@@ -8,19 +8,25 @@ import {
 
 import Rectangle from "./Rectangle";
 
+type IThen = TThen<Rectangle>
+type IWhen = TWhen<Rectangle>;
+const Thener = TThen<Rectangle>;
+const Whener = TWhen<Rectangle>;
+const Suiter = Suite<Rectangle>
+
 const RectangleTesteranto = {
-  Suite: {
+  suite: {
     default: (
       description: string,
       rectangle: Rectangle,
       givens: any[]
-    ) => new Suite<Rectangle>(description, rectangle, givens)
+    ) => new Suiter(description, rectangle, givens)
   },
-  Given: {
+  given: {
     WidthOfOneAndHeightOfOne: (
       feature: string,
-      whens: TWhen<Rectangle>[],
-      thens: TThen<Rectangle>[]
+      whens: IWhen[],
+      thens: IThen[]
     ) => {
       return new TGiven(`width of 1 and height of 1`, whens, thens, feature, new Rectangle(1, 1))
     },
@@ -28,62 +34,61 @@ const RectangleTesteranto = {
       width: number,
       height: number,
       feature: string,
-      whens: TWhen<Rectangle>[],
-      thens: TThen<Rectangle>[]
+      whens: IWhen[],
+      thens: IThen[]
     ) => new TGiven(`width of "${width} and height of "${height}"`, whens, thens, feature, new Rectangle(height, width)),
     Default: (
       feature: string,
-      whens: TWhen<Rectangle>[],
-      thens: TThen<Rectangle>[]
+      whens: IWhen[],
+      thens: IThen[]
     ) => new TGiven(`default width and height`, whens, thens, feature, new Rectangle())
   },
 
-  When: {
+  when: {
     WidthIsPubliclySetTo: (width: number) =>
-      new TWhen<Rectangle>(`the width is set to "${width}"`, (rectangle) =>
+      new Whener(`the width is set to "${width}"`, (rectangle) =>
         rectangle.width = width
       ),
     HeightIsPubliclySetTo: (height: number) =>
-      new TWhen<Rectangle>(`the height is set to "${height}"`, (rectangle) =>
+      new Whener(`the height is set to "${height}"`, (rectangle) =>
         rectangle.height = height
       ),
     WidthIsSetTo: (width: number) =>
-      new TWhen<Rectangle>(`the width is set to "${width}"`, (rectangle) => {
+      new Whener(`the width is set to "${width}"`, (rectangle) =>
         rectangle.setWidth(width)
-      }
       ),
     HeightIsSetTo: (height: number) =>
-      new TWhen<Rectangle>(`the height is set to "${height}"`, (rectangle) =>
+      new Whener(`the height is set to "${height}"`, (rectangle) =>
         rectangle.setHeight(height)
       )
   },
 
-  Then: {
+  then: {
     WidthIs: (width: number) =>
-      new TThen(`the width is "${width}"`, (rectangle: Rectangle) => {
+      new Thener(`the width is "${width}"`, (rectangle) => {
         assert.equal(rectangle.width, width)
       }
 
       ),
     HeightIs: (height: number) =>
-      new TThen(`the height is "${height}"`, (rectangle: Rectangle) =>
+      new Thener(`the height is "${height}"`, (rectangle) =>
         assert.equal(rectangle.height, height)
       ),
     AreaIs: (area: number) =>
-      new TThen(`the area is "${area}"`, (rectangle: Rectangle) =>
+      new Thener(`the area is "${area}"`, (rectangle) =>
         assert.equal(rectangle.area(), area)
       ),
     CircumferenceIs: (circumference: number) =>
-      new TThen(`the circumference is "${circumference}"`, (rectangle: Rectangle) =>
+      new Thener(`the circumference is "${circumference}"`, (rectangle) =>
         assert.equal(rectangle.circumference(), circumference)
       )
   },
 }
 
-const RectangleSuite = RectangleTesteranto.Suite.default;
-const Given = RectangleTesteranto.Given;
-const When = RectangleTesteranto.When;
-const Then = RectangleTesteranto.Then;
+const RectangleSuite = RectangleTesteranto.suite.default;
+const Given = RectangleTesteranto.given;
+const When = RectangleTesteranto.when;
+const Then = RectangleTesteranto.then;
 
 export default () => {
   RectangleSuite(`testing the Rectangle class`, (Rectangle.prototype), [
@@ -134,6 +139,11 @@ export default () => {
       Then.CircumferenceIs(8),
       Then.WidthIs(2),
       Then.HeightIs(2),
+      new Thener(`the height is 2"`, (rectangle) =>
+        assert.equal(rectangle.height, 2)
+      ),
+      // (rectangle) =>
+      //   assert.equal(rectangle.height, 2)
     ])
 
   ]).run();

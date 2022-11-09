@@ -80,9 +80,9 @@ export abstract class TesterantoWhen<
 
   abstract when(store: IStore, actioner: (x) => any): any;
 
-  run(store: IStore) {
+  run(store: IStore): IStore {
     console.log(" When:", this.name);
-    this.when(store, this.actioner)
+    return this.when(store, this.actioner)
   }
 };
 
@@ -131,14 +131,14 @@ export class Given<Klass> extends TesterantoGiven<Klass, Klass, Klass> {
 
 export class When<Klass> extends TesterantoWhen<Klass> {
 
-  when(thing: Klass) {
+  when(thing: Klass): Klass {
     return this.actioner(thing);
   }
 
 };
 
 export class Then<Klass> extends TesterantoThen<Klass> {
-  then(thing: Klass) {
+  then(thing: Klass): Klass {
     return thing;
   }
 };
