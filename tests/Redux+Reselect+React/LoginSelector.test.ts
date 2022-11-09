@@ -2,11 +2,15 @@
 // It's purpose is to test reselect Selectors backed by a redux Store
 
 import assert from "assert";
-import { Store, AnyAction, Slice, Reducer } from "@reduxjs/toolkit";
+import { Store, AnyAction, Reducer, Selector } from "@reduxjs/toolkit";
 
-import { Given, When, Then, Suite } from "./reduxToolkit.test";
+import {
+  Suite,
+  Given as TGiven,
+  When as TWhen,
+  Then as TThen,
+} from "./reduxToolkit.test";
 
-// import core, { IStoreState as IState } from "./app";
 import { ILoginPageSelection } from "./LoginPage";
 import { IStoreState as IState } from "./app";
 import app from "./app";
@@ -18,21 +22,33 @@ const reducer = core.app.reducer;
 
 type IStore = Store<IState, AnyAction>;
 
+type IThen = TThen<ILoginPageSelection>[]
+type IWhen = TWhen[];
+type IGiven = TGiven<IStore, any>[]
+const Thener = TThen<ILoginPageSelection>;
+const Whener = TWhen;
+const Givener = TGiven;
+
+export type ISubject = {
+  reducer: Reducer<IState, AnyAction>,
+  selector: Selector
+};
+
 const ReduxToolkitSuite = (
   description: string,
-  reducer: Reducer<IState, AnyAction>,
-  givens: any[]
+  subject: ISubject,
+  givens: IGiven
 ) => new Suite(
   description,
-  reducer,
+  subject,
   givens
 );
 
 const GivenAnEmptyState = (
   feature: string,
-  whens: When[],
-  thens: Then<IState, ILoginPageSelection, IStore>[]
-) => new Given(
+  whens: IWhen,
+  thens: IThen,
+) => new Givener(
   `the state is empty`,
   whens,
   thens,
@@ -43,9 +59,9 @@ const GivenAnEmptyState = (
 const GivenAStateWithEmail = (
   feature: string,
   email: string,
-  whens: When[],
-  thens: Then<IState, ILoginPageSelection, IStore>[]
-) => new Given(
+  whens: IWhen,
+  thens: IThen,
+) => new Givener(
   `the email is already ${email}`,
   whens,
   thens,
@@ -56,60 +72,50 @@ const GivenAStateWithEmail = (
   },
 );
 const WhenTheLoginIsSubmitted = () =>
-  new When(`the login form is submitted`, actions.signIn);
+  new Whener(`the login form is submitted`, actions.signIn);
 const WhenTheEmailIsSetTo = (email: string) =>
-  new When(`the email is set to "${email}"`, actions.setEmail, email);
+  new Whener(`the email is set to "${email}"`, actions.setEmail, email);
 const WhenThePasswordIsSetTo = (password: string) =>
-  new When(`the password is set to "${password}"`, actions.setPassword, password);
+  new Whener(`the password is set to "${password}"`, actions.setPassword, password);
 
 const ThenTheEmailIs = (email: string) =>
-  new Then(`the email is "${email}"`,
+  new Thener(`the email is "${email}"`,
     (selection) => {
       assert.equal(selection.email, email)
-    },
-    selector,
+    }
   );
-
 const ThenTheEmailIsNot = (email: string) =>
-  new Then(`the email is not "${email}"`,
-    (selection) => assert.notEqual(selection.email, email),
-    selector
+  new Thener(`the email is not "${email}"`,
+    (selection) => assert.notEqual(selection.email, email)
   );
-
-
 const ThenThereIsAnEmailError = () =>
-  new Then(`there should be an email error`, (selection) => {
-    return assert.equal(selection.error, 'invalidEmail')
-  }, selector
+  new Thener(`there should be an email error`, (selection) =>
+    assert.equal(selection.error, 'invalidEmail')
   );
 const ThenThereIsNotAnEmailError = () =>
-  new Then(`there should not be an email error`, (selection) =>
-    assert.notEqual(selection.error, 'invalidEmail'),
-    selector
+  new Thener(`there should not be an email error`, (selection) =>
+    assert.notEqual(selection.error, 'invalidEmail')
   );
 const ThenTheSubmitButtonShouldBeEnabled = () =>
-  new Then(`the submit button should be enabled`, (selection) =>
-    assert(!selection.disableSubmit),
-    selector
+  new Thener(`the submit button should be enabled`, (selection) =>
+    assert(!selection.disableSubmit)
   );
 const ThenTheSubmitButtonShouldNotBeEnabled = () =>
-  new Then(`the submit button should not be enabled`, (selection) =>
-    assert(selection.disableSubmit),
-    selector
+  new Thener(`the submit button should not be enabled`, (selection) =>
+    assert(selection.disableSubmit)
   );
 const ThenThePasswordIs = (password: string) =>
-  new Then(`the password is "${password}"`, (selection) =>
-    assert.equal(selection.password, password),
-    selector
+  new Thener(`the password is "${password}"`, (selection) =>
+    assert.equal(selection.password, password)
   )
 function ThenThePasswordIsNot(password: string) {
-  return new Then(`the password is not "${password}"`, (selection) => {
+  return new Thener(`the password is not "${password}"`, (selection) => {
     assert.notEqual(selection.password, password);
-  }, selector)
+  })
 };
 
 export default () => {
-  ReduxToolkitSuite('testing redux store + reselect selectors', reducer, [
+  ReduxToolkitSuite('testing redux store + reselect selectors', { reducer, selector }, [
     GivenAnEmptyState(`Set the email and check the email`, [
       WhenTheEmailIsSetTo("adam@email.com"),
     ], [

@@ -65,10 +65,8 @@ const RectangleTesteranto = {
 
   then: {
     WidthIs: (width: number) =>
-      new Thener(`the width is "${width}"`, (rectangle) => {
+      new Thener(`the width is "${width}"`, (rectangle) =>
         assert.equal(rectangle.width, width)
-      }
-
       ),
     HeightIs: (height: number) =>
       new Thener(`the height is "${height}"`, (rectangle) =>

@@ -1,41 +1,62 @@
 
-import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, AnyAction, PreloadedState, Reducer, Selector, Store } from "@reduxjs/toolkit";
+import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, AnyAction, Reducer, Selector, Store } from "@reduxjs/toolkit";
 import { createStore } from "redux";
 
 import { TesterantoGiven, TesterantoSuite, TesterantoThen, TesterantoWhen } from "../../index";
 
 type IActionCreate = ActionCreatorWithoutPayload<string> | ActionCreatorWithPayload<any, string>;
 
+type ISubjectReducerAndSelector = {
+  reducer: Reducer<any, AnyAction>,
+  selector: Selector<any, any>
+};
+
+type ISubjectReducerAndSelectorAnStore = {
+  reducer: Reducer<any, AnyAction>,
+  selector: Selector<any, any>,
+  store: Store<any, any>
+};
+
 export class Suite<
-  ISubject extends Reducer,
+  ISubjectReducerAndSelector,
   IStore extends Store,
   ISelected extends Selector
-> extends TesterantoSuite<ISubject, IStore, ISelected> { }
+> extends TesterantoSuite<ISubjectReducerAndSelector, IStore, ISelected> { }
 
 export class Given<
-  ISubject extends Reducer,
   IStore extends Store,
-  ISelected extends Selector
+  ISelected,
 > extends TesterantoGiven<
-  ISubject,
+  ISubjectReducerAndSelector,
   IStore,
   ISelected
 > {
+
+  initialValues: any; //PreloadedState<IState>;
+
   constructor(
     name: string,
     whens: When[],
-    thens: Then<any, any, any>[],
+    thens: Then<ISelected>[],
     feature: string,
-    initialValues: PreloadedState<any>,
+    initialValues: any,
   ) {
     super(name, whens, thens, feature);
     this.initialValues = initialValues;
   }
 
-  initialValues: PreloadedState<any>;
+  given
+    (subject: ISubjectReducerAndSelector):
+    any {
+    const store = createStore<
+      Reducer<any, AnyAction>,
+      any, any, any
+    >(subject.reducer, this.initialValues);
 
-  given(subject) {
-    return createStore<any, any, any, any>(subject, this.initialValues)
+    return {
+      ...subject,
+      store
+    };
   }
 
 }
@@ -55,32 +76,24 @@ export class When extends TesterantoWhen<any> {
     this.payload = payload;
   }
 
-  when(store, actioner) {
-    return store.dispatch(actioner());
+  when(x, actioner) {
+    return x.store.dispatch(actioner());
   }
 
 };
 
 export class Then<
-  IState,
   ISelected,
-  IStore extends Store<IState, AnyAction>
 > extends TesterantoThen<ISelected> {
-
-  selector: Selector<IState, ISelected>;
-
   constructor(
     name: string,
     callback: (val: ISelected) => any,
-    selector: Selector<IState, ISelected>,
-
   ) {
     super(name, callback);
-    this.selector = selector
   }
 
-  then(store: IStore): ISelected {
-    return this.selector(store.getState());
+  then(subject: ISubjectReducerAndSelectorAnStore): ISelected {
+    return subject.selector(subject.store.getState());
   }
 
 };
