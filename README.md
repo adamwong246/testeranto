@@ -115,7 +115,7 @@ const RectangleTesteranto = {
 }
 ```
 
-#### the tests
+#### Your tests in stakeholder-friendly language
 ```
 RectangleSuite(`testing the Rectangle class`, (Rectangle.prototype), [
     Given.WidthOfOneAndHeightOfOne(`Set the width`, [
@@ -172,6 +172,6 @@ RectangleSuite(`testing the Rectangle class`, (Rectangle.prototype), [
 
 There are more examples in the `tests` folder!
 
-[Testing a Redux store](/tests/Redux+Reselect+React/LoginStore.test.ts)
-[Testing a Reselect Selector based on a Redux store](/tests/Redux+Reselect+React/LoginSelector.test.ts)
-[Testing a React Component with Reselect Selector based on a Redux store](/tests/Redux+Reselect+React/LoginPage.test.ts)
+- [Testing a Redux store](/tests/Redux+Reselect+React/LoginStore.test.ts)
+- [Testing a Reselect Selector based on a Redux store](/tests/Redux+Reselect+React/LoginSelector.test.ts)
+- [Testing a React Component with Reselect Selector based on a Redux store](/tests/Redux+Reselect+React/LoginPage.test.ts)
