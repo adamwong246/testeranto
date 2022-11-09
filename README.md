@@ -7,9 +7,10 @@ Testeranto is pure typescript that adds zero dependencies. You are free to use a
 
 Typescript makes it very easy to implement your testeranto interfaces, of which you will need 1 for each class or type signature. Each will consist 4 simple classes, corresponding to Suite, Given, When, and Then cucumber steps. 
 
-### How does it work?
+### Examples
 
-#### Your code
+#### a plain old javascript class
+
 ```
 class Rectangle {
 
@@ -41,7 +42,7 @@ class Rectangle {
 export default Rectangle;
 ```
 
-#### a little boilerplate
+#### some typed boilerplate
 ```
 const RectangleTesteranto = {
   Suite: {
@@ -97,9 +98,7 @@ const RectangleTesteranto = {
     WidthIs: (width: number) =>
       new TThen(`the width is "${width}"`, (rectangle: Rectangle) => {
         assert.equal(rectangle.width, width)
-      }
-
-      ),
+      }),
     HeightIs: (height: number) =>
       new TThen(`the height is "${height}"`, (rectangle: Rectangle) =>
         assert.equal(rectangle.height, height)
@@ -116,7 +115,7 @@ const RectangleTesteranto = {
 }
 ```
 
-#### Your tests
+#### the tests
 ```
 RectangleSuite(`testing the Rectangle class`, (Rectangle.prototype), [
     Given.WidthOfOneAndHeightOfOne(`Set the width`, [
@@ -171,3 +170,8 @@ RectangleSuite(`testing the Rectangle class`, (Rectangle.prototype), [
   ]).run();
 ```
 
+There are more examples in the `tests` folder!
+
+[Testing a Redux store](/tests/Redux+Reselect+React/LoginStore.test.ts)
+[Testing a Reselect Selector based on a Redux store](/tests/Redux+Reselect+React/LoginSelector.test.ts)
+[Testing a React Component with Reselect Selector based on a Redux store](/tests/Redux+Reselect+React/LoginPage.test.ts)
