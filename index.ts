@@ -1,15 +1,16 @@
 export abstract class TesterantoSuite<
+  ISubject,
   IStore,
-  ISelected,
+  ISelection,
 > {
   name: string;
-  subject: IStore;
-  givens: TesterantoGiven<IStore, ISelected>[];
+  subject: ISubject;
+  givens: TesterantoGiven<ISubject, IStore, ISelection>[];
 
   constructor(
     name: string,
-    subject: IStore,
-    givens: TesterantoGiven<IStore, ISelected>[],
+    subject: ISubject,
+    givens: TesterantoGiven<ISubject, IStore, ISelection>[],
 
   ) {
     this.name = name;
@@ -19,25 +20,27 @@ export abstract class TesterantoSuite<
 
   run() {
     console.log("\nSuite:", this.name)
-    this.givens.forEach((g) => {
-      g.run(this.subject);
+    this.givens.forEach((g: TesterantoGiven<any, any, any>) => {
+      g.give(this.subject);
     })
   }
 }
 
 export abstract class TesterantoGiven<
+  ISubject,
   IStore,
-  ISelected,
+  ISelection,
 > {
   name: string;
   whens: TesterantoWhen<IStore>[];
-  thens: TesterantoThen<ISelected>[];
+  thens: TesterantoThen<ISelection>[];
   feature: string;
+
   constructor(
     name: string,
     whens: TesterantoWhen<IStore>[],
-    thens: TesterantoThen<ISelected>[],
-    feature: string
+    thens: TesterantoThen<ISelection>[],
+    feature: string,
   ) {
     this.name = name;
     this.whens = whens;
@@ -45,9 +48,9 @@ export abstract class TesterantoGiven<
     this.feature = feature;
   }
 
-  abstract given(subject): any;
+  abstract given(subject: ISubject): IStore;
 
-  run(subject: any) {
+  give(subject: ISubject) {
     console.log(`\n - ${this.feature} - \n\nGiven: ${this.name}`)
     const store = this.given(subject);
 
@@ -66,25 +69,20 @@ export abstract class TesterantoWhen<
   IStore,
 > {
   name: string;
-  actionCreator: (x: any) => any;
-  payload: object;
+  actioner: (x: any) => any;
   constructor(
     name: string,
-    actionCreator: (x) => any,
-    payload: any = {}
+    actioner: (x) => any,
   ) {
     this.name = name;
-    this.actionCreator = actionCreator;
-    this.payload = payload;
+    this.actioner = actioner;
   }
 
-  abstract when(store: IStore, action: any): any;
+  abstract when(store: IStore, actioner: (x) => any): any;
 
   run(store: IStore) {
     console.log(" When:", this.name);
-    const action = this.actionCreator;
-    action(store);
-    this.when(store, action)
+    this.when(store, this.actioner)
   }
 };
 
@@ -105,14 +103,14 @@ export abstract class TesterantoThen<
   abstract then(store: any): ISelected;
 
   run(store: any) {
-    console.log(" Then:", this.name)
-    this.callback(this.then(store))
+    console.log(" Then:", this.name);
+    return this.callback(this.then(store));
   }
 };
 
-export class Suite<Klass> extends TesterantoSuite<Klass, Klass> { };
+export class Suite<Klass> extends TesterantoSuite<Klass, Klass, Klass> { };
 
-export class Given<Klass> extends TesterantoGiven<Klass, any> {
+export class Given<Klass> extends TesterantoGiven<Klass, Klass, Klass> {
   thing: Klass;
 
   constructor(
@@ -132,30 +130,16 @@ export class Given<Klass> extends TesterantoGiven<Klass, any> {
 }
 
 export class When<Klass> extends TesterantoWhen<Klass> {
-  constructor(
-    name: string,
-    actionCreator: (x: Klass) => any,
-    payload: any = {}
-  ) {
-    super(name, actionCreator, payload);
-  }
 
   when(thing: Klass) {
-    return thing;
+    return this.actioner(thing);
   }
 
 };
 
 export class Then<Klass> extends TesterantoThen<Klass> {
-  constructor(
-    name: string,
-    callback: (thing: Klass) => void
-  ) {
-    super(name, callback);
-  }
-
-  then(rectangle: Klass) {
-    return rectangle;
+  then(thing: Klass) {
+    return thing;
   }
 };
 
