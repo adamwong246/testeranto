@@ -16,14 +16,14 @@ const Whener = ClassyWhen<Rectangle>;
 const Suiter = ClassySuite<Rectangle>
 
 const RectangleTesteranto = {
-  suite: {
+  Suite: {
     default: (
       description: string,
       rectangle: Rectangle,
       givens: IGiven,
     ) => new Suiter(description, rectangle, givens)
   },
-  given: {
+  Given: {
     WidthOfOneAndHeightOfOne: (
       feature: string,
       whens: IWhen,
@@ -45,7 +45,7 @@ const RectangleTesteranto = {
     ) => new ClassyGiven(`default width and height`, whens, thens, feature, new Rectangle())
   },
 
-  when: {
+  When: {
     WidthIsPubliclySetTo: (width: number) =>
       new Whener(`the width is set to "${width}"`, (rectangle) =>
         rectangle.width = width
@@ -64,7 +64,7 @@ const RectangleTesteranto = {
       )
   },
 
-  then: {
+  Then: {
     WidthIs: (width: number) =>
       new Thener(`the width is "${width}"`, (rectangle) =>
         assert.equal(rectangle.width, width)
@@ -84,10 +84,10 @@ const RectangleTesteranto = {
   },
 }
 
-const RectangleSuite = RectangleTesteranto.suite.default;
-const Given = RectangleTesteranto.given;
-const When = RectangleTesteranto.when;
-const Then = RectangleTesteranto.then;
+const RectangleSuite = RectangleTesteranto.Suite.default;
+const Given = RectangleTesteranto.Given;
+const When = RectangleTesteranto.When;
+const Then = RectangleTesteranto.Then;
 
 export default () => {
   RectangleSuite(`testing the Rectangle class`, (Rectangle.prototype), [
@@ -145,5 +145,5 @@ export default () => {
       //   assert.equal(rectangle.height, 2)
     ])
 
-  ]).run();
+  ]).test();
 }

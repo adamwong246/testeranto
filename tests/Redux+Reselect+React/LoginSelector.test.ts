@@ -192,5 +192,5 @@ export default () => {
     ]),
 
 
-  ]).run();
+  ]).test();
 }

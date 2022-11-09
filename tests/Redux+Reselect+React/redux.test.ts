@@ -29,8 +29,7 @@ export class Given<
 
   initialValues: PreloadedState<any>;
 
-  given(subject) {
-    // console.log(subject, this.initialValues)
+  givenThat(subject) {
     return subject;  //createStore<any, any, any, any>(subject, this.initialValues)
   }
 }
@@ -50,7 +49,7 @@ export class When extends BaseWhen<any> {
     this.payload = payload;
   }
 
-  when(store, actioner) {
+  andWhen(store, actioner) {
     return store.dispatch(actioner());
   }
 
@@ -61,7 +60,7 @@ export class Then<
   IState,
 > extends BaseThen<IState> {
 
-  then(store: IStore): IState {
+  butThen(store: IStore): IState {
     return store.getState();
   }
 

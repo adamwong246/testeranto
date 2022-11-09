@@ -17,7 +17,7 @@ export class ReactGiven extends
     ReactTestRenderer
   >{
 
-  given(subject: () => JSX.Element) {
+  givenThat(subject: () => JSX.Element) {
     let component;
     act(() => {
       component = renderer.create(subject());
@@ -27,13 +27,13 @@ export class ReactGiven extends
 }
 
 export class ReactWhen extends BaseWhen<ReactTestRenderer> {
-  when(store: renderer.ReactTestRenderer) {
+  andWhen(store: renderer.ReactTestRenderer) {
     act(() => this.actioner(store));
   }
 };
 
 export class ReactThen extends BaseThen<ReactTestRenderer>{
-  then(component: renderer.ReactTestRenderer): renderer.ReactTestRenderer {
+  butThen(component: renderer.ReactTestRenderer): renderer.ReactTestRenderer {
     return component;
   }
 };

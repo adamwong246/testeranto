@@ -1,8 +1,4 @@
-export abstract class BaseSuite<
-  ISubject,
-  IStore,
-  ISelection,
-> {
+export abstract class BaseSuite<ISubject, IStore, ISelection> {
   name: string;
   subject: ISubject;
   givens: BaseGiven<ISubject, IStore, ISelection>[];
@@ -18,19 +14,15 @@ export abstract class BaseSuite<
     this.givens = givens;
   }
 
-  run() {
+  test() {
     console.log("\nSuite:", this.name)
-    this.givens.forEach((g: BaseGiven<any, any, any>) => {
-      g.give(this.subject);
+    this.givens.forEach((givenThat: BaseGiven<ISubject, IStore, ISelection>) => {
+      givenThat.test(this.subject);
     })
   }
 }
 
-export abstract class BaseGiven<
-  ISubject,
-  IStore,
-  ISelection,
-> {
+export abstract class BaseGiven<ISubject, IStore, ISelection> {
   name: string;
   whens: BaseWhen<IStore>[];
   thens: BaseThen<ISelection>[];
@@ -48,26 +40,24 @@ export abstract class BaseGiven<
     this.feature = feature;
   }
 
-  abstract given(subject: ISubject): IStore;
+  abstract givenThat(subject: ISubject): IStore;
 
-  give(subject: ISubject) {
+  test(subject: ISubject) {
     console.log(`\n - ${this.feature} - \n\nGiven: ${this.name}`)
-    const store = this.given(subject);
+    const store = this.givenThat(subject);
 
-    this.whens.forEach((when) => {
-      when.run(store);
+    this.whens.forEach((whenStep) => {
+      whenStep.test(store);
     });
 
-    this.thens.forEach((then) => {
-      then.run(store);
+    this.thens.forEach((thenStep) => {
+      thenStep.test(store);
     });
   }
 
 }
 
-export abstract class BaseWhen<
-  IStore,
-> {
+export abstract class BaseWhen<IStore> {
   name: string;
   actioner: (x: any) => any;
   constructor(
@@ -78,17 +68,15 @@ export abstract class BaseWhen<
     this.actioner = actioner;
   }
 
-  abstract when(store: IStore, actioner: (x) => any): any;
+  abstract andWhen(store: IStore, actioner: (x) => any): any;
 
-  run(store: IStore): IStore {
+  test(store: IStore): IStore {
     console.log(" When:", this.name);
-    return this.when(store, this.actioner)
+    return this.andWhen(store, this.actioner)
   }
 };
 
-export abstract class BaseThen<
-  ISelected,
-> {
+export abstract class BaseThen<ISelected> {
   name: string;
   callback: (storeState: ISelected) => any;
 
@@ -100,11 +88,11 @@ export abstract class BaseThen<
     this.callback = callback;
   }
 
-  abstract then(store: any): ISelected;
+  abstract butThen(store: any): ISelected;
 
-  run(store: any) {
+  test(store: any) {
     console.log(" Then:", this.name);
-    return this.callback(this.then(store));
+    return this.callback(this.butThen(store));
   }
 };
 
@@ -124,19 +112,19 @@ export class ClassyGiven<Klass> extends BaseGiven<Klass, Klass, Klass> {
     this.thing = thing;
   }
 
-  given() {
+  givenThat() {
     return this.thing;
   }
 }
 
 export class ClassyWhen<Klass> extends BaseWhen<Klass> {
-  when(thing: Klass): Klass {
+  andWhen(thing: Klass): Klass {
     return this.actioner(thing);
   }
 };
 
 export class ClassyThen<Klass> extends BaseThen<Klass> {
-  then(thing: Klass): Klass {
+  butThen(thing: Klass): Klass {
     return thing;
   }
 };

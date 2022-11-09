@@ -123,5 +123,5 @@ const suite = Suite(`testing a function which returns a JSX.Element`, LoginPage,
 ]);
 
 export default () => {
-  suite.run();
+  suite.test();
 }

@@ -97,5 +97,5 @@ export default () => {
       Then.ThePropsAreNot(dummyProps0)
     ]),
 
-  ]).run();
+  ]).test();
 }

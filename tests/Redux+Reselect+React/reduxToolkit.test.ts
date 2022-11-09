@@ -45,7 +45,7 @@ export class Given<
     this.initialValues = initialValues;
   }
 
-  given
+  givenThat
     (subject: ISubjectReducerAndSelector):
     any {
     const store = createStore<
@@ -76,7 +76,7 @@ export class When extends BaseWhen<any> {
     this.payload = payload;
   }
 
-  when(x, actioner) {
+  andWhen(x, actioner) {
     return x.store.dispatch(actioner());
   }
 
@@ -92,7 +92,7 @@ export class Then<
     super(name, callback);
   }
 
-  then(subject: ISubjectReducerAndSelectorAnStore): ISelected {
+  butThen(subject: ISubjectReducerAndSelectorAnStore): ISelected {
     return subject.selector(subject.store.getState());
   }
 
