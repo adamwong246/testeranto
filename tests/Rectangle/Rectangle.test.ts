@@ -1,47 +1,48 @@
 import assert from "assert";
 import {
-  Suite,
-  Given as TGiven,
-  When as TWhen,
-  Then as TThen,
+  ClassySuite,
+  ClassyGiven,
+  ClassyWhen,
+  ClassyThen
 } from "../../index";
 
 import Rectangle from "./Rectangle";
 
-type IThen = TThen<Rectangle>
-type IWhen = TWhen<Rectangle>;
-const Thener = TThen<Rectangle>;
-const Whener = TWhen<Rectangle>;
-const Suiter = Suite<Rectangle>
+type IThen = ClassyThen<Rectangle>[];
+type IWhen = ClassyWhen<Rectangle>[];
+type IGiven = ClassyGiven<Rectangle>[];
+const Thener = ClassyThen<Rectangle>;
+const Whener = ClassyWhen<Rectangle>;
+const Suiter = ClassySuite<Rectangle>
 
 const RectangleTesteranto = {
   suite: {
     default: (
       description: string,
       rectangle: Rectangle,
-      givens: any[]
+      givens: IGiven,
     ) => new Suiter(description, rectangle, givens)
   },
   given: {
     WidthOfOneAndHeightOfOne: (
       feature: string,
-      whens: IWhen[],
-      thens: IThen[]
+      whens: IWhen,
+      thens: IThen
     ) => {
-      return new TGiven(`width of 1 and height of 1`, whens, thens, feature, new Rectangle(1, 1))
+      return new ClassyGiven(`width of 1 and height of 1`, whens, thens, feature, new Rectangle(1, 1))
     },
     WidthAndHeightOf: (
       width: number,
       height: number,
       feature: string,
-      whens: IWhen[],
-      thens: IThen[]
-    ) => new TGiven(`width of "${width} and height of "${height}"`, whens, thens, feature, new Rectangle(height, width)),
+      whens: IWhen,
+      thens: IThen
+    ) => new ClassyGiven(`width of "${width} and height of "${height}"`, whens, thens, feature, new Rectangle(height, width)),
     Default: (
       feature: string,
-      whens: IWhen[],
-      thens: IThen[]
-    ) => new TGiven(`default width and height`, whens, thens, feature, new Rectangle())
+      whens: IWhen,
+      thens: IThen
+    ) => new ClassyGiven(`default width and height`, whens, thens, feature, new Rectangle())
   },
 
   when: {

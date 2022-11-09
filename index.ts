@@ -1,16 +1,16 @@
-export abstract class TesterantoSuite<
+export abstract class BaseSuite<
   ISubject,
   IStore,
   ISelection,
 > {
   name: string;
   subject: ISubject;
-  givens: TesterantoGiven<ISubject, IStore, ISelection>[];
+  givens: BaseGiven<ISubject, IStore, ISelection>[];
 
   constructor(
     name: string,
     subject: ISubject,
-    givens: TesterantoGiven<ISubject, IStore, ISelection>[],
+    givens: BaseGiven<ISubject, IStore, ISelection>[],
 
   ) {
     this.name = name;
@@ -20,26 +20,26 @@ export abstract class TesterantoSuite<
 
   run() {
     console.log("\nSuite:", this.name)
-    this.givens.forEach((g: TesterantoGiven<any, any, any>) => {
+    this.givens.forEach((g: BaseGiven<any, any, any>) => {
       g.give(this.subject);
     })
   }
 }
 
-export abstract class TesterantoGiven<
+export abstract class BaseGiven<
   ISubject,
   IStore,
   ISelection,
 > {
   name: string;
-  whens: TesterantoWhen<IStore>[];
-  thens: TesterantoThen<ISelection>[];
+  whens: BaseWhen<IStore>[];
+  thens: BaseThen<ISelection>[];
   feature: string;
 
   constructor(
     name: string,
-    whens: TesterantoWhen<IStore>[],
-    thens: TesterantoThen<ISelection>[],
+    whens: BaseWhen<IStore>[],
+    thens: BaseThen<ISelection>[],
     feature: string,
   ) {
     this.name = name;
@@ -65,7 +65,7 @@ export abstract class TesterantoGiven<
 
 }
 
-export abstract class TesterantoWhen<
+export abstract class BaseWhen<
   IStore,
 > {
   name: string;
@@ -86,7 +86,7 @@ export abstract class TesterantoWhen<
   }
 };
 
-export abstract class TesterantoThen<
+export abstract class BaseThen<
   ISelected,
 > {
   name: string;
@@ -108,15 +108,15 @@ export abstract class TesterantoThen<
   }
 };
 
-export class Suite<Klass> extends TesterantoSuite<Klass, Klass, Klass> { };
+export class ClassySuite<Klass> extends BaseSuite<Klass, Klass, Klass> { };
 
-export class Given<Klass> extends TesterantoGiven<Klass, Klass, Klass> {
+export class ClassyGiven<Klass> extends BaseGiven<Klass, Klass, Klass> {
   thing: Klass;
 
   constructor(
     name: string,
-    whens: When<Klass>[],
-    thens: Then<Klass>[],
+    whens: ClassyWhen<Klass>[],
+    thens: ClassyThen<Klass>[],
     feature: string,
     thing: Klass,
   ) {
@@ -129,30 +129,14 @@ export class Given<Klass> extends TesterantoGiven<Klass, Klass, Klass> {
   }
 }
 
-export class When<Klass> extends TesterantoWhen<Klass> {
-
+export class ClassyWhen<Klass> extends BaseWhen<Klass> {
   when(thing: Klass): Klass {
     return this.actioner(thing);
   }
-
 };
 
-export class Then<Klass> extends TesterantoThen<Klass> {
+export class ClassyThen<Klass> extends BaseThen<Klass> {
   then(thing: Klass): Klass {
     return thing;
   }
 };
-
-export const TesterantoFactory = {
-  Suite: Suite,
-  Given: Given,
-  When: When,
-  Then: Then,
-}
-
-export type ITesterantoFactory<Klass> = {
-  Suite: Suite<Klass>;
-  Given: Given<Klass>;
-  When: When<Klass>;
-  Then: Then<Klass>;
-}

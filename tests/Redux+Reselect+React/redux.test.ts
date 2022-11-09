@@ -1,17 +1,17 @@
 
 import { Store, AnyAction, PreloadedState } from "redux";
-import { TesterantoGiven, TesterantoSuite, TesterantoThen, TesterantoWhen } from '../../index';
+import { BaseGiven, BaseSuite, BaseThen, BaseWhen } from '../../index';
 
 export class Suite<
   IStore extends Store<IState, AnyAction>,
   IState,
-> extends TesterantoSuite<IStore, IStore, IState> {
+> extends BaseSuite<IStore, IStore, IState> {
 }
 
 export class Given<
   IStore extends Store<IState, AnyAction>,
   IState,
-> extends TesterantoGiven<
+> extends BaseGiven<
   IStore,
   IStore,
   IState
@@ -35,7 +35,7 @@ export class Given<
   }
 }
 
-export class When extends TesterantoWhen<any> {
+export class When extends BaseWhen<any> {
   payload: any;
 
   constructor(
@@ -59,7 +59,7 @@ export class When extends TesterantoWhen<any> {
 export class Then<
   IStore extends Store<IState, AnyAction>,
   IState,
-> extends TesterantoThen<IState> {
+> extends BaseThen<IState> {
 
   then(store: IStore): IState {
     return store.getState();

@@ -1,20 +1,20 @@
 
 
 // import { ReactTestRenderer, act } from "react-test-renderer";
-import { TesterantoGiven, TesterantoSuite, TesterantoThen, TesterantoWhen } from "../..";
+import { BaseGiven, BaseSuite, BaseThen, BaseWhen } from "../..";
 import type { ICardProps, ICard } from "./Card";
 import { Card } from "./Card";
 
 export class Suite<
   ICardProps,
   ICard,
-> extends TesterantoSuite<ICardProps, ICard> {
+> extends BaseSuite<ICardProps, ICard> {
 }
 
 class Given<
   ICardProps,
   ICard,
-> extends TesterantoGiven<ICardProps, ICard> {
+> extends BaseGiven<ICardProps, ICard> {
 
   initialValues: ICardProps;
 
@@ -37,7 +37,7 @@ class Given<
 
 }
 
-class When<ICardProps> extends TesterantoWhen<ICardProps> {
+class When<ICardProps> extends BaseWhen<ICardProps> {
 
   actionCreator: (x: ICard) => any;
   payload: object;
@@ -57,7 +57,7 @@ class When<ICardProps> extends TesterantoWhen<ICardProps> {
 
 };
 
-class Then<ICard> extends TesterantoThen<ICard> {
+class Then<ICard> extends BaseThen<ICard> {
   then(card: ICard) {
     return card;
   }

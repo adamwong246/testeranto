@@ -2,7 +2,7 @@
 import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, AnyAction, Reducer, Selector, Store } from "@reduxjs/toolkit";
 import { createStore } from "redux";
 
-import { TesterantoGiven, TesterantoSuite, TesterantoThen, TesterantoWhen } from "../../index";
+import { BaseGiven, BaseSuite, BaseThen, BaseWhen } from "../../index";
 
 type IActionCreate = ActionCreatorWithoutPayload<string> | ActionCreatorWithPayload<any, string>;
 
@@ -21,12 +21,12 @@ export class Suite<
   ISubjectReducerAndSelector,
   IStore extends Store,
   ISelected extends Selector
-> extends TesterantoSuite<ISubjectReducerAndSelector, IStore, ISelected> { }
+> extends BaseSuite<ISubjectReducerAndSelector, IStore, ISelected> { }
 
 export class Given<
   IStore extends Store,
   ISelected,
-> extends TesterantoGiven<
+> extends BaseGiven<
   ISubjectReducerAndSelector,
   IStore,
   ISelected
@@ -61,7 +61,7 @@ export class Given<
 
 }
 
-export class When extends TesterantoWhen<any> {
+export class When extends BaseWhen<any> {
   payload: any;
 
   constructor(
@@ -84,7 +84,7 @@ export class When extends TesterantoWhen<any> {
 
 export class Then<
   ISelected,
-> extends TesterantoThen<ISelected> {
+> extends BaseThen<ISelected> {
   constructor(
     name: string,
     callback: (val: ISelected) => any,

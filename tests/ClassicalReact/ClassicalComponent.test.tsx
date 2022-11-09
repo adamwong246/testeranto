@@ -1,10 +1,10 @@
 import assert from "assert";
 import React from "react";
 import {
-  Suite as TSuite,
-  Given as TGiven,
-  When as TWhen,
-  Then as TThen
+  ClassySuite,
+  ClassyGiven,
+  ClassyWhen,
+  ClassyThen
 } from "../../index";
 
 type IClassicalComponentProps = { hello: string };
@@ -43,19 +43,19 @@ const ClassicalComponentTesteranto = {
       description: string,
       classicalComponent: typeof ClassicalComponent,
       givens: any[]
-    ) => new TSuite<typeof ClassicalComponent>(description, classicalComponent, givens)
+    ) => new ClassySuite<typeof ClassicalComponent>(description, classicalComponent, givens)
   },
   Given: {
     Default: (
       feature: string,
-      whens: TWhen<ClassicalComponent>[],
-      thens: TThen<ClassicalComponent>[]
-    ) => new TGiven(`default`, whens, thens, feature, new ClassicalComponent({}))
+      whens: ClassyWhen<ClassicalComponent>[],
+      thens: ClassyThen<ClassicalComponent>[]
+    ) => new ClassyGiven(`default`, whens, thens, feature, new ClassicalComponent({}))
   },
 
   When: {
     SetTheProps: (props: IClassicalComponentProps) =>
-      new TWhen<ClassicalComponent>(`Props check`, (classicalComponent: any) => {
+      new ClassyWhen<ClassicalComponent>(`Props check`, (classicalComponent: any) => {
         classicalComponent.props = props;
       }
       ),
@@ -64,11 +64,11 @@ const ClassicalComponentTesteranto = {
 
   Then: {
     ThePropsAre: (props: IClassicalComponentProps) =>
-      new TThen(`the props are`, (classicalComponent: ClassicalComponent) =>
+      new ClassyThen(`the props are`, (classicalComponent: ClassicalComponent) =>
         assert.equal(classicalComponent.props, props)
       ),
     ThePropsAreNot: (props: IClassicalComponentProps) => {
-      return new TThen(`the props are not`, (classicalComponent: ClassicalComponent) =>
+      return new ClassyThen(`the props are not`, (classicalComponent: ClassicalComponent) =>
         assert.notEqual(classicalComponent.props, props)
       )
     }

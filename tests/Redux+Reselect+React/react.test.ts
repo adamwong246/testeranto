@@ -1,9 +1,9 @@
 import renderer, { act, ReactTestRenderer } from 'react-test-renderer';
 
-import { TesterantoSuite, TesterantoGiven, TesterantoWhen, TesterantoThen } from '../../index';
+import { BaseSuite, BaseGiven, BaseWhen, BaseThen } from '../../index';
 
 export class ReactSuite extends
-  TesterantoSuite<
+  BaseSuite<
     () => JSX.Element,  // the thing we test
     ReactTestRenderer,  // the thing we perform actions against
     ReactTestRenderer   // the thing we make assertions against
@@ -11,7 +11,7 @@ export class ReactSuite extends
 }
 
 export class ReactGiven extends
-  TesterantoGiven<
+  BaseGiven<
     () => JSX.Element,
     ReactTestRenderer,
     ReactTestRenderer
@@ -26,13 +26,13 @@ export class ReactGiven extends
   }
 }
 
-export class ReactWhen extends TesterantoWhen<ReactTestRenderer> {
+export class ReactWhen extends BaseWhen<ReactTestRenderer> {
   when(store: renderer.ReactTestRenderer) {
     act(() => this.actioner(store));
   }
 };
 
-export class ReactThen extends TesterantoThen<ReactTestRenderer>{
+export class ReactThen extends BaseThen<ReactTestRenderer>{
   then(component: renderer.ReactTestRenderer): renderer.ReactTestRenderer {
     return component;
   }

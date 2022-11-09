@@ -1,4 +1,4 @@
-export class TesterantoSuite {
+export class BaseSuite {
     constructor(name, subject, givens) {
         this.name = name;
         this.subject = subject;
@@ -11,7 +11,7 @@ export class TesterantoSuite {
         });
     }
 }
-export class TesterantoGiven {
+export class BaseGiven {
     constructor(name, whens, thens, feature) {
         this.name = name;
         this.whens = whens;
@@ -29,18 +29,18 @@ export class TesterantoGiven {
         });
     }
 }
-export class TesterantoWhen {
+export class BaseWhen {
     constructor(name, actioner) {
         this.name = name;
         this.actioner = actioner;
     }
     run(store) {
         console.log(" When:", this.name);
-        this.when(store, this.actioner);
+        return this.when(store, this.actioner);
     }
 }
 ;
-export class TesterantoThen {
+export class BaseThen {
     constructor(name, callback) {
         this.name = name;
         this.callback = callback;
@@ -51,10 +51,10 @@ export class TesterantoThen {
     }
 }
 ;
-export class Suite extends TesterantoSuite {
+export class ClassySuite extends BaseSuite {
 }
 ;
-export class Given extends TesterantoGiven {
+export class ClassyGiven extends BaseGiven {
     constructor(name, whens, thens, feature, thing) {
         super(name, whens, thens, feature);
         this.thing = thing;
@@ -63,21 +63,15 @@ export class Given extends TesterantoGiven {
         return this.thing;
     }
 }
-export class When extends TesterantoWhen {
+export class ClassyWhen extends BaseWhen {
     when(thing) {
         return this.actioner(thing);
     }
 }
 ;
-export class Then extends TesterantoThen {
+export class ClassyThen extends BaseThen {
     then(thing) {
         return thing;
     }
 }
 ;
-export const TesterantoFactory = {
-    Suite: Suite,
-    Given: Given,
-    When: When,
-    Then: Then,
-};
