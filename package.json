@@ -1,11 +1,17 @@
 {
   "name": "testeranto.ts",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "index.js",
-  "repository": "git@github.com:adamwong246/super-parakeet.git",
+  "repository": "git@github.com:adamwong246/testeranto.ts.git",
+  "homepage": "https://github.com/adamwong246/testeranto.ts",
   "author": "adam wong <adamwong246@gmail.com>",
   "license": "MIT",
+  "keywords": [
+    "typescript",
+    "test",
+    "cucumber"
+  ],
   "scripts": {
     "test": "yarn webpack -c test.webpack.config.js && node ./dist/test.bundle.js",
     "prepublish": "tsc"
