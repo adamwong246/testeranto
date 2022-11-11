@@ -4,10 +4,10 @@ export class BaseSuite {
         this.subject = subject;
         this.givens = givens;
     }
-    run() {
+    test() {
         console.log("\nSuite:", this.name);
-        this.givens.forEach((g) => {
-            g.give(this.subject);
+        this.givens.forEach((givenThat) => {
+            givenThat.test(this.subject);
         });
     }
 }
@@ -18,14 +18,14 @@ export class BaseGiven {
         this.thens = thens;
         this.feature = feature;
     }
-    give(subject) {
+    test(subject) {
         console.log(`\n - ${this.feature} - \n\nGiven: ${this.name}`);
-        const store = this.given(subject);
-        this.whens.forEach((when) => {
-            when.run(store);
+        const store = this.givenThat(subject);
+        this.whens.forEach((whenStep) => {
+            whenStep.test(store);
         });
-        this.thens.forEach((then) => {
-            then.run(store);
+        this.thens.forEach((thenStep) => {
+            thenStep.test(store);
         });
     }
 }
@@ -34,9 +34,9 @@ export class BaseWhen {
         this.name = name;
         this.actioner = actioner;
     }
-    run(store) {
+    test(store) {
         console.log(" When:", this.name);
-        return this.when(store, this.actioner);
+        return this.andWhen(store, this.actioner);
     }
 }
 ;
@@ -45,9 +45,9 @@ export class BaseThen {
         this.name = name;
         this.callback = callback;
     }
-    run(store) {
+    test(store) {
         console.log(" Then:", this.name);
-        return this.callback(this.then(store));
+        return this.callback(this.butThen(store));
     }
 }
 ;
@@ -59,18 +59,18 @@ export class ClassyGiven extends BaseGiven {
         super(name, whens, thens, feature);
         this.thing = thing;
     }
-    given() {
+    givenThat() {
         return this.thing;
     }
 }
 export class ClassyWhen extends BaseWhen {
-    when(thing) {
+    andWhen(thing) {
         return this.actioner(thing);
     }
 }
 ;
 export class ClassyThen extends BaseThen {
-    then(thing) {
+    butThen(thing) {
         return thing;
     }
 }
