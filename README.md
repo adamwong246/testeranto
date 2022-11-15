@@ -13,7 +13,7 @@ Testeranto is not meant to _replace all_ tests. Rather, it's meant to _complimen
 
 ## The bad parts
 
-Testeranto requires _some_ boilerplate_ but because of TS, much of this can be shared. Depending on your needs, you will need to implement an interface which extends 1 of 2 classes:
+Testeranto requires _some_ boilerplate but because of TS, much of this can be shared. Depending on your needs, you will need to implement an interface which extends 1 of 2 classes:
 - `TesterantoClassic`, when you only need to test a class
 - `TesterantoBasic`, when you need to test something more complex
 
