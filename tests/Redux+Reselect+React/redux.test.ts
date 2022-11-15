@@ -1,6 +1,6 @@
 
 import { Store, AnyAction, PreloadedState } from "redux";
-import { BaseGiven, BaseSuite, BaseThen, BaseWhen } from '../../index';
+import { BaseGiven, BaseSuite, BaseThen, BaseWhen, TesterantoBasic } from '../../index';
 
 export class Suite<
   IStore extends Store<IState, AnyAction>,
@@ -18,7 +18,7 @@ export class Given<
 > {
   constructor(
     name: string,
-    whens: When[],
+    whens: When<IStore>[],
     thens: Then<any, any>[],
     feature: string,
     initialValues: PreloadedState<any>,
@@ -34,8 +34,8 @@ export class Given<
   }
 }
 
-export class When extends BaseWhen<any> {
-  payload: any;
+export class When<IStore> extends BaseWhen<IStore> {
+  payload?: any;
 
   constructor(
     name: string,
@@ -64,4 +64,22 @@ export class Then<
     return store.getState();
   }
 
+};
+
+export class Testeranto<
+  IStore extends Store<IState, AnyAction>,
+  IState,
+  SuiteExtensions,
+  GivenExtensions,
+  WhenExtensions,
+  ThenExtensions
+> extends TesterantoBasic<
+  IStore,
+  IStore,
+  IState,
+  SuiteExtensions,
+  GivenExtensions,
+  WhenExtensions,
+  ThenExtensions
+> {
 };

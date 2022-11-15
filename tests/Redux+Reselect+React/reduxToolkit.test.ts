@@ -2,7 +2,7 @@
 import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, AnyAction, Reducer, Selector, Store } from "@reduxjs/toolkit";
 import { createStore } from "redux";
 
-import { BaseGiven, BaseSuite, BaseThen, BaseWhen } from "../../index";
+import { BaseGiven, BaseSuite, BaseThen, BaseWhen, TesterantoBasic } from "../../index";
 
 type IActionCreate = ActionCreatorWithoutPayload<string> | ActionCreatorWithPayload<any, string>;
 
@@ -20,7 +20,7 @@ type ISubjectReducerAndSelectorAnStore = {
 export class Suite<
   ISubjectReducerAndSelector,
   IStore extends Store,
-  ISelected extends Selector
+  ISelected,
 > extends BaseSuite<ISubjectReducerAndSelector, IStore, ISelected> { }
 
 export class Given<
@@ -62,7 +62,7 @@ export class Given<
 }
 
 export class When extends BaseWhen<any> {
-  payload: any;
+  payload?: any;
 
   constructor(
     name: string,
@@ -96,4 +96,23 @@ export class Then<
     return subject.selector(subject.store.getState());
   }
 
+};
+
+export class Testeranto<
+  ISubjectReducerAndSelectorAnStore,
+  IState,
+  ISelection,
+  SuiteExtensions,
+  GivenExtensions,
+  WhenExtensions,
+  ThenExtensions
+> extends TesterantoBasic<
+  ISubjectReducerAndSelectorAnStore,
+  IState,
+  ISelection,
+  SuiteExtensions,
+  GivenExtensions,
+  WhenExtensions,
+  ThenExtensions
+> {
 };

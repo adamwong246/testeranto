@@ -76,25 +76,110 @@ export abstract class BaseWhen<IStore> {
   }
 };
 
-export abstract class BaseThen<ISelected> {
+export abstract class BaseThen<ISelection> {
   name: string;
-  callback: (storeState: ISelected) => any;
+  callback: (storeState: ISelection) => any;
 
   constructor(
     name: string,
-    callback: (val: ISelected) => any
+    callback: (val: ISelection) => any
   ) {
     this.name = name;
     this.callback = callback;
   }
 
-  abstract butThen(store: any): ISelected;
+  abstract butThen(store: any): ISelection;
 
   test(store: any) {
     console.log(" Then:", this.name);
     return this.callback(this.butThen(store));
   }
 };
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export abstract class TesterantoBasic<
+  ISubject, IStore, ISelection,
+  SuiteExtensions, GivenExtensions, WhenExtensions, ThenExtensions
+> {
+
+  constructorator: IStore;
+
+  suitesOverrides: Record<(keyof SuiteExtensions), (
+    sometext: string,
+    subject: ISubject,
+    givens: BaseGiven<ISubject, IStore, ISelection>[],
+    ...xtraArgs
+  ) => BaseSuite<ISubject, IStore, ISelection>>;
+
+  givenOverides: Record<(keyof GivenExtensions), (
+    feature: string,
+    whens: BaseWhen<IStore>[],
+    thens: BaseThen<ISelection>[],
+    ...xtraArgs
+  ) => BaseGiven<ISubject, IStore, ISelection>>;
+
+  whenOverides: Record<(keyof WhenExtensions), (any) => BaseWhen<IStore>>;
+  thenOverides: Record<(keyof ThenExtensions), (any) => BaseThen<ISelection>>;
+
+  constructor(
+    public readonly cc: IStore,
+    suitesOverrides: Record<(keyof SuiteExtensions), (
+      sometext: string,
+      subject: ISubject,
+      givens: BaseGiven<ISubject, IStore, ISelection>[],
+      ...xtraArgs
+    ) => BaseSuite<ISubject, IStore, ISelection>>,
+
+    givenOverides: Record<(keyof GivenExtensions), (
+      feature: string,
+      whens: BaseWhen<IStore>[],
+      thens: BaseThen<ISelection>[],
+      ...xtraArgs
+    ) => BaseGiven<ISubject, IStore, ISelection>>,
+    whenOverides: Record<(keyof WhenExtensions), (c: any) => BaseWhen<IStore>>,
+    thenOverides: Record<(keyof ThenExtensions), (d: any) => BaseThen<ISelection>>,
+  ) {
+    this.constructorator = cc;
+    this.suitesOverrides = suitesOverrides;
+    this.givenOverides = givenOverides;
+    this.whenOverides = whenOverides;
+    this.thenOverides = thenOverides;
+  }
+
+  Suites():
+    Record<(keyof SuiteExtensions), (
+      sometext: string,
+      subject: ISubject,
+      givens: BaseGiven<ISubject, IStore, ISelection>[],
+      ...xtraArgs
+    ) => BaseSuite<ISubject, IStore, ISelection>> {
+    return this.suitesOverrides;
+  }
+
+  Given():
+    Record<(keyof GivenExtensions), (
+      feature: string,
+      whens: BaseWhen<IStore>[],
+      thens: BaseThen<ISelection>[],
+      ...xtraArgs
+    ) => BaseGiven<ISubject, IStore, ISelection>> {
+    return this.givenOverides;
+  }
+
+  When():
+    Record<(keyof WhenExtensions), (any?) => BaseWhen<IStore>> {
+    return this.whenOverides;
+  }
+
+  Then(): Record<(keyof ThenExtensions), (any?) => BaseThen<ISelection>> {
+    return this.thenOverides;
+  }
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 export class ClassySuite<Klass> extends BaseSuite<Klass, Klass, Klass> { };
 
@@ -128,6 +213,8 @@ export class ClassyThen<Klass> extends BaseThen<Klass> {
     return thing;
   }
 };
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export class TesterantoClassic<Klass, GivenExtensions, WhenExtensions, ThenExtensions> {
 
