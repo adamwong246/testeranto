@@ -1,13 +1,17 @@
 # testeranto.ts
 ## teeny tiny tightly-typed typescript tests
 
-testeranto.ts a Typescript testing framework. It is a way of specifing stateful logic, lifting that knowledge out of your codebase into a high-level cucumber-like specification. Testeranto is NOT for testing pure functions- it is designed only to address _stateful_ logic. 
+Testeranto.ts a Typescript testing framework. It is a way of specifing stateful logic, lifting that knowledge out of your stakeholder's head and into a high-level strongly-typed specification. Testeranto can test any statefull code, from individual javascript classes to entire services, all with the stakeholder-friendly gherkin-like syntax we all know and love. Most testing frameworks focus either on the small-scale (unit tests) or the large-scale (integration tests, E2E tests) but testeranto brings them all under 1 tent, providing 1 type interface for all your tests. 
 
-Testeranto is pure typescript that adds zero dependencies. You are free to use any other testing, or test-reporting, frameworks you'd like in conjunction.
+Testeranto is NOT for testing stateless, or "pure", functions- it is designed only to address _stateful_ logic. Testeranto is made to test individual classes as well as more complex pieces of code but it's not designed to address functions themselves.
 
-Typescript makes it very easy to implement your testeranto interfaces, of which you will need 1 for each class or type signature. Each will consist 4 simple classes, corresponding to Suite, Given, When, and Then cucumber steps. 
+Testeranto is pure Typescript with zero dependencies. You are free to use any other testing, or test-reporting, frameworks you'd like in conjunction.
 
-### Examples
+---
+
+### Example 1 - Testing a single class with TesterantoClassic
+
+If you want to test a single javascript class, you can use `TesterantoClassic` class to skip some boilerplate. 
 
 #### a plain old javascript class
 
@@ -42,135 +46,114 @@ class Rectangle {
 export default Rectangle;
 ```
 
-#### some typed boilerplate
+#### a little boilerplate
 ```
-const RectangleTesteranto = {
-  Suite: {
-    default: (
-      description: string,
-      rectangle: Rectangle,
-      givens: IGiven,
-    ) => new Suiter(description, rectangle, givens)
-  },
-  Given: {
+const RectangleTesteranto = new TesterantoClassic<
+  Rectangle,
+  {
     WidthOfOneAndHeightOfOne: (
       feature: string,
-      whens: IWhen,
-      thens: IThen
-    ) => {
-      return new ClassyGiven(`width of 1 and height of 1`, whens, thens, feature, new Rectangle(1, 1))
-    },
+      whens: ClassyWhen<Rectangle>[],
+      thens: ClassyThen<Rectangle>[]
+    ) => ClassyGiven<Rectangle>,
     WidthAndHeightOf: (
-      width: number,
-      height: number,
       feature: string,
-      whens: IWhen,
-      thens: IThen
-    ) => new ClassyGiven(`width of "${width} and height of "${height}"`, whens, thens, feature, new Rectangle(height, width)),
-    Default: (
-      feature: string,
-      whens: IWhen,
-      thens: IThen
-    ) => new ClassyGiven(`default width and height`, whens, thens, feature, new Rectangle())
-  },
-
-  When: {
-    WidthIsPubliclySetTo: (width: number) =>
-      new Whener(`the width is set to "${width}"`, (rectangle) =>
-        rectangle.width = width
+      whens: ClassyWhen<Rectangle>[],
+      thens: ClassyThen<Rectangle>[]
+    ) => ClassyGiven<Rectangle>,
+  }, {
+    HeightIsPubliclySetTo: (height: number) => ClassyWhen<Rectangle>
+    WidthIsPubliclySetTo: (width: number) => ClassyWhen<Rectangle>
+  }, {
+    AreaPlusCircumference: (combined: number) => ClassyThen<Rectangle>
+  }
+>(
+  Rectangle,
+  {
+    WidthOfOneAndHeightOfOne: (feature, whens, thens) =>
+      new ClassyGiven(`width of 1 and height of 1`, whens, thens, feature, new Rectangle(1, 1)
       ),
+    WidthAndHeightOf: (feature, whens, thens, width, height,) =>
+      new ClassyGiven(`width of "${width} and height of "${height}"`, whens, thens, feature, new Rectangle(height, width)),
+  },
+  {
     HeightIsPubliclySetTo: (height: number) =>
-      new Whener(`the height is set to "${height}"`, (rectangle) =>
+      new ClassyWhen(`the height is set to "${height}"`, (rectangle) =>
         rectangle.height = height
       ),
-    WidthIsSetTo: (width: number) =>
-      new Whener(`the width is set to "${width}"`, (rectangle) =>
-        rectangle.setWidth(width)
+    WidthIsPubliclySetTo: (width: number) =>
+      new ClassyWhen(`the width is set to "${width}"`, (rectangle) =>
+        rectangle.width = width
       ),
-    HeightIsSetTo: (height: number) =>
-      new Whener(`the height is set to "${height}"`, (rectangle) =>
-        rectangle.setHeight(height)
-      )
   },
-
-  Then: {
-    WidthIs: (width: number) =>
-      new Thener(`the width is "${width}"`, (rectangle) =>
-        assert.equal(rectangle.width, width)
+  {
+    AreaPlusCircumference: (combined: number) =>
+      new ClassyThen(`the area+circumference is "${combined}"`, (rectangle) =>
+        assert.equal(rectangle.area() + rectangle.circumference(), combined)
       ),
-    HeightIs: (height: number) =>
-      new Thener(`the height is "${height}"`, (rectangle) =>
-        assert.equal(rectangle.height, height)
-      ),
-    AreaIs: (area: number) =>
-      new Thener(`the area is "${area}"`, (rectangle) =>
-        assert.equal(rectangle.area(), area)
-      ),
-    CircumferenceIs: (circumference: number) =>
-      new Thener(`the circumference is "${circumference}"`, (rectangle) =>
-        assert.equal(rectangle.circumference(), circumference)
-      )
   },
-}
+)
 ```
 
 #### Your tests in stakeholder-friendly language
 ```
-RectangleSuite(`testing the Rectangle class`, (Rectangle.prototype), [
-  Given.WidthOfOneAndHeightOfOne(`Set the width`, [
-    When.WidthIsSetTo(3),
+RectangleSuite([
+  Given.Default('hello testeranto', [
+    When.setWidth(4),
+    When.setHeight(9)
   ], [
-    Then.WidthIs(3),
+    Then.AreaPlusCircumference(62)
   ]),
-
-  Given.WidthOfOneAndHeightOfOne(`Set the height`, [
-    When.HeightIsSetTo(4),
-  ], [
-    Then.HeightIs(4),
-  ]),
-
+  Given.WidthOfOneAndHeightOfOne(`Check the area`,
+    [
+      When.setWidth(4),
+      When.setHeight(5),
+    ],
+    [
+      Then.getWidth(4),
+      Then.getHeight(5),
+      Then.area(20),
+      Then.AreaPlusCircumference(38)
+    ]
+  ),
   Given.WidthOfOneAndHeightOfOne(`Check the area`, [
-    When.HeightIsSetTo(4),
-    When.WidthIsSetTo(3),
+    When.setHeight(4),
+    When.setWidth(3)
   ], [
-    Then.AreaIs(12),
+    Then.area(12),
   ]),
-
   Given.WidthOfOneAndHeightOfOne(`Check the area and circumference`, [
-    When.HeightIsSetTo(3),
-    When.WidthIsSetTo(4),
-    When.HeightIsSetTo(5),
-    When.WidthIsSetTo(6),
+    When.setHeight(3),
+    When.setWidth(4),
+    When.setHeight(5),
+    When.setWidth(6),
   ], [
-    Then.AreaIs(30),
-    Then.CircumferenceIs(22)
+    Then.area(30),
+    Then.circumference(22)
   ]),
-
   Given.WidthOfOneAndHeightOfOne(`Check the area and circumference after publicly setting`, [
-    When.HeightIsPubliclySetTo(3),
-    When.WidthIsPubliclySetTo(4),
+    When.setHeight(3),
+    When.setWidth(4),
   ], [
-    Then.AreaIs(12),
-    Then.CircumferenceIs(14),
+    Then.getHeight(3),
+    Then.getWidth(4),
+    Then.area(12),
+    Then.circumference(14),
   ]),
-
-  Given.WidthAndHeightOf(3, 5, `Set the height and width by constructor, then check the are and circumference`, [], [
-    Then.AreaIs(15),
-    Then.CircumferenceIs(16),
-  ]),
-
+  Given.WidthAndHeightOf(`Set the height and width by constructor, then check the are and circumference`, [
+  ], [
+    Then.area(15),
+    Then.circumference(16),
+  ], 3, 5),
   Given.Default('the default constructor', [], [
-    Then.AreaIs(4),
-    Then.CircumferenceIs(8),
-    Then.WidthIs(2),
-    Then.HeightIs(2),
-    new Thener(`the height is 2"`, (rectangle) =>
-      assert.equal(rectangle.height, 2)
-    ),
-    // (rectangle) =>
-    //   assert.equal(rectangle.height, 2)
-  ])
+    Then.area(4),
+    Then.circumference(8),
+    Then.getWidth(2),
+    Then.getHeight(2),
+  ]),
+]).test();
 ```
+
 
 There are more examples in the `tests` folder!
 

@@ -8,6 +8,14 @@ class Rectangle {
     this.width = width;
   }
 
+  getHeight() {
+    return this.height;
+  }
+
+  getWidth() {
+    return this.width;
+  }
+
   setHeight(height: number) {
     this.height = height;
   }
@@ -25,4 +33,4 @@ class Rectangle {
   }
 };
 
-export default Rectangle;
+export default Rectangle; 
