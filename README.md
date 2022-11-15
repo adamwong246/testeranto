@@ -1,7 +1,7 @@
 # testeranto.ts
 ## teeny tiny tightly-typed typescript tests
 
-Testeranto.ts a Typescript testing framework. It is a way of specifing stateful logic, lifting that knowledge out of your stakeholder's head and into a high-level strongly-typed specification. Testeranto can test any statefull code, from individual javascript classes to entire services, all with the stakeholder-friendly gherkin-like syntax we all know and love. Most testing frameworks focus either on the small-scale (unit tests) or the large-scale (integration tests, E2E tests) but testeranto brings them all under 1 tent, providing 1 type interface for all your tests. 
+Testeranto.ts a Typescript testing framework. It is a way of specifing stateful logic, lifting that knowledge out of your stakeholder's head and into a high-level strongly-typed specification. Testeranto can test any statefull code, from individual javascript classes to entire services, all with the gherkin-like syntax we all know and love. Most testing frameworks focus either on the small-scale (unit tests) or the large-scale (integration tests, E2E tests) but testeranto brings them all under 1 tent, providing 1 type interface for all your tests. 
 
 Testeranto is NOT for testing stateless, or "pure", functions- it is designed only to address _stateful_ logic. Testeranto is made to test individual classes as well as more complex pieces of code but it's not designed to address functions themselves.
 
@@ -95,7 +95,7 @@ const RectangleTesteranto = new TesterantoClassic<
 )
 ```
 
-#### Your tests in stakeholder-friendly language
+#### the tests
 ```
 RectangleSuite([
   Given.Default('hello testeranto', [
