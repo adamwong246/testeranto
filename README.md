@@ -7,7 +7,7 @@ Testeranto is NOT for testing stateless functions- it is designed only to addres
 
 ## Rationale
 
-There is a flaw in the heart of javascript, a flaw that not even Typescript can help us solve. The problem is this: **it's not possible to know if a function is "pure".** It is not possible for the developer, or the transpiler, to know if function causes side-effects, and if it is dependent on something beyond the specified parameters. Typescript lets us know that what should be returned, but it can't tell us if _something else_ was affected. We must live with the fact that every function *might not be pure*.
+There is a flaw in the heart of Javascript, a flaw that not even Typescript can help us solve. The problem is this: **it's not possible to know if a function is "pure".** It is not possible for the developer, or the transpiler, to know if function causes side-effects, and if it is dependent on something beyond the specified parameters. Typescript lets us know what _ought_ be returned, but it can't tell us if _something else_ was effected along the way. We must live with the fact that every function *might not be pure*.
 
 Testeranto is my answer to that problem. Since we cannot enforce this purity at the level of the javascript code, nor can we enforce it at the level of the the type signatures, we must enforce it in the tests. By wrapping our code in a testeranto interface, we can divide an our code into 2 sets- state-changing "whens" (aka stately) and state-inspecting "thens" (aka pure)- and then testing them accordingly. 
 
