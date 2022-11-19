@@ -14,11 +14,14 @@
   ],
   "scripts": {
     "test": "yarn webpack -c test.webpack.config.js && node ./dist/test.bundle.js",
-    "prepublish": "tsc"
+    "prepublish": "tsc",
+    "derw:compile": "rm -rf tsGenerated/**/* && yarn derw compile --output tsGenerated --entry ./tests/Derw/index.derw"
   },
   "types": "index.d.ts",
   "dependencies": {},
   "devDependencies": {
+    "derw": "^0.0.9-18",
+    "ts-node": "^10.9.1",
     "@babel/core": "^7.19.6",
     "@reduxjs/toolkit": "^1.8.6",
     "@types/react": "^18.0.21",

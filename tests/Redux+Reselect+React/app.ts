@@ -2,6 +2,8 @@ import { createSelector, createSlice, createStore, Store, combineReducers, Actio
 
 import { ILoginPageError, ILoginPageSelection } from "./LoginPage";
 
+import { validateEmail } from "../../tsGenerated/src/email";
+
 export type IStoreState = {
   password: string;
   email: string;
@@ -36,15 +38,8 @@ const selectRoot = ((storeState: IStoreState) => {
   return storeState;
 });
 
-// https://stackoverflow.com/a/46181/614612
-const validateEmail = (email) => {
-  return email.match(
-    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  );
-};
-
 const checkForErrors = (storeState: IStoreState): ILoginPageError => {
-  if (!validateEmail(storeState.email)) {
+  if (validateEmail(storeState.email)) {
     return 'invalidEmail'
   }
   if (storeState.password !== "password" && storeState.email !== "adam@email.com") {
@@ -59,8 +54,6 @@ const loginPageSelection = createSelector<[(storeState: IStoreState) => IStoreSt
     disableSubmit: root.email == "" || root.password == ""
   }
 });
-
-
 
 export default () => {
 

@@ -1,0 +1,8 @@
+import assert exposing (equal)
+
+import "./email" exposing (validateEmail)
+
+validateEmailTest: List number string
+validateEmailTest = [(number -> equal (validateEmail "address@email.com") true)]
+
+exposing (validateEmailTest) 

@@ -1,0 +1,14 @@
+type Binary =
+    One
+    | Zero
+
+isTruthy: Binary -> boolean
+isTruthy binary =
+    case binary of
+        One ->
+            true
+
+        Zero ->
+            false
+
+exposing (isTruthy)

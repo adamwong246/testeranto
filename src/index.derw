@@ -1,0 +1,4 @@
+import "./simple_union" as isTruthy
+import "./emailTest" as emailTest
+
+exposing(isTruthy emailTest)
