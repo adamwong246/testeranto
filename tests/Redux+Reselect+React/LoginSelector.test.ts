@@ -46,17 +46,16 @@ const LoginSelectorTesteranto = new ReduxToolkitTesteranto<
     TheLoginIsSubmitted: () => ReduxToolkitWhen,
     TheEmailIsSetTo: (email: string) => ReduxToolkitWhen,
     ThePasswordIsSetTo: (password: string) => ReduxToolkitWhen,
-
   },
   {
     TheEmailIs: (email: string) => ReduxToolkitThen<ILoginPageSelection>,
     TheEmailIsNot: (email: string) => ReduxToolkitThen<ILoginPageSelection>,
     ThereIsAnEmailError: () => ReduxToolkitThen<ILoginPageSelection>,
     ThereIsNotAnEmailError: () => ReduxToolkitThen<ILoginPageSelection>,
-    ThePasswordIs: (password) => ReduxToolkitThen<ILoginPageSelection>,
-    ThePasswordIsNot: (password) => ReduxToolkitThen<ILoginPageSelection>,
-    TheSubmitButtonShouldBeEnabled: (password) => ReduxToolkitThen<ILoginPageSelection>,
-    TheSubmitButtonShouldNotBeEnabled: (password) => ReduxToolkitThen<ILoginPageSelection>,
+    ThePasswordIs: (password: string) => ReduxToolkitThen<ILoginPageSelection>,
+    ThePasswordIsNot: (password: string) => ReduxToolkitThen<ILoginPageSelection>,
+    TheSubmitButtonShouldBeEnabled: () => ReduxToolkitThen<ILoginPageSelection>,
+    TheSubmitButtonShouldNotBeEnabled: () => ReduxToolkitThen<ILoginPageSelection>,
   }
 >(
   core.store,
@@ -98,11 +97,11 @@ const LoginSelectorTesteranto = new ReduxToolkitTesteranto<
       new ReduxToolkitThen(`there should not be an email error`, (state) =>
         assert.notEqual(state.error, 'invalidEmail')
       ),
-    ThePasswordIs: (password: string) =>
+    ThePasswordIs: (password) =>
       new ReduxToolkitThen(`the password is "${password}"`, (state) =>
         assert.equal(state.password, password)
       ),
-    ThePasswordIsNot: (password: string) =>
+    ThePasswordIsNot: (password) =>
       new ReduxToolkitThen(`the password is not "${password}"`, (state) => {
         assert.notEqual(state.password, password);
       }),

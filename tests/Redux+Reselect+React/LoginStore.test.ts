@@ -38,13 +38,13 @@ const LoginStoreTesteranto = new ReduxTesteranto<
     TheEmailIsNot: (email: string) => ReduxThen<IStore, IState>,
     ThereIsAnEmailError: () => ReduxThen<IStore, IState>,
     ThereIsNotAnEmailError: () => ReduxThen<IStore, IState>,
-    ThePasswordIs: (password) => ReduxThen<IStore, IState>,
-    ThePasswordIsNot: (password) => ReduxThen<IStore, IState>,
+    ThePasswordIs: (password: string) => ReduxThen<IStore, IState>,
+    ThePasswordIsNot: (password: string) => ReduxThen<IStore, IState>,
   }
 >(
   core.store,
   {
-    Default: (a, b, givens) =>
+    Default: (feature, store, givens) =>
       new ReduxSuite<IStore, IState>('testing the redux store of the login page', core.store, givens)
   },
   {
@@ -81,11 +81,11 @@ const LoginStoreTesteranto = new ReduxTesteranto<
       new ReduxThen(`there should not be an email error`, (state) =>
         assert.notEqual(state.error, 'invalidEmail')
       ),
-    ThePasswordIs: (password: string) =>
+    ThePasswordIs: (password) =>
       new ReduxThen(`the password is "${password}"`, (state) =>
         assert.equal(state.password, password)
       ),
-    ThePasswordIsNot: (password: string) =>
+    ThePasswordIsNot: (password) =>
       new ReduxThen(`the password is not "${password}"`, (state) => {
         assert.notEqual(state.password, password);
       })

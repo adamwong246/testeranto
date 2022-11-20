@@ -18,7 +18,7 @@ const LoginPageTesteranto = new ReactTesteranto<
   },
   {
     AnEmptyState: (feature: string, whens: ReactWhen[], thens: ReactThen[]) => ReactGiven
-    AStateWithEmail: (feature: string, whens: ReactWhen[], thens: ReactThen[]) => ReactGiven
+    // AStateWithEmail: (feature: string, whens: ReactWhen[], thens: ReactThen[]) => ReactGiven
   },
   {
     TheLoginIsSubmitted: () => ReactWhen,
@@ -44,17 +44,7 @@ const LoginPageTesteranto = new ReactTesteranto<
   },
   {
     AnEmptyState: (feature, whens, thens, x) =>
-      // new ReactGiven(`the state is empty`, whens, thens, feature, core.app.getInitialState()),
       new ReactGiven(`the state is empty`, whens, thens, feature),
-
-    AStateWithEmail: (feature, whens, thens, email) =>
-      // new ReactGiven(`the email is already ${email}`, whens, thens, feature, {
-      //   ...core.app.getInitialState(),
-      //   email,
-      //   password: "",
-      // },
-      // )
-      new ReactGiven(`the email is already ${email}`, whens, thens, feature)
   },
   {
     TheLoginIsSubmitted: () => new ReactWhen(`the login form is submitted`, (component) => component.root.findByType('button').props.onClick()),
@@ -128,7 +118,7 @@ export default () => {
       Then.TheEmailIs("adam@email.com"),
     ]),
 
-    Given.AStateWithEmail(`Set the email by initial state, then set the email normally, and then check some other stuff`, [
+    Given.AnEmptyState(`Set the email by initial state, then set the email normally, and then check some other stuff`, [
       When.TheEmailIsSetTo("adam@email.com"),
       When.ThePasswordIsSetTo("secret"),
     ], [
@@ -141,7 +131,7 @@ export default () => {
     Given.AnEmptyState("Don't show an email error just because the email does not validate", [
       When.TheEmailIsSetTo("adam")
     ], [
-      Then.ThereIsNotAnEmailError()
+      Then.ThereIsNotAnEmailError(),
     ]),
 
     Given.AnEmptyState("Do show an email error after submitting", [
