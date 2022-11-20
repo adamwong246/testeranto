@@ -1,0 +1,19 @@
+import  "./email" exposing validateEmail
+import  "../tests/Redux+Reselect+React/app" exposing IStoreState
+import  "../tests/Redux+Reselect+React/LoginPage" exposing ILoginPageError
+
+
+-- checkForErrors: IStoreState -> ILoginPageError
+
+checkForErrors: IStoreState -> string
+checkForErrors storeState =
+    if (validateEmail(storeState.email)) then
+        "invalidEmail"
+    else
+        if (storeState.password != "password" && storeState.email != "adam@email.com") then
+            "credentialFail"
+        else 
+            "no_error"
+}
+
+exposing  checkForErrors 

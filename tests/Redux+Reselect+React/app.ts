@@ -38,15 +38,15 @@ const selectRoot = ((storeState: IStoreState) => {
   return storeState;
 });
 
-const checkForErrors = (storeState: IStoreState): ILoginPageError => {
-  if (validateEmail(storeState.email)) {
-    return 'invalidEmail'
-  }
-  if (storeState.password !== "password" && storeState.email !== "adam@email.com") {
-    return 'credentialFail';
-  }
-  return 'no_error';
-};
+// const checkForErrors = (storeState: IStoreState): ILoginPageError => {
+//   if (validateEmail(storeState.email)) {
+//     return 'invalidEmail'
+//   }
+//   if (storeState.password !== "password" && storeState.email !== "adam@email.com") {
+//     return 'credentialFail';
+//   }
+//   return 'no_error';
+// };
 
 const loginPageSelection = createSelector<[(storeState: IStoreState) => IStoreState], ILoginPageSelection>([selectRoot], (root: IStoreState) => {
   return {

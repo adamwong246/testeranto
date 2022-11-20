@@ -1,6 +1,6 @@
 import * as isTruthy from "./simple_union";
 
-import * as emailTest from "./emailTest";
+import { validateEmailValidEmailTest, validateEmailInvalidEmailTest } from "./emailTest";
 
-export { isTruthy };
-export { emailTest };
+export { validateEmailValidEmailTest };
+export { validateEmailInvalidEmailTest };

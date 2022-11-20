@@ -2,7 +2,12 @@ import assert exposing (equal)
 
 import "./email" exposing (validateEmail)
 
-validateEmailTest: List number string
-validateEmailTest = [(number -> equal (validateEmail "address@email.com") true)]
+validateEmailValidEmailTest: () -> void
+validateEmailValidEmailTest =
+    equal (validateEmail "address@email.com") true
 
-exposing (validateEmailTest) 
+validateEmailInvalidEmailTest: () -> void
+validateEmailInvalidEmailTest =
+    equal (validateEmail "malformedAddress") false
+
+exposing(validateEmailValidEmailTest, validateEmailInvalidEmailTest)

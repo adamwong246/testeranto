@@ -1,4 +1,4 @@
 import "./simple_union" as isTruthy
-import "./emailTest" as emailTest
+import "./emailTest" exposing validateEmailValidEmailTest, validateEmailInvalidEmailTest
 
-exposing(isTruthy emailTest)
+exposing(validateEmailValidEmailTest, validateEmailInvalidEmailTest)
