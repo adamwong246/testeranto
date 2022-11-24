@@ -5,33 +5,39 @@ import ReduxTesterantoFactory from "./redux.test";
 import { IStoreState as IState } from "./app";
 
 import { loginApp } from "./app";
-import { ISimpleThens } from "../../src/shared";
+import { ITypeDeTuple } from "../../src/shared";
 
 type IStore = Store<IState, AnyAction>;
 
-type ITS = {
+type ISuites = {
+  Default: string;
+};
+
+type IGivens = {
+  AnEmptyState: [never];
+  AStateWithEmail: [string];
+};
+
+type IWhens = {
+  TheLoginIsSubmitted: [never];
+  TheEmailIsSetTo: [string];
+  ThePasswordIsSetTo: [string];
+};
+
+type IThens = {
   TheEmailIs: [string];
   TheEmailIsNot: [string];
   ThePasswordIs: [string];
-  ThePasswordIsNot: [string];
+  ThePasswordIsNot: [number, boolean];
 };
 
 const LoginStoreTesteranto = ReduxTesterantoFactory<
   IStore,
   IState,
-  {
-    Default: "default";
-  },
-  {
-    AnEmptyState: [never];
-    AStateWithEmail: [string];
-  },
-  {
-    TheLoginIsSubmitted: [never];
-    TheEmailIsSetTo: [string];
-    ThePasswordIsSetTo: [string];
-  },
-  ITS
+  ISuites,
+  IGivens,
+  IWhens,
+  IThens
 >(loginApp.reducer, (Suite, Given, When, Then) => {
   return [
     Suite.Default("idk", [
@@ -52,44 +58,44 @@ const LoginStoreTesteranto = ReduxTesterantoFactory<
       ),
 
       Given.AnEmptyState("OMG a feature!", [], [Then.TheEmailIs("")]),
+
+      // Given.AStateWithEmail(),
     ]),
   ];
 });
 
+const suites: Record<keyof ISuites, string> = {
+  Default: "some default Suite",
+};
+
+const givens: ITypeDeTuple<IGivens, IState> = {
+  /* @ts-ignore:next-line */
+  AnEmptyState: () => {}, //loginApp.getInitialState(),
+  /* @ts-ignore:next-line */
+  AStateWithEmail: (email) => {
+    return { ...loginApp.getInitialState(), email };
+  },
+};
+
+const thens: ITypeDeTuple<IThens, IState> = {
+  TheEmailIs: (email) => (selection) => assert.equal(selection.email, email),
+
+  TheEmailIsNot: (email) => (selection) =>
+    assert.notEqual(selection.email, email),
+  ThePasswordIs: function (k: IState, b): void {
+    throw new Error("Function not implemented.");
+  },
+  ThePasswordIsNot: function (k: IState, any_0: number, any_1: boolean): void {
+    throw new Error("Function not implemented.");
+  },
+};
+const whens: ITypeDeTuple<IWhens, IState> = {
+  TheLoginIsSubmitted: () => [loginApp.actions.signIn],
+  TheEmailIsSetTo: (email) => [loginApp.actions.setEmail, email],
+  ThePasswordIsSetTo: (password) => [loginApp.actions.setPassword, password],
+};
+
 export default () => {
-  const thens: ISimpleThens<ITS, IState> = {
-    TheEmailIs: (email) => (selection) => assert.equal(selection.email, email),
-
-    TheEmailIsNot: (email) => (selection) =>
-      assert.notEqual(selection.email, email),
-    ThePasswordIs: function (k: IState, ...any: any[]): void {
-      throw new Error("Function not implemented.");
-    },
-    ThePasswordIsNot: function (k: IState, ...any: any[]): void {
-      throw new Error("Function not implemented.");
-    },
-  };
-
-  LoginStoreTesteranto.run(
-    {
-      Default: "a default suite",
-    },
-    {
-      /* @ts-ignore:next-line */
-      AnEmptyState: () => loginApp.getInitialState(),
-      /* @ts-ignore:next-line */
-      AStateWithEmail: (email) => {
-        return { ...loginApp.getInitialState(), email };
-      },
-    },
-    {
-      TheLoginIsSubmitted: () => [loginApp.actions.signIn],
-      TheEmailIsSetTo: (email) => [loginApp.actions.setEmail, email],
-      ThePasswordIsSetTo: (password) => [
-        loginApp.actions.setPassword,
-        password,
-      ],
-    },
-    thens
-  );
+  /* @ts-ignore:next-line */
+  LoginStoreTesteranto.run(suites, givens, whens, thens);
 };

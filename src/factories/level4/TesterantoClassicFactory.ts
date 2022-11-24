@@ -4,14 +4,14 @@ import {
   ClassySuite,
   ClassyWhen,
   ClassyThen,
-} from "./classical/level2/TesterantoClasses";
-import { TesterantoClassic } from "./classical/level3/TesteranoClassic";
+} from "../../classical/level2/TesterantoClasses";
+import { TesterantoClassic } from "../../classical/level3/TesteranoClassic";
 import {
   ISimpleGivens,
   ISimpleSuites,
-  ISimpleThens,
+  ITypeDeTuple,
   ISimpleWhens,
-} from "./shared";
+} from "../../shared";
 
 type IZ<T, Klass> = {
   [K in keyof T]: (
@@ -47,7 +47,7 @@ export const TesterantoClassicFactory = <Klass, ISS, IGS, IWS, ITS>(
       suites: ISimpleSuites<ISS>,
       givens: ISimpleGivens<IGS, Klass>,
       whens: ISimpleWhens<IWS, Klass>,
-      thens: ISimpleThens<ITS, Klass>
+      thens: ITypeDeTuple<ITS, Klass>
     ) => {
       const classyGivens = mapValues(givens as any, (z) => {
         return (whens, thens, ...xtras) => {

@@ -9,7 +9,9 @@ const selector = core.select.loginPageSelection;
 const actions = core.app.actions;
 const store = core.store;
 
-export type ILoginPageError = 'invalidEmail' | `credentialFail` | 'no_error';
+export const noError = 'no_error';
+
+export type ILoginPageError = 'invalidEmail' | `credentialFail` | typeof noError;
 
 export type ILoginPageSelection = {
   password: string;

@@ -1,12 +1,10 @@
-// This file is for testing implementations of types supplied by the "react" package with the "react-test-renderer" package
-
 import assert from "assert";
 
-import ReactTesterantofactory from "./react.test";
+import ReactTesteranto from "./react.test";
 
 import LoginPage from "./LoginPage";
 
-const LoginPageTesteranto = ReactTesterantofactory<
+const LoginPageTesteranto = ReactTesteranto<
   typeof LoginPage,
   {
     Default: "default";
@@ -18,6 +16,7 @@ const LoginPageTesteranto = ReactTesterantofactory<
     TheLoginIsSubmitted;
     TheEmailIsSetTo: [string];
     ThePasswordIsSetTo: [string];
+    ThePasswordIsNotSetTo: [string];
   },
   {
     TheEmailIs: [string];

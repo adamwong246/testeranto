@@ -1,6 +1,3 @@
-// This file is for testing an implementation of types supplied by the "redux-toolkit" package.
-// It's purpose is to test reselect Selectors backed by a redux Store
-
 import assert from "assert";
 import { Store, AnyAction, Reducer, Selector } from "@reduxjs/toolkit";
 
@@ -9,8 +6,8 @@ import ReduxToolkitTesterantoFactory from "./reduxToolkit.test";
 import { IStoreState as IState } from "./app";
 import app from "./app";
 import { ILoginPageSelection } from "./LoginPage";
-const core = app();
 
+const core = app();
 const selector = core.select.loginPageSelection;
 const actions = core.app.actions;
 const reducer = core.app.reducer;
@@ -22,35 +19,50 @@ export type ISubject = {
   selector: Selector;
 };
 
+type ISuites = {
+  Default: string;
+};
+
+type IGivens = {
+  AnEmptyState: [];
+  AStateWithEmail: string;
+};
+
+type IWhens = {
+  TheLoginIsSubmitted;
+  TheEmailIsSetTo: [string];
+  ThePasswordIsSetTo: [string];
+};
+
+type IThens = {
+  TheEmailIs: [string];
+  TheEmailIsNot: [string];
+  ThePasswordIs: [string];
+  ThePasswordIsNot: [string];
+  ThereIsNotAnEmailError;
+  TheSubmitButtonShouldBeEnabled;
+  TheSubmitButtonShouldNotBeEnabled;
+  ThereIsAnEmailError;
+};
+
 const LoginSelectorTesteranto = ReduxToolkitTesterantoFactory<
   IStore,
   ILoginPageSelection,
   IState,
-  {
-    Default: "default";
-  },
-  {
-    AnEmptyState;
-    AStateWithEmail: [string];
-  },
-  {
-    TheLoginIsSubmitted;
-    TheEmailIsSetTo: [string];
-    ThePasswordIsSetTo: [string];
-  },
-  {
-    TheEmailIs: [string];
-    TheEmailIsNot: [string];
-    ThePasswordIs: [string];
-    ThePasswordIsNot: [string];
-    ThereIsNotAnEmailError;
-    TheSubmitButtonShouldBeEnabled;
-    TheSubmitButtonShouldNotBeEnabled;
-    ThereIsAnEmailError;
-  }
+  ISuites,
+  IGivens,
+  IWhens,
+  IThens
 >({ reducer, selector }, (Suite, Given, When, Then) => {
   return [
     Suite.Default("idk", [
+      Given.AStateWithEmail(
+        "something",
+        [When.TheEmailIsSetTo("bob"), Then.TheEmailIs("bob")],
+        [When.TheEmailIsSetTo("foo"), Then.TheEmailIs("foo")],
+        3
+      ),
+
       Given.AnEmptyState(
         `Set the email and check the email`,
         [When.TheEmailIsSetTo("adam@email.com")],
@@ -135,9 +147,20 @@ export default () => {
       Default: "a default suite",
     },
     {
-      AnEmptyState: () => core.app.getInitialState(),
+      AnEmptyState: () => {
+        return {
+          password: "",
+          email: "",
+          error: "no_error",
+        };
+      },
+      /* @ts-ignore:next-line */
       AStateWithEmail: (email) => {
-        return { ...core.app.getInitialState(), email };
+        return {
+          password: "",
+          email,
+          error: "no_error",
+        };
       },
     },
     {

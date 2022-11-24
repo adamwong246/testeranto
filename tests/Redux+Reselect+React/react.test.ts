@@ -8,7 +8,29 @@ import {
   Testeranto,
 } from "./../../index";
 
-export default <IComponent, ISS, IGS, IWS, ITS>(store, tests) => {
+export default <IComponent, ISS, IGS, IWS, ITS>(
+  store,
+  tests: (
+    Suite: Record<
+      keyof ISS,
+      (
+        name: string,
+        givens: BaseGiven<any, any, any>[]
+      ) => BaseSuite<any, any, any>
+    >,
+    Given: Record<
+      keyof IGS,
+      (
+        featureReduxTook: string,
+        whens: BaseWhen<any>[],
+        thens: BaseThen<any>[],
+        ...xtraArgsForGiven: any //{ [ISuite in keyof IGS]: IGS[ISuite] }[]
+      ) => BaseGiven<any, any, any>
+    >,
+    When: Record<keyof IWS, any>,
+    Then: Record<keyof ITS, any>
+  ) => BaseSuite<any, any, any>[]
+) => {
   return Testeranto<
     ReactTestRenderer,
     ReactTestRenderer,

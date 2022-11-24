@@ -1,5 +1,5 @@
-import { TesterantoBasic } from "./base/level1/TesterantoBasic";
-import { ISimpleGivens, ISimpleWhens, ISimpleThens } from "./shared";
+import { TesterantoBasic } from "../../base/level1/TesterantoBasic";
+import { ISimpleGivens, ISimpleWhens, ITypeDeTuple } from "../../shared";
 
 export const TesterantoBasicFactory = <
   IState,
@@ -22,7 +22,7 @@ export const TesterantoBasicFactory = <
   suites: any,
   givens: ISimpleGivens<IGS, IStore>[],
   whens: ISimpleWhens<IWS, IState>,
-  thens: ISimpleThens<ITS, ISelection>
+  thens: ITypeDeTuple<ITS, ISelection>
 ): IBasicTesteranto => {
   return testerano;
 };

@@ -17,6 +17,7 @@ export type ISimpleWhens<IThens, Klass> = {
   ) => any;
 };
 
-export type ISimpleThens<T, Klass> = {
-  [K in keyof T]: (k: Klass, ...any) => void;
+export type ITypeDeTuple<T, Klass> = {
+  /* @ts-ignore:next-line */
+  [K in keyof T]: (k: Klass, ...any: T[K]) => void;
 };

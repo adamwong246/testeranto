@@ -10,7 +10,7 @@ import {
   ISimpleWhens,
   ISimpleSuites,
   ISimpleGivens,
-  ISimpleThens,
+  ITypeDeTuple,
 } from "./shared";
 
 export const Testeranto = <
@@ -51,11 +51,14 @@ export const Testeranto = <
   CThen
 ) => {
   return {
+    thens: (ts): ITypeDeTuple<ITS, IState> => {
+      return ts;
+    },
     run: (
       suites: ISimpleSuites<ISS>,
       givens: ISimpleGivens<IGS, IState>,
       whens: ISimpleWhens<IWS, IStore>,
-      thens: ISimpleThens<ITS, ISelection>
+      thens: ITypeDeTuple<ITS, ISelection>
     ) => {
       const classySuites = mapValues(suites as any, (suite) => {
         return (somestring, givens) => {

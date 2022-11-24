@@ -7,7 +7,7 @@ import {
   Testeranto,
 } from "../../index";
 
-type ISimpleThens<IThens> = {
+type ISimpleThensForRedux<IThens> = {
   [IThen in keyof IThens]: (
     /* @ts-ignore:next-line */
     ...xtras: IThens[IThen]
@@ -23,7 +23,26 @@ export default <
   ITS
 >(
   store,
-  tests
+  tests: (
+    Suite: Record<
+      keyof ISS,
+      (
+        name: string,
+        givens: BaseGiven<any, IStore, IStore>[]
+      ) => BaseSuite<any, IStore, IStore>
+    >,
+    Given: Record<
+      keyof IGS,
+      (
+        featureReduxTook: string,
+        whens: BaseWhen<IStore>[],
+        thens: BaseThen<IStore>[],
+        ...xtraArgsForGiven: any //{ [ISuite in keyof IGS]: IGS[ISuite] }[]
+      ) => BaseGiven<any, IStore, IStore>
+    >,
+    When: Record<keyof IWS, any>,
+    Then: Record<keyof ITS, any>
+  ) => BaseSuite<any, IStore, IStore>[]
 ) =>
   Testeranto<
     IStore,
@@ -34,7 +53,7 @@ export default <
     IGS,
     IWS,
     ITS,
-    ISimpleThens<ITS>
+    ISimpleThensForRedux<ITS>
   >(
     store,
     tests,
