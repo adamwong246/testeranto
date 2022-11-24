@@ -4,16 +4,16 @@ import {
   BaseSuite,
   BaseWhen,
   BaseThen,
-} from "../level0/AbstractClasses";
-import { TesterantoBasic } from "../level1/TesterantoBasic";
+} from "./base/level0/AbstractClasses";
+import { TesterantoBasic } from "./base/level1/TesterantoBasic";
 import {
   ISimpleWhens,
   ISimpleSuites,
   ISimpleGivens,
   ISimpleThens,
-} from "../shared";
+} from "./shared";
 
-export const TesterantoMetaFactory = <
+export const Testeranto = <
   IStore,
   ISubject,
   ISelection,

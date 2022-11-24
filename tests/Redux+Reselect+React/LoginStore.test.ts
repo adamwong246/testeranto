@@ -5,8 +5,16 @@ import ReduxTesterantoFactory from "./redux.test";
 import { IStoreState as IState } from "./app";
 
 import { loginApp } from "./app";
+import { ISimpleThens } from "../../src/shared";
 
 type IStore = Store<IState, AnyAction>;
+
+type ITS = {
+  TheEmailIs: [string];
+  TheEmailIsNot: [string];
+  ThePasswordIs: [string];
+  ThePasswordIsNot: [string];
+};
 
 const LoginStoreTesteranto = ReduxTesterantoFactory<
   IStore,
@@ -23,35 +31,45 @@ const LoginStoreTesteranto = ReduxTesterantoFactory<
     TheEmailIsSetTo: [string];
     ThePasswordIsSetTo: [string];
   },
-  {
-    TheEmailIs: [string];
-    TheEmailIsNot: [string];
-  }
+  ITS
 >(loginApp.reducer, (Suite, Given, When, Then) => {
   return [
     Suite.Default("idk", [
       Given.AnEmptyState(
-        "xyz",
+        "a feature",
         [When.TheEmailIsSetTo("adam@email.com")],
         [Then.TheEmailIs("adam@email.com")]
       ),
       Given.AnEmptyState(
-        "xyz",
+        "another feature",
         [When.TheEmailIsSetTo("hello")],
         [Then.TheEmailIsNot("adam@email.com")]
       ),
       Given.AnEmptyState(
-        "xyz",
+        "yet another feature",
         [When.TheEmailIsSetTo("hello"), When.TheEmailIsSetTo("aloha")],
         [Then.TheEmailIs("aloha")]
       ),
 
-      Given.AnEmptyState("xyz", [], [Then.TheEmailIs("")]),
+      Given.AnEmptyState("OMG a feature!", [], [Then.TheEmailIs("")]),
     ]),
   ];
 });
 
 export default () => {
+  const thens: ISimpleThens<ITS, IState> = {
+    TheEmailIs: (email) => (selection) => assert.equal(selection.email, email),
+
+    TheEmailIsNot: (email) => (selection) =>
+      assert.notEqual(selection.email, email),
+    ThePasswordIs: function (k: IState, ...any: any[]): void {
+      throw new Error("Function not implemented.");
+    },
+    ThePasswordIsNot: function (k: IState, ...any: any[]): void {
+      throw new Error("Function not implemented.");
+    },
+  };
+
   LoginStoreTesteranto.run(
     {
       Default: "a default suite",
@@ -72,12 +90,6 @@ export default () => {
         password,
       ],
     },
-    {
-      TheEmailIs: (email) => (selection) =>
-        assert.equal(selection.email, email),
-
-      TheEmailIsNot: (email) => (selection) =>
-        assert.notEqual(selection.email, email),
-    }
+    thens
   );
 };

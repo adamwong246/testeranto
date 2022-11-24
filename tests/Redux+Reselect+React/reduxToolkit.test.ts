@@ -13,7 +13,7 @@ import {
   BaseSuite,
   BaseThen,
   BaseWhen,
-  TesterantoMetaFactory,
+  Testeranto,
 } from "../../index";
 
 export type IActionCreate =
@@ -51,7 +51,7 @@ export default <
   store,
   tests
 ) =>
-  TesterantoMetaFactory<
+  Testeranto<
     IStore,
     ISubjectReducerAndSelector,
     ISelection,

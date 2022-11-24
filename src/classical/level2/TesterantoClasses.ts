@@ -3,7 +3,7 @@ import {
   BaseGiven,
   BaseWhen,
   BaseThen,
-} from "../level0/AbstractClasses";
+} from "../../base/level0/AbstractClasses";
 
 export class ClassySuite<Klass> extends BaseSuite<Klass, Klass, Klass> {}
 

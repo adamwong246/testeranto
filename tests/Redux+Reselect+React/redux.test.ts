@@ -4,7 +4,7 @@ import {
   BaseSuite,
   BaseThen,
   BaseWhen,
-  TesterantoMetaFactory,
+  Testeranto,
 } from "../../index";
 
 type ISimpleThens<IThens> = {
@@ -25,7 +25,7 @@ export default <
   store,
   tests
 ) =>
-  TesterantoMetaFactory<
+  Testeranto<
     IStore,
     IStore,
     IState,

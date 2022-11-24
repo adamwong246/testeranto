@@ -4,14 +4,14 @@ import {
   ClassySuite,
   ClassyWhen,
   ClassyThen,
-} from "../level1/TesterantoClassy";
-import { TesterantoClassic } from "../level2/TesteranoClassic";
+} from "./classical/level2/TesterantoClasses";
+import { TesterantoClassic } from "./classical/level3/TesteranoClassic";
 import {
   ISimpleGivens,
   ISimpleSuites,
   ISimpleThens,
   ISimpleWhens,
-} from "../shared";
+} from "./shared";
 
 type IZ<T, Klass> = {
   [K in keyof T]: (

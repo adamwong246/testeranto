@@ -1,6 +1,6 @@
-export * from "./src/level0/AbstractClasses";
-export * from "./src/level3/TesterantoClassicFactory";
-export * from "./src/level4/TesterantoMetaFactory";
+export * from "./src/base/level0/AbstractClasses";
+export * from "./src/TesterantoClassicFactory";
+export * from "./src/Testeranto";
 
 export default () => {
   console.log("hello testerano");

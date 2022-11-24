@@ -1,5 +1,5 @@
-import { TesterantoBasic } from "../level1/TesterantoBasic";
-import { ISimpleGivens, ISimpleWhens, ISimpleThens } from "../shared";
+import { TesterantoBasic } from "./base/level1/TesterantoBasic";
+import { ISimpleGivens, ISimpleWhens, ISimpleThens } from "./shared";
 
 export const TesterantoBasicFactory = <
   IState,

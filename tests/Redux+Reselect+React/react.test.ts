@@ -5,11 +5,11 @@ import {
   BaseGiven,
   BaseWhen,
   BaseThen,
-  TesterantoMetaFactory,
+  Testeranto,
 } from "./../../index";
 
 export default <IComponent, ISS, IGS, IWS, ITS>(store, tests) => {
-  return TesterantoMetaFactory<
+  return Testeranto<
     ReactTestRenderer,
     ReactTestRenderer,
     ReactTestRenderer,

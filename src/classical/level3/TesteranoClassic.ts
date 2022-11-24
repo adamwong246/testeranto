@@ -3,7 +3,7 @@ import {
   ClassyThen,
   ClassyGiven,
   ClassySuite,
-} from "../level1/TesterantoClassy";
+} from "./../level2/TesterantoClasses";
 
 export class TesterantoClassic<
   Klass,
