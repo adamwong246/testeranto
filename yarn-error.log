@@ -1,8 +1,8 @@
 Arguments: 
-  /Users/adam/.nvm/versions/node/v18.9.0/bin/node /Users/adam/.nvm/versions/node/v18.9.0/bin/yarn publish
+  /Users/adam/.nvm/versions/node/v18.9.0/bin/node /Users/adam/.nvm/versions/node/v18.9.0/bin/yarn add chai @typesc/chai
 
 PATH: 
-  /Users/adam/.yarn/bin:/Users/adam/.config/yarn/global/node_modules/.bin:/Users/adam/.nvm/versions/node/v18.9.0/bin:/Users/adam/.nvm/versions/node/v18.9.0/bin:/Users/adam/.yarn/bin:/Users/adam/.config/yarn/global/node_modules/.bin:/Users/adam/.nvm/versions/node/v18.9.0/bin:/Users/adam/.nvm/versions/node/v18.9.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/adam/.yarn/bin:/Users/adam/.config/yarn/global/node_modules/.bin:/Users/adam/.nvm/versions/node/v18.9.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/adam/.cargo/bin:/Users/adam/.rvm/bin:/Users/adam/.rvm/bin:/Users/adam/.rvm/bin
+  /Users/adam/.yarn/bin:/Users/adam/.config/yarn/global/node_modules/.bin:/Users/adam/.nvm/versions/node/v18.9.0/bin:/Users/adam/.nvm/versions/node/v18.9.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/adam/.yarn/bin:/Users/adam/.config/yarn/global/node_modules/.bin:/Users/adam/.nvm/versions/node/v18.9.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/adam/.cargo/bin:/Users/adam/.rvm/bin:/Users/adam/.rvm/bin
 
 Yarn version: 
   1.22.19
@@ -14,7 +14,7 @@ Platform:
   darwin arm64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/-/user/org.couchdb.user:adamwong246: failed to authenticate: Could not authenticate adamwong246: bad password
+  Error: https://registry.yarnpkg.com/@typesc%2fchai: Not found
       at params.callback [as _callback] (/Users/adam/.nvm/versions/node/v18.9.0/lib/node_modules/yarn/lib/cli.js:66145:18)
       at self.callback (/Users/adam/.nvm/versions/node/v18.9.0/lib/node_modules/yarn/lib/cli.js:140890:22)
       at Request.emit (node:events:513:28)
@@ -30,11 +30,17 @@ npm manifest:
   {
     "name": "testeranto.ts",
     "description": "teeny tiny tightly-typed typescript tests",
-    "version": "0.0.3",
+    "version": "0.0.7",
     "main": "index.js",
-    "repository": "git@github.com:adamwong246/super-parakeet.git",
+    "repository": "git@github.com:adamwong246/testeranto.ts.git",
+    "homepage": "https://github.com/adamwong246/testeranto.ts",
     "author": "adam wong <adamwong246@gmail.com>",
     "license": "MIT",
+    "keywords": [
+      "typescript",
+      "test",
+      "cucumber"
+    ],
     "scripts": {
       "test": "yarn webpack -c test.webpack.config.js && node ./dist/test.bundle.js",
       "prepublish": "tsc"

@@ -1,4 +1,4 @@
-import { createSelector, createSlice, createStore, Store, combineReducers, ActionCreatorWithPayload, ActionCreatorWithoutPayload } from "@reduxjs/toolkit";
+import { createSelector, createSlice, createStore } from "@reduxjs/toolkit";
 
 import { ILoginPageError, ILoginPageSelection } from "./LoginPage";
 
@@ -8,16 +8,19 @@ export type IStoreState = {
   error: ILoginPageError;
 };
 
-export const loginApp = createSlice<IStoreState, {
-  setPassword: (s: IStoreState, b) => void,
-  setEmail: (s: IStoreState, b) => void,
-  signIn: (s: IStoreState) => void,
-}>({
+export const loginApp = createSlice<
+  IStoreState,
+  {
+    setPassword: (s: IStoreState, b) => void;
+    setEmail: (s: IStoreState, b) => void;
+    signIn: (s: IStoreState) => void;
+  }
+>({
   name: "login app",
   initialState: {
     password: "",
     email: "",
-    error: 'no_error'
+    error: "no_error",
   },
   reducers: {
     setPassword: (state, action) => {
@@ -27,14 +30,14 @@ export const loginApp = createSlice<IStoreState, {
       state.email = action.payload;
     },
     signIn: (state) => {
-      state.error = checkForErrors(state)
-    }
+      state.error = checkForErrors(state);
+    },
   },
 });
 
-const selectRoot = ((storeState: IStoreState) => {
+const selectRoot = (storeState: IStoreState) => {
   return storeState;
-});
+};
 
 // https://stackoverflow.com/a/46181/614612
 const validateEmail = (email) => {
@@ -45,33 +48,35 @@ const validateEmail = (email) => {
 
 const checkForErrors = (storeState: IStoreState): ILoginPageError => {
   if (!validateEmail(storeState.email)) {
-    return 'invalidEmail'
+    return "invalidEmail";
   }
-  if (storeState.password !== "password" && storeState.email !== "adam@email.com") {
-    return 'credentialFail';
+  if (
+    storeState.password !== "password" &&
+    storeState.email !== "adam@email.com"
+  ) {
+    return "credentialFail";
   }
-  return 'no_error';
+  return "no_error";
 };
 
-const loginPageSelection = createSelector<[(storeState: IStoreState) => IStoreState], ILoginPageSelection>([selectRoot], (root: IStoreState) => {
+const loginPageSelection = createSelector<
+  [(storeState: IStoreState) => IStoreState],
+  ILoginPageSelection
+>([selectRoot], (root: IStoreState) => {
   return {
     ...root,
-    disableSubmit: root.email == "" || root.password == ""
-  }
+    disableSubmit: root.email == "" || root.password == "",
+  };
 });
 
-
-
 export default () => {
-
   const store = createStore(loginApp.reducer);
 
   return {
     app: loginApp,
     select: {
-      loginPageSelection
+      loginPageSelection,
     },
-    store
-  }
+    store,
+  };
 };
-

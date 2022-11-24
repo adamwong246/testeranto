@@ -1,5 +1,4 @@
 class Rectangle {
-
   height: number;
   width: number;
 
@@ -29,8 +28,8 @@ class Rectangle {
   }
 
   circumference(): number {
-    return (this.width * 2) + (this.height * 2);
+    return this.width * 2 + this.height * 2;
   }
-};
+}
 
-export default Rectangle; 
+export default Rectangle;

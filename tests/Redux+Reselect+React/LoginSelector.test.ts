@@ -4,17 +4,11 @@
 import assert from "assert";
 import { Store, AnyAction, Reducer, Selector } from "@reduxjs/toolkit";
 
-import {
-  Given as ReduxToolkitGiven,
-  When as ReduxToolkitWhen,
-  Then as ReduxToolkitThen,
-  Suite as ReduxToolkitSuite,
-  Testeranto as ReduxToolkitTesteranto
-} from "./reduxToolkit.test";
+import ReduxToolkitTesterantoFactory from "./reduxToolkit.test";
 
-import { ILoginPageSelection } from "./LoginPage";
 import { IStoreState as IState } from "./app";
 import app from "./app";
+import { ILoginPageSelection } from "./LoginPage";
 const core = app();
 
 const selector = core.select.loginPageSelection;
@@ -24,175 +18,153 @@ const reducer = core.app.reducer;
 type IStore = Store<IState, AnyAction>;
 
 export type ISubject = {
-  reducer: Reducer<IState, AnyAction>,
-  selector: Selector
+  reducer: Reducer<IState, AnyAction>;
+  selector: Selector;
 };
 
-const LoginSelectorTesteranto = new ReduxToolkitTesteranto<
-  ISubject,
+const LoginSelectorTesteranto = ReduxToolkitTesterantoFactory<
   IStore,
   ILoginPageSelection,
+  IState,
   {
-    Default: (givens: ReduxToolkitGiven<IStore, IState>[]) =>
-      ReduxToolkitSuite<ISubject, IStore, ILoginPageSelection>
+    Default: "default";
   },
   {
-    AnEmptyState: (feature: string, whens: ReduxToolkitWhen[], thens: ReduxToolkitThen<ILoginPageSelection>[]) =>
-      ReduxToolkitGiven<IStore, IState>,
-    AStateWithEmail: (feature: string, whens: ReduxToolkitWhen[], thens: ReduxToolkitThen<ILoginPageSelection>[]) =>
-      ReduxToolkitGiven<IStore, IState>,
+    AnEmptyState;
+    AStateWithEmail: [string];
   },
   {
-    TheLoginIsSubmitted: () => ReduxToolkitWhen,
-    TheEmailIsSetTo: (email: string) => ReduxToolkitWhen,
-    ThePasswordIsSetTo: (password: string) => ReduxToolkitWhen,
+    TheLoginIsSubmitted;
+    TheEmailIsSetTo: [string];
+    ThePasswordIsSetTo: [string];
   },
   {
-    TheEmailIs: (email: string) => ReduxToolkitThen<ILoginPageSelection>,
-    TheEmailIsNot: (email: string) => ReduxToolkitThen<ILoginPageSelection>,
-    ThereIsAnEmailError: () => ReduxToolkitThen<ILoginPageSelection>,
-    ThereIsNotAnEmailError: () => ReduxToolkitThen<ILoginPageSelection>,
-    ThePasswordIs: (password: string) => ReduxToolkitThen<ILoginPageSelection>,
-    ThePasswordIsNot: (password: string) => ReduxToolkitThen<ILoginPageSelection>,
-    TheSubmitButtonShouldBeEnabled: () => ReduxToolkitThen<ILoginPageSelection>,
-    TheSubmitButtonShouldNotBeEnabled: () => ReduxToolkitThen<ILoginPageSelection>,
+    TheEmailIs: [string];
+    TheEmailIsNot: [string];
+    ThePasswordIs: [string];
+    ThePasswordIsNot: [string];
+    ThereIsNotAnEmailError;
+    TheSubmitButtonShouldBeEnabled;
+    TheSubmitButtonShouldNotBeEnabled;
+    ThereIsAnEmailError;
   }
->(
-  core.store,
-  {
-    Default: (a, subject, givens) =>
-      new ReduxToolkitSuite('testing the redux store of the login page', subject, givens)
-  },
-  {
-    AnEmptyState: (feature, whens, thens, x) =>
-      new ReduxToolkitGiven(`the state is empty`, whens, thens, feature, core.app.getInitialState()),
+>({ reducer, selector }, (Suite, Given, When, Then) => {
+  return [
+    Suite.Default("idk", [
+      Given.AnEmptyState(
+        `Set the email and check the email`,
+        [When.TheEmailIsSetTo("adam@email.com")],
+        [Then.TheEmailIs("adam@email.com")]
+      ),
 
-    AStateWithEmail: (feature, whens, thens, email) =>
-      new ReduxToolkitGiven(`the email is already ${email}`, whens, thens, feature, {
-        ...core.app.getInitialState(),
-        email,
-        password: "",
-      },
-      )
-  },
-  {
-    TheLoginIsSubmitted: () => new ReduxToolkitWhen(`the login form is submitted`, actions.signIn),
-    TheEmailIsSetTo: (email) => new ReduxToolkitWhen(`the email is set to "${email}"`, actions.setEmail, email),
-    ThePasswordIsSetTo: (password) => new ReduxToolkitWhen(`the password is set to "${password}"`, actions.setPassword, password),
-  },
-  {
-    TheEmailIs: (email) =>
-      new ReduxToolkitThen(`the email is "${email}"`, (state) =>
-        assert.equal(state.email, email)
+      Given.AStateWithEmail(
+        `Set the email by initial state, then set the email normally, and then check some other stuff`,
+        [
+          When.TheEmailIsSetTo("adam@email.com"),
+          When.ThePasswordIsSetTo("secret"),
+        ],
+        [
+          Then.TheEmailIsNot("wade@rpc"),
+          Then.ThePasswordIs("secret"),
+          Then.ThePasswordIsNot("idk"),
+        ],
+        "wade@rpc"
       ),
-    TheEmailIsNot: (email) =>
-      new ReduxToolkitThen(`the email is not "${email}"`, (state) =>
-        assert.notEqual(state.email, email)
-      ),
-    ThereIsAnEmailError: () =>
-      new ReduxToolkitThen(`there should be an email error`, (state) =>
-        assert.equal(state.error, 'invalidEmail')
-      ),
-    ThereIsNotAnEmailError: () =>
-      new ReduxToolkitThen(`there should not be an email error`, (state) =>
-        assert.notEqual(state.error, 'invalidEmail')
-      ),
-    ThePasswordIs: (password) =>
-      new ReduxToolkitThen(`the password is "${password}"`, (state) =>
-        assert.equal(state.password, password)
-      ),
-    ThePasswordIsNot: (password) =>
-      new ReduxToolkitThen(`the password is not "${password}"`, (state) => {
-        assert.notEqual(state.password, password);
-      }),
 
-    TheSubmitButtonShouldBeEnabled: () =>
-      new ReduxToolkitThen(`the submit button should be enabled`, (selection) =>
-        assert(!selection.disableSubmit)
+      Given.AnEmptyState(
+        "Don't show an email error just because the email does not validate",
+        [When.TheEmailIsSetTo("adam")],
+        [Then.ThereIsNotAnEmailError()]
       ),
-    TheSubmitButtonShouldNotBeEnabled: () =>
-      new ReduxToolkitThen(`the submit button should not be enabled`, (selection) =>
-        assert(selection.disableSubmit)
-      )
-  }
-)
 
-const LoginSelectorSuite = LoginSelectorTesteranto.Suites().Default;
-const Given = LoginSelectorTesteranto.Given();
-const When = LoginSelectorTesteranto.When();
-const Then = LoginSelectorTesteranto.Then();
+      Given.AnEmptyState(
+        `Put some data in both fields to enable the submit button. Email does not need to be valid!`,
+        [When.TheEmailIsSetTo("adam"), When.ThePasswordIsSetTo("adam")],
+        [Then.TheSubmitButtonShouldBeEnabled()]
+      ),
+
+      Given.AnEmptyState(
+        `Don't enable the submit button if password is blank`,
+        [When.TheEmailIsSetTo("adam"), When.ThePasswordIsSetTo("")],
+        [Then.TheSubmitButtonShouldNotBeEnabled()]
+      ),
+
+      Given.AnEmptyState(
+        `Don't enable the submit button if email is blank`,
+        [When.TheEmailIsSetTo(""), When.ThePasswordIsSetTo("something")],
+        [Then.TheSubmitButtonShouldNotBeEnabled()]
+      ),
+
+      Given.AnEmptyState(
+        `Don't enable the submit button if you haven't entered a password`,
+        [When.TheEmailIsSetTo("adam")],
+        [Then.TheSubmitButtonShouldNotBeEnabled()]
+      ),
+
+      Given.AnEmptyState(
+        `Don't enable the submit button if you haven't entered an email`,
+        [When.ThePasswordIsSetTo("something")],
+        [Then.TheSubmitButtonShouldNotBeEnabled()]
+      ),
+
+      Given.AnEmptyState(
+        `Check for email validations only after you've pressed the submit button 1/2`,
+        [When.TheEmailIsSetTo("adam")],
+        [
+          Then.ThereIsNotAnEmailError(),
+          Then.TheSubmitButtonShouldNotBeEnabled(),
+        ]
+      ),
+
+      Given.AnEmptyState(
+        `Check for email validations only after you've pressed the submit button 2/2`,
+        [
+          When.TheEmailIsSetTo("adam"),
+          When.ThePasswordIsSetTo("adam"),
+          When.TheLoginIsSubmitted(),
+        ],
+        [Then.ThereIsAnEmailError(), Then.TheSubmitButtonShouldBeEnabled()]
+      ),
+    ]),
+  ];
+});
 
 export default () => {
-  LoginSelectorSuite('testing redux store + reselect selectors', { reducer, selector }, [
-    Given.AnEmptyState(`Set the email and check the email`, [
-      When.TheEmailIsSetTo("adam@email.com"),
-    ], [
-      Then.TheEmailIs("adam@email.com")
-    ]),
-
-    Given.AStateWithEmail(`Set the email by initial state, then set the email normally, and then check some other stuff`, [
-      When.TheEmailIsSetTo("adam@email.com"),
-      When.ThePasswordIsSetTo("secret"),
-    ], [
-      Then.TheEmailIsNot("wade@rpc"),
-      Then.ThePasswordIs("secret"),
-      Then.ThePasswordIsNot("idk"),
-    ], "wade@rpc"),
-
-    Given.AnEmptyState("Don't show an email error just because the email does not validate", [
-      When.TheEmailIsSetTo("adam")
-    ], [
-      Then.ThereIsNotAnEmailError()
-    ]),
-
-    Given.AnEmptyState(`Put some data in both fields to enable the submit button. Email does not need to be valid!`, [
-      When.TheEmailIsSetTo("adam"),
-      When.ThePasswordIsSetTo("adam"),
-    ], [
-      Then.TheSubmitButtonShouldBeEnabled()
-    ]),
-
-    Given.AnEmptyState(`Don't enable the submit button if password is blank`, [
-      When.TheEmailIsSetTo("adam"),
-      When.ThePasswordIsSetTo(""),
-    ], [
-      Then.TheSubmitButtonShouldNotBeEnabled()
-    ]),
-
-    Given.AnEmptyState(`Don't enable the submit button if email is blank`, [
-      When.TheEmailIsSetTo(""),
-      When.ThePasswordIsSetTo("something"),
-    ], [
-      Then.TheSubmitButtonShouldNotBeEnabled()
-    ]),
-
-    Given.AnEmptyState(`Don't enable the submit button if you haven't entered a password`, [
-      When.TheEmailIsSetTo("adam")
-    ], [
-      Then.TheSubmitButtonShouldNotBeEnabled()
-    ]),
-
-    Given.AnEmptyState(`Don't enable the submit button if you haven't entered an email`, [
-      When.ThePasswordIsSetTo("something"),
-    ], [
-      Then.TheSubmitButtonShouldNotBeEnabled()
-    ]),
-
-    Given.AnEmptyState(`Check for email validations only after you've pressed the submit button 1/2`, [
-      When.TheEmailIsSetTo("adam"),
-    ], [
-      Then.ThereIsNotAnEmailError(),
-      Then.TheSubmitButtonShouldNotBeEnabled()
-    ]),
-
-    Given.AnEmptyState(`Check for email validations only after you've pressed the submit button 2/2`, [
-      When.TheEmailIsSetTo("adam"),
-      When.ThePasswordIsSetTo("adam"),
-      When.TheLoginIsSubmitted()
-    ], [
-      Then.ThereIsAnEmailError(),
-      Then.TheSubmitButtonShouldBeEnabled()
-    ]),
-
-  ]).test();
-}
+  LoginSelectorTesteranto.run(
+    {
+      Default: "a default suite",
+    },
+    {
+      AnEmptyState: () => core.app.getInitialState(),
+      AStateWithEmail: (email) => {
+        return { ...core.app.getInitialState(), email };
+      },
+    },
+    {
+      TheLoginIsSubmitted: () => [core.app.actions.signIn],
+      TheEmailIsSetTo: (email) => [core.app.actions.setEmail, email],
+      ThePasswordIsSetTo: (password) => [
+        core.app.actions.setPassword,
+        password,
+      ],
+    },
+    {
+      TheEmailIs: (email) => (selection) =>
+        assert.equal(selection.email, email),
+      TheEmailIsNot: (email) => (selection) =>
+        assert.notEqual(selection.email, email),
+      ThePasswordIs: (password) => (selection) =>
+        assert.equal(selection.password, password),
+      ThePasswordIsNot: (password) => (selection) =>
+        assert.notEqual(selection.password, password),
+      ThereIsNotAnEmailError: () => (selection) =>
+        assert.notEqual(selection.error, "invalidEmail"),
+      TheSubmitButtonShouldBeEnabled: () => (selection) =>
+        assert(!selection.disableSubmit),
+      TheSubmitButtonShouldNotBeEnabled: () => (selection) =>
+        assert(selection.disableSubmit),
+      ThereIsAnEmailError: () => (selection) =>
+        assert.equal(selection.error, "invalidEmail"),
+    }
+  );
+};

@@ -1,81 +1,66 @@
-import renderer, { act, ReactTestRenderer } from 'react-test-renderer';
+import renderer, { act, ReactTestRenderer } from "react-test-renderer";
 
-import { BaseSuite, BaseGiven, BaseWhen, BaseThen, TesterantoBasic } from '../../index';
+import {
+  BaseSuite,
+  BaseGiven,
+  BaseWhen,
+  BaseThen,
+  TesterantoMetaFactory,
+} from "../../index";
 
-export class ReactSuite extends
-  BaseSuite<
-    () => JSX.Element,  // the thing we test
-    ReactTestRenderer,  // the thing we perform actions against
-    ReactTestRenderer   // the thing we make assertions against
-  > {
-}
-
-export class ReactGiven extends
-  BaseGiven<
-    () => JSX.Element,
+export default <IComponent, ISS, IGS, IWS, ITS>(store, tests) => {
+  return TesterantoMetaFactory<
     ReactTestRenderer,
-    ReactTestRenderer
-  >{
+    ReactTestRenderer,
+    ReactTestRenderer,
+    ReactTestRenderer,
+    ISS,
+    IGS,
+    IWS,
+    ITS,
+    {
+      [IThen in keyof ITS]: (
+        // arg0: ReactTestRenderer,
+        /* @ts-ignore:next-line */
+        ...xtrasQW: IThens[IThen]
+      ) => any;
+    }
+  >(
+    store,
+    tests,
 
-  givenThat(subject: () => JSX.Element) {
-    let component;
-    act(() => {
-      component = renderer.create(subject());
-    });
-    return component;
-  }
-}
+    class ReactSuite extends BaseSuite<
+      () => JSX.Element, // the thing we test
+      ReactTestRenderer, // the thing we perform actions against
+      ReactTestRenderer // the thing we make assertions against
+    > {},
 
-export class ReactWhen extends BaseWhen<ReactTestRenderer> {
-  andWhen(store: renderer.ReactTestRenderer) {
-    act(() => this.actioner(store));
-  }
-};
+    class ReactGiven extends BaseGiven<
+      () => JSX.Element,
+      ReactTestRenderer,
+      ReactTestRenderer
+    > {
+      givenThat(subject: () => JSX.Element) {
+        let component;
+        act(() => {
+          component = renderer.create(subject());
+        });
+        return component;
+      }
+    },
 
-export class ReactThen extends BaseThen<ReactTestRenderer>{
-  butThen(component: renderer.ReactTestRenderer): renderer.ReactTestRenderer {
-    return component;
-  }
-};
+    class ReactWhen extends BaseWhen<ReactTestRenderer> {
+      andWhen(store: renderer.ReactTestRenderer, x) {
+        return act(() => this.actioner(store));
+      }
+    },
 
-export class ReactTesteranto<
-  SuiteExtensions,
-  GivenExtensions,
-  WhenExtensions,
-  ThenExtensions
-> extends TesterantoBasic<
-  () => JSX.Element,
-  any,
-  any,
-  any,
-  any,
-  any,
-  any
-> {
-
-  constructor(
-    suitesOverrides: Record<(keyof SuiteExtensions), (
-      sometext: string,
-      subject: () => JSX.Element,
-      givens: ReactGiven[],
-      ...xtraArgs
-    ) => ReactSuite>,
-    givenOverides: Record<(keyof GivenExtensions), (
-      feature: string,
-      whens: ReactWhen[],
-      thens: ReactThen[],
-      ...xtraArgs
-    ) => ReactGiven>,
-    whenOverides: Record<(keyof WhenExtensions), (c: any) => ReactWhen>,
-    thenOverides: Record<(keyof ThenExtensions), (d: any) => ReactThen>,
-  ) {
-    super(
-      renderer,
-      suitesOverrides,
-      givenOverides,
-      whenOverides,
-      thenOverides
-    )
-  }
-
+    class ReactThen extends BaseThen<ReactTestRenderer> {
+      butThen(
+        component: renderer.ReactTestRenderer
+      ): renderer.ReactTestRenderer {
+        return component;
+      }
+    }
+  );
 };

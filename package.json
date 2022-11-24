@@ -14,10 +14,16 @@
   ],
   "scripts": {
     "test": "yarn webpack -c test.webpack.config.js && node ./dist/test.bundle.js",
+    "testrun": "node --inspect ./dist/test.bundle.js",
     "prepublish": "tsc"
   },
   "types": "index.d.ts",
-  "dependencies": {},
+  "dependencies": {
+    "@types/chai": "^4.3.4",
+    "@types/lodash": "^4.14.189",
+    "chai": "^4.3.7",
+    "lodash": "^4.17.21"
+  },
   "devDependencies": {
     "@babel/core": "^7.19.6",
     "@reduxjs/toolkit": "^1.8.6",
