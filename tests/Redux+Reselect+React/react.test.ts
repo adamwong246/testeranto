@@ -6,7 +6,7 @@ import {
   BaseWhen,
   BaseThen,
   TesterantoMetaFactory,
-} from "../../index";
+} from "./../../index";
 
 export default <IComponent, ISS, IGS, IWS, ITS>(store, tests) => {
   return TesterantoMetaFactory<
