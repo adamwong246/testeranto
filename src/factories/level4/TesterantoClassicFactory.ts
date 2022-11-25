@@ -118,8 +118,8 @@ export const TesterantoClassicFactory = <Klass, ISS, IGS, IWS, ITS>(
         testerano.Given(),
         testerano.When(),
         testerano.Then()
-      ).forEach((test) => {
-        test.test(thing);
+      ).forEach(async (test) => {
+        await test.run(thing);
       });
     },
   };

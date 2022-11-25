@@ -7,13 +7,11 @@ export abstract class BaseSuite<ISubject, IStore, ISelection> {
     this.givens = givens;
   }
 
-  test(subject) {
+  async run(subject) {
     console.log("\nSuite:", this.name);
-    this.givens.forEach(
-      (givenThat: BaseGiven<ISubject, IStore, ISelection>) => {
-        givenThat.test(subject);
-      }
-    );
+    for (const givenThat of this.givens) {
+      await givenThat.give(subject);
+    }
   }
 }
 
@@ -37,17 +35,24 @@ export abstract class BaseGiven<ISubject, IStore, ISelection> {
 
   abstract givenThat(subject: ISubject): IStore;
 
-  test(subject: ISubject) {
+  async teardown(subject: any) {
+    return subject;
+  }
+
+  async give(subject: ISubject) {
     console.log(`\n - ${this.feature} - \n\nGiven: ${this.name}`);
-    const store = this.givenThat(subject);
+    const store = await this.givenThat(subject);
 
-    this.whens.forEach((whenStep) => {
-      whenStep.test(store);
-    });
+    for (const whenStep of this.whens) {
+      await whenStep.test(store);
+    }
 
-    this.thens.forEach((thenStep) => {
-      thenStep.test(store);
-    });
+    for (const thenStep of this.thens) {
+      await thenStep.test(store);
+    }
+
+    await this.teardown(store);
+    return;
   }
 }
 
@@ -61,9 +66,9 @@ export abstract class BaseWhen<IStore> {
 
   abstract andWhen(store: IStore, actioner: (x) => any): any;
 
-  test(store: IStore): IStore {
+  async test(store: IStore) {
     console.log(" When:", this.name);
-    return this.andWhen(store, this.actioner);
+    return await this.andWhen(store, this.actioner);
   }
 }
 
@@ -78,8 +83,8 @@ export abstract class BaseThen<ISelection> {
 
   abstract butThen(store: any): ISelection;
 
-  test(store: any) {
+  async test(store: any) {
     console.log(" Then:", this.name);
-    return this.callback(this.butThen(store));
+    return this.callback(await this.butThen(store));
   }
 }

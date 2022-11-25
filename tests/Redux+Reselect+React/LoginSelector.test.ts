@@ -141,8 +141,8 @@ const LoginSelectorTesteranto = ReduxToolkitTesterantoFactory<
   ];
 });
 
-export default () => {
-  LoginSelectorTesteranto.run(
+export default async () => {
+  await LoginSelectorTesteranto.run(
     {
       Default: "a default suite",
     },

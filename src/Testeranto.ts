@@ -54,7 +54,7 @@ export const Testeranto = <
     thens: (ts): ITypeDeTuple<ITS, IState> => {
       return ts;
     },
-    run: (
+    run: async (
       suites: ISimpleSuites<ISS>,
       givens: ISimpleGivens<IGS, IState>,
       whens: ISimpleWhens<IWS, IStore>,
@@ -155,15 +155,16 @@ export const Testeranto = <
         }
         /* @ts-ignore:next-line */
       >(store, classySuites, classyGivens, classyWhens, classyThens);
-      tests(
+      for (const suite of tests(
         testerano.Suites(),
         testerano.Given(),
         testerano.When(),
         /* @ts-ignore:next-line */
         testerano.Then()
-      ).forEach((suite) => {
-        suite.test(store);
-      });
+      )) {
+        console.log("mark1");
+        return await suite.run(store);
+      }
     },
   };
 };

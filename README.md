@@ -4,6 +4,8 @@
 
 ### "It's like cucumber, but for typescript."
 
+Testeranto.ts a Typescript testing framework, akin to mocha, jasmine or jest. Unlike those projects, testeranto focuses on _specifing stateful logic with strong type bindings using a gherkin syntax_.
+
 ---
 
 ```ts
@@ -164,10 +166,6 @@ Given: width of 1 and height of 1
  Then: circumference: 14
 ```
 
-### about
-
-Testeranto.ts a Typescript testing framework, akin to mocha, jasmine or jest. Unlike those projects, testeranto focuses on _specifing stateful logic with strong type bindings using a gherkin syntax_.
-
 ### the good parts
 
 Testeranto can test any statefull typescript, from individual classes to entire services, with the given-when-then format that we all know and love, and all without any dependencies- testeranto.ts is comprised entirely of <700 lines of typescript.
@@ -184,3 +182,4 @@ You will need to implement your own test infrastructure. Depending on your needs
   - [Testing a Redux store](/tests/Redux+Reselect+React/LoginStore.test.ts)
   - [Testing a Reselect Selector based on a Redux store](/tests/Redux+Reselect+React/LoginSelector.test.ts)
   - [Testing a React Component with Reselect Selector based on a Redux store](/tests/Redux+Reselect+React/LoginPage.test.ts)
+  - [Testing an http server](/tests/httpServer/server.test.ts)

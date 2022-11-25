@@ -1,11 +1,18 @@
 import Rectangle from "./Rectangle/Rectangle.test";
-Rectangle();
 import LoginSelector from "./Redux+Reselect+React/LoginSelector.test";
-LoginSelector();
 import LoginStore from "./Redux+Reselect+React/LoginStore.test";
-LoginStore();
 import LoginPage from "./Redux+Reselect+React/LoginPage.test";
-LoginPage();
+import HttpServerTests from "./httpServer/server.test";
 
-// import Classical from "./ClassicalReact/ClassicalComponent.test";
-// Classical();
+export {};
+
+Promise.all([
+  LoginStore(),
+  LoginSelector(),
+  Rectangle(),
+  LoginPage(),
+  HttpServerTests(),
+]).then(() => {
+  console.log("all done");
+  process.exit(0);
+});

@@ -67,8 +67,8 @@ const LoginPageTesteranto = ReactTesteranto<
   ];
 });
 
-export default () => {
-  LoginPageTesteranto.run(
+export default async () =>
+  await LoginPageTesteranto.run(
     {
       Default: "a default suite",
     },
@@ -134,4 +134,3 @@ export default () => {
         ),
     }
   );
-};

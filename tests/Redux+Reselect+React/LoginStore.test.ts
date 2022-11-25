@@ -95,7 +95,7 @@ const whens: ITypeDeTuple<IWhens, IState> = {
   ThePasswordIsSetTo: (password) => [loginApp.actions.setPassword, password],
 };
 
-export default () => {
+export default async () => {
   /* @ts-ignore:next-line */
-  LoginStoreTesteranto.run(suites, givens, whens, thens);
+  await LoginStoreTesteranto.run(suites, givens, whens, thens);
 };
