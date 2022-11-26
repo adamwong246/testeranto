@@ -47,7 +47,9 @@ export const TesterantoClassicFactory = <Klass, ISS, IGS, IWS, ITS>(
       suites: ISimpleSuites<ISS>,
       givens: ISimpleGivens<IGS, Klass>,
       whens: ISimpleWhens<IWS, Klass>,
-      thens: ITypeDeTuple<ITS, Klass>
+      thens: ITypeDeTuple<ITS, Klass>,
+      checks: any, //ISimpleGivens<IGS, Klass>
+      thats: any // ITypeDeTuple<ITS, Klass>
     ) => {
       const classyGivens = mapValues(givens as any, (z) => {
         return (whens, thens, ...xtras) => {

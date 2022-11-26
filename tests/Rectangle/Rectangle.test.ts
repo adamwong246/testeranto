@@ -112,5 +112,7 @@ export default () =>
       ): void {
         assert.equal(rectangle.circumference(), circumference);
       },
-    }
+    },
+    {},
+    {}
   );

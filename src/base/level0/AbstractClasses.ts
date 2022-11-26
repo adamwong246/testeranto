@@ -1,16 +1,27 @@
 export abstract class BaseSuite<ISubject, IStore, ISelection> {
   name: string;
   givens: BaseGiven<ISubject, IStore, ISelection>[];
+  checks: BaseCheck<ISubject, IStore, ISelection>[];
 
-  constructor(name: string, givens: BaseGiven<ISubject, IStore, ISelection>[]) {
+  constructor(
+    name: string,
+    givens: BaseGiven<ISubject, IStore, ISelection>[],
+    checks: BaseCheck<ISubject, IStore, ISelection>[]
+  ) {
+    console.log("constructor", name, checks);
     this.name = name;
     this.givens = givens;
+    this.checks = checks;
   }
 
   async run(subject) {
     console.log("\nSuite:", this.name);
     for (const givenThat of this.givens) {
       await givenThat.give(subject);
+    }
+
+    for (const checkThat of this.checks) {
+      await checkThat.check(subject);
     }
   }
 }
@@ -86,5 +97,49 @@ export abstract class BaseThen<ISelection> {
   async test(store: any) {
     console.log(" Then:", this.name);
     return this.callback(await this.butThen(store));
+  }
+}
+
+export abstract class BaseCheck<ISubject, IStore, ISelection> {
+  feature: string;
+  thats: BaseThat<IStore>[];
+
+  constructor(feature: string, thats: BaseThat<IStore>[]) {
+    this.feature = feature;
+    this.thats = thats;
+  }
+
+  abstract checkThat(subject: ISubject): IStore;
+
+  async teardown(subject: any) {
+    return subject;
+  }
+
+  async check(subject: ISubject) {
+    console.log(`\n - \nCheck: ${this.feature}`);
+    const store = await this.checkThat(subject);
+
+    for (const thatStep of this.thats) {
+      await thatStep.that(store);
+    }
+    await this.teardown(store);
+    return;
+  }
+}
+
+export abstract class BaseThat<ISelection> {
+  name: string;
+  callback: (storeState: ISelection) => any;
+
+  constructor(name: string, callback: (val: ISelection) => any) {
+    this.name = name;
+    this.callback = callback;
+  }
+
+  abstract forThat(store: any): ISelection;
+
+  async that(store: any) {
+    console.log(" That:", this.name);
+    return this.callback(await this.forThat(store));
   }
 }

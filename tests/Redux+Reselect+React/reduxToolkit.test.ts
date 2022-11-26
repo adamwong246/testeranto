@@ -9,8 +9,10 @@ import {
 import { createStore } from "redux";
 
 import {
+  BaseCheck,
   BaseGiven,
   BaseSuite,
+  BaseThat,
   BaseThen,
   BaseWhen,
   Testeranto,
@@ -47,7 +49,9 @@ export default <
   ISS,
   IGS,
   IWS,
-  ITS
+  ITS,
+  ICheckExtensions,
+  IThatExtensions
 >(
   store,
   tests: (
@@ -68,7 +72,18 @@ export default <
       ) => BaseGiven<any, IStore, IStore>
     >,
     When: Record<keyof IWS, any>,
-    Then: Record<keyof ITS, any>
+    Then: Record<keyof ITS, any>,
+
+    Check: Record<
+      keyof ICheckExtensions,
+      (
+        feature: string,
+        thats: BaseThat<IStore>[],
+        ...xtraArgsForGiven: any //{ [ISuite in keyof IGS]: IGS[ISuite] }[]
+      ) => BaseCheck<any, IStore, IStore>
+    >,
+
+    That: Record<keyof IThatExtensions, any>
   ) => BaseSuite<any, IStore, IStore>[]
 ) =>
   Testeranto<
@@ -80,7 +95,9 @@ export default <
     IGS,
     IWS,
     ITS,
-    ISimplerThens<ITS, IState>
+    ISimplerThens<ITS, IState>,
+    ICheckExtensions,
+    IThatExtensions
   >(
     store,
 
@@ -126,6 +143,7 @@ export default <
         };
       }
     },
+
     class When extends BaseWhen<any> {
       payload?: any;
 
@@ -146,6 +164,44 @@ export default <
       }
 
       butThen(subject: ISubjectReducerAndSelectorAnStore): ISelected {
+        return subject.selector(subject.store.getState());
+      }
+    },
+    ///////////////////////////////////////////
+    class Check<IStore extends Store, ISelected> extends BaseCheck<
+      ISubjectReducerAndSelector,
+      IStore,
+      ISelected
+    > {
+      initialValues: any; //PreloadedState<IState>;
+
+      constructor(feature: string, thats: BaseThat<any>[], initialValues: any) {
+        super(feature, thats);
+        this.initialValues = initialValues;
+      }
+
+      /* @ts-ignore:next-line */
+      checkThat(
+        subject: ISubjectReducerAndSelector
+      ): ISubjectReducerAndSelectorAnStore {
+        const store = createStore<Reducer<any, AnyAction>, any, any, any>(
+          subject.reducer,
+          this.initialValues
+        );
+
+        return {
+          ...subject,
+          store,
+        };
+      }
+    },
+
+    class That<ISelected> extends BaseThat<ISelected> {
+      constructor(name: string, callback: (val: ISelected) => any) {
+        super(name, callback);
+      }
+
+      forThat(subject: ISubjectReducerAndSelectorAnStore): ISelected {
         return subject.selector(subject.store.getState());
       }
     }

@@ -1,7 +1,9 @@
 import { createStore, Store, AnyAction, PreloadedState } from "redux";
 import {
+  BaseCheck,
   BaseGiven,
   BaseSuite,
+  BaseThat,
   BaseThen,
   BaseWhen,
   Testeranto,
@@ -20,7 +22,9 @@ export default <
   ISS,
   IGS,
   IWS,
-  ITS
+  ITS,
+  ICheckExtensions,
+  IThatExtensions
 >(
   store,
   tests: (
@@ -28,7 +32,8 @@ export default <
       keyof ISS,
       (
         name: string,
-        givens: BaseGiven<any, IStore, IStore>[]
+        givens: BaseGiven<any, IStore, IStore>[],
+        checks: BaseCheck<any, any, any>[]
       ) => BaseSuite<any, IStore, IStore>
     >,
     Given: Record<
@@ -41,7 +46,18 @@ export default <
       ) => BaseGiven<any, IStore, IStore>
     >,
     When: Record<keyof IWS, any>,
-    Then: Record<keyof ITS, any>
+    Then: Record<keyof ITS, any>,
+
+    Check: Record<
+      keyof ICheckExtensions,
+      (
+        feature: string,
+        thats: BaseThat<IStore>[],
+        ...xtraArgsForGiven: any //{ [ISuite in keyof IGS]: IGS[ISuite] }[]
+      ) => BaseCheck<any, IStore, IStore>
+    >,
+
+    That: Record<keyof IThatExtensions, any>
   ) => BaseSuite<any, IStore, IStore>[]
 ) =>
   Testeranto<
@@ -53,9 +69,12 @@ export default <
     IGS,
     IWS,
     ITS,
-    ISimpleThensForRedux<ITS>
+    ISimpleThensForRedux<ITS>,
+    ICheckExtensions,
+    IThatExtensions
   >(
     store,
+    /* @ts-ignore:next-line */
     tests,
     class ReduxSuite<
       IStore extends Store<IState, AnyAction>,
@@ -101,6 +120,37 @@ export default <
       IState
     > extends BaseThen<IState> {
       butThen(store: IStore): IState {
+        return store.getState();
+      }
+    },
+
+    /////////////////////////////////////////////////////////////////////////
+
+    class ReduxCheck<
+      IStore extends Store<IState, AnyAction>,
+      IState
+    > extends BaseCheck<IStore, IStore, IState> {
+      constructor(
+        feature: string,
+        thats: BaseThat<any>[],
+        initialValues: PreloadedState<any>
+      ) {
+        super(feature, thats);
+        this.initialValues = initialValues;
+      }
+
+      initialValues: PreloadedState<any>;
+
+      checkThat(subject) {
+        return createStore<any, any, any, any>(subject, this.initialValues);
+      }
+    },
+
+    class ReduxThat<
+      IStore extends Store<IState, AnyAction>,
+      IState
+    > extends BaseThat<IState> {
+      forThat(store: IStore): IState {
         return store.getState();
       }
     }

@@ -4,7 +4,7 @@
 
 ### "It's like cucumber, but for typescript."
 
-Testeranto.ts a Typescript testing framework, akin to mocha, jasmine or jest. Unlike those projects, testeranto focuses on _specifing stateful logic with strong type bindings using a gherkin syntax_.
+Testeranto.ts a Typescript testing framework, akin to mocha, jasmine or jest. Unlike those projects, testeranto focuses on _specifing stateful logic with strong type bindings using an extended gherkin syntax_.
 
 ---
 
@@ -168,7 +168,9 @@ Given: width of 1 and height of 1
 
 ### the good parts
 
-Testeranto can test any statefull typescript, from individual classes to entire services, with the given-when-then format that we all know and love, and all without any dependencies- testeranto.ts is comprised entirely of <700 lines of typescript.
+Testeranto can test any statefull typescript, from individual classes to entire services, with the common given-when-then lingua-franca.
+
+Testeranto.ts is comprised entirely of <1000 lines of typescript, with only 1 dependency (lodash).
 
 ### the bad parts
 

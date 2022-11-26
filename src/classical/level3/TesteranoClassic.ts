@@ -3,6 +3,7 @@ import {
   ClassyThen,
   ClassyGiven,
   ClassySuite,
+  ClassyCheck,
 } from "./../level2/TesterantoClasses";
 
 export class TesterantoClassic<
@@ -53,8 +54,8 @@ export class TesterantoClassic<
   > {
     /* @ts-ignore:next-line */
     return {
-      Default: (givenz: ClassyGiven<Klass>[]) =>
-        new ClassySuite<Klass>("Default constructor", givenz),
+      Default: (givenz: ClassyGiven<Klass>[], checkz: ClassyCheck<Klass>[]) =>
+        new ClassySuite<Klass>("Default constructor", givenz, checkz),
     };
   }
 

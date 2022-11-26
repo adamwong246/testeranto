@@ -2,8 +2,10 @@ import { assert } from "chai";
 import http, { get, request } from "http";
 
 import {
+  BaseCheck,
   BaseGiven,
   BaseSuite,
+  BaseThat,
   BaseThen,
   BaseWhen,
   Testeranto,
@@ -17,14 +19,15 @@ type ISimpleThensForRedux<IThens> = {
   ) => any;
 };
 
-export default <ISS, IGS, IWS, ITS>(
+export default <ISS, IGS, IWS, ITS, ICheckExtensions, IThatExtensions>(
   serverfactory: () => http.Server,
   tests: (
     Suite: Record<
       keyof ISS,
       (
         name: string,
-        givens: BaseGiven<any, any, any>[]
+        givens: BaseGiven<any, any, any>[],
+        checks: BaseCheck<any, any, any>[]
       ) => BaseSuite<any, any, any>
     >,
     Given: Record<
@@ -37,7 +40,18 @@ export default <ISS, IGS, IWS, ITS>(
       ) => BaseGiven<any, any, any>
     >,
     When: Record<keyof IWS, any>,
-    Then: Record<keyof ITS, any>
+    Then: Record<keyof ITS, any>,
+
+    Check: Record<
+      keyof ICheckExtensions,
+      (
+        feature: string,
+        thats: BaseThat<any>[],
+        ...xtraArgsForGiven: any //{ [ISuite in keyof IGS]: IGS[ISuite] }[]
+      ) => BaseCheck<any, any, any>
+    >,
+
+    That: Record<keyof IThatExtensions, any>
   ) => BaseSuite<any, any, any>[]
 ) => {
   return Testeranto<
@@ -49,7 +63,9 @@ export default <ISS, IGS, IWS, ITS>(
     IGS,
     IWS,
     ITS,
-    ISimpleThensForRedux<ITS>
+    ISimpleThensForRedux<ITS>,
+    ICheckExtensions,
+    IThatExtensions
   >(
     serverfactory,
     tests,
@@ -97,6 +113,36 @@ export default <ISS, IGS, IWS, ITS>(
         const x = await fetch(`http://localhost:3000/${path}`);
         assert.equal(await x.text(), expectation);
         return;
+      }
+    },
+
+    /////////////////////////////////////////
+    class HttpCheck extends BaseCheck<any, any, any> {
+      async teardown(server: http.Server) {
+        return new Promise((resolve, reject) => {
+          server.close(() => {
+            resolve(server);
+          });
+        });
+      }
+
+      async checkThat(subject) {
+        const server = serverFactory();
+        await server.listen(3000);
+        return server;
+      }
+    },
+
+    class HttpThat extends BaseThat<any> {
+      constructor(name: string, callback: (val: any) => any) {
+        super(name, callback);
+      }
+
+      async forThat() {
+        // const [path, expectation]: [string, string] = this.callback({});
+        // const x = await fetch(`http://localhost:3000/${path}`);
+        // assert.equal(await x.text(), expectation);
+        // return;
       }
     }
   );

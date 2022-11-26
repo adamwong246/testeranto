@@ -7,10 +7,10 @@ import HttpServerTests from "./httpServer/server.test";
 export {};
 
 Promise.all([
-  LoginStore(),
-  LoginSelector(),
-  Rectangle(),
-  LoginPage(),
+  // LoginStore(),
+  // LoginSelector(),
+  // Rectangle(),
+  // LoginPage(),
   HttpServerTests(),
 ]).then(() => {
   console.log("all done");

@@ -31,36 +31,52 @@ type IThens = {
   ThePasswordIsNot: [number, boolean];
 };
 
+type IChecks = {
+  AnEmptyState: [never];
+};
+
+type IThats = {
+  TheEmailIs: [string];
+  ICheckTheSecretCode: [string];
+  IUseTheSecretCode;
+};
+
 const LoginStoreTesteranto = ReduxTesterantoFactory<
   IStore,
   IState,
   ISuites,
   IGivens,
   IWhens,
-  IThens
->(loginApp.reducer, (Suite, Given, When, Then) => {
+  IThens,
+  IChecks,
+  IThats
+>(loginApp.reducer, (Suite, Given, When, Then, Check, That) => {
   return [
-    Suite.Default("idk", [
-      Given.AnEmptyState(
-        "a feature",
-        [When.TheEmailIsSetTo("adam@email.com")],
-        [Then.TheEmailIs("adam@email.com")]
-      ),
-      Given.AnEmptyState(
-        "another feature",
-        [When.TheEmailIsSetTo("hello")],
-        [Then.TheEmailIsNot("adam@email.com")]
-      ),
-      Given.AnEmptyState(
-        "yet another feature",
-        [When.TheEmailIsSetTo("hello"), When.TheEmailIsSetTo("aloha")],
-        [Then.TheEmailIs("aloha")]
-      ),
+    Suite.Default(
+      "idk",
+      [
+        Given.AnEmptyState(
+          "a feature",
+          [When.TheEmailIsSetTo("adam@email.com")],
+          [Then.TheEmailIs("adam@email.com")]
+        ),
+        // Given.AnEmptyState(
+        //   "another feature",
+        //   [When.TheEmailIsSetTo("hello")],
+        //   [Then.TheEmailIsNot("adam@email.com")]
+        // ),
+        // Given.AnEmptyState(
+        //   "yet another feature",
+        //   [When.TheEmailIsSetTo("hello"), When.TheEmailIsSetTo("aloha")],
+        //   [Then.TheEmailIs("aloha")]
+        // ),
 
-      Given.AnEmptyState("OMG a feature!", [], [Then.TheEmailIs("")]),
+        // Given.AnEmptyState("OMG a feature!", [], [Then.TheEmailIs("")]),
 
-      // Given.AStateWithEmail(),
-    ]),
+        // Given.AStateWithEmail(),
+      ],
+      []
+    ),
   ];
 });
 
@@ -89,13 +105,29 @@ const thens: ITypeDeTuple<IThens, IState> = {
     throw new Error("Function not implemented.");
   },
 };
+
 const whens: ITypeDeTuple<IWhens, IState> = {
   TheLoginIsSubmitted: () => [loginApp.actions.signIn],
   TheEmailIsSetTo: (email) => [loginApp.actions.setEmail, email],
   ThePasswordIsSetTo: (password) => [loginApp.actions.setPassword, password],
 };
 
+const checks: ITypeDeTuple<IChecks, IState> = {
+  /* @ts-ignore:next-line */
+  AnEmptyState: () => {}, //loginApp.getInitialState(),
+};
+
+const thats: ITypeDeTuple<IThats, IState> = {
+  TheEmailIs: (email) => (selection) => assert.equal(selection.email, email),
+  ICheckTheSecretCode: function (k: IState, any_0: string): void {
+    throw new Error("Function not implemented.");
+  },
+  IUseTheSecretCode: function (k: IState, ...any: any): void {
+    throw new Error("Function not implemented.");
+  },
+};
+
 export default async () => {
   /* @ts-ignore:next-line */
-  await LoginStoreTesteranto.run(suites, givens, whens, thens);
+  await LoginStoreTesteranto.run(suites, givens, whens, thens, checks, thats);
 };

@@ -3,6 +3,8 @@ import {
   BaseSuite,
   BaseWhen,
   BaseThen,
+  BaseThat,
+  BaseCheck,
 } from "../level0/AbstractClasses";
 
 export abstract class TesterantoBasic<
@@ -12,7 +14,9 @@ export abstract class TesterantoBasic<
   SuiteExtensions,
   GivenExtensions,
   WhenExtensions,
-  ThenExtensions
+  ThenExtensions,
+  CheckExtensions,
+  ThatExtensions
 > {
   constructorator: IStore;
 
@@ -20,7 +24,8 @@ export abstract class TesterantoBasic<
     keyof SuiteExtensions,
     (
       name: string,
-      givens: BaseGiven<ISubject, IStore, ISelection>[]
+      givens: BaseGiven<ISubject, IStore, ISelection>[],
+      checks: BaseCheck<ISubject, IStore, ISelection>[]
     ) => BaseSuite<ISubject, IStore, ISelection>
   >;
 
@@ -35,9 +40,24 @@ export abstract class TesterantoBasic<
   >;
 
   whenOverides: Record<keyof WhenExtensions, (any) => BaseWhen<IStore>>;
+
   thenOverides: Record<
     keyof ThenExtensions,
     (selection: ISelection, expectation: any) => BaseThen<ISelection>
+  >;
+
+  checkOverides: Record<
+    keyof CheckExtensions,
+    (
+      feature: string,
+      thats: BaseThat<IStore>[],
+      ...xtraArgs
+    ) => BaseCheck<ISubject, IStore, ISelection>
+  >;
+
+  thatOverides: Record<
+    keyof ThatExtensions,
+    (selection: ISelection, expectation: any) => BaseThat<ISelection>
   >;
 
   constructor(
@@ -46,7 +66,8 @@ export abstract class TesterantoBasic<
       keyof SuiteExtensions,
       (
         name: string,
-        givens: BaseGiven<ISubject, IStore, ISelection>[]
+        givens: BaseGiven<ISubject, IStore, ISelection>[],
+        checks: BaseCheck<ISubject, IStore, ISelection>[]
       ) => BaseSuite<ISubject, IStore, ISelection>
     >,
 
@@ -59,10 +80,26 @@ export abstract class TesterantoBasic<
         ...xtraArgs
       ) => BaseGiven<ISubject, IStore, ISelection>
     >,
+
     whenOverides: Record<keyof WhenExtensions, (c: any) => BaseWhen<IStore>>,
+
     thenOverides: Record<
       keyof ThenExtensions,
       (selection: ISelection, expectation: any) => BaseThen<ISelection>
+    >,
+
+    checkOverides: Record<
+      keyof CheckExtensions,
+      (
+        feature: string,
+        thats: BaseThat<IStore>[],
+        ...xtraArgs
+      ) => BaseCheck<ISubject, IStore, ISelection>
+    >,
+
+    thatOverides: Record<
+      keyof ThatExtensions,
+      (selection: ISelection, expectation: any) => BaseThat<ISelection>
     >
   ) {
     this.constructorator = cc;
@@ -70,6 +107,8 @@ export abstract class TesterantoBasic<
     this.givenOverides = givenOverides;
     this.whenOverides = whenOverides;
     this.thenOverides = thenOverides;
+    this.checkOverides = checkOverides;
+    this.thatOverides = thatOverides;
   }
 
   Suites() {
@@ -100,5 +139,23 @@ export abstract class TesterantoBasic<
     (selection: ISelection, expectation: any) => BaseThen<ISelection>
   > {
     return this.thenOverides;
+  }
+
+  Check(): Record<
+    keyof CheckExtensions,
+    (
+      feature: string,
+      thats: BaseThat<IStore>[],
+      ...xtraArgs
+    ) => BaseCheck<ISubject, IStore, ISelection>
+  > {
+    return this.checkOverides;
+  }
+
+  That(): Record<
+    keyof ThatExtensions,
+    (selection: ISelection, expectation: any) => BaseThat<ISelection>
+  > {
+    return this.thatOverides;
   }
 }
