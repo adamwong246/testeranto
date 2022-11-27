@@ -5,7 +5,7 @@ import {
   ClassyGiven,
   ClassyWhen,
   ClassyThen
-} from "../../index";
+} from "../../tests/index";
 
 type IClassicalComponentProps = { hello: string };
 type IClassicalComponentState = { count: number };

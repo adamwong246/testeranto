@@ -27,24 +27,13 @@ type IChecks = {
   AnEmptyState: [never];
 };
 
-type IThats = {
-  TheEmailIs: [string];
-  ICheckTheSecretCode: [string];
-  IUseTheSecretCode;
-};
-
-type IWorkingMemory = {
-  LastCheckedEmail;
-};
-
 const ServerTesteranto = HttpTesterantoFactory<
   ISuites,
   IGivens,
   IWhens,
   IThens,
-  IChecks,
-  IThats
->(serverFactory, (Suite, Given, When, Then, Check, That) => {
+  IChecks
+>(serverFactory, (Suite, Given, When, Then, Check) => {
   return [
     Suite.Default(
       "idk",
@@ -54,47 +43,46 @@ const ServerTesteranto = HttpTesterantoFactory<
           [],
           [Then.TheStatusIs("some great status")]
         ),
-
-        // Given.AnEmptyState(
-        //   "a feature",
-        //   [When.PostToStatus("hello")],
-        //   [Then.TheStatusIs("hello")]
-        // ),
-
-        // Given.AnEmptyState(
-        //   "a feature",
-        //   [When.PostToStatus("hello"), When.PostToStatus("aloha")],
-        //   [Then.TheStatusIs("aloha")]
-        // ),
-
-        // Given.AnEmptyState("a feature", [], [Then.TheNumberIs(0)]),
-
-        // Given.AnEmptyState(
-        //   "a feature",
-        //   [When.PostToAdd(1), When.PostToAdd(2)],
-        //   [Then.TheNumberIs(3)]
-        // ),
-
-        // Given.AnEmptyState(
-        //   "another feature",
-        //   [
-        //     // When.PostToStatus("aloha"),
-        //     When.PostToAdd(4),
-        //     // When.PostToStatus("hello"),
-        //     When.PostToAdd(3),
-        //   ],
-        //   [
-        //     // Then.TheStatusIs("hello"),
-        //     Then.TheNumberIs(7),
-        //   ]
-        // ),
+        Given.AnEmptyState(
+          "a feature",
+          [When.PostToStatus("hello")],
+          [Then.TheStatusIs("hello")]
+        ),
+        Given.AnEmptyState(
+          "a feature",
+          [When.PostToStatus("hello"), When.PostToStatus("aloha")],
+          [Then.TheStatusIs("aloha")]
+        ),
+        Given.AnEmptyState("a feature", [], [Then.TheNumberIs(0)]),
+        Given.AnEmptyState(
+          "a feature",
+          [When.PostToAdd(1), When.PostToAdd(2)],
+          [Then.TheNumberIs(3)]
+        ),
+        Given.AnEmptyState(
+          "another feature",
+          [
+            When.PostToStatus("aloha"),
+            When.PostToAdd(4),
+            When.PostToStatus("hello"),
+            When.PostToAdd(3),
+          ],
+          [Then.TheStatusIs("hello"), Then.TheNumberIs(7)]
+        ),
       ],
       [
-        Check.AnEmptyState("hello imperative style", [
-          // That.TheEmailIs("hello world"),
-          That("my code").ICheckTheSecretCode("some salt"),
-          That.IUseTheSecretCode(),
-        ]),
+        Check.AnEmptyState(
+          "hello imperative style",
+          async ({ PostToAdd }, { TheNumberIs }) => {
+            await PostToAdd(2);
+            await PostToAdd(3);
+            await TheNumberIs(5);
+            await PostToAdd(2);
+            await TheNumberIs(7);
+            await PostToAdd(3);
+            await TheNumberIs(10);
+          }
+        ),
       ]
     ),
   ];
@@ -113,7 +101,7 @@ const whens: ITypeDeTuple<IWhens, any> = {
   PostToStatus: (status: string) => () => {
     return ["put_status", status];
   },
-  PostToAdd: (number: number) => () => ["put_number", number],
+  PostToAdd: (n: number) => () => ["put_number", n],
 };
 
 const thens: ITypeDeTuple<IThens, any> = {
@@ -126,31 +114,7 @@ const checks: ITypeDeTuple<IChecks, any> = {
   AnEmptyState: () => {}, //loginApp.getInitialState(),
 };
 
-const thats: ITypeDeTuple<IThats, any> = {
-  TheEmailIs: (k: any, email: string) => {
-    return [
-      ["get_email"],
-      assert.equal,
-      email,
-      (body) => body,
-      "LastCheckedEmail",
-    ];
-  },
-  ICheckTheSecretCode: function (k: any, salt: string): void {
-    return [
-      ["get_secret"],
-      assert.equal,
-      email,
-      (body) => body,
-      "LastSecretCode",
-    ];
-  },
-  IUseTheSecretCode: function (k: any): void {
-    throw new Error("Function not implemented.");
-  },
-};
-
 export default async () => {
   /* @ts-ignore:next-line */
-  await ServerTesteranto.run(suites, givens, whens, thens, checks, thats);
+  await ServerTesteranto.run(suites, givens, whens, thens, checks);
 };

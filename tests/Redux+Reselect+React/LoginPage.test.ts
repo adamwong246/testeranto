@@ -30,16 +30,6 @@ const LoginPageTesteranto = ReactTesteranto<
   },
   {
     AnEmptyState: () => any;
-  },
-  {
-    TheEmailIs: [string];
-    TheEmailIsNot: [string];
-    ThePasswordIs: [string];
-    ThePasswordIsNot: [string];
-    ThereIsNotAnEmailError;
-    TheSubmitButtonShouldBeEnabled;
-    TheSubmitButtonShouldNotBeEnabled;
-    ThereIsAnEmailError;
   }
 >(LoginPage, (Suite, Given, When, Then) => {
   return [
@@ -155,50 +145,5 @@ export default async () =>
     {
       /* @ts-ignore:next-line */
       AnEmptyState: () => {},
-    },
-
-    // thats
-    {
-      TheEmailIs: (email) => (component) =>
-        assert.equal(
-          component.root.findByProps({ type: "email" }).props.value,
-          email
-        ),
-
-      TheEmailIsNot: (email) => (component) =>
-        assert.notEqual(
-          component.root.findByProps({ type: "email" }).props.value,
-          email
-        ),
-      ThereIsAnEmailError: () => (component) =>
-        assert.equal(
-          component.root
-            .findByProps({
-              className: "warning",
-              id: "invalid-email-warning",
-            })
-            .children.toString(),
-          "Something isn’t right. Please double check your email format"
-        ),
-      ThereIsNotAnEmailError: () => (component) =>
-        assert.notEqual(
-          component.root
-            .findByProps({
-              className: "warning",
-              id: "invalid-email-warning",
-            })
-            .children.toString(),
-          "Something isn’t right. Please double check your email format"
-        ),
-      ThePasswordIs: (password) => (component) =>
-        assert.equal(
-          component.root.findByProps({ type: "password" }).props.value,
-          password
-        ),
-      ThePasswordIsNot: (password) => (component) =>
-        assert.notEqual(
-          component.root.findByProps({ type: "password" }).props.value,
-          password
-        ),
     }
   );

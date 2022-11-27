@@ -1,3 +1,5 @@
+import { mapValues } from "lodash";
+
 export abstract class BaseSuite<ISubject, IStore, ISelection> {
   name: string;
   givens: BaseGiven<ISubject, IStore, ISelection>[];
@@ -5,10 +7,9 @@ export abstract class BaseSuite<ISubject, IStore, ISelection> {
 
   constructor(
     name: string,
-    givens: BaseGiven<ISubject, IStore, ISelection>[],
-    checks: BaseCheck<ISubject, IStore, ISelection>[]
+    givens: BaseGiven<ISubject, IStore, ISelection>[] = [],
+    checks: BaseCheck<ISubject, IStore, ISelection>[] = []
   ) {
-    console.log("constructor", name, checks);
     this.name = name;
     this.givens = givens;
     this.checks = checks;
@@ -102,11 +103,21 @@ export abstract class BaseThen<ISelection> {
 
 export abstract class BaseCheck<ISubject, IStore, ISelection> {
   feature: string;
-  thats: BaseThat<IStore>[];
+  callback: (whens, thens) => any;
+  whens: any; //Record<string, BaseWhen<any>>;
+  thens: any; //Record<string, BaseThen<any>>;
 
-  constructor(feature: string, thats: BaseThat<IStore>[]) {
+  constructor(
+    feature: string,
+    callback: (whens, thens) => any,
+    anotherString: string,
+    whens,
+    thens
+  ) {
     this.feature = feature;
-    this.thats = thats;
+    this.callback = callback;
+    this.whens = whens;
+    this.thens = thens;
   }
 
   abstract checkThat(subject: ISubject): IStore;
@@ -118,28 +129,22 @@ export abstract class BaseCheck<ISubject, IStore, ISelection> {
   async check(subject: ISubject) {
     console.log(`\n - \nCheck: ${this.feature}`);
     const store = await this.checkThat(subject);
+    await this.callback(
+      mapValues(this.whens, (w) => {
+        return async (payload) => {
+          // console.log("mark2", payload);
+          // return await w().test(payload);
+          return await w(payload).test();
+        };
+      }),
+      mapValues(this.thens, (then) => {
+        return async (payload) => {
+          return await then(payload).test();
+        };
+      })
+    );
 
-    for (const thatStep of this.thats) {
-      await thatStep.that(store);
-    }
     await this.teardown(store);
     return;
-  }
-}
-
-export abstract class BaseThat<ISelection> {
-  name: string;
-  callback: (storeState: ISelection) => any;
-
-  constructor(name: string, callback: (val: ISelection) => any) {
-    this.name = name;
-    this.callback = callback;
-  }
-
-  abstract forThat(store: any): ISelection;
-
-  async that(store: any) {
-    console.log(" That:", this.name);
-    return this.callback(await this.forThat(store));
   }
 }

@@ -12,7 +12,6 @@ import {
   BaseCheck,
   BaseGiven,
   BaseSuite,
-  BaseThat,
   BaseThen,
   BaseWhen,
   Testeranto,
@@ -50,8 +49,7 @@ export default <
   IGS,
   IWS,
   ITS,
-  ICheckExtensions,
-  IThatExtensions
+  ICheckExtensions
 >(
   store,
   tests: (
@@ -78,12 +76,11 @@ export default <
       keyof ICheckExtensions,
       (
         feature: string,
-        thats: BaseThat<IStore>[],
-        ...xtraArgsForGiven: any //{ [ISuite in keyof IGS]: IGS[ISuite] }[]
+        callback: (whens, thens) => any
+        // thats: BaseThat<IStore>[],
+        // ...xtraArgsForGiven: any //{ [ISuite in keyof IGS]: IGS[ISuite] }[]
       ) => BaseCheck<any, IStore, IStore>
-    >,
-
-    That: Record<keyof IThatExtensions, any>
+    >
   ) => BaseSuite<any, IStore, IStore>[]
 ) =>
   Testeranto<
@@ -96,8 +93,7 @@ export default <
     IWS,
     ITS,
     ISimplerThens<ITS, IState>,
-    ICheckExtensions,
-    IThatExtensions
+    ICheckExtensions
   >(
     store,
 
@@ -175,8 +171,14 @@ export default <
     > {
       initialValues: any; //PreloadedState<IState>;
 
-      constructor(feature: string, thats: BaseThat<any>[], initialValues: any) {
-        super(feature, thats);
+      constructor(
+        feature: string,
+        callback: (whens, thens) => any,
+        initialValues: any,
+        whens,
+        thens
+      ) {
+        super(feature, callback, initialValues, whens, thens);
         this.initialValues = initialValues;
       }
 
@@ -193,16 +195,6 @@ export default <
           ...subject,
           store,
         };
-      }
-    },
-
-    class That<ISelected> extends BaseThat<ISelected> {
-      constructor(name: string, callback: (val: ISelected) => any) {
-        super(name, callback);
-      }
-
-      forThat(subject: ISubjectReducerAndSelectorAnStore): ISelected {
-        return subject.selector(subject.store.getState());
       }
     }
   );

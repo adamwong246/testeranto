@@ -30,7 +30,7 @@ export const serverFactory = () => {
 
       req.on("end", function () {
         if (req.url === "/put_status") {
-          status = body;
+          status = body.toString();
           res.write("aok");
           res.end();
           return;

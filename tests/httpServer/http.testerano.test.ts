@@ -5,7 +5,6 @@ import {
   BaseCheck,
   BaseGiven,
   BaseSuite,
-  BaseThat,
   BaseThen,
   BaseWhen,
   Testeranto,
@@ -19,7 +18,7 @@ type ISimpleThensForRedux<IThens> = {
   ) => any;
 };
 
-export default <ISS, IGS, IWS, ITS, ICheckExtensions, IThatExtensions>(
+export default <ISS, IGS, IWS, ITS, ICheckExtensions>(
   serverfactory: () => http.Server,
   tests: (
     Suite: Record<
@@ -46,12 +45,12 @@ export default <ISS, IGS, IWS, ITS, ICheckExtensions, IThatExtensions>(
       keyof ICheckExtensions,
       (
         feature: string,
-        thats: BaseThat<any>[],
+        callback: (whens, thens) => any,
         ...xtraArgsForGiven: any //{ [ISuite in keyof IGS]: IGS[ISuite] }[]
       ) => BaseCheck<any, any, any>
-    >,
+    >
 
-    That: Record<keyof IThatExtensions, any>
+    // That: Record<keyof IThatExtensions, any>
   ) => BaseSuite<any, any, any>[]
 ) => {
   return Testeranto<
@@ -64,8 +63,8 @@ export default <ISS, IGS, IWS, ITS, ICheckExtensions, IThatExtensions>(
     IWS,
     ITS,
     ISimpleThensForRedux<ITS>,
-    ICheckExtensions,
-    IThatExtensions
+    ICheckExtensions
+    // IThatExtensions
   >(
     serverfactory,
     tests,
@@ -96,11 +95,16 @@ export default <ISS, IGS, IWS, ITS, ICheckExtensions, IThatExtensions>(
       }
 
       async andWhen(store, actioner) {
-        const [path, payload]: [string, string] = actioner();
-        const x = await fetch(`http://localhost:3000/${path}`, {
+        const [path, body]: [string, string] = actioner({});
+
+        // console.log("mark1", path, body);
+
+        const y = await fetch(`http://localhost:3000/${path}`, {
           method: "POST",
-          body: payload,
+          body,
         });
+
+        return y.text();
       }
     },
     class HttpThen extends BaseThen<any> {
@@ -108,10 +112,14 @@ export default <ISS, IGS, IWS, ITS, ICheckExtensions, IThatExtensions>(
         super(name, callback);
       }
 
-      async butThen() {
+      async butThen(store) {
         const [path, expectation]: [string, string] = this.callback({});
-        const x = await fetch(`http://localhost:3000/${path}`);
-        assert.equal(await x.text(), expectation);
+
+        // console.log("mark4", path, expectation, store);
+        const bodytext = await (
+          await fetch(`http://localhost:3000/${path}`)
+        ).text();
+        assert.equal(bodytext, expectation);
         return;
       }
     },
@@ -131,19 +139,19 @@ export default <ISS, IGS, IWS, ITS, ICheckExtensions, IThatExtensions>(
         await server.listen(3000);
         return server;
       }
-    },
-
-    class HttpThat extends BaseThat<any> {
-      constructor(name: string, callback: (val: any) => any) {
-        super(name, callback);
-      }
-
-      async forThat() {
-        // const [path, expectation]: [string, string] = this.callback({});
-        // const x = await fetch(`http://localhost:3000/${path}`);
-        // assert.equal(await x.text(), expectation);
-        // return;
-      }
     }
+
+    // class HttpThat extends BaseThat<any> {
+    //   constructor(name: string, callback: (val: any) => any) {
+    //     super(name, callback);
+    //   }
+
+    //   async forThat() {
+    //     // const [path, expectation]: [string, string] = this.callback({});
+    //     // const x = await fetch(`http://localhost:3000/${path}`);
+    //     // assert.equal(await x.text(), expectation);
+    //     // return;
+    //   }
+    // }
   );
 };

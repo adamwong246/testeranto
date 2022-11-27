@@ -49,10 +49,6 @@ type IChecks = {
   AnEmptyState: [];
 };
 
-type IThats = {
-  TheEmailIs: [string];
-};
-
 const LoginSelectorTesteranto = ReduxToolkitTesterantoFactory<
   IStore,
   ILoginPageSelection,
@@ -61,9 +57,8 @@ const LoginSelectorTesteranto = ReduxToolkitTesterantoFactory<
   IGivens,
   IWhens,
   IThens,
-  IChecks,
-  IThats
->({ reducer, selector }, (Suite, Given, When, Then, Check, That) => {
+  IChecks
+>({ reducer, selector }, (Suite, Given, When, Then, Check) => {
   return [
     Suite.Default("idk", [
       Given.AStateWithEmail(
@@ -208,11 +203,6 @@ export default async () => {
           error: "no_error",
         };
       },
-    },
-
-    {
-      TheEmailIs: (email) => (selection) =>
-        assert.equal(selection.email, email),
     }
   );
 };

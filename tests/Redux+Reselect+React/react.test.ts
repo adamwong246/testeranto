@@ -7,18 +7,9 @@ import {
   BaseThen,
   Testeranto,
   BaseCheck,
-  BaseThat,
 } from "./../../index";
 
-export default <
-  IComponent,
-  ISS,
-  IGS,
-  IWS,
-  ITS,
-  ICheckExtensions,
-  IThatExensions
->(
+export default <IComponent, ISS, IGS, IWS, ITS, ICheckExtensions>(
   store,
   tests: (
     Suite: Record<
@@ -58,8 +49,7 @@ export default <
         ...xtrasQW: IThens[IThen]
       ) => any;
     },
-    ICheckExtensions,
-    IThatExensions
+    ICheckExtensions
   >(
     store,
     tests,
@@ -108,14 +98,6 @@ export default <
         act(() => {
           component = renderer.create(subject());
         });
-        return component;
-      }
-    },
-
-    class ReactThat extends BaseThat<ReactTestRenderer> {
-      forThat(
-        component: renderer.ReactTestRenderer
-      ): renderer.ReactTestRenderer {
         return component;
       }
     }

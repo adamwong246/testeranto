@@ -3,7 +3,6 @@ import {
   BaseCheck,
   BaseGiven,
   BaseSuite,
-  BaseThat,
   BaseThen,
   BaseWhen,
   Testeranto,
@@ -52,8 +51,9 @@ export default <
       keyof ICheckExtensions,
       (
         feature: string,
-        thats: BaseThat<IStore>[],
-        ...xtraArgsForGiven: any //{ [ISuite in keyof IGS]: IGS[ISuite] }[]
+        callback: (whens, thens) => any
+        // thats: BaseThat<IStore>[],
+        // ...xtraArgsForGiven: any //{ [ISuite in keyof IGS]: IGS[ISuite] }[]
       ) => BaseCheck<any, IStore, IStore>
     >,
 
@@ -70,8 +70,7 @@ export default <
     IWS,
     ITS,
     ISimpleThensForRedux<ITS>,
-    ICheckExtensions,
-    IThatExtensions
+    ICheckExtensions
   >(
     store,
     /* @ts-ignore:next-line */
@@ -132,10 +131,13 @@ export default <
     > extends BaseCheck<IStore, IStore, IState> {
       constructor(
         feature: string,
-        thats: BaseThat<any>[],
-        initialValues: PreloadedState<any>
+        // thats: BaseThat<any>[],
+        callback: (whens, thens) => any,
+        initialValues: PreloadedState<any>,
+        whens,
+        thens
       ) {
-        super(feature, thats);
+        super(feature, callback, feature, whens, thens);
         this.initialValues = initialValues;
       }
 
@@ -143,15 +145,6 @@ export default <
 
       checkThat(subject) {
         return createStore<any, any, any, any>(subject, this.initialValues);
-      }
-    },
-
-    class ReduxThat<
-      IStore extends Store<IState, AnyAction>,
-      IState
-    > extends BaseThat<IState> {
-      forThat(store: IStore): IState {
-        return store.getState();
       }
     }
   );

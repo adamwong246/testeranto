@@ -3,7 +3,7 @@ import {
   BaseSuite,
   BaseWhen,
   BaseThen,
-  BaseThat,
+  // BaseThat,
   BaseCheck,
 } from "../level0/AbstractClasses";
 
@@ -15,8 +15,8 @@ export abstract class TesterantoBasic<
   GivenExtensions,
   WhenExtensions,
   ThenExtensions,
-  CheckExtensions,
-  ThatExtensions
+  CheckExtensions
+  // ThatExtensions
 > {
   constructorator: IStore;
 
@@ -50,15 +50,15 @@ export abstract class TesterantoBasic<
     keyof CheckExtensions,
     (
       feature: string,
-      thats: BaseThat<IStore>[],
+      callback: (whens, thens) => any,
       ...xtraArgs
     ) => BaseCheck<ISubject, IStore, ISelection>
   >;
 
-  thatOverides: Record<
-    keyof ThatExtensions,
-    (selection: ISelection, expectation: any) => BaseThat<ISelection>
-  >;
+  // thatOverides: Record<
+  //   keyof ThatExtensions,
+  //   (selection: ISelection, expectation: any) => BaseThat<ISelection>
+  // >;
 
   constructor(
     public readonly cc: IStore,
@@ -92,15 +92,15 @@ export abstract class TesterantoBasic<
       keyof CheckExtensions,
       (
         feature: string,
-        thats: BaseThat<IStore>[],
+        callback: (whens, thens) => any,
         ...xtraArgs
       ) => BaseCheck<ISubject, IStore, ISelection>
-    >,
-
-    thatOverides: Record<
-      keyof ThatExtensions,
-      (selection: ISelection, expectation: any) => BaseThat<ISelection>
     >
+
+    // thatOverides: Record<
+    //   keyof ThatExtensions,
+    //   (selection: ISelection, expectation: any) => BaseThat<ISelection>
+    // >
   ) {
     this.constructorator = cc;
     this.suitesOverrides = suitesOverrides;
@@ -108,7 +108,7 @@ export abstract class TesterantoBasic<
     this.whenOverides = whenOverides;
     this.thenOverides = thenOverides;
     this.checkOverides = checkOverides;
-    this.thatOverides = thatOverides;
+    // this.thatOverides = thatOverides;
   }
 
   Suites() {
@@ -145,17 +145,18 @@ export abstract class TesterantoBasic<
     keyof CheckExtensions,
     (
       feature: string,
-      thats: BaseThat<IStore>[],
-      ...xtraArgs
+      callback: (whens, thens) => any,
+      whens,
+      thens
     ) => BaseCheck<ISubject, IStore, ISelection>
   > {
     return this.checkOverides;
   }
 
-  That(): Record<
-    keyof ThatExtensions,
-    (selection: ISelection, expectation: any) => BaseThat<ISelection>
-  > {
-    return this.thatOverides;
-  }
+  // That(): Record<
+  //   keyof ThatExtensions,
+  //   (selection: ISelection, expectation: any) => BaseThat<ISelection>
+  // > {
+  //   return this.thatOverides;
+  // }
 }

@@ -4,7 +4,7 @@ import {
   BaseWhen,
   BaseThen,
   BaseCheck,
-  BaseThat,
+  // BaseThat,
 } from "../../base/level0/AbstractClasses";
 
 export class ClassySuite<Klass> extends BaseSuite<Klass, Klass, Klass> {}
@@ -45,21 +45,17 @@ export class ClassyCheck<Klass> extends BaseCheck<Klass, Klass, Klass> {
 
   constructor(
     name: string,
-    thats: ClassyThat<Klass>[],
+    callback: (whens, thens) => any,
     feature: string,
-    thing: Klass
+    thing: Klass,
+    whens,
+    thens
   ) {
-    super(feature, thats);
+    super(feature, callback, feature, whens, thens);
     this.thing = thing;
   }
 
   checkThat() {
     return this.thing;
-  }
-}
-
-export class ClassyThat<Klass> extends BaseThat<Klass> {
-  forThat(thing: Klass): Klass {
-    return thing;
   }
 }
