@@ -40,7 +40,7 @@ const LoginStoreTesteranto = ReduxTesterantoFactory<
   IThens
 >(loginApp.reducer, (Suite, Given, When, Then) => {
   return [
-    Suite.Default("idk", [
+    Suite.Default("LoginStore", [
       Given.AnEmptyState(
         "a feature",
         [When.TheEmailIsSetTo("adam@email.com")],
@@ -95,7 +95,6 @@ const whens: ITypeDeTuple<IWhens, IState> = {
   ThePasswordIsSetTo: (password) => [loginApp.actions.setPassword, password],
 };
 
-export default async () => {
+export default async () =>
   /* @ts-ignore:next-line */
   await LoginStoreTesteranto.run(suites, givens, whens, thens);
-};

@@ -1,18 +1,17 @@
-import Rectangle from "./Rectangle/Rectangle.test";
+// import Rectangle from "./Rectangle/Rectangle.test";
 import LoginSelector from "./Redux+Reselect+React/LoginSelector.test";
 import LoginStore from "./Redux+Reselect+React/LoginStore.test";
 import LoginPage from "./Redux+Reselect+React/LoginPage.test";
 import HttpServerTests from "./httpServer/server.test";
 
-export {};
+import reporter from "../src/reporter";
 
-Promise.all([
+reporter([
   LoginStore(),
   LoginSelector(),
-  Rectangle(),
+  // Rectangle(),
   LoginPage(),
   HttpServerTests(),
-]).then(() => {
-  console.log("all done");
-  process.exit(0);
-});
+]);
+
+export {};

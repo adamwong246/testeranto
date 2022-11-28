@@ -55,7 +55,7 @@ const LoginSelectorTesteranto = ReduxToolkitTesterantoFactory<
   IThens
 >({ reducer, selector }, (Suite, Given, When, Then) => {
   return [
-    Suite.Default("idk", [
+    Suite.Default("LoginSelector", [
       Given.AStateWithEmail(
         "something",
         [When.TheEmailIsSetTo("bob"), Then.TheEmailIs("bob")],
@@ -141,7 +141,7 @@ const LoginSelectorTesteranto = ReduxToolkitTesterantoFactory<
   ];
 });
 
-export default async () => {
+export default async () =>
   await LoginSelectorTesteranto.run(
     {
       Default: "a default suite",
@@ -190,4 +190,3 @@ export default async () => {
         assert.equal(selection.error, "invalidEmail"),
     }
   );
-};
