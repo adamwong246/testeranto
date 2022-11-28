@@ -1,4 +1,7 @@
-// This file defines the test of an `http.Server` of the native `http` library, using the native `fetch` method
+// This file defines the test of a react component, using puppeteer
+
+import * as puppeteer from "puppeteer";
+
 import { assert } from "chai";
 import http from "http";
 
@@ -10,7 +13,6 @@ import {
   BaseWhen,
   Testeranto,
 } from "../../index";
-import { serverFactory } from "./server";
 
 type ISimpleThensForRedux<IThens> = {
   [IThen in keyof IThens]: (
@@ -20,7 +22,7 @@ type ISimpleThensForRedux<IThens> = {
 };
 
 export default <ISS, IGS, IWS, ITS, ICheckExtensions>(
-  serverfactory: () => http.Server,
+  reactComponent: () => React.Component,
   tests: (
     Suite: Record<
       keyof ISS,
@@ -66,11 +68,28 @@ export default <ISS, IGS, IWS, ITS, ICheckExtensions>(
     ISimpleThensForRedux<ITS>,
     ICheckExtensions
   >(
-    serverfactory,
+    reactComponent,
     tests,
     class HttpSuite extends BaseSuite<any, any, any> {},
 
     class HttpGiven extends BaseGiven<any, any, any> {
+      async givenThat(subject) {
+        const browser = await puppeteer.launch({
+          // wtf?
+          product: "firefox",
+          headless: false,
+        });
+        const page = await browser.newPage();
+        const htmlContent = `<body>
+ <h1>An example static HTML to PDF</h1>
+ </body>`;
+        await page.setContent(htmlContent);
+        // const server = serverFactory();
+        // await server.listen(3000);
+        // return { page, server };
+        return {};
+      }
+
       async teardown(server: http.Server) {
         return new Promise((resolve, reject) => {
           server.close(() => {
@@ -78,15 +97,9 @@ export default <ISS, IGS, IWS, ITS, ICheckExtensions>(
           });
         });
       }
-
-      async givenThat(subject) {
-        const server = serverFactory();
-        await server.listen(3000);
-        return server;
-      }
     },
 
-    class HttpWhen<IStore> extends BaseWhen<IStore> {
+    class HttpWhen<IStore extends { page; server }> extends BaseWhen<IStore> {
       payload?: any;
 
       constructor(name: string, actioner: (...any) => any, payload?: any) {
@@ -94,14 +107,16 @@ export default <ISS, IGS, IWS, ITS, ICheckExtensions>(
         this.payload = payload;
       }
 
-      async andWhen(store, actioner) {
+      async andWhen(store: IStore, actioner) {
         const [path, body]: [string, string] = actioner({});
-        const y = await fetch(`http://localhost:3000/${path}`, {
-          method: "POST",
-          body,
-        });
 
-        return y.text();
+        await store.page.goto(`http://localhost:3000/${path}`);
+
+        // const y = await fetch(`http://localhost:3000/${path}`, {
+        //   method: "POST",
+        //   body,
+        // });
+        // return y.text();
       }
     },
     class HttpThen extends BaseThen<any> {

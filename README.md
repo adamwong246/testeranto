@@ -188,4 +188,6 @@ You will need to implement your own test infrastructure. Depending on your needs
 - [Testing a Redux store](/tests/Redux+Reselect+React/LoginStore.test.ts)
 - [Testing a Reselect Selector based on a Redux store](/tests/Redux+Reselect+React/LoginSelector.test.ts)
 - [Testing a React Component with Reselect Selector based on a Redux store](/tests/Redux+Reselect+React/LoginPage.test.ts)
-- [Testing an http server](/tests/httpServer/server.test.ts)
+- [Testing an http server with node's fetch](/tests/httpServer/http.testerano.test.ts.test.ts)
+- [Testing an http server with puppeteer](/tests/httpServer/puppeteer.testeranto.test.ts)
+- [Testing a react component with puppeteer](/tests/ClassicalReact/react-on-puppeteer.testeranto.test.ts)
