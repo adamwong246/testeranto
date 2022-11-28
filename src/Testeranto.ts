@@ -116,7 +116,6 @@ export const Testeranto = <
         thens as any,
         (thEn: (klass, ...xtrasE) => void) => {
           return (expected: any, x) => {
-            // console.log("mark3 -- ", expected, x);
             return new CThen(
               `${thEn.name}: ${expected && expected.toString()}`,
               thEn(expected)
@@ -135,7 +134,7 @@ export const Testeranto = <
           return new CCheck(
             somestring,
             callback,
-            somestring,
+            // somestring,
             classyWhens,
             classyThens
           );
@@ -167,7 +166,6 @@ export const Testeranto = <
         WhenExtensions,
         ThenExtensions,
         ICheckExtensions
-        // IThatExtensions
       > {}
       const testerano = new MetaTesteranto<
         ISubject,
@@ -195,9 +193,6 @@ export const Testeranto = <
             callback: (whens, thens) => any
           ) => BaseCheck<IStore, IState, ISelection>;
         }
-        // {
-        //   [K in keyof IThatExtensions]: (...any) => BaseThat<ISubject>;
-        // }
       >(
         /* @ts-ignore:next-line */
         store,
@@ -206,7 +201,6 @@ export const Testeranto = <
         classyWhens,
         classyThens,
         classyChecks
-        // classyThats
       );
       for (const suite of tests(
         testerano.Suites(),
@@ -215,7 +209,6 @@ export const Testeranto = <
         /* @ts-ignore:next-line */
         testerano.Then(),
         testerano.Check()
-        // testerano.That()
       )) {
         return await suite.run(store);
       }

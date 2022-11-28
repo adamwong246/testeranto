@@ -168,20 +168,24 @@ Given: width of 1 and height of 1
 
 ### the good parts
 
-Testeranto can test any statefull typescript, from individual classes to entire services, with the common given-when-then lingua-franca.
+Testeranto can test any statefull typescript, from individual classes to entire services.
+
+Testeranto bridges TDD and BDD patterns. You can use the given-when-then lingua-franca of gherkin, AND you can also use an imperative style which is a bit more flexible.
 
 Testeranto.ts is comprised entirely of <1000 lines of typescript, with only 1 dependency (lodash).
+
+Testeranto is just TS, so you don't need to spend all your time writing regexes to match against tests written in a text file.
 
 ### the bad parts
 
 You will need to implement your own test infrastructure. Depending on your needs, you will need to implement an interface which extends 1 of 2 classes:
+1] `TesterantoClassic`, when you only need to test a class
+2] `TesterantoBasic`, when you need to test something more complex
 
-- `TesterantoClassic`, when you only need to test a class
+### examples
 
-  - [Testing a class](/tests/Rectangle)
-
-- `TesterantoBasic`, when you need to test something more complex
-  - [Testing a Redux store](/tests/Redux+Reselect+React/LoginStore.test.ts)
-  - [Testing a Reselect Selector based on a Redux store](/tests/Redux+Reselect+React/LoginSelector.test.ts)
-  - [Testing a React Component with Reselect Selector based on a Redux store](/tests/Redux+Reselect+React/LoginPage.test.ts)
-  - [Testing an http server](/tests/httpServer/server.test.ts)
+- [Testing a class, with TesterantoClassic](/tests/Rectangle)
+- [Testing a Redux store](/tests/Redux+Reselect+React/LoginStore.test.ts)
+- [Testing a Reselect Selector based on a Redux store](/tests/Redux+Reselect+React/LoginSelector.test.ts)
+- [Testing a React Component with Reselect Selector based on a Redux store](/tests/Redux+Reselect+React/LoginPage.test.ts)
+- [Testing an http server](/tests/httpServer/server.test.ts)

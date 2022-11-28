@@ -107,13 +107,7 @@ export abstract class BaseCheck<ISubject, IStore, ISelection> {
   whens: any; //Record<string, BaseWhen<any>>;
   thens: any; //Record<string, BaseThen<any>>;
 
-  constructor(
-    feature: string,
-    callback: (whens, thens) => any,
-    anotherString: string,
-    whens,
-    thens
-  ) {
+  constructor(feature: string, callback: (whens, thens) => any, whens, thens) {
     this.feature = feature;
     this.callback = callback;
     this.whens = whens;
@@ -130,16 +124,14 @@ export abstract class BaseCheck<ISubject, IStore, ISelection> {
     console.log(`\n - \nCheck: ${this.feature}`);
     const store = await this.checkThat(subject);
     await this.callback(
-      mapValues(this.whens, (w) => {
+      mapValues(this.whens, (when) => {
         return async (payload) => {
-          // console.log("mark2", payload);
-          // return await w().test(payload);
-          return await w(payload).test();
+          return await when(payload).test(store);
         };
       }),
       mapValues(this.thens, (then) => {
         return async (payload) => {
-          return await then(payload).test();
+          return await then(payload).test(store);
         };
       })
     );

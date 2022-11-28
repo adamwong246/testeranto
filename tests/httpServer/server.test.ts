@@ -36,7 +36,7 @@ const ServerTesteranto = HttpTesterantoFactory<
 >(serverFactory, (Suite, Given, When, Then, Check) => {
   return [
     Suite.Default(
-      "idk",
+      "Testing the http server",
       [
         Given.AnEmptyState(
           "a boringfeature",
@@ -81,6 +81,23 @@ const ServerTesteranto = HttpTesterantoFactory<
             await TheNumberIs(7);
             await PostToAdd(3);
             await TheNumberIs(10);
+          }
+        ),
+
+        Check.AnEmptyState(
+          "hello imperative style II",
+          async ({ PostToAdd }, { TheNumberIs }) => {
+            const a = await PostToAdd(2);
+            const b = parseInt(await PostToAdd(3));
+            await TheNumberIs(b);
+
+            await PostToAdd(2);
+            await TheNumberIs(7);
+            await PostToAdd(3);
+            await TheNumberIs(10);
+
+            assert.equal(await PostToAdd(-15), -5);
+            await TheNumberIs(-5);
           }
         ),
       ]

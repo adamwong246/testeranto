@@ -1,3 +1,4 @@
+import { act } from "react-test-renderer";
 import { createStore, Store, AnyAction, PreloadedState } from "redux";
 import {
   BaseCheck,
@@ -111,7 +112,7 @@ export default <
       }
 
       andWhen(store, actioner) {
-        store.dispatch(actioner(store));
+        return store.dispatch(actioner(store));
       }
     },
     class ReduxThen<
@@ -123,28 +124,22 @@ export default <
       }
     },
 
-    /////////////////////////////////////////////////////////////////////////
+    class ReduxCheck extends BaseCheck<IStore, IStore, IState> {
+      initialValues: PreloadedState<any>;
 
-    class ReduxCheck<
-      IStore extends Store<IState, AnyAction>,
-      IState
-    > extends BaseCheck<IStore, IStore, IState> {
       constructor(
         feature: string,
-        // thats: BaseThat<any>[],
         callback: (whens, thens) => any,
-        initialValues: PreloadedState<any>,
         whens,
-        thens
+        thens,
+        initialValues: PreloadedState<any>
       ) {
-        super(feature, callback, feature, whens, thens);
+        super(feature, callback, whens, thens);
         this.initialValues = initialValues;
       }
 
-      initialValues: PreloadedState<any>;
-
-      checkThat(subject) {
-        return createStore<any, any, any, any>(subject, this.initialValues);
+      checkThat(reducer) {
+        return createStore<any, any, any, any>(reducer, this.initialValues);
       }
     }
   );

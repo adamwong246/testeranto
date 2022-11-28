@@ -50,32 +50,32 @@ const LoginStoreTesteranto = ReduxTesterantoFactory<
   IThens,
   IChecks,
   IThats
->(loginApp.reducer, (Suite, Given, When, Then, Check, That) => {
+>(loginApp.reducer, (Suite, Given, When, Then, Check) => {
   return [
     Suite.Default(
-      "idk",
+      "Testing the Redux store",
       [
         Given.AnEmptyState(
-          "a feature",
+          "BDD gherkin style",
           [When.TheEmailIsSetTo("adam@email.com")],
           [Then.TheEmailIs("adam@email.com")]
         ),
-        // Given.AnEmptyState(
-        //   "another feature",
-        //   [When.TheEmailIsSetTo("hello")],
-        //   [Then.TheEmailIsNot("adam@email.com")]
-        // ),
-        // Given.AnEmptyState(
-        //   "yet another feature",
-        //   [When.TheEmailIsSetTo("hello"), When.TheEmailIsSetTo("aloha")],
-        //   [Then.TheEmailIs("aloha")]
-        // ),
-
-        // Given.AnEmptyState("OMG a feature!", [], [Then.TheEmailIs("")]),
-
-        // Given.AStateWithEmail(),
       ],
-      []
+      [
+        Check.AnEmptyState(
+          "imperative style",
+          async ({ TheEmailIsSetTo }, { TheEmailIs }) => {
+            await TheEmailIsSetTo("foo");
+            await TheEmailIs("foo");
+            const reduxPayload = await TheEmailIsSetTo("foobar");
+            await TheEmailIs("foobar");
+            assert.deepEqual(reduxPayload, {
+              type: "login app/setEmail",
+              payload: "foobar",
+            });
+          }
+        ),
+      ]
     ),
   ];
 });

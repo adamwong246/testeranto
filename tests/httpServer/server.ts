@@ -36,7 +36,7 @@ export const serverFactory = () => {
           return;
         } else if (req.url === "/put_number") {
           counter = counter + parseInt(body);
-          res.write("aok");
+          res.write(counter.toString());
           res.end();
           return;
         } else {
@@ -45,8 +45,8 @@ export const serverFactory = () => {
           return;
         }
 
-        res.writeHead(200, { "Content-Type": "text/html" });
-        res.end(body);
+        // res.writeHead(200, { "Content-Type": "text/html" });
+        // res.end(body);
       });
     }
   });

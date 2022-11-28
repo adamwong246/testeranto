@@ -174,11 +174,11 @@ export default <
       constructor(
         feature: string,
         callback: (whens, thens) => any,
-        initialValues: any,
         whens,
-        thens
+        thens,
+        initialValues: any
       ) {
-        super(feature, callback, initialValues, whens, thens);
+        super(feature, callback, whens, thens);
         this.initialValues = initialValues;
       }
 

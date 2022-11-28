@@ -1,9 +1,11 @@
 import { mapValues } from "lodash";
+import { any } from "prop-types";
 import {
   ClassyGiven,
   ClassySuite,
   ClassyWhen,
   ClassyThen,
+  ClassyCheck,
 } from "../../classical/level2/TesterantoClasses";
 import { TesterantoClassic } from "../../classical/level3/TesteranoClassic";
 import {
@@ -27,19 +29,27 @@ type IZW<T, Klass> = {
   ) => ClassyWhen<Klass>;
 };
 
-export const TesterantoClassicFactory = <Klass, ISS, IGS, IWS, ITS>(
+type IC<T, Klass> = {
+  [K in keyof T]: (
+    /* @ts-ignore:next-line */
+    ...arg1: T[K]
+  ) => ClassyCheck<Klass>;
+};
+
+export const TesterantoClassicFactory = <Klass, ISS, IGS, IWS, ITS, ICS>(
   thing,
   tests: (
     s: Record<
       keyof ISS | "Default",
-      (ss: ClassyGiven<Klass>[]) => ClassySuite<Klass>
+      (ss: ClassyGiven<Klass>[], cc: ClassyCheck<Klass>[]) => ClassySuite<Klass>
     >,
     g: Record<
       keyof IGS,
       (ww: ClassyWhen<Klass>[], tt: ClassyThen<Klass>[]) => ClassyGiven<Klass>
     >,
     w: IZW<IWS, Klass>,
-    t: IZ<ITS, Klass>
+    t: IZ<ITS, Klass>,
+    c: IC<ICS, Klass>
   ) => ClassySuite<Klass>[]
 ) => {
   return {
@@ -97,6 +107,15 @@ export const TesterantoClassicFactory = <Klass, ISS, IGS, IWS, ITS>(
       ) as unknown as {
         [K in keyof ITS]: (c: Klass) => ClassyThen<Klass>;
       };
+
+      const classyChecks = mapValues(checks as any, (z) => {
+        return (callback, whens, thens, thing) => {
+          return new ClassyCheck(`IDK`, callback, whens, thens, thing);
+        };
+      }) as {
+        [K in keyof ICS]: (name: string, callback) => ClassyCheck<Klass>;
+      };
+
       const testerano = new TesterantoClassic<
         Klass,
         {},
@@ -112,14 +131,23 @@ export const TesterantoClassicFactory = <Klass, ISS, IGS, IWS, ITS>(
         },
         {
           [K in keyof ITS]: (...any) => ClassyThen<Klass>;
+        },
+        {
+          [K in keyof ICS]: (
+            feature: string,
+            callback: (whens, thens) => any,
+            whens,
+            thens
+          ) => ClassyCheck<Klass>;
         }
-      >(thing, {}, classyGivens, classyWhens, classThens);
+      >(thing, {}, classyGivens, classyWhens, classThens, classyChecks);
       tests(
         /* @ts-ignore:next-line */
         testerano.Suites(),
         testerano.Given(),
         testerano.When(),
-        testerano.Then()
+        testerano.Then(),
+        testerano.Checks()
       ).forEach(async (test) => {
         await test.run(thing);
       });

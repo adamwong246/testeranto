@@ -1,5 +1,5 @@
 import { assert } from "chai";
-import http, { get, request } from "http";
+import http from "http";
 
 import {
   BaseCheck,
@@ -64,7 +64,6 @@ export default <ISS, IGS, IWS, ITS, ICheckExtensions>(
     ITS,
     ISimpleThensForRedux<ITS>,
     ICheckExtensions
-    // IThatExtensions
   >(
     serverfactory,
     tests,
@@ -96,9 +95,6 @@ export default <ISS, IGS, IWS, ITS, ICheckExtensions>(
 
       async andWhen(store, actioner) {
         const [path, body]: [string, string] = actioner({});
-
-        // console.log("mark1", path, body);
-
         const y = await fetch(`http://localhost:3000/${path}`, {
           method: "POST",
           body,
@@ -114,8 +110,6 @@ export default <ISS, IGS, IWS, ITS, ICheckExtensions>(
 
       async butThen(store) {
         const [path, expectation]: [string, string] = this.callback({});
-
-        // console.log("mark4", path, expectation, store);
         const bodytext = await (
           await fetch(`http://localhost:3000/${path}`)
         ).text();
@@ -124,7 +118,6 @@ export default <ISS, IGS, IWS, ITS, ICheckExtensions>(
       }
     },
 
-    /////////////////////////////////////////
     class HttpCheck extends BaseCheck<any, any, any> {
       async teardown(server: http.Server) {
         return new Promise((resolve, reject) => {
@@ -140,18 +133,5 @@ export default <ISS, IGS, IWS, ITS, ICheckExtensions>(
         return server;
       }
     }
-
-    // class HttpThat extends BaseThat<any> {
-    //   constructor(name: string, callback: (val: any) => any) {
-    //     super(name, callback);
-    //   }
-
-    //   async forThat() {
-    //     // const [path, expectation]: [string, string] = this.callback({});
-    //     // const x = await fetch(`http://localhost:3000/${path}`);
-    //     // assert.equal(await x.text(), expectation);
-    //     // return;
-    //   }
-    // }
   );
 };

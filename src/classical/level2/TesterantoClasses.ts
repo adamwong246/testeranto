@@ -44,14 +44,13 @@ export class ClassyCheck<Klass> extends BaseCheck<Klass, Klass, Klass> {
   thing: Klass;
 
   constructor(
-    name: string,
-    callback: (whens, thens) => any,
     feature: string,
-    thing: Klass,
+    callback: (whens, thens) => any,
     whens,
-    thens
+    thens,
+    thing: Klass
   ) {
-    super(feature, callback, feature, whens, thens);
+    super(feature, callback, whens, thens);
     this.thing = thing;
   }
 
