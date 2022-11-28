@@ -1,0 +1,490 @@
+[
+  {
+    "test": {
+      "name": "LoginStore",
+      "givens": [
+        {
+          "name": "a feature",
+          "whens": [
+            {
+              "name": "TheEmailIsSetTo: adam@email.com"
+            }
+          ],
+          "thens": [
+            {
+              "name": "TheEmailIs: adam@email.com"
+            }
+          ],
+          "feature": "a feature"
+        },
+        {
+          "name": "another feature",
+          "whens": [
+            {
+              "name": "TheEmailIsSetTo: hello"
+            }
+          ],
+          "thens": [
+            {
+              "name": "TheEmailIsNot: adam@email.com"
+            }
+          ],
+          "feature": "another feature"
+        },
+        {
+          "name": "yet another feature",
+          "whens": [
+            {
+              "name": "TheEmailIsSetTo: hello"
+            },
+            {
+              "name": "TheEmailIsSetTo: aloha"
+            }
+          ],
+          "thens": [
+            {
+              "name": "TheEmailIs: aloha"
+            }
+          ],
+          "feature": "yet another feature"
+        },
+        {
+          "name": "OMG a feature!",
+          "whens": [],
+          "thens": [
+            {
+              "name": "TheEmailIs: "
+            }
+          ],
+          "feature": "OMG a feature!"
+        }
+      ]
+    },
+    "status": "pass"
+  },
+  {
+    "test": {
+      "name": "LoginSelector",
+      "givens": [
+        {
+          "name": "something",
+          "whens": [
+            {
+              "name": "TheEmailIsSetTo: bob"
+            },
+            {
+              "name": "TheEmailIs: bob"
+            }
+          ],
+          "thens": [
+            {
+              "name": "TheEmailIsSetTo: foo"
+            },
+            {
+              "name": "TheEmailIs: foo"
+            }
+          ],
+          "feature": "something",
+          "initialValues": {
+            "password": "",
+            "email": 3,
+            "error": "no_error"
+          }
+        },
+        {
+          "name": "Set the email and check the email",
+          "whens": [
+            {
+              "name": "TheEmailIsSetTo: adam@email.com"
+            }
+          ],
+          "thens": [
+            {
+              "name": "TheEmailIs: adam@email.com"
+            }
+          ],
+          "feature": "Set the email and check the email",
+          "initialValues": {
+            "password": "",
+            "email": "",
+            "error": "no_error"
+          }
+        },
+        {
+          "name": "Set the email by initial state, then set the email normally, and then check some other stuff",
+          "whens": [
+            {
+              "name": "TheEmailIsSetTo: adam@email.com"
+            },
+            {
+              "name": "ThePasswordIsSetTo: secret"
+            }
+          ],
+          "thens": [
+            {
+              "name": "TheEmailIsNot: wade@rpc"
+            },
+            {
+              "name": "ThePasswordIs: secret"
+            },
+            {
+              "name": "ThePasswordIsNot: idk"
+            }
+          ],
+          "feature": "Set the email by initial state, then set the email normally, and then check some other stuff",
+          "initialValues": {
+            "password": "",
+            "email": "wade@rpc",
+            "error": "no_error"
+          }
+        },
+        {
+          "name": "Don't show an email error just because the email does not validate",
+          "whens": [
+            {
+              "name": "TheEmailIsSetTo: adam"
+            }
+          ],
+          "thens": [
+            {
+              "name": "ThereIsNotAnEmailError: undefined"
+            }
+          ],
+          "feature": "Don't show an email error just because the email does not validate",
+          "initialValues": {
+            "password": "",
+            "email": "",
+            "error": "no_error"
+          }
+        },
+        {
+          "name": "Put some data in both fields to enable the submit button. Email does not need to be valid!",
+          "whens": [
+            {
+              "name": "TheEmailIsSetTo: adam"
+            },
+            {
+              "name": "ThePasswordIsSetTo: adam"
+            }
+          ],
+          "thens": [
+            {
+              "name": "TheSubmitButtonShouldBeEnabled: undefined"
+            }
+          ],
+          "feature": "Put some data in both fields to enable the submit button. Email does not need to be valid!",
+          "initialValues": {
+            "password": "",
+            "email": "",
+            "error": "no_error"
+          }
+        },
+        {
+          "name": "Don't enable the submit button if password is blank",
+          "whens": [
+            {
+              "name": "TheEmailIsSetTo: adam"
+            },
+            {
+              "name": "ThePasswordIsSetTo: "
+            }
+          ],
+          "thens": [
+            {
+              "name": "TheSubmitButtonShouldNotBeEnabled: undefined"
+            }
+          ],
+          "feature": "Don't enable the submit button if password is blank",
+          "initialValues": {
+            "password": "",
+            "email": "",
+            "error": "no_error"
+          }
+        },
+        {
+          "name": "Don't enable the submit button if email is blank",
+          "whens": [
+            {
+              "name": "TheEmailIsSetTo: "
+            },
+            {
+              "name": "ThePasswordIsSetTo: something"
+            }
+          ],
+          "thens": [
+            {
+              "name": "TheSubmitButtonShouldNotBeEnabled: undefined"
+            }
+          ],
+          "feature": "Don't enable the submit button if email is blank",
+          "initialValues": {
+            "password": "",
+            "email": "",
+            "error": "no_error"
+          }
+        },
+        {
+          "name": "Don't enable the submit button if you haven't entered a password",
+          "whens": [
+            {
+              "name": "TheEmailIsSetTo: adam"
+            }
+          ],
+          "thens": [
+            {
+              "name": "TheSubmitButtonShouldNotBeEnabled: undefined"
+            }
+          ],
+          "feature": "Don't enable the submit button if you haven't entered a password",
+          "initialValues": {
+            "password": "",
+            "email": "",
+            "error": "no_error"
+          }
+        },
+        {
+          "name": "Don't enable the submit button if you haven't entered an email",
+          "whens": [
+            {
+              "name": "ThePasswordIsSetTo: something"
+            }
+          ],
+          "thens": [
+            {
+              "name": "TheSubmitButtonShouldNotBeEnabled: undefined"
+            }
+          ],
+          "feature": "Don't enable the submit button if you haven't entered an email",
+          "initialValues": {
+            "password": "",
+            "email": "",
+            "error": "no_error"
+          }
+        },
+        {
+          "name": "Check for email validations only after you've pressed the submit button 1/2",
+          "whens": [
+            {
+              "name": "TheEmailIsSetTo: adam"
+            }
+          ],
+          "thens": [
+            {
+              "name": "ThereIsNotAnEmailError: undefined"
+            },
+            {
+              "name": "TheSubmitButtonShouldNotBeEnabled: undefined"
+            }
+          ],
+          "feature": "Check for email validations only after you've pressed the submit button 1/2",
+          "initialValues": {
+            "password": "",
+            "email": "",
+            "error": "no_error"
+          }
+        },
+        {
+          "name": "Check for email validations only after you've pressed the submit button 2/2",
+          "whens": [
+            {
+              "name": "TheEmailIsSetTo: adam"
+            },
+            {
+              "name": "ThePasswordIsSetTo: adam"
+            },
+            {
+              "name": "TheLoginIsSubmitted: undefined"
+            }
+          ],
+          "thens": [
+            {
+              "name": "ThereIsAnEmailError: undefined"
+            },
+            {
+              "name": "TheSubmitButtonShouldBeEnabled: undefined"
+            }
+          ],
+          "feature": "Check for email validations only after you've pressed the submit button 2/2",
+          "initialValues": {
+            "password": "",
+            "email": "",
+            "error": "no_error"
+          }
+        }
+      ]
+    },
+    "status": "pass"
+  },
+  {
+    "test": {
+      "name": "testing redux store + reselect selectors",
+      "givens": [
+        {
+          "name": "Set the email and check the email",
+          "whens": [
+            {
+              "name": "TheEmailIsSetTo: adam@email.com"
+            }
+          ],
+          "thens": [
+            {
+              "name": "TheEmailIs: adam@email.com"
+            }
+          ],
+          "feature": "Set the email and check the email"
+        },
+        {
+          "name": "Set the email by initial state, then set the email normally, and then check some other stuff",
+          "whens": [
+            {
+              "name": "TheEmailIsSetTo: adam@email.com"
+            },
+            {
+              "name": "ThePasswordIsSetTo: secret"
+            }
+          ],
+          "thens": [
+            {
+              "name": "TheEmailIsNot: wade@rpc"
+            },
+            {
+              "name": "TheEmailIs: adam@email.com"
+            },
+            {
+              "name": "ThePasswordIs: secret"
+            },
+            {
+              "name": "ThePasswordIsNot: idk"
+            }
+          ],
+          "feature": "Set the email by initial state, then set the email normally, and then check some other stuff"
+        },
+        {
+          "name": "Don't show an email error just because the email does not validate",
+          "whens": [
+            {
+              "name": "TheEmailIsSetTo: adam"
+            }
+          ],
+          "thens": [
+            {
+              "name": "ThereIsNotAnEmailError: undefined"
+            }
+          ],
+          "feature": "Don't show an email error just because the email does not validate"
+        },
+        {
+          "name": "Do show an email error after submitting",
+          "whens": [
+            {
+              "name": "TheEmailIsSetTo: adam"
+            },
+            {
+              "name": "TheLoginIsSubmitted: undefined"
+            }
+          ],
+          "thens": [
+            {
+              "name": "ThereIsAnEmailError: undefined"
+            }
+          ],
+          "feature": "Do show an email error after submitting"
+        }
+      ]
+    },
+    "status": "pass"
+  },
+  {
+    "test": {
+      "name": "idk",
+      "givens": [
+        {
+          "name": "a boringfeature",
+          "whens": [],
+          "thens": [
+            {
+              "name": "TheStatusIs: some great status"
+            }
+          ],
+          "feature": "a boringfeature"
+        },
+        {
+          "name": "a feature",
+          "whens": [
+            {
+              "name": "PostToStatus: hello"
+            }
+          ],
+          "thens": [
+            {
+              "name": "TheStatusIs: hello"
+            }
+          ],
+          "feature": "a feature"
+        },
+        {
+          "name": "a feature",
+          "whens": [
+            {
+              "name": "PostToStatus: hello"
+            },
+            {
+              "name": "PostToStatus: aloha"
+            }
+          ],
+          "thens": [
+            {
+              "name": "TheStatusIs: aloha"
+            }
+          ],
+          "feature": "a feature"
+        },
+        {
+          "name": "a feature",
+          "whens": [],
+          "thens": [
+            {
+              "name": "TheNumberIs: 0"
+            }
+          ],
+          "feature": "a feature"
+        },
+        {
+          "name": "a feature",
+          "whens": [
+            {
+              "name": "PostToAdd: 1"
+            },
+            {
+              "name": "PostToAdd: 2"
+            }
+          ],
+          "thens": [
+            {
+              "name": "TheNumberIs: 3"
+            }
+          ],
+          "feature": "a feature"
+        },
+        {
+          "name": "another feature",
+          "whens": [
+            {
+              "name": "PostToAdd: 4"
+            },
+            {
+              "name": "PostToAdd: 3"
+            }
+          ],
+          "thens": [
+            {
+              "name": "TheNumberIs: 7"
+            }
+          ],
+          "feature": "another feature"
+        }
+      ]
+    },
+    "status": "pass"
+  }
+]

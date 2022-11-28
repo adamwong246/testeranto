@@ -95,7 +95,11 @@ const thens: ITypeDeTuple<IThens, any> = {
   TheNumberIs: (number: number) => () => ["get_number", number],
 };
 
-export default async () => {
-  /* @ts-ignore:next-line */
-  await ServerTesteranto.run(suites, givens, whens, thens);
-};
+export default async () =>
+  await ServerTesteranto.run(
+    suites,
+    /* @ts-ignore:next-line */
+    givens,
+    whens,
+    thens
+  );

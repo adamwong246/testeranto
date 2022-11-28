@@ -133,6 +133,7 @@ export const Testeranto = <
         WhenExtensions,
         ThenExtensions
       > {}
+
       const testerano = new MetaTesteranto<
         ISubject,
         IStore,
@@ -155,16 +156,40 @@ export const Testeranto = <
         }
         /* @ts-ignore:next-line */
       >(store, classySuites, classyGivens, classyWhens, classyThens);
-      for (const suite of tests(
+
+      // for (const suite of tests(
+      //   testerano.Suites(),
+      //   testerano.Given(),
+      //   testerano.When(),
+      //   /* @ts-ignore:next-line */
+      //   testerano.Then()
+      // )) {
+      //   return await suite.run(store);
+      // }
+
+      const t = tests(
         testerano.Suites(),
         testerano.Given(),
         testerano.When(),
         /* @ts-ignore:next-line */
         testerano.Then()
-      )) {
-        console.log("mark1");
-        return await suite.run(store);
-      }
+      );
+
+      return t.map((tt) => {
+        return {
+          test: tt,
+          runner: async () => {
+            await tt.run(store);
+          },
+        };
+      });
+      // return {
+      //   tests: t,
+      //   runIt: async (suite) => {
+      //     console.log("suite", suite);
+      //     await suite.runIt(store);
+      //   },
+      // };
     },
   };
 };
