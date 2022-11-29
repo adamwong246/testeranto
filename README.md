@@ -2,9 +2,9 @@
 
 ## teeny-tiny, tightly-typed typescript tests™
 
-### "It's like cucumber, but for typescript."
+Testeranto.ts a Typescript testing framework, akin to mocha, jasmine or jest. Unlike those projects, testeranto focuses on _specifing stateful logic with strong type bindings using an extended gherkin syntax._
 
-Testeranto.ts a Typescript testing framework, akin to mocha, jasmine or jest. Unlike those projects, testeranto focuses on _specifing stateful logic with strong type bindings using an extended gherkin syntax_.
+### example
 
 ---
 
@@ -168,21 +168,23 @@ Given: width of 1 and height of 1
 
 ### the good parts
 
-Testeranto can test any statefull typescript, from individual classes to entire services.
+Testeranto can test any stateful typescript, from individual classes to entire services.
 
 Testeranto bridges TDD and BDD patterns. You can use the given-when-then lingua-franca of gherkin, AND you can also use an imperative style which is a bit more flexible.
 
-Testeranto.ts is comprised entirely of <1000 lines of typescript, with only 1 dependency (lodash).
+Testeranto.ts is very lightweight and unopinionated. It is comprised entirely of <1000 lines of typescript, with only 1 dependency (lodash).
 
 Testeranto is just TS, so you don't need to spend all your time writing regexes to match against tests written in a text file.
 
 ### the bad parts
 
-You will need to implement your own test infrastructure. Depending on your needs, you will need to implement an interface which extends 1 of 2 classes:
+Testerano is not for testing pure functions. It's designed only to address _stateful_ logic.
+
+Because testerano is so unopinionated, it does not provide test infrastructure. You will need to find an existing recipe and implement this yourself. Depending on your needs, you will need to implement an interface which extends 1 of 2 classes:
 1] `TesterantoClassic`, when you only need to test a class
 2] `TesterantoBasic`, when you need to test something more complex
 
-### examples
+### examples of test infrasuctures
 
 - [Testing a class, with TesterantoClassic](/tests/Rectangle)
 - [Testing a Redux store](/tests/Redux+Reselect+React/LoginStore.test.ts)
@@ -191,3 +193,5 @@ You will need to implement your own test infrastructure. Depending on your needs
 - [Testing an http server with node's fetch](/tests/httpServer/http.testerano.test.ts.test.ts)
 - [Testing an http server with puppeteer](/tests/httpServer/puppeteer.testeranto.test.ts)
 - [Testing a react component with puppeteer](/tests/ClassicalReact/react-on-puppeteer.testeranto.test.ts)
+
+### philosophy
