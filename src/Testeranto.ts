@@ -4,6 +4,7 @@ import {
   BaseSuite,
   BaseWhen,
   BaseThen,
+  BaseCheck,
 } from "./base/level0/AbstractClasses";
 import { TesterantoBasic } from "./base/level1/TesterantoBasic";
 import {
@@ -22,7 +23,8 @@ export const Testeranto = <
   IGS,
   IWS,
   ITS,
-  IThenShape
+  IThenShape,
+  ICheckExtensions
 >(
   store: ISubject,
   tests: (
@@ -30,7 +32,8 @@ export const Testeranto = <
       keyof ISS,
       (
         name: string,
-        givens: BaseGiven<any, any, any>[]
+        givens: BaseGiven<any, any, any>[],
+        checks: BaseCheck<ISubject, IStore, ISelection>[]
       ) => BaseSuite<any, any, any>
     >,
     g: Record<
@@ -43,12 +46,21 @@ export const Testeranto = <
       ) => BaseGiven<any, any, any>
     >,
     w: ISimpleWhens<IWS, IStore>,
-    t: IThenShape
+    t: IThenShape,
+    check: Record<
+      keyof ICheckExtensions,
+      (
+        feature: string,
+        callback: (whens, thens) => any,
+        ...xtraArgs: any[]
+      ) => BaseCheck<any, any, any>
+    >
   ) => BaseSuite<any, any, any>[],
   CSuite,
   CGiven,
   CWhen,
-  CThen
+  CThen,
+  CCheck: any
 ) => {
   return {
     thens: (ts): ITypeDeTuple<ITS, IState> => {
@@ -58,17 +70,18 @@ export const Testeranto = <
       suites: ISimpleSuites<ISS>,
       givens: ISimpleGivens<IGS, IState>,
       whens: ISimpleWhens<IWS, IStore>,
-      thens: ITypeDeTuple<ITS, ISelection>
+      thens: ITypeDeTuple<ITS, ISelection>,
+      checks: any //ISimpleChecks<ICheckExtensions, IState>,
     ) => {
       const classySuites = mapValues(suites as any, (suite) => {
-        return (somestring, givens) => {
-          return new CSuite(somestring, givens);
+        return (somestring, givens, checks) => {
+          return new CSuite(somestring, givens, checks);
         };
       }) as unknown as {
         [K in keyof ISS]: (
-          name: string,
-          somestring: string,
-          givens: BaseGiven<any, any, any>[]
+          feature: string,
+          givens: BaseGiven<any, any, any>[],
+          checks: BaseCheck<any, any, any>[]
         ) => BaseSuite<any, any, any>;
       };
 
@@ -102,7 +115,7 @@ export const Testeranto = <
       const classyThens = mapValues(
         thens as any,
         (thEn: (klass, ...xtrasE) => void) => {
-          return (expected?: any) => {
+          return (expected: any, x) => {
             return new CThen(
               `${thEn.name}: ${expected && expected.toString()}`,
               thEn(expected)
@@ -116,6 +129,24 @@ export const Testeranto = <
         ) => BaseThen<ISelection>;
       };
 
+      const classyChecks = mapValues(checks as any, (z) => {
+        return (somestring, callback) => {
+          return new CCheck(
+            somestring,
+            callback,
+            // somestring,
+            classyWhens,
+            classyThens
+          );
+        };
+      }) as unknown as {
+        [K in keyof ICheckExtensions]: (
+          feature: string,
+          callback: (whens, thens) => any,
+          ...xtraArgs: any[]
+        ) => BaseCheck<any, any, any>;
+      };
+
       class MetaTesteranto<
         ISubject,
         IState,
@@ -123,7 +154,8 @@ export const Testeranto = <
         SuiteExtensions,
         GivenExtensions,
         WhenExtensions,
-        ThenExtensions
+        ThenExtensions,
+        ICheckExtensions
       > extends TesterantoBasic<
         ISubject,
         IState,
@@ -131,7 +163,8 @@ export const Testeranto = <
         SuiteExtensions,
         GivenExtensions,
         WhenExtensions,
-        ThenExtensions
+        ThenExtensions,
+        ICheckExtensions
       > {}
 
       const testerano = new MetaTesteranto<
@@ -153,26 +186,30 @@ export const Testeranto = <
         },
         {
           [K in keyof ITS]: (...any) => BaseThen<ISubject>;
+        },
+        {
+          [K in keyof ICheckExtensions]: (
+            feature: string,
+            callback: (whens, thens) => any
+          ) => BaseCheck<IStore, IState, ISelection>;
         }
+      >(
         /* @ts-ignore:next-line */
-      >(store, classySuites, classyGivens, classyWhens, classyThens);
-
-      // for (const suite of tests(
-      //   testerano.Suites(),
-      //   testerano.Given(),
-      //   testerano.When(),
-      //   /* @ts-ignore:next-line */
-      //   testerano.Then()
-      // )) {
-      //   return await suite.run(store);
-      // }
-
+        store,
+        classySuites,
+        classyGivens,
+        classyWhens,
+        classyThens,
+        classyChecks
+      );
+      /* @ts-ignore:next-line */
       const t = tests(
         testerano.Suites(),
         testerano.Given(),
         testerano.When(),
         /* @ts-ignore:next-line */
-        testerano.Then()
+        testerano.Then(),
+        testerano.Check()
       );
 
       return t.map((tt) => {
@@ -183,13 +220,6 @@ export const Testeranto = <
           },
         };
       });
-      // return {
-      //   tests: t,
-      //   runIt: async (suite) => {
-      //     console.log("suite", suite);
-      //     await suite.runIt(store);
-      //   },
-      // };
     },
   };
 };

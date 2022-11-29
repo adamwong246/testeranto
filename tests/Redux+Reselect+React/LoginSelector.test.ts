@@ -45,6 +45,10 @@ type IThens = {
   ThereIsAnEmailError;
 };
 
+type IChecks = {
+  AnEmptyState: [];
+};
+
 const LoginSelectorTesteranto = ReduxToolkitTesterantoFactory<
   IStore,
   ILoginPageSelection,
@@ -52,8 +56,9 @@ const LoginSelectorTesteranto = ReduxToolkitTesterantoFactory<
   ISuites,
   IGivens,
   IWhens,
-  IThens
->({ reducer, selector }, (Suite, Given, When, Then) => {
+  IThens,
+  IChecks
+>({ reducer, selector }, (Suite, Given, When, Then, Check) => {
   return [
     Suite.Default("LoginSelector", [
       Given.AStateWithEmail(
@@ -188,5 +193,15 @@ export default async () =>
         assert(selection.disableSubmit),
       ThereIsAnEmailError: () => (selection) =>
         assert.equal(selection.error, "invalidEmail"),
+    },
+
+    {
+      AnEmptyState: () => {
+        return {
+          password: "",
+          email: "",
+          error: "no_error",
+        };
+      },
     }
   );

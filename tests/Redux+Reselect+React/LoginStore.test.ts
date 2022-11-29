@@ -31,36 +31,56 @@ type IThens = {
   ThePasswordIsNot: [number, boolean];
 };
 
+type IChecks = {
+  AnEmptyState: [never];
+};
+
 const LoginStoreTesteranto = ReduxTesterantoFactory<
   IStore,
   IState,
   ISuites,
   IGivens,
   IWhens,
-  IThens
->(loginApp.reducer, (Suite, Given, When, Then) => {
+  IThens,
+  IChecks
+>(loginApp.reducer, (Suite, Given, When, Then, Check) => {
   return [
-    Suite.Default("LoginStore", [
-      Given.AnEmptyState(
-        "a feature",
-        [When.TheEmailIsSetTo("adam@email.com")],
-        [Then.TheEmailIs("adam@email.com")]
-      ),
-      Given.AnEmptyState(
-        "another feature",
-        [When.TheEmailIsSetTo("hello")],
-        [Then.TheEmailIsNot("adam@email.com")]
-      ),
-      Given.AnEmptyState(
-        "yet another feature",
-        [When.TheEmailIsSetTo("hello"), When.TheEmailIsSetTo("aloha")],
-        [Then.TheEmailIs("aloha")]
-      ),
-
-      Given.AnEmptyState("OMG a feature!", [], [Then.TheEmailIs("")]),
-
-      // Given.AStateWithEmail(),
-    ]),
+    Suite.Default(
+      "Testing the Redux store",
+      [
+        // Given.AnEmptyState(
+        //   "BDD gherkin style",
+        //   [When.TheEmailIsSetTo("adam@email.com")],
+        //   [Then.TheEmailIs("adam@email.com")]
+        // ),
+        // Given.AnEmptyState(
+        //   "another feature",
+        //   [When.TheEmailIsSetTo("hello")],
+        //   [Then.TheEmailIsNot("adam@email.com")]
+        // ),
+        // Given.AnEmptyState(
+        //   "yet another feature",
+        //   [When.TheEmailIsSetTo("hello"), When.TheEmailIsSetTo("aloha")],
+        //   [Then.TheEmailIs("aloha")]
+        // ),
+        // Given.AnEmptyState("OMG a feature!", [], [Then.TheEmailIs("")]),
+      ],
+      [
+        Check.AnEmptyState(
+          "imperative style",
+          async ({ TheEmailIsSetTo }, { TheEmailIs }) => {
+            await TheEmailIsSetTo("foo");
+            await TheEmailIs("foo");
+            const reduxPayload = await TheEmailIsSetTo("foobar");
+            await TheEmailIs("foobar");
+            assert.deepEqual(reduxPayload, {
+              type: "login app/setEmail",
+              payload: "foobar",
+            });
+          }
+        ),
+      ]
+    ),
   ];
 });
 
@@ -89,12 +109,24 @@ const thens: ITypeDeTuple<IThens, IState> = {
     throw new Error("Function not implemented.");
   },
 };
+
 const whens: ITypeDeTuple<IWhens, IState> = {
   TheLoginIsSubmitted: () => [loginApp.actions.signIn],
   TheEmailIsSetTo: (email) => [loginApp.actions.setEmail, email],
   ThePasswordIsSetTo: (password) => [loginApp.actions.setPassword, password],
 };
 
-export default async () =>
+const checks: ITypeDeTuple<IChecks, IState> = {
   /* @ts-ignore:next-line */
-  await LoginStoreTesteranto.run(suites, givens, whens, thens);
+  AnEmptyState: () => {}, //loginApp.getInitialState(),
+};
+
+export default async () =>
+  await LoginStoreTesteranto.run(
+    suites,
+    /* @ts-ignore:next-line */
+    givens,
+    whens,
+    thens,
+    checks
+  );

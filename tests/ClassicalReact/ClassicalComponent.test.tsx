@@ -1,101 +1,128 @@
 import assert from "assert";
-import React from "react";
-import {
-  ClassySuite,
-  ClassyGiven,
-  ClassyWhen,
-  ClassyThen
-} from "../../index";
+import { Store, AnyAction, Reducer, Selector } from "@reduxjs/toolkit";
 
-type IClassicalComponentProps = { hello: string };
-type IClassicalComponentState = { count: number };
-class ClassicalComponent extends React.Component<IClassicalComponentProps, IClassicalComponentState> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      count: 0
-    };
-  }
+// import ReduxToolkitTesterantoFactory from "./reduxToolkit.test";
+import TesteranoFactory from "./react-on-puppeteer.testeranto.test";
 
-  render() {
-    return (
-      <div>
-        <p>{this.props.hello}</p>
-        <p>count: {this.state.count} times</p>
-        <button onClick={() => this.setState({ count: this.state.count + 1 })}>
-          Click
-        </button>
-      </div>
-    );
-  }
-}
+// import { IStoreState as IState } from "./app";
+// import app from "./app";
+// import { ILoginPageSelection } from "./LoginPage";
 
-const dummyProps0: IClassicalComponentProps = {
-  hello: "aloha"
-};
-const dummyProps1: IClassicalComponentProps = {
-  hello: "salutations"
+import { ClassicalComponent } from "./ClassicalComponent";
+import type { IProps, IState } from "./ClassicalComponent";
+
+// const core = app();
+// const selector = core.select.loginPageSelection;
+// const actions = core.app.actions;
+// const reducer = core.app.reducer;
+
+// type IStore = Store<IState, AnyAction>;
+
+// export type ISubject = {
+//   reducer: Reducer<IState, AnyAction>;
+//   selector: Selector;
+// };
+
+type ISuites = {
+  Default: string;
 };
 
-const ClassicalComponentTesteranto = {
-  Suite: {
-    default: (
-      description: string,
-      classicalComponent: typeof ClassicalComponent,
-      givens: any[]
-    ) => new ClassySuite<typeof ClassicalComponent>(description, classicalComponent, givens)
-  },
-  Given: {
-    Default: (
-      feature: string,
-      whens: ClassyWhen<ClassicalComponent>[],
-      thens: ClassyThen<ClassicalComponent>[]
-    ) => new ClassyGiven(`default`, whens, thens, feature, new ClassicalComponent({}))
-  },
+type IGivens = {
+  AnEmptyState: [];
+};
 
-  When: {
-    SetTheProps: (props: IClassicalComponentProps) =>
-      new ClassyWhen<ClassicalComponent>(`Props check`, (classicalComponent: any) => {
-        classicalComponent.props = props;
-      }
+type IWhens = {
+  IClickTheButton;
+};
+
+type IThens = {
+  ThePropsIs: [IProps];
+  TheStatusIs: [IState];
+};
+
+type IChecks = {
+  AnEmptyState: [];
+};
+
+const LoginSelectorTesteranto = TesteranoFactory<
+  ISuites,
+  IGivens,
+  IWhens,
+  IThens,
+  IChecks
+>(() => new ClassicalComponent({}), (Suite, Given, When, Then, Check) => {
+  return [
+    Suite.Default("idk", [
+      Given.AStateWithEmail(
+        "something",
+        [When.TheEmailIsSetTo("bob"), Then.TheEmailIs("bob")],
+        [When.TheEmailIsSetTo("foo"), Then.TheEmailIs("foo")],
+        3
       ),
 
-  },
+    ], [
 
-  Then: {
-    ThePropsAre: (props: IClassicalComponentProps) =>
-      new ClassyThen(`the props are`, (classicalComponent: ClassicalComponent) =>
-        assert.equal(classicalComponent.props, props)
-      ),
-    ThePropsAreNot: (props: IClassicalComponentProps) => {
-      return new ClassyThen(`the props are not`, (classicalComponent: ClassicalComponent) =>
-        assert.notEqual(classicalComponent.props, props)
-      )
+    ]),
+  ];
+});
+
+export default async () => {
+  await LoginSelectorTesteranto.run(
+    {
+      Default: "a default suite",
+    },
+    {
+      AnEmptyState: () => {
+        return {
+          password: "",
+          email: "",
+          error: "no_error",
+        };
+      },
+      /* @ts-ignore:next-line */
+      AStateWithEmail: (email) => {
+        return {
+          password: "",
+          email,
+          error: "no_error",
+        };
+      },
+    },
+    {
+      TheLoginIsSubmitted: () => [core.app.actions.signIn],
+      TheEmailIsSetTo: (email) => [core.app.actions.setEmail, email],
+      ThePasswordIsSetTo: (password) => [
+        core.app.actions.setPassword,
+        password,
+      ],
+    },
+    {
+      TheEmailIs: (email) => (selection) =>
+        assert.equal(selection.email, email),
+      TheEmailIsNot: (email) => (selection) =>
+        assert.notEqual(selection.email, email),
+      ThePasswordIs: (password) => (selection) =>
+        assert.equal(selection.password, password),
+      ThePasswordIsNot: (password) => (selection) =>
+        assert.notEqual(selection.password, password),
+      ThereIsNotAnEmailError: () => (selection) =>
+        assert.notEqual(selection.error, "invalidEmail"),
+      TheSubmitButtonShouldBeEnabled: () => (selection) =>
+        assert(!selection.disableSubmit),
+      TheSubmitButtonShouldNotBeEnabled: () => (selection) =>
+        assert(selection.disableSubmit),
+      ThereIsAnEmailError: () => (selection) =>
+        assert.equal(selection.error, "invalidEmail"),
+    },
+
+    {
+      AnEmptyState: () => {
+        return {
+          password: "",
+          email: "",
+          error: "no_error",
+        };
+      },
     }
-    ,
-  },
-}
-
-const Given = ClassicalComponentTesteranto.Given;
-const When = ClassicalComponentTesteranto.When;
-const Then = ClassicalComponentTesteranto.Then;
-const Suite = ClassicalComponentTesteranto.Suite.default;
-
-export default () => {
-  Suite(`testing the ClassicalComponent class`, (ClassicalComponent), [
-    Given.Default(`Default`, [
-      When.SetTheProps(dummyProps0),
-    ], [
-      Then.ThePropsAre(dummyProps0)
-    ]),
-
-    Given.Default(``, [
-      When.SetTheProps(dummyProps0),
-      When.SetTheProps(dummyProps1),
-    ], [
-      Then.ThePropsAre(dummyProps1),
-      Then.ThePropsAreNot(dummyProps0)
-    ]),
-
-  ]).test();
-}
+  );
+};

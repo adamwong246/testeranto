@@ -33,52 +33,74 @@ const ServerTesteranto = HttpTesterantoFactory<
   IWhens,
   IThens,
   IChecks
->(serverFactory, (Suite, Given, When, Then) => {
+>(serverFactory, (Suite, Given, When, Then, Check) => {
   return [
     Suite.Default(
-      "idk",
+      "Testing the http server",
       [
         Given.AnEmptyState(
           "a boringfeature",
           [],
           [Then.TheStatusIs("some great status")]
         ),
-
         Given.AnEmptyState(
           "a feature",
           [When.PostToStatus("hello")],
           [Then.TheStatusIs("hello")]
         ),
-
         Given.AnEmptyState(
           "a feature",
           [When.PostToStatus("hello"), When.PostToStatus("aloha")],
           [Then.TheStatusIs("aloha")]
         ),
-
         Given.AnEmptyState("a feature", [], [Then.TheNumberIs(0)]),
-
         Given.AnEmptyState(
           "a feature",
           [When.PostToAdd(1), When.PostToAdd(2)],
           [Then.TheNumberIs(3)]
         ),
-
         Given.AnEmptyState(
           "another feature",
           [
-            // When.PostToStatus("aloha"),
+            When.PostToStatus("aloha"),
             When.PostToAdd(4),
-            // When.PostToStatus("hello"),
+            When.PostToStatus("hello"),
             When.PostToAdd(3),
           ],
-          [
-            // Then.TheStatusIs("hello"),
-            Then.TheNumberIs(7),
-          ]
+          [Then.TheStatusIs("hello"), Then.TheNumberIs(7)]
         ),
       ],
-      []
+      [
+        Check.AnEmptyState(
+          "hello imperative style",
+          async ({ PostToAdd }, { TheNumberIs }) => {
+            await PostToAdd(2);
+            await PostToAdd(3);
+            await TheNumberIs(5);
+            await PostToAdd(2);
+            await TheNumberIs(7);
+            await PostToAdd(3);
+            await TheNumberIs(10);
+          }
+        ),
+
+        Check.AnEmptyState(
+          "hello imperative style II",
+          async ({ PostToAdd }, { TheNumberIs }) => {
+            const a = await PostToAdd(2);
+            const b = parseInt(await PostToAdd(3));
+            await TheNumberIs(b);
+
+            await PostToAdd(2);
+            await TheNumberIs(7);
+            await PostToAdd(3);
+            await TheNumberIs(10);
+
+            assert.equal(await PostToAdd(-15), -5);
+            await TheNumberIs(-5);
+          }
+        ),
+      ]
     ),
   ];
 });
@@ -96,7 +118,7 @@ const whens: ITypeDeTuple<IWhens, any> = {
   PostToStatus: (status: string) => () => {
     return ["put_status", status];
   },
-  PostToAdd: (number: number) => () => ["put_number", number],
+  PostToAdd: (n: number) => () => ["put_number", n],
 };
 
 const thens: ITypeDeTuple<IThens, any> = {

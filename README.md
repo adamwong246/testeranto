@@ -4,7 +4,7 @@
 
 ### "It's like cucumber, but for typescript."
 
-Testeranto.ts a Typescript testing framework, akin to mocha, jasmine or jest. Unlike those projects, testeranto focuses on _specifing stateful logic with strong type bindings using a gherkin syntax_.
+Testeranto.ts a Typescript testing framework, akin to mocha, jasmine or jest. Unlike those projects, testeranto focuses on _specifing stateful logic with strong type bindings using an extended gherkin syntax_.
 
 ---
 
@@ -168,18 +168,26 @@ Given: width of 1 and height of 1
 
 ### the good parts
 
-Testeranto can test any statefull typescript, from individual classes to entire services, with the given-when-then format that we all know and love, and all without any dependencies- testeranto.ts is comprised entirely of <700 lines of typescript.
+Testeranto can test any statefull typescript, from individual classes to entire services.
+
+Testeranto bridges TDD and BDD patterns. You can use the given-when-then lingua-franca of gherkin, AND you can also use an imperative style which is a bit more flexible.
+
+Testeranto.ts is comprised entirely of <1000 lines of typescript, with only 1 dependency (lodash).
+
+Testeranto is just TS, so you don't need to spend all your time writing regexes to match against tests written in a text file.
 
 ### the bad parts
 
 You will need to implement your own test infrastructure. Depending on your needs, you will need to implement an interface which extends 1 of 2 classes:
+1] `TesterantoClassic`, when you only need to test a class
+2] `TesterantoBasic`, when you need to test something more complex
 
-- `TesterantoClassic`, when you only need to test a class
+### examples
 
-  - [Testing a class](/tests/Rectangle)
-
-- `TesterantoBasic`, when you need to test something more complex
-  - [Testing a Redux store](/tests/Redux+Reselect+React/LoginStore.test.ts)
-  - [Testing a Reselect Selector based on a Redux store](/tests/Redux+Reselect+React/LoginSelector.test.ts)
-  - [Testing a React Component with Reselect Selector based on a Redux store](/tests/Redux+Reselect+React/LoginPage.test.ts)
-  - [Testing an http server](/tests/httpServer/server.test.ts)
+- [Testing a class, with TesterantoClassic](/tests/Rectangle)
+- [Testing a Redux store](/tests/Redux+Reselect+React/LoginStore.test.ts)
+- [Testing a Reselect Selector based on a Redux store](/tests/Redux+Reselect+React/LoginSelector.test.ts)
+- [Testing a React Component with Reselect Selector based on a Redux store](/tests/Redux+Reselect+React/LoginPage.test.ts)
+- [Testing an http server with node's fetch](/tests/httpServer/http.testerano.test.ts.test.ts)
+- [Testing an http server with puppeteer](/tests/httpServer/puppeteer.testeranto.test.ts)
+- [Testing a react component with puppeteer](/tests/ClassicalReact/react-on-puppeteer.testeranto.test.ts)

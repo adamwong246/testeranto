@@ -6,16 +6,18 @@ import {
   BaseWhen,
   BaseThen,
   Testeranto,
+  BaseCheck,
 } from "./../../index";
 
-export default <IComponent, ISS, IGS, IWS, ITS>(
+export default <IComponent, ISS, IGS, IWS, ITS, ICheckExtensions>(
   store,
   tests: (
     Suite: Record<
       keyof ISS,
       (
         name: string,
-        givens: BaseGiven<any, any, any>[]
+        givens: BaseGiven<any, any, any>[],
+        checks: BaseCheck<any, any, any>[]
       ) => BaseSuite<any, any, any>
     >,
     Given: Record<
@@ -46,7 +48,8 @@ export default <IComponent, ISS, IGS, IWS, ITS>(
         /* @ts-ignore:next-line */
         ...xtrasQW: IThens[IThen]
       ) => any;
-    }
+    },
+    ICheckExtensions
   >(
     store,
     tests,
@@ -81,6 +84,20 @@ export default <IComponent, ISS, IGS, IWS, ITS>(
       butThen(
         component: renderer.ReactTestRenderer
       ): renderer.ReactTestRenderer {
+        return component;
+      }
+    },
+
+    class ReactCheck extends BaseCheck<
+      () => JSX.Element,
+      ReactTestRenderer,
+      ReactTestRenderer
+    > {
+      checkThat(subject: () => JSX.Element) {
+        let component;
+        act(() => {
+          component = renderer.create(subject());
+        });
         return component;
       }
     }

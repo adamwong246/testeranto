@@ -1,5 +1,7 @@
+import { act } from "react-test-renderer";
 import { createStore, Store, AnyAction, PreloadedState } from "redux";
 import {
+  BaseCheck,
   BaseGiven,
   BaseSuite,
   BaseThen,
@@ -20,7 +22,8 @@ export default <
   ISS,
   IGS,
   IWS,
-  ITS
+  ITS,
+  ICheckExtensions
 >(
   store,
   tests: (
@@ -28,7 +31,8 @@ export default <
       keyof ISS,
       (
         name: string,
-        givens: BaseGiven<any, IStore, IStore>[]
+        givens: BaseGiven<any, IStore, IStore>[],
+        checks: BaseCheck<any, any, any>[]
       ) => BaseSuite<any, IStore, IStore>
     >,
     Given: Record<
@@ -41,7 +45,17 @@ export default <
       ) => BaseGiven<any, IStore, IStore>
     >,
     When: Record<keyof IWS, any>,
-    Then: Record<keyof ITS, any>
+    Then: Record<keyof ITS, any>,
+
+    Check: Record<
+      keyof ICheckExtensions,
+      (
+        feature: string,
+        callback: (whens, thens) => any
+        // thats: BaseThat<IStore>[],
+        // ...xtraArgsForGiven: any //{ [ISuite in keyof IGS]: IGS[ISuite] }[]
+      ) => BaseCheck<any, IStore, IStore>
+    >
   ) => BaseSuite<any, IStore, IStore>[]
 ) =>
   Testeranto<
@@ -53,9 +67,11 @@ export default <
     IGS,
     IWS,
     ITS,
-    ISimpleThensForRedux<ITS>
+    ISimpleThensForRedux<ITS>,
+    ICheckExtensions
   >(
     store,
+    /* @ts-ignore:next-line */
     tests,
     class ReduxSuite<
       IStore extends Store<IState, AnyAction>,
@@ -93,7 +109,7 @@ export default <
       }
 
       andWhen(store, actioner) {
-        store.dispatch(actioner(store));
+        return store.dispatch(actioner(store));
       }
     },
     class ReduxThen<
@@ -102,6 +118,25 @@ export default <
     > extends BaseThen<IState> {
       butThen(store: IStore): IState {
         return store.getState();
+      }
+    },
+
+    class ReduxCheck extends BaseCheck<IStore, IStore, IState> {
+      initialValues: PreloadedState<any>;
+
+      constructor(
+        feature: string,
+        callback: (whens, thens) => any,
+        whens,
+        thens,
+        initialValues: PreloadedState<any>
+      ) {
+        super(feature, callback, whens, thens);
+        this.initialValues = initialValues;
+      }
+
+      checkThat(reducer) {
+        return createStore<any, any, any, any>(reducer, this.initialValues);
       }
     }
   );

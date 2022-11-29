@@ -1,4 +1,7 @@
-// This file defines the test of an `http.Server` of the native `http` library, using the native `fetch` method
+// This file defines the test of an `http.Server` of the native `http` library, using puppeteer
+
+import * as puppeteer from "puppeteer";
+
 import { assert } from "chai";
 import http from "http";
 
@@ -80,13 +83,20 @@ export default <ISS, IGS, IWS, ITS, ICheckExtensions>(
       }
 
       async givenThat(subject) {
+        const browser = await puppeteer.launch({
+          // wtf?
+          product: "firefox",
+          headless: false,
+        });
+        const page = await browser.newPage();
+
         const server = serverFactory();
         await server.listen(3000);
-        return server;
+        return { page, server };
       }
     },
 
-    class HttpWhen<IStore> extends BaseWhen<IStore> {
+    class HttpWhen<IStore extends { page; server }> extends BaseWhen<IStore> {
       payload?: any;
 
       constructor(name: string, actioner: (...any) => any, payload?: any) {
@@ -94,14 +104,16 @@ export default <ISS, IGS, IWS, ITS, ICheckExtensions>(
         this.payload = payload;
       }
 
-      async andWhen(store, actioner) {
+      async andWhen(store: IStore, actioner) {
         const [path, body]: [string, string] = actioner({});
-        const y = await fetch(`http://localhost:3000/${path}`, {
-          method: "POST",
-          body,
-        });
 
-        return y.text();
+        await store.page.goto(`http://localhost:3000/${path}`);
+
+        // const y = await fetch(`http://localhost:3000/${path}`, {
+        //   method: "POST",
+        //   body,
+        // });
+        // return y.text();
       }
     },
     class HttpThen extends BaseThen<any> {

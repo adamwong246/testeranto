@@ -4,10 +4,15 @@ import { TesterantoClassicFactory } from "../../index";
 
 import Rectangle from "./Rectangle";
 
+// const checks: ITypeDeTuple<IChecks, any> = {
+//   /* @ts-ignore:next-line */
+//   AnEmptyState: () => {}, //loginApp.getInitialState(),
+// };
+
 const RectangleTesteranto = TesterantoClassicFactory<
   Rectangle,
   {
-    Default: "hello";
+    Default;
   },
   {
     Default: [never];
@@ -27,56 +32,83 @@ const RectangleTesteranto = TesterantoClassicFactory<
     getHeight: [number];
     area: [number];
     prototype: [string];
+  },
+  {
+    /* @ts-ignore:next-line */
+    Default; //: () => {}; //loginApp.getInitialState(),
   }
->(Rectangle, (Suite, Given, When, Then) => {
+>(Rectangle, (Suite, Given, When, Then, Check) => {
+  console.log(Check);
+  process.exit(-1);
   const RectangleSuite = Suite.Default;
   return [
-    RectangleSuite([
-      Given.Default(
-        [When.setWidth(4), When.setHeight(9)],
+    RectangleSuite(
+      [
+        Given.Default(
+          [When.setWidth(4), When.setHeight(9)],
 
-        [Then.getWidth(4), Then.getHeight(9)]
-      ),
+          [Then.getWidth(4), Then.getHeight(9)]
+        ),
 
-      Given.WidthOfOneAndHeightOfOne(
-        [When.setWidth(4), When.setHeight(5)],
-        [
-          Then.getWidth(4),
-          Then.getHeight(5),
-          Then.area(20),
-          Then.AreaPlusCircumference(38),
-        ]
-      ),
-      Given.WidthOfOneAndHeightOfOne(
-        [When.setHeight(4), When.setWidth(3)],
-        [Then.area(12)]
-      ),
-      Given.WidthOfOneAndHeightOfOne(
-        [
-          When.setHeight(3),
-          When.setWidth(4),
-          When.setHeight(5),
-          When.setWidth(6),
-        ],
-        [Then.area(30), Then.circumference(22)]
-      ),
-      Given.WidthOfOneAndHeightOfOne(
-        [When.setHeight(3), When.setWidth(4)],
-        [
-          Then.getHeight(3),
-          Then.getWidth(4),
-          Then.area(12),
-          Then.circumference(14),
-        ]
-      ),
-    ]),
+        Given.WidthOfOneAndHeightOfOne(
+          [When.setWidth(4), When.setHeight(5)],
+          [
+            Then.getWidth(4),
+            Then.getHeight(5),
+            Then.area(20),
+            Then.AreaPlusCircumference(38),
+          ]
+        ),
+        Given.WidthOfOneAndHeightOfOne(
+          [When.setHeight(4), When.setWidth(3)],
+          [Then.area(12)]
+        ),
+        Given.WidthOfOneAndHeightOfOne(
+          [
+            When.setHeight(3),
+            When.setWidth(4),
+            When.setHeight(5),
+            When.setWidth(6),
+          ],
+          [Then.area(30), Then.circumference(22)]
+        ),
+        Given.WidthOfOneAndHeightOfOne(
+          [When.setHeight(3), When.setWidth(4)],
+          [
+            Then.getHeight(3),
+            Then.getWidth(4),
+            Then.area(12),
+            Then.circumference(14),
+          ]
+        ),
+      ],
+
+      [
+        Check.Default(
+          "imperative style",
+          async ({ PostToAdd }, { TheNumberIs }) => {
+            const a = await PostToAdd(2);
+            // const b = parseInt(await PostToAdd(3));
+            // await TheNumberIs(b);
+
+            // await PostToAdd(2);
+            // await TheNumberIs(7);
+            // await PostToAdd(3);
+            // await TheNumberIs(10);
+
+            // assert.equal(await PostToAdd(-15), -5);
+            // await TheNumberIs(-5);
+          }
+        ),
+      ]
+    ),
   ];
 });
 
 export default () =>
   RectangleTesteranto.run(
     {
-      Default: "hello",
+      Default: "some default Suite",
     },
     {
       Default: () => new Rectangle(),
@@ -112,5 +144,7 @@ export default () =>
       ): void {
         assert.equal(rectangle.circumference(), circumference);
       },
-    }
+    },
+    {},
+    {}
   );

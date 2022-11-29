@@ -27,43 +27,50 @@ const LoginPageTesteranto = ReactTesteranto<
     TheSubmitButtonShouldBeEnabled;
     TheSubmitButtonShouldNotBeEnabled;
     ThereIsAnEmailError;
+  },
+  {
+    AnEmptyState: () => any;
   }
 >(LoginPage, (Suite, Given, When, Then) => {
   return [
-    Suite.Default("testing redux store + reselect selectors", [
-      Given.AnEmptyState(
-        `Set the email and check the email`,
-        [When.TheEmailIsSetTo("adam@email.com")],
-        [Then.TheEmailIs("adam@email.com")]
-      ),
+    Suite.Default(
+      "testing redux store + reselect selectors",
+      [
+        Given.AnEmptyState(
+          `Set the email and check the email`,
+          [When.TheEmailIsSetTo("adam@email.com")],
+          [Then.TheEmailIs("adam@email.com")]
+        ),
 
-      Given.AnEmptyState(
-        `Set the email by initial state, then set the email normally, and then check some other stuff`,
-        [
-          When.TheEmailIsSetTo("adam@email.com"),
-          When.ThePasswordIsSetTo("secret"),
-        ],
-        [
-          Then.TheEmailIsNot("wade@rpc"),
-          Then.TheEmailIs("adam@email.com"),
-          Then.ThePasswordIs("secret"),
-          Then.ThePasswordIsNot("idk"),
-        ],
-        "wade@rpc"
-      ),
+        Given.AnEmptyState(
+          `Set the email by initial state, then set the email normally, and then check some other stuff`,
+          [
+            When.TheEmailIsSetTo("adam@email.com"),
+            When.ThePasswordIsSetTo("secret"),
+          ],
+          [
+            Then.TheEmailIsNot("wade@rpc"),
+            Then.TheEmailIs("adam@email.com"),
+            Then.ThePasswordIs("secret"),
+            Then.ThePasswordIsNot("idk"),
+          ],
+          "wade@rpc"
+        ),
 
-      Given.AnEmptyState(
-        "Don't show an email error just because the email does not validate",
-        [When.TheEmailIsSetTo("adam")],
-        [Then.ThereIsNotAnEmailError()]
-      ),
+        Given.AnEmptyState(
+          "Don't show an email error just because the email does not validate",
+          [When.TheEmailIsSetTo("adam")],
+          [Then.ThereIsNotAnEmailError()]
+        ),
 
-      Given.AnEmptyState(
-        "Do show an email error after submitting",
-        [When.TheEmailIsSetTo("adam"), When.TheLoginIsSubmitted()],
-        [Then.ThereIsAnEmailError()]
-      ),
-    ]),
+        Given.AnEmptyState(
+          "Do show an email error after submitting",
+          [When.TheEmailIsSetTo("adam"), When.TheLoginIsSubmitted()],
+          [Then.ThereIsAnEmailError()]
+        ),
+      ],
+      []
+    ),
   ];
 });
 
@@ -132,5 +139,11 @@ export default async () =>
           component.root.findByProps({ type: "password" }).props.value,
           password
         ),
+    },
+
+    // checks
+    {
+      /* @ts-ignore:next-line */
+      AnEmptyState: () => {},
     }
   );

@@ -1,62 +1,13 @@
 [
   {
     "test": {
-      "name": "LoginStore",
-      "givens": [
+      "name": "Testing the Redux store",
+      "givens": [],
+      "checks": [
         {
-          "name": "a feature",
-          "whens": [
-            {
-              "name": "TheEmailIsSetTo: adam@email.com"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheEmailIs: adam@email.com"
-            }
-          ],
-          "feature": "a feature"
-        },
-        {
-          "name": "another feature",
-          "whens": [
-            {
-              "name": "TheEmailIsSetTo: hello"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheEmailIsNot: adam@email.com"
-            }
-          ],
-          "feature": "another feature"
-        },
-        {
-          "name": "yet another feature",
-          "whens": [
-            {
-              "name": "TheEmailIsSetTo: hello"
-            },
-            {
-              "name": "TheEmailIsSetTo: aloha"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheEmailIs: aloha"
-            }
-          ],
-          "feature": "yet another feature"
-        },
-        {
-          "name": "OMG a feature!",
-          "whens": [],
-          "thens": [
-            {
-              "name": "TheEmailIs: "
-            }
-          ],
-          "feature": "OMG a feature!"
+          "feature": "imperative style",
+          "whens": {},
+          "thens": {}
         }
       ]
     },
@@ -311,7 +262,8 @@
             "error": "no_error"
           }
         }
-      ]
+      ],
+      "checks": []
     },
     "status": "pass"
   },
@@ -390,13 +342,14 @@
           ],
           "feature": "Do show an email error after submitting"
         }
-      ]
+      ],
+      "checks": []
     },
     "status": "pass"
   },
   {
     "test": {
-      "name": "idk",
+      "name": "Testing the http server",
       "givens": [
         {
           "name": "a boringfeature",
@@ -470,7 +423,13 @@
           "name": "another feature",
           "whens": [
             {
+              "name": "PostToStatus: aloha"
+            },
+            {
               "name": "PostToAdd: 4"
+            },
+            {
+              "name": "PostToStatus: hello"
             },
             {
               "name": "PostToAdd: 3"
@@ -478,10 +437,25 @@
           ],
           "thens": [
             {
+              "name": "TheStatusIs: hello"
+            },
+            {
               "name": "TheNumberIs: 7"
             }
           ],
           "feature": "another feature"
+        }
+      ],
+      "checks": [
+        {
+          "feature": "hello imperative style",
+          "whens": {},
+          "thens": {}
+        },
+        {
+          "feature": "hello imperative style II",
+          "whens": {},
+          "thens": {}
         }
       ]
     },
