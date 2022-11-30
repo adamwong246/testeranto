@@ -64,11 +64,10 @@ export const TesterantoClassicFactory = <Klass, ISS, IGS, IWS, ITS, ICS>(
       const classyGivens = mapValues(givens as any, (z) => {
         return (whens, thens, ...xtras) => {
           return new ClassyGiven(
-            `width of 1 and height of 1`,
+            `idk`,
             /* @ts-ignore:next-line */
             whens,
             thens,
-            "idk feature",
             z(...xtras)
           );
         };

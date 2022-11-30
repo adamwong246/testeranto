@@ -4,7 +4,6 @@ import {
   BaseWhen,
   BaseThen,
   BaseCheck,
-  // BaseThat,
 } from "../../base/level0/AbstractClasses";
 
 export class ClassySuite<Klass> extends BaseSuite<Klass, Klass, Klass> {}
@@ -16,10 +15,9 @@ export class ClassyGiven<Klass> extends BaseGiven<Klass, Klass, Klass> {
     name: string,
     whens: ClassyWhen<Klass>[],
     thens: ClassyThen<Klass>[],
-    feature: string,
     thing: Klass
   ) {
-    super(name, whens, thens, feature);
+    super(name, whens, thens);
     this.thing = thing;
   }
 

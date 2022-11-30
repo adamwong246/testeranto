@@ -86,10 +86,9 @@ export default <
         name: string,
         whens: BaseWhen<IStore>[],
         thens: BaseThen<any>[],
-        feature: string,
         initialValues: PreloadedState<any>
       ) {
-        super(name, whens, thens, feature);
+        super(name, whens, thens);
         this.initialValues = initialValues;
       }
 

@@ -31,18 +31,15 @@ export abstract class BaseGiven<ISubject, IStore, ISelection> {
   name: string;
   whens: BaseWhen<IStore>[];
   thens: BaseThen<ISelection>[];
-  feature: string;
 
   constructor(
     name: string,
     whens: BaseWhen<IStore>[],
-    thens: BaseThen<ISelection>[],
-    feature: string
+    thens: BaseThen<ISelection>[]
   ) {
     this.name = name;
     this.whens = whens;
     this.thens = thens;
-    this.feature = feature;
   }
 
   abstract givenThat(subject: ISubject): IStore;
@@ -52,7 +49,7 @@ export abstract class BaseGiven<ISubject, IStore, ISelection> {
   }
 
   async give(subject: ISubject) {
-    console.log(`\n - ${this.feature} - \n\nGiven: ${this.name}`);
+    console.log(`\n Given: ${this.name}`);
     const store = await this.givenThat(subject);
 
     for (const whenStep of this.whens) {

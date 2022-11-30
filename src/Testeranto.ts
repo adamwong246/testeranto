@@ -86,8 +86,8 @@ export const Testeranto = <
       };
 
       const classyGivens = mapValues(givens as any, (z) => {
-        return (somestring, whens, thens, ...xtrasW) => {
-          return new CGiven(somestring, whens, thens, somestring, z(...xtrasW));
+        return (feature, whens, thens, ...xtrasW) => {
+          return new CGiven(feature, whens, thens, z(...xtrasW));
         };
       }) as unknown as {
         [K in keyof IGS]: (

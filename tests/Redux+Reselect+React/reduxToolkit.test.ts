@@ -120,7 +120,7 @@ export default <
         feature: string,
         initialValues: any
       ) {
-        super(name, whens, thens, feature);
+        super(name, whens, thens);
         this.initialValues = initialValues;
       }
 
