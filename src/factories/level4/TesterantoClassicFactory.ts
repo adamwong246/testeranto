@@ -58,8 +58,7 @@ export const TesterantoClassicFactory = <Klass, ISS, IGS, IWS, ITS, ICS>(
       givens: ISimpleGivens<IGS, Klass>,
       whens: ISimpleWhens<IWS, Klass>,
       thens: ITypeDeTuple<ITS, Klass>,
-      checks: any, //ISimpleGivens<IGS, Klass>
-      thats: any // ITypeDeTuple<ITS, Klass>
+      checks: any //ISimpleGivens<IGS, Klass>
     ) => {
       const classyGivens = mapValues(givens as any, (z) => {
         return (whens, thens, ...xtras) => {
@@ -140,15 +139,24 @@ export const TesterantoClassicFactory = <Klass, ISS, IGS, IWS, ITS, ICS>(
           ) => ClassyCheck<Klass>;
         }
       >(thing, {}, classyGivens, classyWhens, classThens, classyChecks);
-      tests(
+
+      const t = tests(
         /* @ts-ignore:next-line */
         testerano.Suites(),
         testerano.Given(),
         testerano.When(),
+        /* @ts-ignore:next-line */
         testerano.Then(),
         testerano.Checks()
-      ).forEach(async (test) => {
-        await test.run(thing);
+      );
+
+      return t.map((tt) => {
+        return {
+          test: tt,
+          runner: async () => {
+            await tt.run(thing);
+          },
+        };
       });
     },
   };

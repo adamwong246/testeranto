@@ -14,13 +14,11 @@ export const TesterantoBasicFactory = <
     any,
     any,
     ICheckExtensions
-    // IThatExtensions
   >,
   IGS,
   IWS,
   ITS,
   ICheckExtensions
-  // IThatExtensions
 >(
   testerano: IBasicTesteranto,
   suites: any,
@@ -28,7 +26,6 @@ export const TesterantoBasicFactory = <
   whens: ISimpleWhens<IWS, IState>,
   thens: ITypeDeTuple<ITS, ISelection>,
   checks: any
-  // thats: any
 ): IBasicTesteranto => {
   return testerano;
 };

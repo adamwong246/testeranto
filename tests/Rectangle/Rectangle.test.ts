@@ -38,8 +38,6 @@ const RectangleTesteranto = TesterantoClassicFactory<
     Default; //: () => {}; //loginApp.getInitialState(),
   }
 >(Rectangle, (Suite, Given, When, Then, Check) => {
-  console.log(Check);
-  process.exit(-1);
   const RectangleSuite = Suite.Default;
   return [
     RectangleSuite(
@@ -88,16 +86,14 @@ const RectangleTesteranto = TesterantoClassicFactory<
           "imperative style",
           async ({ PostToAdd }, { TheNumberIs }) => {
             const a = await PostToAdd(2);
-            // const b = parseInt(await PostToAdd(3));
-            // await TheNumberIs(b);
-
-            // await PostToAdd(2);
-            // await TheNumberIs(7);
-            // await PostToAdd(3);
-            // await TheNumberIs(10);
-
-            // assert.equal(await PostToAdd(-15), -5);
-            // await TheNumberIs(-5);
+            const b = parseInt(await PostToAdd(3));
+            await TheNumberIs(b);
+            await PostToAdd(2);
+            await TheNumberIs(7);
+            await PostToAdd(3);
+            await TheNumberIs(10);
+            assert.equal(await PostToAdd(-15), -5);
+            await TheNumberIs(-5);
           }
         ),
       ]
@@ -105,8 +101,8 @@ const RectangleTesteranto = TesterantoClassicFactory<
   ];
 });
 
-export default () =>
-  RectangleTesteranto.run(
+export default async () =>
+  await RectangleTesteranto.run(
     {
       Default: "some default Suite",
     },
@@ -145,6 +141,7 @@ export default () =>
         assert.equal(rectangle.circumference(), circumference);
       },
     },
-    {},
-    {}
+    {
+      Default: "some default Suite",
+    }
   );

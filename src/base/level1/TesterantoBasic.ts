@@ -150,14 +150,6 @@ export abstract class TesterantoBasic<
       thens
     ) => BaseCheck<ISubject, IStore, ISelection>
   > {
-    console.log("mark3");
     return this.checkOverides;
   }
-
-  // That(): Record<
-  //   keyof ThatExtensions,
-  //   (selection: ISelection, expectation: any) => BaseThat<ISelection>
-  // > {
-  //   return this.thatOverides;
-  // }
 }

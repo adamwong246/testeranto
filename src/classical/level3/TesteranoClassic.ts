@@ -74,8 +74,8 @@ export class TesterantoClassic<
   > {
     /* @ts-ignore:next-line */
     return {
-      Default: (givenz: ClassyGiven<Klass>[], checkz: ClassyCheck<Klass>[]) =>
-        new ClassySuite<Klass>("Default constructor", givenz, checkz),
+      // Default: (givenz: ClassyGiven<Klass>[], checkz: ClassyCheck<Klass>[]) =>
+      //   new ClassySuite<Klass>("Default constructor", givenz, checkz),
     };
   }
 
