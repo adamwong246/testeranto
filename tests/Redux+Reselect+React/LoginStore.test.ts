@@ -1,7 +1,7 @@
 import { assert } from "chai";
 import { Store, AnyAction } from "redux";
 
-import ReduxTesterantoFactory from "./redux.test";
+import ReduxTesterantoFactory from "./redux.testeranto.test";
 import { IStoreState as IState } from "./app";
 
 import { loginApp } from "./app";

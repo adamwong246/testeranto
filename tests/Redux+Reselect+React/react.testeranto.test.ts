@@ -7,7 +7,7 @@ import {
   BaseThen,
   Testeranto,
   BaseCheck,
-} from "./../../index";
+} from "../../index";
 
 export default <IComponent, ISS, IGS, IWS, ITS, ICheckExtensions>(
   store,

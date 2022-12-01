@@ -1,7 +1,7 @@
 import assert from "assert";
 import { Store, AnyAction, Reducer, Selector } from "@reduxjs/toolkit";
 
-import ReduxToolkitTesterantoFactory from "./reduxToolkit.test";
+import ReduxToolkitTesterantoFactory from "./reduxToolkit.testeranto.test";
 
 import { IStoreState as IState } from "./app";
 import app from "./app";

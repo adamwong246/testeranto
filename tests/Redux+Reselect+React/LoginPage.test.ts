@@ -1,6 +1,6 @@
 import assert from "assert";
 
-import ReactTesteranto from "./react.test";
+import ReactTesteranto from "./react.testeranto.test";
 
 import LoginPage from "./LoginPage";
 
