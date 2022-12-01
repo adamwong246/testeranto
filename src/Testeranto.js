@@ -13,8 +13,8 @@ export const Testeranto = (store, tests, CSuite, CGiven, CWhen, CThen, CCheck) =
                 };
             });
             const classyGivens = mapValues(givens, (z) => {
-                return (somestring, whens, thens, ...xtrasW) => {
-                    return new CGiven(somestring, whens, thens, somestring, z(...xtrasW));
+                return (feature, whens, thens, ...xtrasW) => {
+                    return new CGiven(feature, whens, thens, z(...xtrasW));
                 };
             });
             const classyWhens = mapValues(whens, (whEn) => {
@@ -39,11 +39,18 @@ export const Testeranto = (store, tests, CSuite, CGiven, CWhen, CThen, CCheck) =
             const testerano = new MetaTesteranto(
             /* @ts-ignore:next-line */
             store, classySuites, classyGivens, classyWhens, classyThens, classyChecks);
-            for (const suite of tests(testerano.Suites(), testerano.Given(), testerano.When(), 
             /* @ts-ignore:next-line */
-            testerano.Then(), testerano.Check())) {
-                return await suite.run(store);
-            }
+            const t = tests(testerano.Suites(), testerano.Given(), testerano.When(), 
+            /* @ts-ignore:next-line */
+            testerano.Then(), testerano.Check());
+            return t.map((tt) => {
+                return {
+                    test: tt,
+                    runner: async () => {
+                        await tt.run(store);
+                    },
+                };
+            });
         },
     };
 };

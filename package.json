@@ -19,6 +19,7 @@
   },
   "types": "index.d.ts",
   "dependencies": {
+    "@testing-library/react": "^13.4.0",
     "@types/chai": "^4.3.4",
     "@types/lodash": "^4.14.189",
     "chai": "^4.3.7",

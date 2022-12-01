@@ -1,4 +1,3 @@
-import { ClassySuite, } from "./../level2/TesterantoClasses";
 export class TesterantoClassic {
     constructor(cc, suites, givenOverides, whenOverides, thenOverides, checkOverides) {
         this.cc = cc;
@@ -11,7 +10,8 @@ export class TesterantoClassic {
     Suites() {
         /* @ts-ignore:next-line */
         return {
-            Default: (givenz, checkz) => new ClassySuite("Default constructor", givenz, checkz),
+        // Default: (givenz: ClassyGiven<Klass>[], checkz: ClassyCheck<Klass>[]) =>
+        //   new ClassySuite<Klass>("Default constructor", givenz, checkz),
         };
     }
     Given() {

@@ -14,9 +14,9 @@ export class ClassicalComponent extends React.Component<IProps, IState> {
     return (
       <div style={{ border: '2px solid red' }}>
         <h1>Hello Classical React</h1>
-        <pre>{JSON.stringify(this.props)}</pre>
+        <pre id="theProps">{JSON.stringify(this.props)}</pre>
         <p>foo: {this.props.foo}</p>
-        <pre>{JSON.stringify(this.state)}</pre>
+        <pre id="theState">{JSON.stringify(this.state)}</pre>
         <p>count: {this.state.count} times</p>
         <button onClick={() => this.setState({ count: this.state.count + 1 })}>
           Click

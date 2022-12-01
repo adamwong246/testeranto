@@ -3,14 +3,13 @@ import { ClassyGiven, ClassyWhen, ClassyThen, ClassyCheck, } from "../../classic
 import { TesterantoClassic } from "../../classical/level3/TesteranoClassic";
 export const TesterantoClassicFactory = (thing, tests) => {
     return {
-        run: (suites, givens, whens, thens, checks, //ISimpleGivens<IGS, Klass>
-        thats // ITypeDeTuple<ITS, Klass>
+        run: (suites, givens, whens, thens, checks //ISimpleGivens<IGS, Klass>
         ) => {
             const classyGivens = mapValues(givens, (z) => {
                 return (whens, thens, ...xtras) => {
-                    return new ClassyGiven(`width of 1 and height of 1`, 
+                    return new ClassyGiven(`idk`, 
                     /* @ts-ignore:next-line */
-                    whens, thens, "idk feature", z(...xtras));
+                    whens, thens, z(...xtras));
                 };
             });
             const classyWhens = mapValues(whens, (testHookImplementation) => {
@@ -27,10 +26,18 @@ export const TesterantoClassicFactory = (thing, tests) => {
                 };
             });
             const testerano = new TesterantoClassic(thing, {}, classyGivens, classyWhens, classThens, classyChecks);
-            tests(
+            const t = tests(
             /* @ts-ignore:next-line */
-            testerano.Suites(), testerano.Given(), testerano.When(), testerano.Then(), testerano.Checks()).forEach(async (test) => {
-                await test.run(thing);
+            testerano.Suites(), testerano.Given(), testerano.When(), 
+            /* @ts-ignore:next-line */
+            testerano.Then(), testerano.Checks());
+            return t.map((tt) => {
+                return {
+                    test: tt,
+                    runner: async () => {
+                        await tt.run(thing);
+                    },
+                };
             });
         },
     };

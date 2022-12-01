@@ -331,109 +331,26 @@
   },
   {
     "test": {
-      "name": "Testing the http server",
+      "name": "idk",
       "givens": [
         {
-          "name": "a boringfeature",
-          "whens": [],
-          "thens": [
-            {
-              "name": "TheStatusIs: some great status"
-            }
-          ]
-        },
-        {
-          "name": "a feature",
+          "name": "idk",
           "whens": [
             {
-              "name": "PostToStatus: hello"
+              "name": "IClickTheButton: undefined"
             }
           ],
           "thens": [
             {
-              "name": "TheStatusIs: hello"
-            }
-          ]
-        },
-        {
-          "name": "a feature",
-          "whens": [
-            {
-              "name": "PostToStatus: hello"
+              "name": "ThePropsIs: [object Object]"
             },
             {
-              "name": "PostToStatus: aloha"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheStatusIs: aloha"
-            }
-          ]
-        },
-        {
-          "name": "a feature",
-          "whens": [],
-          "thens": [
-            {
-              "name": "TheNumberIs: 0"
-            }
-          ]
-        },
-        {
-          "name": "a feature",
-          "whens": [
-            {
-              "name": "PostToAdd: 1"
-            },
-            {
-              "name": "PostToAdd: 2"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheNumberIs: 3"
-            }
-          ]
-        },
-        {
-          "name": "another feature",
-          "whens": [
-            {
-              "name": "PostToStatus: aloha"
-            },
-            {
-              "name": "PostToAdd: 4"
-            },
-            {
-              "name": "PostToStatus: hello"
-            },
-            {
-              "name": "PostToAdd: 3"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheStatusIs: hello"
-            },
-            {
-              "name": "TheNumberIs: 7"
+              "name": "TheStatusIs: [object Object]"
             }
           ]
         }
       ],
-      "checks": [
-        {
-          "feature": "hello imperative style",
-          "whens": {},
-          "thens": {}
-        },
-        {
-          "feature": "hello imperative style II",
-          "whens": {},
-          "thens": {}
-        }
-      ]
+      "checks": []
     },
     "status": "pass"
   }

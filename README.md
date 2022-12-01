@@ -192,6 +192,6 @@ Because testerano is so unopinionated, it does not provide test infrastructure. 
 - [Testing a React Component with Reselect Selector based on a Redux store](/tests/Redux+Reselect+React/LoginPage.test.ts)
 - [Testing an http server with node's fetch](/tests/httpServer/http.testerano.test.ts.test.ts)
 - [Testing an http server with puppeteer](/tests/httpServer/puppeteer.testeranto.test.ts)
-- [Testing a react component with puppeteer](/tests/ClassicalReact/react-on-puppeteer.testeranto.test.ts)
+- [Testing a react component with puppeteer](/tests/ClassicalReact/ClassicalReact.testeranto.test.ts)
 
 ### philosophy

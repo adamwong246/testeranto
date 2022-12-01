@@ -16,17 +16,16 @@ export class BaseSuite {
     }
 }
 export class BaseGiven {
-    constructor(name, whens, thens, feature) {
+    constructor(name, whens, thens) {
         this.name = name;
         this.whens = whens;
         this.thens = thens;
-        this.feature = feature;
     }
     async teardown(subject) {
         return subject;
     }
     async give(subject) {
-        console.log(`\n - ${this.feature} - \n\nGiven: ${this.name}`);
+        console.log(`\n Given: ${this.name}`);
         const store = await this.givenThat(subject);
         for (const whenStep of this.whens) {
             await whenStep.test(store);

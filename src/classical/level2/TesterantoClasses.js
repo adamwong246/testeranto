@@ -1,11 +1,9 @@
-import { BaseSuite, BaseGiven, BaseWhen, BaseThen, BaseCheck,
-// BaseThat,
- } from "../../base/level0/AbstractClasses";
+import { BaseSuite, BaseGiven, BaseWhen, BaseThen, BaseCheck, } from "../../base/level0/AbstractClasses";
 export class ClassySuite extends BaseSuite {
 }
 export class ClassyGiven extends BaseGiven {
-    constructor(name, whens, thens, feature, thing) {
-        super(name, whens, thens, feature);
+    constructor(name, whens, thens, thing) {
+        super(name, whens, thens);
         this.thing = thing;
     }
     givenThat() {

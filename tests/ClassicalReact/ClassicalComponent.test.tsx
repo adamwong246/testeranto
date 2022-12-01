@@ -1,63 +1,39 @@
+import renderer, { act, ReactTestRenderer } from "react-test-renderer";
 import assert from "assert";
-import { Store, AnyAction, Reducer, Selector } from "@reduxjs/toolkit";
 
-// import ReduxToolkitTesterantoFactory from "./reduxToolkit.test";
-import TesteranoFactory from "./react-on-puppeteer.testeranto.test";
-
-// import { IStoreState as IState } from "./app";
-// import app from "./app";
-// import { ILoginPageSelection } from "./LoginPage";
+import TesteranoFactory from "./ClassicalReact.testeranto.test";
 
 import { ClassicalComponent } from "./ClassicalComponent";
 import type { IProps, IState } from "./ClassicalComponent";
 
-// const core = app();
-// const selector = core.select.loginPageSelection;
-// const actions = core.app.actions;
-// const reducer = core.app.reducer;
-
-// type IStore = Store<IState, AnyAction>;
-
-// export type ISubject = {
-//   reducer: Reducer<IState, AnyAction>;
-//   selector: Selector;
-// };
-
-type ISuites = {
-  Default: string;
-};
-
-type IGivens = {
-  AnEmptyState: [];
-};
-
-type IWhens = {
-  IClickTheButton;
-};
-
-type IThens = {
-  ThePropsIs: [IProps];
-  TheStatusIs: [IState];
-};
-
-type IChecks = {
-  AnEmptyState: [];
-};
-
-const LoginSelectorTesteranto = TesteranoFactory<
-  ISuites,
-  IGivens,
-  IWhens,
-  IThens,
-  IChecks
->(() => new ClassicalComponent({}), (Suite, Given, When, Then, Check) => {
+const ClassicalReactTesteranto = TesteranoFactory<
+  {
+    Default: string;
+  },
+  {
+    AnEmptyState: [];
+  },
+  {
+    IClickTheButton;
+  },
+  {
+    ThePropsIs: [IProps];
+    TheStatusIs: [IState];
+  },
+  {
+    AnEmptyState: [];
+  }
+>(ClassicalComponent, (Suite, Given, When, Then, Check) => {
   return [
     Suite.Default("idk", [
-      Given.AStateWithEmail(
-        "something",
-        [When.TheEmailIsSetTo("bob"), Then.TheEmailIs("bob")],
-        [When.TheEmailIsSetTo("foo"), Then.TheEmailIs("foo")],
-        3
+      Given.AnEmptyState("idk",
+        [
+          When.IClickTheButton()
+        ],
+        [
+          Then.ThePropsIs({ "children": [] }),
+          Then.TheStatusIs({ "count": 1 }),
+        ]
       ),
 
     ], [
@@ -66,63 +42,87 @@ const LoginSelectorTesteranto = TesteranoFactory<
   ];
 });
 
-export default async () => {
-  await LoginSelectorTesteranto.run(
+export default async () =>
+  await ClassicalReactTesteranto.run(
     {
       Default: "a default suite",
     },
     {
       AnEmptyState: () => {
         return {
-          password: "",
-          email: "",
-          error: "no_error",
-        };
-      },
-      /* @ts-ignore:next-line */
-      AStateWithEmail: (email) => {
-        return {
-          password: "",
-          email,
-          error: "no_error",
+
         };
       },
     },
     {
-      TheLoginIsSubmitted: () => [core.app.actions.signIn],
-      TheEmailIsSetTo: (email) => [core.app.actions.setEmail, email],
-      ThePasswordIsSetTo: (password) => [
-        core.app.actions.setPassword,
-        password,
-      ],
+      IClickTheButton: () => (component) =>
+        component.root.findByType("button").props.onClick(),
     },
     {
-      TheEmailIs: (email) => (selection) =>
-        assert.equal(selection.email, email),
-      TheEmailIsNot: (email) => (selection) =>
-        assert.notEqual(selection.email, email),
-      ThePasswordIs: (password) => (selection) =>
-        assert.equal(selection.password, password),
-      ThePasswordIsNot: (password) => (selection) =>
-        assert.notEqual(selection.password, password),
-      ThereIsNotAnEmailError: () => (selection) =>
-        assert.notEqual(selection.error, "invalidEmail"),
-      TheSubmitButtonShouldBeEnabled: () => (selection) =>
-        assert(!selection.disableSubmit),
-      TheSubmitButtonShouldNotBeEnabled: () => (selection) =>
-        assert(selection.disableSubmit),
-      ThereIsAnEmailError: () => (selection) =>
-        assert.equal(selection.error, "invalidEmail"),
+      ThePropsIs: (expectation) => (component: renderer.ReactTestRenderer) => {
+        const x = component.toJSON() as any;
+
+        return assert.deepEqual(x.children[1], {
+          type: 'pre',
+          props: { id: 'theProps' },
+          children: [
+            JSON.stringify(expectation)
+          ]
+        })
+      },
+
+      TheStatusIs: (expectation) => (component) => {
+        const x = component.toJSON() as any;
+
+        return assert.deepEqual(x.children[3], {
+          type: 'pre',
+          props: { id: 'theState' },
+          children: [
+            JSON.stringify(expectation)
+          ]
+        })
+      },
     },
 
     {
       AnEmptyState: () => {
         return {
-          password: "",
-          email: "",
-          error: "no_error",
+
         };
       },
     }
   );
-};
+
+
+// import * as ReactDOMServer from "react-dom/server";
+// import { ClassicalComponent } from "./ClassicalReact/ClassicalComponent";
+// import React from "react";
+
+// const puppeteer = require("puppeteer");
+// // import * as puppeteer from 'puppeteer';
+
+// const doIt = async () => {
+//   console.log("start");
+//   const browser = await puppeteer.launch({
+//     headless: true,
+//     executablePath:
+//       "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+//   });
+//   console.log("launched");
+//   const page = await browser.newPage();
+//   console.log("navigated");
+//   await page.goto("https://adamwong246.github.io/resume.html");
+
+//   const htmlContent = ReactDOMServer.renderToString(
+//     React.createElement(ClassicalComponent, { foo: "hello puppeteer!" }, [])
+//   );
+//   await page.setContent(htmlContent);
+
+//   console.log("navigated");
+//   await page.screenshot({ path: `./dist/screenshot.jpg` });
+//   console.log("done");
+//   process.exit(0);
+// };
+
+// doIt();
+//

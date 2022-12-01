@@ -75,7 +75,7 @@ export default <IComponent, ISS, IGS, IWS, ITS, ICheckExtensions>(
     },
 
     class ReactWhen extends BaseWhen<ReactTestRenderer> {
-      andWhen(store: renderer.ReactTestRenderer, x) {
+      andWhen(store: renderer.ReactTestRenderer) {
         return act(() => this.actioner(store));
       }
     },
