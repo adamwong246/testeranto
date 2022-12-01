@@ -77,7 +77,6 @@ export default <
       (
         feature: string,
         callback: (whens, thens) => any
-        // thats: BaseThat<IStore>[],
         // ...xtraArgsForGiven: any //{ [ISuite in keyof IGS]: IGS[ISuite] }[]
       ) => BaseCheck<any, IStore, IStore>
     >
@@ -92,7 +91,7 @@ export default <
     IGS,
     IWS,
     ITS,
-    ISimplerThens<ITS, IState>,
+    // ISimplerThens<ITS, IState>,
     ICheckExtensions
   >(
     store,

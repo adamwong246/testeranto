@@ -1,7 +1,7 @@
 import { assert } from "chai";
 import { ITypeDeTuple } from "../../src/shared";
 
-import HttpTesterantoFactory from "./http.testerano.test";
+import HttpTesterantoFactory from "./http.testeranto.test";
 
 import { serverFactory } from "./server";
 

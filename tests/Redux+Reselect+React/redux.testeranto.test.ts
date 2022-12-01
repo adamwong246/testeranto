@@ -1,4 +1,3 @@
-import { act } from "react-test-renderer";
 import { createStore, Store, AnyAction, PreloadedState } from "redux";
 import {
   BaseCheck,
@@ -8,13 +7,6 @@ import {
   BaseWhen,
   Testeranto,
 } from "../../index";
-
-type ISimpleThensForRedux<IThens> = {
-  [IThen in keyof IThens]: (
-    /* @ts-ignore:next-line */
-    ...xtras: IThens[IThen]
-  ) => any;
-};
 
 export default <
   IStore extends Store<IState, AnyAction>,
@@ -52,7 +44,6 @@ export default <
       (
         feature: string,
         callback: (whens, thens) => any
-        // thats: BaseThat<IStore>[],
         // ...xtraArgsForGiven: any //{ [ISuite in keyof IGS]: IGS[ISuite] }[]
       ) => BaseCheck<any, IStore, IStore>
     >
@@ -67,7 +58,6 @@ export default <
     IGS,
     IWS,
     ITS,
-    ISimpleThensForRedux<ITS>,
     ICheckExtensions
   >(
     store,

@@ -12,13 +12,6 @@ import {
   Testeranto,
 } from "../../index";
 
-type ISimpleThensForRedux<IThens> = {
-  [IThen in keyof IThens]: (
-    /* @ts-ignore:next-line */
-    ...xtras: IThens[IThen]
-  ) => any;
-};
-
 export default <ISS, IGS, IWS, ITS, ICheckExtensions>(
   reactComponent: typeof React.Component,
   tests: (
@@ -61,7 +54,7 @@ export default <ISS, IGS, IWS, ITS, ICheckExtensions>(
     IGS,
     IWS,
     ITS,
-    ISimpleThensForRedux<ITS>,
+    // ISimpleThensForRedux<ITS>,
     ICheckExtensions
   >(
     reactComponent,

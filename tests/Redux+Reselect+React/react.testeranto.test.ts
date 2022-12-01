@@ -42,13 +42,6 @@ export default <IComponent, ISS, IGS, IWS, ITS, ICheckExtensions>(
     IGS,
     IWS,
     ITS,
-    {
-      [IThen in keyof ITS]: (
-        // arg0: ReactTestRenderer,
-        /* @ts-ignore:next-line */
-        ...xtrasQW: IThens[IThen]
-      ) => any;
-    },
     ICheckExtensions
   >(
     store,

@@ -14,6 +14,13 @@ import {
   ITypeDeTuple,
 } from "./shared";
 
+type ISimpleThensForRedux<IThens> = {
+  [IThen in keyof IThens]: (
+    /* @ts-ignore:next-line */
+    ...xtras: IThens[IThen]
+  ) => any;
+};
+
 export const Testeranto = <
   IStore,
   ISubject,
@@ -23,7 +30,7 @@ export const Testeranto = <
   IGS,
   IWS,
   ITS,
-  IThenShape,
+  // IThenShape,
   ICheckExtensions
 >(
   store: ISubject,
@@ -46,7 +53,7 @@ export const Testeranto = <
       ) => BaseGiven<any, any, any>
     >,
     w: ISimpleWhens<IWS, IStore>,
-    t: IThenShape,
+    t: ISimpleThensForRedux<ITS>,
     check: Record<
       keyof ICheckExtensions,
       (

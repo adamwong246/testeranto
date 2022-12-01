@@ -15,13 +15,6 @@ import {
 } from "../../index";
 import { serverFactory } from "./server";
 
-type ISimpleThensForRedux<IThens> = {
-  [IThen in keyof IThens]: (
-    /* @ts-ignore:next-line */
-    ...xtras: IThens[IThen]
-  ) => any;
-};
-
 export default <ISS, IGS, IWS, ITS, ICheckExtensions>(
   serverfactory: () => http.Server,
   tests: (
@@ -57,18 +50,7 @@ export default <ISS, IGS, IWS, ITS, ICheckExtensions>(
     // That: Record<keyof IThatExtensions, any>
   ) => BaseSuite<any, any, any>[]
 ) => {
-  return Testeranto<
-    any,
-    any,
-    any,
-    any,
-    ISS,
-    IGS,
-    IWS,
-    ITS,
-    ISimpleThensForRedux<ITS>,
-    ICheckExtensions
-  >(
+  return Testeranto<any, any, any, any, ISS, IGS, IWS, ITS, ICheckExtensions>(
     serverfactory,
     tests,
     class HttpSuite extends BaseSuite<any, any, any> {},
