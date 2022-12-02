@@ -17,12 +17,13 @@ export abstract class BaseSuite<ISubject, IStore, ISelection> {
 
   async run(subject) {
     console.log("\nSuite:", this.name);
-    for (const givenThat of this.givens) {
-      await givenThat.give(subject);
+
+    for (const [ndx, givenThat] of this.givens.entries()) {
+      await givenThat.give(subject, ndx);
     }
 
-    for (const checkThat of this.checks) {
-      await checkThat.check(subject);
+    for (const [ndx, checkThat] of this.checks.entries()) {
+      await checkThat.check(subject, ndx);
     }
   }
 }
@@ -44,11 +45,11 @@ export abstract class BaseGiven<ISubject, IStore, ISelection> {
 
   abstract givenThat(subject: ISubject): IStore;
 
-  async teardown(subject: any) {
+  async teardown(subject: any, ndx: number) {
     return subject;
   }
 
-  async give(subject: ISubject) {
+  async give(subject: ISubject, index: number) {
     console.log(`\n Given: ${this.name}`);
     const store = await this.givenThat(subject);
 
@@ -60,7 +61,7 @@ export abstract class BaseGiven<ISubject, IStore, ISelection> {
       await thenStep.test(store);
     }
 
-    await this.teardown(store);
+    await this.teardown(store, index);
     return;
   }
 }
@@ -117,7 +118,7 @@ export abstract class BaseCheck<ISubject, IStore, ISelection> {
     return subject;
   }
 
-  async check(subject: ISubject) {
+  async check(subject: ISubject, ndx: number) {
     console.log(`\n - \nCheck: ${this.feature}`);
     const store = await this.checkThat(subject);
     await this.callback(

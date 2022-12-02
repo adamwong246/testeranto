@@ -6,10 +6,8 @@ import { ClassicalComponent } from "./ClassicalComponent";
 console.log("hello esbuild");
 
 document.addEventListener("DOMContentLoaded", function () {
-  const elem = document.getElementById("body-children");
+  const elem = document.getElementById("root");
   if (elem) {
-    return ReactDom.createRoot(elem).render(
-      React.createElement(ClassicalComponent)
-    );
+    ReactDom.createRoot(elem).render(React.createElement(ClassicalComponent));
   }
 });

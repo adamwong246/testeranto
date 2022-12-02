@@ -12,11 +12,11 @@ import reporter from "../src/reporter";
 reporter([
   // Rectangle(),
 
-  // LoginStore(),
-  // LoginSelector(),
-  // LoginPage(),
-  // HttpServerTests(),
+  LoginStore(),
+  LoginSelector(),
+  LoginPage(),
+  HttpServerTests(),
 
-  // ClassicalReactTests(),
+  ClassicalReactTests(),
   ClassicalReactEsBuildPuppeteer(),
 ]);

@@ -5,6 +5,7 @@ import TesteranoFactory from "./esbuild-puppeteer.testeranto.test";
 
 import { ClassicalComponent } from "./ClassicalComponent";
 import type { IProps, IState } from "./ClassicalComponent";
+import { Page } from "puppeteer";
 
 const ClassicalReactTesteranto = TesteranoFactory<
   {
@@ -26,12 +27,40 @@ const ClassicalReactTesteranto = TesteranoFactory<
 >(ClassicalComponent, (Suite, Given, When, Then, Check) => {
   return [
     Suite.Default(
-      "idk",
+      "a classical react component, bundled with esbuild and tested with puppeteer",
       [
         Given.AnEmptyState(
-          "idk",
+          "default",
+          [],
+          [Then.ThePropsIs({}), Then.TheStatusIs({ count: 0 })]
+        ),
+        Given.AnEmptyState(
+          "default",
           [When.IClickTheButton()],
-          [Then.ThePropsIs({ children: [] }), Then.TheStatusIs({ count: 1 })]
+          [Then.ThePropsIs({}), Then.TheStatusIs({ count: 1 })]
+        ),
+
+        Given.AnEmptyState(
+          "default",
+          [
+            When.IClickTheButton(),
+            When.IClickTheButton(),
+            When.IClickTheButton(),
+          ],
+          [Then.TheStatusIs({ count: 3 })]
+        ),
+
+        Given.AnEmptyState(
+          "default",
+          [
+            When.IClickTheButton(),
+            When.IClickTheButton(),
+            When.IClickTheButton(),
+            When.IClickTheButton(),
+            When.IClickTheButton(),
+            When.IClickTheButton(),
+          ],
+          [Then.TheStatusIs({ count: 6 })]
         ),
       ],
       []
@@ -40,7 +69,9 @@ const ClassicalReactTesteranto = TesteranoFactory<
 });
 
 export default async () =>
-  await ClassicalReactTesteranto.run(
+  await (
+    await ClassicalReactTesteranto
+  ).run(
     {
       Default: "a default suite",
     },
@@ -50,29 +81,21 @@ export default async () =>
       },
     },
     {
-      IClickTheButton: () => (component) =>
-        component.root.findByType("button").props.onClick(),
+      IClickTheButton: () => async (page: Page) =>
+        await page.click("#theButton"),
     },
     {
-      ThePropsIs: (expectation) => (component: renderer.ReactTestRenderer) => {
-        const x = component.toJSON() as any;
+      ThePropsIs: (expectation) => async (page: Page) =>
+        assert.deepEqual(
+          await page.$eval("#theProps", (el) => el.innerHTML),
+          JSON.stringify(expectation)
+        ),
 
-        return assert.deepEqual(x.children[1], {
-          type: "pre",
-          props: { id: "theProps" },
-          children: [JSON.stringify(expectation)],
-        });
-      },
-
-      TheStatusIs: (expectation) => (component) => {
-        const x = component.toJSON() as any;
-
-        return assert.deepEqual(x.children[3], {
-          type: "pre",
-          props: { id: "theState" },
-          children: [JSON.stringify(expectation)],
-        });
-      },
+      TheStatusIs: (expectation) => async (page: Page) =>
+        assert.deepEqual(
+          await page.$eval("#theState", (el) => el.innerHTML),
+          JSON.stringify(expectation)
+        ),
     },
 
     {
@@ -81,36 +104,3 @@ export default async () =>
       },
     }
   );
-
-// import * as ReactDOMServer from "react-dom/server";
-// import { ClassicalComponent } from "./ClassicalReact/ClassicalComponent";
-// import React from "react";
-
-// const puppeteer = require("puppeteer");
-// // import * as puppeteer from 'puppeteer';
-
-// const doIt = async () => {
-//   console.log("start");
-//   const browser = await puppeteer.launch({
-//     headless: true,
-//     executablePath:
-//       "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-//   });
-//   console.log("launched");
-//   const page = await browser.newPage();
-//   console.log("navigated");
-//   await page.goto("https://adamwong246.github.io/resume.html");
-
-//   const htmlContent = ReactDOMServer.renderToString(
-//     React.createElement(ClassicalComponent, { foo: "hello puppeteer!" }, [])
-//   );
-//   await page.setContent(htmlContent);
-
-//   console.log("navigated");
-//   await page.screenshot({ path: `./dist/screenshot.jpg` });
-//   console.log("done");
-//   process.exit(0);
-// };
-
-// doIt();
-//
