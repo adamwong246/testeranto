@@ -1,7 +1,7 @@
 import renderer, { act, ReactTestRenderer } from "react-test-renderer";
 import assert from "assert";
 
-import TesteranoFactory from "./ClassicalReact.testeranto.test";
+import TesteranoFactory from "./react-test-renderer.testeranto.test";
 
 import { ClassicalComponent } from "./ClassicalComponent";
 import type { IProps, IState } from "./ClassicalComponent";

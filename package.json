@@ -13,7 +13,7 @@
     "cucumber"
   ],
   "scripts": {
-    "test": "yarn webpack -c test.webpack.config.js && node ./dist/test.bundle.js",
+    "testeranto!": "ts-node ./tests/index.ts",
     "testrun": "node --inspect ./dist/test.bundle.js",
     "prepublish": "tsc"
   },
@@ -23,8 +23,11 @@
     "@types/chai": "^4.3.4",
     "@types/lodash": "^4.14.189",
     "chai": "^4.3.7",
+    "esbuild": "^0.15.16",
+    "ignore-loader": "^0.1.2",
     "lodash": "^4.17.21",
-    "puppeteer": "^19.3.0"
+    "puppeteer": "^19.3.0",
+    "ts-node": "^10.9.1"
   },
   "devDependencies": {
     "@babel/core": "^7.19.6",

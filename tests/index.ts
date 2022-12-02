@@ -4,7 +4,8 @@ import LoginStore from "./Redux+Reselect+React/LoginStore.test";
 import LoginPage from "./Redux+Reselect+React/LoginPage.test";
 import HttpServerTests from "./httpServer/server.http.test";
 
-import ClassicalReactTests from "./ClassicalReact/ClassicalComponent.test";
+import ClassicalReactTests from "./ClassicalReact/ClassicalComponent.react-test-renderer.test";
+import ClassicalReactEsBuildPuppeteer from "./ClassicalReact/ClassicalComponent.esbuild-puppeteer.test";
 
 import reporter from "../src/reporter";
 
@@ -14,7 +15,8 @@ reporter([
   LoginStore(),
   LoginSelector(),
   LoginPage(),
-  // HttpServerTests(),
+  HttpServerTests(),
 
   ClassicalReactTests(),
+  ClassicalReactEsBuildPuppeteer(),
 ]);

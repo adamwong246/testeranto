@@ -1,0 +1,60 @@
+Arguments: 
+  /Users/adam/.nvm/versions/node/v18.9.0/bin/node /Users/adam/.nvm/versions/node/v18.9.0/bin/yarn add esbuild
+
+PATH: 
+  /Users/adam/.yarn/bin:/Users/adam/.config/yarn/global/node_modules/.bin:/Users/adam/.nvm/versions/node/v18.9.0/bin:/Users/adam/.nvm/versions/node/v18.9.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/adam/.yarn/bin:/Users/adam/.config/yarn/global/node_modules/.bin:/Users/adam/.nvm/versions/node/v18.9.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/adam/.cargo/bin:/Users/adam/.rvm/bin:/Users/adam/.rvm/bin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  18.9.0
+
+Platform: 
+  darwin arm64
+
+Trace: 
+  SyntaxError: /Users/adam/Code/testeranto.ts/tests/ClassicalReact/package.json: Unexpected token } in JSON at position 798
+      at JSON.parse (<anonymous>)
+      at /Users/adam/.nvm/versions/node/v18.9.0/lib/node_modules/yarn/lib/cli.js:1629:59
+      at Generator.next (<anonymous>)
+      at step (/Users/adam/.nvm/versions/node/v18.9.0/lib/node_modules/yarn/lib/cli.js:310:30)
+      at /Users/adam/.nvm/versions/node/v18.9.0/lib/node_modules/yarn/lib/cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "ClassicalComponent",
+    "version": "0.0.1",
+    "main": "index.js",
+    "homepage": "https://github.com/adamwong246/testeranto.ts",
+    "author": "adam wong <adamwong246@gmail.com>",
+    "license": "MIT",
+    "scripts": {},
+    "types": "index.d.ts",
+    "dependencies": {
+      "@testing-library/react": "^13.4.0",
+      "@types/chai": "^4.3.4",
+      "@types/lodash": "^4.14.189",
+      "chai": "^4.3.7",
+      "lodash": "^4.17.21",
+      "puppeteer": "^19.3.0"
+    },
+    "devDependencies": {
+      "@reduxjs/toolkit": "^1.8.6",
+      "@types/react": "^18.0.21",
+      "@types/react-dom": "^18.0.6",
+      "@types/react-test-renderer": "^18.0.0",
+      "react": "18.2.0",
+      "react-dom": "^18.2.0",
+      "react-redux": "^8.0.4",
+      "react-test-renderer": "^18.2.0",
+      "ts-loader": "^9.3.1",
+      "typescript": "4.8.2",
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
