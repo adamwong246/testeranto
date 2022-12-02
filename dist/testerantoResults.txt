@@ -14,7 +14,12 @@
             {
               "name": "TheEmailIs: adam@email.com"
             }
-          ]
+          ],
+          "initialValues": {
+            "password": "",
+            "email": "",
+            "error": "no_error"
+          }
         },
         {
           "name": "another feature",
@@ -27,7 +32,12 @@
             {
               "name": "TheEmailIsNot: adam@email.com"
             }
-          ]
+          ],
+          "initialValues": {
+            "password": "",
+            "email": "12",
+            "error": "no_error"
+          }
         },
         {
           "name": "yet another feature",
@@ -43,7 +53,12 @@
             {
               "name": "TheEmailIs: aloha"
             }
-          ]
+          ],
+          "initialValues": {
+            "password": "",
+            "email": "",
+            "error": "no_error"
+          }
         },
         {
           "name": "OMG a feature!",
@@ -52,7 +67,12 @@
             {
               "name": "TheEmailIs: "
             }
-          ]
+          ],
+          "initialValues": {
+            "password": "",
+            "email": "",
+            "error": "no_error"
+          }
         }
       ],
       "checks": [
@@ -63,7 +83,7 @@
         }
       ]
     },
-    "status": "pass"
+    "status": {}
   },
   {
     "test": {
@@ -86,7 +106,12 @@
             {
               "name": "TheEmailIs: foo"
             }
-          ]
+          ],
+          "initialValues": {
+            "password": "",
+            "email": 3,
+            "error": "no_error"
+          }
         },
         {
           "name": "Set the email and check the email",
@@ -99,7 +124,12 @@
             {
               "name": "TheEmailIs: adam@email.com"
             }
-          ]
+          ],
+          "initialValues": {
+            "password": "",
+            "email": "",
+            "error": "no_error"
+          }
         },
         {
           "name": "Set the email by initial state, then set the email normally, and then check some other stuff",
@@ -121,7 +151,12 @@
             {
               "name": "ThePasswordIsNot: idk"
             }
-          ]
+          ],
+          "initialValues": {
+            "password": "",
+            "email": "wade@rpc",
+            "error": "no_error"
+          }
         },
         {
           "name": "Don't show an email error just because the email does not validate",
@@ -134,7 +169,12 @@
             {
               "name": "ThereIsNotAnEmailError: undefined"
             }
-          ]
+          ],
+          "initialValues": {
+            "password": "",
+            "email": "",
+            "error": "no_error"
+          }
         },
         {
           "name": "Put some data in both fields to enable the submit button. Email does not need to be valid!",
@@ -150,7 +190,12 @@
             {
               "name": "TheSubmitButtonShouldBeEnabled: undefined"
             }
-          ]
+          ],
+          "initialValues": {
+            "password": "",
+            "email": "",
+            "error": "no_error"
+          }
         },
         {
           "name": "Don't enable the submit button if password is blank",
@@ -166,7 +211,12 @@
             {
               "name": "TheSubmitButtonShouldNotBeEnabled: undefined"
             }
-          ]
+          ],
+          "initialValues": {
+            "password": "",
+            "email": "",
+            "error": "no_error"
+          }
         },
         {
           "name": "Don't enable the submit button if email is blank",
@@ -182,7 +232,12 @@
             {
               "name": "TheSubmitButtonShouldNotBeEnabled: undefined"
             }
-          ]
+          ],
+          "initialValues": {
+            "password": "",
+            "email": "",
+            "error": "no_error"
+          }
         },
         {
           "name": "Don't enable the submit button if you haven't entered a password",
@@ -195,7 +250,12 @@
             {
               "name": "TheSubmitButtonShouldNotBeEnabled: undefined"
             }
-          ]
+          ],
+          "initialValues": {
+            "password": "",
+            "email": "",
+            "error": "no_error"
+          }
         },
         {
           "name": "Don't enable the submit button if you haven't entered an email",
@@ -208,7 +268,12 @@
             {
               "name": "TheSubmitButtonShouldNotBeEnabled: undefined"
             }
-          ]
+          ],
+          "initialValues": {
+            "password": "",
+            "email": "",
+            "error": "no_error"
+          }
         },
         {
           "name": "Check for email validations only after you've pressed the submit button 1/2",
@@ -224,7 +289,12 @@
             {
               "name": "TheSubmitButtonShouldNotBeEnabled: undefined"
             }
-          ]
+          ],
+          "initialValues": {
+            "password": "",
+            "email": "",
+            "error": "no_error"
+          }
         },
         {
           "name": "Check for email validations only after you've pressed the submit button 2/2",
@@ -246,7 +316,12 @@
             {
               "name": "TheSubmitButtonShouldBeEnabled: undefined"
             }
-          ]
+          ],
+          "initialValues": {
+            "password": "",
+            "email": "",
+            "error": "no_error"
+          }
         }
       ],
       "checks": []
@@ -326,114 +401,6 @@
         }
       ],
       "checks": []
-    },
-    "status": "pass"
-  },
-  {
-    "test": {
-      "name": "Testing the http server",
-      "givens": [
-        {
-          "name": "a boringfeature",
-          "whens": [],
-          "thens": [
-            {
-              "name": "TheStatusIs: some great status"
-            }
-          ]
-        },
-        {
-          "name": "a feature",
-          "whens": [
-            {
-              "name": "PostToStatus: hello"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheStatusIs: hello"
-            }
-          ]
-        },
-        {
-          "name": "a feature",
-          "whens": [
-            {
-              "name": "PostToStatus: hello"
-            },
-            {
-              "name": "PostToStatus: aloha"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheStatusIs: aloha"
-            }
-          ]
-        },
-        {
-          "name": "a feature",
-          "whens": [],
-          "thens": [
-            {
-              "name": "TheNumberIs: 0"
-            }
-          ]
-        },
-        {
-          "name": "a feature",
-          "whens": [
-            {
-              "name": "PostToAdd: 1"
-            },
-            {
-              "name": "PostToAdd: 2"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheNumberIs: 3"
-            }
-          ]
-        },
-        {
-          "name": "another feature",
-          "whens": [
-            {
-              "name": "PostToStatus: aloha"
-            },
-            {
-              "name": "PostToAdd: 4"
-            },
-            {
-              "name": "PostToStatus: hello"
-            },
-            {
-              "name": "PostToAdd: 3"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheStatusIs: hello"
-            },
-            {
-              "name": "TheNumberIs: 7"
-            }
-          ]
-        }
-      ],
-      "checks": [
-        {
-          "feature": "hello imperative style",
-          "whens": {},
-          "thens": {}
-        },
-        {
-          "feature": "hello imperative style II",
-          "whens": {},
-          "thens": {}
-        }
-      ]
     },
     "status": "pass"
   },

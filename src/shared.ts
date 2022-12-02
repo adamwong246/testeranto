@@ -11,9 +11,9 @@ export type ISimpleGivens<IGivens, Klass> = {
 
 export type ISimpleWhens<IThens, Klass> = {
   [IThen in keyof IThens]: (
-    arg0: Klass,
+    argz: Klass,
     /* @ts-ignore:next-line */
-    ...arg1: IThens[IThen]
+    ...argzz: IThens[IThen]
   ) => any;
 };
 

@@ -16,7 +16,6 @@ import {
   BaseWhen,
   Testeranto,
 } from "../../index";
-import { ITypeDeTuple } from "../../src/shared";
 
 export type IActionCreate =
   | ActionCreatorWithoutPayload<string>
@@ -31,14 +30,6 @@ export type ISubjectReducerAndSelectorAnStore = {
   reducer: Reducer<any, AnyAction>;
   selector: Selector<any, any>;
   store: Store<any, any>;
-};
-
-type ISimplerThens<IThens, Klass> = {
-  [IThen in keyof IThens]: (
-    // arg0: Klass,
-    /* @ts-ignore:next-line */
-    ...xtrasQW: IThens[IThen]?
-  ) => any;
 };
 
 export default <
@@ -91,7 +82,6 @@ export default <
     IGS,
     IWS,
     ITS,
-    // ISimplerThens<ITS, IState>,
     ICheckExtensions
   >(
     store,
@@ -116,7 +106,6 @@ export default <
         name: string,
         whens: BaseWhen<any>[],
         thens: BaseThen<ISelected>[],
-        feature: string,
         initialValues: any
       ) {
         super(name, whens, thens);
@@ -149,8 +138,8 @@ export default <
         this.payload = payload;
       }
 
-      andWhen(x, actioner) {
-        return x.store.dispatch(actioner());
+      andWhen(subject, actioner) {
+        return subject.store.dispatch(actioner());
       }
     },
     class Then<ISelected> extends BaseThen<ISelected> {

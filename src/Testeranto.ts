@@ -14,6 +14,13 @@ import {
   ITypeDeTuple,
 } from "./shared";
 
+type ISimpleWhens2<IThens, Klass> = {
+  [IThen in keyof IThens]: (
+    /* @ts-ignore:next-line */
+    ...argzz: IThens[IThen]
+  ) => (arg0: Klass) => any;
+};
+
 type ISimpleThensForRedux<IThens> = {
   [IThen in keyof IThens]: (
     /* @ts-ignore:next-line */
@@ -30,7 +37,6 @@ export const Testeranto = <
   IGS,
   IWS,
   ITS,
-  // IThenShape,
   ICheckExtensions
 >(
   store: ISubject,
@@ -76,7 +82,7 @@ export const Testeranto = <
     run: async (
       suites: ISimpleSuites<ISS>,
       givens: ISimpleGivens<IGS, IState>,
-      whens: ISimpleWhens<IWS, IStore>,
+      whens: ISimpleWhens2<IWS, IStore>,
       thens: ITypeDeTuple<ITS, ISelection>,
       checks: any //ISimpleChecks<ICheckExtensions, IState>,
     ) => {

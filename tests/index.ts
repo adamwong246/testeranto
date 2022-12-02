@@ -15,7 +15,7 @@ reporter([
   LoginStore(),
   LoginSelector(),
   LoginPage(),
-  HttpServerTests(),
+  // HttpServerTests(),
 
   ClassicalReactTests(),
   ClassicalReactEsBuildPuppeteer(),

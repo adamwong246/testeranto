@@ -8,57 +8,53 @@ import {
   Testeranto,
 } from "../../index";
 
-export default <
-  IStore extends Store<IState, AnyAction>,
-  IState,
-  ISS,
-  IGS,
-  IWS,
-  ITS,
-  ICheckExtensions
->(
+export default <IState, ISS, IGS, IWS, ITS, ICS>(
   store,
   tests: (
     Suite: Record<
       keyof ISS,
       (
         name: string,
-        givens: BaseGiven<any, IStore, IStore>[],
+        givens: BaseGiven<
+          any,
+          Store<IState, AnyAction>,
+          Store<IState, AnyAction>
+        >[],
         checks: BaseCheck<any, any, any>[]
-      ) => BaseSuite<any, IStore, IStore>
+      ) => BaseSuite<any, Store<IState, AnyAction>, Store<IState, AnyAction>>
     >,
     Given: Record<
       keyof IGS,
       (
         featureReduxTook: string,
-        whens: BaseWhen<IStore>[],
-        thens: BaseThen<IStore>[],
-        ...xtraArgsForGiven: any //{ [ISuite in keyof IGS]: IGS[ISuite] }[]
-      ) => BaseGiven<any, IStore, IStore>
+        whens: BaseWhen<Store<IState, AnyAction>>[],
+        thens: BaseThen<Store<IState, AnyAction>>[],
+        ...zxy: any //{ [ISuite in keyof IGS]: IGS[ISuite] }[]
+      ) => BaseGiven<any, Store<IState, AnyAction>, Store<IState, AnyAction>>
     >,
     When: Record<keyof IWS, any>,
     Then: Record<keyof ITS, any>,
 
     Check: Record<
-      keyof ICheckExtensions,
+      keyof ICS,
       (
         feature: string,
         callback: (whens, thens) => any
         // ...xtraArgsForGiven: any //{ [ISuite in keyof IGS]: IGS[ISuite] }[]
-      ) => BaseCheck<any, IStore, IStore>
+      ) => BaseCheck<any, Store<IState, AnyAction>, Store<IState, AnyAction>>
     >
-  ) => BaseSuite<any, IStore, IStore>[]
+  ) => BaseSuite<any, Store<IState, AnyAction>, Store<IState, AnyAction>>[]
 ) =>
   Testeranto<
-    IStore,
-    IStore,
+    Store<IState, AnyAction>,
+    Store<IState, AnyAction>,
     IState,
-    IStore,
+    IState,
     ISS,
     IGS,
     IWS,
     ITS,
-    ICheckExtensions
+    ICS
   >(
     store,
     /* @ts-ignore:next-line */
@@ -110,7 +106,11 @@ export default <
       }
     },
 
-    class ReduxCheck extends BaseCheck<IStore, IStore, IState> {
+    class ReduxCheck extends BaseCheck<
+      Store<IState, AnyAction>,
+      Store<IState, AnyAction>,
+      IState
+    > {
       initialValues: PreloadedState<any>;
 
       constructor(

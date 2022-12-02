@@ -2,7 +2,7 @@
 
 ## teeny-tiny, tightly-typed typescript tests™
 
-Testeranto.ts a Typescript testing framework, akin to mocha, jasmine or jest. Unlike those projects, testeranto focuses on _specifing stateful logic with strong type bindings using an extended gherkin syntax._
+Testeranto.ts an Acceptance Test Driven Development (ATDD) Typescript testing framework, akin to mocha, jasmine or jest. Testeranto focuses on specifing stateful logic, which crosses applications, with strong type bindings and using an extended gherkin syntax.
 
 ### example
 
@@ -168,9 +168,7 @@ Given: width of 1 and height of 1
 
 ### the good parts
 
-Testeranto can test any stateful typescript, from individual classes to entire services.
-
-Testeranto bridges TDD and BDD patterns. You can use the given-when-then lingua-franca of gherkin, AND you can also use an imperative style which is a bit more flexible.
+Testeranto can test any stateful typescript, from individual classes to entire services. You can test your code in a granular, unit-test fashion, or bundle it and test it through an interface like puppeteer, bridging TDD and BDD patterns. You can use the given-when-then lingua-franca of gherkin, AND you can also use an imperative style which is a bit more flexible.
 
 Testeranto.ts is very lightweight and unopinionated. It is comprised entirely of <1000 lines of typescript, with only 1 dependency (lodash).
 
@@ -192,6 +190,7 @@ Because testerano is so unopinionated, it does not provide test infrastructure. 
 - [Testing a React Component with Reselect Selector based on a Redux store](/tests/Redux+Reselect+React/LoginPage.test.ts)
 - [Testing an http server with node's fetch](/tests/httpServer/http.testerano.test.ts.test.ts)
 - [Testing an http server with puppeteer](/tests/httpServer/puppeteer.testeranto.test.ts)
-- [Testing a react component with puppeteer](/tests/ClassicalReact/ClassicalReact.testeranto.test.ts)
+- [Testing a Clasical react component](/tests/ClassicalReact/ClassicalReact.testeranto.test.ts)
+- [Testing a Clasical react component, bundled with esbuild and tested with puppeteer](/tests/ClassicalReact/ClassicalComponent.esbuild-puppeteer.test.ts)
 
 ### philosophy
