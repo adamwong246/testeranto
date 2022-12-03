@@ -185,14 +185,3 @@ Testerano is not for testing pure functions. It's designed only to address _stat
 Because testerano is so unopinionated, it does not provide test infrastructure. You will need to find an existing recipe or implement it yourself. Depending on your needs, you will need to implement an interface which extends 1 of 2 classes:
 1] `TesterantoClassic`, when you only need to test a class
 2] `TesterantoBasic`, when you need to test something more complex
-
-### examples of test infrasuctures
-
-- [Testing a class, with TesterantoClassic](/tests/Rectangle)
-- [Testing a Redux store](/tests/Redux+Reselect+React/LoginStore.test.ts)
-- [Testing a Reselect Selector based on a Redux store](/tests/Redux+Reselect+React/LoginSelector.test.ts)
-- [Testing a React Component with Reselect Selector based on a Redux store](/tests/Redux+Reselect+React/LoginPage.test.ts)
-- [Testing an http server with node's fetch](/tests/httpServer/http.testerano.test.ts.test.ts)
-- [Testing an http server with puppeteer](/tests/httpServer/puppeteer.testeranto.test.ts)
-- [Testing a Clasical react component](/tests/ClassicalReact/ClassicalReact.testeranto.test.ts)
-- [Testing a Clasical react component, bundled with esbuild and tested with puppeteer](/tests/ClassicalReact/ClassicalComponent.esbuild-puppeteer.test.ts)
