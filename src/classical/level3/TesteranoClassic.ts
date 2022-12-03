@@ -15,6 +15,10 @@ export class TesterantoClassic<
   CheckExtensions
 > {
   constructorator: new (...any) => Klass;
+  suiteOverides: Record<
+    keyof SuiteExtensions,
+    (feature: string) => ClassySuite<Klass>
+  >;
 
   givenOverides: Record<
     keyof GivenExtensions,
@@ -39,7 +43,10 @@ export class TesterantoClassic<
 
   constructor(
     public readonly cc: new () => Klass,
-    suites: any,
+    suiteOverides: Record<
+      keyof SuiteExtensions,
+      (feature: string) => ClassySuite<Klass>
+    >,
     givenOverides: Record<
       keyof GivenExtensions,
       (
@@ -62,20 +69,17 @@ export class TesterantoClassic<
     >
   ) {
     this.constructorator = cc;
+    this.suiteOverides = suiteOverides;
     this.givenOverides = givenOverides;
     this.whenOverides = whenOverides;
     this.thenOverides = thenOverides;
     this.checkOverides = checkOverides;
   }
 
-  Suites(): Record<
-    keyof SuiteExtensions | "Default",
-    (a: ClassyGiven<Klass>[]) => ClassySuite<Klass>
-  > {
-    /* @ts-ignore:next-line */
+  Suites(): Record<keyof SuiteExtensions, (a: string) => ClassySuite<Klass>> {
+    console.log("mark1", this.suiteOverides);
     return {
-      // Default: (givenz: ClassyGiven<Klass>[], checkz: ClassyCheck<Klass>[]) =>
-      //   new ClassySuite<Klass>("Default constructor", givenz, checkz),
+      ...this.suiteOverides,
     };
   }
 

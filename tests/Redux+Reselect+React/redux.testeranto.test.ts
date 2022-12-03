@@ -89,7 +89,12 @@ export default <IState, ISS, IGS, IWS, ITS, ICS>(
       payload?: any;
 
       constructor(name: string, actioner: (...any) => any, payload?: any) {
-        super(name, (store) => actioner[0](actioner[1]));
+        // console.log(actioner());
+        // const action = actioner();
+        super(name, (store) => {
+          const a = actioner();
+          return a[0](a[1]);
+        });
         this.payload = payload;
       }
 

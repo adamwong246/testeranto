@@ -4,19 +4,14 @@ import { TesterantoClassicFactory } from "../../index";
 
 import Rectangle from "./Rectangle";
 
-// const checks: ITypeDeTuple<IChecks, any> = {
-//   /* @ts-ignore:next-line */
-//   AnEmptyState: () => {}, //loginApp.getInitialState(),
-// };
-
 const RectangleTesteranto = TesterantoClassicFactory<
   Rectangle,
   {
     Default;
   },
   {
-    Default: [never];
-    WidthOfOneAndHeightOfOne: [never];
+    Default;
+    WidthOfOneAndHeightOfOne;
     WidthAndHeightOf: [number, number];
   },
   {
@@ -34,11 +29,12 @@ const RectangleTesteranto = TesterantoClassicFactory<
     prototype: [string];
   },
   {
-    /* @ts-ignore:next-line */
-    Default; //: () => {}; //loginApp.getInitialState(),
+    Default;
   }
 >(Rectangle, (Suite, Given, When, Then, Check) => {
   const RectangleSuite = Suite.Default;
+  console.log(Suite);
+  // process.exit(0);
   return [
     RectangleSuite(
       [
@@ -82,20 +78,20 @@ const RectangleTesteranto = TesterantoClassicFactory<
       ],
 
       [
-        Check.Default(
-          "imperative style",
-          async ({ PostToAdd }, { TheNumberIs }) => {
-            const a = await PostToAdd(2);
-            const b = parseInt(await PostToAdd(3));
-            await TheNumberIs(b);
-            await PostToAdd(2);
-            await TheNumberIs(7);
-            await PostToAdd(3);
-            await TheNumberIs(10);
-            assert.equal(await PostToAdd(-15), -5);
-            await TheNumberIs(-5);
-          }
-        ),
+        // Check.Default(
+        //   "imperative style",
+        //   async ({ PostToAdd }, { TheNumberIs }) => {
+        //     const a = await PostToAdd(2);
+        //     const b = parseInt(await PostToAdd(3));
+        //     await TheNumberIs(b);
+        //     await PostToAdd(2);
+        //     await TheNumberIs(7);
+        //     await PostToAdd(3);
+        //     await TheNumberIs(10);
+        //     assert.equal(await PostToAdd(-15), -5);
+        //     await TheNumberIs(-5);
+        //   }
+        // ),
       ]
     ),
   ];
@@ -121,7 +117,6 @@ export default async () =>
       AreaPlusCircumference: (rectangle, combined: number) => {
         assert.equal(rectangle.area() + rectangle.circumference(), combined);
       },
-
       getWidth: function (rectangle, width: number): void {
         assert.equal(rectangle.width, width);
       },
@@ -142,6 +137,6 @@ export default async () =>
       },
     },
     {
-      Default: "some default Suite",
+      // Checks go here
     }
   );

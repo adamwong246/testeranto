@@ -1,5 +1,5 @@
 import { mapValues } from "lodash";
-import { any } from "prop-types";
+
 import {
   ClassyGiven,
   ClassySuite,
@@ -40,7 +40,7 @@ export const TesterantoClassicFactory = <Klass, ISS, IGS, IWS, ITS, ICS>(
   thing,
   tests: (
     s: Record<
-      keyof ISS | "Default",
+      keyof ISS,
       (ss: ClassyGiven<Klass>[], cc: ClassyCheck<Klass>[]) => ClassySuite<Klass>
     >,
     g: Record<
@@ -52,6 +52,8 @@ export const TesterantoClassicFactory = <Klass, ISS, IGS, IWS, ITS, ICS>(
     c: IC<ICS, Klass>
   ) => ClassySuite<Klass>[]
 ) => {
+  console.log("mark3", tests);
+
   return {
     run: (
       suites: ISimpleSuites<ISS>,
@@ -60,6 +62,14 @@ export const TesterantoClassicFactory = <Klass, ISS, IGS, IWS, ITS, ICS>(
       thens: ITypeDeTuple<ITS, Klass>,
       checks: any //ISimpleGivens<IGS, Klass>
     ) => {
+      const classySuites = mapValues(suites as any, (z) => {
+        return (x) => {
+          return new ClassySuite<Klass>(x);
+        };
+      }) as {
+        [K in keyof ISS]: (name: string) => ClassySuite<Klass>;
+      };
+
       const classyGivens = mapValues(givens as any, (z) => {
         return (whens, thens, ...xtras) => {
           return new ClassyGiven(
@@ -116,7 +126,9 @@ export const TesterantoClassicFactory = <Klass, ISS, IGS, IWS, ITS, ICS>(
 
       const testerano = new TesterantoClassic<
         Klass,
-        {},
+        {
+          [S in keyof ISS]: (feature: string) => ClassySuite<Klass>;
+        },
         {
           [K in keyof IGS]: (
             feature: string,
@@ -138,8 +150,17 @@ export const TesterantoClassicFactory = <Klass, ISS, IGS, IWS, ITS, ICS>(
             thens
           ) => ClassyCheck<Klass>;
         }
-      >(thing, {}, classyGivens, classyWhens, classThens, classyChecks);
+      >(
+        thing,
+        classySuites,
+        classyGivens,
+        classyWhens,
+        classThens,
+        classyChecks
+      );
 
+      console.log("mark2", classySuites);
+      process.exit(1);
       const t = tests(
         /* @ts-ignore:next-line */
         testerano.Suites(),
