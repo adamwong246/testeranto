@@ -1,120 +1,112 @@
-// This file defines the test of an `http.Server` of the native `http` library, using the native `fetch` method
-import { assert } from "chai";
 import http from "http";
 
+import { assert } from "chai";
+
+import { serverFactory } from "./server";
+
+import { createStore, Store, AnyAction, PreloadedState } from "redux";
 import {
   BaseCheck,
   BaseGiven,
   BaseSuite,
   BaseThen,
   BaseWhen,
-  Testeranto,
+  ITestImplementation,
+  TesterantoV2,
 } from "../../index";
-import { serverFactory } from "./server";
 
-export default <ISS, IGS, IWS, ITS, ICheckExtensions>(
-  serverfactory: () => http.Server,
-  tests: (
-    Suite: Record<
-      keyof ISS,
-      (
-        name: string,
-        givens: BaseGiven<any, any, any>[],
-        checks: BaseCheck<any, any, any>[]
-      ) => BaseSuite<any, any, any>
-    >,
-    Given: Record<
-      keyof IGS,
-      (
-        feature: string,
-        whens: BaseWhen<any>[],
-        thens: BaseThen<any>[],
-        ...xtraArgsForGiven: any //{ [ISuite in keyof IGS]: IGS[ISuite] }[]
-      ) => BaseGiven<any, any, any>
-    >,
-    When: Record<keyof IWS, any>,
-    Then: Record<keyof ITS, any>,
+class Suite extends BaseSuite<any, any, any> {}
 
-    Check: Record<
-      keyof ICheckExtensions,
-      (
-        feature: string,
-        callback: (whens, thens) => any,
-        ...xtraArgsForGiven: any //{ [ISuite in keyof IGS]: IGS[ISuite] }[]
-      ) => BaseCheck<any, any, any>
-    >
+class Given extends BaseGiven<any, any, any> {
+  async teardown(server: http.Server) {
+    return new Promise((resolve, reject) => {
+      server.close(() => {
+        resolve(server);
+      });
+    });
+  }
 
-    // That: Record<keyof IThatExtensions, any>
-  ) => BaseSuite<any, any, any>[]
-) => {
-  return Testeranto<any, any, any, any, ISS, IGS, IWS, ITS, ICheckExtensions>(
-    serverfactory,
-    tests,
-    class HttpSuite extends BaseSuite<any, any, any> {},
+  async givenThat(subject) {
+    const server = serverFactory();
+    await server.listen(3000);
+    return server;
+  }
+}
 
-    class HttpGiven extends BaseGiven<any, any, any> {
-      async teardown(server: http.Server) {
-        return new Promise((resolve, reject) => {
-          server.close(() => {
-            resolve(server);
-          });
-        });
-      }
+class When<IStore> extends BaseWhen<IStore> {
+  payload?: any;
 
-      async givenThat(subject) {
-        const server = serverFactory();
-        await server.listen(3000);
-        return server;
-      }
-    },
+  constructor(name: string, actioner: (...any) => any, payload?: any) {
+    super(name, (store) => actioner(store));
+    this.payload = payload;
+  }
 
-    class HttpWhen<IStore> extends BaseWhen<IStore> {
-      payload?: any;
+  async andWhen(store, actioner) {
+    const [path, body]: [string, string] = actioner({});
+    const y = await fetch(`http://localhost:3000/${path}`, {
+      method: "POST",
+      body,
+    });
 
-      constructor(name: string, actioner: (...any) => any, payload?: any) {
-        super(name, (store) => actioner(store));
-        this.payload = payload;
-      }
+    return y.text();
+  }
+}
 
-      async andWhen(store, actioner) {
-        const [path, body]: [string, string] = actioner({});
-        const y = await fetch(`http://localhost:3000/${path}`, {
-          method: "POST",
-          body,
-        });
+class Then extends BaseThen<any> {
+  constructor(name: string, callback: (val: any) => any) {
+    super(name, callback);
+  }
 
-        return y.text();
-      }
-    },
-    class HttpThen extends BaseThen<any> {
-      constructor(name: string, callback: (val: any) => any) {
-        super(name, callback);
-      }
+  async butThen(store) {
+    const [path, expectation]: [string, string] = this.callback({});
+    const bodytext = await (
+      await fetch(`http://localhost:3000/${path}`)
+    ).text();
+    assert.equal(bodytext, expectation);
+    return;
+  }
+}
 
-      async butThen(store) {
-        const [path, expectation]: [string, string] = this.callback({});
-        const bodytext = await (
-          await fetch(`http://localhost:3000/${path}`)
-        ).text();
-        assert.equal(bodytext, expectation);
-        return;
-      }
-    },
+class Check extends BaseCheck<any, any, any> {
+  async teardown(server: http.Server) {
+    return new Promise((resolve, reject) => {
+      server.close(() => {
+        resolve(server);
+      });
+    });
+  }
 
-    class HttpCheck extends BaseCheck<any, any, any> {
-      async teardown(server: http.Server) {
-        return new Promise((resolve, reject) => {
-          server.close(() => {
-            resolve(server);
-          });
-        });
-      }
+  async checkThat(subject) {
+    const server = serverFactory();
+    await server.listen(3000);
+    return server;
+  }
+}
 
-      async checkThat(subject) {
-        const server = serverFactory();
-        await server.listen(3000);
-        return server;
-      }
-    }
-  );
-};
+type IAction = [url: string, paylaod: string];
+
+export class HttpTesteranto<IStoreShape, ITestShape> extends TesterantoV2<
+  ITestShape,
+  IStoreShape,
+  IStoreShape,
+  IStoreShape,
+  IStoreShape,
+  IAction
+> {
+  constructor(
+    testImplementation: ITestImplementation<IStoreShape, IStoreShape, IAction>,
+    testSpecification,
+    thing
+  ) {
+    super(
+      testImplementation,
+      testSpecification,
+      thing,
+      (s, g, c) => new Suite(s, g, c),
+      (f, w, t) => new Given(f, w, t),
+      (s, o) => new When(s, o),
+      (s, o) => new Then(s, o),
+      (f, g, c, cb) => new Check(f, g, c, cb)
+    );
+  }
+}

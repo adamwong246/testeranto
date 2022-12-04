@@ -35,7 +35,7 @@
           ],
           "initialValues": {
             "password": "",
-            "email": "12",
+            "email": "bob@mail.com",
             "error": "no_error"
           }
         },
@@ -87,34 +87,10 @@
   },
   {
     "test": {
-      "name": "LoginSelector",
+      "name": "Testing the Redux store",
       "givens": [
         {
-          "name": "something",
-          "whens": [
-            {
-              "name": "TheEmailIsSetTo: bob"
-            },
-            {
-              "name": "TheEmailIs: bob"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheEmailIsSetTo: foo"
-            },
-            {
-              "name": "TheEmailIs: foo"
-            }
-          ],
-          "initialValues": {
-            "password": "",
-            "email": 3,
-            "error": "no_error"
-          }
-        },
-        {
-          "name": "Set the email and check the email",
+          "name": "BDD gherkin style",
           "whens": [
             {
               "name": "TheEmailIsSetTo: adam@email.com"
@@ -132,42 +108,36 @@
           }
         },
         {
-          "name": "Set the email by initial state, then set the email normally, and then check some other stuff",
+          "name": "another feature",
           "whens": [
             {
-              "name": "TheEmailIsSetTo: adam@email.com"
-            },
-            {
-              "name": "ThePasswordIsSetTo: secret"
+              "name": "TheEmailIsSetTo: hello"
             }
           ],
           "thens": [
             {
-              "name": "TheEmailIsNot: wade@rpc"
-            },
-            {
-              "name": "ThePasswordIs: secret"
-            },
-            {
-              "name": "ThePasswordIsNot: idk"
+              "name": "TheEmailIsNot: adam@email.com"
             }
           ],
           "initialValues": {
             "password": "",
-            "email": "wade@rpc",
+            "email": "bob@mail.com",
             "error": "no_error"
           }
         },
         {
-          "name": "Don't show an email error just because the email does not validate",
+          "name": "yet another feature",
           "whens": [
             {
-              "name": "TheEmailIsSetTo: adam"
+              "name": "TheEmailIsSetTo: hello"
+            },
+            {
+              "name": "TheEmailIsSetTo: aloha"
             }
           ],
           "thens": [
             {
-              "name": "ThereIsNotAnEmailError: undefined"
+              "name": "TheEmailIs: aloha"
             }
           ],
           "initialValues": {
@@ -177,144 +147,11 @@
           }
         },
         {
-          "name": "Put some data in both fields to enable the submit button. Email does not need to be valid!",
-          "whens": [
-            {
-              "name": "TheEmailIsSetTo: adam"
-            },
-            {
-              "name": "ThePasswordIsSetTo: adam"
-            }
-          ],
+          "name": "OMG a feature!",
+          "whens": [],
           "thens": [
             {
-              "name": "TheSubmitButtonShouldBeEnabled: undefined"
-            }
-          ],
-          "initialValues": {
-            "password": "",
-            "email": "",
-            "error": "no_error"
-          }
-        },
-        {
-          "name": "Don't enable the submit button if password is blank",
-          "whens": [
-            {
-              "name": "TheEmailIsSetTo: adam"
-            },
-            {
-              "name": "ThePasswordIsSetTo: "
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheSubmitButtonShouldNotBeEnabled: undefined"
-            }
-          ],
-          "initialValues": {
-            "password": "",
-            "email": "",
-            "error": "no_error"
-          }
-        },
-        {
-          "name": "Don't enable the submit button if email is blank",
-          "whens": [
-            {
-              "name": "TheEmailIsSetTo: "
-            },
-            {
-              "name": "ThePasswordIsSetTo: something"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheSubmitButtonShouldNotBeEnabled: undefined"
-            }
-          ],
-          "initialValues": {
-            "password": "",
-            "email": "",
-            "error": "no_error"
-          }
-        },
-        {
-          "name": "Don't enable the submit button if you haven't entered a password",
-          "whens": [
-            {
-              "name": "TheEmailIsSetTo: adam"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheSubmitButtonShouldNotBeEnabled: undefined"
-            }
-          ],
-          "initialValues": {
-            "password": "",
-            "email": "",
-            "error": "no_error"
-          }
-        },
-        {
-          "name": "Don't enable the submit button if you haven't entered an email",
-          "whens": [
-            {
-              "name": "ThePasswordIsSetTo: something"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheSubmitButtonShouldNotBeEnabled: undefined"
-            }
-          ],
-          "initialValues": {
-            "password": "",
-            "email": "",
-            "error": "no_error"
-          }
-        },
-        {
-          "name": "Check for email validations only after you've pressed the submit button 1/2",
-          "whens": [
-            {
-              "name": "TheEmailIsSetTo: adam"
-            }
-          ],
-          "thens": [
-            {
-              "name": "ThereIsNotAnEmailError: undefined"
-            },
-            {
-              "name": "TheSubmitButtonShouldNotBeEnabled: undefined"
-            }
-          ],
-          "initialValues": {
-            "password": "",
-            "email": "",
-            "error": "no_error"
-          }
-        },
-        {
-          "name": "Check for email validations only after you've pressed the submit button 2/2",
-          "whens": [
-            {
-              "name": "TheEmailIsSetTo: adam"
-            },
-            {
-              "name": "ThePasswordIsSetTo: adam"
-            },
-            {
-              "name": "TheLoginIsSubmitted: undefined"
-            }
-          ],
-          "thens": [
-            {
-              "name": "ThereIsAnEmailError: undefined"
-            },
-            {
-              "name": "TheSubmitButtonShouldBeEnabled: undefined"
+              "name": "TheEmailIs: "
             }
           ],
           "initialValues": {
@@ -324,13 +161,19 @@
           }
         }
       ],
-      "checks": []
+      "checks": [
+        {
+          "feature": "imperative style",
+          "whens": {},
+          "thens": {}
+        }
+      ]
     },
     "status": "pass"
   },
   {
     "test": {
-      "name": "testing redux store + reselect selectors",
+      "name": "Testing the Redux store",
       "givens": [
         {
           "name": "Set the email and check the email",
@@ -406,7 +249,7 @@
   },
   {
     "test": {
-      "name": "Testing the http server",
+      "name": "Testing the Redux store",
       "givens": [
         {
           "name": "a boringfeature",
@@ -509,115 +352,6 @@
           "thens": {}
         }
       ]
-    },
-    "status": "pass"
-  },
-  {
-    "test": {
-      "name": "idk",
-      "givens": [
-        {
-          "name": "idk",
-          "whens": [
-            {
-              "name": "IClickTheButton: undefined"
-            }
-          ],
-          "thens": [
-            {
-              "name": "ThePropsIs: [object Object]"
-            },
-            {
-              "name": "TheStatusIs: [object Object]"
-            }
-          ]
-        }
-      ],
-      "checks": []
-    },
-    "status": "pass"
-  },
-  {
-    "test": {
-      "name": "a classical react component, bundled with esbuild and tested with puppeteer",
-      "givens": [
-        {
-          "name": "default",
-          "whens": [],
-          "thens": [
-            {
-              "name": "ThePropsIs: [object Object]"
-            },
-            {
-              "name": "TheStatusIs: [object Object]"
-            }
-          ]
-        },
-        {
-          "name": "default",
-          "whens": [
-            {
-              "name": "IClickTheButton: undefined"
-            }
-          ],
-          "thens": [
-            {
-              "name": "ThePropsIs: [object Object]"
-            },
-            {
-              "name": "TheStatusIs: [object Object]"
-            }
-          ]
-        },
-        {
-          "name": "default",
-          "whens": [
-            {
-              "name": "IClickTheButton: undefined"
-            },
-            {
-              "name": "IClickTheButton: undefined"
-            },
-            {
-              "name": "IClickTheButton: undefined"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheStatusIs: [object Object]"
-            }
-          ]
-        },
-        {
-          "name": "default",
-          "whens": [
-            {
-              "name": "IClickTheButton: undefined"
-            },
-            {
-              "name": "IClickTheButton: undefined"
-            },
-            {
-              "name": "IClickTheButton: undefined"
-            },
-            {
-              "name": "IClickTheButton: undefined"
-            },
-            {
-              "name": "IClickTheButton: undefined"
-            },
-            {
-              "name": "IClickTheButton: undefined"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheStatusIs: [object Object]"
-            }
-          ]
-        }
-      ],
-      "checks": []
     },
     "status": "pass"
   }

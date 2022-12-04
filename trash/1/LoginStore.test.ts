@@ -1,9 +1,9 @@
 import { assert } from "chai";
 
-import ReduxTesterantoFactory from "./redux.testeranto.test";
-import { IStoreState as IState } from "./app";
+import ReduxTesterantoFactory from "../../tests/Redux+Reselect+React/redux.testeranto.test";
+import { IStoreState as IState } from "../../tests/Redux+Reselect+React/app";
 
-import { loginApp } from "./app";
+import { loginApp } from "../../tests/Redux+Reselect+React/app";
 
 const LoginStoreTesteranto = ReduxTesterantoFactory<
   IState,
