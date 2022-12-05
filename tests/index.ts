@@ -7,28 +7,17 @@ import { ServerHttpPuppeteerTesteranto } from "./httpServer/server.puppeteer.tes
 
 import reporter from "../src/reporter";
 
-reporter([
-  new AppReduxTesteranto()[0],
-  new AppReduxToolkitTesteranto()[0],
-  new AppReactTesteranto()[0],
-  new ServerHttpTesteranto()[0],
-  // new ServerHttpPuppeteerTesteranto()[0],
-]);
+export type ITestResource = "port";
 
-// import { AppReduxTesteranto } from "./Redux+Reselect+React/app.redux.test";
-
-// import Rectangle from "./Rectangle/Rectangle.test";
-// import LoginSelector from "./Redux+Reselect+React/LoginSelector.test";
-// import LoginStore from "./Redux+Reselect+React/LoginStore.test";
-// import LoginPage from "./Redux+Reselect+React/LoginPage.test";
-
-// import ClassicalReactTests from "./ClassicalReact/ClassicalComponent.react-test-renderer.test";
-// import ClassicalReactEsBuildPuppeteer from "./ClassicalReact/ClassicalComponent.esbuild-puppeteer.test";
-
-// Rectangle(),
-// LoginStore(),
-// LoginSelector(),
-// LoginPage(),
-// HttpServerTests(),
-// ClassicalReactTests(),
-// ClassicalReactEsBuildPuppeteer(),
+reporter(
+  [
+    new AppReduxTesteranto()[0],
+    new AppReduxToolkitTesteranto()[0],
+    new AppReactTesteranto()[0],
+    new ServerHttpTesteranto()[0],
+    new ServerHttpPuppeteerTesteranto()[0],
+  ],
+  {
+    ports: [3000, 3001],
+  }
+);

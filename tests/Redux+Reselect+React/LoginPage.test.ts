@@ -104,7 +104,7 @@ export class AppReactTesteranto extends ReactTesteranto<{
       (Suite, Given, When, Then, Check) => {
         return [
           Suite.Default(
-            "Testing the Redux store",
+            "Testing the LoginPage as react",
             [
               Given.AnEmptyState(
                 `Set the email and check the email`,

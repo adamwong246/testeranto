@@ -15,15 +15,15 @@ export abstract class BaseSuite<ISubject, IStore, ISelection> {
     this.checks = checks;
   }
 
-  async run(subject) {
-    console.log("\nSuite:", this.name);
+  async run(subject, testResourceConfiguration?) {
+    console.log("\nSuite:", this.name, testResourceConfiguration);
 
     for (const [ndx, givenThat] of this.givens.entries()) {
-      await givenThat.give(subject, ndx);
+      await givenThat.give(subject, ndx, testResourceConfiguration);
     }
 
     for (const [ndx, checkThat] of this.checks.entries()) {
-      await checkThat.check(subject, ndx);
+      await checkThat.check(subject, ndx, testResourceConfiguration);
     }
   }
 }
@@ -43,22 +43,22 @@ export abstract class BaseGiven<ISubject, IStore, ISelection> {
     this.thens = thens;
   }
 
-  abstract givenThat(subject: ISubject): IStore;
+  abstract givenThat(subject: ISubject, testResourceConfiguration?): IStore;
 
   async teardown(subject: any, ndx: number) {
     return subject;
   }
 
-  async give(subject: ISubject, index: number) {
+  async give(subject: ISubject, index: number, testResourceConfiguration?) {
     console.log(`\n Given: ${this.name}`);
-    const store = await this.givenThat(subject);
+    const store = await this.givenThat(subject, testResourceConfiguration);
 
     for (const whenStep of this.whens) {
-      await whenStep.test(store);
+      await whenStep.test(store, testResourceConfiguration);
     }
 
     for (const thenStep of this.thens) {
-      await thenStep.test(store);
+      await thenStep.test(store, testResourceConfiguration);
     }
 
     await this.teardown(store, index);
@@ -74,11 +74,11 @@ export abstract class BaseWhen<IStore> {
     this.actioner = actioner;
   }
 
-  abstract andWhen(store: IStore, actioner: (x) => any): any;
+  abstract andWhen(store: IStore, actioner: (x) => any, testResource): any;
 
-  async test(store: IStore) {
+  async test(store: IStore, testResourceConfiguration?) {
     console.log(" When:", this.name);
-    return await this.andWhen(store, this.actioner);
+    return await this.andWhen(store, this.actioner, testResourceConfiguration);
   }
 }
 
@@ -91,11 +91,11 @@ export abstract class BaseThen<ISelection> {
     this.callback = callback;
   }
 
-  abstract butThen(store: any): ISelection;
+  abstract butThen(store: any, testResourceConfiguration?): ISelection;
 
-  async test(store: any) {
+  async test(store: any, testResourceConfiguration) {
     console.log(" Then:", this.name);
-    return this.callback(await this.butThen(store));
+    return this.callback(await this.butThen(store, testResourceConfiguration));
   }
 }
 
@@ -112,24 +112,30 @@ export abstract class BaseCheck<ISubject, IStore, ISelection> {
     this.thens = thens;
   }
 
-  abstract checkThat(subject: ISubject): IStore;
+  abstract checkThat(subject: ISubject, testResourceConfiguration?): IStore;
 
   async teardown(subject: any) {
     return subject;
   }
 
-  async check(subject: ISubject, ndx: number) {
+  async check(subject: ISubject, ndx: number, testResourceConfiguration) {
     console.log(`\n - \nCheck: ${this.feature}`);
-    const store = await this.checkThat(subject);
+    const store = await this.checkThat(subject, testResourceConfiguration);
     await this.callback(
       mapValues(this.whens, (when) => {
         return async (payload) => {
-          return await when(payload).test(store);
+          return await when(payload, testResourceConfiguration).test(
+            store,
+            testResourceConfiguration
+          );
         };
       }),
       mapValues(this.thens, (then) => {
         return async (payload) => {
-          return await then(payload).test(store);
+          return await then(payload, testResourceConfiguration).test(
+            store,
+            testResourceConfiguration
+          );
         };
       })
     );
@@ -335,7 +341,8 @@ export abstract class TesterantoV2<
   ISelection,
   IStore,
   ISubject,
-  IWhenShape
+  IWhenShape,
+  ITestResource = {}
 > {
   constructor(
     testImplementation: ITestImplementation<IState, ISelection, IWhenShape>,
@@ -392,7 +399,9 @@ export abstract class TesterantoV2<
     givenKlasser,
     whenKlasser,
     thenKlasser,
-    checkKlasser
+    checkKlasser,
+
+    testResource?: ITestResource
   ) {
     const classySuites = mapValues(
       testImplementation.Suites as any,
@@ -489,8 +498,9 @@ export abstract class TesterantoV2<
     return t.map((tt) => {
       return {
         test: tt,
-        runner: async () => {
-          await tt.run(store);
+        testResource,
+        runner: async (testResourceConfiguration?) => {
+          await tt.run(store, testResourceConfiguration[testResource]);
         },
       };
     });

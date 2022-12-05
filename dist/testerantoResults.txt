@@ -87,7 +87,7 @@
   },
   {
     "test": {
-      "name": "Testing the Redux store",
+      "name": "Testing the ReduxToolkit",
       "givens": [
         {
           "name": "BDD gherkin style",
@@ -173,7 +173,7 @@
   },
   {
     "test": {
-      "name": "Testing the Redux store",
+      "name": "Testing the LoginPage as react",
       "givens": [
         {
           "name": "Set the email and check the email",
@@ -249,10 +249,10 @@
   },
   {
     "test": {
-      "name": "Testing the Redux store",
+      "name": "Testing the Server with Puppeteer",
       "givens": [
         {
-          "name": "a boringfeature",
+          "name": "a Puppeteer boringfeature",
           "whens": [],
           "thens": [
             {
@@ -261,7 +261,7 @@
           ]
         },
         {
-          "name": "a feature",
+          "name": "a Puppeteer feature",
           "whens": [
             {
               "name": "PostToStatus: hello"
@@ -270,88 +270,42 @@
           "thens": [
             {
               "name": "TheStatusIs: hello"
-            }
-          ]
-        },
-        {
-          "name": "a feature",
-          "whens": [
-            {
-              "name": "PostToStatus: hello"
-            },
-            {
-              "name": "PostToStatus: aloha"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheStatusIs: aloha"
-            }
-          ]
-        },
-        {
-          "name": "a feature",
-          "whens": [],
-          "thens": [
-            {
-              "name": "TheNumberIs: 0"
-            }
-          ]
-        },
-        {
-          "name": "a feature",
-          "whens": [
-            {
-              "name": "PostToAdd: 1"
-            },
-            {
-              "name": "PostToAdd: 2"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheNumberIs: 3"
-            }
-          ]
-        },
-        {
-          "name": "another feature",
-          "whens": [
-            {
-              "name": "PostToStatus: aloha"
-            },
-            {
-              "name": "PostToAdd: 4"
-            },
-            {
-              "name": "PostToStatus: hello"
-            },
-            {
-              "name": "PostToAdd: 3"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheStatusIs: hello"
-            },
-            {
-              "name": "TheNumberIs: 7"
             }
           ]
         }
       ],
-      "checks": [
+      "checks": []
+    },
+    "status": "pass"
+  },
+  {
+    "test": {
+      "name": "Testing the Node server with fetch",
+      "givens": [
         {
-          "feature": "hello imperative style",
-          "whens": {},
-          "thens": {}
+          "name": "a http boringfeature",
+          "whens": [],
+          "thens": [
+            {
+              "name": "TheStatusIs: some great status"
+            }
+          ]
         },
         {
-          "feature": "hello imperative style II",
-          "whens": {},
-          "thens": {}
+          "name": "a http feature",
+          "whens": [
+            {
+              "name": "PostToStatus: hello"
+            }
+          ],
+          "thens": [
+            {
+              "name": "TheStatusIs: hello"
+            }
+          ]
         }
-      ]
+      ],
+      "checks": []
     },
     "status": "pass"
   }

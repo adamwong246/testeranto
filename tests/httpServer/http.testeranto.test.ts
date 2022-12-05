@@ -3,8 +3,8 @@ import http from "http";
 import { assert } from "chai";
 
 import { serverFactory } from "./server";
+import { ITestResource } from "..";
 
-import { createStore, Store, AnyAction, PreloadedState } from "redux";
 import {
   BaseCheck,
   BaseGiven,
@@ -26,9 +26,10 @@ class Given extends BaseGiven<any, any, any> {
     });
   }
 
-  async givenThat(subject) {
+  async givenThat(subject, port: number) {
     const server = serverFactory();
-    await server.listen(3000);
+    console.log("(http) Server starting on ", port);
+    await server.listen(port);
     return server;
   }
 }
@@ -41,9 +42,9 @@ class When<IStore> extends BaseWhen<IStore> {
     this.payload = payload;
   }
 
-  async andWhen(store, actioner) {
+  async andWhen(store, actioner, port: number) {
     const [path, body]: [string, string] = actioner({});
-    const y = await fetch(`http://localhost:3000/${path}`, {
+    const y = await fetch(`http://localhost:${port.toString()}/${path}`, {
       method: "POST",
       body,
     });
@@ -57,10 +58,10 @@ class Then extends BaseThen<any> {
     super(name, callback);
   }
 
-  async butThen(store) {
+  async butThen(store, port: number) {
     const [path, expectation]: [string, string] = this.callback({});
     const bodytext = await (
-      await fetch(`http://localhost:3000/${path}`)
+      await fetch(`http://localhost:${port.toString()}/${path}`)
     ).text();
     assert.equal(bodytext, expectation);
     return;
@@ -76,9 +77,9 @@ class Check extends BaseCheck<any, any, any> {
     });
   }
 
-  async checkThat(subject) {
+  async checkThat(subject, port: number) {
     const server = serverFactory();
-    await server.listen(3000);
+    await server.listen(port);
     return server;
   }
 }
@@ -91,7 +92,8 @@ export class HttpTesteranto<IStoreShape, ITestShape> extends TesterantoV2<
   IStoreShape,
   IStoreShape,
   IStoreShape,
-  IAction
+  IAction,
+  ITestResource
 > {
   constructor(
     testImplementation: ITestImplementation<IStoreShape, IStoreShape, IAction>,
@@ -106,7 +108,8 @@ export class HttpTesteranto<IStoreShape, ITestShape> extends TesterantoV2<
       (f, w, t) => new Given(f, w, t),
       (s, o) => new When(s, o),
       (s, o) => new Then(s, o),
-      (f, g, c, cb) => new Check(f, g, c, cb)
+      (f, g, c, cb) => new Check(f, g, c, cb),
+      "port"
     );
   }
 }

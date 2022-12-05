@@ -73,7 +73,7 @@ export class AppReduxToolkitTesteranto extends ReduxToolkitTesteranto<
       (Suite, Given, When, Then, Check) => {
         return [
           Suite.Default(
-            "Testing the Redux store",
+            "Testing the ReduxToolkit",
             [
               Given.AnEmptyState(
                 "BDD gherkin style",

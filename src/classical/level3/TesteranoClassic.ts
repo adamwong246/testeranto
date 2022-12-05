@@ -77,7 +77,6 @@ export class TesterantoClassic<
   }
 
   Suites(): Record<keyof SuiteExtensions, (a: string) => ClassySuite<Klass>> {
-    console.log("mark1", this.suiteOverides);
     return {
       ...this.suiteOverides,
     };

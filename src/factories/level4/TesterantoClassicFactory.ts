@@ -52,8 +52,6 @@ export const TesterantoClassicFactory = <Klass, ISS, IGS, IWS, ITS, ICS>(
     c: IC<ICS, Klass>
   ) => ClassySuite<Klass>[]
 ) => {
-  console.log("mark3", tests);
-
   return {
     run: (
       suites: ISimpleSuites<ISS>,
