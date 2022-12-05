@@ -28,11 +28,11 @@ Because testerano is so unopinionated, it does not provide test infrastructure. 
 
 ### examples of test infrasuctures
 
-- [Testing a class, with TesterantoClassic](/tests/Rectangle)
-- [Testing a Redux store](/tests/Redux+Reselect+React/LoginStore.test.ts)
+- [Testing a class, with TesterantoClassic](/tests/Rectangle/Rectangle.test.ts)
+- [Testing a Redux store](/tests/Redux+Reselect+React/app.redux.test.ts)
 - [Testing a Reselect Selector based on a Redux store](/tests/Redux+Reselect+React/LoginSelector.test.ts)
-- [Testing a React Component with Reselect Selector based on a Redux store](/tests/Redux+Reselect+React/LoginPage.test.ts)
-- [Testing an http server with node's fetch](/tests/httpServer/http.testerano.test.ts.test.ts)
-- [Testing an http server with puppeteer](/tests/httpServer/puppeteer.testeranto.test.ts)
-- [Testing a Clasical react component](/tests/ClassicalReact/ClassicalReact.testeranto.test.ts)
-- [Testing a Clasical react component, bundled with esbuild and tested with puppeteer with screenshots](/tests/ClassicalReact/ClassicalComponent.esbuild-puppeteer.test.ts)
+- [Testing a React Component with Reselect Selector based on a Redux store](/tests/Redux+Reselect+React/app.reduxToolkit.test.ts)
+- [Testing an http server with node's fetch](/tests/httpServer/server.http.test.ts)
+- [Testing an http server with puppeteer](/tests/httpServer/server.puppeteer.test.ts)
+- [Testing a Clasical react component](/tests/ClassicalReact/ClassicalComponent.react-test-renderer.test.tsx)
+- [Testing a Clasical react component, bundled with esbuild and tested with puppeteer with screenshots](/tests/ClassicalReact/ClassicalComponent.react-test-renderer.test.tsx)
