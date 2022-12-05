@@ -20,7 +20,7 @@
   },
   "types": "index.d.ts",
   "dependencies": {
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@babel/core": "^7.19.6",
