@@ -14,7 +14,7 @@ Testeranto allows you to test the same code in multiple ways. You can test your 
 
 Testeranto exposes an extended gherkin syntax. You can use the given-when-then lingua-franca, AND you can also use an imperative `Check` which is a bit more flexible.
 
-Testeranto.ts is very lightweight and unopinionated. It is comprised entirely of ~1000 lines of typescript, with only 1 dependency (lodash).
+Testeranto.ts is very lightweight and unopinionated. It is comprised entirely of <700 lines of typescript, with only 1 dependency (lodash).
 
 Testeranto is just TS- no plain text, no markdown and no regex pattern matching required.
 
@@ -24,11 +24,7 @@ Testerano is not for testing pure functions. It's designed only to address _stat
 
 Testeranto prefers TS and to be leveraged to it full potential requires at least some proficiency with the language.
 
-Because testerano is so unopinionated, it does not provide test infrastructure. You will need to find an existing recipe or implement it yourself. Depending on your needs, you will need to implement an interface which extends 1 of 2 classes:
-
-1] `TesterantoClassic`, when you only need to test a class
-
-2] `TesterantoBasic`, when you need to test something more complex
+Because testerano is so unopinionated, it does not provide test infrastructure. You will need to find an existing recipe or implement it yourself.
 
 ### examples of test infrasuctures
 

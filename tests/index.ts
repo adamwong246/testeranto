@@ -6,8 +6,7 @@ import { ClassicalComponentReactTestRendererTesteranto } from "./ClassicalReact/
 import { RectangleTesteranto } from "./Rectangle/Rectangle.test";
 import { ServerHttpPuppeteerTesteranto } from "./httpServer/server.puppeteer.test";
 import { ServerHttpTesteranto } from "./httpServer/server.http.test";
-
-import reporter from "../src/reporter";
+import { reporter } from "..";
 
 export type ITestResource = "port";
 

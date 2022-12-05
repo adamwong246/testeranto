@@ -10,7 +10,6 @@ import {
   BaseWhen,
   ITestImplementation,
   Testeranto,
-  TesterantoV2,
 } from "../../index";
 
 class Suite extends BaseSuite<any, any, any> {}
@@ -95,7 +94,7 @@ class Check extends BaseCheck<any, any, any> {
 
 type IAction = any;
 
-export class EsbuildPuppeteerTesteranto<ITestShape> extends TesterantoV2<
+export class EsbuildPuppeteerTesteranto<ITestShape> extends Testeranto<
   ITestShape,
   any,
   any,

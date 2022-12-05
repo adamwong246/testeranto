@@ -13,7 +13,7 @@ import {
   BaseThen,
   BaseWhen,
   ITestImplementation,
-  TesterantoV2,
+  Testeranto,
 } from "../../index";
 
 export type IActionCreate =
@@ -143,7 +143,7 @@ export class ReduxToolkitTesteranto<
   ISelection,
   IState,
   ITestShape
-> extends TesterantoV2<
+> extends Testeranto<
   ITestShape,
   IStoreShape,
   IStoreShape,

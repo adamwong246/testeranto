@@ -13,7 +13,7 @@ import {
   BaseThen,
   BaseWhen,
   ITestImplementation,
-  TesterantoV2,
+  Testeranto,
 } from "../../index";
 
 class Suite extends BaseSuite<any, any, any> {}
@@ -118,7 +118,7 @@ type IAction = [url: string, paylaod: string];
 export class PuppeteerHttpTesteranto<
   IStoreShape,
   ITestShape
-> extends TesterantoV2<
+> extends Testeranto<
   ITestShape,
   IStoreShape,
   IStoreShape,

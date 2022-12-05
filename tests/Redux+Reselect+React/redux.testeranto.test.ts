@@ -10,7 +10,7 @@ import {
   BaseThen,
   BaseWhen,
   ITestImplementation,
-  TesterantoV2,
+  Testeranto,
 } from "../../index";
 
 class ReduxSuite<
@@ -95,7 +95,7 @@ type IAction = [
   (object | string)?
 ];
 
-export class ReduxTesteranto<IStoreShape, ITestShape> extends TesterantoV2<
+export class ReduxTesteranto<IStoreShape, ITestShape> extends Testeranto<
   ITestShape,
   IStoreShape,
   IStoreShape,

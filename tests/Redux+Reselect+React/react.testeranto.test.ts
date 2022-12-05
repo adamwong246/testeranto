@@ -7,7 +7,7 @@ import {
   BaseThen,
   BaseWhen,
   ITestImplementation,
-  TesterantoV2,
+  Testeranto,
 } from "../../index";
 
 class Suite extends BaseSuite<
@@ -56,7 +56,7 @@ class Check extends BaseCheck<
   }
 }
 
-export class ReactTesteranto<ITestShape> extends TesterantoV2<
+export class ReactTesteranto<ITestShape> extends Testeranto<
   ReactTestRenderer,
   ReactTestRenderer,
   ReactTestRenderer,

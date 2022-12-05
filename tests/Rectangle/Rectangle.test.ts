@@ -1,18 +1,19 @@
 import assert from "assert";
 
-import { TesterantoV2 } from "../../index";
 import {
   ClassyCheck,
   ClassyGiven,
   ClassySuite,
   ClassyThen,
   ClassyWhen,
-} from "../../src/classical/level2/TesterantoClasses";
+  Testeranto,
+} from "../../index";
+
 import LoginPage from "../Redux+Reselect+React/LoginPage";
 
 import Rectangle from "./Rectangle";
 
-export class RectangleTesteranto extends TesterantoV2<
+export class RectangleTesteranto extends Testeranto<
   {
     suites: {
       Default: string;

@@ -9,7 +9,7 @@ import {
   BaseThen,
   BaseWhen,
   ITestImplementation,
-  TesterantoV2,
+  Testeranto,
 } from "../../index";
 
 import puppeteer, { Page } from "puppeteer";
@@ -70,7 +70,7 @@ class Check extends BaseCheck<any, any, any> {
 
 type IAction = any;
 
-export class ReactTestRendererTesteranto<ITestShape> extends TesterantoV2<
+export class ReactTestRendererTesteranto<ITestShape> extends Testeranto<
   ITestShape,
   any,
   any,
