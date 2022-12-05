@@ -18,7 +18,7 @@ Testeranto.ts is very lightweight and unopinionated. It is comprised entirely of
 
 Testeranto is just TS- no plain text, no markdown and no regex pattern matching required.
 
-### the bad parts
+Testeranto allows you to test the same code in multiple ways. You can test your TS in a granular, unit-test fashion, and also bundle it and test it through an interface like puppeteer, bridging TDD and BDD patterns.
 
 Testerano is not for testing pure functions. It's designed only to address _stateful_ logic.
 
