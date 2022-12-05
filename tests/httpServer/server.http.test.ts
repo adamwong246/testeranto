@@ -66,55 +66,55 @@ export class ServerHttpTesteranto extends HttpTesteranto<
                 [When.PostToStatus("hello")],
                 [Then.TheStatusIs("hello")]
               ),
-              // Given.AnEmptyState(
-              //   "a httpfeature",
-              //   [When.PostToStatus("hello"), When.PostToStatus("aloha")],
-              //   [Then.TheStatusIs("aloha")]
-              // ),
-              // Given.AnEmptyState("a feature", [], [Then.TheNumberIs(0)]),
-              // Given.AnEmptyState(
-              //   "a httpfeature",
-              //   [When.PostToAdd(1), When.PostToAdd(2)],
-              //   [Then.TheNumberIs(3)]
-              // ),
-              // Given.AnEmptyState(
-              //   "another http feature",
-              //   [
-              //     When.PostToStatus("aloha"),
-              //     When.PostToAdd(4),
-              //     When.PostToStatus("hello"),
-              //     When.PostToAdd(3),
-              //   ],
-              //   [Then.TheStatusIs("hello"), Then.TheNumberIs(7)]
-              // ),
+              Given.AnEmptyState(
+                "a httpfeature",
+                [When.PostToStatus("hello"), When.PostToStatus("aloha")],
+                [Then.TheStatusIs("aloha")]
+              ),
+              Given.AnEmptyState("a feature", [], [Then.TheNumberIs(0)]),
+              Given.AnEmptyState(
+                "a httpfeature",
+                [When.PostToAdd(1), When.PostToAdd(2)],
+                [Then.TheNumberIs(3)]
+              ),
+              Given.AnEmptyState(
+                "another http feature",
+                [
+                  When.PostToStatus("aloha"),
+                  When.PostToAdd(4),
+                  When.PostToStatus("hello"),
+                  When.PostToAdd(3),
+                ],
+                [Then.TheStatusIs("hello"), Then.TheNumberIs(7)]
+              ),
             ],
             [
-              // Check.AnEmptyState(
-              //   "HTTP imperative style",
-              //   async ({ PostToAdd }, { TheNumberIs }) => {
-              //     await PostToAdd(2);
-              //     await PostToAdd(3);
-              //     await TheNumberIs(5);
-              //     await PostToAdd(2);
-              //     await TheNumberIs(7);
-              //     await PostToAdd(3);
-              //     await TheNumberIs(10);
-              //   }
-              // ),
-              // Check.AnEmptyState(
-              //   "HTTP imperative style II",
-              //   async ({ PostToAdd }, { TheNumberIs }) => {
-              //     const a = await PostToAdd(2);
-              //     const b = parseInt(await PostToAdd(3));
-              //     await TheNumberIs(b);
-              //     await PostToAdd(2);
-              //     await TheNumberIs(7);
-              //     await PostToAdd(3);
-              //     await TheNumberIs(10);
-              //     assert.equal(await PostToAdd(-15), -5);
-              //     await TheNumberIs(-5);
-              //   }
-              // ),
+              Check.AnEmptyState(
+                "HTTP imperative style",
+                async ({ PostToAdd }, { TheNumberIs }) => {
+                  await PostToAdd(2);
+                  await PostToAdd(3);
+                  await TheNumberIs(5);
+                  await PostToAdd(2);
+                  await TheNumberIs(7);
+                  await PostToAdd(3);
+                  await TheNumberIs(10);
+                }
+              ),
+              Check.AnEmptyState(
+                "HTTP imperative style II",
+                async ({ PostToAdd }, { TheNumberIs }) => {
+                  const a = await PostToAdd(2);
+                  const b = parseInt(await PostToAdd(3));
+                  await TheNumberIs(b);
+                  await PostToAdd(2);
+                  await TheNumberIs(7);
+                  await PostToAdd(3);
+                  await TheNumberIs(10);
+                  assert.equal(await PostToAdd(-15), -5);
+                  await TheNumberIs(-5);
+                }
+              ),
             ]
           ),
         ];
