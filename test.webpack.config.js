@@ -14,10 +14,20 @@ const config = {
     unknownContextCritical: false,
     rules: [
       {
-        test: /\.(ts|tsx)$/i,
-        loader: "ts-loader",
-        exclude: ["/node_modules/"],
+        test: /\.node$/,
+        loader: "node-loader",
       },
+      {
+        test: /(?<!\.d)\.tsx?$/,
+        loader: "ts-loader",
+        // exclude: ["/node_modules/"],
+        // options: { compilerOptions: { noEmit: false }, allowTsInNodeModules: true },
+        // exclude: /node_modules|\.d\.ts$/
+      },
+      {
+        test: /\.d\.ts$/,
+        loader: 'ignore-loader'
+      }
     ],
   },
   resolve: {

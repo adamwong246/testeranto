@@ -1,8 +1,8 @@
 import React from "react";
 import { Provider, useSelector } from "react-redux";
 
-import { IStoreState as IState } from "./app";
 import app from "./app";
+
 const core = app();
 
 const selector = core.select.loginPageSelection;
