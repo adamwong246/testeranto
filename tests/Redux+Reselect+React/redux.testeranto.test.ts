@@ -5,6 +5,7 @@ import {
 import { createStore, Store, AnyAction, PreloadedState } from "redux";
 import {
   BaseCheck,
+  BaseFeature,
   BaseGiven,
   BaseSuite,
   BaseThen,
@@ -26,9 +27,10 @@ class ReduxGiven<
     name: string,
     whens: BaseWhen<IStore>[],
     thens: BaseThen<any>[],
-    initialValues: PreloadedState<any>
+    initialValues: PreloadedState<any>,
+    features: BaseFeature[]
   ) {
-    super(name, whens, thens);
+    super(name, whens, thens, features);
     this.initialValues = initialValues;
   }
 
@@ -113,7 +115,7 @@ export class ReduxTesteranto<IStoreShape, ITestShape> extends Testeranto<
       testSpecification,
       thing,
       (s, g, c) => new ReduxSuite(s, g, c),
-      (f, w, t, z?) => new ReduxGiven(f, w, t, z),
+      (f, w, t, ft, z?) => new ReduxGiven(f, w, t, ft, z),
       (s, o) => new ReduxWhen(s, o),
       (s, o) => new ReduxThen(s, o),
       (f, g, c, cb, z?) => new ReduxCheck(f, g, c, cb, z)

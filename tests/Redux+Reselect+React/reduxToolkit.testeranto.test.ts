@@ -8,6 +8,7 @@ import {
 import { createStore, Store, AnyAction, PreloadedState } from "redux";
 import {
   BaseCheck,
+  BaseFeature,
   BaseGiven,
   BaseSuite,
   BaseThen,
@@ -56,9 +57,10 @@ class Given<IStore extends Store, ISelected> extends BaseGiven<
     name: string,
     whens: BaseWhen<any>[],
     thens: BaseThen<ISelected>[],
+    features: BaseFeature[],
     initialValues: any
   ) {
-    super(name, whens, thens);
+    super(name, whens, thens, features);
     this.initialValues = initialValues;
   }
 
@@ -161,7 +163,7 @@ export class ReduxToolkitTesteranto<
       testSpecification,
       thing,
       (s, g, c) => new Suite(s, g, c),
-      (f, w, t, z?) => new Given(f, w, t, z),
+      (f, w, t, ft, z?) => new Given(f, w, t, ft, z),
       (s, o) => new When(s, o),
       (s, o) => new Then(s, o),
       (f, g, c, cb, z?) => new Check(f, g, c, cb, z)

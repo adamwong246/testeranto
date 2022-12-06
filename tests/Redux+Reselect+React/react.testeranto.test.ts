@@ -74,7 +74,7 @@ export class ReactTesteranto<ITestShape> extends Testeranto<
       testSpecification,
       thing,
       (s, g, c) => new Suite(s, g, c),
-      (f, w, t) => new Given(f, w, t),
+      (f, w, t, ft) => new Given(f, w, t, ft),
       (s, o) => new When(s, o),
       (s, o) => new Then(s, o),
       (f, g, c, cb) => new Check(f, g, c, cb)

@@ -1,4 +1,4 @@
-import React from "react";
+// import React, { Component } from "react";
 import puppeteer, { Page } from "puppeteer";
 import esbuild from "esbuild";
 
@@ -12,43 +12,36 @@ import {
   Testeranto,
 } from "../../index";
 
-class Suite extends BaseSuite<any, any, any> {}
+class Suite extends BaseSuite<any, any, any> {
+  async setup(bundlePath: string) {
+    console.log("setup");
+    return {
+      page: await (
+        await puppeteer.launch({
+          headless: true,
+          executablePath:
+            "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        })
+      ).newPage(),
+      jsbundle: esbuild.buildSync({
+        entryPoints: [bundlePath],
+        bundle: true,
+        minify: true,
+        format: "esm",
+        target: ["esnext"],
+        write: false,
+      }).outputFiles[0].text,
+    };
+  }
+}
 
 class Given extends BaseGiven<any, any, any> {
-  async givenThat(subject: React.ReactElement): Promise<any> {
-    const script = esbuild.buildSync({
-      entryPoints: ["./tests/ClassicalReact/index.ts"],
-      bundle: true,
-      minify: true,
-      format: "esm",
-      target: ["esnext"],
-      write: false,
-    });
-
-    const browser = await puppeteer.launch({
-      headless: true,
-      executablePath:
-        "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-    });
-    const page = await browser.newPage();
-
-    await page.setContent(`
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <script type="module">${script.outputFiles[0].text}</script>
-</head>
-
-<body>
-  <div id="root">
-  </div>
-</body>
-
-<footer></footer>
-
-</html>
-        `);
-    return page;
+  async givenThat(
+    [jsFilePath],
+    htmlTemplate: [string, (string) => string],
+    { jsbundle, page }
+  ): Promise<any> {
+    await page.setContent();
   }
 
   async teardown(page: Page, ndx: number): Promise<any> {
@@ -59,23 +52,12 @@ class Given extends BaseGiven<any, any, any> {
 }
 
 class When<IStore extends Page> extends BaseWhen<IStore> {
-  payload?: any;
-
-  constructor(name: string, actioner: (...any) => any, payload?: any) {
-    super(name, (store) => actioner(store));
-    this.payload = payload;
-  }
-
   async andWhen(page: IStore) {
     return this.actioner(page);
   }
 }
 
 class Then extends BaseThen<any> {
-  constructor(name: string, callback: (val: any) => any) {
-    super(name, callback);
-  }
-
   async butThen(component) {
     return component;
   }
@@ -107,12 +89,16 @@ export class EsbuildPuppeteerTesteranto<ITestShape> extends Testeranto<
     testSpecification,
     thing
   ) {
+    console.log("mark11");
     super(
       testImplementation,
       testSpecification,
       thing,
-      (s, g, c) => new Suite(s, g, c),
-      (f, w, t) => new Given(f, w, t),
+      (s, g, c) => {
+        console.log("mark12");
+        return new Suite(s, g, c);
+      },
+      (n, w, t, f) => new Given(n, w, t, f),
       (s, o) => new When(s, o),
       (s, o) => new Then(s, o),
       (f, g, c, cb) => new Check(f, g, c, cb)

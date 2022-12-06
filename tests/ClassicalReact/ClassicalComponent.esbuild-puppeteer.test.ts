@@ -101,7 +101,26 @@ export class ClassicalComponentEsbuildPuppeteerTesteranto extends EsbuildPuppete
         ];
       },
 
-      ClassicalComponent
+      [
+        "./tests/ClassicalReact/index.ts",
+
+        (jsbundle: string): string => `
+            <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <script type="module">${jsbundle}</script>
+    </head>
+
+    <body>
+      <div id="root">
+      </div>
+    </body>
+
+    <footer></footer>
+
+    </html>
+`,
+      ]
     );
   }
 }

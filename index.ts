@@ -1,6 +1,13 @@
 import fs from "fs";
 import { mapValues } from "lodash";
 
+export abstract class BaseFeature {
+  name: string;
+  constructor(name: string) {
+    this.name = name;
+  }
+}
+
 export abstract class BaseSuite<ISubject, IStore, ISelection> {
   name: string;
   givens: BaseGiven<ISubject, IStore, ISelection>[];
@@ -16,15 +23,22 @@ export abstract class BaseSuite<ISubject, IStore, ISelection> {
     this.checks = checks;
   }
 
+  async setup(): Promise<any> {
+    console.log("mark1");
+  }
+
   async run(subject, testResourceConfiguration?) {
+    const setup = await this.setup();
+
     console.log("\nSuite:", this.name, testResourceConfiguration);
 
     for (const [ndx, givenThat] of this.givens.entries()) {
-      await givenThat.give(subject, ndx, testResourceConfiguration);
+      console.log("mark8", setup);
+      await givenThat.give(subject, ndx, setup, testResourceConfiguration);
     }
 
     for (const [ndx, checkThat] of this.checks.entries()) {
-      await checkThat.check(subject, ndx, testResourceConfiguration);
+      await checkThat.check(subject, ndx, setup, testResourceConfiguration);
     }
   }
 }
@@ -33,33 +47,50 @@ export abstract class BaseGiven<ISubject, IStore, ISelection> {
   name: string;
   whens: BaseWhen<IStore>[];
   thens: BaseThen<ISelection>[];
+  features: BaseFeature[];
 
   constructor(
     name: string,
     whens: BaseWhen<IStore>[],
-    thens: BaseThen<ISelection>[]
+    thens: BaseThen<ISelection>[],
+    features: BaseFeature[]
   ) {
     this.name = name;
     this.whens = whens;
     this.thens = thens;
+    this.features = features;
   }
 
-  abstract givenThat(subject: ISubject, testResourceConfiguration?): IStore;
+  abstract givenThat(
+    subject: ISubject,
+    suite: BaseSuite<ISubject, IStore, ISelection>,
+    testResourceConfiguration?
+  ): IStore;
 
   async teardown(subject: any, ndx: number) {
     return subject;
   }
 
-  async give(subject: ISubject, index: number, testResourceConfiguration?) {
+  async give(
+    subject: ISubject,
+    index: number,
+    setup,
+    testResourceConfiguration?
+  ) {
+    console.log("mark3");
     console.log(`\n Given: ${this.name}`);
-    const store = await this.givenThat(subject, testResourceConfiguration);
+    const store = await this.givenThat(
+      subject,
+      setup,
+      testResourceConfiguration
+    );
 
     for (const whenStep of this.whens) {
-      await whenStep.test(store, testResourceConfiguration);
+      await whenStep.test(store, setup, testResourceConfiguration);
     }
 
     for (const thenStep of this.thens) {
-      await thenStep.test(store, testResourceConfiguration);
+      await thenStep.test(store, setup, testResourceConfiguration);
     }
 
     await this.teardown(store, index);
@@ -70,6 +101,7 @@ export abstract class BaseGiven<ISubject, IStore, ISelection> {
 export abstract class BaseWhen<IStore> {
   name: string;
   actioner: (x: any) => any;
+
   constructor(name: string, actioner: (x) => any) {
     this.name = name;
     this.actioner = actioner;
@@ -77,7 +109,7 @@ export abstract class BaseWhen<IStore> {
 
   abstract andWhen(store: IStore, actioner: (x) => any, testResource): any;
 
-  async test(store: IStore, testResourceConfiguration?) {
+  async test(store: IStore, setup, testResourceConfiguration?) {
     console.log(" When:", this.name);
     return await this.andWhen(store, this.actioner, testResourceConfiguration);
   }
@@ -94,7 +126,7 @@ export abstract class BaseThen<ISelection> {
 
   abstract butThen(store: any, testResourceConfiguration?): ISelection;
 
-  async test(store: any, testResourceConfiguration) {
+  async test(store: any, setup, testResourceConfiguration) {
     console.log(" Then:", this.name);
     return this.callback(await this.butThen(store, testResourceConfiguration));
   }
@@ -119,7 +151,12 @@ export abstract class BaseCheck<ISubject, IStore, ISelection> {
     return subject;
   }
 
-  async check(subject: ISubject, ndx: number, testResourceConfiguration) {
+  async check(
+    subject: ISubject,
+    ndx: number,
+    setup,
+    testResourceConfiguration
+  ) {
     console.log(`\n - \nCheck: ${this.feature}`);
     const store = await this.checkThat(subject, testResourceConfiguration);
     await this.callback(
@@ -290,9 +327,10 @@ export class ClassyGiven<Klass> extends BaseGiven<Klass, Klass, Klass> {
     name: string,
     whens: ClassyWhen<Klass>[],
     thens: ClassyThen<Klass>[],
-    thing: Klass
+    thing: Klass,
+    features: BaseFeature[]
   ) {
-    super(name, whens, thens);
+    super(name, whens, thens, features);
     this.thing = thing;
   }
 
@@ -411,9 +449,10 @@ export abstract class Testeranto<
       Given: {
         /* @ts-ignore:next-line */
         [K in keyof ITestShape["givens"]]: (
-          feature: string,
+          name: string,
           whens: BaseWhen<any>[],
           thens: BaseThen<any>[],
+          features: BaseFeature[],
 
           /* @ts-ignore:next-line */
           ...a: ITestShape["givens"][K]
@@ -559,31 +598,29 @@ export abstract class Testeranto<
   }
 }
 
+type IT = {
+  name: string;
+  givens: BaseGiven<any, any, any>[];
+  checks: BaseCheck<any, any, any>[];
+};
+
 type ITest = {
-  test: {
-    name: string;
-    givens: BaseGiven<any, any, any>[];
-    checks: BaseCheck<any, any, any>[];
-  };
+  test: IT;
   runner: (testResurce?) => any;
   testResource: any;
 };
 
 type ITestResults = Promise<{
-  test: {
-    name: string;
-    givens: BaseGiven<any, any, any>[];
-    checks: BaseCheck<any, any, any>[];
-  };
+  test: IT;
   status: any;
 }>[];
 
+// this function is awesome
 const processPortyTests = async (
   tests: ITest[],
   ports: number[]
 ): Promise<ITestResults> => {
   let testsStack = tests;
-
   return (
     await Promise.all(
       ports.map(async (port: number) => {
