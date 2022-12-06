@@ -587,14 +587,14 @@ const processPortyTests = async (
   return (
     await Promise.all(
       ports.map(async (port: number) => {
-        return await new Promise<ITestResults>((res, rej) => {
+        return new Promise<ITestResults>((res, rej) => {
           const popper = async (payload) => {
             if (testsStack.length === 0) {
               res(payload);
             } else {
               const suite = testsStack.pop();
               try {
-                await suite?.runner({ port });
+                suite?.runner({ port });
                 popper([
                   ...payload,
                   {
