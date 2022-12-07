@@ -40,11 +40,13 @@ export type ISubjectReducerAndSelectorAnStore = {
   store: Store<any, any>;
 };
 
+type IInput = { reducer: Reducer };
+
 class Suite<
   ISubjectReducerAndSelector,
   IStore extends Store,
   ISelected
-> extends BaseSuite<ISubjectReducerAndSelector, IStore, ISelected> {}
+> extends BaseSuite<IInput, ISubjectReducerAndSelector, IStore, ISelected> {}
 
 class Given<IStore extends Store, ISelected> extends BaseGiven<
   ISubjectReducerAndSelector,
@@ -55,12 +57,17 @@ class Given<IStore extends Store, ISelected> extends BaseGiven<
 
   constructor(
     name: string,
-    whens: BaseWhen<any>[],
-    thens: BaseThen<ISelected>[],
-    features: BaseFeature[],
+    whens: BaseWhen<IStore>[],
+    thens: BaseThen<ISelected, IStore>[],
+    // features: BaseFeature[],
     initialValues: any
   ) {
-    super(name, whens, thens, features);
+    super(
+      name,
+      whens,
+      thens
+      // features
+    );
     this.initialValues = initialValues;
   }
 
@@ -96,7 +103,7 @@ class When extends BaseWhen<any> {
   }
 }
 
-class Then<ISelected> extends BaseThen<ISelected> {
+class Then<ISelected> extends BaseThen<ISelected, Store> {
   constructor(name: string, callback: (val: ISelected) => any) {
     super(name, callback);
   }
@@ -140,6 +147,11 @@ class Check<IStore extends Store, ISelected> extends BaseCheck<
   }
 }
 
+type IInputshape<IStore, ISelect> = {
+  reducer: Reducer;
+  selector: (state: IStore) => ISelect;
+};
+
 export class ReduxToolkitTesteranto<
   IStoreShape,
   ISelection,
@@ -151,19 +163,21 @@ export class ReduxToolkitTesteranto<
   IStoreShape,
   IStoreShape,
   IStoreShape,
-  IAction
+  IAction,
+  never,
+  IInputshape<IStoreShape, ISelection>
 > {
   constructor(
     testImplementation: ITestImplementation<IStoreShape, IStoreShape, IAction>,
     testSpecification,
-    thing
+    thing: IInputshape<IStoreShape, ISelection>
   ) {
     super(
       testImplementation,
       testSpecification,
       thing,
       (s, g, c) => new Suite(s, g, c),
-      (f, w, t, ft, z?) => new Given(f, w, t, ft, z),
+      (f, w, t, z) => new Given(f, w, t, z),
       (s, o) => new When(s, o),
       (s, o) => new Then(s, o),
       (f, g, c, cb, z?) => new Check(f, g, c, cb, z)

@@ -11,9 +11,10 @@ import {
 } from "../../index";
 
 class Suite extends BaseSuite<
-  () => JSX.Element, // the thing we test
-  ReactTestRenderer, // the thing we perform actions against
-  ReactTestRenderer // the thing we make assertions against
+  () => JSX.Element,
+  () => JSX.Element,
+  ReactTestRenderer,
+  ReactTestRenderer
 > {}
 
 class Given extends BaseGiven<
@@ -36,7 +37,7 @@ class When extends BaseWhen<ReactTestRenderer> {
   }
 }
 
-class Then extends BaseThen<ReactTestRenderer> {
+class Then extends BaseThen<ReactTestRenderer, ReactTestRenderer> {
   butThen(component: renderer.ReactTestRenderer): renderer.ReactTestRenderer {
     return component;
   }
@@ -57,11 +58,13 @@ class Check extends BaseCheck<
 }
 
 export class ReactTesteranto<ITestShape> extends Testeranto<
+  any,
   ReactTestRenderer,
   ReactTestRenderer,
   ReactTestRenderer,
   ReactTestRenderer,
   ReactTestRenderer,
+  any,
   any
 > {
   constructor(
@@ -74,7 +77,7 @@ export class ReactTesteranto<ITestShape> extends Testeranto<
       testSpecification,
       thing,
       (s, g, c) => new Suite(s, g, c),
-      (f, w, t, ft) => new Given(f, w, t, ft),
+      (f, w, t) => new Given(f, w, t),
       (s, o) => new When(s, o),
       (s, o) => new Then(s, o),
       (f, g, c, cb) => new Check(f, g, c, cb)
