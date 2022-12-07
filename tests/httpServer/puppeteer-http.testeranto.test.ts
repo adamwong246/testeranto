@@ -16,7 +16,9 @@ import {
   Testeranto,
 } from "../../index";
 
-class Suite extends BaseSuite<any, any, any> {}
+type IInput = () => http.Server;
+
+class Suite extends BaseSuite<IInput, any, any, any> {}
 
 class Given extends BaseGiven<any, any, any> {
   async teardown({
@@ -67,7 +69,7 @@ class When<IStore> extends BaseWhen<IStore> {
   }
 }
 
-class Then extends BaseThen<any> {
+class Then extends BaseThen<any, any> {
   constructor(name: string, callback: (val: any) => any) {
     super(name, callback);
   }
@@ -125,7 +127,8 @@ export class PuppeteerHttpTesteranto<
   IStoreShape,
   IStoreShape,
   IAction,
-  ITestResource
+  ITestResource,
+  IInput
 > {
   constructor(
     testImplementation: ITestImplementation<IStoreShape, IStoreShape, IAction>,

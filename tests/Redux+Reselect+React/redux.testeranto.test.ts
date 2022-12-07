@@ -1,10 +1,12 @@
 import {
   ActionCreatorWithNonInferrablePayload,
   ActionCreatorWithoutPayload,
+  Slice,
 } from "@reduxjs/toolkit";
 import { createStore, Store, AnyAction, PreloadedState } from "redux";
 import {
   BaseCheck,
+  BaseFeature,
   BaseGiven,
   BaseSuite,
   BaseThen,
@@ -13,22 +15,33 @@ import {
   Testeranto,
 } from "../../index";
 
-class ReduxSuite<
-  IStore extends Store<IState, AnyAction>,
-  IState
-> extends BaseSuite<IStore, IState, IState> {}
+type IInput = Slice;
 
-class ReduxGiven<
-  IStore extends Store<IState, AnyAction>,
+class Suite<IStore extends Store<IState, AnyAction>, IState> extends BaseSuite<
+  IInput,
+  IStore,
+  IState,
   IState
-> extends BaseGiven<IStore, IStore, IState> {
+> {}
+
+class Given<IStore extends Store<IState, AnyAction>, IState> extends BaseGiven<
+  IStore,
+  IStore,
+  IState
+> {
   constructor(
     name: string,
     whens: BaseWhen<IStore>[],
-    thens: BaseThen<any>[],
+    thens: BaseThen<IState, IStore>[],
     initialValues: PreloadedState<any>
+    // features: BaseFeature[]
   ) {
-    super(name, whens, thens);
+    super(
+      name,
+      whens,
+      thens
+      // features
+    );
     this.initialValues = initialValues;
   }
 
@@ -39,7 +52,7 @@ class ReduxGiven<
   }
 }
 
-class ReduxWhen<IStore> extends BaseWhen<IStore> {
+class When<IStore> extends BaseWhen<IStore> {
   payload?: any;
 
   constructor(name: string, actioner: (...any) => any, payload?: any) {
@@ -55,16 +68,16 @@ class ReduxWhen<IStore> extends BaseWhen<IStore> {
   }
 }
 
-class ReduxThen<
-  IStore extends Store<IState, AnyAction>,
-  IState
-> extends BaseThen<IState> {
+class Then<IStore extends Store<IState, AnyAction>, IState> extends BaseThen<
+  IState,
+  IStore
+> {
   butThen(store: IStore): IState {
     return store.getState();
   }
 }
 
-class ReduxCheck<IState> extends BaseCheck<
+class Check<IState> extends BaseCheck<
   Store<IState, AnyAction>,
   Store<IState, AnyAction>,
   IState
@@ -101,7 +114,9 @@ export class ReduxTesteranto<IStoreShape, ITestShape> extends Testeranto<
   IStoreShape,
   IStoreShape,
   IStoreShape,
-  IAction
+  IAction,
+  any,
+  Slice
 > {
   constructor(
     testImplementation: ITestImplementation<IStoreShape, IStoreShape, IAction>,
@@ -112,11 +127,11 @@ export class ReduxTesteranto<IStoreShape, ITestShape> extends Testeranto<
       testImplementation,
       testSpecification,
       thing,
-      (s, g, c) => new ReduxSuite(s, g, c),
-      (f, w, t, z?) => new ReduxGiven(f, w, t, z),
-      (s, o) => new ReduxWhen(s, o),
-      (s, o) => new ReduxThen(s, o),
-      (f, g, c, cb, z?) => new ReduxCheck(f, g, c, cb, z)
+      (s, g, c) => new Suite(s, g, c),
+      (f, w, t, z?) => new Given(f, w, t, z),
+      (s, o) => new When(s, o),
+      (s, o) => new Then(s, o),
+      (f, g, c, cb, z?) => new Check(f, g, c, cb, z)
     );
   }
 }

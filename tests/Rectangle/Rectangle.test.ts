@@ -47,7 +47,9 @@ export class RectangleTesteranto extends Testeranto<
   any,
   any,
   any,
-  any
+  any,
+  any,
+  () => Rectangle
 > {
   constructor() {
     super(

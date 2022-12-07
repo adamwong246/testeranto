@@ -1,6 +1,7 @@
 import { ReactTesteranto } from "./react.testeranto.test";
 import { assert } from "chai";
 import LoginPage from "./LoginPage";
+
 export class AppReactTesteranto extends ReactTesteranto<{
   suites: {
     Default: string;

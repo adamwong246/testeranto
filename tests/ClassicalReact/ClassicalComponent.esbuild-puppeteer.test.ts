@@ -1,10 +1,8 @@
-import { ClassicalComponent } from "./ClassicalComponent";
 import type { IProps, IState } from "./ClassicalComponent";
 
 import { assert } from "chai";
 
 import { EsbuildPuppeteerTesteranto } from "./esbuild-puppeteer.testeranto.test";
-import { Page } from "puppeteer";
 
 export class ClassicalComponentEsbuildPuppeteerTesteranto extends EsbuildPuppeteerTesteranto<{
   suites: {
@@ -35,21 +33,27 @@ export class ClassicalComponentEsbuildPuppeteerTesteranto extends EsbuildPuppete
           AnEmptyState: () => {},
         },
         Whens: {
-          IClickTheButton: () => async (page: Page) =>
-            await page.click("#theButton"),
+          IClickTheButton:
+            () =>
+            async ({ page }) =>
+              await page.click("#theButton"),
         },
         Thens: {
-          ThePropsIs: (expectation) => async (page: Page) =>
-            assert.deepEqual(
-              await page.$eval("#theProps", (el) => el.innerHTML),
-              JSON.stringify(expectation)
-            ),
+          ThePropsIs:
+            (expectation) =>
+            async ({ page }) =>
+              assert.deepEqual(
+                await page.$eval("#theProps", (el) => el.innerHTML),
+                JSON.stringify(expectation)
+              ),
 
-          TheStatusIs: (expectation) => async (page: Page) =>
-            assert.deepEqual(
-              await page.$eval("#theState", (el) => el.innerHTML),
-              JSON.stringify(expectation)
-            ),
+          TheStatusIs:
+            (expectation) =>
+            async ({ page }) =>
+              assert.deepEqual(
+                await page.$eval("#theState", (el) => el.innerHTML),
+                JSON.stringify(expectation)
+              ),
         },
         Checks: {
           /* @ts-ignore:next-line */
@@ -101,7 +105,26 @@ export class ClassicalComponentEsbuildPuppeteerTesteranto extends EsbuildPuppete
         ];
       },
 
-      ClassicalComponent
+      [
+        "./tests/ClassicalReact/index.ts",
+
+        (jsbundle: string): string => `
+            <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <script type="module">${jsbundle}</script>
+    </head>
+
+    <body>
+      <div id="root">
+      </div>
+    </body>
+
+    <footer></footer>
+
+    </html>
+`,
+      ]
     );
   }
 }

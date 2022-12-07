@@ -1,7 +1,19 @@
 import fs from "fs";
 import { mapValues } from "lodash";
 
-export abstract class BaseSuite<ISubject, IStore, ISelection> {
+export abstract class BaseFeature {
+  name: string;
+  constructor(name: string) {
+    this.name = name;
+  }
+}
+
+export abstract class BaseSuite<
+  IInput,
+  ISubject extends any,
+  IStore,
+  ISelection
+> {
   name: string;
   givens: BaseGiven<ISubject, IStore, ISelection>[];
   checks: BaseCheck<ISubject, IStore, ISelection>[];
@@ -16,15 +28,22 @@ export abstract class BaseSuite<ISubject, IStore, ISelection> {
     this.checks = checks;
   }
 
-  async run(subject, testResourceConfiguration?) {
+  // abstract setup(s: IInput): Promise<ISubject>;
+  setup(s: IInput): Promise<ISubject> {
+    return new Promise((res, rej) => res(s as unknown as ISubject));
+  }
+
+  async run(input, testResourceConfiguration?) {
+    const subject = await this.setup(input);
+
     console.log("\nSuite:", this.name, testResourceConfiguration);
 
-    for (const [ndx, givenThat] of this.givens.entries()) {
-      await givenThat.give(subject, ndx, testResourceConfiguration);
+    for (const [ndx, giver] of this.givens.entries()) {
+      await giver.give(subject, ndx, testResourceConfiguration);
     }
 
-    for (const [ndx, checkThat] of this.checks.entries()) {
-      await checkThat.check(subject, ndx, testResourceConfiguration);
+    for (const [ndx, thater] of this.checks.entries()) {
+      await thater.check(subject, ndx, testResourceConfiguration);
     }
   }
 }
@@ -32,21 +51,27 @@ export abstract class BaseSuite<ISubject, IStore, ISelection> {
 export abstract class BaseGiven<ISubject, IStore, ISelection> {
   name: string;
   whens: BaseWhen<IStore>[];
-  thens: BaseThen<ISelection>[];
+  thens: BaseThen<ISelection, IStore>[];
+  // features: BaseFeature[];
 
   constructor(
     name: string,
     whens: BaseWhen<IStore>[],
-    thens: BaseThen<ISelection>[]
+    thens: BaseThen<ISelection, IStore>[]
+    // features: BaseFeature[]
   ) {
     this.name = name;
     this.whens = whens;
     this.thens = thens;
+    // this.features = features;
   }
 
   abstract givenThat(subject: ISubject, testResourceConfiguration?): IStore;
+  // givenThat(subject: ISubject, testResourceConfiguration?): IStore {
+  //   return subject as unknown as IStore;
+  // }
 
-  async teardown(subject: any, ndx: number) {
+  async teardown(subject: IStore, ndx: number) {
     return subject;
   }
 
@@ -70,6 +95,7 @@ export abstract class BaseGiven<ISubject, IStore, ISelection> {
 export abstract class BaseWhen<IStore> {
   name: string;
   actioner: (x: any) => any;
+
   constructor(name: string, actioner: (x) => any) {
     this.name = name;
     this.actioner = actioner;
@@ -83,7 +109,7 @@ export abstract class BaseWhen<IStore> {
   }
 }
 
-export abstract class BaseThen<ISelection> {
+export abstract class BaseThen<ISelection, IStore> {
   name: string;
   callback: (storeState: ISelection) => any;
 
@@ -94,7 +120,7 @@ export abstract class BaseThen<ISelection> {
 
   abstract butThen(store: any, testResourceConfiguration?): ISelection;
 
-  async test(store: any, testResourceConfiguration) {
+  async test(store: IStore, testResourceConfiguration) {
     console.log(" Then:", this.name);
     return this.callback(await this.butThen(store, testResourceConfiguration));
   }
@@ -115,7 +141,7 @@ export abstract class BaseCheck<ISubject, IStore, ISelection> {
 
   abstract checkThat(subject: ISubject, testResourceConfiguration?): IStore;
 
-  async teardown(subject: any) {
+  async teardown(subject: IStore, ndx: number) {
     return subject;
   }
 
@@ -141,12 +167,13 @@ export abstract class BaseCheck<ISubject, IStore, ISelection> {
       })
     );
 
-    await this.teardown(store);
+    await this.teardown(store, ndx);
     return;
   }
 }
 //////////////////////////////////////////////////////////////////////////////////
 abstract class TesterantoBasic<
+  IInput,
   ISubject,
   IStore,
   ISelection,
@@ -164,7 +191,7 @@ abstract class TesterantoBasic<
       name: string,
       givens: BaseGiven<ISubject, IStore, ISelection>[],
       checks: BaseCheck<ISubject, IStore, ISelection>[]
-    ) => BaseSuite<ISubject, IStore, ISelection>
+    ) => BaseSuite<IInput, ISubject, IStore, ISelection>
   >;
 
   givenOverides: Record<
@@ -172,7 +199,7 @@ abstract class TesterantoBasic<
     (
       feature: string,
       whens: BaseWhen<IStore>[],
-      thens: BaseThen<ISelection>[],
+      thens: BaseThen<ISelection, IStore>[],
       ...xtraArgs
     ) => BaseGiven<ISubject, IStore, ISelection>
   >;
@@ -181,7 +208,7 @@ abstract class TesterantoBasic<
 
   thenOverides: Record<
     keyof ThenExtensions,
-    (selection: ISelection, expectation: any) => BaseThen<ISelection>
+    (selection: ISelection, expectation: any) => BaseThen<ISelection, IStore>
   >;
 
   checkOverides: Record<
@@ -201,7 +228,7 @@ abstract class TesterantoBasic<
         name: string,
         givens: BaseGiven<ISubject, IStore, ISelection>[],
         checks: BaseCheck<ISubject, IStore, ISelection>[]
-      ) => BaseSuite<ISubject, IStore, ISelection>
+      ) => BaseSuite<IInput, ISubject, IStore, ISelection>
     >,
 
     givenOverides: Record<
@@ -209,7 +236,7 @@ abstract class TesterantoBasic<
       (
         feature: string,
         whens: BaseWhen<IStore>[],
-        thens: BaseThen<ISelection>[],
+        thens: BaseThen<ISelection, IStore>[],
         ...xtraArgs
       ) => BaseGiven<ISubject, IStore, ISelection>
     >,
@@ -218,7 +245,7 @@ abstract class TesterantoBasic<
 
     thenOverides: Record<
       keyof ThenExtensions,
-      (selection: ISelection, expectation: any) => BaseThen<ISelection>
+      (selection: ISelection, expectation: any) => BaseThen<ISelection, IStore>
     >,
 
     checkOverides: Record<
@@ -247,7 +274,7 @@ abstract class TesterantoBasic<
     (
       feature: string,
       whens: BaseWhen<IStore>[],
-      thens: BaseThen<ISelection>[],
+      thens: BaseThen<ISelection, IStore>[],
       ...xtraArgs
     ) => BaseGiven<ISubject, IStore, ISelection>
   > {
@@ -263,7 +290,7 @@ abstract class TesterantoBasic<
 
   Then(): Record<
     keyof ThenExtensions,
-    (selection: ISelection, expectation: any) => BaseThen<ISelection>
+    (selection: ISelection, expectation: any) => BaseThen<ISelection, IStore>
   > {
     return this.thenOverides;
   }
@@ -281,7 +308,11 @@ abstract class TesterantoBasic<
   }
 }
 
-export class ClassySuite<Klass> extends BaseSuite<Klass, Klass, Klass> {}
+export class ClassySuite<Klass> extends BaseSuite<Klass, Klass, Klass, Klass> {
+  setup(s: Klass): Promise<Klass> {
+    return new Promise((res, rej) => res(s));
+  }
+}
 
 export class ClassyGiven<Klass> extends BaseGiven<Klass, Klass, Klass> {
   thing: Klass;
@@ -291,8 +322,14 @@ export class ClassyGiven<Klass> extends BaseGiven<Klass, Klass, Klass> {
     whens: ClassyWhen<Klass>[],
     thens: ClassyThen<Klass>[],
     thing: Klass
+    // features: BaseFeature[]
   ) {
-    super(name, whens, thens);
+    super(
+      name,
+      whens,
+      thens
+      // features
+    );
     this.thing = thing;
   }
 
@@ -307,7 +344,7 @@ export class ClassyWhen<Klass> extends BaseWhen<Klass> {
   }
 }
 
-export class ClassyThen<Klass> extends BaseThen<Klass> {
+export class ClassyThen<Klass> extends BaseThen<Klass, Klass> {
   butThen(thing: Klass): Klass {
     return thing;
   }
@@ -333,8 +370,17 @@ export class ClassyCheck<Klass> extends BaseCheck<Klass, Klass, Klass> {
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////
-export abstract class TesterantoInterface<ISubject, IStore, ISelection> {
-  abstract suiteKlasser: (s, g, c) => BaseSuite<ISubject, IStore, ISelection>;
+export abstract class TesterantoInterface<
+  IInput,
+  ISubject,
+  IStore,
+  ISelection
+> {
+  abstract suiteKlasser: (
+    s,
+    g,
+    c
+  ) => BaseSuite<IInput, ISubject, IStore, ISelection>;
   abstract givenKlasser: (
     f,
     w,
@@ -342,7 +388,7 @@ export abstract class TesterantoInterface<ISubject, IStore, ISelection> {
     z?
   ) => BaseGiven<ISubject, IStore, ISelection>;
   abstract whenKlasser: (a, b) => BaseWhen<IStore>;
-  abstract thenKlasser: (a, b) => BaseThen<ISelection>;
+  abstract thenKlasser: (a, b) => BaseThen<ISelection, IStore>;
   abstract checkKlasser: (
     f,
     w,
@@ -369,7 +415,7 @@ export type ITestImplementation<IState, ISelection, IWhenShape> = {
     [K in keyof ITestShape["whens"]]: (
       /* @ts-ignore:next-line */
       ...a: ITestShape["whens"][K]
-    ) => (sel: ISelection) => IWhenShape; //TesterantoInterface<any, any, any>["whenKlass"];
+    ) => (zel: ISelection) => IWhenShape; //TesterantoInterface<any, any, any>["whenKlass"];
   };
   Thens: {
     /* @ts-ignore:next-line */
@@ -394,7 +440,8 @@ export abstract class Testeranto<
   IStore,
   ISubject,
   IWhenShape,
-  ITestResource = {}
+  ITestResource,
+  IInput
 > {
   constructor(
     testImplementation: ITestImplementation<IState, ISelection, IWhenShape>,
@@ -411,9 +458,10 @@ export abstract class Testeranto<
       Given: {
         /* @ts-ignore:next-line */
         [K in keyof ITestShape["givens"]]: (
-          feature: string,
+          name: string,
           whens: BaseWhen<any>[],
-          thens: BaseThen<any>[],
+          thens: BaseThen<ISelection, IStore>[],
+          // features: BaseFeature[],
 
           /* @ts-ignore:next-line */
           ...a: ITestShape["givens"][K]
@@ -443,7 +491,7 @@ export abstract class Testeranto<
           ) => Promise<void>
         ) => any;
       }
-    ) => BaseSuite<any, any, any>[],
+    ) => BaseSuite<any, any, any, any>[],
 
     store,
 
@@ -501,6 +549,7 @@ export abstract class Testeranto<
     });
 
     class MetaTesteranto<
+      IInput,
       ISubject,
       IState,
       ISelection,
@@ -510,6 +559,7 @@ export abstract class Testeranto<
       ThenExtensions,
       ICheckExtensions
     > extends TesterantoBasic<
+      IInput,
       ISubject,
       IState,
       ISelection,
@@ -521,6 +571,7 @@ export abstract class Testeranto<
     > {}
 
     const classyTesteranto = new MetaTesteranto<
+      IInput,
       ISubject,
       IStore,
       IState,
@@ -559,31 +610,29 @@ export abstract class Testeranto<
   }
 }
 
+type IT = {
+  name: string;
+  givens: BaseGiven<any, any, any>[];
+  checks: BaseCheck<any, any, any>[];
+};
+
 type ITest = {
-  test: {
-    name: string;
-    givens: BaseGiven<any, any, any>[];
-    checks: BaseCheck<any, any, any>[];
-  };
+  test: IT;
   runner: (testResurce?) => any;
   testResource: any;
 };
 
 type ITestResults = Promise<{
-  test: {
-    name: string;
-    givens: BaseGiven<any, any, any>[];
-    checks: BaseCheck<any, any, any>[];
-  };
+  test: IT;
   status: any;
 }>[];
 
-const processPortyTests = async (
+// this function is awesome
+const processTestsWithPorts = async (
   tests: ITest[],
   ports: number[]
 ): Promise<ITestResults> => {
   let testsStack = tests;
-
   return (
     await Promise.all(
       ports.map(async (port: number) => {
@@ -649,7 +698,7 @@ export const reporter = async (
         };
       });
 
-    const portTestresults = await processPortyTests(
+    const portTestresults = await processTestsWithPorts(
       suites.filter((s) => s.testResource === "port"),
       testResources.ports
     );
