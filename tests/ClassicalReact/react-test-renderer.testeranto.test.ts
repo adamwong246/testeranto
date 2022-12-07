@@ -12,11 +12,9 @@ import {
   Testeranto,
 } from "../../index";
 
-import puppeteer, { Page } from "puppeteer";
-import esbuild from "esbuild";
 import { ClassicalComponent } from "./ClassicalComponent";
 
-class Suite extends BaseSuite<any, any, any> {}
+class Suite extends BaseSuite<React.Component, any, any, any> {}
 
 class Given extends BaseGiven<any, any, any> {
   async givenThat(
@@ -43,18 +41,22 @@ class When<IStore extends renderer.ReactTestRenderer> extends BaseWhen<IStore> {
   }
 
   async andWhen(renderer: IStore) {
-    // console.log("mark3", renderer);
     return act(() => this.actioner(renderer));
   }
 }
 
-class Then extends BaseThen<any> {
+class Then extends BaseThen<
+  renderer.ReactTestRenderer,
+  renderer.ReactTestRenderer
+> {
+  butThen(
+    component: renderer.ReactTestRenderer,
+    testResourceConfiguration?: any
+  ): renderer.ReactTestRenderer {
+    return component;
+  }
   constructor(name: string, callback: (val: any) => any) {
     super(name, callback);
-  }
-
-  async butThen(component) {
-    return component;
   }
 }
 
@@ -68,18 +70,18 @@ class Check extends BaseCheck<any, any, any> {
   }
 }
 
-type IAction = any;
-
 export class ReactTestRendererTesteranto<ITestShape> extends Testeranto<
   ITestShape,
+  renderer.ReactTestRenderer,
+  renderer.ReactTestRenderer,
+  renderer.ReactTestRenderer,
+  renderer.ReactTestRenderer,
   any,
   any,
-  any,
-  any,
-  IAction
+  any
 > {
   constructor(
-    testImplementation: ITestImplementation<any, any, IAction>,
+    testImplementation: ITestImplementation<any, any, any>,
     testSpecification,
     thing
   ) {
