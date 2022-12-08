@@ -3,6 +3,7 @@ import {
   ActionCreatorWithoutPayload,
   Slice,
 } from "@reduxjs/toolkit";
+import { any } from "prop-types";
 import {
   createStore,
   Store,
@@ -29,6 +30,7 @@ type IAction = [
   ),
   (object | string)?
 ];
+type IAssert = [(expected, actual, message) => void, any, any];
 
 export class ReduxTesteranto<
   IStoreShape,
@@ -40,6 +42,7 @@ export class ReduxTesteranto<
   IStoreShape,
   IStoreShape,
   IAction,
+  IAssert,
   any,
   Slice
 > {
@@ -48,6 +51,7 @@ export class ReduxTesteranto<
       IStoreShape,
       IStoreShape,
       IAction,
+      IAssert,
       ITestShape
     >,
     testSpecification,

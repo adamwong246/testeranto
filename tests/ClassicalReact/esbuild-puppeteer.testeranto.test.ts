@@ -94,6 +94,7 @@ export class EsbuildPuppeteerTesteranto<ITestShape extends ITTestShape> extends 
   IStore,
   ISelection,
   any,
+  any,
   IInput
 > {
   constructor(
@@ -101,6 +102,7 @@ export class EsbuildPuppeteerTesteranto<ITestShape extends ITTestShape> extends 
       any,
       ISelection,
       IAction,
+      any,
       ITestShape
     >,
     testSpecification,

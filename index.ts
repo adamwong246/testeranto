@@ -426,7 +426,7 @@ export type ITestSpecification<ITestShape> = (
   Check: any
 ) => any[];
 
-export type ITestImplementation<IState, ISelection, IWhenShape, ITestShape> = {
+export type ITestImplementation<IState, ISelection, IWhenShape, IThenShape, ITestShape> = {
   Suites: {
     /* @ts-ignore:next-line */
     [K in keyof ITestShape["suites"]]: string;
@@ -450,7 +450,7 @@ export type ITestImplementation<IState, ISelection, IWhenShape, ITestShape> = {
     [K in keyof ITestShape["thens"]]: (
       /* @ts-ignore:next-line */
       ...b: ITestShape["thens"][K]
-    ) => (sel: ISelection) => any;
+    ) => (sel: ISelection) => IThenShape;
   };
   Checks: {
     /* @ts-ignore:next-line */
@@ -476,6 +476,7 @@ export abstract class Testeranto<
   IStore,
   ISubject,
   IWhenShape,
+  IThenShape,
   ITestResource,
   IInput
 > {
@@ -484,6 +485,7 @@ export abstract class Testeranto<
       IState,
       ISelection,
       IWhenShape,
+      IThenShape,
       ITestShape
     >,
 

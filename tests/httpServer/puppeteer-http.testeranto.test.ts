@@ -128,6 +128,7 @@ export class PuppeteerHttpTesteranto<
   IStoreShape,
   IStoreShape,
   IAction,
+  any,
   ITestResource,
   IInput
 > {
@@ -136,6 +137,7 @@ export class PuppeteerHttpTesteranto<
       IStoreShape,
       IStoreShape,
       IAction,
+      any,
       ITestShape
     >,
     testSpecification,

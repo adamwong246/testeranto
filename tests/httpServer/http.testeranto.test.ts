@@ -96,6 +96,7 @@ export class HttpTesteranto<IStoreShape, ITestShape extends ITTestShape> extends
   IStoreShape,
   IStoreShape,
   IAction,
+  any,
   ITestResource,
   IInput
 > {
@@ -104,6 +105,7 @@ export class HttpTesteranto<IStoreShape, ITestShape extends ITTestShape> extends
       IStoreShape,
       IStoreShape,
       IAction,
+      any,
       ITestShape
     >,
     testSpecification,

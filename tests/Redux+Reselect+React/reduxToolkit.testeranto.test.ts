@@ -165,6 +165,7 @@ export class ReduxToolkitTesteranto<
   IStoreShape,
   IStoreShape,
   IAction,
+  any,
   never,
   IInputshape<IStoreShape, ISelection>
 > {
@@ -173,6 +174,7 @@ export class ReduxToolkitTesteranto<
       IStoreShape,
       IStoreShape,
       IAction,
+      any,
       ITestShape
     >,
     testSpecification,

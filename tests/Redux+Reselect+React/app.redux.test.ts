@@ -10,7 +10,7 @@ export class AppReduxTesteranto extends ReduxTesteranto<
       Default: string;
     };
     givens: {
-      AnEmptyState;
+      AnEmptyState: [];
       AStateWithEmail: [string];
     };
     whens: {
@@ -46,17 +46,17 @@ export class AppReduxTesteranto extends ReduxTesteranto<
         Whens: {
           TheLoginIsSubmitted: () => () => [loginApp.actions.signIn],
           TheEmailIsSetTo: (email) => () => [loginApp.actions.setEmail, email],
-          ThePasswordIsSetTo: (password) => () =>
+          ThePasswordIsSetTo: (password) => (x) =>
             [loginApp.actions.setPassword, password],
         },
         Thens: {
           TheEmailIs: (email) => (selection) =>
-            assert.equal(selection.email, email),
-
+            [assert.equal, selection.email, email],
           TheEmailIsNot: (email) => (selection) =>
-            assert.notEqual(selection.email, email),
-          ThePasswordIs: (password) => (selection) => assert.equal(1, 1),
-          ThePasswordIsNot: (n, x) => (selection) => assert.equal(1, 1),
+            [assert.notEqual, selection.email, email],
+          ThePasswordIs: (password) => (selection) => [assert.equal, 1, 1],
+          ThePasswordIsNot: (n, x) => (selection) => [assert.equal, 1, 1],
+          
         },
         Checks: {
           AnEmptyState: () => loginApp.getInitialState(),
