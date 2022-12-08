@@ -25,7 +25,7 @@ export class AppReduxTesteranto extends ReduxTesteranto<
       ThePasswordIsNot: [number, boolean];
     };
     checks: {
-      AnEmptyState;
+      AnEmptyState: []
     };
   }
 > {
@@ -104,7 +104,6 @@ export class AppReduxTesteranto extends ReduxTesteranto<
           ),
         ];
       },
-
       loginApp.reducer
     );
   }

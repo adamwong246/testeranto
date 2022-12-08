@@ -372,11 +372,14 @@ export abstract class TesterantoInterface<
   IStore,
   ISelection
 > {
-  abstract suiteKlasser: (
-    s,
-    g,
-    c
-  ) => BaseSuite<IInput, ISubject, IStore, ISelection>;
+  // abstract suiteKlasser: (
+  //   s,
+  //   g,
+  //   c
+  // ) => BaseSuite<IInput, ISubject, IStore, ISelection>;
+  // class extends BaseSuite<any, any, any, any>;
+  number;
+
   abstract givenKlasser: (
     f,
     w,
@@ -414,11 +417,11 @@ export type ITestSpecification<ITestShape> = (
   },
   When: {
     [K in keyof /* @ts-ignore:next-line */
-    ITestShape["whens"]]: (...xtras?: any) => BaseWhen<any>;
+    ITestShape["whens"]]: (...xtras: any) => BaseWhen<any>;
   },
   Then: {
     [K in keyof /* @ts-ignore:next-line */
-    ITestShape["thens"]]: (...xtras?: any) => BaseThen<any>;
+    ITestShape["thens"]]: (...xtras: any) => BaseThen<any>;
   },
   Check: any
 ) => any[];
@@ -467,8 +470,8 @@ export type ITTestShape = {
 };
 
 export abstract class Testeranto<
-  ITestShape extends ITTestShape,
-  IState,
+  ITestShape extends ITTestShape, // the test specifications and implementations
+  IState, //
   ISelection,
   IStore,
   ISubject,
@@ -531,9 +534,13 @@ export abstract class Testeranto<
       }
     ) => BaseSuite<any, any, any, any>[],
 
-    store,
+    input: IInput,
 
-    suiteKlasser,
+    suiteKlasser: (
+      name: string,
+      givens: any[],
+      checks: any[]
+    ) => BaseSuite<any, any, any, any>,
     givenKlasser,
     whenKlasser,
     thenKlasser,
@@ -545,6 +552,7 @@ export abstract class Testeranto<
       testImplementation.Suites as any,
       (suite) => {
         return (somestring, givens, checks) => {
+          // console.log(suiteKlasser())
           return suiteKlasser(somestring, givens, checks);
         };
       }
@@ -586,10 +594,10 @@ export abstract class Testeranto<
       };
     });
 
-    class MetaTesteranto<
+    const classyTesteranto = new (class<
       IInput,
       ISubject,
-      IState,
+      IStore,
       ISelection,
       SuiteExtensions,
       GivenExtensions,
@@ -599,27 +607,15 @@ export abstract class Testeranto<
     > extends TesterantoBasic<
       IInput,
       ISubject,
-      IState,
+      IStore,
       ISelection,
       SuiteExtensions,
       GivenExtensions,
       WhenExtensions,
       ThenExtensions,
       ICheckExtensions
-    > {}
-
-    const classyTesteranto = new MetaTesteranto<
-      IInput,
-      ISubject,
-      IStore,
-      IState,
-      any,
-      any,
-      any,
-      any,
-      any
-    >(
-      store,
+    > {})(
+      input,
       classySuites,
       classyGivens,
       classyWhens,
@@ -627,7 +623,7 @@ export abstract class Testeranto<
       classyChecks
     );
 
-    const t = testSpecification(
+    const suites = testSpecification(
       /* @ts-ignore:next-line */
       classyTesteranto.Suites(),
       classyTesteranto.Given(),
@@ -636,12 +632,12 @@ export abstract class Testeranto<
       classyTesteranto.Check()
     );
 
-    return t.map((tt) => {
+    return suites.map((suite) => {
       return {
-        test: tt,
+        test: suite,
         testResource,
         runner: async (testResourceConfiguration?) => {
-          await tt.run(store, testResourceConfiguration[testResource]);
+          await suite.run(input, testResourceConfiguration[testResource]);
         },
       };
     });
