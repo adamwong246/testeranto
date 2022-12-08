@@ -9,7 +9,7 @@ export class ServerHttpPuppeteerTesteranto extends PuppeteerHttpTesteranto<
       Default: string;
     };
     givens: {
-      AnEmptyState;
+      AnEmptyState: [];
     };
     whens: {
       PostToStatus: [string];
@@ -22,8 +22,7 @@ export class ServerHttpPuppeteerTesteranto extends PuppeteerHttpTesteranto<
     checks: {
       AnEmptyState;
     };
-  },
-  any
+  }
 > {
   constructor() {
     super(
@@ -32,8 +31,9 @@ export class ServerHttpPuppeteerTesteranto extends PuppeteerHttpTesteranto<
           Default: "some default Suite",
         },
         Givens: {
-          /* @ts-ignore:next-line */
-          AnEmptyState: () => {},
+          AnEmptyState: () => {
+            return {  }
+          },
         },
         Whens: {
           PostToStatus: (status: string) => () => {
@@ -46,8 +46,9 @@ export class ServerHttpPuppeteerTesteranto extends PuppeteerHttpTesteranto<
           TheNumberIs: (number: number) => () => ["get_number", number],
         },
         Checks: {
-          /* @ts-ignore:next-line */
-          AnEmptyState: () => {},
+          AnEmptyState: () => {
+            return {};
+          },
         },
       },
 
@@ -57,23 +58,23 @@ export class ServerHttpPuppeteerTesteranto extends PuppeteerHttpTesteranto<
             "Testing the Server with Puppeteer",
             [
               Given.AnEmptyState(
-                "a Puppeteer boringfeature",
+                "a boring Puppeteer feature",
                 [],
                 [Then.TheStatusIs("some great status")]
               ),
               Given.AnEmptyState(
-                "a Puppeteer feature",
+                "a nother Puppeteer feature",
                 [When.PostToStatus("hello")],
                 [Then.TheStatusIs("hello")]
               ),
               Given.AnEmptyState(
-                "a Puppeteer feature",
+                "yet another Puppeteer feature",
                 [When.PostToStatus("hello"), When.PostToStatus("aloha")],
                 [Then.TheStatusIs("aloha")]
               ),
               Given.AnEmptyState("a feature", [], [Then.TheNumberIs(0)]),
               Given.AnEmptyState(
-                "a Puppeteer feature",
+                "still further Puppeteer features?!",
                 [When.PostToAdd(1), When.PostToAdd(2)],
                 [Then.TheNumberIs(3)]
               ),

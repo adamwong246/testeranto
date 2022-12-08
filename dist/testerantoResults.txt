@@ -602,7 +602,7 @@
       "name": "Testing the Server with Puppeteer",
       "givens": [
         {
-          "name": "a Puppeteer boringfeature",
+          "name": "a boring Puppeteer feature",
           "whens": [],
           "thens": [
             {
@@ -611,7 +611,7 @@
           ]
         },
         {
-          "name": "a Puppeteer feature",
+          "name": "a nother Puppeteer feature",
           "whens": [
             {
               "name": "PostToStatus: hello"
@@ -624,7 +624,7 @@
           ]
         },
         {
-          "name": "a Puppeteer feature",
+          "name": "yet another Puppeteer feature",
           "whens": [
             {
               "name": "PostToStatus: hello"
@@ -649,7 +649,7 @@
           ]
         },
         {
-          "name": "a Puppeteer feature",
+          "name": "still further Puppeteer features?!",
           "whens": [
             {
               "name": "PostToAdd: 1"

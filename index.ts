@@ -72,8 +72,8 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
 
   abstract givenThat(subject: ISubject, testResourceConfiguration?): IStore;
 
-  async teardown(subject: IStore, ndx: number) {
-    return subject;
+  async teardown(subject: IStore, ndx: number): Promise<unknown> {
+    return ;
   }
 
   async give(
@@ -188,7 +188,7 @@ export abstract class BaseCheck<ISubject, IStore, ISelection> {
     return;
   }
 }
-//////////////////////////////////////////////////////////////////////////////////
+
 abstract class TesterantoBasic<
   IInput,
   ISubject,
@@ -481,22 +481,22 @@ export type ITestImplementation<
   };
   Givens: {
     [K in keyof ITestShape["givens"]]: (
-      ...a: ITestShape["givens"][K]
+      ...e: ITestShape["givens"][K]
     ) => IState;
   };
   Whens: {
     [K in keyof ITestShape["whens"]]: (
-      ...a: ITestShape["whens"][K]
+      ...f: ITestShape["whens"][K]
     ) => (zel: ISelection) => IWhenShape;
   };
   Thens: {
     [K in keyof ITestShape["thens"]]: (
-      ...b: ITestShape["thens"][K]
+      ...g: ITestShape["thens"][K]
     ) => (sel: ISelection) => IThenShape;
   };
   Checks: {
     [K in keyof ITestShape["checks"]]: (
-      ...a: ITestShape["checks"][K]
+      ...h: ITestShape["checks"][K]
     ) => IState;
   };
 };
@@ -570,50 +570,44 @@ export abstract class Testeranto<
     whenKlasser,
     thenKlasser,
     checkKlasser,
-
     testResource?: ITestResource
   ) {
-    const classySuites = mapValues(testImplementation.Suites, (suite) => {
-      return (somestring, givens, checks) => {
-        return suiteKlasser(somestring, givens, checks);
-      };
-    });
+    const classySuites = mapValues(
+      testImplementation.Suites,
+      () => (somestring, givens, checks) =>
+        suiteKlasser(somestring, givens, checks)
+    );
 
-    const classyGivens = mapValues(testImplementation.Givens, (z) => {
-      return (feature, whens, thens, ...xtrasW) => {
-        return givenKlasser(feature, whens, thens, z(...xtrasW));
-      };
-    });
+    const classyGivens = mapValues(
+      testImplementation.Givens,
+      (z) =>
+        (feature, whens, thens, ...xtrasW) =>
+          givenKlasser(feature, whens, thens, z(...xtrasW))
+    );
 
     const classyWhens = mapValues(
       testImplementation.Whens,
-      (whEn: (thing, payload?: any) => any) => {
-        return (payload?: any) => {
-          return whenKlasser(
-            `${whEn.name}: ${payload && payload.toString()}`,
-            whEn(payload)
-          );
-        };
-      }
+      (whEn: (thing, payload?: any) => any) => (payload?: any) =>
+        whenKlasser(
+          `${whEn.name}: ${payload && payload.toString()}`,
+          whEn(payload)
+        )
     );
 
     const classyThens = mapValues(
       testImplementation.Thens,
-      (thEn: (klass, ...xtrasE) => void) => {
-        return (expected: any, x) => {
-          return thenKlasser(
-            `${thEn.name}: ${expected && expected.toString()}`,
-            thEn(expected)
-          );
-        };
-      }
+      (thEn: (klass, ...xtrasE) => void) => (expected: any, x) =>
+        thenKlasser(
+          `${thEn.name}: ${expected && expected.toString()}`,
+          thEn(expected)
+        )
     );
 
-    const classyChecks = mapValues(testImplementation.Checks, (z) => {
-      return (somestring, callback) => {
-        return checkKlasser(somestring, callback, classyWhens, classyThens);
-      };
-    });
+    const classyChecks = mapValues(
+      testImplementation.Checks,
+      (z) => (somestring, callback) =>
+        checkKlasser(somestring, callback, classyWhens, classyThens)
+    );
 
     const classyTesteranto = new (class<
       IInput,

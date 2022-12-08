@@ -16,6 +16,8 @@ import {
   Testeranto,
 } from "../../index";
 
+type IThenShape = any;
+type IWhenShape = any;
 type IInput = any; //Slice<IStoreState, { setPassword: (s: IStoreState, b: any) => void; setEmail: (s: IStoreState, b: any) => void; signIn: (s: IStoreState) => void; }, string>.reducer: Reducer<IStoreState, AnyAction>;
 type IZ<IS> = Store<IS, AnyAction>;
 type IAction = [
@@ -26,8 +28,6 @@ type IAction = [
   (object | string)?
 ];
 
-type IThenShape = any; //(expected, actual, message) => void; //[, any, any];
-
 export class ReduxTesteranto<
   IStoreShape,
   ITestShape extends ITTestShape
@@ -37,9 +37,9 @@ export class ReduxTesteranto<
   IStoreShape,
   IStoreShape,
   IStoreShape,
-  IAction, // IWhen
-  IThenShape, // IThen
-  any,
+  IWhenShape,
+  IThenShape,
+  never,
   Slice
 > {
   constructor(

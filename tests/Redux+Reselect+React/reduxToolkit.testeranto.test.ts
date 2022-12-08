@@ -35,17 +35,17 @@ type IWhenShape = [
   (object | string)?
 ];
 
-type IThenShape = [
-  (expected, actual, message?: string) => void,
-  any,
-  any,
+type IThenShape<IX> = [
+  (expected: IX, actual: IX, message?: string) => void,
+  IX,
+  IX,
   string?
 ];
 
-export type ISubjectReducerAndSelectorAnStore = {
-  reducer: Reducer<any, AnyAction>;
-  selector: Selector<any, any>;
-  store: Store<any, any>;
+export type ISubjectReducerAndSelectorAnStore<ST> = {
+  reducer: Reducer<ST, AnyAction>;
+  selector: Selector<ST, any>;
+  store: Store<ST, any>;
 };
 
 type IInput = { reducer: Reducer };
@@ -66,7 +66,7 @@ export class ReduxToolkitTesteranto<
   IStoreShape,
   IStoreShape,
   IWhenShape,
-  IThenShape,
+  IThenShape<unknown>,
   never,
   IInputshape<IStoreShape, ISelection>
 > {
@@ -75,7 +75,7 @@ export class ReduxToolkitTesteranto<
       IStoreShape,
       ISelection,
       IWhenShape,
-      IThenShape,
+      IThenShape<unknown>,
       ITestShape
     >,
     testSpecification,
@@ -109,14 +109,14 @@ export class ReduxToolkitTesteranto<
           ISubjectReducerAndSelector,
           IStore,
           ISelection,
-          IThenShape
+          IThenShape<unknown>
         > {
           initialValues: any;
 
           constructor(
             name: string,
-            whens: BaseWhen<IStore, ISelection, IThenShape>[],
-            thens: BaseThen<ISelection, IStore, IThenShape>[],
+            whens: BaseWhen<IStore, ISelection, IThenShape<unknown>>[],
+            thens: BaseThen<ISelection, IStore, IThenShape<unknown>>[],
             // features: BaseFeature[],
             initialValues: any
           ) {
@@ -132,7 +132,7 @@ export class ReduxToolkitTesteranto<
           /* @ts-ignore:next-line */
           givenThat(
             subject: ISubjectReducerAndSelector
-          ): ISubjectReducerAndSelectorAnStore {
+          ): ISubjectReducerAndSelectorAnStore<IStore> {
             const store = createStore<Reducer<any, AnyAction>, any, any, any>(
               subject.reducer,
               this.initialValues
@@ -145,7 +145,11 @@ export class ReduxToolkitTesteranto<
           }
         })(f, w, t, z),
       (s, o) =>
-        new (class When extends BaseWhen<Store, ISelection, IThenShape> {
+        new (class When extends BaseWhen<
+          Store,
+          ISelection,
+          IThenShape<unknown>
+        > {
           payload?: any;
 
           constructor(name: string, action: IActionCreate, payload?: any) {
@@ -165,13 +169,16 @@ export class ReduxToolkitTesteranto<
         new (class Then<ISelection> extends BaseThen<
           ISelection,
           Store,
-          IThenShape
+          IThenShape<unknown>
         > {
-          constructor(name: string, callback: (val: ISelection) => IThenShape) {
+          constructor(
+            name: string,
+            callback: (val: ISelection) => IThenShape<unknown>
+          ) {
             super(name, callback);
           }
 
-          butThen(subject: ISubjectReducerAndSelectorAnStore): ISelection {
+          butThen(subject: ISubjectReducerAndSelectorAnStore<IStoreShape>): ISelection {
             return subject.selector(subject.store.getState());
           }
         })(s, o),
@@ -198,7 +205,7 @@ export class ReduxToolkitTesteranto<
           /* @ts-ignore:next-line */
           checkThat(
             subject: ISubjectReducerAndSelector
-          ): ISubjectReducerAndSelectorAnStore {
+          ): ISubjectReducerAndSelectorAnStore<IStore> {
             const store = createStore<Reducer<any, AnyAction>, any, any, any>(
               subject.reducer,
               this.initialValues
