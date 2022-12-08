@@ -17,7 +17,7 @@ import { ClassicalComponent } from "./ClassicalComponent";
 
 class Suite extends BaseSuite<React.Component, any, any, any, any> {}
 
-class Given extends BaseGiven<any, any, any> {
+class Given extends BaseGiven<any, any, any, any> {
   async givenThat(
     subject: React.ReactElement
   ): Promise<
@@ -33,7 +33,7 @@ class Given extends BaseGiven<any, any, any> {
   }
 }
 
-class When<IStore extends renderer.ReactTestRenderer> extends BaseWhen<IStore> {
+class When<IStore extends renderer.ReactTestRenderer> extends BaseWhen<IStore, any, any> {
   payload?: any;
 
   constructor(name: string, actioner: (...any) => any, payload?: any) {
@@ -48,7 +48,8 @@ class When<IStore extends renderer.ReactTestRenderer> extends BaseWhen<IStore> {
 
 class Then extends BaseThen<
   renderer.ReactTestRenderer,
-  renderer.ReactTestRenderer
+  renderer.ReactTestRenderer,
+  any
 > {
   butThen(
     component: renderer.ReactTestRenderer,

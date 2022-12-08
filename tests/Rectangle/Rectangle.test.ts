@@ -100,7 +100,9 @@ export class RectangleTesteranto extends Testeranto<
 
         Checks: {
           /* @ts-ignore:next-line */
-          AnEmptyState: () => {},
+          AnEmptyState: () => {
+            return {}
+          },
         },
       },
 

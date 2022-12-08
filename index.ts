@@ -8,14 +8,20 @@ export abstract class BaseFeature {
   }
 }
 
-export abstract class BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape> {
+export abstract class BaseSuite<
+  IInput,
+  ISubject,
+  IStore,
+  ISelection,
+  IThenShape
+> {
   name: string;
-  givens: BaseGiven<ISubject, IStore, ISelection>[];
+  givens: BaseGiven<ISubject, IStore, ISelection, IThenShape>[];
   checks: BaseCheck<ISubject, IStore, ISelection>[];
 
   constructor(
     name: string,
-    givens: BaseGiven<ISubject, IStore, ISelection>[] = [],
+    givens: BaseGiven<ISubject, IStore, ISelection, IThenShape>[] = [],
     checks: BaseCheck<ISubject, IStore, ISelection>[] = []
   ) {
     this.name = name;
@@ -46,16 +52,16 @@ export abstract class BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape
   }
 }
 
-export abstract class BaseGiven<ISubject, IStore, ISelection> {
+export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
   name: string;
-  whens: BaseWhen<IStore>[];
-  thens: BaseThen<ISelection, IStore>[];
+  whens: BaseWhen<IStore, ISelection, IThenShape>[];
+  thens: BaseThen<ISelection, IStore, IThenShape>[];
   // features: BaseFeature[];
 
   constructor(
     name: string,
-    whens: BaseWhen<IStore>[],
-    thens: BaseThen<ISelection, IStore>[]
+    whens: BaseWhen<IStore, ISelection, IThenShape>[],
+    thens: BaseThen<ISelection, IStore, IThenShape>[]
     // features: BaseFeature[]
   ) {
     this.name = name;
@@ -70,7 +76,12 @@ export abstract class BaseGiven<ISubject, IStore, ISelection> {
     return subject;
   }
 
-  async give(subject: ISubject, index: number, testResourceConfiguration, tester) {
+  async give(
+    subject: ISubject,
+    index: number,
+    testResourceConfiguration,
+    tester
+  ) {
     console.log(`\n Given: ${this.name}`);
     const store = await this.givenThat(subject, testResourceConfiguration);
 
@@ -88,16 +99,20 @@ export abstract class BaseGiven<ISubject, IStore, ISelection> {
   }
 }
 
-export abstract class BaseWhen<IStore> {
+export abstract class BaseWhen<IStore, ISelection, IThenShape> {
   name: string;
-  actioner: (x: any) => any;
+  actioner: (x: ISelection) => IThenShape;
 
-  constructor(name: string, actioner: (x) => any) {
+  constructor(name: string, actioner: (x: ISelection) => IThenShape) {
     this.name = name;
     this.actioner = actioner;
   }
 
-  abstract andWhen(store: IStore, actioner: (x) => any, testResource): any;
+  abstract andWhen(
+    store: IStore,
+    actioner: (x: ISelection) => IThenShape,
+    testResource
+  );
 
   async test(store: IStore, testResourceConfiguration?) {
     console.log(" When:", this.name);
@@ -105,18 +120,18 @@ export abstract class BaseWhen<IStore> {
   }
 }
 
-export abstract class BaseThen<ISelection, IStore> {
+export abstract class BaseThen<ISelection, IStore, IThenShape> {
   name: string;
-  callback: (storeState: ISelection) => any;
+  callback: (storeState: ISelection) => IThenShape;
 
-  constructor(name: string, callback: (val: ISelection) => any) {
+  constructor(name: string, callback: (val: ISelection) => IThenShape) {
     this.name = name;
     this.callback = callback;
   }
 
   abstract butThen(store: any, testResourceConfiguration?): ISelection;
 
-  async test(store: IStore, testResourceConfiguration): Promise<Awaited<ISelection>> {
+  async test(store: IStore, testResourceConfiguration): Promise<IThenShape> {
     console.log(" Then:", this.name);
     return this.callback(await this.butThen(store, testResourceConfiguration));
   }
@@ -141,7 +156,12 @@ export abstract class BaseCheck<ISubject, IStore, ISelection> {
     return subject;
   }
 
-  async check(subject: ISubject, ndx: number, testResourceConfiguration, tester) {
+  async check(
+    subject: ISubject,
+    ndx: number,
+    testResourceConfiguration,
+    tester
+  ) {
     console.log(`\n - \nCheck: ${this.feature}`);
     const store = await this.checkThat(subject, testResourceConfiguration);
     await this.callback(
@@ -187,7 +207,7 @@ abstract class TesterantoBasic<
     keyof SuiteExtensions,
     (
       name: string,
-      givens: BaseGiven<ISubject, IStore, ISelection>[],
+      givens: BaseGiven<ISubject, IStore, ISelection, IThenShape>[],
       checks: BaseCheck<ISubject, IStore, ISelection>[]
     ) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape>
   >;
@@ -196,17 +216,23 @@ abstract class TesterantoBasic<
     keyof GivenExtensions,
     (
       feature: string,
-      whens: BaseWhen<IStore>[],
-      thens: BaseThen<ISelection, IStore>[],
+      whens: BaseWhen<IStore, ISelection, IThenShape>[],
+      thens: BaseThen<ISelection, IStore, IThenShape>[],
       ...xtraArgs
-    ) => BaseGiven<ISubject, IStore, ISelection>
+    ) => BaseGiven<ISubject, IStore, ISelection, IThenShape>
   >;
 
-  whenOverides: Record<keyof WhenExtensions, (any) => BaseWhen<IStore>>;
+  whenOverides: Record<
+    keyof WhenExtensions,
+    (any) => BaseWhen<IStore, ISelection, IThenShape>
+  >;
 
   thenOverides: Record<
     keyof ThenExtensions,
-    (selection: ISelection, expectation: any) => BaseThen<ISelection, IStore>
+    (
+      selection: ISelection,
+      expectation: any
+    ) => BaseThen<ISelection, IStore, IThenShape>
   >;
 
   checkOverides: Record<
@@ -224,7 +250,7 @@ abstract class TesterantoBasic<
       keyof SuiteExtensions,
       (
         name: string,
-        givens: BaseGiven<ISubject, IStore, ISelection>[],
+        givens: BaseGiven<ISubject, IStore, ISelection, IThenShape>[],
         checks: BaseCheck<ISubject, IStore, ISelection>[]
       ) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape>
     >,
@@ -233,17 +259,23 @@ abstract class TesterantoBasic<
       keyof GivenExtensions,
       (
         feature: string,
-        whens: BaseWhen<IStore>[],
-        thens: BaseThen<ISelection, IStore>[],
+        whens: BaseWhen<IStore, ISelection, IThenShape>[],
+        thens: BaseThen<ISelection, IStore, IThenShape>[],
         ...xtraArgs
-      ) => BaseGiven<ISubject, IStore, ISelection>
+      ) => BaseGiven<ISubject, IStore, ISelection, IThenShape>
     >,
 
-    whenOverides: Record<keyof WhenExtensions, (c: any) => BaseWhen<IStore>>,
+    whenOverides: Record<
+      keyof WhenExtensions,
+      (c: any) => BaseWhen<IStore, ISelection, IThenShape>
+    >,
 
     thenOverides: Record<
       keyof ThenExtensions,
-      (selection: ISelection, expectation: any) => BaseThen<ISelection, IStore>
+      (
+        selection: ISelection,
+        expectation: any
+      ) => BaseThen<ISelection, IStore, IThenShape>
     >,
 
     checkOverides: Record<
@@ -271,24 +303,27 @@ abstract class TesterantoBasic<
     keyof GivenExtensions,
     (
       feature: string,
-      whens: BaseWhen<IStore>[],
-      thens: BaseThen<ISelection, IStore>[],
+      whens: BaseWhen<IStore, ISelection, IThenShape>[],
+      thens: BaseThen<ISelection, IStore, IThenShape>[],
       ...xtraArgs
-    ) => BaseGiven<ISubject, IStore, ISelection>
+    ) => BaseGiven<ISubject, IStore, ISelection, IThenShape>
   > {
     return this.givenOverides;
   }
 
   When(): Record<
     keyof WhenExtensions,
-    (arg0: IStore, ...arg1: any) => BaseWhen<IStore>
+    (arg0: IStore, ...arg1: any) => BaseWhen<IStore, ISelection, IThenShape>
   > {
     return this.whenOverides;
   }
 
   Then(): Record<
     keyof ThenExtensions,
-    (selection: ISelection, expectation: any) => BaseThen<ISelection, IStore>
+    (
+      selection: ISelection,
+      expectation: any
+    ) => BaseThen<ISelection, IStore, IThenShape>
   > {
     return this.thenOverides;
   }
@@ -318,7 +353,7 @@ export class ClassySuite<Klass> extends BaseSuite<
   }
 }
 
-export class ClassyGiven<Klass> extends BaseGiven<Klass, Klass, Klass> {
+export class ClassyGiven<Klass> extends BaseGiven<Klass, Klass, Klass, any> {
   thing: Klass;
 
   constructor(
@@ -342,13 +377,13 @@ export class ClassyGiven<Klass> extends BaseGiven<Klass, Klass, Klass> {
   }
 }
 
-export class ClassyWhen<Klass> extends BaseWhen<Klass> {
+export class ClassyWhen<Klass> extends BaseWhen<Klass, Klass, any> {
   andWhen(thing: Klass): Klass {
     return this.actioner(thing);
   }
 }
 
-export class ClassyThen<Klass> extends BaseThen<Klass, Klass> {
+export class ClassyThen<Klass> extends BaseThen<Klass, Klass, any> {
   butThen(thing: Klass): Klass {
     return thing;
   }
@@ -378,58 +413,58 @@ export abstract class TesterantoInterface<
   IInput,
   ISubject,
   IStore,
-  ISelection
+  ISelection,
+  IThenShape
 > {
-  // abstract suiteKlasser: (
-  //   s,
-  //   g,
-  //   c
-  // ) => BaseSuite<IInput, ISubject, IStore, ISelection>;
-  // class extends BaseSuite<any, any, any, any>;
-  number;
-
   abstract givenKlasser: (
     f,
     w,
     t,
     z?
-  ) => BaseGiven<ISubject, IStore, ISelection>;
-  abstract whenKlasser: (a, b) => BaseWhen<IStore>;
-  abstract thenKlasser: (a, b) => BaseThen<ISelection, IStore>;
+  ) => BaseGiven<ISubject, IStore, ISelection, IThenShape>;
+  abstract whenKlasser: (a, b) => BaseWhen<IStore, ISelection, IThenShape>;
+  abstract thenKlasser: (a, b) => BaseThen<ISelection, IStore, IThenShape>;
   abstract checkKlasser: (
     f,
     w,
     t,
     z?
   ) => BaseCheck<ISubject, IStore, ISelection>;
-  abstract whenshape: any;
 }
 
-export type ITestSpecification<ITestShape> = (
+export type ITTestShape = {
+  suites;
+  givens;
+  whens;
+  thens;
+  checks;
+};
+
+export type ITestSpecification<ITestShape extends ITTestShape> = (
   Suite: {
-    [K in keyof /* @ts-ignore:next-line */
-    ITestShape["suites"]]: (
+    [K in keyof ITestShape["suites"]]: (
       name: string,
-      givens: BaseGiven<any, any, any>[],
+      givens: BaseGiven<any, any, any, any>[],
       checks: BaseCheck<any, any, any>[]
     ) => BaseSuite<any, any, any, any, any>;
   },
   Given: {
-    [K in keyof /* @ts-ignore:next-line */
-    ITestShape["givens"]]: (
+    [K in keyof ITestShape["givens"]]: (
       name: string,
-      whens: BaseWhen<any>[],
-      thens: BaseThen<any, any>[],
+      whens: BaseWhen<any, any, any>[],
+      thens: BaseThen<any, any, any>[],
       ...xtras: any
-    ) => BaseGiven<any, any, any>;
+    ) => BaseGiven<any, any, any, any>;
   },
   When: {
-    [K in keyof /* @ts-ignore:next-line */
-    ITestShape["whens"]]: (...xtras: any) => BaseWhen<any>;
+    [K in keyof ITestShape["whens"]]: (
+      ...xtras: any
+    ) => BaseWhen<any, any, any>;
   },
   Then: {
-    [K in keyof /* @ts-ignore:next-line */
-    ITestShape["thens"]]: (...xtras: any) => BaseThen<any>;
+    [K in keyof ITestShape["thens"]]: (
+      ...xtras: any
+    ) => BaseThen<any, any, any>;
   },
   Check: any
 ) => any[];
@@ -439,53 +474,36 @@ export type ITestImplementation<
   ISelection,
   IWhenShape,
   IThenShape,
-  ITestShape
+  ITestShape extends ITTestShape
 > = {
   Suites: {
-    /* @ts-ignore:next-line */
     [K in keyof ITestShape["suites"]]: string;
   };
   Givens: {
-    /* @ts-ignore:next-line */
     [K in keyof ITestShape["givens"]]: (
-      /* @ts-ignore:next-line */
       ...a: ITestShape["givens"][K]
     ) => IState;
   };
   Whens: {
-    /* @ts-ignore:next-line */
     [K in keyof ITestShape["whens"]]: (
-      /* @ts-ignore:next-line */
       ...a: ITestShape["whens"][K]
     ) => (zel: ISelection) => IWhenShape;
   };
   Thens: {
-    /* @ts-ignore:next-line */
     [K in keyof ITestShape["thens"]]: (
-      /* @ts-ignore:next-line */
       ...b: ITestShape["thens"][K]
     ) => (sel: ISelection) => IThenShape;
   };
   Checks: {
-    /* @ts-ignore:next-line */
     [K in keyof ITestShape["checks"]]: (
-      /* @ts-ignore:next-line */
       ...a: ITestShape["checks"][K]
     ) => IState;
   };
 };
 
-export type ITTestShape = {
-  suites: any;
-  givens: any;
-  whens: any;
-  thens: any;
-  checks: any;
-};
-
 export abstract class Testeranto<
-  ITestShape extends ITTestShape, // the test specifications and implementations
-  IState, //
+  ITestShape extends ITTestShape,
+  IState,
   ISelection,
   IStore,
   ISubject,
@@ -505,41 +523,32 @@ export abstract class Testeranto<
 
     testSpecification: (
       Suite: {
-        /* @ts-ignore:next-line */
         [K in keyof ITestShape["suites"]]: (
           feature: string,
-          givens: BaseGiven<any, any, any>[],
-          checks: BaseCheck<any, any, any>[]
-        ) => any;
+          givens: BaseGiven<ISubject, IStore, ISelection, IThenShape>[],
+          checks: BaseCheck<ISubject, IStore, ISelection>[]
+        ) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape>;
       },
       Given: {
-        /* @ts-ignore:next-line */
         [K in keyof ITestShape["givens"]]: (
           name: string,
-          whens: BaseWhen<any>[],
-          thens: BaseThen<ISelection, IStore>[],
+          whens: BaseWhen<IStore, ISelection, IThenShape>[],
+          thens: BaseThen<ISelection, IStore, IThenShape>[],
           // features: BaseFeature[],
-
-          /* @ts-ignore:next-line */
           ...a: ITestShape["givens"][K]
-        ) => any;
+        ) => BaseGiven<ISubject, IStore, ISelection, IThenShape>;
       },
       When: {
-        /* @ts-ignore:next-line */
         [K in keyof ITestShape["whens"]]: (
-          /* @ts-ignore:next-line */
           ...a: ITestShape["whens"][K]
-        ) => any;
+        ) => BaseWhen<IStore, ISelection, IThenShape>;
       },
       Then: {
-        /* @ts-ignore:next-line */
         [K in keyof ITestShape["thens"]]: (
-          /* @ts-ignore:next-line */
           ...a: ITestShape["thens"][K]
-        ) => any;
+        ) => BaseThen<ISelection, IStore, IThenShape>;
       },
       Check: {
-        /* @ts-ignore:next-line */
         [K in keyof ITestShape["checks"]]: (
           feature: string,
           x: (
@@ -548,15 +557,15 @@ export abstract class Testeranto<
           ) => Promise<void>
         ) => any;
       }
-    ) => BaseSuite<any, any, any, any, IThenShape>[],
+    ) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape>[],
 
     input: IInput,
 
     suiteKlasser: (
       name: string,
-      givens: any[],
+      givens: BaseGiven<ISubject, IStore, ISelection, IThenShape>[],
       checks: any[]
-    ) => BaseSuite<any, any, any, any, IThenShape>,
+    ) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape>,
     givenKlasser,
     whenKlasser,
     thenKlasser,
@@ -564,24 +573,20 @@ export abstract class Testeranto<
 
     testResource?: ITestResource
   ) {
-    const classySuites = mapValues(
-      testImplementation.Suites as any,
-      (suite) => {
-        return (somestring, givens, checks) => {
-          // console.log(suiteKlasser())
-          return suiteKlasser(somestring, givens, checks);
-        };
-      }
-    );
+    const classySuites = mapValues(testImplementation.Suites, (suite) => {
+      return (somestring, givens, checks) => {
+        return suiteKlasser(somestring, givens, checks);
+      };
+    });
 
-    const classyGivens = mapValues(testImplementation.Givens as any, (z) => {
+    const classyGivens = mapValues(testImplementation.Givens, (z) => {
       return (feature, whens, thens, ...xtrasW) => {
         return givenKlasser(feature, whens, thens, z(...xtrasW));
       };
     });
 
     const classyWhens = mapValues(
-      testImplementation.Whens as any,
+      testImplementation.Whens,
       (whEn: (thing, payload?: any) => any) => {
         return (payload?: any) => {
           return whenKlasser(
@@ -593,7 +598,7 @@ export abstract class Testeranto<
     );
 
     const classyThens = mapValues(
-      testImplementation.Thens as any,
+      testImplementation.Thens,
       (thEn: (klass, ...xtrasE) => void) => {
         return (expected: any, x) => {
           return thenKlasser(
@@ -604,7 +609,7 @@ export abstract class Testeranto<
       }
     );
 
-    const classyChecks = mapValues(testImplementation.Checks as any, (z) => {
+    const classyChecks = mapValues(testImplementation.Checks, (z) => {
       return (somestring, callback) => {
         return checkKlasser(somestring, callback, classyWhens, classyThens);
       };
@@ -634,6 +639,7 @@ export abstract class Testeranto<
       IThenShape
     > {})(
       input,
+      /* @ts-ignore:next-line */
       classySuites,
       classyGivens,
       classyWhens,
@@ -664,7 +670,7 @@ export abstract class Testeranto<
 
 type IT = {
   name: string;
-  givens: BaseGiven<any, any, any>[];
+  givens: BaseGiven<any, any, any, any>[];
   checks: BaseCheck<any, any, any>[];
 };
 

@@ -25,7 +25,8 @@ type IAction = [
   ),
   (object | string)?
 ];
-type IAssert = void; //(expected, actual, message) => void; //[, any, any];
+
+type IThenShape = any; //(expected, actual, message) => void; //[, any, any];
 
 export class ReduxTesteranto<
   IStoreShape,
@@ -37,7 +38,7 @@ export class ReduxTesteranto<
   IStoreShape,
   IStoreShape,
   IAction, // IWhen
-  IAssert, // IThen
+  IThenShape, // IThen
   any,
   Slice
 > {
@@ -46,7 +47,7 @@ export class ReduxTesteranto<
       IStoreShape,
       IStoreShape,
       IAction,
-      IAssert,
+      IThenShape,
       ITestShape
     >,
     testSpecification,
@@ -59,22 +60,24 @@ export class ReduxTesteranto<
 
       (f, g, z?) => {
         return new (class Suite<
-          IStore extends IZ<IState>,
+          IStore extends IStoreShape,
           IState
-        > extends BaseSuite<IInput, IStore, IState, IState, IAssert> {
-          
-        })(f, g, z);
+        > extends BaseSuite<IInput, IStore, IState, IState, IThenShape> {})(
+          f,
+          g,
+          z
+        );
       },
 
       (f, w, t, z?) => {
         return new (class Given<
           IStore extends IZ<IState>,
           IState
-        > extends BaseGiven<IStore, IStore, IState> {
+        > extends BaseGiven<IStore, IStore, IState, IThenShape> {
           constructor(
             name: string,
-            whens: BaseWhen<IStore>[],
-            thens: BaseThen<IState, IStore>[],
+            whens: BaseWhen<IStore, IState, IAction>[],
+            thens: BaseThen<IState, IStore, IAction>[],
             initialValues: PreloadedState<any>
             // features: BaseFeature[]
           ) {
@@ -96,7 +99,11 @@ export class ReduxTesteranto<
       },
 
       (s, o) => {
-        return new (class When<IStore> extends BaseWhen<IStore> {
+        return new (class When<IStore> extends BaseWhen<
+          IStore,
+          IStoreShape,
+          IAction
+        > {
           payload?: any;
 
           constructor(name: string, actioner: (...any) => any, payload?: any) {
@@ -117,7 +124,7 @@ export class ReduxTesteranto<
         return new (class Then<
           IStore extends IZ<IState>,
           IState
-        > extends BaseThen<IState, IStore> {
+        > extends BaseThen<IState, IStore, IThenShape> {
           butThen(store: IStore): IState {
             return store.getState();
           }

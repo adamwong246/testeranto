@@ -13,38 +13,14 @@ import {
 } from "../../index";
 
 type IInput = [string, (string) => string];
-type ISubject = { page: Page; htmlBundle: string };
-type IStore = { page: Page; htmlbundle: string };
-type IAction = any;
+type ISubjectStore = { page: Page; htmlBundle: string };
+type IWhenShape = any;
+type IThenShape = any;
 type ISelection = { page: Page };
 
-class Suite extends BaseSuite<IInput, ISubject, IStore, ISelection, any> {
-  async setup([bundlePath, htmlTemplate]: IInput) {
-    return {
-      page: await (
-        await puppeteer.launch({
-          headless: true,
-          executablePath:
-            "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-        })
-      ).newPage(),
-      htmlBundle: htmlTemplate(
-        esbuild.buildSync({
-          entryPoints: [bundlePath],
-          bundle: true,
-          minify: true,
-          format: "esm",
-          target: ["esnext"],
-          write: false,
-        }).outputFiles[0].text
-      ),
-    };
-  }
-}
-
-class Given extends BaseGiven<ISubject, any, ISelection> {
+class Given extends BaseGiven<ISubjectStore, any, ISelection, any> {
   async givenThat(
-    { page, htmlBundle }: ISubject,
+    { page, htmlBundle }: ISubjectStore,
     testResourceConfiguration?: any
   ) {
     await page.setContent(htmlBundle);
@@ -58,21 +34,21 @@ class Given extends BaseGiven<ISubject, any, ISelection> {
   }
 }
 
-class When<IStore extends Page> extends BaseWhen<IStore> {
+class When<IStore extends Page> extends BaseWhen<IStore, any, any> {
   async andWhen(page: IStore) {
     return this.actioner(page);
   }
 }
 
-class Then extends BaseThen<IStore, IStore> {
-  butThen(store: any, testResourceConfiguration?: any): IStore {
+class Then extends BaseThen<ISubjectStore, ISubjectStore, any> {
+  butThen(store: any, testResourceConfiguration?: any): ISubjectStore {
     return store;
   }
 }
 
-class Check extends BaseCheck<ISubject, any, ISelection> {
+class Check extends BaseCheck<ISubjectStore, any, ISelection> {
   async checkThat(
-    { page, htmlBundle }: ISubject,
+    { page, htmlBundle }: ISubjectStore,
     testResourceConfiguration?: any
   ) {
     await page.setContent(htmlBundle);
@@ -86,23 +62,25 @@ class Check extends BaseCheck<ISubject, any, ISelection> {
   }
 }
 
-export class EsbuildPuppeteerTesteranto<ITestShape extends ITTestShape> extends Testeranto<
+export class EsbuildPuppeteerTesteranto<
+  ITestShape extends ITTestShape
+> extends Testeranto<
   ITestShape,
-  IStore,
-  IStore,
-  IStore,
-  IStore,
-  ISelection,
-  any,
-  any,
+  ISubjectStore, // state
+  ISelection, // selection
+  ISubjectStore, // store
+  ISubjectStore, // subject
+  IWhenShape,
+  IThenShape,
+  any, // test resource
   IInput
 > {
   constructor(
     testImplementation: ITestImplementation<
-      any,
-      ISelection,
-      IAction,
-      any,
+      ISubjectStore, // state
+      ISelection, // selection
+      IWhenShape,
+      IThenShape,
       ITestShape
     >,
     testSpecification,
@@ -113,7 +91,35 @@ export class EsbuildPuppeteerTesteranto<ITestShape extends ITTestShape> extends 
       testSpecification,
       thing,
       (s, g, c) => {
-        return new Suite(s, g, c);
+        return new (class Suite extends BaseSuite<
+          IInput,
+          ISubjectStore,
+          ISubjectStore,
+          ISelection,
+          IThenShape
+        > {
+          async setup([bundlePath, htmlTemplate]: IInput) {
+            return {
+              page: await (
+                await puppeteer.launch({
+                  headless: true,
+                  executablePath:
+                    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+                })
+              ).newPage(),
+              htmlBundle: htmlTemplate(
+                esbuild.buildSync({
+                  entryPoints: [bundlePath],
+                  bundle: true,
+                  minify: true,
+                  format: "esm",
+                  target: ["esnext"],
+                  write: false,
+                }).outputFiles[0].text
+              ),
+            };
+          }
+        })(s, g, c);
       },
       (n, w, t, f) =>
         new Given(

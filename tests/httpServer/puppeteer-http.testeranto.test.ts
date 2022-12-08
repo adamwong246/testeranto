@@ -21,7 +21,7 @@ type IInput = () => http.Server;
 
 class Suite extends BaseSuite<IInput, any, any, any, any> {}
 
-class Given extends BaseGiven<any, any, any> {
+class Given extends BaseGiven<any, any, any, any> {
   async teardown({
     browser,
     server,
@@ -49,7 +49,7 @@ class Given extends BaseGiven<any, any, any> {
   }
 }
 
-class When<IStore> extends BaseWhen<IStore> {
+class When<IStore> extends BaseWhen<IStore, any, any> {
   payload?: any;
 
   constructor(name: string, actioner: (...any) => any, payload?: any) {
@@ -68,7 +68,7 @@ class When<IStore> extends BaseWhen<IStore> {
   }
 }
 
-class Then extends BaseThen<any, any> {
+class Then extends BaseThen<any, any, any> {
   constructor(name: string, callback: (val: any) => any) {
     super(name, callback);
   }

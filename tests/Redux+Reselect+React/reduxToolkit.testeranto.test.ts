@@ -35,7 +35,12 @@ type IWhenShape = [
   (object | string)?
 ];
 
-type IThenShape = [(expected, actual, message?: string) => void, any, any, string?];
+type IThenShape = [
+  (expected, actual, message?: string) => void,
+  any,
+  any,
+  string?
+];
 
 export type ISubjectReducerAndSelectorAnStore = {
   reducer: Reducer<any, AnyAction>;
@@ -84,7 +89,7 @@ export class ReduxToolkitTesteranto<
       (s, g, c) =>
         new (class Suite<
           ISubjectReducerAndSelector,
-          IStore extends Store,
+          IStore,
           ISelected,
           IThenShape
         > extends BaseSuite<
@@ -100,17 +105,18 @@ export class ReduxToolkitTesteranto<
         })(s, g, c),
 
       (f, w, t, z) =>
-        new (class Given<IStore extends Store, ISelected> extends BaseGiven<
+        new (class Given<IStore extends Store, ISelection> extends BaseGiven<
           ISubjectReducerAndSelector,
           IStore,
-          ISelected
+          ISelection,
+          IThenShape
         > {
           initialValues: any;
 
           constructor(
             name: string,
-            whens: BaseWhen<IStore>[],
-            thens: BaseThen<ISelected, IStore>[],
+            whens: BaseWhen<IStore, ISelection, IThenShape>[],
+            thens: BaseThen<ISelection, IStore, IThenShape>[],
             // features: BaseFeature[],
             initialValues: any
           ) {
@@ -139,7 +145,7 @@ export class ReduxToolkitTesteranto<
           }
         })(f, w, t, z),
       (s, o) =>
-        new (class When extends BaseWhen<Store> {
+        new (class When extends BaseWhen<Store, ISelection, IThenShape> {
           payload?: any;
 
           constructor(name: string, action: IActionCreate, payload?: any) {
@@ -156,8 +162,12 @@ export class ReduxToolkitTesteranto<
         })(s, o),
 
       (s, o) =>
-        new (class Then<ISelection> extends BaseThen<ISelection, Store> {
-          constructor(name: string, callback: (val: ISelection) => any) {
+        new (class Then<ISelection> extends BaseThen<
+          ISelection,
+          Store,
+          IThenShape
+        > {
+          constructor(name: string, callback: (val: ISelection) => IThenShape) {
             super(name, callback);
           }
 

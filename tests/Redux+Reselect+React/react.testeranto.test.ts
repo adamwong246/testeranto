@@ -12,35 +12,13 @@ import {
   Testeranto,
 } from "../../index";
 
-class Suite extends BaseSuite<
-  () => JSX.Element,
-  () => JSX.Element,
-  ReactTestRenderer,
-  ReactTestRenderer,
-  any
-> {}
-
-class Given extends BaseGiven<
-  () => JSX.Element,
-  ReactTestRenderer,
-  ReactTestRenderer
-> {
-  givenThat(subject: () => JSX.Element) {
-    let component;
-    act(() => {
-      component = renderer.create(subject());
-    });
-    return component;
-  }
-}
-
-class When extends BaseWhen<ReactTestRenderer> {
+class When extends BaseWhen<ReactTestRenderer, ReactTestRenderer, any> {
   andWhen(store: renderer.ReactTestRenderer) {
     return act(() => this.actioner(store));
   }
 }
 
-class Then extends BaseThen<ReactTestRenderer, ReactTestRenderer> {
+class Then extends BaseThen<ReactTestRenderer, ReactTestRenderer, any> {
   butThen(component: renderer.ReactTestRenderer): renderer.ReactTestRenderer {
     return component;
   }
@@ -80,8 +58,31 @@ export class ReactTesteranto<ITestShape extends ITTestShape> extends Testeranto<
       testImplementation,
       testSpecification,
       thing,
-      (s, g, c) => new Suite(s, g, c),
-      (f, w, t) => new Given(f, w, t),
+
+      (s, g, c) =>
+        new (class Suite extends BaseSuite<
+          () => JSX.Element,
+          ReactTestRenderer,
+          ReactTestRenderer,
+          ReactTestRenderer,
+          any
+        > {})(s, g, c),
+
+      (f, w, t) =>
+        new (class Given extends BaseGiven<
+          () => JSX.Element,
+          ReactTestRenderer,
+          ReactTestRenderer,
+          any
+        > {
+          givenThat(subject: () => JSX.Element) {
+            let component;
+            act(() => {
+              component = renderer.create(subject());
+            });
+            return component;
+          }
+        })(f, w, t),
       (s, o) => new When(s, o),
       (s, o) => new Then(s, o),
       (f, g, c, cb) => new Check(f, g, c, cb)
