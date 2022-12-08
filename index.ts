@@ -28,7 +28,6 @@ export abstract class BaseSuite<
     this.checks = checks;
   }
 
-  // abstract setup(s: IInput): Promise<ISubject>;
   setup(s: IInput): Promise<ISubject> {
     return new Promise((res, rej) => res(s as unknown as ISubject));
   }
@@ -67,9 +66,6 @@ export abstract class BaseGiven<ISubject, IStore, ISelection> {
   }
 
   abstract givenThat(subject: ISubject, testResourceConfiguration?): IStore;
-  // givenThat(subject: ISubject, testResourceConfiguration?): IStore {
-  //   return subject as unknown as IStore;
-  // }
 
   async teardown(subject: IStore, ndx: number) {
     return subject;
@@ -129,8 +125,8 @@ export abstract class BaseThen<ISelection, IStore> {
 export abstract class BaseCheck<ISubject, IStore, ISelection> {
   feature: string;
   callback: (whens, thens) => any;
-  whens: any; //Record<string, BaseWhen<any>>;
-  thens: any; //Record<string, BaseThen<any>>;
+  whens: any;
+  thens: any;
 
   constructor(feature: string, callback: (whens, thens) => any, whens, thens) {
     this.feature = feature;
@@ -398,7 +394,36 @@ export abstract class TesterantoInterface<
   abstract whenshape: any;
 }
 
-export type ITestImplementation<IState, ISelection, IWhenShape> = {
+export type ITestSpecification<ITestShape> = (
+  Suite: {
+    [K in keyof /* @ts-ignore:next-line */
+    ITestShape["suites"]]: (
+      name: string,
+      givens: BaseGiven<any, any, any>[],
+      checks: BaseCheck<any, any, any>[]
+    ) => BaseSuite<any, any, any, any>;
+  },
+  Given: {
+    [K in keyof /* @ts-ignore:next-line */
+    ITestShape["givens"]]: (
+      name: string,
+      whens: BaseWhen<any>[],
+      thens: BaseThen<any, any>[],
+      ...xtras: any
+    ) => BaseGiven<any, any, any>;
+  },
+  When: {
+    [K in keyof /* @ts-ignore:next-line */
+    ITestShape["whens"]]: (...xtras?: any) => BaseWhen<any>;
+  },
+  Then: {
+    [K in keyof /* @ts-ignore:next-line */
+    ITestShape["thens"]]: (...xtras?: any) => BaseThen<any>;
+  },
+  Check: any
+) => any[];
+
+export type ITestImplementation<IState, ISelection, IWhenShape, ITestShape> = {
   Suites: {
     /* @ts-ignore:next-line */
     [K in keyof ITestShape["suites"]]: string;
@@ -415,13 +440,13 @@ export type ITestImplementation<IState, ISelection, IWhenShape> = {
     [K in keyof ITestShape["whens"]]: (
       /* @ts-ignore:next-line */
       ...a: ITestShape["whens"][K]
-    ) => (zel: ISelection) => IWhenShape; //TesterantoInterface<any, any, any>["whenKlass"];
+    ) => (zel: ISelection) => IWhenShape;
   };
   Thens: {
     /* @ts-ignore:next-line */
     [K in keyof ITestShape["thens"]]: (
       /* @ts-ignore:next-line */
-      ...a: ITestShape["thens"][K]
+      ...b: ITestShape["thens"][K]
     ) => (sel: ISelection) => any;
   };
   Checks: {
@@ -433,8 +458,16 @@ export type ITestImplementation<IState, ISelection, IWhenShape> = {
   };
 };
 
+export type ITTestShape = {
+  suites: any;
+  givens: any;
+  whens: any;
+  thens: any;
+  checks: any;
+};
+
 export abstract class Testeranto<
-  ITestShape,
+  ITestShape extends ITTestShape,
   IState,
   ISelection,
   IStore,
@@ -444,7 +477,12 @@ export abstract class Testeranto<
   IInput
 > {
   constructor(
-    testImplementation: ITestImplementation<IState, ISelection, IWhenShape>,
+    testImplementation: ITestImplementation<
+      IState,
+      ISelection,
+      IWhenShape,
+      ITestShape
+    >,
 
     testSpecification: (
       Suite: {
@@ -643,7 +681,7 @@ const processTestsWithPorts = async (
             } else {
               const suite = testsStack.pop();
               try {
-                suite?.runner({ port });
+                await suite?.runner({ port });
                 popper([
                   ...payload,
                   {
@@ -677,7 +715,7 @@ export const reporter = async (
     ports: number[];
   }
 ) => {
-  Promise.all(tests).then(async (x) => {
+  await Promise.all(tests).then(async (x) => {
     const suites = x.flat();
 
     const testsWithoutResources: ITestResults = suites

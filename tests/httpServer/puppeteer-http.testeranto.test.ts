@@ -13,6 +13,7 @@ import {
   BaseThen,
   BaseWhen,
   ITestImplementation,
+  ITTestShape,
   Testeranto,
 } from "../../index";
 
@@ -119,7 +120,7 @@ type IAction = [url: string, paylaod: string];
 
 export class PuppeteerHttpTesteranto<
   IStoreShape,
-  ITestShape
+  ITestShape extends ITTestShape
 > extends Testeranto<
   ITestShape,
   IStoreShape,

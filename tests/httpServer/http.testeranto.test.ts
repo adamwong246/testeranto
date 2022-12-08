@@ -12,6 +12,7 @@ import {
   BaseThen,
   BaseWhen,
   ITestImplementation,
+  ITTestShape,
   Testeranto,
 } from "../../index";
 
@@ -88,7 +89,7 @@ class Check extends BaseCheck<any, any, any> {
 
 type IAction = [url: string, paylaod: string];
 
-export class HttpTesteranto<IStoreShape, ITestShape> extends Testeranto<
+export class HttpTesteranto<IStoreShape, ITestShape extends ITTestShape> extends Testeranto<
   ITestShape,
   IStoreShape,
   IStoreShape,

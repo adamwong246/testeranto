@@ -7,6 +7,8 @@ import {
   BaseThen,
   BaseWhen,
   ITestImplementation,
+  ITestSpecification,
+  ITTestShape,
   Testeranto,
 } from "../../index";
 
@@ -57,8 +59,8 @@ class Check extends BaseCheck<
   }
 }
 
-export class ReactTesteranto<ITestShape> extends Testeranto<
-  any,
+export class ReactTesteranto<ITestShape extends ITTestShape> extends Testeranto<
+  ITestShape,
   ReactTestRenderer,
   ReactTestRenderer,
   ReactTestRenderer,
@@ -68,8 +70,8 @@ export class ReactTesteranto<ITestShape> extends Testeranto<
   any
 > {
   constructor(
-    testImplementation: ITestImplementation<any, any, any>,
-    testSpecification,
+    testImplementation: ITestImplementation<any, any, any, ITestShape>,
+    testSpecification: ITestSpecification<ITestShape>,
     thing
   ) {
     super(

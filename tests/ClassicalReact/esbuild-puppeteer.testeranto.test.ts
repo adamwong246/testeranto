@@ -8,6 +8,7 @@ import {
   BaseThen,
   BaseWhen,
   ITestImplementation,
+  ITTestShape,
   Testeranto,
 } from "../../index";
 
@@ -85,7 +86,7 @@ class Check extends BaseCheck<ISubject, any, ISelection> {
   }
 }
 
-export class EsbuildPuppeteerTesteranto<ITestShape> extends Testeranto<
+export class EsbuildPuppeteerTesteranto<ITestShape extends ITTestShape> extends Testeranto<
   ITestShape,
   IStore,
   IStore,

@@ -9,6 +9,7 @@ import {
   BaseThen,
   BaseWhen,
   ITestImplementation,
+  ITTestShape,
   Testeranto,
 } from "../../index";
 
@@ -70,7 +71,7 @@ class Check extends BaseCheck<any, any, any> {
   }
 }
 
-export class ReactTestRendererTesteranto<ITestShape> extends Testeranto<
+export class ReactTestRendererTesteranto<ITestShape extends ITTestShape> extends Testeranto<
   ITestShape,
   renderer.ReactTestRenderer,
   renderer.ReactTestRenderer,

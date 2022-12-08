@@ -14,6 +14,7 @@ import {
   BaseThen,
   BaseWhen,
   ITestImplementation,
+  ITTestShape,
   Testeranto,
 } from "../../index";
 
@@ -156,7 +157,7 @@ export class ReduxToolkitTesteranto<
   IStoreShape,
   ISelection,
   IState,
-  ITestShape
+  ITestShape extends ITTestShape
 > extends Testeranto<
   ITestShape,
   IStoreShape,

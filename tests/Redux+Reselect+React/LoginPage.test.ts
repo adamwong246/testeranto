@@ -5,13 +5,13 @@ import LoginPage from "./LoginPage";
 export class AppReactTesteranto extends ReactTesteranto<{
   suites: {
     Default: string;
-  };
+  },
   givens: {
     AnEmptyState;
     AStateWithEmail: [string];
   };
   whens: {
-    TheLoginIsSubmitted;
+    TheLoginIsSubmitted: [];
     TheEmailIsSetTo: [string];
     ThePasswordIsSetTo: [string];
   };
@@ -20,6 +20,8 @@ export class AppReactTesteranto extends ReactTesteranto<{
     TheEmailIsNot: [string];
     ThePasswordIs: [string];
     ThePasswordIsNot: [number, boolean];
+    ThereIsAnEmailError: [];
+    ThereIsNotAnEmailError: [];
   };
   checks: {
     AnEmptyState;
@@ -27,16 +29,17 @@ export class AppReactTesteranto extends ReactTesteranto<{
 }> {
   constructor() {
     super(
+      // test implementation
       {
         Suites: {
           Default: "a default suite",
         },
-
         Givens: {
-          /* @ts-ignore:next-line */
           AnEmptyState: () => {},
+          AStateWithEmail: (email) => {
+            return { email };
+          },
         },
-
         Whens: {
           TheLoginIsSubmitted: () => (component) =>
             component.root.findByType("button").props.onClick(),
@@ -64,26 +67,6 @@ export class AppReactTesteranto extends ReactTesteranto<{
               component.root.findByProps({ type: "email" }).props.value,
               email
             ),
-          ThereIsAnEmailError: () => (component) =>
-            assert.equal(
-              component.root
-                .findByProps({
-                  className: "warning",
-                  id: "invalid-email-warning",
-                })
-                .children.toString(),
-              "Something isn’t right. Please double check your email format"
-            ),
-          ThereIsNotAnEmailError: () => (component) =>
-            assert.notEqual(
-              component.root
-                .findByProps({
-                  className: "warning",
-                  id: "invalid-email-warning",
-                })
-                .children.toString(),
-              "Something isn’t right. Please double check your email format"
-            ),
           ThePasswordIs: (password) => (component) =>
             assert.equal(
               component.root.findByProps({ type: "password" }).props.value,
@@ -94,14 +77,24 @@ export class AppReactTesteranto extends ReactTesteranto<{
               component.root.findByProps({ type: "password" }).props.value,
               password
             ),
+          ThereIsAnEmailError: () => (component) =>
+            assert.notEqual(
+              component.root.findByProps({ type: "password" }).props.value,
+              'password'
+            ),
+          ThereIsNotAnEmailError: () => (component) =>
+            assert.notEqual(
+              component.root.findByProps({ type: "password" }).props.value,
+              'password'
+            ),
         },
 
         Checks: {
-          /* @ts-ignore:next-line */
           AnEmptyState: () => {},
         },
       },
 
+      // test specification
       (Suite, Given, When, Then, Check) => {
         return [
           Suite.Default(
