@@ -30,7 +30,7 @@ type IAction = [
   ),
   (object | string)?
 ];
-type IAssert = [(expected, actual, message) => void, any, any];
+type IAssert = any; //[(expected, actual, message) => void, any, any];
 
 export class ReduxTesteranto<
   IStoreShape,

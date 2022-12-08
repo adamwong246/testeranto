@@ -308,7 +308,7 @@
           "name": "BDD gherkin style",
           "whens": [
             {
-              "name": "TheEmailIsSetTo: adam@email.com"
+              "name": "TheEmailIsSetTo: adam@email.comz"
             }
           ],
           "thens": [
@@ -376,15 +376,17 @@
           }
         }
       ],
-      "checks": [
-        {
-          "feature": "imperative style",
-          "whens": {},
-          "thens": {}
-        }
-      ]
+      "checks": []
     },
-    "status": "pass"
+    "status": {
+      "name": "AssertionError",
+      "message": "a nice message: expected 'adam@email.comz' to equal 'adam@email.com'",
+      "showDiff": true,
+      "actual": "adam@email.comz",
+      "expected": "adam@email.com",
+      "operator": "strictEqual",
+      "stack": "AssertionError: a nice message: expected 'adam@email.comz' to equal 'adam@email.com'\n    at test (/Users/adam/Code/testeranto.ts/tests/Redux+Reselect+React/reduxToolkit.testeranto.test.ts:97:19)\n    at Given.give (/Users/adam/Code/testeranto.ts/index.ts:81:7)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Suite.run (/Users/adam/Code/testeranto.ts/index.ts:38:7)\n    at async Object.runner (/Users/adam/Code/testeranto.ts/index.ts:647:11)\n    at async /Users/adam/Code/testeranto.ts/index.ts:729:11\n    at async Promise.all (index 3)"
+    }
   },
   {
     "test": {
@@ -492,222 +494,6 @@
         }
       ],
       "checks": []
-    },
-    "status": "pass"
-  },
-  {
-    "test": {
-      "name": "Testing the Node server with fetch",
-      "givens": [
-        {
-          "name": "a http boringfeature",
-          "whens": [],
-          "thens": [
-            {
-              "name": "TheStatusIs: some great status"
-            }
-          ]
-        },
-        {
-          "name": "a http feature",
-          "whens": [
-            {
-              "name": "PostToStatus: hello"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheStatusIs: hello"
-            }
-          ]
-        },
-        {
-          "name": "a httpfeature",
-          "whens": [
-            {
-              "name": "PostToStatus: hello"
-            },
-            {
-              "name": "PostToStatus: aloha"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheStatusIs: aloha"
-            }
-          ]
-        },
-        {
-          "name": "a feature",
-          "whens": [],
-          "thens": [
-            {
-              "name": "TheNumberIs: 0"
-            }
-          ]
-        },
-        {
-          "name": "a httpfeature",
-          "whens": [
-            {
-              "name": "PostToAdd: 1"
-            },
-            {
-              "name": "PostToAdd: 2"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheNumberIs: 3"
-            }
-          ]
-        },
-        {
-          "name": "another http feature",
-          "whens": [
-            {
-              "name": "PostToStatus: aloha"
-            },
-            {
-              "name": "PostToAdd: 4"
-            },
-            {
-              "name": "PostToStatus: hello"
-            },
-            {
-              "name": "PostToAdd: 3"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheStatusIs: hello"
-            },
-            {
-              "name": "TheNumberIs: 7"
-            }
-          ]
-        }
-      ],
-      "checks": [
-        {
-          "feature": "HTTP imperative style",
-          "whens": {},
-          "thens": {}
-        },
-        {
-          "feature": "HTTP imperative style II",
-          "whens": {},
-          "thens": {}
-        }
-      ]
-    },
-    "status": "pass"
-  },
-  {
-    "test": {
-      "name": "Testing the Server with Puppeteer",
-      "givens": [
-        {
-          "name": "a Puppeteer boringfeature",
-          "whens": [],
-          "thens": [
-            {
-              "name": "TheStatusIs: some great status"
-            }
-          ]
-        },
-        {
-          "name": "a Puppeteer feature",
-          "whens": [
-            {
-              "name": "PostToStatus: hello"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheStatusIs: hello"
-            }
-          ]
-        },
-        {
-          "name": "a Puppeteer feature",
-          "whens": [
-            {
-              "name": "PostToStatus: hello"
-            },
-            {
-              "name": "PostToStatus: aloha"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheStatusIs: aloha"
-            }
-          ]
-        },
-        {
-          "name": "a feature",
-          "whens": [],
-          "thens": [
-            {
-              "name": "TheNumberIs: 0"
-            }
-          ]
-        },
-        {
-          "name": "a Puppeteer feature",
-          "whens": [
-            {
-              "name": "PostToAdd: 1"
-            },
-            {
-              "name": "PostToAdd: 2"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheNumberIs: 3"
-            }
-          ]
-        },
-        {
-          "name": "another Puppeteer feature",
-          "whens": [
-            {
-              "name": "PostToStatus: aloha"
-            },
-            {
-              "name": "PostToAdd: 4"
-            },
-            {
-              "name": "PostToStatus: hello"
-            },
-            {
-              "name": "PostToAdd: 3"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheStatusIs: hello"
-            },
-            {
-              "name": "TheNumberIs: 7"
-            }
-          ]
-        }
-      ],
-      "checks": [
-        {
-          "feature": "puppeteer imperative style",
-          "whens": {},
-          "thens": {}
-        },
-        {
-          "feature": "puppeteer imperative style II",
-          "whens": {},
-          "thens": {}
-        }
-      ]
     },
     "status": "pass"
   }

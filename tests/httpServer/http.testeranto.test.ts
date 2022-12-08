@@ -31,7 +31,6 @@ class Given extends BaseGiven<any, any, any> {
 
   async givenThat(subject, port: number) {
     const server = serverFactory();
-    console.log("(http) Server starting on ", port);
     await server.listen(port);
     return server;
   }

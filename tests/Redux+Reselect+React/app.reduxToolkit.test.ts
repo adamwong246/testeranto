@@ -2,6 +2,7 @@ import { assert } from "chai";
 import { ReduxToolkitTesteranto } from "./reduxToolkit.testeranto.test";
 import { IStoreState, loginApp } from "./app";
 import app from "./app";
+import { ILoginPageSelection } from "./LoginPage";
 
 const core = app();
 const selector = core.select.loginPageSelection;
@@ -10,8 +11,7 @@ const reducer = core.app.reducer;
 
 export class AppReduxToolkitTesteranto extends ReduxToolkitTesteranto<
   IStoreState,
-  any,
-  any,
+  ILoginPageSelection,
   {
     suites: {
       Default: string;
@@ -38,6 +38,7 @@ export class AppReduxToolkitTesteranto extends ReduxToolkitTesteranto<
 > {
   constructor() {
     super(
+      // test implementation
       {
         Suites: {
           Default: "some default Suite",
@@ -58,24 +59,26 @@ export class AppReduxToolkitTesteranto extends ReduxToolkitTesteranto<
         },
         Thens: {
           TheEmailIs: (email) => (selection) =>
-            assert.equal(selection.email, email),
-
+            [assert.equal, selection.email, email, "a nice message"],
           TheEmailIsNot: (email) => (selection) =>
-            assert.notEqual(selection.email, email),
-          ThePasswordIs: (password) => (selection) => assert.equal(1, 1),
-          ThePasswordIsNot: (password) => (selection) => assert.equal(1, 1),
+            [assert.notEqual, selection.email, email],
+          ThePasswordIs: (password) => (selection) =>
+            [assert.equal, selection.password, password],
+          ThePasswordIsNot: (password) => (selection) =>
+            [assert.notEqual, selection.password, password],
         },
         Checks: {
           AnEmptyState: () => loginApp.getInitialState(),
         },
       },
 
+      // test specification
       (Suite, Given, When, Then, Check) => {
         return [
           Suite.Default(
             "Testing the ReduxToolkit",
             [
-              Given.AnEmptyState(
+              Given.AnEmptyState(   
                 "BDD gherkin style",
                 [When.TheEmailIsSetTo("adam@email.com")],
                 [Then.TheEmailIs("adam@email.com")]
@@ -87,26 +90,26 @@ export class AppReduxToolkitTesteranto extends ReduxToolkitTesteranto<
                 "bob@mail.com"
               ),
               Given.AnEmptyState(
-                "yet another feature",
+                "yet another feature",  
                 [When.TheEmailIsSetTo("hello"), When.TheEmailIsSetTo("aloha")],
                 [Then.TheEmailIs("aloha")]
               ),
               Given.AnEmptyState("OMG a feature!", [], [Then.TheEmailIs("")]),
             ],
             [
-              Check.AnEmptyState(
-                "imperative style",
-                async ({ TheEmailIsSetTo }, { TheEmailIs }) => {
-                  await TheEmailIsSetTo("foo");
-                  await TheEmailIs("foo");
-                  const reduxPayload = await TheEmailIsSetTo("foobar");
-                  await TheEmailIs("foobar");
-                  // assert.deepEqual(reduxPayload, {
-                  //   type: "login app/setEmail",
-                  //   payload: "foobar",
-                  // });
-                }
-              ),
+              // Check.AnEmptyState(
+              //   "imperative style",
+              //   async ({ TheEmailIsSetTo }, { TheEmailIs }) => {
+              //     await TheEmailIsSetTo("foo");
+              //     await TheEmailIs("foo");
+              //     const reduxPayload = await TheEmailIsSetTo("foobar");
+              //     await TheEmailIs("foobar");
+              //     // assert.deepEqual(reduxPayload, {
+              //     //   type: "login app/setEmail",
+              //     //   payload: "foobar",
+              //     // });
+              //   }
+              // ),
             ]
           ),
         ];

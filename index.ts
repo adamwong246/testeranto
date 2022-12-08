@@ -8,12 +8,7 @@ export abstract class BaseFeature {
   }
 }
 
-export abstract class BaseSuite<
-  IInput,
-  ISubject extends any,
-  IStore,
-  ISelection
-> {
+export abstract class BaseSuite<IInput, ISubject extends any, IStore, ISelection> {
   name: string;
   givens: BaseGiven<ISubject, IStore, ISelection>[];
   checks: BaseCheck<ISubject, IStore, ISelection>[];
@@ -32,17 +27,19 @@ export abstract class BaseSuite<
     return new Promise((res, rej) => res(s as unknown as ISubject));
   }
 
+  test(t) { }
+  
   async run(input, testResourceConfiguration?) {
     const subject = await this.setup(input);
 
     console.log("\nSuite:", this.name, testResourceConfiguration);
 
     for (const [ndx, giver] of this.givens.entries()) {
-      await giver.give(subject, ndx, testResourceConfiguration);
+      await giver.give(subject, ndx, testResourceConfiguration, this.test);
     }
 
     for (const [ndx, thater] of this.checks.entries()) {
-      await thater.check(subject, ndx, testResourceConfiguration);
+      await thater.check(subject, ndx, testResourceConfiguration, this.test);
     }
   }
 }
@@ -71,7 +68,7 @@ export abstract class BaseGiven<ISubject, IStore, ISelection> {
     return subject;
   }
 
-  async give(subject: ISubject, index: number, testResourceConfiguration?) {
+  async give(subject: ISubject, index: number, testResourceConfiguration, tester) {
     console.log(`\n Given: ${this.name}`);
     const store = await this.givenThat(subject, testResourceConfiguration);
 
@@ -80,7 +77,8 @@ export abstract class BaseGiven<ISubject, IStore, ISelection> {
     }
 
     for (const thenStep of this.thens) {
-      await thenStep.test(store, testResourceConfiguration);
+      const t = await thenStep.test(store, testResourceConfiguration);
+      tester(t);
     }
 
     await this.teardown(store, index);
@@ -116,7 +114,7 @@ export abstract class BaseThen<ISelection, IStore> {
 
   abstract butThen(store: any, testResourceConfiguration?): ISelection;
 
-  async test(store: IStore, testResourceConfiguration) {
+  async test(store: IStore, testResourceConfiguration): Promise<Awaited<ISelection>> {
     console.log(" Then:", this.name);
     return this.callback(await this.butThen(store, testResourceConfiguration));
   }
@@ -141,7 +139,7 @@ export abstract class BaseCheck<ISubject, IStore, ISelection> {
     return subject;
   }
 
-  async check(subject: ISubject, ndx: number, testResourceConfiguration) {
+  async check(subject: ISubject, ndx: number, testResourceConfiguration, tester) {
     console.log(`\n - \nCheck: ${this.feature}`);
     const store = await this.checkThat(subject, testResourceConfiguration);
     await this.callback(
@@ -155,10 +153,11 @@ export abstract class BaseCheck<ISubject, IStore, ISelection> {
       }),
       mapValues(this.thens, (then) => {
         return async (payload) => {
-          return await then(payload, testResourceConfiguration).test(
+          const t = await then(payload, testResourceConfiguration).test(
             store,
             testResourceConfiguration
           );
+          tester(t);
         };
       })
     );
@@ -426,7 +425,13 @@ export type ITestSpecification<ITestShape> = (
   Check: any
 ) => any[];
 
-export type ITestImplementation<IState, ISelection, IWhenShape, IThenShape, ITestShape> = {
+export type ITestImplementation<
+  IState,
+  ISelection,
+  IWhenShape,
+  IThenShape,
+  ITestShape
+> = {
   Suites: {
     /* @ts-ignore:next-line */
     [K in keyof ITestShape["suites"]]: string;

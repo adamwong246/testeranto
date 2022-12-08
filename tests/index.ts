@@ -18,8 +18,8 @@ reporter(
     new AppReduxToolkitTesteranto()[0],
     new ClassicalComponentEsbuildPuppeteerTesteranto()[0],
     new ClassicalComponentReactTestRendererTesteranto()[0],
-    new ServerHttpPuppeteerTesteranto()[0],
-    new ServerHttpTesteranto()[0],
+    // new ServerHttpPuppeteerTesteranto()[0],
+    // new ServerHttpTesteranto()[0],
   ],
   {
     ports: [3000, 3001],

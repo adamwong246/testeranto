@@ -51,11 +51,11 @@ export class AppReduxTesteranto extends ReduxTesteranto<
         },
         Thens: {
           TheEmailIs: (email) => (selection) =>
-            [assert.equal, selection.email, email],
+            assert.equal(selection.email, email),
           TheEmailIsNot: (email) => (selection) =>
-            [assert.notEqual, selection.email, email],
-          ThePasswordIs: (password) => (selection) => [assert.equal, 1, 1],
-          ThePasswordIsNot: (n, x) => (selection) => [assert.equal, 1, 1],
+            assert.notEqual(selection.email, email),
+          ThePasswordIs: (password) => (selection) => assert.equal(1, 1),
+          ThePasswordIsNot: (n, x) => (selection) => assert.equal( 1, 1),
           
         },
         Checks: {

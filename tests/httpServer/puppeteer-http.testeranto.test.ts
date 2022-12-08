@@ -43,8 +43,6 @@ class Given extends BaseGiven<any, any, any> {
       executablePath:
         "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
     });
-    // const page = await browser.newPage();
-    // console.log("(puppeteer) Server starting on ", port);
     const server = serverFactory();
     await server.listen(port);
     return { browser, server };
@@ -107,9 +105,6 @@ class Check extends BaseCheck<any, any, any> {
       executablePath:
         "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
     });
-    // const page = await browser.newPage();
-
-    console.log("(puppeteer) Server starting on ", port);
     const server = serverFactory();
     await server.listen(port);
     return { browser, server };
