@@ -19,7 +19,7 @@ import {
 
 type IInput = () => http.Server;
 
-class Suite extends BaseSuite<IInput, any, any, any> {}
+class Suite extends BaseSuite<IInput, any, any, any, any> {}
 
 class Given extends BaseGiven<any, any, any> {
   async teardown({

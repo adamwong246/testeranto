@@ -85,16 +85,17 @@ export class ReduxToolkitTesteranto<
         new (class Suite<
           ISubjectReducerAndSelector,
           IStore extends Store,
-          ISelected
+          ISelected,
+          IThenShape
         > extends BaseSuite<
           IInput,
           ISubjectReducerAndSelector,
           IStore,
-          ISelected
-          > {
-          
+          ISelected,
+          IThenShape
+        > {
           test(t: IThenShape): void {
-              t[0](t[1], t[2], t[3]);
+            t[0](t[1], t[2], t[3]);
           }
         })(s, g, c),
 

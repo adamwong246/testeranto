@@ -18,7 +18,7 @@ type IStore = { page: Page; htmlbundle: string };
 type IAction = any;
 type ISelection = { page: Page };
 
-class Suite extends BaseSuite<IInput, ISubject, IStore, ISelection> {
+class Suite extends BaseSuite<IInput, ISubject, IStore, ISelection, any> {
   async setup([bundlePath, htmlTemplate]: IInput) {
     return {
       page: await (

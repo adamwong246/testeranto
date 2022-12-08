@@ -15,7 +15,7 @@ import {
 
 import { ClassicalComponent } from "./ClassicalComponent";
 
-class Suite extends BaseSuite<React.Component, any, any, any> {}
+class Suite extends BaseSuite<React.Component, any, any, any, any> {}
 
 class Given extends BaseGiven<any, any, any> {
   async givenThat(

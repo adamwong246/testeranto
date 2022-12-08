@@ -16,7 +16,8 @@ class Suite extends BaseSuite<
   () => JSX.Element,
   () => JSX.Element,
   ReactTestRenderer,
-  ReactTestRenderer
+  ReactTestRenderer,
+  any
 > {}
 
 class Given extends BaseGiven<

@@ -8,7 +8,13 @@ export abstract class BaseFeature {
   }
 }
 
-export abstract class BaseSuite<IInput, ISubject extends any, IStore, ISelection> {
+export abstract class BaseSuite<
+  IInput,
+  ISubject extends any,
+  IStore,
+  ISelection,
+  IThenShape
+> {
   name: string;
   givens: BaseGiven<ISubject, IStore, ISelection>[];
   checks: BaseCheck<ISubject, IStore, ISelection>[];
@@ -27,8 +33,8 @@ export abstract class BaseSuite<IInput, ISubject extends any, IStore, ISelection
     return new Promise((res, rej) => res(s as unknown as ISubject));
   }
 
-  test(t) { }
-  
+  test(t: IThenShape) {}
+
   async run(input, testResourceConfiguration?) {
     const subject = await this.setup(input);
 
@@ -176,7 +182,8 @@ abstract class TesterantoBasic<
   GivenExtensions,
   WhenExtensions,
   ThenExtensions,
-  CheckExtensions
+  CheckExtensions,
+  IThenShape
 > {
   constructorator: IStore;
 
@@ -186,7 +193,7 @@ abstract class TesterantoBasic<
       name: string,
       givens: BaseGiven<ISubject, IStore, ISelection>[],
       checks: BaseCheck<ISubject, IStore, ISelection>[]
-    ) => BaseSuite<IInput, ISubject, IStore, ISelection>
+    ) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape>
   >;
 
   givenOverides: Record<
@@ -223,7 +230,7 @@ abstract class TesterantoBasic<
         name: string,
         givens: BaseGiven<ISubject, IStore, ISelection>[],
         checks: BaseCheck<ISubject, IStore, ISelection>[]
-      ) => BaseSuite<IInput, ISubject, IStore, ISelection>
+      ) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape>
     >,
 
     givenOverides: Record<
@@ -303,7 +310,13 @@ abstract class TesterantoBasic<
   }
 }
 
-export class ClassySuite<Klass> extends BaseSuite<Klass, Klass, Klass, Klass> {
+export class ClassySuite<Klass> extends BaseSuite<
+  Klass,
+  Klass,
+  Klass,
+  Klass,
+  any
+> {
   setup(s: Klass): Promise<Klass> {
     return new Promise((res, rej) => res(s));
   }
@@ -403,7 +416,7 @@ export type ITestSpecification<ITestShape> = (
       name: string,
       givens: BaseGiven<any, any, any>[],
       checks: BaseCheck<any, any, any>[]
-    ) => BaseSuite<any, any, any, any>;
+    ) => BaseSuite<any, any, any, any, any>;
   },
   Given: {
     [K in keyof /* @ts-ignore:next-line */
@@ -539,7 +552,7 @@ export abstract class Testeranto<
           ) => Promise<void>
         ) => any;
       }
-    ) => BaseSuite<any, any, any, any>[],
+    ) => BaseSuite<any, any, any, any, IThenShape>[],
 
     input: IInput,
 
@@ -547,7 +560,7 @@ export abstract class Testeranto<
       name: string,
       givens: any[],
       checks: any[]
-    ) => BaseSuite<any, any, any, any>,
+    ) => BaseSuite<any, any, any, any, IThenShape>,
     givenKlasser,
     whenKlasser,
     thenKlasser,
@@ -610,7 +623,8 @@ export abstract class Testeranto<
       GivenExtensions,
       WhenExtensions,
       ThenExtensions,
-      ICheckExtensions
+      ICheckExtensions,
+      IThenShape
     > extends TesterantoBasic<
       IInput,
       ISubject,
@@ -620,7 +634,8 @@ export abstract class Testeranto<
       GivenExtensions,
       WhenExtensions,
       ThenExtensions,
-      ICheckExtensions
+      ICheckExtensions,
+      IThenShape
     > {})(
       input,
       classySuites,

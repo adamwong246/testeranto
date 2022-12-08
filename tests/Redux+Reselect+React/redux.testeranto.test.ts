@@ -3,13 +3,8 @@ import {
   ActionCreatorWithoutPayload,
   Slice,
 } from "@reduxjs/toolkit";
-import { any } from "prop-types";
-import {
-  createStore,
-  Store,
-  AnyAction,
-  PreloadedState
-} from "redux";
+
+import { createStore, Store, AnyAction, PreloadedState } from "redux";
 import {
   BaseCheck,
   BaseGiven,
@@ -21,7 +16,7 @@ import {
   Testeranto,
 } from "../../index";
 
-type IInput = any;  //Slice<IStoreState, { setPassword: (s: IStoreState, b: any) => void; setEmail: (s: IStoreState, b: any) => void; signIn: (s: IStoreState) => void; }, string>.reducer: Reducer<IStoreState, AnyAction>;
+type IInput = any; //Slice<IStoreState, { setPassword: (s: IStoreState, b: any) => void; setEmail: (s: IStoreState, b: any) => void; signIn: (s: IStoreState) => void; }, string>.reducer: Reducer<IStoreState, AnyAction>;
 type IZ<IS> = Store<IS, AnyAction>;
 type IAction = [
   (
@@ -30,7 +25,7 @@ type IAction = [
   ),
   (object | string)?
 ];
-type IAssert = any; //[(expected, actual, message) => void, any, any];
+type IAssert = void; //(expected, actual, message) => void; //[, any, any];
 
 export class ReduxTesteranto<
   IStoreShape,
@@ -41,8 +36,8 @@ export class ReduxTesteranto<
   IStoreShape,
   IStoreShape,
   IStoreShape,
-  IAction,
-  IAssert,
+  IAction, // IWhen
+  IAssert, // IThen
   any,
   Slice
 > {
@@ -55,7 +50,7 @@ export class ReduxTesteranto<
       ITestShape
     >,
     testSpecification,
-    thing: IInput,
+    thing: IInput
   ) {
     super(
       testImplementation,
@@ -66,7 +61,9 @@ export class ReduxTesteranto<
         return new (class Suite<
           IStore extends IZ<IState>,
           IState
-        > extends BaseSuite<IInput, IStore, IState, IState> {})(f, g, z);
+        > extends BaseSuite<IInput, IStore, IState, IState, IAssert> {
+          
+        })(f, g, z);
       },
 
       (f, w, t, z?) => {
