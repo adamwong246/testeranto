@@ -168,7 +168,12 @@ export class ReduxToolkitTesteranto<
   IInputshape<IStoreShape, ISelection>
 > {
   constructor(
-    testImplementation: ITestImplementation<IStoreShape, IStoreShape, IAction>,
+    testImplementation: ITestImplementation<
+      IStoreShape,
+      IStoreShape,
+      IAction,
+      ITestShape
+    >,
     testSpecification,
     thing: IInputshape<IStoreShape, ISelection>
   ) {

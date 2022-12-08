@@ -119,7 +119,12 @@ export class ReduxTesteranto<IStoreShape, ITestShape> extends Testeranto<
   Slice
 > {
   constructor(
-    testImplementation: ITestImplementation<IStoreShape, IStoreShape, IAction>,
+    testImplementation: ITestImplementation<
+      IStoreShape,
+      IStoreShape,
+      IAction,
+      ITestShape
+    >,
     testSpecification,
     thing
   ) {

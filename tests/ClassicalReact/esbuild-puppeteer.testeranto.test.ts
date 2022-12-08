@@ -96,7 +96,12 @@ export class EsbuildPuppeteerTesteranto<ITestShape> extends Testeranto<
   IInput
 > {
   constructor(
-    testImplementation: ITestImplementation<any, ISelection, IAction>,
+    testImplementation: ITestImplementation<
+      any,
+      ISelection,
+      IAction,
+      ITestShape
+    >,
     testSpecification,
     thing: IInput
   ) {

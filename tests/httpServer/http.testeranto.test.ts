@@ -99,7 +99,12 @@ export class HttpTesteranto<IStoreShape, ITestShape> extends Testeranto<
   IInput
 > {
   constructor(
-    testImplementation: ITestImplementation<IStoreShape, IStoreShape, IAction>,
+    testImplementation: ITestImplementation<
+      IStoreShape,
+      IStoreShape,
+      IAction,
+      ITestShape
+    >,
     testSpecification,
     thing
   ) {

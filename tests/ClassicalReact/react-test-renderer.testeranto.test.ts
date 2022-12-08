@@ -81,7 +81,7 @@ export class ReactTestRendererTesteranto<ITestShape> extends Testeranto<
   any
 > {
   constructor(
-    testImplementation: ITestImplementation<any, any, any>,
+    testImplementation: ITestImplementation<any, any, any, ITestShape>,
     testSpecification,
     thing
   ) {

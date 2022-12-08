@@ -131,7 +131,12 @@ export class PuppeteerHttpTesteranto<
   IInput
 > {
   constructor(
-    testImplementation: ITestImplementation<IStoreShape, IStoreShape, IAction>,
+    testImplementation: ITestImplementation<
+      IStoreShape,
+      IStoreShape,
+      IAction,
+      ITestShape
+    >,
     testSpecification,
     thing
   ) {
