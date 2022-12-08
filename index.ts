@@ -8,13 +8,7 @@ export abstract class BaseFeature {
   }
 }
 
-export abstract class BaseSuite<
-  IInput,
-  ISubject extends any,
-  IStore,
-  ISelection,
-  IThenShape
-> {
+export abstract class BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape> {
   name: string;
   givens: BaseGiven<ISubject, IStore, ISelection>[];
   checks: BaseCheck<ISubject, IStore, ISelection>[];
@@ -30,10 +24,12 @@ export abstract class BaseSuite<
   }
 
   setup(s: IInput): Promise<ISubject> {
-    return new Promise((res, rej) => res(s as unknown as ISubject));
+    return new Promise((res) => res(s as unknown as ISubject));
   }
 
-  test(t: IThenShape) {}
+  test(t: IThenShape): unknown {
+    return t;
+  }
 
   async run(input, testResourceConfiguration?) {
     const subject = await this.setup(input);
@@ -688,7 +684,7 @@ const processTestsWithPorts = async (
   tests: ITest[],
   ports: number[]
 ): Promise<ITestResults> => {
-  let testsStack = tests;
+  const testsStack = tests;
   return (
     await Promise.all(
       ports.map(async (port: number) => {

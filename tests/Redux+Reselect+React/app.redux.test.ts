@@ -50,13 +50,12 @@ export class AppReduxTesteranto extends ReduxTesteranto<
             [loginApp.actions.setPassword, password],
         },
         Thens: {
-          TheEmailIs: (email) => (selection) =>
-            assert.equal(selection.email, email),
-          TheEmailIsNot: (email) => (selection) =>
-            assert.notEqual(selection.email, email),
+          TheEmailIs: (email) => (storeState) =>
+            assert.equal(storeState.email, email),
+          TheEmailIsNot: (email) => (storeState) =>
+            assert.notEqual(storeState.email, email),
           ThePasswordIs: (password) => (selection) => assert.equal(1, 2),
-          ThePasswordIsNot: (n, x) => (selection) => assert.equal( 1, 1),
-          
+          ThePasswordIsNot: (n, x) => (selection) => assert.equal(1, 1),
         },
         Checks: {
           AnEmptyState: () => loginApp.getInitialState(),

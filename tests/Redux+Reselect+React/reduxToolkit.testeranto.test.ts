@@ -139,7 +139,7 @@ export class ReduxToolkitTesteranto<
           }
         })(f, w, t, z),
       (s, o) =>
-        new (class When extends BaseWhen<any> {
+        new (class When extends BaseWhen<Store> {
           payload?: any;
 
           constructor(name: string, action: IActionCreate, payload?: any) {
@@ -172,7 +172,7 @@ export class ReduxToolkitTesteranto<
           IStore,
           ISelected
         > {
-          initialValues: any; //PreloadedState<IState>;
+          initialValues: PreloadedState<any>;
 
           constructor(
             feature: string,

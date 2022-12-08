@@ -23,7 +23,7 @@ export const serverFactory = () => {
       // res.writeHead(200, { "Content-Type": "text/text" });
       // res.end();
     } else if (req.method === "POST") {
-      var body = "";
+      let body = "";
       req.on("data", function (chunk) {
         body += chunk;
       });
