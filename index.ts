@@ -3,13 +3,13 @@ import { mapValues } from "lodash";
 
 type IT = {
   name: string;
-  givens: BaseGiven<any, any, any, any>[];
-  checks: BaseCheck<any, any, any, any>[];
+  givens: BaseGiven<unknown, unknown, unknown, unknown>[];
+  checks: BaseCheck<unknown, unknown, unknown, unknown>[];
 };
 
 type ITest = {
   test: IT;
-  runner: (testResurce?) => any;
+  runner: (testResurce?) => unknown;
   testResource: any;
 };
 
@@ -30,28 +30,28 @@ export type ITestSpecification<ITestShape extends ITTestShape> = (
   Suite: {
     [K in keyof ITestShape["suites"]]: (
       name: string,
-      givens: BaseGiven<any, any, any, any>[],
-      checks: BaseCheck<any, any, any, any>[]
-    ) => BaseSuite<any, any, any, any, any>;
+      givens: BaseGiven<unknown, unknown, unknown, unknown>[],
+      checks: BaseCheck<unknown, unknown, unknown, unknown>[]
+    ) => BaseSuite<unknown, unknown, unknown, unknown, unknown>;
   },
   Given: {
     [K in keyof ITestShape["givens"]]: (
       name: string,
       features: BaseFeature[],
-      whens: BaseWhen<any, any, any>[],
-      thens: BaseThen<any, any, any>[],
+      whens: BaseWhen<unknown, unknown, unknown>[],
+      thens: BaseThen<unknown, unknown, unknown>[],
       ...xtras: ITestShape["givens"][K]
-    ) => BaseGiven<any, any, any, any>;
+    ) => BaseGiven<unknown, unknown, unknown, unknown>;
   },
   When: {
     [K in keyof ITestShape["whens"]]: (
       ...xtras: ITestShape["whens"][K]
-    ) => BaseWhen<any, any, any>;
+    ) => BaseWhen<unknown, unknown, unknown>;
   },
   Then: {
     [K in keyof ITestShape["thens"]]: (
       ...xtras: ITestShape["thens"][K]
-    ) => BaseThen<any, any, any>;
+    ) => BaseThen<unknown, unknown, unknown>;
   },
   Check: {
     [K in keyof ITestShape["checks"]]: (
@@ -60,18 +60,18 @@ export type ITestSpecification<ITestShape extends ITTestShape> = (
       features: BaseFeature[],
       callbackA: (
         whens: {
-          [K in keyof ITestShape["whens"]]: (...any) => BaseWhen<any, any, any>
+          [K in keyof ITestShape["whens"]]: (...unknown) => BaseWhen<unknown, unknown, unknown>
         },
         thens: {
-          [K in keyof ITestShape["thens"]]: (...any) => BaseThen<any, any, any>
+          [K in keyof ITestShape["thens"]]: (...unknown) => BaseThen<unknown, unknown, unknown>
         },
 
-      ) => any,
-      // whens: BaseWhen<any, any, any>[],
-      // thens: BaseThen<any, any, any>[],
+      ) => unknown,
+      // whens: BaseWhen<unknown, unknown, unknown>[],
+      // thens: BaseThen<unknown, unknown, unknown>[],
 
       ...xtras: ITestShape["checks"][K]
-    ) => BaseCheck<any, any, any, any>;
+    ) => BaseCheck<unknown, unknown, unknown, unknown>;
   }
 ) => any[];
 
@@ -621,22 +621,24 @@ export abstract class Testeranto<
 
     input: IInput,
 
-    suiteKlasser: (
-      name: string,
-      givens: BaseGiven<ISubject, IStore, ISelection, IThenShape>[],
-      checks: any[]
-    ) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape>,
-    givenKlasser: (n, f, w, t, z?) => BaseGiven<ISubject, IStore, ISelection, IThenShape>,
-    whenKlasser: (s, o) => BaseWhen<IStore, ISelection, IThenShape>,
-    thenKlasser: (s, o) => BaseThen<IStore, ISelection, IThenShape>,
-    checkKlasser: (n, f, cb, w, t) => BaseCheck<ISubject, IStore, ISelection, IThenShape>,
+    suiteKlasser: (n: string, g: BaseGiven<ISubject, IStore, ISelection, IThenShape>[], c: any[]) =>
+      BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape>,
+    givenKlasser: (n, f, w, t, z?) =>
+      BaseGiven<ISubject, IStore, ISelection, IThenShape>,
+    whenKlasser: (s, o) =>
+      BaseWhen<IStore, ISelection, IThenShape>,
+    thenKlasser: (s, o) =>
+      BaseThen<IStore, ISelection, IThenShape>,
+    checkKlasser: (n, f, cb, w, t) =>
+      BaseCheck<ISubject, IStore, ISelection, IThenShape>,
+    
     testResource?: ITestResource
   ) {
     const classySuites = mapValues(
       testImplementation.Suites,
-      () => (somestring, givens, checks) => 
+      () => (somestring, givens, checks) =>
         new suiteKlasser.prototype.constructor(somestring, givens, checks)
-      
+
     );
 
     const classyGivens = mapValues(
