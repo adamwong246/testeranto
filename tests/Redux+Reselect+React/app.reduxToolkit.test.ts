@@ -105,19 +105,20 @@ export class AppReduxToolkitTesteranto extends ReduxToolkitTesteranto<
               ),
             ],
             [
-              // Check.AnEmptyState(
-              //   "imperative style",
-              //   async ({ TheEmailIsSetTo }, { TheEmailIs }) => {
-              //     await TheEmailIsSetTo("foo");
-              //     await TheEmailIs("foo");
-              //     const reduxPayload = await TheEmailIsSetTo("foobar");
-              //     await TheEmailIs("foobar");
-              //     // assert.deepEqual(reduxPayload, {
-              //     //   type: "login app/setEmail",
-              //     //   payload: "foobar",
-              //     // });
-              //   }
-              // ),
+              Check.AnEmptyState(
+                "imperative style",
+                [],
+                async ({ TheEmailIsSetTo }, { TheEmailIs }) => {
+                  await TheEmailIsSetTo("foo");
+                  await TheEmailIs("foo");
+                  const reduxPayload = await TheEmailIsSetTo("foobar");
+                  await TheEmailIs("foobar");
+                  // assert.deepEqual(reduxPayload, {
+                  //   type: "login app/setEmail",
+                  //   payload: "foobar",
+                  // });
+                }
+              ),
             ]
           ),
         ];

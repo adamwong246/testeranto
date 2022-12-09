@@ -32,6 +32,7 @@ export class ReactTesteranto<ITestShape extends ITTestShape> extends Testeranto<
   ) {
     super(
       testImplementation,
+      /* @ts-ignore:next-line */
       testSpecification,
       thing,
 
@@ -81,7 +82,7 @@ export class ReactTesteranto<ITestShape extends ITTestShape> extends Testeranto<
             return component;
           }
         })(s, o),
-      (f, g, c, cb) =>
+      (n, f, cb, w, t) =>
         new (class Check extends BaseCheck<
           () => JSX.Element,
           ReactTestRenderer,
@@ -95,7 +96,7 @@ export class ReactTesteranto<ITestShape extends ITTestShape> extends Testeranto<
             });
             return component;
           }
-        })(f, g, c, cb)
+        })(n, f, cb, w, t)
     );
   }
 }

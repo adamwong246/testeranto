@@ -48,6 +48,7 @@ export class HttpTesteranto<
   ) {
     super(
       testImplementation,
+      /* @ts-ignore:next-line */
       testSpecification,
       thing,
       (s, g, c) =>
@@ -101,7 +102,7 @@ export class HttpTesteranto<
           }
 
           async butThen(store, port: number) {
-            const [path, expectation]: [string, string] = this.callback({});
+            const [path, expectation]: [string, string] = this.thenCB({});
             const bodytext = await (
               await fetch(`http://localhost:${port.toString()}/${path}`)
             ).text();
@@ -109,7 +110,7 @@ export class HttpTesteranto<
             return;
           }
         })(s, o),
-      (f, g, c, cb) =>
+      (n, f, cb, w, t) =>
         new (class Check extends BaseCheck<any, any, any, IThenShape> {
           async teardown(server: http.Server) {
             return new Promise((resolve, reject) => {
@@ -124,7 +125,7 @@ export class HttpTesteranto<
             await server.listen(port);
             return server;
           }
-        })(f, g, c, cb),
+        })(n, f, cb, w, t),
       "port"
     );
   }

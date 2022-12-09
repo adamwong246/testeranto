@@ -18,11 +18,11 @@ import {
   Testeranto,
 } from "../../index";
 
-type IThenShape = any;
-type IWhenShape = any;
-type IInput = any; //Slice<IStoreState, { setPassword: (s: IStoreState, b: any) => void; setEmail: (s: IStoreState, b: any) => void; signIn: (s: IStoreState) => void; }, string>.reducer: Reducer<IStoreState, AnyAction>;
+type IInput = any;
 type IZ<IS> = Store<IS, AnyAction>;
-type IAction = [
+type IThenShape = any;
+
+type IWhenShape = [
   (
     | ActionCreatorWithNonInferrablePayload<string>
     | ActionCreatorWithoutPayload<string>
@@ -30,15 +30,20 @@ type IAction = [
   (object | string)?
 ];
 
+type ISelection<I> = I;
+type IState<I> = I;
+type IStore<I> = I;
+type ISubject<I> = I;
+
 export class ReduxTesteranto<
   IStoreShape,
   ITestShape extends ITTestShape
 > extends Testeranto<
   ITestShape,
-  IStoreShape,
-  IStoreShape,
-  IStoreShape,
-  IStoreShape,
+  IState<IStoreShape>,
+  ISelection<IStoreShape>,
+  IStore<IStoreShape>,
+  ISubject<IStoreShape>,
   IWhenShape,
   IThenShape,
   never,
@@ -46,9 +51,9 @@ export class ReduxTesteranto<
 > {
   constructor(
     testImplementation: ITestImplementation<
-      IStoreShape,
-      IStoreShape,
-      IAction,
+      IState<IStoreShape>,
+      ISelection<IStoreShape>,
+      IWhenShape,
       IThenShape,
       ITestShape
     >,
@@ -57,6 +62,7 @@ export class ReduxTesteranto<
   ) {
     super(
       testImplementation,
+      /* @ts-ignore:next-line */
       testSpecification,
       thing,
 
@@ -79,8 +85,8 @@ export class ReduxTesteranto<
           constructor(
             name: string,
             features: BaseFeature[],
-            whens: BaseWhen<IStore, IState, IAction>[],
-            thens: BaseThen<IState, IStore, IAction>[],
+            whens: BaseWhen<IStore, IState, IWhenShape>[],
+            thens: BaseThen<IState, IStore, IWhenShape>[],
             initialValues: PreloadedState<any>
           ) {
             super(name, features, whens, thens);
@@ -99,7 +105,7 @@ export class ReduxTesteranto<
         return new (class When<IStore> extends BaseWhen<
           IStore,
           IStoreShape,
-          IAction
+          IWhenShape
         > {
           payload?: any;
 
@@ -128,7 +134,8 @@ export class ReduxTesteranto<
         })(s, o);
       },
 
-      (f, g, c, cb, z?) => {
+      (n: string, f: BaseFeature[], cb, w, t, z?) => {
+        console.log("mark4", n, f, cb, w, t, z)
         return new (class Check<IState> extends BaseCheck<
           IZ<IState>,
           IZ<IState>,
@@ -138,20 +145,21 @@ export class ReduxTesteranto<
           initialValues: PreloadedState<any>;
 
           constructor(
-            feature: string,
-            callback: (whens, thens) => any,
+            name: string,
+            features: BaseFeature[],
+            checkCallback: (a, b) => any,
             whens,
             thens,
-            initialValues: PreloadedState<any>
+            initialValues: any,
           ) {
-            super(feature, callback, whens, thens);
+            super(name, features, checkCallback, whens, thens);
             this.initialValues = initialValues;
           }
 
           checkThat(reducer) {
             return createStore<any, any, any, any>(reducer, this.initialValues);
           }
-        })(f, g, c, cb, z);
+        })(n, f, cb, w, t, z);
       }
     );
   }

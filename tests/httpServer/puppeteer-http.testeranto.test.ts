@@ -49,6 +49,7 @@ export class PuppeteerHttpTesteranto<
   ) {
     super(
       testImplementation,
+      /* @ts-ignore:next-line */
       testSpecification,
       thing,
       (s, g, c) =>
@@ -122,7 +123,7 @@ export class PuppeteerHttpTesteranto<
           }
 
           async butThen(store, port: number) {
-            const [path, expectation]: [string, string] = this.callback({});
+            const [path, expectation]: [string, string] = this.thenCB({});
             const bodytext = await (
               await fetch(`http://localhost:${port.toString()}/${path}`)
             ).text();
@@ -130,7 +131,7 @@ export class PuppeteerHttpTesteranto<
             return;
           }
         })(s, o),
-      (f, g, c, cb) =>
+      (n, f, cb, w, t) =>
         new (class Check extends BaseCheck<any, any, ISelection, IThenShape> {
           async teardown({
             browser,
@@ -157,7 +158,7 @@ export class PuppeteerHttpTesteranto<
             await server.listen(port);
             return { browser, server };
           }
-        })(f, g, c, cb),
+        })(n, f, cb, w, t),
       "port"
     );
   }

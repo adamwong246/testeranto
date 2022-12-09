@@ -3,6 +3,8 @@ import { assert } from "chai";
 import { IStoreState, loginApp } from "./app";
 import { ReduxTesteranto } from "./redux.testeranto.test";
 
+import features from "../testerantoFeatures.test"
+
 export class AppReduxTesteranto extends ReduxTesteranto<
   IStoreState,
   {
@@ -71,44 +73,48 @@ export class AppReduxTesteranto extends ReduxTesteranto<
             [
               Given.AnEmptyState(
                 "BDD gherkin style",
-                [],
+                [features.hello],
                 [When.TheEmailIsSetTo("adam@email.com")],
                 [Then.TheEmailIs("adam@email.com")]
               ),
-              // Given.AStateWithEmail(
-              //   "another feature",
-              //   [],
-              //   [When.TheEmailIsSetTo("hello")],
-              //   [Then.TheEmailIsNot("adam@email.com")],
-              //   "bob@mail.com"
-              // ),
-              // Given.AnEmptyState(
-              //   "yet another feature",
-              //   [],
-              //   [When.TheEmailIsSetTo("hello"), When.TheEmailIsSetTo("aloha")],
-              //   [Then.TheEmailIs("aloha")]
-              // ),
-              // Given.AnEmptyState(
-              //   "OMG a feature!",
-              //   [],
-              //   [],
-              //   [Then.TheEmailIs("")]
-              // ),
+              Given.AStateWithEmail(
+                "another feature",
+                [features.hello],
+                [],
+                [
+                  Then.TheEmailIsNot("adam@email.com"),
+                  Then.TheEmailIs("bob@mail.com"),
+                ],
+                "bob@mail.com"
+              ),
+              Given.AnEmptyState(
+                "yet another feature",
+                [features.hello],
+                [When.TheEmailIsSetTo("hello"), When.TheEmailIsSetTo("aloha")],
+                [Then.TheEmailIs("aloha")]
+              ),
+              Given.AnEmptyState(
+                "OMG a feature!",
+                [features.aloha, features.hello],
+                [],
+                [Then.TheEmailIs("")]
+              ),
             ],
             [
-              // Check.AnEmptyState(
-              //   "imperative style",
-              //   async ({ TheEmailIsSetTo }, { TheEmailIs }) => {
-              //     await TheEmailIsSetTo("foo");
-              //     await TheEmailIs("foo");
-              //     const reduxPayload = await TheEmailIsSetTo("foobar");
-              //     await TheEmailIs("foobar");
-              //     // assert.deepEqual(reduxPayload, {
-              //     //   type: "login app/setEmail",
-              //     //   payload: "foobar",
-              //     // });
-              //   }
-              // ),
+              Check.AnEmptyState(
+                "imperative style",
+                [features.aloha],
+                async ({ TheEmailIsSetTo }, { TheEmailIs }) => {
+                  await TheEmailIsSetTo("foo");
+                  await TheEmailIs("foo");
+                  const reduxPayload = await TheEmailIsSetTo("foobar");
+                  await TheEmailIs("foobar");
+                  // assert.deepEqual(reduxPayload, {
+                  //   type: "login app/setEmail",
+                  //   payload: "foobar",
+                  // });
+                }
+              ),
             ]
           ),
         ];

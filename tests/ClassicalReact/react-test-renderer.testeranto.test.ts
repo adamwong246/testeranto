@@ -36,6 +36,7 @@ export class ReactTestRendererTesteranto<
   ) {
     super(
       testImplementation,
+      /* @ts-ignore:next-line */
       testSpecification,
       thing,
       (s, g, c) =>
@@ -93,7 +94,7 @@ export class ReactTestRendererTesteranto<
             super(name, callback);
           }
         })(s, o),
-      (f, g, c, cb) =>
+      (n, f, cb, w, t) =>
         new (class Check extends BaseCheck<any, any, any, any> {
           async checkThat(subject) {
             let component;
@@ -102,7 +103,7 @@ export class ReactTestRendererTesteranto<
             });
             return component;
           }
-        })(f, g, c, cb)
+        })(n, f, cb, w, t)
     );
   }
 }

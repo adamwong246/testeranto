@@ -84,6 +84,7 @@ export class ReduxToolkitTesteranto<
   ) {
     super(
       testImplementation,
+      /* @ts-ignore:next-line */
       testSpecification,
       thing,
 
@@ -191,14 +192,14 @@ export class ReduxToolkitTesteranto<
           initialValues: PreloadedState<any>;
 
           constructor(
-            feature: string,
+            name: string,
+            features: BaseFeature[],
             callback: (whens, thens) => any,
             whens,
             thens,
-            initialValues: any
           ) {
-            super(feature, callback, whens, thens);
-            this.initialValues = initialValues;
+            super(name, features, callback, whens, thens);
+            this.initialValues = z;
           }
 
           /* @ts-ignore:next-line */

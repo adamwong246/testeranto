@@ -46,6 +46,7 @@ export class EsbuildPuppeteerTesteranto<
   ) {
     super(
       testImplementation,
+      /* @ts-ignore:next-line */
       testSpecification,
       thing,
       (s, g, c) => {
@@ -124,7 +125,7 @@ export class EsbuildPuppeteerTesteranto<
             return store;
           }
         })(s, o),
-      (f, g, c, cb) =>
+      (n, f, cb, w, t) =>
         new (class Check extends BaseCheck<ISubjectStore, any, ISelection, IThenShape> {
           async checkThat(
             { page, htmlBundle }: ISubjectStore,
@@ -139,7 +140,7 @@ export class EsbuildPuppeteerTesteranto<
               path: `./dist/teardown-${ndx}-screenshot.jpg`,
             });
           }
-        })(f, g, c, cb)
+        })(n, f, cb, w, t)
     );
   }
 }

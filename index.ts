@@ -53,7 +53,26 @@ export type ITestSpecification<ITestShape extends ITTestShape> = (
       ...xtras: ITestShape["thens"][K]
     ) => BaseThen<any, any, any>;
   },
-  Check: any
+  Check: {
+    [K in keyof ITestShape["checks"]]: (
+
+      name: string,
+      features: BaseFeature[],
+      callbackA: (
+        whens: {
+          [K in keyof ITestShape["whens"]]: (...any) => BaseWhen<any, any, any>
+        },
+        thens: {
+          [K in keyof ITestShape["thens"]]: (...any) => BaseThen<any, any, any>
+        },
+
+      ) => any,
+      // whens: BaseWhen<any, any, any>[],
+      // thens: BaseThen<any, any, any>[],
+
+      ...xtras: ITestShape["checks"][K]
+    ) => BaseCheck<any, any, any, any>;
+  }
 ) => any[];
 
 export type ITestImplementation<
@@ -212,43 +231,45 @@ export abstract class BaseWhen<IStore, ISelection, IThenShape> {
 
 export abstract class BaseThen<ISelection, IStore, IThenShape> {
   name: string;
-  callback: (storeState: ISelection) => IThenShape;
+  thenCB: (storeState: ISelection) => IThenShape;
 
-  constructor(name: string, callback: (val: ISelection) => IThenShape) {
+  constructor(name: string, thenCB: (val: ISelection) => IThenShape) {
     this.name = name;
-    this.callback = callback;
+    this.thenCB = thenCB;
   }
 
   abstract butThen(store: any, testResourceConfiguration?): ISelection;
 
   async test(store: IStore, testResourceConfiguration): Promise<IThenShape> {
     console.log(" Then:", this.name);
-    return this.callback(await this.butThen(store, testResourceConfiguration));
+    return this.thenCB(await this.butThen(store, testResourceConfiguration));
   }
 }
 
 export abstract class BaseCheck<ISubject, IStore, ISelection, IThenShape> {
   name: string;
-  callback: (whens, thens) => any;
+  features: BaseFeature[];
+  checkCB: (whens, thens) => any;
   whens: BaseWhen<IStore, ISelection, IThenShape>[];
   thens: BaseThen<ISelection, IStore, IThenShape>[];
-  // features: BaseFeature[]
 
   constructor(
     name: string,
-    callback: (
+    features: BaseFeature[],
+    checkCB: (
       whens: BaseWhen<IStore, ISelection, IThenShape>[],
       thens: BaseThen<ISelection, IStore, IThenShape>[]
     ) => any,
     whens: BaseWhen<IStore, ISelection, IThenShape>[],
     thens: BaseThen<ISelection, IStore, IThenShape>[]
-    // features: BaseFeature[]
   ) {
+    // console.log("mark2", checkCB)
     this.name = name;
-    this.callback = callback;
+    this.features = features;
+    this.checkCB = checkCB;
     this.whens = whens;
     this.thens = thens;
-    // this.features = features;
+
   }
 
   abstract checkThat(
@@ -267,8 +288,9 @@ export abstract class BaseCheck<ISubject, IStore, ISelection, IThenShape> {
     tester
   ) {
     console.log(`\n Check: ${this.name}`);
+    console.log(this.checkCB)
     const store = await this.checkThat(subject, testResourceConfiguration);
-    await this.callback(
+    await this.checkCB(
       mapValues(this.whens, (when: (p, tc) => any) => {
         return async (payload) => {
           return await when(payload, testResourceConfiguration).test(
@@ -495,19 +517,17 @@ export class ClassyCheck<Klass> extends BaseCheck<Klass, Klass, Klass, any> {
   thing: Klass;
 
   constructor(
-    feature: string,
+    name: string,
+    features: BaseFeature[],
     callback: (whens, thens) => any,
     whens,
     thens,
     thing: Klass
   ) {
-    super(feature, callback, whens, thens);
+    super(name, features, callback, whens, thens);
     this.thing = thing;
   }
 
-  // checkThat() {
-  //   return this.thing;
-  // }
   checkThat(subject: Klass, testResourceConfiguration?: any): Promise<Klass> {
     return new Promise((res) => res(this.thing));
   }
@@ -530,9 +550,9 @@ export abstract class TesterantoInterface<
   abstract whenKlasser: (a, b) => BaseWhen<IStore, ISelection, IThenShape>;
   abstract thenKlasser: (a, b) => BaseThen<ISelection, IStore, IThenShape>;
   abstract checkKlasser: (
+    n,
     f,
-    w,
-    t,
+    cb,
     z?
   ) => BaseCheck<ISubject, IStore, ISelection, IThenShape>;
 }
@@ -586,11 +606,16 @@ export abstract class Testeranto<
       },
       Check: {
         [K in keyof ITestShape["checks"]]: (
-          feature: string,
-          x: (
-            { TheEmailIsSetTo }: { TheEmailIsSetTo: any },
-            { TheEmailIs }: { TheEmailIs: any }
-          ) => Promise<void>
+          name: string,
+          features: BaseFeature[],
+          cbz:
+            (
+              ...any
+              // a: any,
+              // b: any
+              // { TheEmailIsSetTo }: { TheEmailIsSetTo: any },
+              // { TheEmailIs }: { TheEmailIs: any }
+            ) => Promise<void>
         ) => any;
       }
     ) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape>[],
@@ -617,7 +642,7 @@ export abstract class Testeranto<
     const classyGivens = mapValues(
       testImplementation.Givens,
       (z) =>
-        (name, features,  whens, thens, ...xtrasW) =>
+        (name, features, whens, thens, ...xtrasW) =>
           givenKlasser(name, features, whens, thens, z(...xtrasW))
     );
 
@@ -641,12 +666,12 @@ export abstract class Testeranto<
 
     const classyChecks = mapValues(
       testImplementation.Checks,
-      (z) => (somestring, callback) => {
-        return checkKlasser(somestring, callback, classyWhens, classyThens);
+      (z) => (somestring, features, callback) => {
+        return checkKlasser(somestring, features, callback, classyWhens, classyThens);
       }
     );
 
-    const classyTesteranto = new (class<
+    const classyTesteranto = new (class <
       IInput,
       ISubject,
       IStore,
@@ -668,7 +693,7 @@ export abstract class Testeranto<
       ThenExtensions,
       ICheckExtensions,
       IThenShape
-    > {})(
+    > { })(
       input,
       /* @ts-ignore:next-line */
       classySuites,

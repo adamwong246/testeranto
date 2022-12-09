@@ -233,7 +233,11 @@
       "givens": [
         {
           "name": "BDD gherkin style",
-          "features": [],
+          "features": [
+            {
+              "name": "hello"
+            }
+          ],
           "whens": [
             {
               "name": "TheEmailIsSetTo: adam@email.com"
@@ -249,9 +253,90 @@
             "email": "",
             "error": "no_error"
           }
+        },
+        {
+          "name": "another feature",
+          "features": [
+            {
+              "name": "hello"
+            }
+          ],
+          "whens": [],
+          "thens": [
+            {
+              "name": "TheEmailIsNot: adam@email.com"
+            },
+            {
+              "name": "TheEmailIs: bob@mail.com"
+            }
+          ],
+          "initialValues": {
+            "password": "",
+            "email": "bob@mail.com",
+            "error": "no_error"
+          }
+        },
+        {
+          "name": "yet another feature",
+          "features": [
+            {
+              "name": "hello"
+            }
+          ],
+          "whens": [
+            {
+              "name": "TheEmailIsSetTo: hello"
+            },
+            {
+              "name": "TheEmailIsSetTo: aloha"
+            }
+          ],
+          "thens": [
+            {
+              "name": "TheEmailIs: aloha"
+            }
+          ],
+          "initialValues": {
+            "password": "",
+            "email": "",
+            "error": "no_error"
+          }
+        },
+        {
+          "name": "OMG a feature!",
+          "features": [
+            {
+              "name": "aloha"
+            },
+            {
+              "name": "hello"
+            }
+          ],
+          "whens": [],
+          "thens": [
+            {
+              "name": "TheEmailIs: "
+            }
+          ],
+          "initialValues": {
+            "password": "",
+            "email": "",
+            "error": "no_error"
+          }
         }
       ],
-      "checks": []
+      "checks": [
+        {
+          "name": "imperative style",
+          "features": [
+            {
+              "name": "aloha"
+            }
+          ],
+          "whens": {},
+          "thens": {}
+        }
+      ]
     },
     "status": "pass"
   },
@@ -335,7 +420,15 @@
           }
         }
       ],
-      "checks": []
+      "checks": [
+        {
+          "name": "imperative style",
+          "features": [],
+          "whens": {},
+          "thens": {},
+          "initialValues": {}
+        }
+      ]
     },
     "status": "pass"
   },
@@ -584,18 +677,7 @@
           ]
         }
       ],
-      "checks": [
-        {
-          "name": "HTTP imperative style",
-          "whens": {},
-          "thens": {}
-        },
-        {
-          "name": "HTTP imperative style II",
-          "whens": {},
-          "thens": {}
-        }
-      ]
+      "checks": []
     },
     "status": "pass"
   },
@@ -710,18 +792,7 @@
           ]
         }
       ],
-      "checks": [
-        {
-          "name": "puppeteer imperative style",
-          "whens": {},
-          "thens": {}
-        },
-        {
-          "name": "puppeteer imperative style II",
-          "whens": {},
-          "thens": {}
-        }
-      ]
+      "checks": []
     },
     "status": "pass"
   }

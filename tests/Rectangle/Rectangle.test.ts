@@ -187,7 +187,7 @@ export class RectangleTesteranto extends Testeranto<
       (n, f, w, t, z?) => new ClassyGiven<Rectangle>(n, f, w, t, z),
       (s, o) => new ClassyWhen<Rectangle>(s, o),
       (s, o) => new ClassyThen<Rectangle>(s, o),
-      (f, g, c, cb, z?) => new ClassyCheck<Rectangle>(f, g, c, cb, z)
+      (n, f, cb, w, t, z) => new ClassyCheck<Rectangle>(n, f, cb, w, t, z)
     );
   }
 }
