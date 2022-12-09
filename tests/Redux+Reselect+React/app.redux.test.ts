@@ -71,36 +71,44 @@ export class AppReduxTesteranto extends ReduxTesteranto<
             [
               Given.AnEmptyState(
                 "BDD gherkin style",
+                [],
                 [When.TheEmailIsSetTo("adam@email.com")],
                 [Then.TheEmailIs("adam@email.com")]
               ),
-              Given.AStateWithEmail(
-                "another feature",
-                [When.TheEmailIsSetTo("hello")],
-                [Then.TheEmailIsNot("adam@email.com")],
-                "bob@mail.com"
-              ),
-              Given.AnEmptyState(
-                "yet another feature",
-                [When.TheEmailIsSetTo("hello"), When.TheEmailIsSetTo("aloha")],
-                [Then.TheEmailIs("aloha")]
-              ),
-              Given.AnEmptyState("OMG a feature!", [], [Then.TheEmailIs("")]),
+              // Given.AStateWithEmail(
+              //   "another feature",
+              //   [],
+              //   [When.TheEmailIsSetTo("hello")],
+              //   [Then.TheEmailIsNot("adam@email.com")],
+              //   "bob@mail.com"
+              // ),
+              // Given.AnEmptyState(
+              //   "yet another feature",
+              //   [],
+              //   [When.TheEmailIsSetTo("hello"), When.TheEmailIsSetTo("aloha")],
+              //   [Then.TheEmailIs("aloha")]
+              // ),
+              // Given.AnEmptyState(
+              //   "OMG a feature!",
+              //   [],
+              //   [],
+              //   [Then.TheEmailIs("")]
+              // ),
             ],
             [
-              Check.AnEmptyState(
-                "imperative style",
-                async ({ TheEmailIsSetTo }, { TheEmailIs }) => {
-                  await TheEmailIsSetTo("foo");
-                  await TheEmailIs("foo");
-                  const reduxPayload = await TheEmailIsSetTo("foobar");
-                  await TheEmailIs("foobar");
-                  // assert.deepEqual(reduxPayload, {
-                  //   type: "login app/setEmail",
-                  //   payload: "foobar",
-                  // });
-                }
-              ),
+              // Check.AnEmptyState(
+              //   "imperative style",
+              //   async ({ TheEmailIsSetTo }, { TheEmailIs }) => {
+              //     await TheEmailIsSetTo("foo");
+              //     await TheEmailIs("foo");
+              //     const reduxPayload = await TheEmailIsSetTo("foobar");
+              //     await TheEmailIs("foobar");
+              //     // assert.deepEqual(reduxPayload, {
+              //     //   type: "login app/setEmail",
+              //     //   payload: "foobar",
+              //     // });
+              //   }
+              // ),
             ]
           ),
         ];

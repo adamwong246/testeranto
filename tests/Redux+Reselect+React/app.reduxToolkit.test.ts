@@ -78,23 +78,31 @@ export class AppReduxToolkitTesteranto extends ReduxToolkitTesteranto<
           Suite.Default(
             "Testing the ReduxToolkit",
             [
-              Given.AnEmptyState(   
+              Given.AnEmptyState(
                 "BDD gherkin style",
+                [],
                 [When.TheEmailIsSetTo("adam@email.com")],
                 [Then.TheEmailIs("adam@email.com")]
               ),
               Given.AStateWithEmail(
                 "another feature",
+                [],
                 [When.TheEmailIsSetTo("hello")],
                 [Then.TheEmailIsNot("adam@email.com")],
                 "bob@mail.com"
               ),
               Given.AnEmptyState(
-                "yet another feature",  
+                "yet another feature",
+                [],
                 [When.TheEmailIsSetTo("hello"), When.TheEmailIsSetTo("aloha")],
                 [Then.TheEmailIs("aloha")]
               ),
-              Given.AnEmptyState("OMG a feature!", [], [Then.TheEmailIs("")]),
+              Given.AnEmptyState(
+                "OMG a feature!",
+                [],
+                [],
+                [Then.TheEmailIs("")]
+              ),
             ],
             [
               // Check.AnEmptyState(

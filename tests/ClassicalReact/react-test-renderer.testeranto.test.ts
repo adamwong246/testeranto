@@ -46,7 +46,7 @@ export class ReactTestRendererTesteranto<
           any,
           any
         > {})(s, g, c),
-      (f, w, t) =>
+      (n, f, w, t) =>
         new (class Given extends BaseGiven<any, any, any, any> {
           async givenThat(
             subject: React.ReactElement
@@ -61,7 +61,7 @@ export class ReactTestRendererTesteranto<
             });
             return component;
           }
-        })(f, w, t),
+        })(n, f, w, t),
       (s, o) =>
         new (class When<
           IStore extends renderer.ReactTestRenderer

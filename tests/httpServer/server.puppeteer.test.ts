@@ -1,29 +1,29 @@
 import { assert } from "chai";
-
+import features from "../testerantoFeatures.test";
 import { PuppeteerHttpTesteranto } from "./puppeteer-http.testeranto.test";
 import { serverFactory } from "./server";
 
-export class ServerHttpPuppeteerTesteranto extends PuppeteerHttpTesteranto<
-  {
-    suites: {
-      Default: string;
-    };
-    givens: {
-      AnEmptyState: [];
-    };
-    whens: {
-      PostToStatus: [string];
-      PostToAdd: [number];
-    };
-    thens: {
-      TheStatusIs: [string];
-      TheNumberIs: [number];
-    };
-    checks: {
-      AnEmptyState;
-    };
-  }
-> {
+const myFeature = features.hello;
+
+export class ServerHttpPuppeteerTesteranto extends PuppeteerHttpTesteranto<{
+  suites: {
+    Default: string;
+  };
+  givens: {
+    AnEmptyState: [];
+  };
+  whens: {
+    PostToStatus: [string];
+    PostToAdd: [number];
+  };
+  thens: {
+    TheStatusIs: [string];
+    TheNumberIs: [number];
+  };
+  checks: {
+    AnEmptyState;
+  };
+}> {
   constructor() {
     super(
       {
@@ -32,7 +32,7 @@ export class ServerHttpPuppeteerTesteranto extends PuppeteerHttpTesteranto<
         },
         Givens: {
           AnEmptyState: () => {
-            return {  }
+            return {};
           },
         },
         Whens: {
@@ -60,26 +60,31 @@ export class ServerHttpPuppeteerTesteranto extends PuppeteerHttpTesteranto<
               Given.AnEmptyState(
                 "a boring Puppeteer feature",
                 [],
+                [],
                 [Then.TheStatusIs("some great status")]
               ),
               Given.AnEmptyState(
                 "a nother Puppeteer feature",
+                [],
                 [When.PostToStatus("hello")],
                 [Then.TheStatusIs("hello")]
               ),
               Given.AnEmptyState(
                 "yet another Puppeteer feature",
+                [myFeature],
                 [When.PostToStatus("hello"), When.PostToStatus("aloha")],
                 [Then.TheStatusIs("aloha")]
               ),
-              Given.AnEmptyState("a feature", [], [Then.TheNumberIs(0)]),
+              Given.AnEmptyState("a feature", [], [], [Then.TheNumberIs(0)]),
               Given.AnEmptyState(
                 "still further Puppeteer features?!",
+                [myFeature],
                 [When.PostToAdd(1), When.PostToAdd(2)],
                 [Then.TheNumberIs(3)]
               ),
               Given.AnEmptyState(
                 "another Puppeteer feature",
+                [myFeature],
                 [
                   When.PostToStatus("aloha"),
                   When.PostToAdd(4),
@@ -92,6 +97,7 @@ export class ServerHttpPuppeteerTesteranto extends PuppeteerHttpTesteranto<
             [
               Check.AnEmptyState(
                 "puppeteer imperative style",
+
                 async ({ PostToAdd }, { TheNumberIs }) => {
                   await PostToAdd(2);
                   await PostToAdd(3);

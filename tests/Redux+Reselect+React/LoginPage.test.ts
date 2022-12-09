@@ -106,12 +106,14 @@ export class AppReactTesteranto extends ReactTesteranto<{
             [
               Given.AnEmptyState(
                 `Set the email and check the email`,
+                [],
                 [When.TheEmailIsSetTo("adam@email.com")],
                 [Then.TheEmailIs("adam@email.com")]
               ),
 
               Given.AnEmptyState(
                 `Set the email by initial state, then set the email normally, and then check some other stuff`,
+                [],
                 [
                   When.TheEmailIsSetTo("adam@email.com"),
                   When.ThePasswordIsSetTo("secret"),
@@ -127,12 +129,14 @@ export class AppReactTesteranto extends ReactTesteranto<{
 
               Given.AnEmptyState(
                 "Don't show an email error just because the email does not validate",
+                [],
                 [When.TheEmailIsSetTo("adam")],
                 [Then.ThereIsNotAnEmailError()]
               ),
 
               Given.AnEmptyState(
                 "Do show an email error after submitting",
+                [],
                 [When.TheEmailIsSetTo("adam"), When.TheLoginIsSubmitted()],
                 [Then.ThereIsAnEmailError()]
               ),

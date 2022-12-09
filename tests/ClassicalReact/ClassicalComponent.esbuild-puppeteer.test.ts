@@ -4,6 +4,7 @@ import { assert } from "chai";
 
 import { EsbuildPuppeteerTesteranto } from "./esbuild-puppeteer.testeranto.test";
 
+import features from "../testerantoFeatures.test"; 
 export class ClassicalComponentEsbuildPuppeteerTesteranto extends EsbuildPuppeteerTesteranto<{
   suites: {
     Default: string;
@@ -71,16 +72,19 @@ export class ClassicalComponentEsbuildPuppeteerTesteranto extends EsbuildPuppete
               Given.AnEmptyState(
                 "default",
                 [],
-                [Then.ThePropsIs({  }), Then.TheStatusIs({ count: 0 })]
+                [],
+                [Then.ThePropsIs({}), Then.TheStatusIs({ count: 0 })]
               ),
               Given.AnEmptyState(
                 "default",
+                [],
                 [When.IClickTheButton()],
-                [Then.ThePropsIs({  }), Then.TheStatusIs({ count: 1 })]
+                [Then.ThePropsIs({}), Then.TheStatusIs({ count: 1 })]
               ),
 
               Given.AnEmptyState(
                 "default",
+                [features.hello],
                 [
                   When.IClickTheButton(),
                   When.IClickTheButton(),
@@ -91,6 +95,7 @@ export class ClassicalComponentEsbuildPuppeteerTesteranto extends EsbuildPuppete
 
               Given.AnEmptyState(
                 "default",
+                [features.hello],
                 [
                   When.IClickTheButton(),
                   When.IClickTheButton(),

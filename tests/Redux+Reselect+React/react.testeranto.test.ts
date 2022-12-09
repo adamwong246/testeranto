@@ -44,7 +44,7 @@ export class ReactTesteranto<ITestShape extends ITTestShape> extends Testeranto<
           any
         > {})(s, g, c),
 
-      (f, w, t) =>
+      (f, fts, w, t) =>
         new (class Given extends BaseGiven<
           () => JSX.Element,
           ReactTestRenderer,
@@ -58,7 +58,7 @@ export class ReactTesteranto<ITestShape extends ITTestShape> extends Testeranto<
             });
             return component;
           }
-        })(f, w, t),
+        })(f, fts, w, t),
       (s, o) =>
         new (class When extends BaseWhen<
           ReactTestRenderer,

@@ -59,7 +59,7 @@ export class PuppeteerHttpTesteranto<
           ISelection,
           IThenShape
         > {})(s, g, c),
-      (f, w, t) =>
+      (n, f, w, t) =>
         new (class Given extends BaseGiven<
           () => http.Server,
           TB,
@@ -92,7 +92,7 @@ export class PuppeteerHttpTesteranto<
               });
             });
           }
-        })(f, w, t),
+        })(n, f, w, t),
       (s, o) =>
         new (class When<IStore> extends BaseWhen<IStore, any, any> {
           payload?: any;

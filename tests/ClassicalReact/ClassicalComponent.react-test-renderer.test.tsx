@@ -74,6 +74,7 @@ export class ClassicalComponentReactTestRendererTesteranto extends ReactTestRend
             "a classical react component, bundled with esbuild and tested with puppeteer",
             [
               Given.AnEmptyState("idk",
+                [],
                 [
                   When.IClickTheButton()
                 ],

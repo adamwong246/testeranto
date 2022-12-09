@@ -7,6 +7,7 @@ import {
 import { createStore, Store, AnyAction, PreloadedState } from "redux";
 import {
   BaseCheck,
+  BaseFeature,
   BaseGiven,
   BaseSuite,
   BaseThen,
@@ -70,24 +71,19 @@ export class ReduxTesteranto<
         );
       },
 
-      (f, w, t, z?) => {
+      (n, f, w, t, z?) => {
         return new (class Given<
           IStore extends IZ<IState>,
           IState
         > extends BaseGiven<IStore, IStore, IState, IThenShape> {
           constructor(
             name: string,
+            features: BaseFeature[],
             whens: BaseWhen<IStore, IState, IAction>[],
             thens: BaseThen<IState, IStore, IAction>[],
             initialValues: PreloadedState<any>
-            // features: BaseFeature[]
           ) {
-            super(
-              name,
-              whens,
-              thens
-              // features
-            );
+            super(name, features, whens, thens);
             this.initialValues = initialValues;
           }
 
@@ -96,7 +92,7 @@ export class ReduxTesteranto<
           givenThat(subject) {
             return createStore<any, any, any, any>(subject, this.initialValues);
           }
-        })(f, w, t, z);
+        })(n, f, w, t, z);
       },
 
       (s, o) => {

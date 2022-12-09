@@ -105,7 +105,7 @@ export class ReduxToolkitTesteranto<
           }
         })(s, g, c),
 
-      (f, w, t, z) =>
+      (n, f, w, t, z) =>
         new (class Given<IStore extends Store, ISelection> extends BaseGiven<
           ISubjectReducerAndSelector,
           IStore,
@@ -116,17 +116,12 @@ export class ReduxToolkitTesteranto<
 
           constructor(
             name: string,
+            features: BaseFeature[],
             whens: BaseWhen<IStore, ISelection, IThenShape<unknown>>[],
             thens: BaseThen<ISelection, IStore, IThenShape<unknown>>[],
-            // features: BaseFeature[],
             initialValues: any
           ) {
-            super(
-              name,
-              whens,
-              thens
-              // features
-            );
+            super(name, features, whens, thens);
             this.initialValues = initialValues;
           }
 
@@ -144,7 +139,7 @@ export class ReduxToolkitTesteranto<
               store,
             };
           }
-        })(f, w, t, z),
+        })(n, f, w, t, z),
       (s, o) =>
         new (class When extends BaseWhen<
           Store,

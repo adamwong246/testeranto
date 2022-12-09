@@ -13,6 +13,8 @@ import LoginPage from "../Redux+Reselect+React/LoginPage";
 
 import Rectangle from "./Rectangle";
 
+import features from "../testerantoFeatures.test";
+
 export class RectangleTesteranto extends Testeranto<
   {
     suites: {
@@ -113,12 +115,14 @@ export class RectangleTesteranto extends Testeranto<
             [
               Given.Default(
                 "test 1",
+                [features.hello],
                 [When.setWidth(4), When.setHeight(9)],
                 [Then.getWidth(4), Then.getHeight(9)]
               ),
 
               Given.WidthOfOneAndHeightOfOne(
                 "test 2",
+                [],
                 [When.setWidth(4), When.setHeight(5)],
                 [
                   Then.getWidth(4),
@@ -129,11 +133,13 @@ export class RectangleTesteranto extends Testeranto<
               ),
               Given.WidthOfOneAndHeightOfOne(
                 "test 3",
+                [],
                 [When.setHeight(4), When.setWidth(3)],
                 [Then.area(12)]
               ),
               Given.WidthOfOneAndHeightOfOne(
                 "test 4",
+                [],
                 [
                   When.setHeight(3),
                   When.setWidth(4),
@@ -144,6 +150,7 @@ export class RectangleTesteranto extends Testeranto<
               ),
               Given.WidthOfOneAndHeightOfOne(
                 "test 5",
+                [],
                 [When.setHeight(3), When.setWidth(4)],
                 [
                   Then.getHeight(3),
@@ -177,7 +184,7 @@ export class RectangleTesteranto extends Testeranto<
       LoginPage,
 
       (s, g, c) => new ClassySuite<Rectangle>(s, g, c),
-      (f, w, t, z?) => new ClassyGiven<Rectangle>(f, w, t, z),
+      (n, f, w, t, z?) => new ClassyGiven<Rectangle>(n, f, w, t, z),
       (s, o) => new ClassyWhen<Rectangle>(s, o),
       (s, o) => new ClassyThen<Rectangle>(s, o),
       (f, g, c, cb, z?) => new ClassyCheck<Rectangle>(f, g, c, cb, z)
