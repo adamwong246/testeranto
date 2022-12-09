@@ -136,7 +136,8 @@ export class ReduxTesteranto<
         return new (class Check<IState> extends BaseCheck<
           IZ<IState>,
           IZ<IState>,
-          IState
+          IState,
+          IThenShape
         > {
           initialValues: PreloadedState<any>;
 

@@ -12,6 +12,8 @@ import {
   Testeranto,
 } from "../../index";
 
+type IThenShape = any;
+
 export class ReactTesteranto<ITestShape extends ITTestShape> extends Testeranto<
   ITestShape,
   ReactTestRenderer,
@@ -83,7 +85,8 @@ export class ReactTesteranto<ITestShape extends ITTestShape> extends Testeranto<
         new (class Check extends BaseCheck<
           () => JSX.Element,
           ReactTestRenderer,
-          ReactTestRenderer
+          ReactTestRenderer,
+          IThenShape
         > {
           checkThat(subject: () => JSX.Element) {
             let component;

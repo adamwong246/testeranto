@@ -190,7 +190,8 @@ export class ReduxToolkitTesteranto<
         new (class Check<IStore extends Store, ISelected> extends BaseCheck<
           ISubjectReducerAndSelector,
           IStore,
-          ISelected
+          ISelected,
+          IThenShape<unknown>
         > {
           initialValues: PreloadedState<any>;
 

@@ -131,7 +131,7 @@ export class PuppeteerHttpTesteranto<
           }
         })(s, o),
       (f, g, c, cb) =>
-        new (class Check extends BaseCheck<any, any, ISelection> {
+        new (class Check extends BaseCheck<any, any, ISelection, IThenShape> {
           async teardown({
             browser,
             server,

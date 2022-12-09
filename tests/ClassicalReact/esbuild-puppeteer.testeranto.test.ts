@@ -125,7 +125,7 @@ export class EsbuildPuppeteerTesteranto<
           }
         })(s, o),
       (f, g, c, cb) =>
-        new (class Check extends BaseCheck<ISubjectStore, any, ISelection> {
+        new (class Check extends BaseCheck<ISubjectStore, any, ISelection, IThenShape> {
           async checkThat(
             { page, htmlBundle }: ISubjectStore,
             testResourceConfiguration?: any

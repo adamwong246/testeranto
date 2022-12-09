@@ -110,7 +110,7 @@ export class HttpTesteranto<
           }
         })(s, o),
       (f, g, c, cb) =>
-        new (class Check extends BaseCheck<any, any, any> {
+        new (class Check extends BaseCheck<any, any, any, IThenShape> {
           async teardown(server: http.Server) {
             return new Promise((resolve, reject) => {
               server.close(() => {
