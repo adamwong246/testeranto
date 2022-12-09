@@ -19,13 +19,17 @@ import {
   Testeranto,
 } from "../../index";
 
-type ITestResource = never;
-
-export type ISubjectReducerAndSelector = {
+type ISubjectReducerAndSelector = {
   reducer: Reducer<any, AnyAction>;
   selector: Selector<any, any>;
 };
+type ISubjectReducerAndSelectorAnStore<ST> = {
+  reducer: Reducer<ST, AnyAction>;
+  selector: Selector<ST, any>;
+  store: Store<ST, any>;
+};
 
+type ITestResource = never;
 type IWhenShape = [
   (
     | ActionCreatorWithNonInferrablePayload<string>
@@ -33,27 +37,19 @@ type IWhenShape = [
   ),
   (object | string)?
 ];
-
 type IThenShape<IX> = [
   (expected: IX, actual: IX, message?: string) => void,
   IX,
   IX,
   string?
 ];
-
-export type ISubjectReducerAndSelectorAnStore<ST> = {
-  reducer: Reducer<ST, AnyAction>;
-  selector: Selector<ST, any>;
-  store: Store<ST, any>;
-};
-
-type IInput = { reducer: Reducer };
-
 type IInputshape<IStore, ISelect> = {
   reducer: Reducer;
   selector: (state: IStore) => ISelect;
 };
-
+type IState<IX> = IX;
+type IStore<IX> = IX;
+type ISubject<IX> = IX;
 
 export type IActionCreate =
   | ActionCreatorWithoutPayload<string>
@@ -65,10 +61,10 @@ export class ReduxToolkitTesteranto<
   ITestShape extends ITTestShape
 > extends Testeranto<
   ITestShape,
-  IStoreShape,
+  IState<IStoreShape>,
   ISelection,
-  IStoreShape,
-  IStoreShape,
+  IStore<IStoreShape>,
+  ISubject<IStoreShape>,
   IWhenShape,
   IThenShape<unknown>,
   ITestResource,
@@ -97,7 +93,7 @@ export class ReduxToolkitTesteranto<
         ISelected,
         IThenShape
       > extends BaseSuite<
-        IInput,
+        IInputshape<IStoreShape, ISelection>,
         ISubjectReducerAndSelector,
         IStore,
         ISelected,
@@ -109,114 +105,114 @@ export class ReduxToolkitTesteranto<
       },
 
       class Given<IStore extends Store, ISelection> extends BaseGiven<
-          ISubjectReducerAndSelector,
-          IStore,
-          ISelection,
-          IThenShape<unknown>
-        > {
-          initialValues: any;
+        ISubjectReducerAndSelector,
+        IStore,
+        ISelection,
+        IThenShape<unknown>
+      > {
+        initialValues: any;
 
-          constructor(
-            name: string,
-            features: BaseFeature[],
-            whens: BaseWhen<IStore, ISelection, IThenShape<unknown>>[],
-            thens: BaseThen<ISelection, IStore, IThenShape<unknown>>[],
-            initialValues: any
-          ) {
-            super(name, features, whens, thens);
-            this.initialValues = initialValues;
-          }
+        constructor(
+          name: string,
+          features: BaseFeature[],
+          whens: BaseWhen<IStore, ISelection, IThenShape<unknown>>[],
+          thens: BaseThen<ISelection, IStore, IThenShape<unknown>>[],
+          initialValues: any
+        ) {
+          super(name, features, whens, thens);
+          this.initialValues = initialValues;
+        }
 
-          /* @ts-ignore:next-line */
-          givenThat(
-            subject: ISubjectReducerAndSelector
-          ): ISubjectReducerAndSelectorAnStore<IStore> {
-            const store = createStore<Reducer<any, AnyAction>, any, any, any>(
-              subject.reducer,
-              this.initialValues
-            );
+        /* @ts-ignore:next-line */
+        givenThat(
+          subject: ISubjectReducerAndSelector
+        ): ISubjectReducerAndSelectorAnStore<IStore> {
+          const store = createStore<Reducer<any, AnyAction>, any, any, any>(
+            subject.reducer,
+            this.initialValues
+          );
 
-            return {
-              ...subject,
-              store,
-            };
-          }
+          return {
+            ...subject,
+            store,
+          };
+        }
       },
-      
+
       class When extends BaseWhen<
-          Store,
-          ISelection,
-          IThenShape<unknown>
-        > {
-          payload?: any;
+        Store,
+        ISelection,
+        IThenShape<unknown>
+      > {
+        payload?: any;
 
-          constructor(name: string, action: IActionCreate, payload?: any) {
-            const a = action(payload);
-            const actionCreator = a[0];
-            const expectation = a[1];
-            super(name, (store) => actionCreator(expectation));
-            this.payload = payload;
-          }
+        constructor(name: string, action: IActionCreate, payload?: any) {
+          const a = action(payload);
+          const actionCreator = a[0];
+          const expectation = a[1];
+          super(name, (store) => actionCreator(expectation));
+          this.payload = payload;
+        }
 
-          andWhen(subject, actioner) {
-            return subject.store.dispatch(actioner());
-          }
-        },
+        andWhen(subject, actioner) {
+          return subject.store.dispatch(actioner());
+        }
+      },
 
       class Then<ISelection> extends BaseThen<
-          ISelection,
-          Store,
-          IThenShape<unknown>
-        > {
-          constructor(
-            name: string,
-            callback: (val: ISelection) => IThenShape<unknown>
-          ) {
-            super(name, callback);
-          }
+        ISelection,
+        Store,
+        IThenShape<unknown>
+      > {
+        constructor(
+          name: string,
+          callback: (val: ISelection) => IThenShape<unknown>
+        ) {
+          super(name, callback);
+        }
 
-          butThen(
-            subject: ISubjectReducerAndSelectorAnStore<IStoreShape>
-          ): ISelection {
-            return subject.selector(subject.store.getState());
-          }
-        },
+        butThen(
+          subject: ISubjectReducerAndSelectorAnStore<IStoreShape>
+        ): ISelection {
+          return subject.selector(subject.store.getState());
+        }
+      },
 
       class Check<IStore extends Store, ISelected> extends BaseCheck<
-          ISubjectReducerAndSelector,
-          IStore,
-          ISelected,
-          IThenShape<unknown>
-        > {
-          initialValues: PreloadedState<any>;
+        ISubjectReducerAndSelector,
+        IStore,
+        ISelected,
+        IThenShape<unknown>
+      > {
+        initialValues: PreloadedState<any>;
 
-          constructor(
-            name: string,
-            features: BaseFeature[],
-            callback: (whens, thens) => any,
-            whens,
-            thens,
-            z,
-          ) {
-            super(name, features, callback, whens, thens);
-            this.initialValues = z;
-          }
-
-          /* @ts-ignore:next-line */
-          checkThat(
-            subject: ISubjectReducerAndSelector
-          ): ISubjectReducerAndSelectorAnStore<IStore> {
-            const store = createStore<Reducer<any, AnyAction>, any, any, any>(
-              subject.reducer,
-              this.initialValues
-            );
-
-            return {
-              ...subject,
-              store,
-            };
-          }
+        constructor(
+          name: string,
+          features: BaseFeature[],
+          callback: (whens, thens) => any,
+          whens,
+          thens,
+          z,
+        ) {
+          super(name, features, callback, whens, thens);
+          this.initialValues = z;
         }
+
+        /* @ts-ignore:next-line */
+        checkThat(
+          subject: ISubjectReducerAndSelector
+        ): ISubjectReducerAndSelectorAnStore<IStore> {
+          const store = createStore<Reducer<any, AnyAction>, any, any, any>(
+            subject.reducer,
+            this.initialValues
+          );
+
+          return {
+            ...subject,
+            store,
+          };
+        }
+      }
     );
   }
 }

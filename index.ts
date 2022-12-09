@@ -621,7 +621,11 @@ export abstract class Testeranto<
 
     input: IInput,
 
-    suiteKlasser: (n: string, g: BaseGiven<ISubject, IStore, ISelection, IThenShape>[], c: any[]) =>
+    suiteKlasser: (
+      name: string,
+      givens: BaseGiven<ISubject, IStore, ISelection, IThenShape>[],
+      checks: BaseCheck<ISubject, IStore, ISelection, IThenShape>[]
+    ) =>
       BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape>,
     givenKlasser: (n, f, w, t, z?) =>
       BaseGiven<ISubject, IStore, ISelection, IThenShape>,
@@ -631,7 +635,7 @@ export abstract class Testeranto<
       BaseThen<IStore, ISelection, IThenShape>,
     checkKlasser: (n, f, cb, w, t) =>
       BaseCheck<ISubject, IStore, ISelection, IThenShape>,
-    
+
     testResource?: ITestResource
   ) {
     const classySuites = mapValues(
