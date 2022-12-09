@@ -425,8 +425,7 @@
           "name": "imperative style",
           "features": [],
           "whens": {},
-          "thens": {},
-          "initialValues": {}
+          "thens": {}
         }
       ]
     },

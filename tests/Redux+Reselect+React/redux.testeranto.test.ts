@@ -1,6 +1,7 @@
 import {
   ActionCreatorWithNonInferrablePayload,
   ActionCreatorWithoutPayload,
+  Reducer,
   Slice,
 } from "@reduxjs/toolkit";
 
@@ -17,10 +18,9 @@ import {
   ITTestShape,
   Testeranto,
 } from "../../index";
+import { IStoreState } from "./app";
 
-type IInput = any;
-type IZ<IS> = Store<IS, AnyAction>;
-type IThenShape = any;
+type ITestResource = never;
 
 type IWhenShape = [
   (
@@ -29,6 +29,11 @@ type IWhenShape = [
   ),
   (object | string)?
 ];
+type IThenShape = any;
+
+type IZ<IS> = Store<IS, AnyAction>;
+
+type IInput = Reducer<IStoreState, AnyAction>;
 
 type ISelection<I> = I;
 type IState<I> = I;
@@ -46,8 +51,8 @@ export class ReduxTesteranto<
   ISubject<IStoreShape>,
   IWhenShape,
   IThenShape,
-  never,
-  Slice
+  ITestResource,
+  IInput
 > {
   constructor(
     testImplementation: ITestImplementation<
@@ -66,101 +71,87 @@ export class ReduxTesteranto<
       testSpecification,
       thing,
 
-      (f, g, z?) => {
-        return new (class Suite<
-          IStore extends IStoreShape,
-          IState
-        > extends BaseSuite<IInput, IStore, IState, IState, IThenShape> {})(
-          f,
-          g,
-          z
-        );
+      (class Suite<IStore, IState> extends BaseSuite<IInput, IStore, IState, IState, IThenShape> { }),
+
+      class Given<
+        IStore,
+        IState
+      > extends BaseGiven<IStore, IStore, IState, IThenShape> {
+        constructor(
+          name: string,
+          features: BaseFeature[],
+          whens: BaseWhen<IStore, IState, IWhenShape>[],
+          thens: BaseThen<IState, IStore, IWhenShape>[],
+          initialValues: PreloadedState<any>
+        ) {
+          super(name, features, whens, thens);
+          this.initialValues = initialValues;
+        }
+
+        initialValues: PreloadedState<any>;
+
+        givenThat(subject) {
+          return createStore<any, any, any, any>(subject, this.initialValues);
+        }
+
       },
 
-      (n, f, w, t, z?) => {
-        return new (class Given<
-          IStore extends IZ<IState>,
-          IState
-        > extends BaseGiven<IStore, IStore, IState, IThenShape> {
-          constructor(
-            name: string,
-            features: BaseFeature[],
-            whens: BaseWhen<IStore, IState, IWhenShape>[],
-            thens: BaseThen<IState, IStore, IWhenShape>[],
-            initialValues: PreloadedState<any>
-          ) {
-            super(name, features, whens, thens);
-            this.initialValues = initialValues;
-          }
+      class When<IStore> extends BaseWhen<
+        IStore,
+        IStoreShape,
+        IWhenShape
+      > {
+        payload?: any;
 
-          initialValues: PreloadedState<any>;
+        constructor(name: string, actioner: (...any) => any, payload?: any) {
+          super(name, (store) => {
+            const a = actioner();
+            return a[0](a[1]);
+          });
+          this.payload = payload;
+        }
 
-          givenThat(subject) {
-            return createStore<any, any, any, any>(subject, this.initialValues);
-          }
-        })(n, f, w, t, z);
+        andWhen(store, actioner) {
+          return store.dispatch(actioner(store));
+        }
+
       },
 
-      (s, o) => {
-        return new (class When<IStore> extends BaseWhen<
-          IStore,
-          IStoreShape,
-          IWhenShape
-        > {
-          payload?: any;
 
-          constructor(name: string, actioner: (...any) => any, payload?: any) {
-            super(name, (store) => {
-              const a = actioner();
-              return a[0](a[1]);
-            });
-            this.payload = payload;
-          }
-
-          andWhen(store, actioner) {
-            return store.dispatch(actioner(store));
-          }
-        })(s, o);
+      class Then<
+        IStore extends IZ<IState>,
+        IState
+      > extends BaseThen<IState, IStore, IThenShape> {
+        butThen(store: IStore): IState {
+          return store.getState();
+        }
       },
 
-      (s, o) => {
-        return new (class Then<
-          IStore extends IZ<IState>,
-          IState
-        > extends BaseThen<IState, IStore, IThenShape> {
-          butThen(store: IStore): IState {
-            return store.getState();
-          }
-        })(s, o);
-      },
+      class Check<IState> extends BaseCheck<
+        IZ<IState>,
+        IZ<IState>,
+        IState,
+        IThenShape
+      > {
+        initialValues: PreloadedState<any>;
 
-      (n: string, f: BaseFeature[], cb, w, t, z?) => {
-        console.log("mark4", n, f, cb, w, t, z)
-        return new (class Check<IState> extends BaseCheck<
-          IZ<IState>,
-          IZ<IState>,
-          IState,
-          IThenShape
-        > {
-          initialValues: PreloadedState<any>;
+        constructor(
+          name: string,
+          features: BaseFeature[],
+          checkCallback: (a, b) => any,
+          whens,
+          thens,
+          initialValues: any,
+        ) {
+          super(name, features, checkCallback, whens, thens);
+          this.initialValues = initialValues;
+        }
 
-          constructor(
-            name: string,
-            features: BaseFeature[],
-            checkCallback: (a, b) => any,
-            whens,
-            thens,
-            initialValues: any,
-          ) {
-            super(name, features, checkCallback, whens, thens);
-            this.initialValues = initialValues;
-          }
-
-          checkThat(reducer) {
-            return createStore<any, any, any, any>(reducer, this.initialValues);
-          }
-        })(n, f, cb, w, t, z);
+        checkThat(reducer) {
+          return createStore<any, any, any, any>(reducer, this.initialValues);
+        }
       }
+
     );
   }
 }

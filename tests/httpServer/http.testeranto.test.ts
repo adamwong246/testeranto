@@ -50,15 +50,11 @@ export class HttpTesteranto<
       testImplementation,
       /* @ts-ignore:next-line */
       testSpecification,
+      
       thing,
-      (s, g, c) =>
-        new (class Suite extends BaseSuite<IInput, any, any, any, any> {})(
-          s,
-          g,
-          c
-        ),
-      (n, f, w, t) =>
-        new (class Given extends BaseGiven<any, any, any, any> {
+      class Suite extends BaseSuite<IInput, any, any, any, any> { },
+
+      class Given extends BaseGiven<any, any, any, any> {
           async teardown(server: http.Server, ndx) {
             return new Promise<void>((resolve) => {
               server.close(() => {
@@ -72,60 +68,61 @@ export class HttpTesteranto<
             await server.listen(port);
             return server;
           }
-        })(n, f, w, t),
-      (s, o) =>
-        new (class When<IStore> extends BaseWhen<IStore, any, any> {
-          payload?: any;
+      },
+      
+      class When<IStore> extends BaseWhen<IStore, any, any> {
+        payload?: any;
 
-          constructor(name: string, actioner: (...any) => any, payload?: any) {
-            super(name, (store) => actioner(store));
-            this.payload = payload;
-          }
+        constructor(name: string, actioner: (...any) => any, payload?: any) {
+          super(name, (store) => actioner(store));
+          this.payload = payload;
+        }
 
-          async andWhen(store, actioner, port: number) {
-            const [path, body]: [string, string] = actioner({});
-            const y = await fetch(
-              `http://localhost:${port.toString()}/${path}`,
-              {
-                method: "POST",
-                body,
-              }
-            );
+        async andWhen(store, actioner, port: number) {
+          const [path, body]: [string, string] = actioner({});
+          const y = await fetch(
+            `http://localhost:${port.toString()}/${path}`,
+            {
+              method: "POST",
+              body,
+            }
+          );
 
-            return y.text();
-          }
-        })(s, o),
-      (s, o) =>
-        new (class Then extends BaseThen<any, any, any> {
-          constructor(name: string, callback: (val: any) => any) {
-            super(name, callback);
-          }
+          return y.text();
+        }
+      },
 
-          async butThen(store, port: number) {
-            const [path, expectation]: [string, string] = this.thenCB({});
-            const bodytext = await (
-              await fetch(`http://localhost:${port.toString()}/${path}`)
-            ).text();
-            assert.equal(bodytext, expectation);
-            return;
-          }
-        })(s, o),
-      (n, f, cb, w, t) =>
-        new (class Check extends BaseCheck<any, any, any, IThenShape> {
-          async teardown(server: http.Server) {
-            return new Promise((resolve, reject) => {
-              server.close(() => {
-                resolve(server);
-              });
+      class Then extends BaseThen<any, any, any> {
+        constructor(name: string, callback: (val: any) => any) {
+          super(name, callback);
+        }
+
+        async butThen(store, port: number) {
+          const [path, expectation]: [string, string] = this.thenCB({});
+          const bodytext = await (
+            await fetch(`http://localhost:${port.toString()}/${path}`)
+          ).text();
+          assert.equal(bodytext, expectation);
+          return;
+        }
+      },
+
+      class Check extends BaseCheck<any, any, any, IThenShape> {
+        async teardown(server: http.Server) {
+          return new Promise((resolve, reject) => {
+            server.close(() => {
+              resolve(server);
             });
-          }
+          });
+        }
 
-          async checkThat(subject, port: number) {
-            const server = serverFactory();
-            await server.listen(port);
-            return server;
-          }
-        })(n, f, cb, w, t),
+        async checkThat(subject, port: number) {
+          const server = serverFactory();
+          await server.listen(port);
+          return server;
+        }
+      },
+      
       "port"
     );
   }

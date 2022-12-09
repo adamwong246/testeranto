@@ -7,8 +7,7 @@ export class AppReactTesteranto extends ReactTesteranto<{
     Default: string;
   },
   givens: {
-    AnEmptyState;
-    AStateWithEmail: [string];
+    default: []
   };
   whens: {
     TheLoginIsSubmitted: [];
@@ -35,11 +34,8 @@ export class AppReactTesteranto extends ReactTesteranto<{
           Default: "a default suite",
         },
         Givens: {
-          AnEmptyState: () => {
+          default: () => {
             return {}
-          },
-          AStateWithEmail: (email) => {
-            return { email };
           },
         },
         Whens: {
@@ -104,14 +100,14 @@ export class AppReactTesteranto extends ReactTesteranto<{
           Suite.Default(
             "Testing the LoginPage as react",
             [
-              Given.AnEmptyState(
+              Given.default(
                 `Set the email and check the email`,
                 [],
                 [When.TheEmailIsSetTo("adam@email.com")],
                 [Then.TheEmailIs("adam@email.com")]
               ),
 
-              Given.AnEmptyState(
+              Given.default(
                 `Set the email by initial state, then set the email normally, and then check some other stuff`,
                 [],
                 [
@@ -123,18 +119,17 @@ export class AppReactTesteranto extends ReactTesteranto<{
                   Then.TheEmailIs("adam@email.com"),
                   Then.ThePasswordIs("secret"),
                   Then.ThePasswordIsNot("idk"),
-                ],
-                "wade@rpc"
+                ]
               ),
 
-              Given.AnEmptyState(
+              Given.default(
                 "Don't show an email error just because the email does not validate",
                 [],
                 [When.TheEmailIsSetTo("adam")],
                 [Then.ThereIsNotAnEmailError()]
               ),
 
-              Given.AnEmptyState(
+              Given.default(
                 "Do show an email error after submitting",
                 [],
                 [When.TheEmailIsSetTo("adam"), When.TheLoginIsSubmitted()],

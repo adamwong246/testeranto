@@ -13,12 +13,15 @@ import {
   Testeranto,
 } from "../../index";
 
+type ITestResource = never;
 type IInput = [string, (string) => string];
-type ISubjectStore = { page: Page; htmlBundle: string };
+
 type IWhenShape = any;
 type IThenShape = any;
 type ISelection = { page: Page };
 type IState = void;
+type IStore = { page: Page };
+type ISubject = { page: Page; htmlBundle: string };
 
 export class EsbuildPuppeteerTesteranto<
   ITestShape extends ITTestShape
@@ -26,11 +29,11 @@ export class EsbuildPuppeteerTesteranto<
   ITestShape,
   IState,
   ISelection,
-  ISubjectStore, // store
-  ISubjectStore, // subject
+  IStore,
+  ISubject,
   IWhenShape,
   IThenShape,
-  never,         // test resource
+  ITestResource,
   IInput
 > {
   constructor(
@@ -49,98 +52,87 @@ export class EsbuildPuppeteerTesteranto<
       /* @ts-ignore:next-line */
       testSpecification,
       thing,
-      (s, g, c) => {
-        return new (class Suite extends BaseSuite<
-          IInput,
-          ISubjectStore,
-          ISubjectStore,
-          ISelection,
-          IThenShape
-        > {
-          async setup([bundlePath, htmlTemplate]: IInput) {
-            return {
-              page: await (
-                await puppeteer.launch({
-                  headless: true,
-                  executablePath:
-                    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-                })
-              ).newPage(),
-              htmlBundle: htmlTemplate(
-                esbuild.buildSync({
-                  entryPoints: [bundlePath],
-                  bundle: true,
-                  minify: true,
-                  format: "esm",
-                  target: ["esnext"],
-                  write: false,
-                }).outputFiles[0].text
-              ),
-            };
-          }
-        })(s, g, c);
+      class Suite extends BaseSuite<
+        IInput,
+        ISubject,
+        IStore,
+        ISelection,
+        IThenShape
+      > {
+        async setup([bundlePath, htmlTemplate]: IInput) {
+          return {
+            page: await (
+              await puppeteer.launch({
+                headless: true,
+                executablePath:
+                  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+              })
+            ).newPage(),
+            htmlBundle: htmlTemplate(
+              esbuild.buildSync({
+                entryPoints: [bundlePath],
+                bundle: true,
+                minify: true,
+                format: "esm",
+                target: ["esnext"],
+                write: false,
+              }).outputFiles[0].text
+            ),
+          };
+        }
       },
-      (n, f, w, t) =>
-        new (class Given extends BaseGiven<
-          ISubjectStore,
-          {page: Page},
-          ISelection,
-          IThenShape
-        > {
-          givenThat(
-            subject: ISubjectStore,
-            testResourceConfiguration?: any
-          ): Promise<{page: Page}> {
-            return subject.page.setContent(subject.htmlBundle).then(() => {
-              return {page: subject.page};
-            });
-          }
+      class Given extends BaseGiven<
+        ISubject,
+        IStore,
+        ISelection,
+        IThenShape
+      > {
+        givenThat(
+          subject: ISubject,
+          testResourceConfiguration?: any
+        ): Promise<{ page: Page }> {
+          return subject.page.setContent(subject.htmlBundle).then(() => {
+            return { page: subject.page };
+          });
+        }
 
-          async teardown({page}: {page: Page}, ndx: number) {
-            (await page).screenshot({
-              path: `./dist/teardown-${ndx}-screenshot.jpg`,
-            });
+        async teardown({ page }: { page: Page }, ndx: number) {
+          (await page).screenshot({
+            path: `./dist/teardown-${ndx}-screenshot.jpg`,
+          });
 
-            return page;
-          }
-        })(
-          n,
-          f,
-          w,
-          t
-        ),
-      (s, o) =>
-        new (class When<IStore extends Page> extends BaseWhen<
-          IStore,
-          any,
-          any
-        > {
-          async andWhen(page: IStore) {
-            return this.actioner(page);
-          }
-        })(s, o),
-      (s, o) =>
-        new (class Then extends BaseThen<ISubjectStore, ISubjectStore, IThenShape> {
-          butThen(store: any, testResourceConfiguration?: any): ISubjectStore {
-            return store;
-          }
-        })(s, o),
-      (n, f, cb, w, t) =>
-        new (class Check extends BaseCheck<ISubjectStore, any, ISelection, IThenShape> {
-          async checkThat(
-            { page, htmlBundle }: ISubjectStore,
-            testResourceConfiguration?: any
-          ) {
-            await page.setContent(htmlBundle);
-            return { page };
-          }
+          return page;
+        }
+      },
+      class When<IStore extends Page> extends BaseWhen<
+        IStore,
+        any,
+        any
+      > {
+        async andWhen(page: IStore) {
+          return this.actioner(page);
+        }
+      },
+      class Then extends BaseThen<ISelection, ISubject, IThenShape> {
+        butThen(store: any, testResourceConfiguration?: any): ISubject {
+          return store;
+        }
+      },
+      class Check extends BaseCheck<ISubject, IStore, ISelection, IThenShape> {
+        async checkThat(
+          { page, htmlBundle }: ISubject,
+          testResourceConfiguration?: any
+        ) {
+          await page.setContent(htmlBundle);
+          return { page };
+        }
 
-          async teardown({ page }, ndx: number): Promise<any> {
-            await page.screenshot({
-              path: `./dist/teardown-${ndx}-screenshot.jpg`,
-            });
-          }
-        })(n, f, cb, w, t)
+        async teardown({ page }, ndx: number): Promise<any> {
+          await page.screenshot({
+            path: `./dist/teardown-${ndx}-screenshot.jpg`,
+          });
+        }
+      }
     );
   }
 }

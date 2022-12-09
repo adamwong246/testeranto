@@ -19,9 +19,7 @@ import {
   Testeranto,
 } from "../../index";
 
-export type IActionCreate =
-  | ActionCreatorWithoutPayload<string>
-  | ActionCreatorWithPayload<any, string>;
+type ITestResource = never;
 
 export type ISubjectReducerAndSelector = {
   reducer: Reducer<any, AnyAction>;
@@ -56,6 +54,11 @@ type IInputshape<IStore, ISelect> = {
   selector: (state: IStore) => ISelect;
 };
 
+
+export type IActionCreate =
+  | ActionCreatorWithoutPayload<string>
+  | ActionCreatorWithPayload<any, string>;
+
 export class ReduxToolkitTesteranto<
   IStoreShape,
   ISelection,
@@ -68,7 +71,7 @@ export class ReduxToolkitTesteranto<
   IStoreShape,
   IWhenShape,
   IThenShape<unknown>,
-  never,
+  ITestResource,
   IInputshape<IStoreShape, ISelection>
 > {
   constructor(
@@ -88,26 +91,24 @@ export class ReduxToolkitTesteranto<
       testSpecification,
       thing,
 
-      (s, g, c) =>
-        new (class Suite<
-          ISubjectReducerAndSelector,
-          IStore,
-          ISelected,
-          IThenShape
-        > extends BaseSuite<
-          IInput,
-          ISubjectReducerAndSelector,
-          IStore,
-          ISelected,
-          IThenShape
-        > {
-          test(t: IThenShape): void {
-            t[0](t[1], t[2], t[3]);
-          }
-        })(s, g, c),
+      class Suite<
+        ISubjectReducerAndSelector,
+        IStore extends Store,
+        ISelected,
+        IThenShape
+      > extends BaseSuite<
+        IInput,
+        ISubjectReducerAndSelector,
+        IStore,
+        ISelected,
+        IThenShape
+      > {
+        test(t: IThenShape): void {
+          t[0](t[1], t[2], t[3]);
+        }
+      },
 
-      (n, f, w, t, z) =>
-        new (class Given<IStore extends Store, ISelection> extends BaseGiven<
+      class Given<IStore extends Store, ISelection> extends BaseGiven<
           ISubjectReducerAndSelector,
           IStore,
           ISelection,
@@ -140,9 +141,9 @@ export class ReduxToolkitTesteranto<
               store,
             };
           }
-        })(n, f, w, t, z),
-      (s, o) =>
-        new (class When extends BaseWhen<
+      },
+      
+      class When extends BaseWhen<
           Store,
           ISelection,
           IThenShape<unknown>
@@ -160,10 +161,9 @@ export class ReduxToolkitTesteranto<
           andWhen(subject, actioner) {
             return subject.store.dispatch(actioner());
           }
-        })(s, o),
+        },
 
-      (s, o) =>
-        new (class Then<ISelection> extends BaseThen<
+      class Then<ISelection> extends BaseThen<
           ISelection,
           Store,
           IThenShape<unknown>
@@ -180,10 +180,9 @@ export class ReduxToolkitTesteranto<
           ): ISelection {
             return subject.selector(subject.store.getState());
           }
-        })(s, o),
+        },
 
-      (f, g, c, cb, z?) =>
-        new (class Check<IStore extends Store, ISelected> extends BaseCheck<
+      class Check<IStore extends Store, ISelected> extends BaseCheck<
           ISubjectReducerAndSelector,
           IStore,
           ISelected,
@@ -197,6 +196,7 @@ export class ReduxToolkitTesteranto<
             callback: (whens, thens) => any,
             whens,
             thens,
+            z,
           ) {
             super(name, features, callback, whens, thens);
             this.initialValues = z;
@@ -216,7 +216,7 @@ export class ReduxToolkitTesteranto<
               store,
             };
           }
-        })(f, g, c, cb, z)
+        }
     );
   }
 }

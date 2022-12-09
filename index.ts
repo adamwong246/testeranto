@@ -263,7 +263,7 @@ export abstract class BaseCheck<ISubject, IStore, ISelection, IThenShape> {
     whens: BaseWhen<IStore, ISelection, IThenShape>[],
     thens: BaseThen<ISelection, IStore, IThenShape>[]
   ) {
-    // console.log("mark2", checkCB)
+
     this.name = name;
     this.features = features;
     this.checkCB = checkCB;
@@ -288,7 +288,6 @@ export abstract class BaseCheck<ISubject, IStore, ISelection, IThenShape> {
     tester
   ) {
     console.log(`\n Check: ${this.name}`);
-    console.log(this.checkCB)
     const store = await this.checkThat(subject, testResourceConfiguration);
     await this.checkCB(
       mapValues(this.whens, (when: (p, tc) => any) => {
@@ -627,29 +626,30 @@ export abstract class Testeranto<
       givens: BaseGiven<ISubject, IStore, ISelection, IThenShape>[],
       checks: any[]
     ) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape>,
-    givenKlasser,
-    whenKlasser,
-    thenKlasser,
-    checkKlasser,
+    givenKlasser: (n, f, w, t, z?) => BaseGiven<ISubject, IStore, ISelection, IThenShape>,
+    whenKlasser: (s, o) => BaseWhen<IStore, ISelection, IThenShape>,
+    thenKlasser: (s, o) => BaseThen<IStore, ISelection, IThenShape>,
+    checkKlasser: (n, f, cb, w, t) => BaseCheck<ISubject, IStore, ISelection, IThenShape>,
     testResource?: ITestResource
   ) {
     const classySuites = mapValues(
       testImplementation.Suites,
-      () => (somestring, givens, checks) =>
-        suiteKlasser(somestring, givens, checks)
+      () => (somestring, givens, checks) => 
+        new suiteKlasser.prototype.constructor(somestring, givens, checks)
+      
     );
 
     const classyGivens = mapValues(
       testImplementation.Givens,
       (z) =>
         (name, features, whens, thens, ...xtrasW) =>
-          givenKlasser(name, features, whens, thens, z(...xtrasW))
+          new givenKlasser.prototype.constructor(name, features, whens, thens, z(...xtrasW))
     );
 
     const classyWhens = mapValues(
       testImplementation.Whens,
       (whEn: (thing, payload?: any) => any) => (payload?: any) =>
-        whenKlasser(
+        new whenKlasser.prototype.constructor(
           `${whEn.name}: ${payload && payload.toString()}`,
           whEn(payload)
         )
@@ -658,7 +658,7 @@ export abstract class Testeranto<
     const classyThens = mapValues(
       testImplementation.Thens,
       (thEn: (klass, ...xtrasE) => void) => (expected: any, x) =>
-        thenKlasser(
+        new thenKlasser.prototype.constructor(
           `${thEn.name}: ${expected && expected.toString()}`,
           thEn(expected)
         )
@@ -667,7 +667,7 @@ export abstract class Testeranto<
     const classyChecks = mapValues(
       testImplementation.Checks,
       (z) => (somestring, features, callback) => {
-        return checkKlasser(somestring, features, callback, classyWhens, classyThens);
+        return new checkKlasser.prototype.constructor(somestring, features, callback, classyWhens, classyThens);
       }
     );
 
@@ -698,6 +698,7 @@ export abstract class Testeranto<
       /* @ts-ignore:next-line */
       classySuites,
       classyGivens,
+      /* @ts-ignore:next-line */
       classyWhens,
       classyThens,
       classyChecks
@@ -723,9 +724,9 @@ export abstract class Testeranto<
     });
   }
 }
+
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-// this function is awesome
 const processTestsWithPorts = async (
   tests: ITest[],
   ports: number[]

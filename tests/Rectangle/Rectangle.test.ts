@@ -183,11 +183,11 @@ export class RectangleTesteranto extends Testeranto<
 
       LoginPage,
 
-      (s, g, c) => new ClassySuite<Rectangle>(s, g, c),
-      (n, f, w, t, z?) => new ClassyGiven<Rectangle>(n, f, w, t, z),
-      (s, o) => new ClassyWhen<Rectangle>(s, o),
-      (s, o) => new ClassyThen<Rectangle>(s, o),
-      (n, f, cb, w, t, z) => new ClassyCheck<Rectangle>(n, f, cb, w, t, z)
+      ClassySuite<Rectangle>,
+      ClassyGiven<Rectangle>,
+      ClassyWhen<Rectangle>,
+      ClassyThen<Rectangle>,
+      ClassyCheck<Rectangle>,
     );
   }
 }

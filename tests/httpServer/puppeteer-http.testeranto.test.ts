@@ -52,16 +52,16 @@ export class PuppeteerHttpTesteranto<
       /* @ts-ignore:next-line */
       testSpecification,
       thing,
-      (s, g, c) =>
-        new (class Suite extends BaseSuite<
-          IInput,
-          http.Server,
-          TB,
-          ISelection,
-          IThenShape
-        > {})(s, g, c),
-      (n, f, w, t) =>
-        new (class Given extends BaseGiven<
+
+      class Suite extends BaseSuite<
+        IInput,
+        http.Server,
+        TB,
+        ISelection,
+        IThenShape
+      > { },
+      
+      class Given extends BaseGiven<
           () => http.Server,
           TB,
           ISelection,
@@ -93,72 +93,72 @@ export class PuppeteerHttpTesteranto<
               });
             });
           }
-        })(n, f, w, t),
-      (s, o) =>
-        new (class When<IStore> extends BaseWhen<IStore, any, any> {
-          payload?: any;
+      },
 
-          constructor(name: string, actioner: (...any) => any, payload?: any) {
-            super(name, (store) => actioner(store));
-            this.payload = payload;
-          }
+      class When<IStore> extends BaseWhen<IStore, any, any> {
+        payload?: any;
 
-          async andWhen(store, actioner, port: number) {
-            const [path, body]: [string, string] = actioner({});
-            const y = await fetch(
-              `http://localhost:${port.toString()}/${path}`,
-              {
-                method: "POST",
-                body,
-              }
-            );
+        constructor(name: string, actioner: (...any) => any, payload?: any) {
+          super(name, (store) => actioner(store));
+          this.payload = payload;
+        }
 
-            return y.text();
-          }
-        })(s, o),
-      (s, o) =>
-        new (class Then extends BaseThen<any, any, any> {
-          constructor(name: string, callback: (val: any) => any) {
-            super(name, callback);
-          }
+        async andWhen(store, actioner, port: number) {
+          const [path, body]: [string, string] = actioner({});
+          const y = await fetch(
+            `http://localhost:${port.toString()}/${path}`,
+            {
+              method: "POST",
+              body,
+            }
+          );
 
-          async butThen(store, port: number) {
-            const [path, expectation]: [string, string] = this.thenCB({});
-            const bodytext = await (
-              await fetch(`http://localhost:${port.toString()}/${path}`)
-            ).text();
-            assert.equal(bodytext, expectation);
-            return;
-          }
-        })(s, o),
-      (n, f, cb, w, t) =>
-        new (class Check extends BaseCheck<any, any, ISelection, IThenShape> {
-          async teardown({
-            browser,
-            server,
-          }: {
-            browser: Browser;
-            server: http.Server;
-          }) {
-            return new Promise((resolve, reject) => {
-              browser.close();
-              server.close(() => {
-                resolve(server);
-              });
+          return y.text();
+        }
+      },
+
+      class Then extends BaseThen<any, any, any> {
+        constructor(name: string, callback: (val: any) => any) {
+          super(name, callback);
+        }
+
+        async butThen(store, port: number) {
+          const [path, expectation]: [string, string] = this.thenCB({});
+          const bodytext = await (
+            await fetch(`http://localhost:${port.toString()}/${path}`)
+          ).text();
+          assert.equal(bodytext, expectation);
+          return;
+        }
+      },
+      
+      class Check extends BaseCheck<any, any, ISelection, IThenShape> {
+        async teardown({
+          browser,
+          server,
+        }: {
+          browser: Browser;
+          server: http.Server;
+        }) {
+          return new Promise((resolve, reject) => {
+            browser.close();
+            server.close(() => {
+              resolve(server);
             });
-          }
+          });
+        }
 
-          async checkThat(subject, port: number) {
-            const browser = await puppeteer.launch({
-              headless: true,
-              executablePath:
-                "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-            });
-            const server = thing();
-            await server.listen(port);
-            return { browser, server };
-          }
-        })(n, f, cb, w, t),
+        async checkThat(subject, port: number) {
+          const browser = await puppeteer.launch({
+            headless: true,
+            executablePath:
+              "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+          });
+          const server = thing();
+          await server.listen(port);
+          return { browser, server };
+        }
+      },
       "port"
     );
   }
