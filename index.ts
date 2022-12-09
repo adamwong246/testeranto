@@ -1,6 +1,92 @@
 import fs from "fs";
 import { mapValues } from "lodash";
 
+type IT = {
+  name: string;
+  givens: BaseGiven<any, any, any, any>[];
+  checks: BaseCheck<any, any, any>[];
+};
+
+type ITest = {
+  test: IT;
+  runner: (testResurce?) => any;
+  testResource: any;
+};
+
+type ITestResults = Promise<{
+  test: IT;
+  status: any;
+}>[];
+
+export type ITTestShape = {
+  suites;
+  givens;
+  whens;
+  thens;
+  checks;
+};
+
+export type ITestSpecification<ITestShape extends ITTestShape> = (
+  Suite: {
+    [K in keyof ITestShape["suites"]]: (
+      name: string,
+      givens: BaseGiven<any, any, any, any>[],
+      checks: BaseCheck<any, any, any>[]
+    ) => BaseSuite<any, any, any, any, any>;
+  },
+  Given: {
+    [K in keyof ITestShape["givens"]]: (
+      name: string,
+      whens: BaseWhen<any, any, any>[],
+      thens: BaseThen<any, any, any>[],
+      ...xtras: ITestShape["givens"][K]
+    ) => BaseGiven<any, any, any, any>;
+  },
+  When: {
+    [K in keyof ITestShape["whens"]]: (
+      ...xtras: ITestShape["whens"][K]
+    ) => BaseWhen<any, any, any>;
+  },
+  Then: {
+    [K in keyof ITestShape["thens"]]: (
+      ...xtras: ITestShape["thens"][K]
+    ) => BaseThen<any, any, any>;
+  },
+  Check: any
+) => any[];
+
+export type ITestImplementation<
+  IState,
+  ISelection,
+  IWhenShape,
+  IThenShape,
+  ITestShape extends ITTestShape
+> = {
+  Suites: {
+    [K in keyof ITestShape["suites"]]: string;
+  };
+  Givens: {
+    [K in keyof ITestShape["givens"]]: (
+      ...e: ITestShape["givens"][K]
+    ) => IState;
+  };
+  Whens: {
+    [K in keyof ITestShape["whens"]]: (
+      ...f: ITestShape["whens"][K]
+    ) => (zel: ISelection) => IWhenShape;
+  };
+  Thens: {
+    [K in keyof ITestShape["thens"]]: (
+      ...g: ITestShape["thens"][K]
+    ) => (sel: ISelection) => IThenShape;
+  };
+  Checks: {
+    [K in keyof ITestShape["checks"]]: (
+      ...h: ITestShape["checks"][K]
+    ) => IState;
+  };
+};
+
 export abstract class BaseFeature {
   name: string;
   constructor(name: string) {
@@ -70,10 +156,13 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
     // this.features = features;
   }
 
-  abstract givenThat(subject: ISubject, testResourceConfiguration?): IStore;
+  abstract givenThat(
+    subject: ISubject,
+    testResourceConfiguration?
+  ): Promise<IStore>;
 
   async teardown(subject: IStore, ndx: number): Promise<unknown> {
-    return ;
+    return;
   }
 
   async give(
@@ -103,7 +192,7 @@ export abstract class BaseWhen<IStore, ISelection, IThenShape> {
   name: string;
   actioner: (x: ISelection) => IThenShape;
 
-  constructor(name: string, actioner: (x: ISelection) => IThenShape) {
+  constructor(name: string, actioner: (xyz: ISelection) => IThenShape) {
     this.name = name;
     this.actioner = actioner;
   }
@@ -188,7 +277,7 @@ export abstract class BaseCheck<ISubject, IStore, ISelection> {
     return;
   }
 }
-
+//////////////////////////////////////////////////////////////////////////////////////////////
 abstract class TesterantoBasic<
   IInput,
   ISubject,
@@ -340,7 +429,7 @@ abstract class TesterantoBasic<
     return this.checkOverides;
   }
 }
-
+//////////////////////////////////////////////////////////////////////////////////////////////
 export class ClassySuite<Klass> extends BaseSuite<
   Klass,
   Klass,
@@ -372,8 +461,8 @@ export class ClassyGiven<Klass> extends BaseGiven<Klass, Klass, Klass, any> {
     this.thing = thing;
   }
 
-  givenThat() {
-    return this.thing;
+  givenThat(subject: Klass, testResourceConfiguration?: any): Promise<Klass> {
+    return new Promise((res) => res(this.thing));
   }
 }
 
@@ -431,76 +520,7 @@ export abstract class TesterantoInterface<
     z?
   ) => BaseCheck<ISubject, IStore, ISelection>;
 }
-
-export type ITTestShape = {
-  suites;
-  givens;
-  whens;
-  thens;
-  checks;
-};
-
-export type ITestSpecification<ITestShape extends ITTestShape> = (
-  Suite: {
-    [K in keyof ITestShape["suites"]]: (
-      name: string,
-      givens: BaseGiven<any, any, any, any>[],
-      checks: BaseCheck<any, any, any>[]
-    ) => BaseSuite<any, any, any, any, any>;
-  },
-  Given: {
-    [K in keyof ITestShape["givens"]]: (
-      name: string,
-      whens: BaseWhen<any, any, any>[],
-      thens: BaseThen<any, any, any>[],
-      ...xtras: any
-    ) => BaseGiven<any, any, any, any>;
-  },
-  When: {
-    [K in keyof ITestShape["whens"]]: (
-      ...xtras: any
-    ) => BaseWhen<any, any, any>;
-  },
-  Then: {
-    [K in keyof ITestShape["thens"]]: (
-      ...xtras: any
-    ) => BaseThen<any, any, any>;
-  },
-  Check: any
-) => any[];
-
-export type ITestImplementation<
-  IState,
-  ISelection,
-  IWhenShape,
-  IThenShape,
-  ITestShape extends ITTestShape
-> = {
-  Suites: {
-    [K in keyof ITestShape["suites"]]: string;
-  };
-  Givens: {
-    [K in keyof ITestShape["givens"]]: (
-      ...e: ITestShape["givens"][K]
-    ) => IState;
-  };
-  Whens: {
-    [K in keyof ITestShape["whens"]]: (
-      ...f: ITestShape["whens"][K]
-    ) => (zel: ISelection) => IWhenShape;
-  };
-  Thens: {
-    [K in keyof ITestShape["thens"]]: (
-      ...g: ITestShape["thens"][K]
-    ) => (sel: ISelection) => IThenShape;
-  };
-  Checks: {
-    [K in keyof ITestShape["checks"]]: (
-      ...h: ITestShape["checks"][K]
-    ) => IState;
-  };
-};
-
+//////////////////////////////////////////////////////////////////////////////////////////////
 export abstract class Testeranto<
   ITestShape extends ITTestShape,
   IState,
@@ -661,23 +681,7 @@ export abstract class Testeranto<
     });
   }
 }
-
-type IT = {
-  name: string;
-  givens: BaseGiven<any, any, any, any>[];
-  checks: BaseCheck<any, any, any>[];
-};
-
-type ITest = {
-  test: IT;
-  runner: (testResurce?) => any;
-  testResource: any;
-};
-
-type ITestResults = Promise<{
-  test: IT;
-  status: any;
-}>[];
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 // this function is awesome
 const processTestsWithPorts = async (

@@ -8,6 +8,7 @@ import {
   BaseThen,
   BaseWhen,
   ITestImplementation,
+  ITestSpecification,
   ITTestShape,
   Testeranto,
 } from "../../index";
@@ -17,73 +18,30 @@ type ISubjectStore = { page: Page; htmlBundle: string };
 type IWhenShape = any;
 type IThenShape = any;
 type ISelection = { page: Page };
-
-class Given extends BaseGiven<ISubjectStore, any, ISelection, any> {
-  async givenThat(
-    { page, htmlBundle }: ISubjectStore,
-    testResourceConfiguration?: any
-  ) {
-    await page.setContent(htmlBundle);
-    return { page };
-  }
-
-  async teardown({ page }, ndx: number): Promise<any> {
-    await page.screenshot({
-      path: `./dist/teardown-${ndx}-screenshot.jpg`,
-    });
-  }
-}
-
-class When<IStore extends Page> extends BaseWhen<IStore, any, any> {
-  async andWhen(page: IStore) {
-    return this.actioner(page);
-  }
-}
-
-class Then extends BaseThen<ISubjectStore, ISubjectStore, any> {
-  butThen(store: any, testResourceConfiguration?: any): ISubjectStore {
-    return store;
-  }
-}
-
-class Check extends BaseCheck<ISubjectStore, any, ISelection> {
-  async checkThat(
-    { page, htmlBundle }: ISubjectStore,
-    testResourceConfiguration?: any
-  ) {
-    await page.setContent(htmlBundle);
-    return { page };
-  }
-
-  async teardown({ page }, ndx: number): Promise<any> {
-    await page.screenshot({
-      path: `./dist/teardown-${ndx}-screenshot.jpg`,
-    });
-  }
-}
+type IState = void;
 
 export class EsbuildPuppeteerTesteranto<
   ITestShape extends ITTestShape
 > extends Testeranto<
   ITestShape,
-  ISubjectStore, // state
-  ISelection, // selection
+  IState,
+  ISelection,
   ISubjectStore, // store
   ISubjectStore, // subject
   IWhenShape,
   IThenShape,
-  any, // test resource
+  never,         // test resource
   IInput
 > {
   constructor(
     testImplementation: ITestImplementation<
-      ISubjectStore, // state
-      ISelection, // selection
+      IState,
+      ISelection,
       IWhenShape,
       IThenShape,
       ITestShape
     >,
-    testSpecification,
+    testSpecification: ITestSpecification<ITestShape>,
     thing: IInput
   ) {
     super(
@@ -122,15 +80,66 @@ export class EsbuildPuppeteerTesteranto<
         })(s, g, c);
       },
       (n, w, t, f) =>
-        new Given(
+        new (class Given extends BaseGiven<
+          ISubjectStore,
+          {page: Page},
+          ISelection,
+          IThenShape
+        > {
+          givenThat(
+            subject: ISubjectStore,
+            testResourceConfiguration?: any
+          ): Promise<{page: Page}> {
+            return subject.page.setContent(subject.htmlBundle).then(() => {
+              return {page: subject.page};
+            });
+          }
+
+          async teardown({page}: {page: Page}, ndx: number) {
+            (await page).screenshot({
+              path: `./dist/teardown-${ndx}-screenshot.jpg`,
+            });
+
+            return page;
+          }
+        })(
           n,
           w,
           t
           // f
         ),
-      (s, o) => new When(s, o),
-      (s, o) => new Then(s, o),
-      (f, g, c, cb) => new Check(f, g, c, cb)
+      (s, o) =>
+        new (class When<IStore extends Page> extends BaseWhen<
+          IStore,
+          any,
+          any
+        > {
+          async andWhen(page: IStore) {
+            return this.actioner(page);
+          }
+        })(s, o),
+      (s, o) =>
+        new (class Then extends BaseThen<ISubjectStore, ISubjectStore, IThenShape> {
+          butThen(store: any, testResourceConfiguration?: any): ISubjectStore {
+            return store;
+          }
+        })(s, o),
+      (f, g, c, cb) =>
+        new (class Check extends BaseCheck<ISubjectStore, any, ISelection> {
+          async checkThat(
+            { page, htmlBundle }: ISubjectStore,
+            testResourceConfiguration?: any
+          ) {
+            await page.setContent(htmlBundle);
+            return { page };
+          }
+
+          async teardown({ page }, ndx: number): Promise<any> {
+            await page.screenshot({
+              path: `./dist/teardown-${ndx}-screenshot.jpg`,
+            });
+          }
+        })(f, g, c, cb)
     );
   }
 }

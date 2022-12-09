@@ -4,7 +4,6 @@ import http from "http";
 
 import { assert } from "chai";
 
-import { serverFactory } from "./server";
 import { ITestResource } from "..";
 import {
   BaseCheck,
@@ -13,6 +12,7 @@ import {
   BaseThen,
   BaseWhen,
   ITestImplementation,
+  ITestSpecification,
   ITTestShape,
   Testeranto,
 } from "../../index";
@@ -20,7 +20,7 @@ import {
 type IInput = () => http.Server;
 type IThenShape = any;
 type IWhenShape = [url: string, paylaod: string];
-
+type ISelection = any;
 type TB = { browser: Browser; server: http.Server };
 
 export class PuppeteerHttpTesteranto<
@@ -28,7 +28,7 @@ export class PuppeteerHttpTesteranto<
 > extends Testeranto<
   ITestShape,
   void,
-  http.Server,
+  ISelection,
   TB,
   http.Server,
   IWhenShape,
@@ -39,12 +39,12 @@ export class PuppeteerHttpTesteranto<
   constructor(
     testImplementation: ITestImplementation<
       void,
-      http.Server,
+      ISelection,
       IWhenShape,
       IThenShape,
       ITestShape
     >,
-    testSpecification,
+    testSpecification: ITestSpecification<ITestShape>,
     thing
   ) {
     super(
@@ -56,16 +56,34 @@ export class PuppeteerHttpTesteranto<
           IInput,
           http.Server,
           TB,
-          http.Server,
+          ISelection,
           IThenShape
         > {})(s, g, c),
       (f, w, t) =>
         new (class Given extends BaseGiven<
-          http.Server,
-          Promise<TB>,
-          http.Server,
+          () => http.Server,
+          TB,
+          ISelection,
           IThenShape
         > {
+          async givenThat(
+            subject: () => http.Server,
+            port: number
+          ): Promise<TB> {
+            return new Promise((res) => {
+              puppeteer
+                .launch({
+                  headless: true,
+                  executablePath:
+                    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+                })
+                .then((browser) => {
+                  const server = subject();
+                  res({ server: server.listen(port), browser });
+                });
+            });
+          }
+
           async teardown(subject, ndx) {
             return new Promise<void>((resolve) => {
               subject.browser.close();
@@ -73,17 +91,6 @@ export class PuppeteerHttpTesteranto<
                 resolve();
               });
             });
-          }
-
-          async givenThat(subject, port: number) {
-            const browser = await puppeteer.launch({
-              headless: true,
-              executablePath:
-                "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-            });
-            const server = serverFactory();
-            await server.listen(port);
-            return (new Promise<TB>((res) => res({ browser, server })));
           }
         })(f, w, t),
       (s, o) =>
@@ -124,7 +131,7 @@ export class PuppeteerHttpTesteranto<
           }
         })(s, o),
       (f, g, c, cb) =>
-        new (class Check extends BaseCheck<any, any, any> {
+        new (class Check extends BaseCheck<any, any, ISelection> {
           async teardown({
             browser,
             server,
@@ -146,7 +153,7 @@ export class PuppeteerHttpTesteranto<
               executablePath:
                 "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
             });
-            const server = serverFactory();
+            const server = thing();
             await server.listen(port);
             return { browser, server };
           }

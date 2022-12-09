@@ -9,10 +9,10 @@ export class ClassicalComponentEsbuildPuppeteerTesteranto extends EsbuildPuppete
     Default: string;
   };
   givens: {
-    AnEmptyState;
+    AnEmptyState: [];
   };
   whens: {
-    IClickTheButton;
+    IClickTheButton: [];
   };
   thens: {
     ThePropsIs: [IProps];
@@ -29,8 +29,9 @@ export class ClassicalComponentEsbuildPuppeteerTesteranto extends EsbuildPuppete
           Default: "some default Suite",
         },
         Givens: {
-          /* @ts-ignore:next-line */
-          AnEmptyState: () => {},
+          AnEmptyState: () => {
+            return;
+          },
         },
         Whens: {
           IClickTheButton:
@@ -56,8 +57,9 @@ export class ClassicalComponentEsbuildPuppeteerTesteranto extends EsbuildPuppete
               ),
         },
         Checks: {
-          /* @ts-ignore:next-line */
-          AnEmptyState: () => {},
+          AnEmptyState: () => {
+            return {}
+          },
         },
       },
 
@@ -69,12 +71,12 @@ export class ClassicalComponentEsbuildPuppeteerTesteranto extends EsbuildPuppete
               Given.AnEmptyState(
                 "default",
                 [],
-                [Then.ThePropsIs({}), Then.TheStatusIs({ count: 0 })]
+                [Then.ThePropsIs({  }), Then.TheStatusIs({ count: 0 })]
               ),
               Given.AnEmptyState(
                 "default",
                 [When.IClickTheButton()],
-                [Then.ThePropsIs({}), Then.TheStatusIs({ count: 1 })]
+                [Then.ThePropsIs({  }), Then.TheStatusIs({ count: 1 })]
               ),
 
               Given.AnEmptyState(

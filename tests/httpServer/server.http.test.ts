@@ -9,7 +9,7 @@ export class ServerHttpTesteranto extends HttpTesteranto<
       Default: string;
     };
     givens: {
-      AnEmptyState;
+      AnEmptyState: [];
     };
     whens: {
       PostToStatus: [string];
@@ -33,7 +33,9 @@ export class ServerHttpTesteranto extends HttpTesteranto<
         },
         Givens: {
           /* @ts-ignore:next-line */
-          AnEmptyState: () => {},
+          AnEmptyState: () => {
+            return {};
+          },
         },
         Whens: {
           PostToStatus: (status: string) => () => {
@@ -47,7 +49,9 @@ export class ServerHttpTesteranto extends HttpTesteranto<
         },
         Checks: {
           /* @ts-ignore:next-line */
-          AnEmptyState: () => {},
+          AnEmptyState: () => {
+            return {};
+          },
         },
       },
 

@@ -12,6 +12,7 @@ import {
   BaseThen,
   BaseWhen,
   ITestImplementation,
+  ITestSpecification,
   ITTestShape,
   Testeranto,
 } from "../../index";
@@ -50,7 +51,7 @@ export class ReduxTesteranto<
       IThenShape,
       ITestShape
     >,
-    testSpecification,
+    testSpecification: ITestSpecification<ITestShape>,
     thing: IInput
   ) {
     super(

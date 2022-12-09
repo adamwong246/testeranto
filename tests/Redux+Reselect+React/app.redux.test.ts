@@ -22,10 +22,10 @@ export class AppReduxTesteranto extends ReduxTesteranto<
       TheEmailIs: [string];
       TheEmailIsNot: [string];
       ThePasswordIs: [string];
-      ThePasswordIsNot: [number, boolean];
+      ThePasswordIsNot: [string];
     };
     checks: {
-      AnEmptyState: []
+      AnEmptyState: [];
     };
   }
 > {
@@ -46,7 +46,7 @@ export class AppReduxTesteranto extends ReduxTesteranto<
         Whens: {
           TheLoginIsSubmitted: () => () => [loginApp.actions.signIn],
           TheEmailIsSetTo: (email) => () => [loginApp.actions.setEmail, email],
-          ThePasswordIsSetTo: (password) => (x) =>
+          ThePasswordIsSetTo: (password) => () =>
             [loginApp.actions.setPassword, password],
         },
         Thens: {
@@ -54,8 +54,10 @@ export class AppReduxTesteranto extends ReduxTesteranto<
             assert.equal(storeState.email, email),
           TheEmailIsNot: (email) => (storeState) =>
             assert.notEqual(storeState.email, email),
-          ThePasswordIs: (password) => (selection) => assert.equal(1, 2),
-          ThePasswordIsNot: (n, x) => (selection) => assert.equal(1, 1),
+          ThePasswordIs: (password) => (selection) =>
+            assert.equal(selection.password, password),
+          ThePasswordIsNot: (password) => (selection) =>
+            assert.notEqual(selection.password, password),
         },
         Checks: {
           AnEmptyState: () => loginApp.getInitialState(),

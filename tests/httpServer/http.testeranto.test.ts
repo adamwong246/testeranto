@@ -12,6 +12,7 @@ import {
   BaseThen,
   BaseWhen,
   ITestImplementation,
+  ITestSpecification,
   ITTestShape,
   Testeranto,
 } from "../../index";
@@ -42,7 +43,7 @@ export class HttpTesteranto<
       IThenShape,
       ITestShape
     >,
-    testSpecification,
+    testSpecification: ITestSpecification<ITestShape>,
     thing
   ) {
     super(

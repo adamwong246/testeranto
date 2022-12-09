@@ -19,7 +19,7 @@ export class AppReactTesteranto extends ReactTesteranto<{
     TheEmailIs: [string];
     TheEmailIsNot: [string];
     ThePasswordIs: [string];
-    ThePasswordIsNot: [number, boolean];
+    ThePasswordIsNot: [string];
     ThereIsAnEmailError: [];
     ThereIsNotAnEmailError: [];
   };
@@ -35,7 +35,9 @@ export class AppReactTesteranto extends ReactTesteranto<{
           Default: "a default suite",
         },
         Givens: {
-          AnEmptyState: () => {},
+          AnEmptyState: () => {
+            return {}
+          },
           AStateWithEmail: (email) => {
             return { email };
           },
@@ -90,7 +92,9 @@ export class AppReactTesteranto extends ReactTesteranto<{
         },
 
         Checks: {
-          AnEmptyState: () => {},
+          AnEmptyState: () => {
+            return {};
+          },
         },
       },
 

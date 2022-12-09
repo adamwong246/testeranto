@@ -14,6 +14,7 @@ import {
   BaseThen,
   BaseWhen,
   ITestImplementation,
+  ITestSpecification,
   ITTestShape,
   Testeranto,
 } from "../../index";
@@ -78,7 +79,7 @@ export class ReduxToolkitTesteranto<
       IThenShape<unknown>,
       ITestShape
     >,
-    testSpecification,
+    testSpecification: ITestSpecification<ITestShape>,
     thing: IInputshape<IStoreShape, ISelection>
   ) {
     super(
@@ -178,7 +179,9 @@ export class ReduxToolkitTesteranto<
             super(name, callback);
           }
 
-          butThen(subject: ISubjectReducerAndSelectorAnStore<IStoreShape>): ISelection {
+          butThen(
+            subject: ISubjectReducerAndSelectorAnStore<IStoreShape>
+          ): ISelection {
             return subject.selector(subject.store.getState());
           }
         })(s, o),
