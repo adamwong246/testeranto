@@ -97,7 +97,7 @@ export class EsbuildPuppeteerTesteranto<
         }
 
         async teardown({ page }: { page: Page }, ndx: number) {
-          (await page).screenshot({
+          await (await page).screenshot({
             path: `./dist/teardown-${ndx}-screenshot.jpg`,
           });
 
