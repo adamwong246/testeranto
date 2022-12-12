@@ -13,11 +13,9 @@ import {
   BaseSuite,
   BaseThen,
   BaseWhen,
-  ITestImplementation,
-  ITestSpecification,
-  ITTestShape,
   Testeranto,
 } from "../../index";
+import { ITestImplementation, ITestSpecification, ITTestShape } from "../../src/testShapes";
 import { IStoreState } from "./app";
 
 type ITestResource = never;
@@ -122,8 +120,8 @@ export class ReduxTesteranto<
         IStore extends IZ<IState>,
         IState
       > extends BaseThen<IState, IStore, IThenShape> {
-        butThen(store: IStore): IState {
-          return store.getState();
+        butThen(store: IStore):Promise<IState> {
+          return new Promise((res) => res(store.getState()));
         }
       },
 

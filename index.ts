@@ -1,111 +1,5 @@
-import fs from "fs";
 import { mapValues } from "lodash";
-
-type IT = {
-  name: string;
-  givens: BaseGiven<unknown, unknown, unknown, unknown>[];
-  checks: BaseCheck<unknown, unknown, unknown, unknown>[];
-};
-
-type ITest = {
-  test: IT;
-  runner: (testResurce?) => unknown;
-  testResource: any;
-};
-
-type ITestResults = Promise<{
-  test: IT;
-  status: any;
-}>[];
-
-export type ITTestShape = {
-  suites;
-  givens;
-  whens;
-  thens;
-  checks;
-};
-
-export type ITestSpecification<ITestShape extends ITTestShape> = (
-  Suite: {
-    [K in keyof ITestShape["suites"]]: (
-      name: string,
-      givens: BaseGiven<unknown, unknown, unknown, unknown>[],
-      checks: BaseCheck<unknown, unknown, unknown, unknown>[]
-    ) => BaseSuite<unknown, unknown, unknown, unknown, unknown>;
-  },
-  Given: {
-    [K in keyof ITestShape["givens"]]: (
-      name: string,
-      features: BaseFeature[],
-      whens: BaseWhen<unknown, unknown, unknown>[],
-      thens: BaseThen<unknown, unknown, unknown>[],
-      ...xtras: ITestShape["givens"][K]
-    ) => BaseGiven<unknown, unknown, unknown, unknown>;
-  },
-  When: {
-    [K in keyof ITestShape["whens"]]: (
-      ...xtras: ITestShape["whens"][K]
-    ) => BaseWhen<unknown, unknown, unknown>;
-  },
-  Then: {
-    [K in keyof ITestShape["thens"]]: (
-      ...xtras: ITestShape["thens"][K]
-    ) => BaseThen<unknown, unknown, unknown>;
-  },
-  Check: {
-    [K in keyof ITestShape["checks"]]: (
-
-      name: string,
-      features: BaseFeature[],
-      callbackA: (
-        whens: {
-          [K in keyof ITestShape["whens"]]: (...unknown) => BaseWhen<unknown, unknown, unknown>
-        },
-        thens: {
-          [K in keyof ITestShape["thens"]]: (...unknown) => BaseThen<unknown, unknown, unknown>
-        },
-
-      ) => unknown,
-      // whens: BaseWhen<unknown, unknown, unknown>[],
-      // thens: BaseThen<unknown, unknown, unknown>[],
-
-      ...xtras: ITestShape["checks"][K]
-    ) => BaseCheck<unknown, unknown, unknown, unknown>;
-  }
-) => any[];
-
-export type ITestImplementation<
-  IState,
-  ISelection,
-  IWhenShape,
-  IThenShape,
-  ITestShape extends ITTestShape
-> = {
-  Suites: {
-    [K in keyof ITestShape["suites"]]: string;
-  };
-  Givens: {
-    [K in keyof ITestShape["givens"]]: (
-      ...e: ITestShape["givens"][K]
-    ) => IState;
-  };
-  Whens: {
-    [K in keyof ITestShape["whens"]]: (
-      ...f: ITestShape["whens"][K]
-    ) => (zel: ISelection) => IWhenShape;
-  };
-  Thens: {
-    [K in keyof ITestShape["thens"]]: (
-      ...g: ITestShape["thens"][K]
-    ) => (sel: ISelection) => IThenShape;
-  };
-  Checks: {
-    [K in keyof ITestShape["checks"]]: (
-      ...h: ITestShape["checks"][K]
-    ) => IState;
-  };
-};
+import { ITestImplementation, ITestSpecification, ITTestShape } from "./src/testShapes"
 
 export class BaseFeature {
   name: string;
@@ -238,7 +132,7 @@ export abstract class BaseThen<ISelection, IStore, IThenShape> {
     this.thenCB = thenCB;
   }
 
-  abstract butThen(store: any, testResourceConfiguration?): ISelection;
+  abstract butThen(store: any, testResourceConfiguration?): Promise<ISelection>;
 
   async test(store: IStore, testResourceConfiguration): Promise<IThenShape> {
     console.log(" Then:", this.name);
@@ -507,8 +401,8 @@ export class ClassyWhen<Klass> extends BaseWhen<Klass, Klass, any> {
 }
 
 export class ClassyThen<Klass> extends BaseThen<Klass, Klass, any> {
-  butThen(thing: Klass): Klass {
-    return thing;
+  butThen(thing: Klass): Promise<Klass> {
+    return new Promise((res) => res(thing));
   }
 }
 
@@ -533,32 +427,9 @@ export class ClassyCheck<Klass> extends BaseCheck<Klass, Klass, Klass, any> {
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////
-export abstract class TesterantoInterface<
-  IInput,
-  ISubject,
-  IStore,
-  ISelection,
-  IThenShape
-> {
-  abstract givenKlasser: (
-    f,
-    w,
-    t,
-    z?
-  ) => BaseGiven<ISubject, IStore, ISelection, IThenShape>;
-  abstract whenKlasser: (a, b) => BaseWhen<IStore, ISelection, IThenShape>;
-  abstract thenKlasser: (a, b) => BaseThen<ISelection, IStore, IThenShape>;
-  abstract checkKlasser: (
-    n,
-    f,
-    cb,
-    z?
-  ) => BaseCheck<ISubject, IStore, ISelection, IThenShape>;
-}
-//////////////////////////////////////////////////////////////////////////////////////////////
 export abstract class Testeranto<
   ITestShape extends ITTestShape,
-  IState,
+  IInitialState,
   ISelection,
   IStore,
   ISubject,
@@ -569,7 +440,7 @@ export abstract class Testeranto<
 > {
   constructor(
     testImplementation: ITestImplementation<
-      IState,
+      IInitialState,
       ISelection,
       IWhenShape,
       IThenShape,
@@ -731,109 +602,143 @@ export abstract class Testeranto<
   }
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const processTestsWithPorts = async (
-  tests: ITest[],
-  ports: number[]
-): Promise<ITestResults> => {
-  const testsStack = tests;
-  return (
-    await Promise.all(
-      ports.map(async (port: number) => {
-        return new Promise<ITestResults>((res, rej) => {
-          const popper = async (payload) => {
-            if (testsStack.length === 0) {
-              res(payload);
-            } else {
-              const suite = testsStack.pop();
-              try {
-                await suite?.runner({ port });
-                popper([
-                  ...payload,
-                  {
-                    test: suite?.test,
-                    status: "pass",
-                  },
-                ]);
-              } catch (e) {
-                console.error(e);
-                popper([
-                  ...payload,
-                  {
-                    test: suite?.test,
-                    status: e,
-                  },
-                ]);
-              }
-            }
-          };
-          popper([]);
-        });
-      })
-    )
-  ).flat();
-};
+export const TesterantoFactory = <
+  TestShape extends ITTestShape,
+  Input,
+  Subject,
+  Store,
+  Selection,
+  ThenShape,
+  WhenShape,
+  TestResourceShape,
+  InitialStateShape
+>(
+  input: Input,
+  testSpecification: ITestSpecification<TestShape>,
+  testImplementation: ITestImplementation<
+    InitialStateShape,
+    Selection,
+    WhenShape,
+    ThenShape,
+    TestShape
+  >,
+  beforeAll: (input: Input) => Subject,
+  beforeEach: (subject: Subject, initialValues, testResource: TestResourceShape) => Promise<Store>,
+  andWhen: (store: Store, actioner, testResource: TestResourceShape) => Promise<Selection>,
+  butThen: (store: Store, callback, testResource: TestResourceShape) => Promise<Selection>,
+  assertioner: (t: ThenShape) => any,
+  teardown: (store: Store) => unknown,
+  actionHandler: (b: () => any) => any,
+  testResource: "port"
 
-export const reporter = async (
-  tests: Promise<ITest>[],
-
-  testResources: {
-    ports: number[];
-  }
 ) => {
-  await Promise.all(tests).then(async (x) => {
-    const suites = x.flat();
+  return class extends Testeranto<
+    TestShape,
+    InitialStateShape,
+    Selection,
+    Store,
+    Subject,
+    WhenShape,
+    ThenShape,
+    TestResourceShape,
+    Input
+  > {
+    constructor() {
+      super(
+        testImplementation,
+        /* @ts-ignore:next-line */
+        testSpecification,
+        input,
 
-    const testsWithoutResources: ITestResults = suites
-      .filter((s) => !s.testResource)
-      .map(async (suite) => {
-        let status;
-        try {
-          await suite.runner({});
-          status = "pass";
-        } catch (e) {
-          console.error(e);
-          status = e;
-        }
-
-        return {
-          test: suite.test,
-          status,
-        };
-      });
-
-    const portTestresults = await processTestsWithPorts(
-      suites.filter((s) => s.testResource === "port"),
-      testResources.ports
-    );
-
-    Promise.all([...testsWithoutResources, ...portTestresults]).then(
-      (result) => {
-        fs.writeFile(
-          "./dist/testerantoResults.txt",
-          JSON.stringify(result, null, 2),
-          (err) => {
-            if (err) {
-              console.error(err);
-            }
-
-            const failures = result.filter((r) => r.status != "pass");
-
-            if (failures.length) {
-              console.warn(
-                `❌ You have failing tests: ${JSON.stringify(
-                  failures.map((f) => f.test.name)
-                )}`
-              );
-              process.exit(-1);
-            } else {
-              console.log("✅ All tests passed ");
-              process.exit(0);
-            }
+        (class extends BaseSuite<Input, Subject, Store, Selection, ThenShape> {
+          async setup(s: Input): Promise<Subject> {
+            return beforeAll(s);
           }
-        );
-      }
-    );
-  });
+
+          test(t: ThenShape): unknown {
+            return assertioner(t);
+          }
+
+        }),
+
+        class Given extends BaseGiven<Subject, Store, Selection, ThenShape> {
+
+          initialValues: any;
+
+          constructor(
+            name: string,
+            features: BaseFeature[],
+            whens: BaseWhen<Store, Selection, ThenShape>[],
+            thens: BaseThen<Selection, Store, ThenShape>[],
+            initialValues: any,
+          ) {
+            super(name, features, whens, thens);
+            this.initialValues = initialValues;
+          }
+          async givenThat(subject, testResource) {
+            return beforeEach(subject, this.initialValues, testResource);
+          }
+
+        },
+
+        class When extends BaseWhen<Store, Selection, WhenShape> {
+          payload?: any;
+
+          constructor(name: string, actioner: (...any) => any, payload?: any) {
+            super(name, (store) => {
+              return actionHandler(actioner)
+            });
+            this.payload = payload;
+          }
+
+          andWhen(store, actioner, testResource) {
+            return andWhen(store, actioner, testResource);
+          }
+        },
+
+        class Then extends BaseThen<Selection, Store, ThenShape> {
+
+          constructor(
+            name: string,
+            callback: (val: Selection) => ThenShape
+          ) {
+            super(name, callback);
+          }
+
+          butThen(store: any, testResourceConfiguration?): Promise<Selection>{
+            return butThen(store, this.thenCB, testResourceConfiguration)
+          }
+          // butThen(store, testResource) {
+          //   const b = butThen(store, this.thenCB, testResource);
+          //   return b;
+          // }
+        },
+
+        class Check extends BaseCheck<Subject, Store, Selection, ThenShape> {
+          initialValues: any;
+
+          constructor(
+            name: string,
+            features: BaseFeature[],
+            checkCallback: (a, b) => any,
+            whens,
+            thens,
+            initialValues: any,
+          ) {
+            super(name, features, checkCallback, whens, thens);
+            this.initialValues = initialValues;
+          }
+
+          async checkThat(subject, testResource) {
+            return beforeEach(subject, this.initialValues, testResource);
+          }
+        },
+        testResource
+
+      );
+    }
+  }
+
 };
