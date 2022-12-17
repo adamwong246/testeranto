@@ -705,7 +705,6 @@ export const TesterantoFactory = <
         },
 
         class Then extends BaseThen<Selection, Store, ThenShape> {
-
           constructor(
             name: string,
             callback: (val: Selection) => ThenShape
@@ -713,9 +712,14 @@ export const TesterantoFactory = <
             super(name, callback);
           }
 
-          butThen(store: any, testResourceConfiguration?): Promise<Selection>{
+          butThen(store: any, testResourceConfiguration?: any): Promise<Selection> {
+            // throw new Error("Method not implemented.");
             return butThen(store, this.thenCB, testResourceConfiguration)
           }
+
+          // butThen(store: any, testResourceConfiguration?): Promise<Selection>{
+          //   return butThen(store, this.thenCB, testResourceConfiguration)
+          // }
           // butThen(store, testResource) {
           //   const b = butThen(store, this.thenCB, testResource);
           //   return b;

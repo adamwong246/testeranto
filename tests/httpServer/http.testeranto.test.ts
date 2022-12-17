@@ -1,3 +1,4 @@
+import { assert } from "chai";
 import http from "http";
 
 import {TesterantoFactory} from "../../index";
@@ -42,11 +43,12 @@ export const HttpTesteranto = <
     (input) => input,
     async (serverFactory, initialValues, testResource) => {
       const server = serverFactory();
+      console.log("server starting...")
       await server.listen(testResource);
       return server;
     },
     
-    // andWhen
+    // andWhen  
     async (store, actioner, testResource) => {
       const [path, body]: [string, string] = actioner(store)();
       const y = await fetch(
@@ -62,11 +64,38 @@ export const HttpTesteranto = <
     // butThen
     async (store, callback, testResource) => {
       const [path, expectation]: [string, string] = callback({});
-      const bodytext = await(
+      const bodytext = await (
         await fetch(`http://localhost:${testResource.toString()}/${path}`)
       ).text();
+      assert.equal(bodytext, expectation);
       return bodytext;
+      // const [path, expectation]: [string, string] = callback({});
+
+      // return new Promise((res) => {
+      //   fetch(`http://localhost:${testResource.toString()}/${path}`).then((response) => {
+      //     return response.text()
+      //   }).then((bodytext) => {
+      //     res(assert.equal(bodytext, expectation));
+      //   })
+      // });
+
+      
+      // const bodytext = await(
+      //   await fetch(`http://localhost:${testResource.toString()}/${path}`)
+      // ).text();
+      // assert.equal(bodytext, expectation);
+      // return bodytext;
     },
+    // async (store, callback, testResource) => {
+    //   const [path, expectation]: [string, string] = callback({});
+    //   const bodytext = await(
+    //     await fetch(`http://localhost:${testResource.toString()}/${path}`)
+    //   ).text();
+    //   assert.equal(bodytext, expectation);
+    //   return bodytext;
+    // },
+
+    
     (t) => t,
     async (server) => {
       await server.close();

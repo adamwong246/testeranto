@@ -1,4 +1,3 @@
-import { assert } from "chai";
 import features from "../testerantoFeatures.test";
 import { HttpTesteranto } from "./http.testeranto.test";
 import { serverFactory } from "./server";
@@ -63,43 +62,43 @@ export const ServerHttpTesteranto = HttpTesteranto<
             "a http boringfeature",
             [myFeature],
             [],
-            [Then.TheStatusIs("some great status???")]
+            [Then.TheStatusIs("some great status")]
           ),
-          // Given.AnEmptyState(
-          //   "a http feature",
-          //   [myFeature],
-          //   [When.PostToStatus("hello")],
-          //   [Then.TheStatusIs("hello")]
-          // ),
-          // Given.AnEmptyState(
-          //   "a httpfeature",
-          //   [myFeature],
-          //   [When.PostToStatus("hello"), When.PostToStatus("aloha")],
-          //   [Then.TheStatusIs("aloha")]
-          // ),
-          // Given.AnEmptyState(
-          //   "a feature",
-          //   [myFeature],
-          //   [],
-          //   [Then.TheNumberIs(0)]
-          // ),
-          // Given.AnEmptyState(
-          //   "a httpfeature",
-          //   [myFeature],
-          //   [When.PostToAdd(1), When.PostToAdd(2)],
-          //   [Then.TheNumberIs(3)]
-          // ),
-          // Given.AnEmptyState(
-          //   "another http feature",
-          //   [myFeature],
-          //   [
-          //     When.PostToStatus("aloha"),
-          //     When.PostToAdd(4),
-          //     When.PostToStatus("hello"),
-          //     When.PostToAdd(3),
-          //   ],
-          //   [Then.TheStatusIs("hello"), Then.TheNumberIs(77)]
-          // ),
+          Given.AnEmptyState(
+            "a http feature",
+            [myFeature],
+            [When.PostToStatus("hello")],
+            [Then.TheStatusIs("hello")]
+          ),
+          Given.AnEmptyState(
+            "a httpfeature",
+            [myFeature],
+            [When.PostToStatus("hello"), When.PostToStatus("aloha")],
+            [Then.TheStatusIs("aloha")]
+          ),
+          Given.AnEmptyState(
+            "a feature",
+            [myFeature],
+            [],
+            [Then.TheNumberIs(0)]
+          ),
+          Given.AnEmptyState(
+            "a httpfeature",
+            [myFeature],
+            [When.PostToAdd(1), When.PostToAdd(2)],
+            [Then.TheNumberIs(3)]
+          ),
+          Given.AnEmptyState(
+            "another http feature",
+            [myFeature],
+            [
+              When.PostToStatus("aloha"),
+              When.PostToAdd(4),
+              When.PostToStatus("hello"),
+              When.PostToAdd(3),
+            ],
+            [Then.TheStatusIs("hello"), Then.TheNumberIs(77)]
+          ),
         ],
         [
           // Check.AnEmptyState(
