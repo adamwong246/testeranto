@@ -53,60 +53,60 @@ export const reporter = async (
   await Promise.all(tests).then(async (x) => {
     const suites = x.flat();
 
-    // const testsWithoutResources: ITestResults = suites
-    //   .filter((s) => !s.testResource)
-    //   .map(async (suite) => {
-    //     let status;
-    //     try {
-    //       await suite.runner({});
-    //       status = "pass";
-    //     } catch (e) {
-    //       console.error(e);
-    //       status = e;
-    //     }
+    const testsWithoutResources: ITestResults = suites
+      .filter((s) => s.testResource === "na")
+      .map(async (suite) => {
+        let status;
+        try {
+          await suite.runner({});
+          status = "pass";
+        } catch (e) {
+          console.error(e);
+          status = e;
+        }
 
-    //     return {
-    //       test: suite.test,
-    //       status,
-    //     };
-    //   });
+        return {
+          test: suite.test,
+          status,
+        };
+      });
 
     const portTestresults = await processTestsWithPorts(
       suites.filter((s) => s.testResource === "port"),
       testResources.ports
     );
 
-    // console.log("portTestresults", suites.filter((s) => s.testResource === "port"))
+    console.log("testsWithoutResources", testsWithoutResources);
 
-    // Promise.all([
-    //   ...testsWithoutResources,
-    //   ...portTestresults
-    // ]).then(
-    //   (result) => {
-    //     fs.writeFile(
-    //       "./dist/testerantoResults.txt",
-    //       JSON.stringify(result, null, 2),
-    //       (err) => {
-    //         if (err) {
-    //           console.error(err);
-    //         }
+    Promise.all([
+      ...testsWithoutResources,
+      ...portTestresults
+    ]).then(
+      (result) => {
+        fs.writeFile(
+          "./dist/testerantoResults.txt",
+          JSON.stringify(result, null, 2),
+          (err) => {
+            if (err) {
+              console.error(err);
+            }
 
-    //         const failures = result.filter((r) => r.status != "pass");
+            const failures = result.filter((r) => r.status != "pass");
 
-    //         if (failures.length) {
-    //           console.warn(
-    //             `❌ You have failing tests: ${JSON.stringify(
-    //               failures.map((f) => f.test.name)
-    //             )}`
-    //           );
-    //           process.exit(-1);
-    //         } else {
-    //           console.log("✅ All tests passed ");
-    //           process.exit(0);
-    //         }
-    //       }
-    //     );
-    //   }
-    // );
+            if (failures.length) {
+              console.warn(
+                `❌ You have failing tests: ${JSON.stringify(
+                  failures.map((f) => f.test.name)
+                )}`
+              );
+              process.exit(-1);
+            } else {
+              console.log("✅ All tests passed ");
+              process.exit(0);
+            }
+          }
+        );
+      }
+    );
   });
 };

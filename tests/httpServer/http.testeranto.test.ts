@@ -68,8 +68,15 @@ export const HttpTesteranto = <
       return bodytext;
     },
     (t) => t,
-    (store) => store,
-    (actioner) => actioner,
+    async (server) => {
+      await server.close();
+      return server;
+    },
+    (actioner) => {
+      console.log("mark1", actioner.toString())
+      return actioner
+
+    },
     "port"
   )
   

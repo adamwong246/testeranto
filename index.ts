@@ -1,5 +1,5 @@
 import { mapValues } from "lodash";
-import { ITestImplementation, ITestSpecification, ITTestShape } from "./src/testShapes"
+import { ITestImplementation, ITestSpecification, ITTestResource, ITTestShape } from "./src/testShapes"
 
 export class BaseFeature {
   name: string;
@@ -629,9 +629,9 @@ export const TesterantoFactory = <
   andWhen: (store: Store, actioner, testResource: TestResourceShape) => Promise<Selection>,
   butThen: (store: Store, callback, testResource: TestResourceShape) => Promise<Selection>,
   assertioner: (t: ThenShape) => any,
-  teardown: (store: Store) => unknown,
+  teardown: (store: Store, ndx: number) => unknown,
   actionHandler: (b: () => any) => any,
-  testResource: "port"
+  testResource: ITTestResource
 
 ) => {
   return class extends Testeranto<
@@ -661,6 +661,8 @@ export const TesterantoFactory = <
             return assertioner(t);
           }
 
+          
+
         }),
 
         class Given extends BaseGiven<Subject, Store, Selection, ThenShape> {
@@ -679,6 +681,10 @@ export const TesterantoFactory = <
           }
           async givenThat(subject, testResource) {
             return beforeEach(subject, this.initialValues, testResource);
+          }
+
+          teardown(store: Store, ndx: number): Promise<unknown> {
+            return new Promise((res) => res(teardown(store, ndx)))
           }
 
         },
@@ -733,6 +739,10 @@ export const TesterantoFactory = <
 
           async checkThat(subject, testResource) {
             return beforeEach(subject, this.initialValues, testResource);
+          }
+
+          teardown(store: Store, ndx: number): Promise<unknown> {
+            return new Promise((res) => res(teardown(store, ndx)))
           }
         },
         testResource

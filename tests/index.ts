@@ -18,13 +18,14 @@ export type ITestResource = "port";
 
 reporter(
   [
-    new AppReduxTesteranto()[0],
+    // new AppReduxTesteranto()[0],
+    new ServerHttpTesteranto()[0]
 
     // new AppReduxTest()[0],
     // new AppReduxToolkitTest()[0],
     // new LoginAppReactTesteranto()[0],
     // new RectangleTesteranto()[0],
-    // new ServerHttpTesteranto()[0]
+    
 
     // new AppReactTesteranto()[0],
     

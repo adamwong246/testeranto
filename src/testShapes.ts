@@ -1,5 +1,7 @@
 import { BaseGiven, BaseCheck, BaseSuite, BaseFeature, BaseWhen, BaseThen } from "..";
 
+export type  ITTestResource = "port" | "na";
+
 export type IT = {
   name: string;
   givens: BaseGiven<unknown, unknown, unknown, unknown>[];

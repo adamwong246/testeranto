@@ -63,14 +63,14 @@ export const ServerHttpTesteranto = HttpTesteranto<
             "a http boringfeature",
             [myFeature],
             [],
-            [Then.TheStatusIs("some great status")]
+            [Then.TheStatusIs("some great status???")]
           ),
-          Given.AnEmptyState(
-            "a http feature",
-            [myFeature],
-            [When.PostToStatus("hello")],
-            [Then.TheStatusIs("hello")]
-          ),
+          // Given.AnEmptyState(
+          //   "a http feature",
+          //   [myFeature],
+          //   [When.PostToStatus("hello")],
+          //   [Then.TheStatusIs("hello")]
+          // ),
           // Given.AnEmptyState(
           //   "a httpfeature",
           //   [myFeature],
@@ -98,7 +98,7 @@ export const ServerHttpTesteranto = HttpTesteranto<
           //     When.PostToStatus("hello"),
           //     When.PostToAdd(3),
           //   ],
-          //   [Then.TheStatusIs("hello"), Then.TheNumberIs(7)]
+          //   [Then.TheStatusIs("hello"), Then.TheNumberIs(77)]
           // ),
         ],
         [
