@@ -478,14 +478,7 @@ export abstract class Testeranto<
         [K in keyof ITestShape["checks"]]: (
           name: string,
           features: BaseFeature[],
-          cbz:
-            (
-              ...any
-              // a: any,
-              // b: any
-              // { TheEmailIsSetTo }: { TheEmailIsSetTo: any },
-              // { TheEmailIs }: { TheEmailIs: any }
-            ) => Promise<void>
+          cbz: (...any) => Promise<void>
         ) => any;
       }
     ) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape>[],

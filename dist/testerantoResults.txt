@@ -1,237 +1,22 @@
 [
   {
     "test": {
-      "name": "Testing the Redux store",
+      "name": "Testing the Server with Puppeteer",
       "givens": [
         {
-          "name": "BDD gherkin style",
-          "features": [
-            {
-              "name": "hello"
-            }
-          ],
-          "whens": [
-            {
-              "name": "TheEmailIsSetTo: adam@email.com"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheEmailIs: adam@email.com"
-            }
-          ],
-          "initialValues": {
-            "password": "",
-            "email": "",
-            "error": "no_error"
-          }
-        }
-      ],
-      "checks": []
-    },
-    "status": "pass"
-  },
-  {
-    "test": {
-      "name": "Testing the ReduxToolkit",
-      "givens": [
-        {
-          "name": "BDD gherkin style",
-          "features": [],
-          "whens": [
-            {
-              "name": "TheEmailIsSetTo: adam@email.com"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheEmailIs: adam@email.com"
-            }
-          ],
-          "initialValues": {
-            "password": "",
-            "email": "",
-            "error": "no_error"
-          }
-        },
-        {
-          "name": "another feature",
-          "features": [],
-          "whens": [
-            {
-              "name": "TheEmailIsSetTo: hello"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheEmailIsNot: adam@email.com"
-            }
-          ],
-          "initialValues": {
-            "password": "",
-            "email": "bob@mail.com",
-            "error": "no_error"
-          }
-        },
-        {
-          "name": "yet another feature",
-          "features": [],
-          "whens": [
-            {
-              "name": "TheEmailIsSetTo: hello"
-            },
-            {
-              "name": "TheEmailIsSetTo: aloha"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheEmailIs: aloha"
-            }
-          ],
-          "initialValues": {
-            "password": "",
-            "email": "",
-            "error": "no_error"
-          }
-        },
-        {
-          "name": "OMG a feature!",
+          "name": "a boring Puppeteer feature",
           "features": [],
           "whens": [],
           "thens": [
             {
-              "name": "TheEmailIs: "
-            }
-          ],
-          "initialValues": {
-            "password": "",
-            "email": "",
-            "error": "no_error"
-          }
-        }
-      ],
-      "checks": [
-        {
-          "name": "imperative style",
-          "features": [],
-          "whens": {},
-          "thens": {}
-        }
-      ]
-    },
-    "status": "pass"
-  },
-  {
-    "test": {
-      "name": "Testing the LoginPage as react",
-      "givens": [
-        {
-          "name": "Set the email and check the email",
-          "features": [],
-          "whens": [
-            {
-              "name": "TheEmailIsSetTo: adam@email.com"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheEmailIs: adam@email.com"
+              "name": "TheStatusIs: some great status?"
             }
           ],
           "initialValues": {}
         },
         {
-          "name": "Set the email by initial state, then set the email normally, and then check some other stuff",
+          "name": "a nother Puppeteer feature",
           "features": [],
-          "whens": [
-            {
-              "name": "TheEmailIsSetTo: adam@email.com"
-            },
-            {
-              "name": "ThePasswordIsSetTo: secret"
-            }
-          ],
-          "thens": [
-            {
-              "name": "TheEmailIsNot: wade@rpc"
-            },
-            {
-              "name": "TheEmailIs: adam@email.com"
-            },
-            {
-              "name": "ThePasswordIs: secret"
-            },
-            {
-              "name": "ThePasswordIsNot: idk"
-            }
-          ],
-          "initialValues": {}
-        },
-        {
-          "name": "Don't show an email error just because the email does not validate",
-          "features": [],
-          "whens": [
-            {
-              "name": "TheEmailIsSetTo: adam"
-            }
-          ],
-          "thens": [
-            {
-              "name": "ThereIsNotAnEmailError: undefined"
-            }
-          ],
-          "initialValues": {}
-        },
-        {
-          "name": "Do show an email error after submitting",
-          "features": [],
-          "whens": [
-            {
-              "name": "TheEmailIsSetTo: adam"
-            },
-            {
-              "name": "TheLoginIsSubmitted: undefined"
-            }
-          ],
-          "thens": [
-            {
-              "name": "ThereIsAnEmailError: undefined"
-            }
-          ],
-          "initialValues": {}
-        }
-      ],
-      "checks": []
-    },
-    "status": "pass"
-  },
-  {
-    "test": {
-      "name": "Testing the Node server with fetch",
-      "givens": [
-        {
-          "name": "a http boringfeature",
-          "features": [
-            {
-              "name": "hello"
-            }
-          ],
-          "whens": [],
-          "thens": [
-            {
-              "name": "TheStatusIs: some great status"
-            }
-          ],
-          "initialValues": {}
-        },
-        {
-          "name": "a http feature",
-          "features": [
-            {
-              "name": "hello"
-            }
-          ],
           "whens": [
             {
               "name": "PostToStatus: hello"
@@ -245,7 +30,7 @@
           "initialValues": {}
         },
         {
-          "name": "a httpfeature",
+          "name": "yet another Puppeteer feature",
           "features": [
             {
               "name": "hello"
@@ -268,11 +53,7 @@
         },
         {
           "name": "a feature",
-          "features": [
-            {
-              "name": "hello"
-            }
-          ],
+          "features": [],
           "whens": [],
           "thens": [
             {
@@ -282,7 +63,7 @@
           "initialValues": {}
         },
         {
-          "name": "a httpfeature",
+          "name": "still further Puppeteer features?!",
           "features": [
             {
               "name": "hello"
@@ -304,7 +85,7 @@
           "initialValues": {}
         },
         {
-          "name": "another http feature",
+          "name": "another Puppeteer feature",
           "features": [
             {
               "name": "hello"
@@ -337,6 +118,14 @@
       ],
       "checks": []
     },
-    "status": "pass"
+    "status": {
+      "name": "AssertionError",
+      "message": "expected 'some great status' to equal 'some great status?'",
+      "showDiff": true,
+      "actual": "some great status",
+      "expected": "some great status?",
+      "operator": "strictEqual",
+      "stack": "AssertionError: expected 'some great status' to equal 'some great status?'\n    at /Users/adam/Code/testeranto.ts/tests/httpServer/puppeteer-http.testeranto.test.ts:85:14\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Then.test (/Users/adam/Code/testeranto.ts/index.ts:139:24)\n    at async Given.give (/Users/adam/Code/testeranto.ts/index.ts:96:17)\n    at async constructor.run (/Users/adam/Code/testeranto.ts/index.ts:46:7)\n    at async Object.runner (/Users/adam/Code/testeranto.ts/index.ts:591:11)\n    at async popper (/Users/adam/Code/testeranto.ts/src/reporter.ts:19:17)"
+    }
   }
 ]
