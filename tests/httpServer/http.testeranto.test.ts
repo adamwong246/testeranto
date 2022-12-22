@@ -43,7 +43,6 @@ export const HttpTesteranto = <
     (input) => input,
     async (serverFactory, initialValues, testResource) => {
       const server = serverFactory();
-      console.log("server starting...")
       await server.listen(testResource);
       return server;
     },
@@ -58,7 +57,6 @@ export const HttpTesteranto = <
           body,
         }
       );
-
       return await y.text();
     },
     // butThen
@@ -72,14 +70,11 @@ export const HttpTesteranto = <
     },
     (t) => t,
     async (server) => {
-
-      console.log("...server stopping")
       return new Promise((res) => {
         server.close(() => {
           res(server)
         })
       })
-
     },
     (actioner) => actioner,
     "port"

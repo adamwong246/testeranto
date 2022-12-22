@@ -1,110 +1,54 @@
 import renderer, { act, ReactTestRenderer } from "react-test-renderer";
+import { TesterantoFactory } from "../../index";
+import { ITestImplementation, ITestSpecification, ITTestShape } from "../../src/testShapes";
 
-import {
-  BaseCheck,
-  BaseGiven,
-  BaseSuite,
-  BaseThen,
-  BaseWhen,
-  ITestImplementation,
-  ITestSpecification,
-  ITTestShape,
-  Testeranto,
-} from "../../index";
+type TestResource = never;
+type WhenShape = any;
+type ThenShape = any;
+type Input = () => JSX.Element;
 
-type ITestResource = never;
-
-type IWhenShape = any;
-type IThenShape = any;
-
-type IInput = () => JSX.Element;
-type ISubject = () => JSX.Element;
-type IState = unknown;
-type IStore = ReactTestRenderer;
-type ISelection = ReactTestRenderer;
-
-export class ReactTesteranto<ITestShape extends ITTestShape> extends Testeranto<
-  ITestShape,
-  IState,
-  ISelection,
-  IStore,
-  ISubject,
-  IWhenShape,
-  IThenShape,
-  ITestResource,
-  IInput
-> {
-  constructor(
-    testImplementation: ITestImplementation<IState, ISelection, IWhenShape, IThenShape, ITestShape>,
-    testSpecification: ITestSpecification<ITestShape>,
-    thing
-  ) {
-    super(
-      testImplementation,
-      /* @ts-ignore:next-line */
-      testSpecification,
-      thing,
-
-      class Suite extends BaseSuite<
-          IInput,
-          ISubject,
-          IStore,
-          ISelection,
-          IThenShape
-        > { },
-
-      class Given extends BaseGiven<
-          ISubject,
-          IStore,
-          ISelection,
-          IThenShape
-        > {
-          givenThat(subject: () => JSX.Element) {
-            let component;
-            act(() => {
-              component = renderer.create(subject());
-            });
-            return component;
-          }
-        },
-      
-      class When extends BaseWhen<
-        IStore,
-        ISelection,
-        IThenShape
-      > {
-        andWhen(store: renderer.ReactTestRenderer) {
-          return act(() => this.actioner(store));
-        }
-      },
-      
-      class Then extends BaseThen<
-          ISelection,
-          IStore,
-          IThenShape
-        > {
-          butThen(
-            component: renderer.ReactTestRenderer
-          ) {
-            return component;
-          }
-        },
-      
-      class Check extends BaseCheck<
-          ISubject,
-          IStore,
-          ISelection,
-          IThenShape
-        > {
-          checkThat(subject: () => JSX.Element) {
-            let component;
-            act(() => {
-              component = renderer.create(subject());
-            });
-            return component;
-          }
-        },
-      
-    );
-  }
-}
+export const ReactTesteranto = <
+  ITestShape extends ITTestShape
+>(
+  testImplementations: ITestImplementation<
+    unknown,
+    renderer.ReactTestRenderer,
+    WhenShape,
+    ThenShape,
+    ITestShape
+  >,
+  testSpecifications: ITestSpecification<ITestShape>,
+  testInput: Input
+) =>
+  TesterantoFactory<
+    ITestShape,
+    Input,
+    Input,
+    renderer.ReactTestRenderer,
+    renderer.ReactTestRenderer,
+    WhenShape,
+    ThenShape,
+    TestResource,
+    unknown
+  >(
+    testInput,
+    testSpecifications,
+    testImplementations,
+    (input) => input,
+    async (subject, initialValues) => {
+      let component;
+      await act(() => {
+        component = renderer.create(subject());
+      });
+      return component;
+    },
+    async (renderer, actioner) => {
+      await act(() => actioner()(renderer))
+      return renderer;
+    },
+    async (renderer, callback, testResource) => renderer,
+    (t) => t,
+    (renderer) => renderer,
+    (actioner) => actioner,
+    "na"
+  )

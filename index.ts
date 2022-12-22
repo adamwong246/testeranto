@@ -610,8 +610,8 @@ export const TesterantoFactory = <
   Subject,
   Store,
   Selection,
-  ThenShape,
   WhenShape,
+  ThenShape,
   TestResourceShape,
   InitialStateShape
 >(
@@ -630,9 +630,8 @@ export const TesterantoFactory = <
   butThen: (store: Store, callback, testResource: TestResourceShape) => Promise<Selection>,
   assertioner: (t: ThenShape) => any,
   teardown: (store: Store, ndx: number) => unknown,
-  actionHandler: (b: () => any) => any,
+  actionHandler: (b: (...any) => any) => any,
   testResource: ITTestResource
-
 ) => {
   return class extends Testeranto<
     TestShape,
@@ -651,24 +650,17 @@ export const TesterantoFactory = <
         /* @ts-ignore:next-line */
         testSpecification,
         input,
-
         (class extends BaseSuite<Input, Subject, Store, Selection, ThenShape> {
           async setup(s: Input): Promise<Subject> {
             return beforeAll(s);
           }
-
           test(t: ThenShape): unknown {
             return assertioner(t);
           }
-
-          
-
         }),
 
         class Given extends BaseGiven<Subject, Store, Selection, ThenShape> {
-
           initialValues: any;
-
           constructor(
             name: string,
             features: BaseFeature[],
@@ -682,11 +674,9 @@ export const TesterantoFactory = <
           async givenThat(subject, testResource) {
             return beforeEach(subject, this.initialValues, testResource);
           }
-
           teardown(store: Store, ndx: number): Promise<unknown> {
             return new Promise((res) => res(teardown(store, ndx)))
           }
-
         },
 
         class When extends BaseWhen<Store, Selection, WhenShape> {
@@ -713,17 +703,8 @@ export const TesterantoFactory = <
           }
 
           butThen(store: any, testResourceConfiguration?: any): Promise<Selection> {
-            // throw new Error("Method not implemented.");
             return butThen(store, this.thenCB, testResourceConfiguration)
           }
-
-          // butThen(store: any, testResourceConfiguration?): Promise<Selection>{
-          //   return butThen(store, this.thenCB, testResourceConfiguration)
-          // }
-          // butThen(store, testResource) {
-          //   const b = butThen(store, this.thenCB, testResource);
-          //   return b;
-          // }
         },
 
         class Check extends BaseCheck<Subject, Store, Selection, ThenShape> {

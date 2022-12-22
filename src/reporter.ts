@@ -76,8 +76,6 @@ export const reporter = async (
       testResources.ports
     );
 
-    console.log("testsWithoutResources", testsWithoutResources);
-
     Promise.all([
       ...testsWithoutResources,
       ...portTestresults
@@ -101,7 +99,7 @@ export const reporter = async (
               );
               process.exit(-1);
             } else {
-              console.log("✅ All tests passed ");
+              console.log("✅ All tests passed:", (result.filter((r) => r.status === "pass").map((p) => p.test.name)).join(", ") );
               process.exit(0);
             }
           }
