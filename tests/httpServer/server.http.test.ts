@@ -97,7 +97,7 @@ export const ServerHttpTesteranto = HttpTesteranto<
               When.PostToStatus("hello"),
               When.PostToAdd(3),
             ],
-            [Then.TheStatusIs("hello"), Then.TheNumberIs(77)]
+            [Then.TheStatusIs("hello"), Then.TheNumberIs(7)]
           ),
         ],
         [

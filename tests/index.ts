@@ -18,7 +18,7 @@ export type ITestResource = "port";
 
 reporter(
   [
-    // new AppReduxTesteranto()[0],
+    new AppReduxTesteranto()[0],
     new ServerHttpTesteranto()[0]
 
     // new AppReduxTest()[0],

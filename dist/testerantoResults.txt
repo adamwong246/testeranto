@@ -1,6 +1,38 @@
 [
   {
     "test": {
+      "name": "Testing the Redux store",
+      "givens": [
+        {
+          "name": "BDD gherkin style",
+          "features": [
+            {
+              "name": "hello"
+            }
+          ],
+          "whens": [
+            {
+              "name": "TheEmailIsSetTo: adam@email.com"
+            }
+          ],
+          "thens": [
+            {
+              "name": "TheEmailIs: adam@email.com"
+            }
+          ],
+          "initialValues": {
+            "password": "",
+            "email": "",
+            "error": "no_error"
+          }
+        }
+      ],
+      "checks": []
+    },
+    "status": "pass"
+  },
+  {
+    "test": {
       "name": "Testing the Node server with fetch",
       "givens": [
         {
@@ -122,7 +154,7 @@
               "name": "TheStatusIs: hello"
             },
             {
-              "name": "TheNumberIs: 77"
+              "name": "TheNumberIs: 7"
             }
           ],
           "initialValues": {}
@@ -130,14 +162,6 @@
       ],
       "checks": []
     },
-    "status": {
-      "name": "AssertionError",
-      "message": "expected 'some great status' to equal 'hello'",
-      "showDiff": true,
-      "actual": "some great status",
-      "expected": "hello",
-      "operator": "strictEqual",
-      "stack": "AssertionError: expected 'some great status' to equal 'hello'\n    at /Users/adam/Code/testeranto.ts/tests/httpServer/http.testeranto.test.ts:70:14\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Then.test (/Users/adam/Code/testeranto.ts/index.ts:139:24)\n    at async Given.give (/Users/adam/Code/testeranto.ts/index.ts:96:17)\n    at async constructor.run (/Users/adam/Code/testeranto.ts/index.ts:46:7)\n    at async Object.runner (/Users/adam/Code/testeranto.ts/index.ts:598:11)\n    at async popper (/Users/adam/Code/testeranto.ts/src/reporter.ts:19:17)"
-    }
+    "status": "pass"
   }
 ]
