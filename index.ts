@@ -553,7 +553,8 @@ export const TesterantoFactory = <
     WhenShape,
     ThenShape,
     TestShape
-  >,
+    >,
+  testResource: ITTestResource,
   beforeAll: (input: Input) => Promise<Subject>,
   beforeEach: (subject: Subject, initialValues, testResource: TestResourceShape) => Promise<Store>,
   andWhen: (store: Store, actioner, testResource: TestResourceShape) => Promise<Selection>,
@@ -561,7 +562,7 @@ export const TesterantoFactory = <
   assertioner: (t: ThenShape) => any,
   teardown: (store: Store, ndx: number) => unknown,
   actionHandler: (b: (...any) => any) => any,
-  testResource: ITTestResource
+  
 ) => {
   return class extends Testeranto<
     TestShape,

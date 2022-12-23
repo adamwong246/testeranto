@@ -47,6 +47,7 @@ export const ReduxTesteranto = <
     testInput,
     testSpecifications,
     testImplementations,
+    "na",
     async (input) => input,
     (reducerSubject, initialValues) =>
       createStore<IStoreShape, any, any, any>(reducerSubject, initialValues),
@@ -59,5 +60,5 @@ export const ReduxTesteranto = <
     (t) => t,
     (server) => server,
     (actioner) => actioner(),
-    "na"
+    
   )

@@ -30,6 +30,6 @@ reporter(
     new ClassicalComponentReactTestRendererTesteranto()[0],
   ],
   {
-    ports: [3000],
+    ports: [3000, 3001],
   }
 );

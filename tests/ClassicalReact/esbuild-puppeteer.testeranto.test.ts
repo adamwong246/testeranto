@@ -48,6 +48,7 @@ export const EsbuildPuppeteerTesteranto = <
     testInput,
     testSpecifications,
     testImplementations,
+    "na",
     async ([bundlePath, htmlTemplate]: Input) => {
       return {
         page: await (
@@ -90,5 +91,5 @@ export const EsbuildPuppeteerTesteranto = <
       return { page };
     },
     (actioner) => actioner,
-    "na"
+    
   )

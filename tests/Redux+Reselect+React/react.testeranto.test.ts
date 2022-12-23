@@ -34,6 +34,7 @@ export const ReactTesteranto = <
     testInput,
     testSpecifications,
     testImplementations,
+    "na",
     async (input) => input,
     async (subject, initialValues) => {
       let component;
@@ -50,5 +51,4 @@ export const ReactTesteranto = <
     (t) => t,
     (renderer) => renderer,
     (actioner) => actioner,
-    "na"
   )

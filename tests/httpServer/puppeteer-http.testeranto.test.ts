@@ -41,6 +41,7 @@ export const PuppeteerHttpTesteranto = <
     testInput,
     testSpecifications,
     testImplementations,
+    "port",
     async (input) => input,
     async (serverFactory, initialValues, port) => {
 
@@ -90,5 +91,5 @@ export const PuppeteerHttpTesteranto = <
       });
     },
     (actioner) => actioner,
-    "port"
+    
   )
