@@ -42,54 +42,56 @@ export const PuppeteerHttpTesteranto = <
     testSpecifications,
     testImplementations,
     "port",
-    async (input) => input,
-    async (serverFactory, initialValues, port) => {
-
-      return new Promise((res) => {
-        puppeteer
-          .launch({
-            headless: true,
-            executablePath:
-              "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-          })
-          .then((browser) => {
-            const server = serverFactory();
-            res({ server: server.listen(port), browser });
-          });
-      });
-    },
-
-    // andWhen  
-    async (store, actioner, testResource) => {
-      const [path, body]: [string, string] = actioner(store)();
-      const y = await fetch(
-        `http://localhost:${testResource.toString()}/${path}`,
-        {
-          method: "POST",
-          body,
-        }
-      );
-      return await y.text();
-    },
-    // butThen
-    async (store, callback, port) => {
-      const [path, expectation]: [string, string] = callback({});
-      const bodytext = await (
-        await fetch(`http://localhost:${port.toString()}/${path}`)
-      ).text();
-      assert.equal(bodytext, expectation);
-      return bodytext;
-
-    },
-    (t) => t,
-    async (subject) => {
-      return new Promise<void>((resolve) => {
-        subject.browser.close();
-        subject.server.close(() => {
-          resolve();
+    {
+      beforeAll: async function (input: Input): Promise<Subject> {
+        return input;
+      },
+      beforeEach: function (serverFactory : Subject, initialValues: any, port): Promise<Store> {
+        return new Promise((res) => {
+          puppeteer
+            .launch({
+              headless: true,
+              executablePath:
+                "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+            })
+            .then((browser) => {
+              const server = serverFactory();
+              res({ server: server.listen(port), browser });
+            });
         });
-      });
-    },
-    (actioner) => actioner,
-    
+      },
+      andWhen: async function (store: Store, actioner: any, port): Promise<string> {
+        const [path, body]: [string, string] = actioner(store)();
+        const y = await fetch(
+          `http://localhost:${port.toString()}/${path}`,
+          {
+            method: "POST",
+            body,
+          }
+        );
+        return await y.text();
+      },
+      butThen: async function (store: Store, callback: any, port): Promise<string> {
+        const [path, expectation]: [string, string] = callback({});
+        const bodytext = await(
+          await fetch(`http://localhost:${port.toString()}/${path}`)
+        ).text();
+        assert.equal(bodytext, expectation);
+        return bodytext;
+      },
+      assertioner: function (t: WhenShape) {
+        return t;
+      },
+      teardown: function (store: Store, ndx: number): unknown {
+        return new Promise<void>((resolve) => {
+          store.browser.close();
+          store.server.close(() => {
+            resolve();
+          });
+        });
+      },
+      actionHandler: function (b: (...any: any[]) => any) {
+        return b;
+      }
+    }
   )

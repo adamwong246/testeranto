@@ -4,8 +4,8 @@ import {
   Reducer,
 } from "@reduxjs/toolkit";
 
-import { createStore, Store, AnyAction, PreloadedState } from "redux";
-import { TesterantoFactory} from "../../index";
+import { createStore, Store, AnyAction } from "redux";
+import { TesterantoFactory } from "../../index";
 import { ITestImplementation, ITestSpecification, ITTestShape } from "../../src/testShapes";
 
 type TestResource = never;
@@ -48,17 +48,26 @@ export const ReduxTesteranto = <
     testSpecifications,
     testImplementations,
     "na",
-    async (input) => input,
-    (reducerSubject, initialValues) =>
-      createStore<IStoreShape, any, any, any>(reducerSubject, initialValues),
-    (store, actioner) => {
-      const a = actioner();
-      return store.dispatch(a[0](a[1]));
-    },
-    async (store) =>
-      store.getState(),
-    (t) => t,
-    (server) => server,
-    (actioner) => actioner(),
-    
+    {
+      beforeAll: async (input) => input,
+      beforeEach: function (subject: Reducer<any, AnyAction>, initialValues: any, testResource: never): Promise<Store<any, AnyAction>> {
+        return createStore<IStoreShape, any, any, any>(subject, initialValues)
+      },
+      andWhen: function (store: Store<any, AnyAction>, actioner: any, testResource: never): Promise<IStoreShape> {
+        const a = actioner();
+        return store.dispatch(a[0](a[1]));
+      },
+      butThen: function (store: Store<any, AnyAction>, callback: any, testResource: never): Promise<IStoreShape> {
+        return store.getState();
+      },
+      assertioner: function (t: any) {
+        return t;
+      },
+      teardown: function (store: Store<any, AnyAction>, ndx: number): unknown {
+        return store;
+      },
+      actionHandler: function (b: (...any: any[]) => any) {
+        return b();
+      }
+    }
   )

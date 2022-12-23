@@ -555,15 +555,29 @@ export const TesterantoFactory = <
     TestShape
     >,
   testResource: ITTestResource,
-  beforeAll: (input: Input) => Promise<Subject>,
-  beforeEach: (subject: Subject, initialValues, testResource: TestResourceShape) => Promise<Store>,
-  andWhen: (store: Store, actioner, testResource: TestResourceShape) => Promise<Selection>,
-  butThen: (store: Store, callback, testResource: TestResourceShape) => Promise<Selection>,
-  assertioner: (t: ThenShape) => any,
-  teardown: (store: Store, ndx: number) => unknown,
-  actionHandler: (b: (...any) => any) => any,
+  
+  testInterface: {
+    beforeAll: (input: Input) => Promise<Subject>,
+    beforeEach: (subject: Subject, initialValues, testResource: TestResourceShape) => Promise<Store>,
+    andWhen: (store: Store, actioner, testResource: TestResourceShape) => Promise<Selection>,
+    butThen: (store: Store, callback, testResource: TestResourceShape) => Promise<Selection>,
+    assertioner: (t: ThenShape) => any,
+    teardown: (store: Store, ndx: number) => unknown,
+    actionHandler: (b: (...any) => any) => any,
+  }
   
 ) => {
+
+  const {
+    assertioner,
+    beforeAll,
+    beforeEach,
+    teardown,
+    actionHandler,
+    andWhen,
+    butThen
+  } = testInterface;
+  
   return class extends Testeranto<
     TestShape,
     InitialStateShape,
@@ -662,11 +676,7 @@ export const TesterantoFactory = <
           }
         },
         testResource
-
       );
     }
   }
-
 };
-
-

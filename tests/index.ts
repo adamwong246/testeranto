@@ -20,10 +20,10 @@ export type ITestResource = "port";
 
 reporter(
   [
-    new RectangleTesteranto()[0],
     new AppReduxTesteranto()[0],
     new AppReduxToolkitTesteranto()[0],
     new AppReactTesteranto()[0],
+    new RectangleTesteranto()[0],
     new ServerHttpTesteranto()[0],
     new ServerHttpPuppeteerTesteranto()[0],
     new ClassicalComponentEsbuildPuppeteerTesteranto()[0],

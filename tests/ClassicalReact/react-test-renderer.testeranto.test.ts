@@ -1,14 +1,13 @@
 // This file defines the test of a classical react component
 
 import React from "react";
-import renderer, { act, ReactTestRenderer } from "react-test-renderer";
+import renderer, { act } from "react-test-renderer";
 
 import { TesterantoFactory } from "../../index";
 import { ITestImplementation, ITestSpecification, ITTestShape } from "../../src/testShapes";
 import { ClassicalComponent } from "./ClassicalComponent";
 
 type Input = any;
-type TestResource = "never";
 type InitialState = unknown;
 type WhenShape = any;
 type ThenShape = any;
@@ -41,27 +40,34 @@ export const ReactTestRendererTesteranto = <
     testSpecifications,
     testImplementations,
     "na",
-    async (input) => input,
-    async (subject) => {
-      let component;
-      act(() => {
-        component = renderer.create(
-          React.createElement(ClassicalComponent, {}, [])
-        );
-      });
-      return component;
-    },
-    // andWhen  
-    async (renderer, actioner, testResource) => {
-      await act(() => actioner(renderer));
-      return renderer
-    },
-    // butThen
-    async (component, callback, testResource) => {
-      return component;
-    },
-    (t) => t,
-    async (component, ndx) => component,
-    (actioner) => actioner,
-    
+    {
+      beforeAll: async function (input: renderer.ReactTestRenderer): Promise<renderer.ReactTestRenderer> {
+        return input;
+      },
+      beforeEach: function (subject: renderer.ReactTestRenderer, initialValues: any, testResource: any): Promise<renderer.ReactTestRenderer> {
+        let component;
+        act(() => {
+          component = renderer.create(
+            React.createElement(ClassicalComponent, {}, [])
+          );
+        });
+        return component;
+      },
+      andWhen: async function (renderer: renderer.ReactTestRenderer, actioner: any, testResource: any): Promise<renderer.ReactTestRenderer> {
+        await act(() => actioner(renderer));
+        return renderer
+      },
+      butThen: async function (store: renderer.ReactTestRenderer, callback: any, testResource: any): Promise<renderer.ReactTestRenderer> {
+        return store;
+      },
+      assertioner: function (t: any) {
+        return t;
+      },
+      teardown: function (renderer: renderer.ReactTestRenderer, ndx: number): unknown {
+        return renderer;
+      },
+      actionHandler: async function (b: (...any: any[]) => any) {
+        return b;
+      }
+    }
   )

@@ -49,47 +49,50 @@ export const EsbuildPuppeteerTesteranto = <
     testSpecifications,
     testImplementations,
     "na",
-    async ([bundlePath, htmlTemplate]: Input) => {
-      return {
-        page: await (
-          await puppeteer.launch({
-            headless: true,
-            executablePath:
-              "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-          })
-        ).newPage(),
-        htmlBundle: htmlTemplate(
-          esbuild.buildSync({
-            entryPoints: [bundlePath],
-            bundle: true,
-            minify: true,
-            format: "esm",
-            target: ["esnext"],
-            write: false,
-          }).outputFiles[0].text
-        ),
-      };
-    },
-    async (subject) => {
-      return subject.page.setContent(subject.htmlBundle).then(() => {
-        return { page: subject.page };
-      });
-    },
-    // andWhen  
-    async ({ page }, actioner, testResource) => {
-      return actioner()({ page });
-    },
-    // butThen
-    async ({ page }, callback, testResource) => {
-      return { page };
-    },
-    (t) => t,
-    async ({ page }, ndx) => {
-      await (await page).screenshot({
-        path: `./dist/teardown-${ndx}-screenshot.jpg`,
-      });
-      return { page };
-    },
-    (actioner) => actioner,
-    
+    {
+      beforeAll: async function ([bundlePath, htmlTemplate]: Input): Promise<Subject> {
+        return {
+          page: await(
+            await puppeteer.launch({
+              headless: true,
+              executablePath:
+                "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+            })
+          ).newPage(),
+          htmlBundle: htmlTemplate(
+            esbuild.buildSync({
+              entryPoints: [bundlePath],
+              bundle: true,
+              minify: true,
+              format: "esm",
+              target: ["esnext"],
+              write: false,
+            }).outputFiles[0].text
+          ),
+        };
+      },
+      beforeEach: function (subject: Subject, initialValues: any, testResource: "never"): Promise<Store> {
+        return subject.page.setContent(subject.htmlBundle).then(() => {
+          return { page: subject.page };
+        });
+      },
+      andWhen: function ({page}: Store, actioner: any, testResource: "never"): Promise<Selection> {
+            return actioner()({ page });
+      },
+      butThen: async function ({page}: Store, callback: any, testResource: "never"): Promise<Selection> {
+        return { page };
+      },
+      assertioner: function (t: any) {
+        return t;
+      },
+      teardown: async function ({page}: Store, ndx: number) {
+        await(await page).screenshot({
+          path: `./dist/teardown-${ndx}-screenshot.jpg`,
+        });
+        return { page };
+      },
+      actionHandler: function (b: (...any: any[]) => any) {
+        return b;
+      }
+    }
   )

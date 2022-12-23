@@ -25,6 +25,102 @@
             "email": "",
             "error": "no_error"
           }
+        },
+        {
+          "name": "another feature",
+          "features": [
+            {
+              "name": "hello"
+            }
+          ],
+          "whens": [],
+          "thens": [
+            {
+              "name": "TheEmailIsNot: adam@email.com"
+            },
+            {
+              "name": "TheEmailIs: bob@mail.com"
+            }
+          ],
+          "initialValues": {
+            "password": "",
+            "email": "bob@mail.com",
+            "error": "no_error"
+          }
+        },
+        {
+          "name": "yet another feature",
+          "features": [
+            {
+              "name": "hello"
+            }
+          ],
+          "whens": [
+            {
+              "name": "TheEmailIsSetTo: hello"
+            },
+            {
+              "name": "TheEmailIsSetTo: aloha"
+            }
+          ],
+          "thens": [
+            {
+              "name": "TheEmailIs: aloha"
+            }
+          ],
+          "initialValues": {
+            "password": "",
+            "email": "",
+            "error": "no_error"
+          }
+        },
+        {
+          "name": "OMG a feature!",
+          "features": [
+            {
+              "name": "aloha"
+            },
+            {
+              "name": "hello"
+            }
+          ],
+          "whens": [],
+          "thens": [
+            {
+              "name": "TheEmailIs: "
+            }
+          ],
+          "initialValues": {
+            "password": "",
+            "email": "",
+            "error": "no_error"
+          }
+        },
+        {
+          "name": "yes more features plz",
+          "features": [
+            {
+              "name": "aloha"
+            },
+            {
+              "name": "hello"
+            }
+          ],
+          "whens": [
+            {
+              "name": "TheEmailIsSetTo: hey there"
+            }
+          ],
+          "thens": [
+            {
+              "name": "TheEmailIs: hey there"
+            }
+          ],
+          "initialValues": {
+            "password": "",
+            "email": "",
+            "error": "no_error"
+          }
         }
       ],
       "checks": []
@@ -204,6 +300,154 @@
             }
           ],
           "initialValues": {}
+        }
+      ],
+      "checks": []
+    },
+    "status": "pass"
+  },
+  {
+    "test": {
+      "name": "Testing the Rectangle class",
+      "givens": [
+        {
+          "name": "test 1",
+          "features": [
+            {
+              "name": "hello"
+            }
+          ],
+          "whens": [
+            {
+              "name": "setWidth: 4"
+            },
+            {
+              "name": "setHeight: 9"
+            }
+          ],
+          "thens": [
+            {
+              "name": "getWidth: 4"
+            },
+            {
+              "name": "getHeight: 9"
+            }
+          ],
+          "initialValues": {
+            "height": 2,
+            "width": 2
+          }
+        },
+        {
+          "name": "test 2",
+          "features": [],
+          "whens": [
+            {
+              "name": "setWidth: 4"
+            },
+            {
+              "name": "setHeight: 5"
+            }
+          ],
+          "thens": [
+            {
+              "name": "getWidth: 4"
+            },
+            {
+              "name": "getHeight: 5"
+            },
+            {
+              "name": "area: 20"
+            },
+            {
+              "name": "AreaPlusCircumference: 38"
+            }
+          ],
+          "initialValues": {
+            "height": 1,
+            "width": 1
+          }
+        },
+        {
+          "name": "test 3",
+          "features": [],
+          "whens": [
+            {
+              "name": "setHeight: 4"
+            },
+            {
+              "name": "setWidth: 3"
+            }
+          ],
+          "thens": [
+            {
+              "name": "area: 12"
+            }
+          ],
+          "initialValues": {
+            "height": 1,
+            "width": 1
+          }
+        },
+        {
+          "name": "test 4",
+          "features": [],
+          "whens": [
+            {
+              "name": "setHeight: 3"
+            },
+            {
+              "name": "setWidth: 4"
+            },
+            {
+              "name": "setHeight: 5"
+            },
+            {
+              "name": "setWidth: 6"
+            }
+          ],
+          "thens": [
+            {
+              "name": "area: 30"
+            },
+            {
+              "name": "circumference: 22"
+            }
+          ],
+          "initialValues": {
+            "height": 1,
+            "width": 1
+          }
+        },
+        {
+          "name": "test 5",
+          "features": [],
+          "whens": [
+            {
+              "name": "setHeight: 3"
+            },
+            {
+              "name": "setWidth: 4"
+            }
+          ],
+          "thens": [
+            {
+              "name": "getHeight: 3"
+            },
+            {
+              "name": "getWidth: 4"
+            },
+            {
+              "name": "area: 12"
+            },
+            {
+              "name": "circumference: 14"
+            }
+          ],
+          "initialValues": {
+            "height": 1,
+            "width": 1
+          }
         }
       ],
       "checks": []

@@ -35,20 +35,32 @@ export const ReactTesteranto = <
     testSpecifications,
     testImplementations,
     "na",
-    async (input) => input,
-    async (subject, initialValues) => {
-      let component;
-      await act(() => {
-        component = renderer.create(subject());
-      });
-      return component;
-    },
-    async (renderer, actioner) => {
-      await act(() => actioner()(renderer))
-      return renderer;
-    },
-    async (renderer, callback, testResource) => renderer,
-    (t) => t,
-    (renderer) => renderer,
-    (actioner) => actioner,
+    {
+      beforeAll: async function (input: Input): Promise<Input> {
+        return input;
+      },
+      beforeEach: async function (subject: Input, initialValues: any, testResource: never): Promise<renderer.ReactTestRenderer> {
+        let component;
+        await act(() => {
+          component = renderer.create(subject());
+        });
+        return component;
+      },
+      andWhen: async function (renderer: renderer.ReactTestRenderer, actioner: any, testResource: never): Promise<renderer.ReactTestRenderer> {
+        await act(() => actioner()(renderer))
+        return renderer;
+      },
+      butThen: async function (renderer: renderer.ReactTestRenderer, callback: any, testResource: never): Promise<renderer.ReactTestRenderer> {
+        return renderer;
+      },
+      assertioner: function (t: any) {
+        return t;
+      },
+      teardown: function (renderer: renderer.ReactTestRenderer, ndx: number): unknown {
+        return renderer;
+      },
+      actionHandler: function (b: (...any: any[]) => any) {
+        return b;
+      }
+    }
   )

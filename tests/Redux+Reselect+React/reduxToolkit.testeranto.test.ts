@@ -52,19 +52,28 @@ export const ReduxToolkitTesteranto = <
     testSpecifications,
     testImplementations,
     "na",
-    async (input) => input,
-    (subject, initialValues) =>
-      createStore<IStoreShape, any, any, any>(subject.reducer, initialValues),
-    (store, actioner) => {
-      const a = actioner();
-      return store.dispatch(a[0](a[1]));
-    },
-    (store) =>
-      store.getState(),
-    (t) => {
-      t[0](t[1], t[2], t[3])
-    },
-    (server) => server,
-    (actioner) => actioner(),
-    
+    {
+      beforeAll: async (input: Input<IStoreShape, ISelectionShape>): Promise<Input<IStoreShape, ISelectionShape>> =>
+        input,
+
+      beforeEach:  (subject: Input<IStoreShape, ISelectionShape>, initialValues: any, testResource: never): Promise<Store<any, AnyAction>> =>
+        createStore<IStoreShape, any, any, any>(subject.reducer, initialValues),
+
+      andWhen: function (store: Store<any, AnyAction>, actioner: any, testResource: never): Promise<IStoreShape> {
+        const a = actioner();
+        return store.dispatch(a[0](a[1]));
+      },
+      butThen: function (store: Store<any, AnyAction>, callback: any, testResource: never): Promise<IStoreShape> {
+        return store.getState();
+      },
+      assertioner: function (t: ThenShape) {
+        return t[0](t[1], t[2], t[3]);
+      },
+      teardown: function (store: Store<any, AnyAction>, ndx: number): unknown {
+        return store
+      },
+      actionHandler: function (b: (...any: any[]) => any) {
+        return b();
+      }
+    }    
   )

@@ -181,18 +181,44 @@ export const RectangleTesteranto =
         },
       },
     },
-
-    (input) => input,
-    async (subject, initialValues) => {
-      return subject;
-    },
-    async (renderer, actioner) => {
-      actioner()(renderer)
-      return renderer;
-    },
-    async (renderer, callback, testResource) => renderer,
-    (t) => t,
-    (renderer) => renderer,
-    (actioner) => actioner,
-    "na"
+    "na",
+    {
+      beforeAll: async function (input: Input): Promise<Input> {
+        return input;
+      },
+      beforeEach: async function (subject: Input, initialValues: any, testResource: never) {
+        return subject;
+      },
+      andWhen: async function (renderer, actioner: any, testResource: never) {
+        actioner()(renderer)
+        return renderer;
+      },
+      butThen: async function (renderer, callback: any, testResource: never) {
+        return renderer;
+      },
+      assertioner: function (t: any) {
+        return t;
+      },
+      teardown: function (renderer, ndx: number): unknown {
+        return renderer;
+      },
+      actionHandler: function (b: (...any: any[]) => any) {
+        return b;
+      }
+    }
+    
+    
   )
+
+    // (input) => input,
+    //   async (subject, initialValues) => {
+    //     return subject;
+    //   },
+    //   async (renderer, actioner) => {
+    //     actioner()(renderer)
+    //     return renderer;
+    //   },
+    //   async (renderer, callback, testResource) => renderer,
+    //   (t) => t,
+    //   (renderer) => renderer,
+    //   (actioner) => actioner,

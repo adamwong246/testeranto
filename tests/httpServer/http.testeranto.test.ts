@@ -41,43 +41,46 @@ export const HttpTesteranto = <
     testSpecifications,
     testImplementations,
     "port",
-    async (input) => input,
-    async (serverFactory, initialValues, testResource) => {
-      const server = serverFactory();
-      await server.listen(testResource);
-      return server;
-    },
-    
-    // andWhen  
-    async (store, actioner, testResource) => {
-      const [path, body]: [string, string] = actioner(store)();
-      const y = await fetch(
-        `http://localhost:${testResource.toString()}/${path}`,
-        {
-          method: "POST",
-          body,
-        }
-      );
-      return await y.text();
-    },
-    // butThen
-    async (store, callback, testResource) => {
-      const [path, expectation]: [string, string] = callback({});
-      const bodytext = await (
-        await fetch(`http://localhost:${testResource.toString()}/${path}`)
-      ).text();
-      assert.equal(bodytext, expectation);
-      return bodytext;
-    },
-    (t) => t,
-    async (server) => {
-      return new Promise((res) => {
-        server.close(() => {
-          res(server)
+    {
+      beforeAll: async function (input: Input): Promise<Subject> {
+        return input;
+      },
+      beforeEach: async function (serverFactory: Subject, initialValues: any, testResource: "port"): Promise<Store> {
+        const server = serverFactory();
+        await server.listen(testResource);
+        return server;
+      },
+      andWhen: async function (store: Store, actioner: any, testResource: "port"): Promise<string> {
+        const [path, body]: [string, string] = actioner(store)();
+        const y = await fetch(
+          `http://localhost:${testResource.toString()}/${path}`,
+          {
+            method: "POST",
+            body,
+          }
+        );
+        return await y.text();
+      },
+      butThen: async function (store: Store, callback: any, testResource: "port"): Promise<string> {
+        const [path, expectation]: [string, string] = callback({});
+        const bodytext = await(
+          await fetch(`http://localhost:${testResource.toString()}/${path}`)
+        ).text();
+        assert.equal(bodytext, expectation);
+        return bodytext;
+      },
+      assertioner: function (t: WhenShape) {
+        return t;
+      },
+      teardown: function (server: Store, ndx: number): unknown {
+        return new Promise((res) => {
+          server.close(() => {
+            res(server)
+          })
         })
-      })
-    },
-    (actioner) => actioner,
-    
+      },
+      actionHandler: function (b: (...any: any[]) => any) {
+        return b
+      }
+    },   
   )
- 
