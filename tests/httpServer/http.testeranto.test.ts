@@ -42,9 +42,6 @@ export const HttpTesteranto = <
     testImplementations,
     "port",
     {
-      beforeAll: async function (input: Input): Promise<Subject> {
-        return input;
-      },
       beforeEach: async function (serverFactory: Subject, initialValues: any, testResource: "port"): Promise<Store> {
         const server = serverFactory();
         await server.listen(testResource);
@@ -69,18 +66,12 @@ export const HttpTesteranto = <
         assert.equal(bodytext, expectation);
         return bodytext;
       },
-      assertioner: function (t: WhenShape) {
-        return t;
-      },
-      teardown: function (server: Store, ndx: number): unknown {
+      afterEach: function (server: Store, ndx: number): unknown {
         return new Promise((res) => {
           server.close(() => {
             res(server)
           })
         })
-      },
-      actionHandler: function (b: (...any: any[]) => any) {
-        return b
       }
     },   
   )

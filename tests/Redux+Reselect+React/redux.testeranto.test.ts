@@ -49,7 +49,6 @@ export const ReduxTesteranto = <
     testImplementations,
     "na",
     {
-      beforeAll: async (input) => input,
       beforeEach: function (subject: Reducer<any, AnyAction>, initialValues: any, testResource: never): Promise<Store<any, AnyAction>> {
         return createStore<IStoreShape, any, any, any>(subject, initialValues)
       },
@@ -59,12 +58,6 @@ export const ReduxTesteranto = <
       },
       butThen: function (store: Store<any, AnyAction>, callback: any, testResource: never): Promise<IStoreShape> {
         return store.getState();
-      },
-      assertioner: function (t: any) {
-        return t;
-      },
-      teardown: function (store: Store<any, AnyAction>, ndx: number): unknown {
-        return store;
       },
       actionHandler: function (b: (...any: any[]) => any) {
         return b();

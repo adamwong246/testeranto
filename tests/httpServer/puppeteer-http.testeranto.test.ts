@@ -43,9 +43,6 @@ export const PuppeteerHttpTesteranto = <
     testImplementations,
     "port",
     {
-      beforeAll: async function (input: Input): Promise<Subject> {
-        return input;
-      },
       beforeEach: function (serverFactory : Subject, initialValues: any, port): Promise<Store> {
         return new Promise((res) => {
           puppeteer
@@ -79,19 +76,13 @@ export const PuppeteerHttpTesteranto = <
         assert.equal(bodytext, expectation);
         return bodytext;
       },
-      assertioner: function (t: WhenShape) {
-        return t;
-      },
-      teardown: function (store: Store, ndx: number): unknown {
+      afterEach: function (store: Store, ndx: number): unknown {
         return new Promise<void>((resolve) => {
           store.browser.close();
           store.server.close(() => {
             resolve();
           });
         });
-      },
-      actionHandler: function (b: (...any: any[]) => any) {
-        return b;
       }
     }
   )

@@ -1,5 +1,3 @@
-import { assert } from "chai";
-import http from "http";
 import puppeteer, { Page } from "puppeteer";
 import esbuild from "esbuild";
 
@@ -8,13 +6,8 @@ import { ITestImplementation, ITestSpecification, ITTestShape } from "../../src/
 
 type Input = [string, (string) => string];
 type TestResource = "never";
-
-
 type InitialState = unknown;
-// type Subject = () => http.Server;
-// type Store = http.Server;
-// type Selection = { page: Page };
-type WhenShape = any; //[url: string, paylaod: string];
+type WhenShape = any;
 type ThenShape = any;
 type Selection = { page: Page };
 type State = void;
@@ -52,7 +45,7 @@ export const EsbuildPuppeteerTesteranto = <
     {
       beforeAll: async function ([bundlePath, htmlTemplate]: Input): Promise<Subject> {
         return {
-          page: await(
+          page: await (
             await puppeteer.launch({
               headless: true,
               executablePath:
@@ -76,23 +69,17 @@ export const EsbuildPuppeteerTesteranto = <
           return { page: subject.page };
         });
       },
-      andWhen: function ({page}: Store, actioner: any, testResource: "never"): Promise<Selection> {
-            return actioner()({ page });
+      andWhen: function ({ page }: Store, actioner: any, testResource: "never"): Promise<Selection> {
+        return actioner()({ page });
       },
-      butThen: async function ({page}: Store, callback: any, testResource: "never"): Promise<Selection> {
+      butThen: async function ({ page }: Store, callback: any, testResource: "never"): Promise<Selection> {
         return { page };
       },
-      assertioner: function (t: any) {
-        return t;
-      },
-      teardown: async function ({page}: Store, ndx: number) {
-        await(await page).screenshot({
-          path: `./dist/teardown-${ndx}-screenshot.jpg`,
+      afterEach: async function ({ page }: Store, ndx: number) {
+        await (await page).screenshot({
+          path: `./dist/afterEach-${ndx}-screenshot.jpg`,
         });
         return { page };
-      },
-      actionHandler: function (b: (...any: any[]) => any) {
-        return b;
       }
     }
   )

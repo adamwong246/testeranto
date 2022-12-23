@@ -36,9 +36,6 @@ export const ReactTesteranto = <
     testImplementations,
     "na",
     {
-      beforeAll: async function (input: Input): Promise<Input> {
-        return input;
-      },
       beforeEach: async function (subject: Input, initialValues: any, testResource: never): Promise<renderer.ReactTestRenderer> {
         let component;
         await act(() => {
@@ -50,17 +47,5 @@ export const ReactTesteranto = <
         await act(() => actioner()(renderer))
         return renderer;
       },
-      butThen: async function (renderer: renderer.ReactTestRenderer, callback: any, testResource: never): Promise<renderer.ReactTestRenderer> {
-        return renderer;
-      },
-      assertioner: function (t: any) {
-        return t;
-      },
-      teardown: function (renderer: renderer.ReactTestRenderer, ndx: number): unknown {
-        return renderer;
-      },
-      actionHandler: function (b: (...any: any[]) => any) {
-        return b;
-      }
     }
   )

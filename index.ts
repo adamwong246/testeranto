@@ -75,7 +75,7 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
     testResourceConfiguration?
   ): Promise<IStore>;
 
-  async teardown(subject: IStore, ndx: number): Promise<unknown> {
+  async afterEach(subject: IStore, ndx: number): Promise<unknown> {
     return;
   }
 
@@ -97,7 +97,7 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
       tester(t);
     }
 
-    await this.teardown(store, index);
+    await this.afterEach(store, index);
     return;
   }
 }
@@ -171,7 +171,7 @@ export abstract class BaseCheck<ISubject, IStore, ISelection, IThenShape> {
     testResourceConfiguration?
   ): Promise<IStore>;
 
-  async teardown(subject: IStore, ndx: number): Promise<unknown> {
+  async afterEach(subject: IStore, ndx: number): Promise<unknown> {
     return;
   }
 
@@ -203,7 +203,7 @@ export abstract class BaseCheck<ISubject, IStore, ISelection, IThenShape> {
       })
     );
 
-    await this.teardown(store, ndx);
+    await this.afterEach(store, ndx);
     return;
   }
 }
@@ -553,31 +553,34 @@ export const TesterantoFactory = <
     WhenShape,
     ThenShape,
     TestShape
-    >,
+  >,
   testResource: ITTestResource,
-  
+
   testInterface: {
-    beforeAll: (input: Input) => Promise<Subject>,
-    beforeEach: (subject: Subject, initialValues, testResource: TestResourceShape) => Promise<Store>,
+    actionHandler?: (b: (...any) => any) => any,
+    afterEach?: (store: Store, ndx: number) => unknown,
     andWhen: (store: Store, actioner, testResource: TestResourceShape) => Promise<Selection>,
-    butThen: (store: Store, callback, testResource: TestResourceShape) => Promise<Selection>,
-    assertioner: (t: ThenShape) => any,
-    teardown: (store: Store, ndx: number) => unknown,
-    actionHandler: (b: (...any) => any) => any,
+    assertioner?: (t: ThenShape) => any,
+    beforeAll?: (input: Input) => Promise<Subject>,
+    beforeEach?: (subject: Subject, initialValues, testResource: TestResourceShape) => Promise<Store>,
+    butThen?: (store: Store, callback, testResource: TestResourceShape) => Promise<Selection>,
   }
-  
+
 ) => {
 
-  const {
-    assertioner,
-    beforeAll,
-    beforeEach,
-    teardown,
-    actionHandler,
-    andWhen,
-    butThen
-  } = testInterface;
-  
+  const { andWhen } = testInterface;
+
+  const actionHandler = testInterface.actionHandler || function (b: (...any: any[]) => any) {
+    return b;
+  };
+  const afterEach = testInterface.afterEach || (async (s) => s as any);
+  const assertioner = testInterface.assertioner || (async (t) => t as any);
+  const beforeAll = testInterface.beforeAll || (async (input) => input as any);
+  const butThen = testInterface.butThen || (async (a) => a as any);
+  const beforeEach = testInterface.beforeEach || async function (subject: Input, initialValues: any, testResource: any) {
+    return subject as any;
+  }
+
   return class extends Testeranto<
     TestShape,
     InitialStateShape,
@@ -619,8 +622,8 @@ export const TesterantoFactory = <
           async givenThat(subject, testResource) {
             return beforeEach(subject, this.initialValues, testResource);
           }
-          teardown(store: Store, ndx: number): Promise<unknown> {
-            return new Promise((res) => res(teardown(store, ndx)))
+          afterEach(store: Store, ndx: number): Promise<unknown> {
+            return new Promise((res) => res(afterEach(store, ndx)))
           }
         },
 
@@ -671,8 +674,8 @@ export const TesterantoFactory = <
             return beforeEach(subject, this.initialValues, testResource);
           }
 
-          teardown(store: Store, ndx: number): Promise<unknown> {
-            return new Promise((res) => res(teardown(store, ndx)))
+          afterEach(store: Store, ndx: number): Promise<unknown> {
+            return new Promise((res) => res(afterEach(store, ndx)))
           }
         },
         testResource
