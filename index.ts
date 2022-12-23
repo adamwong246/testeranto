@@ -362,69 +362,6 @@ abstract class TesterantoBasic<
     return this.checkOverides;
   }
 }
-//////////////////////////////////////////////////////////////////////////////////////////////
-export class ClassySuite<Klass> extends BaseSuite<
-  Klass,
-  Klass,
-  Klass,
-  Klass,
-  any
-> {
-  setup(s: Klass): Promise<Klass> {
-    return new Promise((res, rej) => res(s));
-  }
-}
-
-export class ClassyGiven<Klass> extends BaseGiven<Klass, Klass, Klass, any> {
-  thing: Klass;
-
-  constructor(
-    name: string,
-    features: BaseFeature[],
-    whens: ClassyWhen<Klass>[],
-    thens: ClassyThen<Klass>[],
-    thing: Klass
-  ) {
-    super(name, features, whens, thens);
-    this.thing = thing;
-  }
-
-  givenThat(subject: Klass, testResourceConfiguration?: any): Promise<Klass> {
-    return new Promise((res) => res(this.thing));
-  }
-}
-
-export class ClassyWhen<Klass> extends BaseWhen<Klass, Klass, any> {
-  andWhen(thing: Klass): Klass {
-    return this.actioner(thing);
-  }
-}
-
-export class ClassyThen<Klass> extends BaseThen<Klass, Klass, any> {
-  butThen(thing: Klass): Promise<Klass> {
-    return new Promise((res) => res(thing));
-  }
-}
-
-export class ClassyCheck<Klass> extends BaseCheck<Klass, Klass, Klass, any> {
-  thing: Klass;
-
-  constructor(
-    name: string,
-    features: BaseFeature[],
-    callback: (whens, thens) => any,
-    whens,
-    thens,
-    thing: Klass
-  ) {
-    super(name, features, callback, whens, thens);
-    this.thing = thing;
-  }
-
-  checkThat(subject: Klass, testResourceConfiguration?: any): Promise<Klass> {
-    return new Promise((res) => res(this.thing));
-  }
-}
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 export abstract class Testeranto<
