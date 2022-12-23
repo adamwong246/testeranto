@@ -34,7 +34,7 @@ export const ReactTesteranto = <
     testInput,
     testSpecifications,
     testImplementations,
-    (input) => input,
+    async (input) => input,
     async (subject, initialValues) => {
       let component;
       await act(() => {

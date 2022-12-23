@@ -617,7 +617,7 @@ export const TesterantoFactory = <
     ThenShape,
     TestShape
   >,
-  beforeAll: (input: Input) => Subject,
+  beforeAll: (input: Input) => Promise<Subject>,
   beforeEach: (subject: Subject, initialValues, testResource: TestResourceShape) => Promise<Store>,
   andWhen: (store: Store, actioner, testResource: TestResourceShape) => Promise<Selection>,
   butThen: (store: Store, callback, testResource: TestResourceShape) => Promise<Selection>,
@@ -730,3 +730,5 @@ export const TesterantoFactory = <
   }
 
 };
+
+

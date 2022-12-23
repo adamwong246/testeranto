@@ -51,7 +51,7 @@ export const ReduxToolkitTesteranto = <
     testInput,
     testSpecifications,
     testImplementations,
-    (input) => input,
+    async (input) => input,
     (subject, initialValues) =>
       createStore<IStoreShape, any, any, any>(subject.reducer, initialValues),
     (store, actioner) => {

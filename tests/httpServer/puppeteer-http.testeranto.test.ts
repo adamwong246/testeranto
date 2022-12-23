@@ -41,7 +41,7 @@ export const PuppeteerHttpTesteranto = <
     testInput,
     testSpecifications,
     testImplementations,
-    (input) => input,
+    async (input) => input,
     async (serverFactory, initialValues, port) => {
 
       return new Promise((res) => {

@@ -40,7 +40,7 @@ export const HttpTesteranto = <
     testInput,
     testSpecifications,
     testImplementations,
-    (input) => input,
+    async (input) => input,
     async (serverFactory, initialValues, testResource) => {
       const server = serverFactory();
       await server.listen(testResource);
