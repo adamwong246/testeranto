@@ -11,9 +11,8 @@ import { ServerHttpTesteranto } from "./httpServer/server.http.test";
 import { ServerHttpPuppeteerTesteranto } from "./httpServer/server.puppeteer.test";
 import { AppReduxToolkitTesteranto } from "./Redux+Reselect+React/app.reduxToolkit.test";
 import { AppReactTesteranto } from "./Redux+Reselect+React/LoginPage.test";
-
-
 import { ClassicalComponentEsbuildPuppeteerTesteranto } from "./ClassicalReact/ClassicalComponent.esbuild-puppeteer.test";
+import { ClassicalComponentReactTestRendererTesteranto } from "./ClassicalReact/ClassicalComponent.react-test-renderer.test";
 
 import { reporter } from "../src/reporter";
 
@@ -28,8 +27,7 @@ reporter(
     new ServerHttpTesteranto()[0],
     new ServerHttpPuppeteerTesteranto()[0],
     new ClassicalComponentEsbuildPuppeteerTesteranto()[0],
-    // new ClassicalComponentReactTestRendererTesteranto()[0],
-    
+    new ClassicalComponentReactTestRendererTesteranto()[0],
   ],
   {
     ports: [3000],
