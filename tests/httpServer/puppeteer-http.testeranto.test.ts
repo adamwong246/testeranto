@@ -69,7 +69,7 @@ export const PuppeteerHttpTesteranto = <
         return await y.text();
       },
       butThen: async function (store: Store, callback: any, port): Promise<string> {
-        const [path, expectation]: [string, string] = callback({});
+        const [path, expectation]: [string, string] = callback(store);
         const bodytext = await(
           await fetch(`http://localhost:${port.toString()}/${path}`)
         ).text();

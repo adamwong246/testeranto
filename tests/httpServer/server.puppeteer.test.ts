@@ -36,14 +36,12 @@ export const ServerHttpPuppeteerTesteranto = PuppeteerHttpTesteranto<
       },
     },
     Whens: {
-      PostToStatus: (status: string) => () => {
-        return ["put_status", status];
-      },
-      PostToAdd: (n: number) => () => ["put_number", n.toString()],
+      PostToStatus: (status) => (store) => ["put_status", status],
+      PostToAdd: (n) => (store) => ["put_number", n.toString()],
     },
     Thens: {
-      TheStatusIs: (status: string) => () => ["get_status", status],
-      TheNumberIs: (number: number) => () => ["get_number", number],
+      TheStatusIs: (status) => (store) => ["get_status", status],
+      TheNumberIs: (number) => (store) => ["get_number", number],
     },
     Checks: {
       AnEmptyState: () => {

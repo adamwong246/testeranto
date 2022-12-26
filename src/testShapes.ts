@@ -99,7 +99,7 @@ export type ITestImplementation<
   Thens: {
     [K in keyof ITestShape["thens"]]: (
       ...g: ITestShape["thens"][K]
-    ) => (sel: ISelection) => IThenShape;
+    ) => (ssel: ISelection) => IThenShape;
   };
   Checks: {
     [K in keyof ITestShape["checks"]]: (
