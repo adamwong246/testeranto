@@ -3,7 +3,7 @@
 import React from "react";
 import renderer, { act } from "react-test-renderer";
 
-import { TesterantoFactory } from "../../index";
+import { TesterantoFactory } from "../../src/index";
 import { ITestImplementation, ITestSpecification, ITTestShape } from "../../src/testShapes";
 
 type Input = typeof React.Component;

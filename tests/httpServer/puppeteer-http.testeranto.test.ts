@@ -2,7 +2,7 @@ import puppeteer, { Browser, Page } from "puppeteer";
 import http from "http";
 import { assert } from "chai";
 
-import { TesterantoFactory } from "../../index";
+import { TesterantoFactory } from "../../src/index";
 import { ITestImplementation, ITestSpecification, ITTestShape } from "../../src/testShapes";
 
 type TestResource = "port";

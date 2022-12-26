@@ -1,7 +1,7 @@
 import puppeteer, { Page } from "puppeteer";
 import esbuild from "esbuild";
 
-import { TesterantoFactory } from "../../index";
+import { TesterantoFactory } from "../../src/index";
 import { ITestImplementation, ITestSpecification, ITTestShape } from "../../src/testShapes";
 
 type Input = [string, (string) => string];

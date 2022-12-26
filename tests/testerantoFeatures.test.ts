@@ -1,4 +1,4 @@
-import { BaseFeature } from "..";
+import { BaseFeature } from "../src/BaseClasses";
 
 export default {
   hello: new BaseFeature("hello"),

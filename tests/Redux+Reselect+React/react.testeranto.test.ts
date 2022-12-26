@@ -1,5 +1,5 @@
 import renderer, { act, ReactTestRenderer } from "react-test-renderer";
-import { TesterantoFactory } from "../../index";
+import { TesterantoFactory } from "../../src/index";
 import { ITestImplementation, ITestSpecification, ITTestShape } from "../../src/testShapes";
 
 type TestResource = never;

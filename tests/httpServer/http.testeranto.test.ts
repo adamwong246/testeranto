@@ -1,7 +1,7 @@
 import { assert } from "chai";
 import http from "http";
 
-import {TesterantoFactory} from "../../index";
+import {TesterantoFactory} from "../../src/index";
 import { ITestImplementation, ITestSpecification, ITTestShape } from "../../src/testShapes";
 
 type TestResource = "port";

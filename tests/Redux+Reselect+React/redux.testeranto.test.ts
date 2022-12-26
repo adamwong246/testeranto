@@ -5,7 +5,7 @@ import {
 } from "@reduxjs/toolkit";
 
 import { createStore, Store, AnyAction } from "redux";
-import { TesterantoFactory } from "../../index";
+import { TesterantoFactory } from "../../src/index";
 import { ITestImplementation, ITestSpecification, ITTestShape } from "../../src/testShapes";
 
 type TestResource = never;

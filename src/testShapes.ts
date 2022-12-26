@@ -1,4 +1,4 @@
-import { BaseGiven, BaseCheck, BaseSuite, BaseFeature, BaseWhen, BaseThen } from "..";
+import { BaseGiven, BaseCheck, BaseSuite, BaseFeature, BaseWhen, BaseThen } from "./BaseClasses";
 
 export type  ITTestResource = "port" | "na";
 

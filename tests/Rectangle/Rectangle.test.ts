@@ -2,7 +2,7 @@ import assert from "assert";
 
 import {
   TesterantoFactory,
-} from "../../index";
+} from "../../src/index";
 
 import Rectangle from "./Rectangle";
 
