@@ -2,6 +2,7 @@ import React from "react";
 
 export type IProps = { foo?: string };
 export type IState = { count: number };
+
 export class ClassicalComponent extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);

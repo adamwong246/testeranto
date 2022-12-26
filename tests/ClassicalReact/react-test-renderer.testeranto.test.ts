@@ -5,18 +5,18 @@ import renderer, { act } from "react-test-renderer";
 
 import { TesterantoFactory } from "../../index";
 import { ITestImplementation, ITestSpecification, ITTestShape } from "../../src/testShapes";
-import { ClassicalComponent } from "./ClassicalComponent";
 
-type Input = any;
-type InitialState = unknown;
+type Input = typeof React.Component;
 type WhenShape = any;
 type ThenShape = any;
 
 export const ReactTestRendererTesteranto = <
-  ITestShape extends ITTestShape
+  ITestShape extends ITTestShape,
+  PropShape,
+  StateShape
 >(
   testImplementations: ITestImplementation<
-    InitialState,
+    PropShape,
     renderer.ReactTestRenderer,
     WhenShape,
     ThenShape,
@@ -27,10 +27,10 @@ export const ReactTestRendererTesteranto = <
 ) =>
   TesterantoFactory<
     ITestShape,
-    renderer.ReactTestRenderer,
-    renderer.ReactTestRenderer,
-    renderer.ReactTestRenderer,
-    renderer.ReactTestRenderer,
+    Input,
+    any,
+    any,
+    any,
     any,
     any,
     any,
@@ -41,17 +41,17 @@ export const ReactTestRendererTesteranto = <
     testImplementations,
     "na",
     {
-      beforeEach: function (subject: renderer.ReactTestRenderer, initialValues: any, testResource: any): Promise<renderer.ReactTestRenderer> {
+      beforeEach: function (CComponent, props): Promise<renderer.ReactTestRenderer> {
         let component;
         act(() => {
           component = renderer.create(
-            React.createElement(ClassicalComponent, {}, [])
+            React.createElement(CComponent, props, [])
           );
         });
         return component;
       },
-      andWhen: async function (renderer: renderer.ReactTestRenderer, actioner: any, testResource: any): Promise<renderer.ReactTestRenderer> {
-        await act(() => actioner(renderer));
+      andWhen: async function (renderer: renderer.ReactTestRenderer, actioner: any): Promise<renderer.ReactTestRenderer> {
+        await act(() => actioner()(renderer));
         return renderer
       }
     }

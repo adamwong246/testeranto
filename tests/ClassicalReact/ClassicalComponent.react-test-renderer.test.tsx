@@ -14,18 +14,21 @@ export const ClassicalComponentReactTestRendererTesteranto = ReactTestRendererTe
     };
     givens: {
       AnEmptyState;
+      SomeState;
     };
     whens: {
       IClickTheButton;
     };
     thens: {
-      ThePropsIs: [IProps];
-      TheStatusIs: [IState];
+      ThePropsIs: [object];
+      TheStatusIs: [object];
     };
     checks: {
       AnEmptyState;
     }
-  }
+  },
+  IProps,
+  IState
 >(
   {
     Suites: {
@@ -35,32 +38,33 @@ export const ClassicalComponentReactTestRendererTesteranto = ReactTestRendererTe
       AnEmptyState: () => {
         return {};
       },
+      SomeState: () => {
+        return { foo: "bar" };
+      }
     },
     Whens: {
-      IClickTheButton: () => async (component: ReactTestRenderer) =>
+      IClickTheButton: () => (component: ReactTestRenderer) =>
         component.root.findByType("button").props.onClick(),
     },
     Thens: {
       ThePropsIs: (expectation) => (component: renderer.ReactTestRenderer) => {
-        // return assert.deepEqual((component.toJSON() as {children: object[]}).children[1], {
-        //   type: 'pre',
-        //   props: { id: 'theProps' },
-        //   children: [
-        //     JSON.stringify(expectation)
-        //   ]
-        // })
+        return assert.deepEqual((component.toJSON() as { children: object[] }).children[1], {
+          type: 'pre',
+          props: { id: 'theProps' },
+          children: [
+            JSON.stringify(expectation)
+          ]
+        })
       },
 
       TheStatusIs: (expectation) => (component) => {
-        const x = component.toJSON();
-
-        // return assert.deepEqual(x.children[3], {
-        //   type: 'pre',
-        //   props: { id: 'theState' },
-        //   children: [
-        //     JSON.stringify(expectation)
-        //   ]
-        // })
+        return assert.deepEqual((component.toJSON() as { children: object[] }).children[3], {
+          type: 'pre',
+          props: { id: 'theState' },
+          children: [
+            JSON.stringify(expectation)
+          ]
+        })
       },
     },
     Checks: {
@@ -81,8 +85,20 @@ export const ClassicalComponentReactTestRendererTesteranto = ReactTestRendererTe
               When.IClickTheButton()
             ],
             [
-              Then.ThePropsIs({ foo: "bar" }),
-              // Then.TheStatusIs({ "count": 1 }),
+              Then.ThePropsIs({ "children": [] }),
+              Then.TheStatusIs({ "count": 1 }),
+            ]
+          ),
+
+          Given.AnEmptyState("idk",
+            [],
+            [
+              When.IClickTheButton(),
+              When.IClickTheButton(),
+              When.IClickTheButton(),
+            ],
+            [
+              Then.TheStatusIs({ "count": 3 }),
             ]
           ),
 
