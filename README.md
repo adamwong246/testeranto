@@ -1,10 +1,8 @@
 # testeranto.ts
 
-🚧 I'm hoping to have a 1.0.0 release by the end of the year 🤞 but until then _caveat emptor_. 🚧
-
 ## about
 
-Testeranto.ts an Acceptance Test Driven Development (ATDD) testing framework. Testeranto focuses on specifing stateful logic which crosses applications boundaries with strong type bindings and using an extended gherkin syntax.
+Testeranto.ts an Acceptance Test Driven Development ([ATDD](https://en.wikipedia.org/wiki/Acceptance_test-driven_development)) testing framework. Testeranto focuses on specifing stateful logic which crosses applications boundaries with strong type bindings and using an extended gherkin syntax.
 
 ### the good parts
 
