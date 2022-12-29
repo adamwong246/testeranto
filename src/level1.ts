@@ -174,9 +174,25 @@ export abstract class Testeranto<
 
         builder: () => {
           
-          console.log("building...", entryPath);
+          // console.log("building...", entryPath);
 
-          const build = esbuild.buildSync({
+          const importPathPlugin = {
+            name: 'import-path',
+            setup(build) {
+              // console.log("build", build)
+              // build.onResolve({ filter: /(?:)/ }, args => {
+              build.onResolve({ filter: /^\.{1,2}\// }, args => {
+                let x = args.resolveDir + "/" + args.path; //.split('/')[1] ; //process.cwd() + "/tests/" + args.path;
+
+                if (x.split(".ts").length > 1) {
+                  x = x + ".ts"
+                }
+                // console.log("args", args, x)
+                return { path: x, external: true }
+              })
+            },
+          }
+          esbuild.build({
             entryPoints: [entryPath],
             bundle: true,
             minify: false,
@@ -184,12 +200,19 @@ export abstract class Testeranto<
             target: ["esnext"],
             write: false,
             packages: 'external',
-            external: ['./src/*', './tests/testerantoFeatures.test.ts']
-          }).outputFiles[0].text;
+            plugins: [importPathPlugin],
+            external: ['./src/*', './tests/testerantoFeatures.test.ts'],
+            // absWorkingDir: path.join(process.cwd(), "dist")
+          }).then((res) => {
+            // console.log()
+            const text = res.outputFiles[0].text;
+            const p = "./dist" + (entryPath.split(process.cwd()).pop())?.split(".ts")[0] + '.js'
+            fs.promises.mkdir(path.dirname(p), { recursive: true }).then(x => fs.promises.writeFile(p, text.toString()))
+          })
+            
 
           
-          const p = './dist' + (entryPath.split(process.cwd()).pop());
-          fs.promises.mkdir(path.dirname(p), { recursive: true }).then(x => fs.promises.writeFile(p, build))
+          
 
         }
       };

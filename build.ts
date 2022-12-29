@@ -5,5 +5,5 @@ import { AppReactTesteranto } from "./tests/Redux+Reselect+React/LoginPage.test"
 
 new RectangleTesteranto()[0].builder()
 new AppReduxTesteranto()[0].builder()
-new AppReduxToolkitTesteranto()[0].builder()
-new AppReactTesteranto()[0].builder()
+// new AppReduxToolkitTesteranto()[0].builder()
+// new AppReactTesteranto()[0].builder()

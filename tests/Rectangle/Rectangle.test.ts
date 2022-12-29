@@ -190,3 +190,5 @@ export const RectangleTesteranto =
     },
     __filename
   )
+
+export { };

@@ -2,39 +2,11 @@
 import assert from "assert";
 import {
   TesterantoFactory
-} from "./src/index";
-
-// tests/Rectangle/Rectangle.ts
-var Rectangle = class {
-  constructor(height = 2, width = 2) {
-    this.height = height;
-    this.width = width;
-  }
-  getHeight() {
-    return this.height;
-  }
-  getWidth() {
-    return this.width;
-  }
-  setHeight(height) {
-    this.height = height;
-  }
-  setWidth(width) {
-    this.width = width;
-  }
-  area() {
-    return this.width * this.height;
-  }
-  circumference() {
-    return this.width * 2 + this.height * 2;
-  }
-};
-var Rectangle_default = Rectangle;
-
-// tests/Rectangle/Rectangle.test.ts
-import features from "./tests/testerantoFeatures.test.ts";
+} from "/Users/adam/Code/testeranto.ts/tests/Rectangle/../../src/index.ts";
+import Rectangle from "/Users/adam/Code/testeranto.ts/tests/Rectangle/./Rectangle.ts";
+import features from "/Users/adam/Code/testeranto.ts/tests/Rectangle/../testerantoFeatures.test.ts";
 var RectangleTesteranto = TesterantoFactory(
-  Rectangle_default.prototype,
+  Rectangle.prototype,
   (Suite, Given, When, Then, Check) => {
     return [
       Suite.Default(
@@ -54,7 +26,7 @@ var RectangleTesteranto = TesterantoFactory(
               Then.getWidth(4),
               Then.getHeight(5),
               Then.area(20),
-              Then.AreaPlusCircumference(38)
+              Then.AreaPlusCircumference(38999)
             ]
           ),
           Given.WidthOfOneAndHeightOfOne(
@@ -95,9 +67,9 @@ var RectangleTesteranto = TesterantoFactory(
       Default: "a default suite"
     },
     Givens: {
-      Default: () => new Rectangle_default(),
-      WidthOfOneAndHeightOfOne: () => new Rectangle_default(1, 1),
-      WidthAndHeightOf: (width, height) => new Rectangle_default(width, height)
+      Default: () => new Rectangle(),
+      WidthOfOneAndHeightOfOne: () => new Rectangle(1, 1),
+      WidthAndHeightOf: (width, height) => new Rectangle(width, height)
     },
     Whens: {
       HeightIsPubliclySetTo: (height) => (rectangle) => rectangle.height = height,

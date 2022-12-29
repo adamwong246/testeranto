@@ -1,6 +1,9 @@
+import fs from "fs";
 import fresh from 'fresh-require';
 import { watchFile } from 'node:fs';
 import { cancelable } from 'cancelable-promise';
+
+const outPath = "./dist/results/";
 
 const jobs = {};
 
@@ -8,22 +11,75 @@ const changed = (key, suite) => {
   if (jobs[key]) {
     jobs[key].cancel
   } 
-  jobs[key] = cancelable(new Promise( (resolve) => {    
+  // eslint-disable-next-line no-async-promise-executor
+  jobs[key] = cancelable(new Promise(async (resolve) => {    
+
+    // return suite.runner({}).then(() => {
+    //   console.log("mark0", result);
+    //   // fs.writeFile(
+    //   //   "./dist/testerantoResults.txt",
+    //   //   JSON.stringify(result.toString(), null, 2),
+    //   //   (err) => {
+    //   //     if (err) {
+    //   //       console.error(err);
+    //   //       process.exit(-1)
+    //   //     }
+    //   //     // process.exit(0)
+    //   //     resolve(result)
+    //   //   }
+    //   // );
+    // })
+
+    
+    let result = {};
+    
+    fs.promises.mkdir(outPath, { recursive: true }) 
+
     try {
-      resolve(suite.runner({}))
+      await suite.runner({});
+      result = {
+        test: suite.test,
+        status: "pass",
+      }
     } catch(e) {
       console.error("MARK 1", e)
+      result = {
+        test: suite.test,
+        status: "fail",
+      }
+      
+    } finally {
+      fs.writeFile(
+        `${outPath}${key}.json`,
+        JSON.stringify(result, null, 2),
+        (err) => {
+          if (err) {
+            console.error(err);
+            process.exit(-1)
+          }
+          resolve(result)
+        }
+      );
     }
   }));
   
 };
 
-watchFile('./dist/tests/Rectangle/Rectangle.test.ts', async (curr, prev) => {
-  const t = fresh("./tests/Rectangle/Rectangle.test", require)
-  const RectangleTesteranto = t.RectangleTesteranto;
+[
+  ['Rectangle', './dist/tests/Rectangle/Rectangle.test.js', 'RectangleTesteranto'],
+  ['Redux', './dist/tests/Redux+Reselect+React/app.redux.test.js', 'AppReduxTesteranto']
+].forEach(([key, sourcefile, className]) => {
+
+  const X = fresh(sourcefile, require)[className];
+  console.log("X", X)
   changed(
-    'Rectangle', new RectangleTesteranto()[0]
+    key, new X()[0]
   )
-  // await new RectangleTesteranto()[0].runner({port: 3001})
-  // console.log("done" )
-});
+
+  watchFile(sourcefile, async (curr, prev) => {
+    const X = fresh(sourcefile, require)[className];
+    changed(
+      key, new X()[0]
+    )
+  });
+})

@@ -1,79 +1,8 @@
 // tests/Redux+Reselect+React/app.redux.test.ts
 import { assert } from "chai";
-import features from "./tests/testerantoFeatures.test.ts";
-
-// tests/Redux+Reselect+React/redux.testeranto.test.ts
-import { createStore } from "redux";
-import { TesterantoFactory } from "./src/index";
-var ReduxTesteranto = (testImplementations, testSpecifications, testInput, entryPath) => TesterantoFactory(
-  testInput,
-  testSpecifications,
-  testImplementations,
-  "na",
-  {
-    beforeEach: function(subject, initialValues, testResource) {
-      return createStore(subject, initialValues);
-    },
-    andWhen: function(store, actioner, testResource) {
-      const a = actioner();
-      return store.dispatch(a[0](a[1]));
-    },
-    butThen: function(store, callback, testResource) {
-      return store.getState();
-    },
-    actionHandler: function(b) {
-      return b();
-    }
-  },
-  entryPath
-);
-
-// tests/Redux+Reselect+React/app.ts
-import { createSelector, createSlice, createStore as createStore2 } from "@reduxjs/toolkit";
-var loginApp = createSlice({
-  name: "login app",
-  initialState: {
-    password: "",
-    email: "",
-    error: "no_error"
-  },
-  reducers: {
-    setPassword: (state, action) => {
-      state.password = action.payload;
-    },
-    setEmail: (state, action) => {
-      state.email = action.payload;
-    },
-    signIn: (state) => {
-      state.error = checkForErrors(state);
-    }
-  }
-});
-var selectRoot = (storeState) => {
-  return storeState;
-};
-var validateEmail = (email) => {
-  return email.match(
-    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  );
-};
-var checkForErrors = (storeState) => {
-  if (!validateEmail(storeState.email)) {
-    return "invalidEmail";
-  }
-  if (storeState.password !== "password" && storeState.email !== "adam@email.com") {
-    return "credentialFail";
-  }
-  return "no_error";
-};
-var loginPageSelection = createSelector([selectRoot], (root) => {
-  return {
-    ...root,
-    disableSubmit: root.email == "" || root.password == ""
-  };
-});
-
-// tests/Redux+Reselect+React/app.redux.test.ts
+import features from "/Users/adam/Code/testeranto.ts/tests/Redux+Reselect+React/../testerantoFeatures.test.ts";
+import { ReduxTesteranto } from "/Users/adam/Code/testeranto.ts/tests/Redux+Reselect+React/./redux.testeranto.test.ts";
+import { loginApp } from "/Users/adam/Code/testeranto.ts/tests/Redux+Reselect+React/./app.ts";
 var AppReduxTesteranto = ReduxTesteranto(
   {
     Suites: {
