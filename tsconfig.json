@@ -33,7 +33,7 @@
     "isolatedModules": true
   },
   "include": [
-    "src/index.ts", "./src/"
+    "src/index.ts", "./src/", "src/watch.ts", "src/build.ts"
   ],
   "exclude": [
     "node_modules"

@@ -16,11 +16,15 @@
   "scripts": {
     "testeranto!": "ts-node ./tests/index.ts",
     "testrun": "node --inspect ./dist/test.bundle.js",
-    "prepublish": "tsc"
+    "prepublish": "tsc",
+    "build": "nodemon --config nodemon.json ./build.ts",
+    "watch": "ts-node ./watch.ts"
   },
   "types": "index.d.ts",
   "dependencies": {
+    "cancelable-promise": "^4.3.1",
     "eslint": "^8.29.0",
+    "fresh-require": "^1.0.3",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
@@ -36,7 +40,7 @@
     "@typescript-eslint/parser": "^5.46.0",
     "babel-loader": "^8.2.5",
     "chai": "^4.3.7",
-    "esbuild": "^0.15.16",
+    "esbuild": "^0.16.5",
     "eslint-plugin-react": "^7.31.11",
     "ignore-loader": "^0.1.2",
     "nodemon": "^2.0.20",

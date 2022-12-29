@@ -102,7 +102,7 @@ export const RectangleTesteranto =
                 Then.getHeight(3),
                 Then.getWidth(4),
                 Then.area(12),
-                Then.circumference(14),
+                Then.circumference(144),
               ]
             ),
           ],
@@ -187,5 +187,6 @@ export const RectangleTesteranto =
         actioner()(renderer)
         return renderer;
       }, 
-    }    
+    },
+    __filename
   )

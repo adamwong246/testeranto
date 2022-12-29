@@ -1,3 +1,6 @@
+import fs from "fs";
+import path from "path";
+import esbuild from "esbuild";
 import { mapValues } from "lodash";
 import { BaseGiven, BaseCheck, BaseSuite, BaseFeature, BaseWhen, BaseThen } from "./BaseClasses";
 import { TesterantoBasic } from "./level0";
@@ -76,7 +79,9 @@ export abstract class Testeranto<
     checkKlasser: (n, f, cb, w, t) =>
       BaseCheck<ISubject, IStore, ISelection, IThenShape>,
 
-    testResource?: ITestResource
+    testResource: ITestResource,
+    
+    entryPath: string
   ) {
     const classySuites = mapValues(
       testImplementation.Suites,
@@ -164,8 +169,29 @@ export abstract class Testeranto<
         test: suite,
         testResource,
         runner: async (testResourceConfiguration?) => {
-          await suite.run(input, testResourceConfiguration[testResource]);
+          suite.run(input, testResourceConfiguration[testResource]);
         },
+
+        builder: () => {
+          
+          console.log("building...", entryPath);
+
+          const build = esbuild.buildSync({
+            entryPoints: [entryPath],
+            bundle: true,
+            minify: false,
+            format: "esm",
+            target: ["esnext"],
+            write: false,
+            packages: 'external',
+            external: ['./src/*', './tests/testerantoFeatures.test.ts']
+          }).outputFiles[0].text;
+
+          
+          const p = './dist' + (entryPath.split(process.cwd()).pop());
+          fs.promises.mkdir(path.dirname(p), { recursive: true }).then(x => fs.promises.writeFile(p, build))
+
+        }
       };
     });
   }

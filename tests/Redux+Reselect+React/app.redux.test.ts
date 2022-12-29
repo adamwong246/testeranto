@@ -127,5 +127,6 @@ export const AppReduxTesteranto = ReduxTesteranto<
       ),
     ];
   },
-  loginApp.reducer
+  loginApp.reducer,
+  __filename
 );

@@ -32,7 +32,8 @@ export const TesterantoFactory = <
     beforeAll?: (input: Input) => Promise<Subject>,
     beforeEach?: (subject: Subject, initialValues, testResource: TestResourceShape) => Promise<Store>,
     butThen?: (store: Store, callback, testResource: TestResourceShape) => Promise<Selection>,
-  }
+  },
+  entryPath: string
 
 ) => {
 
@@ -146,7 +147,8 @@ export const TesterantoFactory = <
             return new Promise((res) => res(afterEach(store, ndx)))
           }
         },
-        testResource
+        testResource,
+        entryPath
       );
     }
   }

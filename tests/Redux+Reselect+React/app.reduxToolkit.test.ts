@@ -124,7 +124,8 @@ export const AppReduxToolkitTesteranto = ReduxToolkitTesteranto<
     ];
   },
 
-  { reducer, selector }
+  { reducer, selector },
+  __filename
 
 );
 
