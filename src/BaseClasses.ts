@@ -56,6 +56,7 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
   features: BaseFeature[];
   whens: BaseWhen<IStore, ISelection, IThenShape>[];
   thens: BaseThen<ISelection, IStore, IThenShape>[];
+  error: Error;
 
   constructor(
     name: string,
@@ -85,25 +86,32 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
     tester
   ) {
     console.log(`\n Given: ${this.name}`);
-    const store = await this.givenThat(subject, testResourceConfiguration);
+    try {
+      const store = await this.givenThat(subject, testResourceConfiguration);
 
-    for (const whenStep of this.whens) {
-      await whenStep.test(store, testResourceConfiguration);
-    }
+      for (const whenStep of this.whens) {
+        await whenStep.test(store, testResourceConfiguration);
+      }
 
-    for (const thenStep of this.thens) {
-      const t = await thenStep.test(store, testResourceConfiguration);
-      tester(t);
-    }
+      for (const thenStep of this.thens) {
+        const t = await thenStep.test(store, testResourceConfiguration);
+        tester(t);
+      }
 
-    await this.afterEach(store, index);
+      await this.afterEach(store, index);
+    } catch (e) {  
+      this.error = e;
+    } 
     return;
+    
+    
   }
 }
 
 export abstract class BaseWhen<IStore, ISelection, IThenShape> {
   name: string;
   actioner: (x: ISelection) => IThenShape;
+  error: boolean;
 
   constructor(name: string, actioner: (xyz: ISelection) => IThenShape) {
     this.name = name;
@@ -118,13 +126,19 @@ export abstract class BaseWhen<IStore, ISelection, IThenShape> {
 
   async test(store: IStore, testResourceConfiguration?) {
     console.log(" When:", this.name);
-    return await this.andWhen(store, this.actioner, testResourceConfiguration);
+    try {
+      return await this.andWhen(store, this.actioner, testResourceConfiguration);
+    } catch (e) {
+      this.error = true;
+      throw e
+    }
   }
 }
 
 export abstract class BaseThen<ISelection, IStore, IThenShape> {
   name: string;
   thenCB: (storeState: ISelection) => IThenShape;
+  error: boolean;
 
   constructor(name: string, thenCB: (val: ISelection) => IThenShape) {
     this.name = name;
@@ -133,9 +147,16 @@ export abstract class BaseThen<ISelection, IStore, IThenShape> {
 
   abstract butThen(store: any, testResourceConfiguration?): Promise<ISelection>;
 
-  async test(store: IStore, testResourceConfiguration): Promise<IThenShape> {
+  async test(store: IStore, testResourceConfiguration): Promise<IThenShape | undefined>  {
     console.log(" Then:", this.name);
-    return this.thenCB(await this.butThen(store, testResourceConfiguration));
+
+    try {
+      return this.thenCB(await this.butThen(store, testResourceConfiguration));  
+    } catch(e) {
+      this.error = true;
+      throw e
+    }
+    
   }
 }
 

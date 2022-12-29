@@ -30,7 +30,7 @@ const processTestsWithPorts = async (
                   ...payload,
                   {
                     test: suite?.test,
-                    status: e,
+                    status: "fail",
                   },
                 ]);
               }
@@ -56,18 +56,18 @@ export const reporter = async (
     const testsWithoutResources: ITestResults = suites
       .filter((s) => s.testResource === "na")
       .map(async (suite) => {
-        let status;
+        // let status;
         try {
           await suite.runner({});
-          status = "pass";
+          // status = "pass";
         } catch (e) {
           console.error(e);
-          status = e;
+          // status = "fail";
         }
 
         return {
           test: suite.test,
-          status,
+          // status,
         };
       });
 
@@ -87,21 +87,9 @@ export const reporter = async (
           (err) => {
             if (err) {
               console.error(err);
+              process.exit(-1)
             }
-
-            const failures = result.filter((r) => r.status != "pass");
-
-            if (failures.length) {
-              console.warn(
-                `❌ You have failing tests: ${JSON.stringify(
-                  failures.map((f) => f.test.name)
-                )}`
-              );
-              process.exit(-1);
-            } else {
-              console.log("✅ All tests passed:", (result.filter((r) => r.status === "pass").map((p) => p.test.name)).join(", ") );
-              process.exit(0);
-            }
+            process.exit(0)
           }
         );
       }

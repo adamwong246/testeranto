@@ -124,8 +124,7 @@
         }
       ],
       "checks": []
-    },
-    "status": "pass"
+    }
   },
   {
     "test": {
@@ -215,8 +214,7 @@
           "thens": {}
         }
       ]
-    },
-    "status": "pass"
+    }
   },
   {
     "test": {
@@ -303,8 +301,7 @@
         }
       ],
       "checks": []
-    },
-    "status": "pass"
+    }
   },
   {
     "test": {
@@ -360,12 +357,20 @@
               "name": "area: 20"
             },
             {
-              "name": "AreaPlusCircumference: 38"
+              "name": "AreaPlusCircumference: 38999",
+              "error": true
             }
           ],
           "initialValues": {
             "height": 1,
             "width": 1
+          },
+          "error": {
+            "generatedMessage": true,
+            "code": "ERR_ASSERTION",
+            "actual": 38,
+            "expected": 38999,
+            "operator": "=="
           }
         },
         {
@@ -451,8 +456,7 @@
         }
       ],
       "checks": []
-    },
-    "status": "pass"
+    }
   },
   {
     "test": {
@@ -547,8 +551,7 @@
         }
       ],
       "checks": []
-    },
-    "status": "pass"
+    }
   },
   {
     "test": {
@@ -595,8 +598,7 @@
         }
       ],
       "checks": []
-    },
-    "status": "pass"
+    }
   },
   {
     "test": {

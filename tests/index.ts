@@ -1,10 +1,3 @@
-// import { ClassicalComponentEsbuildPuppeteerTesteranto } from "./ClassicalReact/ClassicalComponent.esbuild-puppeteer.test";
-// import { ClassicalComponentReactTestRendererTesteranto } from "./ClassicalReact/ClassicalComponent.react-test-renderer.test";
-
-// import { ServerHttpPuppeteerTesteranto } from "./httpServer/server.puppeteer.test";
-
-
-
 import { RectangleTesteranto } from "./Rectangle/Rectangle.test";
 import { AppReduxTesteranto } from "./Redux+Reselect+React/app.redux.test";
 import { ServerHttpTesteranto } from "./httpServer/server.http.test";
