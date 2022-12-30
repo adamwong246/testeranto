@@ -35,7 +35,7 @@ class TestResourceManager {
 
   launch() {
     setInterval(async () => {
-      console.log("tick")
+      console.log("feed me tests plz!")
       const qi = this.queue.pop();
       if (qi?.testResourceRequired === "na") {
         const key = qi.key;
