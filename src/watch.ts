@@ -4,7 +4,7 @@ import { watchFile } from 'node:fs';
 import { cancelable } from 'cancelable-promise';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const testerantoConfig = require("./testeranto.config");
+const testerantoConfig = require("../testeranto.config");
 
 const outPath = "./dist/results/";
 
@@ -41,8 +41,8 @@ const changed = (key, suite) => {
 
 testerantoConfig.forEach(async ([key, sourcefile, className]) => {
   
-  const distFile = "./dist/" + sourcefile.split(".ts")[0] + ".js";
-  const md5File = "./dist/" + sourcefile.split(".ts")[0] + ".md5";
+  const distFile = "../dist/" + sourcefile.split(".ts")[0] + ".js";
+  const md5File = "../dist/" + sourcefile.split(".ts")[0] + ".md5";
   
   fs.readFile(md5File, 'utf-8', (err, firstmd5hash) => {
     md5s[key] = firstmd5hash;

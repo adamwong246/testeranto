@@ -17,8 +17,8 @@
     "testeranto!": "ts-node ./tests/index.ts",
     "testrun": "node --inspect ./dist/test.bundle.js",
     "prepublish": "tsc",
-    "build": "nodemon --config nodemon.json ./build.ts",
-    "watch": "ts-node ./watch.ts"
+    "build": "nodemon --config nodemon.json ./src/build.ts",
+    "watch": "ts-node ./src/watch.ts"
   },
   "types": "index.d.ts",
   "dependencies": {
