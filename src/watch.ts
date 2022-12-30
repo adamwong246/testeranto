@@ -11,30 +11,37 @@ const outPath = "./dist/results/";
 const jobs = {};
 const md5s = {};
 
-const changed = (key, suite) => {
+const changed = async (key, suite) => {
   console.log("running", key)
+  
   if (jobs[key]) {
-    jobs[key].cancel
+    console.log("aborting...", key)
+    // process.exit()
+    await jobs[key].aborter();
+    await jobs[key].cancellablePromise.cancel();
+    console.log(key, "...aborted")
   } 
+
+  let aborter;
   // eslint-disable-next-line no-async-promise-executor
-  jobs[key] = cancelable(new Promise(async (resolve) => {
-    fs.promises.mkdir(outPath, { recursive: true }) 
-    // console.log(suite.test.name)
+  const cancellablePromise = cancelable(new Promise((resolve) => {
+    fs.promises.mkdir(outPath, { recursive: true });
+
+    aborter = () => suite.test.aborter();
 
     let result = {};
     if (suite.testResource === 'port') {
       result = {
         test: suite.test,
-        status: await suite.runner({port: 3001})
+        status: suite.runner({ port: 3001 })
       }
     } else {
       result = {
         test: suite.test,
-        status: await suite.runner({})
+        status: suite.runner({})
       }
     }
 
-    
     fs.writeFile(
       `${outPath}${key}.json`,
       JSON.stringify(result, null, 2),
@@ -43,12 +50,17 @@ const changed = (key, suite) => {
           console.error(err);
           // process.exit(-1)
         }
-        delete jobs[key]
+        // delete jobs[key]
         resolve(result)
       }
     );
 
   }));
+
+  jobs[key] = {
+    aborter, cancellablePromise
+  }
+
 };
 
 testerantoConfig.forEach( ([key, sourcefile, className]) => {

@@ -70,7 +70,7 @@ export const HttpTesteranto = <
       afterEach: function (server: Store, ndx: number): unknown {
         return new Promise((res) => {
           server.close(() => {
-            res(server)
+            res(true)
           })
         })
       }

@@ -12,20 +12,10 @@
         "whens": [],
         "thens": [
           {
-            "name": "TheStatusIs: some great status",
-            "error": true
+            "name": "TheStatusIs: some great status"
           }
         ],
-        "initialValues": {},
-        "error": {
-          "name": "AssertionError",
-          "message": "expected 'aloha' to equal 'some great status'",
-          "showDiff": true,
-          "actual": "aloha",
-          "expected": "some great status",
-          "operator": "strictEqual",
-          "stack": "AssertionError: expected 'aloha' to equal 'some great status'\n    at butThen (/Users/adam/Code/testeranto.ts/tests/httpServer/http.testeranto.test.ts:67:16)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Then.test (/Users/adam/Code/testeranto.ts/src/BaseClasses.ts:163:26)\n    at async Given.give (/Users/adam/Code/testeranto.ts/src/BaseClasses.ts:105:19)\n    at async constructor.run (/Users/adam/Code/testeranto.ts/src/BaseClasses.ts:46:9)\n    at async /Users/adam/Code/testeranto.ts/src/watch.ts:28:17"
-        }
+        "initialValues": {}
       },
       {
         "name": "a http feature",
@@ -131,7 +121,7 @@
             "name": "TheStatusIs: hello"
           },
           {
-            "name": "TheNumberIs: 777"
+            "name": "TheNumberIs: 7"
           }
         ],
         "initialValues": {}
@@ -139,5 +129,5 @@
     ],
     "checks": []
   },
-  "status": false
+  "status": {}
 }
