@@ -32,7 +32,7 @@ export abstract class BaseSuite<
 
   async aborter() {
     this.aborted = true;
-    await Promise.all(this.givens.map((g, ndx) => g.aborter(ndx)))
+    await Promise.all((this.givens|| []).map((g, ndx) => g.aborter(ndx)))
   }
 
   setup(s: IInput): Promise<ISubject> {

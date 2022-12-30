@@ -89,6 +89,216 @@
             }
           }
         }
+      },
+      {
+        "name": "yet another Puppeteer feature",
+        "features": [
+          {
+            "name": "hello"
+          }
+        ],
+        "whens": [
+          {
+            "name": "PostToStatus: hello"
+          },
+          {
+            "name": "PostToStatus: aloha"
+          }
+        ],
+        "thens": [
+          {
+            "name": "TheStatusIs: aloha"
+          }
+        ],
+        "initialValues": {},
+        "store": {
+          "server": {
+            "requestTimeout": 300000,
+            "headersTimeout": 60000,
+            "keepAliveTimeout": 5000,
+            "connectionsCheckingInterval": 30000,
+            "_events": {},
+            "_eventsCount": 2,
+            "_connections": 0,
+            "_handle": null,
+            "_usingWorkers": false,
+            "_workers": [],
+            "_unref": false,
+            "allowHalfOpen": true,
+            "pauseOnConnect": false,
+            "noDelay": true,
+            "keepAlive": false,
+            "keepAliveInitialDelay": 0,
+            "httpAllowHalfOpen": false,
+            "timeout": 0,
+            "maxHeadersCount": null,
+            "maxRequestsPerSocket": 0,
+            "_connectionKey": "6::::3001"
+          },
+          "browser": {
+            "eventsMap": {},
+            "emitter": {
+              "all": {}
+            }
+          }
+        }
+      },
+      {
+        "name": "a feature",
+        "features": [],
+        "whens": [],
+        "thens": [
+          {
+            "name": "TheNumberIs: 0"
+          }
+        ],
+        "initialValues": {},
+        "store": {
+          "server": {
+            "requestTimeout": 300000,
+            "headersTimeout": 60000,
+            "keepAliveTimeout": 5000,
+            "connectionsCheckingInterval": 30000,
+            "_events": {},
+            "_eventsCount": 2,
+            "_connections": 0,
+            "_handle": null,
+            "_usingWorkers": false,
+            "_workers": [],
+            "_unref": false,
+            "allowHalfOpen": true,
+            "pauseOnConnect": false,
+            "noDelay": true,
+            "keepAlive": false,
+            "keepAliveInitialDelay": 0,
+            "httpAllowHalfOpen": false,
+            "timeout": 0,
+            "maxHeadersCount": null,
+            "maxRequestsPerSocket": 0,
+            "_connectionKey": "6::::3001"
+          },
+          "browser": {
+            "eventsMap": {},
+            "emitter": {
+              "all": {}
+            }
+          }
+        }
+      },
+      {
+        "name": "still further Puppeteer features?!",
+        "features": [
+          {
+            "name": "hello"
+          }
+        ],
+        "whens": [
+          {
+            "name": "PostToAdd: 1"
+          },
+          {
+            "name": "PostToAdd: 2"
+          }
+        ],
+        "thens": [
+          {
+            "name": "TheNumberIs: 3"
+          }
+        ],
+        "initialValues": {},
+        "store": {
+          "server": {
+            "requestTimeout": 300000,
+            "headersTimeout": 60000,
+            "keepAliveTimeout": 5000,
+            "connectionsCheckingInterval": 30000,
+            "_events": {},
+            "_eventsCount": 2,
+            "_connections": 0,
+            "_handle": null,
+            "_usingWorkers": false,
+            "_workers": [],
+            "_unref": false,
+            "allowHalfOpen": true,
+            "pauseOnConnect": false,
+            "noDelay": true,
+            "keepAlive": false,
+            "keepAliveInitialDelay": 0,
+            "httpAllowHalfOpen": false,
+            "timeout": 0,
+            "maxHeadersCount": null,
+            "maxRequestsPerSocket": 0,
+            "_connectionKey": "6::::3001"
+          },
+          "browser": {
+            "eventsMap": {},
+            "emitter": {
+              "all": {}
+            }
+          }
+        }
+      },
+      {
+        "name": "another Puppeteer feature",
+        "features": [
+          {
+            "name": "hello"
+          }
+        ],
+        "whens": [
+          {
+            "name": "PostToStatus: aloha"
+          },
+          {
+            "name": "PostToAdd: 4"
+          },
+          {
+            "name": "PostToStatus: hello"
+          },
+          {
+            "name": "PostToAdd: 3"
+          }
+        ],
+        "thens": [
+          {
+            "name": "TheStatusIs: hello"
+          },
+          {
+            "name": "TheNumberIs: 7"
+          }
+        ],
+        "initialValues": {},
+        "store": {
+          "server": {
+            "requestTimeout": 300000,
+            "headersTimeout": 60000,
+            "keepAliveTimeout": 5000,
+            "connectionsCheckingInterval": 30000,
+            "_events": {},
+            "_eventsCount": 2,
+            "_connections": 0,
+            "_handle": null,
+            "_usingWorkers": false,
+            "_workers": [],
+            "_unref": false,
+            "allowHalfOpen": true,
+            "pauseOnConnect": false,
+            "noDelay": true,
+            "keepAlive": false,
+            "keepAliveInitialDelay": 0,
+            "httpAllowHalfOpen": false,
+            "timeout": 0,
+            "maxHeadersCount": null,
+            "maxRequestsPerSocket": 0,
+            "_connectionKey": "6::::3001"
+          },
+          "browser": {
+            "eventsMap": {},
+            "emitter": {
+              "all": {}
+            }
+          }
+        }
       }
     ],
     "checks": [],

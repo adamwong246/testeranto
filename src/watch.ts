@@ -21,21 +21,18 @@ type IRunningJob = {
 };
 
 class TestResourceManager {
-  allocatedPorts: Record<string, boolean>;
+  // allocatedPorts: Record<string, boolean>;
   ports: Record<string, string>;
   jobs: Record<string, IRunningJob>;
   queue: IQueudJob[];
   
-
   constructor(portsToUse: string[]) {
     this.ports = {};
-    this.allocatedPorts = portsToUse.reduce((mm, lm) => {
-      this.ports[lm] = '';
-      return mm[lm] = false
-    }, {});
+    portsToUse.forEach((port) => {
+      this.ports[port] = '';
+    });
     this.queue = [];
     this.jobs = {};
-
   }
 
   launch() {
@@ -138,7 +135,7 @@ class TestResourceManager {
   }
 }
 
-const TRM = new TestResourceManager(['3001']);
+const TRM = new TestResourceManager(['3001', '3002']);
 
 const changed = async (key, distFile, className) => {
   console.log("running", key)
