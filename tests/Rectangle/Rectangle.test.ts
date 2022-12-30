@@ -74,7 +74,7 @@ export const RectangleTesteranto =
                 Then.getWidth(4),
                 Then.getHeight(5),
                 Then.area(20),
-                Then.AreaPlusCircumference(38999),
+                Then.AreaPlusCircumference(38),
               ]
             ),
             Given.WidthOfOneAndHeightOfOne(
@@ -102,7 +102,7 @@ export const RectangleTesteranto =
                 Then.getHeight(3),
                 Then.getWidth(4),
                 Then.area(12),
-                Then.circumference(144),
+                Then.circumference(14),
               ]
             ),
           ],

@@ -36,13 +36,16 @@ const changed = (key, suite) => {
     fs.promises.mkdir(outPath, { recursive: true }) 
 
     try {
+      console.log("mark0")
       await suite.runner({});
+      console.log("mark1", suite.test)
+
       result = {
         test: suite.test,
         status: "pass",
       }
     } catch(e) {
-      console.error("MARK 1", e)
+      console.error(e)
       result = {
         test: suite.test,
         status: "fail",

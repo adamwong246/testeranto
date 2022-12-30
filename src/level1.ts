@@ -168,9 +168,7 @@ export abstract class Testeranto<
       return {
         test: suite,
         testResource,
-        runner: async (testResourceConfiguration?) => {
-          suite.run(input, testResourceConfiguration[testResource]);
-        },
+        runner: async (testResourceConfiguration?) => suite.run(input, testResourceConfiguration[testResource]),
 
         builder: () => {
           

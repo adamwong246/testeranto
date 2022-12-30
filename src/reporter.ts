@@ -56,29 +56,33 @@ export const reporter = async (
     const testsWithoutResources: ITestResults = suites
       .filter((s) => s.testResource === "na")
       .map(async (suite) => {
-        // let status;
+        let status;
         try {
-          await suite.runner({});
-          // status = "pass";
+          const x = await suite.runner({});
+          console.log("x", x)
+          status = "pass";
         } catch (e) {
           console.error(e);
-          // status = "fail";
+          status = "fail";
+        } finally {
+          // eslint-disable-next-line no-unsafe-finally
+          return {
+            test: suite.test,
+            status,
+          };
         }
 
-        return {
-          test: suite.test,
-          // status,
-        };
+        
       });
 
-    const portTestresults = await processTestsWithPorts(
-      suites.filter((s) => s.testResource === "port"),
-      testResources.ports
-    );
+    // const portTestresults = await processTestsWithPorts(
+    //   suites.filter((s) => s.testResource === "port"),
+    //   testResources.ports
+    // );
 
     Promise.all([
       ...testsWithoutResources,
-      ...portTestresults
+      // ...portTestresults
     ]).then(
       (result) => {
         fs.writeFile(
