@@ -23,7 +23,8 @@
           "password": "",
           "email": "",
           "error": "no_error"
-        }
+        },
+        "store": {}
       },
       {
         "name": "another feature",
@@ -45,7 +46,8 @@
           "password": "",
           "email": "bob@mail.com",
           "error": "no_error"
-        }
+        },
+        "store": {}
       },
       {
         "name": "yet another feature",
@@ -71,7 +73,8 @@
           "password": "",
           "email": "",
           "error": "no_error"
-        }
+        },
+        "store": {}
       },
       {
         "name": "OMG a feature!",
@@ -93,7 +96,8 @@
           "password": "",
           "email": "",
           "error": "no_error"
-        }
+        },
+        "store": {}
       },
       {
         "name": "yes more features plz",
@@ -112,17 +116,29 @@
         ],
         "thens": [
           {
-            "name": "TheEmailIs: hey there?"
+            "name": "TheEmailIs: hey there?",
+            "error": true
           }
         ],
         "initialValues": {
           "password": "",
           "email": "",
           "error": "no_error"
+        },
+        "store": {},
+        "error": {
+          "name": "AssertionError",
+          "message": "expected 'hey there' to equal 'hey there?'",
+          "showDiff": true,
+          "actual": "hey there",
+          "expected": "hey there?",
+          "operator": "strictEqual",
+          "stack": "AssertionError: expected 'hey there' to equal 'hey there?'\n    at Then.thenCB (/Users/adam/Code/testeranto.ts/dist/tests/Redux+Reselect+React/app.redux.test.js:1:673)\n    at Then.test (/Users/adam/Code/testeranto.ts/src/BaseClasses.ts:189:21)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Given.give (/Users/adam/Code/testeranto.ts/src/BaseClasses.ts:120:19)\n    at async constructor.run (/Users/adam/Code/testeranto.ts/src/BaseClasses.ts:52:24)\n    at async /Users/adam/Code/testeranto.ts/src/watch.ts:78:17"
         }
       }
     ],
-    "checks": []
+    "checks": [],
+    "store": {}
   },
-  "status": {}
+  "status": false
 }

@@ -120,10 +120,11 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
         const t = await thenStep.test(this.store, testResourceConfiguration);
         tester(t);
       }
-      await this.afterEach(this.store, index);
     } catch (e) {
       this.error = e;
       throw e;
+    } finally { 
+      await this.afterEach(this.store, index);
     }
     return this.store;
   }

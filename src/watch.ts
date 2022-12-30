@@ -37,6 +37,7 @@ class TestResourceManager {
     setInterval(async () => {
       console.log("feed me tests plz!")
       const qi = this.queue.pop();
+
       if (qi?.testResourceRequired === "na") {
         const key = qi.key;
         if (this.jobs[key]) {
@@ -50,15 +51,31 @@ class TestResourceManager {
           cancellablePromise: qi.getCancellablePromise({}).then(() => delete this.jobs[key] )
         }
       }
+
+      if (qi?.testResourceRequired === "port") {
+        const key = qi.key;
+        if (this.jobs[key]) {
+          console.log("aborting...", key, this.jobs[key])
+          await this.jobs[key].aborter();
+          await this.jobs[key].cancellablePromise.cancel();
+          delete this.jobs[key]
+        }
+        this.jobs[key] = {
+          aborter: qi.aborter,
+          cancellablePromise: qi.getCancellablePromise({port: 3001}).then(() => delete this.jobs[key])
+        }
+      }
+
     }, 1000)
   }
 
   async add(suite, key) {
 
-    const cancellablePromise = (allocatedTestResource) => cancelable(new Promise((resolve) => {
+    // eslint-disable-next-line no-async-promise-executor
+    const cancellablePromise = (allocatedTestResource) => cancelable(new Promise(async (resolve) => {
       const result = {
         test: suite.test,
-        status: suite.runner(allocatedTestResource)
+        status: await suite.runner(allocatedTestResource)
       };
       
       fs.promises.mkdir(outPath, { recursive: true });
@@ -71,10 +88,9 @@ class TestResourceManager {
           }
           resolve(result)
         }
-      );
-
-      
+      );      
     }));
+
     this.queue.push({
       key,
       aborter: suite.test.aborter,

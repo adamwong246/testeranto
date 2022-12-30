@@ -68,6 +68,7 @@ export const HttpTesteranto = <
         return bodytext;
       },
       afterEach: function (server: Store, ndx: number): unknown {
+        console.log("afterEach")
         return new Promise((res) => {
           server.close(() => {
             res(true)
