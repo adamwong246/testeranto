@@ -46,6 +46,7 @@ export abstract class BaseSuite<
         await giver.give(subject, ndx, testResourceConfiguration, this.test);  
       } catch (e) {
         console.error(e)
+        return false
       }
       
     }
@@ -53,6 +54,8 @@ export abstract class BaseSuite<
     for (const [ndx, thater] of this.checks.entries()) {
       await thater.check(subject, ndx, testResourceConfiguration, this.test);
     }
+
+    return true
   }
 }
 
