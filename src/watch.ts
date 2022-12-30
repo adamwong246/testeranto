@@ -16,15 +16,13 @@ const changed = async (key, suite) => {
   
   if (jobs[key]) {
     console.log("aborting...", key)
-    // process.exit()
     await jobs[key].aborter();
     await jobs[key].cancellablePromise.cancel();
-    console.log(key, "...aborted")
   } 
 
   let aborter;
   // eslint-disable-next-line no-async-promise-executor
-  const cancellablePromise = cancelable(new Promise((resolve) => {
+  const cancellablePromise = cancelable(new Promise(async (resolve) => {
     fs.promises.mkdir(outPath, { recursive: true });
 
     aborter = () => suite.test.aborter();
@@ -33,12 +31,12 @@ const changed = async (key, suite) => {
     if (suite.testResource === 'port') {
       result = {
         test: suite.test,
-        status: suite.runner({ port: 3001 })
+        status: await suite.runner({ port: 3001 })
       }
     } else {
       result = {
         test: suite.test,
-        status: suite.runner({})
+        status: await suite.runner({})
       }
     }
 
@@ -48,9 +46,7 @@ const changed = async (key, suite) => {
       (err) => {
         if (err) {
           console.error(err);
-          // process.exit(-1)
         }
-        // delete jobs[key]
         resolve(result)
       }
     );
