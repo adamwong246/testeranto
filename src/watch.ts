@@ -19,39 +19,56 @@ const changed = (key, suite) => {
   // eslint-disable-next-line no-async-promise-executor
   jobs[key] = cancelable(new Promise(async (resolve) => {
     fs.promises.mkdir(outPath, { recursive: true }) 
-    const result = {
-      test: suite.test,
-      status: await suite.runner({})
+    // console.log(suite.test.name)
+
+    let result = {};
+    if (suite.testResource === 'port') {
+      result = {
+        test: suite.test,
+        status: await suite.runner({port: 3001})
+      }
+    } else {
+      result = {
+        test: suite.test,
+        status: await suite.runner({})
+      }
     }
 
+    
     fs.writeFile(
       `${outPath}${key}.json`,
       JSON.stringify(result, null, 2),
       (err) => {
         if (err) {
           console.error(err);
-          process.exit(-1)
+          // process.exit(-1)
         }
+        delete jobs[key]
         resolve(result)
       }
     );
+
   }));
-  
 };
 
-testerantoConfig.forEach(async ([key, sourcefile, className]) => {
+testerantoConfig.forEach( ([key, sourcefile, className]) => {
   
   const distFile = "../dist/" + sourcefile.split(".ts")[0] + ".js";
-  const md5File = "../dist/" + sourcefile.split(".ts")[0] + ".md5";
+  const md5File = "./dist/" + sourcefile.split(".ts")[0] + ".md5";
   
   fs.readFile(md5File, 'utf-8', (err, firstmd5hash) => {
     md5s[key] = firstmd5hash;
 
     changed(key, new (fresh(distFile, require)[className])()[0]);
 
-    watchFile(md5File, async (curr, prev) => {
+    watchFile(md5File, (curr, prev) => {
       fs.readFile(md5File, 'utf-8', (err, newmd5Hash) => {
+        if (err) {
+          console.error(err)
+          process.exit(-1)
+        }
         if (newmd5Hash !== md5s[key]) {
+          console.log("changed: ", md5File, newmd5Hash)
           md5s[key] = newmd5Hash;
           changed(key, new (fresh(distFile, require)[className])()[0]);
         }

@@ -24,7 +24,8 @@ export const HttpTesteranto = <
     ITestShape
   >,
   testSpecifications: ITestSpecification<ITestShape>,
-  testInput: Input
+  testInput: Input,
+  entryPath: string
 ) =>
   TesterantoFactory<
     ITestShape,
@@ -73,5 +74,6 @@ export const HttpTesteranto = <
           })
         })
       }
-    },   
+    },
+    entryPath
   )

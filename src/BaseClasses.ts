@@ -93,7 +93,7 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
     testResourceConfiguration,
     tester
   ) {
-    // console.log(`\n Given: ${this.name}`);
+    console.log(`\n Given: ${this.name}`);
     try {
       const store = await this.givenThat(subject, testResourceConfiguration);
 
@@ -134,7 +134,7 @@ export abstract class BaseWhen<IStore, ISelection, IThenShape> {
   );
 
   async test(store: IStore, testResourceConfiguration?) {
-    // console.log(" When:", this.name);
+    console.log(" When:", this.name);
     try {
       return await this.andWhen(store, this.actioner, testResourceConfiguration);
     } catch (e) {
@@ -157,7 +157,7 @@ export abstract class BaseThen<ISelection, IStore, IThenShape> {
   abstract butThen(store: any, testResourceConfiguration?): Promise<ISelection>;
 
   async test(store: IStore, testResourceConfiguration): Promise<IThenShape | undefined>  {
-    // console.log(" Then:", this.name);
+    console.log(" Then:", this.name);
 
     try {
       return this.thenCB(await this.butThen(store, testResourceConfiguration));  

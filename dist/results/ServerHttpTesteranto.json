@@ -1,0 +1,143 @@
+{
+  "test": {
+    "name": "Testing the Node server with fetch",
+    "givens": [
+      {
+        "name": "a http boringfeature",
+        "features": [
+          {
+            "name": "hello"
+          }
+        ],
+        "whens": [],
+        "thens": [
+          {
+            "name": "TheStatusIs: some great status",
+            "error": true
+          }
+        ],
+        "initialValues": {},
+        "error": {
+          "name": "AssertionError",
+          "message": "expected 'aloha' to equal 'some great status'",
+          "showDiff": true,
+          "actual": "aloha",
+          "expected": "some great status",
+          "operator": "strictEqual",
+          "stack": "AssertionError: expected 'aloha' to equal 'some great status'\n    at butThen (/Users/adam/Code/testeranto.ts/tests/httpServer/http.testeranto.test.ts:67:16)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Then.test (/Users/adam/Code/testeranto.ts/src/BaseClasses.ts:163:26)\n    at async Given.give (/Users/adam/Code/testeranto.ts/src/BaseClasses.ts:105:19)\n    at async constructor.run (/Users/adam/Code/testeranto.ts/src/BaseClasses.ts:46:9)\n    at async /Users/adam/Code/testeranto.ts/src/watch.ts:28:17"
+        }
+      },
+      {
+        "name": "a http feature",
+        "features": [
+          {
+            "name": "hello"
+          }
+        ],
+        "whens": [
+          {
+            "name": "PostToStatus: hello"
+          }
+        ],
+        "thens": [
+          {
+            "name": "TheStatusIs: hello"
+          }
+        ],
+        "initialValues": {}
+      },
+      {
+        "name": "a httpfeature",
+        "features": [
+          {
+            "name": "hello"
+          }
+        ],
+        "whens": [
+          {
+            "name": "PostToStatus: hello"
+          },
+          {
+            "name": "PostToStatus: aloha"
+          }
+        ],
+        "thens": [
+          {
+            "name": "TheStatusIs: aloha"
+          }
+        ],
+        "initialValues": {}
+      },
+      {
+        "name": "a feature",
+        "features": [
+          {
+            "name": "hello"
+          }
+        ],
+        "whens": [],
+        "thens": [
+          {
+            "name": "TheNumberIs: 0"
+          }
+        ],
+        "initialValues": {}
+      },
+      {
+        "name": "a httpfeature",
+        "features": [
+          {
+            "name": "hello"
+          }
+        ],
+        "whens": [
+          {
+            "name": "PostToAdd: 1"
+          },
+          {
+            "name": "PostToAdd: 2"
+          }
+        ],
+        "thens": [
+          {
+            "name": "TheNumberIs: 3"
+          }
+        ],
+        "initialValues": {}
+      },
+      {
+        "name": "another http feature",
+        "features": [
+          {
+            "name": "hello"
+          }
+        ],
+        "whens": [
+          {
+            "name": "PostToStatus: aloha"
+          },
+          {
+            "name": "PostToAdd: 4"
+          },
+          {
+            "name": "PostToStatus: hello"
+          },
+          {
+            "name": "PostToAdd: 3"
+          }
+        ],
+        "thens": [
+          {
+            "name": "TheStatusIs: hello"
+          },
+          {
+            "name": "TheNumberIs: 777"
+          }
+        ],
+        "initialValues": {}
+      }
+    ],
+    "checks": []
+  },
+  "status": false
+}
