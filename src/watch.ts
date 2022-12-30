@@ -21,21 +21,26 @@ type IRunningJob = {
 };
 
 class TestResourceManager {
-  ports: Record<number, boolean>;
+  allocatedPorts: Record<string, boolean>;
+  ports: Record<string, string>;
   jobs: Record<string, IRunningJob>;
   queue: IQueudJob[];
+  
 
-  constructor(portsToUse: number[]) {
-    this.ports = portsToUse.reduce((mm, lm) => {
+  constructor(portsToUse: string[]) {
+    this.ports = {};
+    this.allocatedPorts = portsToUse.reduce((mm, lm) => {
+      this.ports[lm] = '';
       return mm[lm] = false
     }, {});
     this.queue = [];
     this.jobs = {};
+
   }
 
   launch() {
     setInterval(async () => {
-      console.log("feed me tests plz!")
+      console.log(".", this.queue.length, this.ports)
       const qi = this.queue.pop();
 
       if (qi?.testResourceRequired === "na") {
@@ -48,25 +53,57 @@ class TestResourceManager {
         }
         this.jobs[key] = {
           aborter: qi.aborter,
-          cancellablePromise: qi.getCancellablePromise({}).then(() => delete this.jobs[key] )
+          cancellablePromise: qi.getCancellablePromise({}).then(() => delete this.jobs[key])
         }
       }
 
       if (qi?.testResourceRequired === "port") {
         const key = qi.key;
+
         if (this.jobs[key]) {
           console.log("aborting...", key, this.jobs[key])
           await this.jobs[key].aborter();
           await this.jobs[key].cancellablePromise.cancel();
-          delete this.jobs[key]
+
+          Object.values(this.ports).forEach((jobMaybe, portNumber) => {
+            if ( jobMaybe && jobMaybe === key) {
+              this.ports[portNumber] = '';
+            }
+          });
+
+          delete this.jobs[key];
+
         }
-        this.jobs[key] = {
-          aborter: qi.aborter,
-          cancellablePromise: qi.getCancellablePromise({port: 3001}).then(() => delete this.jobs[key])
+
+        const foundOpenPort = Object.keys(this.ports).find((p, k) => {
+          return this.ports[p] === ''
+        });
+
+        if (foundOpenPort) {
+          const testPromise = qi.getCancellablePromise({ port: foundOpenPort }).then(() => {
+            Object.keys(this.ports).forEach((p, k) => {
+              const jobExistsAndMatches = this.ports[p] === key;
+              if (jobExistsAndMatches) {
+                this.ports[p] = '';
+              }
+            });
+
+            delete this.jobs[key]
+          });
+
+          this.ports[foundOpenPort] = key;
+          this.jobs[key] = {
+            aborter: qi.aborter,
+            cancellablePromise: testPromise
+          };
+          
+        } else {
+          console.log(`no port was open so send the ${qi.key} job to the back of the queue`)
+          this.queue.push(qi);
         }
       }
 
-    }, 1000)
+    }, 100)
   }
 
   async add(suite, key) {
@@ -77,8 +114,9 @@ class TestResourceManager {
         test: suite.test,
         status: await suite.runner(allocatedTestResource)
       };
+
+      await fs.promises.mkdir(outPath, { recursive: true });
       
-      fs.promises.mkdir(outPath, { recursive: true });
       fs.writeFile(
         `${outPath}${key}.json`,
         JSON.stringify(result, null, 2),
@@ -88,7 +126,7 @@ class TestResourceManager {
           }
           resolve(result)
         }
-      );      
+      );
     }));
 
     this.queue.push({
@@ -100,7 +138,7 @@ class TestResourceManager {
   }
 }
 
-const TRM = new TestResourceManager([3001]);
+const TRM = new TestResourceManager(['3001']);
 
 const changed = async (key, distFile, className) => {
   console.log("running", key)

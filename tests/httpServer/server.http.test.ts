@@ -76,29 +76,29 @@ export const ServerHttpTesteranto = HttpTesteranto<
             [When.PostToStatus("hello"), When.PostToStatus("aloha")],
             [Then.TheStatusIs("aloha")]
           ),
-          Given.AnEmptyState(
-            "a feature",
-            [myFeature],
-            [],
-            [Then.TheNumberIs(0)]
-          ),
-          Given.AnEmptyState(
-            "a httpfeature",
-            [myFeature],
-            [When.PostToAdd(1), When.PostToAdd(2)],
-            [Then.TheNumberIs(3)]
-          ),
-          Given.AnEmptyState(
-            "another http feature",
-            [myFeature],
-            [
-              When.PostToStatus("aloha"),
-              When.PostToAdd(4),
-              When.PostToStatus("hello"),
-              When.PostToAdd(3),
-            ],
-            [Then.TheStatusIs("hello"), Then.TheNumberIs(7)]
-          ),
+          // Given.AnEmptyState(
+          //   "a feature",
+          //   [myFeature],
+          //   [],
+          //   [Then.TheNumberIs(0)]
+          // ),
+          // Given.AnEmptyState(
+          //   "a httpfeature",
+          //   [myFeature],
+          //   [When.PostToAdd(1), When.PostToAdd(2)],
+          //   [Then.TheNumberIs(3)]
+          // ),
+          // Given.AnEmptyState(
+          //   "another http feature",
+          //   [myFeature],
+          //   [
+          //     When.PostToStatus("aloha"),
+          //     When.PostToAdd(4),
+          //     When.PostToStatus("hello"),
+          //     When.PostToAdd(3),
+          //   ],
+          //   [Then.TheStatusIs("hello"), Then.TheNumberIs(77)]
+          // ),
         ],
         [
           // Check.AnEmptyState(

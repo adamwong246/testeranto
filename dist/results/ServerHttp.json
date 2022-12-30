@@ -1,0 +1,128 @@
+{
+  "test": {
+    "name": "Testing the Server with Puppeteer",
+    "givens": [
+      {
+        "name": "a boring Puppeteer feature",
+        "features": [],
+        "whens": [],
+        "thens": [
+          {
+            "name": "TheStatusIs: some great status"
+          }
+        ],
+        "initialValues": {},
+        "store": {
+          "server": {
+            "requestTimeout": 300000,
+            "headersTimeout": 60000,
+            "keepAliveTimeout": 5000,
+            "connectionsCheckingInterval": 30000,
+            "_events": {},
+            "_eventsCount": 2,
+            "_connections": 0,
+            "_handle": null,
+            "_usingWorkers": false,
+            "_workers": [],
+            "_unref": false,
+            "allowHalfOpen": true,
+            "pauseOnConnect": false,
+            "noDelay": true,
+            "keepAlive": false,
+            "keepAliveInitialDelay": 0,
+            "httpAllowHalfOpen": false,
+            "timeout": 0,
+            "maxHeadersCount": null,
+            "maxRequestsPerSocket": 0,
+            "_connectionKey": "6::::3001"
+          },
+          "browser": {
+            "eventsMap": {},
+            "emitter": {
+              "all": {}
+            }
+          }
+        }
+      },
+      {
+        "name": "another Puppeteer feature",
+        "features": [],
+        "whens": [
+          {
+            "name": "PostToStatus: goodbye"
+          }
+        ],
+        "thens": [
+          {
+            "name": "TheStatusIs: goodbye"
+          }
+        ],
+        "initialValues": {},
+        "store": {
+          "server": {
+            "requestTimeout": 300000,
+            "headersTimeout": 60000,
+            "keepAliveTimeout": 5000,
+            "connectionsCheckingInterval": 30000,
+            "_events": {},
+            "_eventsCount": 2,
+            "_connections": 0,
+            "_handle": null,
+            "_usingWorkers": false,
+            "_workers": [],
+            "_unref": false,
+            "allowHalfOpen": true,
+            "pauseOnConnect": false,
+            "noDelay": true,
+            "keepAlive": false,
+            "keepAliveInitialDelay": 0,
+            "httpAllowHalfOpen": false,
+            "timeout": 0,
+            "maxHeadersCount": null,
+            "maxRequestsPerSocket": 0,
+            "_connectionKey": "6::::3001"
+          },
+          "browser": {
+            "eventsMap": {},
+            "emitter": {
+              "all": {}
+            }
+          }
+        }
+      }
+    ],
+    "checks": [],
+    "store": {
+      "server": {
+        "requestTimeout": 300000,
+        "headersTimeout": 60000,
+        "keepAliveTimeout": 5000,
+        "connectionsCheckingInterval": 30000,
+        "_events": {},
+        "_eventsCount": 2,
+        "_connections": 0,
+        "_handle": null,
+        "_usingWorkers": false,
+        "_workers": [],
+        "_unref": false,
+        "allowHalfOpen": true,
+        "pauseOnConnect": false,
+        "noDelay": true,
+        "keepAlive": false,
+        "keepAliveInitialDelay": 0,
+        "httpAllowHalfOpen": false,
+        "timeout": 0,
+        "maxHeadersCount": null,
+        "maxRequestsPerSocket": 0,
+        "_connectionKey": "6::::3001"
+      },
+      "browser": {
+        "eventsMap": {},
+        "emitter": {
+          "all": {}
+        }
+      }
+    }
+  },
+  "status": true
+}

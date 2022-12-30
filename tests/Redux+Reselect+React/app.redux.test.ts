@@ -104,7 +104,7 @@ export const AppReduxTesteranto = ReduxTesteranto<
             "yes more features plz",
             [features.aloha, features.hello],
             [When.TheEmailIsSetTo("hey there")],
-            [Then.TheEmailIs("hey there?")]
+            [Then.TheEmailIs("hey there")]
           ),
 
         ],
