@@ -25,7 +25,8 @@ export const PuppeteerHttpTesteranto = <
     ITestShape
   >,
   testSpecifications: ITestSpecification<ITestShape>,
-  testInput: Input
+  testInput: Input,
+  entryPath: string,
 ) =>
   TesterantoFactory<
     ITestShape,
@@ -84,5 +85,6 @@ export const PuppeteerHttpTesteranto = <
           });
         });
       }
-    }
+    },
+    entryPath
   )

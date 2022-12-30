@@ -187,5 +187,8 @@ export const RectangleTesteranto =
         actioner()(renderer)
         return renderer;
       }, 
-    }    
+    },
+    __filename
   )
+
+export { };

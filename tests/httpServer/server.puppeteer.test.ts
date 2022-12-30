@@ -62,10 +62,10 @@ export const ServerHttpPuppeteerTesteranto = PuppeteerHttpTesteranto<
             [Then.TheStatusIs("some great status")]
           ),
           Given.AnEmptyState(
-            "a nother Puppeteer feature",
+            "another Puppeteer feature",
             [],
-            [When.PostToStatus("hello")],
-            [Then.TheStatusIs("hello")]
+            [When.PostToStatus("goodbye")],
+            [Then.TheStatusIs("goodbye")]
           ),
           Given.AnEmptyState(
             "yet another Puppeteer feature",
@@ -125,6 +125,8 @@ export const ServerHttpPuppeteerTesteranto = PuppeteerHttpTesteranto<
     ];
   },
 
-  serverFactory
+  serverFactory,
+
+  __filename
 
 );

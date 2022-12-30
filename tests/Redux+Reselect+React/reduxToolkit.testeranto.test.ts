@@ -35,7 +35,8 @@ export const ReduxToolkitTesteranto = <
     ITestShape
   >,
   testSpecifications: ITestSpecification<ITestShape>,
-  testInput: Input<IStoreShape, ISelectionShape>
+  testInput: Input<IStoreShape, ISelectionShape>,
+  entryPath: string
 ) =>
   TesterantoFactory<
     ITestShape,
@@ -68,5 +69,6 @@ export const ReduxToolkitTesteranto = <
       actionHandler: function (b: (...any: any[]) => any) {
         return b();
       }
-    }    
+    },
+    entryPath
   )

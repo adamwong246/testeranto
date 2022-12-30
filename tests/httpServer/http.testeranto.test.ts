@@ -24,7 +24,8 @@ export const HttpTesteranto = <
     ITestShape
   >,
   testSpecifications: ITestSpecification<ITestShape>,
-  testInput: Input
+  testInput: Input,
+  entryPath: string
 ) =>
   TesterantoFactory<
     ITestShape,
@@ -69,9 +70,10 @@ export const HttpTesteranto = <
       afterEach: function (server: Store, ndx: number): unknown {
         return new Promise((res) => {
           server.close(() => {
-            res(server)
+            res(true)
           })
         })
       }
-    },   
+    },
+    entryPath
   )

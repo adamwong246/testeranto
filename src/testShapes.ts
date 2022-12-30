@@ -16,7 +16,7 @@ export type ITest = {
 
 export type ITestResults = Promise<{
   test: IT;
-  status: any;
+
 }>[];
 
 export type ITTestShape = {

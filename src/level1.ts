@@ -1,3 +1,7 @@
+import { createHash } from 'node:crypto'
+import fs from "fs";
+import path from "path";
+import esbuild from "esbuild";
 import { mapValues } from "lodash";
 import { BaseGiven, BaseCheck, BaseSuite, BaseFeature, BaseWhen, BaseThen } from "./BaseClasses";
 import { TesterantoBasic } from "./level0";
@@ -76,7 +80,9 @@ export abstract class Testeranto<
     checkKlasser: (n, f, cb, w, t) =>
       BaseCheck<ISubject, IStore, ISelection, IThenShape>,
 
-    testResource?: ITestResource
+    testResource: ITestResource,
+
+    entryPath: string
   ) {
     const classySuites = mapValues(
       testImplementation.Suites,
@@ -163,9 +169,40 @@ export abstract class Testeranto<
       return {
         test: suite,
         testResource,
-        runner: async (testResourceConfiguration?) => {
-          await suite.run(input, testResourceConfiguration[testResource]);
-        },
+        runner: async (testResourceConfiguration?) => suite.run(input, testResourceConfiguration[testResource]),
+
+        builder: () => {
+          const importPathPlugin = {
+            name: 'import-path',
+            setup(build) {
+              build.onResolve({ filter: /^\.{1,2}\// }, args => {
+                let x = args.resolveDir + "/" + args.path;
+                if (x.split(".ts").length > 1) {
+                  x = x + ".ts"
+                }
+                return { path: x, external: true }
+              })
+            },
+          }
+          esbuild.build({
+            entryPoints: [entryPath],
+            bundle: true,
+            minify: true,
+            format: "esm",
+            target: ["esnext"],
+            write: false,
+            packages: 'external',
+            plugins: [importPathPlugin],
+            external: ['./src/*', './tests/testerantoFeatures.test.ts'],
+          }).then((res) => {
+            const text = res.outputFiles[0].text;
+            const p = "./dist" + (entryPath.split(process.cwd()).pop())?.split(".ts")[0] + '.js'
+            fs.promises.mkdir(path.dirname(p), { recursive: true }).then(x => {
+              fs.promises.writeFile(p, text);
+              fs.promises.writeFile("./dist" + (entryPath.split(process.cwd()).pop())?.split(".ts")[0] + `.md5`, createHash('md5').update(text).digest('hex'))
+            })
+          })
+        }
       };
     });
   }
