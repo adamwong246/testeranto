@@ -15,7 +15,30 @@
             "name": "TheStatusIs: some great status"
           }
         ],
-        "initialValues": {}
+        "initialValues": {},
+        "store": {
+          "requestTimeout": 300000,
+          "headersTimeout": 60000,
+          "keepAliveTimeout": 5000,
+          "connectionsCheckingInterval": 30000,
+          "_events": {},
+          "_eventsCount": 2,
+          "_connections": 0,
+          "_handle": null,
+          "_usingWorkers": false,
+          "_workers": [],
+          "_unref": false,
+          "allowHalfOpen": true,
+          "pauseOnConnect": false,
+          "noDelay": true,
+          "keepAlive": false,
+          "keepAliveInitialDelay": 0,
+          "httpAllowHalfOpen": false,
+          "timeout": 0,
+          "maxHeadersCount": null,
+          "maxRequestsPerSocket": 0,
+          "_connectionKey": "6::::3001"
+        }
       },
       {
         "name": "a http feature",
@@ -34,7 +57,30 @@
             "name": "TheStatusIs: hello"
           }
         ],
-        "initialValues": {}
+        "initialValues": {},
+        "store": {
+          "requestTimeout": 300000,
+          "headersTimeout": 60000,
+          "keepAliveTimeout": 5000,
+          "connectionsCheckingInterval": 30000,
+          "_events": {},
+          "_eventsCount": 2,
+          "_connections": 0,
+          "_handle": null,
+          "_usingWorkers": false,
+          "_workers": [],
+          "_unref": false,
+          "allowHalfOpen": true,
+          "pauseOnConnect": false,
+          "noDelay": true,
+          "keepAlive": false,
+          "keepAliveInitialDelay": 0,
+          "httpAllowHalfOpen": false,
+          "timeout": 0,
+          "maxHeadersCount": null,
+          "maxRequestsPerSocket": 0,
+          "_connectionKey": "6::::3001"
+        }
       },
       {
         "name": "a httpfeature",
@@ -56,7 +102,30 @@
             "name": "TheStatusIs: aloha"
           }
         ],
-        "initialValues": {}
+        "initialValues": {},
+        "store": {
+          "requestTimeout": 300000,
+          "headersTimeout": 60000,
+          "keepAliveTimeout": 5000,
+          "connectionsCheckingInterval": 30000,
+          "_events": {},
+          "_eventsCount": 2,
+          "_connections": 0,
+          "_handle": null,
+          "_usingWorkers": false,
+          "_workers": [],
+          "_unref": false,
+          "allowHalfOpen": true,
+          "pauseOnConnect": false,
+          "noDelay": true,
+          "keepAlive": false,
+          "keepAliveInitialDelay": 0,
+          "httpAllowHalfOpen": false,
+          "timeout": 0,
+          "maxHeadersCount": null,
+          "maxRequestsPerSocket": 0,
+          "_connectionKey": "6::::3001"
+        }
       },
       {
         "name": "a feature",
@@ -71,7 +140,30 @@
             "name": "TheNumberIs: 0"
           }
         ],
-        "initialValues": {}
+        "initialValues": {},
+        "store": {
+          "requestTimeout": 300000,
+          "headersTimeout": 60000,
+          "keepAliveTimeout": 5000,
+          "connectionsCheckingInterval": 30000,
+          "_events": {},
+          "_eventsCount": 2,
+          "_connections": 0,
+          "_handle": null,
+          "_usingWorkers": false,
+          "_workers": [],
+          "_unref": false,
+          "allowHalfOpen": true,
+          "pauseOnConnect": false,
+          "noDelay": true,
+          "keepAlive": false,
+          "keepAliveInitialDelay": 0,
+          "httpAllowHalfOpen": false,
+          "timeout": 0,
+          "maxHeadersCount": null,
+          "maxRequestsPerSocket": 0,
+          "_connectionKey": "6::::3001"
+        }
       },
       {
         "name": "a httpfeature",
@@ -93,7 +185,30 @@
             "name": "TheNumberIs: 3"
           }
         ],
-        "initialValues": {}
+        "initialValues": {},
+        "store": {
+          "requestTimeout": 300000,
+          "headersTimeout": 60000,
+          "keepAliveTimeout": 5000,
+          "connectionsCheckingInterval": 30000,
+          "_events": {},
+          "_eventsCount": 2,
+          "_connections": 0,
+          "_handle": null,
+          "_usingWorkers": false,
+          "_workers": [],
+          "_unref": false,
+          "allowHalfOpen": true,
+          "pauseOnConnect": false,
+          "noDelay": true,
+          "keepAlive": false,
+          "keepAliveInitialDelay": 0,
+          "httpAllowHalfOpen": false,
+          "timeout": 0,
+          "maxHeadersCount": null,
+          "maxRequestsPerSocket": 0,
+          "_connectionKey": "6::::3001"
+        }
       },
       {
         "name": "another http feature",
@@ -124,10 +239,56 @@
             "name": "TheNumberIs: 7"
           }
         ],
-        "initialValues": {}
+        "initialValues": {},
+        "store": {
+          "requestTimeout": 300000,
+          "headersTimeout": 60000,
+          "keepAliveTimeout": 5000,
+          "connectionsCheckingInterval": 30000,
+          "_events": {},
+          "_eventsCount": 2,
+          "_connections": 0,
+          "_handle": null,
+          "_usingWorkers": false,
+          "_workers": [],
+          "_unref": false,
+          "allowHalfOpen": true,
+          "pauseOnConnect": false,
+          "noDelay": true,
+          "keepAlive": false,
+          "keepAliveInitialDelay": 0,
+          "httpAllowHalfOpen": false,
+          "timeout": 0,
+          "maxHeadersCount": null,
+          "maxRequestsPerSocket": 0,
+          "_connectionKey": "6::::3001"
+        }
       }
     ],
-    "checks": []
+    "checks": [],
+    "store": {
+      "requestTimeout": 300000,
+      "headersTimeout": 60000,
+      "keepAliveTimeout": 5000,
+      "connectionsCheckingInterval": 30000,
+      "_events": {},
+      "_eventsCount": 2,
+      "_connections": 0,
+      "_handle": null,
+      "_usingWorkers": false,
+      "_workers": [],
+      "_unref": false,
+      "allowHalfOpen": true,
+      "pauseOnConnect": false,
+      "noDelay": true,
+      "keepAlive": false,
+      "keepAliveInitialDelay": 0,
+      "httpAllowHalfOpen": false,
+      "timeout": 0,
+      "maxHeadersCount": null,
+      "maxRequestsPerSocket": 0,
+      "_connectionKey": "6::::3001"
+    }
   },
-  "status": {}
+  "status": true
 }

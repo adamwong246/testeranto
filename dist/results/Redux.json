@@ -23,7 +23,8 @@
           "password": "",
           "email": "",
           "error": "no_error"
-        }
+        },
+        "store": {}
       },
       {
         "name": "another feature",
@@ -45,7 +46,8 @@
           "password": "",
           "email": "bob@mail.com",
           "error": "no_error"
-        }
+        },
+        "store": {}
       },
       {
         "name": "yet another feature",
@@ -71,7 +73,8 @@
           "password": "",
           "email": "",
           "error": "no_error"
-        }
+        },
+        "store": {}
       },
       {
         "name": "OMG a feature!",
@@ -93,7 +96,8 @@
           "password": "",
           "email": "",
           "error": "no_error"
-        }
+        },
+        "store": {}
       },
       {
         "name": "yes more features plz",
@@ -119,10 +123,12 @@
           "password": "",
           "email": "",
           "error": "no_error"
-        }
+        },
+        "store": {}
       }
     ],
-    "checks": []
+    "checks": [],
+    "store": {}
   },
-  "status": {}
+  "status": true
 }
