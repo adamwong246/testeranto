@@ -28,10 +28,6 @@
         "initialValues": {
           "height": 2,
           "width": 2
-        },
-        "store": {
-          "width": 4,
-          "height": 3
         }
       },
       {
@@ -62,10 +58,6 @@
         "initialValues": {
           "height": 1,
           "width": 1
-        },
-        "store": {
-          "width": 4,
-          "height": 3
         }
       },
       {
@@ -87,10 +79,6 @@
         "initialValues": {
           "height": 1,
           "width": 1
-        },
-        "store": {
-          "width": 4,
-          "height": 3
         }
       },
       {
@@ -121,10 +109,6 @@
         "initialValues": {
           "height": 1,
           "width": 1
-        },
-        "store": {
-          "width": 4,
-          "height": 3
         }
       },
       {
@@ -149,24 +133,16 @@
             "name": "area: 12"
           },
           {
-            "name": "circumference: 14"
+            "name": "circumference: 144"
           }
         ],
         "initialValues": {
           "height": 1,
           "width": 1
-        },
-        "store": {
-          "width": 4,
-          "height": 3
         }
       }
     ],
-    "checks": [],
-    "store": {
-      "width": 4,
-      "height": 3
-    }
+    "checks": []
   },
-  "status": true
+  "status": {}
 }
