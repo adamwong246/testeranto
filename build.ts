@@ -1,9 +1,11 @@
-import { RectangleTesteranto } from "./tests/Rectangle/Rectangle.test";
-import { AppReduxTesteranto } from "./tests/Redux+Reselect+React/app.redux.test";
-import { AppReduxToolkitTesteranto } from "./tests/Redux+Reselect+React/app.reduxToolkit.test";
-import { AppReactTesteranto } from "./tests/Redux+Reselect+React/LoginPage.test";
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const testerantoConfig = require("./testeranto.config");
 
-new RectangleTesteranto()[0].builder()
-new AppReduxTesteranto()[0].builder()
-// new AppReduxToolkitTesteranto()[0].builder()
-// new AppReactTesteranto()[0].builder()
+testerantoConfig.forEach(([key, sourcefile, className]) => {  
+  import(sourcefile).then(testSuite => {
+    console.log("dynamicly importing", key)
+    new testSuite[className]()[0].builder()
+  });
+})
+
+export { }

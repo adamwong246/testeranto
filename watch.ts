@@ -3,12 +3,16 @@ import fresh from 'fresh-require';
 import { watchFile } from 'node:fs';
 import { cancelable } from 'cancelable-promise';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const testerantoConfig = require("./testeranto.config");
+
 const outPath = "./dist/results/";
 
 const jobs = {};
+const md5s = {};
 
 const changed = (key, suite) => {
-  console.log(key)
+  console.log("running", key)
   if (jobs[key]) {
     jobs[key].cancel
   } 
@@ -35,14 +39,23 @@ const changed = (key, suite) => {
   
 };
 
-[
-  ['Rectangle', './dist/tests/Rectangle/Rectangle.test.js', 'RectangleTesteranto'],
-  ['Redux', './dist/tests/Redux+Reselect+React/app.redux.test.js', 'AppReduxTesteranto']
-].forEach(([key, sourcefile, className]) => {
+testerantoConfig.forEach(async ([key, sourcefile, className]) => {
   
-  changed(key, new (fresh(sourcefile, require)[className])()[0])
+  const distFile = "./dist/" + sourcefile.split(".ts")[0] + ".js";
+  const md5File = "./dist/" + sourcefile.split(".ts")[0] + ".md5";
   
-  watchFile(sourcefile, async (curr, prev) => {
-    changed(key, new (fresh(sourcefile, require)[className])()[0])
+  fs.readFile(md5File, 'utf-8', (err, firstmd5hash) => {
+    md5s[key] = firstmd5hash;
+
+    changed(key, new (fresh(distFile, require)[className])()[0]);
+
+    watchFile(md5File, async (curr, prev) => {
+      fs.readFile(md5File, 'utf-8', (err, newmd5Hash) => {
+        if (newmd5Hash !== md5s[key]) {
+          md5s[key] = newmd5Hash;
+          changed(key, new (fresh(distFile, require)[className])()[0]);
+        }
+      })
+    });
   });
-})
+});
