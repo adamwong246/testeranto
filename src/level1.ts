@@ -5,7 +5,7 @@ import esbuild from "esbuild";
 import { mapValues } from "lodash";
 import { BaseGiven, BaseCheck, BaseSuite, BaseFeature, BaseWhen, BaseThen } from "./BaseClasses";
 import { TesterantoBasic } from "./level0";
-import { ITTestShape, ITestImplementation } from "./testShapes";
+import { ITTestShape, ITestImplementation, ITestJob } from "./testShapes";
 
 export abstract class Testeranto<
   ITestShape extends ITTestShape,
@@ -165,10 +165,15 @@ export abstract class Testeranto<
       classyTesteranto.Check()
     );
 
-    return suites.map((suite) => {
+    const toReturn: ITestJob[] = suites.map((suite) => {
       return {
         test: suite,
         testResource,
+
+        toObj: () => {
+          return suite.toObj()
+        },
+
         runner: async (testResourceConfiguration?) => suite.run(input, testResourceConfiguration[testResource]),
 
         builder: () => {
@@ -205,5 +210,7 @@ export abstract class Testeranto<
         }
       };
     });
+
+    return toReturn;
   }
 }

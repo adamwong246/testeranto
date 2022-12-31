@@ -3,12 +3,15 @@ import { BaseGiven, BaseCheck, BaseSuite, BaseFeature, BaseWhen, BaseThen } from
 export type  ITTestResource = "port" | "na";
 
 export type IT = {
+  toObj(): object;
+  aborter: () => any;
   name: string;
   givens: BaseGiven<unknown, unknown, unknown, unknown>[];
   checks: BaseCheck<unknown, unknown, unknown, unknown>[];
 };
 
-export type ITest = {
+export type ITestJob = {
+  toObj(): object;
   test: IT;
   runner: (testResurce?) => unknown;
   testResource: any;

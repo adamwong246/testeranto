@@ -1,96 +1,56 @@
 {
-  "test": {
-    "name": "Testing the ReduxToolkit",
-    "givens": [
-      {
-        "name": "BDD gherkin style",
-        "features": [],
-        "whens": [
-          {
-            "name": "TheEmailIsSetTo: adam@email.com"
-          }
-        ],
-        "thens": [
-          {
-            "name": "TheEmailIs: adam@email.com"
-          }
-        ],
-        "initialValues": {
-          "password": "",
-          "email": "",
-          "error": "no_error"
+  "name": "Testing the ReduxToolkit",
+  "givens": [
+    {
+      "name": "BDD gherkin style",
+      "whens": [
+        {
+          "name": "TheEmailIsSetTo: adam@email.com"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheEmailIs: adam@email.com"
+        }
+      ]
+    },
+    {
+      "name": "another feature",
+      "whens": [
+        {
+          "name": "TheEmailIsSetTo: hello"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheEmailIsNot: adam@email.com"
+        }
+      ]
+    },
+    {
+      "name": "yet another feature",
+      "whens": [
+        {
+          "name": "TheEmailIsSetTo: hello"
         },
-        "store": {}
-      },
-      {
-        "name": "another feature",
-        "features": [],
-        "whens": [
-          {
-            "name": "TheEmailIsSetTo: hello"
-          }
-        ],
-        "thens": [
-          {
-            "name": "TheEmailIsNot: adam@email.com"
-          }
-        ],
-        "initialValues": {
-          "password": "",
-          "email": "bob@mail.com",
-          "error": "no_error"
-        },
-        "store": {}
-      },
-      {
-        "name": "yet another feature",
-        "features": [],
-        "whens": [
-          {
-            "name": "TheEmailIsSetTo: hello"
-          },
-          {
-            "name": "TheEmailIsSetTo: aloha"
-          }
-        ],
-        "thens": [
-          {
-            "name": "TheEmailIs: aloha"
-          }
-        ],
-        "initialValues": {
-          "password": "",
-          "email": "",
-          "error": "no_error"
-        },
-        "store": {}
-      },
-      {
-        "name": "OMG a feature!",
-        "features": [],
-        "whens": [],
-        "thens": [
-          {
-            "name": "TheEmailIs: "
-          }
-        ],
-        "initialValues": {
-          "password": "",
-          "email": "",
-          "error": "no_error"
-        },
-        "store": {}
-      }
-    ],
-    "checks": [
-      {
-        "name": "imperative style",
-        "features": [],
-        "whens": {},
-        "thens": {}
-      }
-    ],
-    "store": {}
-  },
-  "status": true
+        {
+          "name": "TheEmailIsSetTo: aloha"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheEmailIs: aloha"
+        }
+      ]
+    },
+    {
+      "name": "OMG a feature!",
+      "whens": [],
+      "thens": [
+        {
+          "name": "TheEmailIs: "
+        }
+      ]
+    }
+  ]
 }

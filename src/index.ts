@@ -83,7 +83,7 @@ export const TesterantoFactory = <
             features: BaseFeature[],
             whens: BaseWhen<Store, Selection, ThenShape>[],
             thens: BaseThen<Selection, Store, ThenShape>[],
-            initialValues: any,
+            initialValues: any
           ) {
             super(name, features, whens, thens);
             this.initialValues = initialValues;

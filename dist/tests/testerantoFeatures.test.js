@@ -6,7 +6,8 @@ var features = {
   hello: new BaseFeature("hello"),
   aloha: new BaseFeature("aloha"),
   gutentag: new BaseFeature("gutentag"),
-  buenosDias: new BaseFeature("buenos dias")
+  buenosDias: new BaseFeature("buenos dias"),
+  hola: new BaseFeature("hola")
 };
 var graph = new DirectedGraph();
 graph.mergeEdge(features.hello.name, features.aloha.name);
@@ -16,7 +17,8 @@ var testerantoFeatures_test_default = new TesterantoFeatures([
   features.hello,
   features.aloha,
   features.gutentag,
-  features.buenosDias
+  features.buenosDias,
+  features.hola
 ], [graph], __filename);
 export {
   testerantoFeatures_test_default as default,

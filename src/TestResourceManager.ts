@@ -1,7 +1,9 @@
 import CancelablePromise, { cancelable } from 'cancelable-promise';
 import fs from "fs";
 import fresh from 'fresh-require';
+
 import { TesterantoFeatures } from './Features';
+import { ITestJob } from './testShapes';
 
 const OPEN_PORT = '';
 
@@ -9,6 +11,9 @@ const testOutPath = "./dist/results/";
 const featureOutPath = "./dist/";
 
 export class TestResourceManager {
+  featureTestJoin: Record<string, any>;
+  testerantoFeatures: TesterantoFeatures;
+
   ports: Record<string, string>;
   jobs: Record<string, {
     aborter: () => any;
@@ -33,43 +38,10 @@ export class TestResourceManager {
     this.queue = [];
     this.jobs = {};
     this.testSrcMd5s = {};
+    this.featureTestJoin = {};
   }
 
-  public testFileTouched(key, distFile, className, hash) {
-    if (hash !== this.testSrcMd5s[key]) {
-      console.log("running", key);
-      this.testSrcMd5s[key] = hash;
-      this.add(new (fresh(distFile, require)[className])()[0], key);
-    }
-  }
-
-  public featureFileTouched(distFile, hash) {
-    if (hash !== this.featureSrcMd5) {
-      console.log("running featureSrcMd5");
-      this.featureSrcMd5 = hash;
-      this.setFeatures((fresh(distFile, require)['default']));
-    }
-  }
-
-  async setFeatures(testerantoFeatures: TesterantoFeatures){
-    console.log("testerantoFeatures", testerantoFeatures.networks);
-
-    await fs.promises.mkdir(featureOutPath, { recursive: true });
-
-    fs.writeFile(
-      `${featureOutPath}TesterantoFeatures.json`,
-      JSON.stringify(testerantoFeatures.networks, null, 2),
-      (err) => {
-        if (err) {
-          console.error(err);
-        }
-
-      }
-    );
-  }
-  
-
-  async abort(key) {
+  public async abort(key) {
     if (this.jobs[key]) {
       console.log("aborting...", key, this.jobs[key])
       await this.jobs[key].aborter();
@@ -78,16 +50,9 @@ export class TestResourceManager {
     }
   }
 
-  launch() {
+  public launch() {
     setInterval(async () => {
-      
       console.log(this.spinner(), this.queue.length, this.ports);
-
-
-
-
-
-
       const qi = this.queue.pop();
       if (!qi) {
         console.log('feed me some tests plz')
@@ -137,19 +102,52 @@ export class TestResourceManager {
     }, 1000);
   }
 
-  async add(suite, key) {
+  public testFileTouched(key, distFile, className, hash) {
+    if (hash !== this.testSrcMd5s[key]) {
+      console.log("running", key);
+      this.testSrcMd5s[key] = hash;
+      this.addTest(new (fresh(distFile, require)[className])()[0], key);
+    }
+  }
+
+  public featureFileTouched(distFile, hash) {
+    if (hash !== this.featureSrcMd5) {
+      console.log("running featureSrcMd5");
+      this.featureSrcMd5 = hash;
+      this.setFeatures((fresh(distFile, require)['default']));
+    }
+  }
+
+  private async setFeatures(testerantoFeatures: TesterantoFeatures){
+    console.log("testerantoFeatures", testerantoFeatures.networks);
+    this.testerantoFeatures = testerantoFeatures;
+    await fs.promises.mkdir(featureOutPath, { recursive: true });
+
+    await fs.writeFile(
+      `${featureOutPath}TesterantoFeatures.json`,
+      JSON.stringify(testerantoFeatures.networks, null, 2),
+      (err) => {
+        if (err) {
+          console.error(err);
+        }
+      }
+    );
+  }
+
+  private async addTest(testJob: ITestJob, key) {
     // eslint-disable-next-line no-async-promise-executor
     const cancellablePromise = (allocatedTestResource) => cancelable(new Promise(async (resolve) => {
       const result = {
-        test: suite.test,
-        status: await suite.runner(allocatedTestResource)
+        test: testJob.test,
+        status: await testJob.runner(allocatedTestResource)
       };
 
       await fs.promises.mkdir(testOutPath, { recursive: true });
 
       fs.writeFile(
         `${testOutPath}${key}.json`,
-        JSON.stringify(result, null, 2),
+        JSON.stringify(testJob.test.toObj(), null, 2),
+
         (err) => {
           if (err) {
             console.error(err);
@@ -157,13 +155,61 @@ export class TestResourceManager {
           resolve(result)
         }
       );
-    }));
+
+      for await (const given of result.test.givens) {
+        for await (const givenFeature of given.features) {
+          for await (const knownFeature of this.testerantoFeatures.features) {
+
+            if (!this.featureTestJoin[givenFeature.name]) {
+              this.featureTestJoin[givenFeature.name] = {};
+            }
+
+            if (givenFeature.name === knownFeature.name) {
+              this.featureTestJoin[givenFeature.name][given.name] = {
+                suite: result.test,
+                whens: given.whens.map((w) => w.name),
+                thens: given.thens.map((t) => t.name),
+                errors: given.error,
+              }
+            } else {
+              // this.featureTestJoin[givenFeature.name][given.name] = {}
+            }
+          }
+        }
+      }
+
+      
+      fs.writeFile(
+        `${testOutPath}featureTestJoin.json`,
+        JSON.stringify(
+          Object.keys(this.featureTestJoin).reduce((mm, featureKey) => {
+            mm[featureKey] = Object.keys(this.featureTestJoin[featureKey]).map((testKey) => {
+              const ranJob = this.featureTestJoin[featureKey][testKey];
+              return {
+                testKey: testKey,
+                name: ranJob.suite.name,
+                whens: ranJob.whens,
+                thens: ranJob.thens,
+                errors: ranJob.errors
+              }
+            });
+            return mm;
+          }, {})
+        , null, 2),
+        (err) => {
+          if (err) {
+            console.error(err);
+          }
+          resolve(result)
+        }
+      );
+    }))
 
     this.queue.push({
       key,
-      aborter: suite.test.aborter,
+      aborter: testJob.test.aborter,
       getCancellablePromise: cancellablePromise,
-      testResourceRequired: suite.testResource
+      testResourceRequired: testJob.testResource
     });
   }
 

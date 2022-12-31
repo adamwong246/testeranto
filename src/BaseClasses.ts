@@ -35,6 +35,13 @@ export abstract class BaseSuite<
     await Promise.all((this.givens|| []).map((g, ndx) => g.aborter(ndx)))
   }
 
+  public toObj() {
+    return {
+      name: this.name,
+      givens: this.givens.map((g) => g.toObj()),
+    }
+  }
+
   setup(s: IInput): Promise<ISubject> {
     return new Promise((res) => res(s as unknown as ISubject));
   }
@@ -76,12 +83,21 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
     name: string,
     features: BaseFeature[],
     whens: BaseWhen<IStore, ISelection, IThenShape>[],
-    thens: BaseThen<ISelection, IStore, IThenShape>[]
+    thens: BaseThen<ISelection, IStore, IThenShape>[],
   ) {
     this.name = name;
     this.features = features;
     this.whens = whens;
     this.thens = thens;
+  }
+
+  toObj() {
+    return {
+      name: this.name,
+      whens: this.whens.map((w) => w.toObj()),
+      thens: this.thens.map((t) => t.toObj()),
+      errors: this.error
+    }
   }
 
   abstract givenThat(
@@ -131,7 +147,7 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
 }
 
 export abstract class BaseWhen<IStore, ISelection, IThenShape> {
-  name: string;
+  public name: string;
   actioner: (x: ISelection) => IThenShape;
   error: boolean;
   abort: boolean;
@@ -146,6 +162,13 @@ export abstract class BaseWhen<IStore, ISelection, IThenShape> {
     actioner: (x: ISelection) => IThenShape,
     testResource
   );
+
+  toObj() {
+    return {
+      name: this.name,
+      error: this.error,
+    }
+  }
 
   aborter() {
     this.abort = true;
@@ -166,7 +189,7 @@ export abstract class BaseWhen<IStore, ISelection, IThenShape> {
 }
 
 export abstract class BaseThen<ISelection, IStore, IThenShape> {
-  name: string;
+  public name: string;
   thenCB: (storeState: ISelection) => IThenShape;
   error: boolean;
   abort: boolean;
@@ -174,6 +197,13 @@ export abstract class BaseThen<ISelection, IStore, IThenShape> {
   constructor(name: string, thenCB: (val: ISelection) => IThenShape) {
     this.name = name;
     this.thenCB = thenCB;
+  }
+
+  toObj() {
+    return {
+      name: this.name,
+      error: this.error,
+    }
   }
 
   abstract butThen(store: any, testResourceConfiguration?): Promise<ISelection>;
