@@ -1,6 +1,6 @@
 import type { IProps, IState } from "./ClassicalComponent";
 import { assert } from "chai";
-import features from "../testerantoFeatures.test";
+import { features } from "../testerantoFeatures.test";
 import { EsbuildPuppeteerTesteranto } from "./esbuild-puppeteer.testeranto.test";
 
 const myFeature = features.hello;

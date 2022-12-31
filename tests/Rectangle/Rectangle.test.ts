@@ -6,7 +6,7 @@ import {
 
 import Rectangle from "./Rectangle";
 
-import features from "../testerantoFeatures.test";
+import {features} from "../testerantoFeatures.test";
 
 type WhenShape = any;
 type ThenShape = any;

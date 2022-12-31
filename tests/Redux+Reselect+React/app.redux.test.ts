@@ -1,5 +1,5 @@
 import { assert } from "chai";
-import features from "../testerantoFeatures.test";
+import { features } from "../testerantoFeatures.test";
 import { ReduxTesteranto } from "./redux.testeranto.test";
 import { IStoreState, loginApp } from "./app";
 

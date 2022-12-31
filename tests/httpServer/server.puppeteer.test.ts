@@ -1,5 +1,5 @@
 import { assert } from "chai";
-import features from "../testerantoFeatures.test";
+import { features } from "../testerantoFeatures.test";
 import { PuppeteerHttpTesteranto } from "./puppeteer-http.testeranto.test";
 import { serverFactory } from "./server";
 

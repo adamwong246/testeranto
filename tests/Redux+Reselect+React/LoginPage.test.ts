@@ -1,7 +1,7 @@
 import { ReactTesteranto } from "./react.testeranto.test";
 import { assert } from "chai";
 import LoginPage from "./LoginPage";
-import features from "../testerantoFeatures.test";
+import { features } from "../testerantoFeatures.test";
 
 const myFeature = features.hello;
 

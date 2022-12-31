@@ -1,4 +1,4 @@
-import features from "../testerantoFeatures.test";
+import { features } from "../testerantoFeatures.test";
 import { HttpTesteranto } from "./http.testeranto.test";
 import { serverFactory } from "./server";
 

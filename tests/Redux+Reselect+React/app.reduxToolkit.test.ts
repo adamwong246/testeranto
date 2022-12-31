@@ -9,7 +9,7 @@ const selector = core.select.loginPageSelection;
 const actions = core.app.actions;
 const reducer = core.app.reducer;
 
-import features from "../testerantoFeatures.test";
+import { features } from "../testerantoFeatures.test";
 
 const myFeature = features.hello;
 
