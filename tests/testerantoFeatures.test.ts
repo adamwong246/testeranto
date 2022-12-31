@@ -6,6 +6,8 @@ export const features = {
   aloha: new BaseFeature("aloha"),
   gutentag: new BaseFeature("gutentag"),
   buenosDias: new BaseFeature("buenos dias"),
+  hola: new BaseFeature("hola"),
+  bienVenidos: new BaseFeature("bien venidos"),
 }
 
 import { DirectedGraph } from 'graphology';
@@ -18,5 +20,10 @@ graph.mergeEdge(features.hello.name, features.gutentag.name);
 graph.mergeEdge(features.gutentag.name, features.buenosDias.name);
 
 export default new TesterantoFeatures([
-  features.hello, features.aloha, features.gutentag, features.buenosDias
-], [graph], __filename);
+  features.hello,
+  features.aloha,
+  features.gutentag,
+  features.buenosDias,
+  features.hola,
+  features.bienVenidos
+], [{ name: "my first graph", graph }], __filename);

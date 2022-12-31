@@ -1,14 +1,15 @@
 import CancelablePromise, { cancelable } from 'cancelable-promise';
 import fs from "fs";
 import fresh from 'fresh-require';
+import { topologicalSort } from 'graphology-dag/topological-sort';
 
 import { TesterantoFeatures } from './Features';
-import { ITestJob } from './testShapes';
+import { ITestJob, IT_FeatureNetwork } from './testShapes';
 
 const OPEN_PORT = '';
-
 const testOutPath = "./dist/results/";
 const featureOutPath = "./dist/";
+const reportOutPath = "./dist/report";
 
 export class TesterantoScheduler {
   featureTestJoin: Record<string, any>;
@@ -115,10 +116,12 @@ export class TesterantoScheduler {
       console.log("running featureSrcMd5");
       this.featureSrcMd5 = hash;
       this.setFeatures((fresh(distFile, require)['default']));
+    } else {
+      console.log("feature file changed byt md5 hash did not")
     }
   }
 
-  private async setFeatures(testerantoFeatures: TesterantoFeatures){
+  private async setFeatures(testerantoFeatures: TesterantoFeatures) {
     console.log("testerantoFeatures", testerantoFeatures.networks);
     this.testerantoFeatures = testerantoFeatures;
     await fs.promises.mkdir(featureOutPath, { recursive: true });
@@ -132,6 +135,8 @@ export class TesterantoScheduler {
         }
       }
     );
+
+    this.regenerateReports();
   }
 
   private async addTest(testJob: ITestJob, key) {
@@ -172,13 +177,13 @@ export class TesterantoScheduler {
                 errors: given.error,
               }
             } else {
-              // this.featureTestJoin[givenFeature.name][given.name] = {}
+              // delete this.featureTestJoin[givenFeature.name][given.name];
             }
           }
         }
       }
 
-      
+
       fs.writeFile(
         `${testOutPath}featureTestJoin.json`,
         JSON.stringify(
@@ -195,7 +200,7 @@ export class TesterantoScheduler {
             });
             return mm;
           }, {})
-        , null, 2),
+          , null, 2),
         (err) => {
           if (err) {
             console.error(err);
@@ -203,6 +208,8 @@ export class TesterantoScheduler {
           resolve(result)
         }
       );
+
+      this.regenerateReports();
     }))
 
     this.queue.push({
@@ -211,6 +218,29 @@ export class TesterantoScheduler {
       getCancellablePromise: cancellablePromise,
       testResourceRequired: testJob.testResource
     });
+  }
+
+  private regenerateReports() {
+
+
+    fs.writeFile(
+      `${reportOutPath}.json`,
+      JSON.stringify((this.testerantoFeatures.networks.map((network: IT_FeatureNetwork) => {
+        const topoSorted = topologicalSort(network.graph);
+        return {
+          topoSorted,
+          name: network.name
+        }
+      })), null, 2),
+
+      (err) => {
+        if (err) {
+          console.error(err);
+        }
+
+      }
+    );
+
   }
 
   private spinner() {

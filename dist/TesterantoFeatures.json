@@ -1,41 +1,44 @@
 [
   {
-    "options": {
-      "type": "directed",
-      "multi": false,
-      "allowSelfLoops": true
-    },
-    "attributes": {},
-    "nodes": [
-      {
-        "key": "hello"
+    "name": "my first graph",
+    "graph": {
+      "options": {
+        "type": "directed",
+        "multi": false,
+        "allowSelfLoops": true
       },
-      {
-        "key": "aloha"
-      },
-      {
-        "key": "gutentag"
-      },
-      {
-        "key": "buenos dias"
-      }
-    ],
-    "edges": [
-      {
-        "key": "geid_136_0",
-        "source": "hello",
-        "target": "aloha"
-      },
-      {
-        "key": "geid_136_1",
-        "source": "hello",
-        "target": "gutentag"
-      },
-      {
-        "key": "geid_136_2",
-        "source": "gutentag",
-        "target": "buenos dias"
-      }
-    ]
+      "attributes": {},
+      "nodes": [
+        {
+          "key": "hello"
+        },
+        {
+          "key": "aloha"
+        },
+        {
+          "key": "gutentag"
+        },
+        {
+          "key": "buenos dias"
+        }
+      ],
+      "edges": [
+        {
+          "key": "geid_105_0",
+          "source": "hello",
+          "target": "aloha"
+        },
+        {
+          "key": "geid_105_1",
+          "source": "hello",
+          "target": "gutentag"
+        },
+        {
+          "key": "geid_105_2",
+          "source": "gutentag",
+          "target": "buenos dias"
+        }
+      ]
+    }
   }
 ]

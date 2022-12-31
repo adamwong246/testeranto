@@ -7,9 +7,9 @@ import path from "path";
 export class TesterantoFeatures{
   features: any;
   entryPath: string
-  networks: DirectedGraph[];
+  networks: {name: string, graph: DirectedGraph}[];
 
-  constructor(features, networks: DirectedGraph[], entryPath: string) {
+  constructor(features, networks: {name: string, graph: DirectedGraph}[], entryPath: string) {
     this.features = features;
     this.entryPath = entryPath;
     this.networks = networks;

@@ -79,13 +79,13 @@ export const RectangleTesteranto =
             ),
             Given.WidthOfOneAndHeightOfOne(
               "test 3",
-              [],
+              [features.hola],
               [When.setHeight(4), When.setWidth(3)],
               [Then.area(12)]
             ),
             Given.WidthOfOneAndHeightOfOne(
               "test 4",
-              [],
+              [features.hola],
               [
                 When.setHeight(3),
                 When.setWidth(4),
@@ -96,13 +96,13 @@ export const RectangleTesteranto =
             ),
             Given.WidthOfOneAndHeightOfOne(
               "test 5",
-              [],
+              [features.gutentag, features.aloha],
               [When.setHeight(3), When.setWidth(4)],
               [
                 Then.getHeight(3),
                 Then.getWidth(4),
                 Then.area(12),
-                Then.circumference(14),
+                Then.circumference(142),
               ]
             ),
           ],
