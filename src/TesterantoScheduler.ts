@@ -6,6 +6,7 @@ import { topologicalSort } from 'graphology-dag/topological-sort';
 import { TesterantoFeatures } from './Features';
 import { ITestJob, IT_FeatureNetwork } from './testShapes';
 
+const TIMEOUT = 3000
 const OPEN_PORT = '';
 const testOutPath = "./dist/results/";
 const featureOutPath = "./dist/";
@@ -100,7 +101,7 @@ export class TesterantoScheduler {
           this.queue.push(qi);
         }
       }
-    }, 1000);
+    }, TIMEOUT);
   }
 
   public testFileTouched(key, distFile, className, hash) {
@@ -221,13 +222,46 @@ export class TesterantoScheduler {
   }
 
   private regenerateReports() {
-
-
     fs.writeFile(
       `${reportOutPath}.json`,
       JSON.stringify((this.testerantoFeatures.networks.map((network: IT_FeatureNetwork) => {
-        const topoSorted = topologicalSort(network.graph);
+        const graph = network.graph;
+        const topoSorted = topologicalSort(graph).reverse();
+
+        {
+          let i = 0;
+          do {
+            const me = topoSorted[i];
+            graph.setNodeAttribute(me, 'testResults', this.featureTestJoin[me]);
+
+            i = i + 1;
+          } while (i < topoSorted.length)
+        }
+
+
+        {
+          let i = 0;
+          do {
+            const me = topoSorted[i];
+            const myTestResults = graph.getNodeAttribute(me, 'testResults');
+            const anscestors = graph.inNeighbors(me);
+            if (anscestors.length === 1) {
+              const anscestor = anscestors[0];
+              graph.setNodeAttribute(anscestor, 'testResults', {
+                ...myTestResults,
+                ...graph.getNodeAttribute(anscestor, 'testResults')
+              });
+            } else if (anscestors.length === 0) {
+              // no-op
+            } else {
+              throw "topological sort fail"
+            }
+            i = i + 1;
+          } while (i < topoSorted.length)
+        }
+
         return {
+          report: graph.getNodeAttribute(topoSorted[topoSorted.length - 1], 'testResults'),
           topoSorted,
           name: network.name
         }
@@ -237,10 +271,8 @@ export class TesterantoScheduler {
         if (err) {
           console.error(err);
         }
-
       }
     );
-
   }
 
   private spinner() {
