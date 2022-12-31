@@ -10,7 +10,7 @@ const OPEN_PORT = '';
 const testOutPath = "./dist/results/";
 const featureOutPath = "./dist/";
 
-export class TestResourceManager {
+export class TesterantoScheduler {
   featureTestJoin: Record<string, any>;
   testerantoFeatures: TesterantoFeatures;
 

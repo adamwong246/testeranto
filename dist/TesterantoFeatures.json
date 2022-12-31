@@ -22,17 +22,17 @@
     ],
     "edges": [
       {
-        "key": "geid_20_0",
+        "key": "geid_136_0",
         "source": "hello",
         "target": "aloha"
       },
       {
-        "key": "geid_20_1",
+        "key": "geid_136_1",
         "source": "hello",
         "target": "gutentag"
       },
       {
-        "key": "geid_20_2",
+        "key": "geid_136_2",
         "source": "gutentag",
         "target": "buenos dias"
       }
