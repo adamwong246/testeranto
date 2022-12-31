@@ -238,7 +238,6 @@ export class TesterantoScheduler {
           } while (i < topoSorted.length)
         }
 
-
         {
           let i = 0;
           do {
