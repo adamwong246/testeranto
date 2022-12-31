@@ -1,0 +1,41 @@
+[
+  {
+    "options": {
+      "type": "directed",
+      "multi": false,
+      "allowSelfLoops": true
+    },
+    "attributes": {},
+    "nodes": [
+      {
+        "key": "hello"
+      },
+      {
+        "key": "aloha"
+      },
+      {
+        "key": "gutentag"
+      },
+      {
+        "key": "buenos dias"
+      }
+    ],
+    "edges": [
+      {
+        "key": "geid_226_0",
+        "source": "hello",
+        "target": "aloha"
+      },
+      {
+        "key": "geid_226_1",
+        "source": "hello",
+        "target": "gutentag"
+      },
+      {
+        "key": "geid_226_2",
+        "source": "gutentag",
+        "target": "buenos dias"
+      }
+    ]
+  }
+]

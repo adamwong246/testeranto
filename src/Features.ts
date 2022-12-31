@@ -1,3 +1,4 @@
+import { DirectedGraph } from 'graphology';
 import { createHash } from 'node:crypto'
 import esbuild from "esbuild";
 import fs from "fs";
@@ -6,10 +7,12 @@ import path from "path";
 export class TesterantoFeatures{
   features: any;
   entryPath: string
+  networks: DirectedGraph[];
 
-  constructor(features, entryPath) {
+  constructor(features, networks: DirectedGraph[], entryPath: string) {
     this.features = features;
     this.entryPath = entryPath;
+    this.networks = networks;
   }
 
   builder() {

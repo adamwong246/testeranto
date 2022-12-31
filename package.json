@@ -18,7 +18,7 @@
     "testrun": "node --inspect ./dist/test.bundle.js",
     "prepublish": "tsc",
     "build": "nodemon --config nodemon.json ./src/build.ts",
-    "watch": "ts-node ./src/watch.ts"
+    "watch": "nodemon --config nodemon.json  ./src/watch.ts"
   },
   "types": "index.d.ts",
   "dependencies": {

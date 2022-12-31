@@ -1,10 +1,12 @@
 import CancelablePromise, { cancelable } from 'cancelable-promise';
 import fs from "fs";
 import fresh from 'fresh-require';
+import { TesterantoFeatures } from './Features';
 
 const OPEN_PORT = '';
 
-const outPath = "./dist/results/";
+const testOutPath = "./dist/results/";
+const featureOutPath = "./dist/";
 
 export class TestResourceManager {
   ports: Record<string, string>;
@@ -49,10 +51,23 @@ export class TestResourceManager {
     }
   }
 
+  async setFeatures(testerantoFeatures: TesterantoFeatures){
+    console.log("testerantoFeatures", testerantoFeatures.networks);
 
-  setFeatures(x){
-    console.log("setFeatures", x)
+    await fs.promises.mkdir(featureOutPath, { recursive: true });
+
+    fs.writeFile(
+      `${featureOutPath}TesterantoFeatures.json`,
+      JSON.stringify(testerantoFeatures.networks, null, 2),
+      (err) => {
+        if (err) {
+          console.error(err);
+        }
+
+      }
+    );
   }
+  
 
   async abort(key) {
     if (this.jobs[key]) {
@@ -65,7 +80,14 @@ export class TestResourceManager {
 
   launch() {
     setInterval(async () => {
-      console.log(this.spinner(), this.queue.length, this.ports)
+      
+      console.log(this.spinner(), this.queue.length, this.ports);
+
+
+
+
+
+
       const qi = this.queue.pop();
       if (!qi) {
         console.log('feed me some tests plz')
@@ -123,10 +145,10 @@ export class TestResourceManager {
         status: await suite.runner(allocatedTestResource)
       };
 
-      await fs.promises.mkdir(outPath, { recursive: true });
+      await fs.promises.mkdir(testOutPath, { recursive: true });
 
       fs.writeFile(
-        `${outPath}${key}.json`,
+        `${testOutPath}${key}.json`,
         JSON.stringify(result, null, 2),
         (err) => {
           if (err) {
