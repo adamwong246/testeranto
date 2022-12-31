@@ -2,6 +2,8 @@ import CancelablePromise, { cancelable } from 'cancelable-promise';
 import fs from "fs";
 import fresh from 'fresh-require';
 
+const OPEN_PORT = '';
+
 const outPath = "./dist/results/";
 
 export class TestResourceManager {
@@ -16,35 +18,40 @@ export class TestResourceManager {
     getCancellablePromise: (testResource) => CancelablePromise<unknown>,
     testResourceRequired: "na" | "port"
   }[];
-  md5s: object;
-  
+  testSrcMd5s: object;
+  featureSrcMd5: string;
   spinCycle = 0;
   spinAnimation = "←↖↑↗→↘↓↙";
-  
+
   constructor(portsToUse: string[]) {
     this.ports = {};
     portsToUse.forEach((port) => {
-      this.ports[port] = '';
+      this.ports[port] = OPEN_PORT;
     });
     this.queue = [];
     this.jobs = {};
-    this.md5s = {};
+    this.testSrcMd5s = {};
   }
 
-  spinner() {
-    this.spinCycle = this.spinCycle + 1;
-    if (this.spinCycle === this.spinAnimation.length) {
-      this.spinCycle = 0;
-    }
-    return this.spinAnimation[this.spinCycle]
-  }
-
-  changed (key, distFile, className, hash) {
-    if (hash !== this.md5s[key]) {
+  public testFileTouched(key, distFile, className, hash) {
+    if (hash !== this.testSrcMd5s[key]) {
       console.log("running", key);
-      this.md5s[key] = hash;
+      this.testSrcMd5s[key] = hash;
       this.add(new (fresh(distFile, require)[className])()[0], key);
     }
+  }
+
+  public featureFileTouched(distFile, hash) {
+    if (hash !== this.featureSrcMd5) {
+      console.log("running featureSrcMd5");
+      this.featureSrcMd5 = hash;
+      this.setFeatures((fresh(distFile, require)['default']));
+    }
+  }
+
+
+  setFeatures(x){
+    console.log("setFeatures", x)
   }
 
   async abort(key) {
@@ -63,7 +70,7 @@ export class TestResourceManager {
       if (!qi) {
         console.log('feed me some tests plz')
         return;
-      } 
+      }
       const { key, aborter, testResourceRequired, getCancellablePromise } = qi;
 
       this.abort(key);
@@ -78,18 +85,18 @@ export class TestResourceManager {
       if (testResourceRequired === "port") {
         Object.values(this.ports).forEach((jobMaybe, portNumber) => {
           if (jobMaybe && jobMaybe === key) {
-            this.ports[portNumber] = '';
+            this.ports[portNumber] = OPEN_PORT;
           }
         });
 
-        const foundOpenPort = Object.keys(this.ports).find((p) => this.ports[p] === '');
+        const foundOpenPort = Object.keys(this.ports).find((p) => this.ports[p] === OPEN_PORT);
 
         if (foundOpenPort) {
           const testPromise = getCancellablePromise({ port: foundOpenPort }).then(() => {
             Object.keys(this.ports).forEach((p, k) => {
               const jobExistsAndMatches = this.ports[p] === key;
               if (jobExistsAndMatches) {
-                this.ports[p] = '';
+                this.ports[p] = OPEN_PORT;
               }
             });
 
@@ -99,13 +106,13 @@ export class TestResourceManager {
           this.jobs[key] = {
             aborter,
             cancellablePromise: testPromise
-          };   
+          };
         } else {
           console.log(`no port was open so send the ${key} job to the back of the queue`)
           this.queue.push(qi);
         }
       }
-    }, 100)
+    }, 1000);
   }
 
   async add(suite, key) {
@@ -117,7 +124,7 @@ export class TestResourceManager {
       };
 
       await fs.promises.mkdir(outPath, { recursive: true });
-      
+
       fs.writeFile(
         `${outPath}${key}.json`,
         JSON.stringify(result, null, 2),
@@ -136,5 +143,10 @@ export class TestResourceManager {
       getCancellablePromise: cancellablePromise,
       testResourceRequired: suite.testResource
     });
+  }
+
+  private spinner() {
+    this.spinCycle = (this.spinCycle + 1) % this.spinAnimation.length;
+    return this.spinAnimation[this.spinCycle]
   }
 }
