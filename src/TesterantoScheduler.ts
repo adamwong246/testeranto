@@ -129,7 +129,7 @@ export class TesterantoScheduler {
 
     await fs.writeFile(
       `${featureOutPath}TesterantoFeatures.json`,
-      JSON.stringify(testerantoFeatures.networks, null, 2),
+      JSON.stringify(testerantoFeatures.toObj(), null, 2),
       (err) => {
         if (err) {
           console.error(err);

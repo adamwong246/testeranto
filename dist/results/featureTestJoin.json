@@ -1,6 +1,36 @@
 {
   "hello": [
     {
+      "testKey": "a http boringfeature",
+      "name": "Testing the Node server with fetch",
+      "whens": [],
+      "thens": [
+        "TheStatusIs: some great status"
+      ]
+    },
+    {
+      "testKey": "a http feature",
+      "name": "Testing the Node server with fetch",
+      "whens": [
+        "PostToStatus: hello"
+      ],
+      "thens": [
+        "TheStatusIs: hello"
+      ]
+    },
+    {
+      "testKey": "test 1",
+      "name": "Testing the Rectangle class",
+      "whens": [
+        "setWidth: 4",
+        "setHeight: 9"
+      ],
+      "thens": [
+        "getWidth: 4",
+        "getHeight: 9"
+      ]
+    },
+    {
       "testKey": "BDD gherkin style",
       "name": "Testing the Redux store",
       "whens": [
@@ -49,47 +79,7 @@
       ]
     },
     {
-      "testKey": "test 1",
-      "name": "Testing the Rectangle class",
-      "whens": [
-        "setWidth: 4",
-        "setHeight: 9"
-      ],
-      "thens": [
-        "getWidth: 4",
-        "getHeight: 9"
-      ]
-    },
-    {
-      "testKey": "a http boringfeature",
-      "name": "Testing the Node server with fetch",
-      "whens": [],
-      "thens": [
-        "TheStatusIs: some great status"
-      ]
-    },
-    {
-      "testKey": "a http feature",
-      "name": "Testing the Node server with fetch",
-      "whens": [
-        "PostToStatus: hello"
-      ],
-      "thens": [
-        "TheStatusIs: hello"
-      ]
-    }
-  ],
-  "aloha": [
-    {
-      "testKey": "OMG a feature!",
-      "name": "Testing the Redux store",
-      "whens": [],
-      "thens": [
-        "TheEmailIs: "
-      ]
-    },
-    {
-      "testKey": "yes more features plz",
+      "testKey": "yes more tests plz",
       "name": "Testing the Redux store",
       "whens": [
         "TheEmailIsSetTo: hey there"
@@ -97,27 +87,6 @@
       "thens": [
         "TheEmailIs: hey there"
       ]
-    },
-    {
-      "testKey": "test 5",
-      "name": "Testing the Rectangle class",
-      "whens": [
-        "setHeight: 3",
-        "setWidth: 4"
-      ],
-      "thens": [
-        "getHeight: 3",
-        "getWidth: 4",
-        "area: 12",
-        "circumference: 142"
-      ],
-      "errors": {
-        "generatedMessage": true,
-        "code": "ERR_ASSERTION",
-        "actual": 14,
-        "expected": 142,
-        "operator": "=="
-      }
     }
   ],
   "hola": [
@@ -168,6 +137,57 @@
         "expected": 142,
         "operator": "=="
       }
+    }
+  ],
+  "aloha": [
+    {
+      "testKey": "test 5",
+      "name": "Testing the Rectangle class",
+      "whens": [
+        "setHeight: 3",
+        "setWidth: 4"
+      ],
+      "thens": [
+        "getHeight: 3",
+        "getWidth: 4",
+        "area: 12",
+        "circumference: 142"
+      ],
+      "errors": {
+        "generatedMessage": true,
+        "code": "ERR_ASSERTION",
+        "actual": 14,
+        "expected": 142,
+        "operator": "=="
+      }
+    },
+    {
+      "testKey": "OMG a feature!",
+      "name": "Testing the Redux store",
+      "whens": [],
+      "thens": [
+        "TheEmailIs: "
+      ]
+    },
+    {
+      "testKey": "yes more features plz",
+      "name": "Testing the Redux store",
+      "whens": [
+        "TheEmailIsSetTo: hey there"
+      ],
+      "thens": [
+        "TheEmailIs: hey there"
+      ]
+    },
+    {
+      "testKey": "yes more tests plz",
+      "name": "Testing the Redux store",
+      "whens": [
+        "TheEmailIsSetTo: hey there"
+      ],
+      "thens": [
+        "TheEmailIs: hey there"
+      ]
     }
   ]
 }

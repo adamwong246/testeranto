@@ -4,15 +4,42 @@ import esbuild from "esbuild";
 import fs from "fs";
 import path from "path";
 
-export class TesterantoFeatures{
+import { BaseFeature } from "../src/BaseClasses";
+
+
+export class TesterantoFeatures {
   features: any;
   entryPath: string
-  networks: {name: string, graph: DirectedGraph}[];
+  networks: { name: string, graph: DirectedGraph }[];
 
-  constructor(features, networks: {name: string, graph: DirectedGraph}[], entryPath: string) {
+  constructor(features, networks: { name: string, graph: DirectedGraph }[], entryPath: string) {
     this.features = features;
     this.entryPath = entryPath;
     this.networks = networks;
+  }
+
+  toObj() {
+    return {
+      features: this.features.map((feature: BaseFeature) => {
+        return {
+          ...feature,
+          inNetworks: this.networks.filter((network) => {
+            return network.graph.hasNode(feature.name);
+          }).map((network) => {
+            return {
+
+              network: network.name,
+              neighbors: network.graph.neighbors(feature.name)
+            }
+          })
+        }
+      }),
+      networks: this.networks.map((network) => {
+        return {
+          ...network
+        }
+      })
+    };
   }
 
   builder() {
@@ -45,6 +72,7 @@ export class TesterantoFeatures{
         fs.promises.writeFile(p, text);
         fs.promises.writeFile("./dist" + (this.entryPath.split(process.cwd()).pop())?.split(".ts")[0] + `.md5`, createHash('md5').update(text).digest('hex'))
       })
-    })
+    });
   }
+
 }

@@ -32,7 +32,7 @@ export abstract class BaseSuite<
 
   async aborter() {
     this.aborted = true;
-    await Promise.all((this.givens|| []).map((g, ndx) => g.aborter(ndx)))
+    await Promise.all((this.givens || []).map((g, ndx) => g.aborter(ndx)))
   }
 
   public toObj() {
@@ -112,8 +112,8 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
       ...this.thens.map((t, ndx) => new Promise((res) => res(t.aborter()))),
     ])
       .then(async () => {
-      return await this.afterEach(this.store, ndx)
-    })
+        return await this.afterEach(this.store, ndx)
+      })
   }
 
   async afterEach(store: IStore, ndx: number): Promise<unknown> {
@@ -139,7 +139,7 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
     } catch (e) {
       this.error = e;
       throw e;
-    } finally { 
+    } finally {
       await this.afterEach(this.store, index);
     }
     return this.store;
@@ -183,7 +183,7 @@ export abstract class BaseWhen<IStore, ISelection, IThenShape> {
       } catch (e) {
         this.error = true;
         throw e
-      }      
+      }
     }
   }
 }

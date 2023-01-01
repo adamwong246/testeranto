@@ -14,6 +14,5 @@ export default new TesterantoProject(
       'ServerHttp', './tests/httpServer/server.puppeteer.test.ts', 'ServerHttpPuppeteerTesteranto'],
   ],
   './tests/testerantoFeatures.test.ts',
-  __filename
+  // __filename
 );
-  

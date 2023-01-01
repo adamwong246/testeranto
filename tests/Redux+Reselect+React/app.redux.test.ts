@@ -101,7 +101,7 @@ export const AppReduxTesteranto = ReduxTesteranto<
           ),
 
           Given.AnEmptyState(
-            "yes more features plz",
+            "yes more tests plz",
             [features.aloha, features.hello],
             [When.TheEmailIsSetTo("hey there")],
             [Then.TheEmailIs("hey there")]

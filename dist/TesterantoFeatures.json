@@ -1,44 +1,102 @@
-[
-  {
-    "name": "my first graph",
-    "graph": {
-      "options": {
-        "type": "directed",
-        "multi": false,
-        "allowSelfLoops": true
-      },
-      "attributes": {},
-      "nodes": [
+{
+  "features": [
+    {
+      "name": "hello",
+      "inNetworks": [
         {
-          "key": "hello"
-        },
-        {
-          "key": "aloha"
-        },
-        {
-          "key": "gutentag"
-        },
-        {
-          "key": "buenos dias"
-        }
-      ],
-      "edges": [
-        {
-          "key": "geid_50_0",
-          "source": "hello",
-          "target": "aloha"
-        },
-        {
-          "key": "geid_50_1",
-          "source": "hello",
-          "target": "gutentag"
-        },
-        {
-          "key": "geid_50_2",
-          "source": "gutentag",
-          "target": "buenos dias"
+          "network": "my first graph",
+          "neighbors": [
+            "aloha",
+            "gutentag"
+          ]
         }
       ]
+    },
+    {
+      "name": "aloha",
+      "inNetworks": [
+        {
+          "network": "my first graph",
+          "neighbors": [
+            "hello"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "gutentag",
+      "inNetworks": [
+        {
+          "network": "my first graph",
+          "neighbors": [
+            "hello",
+            "buenos dias"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "buenos dias",
+      "inNetworks": [
+        {
+          "network": "my first graph",
+          "neighbors": [
+            "gutentag"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "hola",
+      "inNetworks": []
+    },
+    {
+      "name": "bien venidos",
+      "inNetworks": []
     }
-  }
-]
+  ],
+  "networks": [
+    {
+      "name": "my first graph",
+      "graph": {
+        "options": {
+          "type": "directed",
+          "multi": false,
+          "allowSelfLoops": true
+        },
+        "attributes": {},
+        "nodes": [
+          {
+            "key": "hello"
+          },
+          {
+            "key": "aloha"
+          },
+          {
+            "key": "gutentag"
+          },
+          {
+            "key": "buenos dias"
+          }
+        ],
+        "edges": [
+          {
+            "key": "geid_118_0",
+            "source": "hello",
+            "target": "aloha"
+          },
+          {
+            "key": "geid_118_1",
+            "source": "hello",
+            "target": "gutentag"
+          },
+          {
+            "key": "geid_118_2",
+            "source": "gutentag",
+            "target": "buenos dias"
+          }
+        ]
+      }
+    }
+  ]
+}
