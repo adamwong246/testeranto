@@ -1,16 +1,6 @@
 {
   "hello": [
     {
-      "testKey": "Set the email and check the email",
-      "name": "Testing the LoginPage as react",
-      "whens": [
-        "TheEmailIsSetTo: adam@email.com"
-      ],
-      "thens": [
-        "TheEmailIs: adam@email.com"
-      ]
-    },
-    {
       "testKey": "BDD gherkin style",
       "name": "Testing the Redux store",
       "whens": [
@@ -59,18 +49,6 @@
       ]
     },
     {
-      "testKey": "test 1",
-      "name": "Testing the Rectangle class",
-      "whens": [
-        "setWidth: 4",
-        "setHeight: 9"
-      ],
-      "thens": [
-        "getWidth: 4",
-        "getHeight: 9"
-      ]
-    },
-    {
       "testKey": "a http boringfeature",
       "name": "Testing the Node server with fetch",
       "whens": [],
@@ -89,6 +67,18 @@
       ]
     },
     {
+      "testKey": "test 1",
+      "name": "Testing the Rectangle class",
+      "whens": [
+        "setWidth: 4",
+        "setHeight: 9"
+      ],
+      "thens": [
+        "getWidth: 4",
+        "getHeight: 9"
+      ]
+    },
+    {
       "testKey": "default",
       "name": "a classical react component, bundled with esbuild and tested with puppeteer",
       "whens": [
@@ -101,6 +91,16 @@
       ],
       "thens": [
         "TheStatusIs: [object Object]"
+      ]
+    },
+    {
+      "testKey": "Set the email and check the email",
+      "name": "Testing the LoginPage as react",
+      "whens": [
+        "TheEmailIsSetTo: adam@email.com"
+      ],
+      "thens": [
+        "TheEmailIs: adam@email.com"
       ]
     }
   ],

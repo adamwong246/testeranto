@@ -3,10 +3,6 @@
     "dagReduction": {
       "name": "hello",
       "report": {
-        "Set the email and check the email": {
-          "name": "Testing the LoginPage as react",
-          "fails": []
-        },
         "BDD gherkin style": {
           "name": "Testing the Redux store",
           "fails": []
@@ -27,10 +23,6 @@
           "name": "Testing the Redux store",
           "fails": []
         },
-        "test 1": {
-          "name": "Testing the Rectangle class",
-          "fails": []
-        },
         "a http boringfeature": {
           "name": "Testing the Node server with fetch",
           "fails": []
@@ -39,8 +31,16 @@
           "name": "Testing the Node server with fetch",
           "fails": []
         },
+        "test 1": {
+          "name": "Testing the Rectangle class",
+          "fails": []
+        },
         "default": {
           "name": "a classical react component, bundled with esbuild and tested with puppeteer",
+          "fails": []
+        },
+        "Set the email and check the email": {
+          "name": "Testing the LoginPage as react",
           "fails": []
         },
         "results": {
@@ -83,10 +83,6 @@
               }
             },
             "report": {
-              "Set the email and check the email": {
-                "name": "Testing the LoginPage as react",
-                "fails": []
-              },
               "BDD gherkin style": {
                 "name": "Testing the Redux store",
                 "fails": []
@@ -107,10 +103,6 @@
                 "name": "Testing the Redux store",
                 "fails": []
               },
-              "test 1": {
-                "name": "Testing the Rectangle class",
-                "fails": []
-              },
               "a http boringfeature": {
                 "name": "Testing the Node server with fetch",
                 "fails": []
@@ -119,8 +111,16 @@
                 "name": "Testing the Node server with fetch",
                 "fails": []
               },
+              "test 1": {
+                "name": "Testing the Rectangle class",
+                "fails": []
+              },
               "default": {
                 "name": "a classical react component, bundled with esbuild and tested with puppeteer",
+                "fails": []
+              },
+              "Set the email and check the email": {
+                "name": "Testing the LoginPage as react",
                 "fails": []
               }
             }
@@ -141,10 +141,6 @@
               }
             },
             "report": {
-              "Set the email and check the email": {
-                "name": "Testing the LoginPage as react",
-                "fails": []
-              },
               "BDD gherkin style": {
                 "name": "Testing the Redux store",
                 "fails": []
@@ -165,10 +161,6 @@
                 "name": "Testing the Redux store",
                 "fails": []
               },
-              "test 1": {
-                "name": "Testing the Rectangle class",
-                "fails": []
-              },
               "a http boringfeature": {
                 "name": "Testing the Node server with fetch",
                 "fails": []
@@ -177,8 +169,16 @@
                 "name": "Testing the Node server with fetch",
                 "fails": []
               },
+              "test 1": {
+                "name": "Testing the Rectangle class",
+                "fails": []
+              },
               "default": {
                 "name": "a classical react component, bundled with esbuild and tested with puppeteer",
+                "fails": []
+              },
+              "Set the email and check the email": {
+                "name": "Testing the LoginPage as react",
                 "fails": []
               },
               "results": {
@@ -221,10 +221,6 @@
                     }
                   },
                   "report": {
-                    "Set the email and check the email": {
-                      "name": "Testing the LoginPage as react",
-                      "fails": []
-                    },
                     "BDD gherkin style": {
                       "name": "Testing the Redux store",
                       "fails": []
@@ -245,10 +241,6 @@
                       "name": "Testing the Redux store",
                       "fails": []
                     },
-                    "test 1": {
-                      "name": "Testing the Rectangle class",
-                      "fails": []
-                    },
                     "a http boringfeature": {
                       "name": "Testing the Node server with fetch",
                       "fails": []
@@ -257,8 +249,16 @@
                       "name": "Testing the Node server with fetch",
                       "fails": []
                     },
+                    "test 1": {
+                      "name": "Testing the Rectangle class",
+                      "fails": []
+                    },
                     "default": {
                       "name": "a classical react component, bundled with esbuild and tested with puppeteer",
+                      "fails": []
+                    },
+                    "Set the email and check the email": {
+                      "name": "Testing the LoginPage as react",
                       "fails": []
                     }
                   }
