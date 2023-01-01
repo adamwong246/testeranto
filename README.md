@@ -4,7 +4,7 @@
 
 ## about
 
-Testeranto.ts an Acceptance Test Driven Development ([ATDD](https://en.wikipedia.org/wiki/Acceptance_test-driven_development)) testing framework. Testeranto focuses on specifying stateful logic which crosses applications boundaries with strong type bindings and using an extended gherkin syntax. 
+Testeranto.ts an Acceptance Test Driven Development ([ATDD](https://en.wikipedia.org/wiki/Acceptance_test-driven_development)) testing framework. Testeranto focuses on testing stateful TS code which crosses application boundaries, using strongly typed tests and specified with an extended gherkin syntax. 
 
 ## 3 distinguishing features
 
