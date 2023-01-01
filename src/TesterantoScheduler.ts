@@ -162,6 +162,33 @@ export class TesterantoScheduler {
         }
       );
 
+      // let i = 0;
+      for (const [gNdx, g] of testJob.test.givens.entries()) {
+        for (const testArtifactKey of Object.keys(g.testArtifacts)) {
+          for (const [ndx, testArtifact] of g.testArtifacts[testArtifactKey].entries()) {
+            const artifactOutFolderPath = `${testOutPath}${key}/${gNdx}/${ndx}/`
+            const artifactOutPath = `${artifactOutFolderPath}/${testArtifactKey}.png`
+            await fs.promises.mkdir(artifactOutFolderPath, { recursive: true });
+            await fs.writeFile(
+              artifactOutPath,
+              testArtifact.binary,
+              (err) => {
+                if (err) {
+                  console.error(err);
+                }
+                resolve(result)
+              }
+            );
+
+            // i = i + 1;
+
+          }
+        }
+
+      }
+
+
+
       for await (const given of result.test.givens) {
         for await (const givenFeature of given.features) {
           for await (const knownFeature of this.testerantoFeatures.features) {

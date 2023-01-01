@@ -183,28 +183,46 @@ export abstract class Testeranto<
             name: 'import-path',
             setup(build) {
               build.onResolve({ filter: /^\.{1,2}\// }, args => {
-                let path = args.resolveDir + "/" + args.path;
-                if (!fs.existsSync(path)) {
-                  if (fs.existsSync(path + ".tsx")) {
-                    path = path + ".tsx"
-                  } else if (fs.existsSync(path + ".ts")) {
-                    path = path + ".ts"
+                // console.log("args", args)
+
+                const importedPath = args.resolveDir + "/" + args.path;
+                const absolutePath = path.resolve(importedPath);
+                const absolutePath2 = path.resolve(testerantoConfig.features).split(".ts").slice(0, -1).join('.ts');
+
+                if (absolutePath === absolutePath2) {
+
+                  // console.log("mark2", args)
+                  return {
+                    path: process.cwd() + "/dist/tests/testerantoFeatures.test.js", external: true
                   }
+                } else {
+                  // return {
+                  //   path: path.resolve(importedPath), external: false
+                  // }
                 }
-                return { path, external: true }
+                // let path = args.resolveDir + "/" + args.path;
+                // if (!fs.existsSync(path)) {
+                //   if (fs.existsSync(path + ".tsx")) {
+                //     path = path + ".tsx"
+                //   } else if (fs.existsSync(path + ".ts")) {
+                //     path = path + ".ts"
+                //   }
+                // }
+                // return { path, external: true }
               })
             },
           }
           esbuild.build({
             entryPoints: [entryPath],
             bundle: true,
-            minify: true,
+            minify: false,
             format: "esm",
             target: ["esnext"],
             write: false,
             packages: 'external',
             plugins: [importPathPlugin],
-            external: ['./src/*',
+            external: [
+              // './src/*',
               testerantoConfig.features
             ],
           }).then((res) => {

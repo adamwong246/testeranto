@@ -4,7 +4,7 @@ import esbuild from "esbuild";
 import { TesterantoFactory } from "../../src/index";
 import { ITestImplementation, ITestSpecification, ITTestShape } from "../../src/testShapes";
 
-type Input = [string, (string) => string];
+type Input = [string, (string) => string, any];
 type TestResource = "never";
 type InitialState = unknown;
 type WhenShape = any;
@@ -76,13 +76,13 @@ export const EsbuildPuppeteerTesteranto = <
       butThen: async function ({ page }: Store, callback: any, testResource: "never"): Promise<Selection> {
         return { page };
       },
-      afterEach: async function ({ page }: Store, ndx: number) {
-        await (await page).screenshot({
-          path: `./dist/afterEach-${ndx}-screenshot.jpg`,
-        });
+      afterEach: async function ({ page }: Store, ndx: number, saveTestArtifact) {
+        saveTestArtifact.png(
+          await (await page).screenshot()
+        );
         return { page };
       }
-      
+
     },
     entry
   )

@@ -53,13 +53,10 @@ export function Report() {
     {
       data && data.configs && <>
         <Tabs defaultActiveKey="home">
-          <Tab eventKey="home" title="Home">
-            <p>
-              Welcome to testeranto!
-            </p>
-            <pre><code>{JSON.stringify(data, null, 2)}</code></pre>
+          <Tab eventKey="home" title="config">
+            <pre><code>{JSON.stringify(data.configs, null, 2)}</code></pre>
           </Tab>
-          <Tab eventKey="features" title="Features">
+          <Tab eventKey="features" title="features">
             <Tab.Container id="left-tabs-example5" defaultActiveKey="feature-0">
               <Row>
                 <Col sm={3}>
@@ -108,7 +105,7 @@ export function Report() {
               </Row>
             </Tab.Container>
           </Tab>
-          <Tab eventKey="results" title="Results">
+          <Tab eventKey="results" title="tests">
             <Tab.Container id="left-tabs-example" defaultActiveKey="first">
               <Row>
                 <Col sm={3}>
@@ -166,7 +163,7 @@ export function Report() {
           </Tab>
 
 
-          <Tab eventKey="featureTests" title="Feature-Tests">
+          <Tab eventKey="featureTests" title="feature-tests">
             <Tab.Container id="left-tabs-example7" defaultActiveKey="first">
               <Row>
                 <Col sm={3}>
@@ -230,7 +227,7 @@ export function Report() {
             </Tab.Container>
           </Tab>
 
-          <Tab eventKey="summary" title="Summaries">
+          <Tab eventKey="summary" title="summaries">
             <Tab.Container id="left-tabs-example3" defaultActiveKey={`summary-0`}>
               <Row>
                 <Col sm={3}>
