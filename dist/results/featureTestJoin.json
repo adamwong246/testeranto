@@ -1,6 +1,16 @@
 {
   "hello": [
     {
+      "testKey": "Set the email and check the email",
+      "name": "Testing the LoginPage as react",
+      "whens": [
+        "TheEmailIsSetTo: adam@email.com"
+      ],
+      "thens": [
+        "TheEmailIs: adam@email.com"
+      ]
+    },
+    {
       "testKey": "BDD gherkin style",
       "name": "Testing the Redux store",
       "whens": [
@@ -49,24 +59,6 @@
       ]
     },
     {
-      "testKey": "a http boringfeature",
-      "name": "Testing the Node server with fetch",
-      "whens": [],
-      "thens": [
-        "TheStatusIs: some great status"
-      ]
-    },
-    {
-      "testKey": "a http feature",
-      "name": "Testing the Node server with fetch",
-      "whens": [
-        "PostToStatus: hello"
-      ],
-      "thens": [
-        "TheStatusIs: hello"
-      ]
-    },
-    {
       "testKey": "test 1",
       "name": "Testing the Rectangle class",
       "whens": [
@@ -94,13 +86,21 @@
       ]
     },
     {
-      "testKey": "Set the email and check the email",
-      "name": "Testing the LoginPage as react",
+      "testKey": "a http boringfeature",
+      "name": "Testing the Node server with fetch",
+      "whens": [],
+      "thens": [
+        "TheStatusIs: some great status"
+      ]
+    },
+    {
+      "testKey": "a http feature",
+      "name": "Testing the Node server with fetch",
       "whens": [
-        "TheEmailIsSetTo: adam@email.com"
+        "PostToStatus: hello"
       ],
       "thens": [
-        "TheEmailIs: adam@email.com"
+        "TheStatusIs: hello"
       ]
     }
   ],

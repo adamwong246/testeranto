@@ -26,7 +26,7 @@ export const TesterantoFactory = <
 
   testInterface: {
     actionHandler?: (b: (...any) => any) => any,
-    afterEach?: (store: Store, ndx: number) => unknown,
+    afterEach?: (store: Store, ndx: number, cb) => unknown,
     andWhen: (store: Store, actioner, testResource: TestResourceShape) => Promise<Selection>,
     assertioner?: (t: ThenShape) => any,
     beforeAll?: (input: Input) => Promise<Subject>,
@@ -91,8 +91,8 @@ export const TesterantoFactory = <
           async givenThat(subject, testResource) {
             return beforeEach(subject, this.initialValues, testResource);
           }
-          afterEach(store: Store, ndx: number): Promise<unknown> {
-            return new Promise((res) => res(afterEach(store, ndx)))
+          afterEach(store: Store, ndx: number, cb): Promise<unknown> {
+            return new Promise((res) => res(afterEach(store, ndx, cb)))
           }
         },
 
@@ -143,8 +143,8 @@ export const TesterantoFactory = <
             return beforeEach(subject, this.initialValues, testResource);
           }
 
-          afterEach(store: Store, ndx: number): Promise<unknown> {
-            return new Promise((res) => res(afterEach(store, ndx)))
+          afterEach(store: Store, ndx: number, cb): Promise<unknown> {
+            return new Promise((res) => res(afterEach(store, ndx, cb)))
           }
         },
         testResource,

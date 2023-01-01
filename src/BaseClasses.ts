@@ -74,6 +74,14 @@ export abstract class BaseSuite<
   }
 }
 
+class TestArtifact {
+  binary: Buffer | string;
+
+  constructor(binary) {
+    this.binary = binary
+  }
+}
+
 export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
   name: string;
   features: BaseFeature[];
@@ -82,6 +90,7 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
   error: Error;
   abort: boolean;
   store: IStore;
+  testArtifacts: Record<string, any[]>
 
   constructor(
     name: string,
@@ -93,6 +102,7 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
     this.features = features;
     this.whens = whens;
     this.thens = thens;
+    this.testArtifacts = {};
   }
 
   toObj() {
@@ -109,6 +119,17 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
     testResourceConfiguration?
   ): Promise<IStore>;
 
+  saveTestArtifact(k: string, testArtifact: TestArtifact) {
+    if (!this.testArtifacts[k]) {
+      this.testArtifacts[k] = []
+    }
+    this.testArtifacts[k].push(testArtifact)
+  }
+
+  artifactSaver = {
+    png: (testArtifact) => this.saveTestArtifact('afterEach', new TestArtifact(testArtifact))
+  }
+
   async aborter(ndx: number) {
     this.abort = true;
     return Promise.all([
@@ -116,11 +137,11 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
       ...this.thens.map((t, ndx) => new Promise((res) => res(t.aborter()))),
     ])
       .then(async () => {
-        return await this.afterEach(this.store, ndx)
+        return await this.afterEach(this.store, ndx, this.artifactSaver)
       })
   }
 
-  async afterEach(store: IStore, ndx: number): Promise<unknown> {
+  async afterEach(store: IStore, ndx: number, cb): Promise<unknown> {
     return;
   }
 
@@ -144,7 +165,7 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
       this.error = e;
       throw e;
     } finally {
-      await this.afterEach(this.store, index);
+      await this.afterEach(this.store, index, this.artifactSaver);
     }
     return this.store;
   }
@@ -261,7 +282,7 @@ export abstract class BaseCheck<ISubject, IStore, ISelection, IThenShape> {
     testResourceConfiguration?
   ): Promise<IStore>;
 
-  async afterEach(subject: IStore, ndx: number): Promise<unknown> {
+  async afterEach(store: IStore, ndx: number, cb?): Promise<unknown> {
     return;
   }
 

@@ -3,6 +3,8 @@ import { assert } from "chai";
 import { features } from "../testerantoFeatures.test";
 import { EsbuildPuppeteerTesteranto } from "./esbuild-puppeteer.testeranto.test";
 
+import { ClassicalComponent } from "./ClassicalComponent";
+
 const myFeature = features.hello;
 
 export const ClassicalComponentEsbuildPuppeteerTesteranto = EsbuildPuppeteerTesteranto<
@@ -121,6 +123,7 @@ export const ClassicalComponentEsbuildPuppeteerTesteranto = EsbuildPuppeteerTest
   },
 
   [
+
     "./tests/ClassicalReact/index.ts",
 
     (jsbundle: string): string => `
@@ -139,6 +142,7 @@ export const ClassicalComponentEsbuildPuppeteerTesteranto = EsbuildPuppeteerTest
 
     </html>
 `,
+    ClassicalComponent,
   ],
   __filename
 );
