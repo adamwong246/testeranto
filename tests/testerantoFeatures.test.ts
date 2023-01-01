@@ -13,11 +13,17 @@ export const features = {
 import { DirectedGraph } from 'graphology';
 import { hasCycle } from 'graphology-dag';
 
-
 const graph = new DirectedGraph();
 graph.mergeEdge(features.hello.name, features.aloha.name);
 graph.mergeEdge(features.hello.name, features.gutentag.name);
 graph.mergeEdge(features.gutentag.name, features.buenosDias.name);
+graph.mergeEdge(features.hola.name, features.gutentag.name);
+graph.mergeEdge(features.gutentag.name, features.bienVenidos.name);
+
+if (hasCycle(graph)) {
+  console.error("graph has cycles!")
+  process.exit(-1)
+}
 
 export default new TesterantoFeatures([
   features.hello,

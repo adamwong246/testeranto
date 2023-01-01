@@ -19,6 +19,7 @@ export abstract class BaseSuite<
   checks: BaseCheck<ISubject, IStore, ISelection, IThenShape>[];
   store: IStore;
   aborted: boolean;
+  fails: BaseGiven<ISubject, IStore, ISelection, IThenShape>[];
 
   constructor(
     name: string,
@@ -28,6 +29,7 @@ export abstract class BaseSuite<
     this.name = name;
     this.givens = givens;
     this.checks = checks;
+    this.fails = [];
   }
 
   async aborter() {
@@ -39,6 +41,7 @@ export abstract class BaseSuite<
     return {
       name: this.name,
       givens: this.givens.map((g) => g.toObj()),
+      fails: this.fails
     }
   }
 
@@ -59,7 +62,8 @@ export abstract class BaseSuite<
           this.store = await giver.give(subject, ndx, testResourceConfiguration, this.test);
         }
       } catch (e) {
-        console.error(e)
+        console.error(e);
+        this.fails.push(giver)
         return false
       }
     }

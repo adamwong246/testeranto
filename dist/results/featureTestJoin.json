@@ -1,24 +1,6 @@
 {
   "hello": [
     {
-      "testKey": "a http boringfeature",
-      "name": "Testing the Node server with fetch",
-      "whens": [],
-      "thens": [
-        "TheStatusIs: some great status"
-      ]
-    },
-    {
-      "testKey": "a http feature",
-      "name": "Testing the Node server with fetch",
-      "whens": [
-        "PostToStatus: hello"
-      ],
-      "thens": [
-        "TheStatusIs: hello"
-      ]
-    },
-    {
       "testKey": "test 1",
       "name": "Testing the Rectangle class",
       "whens": [
@@ -66,16 +48,6 @@
       "whens": [],
       "thens": [
         "TheEmailIs: "
-      ]
-    },
-    {
-      "testKey": "yes more features plz",
-      "name": "Testing the Redux store",
-      "whens": [
-        "TheEmailIsSetTo: hey there"
-      ],
-      "thens": [
-        "TheEmailIs: hey there"
       ]
     },
     {
@@ -128,13 +100,13 @@
         "getHeight: 3",
         "getWidth: 4",
         "area: 12",
-        "circumference: 142"
+        "circumference: 144"
       ],
       "errors": {
         "generatedMessage": true,
         "code": "ERR_ASSERTION",
         "actual": 14,
-        "expected": 142,
+        "expected": 144,
         "operator": "=="
       }
     }
@@ -151,13 +123,13 @@
         "getHeight: 3",
         "getWidth: 4",
         "area: 12",
-        "circumference: 142"
+        "circumference: 144"
       ],
       "errors": {
         "generatedMessage": true,
         "code": "ERR_ASSERTION",
         "actual": 14,
-        "expected": 142,
+        "expected": 144,
         "operator": "=="
       }
     },
@@ -167,16 +139,6 @@
       "whens": [],
       "thens": [
         "TheEmailIs: "
-      ]
-    },
-    {
-      "testKey": "yes more features plz",
-      "name": "Testing the Redux store",
-      "whens": [
-        "TheEmailIsSetTo: hey there"
-      ],
-      "thens": [
-        "TheEmailIs: hey there"
       ]
     },
     {

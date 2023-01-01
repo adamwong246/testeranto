@@ -30,7 +30,9 @@
           "network": "my first graph",
           "neighbors": [
             "hello",
-            "buenos dias"
+            "hola",
+            "buenos dias",
+            "bien venidos"
           ]
         }
       ]
@@ -48,11 +50,25 @@
     },
     {
       "name": "hola",
-      "inNetworks": []
+      "inNetworks": [
+        {
+          "network": "my first graph",
+          "neighbors": [
+            "gutentag"
+          ]
+        }
+      ]
     },
     {
       "name": "bien venidos",
-      "inNetworks": []
+      "inNetworks": [
+        {
+          "network": "my first graph",
+          "neighbors": [
+            "gutentag"
+          ]
+        }
+      ]
     }
   ],
   "networks": [
@@ -77,23 +93,39 @@
           },
           {
             "key": "buenos dias"
+          },
+          {
+            "key": "hola"
+          },
+          {
+            "key": "bien venidos"
           }
         ],
         "edges": [
           {
-            "key": "geid_118_0",
+            "key": "geid_117_0",
             "source": "hello",
             "target": "aloha"
           },
           {
-            "key": "geid_118_1",
+            "key": "geid_117_1",
             "source": "hello",
             "target": "gutentag"
           },
           {
-            "key": "geid_118_2",
+            "key": "geid_117_2",
             "source": "gutentag",
             "target": "buenos dias"
+          },
+          {
+            "key": "geid_117_3",
+            "source": "hola",
+            "target": "gutentag"
+          },
+          {
+            "key": "geid_117_4",
+            "source": "gutentag",
+            "target": "bien venidos"
           }
         ]
       }

@@ -9,9 +9,6 @@ import Row from 'react-bootstrap/Row';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-// const testerantoConfig = require("../testeranto.config");
-
 export function Report() {
 
   const [data, setData] = useState<{
@@ -118,26 +115,21 @@ export function Report() {
                   <Nav variant="pills" className="flex-column">
                     {data.tests.map((suite, ndx) => <Nav.Item key={ndx}>
                       <Nav.Link eventKey={`suite-${ndx}`}>
-                        {suite.name}
+                        {(suite.fails.length > 0 ? `❌ * ${suite.fails.length.toString()}` : `✅ * ${suite.givens.length.toString()}`)} - {suite.name}
                       </Nav.Link>
                     </Nav.Item>)}
                   </Nav>
                 </Col>
                 <Col sm={9}>
                   <Tab.Content>
-
-                    {/* ////////////////////////// */}
-
                     {data.tests.map((suite, ndx) => <Tab.Pane eventKey={`suite-${ndx}`} key={ndx}>
-                      {/* <pre> <code>{JSON.stringify(suite, null, 2)} </code></pre> */}
-
                       <Tab.Container id="left-tabs-example2" defaultActiveKey={`given-0`}>
                         <Row>
                           <Col sm={3}>
                             <Nav variant="pills" className="flex-column">
                               {suite.givens.map((g, ndx2) => <Nav.Item key={ndx2}>
                                 <Nav.Link eventKey={`given-${ndx2}`}>
-                                  {g.name}
+                                  {(g.errors ? `❌` : `✅`)} - {g.name}
                                 </Nav.Link>
                               </Nav.Item>)}
                             </Nav>
@@ -148,32 +140,25 @@ export function Report() {
                                 <p>when</p>
                                 <ul>
                                   {g.whens.map((w, ndx3) => <li key={ndx3}>
-                                    <p>{w.name}</p>
+                                    {/* <p>{w.name}</p> */}
+                                    {(w.error === true ? `❌` : `✅`)} - {w.name}
                                   </li>)}
                                 </ul>
                                 <p>then</p>
                                 <ul>
                                   {g.thens.map((t, ndx3) => <li key={ndx3}>
-                                    <p>{t.name}</p>
+                                    <p>
+                                      {(t.error === true ? `❌` : `✅`)} - {t.name}
+                                    </p>
                                   </li>)}
                                 </ul>
-
                                 <pre><code>{JSON.stringify(g.errors, null, 2)}</code></pre>
-                                <p>features</p>
-                                <ul>
-                                  {/* {g.features.map((f, ndx3) => <li key={ndx3}>{f.name}</li>)} */}
-                                </ul>
                               </Tab.Pane>)}
-
                             </Tab.Content>
                           </Col>
                         </Row>
                       </Tab.Container>
-
                     </Tab.Pane>)}
-
-                    {/* ////////////////////////// */}
-
                   </Tab.Content>
                 </Col>
               </Row>
@@ -188,32 +173,26 @@ export function Report() {
                   <Nav variant="pills" className="flex-column">
                     {Object.keys(data.featureTests).map((ftKey, ndx) => <Nav.Item key={ndx}>
                       <Nav.Link eventKey={`featureTests-${ndx}`}>
-                        {ftKey}
+                        {Object.values(data.featureTests[ftKey]).reduce((testMemo, test) => test.errors) ? `❌` : `✅`} {ftKey}
                       </Nav.Link>
                     </Nav.Item>)}
                   </Nav>
                 </Col>
                 <Col sm={9}>
                   <Tab.Content>
-
-                    {/* ////////////////////////// */}
-
                     {Object.keys(data.featureTests).map((ftKey, ndx) => <Tab.Pane eventKey={`featureTests-${ndx}`} key={ndx}>
-
-
                       <Tab.Container id="left-tabs-example8" defaultActiveKey={`ft-suite-0`}>
                         <Row>
-                          <Col sm={3}>
+                          <Col sm={6}>
                             <Nav variant="pills" className="flex-column">
-                              {/* <pre> <code>{JSON.stringify(data.featureTests[ftKey], null, 2)} </code></pre> */}
                               {data.featureTests[ftKey].map((s, ndx2) => <Nav.Item key={ndx2}>
                                 <Nav.Link eventKey={`ft-suite-${ndx2}`}>
-                                  {s.testKey}
+                                  {s.errors ? `❌` : `✅`} <strong>{s.testKey}</strong>  <em>{s.name}</em>
                                 </Nav.Link>
                               </Nav.Item>)}
                             </Nav>
                           </Col>
-                          <Col sm={9}>
+                          <Col sm={6}>
                             <Tab.Content>
                               {data.featureTests[ftKey].map((g, ndx2) => <Tab.Pane key={ndx2} eventKey={`ft-suite-${ndx2}`} >
 
@@ -231,6 +210,8 @@ export function Report() {
                                     <p>{t}</p>
                                   </li>)}
                                 </ul>
+
+                                <pre><code>{JSON.stringify(g.errors, null, 2)}</code></pre>
 
                               </Tab.Pane>)}
 
@@ -263,33 +244,8 @@ export function Report() {
                 </Col>
                 <Col sm={9}>
                   <Tab.Content>
-                    {data.summaries.map((summary, ndx2) => <Tab.Pane key={ndx2} eventKey={`summary-${ndx2}`} >
-                      <pre><code>{JSON.stringify(summary, null, 2)}</code></pre>
-
-                      {/* <Tab.Container id="left-tabs-example4" defaultActiveKey={`summarySteps-0`}>
-                        <Row>
-                          <Col sm={3}>
-                            <Nav variant="pills" className="flex-column">
-
-                              {Object.values(summary.report).map((summaryStep, ndx3) => <Nav.Item key={ndx3}>
-                                <Nav.Link eventKey={`summarySteps-${ndx3}`}>
-                                  <p>{summaryStep.suite.name}</p>
-                                </Nav.Link>
-                              </Nav.Item>)}
-                            </Nav>
-                          </Col>
-                          <Col sm={9}>
-                            <Tab.Content>
-
-                              {Object.values(summary.report).map((summaryStep, ndx3) => <Tab.Pane key={ndx3} eventKey={`summarySteps-${ndx3}`} >
-                                <pre>{JSON.stringify(summaryStep)}</pre>
-                              </Tab.Pane>)}
-                            </Tab.Content>
-                          </Col>
-                        </Row>
-                      </Tab.Container> */}
-
-
+                    {Object.keys(data.summaries).map((summaryKey, ndx2) => <Tab.Pane key={ndx2} eventKey={`summary-${ndx2}`} >
+                      <pre><code>{JSON.stringify(data.summaries[summaryKey].dagReduction, null, 2)}</code></pre>
                     </Tab.Pane>)}
                   </Tab.Content>
                 </Col>

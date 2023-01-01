@@ -6,7 +6,7 @@ import {
 
 import Rectangle from "./Rectangle";
 
-import {features} from "../testerantoFeatures.test";
+import { features } from "../testerantoFeatures.test";
 
 type WhenShape = any;
 type ThenShape = any;
@@ -102,7 +102,7 @@ export const RectangleTesteranto =
                 Then.getHeight(3),
                 Then.getWidth(4),
                 Then.area(12),
-                Then.circumference(142),
+                Then.circumference(144),
               ]
             ),
           ],
@@ -146,7 +146,7 @@ export const RectangleTesteranto =
           (rectangle.height = height),
         WidthIsPubliclySetTo: (width) => (rectangle) =>
           (rectangle.width = width),
-        setWidth: (width) => (rectangle) => 
+        setWidth: (width) => (rectangle) =>
           rectangle.setWidth(width),
         setHeight: (height) => (rectangle) =>
           rectangle.setHeight(height),
@@ -186,7 +186,7 @@ export const RectangleTesteranto =
       andWhen: async function (renderer, actioner: any, testResource: never) {
         actioner()(renderer)
         return renderer;
-      }, 
+      },
     },
     __filename
   )
