@@ -3,59 +3,9 @@
     "dagReduction": {
       "name": "hello",
       "report": {
-        "test 1": {
-          "name": "Testing the Rectangle class",
-          "fails": [
-            {
-              "name": "test 5",
-              "features": [
-                {
-                  "name": "gutentag"
-                },
-                {
-                  "name": "aloha"
-                }
-              ],
-              "whens": [
-                {
-                  "name": "setHeight: 3"
-                },
-                {
-                  "name": "setWidth: 4"
-                }
-              ],
-              "thens": [
-                {
-                  "name": "getHeight: 3"
-                },
-                {
-                  "name": "getWidth: 4"
-                },
-                {
-                  "name": "area: 12"
-                },
-                {
-                  "name": "circumference: 144",
-                  "error": true
-                }
-              ],
-              "initialValues": {
-                "height": 1,
-                "width": 1
-              },
-              "store": {
-                "width": 4,
-                "height": 3
-              },
-              "error": {
-                "generatedMessage": true,
-                "code": "ERR_ASSERTION",
-                "actual": 14,
-                "expected": 144,
-                "operator": "=="
-              }
-            }
-          ]
+        "Set the email and check the email": {
+          "name": "Testing the LoginPage as react",
+          "fails": []
         },
         "BDD gherkin style": {
           "name": "Testing the Redux store",
@@ -77,62 +27,28 @@
           "name": "Testing the Redux store",
           "fails": []
         },
+        "test 1": {
+          "name": "Testing the Rectangle class",
+          "fails": []
+        },
+        "a http boringfeature": {
+          "name": "Testing the Node server with fetch",
+          "fails": []
+        },
+        "a http feature": {
+          "name": "Testing the Node server with fetch",
+          "fails": []
+        },
+        "default": {
+          "name": "a classical react component, bundled with esbuild and tested with puppeteer",
+          "fails": []
+        },
         "results": {
           "gutentag": {
             "results": {
               "test 5": {
                 "name": "Testing the Rectangle class",
-                "fails": [
-                  {
-                    "name": "test 5",
-                    "features": [
-                      {
-                        "name": "gutentag"
-                      },
-                      {
-                        "name": "aloha"
-                      }
-                    ],
-                    "whens": [
-                      {
-                        "name": "setHeight: 3"
-                      },
-                      {
-                        "name": "setWidth: 4"
-                      }
-                    ],
-                    "thens": [
-                      {
-                        "name": "getHeight: 3"
-                      },
-                      {
-                        "name": "getWidth: 4"
-                      },
-                      {
-                        "name": "area: 12"
-                      },
-                      {
-                        "name": "circumference: 144",
-                        "error": true
-                      }
-                    ],
-                    "initialValues": {
-                      "height": 1,
-                      "width": 1
-                    },
-                    "store": {
-                      "width": 4,
-                      "height": 3
-                    },
-                    "error": {
-                      "generatedMessage": true,
-                      "code": "ERR_ASSERTION",
-                      "actual": 14,
-                      "expected": 144,
-                      "operator": "=="
-                    }
-                  }
-                ]
+                "fails": []
               },
               "results": {
                 "bien venidos": {
@@ -140,57 +56,7 @@
                   "report": {
                     "test 5": {
                       "name": "Testing the Rectangle class",
-                      "fails": [
-                        {
-                          "name": "test 5",
-                          "features": [
-                            {
-                              "name": "gutentag"
-                            },
-                            {
-                              "name": "aloha"
-                            }
-                          ],
-                          "whens": [
-                            {
-                              "name": "setHeight: 3"
-                            },
-                            {
-                              "name": "setWidth: 4"
-                            }
-                          ],
-                          "thens": [
-                            {
-                              "name": "getHeight: 3"
-                            },
-                            {
-                              "name": "getWidth: 4"
-                            },
-                            {
-                              "name": "area: 12"
-                            },
-                            {
-                              "name": "circumference: 144",
-                              "error": true
-                            }
-                          ],
-                          "initialValues": {
-                            "height": 1,
-                            "width": 1
-                          },
-                          "store": {
-                            "width": 4,
-                            "height": 3
-                          },
-                          "error": {
-                            "generatedMessage": true,
-                            "code": "ERR_ASSERTION",
-                            "actual": 14,
-                            "expected": 144,
-                            "operator": "=="
-                          }
-                        }
-                      ]
+                      "fails": []
                     }
                   }
                 },
@@ -199,57 +65,7 @@
                   "report": {
                     "test 5": {
                       "name": "Testing the Rectangle class",
-                      "fails": [
-                        {
-                          "name": "test 5",
-                          "features": [
-                            {
-                              "name": "gutentag"
-                            },
-                            {
-                              "name": "aloha"
-                            }
-                          ],
-                          "whens": [
-                            {
-                              "name": "setHeight: 3"
-                            },
-                            {
-                              "name": "setWidth: 4"
-                            }
-                          ],
-                          "thens": [
-                            {
-                              "name": "getHeight: 3"
-                            },
-                            {
-                              "name": "getWidth: 4"
-                            },
-                            {
-                              "name": "area: 12"
-                            },
-                            {
-                              "name": "circumference: 144",
-                              "error": true
-                            }
-                          ],
-                          "initialValues": {
-                            "height": 1,
-                            "width": 1
-                          },
-                          "store": {
-                            "width": 4,
-                            "height": 3
-                          },
-                          "error": {
-                            "generatedMessage": true,
-                            "code": "ERR_ASSERTION",
-                            "actual": 14,
-                            "expected": 144,
-                            "operator": "=="
-                          }
-                        }
-                      ]
+                      "fails": []
                     },
                     "results": {
                       "bien venidos": {
@@ -257,57 +73,7 @@
                         "report": {
                           "test 5": {
                             "name": "Testing the Rectangle class",
-                            "fails": [
-                              {
-                                "name": "test 5",
-                                "features": [
-                                  {
-                                    "name": "gutentag"
-                                  },
-                                  {
-                                    "name": "aloha"
-                                  }
-                                ],
-                                "whens": [
-                                  {
-                                    "name": "setHeight: 3"
-                                  },
-                                  {
-                                    "name": "setWidth: 4"
-                                  }
-                                ],
-                                "thens": [
-                                  {
-                                    "name": "getHeight: 3"
-                                  },
-                                  {
-                                    "name": "getWidth: 4"
-                                  },
-                                  {
-                                    "name": "area: 12"
-                                  },
-                                  {
-                                    "name": "circumference: 144",
-                                    "error": true
-                                  }
-                                ],
-                                "initialValues": {
-                                  "height": 1,
-                                  "width": 1
-                                },
-                                "store": {
-                                  "width": 4,
-                                  "height": 3
-                                },
-                                "error": {
-                                  "generatedMessage": true,
-                                  "code": "ERR_ASSERTION",
-                                  "actual": 14,
-                                  "expected": 144,
-                                  "operator": "=="
-                                }
-                              }
-                            ]
+                            "fails": []
                           }
                         }
                       }
@@ -317,59 +83,9 @@
               }
             },
             "report": {
-              "test 1": {
-                "name": "Testing the Rectangle class",
-                "fails": [
-                  {
-                    "name": "test 5",
-                    "features": [
-                      {
-                        "name": "gutentag"
-                      },
-                      {
-                        "name": "aloha"
-                      }
-                    ],
-                    "whens": [
-                      {
-                        "name": "setHeight: 3"
-                      },
-                      {
-                        "name": "setWidth: 4"
-                      }
-                    ],
-                    "thens": [
-                      {
-                        "name": "getHeight: 3"
-                      },
-                      {
-                        "name": "getWidth: 4"
-                      },
-                      {
-                        "name": "area: 12"
-                      },
-                      {
-                        "name": "circumference: 144",
-                        "error": true
-                      }
-                    ],
-                    "initialValues": {
-                      "height": 1,
-                      "width": 1
-                    },
-                    "store": {
-                      "width": 4,
-                      "height": 3
-                    },
-                    "error": {
-                      "generatedMessage": true,
-                      "code": "ERR_ASSERTION",
-                      "actual": 14,
-                      "expected": 144,
-                      "operator": "=="
-                    }
-                  }
-                ]
+              "Set the email and check the email": {
+                "name": "Testing the LoginPage as react",
+                "fails": []
               },
               "BDD gherkin style": {
                 "name": "Testing the Redux store",
@@ -389,66 +105,28 @@
               },
               "yes more tests plz": {
                 "name": "Testing the Redux store",
+                "fails": []
+              },
+              "test 1": {
+                "name": "Testing the Rectangle class",
+                "fails": []
+              },
+              "a http boringfeature": {
+                "name": "Testing the Node server with fetch",
+                "fails": []
+              },
+              "a http feature": {
+                "name": "Testing the Node server with fetch",
+                "fails": []
+              },
+              "default": {
+                "name": "a classical react component, bundled with esbuild and tested with puppeteer",
                 "fails": []
               }
             }
           },
           "aloha": {
             "results": {
-              "test 5": {
-                "name": "Testing the Rectangle class",
-                "fails": [
-                  {
-                    "name": "test 5",
-                    "features": [
-                      {
-                        "name": "gutentag"
-                      },
-                      {
-                        "name": "aloha"
-                      }
-                    ],
-                    "whens": [
-                      {
-                        "name": "setHeight: 3"
-                      },
-                      {
-                        "name": "setWidth: 4"
-                      }
-                    ],
-                    "thens": [
-                      {
-                        "name": "getHeight: 3"
-                      },
-                      {
-                        "name": "getWidth: 4"
-                      },
-                      {
-                        "name": "area: 12"
-                      },
-                      {
-                        "name": "circumference: 144",
-                        "error": true
-                      }
-                    ],
-                    "initialValues": {
-                      "height": 1,
-                      "width": 1
-                    },
-                    "store": {
-                      "width": 4,
-                      "height": 3
-                    },
-                    "error": {
-                      "generatedMessage": true,
-                      "code": "ERR_ASSERTION",
-                      "actual": 14,
-                      "expected": 144,
-                      "operator": "=="
-                    }
-                  }
-                ]
-              },
               "OMG a feature!": {
                 "name": "Testing the Redux store",
                 "fails": []
@@ -456,62 +134,16 @@
               "yes more tests plz": {
                 "name": "Testing the Redux store",
                 "fails": []
+              },
+              "test 5": {
+                "name": "Testing the Rectangle class",
+                "fails": []
               }
             },
             "report": {
-              "test 1": {
-                "name": "Testing the Rectangle class",
-                "fails": [
-                  {
-                    "name": "test 5",
-                    "features": [
-                      {
-                        "name": "gutentag"
-                      },
-                      {
-                        "name": "aloha"
-                      }
-                    ],
-                    "whens": [
-                      {
-                        "name": "setHeight: 3"
-                      },
-                      {
-                        "name": "setWidth: 4"
-                      }
-                    ],
-                    "thens": [
-                      {
-                        "name": "getHeight: 3"
-                      },
-                      {
-                        "name": "getWidth: 4"
-                      },
-                      {
-                        "name": "area: 12"
-                      },
-                      {
-                        "name": "circumference: 144",
-                        "error": true
-                      }
-                    ],
-                    "initialValues": {
-                      "height": 1,
-                      "width": 1
-                    },
-                    "store": {
-                      "width": 4,
-                      "height": 3
-                    },
-                    "error": {
-                      "generatedMessage": true,
-                      "code": "ERR_ASSERTION",
-                      "actual": 14,
-                      "expected": 144,
-                      "operator": "=="
-                    }
-                  }
-                ]
+              "Set the email and check the email": {
+                "name": "Testing the LoginPage as react",
+                "fails": []
               },
               "BDD gherkin style": {
                 "name": "Testing the Redux store",
@@ -531,6 +163,22 @@
               },
               "yes more tests plz": {
                 "name": "Testing the Redux store",
+                "fails": []
+              },
+              "test 1": {
+                "name": "Testing the Rectangle class",
+                "fails": []
+              },
+              "a http boringfeature": {
+                "name": "Testing the Node server with fetch",
+                "fails": []
+              },
+              "a http feature": {
+                "name": "Testing the Node server with fetch",
+                "fails": []
+              },
+              "default": {
+                "name": "a classical react component, bundled with esbuild and tested with puppeteer",
                 "fails": []
               },
               "results": {
@@ -538,57 +186,7 @@
                   "results": {
                     "test 5": {
                       "name": "Testing the Rectangle class",
-                      "fails": [
-                        {
-                          "name": "test 5",
-                          "features": [
-                            {
-                              "name": "gutentag"
-                            },
-                            {
-                              "name": "aloha"
-                            }
-                          ],
-                          "whens": [
-                            {
-                              "name": "setHeight: 3"
-                            },
-                            {
-                              "name": "setWidth: 4"
-                            }
-                          ],
-                          "thens": [
-                            {
-                              "name": "getHeight: 3"
-                            },
-                            {
-                              "name": "getWidth: 4"
-                            },
-                            {
-                              "name": "area: 12"
-                            },
-                            {
-                              "name": "circumference: 144",
-                              "error": true
-                            }
-                          ],
-                          "initialValues": {
-                            "height": 1,
-                            "width": 1
-                          },
-                          "store": {
-                            "width": 4,
-                            "height": 3
-                          },
-                          "error": {
-                            "generatedMessage": true,
-                            "code": "ERR_ASSERTION",
-                            "actual": 14,
-                            "expected": 144,
-                            "operator": "=="
-                          }
-                        }
-                      ]
+                      "fails": []
                     },
                     "results": {
                       "bien venidos": {
@@ -596,57 +194,7 @@
                         "report": {
                           "test 5": {
                             "name": "Testing the Rectangle class",
-                            "fails": [
-                              {
-                                "name": "test 5",
-                                "features": [
-                                  {
-                                    "name": "gutentag"
-                                  },
-                                  {
-                                    "name": "aloha"
-                                  }
-                                ],
-                                "whens": [
-                                  {
-                                    "name": "setHeight: 3"
-                                  },
-                                  {
-                                    "name": "setWidth: 4"
-                                  }
-                                ],
-                                "thens": [
-                                  {
-                                    "name": "getHeight: 3"
-                                  },
-                                  {
-                                    "name": "getWidth: 4"
-                                  },
-                                  {
-                                    "name": "area: 12"
-                                  },
-                                  {
-                                    "name": "circumference: 144",
-                                    "error": true
-                                  }
-                                ],
-                                "initialValues": {
-                                  "height": 1,
-                                  "width": 1
-                                },
-                                "store": {
-                                  "width": 4,
-                                  "height": 3
-                                },
-                                "error": {
-                                  "generatedMessage": true,
-                                  "code": "ERR_ASSERTION",
-                                  "actual": 14,
-                                  "expected": 144,
-                                  "operator": "=="
-                                }
-                              }
-                            ]
+                            "fails": []
                           }
                         }
                       },
@@ -655,57 +203,7 @@
                         "report": {
                           "test 5": {
                             "name": "Testing the Rectangle class",
-                            "fails": [
-                              {
-                                "name": "test 5",
-                                "features": [
-                                  {
-                                    "name": "gutentag"
-                                  },
-                                  {
-                                    "name": "aloha"
-                                  }
-                                ],
-                                "whens": [
-                                  {
-                                    "name": "setHeight: 3"
-                                  },
-                                  {
-                                    "name": "setWidth: 4"
-                                  }
-                                ],
-                                "thens": [
-                                  {
-                                    "name": "getHeight: 3"
-                                  },
-                                  {
-                                    "name": "getWidth: 4"
-                                  },
-                                  {
-                                    "name": "area: 12"
-                                  },
-                                  {
-                                    "name": "circumference: 144",
-                                    "error": true
-                                  }
-                                ],
-                                "initialValues": {
-                                  "height": 1,
-                                  "width": 1
-                                },
-                                "store": {
-                                  "width": 4,
-                                  "height": 3
-                                },
-                                "error": {
-                                  "generatedMessage": true,
-                                  "code": "ERR_ASSERTION",
-                                  "actual": 14,
-                                  "expected": 144,
-                                  "operator": "=="
-                                }
-                              }
-                            ]
+                            "fails": []
                           },
                           "results": {
                             "bien venidos": {
@@ -713,57 +211,7 @@
                               "report": {
                                 "test 5": {
                                   "name": "Testing the Rectangle class",
-                                  "fails": [
-                                    {
-                                      "name": "test 5",
-                                      "features": [
-                                        {
-                                          "name": "gutentag"
-                                        },
-                                        {
-                                          "name": "aloha"
-                                        }
-                                      ],
-                                      "whens": [
-                                        {
-                                          "name": "setHeight: 3"
-                                        },
-                                        {
-                                          "name": "setWidth: 4"
-                                        }
-                                      ],
-                                      "thens": [
-                                        {
-                                          "name": "getHeight: 3"
-                                        },
-                                        {
-                                          "name": "getWidth: 4"
-                                        },
-                                        {
-                                          "name": "area: 12"
-                                        },
-                                        {
-                                          "name": "circumference: 144",
-                                          "error": true
-                                        }
-                                      ],
-                                      "initialValues": {
-                                        "height": 1,
-                                        "width": 1
-                                      },
-                                      "store": {
-                                        "width": 4,
-                                        "height": 3
-                                      },
-                                      "error": {
-                                        "generatedMessage": true,
-                                        "code": "ERR_ASSERTION",
-                                        "actual": 14,
-                                        "expected": 144,
-                                        "operator": "=="
-                                      }
-                                    }
-                                  ]
+                                  "fails": []
                                 }
                               }
                             }
@@ -773,59 +221,9 @@
                     }
                   },
                   "report": {
-                    "test 1": {
-                      "name": "Testing the Rectangle class",
-                      "fails": [
-                        {
-                          "name": "test 5",
-                          "features": [
-                            {
-                              "name": "gutentag"
-                            },
-                            {
-                              "name": "aloha"
-                            }
-                          ],
-                          "whens": [
-                            {
-                              "name": "setHeight: 3"
-                            },
-                            {
-                              "name": "setWidth: 4"
-                            }
-                          ],
-                          "thens": [
-                            {
-                              "name": "getHeight: 3"
-                            },
-                            {
-                              "name": "getWidth: 4"
-                            },
-                            {
-                              "name": "area: 12"
-                            },
-                            {
-                              "name": "circumference: 144",
-                              "error": true
-                            }
-                          ],
-                          "initialValues": {
-                            "height": 1,
-                            "width": 1
-                          },
-                          "store": {
-                            "width": 4,
-                            "height": 3
-                          },
-                          "error": {
-                            "generatedMessage": true,
-                            "code": "ERR_ASSERTION",
-                            "actual": 14,
-                            "expected": 144,
-                            "operator": "=="
-                          }
-                        }
-                      ]
+                    "Set the email and check the email": {
+                      "name": "Testing the LoginPage as react",
+                      "fails": []
                     },
                     "BDD gherkin style": {
                       "name": "Testing the Redux store",
@@ -845,6 +243,22 @@
                     },
                     "yes more tests plz": {
                       "name": "Testing the Redux store",
+                      "fails": []
+                    },
+                    "test 1": {
+                      "name": "Testing the Rectangle class",
+                      "fails": []
+                    },
+                    "a http boringfeature": {
+                      "name": "Testing the Node server with fetch",
+                      "fails": []
+                    },
+                    "a http feature": {
+                      "name": "Testing the Node server with fetch",
+                      "fails": []
+                    },
+                    "default": {
+                      "name": "a classical react component, bundled with esbuild and tested with puppeteer",
                       "fails": []
                     }
                   }

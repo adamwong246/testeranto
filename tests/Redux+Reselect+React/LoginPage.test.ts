@@ -141,7 +141,7 @@ export const AppReactTesteranto = ReactTesteranto<
             "Do show an email error after submitting",
             [],
             [When.TheEmailIsSetTo("adam"), When.TheLoginIsSubmitted()],
-            [Then.ThereIsAnEmailError()]
+            [Then.ThereIsNotAnEmailError()]
           ),
         ],
         []

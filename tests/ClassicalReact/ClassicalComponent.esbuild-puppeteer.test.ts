@@ -49,7 +49,7 @@ export const ClassicalComponentEsbuildPuppeteerTesteranto = EsbuildPuppeteerTest
               JSON.stringify(expectation)
             )
           },
-            
+
 
       TheStatusIs:
         (expectation) =>
@@ -139,5 +139,6 @@ export const ClassicalComponentEsbuildPuppeteerTesteranto = EsbuildPuppeteerTest
 
     </html>
 `,
-  ]
+  ],
+  __filename
 );

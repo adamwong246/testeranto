@@ -6,7 +6,7 @@ import { topologicalSort } from 'graphology-dag/topological-sort';
 import { TesterantoFeatures } from './Features';
 import { ITestJob, IT_FeatureNetwork } from './testShapes';
 
-const TIMEOUT = 2000;
+const TIMEOUT = 500;
 const OPEN_PORT = '';
 const testOutPath = "./dist/results/";
 const featureOutPath = "./dist/";

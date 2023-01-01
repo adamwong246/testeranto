@@ -7,6 +7,8 @@ import { BaseGiven, BaseCheck, BaseSuite, BaseFeature, BaseWhen, BaseThen } from
 import { TesterantoBasic } from "./level0";
 import { ITTestShape, ITestImplementation, ITestJob } from "./testShapes";
 
+import testerantoConfig from "../testeranto.config";
+
 export abstract class Testeranto<
   ITestShape extends ITTestShape,
   IInitialState,
@@ -181,11 +183,15 @@ export abstract class Testeranto<
             name: 'import-path',
             setup(build) {
               build.onResolve({ filter: /^\.{1,2}\// }, args => {
-                let x = args.resolveDir + "/" + args.path;
-                if (x.split(".ts").length > 1) {
-                  x = x + ".ts"
+                let path = args.resolveDir + "/" + args.path;
+                if (!fs.existsSync(path)) {
+                  if (fs.existsSync(path + ".tsx")) {
+                    path = path + ".tsx"
+                  } else if (fs.existsSync(path + ".ts")) {
+                    path = path + ".ts"
+                  }
                 }
-                return { path: x, external: true }
+                return { path, external: true }
               })
             },
           }
@@ -198,7 +204,9 @@ export abstract class Testeranto<
             write: false,
             packages: 'external',
             plugins: [importPathPlugin],
-            external: ['./src/*', './tests/testerantoFeatures.test.ts'],
+            external: ['./src/*',
+              testerantoConfig.features
+            ],
           }).then((res) => {
             const text = res.outputFiles[0].text;
             const p = "./dist" + (entryPath.split(process.cwd()).pop())?.split(".ts")[0] + '.js'

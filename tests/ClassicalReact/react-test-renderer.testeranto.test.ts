@@ -23,7 +23,8 @@ export const ReactTestRendererTesteranto = <
     ITestShape
   >,
   testSpecifications: ITestSpecification<ITestShape>,
-  testInput: Input
+  testInput: Input,
+  entryPath: string
 ) =>
   TesterantoFactory<
     ITestShape,
@@ -54,5 +55,6 @@ export const ReactTestRendererTesteranto = <
         await act(() => actioner()(renderer));
         return renderer
       }
-    }
+    },
+    entryPath
   )

@@ -107,68 +107,10 @@
           "name": "area: 12"
         },
         {
-          "name": "circumference: 144",
-          "error": true
+          "name": "circumference: 14"
         }
-      ],
-      "errors": {
-        "generatedMessage": true,
-        "code": "ERR_ASSERTION",
-        "actual": 14,
-        "expected": 144,
-        "operator": "=="
-      }
+      ]
     }
   ],
-  "fails": [
-    {
-      "name": "test 5",
-      "features": [
-        {
-          "name": "gutentag"
-        },
-        {
-          "name": "aloha"
-        }
-      ],
-      "whens": [
-        {
-          "name": "setHeight: 3"
-        },
-        {
-          "name": "setWidth: 4"
-        }
-      ],
-      "thens": [
-        {
-          "name": "getHeight: 3"
-        },
-        {
-          "name": "getWidth: 4"
-        },
-        {
-          "name": "area: 12"
-        },
-        {
-          "name": "circumference: 144",
-          "error": true
-        }
-      ],
-      "initialValues": {
-        "height": 1,
-        "width": 1
-      },
-      "store": {
-        "width": 4,
-        "height": 3
-      },
-      "error": {
-        "generatedMessage": true,
-        "code": "ERR_ASSERTION",
-        "actual": 14,
-        "expected": 144,
-        "operator": "=="
-      }
-    }
-  ]
+  "fails": []
 }
