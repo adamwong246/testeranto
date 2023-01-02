@@ -1,35 +1,58 @@
 // tests/testerantoFeatures.test.ts
 import { BaseFeature } from "/Users/adam/Code/testeranto.ts/tests/../src/BaseClasses.ts";
-import { TesterantoFeatures } from "/Users/adam/Code/testeranto.ts/tests/../src/Features.ts";
-import { DirectedGraph } from "graphology";
-import { hasCycle } from "graphology-dag";
-var features = {
-  hello: new BaseFeature("hello"),
-  aloha: new BaseFeature("aloha"),
-  gutentag: new BaseFeature("gutentag"),
-  buenosDias: new BaseFeature("buenos dias"),
-  hola: new BaseFeature("hola"),
-  bienVenidos: new BaseFeature("bien venidos")
+import { TesterantoFeatures, TesterantoGraphDirected, TesterantoGraphDirectedAcylic, TesterantoGraphUndirected } from "/Users/adam/Code/testeranto.ts/tests/../src/Features.ts";
+var MyFeature = class extends BaseFeature {
+  constructor(name, due) {
+    super(name);
+    this.due = due;
+  }
 };
-var graph = new DirectedGraph();
-graph.mergeEdge(features.hello.name, features.aloha.name);
-graph.mergeEdge(features.hello.name, features.gutentag.name);
-graph.mergeEdge(features.gutentag.name, features.buenosDias.name);
-graph.mergeEdge(features.hola.name, features.gutentag.name);
-graph.mergeEdge(features.gutentag.name, features.bienVenidos.name);
-if (hasCycle(graph)) {
-  console.error("graph has cycles!");
-  process.exit(-1);
-}
-var testerantoFeatures_test_default = new TesterantoFeatures([
-  features.hello,
-  features.aloha,
-  features.gutentag,
-  features.buenosDias,
-  features.hola,
-  features.bienVenidos
-], [{ name: "my first graph", graph }], __filename);
+var features = {
+  root: new MyFeature("launch the rocket"),
+  buildSilo: new MyFeature("build the rocket silo", new Date("2023-05-02T02:36:34+0000")),
+  buildRocket: new MyFeature("build the rocket", new Date("2023-06-06T02:36:34+0000")),
+  buildSatellite: new MyFeature("build the rocket payload", new Date("2023-06-06T02:36:34+0000")),
+  hello: new MyFeature("hello"),
+  aloha: new MyFeature("aloha"),
+  gutentag: new MyFeature("gutentag"),
+  buenosDias: new MyFeature("buenos dias"),
+  hola: new MyFeature("hola"),
+  bienVenidos: new MyFeature("bien venidos")
+};
+var priorityGraph = new TesterantoGraphDirectedAcylic("Priority");
+priorityGraph.connect(features.root.name, features.buildSilo.name);
+priorityGraph.connect(features.buildSilo.name, features.buildRocket.name);
+priorityGraph.connect(features.buildRocket.name, features.buildSatellite.name, "idk");
+priorityGraph.connect(features.root.name, features.hello.name);
+priorityGraph.connect(features.hello.name, features.aloha.name);
+priorityGraph.connect(features.hello.name, features.gutentag.name);
+priorityGraph.connect(features.gutentag.name, features.buenosDias.name);
+priorityGraph.connect(features.hola.name, features.gutentag.name);
+priorityGraph.connect(features.gutentag.name, features.bienVenidos.name);
+var semantic = new TesterantoGraphDirected("Semantic");
+semantic.connect(features.hello.name, features.aloha.name, "superceedes");
+semantic.connect(features.gutentag.name, features.hola.name, "negates");
+var undirected = new TesterantoGraphUndirected("undirected");
+undirected.connect(features.gutentag.name, features.aloha.name, "related");
+undirected.connect(features.buildRocket.name, features.buildSatellite.name, "overlap");
+var testerantoFeatures_test_default = new TesterantoFeatures(
+  [
+    features.hello,
+    features.aloha,
+    features.gutentag,
+    features.buenosDias,
+    features.hola,
+    features.bienVenidos
+  ],
+  {
+    undirected: [undirected],
+    directed: [semantic],
+    dag: [priorityGraph]
+  },
+  __filename
+);
 export {
+  MyFeature,
   testerantoFeatures_test_default as default,
   features
 };

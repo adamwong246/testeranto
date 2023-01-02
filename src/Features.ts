@@ -1,4 +1,4 @@
-import { DirectedGraph } from 'graphology';
+import Graph, { DirectedGraph, UndirectedGraph } from 'graphology';
 import { createHash } from 'node:crypto'
 import esbuild from "esbuild";
 import fs from "fs";
@@ -6,16 +6,79 @@ import path from "path";
 
 import { BaseFeature } from "../src/BaseClasses";
 
+abstract class TesterantoGraph {
+  name: string;
+  graph: Graph;
+  constructor(name: string) {
+    this.name = name;
+  }
+}
+
+export class TesterantoGraphUndirected implements TesterantoGraph {
+  name: string;
+  graph: UndirectedGraph
+  constructor(name: string) {
+    this.name = name;
+    this.graph = new UndirectedGraph();
+  }
+  connect(a, b, relation?: string) {
+    this.graph.mergeEdge(a, b, { type: relation });
+  }
+}
+
+export class TesterantoGraphDirected implements TesterantoGraph {
+  name: string;
+  graph: DirectedGraph;
+  constructor(name: string) {
+    this.name = name;
+    this.graph = new UndirectedGraph();
+  }
+  connect(to, from, relation?: string) {
+    this.graph.mergeEdge(to, from, { type: relation });
+  }
+}
+
+export class TesterantoGraphDirectedAcylic implements TesterantoGraph {
+  name: string;
+  graph: DirectedGraph;
+  constructor(name: string) {
+    this.name = name;
+    this.graph = new UndirectedGraph();
+  }
+  connect(to, from, relation?: string) {
+    this.graph.mergeEdge(to, from, { type: relation });
+  }
+}
 
 export class TesterantoFeatures {
   features: any;
   entryPath: string
-  networks: { name: string, graph: DirectedGraph }[];
+  graphs: {
+    undirected: TesterantoGraphUndirected[],
+    directed: TesterantoGraphDirected[],
+    dag: TesterantoGraphDirectedAcylic[]
+  }
 
-  constructor(features, networks: { name: string, graph: DirectedGraph }[], entryPath: string) {
+  constructor(
+    features,
+    graphs: {
+      undirected: TesterantoGraphUndirected[],
+      directed: TesterantoGraphDirected[],
+      dag: TesterantoGraphDirectedAcylic[]
+    },
+    entryPath: string,
+  ) {
     this.features = features;
     this.entryPath = entryPath;
-    this.networks = networks;
+    this.graphs = graphs;
+  }
+
+  networks() {
+    return [
+      ...this.graphs.undirected.values(),
+      ...this.graphs.directed.values(),
+      ...this.graphs.dag.values()
+    ]
   }
 
   toObj() {
@@ -23,7 +86,7 @@ export class TesterantoFeatures {
       features: this.features.map((feature: BaseFeature) => {
         return {
           ...feature,
-          inNetworks: this.networks.filter((network) => {
+          inNetworks: this.networks().filter((network) => {
             return network.graph.hasNode(feature.name);
           }).map((network) => {
             return {
@@ -34,7 +97,7 @@ export class TesterantoFeatures {
           })
         }
       }),
-      networks: this.networks.map((network) => {
+      networks: this.networks().map((network) => {
         return {
           ...network
         }

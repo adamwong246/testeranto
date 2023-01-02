@@ -123,7 +123,7 @@ export class TesterantoScheduler {
   }
 
   private async setFeatures(testerantoFeatures: TesterantoFeatures) {
-    console.log("testerantoFeatures", testerantoFeatures.networks);
+    console.log("testerantoFeatures", testerantoFeatures.networks());
     this.testerantoFeatures = testerantoFeatures;
     await fs.promises.mkdir(featureOutPath, { recursive: true });
 
@@ -250,7 +250,7 @@ export class TesterantoScheduler {
   private regenerateReports() {
     fs.writeFile(
       `${reportOutPath}.json`,
-      JSON.stringify((this.testerantoFeatures.networks.map((network: IT_FeatureNetwork) => {
+      JSON.stringify((this.testerantoFeatures.networks().map((network: IT_FeatureNetwork) => {
         const graph = network.graph;
         const topoSorted = topologicalSort(graph).reverse();
 

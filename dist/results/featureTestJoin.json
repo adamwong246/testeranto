@@ -102,6 +102,24 @@
       "thens": [
         "TheStatusIs: hello"
       ]
+    },
+    {
+      "testKey": "this test will fail",
+      "name": "Testing the Rectangle class",
+      "whens": [
+        "setHeight: 33",
+        "setWidth: 34"
+      ],
+      "thens": [
+        "getHeight: 3"
+      ],
+      "errors": {
+        "generatedMessage": true,
+        "code": "ERR_ASSERTION",
+        "actual": 33,
+        "expected": 3,
+        "operator": "=="
+      }
     }
   ],
   "aloha": [

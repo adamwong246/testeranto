@@ -1,29 +1,50 @@
 import { BaseFeature } from "../src/BaseClasses";
-import { TesterantoFeatures } from "../src/Features";
+import { TesterantoFeatures, TesterantoGraphDirected, TesterantoGraphDirectedAcylic, TesterantoGraphUndirected } from "../src/Features";
+
+export class MyFeature extends BaseFeature {
+  due?: Date;
+
+  constructor(name: string, due?: Date) {
+    super(name);
+    this.due = due;
+
+  }
+}
 
 export const features = {
-  hello: new BaseFeature("hello"),
-  aloha: new BaseFeature("aloha"),
-  gutentag: new BaseFeature("gutentag"),
-  buenosDias: new BaseFeature("buenos dias"),
-  hola: new BaseFeature("hola"),
-  bienVenidos: new BaseFeature("bien venidos"),
-}
+  root: new MyFeature("launch the rocket"),
+  buildSilo: new MyFeature("build the rocket silo", new Date('2023-05-02T02:36:34+0000')),
+  buildRocket: new MyFeature("build the rocket", new Date('2023-06-06T02:36:34+0000')),
+  buildSatellite: new MyFeature("build the rocket payload", new Date('2023-06-06T02:36:34+0000')),
 
-import { DirectedGraph } from 'graphology';
-import { hasCycle } from 'graphology-dag';
+  hello: new MyFeature("hello"),
+  aloha: new MyFeature("aloha"),
+  gutentag: new MyFeature("gutentag"),
+  buenosDias: new MyFeature("buenos dias"),
+  hola: new MyFeature("hola"),
+  bienVenidos: new MyFeature("bien venidos"),
+};
 
-const graph = new DirectedGraph();
-graph.mergeEdge(features.hello.name, features.aloha.name);
-graph.mergeEdge(features.hello.name, features.gutentag.name);
-graph.mergeEdge(features.gutentag.name, features.buenosDias.name);
-graph.mergeEdge(features.hola.name, features.gutentag.name);
-graph.mergeEdge(features.gutentag.name, features.bienVenidos.name);
+const priorityGraph = new TesterantoGraphDirectedAcylic("Priority");
 
-if (hasCycle(graph)) {
-  console.error("graph has cycles!")
-  process.exit(-1)
-}
+priorityGraph.connect(features.root.name, features.buildSilo.name);
+priorityGraph.connect(features.buildSilo.name, features.buildRocket.name);
+priorityGraph.connect(features.buildRocket.name, features.buildSatellite.name, "idk");
+
+priorityGraph.connect(features.root.name, features.hello.name);
+priorityGraph.connect(features.hello.name, features.aloha.name);
+priorityGraph.connect(features.hello.name, features.gutentag.name);
+priorityGraph.connect(features.gutentag.name, features.buenosDias.name);
+priorityGraph.connect(features.hola.name, features.gutentag.name);
+priorityGraph.connect(features.gutentag.name, features.bienVenidos.name);
+
+const semantic = new TesterantoGraphDirected("Semantic");
+semantic.connect(features.hello.name, features.aloha.name, "superceedes");
+semantic.connect(features.gutentag.name, features.hola.name, "negates");
+
+const undirected = new TesterantoGraphUndirected("undirected");
+undirected.connect(features.gutentag.name, features.aloha.name, "related");
+undirected.connect(features.buildRocket.name, features.buildSatellite.name, "overlap");
 
 export default new TesterantoFeatures([
   features.hello,
@@ -32,4 +53,11 @@ export default new TesterantoFeatures([
   features.buenosDias,
   features.hola,
   features.bienVenidos
-], [{ name: "my first graph", graph }], __filename);
+], {
+  undirected: [undirected],
+  directed: [semantic],
+  dag: [priorityGraph]
+},
+  __filename
+
+);
