@@ -10,6 +10,8 @@ npm: [npmjs.com/package/testeranto.ts](https://www.npmjs.com/package/testeranto.
 
 dev: [github.dev/adamwong246/testeranto.ts](https://github.dev/adamwong246/testeranto.ts)
 
+example report: [adamwong246.github.io/testeranto.ts/dist/report.html](https://adamwong246.github.io/testeranto.ts/dist/report.html)
+
 ## about
 
 Testeranto.ts an Acceptance Test Driven Development ([ATDD](https://en.wikipedia.org/wiki/Acceptance_test-driven_development)) framework. It focuses on testing features which cross application boundaries using strongly typed tests and specified in a gherkin-like syntax. 
