@@ -20,11 +20,11 @@ ATDD is the latest evolution of BDD and TDD methodologies. Where TDD tests are w
 
 ## 3 distinguishing features of testeranto.ts
 
-0] Testeranto can execute many types of tests. It abstracts away the differences between a "small" unit test and a "big" integration test. Features can thus be tracked across many test suites.
+0) Testeranto can execute many types of tests. It abstracts away the differences between a "small" unit test and a "big" integration test. Features can thus be tracked across many test suites.
 
-1] Rather than testing your code directly, Testeranto requires you wrap your code with a semantic interface which is based on TS type signatures. These interfaces can be shared and your code is now tested through the gherkin-ish directives provided by that interface. 
+1) Rather than testing your code directly, Testeranto requires you wrap your code with a semantic interface which is based on TS type signatures. These interfaces can be shared and your code is now tested through the gherkin-ish directives provided by that interface. 
 
-2] Testeranto tracks features and test results directly in the source code. You may be accustomed to using tools like Jira and Trello to define user stories and assign story points- Under Testeranto, this data lives within the code base _as_ typescript code. Features are defined as nodes within a directed graph, allowing the reporter to summarize these features and their test results.
+2) Testeranto tracks features and test results directly in the source code. You may be accustomed to using tools like Jira and Trello to define user stories and assign story points- Under Testeranto, this data lives within the code base _as_ typescript code. Features are defined as nodes within a directed graph, allowing the reporter to summarize these features and their test results.
 
 ## tech of note
 - typescript - tests are functions with type parameters
