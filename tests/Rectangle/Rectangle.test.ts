@@ -105,6 +105,16 @@ export const RectangleTesteranto =
                 Then.circumference(14),
               ]
             ),
+
+            Given.WidthOfOneAndHeightOfOne(
+              "this test will fail",
+              [features.hello],
+              [When.setHeight(33), When.setWidth(34)],
+              [
+                Then.getHeight(3),
+              ]
+            ),
+
           ],
 
           [
