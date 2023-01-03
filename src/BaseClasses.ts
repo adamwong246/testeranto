@@ -153,7 +153,9 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
   ) {
     // console.log(`\n Given: ${this.name}`);
     try {
-      if (!this.abort) { this.store = await this.givenThat(subject, testResourceConfiguration); }
+      if (!this.abort) {
+        this.store = await this.givenThat(subject, testResourceConfiguration);
+      }
       for (const whenStep of this.whens) {
         await whenStep.test(this.store, testResourceConfiguration);
       }
@@ -165,7 +167,13 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
       this.error = e;
       throw e;
     } finally {
-      await this.afterEach(this.store, index, this.artifactSaver);
+
+      try {
+        await this.afterEach(this.store, index, this.artifactSaver);
+      } catch {
+        console.error("afterEach failed! no error will be recorded!")
+      }
+
     }
     return this.store;
   }

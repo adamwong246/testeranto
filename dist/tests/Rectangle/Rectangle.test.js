@@ -104,7 +104,11 @@ var BaseGiven = class {
       this.error = e;
       throw e;
     } finally {
-      await this.afterEach(this.store, index, this.artifactSaver);
+      try {
+        await this.afterEach(this.store, index, this.artifactSaver);
+      } catch {
+        console.error("afterEach failed! no error will be recorded!");
+      }
     }
     return this.store;
   }
@@ -254,44 +258,14 @@ var TesterantoProject = class {
 var testeranto_config_default = new TesterantoProject(
   [
     [
+      "MyFirstContract",
+      "./tests/solidity/MyFirstContract.test.ts",
+      "MyFirstContractTesteranto"
+    ],
+    [
       "Rectangle",
       "./tests/Rectangle/Rectangle.test.ts",
       "RectangleTesteranto"
-    ],
-    [
-      "Redux",
-      "./tests/Redux+Reselect+React/app.redux.test.ts",
-      "AppReduxTesteranto"
-    ],
-    [
-      "ReduxToolkit",
-      "./tests/Redux+Reselect+React/app.reduxToolkit.test.ts",
-      "AppReduxToolkitTesteranto"
-    ],
-    [
-      "ReactTesteranto",
-      "./tests/Redux+Reselect+React/LoginPage.test.ts",
-      "AppReactTesteranto"
-    ],
-    [
-      "ServerHttpPuppeteer",
-      "./tests/httpServer/server.http.test.ts",
-      "ServerHttpTesteranto"
-    ],
-    [
-      "ServerHttp",
-      "./tests/httpServer/server.puppeteer.test.ts",
-      "ServerHttpPuppeteerTesteranto"
-    ],
-    [
-      "ClassicalComponentReactTestRenderer",
-      "./tests/ClassicalReact/ClassicalComponent.react-test-renderer.test.tsx",
-      "ClassicalComponentReactTestRendererTesteranto"
-    ],
-    [
-      "ClassicalComponentEsbuildPuppeteer",
-      "./tests/ClassicalReact/ClassicalComponent.esbuild-puppeteer.test.ts",
-      "ClassicalComponentEsbuildPuppeteerTesteranto"
     ]
   ],
   "./tests/testerantoFeatures.test.ts"
@@ -399,17 +373,17 @@ var Testeranto = class {
 
 // src/index.ts
 var TesterantoFactory = (input, testSpecification, testImplementation, testResource, testInterface, entryPath) => {
+  const butThen = testInterface.butThen || (async (a) => a);
   const { andWhen } = testInterface;
   const actionHandler = testInterface.actionHandler || function(b) {
     return b;
   };
-  const afterEach = testInterface.afterEach || (async (s) => s);
   const assertioner = testInterface.assertioner || (async (t) => t);
   const beforeAll = testInterface.beforeAll || (async (input2) => input2);
-  const butThen = testInterface.butThen || (async (a) => a);
   const beforeEach = testInterface.beforeEach || async function(subject, initialValues, testResource2) {
     return subject;
   };
+  const afterEach = testInterface.afterEach || (async (s) => s);
   return class extends Testeranto {
     constructor() {
       super(
@@ -553,6 +527,14 @@ var RectangleTesteranto = TesterantoFactory(
               Then.getWidth(4),
               Then.area(12),
               Then.circumference(14)
+            ]
+          ),
+          Given.WidthOfOneAndHeightOfOne(
+            "this test will fail",
+            [features.hello],
+            [When.setHeight(33), When.setWidth(34)],
+            [
+              Then.getHeight(3)
             ]
           )
         ],

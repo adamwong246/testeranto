@@ -1,64 +1,6 @@
 {
   "hello": [
     {
-      "testKey": "Set the email and check the email",
-      "name": "Testing the LoginPage as react",
-      "whens": [
-        "TheEmailIsSetTo: adam@email.com"
-      ],
-      "thens": [
-        "TheEmailIs: adam@email.com"
-      ]
-    },
-    {
-      "testKey": "BDD gherkin style",
-      "name": "Testing the Redux store",
-      "whens": [
-        "TheEmailIsSetTo: adam@email.com"
-      ],
-      "thens": [
-        "TheEmailIs: adam@email.com"
-      ]
-    },
-    {
-      "testKey": "another feature",
-      "name": "Testing the Redux store",
-      "whens": [],
-      "thens": [
-        "TheEmailIsNot: adam@email.com",
-        "TheEmailIs: bob@mail.com"
-      ]
-    },
-    {
-      "testKey": "yet another feature",
-      "name": "Testing the Redux store",
-      "whens": [
-        "TheEmailIsSetTo: hello",
-        "TheEmailIsSetTo: aloha"
-      ],
-      "thens": [
-        "TheEmailIs: aloha"
-      ]
-    },
-    {
-      "testKey": "OMG a feature!",
-      "name": "Testing the Redux store",
-      "whens": [],
-      "thens": [
-        "TheEmailIs: "
-      ]
-    },
-    {
-      "testKey": "yes more tests plz",
-      "name": "Testing the Redux store",
-      "whens": [
-        "TheEmailIsSetTo: hey there"
-      ],
-      "thens": [
-        "TheEmailIs: hey there"
-      ]
-    },
-    {
       "testKey": "test 1",
       "name": "Testing the Rectangle class",
       "whens": [
@@ -71,71 +13,22 @@
       ]
     },
     {
-      "testKey": "default",
-      "name": "a classical react component, bundled with esbuild and tested with puppeteer",
-      "whens": [
-        "IClickTheButton: undefined",
-        "IClickTheButton: undefined",
-        "IClickTheButton: undefined",
-        "IClickTheButton: undefined",
-        "IClickTheButton: undefined",
-        "IClickTheButton: undefined"
-      ],
-      "thens": [
-        "TheStatusIs: [object Object]"
-      ]
-    },
-    {
-      "testKey": "a http boringfeature",
-      "name": "Testing the Node server with fetch",
-      "whens": [],
-      "thens": [
-        "TheStatusIs: some great status"
-      ]
-    },
-    {
-      "testKey": "a http feature",
-      "name": "Testing the Node server with fetch",
-      "whens": [
-        "PostToStatus: hello"
-      ],
-      "thens": [
-        "TheStatusIs: hello"
-      ]
-    }
-  ],
-  "aloha": [
-    {
-      "testKey": "OMG a feature!",
-      "name": "Testing the Redux store",
-      "whens": [],
-      "thens": [
-        "TheEmailIs: "
-      ]
-    },
-    {
-      "testKey": "yes more tests plz",
-      "name": "Testing the Redux store",
-      "whens": [
-        "TheEmailIsSetTo: hey there"
-      ],
-      "thens": [
-        "TheEmailIs: hey there"
-      ]
-    },
-    {
-      "testKey": "test 5",
+      "testKey": "this test will fail",
       "name": "Testing the Rectangle class",
       "whens": [
-        "setHeight: 3",
-        "setWidth: 4"
+        "setHeight: 33",
+        "setWidth: 34"
       ],
       "thens": [
-        "getHeight: 3",
-        "getWidth: 4",
-        "area: 12",
-        "circumference: 14"
-      ]
+        "getHeight: 3"
+      ],
+      "errors": {
+        "generatedMessage": true,
+        "code": "ERR_ASSERTION",
+        "actual": 33,
+        "expected": 3,
+        "operator": "=="
+      }
     }
   ],
   "hola": [
@@ -166,6 +59,22 @@
     }
   ],
   "gutentag": [
+    {
+      "testKey": "test 5",
+      "name": "Testing the Rectangle class",
+      "whens": [
+        "setHeight: 3",
+        "setWidth: 4"
+      ],
+      "thens": [
+        "getHeight: 3",
+        "getWidth: 4",
+        "area: 12",
+        "circumference: 14"
+      ]
+    }
+  ],
+  "aloha": [
     {
       "testKey": "test 5",
       "name": "Testing the Rectangle class",

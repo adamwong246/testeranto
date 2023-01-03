@@ -1,11 +1,11 @@
-import { TesterantoProject } from "./src/Project"
-
-export default new TesterantoProject(
-  [
+import { TesterantoProject } from "./src/Project";
+export default new TesterantoProject([
     [
-      'MyFirstContract', './tests/solidity/MyFirstContract.test.ts', 'MyFirstContractTesteranto'],
+        'MyFirstContract', './tests/solidity/MyFirstContract.test.ts', 'MyFirstContractTesteranto'
+    ],
     [
-      'Rectangle', './tests/Rectangle/Rectangle.test.ts', 'RectangleTesteranto'],
+        'Rectangle', './tests/Rectangle/Rectangle.test.ts', 'RectangleTesteranto'
+    ],
     // [
     //   'Redux', './tests/Redux+Reselect+React/app.redux.test.ts', 'AppReduxTesteranto'],
     // [
@@ -18,7 +18,6 @@ export default new TesterantoProject(
     //   'ServerHttpPuppeteer', './tests/httpServer/server.http.test.ts', 'ServerHttpTesteranto'],
     // [
     //   'ServerHttp', './tests/httpServer/server.puppeteer.test.ts', 'ServerHttpPuppeteerTesteranto'],
-
     // [
     //   'ClassicalComponentReactTestRenderer',
     //   './tests/ClassicalReact/ClassicalComponent.react-test-renderer.test.tsx',
@@ -29,7 +28,4 @@ export default new TesterantoProject(
     //   './tests/ClassicalReact/ClassicalComponent.esbuild-puppeteer.test.ts',
     //   'ClassicalComponentEsbuildPuppeteerTesteranto'
     // ],
-  ],
-  './tests/testerantoFeatures.test.ts',
-  // __filename
-);
+], './tests/testerantoFeatures.test.ts');

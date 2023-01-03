@@ -29,7 +29,9 @@ export const TesterantoFactory = <
     afterEach?: (store: Store, ndx: number, cb) => unknown,
     andWhen: (store: Store, actioner, testResource: TestResourceShape) => Promise<Selection>,
     assertioner?: (t: ThenShape) => any,
+
     beforeAll?: (input: Input) => Promise<Subject>,
+
     beforeEach?: (subject: Subject, initialValues, testResource: TestResourceShape) => Promise<Store>,
     butThen?: (store: Store, callback, testResource: TestResourceShape) => Promise<Selection>,
   },
@@ -37,18 +39,20 @@ export const TesterantoFactory = <
 
 ) => {
 
+  const butThen = testInterface.butThen || (async (a) => a as any);
   const { andWhen } = testInterface;
 
   const actionHandler = testInterface.actionHandler || function (b: (...any: any[]) => any) {
     return b;
   };
-  const afterEach = testInterface.afterEach || (async (s) => s as any);
   const assertioner = testInterface.assertioner || (async (t) => t as any);
+
+
   const beforeAll = testInterface.beforeAll || (async (input) => input as any);
-  const butThen = testInterface.butThen || (async (a) => a as any);
   const beforeEach = testInterface.beforeEach || async function (subject: Input, initialValues: any, testResource: any) {
     return subject as any;
   }
+  const afterEach = testInterface.afterEach || (async (s) => s);
 
   return class extends Testeranto<
     TestShape,

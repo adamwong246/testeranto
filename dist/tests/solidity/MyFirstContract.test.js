@@ -1,5 +1,12 @@
-// tests/Redux+Reselect+React/react.testeranto.test.ts
-import renderer, { act } from "react-test-renderer";
+// tests/solidity/MyFirstContract.test.ts
+import { assert } from "chai";
+import { features } from "/Users/adam/Code/testeranto.ts/dist/tests/testerantoFeatures.test.js";
+
+// tests/solidity/solidity.testeranto.test.ts
+import fs3 from "fs";
+import Web3 from "web3";
+import Web3Contract from "web3-eth-contract";
+import { spawn, spawnSync } from "node:child_process";
 
 // src/BaseClasses.ts
 import { mapValues } from "lodash";
@@ -85,7 +92,7 @@ var BaseGiven = class {
       return await this.afterEach(this.store, ndx, this.artifactSaver);
     });
   }
-  async afterEach(store2, ndx, cb) {
+  async afterEach(store, ndx, cb) {
     return;
   }
   async give(subject, index, testResourceConfiguration, tester) {
@@ -104,7 +111,11 @@ var BaseGiven = class {
       this.error = e;
       throw e;
     } finally {
-      await this.afterEach(this.store, index, this.artifactSaver);
+      try {
+        await this.afterEach(this.store, index, this.artifactSaver);
+      } catch {
+        console.error("afterEach failed! no error will be recorded!");
+      }
     }
     return this.store;
   }
@@ -124,10 +135,10 @@ var BaseWhen = class {
     this.abort = true;
     return this.abort;
   }
-  async test(store2, testResourceConfiguration) {
+  async test(store, testResourceConfiguration) {
     if (!this.abort) {
       try {
-        return await this.andWhen(store2, this.actioner, testResourceConfiguration);
+        return await this.andWhen(store, this.actioner, testResourceConfiguration);
       } catch (e) {
         this.error = true;
         throw e;
@@ -150,10 +161,10 @@ var BaseThen = class {
     this.abort = true;
     return this.abort;
   }
-  async test(store2, testResourceConfiguration) {
+  async test(store, testResourceConfiguration) {
     if (!this.abort) {
       try {
-        return this.thenCB(await this.butThen(store2, testResourceConfiguration));
+        return this.thenCB(await this.butThen(store, testResourceConfiguration));
       } catch (e) {
         this.error = true;
         throw e;
@@ -169,16 +180,16 @@ var BaseCheck = class {
     this.whens = whens;
     this.thens = thens;
   }
-  async afterEach(store2, ndx, cb) {
+  async afterEach(store, ndx, cb) {
     return;
   }
   async check(subject, ndx, testResourceConfiguration, tester) {
-    const store2 = await this.checkThat(subject, testResourceConfiguration);
+    const store = await this.checkThat(subject, testResourceConfiguration);
     await this.checkCB(
       mapValues(this.whens, (when) => {
         return async (payload) => {
           return await when(payload, testResourceConfiguration).test(
-            store2,
+            store,
             testResourceConfiguration
           );
         };
@@ -186,14 +197,14 @@ var BaseCheck = class {
       mapValues(this.thens, (then) => {
         return async (payload) => {
           const t = await then(payload, testResourceConfiguration).test(
-            store2,
+            store,
             testResourceConfiguration
           );
           tester(t);
         };
       })
     );
-    await this.afterEach(store2, ndx);
+    await this.afterEach(store, ndx);
     return;
   }
 };
@@ -254,44 +265,14 @@ var TesterantoProject = class {
 var testeranto_config_default = new TesterantoProject(
   [
     [
+      "MyFirstContract",
+      "./tests/solidity/MyFirstContract.test.ts",
+      "MyFirstContractTesteranto"
+    ],
+    [
       "Rectangle",
       "./tests/Rectangle/Rectangle.test.ts",
       "RectangleTesteranto"
-    ],
-    [
-      "Redux",
-      "./tests/Redux+Reselect+React/app.redux.test.ts",
-      "AppReduxTesteranto"
-    ],
-    [
-      "ReduxToolkit",
-      "./tests/Redux+Reselect+React/app.reduxToolkit.test.ts",
-      "AppReduxToolkitTesteranto"
-    ],
-    [
-      "ReactTesteranto",
-      "./tests/Redux+Reselect+React/LoginPage.test.ts",
-      "AppReactTesteranto"
-    ],
-    [
-      "ServerHttpPuppeteer",
-      "./tests/httpServer/server.http.test.ts",
-      "ServerHttpTesteranto"
-    ],
-    [
-      "ServerHttp",
-      "./tests/httpServer/server.puppeteer.test.ts",
-      "ServerHttpPuppeteerTesteranto"
-    ],
-    [
-      "ClassicalComponentReactTestRenderer",
-      "./tests/ClassicalReact/ClassicalComponent.react-test-renderer.test.tsx",
-      "ClassicalComponentReactTestRendererTesteranto"
-    ],
-    [
-      "ClassicalComponentEsbuildPuppeteer",
-      "./tests/ClassicalReact/ClassicalComponent.esbuild-puppeteer.test.ts",
-      "ClassicalComponentEsbuildPuppeteerTesteranto"
     ]
   ],
   "./tests/testerantoFeatures.test.ts"
@@ -399,17 +380,17 @@ var Testeranto = class {
 
 // src/index.ts
 var TesterantoFactory = (input, testSpecification, testImplementation, testResource, testInterface, entryPath) => {
+  const butThen = testInterface.butThen || (async (a) => a);
   const { andWhen } = testInterface;
   const actionHandler = testInterface.actionHandler || function(b) {
     return b;
   };
-  const afterEach = testInterface.afterEach || (async (s) => s);
   const assertioner = testInterface.assertioner || (async (t) => t);
   const beforeAll = testInterface.beforeAll || (async (input2) => input2);
-  const butThen = testInterface.butThen || (async (a) => a);
   const beforeEach = testInterface.beforeEach || async function(subject, initialValues, testResource2) {
     return subject;
   };
+  const afterEach = testInterface.afterEach || (async (s) => s);
   return class extends Testeranto {
     constructor() {
       super(
@@ -432,27 +413,27 @@ var TesterantoFactory = (input, testSpecification, testImplementation, testResou
           async givenThat(subject, testResource2) {
             return beforeEach(subject, this.initialValues, testResource2);
           }
-          afterEach(store2, ndx, cb) {
-            return new Promise((res) => res(afterEach(store2, ndx, cb)));
+          afterEach(store, ndx, cb) {
+            return new Promise((res) => res(afterEach(store, ndx, cb)));
           }
         },
         class When extends BaseWhen {
           constructor(name, actioner, payload) {
-            super(name, (store2) => {
+            super(name, (store) => {
               return actionHandler(actioner);
             });
             this.payload = payload;
           }
-          andWhen(store2, actioner, testResource2) {
-            return andWhen(store2, actioner, testResource2);
+          andWhen(store, actioner, testResource2) {
+            return andWhen(store, actioner, testResource2);
           }
         },
         class Then extends BaseThen {
           constructor(name, callback) {
             super(name, callback);
           }
-          butThen(store2, testResourceConfiguration) {
-            return butThen(store2, this.thenCB, testResourceConfiguration);
+          butThen(store, testResourceConfiguration) {
+            return butThen(store, this.thenCB, testResourceConfiguration);
           }
         },
         class Check extends BaseCheck {
@@ -463,8 +444,8 @@ var TesterantoFactory = (input, testSpecification, testImplementation, testResou
           async checkThat(subject, testResource2) {
             return beforeEach(subject, this.initialValues, testResource2);
           }
-          afterEach(store2, ndx, cb) {
-            return new Promise((res) => res(afterEach(store2, ndx, cb)));
+          afterEach(store, ndx, cb) {
+            return new Promise((res) => res(afterEach(store, ndx, cb)));
           }
         },
         testResource,
@@ -474,206 +455,154 @@ var TesterantoFactory = (input, testSpecification, testImplementation, testResou
   };
 };
 
-// tests/Redux+Reselect+React/react.testeranto.test.ts
-var ReactTesteranto = (testImplementations, testSpecifications, testInput, entryPath) => TesterantoFactory(
+// tests/solidity/solidity.testeranto.test.ts
+var contractAddress = "contract address";
+var SolidityTesteranto = (testImplementations, testSpecifications, testInput, contractName, entryPath) => TesterantoFactory(
   testInput,
   testSpecifications,
   testImplementations,
-  "na",
+  "port",
   {
-    beforeEach: async function(subject, initialValues, testResource) {
-      let component;
-      await act(() => {
-        component = renderer.create(subject());
+    beforeAll: async (x) => spawnSync("truffle", ["compile"]),
+    beforeEach: (subject, initialValues, ethereumNetworkPort) => {
+      const blockchainAddress = `ws://localhost:${ethereumNetworkPort}`;
+      return new Promise((res, rej) => {
+        const truffleDevelopThread = spawn("truffle", ["console"]);
+        let logs = [];
+        truffleDevelopThread.stdout.on("data", (data) => {
+          const str = data.toString();
+          console.log("TDT >", str);
+          logs.concat(str.split("\n"));
+          if (str.includes("truffle(develop)>")) {
+            let stage = "start";
+            const users = [];
+            let mnemonic = [];
+            for (const line of logs) {
+              if (line.includes("Accounts:")) {
+                stage = "addresses";
+                continue;
+              } else if (line.includes("Private Keys:")) {
+                stage = "keys";
+                continue;
+              } else if (line.includes("Mnemonic:")) {
+                stage = "mnemonic";
+                continue;
+              }
+              if (stage === "addresses") {
+                const [dirtyIndex, address] = line.split(" ");
+                const ndx = dirtyIndex[1];
+                users[ndx].address = address;
+              } else if (stage === "keys") {
+                const [dirtyIndex, pKey] = line.split(" ");
+                const ndx = dirtyIndex[1];
+                users[ndx].pKey = pKey;
+              } else if (stage === "mnemonic") {
+                mnemonic = line.split("Mnemonic:")[1].trim().split(" ");
+              }
+            }
+            const tmt = spawn("truffle", ["migrate", "--network", "develop", "--reset"]).stdout.on("data", (dat) => {
+              const data2 = dat.toString();
+              console.log("TMT >", data2.toString());
+              if (data2.includes(contractAddress)) {
+                const line = data2.split("\n").find((s) => s.includes(contractAddress));
+                if (!line) {
+                  console.error("parse error");
+                  process.exit(-1);
+                }
+                const abi = JSON.parse(fs3.readFileSync(`./build/contracts/${contractName}.json`).toString()).abi;
+                console.log("ABI", abi);
+                console.log("blockchainAddress", blockchainAddress);
+                res({
+                  truffleDevelopThread,
+                  contract: new Web3Contract(
+                    abi,
+                    line.split("> contract address:")[1].trim()
+                  ),
+                  web3: new Web3(blockchainAddress),
+                  users
+                });
+              }
+            });
+            tmt.on("close", (code) => {
+              console.log(`tmt process exited with code ${code}`);
+            });
+          }
+        });
+        truffleDevelopThread.stderr.on("data", (data) => {
+          console.error(`stderr: ${data}`);
+        });
+        truffleDevelopThread.on("close", (code) => {
+          console.log(`child process exited with code ${code}`);
+        });
       });
-      return component;
     },
-    andWhen: async function(renderer2, actioner, testResource) {
-      await act(() => actioner()(renderer2));
-      return renderer2;
+    afterEach: ({ truffleDevelopThread }) => truffleDevelopThread.kill(),
+    andWhen: async ({ truffleDevelopThread, web3, contract, users }, callback, testResource) => {
+      console.log("andWhen", callback.toString());
+      callback()({ contract, users });
+      return { truffleDevelopThread, web3, contract, users };
     }
   },
   entryPath
 );
 
-// tests/Redux+Reselect+React/LoginPage.test.ts
-import { assert } from "chai";
-
-// tests/Redux+Reselect+React/LoginPage.tsx
-import React from "react";
-import { Provider, useSelector } from "react-redux";
-
-// tests/Redux+Reselect+React/app.ts
-import { createSelector, createSlice, createStore } from "@reduxjs/toolkit";
-var loginApp = createSlice({
-  name: "login app",
-  initialState: {
-    password: "",
-    email: "",
-    error: "no_error"
-  },
-  reducers: {
-    setPassword: (state, action) => {
-      state.password = action.payload;
-    },
-    setEmail: (state, action) => {
-      state.email = action.payload;
-    },
-    signIn: (state) => {
-      state.error = checkForErrors(state);
-    }
-  }
-});
-var selectRoot = (storeState) => {
-  return storeState;
-};
-var validateEmail = (email) => {
-  return email.match(
-    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  );
-};
-var checkForErrors = (storeState) => {
-  if (!validateEmail(storeState.email)) {
-    return "invalidEmail";
-  }
-  if (storeState.password !== "password" && storeState.email !== "adam@email.com") {
-    return "credentialFail";
-  }
-  return "no_error";
-};
-var loginPageSelection = createSelector([selectRoot], (root) => {
-  return {
-    ...root,
-    disableSubmit: root.email == "" || root.password == ""
-  };
-});
-var app_default = () => {
-  const store2 = createStore(loginApp.reducer);
-  return {
-    app: loginApp,
-    select: {
-      loginPageSelection
-    },
-    store: store2
-  };
-};
-
-// tests/Redux+Reselect+React/LoginPage.tsx
-var core = app_default();
-var selector = core.select.loginPageSelection;
-var actions = core.app.actions;
-var store = core.store;
-function LoginPage() {
-  const selection = useSelector(selector);
-  return /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("h2", null, "Welcome back!"), /* @__PURE__ */ React.createElement("p", null, "Sign in and get to it."), /* @__PURE__ */ React.createElement("form", null, /* @__PURE__ */ React.createElement("input", { type: "email", value: selection.email, onChange: (e) => store.dispatch(actions.setEmail(e.target.value)) }), /* @__PURE__ */ React.createElement("p", { id: "invalid-email-warning", className: "warning" }, selection.error === "invalidEmail" && "Something isn\u2019t right. Please double check your email format"), /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("input", { type: "password", value: selection.password, onChange: (e) => store.dispatch(actions.setPassword(e.target.value)) }), /* @__PURE__ */ React.createElement("p", null, selection.error === "credentialFail" && "You entered an incorrect email, password, or both."), /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("button", { disabled: selection.disableSubmit, onClick: (event) => {
-    store.dispatch(actions.signIn());
-  } }, "Sign In")), /* @__PURE__ */ React.createElement("pre", null, JSON.stringify(selection, null, 2)));
-}
-function LoginPage_default() {
-  return /* @__PURE__ */ React.createElement(Provider, { store }, /* @__PURE__ */ React.createElement(LoginPage, null));
-}
-
-// tests/Redux+Reselect+React/LoginPage.test.ts
-import { features } from "/Users/adam/Code/testeranto.ts/dist/tests/testerantoFeatures.test.js";
-var myFeature = features.hello;
-var AppReactTesteranto = ReactTesteranto(
+// tests/solidity/MyFirstContract.test.ts
+var MyFirstContractTesteranto = SolidityTesteranto(
   {
     Suites: {
-      Default: "a default suite"
+      Default: "Testing a very simple smart contract"
     },
     Givens: {
-      default: () => {
-        return {};
+      Default: () => {
+        return "MyFirstContract.sol";
       }
     },
     Whens: {
-      TheLoginIsSubmitted: () => (component) => component.root.findByType("button").props.onClick(),
-      TheEmailIsSetTo: (email) => (component) => component.root.findByProps({ type: "email" }).props.onChange({ target: { value: email } }),
-      ThePasswordIsSetTo: (password) => (component) => component.root.findByProps({ type: "password" }).props.onChange({ target: { value: password } })
+      TokensAreMinted: ({ tokensToMint, asTestUser }) => ({ contract, users }) => {
+        return new Promise((res) => {
+          console.log("mark 3", JSON.stringify(contract.methods));
+          contract.methods.inc().send({ from: users[asTestUser] }).on("receipt", function(x) {
+            res(x);
+          });
+        });
+      }
     },
     Thens: {
-      TheEmailIs: (email) => (component) => {
-        assert.equal(
-          component.root.findByProps({ type: "email" }).props.value,
-          email
-        );
-      },
-      TheEmailIsNot: (email) => (component) => assert.notEqual(
-        component.root.findByProps({ type: "email" }).props.value,
-        email
-      ),
-      ThePasswordIs: (password) => (component) => assert.equal(
-        component.root.findByProps({ type: "password" }).props.value,
-        password
-      ),
-      ThePasswordIsNot: (password) => (component) => assert.notEqual(
-        component.root.findByProps({ type: "password" }).props.value,
-        password
-      ),
-      ThereIsAnEmailError: () => (component) => assert.notEqual(
-        component.root.findByProps({ type: "password" }).props.value,
-        "password"
-      ),
-      ThereIsNotAnEmailError: () => (component) => assert.notEqual(
-        component.root.findByProps({ type: "password" }).props.value,
-        "password"
-      )
+      TheNumberOfAllTokensIs: (numberOfTokens) => ({ contract }) => assert.equal(1, 1),
+      TheNumberOfClaimedTokensIs: (numberOfTokens) => ({ contract }) => assert.equal(1, 1)
     },
     Checks: {
-      AnEmptyState: () => {
-        return {};
-      }
+      AnEmptyState: () => "MyFirstContract.sol"
     }
   },
   (Suite, Given, When, Then, Check) => {
     return [
       Suite.Default(
-        "Testing the LoginPage as react",
+        "Testing a very simple smart contract",
         [
-          Given.default(
-            `Set the email and check the email`,
-            [myFeature],
+          Given.Default(
+            "idk",
+            [features.hello],
             [
-              When.TheEmailIsSetTo("adam@email.com")
+              When.TokensAreMinted({
+                tokensToMint: 2,
+                asTestUser: 1
+              })
             ],
             [
-              Then.TheEmailIs("adam@email.com")
-            ]
-          ),
-          Given.default(
-            `Set the email by initial state, then set the email normally, and then check some other stuff`,
-            [],
-            [
-              When.TheEmailIsSetTo("adam@email.com"),
-              When.ThePasswordIsSetTo("secret")
+              Then.TheNumberOfAllTokensIs(3)
             ],
-            [
-              Then.TheEmailIsNot("wade@rpc"),
-              Then.TheEmailIs("adam@email.com"),
-              Then.ThePasswordIs("secret"),
-              Then.ThePasswordIsNot("idk")
-            ]
-          ),
-          Given.default(
-            "Don't show an email error just because the email does not validate",
-            [],
-            [When.TheEmailIsSetTo("adam")],
-            [Then.ThereIsNotAnEmailError()]
-          ),
-          Given.default(
-            "Do show an email error after submitting",
-            [],
-            [When.TheEmailIsSetTo("adam"), When.TheLoginIsSubmitted()],
-            [Then.ThereIsNotAnEmailError()]
+            "my first contract"
           )
         ],
         []
       )
     ];
   },
-  LoginPage_default,
+  "solSource",
+  "MyFirstContract",
   __filename
 );
 export {
-  AppReactTesteranto
+  MyFirstContractTesteranto
 };
