@@ -110,8 +110,8 @@ export const TesterantoFactory = <
             this.payload = payload;
           }
 
-          andWhen(store, actioner, testResource) {
-            return andWhen(store, actioner, testResource);
+          async andWhen(store, actioner, testResource) {
+            return await andWhen(store, actioner, testResource);
           }
         },
 
@@ -123,8 +123,8 @@ export const TesterantoFactory = <
             super(name, callback);
           }
 
-          butThen(store: any, testResourceConfiguration?: any): Promise<Selection> {
-            return butThen(store, this.thenCB, testResourceConfiguration)
+          async butThen(store: any, testResourceConfiguration?: any): Promise<Selection> {
+            return await butThen(store, this.thenCB, testResourceConfiguration)
           }
         },
 

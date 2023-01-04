@@ -1,0 +1,28 @@
+{
+  "name": "Testing a very simple smart contract",
+  "givens": [
+    {
+      "name": "idk",
+      "whens": [
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        }
+      ],
+      "thens": [
+        {
+          "name": "Get: [object Object]"
+        }
+      ]
+    }
+  ],
+  "fails": []
+}

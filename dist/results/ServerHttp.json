@@ -1,0 +1,28 @@
+{
+  "name": "Testing the Server with Puppeteer",
+  "givens": [
+    {
+      "name": "a boring Puppeteer feature",
+      "whens": [],
+      "thens": [
+        {
+          "name": "TheStatusIs: some great status"
+        }
+      ]
+    },
+    {
+      "name": "another Puppeteer feature",
+      "whens": [
+        {
+          "name": "PostToStatus: goodbye"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheStatusIs: goodbye"
+        }
+      ]
+    }
+  ],
+  "fails": []
+}

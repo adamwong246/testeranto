@@ -1,14 +1,9 @@
-// tests/solidity/MyFirstContract.test.ts
+// tests/Redux+Reselect+React/app.redux.test.ts
 import { assert } from "chai";
 import { features } from "/Users/adam/Code/testeranto.ts/dist/tests/testerantoFeatures.test.js";
 
-// tests/solidity/solidity.testeranto.test.ts
-import fs3 from "fs";
-import path3 from "path";
-import Ganache from "ganache";
-import TruffleCompile from "truffle-compile";
-import Web3 from "web3";
-import { spawnSync } from "node:child_process";
+// tests/Redux+Reselect+React/redux.testeranto.test.ts
+import { createStore } from "redux";
 
 // src/BaseClasses.ts
 import { mapValues } from "lodash";
@@ -499,120 +494,155 @@ var TesterantoFactory = (input, testSpecification, testImplementation, testResou
   };
 };
 
-// tests/solidity/solidity.testeranto.test.ts
-var truffleCompile = (...args) => new Promise((resolve) => TruffleCompile(...args, (_, data) => resolve(data)));
-var compile = async (filename) => {
-  const sourcePath = path3.join(__dirname, "../contracts", filename);
-  const sources = {
-    [sourcePath]: fs3.readFileSync(sourcePath, { encoding: "utf8" })
-  };
-  const options = {
-    contracts_directory: path3.join(__dirname, "../contracts"),
-    compilers: {
-      solc: {
-        version: "0.5.2",
-        settings: {
-          optimizer: {
-            enabled: false,
-            runs: 200
-          },
-          evmVersion: "byzantium"
-        }
-      }
-    }
-  };
-  const artifact = await truffleCompile(sources, options);
-  return artifact;
-};
-var SolidityTesteranto = (testImplementations, testSpecifications, testInput, contractName, entryPath) => TesterantoFactory(
+// tests/Redux+Reselect+React/redux.testeranto.test.ts
+var ReduxTesteranto = (testImplementations, testSpecifications, testInput, entryPath) => TesterantoFactory(
   testInput,
   testSpecifications,
   testImplementations,
-  "port",
+  "na",
   {
-    beforeAll: async (x) => spawnSync("truffle", ["compile"]),
-    beforeEach: async (subject, initialValues, ethereumNetworkPort) => {
-      const { MyFirstContract } = await compile("../../../contracts/MyFirstContract.sol");
-      const provider = Ganache.provider({ seed: "drizzle-utils" });
-      const web3 = new Web3(provider);
-      const accounts = await web3.eth.getAccounts();
-      const contractInstance = new web3.eth.Contract(MyFirstContract.abi);
-      return {
-        contract: await contractInstance.deploy({ data: MyFirstContract.bytecode }).send({ from: accounts[0], gas: 15e4 }),
-        accounts,
-        provider
-      };
+    beforeEach: function(subject, initialValues, testResource) {
+      return createStore(subject, initialValues);
     },
-    andWhen: async ({ provider, contract, accounts }, callback, testResource) => {
-      return callback()({ contract, accounts });
+    andWhen: function(store, actioner, testResource) {
+      const a = actioner();
+      return store.dispatch(a[0](a[1]));
+    },
+    butThen: function(store, callback, testResource) {
+      return store.getState();
+    },
+    actionHandler: function(b) {
+      return b();
     }
   },
   entryPath
 );
 
-// tests/solidity/MyFirstContract.test.ts
-var MyFirstContractTesteranto = SolidityTesteranto(
+// tests/Redux+Reselect+React/app.ts
+import { createSelector, createSlice, createStore as createStore2 } from "@reduxjs/toolkit";
+var loginApp = createSlice({
+  name: "login app",
+  initialState: {
+    password: "",
+    email: "",
+    error: "no_error"
+  },
+  reducers: {
+    setPassword: (state, action) => {
+      state.password = action.payload;
+    },
+    setEmail: (state, action) => {
+      state.email = action.payload;
+    },
+    signIn: (state) => {
+      state.error = checkForErrors(state);
+    }
+  }
+});
+var selectRoot = (storeState) => {
+  return storeState;
+};
+var validateEmail = (email) => {
+  return email.match(
+    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  );
+};
+var checkForErrors = (storeState) => {
+  if (!validateEmail(storeState.email)) {
+    return "invalidEmail";
+  }
+  if (storeState.password !== "password" && storeState.email !== "adam@email.com") {
+    return "credentialFail";
+  }
+  return "no_error";
+};
+var loginPageSelection = createSelector([selectRoot], (root) => {
+  return {
+    ...root,
+    disableSubmit: root.email == "" || root.password == ""
+  };
+});
+
+// tests/Redux+Reselect+React/app.redux.test.ts
+var AppReduxTesteranto = ReduxTesteranto(
   {
     Suites: {
-      Default: "Testing a very simple smart contract"
+      Default: "some default Suite"
     },
     Givens: {
-      Default: () => {
-        return "MyFirstContract.sol";
+      AnEmptyState: () => {
+        return loginApp.getInitialState();
+      },
+      AStateWithEmail: (email) => {
+        return { ...loginApp.getInitialState(), email };
       }
     },
     Whens: {
-      Increment: (asTestUser) => ({ contract, accounts }) => {
-        return contract.methods.inc().send({ from: accounts[asTestUser] }).on("receipt", function(x) {
-          return x;
-        });
-      },
-      Decrement: (asTestUser) => ({ contract, accounts }) => {
-        return new Promise((res) => {
-          contract.methods.dec().send({ from: accounts[asTestUser] }).then(function(x) {
-            res(x);
-          });
-        });
-      }
+      TheLoginIsSubmitted: () => () => [loginApp.actions.signIn],
+      TheEmailIsSetTo: (email) => () => [loginApp.actions.setEmail, email],
+      ThePasswordIsSetTo: (password) => () => [loginApp.actions.setPassword, password]
     },
     Thens: {
-      Get: ({ asTestUser, expectation }) => async ({ contract, accounts }) => {
-        const actual = await contract.methods.get().call();
-        assert.equal(expectation, parseInt(actual));
-      }
+      TheEmailIs: (email) => (storeState) => assert.equal(storeState.email, email),
+      TheEmailIsNot: (email) => (storeState) => assert.notEqual(storeState.email, email),
+      ThePasswordIs: (password) => (selection) => assert.equal(selection.password, password),
+      ThePasswordIsNot: (password) => (selection) => assert.notEqual(selection.password, password)
     },
     Checks: {
-      AnEmptyState: () => "MyFirstContract.sol"
+      AnEmptyState: () => loginApp.getInitialState()
     }
   },
   (Suite, Given, When, Then, Check) => {
     return [
       Suite.Default(
-        "Testing a very simple smart contract",
+        "Testing the Redux store",
         [
-          Given.Default(
-            "idk",
+          Given.AnEmptyState(
+            "BDD gherkin style",
             [features.hello],
             [
-              When.Increment(1),
-              When.Increment(1),
-              When.Increment(1),
-              When.Increment(1)
+              When.TheEmailIsSetTo("adam@email.com")
             ],
             [
-              Then.Get({ asTestUser: 1, expectation: 4 })
+              Then.TheEmailIs("adam@email.com")
+            ]
+          ),
+          Given.AStateWithEmail(
+            "another feature",
+            [features.hello],
+            [],
+            [
+              Then.TheEmailIsNot("adam@email.com"),
+              Then.TheEmailIs("bob@mail.com")
             ],
-            "my first contract"
+            "bob@mail.com"
+          ),
+          Given.AnEmptyState(
+            "yet another feature",
+            [features.hello],
+            [When.TheEmailIsSetTo("hello"), When.TheEmailIsSetTo("aloha")],
+            [Then.TheEmailIs("aloha")]
+          ),
+          Given.AnEmptyState(
+            "OMG a feature!",
+            [features.aloha, features.hello],
+            [],
+            [Then.TheEmailIs("")]
+          ),
+          Given.AnEmptyState(
+            "yes more tests plz",
+            [features.aloha, features.hello],
+            [When.TheEmailIsSetTo("hey there")],
+            [Then.TheEmailIs("hey there")]
           )
         ],
         []
       )
     ];
   },
-  "solSource",
-  "MyFirstContract",
+  loginApp.reducer,
   __filename
 );
 export {
-  MyFirstContractTesteranto
+  AppReduxTesteranto
 };

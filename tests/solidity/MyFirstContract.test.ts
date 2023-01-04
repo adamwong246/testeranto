@@ -15,13 +15,16 @@ export const MyFirstContractTesteranto = SolidityTesteranto<
       Default;
     };
     whens: {
-      TokensAreMinted: [{ tokensToMint: number, asTestUser: number }]
+      Increment: [number];
+      Decrement: [number];
+      // TokensAreMinted: [{ tokensToMint: number, asTestUser: number }]
       // TokenIsClaimed: [{ asTestUser: number }]
       // TokenIsRedeemed: [{ tokenToRedeem: number, asTestUser: number }];
     };
     thens: {
-      TheNumberOfAllTokensIs: [number];
-      TheNumberOfClaimedTokensIs: [number];
+      Get: [{ asTestUser: number, expectation: number }];
+      // TheNumberOfAllTokensIs: [number];
+      // TheNumberOfClaimedTokensIs: [number];
     };
     checks: {
       AnEmptyState: [];
@@ -38,30 +41,59 @@ export const MyFirstContractTesteranto = SolidityTesteranto<
       }
     },
     Whens: {
-      TokensAreMinted: ({ tokensToMint, asTestUser }) => ({ contract, users }) => {
-
-        // console.log("TokensAreMinted", Object.keys(x))
-
+      Increment: (asTestUser) => ({ contract, accounts }) => {
+        return contract.methods.inc().send({ from: accounts[asTestUser] })
+          .on('receipt', function (x) {
+            return (x);
+          })
+      },
+      Decrement: (asTestUser) => ({ contract, accounts }) => {
         return new Promise((res) => {
-
-          // console.log("TokensAreMinted", Object.keys(x))
-
-          console.log("mark 3", JSON.stringify(contract.methods))
-          contract.methods.inc().send({ from: users[asTestUser] })
-            .on('receipt', function (x) {
+          contract.methods.dec().send({ from: accounts[asTestUser] })
+            .then(function (x) {
               res(x)
             })
-        })
-
+        });
       },
+
+      // TokensAreMinted: ({ tokensToMint, asTestUser }) => ({ contract, accounts }) => {
+      //   return new Promise((res) => {
+      //     console.log("mark 3");
+      //     contract.methods.inc().send({ from: accounts[asTestUser] })
+      //       .on('receipt', function (x) {
+      //         console.log("INCREMENTED!")
+      //         res(x)
+      //       })
+      //   })
+      // },
       // TokenIsClaimed: ({ asTestUser }) => () => ["Lazy claim", asTestUser],
       // TokenIsRedeemed: ({ tokenToRedeem, asTestUser }) => () => ["redeem me", tokenToRedeem, asTestUser],
     },
     Thens: {
-      TheNumberOfAllTokensIs: (numberOfTokens) => ({ contract }) =>
-        assert.equal(1, 1),
-      TheNumberOfClaimedTokensIs: (numberOfTokens) => ({ contract }) =>
-        assert.equal(1, 1),
+      Get: ({ asTestUser, expectation }) => async ({ contract, accounts }) => {
+
+        const actual = await contract.methods.get().call();
+
+        assert.equal((expectation), parseInt(actual))
+
+        // contract.methods.get().call().then((actual, y) =>
+
+        //   // console.error("wtf", x, y)
+        // );
+        //   .send({ from: accounts[asTestUser] }).then((x) => {
+        //   console.log("mark=2", x)
+        // })
+        // const actual = (await contract.methods.get().call({ from: accounts[asTestUser] }));
+
+        // console.log("mark0", asTestUser, expectation, actual);
+
+        // assert.equal((expectation), actual);
+      }
+
+      // TheNumberOfAllTokensIs: (numberOfTokens) => ({ contract }) =>
+      //   assert.equal(1, 1),
+      // TheNumberOfClaimedTokensIs: (numberOfTokens) => ({ contract }) =>
+      //   assert.equal(1, 1),
     },
     Checks: {
       AnEmptyState: () => 'MyFirstContract.sol',
@@ -77,17 +109,32 @@ export const MyFirstContractTesteranto = SolidityTesteranto<
             "idk",
             [features.hello],
             [
-              When.TokensAreMinted({
-                tokensToMint: 2,
-                asTestUser: 1
-              })
+              When.Increment(1),
+              When.Increment(1),
+              When.Increment(1),
+              When.Increment(1),
 
             ],
             [
-              Then.TheNumberOfAllTokensIs(3)
+              Then.Get({ asTestUser: 1, expectation: 4 })
             ],
             "my first contract"
           ),
+          // Given.Default(
+          //   "idk",
+          //   [features.hello],
+          //   [
+          //     When.TokensAreMinted({
+          //       tokensToMint: 2,
+          //       asTestUser: 1
+          //     })
+
+          //   ],
+          //   [
+          //     Then.TheNumberOfAllTokensIs(3)
+          //   ],
+          //   "my first contract"
+          // ),
 
         ],
         [

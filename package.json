@@ -27,6 +27,7 @@
   },
   "types": "index.d.ts",
   "dependencies": {
+    "@truffle/contract": "^4.6.10",
     "@types/web3": "^1.2.2",
     "bootstrap": "^5.2.3",
     "cancelable-promise": "^4.3.1",
@@ -39,6 +40,7 @@
     "lodash": "^4.17.21",
     "react-bootstrap": "^2.7.0",
     "truffle": "^5.7.1",
+    "truffle-compile": "^4.2.3",
     "web3": "^1.8.1",
     "web3-eth-contract": "^1.8.1"
   },

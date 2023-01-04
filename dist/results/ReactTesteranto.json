@@ -1,0 +1,73 @@
+{
+  "name": "Testing the LoginPage as react",
+  "givens": [
+    {
+      "name": "Set the email and check the email",
+      "whens": [
+        {
+          "name": "TheEmailIsSetTo: adam@email.com"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheEmailIs: adam@email.com"
+        }
+      ]
+    },
+    {
+      "name": "Set the email by initial state, then set the email normally, and then check some other stuff",
+      "whens": [
+        {
+          "name": "TheEmailIsSetTo: adam@email.com"
+        },
+        {
+          "name": "ThePasswordIsSetTo: secret"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheEmailIsNot: wade@rpc"
+        },
+        {
+          "name": "TheEmailIs: adam@email.com"
+        },
+        {
+          "name": "ThePasswordIs: secret"
+        },
+        {
+          "name": "ThePasswordIsNot: idk"
+        }
+      ]
+    },
+    {
+      "name": "Don't show an email error just because the email does not validate",
+      "whens": [
+        {
+          "name": "TheEmailIsSetTo: adam"
+        }
+      ],
+      "thens": [
+        {
+          "name": "ThereIsNotAnEmailError: undefined"
+        }
+      ]
+    },
+    {
+      "name": "Do show an email error after submitting",
+      "whens": [
+        {
+          "name": "TheEmailIsSetTo: adam"
+        },
+        {
+          "name": "TheLoginIsSubmitted: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "ThereIsNotAnEmailError: undefined"
+        }
+      ]
+    }
+  ],
+  "fails": []
+}

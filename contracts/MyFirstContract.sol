@@ -4,8 +4,6 @@ pragma solidity >=0.4.22 <0.9.0;
 contract MyFirstContract {
   uint256 public count;
 
-  constructor() public {}
-
   // Function to get the current count
   function get() public view returns (uint256) {
     return count;

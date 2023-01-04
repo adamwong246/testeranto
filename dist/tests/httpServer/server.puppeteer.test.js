@@ -1,14 +1,9 @@
-// tests/solidity/MyFirstContract.test.ts
-import { assert } from "chai";
+// tests/httpServer/server.puppeteer.test.ts
 import { features } from "/Users/adam/Code/testeranto.ts/dist/tests/testerantoFeatures.test.js";
 
-// tests/solidity/solidity.testeranto.test.ts
-import fs3 from "fs";
-import path3 from "path";
-import Ganache from "ganache";
-import TruffleCompile from "truffle-compile";
-import Web3 from "web3";
-import { spawnSync } from "node:child_process";
+// tests/httpServer/puppeteer-http.testeranto.test.ts
+import puppeteer from "puppeteer";
+import { assert } from "chai";
 
 // src/BaseClasses.ts
 import { mapValues } from "lodash";
@@ -499,120 +494,150 @@ var TesterantoFactory = (input, testSpecification, testImplementation, testResou
   };
 };
 
-// tests/solidity/solidity.testeranto.test.ts
-var truffleCompile = (...args) => new Promise((resolve) => TruffleCompile(...args, (_, data) => resolve(data)));
-var compile = async (filename) => {
-  const sourcePath = path3.join(__dirname, "../contracts", filename);
-  const sources = {
-    [sourcePath]: fs3.readFileSync(sourcePath, { encoding: "utf8" })
-  };
-  const options = {
-    contracts_directory: path3.join(__dirname, "../contracts"),
-    compilers: {
-      solc: {
-        version: "0.5.2",
-        settings: {
-          optimizer: {
-            enabled: false,
-            runs: 200
-          },
-          evmVersion: "byzantium"
-        }
-      }
-    }
-  };
-  const artifact = await truffleCompile(sources, options);
-  return artifact;
-};
-var SolidityTesteranto = (testImplementations, testSpecifications, testInput, contractName, entryPath) => TesterantoFactory(
+// tests/httpServer/puppeteer-http.testeranto.test.ts
+var PuppeteerHttpTesteranto = (testImplementations, testSpecifications, testInput, entryPath) => TesterantoFactory(
   testInput,
   testSpecifications,
   testImplementations,
   "port",
   {
-    beforeAll: async (x) => spawnSync("truffle", ["compile"]),
-    beforeEach: async (subject, initialValues, ethereumNetworkPort) => {
-      const { MyFirstContract } = await compile("../../../contracts/MyFirstContract.sol");
-      const provider = Ganache.provider({ seed: "drizzle-utils" });
-      const web3 = new Web3(provider);
-      const accounts = await web3.eth.getAccounts();
-      const contractInstance = new web3.eth.Contract(MyFirstContract.abi);
-      return {
-        contract: await contractInstance.deploy({ data: MyFirstContract.bytecode }).send({ from: accounts[0], gas: 15e4 }),
-        accounts,
-        provider
-      };
+    beforeEach: function(serverFactory2, initialValues, port) {
+      return new Promise((res) => {
+        puppeteer.launch({
+          headless: true,
+          executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+        }).then((browser) => {
+          const server = serverFactory2();
+          res({ server: server.listen(port), browser });
+        });
+      });
     },
-    andWhen: async ({ provider, contract, accounts }, callback, testResource) => {
-      return callback()({ contract, accounts });
+    andWhen: async function(store, actioner, port) {
+      const [path3, body] = actioner(store)();
+      const y = await fetch(
+        `http://localhost:${port.toString()}/${path3}`,
+        {
+          method: "POST",
+          body
+        }
+      );
+      return await y.text();
+    },
+    butThen: async function(store, callback, port) {
+      const [path3, expectation] = callback(store);
+      const bodytext = await (await fetch(`http://localhost:${port.toString()}/${path3}`)).text();
+      assert.equal(bodytext, expectation);
+      return bodytext;
+    },
+    afterEach: function(store, ndx) {
+      return new Promise((resolve) => {
+        store.browser.close();
+        store.server.close(() => {
+          resolve();
+        });
+      });
     }
   },
   entryPath
 );
 
-// tests/solidity/MyFirstContract.test.ts
-var MyFirstContractTesteranto = SolidityTesteranto(
+// tests/httpServer/server.ts
+import http from "http";
+var serverFactory = () => {
+  let status = "some great status";
+  let counter = 0;
+  return http.createServer(function(req, res) {
+    if (req.method === "GET") {
+      if (req.url === "/get_status") {
+        res.write(status);
+        res.end();
+        return;
+      } else if (req.url === "/get_number") {
+        res.write(counter.toString());
+        res.end();
+        return;
+      } else {
+        res.write("<p>error 404<p>");
+        res.end();
+        return;
+      }
+    } else if (req.method === "POST") {
+      let body = "";
+      req.on("data", function(chunk) {
+        body += chunk;
+      });
+      req.on("end", function() {
+        if (req.url === "/put_status") {
+          status = body.toString();
+          res.write("aok");
+          res.end();
+          return;
+        } else if (req.url === "/put_number") {
+          counter = counter + parseInt(body);
+          res.write(counter.toString());
+          res.end();
+          return;
+        } else {
+          res.write("<p>error 404<p>");
+          res.end();
+          return;
+        }
+      });
+    }
+  });
+};
+
+// tests/httpServer/server.puppeteer.test.ts
+var myFeature = features.hello;
+var ServerHttpPuppeteerTesteranto = PuppeteerHttpTesteranto(
   {
     Suites: {
-      Default: "Testing a very simple smart contract"
+      Default: "some default Suite"
     },
     Givens: {
-      Default: () => {
-        return "MyFirstContract.sol";
+      AnEmptyState: () => {
+        return {};
       }
     },
     Whens: {
-      Increment: (asTestUser) => ({ contract, accounts }) => {
-        return contract.methods.inc().send({ from: accounts[asTestUser] }).on("receipt", function(x) {
-          return x;
-        });
-      },
-      Decrement: (asTestUser) => ({ contract, accounts }) => {
-        return new Promise((res) => {
-          contract.methods.dec().send({ from: accounts[asTestUser] }).then(function(x) {
-            res(x);
-          });
-        });
-      }
+      PostToStatus: (status) => (store) => ["put_status", status],
+      PostToAdd: (n) => (store) => ["put_number", n.toString()]
     },
     Thens: {
-      Get: ({ asTestUser, expectation }) => async ({ contract, accounts }) => {
-        const actual = await contract.methods.get().call();
-        assert.equal(expectation, parseInt(actual));
-      }
+      TheStatusIs: (status) => (store) => ["get_status", status],
+      TheNumberIs: (number) => (store) => ["get_number", number]
     },
     Checks: {
-      AnEmptyState: () => "MyFirstContract.sol"
+      AnEmptyState: () => {
+        return {};
+      }
     }
   },
   (Suite, Given, When, Then, Check) => {
     return [
       Suite.Default(
-        "Testing a very simple smart contract",
+        "Testing the Server with Puppeteer",
         [
-          Given.Default(
-            "idk",
-            [features.hello],
-            [
-              When.Increment(1),
-              When.Increment(1),
-              When.Increment(1),
-              When.Increment(1)
-            ],
-            [
-              Then.Get({ asTestUser: 1, expectation: 4 })
-            ],
-            "my first contract"
+          Given.AnEmptyState(
+            "a boring Puppeteer feature",
+            [],
+            [],
+            [Then.TheStatusIs("some great status")]
+          ),
+          Given.AnEmptyState(
+            "another Puppeteer feature",
+            [],
+            [When.PostToStatus("goodbye")],
+            [Then.TheStatusIs("goodbye")]
           )
         ],
         []
       )
     ];
   },
-  "solSource",
-  "MyFirstContract",
+  serverFactory,
   __filename
 );
 export {
-  MyFirstContractTesteranto
+  ServerHttpPuppeteerTesteranto
 };

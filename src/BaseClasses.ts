@@ -151,12 +151,13 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
     testResourceConfiguration,
     tester
   ) {
-    // console.log(`\n Given: ${this.name}`);
+    console.log(`\n Given: ${this.name}`);
     try {
       if (!this.abort) {
         this.store = await this.givenThat(subject, testResourceConfiguration);
       }
       for (const whenStep of this.whens) {
+        console.log("   whenStep   ", whenStep)
         await whenStep.test(this.store, testResourceConfiguration);
       }
       for (const thenStep of this.thens) {
@@ -209,7 +210,7 @@ export abstract class BaseWhen<IStore, ISelection, IThenShape> {
   }
 
   async test(store: IStore, testResourceConfiguration?) {
-    // console.log(" When:", this.name);
+    console.log(" When:", this.name);
     if (!this.abort) {
       try {
         return await this.andWhen(store, this.actioner, testResourceConfiguration);
@@ -248,9 +249,9 @@ export abstract class BaseThen<ISelection, IStore, IThenShape> {
 
   async test(store: IStore, testResourceConfiguration): Promise<IThenShape | undefined> {
     if (!this.abort) {
-      // console.log(" Then:", this.name);
+      console.log(" Then:", this.name);
       try {
-        return this.thenCB(await this.butThen(store, testResourceConfiguration));
+        return await this.thenCB(await this.butThen(store, testResourceConfiguration));
       } catch (e) {
         this.error = true;
         throw e
@@ -300,7 +301,7 @@ export abstract class BaseCheck<ISubject, IStore, ISelection, IThenShape> {
     testResourceConfiguration,
     tester
   ) {
-    // console.log(`\n Check: ${this.name}`);
+    console.log(`\n Check: ${this.name}`);
     const store = await this.checkThat(subject, testResourceConfiguration);
     await this.checkCB(
       mapValues(this.whens, (when: (p, tc) => any) => {

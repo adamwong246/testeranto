@@ -89,11 +89,14 @@ var BaseGiven = class {
     return;
   }
   async give(subject, index, testResourceConfiguration, tester) {
+    console.log(`
+ Given: ${this.name}`);
     try {
       if (!this.abort) {
         this.store = await this.givenThat(subject, testResourceConfiguration);
       }
       for (const whenStep of this.whens) {
+        console.log("   whenStep   ", whenStep);
         await whenStep.test(this.store, testResourceConfiguration);
       }
       for (const thenStep of this.thens) {
@@ -129,6 +132,7 @@ var BaseWhen = class {
     return this.abort;
   }
   async test(store, testResourceConfiguration) {
+    console.log(" When:", this.name);
     if (!this.abort) {
       try {
         return await this.andWhen(store, this.actioner, testResourceConfiguration);
@@ -156,8 +160,9 @@ var BaseThen = class {
   }
   async test(store, testResourceConfiguration) {
     if (!this.abort) {
+      console.log(" Then:", this.name);
       try {
-        return this.thenCB(await this.butThen(store, testResourceConfiguration));
+        return await this.thenCB(await this.butThen(store, testResourceConfiguration));
       } catch (e) {
         this.error = true;
         throw e;
@@ -177,6 +182,8 @@ var BaseCheck = class {
     return;
   }
   async check(subject, ndx, testResourceConfiguration, tester) {
+    console.log(`
+ Check: ${this.name}`);
     const store = await this.checkThat(subject, testResourceConfiguration);
     await this.checkCB(
       mapValues(this.whens, (when) => {
@@ -266,6 +273,41 @@ var testeranto_config_default = new TesterantoProject(
       "Rectangle",
       "./tests/Rectangle/Rectangle.test.ts",
       "RectangleTesteranto"
+    ],
+    [
+      "Redux",
+      "./tests/Redux+Reselect+React/app.redux.test.ts",
+      "AppReduxTesteranto"
+    ],
+    [
+      "ReduxToolkit",
+      "./tests/Redux+Reselect+React/app.reduxToolkit.test.ts",
+      "AppReduxToolkitTesteranto"
+    ],
+    [
+      "ReactTesteranto",
+      "./tests/Redux+Reselect+React/LoginPage.test.ts",
+      "AppReactTesteranto"
+    ],
+    [
+      "ServerHttpPuppeteer",
+      "./tests/httpServer/server.http.test.ts",
+      "ServerHttpTesteranto"
+    ],
+    [
+      "ServerHttp",
+      "./tests/httpServer/server.puppeteer.test.ts",
+      "ServerHttpPuppeteerTesteranto"
+    ],
+    [
+      "ClassicalComponentReactTestRenderer",
+      "./tests/ClassicalReact/ClassicalComponent.react-test-renderer.test.tsx",
+      "ClassicalComponentReactTestRendererTesteranto"
+    ],
+    [
+      "ClassicalComponentEsbuildPuppeteer",
+      "./tests/ClassicalReact/ClassicalComponent.esbuild-puppeteer.test.ts",
+      "ClassicalComponentEsbuildPuppeteerTesteranto"
     ]
   ],
   "./tests/testerantoFeatures.test.ts"
@@ -417,16 +459,16 @@ var TesterantoFactory = (input, testSpecification, testImplementation, testResou
             });
             this.payload = payload;
           }
-          andWhen(store, actioner, testResource2) {
-            return andWhen(store, actioner, testResource2);
+          async andWhen(store, actioner, testResource2) {
+            return await andWhen(store, actioner, testResource2);
           }
         },
         class Then extends BaseThen {
           constructor(name, callback) {
             super(name, callback);
           }
-          butThen(store, testResourceConfiguration) {
-            return butThen(store, this.thenCB, testResourceConfiguration);
+          async butThen(store, testResourceConfiguration) {
+            return await butThen(store, this.thenCB, testResourceConfiguration);
           }
         },
         class Check extends BaseCheck {

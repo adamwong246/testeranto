@@ -1,14 +1,26 @@
-// tests/solidity/MyFirstContract.test.ts
-import { assert } from "chai";
+// tests/ClassicalReact/ClassicalComponent.react-test-renderer.test.tsx
+import assert from "assert";
 import { features } from "/Users/adam/Code/testeranto.ts/dist/tests/testerantoFeatures.test.js";
 
-// tests/solidity/solidity.testeranto.test.ts
-import fs3 from "fs";
-import path3 from "path";
-import Ganache from "ganache";
-import TruffleCompile from "truffle-compile";
-import Web3 from "web3";
-import { spawnSync } from "node:child_process";
+// tests/ClassicalReact/ClassicalComponent.tsx
+import React from "react";
+var ClassicalComponent = class extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      count: 0
+    };
+  }
+  render() {
+    return /* @__PURE__ */ React.createElement("div", { style: { border: "3px solid green" } }, /* @__PURE__ */ React.createElement("h1", null, "Hello Classical React"), /* @__PURE__ */ React.createElement("pre", { id: "theProps" }, JSON.stringify(this.props)), /* @__PURE__ */ React.createElement("p", null, "foo: ", this.props.foo), /* @__PURE__ */ React.createElement("pre", { id: "theState" }, JSON.stringify(this.state)), /* @__PURE__ */ React.createElement("p", null, "count: ", this.state.count, " times"), /* @__PURE__ */ React.createElement("button", { id: "theButton", onClick: () => {
+      this.setState({ count: this.state.count + 1 });
+    } }, "Click"));
+  }
+};
+
+// tests/ClassicalReact/react-test-renderer.testeranto.test.ts
+import React2 from "react";
+import renderer, { act } from "react-test-renderer";
 
 // src/BaseClasses.ts
 import { mapValues } from "lodash";
@@ -499,120 +511,110 @@ var TesterantoFactory = (input, testSpecification, testImplementation, testResou
   };
 };
 
-// tests/solidity/solidity.testeranto.test.ts
-var truffleCompile = (...args) => new Promise((resolve) => TruffleCompile(...args, (_, data) => resolve(data)));
-var compile = async (filename) => {
-  const sourcePath = path3.join(__dirname, "../contracts", filename);
-  const sources = {
-    [sourcePath]: fs3.readFileSync(sourcePath, { encoding: "utf8" })
-  };
-  const options = {
-    contracts_directory: path3.join(__dirname, "../contracts"),
-    compilers: {
-      solc: {
-        version: "0.5.2",
-        settings: {
-          optimizer: {
-            enabled: false,
-            runs: 200
-          },
-          evmVersion: "byzantium"
-        }
-      }
-    }
-  };
-  const artifact = await truffleCompile(sources, options);
-  return artifact;
-};
-var SolidityTesteranto = (testImplementations, testSpecifications, testInput, contractName, entryPath) => TesterantoFactory(
+// tests/ClassicalReact/react-test-renderer.testeranto.test.ts
+var ReactTestRendererTesteranto = (testImplementations, testSpecifications, testInput, entryPath) => TesterantoFactory(
   testInput,
   testSpecifications,
   testImplementations,
-  "port",
+  "na",
   {
-    beforeAll: async (x) => spawnSync("truffle", ["compile"]),
-    beforeEach: async (subject, initialValues, ethereumNetworkPort) => {
-      const { MyFirstContract } = await compile("../../../contracts/MyFirstContract.sol");
-      const provider = Ganache.provider({ seed: "drizzle-utils" });
-      const web3 = new Web3(provider);
-      const accounts = await web3.eth.getAccounts();
-      const contractInstance = new web3.eth.Contract(MyFirstContract.abi);
-      return {
-        contract: await contractInstance.deploy({ data: MyFirstContract.bytecode }).send({ from: accounts[0], gas: 15e4 }),
-        accounts,
-        provider
-      };
+    beforeEach: function(CComponent, props) {
+      let component;
+      act(() => {
+        component = renderer.create(
+          React2.createElement(CComponent, props, [])
+        );
+      });
+      return component;
     },
-    andWhen: async ({ provider, contract, accounts }, callback, testResource) => {
-      return callback()({ contract, accounts });
+    andWhen: async function(renderer2, actioner) {
+      await act(() => actioner()(renderer2));
+      return renderer2;
     }
   },
   entryPath
 );
 
-// tests/solidity/MyFirstContract.test.ts
-var MyFirstContractTesteranto = SolidityTesteranto(
+// tests/ClassicalReact/ClassicalComponent.react-test-renderer.test.tsx
+var myFeature = features.hello;
+var ClassicalComponentReactTestRendererTesteranto = ReactTestRendererTesteranto(
   {
     Suites: {
-      Default: "Testing a very simple smart contract"
+      Default: "some default Suite"
     },
     Givens: {
-      Default: () => {
-        return "MyFirstContract.sol";
+      AnEmptyState: () => {
+        return {};
+      },
+      SomeState: () => {
+        return { foo: "bar" };
       }
     },
     Whens: {
-      Increment: (asTestUser) => ({ contract, accounts }) => {
-        return contract.methods.inc().send({ from: accounts[asTestUser] }).on("receipt", function(x) {
-          return x;
-        });
-      },
-      Decrement: (asTestUser) => ({ contract, accounts }) => {
-        return new Promise((res) => {
-          contract.methods.dec().send({ from: accounts[asTestUser] }).then(function(x) {
-            res(x);
-          });
-        });
-      }
+      IClickTheButton: () => (component) => component.root.findByType("button").props.onClick()
     },
     Thens: {
-      Get: ({ asTestUser, expectation }) => async ({ contract, accounts }) => {
-        const actual = await contract.methods.get().call();
-        assert.equal(expectation, parseInt(actual));
+      ThePropsIs: (expectation) => (component) => {
+        return assert.deepEqual(component.toJSON().children[1], {
+          type: "pre",
+          props: { id: "theProps" },
+          children: [
+            JSON.stringify(expectation)
+          ]
+        });
+      },
+      TheStatusIs: (expectation) => (component) => {
+        return assert.deepEqual(component.toJSON().children[3], {
+          type: "pre",
+          props: { id: "theState" },
+          children: [
+            JSON.stringify(expectation)
+          ]
+        });
       }
     },
     Checks: {
-      AnEmptyState: () => "MyFirstContract.sol"
+      AnEmptyState: () => {
+        return {};
+      }
     }
   },
   (Suite, Given, When, Then, Check) => {
     return [
       Suite.Default(
-        "Testing a very simple smart contract",
+        "a classical react component, bundled with esbuild and tested with puppeteer",
         [
-          Given.Default(
+          Given.AnEmptyState(
             "idk",
-            [features.hello],
+            [],
             [
-              When.Increment(1),
-              When.Increment(1),
-              When.Increment(1),
-              When.Increment(1)
+              When.IClickTheButton()
             ],
             [
-              Then.Get({ asTestUser: 1, expectation: 4 })
+              Then.ThePropsIs({ "children": [] }),
+              Then.TheStatusIs({ "count": 1 })
+            ]
+          ),
+          Given.AnEmptyState(
+            "idk",
+            [],
+            [
+              When.IClickTheButton(),
+              When.IClickTheButton(),
+              When.IClickTheButton()
             ],
-            "my first contract"
+            [
+              Then.TheStatusIs({ "count": 3 })
+            ]
           )
         ],
         []
       )
     ];
   },
-  "solSource",
-  "MyFirstContract",
+  ClassicalComponent,
   __filename
 );
 export {
-  MyFirstContractTesteranto
+  ClassicalComponentReactTestRendererTesteranto
 };

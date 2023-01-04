@@ -118,7 +118,7 @@ export class TesterantoScheduler {
       this.featureSrcMd5 = hash;
       this.setFeatures((fresh(distFile, require)['default']));
     } else {
-      console.log("feature file changed byt md5 hash did not")
+      console.log("feature file changed but md5 hash did not")
     }
   }
 
