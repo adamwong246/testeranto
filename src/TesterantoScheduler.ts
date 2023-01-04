@@ -123,7 +123,6 @@ export class TesterantoScheduler {
   }
 
   private async setFeatures(testerantoFeatures: TesterantoFeatures) {
-    console.log("testerantoFeatures", testerantoFeatures.networks());
     this.testerantoFeatures = testerantoFeatures;
     await fs.promises.mkdir(featureOutPath, { recursive: true });
 

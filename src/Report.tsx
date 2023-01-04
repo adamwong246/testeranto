@@ -225,6 +225,90 @@ export function Report() {
             </Tab.Container>
           </Tab>
 
+          <Tab eventKey="networks" title="networks">
+            <Tab.Container id="left-tabs-example88" defaultActiveKey={`networks-dags`}>
+              <Row>
+                <Col sm={3}>
+                  <Nav variant="pills" className="flex-column">
+                    <Nav.Link eventKey={`networks-dags`}>
+                      DAG
+                    </Nav.Link>
+                    <Nav.Link eventKey={`networks-directed`}>
+                      Directed (not acyclic)
+                    </Nav.Link>
+                    <Nav.Link eventKey={`networks-undirected`}>
+                      Undirected
+                    </Nav.Link>
+                  </Nav>
+                </Col>
+                <Col sm={9}>
+                  <Tab.Content>
+                    <Tab.Pane eventKey={`networks-dags`} >
+                      <Tab.Container defaultActiveKey={`networks-dags-0`}>
+                        <Row>
+                          <Col sm={3}>
+                            <Nav variant="pills" className="flex-column">
+                              {data.summaries.dags.map((g, ndx2) => <Nav.Item key={ndx2}>
+                                <Nav.Link eventKey={`networks-dags-${ndx2}`}>
+                                  {g.name}
+                                </Nav.Link>
+                              </Nav.Item>)}
+                            </Nav>
+                          </Col>
+                          <Col sm={9}>
+                            <Tab.Content>
+                              <p>idk dags</p>
+                            </Tab.Content>
+                          </Col>
+                        </Row>
+                      </Tab.Container>
+                    </Tab.Pane>
+                    <Tab.Pane eventKey={`networks-directed`} >
+                      <Tab.Container defaultActiveKey={`networks-directed-0`}>
+                        <Row>
+                          <Col sm={3}>
+                            <Nav variant="pills" className="flex-column">
+                              {data.summaries.directed.map((g, ndx2) => <Nav.Item key={ndx2}>
+                                <Nav.Link eventKey={`networks-directed-${ndx2}`}>
+                                  {g.name}
+                                </Nav.Link>
+                              </Nav.Item>)}
+                            </Nav>
+                          </Col>
+                          <Col sm={9}>
+                            <Tab.Content>
+                              <p>idk directed</p>
+                            </Tab.Content>
+                          </Col>
+                        </Row>
+                      </Tab.Container>
+                    </Tab.Pane>
+                    <Tab.Pane eventKey={`networks-undirected`} >
+                      <Tab.Container defaultActiveKey={`networks-undirected-0`}>
+                        <Row>
+                          <Col sm={3}>
+                            <Nav variant="pills" className="flex-column">
+                              {data.summaries.undirected.map((g, ndx2) => <Nav.Item key={ndx2}>
+                                <Nav.Link eventKey={`networks-undirected-${ndx2}`}>
+                                  {g.name}
+                                </Nav.Link>
+                              </Nav.Item>)}
+                            </Nav>
+                          </Col>
+                          <Col sm={9}>
+                            <Tab.Content>
+                              <p>idk undirected</p>
+                            </Tab.Content>
+                          </Col>
+                        </Row>
+                      </Tab.Container>
+                    </Tab.Pane>
+                  </Tab.Content>
+                </Col>
+              </Row>
+            </Tab.Container>
+          </Tab>
+
           <Tab eventKey="summary" title="summaries">
             <Tab.Container id="left-tabs-example3" defaultActiveKey={`summary-0`}>
               <Row>
@@ -239,8 +323,8 @@ export function Report() {
                 </Col>
                 <Col sm={9}>
                   <Tab.Content>
-                    {Object.keys(data.summaries).map((summaryKey, ndx2) => <Tab.Pane key={ndx2} eventKey={`summary-${ndx2}`} >
-                      <pre><code>{JSON.stringify(data.summaries[summaryKey].dagReduction, null, 2)}</code></pre>
+                    {Object.keys(data.summaries.dags).map((summaryKey, ndx2) => <Tab.Pane key={ndx2} eventKey={`summary-${ndx2}`} >
+                      <pre><code>{JSON.stringify(data.summaries.dags[summaryKey].dagReduction, null, 2)}</code></pre>
                     </Tab.Pane>)}
                   </Tab.Content>
                 </Col>

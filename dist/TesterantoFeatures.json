@@ -4,7 +4,7 @@
       "name": "hello",
       "inNetworks": [
         {
-          "network": "Semantic",
+          "network": "some semantic directed graph",
           "neighbors": [
             "aloha"
           ]
@@ -13,7 +13,8 @@
           "network": "Priority",
           "neighbors": [
             "launch the rocket",
-            "aloha"
+            "aloha",
+            "gutentag"
           ]
         }
       ]
@@ -22,13 +23,13 @@
       "name": "aloha",
       "inNetworks": [
         {
-          "network": "undirected",
+          "network": "an undirected semantic graph",
           "neighbors": [
             "gutentag"
           ]
         },
         {
-          "network": "Semantic",
+          "network": "some semantic directed graph",
           "neighbors": [
             "hello"
           ]
@@ -45,28 +46,50 @@
       "name": "gutentag",
       "inNetworks": [
         {
-          "network": "undirected",
+          "network": "an undirected semantic graph",
           "neighbors": [
             "aloha"
           ]
         },
         {
-          "network": "Semantic",
+          "network": "some semantic directed graph",
           "neighbors": [
             "hola"
+          ]
+        },
+        {
+          "network": "Priority",
+          "neighbors": [
+            "hello",
+            "hola",
+            "buenos dias",
+            "bien venidos"
           ]
         }
       ]
     },
     {
       "name": "buenos dias",
-      "inNetworks": []
+      "inNetworks": [
+        {
+          "network": "Priority",
+          "neighbors": [
+            "gutentag"
+          ]
+        }
+      ]
     },
     {
       "name": "hola",
       "inNetworks": [
         {
-          "network": "Semantic",
+          "network": "some semantic directed graph",
+          "neighbors": [
+            "gutentag"
+          ]
+        },
+        {
+          "network": "Priority",
           "neighbors": [
             "gutentag"
           ]
@@ -75,12 +98,81 @@
     },
     {
       "name": "bien venidos",
-      "inNetworks": []
+      "inNetworks": [
+        {
+          "network": "Priority",
+          "neighbors": [
+            "gutentag"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "launch the rocket",
+      "inNetworks": [
+        {
+          "network": "Priority",
+          "neighbors": [
+            "build the rocket silo",
+            "hello"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "build the rocket silo",
+      "due": "2023-05-02T02:36:34.000Z",
+      "inNetworks": [
+        {
+          "network": "Priority",
+          "neighbors": [
+            "launch the rocket",
+            "build the rocket"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "build the rocket",
+      "due": "2023-06-06T02:36:34.000Z",
+      "inNetworks": [
+        {
+          "network": "an undirected semantic graph",
+          "neighbors": [
+            "build the rocket payload"
+          ]
+        },
+        {
+          "network": "Priority",
+          "neighbors": [
+            "build the rocket silo",
+            "build the rocket payload"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "build the rocket payload",
+      "due": "2023-06-06T02:36:34.000Z",
+      "inNetworks": [
+        {
+          "network": "an undirected semantic graph",
+          "neighbors": [
+            "build the rocket"
+          ]
+        },
+        {
+          "network": "Priority",
+          "neighbors": [
+            "build the rocket"
+          ]
+        }
+      ]
     }
   ],
   "networks": [
     {
-      "name": "undirected",
+      "name": "an undirected semantic graph",
       "graph": {
         "options": {
           "type": "undirected",
@@ -104,7 +196,7 @@
         ],
         "edges": [
           {
-            "key": "geid_196_0",
+            "key": "geid_17_0",
             "source": "gutentag",
             "target": "aloha",
             "attributes": {
@@ -112,7 +204,7 @@
             }
           },
           {
-            "key": "geid_196_1",
+            "key": "geid_17_1",
             "source": "build the rocket",
             "target": "build the rocket payload",
             "attributes": {
@@ -123,7 +215,7 @@
       }
     },
     {
-      "name": "Semantic",
+      "name": "some semantic directed graph",
       "graph": {
         "options": {
           "type": "directed",
@@ -147,7 +239,7 @@
         ],
         "edges": [
           {
-            "key": "geid_195_0",
+            "key": "geid_16_0",
             "source": "hello",
             "target": "aloha",
             "attributes": {
@@ -155,7 +247,7 @@
             }
           },
           {
-            "key": "geid_195_1",
+            "key": "geid_16_1",
             "source": "gutentag",
             "target": "hola",
             "attributes": {
@@ -179,23 +271,86 @@
             "key": "launch the rocket"
           },
           {
+            "key": "build the rocket silo"
+          },
+          {
+            "key": "build the rocket"
+          },
+          {
+            "key": "build the rocket payload"
+          },
+          {
             "key": "hello"
           },
           {
             "key": "aloha"
+          },
+          {
+            "key": "gutentag"
+          },
+          {
+            "key": "buenos dias"
+          },
+          {
+            "key": "hola"
+          },
+          {
+            "key": "bien venidos"
           }
         ],
         "edges": [
           {
-            "key": "geid_194_0",
+            "key": "geid_15_0",
+            "source": "launch the rocket",
+            "target": "build the rocket silo",
+            "attributes": {}
+          },
+          {
+            "key": "geid_15_1",
+            "source": "build the rocket silo",
+            "target": "build the rocket",
+            "attributes": {}
+          },
+          {
+            "key": "geid_15_2",
+            "source": "build the rocket",
+            "target": "build the rocket payload",
+            "attributes": {}
+          },
+          {
+            "key": "geid_15_3",
             "source": "launch the rocket",
             "target": "hello",
             "attributes": {}
           },
           {
-            "key": "geid_194_1",
+            "key": "geid_15_4",
             "source": "hello",
             "target": "aloha",
+            "attributes": {}
+          },
+          {
+            "key": "geid_15_5",
+            "source": "hello",
+            "target": "gutentag",
+            "attributes": {}
+          },
+          {
+            "key": "geid_15_6",
+            "source": "gutentag",
+            "target": "buenos dias",
+            "attributes": {}
+          },
+          {
+            "key": "geid_15_7",
+            "source": "hola",
+            "target": "gutentag",
+            "attributes": {}
+          },
+          {
+            "key": "geid_15_8",
+            "source": "gutentag",
+            "target": "bien venidos",
             "attributes": {}
           }
         ]

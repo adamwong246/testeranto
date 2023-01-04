@@ -20,12 +20,19 @@ var features = {
   bienVenidos: new MyFeature("bien venidos")
 };
 var priorityGraph = new TesterantoGraphDirectedAcylic("Priority");
+priorityGraph.connect(features.root.name, features.buildSilo.name);
+priorityGraph.connect(features.buildSilo.name, features.buildRocket.name);
+priorityGraph.connect(features.buildRocket.name, features.buildSatellite.name);
 priorityGraph.connect(features.root.name, features.hello.name);
 priorityGraph.connect(features.hello.name, features.aloha.name);
-var semantic = new TesterantoGraphDirected("Semantic");
+priorityGraph.connect(features.hello.name, features.gutentag.name);
+priorityGraph.connect(features.gutentag.name, features.buenosDias.name);
+priorityGraph.connect(features.hola.name, features.gutentag.name);
+priorityGraph.connect(features.gutentag.name, features.bienVenidos.name);
+var semantic = new TesterantoGraphDirected("some semantic directed graph");
 semantic.connect(features.hello.name, features.aloha.name, "superceedes");
 semantic.connect(features.gutentag.name, features.hola.name, "negates");
-var undirected = new TesterantoGraphUndirected("undirected");
+var undirected = new TesterantoGraphUndirected("an undirected semantic graph");
 undirected.connect(features.gutentag.name, features.aloha.name, "related");
 undirected.connect(features.buildRocket.name, features.buildSatellite.name, "overlap");
 var testerantoFeatures_test_default = new TesterantoFeatures(
@@ -35,7 +42,11 @@ var testerantoFeatures_test_default = new TesterantoFeatures(
     features.gutentag,
     features.buenosDias,
     features.hola,
-    features.bienVenidos
+    features.bienVenidos,
+    features.root,
+    features.buildSilo,
+    features.buildRocket,
+    features.buildSatellite
   ],
   {
     undirected: [undirected],
