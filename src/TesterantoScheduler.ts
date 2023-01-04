@@ -189,7 +189,7 @@ export class TesterantoScheduler {
 
 
 
-      for await (const given of result.test.givens) {
+      for await (const [gNdx, given] of result.test.givens.entries()) {
         for await (const givenFeature of given.features) {
           for await (const knownFeature of this.testerantoFeatures.features) {
 

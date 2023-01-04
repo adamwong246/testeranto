@@ -4,10 +4,12 @@ import path from "path";
 export class TesterantoProject {
   tests: [string, string, string];
   features: string;
+  ports: string[];
 
-  constructor(tests, features) {
+  constructor(tests, features, ports) {
     this.tests = tests;
     this.features = features;
+    this.ports = ports
   }
 
   builder() {

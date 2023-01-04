@@ -3,7 +3,7 @@ import { watchFile } from 'node:fs';
 import testerantoConfig from "../testeranto.config";
 import { TesterantoScheduler } from "./TesterantoScheduler";
 
-const TRM = new TesterantoScheduler(['3001']);
+const TRM = new TesterantoScheduler(testerantoConfig.ports);
 
 (async function () {
   for await (const [ndx, [key, sourcefile, className]] of testerantoConfig.tests.entries()) {
@@ -45,7 +45,7 @@ const TRM = new TesterantoScheduler(['3001']);
     });
   });
 
-  
+
 
   TRM.launch();
 

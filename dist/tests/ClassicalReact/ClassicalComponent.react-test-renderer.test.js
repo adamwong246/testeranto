@@ -258,9 +258,10 @@ var TesterantoBasic = class {
 import fs from "fs";
 import path from "path";
 var TesterantoProject = class {
-  constructor(tests, features2) {
+  constructor(tests, features2, ports) {
     this.tests = tests;
     this.features = features2;
+    this.ports = ports;
   }
   builder() {
     const text = JSON.stringify({ tests: this.tests, features: this.features });
@@ -315,7 +316,8 @@ var testeranto_config_default = new TesterantoProject(
       "ClassicalComponentEsbuildPuppeteerTesteranto"
     ]
   ],
-  "./tests/testerantoFeatures.test.ts"
+  "./tests/testerantoFeatures.test.ts",
+  ["3000", "3001", "3002"]
 );
 
 // src/level1.ts
@@ -327,7 +329,9 @@ var Testeranto = class {
     );
     const classyGivens = mapValues2(
       testImplementation.Givens,
-      (z) => (name, features2, whens, thens, ...xtrasW) => new givenKlasser.prototype.constructor(name, features2, whens, thens, z(...xtrasW))
+      (z) => (features2, whens, thens, ...xtrasW) => {
+        return new givenKlasser.prototype.constructor(z.name, features2, whens, thens, z(...xtrasW));
+      }
     );
     const classyWhens = mapValues2(
       testImplementation.Whens,
@@ -569,7 +573,6 @@ var ClassicalComponentReactTestRendererTesteranto = ReactTestRendererTesteranto(
         "a classical react component, bundled with esbuild and tested with puppeteer",
         [
           Given.AnEmptyState(
-            "idk",
             [],
             [
               When.IClickTheButton()
@@ -580,7 +583,6 @@ var ClassicalComponentReactTestRendererTesteranto = ReactTestRendererTesteranto(
             ]
           ),
           Given.AnEmptyState(
-            "idk",
             [],
             [
               When.IClickTheButton(),

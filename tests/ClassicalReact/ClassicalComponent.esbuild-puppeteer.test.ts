@@ -74,7 +74,6 @@ export const ClassicalComponentEsbuildPuppeteerTesteranto = EsbuildPuppeteerTest
         "a classical react component, bundled with esbuild and tested with puppeteer",
         [
           Given.AnEmptyState(
-            "default",
             [],
             [],
             [
@@ -83,7 +82,6 @@ export const ClassicalComponentEsbuildPuppeteerTesteranto = EsbuildPuppeteerTest
             ]
           ),
           Given.AnEmptyState(
-            "default",
             [],
             [When.IClickTheButton()],
             [
@@ -93,7 +91,6 @@ export const ClassicalComponentEsbuildPuppeteerTesteranto = EsbuildPuppeteerTest
           ),
 
           Given.AnEmptyState(
-            "default",
             [features.hello],
             [
               When.IClickTheButton(),
@@ -104,7 +101,6 @@ export const ClassicalComponentEsbuildPuppeteerTesteranto = EsbuildPuppeteerTest
           ),
 
           Given.AnEmptyState(
-            "default",
             [features.hello],
             [
               When.IClickTheButton(),

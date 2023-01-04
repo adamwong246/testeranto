@@ -29,5 +29,6 @@ export default new TesterantoProject(
     ],
   ],
   './tests/testerantoFeatures.test.ts',
+  ['3000', '3001', '3002']
   // __filename
 );

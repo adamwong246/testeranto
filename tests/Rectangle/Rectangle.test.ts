@@ -60,14 +60,12 @@ export const RectangleTesteranto =
           "Testing the Rectangle class",
           [
             Given.Default(
-              "test 1",
               [features.hello],
               [When.setWidth(4), When.setHeight(9)],
               [Then.getWidth(4), Then.getHeight(9)]
             ),
 
             Given.WidthOfOneAndHeightOfOne(
-              "test 2",
               [],
               [When.setWidth(4), When.setHeight(5)],
               [
@@ -78,13 +76,11 @@ export const RectangleTesteranto =
               ]
             ),
             Given.WidthOfOneAndHeightOfOne(
-              "test 3",
               [features.hola],
               [When.setHeight(4), When.setWidth(3)],
               [Then.area(12)]
             ),
             Given.WidthOfOneAndHeightOfOne(
-              "test 4",
               [features.hola],
               [
                 When.setHeight(3),
@@ -95,7 +91,6 @@ export const RectangleTesteranto =
               [Then.area(30), Then.circumference(22)]
             ),
             Given.WidthOfOneAndHeightOfOne(
-              "test 5",
               [features.gutentag, features.aloha],
               [When.setHeight(3), When.setWidth(4)],
               [
@@ -107,7 +102,6 @@ export const RectangleTesteranto =
             ),
 
             Given.WidthOfOneAndHeightOfOne(
-              "this test will fail",
               [features.hello],
               [When.setHeight(33), When.setWidth(34)],
               [

@@ -237,9 +237,10 @@ var TesterantoBasic = class {
 import fs from "fs";
 import path from "path";
 var TesterantoProject = class {
-  constructor(tests, features2) {
+  constructor(tests, features2, ports) {
     this.tests = tests;
     this.features = features2;
+    this.ports = ports;
   }
   builder() {
     const text = JSON.stringify({ tests: this.tests, features: this.features });
@@ -294,7 +295,8 @@ var testeranto_config_default = new TesterantoProject(
       "ClassicalComponentEsbuildPuppeteerTesteranto"
     ]
   ],
-  "./tests/testerantoFeatures.test.ts"
+  "./tests/testerantoFeatures.test.ts",
+  ["3000", "3001", "3002"]
 );
 
 // src/level1.ts
@@ -306,7 +308,9 @@ var Testeranto = class {
     );
     const classyGivens = mapValues2(
       testImplementation.Givens,
-      (z) => (name, features2, whens, thens, ...xtrasW) => new givenKlasser.prototype.constructor(name, features2, whens, thens, z(...xtrasW))
+      (z) => (features2, whens, thens, ...xtrasW) => {
+        return new givenKlasser.prototype.constructor(z.name, features2, whens, thens, z(...xtrasW));
+      }
     );
     const classyWhens = mapValues2(
       testImplementation.Whens,
@@ -511,13 +515,11 @@ var RectangleTesteranto = TesterantoFactory(
         "Testing the Rectangle class",
         [
           Given.Default(
-            "test 1",
             [features.hello],
             [When.setWidth(4), When.setHeight(9)],
             [Then.getWidth(4), Then.getHeight(9)]
           ),
           Given.WidthOfOneAndHeightOfOne(
-            "test 2",
             [],
             [When.setWidth(4), When.setHeight(5)],
             [
@@ -528,13 +530,11 @@ var RectangleTesteranto = TesterantoFactory(
             ]
           ),
           Given.WidthOfOneAndHeightOfOne(
-            "test 3",
             [features.hola],
             [When.setHeight(4), When.setWidth(3)],
             [Then.area(12)]
           ),
           Given.WidthOfOneAndHeightOfOne(
-            "test 4",
             [features.hola],
             [
               When.setHeight(3),
@@ -545,7 +545,6 @@ var RectangleTesteranto = TesterantoFactory(
             [Then.area(30), Then.circumference(22)]
           ),
           Given.WidthOfOneAndHeightOfOne(
-            "test 5",
             [features.gutentag, features.aloha],
             [When.setHeight(3), When.setWidth(4)],
             [
@@ -553,6 +552,13 @@ var RectangleTesteranto = TesterantoFactory(
               Then.getWidth(4),
               Then.area(12),
               Then.circumference(14)
+            ]
+          ),
+          Given.WidthOfOneAndHeightOfOne(
+            [features.hello],
+            [When.setHeight(33), When.setWidth(34)],
+            [
+              Then.getHeight(3)
             ]
           )
         ],

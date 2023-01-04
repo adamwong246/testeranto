@@ -1,7 +1,7 @@
 import { DirectedGraph } from 'graphology';
 import { BaseGiven, BaseCheck, BaseSuite, BaseFeature, BaseWhen, BaseThen } from "./BaseClasses";
 
-export type  ITTestResource = "port" | "na";
+export type ITTestResource = "port" | "na";
 
 export type IT_FeatureNetwork = { name: string, graph: DirectedGraph };
 
@@ -43,7 +43,6 @@ export type ITestSpecification<ITestShape extends ITTestShape> = (
   },
   Given: {
     [K in keyof ITestShape["givens"]]: (
-      name: string,
       features: BaseFeature[],
       whens: BaseWhen<unknown, unknown, unknown>[],
       thens: BaseThen<unknown, unknown, unknown>[],

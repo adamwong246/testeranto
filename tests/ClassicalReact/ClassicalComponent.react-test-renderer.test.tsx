@@ -79,7 +79,7 @@ export const ClassicalComponentReactTestRendererTesteranto = ReactTestRendererTe
       Suite.Default(
         "a classical react component, bundled with esbuild and tested with puppeteer",
         [
-          Given.AnEmptyState("idk",
+          Given.AnEmptyState(
             [],
             [
               When.IClickTheButton()
@@ -90,7 +90,7 @@ export const ClassicalComponentReactTestRendererTesteranto = ReactTestRendererTe
             ]
           ),
 
-          Given.AnEmptyState("idk",
+          Given.AnEmptyState(
             [],
             [
               When.IClickTheButton(),

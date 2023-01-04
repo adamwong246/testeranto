@@ -2,7 +2,7 @@
   "name": "Testing the LoginPage as react",
   "givens": [
     {
-      "name": "Set the email and check the email",
+      "name": "default",
       "whens": [
         {
           "name": "TheEmailIsSetTo: adam@email.com"
@@ -15,7 +15,7 @@
       ]
     },
     {
-      "name": "Set the email by initial state, then set the email normally, and then check some other stuff",
+      "name": "default",
       "whens": [
         {
           "name": "TheEmailIsSetTo: adam@email.com"
@@ -40,7 +40,7 @@
       ]
     },
     {
-      "name": "Don't show an email error just because the email does not validate",
+      "name": "default",
       "whens": [
         {
           "name": "TheEmailIsSetTo: adam"
@@ -53,7 +53,7 @@
       ]
     },
     {
-      "name": "Do show an email error after submitting",
+      "name": "default",
       "whens": [
         {
           "name": "TheEmailIsSetTo: adam"
