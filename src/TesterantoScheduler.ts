@@ -6,7 +6,7 @@ import { topologicalSort } from 'graphology-dag/topological-sort';
 import { TesterantoFeatures } from './Features';
 import { ITestJob, IT_FeatureNetwork } from './testShapes';
 
-const TIMEOUT = 500;
+const TIMEOUT = 100;
 const OPEN_PORT = '';
 const testOutPath = "./dist/results/";
 const featureOutPath = "./dist/";
@@ -125,7 +125,6 @@ export class TesterantoScheduler {
   private async setFeatures(testerantoFeatures: TesterantoFeatures) {
     this.testerantoFeatures = testerantoFeatures;
     await fs.promises.mkdir(featureOutPath, { recursive: true });
-
     await fs.writeFile(
       `${featureOutPath}TesterantoFeatures.json`,
       JSON.stringify(testerantoFeatures.toObj(), null, 2),
@@ -135,7 +134,6 @@ export class TesterantoScheduler {
         }
       }
     );
-
     this.regenerateReports();
   }
 
@@ -161,7 +159,6 @@ export class TesterantoScheduler {
         }
       );
 
-      // let i = 0;
       for (const [gNdx, g] of testJob.test.givens.entries()) {
         for (const testArtifactKey of Object.keys(g.testArtifacts)) {
           for (const [ndx, testArtifact] of g.testArtifacts[testArtifactKey].entries()) {
@@ -178,24 +175,15 @@ export class TesterantoScheduler {
                 resolve(result)
               }
             );
-
-            // i = i + 1;
-
           }
         }
-
       }
-
-
-
       for await (const [gNdx, given] of result.test.givens.entries()) {
         for await (const givenFeature of given.features) {
           for await (const knownFeature of this.testerantoFeatures.features) {
-
             if (!this.featureTestJoin[givenFeature.name]) {
               this.featureTestJoin[givenFeature.name] = {};
             }
-
             if (givenFeature.name === knownFeature.name) {
               this.featureTestJoin[givenFeature.name][given.name] = {
                 suite: result.test,
@@ -234,10 +222,8 @@ export class TesterantoScheduler {
           resolve(result)
         }
       );
-
       this.regenerateReports();
-    }))
-
+    }));
     this.queue.push({
       key,
       aborter: testJob.test.aborter,
@@ -246,8 +232,6 @@ export class TesterantoScheduler {
     });
   }
 
-  // private dumpNetworks = () => { }
-
   private dumpNetworks = () => {
     return {
       dags: this.dumpNetworksDags(),
@@ -255,6 +239,7 @@ export class TesterantoScheduler {
       undirected: this.testerantoFeatures.graphs.undirected.map((g) => { return { name: g.name } })
     }
   }
+
   private dumpNetworksDags = () => {
     return (this.testerantoFeatures.graphs.dags.map((network: IT_FeatureNetwork) => {
       const graph = network.graph;
