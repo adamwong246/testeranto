@@ -4,7 +4,6 @@ import Ganache from "ganache";
 import TruffleCompile from "truffle-compile";
 import Web3 from 'web3';
 import { Contract } from 'web3-eth-contract';
-import { SpawnSyncReturns, spawnSync } from 'node:child_process';
 
 import { TesterantoFactory } from "../../src/index";
 import { ITestImplementation, ITestSpecification, ITTestShape } from "../../src/testShapes";
@@ -19,9 +18,13 @@ type WhenShape = any;
 type ThenShape = any;
 type Input = any;
 
+// import { AbiItem } from "web3-utils";
+type Ibis = any;  //{ abi: AbiItem | AbiItem[], bytecode: string }
+
 // Promisify truffle-compile
 const truffleCompile = (...args) =>
   new Promise(resolve => TruffleCompile(...args, (_, data) => resolve(data)));
+
 
 const compile = async filename => {
   const sourcePath = path.join(__dirname, "../contracts", filename);
@@ -68,7 +71,7 @@ export const SolidityTesteranto = <
   TesterantoFactory<
     ITestShape,
     string,
-    SpawnSyncReturns<Buffer>,
+    Ibis,
     Selection,
     Selection,
     WhenShape,
@@ -81,27 +84,24 @@ export const SolidityTesteranto = <
     testImplementations,
     "port",
     {
-      beforeAll: async (x) => spawnSync('truffle', ['compile']),
-
-      beforeEach: async (subject, initialValues: any, ethereumNetworkPort: string) => {
-        /* @ts-ignore:next-line */
-        const { MyFirstContract } = await compile("../../../contracts/MyFirstContract.sol");
+      beforeAll: async () => {
+        return (await compile(`../../../contracts/${contractName}.sol`) as any)[contractName] as Ibis
+      },
+      beforeEach: async (contract: Ibis, initialValues: any, ethereumNetworkPort: string) => {
         const provider = Ganache.provider({ seed: "drizzle-utils" });
         /* @ts-ignore:next-line */
         const web3 = new Web3(provider);
         const accounts = await web3.eth.getAccounts();
-        const contractInstance = new web3.eth.Contract(MyFirstContract.abi);
         return {
-          contract: await contractInstance
-            .deploy({ data: MyFirstContract.bytecode })
+          contract: await (new web3.eth.Contract(contract.abi))
+            .deploy({ data: contract.bytecode })
             .send({ from: accounts[0], gas: 150000 }),
           accounts,
           provider
         };
       },
-      andWhen: async ({ provider, contract, accounts }, callback: any, testResource: never) => {
-        return (callback())({ contract, accounts });
-      },
+      andWhen: async ({ provider, contract, accounts }, callback: any, testResource: never) =>
+        (callback())({ contract, accounts }),
     },
     entryPath
   )

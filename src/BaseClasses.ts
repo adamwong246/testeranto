@@ -166,6 +166,7 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
       }
     } catch (e) {
       this.error = e;
+      console.log('\u0007');// bell
       throw e;
     } finally {
 

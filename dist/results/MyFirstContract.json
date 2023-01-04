@@ -3,6 +3,15 @@
   "givens": [
     {
       "name": "idk",
+      "whens": [],
+      "thens": [
+        {
+          "name": "Get: [object Object]"
+        }
+      ]
+    },
+    {
+      "name": "idk",
       "whens": [
         {
           "name": "Increment: 1"
@@ -12,6 +21,53 @@
         },
         {
           "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        }
+      ],
+      "thens": [
+        {
+          "name": "Get: [object Object]"
+        }
+      ]
+    },
+    {
+      "name": "idk",
+      "whens": [
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Decrement: 1"
+        }
+      ],
+      "thens": [
+        {
+          "name": "Get: [object Object]"
+        }
+      ]
+    },
+    {
+      "name": "idk",
+      "whens": [
+        {
+          "name": "Decrement: 1"
+        },
+        {
+          "name": "Decrement: 1"
+        },
+        {
+          "name": "Decrement: 1"
         },
         {
           "name": "Increment: 1"

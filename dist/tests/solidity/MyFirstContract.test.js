@@ -8,7 +8,6 @@ import path3 from "path";
 import Ganache from "ganache";
 import TruffleCompile from "truffle-compile";
 import Web3 from "web3";
-import { spawnSync } from "node:child_process";
 
 // src/BaseClasses.ts
 import { mapValues } from "lodash";
@@ -114,6 +113,7 @@ var BaseGiven = class {
       }
     } catch (e) {
       this.error = e;
+      console.log("\x07");
       throw e;
     } finally {
       try {
@@ -277,46 +277,6 @@ var testeranto_config_default = new TesterantoProject(
       "MyFirstContract",
       "./tests/solidity/MyFirstContract.test.ts",
       "MyFirstContractTesteranto"
-    ],
-    [
-      "Rectangle",
-      "./tests/Rectangle/Rectangle.test.ts",
-      "RectangleTesteranto"
-    ],
-    [
-      "Redux",
-      "./tests/Redux+Reselect+React/app.redux.test.ts",
-      "AppReduxTesteranto"
-    ],
-    [
-      "ReduxToolkit",
-      "./tests/Redux+Reselect+React/app.reduxToolkit.test.ts",
-      "AppReduxToolkitTesteranto"
-    ],
-    [
-      "ReactTesteranto",
-      "./tests/Redux+Reselect+React/LoginPage.test.ts",
-      "AppReactTesteranto"
-    ],
-    [
-      "ServerHttpPuppeteer",
-      "./tests/httpServer/server.http.test.ts",
-      "ServerHttpTesteranto"
-    ],
-    [
-      "ServerHttp",
-      "./tests/httpServer/server.puppeteer.test.ts",
-      "ServerHttpPuppeteerTesteranto"
-    ],
-    [
-      "ClassicalComponentReactTestRenderer",
-      "./tests/ClassicalReact/ClassicalComponent.react-test-renderer.test.tsx",
-      "ClassicalComponentReactTestRendererTesteranto"
-    ],
-    [
-      "ClassicalComponentEsbuildPuppeteer",
-      "./tests/ClassicalReact/ClassicalComponent.esbuild-puppeteer.test.ts",
-      "ClassicalComponentEsbuildPuppeteerTesteranto"
     ]
   ],
   "./tests/testerantoFeatures.test.ts"
@@ -530,22 +490,20 @@ var SolidityTesteranto = (testImplementations, testSpecifications, testInput, co
   testImplementations,
   "port",
   {
-    beforeAll: async (x) => spawnSync("truffle", ["compile"]),
-    beforeEach: async (subject, initialValues, ethereumNetworkPort) => {
-      const { MyFirstContract } = await compile("../../../contracts/MyFirstContract.sol");
+    beforeAll: async () => {
+      return (await compile(`../../../contracts/${contractName}.sol`))[contractName];
+    },
+    beforeEach: async (contract, initialValues, ethereumNetworkPort) => {
       const provider = Ganache.provider({ seed: "drizzle-utils" });
       const web3 = new Web3(provider);
       const accounts = await web3.eth.getAccounts();
-      const contractInstance = new web3.eth.Contract(MyFirstContract.abi);
       return {
-        contract: await contractInstance.deploy({ data: MyFirstContract.bytecode }).send({ from: accounts[0], gas: 15e4 }),
+        contract: await new web3.eth.Contract(contract.abi).deploy({ data: contract.bytecode }).send({ from: accounts[0], gas: 15e4 }),
         accounts,
         provider
       };
     },
-    andWhen: async ({ provider, contract, accounts }, callback, testResource) => {
-      return callback()({ contract, accounts });
-    }
+    andWhen: async ({ provider, contract, accounts }, callback, testResource) => callback()({ contract, accounts })
   },
   entryPath
 );
@@ -576,10 +534,7 @@ var MyFirstContractTesteranto = SolidityTesteranto(
       }
     },
     Thens: {
-      Get: ({ asTestUser, expectation }) => async ({ contract, accounts }) => {
-        const actual = await contract.methods.get().call();
-        assert.equal(expectation, parseInt(actual));
-      }
+      Get: ({ asTestUser, expectation }) => async ({ contract, accounts }) => assert.equal(expectation, parseInt(await contract.methods.get().call()))
     },
     Checks: {
       AnEmptyState: () => "MyFirstContract.sol"
@@ -593,6 +548,15 @@ var MyFirstContractTesteranto = SolidityTesteranto(
           Given.Default(
             "idk",
             [features.hello],
+            [],
+            [
+              Then.Get({ asTestUser: 1, expectation: 0 })
+            ],
+            "my first contract"
+          ),
+          Given.Default(
+            "idk",
+            [features.hello],
             [
               When.Increment(1),
               When.Increment(1),
@@ -603,6 +567,35 @@ var MyFirstContractTesteranto = SolidityTesteranto(
               Then.Get({ asTestUser: 1, expectation: 4 })
             ],
             "my first contract"
+          ),
+          Given.Default(
+            "idk",
+            [features.hello],
+            [
+              When.Increment(1),
+              When.Increment(1),
+              When.Increment(1),
+              When.Increment(1),
+              When.Decrement(1)
+            ],
+            [
+              Then.Get({ asTestUser: 1, expectation: 3 })
+            ],
+            "my first contract"
+          ),
+          Given.Default(
+            "idk",
+            [features.hello],
+            [
+              When.Decrement(1),
+              When.Decrement(1),
+              When.Decrement(1),
+              When.Increment(1)
+            ],
+            [
+              Then.Get({ asTestUser: 1, expectation: 1157920892373162e62 })
+            ],
+            "this test should fail"
           )
         ],
         []
