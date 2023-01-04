@@ -92,11 +92,14 @@ var BaseGiven = class {
     return;
   }
   async give(subject, index, testResourceConfiguration, tester) {
+    console.log(`
+ Given: ${this.name}`);
     try {
       if (!this.abort) {
         this.store = await this.givenThat(subject, testResourceConfiguration);
       }
       for (const whenStep of this.whens) {
+        console.log("   whenStep   ", whenStep);
         await whenStep.test(this.store, testResourceConfiguration);
       }
       for (const thenStep of this.thens) {
@@ -105,9 +108,14 @@ var BaseGiven = class {
       }
     } catch (e) {
       this.error = e;
+      console.log("\x07");
       throw e;
     } finally {
-      await this.afterEach(this.store, index, this.artifactSaver);
+      try {
+        await this.afterEach(this.store, index, this.artifactSaver);
+      } catch {
+        console.error("afterEach failed! no error will be recorded!");
+      }
     }
     return this.store;
   }
@@ -128,6 +136,7 @@ var BaseWhen = class {
     return this.abort;
   }
   async test(store, testResourceConfiguration) {
+    console.log(" When:", this.name);
     if (!this.abort) {
       try {
         return await this.andWhen(store, this.actioner, testResourceConfiguration);
@@ -155,8 +164,9 @@ var BaseThen = class {
   }
   async test(store, testResourceConfiguration) {
     if (!this.abort) {
+      console.log(" Then:", this.name);
       try {
-        return this.thenCB(await this.butThen(store, testResourceConfiguration));
+        return await this.thenCB(await this.butThen(store, testResourceConfiguration));
       } catch (e) {
         this.error = true;
         throw e;
@@ -176,6 +186,8 @@ var BaseCheck = class {
     return;
   }
   async check(subject, ndx, testResourceConfiguration, tester) {
+    console.log(`
+ Check: ${this.name}`);
     const store = await this.checkThat(subject, testResourceConfiguration);
     await this.checkCB(
       mapValues(this.whens, (when) => {
@@ -257,6 +269,11 @@ var TesterantoProject = class {
 // testeranto.config.ts
 var testeranto_config_default = new TesterantoProject(
   [
+    [
+      "MyFirstContract",
+      "./tests/solidity/MyFirstContract.test.ts",
+      "MyFirstContractTesteranto"
+    ],
     [
       "Rectangle",
       "./tests/Rectangle/Rectangle.test.ts",
@@ -406,17 +423,17 @@ var Testeranto = class {
 
 // src/index.ts
 var TesterantoFactory = (input, testSpecification, testImplementation, testResource, testInterface, entryPath) => {
+  const butThen = testInterface.butThen || (async (a) => a);
   const { andWhen } = testInterface;
   const actionHandler = testInterface.actionHandler || function(b) {
     return b;
   };
-  const afterEach = testInterface.afterEach || (async (s) => s);
   const assertioner = testInterface.assertioner || (async (t) => t);
   const beforeAll = testInterface.beforeAll || (async (input2) => input2);
-  const butThen = testInterface.butThen || (async (a) => a);
   const beforeEach = testInterface.beforeEach || async function(subject, initialValues, testResource2) {
     return subject;
   };
+  const afterEach = testInterface.afterEach || (async (s) => s);
   return class extends Testeranto {
     constructor() {
       super(
@@ -450,16 +467,16 @@ var TesterantoFactory = (input, testSpecification, testImplementation, testResou
             });
             this.payload = payload;
           }
-          andWhen(store, actioner, testResource2) {
-            return andWhen(store, actioner, testResource2);
+          async andWhen(store, actioner, testResource2) {
+            return await andWhen(store, actioner, testResource2);
           }
         },
         class Then extends BaseThen {
           constructor(name, callback) {
             super(name, callback);
           }
-          butThen(store, testResourceConfiguration) {
-            return butThen(store, this.thenCB, testResourceConfiguration);
+          async butThen(store, testResourceConfiguration) {
+            return await butThen(store, this.thenCB, testResourceConfiguration);
           }
         },
         class Check extends BaseCheck {

@@ -20,6 +20,10 @@ module.exports = {
         "@typescript-eslint"
     ],
     "rules": {
-        "@typescript-eslint/ban-ts-comment": "warn"
+        "@typescript-eslint/ban-ts-comment": "warn",
+        "prefer-const": "warn",
+        "@typescript-eslint/no-unused-vars": "warn"
     }
 }
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars

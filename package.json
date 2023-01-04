@@ -21,20 +21,28 @@
     "watch": "ts-node ./src/watch.ts",
     "bundle:reporter": "esbuild ./src/Report.tsx --bundle --outfile=./dist/reporter.js",
     "simpleserver": "cd dist && python -m SimpleHTTPServer 8080",
-    "clean:dist": "rm -rf ./dist/results && rm -rf ./dist/tests && rm ./dist/reporter.css && rm ./dist/reporter.js",
-    "clean:npm": "rm -rf node_modules && yarn install"
+    "clean:dist": "rm -rf ./dist/results && rm -rf ./dist/tests && rm -f ./dist/reporter.css && rm -f ./dist/reporter.js",
+    "clean:npm": "rm -rf node_modules && yarn install",
+    "clean": "yarn clean:dist && yarn clean:npm"
   },
   "types": "index.d.ts",
   "dependencies": {
+    "@truffle/contract": "^4.6.10",
+    "@types/web3": "^1.2.2",
     "bootstrap": "^5.2.3",
     "cancelable-promise": "^4.3.1",
     "eslint": "^8.29.0",
     "fresh-require": "^1.0.3",
+    "ganache": "^7.7.2",
     "graphology": "^0.25.1",
     "graphology-dag": "^0.2.0",
     "graphology-types": "^0.24.5",
     "lodash": "^4.17.21",
-    "react-bootstrap": "^2.7.0"
+    "react-bootstrap": "^2.7.0",
+    "truffle": "^5.7.1",
+    "truffle-compile": "^4.2.3",
+    "web3": "^1.8.1",
+    "web3-eth-contract": "^1.8.1"
   },
   "devDependencies": {
     "@babel/core": "^7.19.6",

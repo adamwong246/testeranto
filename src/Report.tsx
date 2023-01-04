@@ -161,8 +161,6 @@ export function Report() {
               </Row>
             </Tab.Container>
           </Tab>
-
-
           <Tab eventKey="featureTests" title="feature-tests">
             <Tab.Container id="left-tabs-example7" defaultActiveKey="first">
               <Row>
@@ -255,6 +253,8 @@ export function Report() {
     {
       !data && <p>LOADING</p>
     }
+
+    <footer style={{ position: 'fixed', bottom: 0, right: 0 }}>made with ❤️ and <a href="https://adamwong246.github.io/testeranto.ts/" >testeranto.ts</a></footer>
 
   </div>)
 }

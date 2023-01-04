@@ -76,3 +76,8 @@ Because Testeranto is so un-opinionated that it does not provide test infrastruc
 - fix "checks"
 - hunt down many ts "ignore-s" and "any-s"
 - separate example from library
+
+
+## truffle testing
+start local blockchain -  `truffle develop`
+migrate -  `truffle migrate  --network develop`

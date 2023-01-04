@@ -3,6 +3,8 @@ import { TesterantoProject } from "./src/Project"
 export default new TesterantoProject(
   [
     [
+      'MyFirstContract', './tests/solidity/MyFirstContract.test.ts', 'MyFirstContractTesteranto'],
+    [
       'Rectangle', './tests/Rectangle/Rectangle.test.ts', 'RectangleTesteranto'],
     [
       'Redux', './tests/Redux+Reselect+React/app.redux.test.ts', 'AppReduxTesteranto'],
