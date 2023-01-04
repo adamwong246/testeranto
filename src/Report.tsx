@@ -22,7 +22,7 @@ export function Report() {
     },
     tests: object[],
     featureTests: object,
-    summaries: []
+    summaries: { dags: [], directed: [], undirected: [] }
   }>({
     configs: {},
     features: {
@@ -30,7 +30,7 @@ export function Report() {
     },
     tests: [],
     featureTests: {},
-    summaries: []
+    summaries: { dags: [], directed: [], undirected: [] }
   });
 
   const getData = async () => {
@@ -232,7 +232,7 @@ export function Report() {
               <Row>
                 <Col sm={3}>
                   <Nav variant="pills" className="flex-column">
-                    {data.summaries.map((summary, ndx) => <Nav.Item key={ndx}>
+                    {data.summaries.dags?.map((summary, ndx) => <Nav.Item key={ndx}>
                       <Nav.Link eventKey={`summary-${ndx}`}>
                         {summary.name}
                       </Nav.Link>

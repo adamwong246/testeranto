@@ -1,978 +1,342 @@
-[
-  {
-    "dagReduction": {
-      "name": "hello",
-      "report": {
-        "Set the email and check the email": {
-          "name": "Testing the LoginPage as react",
-          "fails": []
-        },
-        "BDD gherkin style": {
-          "name": "Testing the Redux store",
-          "fails": []
-        },
-        "another feature": {
-          "name": "Testing the Redux store",
-          "fails": []
-        },
-        "yet another feature": {
-          "name": "Testing the Redux store",
-          "fails": []
-        },
-        "OMG a feature!": {
-          "name": "Testing the Redux store",
-          "fails": []
-        },
-        "yes more tests plz": {
-          "name": "Testing the Redux store",
-          "fails": []
-        },
-        "test 1": {
-          "name": "Testing the Rectangle class",
-          "fails": [
-            {
-              "artifactSaver": {},
-              "name": "this test will fail",
-              "features": [
-                {
-                  "name": "hello"
-                }
-              ],
-              "whens": [
-                {
-                  "name": "setHeight: 33"
-                },
-                {
-                  "name": "setWidth: 34"
-                }
-              ],
-              "thens": [
-                {
-                  "name": "getHeight: 3",
-                  "error": true
-                }
-              ],
-              "testArtifacts": {},
-              "initialValues": {
-                "height": 1,
-                "width": 1
-              },
-              "store": {
-                "width": 34,
-                "height": 33
-              },
-              "error": {
-                "generatedMessage": true,
-                "code": "ERR_ASSERTION",
-                "actual": 33,
-                "expected": 3,
-                "operator": "=="
-              }
-            }
-          ]
-        },
-        "default": {
-          "name": "a classical react component, bundled with esbuild and tested with puppeteer",
-          "fails": []
-        },
-        "a http boringfeature": {
-          "name": "Testing the Node server with fetch",
-          "fails": []
-        },
-        "a http feature": {
-          "name": "Testing the Node server with fetch",
-          "fails": []
-        },
-        "this test will fail": {
-          "name": "Testing the Rectangle class",
-          "fails": [
-            {
-              "artifactSaver": {},
-              "name": "this test will fail",
-              "features": [
-                {
-                  "name": "hello"
-                }
-              ],
-              "whens": [
-                {
-                  "name": "setHeight: 33"
-                },
-                {
-                  "name": "setWidth: 34"
-                }
-              ],
-              "thens": [
-                {
-                  "name": "getHeight: 3",
-                  "error": true
-                }
-              ],
-              "testArtifacts": {},
-              "initialValues": {
-                "height": 1,
-                "width": 1
-              },
-              "store": {
-                "width": 34,
-                "height": 33
-              },
-              "error": {
-                "generatedMessage": true,
-                "code": "ERR_ASSERTION",
-                "actual": 33,
-                "expected": 3,
-                "operator": "=="
-              }
-            }
-          ]
-        },
-        "results": {
-          "gutentag": {
-            "results": {
-              "test 5": {
-                "name": "Testing the Rectangle class",
-                "fails": [
-                  {
-                    "artifactSaver": {},
-                    "name": "this test will fail",
-                    "features": [
-                      {
-                        "name": "hello"
-                      }
-                    ],
-                    "whens": [
-                      {
-                        "name": "setHeight: 33"
-                      },
-                      {
-                        "name": "setWidth: 34"
-                      }
-                    ],
-                    "thens": [
-                      {
-                        "name": "getHeight: 3",
-                        "error": true
-                      }
-                    ],
-                    "testArtifacts": {},
-                    "initialValues": {
-                      "height": 1,
-                      "width": 1
-                    },
-                    "store": {
-                      "width": 34,
-                      "height": 33
-                    },
-                    "error": {
-                      "generatedMessage": true,
-                      "code": "ERR_ASSERTION",
-                      "actual": 33,
-                      "expected": 3,
-                      "operator": "=="
-                    }
-                  }
-                ]
-              },
+{
+  "dags": [
+    {
+      "dagReduction": {
+        "name": "launch the rocket",
+        "report": {
+          "results": {
+            "hello": {
               "results": {
-                "bien venidos": {
-                  "results": {},
-                  "report": {
-                    "test 5": {
-                      "name": "Testing the Rectangle class",
-                      "fails": [
-                        {
-                          "artifactSaver": {},
-                          "name": "this test will fail",
-                          "features": [
-                            {
-                              "name": "hello"
-                            }
-                          ],
-                          "whens": [
-                            {
-                              "name": "setHeight: 33"
-                            },
-                            {
-                              "name": "setWidth: 34"
-                            }
-                          ],
-                          "thens": [
-                            {
-                              "name": "getHeight: 3",
-                              "error": true
-                            }
-                          ],
-                          "testArtifacts": {},
-                          "initialValues": {
-                            "height": 1,
-                            "width": 1
-                          },
-                          "store": {
-                            "width": 34,
-                            "height": 33
-                          },
-                          "error": {
-                            "generatedMessage": true,
-                            "code": "ERR_ASSERTION",
-                            "actual": 33,
-                            "expected": 3,
-                            "operator": "=="
-                          }
-                        }
-                      ]
-                    }
-                  }
+                "default": {
+                  "name": "a classical react component, bundled with esbuild and tested with puppeteer",
+                  "fails": []
                 },
-                "buenos dias": {
-                  "results": {},
-                  "report": {
-                    "test 5": {
-                      "name": "Testing the Rectangle class",
-                      "fails": [
+                "BDD gherkin style": {
+                  "name": "Testing the Redux store",
+                  "fails": []
+                },
+                "another feature": {
+                  "name": "Testing the Redux store",
+                  "fails": []
+                },
+                "yet another feature": {
+                  "name": "Testing the Redux store",
+                  "fails": []
+                },
+                "OMG a feature!": {
+                  "name": "Testing the Redux store",
+                  "fails": []
+                },
+                "yes more tests plz": {
+                  "name": "Testing the Redux store",
+                  "fails": []
+                },
+                "a http boringfeature": {
+                  "name": "Testing the Node server with fetch",
+                  "fails": []
+                },
+                "a http feature": {
+                  "name": "Testing the Node server with fetch",
+                  "fails": []
+                },
+                "Set the email and check the email": {
+                  "name": "Testing the LoginPage as react",
+                  "fails": []
+                },
+                "test 1": {
+                  "name": "Testing the Rectangle class",
+                  "fails": [
+                    {
+                      "artifactSaver": {},
+                      "name": "this test will fail",
+                      "features": [
                         {
-                          "artifactSaver": {},
-                          "name": "this test will fail",
-                          "features": [
-                            {
-                              "name": "hello"
-                            }
-                          ],
-                          "whens": [
-                            {
-                              "name": "setHeight: 33"
-                            },
-                            {
-                              "name": "setWidth: 34"
-                            }
-                          ],
-                          "thens": [
-                            {
-                              "name": "getHeight: 3",
-                              "error": true
-                            }
-                          ],
-                          "testArtifacts": {},
-                          "initialValues": {
-                            "height": 1,
-                            "width": 1
-                          },
-                          "store": {
-                            "width": 34,
-                            "height": 33
-                          },
-                          "error": {
-                            "generatedMessage": true,
-                            "code": "ERR_ASSERTION",
-                            "actual": 33,
-                            "expected": 3,
-                            "operator": "=="
-                          }
+                          "name": "hello"
                         }
-                      ]
-                    },
+                      ],
+                      "whens": [
+                        {
+                          "name": "setHeight: 33"
+                        },
+                        {
+                          "name": "setWidth: 34"
+                        }
+                      ],
+                      "thens": [
+                        {
+                          "name": "getHeight: 3",
+                          "error": true
+                        }
+                      ],
+                      "testArtifacts": {},
+                      "initialValues": {
+                        "height": 1,
+                        "width": 1
+                      },
+                      "store": {
+                        "width": 34,
+                        "height": 33
+                      },
+                      "error": {
+                        "generatedMessage": true,
+                        "code": "ERR_ASSERTION",
+                        "actual": 33,
+                        "expected": 3,
+                        "operator": "=="
+                      }
+                    }
+                  ]
+                },
+                "this test will fail": {
+                  "name": "Testing the Rectangle class",
+                  "fails": [
+                    {
+                      "artifactSaver": {},
+                      "name": "this test will fail",
+                      "features": [
+                        {
+                          "name": "hello"
+                        }
+                      ],
+                      "whens": [
+                        {
+                          "name": "setHeight: 33"
+                        },
+                        {
+                          "name": "setWidth: 34"
+                        }
+                      ],
+                      "thens": [
+                        {
+                          "name": "getHeight: 3",
+                          "error": true
+                        }
+                      ],
+                      "testArtifacts": {},
+                      "initialValues": {
+                        "height": 1,
+                        "width": 1
+                      },
+                      "store": {
+                        "width": 34,
+                        "height": 33
+                      },
+                      "error": {
+                        "generatedMessage": true,
+                        "code": "ERR_ASSERTION",
+                        "actual": 33,
+                        "expected": 3,
+                        "operator": "=="
+                      }
+                    }
+                  ]
+                },
+                "results": {
+                  "aloha": {
                     "results": {
-                      "bien venidos": {
-                        "results": {},
-                        "report": {
-                          "test 5": {
-                            "name": "Testing the Rectangle class",
-                            "fails": [
+                      "OMG a feature!": {
+                        "name": "Testing the Redux store",
+                        "fails": []
+                      },
+                      "yes more tests plz": {
+                        "name": "Testing the Redux store",
+                        "fails": []
+                      },
+                      "test 5": {
+                        "name": "Testing the Rectangle class",
+                        "fails": [
+                          {
+                            "artifactSaver": {},
+                            "name": "this test will fail",
+                            "features": [
                               {
-                                "artifactSaver": {},
-                                "name": "this test will fail",
-                                "features": [
-                                  {
-                                    "name": "hello"
-                                  }
-                                ],
-                                "whens": [
-                                  {
-                                    "name": "setHeight: 33"
-                                  },
-                                  {
-                                    "name": "setWidth: 34"
-                                  }
-                                ],
-                                "thens": [
-                                  {
-                                    "name": "getHeight: 3",
-                                    "error": true
-                                  }
-                                ],
-                                "testArtifacts": {},
-                                "initialValues": {
-                                  "height": 1,
-                                  "width": 1
-                                },
-                                "store": {
-                                  "width": 34,
-                                  "height": 33
-                                },
-                                "error": {
-                                  "generatedMessage": true,
-                                  "code": "ERR_ASSERTION",
-                                  "actual": 33,
-                                  "expected": 3,
-                                  "operator": "=="
-                                }
+                                "name": "hello"
                               }
-                            ]
+                            ],
+                            "whens": [
+                              {
+                                "name": "setHeight: 33"
+                              },
+                              {
+                                "name": "setWidth: 34"
+                              }
+                            ],
+                            "thens": [
+                              {
+                                "name": "getHeight: 3",
+                                "error": true
+                              }
+                            ],
+                            "testArtifacts": {},
+                            "initialValues": {
+                              "height": 1,
+                              "width": 1
+                            },
+                            "store": {
+                              "width": 34,
+                              "height": 33
+                            },
+                            "error": {
+                              "generatedMessage": true,
+                              "code": "ERR_ASSERTION",
+                              "actual": 33,
+                              "expected": 3,
+                              "operator": "=="
+                            }
                           }
-                        }
+                        ]
+                      }
+                    },
+                    "report": {
+                      "default": {
+                        "name": "a classical react component, bundled with esbuild and tested with puppeteer",
+                        "fails": []
+                      },
+                      "BDD gherkin style": {
+                        "name": "Testing the Redux store",
+                        "fails": []
+                      },
+                      "another feature": {
+                        "name": "Testing the Redux store",
+                        "fails": []
+                      },
+                      "yet another feature": {
+                        "name": "Testing the Redux store",
+                        "fails": []
+                      },
+                      "OMG a feature!": {
+                        "name": "Testing the Redux store",
+                        "fails": []
+                      },
+                      "yes more tests plz": {
+                        "name": "Testing the Redux store",
+                        "fails": []
+                      },
+                      "a http boringfeature": {
+                        "name": "Testing the Node server with fetch",
+                        "fails": []
+                      },
+                      "a http feature": {
+                        "name": "Testing the Node server with fetch",
+                        "fails": []
+                      },
+                      "Set the email and check the email": {
+                        "name": "Testing the LoginPage as react",
+                        "fails": []
+                      },
+                      "test 1": {
+                        "name": "Testing the Rectangle class",
+                        "fails": [
+                          {
+                            "artifactSaver": {},
+                            "name": "this test will fail",
+                            "features": [
+                              {
+                                "name": "hello"
+                              }
+                            ],
+                            "whens": [
+                              {
+                                "name": "setHeight: 33"
+                              },
+                              {
+                                "name": "setWidth: 34"
+                              }
+                            ],
+                            "thens": [
+                              {
+                                "name": "getHeight: 3",
+                                "error": true
+                              }
+                            ],
+                            "testArtifacts": {},
+                            "initialValues": {
+                              "height": 1,
+                              "width": 1
+                            },
+                            "store": {
+                              "width": 34,
+                              "height": 33
+                            },
+                            "error": {
+                              "generatedMessage": true,
+                              "code": "ERR_ASSERTION",
+                              "actual": 33,
+                              "expected": 3,
+                              "operator": "=="
+                            }
+                          }
+                        ]
+                      },
+                      "this test will fail": {
+                        "name": "Testing the Rectangle class",
+                        "fails": [
+                          {
+                            "artifactSaver": {},
+                            "name": "this test will fail",
+                            "features": [
+                              {
+                                "name": "hello"
+                              }
+                            ],
+                            "whens": [
+                              {
+                                "name": "setHeight: 33"
+                              },
+                              {
+                                "name": "setWidth: 34"
+                              }
+                            ],
+                            "thens": [
+                              {
+                                "name": "getHeight: 3",
+                                "error": true
+                              }
+                            ],
+                            "testArtifacts": {},
+                            "initialValues": {
+                              "height": 1,
+                              "width": 1
+                            },
+                            "store": {
+                              "width": 34,
+                              "height": 33
+                            },
+                            "error": {
+                              "generatedMessage": true,
+                              "code": "ERR_ASSERTION",
+                              "actual": 33,
+                              "expected": 3,
+                              "operator": "=="
+                            }
+                          }
+                        ]
                       }
                     }
                   }
                 }
-              }
-            },
-            "report": {
-              "Set the email and check the email": {
-                "name": "Testing the LoginPage as react",
-                "fails": []
               },
-              "BDD gherkin style": {
-                "name": "Testing the Redux store",
-                "fails": []
-              },
-              "another feature": {
-                "name": "Testing the Redux store",
-                "fails": []
-              },
-              "yet another feature": {
-                "name": "Testing the Redux store",
-                "fails": []
-              },
-              "OMG a feature!": {
-                "name": "Testing the Redux store",
-                "fails": []
-              },
-              "yes more tests plz": {
-                "name": "Testing the Redux store",
-                "fails": []
-              },
-              "test 1": {
-                "name": "Testing the Rectangle class",
-                "fails": [
-                  {
-                    "artifactSaver": {},
-                    "name": "this test will fail",
-                    "features": [
-                      {
-                        "name": "hello"
-                      }
-                    ],
-                    "whens": [
-                      {
-                        "name": "setHeight: 33"
-                      },
-                      {
-                        "name": "setWidth: 34"
-                      }
-                    ],
-                    "thens": [
-                      {
-                        "name": "getHeight: 3",
-                        "error": true
-                      }
-                    ],
-                    "testArtifacts": {},
-                    "initialValues": {
-                      "height": 1,
-                      "width": 1
-                    },
-                    "store": {
-                      "width": 34,
-                      "height": 33
-                    },
-                    "error": {
-                      "generatedMessage": true,
-                      "code": "ERR_ASSERTION",
-                      "actual": 33,
-                      "expected": 3,
-                      "operator": "=="
-                    }
-                  }
-                ]
-              },
-              "default": {
-                "name": "a classical react component, bundled with esbuild and tested with puppeteer",
-                "fails": []
-              },
-              "a http boringfeature": {
-                "name": "Testing the Node server with fetch",
-                "fails": []
-              },
-              "a http feature": {
-                "name": "Testing the Node server with fetch",
-                "fails": []
-              },
-              "this test will fail": {
-                "name": "Testing the Rectangle class",
-                "fails": [
-                  {
-                    "artifactSaver": {},
-                    "name": "this test will fail",
-                    "features": [
-                      {
-                        "name": "hello"
-                      }
-                    ],
-                    "whens": [
-                      {
-                        "name": "setHeight: 33"
-                      },
-                      {
-                        "name": "setWidth: 34"
-                      }
-                    ],
-                    "thens": [
-                      {
-                        "name": "getHeight: 3",
-                        "error": true
-                      }
-                    ],
-                    "testArtifacts": {},
-                    "initialValues": {
-                      "height": 1,
-                      "width": 1
-                    },
-                    "store": {
-                      "width": 34,
-                      "height": 33
-                    },
-                    "error": {
-                      "generatedMessage": true,
-                      "code": "ERR_ASSERTION",
-                      "actual": 33,
-                      "expected": 3,
-                      "operator": "=="
-                    }
-                  }
-                ]
-              }
-            }
-          },
-          "aloha": {
-            "results": {
-              "OMG a feature!": {
-                "name": "Testing the Redux store",
-                "fails": []
-              },
-              "yes more tests plz": {
-                "name": "Testing the Redux store",
-                "fails": []
-              },
-              "test 5": {
-                "name": "Testing the Rectangle class",
-                "fails": [
-                  {
-                    "artifactSaver": {},
-                    "name": "this test will fail",
-                    "features": [
-                      {
-                        "name": "hello"
-                      }
-                    ],
-                    "whens": [
-                      {
-                        "name": "setHeight: 33"
-                      },
-                      {
-                        "name": "setWidth: 34"
-                      }
-                    ],
-                    "thens": [
-                      {
-                        "name": "getHeight: 3",
-                        "error": true
-                      }
-                    ],
-                    "testArtifacts": {},
-                    "initialValues": {
-                      "height": 1,
-                      "width": 1
-                    },
-                    "store": {
-                      "width": 34,
-                      "height": 33
-                    },
-                    "error": {
-                      "generatedMessage": true,
-                      "code": "ERR_ASSERTION",
-                      "actual": 33,
-                      "expected": 3,
-                      "operator": "=="
-                    }
-                  }
-                ]
-              }
-            },
-            "report": {
-              "Set the email and check the email": {
-                "name": "Testing the LoginPage as react",
-                "fails": []
-              },
-              "BDD gherkin style": {
-                "name": "Testing the Redux store",
-                "fails": []
-              },
-              "another feature": {
-                "name": "Testing the Redux store",
-                "fails": []
-              },
-              "yet another feature": {
-                "name": "Testing the Redux store",
-                "fails": []
-              },
-              "OMG a feature!": {
-                "name": "Testing the Redux store",
-                "fails": []
-              },
-              "yes more tests plz": {
-                "name": "Testing the Redux store",
-                "fails": []
-              },
-              "test 1": {
-                "name": "Testing the Rectangle class",
-                "fails": [
-                  {
-                    "artifactSaver": {},
-                    "name": "this test will fail",
-                    "features": [
-                      {
-                        "name": "hello"
-                      }
-                    ],
-                    "whens": [
-                      {
-                        "name": "setHeight: 33"
-                      },
-                      {
-                        "name": "setWidth: 34"
-                      }
-                    ],
-                    "thens": [
-                      {
-                        "name": "getHeight: 3",
-                        "error": true
-                      }
-                    ],
-                    "testArtifacts": {},
-                    "initialValues": {
-                      "height": 1,
-                      "width": 1
-                    },
-                    "store": {
-                      "width": 34,
-                      "height": 33
-                    },
-                    "error": {
-                      "generatedMessage": true,
-                      "code": "ERR_ASSERTION",
-                      "actual": 33,
-                      "expected": 3,
-                      "operator": "=="
-                    }
-                  }
-                ]
-              },
-              "default": {
-                "name": "a classical react component, bundled with esbuild and tested with puppeteer",
-                "fails": []
-              },
-              "a http boringfeature": {
-                "name": "Testing the Node server with fetch",
-                "fails": []
-              },
-              "a http feature": {
-                "name": "Testing the Node server with fetch",
-                "fails": []
-              },
-              "this test will fail": {
-                "name": "Testing the Rectangle class",
-                "fails": [
-                  {
-                    "artifactSaver": {},
-                    "name": "this test will fail",
-                    "features": [
-                      {
-                        "name": "hello"
-                      }
-                    ],
-                    "whens": [
-                      {
-                        "name": "setHeight: 33"
-                      },
-                      {
-                        "name": "setWidth: 34"
-                      }
-                    ],
-                    "thens": [
-                      {
-                        "name": "getHeight: 3",
-                        "error": true
-                      }
-                    ],
-                    "testArtifacts": {},
-                    "initialValues": {
-                      "height": 1,
-                      "width": 1
-                    },
-                    "store": {
-                      "width": 34,
-                      "height": 33
-                    },
-                    "error": {
-                      "generatedMessage": true,
-                      "code": "ERR_ASSERTION",
-                      "actual": 33,
-                      "expected": 3,
-                      "operator": "=="
-                    }
-                  }
-                ]
-              },
-              "results": {
-                "gutentag": {
-                  "results": {
-                    "test 5": {
-                      "name": "Testing the Rectangle class",
-                      "fails": [
-                        {
-                          "artifactSaver": {},
-                          "name": "this test will fail",
-                          "features": [
-                            {
-                              "name": "hello"
-                            }
-                          ],
-                          "whens": [
-                            {
-                              "name": "setHeight: 33"
-                            },
-                            {
-                              "name": "setWidth: 34"
-                            }
-                          ],
-                          "thens": [
-                            {
-                              "name": "getHeight: 3",
-                              "error": true
-                            }
-                          ],
-                          "testArtifacts": {},
-                          "initialValues": {
-                            "height": 1,
-                            "width": 1
-                          },
-                          "store": {
-                            "width": 34,
-                            "height": 33
-                          },
-                          "error": {
-                            "generatedMessage": true,
-                            "code": "ERR_ASSERTION",
-                            "actual": 33,
-                            "expected": 3,
-                            "operator": "=="
-                          }
-                        }
-                      ]
-                    },
-                    "results": {
-                      "bien venidos": {
-                        "results": {},
-                        "report": {
-                          "test 5": {
-                            "name": "Testing the Rectangle class",
-                            "fails": [
-                              {
-                                "artifactSaver": {},
-                                "name": "this test will fail",
-                                "features": [
-                                  {
-                                    "name": "hello"
-                                  }
-                                ],
-                                "whens": [
-                                  {
-                                    "name": "setHeight: 33"
-                                  },
-                                  {
-                                    "name": "setWidth: 34"
-                                  }
-                                ],
-                                "thens": [
-                                  {
-                                    "name": "getHeight: 3",
-                                    "error": true
-                                  }
-                                ],
-                                "testArtifacts": {},
-                                "initialValues": {
-                                  "height": 1,
-                                  "width": 1
-                                },
-                                "store": {
-                                  "width": 34,
-                                  "height": 33
-                                },
-                                "error": {
-                                  "generatedMessage": true,
-                                  "code": "ERR_ASSERTION",
-                                  "actual": 33,
-                                  "expected": 3,
-                                  "operator": "=="
-                                }
-                              }
-                            ]
-                          }
-                        }
-                      },
-                      "buenos dias": {
-                        "results": {},
-                        "report": {
-                          "test 5": {
-                            "name": "Testing the Rectangle class",
-                            "fails": [
-                              {
-                                "artifactSaver": {},
-                                "name": "this test will fail",
-                                "features": [
-                                  {
-                                    "name": "hello"
-                                  }
-                                ],
-                                "whens": [
-                                  {
-                                    "name": "setHeight: 33"
-                                  },
-                                  {
-                                    "name": "setWidth: 34"
-                                  }
-                                ],
-                                "thens": [
-                                  {
-                                    "name": "getHeight: 3",
-                                    "error": true
-                                  }
-                                ],
-                                "testArtifacts": {},
-                                "initialValues": {
-                                  "height": 1,
-                                  "width": 1
-                                },
-                                "store": {
-                                  "width": 34,
-                                  "height": 33
-                                },
-                                "error": {
-                                  "generatedMessage": true,
-                                  "code": "ERR_ASSERTION",
-                                  "actual": 33,
-                                  "expected": 3,
-                                  "operator": "=="
-                                }
-                              }
-                            ]
-                          },
-                          "results": {
-                            "bien venidos": {
-                              "results": {},
-                              "report": {
-                                "test 5": {
-                                  "name": "Testing the Rectangle class",
-                                  "fails": [
-                                    {
-                                      "artifactSaver": {},
-                                      "name": "this test will fail",
-                                      "features": [
-                                        {
-                                          "name": "hello"
-                                        }
-                                      ],
-                                      "whens": [
-                                        {
-                                          "name": "setHeight: 33"
-                                        },
-                                        {
-                                          "name": "setWidth: 34"
-                                        }
-                                      ],
-                                      "thens": [
-                                        {
-                                          "name": "getHeight: 3",
-                                          "error": true
-                                        }
-                                      ],
-                                      "testArtifacts": {},
-                                      "initialValues": {
-                                        "height": 1,
-                                        "width": 1
-                                      },
-                                      "store": {
-                                        "width": 34,
-                                        "height": 33
-                                      },
-                                      "error": {
-                                        "generatedMessage": true,
-                                        "code": "ERR_ASSERTION",
-                                        "actual": 33,
-                                        "expected": 3,
-                                        "operator": "=="
-                                      }
-                                    }
-                                  ]
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "report": {
-                    "Set the email and check the email": {
-                      "name": "Testing the LoginPage as react",
-                      "fails": []
-                    },
-                    "BDD gherkin style": {
-                      "name": "Testing the Redux store",
-                      "fails": []
-                    },
-                    "another feature": {
-                      "name": "Testing the Redux store",
-                      "fails": []
-                    },
-                    "yet another feature": {
-                      "name": "Testing the Redux store",
-                      "fails": []
-                    },
-                    "OMG a feature!": {
-                      "name": "Testing the Redux store",
-                      "fails": []
-                    },
-                    "yes more tests plz": {
-                      "name": "Testing the Redux store",
-                      "fails": []
-                    },
-                    "test 1": {
-                      "name": "Testing the Rectangle class",
-                      "fails": [
-                        {
-                          "artifactSaver": {},
-                          "name": "this test will fail",
-                          "features": [
-                            {
-                              "name": "hello"
-                            }
-                          ],
-                          "whens": [
-                            {
-                              "name": "setHeight: 33"
-                            },
-                            {
-                              "name": "setWidth: 34"
-                            }
-                          ],
-                          "thens": [
-                            {
-                              "name": "getHeight: 3",
-                              "error": true
-                            }
-                          ],
-                          "testArtifacts": {},
-                          "initialValues": {
-                            "height": 1,
-                            "width": 1
-                          },
-                          "store": {
-                            "width": 34,
-                            "height": 33
-                          },
-                          "error": {
-                            "generatedMessage": true,
-                            "code": "ERR_ASSERTION",
-                            "actual": 33,
-                            "expected": 3,
-                            "operator": "=="
-                          }
-                        }
-                      ]
-                    },
-                    "default": {
-                      "name": "a classical react component, bundled with esbuild and tested with puppeteer",
-                      "fails": []
-                    },
-                    "a http boringfeature": {
-                      "name": "Testing the Node server with fetch",
-                      "fails": []
-                    },
-                    "a http feature": {
-                      "name": "Testing the Node server with fetch",
-                      "fails": []
-                    },
-                    "this test will fail": {
-                      "name": "Testing the Rectangle class",
-                      "fails": [
-                        {
-                          "artifactSaver": {},
-                          "name": "this test will fail",
-                          "features": [
-                            {
-                              "name": "hello"
-                            }
-                          ],
-                          "whens": [
-                            {
-                              "name": "setHeight: 33"
-                            },
-                            {
-                              "name": "setWidth: 34"
-                            }
-                          ],
-                          "thens": [
-                            {
-                              "name": "getHeight: 3",
-                              "error": true
-                            }
-                          ],
-                          "testArtifacts": {},
-                          "initialValues": {
-                            "height": 1,
-                            "width": 1
-                          },
-                          "store": {
-                            "width": 34,
-                            "height": 33
-                          },
-                          "error": {
-                            "generatedMessage": true,
-                            "code": "ERR_ASSERTION",
-                            "actual": 33,
-                            "expected": 3,
-                            "operator": "=="
-                          }
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
+              "report": {}
             }
           }
         }
-      }
-    },
-    "topoSorted": [
-      "bien venidos",
-      "buenos dias",
-      "gutentag",
-      "aloha",
-      "hola",
-      "hello"
-    ],
-    "name": "my first graph"
-  }
-]
+      },
+      "topoSorted": [
+        "aloha",
+        "hello",
+        "launch the rocket"
+      ],
+      "name": "Priority"
+    }
+  ],
+  "directed": [
+    {
+      "name": "Semantic"
+    }
+  ],
+  "undirected": [
+    {
+      "name": "undirected"
+    }
+  ]
+}

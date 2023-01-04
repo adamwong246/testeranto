@@ -1,13 +1,18 @@
 {
   "hello": [
     {
-      "testKey": "Set the email and check the email",
-      "name": "Testing the LoginPage as react",
+      "testKey": "default",
+      "name": "a classical react component, bundled with esbuild and tested with puppeteer",
       "whens": [
-        "TheEmailIsSetTo: adam@email.com"
+        "IClickTheButton: undefined",
+        "IClickTheButton: undefined",
+        "IClickTheButton: undefined",
+        "IClickTheButton: undefined",
+        "IClickTheButton: undefined",
+        "IClickTheButton: undefined"
       ],
       "thens": [
-        "TheEmailIs: adam@email.com"
+        "TheStatusIs: [object Object]"
       ]
     },
     {
@@ -59,33 +64,6 @@
       ]
     },
     {
-      "testKey": "test 1",
-      "name": "Testing the Rectangle class",
-      "whens": [
-        "setWidth: 4",
-        "setHeight: 9"
-      ],
-      "thens": [
-        "getWidth: 4",
-        "getHeight: 9"
-      ]
-    },
-    {
-      "testKey": "default",
-      "name": "a classical react component, bundled with esbuild and tested with puppeteer",
-      "whens": [
-        "IClickTheButton: undefined",
-        "IClickTheButton: undefined",
-        "IClickTheButton: undefined",
-        "IClickTheButton: undefined",
-        "IClickTheButton: undefined",
-        "IClickTheButton: undefined"
-      ],
-      "thens": [
-        "TheStatusIs: [object Object]"
-      ]
-    },
-    {
       "testKey": "a http boringfeature",
       "name": "Testing the Node server with fetch",
       "whens": [],
@@ -101,6 +79,28 @@
       ],
       "thens": [
         "TheStatusIs: hello"
+      ]
+    },
+    {
+      "testKey": "Set the email and check the email",
+      "name": "Testing the LoginPage as react",
+      "whens": [
+        "TheEmailIsSetTo: adam@email.com"
+      ],
+      "thens": [
+        "TheEmailIs: adam@email.com"
+      ]
+    },
+    {
+      "testKey": "test 1",
+      "name": "Testing the Rectangle class",
+      "whens": [
+        "setWidth: 4",
+        "setHeight: 9"
+      ],
+      "thens": [
+        "getWidth: 4",
+        "getHeight: 9"
       ]
     },
     {

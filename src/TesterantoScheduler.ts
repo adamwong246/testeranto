@@ -247,78 +247,89 @@ export class TesterantoScheduler {
     });
   }
 
+  // private dumpNetworks = () => { }
+
+  private dumpNetworks = () => {
+    return {
+      dags: this.dumpNetworksDags(),
+      directed: this.testerantoFeatures.graphs.directed.map((g) => { return { name: g.name } }),
+      undirected: this.testerantoFeatures.graphs.undirected.map((g) => { return { name: g.name } })
+    }
+  }
+  private dumpNetworksDags = () => {
+    return (this.testerantoFeatures.graphs.dags.map((network: IT_FeatureNetwork) => {
+      const graph = network.graph;
+      const topoSorted = topologicalSort(graph).reverse();
+      {
+        let i = 0;
+        do {
+          const me = topoSorted[i];
+          const feature = this.featureTestJoin[me] || {};
+
+          graph.setNodeAttribute(me, 'testResults',
+            Object.keys(feature).reduce((mm, k) => {
+              mm[k] = {
+                name: feature[k].suite.name,
+                fails: feature[k].suite.fails
+              };
+              return mm;
+            }, {})
+          );
+          i = i + 1;
+        } while (i < topoSorted.length)
+      }
+
+      {
+        let i = 0;
+        do {
+          const me = topoSorted[i];
+
+          const myTestResults = graph.getNodeAttribute(me, 'testResults');
+          const anscestors = graph.inNeighbors(me);
+
+          for (const anscestor of anscestors) {
+            const anscestorResults = graph.getNodeAttribute(anscestor, 'testResults');
+            graph.setNodeAttribute(anscestor, 'testResults', {
+              ...anscestorResults,
+              results: {
+                ...anscestorResults.results,
+                [me]: {
+                  results: myTestResults,
+                  report: graph.getNodeAttribute(anscestor, 'testResults')
+                }
+              }
+            });
+          }
+
+          // if (anscestors.length === 1) {
+          //   const anscestor = anscestors[0];              
+          // } else if (anscestors.length === 0) {
+          //   // no-op
+          // } else {
+          //   throw "topological sort fail"
+          // }
+          i = i + 1;
+        } while (i < topoSorted.length)
+      }
+
+      const report = graph.getNodeAttribute(topoSorted[topoSorted.length - 1], 'testResults');
+      const name = topoSorted[topoSorted.length - 1];
+
+      return {
+        dagReduction: {
+          name,
+          report
+        },
+        topoSorted,
+        name: network.name
+      }
+    }));
+  }
+
   private regenerateReports() {
     fs.writeFile(
       `${reportOutPath}.json`,
-      JSON.stringify((this.testerantoFeatures.networks().map((network: IT_FeatureNetwork) => {
-        const graph = network.graph;
-        const topoSorted = topologicalSort(graph).reverse();
-
-        {
-          let i = 0;
-          do {
-            const me = topoSorted[i];
-            const feature = this.featureTestJoin[me] || {};
-
-            graph.setNodeAttribute(me, 'testResults',
-              Object.keys(feature).reduce((mm, k) => {
-                mm[k] = {
-                  name: feature[k].suite.name,
-                  fails: feature[k].suite.fails
-                };
-                return mm;
-              }, {})
-            );
-            i = i + 1;
-          } while (i < topoSorted.length)
-        }
-
-        {
-          let i = 0;
-          do {
-            const me = topoSorted[i];
-
-            const myTestResults = graph.getNodeAttribute(me, 'testResults');
-            const anscestors = graph.inNeighbors(me);
-
-            for (const anscestor of anscestors) {
-              const anscestorResults = graph.getNodeAttribute(anscestor, 'testResults');
-              graph.setNodeAttribute(anscestor, 'testResults', {
-                ...anscestorResults,
-                results: {
-                  ...anscestorResults.results,
-                  [me]: {
-                    results: myTestResults,
-                    report: graph.getNodeAttribute(anscestor, 'testResults')
-                  }
-                }
-              });
-            }
-
-            // if (anscestors.length === 1) {
-            //   const anscestor = anscestors[0];              
-            // } else if (anscestors.length === 0) {
-            //   // no-op
-            // } else {
-            //   throw "topological sort fail"
-            // }
-            i = i + 1;
-          } while (i < topoSorted.length)
-        }
-
-        const report = graph.getNodeAttribute(topoSorted[topoSorted.length - 1], 'testResults');
-        const name = topoSorted[topoSorted.length - 1];
-
-        return {
-          dagReduction: {
-            name,
-            report
-          },
-          topoSorted,
-          name: network.name
-        }
-      })), null, 2),
-
+      JSON.stringify(this.dumpNetworks(), null, 2),
       (err) => {
         if (err) {
           console.error(err);

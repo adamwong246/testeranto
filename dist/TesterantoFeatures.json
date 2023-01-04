@@ -1,0 +1,205 @@
+{
+  "features": [
+    {
+      "name": "hello",
+      "inNetworks": [
+        {
+          "network": "Semantic",
+          "neighbors": [
+            "aloha"
+          ]
+        },
+        {
+          "network": "Priority",
+          "neighbors": [
+            "launch the rocket",
+            "aloha"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "aloha",
+      "inNetworks": [
+        {
+          "network": "undirected",
+          "neighbors": [
+            "gutentag"
+          ]
+        },
+        {
+          "network": "Semantic",
+          "neighbors": [
+            "hello"
+          ]
+        },
+        {
+          "network": "Priority",
+          "neighbors": [
+            "hello"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "gutentag",
+      "inNetworks": [
+        {
+          "network": "undirected",
+          "neighbors": [
+            "aloha"
+          ]
+        },
+        {
+          "network": "Semantic",
+          "neighbors": [
+            "hola"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "buenos dias",
+      "inNetworks": []
+    },
+    {
+      "name": "hola",
+      "inNetworks": [
+        {
+          "network": "Semantic",
+          "neighbors": [
+            "gutentag"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "bien venidos",
+      "inNetworks": []
+    }
+  ],
+  "networks": [
+    {
+      "name": "undirected",
+      "graph": {
+        "options": {
+          "type": "undirected",
+          "multi": false,
+          "allowSelfLoops": true
+        },
+        "attributes": {},
+        "nodes": [
+          {
+            "key": "gutentag"
+          },
+          {
+            "key": "aloha"
+          },
+          {
+            "key": "build the rocket"
+          },
+          {
+            "key": "build the rocket payload"
+          }
+        ],
+        "edges": [
+          {
+            "key": "geid_260_0",
+            "source": "gutentag",
+            "target": "aloha",
+            "attributes": {
+              "type": "related"
+            }
+          },
+          {
+            "key": "geid_260_1",
+            "source": "build the rocket",
+            "target": "build the rocket payload",
+            "attributes": {
+              "type": "overlap"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Semantic",
+      "graph": {
+        "options": {
+          "type": "directed",
+          "multi": false,
+          "allowSelfLoops": true
+        },
+        "attributes": {},
+        "nodes": [
+          {
+            "key": "hello"
+          },
+          {
+            "key": "aloha"
+          },
+          {
+            "key": "gutentag"
+          },
+          {
+            "key": "hola"
+          }
+        ],
+        "edges": [
+          {
+            "key": "geid_259_0",
+            "source": "hello",
+            "target": "aloha",
+            "attributes": {
+              "type": "superceedes"
+            }
+          },
+          {
+            "key": "geid_259_1",
+            "source": "gutentag",
+            "target": "hola",
+            "attributes": {
+              "type": "negates"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Priority",
+      "graph": {
+        "options": {
+          "type": "directed",
+          "multi": false,
+          "allowSelfLoops": true
+        },
+        "attributes": {},
+        "nodes": [
+          {
+            "key": "launch the rocket"
+          },
+          {
+            "key": "hello"
+          },
+          {
+            "key": "aloha"
+          }
+        ],
+        "edges": [
+          {
+            "key": "geid_258_0",
+            "source": "launch the rocket",
+            "target": "hello",
+            "attributes": {}
+          },
+          {
+            "key": "geid_258_1",
+            "source": "hello",
+            "target": "aloha",
+            "attributes": {}
+          }
+        ]
+      }
+    }
+  ]
+}

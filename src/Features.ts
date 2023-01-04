@@ -8,7 +8,8 @@ import { BaseFeature } from "../src/BaseClasses";
 
 abstract class TesterantoGraph {
   name: string;
-  graph: Graph;
+  abstract graph;
+
   constructor(name: string) {
     this.name = name;
   }
@@ -31,7 +32,7 @@ export class TesterantoGraphDirected implements TesterantoGraph {
   graph: DirectedGraph;
   constructor(name: string) {
     this.name = name;
-    this.graph = new UndirectedGraph();
+    this.graph = new DirectedGraph();
   }
   connect(to, from, relation?: string) {
     this.graph.mergeEdge(to, from, { type: relation });
@@ -43,7 +44,7 @@ export class TesterantoGraphDirectedAcylic implements TesterantoGraph {
   graph: DirectedGraph;
   constructor(name: string) {
     this.name = name;
-    this.graph = new UndirectedGraph();
+    this.graph = new DirectedGraph();
   }
   connect(to, from, relation?: string) {
     this.graph.mergeEdge(to, from, { type: relation });
@@ -56,7 +57,7 @@ export class TesterantoFeatures {
   graphs: {
     undirected: TesterantoGraphUndirected[],
     directed: TesterantoGraphDirected[],
-    dag: TesterantoGraphDirectedAcylic[]
+    dags: TesterantoGraphDirectedAcylic[]
   }
 
   constructor(
@@ -64,7 +65,7 @@ export class TesterantoFeatures {
     graphs: {
       undirected: TesterantoGraphUndirected[],
       directed: TesterantoGraphDirected[],
-      dag: TesterantoGraphDirectedAcylic[]
+      dags: TesterantoGraphDirectedAcylic[]
     },
     entryPath: string,
   ) {
@@ -77,7 +78,7 @@ export class TesterantoFeatures {
     return [
       ...this.graphs.undirected.values(),
       ...this.graphs.directed.values(),
-      ...this.graphs.dag.values()
+      ...this.graphs.dags.values()
     ]
   }
 

@@ -20,15 +20,8 @@ var features = {
   bienVenidos: new MyFeature("bien venidos")
 };
 var priorityGraph = new TesterantoGraphDirectedAcylic("Priority");
-priorityGraph.connect(features.root.name, features.buildSilo.name);
-priorityGraph.connect(features.buildSilo.name, features.buildRocket.name);
-priorityGraph.connect(features.buildRocket.name, features.buildSatellite.name, "idk");
 priorityGraph.connect(features.root.name, features.hello.name);
 priorityGraph.connect(features.hello.name, features.aloha.name);
-priorityGraph.connect(features.hello.name, features.gutentag.name);
-priorityGraph.connect(features.gutentag.name, features.buenosDias.name);
-priorityGraph.connect(features.hola.name, features.gutentag.name);
-priorityGraph.connect(features.gutentag.name, features.bienVenidos.name);
 var semantic = new TesterantoGraphDirected("Semantic");
 semantic.connect(features.hello.name, features.aloha.name, "superceedes");
 semantic.connect(features.gutentag.name, features.hola.name, "negates");
@@ -47,7 +40,7 @@ var testerantoFeatures_test_default = new TesterantoFeatures(
   {
     undirected: [undirected],
     directed: [semantic],
-    dag: [priorityGraph]
+    dags: [priorityGraph]
   },
   __filename
 );
