@@ -7,17 +7,53 @@
           "results": {
             "hello": {
               "results": {
-                "AnEmptyState": {
-                  "name": "Testing the Server with Puppeteer",
-                  "fails": []
-                },
-                "AStateWithEmail": {
-                  "name": "Testing the Redux store",
+                "default": {
+                  "name": "Testing the LoginPage as react",
                   "fails": []
                 },
                 "Default": {
-                  "name": "Testing a very simple smart contract",
-                  "fails": []
+                  "name": "Testing the Rectangle class",
+                  "fails": [
+                    {
+                      "artifactSaver": {},
+                      "name": "WidthOfOneAndHeightOfOne",
+                      "features": [
+                        {
+                          "name": "hello"
+                        }
+                      ],
+                      "whens": [
+                        {
+                          "name": "setHeight: 33"
+                        },
+                        {
+                          "name": "setWidth: 34"
+                        }
+                      ],
+                      "thens": [
+                        {
+                          "name": "getHeight: 3",
+                          "error": true
+                        }
+                      ],
+                      "testArtifacts": {},
+                      "initialValues": {
+                        "height": 1,
+                        "width": 1
+                      },
+                      "store": {
+                        "width": 34,
+                        "height": 33
+                      },
+                      "error": {
+                        "generatedMessage": true,
+                        "code": "ERR_ASSERTION",
+                        "actual": 33,
+                        "expected": 3,
+                        "operator": "=="
+                      }
+                    }
+                  ]
                 },
                 "WidthOfOneAndHeightOfOne": {
                   "name": "Testing the Rectangle class",
@@ -63,8 +99,12 @@
                     }
                   ]
                 },
-                "default": {
-                  "name": "Testing the LoginPage as react",
+                "AnEmptyState": {
+                  "name": "Testing the Server with Puppeteer",
+                  "fails": []
+                },
+                "AStateWithEmail": {
+                  "name": "Testing the Redux store",
                   "fails": []
                 },
                 "results": {
@@ -267,17 +307,53 @@
                       }
                     },
                     "report": {
-                      "AnEmptyState": {
-                        "name": "Testing the Server with Puppeteer",
-                        "fails": []
-                      },
-                      "AStateWithEmail": {
-                        "name": "Testing the Redux store",
+                      "default": {
+                        "name": "Testing the LoginPage as react",
                         "fails": []
                       },
                       "Default": {
-                        "name": "Testing a very simple smart contract",
-                        "fails": []
+                        "name": "Testing the Rectangle class",
+                        "fails": [
+                          {
+                            "artifactSaver": {},
+                            "name": "WidthOfOneAndHeightOfOne",
+                            "features": [
+                              {
+                                "name": "hello"
+                              }
+                            ],
+                            "whens": [
+                              {
+                                "name": "setHeight: 33"
+                              },
+                              {
+                                "name": "setWidth: 34"
+                              }
+                            ],
+                            "thens": [
+                              {
+                                "name": "getHeight: 3",
+                                "error": true
+                              }
+                            ],
+                            "testArtifacts": {},
+                            "initialValues": {
+                              "height": 1,
+                              "width": 1
+                            },
+                            "store": {
+                              "width": 34,
+                              "height": 33
+                            },
+                            "error": {
+                              "generatedMessage": true,
+                              "code": "ERR_ASSERTION",
+                              "actual": 33,
+                              "expected": 3,
+                              "operator": "=="
+                            }
+                          }
+                        ]
                       },
                       "WidthOfOneAndHeightOfOne": {
                         "name": "Testing the Rectangle class",
@@ -323,17 +399,115 @@
                           }
                         ]
                       },
-                      "default": {
-                        "name": "Testing the LoginPage as react",
+                      "AnEmptyState": {
+                        "name": "Testing the Server with Puppeteer",
+                        "fails": []
+                      },
+                      "AStateWithEmail": {
+                        "name": "Testing the Redux store",
                         "fails": []
                       }
                     }
                   },
                   "aloha": {
                     "results": {
+                      "WidthOfOneAndHeightOfOne": {
+                        "name": "Testing the Rectangle class",
+                        "fails": [
+                          {
+                            "artifactSaver": {},
+                            "name": "WidthOfOneAndHeightOfOne",
+                            "features": [
+                              {
+                                "name": "hello"
+                              }
+                            ],
+                            "whens": [
+                              {
+                                "name": "setHeight: 33"
+                              },
+                              {
+                                "name": "setWidth: 34"
+                              }
+                            ],
+                            "thens": [
+                              {
+                                "name": "getHeight: 3",
+                                "error": true
+                              }
+                            ],
+                            "testArtifacts": {},
+                            "initialValues": {
+                              "height": 1,
+                              "width": 1
+                            },
+                            "store": {
+                              "width": 34,
+                              "height": 33
+                            },
+                            "error": {
+                              "generatedMessage": true,
+                              "code": "ERR_ASSERTION",
+                              "actual": 33,
+                              "expected": 3,
+                              "operator": "=="
+                            }
+                          }
+                        ]
+                      },
                       "AnEmptyState": {
                         "name": "Testing the Redux store",
                         "fails": []
+                      }
+                    },
+                    "report": {
+                      "default": {
+                        "name": "Testing the LoginPage as react",
+                        "fails": []
+                      },
+                      "Default": {
+                        "name": "Testing the Rectangle class",
+                        "fails": [
+                          {
+                            "artifactSaver": {},
+                            "name": "WidthOfOneAndHeightOfOne",
+                            "features": [
+                              {
+                                "name": "hello"
+                              }
+                            ],
+                            "whens": [
+                              {
+                                "name": "setHeight: 33"
+                              },
+                              {
+                                "name": "setWidth: 34"
+                              }
+                            ],
+                            "thens": [
+                              {
+                                "name": "getHeight: 3",
+                                "error": true
+                              }
+                            ],
+                            "testArtifacts": {},
+                            "initialValues": {
+                              "height": 1,
+                              "width": 1
+                            },
+                            "store": {
+                              "width": 34,
+                              "height": 33
+                            },
+                            "error": {
+                              "generatedMessage": true,
+                              "code": "ERR_ASSERTION",
+                              "actual": 33,
+                              "expected": 3,
+                              "operator": "=="
+                            }
+                          }
+                        ]
                       },
                       "WidthOfOneAndHeightOfOne": {
                         "name": "Testing the Rectangle class",
@@ -378,67 +552,13 @@
                             }
                           }
                         ]
-                      }
-                    },
-                    "report": {
+                      },
                       "AnEmptyState": {
                         "name": "Testing the Server with Puppeteer",
                         "fails": []
                       },
                       "AStateWithEmail": {
                         "name": "Testing the Redux store",
-                        "fails": []
-                      },
-                      "Default": {
-                        "name": "Testing a very simple smart contract",
-                        "fails": []
-                      },
-                      "WidthOfOneAndHeightOfOne": {
-                        "name": "Testing the Rectangle class",
-                        "fails": [
-                          {
-                            "artifactSaver": {},
-                            "name": "WidthOfOneAndHeightOfOne",
-                            "features": [
-                              {
-                                "name": "hello"
-                              }
-                            ],
-                            "whens": [
-                              {
-                                "name": "setHeight: 33"
-                              },
-                              {
-                                "name": "setWidth: 34"
-                              }
-                            ],
-                            "thens": [
-                              {
-                                "name": "getHeight: 3",
-                                "error": true
-                              }
-                            ],
-                            "testArtifacts": {},
-                            "initialValues": {
-                              "height": 1,
-                              "width": 1
-                            },
-                            "store": {
-                              "width": 34,
-                              "height": 33
-                            },
-                            "error": {
-                              "generatedMessage": true,
-                              "code": "ERR_ASSERTION",
-                              "actual": 33,
-                              "expected": 3,
-                              "operator": "=="
-                            }
-                          }
-                        ]
-                      },
-                      "default": {
-                        "name": "Testing the LoginPage as react",
                         "fails": []
                       },
                       "results": {
@@ -641,17 +761,53 @@
                             }
                           },
                           "report": {
-                            "AnEmptyState": {
-                              "name": "Testing the Server with Puppeteer",
-                              "fails": []
-                            },
-                            "AStateWithEmail": {
-                              "name": "Testing the Redux store",
+                            "default": {
+                              "name": "Testing the LoginPage as react",
                               "fails": []
                             },
                             "Default": {
-                              "name": "Testing a very simple smart contract",
-                              "fails": []
+                              "name": "Testing the Rectangle class",
+                              "fails": [
+                                {
+                                  "artifactSaver": {},
+                                  "name": "WidthOfOneAndHeightOfOne",
+                                  "features": [
+                                    {
+                                      "name": "hello"
+                                    }
+                                  ],
+                                  "whens": [
+                                    {
+                                      "name": "setHeight: 33"
+                                    },
+                                    {
+                                      "name": "setWidth: 34"
+                                    }
+                                  ],
+                                  "thens": [
+                                    {
+                                      "name": "getHeight: 3",
+                                      "error": true
+                                    }
+                                  ],
+                                  "testArtifacts": {},
+                                  "initialValues": {
+                                    "height": 1,
+                                    "width": 1
+                                  },
+                                  "store": {
+                                    "width": 34,
+                                    "height": 33
+                                  },
+                                  "error": {
+                                    "generatedMessage": true,
+                                    "code": "ERR_ASSERTION",
+                                    "actual": 33,
+                                    "expected": 3,
+                                    "operator": "=="
+                                  }
+                                }
+                              ]
                             },
                             "WidthOfOneAndHeightOfOne": {
                               "name": "Testing the Rectangle class",
@@ -697,8 +853,12 @@
                                 }
                               ]
                             },
-                            "default": {
-                              "name": "Testing the LoginPage as react",
+                            "AnEmptyState": {
+                              "name": "Testing the Server with Puppeteer",
+                              "fails": []
+                            },
+                            "AStateWithEmail": {
+                              "name": "Testing the Redux store",
                               "fails": []
                             }
                           }
@@ -730,17 +890,53 @@
                 "results": {
                   "hello": {
                     "results": {
-                      "AnEmptyState": {
-                        "name": "Testing the Server with Puppeteer",
-                        "fails": []
-                      },
-                      "AStateWithEmail": {
-                        "name": "Testing the Redux store",
+                      "default": {
+                        "name": "Testing the LoginPage as react",
                         "fails": []
                       },
                       "Default": {
-                        "name": "Testing a very simple smart contract",
-                        "fails": []
+                        "name": "Testing the Rectangle class",
+                        "fails": [
+                          {
+                            "artifactSaver": {},
+                            "name": "WidthOfOneAndHeightOfOne",
+                            "features": [
+                              {
+                                "name": "hello"
+                              }
+                            ],
+                            "whens": [
+                              {
+                                "name": "setHeight: 33"
+                              },
+                              {
+                                "name": "setWidth: 34"
+                              }
+                            ],
+                            "thens": [
+                              {
+                                "name": "getHeight: 3",
+                                "error": true
+                              }
+                            ],
+                            "testArtifacts": {},
+                            "initialValues": {
+                              "height": 1,
+                              "width": 1
+                            },
+                            "store": {
+                              "width": 34,
+                              "height": 33
+                            },
+                            "error": {
+                              "generatedMessage": true,
+                              "code": "ERR_ASSERTION",
+                              "actual": 33,
+                              "expected": 3,
+                              "operator": "=="
+                            }
+                          }
+                        ]
                       },
                       "WidthOfOneAndHeightOfOne": {
                         "name": "Testing the Rectangle class",
@@ -786,8 +982,12 @@
                           }
                         ]
                       },
-                      "default": {
-                        "name": "Testing the LoginPage as react",
+                      "AnEmptyState": {
+                        "name": "Testing the Server with Puppeteer",
+                        "fails": []
+                      },
+                      "AStateWithEmail": {
+                        "name": "Testing the Redux store",
                         "fails": []
                       },
                       "results": {
@@ -990,17 +1190,53 @@
                             }
                           },
                           "report": {
-                            "AnEmptyState": {
-                              "name": "Testing the Server with Puppeteer",
-                              "fails": []
-                            },
-                            "AStateWithEmail": {
-                              "name": "Testing the Redux store",
+                            "default": {
+                              "name": "Testing the LoginPage as react",
                               "fails": []
                             },
                             "Default": {
-                              "name": "Testing a very simple smart contract",
-                              "fails": []
+                              "name": "Testing the Rectangle class",
+                              "fails": [
+                                {
+                                  "artifactSaver": {},
+                                  "name": "WidthOfOneAndHeightOfOne",
+                                  "features": [
+                                    {
+                                      "name": "hello"
+                                    }
+                                  ],
+                                  "whens": [
+                                    {
+                                      "name": "setHeight: 33"
+                                    },
+                                    {
+                                      "name": "setWidth: 34"
+                                    }
+                                  ],
+                                  "thens": [
+                                    {
+                                      "name": "getHeight: 3",
+                                      "error": true
+                                    }
+                                  ],
+                                  "testArtifacts": {},
+                                  "initialValues": {
+                                    "height": 1,
+                                    "width": 1
+                                  },
+                                  "store": {
+                                    "width": 34,
+                                    "height": 33
+                                  },
+                                  "error": {
+                                    "generatedMessage": true,
+                                    "code": "ERR_ASSERTION",
+                                    "actual": 33,
+                                    "expected": 3,
+                                    "operator": "=="
+                                  }
+                                }
+                              ]
                             },
                             "WidthOfOneAndHeightOfOne": {
                               "name": "Testing the Rectangle class",
@@ -1046,17 +1282,115 @@
                                 }
                               ]
                             },
-                            "default": {
-                              "name": "Testing the LoginPage as react",
+                            "AnEmptyState": {
+                              "name": "Testing the Server with Puppeteer",
+                              "fails": []
+                            },
+                            "AStateWithEmail": {
+                              "name": "Testing the Redux store",
                               "fails": []
                             }
                           }
                         },
                         "aloha": {
                           "results": {
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": [
+                                {
+                                  "artifactSaver": {},
+                                  "name": "WidthOfOneAndHeightOfOne",
+                                  "features": [
+                                    {
+                                      "name": "hello"
+                                    }
+                                  ],
+                                  "whens": [
+                                    {
+                                      "name": "setHeight: 33"
+                                    },
+                                    {
+                                      "name": "setWidth: 34"
+                                    }
+                                  ],
+                                  "thens": [
+                                    {
+                                      "name": "getHeight: 3",
+                                      "error": true
+                                    }
+                                  ],
+                                  "testArtifacts": {},
+                                  "initialValues": {
+                                    "height": 1,
+                                    "width": 1
+                                  },
+                                  "store": {
+                                    "width": 34,
+                                    "height": 33
+                                  },
+                                  "error": {
+                                    "generatedMessage": true,
+                                    "code": "ERR_ASSERTION",
+                                    "actual": 33,
+                                    "expected": 3,
+                                    "operator": "=="
+                                  }
+                                }
+                              ]
+                            },
                             "AnEmptyState": {
                               "name": "Testing the Redux store",
                               "fails": []
+                            }
+                          },
+                          "report": {
+                            "default": {
+                              "name": "Testing the LoginPage as react",
+                              "fails": []
+                            },
+                            "Default": {
+                              "name": "Testing the Rectangle class",
+                              "fails": [
+                                {
+                                  "artifactSaver": {},
+                                  "name": "WidthOfOneAndHeightOfOne",
+                                  "features": [
+                                    {
+                                      "name": "hello"
+                                    }
+                                  ],
+                                  "whens": [
+                                    {
+                                      "name": "setHeight: 33"
+                                    },
+                                    {
+                                      "name": "setWidth: 34"
+                                    }
+                                  ],
+                                  "thens": [
+                                    {
+                                      "name": "getHeight: 3",
+                                      "error": true
+                                    }
+                                  ],
+                                  "testArtifacts": {},
+                                  "initialValues": {
+                                    "height": 1,
+                                    "width": 1
+                                  },
+                                  "store": {
+                                    "width": 34,
+                                    "height": 33
+                                  },
+                                  "error": {
+                                    "generatedMessage": true,
+                                    "code": "ERR_ASSERTION",
+                                    "actual": 33,
+                                    "expected": 3,
+                                    "operator": "=="
+                                  }
+                                }
+                              ]
                             },
                             "WidthOfOneAndHeightOfOne": {
                               "name": "Testing the Rectangle class",
@@ -1101,67 +1435,13 @@
                                   }
                                 }
                               ]
-                            }
-                          },
-                          "report": {
+                            },
                             "AnEmptyState": {
                               "name": "Testing the Server with Puppeteer",
                               "fails": []
                             },
                             "AStateWithEmail": {
                               "name": "Testing the Redux store",
-                              "fails": []
-                            },
-                            "Default": {
-                              "name": "Testing a very simple smart contract",
-                              "fails": []
-                            },
-                            "WidthOfOneAndHeightOfOne": {
-                              "name": "Testing the Rectangle class",
-                              "fails": [
-                                {
-                                  "artifactSaver": {},
-                                  "name": "WidthOfOneAndHeightOfOne",
-                                  "features": [
-                                    {
-                                      "name": "hello"
-                                    }
-                                  ],
-                                  "whens": [
-                                    {
-                                      "name": "setHeight: 33"
-                                    },
-                                    {
-                                      "name": "setWidth: 34"
-                                    }
-                                  ],
-                                  "thens": [
-                                    {
-                                      "name": "getHeight: 3",
-                                      "error": true
-                                    }
-                                  ],
-                                  "testArtifacts": {},
-                                  "initialValues": {
-                                    "height": 1,
-                                    "width": 1
-                                  },
-                                  "store": {
-                                    "width": 34,
-                                    "height": 33
-                                  },
-                                  "error": {
-                                    "generatedMessage": true,
-                                    "code": "ERR_ASSERTION",
-                                    "actual": 33,
-                                    "expected": 3,
-                                    "operator": "=="
-                                  }
-                                }
-                              ]
-                            },
-                            "default": {
-                              "name": "Testing the LoginPage as react",
                               "fails": []
                             },
                             "results": {
@@ -1364,17 +1644,53 @@
                                   }
                                 },
                                 "report": {
-                                  "AnEmptyState": {
-                                    "name": "Testing the Server with Puppeteer",
-                                    "fails": []
-                                  },
-                                  "AStateWithEmail": {
-                                    "name": "Testing the Redux store",
+                                  "default": {
+                                    "name": "Testing the LoginPage as react",
                                     "fails": []
                                   },
                                   "Default": {
-                                    "name": "Testing a very simple smart contract",
-                                    "fails": []
+                                    "name": "Testing the Rectangle class",
+                                    "fails": [
+                                      {
+                                        "artifactSaver": {},
+                                        "name": "WidthOfOneAndHeightOfOne",
+                                        "features": [
+                                          {
+                                            "name": "hello"
+                                          }
+                                        ],
+                                        "whens": [
+                                          {
+                                            "name": "setHeight: 33"
+                                          },
+                                          {
+                                            "name": "setWidth: 34"
+                                          }
+                                        ],
+                                        "thens": [
+                                          {
+                                            "name": "getHeight: 3",
+                                            "error": true
+                                          }
+                                        ],
+                                        "testArtifacts": {},
+                                        "initialValues": {
+                                          "height": 1,
+                                          "width": 1
+                                        },
+                                        "store": {
+                                          "width": 34,
+                                          "height": 33
+                                        },
+                                        "error": {
+                                          "generatedMessage": true,
+                                          "code": "ERR_ASSERTION",
+                                          "actual": 33,
+                                          "expected": 3,
+                                          "operator": "=="
+                                        }
+                                      }
+                                    ]
                                   },
                                   "WidthOfOneAndHeightOfOne": {
                                     "name": "Testing the Rectangle class",
@@ -1420,8 +1736,12 @@
                                       }
                                     ]
                                   },
-                                  "default": {
-                                    "name": "Testing the LoginPage as react",
+                                  "AnEmptyState": {
+                                    "name": "Testing the Server with Puppeteer",
+                                    "fails": []
+                                  },
+                                  "AStateWithEmail": {
+                                    "name": "Testing the Redux store",
                                     "fails": []
                                   }
                                 }
