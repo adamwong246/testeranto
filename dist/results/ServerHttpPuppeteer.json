@@ -2,7 +2,7 @@
   "name": "Testing the Node server with fetch",
   "givens": [
     {
-      "name": "a http boringfeature",
+      "name": "AnEmptyState",
       "whens": [],
       "thens": [
         {
@@ -11,7 +11,7 @@
       ]
     },
     {
-      "name": "a http feature",
+      "name": "AnEmptyState",
       "whens": [
         {
           "name": "PostToStatus: hello"
@@ -20,6 +20,72 @@
       "thens": [
         {
           "name": "TheStatusIs: hello"
+        }
+      ]
+    },
+    {
+      "name": "AnEmptyState",
+      "whens": [
+        {
+          "name": "PostToStatus: hello"
+        },
+        {
+          "name": "PostToStatus: aloha"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheStatusIs: aloha"
+        }
+      ]
+    },
+    {
+      "name": "AnEmptyState",
+      "whens": [],
+      "thens": [
+        {
+          "name": "TheNumberIs: 0"
+        }
+      ]
+    },
+    {
+      "name": "AnEmptyState",
+      "whens": [
+        {
+          "name": "PostToAdd: 1"
+        },
+        {
+          "name": "PostToAdd: 2"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheNumberIs: 3"
+        }
+      ]
+    },
+    {
+      "name": "AnEmptyState",
+      "whens": [
+        {
+          "name": "PostToStatus: aloha"
+        },
+        {
+          "name": "PostToAdd: 4"
+        },
+        {
+          "name": "PostToStatus: hello"
+        },
+        {
+          "name": "PostToAdd: 3"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheStatusIs: hello"
+        },
+        {
+          "name": "TheNumberIs: 7"
         }
       ]
     }

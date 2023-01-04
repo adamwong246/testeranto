@@ -68,7 +68,6 @@ export const AppReduxTesteranto = ReduxTesteranto<
         "Testing the Redux store",
         [
           Given.AnEmptyState(
-            "BDD gherkin style",
             [features.hello],
             [
               When.TheEmailIsSetTo("adam@email.com")
@@ -78,7 +77,6 @@ export const AppReduxTesteranto = ReduxTesteranto<
             ]
           ),
           Given.AStateWithEmail(
-            "another feature",
             [features.hello],
             [],
             [
@@ -88,20 +86,17 @@ export const AppReduxTesteranto = ReduxTesteranto<
             "bob@mail.com"
           ),
           Given.AnEmptyState(
-            "yet another feature",
             [features.hello],
             [When.TheEmailIsSetTo("hello"), When.TheEmailIsSetTo("aloha")],
             [Then.TheEmailIs("aloha")]
           ),
           Given.AnEmptyState(
-            "OMG a feature!",
             [features.aloha, features.hello],
             [],
             [Then.TheEmailIs("")]
           ),
 
           Given.AnEmptyState(
-            "yes more tests plz",
             [features.aloha, features.hello],
             [When.TheEmailIsSetTo("hey there")],
             [Then.TheEmailIs("hey there")]

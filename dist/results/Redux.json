@@ -2,7 +2,7 @@
   "name": "Testing the Redux store",
   "givens": [
     {
-      "name": "BDD gherkin style",
+      "name": "AnEmptyState",
       "whens": [
         {
           "name": "TheEmailIsSetTo: adam@email.com"
@@ -15,7 +15,7 @@
       ]
     },
     {
-      "name": "another feature",
+      "name": "AStateWithEmail",
       "whens": [],
       "thens": [
         {
@@ -27,7 +27,7 @@
       ]
     },
     {
-      "name": "yet another feature",
+      "name": "AnEmptyState",
       "whens": [
         {
           "name": "TheEmailIsSetTo: hello"
@@ -43,7 +43,7 @@
       ]
     },
     {
-      "name": "OMG a feature!",
+      "name": "AnEmptyState",
       "whens": [],
       "thens": [
         {
@@ -52,7 +52,7 @@
       ]
     },
     {
-      "name": "yes more tests plz",
+      "name": "AnEmptyState",
       "whens": [
         {
           "name": "TheEmailIsSetTo: hey there"

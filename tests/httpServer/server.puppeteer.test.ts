@@ -56,41 +56,37 @@ export const ServerHttpPuppeteerTesteranto = PuppeteerHttpTesteranto<
         "Testing the Server with Puppeteer",
         [
           Given.AnEmptyState(
-            "a boring Puppeteer feature",
             [],
             [],
             [Then.TheStatusIs("some great status")]
           ),
           Given.AnEmptyState(
-            "another Puppeteer feature",
             [],
             [When.PostToStatus("goodbye")],
             [Then.TheStatusIs("goodbye")]
           ),
-          // Given.AnEmptyState(
-          //   "yet another Puppeteer feature",
-          //   [myFeature],
-          //   [When.PostToStatus("hello"), When.PostToStatus("aloha")],
-          //   [Then.TheStatusIs("aloha")]
-          // ),
-          // Given.AnEmptyState("a feature", [], [], [Then.TheNumberIs(0)]),
-          // Given.AnEmptyState(
-          //   "still further Puppeteer features?!",
-          //   [myFeature],
-          //   [When.PostToAdd(1), When.PostToAdd(2)],
-          //   [Then.TheNumberIs(3)]
-          // ),
-          // Given.AnEmptyState(
-          //   "another Puppeteer feature",
-          //   [myFeature],
-          //   [
-          //     When.PostToStatus("aloha"),
-          //     When.PostToAdd(4),
-          //     When.PostToStatus("hello"),
-          //     When.PostToAdd(3),
-          //   ],
-          //   [Then.TheStatusIs("hello"), Then.TheNumberIs(7)]
-          // ),
+          Given.AnEmptyState(
+            [myFeature],
+            [When.PostToStatus("hello"), When.PostToStatus("aloha")],
+            [Then.TheStatusIs("aloha")]
+          ),
+          Given.AnEmptyState(
+            [], [], [Then.TheNumberIs(0)]),
+          Given.AnEmptyState(
+            [myFeature],
+            [When.PostToAdd(1), When.PostToAdd(2)],
+            [Then.TheNumberIs(3)]
+          ),
+          Given.AnEmptyState(
+            [myFeature],
+            [
+              When.PostToStatus("aloha"),
+              When.PostToAdd(4),
+              When.PostToStatus("hello"),
+              When.PostToAdd(3),
+            ],
+            [Then.TheStatusIs("hello"), Then.TheNumberIs(7)]
+          ),
         ],
         [
           // Check.AnEmptyState(

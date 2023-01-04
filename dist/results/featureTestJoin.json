@@ -1,32 +1,21 @@
 {
   "hello": [
     {
-      "testKey": "default",
-      "name": "a classical react component, bundled with esbuild and tested with puppeteer",
+      "testKey": "AnEmptyState",
+      "name": "Testing the Server with Puppeteer",
       "whens": [
-        "IClickTheButton: undefined",
-        "IClickTheButton: undefined",
-        "IClickTheButton: undefined",
-        "IClickTheButton: undefined",
-        "IClickTheButton: undefined",
-        "IClickTheButton: undefined"
+        "PostToStatus: aloha",
+        "PostToAdd: 4",
+        "PostToStatus: hello",
+        "PostToAdd: 3"
       ],
       "thens": [
-        "TheStatusIs: [object Object]"
+        "TheStatusIs: hello",
+        "TheNumberIs: 7"
       ]
     },
     {
-      "testKey": "BDD gherkin style",
-      "name": "Testing the Redux store",
-      "whens": [
-        "TheEmailIsSetTo: adam@email.com"
-      ],
-      "thens": [
-        "TheEmailIs: adam@email.com"
-      ]
-    },
-    {
-      "testKey": "another feature",
+      "testKey": "AStateWithEmail",
       "name": "Testing the Redux store",
       "whens": [],
       "thens": [
@@ -35,54 +24,7 @@
       ]
     },
     {
-      "testKey": "yet another feature",
-      "name": "Testing the Redux store",
-      "whens": [
-        "TheEmailIsSetTo: hello",
-        "TheEmailIsSetTo: aloha"
-      ],
-      "thens": [
-        "TheEmailIs: aloha"
-      ]
-    },
-    {
-      "testKey": "OMG a feature!",
-      "name": "Testing the Redux store",
-      "whens": [],
-      "thens": [
-        "TheEmailIs: "
-      ]
-    },
-    {
-      "testKey": "yes more tests plz",
-      "name": "Testing the Redux store",
-      "whens": [
-        "TheEmailIsSetTo: hey there"
-      ],
-      "thens": [
-        "TheEmailIs: hey there"
-      ]
-    },
-    {
-      "testKey": "a http boringfeature",
-      "name": "Testing the Node server with fetch",
-      "whens": [],
-      "thens": [
-        "TheStatusIs: some great status"
-      ]
-    },
-    {
-      "testKey": "a http feature",
-      "name": "Testing the Node server with fetch",
-      "whens": [
-        "PostToStatus: hello"
-      ],
-      "thens": [
-        "TheStatusIs: hello"
-      ]
-    },
-    {
-      "testKey": "Set the email and check the email",
+      "testKey": "default",
       "name": "Testing the LoginPage as react",
       "whens": [
         "TheEmailIsSetTo: adam@email.com"
@@ -92,7 +34,7 @@
       ]
     },
     {
-      "testKey": "test 1",
+      "testKey": "Default",
       "name": "Testing the Rectangle class",
       "whens": [
         "setWidth: 4",
@@ -104,7 +46,7 @@
       ]
     },
     {
-      "testKey": "this test will fail",
+      "testKey": "WidthOfOneAndHeightOfOne",
       "name": "Testing the Rectangle class",
       "whens": [
         "setHeight: 33",
@@ -124,15 +66,7 @@
   ],
   "aloha": [
     {
-      "testKey": "OMG a feature!",
-      "name": "Testing the Redux store",
-      "whens": [],
-      "thens": [
-        "TheEmailIs: "
-      ]
-    },
-    {
-      "testKey": "yes more tests plz",
+      "testKey": "AnEmptyState",
       "name": "Testing the Redux store",
       "whens": [
         "TheEmailIsSetTo: hey there"
@@ -142,7 +76,7 @@
       ]
     },
     {
-      "testKey": "test 5",
+      "testKey": "WidthOfOneAndHeightOfOne",
       "name": "Testing the Rectangle class",
       "whens": [
         "setHeight: 3",
@@ -158,18 +92,7 @@
   ],
   "hola": [
     {
-      "testKey": "test 3",
-      "name": "Testing the Rectangle class",
-      "whens": [
-        "setHeight: 4",
-        "setWidth: 3"
-      ],
-      "thens": [
-        "area: 12"
-      ]
-    },
-    {
-      "testKey": "test 4",
+      "testKey": "WidthOfOneAndHeightOfOne",
       "name": "Testing the Rectangle class",
       "whens": [
         "setHeight: 3",
@@ -185,7 +108,7 @@
   ],
   "gutentag": [
     {
-      "testKey": "test 5",
+      "testKey": "WidthOfOneAndHeightOfOne",
       "name": "Testing the Rectangle class",
       "whens": [
         "setHeight: 3",

@@ -2,7 +2,7 @@
   "name": "Testing the Rectangle class",
   "givens": [
     {
-      "name": "test 1",
+      "name": "Default",
       "whens": [
         {
           "name": "setWidth: 4"
@@ -21,7 +21,7 @@
       ]
     },
     {
-      "name": "test 2",
+      "name": "WidthOfOneAndHeightOfOne",
       "whens": [
         {
           "name": "setWidth: 4"
@@ -46,7 +46,7 @@
       ]
     },
     {
-      "name": "test 3",
+      "name": "WidthOfOneAndHeightOfOne",
       "whens": [
         {
           "name": "setHeight: 4"
@@ -62,7 +62,7 @@
       ]
     },
     {
-      "name": "test 4",
+      "name": "WidthOfOneAndHeightOfOne",
       "whens": [
         {
           "name": "setHeight: 3"
@@ -87,7 +87,7 @@
       ]
     },
     {
-      "name": "test 5",
+      "name": "WidthOfOneAndHeightOfOne",
       "whens": [
         {
           "name": "setHeight: 3"
@@ -112,7 +112,7 @@
       ]
     },
     {
-      "name": "this test will fail",
+      "name": "WidthOfOneAndHeightOfOne",
       "whens": [
         {
           "name": "setHeight: 33"
@@ -139,7 +139,7 @@
   "fails": [
     {
       "artifactSaver": {},
-      "name": "this test will fail",
+      "name": "WidthOfOneAndHeightOfOne",
       "features": [
         {
           "name": "hello"

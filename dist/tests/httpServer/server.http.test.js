@@ -240,9 +240,10 @@ var TesterantoBasic = class {
 import fs from "fs";
 import path from "path";
 var TesterantoProject = class {
-  constructor(tests, features2) {
+  constructor(tests, features2, ports) {
     this.tests = tests;
     this.features = features2;
+    this.ports = ports;
   }
   builder() {
     const text = JSON.stringify({ tests: this.tests, features: this.features });
@@ -297,7 +298,8 @@ var testeranto_config_default = new TesterantoProject(
       "ClassicalComponentEsbuildPuppeteerTesteranto"
     ]
   ],
-  "./tests/testerantoFeatures.test.ts"
+  "./tests/testerantoFeatures.test.ts",
+  ["3000", "3001", "3002"]
 );
 
 // src/level1.ts
@@ -309,7 +311,9 @@ var Testeranto = class {
     );
     const classyGivens = mapValues2(
       testImplementation.Givens,
-      (z) => (name, features2, whens, thens, ...xtrasW) => new givenKlasser.prototype.constructor(name, features2, whens, thens, z(...xtrasW))
+      (z) => (features2, whens, thens, ...xtrasW) => {
+        return new givenKlasser.prototype.constructor(z.name, features2, whens, thens, z(...xtrasW));
+      }
     );
     const classyWhens = mapValues2(
       testImplementation.Whens,
@@ -597,16 +601,39 @@ var ServerHttpTesteranto = HttpTesteranto(
         "Testing the Node server with fetch",
         [
           Given.AnEmptyState(
-            "a http boringfeature",
             [myFeature],
             [],
             [Then.TheStatusIs("some great status")]
           ),
           Given.AnEmptyState(
-            "a http feature",
             [myFeature],
             [When.PostToStatus("hello")],
             [Then.TheStatusIs("hello")]
+          ),
+          Given.AnEmptyState(
+            [myFeature],
+            [When.PostToStatus("hello"), When.PostToStatus("aloha")],
+            [Then.TheStatusIs("aloha")]
+          ),
+          Given.AnEmptyState(
+            [myFeature],
+            [],
+            [Then.TheNumberIs(0)]
+          ),
+          Given.AnEmptyState(
+            [myFeature],
+            [When.PostToAdd(1), When.PostToAdd(2)],
+            [Then.TheNumberIs(3)]
+          ),
+          Given.AnEmptyState(
+            [myFeature],
+            [
+              When.PostToStatus("aloha"),
+              When.PostToAdd(4),
+              When.PostToStatus("hello"),
+              When.PostToAdd(3)
+            ],
+            [Then.TheStatusIs("hello"), Then.TheNumberIs(7)]
           )
         ],
         []

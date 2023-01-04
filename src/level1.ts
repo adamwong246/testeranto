@@ -96,8 +96,10 @@ export abstract class Testeranto<
     const classyGivens = mapValues(
       testImplementation.Givens,
       (z) =>
-        (name, features, whens, thens, ...xtrasW) =>
-          new givenKlasser.prototype.constructor(name, features, whens, thens, z(...xtrasW))
+        (features, whens, thens, ...xtrasW) => {
+          return new givenKlasser.prototype.constructor(z.name, features, whens, thens, z(...xtrasW))
+        }
+
     );
 
     const classyWhens = mapValues(

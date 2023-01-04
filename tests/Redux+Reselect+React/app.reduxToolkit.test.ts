@@ -79,26 +79,22 @@ export const AppReduxToolkitTesteranto = ReduxToolkitTesteranto<
         "Testing the ReduxToolkit",
         [
           Given.AnEmptyState(
-            "BDD gherkin style",
             [],
             [When.TheEmailIsSetTo("adam@email.com")],
             [Then.TheEmailIs("adam@email.com")]
           ),
           Given.AStateWithEmail(
-            "another feature",
             [],
             [When.TheEmailIsSetTo("hello")],
             [Then.TheEmailIsNot("adam@email.com")],
             "bob@mail.com"
           ),
           Given.AnEmptyState(
-            "yet another feature",
             [],
             [When.TheEmailIsSetTo("hello"), When.TheEmailIsSetTo("aloha")],
             [Then.TheEmailIs("aloha")]
           ),
           Given.AnEmptyState(
-            "OMG a feature!",
             [],
             [],
             [Then.TheEmailIs("")]

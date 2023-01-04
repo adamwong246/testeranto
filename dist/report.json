@@ -7,48 +7,24 @@
           "results": {
             "hello": {
               "results": {
+                "AnEmptyState": {
+                  "name": "Testing the Server with Puppeteer",
+                  "fails": []
+                },
+                "AStateWithEmail": {
+                  "name": "Testing the Redux store",
+                  "fails": []
+                },
                 "default": {
-                  "name": "a classical react component, bundled with esbuild and tested with puppeteer",
-                  "fails": []
-                },
-                "BDD gherkin style": {
-                  "name": "Testing the Redux store",
-                  "fails": []
-                },
-                "another feature": {
-                  "name": "Testing the Redux store",
-                  "fails": []
-                },
-                "yet another feature": {
-                  "name": "Testing the Redux store",
-                  "fails": []
-                },
-                "OMG a feature!": {
-                  "name": "Testing the Redux store",
-                  "fails": []
-                },
-                "yes more tests plz": {
-                  "name": "Testing the Redux store",
-                  "fails": []
-                },
-                "a http boringfeature": {
-                  "name": "Testing the Node server with fetch",
-                  "fails": []
-                },
-                "a http feature": {
-                  "name": "Testing the Node server with fetch",
-                  "fails": []
-                },
-                "Set the email and check the email": {
                   "name": "Testing the LoginPage as react",
                   "fails": []
                 },
-                "test 1": {
+                "Default": {
                   "name": "Testing the Rectangle class",
                   "fails": [
                     {
                       "artifactSaver": {},
-                      "name": "this test will fail",
+                      "name": "WidthOfOneAndHeightOfOne",
                       "features": [
                         {
                           "name": "hello"
@@ -87,12 +63,12 @@
                     }
                   ]
                 },
-                "this test will fail": {
+                "WidthOfOneAndHeightOfOne": {
                   "name": "Testing the Rectangle class",
                   "fails": [
                     {
                       "artifactSaver": {},
-                      "name": "this test will fail",
+                      "name": "WidthOfOneAndHeightOfOne",
                       "features": [
                         {
                           "name": "hello"
@@ -134,20 +110,16 @@
                 "results": {
                   "aloha": {
                     "results": {
-                      "OMG a feature!": {
+                      "AnEmptyState": {
                         "name": "Testing the Redux store",
                         "fails": []
                       },
-                      "yes more tests plz": {
-                        "name": "Testing the Redux store",
-                        "fails": []
-                      },
-                      "test 5": {
+                      "WidthOfOneAndHeightOfOne": {
                         "name": "Testing the Rectangle class",
                         "fails": [
                           {
                             "artifactSaver": {},
-                            "name": "this test will fail",
+                            "name": "WidthOfOneAndHeightOfOne",
                             "features": [
                               {
                                 "name": "hello"
@@ -188,48 +160,24 @@
                       }
                     },
                     "report": {
+                      "AnEmptyState": {
+                        "name": "Testing the Server with Puppeteer",
+                        "fails": []
+                      },
+                      "AStateWithEmail": {
+                        "name": "Testing the Redux store",
+                        "fails": []
+                      },
                       "default": {
-                        "name": "a classical react component, bundled with esbuild and tested with puppeteer",
-                        "fails": []
-                      },
-                      "BDD gherkin style": {
-                        "name": "Testing the Redux store",
-                        "fails": []
-                      },
-                      "another feature": {
-                        "name": "Testing the Redux store",
-                        "fails": []
-                      },
-                      "yet another feature": {
-                        "name": "Testing the Redux store",
-                        "fails": []
-                      },
-                      "OMG a feature!": {
-                        "name": "Testing the Redux store",
-                        "fails": []
-                      },
-                      "yes more tests plz": {
-                        "name": "Testing the Redux store",
-                        "fails": []
-                      },
-                      "a http boringfeature": {
-                        "name": "Testing the Node server with fetch",
-                        "fails": []
-                      },
-                      "a http feature": {
-                        "name": "Testing the Node server with fetch",
-                        "fails": []
-                      },
-                      "Set the email and check the email": {
                         "name": "Testing the LoginPage as react",
                         "fails": []
                       },
-                      "test 1": {
+                      "Default": {
                         "name": "Testing the Rectangle class",
                         "fails": [
                           {
                             "artifactSaver": {},
-                            "name": "this test will fail",
+                            "name": "WidthOfOneAndHeightOfOne",
                             "features": [
                               {
                                 "name": "hello"
@@ -268,12 +216,12 @@
                           }
                         ]
                       },
-                      "this test will fail": {
+                      "WidthOfOneAndHeightOfOne": {
                         "name": "Testing the Rectangle class",
                         "fails": [
                           {
                             "artifactSaver": {},
-                            "name": "this test will fail",
+                            "name": "WidthOfOneAndHeightOfOne",
                             "features": [
                               {
                                 "name": "hello"

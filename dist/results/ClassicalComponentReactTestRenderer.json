@@ -2,7 +2,7 @@
   "name": "a classical react component, bundled with esbuild and tested with puppeteer",
   "givens": [
     {
-      "name": "idk",
+      "name": "AnEmptyState",
       "whens": [
         {
           "name": "IClickTheButton: undefined"
@@ -18,7 +18,7 @@
       ]
     },
     {
-      "name": "idk",
+      "name": "AnEmptyState",
       "whens": [
         {
           "name": "IClickTheButton: undefined"

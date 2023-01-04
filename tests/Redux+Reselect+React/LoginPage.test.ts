@@ -105,7 +105,6 @@ export const AppReactTesteranto = ReactTesteranto<
         "Testing the LoginPage as react",
         [
           Given.default(
-            `Set the email and check the email`,
             [myFeature],
             [
               When.TheEmailIsSetTo("adam@email.com")
@@ -116,7 +115,6 @@ export const AppReactTesteranto = ReactTesteranto<
           ),
 
           Given.default(
-            `Set the email by initial state, then set the email normally, and then check some other stuff`,
             [],
             [
               When.TheEmailIsSetTo("adam@email.com"),
@@ -131,14 +129,12 @@ export const AppReactTesteranto = ReactTesteranto<
           ),
 
           Given.default(
-            "Don't show an email error just because the email does not validate",
             [],
             [When.TheEmailIsSetTo("adam")],
             [Then.ThereIsNotAnEmailError()]
           ),
 
           Given.default(
-            "Do show an email error after submitting",
             [],
             [When.TheEmailIsSetTo("adam"), When.TheLoginIsSubmitted()],
             [Then.ThereIsNotAnEmailError()]

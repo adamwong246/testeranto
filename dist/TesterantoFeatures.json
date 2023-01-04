@@ -104,7 +104,7 @@
         ],
         "edges": [
           {
-            "key": "geid_260_0",
+            "key": "geid_197_0",
             "source": "gutentag",
             "target": "aloha",
             "attributes": {
@@ -112,7 +112,7 @@
             }
           },
           {
-            "key": "geid_260_1",
+            "key": "geid_197_1",
             "source": "build the rocket",
             "target": "build the rocket payload",
             "attributes": {
@@ -147,7 +147,7 @@
         ],
         "edges": [
           {
-            "key": "geid_259_0",
+            "key": "geid_196_0",
             "source": "hello",
             "target": "aloha",
             "attributes": {
@@ -155,7 +155,7 @@
             }
           },
           {
-            "key": "geid_259_1",
+            "key": "geid_196_1",
             "source": "gutentag",
             "target": "hola",
             "attributes": {
@@ -187,13 +187,13 @@
         ],
         "edges": [
           {
-            "key": "geid_258_0",
+            "key": "geid_195_0",
             "source": "launch the rocket",
             "target": "hello",
             "attributes": {}
           },
           {
-            "key": "geid_258_1",
+            "key": "geid_195_1",
             "source": "hello",
             "target": "aloha",
             "attributes": {}
