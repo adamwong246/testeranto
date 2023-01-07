@@ -298,16 +298,9 @@ var testeranto_config_default = new TesterantoProject(
       "./tests/Redux+Reselect+React/LoginPage.test.ts",
       "AppReactTesteranto"
     ],
-    [
-      "ServerHttpPuppeteer",
-      "./tests/httpServer/server.http.test.ts",
-      "ServerHttpTesteranto"
-    ],
-    [
-      "ServerHttp",
-      "./tests/httpServer/server.puppeteer.test.ts",
-      "ServerHttpPuppeteerTesteranto"
-    ],
+    ["ServerHttp", "./tests/httpServer/server.http.test.ts", "ServerHttpTesteranto"],
+    ["ServerHttpPuppeteer", "./tests/httpServer/server.puppeteer.test.ts", "ServerHttpPuppeteerTesteranto"],
+    ["ServerHttp2x", "./tests/httpServer/server.http2x.test.ts", "ServerHttp2xTesteranto"],
     [
       "ClassicalComponentReactTestRenderer",
       "./tests/ClassicalReact/ClassicalComponent.react-test-renderer.test.tsx",
@@ -320,7 +313,7 @@ var testeranto_config_default = new TesterantoProject(
     ]
   ],
   "./tests/testerantoFeatures.test.ts",
-  ["3000", "3001", "3002"]
+  ["3000", "3001", "3002", "3003"]
 );
 
 // src/lib/level1.ts
@@ -379,7 +372,9 @@ var TesterantoLevelOne = class {
         toObj: () => {
           return suite.toObj();
         },
-        runner: async (testResourceConfiguration) => suite.run(input, testResourceConfiguration[testResource]),
+        runner: async (allocatedPorts) => {
+          return suite.run(input, { ports: allocatedPorts });
+        },
         builder: () => {
           const importPathPlugin = {
             name: "import-path",
@@ -531,12 +526,12 @@ var SolidityTesteranto = (testImplementations, testSpecifications, testInput, co
   testInput,
   testSpecifications,
   testImplementations,
-  "port",
+  { ports: 0 },
   {
     beforeAll: async () => {
       return (await compile(`../../../contracts/${contractName}.sol`))[contractName];
     },
-    beforeEach: async (contract, initialValues, ethereumNetworkPort) => {
+    beforeEach: async (contract) => {
       const provider = Ganache.provider({ seed: "drizzle-utils" });
       const web3 = new Web3(provider);
       const accounts = await web3.eth.getAccounts();
@@ -546,7 +541,7 @@ var SolidityTesteranto = (testImplementations, testSpecifications, testInput, co
         provider
       };
     },
-    andWhen: async ({ provider, contract, accounts }, callback, testResource) => callback()({ contract, accounts })
+    andWhen: async ({ provider, contract, accounts }, callback) => callback()({ contract, accounts })
   },
   entryPath
 );

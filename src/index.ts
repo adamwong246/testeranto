@@ -1,6 +1,6 @@
 import { BaseGiven, BaseCheck, BaseSuite, BaseFeature, BaseWhen, BaseThen } from "./BaseClasses";
 import { TesterantoLevelOne } from "./lib/level1";
-import { ITestImplementation, ITestSpecification, ITTestResource, ITTestShape } from "./types"
+import { ITestSpecification, ITTestResource, ITTestResourceRequirement, ITTestShape } from "./types"
 
 export const Testeranto = <
   TestShape extends ITTestShape,
@@ -10,7 +10,6 @@ export const Testeranto = <
   Selection,
   WhenShape,
   ThenShape,
-  TestResourceShape,
   InitialStateShape
 >(
   input: Input,
@@ -23,18 +22,16 @@ export const Testeranto = <
   //   ThenShape,
   //   TestShape
   // >,
-  testResource: ITTestResource,
+  testResource: ITTestResourceRequirement,
 
   testInterface: {
     actionHandler?: (b: (...any) => any) => any,
     afterEach?: (store: Store, ndx: number, cb) => unknown,
-    andWhen: (store: Store, actioner, testResource: TestResourceShape) => Promise<Selection>,
+    andWhen: (store: Store, actioner, testResource: ITTestResource) => Promise<Selection>,
     assertioner?: (t: ThenShape) => any,
-
     beforeAll?: (input: Input) => Promise<Subject>,
-
-    beforeEach?: (subject: Subject, initialValues, testResource: TestResourceShape) => Promise<Store>,
-    butThen?: (store: Store, callback, testResource: TestResourceShape) => Promise<Selection>,
+    beforeEach?: (subject: Subject, initialValues, testResource: ITTestResource) => Promise<Store>,
+    butThen?: (store: Store, callback, testResource: ITTestResource) => Promise<Selection>,
   },
   entryPath: string
 
@@ -63,7 +60,7 @@ export const Testeranto = <
     Subject,
     WhenShape,
     ThenShape,
-    TestResourceShape,
+    // ITTestResource,
     Input
   > {
     constructor() {

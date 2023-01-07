@@ -7,33 +7,59 @@
           "results": {
             "hello": {
               "results": {
-                "Default": {
-                  "name": "Testing a very simple smart contract",
+                "AnEmptyState": {
+                  "name": "Testing the Node server with fetch",
                   "fails": []
                 },
-                "AnEmptyState": {
-                  "name": "Testing the Redux store",
+                "default": {
+                  "name": "Testing the LoginPage as react",
                   "fails": []
                 },
                 "AStateWithEmail": {
                   "name": "Testing the Redux store",
                   "fails": []
                 },
+                "Default": {
+                  "name": "Testing the Rectangle class",
+                  "fails": []
+                },
+                "WidthOfOneAndHeightOfOne": {
+                  "name": "Testing the Rectangle class",
+                  "fails": []
+                },
                 "results": {
                   "gutentag": {
                     "results": {
+                      "WidthOfOneAndHeightOfOne": {
+                        "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
                       "results": {
                         "bien venidos": {
                           "results": {},
-                          "report": {}
+                          "report": {
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            }
+                          }
                         },
                         "buenos dias": {
                           "results": {},
                           "report": {
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
                             "results": {
                               "bien venidos": {
                                 "results": {},
-                                "report": {}
+                                "report": {
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  }
+                                }
                               }
                             }
                           }
@@ -41,16 +67,24 @@
                       }
                     },
                     "report": {
-                      "Default": {
-                        "name": "Testing a very simple smart contract",
+                      "AnEmptyState": {
+                        "name": "Testing the Node server with fetch",
                         "fails": []
                       },
-                      "AnEmptyState": {
-                        "name": "Testing the Redux store",
+                      "default": {
+                        "name": "Testing the LoginPage as react",
                         "fails": []
                       },
                       "AStateWithEmail": {
                         "name": "Testing the Redux store",
+                        "fails": []
+                      },
+                      "Default": {
+                        "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
+                      "WidthOfOneAndHeightOfOne": {
+                        "name": "Testing the Rectangle class",
                         "fails": []
                       }
                     }
@@ -60,36 +94,66 @@
                       "AnEmptyState": {
                         "name": "Testing the Redux store",
                         "fails": []
+                      },
+                      "WidthOfOneAndHeightOfOne": {
+                        "name": "Testing the Rectangle class",
+                        "fails": []
                       }
                     },
                     "report": {
-                      "Default": {
-                        "name": "Testing a very simple smart contract",
+                      "AnEmptyState": {
+                        "name": "Testing the Node server with fetch",
                         "fails": []
                       },
-                      "AnEmptyState": {
-                        "name": "Testing the Redux store",
+                      "default": {
+                        "name": "Testing the LoginPage as react",
                         "fails": []
                       },
                       "AStateWithEmail": {
                         "name": "Testing the Redux store",
                         "fails": []
                       },
+                      "Default": {
+                        "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
+                      "WidthOfOneAndHeightOfOne": {
+                        "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
                       "results": {
                         "gutentag": {
                           "results": {
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
                             "results": {
                               "bien venidos": {
                                 "results": {},
-                                "report": {}
+                                "report": {
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  }
+                                }
                               },
                               "buenos dias": {
                                 "results": {},
                                 "report": {
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
                                   "results": {
                                     "bien venidos": {
                                       "results": {},
-                                      "report": {}
+                                      "report": {
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        }
+                                      }
                                     }
                                   }
                                 }
@@ -97,16 +161,24 @@
                             }
                           },
                           "report": {
-                            "Default": {
-                              "name": "Testing a very simple smart contract",
+                            "AnEmptyState": {
+                              "name": "Testing the Node server with fetch",
                               "fails": []
                             },
-                            "AnEmptyState": {
-                              "name": "Testing the Redux store",
+                            "default": {
+                              "name": "Testing the LoginPage as react",
                               "fails": []
                             },
                             "AStateWithEmail": {
                               "name": "Testing the Redux store",
+                              "fails": []
+                            },
+                            "Default": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
                               "fails": []
                             }
                           }
@@ -138,33 +210,59 @@
                 "results": {
                   "hello": {
                     "results": {
-                      "Default": {
-                        "name": "Testing a very simple smart contract",
+                      "AnEmptyState": {
+                        "name": "Testing the Node server with fetch",
                         "fails": []
                       },
-                      "AnEmptyState": {
-                        "name": "Testing the Redux store",
+                      "default": {
+                        "name": "Testing the LoginPage as react",
                         "fails": []
                       },
                       "AStateWithEmail": {
                         "name": "Testing the Redux store",
                         "fails": []
                       },
+                      "Default": {
+                        "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
+                      "WidthOfOneAndHeightOfOne": {
+                        "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
                       "results": {
                         "gutentag": {
                           "results": {
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
                             "results": {
                               "bien venidos": {
                                 "results": {},
-                                "report": {}
+                                "report": {
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  }
+                                }
                               },
                               "buenos dias": {
                                 "results": {},
                                 "report": {
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
                                   "results": {
                                     "bien venidos": {
                                       "results": {},
-                                      "report": {}
+                                      "report": {
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        }
+                                      }
                                     }
                                   }
                                 }
@@ -172,16 +270,24 @@
                             }
                           },
                           "report": {
-                            "Default": {
-                              "name": "Testing a very simple smart contract",
+                            "AnEmptyState": {
+                              "name": "Testing the Node server with fetch",
                               "fails": []
                             },
-                            "AnEmptyState": {
-                              "name": "Testing the Redux store",
+                            "default": {
+                              "name": "Testing the LoginPage as react",
                               "fails": []
                             },
                             "AStateWithEmail": {
                               "name": "Testing the Redux store",
+                              "fails": []
+                            },
+                            "Default": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
                               "fails": []
                             }
                           }
@@ -191,36 +297,66 @@
                             "AnEmptyState": {
                               "name": "Testing the Redux store",
                               "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
                             }
                           },
                           "report": {
-                            "Default": {
-                              "name": "Testing a very simple smart contract",
+                            "AnEmptyState": {
+                              "name": "Testing the Node server with fetch",
                               "fails": []
                             },
-                            "AnEmptyState": {
-                              "name": "Testing the Redux store",
+                            "default": {
+                              "name": "Testing the LoginPage as react",
                               "fails": []
                             },
                             "AStateWithEmail": {
                               "name": "Testing the Redux store",
                               "fails": []
                             },
+                            "Default": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
                             "results": {
                               "gutentag": {
                                 "results": {
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
                                   "results": {
                                     "bien venidos": {
                                       "results": {},
-                                      "report": {}
+                                      "report": {
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        }
+                                      }
                                     },
                                     "buenos dias": {
                                       "results": {},
                                       "report": {
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        },
                                         "results": {
                                           "bien venidos": {
                                             "results": {},
-                                            "report": {}
+                                            "report": {
+                                              "WidthOfOneAndHeightOfOne": {
+                                                "name": "Testing the Rectangle class",
+                                                "fails": []
+                                              }
+                                            }
                                           }
                                         }
                                       }
@@ -228,16 +364,24 @@
                                   }
                                 },
                                 "report": {
-                                  "Default": {
-                                    "name": "Testing a very simple smart contract",
+                                  "AnEmptyState": {
+                                    "name": "Testing the Node server with fetch",
                                     "fails": []
                                   },
-                                  "AnEmptyState": {
-                                    "name": "Testing the Redux store",
+                                  "default": {
+                                    "name": "Testing the LoginPage as react",
                                     "fails": []
                                   },
                                   "AStateWithEmail": {
                                     "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "Default": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
                                     "fails": []
                                   }
                                 }

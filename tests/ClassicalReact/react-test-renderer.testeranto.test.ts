@@ -34,13 +34,12 @@ export const ReactTestRendererTesteranto = <
     any,
     any,
     any,
-    any,
     any
   >(
     testInput,
     testSpecifications,
     testImplementations,
-    "na",
+    { ports: 0 },
     {
       beforeEach: function (CComponent, props): Promise<renderer.ReactTestRenderer> {
         let component;

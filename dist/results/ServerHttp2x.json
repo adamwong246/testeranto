@@ -1,0 +1,34 @@
+{
+  "name": "Testing the Node server with fetch",
+  "givens": [
+    {
+      "name": "AnEmptyState",
+      "whens": [],
+      "thens": [
+        {
+          "name": "TheStatusIsA: some great status"
+        }
+      ]
+    },
+    {
+      "name": "AnEmptyState",
+      "whens": [
+        {
+          "name": "PostToStatusA: gutentag"
+        },
+        {
+          "name": "PostToStatusB: buenos dias"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheStatusIsA: gutentag"
+        },
+        {
+          "name": "TheStatusIsB: buenos dias"
+        }
+      ]
+    }
+  ],
+  "fails": []
+}

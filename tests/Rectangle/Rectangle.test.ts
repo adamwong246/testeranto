@@ -10,7 +10,6 @@ import { features } from "../testerantoFeatures.test";
 
 type WhenShape = any;
 type ThenShape = any;
-type TestResource = never;
 type Input = Rectangle;
 
 export const RectangleTesteranto =
@@ -50,7 +49,6 @@ export const RectangleTesteranto =
     Rectangle,
     WhenShape,
     ThenShape,
-    TestResource,
     unknown
   >(
     Rectangle.prototype,
@@ -185,9 +183,9 @@ export const RectangleTesteranto =
         },
       },
     },
-    "na",
+    { ports: 0 },
     {
-      andWhen: async function (renderer, actioner: any, testResource: never) {
+      andWhen: async function (renderer, actioner) {
         actioner()(renderer)
         return renderer;
       },

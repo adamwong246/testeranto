@@ -8,7 +8,6 @@ import { createStore, Store, AnyAction } from "redux";
 import { Testeranto } from "../../src/index";
 import { ITestImplementation, ITestSpecification, ITTestShape, Modify } from "../../src/types";
 
-type TestResource = never;
 type WhenShape = [
   (
     | ActionCreatorWithNonInferrablePayload<string>
@@ -49,22 +48,21 @@ export const ReduxTesteranto = <
     IStoreShape,
     WhenShape,
     ThenShape,
-    TestResource,
     IStoreShape
   >(
     testInput,
     testSpecifications,
     testImplementations,
-    "na",
+    { ports: 0 },
     {
-      beforeEach: function (subject: Reducer<any, AnyAction>, initialValues: any, testResource: never): Promise<Store<any, AnyAction>> {
+      beforeEach: function (subject: Reducer<any, AnyAction>, initialValues: any): Promise<Store<any, AnyAction>> {
         return createStore<IStoreShape, any, any, any>(subject, initialValues)
       },
-      andWhen: function (store: Store<any, AnyAction>, actioner: any, testResource: never): Promise<IStoreShape> {
+      andWhen: function (store: Store<any, AnyAction>, actioner: any): Promise<IStoreShape> {
         const a = actioner();
         return store.dispatch(a[0](a[1]));
       },
-      butThen: function (store: Store<any, AnyAction>, callback: any, testResource: never): Promise<IStoreShape> {
+      butThen: function (store: Store<any, AnyAction>): Promise<IStoreShape> {
         return store.getState();
       },
     },

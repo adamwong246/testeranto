@@ -5,7 +5,6 @@ import { Testeranto } from "../../src/index";
 import { ITestImplementation, ITestSpecification, ITTestShape } from "../../src/types";
 
 type Input = [string, (string) => string, any];
-type TestResource = "never";
 type InitialState = unknown;
 type WhenShape = any;
 type ThenShape = any;
@@ -36,13 +35,12 @@ export const EsbuildPuppeteerTesteranto = <
     Selection,
     ThenShape,
     WhenShape,
-    TestResource,
     InitialState
   >(
     testInput,
     testSpecifications,
     testImplementations,
-    "na",
+    { ports: 0 },
     {
       beforeAll: async function ([bundlePath, htmlTemplate]: Input): Promise<Subject> {
         return {
@@ -65,15 +63,15 @@ export const EsbuildPuppeteerTesteranto = <
           ),
         };
       },
-      beforeEach: function (subject: Subject, initialValues: any, testResource: "never"): Promise<Store> {
+      beforeEach: function (subject: Subject): Promise<Store> {
         return subject.page.setContent(subject.htmlBundle).then(() => {
           return { page: subject.page };
         });
       },
-      andWhen: function ({ page }: Store, actioner: any, testResource: "never"): Promise<Selection> {
+      andWhen: function ({ page }: Store, actioner): Promise<Selection> {
         return actioner()({ page });
       },
-      butThen: async function ({ page }: Store, callback: any, testResource: "never"): Promise<Selection> {
+      butThen: async function ({ page }: Store): Promise<Selection> {
         return { page };
       },
       afterEach: async function ({ page }: Store, ndx: number, saveTestArtifact) {

@@ -295,16 +295,9 @@ var testeranto_config_default = new TesterantoProject(
       "./tests/Redux+Reselect+React/LoginPage.test.ts",
       "AppReactTesteranto"
     ],
-    [
-      "ServerHttpPuppeteer",
-      "./tests/httpServer/server.http.test.ts",
-      "ServerHttpTesteranto"
-    ],
-    [
-      "ServerHttp",
-      "./tests/httpServer/server.puppeteer.test.ts",
-      "ServerHttpPuppeteerTesteranto"
-    ],
+    ["ServerHttp", "./tests/httpServer/server.http.test.ts", "ServerHttpTesteranto"],
+    ["ServerHttpPuppeteer", "./tests/httpServer/server.puppeteer.test.ts", "ServerHttpPuppeteerTesteranto"],
+    ["ServerHttp2x", "./tests/httpServer/server.http2x.test.ts", "ServerHttp2xTesteranto"],
     [
       "ClassicalComponentReactTestRenderer",
       "./tests/ClassicalReact/ClassicalComponent.react-test-renderer.test.tsx",
@@ -317,7 +310,7 @@ var testeranto_config_default = new TesterantoProject(
     ]
   ],
   "./tests/testerantoFeatures.test.ts",
-  ["3000", "3001", "3002"]
+  ["3000", "3001", "3002", "3003"]
 );
 
 // src/lib/level1.ts
@@ -376,7 +369,9 @@ var TesterantoLevelOne = class {
         toObj: () => {
           return suite.toObj();
         },
-        runner: async (testResourceConfiguration) => suite.run(input, testResourceConfiguration[testResource]),
+        runner: async (allocatedPorts) => {
+          return suite.run(input, { ports: allocatedPorts });
+        },
         builder: () => {
           const importPathPlugin = {
             name: "import-path",
@@ -504,7 +499,7 @@ var EsbuildPuppeteerTesteranto = (testImplementations, testSpecifications, testI
   testInput,
   testSpecifications,
   testImplementations,
-  "na",
+  { ports: 0 },
   {
     beforeAll: async function([bundlePath, htmlTemplate]) {
       return {
@@ -524,15 +519,15 @@ var EsbuildPuppeteerTesteranto = (testImplementations, testSpecifications, testI
         )
       };
     },
-    beforeEach: function(subject, initialValues, testResource) {
+    beforeEach: function(subject) {
       return subject.page.setContent(subject.htmlBundle).then(() => {
         return { page: subject.page };
       });
     },
-    andWhen: function({ page }, actioner, testResource) {
+    andWhen: function({ page }, actioner) {
       return actioner()({ page });
     },
-    butThen: async function({ page }, callback, testResource) {
+    butThen: async function({ page }) {
       return { page };
     },
     afterEach: async function({ page }, ndx, saveTestArtifact) {

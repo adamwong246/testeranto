@@ -5,7 +5,6 @@ import { assert } from "chai";
 import { Testeranto } from "../../src/index";
 import { ITestImplementation, ITestSpecification, ITTestShape, Modify } from "../../src/types";
 
-type TestResource = "port";
 type WhenShape = [url: string, paylaod: string];
 type ThenShape = any;
 type Input = () => http.Server;
@@ -42,15 +41,14 @@ export const PuppeteerHttpTesteranto = <
     Selection,
     ThenShape,
     WhenShape,
-    TestResource,
     InitialState
   >(
     testInput,
     testSpecifications,
     testImplementations,
-    "port",
+    { ports: 1 },
     {
-      beforeEach: function (serverFactory: Subject, initialValues: any, port): Promise<Store> {
+      beforeEach: function (serverFactory: Subject, initialValues: any, testResource): Promise<Store> {
         return new Promise((res) => {
           puppeteer
             .launch({
@@ -60,14 +58,14 @@ export const PuppeteerHttpTesteranto = <
             })
             .then((browser) => {
               const server = serverFactory();
-              res({ server: server.listen(port), browser });
+              res({ server: server.listen(testResource.ports[0]), browser });
             });
         });
       },
-      andWhen: async function (store: Store, actioner: any, port): Promise<string> {
+      andWhen: async function (store: Store, actioner: any, testResource): Promise<string> {
         const [path, body]: [string, string] = actioner(store);
         const y = await fetch(
-          `http://localhost:${port.toString()}/${path}`,
+          `http://localhost:${testResource.ports[0]}/${path}`,
           {
             method: "POST",
             body,
@@ -75,10 +73,10 @@ export const PuppeteerHttpTesteranto = <
         );
         return await y.text();
       },
-      butThen: async function (store: Store, callback: any, port): Promise<string> {
+      butThen: async function (store: Store, callback: any, testResource): Promise<string> {
         const [path, expectation]: [string, string] = callback(store);
         const bodytext = await (
-          await fetch(`http://localhost:${port.toString()}/${path}`)
+          await fetch(`http://localhost:${testResource.ports[0]}/${path}`)
         ).text();
         assert.equal(bodytext, expectation);
         return bodytext;

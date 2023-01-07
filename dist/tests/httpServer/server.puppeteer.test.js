@@ -294,16 +294,9 @@ var testeranto_config_default = new TesterantoProject(
       "./tests/Redux+Reselect+React/LoginPage.test.ts",
       "AppReactTesteranto"
     ],
-    [
-      "ServerHttpPuppeteer",
-      "./tests/httpServer/server.http.test.ts",
-      "ServerHttpTesteranto"
-    ],
-    [
-      "ServerHttp",
-      "./tests/httpServer/server.puppeteer.test.ts",
-      "ServerHttpPuppeteerTesteranto"
-    ],
+    ["ServerHttp", "./tests/httpServer/server.http.test.ts", "ServerHttpTesteranto"],
+    ["ServerHttpPuppeteer", "./tests/httpServer/server.puppeteer.test.ts", "ServerHttpPuppeteerTesteranto"],
+    ["ServerHttp2x", "./tests/httpServer/server.http2x.test.ts", "ServerHttp2xTesteranto"],
     [
       "ClassicalComponentReactTestRenderer",
       "./tests/ClassicalReact/ClassicalComponent.react-test-renderer.test.tsx",
@@ -316,7 +309,7 @@ var testeranto_config_default = new TesterantoProject(
     ]
   ],
   "./tests/testerantoFeatures.test.ts",
-  ["3000", "3001", "3002"]
+  ["3000", "3001", "3002", "3003"]
 );
 
 // src/lib/level1.ts
@@ -375,7 +368,9 @@ var TesterantoLevelOne = class {
         toObj: () => {
           return suite.toObj();
         },
-        runner: async (testResourceConfiguration) => suite.run(input, testResourceConfiguration[testResource]),
+        runner: async (allocatedPorts) => {
+          return suite.run(input, { ports: allocatedPorts });
+        },
         builder: () => {
           const importPathPlugin = {
             name: "import-path",
@@ -503,23 +498,23 @@ var PuppeteerHttpTesteranto = (testImplementations, testSpecifications, testInpu
   testInput,
   testSpecifications,
   testImplementations,
-  "port",
+  { ports: 1 },
   {
-    beforeEach: function(serverFactory2, initialValues, port) {
+    beforeEach: function(serverFactory2, initialValues, testResource) {
       return new Promise((res) => {
         puppeteer.launch({
           headless: true,
           executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
         }).then((browser) => {
           const server = serverFactory2();
-          res({ server: server.listen(port), browser });
+          res({ server: server.listen(testResource.ports[0]), browser });
         });
       });
     },
-    andWhen: async function(store, actioner, port) {
+    andWhen: async function(store, actioner, testResource) {
       const [path3, body] = actioner(store);
       const y = await fetch(
-        `http://localhost:${port.toString()}/${path3}`,
+        `http://localhost:${testResource.ports[0]}/${path3}`,
         {
           method: "POST",
           body
@@ -527,9 +522,9 @@ var PuppeteerHttpTesteranto = (testImplementations, testSpecifications, testInpu
       );
       return await y.text();
     },
-    butThen: async function(store, callback, port) {
+    butThen: async function(store, callback, testResource) {
       const [path3, expectation] = callback(store);
-      const bodytext = await (await fetch(`http://localhost:${port.toString()}/${path3}`)).text();
+      const bodytext = await (await fetch(`http://localhost:${testResource.ports[0]}/${path3}`)).text();
       assert.equal(bodytext, expectation);
       return bodytext;
     },

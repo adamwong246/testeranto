@@ -1,8 +1,7 @@
-import renderer, { act, ReactTestRenderer } from "react-test-renderer";
+import renderer, { act } from "react-test-renderer";
 import { Testeranto } from "../../src/index";
 import { ITestImplementation, ITestSpecification, ITTestShape } from "../../src/types";
 
-type TestResource = never;
 type WhenShape = any;
 type ThenShape = any;
 type Input = () => JSX.Element;
@@ -29,22 +28,21 @@ export const ReactTesteranto = <
     renderer.ReactTestRenderer,
     WhenShape,
     ThenShape,
-    TestResource,
     unknown
   >(
     testInput,
     testSpecifications,
     testImplementations,
-    "na",
+    { ports: 0 },
     {
-      beforeEach: async function (subject: Input, initialValues: any, testResource: never): Promise<renderer.ReactTestRenderer> {
+      beforeEach: async function (subject: Input): Promise<renderer.ReactTestRenderer> {
         let component;
         await act(() => {
           component = renderer.create(subject());
         });
         return component;
       },
-      andWhen: async function (renderer: renderer.ReactTestRenderer, actioner: any, testResource: never): Promise<renderer.ReactTestRenderer> {
+      andWhen: async function (renderer: renderer.ReactTestRenderer, actioner): Promise<renderer.ReactTestRenderer> {
         await act(() => actioner()(renderer))
         return renderer;
       },

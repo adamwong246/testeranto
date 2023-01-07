@@ -4,7 +4,7 @@ import fresh from 'fresh-require';
 import { topologicalSort } from 'graphology-dag/topological-sort';
 
 import { TesterantoFeatures } from '../Features';
-import { ITestJob, IT_FeatureNetwork } from '../types';
+import { ITestJob, ITTestResourceRequirement, IT_FeatureNetwork } from '../types';
 
 const TIMEOUT = 1000;
 const OPEN_PORT = '';
@@ -25,7 +25,7 @@ export class Scheduler {
     key: string,
     aborter: () => any;
     getCancellablePromise: (testResource) => CancelablePromise<unknown>,
-    testResourceRequired: "na" | "port"
+    testResourceRequired: ITTestResourceRequirement
   }[];
   testSrcMd5s: object;
   featureSrcMd5: string;
@@ -206,43 +206,72 @@ export class Scheduler {
 
     this.abort(key);
 
-    if (testResourceRequired === "na") {
+    if (testResourceRequired.ports === 0) {
       this.jobs[key] = {
         aborter,
         cancellablePromise: getCancellablePromise({}).then(() => delete this.jobs[key])
       }
     }
 
-    if (testResourceRequired === "port") {
+
+
+
+
+
+    if (testResourceRequired.ports > 0) {
+
+      // clear any port-slots associated with this job
       Object.values(this.ports).forEach((jobMaybe, portNumber) => {
         if (jobMaybe && jobMaybe === key) {
           this.ports[portNumber] = OPEN_PORT;
         }
       });
 
-      const foundOpenPort = Object.keys(this.ports).find((p) => this.ports[p] === OPEN_PORT);
+      // find a list of open ports
+      const foundOpenPorts = Object.keys(this.ports)
+        .filter((p) => this.ports[p] === OPEN_PORT);
 
-      if (foundOpenPort) {
-        const testPromise = getCancellablePromise({ port: foundOpenPort }).then(() => {
-          Object.keys(this.ports).forEach((p, k) => {
-            const jobExistsAndMatches = this.ports[p] === key;
-            if (jobExistsAndMatches) {
-              this.ports[p] = OPEN_PORT;
-            }
+      // if there are enough open port-slots...
+      if (foundOpenPorts.length >= testResourceRequired.ports) {
+
+        const selectionOfPorts = foundOpenPorts.slice(0, testResourceRequired.ports);
+
+        //  init the promise with ports which are open.
+        const testPromise = getCancellablePromise(selectionOfPorts)
+
+          // when the promise is done...
+          .then(() => {
+            // clear any ports which were used
+            Object.keys(this.ports)
+              .forEach((p, k) => {
+                const jobExistsAndMatches = this.ports[p] === key;
+                if (jobExistsAndMatches) {
+                  this.ports[p] = OPEN_PORT;
+                }
+              });
+
+            delete this.jobs[key]
           });
 
-          delete this.jobs[key]
-        });
-        this.ports[foundOpenPort] = key;
+        // mark the selected ports as occupied
+        for (const foundOpenPort of selectionOfPorts) {
+          this.ports[foundOpenPort] = key;
+        }
+
         this.jobs[key] = {
           aborter,
           cancellablePromise: testPromise
         };
+
       } else {
         console.log(`no port was open so send the ${key} job to the back of the queue`)
         this.queue.push(qi);
       }
     }
+
+
+
+
   }
 
   private startJob(testJob, key) {

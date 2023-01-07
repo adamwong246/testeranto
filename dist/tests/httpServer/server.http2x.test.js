@@ -1,9 +1,8 @@
-// tests/Redux+Reselect+React/app.redux.test.ts
-import { assert } from "chai";
+// tests/httpServer/server.http2x.test.ts
 import { features } from "/Users/adam/Code/testeranto.ts/dist/tests/testerantoFeatures.test.js";
 
-// tests/Redux+Reselect+React/redux.testeranto.test.ts
-import { createStore } from "redux";
+// tests/httpServer/http2x.testeranto.test.ts
+import { assert } from "chai";
 
 // src/BaseClasses.ts
 import { mapValues } from "lodash";
@@ -493,147 +492,155 @@ var Testeranto = (input, testSpecification, testImplementation, testResource, te
   };
 };
 
-// tests/Redux+Reselect+React/redux.testeranto.test.ts
-var ReduxTesteranto = (testImplementations, testSpecifications, testInput, entryPath) => Testeranto(
+// tests/httpServer/http2x.testeranto.test.ts
+var Http2xTesteranto = (testImplementations, testSpecifications, testInput, entryPath) => Testeranto(
   testInput,
   testSpecifications,
   testImplementations,
-  { ports: 0 },
+  { ports: 2 },
   {
-    beforeEach: function(subject, initialValues) {
-      return createStore(subject, initialValues);
+    beforeEach: async function(serverFactory2, initialValues, testResource) {
+      const serverA = serverFactory2();
+      await serverA.listen(testResource.ports[0]);
+      const serverB = serverFactory2();
+      await serverB.listen(testResource.ports[1]);
+      return { serverA, serverB };
     },
-    andWhen: function(store, actioner) {
-      const a = actioner();
-      return store.dispatch(a[0](a[1]));
+    afterEach: function({ serverA, serverB }, ndx) {
+      return new Promise((res) => {
+        serverA.close(() => {
+          serverB.close(() => {
+            res(true);
+          });
+        });
+      });
     },
-    butThen: function(store) {
-      return store.getState();
+    andWhen: async function(store, actioner, testResource) {
+      const [path3, body, portSlot] = actioner(store);
+      const y = await fetch(
+        `http://localhost:${testResource.ports[portSlot]}/${path3}`,
+        {
+          method: "POST",
+          body
+        }
+      );
+      return await y.text();
+    },
+    butThen: async function(store, callback, testResource) {
+      const [path3, expectation, portSlot] = callback({});
+      const bodytext = await (await fetch(`http://localhost:${testResource.ports[portSlot]}/${path3}`)).text();
+      assert.equal(bodytext, expectation);
+      return bodytext;
     }
   },
   entryPath
 );
 
-// tests/Redux+Reselect+React/app.ts
-import { createSelector, createSlice, createStore as createStore2 } from "@reduxjs/toolkit";
-var loginApp = createSlice({
-  name: "login app",
-  initialState: {
-    password: "",
-    email: "",
-    error: "no_error"
-  },
-  reducers: {
-    setPassword: (state, action) => {
-      state.password = action.payload;
-    },
-    setEmail: (state, action) => {
-      state.email = action.payload;
-    },
-    signIn: (state) => {
-      state.error = checkForErrors(state);
+// tests/httpServer/server.ts
+import http from "http";
+var serverFactory = () => {
+  let status = "some great status";
+  let counter = 0;
+  return http.createServer(function(req, res) {
+    if (req.method === "GET") {
+      if (req.url === "/get_status") {
+        res.write(status);
+        res.end();
+        return;
+      } else if (req.url === "/get_number") {
+        res.write(counter.toString());
+        res.end();
+        return;
+      } else {
+        res.write("<p>error 404<p>");
+        res.end();
+        return;
+      }
+    } else if (req.method === "POST") {
+      let body = "";
+      req.on("data", function(chunk) {
+        body += chunk;
+      });
+      req.on("end", function() {
+        if (req.url === "/put_status") {
+          status = body.toString();
+          res.write("aok");
+          res.end();
+          return;
+        } else if (req.url === "/put_number") {
+          counter = counter + parseInt(body);
+          res.write(counter.toString());
+          res.end();
+          return;
+        } else {
+          res.write("<p>error 404<p>");
+          res.end();
+          return;
+        }
+      });
     }
-  }
-});
-var selectRoot = (storeState) => {
-  return storeState;
+  });
 };
-var validateEmail = (email) => {
-  return email.match(
-    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  );
-};
-var checkForErrors = (storeState) => {
-  if (!validateEmail(storeState.email)) {
-    return "invalidEmail";
-  }
-  if (storeState.password !== "password" && storeState.email !== "adam@email.com") {
-    return "credentialFail";
-  }
-  return "no_error";
-};
-var loginPageSelection = createSelector([selectRoot], (root) => {
-  return {
-    ...root,
-    disableSubmit: root.email == "" || root.password == ""
-  };
-});
 
-// tests/Redux+Reselect+React/app.redux.test.ts
-var AppReduxTesteranto = ReduxTesteranto(
+// tests/httpServer/server.http2x.test.ts
+var myFeature = features.hello;
+var ServerHttp2xTesteranto = Http2xTesteranto(
   {
     Suites: {
       Default: "some default Suite"
     },
     Givens: {
       AnEmptyState: () => {
-        return loginApp.getInitialState();
-      },
-      AStateWithEmail: (email) => {
-        return { ...loginApp.getInitialState(), email };
+        return {};
       }
     },
     Whens: {
-      TheLoginIsSubmitted: () => [loginApp.actions.signIn],
-      TheEmailIsSetTo: (email) => [loginApp.actions.setEmail, email],
-      ThePasswordIsSetTo: (password) => [loginApp.actions.setPassword, password]
+      PostToStatusA: (status) => ["put_status", status, 0],
+      PostToAddA: (n) => ["put_number", n.toString(), 0],
+      PostToStatusB: (status) => ["put_status", status, 1],
+      PostToAddB: (n) => ["put_number", n.toString(), 1]
     },
     Thens: {
-      TheEmailIs: (email) => (storeState) => assert.equal(storeState.email, email),
-      TheEmailIsNot: (email) => (storeState) => assert.notEqual(storeState.email, email),
-      ThePasswordIs: (password) => (selection) => assert.equal(selection.password, password),
-      ThePasswordIsNot: (password) => (selection) => assert.notEqual(selection.password, password)
+      TheStatusIsA: (status) => () => ["get_status", status, 0],
+      TheNumberIsA: (number) => () => ["get_number", number, 0],
+      TheStatusIsB: (status) => () => ["get_status", status, 1],
+      TheNumberIsB: (number) => () => ["get_number", number, 1]
     },
     Checks: {
-      AnEmptyState: () => loginApp.getInitialState()
+      AnEmptyState: () => {
+        return {};
+      }
     }
   },
   (Suite, Given, When, Then, Check) => {
     return [
       Suite.Default(
-        "Testing the Redux store",
+        "Testing the Node server with fetch",
         [
           Given.AnEmptyState(
-            [features.hello],
+            [myFeature],
+            [],
+            [Then.TheStatusIsA("some great status")]
+          ),
+          Given.AnEmptyState(
+            [myFeature],
             [
-              When.TheEmailIsSetTo("adam@email.com")
+              When.PostToStatusA("gutentag"),
+              When.PostToStatusB("buenos dias")
             ],
             [
-              Then.TheEmailIs("adam@email.com")
+              Then.TheStatusIsA("gutentag"),
+              Then.TheStatusIsB("buenos dias")
             ]
-          ),
-          Given.AStateWithEmail(
-            [features.hello],
-            [],
-            [
-              Then.TheEmailIsNot("adam@email.com"),
-              Then.TheEmailIs("bob@mail.com")
-            ],
-            "bob@mail.com"
-          ),
-          Given.AnEmptyState(
-            [features.hello],
-            [When.TheEmailIsSetTo("hello"), When.TheEmailIsSetTo("aloha")],
-            [Then.TheEmailIs("aloha")]
-          ),
-          Given.AnEmptyState(
-            [features.aloha, features.hello],
-            [],
-            [Then.TheEmailIs("")]
-          ),
-          Given.AnEmptyState(
-            [features.aloha, features.hello],
-            [When.TheEmailIsSetTo("hey there")],
-            [Then.TheEmailIs("hey there")]
           )
         ],
         []
       )
     ];
   },
-  loginApp.reducer,
+  serverFactory,
   __filename
 );
 export {
-  AppReduxTesteranto
+  ServerHttp2xTesteranto
 };

@@ -1,4 +1,5 @@
 import { mapValues } from "lodash";
+import { ITTestResource } from "./types";
 
 export class BaseFeature {
   name: string;
@@ -53,7 +54,7 @@ export abstract class BaseSuite<
     return t;
   }
 
-  async run(input, testResourceConfiguration?) {
+  async run(input, testResourceConfiguration: ITTestResource) {
     const subject = await this.setup(input);
     // console.log("\nSuite:", this.name, testResourceConfiguration);
     for (const [ndx, giver] of this.givens.entries()) {

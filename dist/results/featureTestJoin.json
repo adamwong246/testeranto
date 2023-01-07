@@ -1,26 +1,27 @@
 {
   "hello": [
     {
-      "testKey": "Default",
-      "name": "Testing a very simple smart contract",
+      "testKey": "AnEmptyState",
+      "name": "Testing the Node server with fetch",
       "whens": [
-        "Decrement: 1",
-        "Decrement: 1",
-        "Decrement: 1",
-        "Increment: 1"
+        "PostToStatus: aloha",
+        "PostToAdd: 4",
+        "PostToStatus: hello",
+        "PostToAdd: 3"
       ],
       "thens": [
-        "Get: [object Object]"
+        "TheStatusIs: hello",
+        "TheNumberIs: 7"
       ]
     },
     {
-      "testKey": "AnEmptyState",
-      "name": "Testing the Redux store",
+      "testKey": "default",
+      "name": "Testing the LoginPage as react",
       "whens": [
-        "TheEmailIsSetTo: hey there"
+        "TheEmailIsSetTo: adam@email.com"
       ],
       "thens": [
-        "TheEmailIs: hey there"
+        "TheEmailIs: adam@email.com"
       ]
     },
     {
@@ -30,6 +31,29 @@
       "thens": [
         "TheEmailIsNot: adam@email.com",
         "TheEmailIs: bob@mail.com"
+      ]
+    },
+    {
+      "testKey": "Default",
+      "name": "Testing the Rectangle class",
+      "whens": [
+        "setWidth: 4",
+        "setHeight: 9"
+      ],
+      "thens": [
+        "getWidth: 4",
+        "getHeight: 9"
+      ]
+    },
+    {
+      "testKey": "WidthOfOneAndHeightOfOne",
+      "name": "Testing the Rectangle class",
+      "whens": [
+        "setHeight: 33",
+        "setWidth: 34"
+      ],
+      "thens": [
+        "getHeight: 33"
       ]
     }
   ],
@@ -42,6 +66,52 @@
       ],
       "thens": [
         "TheEmailIs: hey there"
+      ]
+    },
+    {
+      "testKey": "WidthOfOneAndHeightOfOne",
+      "name": "Testing the Rectangle class",
+      "whens": [
+        "setHeight: 3",
+        "setWidth: 4"
+      ],
+      "thens": [
+        "getHeight: 3",
+        "getWidth: 4",
+        "area: 12",
+        "circumference: 14"
+      ]
+    }
+  ],
+  "hola": [
+    {
+      "testKey": "WidthOfOneAndHeightOfOne",
+      "name": "Testing the Rectangle class",
+      "whens": [
+        "setHeight: 3",
+        "setWidth: 4",
+        "setHeight: 5",
+        "setWidth: 6"
+      ],
+      "thens": [
+        "area: 30",
+        "circumference: 22"
+      ]
+    }
+  ],
+  "gutentag": [
+    {
+      "testKey": "WidthOfOneAndHeightOfOne",
+      "name": "Testing the Rectangle class",
+      "whens": [
+        "setHeight: 3",
+        "setWidth: 4"
+      ],
+      "thens": [
+        "getHeight: 3",
+        "getWidth: 4",
+        "area: 12",
+        "circumference: 14"
       ]
     }
   ]

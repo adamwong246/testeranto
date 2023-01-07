@@ -14,10 +14,10 @@ export default new TesterantoProject(
     [
       'ReactTesteranto', './tests/Redux+Reselect+React/LoginPage.test.ts', 'AppReactTesteranto'
     ],
-    [
-      'ServerHttpPuppeteer', './tests/httpServer/server.http.test.ts', 'ServerHttpTesteranto'],
-    [
-      'ServerHttp', './tests/httpServer/server.puppeteer.test.ts', 'ServerHttpPuppeteerTesteranto'],
+
+    ['ServerHttp', './tests/httpServer/server.http.test.ts', 'ServerHttpTesteranto'],
+    ['ServerHttpPuppeteer', './tests/httpServer/server.puppeteer.test.ts', 'ServerHttpPuppeteerTesteranto'],
+    ['ServerHttp2x', './tests/httpServer/server.http2x.test.ts', 'ServerHttp2xTesteranto'],
 
     [
       'ClassicalComponentReactTestRenderer',
@@ -31,6 +31,6 @@ export default new TesterantoProject(
     ],
   ],
   './tests/testerantoFeatures.test.ts',
-  ['3000', '3001', '3002']
+  ['3000', '3001', '3002', '3003']
   // __filename
 );

@@ -5,7 +5,7 @@ import esbuild from "esbuild";
 import { mapValues } from "lodash";
 import { BaseGiven, BaseCheck, BaseSuite, BaseFeature, BaseWhen, BaseThen } from "../BaseClasses";
 import { TesterantoLevelZero } from "./level0";
-import { ITTestShape, ITestImplementation, ITestJob } from "../types";
+import { ITTestShape, ITestImplementation, ITestJob, ITTestResource, ITTestResourceRequirement } from "../types";
 
 import testerantoConfig from "../../testeranto.config";
 
@@ -17,7 +17,7 @@ export abstract class TesterantoLevelOne<
   ISubject,
   IWhenShape,
   IThenShape,
-  ITestResource,
+  // ITestResource,
   IInput
 > {
   constructor(
@@ -82,7 +82,7 @@ export abstract class TesterantoLevelOne<
     checkKlasser: (n, f, cb, w, t) =>
       BaseCheck<ISubject, IStore, ISelection, IThenShape>,
 
-    testResource: ITestResource,
+    testResource: any,
 
     entryPath: string
   ) {
@@ -151,7 +151,6 @@ export abstract class TesterantoLevelOne<
       IThenShape
     > { })(
       input,
-      /* @ts-ignore:next-line */
       classySuites,
       classyGivens,
       /* @ts-ignore:next-line */
@@ -169,6 +168,7 @@ export abstract class TesterantoLevelOne<
       classyTesteranto.Check()
     );
 
+    /* @ts-ignore:next-line */
     const toReturn: ITestJob[] = suites.map((suite) => {
       return {
         test: suite,
@@ -178,22 +178,21 @@ export abstract class TesterantoLevelOne<
           return suite.toObj()
         },
 
-        runner: async (testResourceConfiguration?) => suite.run(input, testResourceConfiguration[testResource]),
+        runner: async (allocatedPorts: number[]) => {
+          return suite.run(input, { ports: allocatedPorts });
+        },
 
         builder: () => {
           const importPathPlugin = {
             name: 'import-path',
             setup(build) {
               build.onResolve({ filter: /^\.{1,2}\// }, args => {
-                // console.log("args", args)
 
                 const importedPath = args.resolveDir + "/" + args.path;
                 const absolutePath = path.resolve(importedPath);
                 const absolutePath2 = path.resolve(testerantoConfig.features).split(".ts").slice(0, -1).join('.ts');
 
                 if (absolutePath === absolutePath2) {
-
-                  // console.log("mark2", args)
                   return {
                     path: process.cwd() + "/dist/tests/testerantoFeatures.test.js", external: true
                   }

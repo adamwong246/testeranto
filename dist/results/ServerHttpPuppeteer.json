@@ -1,5 +1,5 @@
 {
-  "name": "Testing the Node server with fetch",
+  "name": "Testing the Server with Puppeteer",
   "givens": [
     {
       "name": "AnEmptyState",
@@ -14,12 +14,12 @@
       "name": "AnEmptyState",
       "whens": [
         {
-          "name": "PostToStatus: hello"
+          "name": "PostToStatus: goodbye"
         }
       ],
       "thens": [
         {
-          "name": "TheStatusIs: hello"
+          "name": "TheStatusIs: goodbye"
         }
       ]
     },

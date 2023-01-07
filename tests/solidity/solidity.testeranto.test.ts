@@ -17,9 +17,7 @@ type TestResource = never;
 type WhenShape = any;
 type ThenShape = any;
 type Input = any;
-
-// import { AbiItem } from "web3-utils";
-type Ibis = any;  //{ abi: AbiItem | AbiItem[], bytecode: string }
+type Ibis = any;
 
 // Promisify truffle-compile
 const truffleCompile = (...args) =>
@@ -76,18 +74,17 @@ export const SolidityTesteranto = <
     Selection,
     WhenShape,
     ThenShape,
-    TestResource,
     string
   >(
     testInput,
     testSpecifications,
     testImplementations,
-    "port",
+    { ports: 0 },
     {
       beforeAll: async () => {
         return (await compile(`../../../contracts/${contractName}.sol`) as any)[contractName] as Ibis
       },
-      beforeEach: async (contract: Ibis, initialValues: any, ethereumNetworkPort: string) => {
+      beforeEach: async (contract: Ibis) => {
         const provider = Ganache.provider({ seed: "drizzle-utils" });
         /* @ts-ignore:next-line */
         const web3 = new Web3(provider);
@@ -100,7 +97,7 @@ export const SolidityTesteranto = <
           provider
         };
       },
-      andWhen: async ({ provider, contract, accounts }, callback: any, testResource: never) =>
+      andWhen: async ({ provider, contract, accounts }, callback: any) =>
         (callback())({ contract, accounts }),
     },
     entryPath
