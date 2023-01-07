@@ -209,15 +209,15 @@ var BaseCheck = class {
   }
 };
 
-// src/level1.ts
+// src/lib/level1.ts
 import { createHash } from "node:crypto";
 import fs2 from "fs";
 import path2 from "path";
 import esbuild from "esbuild";
 import { mapValues as mapValues2 } from "lodash";
 
-// src/level0.ts
-var TesterantoBasic = class {
+// src/lib/level0.ts
+var TesterantoLevelZero = class {
   constructor(cc, suitesOverrides, givenOverides, whenOverides, thenOverides, checkOverides) {
     this.cc = cc;
     this.constructorator = cc;
@@ -315,8 +315,8 @@ var testeranto_config_default = new TesterantoProject(
   ["3000", "3001", "3002"]
 );
 
-// src/level1.ts
-var Testeranto = class {
+// src/lib/level1.ts
+var TesterantoLevelOne = class {
   constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResource, entryPath) {
     const classySuites = mapValues2(
       testImplementation.Suites,
@@ -348,7 +348,7 @@ var Testeranto = class {
         return new checkKlasser.prototype.constructor(somestring, features2, callback, classyWhens, classyThens);
       }
     );
-    const classyTesteranto = new class extends TesterantoBasic {
+    const classyTesteranto = new class extends TesterantoLevelZero {
     }(
       input,
       classySuites,
@@ -418,7 +418,7 @@ var Testeranto = class {
 };
 
 // src/index.ts
-var TesterantoFactory = (input, testSpecification, testImplementation, testResource, testInterface, entryPath) => {
+var Testeranto = (input, testSpecification, testImplementation, testResource, testInterface, entryPath) => {
   const butThen = testInterface.butThen || (async (a) => a);
   const { andWhen } = testInterface;
   const actionHandler = testInterface.actionHandler || function(b) {
@@ -430,7 +430,7 @@ var TesterantoFactory = (input, testSpecification, testImplementation, testResou
     return subject;
   };
   const afterEach = testInterface.afterEach || (async (s) => s);
-  return class extends Testeranto {
+  return class extends TesterantoLevelOne {
     constructor() {
       super(
         testImplementation,
@@ -523,7 +523,7 @@ var Rectangle_default = Rectangle;
 
 // tests/Rectangle/Rectangle.test.ts
 import { features } from "/Users/adam/Code/testeranto.ts/dist/tests/testerantoFeatures.test.js";
-var RectangleTesteranto = TesterantoFactory(
+var RectangleTesteranto = Testeranto(
   Rectangle_default.prototype,
   (Suite, Given, When, Then, Check) => {
     return [

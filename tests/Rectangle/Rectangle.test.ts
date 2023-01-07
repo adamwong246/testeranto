@@ -1,7 +1,7 @@
 import assert from "assert";
 
 import {
-  TesterantoFactory,
+  Testeranto,
 } from "../../src/index";
 
 import Rectangle from "./Rectangle";
@@ -14,7 +14,7 @@ type TestResource = never;
 type Input = Rectangle;
 
 export const RectangleTesteranto =
-  TesterantoFactory<
+  Testeranto<
     {
       suites: {
         Default: string;

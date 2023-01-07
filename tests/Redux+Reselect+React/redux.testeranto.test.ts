@@ -5,8 +5,8 @@ import {
 } from "@reduxjs/toolkit";
 
 import { createStore, Store, AnyAction } from "redux";
-import { TesterantoFactory } from "../../src/index";
-import { ITestImplementation, ITestSpecification, ITTestShape, Modify } from "../../src/testShapes";
+import { Testeranto } from "../../src/index";
+import { ITestImplementation, ITestSpecification, ITTestShape, Modify } from "../../src/types";
 
 type TestResource = never;
 type WhenShape = [
@@ -41,7 +41,7 @@ export const ReduxTesteranto = <
   testInput: Input,
   entryPath: string
 ) =>
-  TesterantoFactory<
+  Testeranto<
     ITestShape,
     Input,
     Reducer,

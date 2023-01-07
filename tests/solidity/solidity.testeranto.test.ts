@@ -5,8 +5,8 @@ import TruffleCompile from "truffle-compile";
 import Web3 from 'web3';
 import { Contract } from 'web3-eth-contract';
 
-import { TesterantoFactory } from "../../src/index";
-import { ITestImplementation, ITestSpecification, ITTestShape } from "../../src/testShapes";
+import { Testeranto } from "../../src/index";
+import { ITestImplementation, ITestSpecification, ITTestShape } from "../../src/types";
 
 type Selection = {
   contract: Contract,
@@ -68,7 +68,7 @@ export const SolidityTesteranto = <
   contractName: string,
   entryPath: string
 ) =>
-  TesterantoFactory<
+  Testeranto<
     ITestShape,
     string,
     Ibis,

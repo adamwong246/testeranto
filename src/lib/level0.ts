@@ -1,6 +1,6 @@
-import { BaseGiven, BaseCheck, BaseSuite, BaseFeature, BaseWhen, BaseThen } from "./BaseClasses";
+import { BaseGiven, BaseCheck, BaseSuite, BaseFeature, BaseWhen, BaseThen } from "../BaseClasses";
 
-export abstract class TesterantoBasic<
+export abstract class TesterantoLevelZero<
   IInput,
   ISubject,
   IStore,

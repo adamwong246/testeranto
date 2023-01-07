@@ -1,8 +1,8 @@
 import { assert } from "chai";
 import http from "http";
 
-import { TesterantoFactory } from "../../src/index";
-import { ITestImplementation, ITestSpecification, ITTestShape, Modify } from "../../src/testShapes";
+import { Testeranto } from "../../src/index";
+import { ITestImplementation, ITestSpecification, ITTestShape, Modify } from "../../src/types";
 
 type TestResource = "port";
 type WhenShape = [url: string, paylaod: string];
@@ -33,7 +33,7 @@ export const HttpTesteranto = <
   testInput: Input,
   entryPath: string
 ) =>
-  TesterantoFactory<
+  Testeranto<
     ITestShape,
     Input,
     Subject,

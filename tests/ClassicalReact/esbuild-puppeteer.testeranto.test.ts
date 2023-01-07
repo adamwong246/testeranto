@@ -1,8 +1,8 @@
 import puppeteer, { Page } from "puppeteer";
 import esbuild from "esbuild";
 
-import { TesterantoFactory } from "../../src/index";
-import { ITestImplementation, ITestSpecification, ITTestShape } from "../../src/testShapes";
+import { Testeranto } from "../../src/index";
+import { ITestImplementation, ITestSpecification, ITTestShape } from "../../src/types";
 
 type Input = [string, (string) => string, any];
 type TestResource = "never";
@@ -28,7 +28,7 @@ export const EsbuildPuppeteerTesteranto = <
   testInput: Input,
   entry: string
 ) =>
-  TesterantoFactory<
+  Testeranto<
     ITestShape,
     Input,
     Subject,

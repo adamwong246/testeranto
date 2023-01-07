@@ -1,8 +1,8 @@
 import { BaseGiven, BaseCheck, BaseSuite, BaseFeature, BaseWhen, BaseThen } from "./BaseClasses";
-import { Testeranto } from "./level1";
-import { ITestImplementation, ITestSpecification, ITTestResource, ITTestShape } from "./testShapes"
+import { TesterantoLevelOne } from "./lib/level1";
+import { ITestImplementation, ITestSpecification, ITTestResource, ITTestShape } from "./types"
 
-export const TesterantoFactory = <
+export const Testeranto = <
   TestShape extends ITTestShape,
   Input,
   Subject,
@@ -55,7 +55,7 @@ export const TesterantoFactory = <
   }
   const afterEach = testInterface.afterEach || (async (s) => s);
 
-  return class extends Testeranto<
+  return class extends TesterantoLevelOne<
     TestShape,
     InitialStateShape,
     Selection,

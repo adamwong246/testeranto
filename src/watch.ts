@@ -1,9 +1,9 @@
 import fs from "fs";
 import { watchFile } from 'node:fs';
 import testerantoConfig from "../testeranto.config";
-import { TesterantoScheduler } from "./TesterantoScheduler";
+import { Scheduler } from "./lib/Scheduler";
 
-const TRM = new TesterantoScheduler(testerantoConfig.ports);
+const TRM = new Scheduler(testerantoConfig.ports);
 
 (async function () {
   for await (const [ndx, [key, sourcefile, className]] of testerantoConfig.tests.entries()) {

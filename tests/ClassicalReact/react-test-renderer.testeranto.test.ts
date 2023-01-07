@@ -3,8 +3,8 @@
 import React from "react";
 import renderer, { act } from "react-test-renderer";
 
-import { TesterantoFactory } from "../../src/index";
-import { ITestImplementation, ITestSpecification, ITTestShape } from "../../src/testShapes";
+import { Testeranto } from "../../src/index";
+import { ITestImplementation, ITestSpecification, ITTestShape } from "../../src/types";
 
 type Input = typeof React.Component;
 type WhenShape = any;
@@ -26,7 +26,7 @@ export const ReactTestRendererTesteranto = <
   testInput: Input,
   entryPath: string
 ) =>
-  TesterantoFactory<
+  Testeranto<
     ITestShape,
     Input,
     any,

@@ -1,40 +1,6 @@
 {
   "hello": [
     {
-      "testKey": "AnEmptyState",
-      "name": "a classical react component, bundled with esbuild and tested with puppeteer",
-      "whens": [
-        "IClickTheButton: undefined",
-        "IClickTheButton: undefined",
-        "IClickTheButton: undefined",
-        "IClickTheButton: undefined",
-        "IClickTheButton: undefined",
-        "IClickTheButton: undefined"
-      ],
-      "thens": [
-        "TheStatusIs: [object Object]"
-      ]
-    },
-    {
-      "testKey": "default",
-      "name": "Testing the LoginPage as react",
-      "whens": [
-        "TheEmailIsSetTo: adam@email.com"
-      ],
-      "thens": [
-        "TheEmailIs: adam@email.com"
-      ]
-    },
-    {
-      "testKey": "AStateWithEmail",
-      "name": "Testing the Redux store",
-      "whens": [],
-      "thens": [
-        "TheEmailIsNot: adam@email.com",
-        "TheEmailIs: bob@mail.com"
-      ]
-    },
-    {
       "testKey": "Default",
       "name": "Testing a very simple smart contract",
       "whens": [
@@ -48,14 +14,22 @@
       ]
     },
     {
-      "testKey": "WidthOfOneAndHeightOfOne",
-      "name": "Testing the Rectangle class",
+      "testKey": "AnEmptyState",
+      "name": "Testing the Redux store",
       "whens": [
-        "setHeight: 33",
-        "setWidth: 34"
+        "TheEmailIsSetTo: hey there"
       ],
       "thens": [
-        "getHeight: 33"
+        "TheEmailIs: hey there"
+      ]
+    },
+    {
+      "testKey": "AStateWithEmail",
+      "name": "Testing the Redux store",
+      "whens": [],
+      "thens": [
+        "TheEmailIsNot: adam@email.com",
+        "TheEmailIs: bob@mail.com"
       ]
     }
   ],
@@ -68,52 +42,6 @@
       ],
       "thens": [
         "TheEmailIs: hey there"
-      ]
-    },
-    {
-      "testKey": "WidthOfOneAndHeightOfOne",
-      "name": "Testing the Rectangle class",
-      "whens": [
-        "setHeight: 3",
-        "setWidth: 4"
-      ],
-      "thens": [
-        "getHeight: 3",
-        "getWidth: 4",
-        "area: 12",
-        "circumference: 14"
-      ]
-    }
-  ],
-  "hola": [
-    {
-      "testKey": "WidthOfOneAndHeightOfOne",
-      "name": "Testing the Rectangle class",
-      "whens": [
-        "setHeight: 3",
-        "setWidth: 4",
-        "setHeight: 5",
-        "setWidth: 6"
-      ],
-      "thens": [
-        "area: 30",
-        "circumference: 22"
-      ]
-    }
-  ],
-  "gutentag": [
-    {
-      "testKey": "WidthOfOneAndHeightOfOne",
-      "name": "Testing the Rectangle class",
-      "whens": [
-        "setHeight: 3",
-        "setWidth: 4"
-      ],
-      "thens": [
-        "getHeight: 3",
-        "getWidth: 4",
-        "area: 12",
-        "circumference: 14"
       ]
     }
   ]

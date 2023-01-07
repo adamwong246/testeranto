@@ -3,13 +3,13 @@ import fs from "fs";
 import path from "path";
 import esbuild from "esbuild";
 import { mapValues } from "lodash";
-import { BaseGiven, BaseCheck, BaseSuite, BaseFeature, BaseWhen, BaseThen } from "./BaseClasses";
-import { TesterantoBasic } from "./level0";
-import { ITTestShape, ITestImplementation, ITestJob } from "./testShapes";
+import { BaseGiven, BaseCheck, BaseSuite, BaseFeature, BaseWhen, BaseThen } from "../BaseClasses";
+import { TesterantoLevelZero } from "./level0";
+import { ITTestShape, ITestImplementation, ITestJob } from "../types";
 
-import testerantoConfig from "../testeranto.config";
+import testerantoConfig from "../../testeranto.config";
 
-export abstract class Testeranto<
+export abstract class TesterantoLevelOne<
   ITestShape extends ITTestShape,
   IInitialState,
   ISelection,
@@ -138,7 +138,7 @@ export abstract class Testeranto<
       ThenExtensions,
       ICheckExtensions,
       IThenShape
-    > extends TesterantoBasic<
+    > extends TesterantoLevelZero<
       IInput,
       ISubject,
       IStore,
