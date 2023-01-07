@@ -6,7 +6,7 @@ import {
 
 import { createStore, Store, AnyAction } from "redux";
 import { TesterantoFactory } from "../../src/index";
-import { ITestImplementation, ITestSpecification, ITTestShape } from "../../src/testShapes";
+import { ITestImplementation, ITestSpecification, ITTestShape, Modify } from "../../src/testShapes";
 
 type TestResource = never;
 type WhenShape = [
@@ -23,13 +23,20 @@ export const ReduxTesteranto = <
   IStoreShape,
   ITestShape extends ITTestShape
 >(
-  testImplementations: ITestImplementation<
+  testImplementations: Modify<ITestImplementation<
     IStoreShape,
     IStoreShape,
     WhenShape,
     ThenShape,
     ITestShape
-  >,
+  >, {
+    Whens: {
+      [K in keyof ITestShape["whens"]]: (
+        ...Iw: ITestShape["whens"][K]
+      ) => WhenShape;
+    }
+
+  }>,
   testSpecifications: ITestSpecification<ITestShape>,
   testInput: Input,
   entryPath: string
@@ -60,9 +67,6 @@ export const ReduxTesteranto = <
       butThen: function (store: Store<any, AnyAction>, callback: any, testResource: never): Promise<IStoreShape> {
         return store.getState();
       },
-      actionHandler: function (b: (...any: any[]) => any) {
-        return b();
-      }
     },
     entryPath
   )

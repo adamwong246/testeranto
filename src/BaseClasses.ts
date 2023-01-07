@@ -157,7 +157,6 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
         this.store = await this.givenThat(subject, testResourceConfiguration);
       }
       for (const whenStep of this.whens) {
-        console.log("   whenStep   ", whenStep)
         await whenStep.test(this.store, testResourceConfiguration);
       }
       for (const thenStep of this.thens) {

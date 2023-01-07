@@ -96,7 +96,6 @@ var BaseGiven = class {
         this.store = await this.givenThat(subject, testResourceConfiguration);
       }
       for (const whenStep of this.whens) {
-        console.log("   whenStep   ", whenStep);
         await whenStep.test(this.store, testResourceConfiguration);
       }
       for (const thenStep of this.thens) {
@@ -575,7 +574,7 @@ var RectangleTesteranto = TesterantoFactory(
             [features.hello],
             [When.setHeight(33), When.setWidth(34)],
             [
-              Then.getHeight(3)
+              Then.getHeight(33)
             ]
           )
         ],

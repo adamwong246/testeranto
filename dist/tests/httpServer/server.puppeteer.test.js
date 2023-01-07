@@ -100,7 +100,6 @@ var BaseGiven = class {
         this.store = await this.givenThat(subject, testResourceConfiguration);
       }
       for (const whenStep of this.whens) {
-        console.log("   whenStep   ", whenStep);
         await whenStep.test(this.store, testResourceConfiguration);
       }
       for (const thenStep of this.thens) {
@@ -518,7 +517,7 @@ var PuppeteerHttpTesteranto = (testImplementations, testSpecifications, testInpu
       });
     },
     andWhen: async function(store, actioner, port) {
-      const [path3, body] = actioner(store)();
+      const [path3, body] = actioner(store);
       const y = await fetch(
         `http://localhost:${port.toString()}/${path3}`,
         {
@@ -605,8 +604,8 @@ var ServerHttpPuppeteerTesteranto = PuppeteerHttpTesteranto(
       }
     },
     Whens: {
-      PostToStatus: (status) => (store) => ["put_status", status],
-      PostToAdd: (n) => (store) => ["put_number", n.toString()]
+      PostToStatus: (status) => ["put_status", status],
+      PostToAdd: (n) => ["put_number", n.toString()]
     },
     Thens: {
       TheStatusIs: (status) => (store) => ["get_status", status],

@@ -36,8 +36,8 @@ export const ServerHttpPuppeteerTesteranto = PuppeteerHttpTesteranto<
       },
     },
     Whens: {
-      PostToStatus: (status) => (store) => ["put_status", status],
-      PostToAdd: (n) => (store) => ["put_number", n.toString()],
+      PostToStatus: (status) => ["put_status", status],
+      PostToAdd: (n) => ["put_number", n.toString()],
     },
     Thens: {
       TheStatusIs: (status) => (store) => ["get_status", status],

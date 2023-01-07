@@ -105,7 +105,7 @@ export const RectangleTesteranto =
               [features.hello],
               [When.setHeight(33), When.setWidth(34)],
               [
-                Then.getHeight(3),
+                Then.getHeight(33),
               ]
             ),
 

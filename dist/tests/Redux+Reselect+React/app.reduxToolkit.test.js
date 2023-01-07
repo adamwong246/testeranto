@@ -99,7 +99,6 @@ var BaseGiven = class {
         this.store = await this.givenThat(subject, testResourceConfiguration);
       }
       for (const whenStep of this.whens) {
-        console.log("   whenStep   ", whenStep);
         await whenStep.test(this.store, testResourceConfiguration);
       }
       for (const thenStep of this.thens) {
@@ -515,9 +514,6 @@ var ReduxToolkitTesteranto = (testImplementations, testSpecifications, testInput
     },
     assertioner: function(t) {
       return t[0](t[1], t[2], t[3]);
-    },
-    actionHandler: function(b) {
-      return b();
     }
   },
   entryPath
@@ -599,9 +595,9 @@ var AppReduxToolkitTesteranto = ReduxToolkitTesteranto(
       }
     },
     Whens: {
-      TheLoginIsSubmitted: () => () => [loginApp.actions.signIn],
-      TheEmailIsSetTo: (email) => () => [loginApp.actions.setEmail, email],
-      ThePasswordIsSetTo: (password) => () => [loginApp.actions.setPassword, password]
+      TheLoginIsSubmitted: () => [loginApp.actions.signIn],
+      TheEmailIsSetTo: (email) => [loginApp.actions.setEmail, email],
+      ThePasswordIsSetTo: (password) => [loginApp.actions.setPassword, password]
     },
     Thens: {
       TheEmailIs: (email) => (selection) => [assert.equal, selection.email, email, "a nice message"],
