@@ -42,10 +42,9 @@ export const AppReduxTesteranto = ReduxTesteranto<
       },
     },
     Whens: {
-      TheLoginIsSubmitted: () => () => [loginApp.actions.signIn],
-      TheEmailIsSetTo: (email) => () => [loginApp.actions.setEmail, email],
-      ThePasswordIsSetTo: (password) => () =>
-        [loginApp.actions.setPassword, password],
+      TheLoginIsSubmitted: () => [loginApp.actions.signIn],
+      TheEmailIsSetTo: (email) => [loginApp.actions.setEmail, email],
+      ThePasswordIsSetTo: (password) => [loginApp.actions.setPassword, password],
     },
     Thens: {
       TheEmailIs: (email) => (storeState) =>

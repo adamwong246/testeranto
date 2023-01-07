@@ -3,7 +3,7 @@ import http from "http";
 import { assert } from "chai";
 
 import { TesterantoFactory } from "../../src/index";
-import { ITestImplementation, ITestSpecification, ITTestShape } from "../../src/testShapes";
+import { ITestImplementation, ITestSpecification, ITTestShape, Modify } from "../../src/testShapes";
 
 type TestResource = "port";
 type WhenShape = [url: string, paylaod: string];
@@ -17,13 +17,19 @@ type Selection = string;
 export const PuppeteerHttpTesteranto = <
   ITestShape extends ITTestShape
 >(
-  testImplementations: ITestImplementation<
+  testImplementations: Modify<ITestImplementation<
     InitialState,
     Selection,
     WhenShape,
     ThenShape,
     ITestShape
-  >,
+  >, {
+    Whens: {
+      [K in keyof ITestShape["whens"]]: (
+        ...Iw: ITestShape["whens"][K]
+      ) => WhenShape;
+    }
+  }>,
   testSpecifications: ITestSpecification<ITestShape>,
   testInput: Input,
   entryPath: string,
@@ -44,7 +50,7 @@ export const PuppeteerHttpTesteranto = <
     testImplementations,
     "port",
     {
-      beforeEach: function (serverFactory : Subject, initialValues: any, port): Promise<Store> {
+      beforeEach: function (serverFactory: Subject, initialValues: any, port): Promise<Store> {
         return new Promise((res) => {
           puppeteer
             .launch({
@@ -59,7 +65,7 @@ export const PuppeteerHttpTesteranto = <
         });
       },
       andWhen: async function (store: Store, actioner: any, port): Promise<string> {
-        const [path, body]: [string, string] = actioner(store)();
+        const [path, body]: [string, string] = actioner(store);
         const y = await fetch(
           `http://localhost:${port.toString()}/${path}`,
           {
@@ -71,7 +77,7 @@ export const PuppeteerHttpTesteranto = <
       },
       butThen: async function (store: Store, callback: any, port): Promise<string> {
         const [path, expectation]: [string, string] = callback(store);
-        const bodytext = await(
+        const bodytext = await (
           await fetch(`http://localhost:${port.toString()}/${path}`)
         ).text();
         assert.equal(bodytext, expectation);

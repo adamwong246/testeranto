@@ -36,10 +36,8 @@ export const ServerHttpTesteranto = HttpTesteranto<
       },
     },
     Whens: {
-      PostToStatus: (status: string) => () => {
-        return ["put_status", status];
-      },
-      PostToAdd: (n: number) => () => ["put_number", n.toString()],
+      PostToStatus: (status: string) => ["put_status", status],
+      PostToAdd: (n: number) => ["put_number", n.toString()],
     },
     Thens: {
       TheStatusIs: (status: string) => () => ["get_status", status],

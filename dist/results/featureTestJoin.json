@@ -2,16 +2,17 @@
   "hello": [
     {
       "testKey": "AnEmptyState",
-      "name": "Testing the Node server with fetch",
+      "name": "a classical react component, bundled with esbuild and tested with puppeteer",
       "whens": [
-        "PostToStatus: aloha",
-        "PostToAdd: 4",
-        "PostToStatus: hello",
-        "PostToAdd: 3"
+        "IClickTheButton: undefined",
+        "IClickTheButton: undefined",
+        "IClickTheButton: undefined",
+        "IClickTheButton: undefined",
+        "IClickTheButton: undefined",
+        "IClickTheButton: undefined"
       ],
       "thens": [
-        "TheStatusIs: hello",
-        "TheNumberIs: 7"
+        "TheStatusIs: [object Object]"
       ]
     },
     {
@@ -35,14 +36,15 @@
     },
     {
       "testKey": "Default",
-      "name": "Testing the Rectangle class",
+      "name": "Testing a very simple smart contract",
       "whens": [
-        "setWidth: 4",
-        "setHeight: 9"
+        "Decrement: 1",
+        "Decrement: 1",
+        "Decrement: 1",
+        "Increment: 1"
       ],
       "thens": [
-        "getWidth: 4",
-        "getHeight: 9"
+        "Get: [object Object]"
       ]
     },
     {
@@ -53,15 +55,8 @@
         "setWidth: 34"
       ],
       "thens": [
-        "getHeight: 3"
-      ],
-      "errors": {
-        "generatedMessage": true,
-        "code": "ERR_ASSERTION",
-        "actual": 33,
-        "expected": 3,
-        "operator": "=="
-      }
+        "getHeight: 33"
+      ]
     }
   ],
   "aloha": [

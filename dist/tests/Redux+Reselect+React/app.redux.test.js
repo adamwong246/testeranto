@@ -100,7 +100,6 @@ var BaseGiven = class {
         this.store = await this.givenThat(subject, testResourceConfiguration);
       }
       for (const whenStep of this.whens) {
-        console.log("   whenStep   ", whenStep);
         await whenStep.test(this.store, testResourceConfiguration);
       }
       for (const thenStep of this.thens) {
@@ -515,9 +514,6 @@ var ReduxTesteranto = (testImplementations, testSpecifications, testInput, entry
     },
     butThen: function(store, callback, testResource) {
       return store.getState();
-    },
-    actionHandler: function(b) {
-      return b();
     }
   },
   entryPath
@@ -583,9 +579,9 @@ var AppReduxTesteranto = ReduxTesteranto(
       }
     },
     Whens: {
-      TheLoginIsSubmitted: () => () => [loginApp.actions.signIn],
-      TheEmailIsSetTo: (email) => () => [loginApp.actions.setEmail, email],
-      ThePasswordIsSetTo: (password) => () => [loginApp.actions.setPassword, password]
+      TheLoginIsSubmitted: () => [loginApp.actions.signIn],
+      TheEmailIsSetTo: (email) => [loginApp.actions.setEmail, email],
+      ThePasswordIsSetTo: (password) => [loginApp.actions.setPassword, password]
     },
     Thens: {
       TheEmailIs: (email) => (storeState) => assert.equal(storeState.email, email),

@@ -1,8 +1,8 @@
 import { assert } from "chai";
 import http from "http";
 
-import {TesterantoFactory} from "../../src/index";
-import { ITestImplementation, ITestSpecification, ITTestShape } from "../../src/testShapes";
+import { TesterantoFactory } from "../../src/index";
+import { ITestImplementation, ITestSpecification, ITTestShape, Modify } from "../../src/testShapes";
 
 type TestResource = "port";
 type WhenShape = [url: string, paylaod: string];
@@ -16,13 +16,19 @@ type Selection = string;
 export const HttpTesteranto = <
   ITestShape extends ITTestShape
 >(
-  testImplementations: ITestImplementation<
+  testImplementations: Modify<ITestImplementation<
     InitialState,
     Selection,
     WhenShape,
     ThenShape,
     ITestShape
-  >,
+  >, {
+    Whens: {
+      [K in keyof ITestShape["whens"]]: (
+        ...Iw: ITestShape["whens"][K]
+      ) => WhenShape;
+    }
+  }>,
   testSpecifications: ITestSpecification<ITestShape>,
   testInput: Input,
   entryPath: string
@@ -49,7 +55,7 @@ export const HttpTesteranto = <
         return server;
       },
       andWhen: async function (store: Store, actioner: any, testResource: "port"): Promise<string> {
-        const [path, body]: [string, string] = actioner(store)();
+        const [path, body]: [string, string] = actioner(store);
         const y = await fetch(
           `http://localhost:${testResource.toString()}/${path}`,
           {
@@ -61,7 +67,7 @@ export const HttpTesteranto = <
       },
       butThen: async function (store: Store, callback: any, testResource: "port"): Promise<string> {
         const [path, expectation]: [string, string] = callback({});
-        const bodytext = await(
+        const bodytext = await (
           await fetch(`http://localhost:${testResource.toString()}/${path}`)
         ).text();
         assert.equal(bodytext, expectation);

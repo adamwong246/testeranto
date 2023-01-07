@@ -15,13 +15,14 @@ export const TesterantoFactory = <
 >(
   input: Input,
   testSpecification: ITestSpecification<TestShape>,
-  testImplementation: ITestImplementation<
-    InitialStateShape,
-    Selection,
-    WhenShape,
-    ThenShape,
-    TestShape
-  >,
+  testImplementation,
+  // testImplementation: ITestImplementation<
+  //   InitialStateShape,
+  //   Selection,
+  //   WhenShape,
+  //   ThenShape,
+  //   TestShape
+  // >,
   testResource: ITTestResource,
 
   testInterface: {

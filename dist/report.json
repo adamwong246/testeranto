@@ -8,7 +8,7 @@
             "hello": {
               "results": {
                 "AnEmptyState": {
-                  "name": "Testing the Node server with fetch",
+                  "name": "a classical react component, bundled with esbuild and tested with puppeteer",
                   "fails": []
                 },
                 "default": {
@@ -20,139 +20,19 @@
                   "fails": []
                 },
                 "Default": {
-                  "name": "Testing the Rectangle class",
-                  "fails": [
-                    {
-                      "artifactSaver": {},
-                      "name": "WidthOfOneAndHeightOfOne",
-                      "features": [
-                        {
-                          "name": "hello"
-                        }
-                      ],
-                      "whens": [
-                        {
-                          "name": "setHeight: 33"
-                        },
-                        {
-                          "name": "setWidth: 34"
-                        }
-                      ],
-                      "thens": [
-                        {
-                          "name": "getHeight: 3",
-                          "error": true
-                        }
-                      ],
-                      "testArtifacts": {},
-                      "initialValues": {
-                        "height": 1,
-                        "width": 1
-                      },
-                      "store": {
-                        "width": 34,
-                        "height": 33
-                      },
-                      "error": {
-                        "generatedMessage": true,
-                        "code": "ERR_ASSERTION",
-                        "actual": 33,
-                        "expected": 3,
-                        "operator": "=="
-                      }
-                    }
-                  ]
+                  "name": "Testing a very simple smart contract",
+                  "fails": []
                 },
                 "WidthOfOneAndHeightOfOne": {
                   "name": "Testing the Rectangle class",
-                  "fails": [
-                    {
-                      "artifactSaver": {},
-                      "name": "WidthOfOneAndHeightOfOne",
-                      "features": [
-                        {
-                          "name": "hello"
-                        }
-                      ],
-                      "whens": [
-                        {
-                          "name": "setHeight: 33"
-                        },
-                        {
-                          "name": "setWidth: 34"
-                        }
-                      ],
-                      "thens": [
-                        {
-                          "name": "getHeight: 3",
-                          "error": true
-                        }
-                      ],
-                      "testArtifacts": {},
-                      "initialValues": {
-                        "height": 1,
-                        "width": 1
-                      },
-                      "store": {
-                        "width": 34,
-                        "height": 33
-                      },
-                      "error": {
-                        "generatedMessage": true,
-                        "code": "ERR_ASSERTION",
-                        "actual": 33,
-                        "expected": 3,
-                        "operator": "=="
-                      }
-                    }
-                  ]
+                  "fails": []
                 },
                 "results": {
                   "gutentag": {
                     "results": {
                       "WidthOfOneAndHeightOfOne": {
                         "name": "Testing the Rectangle class",
-                        "fails": [
-                          {
-                            "artifactSaver": {},
-                            "name": "WidthOfOneAndHeightOfOne",
-                            "features": [
-                              {
-                                "name": "hello"
-                              }
-                            ],
-                            "whens": [
-                              {
-                                "name": "setHeight: 33"
-                              },
-                              {
-                                "name": "setWidth: 34"
-                              }
-                            ],
-                            "thens": [
-                              {
-                                "name": "getHeight: 3",
-                                "error": true
-                              }
-                            ],
-                            "testArtifacts": {},
-                            "initialValues": {
-                              "height": 1,
-                              "width": 1
-                            },
-                            "store": {
-                              "width": 34,
-                              "height": 33
-                            },
-                            "error": {
-                              "generatedMessage": true,
-                              "code": "ERR_ASSERTION",
-                              "actual": 33,
-                              "expected": 3,
-                              "operator": "=="
-                            }
-                          }
-                        ]
+                        "fails": []
                       },
                       "results": {
                         "bien venidos": {
@@ -160,47 +40,7 @@
                           "report": {
                             "WidthOfOneAndHeightOfOne": {
                               "name": "Testing the Rectangle class",
-                              "fails": [
-                                {
-                                  "artifactSaver": {},
-                                  "name": "WidthOfOneAndHeightOfOne",
-                                  "features": [
-                                    {
-                                      "name": "hello"
-                                    }
-                                  ],
-                                  "whens": [
-                                    {
-                                      "name": "setHeight: 33"
-                                    },
-                                    {
-                                      "name": "setWidth: 34"
-                                    }
-                                  ],
-                                  "thens": [
-                                    {
-                                      "name": "getHeight: 3",
-                                      "error": true
-                                    }
-                                  ],
-                                  "testArtifacts": {},
-                                  "initialValues": {
-                                    "height": 1,
-                                    "width": 1
-                                  },
-                                  "store": {
-                                    "width": 34,
-                                    "height": 33
-                                  },
-                                  "error": {
-                                    "generatedMessage": true,
-                                    "code": "ERR_ASSERTION",
-                                    "actual": 33,
-                                    "expected": 3,
-                                    "operator": "=="
-                                  }
-                                }
-                              ]
+                              "fails": []
                             }
                           }
                         },
@@ -209,47 +49,7 @@
                           "report": {
                             "WidthOfOneAndHeightOfOne": {
                               "name": "Testing the Rectangle class",
-                              "fails": [
-                                {
-                                  "artifactSaver": {},
-                                  "name": "WidthOfOneAndHeightOfOne",
-                                  "features": [
-                                    {
-                                      "name": "hello"
-                                    }
-                                  ],
-                                  "whens": [
-                                    {
-                                      "name": "setHeight: 33"
-                                    },
-                                    {
-                                      "name": "setWidth: 34"
-                                    }
-                                  ],
-                                  "thens": [
-                                    {
-                                      "name": "getHeight: 3",
-                                      "error": true
-                                    }
-                                  ],
-                                  "testArtifacts": {},
-                                  "initialValues": {
-                                    "height": 1,
-                                    "width": 1
-                                  },
-                                  "store": {
-                                    "width": 34,
-                                    "height": 33
-                                  },
-                                  "error": {
-                                    "generatedMessage": true,
-                                    "code": "ERR_ASSERTION",
-                                    "actual": 33,
-                                    "expected": 3,
-                                    "operator": "=="
-                                  }
-                                }
-                              ]
+                              "fails": []
                             },
                             "results": {
                               "bien venidos": {
@@ -257,47 +57,7 @@
                                 "report": {
                                   "WidthOfOneAndHeightOfOne": {
                                     "name": "Testing the Rectangle class",
-                                    "fails": [
-                                      {
-                                        "artifactSaver": {},
-                                        "name": "WidthOfOneAndHeightOfOne",
-                                        "features": [
-                                          {
-                                            "name": "hello"
-                                          }
-                                        ],
-                                        "whens": [
-                                          {
-                                            "name": "setHeight: 33"
-                                          },
-                                          {
-                                            "name": "setWidth: 34"
-                                          }
-                                        ],
-                                        "thens": [
-                                          {
-                                            "name": "getHeight: 3",
-                                            "error": true
-                                          }
-                                        ],
-                                        "testArtifacts": {},
-                                        "initialValues": {
-                                          "height": 1,
-                                          "width": 1
-                                        },
-                                        "store": {
-                                          "width": 34,
-                                          "height": 33
-                                        },
-                                        "error": {
-                                          "generatedMessage": true,
-                                          "code": "ERR_ASSERTION",
-                                          "actual": 33,
-                                          "expected": 3,
-                                          "operator": "=="
-                                        }
-                                      }
-                                    ]
+                                    "fails": []
                                   }
                                 }
                               }
@@ -308,7 +68,7 @@
                     },
                     "report": {
                       "AnEmptyState": {
-                        "name": "Testing the Node server with fetch",
+                        "name": "a classical react component, bundled with esbuild and tested with puppeteer",
                         "fails": []
                       },
                       "default": {
@@ -320,92 +80,12 @@
                         "fails": []
                       },
                       "Default": {
-                        "name": "Testing the Rectangle class",
-                        "fails": [
-                          {
-                            "artifactSaver": {},
-                            "name": "WidthOfOneAndHeightOfOne",
-                            "features": [
-                              {
-                                "name": "hello"
-                              }
-                            ],
-                            "whens": [
-                              {
-                                "name": "setHeight: 33"
-                              },
-                              {
-                                "name": "setWidth: 34"
-                              }
-                            ],
-                            "thens": [
-                              {
-                                "name": "getHeight: 3",
-                                "error": true
-                              }
-                            ],
-                            "testArtifacts": {},
-                            "initialValues": {
-                              "height": 1,
-                              "width": 1
-                            },
-                            "store": {
-                              "width": 34,
-                              "height": 33
-                            },
-                            "error": {
-                              "generatedMessage": true,
-                              "code": "ERR_ASSERTION",
-                              "actual": 33,
-                              "expected": 3,
-                              "operator": "=="
-                            }
-                          }
-                        ]
+                        "name": "Testing a very simple smart contract",
+                        "fails": []
                       },
                       "WidthOfOneAndHeightOfOne": {
                         "name": "Testing the Rectangle class",
-                        "fails": [
-                          {
-                            "artifactSaver": {},
-                            "name": "WidthOfOneAndHeightOfOne",
-                            "features": [
-                              {
-                                "name": "hello"
-                              }
-                            ],
-                            "whens": [
-                              {
-                                "name": "setHeight: 33"
-                              },
-                              {
-                                "name": "setWidth: 34"
-                              }
-                            ],
-                            "thens": [
-                              {
-                                "name": "getHeight: 3",
-                                "error": true
-                              }
-                            ],
-                            "testArtifacts": {},
-                            "initialValues": {
-                              "height": 1,
-                              "width": 1
-                            },
-                            "store": {
-                              "width": 34,
-                              "height": 33
-                            },
-                            "error": {
-                              "generatedMessage": true,
-                              "code": "ERR_ASSERTION",
-                              "actual": 33,
-                              "expected": 3,
-                              "operator": "=="
-                            }
-                          }
-                        ]
+                        "fails": []
                       }
                     }
                   },
@@ -417,52 +97,12 @@
                       },
                       "WidthOfOneAndHeightOfOne": {
                         "name": "Testing the Rectangle class",
-                        "fails": [
-                          {
-                            "artifactSaver": {},
-                            "name": "WidthOfOneAndHeightOfOne",
-                            "features": [
-                              {
-                                "name": "hello"
-                              }
-                            ],
-                            "whens": [
-                              {
-                                "name": "setHeight: 33"
-                              },
-                              {
-                                "name": "setWidth: 34"
-                              }
-                            ],
-                            "thens": [
-                              {
-                                "name": "getHeight: 3",
-                                "error": true
-                              }
-                            ],
-                            "testArtifacts": {},
-                            "initialValues": {
-                              "height": 1,
-                              "width": 1
-                            },
-                            "store": {
-                              "width": 34,
-                              "height": 33
-                            },
-                            "error": {
-                              "generatedMessage": true,
-                              "code": "ERR_ASSERTION",
-                              "actual": 33,
-                              "expected": 3,
-                              "operator": "=="
-                            }
-                          }
-                        ]
+                        "fails": []
                       }
                     },
                     "report": {
                       "AnEmptyState": {
-                        "name": "Testing the Node server with fetch",
+                        "name": "a classical react component, bundled with esbuild and tested with puppeteer",
                         "fails": []
                       },
                       "default": {
@@ -474,139 +114,19 @@
                         "fails": []
                       },
                       "Default": {
-                        "name": "Testing the Rectangle class",
-                        "fails": [
-                          {
-                            "artifactSaver": {},
-                            "name": "WidthOfOneAndHeightOfOne",
-                            "features": [
-                              {
-                                "name": "hello"
-                              }
-                            ],
-                            "whens": [
-                              {
-                                "name": "setHeight: 33"
-                              },
-                              {
-                                "name": "setWidth: 34"
-                              }
-                            ],
-                            "thens": [
-                              {
-                                "name": "getHeight: 3",
-                                "error": true
-                              }
-                            ],
-                            "testArtifacts": {},
-                            "initialValues": {
-                              "height": 1,
-                              "width": 1
-                            },
-                            "store": {
-                              "width": 34,
-                              "height": 33
-                            },
-                            "error": {
-                              "generatedMessage": true,
-                              "code": "ERR_ASSERTION",
-                              "actual": 33,
-                              "expected": 3,
-                              "operator": "=="
-                            }
-                          }
-                        ]
+                        "name": "Testing a very simple smart contract",
+                        "fails": []
                       },
                       "WidthOfOneAndHeightOfOne": {
                         "name": "Testing the Rectangle class",
-                        "fails": [
-                          {
-                            "artifactSaver": {},
-                            "name": "WidthOfOneAndHeightOfOne",
-                            "features": [
-                              {
-                                "name": "hello"
-                              }
-                            ],
-                            "whens": [
-                              {
-                                "name": "setHeight: 33"
-                              },
-                              {
-                                "name": "setWidth: 34"
-                              }
-                            ],
-                            "thens": [
-                              {
-                                "name": "getHeight: 3",
-                                "error": true
-                              }
-                            ],
-                            "testArtifacts": {},
-                            "initialValues": {
-                              "height": 1,
-                              "width": 1
-                            },
-                            "store": {
-                              "width": 34,
-                              "height": 33
-                            },
-                            "error": {
-                              "generatedMessage": true,
-                              "code": "ERR_ASSERTION",
-                              "actual": 33,
-                              "expected": 3,
-                              "operator": "=="
-                            }
-                          }
-                        ]
+                        "fails": []
                       },
                       "results": {
                         "gutentag": {
                           "results": {
                             "WidthOfOneAndHeightOfOne": {
                               "name": "Testing the Rectangle class",
-                              "fails": [
-                                {
-                                  "artifactSaver": {},
-                                  "name": "WidthOfOneAndHeightOfOne",
-                                  "features": [
-                                    {
-                                      "name": "hello"
-                                    }
-                                  ],
-                                  "whens": [
-                                    {
-                                      "name": "setHeight: 33"
-                                    },
-                                    {
-                                      "name": "setWidth: 34"
-                                    }
-                                  ],
-                                  "thens": [
-                                    {
-                                      "name": "getHeight: 3",
-                                      "error": true
-                                    }
-                                  ],
-                                  "testArtifacts": {},
-                                  "initialValues": {
-                                    "height": 1,
-                                    "width": 1
-                                  },
-                                  "store": {
-                                    "width": 34,
-                                    "height": 33
-                                  },
-                                  "error": {
-                                    "generatedMessage": true,
-                                    "code": "ERR_ASSERTION",
-                                    "actual": 33,
-                                    "expected": 3,
-                                    "operator": "=="
-                                  }
-                                }
-                              ]
+                              "fails": []
                             },
                             "results": {
                               "bien venidos": {
@@ -614,47 +134,7 @@
                                 "report": {
                                   "WidthOfOneAndHeightOfOne": {
                                     "name": "Testing the Rectangle class",
-                                    "fails": [
-                                      {
-                                        "artifactSaver": {},
-                                        "name": "WidthOfOneAndHeightOfOne",
-                                        "features": [
-                                          {
-                                            "name": "hello"
-                                          }
-                                        ],
-                                        "whens": [
-                                          {
-                                            "name": "setHeight: 33"
-                                          },
-                                          {
-                                            "name": "setWidth: 34"
-                                          }
-                                        ],
-                                        "thens": [
-                                          {
-                                            "name": "getHeight: 3",
-                                            "error": true
-                                          }
-                                        ],
-                                        "testArtifacts": {},
-                                        "initialValues": {
-                                          "height": 1,
-                                          "width": 1
-                                        },
-                                        "store": {
-                                          "width": 34,
-                                          "height": 33
-                                        },
-                                        "error": {
-                                          "generatedMessage": true,
-                                          "code": "ERR_ASSERTION",
-                                          "actual": 33,
-                                          "expected": 3,
-                                          "operator": "=="
-                                        }
-                                      }
-                                    ]
+                                    "fails": []
                                   }
                                 }
                               },
@@ -663,47 +143,7 @@
                                 "report": {
                                   "WidthOfOneAndHeightOfOne": {
                                     "name": "Testing the Rectangle class",
-                                    "fails": [
-                                      {
-                                        "artifactSaver": {},
-                                        "name": "WidthOfOneAndHeightOfOne",
-                                        "features": [
-                                          {
-                                            "name": "hello"
-                                          }
-                                        ],
-                                        "whens": [
-                                          {
-                                            "name": "setHeight: 33"
-                                          },
-                                          {
-                                            "name": "setWidth: 34"
-                                          }
-                                        ],
-                                        "thens": [
-                                          {
-                                            "name": "getHeight: 3",
-                                            "error": true
-                                          }
-                                        ],
-                                        "testArtifacts": {},
-                                        "initialValues": {
-                                          "height": 1,
-                                          "width": 1
-                                        },
-                                        "store": {
-                                          "width": 34,
-                                          "height": 33
-                                        },
-                                        "error": {
-                                          "generatedMessage": true,
-                                          "code": "ERR_ASSERTION",
-                                          "actual": 33,
-                                          "expected": 3,
-                                          "operator": "=="
-                                        }
-                                      }
-                                    ]
+                                    "fails": []
                                   },
                                   "results": {
                                     "bien venidos": {
@@ -711,47 +151,7 @@
                                       "report": {
                                         "WidthOfOneAndHeightOfOne": {
                                           "name": "Testing the Rectangle class",
-                                          "fails": [
-                                            {
-                                              "artifactSaver": {},
-                                              "name": "WidthOfOneAndHeightOfOne",
-                                              "features": [
-                                                {
-                                                  "name": "hello"
-                                                }
-                                              ],
-                                              "whens": [
-                                                {
-                                                  "name": "setHeight: 33"
-                                                },
-                                                {
-                                                  "name": "setWidth: 34"
-                                                }
-                                              ],
-                                              "thens": [
-                                                {
-                                                  "name": "getHeight: 3",
-                                                  "error": true
-                                                }
-                                              ],
-                                              "testArtifacts": {},
-                                              "initialValues": {
-                                                "height": 1,
-                                                "width": 1
-                                              },
-                                              "store": {
-                                                "width": 34,
-                                                "height": 33
-                                              },
-                                              "error": {
-                                                "generatedMessage": true,
-                                                "code": "ERR_ASSERTION",
-                                                "actual": 33,
-                                                "expected": 3,
-                                                "operator": "=="
-                                              }
-                                            }
-                                          ]
+                                          "fails": []
                                         }
                                       }
                                     }
@@ -762,7 +162,7 @@
                           },
                           "report": {
                             "AnEmptyState": {
-                              "name": "Testing the Node server with fetch",
+                              "name": "a classical react component, bundled with esbuild and tested with puppeteer",
                               "fails": []
                             },
                             "default": {
@@ -774,92 +174,12 @@
                               "fails": []
                             },
                             "Default": {
-                              "name": "Testing the Rectangle class",
-                              "fails": [
-                                {
-                                  "artifactSaver": {},
-                                  "name": "WidthOfOneAndHeightOfOne",
-                                  "features": [
-                                    {
-                                      "name": "hello"
-                                    }
-                                  ],
-                                  "whens": [
-                                    {
-                                      "name": "setHeight: 33"
-                                    },
-                                    {
-                                      "name": "setWidth: 34"
-                                    }
-                                  ],
-                                  "thens": [
-                                    {
-                                      "name": "getHeight: 3",
-                                      "error": true
-                                    }
-                                  ],
-                                  "testArtifacts": {},
-                                  "initialValues": {
-                                    "height": 1,
-                                    "width": 1
-                                  },
-                                  "store": {
-                                    "width": 34,
-                                    "height": 33
-                                  },
-                                  "error": {
-                                    "generatedMessage": true,
-                                    "code": "ERR_ASSERTION",
-                                    "actual": 33,
-                                    "expected": 3,
-                                    "operator": "=="
-                                  }
-                                }
-                              ]
+                              "name": "Testing a very simple smart contract",
+                              "fails": []
                             },
                             "WidthOfOneAndHeightOfOne": {
                               "name": "Testing the Rectangle class",
-                              "fails": [
-                                {
-                                  "artifactSaver": {},
-                                  "name": "WidthOfOneAndHeightOfOne",
-                                  "features": [
-                                    {
-                                      "name": "hello"
-                                    }
-                                  ],
-                                  "whens": [
-                                    {
-                                      "name": "setHeight: 33"
-                                    },
-                                    {
-                                      "name": "setWidth: 34"
-                                    }
-                                  ],
-                                  "thens": [
-                                    {
-                                      "name": "getHeight: 3",
-                                      "error": true
-                                    }
-                                  ],
-                                  "testArtifacts": {},
-                                  "initialValues": {
-                                    "height": 1,
-                                    "width": 1
-                                  },
-                                  "store": {
-                                    "width": 34,
-                                    "height": 33
-                                  },
-                                  "error": {
-                                    "generatedMessage": true,
-                                    "code": "ERR_ASSERTION",
-                                    "actual": 33,
-                                    "expected": 3,
-                                    "operator": "=="
-                                  }
-                                }
-                              ]
+                              "fails": []
                             }
                           }
                         }
@@ -891,7 +211,7 @@
                   "hello": {
                     "results": {
                       "AnEmptyState": {
-                        "name": "Testing the Node server with fetch",
+                        "name": "a classical react component, bundled with esbuild and tested with puppeteer",
                         "fails": []
                       },
                       "default": {
@@ -903,139 +223,19 @@
                         "fails": []
                       },
                       "Default": {
-                        "name": "Testing the Rectangle class",
-                        "fails": [
-                          {
-                            "artifactSaver": {},
-                            "name": "WidthOfOneAndHeightOfOne",
-                            "features": [
-                              {
-                                "name": "hello"
-                              }
-                            ],
-                            "whens": [
-                              {
-                                "name": "setHeight: 33"
-                              },
-                              {
-                                "name": "setWidth: 34"
-                              }
-                            ],
-                            "thens": [
-                              {
-                                "name": "getHeight: 3",
-                                "error": true
-                              }
-                            ],
-                            "testArtifacts": {},
-                            "initialValues": {
-                              "height": 1,
-                              "width": 1
-                            },
-                            "store": {
-                              "width": 34,
-                              "height": 33
-                            },
-                            "error": {
-                              "generatedMessage": true,
-                              "code": "ERR_ASSERTION",
-                              "actual": 33,
-                              "expected": 3,
-                              "operator": "=="
-                            }
-                          }
-                        ]
+                        "name": "Testing a very simple smart contract",
+                        "fails": []
                       },
                       "WidthOfOneAndHeightOfOne": {
                         "name": "Testing the Rectangle class",
-                        "fails": [
-                          {
-                            "artifactSaver": {},
-                            "name": "WidthOfOneAndHeightOfOne",
-                            "features": [
-                              {
-                                "name": "hello"
-                              }
-                            ],
-                            "whens": [
-                              {
-                                "name": "setHeight: 33"
-                              },
-                              {
-                                "name": "setWidth: 34"
-                              }
-                            ],
-                            "thens": [
-                              {
-                                "name": "getHeight: 3",
-                                "error": true
-                              }
-                            ],
-                            "testArtifacts": {},
-                            "initialValues": {
-                              "height": 1,
-                              "width": 1
-                            },
-                            "store": {
-                              "width": 34,
-                              "height": 33
-                            },
-                            "error": {
-                              "generatedMessage": true,
-                              "code": "ERR_ASSERTION",
-                              "actual": 33,
-                              "expected": 3,
-                              "operator": "=="
-                            }
-                          }
-                        ]
+                        "fails": []
                       },
                       "results": {
                         "gutentag": {
                           "results": {
                             "WidthOfOneAndHeightOfOne": {
                               "name": "Testing the Rectangle class",
-                              "fails": [
-                                {
-                                  "artifactSaver": {},
-                                  "name": "WidthOfOneAndHeightOfOne",
-                                  "features": [
-                                    {
-                                      "name": "hello"
-                                    }
-                                  ],
-                                  "whens": [
-                                    {
-                                      "name": "setHeight: 33"
-                                    },
-                                    {
-                                      "name": "setWidth: 34"
-                                    }
-                                  ],
-                                  "thens": [
-                                    {
-                                      "name": "getHeight: 3",
-                                      "error": true
-                                    }
-                                  ],
-                                  "testArtifacts": {},
-                                  "initialValues": {
-                                    "height": 1,
-                                    "width": 1
-                                  },
-                                  "store": {
-                                    "width": 34,
-                                    "height": 33
-                                  },
-                                  "error": {
-                                    "generatedMessage": true,
-                                    "code": "ERR_ASSERTION",
-                                    "actual": 33,
-                                    "expected": 3,
-                                    "operator": "=="
-                                  }
-                                }
-                              ]
+                              "fails": []
                             },
                             "results": {
                               "bien venidos": {
@@ -1043,47 +243,7 @@
                                 "report": {
                                   "WidthOfOneAndHeightOfOne": {
                                     "name": "Testing the Rectangle class",
-                                    "fails": [
-                                      {
-                                        "artifactSaver": {},
-                                        "name": "WidthOfOneAndHeightOfOne",
-                                        "features": [
-                                          {
-                                            "name": "hello"
-                                          }
-                                        ],
-                                        "whens": [
-                                          {
-                                            "name": "setHeight: 33"
-                                          },
-                                          {
-                                            "name": "setWidth: 34"
-                                          }
-                                        ],
-                                        "thens": [
-                                          {
-                                            "name": "getHeight: 3",
-                                            "error": true
-                                          }
-                                        ],
-                                        "testArtifacts": {},
-                                        "initialValues": {
-                                          "height": 1,
-                                          "width": 1
-                                        },
-                                        "store": {
-                                          "width": 34,
-                                          "height": 33
-                                        },
-                                        "error": {
-                                          "generatedMessage": true,
-                                          "code": "ERR_ASSERTION",
-                                          "actual": 33,
-                                          "expected": 3,
-                                          "operator": "=="
-                                        }
-                                      }
-                                    ]
+                                    "fails": []
                                   }
                                 }
                               },
@@ -1092,47 +252,7 @@
                                 "report": {
                                   "WidthOfOneAndHeightOfOne": {
                                     "name": "Testing the Rectangle class",
-                                    "fails": [
-                                      {
-                                        "artifactSaver": {},
-                                        "name": "WidthOfOneAndHeightOfOne",
-                                        "features": [
-                                          {
-                                            "name": "hello"
-                                          }
-                                        ],
-                                        "whens": [
-                                          {
-                                            "name": "setHeight: 33"
-                                          },
-                                          {
-                                            "name": "setWidth: 34"
-                                          }
-                                        ],
-                                        "thens": [
-                                          {
-                                            "name": "getHeight: 3",
-                                            "error": true
-                                          }
-                                        ],
-                                        "testArtifacts": {},
-                                        "initialValues": {
-                                          "height": 1,
-                                          "width": 1
-                                        },
-                                        "store": {
-                                          "width": 34,
-                                          "height": 33
-                                        },
-                                        "error": {
-                                          "generatedMessage": true,
-                                          "code": "ERR_ASSERTION",
-                                          "actual": 33,
-                                          "expected": 3,
-                                          "operator": "=="
-                                        }
-                                      }
-                                    ]
+                                    "fails": []
                                   },
                                   "results": {
                                     "bien venidos": {
@@ -1140,47 +260,7 @@
                                       "report": {
                                         "WidthOfOneAndHeightOfOne": {
                                           "name": "Testing the Rectangle class",
-                                          "fails": [
-                                            {
-                                              "artifactSaver": {},
-                                              "name": "WidthOfOneAndHeightOfOne",
-                                              "features": [
-                                                {
-                                                  "name": "hello"
-                                                }
-                                              ],
-                                              "whens": [
-                                                {
-                                                  "name": "setHeight: 33"
-                                                },
-                                                {
-                                                  "name": "setWidth: 34"
-                                                }
-                                              ],
-                                              "thens": [
-                                                {
-                                                  "name": "getHeight: 3",
-                                                  "error": true
-                                                }
-                                              ],
-                                              "testArtifacts": {},
-                                              "initialValues": {
-                                                "height": 1,
-                                                "width": 1
-                                              },
-                                              "store": {
-                                                "width": 34,
-                                                "height": 33
-                                              },
-                                              "error": {
-                                                "generatedMessage": true,
-                                                "code": "ERR_ASSERTION",
-                                                "actual": 33,
-                                                "expected": 3,
-                                                "operator": "=="
-                                              }
-                                            }
-                                          ]
+                                          "fails": []
                                         }
                                       }
                                     }
@@ -1191,7 +271,7 @@
                           },
                           "report": {
                             "AnEmptyState": {
-                              "name": "Testing the Node server with fetch",
+                              "name": "a classical react component, bundled with esbuild and tested with puppeteer",
                               "fails": []
                             },
                             "default": {
@@ -1203,92 +283,12 @@
                               "fails": []
                             },
                             "Default": {
-                              "name": "Testing the Rectangle class",
-                              "fails": [
-                                {
-                                  "artifactSaver": {},
-                                  "name": "WidthOfOneAndHeightOfOne",
-                                  "features": [
-                                    {
-                                      "name": "hello"
-                                    }
-                                  ],
-                                  "whens": [
-                                    {
-                                      "name": "setHeight: 33"
-                                    },
-                                    {
-                                      "name": "setWidth: 34"
-                                    }
-                                  ],
-                                  "thens": [
-                                    {
-                                      "name": "getHeight: 3",
-                                      "error": true
-                                    }
-                                  ],
-                                  "testArtifacts": {},
-                                  "initialValues": {
-                                    "height": 1,
-                                    "width": 1
-                                  },
-                                  "store": {
-                                    "width": 34,
-                                    "height": 33
-                                  },
-                                  "error": {
-                                    "generatedMessage": true,
-                                    "code": "ERR_ASSERTION",
-                                    "actual": 33,
-                                    "expected": 3,
-                                    "operator": "=="
-                                  }
-                                }
-                              ]
+                              "name": "Testing a very simple smart contract",
+                              "fails": []
                             },
                             "WidthOfOneAndHeightOfOne": {
                               "name": "Testing the Rectangle class",
-                              "fails": [
-                                {
-                                  "artifactSaver": {},
-                                  "name": "WidthOfOneAndHeightOfOne",
-                                  "features": [
-                                    {
-                                      "name": "hello"
-                                    }
-                                  ],
-                                  "whens": [
-                                    {
-                                      "name": "setHeight: 33"
-                                    },
-                                    {
-                                      "name": "setWidth: 34"
-                                    }
-                                  ],
-                                  "thens": [
-                                    {
-                                      "name": "getHeight: 3",
-                                      "error": true
-                                    }
-                                  ],
-                                  "testArtifacts": {},
-                                  "initialValues": {
-                                    "height": 1,
-                                    "width": 1
-                                  },
-                                  "store": {
-                                    "width": 34,
-                                    "height": 33
-                                  },
-                                  "error": {
-                                    "generatedMessage": true,
-                                    "code": "ERR_ASSERTION",
-                                    "actual": 33,
-                                    "expected": 3,
-                                    "operator": "=="
-                                  }
-                                }
-                              ]
+                              "fails": []
                             }
                           }
                         },
@@ -1300,52 +300,12 @@
                             },
                             "WidthOfOneAndHeightOfOne": {
                               "name": "Testing the Rectangle class",
-                              "fails": [
-                                {
-                                  "artifactSaver": {},
-                                  "name": "WidthOfOneAndHeightOfOne",
-                                  "features": [
-                                    {
-                                      "name": "hello"
-                                    }
-                                  ],
-                                  "whens": [
-                                    {
-                                      "name": "setHeight: 33"
-                                    },
-                                    {
-                                      "name": "setWidth: 34"
-                                    }
-                                  ],
-                                  "thens": [
-                                    {
-                                      "name": "getHeight: 3",
-                                      "error": true
-                                    }
-                                  ],
-                                  "testArtifacts": {},
-                                  "initialValues": {
-                                    "height": 1,
-                                    "width": 1
-                                  },
-                                  "store": {
-                                    "width": 34,
-                                    "height": 33
-                                  },
-                                  "error": {
-                                    "generatedMessage": true,
-                                    "code": "ERR_ASSERTION",
-                                    "actual": 33,
-                                    "expected": 3,
-                                    "operator": "=="
-                                  }
-                                }
-                              ]
+                              "fails": []
                             }
                           },
                           "report": {
                             "AnEmptyState": {
-                              "name": "Testing the Node server with fetch",
+                              "name": "a classical react component, bundled with esbuild and tested with puppeteer",
                               "fails": []
                             },
                             "default": {
@@ -1357,139 +317,19 @@
                               "fails": []
                             },
                             "Default": {
-                              "name": "Testing the Rectangle class",
-                              "fails": [
-                                {
-                                  "artifactSaver": {},
-                                  "name": "WidthOfOneAndHeightOfOne",
-                                  "features": [
-                                    {
-                                      "name": "hello"
-                                    }
-                                  ],
-                                  "whens": [
-                                    {
-                                      "name": "setHeight: 33"
-                                    },
-                                    {
-                                      "name": "setWidth: 34"
-                                    }
-                                  ],
-                                  "thens": [
-                                    {
-                                      "name": "getHeight: 3",
-                                      "error": true
-                                    }
-                                  ],
-                                  "testArtifacts": {},
-                                  "initialValues": {
-                                    "height": 1,
-                                    "width": 1
-                                  },
-                                  "store": {
-                                    "width": 34,
-                                    "height": 33
-                                  },
-                                  "error": {
-                                    "generatedMessage": true,
-                                    "code": "ERR_ASSERTION",
-                                    "actual": 33,
-                                    "expected": 3,
-                                    "operator": "=="
-                                  }
-                                }
-                              ]
+                              "name": "Testing a very simple smart contract",
+                              "fails": []
                             },
                             "WidthOfOneAndHeightOfOne": {
                               "name": "Testing the Rectangle class",
-                              "fails": [
-                                {
-                                  "artifactSaver": {},
-                                  "name": "WidthOfOneAndHeightOfOne",
-                                  "features": [
-                                    {
-                                      "name": "hello"
-                                    }
-                                  ],
-                                  "whens": [
-                                    {
-                                      "name": "setHeight: 33"
-                                    },
-                                    {
-                                      "name": "setWidth: 34"
-                                    }
-                                  ],
-                                  "thens": [
-                                    {
-                                      "name": "getHeight: 3",
-                                      "error": true
-                                    }
-                                  ],
-                                  "testArtifacts": {},
-                                  "initialValues": {
-                                    "height": 1,
-                                    "width": 1
-                                  },
-                                  "store": {
-                                    "width": 34,
-                                    "height": 33
-                                  },
-                                  "error": {
-                                    "generatedMessage": true,
-                                    "code": "ERR_ASSERTION",
-                                    "actual": 33,
-                                    "expected": 3,
-                                    "operator": "=="
-                                  }
-                                }
-                              ]
+                              "fails": []
                             },
                             "results": {
                               "gutentag": {
                                 "results": {
                                   "WidthOfOneAndHeightOfOne": {
                                     "name": "Testing the Rectangle class",
-                                    "fails": [
-                                      {
-                                        "artifactSaver": {},
-                                        "name": "WidthOfOneAndHeightOfOne",
-                                        "features": [
-                                          {
-                                            "name": "hello"
-                                          }
-                                        ],
-                                        "whens": [
-                                          {
-                                            "name": "setHeight: 33"
-                                          },
-                                          {
-                                            "name": "setWidth: 34"
-                                          }
-                                        ],
-                                        "thens": [
-                                          {
-                                            "name": "getHeight: 3",
-                                            "error": true
-                                          }
-                                        ],
-                                        "testArtifacts": {},
-                                        "initialValues": {
-                                          "height": 1,
-                                          "width": 1
-                                        },
-                                        "store": {
-                                          "width": 34,
-                                          "height": 33
-                                        },
-                                        "error": {
-                                          "generatedMessage": true,
-                                          "code": "ERR_ASSERTION",
-                                          "actual": 33,
-                                          "expected": 3,
-                                          "operator": "=="
-                                        }
-                                      }
-                                    ]
+                                    "fails": []
                                   },
                                   "results": {
                                     "bien venidos": {
@@ -1497,47 +337,7 @@
                                       "report": {
                                         "WidthOfOneAndHeightOfOne": {
                                           "name": "Testing the Rectangle class",
-                                          "fails": [
-                                            {
-                                              "artifactSaver": {},
-                                              "name": "WidthOfOneAndHeightOfOne",
-                                              "features": [
-                                                {
-                                                  "name": "hello"
-                                                }
-                                              ],
-                                              "whens": [
-                                                {
-                                                  "name": "setHeight: 33"
-                                                },
-                                                {
-                                                  "name": "setWidth: 34"
-                                                }
-                                              ],
-                                              "thens": [
-                                                {
-                                                  "name": "getHeight: 3",
-                                                  "error": true
-                                                }
-                                              ],
-                                              "testArtifacts": {},
-                                              "initialValues": {
-                                                "height": 1,
-                                                "width": 1
-                                              },
-                                              "store": {
-                                                "width": 34,
-                                                "height": 33
-                                              },
-                                              "error": {
-                                                "generatedMessage": true,
-                                                "code": "ERR_ASSERTION",
-                                                "actual": 33,
-                                                "expected": 3,
-                                                "operator": "=="
-                                              }
-                                            }
-                                          ]
+                                          "fails": []
                                         }
                                       }
                                     },
@@ -1546,47 +346,7 @@
                                       "report": {
                                         "WidthOfOneAndHeightOfOne": {
                                           "name": "Testing the Rectangle class",
-                                          "fails": [
-                                            {
-                                              "artifactSaver": {},
-                                              "name": "WidthOfOneAndHeightOfOne",
-                                              "features": [
-                                                {
-                                                  "name": "hello"
-                                                }
-                                              ],
-                                              "whens": [
-                                                {
-                                                  "name": "setHeight: 33"
-                                                },
-                                                {
-                                                  "name": "setWidth: 34"
-                                                }
-                                              ],
-                                              "thens": [
-                                                {
-                                                  "name": "getHeight: 3",
-                                                  "error": true
-                                                }
-                                              ],
-                                              "testArtifacts": {},
-                                              "initialValues": {
-                                                "height": 1,
-                                                "width": 1
-                                              },
-                                              "store": {
-                                                "width": 34,
-                                                "height": 33
-                                              },
-                                              "error": {
-                                                "generatedMessage": true,
-                                                "code": "ERR_ASSERTION",
-                                                "actual": 33,
-                                                "expected": 3,
-                                                "operator": "=="
-                                              }
-                                            }
-                                          ]
+                                          "fails": []
                                         },
                                         "results": {
                                           "bien venidos": {
@@ -1594,47 +354,7 @@
                                             "report": {
                                               "WidthOfOneAndHeightOfOne": {
                                                 "name": "Testing the Rectangle class",
-                                                "fails": [
-                                                  {
-                                                    "artifactSaver": {},
-                                                    "name": "WidthOfOneAndHeightOfOne",
-                                                    "features": [
-                                                      {
-                                                        "name": "hello"
-                                                      }
-                                                    ],
-                                                    "whens": [
-                                                      {
-                                                        "name": "setHeight: 33"
-                                                      },
-                                                      {
-                                                        "name": "setWidth: 34"
-                                                      }
-                                                    ],
-                                                    "thens": [
-                                                      {
-                                                        "name": "getHeight: 3",
-                                                        "error": true
-                                                      }
-                                                    ],
-                                                    "testArtifacts": {},
-                                                    "initialValues": {
-                                                      "height": 1,
-                                                      "width": 1
-                                                    },
-                                                    "store": {
-                                                      "width": 34,
-                                                      "height": 33
-                                                    },
-                                                    "error": {
-                                                      "generatedMessage": true,
-                                                      "code": "ERR_ASSERTION",
-                                                      "actual": 33,
-                                                      "expected": 3,
-                                                      "operator": "=="
-                                                    }
-                                                  }
-                                                ]
+                                                "fails": []
                                               }
                                             }
                                           }
@@ -1645,7 +365,7 @@
                                 },
                                 "report": {
                                   "AnEmptyState": {
-                                    "name": "Testing the Node server with fetch",
+                                    "name": "a classical react component, bundled with esbuild and tested with puppeteer",
                                     "fails": []
                                   },
                                   "default": {
@@ -1657,92 +377,12 @@
                                     "fails": []
                                   },
                                   "Default": {
-                                    "name": "Testing the Rectangle class",
-                                    "fails": [
-                                      {
-                                        "artifactSaver": {},
-                                        "name": "WidthOfOneAndHeightOfOne",
-                                        "features": [
-                                          {
-                                            "name": "hello"
-                                          }
-                                        ],
-                                        "whens": [
-                                          {
-                                            "name": "setHeight: 33"
-                                          },
-                                          {
-                                            "name": "setWidth: 34"
-                                          }
-                                        ],
-                                        "thens": [
-                                          {
-                                            "name": "getHeight: 3",
-                                            "error": true
-                                          }
-                                        ],
-                                        "testArtifacts": {},
-                                        "initialValues": {
-                                          "height": 1,
-                                          "width": 1
-                                        },
-                                        "store": {
-                                          "width": 34,
-                                          "height": 33
-                                        },
-                                        "error": {
-                                          "generatedMessage": true,
-                                          "code": "ERR_ASSERTION",
-                                          "actual": 33,
-                                          "expected": 3,
-                                          "operator": "=="
-                                        }
-                                      }
-                                    ]
+                                    "name": "Testing a very simple smart contract",
+                                    "fails": []
                                   },
                                   "WidthOfOneAndHeightOfOne": {
                                     "name": "Testing the Rectangle class",
-                                    "fails": [
-                                      {
-                                        "artifactSaver": {},
-                                        "name": "WidthOfOneAndHeightOfOne",
-                                        "features": [
-                                          {
-                                            "name": "hello"
-                                          }
-                                        ],
-                                        "whens": [
-                                          {
-                                            "name": "setHeight: 33"
-                                          },
-                                          {
-                                            "name": "setWidth: 34"
-                                          }
-                                        ],
-                                        "thens": [
-                                          {
-                                            "name": "getHeight: 3",
-                                            "error": true
-                                          }
-                                        ],
-                                        "testArtifacts": {},
-                                        "initialValues": {
-                                          "height": 1,
-                                          "width": 1
-                                        },
-                                        "store": {
-                                          "width": 34,
-                                          "height": 33
-                                        },
-                                        "error": {
-                                          "generatedMessage": true,
-                                          "code": "ERR_ASSERTION",
-                                          "actual": 33,
-                                          "expected": 3,
-                                          "operator": "=="
-                                        }
-                                      }
-                                    ]
+                                    "fails": []
                                   }
                                 }
                               }
