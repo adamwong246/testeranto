@@ -62,7 +62,7 @@ export const ServerHttp2xTesteranto = Http2xTesteranto<
   (Suite, Given, When, Then, Check) => {
     return [
       Suite.Default(
-        "Testing the Node server with fetch",
+        "Testing the Node server with fetch * 2 ports",
         [
           Given.AnEmptyState(
             [myFeature],

@@ -15,16 +15,6 @@
       ]
     },
     {
-      "testKey": "default",
-      "name": "Testing the LoginPage as react",
-      "whens": [
-        "TheEmailIsSetTo: adam@email.com"
-      ],
-      "thens": [
-        "TheEmailIs: adam@email.com"
-      ]
-    },
-    {
       "testKey": "AStateWithEmail",
       "name": "Testing the Redux store",
       "whens": [],
@@ -35,14 +25,15 @@
     },
     {
       "testKey": "Default",
-      "name": "Testing the Rectangle class",
+      "name": "Testing a very simple smart contract",
       "whens": [
-        "setWidth: 4",
-        "setHeight: 9"
+        "Decrement: 1",
+        "Decrement: 1",
+        "Decrement: 1",
+        "Increment: 1"
       ],
       "thens": [
-        "getWidth: 4",
-        "getHeight: 9"
+        "Get: [object Object]"
       ]
     },
     {
@@ -54,6 +45,16 @@
       ],
       "thens": [
         "getHeight: 33"
+      ]
+    },
+    {
+      "testKey": "default",
+      "name": "Testing the LoginPage as react",
+      "whens": [
+        "TheEmailIsSetTo: adam@email.com"
+      ],
+      "thens": [
+        "TheEmailIs: adam@email.com"
       ]
     }
   ],
