@@ -14,8 +14,8 @@
     "ATDD"
   ],
   "bin": {
-    "testeranto:build": "./bin/build.sh",
-    "testeranto:watch": "./bin/watch.sh"
+    "testerantoBuild": "./bin/build.sh",
+    "testerantoWatch": "./bin/watch.sh"
   },
   "scripts": {
     "prepublish": "tsc",
