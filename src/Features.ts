@@ -133,13 +133,25 @@ export class TesterantoFeatures {
       const text = res.outputFiles[0].text;
 
       console.log("mark 0", this.entryPath, process.cwd());
-      const p = "./dist" +
-        (this.entryPath.split(process.cwd()).pop())?.split(".ts")[0]
-        + '.js'
 
-      fs.promises.mkdir(path.dirname(p), { recursive: true }).then(x => {
-        fs.promises.writeFile(p, text);
-        fs.promises.writeFile("./dist" + (this.entryPath.split(process.cwd()).pop())?.split(".ts")[0] + `.md5`, createHash('md5').update(text).digest('hex'))
+      // const p = process.cwd() + "./dist/tests/testerantoFeatures.test.js";
+      // +
+      //   (this.entryPath.split(process.cwd()).pop())?.split(".ts")[0]
+      //   + '.js'
+
+      fs.promises.mkdir(path.dirname(
+        process.cwd() + "./dist/tests"
+      ), { recursive: true }).then(x => {
+
+        console.log("mark 1", process.cwd() + "/dist/tests/testerantoFeatures.test.js");
+
+        fs.promises.writeFile(
+          process.cwd() + "/dist/tests/testerantoFeatures.test.js"
+          , text);
+        fs.promises.writeFile(
+          // "./dist" + (this.entryPath.split(process.cwd()).pop())?.split(".ts")[0] + `.md5`,
+          process.cwd() + "/dist/tests/testerantoFeatures.test.md5",
+          createHash('md5').update(text).digest('hex'))
       })
     });
   }
