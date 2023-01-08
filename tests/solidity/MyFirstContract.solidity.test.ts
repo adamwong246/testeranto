@@ -3,6 +3,8 @@ import { assert } from "chai";
 import { features } from "../testerantoFeatures.test";
 import { SolidityTesteranto } from "./solidity.testeranto.test";
 
+import { commonGivens } from './index.test';
+
 export const MyFirstContractTesteranto = SolidityTesteranto<
   {
     suites: {
@@ -60,60 +62,8 @@ export const MyFirstContractTesteranto = SolidityTesteranto<
   (Suite, Given, When, Then, Check) => {
     return [
       Suite.Default(
-        "Testing a very simple smart contract",
-        [
-          Given.Default(
-            [features.hello],
-            [],
-            [
-              Then.Get({ asTestUser: 1, expectation: 0 })
-            ],
-            "my first contract"
-          ),
-
-          Given.Default(
-            [features.hello],
-            [
-              When.Increment(1),
-              When.Increment(1),
-              When.Increment(1),
-              When.Increment(1),
-            ],
-            [
-              Then.Get({ asTestUser: 1, expectation: 4 })
-            ],
-            "my first contract"
-          ),
-
-          Given.Default(
-            [features.hello],
-            [
-              When.Increment(1),
-              When.Increment(1),
-              When.Increment(1),
-              When.Increment(1),
-              When.Decrement(1),
-            ],
-            [
-              Then.Get({ asTestUser: 1, expectation: 3 })
-            ],
-            "my first contract"
-          ),
-
-          Given.Default(
-            [features.hello],
-            [
-              When.Decrement(1),
-              When.Decrement(1),
-              When.Decrement(1),
-              When.Increment(1),
-            ],
-            [
-              Then.Get({ asTestUser: 1, expectation: 1.157920892373162e+77 })
-            ],
-            "this test should fail"
-          ),
-        ],
+        "Testing a very simple smart contract ephemerally",
+        commonGivens(Given, When, Then, features),
         [
           // Check.AnEmptyState(
           //   "imperative style",

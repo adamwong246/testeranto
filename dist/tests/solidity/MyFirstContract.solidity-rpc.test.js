@@ -1,9 +1,13 @@
-// tests/Redux+Reselect+React/app.redux.test.ts
+// tests/solidity/MyFirstContract.solidity-rpc.test.ts
 import { assert } from "chai";
 import { features } from "/Users/adam/Code/testeranto.ts/dist/tests/testerantoFeatures.test.js";
 
-// tests/Redux+Reselect+React/redux.testeranto.test.ts
-import { createStore } from "redux";
+// tests/solidity/solidity-rpc.testeranto.test.ts
+import fs3 from "fs";
+import path3 from "path";
+import Ganache from "ganache";
+import TruffleCompile from "truffle-compile";
+import Web3 from "web3";
 
 // src/BaseClasses.ts
 import { mapValues } from "lodash";
@@ -490,147 +494,165 @@ var Testeranto = (input, testSpecification, testImplementation, testResource, te
   };
 };
 
-// tests/Redux+Reselect+React/redux.testeranto.test.ts
-var ReduxTesteranto = (testImplementations, testSpecifications, testInput, entryPath) => Testeranto(
+// tests/solidity/solidity-rpc.testeranto.test.ts
+import { ethers } from "ethers";
+var truffleCompile = (...args) => new Promise((resolve) => TruffleCompile(...args, (_, data) => resolve(data)));
+var compile = async (filename) => {
+  const sourcePath = path3.join(__dirname, "../contracts", filename);
+  const sources = {
+    [sourcePath]: fs3.readFileSync(sourcePath, { encoding: "utf8" })
+  };
+  const options = {
+    contracts_directory: path3.join(__dirname, "../contracts"),
+    compilers: {
+      solc: {
+        version: "0.5.2",
+        settings: {
+          optimizer: {
+            enabled: false,
+            runs: 200
+          },
+          evmVersion: "byzantium"
+        }
+      }
+    }
+  };
+  const artifact = await truffleCompile(sources, options);
+  return artifact;
+};
+var SolidityRpcTesteranto = (testImplementations, testSpecifications, testInput, contractName, entryPath) => Testeranto(
   testInput,
   testSpecifications,
   testImplementations,
-  { ports: 0 },
+  { ports: 1 },
   {
-    beforeEach: function(subject, initialValues) {
-      return createStore(subject, initialValues);
+    beforeAll: async () => (await compile(`../../../contracts/${contractName}.sol`))[contractName],
+    beforeEach: (contract, i, tr) => {
+      return new Promise((res) => {
+        const options = {};
+        const port = tr.ports[0];
+        const server = Ganache.server(options);
+        server.listen(port, async (err) => {
+          console.log(`ganache listening on port ${port}...`);
+          if (err)
+            throw err;
+          const providerFarSide = server.provider;
+          const accounts = await providerFarSide.request({ method: "eth_accounts", params: [] });
+          const web3NearSide = new Web3(providerFarSide);
+          const contractNearSide = await new web3NearSide.eth.Contract(contract.abi).deploy({ data: contract.bytecode }).send({ from: accounts[0], gas: 15e4 });
+          const web3FarSideProvider = new ethers.providers.JsonRpcProvider(`http://localhost:${port}`);
+          const web3FarSideSigner = new ethers.Wallet(
+            providerFarSide.getInitialAccounts()[accounts[1]].secretKey,
+            web3FarSideProvider
+          );
+          const contractFarSide = new ethers.Contract(contractNearSide.options.address, contract.abi, web3FarSideSigner);
+          res({
+            contractNearSide,
+            contractFarSide,
+            accounts,
+            server
+          });
+        });
+      });
     },
-    andWhen: function(store, actioner) {
-      const a = actioner();
-      return store.dispatch(a[0](a[1]));
-    },
-    butThen: function(store) {
-      return store.getState();
-    }
+    afterEach: async ({ server }) => await server.close(),
+    andWhen: async ({ contractFarSide, accounts }, callback) => callback()({ contractFarSide, accounts })
   },
   entryPath
 );
 
-// tests/Redux+Reselect+React/app.ts
-import { createSelector, createSlice, createStore as createStore2 } from "@reduxjs/toolkit";
-var loginApp = createSlice({
-  name: "login app",
-  initialState: {
-    password: "",
-    email: "",
-    error: "no_error"
-  },
-  reducers: {
-    setPassword: (state, action) => {
-      state.password = action.payload;
-    },
-    setEmail: (state, action) => {
-      state.email = action.payload;
-    },
-    signIn: (state) => {
-      state.error = checkForErrors(state);
-    }
-  }
-});
-var selectRoot = (storeState) => {
-  return storeState;
-};
-var validateEmail = (email) => {
-  return email.match(
-    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  );
-};
-var checkForErrors = (storeState) => {
-  if (!validateEmail(storeState.email)) {
-    return "invalidEmail";
-  }
-  if (storeState.password !== "password" && storeState.email !== "adam@email.com") {
-    return "credentialFail";
-  }
-  return "no_error";
-};
-var loginPageSelection = createSelector([selectRoot], (root) => {
-  return {
-    ...root,
-    disableSubmit: root.email == "" || root.password == ""
-  };
-});
+// tests/solidity/index.test.ts
+var commonGivens = (Given, When, Then, features2) => [
+  Given.Default(
+    [features2.hello],
+    [],
+    [
+      Then.Get({ asTestUser: 1, expectation: 0 })
+    ],
+    "my first contract"
+  ),
+  Given.Default(
+    [features2.hello],
+    [
+      When.Increment(1),
+      When.Increment(1),
+      When.Increment(1),
+      When.Increment(1)
+    ],
+    [
+      Then.Get({ asTestUser: 1, expectation: 4 })
+    ],
+    "my first contract"
+  ),
+  Given.Default(
+    [features2.hello],
+    [
+      When.Increment(1),
+      When.Increment(1),
+      When.Increment(1),
+      When.Increment(1),
+      When.Decrement(1)
+    ],
+    [
+      Then.Get({ asTestUser: 1, expectation: 3 })
+    ],
+    "my first contract"
+  ),
+  Given.Default(
+    [features2.hello],
+    [
+      When.Decrement(1),
+      When.Decrement(1),
+      When.Decrement(1),
+      When.Increment(1),
+      When.Increment(1)
+    ],
+    [
+      Then.Get({ asTestUser: 1, expectation: 1157920892373162e62 })
+    ],
+    "this test should fail"
+  )
+];
 
-// tests/Redux+Reselect+React/app.redux.test.ts
-var AppReduxTesteranto = ReduxTesteranto(
+// tests/solidity/MyFirstContract.solidity-rpc.test.ts
+var MyFirstContractPlusRpcTesteranto = SolidityRpcTesteranto(
   {
     Suites: {
-      Default: "some default Suite"
+      Default: "Testing a very simple smart contract"
     },
     Givens: {
-      AnEmptyState: () => {
-        return loginApp.getInitialState();
-      },
-      AStateWithEmail: (email) => {
-        return { ...loginApp.getInitialState(), email };
+      Default: () => {
+        return "MyFirstContract.sol";
       }
     },
     Whens: {
-      TheLoginIsSubmitted: () => [loginApp.actions.signIn],
-      TheEmailIsSetTo: (email) => [loginApp.actions.setEmail, email],
-      ThePasswordIsSetTo: (password) => [loginApp.actions.setPassword, password]
+      Increment: (asTestUser) => async ({ contractFarSide, accounts }) => {
+        return await contractFarSide.inc({ gasLimit: 15e4 });
+      },
+      Decrement: (asTestUser) => async ({ contractFarSide, accounts }) => {
+        return await contractFarSide.dec({ gasLimit: 15e4 });
+      }
     },
     Thens: {
-      TheEmailIs: (email) => (storeState) => assert.equal(storeState.email, email),
-      TheEmailIsNot: (email) => (storeState) => assert.notEqual(storeState.email, email),
-      ThePasswordIs: (password) => (selection) => assert.equal(selection.password, password),
-      ThePasswordIsNot: (password) => (selection) => assert.notEqual(selection.password, password)
+      Get: ({ asTestUser, expectation }) => async ({ contractFarSide, accounts }) => assert.equal(expectation, parseInt(await contractFarSide.get({ gasLimit: 15e4 })))
     },
     Checks: {
-      AnEmptyState: () => loginApp.getInitialState()
+      AnEmptyState: () => "MyFirstContract.sol"
     }
   },
   (Suite, Given, When, Then, Check) => {
     return [
       Suite.Default(
-        "Testing the Redux store",
-        [
-          Given.AnEmptyState(
-            [features.hello],
-            [
-              When.TheEmailIsSetTo("adam@email.com")
-            ],
-            [
-              Then.TheEmailIs("adam@email.com")
-            ]
-          ),
-          Given.AStateWithEmail(
-            [features.hello],
-            [],
-            [
-              Then.TheEmailIsNot("adam@email.com"),
-              Then.TheEmailIs("bob@mail.com")
-            ],
-            "bob@mail.com"
-          ),
-          Given.AnEmptyState(
-            [features.hello],
-            [When.TheEmailIsSetTo("hello"), When.TheEmailIsSetTo("aloha")],
-            [Then.TheEmailIs("aloha")]
-          ),
-          Given.AnEmptyState(
-            [features.aloha, features.hello],
-            [],
-            [Then.TheEmailIs("")]
-          ),
-          Given.AnEmptyState(
-            [features.aloha, features.hello],
-            [When.TheEmailIsSetTo("hey there")],
-            [Then.TheEmailIs("hey there")]
-          )
-        ],
+        "Testing a very simple smart contract over RPC",
+        commonGivens(Given, When, Then, features),
         []
       )
     ];
   },
-  loginApp.reducer,
+  "solSource",
+  "MyFirstContract",
   __filename
 );
 export {
-  AppReduxTesteranto
+  MyFirstContractPlusRpcTesteranto
 };

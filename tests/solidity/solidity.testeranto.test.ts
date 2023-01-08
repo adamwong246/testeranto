@@ -13,7 +13,7 @@ type Selection = {
   accounts,
   provider: unknown,
 };
-type TestResource = never;
+
 type WhenShape = any;
 type ThenShape = any;
 type Input = any;
@@ -85,10 +85,15 @@ export const SolidityTesteranto = <
         return (await compile(`../../../contracts/${contractName}.sol`) as any)[contractName] as Ibis
       },
       beforeEach: async (contract: Ibis) => {
+
+        // https://github.com/trufflesuite/ganache#programmatic-use
         const provider = Ganache.provider({ seed: "drizzle-utils" });
+
         /* @ts-ignore:next-line */
         const web3 = new Web3(provider);
+
         const accounts = await web3.eth.getAccounts();
+
         return {
           contract: await (new web3.eth.Contract(contract.abi))
             .deploy({ data: contract.bytecode })

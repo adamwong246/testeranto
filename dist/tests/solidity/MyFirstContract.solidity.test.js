@@ -1,4 +1,4 @@
-// tests/solidity/MyFirstContract.test.ts
+// tests/solidity/MyFirstContract.solidity.test.ts
 import { assert } from "chai";
 import { features } from "/Users/adam/Code/testeranto.ts/dist/tests/testerantoFeatures.test.js";
 
@@ -273,11 +273,8 @@ var TesterantoProject = class {
 // testeranto.config.ts
 var testeranto_config_default = new TesterantoProject(
   [
-    [
-      "MyFirstContract",
-      "./tests/solidity/MyFirstContract.test.ts",
-      "MyFirstContractTesteranto"
-    ],
+    ["MyFirstContract", "./tests/solidity/MyFirstContract.solidity.test.ts", "MyFirstContractTesteranto"],
+    ["MyFirstContractPlusRpc", "./tests/solidity/MyFirstContract.solidity-rpc.test.ts", "MyFirstContractPlusRpcTesteranto"],
     [
       "Rectangle",
       "./tests/Rectangle/Rectangle.test.ts",
@@ -313,7 +310,7 @@ var testeranto_config_default = new TesterantoProject(
     ]
   ],
   "./tests/testerantoFeatures.test.ts",
-  ["3000", "3001", "3002", "3003"]
+  ["3001", "3002", "3003"]
 );
 
 // src/lib/level1.ts
@@ -546,7 +543,60 @@ var SolidityTesteranto = (testImplementations, testSpecifications, testInput, co
   entryPath
 );
 
-// tests/solidity/MyFirstContract.test.ts
+// tests/solidity/index.test.ts
+var commonGivens = (Given, When, Then, features2) => [
+  Given.Default(
+    [features2.hello],
+    [],
+    [
+      Then.Get({ asTestUser: 1, expectation: 0 })
+    ],
+    "my first contract"
+  ),
+  Given.Default(
+    [features2.hello],
+    [
+      When.Increment(1),
+      When.Increment(1),
+      When.Increment(1),
+      When.Increment(1)
+    ],
+    [
+      Then.Get({ asTestUser: 1, expectation: 4 })
+    ],
+    "my first contract"
+  ),
+  Given.Default(
+    [features2.hello],
+    [
+      When.Increment(1),
+      When.Increment(1),
+      When.Increment(1),
+      When.Increment(1),
+      When.Decrement(1)
+    ],
+    [
+      Then.Get({ asTestUser: 1, expectation: 3 })
+    ],
+    "my first contract"
+  ),
+  Given.Default(
+    [features2.hello],
+    [
+      When.Decrement(1),
+      When.Decrement(1),
+      When.Decrement(1),
+      When.Increment(1),
+      When.Increment(1)
+    ],
+    [
+      Then.Get({ asTestUser: 1, expectation: 1157920892373162e62 })
+    ],
+    "this test should fail"
+  )
+];
+
+// tests/solidity/MyFirstContract.solidity.test.ts
 var MyFirstContractTesteranto = SolidityTesteranto(
   {
     Suites: {
@@ -581,57 +631,8 @@ var MyFirstContractTesteranto = SolidityTesteranto(
   (Suite, Given, When, Then, Check) => {
     return [
       Suite.Default(
-        "Testing a very simple smart contract",
-        [
-          Given.Default(
-            [features.hello],
-            [],
-            [
-              Then.Get({ asTestUser: 1, expectation: 0 })
-            ],
-            "my first contract"
-          ),
-          Given.Default(
-            [features.hello],
-            [
-              When.Increment(1),
-              When.Increment(1),
-              When.Increment(1),
-              When.Increment(1)
-            ],
-            [
-              Then.Get({ asTestUser: 1, expectation: 4 })
-            ],
-            "my first contract"
-          ),
-          Given.Default(
-            [features.hello],
-            [
-              When.Increment(1),
-              When.Increment(1),
-              When.Increment(1),
-              When.Increment(1),
-              When.Decrement(1)
-            ],
-            [
-              Then.Get({ asTestUser: 1, expectation: 3 })
-            ],
-            "my first contract"
-          ),
-          Given.Default(
-            [features.hello],
-            [
-              When.Decrement(1),
-              When.Decrement(1),
-              When.Decrement(1),
-              When.Increment(1)
-            ],
-            [
-              Then.Get({ asTestUser: 1, expectation: 1157920892373162e62 })
-            ],
-            "this test should fail"
-          )
-        ],
+        "Testing a very simple smart contract ephemerally",
+        commonGivens(Given, When, Then, features),
         []
       )
     ];

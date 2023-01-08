@@ -268,11 +268,8 @@ var TesterantoProject = class {
 // testeranto.config.ts
 var testeranto_config_default = new TesterantoProject(
   [
-    [
-      "MyFirstContract",
-      "./tests/solidity/MyFirstContract.test.ts",
-      "MyFirstContractTesteranto"
-    ],
+    ["MyFirstContract", "./tests/solidity/MyFirstContract.solidity.test.ts", "MyFirstContractTesteranto"],
+    ["MyFirstContractPlusRpc", "./tests/solidity/MyFirstContract.solidity-rpc.test.ts", "MyFirstContractPlusRpcTesteranto"],
     [
       "Rectangle",
       "./tests/Rectangle/Rectangle.test.ts",
@@ -308,7 +305,7 @@ var testeranto_config_default = new TesterantoProject(
     ]
   ],
   "./tests/testerantoFeatures.test.ts",
-  ["3000", "3001", "3002", "3003"]
+  ["3001", "3002", "3003"]
 );
 
 // src/lib/level1.ts

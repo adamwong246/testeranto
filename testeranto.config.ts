@@ -2,8 +2,9 @@ import { TesterantoProject } from "./src/Project"
 
 export default new TesterantoProject(
   [
-    [
-      'MyFirstContract', './tests/solidity/MyFirstContract.test.ts', 'MyFirstContractTesteranto'],
+    ['MyFirstContract', './tests/solidity/MyFirstContract.solidity.test.ts', 'MyFirstContractTesteranto'],
+    ['MyFirstContractPlusRpc', './tests/solidity/MyFirstContract.solidity-rpc.test.ts', 'MyFirstContractPlusRpcTesteranto'],
+
     [
       'Rectangle', './tests/Rectangle/Rectangle.test.ts', 'RectangleTesteranto'],
     [
@@ -31,6 +32,6 @@ export default new TesterantoProject(
     ],
   ],
   './tests/testerantoFeatures.test.ts',
-  ['3000', '3001', '3002', '3003']
+  ['3001', '3002', '3003']
   // __filename
 );

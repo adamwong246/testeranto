@@ -25,11 +25,12 @@
     },
     {
       "testKey": "Default",
-      "name": "Testing a very simple smart contract",
+      "name": "Testing a very simple smart contract ephemerally",
       "whens": [
         "Decrement: 1",
         "Decrement: 1",
         "Decrement: 1",
+        "Increment: 1",
         "Increment: 1"
       ],
       "thens": [

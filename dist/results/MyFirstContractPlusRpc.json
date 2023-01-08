@@ -1,5 +1,5 @@
 {
-  "name": "Testing a very simple smart contract ephemerally",
+  "name": "Testing a very simple smart contract over RPC",
   "givens": [
     {
       "name": "Default",

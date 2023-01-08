@@ -16,7 +16,7 @@
                   "fails": []
                 },
                 "Default": {
-                  "name": "Testing a very simple smart contract",
+                  "name": "Testing a very simple smart contract ephemerally",
                   "fails": []
                 },
                 "WidthOfOneAndHeightOfOne": {
@@ -76,7 +76,7 @@
                         "fails": []
                       },
                       "Default": {
-                        "name": "Testing a very simple smart contract",
+                        "name": "Testing a very simple smart contract ephemerally",
                         "fails": []
                       },
                       "WidthOfOneAndHeightOfOne": {
@@ -110,7 +110,7 @@
                         "fails": []
                       },
                       "Default": {
-                        "name": "Testing a very simple smart contract",
+                        "name": "Testing a very simple smart contract ephemerally",
                         "fails": []
                       },
                       "WidthOfOneAndHeightOfOne": {
@@ -170,7 +170,7 @@
                               "fails": []
                             },
                             "Default": {
-                              "name": "Testing a very simple smart contract",
+                              "name": "Testing a very simple smart contract ephemerally",
                               "fails": []
                             },
                             "WidthOfOneAndHeightOfOne": {
@@ -219,7 +219,7 @@
                         "fails": []
                       },
                       "Default": {
-                        "name": "Testing a very simple smart contract",
+                        "name": "Testing a very simple smart contract ephemerally",
                         "fails": []
                       },
                       "WidthOfOneAndHeightOfOne": {
@@ -279,7 +279,7 @@
                               "fails": []
                             },
                             "Default": {
-                              "name": "Testing a very simple smart contract",
+                              "name": "Testing a very simple smart contract ephemerally",
                               "fails": []
                             },
                             "WidthOfOneAndHeightOfOne": {
@@ -313,7 +313,7 @@
                               "fails": []
                             },
                             "Default": {
-                              "name": "Testing a very simple smart contract",
+                              "name": "Testing a very simple smart contract ephemerally",
                               "fails": []
                             },
                             "WidthOfOneAndHeightOfOne": {
@@ -373,7 +373,7 @@
                                     "fails": []
                                   },
                                   "Default": {
-                                    "name": "Testing a very simple smart contract",
+                                    "name": "Testing a very simple smart contract ephemerally",
                                     "fails": []
                                   },
                                   "WidthOfOneAndHeightOfOne": {
