@@ -14,14 +14,16 @@
     },
     {
       "testKey": "AnEmptyState",
-      "name": "Testing the Node server with fetch * 2 ports",
+      "name": "Testing the Server with Puppeteer",
       "whens": [
-        "PostToStatusA: gutentag",
-        "PostToStatusB: buenos dias"
+        "PostToStatus: aloha",
+        "PostToAdd: 4",
+        "PostToStatus: hello",
+        "PostToAdd: 3"
       ],
       "thens": [
-        "TheStatusIsA: gutentag",
-        "TheStatusIsB: buenos dias"
+        "TheStatusIs: hello",
+        "TheNumberIs: 7"
       ]
     },
     {

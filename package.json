@@ -13,6 +13,10 @@
     "cucumber",
     "ATDD"
   ],
+  "bin": {
+    "testeranto:build": "./bin/buid.sh",
+    "testeranto:watch": "./bin/watch.sh"
+  },
   "scripts": {
     "prepublish": "tsc",
     "build": "sh ./bin/build.sh",
