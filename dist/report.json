@@ -7,8 +7,16 @@
           "results": {
             "hello": {
               "results": {
+                "Default": {
+                  "name": "Testing the Rectangle class",
+                  "fails": []
+                },
                 "AnEmptyState": {
-                  "name": "Testing the Server with Puppeteer",
+                  "name": "Testing the Node server with fetch * 2 ports",
+                  "fails": []
+                },
+                "WidthOfOneAndHeightOfOne": {
+                  "name": "Testing the Rectangle class",
                   "fails": []
                 },
                 "AStateWithEmail": {
@@ -17,14 +25,6 @@
                 },
                 "default": {
                   "name": "Testing the LoginPage as react",
-                  "fails": []
-                },
-                "Default": {
-                  "name": "Testing a very simple smart contract over RPC",
-                  "fails": []
-                },
-                "WidthOfOneAndHeightOfOne": {
-                  "name": "Testing the Rectangle class",
                   "fails": []
                 },
                 "results": {
@@ -67,8 +67,16 @@
                       }
                     },
                     "report": {
+                      "Default": {
+                        "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
                       "AnEmptyState": {
-                        "name": "Testing the Server with Puppeteer",
+                        "name": "Testing the Node server with fetch * 2 ports",
+                        "fails": []
+                      },
+                      "WidthOfOneAndHeightOfOne": {
+                        "name": "Testing the Rectangle class",
                         "fails": []
                       },
                       "AStateWithEmail": {
@@ -77,32 +85,32 @@
                       },
                       "default": {
                         "name": "Testing the LoginPage as react",
-                        "fails": []
-                      },
-                      "Default": {
-                        "name": "Testing a very simple smart contract over RPC",
-                        "fails": []
-                      },
-                      "WidthOfOneAndHeightOfOne": {
-                        "name": "Testing the Rectangle class",
                         "fails": []
                       }
                     }
                   },
                   "aloha": {
                     "results": {
-                      "AnEmptyState": {
-                        "name": "Testing the Redux store",
-                        "fails": []
-                      },
                       "WidthOfOneAndHeightOfOne": {
                         "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
+                      "AnEmptyState": {
+                        "name": "Testing the Redux store",
                         "fails": []
                       }
                     },
                     "report": {
+                      "Default": {
+                        "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
                       "AnEmptyState": {
-                        "name": "Testing the Server with Puppeteer",
+                        "name": "Testing the Node server with fetch * 2 ports",
+                        "fails": []
+                      },
+                      "WidthOfOneAndHeightOfOne": {
+                        "name": "Testing the Rectangle class",
                         "fails": []
                       },
                       "AStateWithEmail": {
@@ -111,14 +119,6 @@
                       },
                       "default": {
                         "name": "Testing the LoginPage as react",
-                        "fails": []
-                      },
-                      "Default": {
-                        "name": "Testing a very simple smart contract over RPC",
-                        "fails": []
-                      },
-                      "WidthOfOneAndHeightOfOne": {
-                        "name": "Testing the Rectangle class",
                         "fails": []
                       },
                       "results": {
@@ -161,8 +161,16 @@
                             }
                           },
                           "report": {
+                            "Default": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
                             "AnEmptyState": {
-                              "name": "Testing the Server with Puppeteer",
+                              "name": "Testing the Node server with fetch * 2 ports",
+                              "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
                               "fails": []
                             },
                             "AStateWithEmail": {
@@ -171,14 +179,6 @@
                             },
                             "default": {
                               "name": "Testing the LoginPage as react",
-                              "fails": []
-                            },
-                            "Default": {
-                              "name": "Testing a very simple smart contract over RPC",
-                              "fails": []
-                            },
-                            "WidthOfOneAndHeightOfOne": {
-                              "name": "Testing the Rectangle class",
                               "fails": []
                             }
                           }
@@ -210,8 +210,16 @@
                 "results": {
                   "hello": {
                     "results": {
+                      "Default": {
+                        "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
                       "AnEmptyState": {
-                        "name": "Testing the Server with Puppeteer",
+                        "name": "Testing the Node server with fetch * 2 ports",
+                        "fails": []
+                      },
+                      "WidthOfOneAndHeightOfOne": {
+                        "name": "Testing the Rectangle class",
                         "fails": []
                       },
                       "AStateWithEmail": {
@@ -220,14 +228,6 @@
                       },
                       "default": {
                         "name": "Testing the LoginPage as react",
-                        "fails": []
-                      },
-                      "Default": {
-                        "name": "Testing a very simple smart contract over RPC",
-                        "fails": []
-                      },
-                      "WidthOfOneAndHeightOfOne": {
-                        "name": "Testing the Rectangle class",
                         "fails": []
                       },
                       "results": {
@@ -270,8 +270,16 @@
                             }
                           },
                           "report": {
+                            "Default": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
                             "AnEmptyState": {
-                              "name": "Testing the Server with Puppeteer",
+                              "name": "Testing the Node server with fetch * 2 ports",
+                              "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
                               "fails": []
                             },
                             "AStateWithEmail": {
@@ -280,32 +288,32 @@
                             },
                             "default": {
                               "name": "Testing the LoginPage as react",
-                              "fails": []
-                            },
-                            "Default": {
-                              "name": "Testing a very simple smart contract over RPC",
-                              "fails": []
-                            },
-                            "WidthOfOneAndHeightOfOne": {
-                              "name": "Testing the Rectangle class",
                               "fails": []
                             }
                           }
                         },
                         "aloha": {
                           "results": {
-                            "AnEmptyState": {
-                              "name": "Testing the Redux store",
-                              "fails": []
-                            },
                             "WidthOfOneAndHeightOfOne": {
                               "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "AnEmptyState": {
+                              "name": "Testing the Redux store",
                               "fails": []
                             }
                           },
                           "report": {
+                            "Default": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
                             "AnEmptyState": {
-                              "name": "Testing the Server with Puppeteer",
+                              "name": "Testing the Node server with fetch * 2 ports",
+                              "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
                               "fails": []
                             },
                             "AStateWithEmail": {
@@ -314,14 +322,6 @@
                             },
                             "default": {
                               "name": "Testing the LoginPage as react",
-                              "fails": []
-                            },
-                            "Default": {
-                              "name": "Testing a very simple smart contract over RPC",
-                              "fails": []
-                            },
-                            "WidthOfOneAndHeightOfOne": {
-                              "name": "Testing the Rectangle class",
                               "fails": []
                             },
                             "results": {
@@ -364,8 +364,16 @@
                                   }
                                 },
                                 "report": {
+                                  "Default": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
                                   "AnEmptyState": {
-                                    "name": "Testing the Server with Puppeteer",
+                                    "name": "Testing the Node server with fetch * 2 ports",
+                                    "fails": []
+                                  },
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
                                     "fails": []
                                   },
                                   "AStateWithEmail": {
@@ -374,14 +382,6 @@
                                   },
                                   "default": {
                                     "name": "Testing the LoginPage as react",
-                                    "fails": []
-                                  },
-                                  "Default": {
-                                    "name": "Testing a very simple smart contract over RPC",
-                                    "fails": []
-                                  },
-                                  "WidthOfOneAndHeightOfOne": {
-                                    "name": "Testing the Rectangle class",
                                     "fails": []
                                   }
                                 }

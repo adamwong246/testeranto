@@ -9,8 +9,6 @@ import { ITTestShape, ITestImplementation, ITestJob } from "../types";
 
 import { TesterantoLevelZero } from "./level0";
 
-import testerantoConfig from "../../testeranto.config";
-
 export abstract class TesterantoLevelOne<
   ITestShape extends ITTestShape,
   IInitialState,
@@ -182,7 +180,7 @@ export abstract class TesterantoLevelOne<
           return suite.run(input, { ports: allocatedPorts });
         },
 
-        builder: (entryPath: string) => {
+        builder: (entryPath: string, featureFile: string) => {
           const importPathPlugin = {
             name: 'import-path',
             setup(build) {
@@ -190,7 +188,7 @@ export abstract class TesterantoLevelOne<
 
                 const importedPath = args.resolveDir + "/" + args.path;
                 const absolutePath = path.resolve(importedPath);
-                const absolutePath2 = path.resolve(testerantoConfig.features).split(".ts").slice(0, -1).join('.ts');
+                const absolutePath2 = path.resolve(featureFile).split(".ts").slice(0, -1).join('.ts');
 
                 if (absolutePath === absolutePath2) {
                   return {
@@ -213,6 +211,7 @@ export abstract class TesterantoLevelOne<
               })
             },
           }
+
           esbuild.build({
             entryPoints: [entryPath],
             bundle: true,
@@ -224,7 +223,7 @@ export abstract class TesterantoLevelOne<
             plugins: [importPathPlugin],
             external: [
               // './src/*',
-              testerantoConfig.features
+              featureFile
             ],
           }).then((res) => {
             const text = res.outputFiles[0].text;
@@ -233,7 +232,8 @@ export abstract class TesterantoLevelOne<
               fs.promises.writeFile(p, text);
               fs.promises.writeFile("./dist/" + (entryPath.split(process.cwd()).pop())?.split(".ts")[0] + `.md5`, createHash('md5').update(text).digest('hex'))
             })
-          })
+          });
+
         }
       };
     });

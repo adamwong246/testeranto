@@ -232,8 +232,8 @@ var BaseCheck = class {
 
 // src/lib/level1.ts
 import { createHash } from "node:crypto";
-import fs2 from "fs";
-import path2 from "path";
+import fs from "fs";
+import path from "path";
 import esbuild from "esbuild";
 import { mapValues as mapValues2 } from "lodash";
 
@@ -264,67 +264,6 @@ var TesterantoLevelZero = class {
     return this.checkOverides;
   }
 };
-
-// src/Project.ts
-import fs from "fs";
-import path from "path";
-var TesterantoProject = class {
-  constructor(tests, features2, ports) {
-    this.tests = tests;
-    this.features = features2;
-    this.ports = ports;
-  }
-  builder() {
-    const text = JSON.stringify({ tests: this.tests, features: this.features });
-    const p = "./dist/testeranto.config.json";
-    fs.promises.mkdir(path.dirname(p), { recursive: true }).then((x) => {
-      fs.promises.writeFile(p, text);
-    });
-  }
-};
-
-// testeranto.config.ts
-var testeranto_config_default = new TesterantoProject(
-  [
-    ["MyFirstContract", "./tests/solidity/MyFirstContract.solidity.test.ts", "MyFirstContractTesteranto"],
-    ["MyFirstContractPlusRpc", "./tests/solidity/MyFirstContract.solidity-rpc.test.ts", "MyFirstContractPlusRpcTesteranto"],
-    [
-      "Rectangle",
-      "./tests/Rectangle/Rectangle.test.ts",
-      "RectangleTesteranto"
-    ],
-    [
-      "Redux",
-      "./tests/Redux+Reselect+React/app.redux.test.ts",
-      "AppReduxTesteranto"
-    ],
-    [
-      "ReduxToolkit",
-      "./tests/Redux+Reselect+React/app.reduxToolkit.test.ts",
-      "AppReduxToolkitTesteranto"
-    ],
-    [
-      "ReactTesteranto",
-      "./tests/Redux+Reselect+React/LoginPage.test.ts",
-      "AppReactTesteranto"
-    ],
-    ["ServerHttp", "./tests/httpServer/server.http.test.ts", "ServerHttpTesteranto"],
-    ["ServerHttpPuppeteer", "./tests/httpServer/server.puppeteer.test.ts", "ServerHttpPuppeteerTesteranto"],
-    ["ServerHttp2x", "./tests/httpServer/server.http2x.test.ts", "ServerHttp2xTesteranto"],
-    [
-      "ClassicalComponentReactTestRenderer",
-      "./tests/ClassicalReact/ClassicalComponent.react-test-renderer.test.tsx",
-      "ClassicalComponentReactTestRendererTesteranto"
-    ],
-    [
-      "ClassicalComponentEsbuildPuppeteer",
-      "./tests/ClassicalReact/ClassicalComponent.esbuild-puppeteer.test.ts",
-      "ClassicalComponentEsbuildPuppeteerTesteranto"
-    ]
-  ],
-  "./tests/testerantoFeatures.test.ts",
-  ["3001", "3002", "3003"]
-);
 
 // src/lib/level1.ts
 var TesterantoLevelOne = class {
@@ -385,14 +324,14 @@ var TesterantoLevelOne = class {
         runner: async (allocatedPorts) => {
           return suite.run(input, { ports: allocatedPorts });
         },
-        builder: (entryPath) => {
+        builder: (entryPath, featureFile) => {
           const importPathPlugin = {
             name: "import-path",
             setup(build) {
               build.onResolve({ filter: /^\.{1,2}\// }, (args) => {
                 const importedPath = args.resolveDir + "/" + args.path;
-                const absolutePath = path2.resolve(importedPath);
-                const absolutePath2 = path2.resolve(testeranto_config_default.features).split(".ts").slice(0, -1).join(".ts");
+                const absolutePath = path.resolve(importedPath);
+                const absolutePath2 = path.resolve(featureFile).split(".ts").slice(0, -1).join(".ts");
                 if (absolutePath === absolutePath2) {
                   return {
                     path: process.cwd() + "/dist/tests/testerantoFeatures.test.js",
@@ -413,14 +352,14 @@ var TesterantoLevelOne = class {
             packages: "external",
             plugins: [importPathPlugin],
             external: [
-              testeranto_config_default.features
+              featureFile
             ]
           }).then((res) => {
             const text = res.outputFiles[0].text;
             const p = "./dist/" + entryPath.split(process.cwd()).pop()?.split(".ts")[0] + ".js";
-            fs2.promises.mkdir(path2.dirname(p), { recursive: true }).then((x) => {
-              fs2.promises.writeFile(p, text);
-              fs2.promises.writeFile("./dist/" + entryPath.split(process.cwd()).pop()?.split(".ts")[0] + `.md5`, createHash("md5").update(text).digest("hex"));
+            fs.promises.mkdir(path.dirname(p), { recursive: true }).then((x) => {
+              fs.promises.writeFile(p, text);
+              fs.promises.writeFile("./dist/" + entryPath.split(process.cwd()).pop()?.split(".ts")[0] + `.md5`, createHash("md5").update(text).digest("hex"));
             });
           });
         }
