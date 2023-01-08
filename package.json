@@ -16,7 +16,8 @@
   "bin": {
     "testeranto": "./bin/testeranto.sh",
     "testerantoBuild": "./bin/build.sh",
-    "testerantoWatch": "./bin/watch.sh"
+    "testerantoWatch": "./bin/watch.sh",
+    "testerantoReport": "./bin/report.sh"
   },
   "scripts": {
     "prepublish": "tsc",
