@@ -131,7 +131,10 @@ export class TesterantoFeatures {
       external: ['./src/*', './tests/testerantoFeatures.test.ts'],
     }).then((res) => {
       const text = res.outputFiles[0].text;
+
+      console.log("mark 0", this.entryPath, process.cwd());
       const p = "./dist" + (this.entryPath.split(process.cwd()).pop())?.split(".ts")[0] + '.js'
+
       fs.promises.mkdir(path.dirname(p), { recursive: true }).then(x => {
         fs.promises.writeFile(p, text);
         fs.promises.writeFile("./dist" + (this.entryPath.split(process.cwd()).pop())?.split(".ts")[0] + `.md5`, createHash('md5').update(text).digest('hex'))
