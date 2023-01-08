@@ -20,8 +20,8 @@
   },
   "scripts": {
     "prepublish": "tsc",
-    "build": "sh ./bin/build.sh",
-    "watch": "sh ./bin/watch.sh",
+    "build": "nodemon --config nodemon.json ./src/build.ts ./testeranto.config.json",
+    "watch": "ts-node ./src/watch.ts",
     "bundle:reporter": "esbuild ./src/Report.tsx --watch --bundle --outfile=./dist/reporter.js",
     "simpleserver": "cd dist && python -m SimpleHTTPServer 8080",
     "clean:dist": "rm -rf ./dist/results && rm -rf ./dist/tests  && rm -f ./dist/reporter.css && rm -f ./dist/reporter.js && rm -f ./dist/*.jpg ",
