@@ -8,7 +8,7 @@
             "hello": {
               "results": {
                 "AnEmptyState": {
-                  "name": "Testing the Server with Puppeteer",
+                  "name": "Testing the Node server with fetch",
                   "fails": []
                 },
                 "AStateWithEmail": {
@@ -68,7 +68,7 @@
                     },
                     "report": {
                       "AnEmptyState": {
-                        "name": "Testing the Server with Puppeteer",
+                        "name": "Testing the Node server with fetch",
                         "fails": []
                       },
                       "AStateWithEmail": {
@@ -102,7 +102,7 @@
                     },
                     "report": {
                       "AnEmptyState": {
-                        "name": "Testing the Server with Puppeteer",
+                        "name": "Testing the Node server with fetch",
                         "fails": []
                       },
                       "AStateWithEmail": {
@@ -162,7 +162,7 @@
                           },
                           "report": {
                             "AnEmptyState": {
-                              "name": "Testing the Server with Puppeteer",
+                              "name": "Testing the Node server with fetch",
                               "fails": []
                             },
                             "AStateWithEmail": {
@@ -211,7 +211,7 @@
                   "hello": {
                     "results": {
                       "AnEmptyState": {
-                        "name": "Testing the Server with Puppeteer",
+                        "name": "Testing the Node server with fetch",
                         "fails": []
                       },
                       "AStateWithEmail": {
@@ -271,7 +271,7 @@
                           },
                           "report": {
                             "AnEmptyState": {
-                              "name": "Testing the Server with Puppeteer",
+                              "name": "Testing the Node server with fetch",
                               "fails": []
                             },
                             "AStateWithEmail": {
@@ -305,7 +305,7 @@
                           },
                           "report": {
                             "AnEmptyState": {
-                              "name": "Testing the Server with Puppeteer",
+                              "name": "Testing the Node server with fetch",
                               "fails": []
                             },
                             "AStateWithEmail": {
@@ -365,7 +365,7 @@
                                 },
                                 "report": {
                                   "AnEmptyState": {
-                                    "name": "Testing the Server with Puppeteer",
+                                    "name": "Testing the Node server with fetch",
                                     "fails": []
                                   },
                                   "AStateWithEmail": {

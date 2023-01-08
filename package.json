@@ -1,10 +1,10 @@
 {
-  "name": "testeranto.ts",
-  "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.6.1",
+  "name": "kokomo-bay",
+  "description": "",
+  "version": "0.0.1",
   "main": "index.js",
-  "repository": "git@github.com:adamwong246/testeranto.ts.git",
-  "homepage": "https://github.com/adamwong246/testeranto.ts",
+  "repository": "git@github.com:ChromaPDX/kokomoBay.git",
+  "homepage": "https://github.com/ChromaPDX/kokomoBay",
   "author": "adam wong <adamwong246@gmail.com>",
   "license": "MIT",
   "keywords": [
@@ -14,9 +14,8 @@
     "ATDD"
   ],
   "scripts": {
-    "prepublish": "tsc",
-    "build": "nodemon --config nodemon.json ./src/build.ts",
-    "watch": "ts-node ./src/watch.ts",
+    "build": "testeranto.ts build",
+    "watch": "testeranto.ts watch",
     "bundle:reporter": "esbuild ./src/Report.tsx --watch --bundle --outfile=./dist/reporter.js",
     "simpleserver": "cd dist && python -m SimpleHTTPServer 8080",
     "clean:dist": "rm -rf ./dist/results && rm -rf ./dist/tests  && rm -f ./dist/reporter.css && rm -f ./dist/reporter.js && rm -f ./dist/*.jpg ",
@@ -26,14 +25,7 @@
   },
   "types": "index.d.ts",
   "dependencies": {
-    "bootstrap": "^5.2.3",
-    "cancelable-promise": "^4.3.1",
-    "fresh-require": "^1.0.3",
-    "graphology-dag": "^0.2.0",
-    "graphology-types": "^0.24.5",
-    "graphology": "^0.25.1",
-    "lodash": "^4.17.21",
-    "react-bootstrap": "^2.7.0"
+    "testeranto": "adamwong246/testeranto#944f6dd29c379e748a5ef8ba7cbfed26470a484f"
   },
   "devDependencies": {
     "@babel/core": "^7.19.6",

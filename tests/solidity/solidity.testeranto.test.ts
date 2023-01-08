@@ -5,7 +5,7 @@ import TruffleCompile from "truffle-compile";
 import Web3 from 'web3';
 import { Contract } from 'web3-eth-contract';
 
-import { Testeranto } from "../../src/index";
+import { Testeranto } from "testeranto";
 import { ITestImplementation, ITestSpecification, ITTestShape } from "../../src/types";
 
 type Selection = {

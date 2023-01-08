@@ -8782,6 +8782,19 @@ terser@^5.14.1:
     commander "^2.20.0"
     source-map-support "~0.5.20"
 
+testeranto@adamwong246/testeranto#944f6dd29c379e748a5ef8ba7cbfed26470a484f:
+  version "0.9.3"
+  resolved "https://codeload.github.com/adamwong246/testeranto/tar.gz/944f6dd29c379e748a5ef8ba7cbfed26470a484f"
+  dependencies:
+    bootstrap "^5.2.3"
+    cancelable-promise "^4.3.1"
+    fresh-require "^1.0.3"
+    graphology "^0.25.1"
+    graphology-dag "^0.2.0"
+    graphology-types "^0.24.5"
+    lodash "^4.17.21"
+    react-bootstrap "^2.7.0"
+
 testrpc@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/testrpc/-/testrpc-0.0.1.tgz#83e2195b1f5873aec7be1af8cbe6dcf39edb7aed"

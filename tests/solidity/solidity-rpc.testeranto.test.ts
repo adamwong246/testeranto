@@ -4,8 +4,8 @@ import Ganache, { Server } from "ganache";
 import TruffleCompile from "truffle-compile";
 import Web3 from 'web3';
 
-import { Testeranto } from "../../src/index";
-import { ITestImplementation, ITestSpecification, ITTestShape } from "../../src/types";
+import { Testeranto } from "testeranto";
+import { ITestImplementation, ITestSpecification, ITTestShape } from "testeranto";
 import { ethers } from "ethers";
 
 import { Contract as ContractEthers } from 'ethers';

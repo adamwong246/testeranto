@@ -1,7 +1,8 @@
-// tests/testerantoFeatures.test.ts
-import { BaseFeature } from "/Users/adam/Code/testeranto.ts/tests/../src/BaseClasses.ts";
-import { TesterantoFeatures, TesterantoGraphDirected, TesterantoGraphDirectedAcylic, TesterantoGraphUndirected } from "/Users/adam/Code/testeranto.ts/tests/../src/Features.ts";
+// node_modules/testeranto/tests/testerantoFeatures.test.ts
+import { BaseFeature } from "/Users/adam/Code/kokomoBay/node_modules/testeranto/tests/../src/BaseClasses";
+import { TesterantoFeatures, TesterantoGraphDirected, TesterantoGraphDirectedAcylic, TesterantoGraphUndirected } from "/Users/adam/Code/kokomoBay/node_modules/testeranto/tests/../src/Features";
 var MyFeature = class extends BaseFeature {
+  due;
   constructor(name, due) {
     super(name);
     this.due = due;

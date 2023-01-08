@@ -1,6 +1,8 @@
 {
-  
   "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node",
+
     "compilerOptions": {
       "module": "commonjs"
     }
@@ -19,11 +21,7 @@
     "jsx": "react",
     "resolveJsonModule": true,
     "strictNullChecks": true,
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "skipLibCheck": true,
     "strict": false,
     "forceConsistentCasingInFileNames": true,
@@ -33,9 +31,14 @@
     "isolatedModules": true
   },
   "include": [
-    "src/index.ts", "./src/", "src/watch.ts", "src/build.ts"
+    "src/index.ts",
+    "./src/",
+    "src/watch.ts",
+    "src/build.ts",
+    "./testeranto.config.ts",
+    "node_modules"
   ],
   "exclude": [
-    "node_modules"
+    // "node_modules"
   ]
 }

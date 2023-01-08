@@ -2,7 +2,7 @@ import puppeteer, { Browser, Page } from "puppeteer";
 import http from "http";
 import { assert } from "chai";
 
-import { Testeranto } from "../../src/index";
+import { Testeranto } from "testeranto";
 import { ITestImplementation, ITestSpecification, ITTestShape, Modify } from "../../src/types";
 
 type WhenShape = [url: string, paylaod: string];

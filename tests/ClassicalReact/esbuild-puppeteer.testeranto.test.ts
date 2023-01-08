@@ -1,8 +1,8 @@
 import puppeteer, { Page } from "puppeteer";
 import esbuild from "esbuild";
 
-import { Testeranto } from "../../src/index";
-import { ITestImplementation, ITestSpecification, ITTestShape } from "../../src/types";
+import { Testeranto } from "testeranto";
+import { ITestImplementation, ITestSpecification, ITTestShape } from "testeranto";
 
 type Input = [string, (string) => string, any];
 type InitialState = unknown;

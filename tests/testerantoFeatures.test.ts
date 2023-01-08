@@ -1,4 +1,5 @@
-import { BaseFeature } from "../src/BaseClasses";
+// import { BaseFeature } from "../src/BaseClasses";
+import { BaseFeature } from "testeranto.ts/src/BaseClasses";
 import { TesterantoFeatures, TesterantoGraphDirected, TesterantoGraphDirectedAcylic, TesterantoGraphUndirected } from "../src/Features";
 
 export class MyFeature extends BaseFeature {

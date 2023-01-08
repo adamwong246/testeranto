@@ -1,6 +1,6 @@
 import renderer, { act } from "react-test-renderer";
-import { Testeranto } from "../../src/index";
-import { ITestImplementation, ITestSpecification, ITTestShape } from "../../src/types";
+import { Testeranto } from "testeranto";
+import { ITestImplementation, ITestSpecification, ITTestShape } from "testeranto";
 
 type WhenShape = any;
 type ThenShape = any;
