@@ -1,5 +1,5 @@
 {
-  "name": "testeranto.ts",
+  "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
   "version": "0.9.2",
   "main": "index.js",
