@@ -33,5 +33,5 @@ export default new TesterantoProject(
   ],
   './tests/testerantoFeatures.test.ts',
   ['3001', '3002', '3003']
-  // __filename
+
 );

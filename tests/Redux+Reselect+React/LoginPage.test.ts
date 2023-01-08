@@ -147,6 +147,4 @@ export const AppReactTesteranto = ReactTesteranto<
 
   LoginPage,
 
-  __filename
-
 );

@@ -121,8 +121,6 @@ export const ServerHttpPuppeteerTesteranto = PuppeteerHttpTesteranto<
     ];
   },
 
-  serverFactory,
-
-  __filename
+  serverFactory
 
 );

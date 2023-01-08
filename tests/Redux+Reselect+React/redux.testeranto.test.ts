@@ -37,8 +37,7 @@ export const ReduxTesteranto = <
 
   }>,
   testSpecifications: ITestSpecification<ITestShape>,
-  testInput: Input,
-  entryPath: string
+  testInput: Input
 ) =>
   Testeranto<
     ITestShape,
@@ -65,6 +64,5 @@ export const ReduxTesteranto = <
       butThen: function (store: Store<any, AnyAction>): Promise<IStoreShape> {
         return store.getState();
       },
-    },
-    entryPath
+    }
   )

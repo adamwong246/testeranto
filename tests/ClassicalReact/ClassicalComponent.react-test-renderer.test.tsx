@@ -109,7 +109,5 @@ export const ClassicalComponentReactTestRendererTesteranto = ReactTestRendererTe
     ];
   },
 
-  ClassicalComponent,
-
-  __filename
+  ClassicalComponent
 );

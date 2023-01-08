@@ -67,8 +67,7 @@ export const SolidityRpcTesteranto = <
   >,
   testSpecifications: ITestSpecification<ITestShape>,
   testInput: Input,
-  contractName: string,
-  entryPath: string
+  contractName: string
 ) =>
   Testeranto<
     ITestShape,
@@ -141,6 +140,5 @@ export const SolidityRpcTesteranto = <
 
       andWhen: async ({ contractFarSide, accounts }, callback: any) =>
         (callback())({ contractFarSide, accounts }),
-    },
-    entryPath
+    }
   )

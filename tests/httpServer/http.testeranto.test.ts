@@ -4,7 +4,6 @@ import http from "http";
 import { Testeranto } from "../../src/index";
 import { ITestImplementation, ITestSpecification, ITTestShape, Modify } from "../../src/types";
 
-type TestResource = "port";
 type WhenShape = [url: string, paylaod: string];
 type ThenShape = any;
 type Input = () => http.Server;
@@ -31,7 +30,6 @@ export const HttpTesteranto = <
   }>,
   testSpecifications: ITestSpecification<ITestShape>,
   testInput: Input,
-  entryPath: string
 ) =>
   Testeranto<
     ITestShape,
@@ -80,5 +78,4 @@ export const HttpTesteranto = <
         })
       }
     },
-    entryPath
   )

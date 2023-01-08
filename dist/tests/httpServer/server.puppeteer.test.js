@@ -311,7 +311,7 @@ var testeranto_config_default = new TesterantoProject(
 
 // src/lib/level1.ts
 var TesterantoLevelOne = class {
-  constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResource, entryPath) {
+  constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResource) {
     const classySuites = mapValues2(
       testImplementation.Suites,
       () => (somestring, givens, checks) => new suiteKlasser.prototype.constructor(somestring, givens, checks)
@@ -368,7 +368,7 @@ var TesterantoLevelOne = class {
         runner: async (allocatedPorts) => {
           return suite.run(input, { ports: allocatedPorts });
         },
-        builder: () => {
+        builder: (entryPath) => {
           const importPathPlugin = {
             name: "import-path",
             setup(build) {
@@ -400,10 +400,10 @@ var TesterantoLevelOne = class {
             ]
           }).then((res) => {
             const text = res.outputFiles[0].text;
-            const p = "./dist" + entryPath.split(process.cwd()).pop()?.split(".ts")[0] + ".js";
+            const p = "./dist/" + entryPath.split(process.cwd()).pop()?.split(".ts")[0] + ".js";
             fs2.promises.mkdir(path2.dirname(p), { recursive: true }).then((x) => {
               fs2.promises.writeFile(p, text);
-              fs2.promises.writeFile("./dist" + entryPath.split(process.cwd()).pop()?.split(".ts")[0] + `.md5`, createHash("md5").update(text).digest("hex"));
+              fs2.promises.writeFile("./dist/" + entryPath.split(process.cwd()).pop()?.split(".ts")[0] + `.md5`, createHash("md5").update(text).digest("hex"));
             });
           });
         }
@@ -414,7 +414,7 @@ var TesterantoLevelOne = class {
 };
 
 // src/index.ts
-var Testeranto = (input, testSpecification, testImplementation, testResource, testInterface, entryPath) => {
+var Testeranto = (input, testSpecification, testImplementation, testResource, testInterface) => {
   const butThen = testInterface.butThen || (async (a) => a);
   const { andWhen } = testInterface;
   const actionHandler = testInterface.actionHandler || function(b) {
@@ -483,15 +483,14 @@ var Testeranto = (input, testSpecification, testImplementation, testResource, te
             return new Promise((res) => res(afterEach(store, ndx, cb)));
           }
         },
-        testResource,
-        entryPath
+        testResource
       );
     }
   };
 };
 
 // tests/httpServer/puppeteer-http.testeranto.test.ts
-var PuppeteerHttpTesteranto = (testImplementations, testSpecifications, testInput, entryPath) => Testeranto(
+var PuppeteerHttpTesteranto = (testImplementations, testSpecifications, testInput) => Testeranto(
   testInput,
   testSpecifications,
   testImplementations,
@@ -533,8 +532,7 @@ var PuppeteerHttpTesteranto = (testImplementations, testSpecifications, testInpu
         });
       });
     }
-  },
-  entryPath
+  }
 );
 
 // tests/httpServer/server.ts
@@ -654,8 +652,7 @@ var ServerHttpPuppeteerTesteranto = PuppeteerHttpTesteranto(
       )
     ];
   },
-  serverFactory,
-  __filename
+  serverFactory
 );
 export {
   ServerHttpPuppeteerTesteranto

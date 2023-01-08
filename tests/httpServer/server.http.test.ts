@@ -124,8 +124,6 @@ export const ServerHttpTesteranto = HttpTesteranto<
     ];
   },
 
-  serverFactory,
-
-  __filename
+  serverFactory
 
 );

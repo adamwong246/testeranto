@@ -41,8 +41,7 @@ export const ReduxToolkitTesteranto = <
 
   }>,
   testSpecifications: ITestSpecification<ITestShape>,
-  testInput: Input<IStoreShape, ISelectionShape>,
-  entryPath: string
+  testInput: Input<IStoreShape, ISelectionShape>
 ) =>
   Testeranto<
     ITestShape,
@@ -71,6 +70,5 @@ export const ReduxToolkitTesteranto = <
       assertioner: function (t: ThenShape) {
         return t[0](t[1], t[2], t[3]);
       }
-    },
-    entryPath
+    }
   )

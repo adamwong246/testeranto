@@ -30,7 +30,6 @@ export const Http2xTesteranto = <
   }>,
   testSpecifications: ITestSpecification<ITestShape>,
   testInput: Input,
-  entryPath: string
 ) =>
   Testeranto<
     ITestShape,
@@ -88,6 +87,5 @@ export const Http2xTesteranto = <
         return bodytext;
       },
 
-    },
-    entryPath
+    }
   )

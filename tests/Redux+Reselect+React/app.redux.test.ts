@@ -121,6 +121,5 @@ export const AppReduxTesteranto = ReduxTesteranto<
       ),
     ];
   },
-  loginApp.reducer,
-  __filename
+  loginApp.reducer
 );

@@ -3,9 +3,11 @@ import fs from "fs";
 import path from "path";
 import esbuild from "esbuild";
 import { mapValues } from "lodash";
+
 import { BaseGiven, BaseCheck, BaseSuite, BaseFeature, BaseWhen, BaseThen } from "../BaseClasses";
+import { ITTestShape, ITestImplementation, ITestJob } from "../types";
+
 import { TesterantoLevelZero } from "./level0";
-import { ITTestShape, ITestImplementation, ITestJob, ITTestResource, ITTestResourceRequirement } from "../types";
 
 import testerantoConfig from "../../testeranto.config";
 
@@ -17,7 +19,6 @@ export abstract class TesterantoLevelOne<
   ISubject,
   IWhenShape,
   IThenShape,
-  // ITestResource,
   IInput
 > {
   constructor(
@@ -82,9 +83,8 @@ export abstract class TesterantoLevelOne<
     checkKlasser: (n, f, cb, w, t) =>
       BaseCheck<ISubject, IStore, ISelection, IThenShape>,
 
-    testResource: any,
+    testResource
 
-    entryPath: string
   ) {
     const classySuites = mapValues(
       testImplementation.Suites,
@@ -182,7 +182,7 @@ export abstract class TesterantoLevelOne<
           return suite.run(input, { ports: allocatedPorts });
         },
 
-        builder: () => {
+        builder: (entryPath: string) => {
           const importPathPlugin = {
             name: 'import-path',
             setup(build) {
@@ -228,10 +228,10 @@ export abstract class TesterantoLevelOne<
             ],
           }).then((res) => {
             const text = res.outputFiles[0].text;
-            const p = "./dist" + (entryPath.split(process.cwd()).pop())?.split(".ts")[0] + '.js'
+            const p = "./dist/" + (entryPath.split(process.cwd()).pop())?.split(".ts")[0] + '.js'
             fs.promises.mkdir(path.dirname(p), { recursive: true }).then(x => {
               fs.promises.writeFile(p, text);
-              fs.promises.writeFile("./dist" + (entryPath.split(process.cwd()).pop())?.split(".ts")[0] + `.md5`, createHash('md5').update(text).digest('hex'))
+              fs.promises.writeFile("./dist/" + (entryPath.split(process.cwd()).pop())?.split(".ts")[0] + `.md5`, createHash('md5').update(text).digest('hex'))
             })
           })
         }

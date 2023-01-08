@@ -33,19 +33,15 @@ export const Testeranto = <
     beforeEach?: (subject: Subject, initialValues, testResource: ITTestResource) => Promise<Store>,
     butThen?: (store: Store, callback, testResource: ITTestResource) => Promise<Selection>,
   },
-  entryPath: string
 
 ) => {
 
   const butThen = testInterface.butThen || (async (a) => a as any);
   const { andWhen } = testInterface;
-
   const actionHandler = testInterface.actionHandler || function (b: (...any: any[]) => any) {
     return b;
   };
   const assertioner = testInterface.assertioner || (async (t) => t as any);
-
-
   const beforeAll = testInterface.beforeAll || (async (input) => input as any);
   const beforeEach = testInterface.beforeEach || async function (subject: Input, initialValues: any, testResource: any) {
     return subject as any;
@@ -149,8 +145,7 @@ export const Testeranto = <
             return new Promise((res) => res(afterEach(store, ndx, cb)))
           }
         },
-        testResource,
-        entryPath
+        testResource
       );
     }
   }

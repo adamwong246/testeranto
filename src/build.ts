@@ -10,7 +10,7 @@ testerantoConfig.tests.forEach(([key, sourcefile, className]) => {
   import("../" + sourcefile).then(testSuite => {
     console.log("dynamicly exporting", key)
     try {
-      new testSuite[className]()[0].builder()
+      new testSuite[className]()[0].builder(sourcefile)
     } catch (e) {
       console.error(className);
       console.error(testSuite[className].toString());

@@ -76,6 +76,5 @@ export const MyFirstContractPlusRpcTesteranto = SolidityRpcTesteranto<
     ];
   },
   "solSource",
-  'MyFirstContract',
-  __filename
+  'MyFirstContract'
 );

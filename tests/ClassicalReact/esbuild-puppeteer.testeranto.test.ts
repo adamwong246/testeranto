@@ -24,8 +24,7 @@ export const EsbuildPuppeteerTesteranto = <
     ITestShape
   >,
   testSpecifications: ITestSpecification<ITestShape>,
-  testInput: Input,
-  entry: string
+  testInput: Input
 ) =>
   Testeranto<
     ITestShape,
@@ -80,7 +79,5 @@ export const EsbuildPuppeteerTesteranto = <
         );
         return { page };
       }
-
-    },
-    entry
+    }
   )

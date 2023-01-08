@@ -30,8 +30,7 @@ export const PuppeteerHttpTesteranto = <
     }
   }>,
   testSpecifications: ITestSpecification<ITestShape>,
-  testInput: Input,
-  entryPath: string,
+  testInput: Input
 ) =>
   Testeranto<
     ITestShape,
@@ -89,6 +88,5 @@ export const PuppeteerHttpTesteranto = <
           });
         });
       }
-    },
-    entryPath
+    }
   )

@@ -139,6 +139,5 @@ export const ClassicalComponentEsbuildPuppeteerTesteranto = EsbuildPuppeteerTest
     </html>
 `,
     ClassicalComponent,
-  ],
-  __filename
+  ]
 );

@@ -84,6 +84,5 @@ export const MyFirstContractTesteranto = SolidityTesteranto<
     ];
   },
   "solSource",
-  'MyFirstContract',
-  __filename
+  'MyFirstContract'
 );

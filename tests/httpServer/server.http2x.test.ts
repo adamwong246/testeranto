@@ -89,8 +89,5 @@ export const ServerHttp2xTesteranto = Http2xTesteranto<
     ];
   },
 
-  serverFactory,
-
-  __filename
-
+  serverFactory
 );
