@@ -2,8 +2,11 @@ import { TesterantoProject } from "./Project"
 
 const configFile = `${process.cwd()}/${process.argv[2]}`;
 
+console.log("build.ts configFile", configFile);
+
 import(configFile).then((configModule) => {
   const tProject = new TesterantoProject(configModule.default[0], configModule.default[1], configModule.default[2])
+  console.log("build.ts tProject", tProject);
 
   import("../" + tProject.features).then(features => {
     features.default.builder();
