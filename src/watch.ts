@@ -6,9 +6,12 @@ import { TesterantoProject } from "./Project";
 
 const configFile = `${process.cwd()}/${process.argv[2]}`;
 
+console.log("watch.ts configFile", configFile);
+
 import(configFile).then((configModule) => {
 
   const tProject = new TesterantoProject(configModule.default[0], configModule.default[1], configModule.default[2])
+  console.log("build.ts tProject", tProject);
 
   const TRM = new Scheduler(tProject.ports);
 

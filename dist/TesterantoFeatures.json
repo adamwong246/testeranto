@@ -196,7 +196,7 @@
         ],
         "edges": [
           {
-            "key": "geid_238_0",
+            "key": "geid_157_0",
             "source": "gutentag",
             "target": "aloha",
             "attributes": {
@@ -204,7 +204,7 @@
             }
           },
           {
-            "key": "geid_238_1",
+            "key": "geid_157_1",
             "source": "build the rocket",
             "target": "build the rocket payload",
             "attributes": {
@@ -239,7 +239,7 @@
         ],
         "edges": [
           {
-            "key": "geid_237_0",
+            "key": "geid_156_0",
             "source": "hello",
             "target": "aloha",
             "attributes": {
@@ -247,7 +247,7 @@
             }
           },
           {
-            "key": "geid_237_1",
+            "key": "geid_156_1",
             "source": "gutentag",
             "target": "hola",
             "attributes": {
@@ -268,87 +268,650 @@
         "attributes": {},
         "nodes": [
           {
-            "key": "launch the rocket"
+            "key": "launch the rocket",
+            "attributes": {
+              "testResults": {
+                "results": {
+                  "hello": {
+                    "results": {
+                      "Default": {
+                        "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
+                      "WidthOfOneAndHeightOfOne": {
+                        "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
+                      "results": {
+                        "gutentag": {
+                          "results": {
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "results": {
+                              "bien venidos": {
+                                "results": {},
+                                "report": {
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  }
+                                }
+                              },
+                              "buenos dias": {
+                                "results": {},
+                                "report": {
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "results": {
+                                    "bien venidos": {
+                                      "results": {},
+                                      "report": {
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "report": {
+                            "Default": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            }
+                          }
+                        },
+                        "aloha": {
+                          "results": {
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            }
+                          },
+                          "report": {
+                            "Default": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "results": {
+                              "gutentag": {
+                                "results": {
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "results": {
+                                    "bien venidos": {
+                                      "results": {},
+                                      "report": {
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        }
+                                      }
+                                    },
+                                    "buenos dias": {
+                                      "results": {},
+                                      "report": {
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        },
+                                        "results": {
+                                          "bien venidos": {
+                                            "results": {},
+                                            "report": {
+                                              "WidthOfOneAndHeightOfOne": {
+                                                "name": "Testing the Rectangle class",
+                                                "fails": []
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "report": {
+                                  "Default": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "report": {}
+                  },
+                  "build the rocket silo": {
+                    "results": {
+                      "results": {
+                        "build the rocket": {
+                          "results": {
+                            "results": {
+                              "build the rocket payload": {
+                                "results": {},
+                                "report": {}
+                              }
+                            }
+                          },
+                          "report": {}
+                        }
+                      }
+                    },
+                    "report": {
+                      "results": {
+                        "hello": {
+                          "results": {
+                            "Default": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "results": {
+                              "gutentag": {
+                                "results": {
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "results": {
+                                    "bien venidos": {
+                                      "results": {},
+                                      "report": {
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        }
+                                      }
+                                    },
+                                    "buenos dias": {
+                                      "results": {},
+                                      "report": {
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        },
+                                        "results": {
+                                          "bien venidos": {
+                                            "results": {},
+                                            "report": {
+                                              "WidthOfOneAndHeightOfOne": {
+                                                "name": "Testing the Rectangle class",
+                                                "fails": []
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "report": {
+                                  "Default": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  }
+                                }
+                              },
+                              "aloha": {
+                                "results": {
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  }
+                                },
+                                "report": {
+                                  "Default": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "results": {
+                                    "gutentag": {
+                                      "results": {
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        },
+                                        "results": {
+                                          "bien venidos": {
+                                            "results": {},
+                                            "report": {
+                                              "WidthOfOneAndHeightOfOne": {
+                                                "name": "Testing the Rectangle class",
+                                                "fails": []
+                                              }
+                                            }
+                                          },
+                                          "buenos dias": {
+                                            "results": {},
+                                            "report": {
+                                              "WidthOfOneAndHeightOfOne": {
+                                                "name": "Testing the Rectangle class",
+                                                "fails": []
+                                              },
+                                              "results": {
+                                                "bien venidos": {
+                                                  "results": {},
+                                                  "report": {
+                                                    "WidthOfOneAndHeightOfOne": {
+                                                      "name": "Testing the Rectangle class",
+                                                      "fails": []
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      },
+                                      "report": {
+                                        "Default": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        },
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "report": {}
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           {
-            "key": "build the rocket silo"
+            "key": "build the rocket silo",
+            "attributes": {
+              "testResults": {
+                "results": {
+                  "build the rocket": {
+                    "results": {
+                      "results": {
+                        "build the rocket payload": {
+                          "results": {},
+                          "report": {}
+                        }
+                      }
+                    },
+                    "report": {}
+                  }
+                }
+              }
+            }
           },
           {
-            "key": "build the rocket"
+            "key": "build the rocket",
+            "attributes": {
+              "testResults": {
+                "results": {
+                  "build the rocket payload": {
+                    "results": {},
+                    "report": {}
+                  }
+                }
+              }
+            }
           },
           {
-            "key": "build the rocket payload"
+            "key": "build the rocket payload",
+            "attributes": {
+              "testResults": {}
+            }
           },
           {
-            "key": "hello"
+            "key": "hello",
+            "attributes": {
+              "testResults": {
+                "Default": {
+                  "name": "Testing the Rectangle class",
+                  "fails": []
+                },
+                "WidthOfOneAndHeightOfOne": {
+                  "name": "Testing the Rectangle class",
+                  "fails": []
+                },
+                "results": {
+                  "gutentag": {
+                    "results": {
+                      "WidthOfOneAndHeightOfOne": {
+                        "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
+                      "results": {
+                        "bien venidos": {
+                          "results": {},
+                          "report": {
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            }
+                          }
+                        },
+                        "buenos dias": {
+                          "results": {},
+                          "report": {
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "results": {
+                              "bien venidos": {
+                                "results": {},
+                                "report": {
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "report": {
+                      "Default": {
+                        "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
+                      "WidthOfOneAndHeightOfOne": {
+                        "name": "Testing the Rectangle class",
+                        "fails": []
+                      }
+                    }
+                  },
+                  "aloha": {
+                    "results": {
+                      "WidthOfOneAndHeightOfOne": {
+                        "name": "Testing the Rectangle class",
+                        "fails": []
+                      }
+                    },
+                    "report": {
+                      "Default": {
+                        "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
+                      "WidthOfOneAndHeightOfOne": {
+                        "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
+                      "results": {
+                        "gutentag": {
+                          "results": {
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "results": {
+                              "bien venidos": {
+                                "results": {},
+                                "report": {
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  }
+                                }
+                              },
+                              "buenos dias": {
+                                "results": {},
+                                "report": {
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "results": {
+                                    "bien venidos": {
+                                      "results": {},
+                                      "report": {
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "report": {
+                            "Default": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           {
-            "key": "aloha"
+            "key": "aloha",
+            "attributes": {
+              "testResults": {
+                "WidthOfOneAndHeightOfOne": {
+                  "name": "Testing the Rectangle class",
+                  "fails": []
+                }
+              }
+            }
           },
           {
-            "key": "gutentag"
+            "key": "gutentag",
+            "attributes": {
+              "testResults": {
+                "WidthOfOneAndHeightOfOne": {
+                  "name": "Testing the Rectangle class",
+                  "fails": []
+                },
+                "results": {
+                  "bien venidos": {
+                    "results": {},
+                    "report": {
+                      "WidthOfOneAndHeightOfOne": {
+                        "name": "Testing the Rectangle class",
+                        "fails": []
+                      }
+                    }
+                  },
+                  "buenos dias": {
+                    "results": {},
+                    "report": {
+                      "WidthOfOneAndHeightOfOne": {
+                        "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
+                      "results": {
+                        "bien venidos": {
+                          "results": {},
+                          "report": {
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           {
-            "key": "buenos dias"
+            "key": "buenos dias",
+            "attributes": {
+              "testResults": {}
+            }
           },
           {
-            "key": "hola"
+            "key": "hola",
+            "attributes": {
+              "testResults": {
+                "WidthOfOneAndHeightOfOne": {
+                  "name": "Testing the Rectangle class",
+                  "fails": []
+                },
+                "results": {
+                  "gutentag": {
+                    "results": {
+                      "WidthOfOneAndHeightOfOne": {
+                        "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
+                      "results": {
+                        "bien venidos": {
+                          "results": {},
+                          "report": {
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            }
+                          }
+                        },
+                        "buenos dias": {
+                          "results": {},
+                          "report": {
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "results": {
+                              "bien venidos": {
+                                "results": {},
+                                "report": {
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "report": {
+                      "WidthOfOneAndHeightOfOne": {
+                        "name": "Testing the Rectangle class",
+                        "fails": []
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           {
-            "key": "bien venidos"
+            "key": "bien venidos",
+            "attributes": {
+              "testResults": {}
+            }
           }
         ],
         "edges": [
           {
-            "key": "geid_236_0",
+            "key": "geid_155_0",
             "source": "launch the rocket",
             "target": "build the rocket silo",
             "attributes": {}
           },
           {
-            "key": "geid_236_1",
+            "key": "geid_155_1",
             "source": "build the rocket silo",
             "target": "build the rocket",
             "attributes": {}
           },
           {
-            "key": "geid_236_2",
+            "key": "geid_155_2",
             "source": "build the rocket",
             "target": "build the rocket payload",
             "attributes": {}
           },
           {
-            "key": "geid_236_3",
+            "key": "geid_155_3",
             "source": "launch the rocket",
             "target": "hello",
             "attributes": {}
           },
           {
-            "key": "geid_236_4",
+            "key": "geid_155_4",
             "source": "hello",
             "target": "aloha",
             "attributes": {}
           },
           {
-            "key": "geid_236_5",
+            "key": "geid_155_5",
             "source": "hello",
             "target": "gutentag",
             "attributes": {}
           },
           {
-            "key": "geid_236_6",
+            "key": "geid_155_6",
             "source": "gutentag",
             "target": "buenos dias",
             "attributes": {}
           },
           {
-            "key": "geid_236_7",
+            "key": "geid_155_7",
             "source": "hola",
             "target": "gutentag",
             "attributes": {}
           },
           {
-            "key": "geid_236_8",
+            "key": "geid_155_8",
             "source": "gutentag",
             "target": "bien venidos",
             "attributes": {}
