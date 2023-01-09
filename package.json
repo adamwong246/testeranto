@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.9.3",
+  "version": "0.9.4",
   "main": "index.js",
   "repository": "git@github.com:adamwong246/testeranto.ts.git",
   "homepage": "https://github.com/adamwong246/testeranto.ts",
@@ -21,14 +21,12 @@
   },
   "scripts": {
     "prepublish": "tsc",
-    "build": "nodemon --config nodemon.json ./src/build.ts ./testeranto.config.json",
-    "watch": "ts-node ./src/watch.ts ./testeranto.config.json",
-    "bundle:reporter": "esbuild ./src/Report.tsx --watch --bundle --outfile=./dist/reporter.js",
+    "bundle:reporter": "esbuild ./src/Report.tsx --bundle --outfile=./dist/reporter.js",
     "simpleserver": "cd dist && python -m SimpleHTTPServer 8080",
     "clean:dist": "rm -rf ./dist/results && rm -rf ./dist/tests  && rm -f ./dist/reporter.css && rm -f ./dist/reporter.js && rm -f ./dist/*.jpg ",
     "clean:npm": "rm -rf node_modules && yarn install",
     "clean": "yarn clean:dist && yarn clean:npm",
-    "tableflip": "yarn clean && yarn build; yarn watch"
+    "tableflip": "yarn clean && yarn bundle:reporter"
   },
   "types": "index.d.ts",
   "dependencies": {
