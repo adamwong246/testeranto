@@ -1,9 +1,9 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.9.5",
-  "main": "./src/index.js",
-  "types": "./src/index.d.ts",
+  "version": "0.9.6",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "repository": "git@github.com:adamwong246/testeranto.ts.git",
   "homepage": "https://github.com/adamwong246/testeranto.ts",
   "author": "adam wong <adamwong246@gmail.com>",
