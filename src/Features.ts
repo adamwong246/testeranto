@@ -122,7 +122,7 @@ export class TesterantoFeatures {
     esbuild.build({
       entryPoints: [this.entryPath],
       bundle: true,
-      minify: false,
+      minify: true,
       format: "esm",
       target: ["esnext"],
       write: false,

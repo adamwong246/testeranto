@@ -217,7 +217,7 @@ export abstract class TesterantoLevelOne<
           esbuild.build({
             entryPoints: [entryPath],
             bundle: true,
-            minify: false,
+            minify: true,
             format: "esm",
             target: ["esnext"],
             write: false,
