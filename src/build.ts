@@ -18,7 +18,7 @@ import(configFile).then((configModule) => {
 
   tProject.tests.forEach(([key, sourcefile, className]) => {
 
-    const featureFile = process.cwd() + sourcefile;
+    const featureFile = `${process.cwd()}/${sourcefile}`;
 
     console.log("build.ts featureFile", featureFile);
 
