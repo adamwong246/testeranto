@@ -224,7 +224,6 @@ export abstract class TesterantoLevelOne<
             packages: 'external',
             plugins: [importPathPlugin],
             external: [
-              // './src/*',
               featureFile
             ],
           }).then((res) => {

@@ -74,7 +74,6 @@ export class TesterantoLevelOne {
                         packages: 'external',
                         plugins: [importPathPlugin],
                         external: [
-                            // './src/*',
                             featureFile
                         ],
                     }).then((res) => {
