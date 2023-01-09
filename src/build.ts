@@ -13,7 +13,7 @@ import(configFile).then((configModule) => {
   );
 
   const featureFile = `${process.cwd()}/${tProject.features}`;
-  console.log("build.ts featureFile", featureFile);
+  // console.log("build.ts featureFile", featureFile);
 
   // console.log("build.ts tProject", tProject);
 
@@ -24,7 +24,7 @@ import(configFile).then((configModule) => {
 
   tProject.tests.forEach(([key, testSourcefile, className]) => {
     console.log("build.ts sourcefile", testSourcefile);
-    console.log("build.ts className", className);
+    // console.log("build.ts className", className);
 
     import(testSourcefile).then(testSuite => {
       console.log("dynamicly exporting", key)

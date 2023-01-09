@@ -212,6 +212,8 @@ export abstract class TesterantoLevelOne<
             },
           }
 
+          console.log("level1 esbuild", entryPath);
+
           esbuild.build({
             entryPoints: [entryPath],
             bundle: true,
@@ -227,7 +229,10 @@ export abstract class TesterantoLevelOne<
             ],
           }).then((res) => {
             const text = res.outputFiles[0].text;
+
             const p = "./dist/" + (entryPath.split(process.cwd()).pop())?.split(".ts")[0] + '.js'
+
+
             fs.promises.mkdir(path.dirname(p), { recursive: true }).then(x => {
               fs.promises.writeFile(p, text);
               fs.promises.writeFile("./dist/" + (entryPath.split(process.cwd()).pop())?.split(".ts")[0] + `.md5`, createHash('md5').update(text).digest('hex'))
