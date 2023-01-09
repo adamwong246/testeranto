@@ -132,8 +132,7 @@ export class TesterantoFeatures {
     }).then((res) => {
       const text = res.outputFiles[0].text;
 
-      console.log("mark 0", this.entryPath, process.cwd());
-
+      // console.log("mark 0", this.entryPath, process.cwd());
       // const p = process.cwd() + "./dist/tests/testerantoFeatures.test.js";
       // +
       //   (this.entryPath.split(process.cwd()).pop())?.split(".ts")[0]
@@ -143,7 +142,7 @@ export class TesterantoFeatures {
         process.cwd() + "./dist/tests"
       ), { recursive: true }).then(x => {
 
-        console.log("mark 1", process.cwd() + "/dist/tests/testerantoFeatures.test.js");
+        // console.log("mark 1", process.cwd() + "/dist/tests/testerantoFeatures.test.js");
 
         fs.promises.writeFile(
           process.cwd() + "/dist/tests/testerantoFeatures.test.js"

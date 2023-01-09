@@ -2,8 +2,8 @@
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
   "version": "0.9.8",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
   "repository": "git@github.com:adamwong246/testeranto.ts.git",
   "homepage": "https://github.com/adamwong246/testeranto.ts",
   "author": "adam wong <adamwong246@gmail.com>",
@@ -21,7 +21,6 @@
     "testerantoReport": "./bin/report.sh"
   },
   "scripts": {
-    "prepublish": "tsc --declaration",
     "bundle:reporter": "esbuild ./src/Report.tsx --bundle --outfile=./dist/reporter.js",
     "simpleserver": "cd dist && python -m SimpleHTTPServer 8080",
     "clean:dist": "rm -rf ./dist/results && rm -rf ./dist/tests  && rm -f ./dist/reporter.css && rm -f ./dist/reporter.js && rm -f ./dist/*.jpg ",

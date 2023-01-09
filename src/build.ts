@@ -13,9 +13,7 @@ import(configFile).then((configModule) => {
   );
 
   const featureFile = `${process.cwd()}/${tProject.features}`;
-  // console.log("build.ts featureFile", featureFile);
-
-  // console.log("build.ts tProject", tProject);
+  console.log("build.ts featureFile", featureFile);
 
   import(featureFile).then(features => {
     features.default.builder();
