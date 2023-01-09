@@ -1,4 +1,5 @@
-import { ITestSpecification, ITTestResource, ITTestResourceRequirement, ITTestShape } from "./types";
+import { ITestImplementation, ITestSpecification, ITTestResource, ITTestResourceRequirement, ITTestShape } from "./types";
+export type { ITestImplementation, ITestSpecification, ITTestShape };
 export declare const Testeranto: <TestShape extends ITTestShape, Input, Subject, Store, Selection_1, WhenShape, ThenShape, InitialStateShape>(input: Input, testSpecification: ITestSpecification<TestShape>, testImplementation: any, testResource: ITTestResourceRequirement, testInterface: {
     actionHandler?: ((b: (...any: any[]) => any) => any) | undefined;
     afterEach?: ((store: Store, ndx: number, cb: any) => unknown) | undefined;

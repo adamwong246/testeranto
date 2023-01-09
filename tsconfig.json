@@ -1,5 +1,4 @@
 {
-  
   "ts-node": {
     "compilerOptions": {
       "module": "commonjs"
@@ -19,23 +18,16 @@
     "jsx": "react",
     "resolveJsonModule": true,
     "strictNullChecks": true,
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "skipLibCheck": true,
     "strict": false,
     "forceConsistentCasingInFileNames": true,
     "noEmit": false,
     "incremental": true,
     "esModuleInterop": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "outDir": "dist"
   },
-  "include": [
-    "src/index.ts", "./src/", "src/watch.ts", "src/build.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["src/index.ts", "./src/"],
+  "exclude": ["node_modules"]
 }

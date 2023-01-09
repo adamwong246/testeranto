@@ -1,6 +1,8 @@
 import { BaseGiven, BaseCheck, BaseSuite, BaseFeature, BaseWhen, BaseThen } from "./BaseClasses";
 import { TesterantoLevelOne } from "./lib/level1";
-import { ITestSpecification, ITTestResource, ITTestResourceRequirement, ITTestShape } from "./types"
+import { ITestImplementation, ITestSpecification, ITTestResource, ITTestResourceRequirement, ITTestShape } from "./types"
+
+export type { ITestImplementation, ITestSpecification, ITTestShape };
 
 export const Testeranto = <
   TestShape extends ITTestShape,
