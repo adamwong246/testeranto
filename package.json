@@ -2,7 +2,8 @@
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
   "version": "0.9.5",
-  "main": "index.js",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
   "repository": "git@github.com:adamwong246/testeranto.ts.git",
   "homepage": "https://github.com/adamwong246/testeranto.ts",
   "author": "adam wong <adamwong246@gmail.com>",
@@ -28,7 +29,6 @@
     "clean": "yarn clean:dist && yarn clean:npm",
     "tableflip": "yarn clean && yarn bundle:reporter"
   },
-  "types": "index.d.ts",
   "dependencies": {
     "bootstrap": "^5.2.3",
     "cancelable-promise": "^4.3.1",
