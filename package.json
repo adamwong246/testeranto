@@ -1,11 +1,11 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.9.8",
+  "version": "0.9.9",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
-  "repository": "git@github.com:adamwong246/testeranto.ts.git",
-  "homepage": "https://github.com/adamwong246/testeranto.ts",
+  "repository": "git@github.com:adamwong246/testeranto.git",
+  "homepage": "https://github.com/adamwong246/testeranto",
   "author": "adam wong <adamwong246@gmail.com>",
   "license": "MIT",
   "keywords": [

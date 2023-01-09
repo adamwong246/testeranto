@@ -334,7 +334,7 @@ export function Report() {
       !data && <p>LOADING</p>
     }
 
-    <footer style={{ position: 'fixed', bottom: 0, right: 0 }}>made with ❤️ and <a href="https://adamwong246.github.io/testeranto.ts/" >testeranto.ts</a></footer>
+    <footer style={{ position: 'fixed', bottom: 0, right: 0 }}>made with ❤️ and <a href="https://adamwong246.github.io/testeranto/" >testeranto</a></footer>
 
   </div>)
 }
