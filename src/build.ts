@@ -23,13 +23,15 @@ import(configFile).then((configModule) => {
   });
 
   tProject.tests.forEach(([key, testSourcefile, className]) => {
-    console.log("build.ts sourcefile", testSourcefile);
+
+    const sourcefile = `${process.cwd()}/${testSourcefile}`;
+    console.log("build.ts sourcefile", sourcefile);
     // console.log("build.ts className", className);
 
-    import(testSourcefile).then(testSuite => {
+    import(sourcefile).then(testSuite => {
       console.log("dynamicly exporting", key)
       try {
-        new testSuite[className]()[0].builder(testSourcefile, featureFile)
+        new testSuite[className]()[0].builder(sourcefile, featureFile)
       } catch (e) {
         console.error(className);
         console.error(testSuite);
