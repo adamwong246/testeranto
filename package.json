@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.9.7",
+  "version": "0.9.8",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "repository": "git@github.com:adamwong246/testeranto.ts.git",
