@@ -1,5 +1,7 @@
 import { TesterantoProject } from "./Project"
 
+console.log("build.ts", process.cwd(), process.argv);
+
 const configFile = `${process.cwd()}/${process.argv[2]}`;
 
 console.log("build.ts configFile", configFile);

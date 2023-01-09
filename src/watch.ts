@@ -4,6 +4,8 @@ import { watchFile } from 'node:fs';
 import { Scheduler } from "./lib/Scheduler";
 import { TesterantoProject } from "./Project";
 
+console.log("watch.ts", process.cwd(), process.argv);
+
 const configFile = `${process.cwd()}/${process.argv[2]}`;
 
 console.log("watch.ts configFile", configFile);
