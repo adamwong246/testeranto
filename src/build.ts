@@ -23,6 +23,8 @@ import(configFile).then((configModule) => {
 
   tProject.tests.forEach(([key, sourcefile, className]) => {
 
+    console.log("build.ts className", className);
+    console.log("build.ts sourcefile", sourcefile);
     console.log("build.ts featureFile", featureFile);
 
     import(featureFile).then(testSuite => {
@@ -31,7 +33,7 @@ import(configFile).then((configModule) => {
         new testSuite[className]()[0].builder(sourcefile, featureFile)
       } catch (e) {
         console.error(className);
-        console.error(testSuite[className].toString());
+        console.error(testSuite);
         console.error(e);
       }
     });
