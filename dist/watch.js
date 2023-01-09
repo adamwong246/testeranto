@@ -21,8 +21,8 @@ import(configFile).then((configModule) => {
         try {
             for (var _b = __asyncValues(tProject.tests.entries()), _c; _c = await _b.next(), !_c.done;) {
                 const [ndx, [key, sourcefile, className]] = _c.value;
-                const distFile = "../dist/" + sourcefile.split(".ts")[0] + ".js";
-                const md5File = "./dist/" + sourcefile.split(".ts")[0] + ".md5";
+                const distFile = process.cwd() + "/dist/" + sourcefile.split(".ts")[0] + ".js";
+                const md5File = process.cwd() + "/dist/" + sourcefile.split(".ts")[0] + ".md5";
                 fs.readFile(md5File, 'utf-8', (err, firstmd5hash) => {
                     TRM.testFileTouched(key, distFile, className, firstmd5hash);
                     watchFile(md5File, () => {
@@ -45,8 +45,8 @@ import(configFile).then((configModule) => {
             finally { if (e_1) throw e_1.error; }
         }
         const featureFile = tProject.features;
-        const distFile = "../dist/" + featureFile.split(".ts")[0] + ".js";
-        const md5File = "./dist/" + featureFile.split(".ts")[0] + ".md5";
+        const distFile = process.cwd() + "/dist/" + featureFile.split(".ts")[0] + ".js";
+        const md5File = process.cwd() + "/dist/" + featureFile.split(".ts")[0] + ".md5";
         fs.readFile(featureFile, 'utf-8', (err, featuresFileContents) => {
             TRM.featureFileTouched(distFile, featuresFileContents);
             watchFile(md5File, () => {

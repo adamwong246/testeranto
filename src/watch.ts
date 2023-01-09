@@ -19,8 +19,8 @@ import(configFile).then((configModule) => {
 
   (async function () {
     for await (const [ndx, [key, sourcefile, className]] of tProject.tests.entries()) {
-      const distFile = "../dist/" + sourcefile.split(".ts")[0] + ".js";
-      const md5File = "./dist/" + sourcefile.split(".ts")[0] + ".md5";
+      const distFile = process.cwd() + "/dist/" + sourcefile.split(".ts")[0] + ".js";
+      const md5File = process.cwd() + "/dist/" + sourcefile.split(".ts")[0] + ".md5";
 
       fs.readFile(md5File, 'utf-8', (err, firstmd5hash) => {
         TRM.testFileTouched(key, distFile, className, firstmd5hash);
@@ -39,8 +39,8 @@ import(configFile).then((configModule) => {
     }
 
     const featureFile = tProject.features;
-    const distFile = "../dist/" + featureFile.split(".ts")[0] + ".js";
-    const md5File = "./dist/" + featureFile.split(".ts")[0] + ".md5";
+    const distFile = process.cwd() + "/dist/" + featureFile.split(".ts")[0] + ".js";
+    const md5File = process.cwd() + "/dist/" + featureFile.split(".ts")[0] + ".md5";
 
     fs.readFile(featureFile, 'utf-8', (err, featuresFileContents) => {
       TRM.featureFileTouched(distFile, featuresFileContents);

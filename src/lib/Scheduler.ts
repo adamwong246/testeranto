@@ -6,7 +6,7 @@ import { topologicalSort } from 'graphology-dag/topological-sort';
 import { TesterantoFeatures } from '../Features';
 import { ITestJob, ITTestResourceRequirement, IT_FeatureNetwork } from '../types';
 
-const TIMEOUT = 500;
+const TIMEOUT = 1000;
 const OPEN_PORT = '';
 const testOutPath = "./dist/results/";
 const featureOutPath = "./dist/";
@@ -63,7 +63,7 @@ export class Scheduler {
     if (hash !== this.testSrcMd5s[key]) {
       console.log("running", key);
       this.testSrcMd5s[key] = hash;
-      this.push(new (fresh(`../${distFile}`, require)[className])()[0], key);
+      this.push(new (fresh(distFile, require)[className])()[0], key);
     }
   }
 
@@ -71,7 +71,7 @@ export class Scheduler {
     if (hash !== this.featureSrcMd5) {
       console.log("running featureSrcMd5");
       this.featureSrcMd5 = hash;
-      this.setFeatures((fresh(`../${distFile}`, require)['default']));
+      this.setFeatures((fresh(distFile, require)['default']));
     } else {
       console.log("feature file changed but md5 hash did not")
     }
