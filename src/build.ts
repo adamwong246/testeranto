@@ -11,7 +11,7 @@ import(configFile).then((configModule) => {
   const tProject = new TesterantoProject(configModule.default[0], configModule.default[1], configModule.default[2])
   console.log("build.ts tProject", tProject);
 
-  import("../" + tProject.features).then(features => {
+  import(configFile).then(features => {
     features.default.builder();
     console.log("dynamicly exporting the features");
   });
