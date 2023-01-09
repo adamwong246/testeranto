@@ -28,7 +28,7 @@ import(configFile).then((configModule) => {
     import(featureFile).then(testSuite => {
       console.log("dynamicly exporting", key)
       try {
-        new testSuite[className]()[0].builder(sourcefile, tProject.features)
+        new testSuite[className]()[0].builder(sourcefile, featureFile)
       } catch (e) {
         console.error(className);
         console.error(testSuite[className].toString());
