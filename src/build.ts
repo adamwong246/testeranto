@@ -8,17 +8,20 @@ console.log("build.ts configFile", configFile);
 
 import(configFile).then((configModule) => {
 
-  const tProject = new TesterantoProject(configModule.default[0], configModule.default[1], configModule.default[2])
+  const tProject = new TesterantoProject(
+    configModule.default[0], configModule.default[1], configModule.default[2]
+  );
+
+  const featureFile = `${process.cwd()}/${tProject.features}`;
+
   // console.log("build.ts tProject", tProject);
 
-  import(configFile).then(features => {
-    features.default.builder();
-    console.log("dynamicly exporting the features");
-  });
+  // import(configFile).then(features => {
+  //   features.default.builder();
+  //   console.log("dynamicly exporting the features");
+  // });
 
   tProject.tests.forEach(([key, sourcefile, className]) => {
-
-    const featureFile = `${process.cwd()}/${tProject.features}`;
 
     console.log("build.ts featureFile", featureFile);
 
