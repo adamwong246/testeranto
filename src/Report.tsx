@@ -14,13 +14,9 @@ export function Report() {
   const [data, setData] = useState<{
     configs: object,
     features: {
-      features: {
-        name: string,
-        description: string,
-        relations: any,
-      }[]
+      features: any[]
     },
-    tests: object[],
+    tests: any[],
     featureTests: object,
     summaries: { dags: [], directed: [], undirected: [] }
   }>({
@@ -168,7 +164,7 @@ export function Report() {
                   <Nav variant="pills" className="flex-column">
                     {Object.keys(data.featureTests).map((ftKey, ndx) => <Nav.Item key={ndx}>
                       <Nav.Link eventKey={`featureTests-${ndx}`}>
-                        {Object.values(data.featureTests[ftKey]).reduce((testMemo, test) => test.errors) ? `❌` : `✅`} {ftKey}
+                        {Object.values(data.featureTests[ftKey]).reduce((testMemo, test: any) => test.errors) ? `❌` : `✅`} {ftKey}
                       </Nav.Link>
                     </Nav.Item>)}
                   </Nav>
@@ -248,7 +244,7 @@ export function Report() {
                         <Row>
                           <Col sm={3}>
                             <Nav variant="pills" className="flex-column">
-                              {data.summaries.dags.map((g, ndx2) => <Nav.Item key={ndx2}>
+                              {data.summaries.dags.map((g: any, ndx2) => <Nav.Item key={ndx2}>
                                 <Nav.Link eventKey={`networks-dags-${ndx2}`}>
                                   {g.name}
                                 </Nav.Link>
@@ -268,7 +264,7 @@ export function Report() {
                         <Row>
                           <Col sm={3}>
                             <Nav variant="pills" className="flex-column">
-                              {data.summaries.directed.map((g, ndx2) => <Nav.Item key={ndx2}>
+                              {data.summaries.directed.map((g: any, ndx2) => <Nav.Item key={ndx2}>
                                 <Nav.Link eventKey={`networks-directed-${ndx2}`}>
                                   {g.name}
                                 </Nav.Link>
@@ -288,7 +284,7 @@ export function Report() {
                         <Row>
                           <Col sm={3}>
                             <Nav variant="pills" className="flex-column">
-                              {data.summaries.undirected.map((g, ndx2) => <Nav.Item key={ndx2}>
+                              {data.summaries.undirected.map((g: any, ndx2) => <Nav.Item key={ndx2}>
                                 <Nav.Link eventKey={`networks-undirected-${ndx2}`}>
                                   {g.name}
                                 </Nav.Link>
@@ -314,7 +310,7 @@ export function Report() {
               <Row>
                 <Col sm={3}>
                   <Nav variant="pills" className="flex-column">
-                    {data.summaries.dags?.map((summary, ndx) => <Nav.Item key={ndx}>
+                    {data.summaries.dags?.map((summary: any, ndx) => <Nav.Item key={ndx}>
                       <Nav.Link eventKey={`summary-${ndx}`}>
                         {summary.name}
                       </Nav.Link>
