@@ -1,5 +1,5 @@
 // // import { TesterantoProject } from "./src/Project";
-// import { TesterantoProject } from "testeranto.ts/src/Project";
+// import { TesterantoProject } from "testeranto/src/Project";
 
 // export default new TesterantoProject(
 //   [

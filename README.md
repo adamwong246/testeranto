@@ -1,26 +1,26 @@
-# testeranto.ts
+# testeranto
 
 🚧 this project has not yet reached a stable api 🚧
 
-home: [adamwong246.github.io/testeranto.ts](https://adamwong246.github.io/testeranto.ts/)
+home: [adamwong246.github.io/testeranto](https://adamwong246.github.io/testeranto/)
 
-source: [github.com/adamwong246/testeranto.ts](https://github.com/adamwong246/testeranto.ts)
+source: [github.com/adamwong246/testeranto](https://github.com/adamwong246/testeranto)
 
-npm: [npmjs.com/package/testeranto.ts](https://www.npmjs.com/package/testeranto.ts)
+npm: [npmjs.com/package/testeranto](https://www.npmjs.com/package/testeranto)
 
-dev: [github.dev/adamwong246/testeranto.ts](https://github.dev/adamwong246/testeranto.ts)
+dev: [github.dev/adamwong246/testeranto](https://github.dev/adamwong246/testeranto)
 
-example report: [adamwong246.github.io/testeranto.ts/dist/report.html](https://adamwong246.github.io/testeranto.ts/dist/report.html)
+example report: [adamwong246.github.io/testeranto/dist/report.html](https://adamwong246.github.io/testeranto/dist/report.html)
 
 ## about
 
-Testeranto.ts an Acceptance Test Driven Development ([ATDD](https://en.wikipedia.org/wiki/Acceptance_test-driven_development)) framework. It focuses on testing features which cross application boundaries using strongly typed tests and specified in a gherkin-like syntax.
+testeranto an Acceptance Test Driven Development ([ATDD](https://en.wikipedia.org/wiki/Acceptance_test-driven_development)) framework. It focuses on testing features which cross application boundaries using strongly typed tests and specified in a gherkin-like syntax.
 
 ## what is Acceptance Test Driven Development?
 
 ATDD is the latest evolution of BDD and TDD methodologies. Where TDD tests are written for the benefit of the developer and BDD tests are written from the perspective of the user, ATDD uses executable tests which resolve to acceptance critera and draws from a larger range of stakeholders.
 
-## 3 distinguishing features of testeranto.ts
+## 3 distinguishing features of testeranto
 
 0. Testeranto can execute many types of tests. It abstracts away the differences between a "small" unit test and a "big" integration test. Features can thus be tracked across many test suites.
 
@@ -38,7 +38,7 @@ ATDD is the latest evolution of BDD and TDD methodologies. Where TDD tests are w
 
 Testeranto includes a test runner which bundles and executes your tests, taking care to only run the tests which have changed. It is designed to run most tests in parallel, though it has support for tests which require a shared resource, like a port.
 
-Testeranto includes a test reporter which displays the state of your code in a web app. ([see example](https://adamwong246.github.io/testeranto.ts/dist/report.html)) This reporter can also be run locally for the developer's convenience.
+Testeranto includes a test reporter which displays the state of your code in a web app. ([see example](https://adamwong246.github.io/testeranto/dist/report.html)) This reporter can also be run locally for the developer's convenience.
 
 Testeranto can very feasibly be used to test any code- a ruby HTTP server, for example. While testeranto itself and it's test implementations are typescript, the subject of the test can be any stateful software.
 
@@ -46,9 +46,9 @@ Testeranto allows you to test the same code in multiple ways. You can test your 
 
 Testeranto exposes an extended gherkin syntax. You can use the given-when-then lingua-franca, AND you can also use an imperative `Check` which is a bit more flexible.
 
-Testeranto.ts is very lightweight and un-opinionated. It is comprised entirely of <2000 lines of typescript, with only a few basic dependencies.
+testeranto is very lightweight and un-opinionated. It is comprised entirely of <2000 lines of typescript, with only a few basic dependencies.
 
-Rather than the traditional method of specifying tests in plain text, Testeranto tests and features are just TS, editable and type-checkable from [github's online editor](https://github.dev/adamwong246/testeranto.ts)!
+Rather than the traditional method of specifying tests in plain text, Testeranto tests and features are just TS, editable and type-checkable from [github's online editor](https://github.dev/adamwong246/testeranto)!
 
 ## the bad parts
 

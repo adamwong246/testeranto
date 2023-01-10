@@ -28,12 +28,12 @@ Trace:
 
 npm manifest: 
   {
-    "name": "testeranto.ts",
+    "name": "testeranto",
     "description": "teeny tiny tightly-typed typescript tests",
     "version": "0.1.0",
     "main": "index.js",
-    "repository": "git@github.com:adamwong246/testeranto.ts.git",
-    "homepage": "https://github.com/adamwong246/testeranto.ts",
+    "repository": "git@github.com:adamwong246/testeranto.git",
+    "homepage": "https://github.com/adamwong246/testeranto",
     "author": "adam wong <adamwong246@gmail.com>",
     "license": "MIT",
     "keywords": [

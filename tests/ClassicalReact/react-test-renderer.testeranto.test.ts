@@ -4,7 +4,7 @@ import React from "react";
 import renderer, { act } from "react-test-renderer";
 
 import { Testeranto } from "testeranto";
-import { ITestImplementation, ITestSpecification, ITTestShape } from "../../src/types";
+import { ITestImplementation, ITestSpecification, ITTestShape } from "testeranto";
 
 type Input = typeof React.Component;
 type WhenShape = any;

@@ -8,23 +8,23 @@
             "hello": {
               "results": {
                 "AnEmptyState": {
-                  "name": "Testing the Node server with fetch",
-                  "fails": []
-                },
-                "AStateWithEmail": {
-                  "name": "Testing the Redux store",
-                  "fails": []
-                },
-                "default": {
-                  "name": "Testing the LoginPage as react",
+                  "name": "a classical react component, bundled with esbuild and tested with puppeteer",
                   "fails": []
                 },
                 "Default": {
                   "name": "Testing a very simple smart contract over RPC",
                   "fails": []
                 },
+                "default": {
+                  "name": "Testing the LoginPage as react",
+                  "fails": []
+                },
                 "WidthOfOneAndHeightOfOne": {
                   "name": "Testing the Rectangle class",
+                  "fails": []
+                },
+                "AStateWithEmail": {
+                  "name": "Testing the Redux store",
                   "fails": []
                 },
                 "results": {
@@ -68,57 +68,57 @@
                     },
                     "report": {
                       "AnEmptyState": {
-                        "name": "Testing the Node server with fetch",
-                        "fails": []
-                      },
-                      "AStateWithEmail": {
-                        "name": "Testing the Redux store",
-                        "fails": []
-                      },
-                      "default": {
-                        "name": "Testing the LoginPage as react",
+                        "name": "a classical react component, bundled with esbuild and tested with puppeteer",
                         "fails": []
                       },
                       "Default": {
                         "name": "Testing a very simple smart contract over RPC",
                         "fails": []
                       },
+                      "default": {
+                        "name": "Testing the LoginPage as react",
+                        "fails": []
+                      },
                       "WidthOfOneAndHeightOfOne": {
                         "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
+                      "AStateWithEmail": {
+                        "name": "Testing the Redux store",
                         "fails": []
                       }
                     }
                   },
                   "aloha": {
                     "results": {
-                      "AnEmptyState": {
-                        "name": "Testing the Redux store",
-                        "fails": []
-                      },
                       "WidthOfOneAndHeightOfOne": {
                         "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
+                      "AnEmptyState": {
+                        "name": "Testing the Redux store",
                         "fails": []
                       }
                     },
                     "report": {
                       "AnEmptyState": {
-                        "name": "Testing the Node server with fetch",
-                        "fails": []
-                      },
-                      "AStateWithEmail": {
-                        "name": "Testing the Redux store",
-                        "fails": []
-                      },
-                      "default": {
-                        "name": "Testing the LoginPage as react",
+                        "name": "a classical react component, bundled with esbuild and tested with puppeteer",
                         "fails": []
                       },
                       "Default": {
                         "name": "Testing a very simple smart contract over RPC",
                         "fails": []
                       },
+                      "default": {
+                        "name": "Testing the LoginPage as react",
+                        "fails": []
+                      },
                       "WidthOfOneAndHeightOfOne": {
                         "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
+                      "AStateWithEmail": {
+                        "name": "Testing the Redux store",
                         "fails": []
                       },
                       "results": {
@@ -162,23 +162,23 @@
                           },
                           "report": {
                             "AnEmptyState": {
-                              "name": "Testing the Node server with fetch",
-                              "fails": []
-                            },
-                            "AStateWithEmail": {
-                              "name": "Testing the Redux store",
-                              "fails": []
-                            },
-                            "default": {
-                              "name": "Testing the LoginPage as react",
+                              "name": "a classical react component, bundled with esbuild and tested with puppeteer",
                               "fails": []
                             },
                             "Default": {
                               "name": "Testing a very simple smart contract over RPC",
                               "fails": []
                             },
+                            "default": {
+                              "name": "Testing the LoginPage as react",
+                              "fails": []
+                            },
                             "WidthOfOneAndHeightOfOne": {
                               "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "AStateWithEmail": {
+                              "name": "Testing the Redux store",
                               "fails": []
                             }
                           }
@@ -211,23 +211,23 @@
                   "hello": {
                     "results": {
                       "AnEmptyState": {
-                        "name": "Testing the Node server with fetch",
-                        "fails": []
-                      },
-                      "AStateWithEmail": {
-                        "name": "Testing the Redux store",
-                        "fails": []
-                      },
-                      "default": {
-                        "name": "Testing the LoginPage as react",
+                        "name": "a classical react component, bundled with esbuild and tested with puppeteer",
                         "fails": []
                       },
                       "Default": {
                         "name": "Testing a very simple smart contract over RPC",
                         "fails": []
                       },
+                      "default": {
+                        "name": "Testing the LoginPage as react",
+                        "fails": []
+                      },
                       "WidthOfOneAndHeightOfOne": {
                         "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
+                      "AStateWithEmail": {
+                        "name": "Testing the Redux store",
                         "fails": []
                       },
                       "results": {
@@ -271,57 +271,57 @@
                           },
                           "report": {
                             "AnEmptyState": {
-                              "name": "Testing the Node server with fetch",
-                              "fails": []
-                            },
-                            "AStateWithEmail": {
-                              "name": "Testing the Redux store",
-                              "fails": []
-                            },
-                            "default": {
-                              "name": "Testing the LoginPage as react",
+                              "name": "a classical react component, bundled with esbuild and tested with puppeteer",
                               "fails": []
                             },
                             "Default": {
                               "name": "Testing a very simple smart contract over RPC",
                               "fails": []
                             },
+                            "default": {
+                              "name": "Testing the LoginPage as react",
+                              "fails": []
+                            },
                             "WidthOfOneAndHeightOfOne": {
                               "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "AStateWithEmail": {
+                              "name": "Testing the Redux store",
                               "fails": []
                             }
                           }
                         },
                         "aloha": {
                           "results": {
-                            "AnEmptyState": {
-                              "name": "Testing the Redux store",
-                              "fails": []
-                            },
                             "WidthOfOneAndHeightOfOne": {
                               "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "AnEmptyState": {
+                              "name": "Testing the Redux store",
                               "fails": []
                             }
                           },
                           "report": {
                             "AnEmptyState": {
-                              "name": "Testing the Node server with fetch",
-                              "fails": []
-                            },
-                            "AStateWithEmail": {
-                              "name": "Testing the Redux store",
-                              "fails": []
-                            },
-                            "default": {
-                              "name": "Testing the LoginPage as react",
+                              "name": "a classical react component, bundled with esbuild and tested with puppeteer",
                               "fails": []
                             },
                             "Default": {
                               "name": "Testing a very simple smart contract over RPC",
                               "fails": []
                             },
+                            "default": {
+                              "name": "Testing the LoginPage as react",
+                              "fails": []
+                            },
                             "WidthOfOneAndHeightOfOne": {
                               "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "AStateWithEmail": {
+                              "name": "Testing the Redux store",
                               "fails": []
                             },
                             "results": {
@@ -365,23 +365,23 @@
                                 },
                                 "report": {
                                   "AnEmptyState": {
-                                    "name": "Testing the Node server with fetch",
-                                    "fails": []
-                                  },
-                                  "AStateWithEmail": {
-                                    "name": "Testing the Redux store",
-                                    "fails": []
-                                  },
-                                  "default": {
-                                    "name": "Testing the LoginPage as react",
+                                    "name": "a classical react component, bundled with esbuild and tested with puppeteer",
                                     "fails": []
                                   },
                                   "Default": {
                                     "name": "Testing a very simple smart contract over RPC",
                                     "fails": []
                                   },
+                                  "default": {
+                                    "name": "Testing the LoginPage as react",
+                                    "fails": []
+                                  },
                                   "WidthOfOneAndHeightOfOne": {
                                     "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "AStateWithEmail": {
+                                    "name": "Testing the Redux store",
                                     "fails": []
                                   }
                                 }

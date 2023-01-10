@@ -1,6 +1,6 @@
-// import { BaseFeature } from "../src/BaseClasses";
-import { BaseFeature } from "testeranto.ts/src/BaseClasses";
-import { TesterantoFeatures, TesterantoGraphDirected, TesterantoGraphDirectedAcylic, TesterantoGraphUndirected } from "../src/Features";
+
+import { BaseFeature } from "testeranto/src/BaseClasses";
+import { TesterantoFeatures, TesterantoGraphDirected, TesterantoGraphDirectedAcylic, TesterantoGraphUndirected } from "testeranto/src/Features";
 
 export class MyFeature extends BaseFeature {
   due?: Date;

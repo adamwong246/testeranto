@@ -8782,9 +8782,9 @@ terser@^5.14.1:
     commander "^2.20.0"
     source-map-support "~0.5.20"
 
-testeranto@adamwong246/testeranto#944f6dd29c379e748a5ef8ba7cbfed26470a484f:
-  version "0.9.3"
-  resolved "https://codeload.github.com/adamwong246/testeranto/tar.gz/944f6dd29c379e748a5ef8ba7cbfed26470a484f"
+testeranto@adamwong246/testeranto#906da0813c56f91969221c8751fe5765357e2384:
+  version "0.9.9"
+  resolved "https://codeload.github.com/adamwong246/testeranto/tar.gz/906da0813c56f91969221c8751fe5765357e2384"
   dependencies:
     bootstrap "^5.2.3"
     cancelable-promise "^4.3.1"

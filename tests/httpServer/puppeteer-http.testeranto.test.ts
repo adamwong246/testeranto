@@ -3,7 +3,7 @@ import http from "http";
 import { assert } from "chai";
 
 import { Testeranto } from "testeranto";
-import { ITestImplementation, ITestSpecification, ITTestShape, Modify } from "../../src/types";
+import { ITestImplementation, ITestSpecification, ITTestShape, Modify } from "testeranto";
 
 type WhenShape = [url: string, paylaod: string];
 type ThenShape = any;
