@@ -14,8 +14,6 @@
     "ATDD"
   ],
   "scripts": {
-    "build": "testeranto build",
-    "watch": "testeranto watch",
     "bundle:reporter": "esbuild ./src/Report.tsx --watch --bundle --outfile=./dist/reporter.js",
     "simpleserver": "cd dist && python -m SimpleHTTPServer 8080",
     "clean:dist": "rm -rf ./dist/results && rm -rf ./dist/tests  && rm -f ./dist/reporter.css && rm -f ./dist/reporter.js && rm -f ./dist/*.jpg ",
@@ -25,7 +23,7 @@
   },
   "types": "index.d.ts",
   "dependencies": {
-    "testeranto": "adamwong246/testeranto#906da0813c56f91969221c8751fe5765357e2384"
+    "testeranto": "adamwong246/testeranto"
   },
   "devDependencies": {
     "@babel/core": "^7.19.6",
@@ -34,34 +32,33 @@
     "@truffle/contract": "^4.6.10",
     "@types/chai": "^4.3.4",
     "@types/lodash": "^4.14.189",
+    "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
     "@types/react-test-renderer": "^18.0.0",
-    "@types/react": "^18.0.21",
     "@types/web3": "^1.2.2",
     "@typescript-eslint/eslint-plugin": "^5.46.0",
     "@typescript-eslint/parser": "^5.46.0",
     "babel-loader": "^8.2.5",
     "chai": "^4.3.7",
     "esbuild": "^0.16.5",
-    "eslint-plugin-react": "^7.31.11",
     "eslint": "^8.29.0",
+    "eslint-plugin-react": "^7.31.11",
     "ethers": "^5.7.2",
     "ganache": "^7.7.2",
     "ignore-loader": "^0.1.2",
     "nodemon": "^2.0.20",
     "puppeteer": "^19.3.0",
+    "react": "18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.4",
     "react-test-renderer": "^18.2.0",
-    "react": "18.2.0",
-    "truffle-compile": "^4.2.3",
     "truffle": "^5.7.1",
+    "truffle-compile": "^4.2.3",
     "ts-loader": "^9.3.1",
-    "ts-node": "^10.9.1",
     "typescript": "4.8.2",
-    "web3-eth-contract": "^1.8.1",
     "web3": "^1.8.1",
-    "webpack-cli": "^4.10.0",
-    "webpack": "^5.74.0"
+    "web3-eth-contract": "^1.8.1",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
   }
 }

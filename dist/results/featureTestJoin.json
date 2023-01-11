@@ -1,35 +1,6 @@
 {
   "hello": [
     {
-      "testKey": "AnEmptyState",
-      "name": "a classical react component, bundled with esbuild and tested with puppeteer",
-      "whens": [
-        "IClickTheButton: undefined",
-        "IClickTheButton: undefined",
-        "IClickTheButton: undefined",
-        "IClickTheButton: undefined",
-        "IClickTheButton: undefined",
-        "IClickTheButton: undefined"
-      ],
-      "thens": [
-        "TheStatusIs: [object Object]"
-      ]
-    },
-    {
-      "testKey": "Default",
-      "name": "Testing a very simple smart contract over RPC",
-      "whens": [
-        "Decrement: 1",
-        "Decrement: 1",
-        "Decrement: 1",
-        "Increment: 1",
-        "Increment: 1"
-      ],
-      "thens": [
-        "Get: [object Object]"
-      ]
-    },
-    {
       "testKey": "default",
       "name": "Testing the LoginPage as react",
       "whens": [
@@ -37,6 +8,18 @@
       ],
       "thens": [
         "TheEmailIs: adam@email.com"
+      ]
+    },
+    {
+      "testKey": "Default",
+      "name": "Testing the Rectangle class",
+      "whens": [
+        "setWidth: 4",
+        "setHeight: 9"
+      ],
+      "thens": [
+        "getWidth: 4",
+        "getHeight: 9"
       ]
     },
     {
@@ -48,6 +31,16 @@
       ],
       "thens": [
         "getHeight: 33"
+      ]
+    },
+    {
+      "testKey": "AnEmptyState",
+      "name": "Testing the Redux store",
+      "whens": [
+        "TheEmailIsSetTo: hey there"
+      ],
+      "thens": [
+        "TheEmailIs: hey there"
       ]
     },
     {

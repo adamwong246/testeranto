@@ -57,7 +57,5 @@ export default new TesterantoFeatures([
   undirected: [undirected],
   directed: [semantic],
   dags: [priorityGraph]
-},
-  __filename
-
+}
 );

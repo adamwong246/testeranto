@@ -1762,19 +1762,19 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^18.0.21":
-  version "18.0.25"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.25.tgz#8b1dcd7e56fe7315535a4af25435e0bb55c8ae44"
-  integrity sha512-xD6c0KDT4m7n9uD4ZHi02lzskaiqcBxf4zi+tXZY98a04wvc0hi/TcCPC2FOESZi51Nd7tlUeOJY8RofL799/g==
+"@types/react@*", "@types/react@>=16.9.11":
+  version "18.0.26"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.26.tgz#8ad59fc01fef8eaf5c74f4ea392621749f0b7917"
+  integrity sha512-hCR3PJQsAIXyxhTNSiDFY//LhnMZWpNNr5etoCqx/iUfGc5gXWtQR2Phl908jVR6uPXacojQWTg4qRpkxTuGug==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
     csstype "^3.0.2"
 
-"@types/react@>=16.9.11":
-  version "18.0.26"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.26.tgz#8ad59fc01fef8eaf5c74f4ea392621749f0b7917"
-  integrity sha512-hCR3PJQsAIXyxhTNSiDFY//LhnMZWpNNr5etoCqx/iUfGc5gXWtQR2Phl908jVR6uPXacojQWTg4qRpkxTuGug==
+"@types/react@^18.0.21":
+  version "18.0.25"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.25.tgz#8b1dcd7e56fe7315535a4af25435e0bb55c8ae44"
+  integrity sha512-xD6c0KDT4m7n9uD4ZHi02lzskaiqcBxf4zi+tXZY98a04wvc0hi/TcCPC2FOESZi51Nd7tlUeOJY8RofL799/g==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -5143,9 +5143,9 @@ graphology-dag@^0.2.0:
     mnemonist "^0.39.0"
 
 graphology-types@^0.24.5:
-  version "0.24.5"
-  resolved "https://registry.yarnpkg.com/graphology-types/-/graphology-types-0.24.5.tgz#55b93139047a40657098d308ae7daf0ab9818cc1"
-  integrity sha512-m8FVoj9b6MwIaTN+/AvoxXhcK5n0uSe7ZnhbQNTcjh94vzN6m5hU501LihtCfRjF35QEMVrXYOrTNO0wAR1Gxw==
+  version "0.24.6"
+  resolved "https://registry.yarnpkg.com/graphology-types/-/graphology-types-0.24.6.tgz#44edeaf4b351062a0b49f593559144103abf53ea"
+  integrity sha512-oIxI4LREB6LBgr29aEnyxIszIHWMu9iSkeOOHBPZg16I5TG+Ai2E6bzAVN8bbt4CWvWyJSWF+PzZa/9dcWCJNA==
 
 graphology-utils@^2.4.1:
   version "2.5.2"
@@ -8782,18 +8782,32 @@ terser@^5.14.1:
     commander "^2.20.0"
     source-map-support "~0.5.20"
 
-testeranto@adamwong246/testeranto#906da0813c56f91969221c8751fe5765357e2384:
-  version "0.9.9"
-  resolved "https://codeload.github.com/adamwong246/testeranto/tar.gz/906da0813c56f91969221c8751fe5765357e2384"
+testeranto@adamwong246/testeranto:
+  version "0.9.20"
+  resolved "https://codeload.github.com/adamwong246/testeranto/tar.gz/ef2beaebe9f8f7257844c84706b85cb2b67ad2a8"
   dependencies:
+    "@types/react" "^18.0.21"
+    "@types/react-dom" "^18.0.6"
+    "@typescript-eslint/eslint-plugin" "^5.46.0"
+    "@typescript-eslint/parser" "^5.46.0"
+    babel-loader "^8.2.5"
     bootstrap "^5.2.3"
     cancelable-promise "^4.3.1"
+    esbuild "^0.16.5"
+    eslint "^8.29.0"
+    eslint-plugin-react "^7.31.11"
     fresh-require "^1.0.3"
     graphology "^0.25.1"
     graphology-dag "^0.2.0"
     graphology-types "^0.24.5"
-    lodash "^4.17.21"
+    nodemon "^2.0.20"
+    react "18.2.0"
     react-bootstrap "^2.7.0"
+    react-dom "^18.2.0"
+    react-redux "^8.0.4"
+    react-test-renderer "^18.2.0"
+    ts-node "^10.9.1"
+    typescript "4.8.2"
 
 testrpc@0.0.1:
   version "0.0.1"

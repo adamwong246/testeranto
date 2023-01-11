@@ -78,3 +78,6 @@ Because Testeranto is so un-opinionated that it does not provide test infrastruc
 - improve type signatures
 - hunt down many ts "ignore-s" and "any-s"
 - separate example from library
+
+"testeranto": "adamwong246/testeranto#f8028a736e40e1644d27a60b2fa431f0db90de43"
+"testeranto": "file:../testeranto.ts"

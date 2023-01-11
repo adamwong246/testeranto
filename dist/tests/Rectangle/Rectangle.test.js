@@ -1,1 +1,139 @@
-import r from"assert";import{Testeranto as a}from"testeranto";var s=class{constructor(e=2,i=2){this.height=e,this.width=i}getHeight(){return this.height}getWidth(){return this.width}setHeight(e){this.height=e}setWidth(e){this.width=e}area(){return this.width*this.height}circumference(){return this.width*2+this.height*2}},u=s;import{features as n}from"/Users/adam/Code/kokomoBay/dist/tests/testerantoFeatures.test.js";var O=a(u.prototype,(t,e,i,h,g)=>[t.Default("Testing the Rectangle class",[e.Default([n.hello],[i.setWidth(4),i.setHeight(9)],[h.getWidth(4),h.getHeight(9)]),e.WidthOfOneAndHeightOfOne([],[i.setWidth(4),i.setHeight(5)],[h.getWidth(4),h.getHeight(5),h.area(20),h.AreaPlusCircumference(38)]),e.WidthOfOneAndHeightOfOne([n.hola],[i.setHeight(4),i.setWidth(3)],[h.area(12)]),e.WidthOfOneAndHeightOfOne([n.hola],[i.setHeight(3),i.setWidth(4),i.setHeight(5),i.setWidth(6)],[h.area(30),h.circumference(22)]),e.WidthOfOneAndHeightOfOne([n.gutentag,n.aloha],[i.setHeight(3),i.setWidth(4)],[h.getHeight(3),h.getWidth(4),h.area(12),h.circumference(14)]),e.WidthOfOneAndHeightOfOne([n.hello],[i.setHeight(33),i.setWidth(34)],[h.getHeight(33)])],[])],{Suites:{Default:"a default suite"},Givens:{Default:()=>new u,WidthOfOneAndHeightOfOne:()=>new u(1,1),WidthAndHeightOf:(t,e)=>new u(t,e)},Whens:{HeightIsPubliclySetTo:t=>e=>e.height=t,WidthIsPubliclySetTo:t=>e=>e.width=t,setWidth:t=>e=>e.setWidth(t),setHeight:t=>e=>e.setHeight(t)},Thens:{AreaPlusCircumference:t=>e=>{r.equal(e.area()+e.circumference(),t)},getWidth:t=>e=>r.equal(e.width,t),getHeight:t=>e=>r.equal(e.height,t),area:t=>e=>r.equal(e.area(),t),prototype:t=>e=>r.equal(1,1),circumference:t=>e=>r.equal(e.circumference(),t)},Checks:{AnEmptyState:()=>({})}},{ports:0},{andWhen:async function(t,e){return e()(t),t}});export{O as RectangleTesteranto};
+// tests/Rectangle/Rectangle.test.ts
+import assert from "assert";
+import {
+  Testeranto
+} from "testeranto";
+
+// tests/Rectangle/Rectangle.ts
+var Rectangle = class {
+  constructor(height = 2, width = 2) {
+    this.height = height;
+    this.width = width;
+  }
+  getHeight() {
+    return this.height;
+  }
+  getWidth() {
+    return this.width;
+  }
+  setHeight(height) {
+    this.height = height;
+  }
+  setWidth(width) {
+    this.width = width;
+  }
+  area() {
+    return this.width * this.height;
+  }
+  circumference() {
+    return this.width * 2 + this.height * 2;
+  }
+};
+var Rectangle_default = Rectangle;
+
+// tests/Rectangle/Rectangle.test.ts
+import { features } from "/Users/adam/Code/kokomoBay/dist/tests/testerantoFeatures.test.js";
+var RectangleTesteranto = Testeranto(
+  Rectangle_default.prototype,
+  (Suite, Given, When, Then, Check) => {
+    return [
+      Suite.Default(
+        "Testing the Rectangle class",
+        [
+          Given.Default(
+            [features.hello],
+            [When.setWidth(4), When.setHeight(9)],
+            [Then.getWidth(4), Then.getHeight(9)]
+          ),
+          Given.WidthOfOneAndHeightOfOne(
+            [],
+            [When.setWidth(4), When.setHeight(5)],
+            [
+              Then.getWidth(4),
+              Then.getHeight(5),
+              Then.area(20),
+              Then.AreaPlusCircumference(38)
+            ]
+          ),
+          Given.WidthOfOneAndHeightOfOne(
+            [features.hola],
+            [When.setHeight(4), When.setWidth(3)],
+            [Then.area(12)]
+          ),
+          Given.WidthOfOneAndHeightOfOne(
+            [features.hola],
+            [
+              When.setHeight(3),
+              When.setWidth(4),
+              When.setHeight(5),
+              When.setWidth(6)
+            ],
+            [Then.area(30), Then.circumference(22)]
+          ),
+          Given.WidthOfOneAndHeightOfOne(
+            [features.gutentag, features.aloha],
+            [When.setHeight(3), When.setWidth(4)],
+            [
+              Then.getHeight(3),
+              Then.getWidth(4),
+              Then.area(12),
+              Then.circumference(14)
+            ]
+          ),
+          Given.WidthOfOneAndHeightOfOne(
+            [features.hello],
+            [When.setHeight(33), When.setWidth(34)],
+            [
+              Then.getHeight(33)
+            ]
+          )
+        ],
+        []
+      )
+    ];
+  },
+  {
+    Suites: {
+      Default: "a default suite"
+    },
+    Givens: {
+      Default: () => new Rectangle_default(),
+      WidthOfOneAndHeightOfOne: () => new Rectangle_default(1, 1),
+      WidthAndHeightOf: (width, height) => new Rectangle_default(width, height)
+    },
+    Whens: {
+      HeightIsPubliclySetTo: (height) => (rectangle) => rectangle.height = height,
+      WidthIsPubliclySetTo: (width) => (rectangle) => rectangle.width = width,
+      setWidth: (width) => (rectangle) => rectangle.setWidth(width),
+      setHeight: (height) => (rectangle) => rectangle.setHeight(height)
+    },
+    Thens: {
+      AreaPlusCircumference: (combined) => (rectangle) => {
+        assert.equal(
+          rectangle.area() + rectangle.circumference(),
+          combined
+        );
+      },
+      getWidth: (width) => (rectangle) => assert.equal(rectangle.width, width),
+      getHeight: (height) => (rectangle) => assert.equal(rectangle.height, height),
+      area: (area) => (rectangle) => assert.equal(rectangle.area(), area),
+      prototype: (name) => (rectangle) => assert.equal(1, 1),
+      circumference: (circumference) => (rectangle) => assert.equal(rectangle.circumference(), circumference)
+    },
+    Checks: {
+      AnEmptyState: () => {
+        return {};
+      }
+    }
+  },
+  { ports: 0 },
+  {
+    andWhen: async function(renderer, actioner) {
+      actioner()(renderer);
+      return renderer;
+    }
+  }
+);
+export {
+  RectangleTesteranto
+};

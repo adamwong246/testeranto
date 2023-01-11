@@ -91,6 +91,8 @@ export const SolidityTesteranto = <
         /* @ts-ignore:next-line */
         const web3 = new Web3(provider);
 
+        console.log("asd");
+
         const accounts = await web3.eth.getAccounts();
 
         return {
