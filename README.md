@@ -10,7 +10,7 @@ npm: [npmjs.com/package/testeranto](https://www.npmjs.com/package/testeranto)
 
 dev: [github.dev/adamwong246/testeranto](https://github.dev/adamwong246/testeranto)
 
-example report: [adamwong246.github.io/testeranto/dist/report.html](https://adamwong246.github.io/testeranto/dist/report.html)
+example report: [kokomoBay acceptance tests](https://chromapdx.github.io/kokomoBay/report.html)
 
 tl;dr
 
