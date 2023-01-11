@@ -145,13 +145,6 @@ export class Scheduler {
             });
           }
 
-          // if (anscestors.length === 1) {
-          //   const anscestor = anscestors[0];              
-          // } else if (anscestors.length === 0) {
-          //   // no-op
-          // } else {
-          //   throw "topological sort fail"
-          // }
           i = i + 1;
         } while (i < topoSorted.length)
       }
@@ -213,11 +206,6 @@ export class Scheduler {
       }
     }
 
-
-
-
-
-
     if (testResourceRequired.ports > 0) {
 
       // clear any port-slots associated with this job
@@ -268,10 +256,6 @@ export class Scheduler {
         this.queue.push(qi);
       }
     }
-
-
-
-
   }
 
   private startJob(testJob, key) {
