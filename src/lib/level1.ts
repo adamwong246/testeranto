@@ -1,5 +1,3 @@
-import { mapValues } from "lodash";
-
 import { BaseGiven, BaseCheck, BaseSuite, BaseFeature, BaseWhen, BaseThen } from "../BaseClasses";
 import { ITTestShape, ITestImplementation, ITestJob } from "../types";
 
@@ -29,8 +27,8 @@ export abstract class TesterantoLevelOne<
         [K in keyof ITestShape["suites"]]: (
           feature: string,
           givens: BaseGiven<ISubject, IStore, ISelection, IThenShape>[],
-          checks: BaseCheck<ISubject, IStore, ISelection, IThenShape>[]
-        ) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape>;
+          checks: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape>[]
+        ) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape>;
       },
       Given: {
         [K in keyof ITestShape["givens"]]: (
@@ -58,16 +56,16 @@ export abstract class TesterantoLevelOne<
           cbz: (...any) => Promise<void>
         ) => any;
       }
-    ) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape>[],
+    ) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape>[],
 
     input: IInput,
 
     suiteKlasser: (
       name: string,
       givens: BaseGiven<ISubject, IStore, ISelection, IThenShape>[],
-      checks: BaseCheck<ISubject, IStore, ISelection, IThenShape>[]
+      checks: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape>[]
     ) =>
-      BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape>,
+      BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape>,
     givenKlasser: (n, f, w, t, z?) =>
       BaseGiven<ISubject, IStore, ISelection, IThenShape>,
     whenKlasser: (s, o) =>
@@ -75,51 +73,62 @@ export abstract class TesterantoLevelOne<
     thenKlasser: (s, o) =>
       BaseThen<IStore, ISelection, IThenShape>,
     checkKlasser: (n, f, cb, w, t) =>
-      BaseCheck<ISubject, IStore, ISelection, IThenShape>,
+      BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape>,
 
     testResource
 
   ) {
-    const classySuites = mapValues(
-      testImplementation.Suites,
-      () => (somestring, givens, checks) =>
-        new suiteKlasser.prototype.constructor(somestring, givens, checks)
+    const classySuites = Object.entries(testImplementation.Suites)
+      .reduce((a, [key]) => {
+        a[key] = (somestring, givens, checks) => {
+          return new suiteKlasser.prototype.constructor(somestring, givens, checks);
+        };
+        return a;
+      }, {}
+      );
 
-    );
-
-    const classyGivens = mapValues(
-      testImplementation.Givens,
-      (z) =>
-        (features, whens, thens, ...xtrasW) => {
+    const classyGivens = Object.entries(testImplementation.Givens)
+      .reduce((a, [key, z]) => {
+        a[key] = (features, whens, thens, ...xtrasW) => {
           return new givenKlasser.prototype.constructor(z.name, features, whens, thens, z(...xtrasW))
-        }
+        };
+        return a;
+      }, {}
+      );
 
-    );
+    const classyWhens = Object.entries(testImplementation.Whens)
+      .reduce((a, [key, whEn]) => {
+        a[key] = (payload?: any) => {
+          return new whenKlasser.prototype.constructor(
+            `${whEn.name}: ${payload && payload.toString()}`,
+            whEn(payload)
+          )
+        };
+        return a;
+      }, {}
+      );
 
-    const classyWhens = mapValues(
-      testImplementation.Whens,
-      (whEn: (thing, payload?: any) => any) => (payload?: any) =>
-        new whenKlasser.prototype.constructor(
-          `${whEn.name}: ${payload && payload.toString()}`,
-          whEn(payload)
-        )
-    );
+    const classyThens = Object.entries(testImplementation.Thens)
+      .reduce((a, [key, thEn]) => {
+        a[key] = (expected: any, x) => {
+          return new thenKlasser.prototype.constructor(
+            `${thEn.name}: ${expected && expected.toString()}`,
+            thEn(expected)
+          );
+        };
+        return a;
+      }, {}
+      );
 
-    const classyThens = mapValues(
-      testImplementation.Thens,
-      (thEn: (klass, ...xtrasE) => void) => (expected: any, x) =>
-        new thenKlasser.prototype.constructor(
-          `${thEn.name}: ${expected && expected.toString()}`,
-          thEn(expected)
-        )
-    );
+    const classyChecks = Object.entries(testImplementation.Checks)
+      .reduce((a, [key, z]) => {
+        a[key] = (somestring, features, callback) => {
+          return new checkKlasser.prototype.constructor(somestring, features, callback, classyWhens, classyThens);
+        };
+        return a;
+      }, {}
+      );
 
-    const classyChecks = mapValues(
-      testImplementation.Checks,
-      (z) => (somestring, features, callback) => {
-        return new checkKlasser.prototype.constructor(somestring, features, callback, classyWhens, classyThens);
-      }
-    );
 
     const classyTesteranto = new (class <
       IInput,
@@ -147,7 +156,6 @@ export abstract class TesterantoLevelOne<
       input,
       classySuites,
       classyGivens,
-      /* @ts-ignore:next-line */
       classyWhens,
       classyThens,
       classyChecks
@@ -162,7 +170,6 @@ export abstract class TesterantoLevelOne<
       classyTesteranto.Check()
     );
 
-    /* @ts-ignore:next-line */
     const toReturn: ITestJob[] = suites.map((suite) => {
       return {
         test: suite,

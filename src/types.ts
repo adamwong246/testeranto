@@ -16,7 +16,7 @@ export type IT = {
   aborter: () => any;
   name: string;
   givens: BaseGiven<unknown, unknown, unknown, unknown>[];
-  checks: BaseCheck<unknown, unknown, unknown, unknown>[];
+  checks: BaseCheck<unknown, unknown, unknown, unknown, ITTestShape>[];
 };
 
 export type ITestJob = {
@@ -46,8 +46,8 @@ export type ITestSpecification<ITestShape extends ITTestShape> = (
     [K in keyof ITestShape["suites"]]: (
       name: string,
       givens: BaseGiven<unknown, unknown, unknown, unknown>[],
-      checks: BaseCheck<unknown, unknown, unknown, unknown>[]
-    ) => BaseSuite<unknown, unknown, unknown, unknown, unknown>;
+      checks: BaseCheck<unknown, unknown, unknown, unknown, ITestShape>[]
+    ) => BaseSuite<unknown, unknown, unknown, unknown, unknown, ITestShape>;
   },
   Given: {
     [K in keyof ITestShape["givens"]]: (
@@ -85,7 +85,7 @@ export type ITestSpecification<ITestShape extends ITTestShape> = (
       // thens: BaseThen<unknown, unknown, unknown>[],
 
       ...xtras: ITestShape["checks"][K]
-    ) => BaseCheck<unknown, unknown, unknown, unknown>;
+    ) => BaseCheck<unknown, unknown, unknown, unknown, ITestShape>;
   }
 ) => any[];
 

@@ -12,6 +12,14 @@ dev: [github.dev/adamwong246/testeranto](https://github.dev/adamwong246/testeran
 
 example report: [adamwong246.github.io/testeranto/dist/report.html](https://adamwong246.github.io/testeranto/dist/report.html)
 
+tl;dr
+
+Do you like BDD?
+Do you love Typescript?
+Do you hate Jira?
+
+If yes, then testeranto might be the testing tool you have been looking for!
+
 ## about
 
 Testeranto.ts an Acceptance Test Driven Development ([ATDD](https://en.wikipedia.org/wiki/Acceptance_test-driven_development)) framework. It focuses on testing features which cross application boundaries using strongly typed tests and specified in a gherkin-like syntax.
@@ -45,8 +53,6 @@ Testeranto can very feasibly be used to test any code- a ruby HTTP server, for e
 Testeranto allows you to test the same code in multiple ways. You can test your unbundled TS in a unit-test fashion, and also bundle that same code, then testing it through a interface like puppeteer, fetch, curl, etc.
 
 Testeranto exposes an extended gherkin syntax. You can use the given-when-then lingua-franca, AND you can also use an imperative `Check` which is a bit more flexible.
-
-Testeranto.ts is very lightweight and un-opinionated. It is comprised entirely of <2000 lines of typescript, with only a few basic dependencies.
 
 Rather than the traditional method of specifying tests in plain text, Testeranto tests and features are just TS, editable and type-checkable from [github's online editor](https://github.dev/adamwong246/testeranto)!
 

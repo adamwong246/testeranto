@@ -58,7 +58,6 @@ export const Testeranto = <
     Subject,
     WhenShape,
     ThenShape,
-    // ITTestResource,
     Input
   > {
     constructor() {
@@ -67,7 +66,7 @@ export const Testeranto = <
         /* @ts-ignore:next-line */
         testSpecification,
         input,
-        (class extends BaseSuite<Input, Subject, Store, Selection, ThenShape> {
+        (class extends BaseSuite<Input, Subject, Store, Selection, ThenShape, TestShape> {
           async setup(s: Input): Promise<Subject> {
             return beforeAll(s);
           }
@@ -124,7 +123,7 @@ export const Testeranto = <
           }
         },
 
-        class Check extends BaseCheck<Subject, Store, Selection, ThenShape> {
+        class Check extends BaseCheck<Subject, Store, Selection, ThenShape, TestShape> {
           initialValues: any;
 
           constructor(

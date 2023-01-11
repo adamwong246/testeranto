@@ -1,4 +1,5 @@
 import { BaseGiven, BaseCheck, BaseSuite, BaseFeature, BaseWhen, BaseThen } from "../BaseClasses";
+import { ITTestShape } from "../types";
 
 export abstract class TesterantoLevelZero<
   IInput,
@@ -19,8 +20,8 @@ export abstract class TesterantoLevelZero<
     (
       name: string,
       givens: BaseGiven<ISubject, IStore, ISelection, IThenShape>[],
-      checks: BaseCheck<ISubject, IStore, ISelection, IThenShape>[]
-    ) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape>
+      checks: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITTestShape>[]
+    ) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITTestShape>
   >;
 
   givenOverides: Record<
@@ -53,7 +54,7 @@ export abstract class TesterantoLevelZero<
       feature: string,
       callback: (whens, thens) => any,
       ...xtraArgs
-    ) => BaseCheck<ISubject, IStore, ISelection, IThenShape>
+    ) => BaseCheck<ISubject, IStore, ISelection, IThenShape, ITTestShape>
   >;
 
   constructor(
@@ -63,8 +64,8 @@ export abstract class TesterantoLevelZero<
       (
         name: string,
         givens: BaseGiven<ISubject, IStore, ISelection, IThenShape>[],
-        checks: BaseCheck<ISubject, IStore, ISelection, IThenShape>[]
-      ) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape>
+        checks: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITTestShape>[]
+      ) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITTestShape>
     >,
 
     givenOverides: Record<
@@ -97,7 +98,7 @@ export abstract class TesterantoLevelZero<
         feature: string,
         callback: (whens, thens) => any,
         ...xtraArgs
-      ) => BaseCheck<ISubject, IStore, ISelection, IThenShape>
+      ) => BaseCheck<ISubject, IStore, ISelection, IThenShape, ITTestShape>
     >
   ) {
     this.constructorator = cc;
@@ -149,7 +150,7 @@ export abstract class TesterantoLevelZero<
       callback: (whens, thens) => any,
       whens,
       thens
-    ) => BaseCheck<ISubject, IStore, ISelection, IThenShape>
+    ) => BaseCheck<ISubject, IStore, ISelection, IThenShape, ITTestShape>
   > {
     return this.checkOverides;
   }

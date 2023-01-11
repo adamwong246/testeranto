@@ -1,5 +1,4 @@
-import { mapValues } from "lodash";
-import { ITTestResource } from "./types";
+import { ITTestResource, ITTestShape } from "./types";
 
 export class BaseFeature {
   name: string;
@@ -13,11 +12,12 @@ export abstract class BaseSuite<
   ISubject,
   IStore,
   ISelection,
-  IThenShape
+  IThenShape,
+  ITestShape extends ITTestShape
 > {
   name: string;
   givens: BaseGiven<ISubject, IStore, ISelection, IThenShape>[];
-  checks: BaseCheck<ISubject, IStore, ISelection, IThenShape>[];
+  checks: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape>[];
   store: IStore;
   aborted: boolean;
   fails: BaseGiven<ISubject, IStore, ISelection, IThenShape>[];
@@ -25,7 +25,7 @@ export abstract class BaseSuite<
   constructor(
     name: string,
     givens: BaseGiven<ISubject, IStore, ISelection, IThenShape>[] = [],
-    checks: BaseCheck<ISubject, IStore, ISelection, IThenShape>[] = []
+    checks: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape>[] = []
   ) {
     this.name = name;
     this.givens = givens;
@@ -56,7 +56,7 @@ export abstract class BaseSuite<
 
   async run(input, testResourceConfiguration: ITTestResource) {
     const subject = await this.setup(input);
-    // console.log("\nSuite:", this.name, testResourceConfiguration);
+    console.log("\nSuite:", this.name, testResourceConfiguration);
     for (const [ndx, giver] of this.givens.entries()) {
       try {
         if (!this.aborted) {
@@ -261,22 +261,34 @@ export abstract class BaseThen<ISelection, IStore, IThenShape> {
   }
 }
 
-export abstract class BaseCheck<ISubject, IStore, ISelection, IThenShape> {
+export abstract class BaseCheck<
+  ISubject,
+  IStore,
+  ISelection,
+  IThenShape,
+  ITestShape extends ITTestShape
+> {
   name: string;
   features: BaseFeature[];
   checkCB: (whens, thens) => any;
-  whens: BaseWhen<IStore, ISelection, IThenShape>[];
-  thens: BaseThen<ISelection, IStore, IThenShape>[];
+  whens: {
+    [K in keyof ITestShape["whens"]]: (p, tc) =>
+      BaseWhen<IStore, ISelection, IThenShape>
+  }
+  thens: {
+    [K in keyof ITestShape["thens"]]: (p, tc) =>
+      BaseThen<ISelection, IStore, IThenShape>
+  }
 
   constructor(
     name: string,
     features: BaseFeature[],
     checkCB: (
-      whens: BaseWhen<IStore, ISelection, IThenShape>[],
-      thens: BaseThen<ISelection, IStore, IThenShape>[]
+      whens,
+      thens
     ) => any,
-    whens: BaseWhen<IStore, ISelection, IThenShape>[],
-    thens: BaseThen<ISelection, IStore, IThenShape>[]
+    whens,
+    thens
   ) {
 
     this.name = name;
@@ -284,7 +296,6 @@ export abstract class BaseCheck<ISubject, IStore, ISelection, IThenShape> {
     this.checkCB = checkCB;
     this.whens = whens;
     this.thens = thens;
-
   }
 
   abstract checkThat(
@@ -305,23 +316,35 @@ export abstract class BaseCheck<ISubject, IStore, ISelection, IThenShape> {
     console.log(`\n Check: ${this.name}`);
     const store = await this.checkThat(subject, testResourceConfiguration);
     await this.checkCB(
-      mapValues(this.whens, (when: (p, tc) => any) => {
-        return async (payload) => {
-          return await when(payload, testResourceConfiguration).test(
-            store,
-            testResourceConfiguration
-          );
-        };
-      }),
-      mapValues(this.thens, (then: (p, tc) => any) => {
-        return async (payload) => {
-          const t = await then(payload, testResourceConfiguration).test(
-            store,
-            testResourceConfiguration
-          );
-          tester(t);
-        };
-      })
+
+      (
+        Object.entries(this.whens)
+          .reduce((a, [key, when]) => {
+            a[key] = async (payload) => {
+              return await when(payload, testResourceConfiguration).test(
+                store,
+                testResourceConfiguration
+              );
+            };
+            return a;
+          }, {}
+          )
+      ),
+
+      (
+        Object.entries(this.thens)
+          .reduce((a, [key, then]) => {
+            a[key] = async (payload) => {
+              const t = await then(payload, testResourceConfiguration).test(
+                store,
+                testResourceConfiguration
+              );
+              tester(t);
+            };
+            return a;
+          }, {}
+          )
+      )
     );
 
     await this.afterEach(store, ndx);
