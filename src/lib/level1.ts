@@ -1,7 +1,3 @@
-import { createHash } from 'node:crypto'
-import fs from "fs";
-import path from "path";
-import esbuild from "esbuild";
 import { mapValues } from "lodash";
 
 import { BaseGiven, BaseCheck, BaseSuite, BaseFeature, BaseWhen, BaseThen } from "../BaseClasses";
@@ -180,65 +176,6 @@ export abstract class TesterantoLevelOne<
           return suite.run(input, { ports: allocatedPorts });
         },
 
-        builder: (entryPath: string, featureFile: string) => {
-          const importPathPlugin = {
-            name: 'import-path',
-            setup(build) {
-              build.onResolve({ filter: /^\.{1,2}\// }, args => {
-
-                const importedPath = args.resolveDir + "/" + args.path;
-                const absolutePath = path.resolve(importedPath);
-                const absolutePath2 = path.resolve(featureFile).split(".ts").slice(0, -1).join('.ts');
-
-                if (absolutePath === absolutePath2) {
-                  return {
-                    path: process.cwd() + "/dist/tests/testerantoFeatures.test.js", external: true
-                  }
-                } else {
-                  // return {
-                  //   path: path.resolve(importedPath), external: false
-                  // }
-                }
-                // let path = args.resolveDir + "/" + args.path;
-                // if (!fs.existsSync(path)) {
-                //   if (fs.existsSync(path + ".tsx")) {
-                //     path = path + ".tsx"
-                //   } else if (fs.existsSync(path + ".ts")) {
-                //     path = path + ".ts"
-                //   }
-                // }
-                // return { path, external: true }
-              })
-            },
-          }
-
-          console.log("level1 esbuild", entryPath);
-
-          esbuild.build({
-            entryPoints: [entryPath],
-            bundle: true,
-            minify: true,
-            format: "esm",
-            target: ["esnext"],
-            write: false,
-            packages: 'external',
-            plugins: [importPathPlugin],
-            external: [
-              featureFile
-            ],
-          }).then((res) => {
-            const text = res.outputFiles[0].text;
-
-            const p = "./dist/" + (entryPath.split(process.cwd()).pop())?.split(".ts")[0] + '.js'
-
-
-            fs.promises.mkdir(path.dirname(p), { recursive: true }).then(x => {
-              fs.promises.writeFile(p, text);
-              fs.promises.writeFile("./dist/" + (entryPath.split(process.cwd()).pop())?.split(".ts")[0] + `.md5`, createHash('md5').update(text).digest('hex'))
-            })
-          });
-
-        }
       };
     });
 
