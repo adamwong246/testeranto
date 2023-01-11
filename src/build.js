@@ -53,11 +53,7 @@ testerantoConfig.tests.forEach(([key, sourcefile, className]) => {
           const importedPath = args.resolveDir + "/" + args.path;
           const absolutePath = path.resolve(importedPath);
 
-          // const absolutePath2 = path.resolve(featureFile).split(".ts").slice(0, -1).join('.ts');
           const absolutePath2 = path.resolve(testerantoConfig.features).split(".ts").slice(0, -1).join('.ts');
-
-          console.log("absolutePath", absolutePath);
-          console.log("absolutePath2", absolutePath2);
 
           if (absolutePath === absolutePath2) {
             return {
