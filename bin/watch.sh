@@ -2,4 +2,4 @@
 
 echo "testeranto watch..."
 
-yarn ts-node --transpile-only ./node_modules/testeranto/src/watch.ts testeranto.config.json
+yarn ts-node --swc ./node_modules/testeranto/src/watch.ts testeranto.config.json
