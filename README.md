@@ -1,10 +1,14 @@
 # kokomo bay
 
+1. Install the dependencies
+
 `yarn install`
 
-you will need to start 2 seperate processes in parallel
+2. Start 2 seperate processes in parallel
 
-1. `yarn testerantoBuild`
-2. `yarn testerantoWatch`
+1) `testerantoBuild`
+2) `testerantoWatch`
 
-to view the results of the test, use `yarn simpleserver`
+3. View the results of the test
+
+`yarn simpleserver`

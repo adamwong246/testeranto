@@ -2,7 +2,7 @@
   "dags": [
     {
       "dagReduction": {
-        "name": "launch the rocket",
+        "name": "kokomo bay",
         "report": {
           "results": {
             "hello": {
@@ -395,6 +395,1200 @@
                   }
                 }
               }
+            },
+            "A website which can acts as a storefront": {
+              "results": {},
+              "report": {
+                "results": {
+                  "hello": {
+                    "results": {
+                      "AnEmptyState": {
+                        "name": "Testing the Redux store",
+                        "fails": []
+                      },
+                      "AStateWithEmail": {
+                        "name": "Testing the Redux store",
+                        "fails": []
+                      },
+                      "default": {
+                        "name": "Testing the LoginPage as react",
+                        "fails": []
+                      },
+                      "Default": {
+                        "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
+                      "WidthOfOneAndHeightOfOne": {
+                        "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
+                      "results": {
+                        "gutentag": {
+                          "results": {
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "results": {
+                              "bien venidos": {
+                                "results": {},
+                                "report": {
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  }
+                                }
+                              },
+                              "buenos dias": {
+                                "results": {},
+                                "report": {
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "results": {
+                                    "bien venidos": {
+                                      "results": {},
+                                      "report": {
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "report": {
+                            "AnEmptyState": {
+                              "name": "Testing the Redux store",
+                              "fails": []
+                            },
+                            "AStateWithEmail": {
+                              "name": "Testing the Redux store",
+                              "fails": []
+                            },
+                            "default": {
+                              "name": "Testing the LoginPage as react",
+                              "fails": []
+                            },
+                            "Default": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            }
+                          }
+                        },
+                        "aloha": {
+                          "results": {
+                            "AnEmptyState": {
+                              "name": "Testing the Redux store",
+                              "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            }
+                          },
+                          "report": {
+                            "AnEmptyState": {
+                              "name": "Testing the Redux store",
+                              "fails": []
+                            },
+                            "AStateWithEmail": {
+                              "name": "Testing the Redux store",
+                              "fails": []
+                            },
+                            "default": {
+                              "name": "Testing the LoginPage as react",
+                              "fails": []
+                            },
+                            "Default": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "results": {
+                              "gutentag": {
+                                "results": {
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "results": {
+                                    "bien venidos": {
+                                      "results": {},
+                                      "report": {
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        }
+                                      }
+                                    },
+                                    "buenos dias": {
+                                      "results": {},
+                                      "report": {
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        },
+                                        "results": {
+                                          "bien venidos": {
+                                            "results": {},
+                                            "report": {
+                                              "WidthOfOneAndHeightOfOne": {
+                                                "name": "Testing the Rectangle class",
+                                                "fails": []
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "report": {
+                                  "AnEmptyState": {
+                                    "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "AStateWithEmail": {
+                                    "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "default": {
+                                    "name": "Testing the LoginPage as react",
+                                    "fails": []
+                                  },
+                                  "Default": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "report": {}
+                  },
+                  "build the rocket silo": {
+                    "results": {
+                      "results": {
+                        "build the rocket": {
+                          "results": {
+                            "results": {
+                              "build the rocket payload": {
+                                "results": {},
+                                "report": {}
+                              }
+                            }
+                          },
+                          "report": {}
+                        }
+                      }
+                    },
+                    "report": {
+                      "results": {
+                        "hello": {
+                          "results": {
+                            "AnEmptyState": {
+                              "name": "Testing the Redux store",
+                              "fails": []
+                            },
+                            "AStateWithEmail": {
+                              "name": "Testing the Redux store",
+                              "fails": []
+                            },
+                            "default": {
+                              "name": "Testing the LoginPage as react",
+                              "fails": []
+                            },
+                            "Default": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "results": {
+                              "gutentag": {
+                                "results": {
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "results": {
+                                    "bien venidos": {
+                                      "results": {},
+                                      "report": {
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        }
+                                      }
+                                    },
+                                    "buenos dias": {
+                                      "results": {},
+                                      "report": {
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        },
+                                        "results": {
+                                          "bien venidos": {
+                                            "results": {},
+                                            "report": {
+                                              "WidthOfOneAndHeightOfOne": {
+                                                "name": "Testing the Rectangle class",
+                                                "fails": []
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "report": {
+                                  "AnEmptyState": {
+                                    "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "AStateWithEmail": {
+                                    "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "default": {
+                                    "name": "Testing the LoginPage as react",
+                                    "fails": []
+                                  },
+                                  "Default": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  }
+                                }
+                              },
+                              "aloha": {
+                                "results": {
+                                  "AnEmptyState": {
+                                    "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  }
+                                },
+                                "report": {
+                                  "AnEmptyState": {
+                                    "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "AStateWithEmail": {
+                                    "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "default": {
+                                    "name": "Testing the LoginPage as react",
+                                    "fails": []
+                                  },
+                                  "Default": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "results": {
+                                    "gutentag": {
+                                      "results": {
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        },
+                                        "results": {
+                                          "bien venidos": {
+                                            "results": {},
+                                            "report": {
+                                              "WidthOfOneAndHeightOfOne": {
+                                                "name": "Testing the Rectangle class",
+                                                "fails": []
+                                              }
+                                            }
+                                          },
+                                          "buenos dias": {
+                                            "results": {},
+                                            "report": {
+                                              "WidthOfOneAndHeightOfOne": {
+                                                "name": "Testing the Rectangle class",
+                                                "fails": []
+                                              },
+                                              "results": {
+                                                "bien venidos": {
+                                                  "results": {},
+                                                  "report": {
+                                                    "WidthOfOneAndHeightOfOne": {
+                                                      "name": "Testing the Rectangle class",
+                                                      "fails": []
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      },
+                                      "report": {
+                                        "AnEmptyState": {
+                                          "name": "Testing the Redux store",
+                                          "fails": []
+                                        },
+                                        "AStateWithEmail": {
+                                          "name": "Testing the Redux store",
+                                          "fails": []
+                                        },
+                                        "default": {
+                                          "name": "Testing the LoginPage as react",
+                                          "fails": []
+                                        },
+                                        "Default": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        },
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "report": {}
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "An ERC721 which is redeemable": {
+              "results": {},
+              "report": {
+                "results": {
+                  "hello": {
+                    "results": {
+                      "AnEmptyState": {
+                        "name": "Testing the Redux store",
+                        "fails": []
+                      },
+                      "AStateWithEmail": {
+                        "name": "Testing the Redux store",
+                        "fails": []
+                      },
+                      "default": {
+                        "name": "Testing the LoginPage as react",
+                        "fails": []
+                      },
+                      "Default": {
+                        "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
+                      "WidthOfOneAndHeightOfOne": {
+                        "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
+                      "results": {
+                        "gutentag": {
+                          "results": {
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "results": {
+                              "bien venidos": {
+                                "results": {},
+                                "report": {
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  }
+                                }
+                              },
+                              "buenos dias": {
+                                "results": {},
+                                "report": {
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "results": {
+                                    "bien venidos": {
+                                      "results": {},
+                                      "report": {
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "report": {
+                            "AnEmptyState": {
+                              "name": "Testing the Redux store",
+                              "fails": []
+                            },
+                            "AStateWithEmail": {
+                              "name": "Testing the Redux store",
+                              "fails": []
+                            },
+                            "default": {
+                              "name": "Testing the LoginPage as react",
+                              "fails": []
+                            },
+                            "Default": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            }
+                          }
+                        },
+                        "aloha": {
+                          "results": {
+                            "AnEmptyState": {
+                              "name": "Testing the Redux store",
+                              "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            }
+                          },
+                          "report": {
+                            "AnEmptyState": {
+                              "name": "Testing the Redux store",
+                              "fails": []
+                            },
+                            "AStateWithEmail": {
+                              "name": "Testing the Redux store",
+                              "fails": []
+                            },
+                            "default": {
+                              "name": "Testing the LoginPage as react",
+                              "fails": []
+                            },
+                            "Default": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "results": {
+                              "gutentag": {
+                                "results": {
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "results": {
+                                    "bien venidos": {
+                                      "results": {},
+                                      "report": {
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        }
+                                      }
+                                    },
+                                    "buenos dias": {
+                                      "results": {},
+                                      "report": {
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        },
+                                        "results": {
+                                          "bien venidos": {
+                                            "results": {},
+                                            "report": {
+                                              "WidthOfOneAndHeightOfOne": {
+                                                "name": "Testing the Rectangle class",
+                                                "fails": []
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "report": {
+                                  "AnEmptyState": {
+                                    "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "AStateWithEmail": {
+                                    "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "default": {
+                                    "name": "Testing the LoginPage as react",
+                                    "fails": []
+                                  },
+                                  "Default": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "report": {}
+                  },
+                  "build the rocket silo": {
+                    "results": {
+                      "results": {
+                        "build the rocket": {
+                          "results": {
+                            "results": {
+                              "build the rocket payload": {
+                                "results": {},
+                                "report": {}
+                              }
+                            }
+                          },
+                          "report": {}
+                        }
+                      }
+                    },
+                    "report": {
+                      "results": {
+                        "hello": {
+                          "results": {
+                            "AnEmptyState": {
+                              "name": "Testing the Redux store",
+                              "fails": []
+                            },
+                            "AStateWithEmail": {
+                              "name": "Testing the Redux store",
+                              "fails": []
+                            },
+                            "default": {
+                              "name": "Testing the LoginPage as react",
+                              "fails": []
+                            },
+                            "Default": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "results": {
+                              "gutentag": {
+                                "results": {
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "results": {
+                                    "bien venidos": {
+                                      "results": {},
+                                      "report": {
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        }
+                                      }
+                                    },
+                                    "buenos dias": {
+                                      "results": {},
+                                      "report": {
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        },
+                                        "results": {
+                                          "bien venidos": {
+                                            "results": {},
+                                            "report": {
+                                              "WidthOfOneAndHeightOfOne": {
+                                                "name": "Testing the Rectangle class",
+                                                "fails": []
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "report": {
+                                  "AnEmptyState": {
+                                    "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "AStateWithEmail": {
+                                    "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "default": {
+                                    "name": "Testing the LoginPage as react",
+                                    "fails": []
+                                  },
+                                  "Default": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  }
+                                }
+                              },
+                              "aloha": {
+                                "results": {
+                                  "AnEmptyState": {
+                                    "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  }
+                                },
+                                "report": {
+                                  "AnEmptyState": {
+                                    "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "AStateWithEmail": {
+                                    "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "default": {
+                                    "name": "Testing the LoginPage as react",
+                                    "fails": []
+                                  },
+                                  "Default": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "results": {
+                                    "gutentag": {
+                                      "results": {
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        },
+                                        "results": {
+                                          "bien venidos": {
+                                            "results": {},
+                                            "report": {
+                                              "WidthOfOneAndHeightOfOne": {
+                                                "name": "Testing the Rectangle class",
+                                                "fails": []
+                                              }
+                                            }
+                                          },
+                                          "buenos dias": {
+                                            "results": {},
+                                            "report": {
+                                              "WidthOfOneAndHeightOfOne": {
+                                                "name": "Testing the Rectangle class",
+                                                "fails": []
+                                              },
+                                              "results": {
+                                                "bien venidos": {
+                                                  "results": {},
+                                                  "report": {
+                                                    "WidthOfOneAndHeightOfOne": {
+                                                      "name": "Testing the Rectangle class",
+                                                      "fails": []
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      },
+                                      "report": {
+                                        "AnEmptyState": {
+                                          "name": "Testing the Redux store",
+                                          "fails": []
+                                        },
+                                        "AStateWithEmail": {
+                                          "name": "Testing the Redux store",
+                                          "fails": []
+                                        },
+                                        "default": {
+                                          "name": "Testing the LoginPage as react",
+                                          "fails": []
+                                        },
+                                        "Default": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        },
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "report": {}
+                        }
+                      }
+                    }
+                  },
+                  "A website which can acts as a storefront": {
+                    "results": {},
+                    "report": {
+                      "results": {
+                        "hello": {
+                          "results": {
+                            "AnEmptyState": {
+                              "name": "Testing the Redux store",
+                              "fails": []
+                            },
+                            "AStateWithEmail": {
+                              "name": "Testing the Redux store",
+                              "fails": []
+                            },
+                            "default": {
+                              "name": "Testing the LoginPage as react",
+                              "fails": []
+                            },
+                            "Default": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "results": {
+                              "gutentag": {
+                                "results": {
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "results": {
+                                    "bien venidos": {
+                                      "results": {},
+                                      "report": {
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        }
+                                      }
+                                    },
+                                    "buenos dias": {
+                                      "results": {},
+                                      "report": {
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        },
+                                        "results": {
+                                          "bien venidos": {
+                                            "results": {},
+                                            "report": {
+                                              "WidthOfOneAndHeightOfOne": {
+                                                "name": "Testing the Rectangle class",
+                                                "fails": []
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "report": {
+                                  "AnEmptyState": {
+                                    "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "AStateWithEmail": {
+                                    "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "default": {
+                                    "name": "Testing the LoginPage as react",
+                                    "fails": []
+                                  },
+                                  "Default": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  }
+                                }
+                              },
+                              "aloha": {
+                                "results": {
+                                  "AnEmptyState": {
+                                    "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  }
+                                },
+                                "report": {
+                                  "AnEmptyState": {
+                                    "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "AStateWithEmail": {
+                                    "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "default": {
+                                    "name": "Testing the LoginPage as react",
+                                    "fails": []
+                                  },
+                                  "Default": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "results": {
+                                    "gutentag": {
+                                      "results": {
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        },
+                                        "results": {
+                                          "bien venidos": {
+                                            "results": {},
+                                            "report": {
+                                              "WidthOfOneAndHeightOfOne": {
+                                                "name": "Testing the Rectangle class",
+                                                "fails": []
+                                              }
+                                            }
+                                          },
+                                          "buenos dias": {
+                                            "results": {},
+                                            "report": {
+                                              "WidthOfOneAndHeightOfOne": {
+                                                "name": "Testing the Rectangle class",
+                                                "fails": []
+                                              },
+                                              "results": {
+                                                "bien venidos": {
+                                                  "results": {},
+                                                  "report": {
+                                                    "WidthOfOneAndHeightOfOne": {
+                                                      "name": "Testing the Rectangle class",
+                                                      "fails": []
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      },
+                                      "report": {
+                                        "AnEmptyState": {
+                                          "name": "Testing the Redux store",
+                                          "fails": []
+                                        },
+                                        "AStateWithEmail": {
+                                          "name": "Testing the Redux store",
+                                          "fails": []
+                                        },
+                                        "default": {
+                                          "name": "Testing the LoginPage as react",
+                                          "fails": []
+                                        },
+                                        "Default": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        },
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "report": {}
+                        },
+                        "build the rocket silo": {
+                          "results": {
+                            "results": {
+                              "build the rocket": {
+                                "results": {
+                                  "results": {
+                                    "build the rocket payload": {
+                                      "results": {},
+                                      "report": {}
+                                    }
+                                  }
+                                },
+                                "report": {}
+                              }
+                            }
+                          },
+                          "report": {
+                            "results": {
+                              "hello": {
+                                "results": {
+                                  "AnEmptyState": {
+                                    "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "AStateWithEmail": {
+                                    "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "default": {
+                                    "name": "Testing the LoginPage as react",
+                                    "fails": []
+                                  },
+                                  "Default": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "results": {
+                                    "gutentag": {
+                                      "results": {
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        },
+                                        "results": {
+                                          "bien venidos": {
+                                            "results": {},
+                                            "report": {
+                                              "WidthOfOneAndHeightOfOne": {
+                                                "name": "Testing the Rectangle class",
+                                                "fails": []
+                                              }
+                                            }
+                                          },
+                                          "buenos dias": {
+                                            "results": {},
+                                            "report": {
+                                              "WidthOfOneAndHeightOfOne": {
+                                                "name": "Testing the Rectangle class",
+                                                "fails": []
+                                              },
+                                              "results": {
+                                                "bien venidos": {
+                                                  "results": {},
+                                                  "report": {
+                                                    "WidthOfOneAndHeightOfOne": {
+                                                      "name": "Testing the Rectangle class",
+                                                      "fails": []
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      },
+                                      "report": {
+                                        "AnEmptyState": {
+                                          "name": "Testing the Redux store",
+                                          "fails": []
+                                        },
+                                        "AStateWithEmail": {
+                                          "name": "Testing the Redux store",
+                                          "fails": []
+                                        },
+                                        "default": {
+                                          "name": "Testing the LoginPage as react",
+                                          "fails": []
+                                        },
+                                        "Default": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        },
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        }
+                                      }
+                                    },
+                                    "aloha": {
+                                      "results": {
+                                        "AnEmptyState": {
+                                          "name": "Testing the Redux store",
+                                          "fails": []
+                                        },
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        }
+                                      },
+                                      "report": {
+                                        "AnEmptyState": {
+                                          "name": "Testing the Redux store",
+                                          "fails": []
+                                        },
+                                        "AStateWithEmail": {
+                                          "name": "Testing the Redux store",
+                                          "fails": []
+                                        },
+                                        "default": {
+                                          "name": "Testing the LoginPage as react",
+                                          "fails": []
+                                        },
+                                        "Default": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        },
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        },
+                                        "results": {
+                                          "gutentag": {
+                                            "results": {
+                                              "WidthOfOneAndHeightOfOne": {
+                                                "name": "Testing the Rectangle class",
+                                                "fails": []
+                                              },
+                                              "results": {
+                                                "bien venidos": {
+                                                  "results": {},
+                                                  "report": {
+                                                    "WidthOfOneAndHeightOfOne": {
+                                                      "name": "Testing the Rectangle class",
+                                                      "fails": []
+                                                    }
+                                                  }
+                                                },
+                                                "buenos dias": {
+                                                  "results": {},
+                                                  "report": {
+                                                    "WidthOfOneAndHeightOfOne": {
+                                                      "name": "Testing the Rectangle class",
+                                                      "fails": []
+                                                    },
+                                                    "results": {
+                                                      "bien venidos": {
+                                                        "results": {},
+                                                        "report": {
+                                                          "WidthOfOneAndHeightOfOne": {
+                                                            "name": "Testing the Rectangle class",
+                                                            "fails": []
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            },
+                                            "report": {
+                                              "AnEmptyState": {
+                                                "name": "Testing the Redux store",
+                                                "fails": []
+                                              },
+                                              "AStateWithEmail": {
+                                                "name": "Testing the Redux store",
+                                                "fails": []
+                                              },
+                                              "default": {
+                                                "name": "Testing the LoginPage as react",
+                                                "fails": []
+                                              },
+                                              "Default": {
+                                                "name": "Testing the Rectangle class",
+                                                "fails": []
+                                              },
+                                              "WidthOfOneAndHeightOfOne": {
+                                                "name": "Testing the Rectangle class",
+                                                "fails": []
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "report": {}
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -408,8 +1602,10 @@
         "build the rocket",
         "hello",
         "build the rocket silo",
+        "A website which can acts as a storefront",
+        "An ERC721 which is redeemable",
         "hola",
-        "launch the rocket"
+        "kokomo bay"
       ],
       "name": "Priority"
     }

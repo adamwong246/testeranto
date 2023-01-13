@@ -1,6 +1,28 @@
 {
   "features": [
     {
+      "name": "An ERC721 which is redeemable",
+      "inNetworks": [
+        {
+          "network": "Priority",
+          "neighbors": [
+            "kokomo bay"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "A website which can acts as a storefront",
+      "inNetworks": [
+        {
+          "network": "Priority",
+          "neighbors": [
+            "kokomo bay"
+          ]
+        }
+      ]
+    },
+    {
       "name": "hello",
       "inNetworks": [
         {
@@ -12,7 +34,7 @@
         {
           "network": "Priority",
           "neighbors": [
-            "launch the rocket",
+            "kokomo bay",
             "aloha",
             "gutentag"
           ]
@@ -108,11 +130,13 @@
       ]
     },
     {
-      "name": "launch the rocket",
+      "name": "kokomo bay",
       "inNetworks": [
         {
           "network": "Priority",
           "neighbors": [
+            "An ERC721 which is redeemable",
+            "A website which can acts as a storefront",
             "build the rocket silo",
             "hello"
           ]
@@ -126,7 +150,7 @@
         {
           "network": "Priority",
           "neighbors": [
-            "launch the rocket",
+            "kokomo bay",
             "build the rocket"
           ]
         }
@@ -196,7 +220,7 @@
         ],
         "edges": [
           {
-            "key": "geid_147_0",
+            "key": "geid_14_0",
             "source": "gutentag",
             "target": "aloha",
             "attributes": {
@@ -204,7 +228,7 @@
             }
           },
           {
-            "key": "geid_147_1",
+            "key": "geid_14_1",
             "source": "build the rocket",
             "target": "build the rocket payload",
             "attributes": {
@@ -239,7 +263,7 @@
         ],
         "edges": [
           {
-            "key": "geid_146_0",
+            "key": "geid_13_0",
             "source": "hello",
             "target": "aloha",
             "attributes": {
@@ -247,7 +271,7 @@
             }
           },
           {
-            "key": "geid_146_1",
+            "key": "geid_13_1",
             "source": "gutentag",
             "target": "hola",
             "attributes": {
@@ -268,7 +292,13 @@
         "attributes": {},
         "nodes": [
           {
-            "key": "launch the rocket"
+            "key": "kokomo bay"
+          },
+          {
+            "key": "An ERC721 which is redeemable"
+          },
+          {
+            "key": "A website which can acts as a storefront"
           },
           {
             "key": "build the rocket silo"
@@ -300,55 +330,67 @@
         ],
         "edges": [
           {
-            "key": "geid_145_0",
-            "source": "launch the rocket",
+            "key": "geid_12_0",
+            "source": "kokomo bay",
+            "target": "An ERC721 which is redeemable",
+            "attributes": {}
+          },
+          {
+            "key": "geid_12_1",
+            "source": "kokomo bay",
+            "target": "A website which can acts as a storefront",
+            "attributes": {}
+          },
+          {
+            "key": "geid_12_2",
+            "source": "kokomo bay",
             "target": "build the rocket silo",
             "attributes": {}
           },
           {
-            "key": "geid_145_1",
+            "key": "geid_12_3",
             "source": "build the rocket silo",
             "target": "build the rocket",
             "attributes": {}
           },
           {
-            "key": "geid_145_2",
+            "key": "geid_12_4",
             "source": "build the rocket",
             "target": "build the rocket payload",
             "attributes": {}
           },
           {
-            "key": "geid_145_3",
-            "source": "launch the rocket",
+            "key": "geid_12_5",
+            "source": "kokomo bay",
             "target": "hello",
             "attributes": {}
           },
           {
-            "key": "geid_145_4",
+            "key": "geid_12_6",
             "source": "hello",
             "target": "aloha",
             "attributes": {}
           },
           {
-            "key": "geid_145_5",
+            "key": "geid_12_7",
             "source": "hello",
             "target": "gutentag",
             "attributes": {}
           },
           {
-            "key": "geid_145_6",
+            "key": "geid_12_8",
             "source": "gutentag",
             "target": "buenos dias",
             "attributes": {}
           },
           {
-            "key": "geid_145_7",
+            "key": "geid_12_9",
             "source": "hola",
             "target": "gutentag",
             "attributes": {}
           },
           {
-            "key": "geid_145_8",
+            "key": "geid_12_10",
             "source": "gutentag",
             "target": "bien venidos",
             "attributes": {}
