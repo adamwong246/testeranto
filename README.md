@@ -1,6 +1,6 @@
 # testeranto
 
-![demo](testerantoDemo.mov)
+![demo](testerantoDemo.gif)
 
 home: [adamwong246.github.io/testeranto](https://adamwong246.github.io/testeranto/)
 
