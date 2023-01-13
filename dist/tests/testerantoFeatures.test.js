@@ -8,7 +8,9 @@ var MyFeature = class extends BaseFeature {
   }
 };
 var features = {
-  root: new MyFeature("launch the rocket"),
+  root: new MyFeature("kokomo bay"),
+  redemption: new MyFeature("An ERC721 which is redeemable"),
+  federatedSplitContract: new MyFeature("A website which can acts as a storefront"),
   buildSilo: new MyFeature("build the rocket silo", new Date("2023-05-02T02:36:34+0000")),
   buildRocket: new MyFeature("build the rocket", new Date("2023-06-06T02:36:34+0000")),
   buildSatellite: new MyFeature("build the rocket payload", new Date("2023-06-06T02:36:34+0000")),
@@ -20,6 +22,8 @@ var features = {
   bienVenidos: new MyFeature("bien venidos")
 };
 var priorityGraph = new TesterantoGraphDirectedAcylic("Priority");
+priorityGraph.connect(features.root.name, features.redemption.name);
+priorityGraph.connect(features.root.name, features.federatedSplitContract.name);
 priorityGraph.connect(features.root.name, features.buildSilo.name);
 priorityGraph.connect(features.buildSilo.name, features.buildRocket.name);
 priorityGraph.connect(features.buildRocket.name, features.buildSatellite.name);
@@ -37,6 +41,8 @@ undirected.connect(features.gutentag.name, features.aloha.name, "related");
 undirected.connect(features.buildRocket.name, features.buildSatellite.name, "overlap");
 var testerantoFeatures_test_default = new TesterantoFeatures(
   [
+    features.redemption,
+    features.federatedSplitContract,
     features.hello,
     features.aloha,
     features.gutentag,
