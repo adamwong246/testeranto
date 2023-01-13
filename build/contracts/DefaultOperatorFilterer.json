@@ -1,0 +1,358 @@
+{
+  "contractName": "DefaultOperatorFilterer",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "operator",
+          "type": "address"
+        }
+      ],
+      "name": "OperatorNotAllowed",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "bool",
+          "name": "restriction",
+          "type": "bool"
+        }
+      ],
+      "name": "OperatorRestriction",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "OPERATOR_FILTER_REGISTRY",
+      "outputs": [
+        {
+          "internalType": "contract IOperatorFilterRegistry",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "operatorRestriction",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bool",
+          "name": "_restriction",
+          "type": "bool"
+        }
+      ],
+      "name": "setOperatorRestriction",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.14+commit.80d49f37\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"}],\"name\":\"OperatorNotAllowed\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"restriction\",\"type\":\"bool\"}],\"name\":\"OperatorRestriction\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"OPERATOR_FILTER_REGISTRY\",\"outputs\":[{\"internalType\":\"contract IOperatorFilterRegistry\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"operatorRestriction\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bool\",\"name\":\"_restriction\",\"type\":\"bool\"}],\"name\":\"setOperatorRestriction\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"title\":\"DefaultOperatorFilterer\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"notice\":\"Inherits from OperatorFilterer and automatically subscribes to the default OpenSea subscription.\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"@thirdweb-dev/contracts/extension/DefaultOperatorFilterer.sol\":\"DefaultOperatorFilterer\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"@thirdweb-dev/contracts/extension/DefaultOperatorFilterer.sol\":{\"keccak256\":\"0xb96987d98d5830643abb23808a7d4101a92e527b7be828288815201f5c8b482e\",\"license\":\"Apache 2.0\",\"urls\":[\"bzz-raw://ae19b8fb297151d8e0ac2ada27d16b26359aeab8dd52be8ae583f07631a81775\",\"dweb:/ipfs/Qmcv7e2XV4dYY9pr6MTPSVRpUS1yUWuvSBSantqXMbFeBQ\"]},\"@thirdweb-dev/contracts/extension/OperatorFilterToggle.sol\":{\"keccak256\":\"0x719631d2a027d475d6c4ef277492912c94d5c49b9fb4f18bd1f8d61c013a4acd\",\"license\":\"Apache 2.0\",\"urls\":[\"bzz-raw://548325ed52fdefbfef2aec1b872d3ce5ee74aa13acf97a13fd15e0c3fa5f44c1\",\"dweb:/ipfs/QmXXNFXaeHuC63dtfx3faqx8sckLPHZReZvCA1QUy8fP3S\"]},\"@thirdweb-dev/contracts/extension/OperatorFilterer.sol\":{\"keccak256\":\"0xb776690508c16660258ce40e7bec045400fbf0df6649fc042da9251237e7f3c3\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://4bdeeac629c20d3025b42b56763750a071baeed819f49843011c69591718c98a\",\"dweb:/ipfs/QmZ6s57BHHaQdVrWo9XiMryAGUvB4di1WVABJnK1hisd2y\"]},\"@thirdweb-dev/contracts/extension/interface/IOperatorFilterRegistry.sol\":{\"keccak256\":\"0xd7f30dd4b4619ef9eb35aedec653a8bd527de5bdfeaab96980dc7a9b012baea4\",\"license\":\"Apache 2.0\",\"urls\":[\"bzz-raw://6e01012d4719d6709e72eab6ec038d315a5b64a7d6fe86bacfc68445a3e3a2d9\",\"dweb:/ipfs/QmQ8Ad2NKzEK31M8qcvS5sC4eFTk7LnMEzA9ETtN5n5wyX\"]},\"@thirdweb-dev/contracts/extension/interface/IOperatorFilterToggle.sol\":{\"keccak256\":\"0x483c4999d362912e4aa7820a066c7e464667123671d7e559b76e31a71a34a32e\",\"license\":\"Apache 2.0\",\"urls\":[\"bzz-raw://08cc1fdea8e11d1d05c74b9ba30f4a2c3396c4b6574f13fd25af7a324c892a28\",\"dweb:/ipfs/QmPYKdRA9kNBtVVWZt5sZjcfKJBsyem3NmZRjCzz9Gt3iN\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: Apache 2.0\npragma solidity ^0.8.0;\n\nimport { OperatorFilterer } from \"./OperatorFilterer.sol\";\n\n/**\n * @title  DefaultOperatorFilterer\n * @notice Inherits from OperatorFilterer and automatically subscribes to the default OpenSea subscription.\n */\nabstract contract DefaultOperatorFilterer is OperatorFilterer {\n    address constant DEFAULT_SUBSCRIPTION = address(0x3cc6CddA760b79bAfa08dF41ECFA224f810dCeB6);\n\n    constructor() OperatorFilterer(DEFAULT_SUBSCRIPTION, true) {}\n}\n",
+  "sourcePath": "@thirdweb-dev/contracts/extension/DefaultOperatorFilterer.sol",
+  "ast": {
+    "absolutePath": "@thirdweb-dev/contracts/extension/DefaultOperatorFilterer.sol",
+    "exportedSymbols": {
+      "DefaultOperatorFilterer": [
+        3612
+      ],
+      "OperatorFilterer": [
+        5206
+      ]
+    },
+    "id": 3613,
+    "license": "Apache 2.0",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3592,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "39:23:15"
+      },
+      {
+        "absolutePath": "@thirdweb-dev/contracts/extension/OperatorFilterer.sol",
+        "file": "./OperatorFilterer.sol",
+        "id": 3594,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 3613,
+        "sourceUnit": 5207,
+        "src": "64:58:15",
+        "symbolAliases": [
+          {
+            "foreign": {
+              "id": 3593,
+              "name": "OperatorFilterer",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": 5206,
+              "src": "73:16:15",
+              "typeDescriptions": {}
+            },
+            "nameLocation": "-1:-1:-1"
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "abstract": true,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 3596,
+              "name": "OperatorFilterer",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 5206,
+              "src": "320:16:15"
+            },
+            "id": 3597,
+            "nodeType": "InheritanceSpecifier",
+            "src": "320:16:15"
+          }
+        ],
+        "canonicalName": "DefaultOperatorFilterer",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": {
+          "id": 3595,
+          "nodeType": "StructuredDocumentation",
+          "src": "124:150:15",
+          "text": " @title  DefaultOperatorFilterer\n @notice Inherits from OperatorFilterer and automatically subscribes to the default OpenSea subscription."
+        },
+        "fullyImplemented": false,
+        "id": 3612,
+        "linearizedBaseContracts": [
+          3612,
+          5206,
+          5067,
+          6067
+        ],
+        "name": "DefaultOperatorFilterer",
+        "nameLocation": "293:23:15",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": true,
+            "id": 3603,
+            "mutability": "constant",
+            "name": "DEFAULT_SUBSCRIPTION",
+            "nameLocation": "360:20:15",
+            "nodeType": "VariableDeclaration",
+            "scope": 3612,
+            "src": "343:91:15",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 3598,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "343:7:15",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "value": {
+              "arguments": [
+                {
+                  "hexValue": "307833636336436464413736306237396241666130386446343145434641323234663831306443654236",
+                  "id": 3601,
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "kind": "number",
+                  "lValueRequested": false,
+                  "nodeType": "Literal",
+                  "src": "391:42:15",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "value": "0x3cc6CddA760b79bAfa08dF41ECFA224f810dCeB6"
+                }
+              ],
+              "expression": {
+                "argumentTypes": [
+                  {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                ],
+                "id": 3600,
+                "isConstant": false,
+                "isLValue": false,
+                "isPure": true,
+                "lValueRequested": false,
+                "nodeType": "ElementaryTypeNameExpression",
+                "src": "383:7:15",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_type$_t_address_$",
+                  "typeString": "type(address)"
+                },
+                "typeName": {
+                  "id": 3599,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "383:7:15",
+                  "typeDescriptions": {}
+                }
+              },
+              "id": 3602,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "typeConversion",
+              "lValueRequested": false,
+              "names": [],
+              "nodeType": "FunctionCall",
+              "src": "383:51:15",
+              "tryCall": false,
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 3610,
+              "nodeType": "Block",
+              "src": "500:2:15",
+              "statements": []
+            },
+            "id": 3611,
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [
+              {
+                "arguments": [
+                  {
+                    "id": 3606,
+                    "name": "DEFAULT_SUBSCRIPTION",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 3603,
+                    "src": "472:20:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  {
+                    "hexValue": "74727565",
+                    "id": 3607,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "bool",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "494:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    },
+                    "value": "true"
+                  }
+                ],
+                "id": 3608,
+                "kind": "baseConstructorSpecifier",
+                "modifierName": {
+                  "id": 3605,
+                  "name": "OperatorFilterer",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 5206,
+                  "src": "455:16:15"
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "455:44:15"
+              }
+            ],
+            "name": "",
+            "nameLocation": "-1:-1:-1",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3604,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "452:2:15"
+            },
+            "returnParameters": {
+              "id": 3609,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "500:0:15"
+            },
+            "scope": 3612,
+            "src": "441:61:15",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "internal"
+          }
+        ],
+        "scope": 3613,
+        "src": "275:229:15",
+        "usedErrors": [
+          5078
+        ]
+      }
+    ],
+    "src": "39:466:15"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.14+commit.80d49f37.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.7",
+  "updatedAt": "2023-01-12T19:00:18.872Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "title": "DefaultOperatorFilterer",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "notice": "Inherits from OperatorFilterer and automatically subscribes to the default OpenSea subscription.",
+    "version": 1
+  }
+}

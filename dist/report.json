@@ -7,59 +7,61 @@
           "results": {
             "hello": {
               "results": {
-                "default": {
-                  "name": "Testing the LoginPage as react",
-                  "fails": []
-                },
                 "Default": {
-                  "name": "Testing the Rectangle class",
-                  "fails": []
-                },
-                "WidthOfOneAndHeightOfOne": {
-                  "name": "Testing the Rectangle class",
-                  "fails": []
-                },
-                "AnEmptyState": {
-                  "name": "Testing the Redux store",
-                  "fails": []
-                },
-                "AStateWithEmail": {
-                  "name": "Testing the Redux store",
-                  "fails": []
+                  "name": "Testing a very simple smart contract ephemerally",
+                  "fails": [
+                    {
+                      "artifactSaver": {},
+                      "name": "Default",
+                      "features": [
+                        {
+                          "name": "hello"
+                        }
+                      ],
+                      "whens": [],
+                      "thens": [
+                        {
+                          "name": "Get: [object Object]"
+                        }
+                      ],
+                      "testArtifacts": {},
+                      "initialValues": "MyFirstContract.sol",
+                      "error": {
+                        "receipt": {
+                          "transactionHash": "0xf31e35db069425e206a2a19b72ff67f44c9fc1ef3006f8f47d21bcb90c874f57",
+                          "transactionIndex": 0,
+                          "blockNumber": 1,
+                          "blockHash": "0x375f7e41562e4caf446207e7ce7709b69be700156424e8419ba8c9060cf8c3aa",
+                          "from": "0x534679f55824c10188c6439ff24562f7fa841056",
+                          "to": null,
+                          "cumulativeGasUsed": 150000,
+                          "gasUsed": 150000,
+                          "contractAddress": "0xf2bE270719ddD7722220d49b0093D51227f3A2Aa",
+                          "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                          "status": false,
+                          "effectiveGasPrice": 3375000000,
+                          "type": "0x2",
+                          "events": {}
+                        }
+                      }
+                    }
+                  ]
                 },
                 "results": {
                   "gutentag": {
                     "results": {
-                      "WidthOfOneAndHeightOfOne": {
-                        "name": "Testing the Rectangle class",
-                        "fails": []
-                      },
                       "results": {
                         "bien venidos": {
                           "results": {},
-                          "report": {
-                            "WidthOfOneAndHeightOfOne": {
-                              "name": "Testing the Rectangle class",
-                              "fails": []
-                            }
-                          }
+                          "report": {}
                         },
                         "buenos dias": {
                           "results": {},
                           "report": {
-                            "WidthOfOneAndHeightOfOne": {
-                              "name": "Testing the Rectangle class",
-                              "fails": []
-                            },
                             "results": {
                               "bien venidos": {
                                 "results": {},
-                                "report": {
-                                  "WidthOfOneAndHeightOfOne": {
-                                    "name": "Testing the Rectangle class",
-                                    "fails": []
-                                  }
-                                }
+                                "report": {}
                               }
                             }
                           }
@@ -67,93 +69,106 @@
                       }
                     },
                     "report": {
-                      "default": {
-                        "name": "Testing the LoginPage as react",
-                        "fails": []
-                      },
                       "Default": {
-                        "name": "Testing the Rectangle class",
-                        "fails": []
-                      },
-                      "WidthOfOneAndHeightOfOne": {
-                        "name": "Testing the Rectangle class",
-                        "fails": []
-                      },
-                      "AnEmptyState": {
-                        "name": "Testing the Redux store",
-                        "fails": []
-                      },
-                      "AStateWithEmail": {
-                        "name": "Testing the Redux store",
-                        "fails": []
+                        "name": "Testing a very simple smart contract ephemerally",
+                        "fails": [
+                          {
+                            "artifactSaver": {},
+                            "name": "Default",
+                            "features": [
+                              {
+                                "name": "hello"
+                              }
+                            ],
+                            "whens": [],
+                            "thens": [
+                              {
+                                "name": "Get: [object Object]"
+                              }
+                            ],
+                            "testArtifacts": {},
+                            "initialValues": "MyFirstContract.sol",
+                            "error": {
+                              "receipt": {
+                                "transactionHash": "0xf31e35db069425e206a2a19b72ff67f44c9fc1ef3006f8f47d21bcb90c874f57",
+                                "transactionIndex": 0,
+                                "blockNumber": 1,
+                                "blockHash": "0x375f7e41562e4caf446207e7ce7709b69be700156424e8419ba8c9060cf8c3aa",
+                                "from": "0x534679f55824c10188c6439ff24562f7fa841056",
+                                "to": null,
+                                "cumulativeGasUsed": 150000,
+                                "gasUsed": 150000,
+                                "contractAddress": "0xf2bE270719ddD7722220d49b0093D51227f3A2Aa",
+                                "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                                "status": false,
+                                "effectiveGasPrice": 3375000000,
+                                "type": "0x2",
+                                "events": {}
+                              }
+                            }
+                          }
+                        ]
                       }
                     }
                   },
                   "aloha": {
-                    "results": {
-                      "WidthOfOneAndHeightOfOne": {
-                        "name": "Testing the Rectangle class",
-                        "fails": []
-                      },
-                      "AnEmptyState": {
-                        "name": "Testing the Redux store",
-                        "fails": []
-                      }
-                    },
+                    "results": {},
                     "report": {
-                      "default": {
-                        "name": "Testing the LoginPage as react",
-                        "fails": []
-                      },
                       "Default": {
-                        "name": "Testing the Rectangle class",
-                        "fails": []
-                      },
-                      "WidthOfOneAndHeightOfOne": {
-                        "name": "Testing the Rectangle class",
-                        "fails": []
-                      },
-                      "AnEmptyState": {
-                        "name": "Testing the Redux store",
-                        "fails": []
-                      },
-                      "AStateWithEmail": {
-                        "name": "Testing the Redux store",
-                        "fails": []
+                        "name": "Testing a very simple smart contract ephemerally",
+                        "fails": [
+                          {
+                            "artifactSaver": {},
+                            "name": "Default",
+                            "features": [
+                              {
+                                "name": "hello"
+                              }
+                            ],
+                            "whens": [],
+                            "thens": [
+                              {
+                                "name": "Get: [object Object]"
+                              }
+                            ],
+                            "testArtifacts": {},
+                            "initialValues": "MyFirstContract.sol",
+                            "error": {
+                              "receipt": {
+                                "transactionHash": "0xf31e35db069425e206a2a19b72ff67f44c9fc1ef3006f8f47d21bcb90c874f57",
+                                "transactionIndex": 0,
+                                "blockNumber": 1,
+                                "blockHash": "0x375f7e41562e4caf446207e7ce7709b69be700156424e8419ba8c9060cf8c3aa",
+                                "from": "0x534679f55824c10188c6439ff24562f7fa841056",
+                                "to": null,
+                                "cumulativeGasUsed": 150000,
+                                "gasUsed": 150000,
+                                "contractAddress": "0xf2bE270719ddD7722220d49b0093D51227f3A2Aa",
+                                "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                                "status": false,
+                                "effectiveGasPrice": 3375000000,
+                                "type": "0x2",
+                                "events": {}
+                              }
+                            }
+                          }
+                        ]
                       },
                       "results": {
                         "gutentag": {
                           "results": {
-                            "WidthOfOneAndHeightOfOne": {
-                              "name": "Testing the Rectangle class",
-                              "fails": []
-                            },
                             "results": {
                               "bien venidos": {
                                 "results": {},
-                                "report": {
-                                  "WidthOfOneAndHeightOfOne": {
-                                    "name": "Testing the Rectangle class",
-                                    "fails": []
-                                  }
-                                }
+                                "report": {}
                               },
                               "buenos dias": {
                                 "results": {},
                                 "report": {
-                                  "WidthOfOneAndHeightOfOne": {
-                                    "name": "Testing the Rectangle class",
-                                    "fails": []
-                                  },
                                   "results": {
                                     "bien venidos": {
                                       "results": {},
-                                      "report": {
-                                        "WidthOfOneAndHeightOfOne": {
-                                          "name": "Testing the Rectangle class",
-                                          "fails": []
-                                        }
-                                      }
+                                      "report": {}
                                     }
                                   }
                                 }
@@ -161,25 +176,45 @@
                             }
                           },
                           "report": {
-                            "default": {
-                              "name": "Testing the LoginPage as react",
-                              "fails": []
-                            },
                             "Default": {
-                              "name": "Testing the Rectangle class",
-                              "fails": []
-                            },
-                            "WidthOfOneAndHeightOfOne": {
-                              "name": "Testing the Rectangle class",
-                              "fails": []
-                            },
-                            "AnEmptyState": {
-                              "name": "Testing the Redux store",
-                              "fails": []
-                            },
-                            "AStateWithEmail": {
-                              "name": "Testing the Redux store",
-                              "fails": []
+                              "name": "Testing a very simple smart contract ephemerally",
+                              "fails": [
+                                {
+                                  "artifactSaver": {},
+                                  "name": "Default",
+                                  "features": [
+                                    {
+                                      "name": "hello"
+                                    }
+                                  ],
+                                  "whens": [],
+                                  "thens": [
+                                    {
+                                      "name": "Get: [object Object]"
+                                    }
+                                  ],
+                                  "testArtifacts": {},
+                                  "initialValues": "MyFirstContract.sol",
+                                  "error": {
+                                    "receipt": {
+                                      "transactionHash": "0xf31e35db069425e206a2a19b72ff67f44c9fc1ef3006f8f47d21bcb90c874f57",
+                                      "transactionIndex": 0,
+                                      "blockNumber": 1,
+                                      "blockHash": "0x375f7e41562e4caf446207e7ce7709b69be700156424e8419ba8c9060cf8c3aa",
+                                      "from": "0x534679f55824c10188c6439ff24562f7fa841056",
+                                      "to": null,
+                                      "cumulativeGasUsed": 150000,
+                                      "gasUsed": 150000,
+                                      "contractAddress": "0xf2bE270719ddD7722220d49b0093D51227f3A2Aa",
+                                      "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                                      "status": false,
+                                      "effectiveGasPrice": 3375000000,
+                                      "type": "0x2",
+                                      "events": {}
+                                    }
+                                  }
+                                }
+                              ]
                             }
                           }
                         }
@@ -210,59 +245,61 @@
                 "results": {
                   "hello": {
                     "results": {
-                      "default": {
-                        "name": "Testing the LoginPage as react",
-                        "fails": []
-                      },
                       "Default": {
-                        "name": "Testing the Rectangle class",
-                        "fails": []
-                      },
-                      "WidthOfOneAndHeightOfOne": {
-                        "name": "Testing the Rectangle class",
-                        "fails": []
-                      },
-                      "AnEmptyState": {
-                        "name": "Testing the Redux store",
-                        "fails": []
-                      },
-                      "AStateWithEmail": {
-                        "name": "Testing the Redux store",
-                        "fails": []
+                        "name": "Testing a very simple smart contract ephemerally",
+                        "fails": [
+                          {
+                            "artifactSaver": {},
+                            "name": "Default",
+                            "features": [
+                              {
+                                "name": "hello"
+                              }
+                            ],
+                            "whens": [],
+                            "thens": [
+                              {
+                                "name": "Get: [object Object]"
+                              }
+                            ],
+                            "testArtifacts": {},
+                            "initialValues": "MyFirstContract.sol",
+                            "error": {
+                              "receipt": {
+                                "transactionHash": "0xf31e35db069425e206a2a19b72ff67f44c9fc1ef3006f8f47d21bcb90c874f57",
+                                "transactionIndex": 0,
+                                "blockNumber": 1,
+                                "blockHash": "0x375f7e41562e4caf446207e7ce7709b69be700156424e8419ba8c9060cf8c3aa",
+                                "from": "0x534679f55824c10188c6439ff24562f7fa841056",
+                                "to": null,
+                                "cumulativeGasUsed": 150000,
+                                "gasUsed": 150000,
+                                "contractAddress": "0xf2bE270719ddD7722220d49b0093D51227f3A2Aa",
+                                "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                                "status": false,
+                                "effectiveGasPrice": 3375000000,
+                                "type": "0x2",
+                                "events": {}
+                              }
+                            }
+                          }
+                        ]
                       },
                       "results": {
                         "gutentag": {
                           "results": {
-                            "WidthOfOneAndHeightOfOne": {
-                              "name": "Testing the Rectangle class",
-                              "fails": []
-                            },
                             "results": {
                               "bien venidos": {
                                 "results": {},
-                                "report": {
-                                  "WidthOfOneAndHeightOfOne": {
-                                    "name": "Testing the Rectangle class",
-                                    "fails": []
-                                  }
-                                }
+                                "report": {}
                               },
                               "buenos dias": {
                                 "results": {},
                                 "report": {
-                                  "WidthOfOneAndHeightOfOne": {
-                                    "name": "Testing the Rectangle class",
-                                    "fails": []
-                                  },
                                   "results": {
                                     "bien venidos": {
                                       "results": {},
-                                      "report": {
-                                        "WidthOfOneAndHeightOfOne": {
-                                          "name": "Testing the Rectangle class",
-                                          "fails": []
-                                        }
-                                      }
+                                      "report": {}
                                     }
                                   }
                                 }
@@ -270,93 +307,106 @@
                             }
                           },
                           "report": {
-                            "default": {
-                              "name": "Testing the LoginPage as react",
-                              "fails": []
-                            },
                             "Default": {
-                              "name": "Testing the Rectangle class",
-                              "fails": []
-                            },
-                            "WidthOfOneAndHeightOfOne": {
-                              "name": "Testing the Rectangle class",
-                              "fails": []
-                            },
-                            "AnEmptyState": {
-                              "name": "Testing the Redux store",
-                              "fails": []
-                            },
-                            "AStateWithEmail": {
-                              "name": "Testing the Redux store",
-                              "fails": []
+                              "name": "Testing a very simple smart contract ephemerally",
+                              "fails": [
+                                {
+                                  "artifactSaver": {},
+                                  "name": "Default",
+                                  "features": [
+                                    {
+                                      "name": "hello"
+                                    }
+                                  ],
+                                  "whens": [],
+                                  "thens": [
+                                    {
+                                      "name": "Get: [object Object]"
+                                    }
+                                  ],
+                                  "testArtifacts": {},
+                                  "initialValues": "MyFirstContract.sol",
+                                  "error": {
+                                    "receipt": {
+                                      "transactionHash": "0xf31e35db069425e206a2a19b72ff67f44c9fc1ef3006f8f47d21bcb90c874f57",
+                                      "transactionIndex": 0,
+                                      "blockNumber": 1,
+                                      "blockHash": "0x375f7e41562e4caf446207e7ce7709b69be700156424e8419ba8c9060cf8c3aa",
+                                      "from": "0x534679f55824c10188c6439ff24562f7fa841056",
+                                      "to": null,
+                                      "cumulativeGasUsed": 150000,
+                                      "gasUsed": 150000,
+                                      "contractAddress": "0xf2bE270719ddD7722220d49b0093D51227f3A2Aa",
+                                      "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                                      "status": false,
+                                      "effectiveGasPrice": 3375000000,
+                                      "type": "0x2",
+                                      "events": {}
+                                    }
+                                  }
+                                }
+                              ]
                             }
                           }
                         },
                         "aloha": {
-                          "results": {
-                            "WidthOfOneAndHeightOfOne": {
-                              "name": "Testing the Rectangle class",
-                              "fails": []
-                            },
-                            "AnEmptyState": {
-                              "name": "Testing the Redux store",
-                              "fails": []
-                            }
-                          },
+                          "results": {},
                           "report": {
-                            "default": {
-                              "name": "Testing the LoginPage as react",
-                              "fails": []
-                            },
                             "Default": {
-                              "name": "Testing the Rectangle class",
-                              "fails": []
-                            },
-                            "WidthOfOneAndHeightOfOne": {
-                              "name": "Testing the Rectangle class",
-                              "fails": []
-                            },
-                            "AnEmptyState": {
-                              "name": "Testing the Redux store",
-                              "fails": []
-                            },
-                            "AStateWithEmail": {
-                              "name": "Testing the Redux store",
-                              "fails": []
+                              "name": "Testing a very simple smart contract ephemerally",
+                              "fails": [
+                                {
+                                  "artifactSaver": {},
+                                  "name": "Default",
+                                  "features": [
+                                    {
+                                      "name": "hello"
+                                    }
+                                  ],
+                                  "whens": [],
+                                  "thens": [
+                                    {
+                                      "name": "Get: [object Object]"
+                                    }
+                                  ],
+                                  "testArtifacts": {},
+                                  "initialValues": "MyFirstContract.sol",
+                                  "error": {
+                                    "receipt": {
+                                      "transactionHash": "0xf31e35db069425e206a2a19b72ff67f44c9fc1ef3006f8f47d21bcb90c874f57",
+                                      "transactionIndex": 0,
+                                      "blockNumber": 1,
+                                      "blockHash": "0x375f7e41562e4caf446207e7ce7709b69be700156424e8419ba8c9060cf8c3aa",
+                                      "from": "0x534679f55824c10188c6439ff24562f7fa841056",
+                                      "to": null,
+                                      "cumulativeGasUsed": 150000,
+                                      "gasUsed": 150000,
+                                      "contractAddress": "0xf2bE270719ddD7722220d49b0093D51227f3A2Aa",
+                                      "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                                      "status": false,
+                                      "effectiveGasPrice": 3375000000,
+                                      "type": "0x2",
+                                      "events": {}
+                                    }
+                                  }
+                                }
+                              ]
                             },
                             "results": {
                               "gutentag": {
                                 "results": {
-                                  "WidthOfOneAndHeightOfOne": {
-                                    "name": "Testing the Rectangle class",
-                                    "fails": []
-                                  },
                                   "results": {
                                     "bien venidos": {
                                       "results": {},
-                                      "report": {
-                                        "WidthOfOneAndHeightOfOne": {
-                                          "name": "Testing the Rectangle class",
-                                          "fails": []
-                                        }
-                                      }
+                                      "report": {}
                                     },
                                     "buenos dias": {
                                       "results": {},
                                       "report": {
-                                        "WidthOfOneAndHeightOfOne": {
-                                          "name": "Testing the Rectangle class",
-                                          "fails": []
-                                        },
                                         "results": {
                                           "bien venidos": {
                                             "results": {},
-                                            "report": {
-                                              "WidthOfOneAndHeightOfOne": {
-                                                "name": "Testing the Rectangle class",
-                                                "fails": []
-                                              }
-                                            }
+                                            "report": {}
                                           }
                                         }
                                       }
@@ -364,25 +414,45 @@
                                   }
                                 },
                                 "report": {
-                                  "default": {
-                                    "name": "Testing the LoginPage as react",
-                                    "fails": []
-                                  },
                                   "Default": {
-                                    "name": "Testing the Rectangle class",
-                                    "fails": []
-                                  },
-                                  "WidthOfOneAndHeightOfOne": {
-                                    "name": "Testing the Rectangle class",
-                                    "fails": []
-                                  },
-                                  "AnEmptyState": {
-                                    "name": "Testing the Redux store",
-                                    "fails": []
-                                  },
-                                  "AStateWithEmail": {
-                                    "name": "Testing the Redux store",
-                                    "fails": []
+                                    "name": "Testing a very simple smart contract ephemerally",
+                                    "fails": [
+                                      {
+                                        "artifactSaver": {},
+                                        "name": "Default",
+                                        "features": [
+                                          {
+                                            "name": "hello"
+                                          }
+                                        ],
+                                        "whens": [],
+                                        "thens": [
+                                          {
+                                            "name": "Get: [object Object]"
+                                          }
+                                        ],
+                                        "testArtifacts": {},
+                                        "initialValues": "MyFirstContract.sol",
+                                        "error": {
+                                          "receipt": {
+                                            "transactionHash": "0xf31e35db069425e206a2a19b72ff67f44c9fc1ef3006f8f47d21bcb90c874f57",
+                                            "transactionIndex": 0,
+                                            "blockNumber": 1,
+                                            "blockHash": "0x375f7e41562e4caf446207e7ce7709b69be700156424e8419ba8c9060cf8c3aa",
+                                            "from": "0x534679f55824c10188c6439ff24562f7fa841056",
+                                            "to": null,
+                                            "cumulativeGasUsed": 150000,
+                                            "gasUsed": 150000,
+                                            "contractAddress": "0xf2bE270719ddD7722220d49b0093D51227f3A2Aa",
+                                            "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                                            "status": false,
+                                            "effectiveGasPrice": 3375000000,
+                                            "type": "0x2",
+                                            "events": {}
+                                          }
+                                        }
+                                      }
+                                    ]
                                   }
                                 }
                               }
