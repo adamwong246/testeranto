@@ -1,5 +1,5 @@
 {
-  "name": "Testing a very simple smart contract ephemerally",
+  "name": "FallenAngels, ephemerally",
   "givens": [
     {
       "name": "Default",
@@ -57,31 +57,6 @@
           "name": "Get: [object Object]"
         }
       ]
-    },
-    {
-      "name": "Default",
-      "whens": [
-        {
-          "name": "Decrement: 1"
-        },
-        {
-          "name": "Decrement: 1"
-        },
-        {
-          "name": "Decrement: 1"
-        },
-        {
-          "name": "Increment: 1"
-        },
-        {
-          "name": "Increment: 1"
-        }
-      ],
-      "thens": [
-        {
-          "name": "Get: [object Object]"
-        }
-      ]
     }
   ],
   "fails": [
@@ -100,7 +75,7 @@
         }
       ],
       "testArtifacts": {},
-      "initialValues": "MyFirstContract.sol",
+      "initialValues": "FallenAngels.sol",
       "error": {}
     }
   ]

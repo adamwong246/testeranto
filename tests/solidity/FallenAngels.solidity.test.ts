@@ -27,11 +27,11 @@ export const FallenAngelsTesteranto = SolidityTesteranto<
 >(
   {
     Suites: {
-      Default: "Testing a very simple smart contract"
+      Default: "FallenAngels.sol"
     },
     Givens: {
       Default: () => {
-        return 'MyFirstContract.sol';
+        return 'FallenAngels.sol';
       }
     },
     Whens: {
@@ -62,7 +62,7 @@ export const FallenAngelsTesteranto = SolidityTesteranto<
   (Suite, Given, When, Then, Check) => {
     return [
       Suite.Default(
-        "Testing a very simple smart contract ephemerally",
+        "FallenAngels, ephemerally",
         commonGivens(Given, When, Then, features),
         [
           // Check.AnEmptyState(

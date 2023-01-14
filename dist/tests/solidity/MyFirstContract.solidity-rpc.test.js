@@ -1,11 +1,12 @@
-// tests/solidity/FallenAngels.solidity.test.ts
+// tests/solidity/MyFirstContract.solidity-rpc.test.ts
 import { assert } from "chai";
 import { features } from "/Users/adam/Code/kokomoBay/dist/tests/testerantoFeatures.test.js";
 
-// tests/solidity/solidity.testeranto.test.ts
+// tests/solidity/solidity-rpc.testeranto.test.ts
 import Ganache from "ganache";
 import Web3 from "web3";
 import { Testeranto } from "testeranto";
+import { ethers } from "ethers";
 
 // tests/solidity/truffle.ts
 import fs from "fs/promises";
@@ -56,28 +57,54 @@ var solCompile = async (entrySolidityFile) => {
   return await Compile.sources({ sources: remmapedSources, options: TruffleConfig.detect() });
 };
 
-// tests/solidity/solidity.testeranto.test.ts
-var SolidityTesteranto = (testImplementations, testSpecifications, testInput, contractName) => Testeranto(
+// tests/solidity/solidity-rpc.testeranto.test.ts
+var SolidityRpcTesteranto = (testImplementations, testSpecifications, testInput, contractName) => Testeranto(
   testInput,
   testSpecifications,
   testImplementations,
-  { ports: 0 },
+  { ports: 1 },
   {
     beforeAll: async () => (await solCompile(contractName)).contracts.find((c) => c.contractName === contractName),
-    beforeEach: async (contract) => {
-      const provider = Ganache.provider({
-        seed: "drizzle-utils",
-        gasPrice: 7e6
+    beforeEach: (contract, i, tr) => {
+      return new Promise((res) => {
+        const options = {};
+        const port = tr.ports[0];
+        const server = Ganache.server(options);
+        server.listen(port, async (err) => {
+          console.log(`ganache listening on port ${port}...`);
+          if (err)
+            throw err;
+          const providerFarSide = server.provider;
+          const accounts = await providerFarSide.request({ method: "eth_accounts", params: [] });
+          console.log("mark 1");
+          const web3NearSide = new Web3(providerFarSide);
+          console.log("mark 2");
+          const contractNearSide = await new web3NearSide.eth.Contract(contract.abi).deploy({ data: contract.bytecode.bytes }).send({ from: accounts[0], gas: 7e6 });
+          console.log("mark 3");
+          const web3FarSideProvider = new ethers.providers.JsonRpcProvider(`http://localhost:${port}`);
+          console.log("mark 4");
+          const web3FarSideSigner = new ethers.Wallet(
+            providerFarSide.getInitialAccounts()[accounts[1]].secretKey,
+            web3FarSideProvider
+          );
+          console.log("mark 5");
+          const contractFarSide = new ethers.Contract(
+            contractNearSide.options.address,
+            contract.abi,
+            web3FarSideSigner
+          );
+          console.log("mark 6");
+          res({
+            contractNearSide,
+            contractFarSide,
+            accounts,
+            server
+          });
+        });
       });
-      const web3 = new Web3(provider);
-      const accounts = await web3.eth.getAccounts();
-      return {
-        contract: await new web3.eth.Contract(contract.abi).deploy({ data: contract.bytecode.bytes }).send({ from: accounts[0], gas: 7e6 }),
-        accounts,
-        provider
-      };
     },
-    andWhen: async ({ provider, contract, accounts }, callback) => callback()({ contract, accounts })
+    afterEach: async ({ server }) => await server.close(),
+    andWhen: async ({ contractFarSide, accounts }, callback) => callback()({ contractFarSide, accounts })
   }
 );
 
@@ -120,33 +147,27 @@ var commonGivens = (Given, When, Then, features2) => [
   )
 ];
 
-// tests/solidity/FallenAngels.solidity.test.ts
-var FallenAngelsTesteranto = SolidityTesteranto(
+// tests/solidity/MyFirstContract.solidity-rpc.test.ts
+var MyFirstContractPlusRpcTesteranto = SolidityRpcTesteranto(
   {
     Suites: {
-      Default: "FallenAngels.sol"
+      Default: "Testing a very simple smart contract"
     },
     Givens: {
       Default: () => {
-        return "FallenAngels.sol";
+        return "MyFirstContract.sol";
       }
     },
     Whens: {
-      Increment: (asTestUser) => ({ contract, accounts }) => {
-        return contract.methods.inc().send({ from: accounts[asTestUser] }).on("receipt", function(x) {
-          return x;
-        });
+      Increment: (asTestUser) => async ({ contractFarSide, accounts }) => {
+        return await contractFarSide.inc({ gasLimit: 15e4 });
       },
-      Decrement: (asTestUser) => ({ contract, accounts }) => {
-        return new Promise((res) => {
-          contract.methods.dec().send({ from: accounts[asTestUser] }).then(function(x) {
-            res(x);
-          });
-        });
+      Decrement: (asTestUser) => async ({ contractFarSide, accounts }) => {
+        return await contractFarSide.dec({ gasLimit: 15e4 });
       }
     },
     Thens: {
-      Get: ({ asTestUser, expectation }) => async ({ contract, accounts }) => assert.equal(expectation, parseInt(await contract.methods.get().call()))
+      Get: ({ asTestUser, expectation }) => async ({ contractFarSide, accounts }) => assert.equal(expectation, parseInt(await contractFarSide.get({ gasLimit: 15e4 })))
     },
     Checks: {
       AnEmptyState: () => "MyFirstContract.sol"
@@ -155,15 +176,15 @@ var FallenAngelsTesteranto = SolidityTesteranto(
   (Suite, Given, When, Then, Check) => {
     return [
       Suite.Default(
-        "FallenAngels, ephemerally",
+        "Testing a very simple smart contract over RPC",
         commonGivens(Given, When, Then, features),
         []
       )
     ];
   },
   "solSource",
-  "FallenAngels"
+  "MyFirstContract"
 );
 export {
-  FallenAngelsTesteranto
+  MyFirstContractPlusRpcTesteranto
 };

@@ -4,14 +4,116 @@
       "testKey": "Default",
       "name": "Testing a very simple smart contract ephemerally",
       "whens": [
-        "Decrement: 1",
-        "Decrement: 1",
-        "Decrement: 1",
         "Increment: 1",
-        "Increment: 1"
+        "Increment: 1",
+        "Increment: 1",
+        "Increment: 1",
+        "Decrement: 1"
       ],
       "thens": [
         "Get: [object Object]"
+      ]
+    },
+    {
+      "testKey": "default",
+      "name": "Testing the LoginPage as react",
+      "whens": [
+        "TheEmailIsSetTo: adam@email.com"
+      ],
+      "thens": [
+        "TheEmailIs: adam@email.com"
+      ]
+    },
+    {
+      "testKey": "AnEmptyState",
+      "name": "Testing the Server with Puppeteer",
+      "whens": [
+        "PostToStatus: aloha",
+        "PostToAdd: 4",
+        "PostToStatus: hello",
+        "PostToAdd: 3"
+      ],
+      "thens": [
+        "TheStatusIs: hello",
+        "TheNumberIs: 7"
+      ]
+    },
+    {
+      "testKey": "WidthOfOneAndHeightOfOne",
+      "name": "Testing the Rectangle class",
+      "whens": [
+        "setHeight: 33",
+        "setWidth: 34"
+      ],
+      "thens": [
+        "getHeight: 33"
+      ]
+    },
+    {
+      "testKey": "AStateWithEmail",
+      "name": "Testing the Redux store",
+      "whens": [],
+      "thens": [
+        "TheEmailIsNot: adam@email.com",
+        "TheEmailIs: bob@mail.com"
+      ]
+    }
+  ],
+  "hola": [
+    {
+      "testKey": "WidthOfOneAndHeightOfOne",
+      "name": "Testing the Rectangle class",
+      "whens": [
+        "setHeight: 3",
+        "setWidth: 4",
+        "setHeight: 5",
+        "setWidth: 6"
+      ],
+      "thens": [
+        "area: 30",
+        "circumference: 22"
+      ]
+    }
+  ],
+  "gutentag": [
+    {
+      "testKey": "WidthOfOneAndHeightOfOne",
+      "name": "Testing the Rectangle class",
+      "whens": [
+        "setHeight: 3",
+        "setWidth: 4"
+      ],
+      "thens": [
+        "getHeight: 3",
+        "getWidth: 4",
+        "area: 12",
+        "circumference: 14"
+      ]
+    }
+  ],
+  "aloha": [
+    {
+      "testKey": "WidthOfOneAndHeightOfOne",
+      "name": "Testing the Rectangle class",
+      "whens": [
+        "setHeight: 3",
+        "setWidth: 4"
+      ],
+      "thens": [
+        "getHeight: 3",
+        "getWidth: 4",
+        "area: 12",
+        "circumference: 14"
+      ]
+    },
+    {
+      "testKey": "AnEmptyState",
+      "name": "Testing the Redux store",
+      "whens": [
+        "TheEmailIsSetTo: hey there"
+      ],
+      "thens": [
+        "TheEmailIs: hey there"
       ]
     }
   ]

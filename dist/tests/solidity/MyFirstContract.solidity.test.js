@@ -3,12 +3,14 @@ import { assert } from "chai";
 import { features } from "/Users/adam/Code/kokomoBay/dist/tests/testerantoFeatures.test.js";
 
 // tests/solidity/solidity.testeranto.test.ts
-import { Compile } from "@truffle/compile-solidity";
-import fs from "fs/promises";
 import Ganache from "ganache";
-import TruffleConfig from "@truffle/config";
 import Web3 from "web3";
 import { Testeranto } from "testeranto";
+
+// tests/solidity/truffle.ts
+import fs from "fs/promises";
+import { Compile } from "@truffle/compile-solidity";
+import TruffleConfig from "@truffle/config";
 var buildFullPath = (parent, path) => {
   let curDir = parent.substr(0, parent.lastIndexOf("/"));
   if (path.startsWith("@")) {
@@ -40,7 +42,7 @@ var solidifier = async (path, recursivePayload = {}) => {
   recursivePayload[path] = text;
   return recursivePayload;
 };
-var compile = async (entrySolidityFile) => {
+var solCompile = async (entrySolidityFile) => {
   const sources = await solidifier(process.cwd() + `/contracts/${entrySolidityFile}.sol`);
   const remmapedSources = {};
   for (const filepath of Object.keys(sources)) {
@@ -53,23 +55,24 @@ var compile = async (entrySolidityFile) => {
   }
   return await Compile.sources({ sources: remmapedSources, options: TruffleConfig.detect() });
 };
+
+// tests/solidity/solidity.testeranto.test.ts
 var SolidityTesteranto = (testImplementations, testSpecifications, testInput, contractName) => Testeranto(
   testInput,
   testSpecifications,
   testImplementations,
   { ports: 0 },
   {
-    beforeAll: async () => (await compile(contractName)).contracts.find((c) => c.contractName === contractName),
+    beforeAll: async () => (await solCompile(contractName)).contracts.find((c) => c.contractName === contractName),
     beforeEach: async (contract) => {
       const provider = Ganache.provider({
         seed: "drizzle-utils",
-        gasPrice: 15e4
+        gasPrice: 7e6
       });
       const web3 = new Web3(provider);
       const accounts = await web3.eth.getAccounts();
-      console.log("contract", contract);
       return {
-        contract: await new web3.eth.Contract(contract.abi).deploy({ data: contract.bytecode.bytes }).send({ from: accounts[0], gas: 15e4 }),
+        contract: await new web3.eth.Contract(contract.abi).deploy({ data: contract.bytecode.bytes }).send({ from: accounts[0], gas: 7e6 }),
         accounts,
         provider
       };
@@ -114,20 +117,6 @@ var commonGivens = (Given, When, Then, features2) => [
       Then.Get({ asTestUser: 1, expectation: 3 })
     ],
     "my first contract"
-  ),
-  Given.Default(
-    [features2.hello],
-    [
-      When.Decrement(1),
-      When.Decrement(1),
-      When.Decrement(1),
-      When.Increment(1),
-      When.Increment(1)
-    ],
-    [
-      Then.Get({ asTestUser: 1, expectation: 1157920892373162e62 })
-    ],
-    "this test should fail"
   )
 ];
 
