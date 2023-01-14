@@ -118,14 +118,14 @@ var StorefrontTesteranto = (testImplementations, testSpecifications, testInput, 
     },
     andWhen: async function({ page, contract, accounts }, actioner) {
       const action = await actioner()({ page });
-      await page.waitForTimeout(1);
+      await page.waitForTimeout(10);
       await page.evaluate((counter) => {
         document.dispatchEvent(new CustomEvent("setCounterEvent", { detail: counter }));
       }, await contract.methods.get().call());
       return action;
     },
     butThen: async function({ page, contract }) {
-      await page.waitForTimeout(1);
+      await page.waitForTimeout(10);
       await page.evaluate((counter) => {
         document.dispatchEvent(new CustomEvent("setCounterEvent", { detail: counter }));
       }, await contract.methods.get().call());
@@ -184,7 +184,7 @@ var StorefrontTest = StorefrontTesteranto(
   (Suite, Given, When, Then, Check) => {
     return [
       Suite.Default(
-        "the storefront?",
+        "the storefront react app",
         [
           Given.AnEmptyState(
             [features.federatedSplitContract],

@@ -8,23 +8,23 @@
             "hello": {
               "results": {
                 "Default": {
-                  "name": "Testing a very simple smart contract ephemerally",
-                  "fails": []
-                },
-                "WidthOfOneAndHeightOfOne": {
-                  "name": "Testing the Rectangle class",
+                  "name": "Testing a very simple smart contract over RPC",
                   "fails": []
                 },
                 "AnEmptyState": {
                   "name": "Testing the Node server with fetch",
                   "fails": []
                 },
-                "default": {
-                  "name": "Testing the LoginPage as react",
-                  "fails": []
-                },
                 "AStateWithEmail": {
                   "name": "Testing the Redux store",
+                  "fails": []
+                },
+                "WidthOfOneAndHeightOfOne": {
+                  "name": "Testing the Rectangle class",
+                  "fails": []
+                },
+                "default": {
+                  "name": "Testing the LoginPage as react",
                   "fails": []
                 },
                 "results": {
@@ -68,57 +68,57 @@
                     },
                     "report": {
                       "Default": {
-                        "name": "Testing a very simple smart contract ephemerally",
-                        "fails": []
-                      },
-                      "WidthOfOneAndHeightOfOne": {
-                        "name": "Testing the Rectangle class",
+                        "name": "Testing a very simple smart contract over RPC",
                         "fails": []
                       },
                       "AnEmptyState": {
                         "name": "Testing the Node server with fetch",
                         "fails": []
                       },
-                      "default": {
-                        "name": "Testing the LoginPage as react",
-                        "fails": []
-                      },
                       "AStateWithEmail": {
                         "name": "Testing the Redux store",
+                        "fails": []
+                      },
+                      "WidthOfOneAndHeightOfOne": {
+                        "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
+                      "default": {
+                        "name": "Testing the LoginPage as react",
                         "fails": []
                       }
                     }
                   },
                   "aloha": {
                     "results": {
-                      "WidthOfOneAndHeightOfOne": {
-                        "name": "Testing the Rectangle class",
-                        "fails": []
-                      },
                       "AnEmptyState": {
                         "name": "Testing the Redux store",
+                        "fails": []
+                      },
+                      "WidthOfOneAndHeightOfOne": {
+                        "name": "Testing the Rectangle class",
                         "fails": []
                       }
                     },
                     "report": {
                       "Default": {
-                        "name": "Testing a very simple smart contract ephemerally",
-                        "fails": []
-                      },
-                      "WidthOfOneAndHeightOfOne": {
-                        "name": "Testing the Rectangle class",
+                        "name": "Testing a very simple smart contract over RPC",
                         "fails": []
                       },
                       "AnEmptyState": {
                         "name": "Testing the Node server with fetch",
                         "fails": []
                       },
-                      "default": {
-                        "name": "Testing the LoginPage as react",
-                        "fails": []
-                      },
                       "AStateWithEmail": {
                         "name": "Testing the Redux store",
+                        "fails": []
+                      },
+                      "WidthOfOneAndHeightOfOne": {
+                        "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
+                      "default": {
+                        "name": "Testing the LoginPage as react",
                         "fails": []
                       },
                       "results": {
@@ -162,23 +162,23 @@
                           },
                           "report": {
                             "Default": {
-                              "name": "Testing a very simple smart contract ephemerally",
-                              "fails": []
-                            },
-                            "WidthOfOneAndHeightOfOne": {
-                              "name": "Testing the Rectangle class",
+                              "name": "Testing a very simple smart contract over RPC",
                               "fails": []
                             },
                             "AnEmptyState": {
                               "name": "Testing the Node server with fetch",
                               "fails": []
                             },
-                            "default": {
-                              "name": "Testing the LoginPage as react",
-                              "fails": []
-                            },
                             "AStateWithEmail": {
                               "name": "Testing the Redux store",
+                              "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "default": {
+                              "name": "Testing the LoginPage as react",
                               "fails": []
                             }
                           }
@@ -211,23 +211,23 @@
                   "hello": {
                     "results": {
                       "Default": {
-                        "name": "Testing a very simple smart contract ephemerally",
-                        "fails": []
-                      },
-                      "WidthOfOneAndHeightOfOne": {
-                        "name": "Testing the Rectangle class",
+                        "name": "Testing a very simple smart contract over RPC",
                         "fails": []
                       },
                       "AnEmptyState": {
                         "name": "Testing the Node server with fetch",
                         "fails": []
                       },
-                      "default": {
-                        "name": "Testing the LoginPage as react",
-                        "fails": []
-                      },
                       "AStateWithEmail": {
                         "name": "Testing the Redux store",
+                        "fails": []
+                      },
+                      "WidthOfOneAndHeightOfOne": {
+                        "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
+                      "default": {
+                        "name": "Testing the LoginPage as react",
                         "fails": []
                       },
                       "results": {
@@ -271,57 +271,57 @@
                           },
                           "report": {
                             "Default": {
-                              "name": "Testing a very simple smart contract ephemerally",
-                              "fails": []
-                            },
-                            "WidthOfOneAndHeightOfOne": {
-                              "name": "Testing the Rectangle class",
+                              "name": "Testing a very simple smart contract over RPC",
                               "fails": []
                             },
                             "AnEmptyState": {
                               "name": "Testing the Node server with fetch",
                               "fails": []
                             },
-                            "default": {
-                              "name": "Testing the LoginPage as react",
-                              "fails": []
-                            },
                             "AStateWithEmail": {
                               "name": "Testing the Redux store",
+                              "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "default": {
+                              "name": "Testing the LoginPage as react",
                               "fails": []
                             }
                           }
                         },
                         "aloha": {
                           "results": {
-                            "WidthOfOneAndHeightOfOne": {
-                              "name": "Testing the Rectangle class",
-                              "fails": []
-                            },
                             "AnEmptyState": {
                               "name": "Testing the Redux store",
+                              "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
                               "fails": []
                             }
                           },
                           "report": {
                             "Default": {
-                              "name": "Testing a very simple smart contract ephemerally",
-                              "fails": []
-                            },
-                            "WidthOfOneAndHeightOfOne": {
-                              "name": "Testing the Rectangle class",
+                              "name": "Testing a very simple smart contract over RPC",
                               "fails": []
                             },
                             "AnEmptyState": {
                               "name": "Testing the Node server with fetch",
                               "fails": []
                             },
-                            "default": {
-                              "name": "Testing the LoginPage as react",
-                              "fails": []
-                            },
                             "AStateWithEmail": {
                               "name": "Testing the Redux store",
+                              "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "default": {
+                              "name": "Testing the LoginPage as react",
                               "fails": []
                             },
                             "results": {
@@ -365,23 +365,23 @@
                                 },
                                 "report": {
                                   "Default": {
-                                    "name": "Testing a very simple smart contract ephemerally",
-                                    "fails": []
-                                  },
-                                  "WidthOfOneAndHeightOfOne": {
-                                    "name": "Testing the Rectangle class",
+                                    "name": "Testing a very simple smart contract over RPC",
                                     "fails": []
                                   },
                                   "AnEmptyState": {
                                     "name": "Testing the Node server with fetch",
                                     "fails": []
                                   },
-                                  "default": {
-                                    "name": "Testing the LoginPage as react",
-                                    "fails": []
-                                  },
                                   "AStateWithEmail": {
                                     "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "default": {
+                                    "name": "Testing the LoginPage as react",
                                     "fails": []
                                   }
                                 }
@@ -399,7 +399,7 @@
             "A website which can acts as a storefront": {
               "results": {
                 "AnEmptyState": {
-                  "name": "the storefront?",
+                  "name": "the storefront react app",
                   "fails": []
                 }
               },
@@ -408,23 +408,23 @@
                   "hello": {
                     "results": {
                       "Default": {
-                        "name": "Testing a very simple smart contract ephemerally",
-                        "fails": []
-                      },
-                      "WidthOfOneAndHeightOfOne": {
-                        "name": "Testing the Rectangle class",
+                        "name": "Testing a very simple smart contract over RPC",
                         "fails": []
                       },
                       "AnEmptyState": {
                         "name": "Testing the Node server with fetch",
                         "fails": []
                       },
-                      "default": {
-                        "name": "Testing the LoginPage as react",
-                        "fails": []
-                      },
                       "AStateWithEmail": {
                         "name": "Testing the Redux store",
+                        "fails": []
+                      },
+                      "WidthOfOneAndHeightOfOne": {
+                        "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
+                      "default": {
+                        "name": "Testing the LoginPage as react",
                         "fails": []
                       },
                       "results": {
@@ -468,57 +468,57 @@
                           },
                           "report": {
                             "Default": {
-                              "name": "Testing a very simple smart contract ephemerally",
-                              "fails": []
-                            },
-                            "WidthOfOneAndHeightOfOne": {
-                              "name": "Testing the Rectangle class",
+                              "name": "Testing a very simple smart contract over RPC",
                               "fails": []
                             },
                             "AnEmptyState": {
                               "name": "Testing the Node server with fetch",
                               "fails": []
                             },
-                            "default": {
-                              "name": "Testing the LoginPage as react",
-                              "fails": []
-                            },
                             "AStateWithEmail": {
                               "name": "Testing the Redux store",
+                              "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "default": {
+                              "name": "Testing the LoginPage as react",
                               "fails": []
                             }
                           }
                         },
                         "aloha": {
                           "results": {
-                            "WidthOfOneAndHeightOfOne": {
-                              "name": "Testing the Rectangle class",
-                              "fails": []
-                            },
                             "AnEmptyState": {
                               "name": "Testing the Redux store",
+                              "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
                               "fails": []
                             }
                           },
                           "report": {
                             "Default": {
-                              "name": "Testing a very simple smart contract ephemerally",
-                              "fails": []
-                            },
-                            "WidthOfOneAndHeightOfOne": {
-                              "name": "Testing the Rectangle class",
+                              "name": "Testing a very simple smart contract over RPC",
                               "fails": []
                             },
                             "AnEmptyState": {
                               "name": "Testing the Node server with fetch",
                               "fails": []
                             },
-                            "default": {
-                              "name": "Testing the LoginPage as react",
-                              "fails": []
-                            },
                             "AStateWithEmail": {
                               "name": "Testing the Redux store",
+                              "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "default": {
+                              "name": "Testing the LoginPage as react",
                               "fails": []
                             },
                             "results": {
@@ -562,23 +562,23 @@
                                 },
                                 "report": {
                                   "Default": {
-                                    "name": "Testing a very simple smart contract ephemerally",
-                                    "fails": []
-                                  },
-                                  "WidthOfOneAndHeightOfOne": {
-                                    "name": "Testing the Rectangle class",
+                                    "name": "Testing a very simple smart contract over RPC",
                                     "fails": []
                                   },
                                   "AnEmptyState": {
                                     "name": "Testing the Node server with fetch",
                                     "fails": []
                                   },
-                                  "default": {
-                                    "name": "Testing the LoginPage as react",
-                                    "fails": []
-                                  },
                                   "AStateWithEmail": {
                                     "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "default": {
+                                    "name": "Testing the LoginPage as react",
                                     "fails": []
                                   }
                                 }
@@ -611,23 +611,23 @@
                         "hello": {
                           "results": {
                             "Default": {
-                              "name": "Testing a very simple smart contract ephemerally",
-                              "fails": []
-                            },
-                            "WidthOfOneAndHeightOfOne": {
-                              "name": "Testing the Rectangle class",
+                              "name": "Testing a very simple smart contract over RPC",
                               "fails": []
                             },
                             "AnEmptyState": {
                               "name": "Testing the Node server with fetch",
                               "fails": []
                             },
-                            "default": {
-                              "name": "Testing the LoginPage as react",
-                              "fails": []
-                            },
                             "AStateWithEmail": {
                               "name": "Testing the Redux store",
+                              "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "default": {
+                              "name": "Testing the LoginPage as react",
                               "fails": []
                             },
                             "results": {
@@ -671,57 +671,57 @@
                                 },
                                 "report": {
                                   "Default": {
-                                    "name": "Testing a very simple smart contract ephemerally",
-                                    "fails": []
-                                  },
-                                  "WidthOfOneAndHeightOfOne": {
-                                    "name": "Testing the Rectangle class",
+                                    "name": "Testing a very simple smart contract over RPC",
                                     "fails": []
                                   },
                                   "AnEmptyState": {
                                     "name": "Testing the Node server with fetch",
                                     "fails": []
                                   },
-                                  "default": {
-                                    "name": "Testing the LoginPage as react",
-                                    "fails": []
-                                  },
                                   "AStateWithEmail": {
                                     "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "default": {
+                                    "name": "Testing the LoginPage as react",
                                     "fails": []
                                   }
                                 }
                               },
                               "aloha": {
                                 "results": {
-                                  "WidthOfOneAndHeightOfOne": {
-                                    "name": "Testing the Rectangle class",
-                                    "fails": []
-                                  },
                                   "AnEmptyState": {
                                     "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
                                     "fails": []
                                   }
                                 },
                                 "report": {
                                   "Default": {
-                                    "name": "Testing a very simple smart contract ephemerally",
-                                    "fails": []
-                                  },
-                                  "WidthOfOneAndHeightOfOne": {
-                                    "name": "Testing the Rectangle class",
+                                    "name": "Testing a very simple smart contract over RPC",
                                     "fails": []
                                   },
                                   "AnEmptyState": {
                                     "name": "Testing the Node server with fetch",
                                     "fails": []
                                   },
-                                  "default": {
-                                    "name": "Testing the LoginPage as react",
-                                    "fails": []
-                                  },
                                   "AStateWithEmail": {
                                     "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "default": {
+                                    "name": "Testing the LoginPage as react",
                                     "fails": []
                                   },
                                   "results": {
@@ -765,23 +765,23 @@
                                       },
                                       "report": {
                                         "Default": {
-                                          "name": "Testing a very simple smart contract ephemerally",
-                                          "fails": []
-                                        },
-                                        "WidthOfOneAndHeightOfOne": {
-                                          "name": "Testing the Rectangle class",
+                                          "name": "Testing a very simple smart contract over RPC",
                                           "fails": []
                                         },
                                         "AnEmptyState": {
                                           "name": "Testing the Node server with fetch",
                                           "fails": []
                                         },
-                                        "default": {
-                                          "name": "Testing the LoginPage as react",
-                                          "fails": []
-                                        },
                                         "AStateWithEmail": {
                                           "name": "Testing the Redux store",
+                                          "fails": []
+                                        },
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        },
+                                        "default": {
+                                          "name": "Testing the LoginPage as react",
                                           "fails": []
                                         }
                                       }
@@ -806,23 +806,23 @@
                   "hello": {
                     "results": {
                       "Default": {
-                        "name": "Testing a very simple smart contract ephemerally",
-                        "fails": []
-                      },
-                      "WidthOfOneAndHeightOfOne": {
-                        "name": "Testing the Rectangle class",
+                        "name": "Testing a very simple smart contract over RPC",
                         "fails": []
                       },
                       "AnEmptyState": {
                         "name": "Testing the Node server with fetch",
                         "fails": []
                       },
-                      "default": {
-                        "name": "Testing the LoginPage as react",
-                        "fails": []
-                      },
                       "AStateWithEmail": {
                         "name": "Testing the Redux store",
+                        "fails": []
+                      },
+                      "WidthOfOneAndHeightOfOne": {
+                        "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
+                      "default": {
+                        "name": "Testing the LoginPage as react",
                         "fails": []
                       },
                       "results": {
@@ -866,57 +866,57 @@
                           },
                           "report": {
                             "Default": {
-                              "name": "Testing a very simple smart contract ephemerally",
-                              "fails": []
-                            },
-                            "WidthOfOneAndHeightOfOne": {
-                              "name": "Testing the Rectangle class",
+                              "name": "Testing a very simple smart contract over RPC",
                               "fails": []
                             },
                             "AnEmptyState": {
                               "name": "Testing the Node server with fetch",
                               "fails": []
                             },
-                            "default": {
-                              "name": "Testing the LoginPage as react",
-                              "fails": []
-                            },
                             "AStateWithEmail": {
                               "name": "Testing the Redux store",
+                              "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "default": {
+                              "name": "Testing the LoginPage as react",
                               "fails": []
                             }
                           }
                         },
                         "aloha": {
                           "results": {
-                            "WidthOfOneAndHeightOfOne": {
-                              "name": "Testing the Rectangle class",
-                              "fails": []
-                            },
                             "AnEmptyState": {
                               "name": "Testing the Redux store",
+                              "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
                               "fails": []
                             }
                           },
                           "report": {
                             "Default": {
-                              "name": "Testing a very simple smart contract ephemerally",
-                              "fails": []
-                            },
-                            "WidthOfOneAndHeightOfOne": {
-                              "name": "Testing the Rectangle class",
+                              "name": "Testing a very simple smart contract over RPC",
                               "fails": []
                             },
                             "AnEmptyState": {
                               "name": "Testing the Node server with fetch",
                               "fails": []
                             },
-                            "default": {
-                              "name": "Testing the LoginPage as react",
-                              "fails": []
-                            },
                             "AStateWithEmail": {
                               "name": "Testing the Redux store",
+                              "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "default": {
+                              "name": "Testing the LoginPage as react",
                               "fails": []
                             },
                             "results": {
@@ -960,23 +960,23 @@
                                 },
                                 "report": {
                                   "Default": {
-                                    "name": "Testing a very simple smart contract ephemerally",
-                                    "fails": []
-                                  },
-                                  "WidthOfOneAndHeightOfOne": {
-                                    "name": "Testing the Rectangle class",
+                                    "name": "Testing a very simple smart contract over RPC",
                                     "fails": []
                                   },
                                   "AnEmptyState": {
                                     "name": "Testing the Node server with fetch",
                                     "fails": []
                                   },
-                                  "default": {
-                                    "name": "Testing the LoginPage as react",
-                                    "fails": []
-                                  },
                                   "AStateWithEmail": {
                                     "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "default": {
+                                    "name": "Testing the LoginPage as react",
                                     "fails": []
                                   }
                                 }
@@ -1009,23 +1009,23 @@
                         "hello": {
                           "results": {
                             "Default": {
-                              "name": "Testing a very simple smart contract ephemerally",
-                              "fails": []
-                            },
-                            "WidthOfOneAndHeightOfOne": {
-                              "name": "Testing the Rectangle class",
+                              "name": "Testing a very simple smart contract over RPC",
                               "fails": []
                             },
                             "AnEmptyState": {
                               "name": "Testing the Node server with fetch",
                               "fails": []
                             },
-                            "default": {
-                              "name": "Testing the LoginPage as react",
-                              "fails": []
-                            },
                             "AStateWithEmail": {
                               "name": "Testing the Redux store",
+                              "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "default": {
+                              "name": "Testing the LoginPage as react",
                               "fails": []
                             },
                             "results": {
@@ -1069,57 +1069,57 @@
                                 },
                                 "report": {
                                   "Default": {
-                                    "name": "Testing a very simple smart contract ephemerally",
-                                    "fails": []
-                                  },
-                                  "WidthOfOneAndHeightOfOne": {
-                                    "name": "Testing the Rectangle class",
+                                    "name": "Testing a very simple smart contract over RPC",
                                     "fails": []
                                   },
                                   "AnEmptyState": {
                                     "name": "Testing the Node server with fetch",
                                     "fails": []
                                   },
-                                  "default": {
-                                    "name": "Testing the LoginPage as react",
-                                    "fails": []
-                                  },
                                   "AStateWithEmail": {
                                     "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "default": {
+                                    "name": "Testing the LoginPage as react",
                                     "fails": []
                                   }
                                 }
                               },
                               "aloha": {
                                 "results": {
-                                  "WidthOfOneAndHeightOfOne": {
-                                    "name": "Testing the Rectangle class",
-                                    "fails": []
-                                  },
                                   "AnEmptyState": {
                                     "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
                                     "fails": []
                                   }
                                 },
                                 "report": {
                                   "Default": {
-                                    "name": "Testing a very simple smart contract ephemerally",
-                                    "fails": []
-                                  },
-                                  "WidthOfOneAndHeightOfOne": {
-                                    "name": "Testing the Rectangle class",
+                                    "name": "Testing a very simple smart contract over RPC",
                                     "fails": []
                                   },
                                   "AnEmptyState": {
                                     "name": "Testing the Node server with fetch",
                                     "fails": []
                                   },
-                                  "default": {
-                                    "name": "Testing the LoginPage as react",
-                                    "fails": []
-                                  },
                                   "AStateWithEmail": {
                                     "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "default": {
+                                    "name": "Testing the LoginPage as react",
                                     "fails": []
                                   },
                                   "results": {
@@ -1163,23 +1163,23 @@
                                       },
                                       "report": {
                                         "Default": {
-                                          "name": "Testing a very simple smart contract ephemerally",
-                                          "fails": []
-                                        },
-                                        "WidthOfOneAndHeightOfOne": {
-                                          "name": "Testing the Rectangle class",
+                                          "name": "Testing a very simple smart contract over RPC",
                                           "fails": []
                                         },
                                         "AnEmptyState": {
                                           "name": "Testing the Node server with fetch",
                                           "fails": []
                                         },
-                                        "default": {
-                                          "name": "Testing the LoginPage as react",
-                                          "fails": []
-                                        },
                                         "AStateWithEmail": {
                                           "name": "Testing the Redux store",
+                                          "fails": []
+                                        },
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        },
+                                        "default": {
+                                          "name": "Testing the LoginPage as react",
                                           "fails": []
                                         }
                                       }
@@ -1197,7 +1197,7 @@
                   "A website which can acts as a storefront": {
                     "results": {
                       "AnEmptyState": {
-                        "name": "the storefront?",
+                        "name": "the storefront react app",
                         "fails": []
                       }
                     },
@@ -1206,23 +1206,23 @@
                         "hello": {
                           "results": {
                             "Default": {
-                              "name": "Testing a very simple smart contract ephemerally",
-                              "fails": []
-                            },
-                            "WidthOfOneAndHeightOfOne": {
-                              "name": "Testing the Rectangle class",
+                              "name": "Testing a very simple smart contract over RPC",
                               "fails": []
                             },
                             "AnEmptyState": {
                               "name": "Testing the Node server with fetch",
                               "fails": []
                             },
-                            "default": {
-                              "name": "Testing the LoginPage as react",
-                              "fails": []
-                            },
                             "AStateWithEmail": {
                               "name": "Testing the Redux store",
+                              "fails": []
+                            },
+                            "WidthOfOneAndHeightOfOne": {
+                              "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "default": {
+                              "name": "Testing the LoginPage as react",
                               "fails": []
                             },
                             "results": {
@@ -1266,57 +1266,57 @@
                                 },
                                 "report": {
                                   "Default": {
-                                    "name": "Testing a very simple smart contract ephemerally",
-                                    "fails": []
-                                  },
-                                  "WidthOfOneAndHeightOfOne": {
-                                    "name": "Testing the Rectangle class",
+                                    "name": "Testing a very simple smart contract over RPC",
                                     "fails": []
                                   },
                                   "AnEmptyState": {
                                     "name": "Testing the Node server with fetch",
                                     "fails": []
                                   },
-                                  "default": {
-                                    "name": "Testing the LoginPage as react",
-                                    "fails": []
-                                  },
                                   "AStateWithEmail": {
                                     "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "default": {
+                                    "name": "Testing the LoginPage as react",
                                     "fails": []
                                   }
                                 }
                               },
                               "aloha": {
                                 "results": {
-                                  "WidthOfOneAndHeightOfOne": {
-                                    "name": "Testing the Rectangle class",
-                                    "fails": []
-                                  },
                                   "AnEmptyState": {
                                     "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
                                     "fails": []
                                   }
                                 },
                                 "report": {
                                   "Default": {
-                                    "name": "Testing a very simple smart contract ephemerally",
-                                    "fails": []
-                                  },
-                                  "WidthOfOneAndHeightOfOne": {
-                                    "name": "Testing the Rectangle class",
+                                    "name": "Testing a very simple smart contract over RPC",
                                     "fails": []
                                   },
                                   "AnEmptyState": {
                                     "name": "Testing the Node server with fetch",
                                     "fails": []
                                   },
-                                  "default": {
-                                    "name": "Testing the LoginPage as react",
-                                    "fails": []
-                                  },
                                   "AStateWithEmail": {
                                     "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "default": {
+                                    "name": "Testing the LoginPage as react",
                                     "fails": []
                                   },
                                   "results": {
@@ -1360,23 +1360,23 @@
                                       },
                                       "report": {
                                         "Default": {
-                                          "name": "Testing a very simple smart contract ephemerally",
-                                          "fails": []
-                                        },
-                                        "WidthOfOneAndHeightOfOne": {
-                                          "name": "Testing the Rectangle class",
+                                          "name": "Testing a very simple smart contract over RPC",
                                           "fails": []
                                         },
                                         "AnEmptyState": {
                                           "name": "Testing the Node server with fetch",
                                           "fails": []
                                         },
-                                        "default": {
-                                          "name": "Testing the LoginPage as react",
-                                          "fails": []
-                                        },
                                         "AStateWithEmail": {
                                           "name": "Testing the Redux store",
+                                          "fails": []
+                                        },
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        },
+                                        "default": {
+                                          "name": "Testing the LoginPage as react",
                                           "fails": []
                                         }
                                       }
@@ -1409,23 +1409,23 @@
                               "hello": {
                                 "results": {
                                   "Default": {
-                                    "name": "Testing a very simple smart contract ephemerally",
-                                    "fails": []
-                                  },
-                                  "WidthOfOneAndHeightOfOne": {
-                                    "name": "Testing the Rectangle class",
+                                    "name": "Testing a very simple smart contract over RPC",
                                     "fails": []
                                   },
                                   "AnEmptyState": {
                                     "name": "Testing the Node server with fetch",
                                     "fails": []
                                   },
-                                  "default": {
-                                    "name": "Testing the LoginPage as react",
-                                    "fails": []
-                                  },
                                   "AStateWithEmail": {
                                     "name": "Testing the Redux store",
+                                    "fails": []
+                                  },
+                                  "WidthOfOneAndHeightOfOne": {
+                                    "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "default": {
+                                    "name": "Testing the LoginPage as react",
                                     "fails": []
                                   },
                                   "results": {
@@ -1469,57 +1469,57 @@
                                       },
                                       "report": {
                                         "Default": {
-                                          "name": "Testing a very simple smart contract ephemerally",
-                                          "fails": []
-                                        },
-                                        "WidthOfOneAndHeightOfOne": {
-                                          "name": "Testing the Rectangle class",
+                                          "name": "Testing a very simple smart contract over RPC",
                                           "fails": []
                                         },
                                         "AnEmptyState": {
                                           "name": "Testing the Node server with fetch",
                                           "fails": []
                                         },
-                                        "default": {
-                                          "name": "Testing the LoginPage as react",
-                                          "fails": []
-                                        },
                                         "AStateWithEmail": {
                                           "name": "Testing the Redux store",
+                                          "fails": []
+                                        },
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        },
+                                        "default": {
+                                          "name": "Testing the LoginPage as react",
                                           "fails": []
                                         }
                                       }
                                     },
                                     "aloha": {
                                       "results": {
-                                        "WidthOfOneAndHeightOfOne": {
-                                          "name": "Testing the Rectangle class",
-                                          "fails": []
-                                        },
                                         "AnEmptyState": {
                                           "name": "Testing the Redux store",
+                                          "fails": []
+                                        },
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
                                           "fails": []
                                         }
                                       },
                                       "report": {
                                         "Default": {
-                                          "name": "Testing a very simple smart contract ephemerally",
-                                          "fails": []
-                                        },
-                                        "WidthOfOneAndHeightOfOne": {
-                                          "name": "Testing the Rectangle class",
+                                          "name": "Testing a very simple smart contract over RPC",
                                           "fails": []
                                         },
                                         "AnEmptyState": {
                                           "name": "Testing the Node server with fetch",
                                           "fails": []
                                         },
-                                        "default": {
-                                          "name": "Testing the LoginPage as react",
-                                          "fails": []
-                                        },
                                         "AStateWithEmail": {
                                           "name": "Testing the Redux store",
+                                          "fails": []
+                                        },
+                                        "WidthOfOneAndHeightOfOne": {
+                                          "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        },
+                                        "default": {
+                                          "name": "Testing the LoginPage as react",
                                           "fails": []
                                         },
                                         "results": {
@@ -1563,23 +1563,23 @@
                                             },
                                             "report": {
                                               "Default": {
-                                                "name": "Testing a very simple smart contract ephemerally",
-                                                "fails": []
-                                              },
-                                              "WidthOfOneAndHeightOfOne": {
-                                                "name": "Testing the Rectangle class",
+                                                "name": "Testing a very simple smart contract over RPC",
                                                 "fails": []
                                               },
                                               "AnEmptyState": {
                                                 "name": "Testing the Node server with fetch",
                                                 "fails": []
                                               },
-                                              "default": {
-                                                "name": "Testing the LoginPage as react",
-                                                "fails": []
-                                              },
                                               "AStateWithEmail": {
                                                 "name": "Testing the Redux store",
+                                                "fails": []
+                                              },
+                                              "WidthOfOneAndHeightOfOne": {
+                                                "name": "Testing the Rectangle class",
+                                                "fails": []
+                                              },
+                                              "default": {
+                                                "name": "Testing the LoginPage as react",
                                                 "fails": []
                                               }
                                             }

@@ -63,6 +63,7 @@ export const FallenAngelsTesteranto = SolidityTesteranto<
     return [
       Suite.Default(
         "FallenAngels, ephemerally",
+        // this is expected to fail
         commonGivens(Given, When, Then, features),
         [
           // Check.AnEmptyState(

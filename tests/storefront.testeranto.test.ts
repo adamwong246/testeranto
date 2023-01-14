@@ -11,33 +11,6 @@ import { ITestImplementation, ITestSpecification, ITTestShape } from "testeranto
 
 import { solCompile } from "./solidity/truffle";
 
-/** https://stackoverflow.com/a/65534026/614612
- * Wait for the browser to fire an event (including custom events)
- * @param {string} eventName - Event name
- * @param {integer} seconds - number of seconds to wait.
- * @returns {Promise} resolves when event fires or timeout is reached
- */
-async function waitForEvent(page, eventName, seconds) {
-
-  seconds = seconds || 30;
-
-  // use race to implement a timeout
-  return Promise.race([
-
-    // add event listener and wait for event to fire before returning
-    page.evaluate(function (eventName) {
-      return new Promise(function (resolve, reject) {
-        document.addEventListener(eventName, function (e) {
-          resolve(); // resolves when the event fires
-        });
-      });
-    }, eventName),
-
-    // if the event does not fire within n seconds, exit
-    page.waitForTimeout(seconds * 1000)
-  ]);
-}
-
 type Input = [
   string,
   (string) => string,
@@ -172,7 +145,7 @@ export const StorefrontTesteranto = <
       },
       andWhen: async function ({ page, contract, accounts }: Store, actioner): Promise<Selection> {
         const action = await actioner()({ page });
-        await page.waitForTimeout(1);
+        await page.waitForTimeout(10);
 
         await page.evaluate((counter) => {
           document.dispatchEvent(new CustomEvent<number>('setCounterEvent', ({ detail: counter })));
@@ -181,7 +154,7 @@ export const StorefrontTesteranto = <
         return action
       },
       butThen: async function ({ page, contract }: Store): Promise<Selection> {
-        await page.waitForTimeout(1);
+        await page.waitForTimeout(10);
 
         await page.evaluate((counter) => {
           document.dispatchEvent(new CustomEvent<number>('setCounterEvent', ({ detail: counter })));

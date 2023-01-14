@@ -65,7 +65,7 @@ export const StorefrontTest = StorefrontTesteranto<
   (Suite, Given, When, Then, Check) => {
     return [
       Suite.Default(
-        "the storefront?",
+        "the storefront react app",
         [
           Given.AnEmptyState(
             [features.federatedSplitContract],
