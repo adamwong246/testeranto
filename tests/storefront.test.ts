@@ -1,14 +1,11 @@
 import { assert } from "chai";
 
-// import type { IProps, IState } from "./ClassicalReact/ClassicalComponent";
 import { features } from "./testerantoFeatures.test";
-import { EsbuildPuppeteerTesteranto } from "./ClassicalReact/esbuild-puppeteer.testeranto.test";
+import { StorefrontTesteranto } from "./storefront.testeranto.test";
 
 import storefront from "../src/storefront";
 
-// const myFeature = features.federatedSplitContract;
-
-export const StorefrontTesteranto = EsbuildPuppeteerTesteranto<
+export const StorefrontTest = StorefrontTesteranto<
   {
     suites: {
       Default: string;
@@ -17,11 +14,11 @@ export const StorefrontTesteranto = EsbuildPuppeteerTesteranto<
       AnEmptyState: [];
     };
     whens: {
-      IClickTheButton: [];
+      Increment: [];
+      Decrement: [];
     };
     thens: {
-      ThePropsIs: [any];
-      TheStatusIs: [any];
+      TheCounterIs: [number];
     };
     checks: {
       AnEmptyState;
@@ -30,7 +27,7 @@ export const StorefrontTesteranto = EsbuildPuppeteerTesteranto<
 >(
   {
     Suites: {
-      Default: "some default Suite",
+      Default: "default storefront suite",
     },
     Givens: {
       AnEmptyState: () => {
@@ -38,29 +35,25 @@ export const StorefrontTesteranto = EsbuildPuppeteerTesteranto<
       },
     },
     Whens: {
-      IClickTheButton:
-        () =>
-          async ({ page }) =>
-            await page.click("#theButton"),
+      Increment: () =>
+        async ({ page }) => {
+          await page.click("#inc")
+        }
+      ,
+      Decrement: () =>
+        async ({ page }) =>
+          await page.click("#dec"),
     },
     Thens: {
-      ThePropsIs:
+      TheCounterIs:
         (expectation) =>
           async ({ page }) => {
             assert.deepEqual(
-              await page.$eval("#theProps", (el) => el.innerHTML),
+              await page.$eval("#counter", (el) => el.innerHTML),
               JSON.stringify(expectation)
             )
           },
 
-
-      TheStatusIs:
-        (expectation) =>
-          async ({ page }) =>
-            assert.deepEqual(
-              await page.$eval("#theState", (el) => el.innerHTML),
-              JSON.stringify(expectation)
-            ),
     },
     Checks: {
       AnEmptyState: () => {
@@ -72,47 +65,48 @@ export const StorefrontTesteranto = EsbuildPuppeteerTesteranto<
   (Suite, Given, When, Then, Check) => {
     return [
       Suite.Default(
-        "the storefront",
+        "the storefront?",
         [
           Given.AnEmptyState(
             [features.federatedSplitContract],
             [],
             [
-              Then.ThePropsIs({}),
-              Then.TheStatusIs({ count: 0 })
+              Then.TheCounterIs(0)
             ]
           ),
-          // Given.AnEmptyState(
-          //   [],
-          //   [When.IClickTheButton()],
-          //   [
-          //     Then.ThePropsIs({}),
-          //     Then.TheStatusIs({ count: 1 })
-          //   ]
-          // ),
+          Given.AnEmptyState(
+            [],
+            [When.Increment()],
+            [
+              Then.TheCounterIs(1)
+            ]
+          ),
+          Given.AnEmptyState(
+            [],
+            [
+              When.Increment(), When.Increment(), When.Increment(),
+              When.Increment(), When.Increment(), When.Increment(),
+            ],
+            [
+              Then.TheCounterIs(6)
+            ]
+          ),
+          Given.AnEmptyState(
+            [],
+            [
 
-          // Given.AnEmptyState(
-          //   [features.hello],
-          //   [
-          //     When.IClickTheButton(),
-          //     When.IClickTheButton(),
-          //     When.IClickTheButton(),
-          //   ],
-          //   [Then.TheStatusIs({ count: 3 })]
-          // ),
+              When.Increment(), When.Increment(), When.Increment(), When.Increment(), When.Increment(), When.Increment(),
+              When.Increment(), When.Increment(), When.Increment(), When.Increment(), When.Increment(), When.Increment(),
+              When.Increment(), When.Increment(), When.Increment(), When.Increment(), When.Increment(), When.Increment(),
+              When.Increment(), When.Increment(), When.Increment(), When.Increment(), When.Increment(), When.Increment(),
+              When.Increment(), When.Increment(), When.Increment(), When.Increment(), When.Increment(), When.Increment(),
+              When.Increment(), When.Increment(), When.Increment(), When.Increment(), When.Increment(), When.Increment(),
+            ],
+            [
+              Then.TheCounterIs(36)
+            ]
+          ),
 
-          // Given.AnEmptyState(
-          //   [features.hello],
-          //   [
-          //     When.IClickTheButton(),
-          //     When.IClickTheButton(),
-          //     When.IClickTheButton(),
-          //     When.IClickTheButton(),
-          //     When.IClickTheButton(),
-          //     When.IClickTheButton(),
-          //   ],
-          //   [Then.TheStatusIs({ count: 6 })]
-          // ),
         ],
         []
       ),
@@ -121,7 +115,7 @@ export const StorefrontTesteranto = EsbuildPuppeteerTesteranto<
 
   [
 
-    "./src/index.tsx",
+    "./tests/storefrontIndex.test.tsx",
 
     (jsbundle: string): string => `
             <!DOCTYPE html>
@@ -130,8 +124,10 @@ export const StorefrontTesteranto = EsbuildPuppeteerTesteranto<
       <script type="module">${jsbundle}</script>
     </head>
 
+    <h1>hello world</h1>
     <body>
       <div id="root">
+        <p>loading...</p>
       </div>
     </body>
 
@@ -140,5 +136,7 @@ export const StorefrontTesteranto = EsbuildPuppeteerTesteranto<
     </html>
 `,
     storefront,
-  ]
+  ],
+
+  "MyFirstContract"
 );

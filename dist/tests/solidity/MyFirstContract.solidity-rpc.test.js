@@ -76,24 +76,18 @@ var SolidityRpcTesteranto = (testImplementations, testSpecifications, testInput,
             throw err;
           const providerFarSide = server.provider;
           const accounts = await providerFarSide.request({ method: "eth_accounts", params: [] });
-          console.log("mark 1");
           const web3NearSide = new Web3(providerFarSide);
-          console.log("mark 2");
           const contractNearSide = await new web3NearSide.eth.Contract(contract.abi).deploy({ data: contract.bytecode.bytes }).send({ from: accounts[0], gas: 7e6 });
-          console.log("mark 3");
           const web3FarSideProvider = new ethers.providers.JsonRpcProvider(`http://localhost:${port}`);
-          console.log("mark 4");
           const web3FarSideSigner = new ethers.Wallet(
             providerFarSide.getInitialAccounts()[accounts[1]].secretKey,
             web3FarSideProvider
           );
-          console.log("mark 5");
           const contractFarSide = new ethers.Contract(
             contractNearSide.options.address,
             contract.abi,
             web3FarSideSigner
           );
-          console.log("mark 6");
           res({
             contractNearSide,
             contractFarSide,

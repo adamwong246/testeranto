@@ -1,6 +1,6 @@
 import ReactDom from "react-dom/client";
-
 import React from "react";
+
 import storefront from "./storefront";
 
 document.addEventListener("DOMContentLoaded", function () {
