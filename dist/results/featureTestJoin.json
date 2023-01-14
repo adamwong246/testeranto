@@ -1,17 +1,17 @@
 {
-  "hello": [
+  "A website which can acts as a storefront": [
     {
-      "testKey": "Default",
-      "name": "Testing the Rectangle class",
-      "whens": [
-        "setWidth: 4",
-        "setHeight: 9"
-      ],
+      "testKey": "AnEmptyState",
+      "name": "the storefront",
+      "whens": [],
       "thens": [
-        "getWidth: 4",
-        "getHeight: 9"
-      ]
-    },
+        "ThePropsIs: [object Object]",
+        "TheStatusIs: [object Object]"
+      ],
+      "errors": {}
+    }
+  ],
+  "hello": [
     {
       "testKey": "AnEmptyState",
       "name": "Testing the Node server with fetch",
@@ -33,6 +33,20 @@
       "thens": [
         "TheEmailIsNot: adam@email.com",
         "TheEmailIs: bob@mail.com"
+      ]
+    },
+    {
+      "testKey": "Default",
+      "name": "Testing a very simple smart contract ephemerally",
+      "whens": [
+        "Increment: 1",
+        "Increment: 1",
+        "Increment: 1",
+        "Increment: 1",
+        "Decrement: 1"
+      ],
+      "thens": [
+        "Get: [object Object]"
       ]
     },
     {

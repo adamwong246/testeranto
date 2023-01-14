@@ -59,6 +59,11 @@
       "FallenAngels",
       "./tests/solidity/FallenAngels.solidity.test.ts",
       "FallenAngelsTesteranto"
+    ],
+    [
+      "storefront",
+      "./tests/storefront.test.ts",
+      "StorefrontTesteranto"
     ]
   ],
   "features": "./tests/testerantoFeatures.test.ts",
