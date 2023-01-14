@@ -1,7 +1,8 @@
-import fs from "fs";
-import path from "path";
+// import fs from "fs";
+// import path from "path";
 import Ganache, { Server } from "ganache";
-import TruffleCompile from "truffle-compile";
+// import TruffleCompile from "truffle-compile";
+// import TruffleConfig from "@truffle/config";
 import Web3 from 'web3';
 
 import { Testeranto } from "testeranto";
@@ -10,6 +11,8 @@ import { ethers } from "ethers";
 
 import { Contract as ContractEthers } from 'ethers';
 import { Contract as ContractWeb3 } from 'web3-eth-contract';
+
+import { solCompile } from "./truffle";
 
 type Selection = {
   contractFarSide: ContractEthers,
@@ -23,37 +26,37 @@ type ThenShape = any;
 type Input = any;
 type Ibis = any;
 
-// Promisify truffle-compile
-const truffleCompile = (...args) =>
-  new Promise(resolve => TruffleCompile(...args, (_, data) => resolve(data)));
+// // Promisify truffle-compile
+// const truffleCompile = (...args) =>
+//   new Promise(resolve => TruffleCompile(...args, (_, data) => resolve(data)));
 
 
-const compile = async filename => {
-  const sourcePath = path.join(__dirname, "../contracts", filename);
+// const compile = async filename => {
+//   const sourcePath = path.join(__dirname, "../contracts", filename);
 
-  const sources = {
-    [sourcePath]: fs.readFileSync(sourcePath, { encoding: "utf8" }),
-  };
+//   const sources = {
+//     [sourcePath]: fs.readFileSync(sourcePath, { encoding: "utf8" }),
+//   };
 
-  const options = {
-    contracts_directory: path.join(__dirname, "../contracts"),
-    compilers: {
-      solc: {
-        version: "0.5.2",
-        settings: {
-          optimizer: {
-            enabled: false,
-            runs: 200,
-          },
-          evmVersion: "byzantium",
-        },
-      },
-    },
-  };
+//   const options = {
+//     contracts_directory: path.join(__dirname, "../contracts"),
+//     compilers: {
+//       solc: {
+//         version: "0.5.2",
+//         settings: {
+//           optimizer: {
+//             enabled: false,
+//             runs: 200,
+//           },
+//           evmVersion: "byzantium",
+//         },
+//       },
+//     },
+//   };
 
-  const artifact = await truffleCompile(sources, options);
-  return artifact;
-};
+//   const artifact = await truffleCompile(sources, options);
+//   return artifact;
+// };
 
 export const SolidityRpcTesteranto = <
   ITestShape extends ITTestShape
@@ -85,7 +88,8 @@ export const SolidityRpcTesteranto = <
     { ports: 1 },
     {
       beforeAll: async () =>
-        (await compile(`../../../contracts/${contractName}.sol`) as any)[contractName] as Ibis,
+        (await solCompile(contractName)).contracts.find((c) => c.contractName === contractName),
+      // (await compile(`../../../contracts/${contractName}.sol`) as any)[contractName] as Ibis,
 
       beforeEach: (contract: Ibis, i, tr) => {
 
@@ -104,17 +108,25 @@ export const SolidityRpcTesteranto = <
             const providerFarSide = server.provider;
             const accounts = await providerFarSide.request({ method: "eth_accounts", params: [] });
 
+            console.log("mark 1")
+
             /* @ts-ignore:next-line */
             const web3NearSide = new Web3(providerFarSide);
 
+            console.log("mark 2")
+
             // deploy the contract under accounts[0]
             const contractNearSide = await (new web3NearSide.eth.Contract(contract.abi))
-              .deploy({ data: contract.bytecode })
-              .send({ from: accounts[0], gas: 150000 });
+              .deploy({ data: contract.bytecode.bytes })
+              .send({ from: accounts[0], gas: 7000000 });
+
+            console.log("mark 3")
 
             /////////////////////////////////////////////
 
             const web3FarSideProvider = new ethers.providers.JsonRpcProvider(`http://localhost:${port}`);
+
+            console.log("mark 4")
 
             // create a test wallet from a ganache account
             const web3FarSideSigner = new ethers.Wallet(
@@ -122,8 +134,16 @@ export const SolidityRpcTesteranto = <
               web3FarSideProvider
             );
 
+            console.log("mark 5")
+
             // create a contract that our test user can access
-            const contractFarSide = new ethers.Contract(contractNearSide.options.address, contract.abi, web3FarSideSigner);
+            const contractFarSide = new ethers.Contract(
+              contractNearSide.options.address,
+              contract.abi,
+              web3FarSideSigner
+            );
+
+            console.log("mark 6")
 
             res({
               contractNearSide,

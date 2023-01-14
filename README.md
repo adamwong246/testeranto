@@ -1,4 +1,6 @@
-# kokomo bay
+# kokomo bay 🏝
+
+## t;dr
 
 1. Install the dependencies
 
@@ -12,3 +14,7 @@
 3. View the results of the test
 
 `yarn simpleserver`
+
+## testeranto
+
+[ChromaPDX.github.io/kokomoBay/dist/report.html](https://ChromaPDX.github.io/kokomoBay/dist/report.html)

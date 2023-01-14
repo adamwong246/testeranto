@@ -22,12 +22,17 @@
   },
   "types": "index.d.ts",
   "dependencies": {
-    "testeranto": "adamwong246/testeranto"
+    "@openzeppelin/contracts": "^4.8.0",
+    "@poanet/solidity-flattener": "^3.0.8",
+    "@thirdweb-dev/contracts": "^3.3.0",
+    "@thirdweb-dev/sdk": "^3.6.9",
+    "testeranto": "file:../testeranto.ts"
   },
   "devDependencies": {
     "@babel/core": "^7.19.6",
     "@reduxjs/toolkit": "^1.8.6",
     "@testing-library/react": "^13.4.0",
+    "@truffle/compile-solidity": "6.0.56",
     "@truffle/contract": "^4.6.10",
     "@types/chai": "^4.3.4",
     "@types/lodash": "^4.14.189",
@@ -51,13 +56,10 @@
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.4",
     "react-test-renderer": "^18.2.0",
-    "truffle": "^5.7.1",
-    "truffle-compile": "^4.2.3",
+    "truffle": "^5.7.3",
     "ts-loader": "^9.3.1",
     "typescript": "4.8.2",
     "web3": "^1.8.1",
-    "web3-eth-contract": "^1.8.1",
-    "webpack": "^5.74.0",
-    "webpack-cli": "^4.10.0"
+    "web3-eth-contract": "^1.8.1"
   }
 }

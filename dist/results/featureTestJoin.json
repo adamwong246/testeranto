@@ -1,13 +1,29 @@
 {
   "hello": [
     {
-      "testKey": "AnEmptyState",
-      "name": "Testing the Redux store",
+      "testKey": "Default",
+      "name": "Testing the Rectangle class",
       "whens": [
-        "TheEmailIsSetTo: hey there"
+        "setWidth: 4",
+        "setHeight: 9"
       ],
       "thens": [
-        "TheEmailIs: hey there"
+        "getWidth: 4",
+        "getHeight: 9"
+      ]
+    },
+    {
+      "testKey": "AnEmptyState",
+      "name": "Testing the Node server with fetch",
+      "whens": [
+        "PostToStatus: aloha",
+        "PostToAdd: 4",
+        "PostToStatus: hello",
+        "PostToAdd: 3"
+      ],
+      "thens": [
+        "TheStatusIs: hello",
+        "TheNumberIs: 7"
       ]
     },
     {
@@ -27,18 +43,6 @@
       ],
       "thens": [
         "TheEmailIs: adam@email.com"
-      ]
-    },
-    {
-      "testKey": "Default",
-      "name": "Testing the Rectangle class",
-      "whens": [
-        "setWidth: 4",
-        "setHeight: 9"
-      ],
-      "thens": [
-        "getWidth: 4",
-        "getHeight: 9"
       ]
     },
     {

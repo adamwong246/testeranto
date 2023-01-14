@@ -1,12 +1,11 @@
-import fs from "fs";
-import path from "path";
-import Ganache from "ganache";
-import TruffleCompile from "truffle-compile";
-import Web3 from 'web3';
 import { Contract } from 'web3-eth-contract';
+import Ganache from "ganache";
+import Web3 from 'web3';
 
 import { Testeranto } from "testeranto";
 import { ITestImplementation, ITestSpecification, ITTestShape } from "testeranto";
+
+import { solCompile } from "./truffle";
 
 type Selection = {
   contract: Contract,
@@ -18,38 +17,6 @@ type WhenShape = any;
 type ThenShape = any;
 type Input = any;
 type Ibis = any;
-
-// Promisify truffle-compile
-const truffleCompile = (...args) =>
-  new Promise(resolve => TruffleCompile(...args, (_, data) => resolve(data)));
-
-
-const compile = async filename => {
-  const sourcePath = path.join(__dirname, "../contracts", filename);
-
-  const sources = {
-    [sourcePath]: fs.readFileSync(sourcePath, { encoding: "utf8" }),
-  };
-
-  const options = {
-    contracts_directory: path.join(__dirname, "../contracts"),
-    compilers: {
-      solc: {
-        version: "0.5.2",
-        settings: {
-          optimizer: {
-            enabled: false,
-            runs: 200,
-          },
-          evmVersion: "byzantium",
-        },
-      },
-    },
-  };
-
-  const artifact = await truffleCompile(sources, options);
-  return artifact;
-};
 
 export const SolidityTesteranto = <
   ITestShape extends ITTestShape
@@ -80,25 +47,26 @@ export const SolidityTesteranto = <
     testImplementations,
     { ports: 0 },
     {
-      beforeAll: async () => {
-        return (await compile(`../../../contracts/${contractName}.sol`) as any)[contractName] as Ibis
-      },
+      beforeAll: async () =>
+        (await solCompile(contractName)).contracts.find((c) => c.contractName === contractName),
+
       beforeEach: async (contract: Ibis) => {
 
         // https://github.com/trufflesuite/ganache#programmatic-use
-        const provider = Ganache.provider({ seed: "drizzle-utils" });
+        const provider = Ganache.provider({
+          seed: "drizzle-utils",
+          gasPrice: 7000000
+        });
 
         /* @ts-ignore:next-line */
         const web3 = new Web3(provider);
-
-        console.log("asd");
-
         const accounts = await web3.eth.getAccounts();
 
+        // console.log("contract", contract);
         return {
           contract: await (new web3.eth.Contract(contract.abi))
-            .deploy({ data: contract.bytecode })
-            .send({ from: accounts[0], gas: 150000 }),
+            .deploy({ data: contract.bytecode.bytes })
+            .send({ from: accounts[0], gas: 7000000 }),
           accounts,
           provider
         };
