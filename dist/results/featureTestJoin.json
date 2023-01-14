@@ -2,14 +2,16 @@
   "hello": [
     {
       "testKey": "Default",
-      "name": "Testing the Rectangle class",
+      "name": "Testing a very simple smart contract over RPC",
       "whens": [
-        "setWidth: 4",
-        "setHeight: 9"
+        "Increment: 1",
+        "Increment: 1",
+        "Increment: 1",
+        "Increment: 1",
+        "Decrement: 1"
       ],
       "thens": [
-        "getWidth: 4",
-        "getHeight: 9"
+        "Get: [object Object]"
       ]
     },
     {
@@ -36,16 +38,6 @@
       ]
     },
     {
-      "testKey": "default",
-      "name": "Testing the LoginPage as react",
-      "whens": [
-        "TheEmailIsSetTo: adam@email.com"
-      ],
-      "thens": [
-        "TheEmailIs: adam@email.com"
-      ]
-    },
-    {
       "testKey": "WidthOfOneAndHeightOfOne",
       "name": "Testing the Rectangle class",
       "whens": [
@@ -54,6 +46,16 @@
       ],
       "thens": [
         "getHeight: 33"
+      ]
+    },
+    {
+      "testKey": "default",
+      "name": "Testing the LoginPage as react",
+      "whens": [
+        "TheEmailIsSetTo: adam@email.com"
+      ],
+      "thens": [
+        "TheEmailIs: adam@email.com"
       ]
     }
   ],
@@ -112,6 +114,16 @@
         "getWidth: 4",
         "area: 12",
         "circumference: 14"
+      ]
+    }
+  ],
+  "A website which can acts as a storefront": [
+    {
+      "testKey": "AnEmptyState",
+      "name": "the storefront react app",
+      "whens": [],
+      "thens": [
+        "TheCounterIs: 0"
       ]
     }
   ]

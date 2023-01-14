@@ -108,25 +108,17 @@ export const SolidityRpcTesteranto = <
             const providerFarSide = server.provider;
             const accounts = await providerFarSide.request({ method: "eth_accounts", params: [] });
 
-            console.log("mark 1")
-
             /* @ts-ignore:next-line */
             const web3NearSide = new Web3(providerFarSide);
-
-            console.log("mark 2")
 
             // deploy the contract under accounts[0]
             const contractNearSide = await (new web3NearSide.eth.Contract(contract.abi))
               .deploy({ data: contract.bytecode.bytes })
               .send({ from: accounts[0], gas: 7000000 });
 
-            console.log("mark 3")
-
             /////////////////////////////////////////////
 
             const web3FarSideProvider = new ethers.providers.JsonRpcProvider(`http://localhost:${port}`);
-
-            console.log("mark 4")
 
             // create a test wallet from a ganache account
             const web3FarSideSigner = new ethers.Wallet(
@@ -134,16 +126,12 @@ export const SolidityRpcTesteranto = <
               web3FarSideProvider
             );
 
-            console.log("mark 5")
-
             // create a contract that our test user can access
             const contractFarSide = new ethers.Contract(
               contractNearSide.options.address,
               contract.abi,
               web3FarSideSigner
             );
-
-            console.log("mark 6")
 
             res({
               contractNearSide,

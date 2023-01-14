@@ -8,7 +8,7 @@
             "hello": {
               "results": {
                 "Default": {
-                  "name": "Testing the Rectangle class",
+                  "name": "Testing a very simple smart contract over RPC",
                   "fails": []
                 },
                 "AnEmptyState": {
@@ -19,12 +19,12 @@
                   "name": "Testing the Redux store",
                   "fails": []
                 },
-                "default": {
-                  "name": "Testing the LoginPage as react",
-                  "fails": []
-                },
                 "WidthOfOneAndHeightOfOne": {
                   "name": "Testing the Rectangle class",
+                  "fails": []
+                },
+                "default": {
+                  "name": "Testing the LoginPage as react",
                   "fails": []
                 },
                 "results": {
@@ -68,7 +68,7 @@
                     },
                     "report": {
                       "Default": {
-                        "name": "Testing the Rectangle class",
+                        "name": "Testing a very simple smart contract over RPC",
                         "fails": []
                       },
                       "AnEmptyState": {
@@ -79,12 +79,12 @@
                         "name": "Testing the Redux store",
                         "fails": []
                       },
-                      "default": {
-                        "name": "Testing the LoginPage as react",
-                        "fails": []
-                      },
                       "WidthOfOneAndHeightOfOne": {
                         "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
+                      "default": {
+                        "name": "Testing the LoginPage as react",
                         "fails": []
                       }
                     }
@@ -102,7 +102,7 @@
                     },
                     "report": {
                       "Default": {
-                        "name": "Testing the Rectangle class",
+                        "name": "Testing a very simple smart contract over RPC",
                         "fails": []
                       },
                       "AnEmptyState": {
@@ -113,12 +113,12 @@
                         "name": "Testing the Redux store",
                         "fails": []
                       },
-                      "default": {
-                        "name": "Testing the LoginPage as react",
-                        "fails": []
-                      },
                       "WidthOfOneAndHeightOfOne": {
                         "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
+                      "default": {
+                        "name": "Testing the LoginPage as react",
                         "fails": []
                       },
                       "results": {
@@ -162,7 +162,7 @@
                           },
                           "report": {
                             "Default": {
-                              "name": "Testing the Rectangle class",
+                              "name": "Testing a very simple smart contract over RPC",
                               "fails": []
                             },
                             "AnEmptyState": {
@@ -173,12 +173,12 @@
                               "name": "Testing the Redux store",
                               "fails": []
                             },
-                            "default": {
-                              "name": "Testing the LoginPage as react",
-                              "fails": []
-                            },
                             "WidthOfOneAndHeightOfOne": {
                               "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "default": {
+                              "name": "Testing the LoginPage as react",
                               "fails": []
                             }
                           }
@@ -211,7 +211,7 @@
                   "hello": {
                     "results": {
                       "Default": {
-                        "name": "Testing the Rectangle class",
+                        "name": "Testing a very simple smart contract over RPC",
                         "fails": []
                       },
                       "AnEmptyState": {
@@ -222,12 +222,12 @@
                         "name": "Testing the Redux store",
                         "fails": []
                       },
-                      "default": {
-                        "name": "Testing the LoginPage as react",
-                        "fails": []
-                      },
                       "WidthOfOneAndHeightOfOne": {
                         "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
+                      "default": {
+                        "name": "Testing the LoginPage as react",
                         "fails": []
                       },
                       "results": {
@@ -271,7 +271,7 @@
                           },
                           "report": {
                             "Default": {
-                              "name": "Testing the Rectangle class",
+                              "name": "Testing a very simple smart contract over RPC",
                               "fails": []
                             },
                             "AnEmptyState": {
@@ -282,12 +282,12 @@
                               "name": "Testing the Redux store",
                               "fails": []
                             },
-                            "default": {
-                              "name": "Testing the LoginPage as react",
-                              "fails": []
-                            },
                             "WidthOfOneAndHeightOfOne": {
                               "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "default": {
+                              "name": "Testing the LoginPage as react",
                               "fails": []
                             }
                           }
@@ -305,7 +305,7 @@
                           },
                           "report": {
                             "Default": {
-                              "name": "Testing the Rectangle class",
+                              "name": "Testing a very simple smart contract over RPC",
                               "fails": []
                             },
                             "AnEmptyState": {
@@ -316,12 +316,12 @@
                               "name": "Testing the Redux store",
                               "fails": []
                             },
-                            "default": {
-                              "name": "Testing the LoginPage as react",
-                              "fails": []
-                            },
                             "WidthOfOneAndHeightOfOne": {
                               "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "default": {
+                              "name": "Testing the LoginPage as react",
                               "fails": []
                             },
                             "results": {
@@ -365,7 +365,7 @@
                                 },
                                 "report": {
                                   "Default": {
-                                    "name": "Testing the Rectangle class",
+                                    "name": "Testing a very simple smart contract over RPC",
                                     "fails": []
                                   },
                                   "AnEmptyState": {
@@ -376,12 +376,12 @@
                                     "name": "Testing the Redux store",
                                     "fails": []
                                   },
-                                  "default": {
-                                    "name": "Testing the LoginPage as react",
-                                    "fails": []
-                                  },
                                   "WidthOfOneAndHeightOfOne": {
                                     "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "default": {
+                                    "name": "Testing the LoginPage as react",
                                     "fails": []
                                   }
                                 }
@@ -397,13 +397,18 @@
               }
             },
             "A website which can acts as a storefront": {
-              "results": {},
+              "results": {
+                "AnEmptyState": {
+                  "name": "the storefront react app",
+                  "fails": []
+                }
+              },
               "report": {
                 "results": {
                   "hello": {
                     "results": {
                       "Default": {
-                        "name": "Testing the Rectangle class",
+                        "name": "Testing a very simple smart contract over RPC",
                         "fails": []
                       },
                       "AnEmptyState": {
@@ -414,12 +419,12 @@
                         "name": "Testing the Redux store",
                         "fails": []
                       },
-                      "default": {
-                        "name": "Testing the LoginPage as react",
-                        "fails": []
-                      },
                       "WidthOfOneAndHeightOfOne": {
                         "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
+                      "default": {
+                        "name": "Testing the LoginPage as react",
                         "fails": []
                       },
                       "results": {
@@ -463,7 +468,7 @@
                           },
                           "report": {
                             "Default": {
-                              "name": "Testing the Rectangle class",
+                              "name": "Testing a very simple smart contract over RPC",
                               "fails": []
                             },
                             "AnEmptyState": {
@@ -474,12 +479,12 @@
                               "name": "Testing the Redux store",
                               "fails": []
                             },
-                            "default": {
-                              "name": "Testing the LoginPage as react",
-                              "fails": []
-                            },
                             "WidthOfOneAndHeightOfOne": {
                               "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "default": {
+                              "name": "Testing the LoginPage as react",
                               "fails": []
                             }
                           }
@@ -497,7 +502,7 @@
                           },
                           "report": {
                             "Default": {
-                              "name": "Testing the Rectangle class",
+                              "name": "Testing a very simple smart contract over RPC",
                               "fails": []
                             },
                             "AnEmptyState": {
@@ -508,12 +513,12 @@
                               "name": "Testing the Redux store",
                               "fails": []
                             },
-                            "default": {
-                              "name": "Testing the LoginPage as react",
-                              "fails": []
-                            },
                             "WidthOfOneAndHeightOfOne": {
                               "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "default": {
+                              "name": "Testing the LoginPage as react",
                               "fails": []
                             },
                             "results": {
@@ -557,7 +562,7 @@
                                 },
                                 "report": {
                                   "Default": {
-                                    "name": "Testing the Rectangle class",
+                                    "name": "Testing a very simple smart contract over RPC",
                                     "fails": []
                                   },
                                   "AnEmptyState": {
@@ -568,12 +573,12 @@
                                     "name": "Testing the Redux store",
                                     "fails": []
                                   },
-                                  "default": {
-                                    "name": "Testing the LoginPage as react",
-                                    "fails": []
-                                  },
                                   "WidthOfOneAndHeightOfOne": {
                                     "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "default": {
+                                    "name": "Testing the LoginPage as react",
                                     "fails": []
                                   }
                                 }
@@ -606,7 +611,7 @@
                         "hello": {
                           "results": {
                             "Default": {
-                              "name": "Testing the Rectangle class",
+                              "name": "Testing a very simple smart contract over RPC",
                               "fails": []
                             },
                             "AnEmptyState": {
@@ -617,12 +622,12 @@
                               "name": "Testing the Redux store",
                               "fails": []
                             },
-                            "default": {
-                              "name": "Testing the LoginPage as react",
-                              "fails": []
-                            },
                             "WidthOfOneAndHeightOfOne": {
                               "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "default": {
+                              "name": "Testing the LoginPage as react",
                               "fails": []
                             },
                             "results": {
@@ -666,7 +671,7 @@
                                 },
                                 "report": {
                                   "Default": {
-                                    "name": "Testing the Rectangle class",
+                                    "name": "Testing a very simple smart contract over RPC",
                                     "fails": []
                                   },
                                   "AnEmptyState": {
@@ -677,12 +682,12 @@
                                     "name": "Testing the Redux store",
                                     "fails": []
                                   },
-                                  "default": {
-                                    "name": "Testing the LoginPage as react",
-                                    "fails": []
-                                  },
                                   "WidthOfOneAndHeightOfOne": {
                                     "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "default": {
+                                    "name": "Testing the LoginPage as react",
                                     "fails": []
                                   }
                                 }
@@ -700,7 +705,7 @@
                                 },
                                 "report": {
                                   "Default": {
-                                    "name": "Testing the Rectangle class",
+                                    "name": "Testing a very simple smart contract over RPC",
                                     "fails": []
                                   },
                                   "AnEmptyState": {
@@ -711,12 +716,12 @@
                                     "name": "Testing the Redux store",
                                     "fails": []
                                   },
-                                  "default": {
-                                    "name": "Testing the LoginPage as react",
-                                    "fails": []
-                                  },
                                   "WidthOfOneAndHeightOfOne": {
                                     "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "default": {
+                                    "name": "Testing the LoginPage as react",
                                     "fails": []
                                   },
                                   "results": {
@@ -760,7 +765,7 @@
                                       },
                                       "report": {
                                         "Default": {
-                                          "name": "Testing the Rectangle class",
+                                          "name": "Testing a very simple smart contract over RPC",
                                           "fails": []
                                         },
                                         "AnEmptyState": {
@@ -771,12 +776,12 @@
                                           "name": "Testing the Redux store",
                                           "fails": []
                                         },
-                                        "default": {
-                                          "name": "Testing the LoginPage as react",
-                                          "fails": []
-                                        },
                                         "WidthOfOneAndHeightOfOne": {
                                           "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        },
+                                        "default": {
+                                          "name": "Testing the LoginPage as react",
                                           "fails": []
                                         }
                                       }
@@ -801,7 +806,7 @@
                   "hello": {
                     "results": {
                       "Default": {
-                        "name": "Testing the Rectangle class",
+                        "name": "Testing a very simple smart contract over RPC",
                         "fails": []
                       },
                       "AnEmptyState": {
@@ -812,12 +817,12 @@
                         "name": "Testing the Redux store",
                         "fails": []
                       },
-                      "default": {
-                        "name": "Testing the LoginPage as react",
-                        "fails": []
-                      },
                       "WidthOfOneAndHeightOfOne": {
                         "name": "Testing the Rectangle class",
+                        "fails": []
+                      },
+                      "default": {
+                        "name": "Testing the LoginPage as react",
                         "fails": []
                       },
                       "results": {
@@ -861,7 +866,7 @@
                           },
                           "report": {
                             "Default": {
-                              "name": "Testing the Rectangle class",
+                              "name": "Testing a very simple smart contract over RPC",
                               "fails": []
                             },
                             "AnEmptyState": {
@@ -872,12 +877,12 @@
                               "name": "Testing the Redux store",
                               "fails": []
                             },
-                            "default": {
-                              "name": "Testing the LoginPage as react",
-                              "fails": []
-                            },
                             "WidthOfOneAndHeightOfOne": {
                               "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "default": {
+                              "name": "Testing the LoginPage as react",
                               "fails": []
                             }
                           }
@@ -895,7 +900,7 @@
                           },
                           "report": {
                             "Default": {
-                              "name": "Testing the Rectangle class",
+                              "name": "Testing a very simple smart contract over RPC",
                               "fails": []
                             },
                             "AnEmptyState": {
@@ -906,12 +911,12 @@
                               "name": "Testing the Redux store",
                               "fails": []
                             },
-                            "default": {
-                              "name": "Testing the LoginPage as react",
-                              "fails": []
-                            },
                             "WidthOfOneAndHeightOfOne": {
                               "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "default": {
+                              "name": "Testing the LoginPage as react",
                               "fails": []
                             },
                             "results": {
@@ -955,7 +960,7 @@
                                 },
                                 "report": {
                                   "Default": {
-                                    "name": "Testing the Rectangle class",
+                                    "name": "Testing a very simple smart contract over RPC",
                                     "fails": []
                                   },
                                   "AnEmptyState": {
@@ -966,12 +971,12 @@
                                     "name": "Testing the Redux store",
                                     "fails": []
                                   },
-                                  "default": {
-                                    "name": "Testing the LoginPage as react",
-                                    "fails": []
-                                  },
                                   "WidthOfOneAndHeightOfOne": {
                                     "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "default": {
+                                    "name": "Testing the LoginPage as react",
                                     "fails": []
                                   }
                                 }
@@ -1004,7 +1009,7 @@
                         "hello": {
                           "results": {
                             "Default": {
-                              "name": "Testing the Rectangle class",
+                              "name": "Testing a very simple smart contract over RPC",
                               "fails": []
                             },
                             "AnEmptyState": {
@@ -1015,12 +1020,12 @@
                               "name": "Testing the Redux store",
                               "fails": []
                             },
-                            "default": {
-                              "name": "Testing the LoginPage as react",
-                              "fails": []
-                            },
                             "WidthOfOneAndHeightOfOne": {
                               "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "default": {
+                              "name": "Testing the LoginPage as react",
                               "fails": []
                             },
                             "results": {
@@ -1064,7 +1069,7 @@
                                 },
                                 "report": {
                                   "Default": {
-                                    "name": "Testing the Rectangle class",
+                                    "name": "Testing a very simple smart contract over RPC",
                                     "fails": []
                                   },
                                   "AnEmptyState": {
@@ -1075,12 +1080,12 @@
                                     "name": "Testing the Redux store",
                                     "fails": []
                                   },
-                                  "default": {
-                                    "name": "Testing the LoginPage as react",
-                                    "fails": []
-                                  },
                                   "WidthOfOneAndHeightOfOne": {
                                     "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "default": {
+                                    "name": "Testing the LoginPage as react",
                                     "fails": []
                                   }
                                 }
@@ -1098,7 +1103,7 @@
                                 },
                                 "report": {
                                   "Default": {
-                                    "name": "Testing the Rectangle class",
+                                    "name": "Testing a very simple smart contract over RPC",
                                     "fails": []
                                   },
                                   "AnEmptyState": {
@@ -1109,12 +1114,12 @@
                                     "name": "Testing the Redux store",
                                     "fails": []
                                   },
-                                  "default": {
-                                    "name": "Testing the LoginPage as react",
-                                    "fails": []
-                                  },
                                   "WidthOfOneAndHeightOfOne": {
                                     "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "default": {
+                                    "name": "Testing the LoginPage as react",
                                     "fails": []
                                   },
                                   "results": {
@@ -1158,7 +1163,7 @@
                                       },
                                       "report": {
                                         "Default": {
-                                          "name": "Testing the Rectangle class",
+                                          "name": "Testing a very simple smart contract over RPC",
                                           "fails": []
                                         },
                                         "AnEmptyState": {
@@ -1169,12 +1174,12 @@
                                           "name": "Testing the Redux store",
                                           "fails": []
                                         },
-                                        "default": {
-                                          "name": "Testing the LoginPage as react",
-                                          "fails": []
-                                        },
                                         "WidthOfOneAndHeightOfOne": {
                                           "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        },
+                                        "default": {
+                                          "name": "Testing the LoginPage as react",
                                           "fails": []
                                         }
                                       }
@@ -1190,13 +1195,18 @@
                     }
                   },
                   "A website which can acts as a storefront": {
-                    "results": {},
+                    "results": {
+                      "AnEmptyState": {
+                        "name": "the storefront react app",
+                        "fails": []
+                      }
+                    },
                     "report": {
                       "results": {
                         "hello": {
                           "results": {
                             "Default": {
-                              "name": "Testing the Rectangle class",
+                              "name": "Testing a very simple smart contract over RPC",
                               "fails": []
                             },
                             "AnEmptyState": {
@@ -1207,12 +1217,12 @@
                               "name": "Testing the Redux store",
                               "fails": []
                             },
-                            "default": {
-                              "name": "Testing the LoginPage as react",
-                              "fails": []
-                            },
                             "WidthOfOneAndHeightOfOne": {
                               "name": "Testing the Rectangle class",
+                              "fails": []
+                            },
+                            "default": {
+                              "name": "Testing the LoginPage as react",
                               "fails": []
                             },
                             "results": {
@@ -1256,7 +1266,7 @@
                                 },
                                 "report": {
                                   "Default": {
-                                    "name": "Testing the Rectangle class",
+                                    "name": "Testing a very simple smart contract over RPC",
                                     "fails": []
                                   },
                                   "AnEmptyState": {
@@ -1267,12 +1277,12 @@
                                     "name": "Testing the Redux store",
                                     "fails": []
                                   },
-                                  "default": {
-                                    "name": "Testing the LoginPage as react",
-                                    "fails": []
-                                  },
                                   "WidthOfOneAndHeightOfOne": {
                                     "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "default": {
+                                    "name": "Testing the LoginPage as react",
                                     "fails": []
                                   }
                                 }
@@ -1290,7 +1300,7 @@
                                 },
                                 "report": {
                                   "Default": {
-                                    "name": "Testing the Rectangle class",
+                                    "name": "Testing a very simple smart contract over RPC",
                                     "fails": []
                                   },
                                   "AnEmptyState": {
@@ -1301,12 +1311,12 @@
                                     "name": "Testing the Redux store",
                                     "fails": []
                                   },
-                                  "default": {
-                                    "name": "Testing the LoginPage as react",
-                                    "fails": []
-                                  },
                                   "WidthOfOneAndHeightOfOne": {
                                     "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "default": {
+                                    "name": "Testing the LoginPage as react",
                                     "fails": []
                                   },
                                   "results": {
@@ -1350,7 +1360,7 @@
                                       },
                                       "report": {
                                         "Default": {
-                                          "name": "Testing the Rectangle class",
+                                          "name": "Testing a very simple smart contract over RPC",
                                           "fails": []
                                         },
                                         "AnEmptyState": {
@@ -1361,12 +1371,12 @@
                                           "name": "Testing the Redux store",
                                           "fails": []
                                         },
-                                        "default": {
-                                          "name": "Testing the LoginPage as react",
-                                          "fails": []
-                                        },
                                         "WidthOfOneAndHeightOfOne": {
                                           "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        },
+                                        "default": {
+                                          "name": "Testing the LoginPage as react",
                                           "fails": []
                                         }
                                       }
@@ -1399,7 +1409,7 @@
                               "hello": {
                                 "results": {
                                   "Default": {
-                                    "name": "Testing the Rectangle class",
+                                    "name": "Testing a very simple smart contract over RPC",
                                     "fails": []
                                   },
                                   "AnEmptyState": {
@@ -1410,12 +1420,12 @@
                                     "name": "Testing the Redux store",
                                     "fails": []
                                   },
-                                  "default": {
-                                    "name": "Testing the LoginPage as react",
-                                    "fails": []
-                                  },
                                   "WidthOfOneAndHeightOfOne": {
                                     "name": "Testing the Rectangle class",
+                                    "fails": []
+                                  },
+                                  "default": {
+                                    "name": "Testing the LoginPage as react",
                                     "fails": []
                                   },
                                   "results": {
@@ -1459,7 +1469,7 @@
                                       },
                                       "report": {
                                         "Default": {
-                                          "name": "Testing the Rectangle class",
+                                          "name": "Testing a very simple smart contract over RPC",
                                           "fails": []
                                         },
                                         "AnEmptyState": {
@@ -1470,12 +1480,12 @@
                                           "name": "Testing the Redux store",
                                           "fails": []
                                         },
-                                        "default": {
-                                          "name": "Testing the LoginPage as react",
-                                          "fails": []
-                                        },
                                         "WidthOfOneAndHeightOfOne": {
                                           "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        },
+                                        "default": {
+                                          "name": "Testing the LoginPage as react",
                                           "fails": []
                                         }
                                       }
@@ -1493,7 +1503,7 @@
                                       },
                                       "report": {
                                         "Default": {
-                                          "name": "Testing the Rectangle class",
+                                          "name": "Testing a very simple smart contract over RPC",
                                           "fails": []
                                         },
                                         "AnEmptyState": {
@@ -1504,12 +1514,12 @@
                                           "name": "Testing the Redux store",
                                           "fails": []
                                         },
-                                        "default": {
-                                          "name": "Testing the LoginPage as react",
-                                          "fails": []
-                                        },
                                         "WidthOfOneAndHeightOfOne": {
                                           "name": "Testing the Rectangle class",
+                                          "fails": []
+                                        },
+                                        "default": {
+                                          "name": "Testing the LoginPage as react",
                                           "fails": []
                                         },
                                         "results": {
@@ -1553,7 +1563,7 @@
                                             },
                                             "report": {
                                               "Default": {
-                                                "name": "Testing the Rectangle class",
+                                                "name": "Testing a very simple smart contract over RPC",
                                                 "fails": []
                                               },
                                               "AnEmptyState": {
@@ -1564,12 +1574,12 @@
                                                 "name": "Testing the Redux store",
                                                 "fails": []
                                               },
-                                              "default": {
-                                                "name": "Testing the LoginPage as react",
-                                                "fails": []
-                                              },
                                               "WidthOfOneAndHeightOfOne": {
                                                 "name": "Testing the Rectangle class",
+                                                "fails": []
+                                              },
+                                              "default": {
+                                                "name": "Testing the LoginPage as react",
                                                 "fails": []
                                               }
                                             }

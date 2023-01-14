@@ -1,6 +1,11 @@
 {
   "tests": [
     [
+      "storefront",
+      "./tests/storefront.test.ts",
+      "StorefrontTest"
+    ],
+    [
       "MyFirstContract",
       "./tests/solidity/MyFirstContract.solidity.test.ts",
       "MyFirstContractTesteranto"
