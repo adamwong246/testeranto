@@ -1,0 +1,19 @@
+{
+  "name": "the storefront react app",
+  "givens": [
+    {
+      "name": "AnEmptyState",
+      "whens": [
+        {
+          "name": "Increment: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheCounterIs: 1"
+        }
+      ]
+    }
+  ],
+  "fails": []
+}

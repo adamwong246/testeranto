@@ -1,12 +1,10 @@
-// import fs from "fs";
-// import path from "path";
 import Ganache, { Server } from "ganache";
-// import TruffleCompile from "truffle-compile";
-// import TruffleConfig from "@truffle/config";
 import Web3 from 'web3';
 
 import { Testeranto } from "testeranto";
-import { ITestImplementation, ITestSpecification, ITTestShape } from "testeranto";
+import {
+  ITestImplementation, ITestSpecification, ITTestShape
+} from "testeranto";
 import { ethers } from "ethers";
 
 import { Contract as ContractEthers } from 'ethers';
@@ -25,38 +23,6 @@ type WhenShape = any;
 type ThenShape = any;
 type Input = any;
 type Ibis = any;
-
-// // Promisify truffle-compile
-// const truffleCompile = (...args) =>
-//   new Promise(resolve => TruffleCompile(...args, (_, data) => resolve(data)));
-
-
-// const compile = async filename => {
-//   const sourcePath = path.join(__dirname, "../contracts", filename);
-
-//   const sources = {
-//     [sourcePath]: fs.readFileSync(sourcePath, { encoding: "utf8" }),
-//   };
-
-//   const options = {
-//     contracts_directory: path.join(__dirname, "../contracts"),
-//     compilers: {
-//       solc: {
-//         version: "0.5.2",
-//         settings: {
-//           optimizer: {
-//             enabled: false,
-//             runs: 200,
-//           },
-//           evmVersion: "byzantium",
-//         },
-//       },
-//     },
-//   };
-
-//   const artifact = await truffleCompile(sources, options);
-//   return artifact;
-// };
 
 export const SolidityRpcTesteranto = <
   ITestShape extends ITTestShape
