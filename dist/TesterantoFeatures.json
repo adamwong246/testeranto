@@ -1,12 +1,15 @@
 {
   "features": [
     {
-      "name": "An ERC721 which is redeemable",
+      "name": "Redeems an ERC-721, marking its state as redeemed",
       "inNetworks": [
         {
           "network": "Priority",
           "neighbors": [
-            "kokomo bay"
+            "kokomo bay",
+            "Registers contract status as redeemed, and changes image",
+            "Buyer encrypts plaintext message and stores value on contract",
+            "Vendor Decrypts plaintext message"
           ]
         }
       ]
@@ -23,20 +26,56 @@
       ]
     },
     {
+      "name": "An ERC721 which is redeemable",
+      "inNetworks": [
+        {
+          "network": "Priority",
+          "neighbors": [
+            "kokomo bay"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Registers contract status as redeemed, and changes image",
+      "inNetworks": [
+        {
+          "network": "Priority",
+          "neighbors": [
+            "Redeems an ERC-721, marking its state as redeemed"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Buyer encrypts plaintext message and stores value on contract",
+      "inNetworks": [
+        {
+          "network": "Priority",
+          "neighbors": [
+            "Redeems an ERC-721, marking its state as redeemed"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Vendor Decrypts plaintext message",
+      "inNetworks": [
+        {
+          "network": "Priority",
+          "neighbors": [
+            "Redeems an ERC-721, marking its state as redeemed"
+          ]
+        }
+      ]
+    },
+    {
       "name": "hello",
       "inNetworks": [
         {
           "network": "some semantic directed graph",
           "neighbors": [
             "aloha"
-          ]
-        },
-        {
-          "network": "Priority",
-          "neighbors": [
-            "kokomo bay",
-            "aloha",
-            "gutentag"
           ]
         }
       ]
@@ -52,12 +91,6 @@
         },
         {
           "network": "some semantic directed graph",
-          "neighbors": [
-            "hello"
-          ]
-        },
-        {
-          "network": "Priority",
           "neighbors": [
             "hello"
           ]
@@ -78,28 +111,12 @@
           "neighbors": [
             "hola"
           ]
-        },
-        {
-          "network": "Priority",
-          "neighbors": [
-            "hello",
-            "hola",
-            "buenos dias",
-            "bien venidos"
-          ]
         }
       ]
     },
     {
       "name": "buenos dias",
-      "inNetworks": [
-        {
-          "network": "Priority",
-          "neighbors": [
-            "gutentag"
-          ]
-        }
-      ]
+      "inNetworks": []
     },
     {
       "name": "hola",
@@ -109,25 +126,12 @@
           "neighbors": [
             "gutentag"
           ]
-        },
-        {
-          "network": "Priority",
-          "neighbors": [
-            "gutentag"
-          ]
         }
       ]
     },
     {
       "name": "bien venidos",
-      "inNetworks": [
-        {
-          "network": "Priority",
-          "neighbors": [
-            "gutentag"
-          ]
-        }
-      ]
+      "inNetworks": []
     },
     {
       "name": "kokomo bay",
@@ -135,10 +139,9 @@
         {
           "network": "Priority",
           "neighbors": [
-            "An ERC721 which is redeemable",
+            "Redeems an ERC-721, marking its state as redeemed",
             "A website which can acts as a storefront",
-            "build the rocket silo",
-            "hello"
+            "An ERC721 which is redeemable"
           ]
         }
       ]
@@ -146,15 +149,7 @@
     {
       "name": "build the rocket silo",
       "due": "2023-05-02T02:36:34.000Z",
-      "inNetworks": [
-        {
-          "network": "Priority",
-          "neighbors": [
-            "kokomo bay",
-            "build the rocket"
-          ]
-        }
-      ]
+      "inNetworks": []
     },
     {
       "name": "build the rocket",
@@ -163,13 +158,6 @@
         {
           "network": "an undirected semantic graph",
           "neighbors": [
-            "build the rocket payload"
-          ]
-        },
-        {
-          "network": "Priority",
-          "neighbors": [
-            "build the rocket silo",
             "build the rocket payload"
           ]
         }
@@ -181,12 +169,6 @@
       "inNetworks": [
         {
           "network": "an undirected semantic graph",
-          "neighbors": [
-            "build the rocket"
-          ]
-        },
-        {
-          "network": "Priority",
           "neighbors": [
             "build the rocket"
           ]
@@ -220,7 +202,7 @@
         ],
         "edges": [
           {
-            "key": "geid_144_0",
+            "key": "geid_24_0",
             "source": "gutentag",
             "target": "aloha",
             "attributes": {
@@ -228,7 +210,7 @@
             }
           },
           {
-            "key": "geid_144_1",
+            "key": "geid_24_1",
             "source": "build the rocket",
             "target": "build the rocket payload",
             "attributes": {
@@ -263,7 +245,7 @@
         ],
         "edges": [
           {
-            "key": "geid_143_0",
+            "key": "geid_23_0",
             "source": "hello",
             "target": "aloha",
             "attributes": {
@@ -271,7 +253,7 @@
             }
           },
           {
-            "key": "geid_143_1",
+            "key": "geid_23_1",
             "source": "gutentag",
             "target": "hola",
             "attributes": {
@@ -295,104 +277,59 @@
             "key": "kokomo bay"
           },
           {
-            "key": "An ERC721 which is redeemable"
+            "key": "Redeems an ERC-721, marking its state as redeemed"
           },
           {
             "key": "A website which can acts as a storefront"
           },
           {
-            "key": "build the rocket silo"
+            "key": "An ERC721 which is redeemable"
           },
           {
-            "key": "build the rocket"
+            "key": "Registers contract status as redeemed, and changes image"
           },
           {
-            "key": "build the rocket payload"
+            "key": "Buyer encrypts plaintext message and stores value on contract"
           },
           {
-            "key": "hello"
-          },
-          {
-            "key": "aloha"
-          },
-          {
-            "key": "gutentag"
-          },
-          {
-            "key": "buenos dias"
-          },
-          {
-            "key": "hola"
-          },
-          {
-            "key": "bien venidos"
+            "key": "Vendor Decrypts plaintext message"
           }
         ],
         "edges": [
           {
-            "key": "geid_142_0",
+            "key": "geid_22_0",
             "source": "kokomo bay",
-            "target": "An ERC721 which is redeemable",
+            "target": "Redeems an ERC-721, marking its state as redeemed",
             "attributes": {}
           },
           {
-            "key": "geid_142_1",
+            "key": "geid_22_1",
             "source": "kokomo bay",
             "target": "A website which can acts as a storefront",
             "attributes": {}
           },
           {
-            "key": "geid_142_2",
+            "key": "geid_22_2",
             "source": "kokomo bay",
-            "target": "build the rocket silo",
+            "target": "An ERC721 which is redeemable",
             "attributes": {}
           },
           {
-            "key": "geid_142_3",
-            "source": "build the rocket silo",
-            "target": "build the rocket",
+            "key": "geid_22_3",
+            "source": "Redeems an ERC-721, marking its state as redeemed",
+            "target": "Registers contract status as redeemed, and changes image",
             "attributes": {}
           },
           {
-            "key": "geid_142_4",
-            "source": "build the rocket",
-            "target": "build the rocket payload",
+            "key": "geid_22_4",
+            "source": "Redeems an ERC-721, marking its state as redeemed",
+            "target": "Buyer encrypts plaintext message and stores value on contract",
             "attributes": {}
           },
           {
-            "key": "geid_142_5",
-            "source": "kokomo bay",
-            "target": "hello",
-            "attributes": {}
-          },
-          {
-            "key": "geid_142_6",
-            "source": "hello",
-            "target": "aloha",
-            "attributes": {}
-          },
-          {
-            "key": "geid_142_7",
-            "source": "hello",
-            "target": "gutentag",
-            "attributes": {}
-          },
-          {
-            "key": "geid_142_8",
-            "source": "gutentag",
-            "target": "buenos dias",
-            "attributes": {}
-          },
-          {
-            "key": "geid_142_9",
-            "source": "hola",
-            "target": "gutentag",
-            "attributes": {}
-          },
-          {
-            "key": "geid_142_10",
-            "source": "gutentag",
-            "target": "bien venidos",
+            "key": "geid_22_5",
+            "source": "Redeems an ERC-721, marking its state as redeemed",
+            "target": "Vendor Decrypts plaintext message",
             "attributes": {}
           }
         ]

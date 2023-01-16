@@ -1,6 +1,6 @@
 // tests/ClassicalReact/ClassicalComponent.react-test-renderer.test.tsx
 import assert from "assert";
-import { features } from "/Users/adam/Code/kokomoBay/dist/tests/testerantoFeatures.test.js";
+import { features } from "/Users/marcus/Documents/websites/kokomoBay/dist/tests/testerantoFeatures.test.js";
 
 // tests/ClassicalReact/ClassicalComponent.tsx
 import React from "react";

@@ -99,7 +99,7 @@ function LoginPage_default() {
 }
 
 // tests/Redux+Reselect+React/LoginPage.test.ts
-import { features } from "/Users/adam/Code/kokomoBay/dist/tests/testerantoFeatures.test.js";
+import { features } from "/Users/marcus/Documents/websites/kokomoBay/dist/tests/testerantoFeatures.test.js";
 var myFeature = features.hello;
 var AppReactTesteranto = ReactTesteranto(
   {

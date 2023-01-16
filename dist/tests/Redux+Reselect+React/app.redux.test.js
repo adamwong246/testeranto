@@ -1,6 +1,6 @@
 // tests/Redux+Reselect+React/app.redux.test.ts
 import { assert } from "chai";
-import { features } from "/Users/adam/Code/kokomoBay/dist/tests/testerantoFeatures.test.js";
+import { features } from "/Users/marcus/Documents/websites/kokomoBay/dist/tests/testerantoFeatures.test.js";
 
 // tests/Redux+Reselect+React/redux.testeranto.test.ts
 import { createStore } from "redux";

@@ -1,5 +1,5 @@
 // tests/httpServer/server.puppeteer.test.ts
-import { features } from "/Users/adam/Code/kokomoBay/dist/tests/testerantoFeatures.test.js";
+import { features } from "/Users/marcus/Documents/websites/kokomoBay/dist/tests/testerantoFeatures.test.js";
 
 // tests/httpServer/puppeteer-http.testeranto.test.ts
 import puppeteer from "puppeteer";

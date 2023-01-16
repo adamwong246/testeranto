@@ -80,7 +80,7 @@ var app_default = () => {
 };
 
 // tests/Redux+Reselect+React/app.reduxToolkit.test.ts
-import { features } from "/Users/adam/Code/kokomoBay/dist/tests/testerantoFeatures.test.js";
+import { features } from "/Users/marcus/Documents/websites/kokomoBay/dist/tests/testerantoFeatures.test.js";
 var core = app_default();
 var selector = core.select.loginPageSelection;
 var actions = core.app.actions;

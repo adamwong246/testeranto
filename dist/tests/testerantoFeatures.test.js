@@ -9,8 +9,12 @@ var MyFeature = class extends BaseFeature {
 };
 var features = {
   root: new MyFeature("kokomo bay"),
-  redemption: new MyFeature("An ERC721 which is redeemable"),
+  mint: new MyFeature("An ERC721 which is redeemable"),
+  redemption: new MyFeature("Redeems an ERC-721, marking its state as redeemed"),
   federatedSplitContract: new MyFeature("A website which can acts as a storefront"),
+  markRedeemed: new MyFeature("Registers contract status as redeemed, and changes image"),
+  encryptShipping: new MyFeature("Buyer encrypts plaintext message and stores value on contract"),
+  decryptShipping: new MyFeature("Vendor Decrypts plaintext message"),
   buildSilo: new MyFeature("build the rocket silo", new Date("2023-05-02T02:36:34+0000")),
   buildRocket: new MyFeature("build the rocket", new Date("2023-06-06T02:36:34+0000")),
   buildSatellite: new MyFeature("build the rocket payload", new Date("2023-06-06T02:36:34+0000")),
@@ -24,15 +28,10 @@ var features = {
 var priorityGraph = new TesterantoGraphDirectedAcylic("Priority");
 priorityGraph.connect(features.root.name, features.redemption.name);
 priorityGraph.connect(features.root.name, features.federatedSplitContract.name);
-priorityGraph.connect(features.root.name, features.buildSilo.name);
-priorityGraph.connect(features.buildSilo.name, features.buildRocket.name);
-priorityGraph.connect(features.buildRocket.name, features.buildSatellite.name);
-priorityGraph.connect(features.root.name, features.hello.name);
-priorityGraph.connect(features.hello.name, features.aloha.name);
-priorityGraph.connect(features.hello.name, features.gutentag.name);
-priorityGraph.connect(features.gutentag.name, features.buenosDias.name);
-priorityGraph.connect(features.hola.name, features.gutentag.name);
-priorityGraph.connect(features.gutentag.name, features.bienVenidos.name);
+priorityGraph.connect(features.root.name, features.mint.name);
+priorityGraph.connect(features.redemption.name, features.markRedeemed.name);
+priorityGraph.connect(features.redemption.name, features.encryptShipping.name);
+priorityGraph.connect(features.redemption.name, features.decryptShipping.name);
 var semantic = new TesterantoGraphDirected("some semantic directed graph");
 semantic.connect(features.hello.name, features.aloha.name, "superceedes");
 semantic.connect(features.gutentag.name, features.hola.name, "negates");
@@ -43,6 +42,10 @@ var testerantoFeatures_test_default = new TesterantoFeatures(
   [
     features.redemption,
     features.federatedSplitContract,
+    features.mint,
+    features.markRedeemed,
+    features.encryptShipping,
+    features.decryptShipping,
     features.hello,
     features.aloha,
     features.gutentag,
