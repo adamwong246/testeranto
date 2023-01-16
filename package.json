@@ -23,7 +23,6 @@
   "types": "index.d.ts",
   "dependencies": {
     "@openzeppelin/contracts": "^4.8.0",
-    "@poanet/solidity-flattener": "^3.0.8",
     "@thirdweb-dev/contracts": "^3.3.0",
     "@thirdweb-dev/sdk": "^3.6.9",
     "testeranto": "0.9.21"
