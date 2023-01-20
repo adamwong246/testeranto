@@ -65,7 +65,7 @@ export const StorefrontTest = StorefrontTesteranto<
   (Suite, Given, When, Then, Check) => {
     return [
       Suite.Default(
-        "the storefront react app",
+        "the storefront react app, alpha",
         [
           Given.AnEmptyState(
             [features.federatedSplitContract],
@@ -115,7 +115,7 @@ export const StorefrontTest = StorefrontTesteranto<
 
   [
 
-    "./tests/storefrontIndex.test.tsx",
+    "./tests/storefront/alpha/testIndex.test.tsx",
 
     (jsbundle: string): string => `
             <!DOCTYPE html>

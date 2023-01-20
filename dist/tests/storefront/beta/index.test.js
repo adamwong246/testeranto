@@ -1,5 +1,6 @@
 // tests/storefront/beta/index.test.ts
 import { assert } from "chai";
+import { features } from "/Users/adam/Code/kokomoBay/dist/tests/testerantoFeatures.test.js";
 
 // tests/storefront/beta/index.testeranto.test.ts
 import { ethers } from "ethers";
@@ -59,6 +60,13 @@ var solCompile = async (entrySolidityFile) => {
 };
 
 // tests/storefront/beta/index.testeranto.test.ts
+var reactPropsOfContract = async (contract) => {
+  return {
+    counter: Web3.utils.hexToNumber(await contract.get({ gasLimit: 15e4 })),
+    inc: async () => await contract.inc({ gasLimit: 15e4 }),
+    dec: async () => await contract.dec({ gasLimit: 15e4 })
+  };
+};
 var StorefrontTesteranto = (testImplementations, testSpecifications, testInput) => Testeranto(
   testInput,
   testSpecifications,
@@ -109,11 +117,7 @@ var StorefrontTesteranto = (testImplementations, testSpecifications, testInput) 
             rendereredComponent = renderer.create(
               React.createElement(
                 subject.component,
-                {
-                  counter: ethers.utils.formatEther(await contractFarSide.get({ gasLimit: 15e4 })),
-                  inc: async () => await contractFarSide.inc({ gasLimit: 15e4 }),
-                  dec: async () => await contractFarSide.dec({ gasLimit: 15e4 })
-                },
+                await reactPropsOfContract(contractFarSide),
                 []
               )
             );
@@ -130,16 +134,12 @@ var StorefrontTesteranto = (testImplementations, testSpecifications, testInput) 
       });
     },
     andWhen: async function(store, actioner) {
-      await act(() => actioner()(store));
       await act(async () => {
+        await actioner(store)(store);
         store.rendereredComponent.update(
           React.createElement(
             store.component,
-            {
-              counter: ethers.utils.formatEther(await store.contractFarSide.get({ gasLimit: 15e4 })),
-              inc: async () => await store.contractFarSide.inc({ gasLimit: 15e4 }),
-              dec: async () => await store.contractFarSide.dec({ gasLimit: 15e4 })
-            },
+            await reactPropsOfContract(store.contractFarSide),
             []
           )
         );
@@ -151,11 +151,7 @@ var StorefrontTesteranto = (testImplementations, testSpecifications, testInput) 
         store.rendereredComponent.update(
           React.createElement(
             store.component,
-            {
-              counter: ethers.utils.formatEther(await store.contractFarSide.get({ gasLimit: 15e4 })),
-              inc: async () => await store.contractFarSide.inc({ gasLimit: 15e4 }),
-              dec: async () => await store.contractFarSide.dec({ gasLimit: 15e4 })
-            },
+            await reactPropsOfContract(store.contractFarSide),
             []
           )
         );
@@ -187,24 +183,11 @@ var StorefrontTest = StorefrontTesteranto(
       }
     },
     Whens: {
-      Increment: () => async ({ rendereredComponent }) => {
-        console.log(rendereredComponent.root.findByProps({ id: "inc" }).props.onClick);
-        rendereredComponent.root.findByProps({ id: "inc" }).props.onClick();
-      },
-      Decrement: () => async ({ rendereredComponent }) => {
-        console.log(rendereredComponent.root.findByProps({ id: "dec" }).props.onClick);
-        rendereredComponent.root.findByProps({ id: "dec" }).props.onClick();
-      }
+      Increment: () => async ({ rendereredComponent }) => await rendereredComponent.root.findByProps({ id: "inc" }).props.onClick(),
+      Decrement: () => async ({ rendereredComponent }) => await rendereredComponent.root.findByProps({ id: "dec" }).props.onClick()
     },
     Thens: {
-      TheCounterIs: (expectation) => async ({ rendereredComponent }) => {
-        const compAsJson = rendereredComponent.toTree().rendered.rendered[1].rendered.toString();
-        console.log("compAsJson", compAsJson);
-        assert.deepEqual(
-          1,
-          1
-        );
-      }
+      TheCounterIs: (expectation) => async ({ rendereredComponent }) => assert.deepEqual(expectation, rendereredComponent.toTree().rendered.rendered[1].rendered.toString())
     },
     Checks: {
       AnEmptyState: () => {
@@ -215,13 +198,83 @@ var StorefrontTest = StorefrontTesteranto(
   (Suite, Given, When, Then, Check) => {
     return [
       Suite.Default(
-        "the storefront react app",
+        "the storefront react app, beta",
         [
           Given.AnEmptyState(
+            [features.federatedSplitContract],
             [],
-            [When.Increment()],
             [
-              Then.TheCounterIs(1)
+              Then.TheCounterIs("0")
+            ]
+          ),
+          Given.AnEmptyState(
+            [],
+            [
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment()
+            ],
+            [
+              Then.TheCounterIs("4")
+            ]
+          ),
+          Given.AnEmptyState(
+            [],
+            [
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment()
+            ],
+            [
+              Then.TheCounterIs("6")
+            ]
+          ),
+          Given.AnEmptyState(
+            [],
+            [
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment(),
+              When.Increment()
+            ],
+            [
+              Then.TheCounterIs("36")
             ]
           )
         ],

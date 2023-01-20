@@ -43,6 +43,14 @@ type Store = {
   rendereredComponent: renderer.ReactTestRenderer
 };
 
+const reactPropsOfContract = async (contract) => {
+  return ({
+    counter: Web3.utils.hexToNumber(await contract.get({ gasLimit: 150000 })),
+    inc: async () => await contract.inc({ gasLimit: 150000 }),
+    dec: async () => await contract.dec({ gasLimit: 150000 })
+  });
+}
+
 export const StorefrontTesteranto = <
   ITestShape extends ITTestShape
 >(
@@ -136,16 +144,12 @@ export const StorefrontTesteranto = <
               web3FarSideSigner
             );
 
-
             let rendereredComponent;
             await act(async () => {
               rendereredComponent = renderer.create(
                 React.createElement(subject.component,
-                  {
-                    counter: ethers.utils.formatEther(await contractFarSide.get({ gasLimit: 150000 })),
-                    inc: async () => await contractFarSide.inc({ gasLimit: 150000 }),
-                    dec: async () => await contractFarSide.dec({ gasLimit: 150000 })
-                  }, [])
+                  (await reactPropsOfContract(contractFarSide)),
+                  [])
               );
             });
 
@@ -162,16 +166,11 @@ export const StorefrontTesteranto = <
       },
 
       andWhen: async function (store, actioner) {
-        await act(() => actioner()(store));
-
         await act(async () => {
+          await (actioner(store))(store);
           store.rendereredComponent.update(
             React.createElement(store.component,
-              {
-                counter: ethers.utils.formatEther(await store.contractFarSide.get({ gasLimit: 150000 })),
-                inc: async () => await store.contractFarSide.inc({ gasLimit: 150000 }),
-                dec: async () => await store.contractFarSide.dec({ gasLimit: 150000 })
-              }, [])
+              await reactPropsOfContract(store.contractFarSide), [])
           );
         })
 
@@ -182,11 +181,7 @@ export const StorefrontTesteranto = <
         await act(async () => {
           store.rendereredComponent.update(
             React.createElement(store.component,
-              {
-                counter: ethers.utils.formatEther(await store.contractFarSide.get({ gasLimit: 150000 })),
-                inc: async () => await store.contractFarSide.inc({ gasLimit: 150000 }),
-                dec: async () => await store.contractFarSide.dec({ gasLimit: 150000 })
-              }, [])
+              await reactPropsOfContract(store.contractFarSide), [])
           );
         });
 

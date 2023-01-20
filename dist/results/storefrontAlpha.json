@@ -1,5 +1,5 @@
 {
-  "name": "the storefront react app, beta",
+  "name": "the storefront react app, alpha",
   "givens": [
     {
       "name": "AnEmptyState",
@@ -15,20 +15,11 @@
       "whens": [
         {
           "name": "Increment: undefined"
-        },
-        {
-          "name": "Increment: undefined"
-        },
-        {
-          "name": "Increment: undefined"
-        },
-        {
-          "name": "Increment: undefined"
         }
       ],
       "thens": [
         {
-          "name": "TheCounterIs: 4"
+          "name": "TheCounterIs: 1"
         }
       ]
     },
