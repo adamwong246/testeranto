@@ -14,7 +14,7 @@
     "ATDD"
   ],
   "scripts": {
-    "simpleserver": "open http://localhost:8080/reporter.html & cd dist && python -m SimpleHTTPServer 8080",
+    "simpleserver": "open http://localhost:8080/reporter.html & cd dist && python3 -m SimpleHTTPServer 8080",
     "clean:dist": "rm -rf ./dist/results && rm -rf ./dist/tests  && rm -f ./dist/reporter.css && rm -f ./dist/reporter.js && rm -f ./dist/*.jpg ",
     "clean:npm": "rm -rf node_modules && yarn install",
     "clean": "yarn clean:dist && yarn clean:npm",
@@ -23,10 +23,9 @@
   "types": "index.d.ts",
   "dependencies": {
     "@openzeppelin/contracts": "^4.8.0",
-    "@poanet/solidity-flattener": "^3.0.8",
     "@thirdweb-dev/contracts": "^3.3.0",
     "@thirdweb-dev/sdk": "^3.6.9",
-    "testeranto": "file:../testeranto.ts"
+    "testeranto": "0.9.21"
   },
   "devDependencies": {
     "@babel/core": "^7.19.6",
