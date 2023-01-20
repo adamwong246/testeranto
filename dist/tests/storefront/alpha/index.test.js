@@ -1,8 +1,8 @@
-// tests/storefront.test.ts
+// tests/storefront/alpha/index.test.ts
 import { assert } from "chai";
-import { features } from "/Users/marcus/Documents/websites/kokomoBay/dist/tests/testerantoFeatures.test.js";
+import { features } from "/Users/adam/Code/kokomoBay/dist/tests/testerantoFeatures.test.js";
 
-// tests/storefront.testeranto.test.ts
+// tests/storefront/alpha/index.testeranto.test.ts
 import puppeteer from "puppeteer";
 import esbuild from "esbuild";
 import Ganache from "ganache";
@@ -58,7 +58,7 @@ var solCompile = async (entrySolidityFile) => {
   return await Compile.sources({ sources: remmapedSources, options: TruffleConfig.detect() });
 };
 
-// tests/storefront.testeranto.test.ts
+// tests/storefront/alpha/index.testeranto.test.ts
 var StorefrontTesteranto = (testImplementations, testSpecifications, testInput, contractName) => Testeranto(
   testInput,
   testSpecifications,
@@ -150,7 +150,7 @@ function Storefront({ counter, inc, dec }) {
 }
 var storefront_default = Storefront;
 
-// tests/storefront.test.ts
+// tests/storefront/alpha/index.test.ts
 var StorefrontTest = StorefrontTesteranto(
   {
     Suites: {
@@ -184,7 +184,7 @@ var StorefrontTest = StorefrontTesteranto(
   (Suite, Given, When, Then, Check) => {
     return [
       Suite.Default(
-        "the storefront react app",
+        "the storefront react app, alpha",
         [
           Given.AnEmptyState(
             [features.federatedSplitContract],
@@ -264,7 +264,7 @@ var StorefrontTest = StorefrontTesteranto(
     ];
   },
   [
-    "./tests/storefrontIndex.test.tsx",
+    "./tests/storefront/alpha/testIndex.test.tsx",
     (jsbundle) => `
             <!DOCTYPE html>
     <html lang="en">
@@ -272,7 +272,6 @@ var StorefrontTest = StorefrontTesteranto(
       <script type="module">${jsbundle}<\/script>
     </head>
 
-    <h1>hello world</h1>
     <body>
       <div id="root">
         <p>loading...</p>

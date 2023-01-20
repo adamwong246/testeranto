@@ -1,6 +1,6 @@
 // tests/solidity/MyFirstContract.solidity.test.ts
 import { assert } from "chai";
-import { features } from "/Users/marcus/Documents/websites/kokomoBay/dist/tests/testerantoFeatures.test.js";
+import { features } from "/Users/adam/Code/kokomoBay/dist/tests/testerantoFeatures.test.js";
 
 // tests/solidity/solidity.testeranto.test.ts
 import Ganache from "ganache";

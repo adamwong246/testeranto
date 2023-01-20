@@ -1,8 +1,13 @@
 {
   "tests": [
     [
-      "storefront",
-      "./tests/storefront.test.ts",
+      "storefrontAlpha",
+      "./tests/storefront/alpha/index.test.ts",
+      "StorefrontTest"
+    ],
+    [
+      "storefrontBeta",
+      "./tests/storefront/beta/index.test.ts",
       "StorefrontTest"
     ],
     [

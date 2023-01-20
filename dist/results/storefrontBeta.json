@@ -1,0 +1,183 @@
+{
+  "name": "the storefront react app, beta",
+  "givens": [
+    {
+      "name": "AnEmptyState",
+      "whens": [],
+      "thens": [
+        {
+          "name": "TheCounterIs: 0"
+        }
+      ]
+    },
+    {
+      "name": "AnEmptyState",
+      "whens": [
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheCounterIs: 4"
+        }
+      ]
+    },
+    {
+      "name": "AnEmptyState",
+      "whens": [
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheCounterIs: 6"
+        }
+      ]
+    },
+    {
+      "name": "AnEmptyState",
+      "whens": [
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheCounterIs: 36"
+        }
+      ]
+    }
+  ],
+  "fails": []
+}

@@ -1,25 +1,31 @@
 {
   "hello": [
     {
-      "testKey": "AnEmptyState",
-      "name": "Testing the Redux store",
+      "testKey": "Default",
+      "name": "Testing a very simple smart contract over RPC",
       "whens": [
-        "TheEmailIsSetTo: hey there"
+        "Increment: 1",
+        "Increment: 1",
+        "Increment: 1",
+        "Increment: 1",
+        "Decrement: 1"
       ],
       "thens": [
-        "TheEmailIs: hey there"
+        "Get: [object Object]"
       ]
     },
     {
-      "testKey": "Default",
-      "name": "Testing the Rectangle class",
+      "testKey": "AnEmptyState",
+      "name": "Testing the Node server with fetch",
       "whens": [
-        "setWidth: 4",
-        "setHeight: 9"
+        "PostToStatus: aloha",
+        "PostToAdd: 4",
+        "PostToStatus: hello",
+        "PostToAdd: 3"
       ],
       "thens": [
-        "getWidth: 4",
-        "getHeight: 9"
+        "TheStatusIs: hello",
+        "TheNumberIs: 7"
       ]
     },
     {
@@ -50,6 +56,16 @@
       "thens": [
         "TheEmailIsNot: adam@email.com",
         "TheEmailIs: bob@mail.com"
+      ]
+    }
+  ],
+  "A website which can acts as a storefront": [
+    {
+      "testKey": "AnEmptyState",
+      "name": "the storefront react app, alpha",
+      "whens": [],
+      "thens": [
+        "TheCounterIs: 0"
       ]
     }
   ],
@@ -108,16 +124,6 @@
       ],
       "thens": [
         "TheEmailIs: hey there"
-      ]
-    }
-  ],
-  "A website which can acts as a storefront": [
-    {
-      "testKey": "AnEmptyState",
-      "name": "the storefront react app",
-      "whens": [],
-      "thens": [
-        "TheCounterIs: 0"
       ]
     }
   ]

@@ -1,7 +1,7 @@
 import ReactDom from "react-dom/client";
 import React, { useState } from 'react';
 
-import storefront from "../src/storefront";
+import storefront from "../../../src/storefront";
 
 let rroot;
 let elem;
@@ -23,8 +23,6 @@ class TestHarness extends React.Component<any, { counter: number }> {
   render() {
     return (
       <div>
-
-
         {
           storefront(
             {
@@ -37,25 +35,19 @@ class TestHarness extends React.Component<any, { counter: number }> {
               dec: () => window.AppDec('true'),
             }
           )
-
         }
       </div>
     );
   }
 }
 
-
-const tHarness = new TestHarness({});
-
-
 document.addEventListener("DOMContentLoaded", async function () {
-
-  console.log("\tDOMContentLoaded!")
   elem = document.getElementById("root");
 
   if (elem) {
     rroot = ReactDom.createRoot(elem);
     rroot.render(<TestHarness />);
+
     /* @ts-ignore:next-line */
     window.AppBooted('true');
   }

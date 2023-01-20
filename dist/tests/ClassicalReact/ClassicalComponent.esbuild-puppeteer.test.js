@@ -1,6 +1,6 @@
 // tests/ClassicalReact/ClassicalComponent.esbuild-puppeteer.test.ts
 import { assert } from "chai";
-import { features } from "/Users/marcus/Documents/websites/kokomoBay/dist/tests/testerantoFeatures.test.js";
+import { features } from "/Users/adam/Code/kokomoBay/dist/tests/testerantoFeatures.test.js";
 
 // tests/ClassicalReact/esbuild-puppeteer.testeranto.test.ts
 import puppeteer from "puppeteer";

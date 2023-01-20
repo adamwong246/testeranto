@@ -12,7 +12,7 @@
             "A website which can acts as a storefront": {
               "results": {
                 "AnEmptyState": {
-                  "name": "the storefront react app",
+                  "name": "the storefront react app, alpha",
                   "fails": []
                 }
               },
@@ -76,7 +76,7 @@
                   "A website which can acts as a storefront": {
                     "results": {
                       "AnEmptyState": {
-                        "name": "the storefront react app",
+                        "name": "the storefront react app, alpha",
                         "fails": []
                       }
                     },

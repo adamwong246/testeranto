@@ -32,7 +32,7 @@ var Rectangle = class {
 var Rectangle_default = Rectangle;
 
 // tests/Rectangle/Rectangle.test.ts
-import { features } from "/Users/marcus/Documents/websites/kokomoBay/dist/tests/testerantoFeatures.test.js";
+import { features } from "/Users/adam/Code/kokomoBay/dist/tests/testerantoFeatures.test.js";
 var RectangleTesteranto = Testeranto(
   Rectangle_default.prototype,
   (Suite, Given, When, Then, Check) => {

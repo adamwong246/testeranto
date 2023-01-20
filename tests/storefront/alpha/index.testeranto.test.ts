@@ -9,7 +9,7 @@ import { CompiledContract } from "@truffle/compile-common";
 import { Testeranto } from "testeranto";
 import { ITestImplementation, ITestSpecification, ITTestShape } from "testeranto";
 
-import { solCompile } from "./solidity/truffle";
+import { solCompile } from "../../solidity/truffle";
 
 type Input = [
   string,
