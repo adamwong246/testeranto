@@ -2,8 +2,11 @@
 import { assert } from "chai";
 import { features } from "../testerantoFeatures.test";
 import { SolidityTesteranto } from "./solidity.testeranto.test";
-
+import crypto from "crypto";
 import { commonGivens } from './index.test';
+import { ethers } from "ethers";
+
+const rando = () => new ethers.Wallet(crypto.randomBytes(32).toString('hex'));
 
 export const FallenAngelsTesteranto = SolidityTesteranto<
   {
@@ -62,7 +65,7 @@ export const FallenAngelsTesteranto = SolidityTesteranto<
   (Suite, Given, When, Then, Check) => {
     return [
       Suite.Default(
-        "FallenAngels, ephemerally",
+        "FallenAngels, ephemerally take 2",
         // this is expected to fail
         commonGivens(Given, When, Then, features),
         [
@@ -84,6 +87,8 @@ export const FallenAngelsTesteranto = SolidityTesteranto<
       ),
     ];
   },
-  "solSource",
-  'FallenAngels'
+  ['FallenAngels', async (web3) => {
+    const accounts = await web3.eth.getAccounts();
+    return ['fallen angel test', 'fat', accounts[0], '1', accounts[0]]
+  }]
 );

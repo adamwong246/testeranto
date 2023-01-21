@@ -23,7 +23,7 @@ export const commonGivens = (Given, When, Then, features) => [
       When.Increment(1),
     ],
     [
-      Then.Get({ asTestUser: 1, expectation: 4 })
+      Then.Get({ asTestUser: 1, expectation: 44 })
     ],
     "my first contract"
   ),

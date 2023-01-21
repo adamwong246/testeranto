@@ -57,13 +57,13 @@ var solCompile = async (entrySolidityFile) => {
 };
 
 // tests/solidity/solidity.testeranto.test.ts
-var SolidityTesteranto = (testImplementations, testSpecifications, testInput, contractName) => Testeranto(
+var SolidityTesteranto = (testImplementations, testSpecifications, testInput) => Testeranto(
   testInput,
   testSpecifications,
   testImplementations,
   { ports: 0 },
   {
-    beforeAll: async () => (await solCompile(contractName)).contracts.find((c) => c.contractName === contractName),
+    beforeAll: async () => (await solCompile(testInput[0])).contracts.find((c) => c.contractName === testInput[0]),
     beforeEach: async (contract) => {
       const provider = Ganache.provider({
         seed: "drizzle-utils",
@@ -71,8 +71,14 @@ var SolidityTesteranto = (testImplementations, testSpecifications, testInput, co
       });
       const web3 = new Web3(provider);
       const accounts = await web3.eth.getAccounts();
+      const argz = await testInput[1](web3);
+      const size = Buffer.byteLength(contract.deployedBytecode.bytes, "utf8") / 2;
+      console.log("contract size is", size);
       return {
-        contract: await new web3.eth.Contract(contract.abi).deploy({ data: contract.bytecode.bytes }).send({ from: accounts[0], gas: 7e6 }),
+        contract: await new web3.eth.Contract(contract.abi).deploy({
+          data: contract.bytecode.bytes,
+          arguments: argz
+        }).send({ from: accounts[0], gas: 7e6 }),
         accounts,
         provider
       };
@@ -80,6 +86,9 @@ var SolidityTesteranto = (testImplementations, testSpecifications, testInput, co
     andWhen: async ({ provider, contract, accounts }, callback) => callback()({ contract, accounts })
   }
 );
+
+// tests/solidity/FallenAngels.solidity.test.ts
+import crypto from "crypto";
 
 // tests/solidity/index.test.ts
 var commonGivens = (Given, When, Then, features2) => [
@@ -100,7 +109,7 @@ var commonGivens = (Given, When, Then, features2) => [
       When.Increment(1)
     ],
     [
-      Then.Get({ asTestUser: 1, expectation: 4 })
+      Then.Get({ asTestUser: 1, expectation: 44 })
     ],
     "my first contract"
   ),
@@ -121,6 +130,7 @@ var commonGivens = (Given, When, Then, features2) => [
 ];
 
 // tests/solidity/FallenAngels.solidity.test.ts
+import { ethers } from "ethers";
 var FallenAngelsTesteranto = SolidityTesteranto(
   {
     Suites: {
@@ -155,14 +165,16 @@ var FallenAngelsTesteranto = SolidityTesteranto(
   (Suite, Given, When, Then, Check) => {
     return [
       Suite.Default(
-        "FallenAngels, ephemerally",
+        "FallenAngels, ephemerally take 2",
         commonGivens(Given, When, Then, features),
         []
       )
     ];
   },
-  "solSource",
-  "FallenAngels"
+  ["FallenAngels", async (web3) => {
+    const accounts = await web3.eth.getAccounts();
+    return ["fallen angel test", "fat", accounts[0], "1", accounts[0]];
+  }]
 );
 export {
   FallenAngelsTesteranto

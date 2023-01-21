@@ -24,27 +24,27 @@
     {
       "ast": {
         "nodeType": "YulBlock",
-        "src": "0:614:51",
+        "src": "0:614:52",
         "statements": [
           {
             "body": {
               "nodeType": "YulBlock",
-              "src": "52:81:51",
+              "src": "52:81:52",
               "statements": [
                 {
                   "nodeType": "YulAssignment",
-                  "src": "62:65:51",
+                  "src": "62:65:52",
                   "value": {
                     "arguments": [
                       {
                         "name": "value",
                         "nodeType": "YulIdentifier",
-                        "src": "77:5:51"
+                        "src": "77:5:52"
                       },
                       {
                         "kind": "number",
                         "nodeType": "YulLiteral",
-                        "src": "84:42:51",
+                        "src": "84:42:52",
                         "type": "",
                         "value": "0xffffffffffffffffffffffffffffffffffffffff"
                       }
@@ -52,16 +52,16 @@
                     "functionName": {
                       "name": "and",
                       "nodeType": "YulIdentifier",
-                      "src": "73:3:51"
+                      "src": "73:3:52"
                     },
                     "nodeType": "YulFunctionCall",
-                    "src": "73:54:51"
+                    "src": "73:54:52"
                   },
                   "variableNames": [
                     {
                       "name": "cleaned",
                       "nodeType": "YulIdentifier",
-                      "src": "62:7:51"
+                      "src": "62:7:52"
                     }
                   ]
                 }
@@ -73,7 +73,7 @@
               {
                 "name": "value",
                 "nodeType": "YulTypedName",
-                "src": "34:5:51",
+                "src": "34:5:52",
                 "type": ""
               }
             ],
@@ -81,41 +81,41 @@
               {
                 "name": "cleaned",
                 "nodeType": "YulTypedName",
-                "src": "44:7:51",
+                "src": "44:7:52",
                 "type": ""
               }
             ],
-            "src": "7:126:51"
+            "src": "7:126:52"
           },
           {
             "body": {
               "nodeType": "YulBlock",
-              "src": "184:51:51",
+              "src": "184:51:52",
               "statements": [
                 {
                   "nodeType": "YulAssignment",
-                  "src": "194:35:51",
+                  "src": "194:35:52",
                   "value": {
                     "arguments": [
                       {
                         "name": "value",
                         "nodeType": "YulIdentifier",
-                        "src": "223:5:51"
+                        "src": "223:5:52"
                       }
                     ],
                     "functionName": {
                       "name": "cleanup_t_uint160",
                       "nodeType": "YulIdentifier",
-                      "src": "205:17:51"
+                      "src": "205:17:52"
                     },
                     "nodeType": "YulFunctionCall",
-                    "src": "205:24:51"
+                    "src": "205:24:52"
                   },
                   "variableNames": [
                     {
                       "name": "cleaned",
                       "nodeType": "YulIdentifier",
-                      "src": "194:7:51"
+                      "src": "194:7:52"
                     }
                   ]
                 }
@@ -127,7 +127,7 @@
               {
                 "name": "value",
                 "nodeType": "YulTypedName",
-                "src": "166:5:51",
+                "src": "166:5:52",
                 "type": ""
               }
             ],
@@ -135,16 +135,16 @@
               {
                 "name": "cleaned",
                 "nodeType": "YulTypedName",
-                "src": "176:7:51",
+                "src": "176:7:52",
                 "type": ""
               }
             ],
-            "src": "139:96:51"
+            "src": "139:96:52"
           },
           {
             "body": {
               "nodeType": "YulBlock",
-              "src": "314:53:51",
+              "src": "314:53:52",
               "statements": [
                 {
                   "expression": {
@@ -152,35 +152,35 @@
                       {
                         "name": "pos",
                         "nodeType": "YulIdentifier",
-                        "src": "331:3:51"
+                        "src": "331:3:52"
                       },
                       {
                         "arguments": [
                           {
                             "name": "value",
                             "nodeType": "YulIdentifier",
-                            "src": "354:5:51"
+                            "src": "354:5:52"
                           }
                         ],
                         "functionName": {
                           "name": "cleanup_t_address",
                           "nodeType": "YulIdentifier",
-                          "src": "336:17:51"
+                          "src": "336:17:52"
                         },
                         "nodeType": "YulFunctionCall",
-                        "src": "336:24:51"
+                        "src": "336:24:52"
                       }
                     ],
                     "functionName": {
                       "name": "mstore",
                       "nodeType": "YulIdentifier",
-                      "src": "324:6:51"
+                      "src": "324:6:52"
                     },
                     "nodeType": "YulFunctionCall",
-                    "src": "324:37:51"
+                    "src": "324:37:52"
                   },
                   "nodeType": "YulExpressionStatement",
-                  "src": "324:37:51"
+                  "src": "324:37:52"
                 }
               ]
             },
@@ -190,37 +190,37 @@
               {
                 "name": "value",
                 "nodeType": "YulTypedName",
-                "src": "302:5:51",
+                "src": "302:5:52",
                 "type": ""
               },
               {
                 "name": "pos",
                 "nodeType": "YulTypedName",
-                "src": "309:3:51",
+                "src": "309:3:52",
                 "type": ""
               }
             ],
-            "src": "241:126:51"
+            "src": "241:126:52"
           },
           {
             "body": {
               "nodeType": "YulBlock",
-              "src": "479:132:51",
+              "src": "479:132:52",
               "statements": [
                 {
                   "nodeType": "YulAssignment",
-                  "src": "489:26:51",
+                  "src": "489:26:52",
                   "value": {
                     "arguments": [
                       {
                         "name": "headStart",
                         "nodeType": "YulIdentifier",
-                        "src": "501:9:51"
+                        "src": "501:9:52"
                       },
                       {
                         "kind": "number",
                         "nodeType": "YulLiteral",
-                        "src": "512:2:51",
+                        "src": "512:2:52",
                         "type": "",
                         "value": "32"
                       }
@@ -228,16 +228,16 @@
                     "functionName": {
                       "name": "add",
                       "nodeType": "YulIdentifier",
-                      "src": "497:3:51"
+                      "src": "497:3:52"
                     },
                     "nodeType": "YulFunctionCall",
-                    "src": "497:18:51"
+                    "src": "497:18:52"
                   },
                   "variableNames": [
                     {
                       "name": "tail",
                       "nodeType": "YulIdentifier",
-                      "src": "489:4:51"
+                      "src": "489:4:52"
                     }
                   ]
                 },
@@ -247,19 +247,19 @@
                       {
                         "name": "value0",
                         "nodeType": "YulIdentifier",
-                        "src": "577:6:51"
+                        "src": "577:6:52"
                       },
                       {
                         "arguments": [
                           {
                             "name": "headStart",
                             "nodeType": "YulIdentifier",
-                            "src": "590:9:51"
+                            "src": "590:9:52"
                           },
                           {
                             "kind": "number",
                             "nodeType": "YulLiteral",
-                            "src": "601:1:51",
+                            "src": "601:1:52",
                             "type": "",
                             "value": "0"
                           }
@@ -267,22 +267,22 @@
                         "functionName": {
                           "name": "add",
                           "nodeType": "YulIdentifier",
-                          "src": "586:3:51"
+                          "src": "586:3:52"
                         },
                         "nodeType": "YulFunctionCall",
-                        "src": "586:17:51"
+                        "src": "586:17:52"
                       }
                     ],
                     "functionName": {
                       "name": "abi_encode_t_address_to_t_address_fromStack_library",
                       "nodeType": "YulIdentifier",
-                      "src": "525:51:51"
+                      "src": "525:51:52"
                     },
                     "nodeType": "YulFunctionCall",
-                    "src": "525:79:51"
+                    "src": "525:79:52"
                   },
                   "nodeType": "YulExpressionStatement",
-                  "src": "525:79:51"
+                  "src": "525:79:52"
                 }
               ]
             },
@@ -292,13 +292,13 @@
               {
                 "name": "headStart",
                 "nodeType": "YulTypedName",
-                "src": "451:9:51",
+                "src": "451:9:52",
                 "type": ""
               },
               {
                 "name": "value0",
                 "nodeType": "YulTypedName",
-                "src": "463:6:51",
+                "src": "463:6:52",
                 "type": ""
               }
             ],
@@ -306,22 +306,22 @@
               {
                 "name": "tail",
                 "nodeType": "YulTypedName",
-                "src": "474:4:51",
+                "src": "474:4:52",
                 "type": ""
               }
             ],
-            "src": "373:238:51"
+            "src": "373:238:52"
           }
         ]
       },
       "contents": "{\n\n    function cleanup_t_uint160(value) -> cleaned {\n        cleaned := and(value, 0xffffffffffffffffffffffffffffffffffffffff)\n    }\n\n    function cleanup_t_address(value) -> cleaned {\n        cleaned := cleanup_t_uint160(value)\n    }\n\n    function abi_encode_t_address_to_t_address_fromStack_library(value, pos) {\n        mstore(pos, cleanup_t_address(value))\n    }\n\n    function abi_encode_tuple_t_address__to_t_address__fromStack_library_reversed(headStart , value0) -> tail {\n        tail := add(headStart, 32)\n\n        abi_encode_t_address_to_t_address_fromStack_library(value0,  add(headStart, 0))\n\n    }\n\n}\n",
-      "id": 51,
+      "id": 52,
       "language": "Yul",
       "name": "#utility.yul"
     }
   ],
   "sourceMap": "202:3152:40:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
-  "deployedSourceMap": "202:3152:40:-:0;;;;;;;;;;;;;;;;;;;;;;;;336:81;;;:::i;:::-;;;;;;;:::i;:::-;;;;;;;;;375:42;336:81;:::o;7:126:51:-;44:7;84:42;77:5;73:54;62:65;;7:126;;;:::o;139:96::-;176:7;205:24;223:5;205:24;:::i;:::-;194:35;;139:96;;;:::o;241:126::-;336:24;354:5;336:24;:::i;:::-;331:3;324:37;241:126;;:::o;373:238::-;474:4;512:2;501:9;497:18;489:26;;525:79;601:1;590:9;586:17;577:6;525:79;:::i;:::-;373:238;;;;:::o",
+  "deployedSourceMap": "202:3152:40:-:0;;;;;;;;;;;;;;;;;;;;;;;;336:81;;;:::i;:::-;;;;;;;:::i;:::-;;;;;;;;;375:42;336:81;:::o;7:126:52:-;44:7;84:42;77:5;73:54;62:65;;7:126;;;:::o;139:96::-;176:7;205:24;223:5;205:24;:::i;:::-;194:35;;139:96;;;:::o;241:126::-;336:24;354:5;336:24;:::i;:::-;331:3;324:37;241:126;;:::o;373:238::-;474:4;512:2;501:9;497:18;489:26;;525:79;601:1;590:9;586:17;577:6;525:79;:::i;:::-;373:238;;;;:::o",
   "source": "// SPDX-License-Identifier: Apache-2.0\npragma solidity ^0.8.0;\n\n// Helper interfaces\nimport { IWETH } from \"../interfaces/IWETH.sol\";\n\nimport \"../openzeppelin-presets/token/ERC20/utils/SafeERC20.sol\";\n\nlibrary CurrencyTransferLib {\n    using SafeERC20 for IERC20;\n\n    /// @dev The address interpreted as native token of the chain.\n    address public constant NATIVE_TOKEN = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;\n\n    /// @dev Transfers a given amount of currency.\n    function transferCurrency(\n        address _currency,\n        address _from,\n        address _to,\n        uint256 _amount\n    ) internal {\n        if (_amount == 0) {\n            return;\n        }\n\n        if (_currency == NATIVE_TOKEN) {\n            safeTransferNativeToken(_to, _amount);\n        } else {\n            safeTransferERC20(_currency, _from, _to, _amount);\n        }\n    }\n\n    /// @dev Transfers a given amount of currency. (With native token wrapping)\n    function transferCurrencyWithWrapper(\n        address _currency,\n        address _from,\n        address _to,\n        uint256 _amount,\n        address _nativeTokenWrapper\n    ) internal {\n        if (_amount == 0) {\n            return;\n        }\n\n        if (_currency == NATIVE_TOKEN) {\n            if (_from == address(this)) {\n                // withdraw from weth then transfer withdrawn native token to recipient\n                IWETH(_nativeTokenWrapper).withdraw(_amount);\n                safeTransferNativeTokenWithWrapper(_to, _amount, _nativeTokenWrapper);\n            } else if (_to == address(this)) {\n                // store native currency in weth\n                require(_amount == msg.value, \"msg.value != amount\");\n                IWETH(_nativeTokenWrapper).deposit{ value: _amount }();\n            } else {\n                safeTransferNativeTokenWithWrapper(_to, _amount, _nativeTokenWrapper);\n            }\n        } else {\n            safeTransferERC20(_currency, _from, _to, _amount);\n        }\n    }\n\n    /// @dev Transfer `amount` of ERC20 token from `from` to `to`.\n    function safeTransferERC20(\n        address _currency,\n        address _from,\n        address _to,\n        uint256 _amount\n    ) internal {\n        if (_from == _to) {\n            return;\n        }\n\n        if (_from == address(this)) {\n            IERC20(_currency).safeTransfer(_to, _amount);\n        } else {\n            IERC20(_currency).safeTransferFrom(_from, _to, _amount);\n        }\n    }\n\n    /// @dev Transfers `amount` of native token to `to`.\n    function safeTransferNativeToken(address to, uint256 value) internal {\n        // solhint-disable avoid-low-level-calls\n        // slither-disable-next-line low-level-calls\n        (bool success, ) = to.call{ value: value }(\"\");\n        require(success, \"native token transfer failed\");\n    }\n\n    /// @dev Transfers `amount` of native token to `to`. (With native token wrapping)\n    function safeTransferNativeTokenWithWrapper(\n        address to,\n        uint256 value,\n        address _nativeTokenWrapper\n    ) internal {\n        // solhint-disable avoid-low-level-calls\n        // slither-disable-next-line low-level-calls\n        (bool success, ) = to.call{ value: value }(\"\");\n        if (!success) {\n            IWETH(_nativeTokenWrapper).deposit{ value: value }();\n            IERC20(_nativeTokenWrapper).safeTransfer(to, value);\n        }\n    }\n}\n",
   "sourcePath": "@thirdweb-dev/contracts/lib/CurrencyTransferLib.sol",
   "ast": {
@@ -3494,7 +3494,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.7",
-  "updatedAt": "2023-01-12T19:00:18.887Z",
+  "updatedAt": "2023-01-20T23:46:14.590Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

@@ -15,7 +15,7 @@ type Selection = {
 
 type WhenShape = any;
 type ThenShape = any;
-type Input = any;
+type Input = [string, (_w3: Web3) => Promise<string[]>];
 type Ibis = any;
 
 export const SolidityTesteranto = <
@@ -29,12 +29,11 @@ export const SolidityTesteranto = <
     ITestShape
   >,
   testSpecifications: ITestSpecification<ITestShape>,
-  testInput: Input,
-  contractName: string
+  testInput,
 ) =>
   Testeranto<
     ITestShape,
-    string,
+    Input,
     Ibis,
     Selection,
     Selection,
@@ -48,24 +47,33 @@ export const SolidityTesteranto = <
     { ports: 0 },
     {
       beforeAll: async () =>
-        (await solCompile(contractName)).contracts.find((c) => c.contractName === contractName),
+        (await solCompile(testInput[0])).contracts.find((c) => c.contractName === testInput[0]),
 
       beforeEach: async (contract: Ibis) => {
 
         // https://github.com/trufflesuite/ganache#programmatic-use
         const provider = Ganache.provider({
           seed: "drizzle-utils",
-          gasPrice: 7000000
+          gasPrice: 7000000,
         });
 
         /* @ts-ignore:next-line */
         const web3 = new Web3(provider);
         const accounts = await web3.eth.getAccounts();
+        const argz = await testInput[1](web3);
 
-        // console.log("contract", contract);
+        // console.log("deployedBytecode", contract.deployedBytecode);
+        const size = Buffer.byteLength(contract.deployedBytecode.bytes, 'utf8') / 2;
+        console.log('contract size is', size);
+
+        // console.log(Object.keys(contract.methods))
+
         return {
           contract: await (new web3.eth.Contract(contract.abi))
-            .deploy({ data: contract.bytecode.bytes })
+            .deploy({
+              data: contract.bytecode.bytes,
+              arguments: argz
+            })
             .send({ from: accounts[0], gas: 7000000 }),
           accounts,
           provider

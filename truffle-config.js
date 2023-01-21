@@ -36,11 +36,12 @@ module.exports = {
 
   networks: {
     dev: {
-      gas: 8000000,
-      gasPrice: 1000000000, // web3.eth.gasPrice
-      //   host: "127.0.0.1",     // Localhost (default: none)
-      //   port: 3001,            // Standard Ethereum port (default: none)
-      //   network_id: "*",       // Any network (default: none)
+      gas: 21000,
+      gasPrice: 31000, // web3.eth.gasPrice
+      gasLimit: 41000
+        //   host: "127.0.0.1",     // Localhost (default: none)
+        //   port: 3001,            // Standard Ethereum port (default: none)
+        //   network_id: "*",       // Any network (default: none)
     }
     // Useful for testing. The `development` name is special - truffle uses it by default
     // if it's defined here and no other network is specified at the command line.
@@ -94,13 +95,13 @@ module.exports = {
     solc: {
       version: "0.8.14", // Fetch exact version from solc-bin (default: truffle's version)
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
-      // settings: {          // See the solidity docs for advice about optimization and evmVersion
-      //  optimizer: {
-      //    enabled: false,
-      //    runs: 200
-      //  },
-      //  evmVersion: "byzantium"
-      // }
+      settings: { // See the solidity docs for advice about optimization and evmVersion
+        optimizer: {
+          enabled: false,
+          runs: 200
+        },
+        // evmVersion: "byzantium"
+      }
     }
   },
 
