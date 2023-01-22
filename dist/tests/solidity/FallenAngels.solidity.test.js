@@ -53,7 +53,12 @@ var solCompile = async (entrySolidityFile) => {
       remmapedSources[filepath] = sources[filepath];
     }
   }
-  return await Compile.sources({ sources: remmapedSources, options: TruffleConfig.detect() });
+  const options = TruffleConfig.detect();
+  console.log("solc settings", options._values.compilers.solc.settings);
+  return await Compile.sources({
+    sources: remmapedSources,
+    options
+  });
 };
 
 // tests/solidity/solidity.testeranto.test.ts

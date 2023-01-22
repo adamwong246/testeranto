@@ -64,7 +64,13 @@ export const solCompile = async (entrySolidityFile) => {
     }
   }
 
-  return await Compile.sources({ sources: remmapedSources, options: TruffleConfig.detect() })
+  const options = TruffleConfig.detect();
+  console.log("solc settings", options._values.compilers.solc.settings);
+
+  return await Compile.sources({
+    sources: remmapedSources,
+    options
+  })
 };
 
 export default {
