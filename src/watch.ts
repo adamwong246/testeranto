@@ -10,7 +10,8 @@ const configFile = `${process.cwd()}/${process.argv[2]}`;
 
 console.log("watch.ts configFile", configFile);
 
-import(configFile).then((configModule) => {
+import(configFile).then((testerantoConfigImport) => {
+  const configModule = testerantoConfigImport.default;
 
   console.log("build.ts tProject", configModule);
   const tProject = new TesterantoProject(configModule.tests, configModule.features, configModule.ports)
@@ -21,44 +22,53 @@ import(configFile).then((configModule) => {
   (async function () {
     for await (const [ndx, [key, sourcefile, className]] of tProject.tests.entries()) {
       const distFile = process.cwd() + "/dist/" + sourcefile.split(".ts")[0] + ".js";
-      const md5File = process.cwd() + "/dist/" + sourcefile.split(".ts")[0] + ".md5";
+      // const md5File = process.cwd() + "/dist/" + sourcefile.split(".ts")[0] + ".md5";
 
-      fs.readFile(md5File, 'utf-8', (err, firstmd5hash) => {
-        TRM.testFileTouched(key, distFile, className, firstmd5hash);
+      // fs.readFile(md5File, 'utf-8', (err, firstmd5hash) => {
+      //   TRM.testFileTouched(key, distFile, className, firstmd5hash);
 
-        watchFile(md5File, () => {
-          fs.readFile(md5File, 'utf-8', (err, newmd5Hash) => {
-            if (err) {
-              console.error(err)
-              process.exit(-1)
-            }
+      watchFile(distFile, () => {
+        TRM.testFileTouched(key, distFile, className);
 
-            TRM.testFileTouched(key, distFile, className, newmd5Hash);
-          })
-        });
+        // fs.readFile(distFile, 'utf-8', (err, newmd5Hash) => {
+        //   if (err) {
+        //     console.error(err)
+        //     process.exit(-1)
+        //   }
+
+        //   TRM.testFileTouched(key, distFile, className);
+        // })
       });
+      // });
+
+      TRM.testFileTouched(key, distFile, className);
+
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////
 
     const featureFile = tProject.features;
     const distFile = process.cwd() + "/dist/" + featureFile.split(".ts")[0] + ".js";
-    const md5File = process.cwd() + "/dist/" + featureFile.split(".ts")[0] + ".md5";
+    // const md5File = process.cwd() + "/dist/" + featureFile.split(".ts")[0] + ".md5";
 
-    fs.readFile(featureFile, 'utf-8', (err, featuresFileContents) => {
-      TRM.featureFileTouched(distFile, featuresFileContents);
+    TRM.featureFileTouched(distFile);
+    // fs.readFile(featureFile, 'utf-8', (err, featuresFileContents) => {
+    //   TRM.featureFileTouched(distFile);
 
-      watchFile(md5File, () => {
-        fs.readFile(md5File, 'utf-8', (err, newmd5Hash) => {
-          if (err) {
-            console.error(err)
-            process.exit(-1)
-          }
+    watchFile(distFile, () => {
+      TRM.featureFileTouched(distFile);
+      // fs.readFile(distFile, 'utf-8', (err, newContents) => {
+      //   if (err) {
+      //     console.error(err)
+      //     process.exit(-1)
+      //   }
 
-          TRM.featureFileTouched(distFile, newmd5Hash);
-        })
-      });
+      //   TRM.featureFileTouched(distFile);
+      // })
     });
+
+    //   // TRM.featureFileTouched(distFile);
+    // });
 
 
 

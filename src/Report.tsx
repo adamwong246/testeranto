@@ -31,7 +31,7 @@ export function Report() {
 
   const getData = async () => {
 
-    const configs = await (await fetch('testeranto.config.json')).json();
+    const configs = await (await fetch('testeranto.config.js')).json();
     const features = await (await fetch('TesterantoFeatures.json')).json();
     const featureTests = await (await fetch('results/featureTestJoin.json')).json();
     const summaries = await (await fetch('report.json')).json();

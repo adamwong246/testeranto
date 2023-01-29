@@ -59,22 +59,29 @@ export class Scheduler {
     }, TIMEOUT);
   }
 
-  public testFileTouched(key, distFile, className, hash) {
-    if (hash !== this.testSrcMd5s[key]) {
-      console.log("running", key);
-      this.testSrcMd5s[key] = hash;
-      this.push(new (fresh(distFile, require)[className])()[0], key);
-    }
+  public async testFileTouched(key, distFile, className) {
+    // if (hash !== this.testSrcMd5s[key]) {
+    //   console.log("running", key);
+    //   this.testSrcMd5s[key] = hash;
+    //   this.push(new (fresh(distFile, require)[className])()[0], key);
+    // }
+    console.log(key, distFile, className)
+
+    const x = await fresh(distFile, require)[className]
+    console.log()
+
+    this.push(new (x)()[0], key);
   }
 
-  public featureFileTouched(distFile, hash) {
-    if (hash !== this.featureSrcMd5) {
-      console.log("running featureSrcMd5");
-      this.featureSrcMd5 = hash;
-      this.setFeatures((fresh(distFile, require)['default']));
-    } else {
-      console.log("feature file changed but md5 hash did not")
-    }
+  public featureFileTouched(distFile) {
+    this.setFeatures((fresh(distFile, require)['default']));
+    // if (hash !== this.featureSrcMd5) {
+    //   console.log("running featureSrcMd5");
+    //   this.featureSrcMd5 = hash;
+    //   this.setFeatures((fresh(distFile, require)['default']));
+    // } else {
+    //   console.log("feature file changed but md5 hash did not")
+    // }
   }
 
   private async setFeatures(testerantoFeatures: TesterantoFeatures) {

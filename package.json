@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.9.23",
+  "version": "0.10.1",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "repository": "git@github.com:adamwong246/testeranto.git",
@@ -36,7 +36,7 @@
     "babel-loader": "^8.2.5",
     "bootstrap": "^5.2.3",
     "cancelable-promise": "^4.3.1",
-    "esbuild": "^0.16.5",
+    "esbuild": "0.17.5",
     "eslint": "^8.29.0",
     "eslint-plugin-react": "^7.31.11",
     "fresh-require": "^1.0.3",

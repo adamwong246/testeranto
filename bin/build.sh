@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
 
-echo "testeranto build..."
-
-yarn nodemon --config nodemon.json ./node_modules/testeranto/src/build.js ../../../testeranto.config.json
+# yarn nodemon --config nodemon.json ./node_modules/testeranto/src/build.js ../../../testeranto.config.js
+ts-node  --swc  ./node_modules/testeranto/src/build.ts ../../../testeranto.config.ts
