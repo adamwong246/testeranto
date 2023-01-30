@@ -2,11 +2,9 @@
 import { assert } from "chai";
 import { features } from "../testerantoFeatures.test";
 import { SolidityTesteranto } from "./solidity.testeranto.test";
-import crypto from "crypto";
-import { commonGivens } from './index.test';
-import { ethers } from "ethers";
 
-const rando = () => new ethers.Wallet(crypto.randomBytes(32).toString('hex'));
+const ipfsURL = "ipfs://QmcceQ5mbWixKox1jnEA67kKZuTojCyobfXBJtd7ewJjP4/";
+const nullData = "0x"
 
 export const FallenAngelsTesteranto = SolidityTesteranto<
   {
@@ -17,11 +15,12 @@ export const FallenAngelsTesteranto = SolidityTesteranto<
       Default;
     };
     whens: {
-      Increment: [number];
-      Decrement: [number];
+      lazyMint: [number, string, string];
+      // redeem: [number];
     };
     thens: {
-      Get: [{ asTestUser: number, expectation: number }];
+      nextTokenIdToClaim: [expectation: number];
+      nextTokenIdToMint: [expectation: number];
     };
     checks: {
       AnEmptyState: [];
@@ -38,24 +37,25 @@ export const FallenAngelsTesteranto = SolidityTesteranto<
       }
     },
     Whens: {
-      Increment: (asTestUser) => ({ contract, accounts }) => {
-        return contract.methods.inc().send({ from: accounts[asTestUser] })
+      lazyMint: (amount) => ({ contract, accounts }) => {
+        return contract.methods.lazyMint(amount, ipfsURL, nullData).send({
+          from: accounts[0],
+          gas: 2100000,
+        })
           .on('receipt', function (x) {
             return (x);
           })
       },
-      Decrement: (asTestUser) => ({ contract, accounts }) => {
-        return new Promise((res) => {
-          contract.methods.dec().send({ from: accounts[asTestUser] })
-            .then(function (x) {
-              res(x)
-            })
-        });
-      },
+      // redeem: (asTestUser) => ({ contract, accounts }) => {
+
+      // },
+
     },
     Thens: {
-      Get: ({ asTestUser, expectation }) => async ({ contract, accounts }) =>
-        assert.equal((expectation), parseInt((await contract.methods.get().call())))
+      nextTokenIdToClaim: (expectation) => async ({ contract, accounts }) =>
+        assert.equal((expectation), parseInt((await contract.methods.nextTokenIdToClaim().call()))),
+      nextTokenIdToMint: (expectation) => async ({ contract, accounts }) =>
+        assert.equal((expectation), parseInt((await contract.methods.nextTokenIdToMint().call())))
     },
     Checks: {
       AnEmptyState: () => 'MyFirstContract.sol',
@@ -66,23 +66,28 @@ export const FallenAngelsTesteranto = SolidityTesteranto<
     return [
       Suite.Default(
         "FallenAngels, ephemerally take 2",
-        // this is expected to fail
-        commonGivens(Given, When, Then, features),
         [
-          // Check.AnEmptyState(
-          //   "imperative style",
-          //   [features.aloha],
-          //   async ({ TheEmailIsSetTo }, { TheEmailIs }) => {
-          //     await TheEmailIsSetTo("foo");
-          //     await TheEmailIs("foo");
-          //     const reduxPayload = await TheEmailIsSetTo("foobar");
-          //     await TheEmailIs("foobar");
-          //     // assert.deepEqual(reduxPayload, {
-          //     //   type: "login app/setEmail",
-          //     //   payload: "foobar",
-          //     // });
-          //   }
-          // ),
+          Given.Default([], [
+          ], [
+            Then.nextTokenIdToMint(0)
+          ]),
+
+          Given.Default([], [
+            When.lazyMint(1, "Asd", "Qwe")
+          ], [
+            Then.nextTokenIdToMint(1)
+          ]),
+
+          Given.Default([], [
+            When.lazyMint(1, "Asd", "Qwe"),
+            When.lazyMint(2, "Asd", "Qwe"),
+          ], [
+            Then.nextTokenIdToMint(3)
+          ])
+        ],
+
+        [
+
         ]
       ),
     ];

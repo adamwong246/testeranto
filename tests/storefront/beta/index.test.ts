@@ -5,7 +5,7 @@ import { StorefrontTesteranto } from "./index.testeranto.test";
 
 import Storefront from "../../../src/storefront";
 
-export const StorefrontTest = StorefrontTesteranto<
+export const StorefrontTestBeta = StorefrontTesteranto<
   {
     suites: {
       Default: string;

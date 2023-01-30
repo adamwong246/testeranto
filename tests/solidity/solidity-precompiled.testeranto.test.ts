@@ -5,7 +5,7 @@ import Web3 from 'web3';
 import { Testeranto } from "testeranto";
 import { ITestImplementation, ITestSpecification, ITTestShape } from "testeranto";
 
-import { solCompile } from "./truffle";
+import compilations from "../../contracts/MyFirstContract.sol";
 
 type Selection = {
   contract: Contract,
@@ -18,7 +18,7 @@ type ThenShape = any;
 type Input = [string, (_w3: Web3) => Promise<string[]>];
 type Ibis = any;
 
-export const SolidityTesteranto = async <
+export const SolidityPrecompiledTesteranto = async <
   ITestShape extends ITTestShape
 >(
   testImplementations: ITestImplementation<
@@ -31,7 +31,7 @@ export const SolidityTesteranto = async <
   testSpecifications: ITestSpecification<ITestShape>,
   testInput,
 ) => {
-  const compilation = (await solCompile(testInput[0])).contracts.find((c) => c.contractName === testInput[0]);
+  const compilation = compilations.contracts.find((c) => c.contractName === testInput[0]);
 
   return Testeranto<
     ITestShape,
@@ -55,7 +55,7 @@ export const SolidityTesteranto = async <
         // https://github.com/trufflesuite/ganache#programmatic-use
         const provider = Ganache.provider({
           seed: "drizzle-utils",
-          gasPrice: 7000000,
+          gasPrice: 7000001,
         });
 
         /* @ts-ignore:next-line */

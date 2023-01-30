@@ -137,7 +137,22 @@ var AppReduxTesteranto = ReduxTesteranto(
             [Then.TheEmailIs("hey there")]
           )
         ],
-        []
+        [
+          // Check.AnEmptyState(
+          //   "imperative style",
+          //   [features.aloha],
+          //   async ({ TheEmailIsSetTo }, { TheEmailIs }) => {
+          //     await TheEmailIsSetTo("foo");
+          //     await TheEmailIs("foo");
+          //     const reduxPayload = await TheEmailIsSetTo("foobar");
+          //     await TheEmailIs("foobar");
+          //     // assert.deepEqual(reduxPayload, {
+          //     //   type: "login app/setEmail",
+          //     //   payload: "foobar",
+          //     // });
+          //   }
+          // ),
+        ]
       )
     ];
   },

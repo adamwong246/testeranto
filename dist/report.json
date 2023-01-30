@@ -10,7 +10,12 @@
               "report": {}
             },
             "A website which can acts as a storefront": {
-              "results": {},
+              "results": {
+                "AnEmptyState": {
+                  "name": "the storefront react app, alpha",
+                  "fails": []
+                }
+              },
               "report": {
                 "results": {
                   "An ERC721 which is redeemable": {
@@ -69,7 +74,12 @@
                     "report": {}
                   },
                   "A website which can acts as a storefront": {
-                    "results": {},
+                    "results": {
+                      "AnEmptyState": {
+                        "name": "the storefront react app, alpha",
+                        "fails": []
+                      }
+                    },
                     "report": {
                       "results": {
                         "An ERC721 which is redeemable": {

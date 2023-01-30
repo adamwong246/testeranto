@@ -88,7 +88,22 @@ var RectangleTesteranto = Testeranto(
             ]
           )
         ],
-        []
+        [
+          // Check.Default(
+          //   "imperative style",
+          //   async ({ PostToAdd }, { TheNumberIs }) => {
+          //     const a = await PostToAdd(2);
+          //     const b = parseInt(await PostToAdd(3));
+          //     await TheNumberIs(b);
+          //     await PostToAdd(2);
+          //     await TheNumberIs(7);
+          //     await PostToAdd(3);
+          //     await TheNumberIs(10);
+          //     assert.equal(await PostToAdd(-15), -5);
+          //     await TheNumberIs(-5);
+          //   }
+          // ),
+        ]
       )
     ];
   },
@@ -118,9 +133,11 @@ var RectangleTesteranto = Testeranto(
       getHeight: (height) => (rectangle) => assert.equal(rectangle.height, height),
       area: (area) => (rectangle) => assert.equal(rectangle.area(), area),
       prototype: (name) => (rectangle) => assert.equal(1, 1),
+      // throw new Error("Function not implemented.")
       circumference: (circumference) => (rectangle) => assert.equal(rectangle.circumference(), circumference)
     },
     Checks: {
+      /* @ts-ignore:next-line */
       AnEmptyState: () => {
         return {};
       }

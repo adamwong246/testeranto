@@ -102,6 +102,7 @@ function LoginPage_default() {
 import { features } from "/Users/adam/Code/kokomoBay/dist/tests/testerantoFeatures.test.js";
 var myFeature = features.hello;
 var AppReactTesteranto = ReactTesteranto(
+  // test implementation
   {
     Suites: {
       Default: "a default suite"
@@ -150,6 +151,7 @@ var AppReactTesteranto = ReactTesteranto(
       }
     }
   },
+  // test specification
   (Suite, Given, When, Then, Check) => {
     return [
       Suite.Default(
