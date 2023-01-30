@@ -56,7 +56,12 @@ var solCompile = async (entrySolidityFile) => {
       remmapedSources[filepath] = sources[filepath];
     }
   }
-  return await Compile.sources({ sources: remmapedSources, options: TruffleConfig.detect() });
+  const options = TruffleConfig.detect();
+  console.log("solc settings", options._values.compilers.solc.settings);
+  return await Compile.sources({
+    sources: remmapedSources,
+    options
+  });
 };
 
 // tests/storefront/beta/index.testeranto.test.ts
@@ -100,6 +105,7 @@ var StorefrontTesteranto = (testImplementations, testSpecifications, testInput) 
           });
           const web3NearSide = new Web3(providerFarSide);
           const contractNearSide = await new web3NearSide.eth.Contract(subject.compiledContract.abi).deploy({
+            /* @ts-ignore:next-line */
             data: subject.compiledContract.bytecode.bytes
           }).send({ from: accounts[0], gas: 7e6 });
           const web3FarSideProvider = new ethers.providers.JsonRpcProvider(`http://localhost:${port}`);
@@ -172,7 +178,7 @@ function Storefront({ counter, inc, dec }) {
 var storefront_default = Storefront;
 
 // tests/storefront/beta/index.test.ts
-var StorefrontTest = StorefrontTesteranto(
+var StorefrontTestBeta = StorefrontTesteranto(
   {
     Suites: {
       Default: "default storefront suite"
@@ -288,5 +294,5 @@ var StorefrontTest = StorefrontTesteranto(
   }
 );
 export {
-  StorefrontTest
+  StorefrontTestBeta
 };

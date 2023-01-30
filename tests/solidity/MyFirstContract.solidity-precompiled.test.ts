@@ -1,11 +1,11 @@
 
 import { assert } from "chai";
 import { features } from "../testerantoFeatures.test";
-import { SolidityTesteranto } from "./solidity.testeranto.test";
+import { SolidityPrecompiledTesteranto } from "./solidity-precompiled.testeranto.test";
 
 import { commonGivens } from './index.test';
 
-export const MyFirstContractTesteranto = SolidityTesteranto<
+export const MyFirstContractPrecompiledTesteranto = SolidityPrecompiledTesteranto<
   {
     suites: {
       Default;
@@ -62,7 +62,7 @@ export const MyFirstContractTesteranto = SolidityTesteranto<
   (Suite, Given, When, Then, Check) => {
     return [
       Suite.Default(
-        "Testing a very simple smart contract ephemerally",
+        "Testing a very simple smart contract precompiled?",
         commonGivens(Given, When, Then, features),
         [
           // Check.AnEmptyState(

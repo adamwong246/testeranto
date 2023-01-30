@@ -100,6 +100,7 @@ var ServerHttp2xTesteranto = Http2xTesteranto(
       Default: "some default Suite"
     },
     Givens: {
+      /* @ts-ignore:next-line */
       AnEmptyState: () => {
         return {};
       }
@@ -117,6 +118,7 @@ var ServerHttp2xTesteranto = Http2xTesteranto(
       TheNumberIsB: (number) => () => ["get_number", number, 1]
     },
     Checks: {
+      /* @ts-ignore:next-line */
       AnEmptyState: () => {
         return {};
       }

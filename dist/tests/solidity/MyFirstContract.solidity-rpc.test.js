@@ -54,7 +54,12 @@ var solCompile = async (entrySolidityFile) => {
       remmapedSources[filepath] = sources[filepath];
     }
   }
-  return await Compile.sources({ sources: remmapedSources, options: TruffleConfig.detect() });
+  const options = TruffleConfig.detect();
+  console.log("solc settings", options._values.compilers.solc.settings);
+  return await Compile.sources({
+    sources: remmapedSources,
+    options
+  });
 };
 
 // tests/solidity/solidity-rpc.testeranto.test.ts
@@ -65,6 +70,7 @@ var SolidityRpcTesteranto = (testImplementations, testSpecifications, testInput,
   { ports: 1 },
   {
     beforeAll: async () => (await solCompile(contractName)).contracts.find((c) => c.contractName === contractName),
+    // (await compile(`../../../contracts/${contractName}.sol`) as any)[contractName] as Ibis,
     beforeEach: (contract, i, tr) => {
       return new Promise((res) => {
         const options = {};
@@ -139,6 +145,20 @@ var commonGivens = (Given, When, Then, features2) => [
     ],
     "my first contract"
   )
+  // Given.Default(
+  //   [features.hello],
+  //   [
+  //     When.Decrement(1),
+  //     When.Decrement(1),
+  //     When.Decrement(1),
+  //     When.Increment(1),
+  //     When.Increment(1),
+  //   ],
+  //   [
+  //     Then.Get({ asTestUser: 1, expectation: 1.157920892373162e+77 })
+  //   ],
+  //   "this test should fail"
+  // ),
 ];
 
 // tests/solidity/MyFirstContract.solidity-rpc.test.ts
@@ -172,7 +192,22 @@ var MyFirstContractPlusRpcTesteranto = SolidityRpcTesteranto(
       Suite.Default(
         "Testing a very simple smart contract over RPC",
         commonGivens(Given, When, Then, features),
-        []
+        [
+          // Check.AnEmptyState(
+          //   "imperative style",
+          //   [features.aloha],
+          //   async ({ TheEmailIsSetTo }, { TheEmailIs }) => {
+          //     await TheEmailIsSetTo("foo");
+          //     await TheEmailIs("foo");
+          //     const reduxPayload = await TheEmailIsSetTo("foobar");
+          //     await TheEmailIs("foobar");
+          //     // assert.deepEqual(reduxPayload, {
+          //     //   type: "login app/setEmail",
+          //     //   payload: "foobar",
+          //     // });
+          //   }
+          // ),
+        ]
       )
     ];
   },

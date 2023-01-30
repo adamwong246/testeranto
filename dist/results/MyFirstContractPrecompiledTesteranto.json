@@ -1,5 +1,5 @@
 {
-  "name": "FallenAngels, ephemerally",
+  "name": "Testing a very simple smart contract precompiled?",
   "givens": [
     {
       "name": "Default",
@@ -8,8 +8,7 @@
         {
           "name": "Get: [object Object]"
         }
-      ],
-      "errors": {}
+      ]
     },
     {
       "name": "Default",
@@ -59,24 +58,5 @@
       ]
     }
   ],
-  "fails": [
-    {
-      "artifactSaver": {},
-      "name": "Default",
-      "features": [
-        {
-          "name": "hello"
-        }
-      ],
-      "whens": [],
-      "thens": [
-        {
-          "name": "Get: [object Object]"
-        }
-      ],
-      "testArtifacts": {},
-      "initialValues": "FallenAngels.sol",
-      "error": {}
-    }
-  ]
+  "fails": []
 }

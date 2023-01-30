@@ -53,33 +53,47 @@ var solCompile = async (entrySolidityFile) => {
       remmapedSources[filepath] = sources[filepath];
     }
   }
-  return await Compile.sources({ sources: remmapedSources, options: TruffleConfig.detect() });
+  const options = TruffleConfig.detect();
+  console.log("solc settings", options._values.compilers.solc.settings);
+  return await Compile.sources({
+    sources: remmapedSources,
+    options
+  });
 };
 
 // tests/solidity/solidity.testeranto.test.ts
-var SolidityTesteranto = (testImplementations, testSpecifications, testInput, contractName) => Testeranto(
-  testInput,
-  testSpecifications,
-  testImplementations,
-  { ports: 0 },
-  {
-    beforeAll: async () => (await solCompile(contractName)).contracts.find((c) => c.contractName === contractName),
-    beforeEach: async (contract) => {
-      const provider = Ganache.provider({
-        seed: "drizzle-utils",
-        gasPrice: 7e6
-      });
-      const web3 = new Web3(provider);
-      const accounts = await web3.eth.getAccounts();
-      return {
-        contract: await new web3.eth.Contract(contract.abi).deploy({ data: contract.bytecode.bytes }).send({ from: accounts[0], gas: 7e6 }),
-        accounts,
-        provider
-      };
-    },
-    andWhen: async ({ provider, contract, accounts }, callback) => callback()({ contract, accounts })
-  }
-);
+var SolidityTesteranto = async (testImplementations, testSpecifications, testInput) => {
+  const compilation = (await solCompile(testInput[0])).contracts.find((c) => c.contractName === testInput[0]);
+  return Testeranto(
+    testInput,
+    testSpecifications,
+    testImplementations,
+    { ports: 0 },
+    {
+      beforeAll: async () => compilation,
+      beforeEach: async (contract) => {
+        const provider = Ganache.provider({
+          seed: "drizzle-utils",
+          gasPrice: 7e6
+        });
+        const web3 = new Web3(provider);
+        const accounts = await web3.eth.getAccounts();
+        const argz = await testInput[1](web3);
+        const size = Buffer.byteLength(contract.deployedBytecode.bytes, "utf8") / 2;
+        console.log("contract size is", size);
+        return {
+          contract: await new web3.eth.Contract(contract.abi).deploy({
+            data: contract.bytecode.bytes,
+            arguments: argz
+          }).send({ from: accounts[0], gas: 7e6 }),
+          accounts,
+          provider
+        };
+      },
+      andWhen: async ({ provider, contract, accounts }, callback) => callback()({ contract, accounts })
+    }
+  );
+};
 
 // tests/solidity/index.test.ts
 var commonGivens = (Given, When, Then, features2) => [
@@ -118,6 +132,20 @@ var commonGivens = (Given, When, Then, features2) => [
     ],
     "my first contract"
   )
+  // Given.Default(
+  //   [features.hello],
+  //   [
+  //     When.Decrement(1),
+  //     When.Decrement(1),
+  //     When.Decrement(1),
+  //     When.Increment(1),
+  //     When.Increment(1),
+  //   ],
+  //   [
+  //     Then.Get({ asTestUser: 1, expectation: 1.157920892373162e+77 })
+  //   ],
+  //   "this test should fail"
+  // ),
 ];
 
 // tests/solidity/MyFirstContract.solidity.test.ts
@@ -157,12 +185,29 @@ var MyFirstContractTesteranto = SolidityTesteranto(
       Suite.Default(
         "Testing a very simple smart contract ephemerally",
         commonGivens(Given, When, Then, features),
-        []
+        [
+          // Check.AnEmptyState(
+          //   "imperative style",
+          //   [features.aloha],
+          //   async ({ TheEmailIsSetTo }, { TheEmailIs }) => {
+          //     await TheEmailIsSetTo("foo");
+          //     await TheEmailIs("foo");
+          //     const reduxPayload = await TheEmailIsSetTo("foobar");
+          //     await TheEmailIs("foobar");
+          //     // assert.deepEqual(reduxPayload, {
+          //     //   type: "login app/setEmail",
+          //     //   payload: "foobar",
+          //     // });
+          //   }
+          // ),
+        ]
       )
     ];
   },
-  "solSource",
-  "MyFirstContract"
+  ["MyFirstContract", async (web3) => {
+    return [];
+  }]
+  // 'MyFirstContract'
 );
 export {
   MyFirstContractTesteranto
