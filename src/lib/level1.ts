@@ -1,3 +1,5 @@
+import pm2 from "pm2";
+
 import { BaseGiven, BaseCheck, BaseSuite, BaseFeature, BaseWhen, BaseThen } from "../BaseClasses";
 import { ITTestShape, ITestImplementation, ITestJob } from "../types";
 
@@ -180,7 +182,12 @@ export abstract class TesterantoLevelOne<
         },
 
         runner: async (allocatedPorts: number[]) => {
-          return suite.run(input, { ports: allocatedPorts });
+
+          pm2.launchBus(function (err, pm2_bus) {
+            return suite.run(input, { ports: allocatedPorts })
+          })
+
+            ;
         },
 
       };

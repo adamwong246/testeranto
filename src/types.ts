@@ -19,12 +19,13 @@ export type IT = {
   checks: BaseCheck<unknown, unknown, unknown, unknown, ITTestShape>[];
 };
 
-export type ITestJob = {
-  toObj(): object;
-  test: IT;
-  runner: (testResurce?) => unknown;
-  testResource: ITTestResourceRequirement;
-};
+export type ITestJob = [filename: string, classname: string]
+//   {
+//   toObj(): object;
+//   test: IT;
+//   runner: (testResurce?) => unknown;
+//   testResource: ITTestResourceRequirement;
+// };
 
 export type ITestResults = Promise<{
   test: IT;

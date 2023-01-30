@@ -1,4 +1,4 @@
-import CancelablePromise, { cancelable } from 'cancelable-promise';
+import pm2 from 'pm2';
 import fs from "fs";
 import fresh from 'fresh-require';
 import { topologicalSort } from 'graphology-dag/topological-sort';
@@ -53,35 +53,29 @@ export class Scheduler {
   }
 
   public launch() {
-    setInterval(async () => {
-      console.log(this.spinner(), this.queue.length, this.ports);
-      this.pop();
-    }, TIMEOUT);
+
+    pm2.connect(function (err) {
+      if (err) {
+        console.error(err)
+        process.exit(2)
+      }
+
+      setInterval(async () => {
+        console.log(this.spinner(), this.queue.length, this.ports);
+        this.pop();
+      }, TIMEOUT);
+    })
+
+
   }
 
   public async testFileTouched(key, distFile, className) {
-    // if (hash !== this.testSrcMd5s[key]) {
-    //   console.log("running", key);
-    //   this.testSrcMd5s[key] = hash;
-    //   this.push(new (fresh(distFile, require)[className])()[0], key);
-    // }
-    console.log(key, distFile, className)
+    this.push([distFile, className], key);
 
-    const x = await fresh(distFile, require)[className]
-    console.log()
-
-    this.push(new (x)()[0], key);
   }
 
   public featureFileTouched(distFile) {
     this.setFeatures((fresh(distFile, require)['default']));
-    // if (hash !== this.featureSrcMd5) {
-    //   console.log("running featureSrcMd5");
-    //   this.featureSrcMd5 = hash;
-    //   this.setFeatures((fresh(distFile, require)['default']));
-    // } else {
-    //   console.log("feature file changed but md5 hash did not")
-    // }
   }
 
   private async setFeatures(testerantoFeatures: TesterantoFeatures) {
@@ -190,6 +184,7 @@ export class Scheduler {
   private push(testJob: ITestJob, key) {
     this.queue.push({
       key,
+      // aborter: testJob.test.aborter,
       aborter: testJob.test.aborter,
       getCancellablePromise: this.startJob(testJob, key),
       testResourceRequired: testJob.testResource

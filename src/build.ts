@@ -32,32 +32,29 @@ import(process.argv[2]).then(async (testerantoConfigImport) => {
     outdir: 'dist/tests',
     packages: 'external',
     plugins: [
-
+      ...testerantoConfig.loaders || [],
       {
         name: 'import-path',
         setup(build) {
           build.onResolve({ filter: /^\.{1,2}\// }, args => {
-
             const importedPath = args.resolveDir + "/" + args.path;
             const absolutePath = path.resolve(importedPath);
-
             const absolutePath2 = path.resolve(testerantoConfig.features).split(".ts").slice(0, -1).join('.ts');
-
             if (absolutePath === absolutePath2) {
               return {
                 path: process.cwd() + "/dist/tests/testerantoFeatures.test.js",
                 external: true
               }
             } else {
-              // return {
-              //   path: path.resolve(importedPath), external: false
+              // if (absolutePath === process.cwd() + "/contracts") {
+              //   return {
+              //     path: path.resolve(importedPath), external: false
+              //   }
               // }
             }
           })
         },
       },
-
-      ...testerantoConfig.loaders || [],
 
     ],
     external: [
@@ -67,12 +64,9 @@ import(process.argv[2]).then(async (testerantoConfigImport) => {
 
   await ctx.watch()
 
-
   let { host, port } = await ctx.serve({
     servedir: 'dist',
   })
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   fs.promises.writeFile("./dist/testeranto.config.js", JSON.stringify(testerantoConfig));
 
