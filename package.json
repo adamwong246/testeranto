@@ -15,11 +15,10 @@
     "ATDD"
   ],
   "bin": {
-    "testerantoBuild": "./bin/build.sh",
-    "testerantoWatch": "./bin/watch.sh",
-    "testerantoReport": "./bin/report.sh"
+    "testeranto": "./bin/testeranto.sh"
   },
   "scripts": {
+    "bundle:lib": "esbuild ./src/lib.ts --bundle --outfile=./dist/lib.js",
     "bundle:reporter": "esbuild ./src/Report.tsx --bundle --outfile=./dist/reporter.js",
     "simpleserver": "cd dist && python -m SimpleHTTPServer 8080",
     "clean:dist": "rm -rf ./dist/results && rm -rf ./dist/tests  && rm -f ./dist/reporter.css && rm -f ./dist/reporter.js && rm -f ./dist/*.jpg ",
@@ -33,7 +32,6 @@
     "@types/react-dom": "^18.0.6",
     "@typescript-eslint/eslint-plugin": "^5.46.0",
     "@typescript-eslint/parser": "^5.46.0",
-    "babel-loader": "^8.2.5",
     "bootstrap": "^5.2.3",
     "esbuild": "0.17.5",
     "eslint": "^8.29.0",
@@ -41,7 +39,6 @@
     "graphology": "^0.25.1",
     "graphology-dag": "^0.2.0",
     "graphology-types": "^0.24.5",
-    "nodemon": "^2.0.20",
     "pm2": "^5.2.2",
     "react": "18.2.0",
     "react-bootstrap": "^2.7.0",

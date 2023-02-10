@@ -1,33 +1,36 @@
 {
   "ts-node": {
     "compilerOptions": {
-      "module": "commonjs"
+      "module": "commonjs",
+      "emitDeclarationOnly": true
     }
   },
   "declaration": true,
   "compilerOptions": {
-    "useDefineForClassFields": false,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
-    "noImplicitAny": false,
-    "module": "esnext",
-    "target": "es2017",
     "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "declarationMap": true,
+    "emitDecoratorMetadata": true,
+    "emitDeclarationOnly": false,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "incremental": true,
+    "isolatedModules": true,
     "jsx": "react",
-    "resolveJsonModule": true,
-    "strictNullChecks": true,
     "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmit": false,
+    "noImplicitAny": false,
+    "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": false,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": false,
-    "incremental": true,
-    "esModuleInterop": true,
-    "isolatedModules": true,
-    "outDir": "dist"
+    "strictNullChecks": true,
+    "target": "es2017",
+    "useDefineForClassFields": false
   },
-  "include": ["src/index.ts", "./src/"],
+  "include": ["src/run.ts", "./src/lib.ts"],
   "exclude": ["node_modules"]
 }
