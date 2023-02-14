@@ -5,25 +5,25 @@ declare abstract class TesterantoGraph {
     abstract graph: any;
     constructor(name: string);
 }
-declare class TesterantoGraphUndirected implements TesterantoGraph {
+export declare class TesterantoGraphUndirected implements TesterantoGraph {
     name: string;
     graph: UndirectedGraph;
     constructor(name: string);
     connect(a: any, b: any, relation?: string): void;
 }
-declare class TesterantoGraphDirected implements TesterantoGraph {
+export declare class TesterantoGraphDirected implements TesterantoGraph {
     name: string;
     graph: DirectedGraph;
     constructor(name: string);
     connect(to: any, from: any, relation?: string): void;
 }
-declare class TesterantoGraphDirectedAcyclic implements TesterantoGraph {
+export declare class TesterantoGraphDirectedAcyclic implements TesterantoGraph {
     name: string;
     graph: DirectedGraph;
     constructor(name: string);
     connect(to: any, from: any, relation?: string): void;
 }
-declare class TesterantoFeatures {
+export declare class TesterantoFeatures {
     features: any;
     graphs: {
         undirected: TesterantoGraphUndirected[];
@@ -50,7 +50,7 @@ declare class TesterantoFeatures {
         })[];
     };
 }
-declare class BaseFeature {
+export declare class BaseFeature {
     name: string;
     constructor(name: string);
 }
@@ -208,4 +208,4 @@ declare const _default: {
     TesterantoGraphUndirected: typeof TesterantoGraphUndirected;
 };
 export default _default;
-//# sourceMappingURL=lib.d.ts.map
+//# sourceMappingURL=index.d.ts.map

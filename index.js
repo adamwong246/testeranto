@@ -4,7 +4,7 @@ class TesterantoGraph {
         this.name = name;
     }
 }
-class TesterantoGraphUndirected {
+export class TesterantoGraphUndirected {
     constructor(name) {
         this.name = name;
         this.graph = new UndirectedGraph();
@@ -13,7 +13,7 @@ class TesterantoGraphUndirected {
         this.graph.mergeEdge(a, b, { type: relation });
     }
 }
-class TesterantoGraphDirected {
+export class TesterantoGraphDirected {
     constructor(name) {
         this.name = name;
         this.graph = new DirectedGraph();
@@ -22,7 +22,7 @@ class TesterantoGraphDirected {
         this.graph.mergeEdge(to, from, { type: relation });
     }
 }
-class TesterantoGraphDirectedAcyclic {
+export class TesterantoGraphDirectedAcyclic {
     constructor(name) {
         this.name = name;
         this.graph = new DirectedGraph();
@@ -31,7 +31,7 @@ class TesterantoGraphDirectedAcyclic {
         this.graph.mergeEdge(to, from, { type: relation });
     }
 }
-class TesterantoFeatures {
+export class TesterantoFeatures {
     constructor(features, graphs) {
         this.features = features;
         this.graphs = graphs;
@@ -61,7 +61,7 @@ class TesterantoFeatures {
         };
     }
 }
-class BaseFeature {
+export class BaseFeature {
     constructor(name) {
         this.name = name;
     }
@@ -299,7 +299,6 @@ class TesterantoLevelZero {
     }
 }
 class TesterantoLevelOne {
-    // allocatedPorts: number[] = [];
     constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResource) {
         const classySuites = Object.entries(testImplementation.Suites)
             .reduce((a, [key]) => {
@@ -341,6 +340,7 @@ class TesterantoLevelOne {
         const suites = testSpecification(
         /* @ts-ignore:next-line */
         classyTesteranto.Suites(), classyTesteranto.Given(), classyTesteranto.When(), classyTesteranto.Then(), classyTesteranto.Check());
+        /* @ts-ignore:next-line */
         const toReturn = suites.map((suite) => {
             return {
                 test: suite,

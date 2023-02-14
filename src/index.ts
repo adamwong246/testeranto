@@ -1,5 +1,5 @@
 
-import Graph, { DirectedGraph, UndirectedGraph } from 'graphology';
+import { DirectedGraph, UndirectedGraph } from 'graphology';
 
 abstract class TesterantoGraph {
   name: string;
@@ -10,7 +10,7 @@ abstract class TesterantoGraph {
   }
 }
 
-class TesterantoGraphUndirected implements TesterantoGraph {
+export class TesterantoGraphUndirected implements TesterantoGraph {
   name: string;
   graph: UndirectedGraph
   constructor(name: string) {
@@ -22,7 +22,7 @@ class TesterantoGraphUndirected implements TesterantoGraph {
   }
 }
 
-class TesterantoGraphDirected implements TesterantoGraph {
+export class TesterantoGraphDirected implements TesterantoGraph {
   name: string;
   graph: DirectedGraph;
   constructor(name: string) {
@@ -34,7 +34,7 @@ class TesterantoGraphDirected implements TesterantoGraph {
   }
 }
 
-class TesterantoGraphDirectedAcyclic implements TesterantoGraph {
+export class TesterantoGraphDirectedAcyclic implements TesterantoGraph {
   name: string;
   graph: DirectedGraph;
   constructor(name: string) {
@@ -46,7 +46,7 @@ class TesterantoGraphDirectedAcyclic implements TesterantoGraph {
   }
 }
 
-class TesterantoFeatures {
+export class TesterantoFeatures {
   features: any;
   graphs: {
     undirected: TesterantoGraphUndirected[],
@@ -100,7 +100,7 @@ class TesterantoFeatures {
 
 }
 
-class BaseFeature {
+export class BaseFeature {
   name: string;
   constructor(name: string) {
     this.name = name;
@@ -459,8 +459,6 @@ type ITTestResource = {
   "ports": number[]
 };
 
-type IT_FeatureNetwork = { name: string, graph: DirectedGraph };
-
 type IT = {
   toObj(): object;
   aborter: () => any;
@@ -737,8 +735,6 @@ abstract class TesterantoLevelOne<
   IThenShape,
   IInput
 > {
-  // allocatedPorts: number[] = [];
-
   constructor(
     testImplementation: ITestImplementation<
       IInitialState,
@@ -747,7 +743,6 @@ abstract class TesterantoLevelOne<
       IThenShape,
       ITestShape
     >,
-
     testSpecification: (
       Suite: {
         [K in keyof ITestShape["suites"]]: (
@@ -896,6 +891,7 @@ abstract class TesterantoLevelOne<
       classyTesteranto.Check()
     );
 
+    /* @ts-ignore:next-line */
     const toReturn: ITestJob[] = suites.map((suite) => {
       return {
         test: suite,

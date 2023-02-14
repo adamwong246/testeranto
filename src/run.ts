@@ -3,8 +3,6 @@ import pm2 from 'pm2';
 import fs from "fs";
 import path from "path";
 
-
-
 const TIMEOUT = 1000;
 const OPEN_PORT = '';
 const testOutPath = "./dist/results/";
@@ -455,7 +453,9 @@ fs.readFile(
       bundle: true,
       minify: false,
       format: "esm",
-      target: ["esnext"],
+      platform: 'node',
+      supported: { "dynamic-import": true },
+      // target: ["esnext"],
       write: true,
       outdir: 'dist/tests',
       packages: 'external',
