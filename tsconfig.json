@@ -1,7 +1,7 @@
 {
   "ts-node": {
     "compilerOptions": {
-      "module": "commonjs"
+      "module": "esnext"
     }
   },
   "declaration": true,
@@ -26,8 +26,9 @@
     "incremental": true,
     "esModuleInterop": true,
     "isolatedModules": true,
-    "outDir": "dist"
+    "declaration": true
+    // "outDir": "dist"
   },
-  "include": ["src/index.ts", "./src/"],
+  "include": ["src/index.mts"],
   "exclude": ["node_modules"]
 }

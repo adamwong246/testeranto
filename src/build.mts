@@ -2,8 +2,8 @@ import * as esbuild from 'esbuild';
 
 import fs from "fs";
 import path from "path";
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const createHash = require("node:crypto").createHash;
+
+// import createHash = require("node:crypto").createHash;
 
 console.log("build.sh", process.cwd(), process.argv);
 
@@ -27,9 +27,10 @@ import(process.argv[2]).then(async (testerantoConfigImport) => {
     bundle: true,
     minify: false,
     format: "esm",
-    target: ["esnext"],
+    // target: ["esnext"],
     write: true,
     outdir: 'dist/tests',
+    outExtension: { '.js': '.mjs' },
     packages: 'external',
     plugins: [
 
@@ -45,7 +46,7 @@ import(process.argv[2]).then(async (testerantoConfigImport) => {
 
             if (absolutePath === absolutePath2) {
               return {
-                path: process.cwd() + "/dist/tests/testerantoFeatures.test.js",
+                path: process.cwd() + "/dist/tests/testerantoFeatures.test.mjs",
                 external: true
               }
             } else {

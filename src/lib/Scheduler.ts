@@ -3,8 +3,8 @@ import fs from "fs";
 import fresh from 'fresh-require';
 import { topologicalSort } from 'graphology-dag/topological-sort';
 
-import { TesterantoFeatures } from '../Features';
-import { ITestJob, ITTestResourceRequirement, IT_FeatureNetwork } from '../types';
+import { ITestJob, ITTestResourceRequirement, IT_FeatureNetwork, TesterantoFeatures } from '../index.mjs';
+// import { ITestJob, ITTestResourceRequirement, IT_FeatureNetwork } from '../types';
 
 const TIMEOUT = 1000;
 const OPEN_PORT = '';

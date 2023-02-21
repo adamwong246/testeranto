@@ -1,9 +1,10 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.10.1",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "version": "0.10.4",
+  "type": "module",
+  "types": "./src/index.d.mts",
+  "main": "./src/index.mjs",
   "repository": "git@github.com:adamwong246/testeranto.git",
   "homepage": "https://github.com/adamwong246/testeranto",
   "author": "adam wong <adamwong246@gmail.com>",
@@ -20,6 +21,7 @@
     "testerantoReport": "./bin/report.sh"
   },
   "scripts": {
+    "build": "tsc ",
     "bundle:reporter": "esbuild ./src/Report.tsx --bundle --outfile=./dist/reporter.js",
     "simpleserver": "cd dist && python -m SimpleHTTPServer 8080",
     "clean:dist": "rm -rf ./dist/results && rm -rf ./dist/tests  && rm -f ./dist/reporter.css && rm -f ./dist/reporter.js && rm -f ./dist/*.jpg ",
@@ -29,6 +31,7 @@
   },
   "dependencies": {
     "@swc/core": "^1.3.26",
+    "@types/node": "^18.14.0",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
     "@typescript-eslint/eslint-plugin": "^5.46.0",
