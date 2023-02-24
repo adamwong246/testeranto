@@ -432,5 +432,42 @@ testResource, testInterface) => {
     }
     const mrt = new MrT();
     console.log(mrt[0].runner);
-    await mrt[0].runner();
+    console.log("requesting test resources from mothership...", testResource);
+    /* @ts-ignore:next-line */
+    process.send({
+        type: 'testeranto:hola',
+        data: {
+            testResource
+        }
+    });
+    console.log("awaiting test resources from mothership...");
+    process.on('message', async function (packet) {
+        console.log("mark6", packet);
+        if (packet.data.go === true) {
+            console.log("going!...");
+            await mrt[0].runner();
+            console.log("done going!");
+            process.exit(0); // :-)
+        }
+    });
+    process.on('SIGINT', function () {
+        console.log("SIGINT caught. Releasing test resources back to mothership...", testResource);
+        /* @ts-ignore:next-line */
+        process.send({
+            type: 'testeranto:adios',
+            data: {
+                testResource
+            }
+        });
+    });
+    // process.on('SIGKILL', function () {
+    //   console.log("SIGKILL caught. Releasing test resources back to mothership...", testResource);
+    //   /* @ts-ignore:next-line */
+    //   process.send({
+    //     type: 'testeranto:adios',
+    //     data: {
+    //       testResource
+    //     }
+    //   });
+    // });
 };

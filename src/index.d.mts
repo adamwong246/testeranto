@@ -14,6 +14,9 @@ export declare type ITTestResourceRequirement = {
 export declare type ITTestResource = {
     "ports": number[];
 };
+export declare type IT_FeatureNetwork = {
+    name: string;
+};
 export declare type IT = {
     toObj(): object;
     aborter: () => any;

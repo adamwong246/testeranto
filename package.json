@@ -21,7 +21,7 @@
     "testerantoReport": "./bin/report.sh"
   },
   "scripts": {
-    "build": "tsc ",
+    "build": "tsc",
     "bundle:reporter": "esbuild ./src/Report.tsx --bundle --outfile=./dist/reporter.js",
     "simpleserver": "cd dist && python -m SimpleHTTPServer 8080",
     "clean:dist": "rm -rf ./dist/results && rm -rf ./dist/tests  && rm -f ./dist/reporter.css && rm -f ./dist/reporter.js && rm -f ./dist/*.jpg ",
@@ -47,6 +47,7 @@
     "graphology-dag": "^0.2.0",
     "graphology-types": "^0.24.5",
     "nodemon": "^2.0.20",
+    "pm2": "^5.2.2",
     "react": "18.2.0",
     "react-bootstrap": "^2.7.0",
     "react-dom": "^18.2.0",
