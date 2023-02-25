@@ -13,7 +13,8 @@ type Store = { serverA: http.Server, serverB: http.Server };
 type Selection = string;
 
 export const Http2xTesteranto = <
-  ITestShape extends ITTestShape
+  ITestShape extends ITTestShape,
+  IFeatureShape
 >(
   testImplementations: Modify<ITestImplementation<
     InitialState,
@@ -28,7 +29,7 @@ export const Http2xTesteranto = <
       ) => WhenShape;
     }
   }>,
-  testSpecifications: ITestSpecification<ITestShape>,
+  testSpecifications: ITestSpecification<ITestShape, IFeatureShape>,
   testInput: Input,
 ) =>
   Testeranto<
@@ -39,7 +40,8 @@ export const Http2xTesteranto = <
     Selection,
     ThenShape,
     WhenShape,
-    InitialState
+    InitialState,
+    IFeatureShape
   >(
     testInput,
     testSpecifications,

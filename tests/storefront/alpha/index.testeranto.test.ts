@@ -36,7 +36,8 @@ type Store = {
 };
 
 export const StorefrontTesteranto = <
-  ITestShape extends ITTestShape
+  ITestShape extends ITTestShape,
+  IFeatureShape,
 >(
   testImplementations: ITestImplementation<
     InitialState,
@@ -45,7 +46,7 @@ export const StorefrontTesteranto = <
     ThenShape,
     ITestShape
   >,
-  testSpecifications: ITestSpecification<ITestShape>,
+  testSpecifications: ITestSpecification<ITestShape, IFeatureShape>,
   testInput: Input,
   contractName: string
 ) =>
@@ -57,7 +58,8 @@ export const StorefrontTesteranto = <
     Selection,
     ThenShape,
     WhenShape,
-    InitialState
+    InitialState,
+    IFeatureShape
   >(
     testInput,
     testSpecifications,

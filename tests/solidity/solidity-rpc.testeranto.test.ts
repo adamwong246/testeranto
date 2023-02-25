@@ -25,7 +25,8 @@ type Input = any;
 type Ibis = any;
 
 export const SolidityRpcTesteranto = <
-  ITestShape extends ITTestShape
+  ITestShape extends ITTestShape,
+  IFeatureShape
 >(
   testImplementations: ITestImplementation<
     string,
@@ -34,7 +35,7 @@ export const SolidityRpcTesteranto = <
     ThenShape,
     ITestShape
   >,
-  testSpecifications: ITestSpecification<ITestShape>,
+  testSpecifications: ITestSpecification<ITestShape, IFeatureShape>,
   testInput: Input,
   contractName: string
 ) =>
@@ -46,7 +47,8 @@ export const SolidityRpcTesteranto = <
     Selection,
     WhenShape,
     ThenShape,
-    string
+    string,
+    IFeatureShape
   >(
     testInput,
     testSpecifications,

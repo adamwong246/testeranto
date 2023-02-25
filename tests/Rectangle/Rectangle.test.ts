@@ -49,7 +49,8 @@ export const RectangleTesteranto =
     Rectangle,
     WhenShape,
     ThenShape,
-    unknown
+    unknown,
+    typeof features
   >(
     Rectangle.prototype,
     (Suite, Given, When, Then, Check) => {
@@ -74,12 +75,12 @@ export const RectangleTesteranto =
               ]
             ),
             Given.WidthOfOneAndHeightOfOne(
-              [features.hola],
+              [`hola`],
               [When.setHeight(4), When.setWidth(3)],
               [Then.area(12)]
             ),
             Given.WidthOfOneAndHeightOfOne(
-              [features.hola],
+              [`hola`],
               [
                 When.setHeight(3),
                 When.setWidth(4),
@@ -89,7 +90,7 @@ export const RectangleTesteranto =
               [Then.area(30), Then.circumference(22)]
             ),
             Given.WidthOfOneAndHeightOfOne(
-              [features.gutentag, `aloha`],
+              [`gutentag`, `aloha`],
               [When.setHeight(3), When.setWidth(4)],
               [
                 Then.getHeight(3),

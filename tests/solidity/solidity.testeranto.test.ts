@@ -19,7 +19,8 @@ type Input = [string, (_w3: Web3) => Promise<string[]>];
 type Ibis = any;
 
 export const SolidityTesteranto = async <
-  ITestShape extends ITTestShape
+  ITestShape extends ITTestShape,
+  IFeatureShape
 >(
   testImplementations: ITestImplementation<
     string,
@@ -28,7 +29,7 @@ export const SolidityTesteranto = async <
     ThenShape,
     ITestShape
   >,
-  testSpecifications: ITestSpecification<ITestShape>,
+  testSpecifications: ITestSpecification<ITestShape, IFeatureShape>,
   testInput,
 ) => {
   const compilation = (await solCompile(testInput[0])).contracts.find((c) => c.contractName === testInput[0]);
@@ -41,7 +42,8 @@ export const SolidityTesteranto = async <
     Selection,
     WhenShape,
     ThenShape,
-    string
+    string,
+    IFeatureShape
   >(
     testInput,
     testSpecifications,

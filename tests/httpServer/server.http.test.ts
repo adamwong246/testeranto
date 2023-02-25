@@ -23,7 +23,8 @@ export const ServerHttpTesteranto = HttpTesteranto<
     checks: {
       AnEmptyState;
     };
-  }
+  },
+  typeof features
 >(
   {
     Suites: {

@@ -23,7 +23,8 @@ export const StorefrontTest = StorefrontTesteranto<
     checks: {
       AnEmptyState;
     }
-  }
+  },
+  typeof features
 >(
   {
     Suites: {
@@ -68,7 +69,7 @@ export const StorefrontTest = StorefrontTesteranto<
         "the storefront react app, alpha",
         [
           Given.AnEmptyState(
-            [features.federatedSplitContract],
+            [`federatedSplitContract`],
             [],
             [
               Then.TheCounterIs(0)

@@ -27,7 +27,8 @@ export const ServerHttp2xTesteranto = Http2xTesteranto<
     checks: {
       AnEmptyState;
     };
-  }
+  },
+  typeof features
 >(
   {
     Suites: {

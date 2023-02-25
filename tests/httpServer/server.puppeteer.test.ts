@@ -1,3 +1,4 @@
+import { Feature } from "@thirdweb-dev/sdk/dist/declarations/src/evm/constants/contract-features";
 import { assert } from "chai";
 import { features } from "../testerantoFeatures.test";
 import { PuppeteerHttpTesteranto } from "./puppeteer-http.testeranto.test";
@@ -24,7 +25,8 @@ export const ServerHttpPuppeteerTesteranto = PuppeteerHttpTesteranto<
     checks: {
       AnEmptyState;
     };
-  }
+  },
+  typeof features
 >(
   {
     Suites: {

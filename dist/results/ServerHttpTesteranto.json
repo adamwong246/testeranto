@@ -1,0 +1,118 @@
+{
+  "fails": [],
+  "givens": [
+    {
+      "testArtifacts": {},
+      "features": [
+        "hello"
+      ],
+      "thens": [
+        {
+          "name": "TheStatusIs: some great status"
+        }
+      ],
+      "whens": [],
+      "name": "AnEmptyState"
+    },
+    {
+      "testArtifacts": {},
+      "features": [
+        "hello"
+      ],
+      "thens": [
+        {
+          "name": "TheStatusIs: hello"
+        }
+      ],
+      "whens": [
+        {
+          "name": "PostToStatus: hello"
+        }
+      ],
+      "name": "AnEmptyState"
+    },
+    {
+      "testArtifacts": {},
+      "features": [
+        "hello"
+      ],
+      "thens": [
+        {
+          "name": "TheStatusIs: aloha"
+        }
+      ],
+      "whens": [
+        {
+          "name": "PostToStatus: hello"
+        },
+        {
+          "name": "PostToStatus: aloha"
+        }
+      ],
+      "name": "AnEmptyState"
+    },
+    {
+      "testArtifacts": {},
+      "features": [
+        "hello"
+      ],
+      "thens": [
+        {
+          "name": "TheNumberIs: 0"
+        }
+      ],
+      "whens": [],
+      "name": "AnEmptyState"
+    },
+    {
+      "testArtifacts": {},
+      "features": [
+        "hello"
+      ],
+      "thens": [
+        {
+          "name": "TheNumberIs: 3"
+        }
+      ],
+      "whens": [
+        {
+          "name": "PostToAdd: 1"
+        },
+        {
+          "name": "PostToAdd: 2"
+        }
+      ],
+      "name": "AnEmptyState"
+    },
+    {
+      "testArtifacts": {},
+      "features": [
+        "hello"
+      ],
+      "thens": [
+        {
+          "name": "TheStatusIs: hello"
+        },
+        {
+          "name": "TheNumberIs: 7"
+        }
+      ],
+      "whens": [
+        {
+          "name": "PostToStatus: aloha"
+        },
+        {
+          "name": "PostToAdd: 4"
+        },
+        {
+          "name": "PostToStatus: hello"
+        },
+        {
+          "name": "PostToAdd: 3"
+        }
+      ],
+      "name": "AnEmptyState"
+    }
+  ],
+  "name": "Testing the Node server with fetch!"
+}

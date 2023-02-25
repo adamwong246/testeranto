@@ -14,7 +14,8 @@ type Store = { browser: Browser; server: http.Server };
 type Selection = string;
 
 export const PuppeteerHttpTesteranto = <
-  ITestShape extends ITTestShape
+  ITestShape extends ITTestShape,
+  IFeatureShape
 >(
   testImplementations: Modify<ITestImplementation<
     InitialState,
@@ -29,7 +30,7 @@ export const PuppeteerHttpTesteranto = <
       ) => WhenShape;
     }
   }>,
-  testSpecifications: ITestSpecification<ITestShape>,
+  testSpecifications: ITestSpecification<ITestShape, IFeatureShape>,
   testInput: Input
 ) =>
   Testeranto<
@@ -40,7 +41,8 @@ export const PuppeteerHttpTesteranto = <
     Selection,
     ThenShape,
     WhenShape,
-    InitialState
+    InitialState,
+    IFeatureShape
   >(
     testInput,
     testSpecifications,
