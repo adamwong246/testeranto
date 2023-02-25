@@ -2,6 +2,8 @@ import pm2 from 'pm2';
 import fs from "fs";
 import path from "path";
 
+import { TesterantoFeatures } from './index.mjs';
+
 console.log("watch.ts", process.cwd(), process.argv);
 
 const configFile = `${process.cwd()}/${process.argv[2]}`;
@@ -12,7 +14,7 @@ const TIMEOUT = 1000;
 const OPEN_PORT = '';
 const testOutPath = "./dist/results/";
 const featureOutPath = "./dist/";
-const reportOutPath = "./dist/report";
+const reportOutPath = "./dist/report/";
 
 class TesterantoProject {
   tests: [keyName: string, fileName: string, className: string][];
@@ -25,13 +27,13 @@ class TesterantoProject {
     this.ports = ports
   }
 
-  builder() {
-    const text = JSON.stringify({ tests: this.tests, features: this.features });
-    const p = "./dist/testeranto.config.json";
-    fs.promises.mkdir(path.dirname(p), { recursive: true }).then(x => {
-      fs.promises.writeFile(p, text);
-    })
-  }
+  // builder() {
+  //   const text = JSON.stringify({ tests: this.tests, features: this.features });
+  //   const p = "./dist/testeranto.config.json";
+  //   fs.promises.mkdir(path.dirname(p), { recursive: true }).then(x => {
+  //     fs.promises.writeFile(p, text);
+  //   })
+  // }
 
 }
 
@@ -59,14 +61,14 @@ type IPm2ProcessB = {
   },
   data: {
     testResource: string[],
-    results: object,
+    results: any,
   };
   at: string;
 };
 
 class Scheduler {
   // featureTestJoin: Record<string, any>;
-  // testerantoFeatures: TesterantoFeatures;
+  testerantoFeatures: TesterantoFeatures;
   project: TesterantoProject;
 
   ports: Record<string, string>;
@@ -79,7 +81,7 @@ class Scheduler {
   spinAnimation = "←↖↑↗→↘↓↙";
   pm2: typeof pm2;
 
-  constructor(project: TesterantoProject) {
+  constructor(project: TesterantoProject, testerantoFeatures: TesterantoFeatures) {
     const portsToUse = project.ports;
     this.ports = {};
     portsToUse.forEach((port) => {
@@ -88,6 +90,7 @@ class Scheduler {
     this.queue = [];
     this.jobs = {};
     this.project = project;
+    this.testerantoFeatures = testerantoFeatures;
 
     pm2.connect((err) => {
       console.log(`pm2 is connected`);
@@ -227,7 +230,7 @@ class Scheduler {
     }
   }
 
-  private releaseTestResources(pm2Proc: IPm2ProcessB) {
+  private async releaseTestResources(pm2Proc: IPm2ProcessB) {
     console.log("releasing test resources", pm2Proc.data.testResource, this.ports);
     if (pm2Proc) {
       (pm2Proc.data.testResource || [])
@@ -237,7 +240,19 @@ class Scheduler {
             this.ports[p] = OPEN_PORT;
           }
         });
+
       if (pm2Proc.data.results) {
+
+        // fs.writeFile(
+        //   `${testOutPath}${pm2Proc.process.name}.json`,
+        //   JSON.stringify(this.testerantoFeatures, null, 2),
+        //   (err) => {
+        //     if (err) {
+        //       console.error(err);
+        //     }
+        //   }
+        // );
+
         fs.writeFile(
           `${testOutPath}${pm2Proc.process.name}.json`,
           JSON.stringify(pm2Proc.data.results, null, 2),
@@ -247,7 +262,48 @@ class Scheduler {
             }
           }
         );
+
+        const testJob = { test: pm2Proc.data.results };
+
+
+
+        for (const [gNdx, g] of testJob.test.givens.entries()) {
+          for (const testArtifactKey of Object.keys(g.testArtifacts)) {
+            for (const [ndx, testArtifact] of g.testArtifacts[testArtifactKey].entries()) {
+              const artifactOutFolderPath = `${testOutPath}${pm2Proc.process.name}/${gNdx}/${ndx}/`;
+
+              // console.log("mark4", artifactOutFolderPath);
+              console.log("mark5", testArtifact);
+
+              const artifactOutPath = `${artifactOutFolderPath}/${testArtifactKey}.png`
+              await fs.promises.mkdir(artifactOutFolderPath, { recursive: true });
+              await fs.writeFile(
+                artifactOutPath,
+                Buffer.from(testArtifact.binary.data),
+                (err) => {
+                  if (err) {
+                    console.error(err);
+                  }
+                  // resolve(result)
+                }
+              );
+            }
+          }
+        }
+        // fs.writeFile(
+        //   `${reportOutPath}testDAG.json`,
+        //   JSON.stringify(this.testerantoFeatures.graphs.dags[0].graph.export(), null, 2),
+        //   (err) => {
+        //     if (err) {
+        //       console.error(err);
+        //     }
+        //   }
+        // );
+
+
       }
+
+
     } else {
       console.error("idk?!")
     }
@@ -257,7 +313,12 @@ class Scheduler {
 import(configFile).then((testerantoConfigImport) => {
   const configModule = testerantoConfigImport.default;
   const tProject = new TesterantoProject(configModule.tests, configModule.features, configModule.ports)
-  const TRM = new Scheduler(tProject);
+
+  import(path.resolve(process.cwd(), tProject.features)).then((testerantoFeaturesImport) => {
+    const tFeatures = testerantoFeaturesImport.default as TesterantoFeatures;
+    const TRM = new Scheduler(tProject, tFeatures);
+  });
+
 });
 
   // private dumpNetworks = () => {

@@ -3,8 +3,6 @@ import * as esbuild from 'esbuild';
 import fs from "fs";
 import path from "path";
 
-// import createHash = require("node:crypto").createHash;
-
 console.log("build.sh", process.cwd(), process.argv);
 
 import(process.argv[2]).then(async (testerantoConfigImport) => {
@@ -62,16 +60,16 @@ import(process.argv[2]).then(async (testerantoConfigImport) => {
 
     ],
     external: [
-      testerantoConfig.features
+      // testerantoConfig.features
     ]
   })
 
   await ctx.watch()
 
 
-  let { host, port } = await ctx.serve({
-    servedir: 'dist',
-  })
+  // let { host, port } = await ctx.serve({
+  //   servedir: 'dist',
+  // })
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

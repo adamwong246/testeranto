@@ -1,43 +1,39 @@
-// import { DirectedGraph, UndirectedGraph } from 'graphology/dist/graphology.esm';
-// import type { DirectedGraph } from "graphology-types";
+import pkg from 'graphology';
+/* @ts-ignore:next-line */
+const { DirectedGraph, UndirectedGraph } = pkg;
+const testOutPath = "./dist/results/";
 class TesterantoGraph {
     constructor(name) {
         this.name = name;
     }
 }
-// export class TesterantoGraphUndirected implements TesterantoGraph {
-//   name: string;
-//   // graph: UndirectedGraph
-//   constructor(name: string) {
-//     this.name = name;
-//     this.graph = new UndirectedGraph();
-//   }
-//   connect(a, b, relation?: string) {
-//     this.graph.mergeEdge(a, b, { type: relation });
-//   }
-// }
-// export class TesterantoGraphDirected implements TesterantoGraph {
-//   name: string;
-//   graph: DirectedGraph;
-//   constructor(name: string) {
-//     this.name = name;
-//     this.graph = new DirectedGraph();
-//   }
-//   connect(to, from, relation?: string) {
-//     this.graph.mergeEdge(to, from, { type: relation });
-//   }
-// }
-// export class TesterantoGraphDirectedAcyclic implements TesterantoGraph {
-//   name: string;
-//   graph: DirectedGraph;
-//   constructor(name: string) {
-//     this.name = name;
-//     this.graph = new DirectedGraph();
-//   }
-//   connect(to, from, relation?: string) {
-//     this.graph.mergeEdge(to, from, { type: relation });
-//   }
-// }
+export class TesterantoGraphUndirected {
+    constructor(name) {
+        this.name = name;
+        this.graph = new UndirectedGraph();
+    }
+    connect(a, b, relation) {
+        this.graph.mergeEdge(a, b, { type: relation });
+    }
+}
+export class TesterantoGraphDirected {
+    constructor(name) {
+        this.name = name;
+        this.graph = new DirectedGraph();
+    }
+    connect(to, from, relation) {
+        this.graph.mergeEdge(to, from, { type: relation });
+    }
+}
+export class TesterantoGraphDirectedAcyclic {
+    constructor(name) {
+        this.name = name;
+        this.graph = new DirectedGraph();
+    }
+    connect(to, from, relation) {
+        this.graph.mergeEdge(to, from, { type: relation });
+    }
+}
 export class TesterantoFeatures {
     constructor(features, graphs) {
         this.features = features;
@@ -45,105 +41,32 @@ export class TesterantoFeatures {
     }
     networks() {
         return [
-        // ...this.graphs.undirected.values(),
-        // ...this.graphs.directed.values(),
-        // ...this.graphs.dags.values()
+            ...this.graphs.undirected.values(),
+            ...this.graphs.directed.values(),
+            ...this.graphs.dags.values()
         ];
     }
     toObj() {
         return {
-            features: this.features.map((feature) => {
-                return Object.assign({}, feature);
+            features: Object.entries(this.features).map(([name, feature]) => {
+                return Object.assign(Object.assign({}, feature), { inNetworks: this.networks().filter((network) => {
+                        return network.graph.hasNode(feature.name);
+                    }).map((network) => {
+                        return {
+                            network: network.name,
+                            neighbors: network.graph.neighbors(feature.name)
+                        };
+                    }) });
             }),
-            // networks: this.networks().map((network) => {
-            //   return {
-            //     ...network
-            //   }
-            // })
+            networks: this.networks().map((network) => {
+                return Object.assign({}, network);
+            })
         };
     }
 }
-export class TesterantoLevelZero {
-    constructor(cc, suitesOverrides, givenOverides, whenOverides, thenOverides, checkOverides) {
-        this.cc = cc;
-        this.constructorator = cc;
-        this.suitesOverrides = suitesOverrides;
-        this.givenOverides = givenOverides;
-        this.whenOverides = whenOverides;
-        this.thenOverides = thenOverides;
-        this.checkOverides = checkOverides;
-    }
-    Suites() {
-        return this.suitesOverrides;
-    }
-    Given() {
-        return this.givenOverides;
-    }
-    When() {
-        return this.whenOverides;
-    }
-    Then() {
-        return this.thenOverides;
-    }
-    Check() {
-        return this.checkOverides;
-    }
-}
-export class TesterantoLevelOne {
-    constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResource) {
-        const classySuites = Object.entries(testImplementation.Suites)
-            .reduce((a, [key]) => {
-            a[key] = (somestring, givens, checks) => {
-                return new suiteKlasser.prototype.constructor(somestring, givens, checks);
-            };
-            return a;
-        }, {});
-        const classyGivens = Object.entries(testImplementation.Givens)
-            .reduce((a, [key, z]) => {
-            a[key] = (features, whens, thens, ...xtrasW) => {
-                return new givenKlasser.prototype.constructor(z.name, features, whens, thens, z(...xtrasW));
-            };
-            return a;
-        }, {});
-        const classyWhens = Object.entries(testImplementation.Whens)
-            .reduce((a, [key, whEn]) => {
-            a[key] = (payload) => {
-                return new whenKlasser.prototype.constructor(`${whEn.name}: ${payload && payload.toString()}`, whEn(payload));
-            };
-            return a;
-        }, {});
-        const classyThens = Object.entries(testImplementation.Thens)
-            .reduce((a, [key, thEn]) => {
-            a[key] = (expected, x) => {
-                return new thenKlasser.prototype.constructor(`${thEn.name}: ${expected && expected.toString()}`, thEn(expected));
-            };
-            return a;
-        }, {});
-        const classyChecks = Object.entries(testImplementation.Checks)
-            .reduce((a, [key, z]) => {
-            a[key] = (somestring, features, callback) => {
-                return new checkKlasser.prototype.constructor(somestring, features, callback, classyWhens, classyThens);
-            };
-            return a;
-        }, {});
-        const classyTesteranto = new (class extends TesterantoLevelZero {
-        })(input, classySuites, classyGivens, classyWhens, classyThens, classyChecks);
-        const suites = testSpecification(
-        /* @ts-ignore:next-line */
-        classyTesteranto.Suites(), classyTesteranto.Given(), classyTesteranto.When(), classyTesteranto.Then(), classyTesteranto.Check());
-        const toReturn = suites.map((suite) => {
-            return {
-                test: suite,
-                testResource,
-                toObj: () => {
-                    return suite.toObj();
-                },
-                runner: async (allocatedPorts) => {
-                    return suite.run(input, { ports: allocatedPorts });
-                },
-            };
-        });
-        return toReturn;
+class TestArtifact {
+    constructor(binary) {
+        this.binary = binary;
     }
 }
 export class BaseFeature {
@@ -197,11 +120,6 @@ export class BaseSuite {
         return true;
     }
 }
-class TestArtifact {
-    constructor(binary) {
-        this.binary = binary;
-    }
-}
 export class BaseGiven {
     constructor(name, features, whens, thens) {
         this.artifactSaver = {
@@ -218,7 +136,9 @@ export class BaseGiven {
             name: this.name,
             whens: this.whens.map((w) => w.toObj()),
             thens: this.thens.map((t) => t.toObj()),
-            errors: this.error
+            errors: this.error,
+            features: this.features,
+            testArtifacts: this.testArtifacts,
         };
     }
     saveTestArtifact(k, testArtifact) {
@@ -358,6 +278,90 @@ export class BaseCheck {
         return;
     }
 }
+export class TesterantoLevelZero {
+    constructor(cc, suitesOverrides, givenOverides, whenOverides, thenOverides, checkOverides) {
+        this.cc = cc;
+        this.constructorator = cc;
+        this.suitesOverrides = suitesOverrides;
+        this.givenOverides = givenOverides;
+        this.whenOverides = whenOverides;
+        this.thenOverides = thenOverides;
+        this.checkOverides = checkOverides;
+    }
+    Suites() {
+        return this.suitesOverrides;
+    }
+    Given() {
+        return this.givenOverides;
+    }
+    When() {
+        return this.whenOverides;
+    }
+    Then() {
+        return this.thenOverides;
+    }
+    Check() {
+        return this.checkOverides;
+    }
+}
+export class TesterantoLevelOne {
+    constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResource) {
+        const classySuites = Object.entries(testImplementation.Suites)
+            .reduce((a, [key]) => {
+            a[key] = (somestring, givens, checks) => {
+                return new suiteKlasser.prototype.constructor(somestring, givens, checks);
+            };
+            return a;
+        }, {});
+        const classyGivens = Object.entries(testImplementation.Givens)
+            .reduce((a, [key, z]) => {
+            a[key] = (features, whens, thens, ...xtrasW) => {
+                return new givenKlasser.prototype.constructor(z.name, features, whens, thens, z(...xtrasW));
+            };
+            return a;
+        }, {});
+        const classyWhens = Object.entries(testImplementation.Whens)
+            .reduce((a, [key, whEn]) => {
+            a[key] = (payload) => {
+                return new whenKlasser.prototype.constructor(`${whEn.name}: ${payload && payload.toString()}`, whEn(payload));
+            };
+            return a;
+        }, {});
+        const classyThens = Object.entries(testImplementation.Thens)
+            .reduce((a, [key, thEn]) => {
+            a[key] = (expected, x) => {
+                return new thenKlasser.prototype.constructor(`${thEn.name}: ${expected && expected.toString()}`, thEn(expected));
+            };
+            return a;
+        }, {});
+        const classyChecks = Object.entries(testImplementation.Checks)
+            .reduce((a, [key, z]) => {
+            a[key] = (somestring, features, callback) => {
+                return new checkKlasser.prototype.constructor(somestring, features, callback, classyWhens, classyThens);
+            };
+            return a;
+        }, {});
+        const classyTesteranto = new (class extends TesterantoLevelZero {
+        })(input, classySuites, classyGivens, classyWhens, classyThens, classyChecks);
+        const suites = testSpecification(
+        /* @ts-ignore:next-line */
+        classyTesteranto.Suites(), classyTesteranto.Given(), classyTesteranto.When(), classyTesteranto.Then(), classyTesteranto.Check());
+        /* @ts-ignore:next-line */
+        const toReturn = suites.map((suite) => {
+            return {
+                test: suite,
+                testResource,
+                toObj: () => {
+                    return suite.toObj();
+                },
+                runner: async (allocatedPorts) => {
+                    return suite.run(input, { ports: allocatedPorts });
+                },
+            };
+        });
+        return toReturn;
+    }
+}
 export const Testeranto = async (input, testSpecification, testImplementation, 
 // testImplementation: ITestImplementation<
 //   InitialStateShape,
@@ -442,10 +446,7 @@ testResource, testInterface) => {
     });
     console.log("awaiting test resources from mothership...");
     process.on('message', async function (packet) {
-        console.log("message", packet);
-        console.log("going!...");
         await mrt[0].runner(packet.data.goWithTestResources);
-        console.log("done going with test resources!", mrt[0]);
         /* @ts-ignore:next-line */
         process.send({
             type: 'testeranto:adios',
@@ -453,12 +454,20 @@ testResource, testInterface) => {
                 testResource: mrt[0].test.testResourceConfiguration.ports,
                 results: mrt[0].toObj()
             }
+        }, (err) => {
+            if (!err) {
+                console.log(`✅`);
+            }
+            else {
+                console.error(`❗️`, err);
+            }
+            process.exit(0); // :-)
         });
-        process.exit(0); // :-)
     });
     process.on('SIGINT', function () {
         var _a;
         console.log("SIGINT caught. Releasing test resources back to mothership...", mrt[0].test.testResourceConfiguration);
+        console.log("`❗️`");
         /* @ts-ignore:next-line */
         process.send({
             type: 'testeranto:adios',
