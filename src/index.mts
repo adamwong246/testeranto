@@ -103,7 +103,8 @@ export class TesterantoFeatures {
 export type ITTestResourceRequirement = {
   "ports": number
 };
-export type ITTestResource = {
+
+type ITTestResource = {
   "ports": number[]
 };
 
@@ -123,7 +124,7 @@ export type IT = {
 export type ITestJob = {
   toObj(): object;
   test: IT;
-  runner: (testResurce?) => unknown;
+  runner: (testResource) => Promise<boolean>;
   testResource: ITTestResourceRequirement;
 };
 
@@ -585,6 +586,7 @@ export abstract class BaseSuite<
   store: IStore;
   aborted: boolean;
   fails: BaseGiven<ISubject, IStore, ISelection, IThenShape>[];
+  testResourceConfiguration: ITTestResource;
 
   constructor(
     name: string,
@@ -618,7 +620,8 @@ export abstract class BaseSuite<
     return t;
   }
 
-  async run(input, testResourceConfiguration: ITTestResource) {
+  async run(input, testResourceConfiguration: ITTestResource): Promise<boolean> {
+    this.testResourceConfiguration = Object.keys(testResourceConfiguration).length ? testResourceConfiguration : { ports: [] };
     const subject = await this.setup(input);
     console.log("\nSuite:", this.name, testResourceConfiguration);
     for (const [ndx, giver] of this.givens.entries()) {
@@ -629,13 +632,13 @@ export abstract class BaseSuite<
       } catch (e) {
         console.error(e);
         this.fails.push(giver)
-        return false
+        return false;
       }
     }
     for (const [ndx, thater] of this.checks.entries()) {
       await thater.check(subject, ndx, testResourceConfiguration, this.test);
     }
-    return true
+    return true;
   }
 }
 
@@ -1064,7 +1067,6 @@ export const Testeranto = async <
   }
 
   const mrt = new MrT();
-  console.log(mrt[0].runner)
 
   console.log("requesting test resources from mothership...", testResource);
   /* @ts-ignore:next-line */
@@ -1076,40 +1078,41 @@ export const Testeranto = async <
   });
 
   console.log("awaiting test resources from mothership...");
-  process.on('message', async function (packet: { data: { go: boolean } }) {
-    console.log("mark6", packet);
-    if (packet.data.go === true) {
-      console.log("going!...");
-      await mrt[0].runner();
-      console.log("done going!");
-      process.exit(0); // :-)
-    }
-  });
+  process.on('message', async function (packet: { data: { go?: boolean, goWithTestResources?: string[] } }) {
 
-  process.on('SIGINT', function () {
+    console.log("message", packet);
 
-    console.log("SIGINT caught. Releasing test resources back to mothership...", testResource);
+
+    console.log("going!...");
+    await mrt[0].runner(packet.data.goWithTestResources);
+    console.log("done going with test resources!", mrt[0]);
 
     /* @ts-ignore:next-line */
     process.send({
       type: 'testeranto:adios',
       data: {
-        testResource
+        testResource: mrt[0].test.testResourceConfiguration.ports,
+        results: mrt[0].toObj()
       }
     });
+
+    process.exit(0); // :-)
+
   });
 
-  // process.on('SIGKILL', function () {
+  process.on('SIGINT', function () {
 
-  //   console.log("SIGKILL caught. Releasing test resources back to mothership...", testResource);
+    console.log("SIGINT caught. Releasing test resources back to mothership...", mrt[0].test.testResourceConfiguration);
 
-  //   /* @ts-ignore:next-line */
-  //   process.send({
-  //     type: 'testeranto:adios',
-  //     data: {
-  //       testResource
-  //     }
-  //   });
-  // });
+    /* @ts-ignore:next-line */
+    process.send({
+      type: 'testeranto:adios',
+      data: {
+        testResource: mrt[0].test.testResourceConfiguration?.ports || []
+      }
+    });
+
+    process.exit(0); // :-)
+  });
 
 };

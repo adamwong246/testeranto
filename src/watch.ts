@@ -48,7 +48,20 @@ type IPm2Process = {
     }
   };
   at: string;
+};
 
+type IPm2ProcessB = {
+  process: {
+    namespace: string;
+    versioning: object;
+    name: string;
+    pm_id: number;
+  },
+  data: {
+    testResource: string[],
+    results: object,
+  };
+  at: string;
 };
 
 class Scheduler {
@@ -59,11 +72,9 @@ class Scheduler {
   ports: Record<string, string>;
   jobs: Record<string, {
     aborter: () => any;
-    cancellablePromise: string;  //CancelablePromise<unknown>
+    cancellablePromise: string;
   }>;
   queue: IPm2Process[];
-  // testSrcMd5s: object;
-  // featureSrcMd5: string;
   spinCycle = 0;
   spinAnimation = "←↖↑↗→↘↓↙";
   pm2: typeof pm2;
@@ -76,8 +87,6 @@ class Scheduler {
     });
     this.queue = [];
     this.jobs = {};
-    // this.testSrcMd5s = {};
-    // this.featureTestJoin = {};
     this.project = project;
 
     pm2.connect((err) => {
@@ -90,11 +99,12 @@ class Scheduler {
       }
 
       const theTests = this.project.tests.reduce((m, [kn, fn, cn]) => {
+        const script = "./dist/" + fn.split(".ts")[0] + ".mjs";
         m[kn] = pm2.start({
-          script: "./dist/" + fn.split(".ts")[0] + ".mjs",
+          script,
           name: cn,
           autorestart: false,
-          watch: true,
+          watch: [script],
         }, (err, apps) => {
           if (err) {
             console.error(err);
@@ -105,16 +115,14 @@ class Scheduler {
       }, {});
 
       pm2.launchBus((err, pm2_bus) => {
-        console.log(`pm2 bus is launched`);
-
         pm2_bus.on('testeranto:hola', (packet: any) => {
-          console.log("mark7", packet);
-          console.log(`hola`, packet);
+          console.log("hola", packet);
           this.push(packet);
         });
 
-        pm2_bus.on('testeranto:adios', function (packet: IPm2Process) {
-          console.log(`adios`, packet);
+        pm2_bus.on('testeranto:adios', (packet: IPm2ProcessB) => {
+          console.log("adios", packet);
+          this.releaseTestResources(packet);
         });
 
       });
@@ -131,12 +139,6 @@ class Scheduler {
     this.pm2.stop(pm2Proc.process.pm_id, (err, proc) => {
       console.error(err);
     });
-    // if (this.jobs[key]) {
-    //   console.log("aborting...", key, this.jobs[key])
-    //   await this.jobs[key].aborter();
-    //   // await this.jobs[key].cancellablePromise.cancel();
-    //   delete this.jobs[key];
-    // }
   }
 
   private spinner() {
@@ -154,13 +156,9 @@ class Scheduler {
       console.log('feed me some tests plz')
       return;
     }
-    // const { key, aborter, testResourceRequired, getCancellablePromise } = qi;
-
-    // this.abort(p.process);
     const pid = p.process.pm_id;
     const testResource = p.data.testResource;
 
-    console.log("mark4");
     const message = {
       // these fields must be present
       id: p.process.pm_id, // id of process from "pm2 list" command or from pm2.list(errback) method
@@ -170,20 +168,16 @@ class Scheduler {
 
       // Data to be sent
       data: {
-        go: true,
+        goWithTestResources: [],
         id: p.process.pm_id
       }
     };
 
     if (testResource?.ports === 0) {
+      console.log("mark2", message)
       this.pm2.sendDataToProcessId(p.process.pm_id, message, function (err, res) {
-        console.log("mark5", err, res, message);
+        console.log("sendDataToProcessId", err, res, message);
       })
-
-      // this.jobs[key] = {
-      //   aborter,
-      //   cancellablePromise: getCancellablePromise({}).then(() => delete this.jobs[key])
-      // }
     }
 
     if ((testResource?.ports || 0) > 0) {
@@ -204,49 +198,27 @@ class Scheduler {
 
         const selectionOfPorts = foundOpenPorts.slice(0, testResource.ports);
 
-
-        this.pm2.sendDataToProcessId(p.process.pm_id, {
-          // id of process from "pm2 list" command or from pm2.list(errback) method
-          // id: 1,
-
+        const message = {
+          // these fields must be present
+          id: p.process.pm_id, // id of process from "pm2 list" command or from pm2.list(errback) method
+          topic: 'some topic',
           // process:msg will be send as 'message' on target process
           type: 'process:msg',
 
           // Data to be sent
           data: {
-            goWithResources: selectionOfPorts
-          },
-          // id: 0, // id of process from "pm2 list" command or from pm2.list(errback) method
-          // topic: 'some topic'
-        }, function (err, res) {
+            goWithTestResources: selectionOfPorts,
+            id: p.process.pm_id
+          }
+        };
+
+        this.pm2.sendDataToProcessId(p.process.pm_id, message, function (err, res) {
         })
-
-        //  init the promise with ports which are open.
-        // const testPromise = getCancellablePromise(selectionOfPorts)
-
-        //   // when the promise is done...
-        //   .then(() => {
-        //     // clear any ports which were used
-        //     Object.keys(this.ports)
-        //       .forEach((p, k) => {
-        //         const jobExistsAndMatches = this.ports[p] === key;
-        //         if (jobExistsAndMatches) {
-        //           this.ports[p] = OPEN_PORT;
-        //         }
-        //       });
-
-        //     delete this.jobs[key]
-        //   });
 
         // mark the selected ports as occupied
         for (const foundOpenPort of selectionOfPorts) {
           this.ports[foundOpenPort] = pid.toString();
         }
-
-        // this.jobs[key] = {
-        //   aborter,
-        //   cancellablePromise: testPromise
-        // };
 
       } else {
         console.log(`no port was open so send the ${pid} job to the back of the queue`)
@@ -255,46 +227,38 @@ class Scheduler {
     }
   }
 
-  // public launch() {
+  private releaseTestResources(pm2Proc: IPm2ProcessB) {
+    console.log("releasing test resources", pm2Proc.data.testResource, this.ports);
+    if (pm2Proc) {
+      (pm2Proc.data.testResource || [])
+        .forEach((p, k) => {
+          const jobExistsAndMatches = this.ports[p] === pm2Proc.process.pm_id.toString();
+          if (jobExistsAndMatches) {
+            this.ports[p] = OPEN_PORT;
+          }
+        });
+      if (pm2Proc.data.results) {
+        fs.writeFile(
+          `${testOutPath}${pm2Proc.process.name}.json`,
+          JSON.stringify(pm2Proc.data.results, null, 2),
+          (err) => {
+            if (err) {
+              console.error(err);
+            }
+          }
+        );
+      }
+    } else {
+      console.error("idk?!")
+    }
+  }
+}
 
-  //   pm2.connect(function (err) {
-  //     if (err) {
-  //       console.error(err)
-  //       process.exit(2)
-  //     }
-
-  //     setInterval(async () => {
-  //       console.log(this.spinner(), this.queue.length, this.ports);
-  //       this.pop();
-  //     }, TIMEOUT);
-  //   })
-
-
-  // }
-
-  // public async testFileTouched(key, distFile, className) {
-  //   // this.push([distFile, className], key);
-
-  // }
-
-  // public featureFileTouched(distFile) {
-  //   this.setFeatures((fresh(distFile, require)['default']));
-  // }
-
-  // private async setFeatures(testerantoFeatures: TesterantoFeatures) {
-  //   this.testerantoFeatures = testerantoFeatures;
-  //   await fs.promises.mkdir(featureOutPath, { recursive: true });
-  //   await fs.writeFile(
-  //     `${featureOutPath}TesterantoFeatures.json`,
-  //     JSON.stringify(testerantoFeatures.toObj(), null, 2),
-  //     (err) => {
-  //       if (err) {
-  //         console.error(err);
-  //       }
-  //     }
-  //   );
-  //   this.regenerateReports();
-  // }
+import(configFile).then((testerantoConfigImport) => {
+  const configModule = testerantoConfigImport.default;
+  const tProject = new TesterantoProject(configModule.tests, configModule.features, configModule.ports)
+  const TRM = new Scheduler(tProject);
+});
 
   // private dumpNetworks = () => {
   //   return {
@@ -472,73 +436,3 @@ class Scheduler {
   //   //   this.regenerateReports();
   //   // }))
   // }
-
-}
-
-import(configFile).then((testerantoConfigImport) => {
-  const configModule = testerantoConfigImport.default;
-
-  console.log("build.ts tProject", configModule);
-  const tProject = new TesterantoProject(configModule.tests, configModule.features, configModule.ports)
-  console.log("build.ts tProject", tProject);
-
-  const TRM = new Scheduler(tProject);
-
-  // (async function () {
-  //   for await (const [ndx, [key, sourcefile, className]] of tProject.tests.entries()) {
-  //     const distFile = process.cwd() + "/dist/" + sourcefile.split(".ts")[0] + ".js";
-  //     // const md5File = process.cwd() + "/dist/" + sourcefile.split(".ts")[0] + ".md5";
-
-  //     // fs.readFile(md5File, 'utf-8', (err, firstmd5hash) => {
-  //     //   TRM.testFileTouched(key, distFile, className, firstmd5hash);
-
-  //     watchFile(distFile, () => {
-  //       TRM.testFileTouched(key, distFile, className);
-
-  //       // fs.readFile(distFile, 'utf-8', (err, newmd5Hash) => {
-  //       //   if (err) {
-  //       //     console.error(err)
-  //       //     process.exit(-1)
-  //       //   }
-
-  //       //   TRM.testFileTouched(key, distFile, className);
-  //       // })
-  //     });
-  //     // });
-
-  //     TRM.testFileTouched(key, distFile, className);
-
-  //   }
-
-  //   ///////////////////////////////////////////////////////////////////////////////////////
-
-  //   const featureFile = tProject.features;
-  //   const distFile = process.cwd() + "/dist/" + featureFile.split(".ts")[0] + ".js";
-  //   // const md5File = process.cwd() + "/dist/" + featureFile.split(".ts")[0] + ".md5";
-
-  //   TRM.featureFileTouched(distFile);
-  //   // fs.readFile(featureFile, 'utf-8', (err, featuresFileContents) => {
-  //   //   TRM.featureFileTouched(distFile);
-
-  //   watchFile(distFile, () => {
-  //     TRM.featureFileTouched(distFile);
-  //     // fs.readFile(distFile, 'utf-8', (err, newContents) => {
-  //     //   if (err) {
-  //     //     console.error(err)
-  //     //     process.exit(-1)
-  //     //   }
-
-  //     //   TRM.featureFileTouched(distFile);
-  //     // })
-  //   });
-
-  //   //   // TRM.featureFileTouched(distFile);
-  //   // });
-
-
-
-  //   TRM.launch();
-
-  // })();
-
-})

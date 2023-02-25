@@ -176,6 +176,7 @@ export class BaseSuite {
         return t;
     }
     async run(input, testResourceConfiguration) {
+        this.testResourceConfiguration = Object.keys(testResourceConfiguration).length ? testResourceConfiguration : { ports: [] };
         const subject = await this.setup(input);
         console.log("\nSuite:", this.name, testResourceConfiguration);
         for (const [ndx, giver] of this.givens.entries()) {
@@ -431,7 +432,6 @@ testResource, testInterface) => {
         }
     }
     const mrt = new MrT();
-    console.log(mrt[0].runner);
     console.log("requesting test resources from mothership...", testResource);
     /* @ts-ignore:next-line */
     process.send({
@@ -442,32 +442,30 @@ testResource, testInterface) => {
     });
     console.log("awaiting test resources from mothership...");
     process.on('message', async function (packet) {
-        console.log("mark6", packet);
-        if (packet.data.go === true) {
-            console.log("going!...");
-            await mrt[0].runner();
-            console.log("done going!");
-            process.exit(0); // :-)
-        }
-    });
-    process.on('SIGINT', function () {
-        console.log("SIGINT caught. Releasing test resources back to mothership...", testResource);
+        console.log("message", packet);
+        console.log("going!...");
+        await mrt[0].runner(packet.data.goWithTestResources);
+        console.log("done going with test resources!", mrt[0]);
         /* @ts-ignore:next-line */
         process.send({
             type: 'testeranto:adios',
             data: {
-                testResource
+                testResource: mrt[0].test.testResourceConfiguration.ports,
+                results: mrt[0].toObj()
             }
         });
+        process.exit(0); // :-)
     });
-    // process.on('SIGKILL', function () {
-    //   console.log("SIGKILL caught. Releasing test resources back to mothership...", testResource);
-    //   /* @ts-ignore:next-line */
-    //   process.send({
-    //     type: 'testeranto:adios',
-    //     data: {
-    //       testResource
-    //     }
-    //   });
-    // });
+    process.on('SIGINT', function () {
+        var _a;
+        console.log("SIGINT caught. Releasing test resources back to mothership...", mrt[0].test.testResourceConfiguration);
+        /* @ts-ignore:next-line */
+        process.send({
+            type: 'testeranto:adios',
+            data: {
+                testResource: ((_a = mrt[0].test.testResourceConfiguration) === null || _a === void 0 ? void 0 : _a.ports) || []
+            }
+        });
+        process.exit(0); // :-)
+    });
 };

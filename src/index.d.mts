@@ -11,7 +11,7 @@ export declare class TesterantoFeatures {
 export declare type ITTestResourceRequirement = {
     "ports": number;
 };
-export declare type ITTestResource = {
+declare type ITTestResource = {
     "ports": number[];
 };
 export declare type IT_FeatureNetwork = {
@@ -27,7 +27,7 @@ export declare type IT = {
 export declare type ITestJob = {
     toObj(): object;
     test: IT;
-    runner: (testResurce?: any) => unknown;
+    runner: (testResource: any) => Promise<boolean>;
     testResource: ITTestResourceRequirement;
 };
 export declare type ITestResults = Promise<{
@@ -112,6 +112,7 @@ export declare abstract class BaseSuite<IInput, ISubject, IStore, ISelection, IT
     store: IStore;
     aborted: boolean;
     fails: BaseGiven<ISubject, IStore, ISelection, IThenShape>[];
+    testResourceConfiguration: ITTestResource;
     constructor(name: string, givens?: BaseGiven<ISubject, IStore, ISelection, IThenShape>[], checks?: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape>[]);
     aborter(): Promise<void>;
     toObj(): {
