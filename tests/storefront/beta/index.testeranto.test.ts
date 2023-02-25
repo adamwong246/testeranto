@@ -9,7 +9,7 @@ import Web3 from 'web3';
 
 import { Testeranto, ITestImplementation, ITestSpecification, ITTestShape } from "testeranto";
 
-import { solCompile } from "../../solidity/truffle";
+import { solCompile } from "../../solidity/truffle.mjs";
 
 type Input = {
   contractName: string,

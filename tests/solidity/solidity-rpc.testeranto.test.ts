@@ -10,7 +10,7 @@ import { ethers } from "ethers";
 import { Contract as ContractEthers } from 'ethers';
 import { Contract as ContractWeb3 } from 'web3-eth-contract';
 
-import { solCompile } from "./truffle";
+import { solCompile } from "./truffle.mjs";
 
 type Selection = {
   contractFarSide: ContractEthers,
