@@ -15,7 +15,7 @@
     "ATDD"
   ],
   "scripts": {
-    "stop": "yarn pm2 stop all; yarn pm2 delete all; rm -rf dist/tests/; rm -rf dist/results/; mkdir dist/tests; mkdir dist/results",
+    "stop": "yarn pm2 stop all; yarn pm2 delete all; rm -rf dist/tests/; rm -rf dist/results/; rm -rf dist/report/; mkdir dist/tests; mkdir dist/results; mkdir dist/report",
     "reinstall": "yarn upgrade testeranto -f && yarn testerantoBuild",
     "simpleserver": "open http://localhost:8080/reporter.html & cd dist && python3 -m SimpleHTTPServer 8080",
     "clean:dist": "rm -rf ./dist/results && rm -rf ./dist/tests  && rm -f ./dist/reporter.css && rm -f ./dist/reporter.js && rm -f ./dist/*.jpg ",
