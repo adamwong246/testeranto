@@ -37,21 +37,22 @@ export default {
       "StorefrontTest"
     ],
 
-    // [
-    //   "StorefrontTestBeta",
-    //   "./tests/storefront/beta/index.test.ts",
-    //   "StorefrontTestBeta"
-    // ],
+    [
+      "StorefrontTestBeta",
+      "./tests/storefront/beta/index.test.ts",
+      "StorefrontTestBeta"
+    ],
     [
       "MyFirstContract",
       "./tests/solidity/MyFirstContract.solidity.test.ts",
       "MyFirstContractTesteranto"
     ],
-    // [
-    //   "MyFirstContractPlusRpc",
-    //   "./tests/solidity/MyFirstContract.solidity-rpc.test.ts",
-    //   "MyFirstContractPlusRpcTesteranto"
-    // ],
+    [
+      "MyFirstContractPlusRpc",
+      "./tests/solidity/MyFirstContract.solidity-rpc.test.ts",
+      "MyFirstContractPlusRpcTesteranto"
+    ],
+
     [
       "Rectangle",
       "./tests/Rectangle/Rectangle.test.ts",

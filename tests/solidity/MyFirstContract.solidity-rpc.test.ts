@@ -23,7 +23,8 @@ export const MyFirstContractPlusRpcTesteranto = SolidityRpcTesteranto<
     checks: {
       AnEmptyState: [];
     };
-  }
+  },
+  typeof features
 >(
   {
     Suites: {

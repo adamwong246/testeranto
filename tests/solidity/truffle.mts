@@ -1,4 +1,5 @@
 import fs from "fs/promises";
+import path from "path";
 import { Compile } from "@truffle/compile-solidity";
 import TruffleConfig from "@truffle/config";
 
@@ -64,7 +65,11 @@ export const solCompile = async (entrySolidityFile) => {
     }
   }
 
-  const options = TruffleConfig.detect();
+  /* @ts-ignore:next-line */
+  const tConfig = new TruffleConfig();
+  console.log(tConfig);
+  /* @ts-ignore:next-line */
+  const options = TruffleConfig.load(path.resolve(process.cwd(), `truffle-config.cjs`));
   /* @ts-ignore:next-line */
   console.log("solc settings", options._values.compilers.solc.settings);
 

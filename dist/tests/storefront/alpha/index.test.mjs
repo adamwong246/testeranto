@@ -10,29 +10,30 @@ import { Testeranto } from "testeranto";
 
 // tests/solidity/truffle.mts
 import fs from "fs/promises";
+import path from "path";
 import { Compile } from "@truffle/compile-solidity";
 import TruffleConfig from "@truffle/config";
-var buildFullPath = (parent, path) => {
+var buildFullPath = (parent, path2) => {
   let curDir = parent.substr(0, parent.lastIndexOf("/"));
-  if (path.startsWith("@")) {
-    return process.cwd() + "/node_modules/" + path;
+  if (path2.startsWith("@")) {
+    return process.cwd() + "/node_modules/" + path2;
   }
-  if (path.startsWith("./")) {
-    return curDir + "/" + path.substr(2);
+  if (path2.startsWith("./")) {
+    return curDir + "/" + path2.substr(2);
   }
-  while (path.startsWith("../")) {
+  while (path2.startsWith("../")) {
     curDir = curDir.substr(0, curDir.lastIndexOf("/"));
-    path = path.substr(3);
+    path2 = path2.substr(3);
   }
-  return curDir + "/" + path;
+  return curDir + "/" + path2;
 };
-var solidifier = async (path, recursivePayload = {}) => {
-  const text = (await fs.readFile(path)).toString();
+var solidifier = async (path2, recursivePayload = {}) => {
+  const text = (await fs.readFile(path2)).toString();
   const importLines = text.split("\n").filter((line, index, arr) => {
     return index !== arr.length - 1 && line !== "" && line.trim().startsWith("import") === true;
   }).map((line) => {
     const relativePathsplit = line.split(" ");
-    return buildFullPath(path, relativePathsplit[relativePathsplit.length - 1].trim().slice(1, -2));
+    return buildFullPath(path2, relativePathsplit[relativePathsplit.length - 1].trim().slice(1, -2));
   });
   for (const importLine of importLines) {
     recursivePayload = {
@@ -40,7 +41,7 @@ var solidifier = async (path, recursivePayload = {}) => {
       ...await solidifier(importLine)
     };
   }
-  recursivePayload[path] = text;
+  recursivePayload[path2] = text;
   return recursivePayload;
 };
 var solCompile = async (entrySolidityFile) => {
@@ -54,7 +55,9 @@ var solCompile = async (entrySolidityFile) => {
       remmapedSources[filepath] = sources[filepath];
     }
   }
-  const options = TruffleConfig.detect();
+  const tConfig = new TruffleConfig();
+  console.log(tConfig);
+  const options = TruffleConfig.load(path.resolve(process.cwd(), `truffle-config.cjs`));
   console.log("solc settings", options._values.compilers.solc.settings);
   return await Compile.sources({
     sources: remmapedSources,
