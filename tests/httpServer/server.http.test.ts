@@ -2,7 +2,7 @@ import { features } from "../testerantoFeatures.test";
 import { HttpTesteranto } from "./http.testeranto.test";
 import { serverFactory } from "./server";
 
-const myFeature = features.hello;
+const myFeature = `hello`;
 
 export const ServerHttpTesteranto = HttpTesteranto<
   {
@@ -54,7 +54,7 @@ export const ServerHttpTesteranto = HttpTesteranto<
   (Suite, Given, When, Then, Check) => {
     return [
       Suite.Default(
-        "Testing the Node server with fetch",
+        "Testing the Node server with fetch!",
         [
           Given.AnEmptyState(
             [myFeature],

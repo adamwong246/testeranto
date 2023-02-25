@@ -2,7 +2,7 @@ import { features } from "../testerantoFeatures.test";
 import { Http2xTesteranto } from "./http2x.testeranto.test";
 import { serverFactory } from "./server";
 
-const myFeature = features.hello;
+const myFeature = `hello`;
 
 export const ServerHttp2xTesteranto = Http2xTesteranto<
   {

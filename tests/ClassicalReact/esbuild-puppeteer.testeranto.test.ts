@@ -14,7 +14,8 @@ type Store = { page: Page };
 type Subject = { page: Page; htmlBundle: string };
 
 export const EsbuildPuppeteerTesteranto = <
-  ITestShape extends ITTestShape
+  ITestShape extends ITTestShape,
+  IFeatureShape
 >(
   testImplementations: ITestImplementation<
     InitialState,
@@ -23,7 +24,7 @@ export const EsbuildPuppeteerTesteranto = <
     ThenShape,
     ITestShape
   >,
-  testSpecifications: ITestSpecification<ITestShape>,
+  testSpecifications: ITestSpecification<ITestShape, IFeatureShape>,
   testInput: Input
 ) =>
   Testeranto<
@@ -34,7 +35,8 @@ export const EsbuildPuppeteerTesteranto = <
     Selection,
     ThenShape,
     WhenShape,
-    InitialState
+    InitialState,
+    IFeatureShape
   >(
     testInput,
     testSpecifications,

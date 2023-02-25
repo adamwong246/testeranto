@@ -58,7 +58,7 @@ export const RectangleTesteranto =
           "Testing the Rectangle class",
           [
             Given.Default(
-              [features.hello],
+              [`hello`],
               [When.setWidth(4), When.setHeight(9)],
               [Then.getWidth(4), Then.getHeight(9)]
             ),
@@ -89,7 +89,7 @@ export const RectangleTesteranto =
               [Then.area(30), Then.circumference(22)]
             ),
             Given.WidthOfOneAndHeightOfOne(
-              [features.gutentag, features.aloha],
+              [features.gutentag, `aloha`],
               [When.setHeight(3), When.setWidth(4)],
               [
                 Then.getHeight(3),
@@ -100,7 +100,7 @@ export const RectangleTesteranto =
             ),
 
             Given.WidthOfOneAndHeightOfOne(
-              [features.hello],
+              [`hello`],
               [When.setHeight(33), When.setWidth(34)],
               [
                 Then.getHeight(33),

@@ -3,8 +3,8 @@ import {
   ActionCreatorWithoutPayload,
   Reducer,
 } from "@reduxjs/toolkit";
-
 import { createStore, Store, AnyAction } from "redux";
+
 import { Testeranto } from "testeranto";
 import { ITestImplementation, ITestSpecification, ITTestShape, Modify } from "testeranto";
 
@@ -20,7 +20,8 @@ type Input = Reducer<any, AnyAction>;
 
 export const ReduxTesteranto = <
   IStoreShape,
-  ITestShape extends ITTestShape
+  ITestShape extends ITTestShape,
+  IFeatureShape,
 >(
   testImplementations: Modify<ITestImplementation<
     IStoreShape,
@@ -36,8 +37,9 @@ export const ReduxTesteranto = <
     }
 
   }>,
-  testSpecifications: ITestSpecification<ITestShape>,
+  testSpecifications: ITestSpecification<ITestShape, IFeatureShape>,
   testInput: Input
+
 ) =>
   Testeranto<
     ITestShape,
@@ -47,7 +49,8 @@ export const ReduxTesteranto = <
     IStoreShape,
     WhenShape,
     ThenShape,
-    IStoreShape
+    IStoreShape,
+    IFeatureShape
   >(
     testInput,
     testSpecifications,

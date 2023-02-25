@@ -5,7 +5,7 @@ import { EsbuildPuppeteerTesteranto } from "./esbuild-puppeteer.testeranto.test"
 
 import { ClassicalComponent } from "./ClassicalComponent";
 
-const myFeature = features.hello;
+const myFeature = `hello`;
 
 export const ClassicalComponentEsbuildPuppeteerTesteranto = EsbuildPuppeteerTesteranto<
   {
@@ -25,7 +25,8 @@ export const ClassicalComponentEsbuildPuppeteerTesteranto = EsbuildPuppeteerTest
     checks: {
       AnEmptyState;
     }
-  }
+  },
+  typeof features
 >(
   {
     Suites: {
@@ -91,7 +92,7 @@ export const ClassicalComponentEsbuildPuppeteerTesteranto = EsbuildPuppeteerTest
           ),
 
           Given.AnEmptyState(
-            [features.hello],
+            [`hello`],
             [
               When.IClickTheButton(),
               When.IClickTheButton(),
@@ -101,7 +102,7 @@ export const ClassicalComponentEsbuildPuppeteerTesteranto = EsbuildPuppeteerTest
           ),
 
           Given.AnEmptyState(
-            [features.hello],
+            [`hello`],
             [
               When.IClickTheButton(),
               When.IClickTheButton(),

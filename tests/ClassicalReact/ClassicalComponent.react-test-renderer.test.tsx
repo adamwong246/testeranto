@@ -5,7 +5,7 @@ import { ClassicalComponent } from "./ClassicalComponent";
 import type { IProps, IState } from "./ClassicalComponent";
 import { ReactTestRendererTesteranto } from "./react-test-renderer.testeranto.test";
 
-const myFeature = features.hello;
+const myFeature = `hello`;
 
 export const ClassicalComponentReactTestRendererTesteranto = ReactTestRendererTesteranto<
   {

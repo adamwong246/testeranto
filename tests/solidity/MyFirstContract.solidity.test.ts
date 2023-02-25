@@ -67,7 +67,7 @@ export const MyFirstContractTesteranto = SolidityTesteranto<
         [
           // Check.AnEmptyState(
           //   "imperative style",
-          //   [features.aloha],
+          //   [`aloha`],
           //   async ({ TheEmailIsSetTo }, { TheEmailIs }) => {
           //     await TheEmailIsSetTo("foo");
           //     await TheEmailIs("foo");

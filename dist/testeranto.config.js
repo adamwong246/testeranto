@@ -1,1 +1,1 @@
-{"loaders":[],"tests":[["ReactTesteranto","./tests/Redux+Reselect+React/LoginPage.test.ts","AppReactTesteranto"]],"features":"./tests/testerantoFeatures.test.ts","ports":["3001","3002","3003","3004"]}
+{"loaders":[],"tests":[["ClassicalComponentEsbuildPuppeteer","./tests/ClassicalReact/ClassicalComponent.esbuild-puppeteer.test.ts","ClassicalComponentEsbuildPuppeteerTesteranto"]],"features":"./tests/testerantoFeatures.test.ts","ports":["3001","3002","3003","3004"]}

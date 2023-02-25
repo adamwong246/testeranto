@@ -6,7 +6,7 @@
 
 export const commonGivens = (Given, When, Then, features) => [
   Given.Default(
-    [features.hello],
+    [`hello`],
     [],
     [
       Then.Get({ asTestUser: 1, expectation: 0 })
@@ -15,7 +15,7 @@ export const commonGivens = (Given, When, Then, features) => [
   ),
 
   Given.Default(
-    [features.hello],
+    [`hello`],
     [
       When.Increment(1),
       When.Increment(1),
@@ -29,7 +29,7 @@ export const commonGivens = (Given, When, Then, features) => [
   ),
 
   Given.Default(
-    [features.hello],
+    [`hello`],
     [
       When.Increment(1),
       When.Increment(1),
@@ -44,7 +44,7 @@ export const commonGivens = (Given, When, Then, features) => [
   ),
 
   // Given.Default(
-  //   [features.hello],
+  //   [`hello`],
   //   [
   //     When.Decrement(1),
   //     When.Decrement(1),

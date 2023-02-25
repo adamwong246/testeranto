@@ -1,9 +1,9 @@
-import { ReactTesteranto } from "./react.testeranto.test";
 import { assert } from "chai";
-import LoginPage from "./LoginPage";
+
 import { features } from "../testerantoFeatures.test";
 
-const myFeature = features.hello;
+import { ReactTesteranto } from "./react.testeranto.test";
+import LoginPage from "./LoginPage";
 
 export const AppReactTesteranto = ReactTesteranto<
   {
@@ -29,7 +29,8 @@ export const AppReactTesteranto = ReactTesteranto<
     checks: {
       AnEmptyState;
     }
-  }
+  },
+  typeof features
 >(
   // test implementation
   {
@@ -98,14 +99,13 @@ export const AppReactTesteranto = ReactTesteranto<
     },
   },
 
-  // test specification
   (Suite, Given, When, Then, Check) => {
     return [
       Suite.Default(
         "Testing the LoginPage as react",
         [
           Given.default(
-            [myFeature],
+            ['hello', 'bienVenidos'],
             [
               When.TheEmailIsSetTo("adam@email.com")
             ],

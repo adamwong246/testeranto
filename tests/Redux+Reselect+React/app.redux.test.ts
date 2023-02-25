@@ -27,7 +27,8 @@ export const AppReduxTesteranto = ReduxTesteranto<
     checks: {
       AnEmptyState: [];
     };
-  }
+  },
+  typeof features
 >(
   {
     Suites: {
@@ -67,7 +68,7 @@ export const AppReduxTesteranto = ReduxTesteranto<
         "Testing the Redux store",
         [
           Given.AnEmptyState(
-            [features.hello],
+            [`hello`],
             [
               When.TheEmailIsSetTo("adam@email.com")
             ],
@@ -76,7 +77,7 @@ export const AppReduxTesteranto = ReduxTesteranto<
             ]
           ),
           Given.AStateWithEmail(
-            [features.hello],
+            [`hello`],
             [],
             [
               Then.TheEmailIsNot("adam@email.com"),
@@ -85,18 +86,18 @@ export const AppReduxTesteranto = ReduxTesteranto<
             "bob@mail.com"
           ),
           Given.AnEmptyState(
-            [features.hello],
+            [`hello`],
             [When.TheEmailIsSetTo("hello"), When.TheEmailIsSetTo("aloha")],
             [Then.TheEmailIs("aloha")]
           ),
           Given.AnEmptyState(
-            [features.aloha, features.hello],
+            [`aloha`, `hello`],
             [],
             [Then.TheEmailIs("")]
           ),
 
           Given.AnEmptyState(
-            [features.aloha, features.hello],
+            [`aloha`, `hello`],
             [When.TheEmailIsSetTo("hey there")],
             [Then.TheEmailIs("hey there")]
           ),
@@ -105,7 +106,7 @@ export const AppReduxTesteranto = ReduxTesteranto<
         [
           // Check.AnEmptyState(
           //   "imperative style",
-          //   [features.aloha],
+          //   [`aloha`],
           //   async ({ TheEmailIsSetTo }, { TheEmailIs }) => {
           //     await TheEmailIsSetTo("foo");
           //     await TheEmailIs("foo");

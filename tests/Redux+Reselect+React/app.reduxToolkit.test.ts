@@ -11,7 +11,7 @@ const reducer = core.app.reducer;
 
 import { features } from "../testerantoFeatures.test";
 
-const myFeature = features.hello;
+const myFeature = `hello`;
 
 export const AppReduxToolkitTesteranto = ReduxToolkitTesteranto<
   IStoreState,

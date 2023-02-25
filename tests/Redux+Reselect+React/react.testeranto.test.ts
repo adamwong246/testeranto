@@ -7,7 +7,8 @@ type ThenShape = any;
 type Input = () => JSX.Element;
 
 export const ReactTesteranto = <
-  ITestShape extends ITTestShape
+  ITestShape extends ITTestShape,
+  IFeatureShape,
 >(
   testImplementations: ITestImplementation<
     unknown,
@@ -16,7 +17,7 @@ export const ReactTesteranto = <
     ThenShape,
     ITestShape
   >,
-  testSpecifications: ITestSpecification<ITestShape>,
+  testSpecifications: ITestSpecification<ITestShape, IFeatureShape>,
   testInput: Input
 ) =>
   Testeranto<
@@ -27,7 +28,8 @@ export const ReactTesteranto = <
     renderer.ReactTestRenderer,
     WhenShape,
     ThenShape,
-    unknown
+    unknown,
+    IFeatureShape
   >(
     testInput,
     testSpecifications,

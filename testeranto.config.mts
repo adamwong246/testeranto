@@ -66,11 +66,11 @@ export default {
     //   "AppReduxToolkitTesteranto"
     // ],
 
-    [
-      "ReactTesteranto",
-      "./tests/Redux+Reselect+React/LoginPage.test.ts",
-      "AppReactTesteranto"
-    ],
+    // [
+    //   "ReactTesteranto",
+    //   "./tests/Redux+Reselect+React/LoginPage.test.ts",
+    //   "AppReactTesteranto"
+    // ],
 
     // [
     //   "ServerHttp",
@@ -90,11 +90,13 @@ export default {
     //   "ClassicalComponentReactTestRenderer",
     //   "./tests/ClassicalReact/ClassicalComponent.react-test-renderer.test.tsx",
     //   "ClassicalComponentReactTestRendererTesteranto"
-    // ], [
-    //   "ClassicalComponentEsbuildPuppeteer",
-    //   "./tests/ClassicalReact/ClassicalComponent.esbuild-puppeteer.test.ts",
-    //   "ClassicalComponentEsbuildPuppeteerTesteranto"
-    // ]
+    // ], 
+
+    [
+      "ClassicalComponentEsbuildPuppeteer",
+      "./tests/ClassicalReact/ClassicalComponent.esbuild-puppeteer.test.ts",
+      "ClassicalComponentEsbuildPuppeteerTesteranto"
+    ]
 
   ],
   "features": "./tests/testerantoFeatures.test.ts",

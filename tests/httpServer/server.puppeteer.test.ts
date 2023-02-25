@@ -3,7 +3,7 @@ import { features } from "../testerantoFeatures.test";
 import { PuppeteerHttpTesteranto } from "./puppeteer-http.testeranto.test";
 import { serverFactory } from "./server";
 
-const myFeature = features.hello;
+const myFeature = `hello`;
 
 export const ServerHttpPuppeteerTesteranto = PuppeteerHttpTesteranto<
   {

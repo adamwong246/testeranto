@@ -1,5 +1,5 @@
 // tests/testerantoFeatures.test.ts
-import { BaseFeature, TesterantoFeatures, TesterantoGraphDirectedAcyclic } from "testeranto";
+import { BaseFeature, TesterantoFeatures, TesterantoGraphDirected, TesterantoGraphDirectedAcyclic, TesterantoGraphUndirected } from "testeranto";
 var MyFeature = class extends BaseFeature {
   constructor(name, due) {
     super(name);
@@ -25,38 +25,27 @@ var features = {
   bienVenidos: new MyFeature("bien venidos")
 };
 var priorityGraph = new TesterantoGraphDirectedAcyclic("Priority");
-priorityGraph.connect(features.root.name, features.redemption.name);
-priorityGraph.connect(features.root.name, features.federatedSplitContract.name);
-priorityGraph.connect(features.root.name, features.mint.name);
-priorityGraph.connect(features.redemption.name, features.markRedeemed.name);
-priorityGraph.connect(features.redemption.name, features.encryptShipping.name);
-priorityGraph.connect(features.redemption.name, features.decryptShipping.name);
+priorityGraph.connect(`root`, `redemption`);
+priorityGraph.connect(`root`, `federatedSplitContract`);
+priorityGraph.connect(`root`, `mint`);
+priorityGraph.connect(`redemption`, `markRedeemed`);
+priorityGraph.connect(`redemption`, `encryptShipping`);
+priorityGraph.connect(`redemption`, `decryptShipping`);
+var semantic = new TesterantoGraphDirected("some semantic directed graph");
+semantic.connect(`hello`, `aloha`, "superceedes");
+semantic.connect(`gutentag`, `hola`, "negates");
+var undirected = new TesterantoGraphUndirected("an undirected semantic graph");
+undirected.connect(`gutentag`, `aloha`, "related");
+undirected.connect(`buildRocket`, `buildSatellite`, "overlap");
 var testerantoFeatures_test_default = new TesterantoFeatures(
-  [
-    features.redemption,
-    features.federatedSplitContract,
-    features.mint,
-    features.markRedeemed,
-    features.encryptShipping,
-    features.decryptShipping,
-    features.hello,
-    features.aloha,
-    features.gutentag,
-    features.buenosDias,
-    features.hola,
-    features.bienVenidos,
-    features.root,
-    features.buildSilo,
-    features.buildRocket,
-    features.buildSatellite
-  ],
+  features,
   {
-    // undirected: [
-    //   // undirected
-    // ],
-    // directed: [
-    //   // semantic
-    // ],
+    undirected: [
+      undirected
+    ],
+    directed: [
+      semantic
+    ],
     dags: [
       priorityGraph
     ]
