@@ -63,7 +63,7 @@ export const ServerHttpPuppeteerTesteranto = PuppeteerHttpTesteranto<
           Given.AnEmptyState(
             [],
             [When.PostToStatus("goodbye")],
-            [Then.TheStatusIs("goodbye")]
+            [Then.TheStatusIs("aloha")]
           ),
           Given.AnEmptyState(
             [myFeature],

@@ -2,6 +2,7 @@
   "name": "kokomo-bay",
   "description": "",
   "version": "0.0.3",
+  "type": "module",
   "main": "index.js",
   "repository": "git@github.com:ChromaPDX/kokomoBay.git",
   "homepage": "https://github.com/ChromaPDX/kokomoBay",
@@ -14,6 +15,8 @@
     "ATDD"
   ],
   "scripts": {
+    "stop": "yarn pm2 stop all; yarn pm2 delete all; rm -rf dist/tests/",
+    "reinstall": "yarn upgrade testeranto -f && yarn testerantoBuild",
     "simpleserver": "open http://localhost:8080/reporter.html & cd dist && python3 -m SimpleHTTPServer 8080",
     "clean:dist": "rm -rf ./dist/results && rm -rf ./dist/tests  && rm -f ./dist/reporter.css && rm -f ./dist/reporter.js && rm -f ./dist/*.jpg ",
     "clean:npm": "rm -rf node_modules && yarn install",
@@ -25,7 +28,7 @@
     "@openzeppelin/contracts": "^4.8.0",
     "@thirdweb-dev/contracts": "^3.3.0",
     "@thirdweb-dev/sdk": "^3.6.9",
-    "testeranto": "0.10.1"
+    "testeranto": "file:../testeranto"
   },
   "devDependencies": {
     "@babel/core": "^7.19.6",

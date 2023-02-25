@@ -1,6 +1,8 @@
 
-import { BaseFeature } from "testeranto/src/BaseClasses";
-import { TesterantoFeatures, TesterantoGraphDirected, TesterantoGraphDirectedAcylic, TesterantoGraphUndirected } from "testeranto/src/Features";
+// import { BaseFeature } from "testeranto/src/BaseClasses";
+// import { TesterantoFeatures, TesterantoGraphDirected, TesterantoGraphDirectedAcylic, TesterantoGraphUndirected } from "testeranto/src/Features";
+
+import { BaseFeature, TesterantoFeatures } from "testeranto";
 
 export class MyFeature extends BaseFeature {
   due?: Date;
@@ -31,22 +33,22 @@ export const features = {
   bienVenidos: new MyFeature("bien venidos"),
 };
 
-const priorityGraph = new TesterantoGraphDirectedAcylic("Priority");
+// const priorityGraph = new TesterantoGraphDirectedAcylic("Priority");
 
-priorityGraph.connect(features.root.name, features.redemption.name);
-priorityGraph.connect(features.root.name, features.federatedSplitContract.name);
-priorityGraph.connect(features.root.name, features.mint.name);
-priorityGraph.connect(features.redemption.name, features.markRedeemed.name);
-priorityGraph.connect(features.redemption.name, features.encryptShipping.name);
-priorityGraph.connect(features.redemption.name, features.decryptShipping.name);
+// priorityGraph.connect(features.root.name, features.redemption.name);
+// priorityGraph.connect(features.root.name, features.federatedSplitContract.name);
+// priorityGraph.connect(features.root.name, features.mint.name);
+// priorityGraph.connect(features.redemption.name, features.markRedeemed.name);
+// priorityGraph.connect(features.redemption.name, features.encryptShipping.name);
+// priorityGraph.connect(features.redemption.name, features.decryptShipping.name);
 
-const semantic = new TesterantoGraphDirected("some semantic directed graph");
-semantic.connect(features.hello.name, features.aloha.name, "superceedes");
-semantic.connect(features.gutentag.name, features.hola.name, "negates");
+// const semantic = new TesterantoGraphDirected("some semantic directed graph");
+// semantic.connect(features.hello.name, features.aloha.name, "superceedes");
+// semantic.connect(features.gutentag.name, features.hola.name, "negates");
 
-const undirected = new TesterantoGraphUndirected("an undirected semantic graph");
-undirected.connect(features.gutentag.name, features.aloha.name, "related");
-undirected.connect(features.buildRocket.name, features.buildSatellite.name, "overlap");
+// const undirected = new TesterantoGraphUndirected("an undirected semantic graph");
+// undirected.connect(features.gutentag.name, features.aloha.name, "related");
+// undirected.connect(features.buildRocket.name, features.buildSatellite.name, "overlap");
 
 export default new TesterantoFeatures([
   features.redemption,
@@ -67,8 +69,14 @@ export default new TesterantoFeatures([
   features.buildRocket,
   features.buildSatellite,
 ], {
-  undirected: [undirected],
-  directed: [semantic],
-  dags: [priorityGraph]
+  undirected: [
+    // undirected
+  ],
+  directed: [
+    // semantic
+  ],
+  dags: [
+    // priorityGraph
+  ]
 }
 );

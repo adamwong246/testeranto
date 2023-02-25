@@ -3,9 +3,7 @@
     "esm": true,
     "experimentalSpecifierResolution": "node",
 
-    "compilerOptions": {
-      "module": "commonjs"
-    }
+    "compilerOptions": {}
   },
   "declaration": true,
   "compilerOptions": {
@@ -15,7 +13,7 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": false,
-    "module": "esnext",
+
     "target": "es2017",
     "allowJs": true,
     "jsx": "react",

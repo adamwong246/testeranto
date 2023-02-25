@@ -1,9 +1,19 @@
 {
-  "name": "a classical react component, bundled with esbuild and tested with puppeteer",
+  "fails": [],
   "givens": [
     {
-      "name": "AnEmptyState",
+      "thens": [
+        {
+          "name": "ThePropsIs: [object Object]"
+        },
+        {
+          "name": "TheStatusIs: [object Object]"
+        }
+      ],
       "whens": [],
+      "name": "AnEmptyState"
+    },
+    {
       "thens": [
         {
           "name": "ThePropsIs: [object Object]"
@@ -11,26 +21,20 @@
         {
           "name": "TheStatusIs: [object Object]"
         }
-      ]
-    },
-    {
-      "name": "AnEmptyState",
+      ],
       "whens": [
         {
           "name": "IClickTheButton: undefined"
         }
       ],
+      "name": "AnEmptyState"
+    },
+    {
       "thens": [
-        {
-          "name": "ThePropsIs: [object Object]"
-        },
         {
           "name": "TheStatusIs: [object Object]"
         }
-      ]
-    },
-    {
-      "name": "AnEmptyState",
+      ],
       "whens": [
         {
           "name": "IClickTheButton: undefined"
@@ -42,14 +46,14 @@
           "name": "IClickTheButton: undefined"
         }
       ],
+      "name": "AnEmptyState"
+    },
+    {
       "thens": [
         {
           "name": "TheStatusIs: [object Object]"
         }
-      ]
-    },
-    {
-      "name": "AnEmptyState",
+      ],
       "whens": [
         {
           "name": "IClickTheButton: undefined"
@@ -70,12 +74,8 @@
           "name": "IClickTheButton: undefined"
         }
       ],
-      "thens": [
-        {
-          "name": "TheStatusIs: [object Object]"
-        }
-      ]
+      "name": "AnEmptyState"
     }
   ],
-  "fails": []
+  "name": "a classical react component, bundled with esbuild and tested with puppeteer"
 }

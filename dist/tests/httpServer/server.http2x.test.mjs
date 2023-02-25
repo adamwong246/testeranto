@@ -1,5 +1,5 @@
 // tests/httpServer/server.http2x.test.ts
-import { features } from "/Users/adam/Code/kokomoBay/dist/tests/testerantoFeatures.test.js";
+import { features } from "/Users/adam/Code/kokomoBay/dist/tests/testerantoFeatures.test.mjs";
 
 // tests/httpServer/http2x.testeranto.test.ts
 import { assert } from "chai";

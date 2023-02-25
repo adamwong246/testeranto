@@ -1,30 +1,34 @@
 {
-  "name": "Testing the Node server with fetch",
+  "fails": [],
   "givens": [
     {
-      "name": "AnEmptyState",
-      "whens": [],
       "thens": [
         {
           "name": "TheStatusIs: some great status"
         }
-      ]
+      ],
+      "whens": [],
+      "name": "AnEmptyState"
     },
     {
-      "name": "AnEmptyState",
+      "thens": [
+        {
+          "name": "TheStatusIs: hello"
+        }
+      ],
       "whens": [
         {
           "name": "PostToStatus: hello"
         }
       ],
-      "thens": [
-        {
-          "name": "TheStatusIs: hello"
-        }
-      ]
+      "name": "AnEmptyState"
     },
     {
-      "name": "AnEmptyState",
+      "thens": [
+        {
+          "name": "TheStatusIs: aloha"
+        }
+      ],
       "whens": [
         {
           "name": "PostToStatus: hello"
@@ -33,23 +37,23 @@
           "name": "PostToStatus: aloha"
         }
       ],
-      "thens": [
-        {
-          "name": "TheStatusIs: aloha"
-        }
-      ]
+      "name": "AnEmptyState"
     },
     {
-      "name": "AnEmptyState",
-      "whens": [],
       "thens": [
         {
           "name": "TheNumberIs: 0"
         }
-      ]
+      ],
+      "whens": [],
+      "name": "AnEmptyState"
     },
     {
-      "name": "AnEmptyState",
+      "thens": [
+        {
+          "name": "TheNumberIs: 3"
+        }
+      ],
       "whens": [
         {
           "name": "PostToAdd: 1"
@@ -58,14 +62,17 @@
           "name": "PostToAdd: 2"
         }
       ],
-      "thens": [
-        {
-          "name": "TheNumberIs: 3"
-        }
-      ]
+      "name": "AnEmptyState"
     },
     {
-      "name": "AnEmptyState",
+      "thens": [
+        {
+          "name": "TheStatusIs: hello"
+        },
+        {
+          "name": "TheNumberIs: 7"
+        }
+      ],
       "whens": [
         {
           "name": "PostToStatus: aloha"
@@ -80,15 +87,8 @@
           "name": "PostToAdd: 3"
         }
       ],
-      "thens": [
-        {
-          "name": "TheStatusIs: hello"
-        },
-        {
-          "name": "TheNumberIs: 7"
-        }
-      ]
+      "name": "AnEmptyState"
     }
   ],
-  "fails": []
+  "name": "Testing the Node server with fetch"
 }

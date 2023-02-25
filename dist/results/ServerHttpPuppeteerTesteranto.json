@@ -1,0 +1,163 @@
+{
+  "fails": [
+    {
+      "error": {
+        "stack": "AssertionError: expected 'goodbye' to equal 'aloha'\n    at butThen (file:///Users/adam/Code/kokomoBay/dist/tests/httpServer/server.puppeteer.test.mjs:39:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Then.butThen (file:///Users/adam/Code/kokomoBay/node_modules/testeranto/src/index.mjs:419:28)\n    at async Then.test (file:///Users/adam/Code/kokomoBay/node_modules/testeranto/src/index.mjs:321:42)\n    at async Given.give (file:///Users/adam/Code/kokomoBay/node_modules/testeranto/src/index.mjs:254:27)\n    at async MrT.constructor.run (file:///Users/adam/Code/kokomoBay/node_modules/testeranto/src/index.mjs:186:34)\n    at async process.<anonymous> (file:///Users/adam/Code/kokomoBay/node_modules/testeranto/src/index.mjs:450:13)",
+        "operator": "strictEqual",
+        "expected": "aloha",
+        "actual": "goodbye",
+        "showDiff": true,
+        "message": "expected 'goodbye' to equal 'aloha'",
+        "name": "AssertionError"
+      },
+      "store": {
+        "browser": {
+          "emitter": {
+            "all": {}
+          },
+          "eventsMap": {}
+        },
+        "server": {
+          "_connectionKey": "6::::3001",
+          "maxRequestsPerSocket": 0,
+          "maxHeadersCount": null,
+          "timeout": 0,
+          "httpAllowHalfOpen": false,
+          "keepAliveInitialDelay": 0,
+          "keepAlive": false,
+          "noDelay": true,
+          "pauseOnConnect": false,
+          "allowHalfOpen": true,
+          "_unref": false,
+          "_workers": [],
+          "_usingWorkers": false,
+          "_handle": null,
+          "_connections": 0,
+          "_eventsCount": 2,
+          "_events": {},
+          "connectionsCheckingInterval": 30000,
+          "keepAliveTimeout": 5000,
+          "headersTimeout": 60000,
+          "requestTimeout": 300000
+        }
+      },
+      "initialValues": {},
+      "testArtifacts": {},
+      "thens": [
+        {
+          "error": true,
+          "name": "TheStatusIs: aloha"
+        }
+      ],
+      "whens": [
+        {
+          "name": "PostToStatus: goodbye"
+        }
+      ],
+      "features": [],
+      "name": "AnEmptyState",
+      "artifactSaver": {}
+    }
+  ],
+  "givens": [
+    {
+      "thens": [
+        {
+          "name": "TheStatusIs: some great status"
+        }
+      ],
+      "whens": [],
+      "name": "AnEmptyState"
+    },
+    {
+      "errors": {
+        "stack": "AssertionError: expected 'goodbye' to equal 'aloha'\n    at butThen (file:///Users/adam/Code/kokomoBay/dist/tests/httpServer/server.puppeteer.test.mjs:39:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Then.butThen (file:///Users/adam/Code/kokomoBay/node_modules/testeranto/src/index.mjs:419:28)\n    at async Then.test (file:///Users/adam/Code/kokomoBay/node_modules/testeranto/src/index.mjs:321:42)\n    at async Given.give (file:///Users/adam/Code/kokomoBay/node_modules/testeranto/src/index.mjs:254:27)\n    at async MrT.constructor.run (file:///Users/adam/Code/kokomoBay/node_modules/testeranto/src/index.mjs:186:34)\n    at async process.<anonymous> (file:///Users/adam/Code/kokomoBay/node_modules/testeranto/src/index.mjs:450:13)",
+        "operator": "strictEqual",
+        "expected": "aloha",
+        "actual": "goodbye",
+        "showDiff": true,
+        "message": "expected 'goodbye' to equal 'aloha'",
+        "name": "AssertionError"
+      },
+      "thens": [
+        {
+          "error": true,
+          "name": "TheStatusIs: aloha"
+        }
+      ],
+      "whens": [
+        {
+          "name": "PostToStatus: goodbye"
+        }
+      ],
+      "name": "AnEmptyState"
+    },
+    {
+      "thens": [
+        {
+          "name": "TheStatusIs: aloha"
+        }
+      ],
+      "whens": [
+        {
+          "name": "PostToStatus: hello"
+        },
+        {
+          "name": "PostToStatus: aloha"
+        }
+      ],
+      "name": "AnEmptyState"
+    },
+    {
+      "thens": [
+        {
+          "name": "TheNumberIs: 0"
+        }
+      ],
+      "whens": [],
+      "name": "AnEmptyState"
+    },
+    {
+      "thens": [
+        {
+          "name": "TheNumberIs: 3"
+        }
+      ],
+      "whens": [
+        {
+          "name": "PostToAdd: 1"
+        },
+        {
+          "name": "PostToAdd: 2"
+        }
+      ],
+      "name": "AnEmptyState"
+    },
+    {
+      "thens": [
+        {
+          "name": "TheStatusIs: hello"
+        },
+        {
+          "name": "TheNumberIs: 7"
+        }
+      ],
+      "whens": [
+        {
+          "name": "PostToStatus: aloha"
+        },
+        {
+          "name": "PostToAdd: 4"
+        },
+        {
+          "name": "PostToStatus: hello"
+        },
+        {
+          "name": "PostToAdd: 3"
+        }
+      ],
+      "name": "AnEmptyState"
+    }
+  ],
+  "name": "Testing the Server with Puppeteer"
+}

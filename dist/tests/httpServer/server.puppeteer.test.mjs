@@ -1,5 +1,5 @@
 // tests/httpServer/server.puppeteer.test.ts
-import { features } from "/Users/adam/Code/kokomoBay/dist/tests/testerantoFeatures.test.js";
+import { features } from "/Users/adam/Code/kokomoBay/dist/tests/testerantoFeatures.test.mjs";
 
 // tests/httpServer/puppeteer-http.testeranto.test.ts
 import puppeteer from "puppeteer";
@@ -135,7 +135,7 @@ var ServerHttpPuppeteerTesteranto = PuppeteerHttpTesteranto(
           Given.AnEmptyState(
             [],
             [When.PostToStatus("goodbye")],
-            [Then.TheStatusIs("goodbye")]
+            [Then.TheStatusIs("aloha")]
           ),
           Given.AnEmptyState(
             [myFeature],
