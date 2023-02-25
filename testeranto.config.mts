@@ -31,22 +31,22 @@ export default {
     //   "MyFirstContractPrecompiledTesteranto"
     // ],
 
-    // [
-    //   "storefrontAlpha",
-    //   "./tests/storefront/alpha/index.test.ts",
-    //   "StorefrontTest"
-    // ]
+    [
+      "storefrontAlpha",
+      "./tests/storefront/alpha/index.test.ts",
+      "StorefrontTest"
+    ],
 
     // [
     //   "StorefrontTestBeta",
     //   "./tests/storefront/beta/index.test.ts",
     //   "StorefrontTestBeta"
     // ],
-    // [
-    //   "MyFirstContract",
-    //   "./tests/solidity/MyFirstContract.solidity.test.ts",
-    //   "MyFirstContractTesteranto"
-    // ],
+    [
+      "MyFirstContract",
+      "./tests/solidity/MyFirstContract.solidity.test.ts",
+      "MyFirstContractTesteranto"
+    ],
     // [
     //   "MyFirstContractPlusRpc",
     //   "./tests/solidity/MyFirstContract.solidity-rpc.test.ts",
@@ -104,6 +104,12 @@ export default {
     "3001",
     "3002",
     "3003",
-    "3004"
+    "3004",
+    "3005",
+    "3006",
+    "3007",
+    "3008",
+    "3009",
+    "3010"
   ]
 }
