@@ -67,11 +67,8 @@ export const solCompile = async (entrySolidityFile) => {
 
   /* @ts-ignore:next-line */
   const tConfig = new TruffleConfig();
-  console.log(tConfig);
   /* @ts-ignore:next-line */
   const options = TruffleConfig.load(path.resolve(process.cwd(), `truffle-config.cjs`));
-  /* @ts-ignore:next-line */
-  console.log("solc settings", options._values.compilers.solc.settings);
 
   return await Compile.sources({
     sources: remmapedSources,

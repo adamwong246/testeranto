@@ -1,35 +1,36 @@
-// import { solCompile } from "./tests/solidity/truffle.mjs";
+import { solCompile } from "./tests/solidity/truffle.mjs";
 
 export default {
+  "watchMode": true,
   "loaders": [
-    // {
-    //   name: 'solidity',
-    //   setup(build) {
-    //     console.log("solidity build", build)
+    {
+      name: 'solidity',
+      setup(build) {
+        console.log("solidity build", build)
 
-    //     build.onResolve({ filter: /^.*\.sol$/ }, args => {
-    //       return ({
-    //         path: "MyFirstContract",
-    //         namespace: 'solidity',
-    //       })
-    //     })
+        build.onResolve({ filter: /^.*\.sol$/ }, args => {
+          return ({
+            path: "MyFirstContract",
+            namespace: 'solidity',
+          })
+        })
 
-    //     build.onLoad({ filter: /.*/, namespace: 'solidity' }, async (argz) => {
-    //       return ({
-    //         contents: JSON.stringify((await solCompile(argz.path))),
-    //         loader: 'json',
-    //         watchDirs: [process.cwd() + "/contracts"]
-    //       })
-    //     })
-    //   },
-    // }
+        build.onLoad({ filter: /.*/, namespace: 'solidity' }, async (argz) => {
+          return ({
+            contents: JSON.stringify((await solCompile(argz.path))),
+            loader: 'json',
+            watchDirs: [process.cwd() + "/contracts"]
+          })
+        })
+      },
+    }
   ],
   "tests": [
-    // [
-    //   "MyFirstContractPrecompiledTesteranto",
-    //   "./tests/solidity/MyFirstContract.solidity-precompiled.test.ts",
-    //   "MyFirstContractPrecompiledTesteranto"
-    // ],
+    [
+      "MyFirstContractPrecompiledTesteranto",
+      "./tests/solidity/MyFirstContract.solidity-precompiled.test.ts",
+      "MyFirstContractPrecompiledTesteranto"
+    ],
 
     [
       "storefrontAlpha",

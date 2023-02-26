@@ -4866,6 +4866,11 @@ fs-minipass@^1.2.7:
   dependencies:
     minipass "^2.6.0"
 
+fs.promises.exists@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/fs.promises.exists/-/fs.promises.exists-1.1.4.tgz#6a1d8fd24df79248eda19a8ba9dd7fd68b941921"
+  integrity sha512-lJzUGWbZn8vhGWBedA+RYjB/BeJ+3458ljUfmplqhIeb6ewzTFWNPCR1HCiYCkXV9zxcHz9zXkJzMsEgDLzh3Q==
+
 fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
@@ -8704,7 +8709,7 @@ tar@^4.0.2:
     yallist "^3.1.1"
 
 "testeranto@file:../testeranto":
-  version "0.12.0"
+  version "0.14.0"
   dependencies:
     "@swc/core" "^1.3.26"
     "@types/node" "^18.14.0"
@@ -8719,6 +8724,7 @@ tar@^4.0.2:
     eslint "^8.29.0"
     eslint-plugin-react "^7.31.11"
     fresh-require "^1.0.3"
+    fs.promises.exists "^1.1.4"
     graphology "^0.25.1"
     graphology-dag "^0.2.0"
     graphology-types "^0.24.5"
