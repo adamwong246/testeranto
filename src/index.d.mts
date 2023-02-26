@@ -1,5 +1,9 @@
 /// <reference types="node" />
 declare const DirectedGraph: any, UndirectedGraph: any;
+export declare class BaseFeature {
+    name: string;
+    constructor(name: string);
+}
 declare abstract class TesterantoGraph {
     name: string;
     abstract graph: any;
@@ -124,10 +128,6 @@ export declare type ITestImplementation<IState, ISelection, IWhenShape, IThenSha
 declare class TestArtifact {
     binary: Buffer | string;
     constructor(binary: any);
-}
-export declare class BaseFeature {
-    name: string;
-    constructor(name: string);
 }
 export declare abstract class BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape extends ITTestShape, IFeatureShape> {
     name: string;

@@ -1,10 +1,13 @@
-import fs from "fs";
-
 import pkg from 'graphology';
 /* @ts-ignore:next-line */
 const { DirectedGraph, UndirectedGraph } = pkg;
 
-const testOutPath = "./dist/results/";
+export class BaseFeature {
+  name: string;
+  constructor(name: string) {
+    this.name = name;
+  }
+}
 
 abstract class TesterantoGraph {
   name: string;
@@ -103,6 +106,8 @@ export class TesterantoFeatures {
     };
   }
 }
+
+const testOutPath = "./dist/results/";
 
 export type ITTestResourceRequirement = {
   "ports": number
@@ -234,12 +239,6 @@ class TestArtifact {
   }
 }
 
-export class BaseFeature {
-  name: string;
-  constructor(name: string) {
-    this.name = name;
-  }
-}
 
 export abstract class BaseSuite<
   IInput,

@@ -12,8 +12,6 @@ dev: [github.dev/adamwong246/testeranto](https://github.dev/adamwong246/testeran
 
 example repo: [kokomo bay](https://github.com/ChromaPDX/kokomoBay)
 
-example report: [kokomoBay acceptance tests](https://chromapdx.github.io/kokomoBay/report.html)
-
 ## tl;dr
 
 - Do you like BDD?

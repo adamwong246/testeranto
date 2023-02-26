@@ -1475,6 +1475,11 @@ fs-extra@^8.1.0:
     jsonfile "^4.0.0"
     universalify "^0.1.0"
 
+fs.promises.exists@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/fs.promises.exists/-/fs.promises.exists-1.1.4.tgz#6a1d8fd24df79248eda19a8ba9dd7fd68b941921"
+  integrity sha512-lJzUGWbZn8vhGWBedA+RYjB/BeJ+3458ljUfmplqhIeb6ewzTFWNPCR1HCiYCkXV9zxcHz9zXkJzMsEgDLzh3Q==
+
 fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"

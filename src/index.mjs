@@ -1,7 +1,11 @@
 import pkg from 'graphology';
 /* @ts-ignore:next-line */
 const { DirectedGraph, UndirectedGraph } = pkg;
-const testOutPath = "./dist/results/";
+export class BaseFeature {
+    constructor(name) {
+        this.name = name;
+    }
+}
 class TesterantoGraph {
     constructor(name) {
         this.name = name;
@@ -64,14 +68,10 @@ export class TesterantoFeatures {
         };
     }
 }
+const testOutPath = "./dist/results/";
 class TestArtifact {
     constructor(binary) {
         this.binary = binary;
-    }
-}
-export class BaseFeature {
-    constructor(name) {
-        this.name = name;
     }
 }
 export class BaseSuite {

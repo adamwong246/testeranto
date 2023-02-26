@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.12.0",
+  "version": "0.14.0",
   "type": "module",
   "types": "./src/index.d.mts",
   "main": "./src/index.mjs",
@@ -16,9 +16,8 @@
     "ATDD"
   ],
   "bin": {
-    "testerantoBuild": "./bin/build.sh",
-    "testerantoWatch": "./bin/watch.sh",
-    "testerantoReport": "./bin/report.sh"
+    "testerantoReport": "./bin/report.sh",
+    "testeranto": "./bin/testeranto.sh"
   },
   "scripts": {
     "build": "tsc",
@@ -43,6 +42,7 @@
     "eslint": "^8.29.0",
     "eslint-plugin-react": "^7.31.11",
     "fresh-require": "^1.0.3",
+    "fs.promises.exists": "^1.1.4",
     "graphology": "^0.25.1",
     "graphology-dag": "^0.2.0",
     "graphology-types": "^0.24.5",
