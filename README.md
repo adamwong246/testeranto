@@ -6,15 +6,6 @@
 
 `yarn install`
 
-2. Start 2 seperate processes in parallel
+2. Start testeranto
 
-1) `testerantoBuild`
-2) `testerantoWatch`
-
-3. View the results of the test
-
-`yarn simpleserver`
-
-## testeranto
-
-[ChromaPDX.github.io/kokomoBay/dist/report.html](https://ChromaPDX.github.io/kokomoBay/dist/report.html)
+`yarn testeranto testeranto.config.mts`
