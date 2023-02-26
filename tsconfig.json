@@ -26,8 +26,9 @@
     "incremental": true,
     "esModuleInterop": true,
     "isolatedModules": true,
-    "declaration": true
-    // "outDir": "dist"
+    "declaration": true,
+    // "outDir": "dist",
+    "alwaysStrict": true
   },
   "include": ["src/index.mts"],
   "exclude": ["node_modules"]

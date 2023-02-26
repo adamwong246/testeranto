@@ -15,8 +15,6 @@ console.log("watch.ts configFile", configFile);
 const TIMEOUT = 1000;
 const OPEN_PORT = '';
 const testOutPath = "./dist/results/";
-const featureOutPath = "./dist/";
-const reportOutPath = "./dist/report/";
 
 class TesterantoProject {
   tests: [keyName: string, fileName: string, className: string][];
@@ -96,19 +94,28 @@ class Scheduler {
 
       this.pm2 = pm2;
 
+      const makePath = (f) => {
+        return "./dist/tests/" + f.split(".ts")[0] + ".mjs";
+      }
+
       const bootInterval = setInterval(async () => {
 
-        const allFilesExist = (await Promise.all(this.project.tests.map(([k, f, c]) => {
-          return fsExists("./dist/" + f.split(".ts")[0] + ".mjs");
-        }))).every((b) => b);
+        const filesToLookup = this.project.tests.map(([k, f, c]) => {
+          const filepath = makePath(f); //"./dist/" + f.split(".ts")[0] + ".mjs";
+          return {
+            filepath,
+            exists: fsExists(filepath)
+          }
+        });
+        const allFilesExist = (await Promise.all(filesToLookup.map((f) => f.exists))).every((b) => b);
 
         if (!allFilesExist) {
-          console.log(this.spinner(), "waiting for files to be bundled...");
+          console.log(this.spinner(), "waiting for files to be bundled...", filesToLookup);
         } else {
           clearInterval(bootInterval);
 
           this.project.tests.reduce((m, [kn, fn, cn]) => {
-            const script = "./dist/" + fn.split(".ts")[0] + ".mjs";
+            const script = makePath(fn); // "./dist/" + fn.split(".ts")[0] + ".mjs";
             m[kn] = pm2.start({
               script,
               name: cn,
@@ -328,7 +335,6 @@ class Scheduler {
 import(configFile).then(async (testerantoConfigImport) => {
   const configModule = testerantoConfigImport.default;
   const tProject = new TesterantoProject(configModule.tests, configModule.features, configModule.ports, configModule.watchMode)
-
 
   const testerantoConfig = testerantoConfigImport.default;
 
