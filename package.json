@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.16.14",
+  "version": "0.16.15",
   "type": "module",
   "types": "./src/index.d.mts",
   "main": "./src/index.mjs",
