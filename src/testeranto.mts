@@ -17,12 +17,16 @@ const OPEN_PORT = '';
 const testOutPath = "./dist/results/";
 
 class TesterantoProject {
-  tests: [keyName: string, fileName: string, className: string][];
+  tests: string[];
   features: string;
   ports: string[];
-  watchMode: boolean
+  watchMode: boolean;
+  loaders: {
+    name: string;
+    setup: (build: any) => any;
+  }[]
 
-  constructor(tests, features, ports, watchMode) {
+  constructor(tests, features, ports, watchMode, loaders) {
     this.tests = tests;
     this.features = features;
     this.ports = ports;
@@ -94,13 +98,16 @@ class Scheduler {
 
       this.pm2 = pm2;
 
-      const makePath = (f) => {
-        return "./dist/tests/" + f.split(".ts")[0] + ".mjs";
+      const makePath = (fPath: string): string => {
+        return "./dist/" + fPath.split(".ts")[0] + ".mjs";
+        // const fNameSplit = (fPath.split(".ts")[0]).split[`/`];
+        // const fName = fNameSplit[fNameSplit.length -1 ];
+        // return `./dist/tests/${classname}.mjs`;
       }
 
       const bootInterval = setInterval(async () => {
 
-        const filesToLookup = this.project.tests.map(([k, f, c]) => {
+        const filesToLookup = this.project.tests.map((f) => {
           const filepath = makePath(f); //"./dist/" + f.split(".ts")[0] + ".mjs";
           return {
             filepath,
@@ -114,11 +121,11 @@ class Scheduler {
         } else {
           clearInterval(bootInterval);
 
-          this.project.tests.reduce((m, [kn, fn, cn]) => {
-            const script = makePath(fn); // "./dist/" + fn.split(".ts")[0] + ".mjs";
-            m[kn] = pm2.start({
+          this.project.tests.reduce((m, inputFilePath) => {
+            const script = makePath(inputFilePath); // "./dist/" + fn.split(".ts")[0] + ".mjs";
+            m[inputFilePath] = pm2.start({
               script,
-              name: cn,
+              name: inputFilePath,
               autorestart: false,
               watch: [script],
             }, (err, apps) => {
@@ -281,15 +288,8 @@ class Scheduler {
         //   }
         // );
 
-        fs.writeFile(
-          `${testOutPath}${pm2Proc.process.name}.json`,
-          JSON.stringify(pm2Proc.data.results, null, 2),
-          (err) => {
-            if (err) {
-              console.error(err);
-            }
-          }
-        );
+
+
 
         const testJob = { test: pm2Proc.data.results };
 
@@ -312,6 +312,24 @@ class Scheduler {
             }
           }
         }
+
+        await fs.mkdirSync(`${testOutPath}${pm2Proc.process.name}`.split('/').slice(0, -1).join('/'), { recursive: true });
+
+        fs.writeFile(
+          `${testOutPath}${pm2Proc.process.name}.json`,
+          JSON.stringify(
+            ({
+              ...pm2Proc.data.results,
+              givens: pm2Proc.data.results.givens.map((g) => { delete g.testArtifacts; return g })
+            }),
+            null, 2),
+          (err) => {
+            if (err) {
+              console.error(err);
+            }
+          }
+        );
+
         // fs.writeFile(
         //   `${reportOutPath}testDAG.json`,
         //   JSON.stringify(this.testerantoFeatures.graphs.dags[0].graph.export(), null, 2),
@@ -334,21 +352,14 @@ class Scheduler {
 
 import(configFile).then(async (testerantoConfigImport) => {
   const configModule = testerantoConfigImport.default;
-  const tProject = new TesterantoProject(configModule.tests, configModule.features, configModule.ports, configModule.watchMode)
-
-  const testerantoConfig = testerantoConfigImport.default;
-
-  console.log("testerantoConfig", testerantoConfig)
-
+  const tProject = new TesterantoProject(configModule.tests, configModule.features, configModule.ports, configModule.watchMode, configModule.loaders)
   const entryPoints = [
-    testerantoConfig.features,
-    ...testerantoConfig.tests.map(([key, sourcefile, className]) => {
+    tProject.features,
+    ...tProject.tests.map((sourcefile) => {
       return sourcefile
     })
   ];
-
-  console.log("entryPoints", entryPoints)
-
+  console.log("entryPoints", entryPoints);
   let ctx = await esbuild.context({
     entryPoints,
     bundle: true,
@@ -360,7 +371,6 @@ import(configFile).then(async (testerantoConfigImport) => {
     outExtension: { '.js': '.mjs' },
     packages: 'external',
     plugins: [
-
       {
         name: 'import-path',
         setup(build) {
@@ -369,36 +379,32 @@ import(configFile).then(async (testerantoConfigImport) => {
             const importedPath = args.resolveDir + "/" + args.path;
             const absolutePath = path.resolve(importedPath);
 
-            const absolutePath2 = path.resolve(testerantoConfig.features).split(".ts").slice(0, -1).join('.ts');
+            const featurfilePath = path.resolve(tProject.features).split(".js").slice(0, -1).join('.js');
 
-            if (absolutePath === absolutePath2) {
+            if (absolutePath === featurfilePath) {
               return {
                 path: process.cwd() + "/dist/tests/testerantoFeatures.test.mjs",
                 external: true
               }
-            } else {
-              // return {
-              //   path: path.resolve(importedPath), external: false
-              // }
             }
           })
         },
       },
-
-      ...testerantoConfig.loaders || [],
-
+      ...tProject.loaders || [],
     ],
     external: [
       // testerantoConfig.features
     ]
   })
 
-  fs.promises.writeFile("./dist/testeranto.config.js", JSON.stringify(testerantoConfig));
+  fs.promises.writeFile("./dist/testeranto.config.js", JSON.stringify(tProject));
 
   import(path.resolve(process.cwd(), tProject.features)).then(async (testerantoFeaturesImport) => {
     const tFeatures = testerantoFeaturesImport.default as TesterantoFeatures;
-    const TRM = new Scheduler(tProject, tFeatures);
+    new Scheduler(tProject, tFeatures);
     await ctx.watch()
   });
 
 });
+
+export default {};

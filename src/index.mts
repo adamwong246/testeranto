@@ -239,7 +239,6 @@ class TestArtifact {
   }
 }
 
-
 export abstract class BaseSuite<
   IInput,
   ISubject,
