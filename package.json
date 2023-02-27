@@ -1,7 +1,7 @@
 {
   "name": "kokomo-bay",
   "description": "",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "type": "module",
   "main": "index.js",
   "repository": "git@github.com:ChromaPDX/kokomoBay.git",
@@ -28,7 +28,7 @@
     "@openzeppelin/contracts": "^4.8.0",
     "@thirdweb-dev/contracts": "^3.3.0",
     "@thirdweb-dev/sdk": "^3.6.9",
-    "testeranto": "file:../testeranto"
+    "testeranto": "0.16.12"
   },
   "devDependencies": {
     "@babel/core": "^7.19.6",

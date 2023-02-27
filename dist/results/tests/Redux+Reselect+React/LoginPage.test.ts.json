@@ -2,7 +2,6 @@
   "fails": [],
   "givens": [
     {
-      "testArtifacts": {},
       "features": [
         "hello",
         "bienVenidos"
@@ -20,7 +19,6 @@
       "name": "default"
     },
     {
-      "testArtifacts": {},
       "features": [],
       "thens": [
         {
@@ -47,7 +45,6 @@
       "name": "default"
     },
     {
-      "testArtifacts": {},
       "features": [],
       "thens": [
         {
@@ -62,7 +59,6 @@
       "name": "default"
     },
     {
-      "testArtifacts": {},
       "features": [],
       "thens": [
         {

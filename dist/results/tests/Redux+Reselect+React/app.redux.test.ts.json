@@ -2,8 +2,9 @@
   "fails": [],
   "givens": [
     {
-      "testArtifacts": {},
-      "features": [],
+      "features": [
+        "hello"
+      ],
       "thens": [
         {
           "name": "TheEmailIs: adam@email.com"
@@ -17,23 +18,24 @@
       "name": "AnEmptyState"
     },
     {
-      "testArtifacts": {},
-      "features": [],
+      "features": [
+        "hello"
+      ],
       "thens": [
         {
           "name": "TheEmailIsNot: adam@email.com"
-        }
-      ],
-      "whens": [
+        },
         {
-          "name": "TheEmailIsSetTo: hello"
+          "name": "TheEmailIs: bob@mail.com"
         }
       ],
+      "whens": [],
       "name": "AStateWithEmail"
     },
     {
-      "testArtifacts": {},
-      "features": [],
+      "features": [
+        "hello"
+      ],
       "thens": [
         {
           "name": "TheEmailIs: aloha"
@@ -50,8 +52,10 @@
       "name": "AnEmptyState"
     },
     {
-      "testArtifacts": {},
-      "features": [],
+      "features": [
+        "aloha",
+        "hello"
+      ],
       "thens": [
         {
           "name": "TheEmailIs: "
@@ -59,7 +63,24 @@
       ],
       "whens": [],
       "name": "AnEmptyState"
+    },
+    {
+      "features": [
+        "aloha",
+        "hello"
+      ],
+      "thens": [
+        {
+          "name": "TheEmailIs: hey there"
+        }
+      ],
+      "whens": [
+        {
+          "name": "TheEmailIsSetTo: hey there"
+        }
+      ],
+      "name": "AnEmptyState"
     }
   ],
-  "name": "Testing the ReduxToolkit"
+  "name": "Testing the Redux store"
 }

@@ -1,4 +1,4 @@
-// tests/testerantoFeatures.test.ts
+// tests/testerantoFeatures.test.js
 import { BaseFeature, TesterantoFeatures, TesterantoGraphDirected, TesterantoGraphDirectedAcyclic, TesterantoGraphUndirected } from "testeranto";
 var MyFeature = class extends BaseFeature {
   constructor(name, due) {
@@ -37,20 +37,17 @@ semantic.connect(`gutentag`, `hola`, "negates");
 var undirected = new TesterantoGraphUndirected("an undirected semantic graph");
 undirected.connect(`gutentag`, `aloha`, "related");
 undirected.connect(`buildRocket`, `buildSatellite`, "overlap");
-var testerantoFeatures_test_default = new TesterantoFeatures(
-  features,
-  {
-    undirected: [
-      undirected
-    ],
-    directed: [
-      semantic
-    ],
-    dags: [
-      priorityGraph
-    ]
-  }
-);
+var testerantoFeatures_test_default = new TesterantoFeatures(features, {
+  undirected: [
+    undirected
+  ],
+  directed: [
+    semantic
+  ],
+  dags: [
+    priorityGraph
+  ]
+});
 export {
   MyFeature,
   testerantoFeatures_test_default as default,

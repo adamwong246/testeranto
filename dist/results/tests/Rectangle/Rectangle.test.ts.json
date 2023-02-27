@@ -2,7 +2,6 @@
   "fails": [],
   "givens": [
     {
-      "testArtifacts": {},
       "features": [
         "hello"
       ],
@@ -25,7 +24,6 @@
       "name": "Default"
     },
     {
-      "testArtifacts": {},
       "features": [],
       "thens": [
         {
@@ -52,7 +50,6 @@
       "name": "WidthOfOneAndHeightOfOne"
     },
     {
-      "testArtifacts": {},
       "features": [
         "hola"
       ],
@@ -72,7 +69,6 @@
       "name": "WidthOfOneAndHeightOfOne"
     },
     {
-      "testArtifacts": {},
       "features": [
         "hola"
       ],
@@ -101,7 +97,6 @@
       "name": "WidthOfOneAndHeightOfOne"
     },
     {
-      "testArtifacts": {},
       "features": [
         "gutentag",
         "aloha"
@@ -131,7 +126,6 @@
       "name": "WidthOfOneAndHeightOfOne"
     },
     {
-      "testArtifacts": {},
       "features": [
         "hello"
       ],

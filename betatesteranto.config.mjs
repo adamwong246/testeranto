@@ -1,0 +1,26 @@
+export default {
+    "watchMode": false,
+    "loaders": [],
+    "tests": [
+        [
+            "Rectangle",
+            "./tests/Rectangle/Rectangle.test.ts",
+            "RectangleTesteranto"
+        ], [
+            "Redux",
+            "./tests/Redux+Reselect+React/app.redux.test.ts",
+            "AppReduxTesteranto"
+        ], [
+            "ReduxToolkit",
+            "./tests/Redux+Reselect+React/app.reduxToolkit.test.ts",
+            "AppReduxToolkitTesteranto"
+        ],
+        [
+            "ReactTesteranto",
+            "./tests/Redux+Reselect+React/LoginPage.test.ts",
+            "AppReactTesteranto"
+        ],
+    ],
+    "features": "./tests/testerantoFeatures.test.ts",
+    "ports": []
+};
