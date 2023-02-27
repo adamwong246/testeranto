@@ -16,7 +16,7 @@
   ],
   "scripts": {
     "stop": "yarn pm2 stop all; yarn pm2 delete all; yarn pm2 save; rm -rf dist/**; mkdir dist/tests; mkdir dist/results; mkdir dist/report",
-    "reinstall": "yarn upgrade testeranto -f && yarn testeranto testeranto.config.mts",
+    "test": "yarn testeranto testeranto.config.mjs",
     "simpleserver": "open http://localhost:8080/reporter.html & cd dist && python3 -m SimpleHTTPServer 8080",
     "clean:dist": "rm -rf ./dist/results && rm -rf ./dist/tests  && rm -f ./dist/reporter.css && rm -f ./dist/reporter.js && rm -f ./dist/*.jpg ",
     "clean:npm": "rm -rf node_modules && yarn install",
@@ -28,7 +28,7 @@
     "@openzeppelin/contracts": "^4.8.0",
     "@thirdweb-dev/contracts": "^3.3.0",
     "@thirdweb-dev/sdk": "^3.6.9",
-    "testeranto": "0.16.12"
+    "testeranto": "0.16.13"
   },
   "devDependencies": {
     "@babel/core": "^7.19.6",
