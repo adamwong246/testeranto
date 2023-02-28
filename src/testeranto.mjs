@@ -10,11 +10,14 @@ const TIMEOUT = 1000;
 const OPEN_PORT = '';
 const testOutPath = "./dist/results/";
 class TesterantoProject {
-    constructor(tests, features, ports, watchMode, loaders) {
+    constructor(tests, features, ports, watchMode, loaders, outdir, resultsdir) {
         this.tests = tests;
         this.features = features;
         this.ports = ports;
         this.watchMode = watchMode;
+        this.loaders = loaders;
+        this.outdir = outdir;
+        this.resultsdir = resultsdir;
     }
 }
 class Scheduler {
@@ -40,7 +43,8 @@ class Scheduler {
             }
             this.pm2 = pm2;
             const makePath = (fPath) => {
-                return "./dist/" + fPath.split(".ts")[0] + ".mjs";
+                return "./" + project.outdir + "/" + fPath.split(".ts")[0] + ".mjs";
+                // return "./dist/tests/" + fPath.split(".ts")[0] + ".mjs";
                 // const fNameSplit = (fPath.split(".ts")[0]).split[`/`];
                 // const fName = fNameSplit[fNameSplit.length -1 ];
                 // return `./dist/tests/${classname}.mjs`;
@@ -198,7 +202,7 @@ class Scheduler {
                 for (const [gNdx, g] of testJob.test.givens.entries()) {
                     for (const testArtifactKey of Object.keys(g.testArtifacts)) {
                         for (const [ndx, testArtifact] of g.testArtifacts[testArtifactKey].entries()) {
-                            const artifactOutFolderPath = `${testOutPath}${pm2Proc.process.name}/${gNdx}/${ndx}/`;
+                            const artifactOutFolderPath = `$${this.project.resultsdir}/${pm2Proc.process.name}/${gNdx}/${ndx}/`;
                             const artifactOutPath = `${artifactOutFolderPath}/${testArtifactKey}.png`;
                             await fs.promises.mkdir(artifactOutFolderPath, { recursive: true });
                             await fs.writeFile(artifactOutPath, Buffer.from(testArtifact.binary.data), (err) => {
@@ -210,8 +214,8 @@ class Scheduler {
                         }
                     }
                 }
-                await fs.mkdirSync(`${testOutPath}${pm2Proc.process.name}`.split('/').slice(0, -1).join('/'), { recursive: true });
-                fs.writeFile(`${testOutPath}${pm2Proc.process.name}.json`, JSON.stringify((Object.assign(Object.assign({}, pm2Proc.data.results), { givens: pm2Proc.data.results.givens.map((g) => { delete g.testArtifacts; return g; }) })), null, 2), (err) => {
+                await fs.mkdirSync(`${this.project.resultsdir}/${pm2Proc.process.name}`.split('/').slice(0, -1).join('/'), { recursive: true });
+                fs.writeFile(`${this.project.resultsdir}/${pm2Proc.process.name}.json`, JSON.stringify((Object.assign(Object.assign({}, pm2Proc.data.results), { givens: pm2Proc.data.results.givens.map((g) => { delete g.testArtifacts; return g; }) })), null, 2), (err) => {
                     if (err) {
                         console.error(err);
                     }
@@ -234,22 +238,22 @@ class Scheduler {
 }
 import(configFile).then(async (testerantoConfigImport) => {
     const configModule = testerantoConfigImport.default;
-    const tProject = new TesterantoProject(configModule.tests, configModule.features, configModule.ports, configModule.watchMode, configModule.loaders);
+    const tProject = new TesterantoProject(configModule.tests, configModule.features, configModule.ports, configModule.watchMode, configModule.loaders, configModule.outdir, configModule.resultsdir);
     const entryPoints = [
         tProject.features,
         ...tProject.tests.map((sourcefile) => {
             return sourcefile;
+            // return `${tProject.outdir}/${sourcefile}`;
         })
     ];
     console.log("entryPoints", entryPoints);
     let ctx = await esbuild.context({
         entryPoints,
         bundle: true,
-        minify: false,
+        minify: true,
         format: "esm",
-        // target: ["esnext"],
         write: true,
-        outdir: 'dist/tests',
+        outdir: tProject.outdir,
         outExtension: { '.js': '.mjs' },
         packages: 'external',
         plugins: [
@@ -262,7 +266,7 @@ import(configFile).then(async (testerantoConfigImport) => {
                         const featurfilePath = path.resolve(tProject.features).split(".js").slice(0, -1).join('.js');
                         if (absolutePath === featurfilePath) {
                             return {
-                                path: process.cwd() + "/dist/tests/testerantoFeatures.test.mjs",
+                                path: process.cwd() + tProject.outdir + "/testerantoFeatures.test.mjs",
                                 external: true
                             };
                         }
