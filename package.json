@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.16.26",
+  "version": "0.16.31",
   "type": "module",
   "types": "./src/index.d.mts",
   "main": "./src/index.mjs",
@@ -29,6 +29,9 @@
     "tableflip": "yarn clean && yarn bundle:reporter"
   },
   "peerDependencies": {
+    "esbuild": "0.17.5"
+  },
+  "devDependencies": {
     "esbuild": "0.17.5"
   },
   "dependencies": {
