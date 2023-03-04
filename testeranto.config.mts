@@ -1,8 +1,9 @@
-import { solCompile } from "./tests/solidity/truffle.mjs";
+import tProject from "testeranto/src/testeranto.mjs";
 
-export const f = "";
+import { solCompile } from "./myTests/solidity/truffle.mjs";
+import features from "./myTests/testerantoFeatures.test.mjs";
 
-export default {
+tProject({
   "watchMode": true,
   "loaders": [
     {
@@ -27,24 +28,26 @@ export default {
       },
     }
   ],
+  "outdir": "js",
+  "outbase": ".",
   "tests": [
-    // "./tests/solidity/MyFirstContract.solidity-precompiled.test.ts",
-    // "./tests/storefront/alpha/index.test.ts",
-    // "./tests/storefront/beta/index.test.ts",
-    // "./tests/solidity/MyFirstContract.solidity.test.ts",
-    // "./tests/solidity/MyFirstContract.solidity-rpc.test.ts",
-    "./tests/Rectangle/Rectangle.test.ts",
-    "./tests/Redux+Reselect+React/app.redux.test.ts",
-    "./tests/Redux+Reselect+React/app.reduxToolkit.test.ts",
-    "./tests/Redux+Reselect+React/LoginPage.test.ts",
-    // "./tests/httpServer/server.http.test.ts",
-    // "./tests/httpServer/server.puppeteer.test.ts",
-    // "./tests/httpServer/server.http2x.test.ts",
-    // "./tests/ClassicalReact/ClassicalComponent.react-test-renderer.test.tsx",
-    // "./tests/ClassicalReact/ClassicalComponent.esbuild-puppeteer.test.ts",
+    "./myTests/solidity/MyFirstContract.solidity-precompiled.test.ts",
+    "./myTests/storefront/alpha/index.test.ts",
+    "./myTests/storefront/beta/index.test.ts",
+    "./myTests/solidity/MyFirstContract.solidity.test.ts",
+    "./myTests/solidity/MyFirstContract.solidity-rpc.test.ts",
+    "./myTests/Rectangle/Rectangle.test.ts",
+    "./myTests/Redux+Reselect+React/app.redux.test.ts",
+    "./myTests/Redux+Reselect+React/app.reduxToolkit.test.ts",
+    "./myTests/Redux+Reselect+React/LoginPage.test.ts",
+    "./myTests/httpServer/server.http.test.ts",
+    "./myTests/httpServer/server.puppeteer.test.ts",
+    "./myTests/httpServer/server.http2x.test.ts",
+    "./myTests/ClassicalReact/ClassicalComponent.react-test-renderer.test.tsx",
+    "./myTests/ClassicalReact/ClassicalComponent.esbuild-puppeteer.test.ts",
 
   ],
-  "features": "./tests/testerantoFeatures.test.js",
+  "features": features, //"./tests/testerantoFeatures.test.js",
   "ports": [
     "3001",
     "3002",
@@ -53,8 +56,7 @@ export default {
     "3005",
     "3006",
     "3007",
-    "3008",
-    "3009",
-    "3010"
-  ]
-}
+  ],
+  "resultsdir": "resultsdir",
+  "minify": false
+});

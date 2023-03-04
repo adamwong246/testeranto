@@ -1,0 +1,43 @@
+{
+  "fails": [],
+  "givens": [
+    {
+      "features": [],
+      "thens": [
+        {
+          "name": "ThePropsIs: [object Object]"
+        },
+        {
+          "name": "TheStatusIs: [object Object]"
+        }
+      ],
+      "whens": [
+        {
+          "name": "IClickTheButton: undefined"
+        }
+      ],
+      "name": "AnEmptyState"
+    },
+    {
+      "features": [],
+      "thens": [
+        {
+          "name": "TheStatusIs: [object Object]"
+        }
+      ],
+      "whens": [
+        {
+          "name": "IClickTheButton: undefined"
+        },
+        {
+          "name": "IClickTheButton: undefined"
+        },
+        {
+          "name": "IClickTheButton: undefined"
+        }
+      ],
+      "name": "AnEmptyState"
+    }
+  ],
+  "name": "a classical react component, bundled with esbuild and tested with puppeteer"
+}

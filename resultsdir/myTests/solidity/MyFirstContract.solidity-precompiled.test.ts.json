@@ -1,0 +1,71 @@
+{
+  "fails": [],
+  "givens": [
+    {
+      "features": [
+        "hello"
+      ],
+      "thens": [
+        {
+          "name": "Get: [object Object]"
+        }
+      ],
+      "whens": [],
+      "name": "Default"
+    },
+    {
+      "features": [
+        "hello"
+      ],
+      "thens": [
+        {
+          "name": "Get: [object Object]"
+        }
+      ],
+      "whens": [
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        }
+      ],
+      "name": "Default"
+    },
+    {
+      "features": [
+        "hello"
+      ],
+      "thens": [
+        {
+          "name": "Get: [object Object]"
+        }
+      ],
+      "whens": [
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Decrement: 1"
+        }
+      ],
+      "name": "Default"
+    }
+  ],
+  "name": "Testing a very simple smart contract precompiled?"
+}

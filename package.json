@@ -1,9 +1,7 @@
 {
   "name": "kokomo-bay",
   "description": "",
-  "version": "0.0.4",
-  "type": "module",
-  "main": "index.js",
+  "version": "0.0.5",
   "repository": "git@github.com:ChromaPDX/kokomoBay.git",
   "homepage": "https://github.com/ChromaPDX/kokomoBay",
   "author": "adam wong <adamwong246@gmail.com>",
@@ -15,20 +13,16 @@
     "ATDD"
   ],
   "scripts": {
-    "stop": "yarn pm2 stop all; yarn pm2 delete all; yarn pm2 save; rm -rf dist/**; mkdir dist/tests; mkdir dist/results; mkdir dist/report",
-    "test": "yarn testeranto testeranto.config.mjs",
-    "simpleserver": "open http://localhost:8080/reporter.html & cd dist && python3 -m SimpleHTTPServer 8080",
-    "clean:dist": "rm -rf ./dist/results && rm -rf ./dist/tests  && rm -f ./dist/reporter.css && rm -f ./dist/reporter.js && rm -f ./dist/*.jpg ",
-    "clean:npm": "rm -rf node_modules && yarn install",
-    "clean": "yarn clean:dist && yarn clean:npm",
-    "tableflip": "yarn clean && yarn build; yarn watch"
+    "stop": "yarn pm2 stop all; yarn pm2 delete all; yarn pm2 save; rm -rf js/**; rm -rf outdir/**; rm -rf resultsdir/**",
+    "test": "testeranto js/testeranto.config.mjs"
   },
   "types": "index.d.ts",
   "dependencies": {
     "@openzeppelin/contracts": "^4.8.0",
     "@thirdweb-dev/contracts": "^3.3.0",
     "@thirdweb-dev/sdk": "^3.6.9",
-    "testeranto": "0.16.13"
+    "esbuild": "0.17.11",
+    "testeranto": "0.17.0"
   },
   "devDependencies": {
     "@babel/core": "^7.19.6",
@@ -46,7 +40,6 @@
     "@typescript-eslint/parser": "^5.46.0",
     "babel-loader": "^8.2.5",
     "chai": "^4.3.7",
-    "esbuild": "^0.16.5",
     "eslint": "^8.29.0",
     "eslint-plugin-react": "^7.31.11",
     "ethers": "^5.7.2",
@@ -60,7 +53,7 @@
     "react-test-renderer": "^18.2.0",
     "truffle": "^5.7.3",
     "ts-loader": "^9.3.1",
-    "typescript": "4.8.2",
+    "typescript": "^4.9.5",
     "web3": "^1.8.1",
     "web3-eth-contract": "^1.8.1"
   }
