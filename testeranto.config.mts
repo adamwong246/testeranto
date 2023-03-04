@@ -4,7 +4,7 @@ import { solCompile } from "./myTests/solidity/truffle.mjs";
 import features from "./myTests/testerantoFeatures.test.mjs";
 
 tProject({
-  "watchMode": true,
+  "watchMode": false,
   "loaders": [
     {
       name: 'solidity',

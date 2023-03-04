@@ -22,7 +22,7 @@
     "@thirdweb-dev/contracts": "^3.3.0",
     "@thirdweb-dev/sdk": "^3.6.9",
     "esbuild": "0.17.11",
-    "testeranto": "0.17.0"
+    "testeranto": "../testeranto"
   },
   "devDependencies": {
     "@babel/core": "^7.19.6",
