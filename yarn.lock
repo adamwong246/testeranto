@@ -8662,10 +8662,10 @@ tar@^4.0.2:
     safe-buffer "^5.2.1"
     yallist "^3.1.1"
 
-testeranto@0.21.0:
-  version "0.21.0"
-  resolved "https://registry.yarnpkg.com/testeranto/-/testeranto-0.21.0.tgz#2d1757895cb35566940604dcdfd25db8c27daad4"
-  integrity sha512-TNAke6pQdV5NN0fxkFpvcPMOpbx4dhveJSO+gB3MoT7sScGoFSurKjFx5PebWIbxWGP0konExo1CEIGuGsMtDA==
+testeranto@0.25.0:
+  version "0.25.0"
+  resolved "https://registry.yarnpkg.com/testeranto/-/testeranto-0.25.0.tgz#1a0d6e74b55394093adc235c10b1c0006b851639"
+  integrity sha512-1XUSv7YcMHswc4iRdsrO5cPPZKGglQXo5iH7nNZJDa9xM8btCmUhsADu4Ng4kaBf5MuFz+aSc/ulD05ZHMMAOg==
   dependencies:
     "@swc/core" "^1.3.26"
     "@types/node" "^18.14.0"

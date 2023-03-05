@@ -1,5 +1,7 @@
 
-import { BaseFeature, TesterantoFeatures, TesterantoGraphDirected, TesterantoGraphDirectedAcyclic, TesterantoGraphUndirected } from "testeranto";
+import {
+  BaseFeature, TesterantoFeatures, TesterantoGraphDirected, TesterantoGraphDirectedAcyclic, TesterantoGraphUndirected
+} from "testeranto";
 
 export class MyFeature extends BaseFeature {
   due?: Date;

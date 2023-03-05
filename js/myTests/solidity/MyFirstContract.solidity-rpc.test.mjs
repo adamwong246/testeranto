@@ -39,7 +39,13 @@ var __async = (__this, __arguments, generator) => {
 import { assert } from "chai";
 
 // myTests/testerantoFeatures.test.mts
-import { BaseFeature, TesterantoFeatures, TesterantoGraphDirected, TesterantoGraphDirectedAcyclic, TesterantoGraphUndirected } from "testeranto";
+import {
+  BaseFeature,
+  TesterantoFeatures,
+  TesterantoGraphDirected,
+  TesterantoGraphDirectedAcyclic,
+  TesterantoGraphUndirected
+} from "testeranto";
 var MyFeature = class extends BaseFeature {
   constructor(name, due) {
     super(name);

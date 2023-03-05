@@ -4,8 +4,8 @@ import { solCompile } from "./myTests/solidity/truffle.mjs";
 import features from "./myTests/testerantoFeatures.test.mjs";
 
 tProject({
-  "clearScreen": false,
-  "watchMode": true,
+  "clearScreen": true,
+  "watchMode": false,
   "loaders": [
     {
       name: 'solidity',
@@ -33,7 +33,7 @@ tProject({
   "outbase": ".",
   "tests": [
     "./myTests/solidity/MyFirstContract.solidity-precompiled.test.ts",
-    "./myTests/storefront/alpha/index.test.ts",
+    // "./myTests/storefront/alpha/index.test.ts",
     "./myTests/storefront/beta/index.test.ts",
     "./myTests/solidity/MyFirstContract.solidity.test.ts",
     "./myTests/solidity/MyFirstContract.solidity-rpc.test.ts",

@@ -1,0 +1,15 @@
+{
+  "./myTests/solidity/MyFirstContract.solidity-precompiled.test.ts": true,
+  "./myTests/storefront/beta/index.test.ts": true,
+  "./myTests/solidity/MyFirstContract.solidity.test.ts": true,
+  "./myTests/solidity/MyFirstContract.solidity-rpc.test.ts": true,
+  "./myTests/Rectangle/Rectangle.test.ts": true,
+  "./myTests/Redux+Reselect+React/app.redux.test.ts": true,
+  "./myTests/Redux+Reselect+React/app.reduxToolkit.test.ts": true,
+  "./myTests/Redux+Reselect+React/LoginPage.test.ts": true,
+  "./myTests/httpServer/server.http.test.ts": true,
+  "./myTests/httpServer/server.puppeteer.test.ts": true,
+  "./myTests/httpServer/server.http2x.test.ts": true,
+  "./myTests/ClassicalReact/ClassicalComponent.react-test-renderer.test.tsx": true,
+  "./myTests/ClassicalReact/ClassicalComponent.esbuild-puppeteer.test.ts": true
+}
