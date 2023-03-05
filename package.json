@@ -1,7 +1,7 @@
 {
   "name": "kokomo-bay",
   "description": "",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "repository": "git@github.com:ChromaPDX/kokomoBay.git",
   "homepage": "https://github.com/ChromaPDX/kokomoBay",
   "author": "adam wong <adamwong246@gmail.com>",
@@ -13,7 +13,7 @@
     "ATDD"
   ],
   "scripts": {
-    "stop": "yarn pm2 stop all; yarn pm2 delete all; yarn pm2 save; rm -rf js/**; rm -rf outdir/**; rm -rf resultsdir/**",
+    "nuke": "yarn pm2 stop all; yarn pm2 delete all; yarn pm2 save; rm -rf js/**; rm -rf outdir/**; rm -rf resultsdir/**",
     "test": "testeranto js/testeranto.config.mjs"
   },
   "types": "index.d.ts",
@@ -22,7 +22,8 @@
     "@thirdweb-dev/contracts": "^3.3.0",
     "@thirdweb-dev/sdk": "^3.6.9",
     "esbuild": "0.17.11",
-    "testeranto": "../testeranto"
+    "puppeteer-screen-recorder": "^2.1.2",
+    "testeranto": "0.21.0"
   },
   "devDependencies": {
     "@babel/core": "^7.19.6",

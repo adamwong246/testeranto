@@ -21,6 +21,7 @@ export const ClassicalComponentEsbuildPuppeteerTesteranto = EsbuildPuppeteerTest
     thens: {
       ThePropsIs: [IProps];
       TheStatusIs: [IState];
+      IAmAGenius;
     };
     checks: {
       AnEmptyState;
@@ -44,6 +45,17 @@ export const ClassicalComponentEsbuildPuppeteerTesteranto = EsbuildPuppeteerTest
             await page.click("#theButton"),
     },
     Thens: {
+      IAmAGenius:
+        () =>
+          async ({ page, consoleLogs }) => {
+
+            // console.log("consoleLogs", consoleLogs);
+            // assert.deepEqual(
+            //   await page.$eval("#theProps", (el) => el.innerHTML),
+            //   JSON.stringify(expectation)
+            // )
+          },
+
       ThePropsIs:
         (expectation) =>
           async ({ page }) => {
@@ -111,7 +123,11 @@ export const ClassicalComponentEsbuildPuppeteerTesteranto = EsbuildPuppeteerTest
               When.IClickTheButton(),
               When.IClickTheButton(),
             ],
-            [Then.TheStatusIs({ count: 6 })]
+            [
+              Then.TheStatusIs({ count: 6 }),
+              Then.IAmAGenius()
+
+            ]
           ),
         ],
         []

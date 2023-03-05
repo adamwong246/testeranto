@@ -8,7 +8,7 @@
 
 2. Start the test scheduler after nuking everything
 
-`yarn stop; yarn testeranto js/testeranto.config.mjs`
+`yarn nuke; yarn test`
 
 3. Once the test scheduler is running, from another terminal, you can inspect it with `pm2`:
 

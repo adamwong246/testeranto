@@ -2,7 +2,8 @@ import tProject from "testeranto/src/testeranto.mjs";
 import { solCompile } from "./myTests/solidity/truffle.mjs";
 import features from "./myTests/testerantoFeatures.test.mjs";
 tProject({
-    "watchMode": false,
+    "clearScreen": false,
+    "watchMode": true,
     "loaders": [
         {
             name: 'solidity',

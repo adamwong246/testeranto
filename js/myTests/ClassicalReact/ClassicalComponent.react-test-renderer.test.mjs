@@ -26,15 +26,22 @@ import assert from "assert";
 import React from "react";
 var ClassicalComponent = class extends React.Component {
   constructor(props) {
+    console.log("hello ClassicalComponent");
     super(props);
     this.state = {
       count: 0
     };
   }
+  componentDidMount() {
+    console.info("componentDidMount");
+    const y = fetch("http://www.google.com/", { mode: `no-cors` }).then((x) => {
+      console.log("i am a genius!");
+    });
+  }
   render() {
-    return /* @__PURE__ */ React.createElement("div", { style: { border: "3px solid green" } }, /* @__PURE__ */ React.createElement("h1", null, "Hello Classical React"), /* @__PURE__ */ React.createElement("pre", { id: "theProps" }, JSON.stringify(this.props)), /* @__PURE__ */ React.createElement("p", null, "foo: ", this.props.foo), /* @__PURE__ */ React.createElement("pre", { id: "theState" }, JSON.stringify(this.state)), /* @__PURE__ */ React.createElement("p", null, "count: ", this.state.count, " times"), /* @__PURE__ */ React.createElement("button", { id: "theButton", onClick: () => {
+    return /* @__PURE__ */ React.createElement("div", { style: { border: "3px solid green" } }, /* @__PURE__ */ React.createElement("h1", null, "Hello Classical React"), /* @__PURE__ */ React.createElement("pre", { id: "theProps" }, JSON.stringify(this.props)), /* @__PURE__ */ React.createElement("p", null, "foo: ", this.props.foo), /* @__PURE__ */ React.createElement("pre", { id: "theState" }, JSON.stringify(this.state)), /* @__PURE__ */ React.createElement("p", null, "count: ", this.state.count, " times"), /* @__PURE__ */ React.createElement("button", { id: "theButton", onClick: () => __async(this, null, function* () {
       this.setState({ count: this.state.count + 1 });
-    } }, "Click"));
+    }) }, "Click"));
   }
 };
 

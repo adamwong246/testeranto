@@ -1,0 +1,7 @@
+LOG			hello ClassicalComponent
+INF			componentDidMount
+REQUEST	
+[object Object]
+Res			302 http://www.google.com/ {"referer":"","user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/110.0.5481.177 Safari/537.36","accept":"*/*"}
+REQUEST	
+[object Object]
