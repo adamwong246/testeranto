@@ -1,5 +1,6 @@
 {
   "./myTests/solidity/MyFirstContract.solidity-precompiled.test.ts": true,
+  "./myTests/storefront/alpha/index.test.ts": true,
   "./myTests/storefront/beta/index.test.ts": true,
   "./myTests/solidity/MyFirstContract.solidity.test.ts": true,
   "./myTests/solidity/MyFirstContract.solidity-rpc.test.ts": true,

@@ -1,7 +1,7 @@
 {
   "name": "kokomo-bay",
   "description": "",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "repository": "git@github.com:ChromaPDX/kokomoBay.git",
   "homepage": "https://github.com/ChromaPDX/kokomoBay",
   "author": "adam wong <adamwong246@gmail.com>",

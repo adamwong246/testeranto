@@ -1,8 +1,10 @@
+import { PassThrough } from "stream";
 import puppeteer, { Browser, Page } from "puppeteer";
 import esbuild from "esbuild";
 import { Contract } from 'web3-eth-contract';
 import Ganache from "ganache";
 import Web3 from 'web3';
+import { PuppeteerScreenRecorder } from 'puppeteer-screen-recorder';
 
 import { CompiledContract } from "@truffle/compile-common";
 
@@ -33,6 +35,7 @@ type Store = {
   contract: Contract,
   accounts,
   provider: unknown,
+  recorder: PuppeteerScreenRecorder;
 };
 
 export const StorefrontTesteranto = <
@@ -92,10 +95,31 @@ export const StorefrontTesteranto = <
         };
       },
 
-      beforeEach: async function (subject: Subject): Promise<Store> {
+      beforeEach: async function (subject: Subject, ndx, testResource, artifacter): Promise<Store> {
         const subjectContract = subject.contract;
 
         const page = await subject.browser.newPage();
+
+
+        const recorder = new PuppeteerScreenRecorder(page, {
+          followNewTab: false,
+          fps: 25,
+          videoFrame: {
+            width: 1024,
+            height: 768,
+          },
+          videoCrf: 18,
+          videoCodec: 'libx264',
+          videoPreset: 'ultrafast',
+          videoBitrate: 1000,
+          autopad: {
+            color: 'black',
+          },
+          aspectRatio: '4:3',
+        });
+        const pipeStream = new PassThrough();
+        artifacter("./screencap.mp4", pipeStream);
+        await recorder.startStream(pipeStream);
 
         // https://github.com/trufflesuite/ganache#programmatic-use
         const provider = Ganache.provider({
@@ -133,7 +157,8 @@ export const StorefrontTesteranto = <
               page,
               contract,
               accounts,
-              provider
+              provider,
+              recorder
             });
 
           })
@@ -162,18 +187,16 @@ export const StorefrontTesteranto = <
           document.dispatchEvent(new CustomEvent<number>('setCounterEvent', ({ detail: counter })));
         }, await contract.methods.get().call());
 
-        return { page };
+        return { page, };
       },
-      afterEach: async function ({ page, contract }: Store, ndx: number, saveTestArtifact) {
-
+      afterEach: async function ({ page, contract, recorder }: Store, ndx: number, artifacter) {
+        recorder.stop()
         await page.evaluate((counter) => {
           document.dispatchEvent(new CustomEvent<number>('setCounterEvent', ({ detail: counter })));
         }, await contract.methods.get().call());
 
 
-        saveTestArtifact.png(
-          await (await page).screenshot()
-        );
+        artifacter("screenshotr.png", await (await page).screenshot());
 
         return { page };
       }

@@ -1,0 +1,180 @@
+{
+  "fails": [],
+  "givens": [
+    {
+      "features": [
+        "federatedSplitContract"
+      ],
+      "thens": [
+        {
+          "name": "TheCounterIs: 0"
+        }
+      ],
+      "whens": [],
+      "name": "AnEmptyState"
+    },
+    {
+      "features": [],
+      "thens": [
+        {
+          "name": "TheCounterIs: 1"
+        }
+      ],
+      "whens": [
+        {
+          "name": "Increment: undefined"
+        }
+      ],
+      "name": "AnEmptyState"
+    },
+    {
+      "features": [],
+      "thens": [
+        {
+          "name": "TheCounterIs: 6"
+        }
+      ],
+      "whens": [
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        }
+      ],
+      "name": "AnEmptyState"
+    },
+    {
+      "features": [],
+      "thens": [
+        {
+          "name": "TheCounterIs: 36"
+        }
+      ],
+      "whens": [
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        }
+      ],
+      "name": "AnEmptyState"
+    }
+  ],
+  "name": "the storefront react app, alpha"
+}

@@ -5,7 +5,7 @@ import features from "./myTests/testerantoFeatures.test.mjs";
 
 tProject({
   "clearScreen": true,
-  "watchMode": false,
+  "watchMode": true,
   "loaders": [
     {
       name: 'solidity',
@@ -33,7 +33,7 @@ tProject({
   "outbase": ".",
   "tests": [
     "./myTests/solidity/MyFirstContract.solidity-precompiled.test.ts",
-    // "./myTests/storefront/alpha/index.test.ts",
+    "./myTests/storefront/alpha/index.test.ts",
     "./myTests/storefront/beta/index.test.ts",
     "./myTests/solidity/MyFirstContract.solidity.test.ts",
     "./myTests/solidity/MyFirstContract.solidity-rpc.test.ts",
@@ -46,7 +46,6 @@ tProject({
     "./myTests/httpServer/server.http2x.test.ts",
     "./myTests/ClassicalReact/ClassicalComponent.react-test-renderer.test.tsx",
     "./myTests/ClassicalReact/ClassicalComponent.esbuild-puppeteer.test.ts",
-
   ],
   "features": features, //"./tests/testerantoFeatures.test.js",
   "ports": [
