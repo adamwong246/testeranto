@@ -5,7 +5,6 @@ import { PassThrough, Stream, Writable } from 'stream';
 /* @ts-ignore:next-line */
 const { DirectedGraph, UndirectedGraph } = pkg;
 
-// type ITA = Record<string, any>;
 
 type ITTestResource = {
   "ports": number[]
@@ -233,6 +232,33 @@ export type ITestImplementation<
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+type ITestArtifactory = (key: string, value: string) => unknown;
+
+const testArtiFactoryfileWriter = (x) => (g) => (key, value: string | Buffer | PassThrough) => {
+  console.log("testArtiFactory =>", key, value);
+
+  const fPath = `${x}/${g}/${key}`;
+  const cleanPath = path.resolve(fPath);
+  const targetDir = cleanPath.split('/').slice(0, -1).join('/');
+
+  fs.mkdir(targetDir, { recursive: true }, async (error) => {
+    if (error) { console.error(`❗️testArtiFactory failed`, targetDir, error); }
+
+    if (Buffer.isBuffer(value)) {
+      fs.writeFileSync(fPath, value, "binary");
+    } else if (`string` === (typeof value)) {
+      fs.writeFileSync(fPath, value.toString(), {
+        encoding: 'utf-8'
+      });
+    } else {
+      /* @ts-ignore:next-line */
+      const pipeStream: PassThrough = value;
+      var myFile = fs.createWriteStream(fPath);
+      pipeStream.pipe(myFile);
+    }
+  });
+};
+
 export abstract class BaseSuite<
   IInput,
   ISubject,
@@ -249,7 +275,7 @@ export abstract class BaseSuite<
   aborted: boolean;
   fails: BaseGiven<ISubject, IStore, ISelection, IThenShape, IFeatureShape>[];
   testResourceConfiguration: ITTestResource;
-  recommendedFsPath: string;
+
 
   constructor(
     name: string,
@@ -260,13 +286,13 @@ export abstract class BaseSuite<
     this.givens = givens;
     this.checks = checks;
     this.fails = [];
-    this.recommendedFsPath = `./lol/recommendedFsPath/`;
+
   }
 
-  async aborter() {
-    this.aborted = true;
-    await Promise.all((this.givens || []).map((g, ndx) => g.aborter(ndx)))
-  }
+  // async aborter() {
+  //   this.aborted = true;
+  //   await Promise.all((this.givens || []).map((g, ndx) => g.aborter(ndx)))
+  // }
 
   public toObj() {
     return {
@@ -276,7 +302,7 @@ export abstract class BaseSuite<
     }
   }
 
-  setup(s: IInput): Promise<ISubject> {
+  setup(s: IInput, artifactory: ITestArtifactory): Promise<ISubject> {
     return new Promise((res) => res(s as unknown as ISubject));
   }
 
@@ -287,19 +313,19 @@ export abstract class BaseSuite<
   async run(
     input,
     testResourceConfiguration: ITTestResource,
-    recommendedFsPath: string
+    artifactory: (gndex: string) => (a: string, b: string) => void,
   ): Promise<boolean> {
 
     this.testResourceConfiguration = Object.keys(testResourceConfiguration).length ? testResourceConfiguration : { ports: [] };
-    this.recommendedFsPath;
-    const subject = await this.setup(input);
-    console.log("\nSuite:", this.name, testResourceConfiguration, recommendedFsPath);
+
+    const subject = await this.setup(input, artifactory("-1"));
+    console.log("\nSuite:", this.name, testResourceConfiguration);
 
 
     for (const [ndx, giver] of this.givens.entries()) {
       try {
         if (!this.aborted) {
-          this.store = await giver.give(subject, ndx, testResourceConfiguration, this.test);
+          this.store = await giver.give(subject, ndx, testResourceConfiguration, this.test, artifactory(ndx.toString()));
         }
       } catch (e) {
         console.error(e);
@@ -308,12 +334,12 @@ export abstract class BaseSuite<
       }
     }
     for (const [ndx, thater] of this.checks.entries()) {
-      await thater.check(subject, ndx, testResourceConfiguration, this.test);
+      await thater.check(subject, ndx, testResourceConfiguration, this.test, artifactory);
     }
 
     // @TODO fix me
     for (const [ndx, giver] of this.givens.entries()) {
-      giver.afterAll(this.store);
+      giver.afterAll(this.store, artifactory);
     }
     ////////////////
 
@@ -336,7 +362,6 @@ export abstract class BaseGiven<
   whens: BaseWhen<IStore, ISelection, IThenShape>[];
   thens: BaseThen<ISelection, IStore, IThenShape>[];
   error: Error;
-  abort: boolean;
   store: IStore;
   recommendedFsPath: string;
 
@@ -352,7 +377,7 @@ export abstract class BaseGiven<
     this.thens = thens;
   }
 
-  afterAll(store: IStore) {
+  afterAll(store: IStore, artifactory: ITestArtifactory) {
     return;
   };
 
@@ -368,21 +393,22 @@ export abstract class BaseGiven<
 
   abstract givenThat(
     subject: ISubject,
-    testResourceConfiguration?
+    testResourceConfiguration,
+    artifactory: ITestArtifactory,
   ): Promise<IStore>;
 
-  async aborter(ndx: number) {
-    this.abort = true;
-    return Promise.all([
-      ...this.whens.map((w, ndx) => new Promise((res) => res(w.aborter()))),
-      ...this.thens.map((t, ndx) => new Promise((res) => res(t.aborter()))),
-    ])
-      .then(async () => {
-        return await this.afterEach(this.store, ndx)
-      })
-  }
+  // async aborter(ndx: number) {
+  //   this.abort = true;
+  //   return Promise.all([
+  //     ...this.whens.map((w, ndx) => new Promise((res) => res(w.aborter()))),
+  //     ...this.thens.map((t, ndx) => new Promise((res) => res(t.aborter()))),
+  //   ])
+  //     .then(async () => {
+  //       return await this.afterEach(this.store, ndx, artifactory)
+  //     })
+  // }
 
-  async afterEach(store: IStore, ndx: number): Promise<unknown> {
+  async afterEach(store: IStore, ndx: number, artifactory: ITestArtifactory): Promise<unknown> {
     return;
   }
 
@@ -390,14 +416,13 @@ export abstract class BaseGiven<
     subject: ISubject,
     index: number,
     testResourceConfiguration,
-    tester
+    tester,
+    artifactory: ITestArtifactory
   ) {
     console.log(`\n Given: ${this.name}`);
 
     try {
-      if (!this.abort) {
-        this.store = await this.givenThat(subject, testResourceConfiguration);
-      }
+      this.store = await this.givenThat(subject, testResourceConfiguration, artifactory);
       for (const whenStep of this.whens) {
         await whenStep.test(this.store, testResourceConfiguration);
       }
@@ -412,8 +437,7 @@ export abstract class BaseGiven<
     } finally {
 
       try {
-        /* @ts-ignore:next-line */
-        this.testArtifacts = await this.afterEach(this.store, index);
+        await this.afterEach(this.store, index, artifactory);
       } catch {
         console.error("afterEach failed! no error will be recorded!")
       }
@@ -543,7 +567,8 @@ export abstract class BaseCheck<
 
   abstract checkThat(
     subject: ISubject,
-    testResourceConfiguration?
+    testResourceConfiguration,
+    artifactory: ITestArtifactory,
   ): Promise<IStore>;
 
   async afterEach(store: IStore, ndx: number, cb?): Promise<unknown> {
@@ -554,10 +579,11 @@ export abstract class BaseCheck<
     subject: ISubject,
     ndx: number,
     testResourceConfiguration,
-    tester
+    tester,
+    artifactory: ITestArtifactory
   ) {
     console.log(`\n Check: ${this.name}`);
-    const store = await this.checkThat(subject, testResourceConfiguration);
+    const store = await this.checkThat(subject, testResourceConfiguration, artifactory);
     await this.checkCB(
 
       (
@@ -941,7 +967,7 @@ export abstract class TesterantoLevelOne<
           return suite.run(
             input,
             { ports: allocatedPorts },
-            recommendedFsPath
+            testArtiFactoryfileWriter(recommendedFsPath)
           );
         },
 
@@ -1025,31 +1051,6 @@ export const Testeranto = async <
   const afterEach = testInterface.afterEach || (async (s) => s);
   const afterAll = testInterface.afterAll || ((store: Store) => undefined);
 
-  const testArtiFactoryfileWriter = (x) => (key, value) => {
-    console.log("testArtiFactory =>", key, x);
-
-    const fPath = `./resultsdir/${x}/${key}`;
-    const cleanPath = path.resolve(fPath);
-    const targetDir = cleanPath.split('/').slice(0, -1).join('/');
-
-    fs.mkdir(targetDir, { recursive: true }, async (error) => {
-      if (error) { console.error(`❗️testArtiFactory failed`, targetDir, error); }
-
-      if (Buffer.isBuffer(value) || (`string` === (typeof value))) {
-        fs.writeFile(fPath, value, (error) => {
-          if (error) { console.error(`❗️testArtiFactory failed`, fPath, error); }
-          else {
-            console.log("hello artifactory")
-          }
-        });
-      } else {
-        const pipeStream: PassThrough = value;
-        var myFile = fs.createWriteStream(fPath);
-        pipeStream.pipe(myFile);
-      }
-    });
-  };
-
   class MrT extends TesterantoLevelOne<
     TestShape,
     InitialStateShape,
@@ -1068,10 +1069,8 @@ export const Testeranto = async <
         testSpecification,
         input,
         (class extends BaseSuite<Input, Subject, Store, Selection, ThenShape, TestShape, IFeatureShape> {
-          async setup(s: Input): Promise<Subject> {
-            console.log("mark6 this", this);
-            console.log("mark6 recommendedFsPath", this.recommendedFsPath);
-            return beforeAll(s, testArtiFactoryfileWriter('./idk/'));
+          async setup(s: Input, artifactory): Promise<Subject> {
+            return beforeAll(s, artifactory);
           }
           test(t: ThenShape): unknown {
             return assertioner(t);
@@ -1096,15 +1095,15 @@ export const Testeranto = async <
             super(name, features, whens, thens);
             this.initialValues = initialValues;
           }
-          async givenThat(subject, testResource) {
-            return beforeEach(subject, this.initialValues, testResource, testArtiFactoryfileWriter('./idk/'));
+          async givenThat(subject, testResource, artifactory) {
+            return beforeEach(subject, this.initialValues, testResource, artifactory);
           }
 
-          afterEach(store: Store, ndx: number): Promise<unknown> {
-            return new Promise((res) => res(afterEach(store, ndx, testArtiFactoryfileWriter('./idk/'))))
+          afterEach(store: Store, ndx: number, artifactory): Promise<unknown> {
+            return new Promise((res) => res(afterEach(store, ndx, artifactory)))
           }
-          afterAll(store) {
-            return afterAll(store, testArtiFactoryfileWriter('./idk/'));
+          afterAll(store, artifactory) {
+            return afterAll(store, artifactory);
           }
         },
 
@@ -1151,12 +1150,12 @@ export const Testeranto = async <
             this.initialValues = initialValues;
           }
 
-          async checkThat(subject, testResource) {
-            return beforeEach(subject, this.initialValues, testResource, testArtiFactoryfileWriter('./idk/'));
+          async checkThat(subject, testResource, artifactory) {
+            return beforeEach(subject, this.initialValues, testResource, artifactory);
           }
 
-          afterEach(store: Store, ndx: number): Promise<unknown> {
-            return new Promise((res) => res(afterEach(store, ndx, testArtiFactoryfileWriter('./idk/'))))
+          afterEach(store: Store, ndx: number, artifactory): Promise<unknown> {
+            return new Promise((res) => res(afterEach(store, ndx, artifactory)))
           }
         },
         testResource
@@ -1220,20 +1219,3 @@ export const Testeranto = async <
   });
 
 };
-
-  // async after(recommendedFsPath: string, givenIndex: number) {
-  //   // const protofiles = this.afterAll(this.testArtifacts);
-
-  //   // await Promise.all(protofiles.map(([filePath, fileBody]) => {
-  //   //   return new Promise((res, rej) => {
-  //   //     const target_file = path.resolve(`${recommendedFsPath}/${givenIndex}/${filePath}`);
-  //   //     const targetDir = target_file.split('/').slice(0, -1).join('/') + "/"
-  //   //     fs.mkdir(targetDir, { recursive: true }, async (error) => {
-  //   //       if (error) { console.error(error) }
-  //   //       await fs.writeFileSync(target_file, fileBody);
-  //   //       res(true);
-  //   //     });
-
-  //   //   })
-  //   // }))
-  // };

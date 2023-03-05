@@ -160,11 +160,11 @@ class Scheduler {
             console.log(`# of processes in queue:`, this.queue.length, "/", this.project.tests.length);
             console.log(`summary:`, this.summary);
             console.log(`watchmode:`, this.project.watchMode);
-            pm2.list((err, procs) => {
-              procs.forEach((proc) => {
-                console.log(proc.name, proc.pid, proc.pm_id, proc.monit)
-              })
-            });
+            // pm2.list((err, procs) => {
+            //   procs.forEach((proc) => {
+            //     console.log(proc.name, proc.pid, proc.pm_id, proc.monit)
+            //   })
+            // });
 
             this.pop();
             this.checkForShutDown();

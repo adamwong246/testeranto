@@ -124,6 +124,7 @@ export declare type ITestImplementation<IState, ISelection, IWhenShape, IThenSha
         [K in keyof ITestShape["checks"]]: (...Ic: ITestShape["checks"][K]) => IState;
     };
 };
+declare type ITestArtifactory = (key: string, value: string) => unknown;
 export declare abstract class BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape extends ITTestShape, IFeatureShape> {
     name: string;
     givens: BaseGiven<ISubject, IStore, ISelection, IThenShape, IFeatureShape>[];
@@ -132,9 +133,7 @@ export declare abstract class BaseSuite<IInput, ISubject, IStore, ISelection, IT
     aborted: boolean;
     fails: BaseGiven<ISubject, IStore, ISelection, IThenShape, IFeatureShape>[];
     testResourceConfiguration: ITTestResource;
-    recommendedFsPath: string;
     constructor(name: string, givens?: BaseGiven<ISubject, IStore, ISelection, IThenShape, IFeatureShape>[], checks?: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape, IFeatureShape>[]);
-    aborter(): Promise<void>;
     toObj(): {
         name: string;
         givens: {
@@ -152,9 +151,9 @@ export declare abstract class BaseSuite<IInput, ISubject, IStore, ISelection, IT
         }[];
         fails: BaseGiven<ISubject, IStore, ISelection, IThenShape, IFeatureShape>[];
     };
-    setup(s: IInput): Promise<ISubject>;
+    setup(s: IInput, artifactory: ITestArtifactory): Promise<ISubject>;
     test(t: IThenShape): unknown;
-    run(input: any, testResourceConfiguration: ITTestResource, recommendedFsPath: string): Promise<boolean>;
+    run(input: any, testResourceConfiguration: ITTestResource, artifactory: (gndex: string) => (a: string, b: string) => void): Promise<boolean>;
 }
 export declare abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape, IFeatureShape> {
     name: string;
@@ -162,11 +161,10 @@ export declare abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape
     whens: BaseWhen<IStore, ISelection, IThenShape>[];
     thens: BaseThen<ISelection, IStore, IThenShape>[];
     error: Error;
-    abort: boolean;
     store: IStore;
     recommendedFsPath: string;
     constructor(name: string, features: (keyof IFeatureShape)[], whens: BaseWhen<IStore, ISelection, IThenShape>[], thens: BaseThen<ISelection, IStore, IThenShape>[]);
-    afterAll(store: IStore): void;
+    afterAll(store: IStore, artifactory: ITestArtifactory): void;
     toObj(): {
         name: string;
         whens: {
@@ -180,10 +178,9 @@ export declare abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape
         errors: Error;
         features: (keyof IFeatureShape)[];
     };
-    abstract givenThat(subject: ISubject, testResourceConfiguration?: any): Promise<IStore>;
-    aborter(ndx: number): Promise<unknown>;
-    afterEach(store: IStore, ndx: number): Promise<unknown>;
-    give(subject: ISubject, index: number, testResourceConfiguration: any, tester: any): Promise<IStore>;
+    abstract givenThat(subject: ISubject, testResourceConfiguration: any, artifactory: ITestArtifactory): Promise<IStore>;
+    afterEach(store: IStore, ndx: number, artifactory: ITestArtifactory): Promise<unknown>;
+    give(subject: ISubject, index: number, testResourceConfiguration: any, tester: any, artifactory: ITestArtifactory): Promise<IStore>;
 }
 export declare abstract class BaseWhen<IStore, ISelection, IThenShape> {
     name: string;
@@ -224,9 +221,9 @@ export declare abstract class BaseCheck<ISubject, IStore, ISelection, IThenShape
         [K in keyof ITestShape["thens"]]: (p: any, tc: any) => BaseThen<ISelection, IStore, IThenShape>;
     };
     constructor(name: string, features: (keyof IFeatureShape)[], checkCB: (whens: any, thens: any) => any, whens: any, thens: any);
-    abstract checkThat(subject: ISubject, testResourceConfiguration?: any): Promise<IStore>;
+    abstract checkThat(subject: ISubject, testResourceConfiguration: any, artifactory: ITestArtifactory): Promise<IStore>;
     afterEach(store: IStore, ndx: number, cb?: any): Promise<unknown>;
-    check(subject: ISubject, ndx: number, testResourceConfiguration: any, tester: any): Promise<void>;
+    check(subject: ISubject, ndx: number, testResourceConfiguration: any, tester: any, artifactory: ITestArtifactory): Promise<void>;
 }
 export declare abstract class TesterantoLevelZero<IInput, ISubject, IStore, ISelection, SuiteExtensions, GivenExtensions, WhenExtensions, ThenExtensions, CheckExtensions, IThenShape, IFeatureShape> {
     readonly cc: IStore;
