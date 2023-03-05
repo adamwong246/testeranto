@@ -1,12 +1,14 @@
-/// <reference types="node" />
 declare const DirectedGraph: any, UndirectedGraph: any;
-export declare class BaseFeature {
-    name: string;
-    constructor(name: string);
-}
+declare type ITTestResource = {
+    "ports": number[];
+};
 declare abstract class TesterantoGraph {
     name: string;
     abstract graph: any;
+    constructor(name: string);
+}
+export declare class BaseFeature {
+    name: string;
     constructor(name: string);
 }
 export declare class TesterantoGraphUndirected implements TesterantoGraph {
@@ -62,9 +64,6 @@ export declare class TesterantoFeatures {
 }
 export declare type ITTestResourceRequirement = {
     "ports": number;
-};
-declare type ITTestResource = {
-    "ports": number[];
 };
 export declare type IT_FeatureNetwork = {
     name: string;
@@ -125,10 +124,6 @@ export declare type ITestImplementation<IState, ISelection, IWhenShape, IThenSha
         [K in keyof ITestShape["checks"]]: (...Ic: ITestShape["checks"][K]) => IState;
     };
 };
-declare class TestArtifact {
-    binary: Buffer | string;
-    constructor(binary: any);
-}
 export declare abstract class BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape extends ITTestShape, IFeatureShape> {
     name: string;
     givens: BaseGiven<ISubject, IStore, ISelection, IThenShape, IFeatureShape>[];
@@ -137,6 +132,7 @@ export declare abstract class BaseSuite<IInput, ISubject, IStore, ISelection, IT
     aborted: boolean;
     fails: BaseGiven<ISubject, IStore, ISelection, IThenShape, IFeatureShape>[];
     testResourceConfiguration: ITTestResource;
+    recommendedFsPath: string;
     constructor(name: string, givens?: BaseGiven<ISubject, IStore, ISelection, IThenShape, IFeatureShape>[], checks?: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape, IFeatureShape>[]);
     aborter(): Promise<void>;
     toObj(): {
@@ -153,13 +149,12 @@ export declare abstract class BaseSuite<IInput, ISubject, IStore, ISelection, IT
             }[];
             errors: Error;
             features: (keyof IFeatureShape)[];
-            testArtifacts: Record<string, any[]>;
         }[];
         fails: BaseGiven<ISubject, IStore, ISelection, IThenShape, IFeatureShape>[];
     };
     setup(s: IInput): Promise<ISubject>;
     test(t: IThenShape): unknown;
-    run(input: any, testResourceConfiguration: ITTestResource): Promise<boolean>;
+    run(input: any, testResourceConfiguration: ITTestResource, recommendedFsPath: string): Promise<boolean>;
 }
 export declare abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape, IFeatureShape> {
     name: string;
@@ -169,8 +164,9 @@ export declare abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape
     error: Error;
     abort: boolean;
     store: IStore;
-    testArtifacts: Record<string, any[]>;
+    recommendedFsPath: string;
     constructor(name: string, features: (keyof IFeatureShape)[], whens: BaseWhen<IStore, ISelection, IThenShape>[], thens: BaseThen<ISelection, IStore, IThenShape>[]);
+    afterAll(store: IStore): void;
     toObj(): {
         name: string;
         whens: {
@@ -183,15 +179,10 @@ export declare abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape
         }[];
         errors: Error;
         features: (keyof IFeatureShape)[];
-        testArtifacts: Record<string, any[]>;
     };
     abstract givenThat(subject: ISubject, testResourceConfiguration?: any): Promise<IStore>;
-    saveTestArtifact(k: string, testArtifact: TestArtifact): void;
-    artifactSaver: {
-        png: (testArtifact: any) => void;
-    };
     aborter(ndx: number): Promise<unknown>;
-    afterEach(store: IStore, ndx: number, cb: any): Promise<unknown>;
+    afterEach(store: IStore, ndx: number): Promise<unknown>;
     give(subject: ISubject, index: number, testResourceConfiguration: any, tester: any): Promise<IStore>;
 }
 export declare abstract class BaseWhen<IStore, ISelection, IThenShape> {
@@ -265,13 +256,15 @@ export declare abstract class TesterantoLevelOne<ITestShape extends ITTestShape,
         [K in keyof ITestShape["checks"]]: (name: string, features: (keyof IFeatureShape)[], cbz: (...any: any[]) => Promise<void>) => any;
     }) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape, IFeatureShape>[], input: IInput, suiteKlasser: (name: string, givens: BaseGiven<ISubject, IStore, ISelection, IThenShape, IFeatureShape>[], checks: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape, IFeatureShape>[]) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape, IFeatureShape>, givenKlasser: (n: any, f: any, w: any, t: any, z?: any) => BaseGiven<ISubject, IStore, ISelection, IThenShape, IFeatureShape>, whenKlasser: (s: any, o: any) => BaseWhen<IStore, ISelection, IThenShape>, thenKlasser: (s: any, o: any) => BaseThen<IStore, ISelection, IThenShape>, checkKlasser: (n: any, f: any, cb: any, w: any, t: any) => BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape, IFeatureShape>, testResource: any);
 }
+declare type ITestArtificer = (key: string, data: any) => void;
 export declare const Testeranto: <TestShape extends ITTestShape, Input, Subject, Store, Selection_1, WhenShape, ThenShape, InitialStateShape, IFeatureShape>(input: Input, testSpecification: ITestSpecification<TestShape, IFeatureShape>, testImplementation: any, testResource: ITTestResourceRequirement, testInterface: {
     actionHandler?: ((b: (...any: any[]) => any) => any) | undefined;
-    afterEach?: ((store: Store, ndx: number, cb: any) => unknown) | undefined;
     andWhen: (store: Store, actioner: any, testResource: ITTestResource) => Promise<Selection_1>;
-    assertioner?: ((t: ThenShape) => any) | undefined;
-    beforeAll?: ((input: Input) => Promise<Subject>) | undefined;
-    beforeEach?: ((subject: Subject, initialValues: any, testResource: ITTestResource) => Promise<Store>) | undefined;
     butThen?: ((store: Store, callback: any, testResource: ITTestResource) => Promise<Selection_1>) | undefined;
+    assertioner?: ((t: ThenShape) => any) | undefined;
+    afterAll?: ((store: Store, artificer: ITestArtificer) => any) | undefined;
+    afterEach?: ((store: Store, ndx: number, artificer: ITestArtificer) => Promise<unknown>) | undefined;
+    beforeAll?: ((input: Input, artificer: ITestArtificer) => Promise<Subject>) | undefined;
+    beforeEach?: ((subject: Subject, initialValues: any, testResource: ITTestResource, artificer: ITestArtificer) => Promise<Store>) | undefined;
 }) => Promise<void>;
 export {};

@@ -1,38 +1,27 @@
+import path from 'path';
 import pm2 from 'pm2';
 import fs from "fs";
-import path from "path";
-import * as esbuild from 'esbuild';
+import * as esbuild from "esbuild";
 import fsExists from 'fs.promises.exists';
+import readline from 'readline';
 console.log("watch.ts", process.cwd(), process.argv);
-const configFile = `${process.cwd()}/${process.argv[2]}`;
-console.log("watch.ts configFile", configFile);
 const TIMEOUT = 1000;
 const OPEN_PORT = '';
-const testOutPath = "./dist/results/";
-class TesterantoProject {
-    constructor(tests, features, ports, watchMode, loaders, outdir, resultsdir) {
-        this.tests = tests;
-        this.features = features;
-        this.ports = ports;
-        this.watchMode = watchMode;
-        this.loaders = loaders;
-        this.outdir = outdir;
-        this.resultsdir = resultsdir;
-    }
-}
+readline.emitKeypressEvents(process.stdin);
+process.stdin.setRawMode(true);
 class Scheduler {
-    constructor(project, testerantoFeatures) {
+    constructor(project) {
         this.spinCycle = 0;
         this.spinAnimation = "←↖↑↗→↘↓↙";
-        const portsToUse = project.ports;
-        this.ports = {};
-        portsToUse.forEach((port) => {
-            this.ports[port] = OPEN_PORT;
-        });
+        this.project = project;
         this.queue = [];
         this.jobs = {};
-        this.project = project;
-        this.testerantoFeatures = testerantoFeatures;
+        this.ports = {};
+        this.project.ports.forEach((port) => {
+            this.ports[port] = OPEN_PORT;
+        });
+        this.mode = `up`;
+        this.summary = {};
         pm2.connect(async (err) => {
             if (err) {
                 console.error(err);
@@ -43,15 +32,11 @@ class Scheduler {
             }
             this.pm2 = pm2;
             const makePath = (fPath) => {
-                return "./" + project.outdir + "/" + fPath.split(".ts")[0] + ".mjs";
-                // return "./dist/tests/" + fPath.split(".ts")[0] + ".mjs";
-                // const fNameSplit = (fPath.split(".ts")[0]).split[`/`];
-                // const fName = fNameSplit[fNameSplit.length -1 ];
-                // return `./dist/tests/${classname}.mjs`;
+                return "./js/" + fPath.split(".ts")[0] + ".mjs";
             };
             const bootInterval = setInterval(async () => {
                 const filesToLookup = this.project.tests.map((f) => {
-                    const filepath = makePath(f); //"./dist/" + f.split(".ts")[0] + ".mjs";
+                    const filepath = makePath(f);
                     return {
                         filepath,
                         exists: fsExists(filepath)
@@ -64,7 +49,8 @@ class Scheduler {
                 else {
                     clearInterval(bootInterval);
                     this.project.tests.reduce((m, inputFilePath) => {
-                        const script = makePath(inputFilePath); // "./dist/" + fn.split(".ts")[0] + ".mjs";
+                        const script = makePath(inputFilePath);
+                        this.summary[inputFilePath] = undefined;
                         m[inputFilePath] = pm2.start({
                             script,
                             name: inputFilePath,
@@ -89,12 +75,46 @@ class Scheduler {
                         });
                     });
                     setInterval(async () => {
-                        console.log(this.spinner(), this.queue.length, this.ports);
+                        if (this.project.clearScreen) {
+                            console.clear();
+                        }
+                        console.log(`# of processes in queue:`, this.queue.length, "/", this.project.tests.length);
+                        console.log(`summary:`, this.summary);
+                        console.log(`watchmode:`, this.project.watchMode);
+                        pm2.list((err, procs) => {
+                            procs.forEach((proc) => {
+                                console.log(proc.name, proc.pid, proc.pm_id, proc.monit);
+                            });
+                        });
                         this.pop();
-                    }, TIMEOUT);
+                        this.checkForShutDown();
+                        console.log(this.spinner(), this.mode === `up` ? `press "q" to initiate graceful shutdown` : `please wait while testeranto shuts down gracefully...`);
+                    }, TIMEOUT).unref();
                 }
-            }, TIMEOUT);
+            }, TIMEOUT).unref();
         });
+    }
+    // this is called every cycle
+    // if there are no running processes, none waiting and we are in shutdown mode, 
+    // write the summary to a file and end self with summarized exit code
+    checkForShutDown() {
+        const sums = Object.entries(this.summary).filter((s) => s[1] !== undefined);
+        if ((this.project.watchMode === false || this.mode === `down`) &&
+            sums.length === this.project.tests.length) {
+            fs.writeFile(`${this.project.resultsdir}/results.json`, JSON.stringify(this.summary, null, 2), (err) => {
+                if (err) {
+                    console.error(err);
+                }
+                const finalExitCode = sums.filter((s) => s[1] !== true).length;
+                fs.writeFile(`${this.project.resultsdir}/testeranto.txt`, finalExitCode.toString(), (err) => {
+                    if (err) {
+                        console.error(err);
+                    }
+                    console.log(`goodbye testeranto - ${finalExitCode === 0 ? '👍🏼' : '👎🏻'}`);
+                    process.exit(finalExitCode);
+                });
+            });
+        }
     }
     async abort(pm2Proc) {
         this.pm2.stop(pm2Proc.process.pm_id, (err, proc) => {
@@ -110,20 +130,13 @@ class Scheduler {
     }
     pop() {
         const p = this.queue.pop();
-        if (!p && Object.values(this.ports).every((pp) => pp === OPEN_PORT)) {
-            if (this.project.watchMode === false) {
-                console.log("watch mode is false, so I am quitting now");
-                process.exit(0);
-            }
-            else {
-                console.log('feed me some tests plz');
-            }
-        }
         if (!p) {
+            console.log('feed me a test');
             return;
         }
         const pid = p.process.pm_id;
         const testResource = p.data.testResource;
+        const recommendedFsPath = path.resolve(`${process.cwd()}/${this.project.resultsdir}/${p.process.name}/`); //.replaceAll('.', '-');
         const message = {
             // these fields must be present
             id: p.process.pm_id,
@@ -133,7 +146,8 @@ class Scheduler {
             // Data to be sent
             data: {
                 goWithTestResources: [],
-                id: p.process.pm_id
+                id: p.process.pm_id,
+                recommendedFsPath
             }
         };
         if ((testResource === null || testResource === void 0 ? void 0 : testResource.ports) === 0) {
@@ -163,7 +177,8 @@ class Scheduler {
                     // Data to be sent
                     data: {
                         goWithTestResources: selectionOfPorts,
-                        id: p.process.pm_id
+                        id: p.process.pm_id,
+                        recommendedFsPath
                     }
                 };
                 this.pm2.sendDataToProcessId(p.process.pm_id, message, function (err, res) {
@@ -189,37 +204,14 @@ class Scheduler {
                 }
             });
             if (pm2Proc.data.results) {
-                // fs.writeFile(
-                //   `${testOutPath}${pm2Proc.process.name}.json`,
-                //   JSON.stringify(this.testerantoFeatures, null, 2),
-                //   (err) => {
-                //     if (err) {
-                //       console.error(err);
-                //     }
-                //   }
-                // );
                 const testJob = { test: pm2Proc.data.results };
-                for (const [gNdx, g] of testJob.test.givens.entries()) {
-                    for (const testArtifactKey of Object.keys(g.testArtifacts)) {
-                        for (const [ndx, testArtifact] of g.testArtifacts[testArtifactKey].entries()) {
-                            const artifactOutFolderPath = `$${this.project.resultsdir}/${pm2Proc.process.name}/${gNdx}/${ndx}/`;
-                            const artifactOutPath = `${artifactOutFolderPath}/${testArtifactKey}.png`;
-                            await fs.promises.mkdir(artifactOutFolderPath, { recursive: true });
-                            await fs.writeFile(artifactOutPath, Buffer.from(testArtifact.binary.data), (err) => {
-                                if (err) {
-                                    console.error(err);
-                                }
-                                // resolve(result)
-                            });
-                        }
-                    }
-                }
                 await fs.mkdirSync(`${this.project.resultsdir}/${pm2Proc.process.name}`.split('/').slice(0, -1).join('/'), { recursive: true });
                 fs.writeFile(`${this.project.resultsdir}/${pm2Proc.process.name}.json`, JSON.stringify((Object.assign(Object.assign({}, pm2Proc.data.results), { givens: pm2Proc.data.results.givens.map((g) => { delete g.testArtifacts; return g; }) })), null, 2), (err) => {
                     if (err) {
                         console.error(err);
                     }
                 });
+                this.summary[pm2Proc.process.name] = testJob.test.fails.length === 0;
                 // fs.writeFile(
                 //   `${reportOutPath}testDAG.json`,
                 //   JSON.stringify(this.testerantoFeatures.graphs.dags[0].graph.export(), null, 2),
@@ -235,55 +227,50 @@ class Scheduler {
             console.error("idk?!");
         }
     }
+    shutdown() {
+        this.mode = `down`;
+        pm2.list(((err, processes) => {
+            processes.forEach((proc) => {
+                proc.pm_id && this.pm2.stop(proc.pm_id, (err, proc) => {
+                    console.error(err);
+                });
+            });
+        }));
+    }
 }
-import(configFile).then(async (testerantoConfigImport) => {
-    const configModule = testerantoConfigImport.default;
-    const tProject = new TesterantoProject(configModule.tests, configModule.features, configModule.ports, configModule.watchMode, configModule.loaders, configModule.outdir, configModule.resultsdir);
-    const entryPoints = [
-        tProject.features,
-        ...tProject.tests.map((sourcefile) => {
-            return sourcefile;
-            // return `${tProject.outdir}/${sourcefile}`;
-        })
-    ];
-    console.log("entryPoints", entryPoints);
-    let ctx = await esbuild.context({
-        entryPoints,
+let scheduler;
+process.stdin.on('keypress', (str, key) => {
+    if (key.name === 'q') {
+        console.log("Shutting down gracefully...");
+        scheduler.shutdown();
+    }
+    if (key.ctrl && key.name === 'c') {
+        console.log("Shutting down ungracefully!");
+        process.exit(-1);
+    }
+});
+export default async (project) => {
+    const ctx = await esbuild.context({
+        allowOverwrite: true,
+        outbase: project.outbase,
+        outdir: project.outdir,
+        jsx: `transform`,
+        entryPoints: [
+            ...project.tests.map((sourcefile) => {
+                return sourcefile;
+            })
+        ],
         bundle: true,
-        minify: true,
+        minify: project.minify === true,
         format: "esm",
         write: true,
-        outdir: tProject.outdir,
         outExtension: { '.js': '.mjs' },
         packages: 'external',
         plugins: [
-            {
-                name: 'import-path',
-                setup(build) {
-                    build.onResolve({ filter: /^\.{1,2}\// }, args => {
-                        const importedPath = args.resolveDir + "/" + args.path;
-                        const absolutePath = path.resolve(importedPath);
-                        const featurfilePath = path.resolve(tProject.features).split(".js").slice(0, -1).join('.js');
-                        if (absolutePath === featurfilePath) {
-                            return {
-                                path: process.cwd() + tProject.outdir + "/testerantoFeatures.test.mjs",
-                                external: true
-                            };
-                        }
-                    });
-                },
-            },
-            ...tProject.loaders || [],
+            ...project.loaders || [],
         ],
-        external: [
-        // testerantoConfig.features
-        ]
+        external: []
     });
-    fs.promises.writeFile("./dist/testeranto.config.js", JSON.stringify(tProject));
-    import(path.resolve(process.cwd(), tProject.features)).then(async (testerantoFeaturesImport) => {
-        const tFeatures = testerantoFeaturesImport.default;
-        new Scheduler(tProject, tFeatures);
-        await ctx.watch();
-    });
-});
-export default {};
+    scheduler = new Scheduler(project);
+    ctx.watch();
+};
