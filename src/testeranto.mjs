@@ -34,7 +34,7 @@ class Scheduler {
             }
             this.pm2 = pm2;
             const makePath = (fPath) => {
-                return "./js/" + fPath.split(".ts")[0] + ".mjs";
+                return path.resolve("./" + project.outdir + "/" + fPath.split(".ts")[0] + ".mjs");
             };
             const bootInterval = setInterval(async () => {
                 const filesToLookup = this.project.tests.map((f) => {
