@@ -13,7 +13,10 @@ const TIMEOUT = 1000;
 const OPEN_PORT = '';
 
 readline.emitKeypressEvents(process.stdin);
-process.stdin.setRawMode(true);
+
+if (process.stdin.isTTY) {
+  process.stdin.setRawMode(true);
+}
 
 type IPm2Process = {
   process: {
@@ -101,7 +104,7 @@ class Scheduler {
       this.pm2 = pm2;
 
       const makePath = (fPath: string): string => {
-        return "./js/" + fPath.split(".ts")[0] + ".mjs";
+        return "./" + project.outdir + "/" + fPath.split(".ts")[0] + ".mjs";
       }
 
       const bootInterval = setInterval(async () => {

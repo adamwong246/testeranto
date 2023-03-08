@@ -8,7 +8,9 @@ console.log("watch.ts", process.cwd(), process.argv);
 const TIMEOUT = 1000;
 const OPEN_PORT = '';
 readline.emitKeypressEvents(process.stdin);
-process.stdin.setRawMode(true);
+if (process.stdin.isTTY) {
+    process.stdin.setRawMode(true);
+}
 class Scheduler {
     constructor(project) {
         this.spinCycle = 0;
