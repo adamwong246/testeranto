@@ -1,5 +1,6 @@
 import { TesterantoFeatures } from "./index.mjs";
 declare type ITProject = {
+    tty: boolean;
     tests: string[];
     features: TesterantoFeatures;
     ports: string[];

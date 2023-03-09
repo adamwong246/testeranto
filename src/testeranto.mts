@@ -7,16 +7,32 @@ import readline from 'readline';
 
 import { TesterantoFeatures } from "./index.mjs";
 
-console.log("watch.ts", process.cwd(), process.argv);
+console.log("watch.ts", process.cwd(), process.argv, "tty:", process.stdin.isTTY);
 
 const TIMEOUT = 1000;
 const OPEN_PORT = '';
 
+let scheduler: Scheduler;
+
+process.stdin.on('keypress', (str, key) => {
+  if (key.name === 'q') {
+    // process.stdin.setRawMode(false);
+    console.log("Shutting down gracefully...");
+    scheduler.shutdown();
+  }
+
+  if (key.ctrl && key.name === 'c') {
+    console.log("Shutting down ungracefully!");
+    process.exit(-1);
+  }
+});
+
 readline.emitKeypressEvents(process.stdin);
 
-if (process.stdin.isTTY) {
-  process.stdin.setRawMode(true);
-}
+// if (process.stdin.isTTY) {
+//   process.stdin.setRawMode(true);
+// }
+// process.stdin.setRawMode(true);
 
 type IPm2Process = {
   process: {
@@ -48,6 +64,7 @@ type IPm2ProcessB = {
 };
 
 type ITProject = {
+  tty: boolean;
   tests: string[],
   features: TesterantoFeatures,
   ports: string[],
@@ -104,7 +121,8 @@ class Scheduler {
       this.pm2 = pm2;
 
       const makePath = (fPath: string): string => {
-        return path.resolve("./" + project.outdir + "/" + fPath.split(".ts")[0] + ".mjs");
+        const ext = path.extname(fPath)
+        return path.resolve("./" + project.outdir + "/" + fPath.replace(ext, '') + ".mjs");
       }
 
       const bootInterval = setInterval(async () => {
@@ -376,19 +394,7 @@ class Scheduler {
   }
 }
 
-let scheduler: Scheduler;
 
-process.stdin.on('keypress', (str, key) => {
-  if (key.name === 'q') {
-    console.log("Shutting down gracefully...");
-    scheduler.shutdown();
-  }
-
-  if (key.ctrl && key.name === 'c') {
-    console.log("Shutting down ungracefully!");
-    process.exit(-1);
-  }
-});
 
 export default async (project: ITProject) => {
   const ctx = await esbuild.context({
