@@ -20,3 +20,4 @@ Suite:,Testing the LoginPage as react,[object Object]
  Given: default
  When:,TheEmailIsSetTo: adam
  When:,TheLoginIsSubmitted: undefined
+ Then:,ThereIsNotAnEmailError: undefined

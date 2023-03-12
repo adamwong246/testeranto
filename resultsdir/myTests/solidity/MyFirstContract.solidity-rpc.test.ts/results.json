@@ -1,0 +1,58 @@
+{
+  "fails": [],
+  "givens": [
+    {
+      "whens": [],
+      "thens": [
+        {
+          "name": "Get: [object Object]"
+        }
+      ]
+    },
+    {
+      "whens": [
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        }
+      ],
+      "thens": [
+        {
+          "name": "Get: [object Object]"
+        }
+      ]
+    },
+    {
+      "whens": [
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Decrement: 1"
+        }
+      ],
+      "thens": [
+        {
+          "name": "Get: [object Object]"
+        }
+      ]
+    }
+  ]
+}

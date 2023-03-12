@@ -10,3 +10,5 @@ Suite:,foo,[object Object]
  When:,IClickTheButton: undefined
  When:,IClickTheButton: undefined
  When:,IClickTheButton: undefined
+ Then:,TheStatusIs: [object Object]
+

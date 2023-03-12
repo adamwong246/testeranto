@@ -23,3 +23,8 @@ Suite:,Testing the Server with Puppeteer,[object Object]
 
  Given: AnEmptyState
  When:,PostToStatus: aloha
+ When:,PostToAdd: 4
+ When:,PostToStatus: hello
+ When:,PostToAdd: 3
+ Then:,TheStatusIs: hello
+ Then:,TheNumberIs: 7
