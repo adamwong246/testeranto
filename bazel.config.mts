@@ -5,7 +5,7 @@ import baseConfig from "./base.config.mjs";
 export default new ITProject({
   ...baseConfig,
   outdir: "js-bazel",
-  buildMode: "watch",
+  buildMode: "on",
   runMode: true,
-  collateMode: "watch+serve"
+  collateMode: "on"
 });

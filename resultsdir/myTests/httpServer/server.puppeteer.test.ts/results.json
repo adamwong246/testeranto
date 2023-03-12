@@ -50,6 +50,57 @@
           "address": "::1"
         }
       }
+    },
+    {
+      "name": "AnEmptyState",
+      "features": [],
+      "whens": [],
+      "thens": [
+        {
+          "name": "TheStatusIs: some great status",
+          "error": true
+        }
+      ],
+      "initialValues": {},
+      "store": {
+        "server": {
+          "requestTimeout": 300000,
+          "headersTimeout": 60000,
+          "keepAliveTimeout": 5000,
+          "connectionsCheckingInterval": 30000,
+          "_events": {},
+          "_eventsCount": 2,
+          "_connections": 0,
+          "_handle": null,
+          "_usingWorkers": false,
+          "_workers": [],
+          "_unref": false,
+          "allowHalfOpen": true,
+          "pauseOnConnect": false,
+          "noDelay": true,
+          "keepAlive": false,
+          "keepAliveInitialDelay": 0,
+          "httpAllowHalfOpen": false,
+          "timeout": 0,
+          "maxHeadersCount": null,
+          "maxRequestsPerSocket": 0,
+          "_connectionKey": "6::::0"
+        },
+        "browser": {
+          "eventsMap": {},
+          "emitter": {
+            "all": {}
+          }
+        }
+      },
+      "error": {
+        "cause": {
+          "errno": -49,
+          "code": "EADDRNOTAVAIL",
+          "syscall": "connect",
+          "address": "::1"
+        }
+      }
     }
   ],
   "givens": [
