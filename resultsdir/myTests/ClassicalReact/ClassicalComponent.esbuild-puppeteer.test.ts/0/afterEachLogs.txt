@@ -1,4 +1,4 @@
-LOG			hello ClassicalComponent!
+LOG			hello world!
 INF			componentDidMount
 REQUEST	
 [object Object]

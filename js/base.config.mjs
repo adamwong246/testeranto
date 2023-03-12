@@ -1,7 +1,7 @@
 import features from "./myTests/testerantoFeatures.test.mjs";
 export default {
     features,
-    collateEntry: "MyReport.tsx",
+    collateEntry: "index.tsx",
     "tty": false,
     "clearScreen": false,
     "watchMode": true,

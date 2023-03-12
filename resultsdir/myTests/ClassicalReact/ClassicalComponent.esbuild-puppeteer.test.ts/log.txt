@@ -41,4 +41,3 @@ testArtiFactory =>,./beforeEachScreenshot.png
  Then:,TheStatusIs: [object Object]
  Then:,IAmAGenius: undefined
 testArtiFactory =>,./afterEachScreenshot.png
-testArtiFactory =>,./afterEachLogs.txt

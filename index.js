@@ -29435,7 +29435,8 @@
       };
     }
     componentDidMount() {
-      this.props.config.tests.map((fPath, fndx) => {
+      this.props.config.tests.map((fPath2, fndx) => {
+        const fPath = this.props.config.resultsdir + "/" + fPath2;
         console.log("fPath", fPath);
         const logtxt = fPath + "/log.txt";
         const resultsJson = fPath + "/results.json";
@@ -29463,7 +29464,7 @@ pre, core, p {
     }
   };
 
-  // MyReport.tsx
+  // index.tsx
   var import_client = __toESM(require_client());
   var import_react31 = __toESM(require_react());
 
@@ -29591,7 +29592,7 @@ pre, core, p {
   // base.config.mts
   var base_config_default = {
     features: testerantoFeatures_test_default,
-    collateEntry: "MyReport.tsx",
+    collateEntry: "index.tsx",
     "tty": false,
     "clearScreen": false,
     "watchMode": true,
@@ -29647,7 +29648,7 @@ pre, core, p {
     ]
   };
 
-  // MyReport.tsx
+  // index.tsx
   document.addEventListener("DOMContentLoaded", function() {
     console.log("hello from report! mark2");
     const elem = document.getElementById("root");

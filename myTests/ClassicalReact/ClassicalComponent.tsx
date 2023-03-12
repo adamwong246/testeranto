@@ -5,7 +5,7 @@ export type IState = { count: number };
 
 export class ClassicalComponent extends React.Component<IProps, IState> {
   constructor(props) {
-    console.log("hello ClassicalComponent!")
+    console.log("hello world!")
 
     super(props);
     this.state = {
@@ -36,7 +36,7 @@ export class ClassicalComponent extends React.Component<IProps, IState> {
   render() {
     return (
       <div style={{ border: '3px solid green' }}>
-        <h1>Hello Classical React</h1>
+        <h1>Hello Marcus</h1>
         <pre id="theProps">{JSON.stringify(this.props)}</pre>
         <p>foo: {this.props.foo}</p>
         <pre id="theState">{JSON.stringify(this.state)}</pre>

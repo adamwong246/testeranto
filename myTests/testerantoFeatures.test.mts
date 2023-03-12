@@ -28,7 +28,6 @@ export const features = {
   buenosDias: new MyFeature("buenos dias"),
   hola: new MyFeature("hola"),
   bienVenidos: new MyFeature("bien venidos"),
-
   walkingTheDog: new MyFeature("my favorite chore"),
 };
 

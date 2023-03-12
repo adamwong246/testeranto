@@ -10,4 +10,3 @@ Suite:,Testing the Node server with fetch!,[object Object]
 
  Given: AnEmptyState
  When:,PostToStatus: hello
-

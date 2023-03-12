@@ -5,5 +5,5 @@ export default new ITProject({
     outdir: "js-bazel",
     buildMode: "on",
     runMode: true,
-    collateMode: "on"
+    collateMode: "watch+serve"
 });

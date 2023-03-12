@@ -3,4 +3,23 @@ Suite:,Testing the Server with Puppeteer,[object Object]
 
  Given: AnEmptyState
  Then:,TheStatusIs: some great status
-
+
+ Given: AnEmptyState
+ When:,PostToStatus: aloha
+ Then:,TheStatusIs: aloha
+
+ Given: AnEmptyState
+ When:,PostToStatus: hello
+ When:,PostToStatus: aloha
+ Then:,TheStatusIs: aloha
+
+ Given: AnEmptyState
+ Then:,TheNumberIs: 0
+
+ Given: AnEmptyState
+ When:,PostToAdd: 1
+ When:,PostToAdd: 2
+ Then:,TheNumberIs: 3
+
+ Given: AnEmptyState
+ When:,PostToStatus: aloha

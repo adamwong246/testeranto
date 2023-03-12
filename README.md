@@ -27,3 +27,7 @@
 ### launch the pm2 dashboard
 
 `yarn pm2 monit`
+
+### launch a pre-built test
+
+echo '{"fs": "./foobar", "ports": ["3333"]}' | node js-bazel/myTests/ClassicalReact/ClassicalComponent.esbuild-puppeteer.test.mjs
