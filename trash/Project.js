@@ -1,26 +1,11 @@
+import * as esbuild from "esbuild";
+import fs from 'fs';
+import fsExists from 'fs.promises.exists';
 import path from 'path';
 import pm2 from 'pm2';
-import fs from "fs";
-import * as esbuild from "esbuild";
-import fsExists from 'fs.promises.exists';
-import readline from 'readline';
-console.log("watch.ts", process.cwd(), process.argv, "tty:", process.stdin.isTTY);
 const TIMEOUT = 1000;
 const OPEN_PORT = '';
-let scheduler;
-process.stdin.on('keypress', (str, key) => {
-    if (key.name === 'q') {
-        // process.stdin.setRawMode(false);
-        console.log("Shutting down gracefully...");
-        scheduler.shutdown();
-    }
-    if (key.ctrl && key.name === 'c') {
-        console.log("Shutting down ungracefully!");
-        process.exit(-1);
-    }
-});
-readline.emitKeypressEvents(process.stdin);
-class Scheduler {
+export class Scheduler {
     constructor(project) {
         this.spinCycle = 0;
         this.spinAnimation = "←↖↑↗→↘↓↙";
@@ -28,7 +13,7 @@ class Scheduler {
         this.queue = [];
         this.jobs = {};
         this.ports = {};
-        this.project.ports.forEach((port) => {
+        this.project.getPorts().forEach((port) => {
             this.ports[port] = OPEN_PORT;
         });
         this.mode = `up`;
@@ -47,7 +32,7 @@ class Scheduler {
                 return path.resolve("./" + project.outdir + "/" + fPath.replace(ext, '') + ".mjs");
             };
             const bootInterval = setInterval(async () => {
-                const filesToLookup = this.project.tests.map((f) => {
+                const filesToLookup = this.project.getEntryPoints().map((f) => {
                     const filepath = makePath(f);
                     return {
                         filepath,
@@ -60,7 +45,7 @@ class Scheduler {
                 }
                 else {
                     clearInterval(bootInterval);
-                    this.project.tests.reduce((m, inputFilePath) => {
+                    this.project.getEntryPoints().reduce((m, inputFilePath) => {
                         const script = makePath(inputFilePath);
                         this.summary[inputFilePath] = undefined;
                         m[inputFilePath] = pm2.start({
@@ -90,7 +75,7 @@ class Scheduler {
                         if (this.project.clearScreen) {
                             console.clear();
                         }
-                        console.log(`# of processes in queue:`, this.queue.length, "/", this.project.tests.length);
+                        console.log(`# of processes in queue:`, this.queue.length, "/", this.project.getEntryPoints().length);
                         console.log(`summary:`, this.summary);
                         console.log(`watchmode:`, this.project.watchMode);
                         // pm2.list((err, procs) => {
@@ -112,7 +97,7 @@ class Scheduler {
     checkForShutDown() {
         const sums = Object.entries(this.summary).filter((s) => s[1] !== undefined);
         if ((this.project.watchMode === false || this.mode === `down`) &&
-            sums.length === this.project.tests.length) {
+            sums.length === this.project.getEntryPoints().length) {
             fs.writeFile(`${this.project.resultsdir}/results.json`, JSON.stringify(this.summary, null, 2), (err) => {
                 if (err) {
                     console.error(err);
@@ -250,28 +235,67 @@ class Scheduler {
         }));
     }
 }
-export default async (project) => {
-    const ctx = await esbuild.context({
-        allowOverwrite: true,
-        outbase: project.outbase,
-        outdir: project.outdir,
-        jsx: `transform`,
-        entryPoints: [
-            ...project.tests.map((sourcefile) => {
-                return sourcefile;
-            })
-        ],
-        bundle: true,
-        minify: project.minify === true,
-        format: "esm",
-        write: true,
-        outExtension: { '.js': '.mjs' },
-        packages: 'external',
-        plugins: [
-            ...project.loaders || [],
-        ],
-        external: []
-    });
-    scheduler = new Scheduler(project);
-    ctx.watch();
-};
+export class ITProject {
+    constructor(config) {
+        this.clearScreen = config.clearScreen;
+        this.features = config.features;
+        this.loaders = config.loaders;
+        this.minify = config.minify;
+        this.outbase = config.outbase;
+        this.outdir = config.outdir;
+        this.ports = config.ports;
+        this.resultsdir = config.resultsdir;
+        this.tests = config.tests;
+        this.watchMode = config.watchMode;
+        const esBuildOptions = {
+            allowOverwrite: true,
+            outbase: this.outbase,
+            outdir: this.outdir,
+            jsx: `transform`,
+            entryPoints: [
+                ...this.getEntryPoints().map((sourcefile) => {
+                    return sourcefile;
+                })
+            ],
+            bundle: true,
+            minify: this.minify === true,
+            format: "esm",
+            write: true,
+            outExtension: { '.js': '.mjs' },
+            packages: 'external',
+            plugins: [
+                ...this.loaders || [],
+            ],
+            external: [],
+        };
+        if (this.runMode) {
+            const scheduler = new Scheduler(this);
+            process.stdin.on('keypress', (str, key) => {
+                if (key.name === 'q') {
+                    // process.stdin.setRawMode(false);
+                    console.log("Shutting down gracefully...");
+                    scheduler.shutdown();
+                }
+                if (key.ctrl && key.name === 'c') {
+                    console.log("Shutting down ungracefully!");
+                    process.exit(-1);
+                }
+            });
+        }
+        if (this.watchMode) {
+            esbuild.context(esBuildOptions).then(async (ectx) => {
+                ectx.watch();
+            });
+        }
+        else {
+            esbuild.build(esBuildOptions).then(async (eBuildResult) => {
+                console.log("ebuildResult", eBuildResult);
+                process.exit(eBuildResult.errors.length);
+            });
+        }
+    }
+    getEntryPoints() {
+        return Object.keys(this.tests);
+    }
+}
+;

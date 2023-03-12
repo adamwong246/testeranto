@@ -1,79 +1,12 @@
 import fs from 'fs';
 import path from 'path';
-import pkg from 'graphology';
-/* @ts-ignore:next-line */
-const { DirectedGraph, UndirectedGraph } = pkg;
-class TesterantoGraph {
-    constructor(name) {
-        this.name = name;
-    }
-}
-export class BaseFeature {
-    constructor(name) {
-        this.name = name;
-    }
-}
-;
-export class TesterantoGraphUndirected {
-    constructor(name) {
-        this.name = name;
-        this.graph = new UndirectedGraph();
-    }
-    connect(a, b, relation) {
-        this.graph.mergeEdge(a, b, { type: relation });
-    }
-}
-export class TesterantoGraphDirected {
-    constructor(name) {
-        this.name = name;
-        this.graph = new DirectedGraph();
-    }
-    connect(to, from, relation) {
-        this.graph.mergeEdge(to, from, { type: relation });
-    }
-}
-export class TesterantoGraphDirectedAcyclic {
-    constructor(name) {
-        this.name = name;
-        this.graph = new DirectedGraph();
-    }
-    connect(to, from, relation) {
-        this.graph.mergeEdge(to, from, { type: relation });
-    }
-}
-export class TesterantoFeatures {
-    constructor(features, graphs) {
-        this.features = features;
-        this.graphs = graphs;
-    }
-    networks() {
-        return [
-            ...this.graphs.undirected.values(),
-            ...this.graphs.directed.values(),
-            ...this.graphs.dags.values()
-        ];
-    }
-    toObj() {
-        return {
-            features: Object.entries(this.features).map(([name, feature]) => {
-                return Object.assign(Object.assign({}, feature), { inNetworks: this.networks().filter((network) => {
-                        return network.graph.hasNode(feature.name);
-                    }).map((network) => {
-                        return {
-                            network: network.name,
-                            neighbors: network.graph.neighbors(feature.name)
-                        };
-                    }) });
-            }),
-            networks: this.networks().map((network) => {
-                return Object.assign({}, network);
-            })
-        };
-    }
-}
-const testArtiFactoryfileWriter = (x) => (g) => (key, value) => {
-    console.log("testArtiFactory =>", key, value);
-    const fPath = `${x}/${g}/${key}`;
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const testArtiFactoryfileWriter = (tLog) => (fp) => (g) => (key, value) => {
+    tLog("testArtiFactory =>", key);
+    const fPath = `${fp}/${g}/${key}`;
     const cleanPath = path.resolve(fPath);
     const targetDir = cleanPath.split('/').slice(0, -1).join('/');
     fs.mkdir(targetDir, { recursive: true }, async (error) => {
@@ -103,10 +36,6 @@ export class BaseSuite {
         this.checks = checks;
         this.fails = [];
     }
-    // async aborter() {
-    //   this.aborted = true;
-    //   await Promise.all((this.givens || []).map((g, ndx) => g.aborter(ndx)))
-    // }
     toObj() {
         return {
             name: this.name,
@@ -120,31 +49,29 @@ export class BaseSuite {
     test(t) {
         return t;
     }
-    async run(input, testResourceConfiguration, artifactory) {
-        this.testResourceConfiguration = Object.keys(testResourceConfiguration).length ? testResourceConfiguration : { ports: [] };
+    async run(input, testResourceConfiguration, artifactory, tLog) {
+        this.testResourceConfiguration = testResourceConfiguration;
         const subject = await this.setup(input, artifactory("-1"));
-        console.log("\nSuite:", this.name, testResourceConfiguration);
+        tLog("\nSuite:", this.name, testResourceConfiguration);
         for (const [ndx, giver] of this.givens.entries()) {
             try {
-                if (!this.aborted) {
-                    this.store = await giver.give(subject, ndx, testResourceConfiguration, this.test, artifactory(ndx.toString()));
-                }
+                this.store = await giver.give(subject, ndx, testResourceConfiguration, this.test, artifactory(ndx.toString()), tLog);
             }
             catch (e) {
                 console.error(e);
                 this.fails.push(giver);
-                return false;
+                return this;
             }
         }
         for (const [ndx, thater] of this.checks.entries()) {
-            await thater.check(subject, ndx, testResourceConfiguration, this.test, artifactory);
+            await thater.check(subject, ndx, testResourceConfiguration, this.test, artifactory, tLog);
         }
         // @TODO fix me
         for (const [ndx, giver] of this.givens.entries()) {
             giver.afterAll(this.store, artifactory);
         }
         ////////////////
-        return true;
+        return this;
     }
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -168,34 +95,24 @@ export class BaseGiven {
             features: this.features,
         };
     }
-    // async aborter(ndx: number) {
-    //   this.abort = true;
-    //   return Promise.all([
-    //     ...this.whens.map((w, ndx) => new Promise((res) => res(w.aborter()))),
-    //     ...this.thens.map((t, ndx) => new Promise((res) => res(t.aborter()))),
-    //   ])
-    //     .then(async () => {
-    //       return await this.afterEach(this.store, ndx, artifactory)
-    //     })
-    // }
     async afterEach(store, ndx, artifactory) {
         return;
     }
-    async give(subject, index, testResourceConfiguration, tester, artifactory) {
-        console.log(`\n Given: ${this.name}`);
+    async give(subject, index, testResourceConfiguration, tester, artifactory, tLog) {
+        tLog(`\n Given: ${this.name}`);
         try {
             this.store = await this.givenThat(subject, testResourceConfiguration, artifactory);
             for (const whenStep of this.whens) {
-                await whenStep.test(this.store, testResourceConfiguration);
+                await whenStep.test(this.store, testResourceConfiguration, tLog);
             }
             for (const thenStep of this.thens) {
-                const t = await thenStep.test(this.store, testResourceConfiguration);
+                const t = await thenStep.test(this.store, testResourceConfiguration, tLog);
                 tester(t);
             }
         }
         catch (e) {
             this.error = e;
-            console.log('\u0007'); // bell
+            tLog('\u0007'); // bell
             throw e;
         }
         finally {
@@ -220,20 +137,14 @@ export class BaseWhen {
             error: this.error,
         };
     }
-    aborter() {
-        this.abort = true;
-        return this.abort;
-    }
-    async test(store, testResourceConfiguration) {
-        console.log(" When:", this.name);
-        if (!this.abort) {
-            try {
-                return await this.andWhen(store, this.actioner, testResourceConfiguration);
-            }
-            catch (e) {
-                this.error = true;
-                throw e;
-            }
+    async test(store, testResourceConfiguration, tLog) {
+        tLog(" When:", this.name);
+        try {
+            return await this.andWhen(store, this.actioner, testResourceConfiguration);
+        }
+        catch (e) {
+            this.error = true;
+            throw e;
         }
     }
 }
@@ -248,20 +159,14 @@ export class BaseThen {
             error: this.error,
         };
     }
-    aborter() {
-        this.abort = true;
-        return this.abort;
-    }
-    async test(store, testResourceConfiguration) {
-        if (!this.abort) {
-            console.log(" Then:", this.name);
-            try {
-                return await this.thenCB(await this.butThen(store, testResourceConfiguration));
-            }
-            catch (e) {
-                this.error = true;
-                throw e;
-            }
+    async test(store, testResourceConfiguration, tLog) {
+        tLog(" Then:", this.name);
+        try {
+            return await this.thenCB(await this.butThen(store, testResourceConfiguration));
+        }
+        catch (e) {
+            this.error = true;
+            throw e;
         }
     }
 }
@@ -276,19 +181,19 @@ export class BaseCheck {
     async afterEach(store, ndx, cb) {
         return;
     }
-    async check(subject, ndx, testResourceConfiguration, tester, artifactory) {
-        console.log(`\n Check: ${this.name}`);
+    async check(subject, ndx, testResourceConfiguration, tester, artifactory, tLog) {
+        tLog(`\n Check: ${this.name}`);
         const store = await this.checkThat(subject, testResourceConfiguration, artifactory);
         await this.checkCB((Object.entries(this.whens)
             .reduce((a, [key, when]) => {
             a[key] = async (payload) => {
-                return await when(payload, testResourceConfiguration).test(store, testResourceConfiguration);
+                return await when(payload, testResourceConfiguration).test(store, testResourceConfiguration, tLog);
             };
             return a;
         }, {})), (Object.entries(this.thens)
             .reduce((a, [key, then]) => {
             a[key] = async (payload) => {
-                const t = await then(payload, testResourceConfiguration).test(store, testResourceConfiguration);
+                const t = await then(payload, testResourceConfiguration).test(store, testResourceConfiguration, tLog);
                 tester(t);
             };
             return a;
@@ -325,7 +230,7 @@ export class TesterantoLevelZero {
     }
 }
 export class TesterantoLevelOne {
-    constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResource) {
+    constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResourceRequirement, nameKey) {
         const classySuites = Object.entries(testImplementation.Suites)
             .reduce((a, [key]) => {
             a[key] = (somestring, givens, checks) => {
@@ -366,31 +271,65 @@ export class TesterantoLevelOne {
         const suites = testSpecification(
         /* @ts-ignore:next-line */
         classyTesteranto.Suites(), classyTesteranto.Given(), classyTesteranto.When(), classyTesteranto.Then(), classyTesteranto.Check());
+        const runnerA = (suite) => (testResourceConfiguration, tLog) => {
+            // const outputPath = path.resolve(process.cwd(), nameKey)
+            return suite.run(input, testResourceConfiguration, testArtiFactoryfileWriter(tLog)(testResourceConfiguration.fs + "/"), tLog);
+        };
         /* @ts-ignore:next-line */
         const toReturn = suites.map((suite) => {
+            const runner = runnerA(suite);
             return {
                 test: suite,
-                testResource,
+                testResourceRequirement,
                 toObj: () => {
                     return suite.toObj();
                 },
-                runner: async (allocatedPorts, recommendedFsPath) => {
-                    return suite.run(input, { ports: allocatedPorts }, testArtiFactoryfileWriter(recommendedFsPath));
-                },
+                runner,
+                receiveTestResourceConfig: async function (testReourceMaybe) {
+                    console.log(nameKey);
+                    // const outputDir = path.resolve(process.cwd(), this.project.outdir, nameKey);
+                    const testResourceConfiguration = testReourceMaybe;
+                    await fs.mkdirSync(testResourceConfiguration.fs, { recursive: true });
+                    console.log(`testResourceConfiguration ${JSON.stringify(testResourceConfiguration, null, 2)}`);
+                    const logFilePath = path.resolve(`${testResourceConfiguration.fs}/log.txt`);
+                    await fs.mkdirSync(logFilePath.split('/').slice(0, -1).join('/'), { recursive: true });
+                    var access = fs.createWriteStream(logFilePath);
+                    const tLog = (...l) => {
+                        console.log(...l);
+                        access.write(`${l.toString()}\n`);
+                    };
+                    // const runner: IRunner = await x.runner;
+                    const suite = await runner(testResourceConfiguration, tLog);
+                    const testObject = suite.toObj();
+                    const resultsFilePath = path.resolve(`${testResourceConfiguration.fs}/results.json`);
+                    await fs.mkdirSync(resultsFilePath.split('/').slice(0, -1).join('/'), { recursive: true });
+                    fs.writeFile(resultsFilePath, JSON.stringify({
+                        fails: suite.fails,
+                        givens: suite.givens.map((g) => {
+                            return {
+                                whens: g.whens,
+                                thens: g.thens
+                            };
+                        })
+                    }, 
+                    // ({
+                    //   ...testObject.results,
+                    //   givens: testObject.givens.map((g) => { delete g.testArtifacts; return g })
+                    // }),
+                    null, 2), (err) => {
+                        if (err) {
+                            console.error(err);
+                            access.close();
+                        }
+                    });
+                    return true;
+                }
             };
         });
         return toReturn;
     }
 }
-export const Testeranto = async (input, testSpecification, testImplementation, 
-// testImplementation: ITestImplementation<
-//   InitialStateShape,
-//   Selection,
-//   WhenShape,
-//   ThenShape,
-//   TestShape
-// >,
-testResource, testInterface) => {
+export const Testeranto = async (input, testSpecification, testImplementation, testResourceRequirement, testInterface, nameKey) => {
     const butThen = testInterface.butThen || (async (a) => a);
     const { andWhen } = testInterface;
     const actionHandler = testInterface.actionHandler || function (b) {
@@ -450,55 +389,51 @@ testResource, testInterface) => {
                     super(name, features, checkCallback, whens, thens);
                     this.initialValues = initialValues;
                 }
-                async checkThat(subject, testResource, artifactory) {
-                    return beforeEach(subject, this.initialValues, testResource, artifactory);
+                async checkThat(subject, testResourceConfiguration, artifactory) {
+                    return beforeEach(subject, this.initialValues, testResourceConfiguration, artifactory);
                 }
                 afterEach(store, ndx, artifactory) {
                     return new Promise((res) => res(afterEach(store, ndx, artifactory)));
                 }
-            }, testResource);
+            }, testResourceRequirement, nameKey);
         }
     }
     const mrt = new MrT();
-    console.log("requesting test resources from mothership...", testResource);
+    const t = mrt[0];
+    console.log('halting for test configuration from stidin...');
+    const testResource = t.testResourceRequirement;
+    console.log("requesting test resources from mothership...", testResourceRequirement);
     /* @ts-ignore:next-line */
     process.send({
         type: 'testeranto:hola',
         data: {
-            testResource
+            testResourceRequirement
         }
     });
     console.log("awaiting test resources from mothership...");
     process.on('message', async function (packet) {
-        await mrt[0].runner(packet.data.goWithTestResources, packet.data.recommendedFsPath);
-        /* @ts-ignore:next-line */
-        process.send({
-            type: 'testeranto:adios',
-            data: {
-                testResource: mrt[0].test.testResourceConfiguration.ports,
-                results: mrt[0].toObj()
-            }
-        }, (err) => {
-            if (!err) {
-                console.log(`✅`);
-            }
-            else {
-                console.error(`❗️`, err);
-            }
-            // process.exit(0); // :-)
-        });
+        if (await t.receiveTestResourceConfig(packet.data.testResourceConfiguration)) {
+            /* @ts-ignore:next-line */
+            process.send({
+                type: 'testeranto:adios',
+                data: {
+                    testResourceConfiguration: mrt[0].test.testResourceConfiguration,
+                    results: mrt[0].toObj()
+                }
+            }, (err) => {
+                if (!err) {
+                    console.log(`✅`);
+                }
+                else {
+                    console.error(`❗️`, err);
+                }
+                // process.exit(0); // :-)
+            });
+        }
     });
-    process.on('SIGINT', function () {
-        var _a;
-        console.log("SIGINT caught. Releasing test resources back to mothership...", mrt[0].test.testResourceConfiguration);
-        console.log("`❗️`");
-        /* @ts-ignore:next-line */
-        process.send({
-            type: 'testeranto:adios',
-            data: {
-                testResource: ((_a = mrt[0].test.testResourceConfiguration) === null || _a === void 0 ? void 0 : _a.ports) || []
-            }
-        });
-        process.exit(0); // :-)
+    process.stdin.on('data', async (data) => {
+        if (await t.receiveTestResourceConfig(data)) {
+            console.log("ok");
+        }
     });
 };

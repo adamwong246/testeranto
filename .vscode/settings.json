@@ -1,7 +1,5 @@
 {
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
-  "cSpell.words": [
-    "Testeranto"
-  ]
+  "cSpell.words": ["hola", "mothership", "Testeranto"]
 }

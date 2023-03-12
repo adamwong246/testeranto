@@ -1,142 +1,43 @@
 import fs from 'fs';
 import path from 'path';
-import pkg from 'graphology';
-import { PassThrough, Stream, Writable } from 'stream';
-/* @ts-ignore:next-line */
-const { DirectedGraph, UndirectedGraph } = pkg;
+
+import { PassThrough } from 'stream';
+import { BaseFeature } from './Features';
+
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
 
-type ITTestResource = {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+type ITTestResourceConfiguration = {
+  "fs": string,
   "ports": number[]
 };
 
-abstract class TesterantoGraph {
-  name: string;
-  abstract graph;
+type IRunner = (x: ITTestResourceConfiguration, t: ITLog) => Promise<boolean>;
 
-  constructor(name: string) {
-    this.name = name;
-  }
-}
-
-export class BaseFeature {
-  name: string;
-  constructor(name: string) {
-    this.name = name;
-  }
-};
-
-export class TesterantoGraphUndirected implements TesterantoGraph {
-  name: string;
-  graph: typeof UndirectedGraph
-  constructor(name: string) {
-    this.name = name;
-    this.graph = new UndirectedGraph();
-  }
-  connect(a, b, relation?: string) {
-    this.graph.mergeEdge(a, b, { type: relation });
-  }
-}
-
-export class TesterantoGraphDirected implements TesterantoGraph {
-  name: string;
-  graph: typeof DirectedGraph;
-  constructor(name: string) {
-    this.name = name;
-    this.graph = new DirectedGraph();
-  }
-  connect(to, from, relation?: string) {
-    this.graph.mergeEdge(to, from, { type: relation });
-  }
-}
-
-export class TesterantoGraphDirectedAcyclic implements TesterantoGraph {
-  name: string;
-  graph: typeof DirectedGraph;
-  constructor(name: string) {
-    this.name = name;
-    this.graph = new DirectedGraph();
-  }
-  connect(to, from, relation?: string) {
-    this.graph.mergeEdge(to, from, { type: relation });
-  }
-}
-
-export class TesterantoFeatures {
-  features: Record<string, BaseFeature>;
-  graphs: {
-    undirected: TesterantoGraphUndirected[],
-    directed: TesterantoGraphDirected[],
-    dags: TesterantoGraphDirectedAcyclic[]
-  }
-
-  constructor(
-    features: Record<string, BaseFeature>,
-    graphs: {
-      undirected: TesterantoGraphUndirected[],
-      directed: TesterantoGraphDirected[],
-      dags: TesterantoGraphDirectedAcyclic[]
-    }
-  ) {
-    this.features = features;
-    this.graphs = graphs;
-  }
-
-  networks() {
-    return [
-      ...this.graphs.undirected.values(),
-      ...this.graphs.directed.values(),
-      ...this.graphs.dags.values()
-    ]
-  }
-
-  toObj() {
-    return {
-      features: Object.entries(this.features).map(([name, feature]) => {
-        return {
-          ...feature,
-          inNetworks: this.networks().filter((network) => {
-            return network.graph.hasNode(feature.name);
-          }).map((network) => {
-            return {
-
-              network: network.name,
-              neighbors: network.graph.neighbors(feature.name)
-            }
-          })
-        }
-      }),
-      networks: this.networks().map((network) => {
-        return {
-          ...network
-        }
-      })
-    };
-  }
-}
+import { IBaseConfig } from "./IBaseConfig";
+export type { IBaseConfig };
 
 export type ITTestResourceRequirement = {
   "ports": number
 };
 
-export type IT_FeatureNetwork = {
-  name: string,
-  // graph: DirectedGraph
-};
-
 export type IT = {
   toObj(): object;
-  aborter: () => any;
   name: string;
-  givens: BaseGiven<unknown, unknown, unknown, unknown, unknown>[];
+  givens: BaseGiven<unknown, unknown, unknown, unknown, Record<string, BaseFeature>>[];
   checks: BaseCheck<unknown, unknown, unknown, unknown, ITTestShape, unknown>[];
+  testResourceConfiguration: ITTestResourceConfiguration
 };
 
 export type ITestJob = {
   toObj(): object;
   test: IT;
-  runner: (testResource) => Promise<boolean>;
-  testResource: ITTestResourceRequirement;
+  runner: IRunner;
+  testResourceRequirement: ITTestResourceRequirement;
+  receiveTestResourceConfig: (x) => boolean;
 };
 
 export type ITestResults = Promise<{
@@ -157,7 +58,7 @@ export type ITestSpecification<ITestShape extends ITTestShape, IFeatureShape> = 
   Suite: {
     [K in keyof ITestShape["suites"]]: (
       name: string,
-      givens: BaseGiven<unknown, unknown, unknown, unknown, unknown>[],
+      givens: BaseGiven<unknown, unknown, unknown, unknown, Record<string, BaseFeature>>[],
       checks: BaseCheck<unknown, unknown, unknown, unknown, ITestShape, IFeatureShape>[]
     ) => BaseSuite<unknown, unknown, unknown, unknown, unknown, ITestShape, IFeatureShape>;
   },
@@ -233,11 +134,12 @@ export type ITestImplementation<
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 type ITestArtifactory = (key: string, value: string) => unknown;
+type ITLog = (...string) => void;
 
-const testArtiFactoryfileWriter = (x) => (g) => (key, value: string | Buffer | PassThrough) => {
-  console.log("testArtiFactory =>", key, value);
+const testArtiFactoryfileWriter = (tLog: ITLog) => (fp) => (g) => (key, value: string | Buffer | PassThrough) => {
+  tLog("testArtiFactory =>", key);
 
-  const fPath = `${x}/${g}/${key}`;
+  const fPath = `${fp}/${g}/${key}`;
   const cleanPath = path.resolve(fPath);
   const targetDir = cleanPath.split('/').slice(0, -1).join('/');
 
@@ -272,10 +174,8 @@ export abstract class BaseSuite<
   givens: BaseGiven<ISubject, IStore, ISelection, IThenShape, IFeatureShape>[];
   checks: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape, IFeatureShape>[];
   store: IStore;
-  aborted: boolean;
   fails: BaseGiven<ISubject, IStore, ISelection, IThenShape, IFeatureShape>[];
-  testResourceConfiguration: ITTestResource;
-
+  testResourceConfiguration: ITTestResourceConfiguration;
 
   constructor(
     name: string,
@@ -286,13 +186,7 @@ export abstract class BaseSuite<
     this.givens = givens;
     this.checks = checks;
     this.fails = [];
-
   }
-
-  // async aborter() {
-  //   this.aborted = true;
-  //   await Promise.all((this.givens || []).map((g, ndx) => g.aborter(ndx)))
-  // }
 
   public toObj() {
     return {
@@ -312,29 +206,42 @@ export abstract class BaseSuite<
 
   async run(
     input,
-    testResourceConfiguration: ITTestResource,
+    testResourceConfiguration: ITTestResourceConfiguration,
     artifactory: (gndex: string) => (a: string, b: string) => void,
-  ): Promise<boolean> {
+    tLog: (...string) => void,
+  ): Promise<BaseSuite<IInput,
+    ISubject,
+    IStore,
+    ISelection,
+    IThenShape,
+    ITestShape,
+    IFeatureShape
+  >> {
 
-    this.testResourceConfiguration = Object.keys(testResourceConfiguration).length ? testResourceConfiguration : { ports: [] };
+    this.testResourceConfiguration = testResourceConfiguration;
 
     const subject = await this.setup(input, artifactory("-1"));
-    console.log("\nSuite:", this.name, testResourceConfiguration);
 
+    tLog("\nSuite:", this.name, testResourceConfiguration);
 
     for (const [ndx, giver] of this.givens.entries()) {
       try {
-        if (!this.aborted) {
-          this.store = await giver.give(subject, ndx, testResourceConfiguration, this.test, artifactory(ndx.toString()));
-        }
+        this.store = await giver.give(
+          subject,
+          ndx,
+          testResourceConfiguration,
+          this.test,
+          artifactory(ndx.toString()),
+          tLog
+        );
       } catch (e) {
         console.error(e);
         this.fails.push(giver)
-        return false;
+        return this;
       }
     }
     for (const [ndx, thater] of this.checks.entries()) {
-      await thater.check(subject, ndx, testResourceConfiguration, this.test, artifactory);
+      await thater.check(subject, ndx, testResourceConfiguration, this.test, artifactory, tLog);
     }
 
     // @TODO fix me
@@ -343,7 +250,7 @@ export abstract class BaseSuite<
     }
     ////////////////
 
-    return true;
+    return this;
   }
 
 }
@@ -397,17 +304,6 @@ export abstract class BaseGiven<
     artifactory: ITestArtifactory,
   ): Promise<IStore>;
 
-  // async aborter(ndx: number) {
-  //   this.abort = true;
-  //   return Promise.all([
-  //     ...this.whens.map((w, ndx) => new Promise((res) => res(w.aborter()))),
-  //     ...this.thens.map((t, ndx) => new Promise((res) => res(t.aborter()))),
-  //   ])
-  //     .then(async () => {
-  //       return await this.afterEach(this.store, ndx, artifactory)
-  //     })
-  // }
-
   async afterEach(store: IStore, ndx: number, artifactory: ITestArtifactory): Promise<unknown> {
     return;
   }
@@ -417,22 +313,23 @@ export abstract class BaseGiven<
     index: number,
     testResourceConfiguration,
     tester,
-    artifactory: ITestArtifactory
+    artifactory: ITestArtifactory,
+    tLog: ITLog
   ) {
-    console.log(`\n Given: ${this.name}`);
+    tLog(`\n Given: ${this.name}`);
 
     try {
       this.store = await this.givenThat(subject, testResourceConfiguration, artifactory);
       for (const whenStep of this.whens) {
-        await whenStep.test(this.store, testResourceConfiguration);
+        await whenStep.test(this.store, testResourceConfiguration, tLog);
       }
       for (const thenStep of this.thens) {
-        const t = await thenStep.test(this.store, testResourceConfiguration);
+        const t = await thenStep.test(this.store, testResourceConfiguration, tLog);
         tester(t);
       }
     } catch (e) {
       this.error = e;
-      console.log('\u0007');// bell
+      tLog('\u0007');// bell
       throw e;
     } finally {
 
@@ -451,7 +348,6 @@ export abstract class BaseWhen<IStore, ISelection, IThenShape> {
   public name: string;
   actioner: (x: ISelection) => IThenShape;
   error: boolean;
-  abort: boolean;
 
   constructor(name: string, actioner: (xyz: ISelection) => IThenShape) {
     this.name = name;
@@ -471,21 +367,16 @@ export abstract class BaseWhen<IStore, ISelection, IThenShape> {
     }
   }
 
-  aborter() {
-    this.abort = true;
-    return this.abort;
-  }
+  async test(store: IStore, testResourceConfiguration, tLog: ITLog) {
+    tLog(" When:", this.name);
 
-  async test(store: IStore, testResourceConfiguration?) {
-    console.log(" When:", this.name);
-    if (!this.abort) {
-      try {
-        return await this.andWhen(store, this.actioner, testResourceConfiguration);
-      } catch (e) {
-        this.error = true;
-        throw e
-      }
+    try {
+      return await this.andWhen(store, this.actioner, testResourceConfiguration);
+    } catch (e) {
+      this.error = true;
+      throw e
     }
+
   }
 }
 
@@ -493,7 +384,6 @@ export abstract class BaseThen<ISelection, IStore, IThenShape> {
   public name: string;
   thenCB: (storeState: ISelection) => IThenShape;
   error: boolean;
-  abort: boolean;
 
   constructor(name: string, thenCB: (val: ISelection) => IThenShape) {
     this.name = name;
@@ -509,21 +399,16 @@ export abstract class BaseThen<ISelection, IStore, IThenShape> {
 
   abstract butThen(store: any, testResourceConfiguration?): Promise<ISelection>;
 
-  aborter() {
-    this.abort = true;
-    return this.abort;
-  }
+  async test(store: IStore, testResourceConfiguration, tLog: ITLog): Promise<IThenShape | undefined> {
 
-  async test(store: IStore, testResourceConfiguration): Promise<IThenShape | undefined> {
-    if (!this.abort) {
-      console.log(" Then:", this.name);
-      try {
-        return await this.thenCB(await this.butThen(store, testResourceConfiguration));
-      } catch (e) {
-        this.error = true;
-        throw e
-      }
+    tLog(" Then:", this.name);
+    try {
+      return await this.thenCB(await this.butThen(store, testResourceConfiguration));
+    } catch (e) {
+      this.error = true;
+      throw e
     }
+
   }
 }
 
@@ -580,9 +465,10 @@ export abstract class BaseCheck<
     ndx: number,
     testResourceConfiguration,
     tester,
-    artifactory: ITestArtifactory
+    artifactory: ITestArtifactory,
+    tLog: ITLog
   ) {
-    console.log(`\n Check: ${this.name}`);
+    tLog(`\n Check: ${this.name}`);
     const store = await this.checkThat(subject, testResourceConfiguration, artifactory);
     await this.checkCB(
 
@@ -592,7 +478,8 @@ export abstract class BaseCheck<
             a[key] = async (payload) => {
               return await when(payload, testResourceConfiguration).test(
                 store,
-                testResourceConfiguration
+                testResourceConfiguration,
+                tLog,
               );
             };
             return a;
@@ -606,7 +493,8 @@ export abstract class BaseCheck<
             a[key] = async (payload) => {
               const t = await then(payload, testResourceConfiguration).test(
                 store,
-                testResourceConfiguration
+                testResourceConfiguration,
+                tLog
               );
               tester(t);
             };
@@ -789,7 +677,7 @@ export abstract class TesterantoLevelOne<
   IWhenShape,
   IThenShape,
   IInput,
-  IFeatureShape,
+  IFeatureShape extends Record<string, BaseFeature>
 > {
   constructor(
     testImplementation: ITestImplementation<
@@ -853,7 +741,8 @@ export abstract class TesterantoLevelOne<
     checkKlasser: (n, f, cb, w, t) =>
       BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape, IFeatureShape>,
 
-    testResource
+    testResourceRequirement,
+    nameKey: string
 
   ) {
     const classySuites = Object.entries(testImplementation.Suites)
@@ -950,32 +839,100 @@ export abstract class TesterantoLevelOne<
       classyTesteranto.Check()
     );
 
+
+    const runnerA = (suite) => (
+      testResourceConfiguration: ITTestResourceConfiguration,
+      tLog: ITLog,
+    ) => {
+
+      // const outputPath = path.resolve(process.cwd(), nameKey)
+
+      return suite.run(
+        input,
+        testResourceConfiguration,
+        testArtiFactoryfileWriter(tLog)(testResourceConfiguration.fs + "/"),
+        tLog
+      );
+    };
+
     /* @ts-ignore:next-line */
     const toReturn: ITestJob[] = suites.map((suite) => {
+
+      const runner = runnerA(suite);
+
       return {
         test: suite,
-        testResource,
+        testResourceRequirement,
 
         toObj: () => {
           return suite.toObj()
         },
 
-        runner: async (
-          allocatedPorts: number[],
-          recommendedFsPath: string,
-        ) => {
-          return suite.run(
-            input,
-            { ports: allocatedPorts },
-            testArtiFactoryfileWriter(recommendedFsPath)
-          );
-        },
+        runner,
 
-      };
+        receiveTestResourceConfig: async function (testReourceMaybe) {
+
+          console.log(nameKey);
+          // const outputDir = path.resolve(process.cwd(), this.project.outdir, nameKey);
+
+          const testResourceConfiguration = testReourceMaybe as ITTestResourceConfiguration;
+          await fs.mkdirSync(testResourceConfiguration.fs, { recursive: true });
+          console.log(`testResourceConfiguration ${JSON.stringify(testResourceConfiguration, null, 2)}`);
+
+          const logFilePath = path.resolve(`${testResourceConfiguration.fs}/log.txt`)
+          await fs.mkdirSync(logFilePath.split('/').slice(0, -1).join('/'), { recursive: true });
+
+          var access = fs.createWriteStream(logFilePath);
+          const tLog = (...l: string[]) => {
+            console.log(...l);
+            access.write(`${l.toString()}\n`);
+          }
+
+          // const runner: IRunner = await x.runner;
+
+          const suite: BaseSuite<unknown, unknown, unknown, unknown, unknown, ITestShape, unknown> = await runner(testResourceConfiguration, tLog);
+
+          const testObject = suite.toObj();
+
+          const resultsFilePath = path.resolve(`${testResourceConfiguration.fs}/results.json`)
+
+          await fs.mkdirSync(resultsFilePath.split('/').slice(0, -1).join('/'), { recursive: true });
+          fs.writeFile(
+            resultsFilePath,
+            JSON.stringify(
+              {
+                fails: suite.fails,
+                givens: suite.givens.map((g) => {
+                  return {
+                    whens: g.whens,
+                    thens: g.thens
+                  }
+                })
+              },
+              // ({
+              //   ...testObject.results,
+              //   givens: testObject.givens.map((g) => { delete g.testArtifacts; return g })
+              // }),
+              null, 2),
+            (err) => {
+              if (err) {
+                console.error(err);
+
+                access.close();
+              }
+            }
+          );
+
+
+
+          return true;
+        }
+      }
     });
 
     return toReturn;
   }
+
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -991,7 +948,7 @@ export const Testeranto = async <
   WhenShape,
   ThenShape,
   InitialStateShape,
-  IFeatureShape,
+  IFeatureShape extends Record<string, BaseFeature>,
 >(
   input: Input,
   testSpecification: ITestSpecification<
@@ -999,19 +956,11 @@ export const Testeranto = async <
     IFeatureShape
   >,
   testImplementation,
-  // testImplementation: ITestImplementation<
-  //   InitialStateShape,
-  //   Selection,
-  //   WhenShape,
-  //   ThenShape,
-  //   TestShape
-  // >,
-  testResource: ITTestResourceRequirement,
-
+  testResourceRequirement: ITTestResourceRequirement,
   testInterface: {
     actionHandler?: (b: (...any) => any) => any,
-    andWhen: (store: Store, actioner, testResource: ITTestResource) => Promise<Selection>,
-    butThen?: (store: Store, callback, testResource: ITTestResource) => Promise<Selection>,
+    andWhen: (store: Store, actioner, testResource: ITTestResourceConfiguration) => Promise<Selection>,
+    butThen?: (store: Store, callback, testResource: ITTestResourceConfiguration) => Promise<Selection>,
     assertioner?: (t: ThenShape) => any,
 
     afterAll?: (
@@ -1030,11 +979,12 @@ export const Testeranto = async <
     beforeEach?: (
       subject: Subject,
       initialValues,
-      testResource: ITTestResource,
+      testResource: ITTestResourceConfiguration,
       artificer: ITestArtificer
     ) => Promise<Store>,
 
   },
+  nameKey: string
 
 ) => {
 
@@ -1150,72 +1100,62 @@ export const Testeranto = async <
             this.initialValues = initialValues;
           }
 
-          async checkThat(subject, testResource, artifactory) {
-            return beforeEach(subject, this.initialValues, testResource, artifactory);
+          async checkThat(subject, testResourceConfiguration, artifactory) {
+            return beforeEach(subject, this.initialValues, testResourceConfiguration, artifactory);
           }
 
           afterEach(store: Store, ndx: number, artifactory): Promise<unknown> {
             return new Promise((res) => res(afterEach(store, ndx, artifactory)))
           }
         },
-        testResource
+        testResourceRequirement,
+        nameKey
       );
     }
   }
 
   const mrt = new MrT();
+  const t: ITestJob = mrt[0];
 
-  console.log("requesting test resources from mothership...", testResource);
+  console.log('halting for test configuration from stidin...');
+  const testResource = t.testResourceRequirement;
+
+  console.log("requesting test resources from mothership...", testResourceRequirement);
   /* @ts-ignore:next-line */
   process.send({
     type: 'testeranto:hola',
     data: {
-      testResource
+      testResourceRequirement
     }
   });
 
   console.log("awaiting test resources from mothership...");
   process.on('message', async function (packet: {
-    data: {
-      go?: boolean,
-      goWithTestResources?: string[],
-      recommendedFsPath: string
-    }
+    data: { testResourceConfiguration: ITTestResourceConfiguration }
   }) {
 
-    await mrt[0].runner(
-      packet.data.goWithTestResources,
-      packet.data.recommendedFsPath
-    );
 
-    /* @ts-ignore:next-line */
-    process.send({
-      type: 'testeranto:adios',
-      data: {
-        testResource: mrt[0].test.testResourceConfiguration.ports,
-        results: mrt[0].toObj()
-      }
-    }, (err) => {
-      if (!err) { console.log(`✅`) }
-      else { console.error(`❗️`, err) }
-      // process.exit(0); // :-)
-    });
-
+    if (await t.receiveTestResourceConfig(packet.data.testResourceConfiguration)) {
+      /* @ts-ignore:next-line */
+      process.send({
+        type: 'testeranto:adios',
+        data: {
+          testResourceConfiguration: mrt[0].test.testResourceConfiguration,
+          results: mrt[0].toObj()
+        }
+      }, (err) => {
+        if (!err) { console.log(`✅`) }
+        else { console.error(`❗️`, err) }
+        // process.exit(0); // :-)
+      });
+    }
   });
 
-  process.on('SIGINT', function () {
+  process.stdin.on('data', async data => {
 
-    console.log("SIGINT caught. Releasing test resources back to mothership...", mrt[0].test.testResourceConfiguration);
-    console.log("`❗️`");
-    /* @ts-ignore:next-line */
-    process.send({
-      type: 'testeranto:adios',
-      data: {
-        testResource: mrt[0].test.testResourceConfiguration?.ports || []
-      }
-    });
-
-    process.exit(0); // :-)
+    if (await t.receiveTestResourceConfig(data)) {
+      console.log("ok")
+    }
   });
-
 };
+

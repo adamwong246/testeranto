@@ -30,6 +30,6 @@
     // "outDir": "dist",
     "alwaysStrict": true
   },
-  "include": ["src/index.mts", "src/testeranto.mts"],
+  "include": ["src/**/*.*ts"],
   "exclude": ["node_modules"]
 }

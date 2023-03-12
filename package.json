@@ -3,8 +3,14 @@
   "description": "teeny tiny tightly-typed typescript tests",
   "version": "0.31.0",
   "type": "module",
-  "types": "./src/index.d.mts",
+  "types": "./index.d.ts",
   "main": "./src/index.mjs",
+  "exports": {
+    ".": "./src/index.mjs",
+    "./src/Project": "./src/Project.js",
+    "./src/Features": "./src/Features.js",
+    "./src/Report": "./src/Report.tsx"
+  },
   "repository": "git@github.com:adamwong246/testeranto.git",
   "homepage": "https://github.com/adamwong246/testeranto",
   "author": "adam wong <adamwong246@gmail.com>",
@@ -16,11 +22,11 @@
     "ATDD"
   ],
   "bin": {
-    "testerantoReport": "./bin/report.sh",
-    "testeranto": "./bin/testeranto.sh"
+    "testerantoRun": "./bin/testerantoRun.sh",
+    "testerantoWatch": "./bin/testerantoWatch.sh"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc; yarn tsc --emitDeclarationOnly --isolatedModules false --outFile index.d.ts",
     "dev": "tsc --watch",
     "bundle:reporter": "esbuild ./src/Report.tsx --bundle --outfile=./dist/reporter.js",
     "simpleserver": "cd dist && python -m SimpleHTTPServer 8080",
@@ -39,6 +45,7 @@
     "@swc/core": "^1.3.26",
     "@types/node": "^18.14.0",
     "@types/react": "^18.0.21",
+    "@types/react-bootstrap": "^0.32.32",
     "@types/react-dom": "^18.0.6",
     "@typescript-eslint/eslint-plugin": "^5.46.0",
     "@typescript-eslint/parser": "^5.46.0",
@@ -52,12 +59,9 @@
     "graphology-dag": "^0.2.0",
     "graphology-types": "^0.24.5",
     "pm2": "^5.2.2",
-    "react": "18.2.0",
     "react-bootstrap": "^2.7.0",
-    "react-dom": "^18.2.0",
-    "react-redux": "^8.0.4",
-    "react-test-renderer": "^18.2.0",
     "ts-node": "^10.9.1",
-    "typescript": "4.8.2"
+    "typescript": "4.8.2",
+    "why-is-node-running": "^2.2.2"
   }
 }
