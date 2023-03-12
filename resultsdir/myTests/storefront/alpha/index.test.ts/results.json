@@ -1,0 +1,169 @@
+{
+  "fails": [],
+  "givens": [
+    {
+      "whens": [],
+      "thens": [
+        {
+          "name": "TheCounterIs: 0"
+        }
+      ]
+    },
+    {
+      "whens": [
+        {
+          "name": "Increment: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheCounterIs: 1"
+        }
+      ]
+    },
+    {
+      "whens": [
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheCounterIs: 6"
+        }
+      ]
+    },
+    {
+      "whens": [
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        },
+        {
+          "name": "Increment: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheCounterIs: 36"
+        }
+      ]
+    }
+  ]
+}

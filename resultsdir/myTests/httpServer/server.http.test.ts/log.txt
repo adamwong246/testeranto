@@ -1,0 +1,13 @@
+
+Suite:,Testing the Node server with fetch!,[object Object]
+
+ Given: AnEmptyState
+ Then:,TheStatusIs: some great status
+
+ Given: AnEmptyState
+ When:,PostToStatus: hello
+ Then:,TheStatusIs: hello
+
+ Given: AnEmptyState
+ When:,PostToStatus: hello
+

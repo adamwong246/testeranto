@@ -1,7 +1,7 @@
 
 import {
   BaseFeature, TesterantoFeatures, TesterantoGraphDirected, TesterantoGraphDirectedAcyclic, TesterantoGraphUndirected
-} from "testeranto";
+} from "testeranto/src/Features";
 
 export class MyFeature extends BaseFeature {
   due?: Date;
@@ -13,7 +13,7 @@ export class MyFeature extends BaseFeature {
 
 export const features = {
   root: new MyFeature("kokomo bay"),
-  mint: new MyFeature("An ERC721 which is redeemable"),
+  mint: new MyFeature("An ERC721 which is redeemable?!!!"),
   redemption: new MyFeature("Redeems an ERC-721, marking its state as redeemed"),
   federatedSplitContract: new MyFeature("A website which can acts as a storefront"),
   markRedeemed: new MyFeature("Registers contract status as redeemed, and changes image"),
@@ -28,6 +28,8 @@ export const features = {
   buenosDias: new MyFeature("buenos dias"),
   hola: new MyFeature("hola"),
   bienVenidos: new MyFeature("bien venidos"),
+
+  walkingTheDog: new MyFeature("my favorite chore"),
 };
 
 const priorityGraph = new TesterantoGraphDirectedAcyclic("Priority");
@@ -46,6 +48,7 @@ semantic.connect(`gutentag`, `hola`, "negates");
 const undirected = new TesterantoGraphUndirected("an undirected semantic graph");
 undirected.connect(`gutentag`, `aloha`, "related");
 undirected.connect(`buildRocket`, `buildSatellite`, "overlap");
+undirected.connect(`buildRocket`, `buildSilo`, "overlap");
 
 export default new TesterantoFeatures(features,
   {

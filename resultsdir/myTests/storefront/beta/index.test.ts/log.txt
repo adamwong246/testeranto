@@ -1,0 +1,60 @@
+
+Suite:,the storefront react app, beta,[object Object]
+
+ Given: AnEmptyState
+ Then:,TheCounterIs: 0
+
+ Given: AnEmptyState
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ Then:,TheCounterIs: 4
+
+ Given: AnEmptyState
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ Then:,TheCounterIs: 6
+
+ Given: AnEmptyState
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ Then:,TheCounterIs: 36

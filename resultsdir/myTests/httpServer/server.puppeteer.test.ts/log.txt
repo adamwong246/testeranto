@@ -1,0 +1,6 @@
+
+Suite:,Testing the Server with Puppeteer,[object Object]
+
+ Given: AnEmptyState
+ Then:,TheStatusIs: some great status
+

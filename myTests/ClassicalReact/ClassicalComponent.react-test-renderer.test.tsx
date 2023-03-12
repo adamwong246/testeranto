@@ -77,7 +77,7 @@ export const ClassicalComponentReactTestRendererTesteranto = ReactTestRendererTe
   (Suite, Given, When, Then, Check) => {
     return [
       Suite.Default(
-        "a classical react component, bundled with esbuild and tested with puppeteer",
+        "foo",
         [
           Given.AnEmptyState(
             [],
@@ -98,7 +98,7 @@ export const ClassicalComponentReactTestRendererTesteranto = ReactTestRendererTe
               When.IClickTheButton(),
             ],
             [
-              Then.TheStatusIs({ "count": 3 }),
+              Then.TheStatusIs({ "count": 33 }),
             ]
           ),
 
@@ -109,5 +109,6 @@ export const ClassicalComponentReactTestRendererTesteranto = ReactTestRendererTe
     ];
   },
 
-  ClassicalComponent
+  ClassicalComponent,
+  `ClassicalComponent, react-test-renderer`
 );

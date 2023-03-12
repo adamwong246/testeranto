@@ -23,7 +23,8 @@ export const MyFirstContractPrecompiledTesteranto = SolidityPrecompiledTesterant
     checks: {
       AnEmptyState: [];
     };
-  }
+  },
+  typeof features
 >(
   {
     Suites: {

@@ -12,6 +12,8 @@ import { Testeranto } from "testeranto";
 import { ITestImplementation, ITestSpecification, ITTestShape } from "testeranto";
 
 import { solCompile } from "../../solidity/truffle.mjs";
+import { BaseFeature } from "testeranto/src/Features.js";
+import { MyFeature } from "../../testerantoFeatures.test.mjs";
 
 type Input = [
   string,
@@ -40,7 +42,7 @@ type Store = {
 
 export const StorefrontTesteranto = <
   ITestShape extends ITTestShape,
-  IFeatureShape,
+  IFeatureShape extends Record<string, MyFeature>,
 >(
   testImplementations: ITestImplementation<
     InitialState,

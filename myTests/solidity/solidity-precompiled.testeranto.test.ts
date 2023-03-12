@@ -6,6 +6,7 @@ import { Testeranto } from "testeranto";
 import { ITestImplementation, ITestSpecification, ITTestShape } from "testeranto";
 
 import compilations from "../../contracts/MyFirstContract.sol";
+import { BaseFeature } from 'testeranto/src/Features';
 
 type Selection = {
   contract: Contract,
@@ -19,7 +20,8 @@ type Input = [string, (_w3: Web3) => Promise<string[]>];
 type Ibis = any;
 
 export const SolidityPrecompiledTesteranto = async <
-  ITestShape extends ITTestShape
+  ITestShape extends ITTestShape,
+  IFeatureShape extends Record<string, BaseFeature>
 >(
   testImplementations: ITestImplementation<
     string,
@@ -28,10 +30,12 @@ export const SolidityPrecompiledTesteranto = async <
     ThenShape,
     ITestShape
   >,
-  testSpecifications: ITestSpecification<ITestShape>,
+  testSpecifications: ITestSpecification<ITestShape, IFeatureShape>,
   testInput,
 ) => {
-  const compilation = compilations.contracts.find((c) => c.contractName === testInput[0]);
+  const compilation = compilations.contracts.find(
+    (c) => c.contractName === testInput[0]
+  );
 
   return Testeranto<
     ITestShape,
@@ -41,7 +45,8 @@ export const SolidityPrecompiledTesteranto = async <
     Selection,
     WhenShape,
     ThenShape,
-    string
+    string,
+    IFeatureShape
   >(
     testInput,
     testSpecifications,

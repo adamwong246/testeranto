@@ -13,8 +13,8 @@
     "ATDD"
   ],
   "scripts": {
-    "nuke": "yarn pm2 stop all; yarn pm2 delete all; yarn pm2 save; rm -rf js/**; rm -rf outdir/**; rm -rf resultsdir/**",
-    "test": "testeranto js/testeranto.config.mjs"
+    "nuke": "yarn pm2 stop all; yarn pm2 delete all; yarn pm2 save; rm -rf js/**; rm -rf outdir/**; rm -rf resultsdir/myTests; rm -rf js-bazel/**; rm -rf reports/**",
+    "test": "testerantoRun js/bazel.config.mjs"
   },
   "types": "index.d.ts",
   "dependencies": {
@@ -23,7 +23,7 @@
     "@thirdweb-dev/sdk": "^3.6.9",
     "esbuild": "0.17.11",
     "puppeteer-screen-recorder": "^2.1.2",
-    "testeranto": "0.25.0"
+    "testeranto": "../testeranto"
   },
   "devDependencies": {
     "@babel/core": "^7.19.6",

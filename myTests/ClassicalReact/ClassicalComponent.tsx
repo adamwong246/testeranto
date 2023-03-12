@@ -5,7 +5,7 @@ export type IState = { count: number };
 
 export class ClassicalComponent extends React.Component<IProps, IState> {
   constructor(props) {
-    console.log("hello ClassicalComponent")
+    console.log("hello ClassicalComponent!")
 
     super(props);
     this.state = {
