@@ -21,7 +21,9 @@ export class Report extends React.Component<
   }
 
   componentDidMount() {
-    this.props.config.tests.map((fPath, fndx) => {
+    this.props.config.tests.map((fPath2, fndx) => {
+      const fPath = this.props.config.resultsdir + '/' + fPath2;
+
       console.log("fPath", fPath);
 
       const logtxt = fPath + "/log.txt";
@@ -44,6 +46,9 @@ export class Report extends React.Component<
   }
 
   render() {
+
+
+
     return (
       <div>
         <style>
@@ -213,7 +218,12 @@ pre, core, p {
                   <Nav variant="pills" className="flex-column">
                     {Object.keys(this.state.tests).sort().map((suiteKey, ndx) => <Nav.Item key={ndx}>
                       <Nav.Link eventKey={`suite-${ndx}`}>
-                        {(this.state.tests[suiteKey].results.fails.length > 0 ? `❌ * ${this.state.tests[suiteKey].results.fails.length.toString()}` : `✅ * ${this.state.tests[suiteKey].results.givens.length.toString()}`)} - {suiteKey}
+
+                        {(this.state.tests[suiteKey].results.fails.length > 0 ?
+                          `❌` :
+                          `✅`)
+                        } {suiteKey.split(`/`).filter((word) => word !== `.`).slice(2).join('/')}
+
                       </Nav.Link>
                     </Nav.Item>)}
                   </Nav>
@@ -221,56 +231,45 @@ pre, core, p {
                 <Col sm={6} xl={9}>
                   <Tab.Content>
                     {Object.keys(this.state.tests).sort().map((suiteKey, ndx) => <Tab.Pane eventKey={`suite-${ndx}`} key={ndx}>
-                      <Tab.Container id="left-tabs-example2" defaultActiveKey={`given-0`}>
 
+                      {
+                        (() => {
+                          const failures = this.state.tests[suiteKey].results.fails;
 
-                        < Tabs defaultActiveKey="test-drilldown" >
+                          return (
+                            <Tab.Container id="left-tabs-example2" defaultActiveKey={`given-0`}>
+                              < Tabs defaultActiveKey="test-drilldown" >
+                                <Tab eventKey="test-results" title="failures">
+                                  <Row>
+                                    <Col sm={3}>
+                                      <Nav variant="pills" className="flex-column">
+                                        {failures.map((failure, ndx2) => <Nav.Item key={ndx2}>
+                                          <Nav.Link eventKey={`given-${ndx2}`}>
+                                            {failure.name}
+                                          </Nav.Link>
+                                        </Nav.Item>)}
+                                      </Nav>
+                                    </Col>
+                                    <Col sm={6}>
+                                      <Tab.Content>
+                                        {failures.map((failure, ndx2) => <Tab.Pane key={ndx2} eventKey={`given-${ndx2}`} >
+                                          <pre><code>{JSON.stringify(failure, null, 2)}</code></pre>
+                                        </Tab.Pane>)}
+                                      </Tab.Content>
+                                    </Col>
+                                  </Row>
+                                </Tab>
+                                <Tab eventKey="test-logs" title="logs">
+                                  <pre>{this.state.tests[suiteKey].logs}</pre>
+                                </Tab>
+                              </Tabs>
+                            </Tab.Container>
+                          )
+                        })()
+                      }
 
-
-                          <Tab eventKey="test-results" title="results">
-                            <Row>
-                              <Col sm={3}>
-                                <Nav variant="pills" className="flex-column">
-                                  {this.state.tests[suiteKey].results.givens.map((g, ndx2) => <Nav.Item key={ndx2}>
-                                    <Nav.Link eventKey={`given-${ndx2}`}>
-                                      {(g.errors ? `❌` : `✅`)} - {ndx2}
-                                    </Nav.Link>
-                                  </Nav.Item>)}
-                                </Nav>
-                              </Col>
-                              <Col sm={6}>
-                                <Tab.Content>
-                                  {this.state.tests[suiteKey].results.givens.map((g, ndx2) => <Tab.Pane key={ndx2} eventKey={`given-${ndx2}`} >
-                                    <p>when</p>
-                                    <ul>
-                                      {g.whens.map((w, ndx3) => <li key={ndx3}>
-                                        {/* <p>{w.name}</p> */}
-                                        {(w.error === true ? `❌` : `✅`)} - {w.name}
-                                      </li>)}
-                                    </ul>
-                                    <p>then</p>
-                                    <ul>
-                                      {g.thens.map((t, ndx3) => <li key={ndx3}>
-                                        <p>
-                                          {(t.error === true ? `❌` : `✅`)} - {t.name}
-                                        </p>
-                                      </li>)}
-                                    </ul>
-                                    <pre><code>{JSON.stringify(g.errors, null, 2)}</code></pre>
-                                  </Tab.Pane>)}
-                                </Tab.Content>
-                              </Col>
-                            </Row>
-                          </Tab>
-                          <Tab eventKey="test-logs" title="logs">
-                            <pre>{this.state.tests[suiteKey].logs}</pre>
-                          </Tab>
-
-                        </Tabs>
-
-
-                      </Tab.Container>
-                    </Tab.Pane>)}
+                    </Tab.Pane>
+                    )}
                   </Tab.Content>
                 </Col>
               </Row>

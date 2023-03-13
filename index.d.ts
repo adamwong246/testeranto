@@ -64,46 +64,9 @@ declare module "Features" {
         name: string;
     };
 }
-declare module "Project" {
+declare module "IBaseConfig" {
     import { TesterantoFeatures } from "Features";
-    import pm2 from 'pm2';
-    type IPm2Process = {
-        process: {
-            namespace: string;
-            versioning: object;
-            name: string;
-            pm_id: number;
-        };
-        data: {
-            testResourceRequirement: {
-                ports: number;
-            };
-        };
-        at: string;
-    };
-    export default class Scheduler {
-        project: ITProject;
-        ports: Record<string, string>;
-        jobs: Record<string, {
-            aborter: () => any;
-            cancellablePromise: string;
-        }>;
-        queue: IPm2Process[];
-        spinCycle: number;
-        spinAnimation: string;
-        pm2: typeof pm2;
-        summary: Record<string, boolean | undefined>;
-        mode: `up` | `down`;
-        constructor(project: ITProject);
-        private checkForShutDown;
-        abort(pm2Proc: IPm2Process): Promise<void>;
-        private spinner;
-        private push;
-        private pop;
-        private releaseTestResources;
-        shutdown(): void;
-    }
-    type ICollateMode = 'on' | 'off' | 'watch' | `serve` | `watch+serve`;
+    export type ICollateMode = 'on' | 'off' | 'watch' | `serve` | `watch+serve`;
     export type IBaseConfig = {
         clearScreen: boolean;
         collateMode: ICollateMode;
@@ -113,44 +76,26 @@ declare module "Project" {
         outbase: string;
         outdir: string;
         ports: string[];
-        collateDir: string;
         collateEntry: string;
         resultsdir: string;
         runMode: boolean;
-        tests: Record<string, string>;
+        tests: string[];
         buildMode: 'on' | 'off' | 'watch';
     };
-    export class ITProject {
-        clearScreen: boolean;
-        collateMode: ICollateMode;
-        features: TesterantoFeatures;
-        loaders: any[];
-        minify: boolean;
-        outbase: string;
-        outdir: string;
-        ports: string[];
-        collateDir: string;
-        collateEntry: string;
-        resultsdir: string;
-        runMode: boolean;
-        tests: Record<string, string>;
-        buildMode: 'on' | 'off' | 'watch';
-        getEntryPoints(): string[];
-        constructor(config: IBaseConfig);
-    }
 }
 declare module "index" {
     import { BaseFeature } from "Features";
+    import { IBaseConfig } from "IBaseConfig";
+    export type { IBaseConfig };
     type ITTestResourceConfiguration = {
         "fs": string;
         "ports": number[];
     };
-    type IRunner = (x: ITTestResourceConfiguration, t: ITLog) => Promise<boolean>;
-    import { IBaseConfig } from "Project";
-    export type { IBaseConfig };
     export type ITTestResourceRequirement = {
         "ports": number;
+        "fs": string;
     };
+    type IRunner = (x: ITTestResourceConfiguration, t: ITLog) => Promise<boolean>;
     export type IT = {
         toObj(): object;
         name: string;
@@ -163,12 +108,11 @@ declare module "index" {
         test: IT;
         runner: IRunner;
         testResourceRequirement: ITTestResourceRequirement;
-        receiveTestResourceConfig: (x: any) => boolean;
+        receiveTestResourceConfig: (testResource?: any) => boolean;
     };
     export type ITestResults = Promise<{
         test: IT;
     }>[];
-    export type Modify<T, R> = Omit<T, keyof R> & R;
     export type ITTestShape = {
         suites: any;
         givens: any;
@@ -334,7 +278,7 @@ declare module "index" {
         }) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape, IFeatureShape>[], input: IInput, suiteKlasser: (name: string, givens: BaseGiven<ISubject, IStore, ISelection, IThenShape, IFeatureShape>[], checks: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape, IFeatureShape>[]) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape, IFeatureShape>, givenKlasser: (n: any, f: any, w: any, t: any, z?: any) => BaseGiven<ISubject, IStore, ISelection, IThenShape, IFeatureShape>, whenKlasser: (s: any, o: any) => BaseWhen<IStore, ISelection, IThenShape>, thenKlasser: (s: any, o: any) => BaseThen<IStore, ISelection, IThenShape>, checkKlasser: (n: any, f: any, cb: any, w: any, t: any) => BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape, IFeatureShape>, testResourceRequirement: any, nameKey: string);
     }
     type ITestArtificer = (key: string, data: any) => void;
-    export const Testeranto: <TestShape extends ITTestShape, Input, Subject, Store, Selection_1, WhenShape, ThenShape, InitialStateShape, IFeatureShape extends Record<string, BaseFeature>>(input: Input, testSpecification: ITestSpecification<TestShape, IFeatureShape>, testImplementation: any, testResourceRequirement: ITTestResourceRequirement, testInterface: {
+    const _default: <TestShape extends ITTestShape, Input, Subject, Store, Selection_1, WhenShape, ThenShape, InitialStateShape, IFeatureShape extends Record<string, BaseFeature>>(input: Input, testSpecification: ITestSpecification<TestShape, IFeatureShape>, testImplementation: any, testInterface: {
         actionHandler?: ((b: (...any: any[]) => any) => any) | undefined;
         andWhen: (store: Store, actioner: any, testResource: ITTestResourceConfiguration) => Promise<Selection_1>;
         butThen?: ((store: Store, callback: any, testResource: ITTestResourceConfiguration) => Promise<Selection_1>) | undefined;
@@ -343,5 +287,65 @@ declare module "index" {
         afterEach?: ((store: Store, ndx: number, artificer: ITestArtificer) => Promise<unknown>) | undefined;
         beforeAll?: ((input: Input, artificer: ITestArtificer) => Promise<Subject>) | undefined;
         beforeEach?: ((subject: Subject, initialValues: any, testResource: ITTestResourceConfiguration, artificer: ITestArtificer) => Promise<Store>) | undefined;
-    }, nameKey: string) => Promise<void>;
+    }, nameKey: string, testResourceRequirement?: ITTestResourceRequirement) => Promise<void>;
+    export default _default;
+}
+declare module "Project" {
+    import { TesterantoFeatures } from "Features";
+    import pm2 from 'pm2';
+    import { ICollateMode } from "IBaseConfig";
+    import { IBaseConfig } from "index";
+    type IPm2Process = {
+        process: {
+            namespace: string;
+            versioning: object;
+            name: string;
+            pm_id: number;
+        };
+        data: {
+            testResourceRequirement: {
+                ports: number;
+            };
+        };
+        at: string;
+    };
+    export default class Scheduler {
+        project: ITProject;
+        ports: Record<string, string>;
+        jobs: Record<string, {
+            aborter: () => any;
+            cancellablePromise: string;
+        }>;
+        queue: IPm2Process[];
+        spinCycle: number;
+        spinAnimation: string;
+        pm2: typeof pm2;
+        summary: Record<string, boolean | undefined>;
+        mode: `up` | `down`;
+        constructor(project: ITProject);
+        private checkForShutDown;
+        abort(pm2Proc: IPm2Process): Promise<void>;
+        private spinner;
+        private push;
+        private pop;
+        private releaseTestResources;
+        shutdown(): void;
+    }
+    export class ITProject {
+        clearScreen: boolean;
+        collateMode: ICollateMode;
+        features: TesterantoFeatures;
+        loaders: any[];
+        minify: boolean;
+        outbase: string;
+        outdir: string;
+        ports: string[];
+        collateEntry: string;
+        resultsdir: string;
+        runMode: boolean;
+        tests: string[];
+        buildMode: 'on' | 'off' | 'watch';
+        getEntryPoints(): string[];
+        constructor(config: IBaseConfig);
+    }
 }

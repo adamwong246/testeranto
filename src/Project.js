@@ -1,12 +1,43 @@
 import path from "path";
 import esbuild from "esbuild";
 import { createServer, request } from 'http';
-import fs from 'fs';
 import fsExists from 'fs.promises.exists';
 import pm2 from 'pm2';
 import { spawn } from 'child_process';
-const TIMEOUT = 1000;
+const TIMEOUT = 2000;
 const OPEN_PORT = '';
+const clients = [];
+const hotReload = (ectx, collateDir, port) => {
+    ectx.serve({ servedir: collateDir, host: "localhost" }).then(() => {
+        if (port) {
+            createServer((req, res) => {
+                const { url, method, headers } = req;
+                if (req.url === '/esbuild')
+                    return clients.push(
+                    /* @ts-ignore:next-line */
+                    res.writeHead(200, {
+                        'Content-Type': 'text/event-stream',
+                        'Cache-Control': 'no-cache',
+                        Connection: 'keep-alive',
+                    }));
+                /* @ts-ignore:next-line */
+                const path = ~url.split('/').pop().indexOf('.') ? url : `/index.html`; //for PWA with router
+                req.pipe(request({ hostname: '0.0.0.0', port, path, method, headers }, (prxRes) => {
+                    /* @ts-ignore:next-line */
+                    res.writeHead(prxRes.statusCode, prxRes.headers);
+                    prxRes.pipe(res, { end: true });
+                }), { end: true });
+            }).listen(port);
+            setTimeout(() => {
+                console.log("tick");
+                const op = { darwin: ['open'], linux: ['xdg-open'], win32: ['cmd', '/c', 'start'] };
+                const ptf = process.platform;
+                if (clients.length === 0)
+                    spawn(op[ptf][0], [...[op[ptf].slice(1)], `http://localhost:${port}`]);
+            }, 1000); //open the default browser only if it is not opened yet
+        }
+    });
+};
 export default class Scheduler {
     constructor(project) {
         this.spinCycle = 0;
@@ -15,7 +46,7 @@ export default class Scheduler {
         this.queue = [];
         this.jobs = {};
         this.ports = {};
-        Object.keys(this.project.ports).forEach((port) => {
+        Object.values(this.project.ports).forEach((port) => {
             this.ports[port] = OPEN_PORT;
         });
         this.mode = `up`;
@@ -51,11 +82,15 @@ export default class Scheduler {
                     this.project.getEntryPoints().reduce((m, inputFilePath) => {
                         const script = makePath(inputFilePath);
                         this.summary[inputFilePath] = undefined;
+                        const partialTestResourceByCommandLineArg = `'${JSON.stringify({
+                            fs: path.resolve(process.cwd(), project.resultsdir, inputFilePath)
+                        })}'`;
                         m[inputFilePath] = pm2.start({
                             script,
                             name: inputFilePath,
                             autorestart: false,
                             watch: [script],
+                            args: partialTestResourceByCommandLineArg
                         }, (err, proc) => {
                             if (err) {
                                 console.error(err);
@@ -82,7 +117,7 @@ export default class Scheduler {
                         }
                         console.log(`# of processes in queue:`, this.queue.length, "/", this.project.getEntryPoints().length);
                         console.log(`summary:`, this.summary);
-                        console.log(`watchmode:`, this.project.buildMode);
+                        console.log(`ports:`, this.ports);
                         // pm2.list((err, procs) => {
                         //   procs.forEach((proc) => {
                         //     console.log(proc.name, proc.pid, proc.pm_id, proc.monit)
@@ -101,22 +136,6 @@ export default class Scheduler {
     // write the summary to a file and end self with summarized exit code
     checkForShutDown() {
         const sums = Object.entries(this.summary).filter((s) => s[1] !== undefined);
-        if ((this.project.buildMode === "off" || this.mode === `down`) &&
-            sums.length === this.project.getEntryPoints().length) {
-            fs.writeFile(`${this.project.resultsdir}/results.json`, JSON.stringify(this.summary, null, 2), (err) => {
-                if (err) {
-                    console.error(err);
-                }
-                const finalExitCode = sums.filter((s) => s[1] !== true).length;
-                fs.writeFile(`${this.project.resultsdir}/testeranto.txt`, finalExitCode.toString(), (err) => {
-                    if (err) {
-                        console.error(err);
-                    }
-                    console.log(`goodbye testeranto - ${finalExitCode === 0 ? '👍🏼' : '👎🏻'}`);
-                    process.exit(finalExitCode);
-                });
-            });
-        }
     }
     async abort(pm2Proc) {
         this.pm2.stop(pm2Proc.process.pm_id, (err, proc) => {
@@ -138,7 +157,7 @@ export default class Scheduler {
         }
         const pid = p.process.pm_id;
         const testResourceRequirement = p.data.testResourceRequirement;
-        const fPath = path.resolve(this.project.resultsdir + `/` + p.process.name);
+        // const fPath = path.resolve(this.project.resultsdir + `/` + p.process.name);
         const message = {
             // these fields must be present
             id: p.process.pm_id,
@@ -148,7 +167,7 @@ export default class Scheduler {
             data: {
                 testResourceConfiguration: {
                     ports: [],
-                    fs: fPath,
+                    // fs: fPath,
                 },
                 id: p.process.pm_id,
             }
@@ -180,12 +199,13 @@ export default class Scheduler {
                     // Data to be sent
                     data: {
                         testResourceConfiguration: {
-                            fs: fPath,
+                            // fs: fPath,
                             ports: selectionOfPorts
                         },
                         id: p.process.pm_id,
                     }
                 };
+                console.log("mark1");
                 this.pm2.sendDataToProcessId(p.process.pm_id, message, function (err, res) {
                 });
                 // mark the selected ports as occupied
@@ -208,19 +228,6 @@ export default class Scheduler {
                     this.ports[p] = OPEN_PORT;
                 }
             });
-            // if (pm2Proc.data.results) {
-            //   // const testJob = { test: pm2Proc.data.results };
-            //   // this.summary[pm2Proc.process.name] = testJob.test.fails.length === 0;
-            //   // fs.writeFile(
-            //   //   `${reportOutPath}testDAG.json`,
-            //   //   JSON.stringify(this.testerantoFeatures.graphs.dags[0].graph.export(), null, 2),
-            //   //   (err) => {
-            //   //     if (err) {
-            //   //       console.error(err);
-            //   //     }
-            //   //   }
-            //   // );
-            // }
         }
         else {
             console.error("idk?!");
@@ -237,38 +244,6 @@ export default class Scheduler {
         }));
     }
 }
-const clients = [];
-const hotReload = (ectx, collateDir, port) => {
-    ectx.serve({ servedir: collateDir, host: "localhost" }).then(() => {
-        if (port) {
-            createServer((req, res) => {
-                const { url, method, headers } = req;
-                if (req.url === '/esbuild')
-                    return clients.push(
-                    /* @ts-ignore:next-line */
-                    res.writeHead(200, {
-                        'Content-Type': 'text/event-stream',
-                        'Cache-Control': 'no-cache',
-                        Connection: 'keep-alive',
-                    }));
-                /* @ts-ignore:next-line */
-                const path = ~url.split('/').pop().indexOf('.') ? url : `/index.html`; //for PWA with router
-                req.pipe(request({ hostname: '0.0.0.0', port, path, method, headers }, (prxRes) => {
-                    /* @ts-ignore:next-line */
-                    res.writeHead(prxRes.statusCode, prxRes.headers);
-                    prxRes.pipe(res, { end: true });
-                }), { end: true });
-            }).listen(port);
-            setTimeout(() => {
-                console.log("tick");
-                const op = { darwin: ['open'], linux: ['xdg-open'], win32: ['cmd', '/c', 'start'] };
-                const ptf = process.platform;
-                if (clients.length === 0)
-                    spawn(op[ptf][0], [...[op[ptf].slice(1)], `http://localhost:${port}`]);
-            }, 1000); //open the default browser only if it is not opened yet
-        }
-    });
-};
 export class ITProject {
     constructor(config) {
         this.clearScreen = config.clearScreen;
@@ -285,10 +260,11 @@ export class ITProject {
         this.tests = config.tests;
         this.runMode = config.runMode;
         this.buildMode = config.buildMode;
+        const collateDir = '.';
         const collateOpts = {
             format: "iife",
             outbase: this.outbase,
-            outdir: this.resultsdir,
+            outdir: collateDir,
             jsx: `transform`,
             entryPoints: [
                 config.collateEntry
@@ -388,12 +364,12 @@ export class ITProject {
         }
         else if (this.collateMode === 'serve') {
             esbuild.context(collateOpts).then((esbuildContext) => {
-                hotReload(esbuildContext, this.resultsdir);
+                hotReload(esbuildContext, collateDir);
             });
         }
         else if (this.collateMode === 'watch+serve') {
             esbuild.context(collateOpts).then((esbuildContext) => {
-                hotReload(esbuildContext, this.resultsdir);
+                hotReload(esbuildContext, collateDir);
                 esbuildContext.watch();
                 console.log(`serving collated reports @ ${"http://localhost:8000/"}`);
             });

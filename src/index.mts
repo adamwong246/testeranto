@@ -4,25 +4,22 @@ import path from 'path';
 import { PassThrough } from 'stream';
 import { BaseFeature } from './Features';
 
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import { IBaseConfig } from "./IBaseConfig";
+export type { IBaseConfig };
 
+const defaultTestResource: ITTestResourceConfiguration = { "fs": ".", ports: [] };
+const defaultTestResourceRequirement: ITTestResourceRequirement = { "fs": ".", ports: 0 };
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 type ITTestResourceConfiguration = {
   "fs": string,
   "ports": number[]
 };
+export type ITTestResourceRequirement = {
+  "ports": number,
+  "fs": string,
+};
 
 type IRunner = (x: ITTestResourceConfiguration, t: ITLog) => Promise<boolean>;
-
-import { IBaseConfig } from "./IBaseConfig";
-export type { IBaseConfig };
-
-export type ITTestResourceRequirement = {
-  "ports": number
-};
 
 export type IT = {
   toObj(): object;
@@ -37,14 +34,10 @@ export type ITestJob = {
   test: IT;
   runner: IRunner;
   testResourceRequirement: ITTestResourceRequirement;
-  receiveTestResourceConfig: (x) => boolean;
+  receiveTestResourceConfig: (testResource?) => boolean;
 };
 
-export type ITestResults = Promise<{
-  test: IT;
-}>[];
-
-export type Modify<T, R> = Omit<T, keyof R> & R;
+export type ITestResults = Promise<{ test: IT; }>[];
 
 export type ITTestShape = {
   suites;
@@ -157,6 +150,9 @@ const testArtiFactoryfileWriter = (tLog: ITLog) => (fp) => (g) => (key, value: s
       const pipeStream: PassThrough = value;
       var myFile = fs.createWriteStream(fPath);
       pipeStream.pipe(myFile);
+      pipeStream.on("close", () => {
+        myFile.close()
+      })
     }
   });
 };
@@ -330,7 +326,7 @@ export abstract class BaseGiven<
     } catch (e) {
       this.error = e;
       tLog('\u0007');// bell
-      throw e;
+      // throw e;
     } finally {
 
       try {
@@ -369,7 +365,6 @@ export abstract class BaseWhen<IStore, ISelection, IThenShape> {
 
   async test(store: IStore, testResourceConfiguration, tLog: ITLog) {
     tLog(" When:", this.name);
-
     try {
       return await this.andWhen(store, this.actioner, testResourceConfiguration);
     } catch (e) {
@@ -400,14 +395,39 @@ export abstract class BaseThen<ISelection, IStore, IThenShape> {
   abstract butThen(store: any, testResourceConfiguration?): Promise<ISelection>;
 
   async test(store: IStore, testResourceConfiguration, tLog: ITLog): Promise<IThenShape | undefined> {
-
     tLog(" Then:", this.name);
     try {
-      return await this.thenCB(await this.butThen(store, testResourceConfiguration));
+      return this.thenCB(await this.butThen(store, testResourceConfiguration))
     } catch (e) {
+      console.log("wtf")
       this.error = true;
       throw e
     }
+
+    // try {
+    //   return await (this.thenCB(
+    //     await (async () => {
+    //       try {
+    //         return await (
+    //           (() => {
+    //             try {
+    //               return this.butThen(store, testResourceConfiguration)
+    //             } catch (e) {
+    //               this.error = true;
+    //               throw e
+    //             }
+    //           })()
+    //         );
+    //       } catch (e) {
+    //         this.error = true;
+    //         throw e
+    //       }
+    //     })()
+    //   ));
+    // } catch (e) {
+    //   this.error = true;
+    //   throw e
+    // }
 
   }
 }
@@ -840,13 +860,10 @@ export abstract class TesterantoLevelOne<
     );
 
 
-    const runnerA = (suite) => (
+    const suiteRunner = (suite) => (
       testResourceConfiguration: ITTestResourceConfiguration,
       tLog: ITLog,
-    ) => {
-
-      // const outputPath = path.resolve(process.cwd(), nameKey)
-
+    ): BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape, IFeatureShape> => {
       return suite.run(
         input,
         testResourceConfiguration,
@@ -858,7 +875,7 @@ export abstract class TesterantoLevelOne<
     /* @ts-ignore:next-line */
     const toReturn: ITestJob[] = suites.map((suite) => {
 
-      const runner = runnerA(suite);
+      const runner = suiteRunner(suite);
 
       return {
         test: suite,
@@ -870,62 +887,28 @@ export abstract class TesterantoLevelOne<
 
         runner,
 
-        receiveTestResourceConfig: async function (testReourceMaybe) {
-
-          console.log(nameKey);
-          // const outputDir = path.resolve(process.cwd(), this.project.outdir, nameKey);
-
-          const testResourceConfiguration = testReourceMaybe as ITTestResourceConfiguration;
-          await fs.mkdirSync(testResourceConfiguration.fs, { recursive: true });
+        receiveTestResourceConfig: async function (testResourceConfiguration = defaultTestResource) {
           console.log(`testResourceConfiguration ${JSON.stringify(testResourceConfiguration, null, 2)}`);
 
-          const logFilePath = path.resolve(`${testResourceConfiguration.fs}/log.txt`)
-          await fs.mkdirSync(logFilePath.split('/').slice(0, -1).join('/'), { recursive: true });
-
+          await fs.mkdirSync(testResourceConfiguration.fs, { recursive: true });
+          const logFilePath = path.resolve(`${testResourceConfiguration.fs}/log.txt`);
           var access = fs.createWriteStream(logFilePath);
           const tLog = (...l: string[]) => {
             console.log(...l);
             access.write(`${l.toString()}\n`);
           }
-
-          // const runner: IRunner = await x.runner;
-
-          const suite: BaseSuite<unknown, unknown, unknown, unknown, unknown, ITestShape, unknown> = await runner(testResourceConfiguration, tLog);
-
-          const testObject = suite.toObj();
-
+          const suiteDone: BaseSuite<
+            IInput, ISubject, IStore, ISelection, IThenShape, ITestShape, IFeatureShape
+          > = await runner(testResourceConfiguration, tLog);
           const resultsFilePath = path.resolve(`${testResourceConfiguration.fs}/results.json`)
 
-          await fs.mkdirSync(resultsFilePath.split('/').slice(0, -1).join('/'), { recursive: true });
-          fs.writeFile(
-            resultsFilePath,
-            JSON.stringify(
-              {
-                fails: suite.fails,
-                givens: suite.givens.map((g) => {
-                  return {
-                    whens: g.whens,
-                    thens: g.thens
-                  }
-                })
-              },
-              // ({
-              //   ...testObject.results,
-              //   givens: testObject.givens.map((g) => { delete g.testArtifacts; return g })
-              // }),
-              null, 2),
-            (err) => {
-              if (err) {
-                console.error(err);
+          fs.writeFileSync(resultsFilePath, JSON.stringify(suiteDone.toObj(), null, 2));
+          access.close();
 
-                access.close();
-              }
-            }
-          );
+          const numberOfFailures = suiteDone.givens.filter((g) => g.error).length;
+          console.log(`exiting gracefully with ${numberOfFailures} failures.`)
+          process.exitCode = numberOfFailures;
 
-
-
-          return true;
         }
       }
     });
@@ -939,7 +922,7 @@ export abstract class TesterantoLevelOne<
 
 type ITestArtificer = (key: string, data: any) => void;
 
-export const Testeranto = async <
+export default async <
   TestShape extends ITTestShape,
   Input,
   Subject,
@@ -956,7 +939,6 @@ export const Testeranto = async <
     IFeatureShape
   >,
   testImplementation,
-  testResourceRequirement: ITTestResourceRequirement,
   testInterface: {
     actionHandler?: (b: (...any) => any) => any,
     andWhen: (store: Store, actioner, testResource: ITTestResourceConfiguration) => Promise<Selection>,
@@ -982,11 +964,12 @@ export const Testeranto = async <
       testResource: ITTestResourceConfiguration,
       artificer: ITestArtificer
     ) => Promise<Store>,
-
   },
-  nameKey: string
+  nameKey: string,
+  testResourceRequirement: ITTestResourceRequirement = defaultTestResourceRequirement
 
 ) => {
+
 
   const butThen = testInterface.butThen || (async (a) => a as any);
   const { andWhen } = testInterface;
@@ -1116,46 +1099,74 @@ export const Testeranto = async <
 
   const mrt = new MrT();
   const t: ITestJob = mrt[0];
+  const testResourceArg = process.argv[2] || `{}`;
+  try {
+    const partialTestResource = JSON.parse(testResourceArg) as ITTestResourceConfiguration;
 
-  console.log('halting for test configuration from stidin...');
-  const testResource = t.testResourceRequirement;
+    if (partialTestResource.fs && partialTestResource.ports) {
+      await t.receiveTestResourceConfig(partialTestResource);
+      // process.exit(0); // :-)
+    } else {
+      console.log("test configuration is incomplete");
 
-  console.log("requesting test resources from mothership...", testResourceRequirement);
-  /* @ts-ignore:next-line */
-  process.send({
-    type: 'testeranto:hola',
-    data: {
-      testResourceRequirement
+      if (process.send) {
+        console.log("requesting test resources from pm2 ...", testResourceRequirement);
+        /* @ts-ignore:next-line */
+        process.send({
+          type: 'testeranto:hola',
+          data: {
+            testResourceRequirement
+          }
+        });
+
+        console.log("awaiting test resources from pm2...");
+        process.on('message', async function (packet: {
+          data: { testResourceConfiguration }
+        }) {
+          const resourcesFromPm2 = packet.data.testResourceConfiguration;
+          const secondTestResource = ({
+            ...JSON.parse(JSON.stringify(resourcesFromPm2)),
+            ...JSON.parse(JSON.stringify(partialTestResource)),
+
+          }) as ITTestResourceConfiguration;
+
+          if (await t.receiveTestResourceConfig(secondTestResource)) {
+            /* @ts-ignore:next-line */
+            process.send({
+              type: 'testeranto:adios',
+              data: {
+                testResourceConfiguration: mrt[0].test.testResourceConfiguration,
+                results: mrt[0].toObj()
+              }
+            }, (err) => {
+              if (!err) { console.log(`✅`) }
+              else { console.error(`❗️`, err) }
+              // process.exit(0); // :-)
+            });
+          }
+        });
+      } else {
+        console.log("Pass run-time test resources by STDIN");
+        process.stdin.on('data', async data => {
+
+          const resourcesFromStdin = JSON.parse(data.toString());
+          const secondTestResource = ({
+            ...JSON.parse(JSON.stringify(resourcesFromStdin)),
+            ...JSON.parse(JSON.stringify(partialTestResource)),
+
+          }) as ITTestResourceConfiguration;
+          await t.receiveTestResourceConfig(secondTestResource);
+          // process.exit(0); // :-)
+
+        });
+      }
+
     }
-  });
-
-  console.log("awaiting test resources from mothership...");
-  process.on('message', async function (packet: {
-    data: { testResourceConfiguration: ITTestResourceConfiguration }
-  }) {
 
 
-    if (await t.receiveTestResourceConfig(packet.data.testResourceConfiguration)) {
-      /* @ts-ignore:next-line */
-      process.send({
-        type: 'testeranto:adios',
-        data: {
-          testResourceConfiguration: mrt[0].test.testResourceConfiguration,
-          results: mrt[0].toObj()
-        }
-      }, (err) => {
-        if (!err) { console.log(`✅`) }
-        else { console.error(`❗️`, err) }
-        // process.exit(0); // :-)
-      });
-    }
-  });
+  } catch (e) {
+    console.error(`the test resource passed by command-line arugument "${process.argv[2]}" was malformed.`);
+    process.exit(-1);
+  }
 
-  process.stdin.on('data', async data => {
-
-    if (await t.receiveTestResourceConfig(data)) {
-      console.log("ok")
-    }
-  });
 };
-

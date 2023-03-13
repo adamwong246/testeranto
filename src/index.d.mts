@@ -1,14 +1,15 @@
 import { BaseFeature } from './Features';
+import { IBaseConfig } from "./IBaseConfig";
+export type { IBaseConfig };
 declare type ITTestResourceConfiguration = {
     "fs": string;
     "ports": number[];
 };
-declare type IRunner = (x: ITTestResourceConfiguration, t: ITLog) => Promise<boolean>;
-import { IBaseConfig } from "./IBaseConfig";
-export type { IBaseConfig };
 export declare type ITTestResourceRequirement = {
     "ports": number;
+    "fs": string;
 };
+declare type IRunner = (x: ITTestResourceConfiguration, t: ITLog) => Promise<boolean>;
 export declare type IT = {
     toObj(): object;
     name: string;
@@ -21,12 +22,11 @@ export declare type ITestJob = {
     test: IT;
     runner: IRunner;
     testResourceRequirement: ITTestResourceRequirement;
-    receiveTestResourceConfig: (x: any) => boolean;
+    receiveTestResourceConfig: (testResource?: any) => boolean;
 };
 export declare type ITestResults = Promise<{
     test: IT;
 }>[];
-export declare type Modify<T, R> = Omit<T, keyof R> & R;
 export declare type ITTestShape = {
     suites: any;
     givens: any;
@@ -192,7 +192,7 @@ export declare abstract class TesterantoLevelOne<ITestShape extends ITTestShape,
     }) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape, IFeatureShape>[], input: IInput, suiteKlasser: (name: string, givens: BaseGiven<ISubject, IStore, ISelection, IThenShape, IFeatureShape>[], checks: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape, IFeatureShape>[]) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape, IFeatureShape>, givenKlasser: (n: any, f: any, w: any, t: any, z?: any) => BaseGiven<ISubject, IStore, ISelection, IThenShape, IFeatureShape>, whenKlasser: (s: any, o: any) => BaseWhen<IStore, ISelection, IThenShape>, thenKlasser: (s: any, o: any) => BaseThen<IStore, ISelection, IThenShape>, checkKlasser: (n: any, f: any, cb: any, w: any, t: any) => BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape, IFeatureShape>, testResourceRequirement: any, nameKey: string);
 }
 declare type ITestArtificer = (key: string, data: any) => void;
-export declare const Testeranto: <TestShape extends ITTestShape, Input, Subject, Store, Selection_1, WhenShape, ThenShape, InitialStateShape, IFeatureShape extends Record<string, BaseFeature>>(input: Input, testSpecification: ITestSpecification<TestShape, IFeatureShape>, testImplementation: any, testResourceRequirement: ITTestResourceRequirement, testInterface: {
+declare const _default: <TestShape extends ITTestShape, Input, Subject, Store, Selection_1, WhenShape, ThenShape, InitialStateShape, IFeatureShape extends Record<string, BaseFeature>>(input: Input, testSpecification: ITestSpecification<TestShape, IFeatureShape>, testImplementation: any, testInterface: {
     actionHandler?: ((b: (...any: any[]) => any) => any) | undefined;
     andWhen: (store: Store, actioner: any, testResource: ITTestResourceConfiguration) => Promise<Selection_1>;
     butThen?: ((store: Store, callback: any, testResource: ITTestResourceConfiguration) => Promise<Selection_1>) | undefined;
@@ -201,4 +201,5 @@ export declare const Testeranto: <TestShape extends ITTestShape, Input, Subject,
     afterEach?: ((store: Store, ndx: number, artificer: ITestArtificer) => Promise<unknown>) | undefined;
     beforeAll?: ((input: Input, artificer: ITestArtificer) => Promise<Subject>) | undefined;
     beforeEach?: ((subject: Subject, initialValues: any, testResource: ITTestResourceConfiguration, artificer: ITestArtificer) => Promise<Store>) | undefined;
-}, nameKey: string) => Promise<void>;
+}, nameKey: string, testResourceRequirement?: ITTestResourceRequirement) => Promise<void>;
+export default _default;

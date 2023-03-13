@@ -3078,6 +3078,11 @@ why-is-node-running@^2.2.2:
     siginfo "^2.0.0"
     stackback "0.0.2"
 
+why-is-node-still-running@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/why-is-node-still-running/-/why-is-node-still-running-1.0.0.tgz#b10998778ead008e149b9a1ecac9a3c236b137b8"
+  integrity sha512-oLjSBpYU0cY77XUJZzu0acNMaM/23dncjWsMcvSt45ZyyBEUuVXGDV2rH3XOg85xobxIIp1jcrq91r74XT1QDg==
+
 word-wrap@^1.2.3, word-wrap@~1.2.3:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/word-wrap/-/word-wrap-1.2.3.tgz#610636f6b1f703891bd34771ccb17fb93b47079c"

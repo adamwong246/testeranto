@@ -1,9 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const defaultTestResource = { "fs": ".", ports: [] };
+const defaultTestResourceRequirement = { "fs": ".", ports: 0 };
 const testArtiFactoryfileWriter = (tLog) => (fp) => (g) => (key, value) => {
     tLog("testArtiFactory =>", key);
     const fPath = `${fp}/${g}/${key}`;
@@ -26,6 +24,9 @@ const testArtiFactoryfileWriter = (tLog) => (fp) => (g) => (key, value) => {
             const pipeStream = value;
             var myFile = fs.createWriteStream(fPath);
             pipeStream.pipe(myFile);
+            pipeStream.on("close", () => {
+                myFile.close();
+            });
         }
     });
 };
@@ -113,7 +114,7 @@ export class BaseGiven {
         catch (e) {
             this.error = e;
             tLog('\u0007'); // bell
-            throw e;
+            // throw e;
         }
         finally {
             try {
@@ -162,12 +163,37 @@ export class BaseThen {
     async test(store, testResourceConfiguration, tLog) {
         tLog(" Then:", this.name);
         try {
-            return await this.thenCB(await this.butThen(store, testResourceConfiguration));
+            return this.thenCB(await this.butThen(store, testResourceConfiguration));
         }
         catch (e) {
+            console.log("wtf");
             this.error = true;
             throw e;
         }
+        // try {
+        //   return await (this.thenCB(
+        //     await (async () => {
+        //       try {
+        //         return await (
+        //           (() => {
+        //             try {
+        //               return this.butThen(store, testResourceConfiguration)
+        //             } catch (e) {
+        //               this.error = true;
+        //               throw e
+        //             }
+        //           })()
+        //         );
+        //       } catch (e) {
+        //         this.error = true;
+        //         throw e
+        //       }
+        //     })()
+        //   ));
+        // } catch (e) {
+        //   this.error = true;
+        //   throw e
+        // }
     }
 }
 export class BaseCheck {
@@ -271,13 +297,12 @@ export class TesterantoLevelOne {
         const suites = testSpecification(
         /* @ts-ignore:next-line */
         classyTesteranto.Suites(), classyTesteranto.Given(), classyTesteranto.When(), classyTesteranto.Then(), classyTesteranto.Check());
-        const runnerA = (suite) => (testResourceConfiguration, tLog) => {
-            // const outputPath = path.resolve(process.cwd(), nameKey)
+        const suiteRunner = (suite) => (testResourceConfiguration, tLog) => {
             return suite.run(input, testResourceConfiguration, testArtiFactoryfileWriter(tLog)(testResourceConfiguration.fs + "/"), tLog);
         };
         /* @ts-ignore:next-line */
         const toReturn = suites.map((suite) => {
-            const runner = runnerA(suite);
+            const runner = suiteRunner(suite);
             return {
                 test: suite,
                 testResourceRequirement,
@@ -285,51 +310,29 @@ export class TesterantoLevelOne {
                     return suite.toObj();
                 },
                 runner,
-                receiveTestResourceConfig: async function (testReourceMaybe) {
-                    console.log(nameKey);
-                    // const outputDir = path.resolve(process.cwd(), this.project.outdir, nameKey);
-                    const testResourceConfiguration = testReourceMaybe;
-                    await fs.mkdirSync(testResourceConfiguration.fs, { recursive: true });
+                receiveTestResourceConfig: async function (testResourceConfiguration = defaultTestResource) {
                     console.log(`testResourceConfiguration ${JSON.stringify(testResourceConfiguration, null, 2)}`);
+                    await fs.mkdirSync(testResourceConfiguration.fs, { recursive: true });
                     const logFilePath = path.resolve(`${testResourceConfiguration.fs}/log.txt`);
-                    await fs.mkdirSync(logFilePath.split('/').slice(0, -1).join('/'), { recursive: true });
                     var access = fs.createWriteStream(logFilePath);
                     const tLog = (...l) => {
                         console.log(...l);
                         access.write(`${l.toString()}\n`);
                     };
-                    // const runner: IRunner = await x.runner;
-                    const suite = await runner(testResourceConfiguration, tLog);
-                    const testObject = suite.toObj();
+                    const suiteDone = await runner(testResourceConfiguration, tLog);
                     const resultsFilePath = path.resolve(`${testResourceConfiguration.fs}/results.json`);
-                    await fs.mkdirSync(resultsFilePath.split('/').slice(0, -1).join('/'), { recursive: true });
-                    fs.writeFile(resultsFilePath, JSON.stringify({
-                        fails: suite.fails,
-                        givens: suite.givens.map((g) => {
-                            return {
-                                whens: g.whens,
-                                thens: g.thens
-                            };
-                        })
-                    }, 
-                    // ({
-                    //   ...testObject.results,
-                    //   givens: testObject.givens.map((g) => { delete g.testArtifacts; return g })
-                    // }),
-                    null, 2), (err) => {
-                        if (err) {
-                            console.error(err);
-                            access.close();
-                        }
-                    });
-                    return true;
+                    fs.writeFileSync(resultsFilePath, JSON.stringify(suiteDone.toObj(), null, 2));
+                    access.close();
+                    const numberOfFailures = suiteDone.givens.filter((g) => g.error).length;
+                    console.log(`exiting gracefully with ${numberOfFailures} failures.`);
+                    process.exitCode = numberOfFailures;
                 }
             };
         });
         return toReturn;
     }
 }
-export const Testeranto = async (input, testSpecification, testImplementation, testResourceRequirement, testInterface, nameKey) => {
+export default async (input, testSpecification, testImplementation, testInterface, nameKey, testResourceRequirement = defaultTestResourceRequirement) => {
     const butThen = testInterface.butThen || (async (a) => a);
     const { andWhen } = testInterface;
     const actionHandler = testInterface.actionHandler || function (b) {
@@ -400,40 +403,61 @@ export const Testeranto = async (input, testSpecification, testImplementation, t
     }
     const mrt = new MrT();
     const t = mrt[0];
-    console.log('halting for test configuration from stidin...');
-    const testResource = t.testResourceRequirement;
-    console.log("requesting test resources from mothership...", testResourceRequirement);
-    /* @ts-ignore:next-line */
-    process.send({
-        type: 'testeranto:hola',
-        data: {
-            testResourceRequirement
+    const testResourceArg = process.argv[2] || `{}`;
+    try {
+        const partialTestResource = JSON.parse(testResourceArg);
+        if (partialTestResource.fs && partialTestResource.ports) {
+            await t.receiveTestResourceConfig(partialTestResource);
+            // process.exit(0); // :-)
         }
-    });
-    console.log("awaiting test resources from mothership...");
-    process.on('message', async function (packet) {
-        if (await t.receiveTestResourceConfig(packet.data.testResourceConfiguration)) {
-            /* @ts-ignore:next-line */
-            process.send({
-                type: 'testeranto:adios',
-                data: {
-                    testResourceConfiguration: mrt[0].test.testResourceConfiguration,
-                    results: mrt[0].toObj()
-                }
-            }, (err) => {
-                if (!err) {
-                    console.log(`✅`);
-                }
-                else {
-                    console.error(`❗️`, err);
-                }
-                // process.exit(0); // :-)
-            });
+        else {
+            console.log("test configuration is incomplete");
+            if (process.send) {
+                console.log("requesting test resources from pm2 ...", testResourceRequirement);
+                /* @ts-ignore:next-line */
+                process.send({
+                    type: 'testeranto:hola',
+                    data: {
+                        testResourceRequirement
+                    }
+                });
+                console.log("awaiting test resources from pm2...");
+                process.on('message', async function (packet) {
+                    const resourcesFromPm2 = packet.data.testResourceConfiguration;
+                    const secondTestResource = (Object.assign(Object.assign({}, JSON.parse(JSON.stringify(resourcesFromPm2))), JSON.parse(JSON.stringify(partialTestResource))));
+                    if (await t.receiveTestResourceConfig(secondTestResource)) {
+                        /* @ts-ignore:next-line */
+                        process.send({
+                            type: 'testeranto:adios',
+                            data: {
+                                testResourceConfiguration: mrt[0].test.testResourceConfiguration,
+                                results: mrt[0].toObj()
+                            }
+                        }, (err) => {
+                            if (!err) {
+                                console.log(`✅`);
+                            }
+                            else {
+                                console.error(`❗️`, err);
+                            }
+                            // process.exit(0); // :-)
+                        });
+                    }
+                });
+            }
+            else {
+                console.log("Pass run-time test resources by STDIN");
+                process.stdin.on('data', async (data) => {
+                    const resourcesFromStdin = JSON.parse(data.toString());
+                    const secondTestResource = (Object.assign(Object.assign({}, JSON.parse(JSON.stringify(resourcesFromStdin))), JSON.parse(JSON.stringify(partialTestResource))));
+                    await t.receiveTestResourceConfig(secondTestResource);
+                    // process.exit(0); // :-)
+                });
+            }
         }
-    });
-    process.stdin.on('data', async (data) => {
-        if (await t.receiveTestResourceConfig(data)) {
-            console.log("ok");
-        }
-    });
+    }
+    catch (e) {
+        console.error(`the test resource passed by command-line arugument "${process.argv[2]}" was malformed.`);
+        process.exit(-1);
+    }
 };
