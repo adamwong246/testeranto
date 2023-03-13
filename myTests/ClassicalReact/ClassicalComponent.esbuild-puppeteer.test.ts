@@ -129,7 +129,7 @@ export const ClassicalComponentEsbuildPuppeteerTesteranto = EsbuildPuppeteerTest
               When.IClickTheButton(),
             ],
             [
-              Then.TheStatusIs({ count: 66 }),
+              Then.TheStatusIs({ count: 6 }),
               Then.IAmAGenius()
 
             ]
@@ -161,5 +161,6 @@ export const ClassicalComponentEsbuildPuppeteerTesteranto = EsbuildPuppeteerTest
     </html>
 `,
     ClassicalComponent,
-  ]
+  ],
+  "ClassicalComponent"
 );

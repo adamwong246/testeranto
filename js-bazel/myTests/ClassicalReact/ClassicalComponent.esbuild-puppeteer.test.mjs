@@ -83,13 +83,16 @@ var EsbuildPuppeteerTesteranto = (testImplementations, testSpecifications, testI
       consoleLogs,
       pipeStream
     }, ndx, artificer) {
-      recorder.stop();
+      await recorder.stop();
+      pipeStream.end();
+      page.close();
       artificer("./afterEachScreenshot.png", await (await page).screenshot());
       artificer("./afterEachLogs.txt", consoleLogs.join(`
 `));
       return;
     },
     afterAll: (store, artificer) => {
+      store.page.browser().close();
       return;
     }
   },
@@ -199,7 +202,7 @@ var ClassicalComponentEsbuildPuppeteerTesteranto = EsbuildPuppeteerTesteranto(
               When.IClickTheButton()
             ],
             [
-              Then.TheStatusIs({ count: 66 }),
+              Then.TheStatusIs({ count: 6 }),
               Then.IAmAGenius()
             ]
           )
@@ -227,7 +230,8 @@ var ClassicalComponentEsbuildPuppeteerTesteranto = EsbuildPuppeteerTesteranto(
     </html>
 `,
     ClassicalComponent
-  ]
+  ],
+  "ClassicalComponent"
 );
 export {
   ClassicalComponentEsbuildPuppeteerTesteranto

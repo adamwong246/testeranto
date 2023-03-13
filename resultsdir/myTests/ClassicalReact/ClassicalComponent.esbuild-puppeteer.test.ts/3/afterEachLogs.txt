@@ -1,2 +1,0 @@
-LOG			hello world!
-INF			componentDidMount

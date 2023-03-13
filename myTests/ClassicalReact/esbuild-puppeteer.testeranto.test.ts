@@ -144,16 +144,17 @@ export const EsbuildPuppeteerTesteranto = <
         page,
         recorder,
         consoleLogs,
-        pipeStream
+        pipeStream,
       }: Store, ndx, artificer) {
-        recorder.stop();
-        // pipeStream.end();
+        await recorder.stop();
+        pipeStream.end();
+        page.close();
         artificer("./afterEachScreenshot.png", await ((await page).screenshot()));
         artificer("./afterEachLogs.txt", consoleLogs.join(`\n`));
         return;
       },
-      afterAll: (store, artificer) => {
-        // console.log("afterAll")
+      afterAll: (store: Store, artificer) => {
+        store.page.browser().close();
         return;
       }
     },
