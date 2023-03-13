@@ -83,7 +83,7 @@ var testerantoFeatures_test_default = new TesterantoFeatures(
 // myTests/solidity/solidity.testeranto.test.ts
 import Ganache from "ganache";
 import Web3 from "web3";
-import { Testeranto } from "testeranto";
+import Testeranto from "testeranto";
 
 // myTests/solidity/truffle.mts
 import fs from "fs/promises";

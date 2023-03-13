@@ -1,7 +1,7 @@
 // myTests/httpServer/puppeteer-http.testeranto.test.ts
 import puppeteer from "puppeteer";
 import { assert } from "chai";
-import { Testeranto } from "testeranto";
+import Testeranto from "testeranto";
 var PuppeteerHttpTesteranto = (testImplementations, testSpecifications, testInput) => Testeranto(
   testInput,
   testSpecifications,

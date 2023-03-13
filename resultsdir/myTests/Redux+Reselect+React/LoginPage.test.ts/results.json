@@ -1,22 +1,31 @@
 {
-  "fails": [],
+  "name": "Testing the LoginPage as react",
   "givens": [
     {
+      "name": "default",
       "whens": [
         {
-          "name": "TheEmailIsSetTo: adam@email.com"
+          "name": "TheEmailIsSetTo: adam@email.com",
+          "error": true
         }
       ],
       "thens": [
         {
           "name": "TheEmailIs: adam@email.com"
         }
+      ],
+      "errors": {},
+      "features": [
+        "hello",
+        "bienVenidos"
       ]
     },
     {
+      "name": "default",
       "whens": [
         {
-          "name": "TheEmailIsSetTo: adam@email.com"
+          "name": "TheEmailIsSetTo: adam@email.com",
+          "error": true
         },
         {
           "name": "ThePasswordIsSetTo: secret"
@@ -35,24 +44,32 @@
         {
           "name": "ThePasswordIsNot: idk"
         }
-      ]
+      ],
+      "errors": {},
+      "features": []
     },
     {
+      "name": "default",
       "whens": [
         {
-          "name": "TheEmailIsSetTo: adam"
+          "name": "TheEmailIsSetTo: adam",
+          "error": true
         }
       ],
       "thens": [
         {
           "name": "ThereIsNotAnEmailError: undefined"
         }
-      ]
+      ],
+      "errors": {},
+      "features": []
     },
     {
+      "name": "default",
       "whens": [
         {
-          "name": "TheEmailIsSetTo: adam"
+          "name": "TheEmailIsSetTo: adam",
+          "error": true
         },
         {
           "name": "TheLoginIsSubmitted: undefined"
@@ -62,7 +79,10 @@
         {
           "name": "ThereIsNotAnEmailError: undefined"
         }
-      ]
+      ],
+      "errors": {},
+      "features": []
     }
-  ]
+  ],
+  "fails": []
 }

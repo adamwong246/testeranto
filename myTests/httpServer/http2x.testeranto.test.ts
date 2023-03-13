@@ -1,7 +1,7 @@
 import { assert } from "chai";
 import http from "http";
 
-import { Testeranto } from "testeranto";
+import Testeranto from "testeranto";
 import { ITestImplementation, ITestSpecification, ITTestShape, Modify } from "testeranto";
 
 type WhenShape = [url: string, payload: string, port: number];

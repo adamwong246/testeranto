@@ -5,8 +5,6 @@ import { EsbuildPuppeteerTesteranto } from "./esbuild-puppeteer.testeranto.test"
 
 import { ClassicalComponent } from "./ClassicalComponent";
 
-const myFeature = `hello`;
-
 export const ClassicalComponentEsbuildPuppeteerTesteranto = EsbuildPuppeteerTesteranto<
   {
     suites: {
@@ -102,7 +100,14 @@ export const ClassicalComponentEsbuildPuppeteerTesteranto = EsbuildPuppeteerTest
               Then.TheStatusIs({ count: 1 })
             ]
           ),
-
+          Given.AnEmptyState(
+            [],
+            [When.IClickTheButton()],
+            [
+              Then.ThePropsIs({}),
+              Then.TheStatusIs({ count: 1 })
+            ]
+          ),
           Given.AnEmptyState(
             [`hello`],
             [
@@ -124,7 +129,7 @@ export const ClassicalComponentEsbuildPuppeteerTesteranto = EsbuildPuppeteerTest
               When.IClickTheButton(),
             ],
             [
-              Then.TheStatusIs({ count: 6 }),
+              Then.TheStatusIs({ count: 66 }),
               Then.IAmAGenius()
 
             ]

@@ -2,7 +2,7 @@ import { Contract } from 'web3-eth-contract';
 import Ganache from "ganache";
 import Web3 from 'web3';
 
-import { Testeranto } from "testeranto";
+import Testeranto from "testeranto";
 import { ITestImplementation, ITestSpecification, ITTestShape } from "testeranto";
 
 import { solCompile } from "./truffle.mjs";

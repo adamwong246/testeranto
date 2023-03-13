@@ -3,7 +3,7 @@
 import React from "react";
 import renderer, { act } from "react-test-renderer";
 
-import { Testeranto } from "testeranto";
+import Testeranto from "testeranto";
 import { ITestImplementation, ITestSpecification, ITTestShape } from "testeranto";
 
 type Input = typeof React.Component;
@@ -39,7 +39,6 @@ export const ReactTestRendererTesteranto = <
     testInput,
     testSpecifications,
     testImplementations,
-    { ports: 0 },
     {
       beforeEach: function (CComponent, props): Promise<renderer.ReactTestRenderer> {
         let component;

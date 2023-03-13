@@ -23,7 +23,7 @@ import { assert } from "chai";
 
 // myTests/Redux+Reselect+React/react.testeranto.test.ts
 import renderer, { act } from "react-test-renderer";
-import { Testeranto } from "testeranto";
+import Testeranto from "testeranto";
 var ReactTesteranto = (testImplementations, testSpecifications, testInput) => Testeranto(
   testInput,
   testSpecifications,

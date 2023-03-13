@@ -2,7 +2,7 @@ import puppeteer, { Browser, Page } from "puppeteer";
 import esbuild from "esbuild";
 import { PuppeteerScreenRecorder } from 'puppeteer-screen-recorder';
 import { PassThrough } from "stream";
-import { Testeranto } from "testeranto";
+import Testeranto from "testeranto";
 import { ITestImplementation, ITestSpecification, ITTestShape } from "testeranto";
 
 type Input = [string, (string) => string, any];
@@ -37,7 +37,8 @@ export const EsbuildPuppeteerTesteranto = <
     ITestShape,
     IFeatureShape
   >,
-  testInput: Input
+  testInput: Input,
+  nameKey: string
 ) =>
   Testeranto<
     ITestShape,
@@ -53,7 +54,6 @@ export const EsbuildPuppeteerTesteranto = <
     testInput,
     testSpecifications,
     testImplementations,
-    { ports: 0 },
     {
       beforeAll: async function ([bundlePath, htmlTemplate]: Input, artificer): Promise<Subject> {
 
@@ -151,5 +151,6 @@ export const EsbuildPuppeteerTesteranto = <
       afterAll: (store, artificer) => {
         // console.log("afterAll")
       }
-    }
+    },
+    nameKey
   )

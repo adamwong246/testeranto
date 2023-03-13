@@ -102,6 +102,18 @@ export const ClassicalComponentReactTestRendererTesteranto = ReactTestRendererTe
             ]
           ),
 
+          Given.AnEmptyState(
+            [],
+            [
+              When.IClickTheButton(),
+              When.IClickTheButton(),
+              When.IClickTheButton(),
+            ],
+            [
+              Then.TheStatusIs({ "count": 333 }),
+            ]
+          ),
+
         ], [
 
       ]

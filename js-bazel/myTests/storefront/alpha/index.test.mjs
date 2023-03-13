@@ -25,7 +25,7 @@ import esbuild from "esbuild";
 import Ganache from "ganache";
 import Web3 from "web3";
 import { PuppeteerScreenRecorder } from "puppeteer-screen-recorder";
-import { Testeranto } from "testeranto";
+import Testeranto from "testeranto";
 
 // myTests/solidity/truffle.mts
 import fs from "fs/promises";

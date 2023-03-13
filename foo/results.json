@@ -1,0 +1,118 @@
+{
+  "name": "a classical react component, bundled with esbuild and tested with puppeteer",
+  "givens": [
+    {
+      "name": "AnEmptyState",
+      "whens": [],
+      "thens": [
+        {
+          "name": "ThePropsIs: [object Object]"
+        },
+        {
+          "name": "TheStatusIs: [object Object]"
+        }
+      ],
+      "features": []
+    },
+    {
+      "name": "AnEmptyState",
+      "whens": [
+        {
+          "name": "IClickTheButton: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "ThePropsIs: [object Object]"
+        },
+        {
+          "name": "TheStatusIs: [object Object]"
+        }
+      ],
+      "features": []
+    },
+    {
+      "name": "AnEmptyState",
+      "whens": [
+        {
+          "name": "IClickTheButton: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "ThePropsIs: [object Object]"
+        },
+        {
+          "name": "TheStatusIs: [object Object]"
+        }
+      ],
+      "features": []
+    },
+    {
+      "name": "AnEmptyState",
+      "whens": [
+        {
+          "name": "IClickTheButton: undefined"
+        },
+        {
+          "name": "IClickTheButton: undefined"
+        },
+        {
+          "name": "IClickTheButton: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheStatusIs: [object Object]"
+        }
+      ],
+      "features": [
+        "hello"
+      ]
+    },
+    {
+      "name": "AnEmptyState",
+      "whens": [
+        {
+          "name": "IClickTheButton: undefined"
+        },
+        {
+          "name": "IClickTheButton: undefined"
+        },
+        {
+          "name": "IClickTheButton: undefined"
+        },
+        {
+          "name": "IClickTheButton: undefined"
+        },
+        {
+          "name": "IClickTheButton: undefined"
+        },
+        {
+          "name": "IClickTheButton: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheStatusIs: [object Object]"
+        },
+        {
+          "name": "IAmAGenius: undefined"
+        }
+      ],
+      "errors": {
+        "name": "AssertionError",
+        "message": "expected '{\"count\":6}' to deeply equal '{\"count\":66}'",
+        "showDiff": true,
+        "actual": "{\"count\":6}",
+        "expected": "{\"count\":66}",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected '{\"count\":6}' to deeply equal '{\"count\":66}'\n    at Then.thenCB (file:///Users/adam/Code/kokomoBay/js-bazel/myTests/ClassicalReact/ClassicalComponent.esbuild-puppeteer.test.mjs:139:64)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Given.give (file:///Users/adam/Code/kokomoBay/node_modules/testeranto/src/index.mjs:107:27)\n    at async MrT.constructor.run (file:///Users/adam/Code/kokomoBay/node_modules/testeranto/src/index.mjs:56:30)\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/node_modules/testeranto/src/index.mjs:319:39)\n    at async Socket.<anonymous> (file:///Users/adam/Code/kokomoBay/node_modules/testeranto/src/index.mjs:452:21)"
+      },
+      "features": [
+        "hello"
+      ]
+    }
+  ],
+  "fails": []
+}

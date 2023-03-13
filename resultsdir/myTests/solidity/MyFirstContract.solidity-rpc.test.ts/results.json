@@ -1,18 +1,25 @@
 {
-  "fails": [],
+  "name": "Testing a very simple smart contract over RPC",
   "givens": [
     {
+      "name": "Default",
       "whens": [],
       "thens": [
         {
           "name": "Get: [object Object]"
         }
+      ],
+      "errors": {},
+      "features": [
+        "hello"
       ]
     },
     {
+      "name": "Default",
       "whens": [
         {
-          "name": "Increment: 1"
+          "name": "Increment: 1",
+          "error": true
         },
         {
           "name": "Increment: 1"
@@ -28,12 +35,18 @@
         {
           "name": "Get: [object Object]"
         }
+      ],
+      "errors": {},
+      "features": [
+        "hello"
       ]
     },
     {
+      "name": "Default",
       "whens": [
         {
-          "name": "Increment: 1"
+          "name": "Increment: 1",
+          "error": true
         },
         {
           "name": "Increment: 1"
@@ -52,7 +65,12 @@
         {
           "name": "Get: [object Object]"
         }
+      ],
+      "errors": {},
+      "features": [
+        "hello"
       ]
     }
-  ]
+  ],
+  "fails": []
 }

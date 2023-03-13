@@ -1,18 +1,24 @@
 {
-  "fails": [],
+  "name": "Testing the Node server with fetch * 2 ports",
   "givens": [
     {
+      "name": "AnEmptyState",
       "whens": [],
       "thens": [
         {
           "name": "TheStatusIsA: some great status"
         }
+      ],
+      "features": [
+        "hello"
       ]
     },
     {
+      "name": "AnEmptyState",
       "whens": [
         {
-          "name": "PostToStatusA: gutentag"
+          "name": "PostToStatusA: gutentag",
+          "error": true
         },
         {
           "name": "PostToStatusB: buenos dias"
@@ -25,7 +31,12 @@
         {
           "name": "TheStatusIsB: buenos dias"
         }
+      ],
+      "errors": {},
+      "features": [
+        "hello"
       ]
     }
-  ]
+  ],
+  "fails": []
 }

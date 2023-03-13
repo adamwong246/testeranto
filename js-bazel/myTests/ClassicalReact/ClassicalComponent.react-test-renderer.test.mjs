@@ -13,9 +13,6 @@ var ClassicalComponent = class extends React.Component {
   }
   componentDidMount() {
     console.info("componentDidMount");
-    const y = fetch("http://www.google.com/", { mode: `no-cors` }).then((x) => {
-      console.log("i am a genius!");
-    });
   }
   render() {
     return /* @__PURE__ */ React.createElement("div", { style: { border: "3px solid green" } }, /* @__PURE__ */ React.createElement("h1", null, "Hello Marcus"), /* @__PURE__ */ React.createElement("pre", { id: "theProps" }, JSON.stringify(this.props)), /* @__PURE__ */ React.createElement("p", null, "foo: ", this.props.foo), /* @__PURE__ */ React.createElement("pre", { id: "theState" }, JSON.stringify(this.state)), /* @__PURE__ */ React.createElement("p", null, "count: ", this.state.count, " times"), /* @__PURE__ */ React.createElement("button", { id: "theButton", onClick: async () => {
@@ -27,12 +24,11 @@ var ClassicalComponent = class extends React.Component {
 // myTests/ClassicalReact/react-test-renderer.testeranto.test.ts
 import React2 from "react";
 import renderer, { act } from "react-test-renderer";
-import { Testeranto } from "testeranto";
+import Testeranto from "testeranto";
 var ReactTestRendererTesteranto = (testImplementations, testSpecifications, testInput, nameKey) => Testeranto(
   testInput,
   testSpecifications,
   testImplementations,
-  { ports: 0 },
   {
     beforeEach: function(CComponent, props) {
       let component;
@@ -118,6 +114,17 @@ var ClassicalComponentReactTestRendererTesteranto = ReactTestRendererTesteranto(
             ],
             [
               Then.TheStatusIs({ "count": 33 })
+            ]
+          ),
+          Given.AnEmptyState(
+            [],
+            [
+              When.IClickTheButton(),
+              When.IClickTheButton(),
+              When.IClickTheButton()
+            ],
+            [
+              Then.TheStatusIs({ "count": 333 })
             ]
           )
         ],

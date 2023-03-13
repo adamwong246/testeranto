@@ -1,7 +1,8 @@
 {
-  "fails": [],
+  "name": "Testing the Rectangle class",
   "givens": [
     {
+      "name": "Default",
       "whens": [
         {
           "name": "setWidth: 4"
@@ -17,9 +18,13 @@
         {
           "name": "getHeight: 9"
         }
+      ],
+      "features": [
+        "hello"
       ]
     },
     {
+      "name": "WidthOfOneAndHeightOfOne",
       "whens": [
         {
           "name": "setWidth: 4"
@@ -41,9 +46,11 @@
         {
           "name": "AreaPlusCircumference: 38"
         }
-      ]
+      ],
+      "features": []
     },
     {
+      "name": "WidthOfOneAndHeightOfOne",
       "whens": [
         {
           "name": "setHeight: 4"
@@ -56,9 +63,13 @@
         {
           "name": "area: 12"
         }
+      ],
+      "features": [
+        "hola"
       ]
     },
     {
+      "name": "WidthOfOneAndHeightOfOne",
       "whens": [
         {
           "name": "setHeight: 3"
@@ -80,9 +91,13 @@
         {
           "name": "circumference: 22"
         }
+      ],
+      "features": [
+        "hola"
       ]
     },
     {
+      "name": "WidthOfOneAndHeightOfOne",
       "whens": [
         {
           "name": "setHeight: 3"
@@ -104,9 +119,14 @@
         {
           "name": "circumference: 14"
         }
+      ],
+      "features": [
+        "gutentag",
+        "aloha"
       ]
     },
     {
+      "name": "WidthOfOneAndHeightOfOne",
       "whens": [
         {
           "name": "setHeight: 33"
@@ -119,7 +139,11 @@
         {
           "name": "getHeight: 33"
         }
+      ],
+      "features": [
+        "hello"
       ]
     }
-  ]
+  ],
+  "fails": []
 }

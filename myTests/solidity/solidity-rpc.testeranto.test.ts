@@ -1,7 +1,7 @@
 import Ganache, { Server } from "ganache";
 import Web3 from 'web3';
 
-import { Testeranto } from "testeranto";
+import Testeranto from "testeranto";
 import {
   ITestImplementation, ITestSpecification, ITTestShape
 } from "testeranto";

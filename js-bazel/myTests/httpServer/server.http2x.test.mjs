@@ -1,6 +1,6 @@
 // myTests/httpServer/http2x.testeranto.test.ts
 import { assert } from "chai";
-import { Testeranto } from "testeranto";
+import Testeranto from "testeranto";
 var Http2xTesteranto = (testImplementations, testSpecifications, testInput) => Testeranto(
   testInput,
   testSpecifications,

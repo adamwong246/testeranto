@@ -1,30 +1,38 @@
 {
-  "fails": [],
+  "name": "Testing the Server with Puppeteer",
   "givens": [
     {
+      "name": "AnEmptyState",
       "whens": [],
       "thens": [
         {
           "name": "TheStatusIs: some great status"
         }
-      ]
+      ],
+      "features": []
     },
     {
+      "name": "AnEmptyState",
       "whens": [
         {
-          "name": "PostToStatus: aloha"
+          "name": "PostToStatus: aloha",
+          "error": true
         }
       ],
       "thens": [
         {
           "name": "TheStatusIs: aloha"
         }
-      ]
+      ],
+      "errors": {},
+      "features": []
     },
     {
+      "name": "AnEmptyState",
       "whens": [
         {
-          "name": "PostToStatus: hello"
+          "name": "PostToStatus: hello",
+          "error": true
         },
         {
           "name": "PostToStatus: aloha"
@@ -34,20 +42,28 @@
         {
           "name": "TheStatusIs: aloha"
         }
+      ],
+      "errors": {},
+      "features": [
+        "hello"
       ]
     },
     {
+      "name": "AnEmptyState",
       "whens": [],
       "thens": [
         {
           "name": "TheNumberIs: 0"
         }
-      ]
+      ],
+      "features": []
     },
     {
+      "name": "AnEmptyState",
       "whens": [
         {
-          "name": "PostToAdd: 1"
+          "name": "PostToAdd: 1",
+          "error": true
         },
         {
           "name": "PostToAdd: 2"
@@ -57,12 +73,18 @@
         {
           "name": "TheNumberIs: 3"
         }
+      ],
+      "errors": {},
+      "features": [
+        "hello"
       ]
     },
     {
+      "name": "AnEmptyState",
       "whens": [
         {
-          "name": "PostToStatus: aloha"
+          "name": "PostToStatus: aloha",
+          "error": true
         },
         {
           "name": "PostToAdd: 4"
@@ -81,7 +103,12 @@
         {
           "name": "TheNumberIs: 7"
         }
+      ],
+      "errors": {},
+      "features": [
+        "hello"
       ]
     }
-  ]
+  ],
+  "fails": []
 }

@@ -24,11 +24,11 @@ export class ClassicalComponent extends React.Component<IProps, IState> {
 
     // console.info("x", x);
 
-    const y = fetch("http://www.google.com/", { mode: `no-cors` })
-      // .then((response) => response.text())
-      .then(x => {
-        console.log("i am a genius!")
-      });
+    // const y = fetch("http://www.google.com/", { mode: `no-cors` })
+    //   // .then((response) => response.text())
+    //   .then(x => {
+    //     console.log("i am a genius!")
+    //   });
 
     // console.info(y);
 

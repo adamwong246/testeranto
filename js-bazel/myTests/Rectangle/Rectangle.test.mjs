@@ -1,8 +1,6 @@
 // myTests/Rectangle/Rectangle.test.ts
 import assert from "assert";
-import {
-  Testeranto
-} from "testeranto";
+import Testeranto from "testeranto";
 
 // myTests/Rectangle/Rectangle.ts
 var Rectangle = class {
@@ -142,7 +140,6 @@ var RectangleTesteranto = Testeranto(
       }
     }
   },
-  { ports: 0 },
   {
     andWhen: async function(renderer, actioner) {
       actioner()(renderer);

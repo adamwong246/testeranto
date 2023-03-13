@@ -1,8 +1,25 @@
 {
-  "fails": [
+  "name": "foo",
+  "givens": [
     {
       "name": "AnEmptyState",
-      "features": [],
+      "whens": [
+        {
+          "name": "IClickTheButton: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "ThePropsIs: [object Object]"
+        },
+        {
+          "name": "TheStatusIs: [object Object]"
+        }
+      ],
+      "features": []
+    },
+    {
+      "name": "AnEmptyState",
       "whens": [
         {
           "name": "IClickTheButton: undefined"
@@ -20,68 +37,7 @@
           "error": true
         }
       ],
-      "initialValues": {},
-      "store": {
-        "type": "div",
-        "props": {
-          "style": {
-            "border": "3px solid green"
-          }
-        },
-        "children": [
-          {
-            "type": "h1",
-            "props": {},
-            "children": [
-              "Hello Marcus"
-            ]
-          },
-          {
-            "type": "pre",
-            "props": {
-              "id": "theProps"
-            },
-            "children": [
-              "{\"children\":[]}"
-            ]
-          },
-          {
-            "type": "p",
-            "props": {},
-            "children": [
-              "foo: "
-            ]
-          },
-          {
-            "type": "pre",
-            "props": {
-              "id": "theState"
-            },
-            "children": [
-              "{\"count\":3}"
-            ]
-          },
-          {
-            "type": "p",
-            "props": {},
-            "children": [
-              "count: ",
-              "3",
-              " times"
-            ]
-          },
-          {
-            "type": "button",
-            "props": {
-              "id": "theButton"
-            },
-            "children": [
-              "Click"
-            ]
-          }
-        ]
-      },
-      "error": {
+      "errors": {
         "generatedMessage": true,
         "code": "ERR_ASSERTION",
         "actual": {
@@ -103,26 +59,11 @@
           ]
         },
         "operator": "deepEqual"
-      }
-    }
-  ],
-  "givens": [
-    {
-      "whens": [
-        {
-          "name": "IClickTheButton: undefined"
-        }
-      ],
-      "thens": [
-        {
-          "name": "ThePropsIs: [object Object]"
-        },
-        {
-          "name": "TheStatusIs: [object Object]"
-        }
-      ]
+      },
+      "features": []
     },
     {
+      "name": "AnEmptyState",
       "whens": [
         {
           "name": "IClickTheButton: undefined"
@@ -139,7 +80,32 @@
           "name": "TheStatusIs: [object Object]",
           "error": true
         }
-      ]
+      ],
+      "errors": {
+        "generatedMessage": true,
+        "code": "ERR_ASSERTION",
+        "actual": {
+          "type": "pre",
+          "props": {
+            "id": "theState"
+          },
+          "children": [
+            "{\"count\":3}"
+          ]
+        },
+        "expected": {
+          "type": "pre",
+          "props": {
+            "id": "theState"
+          },
+          "children": [
+            "{\"count\":333}"
+          ]
+        },
+        "operator": "deepEqual"
+      },
+      "features": []
     }
-  ]
+  ],
+  "fails": []
 }

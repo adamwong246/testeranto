@@ -1,8 +1,6 @@
 import assert from "assert";
 
-import {
-  Testeranto,
-} from "testeranto";
+import Testeranto from "testeranto";
 
 import Rectangle from "./Rectangle";
 
@@ -184,7 +182,6 @@ export const RectangleTesteranto =
         },
       },
     },
-    { ports: 0 },
     {
       andWhen: async function (renderer, actioner) {
         actioner()(renderer)
