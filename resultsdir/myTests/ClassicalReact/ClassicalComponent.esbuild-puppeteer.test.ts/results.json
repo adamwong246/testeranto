@@ -107,7 +107,7 @@
         "actual": "{\"count\":6}",
         "expected": "{\"count\":66}",
         "operator": "strictEqual",
-        "stack": "AssertionError: expected '{\"count\":6}' to deeply equal '{\"count\":66}'\n    at Then.thenCB (file:///Users/adam/Code/kokomoBay/js-bazel/myTests/ClassicalReact/ClassicalComponent.esbuild-puppeteer.test.mjs:139:64)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Given.give (file:///Users/adam/Code/kokomoBay/node_modules/testeranto/src/index.mjs:107:27)\n    at async MrT.constructor.run (file:///Users/adam/Code/kokomoBay/node_modules/testeranto/src/index.mjs:56:30)\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/node_modules/testeranto/src/index.mjs:319:39)\n    at async process.<anonymous> (file:///Users/adam/Code/kokomoBay/node_modules/testeranto/src/index.mjs:427:25)"
+        "stack": "AssertionError: expected '{\"count\":6}' to deeply equal '{\"count\":66}'\n    at Then.thenCB (file:///Users/adam/Code/kokomoBay/js-bazel/myTests/ClassicalReact/ClassicalComponent.esbuild-puppeteer.test.mjs:142:64)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Given.give (file:///Users/adam/Code/kokomoBay/node_modules/testeranto/src/index.mjs:109:27)\n    at async MrT.constructor.run (file:///Users/adam/Code/kokomoBay/node_modules/testeranto/src/index.mjs:58:30)\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/node_modules/testeranto/src/index.mjs:321:39)\n    at async process.<anonymous> (file:///Users/adam/Code/kokomoBay/node_modules/testeranto/src/index.mjs:427:25)"
       },
       "features": [
         "hello"

@@ -15,6 +15,7 @@ type Store = {
   page: Page;
   recorder: PuppeteerScreenRecorder;
   consoleLogs: string[];
+  pipeStream: PassThrough;
 };
 
 type Subject = {
@@ -129,6 +130,7 @@ export const EsbuildPuppeteerTesteranto = <
             page,
             recorder: recorder,
             consoleLogs,
+            pipeStream
           };
         });
       },
@@ -142,14 +144,17 @@ export const EsbuildPuppeteerTesteranto = <
         page,
         recorder,
         consoleLogs,
+        pipeStream
       }: Store, ndx, artificer) {
         recorder.stop();
-        console.log("afterEach", artificer)
+        // pipeStream.end();
         artificer("./afterEachScreenshot.png", await ((await page).screenshot()));
         artificer("./afterEachLogs.txt", consoleLogs.join(`\n`));
+        return;
       },
       afterAll: (store, artificer) => {
         // console.log("afterAll")
+        return;
       }
     },
     nameKey

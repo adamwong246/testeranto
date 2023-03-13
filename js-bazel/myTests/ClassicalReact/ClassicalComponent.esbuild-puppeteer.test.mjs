@@ -66,7 +66,8 @@ var EsbuildPuppeteerTesteranto = (testImplementations, testSpecifications, testI
         return {
           page,
           recorder,
-          consoleLogs
+          consoleLogs,
+          pipeStream
         };
       });
     },
@@ -79,15 +80,17 @@ var EsbuildPuppeteerTesteranto = (testImplementations, testSpecifications, testI
     afterEach: async function({
       page,
       recorder,
-      consoleLogs
+      consoleLogs,
+      pipeStream
     }, ndx, artificer) {
       recorder.stop();
-      console.log("afterEach", artificer);
       artificer("./afterEachScreenshot.png", await (await page).screenshot());
       artificer("./afterEachLogs.txt", consoleLogs.join(`
 `));
+      return;
     },
     afterAll: (store, artificer) => {
+      return;
     }
   },
   nameKey
