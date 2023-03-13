@@ -138,5 +138,6 @@ export const StorefrontTest = StorefrontTesteranto<
     storefront,
   ],
 
-  "MyFirstContract"
+  "MyFirstContract",
+  "MyFirstContract-storefront-alpha"
 );

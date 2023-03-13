@@ -24,11 +24,10 @@ import { assert } from "chai";
 // myTests/Redux+Reselect+React/reduxToolkit.testeranto.test.ts
 import { createStore } from "redux";
 import Testeranto from "testeranto";
-var ReduxToolkitTesteranto = (testImplementations, testSpecifications, testInput) => Testeranto(
+var ReduxToolkitTesteranto = (testImplementations, testSpecifications, testInput, keyName) => Testeranto(
   testInput,
   testSpecifications,
   testImplementations,
-  { ports: 0 },
   {
     beforeEach: (subject, initialValues) => createStore(subject.reducer, initialValues),
     andWhen: function(store, actioner) {
@@ -41,7 +40,8 @@ var ReduxToolkitTesteranto = (testImplementations, testSpecifications, testInput
     assertioner: function(t) {
       return t[0](t[1], t[2], t[3]);
     }
-  }
+  },
+  keyName
 );
 
 // myTests/Redux+Reselect+React/app.ts
@@ -174,7 +174,8 @@ var AppReduxToolkitTesteranto = ReduxToolkitTesteranto(
       )
     ];
   },
-  { reducer, selector }
+  { reducer, selector },
+  `app-redux-toolkit`
 );
 export {
   AppReduxToolkitTesteranto

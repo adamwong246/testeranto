@@ -9,7 +9,6 @@
           "name": "TheCounterIs: 0"
         }
       ],
-      "errors": {},
       "features": [
         "federatedSplitContract"
       ]
@@ -18,8 +17,7 @@
       "name": "AnEmptyState",
       "whens": [
         {
-          "name": "Increment: undefined",
-          "error": true
+          "name": "Increment: undefined"
         }
       ],
       "thens": [
@@ -27,15 +25,13 @@
           "name": "TheCounterIs: 1"
         }
       ],
-      "errors": {},
       "features": []
     },
     {
       "name": "AnEmptyState",
       "whens": [
         {
-          "name": "Increment: undefined",
-          "error": true
+          "name": "Increment: undefined"
         },
         {
           "name": "Increment: undefined"
@@ -58,15 +54,13 @@
           "name": "TheCounterIs: 6"
         }
       ],
-      "errors": {},
       "features": []
     },
     {
       "name": "AnEmptyState",
       "whens": [
         {
-          "name": "Increment: undefined",
-          "error": true
+          "name": "Increment: undefined"
         },
         {
           "name": "Increment: undefined"
@@ -179,7 +173,6 @@
           "name": "TheCounterIs: 36"
         }
       ],
-      "errors": {},
       "features": []
     }
   ],

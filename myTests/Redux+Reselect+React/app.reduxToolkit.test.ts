@@ -11,8 +11,6 @@ const reducer = core.app.reducer;
 
 import { features } from "../testerantoFeatures.test.mjs";
 
-const myFeature = `hello`;
-
 export const AppReduxToolkitTesteranto = ReduxToolkitTesteranto<
   IStoreState,
   ILoginPageSelection,
@@ -119,6 +117,7 @@ export const AppReduxToolkitTesteranto = ReduxToolkitTesteranto<
     ];
   },
 
-  { reducer, selector }
+  { reducer, selector },
+  `app-redux-toolkit`
 
 );

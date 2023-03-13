@@ -41,7 +41,8 @@ export const ReduxToolkitTesteranto = <
 
   }>,
   testSpecifications: ITestSpecification<ITestShape>,
-  testInput: Input<IStoreShape, ISelectionShape>
+  testInput: Input<IStoreShape, ISelectionShape>,
+  keyName: string
 ) =>
   Testeranto<
     ITestShape,
@@ -56,7 +57,6 @@ export const ReduxToolkitTesteranto = <
     testInput,
     testSpecifications,
     testImplementations,
-    { ports: 0 },
     {
       beforeEach: (subject: Input<IStoreShape, ISelectionShape>, initialValues: any): Promise<Store<any, AnyAction>> =>
         createStore<IStoreShape, any, any, any>(subject.reducer, initialValues),
@@ -70,5 +70,6 @@ export const ReduxToolkitTesteranto = <
       assertioner: function (t: ThenShape) {
         return t[0](t[1], t[2], t[3]);
       }
-    }
+    },
+    keyName
   )

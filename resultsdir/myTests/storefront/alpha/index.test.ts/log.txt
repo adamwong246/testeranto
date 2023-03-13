@@ -2,17 +2,64 @@
 Suite:,the storefront react app, alpha,[object Object]
 
  Given: AnEmptyState
+testArtiFactory =>,./screencap.mp4
  Then:,TheCounterIs: 0
-
+testArtiFactory =>,screenshotr.png
 
  Given: AnEmptyState
+testArtiFactory =>,./screencap.mp4
  When:,Increment: undefined
-
+ Then:,TheCounterIs: 1
+testArtiFactory =>,screenshotr.png
 
  Given: AnEmptyState
+testArtiFactory =>,./screencap.mp4
  When:,Increment: undefined
-
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ Then:,TheCounterIs: 6
+testArtiFactory =>,screenshotr.png
 
  Given: AnEmptyState
+testArtiFactory =>,./screencap.mp4
  When:,Increment: undefined
-
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ When:,Increment: undefined
+ Then:,TheCounterIs: 36
+testArtiFactory =>,screenshotr.png

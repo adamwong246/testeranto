@@ -3,18 +3,22 @@ Suite:,Testing the ReduxToolkit,[object Object]
 
  Given: AnEmptyState
  When:,TheEmailIsSetTo: adam@email.com
-
+ Then:,TheEmailIs: adam@email.com
 
  Given: AStateWithEmail
  When:,TheEmailIsSetTo: hello
-
+ Then:,TheEmailIsNot: adam@email.com
 
  Given: AnEmptyState
  When:,TheEmailIsSetTo: hello
-
+ When:,TheEmailIsSetTo: aloha
+ Then:,TheEmailIs: aloha
 
  Given: AnEmptyState
  Then:,TheEmailIs: 
 
  Check: imperative style
  When:,TheEmailIsSetTo: foo
+ Then:,TheEmailIs: foo
+ When:,TheEmailIsSetTo: foobar
+ Then:,TheEmailIs: foobar

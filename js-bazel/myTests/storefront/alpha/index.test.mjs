@@ -80,11 +80,10 @@ var solCompile = async (entrySolidityFile) => {
 };
 
 // myTests/storefront/alpha/index.testeranto.test.ts
-var StorefrontTesteranto = (testImplementations, testSpecifications, testInput, contractName) => Testeranto(
+var StorefrontTesteranto = (testImplementations, testSpecifications, testInput, contractName, testName) => Testeranto(
   testInput,
   testSpecifications,
   testImplementations,
-  { ports: 0 },
   {
     beforeAll: async function([bundlePath, htmlTemplate]) {
       return {
@@ -180,7 +179,8 @@ var StorefrontTesteranto = (testImplementations, testSpecifications, testInput, 
       artifacter("screenshotr.png", await (await page).screenshot());
       return { page };
     }
-  }
+  },
+  testName
 );
 
 // src/storefront.tsx
@@ -324,7 +324,8 @@ var StorefrontTest = StorefrontTesteranto(
 `,
     storefront_default
   ],
-  "MyFirstContract"
+  "MyFirstContract",
+  "MyFirstContract-storefront-alpha"
 );
 export {
   StorefrontTest

@@ -54,7 +54,8 @@ export const StorefrontTesteranto = <
   >,
   testSpecifications: ITestSpecification<ITestShape, IFeatureShape>,
   testInput: Input,
-  contractName: string
+  contractName: string,
+  testName: string,
 ) =>
   Testeranto<
     ITestShape,
@@ -70,7 +71,6 @@ export const StorefrontTesteranto = <
     testInput,
     testSpecifications,
     testImplementations,
-    { ports: 0 },
     {
       beforeAll: async function ([bundlePath, htmlTemplate]: Input): Promise<Subject> {
 
@@ -203,5 +203,6 @@ export const StorefrontTesteranto = <
 
         return { page };
       }
-    }
+    },
+    testName
   )
