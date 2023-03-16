@@ -22,7 +22,7 @@ export class Report extends React.Component<
 
   componentDidMount() {
     this.props.config.tests.map((fPath2, fndx) => {
-      const fPath = this.props.config.resultsdir + '/' + fPath2;
+      const fPath = this.props.config.outdir + '/' + fPath2;
 
       console.log("fPath", fPath);
 
@@ -234,30 +234,13 @@ pre, core, p {
 
                       {
                         (() => {
-                          const failures = this.state.tests[suiteKey].results.fails;
-
                           return (
                             <Tab.Container id="left-tabs-example2" defaultActiveKey={`given-0`}>
                               < Tabs defaultActiveKey="test-drilldown" >
-                                <Tab eventKey="test-results" title="failures">
-                                  <Row>
-                                    <Col sm={3}>
-                                      <Nav variant="pills" className="flex-column">
-                                        {failures.map((failure, ndx2) => <Nav.Item key={ndx2}>
-                                          <Nav.Link eventKey={`given-${ndx2}`}>
-                                            {failure.name}
-                                          </Nav.Link>
-                                        </Nav.Item>)}
-                                      </Nav>
-                                    </Col>
-                                    <Col sm={6}>
-                                      <Tab.Content>
-                                        {failures.map((failure, ndx2) => <Tab.Pane key={ndx2} eventKey={`given-${ndx2}`} >
-                                          <pre><code>{JSON.stringify(failure, null, 2)}</code></pre>
-                                        </Tab.Pane>)}
-                                      </Tab.Content>
-                                    </Col>
-                                  </Row>
+                                <Tab eventKey="test-results" title="results">
+                                  <pre>{
+                                    JSON.stringify(this.state.tests[suiteKey].results, null, 2)
+                                  }</pre>
                                 </Tab>
                                 <Tab eventKey="test-logs" title="logs">
                                   <pre>{this.state.tests[suiteKey].logs}</pre>
@@ -279,7 +262,11 @@ pre, core, p {
 
         </Tabs >
 
-        <footer style={{ position: 'fixed', bottom: 0, right: 0 }}>made with ❤️ and <a href="https://adamwong246.github.io/testeranto/" >testeranto</a></footer>
+        <footer style={{
+          position: 'fixed',
+          bottom: 0,
+          right: 0,
+        }}>made with ❤️ and <a href="https://adamwong246.github.io/testeranto/" >testeranto </a></footer>
 
       </div >
 

@@ -1,13 +1,11 @@
+import fsExists from 'fs.promises.exists'
+import pm2 from 'pm2';
+import { spawn } from 'child_process'
 import path from "path";
 import esbuild, { BuildContext, BuildOptions } from "esbuild";
 import { createServer, request } from 'http'
 
 import { TesterantoFeatures } from "./Features";
-
-import fs from 'fs';
-import fsExists from 'fs.promises.exists'
-import pm2 from 'pm2';
-import { spawn } from 'child_process'
 import { ICollateMode } from "./IBaseConfig";
 import { IBaseConfig } from "./index.mjs";
 
@@ -156,7 +154,7 @@ export default class Scheduler {
             const script = makePath(inputFilePath);
             this.summary[inputFilePath] = undefined;
             const partialTestResourceByCommandLineArg = `'${JSON.stringify({
-              fs: path.resolve(process.cwd(), project.resultsdir, inputFilePath)
+              fs: path.resolve(process.cwd(), project.outdir, inputFilePath)
             })}'`
 
             m[inputFilePath] = pm2.start({
@@ -179,12 +177,12 @@ export default class Scheduler {
 
           pm2.launchBus((err, pm2_bus) => {
             pm2_bus.on('testeranto:hola', (packet: any) => {
-              console.log("hola", packet);
+              // console.log("hola", packet);
               this.push(packet);
             });
 
             pm2_bus.on('testeranto:adios', (packet: IPm2ProcessB) => {
-              console.log("adios", packet);
+              // console.log("adios", packet);
               this.releaseTestResources(packet);
             });
           });
@@ -349,7 +347,9 @@ export default class Scheduler {
 }
 
 export class ITProject {
+  buildMode: 'on' | 'off' | 'watch';
   clearScreen: boolean;
+  collateEntry: string;
   collateMode: ICollateMode;
   features: TesterantoFeatures;
   loaders: any[];
@@ -357,19 +357,17 @@ export class ITProject {
   outbase: string;
   outdir: string;
   ports: string[];
-  // collateDir: string;
-  collateEntry: string;
-  resultsdir: string;
   runMode: boolean;
   tests: string[];
-  buildMode: 'on' | 'off' | 'watch';
 
   getEntryPoints(): string[] {
     return Object.values(this.tests);
   }
 
   constructor(config: IBaseConfig) {
+    this.buildMode = config.buildMode;
     this.clearScreen = config.clearScreen;
+    this.collateEntry = config.collateEntry;
     this.collateMode = config.collateMode;
     this.features = config.features;
     this.loaders = config.loaders;
@@ -377,12 +375,8 @@ export class ITProject {
     this.outbase = config.outbase;
     this.outdir = config.outdir;
     this.ports = config.ports;
-    // this.collateDir = config.collateDir;
-    this.collateEntry = config.collateEntry;
-    this.resultsdir = config.resultsdir;
-    this.tests = config.tests;
     this.runMode = config.runMode;
-    this.buildMode = config.buildMode;
+    this.tests = config.tests;
 
     const collateDir = '.';
 
@@ -416,19 +410,13 @@ export class ITProject {
       ]
     };
 
-    const entryPoints = [
-      ...this.getEntryPoints().map((sourcefile) => {
-        return sourcefile;
-      })
-    ];
-
     const testOpts = {
       platform: 'node',
       format: "esm",
       outbase: this.outbase,
       outdir: this.outdir,
       jsx: `transform`,
-      entryPoints,
+      entryPoints: this.getEntryPoints().map((sourcefile) => sourcefile),
       bundle: true,
       minify: this.minify === true,
       write: true,
@@ -504,9 +492,38 @@ export class ITProject {
         esbuildContext.watch();
         console.log(`serving collated reports @ ${"http://localhost:8000/"}`);
       });
+    } else if (this.collateMode === 'dev') {
+
+
+      console.log("mark2", process.cwd());
+
+      esbuild.build({
+        bundle: true,
+        entryPoints: [config.collateEntry],
+        format: "iife",
+        jsx: `transform`,
+        minify: this.minify === true,
+        outbase: this.outbase,
+        outdir: collateDir,
+        write: true,
+      })
+
+
+
+
+
+
+
+
+
+
+
+
 
     } else {
       console.log("skipping 'collate' phase");
     }
+
+
   }
 };

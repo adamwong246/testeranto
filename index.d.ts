@@ -66,7 +66,7 @@ declare module "Features" {
 }
 declare module "IBaseConfig" {
     import { TesterantoFeatures } from "Features";
-    export type ICollateMode = 'on' | 'off' | 'watch' | `serve` | `watch+serve`;
+    export type ICollateMode = 'on' | 'off' | 'watch' | `serve` | `watch+serve` | `dev`;
     export type IBaseConfig = {
         clearScreen: boolean;
         collateMode: ICollateMode;
@@ -77,7 +77,6 @@ declare module "IBaseConfig" {
         outdir: string;
         ports: string[];
         collateEntry: string;
-        resultsdir: string;
         runMode: boolean;
         tests: string[];
         buildMode: 'on' | 'off' | 'watch';
@@ -291,8 +290,8 @@ declare module "index" {
     export default _default;
 }
 declare module "Project" {
-    import { TesterantoFeatures } from "Features";
     import pm2 from 'pm2';
+    import { TesterantoFeatures } from "Features";
     import { ICollateMode } from "IBaseConfig";
     import { IBaseConfig } from "index";
     type IPm2Process = {
@@ -332,7 +331,9 @@ declare module "Project" {
         shutdown(): void;
     }
     export class ITProject {
+        buildMode: 'on' | 'off' | 'watch';
         clearScreen: boolean;
+        collateEntry: string;
         collateMode: ICollateMode;
         features: TesterantoFeatures;
         loaders: any[];
@@ -340,11 +341,8 @@ declare module "Project" {
         outbase: string;
         outdir: string;
         ports: string[];
-        collateEntry: string;
-        resultsdir: string;
         runMode: boolean;
         tests: string[];
-        buildMode: 'on' | 'off' | 'watch';
         getEntryPoints(): string[];
         constructor(config: IBaseConfig);
     }
