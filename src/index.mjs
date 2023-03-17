@@ -30,7 +30,7 @@ const testArtiFactoryfileWriter = (tLog) => (fp) => (g) => (key, value) => {
         }
     });
 };
-export class BaseSuite {
+class BaseSuite {
     constructor(name, givens = [], checks = []) {
         this.name = name;
         this.givens = givens;
@@ -76,7 +76,7 @@ export class BaseSuite {
     }
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-export class BaseGiven {
+class BaseGiven {
     constructor(name, features, whens, thens) {
         this.name = name;
         this.features = features;
@@ -127,7 +127,7 @@ export class BaseGiven {
         return this.store;
     }
 }
-export class BaseWhen {
+class BaseWhen {
     constructor(name, actioner) {
         this.name = name;
         this.actioner = actioner;
@@ -149,7 +149,7 @@ export class BaseWhen {
         }
     }
 }
-export class BaseThen {
+class BaseThen {
     constructor(name, thenCB) {
         this.name = name;
         this.thenCB = thenCB;
@@ -196,7 +196,7 @@ export class BaseThen {
         // }
     }
 }
-export class BaseCheck {
+class BaseCheck {
     constructor(name, features, checkCB, whens, thens) {
         this.name = name;
         this.features = features;
@@ -228,8 +228,7 @@ export class BaseCheck {
         return;
     }
 }
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
-export class TesterantoLevelZero {
+class TesterantoLevelZero {
     constructor(cc, suitesOverrides, givenOverides, whenOverides, thenOverides, checkOverides) {
         this.cc = cc;
         this.constructorator = cc;
@@ -255,7 +254,7 @@ export class TesterantoLevelZero {
         return this.checkOverides;
     }
 }
-export class TesterantoLevelOne {
+class TesterantoLevelOne {
     constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResourceRequirement, nameKey) {
         const classySuites = Object.entries(testImplementation.Suites)
             .reduce((a, [key]) => {
@@ -332,7 +331,7 @@ export class TesterantoLevelOne {
         return toReturn;
     }
 }
-export default async (input, testSpecification, testImplementation, testInterface, nameKey, testResourceRequirement = defaultTestResourceRequirement) => {
+const Testeranto = async (input, testSpecification, testImplementation, testInterface, nameKey, testResourceRequirement = defaultTestResourceRequirement) => {
     const butThen = testInterface.butThen || (async (a) => a);
     const { andWhen } = testInterface;
     const actionHandler = testInterface.actionHandler || function (b) {
@@ -460,4 +459,7 @@ export default async (input, testSpecification, testImplementation, testInterfac
         console.error(`the test resource passed by command-line arugument "${process.argv[2]}" was malformed.`);
         process.exit(-1);
     }
+};
+export default {
+    Testeranto, BaseWhen, BaseThen, BaseCheck, BaseSuite, BaseGiven
 };

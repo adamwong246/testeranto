@@ -5,7 +5,6 @@ import { PassThrough } from 'stream';
 import { BaseFeature } from './Features';
 
 import { IBaseConfig } from "./IBaseConfig";
-export type { IBaseConfig };
 
 const defaultTestResource: ITTestResourceConfiguration = { "fs": ".", ports: [] };
 const defaultTestResourceRequirement: ITTestResourceRequirement = { "fs": ".", ports: 0 };
@@ -14,14 +13,15 @@ type ITTestResourceConfiguration = {
   "fs": string,
   "ports": number[]
 };
-export type ITTestResourceRequirement = {
+
+type ITTestResourceRequirement = {
   "ports": number,
   "fs": string,
 };
 
 type IRunner = (x: ITTestResourceConfiguration, t: ITLog) => Promise<boolean>;
 
-export type IT = {
+type IT = {
   toObj(): object;
   name: string;
   givens: BaseGiven<unknown, unknown, unknown, unknown, Record<string, BaseFeature>>[];
@@ -29,7 +29,7 @@ export type IT = {
   testResourceConfiguration: ITTestResourceConfiguration
 };
 
-export type ITestJob = {
+type ITestJob = {
   toObj(): object;
   test: IT;
   runner: IRunner;
@@ -37,9 +37,9 @@ export type ITestJob = {
   receiveTestResourceConfig: (testResource?) => boolean;
 };
 
-export type ITestResults = Promise<{ test: IT; }>[];
+type ITestResults = Promise<{ test: IT; }>[];
 
-export type ITTestShape = {
+type ITTestShape = {
   suites;
   givens;
   whens;
@@ -47,7 +47,7 @@ export type ITTestShape = {
   checks;
 };
 
-export type ITestSpecification<ITestShape extends ITTestShape, IFeatureShape> = (
+type ITestSpecification<ITestShape extends ITTestShape, IFeatureShape> = (
   Suite: {
     [K in keyof ITestShape["suites"]]: (
       name: string,
@@ -92,7 +92,7 @@ export type ITestSpecification<ITestShape extends ITTestShape, IFeatureShape> = 
   }
 ) => any[];
 
-export type ITestImplementation<
+type ITestImplementation<
   IState,
   ISelection,
   IWhenShape,
@@ -157,7 +157,7 @@ const testArtiFactoryfileWriter = (tLog: ITLog) => (fp) => (g) => (key, value: s
   });
 };
 
-export abstract class BaseSuite<
+abstract class BaseSuite<
   IInput,
   ISubject,
   IStore,
@@ -253,7 +253,7 @@ export abstract class BaseSuite<
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export abstract class BaseGiven<
+abstract class BaseGiven<
   ISubject,
   IStore,
   ISelection,
@@ -340,7 +340,7 @@ export abstract class BaseGiven<
   }
 }
 
-export abstract class BaseWhen<IStore, ISelection, IThenShape> {
+abstract class BaseWhen<IStore, ISelection, IThenShape> {
   public name: string;
   actioner: (x: ISelection) => IThenShape;
   error: boolean;
@@ -375,7 +375,7 @@ export abstract class BaseWhen<IStore, ISelection, IThenShape> {
   }
 }
 
-export abstract class BaseThen<ISelection, IStore, IThenShape> {
+abstract class BaseThen<ISelection, IStore, IThenShape> {
   public name: string;
   thenCB: (storeState: ISelection) => IThenShape;
   error: boolean;
@@ -432,7 +432,7 @@ export abstract class BaseThen<ISelection, IStore, IThenShape> {
   }
 }
 
-export abstract class BaseCheck<
+abstract class BaseCheck<
   ISubject,
   IStore,
   ISelection,
@@ -529,9 +529,7 @@ export abstract class BaseCheck<
   }
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-export abstract class TesterantoLevelZero<
+abstract class TesterantoLevelZero<
   IInput,
   ISubject,
   IStore,
@@ -688,7 +686,7 @@ export abstract class TesterantoLevelZero<
   }
 }
 
-export abstract class TesterantoLevelOne<
+abstract class TesterantoLevelOne<
   ITestShape extends ITTestShape,
   IInitialState,
   ISelection,
@@ -922,7 +920,7 @@ export abstract class TesterantoLevelOne<
 
 type ITestArtificer = (key: string, data: any) => void;
 
-export default async <
+const Testeranto = async <
   TestShape extends ITTestShape,
   Input,
   Subject,
@@ -1170,3 +1168,13 @@ export default async <
   }
 
 };
+
+export type {
+  IBaseConfig,
+  Testeranto, BaseWhen, BaseThen, BaseCheck, BaseSuite, BaseGiven,
+  ITestImplementation, ITestSpecification, ITTestShape, ITestResults, ITestJob, IT, ITTestResourceRequirement
+}
+
+export default {
+  Testeranto, BaseWhen, BaseThen, BaseCheck, BaseSuite, BaseGiven
+}

@@ -370,15 +370,6 @@ export class ITProject {
         else if (this.collateMode === 'dev') {
             console.log("mark2", process.cwd());
             esbuild.build({
-                // // outdir: collateDir,
-                // bundle: true,
-                // entryPoints: [`./node_modules/testeranto/src/Report.tsx`],
-                // format: "esm",
-                // jsx: `transform`,
-                // minify: false,
-                // outbase: this.outbase,
-                // outfile: './index.js'
-                // write: true,
                 bundle: true,
                 entryPoints: [config.collateEntry],
                 format: "iife",

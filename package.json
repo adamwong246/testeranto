@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.33.0",
+  "version": "0.34.0",
   "type": "module",
   "types": "./index.d.mts",
   "main": "./src/index.mjs",
@@ -26,7 +26,7 @@
     "testerantoWatch": "./bin/testerantoWatch.sh"
   },
   "scripts": {
-    "build": "tsc; yarn tsc --emitDeclarationOnly --isolatedModules false --outFile index.d.mts",
+    "build": "tsc; yarn tsc --module 'esnext' --emitDeclarationOnly --isolatedModules false --outFile index.d.mts",
     "dev": "tsc --watch",
     "bundle:reporter": "esbuild ./src/Report.tsx --bundle --outfile=./dist/reporter.js",
     "simpleserver": "cd dist && python -m SimpleHTTPServer 8080",
