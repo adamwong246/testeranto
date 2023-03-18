@@ -5,6 +5,7 @@ import { PassThrough } from 'stream';
 import { BaseFeature } from './Features';
 
 import { IBaseConfig } from "./IBaseConfig";
+export type { IBaseConfig };
 
 const defaultTestResource: ITTestResourceConfiguration = { "fs": ".", ports: [] };
 const defaultTestResourceRequirement: ITTestResourceRequirement = { "fs": ".", ports: 0 };
@@ -13,15 +14,14 @@ type ITTestResourceConfiguration = {
   "fs": string,
   "ports": number[]
 };
-
-type ITTestResourceRequirement = {
+export type ITTestResourceRequirement = {
   "ports": number,
   "fs": string,
 };
 
 type IRunner = (x: ITTestResourceConfiguration, t: ITLog) => Promise<boolean>;
 
-type IT = {
+export type IT = {
   toObj(): object;
   name: string;
   givens: BaseGiven<unknown, unknown, unknown, unknown, Record<string, BaseFeature>>[];
@@ -29,7 +29,7 @@ type IT = {
   testResourceConfiguration: ITTestResourceConfiguration
 };
 
-type ITestJob = {
+export type ITestJob = {
   toObj(): object;
   test: IT;
   runner: IRunner;
@@ -37,9 +37,9 @@ type ITestJob = {
   receiveTestResourceConfig: (testResource?) => boolean;
 };
 
-type ITestResults = Promise<{ test: IT; }>[];
+export type ITestResults = Promise<{ test: IT; }>[];
 
-type ITTestShape = {
+export type ITTestShape = {
   suites;
   givens;
   whens;
@@ -47,7 +47,7 @@ type ITTestShape = {
   checks;
 };
 
-type ITestSpecification<ITestShape extends ITTestShape, IFeatureShape> = (
+export type ITestSpecification<ITestShape extends ITTestShape, IFeatureShape> = (
   Suite: {
     [K in keyof ITestShape["suites"]]: (
       name: string,
@@ -92,7 +92,7 @@ type ITestSpecification<ITestShape extends ITTestShape, IFeatureShape> = (
   }
 ) => any[];
 
-type ITestImplementation<
+export type ITestImplementation<
   IState,
   ISelection,
   IWhenShape,
@@ -129,15 +129,28 @@ type ITestImplementation<
 type ITestArtifactory = (key: string, value: string) => unknown;
 type ITLog = (...string) => void;
 
-const testArtiFactoryfileWriter = (tLog: ITLog) => (fp) => (g) => (key, value: string | Buffer | PassThrough) => {
+type IFPaths = string[];
+const fPaths: IFPaths = [];
+
+const testArtiFactoryfileWriter = (tLog: ITLog) => (fp) => (givenNdx) => (key, value: string | Buffer | PassThrough) => {
   tLog("testArtiFactory =>", key);
 
-  const fPath = `${fp}/${g}/${key}`;
+  const fPath = `${fp}/${givenNdx}/${key}`;
   const cleanPath = path.resolve(fPath);
+  fPaths.push(cleanPath.replace(process.cwd(), ``));
+
   const targetDir = cleanPath.split('/').slice(0, -1).join('/');
 
   fs.mkdir(targetDir, { recursive: true }, async (error) => {
     if (error) { console.error(`❗️testArtiFactory failed`, targetDir, error); }
+
+    fs.writeFileSync(
+      path.resolve(
+        targetDir.split('/').slice(0, -1).join('/'),
+        "manifest"
+      ), fPaths.join(`\n`), {
+      encoding: 'utf-8'
+    });
 
     if (Buffer.isBuffer(value)) {
       fs.writeFileSync(fPath, value, "binary");
@@ -157,7 +170,7 @@ const testArtiFactoryfileWriter = (tLog: ITLog) => (fp) => (g) => (key, value: s
   });
 };
 
-abstract class BaseSuite<
+export abstract class BaseSuite<
   IInput,
   ISubject,
   IStore,
@@ -253,7 +266,7 @@ abstract class BaseSuite<
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-abstract class BaseGiven<
+export abstract class BaseGiven<
   ISubject,
   IStore,
   ISelection,
@@ -340,7 +353,7 @@ abstract class BaseGiven<
   }
 }
 
-abstract class BaseWhen<IStore, ISelection, IThenShape> {
+export abstract class BaseWhen<IStore, ISelection, IThenShape> {
   public name: string;
   actioner: (x: ISelection) => IThenShape;
   error: boolean;
@@ -375,7 +388,7 @@ abstract class BaseWhen<IStore, ISelection, IThenShape> {
   }
 }
 
-abstract class BaseThen<ISelection, IStore, IThenShape> {
+export abstract class BaseThen<ISelection, IStore, IThenShape> {
   public name: string;
   thenCB: (storeState: ISelection) => IThenShape;
   error: boolean;
@@ -432,7 +445,7 @@ abstract class BaseThen<ISelection, IStore, IThenShape> {
   }
 }
 
-abstract class BaseCheck<
+export abstract class BaseCheck<
   ISubject,
   IStore,
   ISelection,
@@ -529,7 +542,9 @@ abstract class BaseCheck<
   }
 }
 
-abstract class TesterantoLevelZero<
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export abstract class TesterantoLevelZero<
   IInput,
   ISubject,
   IStore,
@@ -686,7 +701,7 @@ abstract class TesterantoLevelZero<
   }
 }
 
-abstract class TesterantoLevelOne<
+export abstract class TesterantoLevelOne<
   ITestShape extends ITTestShape,
   IInitialState,
   ISelection,
@@ -889,6 +904,7 @@ abstract class TesterantoLevelOne<
           console.log(`testResourceConfiguration ${JSON.stringify(testResourceConfiguration, null, 2)}`);
 
           await fs.mkdirSync(testResourceConfiguration.fs, { recursive: true });
+
           const logFilePath = path.resolve(`${testResourceConfiguration.fs}/log.txt`);
           var access = fs.createWriteStream(logFilePath);
           const tLog = (...l: string[]) => {
@@ -920,7 +936,7 @@ abstract class TesterantoLevelOne<
 
 type ITestArtificer = (key: string, data: any) => void;
 
-const Testeranto = async <
+export default async <
   TestShape extends ITTestShape,
   Input,
   Subject,
@@ -1168,13 +1184,3 @@ const Testeranto = async <
   }
 
 };
-
-export type {
-  IBaseConfig,
-  Testeranto, BaseWhen, BaseThen, BaseCheck, BaseSuite, BaseGiven,
-  ITestImplementation, ITestSpecification, ITTestShape, ITestResults, ITestJob, IT, ITTestResourceRequirement
-}
-
-export default {
-  Testeranto, BaseWhen, BaseThen, BaseCheck, BaseSuite, BaseGiven
-}

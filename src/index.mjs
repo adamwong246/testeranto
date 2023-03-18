@@ -2,15 +2,20 @@ import fs from 'fs';
 import path from 'path';
 const defaultTestResource = { "fs": ".", ports: [] };
 const defaultTestResourceRequirement = { "fs": ".", ports: 0 };
-const testArtiFactoryfileWriter = (tLog) => (fp) => (g) => (key, value) => {
+const fPaths = [];
+const testArtiFactoryfileWriter = (tLog) => (fp) => (givenNdx) => (key, value) => {
     tLog("testArtiFactory =>", key);
-    const fPath = `${fp}/${g}/${key}`;
+    const fPath = `${fp}/${givenNdx}/${key}`;
     const cleanPath = path.resolve(fPath);
+    fPaths.push(cleanPath.replace(process.cwd(), ``));
     const targetDir = cleanPath.split('/').slice(0, -1).join('/');
     fs.mkdir(targetDir, { recursive: true }, async (error) => {
         if (error) {
             console.error(`❗️testArtiFactory failed`, targetDir, error);
         }
+        fs.writeFileSync(path.resolve(targetDir.split('/').slice(0, -1).join('/'), "manifest"), fPaths.join(`\n`), {
+            encoding: 'utf-8'
+        });
         if (Buffer.isBuffer(value)) {
             fs.writeFileSync(fPath, value, "binary");
         }
@@ -30,7 +35,7 @@ const testArtiFactoryfileWriter = (tLog) => (fp) => (g) => (key, value) => {
         }
     });
 };
-class BaseSuite {
+export class BaseSuite {
     constructor(name, givens = [], checks = []) {
         this.name = name;
         this.givens = givens;
@@ -76,7 +81,7 @@ class BaseSuite {
     }
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-class BaseGiven {
+export class BaseGiven {
     constructor(name, features, whens, thens) {
         this.name = name;
         this.features = features;
@@ -127,7 +132,7 @@ class BaseGiven {
         return this.store;
     }
 }
-class BaseWhen {
+export class BaseWhen {
     constructor(name, actioner) {
         this.name = name;
         this.actioner = actioner;
@@ -149,7 +154,7 @@ class BaseWhen {
         }
     }
 }
-class BaseThen {
+export class BaseThen {
     constructor(name, thenCB) {
         this.name = name;
         this.thenCB = thenCB;
@@ -196,7 +201,7 @@ class BaseThen {
         // }
     }
 }
-class BaseCheck {
+export class BaseCheck {
     constructor(name, features, checkCB, whens, thens) {
         this.name = name;
         this.features = features;
@@ -228,7 +233,8 @@ class BaseCheck {
         return;
     }
 }
-class TesterantoLevelZero {
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+export class TesterantoLevelZero {
     constructor(cc, suitesOverrides, givenOverides, whenOverides, thenOverides, checkOverides) {
         this.cc = cc;
         this.constructorator = cc;
@@ -254,7 +260,7 @@ class TesterantoLevelZero {
         return this.checkOverides;
     }
 }
-class TesterantoLevelOne {
+export class TesterantoLevelOne {
     constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResourceRequirement, nameKey) {
         const classySuites = Object.entries(testImplementation.Suites)
             .reduce((a, [key]) => {
@@ -331,7 +337,7 @@ class TesterantoLevelOne {
         return toReturn;
     }
 }
-const Testeranto = async (input, testSpecification, testImplementation, testInterface, nameKey, testResourceRequirement = defaultTestResourceRequirement) => {
+export default async (input, testSpecification, testImplementation, testInterface, nameKey, testResourceRequirement = defaultTestResourceRequirement) => {
     const butThen = testInterface.butThen || (async (a) => a);
     const { andWhen } = testInterface;
     const actionHandler = testInterface.actionHandler || function (b) {
@@ -459,7 +465,4 @@ const Testeranto = async (input, testSpecification, testImplementation, testInte
         console.error(`the test resource passed by command-line arugument "${process.argv[2]}" was malformed.`);
         process.exit(-1);
     }
-};
-export default {
-    Testeranto, BaseWhen, BaseThen, BaseCheck, BaseSuite, BaseGiven
 };
