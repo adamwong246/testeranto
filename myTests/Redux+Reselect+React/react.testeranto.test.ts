@@ -1,6 +1,6 @@
 import renderer, { act } from "react-test-renderer";
-import Testeranto from "testeranto";
-import { ITestImplementation, ITestSpecification, ITTestShape } from "testeranto";
+import Testeranto from "testeranto/src/core-electron";
+import { ITestImplementation, ITestSpecification, ITTestShape } from "testeranto/src/core";
 
 type WhenShape = any;
 type ThenShape = any;
@@ -17,24 +17,22 @@ export const ReactTesteranto = <
     ThenShape,
     ITestShape
   >,
-  testSpecifications: ITestSpecification<ITestShape, IFeatureShape>,
+  testSpecifications: ITestSpecification<ITestShape>,
   testInput: Input
 ) =>
   Testeranto<
     ITestShape,
-    Input,
+    { runtime: "just node", entrypoint: "./Rect" },
     Input,
     renderer.ReactTestRenderer,
     renderer.ReactTestRenderer,
     WhenShape,
     ThenShape,
-    unknown,
-    IFeatureShape
+    unknown
   >(
-    testInput,
+    { runtime: "just node", entrypoint: "./Rect" },
     testSpecifications,
     testImplementations,
-    { ports: 0 },
     {
       beforeEach: async function (subject: Input): Promise<renderer.ReactTestRenderer> {
         let component;
@@ -47,5 +45,7 @@ export const ReactTesteranto = <
         await act(() => actioner()(renderer))
         return renderer;
       },
-    }
+
+    },
+    "idk"
   )

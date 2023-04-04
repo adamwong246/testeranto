@@ -5,8 +5,8 @@ import {
 } from "@reduxjs/toolkit";
 import { createStore, Store, AnyAction } from "redux";
 
-import Testeranto from "testeranto";
-import { ITestImplementation, ITestSpecification, ITTestShape, Modify } from "testeranto";
+import Testeranto from "testeranto/src/core-node";
+import { ITestImplementation, ITestSpecification, ITTestShape, Modify } from "testeranto/src/core";
 
 type WhenShape = [
   (
@@ -37,7 +37,7 @@ export const ReduxTesteranto = <
     }
 
   }>,
-  testSpecifications: ITestSpecification<ITestShape, IFeatureShape>,
+  testSpecifications: ITestSpecification<ITestShape>,
   testInput: Input
 
 ) =>
@@ -49,13 +49,13 @@ export const ReduxTesteranto = <
     IStoreShape,
     WhenShape,
     ThenShape,
-    IStoreShape,
-    IFeatureShape
+    IStoreShape
+  // IFeatureShape
   >(
     testInput,
     testSpecifications,
     testImplementations,
-    { ports: 0 },
+    // { ports: 0 },
     {
       beforeEach: function (subject: Reducer<any, AnyAction>, initialValues: any): Promise<Store<any, AnyAction>> {
         return createStore<IStoreShape, any, any, any>(subject, initialValues)
@@ -67,5 +67,6 @@ export const ReduxTesteranto = <
       butThen: function (store: Store<any, AnyAction>): Promise<IStoreShape> {
         return store.getState();
       },
-    }
+    },
+    "redux"
   )

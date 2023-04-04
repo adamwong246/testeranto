@@ -26,7 +26,8 @@
     "electron": "^24.2.0",
     "esbuild": "0.17.11",
     "puppeteer-screen-recorder": "^2.1.2",
-    "testeranto": "../testeranto"
+    "testeranto": "../testeranto",
+    "url": "^0.11.3"
   },
   "devDependencies": {
     "@babel/core": "^7.19.6",

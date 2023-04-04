@@ -1,4 +1,4 @@
-import { BaseFeature, TesterantoFeatures, TesterantoGraphDirected, TesterantoGraphDirectedAcyclic, TesterantoGraphUndirected, } from "testeranto";
+import { BaseFeature, TesterantoGraphDirectedAcyclic, TesterantoGraphDirected, TesterantoGraphUndirected, TesterantoFeatures } from "testeranto/src/Features";
 export class MyFeature extends BaseFeature {
     due;
     constructor(name, due) {

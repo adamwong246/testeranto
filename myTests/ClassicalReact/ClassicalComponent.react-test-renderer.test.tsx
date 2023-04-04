@@ -1,32 +1,13 @@
 import renderer, { ReactTestRenderer } from "react-test-renderer";
 import assert from "assert";
-import { features } from "../testerantoFeatures.test.mjs";
+
 import { ClassicalComponent } from "./ClassicalComponent";
 import type { IProps, IState } from "./ClassicalComponent";
 import { ReactTestRendererTesteranto } from "./react-test-renderer.testeranto.test";
-
-const myFeature = `hello`;
+import { IClassicalComponentTesteranto, testSpecification } from "./ClassicalComponent.test";
 
 export const ClassicalComponentReactTestRendererTesteranto = ReactTestRendererTesteranto<
-  {
-    suites: {
-      Default: string;
-    };
-    givens: {
-      AnEmptyState;
-      SomeState;
-    };
-    whens: {
-      IClickTheButton;
-    };
-    thens: {
-      ThePropsIs: [object];
-      TheStatusIs: [object];
-    };
-    checks: {
-      AnEmptyState;
-    }
-  },
+  IClassicalComponentTesteranto,
   IProps,
   IState
 >(
@@ -36,10 +17,7 @@ export const ClassicalComponentReactTestRendererTesteranto = ReactTestRendererTe
     },
     Givens: {
       AnEmptyState: () => {
-        return {};
-      },
-      SomeState: () => {
-        return { foo: "bar" };
+        return { children: [] };
       }
     },
     Whens: {
@@ -69,58 +47,12 @@ export const ClassicalComponentReactTestRendererTesteranto = ReactTestRendererTe
     },
     Checks: {
       AnEmptyState: () => {
-        return {};
+        return { children: [] };
       },
     },
   },
 
-  (Suite, Given, When, Then, Check) => {
-    return [
-      Suite.Default(
-        "foo",
-        [
-          Given.AnEmptyState(
-            [],
-            [
-              When.IClickTheButton()
-            ],
-            [
-              Then.ThePropsIs({ "children": [] }),
-              Then.TheStatusIs({ "count": 1 }),
-            ]
-          ),
-
-          Given.AnEmptyState(
-            [],
-            [
-              When.IClickTheButton(),
-              When.IClickTheButton(),
-              When.IClickTheButton(),
-            ],
-            [
-              Then.TheStatusIs({ "count": 33 }),
-            ]
-          ),
-
-          Given.AnEmptyState(
-            [],
-            [
-              When.IClickTheButton(),
-              When.IClickTheButton(),
-              When.IClickTheButton(),
-            ],
-            [
-              Then.TheStatusIs({ "count": 333 }),
-            ]
-          ),
-
-        ], [
-
-      ]
-      ),
-    ];
-  },
-
+  testSpecification,
   ClassicalComponent,
   `ClassicalComponent, react-test-renderer`
 );

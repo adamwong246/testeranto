@@ -1,29 +1,10 @@
-import type { IProps, IState } from "./ClassicalComponent";
 import { assert } from "chai";
-import { features } from "../testerantoFeatures.test.mjs";
-import { BrowserTesteranto } from "./browser.testeranto.test.mjs";
 
+import ReactTesteranto from "./React.testeranto.test.js";
 import { ClassicalComponent } from "./ClassicalComponent";
+import { IClassicalComponentTesteranto, testSpecification } from "./ClassicalComponent.test.js";
 
-export const ClassicalComponentBrowserTesteranto = BrowserTesteranto<{
-  suites: {
-    Default: string;
-  };
-  givens: {
-    AnEmptyState: [];
-  };
-  whens: {
-    IClickTheButton: [];
-  };
-  thens: {
-    ThePropsIs: [IProps];
-    TheStatusIs: [IState];
-    IAmAGenius;
-  };
-  checks: {
-    AnEmptyState;
-  };
-}>(
+export const ClassicalComponentBrowserTesteranto = ReactTesteranto<IClassicalComponentTesteranto>(
   {
     Suites: {
       Default: "some default Suite",
@@ -36,36 +17,42 @@ export const ClassicalComponentBrowserTesteranto = BrowserTesteranto<{
     Whens: {
       IClickTheButton:
         () =>
-        async ({ page }) =>
-          await page.click("#theButton"),
+          async ({ htmlElement }) =>
+            htmlElement.querySelector("#theButton").click()
     },
     Thens: {
-      IAmAGenius:
-        () =>
-        async ({ page, consoleLogs }) => {
-          // console.log("consoleLogs", consoleLogs);
-          // assert.deepEqual(
-          //   await page.$eval("#theProps", (el) => el.innerHTML),
-          //   JSON.stringify(expectation)
-          // )
-        },
-
       ThePropsIs:
         (expectation) =>
-        async ({ page }) => {
-          assert.deepEqual(
-            await page.$eval("#theProps", (el) => el.innerHTML),
-            JSON.stringify(expectation)
-          );
-        },
+          async ({ htmlElement, reactElement }) => {
+            const elem = htmlElement.querySelector("#theProps")
+            console.log("elem")
+            console.log(elem)
+            const found = elem.innerHTML;
+            console.log("found")
+            console.log(found)
+
+            assert.deepEqual(
+              found,
+              JSON.stringify(expectation)
+            );
+          },
 
       TheStatusIs:
         (expectation) =>
-        async ({ page }) =>
-          assert.deepEqual(
-            await page.$eval("#theState", (el) => el.innerHTML),
-            JSON.stringify(expectation)
-          ),
+          async ({ htmlElement }) => {
+            const elem = htmlElement.querySelector("#theState")
+            console.log("elem")
+            console.log(elem)
+            const found = elem.innerHTML;
+            console.log("found")
+            console.log(found)
+
+            assert.deepEqual(
+              found,
+              JSON.stringify(expectation)
+            );
+
+          }
     },
     Checks: {
       AnEmptyState: () => {
@@ -74,74 +61,7 @@ export const ClassicalComponentBrowserTesteranto = BrowserTesteranto<{
     },
   },
 
-  (Suite, Given, When, Then, Check) => {
-    return [
-      Suite.Default(
-        "a classical react component, bundled with esbuild and tested with puppeteer",
-        [
-          Given.AnEmptyState(
-            [],
-            [],
-            [Then.ThePropsIs({}), Then.TheStatusIs({ count: 0 })]
-          ),
-          Given.AnEmptyState(
-            [],
-            [When.IClickTheButton()],
-            [Then.ThePropsIs({}), Then.TheStatusIs({ count: 1 })]
-          ),
-          Given.AnEmptyState(
-            [],
-            [When.IClickTheButton()],
-            [Then.ThePropsIs({}), Then.TheStatusIs({ count: 1 })]
-          ),
-          Given.AnEmptyState(
-            [`hello`],
-            [
-              When.IClickTheButton(),
-              When.IClickTheButton(),
-              When.IClickTheButton(),
-            ],
-            [Then.TheStatusIs({ count: 3 })]
-          ),
-
-          Given.AnEmptyState(
-            [`hello`],
-            [
-              When.IClickTheButton(),
-              When.IClickTheButton(),
-              When.IClickTheButton(),
-              When.IClickTheButton(),
-              When.IClickTheButton(),
-              When.IClickTheButton(),
-            ],
-            [Then.TheStatusIs({ count: 6 }), Then.IAmAGenius()]
-          ),
-        ],
-        []
-      ),
-    ];
-  },
-
-  [
-    "./myTests/ClassicalReact/index.ts",
-
-    (jsbundle: string): string => `
-            <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <script type="module">${jsbundle}</script>
-    </head>
-
-    <body>
-      <div id="root">
-      </div>
-    </body>
-
-    <footer></footer>
-
-    </html>
-`,
-    ClassicalComponent,
-  ],
+  testSpecification,
+  ClassicalComponent,
   "ClassicalComponent"
 );

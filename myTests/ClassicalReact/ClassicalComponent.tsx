@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
 
-export type IProps = { foo?: string };
+export type IProps = { children: []; foo?: string };
 export type IState = { count: number };
 
 export class ClassicalComponent extends React.Component<IProps, IState> {
   constructor(props) {
-    console.log("hello world!")
 
     super(props);
     this.state = {
@@ -14,25 +13,26 @@ export class ClassicalComponent extends React.Component<IProps, IState> {
   }
 
 
-  componentDidMount() {
-    console.info("componentDidMount");
-    // const x = fetch("http://www.google.com")
-    //   .then((response) => response.text())
-    //   .then(x => {
-    //     console.warn("i am a genius", x)
-    //   });
+  // componentDidMount() {
+  //   console.info("componentDidMount");
+  //   // const x = fetch("http://www.google.com")
+  //   //   .then((response) => response.text())
+  //   //   .then(x => {
+  //   //     console.warn("i am a genius", x)
+  //   //   });
 
-    // console.info("x", x);
+  //   // console.info("x", x);
 
-    // const y = fetch("http://www.google.com/", { mode: `no-cors` })
-    //   // .then((response) => response.text())
-    //   .then(x => {
-    //     console.log("i am a genius!")
-    //   });
+  //   // const y = fetch("http://www.google.com/", { mode: `no-cors` })
+  //   //   // .then((response) => response.text())
+  //   //   .then(x => {
+  //   //     console.log("i am a genius!")
+  //   //   });
 
-    // console.info(y);
+  //   // console.info(y);
 
-  }
+  // }
+
   render() {
     return (
       <div style={{ border: '3px solid green' }}>
