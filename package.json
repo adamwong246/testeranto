@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.37.3",
+  "version": "0.38.0",
   "type": "module",
   "types": "./src/index.d.mts",
   "main": "./src/index.mts",
@@ -9,8 +9,7 @@
     ".": "./src/index.mjs",
     "./src/Project": "./src/Project.js",
     "./src/Features": "./src/Features.js",
-    "./src/Report": "./src/Report.tsx",
-    "./src/kokomoFeatures": "./src/kokomoFeatures.ts"
+    "./src/Report": "./src/Report.tsx"
   },
   "repository": "git@github.com:adamwong246/testeranto.git",
   "homepage": "https://github.com/adamwong246/testeranto",
