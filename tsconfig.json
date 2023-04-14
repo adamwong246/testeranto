@@ -27,7 +27,7 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "declaration": true,
-    // "outDir": "dist",
+    "outDir": "dist",
     "alwaysStrict": true
   },
   "include": ["src/**/*.*ts"],
