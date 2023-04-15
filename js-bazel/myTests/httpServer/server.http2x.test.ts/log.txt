@@ -1,0 +1,9 @@
+
+Suite:,Testing the Node server with fetch * 2 ports,[object Object]
+
+ Given: AnEmptyState
+ Then:,TheStatusIsA: some great status
+
+ Given: AnEmptyState
+ When:,PostToStatusA: gutentag
+

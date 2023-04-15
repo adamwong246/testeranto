@@ -8945,8 +8945,10 @@ tar@^4.0.2:
     safe-buffer "^5.2.1"
     yallist "^3.1.1"
 
-testeranto@../testeranto:
-  version "0.32.0"
+testeranto@0.38.2:
+  version "0.38.2"
+  resolved "https://registry.yarnpkg.com/testeranto/-/testeranto-0.38.2.tgz#0ac8267c8174c9e34d43ff6b4f505589a6df1d6e"
+  integrity sha512-4/v/hmNXpiIoDncU2bU7sKBLpolTaG8nTX7GdgkcdrFskLqHjY0YNKwBmZ3YFB6uytz4bfriro6CbCmk37PZmQ==
   dependencies:
     "@swc/core" "^1.3.26"
     "@types/node" "^18.14.0"

@@ -25,7 +25,7 @@
     "@thirdweb-dev/sdk": "^3.6.9",
     "esbuild": "0.17.11",
     "puppeteer-screen-recorder": "^2.1.2",
-    "testeranto": "../testeranto"
+    "testeranto": "0.38.2"
   },
   "devDependencies": {
     "@babel/core": "^7.19.6",
