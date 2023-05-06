@@ -1,4 +1,4 @@
-import { BaseFeature, TesterantoFeatures, TesterantoGraphDirected, TesterantoGraphDirectedAcyclic, TesterantoGraphUndirected } from "testeranto/src/Features";
+import { BaseFeature, TesterantoFeatures, TesterantoGraphDirected, TesterantoGraphDirectedAcyclic, TesterantoGraphUndirected, } from "testeranto";
 export class MyFeature extends BaseFeature {
     due;
     constructor(name, due) {
@@ -14,9 +14,9 @@ export const features = {
     markRedeemed: new MyFeature("Registers contract status as redeemed, and changes image"),
     encryptShipping: new MyFeature("Buyer encrypts plaintext message and stores value on contract"),
     decryptShipping: new MyFeature("Vendor Decrypts plaintext message"),
-    buildSilo: new MyFeature("build the rocket silo", new Date('2023-05-02T02:36:34+0000')),
-    buildRocket: new MyFeature("build the rocket", new Date('2023-06-06T02:36:34+0000')),
-    buildSatellite: new MyFeature("build the rocket payload", new Date('2023-06-06T02:36:34+0000')),
+    buildSilo: new MyFeature("build the rocket silo", new Date("2023-05-02T02:36:34+0000")),
+    buildRocket: new MyFeature("build the rocket", new Date("2023-06-06T02:36:34+0000")),
+    buildSatellite: new MyFeature("build the rocket payload", new Date("2023-06-06T02:36:34+0000")),
     hello: new MyFeature("hello"),
     aloha: new MyFeature("aloha"),
     gutentag: new MyFeature("gutentag"),
@@ -40,13 +40,7 @@ undirected.connect(`gutentag`, `aloha`, "related");
 undirected.connect(`buildRocket`, `buildSatellite`, "overlap");
 undirected.connect(`buildRocket`, `buildSilo`, "overlap");
 export default new TesterantoFeatures(features, {
-    undirected: [
-        undirected
-    ],
-    directed: [
-        semantic
-    ],
-    dags: [
-        priorityGraph
-    ]
+    undirected: [undirected],
+    directed: [semantic],
+    dags: [priorityGraph],
 });

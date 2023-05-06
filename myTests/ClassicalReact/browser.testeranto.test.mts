@@ -1,37 +1,23 @@
-import puppeteer, { Browser, Page } from "puppeteer";
-import esbuild from "esbuild";
-import { PuppeteerScreenRecorder } from "puppeteer-screen-recorder";
-import { PassThrough } from "stream";
-import Testeranto from "testeranto";
+// import puppeteer, { Browser, Page } from "puppeteer";
+// import esbuild from "esbuild";
+// import { PuppeteerScreenRecorder } from "puppeteer-screen-recorder";
+// import { PassThrough } from "stream";
+import Testeranto from "testeranto/core";
 import {
   ITestImplementation,
   ITestSpecification,
   ITTestShape,
-} from "testeranto";
+} from "testeranto/core";
 
-type Input = [
-  // string,
-  (string) => string,
-  any
-];
+type Input = [string, (string) => string, any];
 type InitialState = unknown;
 type WhenShape = any;
 type ThenShape = any;
-type Selection = { page: Page };
+type Selection = any;
+type Store = any;
+type Subject = any;
 
-type Store = {
-  page: Page;
-  recorder: PuppeteerScreenRecorder;
-  consoleLogs: string[];
-  pipeStream: PassThrough;
-};
-
-type Subject = {
-  browser: Browser;
-  htmlBundle: string;
-};
-
-export const EsbuildPuppeteerTesteranto = <ITestShape extends ITTestShape>(
+export const BrowserTesteranto = <ITestShape extends ITTestShape>(
   testImplementations: ITestImplementation<
     InitialState,
     Selection,
@@ -63,24 +49,24 @@ export const EsbuildPuppeteerTesteranto = <ITestShape extends ITTestShape>(
       ): Promise<Subject> {
         artificer("./before.txt", "hello artificer");
 
-        const browser = await await puppeteer.launch({
-          headless: true,
-          executablePath:
-            "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-        });
+        // const browser = await await puppeteer.launch({
+        //   headless: true,
+        //   executablePath:
+        //     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        // });
 
         return {
-          browser,
-          htmlBundle: htmlTemplate(
-            esbuild.buildSync({
-              entryPoints: [bundlePath],
-              bundle: true,
-              minify: true,
-              format: "esm",
-              target: ["esnext"],
-              write: false,
-            }).outputFiles[0].text
-          ),
+          // browser,
+          // htmlBundle: htmlTemplate(
+          //   esbuild.buildSync({
+          //     entryPoints: [bundlePath],
+          //     bundle: true,
+          //     minify: true,
+          //     format: "esm",
+          //     target: ["esnext"],
+          //     write: false,
+          //   }).outputFiles[0].text
+          // ),
         };
       },
       beforeEach: async (
@@ -91,22 +77,22 @@ export const EsbuildPuppeteerTesteranto = <ITestShape extends ITTestShape>(
       ): Promise<Store> => {
         const page = await subject.browser.newPage();
 
-        const recorder = new PuppeteerScreenRecorder(page, {
-          followNewTab: false,
-          fps: 25,
-          videoFrame: {
-            width: 1024,
-            height: 768,
-          },
-          videoCrf: 18,
-          videoCodec: "libx264",
-          videoPreset: "ultrafast",
-          videoBitrate: 1000,
-          autopad: {
-            color: "black",
-          },
-          aspectRatio: "4:3",
-        });
+        // const recorder = new PuppeteerScreenRecorder(page, {
+        //   followNewTab: false,
+        //   fps: 25,
+        //   videoFrame: {
+        //     width: 1024,
+        //     height: 768,
+        //   },
+        //   videoCrf: 18,
+        //   videoCodec: "libx264",
+        //   videoPreset: "ultrafast",
+        //   videoBitrate: 1000,
+        //   autopad: {
+        //     color: "black",
+        //   },
+        //   aspectRatio: "4:3",
+        // });
 
         const consoleLogs: string[] = [];
         await page.setRequestInterception(true);
@@ -139,21 +125,21 @@ export const EsbuildPuppeteerTesteranto = <ITestShape extends ITTestShape>(
             request.continue();
           });
 
-        const pipeStream = new PassThrough();
+        // const pipeStream = new PassThrough();
 
-        artificer("./screencap.mp4", pipeStream);
+        // artificer("./screencap.mp4", pipeStream);
 
         return page.setContent(subject.htmlBundle).then(async () => {
-          await recorder.startStream(pipeStream);
+          // await recorder.startStream(pipeStream);
           artificer(
             "./beforeEachScreenshot.png",
             await (await page).screenshot()
           );
           return {
             page,
-            recorder: recorder,
+            // recorder: recorder,
             consoleLogs,
-            pipeStream,
+            // pipeStream,
           };
         });
       },

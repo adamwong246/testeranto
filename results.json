@@ -1,72 +1,105 @@
 {
-  "name": "Testing a very simple smart contract ephemerally",
+  "name": "a classical react component, bundled with esbuild and tested with puppeteer",
   "givens": [
     {
-      "name": "Default",
+      "name": "AnEmptyState",
       "whens": [],
       "thens": [
         {
-          "name": "Get: [object Object]"
+          "name": "ThePropsIs: [object Object]"
+        },
+        {
+          "name": "TheStatusIs: [object Object]"
         }
       ],
-      "errors": {},
+      "features": []
+    },
+    {
+      "name": "AnEmptyState",
+      "whens": [
+        {
+          "name": "IClickTheButton: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "ThePropsIs: [object Object]"
+        },
+        {
+          "name": "TheStatusIs: [object Object]"
+        }
+      ],
+      "features": []
+    },
+    {
+      "name": "AnEmptyState",
+      "whens": [
+        {
+          "name": "IClickTheButton: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "ThePropsIs: [object Object]"
+        },
+        {
+          "name": "TheStatusIs: [object Object]"
+        }
+      ],
+      "features": []
+    },
+    {
+      "name": "AnEmptyState",
+      "whens": [
+        {
+          "name": "IClickTheButton: undefined"
+        },
+        {
+          "name": "IClickTheButton: undefined"
+        },
+        {
+          "name": "IClickTheButton: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheStatusIs: [object Object]"
+        }
+      ],
       "features": [
         "hello"
       ]
     },
     {
-      "name": "Default",
+      "name": "AnEmptyState",
       "whens": [
         {
-          "name": "Increment: 1",
-          "error": true
+          "name": "IClickTheButton: undefined"
         },
         {
-          "name": "Increment: 1"
+          "name": "IClickTheButton: undefined"
         },
         {
-          "name": "Increment: 1"
+          "name": "IClickTheButton: undefined"
         },
         {
-          "name": "Increment: 1"
+          "name": "IClickTheButton: undefined"
+        },
+        {
+          "name": "IClickTheButton: undefined"
+        },
+        {
+          "name": "IClickTheButton: undefined"
         }
       ],
       "thens": [
         {
-          "name": "Get: [object Object]"
+          "name": "TheStatusIs: [object Object]"
+        },
+        {
+          "name": "IAmAGenius: undefined"
         }
       ],
-      "errors": {},
-      "features": [
-        "hello"
-      ]
-    },
-    {
-      "name": "Default",
-      "whens": [
-        {
-          "name": "Increment: 1",
-          "error": true
-        },
-        {
-          "name": "Increment: 1"
-        },
-        {
-          "name": "Increment: 1"
-        },
-        {
-          "name": "Increment: 1"
-        },
-        {
-          "name": "Decrement: 1"
-        }
-      ],
-      "thens": [
-        {
-          "name": "Get: [object Object]"
-        }
-      ],
-      "errors": {},
       "features": [
         "hello"
       ]

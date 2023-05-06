@@ -1,4 +1,4 @@
-import { ITProject } from "testeranto/src/Project";
+import { ITProject } from "testeranto/Project";
 
 import baseConfig from "./base.config.mjs";
 
@@ -7,5 +7,5 @@ export default new ITProject({
   outdir: "js-bazel",
   buildMode: "on",
   runMode: true,
-  collateMode: "off"
+  collateMode: "off",
 });

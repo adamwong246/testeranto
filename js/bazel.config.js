@@ -1,5 +1,5 @@
-import { ITProject } from "testeranto/Project";
-import baseConfig from "./base.config.mjs";
+import { ITProject } from "testeranto";
+import baseConfig from "./base.config.js";
 export default new ITProject({
     ...baseConfig,
     outdir: "js-bazel",
