@@ -1,6 +1,13 @@
 import { TesterantoFeatures } from "./Features";
+import { ITestTypes } from "./Project";
 
-export type ICollateMode = 'on' | 'off' | 'watch' | `serve` | `watch+serve` | `dev`;
+export type ICollateMode =
+  | "on"
+  | "off"
+  | "watch"
+  | `serve`
+  | `watch+serve`
+  | `dev`;
 
 export type IBaseConfig = {
   clearScreen: boolean;
@@ -15,6 +22,6 @@ export type IBaseConfig = {
   collateEntry: string;
   // resultsdir: string;
   runMode: boolean;
-  tests: string[];
-  buildMode: 'on' | 'off' | 'watch';
+  tests: ITestTypes;
+  buildMode: "on" | "off" | "watch";
 };

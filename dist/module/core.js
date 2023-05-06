@@ -1,39 +1,63 @@
-import fs from 'fs';
-import path from 'path';
-const defaultTestResource = { "fs": ".", ports: [] };
-const defaultTestResourceRequirement = { "fs": ".", ports: 0 };
+// import fs from "fs";
+// import path from "path";
+// import { PassThrough } from "stream";
+// import {
+//   BaseFeature,
+//   TesterantoFeatures,
+//   TesterantoGraphDirected,
+//   TesterantoGraphDirectedAcyclic,
+//   TesterantoGraphUndirected,
+// } from "./Features.js";
+// export {
+//   BaseFeature,
+//   TesterantoFeatures,
+//   TesterantoGraphDirected,
+//   TesterantoGraphDirectedAcyclic,
+//   TesterantoGraphUndirected,
+// };
+// import { IBaseConfig } from "./IBaseConfig";
+// export type { IBaseConfig };
+// import { ITProject } from "./Project.js";
+// export { ITProject };
+const defaultTestResource = { fs: ".", ports: [] };
+const defaultTestResourceRequirement = {
+    fs: ".",
+    ports: 0,
+};
 const fPaths = [];
 const testArtiFactoryfileWriter = (tLog) => (fp) => (givenNdx) => (key, value) => {
     tLog("testArtiFactory =>", key);
     const fPath = `${fp}/${givenNdx}/${key}`;
-    const cleanPath = path.resolve(fPath);
-    fPaths.push(cleanPath.replace(process.cwd(), ``));
-    const targetDir = cleanPath.split('/').slice(0, -1).join('/');
-    fs.mkdir(targetDir, { recursive: true }, async (error) => {
-        if (error) {
-            console.error(`❗️testArtiFactory failed`, targetDir, error);
-        }
-        fs.writeFileSync(path.resolve(targetDir.split('/').slice(0, -1).join('/'), "manifest"), fPaths.join(`\n`), {
-            encoding: 'utf-8'
-        });
-        if (Buffer.isBuffer(value)) {
-            fs.writeFileSync(fPath, value, "binary");
-        }
-        else if (`string` === (typeof value)) {
-            fs.writeFileSync(fPath, value.toString(), {
-                encoding: 'utf-8'
-            });
-        }
-        else {
-            /* @ts-ignore:next-line */
-            const pipeStream = value;
-            var myFile = fs.createWriteStream(fPath);
-            pipeStream.pipe(myFile);
-            pipeStream.on("close", () => {
-                myFile.close();
-            });
-        }
-    });
+    // const cleanPath = path.resolve(fPath);
+    // fPaths.push(cleanPath.replace(process.cwd(), ``));
+    // const targetDir = cleanPath.split("/").slice(0, -1).join("/");
+    // fs.mkdir(targetDir, { recursive: true }, async (error) => {
+    //   if (error) {
+    //     console.error(`❗️testArtiFactory failed`, targetDir, error);
+    //   }
+    //   fs.writeFileSync(
+    //     path.resolve(targetDir.split("/").slice(0, -1).join("/"), "manifest"),
+    //     fPaths.join(`\n`),
+    //     {
+    //       encoding: "utf-8",
+    //     }
+    //   );
+    //   if (Buffer.isBuffer(value)) {
+    //     fs.writeFileSync(fPath, value, "binary");
+    //   } else if (`string` === typeof value) {
+    //     fs.writeFileSync(fPath, value.toString(), {
+    //       encoding: "utf-8",
+    //     });
+    //   } else {
+    //     /* @ts-ignore:next-line */
+    //     const pipeStream: PassThrough = value;
+    //     var myFile = fs.createWriteStream(fPath);
+    //     pipeStream.pipe(myFile);
+    //     pipeStream.on("close", () => {
+    //       myFile.close();
+    //     });
+    //   }
+    // });
 };
 export class BaseSuite {
     constructor(name, givens = [], checks = []) {
@@ -46,7 +70,7 @@ export class BaseSuite {
         return {
             name: this.name,
             givens: this.givens.map((g) => g.toObj()),
-            fails: this.fails
+            fails: this.fails,
         };
     }
     setup(s, artifactory) {
@@ -91,7 +115,6 @@ export class BaseGiven {
     afterAll(store, artifactory) {
         return;
     }
-    ;
     toObj() {
         return {
             name: this.name,
@@ -118,7 +141,7 @@ export class BaseGiven {
         }
         catch (e) {
             this.error = e;
-            tLog('\u0007'); // bell
+            tLog("\u0007"); // bell
             // throw e;
         }
         finally {
@@ -215,20 +238,18 @@ export class BaseCheck {
     async check(subject, ndx, testResourceConfiguration, tester, artifactory, tLog) {
         tLog(`\n Check: ${this.name}`);
         const store = await this.checkThat(subject, testResourceConfiguration, artifactory);
-        await this.checkCB((Object.entries(this.whens)
-            .reduce((a, [key, when]) => {
+        await this.checkCB(Object.entries(this.whens).reduce((a, [key, when]) => {
             a[key] = async (payload) => {
                 return await when(payload, testResourceConfiguration).test(store, testResourceConfiguration, tLog);
             };
             return a;
-        }, {})), (Object.entries(this.thens)
-            .reduce((a, [key, then]) => {
+        }, {}), Object.entries(this.thens).reduce((a, [key, then]) => {
             a[key] = async (payload) => {
                 const t = await then(payload, testResourceConfiguration).test(store, testResourceConfiguration, tLog);
                 tester(t);
             };
             return a;
-        }, {})));
+        }, {}));
         await this.afterEach(store, ndx);
         return;
     }
@@ -262,36 +283,31 @@ export class TesterantoLevelZero {
 }
 export class TesterantoLevelOne {
     constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResourceRequirement, nameKey) {
-        const classySuites = Object.entries(testImplementation.Suites)
-            .reduce((a, [key]) => {
+        const classySuites = Object.entries(testImplementation.Suites).reduce((a, [key]) => {
             a[key] = (somestring, givens, checks) => {
                 return new suiteKlasser.prototype.constructor(somestring, givens, checks);
             };
             return a;
         }, {});
-        const classyGivens = Object.entries(testImplementation.Givens)
-            .reduce((a, [key, z]) => {
+        const classyGivens = Object.entries(testImplementation.Givens).reduce((a, [key, z]) => {
             a[key] = (features, whens, thens, ...xtrasW) => {
                 return new givenKlasser.prototype.constructor(z.name, features, whens, thens, z(...xtrasW));
             };
             return a;
         }, {});
-        const classyWhens = Object.entries(testImplementation.Whens)
-            .reduce((a, [key, whEn]) => {
+        const classyWhens = Object.entries(testImplementation.Whens).reduce((a, [key, whEn]) => {
             a[key] = (payload) => {
                 return new whenKlasser.prototype.constructor(`${whEn.name}: ${payload && payload.toString()}`, whEn(payload));
             };
             return a;
         }, {});
-        const classyThens = Object.entries(testImplementation.Thens)
-            .reduce((a, [key, thEn]) => {
+        const classyThens = Object.entries(testImplementation.Thens).reduce((a, [key, thEn]) => {
             a[key] = (expected, x) => {
                 return new thenKlasser.prototype.constructor(`${thEn.name}: ${expected && expected.toString()}`, thEn(expected));
             };
             return a;
         }, {});
-        const classyChecks = Object.entries(testImplementation.Checks)
-            .reduce((a, [key, z]) => {
+        const classyChecks = Object.entries(testImplementation.Checks).reduce((a, [key, z]) => {
             a[key] = (somestring, features, callback) => {
                 return new checkKlasser.prototype.constructor(somestring, features, callback, classyWhens, classyThens);
             };
@@ -317,21 +333,37 @@ export class TesterantoLevelOne {
                 runner,
                 receiveTestResourceConfig: async function (testResourceConfiguration = defaultTestResource) {
                     console.log(`testResourceConfiguration ${JSON.stringify(testResourceConfiguration, null, 2)}`);
-                    await fs.mkdirSync(testResourceConfiguration.fs, { recursive: true });
-                    const logFilePath = path.resolve(`${testResourceConfiguration.fs}/log.txt`);
-                    var access = fs.createWriteStream(logFilePath);
-                    const tLog = (...l) => {
-                        console.log(...l);
-                        access.write(`${l.toString()}\n`);
-                    };
-                    const suiteDone = await runner(testResourceConfiguration, tLog);
-                    const resultsFilePath = path.resolve(`${testResourceConfiguration.fs}/results.json`);
-                    fs.writeFileSync(resultsFilePath, JSON.stringify(suiteDone.toObj(), null, 2));
-                    access.close();
-                    const numberOfFailures = suiteDone.givens.filter((g) => g.error).length;
-                    console.log(`exiting gracefully with ${numberOfFailures} failures.`);
-                    process.exitCode = numberOfFailures;
-                }
+                    // await fs.mkdirSync(testResourceConfiguration.fs, { recursive: true });
+                    // const logFilePath = path.resolve(
+                    //   `${testResourceConfiguration.fs}/log.txt`
+                    // );
+                    // var access = fs.createWriteStream(logFilePath);
+                    // const tLog = (...l: string[]) => {
+                    //   console.log(...l);
+                    //   access.write(`${l.toString()}\n`);
+                    // };
+                    // const suiteDone: BaseSuite<
+                    //   IInput,
+                    //   ISubject,
+                    //   IStore,
+                    //   ISelection,
+                    //   IThenShape,
+                    //   ITestShape
+                    // > = await runner(testResourceConfiguration, tLog);
+                    // const resultsFilePath = path.resolve(
+                    //   `${testResourceConfiguration.fs}/results.json`
+                    // );
+                    // fs.writeFileSync(
+                    //   resultsFilePath,
+                    //   JSON.stringify(suiteDone.toObj(), null, 2)
+                    // );
+                    // access.close();
+                    // const numberOfFailures = suiteDone.givens.filter(
+                    //   (g) => g.error
+                    // ).length;
+                    // console.log(`exiting gracefully with ${numberOfFailures} failures.`);
+                    // process.exitCode = numberOfFailures;
+                },
             };
         });
         return toReturn;
@@ -340,28 +372,30 @@ export class TesterantoLevelOne {
 export default async (input, testSpecification, testImplementation, testInterface, nameKey, testResourceRequirement = defaultTestResourceRequirement) => {
     const butThen = testInterface.butThen || (async (a) => a);
     const { andWhen } = testInterface;
-    const actionHandler = testInterface.actionHandler || function (b) {
-        return b;
-    };
+    const actionHandler = testInterface.actionHandler ||
+        function (b) {
+            return b;
+        };
     const assertioner = testInterface.assertioner || (async (t) => t);
     const beforeAll = testInterface.beforeAll || (async (input) => input);
-    const beforeEach = testInterface.beforeEach || async function (subject, initialValues, testResource) {
-        return subject;
-    };
+    const beforeEach = testInterface.beforeEach ||
+        async function (subject, initialValues, testResource) {
+            return subject;
+        };
     const afterEach = testInterface.afterEach || (async (s) => s);
     const afterAll = testInterface.afterAll || ((store) => undefined);
     class MrT extends TesterantoLevelOne {
         constructor() {
             super(testImplementation, 
             /* @ts-ignore:next-line */
-            testSpecification, input, (class extends BaseSuite {
+            testSpecification, input, class extends BaseSuite {
                 async setup(s, artifactory) {
                     return beforeAll(s, artifactory);
                 }
                 test(t) {
                     return assertioner(t);
                 }
-            }), class Given extends BaseGiven {
+            }, class Given extends BaseGiven {
                 constructor(name, features, whens, thens, initialValues) {
                     super(name, features, whens, thens);
                     this.initialValues = initialValues;
@@ -408,8 +442,12 @@ export default async (input, testSpecification, testImplementation, testInterfac
     }
     const mrt = new MrT();
     const t = mrt[0];
+    console.log("mark 3", process.argv);
     const testResourceArg = process.argv[2] || `{}`;
+    console.log("mark 2", testResourceArg);
+    // process.exit();
     try {
+        console.log("mark", testResourceArg);
         const partialTestResource = JSON.parse(testResourceArg);
         if (partialTestResource.fs && partialTestResource.ports) {
             await t.receiveTestResourceConfig(partialTestResource);
@@ -421,23 +459,25 @@ export default async (input, testSpecification, testImplementation, testInterfac
                 console.log("requesting test resources from pm2 ...", testResourceRequirement);
                 /* @ts-ignore:next-line */
                 process.send({
-                    type: 'testeranto:hola',
+                    type: "testeranto:hola",
                     data: {
-                        testResourceRequirement
-                    }
+                        testResourceRequirement,
+                    },
                 });
                 console.log("awaiting test resources from pm2...");
-                process.on('message', async function (packet) {
+                process.on("message", async function (packet) {
+                    console.log("message: ", packet);
                     const resourcesFromPm2 = packet.data.testResourceConfiguration;
-                    const secondTestResource = (Object.assign(Object.assign({}, JSON.parse(JSON.stringify(resourcesFromPm2))), JSON.parse(JSON.stringify(partialTestResource))));
+                    const secondTestResource = Object.assign(Object.assign({ fs: "." }, JSON.parse(JSON.stringify(partialTestResource))), JSON.parse(JSON.stringify(resourcesFromPm2)));
+                    console.log("secondTestResource", secondTestResource);
                     if (await t.receiveTestResourceConfig(secondTestResource)) {
                         /* @ts-ignore:next-line */
                         process.send({
-                            type: 'testeranto:adios',
+                            type: "testeranto:adios",
                             data: {
                                 testResourceConfiguration: mrt[0].test.testResourceConfiguration,
-                                results: mrt[0].toObj()
-                            }
+                                results: mrt[0].toObj(),
+                            },
                         }, (err) => {
                             if (!err) {
                                 console.log(`✅`);
@@ -452,9 +492,10 @@ export default async (input, testSpecification, testImplementation, testInterfac
             }
             else {
                 console.log("Pass run-time test resources by STDIN");
-                process.stdin.on('data', async (data) => {
+                process.stdin.on("data", async (data) => {
+                    console.log("data: ", data);
                     const resourcesFromStdin = JSON.parse(data.toString());
-                    const secondTestResource = (Object.assign(Object.assign({}, JSON.parse(JSON.stringify(resourcesFromStdin))), JSON.parse(JSON.stringify(partialTestResource))));
+                    const secondTestResource = Object.assign(Object.assign({}, JSON.parse(JSON.stringify(resourcesFromStdin))), JSON.parse(JSON.stringify(partialTestResource)));
                     await t.receiveTestResourceConfig(secondTestResource);
                     // process.exit(0); // :-)
                 });
@@ -462,7 +503,8 @@ export default async (input, testSpecification, testImplementation, testInterfac
         }
     }
     catch (e) {
-        console.error(`the test resource passed by command-line arugument "${process.argv[2]}" was malformed.`);
+        console.error(`the test resource passed by command-line argument "${process.argv[2]}" was malformed.`);
+        console.error(e);
         process.exit(-1);
     }
 };

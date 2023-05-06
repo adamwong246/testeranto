@@ -1,12 +1,16 @@
+import { BaseFeature, TesterantoFeatures, TesterantoGraphDirected, TesterantoGraphDirectedAcyclic, TesterantoGraphUndirected } from "./Features.js";
+export { BaseFeature, TesterantoFeatures, TesterantoGraphDirected, TesterantoGraphDirectedAcyclic, TesterantoGraphUndirected, };
 import { IBaseConfig } from "./IBaseConfig";
 export type { IBaseConfig };
+import { ITProject } from "./Project.js";
+export { ITProject };
 declare type ITTestResourceConfiguration = {
-    "fs": string;
-    "ports": number[];
+    fs: string;
+    ports: number[];
 };
 export declare type ITTestResourceRequirement = {
-    "ports": number;
-    "fs": string;
+    ports: number;
+    fs: string;
 };
 declare type IRunner = (x: ITTestResourceConfiguration, t: ITLog) => Promise<boolean>;
 export declare type IT = {

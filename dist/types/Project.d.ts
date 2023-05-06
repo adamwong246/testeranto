@@ -1,7 +1,9 @@
-import pm2 from 'pm2';
+import pm2 from "pm2";
 import { TesterantoFeatures } from "./Features";
 import { ICollateMode } from "./IBaseConfig";
-import { IBaseConfig } from "./index.mjs";
+import { IBaseConfig } from "./index.js";
+export declare type IRunTimes = `node` | `electron`;
+export declare type ITestTypes = [f: string, r: IRunTimes][];
 declare type IPm2Process = {
     process: {
         namespace: string;
@@ -39,7 +41,7 @@ export default class Scheduler {
     shutdown(): void;
 }
 export declare class ITProject {
-    buildMode: 'on' | 'off' | 'watch';
+    buildMode: "on" | "off" | "watch";
     clearScreen: boolean;
     collateEntry: string;
     collateMode: ICollateMode;
@@ -50,8 +52,8 @@ export declare class ITProject {
     outdir: string;
     ports: string[];
     runMode: boolean;
-    tests: string[];
-    getEntryPoints(): string[];
+    tests: ITestTypes;
+    getEntryPoints(runtime?: IRunTimes): ITestTypes;
     constructor(config: IBaseConfig);
 }
 export {};

@@ -1,15 +1,23 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.38.2",
-  "type": "module",
+  "version": "0.40.0",
   "types": "./dist/index.d.mts",
-  "main": "./src/index.mts",
+  "main": "dist/common/index.js",
+  "module": "dist/module/index.js",
   "exports": {
-    ".": "./dist/index.mjs",
-    "./src/Project": "./dist/Project.js",
-    "./src/Features": "./dist/Features.js",
-    "./src/Report": "./dist/Report.tsx"
+    ".": {
+      "import": "./dist/module/index.js",
+      "require": "./dist/common/index.js"
+    },
+    "./Project": {
+      "import": "./dist/module/Project.js",
+      "require": "./dist/common/Project.js"
+    },
+    "./core": {
+      "import": "./dist/module/core.js",
+      "require": "./dist/common/core.js"
+    }
   },
   "repository": "git@github.com:adamwong246/testeranto.git",
   "homepage": "https://github.com/adamwong246/testeranto",
@@ -26,8 +34,7 @@
     "testerantoWatch": "./bin/testerantoWatch.sh"
   },
   "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
+    "build": "sh prebuild.sh; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; sh postBuild.sh",
     "bundle:reporter": "esbuild ./src/Report.tsx --bundle --outfile=./dist/reporter.js",
     "simpleserver": "cd dist && python -m SimpleHTTPServer 8080",
     "clean:dist": "rm -rf ./dist/results && rm -rf ./dist/tests  && rm -f ./dist/reporter.css && rm -f ./dist/reporter.js && rm -f ./dist/*.jpg ",
@@ -36,7 +43,8 @@
     "tableflip": "yarn clean && yarn bundle:reporter"
   },
   "peerDependencies": {
-    "esbuild": "0.17.5"
+    "esbuild": "0.17.5",
+    "electron": "^24.2.0"
   },
   "devDependencies": {
     "esbuild": "0.17.5"

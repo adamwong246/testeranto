@@ -1,0 +1,35 @@
+{
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  },
+  "declaration": true,
+  "compilerOptions": {
+    "useDefineForClassFields": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": false,
+    "module": "commonjs",
+    "target": "es2017",
+    "allowJs": true,
+    "jsx": "react",
+    "resolveJsonModule": true,
+    "strictNullChecks": true,
+    "lib": ["dom", "dom.iterable"],
+    "skipLibCheck": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": false,
+    "incremental": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "declaration": false,
+    "outDir": "dist/common/",
+    "alwaysStrict": true
+  },
+  "include": ["src/**/*.*ts"],
+  "exclude": ["node_modules"]
+}

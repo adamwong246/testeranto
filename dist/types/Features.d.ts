@@ -62,4 +62,6 @@ export declare class TesterantoFeatures {
 export declare type IT_FeatureNetwork = {
     name: string;
 };
-export {};
+export { DirectedGraph };
+declare const _default: {};
+export default _default;
