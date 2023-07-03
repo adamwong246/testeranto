@@ -14,9 +14,9 @@
       "import": "./dist/module/Project.js",
       "require": "./dist/common/Project.js"
     },
-    "./core": {
-      "import": "./dist/module/core.js",
-      "require": "./dist/common/core.js"
+    "./src/core": {
+      "import": "./src/core.ts",
+      "require": "./src/core.ts"
     }
   },
   "repository": "git@github.com:adamwong246/testeranto.git",

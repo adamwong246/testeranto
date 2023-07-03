@@ -10,8 +10,15 @@ import { TesterantoFeatures } from "./Features";
 import { ICollateMode } from "./IBaseConfig";
 import { IBaseConfig } from "./index.js";
 
-export type IRunTimes = `node` | `electron`;
-export type ITestTypes = [f: string, r: IRunTimes][];
+import Testeranto from "./core";
+
+export type IRunTime = `node` | `electron`;
+export type IRunTimes = { runtime: IRunTime; entrypoint: string }[];
+export type ITestTypes = {
+  entrypoint: string;
+  components: IRunTimes;
+};
+
 const TIMEOUT = 2000;
 const OPEN_PORT = "";
 const clients = [];
@@ -137,18 +144,20 @@ export default class Scheduler {
 
       const makePath = (fPath: string): string => {
         const ext = path.extname(fPath);
-        const x = "./" + project.outdir + "/" + fPath.replace(ext, "") + ".cjs";
+        const x = "./" + project.outdir + "/" + fPath.replace(ext, "") + ".mjs";
         return path.resolve(x);
       };
 
       const bootInterval = setInterval(async () => {
-        const filesToLookup = this.project.getEntryPoints().map((f) => {
-          const filepath = makePath(f[0]);
-          return {
-            filepath,
-            exists: fsExists(filepath),
-          };
-        });
+        const filesToLookup = this.project
+          .getSecondaryEndpointsPoints()
+          .map((f) => {
+            const filepath = makePath(f[0]);
+            return {
+              filepath,
+              exists: fsExists(filepath),
+            };
+          });
         const allFilesExist = (
           await Promise.all(filesToLookup.map((f) => f.exists))
         ).every((b) => b);
@@ -163,20 +172,20 @@ export default class Scheduler {
           clearInterval(bootInterval);
 
           this.project
-            .getEntryPoints()
+            .getSecondaryEndpointsPoints()
             .reduce((m, [inputFilePath, runtime]) => {
               const script = makePath(inputFilePath);
               this.summary[inputFilePath] = undefined;
-              // const partialTestResourceByCommandLineArg = `${script} '${JSON.stringify(
-              //   {
-              //     ports: [],
-              //     fs: path.resolve(
-              //       process.cwd(),
-              //       project.outdir,
-              //       inputFilePath
-              //     ),
-              //   }
-              // )}'`;
+              const partialTestResourceByCommandLineArg = `${script} '${JSON.stringify(
+                {
+                  ports: [],
+                  fs: path.resolve(
+                    process.cwd(),
+                    project.outdir,
+                    inputFilePath
+                  ),
+                }
+              )}'`;
 
               m[inputFilePath] = pm2.start(
                 {
@@ -191,19 +200,18 @@ export default class Scheduler {
                     }
                   )}'`,
                   name: `electron test`,
-                  // autorestart: false,
+                  autorestart: false,
                   // watch: [script],
                   // env: {
                   //   ELECTRON_NO_ASAR: `true`,
                   //   ELECTRON_RUN_AS_NODE: `true`,
                   // },
-                  // args: partialTestResourceByCommandLineArg,
+                  args: partialTestResourceByCommandLineArg,
                 },
                 (err, proc) => {
                   if (err) {
                     console.error(err);
                     return pm2.disconnect();
-                  } else {
                   }
                 }
               );
@@ -231,7 +239,7 @@ export default class Scheduler {
               `# of processes in queue:`,
               this.queue.length,
               "/",
-              this.project.getEntryPoints().length
+              this.project.getSecondaryEndpointsPoints().length
             );
             console.log(`summary:`, this.summary);
             console.log(`ports:`, this.ports);
@@ -355,7 +363,9 @@ export default class Scheduler {
         this.pm2.sendDataToProcessId(
           p.process.pm_id,
           message,
-          function (err, res) {}
+          function (err, res) {
+            // no-op
+          }
         );
 
         // mark the selected ports as occupied
@@ -411,13 +421,24 @@ export class ITProject {
   outdir: string;
   ports: string[];
   runMode: boolean;
-  tests: ITestTypes;
+  tests: ITestTypes[];
 
-  getEntryPoints(runtime?: IRunTimes): ITestTypes {
-    if (runtime)
-      return Object.values(this.tests).filter((t) => t[1] === runtime);
+  getSecondaryEndpointsPoints(runtime?: IRunTime): string[] {
+    if (runtime) {
+      return Object.values(this.tests)
+        .map((t) => {
+          return t.components
+            .filter((c) => c.runtime === runtime)
+            .map((tc) => tc.entrypoint);
+        }, [])
+        .flat();
+    }
 
-    return Object.values(this.tests);
+    return Object.values(this.tests)
+      .map((t) => {
+        return t.components.map((tc) => tc.entrypoint);
+      }, [])
+      .flat();
   }
 
   constructor(config: IBaseConfig) {
@@ -455,7 +476,7 @@ export class ITProject {
           name: "hot-refresh",
           setup(build) {
             build.onEnd((result) => {
-              console.log(`collation traspilation`, result);
+              console.log(`collation transpilation`, result);
               /* @ts-ignore:next-line */
               clients.forEach((res) => res.write("data: update\n\n"));
               clients.length = 0;
@@ -472,14 +493,18 @@ export class ITProject {
       outbase: this.outbase,
       outdir: this.outdir,
       jsx: `transform`,
-      entryPoints: this.getEntryPoints("node").map(
-        (sourcefile) => sourcefile[0]
-      ),
+      entryPoints: [
+        // these are the tested artifacts
+        ...this.getSecondaryEndpointsPoints("node"),
+        // these do the testing
+        ...this.tests.map((t) => t.entrypoint),
+      ],
       bundle: true,
       minify: this.minify === true,
       write: true,
       outExtension: { ".js": ".mjs" },
       packages: "external",
+      splitting: true,
       plugins: [
         ...(this.loaders || []),
         {
@@ -500,17 +525,16 @@ export class ITProject {
       ],
     };
 
-    this.getEntryPoints("electron").map((sourcefile) => {
+    this.getSecondaryEndpointsPoints("electron").map((sourcefile) => {
+      const outFileBaseName = sourcefile[0].split("/").slice(0, -1).join("/");
+
       fs.writeFile(
-        `${this.outdir}/${sourcefile[0]
-          .split("/")
-          .slice(0, -1)
-          .join("/")}.html`,
+        `${this.outdir}/${outFileBaseName}.html`,
         `
 <!DOCTYPE html>
     <html lang="en">
     <head>
-      <script type="module" src="./ClassicalReact/ClassicalComponent.electron.test.js"></script>
+      <script type="module" src="/${outFileBaseName}.mjs"></script>
     </head>
 
     <body>
@@ -532,20 +556,21 @@ export class ITProject {
 
     const electronRuntimeEsbuildConfig: BuildOptions = {
       // target: `node`,
-      platform: "node",
+      platform: "browser",
       format: "esm",
       outbase: this.outbase,
       outdir: this.outdir,
       jsx: `transform`,
-      entryPoints: this.getEntryPoints("electron").map(
-        (sourcefile) => sourcefile[0]
-      ),
+      entryPoints: [...this.getSecondaryEndpointsPoints("electron")],
       bundle: true,
       minify: this.minify === true,
       write: true,
-      outExtension: { ".js": ".js" },
-      packages: "external",
-      // splitting: true,
+      outExtension: { ".js": ".mjs" },
+
+      // packages: "external",
+      external: ["fs"],
+
+      splitting: true,
       plugins: [
         ...(this.loaders || []),
         {
@@ -566,49 +591,32 @@ export class ITProject {
       ],
     };
 
-    esbuild.build(electronRuntimeEsbuildConfig).then((eBuildResult) => {
-      console.log("electron tests", eBuildResult);
-    });
+    console.log("buildMode   -", this.buildMode);
+    console.log("runMode     -", this.runMode);
+    console.log("collateMode -", this.collateMode);
 
-    esbuild
-      .context({
-        entryPoints: ["src/app.ts"],
-        outdir: "www/js",
-        bundle: true,
-      })
-      .then(() => {});
-
-    let { host, port } = ctx.serve({
-      servedir: "www",
-    });
-
-    // console.log("buildMode   -", this.buildMode);
-    // console.log("runMode     -", this.runMode);
-    // console.log("collateMode -", this.collateMode);
-
-    // if (this.buildMode === "on") {
-    //   /* @ts-ignore:next-line */
-    //   // esbuild.build(nodeRuntimeEsbuildConfig).then(async (eBuildResult) => {
-    //   //   console.log("node tests", eBuildResult);
-    //   // });
-
-    //   /* @ts-ignore:next-line */
-    //   esbuild.build(electronRuntimeEsbuildConfig).then(async (eBuildResult) => {
-    //     console.log("electron tests", eBuildResult);
-    //   });
-    // } else if (this.buildMode === "watch") {
-    //   /* @ts-ignore:next-line */
-    //   // esbuild.context(nodeRuntimeEsbuildConfig).then(async (ectx) => {
-    //   //   ectx.watch();
-    //   // });
-
-    //   /* @ts-ignore:next-line */
-    //   esbuild.context(electronRuntimeEsbuildConfig).then(async (ectx) => {
-    //     ectx.watch();
-    //   });
-    // } else {
-    //   console.log("skipping 'build' phase");
-    // }
+    if (this.buildMode === "on") {
+      esbuild.build(nodeRuntimeEsbuildConfig).then(async (eBuildResult) => {
+        console.log("node tests", eBuildResult);
+      });
+      esbuild.build(electronRuntimeEsbuildConfig).then(async (eBuildResult) => {
+        console.log("electron tests", eBuildResult);
+      });
+    } else if (this.buildMode === "watch") {
+      esbuild.context(nodeRuntimeEsbuildConfig).then(async (ectx) => {
+        ectx.watch();
+      });
+      esbuild.context(electronRuntimeEsbuildConfig).then(async (ectx) => {
+        // unlike the server side, we need to run an http server to handle chunks imported into web-tests.
+        if (this.runMode) {
+          ectx.serve({
+            servedir: "js-bazel",
+          });
+        }
+      });
+    } else {
+      console.log("skipping 'build' phase");
+    }
 
     if (this.runMode) {
       const scheduler = new Scheduler(this);

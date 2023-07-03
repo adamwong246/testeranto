@@ -70,7 +70,7 @@ export default class Scheduler {
             this.pm2 = pm2;
             const makePath = (fPath) => {
                 const ext = path.extname(fPath);
-                const x = "./" + project.outdir + "/" + fPath.replace(ext, "") + ".cjs";
+                const x = "./" + project.outdir + "/" + fPath.replace(ext, "") + ".mjs";
                 return path.resolve(x);
             };
             const bootInterval = setInterval(async () => {
@@ -92,29 +92,23 @@ export default class Scheduler {
                         .reduce((m, [inputFilePath, runtime]) => {
                         const script = makePath(inputFilePath);
                         this.summary[inputFilePath] = undefined;
-                        // const partialTestResourceByCommandLineArg = `${script} '${JSON.stringify(
-                        //   {
-                        //     ports: [],
-                        //     fs: path.resolve(
-                        //       process.cwd(),
-                        //       project.outdir,
-                        //       inputFilePath
-                        //     ),
-                        //   }
-                        // )}'`;
+                        const partialTestResourceByCommandLineArg = `${script} '${JSON.stringify({
+                            ports: [],
+                            fs: path.resolve(process.cwd(), project.outdir, inputFilePath),
+                        })}'`;
                         m[inputFilePath] = pm2.start({
                             script: `yarn electron node_modules/testeranto/dist/common/electron.js ./js-bazel/myTests/ClassicalReact.html '${JSON.stringify({
                                 ports: [],
                                 fs: path.resolve(process.cwd(), project.outdir, inputFilePath),
                             })}'`,
                             name: `electron test`,
-                            // autorestart: false,
+                            autorestart: false,
                             // watch: [script],
                             // env: {
                             //   ELECTRON_NO_ASAR: `true`,
                             //   ELECTRON_RUN_AS_NODE: `true`,
                             // },
-                            // args: partialTestResourceByCommandLineArg,
+                            args: partialTestResourceByCommandLineArg,
                         }, (err, proc) => {
                             if (err) {
                                 console.error(err);
@@ -300,7 +294,7 @@ export class ITProject {
                     name: "hot-refresh",
                     setup(build) {
                         build.onEnd((result) => {
-                            console.log(`collation traspilation`, result);
+                            console.log(`collation transpilation`, result);
                             /* @ts-ignore:next-line */
                             clients.forEach((res) => res.write("data: update\n\n"));
                             clients.length = 0;
@@ -322,12 +316,13 @@ export class ITProject {
             write: true,
             outExtension: { ".js": ".mjs" },
             packages: "external",
+            splitting: true,
             plugins: [
                 ...(this.loaders || []),
                 {
                     name: "testeranto-redirect",
                     setup(build) {
-                        build.onResolve({ filter: /^.*\/testeranto\/$/ }, (args) => {
+                        build.onResolve({ filter: /^.*\/testeranto\/$/ }, async (args) => {
                             return {
                                 path: path.join(process.cwd(), `..`, "node_modules", `testeranto`),
                             };
@@ -337,14 +332,12 @@ export class ITProject {
             ],
         };
         this.getEntryPoints("electron").map((sourcefile) => {
-            fs.writeFile(`${this.outdir}/${sourcefile[0]
-                .split("/")
-                .slice(0, -1)
-                .join("/")}.html`, `
+            const outFileBaseName = sourcefile[0].split("/").slice(0, -1).join("/");
+            fs.writeFile(`${this.outdir}/${outFileBaseName}.html`, `
 <!DOCTYPE html>
     <html lang="en">
     <head>
-      <script type="module" src="./ClassicalReact/ClassicalComponent.electron.test.js"></script>
+      <script type="module" src="/${outFileBaseName}.mjs"></script>
     </head>
 
     <body>
@@ -363,7 +356,7 @@ export class ITProject {
         });
         const electronRuntimeEsbuildConfig = {
             // target: `node`,
-            platform: "node",
+            platform: "browser",
             format: "esm",
             outbase: this.outbase,
             outdir: this.outdir,
@@ -372,9 +365,10 @@ export class ITProject {
             bundle: true,
             minify: this.minify === true,
             write: true,
-            outExtension: { ".js": ".js" },
-            packages: "external",
-            // splitting: true,
+            outExtension: { ".js": ".mjs" },
+            // packages: "external",
+            external: ["fs"],
+            splitting: true,
             plugins: [
                 ...(this.loaders || []),
                 {
@@ -389,32 +383,38 @@ export class ITProject {
                 },
             ],
         };
-        console.log("buildMode   -", this.buildMode);
-        console.log("runMode     -", this.runMode);
-        console.log("collateMode -", this.collateMode);
-        if (this.buildMode === "on") {
-            /* @ts-ignore:next-line */
-            // esbuild.build(nodeRuntimeEsbuildConfig).then(async (eBuildResult) => {
-            //   console.log("node tests", eBuildResult);
-            // });
-            /* @ts-ignore:next-line */
-            esbuild.build(electronRuntimeEsbuildConfig).then(async (eBuildResult) => {
-                console.log("electron tests", eBuildResult);
-            });
-        }
-        else if (this.buildMode === "watch") {
-            /* @ts-ignore:next-line */
-            // esbuild.context(nodeRuntimeEsbuildConfig).then(async (ectx) => {
-            //   ectx.watch();
-            // });
-            /* @ts-ignore:next-line */
-            esbuild.context(electronRuntimeEsbuildConfig).then(async (ectx) => {
-                ectx.watch();
-            });
-        }
-        else {
-            console.log("skipping 'build' phase");
-        }
+        esbuild.context(electronRuntimeEsbuildConfig).then(async (ectx) => {
+            ectx.watch();
+            ectx
+                .serve({
+                servedir: "js-bazel",
+            })
+                .then((x) => { });
+        });
+        // console.log("buildMode   -", this.buildMode);
+        // console.log("runMode     -", this.runMode);
+        // console.log("collateMode -", this.collateMode);
+        // if (this.buildMode === "on") {
+        //   /* @ts-ignore:next-line */
+        //   // esbuild.build(nodeRuntimeEsbuildConfig).then(async (eBuildResult) => {
+        //   //   console.log("node tests", eBuildResult);
+        //   // });
+        //   /* @ts-ignore:next-line */
+        //   esbuild.build(electronRuntimeEsbuildConfig).then(async (eBuildResult) => {
+        //     console.log("electron tests", eBuildResult);
+        //   });
+        // } else if (this.buildMode === "watch") {
+        //   /* @ts-ignore:next-line */
+        //   // esbuild.context(nodeRuntimeEsbuildConfig).then(async (ectx) => {
+        //   //   ectx.watch();
+        //   // });
+        //   /* @ts-ignore:next-line */
+        //   esbuild.context(electronRuntimeEsbuildConfig).then(async (ectx) => {
+        //     ectx.watch();
+        //   });
+        // } else {
+        //   console.log("skipping 'build' phase");
+        // }
         if (this.runMode) {
             const scheduler = new Scheduler(this);
             process.stdin.on("keypress", (str, key) => {
@@ -432,44 +432,39 @@ export class ITProject {
         else {
             console.log("skipping 'run' phase");
         }
-        if (this.collateMode === "on") {
-            esbuild.build(collateOpts).then(async (eBuildResult) => {
-                console.log("ts collation", eBuildResult);
-            });
-        }
-        else if (this.collateMode === "watch") {
-            esbuild.context(collateOpts).then(async (ectx) => {
-                ectx.watch();
-            });
-        }
-        else if (this.collateMode === "serve") {
-            esbuild.context(collateOpts).then((esbuildContext) => {
-                hotReload(esbuildContext, collateDir);
-            });
-        }
-        else if (this.collateMode === "watch+serve") {
-            esbuild.context(collateOpts).then((esbuildContext) => {
-                hotReload(esbuildContext, collateDir);
-                esbuildContext.watch();
-                console.log(`serving collated reports @ ${"http://localhost:8000/"}`);
-            });
-        }
-        else if (this.collateMode === "dev") {
-            console.log("mark2", process.cwd());
-            esbuild.build({
-                bundle: true,
-                entryPoints: [config.collateEntry],
-                format: "iife",
-                jsx: `transform`,
-                minify: this.minify === true,
-                outbase: this.outbase,
-                outdir: collateDir,
-                write: true,
-            });
-        }
-        else {
-            console.log("skipping 'collate' phase");
-        }
+        // if (this.collateMode === "on") {
+        //   esbuild.build(collateOpts).then(async (eBuildResult) => {
+        //     console.log("ts collation", eBuildResult);
+        //   });
+        // } else if (this.collateMode === "watch") {
+        //   esbuild.context(collateOpts).then(async (ectx) => {
+        //     ectx.watch();
+        //   });
+        // } else if (this.collateMode === "serve") {
+        //   esbuild.context(collateOpts).then((esbuildContext) => {
+        //     hotReload(esbuildContext, collateDir);
+        //   });
+        // } else if (this.collateMode === "watch+serve") {
+        //   esbuild.context(collateOpts).then((esbuildContext) => {
+        //     hotReload(esbuildContext, collateDir);
+        //     esbuildContext.watch();
+        //     console.log(`serving collated reports @ ${"http://localhost:8000/"}`);
+        //   });
+        // } else if (this.collateMode === "dev") {
+        //   console.log("mark2", process.cwd());
+        //   esbuild.build({
+        //     bundle: true,
+        //     entryPoints: [config.collateEntry],
+        //     format: "iife",
+        //     jsx: `transform`,
+        //     minify: this.minify === true,
+        //     outbase: this.outbase,
+        //     outdir: collateDir,
+        //     write: true,
+        //   });
+        // } else {
+        //   console.log("skipping 'collate' phase");
+        // }
     }
     getEntryPoints(runtime) {
         if (runtime)

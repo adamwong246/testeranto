@@ -2,8 +2,15 @@ import pm2 from "pm2";
 import { TesterantoFeatures } from "./Features";
 import { ICollateMode } from "./IBaseConfig";
 import { IBaseConfig } from "./index.js";
+import Testeranto from "./core";
 export declare type IRunTimes = `node` | `electron`;
-export declare type ITestTypes = [f: string, r: IRunTimes][];
+export declare type ITestTypes = {
+    testeranto: typeof Testeranto;
+    components: {
+        runtime: IRunTimes;
+        entrypoint: string;
+    }[];
+};
 declare type IPm2Process = {
     process: {
         namespace: string;

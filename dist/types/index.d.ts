@@ -194,15 +194,5 @@ export declare abstract class TesterantoLevelOne<ITestShape extends ITTestShape,
         [K in keyof ITestShape["checks"]]: (name: string, features: string[], cbz: (...any: any[]) => Promise<void>) => any;
     }) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape>[], input: IInput, suiteKlasser: (name: string, givens: BaseGiven<ISubject, IStore, ISelection, IThenShape>[], checks: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape>[]) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape>, givenKlasser: (n: any, f: any, w: any, t: any, z?: any) => BaseGiven<ISubject, IStore, ISelection, IThenShape>, whenKlasser: (s: any, o: any) => BaseWhen<IStore, ISelection, IThenShape>, thenKlasser: (s: any, o: any) => BaseThen<IStore, ISelection, IThenShape>, checkKlasser: (n: any, f: any, cb: any, w: any, t: any) => BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape>, testResourceRequirement: any, nameKey: string);
 }
-declare type ITestArtificer = (key: string, data: any) => void;
-declare const _default: <TestShape extends ITTestShape, Input, Subject, Store, Selection_1, WhenShape, ThenShape, InitialStateShape>(input: Input, testSpecification: ITestSpecification<TestShape>, testImplementation: any, testInterface: {
-    actionHandler?: ((b: (...any: any[]) => any) => any) | undefined;
-    andWhen: (store: Store, actioner: any, testResource: ITTestResourceConfiguration) => Promise<Selection_1>;
-    butThen?: ((store: Store, callback: any, testResource: ITTestResourceConfiguration) => Promise<Selection_1>) | undefined;
-    assertioner?: ((t: ThenShape) => any) | undefined;
-    afterAll?: ((store: Store, artificer: ITestArtificer) => any) | undefined;
-    afterEach?: ((store: Store, ndx: number, artificer: ITestArtificer) => Promise<unknown>) | undefined;
-    beforeAll?: ((input: Input, artificer: ITestArtificer) => Promise<Subject>) | undefined;
-    beforeEach?: ((subject: Subject, initialValues: any, testResource: ITTestResourceConfiguration, artificer: ITestArtificer) => Promise<Store>) | undefined;
-}, nameKey: string, testResourceRequirement?: ITTestResourceRequirement) => Promise<void>;
+declare const _default: {};
 export default _default;

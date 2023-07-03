@@ -353,142 +353,275 @@ class TesterantoLevelOne {
     }
 }
 exports.TesterantoLevelOne = TesterantoLevelOne;
-exports.default = async (input, testSpecification, testImplementation, testInterface, nameKey, testResourceRequirement = defaultTestResourceRequirement) => {
-    const butThen = testInterface.butThen || (async (a) => a);
-    const { andWhen } = testInterface;
-    const actionHandler = testInterface.actionHandler ||
-        function (b) {
-            return b;
-        };
-    const assertioner = testInterface.assertioner || (async (t) => t);
-    const beforeAll = testInterface.beforeAll || (async (input) => input);
-    const beforeEach = testInterface.beforeEach ||
-        async function (subject, initialValues, testResource) {
-            return subject;
-        };
-    const afterEach = testInterface.afterEach || (async (s) => s);
-    const afterAll = testInterface.afterAll || ((store) => undefined);
-    class MrT extends TesterantoLevelOne {
-        constructor() {
-            super(testImplementation, 
-            /* @ts-ignore:next-line */
-            testSpecification, input, class extends BaseSuite {
-                async setup(s, artifactory) {
-                    return beforeAll(s, artifactory);
-                }
-                test(t) {
-                    return assertioner(t);
-                }
-            }, class Given extends BaseGiven {
-                constructor(name, features, whens, thens, initialValues) {
-                    super(name, features, whens, thens);
-                    this.initialValues = initialValues;
-                }
-                async givenThat(subject, testResource, artifactory) {
-                    return beforeEach(subject, this.initialValues, testResource, artifactory);
-                }
-                afterEach(store, ndx, artifactory) {
-                    return new Promise((res) => res(afterEach(store, ndx, artifactory)));
-                }
-                afterAll(store, artifactory) {
-                    return afterAll(store, artifactory);
-                }
-            }, class When extends BaseWhen {
-                constructor(name, actioner, payload) {
-                    super(name, (store) => {
-                        return actionHandler(actioner);
-                    });
-                    this.payload = payload;
-                }
-                async andWhen(store, actioner, testResource) {
-                    return await andWhen(store, actioner, testResource);
-                }
-            }, class Then extends BaseThen {
-                constructor(name, callback) {
-                    super(name, callback);
-                }
-                async butThen(store, testResourceConfiguration) {
-                    return await butThen(store, this.thenCB, testResourceConfiguration);
-                }
-            }, class Check extends BaseCheck {
-                constructor(name, features, checkCallback, whens, thens, initialValues) {
-                    super(name, features, checkCallback, whens, thens);
-                    this.initialValues = initialValues;
-                }
-                async checkThat(subject, testResourceConfiguration, artifactory) {
-                    return beforeEach(subject, this.initialValues, testResourceConfiguration, artifactory);
-                }
-                afterEach(store, ndx, artifactory) {
-                    return new Promise((res) => res(afterEach(store, ndx, artifactory)));
-                }
-            }, testResourceRequirement, nameKey);
-        }
-    }
-    const mrt = new MrT();
-    const t = mrt[0];
-    console.log("mark 3", process.argv);
-    const testResourceArg = process.argv[2] || `{}`;
-    console.log("mark 2", testResourceArg);
-    // process.exit();
-    try {
-        console.log("mark", testResourceArg);
-        const partialTestResource = JSON.parse(testResourceArg);
-        if (partialTestResource.fs && partialTestResource.ports) {
-            await t.receiveTestResourceConfig(partialTestResource);
-            // process.exit(0); // :-)
-        }
-        else {
-            console.log("test configuration is incomplete");
-            if (process.send) {
-                console.log("requesting test resources from pm2 ...", testResourceRequirement);
-                /* @ts-ignore:next-line */
-                process.send({
-                    type: "testeranto:hola",
-                    data: {
-                        testResourceRequirement,
-                    },
-                });
-                console.log("awaiting test resources from pm2...");
-                process.on("message", async function (packet) {
-                    console.log("message: ", packet);
-                    const resourcesFromPm2 = packet.data.testResourceConfiguration;
-                    const secondTestResource = Object.assign(Object.assign({ fs: "." }, JSON.parse(JSON.stringify(partialTestResource))), JSON.parse(JSON.stringify(resourcesFromPm2)));
-                    console.log("secondTestResource", secondTestResource);
-                    if (await t.receiveTestResourceConfig(secondTestResource)) {
-                        /* @ts-ignore:next-line */
-                        process.send({
-                            type: "testeranto:adios",
-                            data: {
-                                testResourceConfiguration: mrt[0].test.testResourceConfiguration,
-                                results: mrt[0].toObj(),
-                            },
-                        }, (err) => {
-                            if (!err) {
-                                console.log(`✅`);
-                            }
-                            else {
-                                console.error(`❗️`, err);
-                            }
-                            // process.exit(0); // :-)
-                        });
-                    }
-                });
-            }
-            else {
-                console.log("Pass run-time test resources by STDIN");
-                process.stdin.on("data", async (data) => {
-                    console.log("data: ", data);
-                    const resourcesFromStdin = JSON.parse(data.toString());
-                    const secondTestResource = Object.assign(Object.assign({}, JSON.parse(JSON.stringify(resourcesFromStdin))), JSON.parse(JSON.stringify(partialTestResource)));
-                    await t.receiveTestResourceConfig(secondTestResource);
-                    // process.exit(0); // :-)
-                });
-            }
-        }
-    }
-    catch (e) {
-        console.error(`the test resource passed by command-line argument "${process.argv[2]}" was malformed.`);
-        console.error(e);
-        process.exit(-1);
-    }
-};
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// type ITestArtificer = (key: string, data: any) => void;
+// type IMultiRuntimeSubject = Record<
+//   string,
+//   { runtime: "just node" | "just web" | "both web and node"; subject: unknown }
+// >;
+// export default async <
+//   TestShape extends ITTestShape,
+//   Input extends IMultiRuntimeSubject,
+//   Subject,
+//   Store,
+//   Selection,
+//   WhenShape,
+//   ThenShape,
+//   InitialStateShape
+// >(
+//   input: Input,
+//   testSpecification: ITestSpecification<TestShape>,
+//   testImplementation,
+//   testInterface: {
+//     actionHandler?: (b: (...any) => any) => any;
+//     andWhen: (
+//       store: Store,
+//       actioner,
+//       testResource: ITTestResourceConfiguration
+//     ) => Promise<Selection>;
+//     butThen?: (
+//       store: Store,
+//       callback,
+//       testResource: ITTestResourceConfiguration
+//     ) => Promise<Selection>;
+//     assertioner?: (t: ThenShape) => any;
+//     afterAll?: (store: Store, artificer: ITestArtificer) => any;
+//     afterEach?: (
+//       store: Store,
+//       ndx: number,
+//       artificer: ITestArtificer
+//     ) => Promise<unknown>;
+//     beforeAll?: (input: Input, artificer: ITestArtificer) => Promise<Subject>;
+//     beforeEach?: (
+//       subject: Subject,
+//       initialValues,
+//       testResource: ITTestResourceConfiguration,
+//       artificer: ITestArtificer
+//     ) => Promise<Store>;
+//   },
+//   nameKey: string,
+//   testResourceRequirement: ITTestResourceRequirement = defaultTestResourceRequirement
+// ) => {
+//   const butThen = testInterface.butThen || (async (a) => a as any);
+//   const { andWhen } = testInterface;
+//   const actionHandler =
+//     testInterface.actionHandler ||
+//     function (b: (...any: any[]) => any) {
+//       return b;
+//     };
+//   const assertioner = testInterface.assertioner || (async (t) => t as any);
+//   const beforeAll = testInterface.beforeAll || (async (input) => input as any);
+//   const beforeEach =
+//     testInterface.beforeEach ||
+//     async function (subject: Input, initialValues: any, testResource: any) {
+//       return subject as any;
+//     };
+//   const afterEach = testInterface.afterEach || (async (s) => s);
+//   const afterAll = testInterface.afterAll || ((store: Store) => undefined);
+//   class MrT extends TesterantoLevelOne<
+//     TestShape,
+//     InitialStateShape,
+//     Selection,
+//     Store,
+//     Subject,
+//     WhenShape,
+//     ThenShape,
+//     Input
+//   > {
+//     constructor() {
+//       super(
+//         testImplementation,
+//         /* @ts-ignore:next-line */
+//         testSpecification,
+//         input,
+//         class extends BaseSuite<
+//           Input,
+//           Subject,
+//           Store,
+//           Selection,
+//           ThenShape,
+//           TestShape
+//         > {
+//           async setup(s: Input, artifactory): Promise<Subject> {
+//             return beforeAll(s, artifactory);
+//           }
+//           test(t: ThenShape): unknown {
+//             return assertioner(t);
+//           }
+//         },
+//         class Given extends BaseGiven<Subject, Store, Selection, ThenShape> {
+//           initialValues: any;
+//           constructor(
+//             name: string,
+//             features: string[],
+//             whens: BaseWhen<Store, Selection, ThenShape>[],
+//             thens: BaseThen<Selection, Store, ThenShape>[],
+//             initialValues: any
+//           ) {
+//             super(name, features, whens, thens);
+//             this.initialValues = initialValues;
+//           }
+//           async givenThat(subject, testResource, artifactory) {
+//             return beforeEach(
+//               subject,
+//               this.initialValues,
+//               testResource,
+//               artifactory
+//             );
+//           }
+//           afterEach(store: Store, ndx: number, artifactory): Promise<unknown> {
+//             return new Promise((res) =>
+//               res(afterEach(store, ndx, artifactory))
+//             );
+//           }
+//           afterAll(store, artifactory) {
+//             return afterAll(store, artifactory);
+//           }
+//         },
+//         class When extends BaseWhen<Store, Selection, WhenShape> {
+//           payload?: any;
+//           constructor(name: string, actioner: (...any) => any, payload?: any) {
+//             super(name, (store) => {
+//               return actionHandler(actioner);
+//             });
+//             this.payload = payload;
+//           }
+//           async andWhen(store, actioner, testResource) {
+//             return await andWhen(store, actioner, testResource);
+//           }
+//         },
+//         class Then extends BaseThen<Selection, Store, ThenShape> {
+//           constructor(name: string, callback: (val: Selection) => ThenShape) {
+//             super(name, callback);
+//           }
+//           async butThen(
+//             store: any,
+//             testResourceConfiguration?: any
+//           ): Promise<Selection> {
+//             return await butThen(store, this.thenCB, testResourceConfiguration);
+//           }
+//         },
+//         class Check extends BaseCheck<
+//           Subject,
+//           Store,
+//           Selection,
+//           ThenShape,
+//           TestShape
+//         > {
+//           initialValues: any;
+//           constructor(
+//             name: string,
+//             features: string[],
+//             checkCallback: (a, b) => any,
+//             whens,
+//             thens,
+//             initialValues: any
+//           ) {
+//             super(name, features, checkCallback, whens, thens);
+//             this.initialValues = initialValues;
+//           }
+//           async checkThat(subject, testResourceConfiguration, artifactory) {
+//             return beforeEach(
+//               subject,
+//               this.initialValues,
+//               testResourceConfiguration,
+//               artifactory
+//             );
+//           }
+//           afterEach(store: Store, ndx: number, artifactory): Promise<unknown> {
+//             return new Promise((res) =>
+//               res(afterEach(store, ndx, artifactory))
+//             );
+//           }
+//         },
+//         testResourceRequirement,
+//         nameKey
+//       );
+//     }
+//   }
+//   const mrt = new MrT();
+//   const t: ITestJob = mrt[0];
+//   console.log("mark 3", process.argv);
+//   const testResourceArg = process.argv[2] || `{}`;
+//   console.log("mark 2", testResourceArg);
+//   // process.exit();
+//   try {
+//     console.log("mark", testResourceArg);
+//     const partialTestResource = JSON.parse(
+//       testResourceArg
+//     ) as ITTestResourceConfiguration;
+//     if (partialTestResource.fs && partialTestResource.ports) {
+//       await t.receiveTestResourceConfig(partialTestResource);
+//       // process.exit(0); // :-)
+//     } else {
+//       console.log("test configuration is incomplete");
+//       if (process.send) {
+//         console.log(
+//           "requesting test resources from pm2 ...",
+//           testResourceRequirement
+//         );
+//         /* @ts-ignore:next-line */
+//         process.send({
+//           type: "testeranto:hola",
+//           data: {
+//             testResourceRequirement,
+//           },
+//         });
+//         console.log("awaiting test resources from pm2...");
+//         process.on(
+//           "message",
+//           async function (packet: { data: { testResourceConfiguration } }) {
+//             console.log("message: ", packet);
+//             const resourcesFromPm2 = packet.data.testResourceConfiguration;
+//             const secondTestResource = {
+//               fs: ".",
+//               ...JSON.parse(JSON.stringify(partialTestResource)),
+//               ...JSON.parse(JSON.stringify(resourcesFromPm2)),
+//             } as ITTestResourceConfiguration;
+//             console.log("secondTestResource", secondTestResource);
+//             if (await t.receiveTestResourceConfig(secondTestResource)) {
+//               /* @ts-ignore:next-line */
+//               process.send(
+//                 {
+//                   type: "testeranto:adios",
+//                   data: {
+//                     testResourceConfiguration:
+//                       mrt[0].test.testResourceConfiguration,
+//                     results: mrt[0].toObj(),
+//                   },
+//                 },
+//                 (err) => {
+//                   if (!err) {
+//                     console.log(`✅`);
+//                   } else {
+//                     console.error(`❗️`, err);
+//                   }
+//                   // process.exit(0); // :-)
+//                 }
+//               );
+//             }
+//           }
+//         );
+//       } else {
+//         console.log("Pass run-time test resources by STDIN");
+//         process.stdin.on("data", async (data) => {
+//           console.log("data: ", data);
+//           const resourcesFromStdin = JSON.parse(data.toString());
+//           const secondTestResource = {
+//             ...JSON.parse(JSON.stringify(resourcesFromStdin)),
+//             ...JSON.parse(JSON.stringify(partialTestResource)),
+//           } as ITTestResourceConfiguration;
+//           await t.receiveTestResourceConfig(secondTestResource);
+//           // process.exit(0); // :-)
+//         });
+//       }
+//     }
+//   } catch (e) {
+//     console.error(
+//       `the test resource passed by command-line argument "${process.argv[2]}" was malformed.`
+//     );
+//     console.error(e);
+//     process.exit(-1);
+//   }
+// };
+exports.default = {};

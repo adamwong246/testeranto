@@ -22,6 +22,6 @@ export type IBaseConfig = {
   collateEntry: string;
   // resultsdir: string;
   runMode: boolean;
-  tests: ITestTypes;
+  tests: ITestTypes[];
   buildMode: "on" | "off" | "watch";
 };

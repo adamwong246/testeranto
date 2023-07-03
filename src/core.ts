@@ -1026,18 +1026,18 @@ export abstract class TesterantoLevelOne<
           //   `${testResourceConfiguration.fs}/log.txt`
           // );
           // var access = fs.createWriteStream(logFilePath);
-          // const tLog = (...l: string[]) => {
-          //   console.log(...l);
-          //   access.write(`${l.toString()}\n`);
-          // };
-          // const suiteDone: BaseSuite<
-          //   IInput,
-          //   ISubject,
-          //   IStore,
-          //   ISelection,
-          //   IThenShape,
-          //   ITestShape
-          // > = await runner(testResourceConfiguration, tLog);
+          const tLog = (...l: string[]) => {
+            console.log(...l);
+            // access.write(`${l.toString()}\n`);
+          };
+          const suiteDone: BaseSuite<
+            IInput,
+            ISubject,
+            IStore,
+            ISelection,
+            IThenShape,
+            ITestShape
+          > = await runner(testResourceConfiguration, tLog);
           // const resultsFilePath = path.resolve(
           //   `${testResourceConfiguration.fs}/results.json`
           // );
@@ -1064,10 +1064,18 @@ export abstract class TesterantoLevelOne<
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 type ITestArtificer = (key: string, data: any) => void;
+export type IRunTimeAndSubject = {
+  runtime: "just node" | "just web" | "both web and node";
+  entrypoint: string;
+};
+
+// type IMultiRuntimeSubject =
+//   | Record<string, IRunTimeAndSubject>
+//   | IRunTimeAndSubject;
 
 export default async <
   TestShape extends ITTestShape,
-  Input,
+  Input extends IRunTimeAndSubject,
   Subject,
   Store,
   Selection,
@@ -1260,8 +1268,8 @@ export default async <
 
   const mrt = new MrT();
   const t: ITestJob = mrt[0];
-  console.log("mark 3", process.argv);
-  const testResourceArg = process.argv[2] || `{}`;
+  // console.log("mark 3", process.argv);
+  const testResourceArg = `{"fs": ".", "ports": []}`;
   console.log("mark 2", testResourceArg);
   // process.exit();
   try {
@@ -1276,77 +1284,77 @@ export default async <
     } else {
       console.log("test configuration is incomplete");
 
-      if (process.send) {
-        console.log(
-          "requesting test resources from pm2 ...",
-          testResourceRequirement
-        );
-        /* @ts-ignore:next-line */
-        process.send({
-          type: "testeranto:hola",
-          data: {
-            testResourceRequirement,
-          },
-        });
+      // if (process.send) {
+      //   console.log(
+      //     "requesting test resources from pm2 ...",
+      //     testResourceRequirement
+      //   );
+      //   /* @ts-ignore:next-line */
+      //   process.send({
+      //     type: "testeranto:hola",
+      //     data: {
+      //       testResourceRequirement,
+      //     },
+      //   });
 
-        console.log("awaiting test resources from pm2...");
-        process.on(
-          "message",
-          async function (packet: { data: { testResourceConfiguration } }) {
-            console.log("message: ", packet);
+      //   console.log("awaiting test resources from pm2...");
+      //   process.on(
+      //     "message",
+      //     async function (packet: { data: { testResourceConfiguration } }) {
+      //       console.log("message: ", packet);
 
-            const resourcesFromPm2 = packet.data.testResourceConfiguration;
-            const secondTestResource = {
-              fs: ".",
-              ...JSON.parse(JSON.stringify(partialTestResource)),
-              ...JSON.parse(JSON.stringify(resourcesFromPm2)),
-            } as ITTestResourceConfiguration;
+      //       const resourcesFromPm2 = packet.data.testResourceConfiguration;
+      //       const secondTestResource = {
+      //         fs: ".",
+      //         ...JSON.parse(JSON.stringify(partialTestResource)),
+      //         ...JSON.parse(JSON.stringify(resourcesFromPm2)),
+      //       } as ITTestResourceConfiguration;
 
-            console.log("secondTestResource", secondTestResource);
+      //       console.log("secondTestResource", secondTestResource);
 
-            if (await t.receiveTestResourceConfig(secondTestResource)) {
-              /* @ts-ignore:next-line */
-              process.send(
-                {
-                  type: "testeranto:adios",
-                  data: {
-                    testResourceConfiguration:
-                      mrt[0].test.testResourceConfiguration,
-                    results: mrt[0].toObj(),
-                  },
-                },
-                (err) => {
-                  if (!err) {
-                    console.log(`✅`);
-                  } else {
-                    console.error(`❗️`, err);
-                  }
-                  // process.exit(0); // :-)
-                }
-              );
-            }
-          }
-        );
-      } else {
-        console.log("Pass run-time test resources by STDIN");
-        process.stdin.on("data", async (data) => {
-          console.log("data: ", data);
+      //       if (await t.receiveTestResourceConfig(secondTestResource)) {
+      //         /* @ts-ignore:next-line */
+      //         process.send(
+      //           {
+      //             type: "testeranto:adios",
+      //             data: {
+      //               testResourceConfiguration:
+      //                 mrt[0].test.testResourceConfiguration,
+      //               results: mrt[0].toObj(),
+      //             },
+      //           },
+      //           (err) => {
+      //             if (!err) {
+      //               console.log(`✅`);
+      //             } else {
+      //               console.error(`❗️`, err);
+      //             }
+      //             // process.exit(0); // :-)
+      //           }
+      //         );
+      //       }
+      //     }
+      //   );
+      // } else {
+      //   console.log("Pass run-time test resources by STDIN");
+      //   process.stdin.on("data", async (data) => {
+      //     console.log("data: ", data);
 
-          const resourcesFromStdin = JSON.parse(data.toString());
-          const secondTestResource = {
-            ...JSON.parse(JSON.stringify(resourcesFromStdin)),
-            ...JSON.parse(JSON.stringify(partialTestResource)),
-          } as ITTestResourceConfiguration;
-          await t.receiveTestResourceConfig(secondTestResource);
-          // process.exit(0); // :-)
-        });
-      }
+      //     const resourcesFromStdin = JSON.parse(data.toString());
+      //     const secondTestResource = {
+      //       ...JSON.parse(JSON.stringify(resourcesFromStdin)),
+      //       ...JSON.parse(JSON.stringify(partialTestResource)),
+      //     } as ITTestResourceConfiguration;
+      //     await t.receiveTestResourceConfig(secondTestResource);
+      //     // process.exit(0); // :-)
+      //   });
+      // }
     }
   } catch (e) {
     console.error(
       `the test resource passed by command-line argument "${process.argv[2]}" was malformed.`
     );
     console.error(e);
-    process.exit(-1);
+    // process.exit(-1);
   }
 };
