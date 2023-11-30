@@ -14,10 +14,7 @@ import Testeranto from "./core";
 
 export type IRunTime = `node` | `electron`;
 export type IRunTimes = { runtime: IRunTime; entrypoint: string }[];
-export type ITestTypes = {
-  entrypoint: string;
-  components: IRunTimes;
-};
+export type ITestTypes = [string, IRunTime];
 
 const TIMEOUT = 2000;
 const OPEN_PORT = "";
@@ -425,18 +422,16 @@ export class ITProject {
 
   getSecondaryEndpointsPoints(runtime?: IRunTime): string[] {
     if (runtime) {
-      return Object.values(this.tests)
+      return this.tests
         .map((t) => {
-          return t.components
-            .filter((c) => c.runtime === runtime)
-            .map((tc) => tc.entrypoint);
+          return t.filter((c) => c[1] === runtime).map((tc) => tc[0]);
         }, [])
         .flat();
     }
 
-    return Object.values(this.tests)
+    return this.tests
       .map((t) => {
-        return t.components.map((tc) => tc.entrypoint);
+        return t.map((tc) => tc[1]);
       }, [])
       .flat();
   }
@@ -497,7 +492,7 @@ export class ITProject {
         // these are the tested artifacts
         ...this.getSecondaryEndpointsPoints("node"),
         // these do the testing
-        ...this.tests.map((t) => t.entrypoint),
+        ...this.tests.map((t) => t[1]),
       ],
       bundle: true,
       minify: this.minify === true,

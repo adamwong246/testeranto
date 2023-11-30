@@ -12,6 +12,6 @@ export declare type IBaseConfig = {
     ports: string[];
     collateEntry: string;
     runMode: boolean;
-    tests: ITestTypes;
+    tests: ITestTypes[];
     buildMode: "on" | "off" | "watch";
 };

@@ -2,15 +2,12 @@ import pm2 from "pm2";
 import { TesterantoFeatures } from "./Features";
 import { ICollateMode } from "./IBaseConfig";
 import { IBaseConfig } from "./index.js";
-import Testeranto from "./core";
-export declare type IRunTimes = `node` | `electron`;
-export declare type ITestTypes = {
-    testeranto: typeof Testeranto;
-    components: {
-        runtime: IRunTimes;
-        entrypoint: string;
-    }[];
-};
+export declare type IRunTime = `node` | `electron`;
+export declare type IRunTimes = {
+    runtime: IRunTime;
+    entrypoint: string;
+}[];
+export declare type ITestTypes = [string, IRunTime];
 declare type IPm2Process = {
     process: {
         namespace: string;
@@ -59,8 +56,8 @@ export declare class ITProject {
     outdir: string;
     ports: string[];
     runMode: boolean;
-    tests: ITestTypes;
-    getEntryPoints(runtime?: IRunTimes): ITestTypes;
+    tests: ITestTypes[];
+    getSecondaryEndpointsPoints(runtime?: IRunTime): string[];
     constructor(config: IBaseConfig);
 }
 export {};

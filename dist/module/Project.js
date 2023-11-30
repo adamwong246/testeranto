@@ -74,7 +74,9 @@ export default class Scheduler {
                 return path.resolve(x);
             };
             const bootInterval = setInterval(async () => {
-                const filesToLookup = this.project.getEntryPoints().map((f) => {
+                const filesToLookup = this.project
+                    .getSecondaryEndpointsPoints()
+                    .map((f) => {
                     const filepath = makePath(f[0]);
                     return {
                         filepath,
@@ -88,7 +90,7 @@ export default class Scheduler {
                 else {
                     clearInterval(bootInterval);
                     this.project
-                        .getEntryPoints()
+                        .getSecondaryEndpointsPoints()
                         .reduce((m, [inputFilePath, runtime]) => {
                         const script = makePath(inputFilePath);
                         this.summary[inputFilePath] = undefined;
@@ -114,8 +116,6 @@ export default class Scheduler {
                                 console.error(err);
                                 return pm2.disconnect();
                             }
-                            else {
-                            }
                         });
                         return m;
                     }, {});
@@ -133,7 +133,7 @@ export default class Scheduler {
                         if (this.project.clearScreen) {
                             console.clear();
                         }
-                        console.log(`# of processes in queue:`, this.queue.length, "/", this.project.getEntryPoints().length);
+                        console.log(`# of processes in queue:`, this.queue.length, "/", this.project.getSecondaryEndpointsPoints().length);
                         console.log(`summary:`, this.summary);
                         console.log(`ports:`, this.ports);
                         // pm2.list((err, procs) => {
@@ -225,7 +225,9 @@ export default class Scheduler {
                     },
                 };
                 console.log("mark1");
-                this.pm2.sendDataToProcessId(p.process.pm_id, message, function (err, res) { });
+                this.pm2.sendDataToProcessId(p.process.pm_id, message, function (err, res) {
+                    // no-op
+                });
                 // mark the selected ports as occupied
                 for (const foundOpenPort of selectionOfPorts) {
                     this.ports[foundOpenPort] = pid.toString();
@@ -310,7 +312,12 @@ export class ITProject {
             outbase: this.outbase,
             outdir: this.outdir,
             jsx: `transform`,
-            entryPoints: this.getEntryPoints("node").map((sourcefile) => sourcefile[0]),
+            entryPoints: [
+                // these are the tested artifacts
+                ...this.getSecondaryEndpointsPoints("node"),
+                // these do the testing
+                ...this.tests.map((t) => t[1]),
+            ],
             bundle: true,
             minify: this.minify === true,
             write: true,
@@ -331,7 +338,7 @@ export class ITProject {
                 },
             ],
         };
-        this.getEntryPoints("electron").map((sourcefile) => {
+        this.getSecondaryEndpointsPoints("electron").map((sourcefile) => {
             const outFileBaseName = sourcefile[0].split("/").slice(0, -1).join("/");
             fs.writeFile(`${this.outdir}/${outFileBaseName}.html`, `
 <!DOCTYPE html>
@@ -361,7 +368,7 @@ export class ITProject {
             outbase: this.outbase,
             outdir: this.outdir,
             jsx: `transform`,
-            entryPoints: this.getEntryPoints("electron").map((sourcefile) => sourcefile[0]),
+            entryPoints: [...this.getSecondaryEndpointsPoints("electron")],
             bundle: true,
             minify: this.minify === true,
             write: true,
@@ -383,38 +390,33 @@ export class ITProject {
                 },
             ],
         };
-        esbuild.context(electronRuntimeEsbuildConfig).then(async (ectx) => {
-            ectx.watch();
-            ectx
-                .serve({
-                servedir: "js-bazel",
-            })
-                .then((x) => { });
-        });
-        // console.log("buildMode   -", this.buildMode);
-        // console.log("runMode     -", this.runMode);
-        // console.log("collateMode -", this.collateMode);
-        // if (this.buildMode === "on") {
-        //   /* @ts-ignore:next-line */
-        //   // esbuild.build(nodeRuntimeEsbuildConfig).then(async (eBuildResult) => {
-        //   //   console.log("node tests", eBuildResult);
-        //   // });
-        //   /* @ts-ignore:next-line */
-        //   esbuild.build(electronRuntimeEsbuildConfig).then(async (eBuildResult) => {
-        //     console.log("electron tests", eBuildResult);
-        //   });
-        // } else if (this.buildMode === "watch") {
-        //   /* @ts-ignore:next-line */
-        //   // esbuild.context(nodeRuntimeEsbuildConfig).then(async (ectx) => {
-        //   //   ectx.watch();
-        //   // });
-        //   /* @ts-ignore:next-line */
-        //   esbuild.context(electronRuntimeEsbuildConfig).then(async (ectx) => {
-        //     ectx.watch();
-        //   });
-        // } else {
-        //   console.log("skipping 'build' phase");
-        // }
+        console.log("buildMode   -", this.buildMode);
+        console.log("runMode     -", this.runMode);
+        console.log("collateMode -", this.collateMode);
+        if (this.buildMode === "on") {
+            esbuild.build(nodeRuntimeEsbuildConfig).then(async (eBuildResult) => {
+                console.log("node tests", eBuildResult);
+            });
+            esbuild.build(electronRuntimeEsbuildConfig).then(async (eBuildResult) => {
+                console.log("electron tests", eBuildResult);
+            });
+        }
+        else if (this.buildMode === "watch") {
+            esbuild.context(nodeRuntimeEsbuildConfig).then(async (ectx) => {
+                ectx.watch();
+            });
+            esbuild.context(electronRuntimeEsbuildConfig).then(async (ectx) => {
+                // unlike the server side, we need to run an http server to handle chunks imported into web-tests.
+                if (this.runMode) {
+                    ectx.serve({
+                        servedir: "js-bazel",
+                    });
+                }
+            });
+        }
+        else {
+            console.log("skipping 'build' phase");
+        }
         if (this.runMode) {
             const scheduler = new Scheduler(this);
             process.stdin.on("keypress", (str, key) => {
@@ -466,9 +468,18 @@ export class ITProject {
         //   console.log("skipping 'collate' phase");
         // }
     }
-    getEntryPoints(runtime) {
-        if (runtime)
-            return Object.values(this.tests).filter((t) => t[1] === runtime);
-        return Object.values(this.tests);
+    getSecondaryEndpointsPoints(runtime) {
+        if (runtime) {
+            return this.tests
+                .map((t) => {
+                return t.filter((c) => c[1] === runtime).map((tc) => tc[0]);
+            }, [])
+                .flat();
+        }
+        return this.tests
+            .map((t) => {
+            return t.map((tc) => tc[1]);
+        }, [])
+            .flat();
     }
 }
