@@ -1,8 +1,7 @@
-const { app, BrowserWindow } = require("electron");
-const url = require("url");
-const path = require("path");
+import { app, BrowserWindow } from "electron";
+import path from "path";
+import url from "url";
 let win;
-console.log("mark", process.argv);
 function createWindow() {
     win = new BrowserWindow({
         webPreferences: {
@@ -20,4 +19,3 @@ function createWindow() {
     }));
 }
 app.on("ready", createWindow);
-export {};

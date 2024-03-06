@@ -10,13 +10,29 @@
       "import": "./dist/module/index.js",
       "require": "./dist/common/index.js"
     },
-    "./Project": {
+    "./src/Features": {
+      "import": "./dist/module/Features.js",
+      "require": "./dist/common/Features.js"
+    },
+    "./src/Project": {
       "import": "./dist/module/Project.js",
       "require": "./dist/common/Project.js"
     },
+    "./src/core-web": {
+      "import": "./dist/module/core-web.js",
+      "require": "./dist/common/core-web.js"
+    },
+    "./src/core-node": {
+      "import": "./dist/module/core-node.js",
+      "require": "./dist/common/core-node.js"
+    },
+    "./src/electron": {
+      "import": "./dist/module/electron.js",
+      "require": "./dist/common/electron.js"
+    },
     "./src/core": {
-      "import": "./src/core.ts",
-      "require": "./src/core.ts"
+      "import": "./dist/module/core.js",
+      "require": "./dist/common/core.js"
     }
   },
   "repository": "git@github.com:adamwong246/testeranto.git",
@@ -43,8 +59,8 @@
     "tableflip": "yarn clean && yarn bundle:reporter"
   },
   "peerDependencies": {
-    "esbuild": "0.17.5",
-    "electron": "^24.2.0"
+    "electron": "^24.2.0",
+    "esbuild": "0.17.5"
   },
   "devDependencies": {
     "esbuild": "0.17.5"
@@ -59,9 +75,13 @@
     "@typescript-eslint/parser": "^5.46.0",
     "babel-loader": "^8.2.5",
     "bootstrap": "^5.2.3",
+    "electron": "^29.1.0",
+    "esbuild-plugin-external-package": "^1.0.0",
+    "esbuild-plugin-import-map": "^2.1.0",
     "eslint": "^8.29.0",
     "eslint-plugin-react": "^7.31.11",
     "fresh-require": "^1.0.3",
+    "fs-extra": "^11.2.0",
     "fs.promises.exists": "^1.1.4",
     "graphology": "^0.25.1",
     "graphology-dag": "^0.2.0",

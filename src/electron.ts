@@ -1,10 +1,10 @@
-const { app, BrowserWindow } = require("electron");
-const url = require("url");
-const path = require("path");
+import { app, BrowserWindow } from "electron";
+import fs from "fs";
+import path from "path";
+import { PassThrough } from "stream";
+import url from "url";
 
 let win;
-
-console.log("mark", process.argv);
 
 function createWindow() {
   win = new BrowserWindow({
@@ -27,4 +27,4 @@ function createWindow() {
 
 app.on("ready", createWindow);
 
-export {};
+export { };

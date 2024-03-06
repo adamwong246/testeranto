@@ -1,51 +1,10 @@
+import esbuild from "esbuild";
 import fs from "fs";
 import fsExists from "fs.promises.exists";
-import pm2 from "pm2";
-import { spawn } from "child_process";
 import path from "path";
-import esbuild from "esbuild";
-import { createServer, request } from "http";
+import pm2 from "pm2";
 const TIMEOUT = 2000;
 const OPEN_PORT = "";
-const clients = [];
-const hotReload = (ectx, collateDir, port) => {
-    ectx.serve({ servedir: collateDir, host: "localhost" }).then(() => {
-        if (port) {
-            createServer((req, res) => {
-                const { url, method, headers } = req;
-                if (req.url === "/esbuild")
-                    return clients.push(
-                    /* @ts-ignore:next-line */
-                    res.writeHead(200, {
-                        "Content-Type": "text/event-stream",
-                        "Cache-Control": "no-cache",
-                        Connection: "keep-alive",
-                    }));
-                /* @ts-ignore:next-line */
-                const path = ~url.split("/").pop().indexOf(".") ? url : `/index.html`; //for PWA with router
-                req.pipe(request({ hostname: "0.0.0.0", port, path, method, headers }, (prxRes) => {
-                    /* @ts-ignore:next-line */
-                    res.writeHead(prxRes.statusCode, prxRes.headers);
-                    prxRes.pipe(res, { end: true });
-                }), { end: true });
-            }).listen(port);
-            setTimeout(() => {
-                console.log("tick");
-                const op = {
-                    darwin: ["open"],
-                    linux: ["xdg-open"],
-                    win32: ["cmd", "/c", "start"],
-                };
-                const ptf = process.platform;
-                if (clients.length === 0)
-                    spawn(op[ptf][0], [
-                        ...[op[ptf].slice(1)],
-                        `http://localhost:${port}`,
-                    ]);
-            }, 1000); //open the default browser only if it is not opened yet
-        }
-    });
-};
 export default class Scheduler {
     constructor(project) {
         this.spinCycle = 0;
@@ -69,15 +28,15 @@ export default class Scheduler {
             }
             this.pm2 = pm2;
             const makePath = (fPath) => {
+                console.log("makePath", fPath);
                 const ext = path.extname(fPath);
                 const x = "./" + project.outdir + "/" + fPath.replace(ext, "") + ".mjs";
                 return path.resolve(x);
             };
             const bootInterval = setInterval(async () => {
-                const filesToLookup = this.project
-                    .getSecondaryEndpointsPoints()
-                    .map((f) => {
-                    const filepath = makePath(f[0]);
+                const filesToLookup = this.project.tests
+                    .map(([p, rt]) => {
+                    const filepath = makePath(p);
                     return {
                         filepath,
                         exists: fsExists(filepath),
@@ -90,7 +49,7 @@ export default class Scheduler {
                 else {
                     clearInterval(bootInterval);
                     this.project
-                        .getSecondaryEndpointsPoints()
+                        .tests
                         .reduce((m, [inputFilePath, runtime]) => {
                         const script = makePath(inputFilePath);
                         this.summary[inputFilePath] = undefined;
@@ -98,25 +57,41 @@ export default class Scheduler {
                             ports: [],
                             fs: path.resolve(process.cwd(), project.outdir, inputFilePath),
                         })}'`;
-                        m[inputFilePath] = pm2.start({
-                            script: `yarn electron node_modules/testeranto/dist/common/electron.js ./js-bazel/myTests/ClassicalReact.html '${JSON.stringify({
-                                ports: [],
-                                fs: path.resolve(process.cwd(), project.outdir, inputFilePath),
-                            })}'`,
-                            name: `electron test`,
-                            autorestart: false,
-                            // watch: [script],
-                            // env: {
-                            //   ELECTRON_NO_ASAR: `true`,
-                            //   ELECTRON_RUN_AS_NODE: `true`,
-                            // },
-                            args: partialTestResourceByCommandLineArg,
-                        }, (err, proc) => {
-                            if (err) {
-                                console.error(err);
-                                return pm2.disconnect();
-                            }
-                        });
+                        if (runtime === "electron") {
+                            const fileAsList = inputFilePath.split("/");
+                            const fileListHead = fileAsList.slice(0, -1);
+                            const fname = fileAsList[fileAsList.length - 1];
+                            const fnameOnly = fname.split(".")[0];
+                            const htmlFile = [this.project.outdir, ...fileListHead, `${fnameOnly}.html`].join("/");
+                            m[inputFilePath] = pm2.start({
+                                script: `yarn electron node_modules/testeranto/dist/common/electron.js ${htmlFile} '${JSON.stringify({
+                                    ports: [],
+                                    fs: path.resolve(process.cwd(), project.outdir, inputFilePath),
+                                })}'`,
+                                name: `electron test ${htmlFile}`,
+                                autorestart: false,
+                                args: partialTestResourceByCommandLineArg,
+                            }, (err, proc) => {
+                                if (err) {
+                                    console.error(err);
+                                    return pm2.disconnect();
+                                }
+                            });
+                        }
+                        else if (runtime === "node") {
+                            m[inputFilePath] = pm2.start({
+                                script,
+                                name: `node ${inputFilePath}`,
+                                autorestart: false,
+                                watch: [script],
+                                args: partialTestResourceByCommandLineArg
+                            }, (err, proc) => {
+                                if (err) {
+                                    console.error(err);
+                                    return pm2.disconnect();
+                                }
+                            });
+                        }
                         return m;
                     }, {});
                     pm2.launchBus((err, pm2_bus) => {
@@ -264,6 +239,7 @@ export default class Scheduler {
         });
     }
 }
+const clients = [];
 export class ITProject {
     constructor(config) {
         this.buildMode = config.buildMode;
@@ -278,34 +254,36 @@ export class ITProject {
         this.ports = config.ports;
         this.runMode = config.runMode;
         this.tests = config.tests;
-        const collateDir = ".";
-        const collateOpts = {
-            format: "iife",
-            outbase: this.outbase,
-            outdir: collateDir,
-            jsx: `transform`,
-            entryPoints: [config.collateEntry],
-            bundle: true,
-            minify: this.minify === true,
-            write: true,
-            banner: {
-                js: ' (() => new EventSource("/esbuild").onmessage = () => location.reload())();',
-            },
-            plugins: [
-                {
-                    name: "hot-refresh",
-                    setup(build) {
-                        build.onEnd((result) => {
-                            console.log(`collation transpilation`, result);
-                            /* @ts-ignore:next-line */
-                            clients.forEach((res) => res.write("data: update\n\n"));
-                            clients.length = 0;
-                            // console.log(error ? error : '...')
-                        });
-                    },
-                },
-            ],
-        };
+        this.__dirname = config.__dirname;
+        // const collateDir = ".";
+        // const collateOpts: BuildOptions = {
+        //   format: "iife",
+        //   outbase: this.outbase,
+        //   outdir: collateDir,
+        //   jsx: `transform`,
+        //   entryPoints: [config.collateEntry],
+        //   bundle: true,
+        //   write: true,
+        //   banner: {
+        //     js: ' (() => new EventSource("/esbuild").onmessage = () => location.reload())();',
+        //   },
+        //   plugins: [
+        //     {
+        //       name: "hot-refresh",
+        //       setup(build) {
+        //         build.onEnd((result) => {
+        //           console.log(`collation transpilation`, result);
+        //           /* @ts-ignore:next-line */
+        //           clients.forEach((res) => res.write("data: update\n\n"));
+        //           clients.length = 0;
+        //           // console.log(error ? error : '...')
+        //         });
+        //       },
+        //     },
+        //   ],
+        // };
+        const nodeEntryPoints = this.getSecondaryEndpointsPoints("node");
+        console.log("nodeEntryPoints", nodeEntryPoints);
         const nodeRuntimeEsbuildConfig = {
             platform: "node",
             format: "esm",
@@ -314,15 +292,15 @@ export class ITProject {
             jsx: `transform`,
             entryPoints: [
                 // these are the tested artifacts
-                ...this.getSecondaryEndpointsPoints("node"),
+                ...nodeEntryPoints,
                 // these do the testing
-                ...this.tests.map((t) => t[1]),
+                // ...this.tests.map((t) => t[1]),
             ],
             bundle: true,
             minify: this.minify === true,
             write: true,
             outExtension: { ".js": ".mjs" },
-            packages: "external",
+            // packages: "external",
             splitting: true,
             plugins: [
                 ...(this.loaders || []),
@@ -338,43 +316,45 @@ export class ITProject {
                 },
             ],
         };
-        this.getSecondaryEndpointsPoints("electron").map((sourcefile) => {
-            const outFileBaseName = sourcefile[0].split("/").slice(0, -1).join("/");
-            fs.writeFile(`${this.outdir}/${outFileBaseName}.html`, `
-<!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <script type="module" src="/${outFileBaseName}.mjs"></script>
-    </head>
+        Promise.resolve(Promise.all(this.getSecondaryEndpointsPoints("electron").map(async (sourceFilePath) => {
+            const sourceFileSplit = sourceFilePath.split("/");
+            const sourceDir = sourceFileSplit.slice(0, -1);
+            const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
+            const sourceFileNameWithoutExtensions = sourceFileName.split(".").slice(0, 1).join(".");
+            const sourceFileNameMinusJs = sourceFileName.split(".").slice(0, -1).join(".");
+            const htmlFilePath = path.normalize(`${process.cwd()}/${this.outdir}/${sourceDir.join("/")}/${sourceFileNameWithoutExtensions}.html`);
+            const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
+            return fs.promises.mkdir(path.dirname(htmlFilePath), { recursive: true }).then(x => fs.writeFileSync(htmlFilePath, `
+      <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <script type="module" src="${jsfilePath}"></script>
+          </head>
 
-    <body>
-      <div id="root">
-      </div>
-    </body>
+          <body>
+            <div id="root">
+              <h1>${htmlFilePath}</h1>
+            </div>
+          </body>
 
-    <footer></footer>
+          <footer></footer>
 
-    </html>
-`, (error) => {
-                if (error) {
-                    console.error(error);
-                }
-            });
-        });
+          </html>
+      `));
+        })));
         const electronRuntimeEsbuildConfig = {
-            // target: `node`,
             platform: "browser",
+            // external: ["path", "fs"],
             format: "esm",
             outbase: this.outbase,
             outdir: this.outdir,
             jsx: `transform`,
             entryPoints: [...this.getSecondaryEndpointsPoints("electron")],
+            // entryPoints: this.tests.map((tc) => tc[0]),
             bundle: true,
             minify: this.minify === true,
             write: true,
             outExtension: { ".js": ".mjs" },
-            // packages: "external",
-            external: ["fs"],
             splitting: true,
             plugins: [
                 ...(this.loaders || []),
@@ -390,10 +370,12 @@ export class ITProject {
                 },
             ],
         };
+        console.log("electronRuntimeEsbuildConfig", electronRuntimeEsbuildConfig);
         console.log("buildMode   -", this.buildMode);
         console.log("runMode     -", this.runMode);
         console.log("collateMode -", this.collateMode);
         if (this.buildMode === "on") {
+            console.log("nodeRuntimeEsbuildConfig", nodeRuntimeEsbuildConfig);
             esbuild.build(nodeRuntimeEsbuildConfig).then(async (eBuildResult) => {
                 console.log("node tests", eBuildResult);
             });
@@ -402,17 +384,21 @@ export class ITProject {
             });
         }
         else if (this.buildMode === "watch") {
-            esbuild.context(nodeRuntimeEsbuildConfig).then(async (ectx) => {
-                ectx.watch();
-            });
-            esbuild.context(electronRuntimeEsbuildConfig).then(async (ectx) => {
-                // unlike the server side, we need to run an http server to handle chunks imported into web-tests.
-                if (this.runMode) {
-                    ectx.serve({
-                        servedir: "js-bazel",
-                    });
-                }
-            });
+            Promise.all([
+                esbuild.context(nodeRuntimeEsbuildConfig).then(async (nodeContext) => {
+                    nodeContext.watch();
+                }),
+                esbuild.context(electronRuntimeEsbuildConfig).then(async (electronContext) => {
+                    // unlike the server side, we need to run an http server to handle chunks imported into web-tests.
+                    if (this.runMode) {
+                        console.log("serving results on port 8000");
+                        electronContext.serve({
+                            port: 8000,
+                            servedir: ".",
+                        });
+                    }
+                })
+            ]);
         }
         else {
             console.log("skipping 'build' phase");
@@ -471,15 +457,57 @@ export class ITProject {
     getSecondaryEndpointsPoints(runtime) {
         if (runtime) {
             return this.tests
-                .map((t) => {
-                return t.filter((c) => c[1] === runtime).map((tc) => tc[0]);
-            }, [])
-                .flat();
+                .filter((t) => {
+                return (t[1] === runtime);
+            })
+                .map((tc) => tc[0]);
         }
         return this.tests
-            .map((t) => {
-            return t.map((tc) => tc[1]);
-        }, [])
-            .flat();
+            .map((tc) => tc[0]);
     }
 }
+// const hotReload = (ectx, collateDir, port?: string) => {
+//   ectx.serve({ servedir: collateDir, host: "localhost" }).then(() => {
+//     if (port) {
+//       createServer((req, res) => {
+//         const { url, method, headers } = req;
+//         if (req.url === "/esbuild")
+//           return clients.push(
+//             /* @ts-ignore:next-line */
+//             res.writeHead(200, {
+//               "Content-Type": "text/event-stream",
+//               "Cache-Control": "no-cache",
+//               Connection: "keep-alive",
+//             })
+//           );
+//         /* @ts-ignore:next-line */
+//         const path = ~url.split("/").pop().indexOf(".") ? url : `/index.html`; //for PWA with router
+//         req.pipe(
+//           request(
+//             { hostname: "0.0.0.0", port, path, method, headers },
+//             (prxRes) => {
+//               /* @ts-ignore:next-line */
+//               res.writeHead(prxRes.statusCode, prxRes.headers);
+//               prxRes.pipe(res, { end: true });
+//             }
+//           ),
+//           { end: true }
+//         );
+//       }).listen(port);
+//       setTimeout(() => {
+//         console.log("tick");
+//         const op = {
+//           darwin: ["open"],
+//           linux: ["xdg-open"],
+//           win32: ["cmd", "/c", "start"],
+//         };
+//         const ptf = process.platform;
+//         if (clients.length === 0)
+//           spawn(op[ptf][0], [
+//             ...[op[ptf].slice(1)],
+//             `http://localhost:${port}`,
+//           ]);
+//       }, 1000); //open the default browser only if it is not opened yet
+//     }
+//   });
+// };

@@ -14,4 +14,5 @@ export declare type IBaseConfig = {
     runMode: boolean;
     tests: ITestTypes[];
     buildMode: "on" | "off" | "watch";
+    __dirname: string;
 };

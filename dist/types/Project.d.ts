@@ -1,7 +1,6 @@
 import pm2 from "pm2";
 import { TesterantoFeatures } from "./Features";
-import { ICollateMode } from "./IBaseConfig";
-import { IBaseConfig } from "./index.js";
+import { IBaseConfig, ICollateMode } from "./IBaseConfig";
 export declare type IRunTime = `node` | `electron`;
 export declare type IRunTimes = {
     runtime: IRunTime;
@@ -57,6 +56,7 @@ export declare class ITProject {
     ports: string[];
     runMode: boolean;
     tests: ITestTypes[];
+    __dirname: string;
     getSecondaryEndpointsPoints(runtime?: IRunTime): string[];
     constructor(config: IBaseConfig);
 }

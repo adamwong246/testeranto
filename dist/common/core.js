@@ -1,69 +1,13 @@
 "use strict";
-// import fs from "fs";
-// import path from "path";
-// import { PassThrough } from "stream";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TesterantoLevelOne = exports.TesterantoLevelZero = exports.BaseCheck = exports.BaseThen = exports.BaseWhen = exports.BaseGiven = exports.BaseSuite = void 0;
-// import {
-//   BaseFeature,
-//   TesterantoFeatures,
-//   TesterantoGraphDirected,
-//   TesterantoGraphDirectedAcyclic,
-//   TesterantoGraphUndirected,
-// } from "./Features.js";
-// export {
-//   BaseFeature,
-//   TesterantoFeatures,
-//   TesterantoGraphDirected,
-//   TesterantoGraphDirectedAcyclic,
-//   TesterantoGraphUndirected,
-// };
-// import { IBaseConfig } from "./IBaseConfig";
-// export type { IBaseConfig };
-// import { ITProject } from "./Project.js";
-// export { ITProject };
+exports.BaseCheck = exports.BaseThen = exports.BaseWhen = exports.BaseGiven = exports.BaseSuite = exports.defaultTestResourceRequirement = void 0;
 const defaultTestResource = { fs: ".", ports: [] };
-const defaultTestResourceRequirement = {
+exports.defaultTestResourceRequirement = {
     fs: ".",
     ports: 0,
 };
-const fPaths = [];
-const testArtiFactoryfileWriter = (tLog) => (fp) => (givenNdx) => (key, value) => {
-    tLog("testArtiFactory =>", key);
-    const fPath = `${fp}/${givenNdx}/${key}`;
-    // const cleanPath = path.resolve(fPath);
-    // fPaths.push(cleanPath.replace(process.cwd(), ``));
-    // const targetDir = cleanPath.split("/").slice(0, -1).join("/");
-    // fs.mkdir(targetDir, { recursive: true }, async (error) => {
-    //   if (error) {
-    //     console.error(`❗️testArtiFactory failed`, targetDir, error);
-    //   }
-    //   fs.writeFileSync(
-    //     path.resolve(targetDir.split("/").slice(0, -1).join("/"), "manifest"),
-    //     fPaths.join(`\n`),
-    //     {
-    //       encoding: "utf-8",
-    //     }
-    //   );
-    //   if (Buffer.isBuffer(value)) {
-    //     fs.writeFileSync(fPath, value, "binary");
-    //   } else if (`string` === typeof value) {
-    //     fs.writeFileSync(fPath, value.toString(), {
-    //       encoding: "utf-8",
-    //     });
-    //   } else {
-    //     /* @ts-ignore:next-line */
-    //     const pipeStream: PassThrough = value;
-    //     var myFile = fs.createWriteStream(fPath);
-    //     pipeStream.pipe(myFile);
-    //     pipeStream.on("close", () => {
-    //       myFile.close();
-    //     });
-    //   }
-    // });
-};
 class BaseSuite {
-    constructor(name, givens = [], checks = []) {
+    constructor(name, givens = {}, checks = []) {
         this.name = name;
         this.givens = givens;
         this.checks = checks;
@@ -72,7 +16,7 @@ class BaseSuite {
     toObj() {
         return {
             name: this.name,
-            givens: this.givens.map((g) => g.toObj()),
+            givens: Object.keys(this.givens).map((k) => this.givens[k].toObj()),
             fails: this.fails,
         };
     }
@@ -86,9 +30,11 @@ class BaseSuite {
         this.testResourceConfiguration = testResourceConfiguration;
         const subject = await this.setup(input, artifactory("-1"));
         tLog("\nSuite:", this.name, testResourceConfiguration);
-        for (const [ndx, giver] of this.givens.entries()) {
+        tLog("subject:", subject);
+        for (const k of Object.keys(this.givens)) {
+            const giver = this.givens[k];
             try {
-                this.store = await giver.give(subject, ndx, testResourceConfiguration, this.test, artifactory(ndx.toString()), tLog);
+                this.store = await giver.give(subject, k, testResourceConfiguration, this.test, artifactory(k), tLog);
             }
             catch (e) {
                 console.error(e);
@@ -97,10 +43,11 @@ class BaseSuite {
             }
         }
         for (const [ndx, thater] of this.checks.entries()) {
-            await thater.check(subject, ndx, testResourceConfiguration, this.test, artifactory, tLog);
+            await thater.check(subject, thater.name, testResourceConfiguration, this.test, artifactory, tLog);
         }
         // @TODO fix me
-        for (const [ndx, giver] of this.givens.entries()) {
+        for (const k of Object.keys(this.givens)) {
+            const giver = this.givens[k];
             giver.afterAll(this.store, artifactory);
         }
         ////////////////
@@ -128,13 +75,14 @@ class BaseGiven {
             features: this.features,
         };
     }
-    async afterEach(store, ndx, artifactory) {
+    async afterEach(store, key, artifactory) {
         return;
     }
-    async give(subject, index, testResourceConfiguration, tester, artifactory, tLog) {
+    async give(subject, key, testResourceConfiguration, tester, artifactory, tLog) {
         tLog(`\n Given: ${this.name}`);
         try {
             this.store = await this.givenThat(subject, testResourceConfiguration, artifactory);
+            tLog(`\n Given this.store`, this.store);
             for (const whenStep of this.whens) {
                 await whenStep.test(this.store, testResourceConfiguration, tLog);
             }
@@ -150,10 +98,10 @@ class BaseGiven {
         }
         finally {
             try {
-                await this.afterEach(this.store, index, artifactory);
+                await this.afterEach(this.store, key, artifactory);
             }
-            catch (_a) {
-                console.error("afterEach failed! no error will be recorded!");
+            catch (e) {
+                console.error("afterEach failed! no error will be recorded!", e);
             }
         }
         return this.store;
@@ -200,7 +148,7 @@ class BaseThen {
             return this.thenCB(await this.butThen(store, testResourceConfiguration));
         }
         catch (e) {
-            console.log("wtf");
+            console.log("test failed", e);
             this.error = true;
             throw e;
         }
@@ -239,10 +187,10 @@ class BaseCheck {
         this.whens = whens;
         this.thens = thens;
     }
-    async afterEach(store, ndx, cb) {
+    async afterEach(store, key, cb) {
         return;
     }
-    async check(subject, ndx, testResourceConfiguration, tester, artifactory, tLog) {
+    async check(subject, key, testResourceConfiguration, tester, artifactory, tLog) {
         tLog(`\n Check: ${this.name}`);
         const store = await this.checkThat(subject, testResourceConfiguration, artifactory);
         await this.checkCB(Object.entries(this.whens).reduce((a, [key, when]) => {
@@ -257,7 +205,7 @@ class BaseCheck {
             };
             return a;
         }, {}));
-        await this.afterEach(store, ndx);
+        await this.afterEach(store, key);
         return;
     }
 }
@@ -289,18 +237,19 @@ class TesterantoLevelZero {
         return this.checkOverides;
     }
 }
-exports.TesterantoLevelZero = TesterantoLevelZero;
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
 class TesterantoLevelOne {
-    constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResourceRequirement, nameKey) {
+    constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResourceRequirement, nameKey, logWriter) {
         const classySuites = Object.entries(testImplementation.Suites).reduce((a, [key]) => {
             a[key] = (somestring, givens, checks) => {
                 return new suiteKlasser.prototype.constructor(somestring, givens, checks);
             };
             return a;
         }, {});
-        const classyGivens = Object.entries(testImplementation.Givens).reduce((a, [key, z]) => {
+        const classyGivens = Object.entries(testImplementation.Givens)
+            .reduce((a, [key, z]) => {
             a[key] = (features, whens, thens, ...xtrasW) => {
-                return new givenKlasser.prototype.constructor(z.name, features, whens, thens, z(...xtrasW));
+                return new givenKlasser.prototype.constructor(key, features, whens, thens, z(...xtrasW));
             };
             return a;
         }, {});
@@ -326,9 +275,9 @@ class TesterantoLevelOne {
         })(input, classySuites, classyGivens, classyWhens, classyThens, classyChecks);
         const suites = testSpecification(
         /* @ts-ignore:next-line */
-        classyTesteranto.Suites(), classyTesteranto.Given(), classyTesteranto.When(), classyTesteranto.Then(), classyTesteranto.Check());
-        const suiteRunner = (suite) => (testResourceConfiguration, tLog) => {
-            return suite.run(input, testResourceConfiguration, testArtiFactoryfileWriter(tLog)(testResourceConfiguration.fs + "/"), tLog);
+        classyTesteranto.Suites(), classyTesteranto.Given(), classyTesteranto.When(), classyTesteranto.Then(), classyTesteranto.Check(), logWriter);
+        const suiteRunner = (suite) => async (testResourceConfiguration, tLog) => {
+            return await suite.run(input, testResourceConfiguration, logWriter.testArtiFactoryfileWriter(tLog)(testResourceConfiguration.fs + "/"), tLog);
         };
         /* @ts-ignore:next-line */
         const toReturn = suites.map((suite) => {
@@ -342,190 +291,79 @@ class TesterantoLevelOne {
                 runner,
                 receiveTestResourceConfig: async function (testResourceConfiguration = defaultTestResource) {
                     console.log(`testResourceConfiguration ${JSON.stringify(testResourceConfiguration, null, 2)}`);
-                    // await fs.mkdirSync(testResourceConfiguration.fs, { recursive: true });
-                    // const logFilePath = path.resolve(
-                    //   `${testResourceConfiguration.fs}/log.txt`
-                    // );
-                    // var access = fs.createWriteStream(logFilePath);
+                    await logWriter.mkdirSync(testResourceConfiguration.fs);
+                    const logFilePath = (`${testResourceConfiguration.fs}/log.txt`);
+                    const access = await logWriter.createWriteStream(logFilePath);
                     const tLog = (...l) => {
                         console.log(...l);
-                        // access.write(`${l.toString()}\n`);
+                        access.write(`${l.toString()}\n`);
                     };
                     const suiteDone = await runner(testResourceConfiguration, tLog);
-                    // const resultsFilePath = path.resolve(
-                    //   `${testResourceConfiguration.fs}/results.json`
-                    // );
-                    // fs.writeFileSync(
-                    //   resultsFilePath,
-                    //   JSON.stringify(suiteDone.toObj(), null, 2)
-                    // );
-                    // access.close();
-                    // const numberOfFailures = suiteDone.givens.filter(
-                    //   (g) => g.error
-                    // ).length;
-                    // console.log(`exiting gracefully with ${numberOfFailures} failures.`);
-                    // process.exitCode = numberOfFailures;
+                    const resultsFilePath = (`${testResourceConfiguration.fs}/results.json`);
+                    logWriter.writeFileSync(resultsFilePath, JSON.stringify(suiteDone.toObj(), null, 2));
+                    access.close();
+                    const numberOfFailures = Object.keys(suiteDone.givens).filter((k) => suiteDone.givens[k].error).length;
+                    console.log(`suiteDone.givens`, suiteDone.givens);
+                    console.log(`exiting gracefully with ${numberOfFailures} failures.`);
                 },
             };
         });
         return toReturn;
     }
 }
-exports.TesterantoLevelOne = TesterantoLevelOne;
-// type IMultiRuntimeSubject =
-//   | Record<string, IRunTimeAndSubject>
-//   | IRunTimeAndSubject;
-exports.default = async (input, testSpecification, testImplementation, testInterface, nameKey, testResourceRequirement = defaultTestResourceRequirement) => {
-    const butThen = testInterface.butThen || (async (a) => a);
-    const { andWhen } = testInterface;
-    const actionHandler = testInterface.actionHandler ||
-        function (b) {
-            return b;
-        };
-    const assertioner = testInterface.assertioner || (async (t) => t);
-    const beforeAll = testInterface.beforeAll || (async (input) => input);
-    const beforeEach = testInterface.beforeEach ||
-        async function (subject, initialValues, testResource) {
-            return subject;
-        };
-    const afterEach = testInterface.afterEach || (async (s) => s);
-    const afterAll = testInterface.afterAll || ((store) => undefined);
-    class MrT extends TesterantoLevelOne {
-        constructor() {
-            super(testImplementation, 
-            /* @ts-ignore:next-line */
-            testSpecification, input, class extends BaseSuite {
-                async setup(s, artifactory) {
-                    return beforeAll(s, artifactory);
-                }
-                test(t) {
-                    return assertioner(t);
-                }
-            }, class Given extends BaseGiven {
-                constructor(name, features, whens, thens, initialValues) {
-                    super(name, features, whens, thens);
-                    this.initialValues = initialValues;
-                }
-                async givenThat(subject, testResource, artifactory) {
-                    return beforeEach(subject, this.initialValues, testResource, artifactory);
-                }
-                afterEach(store, ndx, artifactory) {
-                    return new Promise((res) => res(afterEach(store, ndx, artifactory)));
-                }
-                afterAll(store, artifactory) {
-                    return afterAll(store, artifactory);
-                }
-            }, class When extends BaseWhen {
-                constructor(name, actioner, payload) {
-                    super(name, (store) => {
-                        return actionHandler(actioner);
-                    });
-                    this.payload = payload;
-                }
-                async andWhen(store, actioner, testResource) {
-                    return await andWhen(store, actioner, testResource);
-                }
-            }, class Then extends BaseThen {
-                constructor(name, callback) {
-                    super(name, callback);
-                }
-                async butThen(store, testResourceConfiguration) {
-                    return await butThen(store, this.thenCB, testResourceConfiguration);
-                }
-            }, class Check extends BaseCheck {
-                constructor(name, features, checkCallback, whens, thens, initialValues) {
-                    super(name, features, checkCallback, whens, thens);
-                    this.initialValues = initialValues;
-                }
-                async checkThat(subject, testResourceConfiguration, artifactory) {
-                    return beforeEach(subject, this.initialValues, testResourceConfiguration, artifactory);
-                }
-                afterEach(store, ndx, artifactory) {
-                    return new Promise((res) => res(afterEach(store, ndx, artifactory)));
-                }
-            }, testResourceRequirement, nameKey);
-        }
+////////////////////////////////////////////////////////////////////////////////////////////////
+class TesterantoLevelTwo extends TesterantoLevelOne {
+    constructor(input, testSpecification, testImplementation, testInterface, nameKey, testResourceRequirement = exports.defaultTestResourceRequirement, assertioner, beforeEach, afterEach, afterAll, butThen, andWhen, actionHandler, logWriter) {
+        super(testImplementation, testSpecification, input, class extends BaseSuite {
+            async setup(s, artifactory) {
+                return testInterface.beforeAll || (async (input, artificer) => input)(s, artifactory);
+            }
+            test(t) {
+                return assertioner(t);
+            }
+        }, class Given extends BaseGiven {
+            constructor(name, features, whens, thens, initialValues) {
+                super(name, features, whens, thens);
+                this.initialValues = initialValues;
+            }
+            async givenThat(subject, testResource, artifactory) {
+                return beforeEach(subject, this.initialValues, testResource, artifactory);
+            }
+            afterEach(store, key, artifactory) {
+                return new Promise((res) => res(afterEach(store, key, artifactory)));
+            }
+            afterAll(store, artifactory) {
+                return afterAll(store, artifactory);
+            }
+        }, class When extends BaseWhen {
+            constructor(name, actioner, payload) {
+                super(name, (store) => {
+                    return actionHandler(actioner);
+                });
+                this.payload = payload;
+            }
+            async andWhen(store, actioner, testResource) {
+                return await andWhen(store, actioner, testResource);
+            }
+        }, class Then extends BaseThen {
+            constructor(name, callback) {
+                super(name, callback);
+            }
+            async butThen(store, testResourceConfiguration) {
+                return await butThen(store, this.thenCB, testResourceConfiguration);
+            }
+        }, class Check extends BaseCheck {
+            constructor(name, features, checkCallback, whens, thens, initialValues) {
+                super(name, features, checkCallback, whens, thens);
+                this.initialValues = initialValues;
+            }
+            async checkThat(subject, testResourceConfiguration, artifactory) {
+                return beforeEach(subject, this.initialValues, testResourceConfiguration, artifactory);
+            }
+            afterEach(store, key, artifactory) {
+                return new Promise((res) => res(afterEach(store, key, artifactory)));
+            }
+        }, testResourceRequirement, nameKey, logWriter);
     }
-    const mrt = new MrT();
-    const t = mrt[0];
-    // console.log("mark 3", process.argv);
-    const testResourceArg = `{"fs": ".", "ports": []}`;
-    console.log("mark 2", testResourceArg);
-    // process.exit();
-    try {
-        console.log("mark", testResourceArg);
-        const partialTestResource = JSON.parse(testResourceArg);
-        if (partialTestResource.fs && partialTestResource.ports) {
-            await t.receiveTestResourceConfig(partialTestResource);
-            // process.exit(0); // :-)
-        }
-        else {
-            console.log("test configuration is incomplete");
-            // if (process.send) {
-            //   console.log(
-            //     "requesting test resources from pm2 ...",
-            //     testResourceRequirement
-            //   );
-            //   /* @ts-ignore:next-line */
-            //   process.send({
-            //     type: "testeranto:hola",
-            //     data: {
-            //       testResourceRequirement,
-            //     },
-            //   });
-            //   console.log("awaiting test resources from pm2...");
-            //   process.on(
-            //     "message",
-            //     async function (packet: { data: { testResourceConfiguration } }) {
-            //       console.log("message: ", packet);
-            //       const resourcesFromPm2 = packet.data.testResourceConfiguration;
-            //       const secondTestResource = {
-            //         fs: ".",
-            //         ...JSON.parse(JSON.stringify(partialTestResource)),
-            //         ...JSON.parse(JSON.stringify(resourcesFromPm2)),
-            //       } as ITTestResourceConfiguration;
-            //       console.log("secondTestResource", secondTestResource);
-            //       if (await t.receiveTestResourceConfig(secondTestResource)) {
-            //         /* @ts-ignore:next-line */
-            //         process.send(
-            //           {
-            //             type: "testeranto:adios",
-            //             data: {
-            //               testResourceConfiguration:
-            //                 mrt[0].test.testResourceConfiguration,
-            //               results: mrt[0].toObj(),
-            //             },
-            //           },
-            //           (err) => {
-            //             if (!err) {
-            //               console.log(`✅`);
-            //             } else {
-            //               console.error(`❗️`, err);
-            //             }
-            //             // process.exit(0); // :-)
-            //           }
-            //         );
-            //       }
-            //     }
-            //   );
-            // } else {
-            //   console.log("Pass run-time test resources by STDIN");
-            //   process.stdin.on("data", async (data) => {
-            //     console.log("data: ", data);
-            //     const resourcesFromStdin = JSON.parse(data.toString());
-            //     const secondTestResource = {
-            //       ...JSON.parse(JSON.stringify(resourcesFromStdin)),
-            //       ...JSON.parse(JSON.stringify(partialTestResource)),
-            //     } as ITTestResourceConfiguration;
-            //     await t.receiveTestResourceConfig(secondTestResource);
-            //     // process.exit(0); // :-)
-            //   });
-            // }
-        }
-    }
-    catch (e) {
-        console.error(`the test resource passed by command-line argument "${process.argv[2]}" was malformed.`);
-        console.error(e);
-        // process.exit(-1);
-    }
-};
+}
+exports.default = TesterantoLevelTwo;
