@@ -1,7 +1,6 @@
-import pm2 from "pm2";
 import { TesterantoFeatures } from "./Features";
 import { IBaseConfig, ICollateMode } from "./IBaseConfig";
-export declare type IRunTime = `node` | `electron`;
+export declare type IRunTime = `node` | `electron` | `puppeteer`;
 export declare type IRunTimes = {
     runtime: IRunTime;
     entrypoint: string;
@@ -31,7 +30,6 @@ export default class Scheduler {
     queue: IPm2Process[];
     spinCycle: number;
     spinAnimation: string;
-    pm2: typeof pm2;
     summary: Record<string, boolean | undefined>;
     mode: `up` | `down`;
     constructor(project: ITProject);

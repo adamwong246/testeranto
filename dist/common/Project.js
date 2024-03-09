@@ -4,13 +4,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ITProject = void 0;
+const ws_1 = require("ws");
 const esbuild_1 = __importDefault(require("esbuild"));
 const fs_1 = __importDefault(require("fs"));
-const fs_promises_exists_1 = __importDefault(require("fs.promises.exists"));
 const path_1 = __importDefault(require("path"));
+const fs_promises_exists_1 = __importDefault(require("fs.promises.exists"));
 const pm2_1 = __importDefault(require("pm2"));
 const TIMEOUT = 2000;
 const OPEN_PORT = "";
+let wss;
 class Scheduler {
     constructor(project) {
         this.spinCycle = 0;
@@ -32,7 +34,6 @@ class Scheduler {
             else {
                 console.log(`pm2 is connected`);
             }
-            this.pm2 = pm2_1.default;
             const makePath = (fPath) => {
                 console.log("makePath", fPath);
                 const ext = path_1.default.extname(fPath);
@@ -63,7 +64,28 @@ class Scheduler {
                             ports: [],
                             fs: path_1.default.resolve(process.cwd(), project.outdir, inputFilePath),
                         })}'`;
-                        if (runtime === "electron") {
+                        if (runtime === "puppeteer") {
+                            const sourceFileSplit = inputFilePath.split("/");
+                            const sourceDir = sourceFileSplit.slice(0, -1);
+                            const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
+                            const sourceFileNameWithoutExtensions = sourceFileName.split(".").slice(0, 1).join(".");
+                            const htmlFilePath = path_1.default.normalize(`/${project.outdir}/${sourceDir.join("/")}/${sourceFileNameWithoutExtensions}.html`);
+                            m[inputFilePath] = pm2_1.default.start({
+                                script: `node ./node_modules/testeranto/dist/common/Puppeteer.js ${htmlFilePath} '${JSON.stringify({
+                                    ports: [],
+                                    fs: path_1.default.resolve(process.cwd(), project.outdir, inputFilePath),
+                                })}'`,
+                                name: `puppeteer ${script}`,
+                                autorestart: false,
+                                args: partialTestResourceByCommandLineArg,
+                            }, (err, proc) => {
+                                if (err) {
+                                    console.error(err);
+                                    return pm2_1.default.disconnect();
+                                }
+                            });
+                        }
+                        else if (runtime === "electron") {
                             const fileAsList = inputFilePath.split("/");
                             const fileListHead = fileAsList.slice(0, -1);
                             const fname = fileAsList[fileAsList.length - 1];
@@ -139,7 +161,7 @@ class Scheduler {
         const sums = Object.entries(this.summary).filter((s) => s[1] !== undefined);
     }
     async abort(pm2Proc) {
-        this.pm2.stop(pm2Proc.process.pm_id, (err, proc) => {
+        pm2_1.default.stop(pm2Proc.process.pm_id, (err, proc) => {
             console.error(err);
         });
     }
@@ -158,7 +180,6 @@ class Scheduler {
         }
         const pid = p.process.pm_id;
         const testResourceRequirement = p.data.testResourceRequirement;
-        // const fPath = path.resolve(this.project.resultsdir + `/` + p.process.name);
         const message = {
             // these fields must be present
             id: p.process.pm_id,
@@ -174,7 +195,7 @@ class Scheduler {
             },
         };
         if ((testResourceRequirement === null || testResourceRequirement === void 0 ? void 0 : testResourceRequirement.ports) === 0) {
-            this.pm2.sendDataToProcessId(p.process.pm_id, message, function (err, res) {
+            pm2_1.default.sendDataToProcessId(p.process.pm_id, message, function (err, res) {
                 // console.log("sendDataToProcessId", err, res, message);
             });
         }
@@ -205,8 +226,7 @@ class Scheduler {
                         id: p.process.pm_id,
                     },
                 };
-                console.log("mark1");
-                this.pm2.sendDataToProcessId(p.process.pm_id, message, function (err, res) {
+                pm2_1.default.sendDataToProcessId(p.process.pm_id, message, function (err, res) {
                     // no-op
                 });
                 // mark the selected ports as occupied
@@ -238,7 +258,7 @@ class Scheduler {
         pm2_1.default.list((err, processes) => {
             processes.forEach((proc) => {
                 proc.pm_id &&
-                    this.pm2.stop(proc.pm_id, (err, proc) => {
+                    pm2_1.default.stop(proc.pm_id, (err, proc) => {
                         console.error(err);
                     });
             });
@@ -246,7 +266,6 @@ class Scheduler {
     }
 }
 exports.default = Scheduler;
-const clients = [];
 class ITProject {
     constructor(config) {
         this.buildMode = config.buildMode;
@@ -290,24 +309,19 @@ class ITProject {
         //   ],
         // };
         const nodeEntryPoints = this.getSecondaryEndpointsPoints("node");
-        console.log("nodeEntryPoints", nodeEntryPoints);
-        const nodeRuntimeEsbuildConfig = {
+        const esbuildConfigNode = {
             platform: "node",
             format: "esm",
             outbase: this.outbase,
             outdir: this.outdir,
             jsx: `transform`,
             entryPoints: [
-                // these are the tested artifacts
                 ...nodeEntryPoints,
-                // these do the testing
-                // ...this.tests.map((t) => t[1]),
             ],
             bundle: true,
             minify: this.minify === true,
             write: true,
             outExtension: { ".js": ".mjs" },
-            // packages: "external",
             splitting: true,
             plugins: [
                 ...(this.loaders || []),
@@ -349,15 +363,16 @@ class ITProject {
           </html>
       `));
         })));
-        const electronRuntimeEsbuildConfig = {
+        const esbuildConfigWeb = {
             platform: "browser",
-            // external: ["path", "fs"],
             format: "esm",
             outbase: this.outbase,
             outdir: this.outdir,
             jsx: `transform`,
-            entryPoints: [...this.getSecondaryEndpointsPoints("electron")],
-            // entryPoints: this.tests.map((tc) => tc[0]),
+            entryPoints: [
+                ...this.getSecondaryEndpointsPoints("electron"),
+                ...this.getSecondaryEndpointsPoints("puppeteer"),
+            ],
             bundle: true,
             minify: this.minify === true,
             write: true,
@@ -377,31 +392,58 @@ class ITProject {
                 },
             ],
         };
-        console.log("electronRuntimeEsbuildConfig", electronRuntimeEsbuildConfig);
+        console.log("esbuildConfigWeb", esbuildConfigWeb);
         console.log("buildMode   -", this.buildMode);
         console.log("runMode     -", this.runMode);
         console.log("collateMode -", this.collateMode);
         if (this.buildMode === "on") {
-            console.log("nodeRuntimeEsbuildConfig", nodeRuntimeEsbuildConfig);
-            esbuild_1.default.build(nodeRuntimeEsbuildConfig).then(async (eBuildResult) => {
+            console.log("esbuildConfigNode", esbuildConfigNode);
+            esbuild_1.default.build(esbuildConfigNode).then(async (eBuildResult) => {
                 console.log("node tests", eBuildResult);
             });
-            esbuild_1.default.build(electronRuntimeEsbuildConfig).then(async (eBuildResult) => {
+            esbuild_1.default.build(esbuildConfigWeb).then(async (eBuildResult) => {
                 console.log("electron tests", eBuildResult);
             });
         }
         else if (this.buildMode === "watch") {
             Promise.all([
-                esbuild_1.default.context(nodeRuntimeEsbuildConfig).then(async (nodeContext) => {
+                esbuild_1.default.context(esbuildConfigNode).then(async (nodeContext) => {
                     nodeContext.watch();
                 }),
-                esbuild_1.default.context(electronRuntimeEsbuildConfig).then(async (electronContext) => {
-                    // unlike the server side, we need to run an http server to handle chunks imported into web-tests.
+                esbuild_1.default.context(esbuildConfigWeb).then(async (electronContext) => {
                     if (this.runMode) {
-                        console.log("serving results on port 8000");
+                        // unlike the server side, we need to run an http server to handle chunks imported into web-tests.
+                        console.log("serving http on port 8000");
                         electronContext.serve({
                             port: 8000,
                             servedir: ".",
+                            onRequest: (args) => {
+                                console.log("onRequest", args);
+                            }
+                        });
+                        // run a websocket as an alternative to node IPC
+                        console.log("serving tcp on port 8001");
+                        wss = new ws_1.WebSocketServer({
+                            port: 8001,
+                            perMessageDeflate: {
+                                zlibDeflateOptions: {
+                                    // See zlib defaults.
+                                    chunkSize: 1024,
+                                    memLevel: 7,
+                                    level: 3
+                                },
+                                zlibInflateOptions: {
+                                    chunkSize: 10 * 1024
+                                },
+                                // Other options settable:
+                                clientNoContextTakeover: true,
+                                serverNoContextTakeover: true,
+                                serverMaxWindowBits: 10,
+                                // Below options specified as default values.
+                                concurrencyLimit: 10,
+                                threshold: 1024 // Size (in bytes) below which messages
+                                // should not be compressed if context takeover is disabled.
+                            }
                         });
                     }
                 })

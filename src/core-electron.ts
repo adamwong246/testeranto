@@ -10,14 +10,6 @@ import {
 } from "./core";
 import TesterantoLevelTwo from "./core";
 
-const startup = async (
-  testResourceArg: string,
-  t: ITestJob,
-  testResourceRequirement: ITTestResourceRequirement
-) => {
-  return
-};
-
 export default async <
   TestShape extends ITTestShape,
   Input,
@@ -82,69 +74,13 @@ export default async <
     function (b: (...any: any[]) => any) {
       return b;
     },
-    {
-      createWriteStream: (filepath: string) => {
-        return
-        // return fs.createWriteStream(filepath);
-      },
-      writeFileSync: (fp: string, contents: string) => {
-        return
-        // fs.writeFileSync(
-        //   fp,
-        //   contents
-        // );
-      },
-      mkdirSync: (fp: string) => {
-        return;
-      },
-      testArtiFactoryfileWriter:
-        (tLog: ITLog) => (fp) => (givenNdx) => (key, value: string | Buffer) => {
-          tLog("testArtiFactory =>", key);
-
-          const fPath = `${fp}/${givenNdx}/${key}`;
-          // const cleanPath = path.resolve(fPath);
-          // fPaths.push(cleanPath.replace(process.cwd(), ``));
-
-          // const targetDir = cleanPath.split("/").slice(0, -1).join("/");
-
-          // fs.mkdir(targetDir, { recursive: true }, async (error) => {
-          //   if (error) {
-          //     console.error(`❗️testArtiFactory failed`, targetDir, error);
-          //   }
-
-          //   fs.writeFileSync(
-          //     path.resolve(targetDir.split("/").slice(0, -1).join("/"), "manifest"),
-          //     fPaths.join(`\n`),
-          //     {
-          //       encoding: "utf-8",
-          //     }
-          //   );
-
-          //   if (Buffer.isBuffer(value)) {
-          //     fs.writeFileSync(fPath, value, "binary");
-          //   } else if (`string` === typeof value) {
-          //     fs.writeFileSync(fPath, value.toString(), {
-          //       encoding: "utf-8",
-          //     });
-          //   } else {
-          //     /* @ts-ignore:next-line */
-          //     const pipeStream: PassThrough = value;
-          //     var myFile = fs.createWriteStream(fPath);
-          //     pipeStream.pipe(myFile);
-          //     pipeStream.on("close", () => {
-          //       myFile.close();
-          //     });
-          //   }
-          // });
-        },
-
-      startup
-    }
+    (window as any).NodeWriter
   );
   const t: ITestJob = mrt[0];
-  const testResourceArg = `{"fs": ".", "ports": []}`;
+  // const testResourceArg = `{"fs": ".", "ports": []}`;
+  const testResourceArg = `{}`;
   try {
-    startup(testResourceArg, t, testResourceRequirement);
+    (window as any).NodeWriter.startup(testResourceArg, t, testResourceRequirement);
   } catch (e) {
     console.error(e);
     process.exit(-1);

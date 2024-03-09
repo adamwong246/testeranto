@@ -1,18 +1,20 @@
-import esbuild, { BuildOptions } from "esbuild";
+import WebSocket, { WebSocketServer } from 'ws';
+import esbuild, { BuildOptions, ServeOnRequestArgs } from "esbuild";
 import fs from "fs";
-import fsExists from "fs.promises.exists";
 import path from "path";
+import fsExists from "fs.promises.exists";
 import pm2 from "pm2";
+import puppeteer from 'puppeteer';
 
 import { TesterantoFeatures } from "./Features";
 import { IBaseConfig, ICollateMode } from "./IBaseConfig";
 
-export type IRunTime = `node` | `electron`;
-export type IRunTimes = { runtime: IRunTime; entrypoint: string }[];
-export type ITestTypes = [string, IRunTime];
-
 const TIMEOUT = 2000;
 const OPEN_PORT = "";
+
+export type IRunTime = `node` | `electron` | `puppeteer`;
+export type IRunTimes = { runtime: IRunTime; entrypoint: string }[];
+export type ITestTypes = [string, IRunTime];
 
 type IPm2Process = {
   process: {
@@ -43,10 +45,10 @@ type IPm2ProcessB = {
   at: string;
 };
 
+let wss: WebSocketServer;
 
 export default class Scheduler {
   project: ITProject;
-
   ports: Record<string, string>;
   jobs: Record<
     string,
@@ -58,9 +60,8 @@ export default class Scheduler {
   queue: IPm2Process[];
   spinCycle = 0;
   spinAnimation = "←↖↑↗→↘↓↙";
-  pm2: typeof pm2;
+  // pm2: typeof pm2;
   summary: Record<string, boolean | undefined>;
-
   mode: `up` | `down`;
 
   constructor(project: ITProject) {
@@ -84,8 +85,6 @@ export default class Scheduler {
       } else {
         console.log(`pm2 is connected`);
       }
-
-      this.pm2 = pm2;
 
       const makePath = (fPath: string): string => {
         console.log("makePath", fPath)
@@ -132,7 +131,38 @@ export default class Scheduler {
                 }
               )}'`;
 
-              if (runtime === "electron") {
+              if (runtime === "puppeteer") {
+                const sourceFileSplit = inputFilePath.split("/");
+                const sourceDir = sourceFileSplit.slice(0, -1);
+                const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
+                const sourceFileNameWithoutExtensions = sourceFileName.split(".").slice(0, 1).join(".")
+                const htmlFilePath = path.normalize(`/${project.outdir}/${sourceDir.join("/")}/${sourceFileNameWithoutExtensions}.html`);
+
+                m[inputFilePath] = pm2.start(
+                  {
+                    script: `node ./node_modules/testeranto/dist/common/Puppeteer.js ${htmlFilePath} '${JSON.stringify(
+                      {
+                        ports: [],
+                        fs:
+                          path.resolve(
+                            process.cwd(),
+                            project.outdir,
+                            inputFilePath
+                          ),
+                      }
+                    )}'`,
+                    name: `puppeteer ${script}`,
+                    autorestart: false,
+                    args: partialTestResourceByCommandLineArg,
+                  },
+                  (err, proc) => {
+                    if (err) {
+                      console.error(err);
+                      return pm2.disconnect();
+                    }
+                  }
+                );
+              } else if (runtime === "electron") {
                 const fileAsList = inputFilePath.split("/");
                 const fileListHead = fileAsList.slice(0, -1);
                 const fname = fileAsList[fileAsList.length - 1];
@@ -144,11 +174,12 @@ export default class Scheduler {
                     script: `yarn electron node_modules/testeranto/dist/common/electron.js ${htmlFile} '${JSON.stringify(
                       {
                         ports: [],
-                        fs: path.resolve(
-                          process.cwd(),
-                          project.outdir,
-                          inputFilePath
-                        ),
+                        fs:
+                          path.resolve(
+                            process.cwd(),
+                            project.outdir,
+                            inputFilePath
+                          ),
                       }
                     )}'`,
                     name: `electron test ${htmlFile}`,
@@ -162,8 +193,9 @@ export default class Scheduler {
                     }
                   }
                 );
-              } else if (runtime === "node") {
 
+              }
+              else if (runtime === "node") {
                 m[inputFilePath] = pm2.start({
                   script,
                   name: `node ${inputFilePath}`,
@@ -177,8 +209,6 @@ export default class Scheduler {
                     return pm2.disconnect();
                   }
                 });
-
-
               }
 
               return m;
@@ -238,7 +268,7 @@ export default class Scheduler {
   }
 
   public async abort(pm2Proc: IPm2Process) {
-    this.pm2.stop(pm2Proc.process.pm_id, (err, proc) => {
+    pm2.stop(pm2Proc.process.pm_id, (err, proc) => {
       console.error(err);
     });
   }
@@ -262,7 +292,6 @@ export default class Scheduler {
 
     const pid = p.process.pm_id;
     const testResourceRequirement = p.data.testResourceRequirement;
-    // const fPath = path.resolve(this.project.resultsdir + `/` + p.process.name);
 
     const message = {
       // these fields must be present
@@ -279,8 +308,9 @@ export default class Scheduler {
         id: p.process.pm_id,
       },
     };
+
     if (testResourceRequirement?.ports === 0) {
-      this.pm2.sendDataToProcessId(
+      pm2.sendDataToProcessId(
         p.process.pm_id,
         message,
         function (err, res) {
@@ -324,16 +354,13 @@ export default class Scheduler {
             id: p.process.pm_id,
           },
         };
-
-        console.log("mark1");
-        this.pm2.sendDataToProcessId(
+        pm2.sendDataToProcessId(
           p.process.pm_id,
           message,
           function (err, res) {
             // no-op
           }
         );
-
         // mark the selected ports as occupied
         for (const foundOpenPort of selectionOfPorts) {
           this.ports[foundOpenPort] = pid.toString();
@@ -367,15 +394,13 @@ export default class Scheduler {
     pm2.list((err, processes) => {
       processes.forEach((proc: pm2.ProcessDescription) => {
         proc.pm_id &&
-          this.pm2.stop(proc.pm_id, (err, proc) => {
+          pm2.stop(proc.pm_id, (err, proc) => {
             console.error(err);
           });
       });
     });
   }
 }
-
-const clients = [];
 
 export class ITProject {
   buildMode: "on" | "off" | "watch";
@@ -452,25 +477,20 @@ export class ITProject {
     // };
 
     const nodeEntryPoints = this.getSecondaryEndpointsPoints("node");
-    console.log("nodeEntryPoints", nodeEntryPoints)
 
-    const nodeRuntimeEsbuildConfig: BuildOptions = {
+    const esbuildConfigNode: BuildOptions = {
       platform: "node",
       format: "esm",
       outbase: this.outbase,
       outdir: this.outdir,
       jsx: `transform`,
       entryPoints: [
-        // these are the tested artifacts
         ...nodeEntryPoints,
-        // these do the testing
-        // ...this.tests.map((t) => t[1]),
       ],
       bundle: true,
       minify: this.minify === true,
       write: true,
       outExtension: { ".js": ".mjs" },
-      // packages: "external",
       splitting: true,
       plugins: [
         ...(this.loaders || []),
@@ -493,17 +513,13 @@ export class ITProject {
     };
 
     Promise.resolve(Promise.all(this.getSecondaryEndpointsPoints("electron").map(async (sourceFilePath) => {
-
       const sourceFileSplit = sourceFilePath.split("/");
-
       const sourceDir = sourceFileSplit.slice(0, -1);
       const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
       const sourceFileNameWithoutExtensions = sourceFileName.split(".").slice(0, 1).join(".")
       const sourceFileNameMinusJs = sourceFileName.split(".").slice(0, -1).join(".");
-
       const htmlFilePath = path.normalize(`${process.cwd()}/${this.outdir}/${sourceDir.join("/")}/${sourceFileNameWithoutExtensions}.html`);
       const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
-
       return fs.promises.mkdir(path.dirname(htmlFilePath), { recursive: true }).then(x => fs.writeFileSync(htmlFilePath, `
       <!DOCTYPE html>
           <html lang="en">
@@ -523,15 +539,16 @@ export class ITProject {
       `))
     })));
 
-    const electronRuntimeEsbuildConfig: BuildOptions = {
+    const esbuildConfigWeb: BuildOptions = {
       platform: "browser",
-      // external: ["path", "fs"],
       format: "esm",
       outbase: this.outbase,
       outdir: this.outdir,
       jsx: `transform`,
-      entryPoints: [...this.getSecondaryEndpointsPoints("electron")],
-      // entryPoints: this.tests.map((tc) => tc[0]),
+      entryPoints: [
+        ...this.getSecondaryEndpointsPoints("electron"),
+        ...this.getSecondaryEndpointsPoints("puppeteer"),
+      ],
       bundle: true,
       minify: this.minify === true,
       write: true,
@@ -557,32 +574,61 @@ export class ITProject {
       ],
     };
 
-    console.log("electronRuntimeEsbuildConfig", electronRuntimeEsbuildConfig);
-
+    console.log("esbuildConfigWeb", esbuildConfigWeb);
     console.log("buildMode   -", this.buildMode);
     console.log("runMode     -", this.runMode);
     console.log("collateMode -", this.collateMode);
 
     if (this.buildMode === "on") {
-      console.log("nodeRuntimeEsbuildConfig", nodeRuntimeEsbuildConfig)
-      esbuild.build(nodeRuntimeEsbuildConfig).then(async (eBuildResult) => {
+      console.log("esbuildConfigNode", esbuildConfigNode)
+      esbuild.build(esbuildConfigNode).then(async (eBuildResult) => {
         console.log("node tests", eBuildResult);
       });
-      esbuild.build(electronRuntimeEsbuildConfig).then(async (eBuildResult) => {
+      esbuild.build(esbuildConfigWeb).then(async (eBuildResult) => {
         console.log("electron tests", eBuildResult);
       });
     } else if (this.buildMode === "watch") {
       Promise.all([
-        esbuild.context(nodeRuntimeEsbuildConfig).then(async (nodeContext) => {
+        esbuild.context(esbuildConfigNode).then(async (nodeContext) => {
           nodeContext.watch();
         }),
-        esbuild.context(electronRuntimeEsbuildConfig).then(async (electronContext) => {
-          // unlike the server side, we need to run an http server to handle chunks imported into web-tests.
+        esbuild.context(esbuildConfigWeb).then(async (electronContext) => {
+
           if (this.runMode) {
-            console.log("serving results on port 8000")
+
+            // unlike the server side, we need to run an http server to handle chunks imported into web-tests.
+            console.log("serving http on port 8000");
             electronContext.serve({
               port: 8000,
               servedir: ".",
+              onRequest: (args: ServeOnRequestArgs) => {
+                console.log("onRequest", args)
+              }
+            });
+
+            // run a websocket as an alternative to node IPC
+            console.log("serving tcp on port 8001");
+            wss = new WebSocketServer({
+              port: 8001,
+              perMessageDeflate: {
+                zlibDeflateOptions: {
+                  // See zlib defaults.
+                  chunkSize: 1024,
+                  memLevel: 7,
+                  level: 3
+                },
+                zlibInflateOptions: {
+                  chunkSize: 10 * 1024
+                },
+                // Other options settable:
+                clientNoContextTakeover: true, // Defaults to negotiated value.
+                serverNoContextTakeover: true, // Defaults to negotiated value.
+                serverMaxWindowBits: 10, // Defaults to negotiated value.
+                // Below options specified as default values.
+                concurrencyLimit: 10, // Limits zlib concurrency for perf.
+                threshold: 1024 // Size (in bytes) below which messages
+                // should not be compressed if context takeover is disabled.
+              }
             });
 
           }
@@ -609,31 +655,6 @@ export class ITProject {
     } else {
       console.log("skipping 'run' phase");
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // if (this.collateMode === "on") {
     //   esbuild.build(collateOpts).then(async (eBuildResult) => {
@@ -671,7 +692,6 @@ export class ITProject {
     // }
   }
 }
-
 
 // const hotReload = (ectx, collateDir, port?: string) => {
 //   ectx.serve({ servedir: collateDir, host: "localhost" }).then(() => {

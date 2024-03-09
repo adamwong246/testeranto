@@ -18,13 +18,21 @@
       "import": "./dist/module/Project.js",
       "require": "./dist/common/Project.js"
     },
-    "./src/core-web": {
-      "import": "./dist/module/core-web.js",
-      "require": "./dist/common/core-web.js"
+    "./src/core-electron": {
+      "import": "./dist/module/core-electron.js",
+      "require": "./dist/common/core-electron.js"
     },
     "./src/core-node": {
       "import": "./dist/module/core-node.js",
       "require": "./dist/common/core-node.js"
+    },
+    "./src/core-puppeteer": {
+      "import": "./dist/module/core-puppeteer.js",
+      "require": "./dist/common/core-puppeteer.js"
+    },
+    "./src/Puppeteer": {
+      "import": "./dist/module/Puppeteer.js",
+      "require": "./dist/common/Puppeteer.js"
     },
     "./src/electron": {
       "import": "./dist/module/electron.js",
@@ -33,6 +41,10 @@
     "./src/core": {
       "import": "./dist/module/core.js",
       "require": "./dist/common/core.js"
+    },
+    "./src/preload": {
+      "import": "./dist/module/preload.js",
+      "require": "./dist/common/preload.js"
     }
   },
   "repository": "git@github.com:adamwong246/testeranto.git",
@@ -75,7 +87,7 @@
     "@typescript-eslint/parser": "^5.46.0",
     "babel-loader": "^8.2.5",
     "bootstrap": "^5.2.3",
-    "electron": "^29.1.0",
+    "electron": "^29.1.1",
     "esbuild-plugin-external-package": "^1.0.0",
     "esbuild-plugin-import-map": "^2.1.0",
     "eslint": "^8.29.0",
@@ -86,11 +98,14 @@
     "graphology": "^0.25.1",
     "graphology-dag": "^0.2.0",
     "graphology-types": "^0.24.5",
+    "ipc": "^0.0.1",
     "pm2": "^5.2.2",
+    "puppeteer": "18.1.0",
     "react-bootstrap": "^2.7.0",
     "ts-node": "^10.9.1",
     "typescript": "4.8.2",
     "why-is-node-running": "^2.2.2",
-    "why-is-node-still-running": "^1.0.0"
+    "why-is-node-still-running": "^1.0.0",
+    "ws": "^8.16.0"
   }
 }

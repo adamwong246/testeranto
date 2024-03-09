@@ -1,4 +1,5 @@
 import {
+  ITLog,
   ITTestResourceConfiguration,
   ITTestResourceRequirement,
   ITTestShape,
@@ -8,7 +9,6 @@ import {
   defaultTestResourceRequirement,
 } from "./core";
 import TesterantoLevelTwo from "./core";
-import { NodeWriter } from "./NodeWriter";
 
 export default async <
   TestShape extends ITTestShape,
@@ -52,9 +52,8 @@ export default async <
     ) => Promise<Store>;
   },
   nameKey: string,
-  testResourceRequirement: ITTestResourceRequirement = defaultTestResourceRequirement,
+  testResourceRequirement: ITTestResourceRequirement = defaultTestResourceRequirement
 ) => {
-
   const mrt = new TesterantoLevelTwo(
     input,
     testSpecification,
@@ -63,7 +62,8 @@ export default async <
     nameKey,
     testResourceRequirement,
     testInterface.assertioner || (async (t) => t as any),
-    testInterface.beforeEach || async function (subject: Input, initialValues: any, testResource: any) {
+    testInterface.beforeEach ||
+    async function (subject: Input, initialValues: any, testResource: any) {
       return subject as any;
     },
     testInterface.afterEach || (async (s) => s),
@@ -74,14 +74,20 @@ export default async <
     function (b: (...any: any[]) => any) {
       return b;
     },
-    NodeWriter
+    // {
+    //   createWriteStream: window.createWriteStream(),
+    // }
+    (window as any).NodeWriter()
   );
   const t: ITestJob = mrt[0];
-  const testResourceArg = process.argv[3] || `{}`;
+  // const testResourceArg = `{"fs": ".", "ports": []}`;
+  const testResourceArg = `{}`;
   try {
-    NodeWriter.startup(testResourceArg, t, testResourceRequirement);
+    const x = await (window as any).NodeWriter();
+    console.log("window.NodeWriter", x)
+    await (window as any).NodeWriter().startup(testResourceArg, t, testResourceRequirement);
   } catch (e) {
     console.error(e);
-    process.exit(-1);
+    // process.exit(-1);
   }
 };

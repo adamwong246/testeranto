@@ -9,7 +9,7 @@ export const NodeWriter = {
             // process.exit(0); // :-)
         }
         else {
-            console.log("test configuration is incomplete");
+            console.log("test configuration is incomplete", partialTestResource);
             if (process.send) {
                 console.log("requesting test resources from pm2 ...", testResourceRequirement);
                 /* @ts-ignore:next-line */
@@ -46,7 +46,7 @@ export const NodeWriter = {
                 });
             }
             else {
-                console.log("Pass run-time test resources by STDIN");
+                console.log("Pass run-time test resources by STDIN", process.stdin);
                 process.stdin.on("data", async (data) => {
                     console.log("data: ", data);
                     const resourcesFromStdin = JSON.parse(data.toString());

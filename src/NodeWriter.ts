@@ -1,8 +1,11 @@
 import fs from "fs";
 import path from "path";
 import { PassThrough } from "stream";
+import pm2 from "pm2";
 
-import { ILogWriter, ITLog, ITTestResourceConfiguration, ITTestResourceRequirement, ITestJob } from "./core";
+import {
+  ILogWriter, ITLog, ITTestResourceConfiguration, ITTestResourceRequirement, ITestJob
+} from "./core";
 
 type IFPaths = string[];
 const fPaths: IFPaths = [];
@@ -22,8 +25,7 @@ export const NodeWriter: ILogWriter = {
       await t.receiveTestResourceConfig(partialTestResource);
       // process.exit(0); // :-)
     } else {
-      console.log("test configuration is incomplete");
-
+      console.log("test configuration is incomplete", partialTestResource);
       if (process.send) {
         console.log(
           "requesting test resources from pm2 ...",
@@ -76,7 +78,7 @@ export const NodeWriter: ILogWriter = {
           }
         );
       } else {
-        console.log("Pass run-time test resources by STDIN");
+        console.log("Pass run-time test resources by STDIN", process.stdin);
         process.stdin.on("data", async (data) => {
           console.log("data: ", data);
 
