@@ -121,7 +121,8 @@ export declare abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape
     store: IStore;
     recommendedFsPath: string;
     constructor(name: string, features: string[], whens: BaseWhen<IStore, ISelection, IThenShape>[], thens: BaseThen<ISelection, IStore, IThenShape>[]);
-    afterAll(store: IStore, artifactory: ITestArtifactory): void;
+    beforeAll(store: IStore, artifactory: ITestArtifactory): IStore;
+    afterAll(store: IStore, artifactory: ITestArtifactory): IStore;
     toObj(): {
         name: string;
         whens: {

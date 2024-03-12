@@ -1,5 +1,5 @@
 import { ITTestResourceConfiguration, ITTestResourceRequirement, ITTestShape, ITestArtificer, ITestSpecification } from "./core";
-declare const _default: <TestShape extends ITTestShape, Input, Subject extends Input, Store, Selection_1, WhenShape, ThenShape, InitialStateShape>(input: Input, testSpecification: ITestSpecification<TestShape>, testImplementation: any, testInterface: {
+declare const _default: <TestShape extends ITTestShape, Input, Subject, Store, Selection_1, WhenShape, ThenShape, InitialStateShape>(input: Input, testSpecification: ITestSpecification<TestShape>, testImplementation: any, testInterface: {
     actionHandler?: ((b: (...any: any[]) => any) => any) | undefined;
     andWhen: (store: Store, actioner: any, testResource: ITTestResourceConfiguration) => Promise<Selection_1>;
     butThen?: ((store: Store, callback: any, testResource: ITTestResourceConfiguration) => Promise<Selection_1>) | undefined;

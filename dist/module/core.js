@@ -60,8 +60,11 @@ export class BaseGiven {
         this.whens = whens;
         this.thens = thens;
     }
+    beforeAll(store, artifactory) {
+        return store;
+    }
     afterAll(store, artifactory) {
-        return;
+        return store;
     }
     toObj() {
         return {
@@ -309,7 +312,7 @@ export default class TesterantoLevelTwo extends TesterantoLevelOne {
     constructor(input, testSpecification, testImplementation, testInterface, nameKey, testResourceRequirement = defaultTestResourceRequirement, assertioner, beforeEach, afterEach, afterAll, butThen, andWhen, actionHandler, logWriter) {
         super(testImplementation, testSpecification, input, class extends BaseSuite {
             async setup(s, artifactory) {
-                return testInterface.beforeAll || (async (input, artificer) => input)(s, artifactory);
+                return (testInterface.beforeAll || (async (input, artificer) => input))(s, artifactory);
             }
             test(t) {
                 return assertioner(t);

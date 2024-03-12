@@ -476,8 +476,9 @@ export class ITProject {
           </head>
 
           <body>
+            <h1>${htmlFilePath}</h1>
             <div id="root">
-              <h1>${htmlFilePath}</h1>
+              
             </div>
           </body>
 

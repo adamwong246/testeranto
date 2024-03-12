@@ -274,8 +274,12 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
     this.thens = thens;
   }
 
+  beforeAll(store: IStore, artifactory: ITestArtifactory) {
+    return store;
+  }
+
   afterAll(store: IStore, artifactory: ITestArtifactory) {
-    return;
+    return store;
   }
 
   toObj() {
@@ -1115,7 +1119,7 @@ export default class TesterantoLevelTwo<TestShape extends ITTestShape,
         TestShape
       > {
         async setup(s: Input, artifactory): Promise<Subject> {
-          return testInterface.beforeAll || (async (input: Input, artificer: ITestArtificer) => input as any)(s, artifactory);
+          return (testInterface.beforeAll || (async (input: Input, artificer: ITestArtificer) => input as any))(s, artifactory);
         }
         test(t: ThenShape): unknown {
           return assertioner(t);

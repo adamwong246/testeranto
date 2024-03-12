@@ -105,7 +105,7 @@ const startup = async (
 export default async <
   TestShape extends ITTestShape,
   Input,
-  Subject extends Input,
+  Subject,
   Store,
   Selection,
   WhenShape,
@@ -155,7 +155,7 @@ export default async <
     testResourceRequirement,
     testInterface.assertioner || (async (t) => t as any),
     testInterface.beforeEach ||
-    async function (subject: Input, initialValues: any, testResource: any) {
+    async function (subject: any, initialValues: any, testResource: any) {
       return subject as any;
     },
     testInterface.afterEach || (async (s) => s),
