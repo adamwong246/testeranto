@@ -1,5 +1,17 @@
 const defaultTestResource: ITTestResourceConfiguration = { fs: ".", ports: [] };
 
+export type ITTestResourceConfiguration = {
+  name?: string;
+  fs: string;
+  ports: number[];
+};
+
+export type ITTestResourceRequirement = {
+  name: string;
+  ports: number;
+  fs: string;
+};
+
 export type Modify<Type, Replace> = Omit<Type, keyof Replace> & Replace;
 
 export type ITTestShape = {
@@ -96,14 +108,10 @@ export type ITestJob = {
 
 export type ITestResults = Promise<{ test: IT }>[];
 
-export type ITTestResourceRequirement = {
-  ports: number;
-  fs: string;
-};
-
 export const defaultTestResourceRequirement: ITTestResourceRequirement = {
   fs: ".",
   ports: 0,
+  name: "",
 };
 
 export type ITestArtifactory = (key: string, value: string) => unknown;
@@ -139,11 +147,6 @@ export type ITestImplementation<
       ...Ic: ITestShape["checks"][K]
     ) => IState;
   };
-};
-
-export type ITTestResourceConfiguration = {
-  fs: string;
-  ports: number[];
 };
 
 export abstract class BaseSuite<

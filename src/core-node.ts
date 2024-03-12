@@ -10,6 +10,8 @@ import {
 import TesterantoLevelTwo from "./core";
 import { NodeWriter } from "./NodeWriter";
 
+console.log("node-core argv", process.argv);
+
 export default async <
   TestShape extends ITTestShape,
   Input,
@@ -77,9 +79,86 @@ export default async <
     NodeWriter
   );
   const t: ITestJob = mrt[0];
-  const testResourceArg = process.argv[3] || `{}`;
+  const testResourceArg = process.argv[2] || `{}`;
   try {
-    NodeWriter.startup(testResourceArg, t, testResourceRequirement);
+    // NodeWriter.startup(testResourceArg, t, testResourceRequirement);
+
+    const partialTestResource = JSON.parse(
+      testResourceArg
+    ) as ITTestResourceConfiguration;
+
+    if (partialTestResource.fs && partialTestResource.ports) {
+      await t.receiveTestResourceConfig(partialTestResource);
+      // process.exit(0); // :-)
+    } else {
+      console.log("test configuration is incomplete", partialTestResource);
+      if (process.send) {
+        console.log(
+          "requesting test resources via IPC ...",
+          testResourceRequirement
+        );
+        /* @ts-ignore:next-line */
+        process.send({
+          type: "testeranto:hola",
+          data: {
+            testResourceRequirement,
+          },
+        });
+
+        console.log("awaiting test resources via IPC...");
+        process.on(
+          "message",
+          async function (packet: { data: { testResourceConfiguration } }) {
+            console.log("message: ", packet);
+
+            const resourcesFromPm2 = packet.data.testResourceConfiguration;
+            const secondTestResource = {
+              fs: ".",
+              ...JSON.parse(JSON.stringify(partialTestResource)),
+              ...JSON.parse(JSON.stringify(resourcesFromPm2)),
+            } as ITTestResourceConfiguration;
+
+            console.log("secondTestResource", secondTestResource);
+
+            if (await t.receiveTestResourceConfig(secondTestResource)) {
+              /* @ts-ignore:next-line */
+              process.send(
+                {
+                  type: "testeranto:adios",
+                  data: {
+                    testResourceConfiguration:
+                      t.test.testResourceConfiguration,
+                    results: t.toObj(),
+                  },
+                },
+                (err) => {
+                  if (!err) {
+                    console.log(`✅`);
+                  } else {
+                    console.error(`❗️`, err);
+                  }
+                  // process.exit(0); // :-)
+                }
+              );
+            }
+          }
+        );
+      } else {
+        console.log("Pass run-time test resources by STDIN", process.stdin);
+        process.stdin.on("data", async (data) => {
+          console.log("data: ", data);
+
+          const resourcesFromStdin = JSON.parse(data.toString());
+          const secondTestResource = {
+            ...JSON.parse(JSON.stringify(resourcesFromStdin)),
+            ...JSON.parse(JSON.stringify(partialTestResource)),
+          } as ITTestResourceConfiguration;
+          await t.receiveTestResourceConfig(secondTestResource);
+          // process.exit(0); // :-)
+        });
+      }
+    }
+
   } catch (e) {
     console.error(e);
     process.exit(-1);

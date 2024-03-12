@@ -1,3 +1,13 @@
+export declare type ITTestResourceConfiguration = {
+    name?: string;
+    fs: string;
+    ports: number[];
+};
+export declare type ITTestResourceRequirement = {
+    name: string;
+    ports: number;
+    fs: string;
+};
 export declare type Modify<Type, Replace> = Omit<Type, keyof Replace> & Replace;
 export declare type ITTestShape = {
     suites: any;
@@ -53,10 +63,6 @@ export declare type ITestJob = {
 export declare type ITestResults = Promise<{
     test: IT;
 }>[];
-export declare type ITTestResourceRequirement = {
-    ports: number;
-    fs: string;
-};
 export declare const defaultTestResourceRequirement: ITTestResourceRequirement;
 export declare type ITestArtifactory = (key: string, value: string) => unknown;
 export declare type ITLog = (...string: any[]) => void;
@@ -76,10 +82,6 @@ export declare type ITestImplementation<IState, ISelection, IWhenShape, IThenSha
     Checks: {
         [K in keyof ITestShape["checks"]]: (...Ic: ITestShape["checks"][K]) => IState;
     };
-};
-export declare type ITTestResourceConfiguration = {
-    fs: string;
-    ports: number[];
 };
 export declare abstract class BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape extends ITTestShape> {
     name: string;

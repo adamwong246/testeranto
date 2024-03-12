@@ -5,6 +5,7 @@ const defaultTestResource = { fs: ".", ports: [] };
 exports.defaultTestResourceRequirement = {
     fs: ".",
     ports: 0,
+    name: "",
 };
 class BaseSuite {
     constructor(name, givens = {}, checks = []) {

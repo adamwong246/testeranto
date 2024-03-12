@@ -4,10 +4,10 @@ import fs from "fs";
 import path from "path";
 import fsExists from "fs.promises.exists";
 import pm2 from "pm2";
-import puppeteer from 'puppeteer';
 
 import { TesterantoFeatures } from "./Features";
 import { IBaseConfig, ICollateMode } from "./IBaseConfig";
+import { ITTestResourceConfiguration, ITTestResourceRequirement } from './core';
 
 const TIMEOUT = 2000;
 const OPEN_PORT = "";
@@ -15,21 +15,7 @@ const OPEN_PORT = "";
 export type IRunTime = `node` | `electron` | `puppeteer`;
 export type IRunTimes = { runtime: IRunTime; entrypoint: string }[];
 export type ITestTypes = [string, IRunTime];
-
-type IPm2Process = {
-  process: {
-    namespace: string;
-    versioning: object;
-    name: string;
-    pm_id: number;
-  };
-  data: {
-    testResourceRequirement: {
-      ports: number;
-    };
-  };
-  at: string;
-};
+type IScehdulerProtocols = `ipc` | `ws`;
 
 type IPm2ProcessB = {
   process: {
@@ -39,15 +25,19 @@ type IPm2ProcessB = {
     pm_id: number;
   };
   data: {
+    name: string;
     testResource: string[];
     results: any;
   };
   at: string;
 };
 
-let wss: WebSocketServer;
+let webSocketServer: WebSocketServer;
 
 export default class Scheduler {
+  private spinCycle = 0;
+  private spinAnimation = "←↖↑↗→↘↓↙";
+
   project: ITProject;
   ports: Record<string, string>;
   jobs: Record<
@@ -57,19 +47,18 @@ export default class Scheduler {
       cancellablePromise: string;
     }
   >;
-  queue: IPm2Process[];
-  spinCycle = 0;
-  spinAnimation = "←↖↑↗→↘↓↙";
-  // pm2: typeof pm2;
+  resourceQueue: { requirement: ITTestResourceRequirement, protocol: IScehdulerProtocols }[];
   summary: Record<string, boolean | undefined>;
   mode: `up` | `down`;
+  websockets: Record<string, WebSocket>;
 
   constructor(project: ITProject) {
     this.project = project;
 
-    this.queue = [];
+    this.resourceQueue = [];
     this.jobs = {};
     this.ports = {};
+    this.websockets = {};
 
     Object.values(this.project.ports).forEach((port) => {
       this.ports[port] = OPEN_PORT;
@@ -85,9 +74,53 @@ export default class Scheduler {
       } else {
         console.log(`pm2 is connected`);
       }
+      // run a websocket as an alternative to node IPC
+      webSocketServer = new WebSocketServer({
+        port: 8080,
+        host: "localhost",
+      });
+
+      webSocketServer.on('open', () => {
+        console.log('open');
+        process.exit()
+      });
+
+      webSocketServer.on('close', (data) => {
+        console.log('webSocketServer close: %s', data);
+        process.exit()
+      });
+
+      webSocketServer.on('listening', () => {
+        console.log("webSocketServer listening", webSocketServer.address());
+        // process.exit()
+      });
+
+      webSocketServer.on('connection', (webSocket: WebSocket) => {
+        console.log('webSocketServer connection');
+
+        webSocket.on('message', (webSocketData) => {
+          console.log('webSocket message: %s', webSocketData);
+          const payload = webSocketData.valueOf() as { type: string, data: ITTestResourceRequirement };
+          const name = payload.data.name;
+          const messageType = payload.type;
+          const requestedResources = payload.data;
+
+          // const wsName = parseInt(webSocket.url.substr(1), 10)
+          this.websockets[name] = webSocket
+          console.log('connected: ' + name + ' in ' + Object.getOwnPropertyNames(this.websockets))
+
+          if (messageType === "testeranto:hola") {
+            console.log("hola WS", requestedResources);
+            this.requestResource(requestedResources, 'ws');
+          } else if (messageType === "testeranto:adios") {
+            console.log("adios WS", name);
+            this.releaseTestResources(name);
+          }
+
+        });
+      });
 
       const makePath = (fPath: string): string => {
-        console.log("makePath", fPath)
         const ext = path.extname(fPath);
         const x = "./" + project.outdir + "/" + fPath.replace(ext, "") + ".mjs";
         return path.resolve(x);
@@ -115,13 +148,26 @@ export default class Scheduler {
         } else {
           clearInterval(bootInterval);
 
-          this.project
+          pm2.launchBus((err, pm2_bus) => {
+            pm2_bus.on("testeranto:hola", (packet: { data: { testResourceRequirement: ITTestResourceRequirement } }) => {
+              console.log("hola IPC", packet);
+              this.requestResource(packet.data.testResourceRequirement, 'ipc');
+            });
+
+            pm2_bus.on("testeranto:adios", (packet: IPm2ProcessB) => {
+              console.log("adios IPC", packet);
+              this.releaseTestResources(packet.data.name);
+            });
+          });
+
+          const inputFilePaths: string[] = this.project
             .tests
             .reduce((m, [inputFilePath, runtime]) => {
               const script = makePath(inputFilePath);
               this.summary[inputFilePath] = undefined;
               const partialTestResourceByCommandLineArg = `${script} '${JSON.stringify(
                 {
+                  name: inputFilePath,
                   ports: [],
                   fs: path.resolve(
                     process.cwd(),
@@ -135,13 +181,16 @@ export default class Scheduler {
                 const sourceFileSplit = inputFilePath.split("/");
                 const sourceDir = sourceFileSplit.slice(0, -1);
                 const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
-                const sourceFileNameWithoutExtensions = sourceFileName.split(".").slice(0, 1).join(".")
+                const sourceFileNameWithoutExtensions = sourceFileName.split(".").slice(0, -1).join(".")
                 const htmlFilePath = path.normalize(`/${project.outdir}/${sourceDir.join("/")}/${sourceFileNameWithoutExtensions}.html`);
 
-                m[inputFilePath] = pm2.start(
+                // const name = script;
+
+                pm2.start(
                   {
                     script: `node ./node_modules/testeranto/dist/common/Puppeteer.js ${htmlFilePath} '${JSON.stringify(
                       {
+                        name: inputFilePath,
                         ports: [],
                         fs:
                           path.resolve(
@@ -151,7 +200,7 @@ export default class Scheduler {
                           ),
                       }
                     )}'`,
-                    name: `puppeteer ${script}`,
+                    name: inputFilePath,
                     autorestart: false,
                     args: partialTestResourceByCommandLineArg,
                   },
@@ -166,13 +215,16 @@ export default class Scheduler {
                 const fileAsList = inputFilePath.split("/");
                 const fileListHead = fileAsList.slice(0, -1);
                 const fname = fileAsList[fileAsList.length - 1];
-                const fnameOnly = fname.split(".")[0];
+                const fnameOnly = fname.split(".").slice(0, -1).join(".");
                 const htmlFile = [this.project.outdir, ...fileListHead, `${fnameOnly}.html`].join("/");
+                // const htmlFilePath = path.normalize(`${process.cwd()}/${this.outdir}/${sourceDir.join("/")}/${sourceFileNameMinusJs}.html`);
 
-                m[inputFilePath] = pm2.start(
+                // const name = `electron ${htmlFile}`;
+                pm2.start(
                   {
                     script: `yarn electron node_modules/testeranto/dist/common/electron.js ${htmlFile} '${JSON.stringify(
                       {
+                        name: inputFilePath,
                         ports: [],
                         fs:
                           path.resolve(
@@ -182,7 +234,7 @@ export default class Scheduler {
                           ),
                       }
                     )}'`,
-                    name: `electron test ${htmlFile}`,
+                    name: inputFilePath,
                     autorestart: false,
                     args: partialTestResourceByCommandLineArg,
                   },
@@ -194,11 +246,24 @@ export default class Scheduler {
                   }
                 );
 
-              }
-              else if (runtime === "node") {
-                m[inputFilePath] = pm2.start({
-                  script,
-                  name: `node ${inputFilePath}`,
+
+
+              } else if (runtime === "node") {
+                // const name = `node ${inputFilePath}`
+                pm2.start({
+                  name: inputFilePath,
+                  script: `node ${script} '${JSON.stringify(
+                    {
+                      name: inputFilePath,
+                      ports: [],
+                      fs:
+                        path.resolve(
+                          process.cwd(),
+                          project.outdir,
+                          inputFilePath
+                        ),
+                    }
+                  )}'`,
                   autorestart: false,
                   watch: [script],
                   args: partialTestResourceByCommandLineArg
@@ -211,181 +276,15 @@ export default class Scheduler {
                 });
               }
 
-              return m;
-            }, {});
+              return [inputFilePath, ...m];
+            }, []);
 
-          pm2.launchBus((err, pm2_bus) => {
-            pm2_bus.on("testeranto:hola", (packet: any) => {
-              console.log("hola", packet);
-              this.push(packet);
-            });
+          // console.log("inputFilePaths", inputFilePaths);
 
-            pm2_bus.on("testeranto:adios", (packet: IPm2ProcessB) => {
-              console.log("adios", packet);
-              this.releaseTestResources(packet);
-            });
-          });
-
-          setInterval(async () => {
-            if (this.project.clearScreen) {
-              console.clear();
-            }
-
-            console.log(
-              `# of processes in queue:`,
-              this.queue.length,
-              "/",
-              this.project.getSecondaryEndpointsPoints().length
-            );
-            console.log(`summary:`, this.summary);
-            console.log(`ports:`, this.ports);
-            // pm2.list((err, procs) => {
-            //   procs.forEach((proc) => {
-            //     console.log(proc.name, proc.pid, proc.pm_id, proc.monit)
-            //   })
-            // });
-
-            this.pop();
-            this.checkForShutDown();
-
-            console.log(
-              this.spinner(),
-              this.mode === `up`
-                ? `press "q" to initiate graceful shutdown`
-                : `please wait while testeranto shuts down gracefully...`
-            );
-          }, TIMEOUT).unref();
+          setInterval(this.mainLoop, TIMEOUT).unref();
         }
       }, TIMEOUT).unref();
     });
-  }
-
-  // this is called every cycle
-  // if there are no running processes, none waiting and we are in shutdown mode,
-  // write the summary to a file and end self with summarized exit code
-  private checkForShutDown() {
-    const sums = Object.entries(this.summary).filter((s) => s[1] !== undefined);
-  }
-
-  public async abort(pm2Proc: IPm2Process) {
-    pm2.stop(pm2Proc.process.pm_id, (err, proc) => {
-      console.error(err);
-    });
-  }
-
-  private spinner() {
-    this.spinCycle = (this.spinCycle + 1) % this.spinAnimation.length;
-    return this.spinAnimation[this.spinCycle];
-  }
-
-  private push(process: IPm2Process) {
-    this.queue.push(process);
-  }
-
-  private pop() {
-    const p = this.queue.pop();
-
-    if (!p) {
-      console.log("feed me a test");
-      return;
-    }
-
-    const pid = p.process.pm_id;
-    const testResourceRequirement = p.data.testResourceRequirement;
-
-    const message = {
-      // these fields must be present
-      id: p.process.pm_id,
-      topic: "some topic",
-      type: "process:msg",
-
-      // Data to be sent
-      data: {
-        testResourceConfiguration: {
-          ports: [],
-          // fs: fPath,
-        },
-        id: p.process.pm_id,
-      },
-    };
-
-    if (testResourceRequirement?.ports === 0) {
-      pm2.sendDataToProcessId(
-        p.process.pm_id,
-        message,
-        function (err, res) {
-          // console.log("sendDataToProcessId", err, res, message);
-        }
-      );
-    }
-
-    if ((testResourceRequirement?.ports || 0) > 0) {
-      // clear any port-slots associated with this job
-      Object.values(this.ports).forEach((jobMaybe, portNumber) => {
-        if (jobMaybe && jobMaybe === pid.toString()) {
-          this.ports[portNumber] = OPEN_PORT;
-        }
-      });
-
-      // find a list of open ports
-      const foundOpenPorts = Object.keys(this.ports).filter(
-        (p) => this.ports[p] === OPEN_PORT
-      );
-      // if there are enough open port-slots...
-      if (foundOpenPorts.length >= testResourceRequirement.ports) {
-        const selectionOfPorts = foundOpenPorts.slice(
-          0,
-          testResourceRequirement.ports
-        );
-
-        const message = {
-          // these fields must be present
-          id: p.process.pm_id, // id of process from "pm2 list" command or from pm2.list(errback) method
-          topic: "some topic",
-          // process:msg will be send as 'message' on target process
-          type: "process:msg",
-
-          // Data to be sent
-          data: {
-            testResourceConfiguration: {
-              // fs: fPath,
-              ports: selectionOfPorts,
-            },
-            id: p.process.pm_id,
-          },
-        };
-        pm2.sendDataToProcessId(
-          p.process.pm_id,
-          message,
-          function (err, res) {
-            // no-op
-          }
-        );
-        // mark the selected ports as occupied
-        for (const foundOpenPort of selectionOfPorts) {
-          this.ports[foundOpenPort] = pid.toString();
-        }
-      } else {
-        console.log(
-          `no port was open so send the ${pid} job to the back of the queue`
-        );
-        this.queue.push(p);
-      }
-    }
-  }
-
-  private async releaseTestResources(pm2Proc: IPm2ProcessB) {
-    if (pm2Proc) {
-      (pm2Proc.data.testResource || []).forEach((p, k) => {
-        const jobExistsAndMatches =
-          this.ports[p] === pm2Proc.process.pm_id.toString();
-        if (jobExistsAndMatches) {
-          this.ports[p] = OPEN_PORT;
-        }
-      });
-    } else {
-      console.error("idk?!");
-    }
   }
 
   public shutdown() {
@@ -400,6 +299,287 @@ export default class Scheduler {
       });
     });
   }
+
+  private spinner() {
+    this.spinCycle = (this.spinCycle + 1) % this.spinAnimation.length;
+    return this.spinAnimation[this.spinCycle];
+  }
+
+  private requestResource(
+    requirement: ITTestResourceRequirement,
+    protocol: IScehdulerProtocols
+  ) {
+    this.resourceQueue.push({ requirement, protocol });
+  }
+
+  private async releaseTestResources(name: string) {
+    pm2.list((err, processes) => {
+      processes.forEach((proc: pm2.ProcessDescription) => {
+        if (proc.name === name) {
+          Object.keys(this.ports).forEach((port: string) => {
+            if (this.ports[port] === name) {
+              this.ports[port] = OPEN_PORT;
+            }
+          });
+        }
+      });
+    });
+  }
+
+  private mainLoop = async () => {
+    if (this.project.clearScreen) {
+      console.clear();
+    }
+
+    // console.log(
+    //   `# of processes in resourceQueue:`,
+    //   this.resourceQueue.length,
+    //   "/",
+    //   this.project.getSecondaryEndpointsPoints().length
+    // );
+
+    // pm2.list((err, procs) => {
+    //   procs.forEach((proc) => {
+    //     console.log(proc.name, proc.pid, proc.pm_id, proc.monit)
+    //   })
+    // });
+
+
+    console.log("webSocketServer.clients", webSocketServer.clients.size);
+
+    this.tick();
+    // this.checkForShutDown();
+
+    console.log(
+      this.spinner(),
+      this.mode === `up`
+        ? `press "q" to initiate graceful shutdown`
+        : `please wait while testeranto shuts down gracefully...`
+    );
+  };
+
+  private tick() {
+    const resourceRequest = this.resourceQueue.pop();
+
+    if (!resourceRequest) {
+      console.log("feed me a test!");
+      return;
+    }
+
+    if (resourceRequest.protocol === "ipc") {
+      this.allocateViaIpc(resourceRequest)
+    } else if (resourceRequest.protocol === "ws") {
+      this.allocateViaWs(resourceRequest)
+    }
+  }
+
+  private allocateViaWs(resourceRequest: {
+    requirement: ITTestResourceRequirement;
+    protocol: IScehdulerProtocols;
+  }) {
+
+    const pName = resourceRequest.requirement.name;
+    const testResourceRequirement = resourceRequest.requirement;
+
+    pm2.list((err, processes) => {
+      console.error(err);
+      processes.forEach((p) => {
+        if (p.name === pName && p.pid) {
+          const message = {
+            // these fields must be present
+            id: p.pid,
+            topic: "some topic",
+            type: "process:msg",
+
+            // Data to be sent
+            data: {
+              testResourceConfiguration: {
+                ports: [],
+                // fs: fPath,
+              },
+              id: p.pm_id,
+            },
+          };
+
+          if (testResourceRequirement?.ports === 0) {
+            pm2.sendDataToProcessId(
+              p.pid,
+              message,
+              function (err, res) {
+                // console.log("sendDataToProcessId", err, res, message);
+              }
+            );
+          }
+
+          if ((testResourceRequirement?.ports || 0) > 0) {
+            // clear any port-slots associated with this job
+            Object.values(this.ports).forEach((jobMaybe, portNumber) => {
+              if (jobMaybe && jobMaybe === pName) {
+                this.ports[portNumber] = OPEN_PORT;
+              }
+            });
+
+            // find a list of open ports
+            const foundOpenPorts = Object.keys(this.ports).filter(
+              (p) => this.ports[p] === OPEN_PORT
+            );
+            // if there are enough open port-slots...
+            if (foundOpenPorts.length >= testResourceRequirement.ports) {
+              const selectionOfPorts = foundOpenPorts.slice(
+                0,
+                testResourceRequirement.ports
+              );
+
+              const message = {
+                // these fields must be present
+                id: p.pid, // id of process from "pm2 list" command or from pm2.list(errback) method
+                topic: "some topic",
+                // process:msg will be send as 'message' on target process
+                type: "process:msg",
+
+                // Data to be sent
+                data: {
+                  testResourceConfiguration: {
+                    // fs: fPath,
+                    ports: selectionOfPorts,
+                  },
+                  id: p.pid,
+                },
+              };
+              pm2.sendDataToProcessId(
+                p.pid,
+                message,
+                function (err, res) {
+                  // no-op
+                }
+              );
+              // mark the selected ports as occupied
+              for (const foundOpenPort of selectionOfPorts) {
+                this.ports[foundOpenPort] = p.pid.toString();
+              }
+            } else {
+              console.log(
+                `no port was open so send the ${p.pid} job to the back of the resourceQueue`
+              );
+              this.resourceQueue.push(resourceRequest);
+            }
+          }
+        }
+      })
+    })
+  }
+
+  private allocateViaIpc(resourceRequest: {
+    requirement: ITTestResourceRequirement;
+    protocol: IScehdulerProtocols;
+  }) {
+
+    const pName = resourceRequest.requirement.name;
+    const testResourceRequirement = resourceRequest.requirement;
+
+    pm2.list((err, processes) => {
+      console.error(err);
+      processes.forEach((p) => {
+        if (p.name === pName && p.pid) {
+          const message = {
+            // these fields must be present
+            id: p.pid,
+            topic: "some topic",
+            type: "process:msg",
+
+            // Data to be sent
+            data: {
+              testResourceConfiguration: {
+                ports: [],
+                // fs: fPath,
+              },
+              id: p.pm_id,
+            },
+          };
+
+          if (testResourceRequirement?.ports === 0) {
+            pm2.sendDataToProcessId(
+              p.pid,
+              message,
+              function (err, res) {
+                // console.log("sendDataToProcessId", err, res, message);
+              }
+            );
+          }
+
+          if ((testResourceRequirement?.ports || 0) > 0) {
+            // clear any port-slots associated with this job
+            Object.values(this.ports).forEach((jobMaybe, portNumber) => {
+              if (jobMaybe && jobMaybe === pName) {
+                this.ports[portNumber] = OPEN_PORT;
+              }
+            });
+
+            // find a list of open ports
+            const foundOpenPorts = Object.keys(this.ports).filter(
+              (p) => this.ports[p] === OPEN_PORT
+            );
+            // if there are enough open port-slots...
+            if (foundOpenPorts.length >= testResourceRequirement.ports) {
+              const selectionOfPorts = foundOpenPorts.slice(
+                0,
+                testResourceRequirement.ports
+              );
+
+              const message = {
+                // these fields must be present
+                id: p.pid, // id of process from "pm2 list" command or from pm2.list(errback) method
+                topic: "some topic",
+                // process:msg will be send as 'message' on target process
+                type: "process:msg",
+
+                // Data to be sent
+                data: {
+                  testResourceConfiguration: {
+                    // fs: fPath,
+                    ports: selectionOfPorts,
+                  },
+                  id: p.pid,
+                },
+              };
+              pm2.sendDataToProcessId(
+                p.pid,
+                message,
+                function (err, res) {
+                  // no-op
+                }
+              );
+              // mark the selected ports as occupied
+              for (const foundOpenPort of selectionOfPorts) {
+                this.ports[foundOpenPort] = p.pid.toString();
+              }
+            } else {
+              console.log(
+                `no port was open so send the ${p.pid} job to the back of the resourceQueue`
+              );
+              this.resourceQueue.push(resourceRequest);
+            }
+          }
+        }
+      })
+    })
+  }
+
+  // this is called every cycle
+  // if there are no running processes, none waiting and we are in shutdown mode,
+  // write the summary to a file and end self with summarized exit code
+  // private checkForShutDown() {
+  //   const sums = Object.entries(this.summary).filter((s) => s[1] !== undefined);
+  // }
+
+  // public async abort(pm2Proc: IIpcResourceRequest) {
+  //   pm2.stop(pm2Proc.process.pm_id, (err, proc) => {
+  //     console.error(err);
+  //   });
+  // }
+
+
+
 }
 
 export class ITProject {
@@ -512,15 +692,17 @@ export class ITProject {
       ],
     };
 
-    Promise.resolve(Promise.all(this.getSecondaryEndpointsPoints("electron").map(async (sourceFilePath) => {
-      const sourceFileSplit = sourceFilePath.split("/");
-      const sourceDir = sourceFileSplit.slice(0, -1);
-      const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
-      const sourceFileNameWithoutExtensions = sourceFileName.split(".").slice(0, 1).join(".")
-      const sourceFileNameMinusJs = sourceFileName.split(".").slice(0, -1).join(".");
-      const htmlFilePath = path.normalize(`${process.cwd()}/${this.outdir}/${sourceDir.join("/")}/${sourceFileNameWithoutExtensions}.html`);
-      const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
-      return fs.promises.mkdir(path.dirname(htmlFilePath), { recursive: true }).then(x => fs.writeFileSync(htmlFilePath, `
+    Promise.resolve(Promise.all(
+      [...this.getSecondaryEndpointsPoints("puppeteer"),
+      ...this.getSecondaryEndpointsPoints("electron")]
+        .map(async (sourceFilePath) => {
+          const sourceFileSplit = sourceFilePath.split("/");
+          const sourceDir = sourceFileSplit.slice(0, -1);
+          const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
+          const sourceFileNameMinusJs = sourceFileName.split(".").slice(0, -1).join(".");
+          const htmlFilePath = path.normalize(`${process.cwd()}/${this.outdir}/${sourceDir.join("/")}/${sourceFileNameMinusJs}.html`);
+          const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
+          return fs.promises.mkdir(path.dirname(htmlFilePath), { recursive: true }).then(x => fs.writeFileSync(htmlFilePath, `
       <!DOCTYPE html>
           <html lang="en">
           <head>
@@ -537,7 +719,7 @@ export class ITProject {
 
           </html>
       `))
-    })));
+        })));
 
     const esbuildConfigWeb: BuildOptions = {
       platform: "browser",
@@ -574,7 +756,7 @@ export class ITProject {
       ],
     };
 
-    console.log("esbuildConfigWeb", esbuildConfigWeb);
+    // console.log("esbuildConfigWeb", esbuildConfigWeb);
     console.log("buildMode   -", this.buildMode);
     console.log("runMode     -", this.runMode);
     console.log("collateMode -", this.collateMode);
@@ -592,47 +774,28 @@ export class ITProject {
         esbuild.context(esbuildConfigNode).then(async (nodeContext) => {
           nodeContext.watch();
         }),
-        esbuild.context(esbuildConfigWeb).then(async (electronContext) => {
+        esbuild.context(esbuildConfigWeb).then(async (esbuildWeb) => {
 
           if (this.runMode) {
 
             // unlike the server side, we need to run an http server to handle chunks imported into web-tests.
-            console.log("serving http on port 8000");
-            electronContext.serve({
+            esbuildWeb.serve({
               port: 8000,
               servedir: ".",
               onRequest: (args: ServeOnRequestArgs) => {
-                console.log("onRequest", args)
+                // console.log("onRequest", args)
               }
-            });
+            }).then((esbuildServerResult) => {
+              console.log("esbuildServer result", esbuildServerResult)
+            }, (esbuildServerFailure) => {
+              console.log("esbuildServer failure", esbuildServerFailure)
+              process.exit(-1)
+            })
 
-            // run a websocket as an alternative to node IPC
-            console.log("serving tcp on port 8001");
-            wss = new WebSocketServer({
-              port: 8001,
-              perMessageDeflate: {
-                zlibDeflateOptions: {
-                  // See zlib defaults.
-                  chunkSize: 1024,
-                  memLevel: 7,
-                  level: 3
-                },
-                zlibInflateOptions: {
-                  chunkSize: 10 * 1024
-                },
-                // Other options settable:
-                clientNoContextTakeover: true, // Defaults to negotiated value.
-                serverNoContextTakeover: true, // Defaults to negotiated value.
-                serverMaxWindowBits: 10, // Defaults to negotiated value.
-                // Below options specified as default values.
-                concurrencyLimit: 10, // Limits zlib concurrency for perf.
-                threshold: 1024 // Size (in bytes) below which messages
-                // should not be compressed if context takeover is disabled.
-              }
-            });
 
           }
         })]);
+
     } else {
       console.log("skipping 'build' phase");
     }

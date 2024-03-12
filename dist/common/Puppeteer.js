@@ -16,7 +16,7 @@ console.log("hello puppeteer stdin", process.stdin);
         await page.exposeFunction('NodeWriter', () => {
             console.log("printProcessSend process.send", process.send);
             console.log("NodeWriter", NodeWriter_1.NodeWriter);
-            return "IDK NodeWriter.startup";
+            return NodeWriter_1.NodeWriter;
         });
         await page.goto(`http://localhost:8000/${process.argv[2]}`);
         await page.setViewport({ width: 1080, height: 1024 });
