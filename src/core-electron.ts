@@ -1,6 +1,7 @@
 import {
   ITTestResourceConfiguration,
   ITTestResourceRequirement,
+  ITTestResourceRequest,
   ITTestShape,
   ITestArtificer,
   ITestJob,
@@ -16,7 +17,7 @@ const webSocket = new WebSocket("ws://localhost:8080");
 const startup = async (
   testResourceArg: string,
   t: ITestJob,
-  testResourceRequirement: ITTestResourceRequirement
+  testResourceRequirement: ITTestResourceRequest
 ) => {
 
   console.log("core-electron startup", testResourceArg);
@@ -144,7 +145,7 @@ export default async <
     ) => Promise<Store>;
   },
   nameKey: string,
-  testResourceRequirement: ITTestResourceRequirement = defaultTestResourceRequirement
+  testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
 ) => {
   const mrt = new TesterantoLevelTwo(
     input,

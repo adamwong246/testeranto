@@ -45,6 +45,10 @@
     "./src/preload": {
       "import": "./dist/module/preload.js",
       "require": "./dist/common/preload.js"
+    },
+    "./dist/module/core": {
+      "import": "./dist/module/core.js",
+      "require": "./dist/common/core.js"
     }
   },
   "repository": "git@github.com:adamwong246/testeranto.git",
@@ -100,6 +104,7 @@
     "graphology": "^0.25.1",
     "graphology-dag": "^0.2.0",
     "graphology-types": "^0.24.5",
+    "html": "^1.0.0",
     "ipc": "^0.0.1",
     "nodemon": "^3.1.0",
     "npm-watch": "^0.11.0",

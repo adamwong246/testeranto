@@ -1,6 +1,6 @@
 import {
   ITTestResourceConfiguration,
-  ITTestResourceRequirement,
+  ITTestResourceRequest,
   ITTestShape,
   ITestArtificer,
   ITestJob,
@@ -15,7 +15,7 @@ console.log("node-core argv", process.argv);
 export default async <
   TestShape extends ITTestShape,
   Input,
-  Subject extends Input,
+  Subject,
   Store,
   Selection,
   WhenShape,
@@ -54,7 +54,7 @@ export default async <
     ) => Promise<Store>;
   },
   nameKey: string,
-  testResourceRequirement: ITTestResourceRequirement = defaultTestResourceRequirement,
+  testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
 ) => {
 
   const mrt = new TesterantoLevelTwo(
@@ -65,7 +65,7 @@ export default async <
     nameKey,
     testResourceRequirement,
     testInterface.assertioner || (async (t) => t as any),
-    testInterface.beforeEach || async function (subject: Input, initialValues: any, testResource: any) {
+    testInterface.beforeEach || async function (subject: Subject, initialValues: any, testResource: any) {
       return subject as any;
     },
     testInterface.afterEach || (async (s) => s),
@@ -78,18 +78,16 @@ export default async <
     },
     NodeWriter
   );
+
   const t: ITestJob = mrt[0];
   const testResourceArg = process.argv[2] || `{}`;
   try {
-    // NodeWriter.startup(testResourceArg, t, testResourceRequirement);
-
     const partialTestResource = JSON.parse(
       testResourceArg
     ) as ITTestResourceConfiguration;
 
-    if (partialTestResource.fs && partialTestResource.ports) {
+    if (testResourceRequirement.ports == 0) {
       await t.receiveTestResourceConfig(partialTestResource);
-      // process.exit(0); // :-)
     } else {
       console.log("test configuration is incomplete", partialTestResource);
       if (process.send) {

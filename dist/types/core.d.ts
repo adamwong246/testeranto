@@ -1,5 +1,5 @@
 export declare type ITTestResourceConfiguration = {
-    name?: string;
+    name: string;
     fs: string;
     ports: number[];
 };
@@ -7,6 +7,9 @@ export declare type ITTestResourceRequirement = {
     name: string;
     ports: number;
     fs: string;
+};
+export declare type ITTestResourceRequest = {
+    ports: number;
 };
 export declare type Modify<Type, Replace> = Omit<Type, keyof Replace> & Replace;
 export declare type ITTestShape = {
@@ -63,7 +66,7 @@ export declare type ITestJob = {
 export declare type ITestResults = Promise<{
     test: IT;
 }>[];
-export declare const defaultTestResourceRequirement: ITTestResourceRequirement;
+export declare const defaultTestResourceRequirement: ITTestResourceRequest;
 export declare type ITestArtifactory = (key: string, value: string) => unknown;
 export declare type ITLog = (...string: any[]) => void;
 export declare type ITestImplementation<IState, ISelection, IWhenShape, IThenShape, ITestShape extends ITTestShape> = {
@@ -200,6 +203,6 @@ export default class TesterantoLevelTwo<TestShape extends ITTestShape, InitialSt
         afterEach?: (store: Store, key: string, artificer: ITestArtificer) => Promise<unknown>;
         beforeAll?: (input: Input, artificer: ITestArtificer) => Promise<Subject>;
         beforeEach?: (subject: Subject, initialValues: any, testResource: ITTestResourceConfiguration, artificer: ITestArtificer) => Promise<Store>;
-    }, nameKey: string, testResourceRequirement: ITTestResourceRequirement | undefined, assertioner: (t: ThenShape) => any, beforeEach: (subject: Subject, initialValues: any, testResource: ITTestResourceConfiguration, artificer: ITestArtificer) => Promise<Store>, afterEach: (store: Store, key: string, artificer: ITestArtificer) => Promise<unknown>, afterAll: (store: Store, artificer: ITestArtificer) => any, butThen: (s: Store, bt: (storeState: Selection) => ThenShape, testResource: ITTestResourceConfiguration) => any, andWhen: (store: Store, actioner: any, testResource: ITTestResourceConfiguration) => Promise<Selection>, actionHandler: (b: (...any: any[]) => any) => any, logWriter: ILogWriter);
+    }, nameKey: string, testResourceRequirement: ITTestResourceRequest | undefined, assertioner: (t: ThenShape) => any, beforeEach: (subject: Subject, initialValues: any, testResource: ITTestResourceConfiguration, artificer: ITestArtificer) => Promise<Store>, afterEach: (store: Store, key: string, artificer: ITestArtificer) => Promise<unknown>, afterAll: (store: Store, artificer: ITestArtificer) => any, butThen: (s: Store, bt: (storeState: Selection) => ThenShape, testResource: ITTestResourceConfiguration) => any, andWhen: (store: Store, actioner: any, testResource: ITTestResourceConfiguration) => Promise<Selection>, actionHandler: (b: (...any: any[]) => any) => any, logWriter: ILogWriter);
 }
 export {};

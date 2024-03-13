@@ -1,8 +1,6 @@
-const defaultTestResource = { fs: ".", ports: [] };
+const defaultTestResource = { name: "", fs: ".", ports: [] };
 export const defaultTestResourceRequirement = {
-    fs: ".",
-    ports: 0,
-    name: "",
+    ports: 0
 };
 export class BaseSuite {
     constructor(name, givens = {}, checks = []) {
@@ -82,7 +80,7 @@ export class BaseGiven {
         tLog(`\n Given: ${this.name}`);
         try {
             this.store = await this.givenThat(subject, testResourceConfiguration, artifactory);
-            tLog(`\n Given this.store`, this.store);
+            tLog(`\n Given this.store`);
             for (const whenStep of this.whens) {
                 await whenStep.test(this.store, testResourceConfiguration, tLog);
             }

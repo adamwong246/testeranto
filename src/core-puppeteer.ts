@@ -54,7 +54,7 @@ export default async <
     ) => Promise<Store>;
   },
   nameKey: string,
-  testResourceRequirement: ITTestResourceRequirement = defaultTestResourceRequirement
+  testResourceRequirement = defaultTestResourceRequirement
 ) => {
   const mrt = new TesterantoLevelTwo(
     input,

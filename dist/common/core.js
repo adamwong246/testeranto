@@ -1,11 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BaseCheck = exports.BaseThen = exports.BaseWhen = exports.BaseGiven = exports.BaseSuite = exports.defaultTestResourceRequirement = void 0;
-const defaultTestResource = { fs: ".", ports: [] };
+const defaultTestResource = { name: "", fs: ".", ports: [] };
 exports.defaultTestResourceRequirement = {
-    fs: ".",
-    ports: 0,
-    name: "",
+    ports: 0
 };
 class BaseSuite {
     constructor(name, givens = {}, checks = []) {
@@ -86,7 +84,7 @@ class BaseGiven {
         tLog(`\n Given: ${this.name}`);
         try {
             this.store = await this.givenThat(subject, testResourceConfiguration, artifactory);
-            tLog(`\n Given this.store`, this.store);
+            tLog(`\n Given this.store`);
             for (const whenStep of this.whens) {
                 await whenStep.test(this.store, testResourceConfiguration, tLog);
             }

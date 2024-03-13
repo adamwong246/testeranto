@@ -1,5 +1,5 @@
 import WebSocket, { WebSocketServer } from 'ws';
-import esbuild, { BuildOptions, ServeOnRequestArgs } from "esbuild";
+import esbuild, { BuildOptions, ImportKind, ServeOnRequestArgs } from "esbuild";
 import fs from "fs";
 import path from "path";
 import fsExists from "fs.promises.exists";
@@ -122,7 +122,7 @@ export default class Scheduler {
 
       const makePath = (fPath: string): string => {
         const ext = path.extname(fPath);
-        const x = "./" + project.outdir + "/" + fPath.replace(ext, "") + ".mjs";
+        const x = "./" + project.outdir + "/" + fPath.replace(ext, "") + ".js";
         return path.resolve(x);
       };
 
@@ -577,9 +577,6 @@ export default class Scheduler {
   //     console.error(err);
   //   });
   // }
-
-
-
 }
 
 export class ITProject {
@@ -659,8 +656,12 @@ export class ITProject {
     const nodeEntryPoints = this.getSecondaryEndpointsPoints("node");
 
     const esbuildConfigNode: BuildOptions = {
+      // define: {
+      //   'process.env.FLUENTFFMPEG_COV': "0",
+      // },
+      packages: "external",
       platform: "node",
-      format: "esm",
+      // format: "esm",
       outbase: this.outbase,
       outdir: this.outdir,
       jsx: `transform`,
@@ -670,25 +671,35 @@ export class ITProject {
       bundle: true,
       minify: this.minify === true,
       write: true,
-      outExtension: { ".js": ".mjs" },
-      splitting: true,
+      // outExtension: { ".js": ".cjs" },
+      // splitting: true,
       plugins: [
         ...(this.loaders || []),
-        {
-          name: "testeranto-redirect",
-          setup(build) {
-            build.onResolve({ filter: /^.*\/testeranto\/$/ }, async (args) => {
-              return {
-                path: path.join(
-                  process.cwd(),
-                  `..`,
-                  "node_modules",
-                  `testeranto`
-                ),
-              };
-            });
-          },
-        },
+        // {
+        //   name: "testeranto-redirect",
+        //   setup(build) {
+        //     build.onResolve({ filter: /^.*\/testeranto\/$/ }, async (OnResolveArgs: {
+        //       path: string,
+        //       importer: string,
+        //       namespace: string,
+        //       resolveDir: string,
+        //       kind: ImportKind,
+        //       pluginData: any
+        //     }) => {
+        //       return {
+        //         path: path.join(
+        //           process.cwd(),
+        //           // `..`,
+        //           "node_modules",
+        //           "foo"
+        //           // ...args
+        //           // `testeranto`,
+        //           // 'dist'
+        //         ),
+        //       };
+        //     });
+        //   },
+        // },
       ],
     };
 
@@ -701,7 +712,7 @@ export class ITProject {
           const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
           const sourceFileNameMinusJs = sourceFileName.split(".").slice(0, -1).join(".");
           const htmlFilePath = path.normalize(`${process.cwd()}/${this.outdir}/${sourceDir.join("/")}/${sourceFileNameMinusJs}.html`);
-          const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
+          const jsfilePath = `./${sourceFileNameMinusJs}.js`;
           return fs.promises.mkdir(path.dirname(htmlFilePath), { recursive: true }).then(x => fs.writeFileSync(htmlFilePath, `
       <!DOCTYPE html>
           <html lang="en">
@@ -723,6 +734,7 @@ export class ITProject {
         })));
 
     const esbuildConfigWeb: BuildOptions = {
+      external: ["stream"],
       platform: "browser",
       format: "esm",
       outbase: this.outbase,
@@ -735,7 +747,7 @@ export class ITProject {
       bundle: true,
       minify: this.minify === true,
       write: true,
-      outExtension: { ".js": ".mjs" },
+      // outExtension: { ".js": ".mjs" },
       splitting: true,
       plugins: [
         ...(this.loaders || []),
@@ -757,7 +769,6 @@ export class ITProject {
       ],
     };
 
-    // console.log("esbuildConfigWeb", esbuildConfigWeb);
     console.log("buildMode   -", this.buildMode);
     console.log("runMode     -", this.runMode);
     console.log("collateMode -", this.collateMode);
@@ -792,10 +803,10 @@ export class ITProject {
               console.log("esbuildServer failure", esbuildServerFailure)
               process.exit(-1)
             })
-
-
           }
-        })]);
+        })
+      ]
+      );
 
     } else {
       console.log("skipping 'build' phase");

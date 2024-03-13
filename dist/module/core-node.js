@@ -12,11 +12,9 @@ export default async (input, testSpecification, testImplementation, testInterfac
     const t = mrt[0];
     const testResourceArg = process.argv[2] || `{}`;
     try {
-        // NodeWriter.startup(testResourceArg, t, testResourceRequirement);
         const partialTestResource = JSON.parse(testResourceArg);
-        if (partialTestResource.fs && partialTestResource.ports) {
+        if (testResourceRequirement.ports == 0) {
             await t.receiveTestResourceConfig(partialTestResource);
-            // process.exit(0); // :-)
         }
         else {
             console.log("test configuration is incomplete", partialTestResource);

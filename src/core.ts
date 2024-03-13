@@ -1,7 +1,7 @@
-const defaultTestResource: ITTestResourceConfiguration = { fs: ".", ports: [] };
+const defaultTestResource: ITTestResourceConfiguration = { name: "", fs: ".", ports: [] };
 
 export type ITTestResourceConfiguration = {
-  name?: string;
+  name: string;
   fs: string;
   ports: number[];
 };
@@ -10,6 +10,10 @@ export type ITTestResourceRequirement = {
   name: string;
   ports: number;
   fs: string;
+};
+
+export type ITTestResourceRequest = {
+  ports: number;
 };
 
 export type Modify<Type, Replace> = Omit<Type, keyof Replace> & Replace;
@@ -108,10 +112,8 @@ export type ITestJob = {
 
 export type ITestResults = Promise<{ test: IT }>[];
 
-export const defaultTestResourceRequirement: ITTestResourceRequirement = {
-  fs: ".",
-  ports: 0,
-  name: "",
+export const defaultTestResourceRequirement: ITTestResourceRequest = {
+  ports: 0
 };
 
 export type ITestArtifactory = (key: string, value: string) => unknown;
@@ -323,7 +325,7 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
         artifactory
       );
 
-      tLog(`\n Given this.store`, this.store);
+      tLog(`\n Given this.store`);
       for (const whenStep of this.whens) {
 
         await whenStep.test(this.store, testResourceConfiguration, tLog);
@@ -1078,7 +1080,7 @@ export default class TesterantoLevelTwo<TestShape extends ITTestShape,
       ) => Promise<Store>;
     },
     nameKey: string,
-    testResourceRequirement: ITTestResourceRequirement = defaultTestResourceRequirement,
+    testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
     assertioner: (t: ThenShape) => any,
     beforeEach: (
       subject: Subject,
