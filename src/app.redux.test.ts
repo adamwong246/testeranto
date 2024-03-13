@@ -1,6 +1,6 @@
 import { assert } from "chai";
-import { features } from "../testerantoFeatures.test.mjs";
-import { ReduxTesteranto } from "./redux.testeranto.test";
+
+import { ReduxTesteranto } from "../myTests/Redux+Reselect+React/redux.testeranto.test";
 import { IStoreState, loginApp } from "./app";
 
 export const AppReduxTesteranto = ReduxTesteranto<
@@ -14,7 +14,7 @@ export const AppReduxTesteranto = ReduxTesteranto<
       AStateWithEmail: [string];
     };
     whens: {
-      TheLoginIsSubmitted;
+      TheLoginIsSubmitted: [];
       TheEmailIsSetTo: [string];
       ThePasswordIsSetTo: [string];
     };
@@ -28,7 +28,7 @@ export const AppReduxTesteranto = ReduxTesteranto<
       AnEmptyState: [];
     };
   },
-  typeof features
+  typeof loginApp
 >(
   {
     Suites: {
@@ -66,43 +66,34 @@ export const AppReduxTesteranto = ReduxTesteranto<
     return [
       Suite.Default(
         "Testing the Redux store",
-        [
-          Given.AnEmptyState(
-            [`hello`],
-            [
-              When.TheEmailIsSetTo("adam@email.com")
-            ],
-            [
-              Then.TheEmailIs("adam@email.com")
-            ]
+        {
+          "test0": Given.AnEmptyState(
+            ['hello'],
+            [When.TheEmailIsSetTo("adam@email.com")],
+            [Then.TheEmailIs("adam@email.com")],
           ),
-          Given.AStateWithEmail(
-            [`hello`],
+          "test1": Given.AStateWithEmail(
+            ['hello'],
             [],
             [
               Then.TheEmailIsNot("adam@email.com"),
               Then.TheEmailIs("bob@mail.com"),
             ],
             "bob@mail.com"
-          ),
-          Given.AnEmptyState(
-            [`hello`],
+          ), "test2": Given.AnEmptyState(
+            ['hello'],
             [When.TheEmailIsSetTo("hello"), When.TheEmailIsSetTo("aloha")],
             [Then.TheEmailIs("aloha")]
-          ),
-          Given.AnEmptyState(
+          ), "test3": Given.AnEmptyState(
             [`aloha`, `hello`],
             [],
             [Then.TheEmailIs("")]
-          ),
-
-          Given.AnEmptyState(
+          ), "test4": Given.AnEmptyState(
             [`aloha`, `hello`],
             [When.TheEmailIsSetTo("hey there")],
             [Then.TheEmailIs("hey there")]
-          ),
-
-        ],
+          )
+        },
         [
           // Check.AnEmptyState(
           //   "imperative style",

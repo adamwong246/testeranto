@@ -1,8 +1,9 @@
 import { assert } from "chai";
 
-import ReactTesteranto from "./React.testeranto.test.js";
-import { ClassicalComponent } from "./ClassicalComponent";
-import { IClassicalComponentTesteranto, testSpecification } from "./ClassicalComponent.test.js";
+import { ClassicalComponent } from "../../src/ClassicalComponent";
+import { IClassicalComponentTesteranto, testSpecification } from "../../src/ClassicalComponent.test";
+
+import ReactTesteranto from "./React.testeranto.test";
 
 export const ClassicalComponentBrowserTesteranto = ReactTesteranto<IClassicalComponentTesteranto>(
   {

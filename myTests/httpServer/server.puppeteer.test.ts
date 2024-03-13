@@ -1,8 +1,11 @@
 import { Feature } from "@thirdweb-dev/sdk/dist/declarations/src/evm/constants/contract-features";
 import { assert } from "chai";
+
+import { serverFactory } from "../../src/server";
+
 import { features } from "../testerantoFeatures.test.mjs";
+
 import { PuppeteerHttpTesteranto } from "./puppeteer-http.testeranto.test";
-import { serverFactory } from "./server";
 
 const myFeature = `hello`;
 

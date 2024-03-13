@@ -1,6 +1,8 @@
+import { serverFactory } from "../../src/server";
+
 import { features } from "../testerantoFeatures.test.mjs";
+
 import { Http2xTesteranto } from "./http2x.testeranto.test";
-import { serverFactory } from "./server";
 
 const myFeature = `hello`;
 

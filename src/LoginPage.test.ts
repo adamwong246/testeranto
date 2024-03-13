@@ -1,8 +1,8 @@
 import { assert } from "chai";
 
-import { features } from "../testerantoFeatures.test.mjs";
+import { features } from "../myTests/testerantoFeatures.test.mjs";
 
-import { ReactTesteranto } from "./react.testeranto.test";
+import { ReactTesteranto } from "../myTests/Redux+Reselect+React/react.testeranto.test";
 import LoginPage from "./LoginPage";
 
 export const AppReactTesteranto = ReactTesteranto<

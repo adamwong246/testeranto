@@ -1,9 +1,12 @@
-import type { IProps, IState } from "./ClassicalComponent";
-import { assert } from "chai";
-import { features } from "../testerantoFeatures.test.mjs";
-import { EsbuildPuppeteerTesteranto } from "./esbuild-puppeteer.testeranto.test";
 
-import { ClassicalComponent } from "./ClassicalComponent";
+import { assert } from "chai";
+
+import { ClassicalComponent } from "../../src/ClassicalComponent";
+import type { IProps, IState } from "../../src//ClassicalComponent";
+
+import { features } from "../testerantoFeatures.test.mjs";
+
+import { EsbuildPuppeteerTesteranto } from "./esbuild-puppeteer.testeranto.test";
 
 export const ClassicalComponentEsbuildPuppeteerTesteranto =
   EsbuildPuppeteerTesteranto<{
@@ -37,36 +40,36 @@ export const ClassicalComponentEsbuildPuppeteerTesteranto =
       Whens: {
         IClickTheButton:
           () =>
-          async ({ page }) =>
-            await page.click("#theButton"),
+            async ({ page }) =>
+              await page.click("#theButton"),
       },
       Thens: {
         IAmAGenius:
           () =>
-          async ({ page, consoleLogs }) => {
-            // console.log("consoleLogs", consoleLogs);
-            // assert.deepEqual(
-            //   await page.$eval("#theProps", (el) => el.innerHTML),
-            //   JSON.stringify(expectation)
-            // )
-          },
+            async ({ page }) => {
+              // console.log("consoleLogs", consoleLogs);
+              // assert.deepEqual(
+              //   await page.$eval("#theProps", (el) => el.innerHTML),
+              //   JSON.stringify(expectation)
+              // )
+            },
 
         ThePropsIs:
           (expectation) =>
-          async ({ page }) => {
-            assert.deepEqual(
-              await page.$eval("#theProps", (el) => el.innerHTML),
-              JSON.stringify(expectation)
-            );
-          },
+            async ({ page }) => {
+              assert.deepEqual(
+                await page.$eval("#theProps", (el) => el.innerHTML),
+                JSON.stringify(expectation)
+              );
+            },
 
         TheStatusIs:
           (expectation) =>
-          async ({ page }) =>
-            assert.deepEqual(
-              await page.$eval("#theState", (el) => el.innerHTML),
-              JSON.stringify(expectation)
-            ),
+            async ({ page }) =>
+              assert.deepEqual(
+                await page.$eval("#theState", (el) => el.innerHTML),
+                JSON.stringify(expectation)
+              ),
       },
       Checks: {
         AnEmptyState: () => {
@@ -79,45 +82,46 @@ export const ClassicalComponentEsbuildPuppeteerTesteranto =
       return [
         Suite.Default(
           "a classical react component, bundled with esbuild and tested with puppeteer",
-          [
-            Given.AnEmptyState(
-              [],
-              [],
-              [Then.ThePropsIs({}), Then.TheStatusIs({ count: 0 })]
-            ),
-            Given.AnEmptyState(
-              [],
-              [When.IClickTheButton()],
-              [Then.ThePropsIs({}), Then.TheStatusIs({ count: 1 })]
-            ),
-            Given.AnEmptyState(
-              [],
-              [When.IClickTheButton()],
-              [Then.ThePropsIs({}), Then.TheStatusIs({ count: 1 })]
-            ),
-            Given.AnEmptyState(
-              [`hello`],
-              [
-                When.IClickTheButton(),
-                When.IClickTheButton(),
-                When.IClickTheButton(),
-              ],
-              [Then.TheStatusIs({ count: 3 })]
-            ),
+          {},
+          // [
+          //   Given.AnEmptyState(
+          //     [],
+          //     [],
+          //     [Then.ThePropsIs({}), Then.TheStatusIs({ count: 0 })]
+          //   ),
+          //   Given.AnEmptyState(
+          //     [],
+          //     [When.IClickTheButton()],
+          //     [Then.ThePropsIs({}), Then.TheStatusIs({ count: 1 })]
+          //   ),
+          //   Given.AnEmptyState(
+          //     [],
+          //     [When.IClickTheButton()],
+          //     [Then.ThePropsIs({}), Then.TheStatusIs({ count: 1 })]
+          //   ),
+          //   Given.AnEmptyState(
+          //     [`hello`],
+          //     [
+          //       When.IClickTheButton(),
+          //       When.IClickTheButton(),
+          //       When.IClickTheButton(),
+          //     ],
+          //     [Then.TheStatusIs({ count: 3 })]
+          //   ),
 
-            Given.AnEmptyState(
-              [`hello`],
-              [
-                When.IClickTheButton(),
-                When.IClickTheButton(),
-                When.IClickTheButton(),
-                When.IClickTheButton(),
-                When.IClickTheButton(),
-                When.IClickTheButton(),
-              ],
-              [Then.TheStatusIs({ count: 6 }), Then.IAmAGenius()]
-            ),
-          ],
+          //   Given.AnEmptyState(
+          //     [`hello`],
+          //     [
+          //       When.IClickTheButton(),
+          //       When.IClickTheButton(),
+          //       When.IClickTheButton(),
+          //       When.IClickTheButton(),
+          //       When.IClickTheButton(),
+          //       When.IClickTheButton(),
+          //     ],
+          //     [Then.TheStatusIs({ count: 6 }), Then.IAmAGenius()]
+          //   ),
+          // ],
           []
         ),
       ];

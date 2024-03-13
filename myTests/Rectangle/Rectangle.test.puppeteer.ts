@@ -1,6 +1,6 @@
 import Testeranto from "testeranto/src/core-puppeteer";
 
-import Rectangle from "./Rectangle";
+import Rectangle from "../../src/Rectangle";
 import {
   Input,
   IRectangleTestShape,
@@ -11,7 +11,7 @@ import {
   RectangleTesterantoBaseTestSpecification,
   ThenShape,
   WhenShape
-} from "./Rectangle.test";
+} from "../../src/Rectangle.test";
 
 export const RectangleTesteranto = Testeranto<
   IRectangleTestShape,

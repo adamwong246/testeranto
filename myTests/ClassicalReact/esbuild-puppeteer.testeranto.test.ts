@@ -2,15 +2,15 @@ import puppeteer, { Browser, Page } from "puppeteer";
 import esbuild from "esbuild";
 import { PuppeteerScreenRecorder } from "puppeteer-screen-recorder";
 import { PassThrough } from "stream";
-import Testeranto from "testeranto";
+
+import Testeranto from "testeranto/src/core-node";
 import {
   ITestImplementation,
   ITestSpecification,
   ITTestShape,
-} from "testeranto";
+} from "testeranto/src/core";
 
 type Input = [
-  // string,
   (string) => string,
   any
 ];

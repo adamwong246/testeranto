@@ -1,10 +1,11 @@
 import renderer, { ReactTestRenderer } from "react-test-renderer";
 import assert from "assert";
 
-import { ClassicalComponent } from "./ClassicalComponent";
-import type { IProps, IState } from "./ClassicalComponent";
+import { ClassicalComponent } from "../../src/ClassicalComponent";
+import type { IProps, IState } from "../../src//ClassicalComponent";
+
 import { ReactTestRendererTesteranto } from "./react-test-renderer.testeranto.test";
-import { IClassicalComponentTesteranto, testSpecification } from "./ClassicalComponent.test";
+import { IClassicalComponentTesteranto, testSpecification } from "../../src/ClassicalComponent.test";
 
 export const ClassicalComponentReactTestRendererTesteranto = ReactTestRendererTesteranto<
   IClassicalComponentTesteranto,

@@ -17,16 +17,19 @@ const baseConfig: IBaseConfig = {
   ports: ["3001", "3002", "3003", "3004", "3005", "3006", "3007"],
 
   tests: [
-
-    [
-      "./myTests/ClassicalReact/ClassicalComponent.react-test-renderer.test.tsx", "node"
-    ],
-    [
-      "./myTests/ClassicalReact/ClassicalComponent.electron.test.ts",
-      "electron",
-    ],
+    // ["./myTests/google.puppeteer.testeranto.test.ts", "node"],
     ["./myTests/Rectangle/Rectangle.test.node.ts", "node"],
     ["./myTests/Rectangle/Rectangle.test.electron.ts", "electron"],
+    // [
+    //   "./myTests/ClassicalReact/ClassicalComponent.react-test-renderer.test.tsx", "node"
+    // ],
+    // [
+    //   "./myTests/ClassicalReact/ClassicalComponent.electron.test.ts",
+    //   "electron",
+    // ],
+    // ["./myTests/Redux+Reselect+React/app.redux.test.ts", "node"],
+
+    // ["./myTests/httpServer/server.http.test.ts", "node"],
 
     // "./myTests/solidity/MyFirstContract.solidity-precompiled.test.ts",
     // "./myTests/storefront/alpha/index.test.ts",

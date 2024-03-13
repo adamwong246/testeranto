@@ -25,6 +25,8 @@
     "@thirdweb-dev/sdk": "^3.6.9",
     "electron": "^24.2.0",
     "esbuild": "0.17.11",
+    "fluent-ffmpeg": "^2.1.2",
+    "html": "^1.0.0",
     "puppeteer-screen-recorder": "^2.1.2",
     "testeranto": "../testeranto",
     "url": "^0.11.3"

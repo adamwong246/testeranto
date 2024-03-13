@@ -4,7 +4,7 @@ subject:,[object Object]
 
  Given: Default
 
- Given this.store,[object Object]
+ Given this.store
  When:,setWidth: 4
  When:,setHeight: 9
  Then:,getWidth: 4
@@ -12,7 +12,7 @@ subject:,[object Object]
 
  Given: Default
 
- Given this.store,[object Object]
+ Given this.store
  When:,setWidth: 4
  When:,setHeight: 5
  Then:,getWidth: 4
@@ -22,14 +22,14 @@ subject:,[object Object]
 
  Given: Default
 
- Given this.store,[object Object]
+ Given this.store
  When:,setHeight: 4
  When:,setWidth: 3
  Then:,area: 12
 
  Given: Default
 
- Given this.store,[object Object]
+ Given this.store
  When:,setHeight: 5
  When:,setWidth: 5
  Then:,area: 25

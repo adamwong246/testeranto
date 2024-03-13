@@ -1,8 +1,11 @@
 import { assert } from "chai";
 import http from "http";
 
-import Testeranto from "testeranto";
-import { ITestImplementation, ITestSpecification, ITTestShape, Modify } from "testeranto";
+import Testeranto from "testeranto/src/core-node";
+import {
+  ITestArtificer,
+  ITestImplementation, ITestSpecification, ITTestShape, Modify
+} from "testeranto/src/core";
 
 type WhenShape = [url: string, paylaod: string];
 type ThenShape = any;
@@ -14,8 +17,9 @@ type Selection = string;
 
 export const HttpTesteranto = <
   ITestShape extends ITTestShape,
-  IFeatureShape
+  Prototype
 >(
+  testInput: Input,
   testImplementations: Modify<ITestImplementation<
     InitialState,
     Selection,
@@ -29,8 +33,9 @@ export const HttpTesteranto = <
       ) => WhenShape;
     }
   }>,
-  testSpecifications: ITestSpecification<ITestShape, IFeatureShape>,
-  testInput: Input,
+
+  testSpecifications: ITestSpecification<ITestShape>,
+  nameKey: string,
 ) =>
   Testeranto<
     ITestShape,
@@ -40,17 +45,20 @@ export const HttpTesteranto = <
     Selection,
     ThenShape,
     WhenShape,
-    InitialState,
-    IFeatureShape
+    InitialState
   >(
     testInput,
     testSpecifications,
     testImplementations,
-    { ports: 1 },
     {
-      beforeEach: async function (serverFactory: Subject, initialValues: any, testResource): Promise<Store> {
+      beforeEach: async function (
+        serverFactory: Subject,
+        initialValues: any,
+        testResource
+      ): Promise<Store> {
         const server = serverFactory();
         await server.listen(testResource.ports[0]);
+        console.log("listening on port", testResource.ports[0]);
         return server;
       },
       andWhen: async function (store: Store, actioner: any, testResource): Promise<string> {
@@ -72,12 +80,18 @@ export const HttpTesteranto = <
         assert.equal(bodytext, expectation);
         return bodytext;
       },
-      afterEach: function (server: Store, ndx: number): unknown {
+      afterEach: function (
+        store: Store,
+        key: string,
+        artificer: ITestArtificer
+      ): Promise<unknown> {
         return new Promise((res) => {
-          server.close(() => {
+          store.close(() => {
             res(true)
           })
         })
       }
     },
+    nameKey,
+    { ports: 1 },
   )

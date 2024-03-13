@@ -1,9 +1,44 @@
-import {
-  assert,
-  core_electron_default
-} from "../../chunk-SNV5CR66.mjs";
+"use strict";
+var __create = Object.create;
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getProtoOf = Object.getPrototypeOf;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  // If the importer is in node compatibility mode or this is not an ESM
+  // file that has been converted to a CommonJS file using a Babel-
+  // compatible transform (i.e. "__esModule" has not been set), then set
+  // "default" to the CommonJS "module.exports" for node compatibility.
+  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+  mod
+));
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// myTests/Rectangle/Rectangle.ts
+// myTests/Rectangle/Rectangle.test.node.ts
+var Rectangle_test_node_exports = {};
+__export(Rectangle_test_node_exports, {
+  RectangleTesteranto: () => RectangleTesteranto
+});
+module.exports = __toCommonJS(Rectangle_test_node_exports);
+var import_core_node = __toESM(require("testeranto/src/core-node"));
+
+// src/Rectangle.test.ts
+var import_chai = require("chai");
+
+// src/Rectangle.ts
 var Rectangle = class {
   constructor(height = 2, width = 2) {
     this.height = height;
@@ -30,7 +65,7 @@ var Rectangle = class {
 };
 var Rectangle_default = Rectangle;
 
-// myTests/Rectangle/Rectangle.test.ts
+// src/Rectangle.test.ts
 var RectangleTesterantoBaseTestSpecification = (Suite, Given, When, Then, Check) => {
   return [
     Suite.Default(
@@ -101,14 +136,14 @@ var RectangleTesterantoBaseTestImplementation = {
   },
   Thens: {
     AreaPlusCircumference: (combined) => (rectangle) => {
-      assert.equal(rectangle.area() + rectangle.circumference(), combined);
+      import_chai.assert.equal(rectangle.area() + rectangle.circumference(), combined);
     },
-    getWidth: (width) => (rectangle) => assert.equal(rectangle.width, width),
-    getHeight: (height) => (rectangle) => assert.equal(rectangle.height, height),
-    area: (area) => (rectangle) => assert.equal(rectangle.area(), area),
-    prototype: (name) => (rectangle) => assert.equal(1, 1),
+    getWidth: (width) => (rectangle) => import_chai.assert.equal(rectangle.width, width),
+    getHeight: (height) => (rectangle) => import_chai.assert.equal(rectangle.height, height),
+    area: (area) => (rectangle) => import_chai.assert.equal(rectangle.area(), area),
+    prototype: (name) => (rectangle) => import_chai.assert.equal(1, 1),
     // throw new Error("Function not implemented.")
-    circumference: (circumference) => (rectangle) => assert.equal(rectangle.circumference(), circumference)
+    circumference: (circumference) => (rectangle) => import_chai.assert.equal(rectangle.circumference(), circumference)
   },
   Checks: {
     /* @ts-ignore:next-line */
@@ -126,14 +161,15 @@ var RectangleTesterantoBaseInterface = {
 var RectangleTesterantoBaseKey = "rectangle";
 var RectangleTesterantoBasePrototype = Rectangle_default.prototype;
 
-// myTests/Rectangle/Rectangle.test.electron.ts
-var RectangleTesteranto = core_electron_default(
+// myTests/Rectangle/Rectangle.test.node.ts
+var RectangleTesteranto = (0, import_core_node.default)(
   RectangleTesterantoBasePrototype,
   RectangleTesterantoBaseTestSpecification,
   RectangleTesterantoBaseTestImplementation,
   RectangleTesterantoBaseInterface,
   RectangleTesterantoBaseKey
 );
-export {
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
   RectangleTesteranto
-};
+});

@@ -55,7 +55,6 @@ export const ReduxTesteranto = <
     testInput,
     testSpecifications,
     testImplementations,
-    // { ports: 0 },
     {
       beforeEach: function (subject: Reducer<any, AnyAction>, initialValues: any): Promise<Store<any, AnyAction>> {
         return createStore<IStoreShape, any, any, any>(subject, initialValues)
