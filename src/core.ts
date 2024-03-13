@@ -52,7 +52,7 @@ type ITestCheckCallback<ITestShape extends ITTestShape> = {
         ) => BaseThen<unknown, unknown, unknown>;
       }
     ) => Promise<any>,
-    ...xtras: ITestShape["checks"][K]
+    ...xtrasA: ITestShape["checks"][K]
   ) => BaseCheck<unknown, unknown, unknown, unknown, ITestShape>;
 };
 
@@ -70,17 +70,17 @@ export type ITestSpecification<ITestShape extends ITTestShape> = (
       features: string[],
       whens: BaseWhen<unknown, unknown, unknown>[],
       thens: BaseThen<unknown, unknown, unknown>[],
-      ...xtras: ITestShape["givens"][K]
+      ...xtrasB: ITestShape["givens"][K]
     ) => BaseGiven<unknown, unknown, unknown, unknown>;
   },
   When: {
     [K in keyof ITestShape["whens"]]: (
-      ...xtras: ITestShape["whens"][K]
+      ...xtrasC: ITestShape["whens"][K]
     ) => BaseWhen<unknown, unknown, unknown>;
   },
   Then: {
     [K in keyof ITestShape["thens"]]: (
-      ...xtras: ITestShape["thens"][K]
+      ...xtrasD: ITestShape["thens"][K]
     ) => BaseThen<unknown, unknown, unknown>;
   },
   Check: ITestCheckCallback<ITestShape>

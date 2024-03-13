@@ -32,16 +32,16 @@ declare type ITestCheckCallback<ITestShape extends ITTestShape> = {
         [K in keyof ITestShape["whens"]]: (...unknown: any[]) => BaseWhen<unknown, unknown, unknown>;
     }, thens: {
         [K in keyof ITestShape["thens"]]: (...unknown: any[]) => BaseThen<unknown, unknown, unknown>;
-    }) => Promise<any>, ...xtras: ITestShape["checks"][K]) => BaseCheck<unknown, unknown, unknown, unknown, ITestShape>;
+    }) => Promise<any>, ...xtrasA: ITestShape["checks"][K]) => BaseCheck<unknown, unknown, unknown, unknown, ITestShape>;
 };
 export declare type ITestSpecification<ITestShape extends ITTestShape> = (Suite: {
     [K in keyof ITestShape["suites"]]: (name: string, givens: IGivens<unknown, unknown, unknown, unknown>, checks: BaseCheck<unknown, unknown, unknown, unknown, ITestShape>[]) => BaseSuite<unknown, unknown, unknown, unknown, unknown, ITestShape>;
 }, Given: {
-    [K in keyof ITestShape["givens"]]: (features: string[], whens: BaseWhen<unknown, unknown, unknown>[], thens: BaseThen<unknown, unknown, unknown>[], ...xtras: ITestShape["givens"][K]) => BaseGiven<unknown, unknown, unknown, unknown>;
+    [K in keyof ITestShape["givens"]]: (features: string[], whens: BaseWhen<unknown, unknown, unknown>[], thens: BaseThen<unknown, unknown, unknown>[], ...xtrasB: ITestShape["givens"][K]) => BaseGiven<unknown, unknown, unknown, unknown>;
 }, When: {
-    [K in keyof ITestShape["whens"]]: (...xtras: ITestShape["whens"][K]) => BaseWhen<unknown, unknown, unknown>;
+    [K in keyof ITestShape["whens"]]: (...xtrasC: ITestShape["whens"][K]) => BaseWhen<unknown, unknown, unknown>;
 }, Then: {
-    [K in keyof ITestShape["thens"]]: (...xtras: ITestShape["thens"][K]) => BaseThen<unknown, unknown, unknown>;
+    [K in keyof ITestShape["thens"]]: (...xtrasD: ITestShape["thens"][K]) => BaseThen<unknown, unknown, unknown>;
 }, Check: ITestCheckCallback<ITestShape>) => any[];
 export declare type ITestArtificer = (key: string, data: any) => void;
 export declare type IRunTimeAndSubject = {
