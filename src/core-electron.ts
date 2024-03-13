@@ -144,7 +144,6 @@ export default async <
       artificer: ITestArtificer
     ) => Promise<Store>;
   },
-  nameKey: string,
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
 ) => {
   const mrt = new TesterantoLevelTwo(
@@ -152,7 +151,6 @@ export default async <
     testSpecification,
     testImplementation,
     testInterface,
-    nameKey,
     testResourceRequirement,
     testInterface.assertioner || (async (t) => t as any),
     testInterface.beforeEach ||

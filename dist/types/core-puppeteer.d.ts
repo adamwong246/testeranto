@@ -8,5 +8,5 @@ declare const _default: <TestShape extends ITTestShape, Input, Subject extends I
     afterEach?: ((store: Store, key: string, artificer: ITestArtificer) => Promise<unknown>) | undefined;
     beforeAll?: ((input: Input, artificer: ITestArtificer) => Promise<Subject>) | undefined;
     beforeEach?: ((subject: Subject, initialValues: any, testResource: ITTestResourceConfiguration, artificer: ITestArtificer) => Promise<Store>) | undefined;
-}, nameKey: string, testResourceRequirement?: import("./core").ITTestResourceRequest) => Promise<void>;
+}, testResourceRequirement?: import("./core").ITTestResourceRequest) => Promise<void>;
 export default _default;

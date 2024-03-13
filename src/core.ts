@@ -823,7 +823,6 @@ abstract class TesterantoLevelOne<
     ) => BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape>,
 
     testResourceRequirement,
-    nameKey: string,
     logWriter: ILogWriter
   ) {
     const classySuites = Object.entries(testImplementation.Suites).reduce(
@@ -1079,7 +1078,6 @@ export default class TesterantoLevelTwo<TestShape extends ITTestShape,
         artificer: ITestArtificer
       ) => Promise<Store>;
     },
-    nameKey: string,
     testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
     assertioner: (t: ThenShape) => any,
     beforeEach: (
@@ -1241,7 +1239,7 @@ export default class TesterantoLevelTwo<TestShape extends ITTestShape,
       } as any,
 
       testResourceRequirement,
-      nameKey,
+      // nameKey,
       logWriter
     );
   }

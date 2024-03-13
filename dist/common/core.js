@@ -241,7 +241,9 @@ class TesterantoLevelZero {
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 class TesterantoLevelOne {
-    constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResourceRequirement, nameKey, logWriter) {
+    constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResourceRequirement, 
+    // nameKey: string,
+    logWriter) {
         const classySuites = Object.entries(testImplementation.Suites).reduce((a, [key]) => {
             a[key] = (somestring, givens, checks) => {
                 return new suiteKlasser.prototype.constructor(somestring, givens, checks);
@@ -315,7 +317,9 @@ class TesterantoLevelOne {
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////
 class TesterantoLevelTwo extends TesterantoLevelOne {
-    constructor(input, testSpecification, testImplementation, testInterface, nameKey, testResourceRequirement = exports.defaultTestResourceRequirement, assertioner, beforeEach, afterEach, afterAll, butThen, andWhen, actionHandler, logWriter) {
+    constructor(input, testSpecification, testImplementation, testInterface, 
+    // nameKey: string,
+    testResourceRequirement = exports.defaultTestResourceRequirement, assertioner, beforeEach, afterEach, afterAll, butThen, andWhen, actionHandler, logWriter) {
         super(testImplementation, testSpecification, input, class extends BaseSuite {
             async setup(s, artifactory) {
                 return (testInterface.beforeAll || (async (input, artificer) => input))(s, artifactory);
@@ -365,7 +369,9 @@ class TesterantoLevelTwo extends TesterantoLevelOne {
             afterEach(store, key, artifactory) {
                 return new Promise((res) => res(afterEach(store, key, artifactory)));
             }
-        }, testResourceRequirement, nameKey, logWriter);
+        }, testResourceRequirement, 
+        // nameKey,
+        logWriter);
     }
 }
 exports.default = TesterantoLevelTwo;

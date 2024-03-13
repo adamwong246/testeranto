@@ -53,7 +53,6 @@ export default async <
       artificer: ITestArtificer
     ) => Promise<Store>;
   },
-  nameKey: string,
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
 ) => {
 
@@ -62,7 +61,6 @@ export default async <
     testSpecification,
     testImplementation,
     testInterface,
-    nameKey,
     testResourceRequirement,
     testInterface.assertioner || (async (t) => t as any),
     testInterface.beforeEach || async function (subject: Subject, initialValues: any, testResource: any) {
