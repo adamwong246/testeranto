@@ -27,6 +27,8 @@
     "esbuild": "0.17.11",
     "fluent-ffmpeg": "^2.1.2",
     "html": "^1.0.0",
+    "http-shutdown": "^1.2.2",
+    "node-fetch": "^3.3.2",
     "puppeteer-screen-recorder": "^2.1.2",
     "testeranto": "../testeranto",
     "url": "^0.11.3"

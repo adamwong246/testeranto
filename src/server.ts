@@ -1,16 +1,28 @@
 import http from "http";
 
+console.log("hello server");
+
 export const serverFactory = () => {
+  console.log("hello serverFactory");
   let status = "some great status";
   let counter = 0;
 
-  return http.createServer(function (req, res) {
+  const server = http.createServer(function (req, res) {
+
+    // req.
+    // req.on("error", function () {
+    //   console.log("ERROR!")
+    // });
+
     if (req.method === "GET") {
+      console.log("GET");
       if (req.url === "/get_status") {
         res.write(status);
         res.end();
         return;
       } else if (req.url === "/get_number") {
+        console.log("mark0");
+        console.log(counter);
         res.write(counter.toString());
         res.end();
         return;
@@ -23,6 +35,7 @@ export const serverFactory = () => {
       // res.writeHead(200, { "Content-Type": "text/text" });
       // res.end();
     } else if (req.method === "POST") {
+      console.log("POST");
       let body = "";
       req.on("data", function (chunk) {
         body += chunk;
@@ -48,6 +61,12 @@ export const serverFactory = () => {
         // res.writeHead(200, { "Content-Type": "text/html" });
         // res.end(body);
       });
+
+
+
+
     }
   });
+
+  return server;
 };

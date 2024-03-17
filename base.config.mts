@@ -1,5 +1,5 @@
 import { solCompile } from "./myTests/solidity/truffle.mjs";
-import features from "./myTests/testerantoFeatures.test.mjs";
+import features from "./testerantoFeatures.test.mjs";
 import { IBaseConfig } from "testeranto/src/IBaseConfig.js";
 
 const baseConfig: IBaseConfig = {
@@ -17,19 +17,31 @@ const baseConfig: IBaseConfig = {
   ports: ["3001", "3002", "3003", "3004", "3005", "3006", "3007"],
 
   tests: [
-    // ["./myTests/google.puppeteer.testeranto.test.ts", "node"],
-    ["./myTests/Rectangle/Rectangle.test.node.ts", "node"],
-    ["./myTests/Rectangle/Rectangle.test.electron.ts", "electron"],
-    // [
-    //   "./myTests/ClassicalReact/ClassicalComponent.react-test-renderer.test.tsx", "node"
-    // ],
-    // [
-    //   "./myTests/ClassicalReact/ClassicalComponent.electron.test.ts",
-    //   "electron",
-    // ],
-    // ["./myTests/Redux+Reselect+React/app.redux.test.ts", "node"],
+    // ["./myTests/google.puppeteer.testeranto.test.ts", "node", []],
+    // ["./src/Rectangle/Rectangle.test.node.ts", "node", []],
+    // ["./src/Rectangle/Rectangle.test.electron.ts", "electron", []],
 
-    // ["./myTests/httpServer/server.http.test.ts", "node"],
+    // ["./src/ClassicalComponent.electron.test.ts", "electron", []],
+    // ["./src/ClassicalComponent.react-test-renderer.test.tsx", "node", []],
+
+
+
+    // ["./myTests/ClassicalReact/ClassicalComponent.react-test-renderer.test.tsx", "node", []],
+
+    // ["./myTests/httpServer/server.http.test.ts", "node", []],
+    // ["./src/app.redux.test.ts", "node", []],
+    // ["./src/app.reduxToolkit.test.ts", "node", []],
+
+    // ["./src/LoginPage.react-test-renderer.test.ts", "node", []],
+    // ["./src/LoginPage.electron.test.ts", "electron", []],
+
+    // not working
+
+    // [
+    //   "./src/ClassicalComponent.esbuild-puppeteer.test.ts",
+    //   "node",
+    //   [["src/ClassicalComponent.tsx", "electron", []]]
+    // ],
 
     // "./myTests/solidity/MyFirstContract.solidity-precompiled.test.ts",
     // "./myTests/storefront/alpha/index.test.ts",
@@ -42,10 +54,9 @@ const baseConfig: IBaseConfig = {
     // "./myTests/httpServer/server.puppeteer.test.ts",
     // "./myTests/httpServer/server.http2x.test.ts",
     // "./myTests/ClassicalReact/ClassicalComponent.react-test-renderer.test.tsx",
-    // "./myTests/ClassicalReact/ClassicalComponent.esbuild-puppeteer.test.ts",
     // ["./myTests/Rectangle/Rectangle.test.puppeteer.ts", "puppeteer"],
     // ["./myTests/Redux+Reselect+React/app.redux.test.ts", "node"],
-    // ["./myTests/Redux+Reselect+React/LoginPage.test.ts", "node"]
+
   ],
   loaders: [
     // {

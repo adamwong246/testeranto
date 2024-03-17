@@ -1,35 +1,40 @@
 
-Suite:,Testing the Rectangle class,[object Object]
-subject:,[object Object]
+Suite:,Testing the Node server with fetch!
 
- Given: Default
+ Given: AnEmptyState
+ Then:,TheStatusIs: some great status
 
- Given this.store,[object Object]
- When:,setWidth: 4
- When:,setHeight: 9
- Then:,getWidth: 4
- Then:,getHeight: 9
+ Given: AnEmptyState
+ When:,PostToStatus: 1
+ When:,PostToStatus: 2
+ When:,PostToStatus: 3
+ When:,PostToStatus: 4
+ When:,PostToStatus: 5
+ When:,PostToStatus: 6
+ When:,PostToStatus: hello
+ Then:,TheStatusIs: hello
 
- Given: Default
+ Given: AnEmptyState
+ When:,PostToStatus: hello
+ When:,PostToStatus: aloha
+ Then:,TheStatusIs: aloha
 
- Given this.store,[object Object]
- When:,setWidth: 4
- When:,setHeight: 5
- Then:,getWidth: 4
- Then:,getHeight: 5
- Then:,area: 20
- Then:,AreaPlusCircumference: 38
+ Given: AnEmptyState
+ When:,PostToStatus: hola
+ Then:,TheStatusIs: hola
 
- Given: Default
+ Given: AnEmptyState
+ Then:,TheNumberIs: 0
 
- Given this.store,[object Object]
- When:,setHeight: 4
- When:,setWidth: 3
- Then:,area: 12
+ Given: AnEmptyState
+ When:,PostToAdd: 1
+ When:,PostToAdd: 2
+ Then:,TheNumberIs: 3
 
- Given: Default
-
- Given this.store,[object Object]
- When:,setHeight: 5
- When:,setWidth: 5
- Then:,area: 25
+ Given: AnEmptyState
+ When:,PostToStatus: aloha
+ When:,PostToAdd: 4
+ When:,PostToStatus: hello
+ When:,PostToAdd: 3
+ Then:,TheStatusIs: hello
+ Then:,TheNumberIs: 7

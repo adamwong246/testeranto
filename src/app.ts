@@ -1,6 +1,4 @@
 import { createSelector, createSlice, createStore } from "@reduxjs/toolkit";
-// import pkg from '@reduxjs/toolkit';
-// const { createSelector, createSlice, createStore } = pkg;
 
 import { ILoginPageError, ILoginPageSelection } from "./LoginPage";
 

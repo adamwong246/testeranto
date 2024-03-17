@@ -20,7 +20,7 @@ export type ILoginPageSelection = {
   disableSubmit: boolean;
 };
 
-export function LoginPage() {
+export function LoginPage(): React.JSX.Element {
   const selection = useSelector(selector);
 
   return (<div>
@@ -63,6 +63,7 @@ export function LoginPage() {
 
 // export const LoginPage;
 
+// eslint-disable-next-line react/display-name
 export default function () {
   return <Provider store={store}>
     <LoginPage />

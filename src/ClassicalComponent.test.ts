@@ -1,5 +1,6 @@
 import type { IProps, IState } from "./ClassicalComponent";
 
+
 export type IClassicalComponentTesteranto = {
   suites: {
     Default: string;

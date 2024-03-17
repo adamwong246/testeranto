@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+// import ReactDOM from "react-dom";
+import ReactDom from "react-dom/client";
 
 export type IProps = { children: []; foo?: string };
 export type IState = { count: number };
@@ -52,3 +54,15 @@ export class ClassicalComponent extends React.Component<IProps, IState> {
 }
 
 export type IClassicalComponent = ClassicalComponent;
+
+export const LaunchClassicalComponent = () => {
+  document.addEventListener("DOMContentLoaded", function () {
+    // import React from "react";
+    const elem = document.getElementById("root");
+    if (elem) {
+      console.log("DOMContentLoaded and root found", ClassicalComponent);
+      ReactDom.createRoot(elem).render(React.createElement(ClassicalComponent))
+      // ReactDOM.createRoot(elem).render(React.createElement(ClassicalComponent));
+    }
+  });
+}

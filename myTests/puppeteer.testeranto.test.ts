@@ -1,3 +1,5 @@
+// A testeranto which operates puppeteer
+
 import { assert } from "chai";
 import html from "html";
 import Testeranto from "testeranto/src/core-node";
@@ -41,9 +43,7 @@ export const PuppeteerTesteranto = <ITestShape extends ITTestShape>(
     ThenShape,
     ITestShape
   >,
-  testSpecifications: ITestSpecification<ITestShape>,
-  keyName: string,
-
+  testSpecifications: ITestSpecification<ITestShape>
 ) =>
   Testeranto<
     ITestShape,
@@ -177,6 +177,5 @@ export const PuppeteerTesteranto = <ITestShape extends ITTestShape>(
         await store.page.browser().close();
         return;
       },
-    },
-    keyName
+    }
   );

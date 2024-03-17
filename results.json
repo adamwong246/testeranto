@@ -1,90 +1,149 @@
 {
-  "name": "Testing the Rectangle class",
+  "name": "Testing the Node server with fetch!",
   "givens": [
     {
-      "name": "Default",
-      "whens": [
-        {
-          "name": "setWidth: 4"
-        },
-        {
-          "name": "setHeight: 9"
-        }
-      ],
+      "name": "AnEmptyState",
+      "whens": [],
       "thens": [
         {
-          "name": "getWidth: 4"
-        },
-        {
-          "name": "getHeight: 9"
+          "name": "TheStatusIs: some great status"
         }
       ],
+      "error": null,
       "features": [
         "hello"
       ]
     },
     {
-      "name": "Default",
+      "name": "AnEmptyState",
       "whens": [
         {
-          "name": "setWidth: 4"
+          "name": "PostToStatus: 1"
         },
         {
-          "name": "setHeight: 5"
+          "name": "PostToStatus: 2"
+        },
+        {
+          "name": "PostToStatus: 3"
+        },
+        {
+          "name": "PostToStatus: 4"
+        },
+        {
+          "name": "PostToStatus: 5"
+        },
+        {
+          "name": "PostToStatus: 6"
+        },
+        {
+          "name": "PostToStatus: hello"
         }
       ],
       "thens": [
         {
-          "name": "getWidth: 4"
-        },
-        {
-          "name": "getHeight: 5"
-        },
-        {
-          "name": "area: 20"
-        },
-        {
-          "name": "AreaPlusCircumference: 38"
+          "name": "TheStatusIs: hello"
         }
       ],
+      "error": null,
       "features": [
         "hello"
       ]
     },
     {
-      "name": "Default",
+      "name": "AnEmptyState",
       "whens": [
         {
-          "name": "setHeight: 4"
+          "name": "PostToStatus: hello"
         },
         {
-          "name": "setWidth: 3"
+          "name": "PostToStatus: aloha"
         }
       ],
       "thens": [
         {
-          "name": "area: 12"
+          "name": "TheStatusIs: aloha"
         }
       ],
+      "error": null,
       "features": [
         "hello"
       ]
     },
     {
-      "name": "Default",
+      "name": "AnEmptyState",
       "whens": [
         {
-          "name": "setHeight: 5"
-        },
-        {
-          "name": "setWidth: 5"
+          "name": "PostToStatus: hola"
         }
       ],
       "thens": [
         {
-          "name": "area: 25"
+          "name": "TheStatusIs: hola"
         }
       ],
+      "error": null,
+      "features": [
+        "hello"
+      ]
+    },
+    {
+      "name": "AnEmptyState",
+      "whens": [],
+      "thens": [
+        {
+          "name": "TheNumberIs: 0"
+        }
+      ],
+      "error": null,
+      "features": [
+        "hello"
+      ]
+    },
+    {
+      "name": "AnEmptyState",
+      "whens": [
+        {
+          "name": "PostToAdd: 1"
+        },
+        {
+          "name": "PostToAdd: 2"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheNumberIs: 3"
+        }
+      ],
+      "error": null,
+      "features": [
+        "hello"
+      ]
+    },
+    {
+      "name": "AnEmptyState",
+      "whens": [
+        {
+          "name": "PostToStatus: aloha"
+        },
+        {
+          "name": "PostToAdd: 4"
+        },
+        {
+          "name": "PostToStatus: hello"
+        },
+        {
+          "name": "PostToAdd: 3"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheStatusIs: hello"
+        },
+        {
+          "name": "TheNumberIs: 7"
+        }
+      ],
+      "error": null,
       "features": [
         "hello"
       ]

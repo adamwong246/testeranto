@@ -1,7 +1,5 @@
 import { ITProject } from "testeranto/src/Project";
-// import { fileURLToPath } from 'url';
 import baseConfig from "./base.config.mjs";
-const __dirname = new URL(import.meta.url + '/..').pathname;
 export default new ITProject({
     ...baseConfig,
     outdir: "js-bazel",

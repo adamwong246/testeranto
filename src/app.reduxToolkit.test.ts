@@ -1,17 +1,20 @@
 import { assert } from "chai";
 
-import { IStoreState, loginApp } from "./app";
 import { AppSpecification, IAppSpecification } from "./app.test";
+import app, { IStoreState, loginApp } from "./app";
+import { ILoginPageSelection } from "./LoginPage";
 
-import { ReduxTesteranto } from "../myTests/redux.testeranto.test";
+import { ReduxToolkitTesteranto } from "../myTests/reduxToolkit.testeranto.test";
 
-export const AppReduxTesteranto = ReduxTesteranto<
+const core = app();
+const selector = core.select.loginPageSelection;
+const reducer = core.app.reducer;
+
+export const AppReduxToolkitTesteranto = ReduxToolkitTesteranto<
   IStoreState,
-  IAppSpecification,
-  typeof loginApp
+  ILoginPageSelection,
+  IAppSpecification
 >(
-  loginApp.reducer,
-  AppSpecification,
   {
     Suites: {
       Default: "some default Suite",
@@ -30,17 +33,19 @@ export const AppReduxTesteranto = ReduxTesteranto<
       ThePasswordIsSetTo: (password) => [loginApp.actions.setPassword, password],
     },
     Thens: {
-      TheEmailIs: (email) => (storeState) =>
-        assert.equal(storeState.email, email),
-      TheEmailIsNot: (email) => (storeState) =>
-        assert.notEqual(storeState.email, email),
+      TheEmailIs: (email) => (selection) =>
+        [assert.equal, selection.email, email, "a nice message"],
+      TheEmailIsNot: (email) => (selection) =>
+        [assert.notEqual, selection.email, email],
       ThePasswordIs: (password) => (selection) =>
-        assert.equal(selection.password, password),
+        [assert.equal, selection.password, password],
       ThePasswordIsNot: (password) => (selection) =>
-        assert.notEqual(selection.password, password),
+        [assert.notEqual, selection.password, password],
     },
     Checks: {
       AnEmptyState: () => loginApp.getInitialState(),
     },
   },
+  AppSpecification,
+  { reducer, selector },
 );

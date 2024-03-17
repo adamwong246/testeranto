@@ -86,8 +86,6 @@ export const RectangleTesterantoBaseTestSpecification: ITestSpecification<IRecta
     ];
   };
 
-
-
 export const RectangleTesterantoBaseTestImplementation = {
   Suites: {
     Default: "a default suite",
@@ -143,7 +141,6 @@ export const RectangleTesterantoBaseInterface = {
   },
 };
 
-export const RectangleTesterantoBaseKey = "rectangle";
 export type WhenShape = any;
 export type ThenShape = any;
 export type Input = Rectangle;
