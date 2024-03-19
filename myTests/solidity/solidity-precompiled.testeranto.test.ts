@@ -2,11 +2,10 @@ import { Contract } from 'web3-eth-contract';
 import Ganache from "ganache";
 import Web3 from 'web3';
 
-import Testeranto from "testeranto";
-import { ITestImplementation, ITestSpecification, ITTestShape } from "testeranto";
+import Testeranto from "testeranto/src/core-node";
+import { ITestImplementation, ITestSpecification, ITTestShape } from "testeranto/src/core";
 
 import compilations from "../../contracts/MyFirstContract.sol";
-import { BaseFeature } from 'testeranto/src/Features';
 
 type Selection = {
   contract: Contract,
@@ -20,8 +19,7 @@ type Input = [string, (_w3: Web3) => Promise<string[]>];
 type Ibis = any;
 
 export const SolidityPrecompiledTesteranto = async <
-  ITestShape extends ITTestShape,
-  IFeatureShape extends Record<string, BaseFeature>
+  ITestShape extends ITTestShape
 >(
   testImplementations: ITestImplementation<
     string,
@@ -30,7 +28,7 @@ export const SolidityPrecompiledTesteranto = async <
     ThenShape,
     ITestShape
   >,
-  testSpecifications: ITestSpecification<ITestShape, IFeatureShape>,
+  testSpecifications: ITestSpecification<ITestShape>,
   testInput,
 ) => {
   const compilation = compilations.contracts.find(
@@ -45,13 +43,12 @@ export const SolidityPrecompiledTesteranto = async <
     Selection,
     WhenShape,
     ThenShape,
-    string,
-    IFeatureShape
+    string
   >(
     testInput,
     testSpecifications,
     testImplementations,
-    { ports: 0 },
+
     {
       beforeAll: async () => compilation,
 
@@ -84,7 +81,9 @@ export const SolidityPrecompiledTesteranto = async <
       },
       andWhen: async ({ provider, contract, accounts }, callback: any) =>
         (callback())({ contract, accounts }),
-    }
+    },
+
+    { ports: 0 },
   );
 }
 

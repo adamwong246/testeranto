@@ -1,14 +1,13 @@
 import Ganache, { Server } from "ganache";
 import Web3 from 'web3';
-
-import Testeranto from "testeranto";
-import {
-  ITestImplementation, ITestSpecification, ITTestShape
-} from "testeranto";
 import { ethers } from "ethers";
-
 import { Contract as ContractEthers } from 'ethers';
 import { Contract as ContractWeb3 } from 'web3-eth-contract';
+
+import Testeranto from "testeranto/src/core-node";
+import {
+  ITestImplementation, ITestSpecification, ITTestShape
+} from "testeranto/src/core";
 
 import { solCompile } from "./truffle.mjs";
 
@@ -26,7 +25,6 @@ type Ibis = any;
 
 export const SolidityRpcTesteranto = <
   ITestShape extends ITTestShape,
-  IFeatureShape
 >(
   testImplementations: ITestImplementation<
     string,
@@ -35,7 +33,7 @@ export const SolidityRpcTesteranto = <
     ThenShape,
     ITestShape
   >,
-  testSpecifications: ITestSpecification<ITestShape, IFeatureShape>,
+  testSpecifications: ITestSpecification<ITestShape>,
   testInput: Input,
   contractName: string
 ) =>
@@ -47,13 +45,12 @@ export const SolidityRpcTesteranto = <
     Selection,
     WhenShape,
     ThenShape,
-    string,
-    IFeatureShape
+    string
   >(
     testInput,
     testSpecifications,
     testImplementations,
-    { ports: 1 },
+
     {
       beforeAll: async () =>
         (await solCompile(contractName)).contracts.find((c) => c.contractName === contractName),
@@ -116,5 +113,6 @@ export const SolidityRpcTesteranto = <
 
       andWhen: async ({ contractFarSide, accounts }, callback: any) =>
         (callback())({ contractFarSide, accounts }),
-    }
+    },
+    { ports: 1 },
   )

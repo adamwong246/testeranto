@@ -1,29 +1,48 @@
 import http from "http";
 
-console.log("hello server");
+const htmlTemplate = (jsbundle: string): string => `
+<!DOCTYPE html><html lang="en">
+  <head>
+    <script type="module" src="./ClassicalComponent">
+      ${jsbundle}
+    </script>
+    <script type="module">
+      import { LaunchClassicalComponent } from "ClassicalComponent";
+      LaunchClassicalComponent();
+    </script>
+  </head>
+
+  <body>
+    <h2>hello esbuild-puppeteer.testeranto</h2>
+    <div id="root">
+    </div>
+  </body>
+
+  <footer></footer>
+</html>`;
 
 export const serverFactory = () => {
-  console.log("hello serverFactory");
   let status = "some great status";
   let counter = 0;
 
   const server = http.createServer(function (req, res) {
 
-    // req.
-    // req.on("error", function () {
-    //   console.log("ERROR!")
-    // });
-
     if (req.method === "GET") {
-      console.log("GET");
       if (req.url === "/get_status") {
         res.write(status);
         res.end();
         return;
       } else if (req.url === "/get_number") {
-        console.log("mark0");
-        console.log(counter);
         res.write(counter.toString());
+        res.end();
+        return;
+      } else if (req.url === "/classical_component") {
+        res.write(htmlTemplate('ClassicalComponent.js'));
+        res.end();
+        return;
+      }
+      else if (req.url === "/login_page") {
+        res.write(htmlTemplate('LoginPage.js'));
         res.end();
         return;
       } else {
@@ -32,10 +51,7 @@ export const serverFactory = () => {
         return;
       }
 
-      // res.writeHead(200, { "Content-Type": "text/text" });
-      // res.end();
     } else if (req.method === "POST") {
-      console.log("POST");
       let body = "";
       req.on("data", function (chunk) {
         body += chunk;
@@ -61,10 +77,6 @@ export const serverFactory = () => {
         // res.writeHead(200, { "Content-Type": "text/html" });
         // res.end(body);
       });
-
-
-
-
     }
   });
 

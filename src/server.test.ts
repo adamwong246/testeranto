@@ -1,3 +1,6 @@
+import { ITestSpecification } from "testeranto/src/core";
+import { IHttpTesterantoTestImplementation } from "../myTests/http.testeranto.test";
+
 const myFeature = `hello`;
 
 export type IServerTestSpecifications = {
@@ -20,7 +23,7 @@ export type IServerTestSpecifications = {
   };
 };
 
-export const ServerTestImplementation = {
+export const ServerTestImplementation: IHttpTesterantoTestImplementation<IServerTestSpecifications> = {
   Suites: {
     Default: "some default Suite"
   },
@@ -46,7 +49,7 @@ export const ServerTestImplementation = {
   },
 };
 
-export const ServerTestSpecification = (Suite, Given, When, Then, Check) => {
+export const ServerTestSpecification: ITestSpecification<IServerTestSpecifications> = (Suite, Given, When, Then, Check) => {
   return [
     Suite.Default(
       "Testing the Node server with fetch!",
@@ -132,4 +135,4 @@ export const ServerTestSpecification = (Suite, Given, When, Then, Check) => {
       // ]
     ),
   ];
-}
+};

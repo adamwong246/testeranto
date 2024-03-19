@@ -2,8 +2,8 @@ import { Contract } from 'web3-eth-contract';
 import Ganache from "ganache";
 import Web3 from 'web3';
 
-import Testeranto from "testeranto";
-import { ITestImplementation, ITestSpecification, ITTestShape } from "testeranto";
+import Testeranto from "testeranto/src/core-node";
+import { ITestImplementation, ITestSpecification, ITTestShape } from "testeranto/src/core";
 
 import { solCompile } from "./truffle.mjs";
 
@@ -19,8 +19,7 @@ type Input = [string, (_w3: Web3) => Promise<string[]>];
 type Ibis = any;
 
 export const SolidityTesteranto = async <
-  ITestShape extends ITTestShape,
-  IFeatureShape
+  ITestShape extends ITTestShape
 >(
   testImplementations: ITestImplementation<
     string,
@@ -29,7 +28,7 @@ export const SolidityTesteranto = async <
     ThenShape,
     ITestShape
   >,
-  testSpecifications: ITestSpecification<ITestShape, IFeatureShape>,
+  testSpecifications: ITestSpecification<ITestShape>,
   testInput,
 ) => {
   const compilation = (await solCompile(testInput[0])).contracts.find((c) => c.contractName === testInput[0]);
@@ -42,13 +41,12 @@ export const SolidityTesteranto = async <
     Selection,
     WhenShape,
     ThenShape,
-    string,
-    IFeatureShape
+    string
   >(
     testInput,
     testSpecifications,
     testImplementations,
-    { ports: 0 },
+
     {
       beforeAll: async () => compilation,
 
@@ -56,8 +54,8 @@ export const SolidityTesteranto = async <
 
         // https://github.com/trufflesuite/ganache#programmatic-use
         const provider = Ganache.provider({
-          seed: "drizzle-utils",
-          gasPrice: 7000000,
+          // seed: "drizzle-utils",
+          // gasPrice: 7000000,
         });
 
         /* @ts-ignore:next-line */
@@ -81,7 +79,9 @@ export const SolidityTesteranto = async <
       },
       andWhen: async ({ provider, contract, accounts }, callback: any) =>
         (callback())({ contract, accounts }),
-    }
+    },
+
+    { ports: 0 },
   );
 }
 

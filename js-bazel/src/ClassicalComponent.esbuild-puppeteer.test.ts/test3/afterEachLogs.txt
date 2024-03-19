@@ -1,1 +1,0 @@
-TypeError: Failed to resolve module specifier "ClassicalComponent". Relative references must start with either "/", "./", or "../".

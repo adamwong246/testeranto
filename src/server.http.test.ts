@@ -1,15 +1,12 @@
-import http from "http";
-
-import { serverFactory } from "../../src/server";
+import { serverFactory } from "./server";
 import {
   IServerTestSpecifications, ServerTestImplementation, ServerTestSpecification
-} from "../../src/server.test";
+} from "./server.test";
 
-import { HttpTesteranto } from "./http.testeranto.test";
+import { HttpTesteranto } from "../myTests/http.testeranto.test";
 
 export const ServerHttpTesteranto = HttpTesteranto<
-  IServerTestSpecifications,
-  () => http.Server
+  IServerTestSpecifications
 >(
   serverFactory,
   ServerTestImplementation,

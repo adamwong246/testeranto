@@ -1,4 +1,4 @@
-import { solCompile } from "./myTests/solidity/truffle.mjs";
+import { solCompile } from "./myTests/truffle.mjs";
 import features from "./testerantoFeatures.test.mjs";
 import { IBaseConfig } from "testeranto/src/IBaseConfig.js";
 
@@ -17,23 +17,16 @@ const baseConfig: IBaseConfig = {
   ports: ["3001", "3002", "3003", "3004", "3005", "3006", "3007"],
 
   tests: [
-    // ["./myTests/google.puppeteer.testeranto.test.ts", "node", []],
-    // ["./src/Rectangle/Rectangle.test.node.ts", "node", []],
-    // ["./src/Rectangle/Rectangle.test.electron.ts", "electron", []],
-
-    // ["./src/ClassicalComponent.electron.test.ts", "electron", []],
-    // ["./src/ClassicalComponent.react-test-renderer.test.tsx", "node", []],
-
-
-
-    // ["./myTests/ClassicalReact/ClassicalComponent.react-test-renderer.test.tsx", "node", []],
-
-    // ["./myTests/httpServer/server.http.test.ts", "node", []],
+    // ["./src/google.puppeteer.testeranto.test.ts", "node", []],
     // ["./src/app.redux.test.ts", "node", []],
     // ["./src/app.reduxToolkit.test.ts", "node", []],
-
-    // ["./src/LoginPage.react-test-renderer.test.ts", "node", []],
+    // ["./src/ClassicalComponent.electron.test.ts", "electron", []],
+    // ["./src/ClassicalComponent.react-test-renderer.test.tsx", "node", []],
     // ["./src/LoginPage.electron.test.ts", "electron", []],
+    // ["./src/LoginPage.react-test-renderer.test.ts", "node", []],
+    // ["./src/Rectangle/Rectangle.test.electron.ts", "electron", []],
+    // ["./src/Rectangle/Rectangle.test.node.ts", "node", []],
+    // ["./src/server.http.test.ts", "node", [["src/ClassicalComponent.tsx", "electron", []], ["src/LoginPage.tsx", "electron", []]]],
 
     // not working
 
@@ -43,19 +36,15 @@ const baseConfig: IBaseConfig = {
     //   [["src/ClassicalComponent.tsx", "electron", []]]
     // ],
 
-    // "./myTests/solidity/MyFirstContract.solidity-precompiled.test.ts",
+    // ["./src/MyFirstContract.solidity.test.ts", "node", []],
+    ["./src/MyFirstContract.solidity-rpc.test.ts", "node", []],
+
     // "./myTests/storefront/alpha/index.test.ts",
     // "./myTests/storefront/beta/index.test.ts",
-    // "./myTests/solidity/MyFirstContract.solidity.test.ts",
-    // "./myTests/solidity/MyFirstContract.solidity-rpc.test.ts",
-    // ["./myTests/Redux+Reselect+React/app.redux.test.ts", "electron"],
-    // "./myTests/Redux+Reselect+React/app.reduxToolkit.test.ts",
-    // "./myTests/httpServer/server.http.test.ts",
     // "./myTests/httpServer/server.puppeteer.test.ts",
     // "./myTests/httpServer/server.http2x.test.ts",
-    // "./myTests/ClassicalReact/ClassicalComponent.react-test-renderer.test.tsx",
     // ["./myTests/Rectangle/Rectangle.test.puppeteer.ts", "puppeteer"],
-    // ["./myTests/Redux+Reselect+React/app.redux.test.ts", "node"],
+    // ["./myTests/solidity/MyFirstContract.solidity-precompiled.test.ts", "node", []],
 
   ],
   loaders: [

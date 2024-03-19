@@ -1,6 +1,6 @@
 import { assert } from "chai";
 
-import { PuppeteerTesteranto } from "./puppeteer.testeranto.test";
+import { PuppeteerTesteranto } from "../myTests/puppeteer.testeranto.test";
 
 export default PuppeteerTesteranto<{
   suites: {
@@ -74,6 +74,5 @@ export default PuppeteerTesteranto<{
         []
       ),
     ];
-  },
-  'google',
+  }
 );

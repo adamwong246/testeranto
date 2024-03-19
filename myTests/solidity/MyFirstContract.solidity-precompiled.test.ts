@@ -1,8 +1,8 @@
 
 import { assert } from "chai";
-import { features } from "../testerantoFeatures.test.mjs";
-import { SolidityPrecompiledTesteranto } from "./solidity-precompiled.testeranto.test";
 
+import { features } from "../../testerantoFeatures.test.mjs";
+import { SolidityPrecompiledTesteranto } from "./solidity-precompiled.testeranto.test";
 import { commonGivens } from './index.test';
 
 export const MyFirstContractPrecompiledTesteranto = SolidityPrecompiledTesteranto<
@@ -23,8 +23,7 @@ export const MyFirstContractPrecompiledTesteranto = SolidityPrecompiledTesterant
     checks: {
       AnEmptyState: [];
     };
-  },
-  typeof features
+  }
 >(
   {
     Suites: {
@@ -88,5 +87,4 @@ export const MyFirstContractPrecompiledTesteranto = SolidityPrecompiledTesterant
     // const accounts = await web3.eth.getAccounts();
     return []
   }]
-  // 'MyFirstContract'
 );

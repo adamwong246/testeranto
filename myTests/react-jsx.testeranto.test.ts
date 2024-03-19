@@ -1,5 +1,5 @@
 import React, {
-  CElement, useEffect, useRef,
+  useEffect, useRef,
 } from "react";
 import ReactDom from "react-dom/client";
 
@@ -32,23 +32,6 @@ export default <ITestShape extends ITTestShape>(
   testSpecifications: ITestSpecification<ITestShape>,
   testInput: Prototype
 ) => {
-  // class TesterantoComponent extends React.Component<{ done: () => void }> {
-  //   done: (t: TesterantoComponent) => void;
-  //   constructor(props) {
-  //     super(props);
-  //     this.done = props.done;
-  //   }
-
-  //   componentDidMount() {
-  //     console.info("componentDidMount");
-  //     super.componentDidMount && super.componentDidMount();
-  //     return this.done(this);
-  //   }
-
-  //   render() {
-  //     return testInput();
-  //   }
-  // };
   const TesterantoComponent = function (props) {
     const myContainer = useRef(null);
 
