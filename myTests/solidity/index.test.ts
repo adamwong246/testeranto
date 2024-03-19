@@ -1,9 +1,3 @@
-// import { MyFirstContractTesteranto } from "./MyFirstContract.test";
-
-// (async () => {
-//   await new MyFirstContractTesteranto()[0].runner({ port: 3001 })
-// })()
-
 export const commonGivens = (Given, When, Then, features) => {
   return {
     "test0": Given.Default(

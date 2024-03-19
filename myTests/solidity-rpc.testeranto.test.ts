@@ -1,3 +1,5 @@
+// Test a solidity file over RPC, compiling on the fly
+
 import Ganache, { Server } from "ganache";
 import Web3 from 'web3';
 import { ethers } from "ethers";

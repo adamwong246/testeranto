@@ -1,0 +1,9 @@
+DOMException: Failed to execute 'evaluate' on 'Document': The string './/*[text()="//*[@value="I'm Feeling Lucky"]"]' is not a valid XPath expression.
+    at j (pptr://__puppeteer_evaluation_script__:3:10048)
+    at j.next (<anonymous>)
+    at Async-from-Sync Iterator.next (<anonymous>)
+    at eval (eval at X (:3:1177), <anonymous>:8:30)
+    at eval (eval at X (:3:1177), <anonymous>:5:36)
+    at T.<anonymous> (pptr://__puppeteer_evaluation_script__:4:36)
+    at T.start (pptr://__puppeteer_evaluation_script__:3:2739)
+    at pptr://__puppeteer_evaluation_script__:2:24

@@ -1,3 +1,5 @@
+// Test a solidity file, compiling on the fly
+
 import { Contract } from 'web3-eth-contract';
 import Ganache from "ganache";
 import Web3 from 'web3';

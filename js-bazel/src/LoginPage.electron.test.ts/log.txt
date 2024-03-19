@@ -1,0 +1,8 @@
+testArtiFactory =>,./before.txt
+
+Suite:,Testing the LoginPage as react
+
+ Given: default
+ When:,TheEmailIsSetTo: adam@mail.com
+ When:,ThePasswordIsSetTo: foo
+ Then:,ThereIsNotAnEmailError: undefined
