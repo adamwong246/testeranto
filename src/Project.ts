@@ -781,6 +781,40 @@ export class ITProject {
           external: ["tests.test.js", "features.test.js"]
         });
 
+        fs.writeFileSync(`${this.outdir}/report.html`, `
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="description" content="Webpage description goes here" />
+  <meta charset="utf-8" />
+  <title>kokomoBay - testeranto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="" />
+  <link rel="stylesheet" href="/dist/report.css" />
+
+  <script type="importmap">
+    {
+    "imports": {
+      "tests.test.js": "/dist/tests.test.js",
+      "features.test.js": "/dist/features.test.js"
+    }
+  }
+  </script>
+
+
+  <script src="/dist/report.js"></script>
+</head>
+
+<body>
+  <div id="root">
+    react is loading
+  </div>
+</body>
+
+</html>
+        `)
+
         console.log("buildMode   -", this.buildMode);
         console.log("runMode     -", this.runMode);
         console.log("collateMode -", this.collateMode);
