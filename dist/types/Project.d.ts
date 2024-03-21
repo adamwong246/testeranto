@@ -46,15 +46,15 @@ export declare class ITProject {
     clearScreen: boolean;
     collateEntry: string;
     collateMode: ICollateMode;
-    features: TesterantoFeatures;
     loaders: any[];
     minify: boolean;
     outbase: string;
     outdir: string;
     ports: string[];
     runMode: boolean;
-    tests: ITestTypes[];
     __dirname: string;
+    tests: ITestTypes[];
+    features: TesterantoFeatures;
     getSecondaryEndpointsPoints(runtime?: IRunTime): string[];
     constructor(config: IBaseConfig);
 }

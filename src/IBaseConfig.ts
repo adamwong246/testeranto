@@ -12,7 +12,6 @@ export type ICollateMode =
 export type IBaseConfig = {
   clearScreen: boolean;
   collateMode: ICollateMode;
-  features: TesterantoFeatures;
   loaders: any[];
   minify: boolean;
   outbase: string;
@@ -22,7 +21,9 @@ export type IBaseConfig = {
   collateEntry: string;
   // resultsdir: string;
   runMode: boolean;
-  tests: ITestTypes[];
   buildMode: "on" | "off" | "watch";
   __dirname: string;
+
+  tests: string;
+  features: string;
 };

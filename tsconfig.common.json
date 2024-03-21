@@ -30,6 +30,6 @@
     "outDir": "dist/common/",
     "alwaysStrict": true
   },
-  "include": ["src/**/*.*ts", "src/**/*.*tsx"],
+  "include": ["src/**/*.*ts", "index.d.ts"],
   "exclude": ["node_modules"]
 }
