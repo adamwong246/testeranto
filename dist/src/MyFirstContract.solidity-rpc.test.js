@@ -49,7 +49,7 @@ __export(MyFirstContract_solidity_rpc_test_exports, {
 module.exports = __toCommonJS(MyFirstContract_solidity_rpc_test_exports);
 var import_chai = require("chai");
 
-// testerantoFeatures.test.mts
+// features.test.mts
 var import_Features = require("testeranto/src/Features");
 var MyFeature = class extends import_Features.BaseFeature {
   constructor(name, due) {
@@ -109,7 +109,7 @@ var undirected = new import_Features.TesterantoGraphUndirected(
 undirected.connect(`gutentag`, `aloha`, "related");
 undirected.connect(`buildRocket`, `buildSatellite`, "overlap");
 undirected.connect(`buildRocket`, `buildSilo`, "overlap");
-var testerantoFeatures_test_default = new import_Features.TesterantoFeatures(features, {
+var features_test_default = new import_Features.TesterantoFeatures(features, {
   undirected: [undirected],
   directed: [semantic],
   dags: [priorityGraph]

@@ -1,7 +1,7 @@
 import { ITProject } from "testeranto/src/Project";
 
 import { solCompile } from "./myTests/truffle.mjs";
-import features from "./testerantoFeatures.test.mjs";
+import features from "./features.test.mjs";
 import tests from "./tests.test.mjs";
 
 export default new ITProject({

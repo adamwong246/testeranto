@@ -1,10 +1,11 @@
 import { ITProject } from "testeranto/src/Project";
 import { solCompile } from "./myTests/truffle.mjs";
-import features from "./testerantoFeatures.test.mjs";
+import features from "./features.test.mjs";
 import tests from "./tests.test.mjs";
 export default new ITProject({
-    __dirname: `~/Code/kokomoBay`,
     features,
+    tests,
+    __dirname: `~/Code/kokomoBay`,
     outbase: ".",
     outdir: "dist",
     buildMode: "watch",
@@ -14,12 +15,10 @@ export default new ITProject({
     collateMode: "on",
     minify: false,
     ports: ["3001", "3002", "3003", "3004", "3005", "3006", "3007"],
-    tests,
     loaders: [
         {
             name: 'solidity',
             setup(build) {
-                // console.log("solidity build", build)
                 build.onResolve({ filter: /^.*\.sol$/ }, args => {
                     return ({
                         path: "MyFirstContract",

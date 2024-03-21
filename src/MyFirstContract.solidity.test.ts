@@ -1,7 +1,7 @@
 
 import { assert } from "chai";
 
-import { features } from "../testerantoFeatures.test.mjs";
+import { features } from "../features.test.mjs";
 import { SolidityTesteranto } from "../myTests/solidity.testeranto.test";
 
 import { commonGivens } from './MyFirstContractGivens.test';
