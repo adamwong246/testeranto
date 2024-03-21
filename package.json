@@ -13,8 +13,9 @@
     "ATDD"
   ],
   "scripts": {
-    "nuke": "yarn pm2 stop all; yarn pm2 delete all; yarn pm2 save; rm -rf js/**; rm -rf outdir/**; rm -rf resultsdir/myTests; rm -rf js-bazel/**; rm -rf reports/**",
-    "test": "testerantoRun js/bazel.config.mjs",
+    "nuke": "yarn pm2 stop all; yarn pm2 delete all; yarn pm2 save; rm -rf js/**; rm -rf dist/**",
+    "reporter": "esbuild --bundle index.tsx",
+    "test": "testerantoRun js/testeranto.test.mjs",
     "foo0": "rm -rf foo/**; echo '{\"fs\": \"./foo\", \"ports\": []}' | node js-bazel/myTests/ClassicalReact/ClassicalComponent.esbuild-puppeteer.test.mjs",
     "foo1": "rm -rf foo/**; echo '{\"fs\": \"./foo\", \"ports\": []}' | node js-bazel/myTests/ClassicalReact/ClassicalComponent.react-test-renderer.test.mjs"
   },

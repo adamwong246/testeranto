@@ -1,5 +1,9 @@
 import {
-  BaseFeature, TesterantoGraphDirectedAcyclic, TesterantoGraphDirected, TesterantoGraphUndirected, TesterantoFeatures
+  BaseFeature,
+  TesterantoGraphDirectedAcyclic,
+  TesterantoGraphDirected,
+  TesterantoGraphUndirected,
+  TesterantoFeatures
 } from "testeranto/src/Features";
 
 export class MyFeature extends BaseFeature {

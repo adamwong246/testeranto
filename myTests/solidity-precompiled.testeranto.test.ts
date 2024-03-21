@@ -1,3 +1,5 @@
+/// <reference types="../index.d.ts" />
+
 import { Contract } from 'web3-eth-contract';
 import Ganache from "ganache";
 import Web3 from 'web3';
@@ -55,10 +57,7 @@ export const SolidityPrecompiledTesteranto = async <
       beforeEach: async (contract: Ibis) => {
 
         // https://github.com/trufflesuite/ganache#programmatic-use
-        const provider = Ganache.provider({
-          seed: "drizzle-utils",
-          gasPrice: 7000001,
-        });
+        const provider = Ganache.provider();
 
         /* @ts-ignore:next-line */
         const web3 = new Web3(provider);

@@ -56,7 +56,6 @@ export const SolidityRpcTesteranto = <
     {
       beforeAll: async () =>
         (await solCompile(contractName)).contracts.find((c) => c.contractName === contractName),
-      // (await compile(`../../../contracts/${contractName}.sol`) as any)[contractName] as Ibis,
 
       beforeEach: (contract: Ibis, i, tr) => {
 

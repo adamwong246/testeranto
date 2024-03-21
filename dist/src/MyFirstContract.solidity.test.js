@@ -206,7 +206,7 @@ var SolidityTesteranto = async (testImplementations, testSpecifications, testInp
   );
 };
 
-// myTests/solidity/index.test.ts
+// src/MyFirstContractGivens.test.ts
 var commonGivens = (Given, When, Then, features2) => {
   return {
     "test0": Given.Default(
