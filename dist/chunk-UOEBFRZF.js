@@ -695,7 +695,7 @@ var require_react_is2 = __commonJS({
 });
 
 // src/LoginPage.tsx
-var import_react3 = __toESM(require_react());
+var import_react3 = __toESM(require_react(), 1);
 
 // node_modules/react-redux/es/index.js
 var import_shim = __toESM(require_shim());

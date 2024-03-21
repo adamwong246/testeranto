@@ -53,9 +53,9 @@ module.exports = __toCommonJS(LoginPage_react_test_renderer_test_exports);
 var import_chai = require("chai");
 
 // myTests/react-test-renderer-jsx.testeranto.test.ts
-var import_react = __toESM(require("react"));
-var import_react_test_renderer = __toESM(require("react-test-renderer"));
-var import_core_node = __toESM(require("testeranto/src/core-node"));
+var import_react = __toESM(require("react"), 1);
+var import_react_test_renderer = __toESM(require("react-test-renderer"), 1);
+var import_core_node = __toESM(require("testeranto/src/core-node"), 1);
 var ReactTestRendererTesteranto = (testImplementations, testSpecifications, testInput) => (0, import_core_node.default)(
   testInput,
   testSpecifications,
@@ -78,7 +78,7 @@ var ReactTestRendererTesteranto = (testImplementations, testSpecifications, test
 );
 
 // src/LoginPage.tsx
-var import_react2 = __toESM(require("react"));
+var import_react2 = __toESM(require("react"), 1);
 var import_react_redux = require("react-redux");
 
 // src/app.ts

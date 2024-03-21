@@ -35,7 +35,7 @@ __export(server_http_test_exports, {
 module.exports = __toCommonJS(server_http_test_exports);
 
 // src/server.ts
-var import_http = __toESM(require("http"));
+var import_http = __toESM(require("http"), 1);
 var htmlTemplate = (jsbundle) => `
 <!DOCTYPE html><html lang="en">
   <head>
@@ -227,7 +227,7 @@ var ServerTestSpecification = (Suite, Given, When, Then, Check) => {
 
 // myTests/http.testeranto.test.ts
 var import_chai = require("chai");
-var import_core_node = __toESM(require("testeranto/src/core-node"));
+var import_core_node = __toESM(require("testeranto/src/core-node"), 1);
 function sleep(ms) {
   return new Promise((resolve) => {
     setTimeout(resolve, ms);

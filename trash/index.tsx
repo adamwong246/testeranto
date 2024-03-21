@@ -2,8 +2,8 @@ import { Report } from "testeranto/src/Report";
 import ReactDom from "react-dom/client";
 import React from "react";
 
-import features from "./features.test.mjs";
-import tests from "./tests.test.mjs";
+import features from "../features.test.mjs";
+import tests from "../tests.test.mjs";
 
 document.addEventListener("DOMContentLoaded", function () {
   console.log("hello from report! mark2");

@@ -6,6 +6,7 @@
   "homepage": "https://github.com/ChromaPDX/kokomoBay",
   "author": "adam wong <adamwong246@gmail.com>",
   "license": "MIT",
+  "type": "module",
   "keywords": [
     "typescript",
     "test",
@@ -13,9 +14,8 @@
     "ATDD"
   ],
   "scripts": {
-    "nuke": "yarn pm2 stop all; yarn pm2 delete all; yarn pm2 save; rm -rf build/**; rm -rf dist/**",
-    "reporter": "esbuild --bundle --outfile=index.js index.tsx ",
-    "test": "testerantoRun build project.test.mjs"
+    "nuke": "yarn pm2 stop all; yarn pm2 delete all; yarn pm2 save; rm -rf dist/**",
+    "test": "yarn ts-node project.test.ts"
   },
   "types": "index.d.ts",
   "dependencies": {

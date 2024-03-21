@@ -1,7 +1,7 @@
 import {
   ClassicalComponent,
   LaunchClassicalComponent
-} from "../chunk-GQ66M77R.js";
+} from "../chunk-RSQCRBYX.js";
 import "../chunk-INCPOGSQ.js";
 import "../chunk-YZAXQEPE.js";
 import "../chunk-4ATCX2XT.js";

@@ -33,7 +33,7 @@ __export(Rectangle_test_node_exports, {
   RectangleTesteranto: () => RectangleTesteranto
 });
 module.exports = __toCommonJS(Rectangle_test_node_exports);
-var import_core_node = __toESM(require("testeranto/src/core-node"));
+var import_core_node = __toESM(require("testeranto/src/core-node"), 1);
 
 // src/Rectangle.test.ts
 var import_chai = require("chai");
