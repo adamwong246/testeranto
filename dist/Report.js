@@ -34,7 +34,7 @@
 
   // ../testeranto/node_modules/react/cjs/react.development.js
   var require_react_development = __commonJS({
-    "../testeranto/node_modules/react/cjs/react.development.js"(exports, module) {
+    "../testeranto/node_modules/react/cjs/react.development.js"(exports2, module2) {
       "use strict";
       if (true) {
         (function() {
@@ -245,9 +245,9 @@
           {
             Object.freeze(emptyObject);
           }
-          function Component(props, context, updater) {
+          function Component(props, context3, updater) {
             this.props = props;
-            this.context = context;
+            this.context = context3;
             this.refs = emptyObject;
             this.updater = updater || ReactNoopUpdateQueue;
           }
@@ -283,9 +283,9 @@
           function ComponentDummy() {
           }
           ComponentDummy.prototype = Component.prototype;
-          function PureComponent(props, context, updater) {
+          function PureComponent(props, context3, updater) {
             this.props = props;
-            this.context = context;
+            this.context = context3;
             this.refs = emptyObject;
             this.updater = updater || ReactNoopUpdateQueue;
           }
@@ -377,8 +377,8 @@
             if (typeof type === "object") {
               switch (type.$$typeof) {
                 case REACT_CONTEXT_TYPE:
-                  var context = type;
-                  return getContextName(context) + ".Consumer";
+                  var context3 = type;
+                  return getContextName(context3) + ".Consumer";
                 case REACT_PROVIDER_TYPE:
                   var provider = type;
                   return getContextName(provider._context) + ".Provider";
@@ -550,8 +550,8 @@
               props.children = children;
             } else if (childrenLength > 1) {
               var childArray = Array(childrenLength);
-              for (var i = 0; i < childrenLength; i++) {
-                childArray[i] = arguments[i + 2];
+              for (var i2 = 0; i2 < childrenLength; i2++) {
+                childArray[i2] = arguments[i2 + 2];
               }
               {
                 if (Object.freeze) {
@@ -561,10 +561,10 @@
               props.children = childArray;
             }
             if (type && type.defaultProps) {
-              var defaultProps = type.defaultProps;
-              for (propName in defaultProps) {
+              var defaultProps5 = type.defaultProps;
+              for (propName in defaultProps5) {
                 if (props[propName] === void 0) {
-                  props[propName] = defaultProps[propName];
+                  props[propName] = defaultProps5[propName];
                 }
               }
             }
@@ -585,7 +585,7 @@
             var newElement = ReactElement(oldElement.type, newKey, oldElement.ref, oldElement._self, oldElement._source, oldElement._owner, oldElement.props);
             return newElement;
           }
-          function cloneElement(element, config, children) {
+          function cloneElement2(element, config, children) {
             if (element === null || element === void 0) {
               throw new Error("React.cloneElement(...): The argument must be a React element, but you passed " + element + ".");
             }
@@ -607,14 +607,14 @@
                 }
                 key = "" + config.key;
               }
-              var defaultProps;
+              var defaultProps5;
               if (element.type && element.type.defaultProps) {
-                defaultProps = element.type.defaultProps;
+                defaultProps5 = element.type.defaultProps;
               }
               for (propName in config) {
                 if (hasOwnProperty.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
-                  if (config[propName] === void 0 && defaultProps !== void 0) {
-                    props[propName] = defaultProps[propName];
+                  if (config[propName] === void 0 && defaultProps5 !== void 0) {
+                    props[propName] = defaultProps5[propName];
                   } else {
                     props[propName] = config[propName];
                   }
@@ -626,14 +626,14 @@
               props.children = children;
             } else if (childrenLength > 1) {
               var childArray = Array(childrenLength);
-              for (var i = 0; i < childrenLength; i++) {
-                childArray[i] = arguments[i + 2];
+              for (var i2 = 0; i2 < childrenLength; i2++) {
+                childArray[i2] = arguments[i2 + 2];
               }
               props.children = childArray;
             }
             return ReactElement(element.type, key, ref, self2, source, owner, props);
           }
-          function isValidElement(object) {
+          function isValidElement2(object) {
             return typeof object === "object" && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
           }
           var SEPARATOR = ".";
@@ -698,7 +698,7 @@
                   return c;
                 });
               } else if (mappedChild != null) {
-                if (isValidElement(mappedChild)) {
+                if (isValidElement2(mappedChild)) {
                   {
                     if (mappedChild.key && (!_child || _child.key !== mappedChild.key)) {
                       checkKeyStringCoercion(mappedChild.key);
@@ -725,9 +725,9 @@
             var subtreeCount = 0;
             var nextNamePrefix = nameSoFar === "" ? SEPARATOR : nameSoFar + SUBSEPARATOR;
             if (isArray(children)) {
-              for (var i = 0; i < children.length; i++) {
-                child = children[i];
-                nextName = nextNamePrefix + getElementKey(child, i);
+              for (var i2 = 0; i2 < children.length; i2++) {
+                child = children[i2];
+                nextName = nextNamePrefix + getElementKey(child, i2);
                 subtreeCount += mapIntoArray(child, array, escapedPrefix, nextName, callback);
               }
             } else {
@@ -757,14 +757,14 @@
             }
             return subtreeCount;
           }
-          function mapChildren(children, func, context) {
+          function mapChildren(children, func, context3) {
             if (children == null) {
               return children;
             }
             var result = [];
             var count = 0;
             mapIntoArray(children, result, "", "", function(child) {
-              return func.call(context, child, count++);
+              return func.call(context3, child, count++);
             });
             return result;
           }
@@ -780,19 +780,19 @@
               forEachFunc.apply(this, arguments);
             }, forEachContext);
           }
-          function toArray(children) {
+          function toArray2(children) {
             return mapChildren(children, function(child) {
               return child;
             }) || [];
           }
           function onlyChild(children) {
-            if (!isValidElement(children)) {
+            if (!isValidElement2(children)) {
               throw new Error("React.Children.only expected to receive a single React element child.");
             }
             return children;
           }
-          function createContext(defaultValue) {
-            var context = {
+          function createContext7(defaultValue) {
+            var context3 = {
               $$typeof: REACT_CONTEXT_TYPE,
               // As a workaround to support multiple concurrent renderers, we categorize
               // some renderers as primary and others as secondary. We only expect
@@ -811,53 +811,53 @@
               _defaultValue: null,
               _globalName: null
             };
-            context.Provider = {
+            context3.Provider = {
               $$typeof: REACT_PROVIDER_TYPE,
-              _context: context
+              _context: context3
             };
             var hasWarnedAboutUsingNestedContextConsumers = false;
             var hasWarnedAboutUsingConsumerProvider = false;
             var hasWarnedAboutDisplayNameOnConsumer = false;
             {
-              var Consumer = {
+              var Consumer2 = {
                 $$typeof: REACT_CONTEXT_TYPE,
-                _context: context
+                _context: context3
               };
-              Object.defineProperties(Consumer, {
+              Object.defineProperties(Consumer2, {
                 Provider: {
                   get: function() {
                     if (!hasWarnedAboutUsingConsumerProvider) {
                       hasWarnedAboutUsingConsumerProvider = true;
                       error("Rendering <Context.Consumer.Provider> is not supported and will be removed in a future major release. Did you mean to render <Context.Provider> instead?");
                     }
-                    return context.Provider;
+                    return context3.Provider;
                   },
                   set: function(_Provider) {
-                    context.Provider = _Provider;
+                    context3.Provider = _Provider;
                   }
                 },
                 _currentValue: {
                   get: function() {
-                    return context._currentValue;
+                    return context3._currentValue;
                   },
                   set: function(_currentValue) {
-                    context._currentValue = _currentValue;
+                    context3._currentValue = _currentValue;
                   }
                 },
                 _currentValue2: {
                   get: function() {
-                    return context._currentValue2;
+                    return context3._currentValue2;
                   },
                   set: function(_currentValue2) {
-                    context._currentValue2 = _currentValue2;
+                    context3._currentValue2 = _currentValue2;
                   }
                 },
                 _threadCount: {
                   get: function() {
-                    return context._threadCount;
+                    return context3._threadCount;
                   },
                   set: function(_threadCount) {
-                    context._threadCount = _threadCount;
+                    context3._threadCount = _threadCount;
                   }
                 },
                 Consumer: {
@@ -866,12 +866,12 @@
                       hasWarnedAboutUsingNestedContextConsumers = true;
                       error("Rendering <Context.Consumer.Consumer> is not supported and will be removed in a future major release. Did you mean to render <Context.Consumer> instead?");
                     }
-                    return context.Consumer;
+                    return context3.Consumer;
                   }
                 },
                 displayName: {
                   get: function() {
-                    return context.displayName;
+                    return context3.displayName;
                   },
                   set: function(displayName) {
                     if (!hasWarnedAboutDisplayNameOnConsumer) {
@@ -881,13 +881,13 @@
                   }
                 }
               });
-              context.Consumer = Consumer;
+              context3.Consumer = Consumer2;
             }
             {
-              context._currentRenderer = null;
-              context._currentRenderer2 = null;
+              context3._currentRenderer = null;
+              context3._currentRenderer2 = null;
             }
-            return context;
+            return context3;
           }
           var Uninitialized = -1;
           var Pending = 0;
@@ -945,17 +945,17 @@
               _init: lazyInitializer
             };
             {
-              var defaultProps;
-              var propTypes;
+              var defaultProps5;
+              var propTypes2;
               Object.defineProperties(lazyType, {
                 defaultProps: {
                   configurable: true,
                   get: function() {
-                    return defaultProps;
+                    return defaultProps5;
                   },
                   set: function(newDefaultProps) {
                     error("React.lazy(...): It is not supported to assign `defaultProps` to a lazy component import. Either specify them where the component is defined, or create a wrapping component around it.");
-                    defaultProps = newDefaultProps;
+                    defaultProps5 = newDefaultProps;
                     Object.defineProperty(lazyType, "defaultProps", {
                       enumerable: true
                     });
@@ -964,11 +964,11 @@
                 propTypes: {
                   configurable: true,
                   get: function() {
-                    return propTypes;
+                    return propTypes2;
                   },
                   set: function(newPropTypes) {
                     error("React.lazy(...): It is not supported to assign `propTypes` to a lazy component import. Either specify them where the component is defined, or create a wrapping component around it.");
-                    propTypes = newPropTypes;
+                    propTypes2 = newPropTypes;
                     Object.defineProperty(lazyType, "propTypes", {
                       enumerable: true
                     });
@@ -978,7 +978,7 @@
             }
             return lazyType;
           }
-          function forwardRef(render) {
+          function forwardRef14(render) {
             {
               if (render != null && render.$$typeof === REACT_MEMO_TYPE) {
                 error("forwardRef requires a render function but received a `memo` component. Instead of forwardRef(memo(...)), use memo(forwardRef(...)).");
@@ -1077,7 +1077,7 @@
             }
             return dispatcher;
           }
-          function useContext(Context) {
+          function useContext6(Context) {
             var dispatcher = resolveDispatcher();
             {
               if (Context._context !== void 0) {
@@ -1091,19 +1091,19 @@
             }
             return dispatcher.useContext(Context);
           }
-          function useState2(initialState) {
+          function useState7(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
-          function useReducer(reducer, initialArg, init) {
+          function useReducer2(reducer, initialArg, init) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useReducer(reducer, initialArg, init);
           }
-          function useRef(initialValue) {
+          function useRef8(initialValue) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect2(create, deps) {
+          function useEffect12(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create, deps);
           }
@@ -1111,15 +1111,15 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useInsertionEffect(create, deps);
           }
-          function useLayoutEffect(create, deps) {
+          function useLayoutEffect2(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useLayoutEffect(create, deps);
           }
-          function useCallback(callback, deps) {
+          function useCallback7(callback, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useCallback(callback, deps);
           }
-          function useMemo(create, deps) {
+          function useMemo4(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useMemo(create, deps);
           }
@@ -1515,13 +1515,13 @@
               return;
             }
             if (isArray(node)) {
-              for (var i = 0; i < node.length; i++) {
-                var child = node[i];
-                if (isValidElement(child)) {
+              for (var i2 = 0; i2 < node.length; i2++) {
+                var child = node[i2];
+                if (isValidElement2(child)) {
                   validateExplicitKey(child, parentType);
                 }
               }
-            } else if (isValidElement(node)) {
+            } else if (isValidElement2(node)) {
               if (node._store) {
                 node._store.validated = true;
               }
@@ -1532,7 +1532,7 @@
                   var iterator = iteratorFn.call(node);
                   var step;
                   while (!(step = iterator.next()).done) {
-                    if (isValidElement(step.value)) {
+                    if (isValidElement2(step.value)) {
                       validateExplicitKey(step.value, parentType);
                     }
                   }
@@ -1546,19 +1546,19 @@
               if (type === null || type === void 0 || typeof type === "string") {
                 return;
               }
-              var propTypes;
+              var propTypes2;
               if (typeof type === "function") {
-                propTypes = type.propTypes;
+                propTypes2 = type.propTypes;
               } else if (typeof type === "object" && (type.$$typeof === REACT_FORWARD_REF_TYPE || // Note: Memo only checks outer props here.
               // Inner props are checked in the reconciler.
               type.$$typeof === REACT_MEMO_TYPE)) {
-                propTypes = type.propTypes;
+                propTypes2 = type.propTypes;
               } else {
                 return;
               }
-              if (propTypes) {
+              if (propTypes2) {
                 var name = getComponentNameFromType(type);
-                checkPropTypes(propTypes, element.props, "prop", name, element);
+                checkPropTypes(propTypes2, element.props, "prop", name, element);
               } else if (type.PropTypes !== void 0 && !propTypesMisspellWarningShown) {
                 propTypesMisspellWarningShown = true;
                 var _name = getComponentNameFromType(type);
@@ -1572,8 +1572,8 @@
           function validateFragmentProps(fragment) {
             {
               var keys = Object.keys(fragment.props);
-              for (var i = 0; i < keys.length; i++) {
-                var key = keys[i];
+              for (var i2 = 0; i2 < keys.length; i2++) {
+                var key = keys[i2];
                 if (key !== "children" && key !== "key") {
                   setCurrentlyValidatingElement$1(fragment);
                   error("Invalid prop `%s` supplied to `React.Fragment`. React.Fragment can only have `key` and `children` props.", key);
@@ -1621,8 +1621,8 @@
               return element;
             }
             if (validType) {
-              for (var i = 2; i < arguments.length; i++) {
-                validateChildKeys(arguments[i], type);
+              for (var i2 = 2; i2 < arguments.length; i2++) {
+                validateChildKeys(arguments[i2], type);
               }
             }
             if (type === REACT_FRAGMENT_TYPE) {
@@ -1655,14 +1655,14 @@
             return validatedFactory;
           }
           function cloneElementWithValidation(element, props, children) {
-            var newElement = cloneElement.apply(this, arguments);
-            for (var i = 2; i < arguments.length; i++) {
-              validateChildKeys(arguments[i], newElement.type);
+            var newElement = cloneElement2.apply(this, arguments);
+            for (var i2 = 2; i2 < arguments.length; i2++) {
+              validateChildKeys(arguments[i2], newElement.type);
             }
             validatePropTypes(newElement);
             return newElement;
           }
-          function startTransition(scope, options) {
+          function startTransition(scope, options2) {
             var prevTransition = ReactCurrentBatchConfig.transition;
             ReactCurrentBatchConfig.transition = {};
             var currentTransition = ReactCurrentBatchConfig.transition;
@@ -1690,8 +1690,8 @@
             if (enqueueTaskImpl === null) {
               try {
                 var requireString = ("require" + Math.random()).slice(0, 7);
-                var nodeRequire = module && module[requireString];
-                enqueueTaskImpl = nodeRequire.call(module, "timers").setImmediate;
+                var nodeRequire = module2 && module2[requireString];
+                enqueueTaskImpl = nodeRequire.call(module2, "timers").setImmediate;
               } catch (_err) {
                 enqueueTaskImpl = function(callback) {
                   {
@@ -1834,17 +1834,17 @@
             {
               if (!isFlushing) {
                 isFlushing = true;
-                var i = 0;
+                var i2 = 0;
                 try {
-                  for (; i < queue.length; i++) {
-                    var callback = queue[i];
+                  for (; i2 < queue.length; i2++) {
+                    var callback = queue[i2];
                     do {
                       callback = callback(true);
                     } while (callback !== null);
                   }
                   queue.length = 0;
                 } catch (error2) {
-                  queue = queue.slice(i + 1);
+                  queue = queue.slice(i2 + 1);
                   throw error2;
                 } finally {
                   isFlushing = false;
@@ -1855,48 +1855,48 @@
           var createElement$1 = createElementWithValidation;
           var cloneElement$1 = cloneElementWithValidation;
           var createFactory = createFactoryWithValidation;
-          var Children = {
+          var Children2 = {
             map: mapChildren,
             forEach: forEachChildren,
             count: countChildren,
-            toArray,
+            toArray: toArray2,
             only: onlyChild
           };
-          exports.Children = Children;
-          exports.Component = Component;
-          exports.Fragment = REACT_FRAGMENT_TYPE;
-          exports.Profiler = REACT_PROFILER_TYPE;
-          exports.PureComponent = PureComponent;
-          exports.StrictMode = REACT_STRICT_MODE_TYPE;
-          exports.Suspense = REACT_SUSPENSE_TYPE;
-          exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactSharedInternals;
-          exports.cloneElement = cloneElement$1;
-          exports.createContext = createContext;
-          exports.createElement = createElement$1;
-          exports.createFactory = createFactory;
-          exports.createRef = createRef;
-          exports.forwardRef = forwardRef;
-          exports.isValidElement = isValidElement;
-          exports.lazy = lazy;
-          exports.memo = memo;
-          exports.startTransition = startTransition;
-          exports.unstable_act = act;
-          exports.useCallback = useCallback;
-          exports.useContext = useContext;
-          exports.useDebugValue = useDebugValue;
-          exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect2;
-          exports.useId = useId;
-          exports.useImperativeHandle = useImperativeHandle;
-          exports.useInsertionEffect = useInsertionEffect;
-          exports.useLayoutEffect = useLayoutEffect;
-          exports.useMemo = useMemo;
-          exports.useReducer = useReducer;
-          exports.useRef = useRef;
-          exports.useState = useState2;
-          exports.useSyncExternalStore = useSyncExternalStore;
-          exports.useTransition = useTransition;
-          exports.version = ReactVersion;
+          exports2.Children = Children2;
+          exports2.Component = Component;
+          exports2.Fragment = REACT_FRAGMENT_TYPE;
+          exports2.Profiler = REACT_PROFILER_TYPE;
+          exports2.PureComponent = PureComponent;
+          exports2.StrictMode = REACT_STRICT_MODE_TYPE;
+          exports2.Suspense = REACT_SUSPENSE_TYPE;
+          exports2.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactSharedInternals;
+          exports2.cloneElement = cloneElement$1;
+          exports2.createContext = createContext7;
+          exports2.createElement = createElement$1;
+          exports2.createFactory = createFactory;
+          exports2.createRef = createRef;
+          exports2.forwardRef = forwardRef14;
+          exports2.isValidElement = isValidElement2;
+          exports2.lazy = lazy;
+          exports2.memo = memo;
+          exports2.startTransition = startTransition;
+          exports2.unstable_act = act;
+          exports2.useCallback = useCallback7;
+          exports2.useContext = useContext6;
+          exports2.useDebugValue = useDebugValue;
+          exports2.useDeferredValue = useDeferredValue;
+          exports2.useEffect = useEffect12;
+          exports2.useId = useId;
+          exports2.useImperativeHandle = useImperativeHandle;
+          exports2.useInsertionEffect = useInsertionEffect;
+          exports2.useLayoutEffect = useLayoutEffect2;
+          exports2.useMemo = useMemo4;
+          exports2.useReducer = useReducer2;
+          exports2.useRef = useRef8;
+          exports2.useState = useState7;
+          exports2.useSyncExternalStore = useSyncExternalStore;
+          exports2.useTransition = useTransition;
+          exports2.version = ReactVersion;
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
           }
@@ -1907,19 +1907,19 @@
 
   // ../testeranto/node_modules/react/index.js
   var require_react = __commonJS({
-    "../testeranto/node_modules/react/index.js"(exports, module) {
+    "../testeranto/node_modules/react/index.js"(exports2, module2) {
       "use strict";
       if (false) {
-        module.exports = null;
+        module2.exports = null;
       } else {
-        module.exports = require_react_development();
+        module2.exports = require_react_development();
       }
     }
   });
 
   // ../testeranto/node_modules/scheduler/cjs/scheduler.development.js
   var require_scheduler_development = __commonJS({
-    "../testeranto/node_modules/scheduler/cjs/scheduler.development.js"(exports) {
+    "../testeranto/node_modules/scheduler/cjs/scheduler.development.js"(exports2) {
       "use strict";
       if (true) {
         (function() {
@@ -1950,8 +1950,8 @@
             }
             return first;
           }
-          function siftUp(heap, node, i) {
-            var index = i;
+          function siftUp(heap, node, i2) {
+            var index = i2;
             while (index > 0) {
               var parentIndex = index - 1 >>> 1;
               var parent = heap[parentIndex];
@@ -1964,8 +1964,8 @@
               }
             }
           }
-          function siftDown(heap, node, i) {
-            var index = i;
+          function siftDown(heap, node, i2) {
+            var index = i2;
             var length = heap.length;
             var halfLength = length >>> 1;
             while (index < halfLength) {
@@ -2006,13 +2006,13 @@
           var hasPerformanceNow = typeof performance === "object" && typeof performance.now === "function";
           if (hasPerformanceNow) {
             var localPerformance = performance;
-            exports.unstable_now = function() {
+            exports2.unstable_now = function() {
               return localPerformance.now();
             };
           } else {
             var localDate = Date;
             var initialTime = localDate.now();
-            exports.unstable_now = function() {
+            exports2.unstable_now = function() {
               return localDate.now() - initialTime;
             };
           }
@@ -2078,7 +2078,7 @@
                   return workLoop(hasTimeRemaining, initialTime2);
                 } catch (error) {
                   if (currentTask !== null) {
-                    var currentTime = exports.unstable_now();
+                    var currentTime = exports2.unstable_now();
                     markTaskErrored(currentTask, currentTime);
                     currentTask.isQueued = false;
                   }
@@ -2107,7 +2107,7 @@
                 currentPriorityLevel = currentTask.priorityLevel;
                 var didUserCallbackTimeout = currentTask.expirationTime <= currentTime;
                 var continuationCallback = callback(didUserCallbackTimeout);
-                currentTime = exports.unstable_now();
+                currentTime = exports2.unstable_now();
                 if (typeof continuationCallback === "function") {
                   currentTask.callback = continuationCallback;
                 } else {
@@ -2182,11 +2182,11 @@
               }
             };
           }
-          function unstable_scheduleCallback(priorityLevel, callback, options) {
-            var currentTime = exports.unstable_now();
+          function unstable_scheduleCallback(priorityLevel, callback, options2) {
+            var currentTime = exports2.unstable_now();
             var startTime2;
-            if (typeof options === "object" && options !== null) {
-              var delay = options.delay;
+            if (typeof options2 === "object" && options2 !== null) {
+              var delay = options2.delay;
               if (typeof delay === "number" && delay > 0) {
                 startTime2 = currentTime + delay;
               } else {
@@ -2195,26 +2195,26 @@
             } else {
               startTime2 = currentTime;
             }
-            var timeout;
+            var timeout2;
             switch (priorityLevel) {
               case ImmediatePriority:
-                timeout = IMMEDIATE_PRIORITY_TIMEOUT;
+                timeout2 = IMMEDIATE_PRIORITY_TIMEOUT;
                 break;
               case UserBlockingPriority:
-                timeout = USER_BLOCKING_PRIORITY_TIMEOUT;
+                timeout2 = USER_BLOCKING_PRIORITY_TIMEOUT;
                 break;
               case IdlePriority:
-                timeout = IDLE_PRIORITY_TIMEOUT;
+                timeout2 = IDLE_PRIORITY_TIMEOUT;
                 break;
               case LowPriority:
-                timeout = LOW_PRIORITY_TIMEOUT;
+                timeout2 = LOW_PRIORITY_TIMEOUT;
                 break;
               case NormalPriority:
               default:
-                timeout = NORMAL_PRIORITY_TIMEOUT;
+                timeout2 = NORMAL_PRIORITY_TIMEOUT;
                 break;
             }
-            var expirationTime = startTime2 + timeout;
+            var expirationTime = startTime2 + timeout2;
             var newTask = {
               id: taskIdCounter++,
               callback,
@@ -2267,7 +2267,7 @@
           var frameInterval = frameYieldMs;
           var startTime = -1;
           function shouldYieldToHost() {
-            var timeElapsed = exports.unstable_now() - startTime;
+            var timeElapsed = exports2.unstable_now() - startTime;
             if (timeElapsed < frameInterval) {
               return false;
             }
@@ -2288,7 +2288,7 @@
           }
           var performWorkUntilDeadline = function() {
             if (scheduledHostCallback !== null) {
-              var currentTime = exports.unstable_now();
+              var currentTime = exports2.unstable_now();
               startTime = currentTime;
               var hasTimeRemaining = true;
               var hasMoreWork = true;
@@ -2332,7 +2332,7 @@
           }
           function requestHostTimeout(callback, ms) {
             taskTimeoutID = localSetTimeout(function() {
-              callback(exports.unstable_now());
+              callback(exports2.unstable_now());
             }, ms);
           }
           function cancelHostTimeout() {
@@ -2341,24 +2341,24 @@
           }
           var unstable_requestPaint = requestPaint;
           var unstable_Profiling = null;
-          exports.unstable_IdlePriority = IdlePriority;
-          exports.unstable_ImmediatePriority = ImmediatePriority;
-          exports.unstable_LowPriority = LowPriority;
-          exports.unstable_NormalPriority = NormalPriority;
-          exports.unstable_Profiling = unstable_Profiling;
-          exports.unstable_UserBlockingPriority = UserBlockingPriority;
-          exports.unstable_cancelCallback = unstable_cancelCallback;
-          exports.unstable_continueExecution = unstable_continueExecution;
-          exports.unstable_forceFrameRate = forceFrameRate;
-          exports.unstable_getCurrentPriorityLevel = unstable_getCurrentPriorityLevel;
-          exports.unstable_getFirstCallbackNode = unstable_getFirstCallbackNode;
-          exports.unstable_next = unstable_next;
-          exports.unstable_pauseExecution = unstable_pauseExecution;
-          exports.unstable_requestPaint = unstable_requestPaint;
-          exports.unstable_runWithPriority = unstable_runWithPriority;
-          exports.unstable_scheduleCallback = unstable_scheduleCallback;
-          exports.unstable_shouldYield = shouldYieldToHost;
-          exports.unstable_wrapCallback = unstable_wrapCallback;
+          exports2.unstable_IdlePriority = IdlePriority;
+          exports2.unstable_ImmediatePriority = ImmediatePriority;
+          exports2.unstable_LowPriority = LowPriority;
+          exports2.unstable_NormalPriority = NormalPriority;
+          exports2.unstable_Profiling = unstable_Profiling;
+          exports2.unstable_UserBlockingPriority = UserBlockingPriority;
+          exports2.unstable_cancelCallback = unstable_cancelCallback;
+          exports2.unstable_continueExecution = unstable_continueExecution;
+          exports2.unstable_forceFrameRate = forceFrameRate;
+          exports2.unstable_getCurrentPriorityLevel = unstable_getCurrentPriorityLevel;
+          exports2.unstable_getFirstCallbackNode = unstable_getFirstCallbackNode;
+          exports2.unstable_next = unstable_next;
+          exports2.unstable_pauseExecution = unstable_pauseExecution;
+          exports2.unstable_requestPaint = unstable_requestPaint;
+          exports2.unstable_runWithPriority = unstable_runWithPriority;
+          exports2.unstable_scheduleCallback = unstable_scheduleCallback;
+          exports2.unstable_shouldYield = shouldYieldToHost;
+          exports2.unstable_wrapCallback = unstable_wrapCallback;
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
           }
@@ -2369,19 +2369,19 @@
 
   // ../testeranto/node_modules/scheduler/index.js
   var require_scheduler = __commonJS({
-    "../testeranto/node_modules/scheduler/index.js"(exports, module) {
+    "../testeranto/node_modules/scheduler/index.js"(exports2, module2) {
       "use strict";
       if (false) {
-        module.exports = null;
+        module2.exports = null;
       } else {
-        module.exports = require_scheduler_development();
+        module2.exports = require_scheduler_development();
       }
     }
   });
 
   // ../testeranto/node_modules/react-dom/cjs/react-dom.development.js
   var require_react_dom_development = __commonJS({
-    "../testeranto/node_modules/react-dom/cjs/react-dom.development.js"(exports) {
+    "../testeranto/node_modules/react-dom/cjs/react-dom.development.js"(exports2) {
       "use strict";
       if (true) {
         (function() {
@@ -2389,9 +2389,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React2 = require_react();
+          var React43 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React2.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React43.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -2490,8 +2490,8 @@
                 possibleRegistrationNames.ondblclick = registrationName;
               }
             }
-            for (var i = 0; i < dependencies.length; i++) {
-              allNativeEvents.add(dependencies[i]);
+            for (var i2 = 0; i2 < dependencies.length; i2++) {
+              allNativeEvents.add(dependencies[i2]);
             }
           }
           var canUseDOM = !!(typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined");
@@ -3547,8 +3547,8 @@
             if (typeof type === "object") {
               switch (type.$$typeof) {
                 case REACT_CONTEXT_TYPE:
-                  var context = type;
-                  return getContextName(context) + ".Consumer";
+                  var context3 = type;
+                  return getContextName(context3) + ".Consumer";
                 case REACT_PROVIDER_TYPE:
                   var provider = type;
                   return getContextName(provider._context) + ".Provider";
@@ -3587,8 +3587,8 @@
               case CacheComponent:
                 return "Cache";
               case ContextConsumer:
-                var context = type;
-                return getContextName$1(context) + ".Consumer";
+                var context3 = type;
+                return getContextName$1(context3) + ".Consumer";
               case ContextProvider:
                 var provider = type;
                 return getContextName$1(provider._context) + ".Provider";
@@ -3963,8 +3963,8 @@
                 checkAttributeStringCoercion(name, "name");
               }
               var group = queryRoot.querySelectorAll("input[name=" + JSON.stringify("" + name) + '][type="radio"]');
-              for (var i = 0; i < group.length; i++) {
-                var otherNode = group[i];
+              for (var i2 = 0; i2 < group.length; i2++) {
+                var otherNode = group[i2];
                 if (otherNode === rootNode || otherNode.form !== rootNode.form) {
                   continue;
                 }
@@ -3996,7 +3996,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React2.Children.forEach(props.children, function(child) {
+                  React43.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -4045,8 +4045,8 @@
           function checkSelectPropTypes(props) {
             {
               checkControlledValueProps("select", props);
-              for (var i = 0; i < valuePropNames.length; i++) {
-                var propName = valuePropNames[i];
+              for (var i2 = 0; i2 < valuePropNames.length; i2++) {
+                var propName = valuePropNames[i2];
                 if (props[propName] == null) {
                   continue;
                 }
@@ -4060,35 +4060,35 @@
             }
           }
           function updateOptions(node, multiple, propValue, setDefaultSelected) {
-            var options2 = node.options;
+            var options3 = node.options;
             if (multiple) {
               var selectedValues = propValue;
               var selectedValue = {};
-              for (var i = 0; i < selectedValues.length; i++) {
-                selectedValue["$" + selectedValues[i]] = true;
+              for (var i2 = 0; i2 < selectedValues.length; i2++) {
+                selectedValue["$" + selectedValues[i2]] = true;
               }
-              for (var _i = 0; _i < options2.length; _i++) {
-                var selected = selectedValue.hasOwnProperty("$" + options2[_i].value);
-                if (options2[_i].selected !== selected) {
-                  options2[_i].selected = selected;
+              for (var _i = 0; _i < options3.length; _i++) {
+                var selected = selectedValue.hasOwnProperty("$" + options3[_i].value);
+                if (options3[_i].selected !== selected) {
+                  options3[_i].selected = selected;
                 }
                 if (selected && setDefaultSelected) {
-                  options2[_i].defaultSelected = true;
+                  options3[_i].defaultSelected = true;
                 }
               }
             } else {
               var _selectedValue = toString(getToStringValue(propValue));
               var defaultSelected = null;
-              for (var _i2 = 0; _i2 < options2.length; _i2++) {
-                if (options2[_i2].value === _selectedValue) {
-                  options2[_i2].selected = true;
+              for (var _i2 = 0; _i2 < options3.length; _i2++) {
+                if (options3[_i2].value === _selectedValue) {
+                  options3[_i2].selected = true;
                   if (setDefaultSelected) {
-                    options2[_i2].defaultSelected = true;
+                    options3[_i2].defaultSelected = true;
                   }
                   return;
                 }
-                if (defaultSelected === null && !options2[_i2].disabled) {
-                  defaultSelected = options2[_i2];
+                if (defaultSelected === null && !options3[_i2].disabled) {
+                  defaultSelected = options3[_i2];
                 }
               }
               if (defaultSelected !== null) {
@@ -4412,9 +4412,9 @@
             return ("" + value).trim();
           }
           var uppercasePattern = /([A-Z])/g;
-          var msPattern = /^ms-/;
-          function hyphenateStyleName(name) {
-            return name.replace(uppercasePattern, "-$1").toLowerCase().replace(msPattern, "-ms-");
+          var msPattern2 = /^ms-/;
+          function hyphenateStyleName2(name) {
+            return name.replace(uppercasePattern, "-$1").toLowerCase().replace(msPattern2, "-ms-");
           }
           var warnValidStyle = function() {
           };
@@ -4427,7 +4427,7 @@
             var warnedStyleValues = {};
             var warnedForNaNValue = false;
             var warnedForInfinityValue = false;
-            var camelize = function(string) {
+            var camelize2 = function(string) {
               return string.replace(hyphenPattern, function(_, character) {
                 return character.toUpperCase();
               });
@@ -4443,7 +4443,7 @@
                 // As Andi Smith suggests
                 // (http://www.andismith.com/blog/2012/02/modernizr-prefixed/), an `-ms` prefix
                 // is converted to lowercase `ms`.
-                camelize(name.replace(msPattern$1, "ms-"))
+                camelize2(name.replace(msPattern$1, "ms-"))
               );
             };
             var warnBadVendoredStyleName = function(name) {
@@ -4503,7 +4503,7 @@
                 var styleValue = styles[styleName];
                 if (styleValue != null) {
                   var isCustomProperty = styleName.indexOf("--") === 0;
-                  serialized += delimiter + (isCustomProperty ? styleName : hyphenateStyleName(styleName)) + ":";
+                  serialized += delimiter + (isCustomProperty ? styleName : hyphenateStyleName2(styleName)) + ":";
                   serialized += dangerousStyleValue(styleName, styleValue, isCustomProperty);
                   delimiter = ";";
                 }
@@ -4512,7 +4512,7 @@
             }
           }
           function setValueForStyles(node, styles) {
-            var style2 = node.style;
+            var style3 = node.style;
             for (var styleName in styles) {
               if (!styles.hasOwnProperty(styleName)) {
                 continue;
@@ -4528,9 +4528,9 @@
                 styleName = "cssFloat";
               }
               if (isCustomProperty) {
-                style2.setProperty(styleName, styleValue);
+                style3.setProperty(styleName, styleValue);
               } else {
-                style2[styleName] = styleValue;
+                style3[styleName] = styleValue;
               }
             }
           }
@@ -4541,8 +4541,8 @@
             var expanded = {};
             for (var key in styles) {
               var longhands = shorthandToLonghand[key] || [key];
-              for (var i = 0; i < longhands.length; i++) {
-                expanded[longhands[i]] = key;
+              for (var i2 = 0; i2 < longhands.length; i2++) {
+                expanded[longhands[i2]] = key;
               }
             }
             return expanded;
@@ -5464,8 +5464,8 @@
             restoreQueue = null;
             restoreStateOfTarget(target);
             if (queuedTargets) {
-              for (var i = 0; i < queuedTargets.length; i++) {
-                restoreStateOfTarget(queuedTargets[i]);
+              for (var i2 = 0; i2 < queuedTargets.length; i2++) {
+                restoreStateOfTarget(queuedTargets[i2]);
               }
             }
           }
@@ -5540,22 +5540,22 @@
           var passiveBrowserEventsSupported = false;
           if (canUseDOM) {
             try {
-              var options = {};
-              Object.defineProperty(options, "passive", {
+              var options2 = {};
+              Object.defineProperty(options2, "passive", {
                 get: function() {
                   passiveBrowserEventsSupported = true;
                 }
               });
-              window.addEventListener("test", options, options);
-              window.removeEventListener("test", options, options);
+              window.addEventListener("test", options2, options2);
+              window.removeEventListener("test", options2, options2);
             } catch (e) {
               passiveBrowserEventsSupported = false;
             }
           }
-          function invokeGuardedCallbackProd(name, func, context, a, b, c, d, e, f) {
+          function invokeGuardedCallbackProd(name, func, context3, a, b, c, d, e, f) {
             var funcArgs = Array.prototype.slice.call(arguments, 3);
             try {
-              func.apply(context, funcArgs);
+              func.apply(context3, funcArgs);
             } catch (error2) {
               this.onError(error2);
             }
@@ -5564,7 +5564,7 @@
           {
             if (typeof window !== "undefined" && typeof window.dispatchEvent === "function" && typeof document !== "undefined" && typeof document.createEvent === "function") {
               var fakeNode = document.createElement("react");
-              invokeGuardedCallbackImpl = function invokeGuardedCallbackDev(name, func, context, a, b, c, d, e, f) {
+              invokeGuardedCallbackImpl = function invokeGuardedCallbackDev(name, func, context3, a, b, c, d, e, f) {
                 if (typeof document === "undefined" || document === null) {
                   throw new Error("The `document` global was defined when React was initialized, but is not defined anymore. This can happen in a test environment if a component schedules an update from an asynchronous callback, but the test has already finished running. To solve this, you can either unmount the component at the end of your test (and ensure that any asynchronous operations get canceled in `componentWillUnmount`), or you can change the test itself to be asynchronous.");
                 }
@@ -5583,7 +5583,7 @@
                 function callCallback2() {
                   didCall = true;
                   restoreAfterDispatch();
-                  func.apply(context, funcArgs);
+                  func.apply(context3, funcArgs);
                   didError = false;
                 }
                 var error2;
@@ -5639,12 +5639,12 @@
               caughtError = error2;
             }
           };
-          function invokeGuardedCallback(name, func, context, a, b, c, d, e, f) {
+          function invokeGuardedCallback(name, func, context3, a, b, c, d, e, f) {
             hasError = false;
             caughtError = null;
             invokeGuardedCallbackImpl$1.apply(reporter, arguments);
           }
-          function invokeGuardedCallbackAndCatchFirstError(name, func, context, a, b, c, d, e, f) {
+          function invokeGuardedCallbackAndCatchFirstError(name, func, context3, a, b, c, d, e, f) {
             invokeGuardedCallback.apply(this, arguments);
             if (hasError) {
               var error2 = clearCaughtError();
@@ -6153,14 +6153,14 @@
           }
           function getLaneLabelMap() {
             {
-              var map = /* @__PURE__ */ new Map();
+              var map2 = /* @__PURE__ */ new Map();
               var lane = 1;
               for (var index2 = 0; index2 < TotalLanes; index2++) {
                 var label = getLabelForLane(lane);
-                map.set(lane, label);
+                map2.set(lane, label);
                 lane *= 2;
               }
-              return map;
+              return map2;
             }
           }
           function markCommitStarted(lanes) {
@@ -6834,7 +6834,7 @@
           }
           function createLaneMap(initial) {
             var laneMap = [];
-            for (var i = 0; i < TotalLanes; i++) {
+            for (var i2 = 0; i2 < TotalLanes; i2++) {
               laneMap.push(initial);
             }
             return laneMap;
@@ -7218,14 +7218,14 @@
               target,
               priority: updatePriority
             };
-            var i = 0;
-            for (; i < queuedExplicitHydrationTargets.length; i++) {
-              if (!isHigherEventPriority(updatePriority, queuedExplicitHydrationTargets[i].priority)) {
+            var i2 = 0;
+            for (; i2 < queuedExplicitHydrationTargets.length; i2++) {
+              if (!isHigherEventPriority(updatePriority, queuedExplicitHydrationTargets[i2].priority)) {
                 break;
               }
             }
-            queuedExplicitHydrationTargets.splice(i, 0, queuedTarget);
-            if (i === 0) {
+            queuedExplicitHydrationTargets.splice(i2, 0, queuedTarget);
+            if (i2 === 0) {
               attemptExplicitHydrationTarget(queuedTarget);
             }
           }
@@ -7257,9 +7257,9 @@
             }
             return true;
           }
-          function attemptReplayContinuousQueuedEventInMap(queuedEvent, key, map) {
+          function attemptReplayContinuousQueuedEventInMap(queuedEvent, key, map2) {
             if (attemptReplayContinuousQueuedEvent(queuedEvent)) {
-              map.delete(key);
+              map2.delete(key);
             }
           }
           function replayUnblockedEvents() {
@@ -7288,8 +7288,8 @@
           function retryIfBlockedOn(unblocked) {
             if (queuedDiscreteEvents.length > 0) {
               scheduleCallbackIfUnblocked(queuedDiscreteEvents[0], unblocked);
-              for (var i = 1; i < queuedDiscreteEvents.length; i++) {
-                var queuedEvent = queuedDiscreteEvents[i];
+              for (var i2 = 1; i2 < queuedDiscreteEvents.length; i2++) {
+                var queuedEvent = queuedDiscreteEvents[i2];
                 if (queuedEvent.blockedOn === unblocked) {
                   queuedEvent.blockedOn = null;
                 }
@@ -8402,8 +8402,8 @@
             if (keysA.length !== keysB.length) {
               return false;
             }
-            for (var i = 0; i < keysA.length; i++) {
-              var currentKey = keysA[i];
+            for (var i2 = 0; i2 < keysA.length; i2++) {
+              var currentKey = keysA[i2];
               if (!hasOwnProperty.call(objB, currentKey) || !objectIs(objA[currentKey], objB[currentKey])) {
                 return false;
               }
@@ -8443,8 +8443,8 @@
             }
           }
           function getOffsets(outerNode) {
-            var ownerDocument = outerNode.ownerDocument;
-            var win = ownerDocument && ownerDocument.defaultView || window;
+            var ownerDocument2 = outerNode.ownerDocument;
+            var win = ownerDocument2 && ownerDocument2.defaultView || window;
             var selection = win.getSelection && win.getSelection();
             if (!selection || selection.rangeCount === 0) {
               return null;
@@ -8620,8 +8620,8 @@
               if (typeof priorFocusedElem.focus === "function") {
                 priorFocusedElem.focus();
               }
-              for (var i = 0; i < ancestors.length; i++) {
-                var info = ancestors[i];
+              for (var i2 = 0; i2 < ancestors.length; i2++) {
+                var info = ancestors[i2];
                 info.element.scrollLeft = info.left;
                 info.element.scrollTop = info.top;
               }
@@ -8749,9 +8749,9 @@
             transitionend: makePrefixMap("Transition", "TransitionEnd")
           };
           var prefixedEventNames = {};
-          var style = {};
+          var style2 = {};
           if (canUseDOM) {
-            style = document.createElement("div").style;
+            style2 = document.createElement("div").style;
             if (!("AnimationEvent" in window)) {
               delete vendorPrefixes.animationend.animation;
               delete vendorPrefixes.animationiteration.animation;
@@ -8769,7 +8769,7 @@
             }
             var prefixMap = vendorPrefixes[eventName];
             for (var styleProp in prefixMap) {
-              if (prefixMap.hasOwnProperty(styleProp) && styleProp in style) {
+              if (prefixMap.hasOwnProperty(styleProp) && styleProp in style2) {
                 return prefixedEventNames[eventName] = prefixMap[styleProp];
               }
             }
@@ -8786,8 +8786,8 @@
             registerTwoPhaseEvent(reactName, [domEventName]);
           }
           function registerSimpleEvents() {
-            for (var i = 0; i < simpleEventPluginEvents.length; i++) {
-              var eventName = simpleEventPluginEvents[i];
+            for (var i2 = 0; i2 < simpleEventPluginEvents.length; i2++) {
+              var eventName = simpleEventPluginEvents[i2];
               var domEventName = eventName.toLowerCase();
               var capitalizedEvent = eventName[0].toUpperCase() + eventName.slice(1);
               registerSimpleEvent(domEventName, "on" + capitalizedEvent);
@@ -8931,8 +8931,8 @@
           function processDispatchQueueItemsInOrder(event, dispatchListeners, inCapturePhase) {
             var previousInstance;
             if (inCapturePhase) {
-              for (var i = dispatchListeners.length - 1; i >= 0; i--) {
-                var _dispatchListeners$i = dispatchListeners[i], instance = _dispatchListeners$i.instance, currentTarget = _dispatchListeners$i.currentTarget, listener = _dispatchListeners$i.listener;
+              for (var i2 = dispatchListeners.length - 1; i2 >= 0; i2--) {
+                var _dispatchListeners$i = dispatchListeners[i2], instance = _dispatchListeners$i.instance, currentTarget = _dispatchListeners$i.currentTarget, listener = _dispatchListeners$i.listener;
                 if (instance !== previousInstance && event.isPropagationStopped()) {
                   return;
                 }
@@ -8952,8 +8952,8 @@
           }
           function processDispatchQueue(dispatchQueue, eventSystemFlags) {
             var inCapturePhase = (eventSystemFlags & IS_CAPTURE_PHASE) !== 0;
-            for (var i = 0; i < dispatchQueue.length; i++) {
-              var _dispatchQueue$i = dispatchQueue[i], event = _dispatchQueue$i.event, listeners = _dispatchQueue$i.listeners;
+            for (var i2 = 0; i2 < dispatchQueue.length; i2++) {
+              var _dispatchQueue$i = dispatchQueue[i2], event = _dispatchQueue$i.event, listeners = _dispatchQueue$i.listeners;
               processDispatchQueueItemsInOrder(event, listeners, inCapturePhase);
             }
             rethrowCaughtError();
@@ -9002,11 +9002,11 @@
                   listenToNativeEvent(domEventName, true, rootContainerElement);
                 }
               });
-              var ownerDocument = rootContainerElement.nodeType === DOCUMENT_NODE ? rootContainerElement : rootContainerElement.ownerDocument;
-              if (ownerDocument !== null) {
-                if (!ownerDocument[listeningMarker]) {
-                  ownerDocument[listeningMarker] = true;
-                  listenToNativeEvent("selectionchange", false, ownerDocument);
+              var ownerDocument2 = rootContainerElement.nodeType === DOCUMENT_NODE ? rootContainerElement : rootContainerElement.ownerDocument;
+              if (ownerDocument2 !== null) {
+                if (!ownerDocument2[listeningMarker]) {
+                  ownerDocument2[listeningMarker] = true;
+                  listenToNativeEvent("selectionchange", false, ownerDocument2);
                 }
               }
             }
@@ -9330,10 +9330,10 @@
           function getOwnerDocumentFromRootContainer(rootContainerElement) {
             return rootContainerElement.nodeType === DOCUMENT_NODE ? rootContainerElement : rootContainerElement.ownerDocument;
           }
-          function noop() {
+          function noop3() {
           }
           function trapClickOnNonInteractiveElement(node) {
-            node.onclick = noop;
+            node.onclick = noop3;
           }
           function setInitialDOMProperties(tag, domElement, rootContainerElement, nextProps, isCustomComponentTag) {
             for (var propKey in nextProps) {
@@ -9381,9 +9381,9 @@
             }
           }
           function updateDOMProperties(domElement, updatePayload, wasCustomComponentTag, isCustomComponentTag) {
-            for (var i = 0; i < updatePayload.length; i += 2) {
-              var propKey = updatePayload[i];
-              var propValue = updatePayload[i + 1];
+            for (var i2 = 0; i2 < updatePayload.length; i2 += 2) {
+              var propKey = updatePayload[i2];
+              var propValue = updatePayload[i2 + 1];
               if (propKey === STYLE) {
                 setValueForStyles(domElement, propValue);
               } else if (propKey === DANGEROUSLY_SET_INNER_HTML) {
@@ -9397,7 +9397,7 @@
           }
           function createElement(type, props, rootContainerElement, parentNamespace) {
             var isCustomComponentTag;
-            var ownerDocument = getOwnerDocumentFromRootContainer(rootContainerElement);
+            var ownerDocument2 = getOwnerDocumentFromRootContainer(rootContainerElement);
             var domElement;
             var namespaceURI = parentNamespace;
             if (namespaceURI === HTML_NAMESPACE) {
@@ -9411,16 +9411,16 @@
                 }
               }
               if (type === "script") {
-                var div = ownerDocument.createElement("div");
+                var div = ownerDocument2.createElement("div");
                 div.innerHTML = "<script><\/script>";
                 var firstChild = div.firstChild;
                 domElement = div.removeChild(firstChild);
               } else if (typeof props.is === "string") {
-                domElement = ownerDocument.createElement(type, {
+                domElement = ownerDocument2.createElement(type, {
                   is: props.is
                 });
               } else {
-                domElement = ownerDocument.createElement(type);
+                domElement = ownerDocument2.createElement(type);
                 if (type === "select") {
                   var node = domElement;
                   if (props.multiple) {
@@ -9431,7 +9431,7 @@
                 }
               }
             } else {
-              domElement = ownerDocument.createElementNS(namespaceURI, type);
+              domElement = ownerDocument2.createElementNS(namespaceURI, type);
             }
             {
               if (namespaceURI === HTML_NAMESPACE) {
@@ -9466,8 +9466,8 @@
                 break;
               case "video":
               case "audio":
-                for (var i = 0; i < mediaEventTypes.length; i++) {
-                  listenToNonDelegatedEvent(mediaEventTypes[i], domElement);
+                for (var i2 = 0; i2 < mediaEventTypes.length; i2++) {
+                  listenToNonDelegatedEvent(mediaEventTypes[i2], domElement);
                 }
                 props = rawProps;
                 break;
@@ -9718,8 +9718,8 @@
                 break;
               case "video":
               case "audio":
-                for (var i = 0; i < mediaEventTypes.length; i++) {
-                  listenToNonDelegatedEvent(mediaEventTypes[i], domElement);
+                for (var i2 = 0; i2 < mediaEventTypes.length; i2++) {
+                  listenToNonDelegatedEvent(mediaEventTypes[i2], domElement);
                 }
                 break;
               case "source":
@@ -10419,11 +10419,11 @@
           }
           function hideInstance(instance) {
             instance = instance;
-            var style2 = instance.style;
-            if (typeof style2.setProperty === "function") {
-              style2.setProperty("display", "none", "important");
+            var style3 = instance.style;
+            if (typeof style3.setProperty === "function") {
+              style3.setProperty("display", "none", "important");
             } else {
-              style2.display = "none";
+              style3.display = "none";
             }
           }
           function hideTextInstance(textInstance) {
@@ -10886,18 +10886,18 @@
               if (instance && instance.__reactInternalMemoizedUnmaskedChildContext === unmaskedContext) {
                 return instance.__reactInternalMemoizedMaskedChildContext;
               }
-              var context = {};
+              var context3 = {};
               for (var key in contextTypes) {
-                context[key] = unmaskedContext[key];
+                context3[key] = unmaskedContext[key];
               }
               {
                 var name = getComponentNameFromFiber(workInProgress2) || "Unknown";
-                checkPropTypes(contextTypes, context, "context", name);
+                checkPropTypes(contextTypes, context3, "context", name);
               }
               if (instance) {
-                cacheContext(workInProgress2, unmaskedContext, context);
+                cacheContext(workInProgress2, unmaskedContext, context3);
               }
-              return context;
+              return context3;
             }
           }
           function hasContextChanged() {
@@ -10923,12 +10923,12 @@
               pop(contextStackCursor, fiber);
             }
           }
-          function pushTopLevelContextObject(fiber, context, didChange) {
+          function pushTopLevelContextObject(fiber, context3, didChange) {
             {
               if (contextStackCursor.current !== emptyContextObject) {
                 throw new Error("Unexpected context found on stack. This error is likely caused by a bug in React. Please file an issue.");
               }
-              push(contextStackCursor, context, fiber);
+              push(contextStackCursor, context3, fiber);
               push(didPerformWorkStackCursor, didChange, fiber);
             }
           }
@@ -11035,14 +11035,14 @@
           function flushSyncCallbacks() {
             if (!isFlushingSyncQueue && syncQueue !== null) {
               isFlushingSyncQueue = true;
-              var i = 0;
+              var i2 = 0;
               var previousUpdatePriority = getCurrentUpdatePriority();
               try {
                 var isSync = true;
                 var queue = syncQueue;
                 setCurrentUpdatePriority(DiscreteEventPriority);
-                for (; i < queue.length; i++) {
-                  var callback = queue[i];
+                for (; i2 < queue.length; i2++) {
+                  var callback = queue[i2];
                   do {
                     callback = callback(isSync);
                   } while (callback !== null);
@@ -11051,7 +11051,7 @@
                 includesLegacySyncCallbacks = false;
               } catch (error2) {
                 if (syncQueue !== null) {
-                  syncQueue = syncQueue.slice(i + 1);
+                  syncQueue = syncQueue.slice(i2 + 1);
                 }
                 scheduleCallback(ImmediatePriority, flushSyncCallbacks);
                 throw error2;
@@ -11765,10 +11765,10 @@
           function resolveDefaultProps(Component, baseProps) {
             if (Component && Component.defaultProps) {
               var props = assign({}, baseProps);
-              var defaultProps = Component.defaultProps;
-              for (var propName in defaultProps) {
+              var defaultProps5 = Component.defaultProps;
+              for (var propName in defaultProps5) {
                 if (props[propName] === void 0) {
-                  props[propName] = defaultProps[propName];
+                  props[propName] = defaultProps5[propName];
                 }
               }
               return props;
@@ -11802,24 +11802,24 @@
               isDisallowedContextReadInDEV = false;
             }
           }
-          function pushProvider(providerFiber, context, nextValue) {
+          function pushProvider(providerFiber, context3, nextValue) {
             {
-              push(valueCursor, context._currentValue, providerFiber);
-              context._currentValue = nextValue;
+              push(valueCursor, context3._currentValue, providerFiber);
+              context3._currentValue = nextValue;
               {
-                if (context._currentRenderer !== void 0 && context._currentRenderer !== null && context._currentRenderer !== rendererSigil) {
+                if (context3._currentRenderer !== void 0 && context3._currentRenderer !== null && context3._currentRenderer !== rendererSigil) {
                   error("Detected multiple renderers concurrently rendering the same context provider. This is currently unsupported.");
                 }
-                context._currentRenderer = rendererSigil;
+                context3._currentRenderer = rendererSigil;
               }
             }
           }
-          function popProvider(context, providerFiber) {
+          function popProvider(context3, providerFiber) {
             var currentValue = valueCursor.current;
             pop(valueCursor, providerFiber);
             {
               {
-                context._currentValue = currentValue;
+                context3._currentValue = currentValue;
               }
             }
           }
@@ -11846,12 +11846,12 @@
               }
             }
           }
-          function propagateContextChange(workInProgress2, context, renderLanes2) {
+          function propagateContextChange(workInProgress2, context3, renderLanes2) {
             {
-              propagateContextChange_eager(workInProgress2, context, renderLanes2);
+              propagateContextChange_eager(workInProgress2, context3, renderLanes2);
             }
           }
-          function propagateContextChange_eager(workInProgress2, context, renderLanes2) {
+          function propagateContextChange_eager(workInProgress2, context3, renderLanes2) {
             var fiber = workInProgress2.child;
             if (fiber !== null) {
               fiber.return = workInProgress2;
@@ -11863,7 +11863,7 @@
                 nextFiber = fiber.child;
                 var dependency = list.firstContext;
                 while (dependency !== null) {
-                  if (dependency.context === context) {
+                  if (dependency.context === context3) {
                     if (fiber.tag === ClassComponent) {
                       var lane = pickArbitraryLane(renderLanes2);
                       var update = createUpdate(NoTimestamp, lane);
@@ -11949,18 +11949,18 @@
               }
             }
           }
-          function readContext(context) {
+          function readContext(context3) {
             {
               if (isDisallowedContextReadInDEV) {
                 error("Context can only be read while React is rendering. In classes, you can read it in the render method or getDerivedStateFromProps. In function components, you can read it directly in the function body, but not inside Hooks like useReducer() or useMemo().");
               }
             }
-            var value = context._currentValue;
-            if (lastFullyObservedContext === context)
+            var value = context3._currentValue;
+            if (lastFullyObservedContext === context3)
               ;
             else {
               var contextItem = {
-                context,
+                context: context3,
                 memoizedValue: value,
                 next: null
               };
@@ -11989,8 +11989,8 @@
           }
           function finishQueueingConcurrentUpdates() {
             if (concurrentQueues !== null) {
-              for (var i = 0; i < concurrentQueues.length; i++) {
-                var queue = concurrentQueues[i];
+              for (var i2 = 0; i2 < concurrentQueues.length; i2++) {
+                var queue = concurrentQueues[i2];
                 var lastInterleavedUpdate = queue.interleaved;
                 if (lastInterleavedUpdate !== null) {
                   queue.interleaved = null;
@@ -12416,11 +12416,11 @@
               currentlyProcessingQueue = null;
             }
           }
-          function callCallback(callback, context) {
+          function callCallback(callback, context3) {
             if (typeof callback !== "function") {
               throw new Error("Invalid argument passed as callback. Expected a function. Instead " + ("received: " + callback));
             }
-            callback.call(context);
+            callback.call(context3);
           }
           function resetHasForceUpdateBeforeProcessing() {
             hasForceUpdate = false;
@@ -12432,8 +12432,8 @@
             var effects = finishedQueue.effects;
             finishedQueue.effects = null;
             if (effects !== null) {
-              for (var i = 0; i < effects.length; i++) {
-                var effect = effects[i];
+              for (var i2 = 0; i2 < effects.length; i2++) {
+                var effect = effects[i2];
                 var callback = effect.callback;
                 if (callback !== null) {
                   effect.callback = null;
@@ -12443,7 +12443,7 @@
             }
           }
           var fakeInternalInstance = {};
-          var emptyRefsObject = new React2.Component().refs;
+          var emptyRefsObject = new React43.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -12694,7 +12694,7 @@
           function constructClassInstance(workInProgress2, ctor, props) {
             var isLegacyContextConsumer = false;
             var unmaskedContext = emptyContextObject;
-            var context = emptyContextObject;
+            var context3 = emptyContextObject;
             var contextType = ctor.contextType;
             {
               if ("contextType" in ctor) {
@@ -12721,19 +12721,19 @@
               }
             }
             if (typeof contextType === "object" && contextType !== null) {
-              context = readContext(contextType);
+              context3 = readContext(contextType);
             } else {
               unmaskedContext = getUnmaskedContext(workInProgress2, ctor, true);
               var contextTypes = ctor.contextTypes;
               isLegacyContextConsumer = contextTypes !== null && contextTypes !== void 0;
-              context = isLegacyContextConsumer ? getMaskedContext(workInProgress2, unmaskedContext) : emptyContextObject;
+              context3 = isLegacyContextConsumer ? getMaskedContext(workInProgress2, unmaskedContext) : emptyContextObject;
             }
-            var instance = new ctor(props, context);
+            var instance = new ctor(props, context3);
             {
               if (workInProgress2.mode & StrictLegacyMode) {
                 setIsStrictModeForDevtools(true);
                 try {
-                  instance = new ctor(props, context);
+                  instance = new ctor(props, context3);
                 } finally {
                   setIsStrictModeForDevtools(false);
                 }
@@ -12779,7 +12779,7 @@
               }
             }
             if (isLegacyContextConsumer) {
-              cacheContext(workInProgress2, unmaskedContext, context);
+              cacheContext(workInProgress2, unmaskedContext, context3);
             }
             return instance;
           }
@@ -13430,8 +13430,8 @@
             function reconcileChildrenArray(returnFiber, currentFirstChild, newChildren, lanes) {
               {
                 var knownKeys = null;
-                for (var i = 0; i < newChildren.length; i++) {
-                  var child = newChildren[i];
+                for (var i2 = 0; i2 < newChildren.length; i2++) {
+                  var child = newChildren[i2];
                   knownKeys = warnOnInvalidKey(child, knownKeys, returnFiber);
                 }
               }
@@ -13830,14 +13830,14 @@
             pop(rootInstanceStackCursor, fiber);
           }
           function getHostContext() {
-            var context = requiredContext(contextStackCursor$1.current);
-            return context;
+            var context3 = requiredContext(contextStackCursor$1.current);
+            return context3;
           }
           function pushHostContext(fiber) {
             var rootInstance = requiredContext(rootInstanceStackCursor.current);
-            var context = requiredContext(contextStackCursor$1.current);
-            var nextContext = getChildHostContext(context, fiber.type);
-            if (context === nextContext) {
+            var context3 = requiredContext(contextStackCursor$1.current);
+            var nextContext = getChildHostContext(context3, fiber.type);
+            if (context3 === nextContext) {
               return;
             }
             push(contextFiberStackCursor, fiber, fiber);
@@ -13945,8 +13945,8 @@
           );
           var workInProgressSources = [];
           function resetWorkInProgressVersions() {
-            for (var i = 0; i < workInProgressSources.length; i++) {
-              var mutableSource = workInProgressSources[i];
+            for (var i2 = 0; i2 < workInProgressSources.length; i2++) {
+              var mutableSource = workInProgressSources[i2];
               {
                 mutableSource._workInProgressVersionPrimary = null;
               }
@@ -14017,10 +14017,10 @@
                 if (hookTypesDev !== null) {
                   var table = "";
                   var secondColumnStart = 30;
-                  for (var i = 0; i <= hookTypesUpdateIndexDev; i++) {
-                    var oldHookName = hookTypesDev[i];
-                    var newHookName = i === hookTypesUpdateIndexDev ? currentHookName : oldHookName;
-                    var row = i + 1 + ". " + oldHookName;
+                  for (var i2 = 0; i2 <= hookTypesUpdateIndexDev; i2++) {
+                    var oldHookName = hookTypesDev[i2];
+                    var newHookName = i2 === hookTypesUpdateIndexDev ? currentHookName : oldHookName;
+                    var row = i2 + 1 + ". " + oldHookName;
                     while (row.length < secondColumnStart) {
                       row += " ";
                     }
@@ -14052,8 +14052,8 @@
                 error("The final argument passed to %s changed size between renders. The order and size of this array must remain constant.\n\nPrevious: %s\nIncoming: %s", currentHookNameInDev, "[" + prevDeps.join(", ") + "]", "[" + nextDeps.join(", ") + "]");
               }
             }
-            for (var i = 0; i < prevDeps.length && i < nextDeps.length; i++) {
-              if (objectIs(nextDeps[i], prevDeps[i])) {
+            for (var i2 = 0; i2 < prevDeps.length && i2 < nextDeps.length; i2++) {
+              if (objectIs(nextDeps[i2], prevDeps[i2])) {
                 continue;
               }
               return false;
@@ -14786,7 +14786,7 @@
               return value;
             }
           }
-          function startTransition(setPending, callback, options2) {
+          function startTransition(setPending, callback, options3) {
             var previousPriority = getCurrentUpdatePriority();
             setCurrentUpdatePriority(higherEventPriority(previousPriority, ContinuousEventPriority));
             setPending(true);
@@ -15005,8 +15005,8 @@
               error("Do not call Hooks inside useEffect(...), useMemo(...), or other built-in Hooks. You can only call Hooks at the top level of your React function. For more information, see https://reactjs.org/link/rules-of-hooks");
             };
             HooksDispatcherOnMountInDEV = {
-              readContext: function(context) {
-                return readContext(context);
+              readContext: function(context3) {
+                return readContext(context3);
               },
               useCallback: function(callback, deps) {
                 currentHookNameInDev = "useCallback";
@@ -15014,10 +15014,10 @@
                 checkDepsAreArrayDev(deps);
                 return mountCallback(callback, deps);
               },
-              useContext: function(context) {
+              useContext: function(context3) {
                 currentHookNameInDev = "useContext";
                 mountHookTypesDev();
-                return readContext(context);
+                return readContext(context3);
               },
               useEffect: function(create, deps) {
                 currentHookNameInDev = "useEffect";
@@ -15115,18 +15115,18 @@
               unstable_isNewReconciler: enableNewReconciler
             };
             HooksDispatcherOnMountWithHookTypesInDEV = {
-              readContext: function(context) {
-                return readContext(context);
+              readContext: function(context3) {
+                return readContext(context3);
               },
               useCallback: function(callback, deps) {
                 currentHookNameInDev = "useCallback";
                 updateHookTypesDev();
                 return mountCallback(callback, deps);
               },
-              useContext: function(context) {
+              useContext: function(context3) {
                 currentHookNameInDev = "useContext";
                 updateHookTypesDev();
-                return readContext(context);
+                return readContext(context3);
               },
               useEffect: function(create, deps) {
                 currentHookNameInDev = "useEffect";
@@ -15219,18 +15219,18 @@
               unstable_isNewReconciler: enableNewReconciler
             };
             HooksDispatcherOnUpdateInDEV = {
-              readContext: function(context) {
-                return readContext(context);
+              readContext: function(context3) {
+                return readContext(context3);
               },
               useCallback: function(callback, deps) {
                 currentHookNameInDev = "useCallback";
                 updateHookTypesDev();
                 return updateCallback(callback, deps);
               },
-              useContext: function(context) {
+              useContext: function(context3) {
                 currentHookNameInDev = "useContext";
                 updateHookTypesDev();
-                return readContext(context);
+                return readContext(context3);
               },
               useEffect: function(create, deps) {
                 currentHookNameInDev = "useEffect";
@@ -15323,18 +15323,18 @@
               unstable_isNewReconciler: enableNewReconciler
             };
             HooksDispatcherOnRerenderInDEV = {
-              readContext: function(context) {
-                return readContext(context);
+              readContext: function(context3) {
+                return readContext(context3);
               },
               useCallback: function(callback, deps) {
                 currentHookNameInDev = "useCallback";
                 updateHookTypesDev();
                 return updateCallback(callback, deps);
               },
-              useContext: function(context) {
+              useContext: function(context3) {
                 currentHookNameInDev = "useContext";
                 updateHookTypesDev();
-                return readContext(context);
+                return readContext(context3);
               },
               useEffect: function(create, deps) {
                 currentHookNameInDev = "useEffect";
@@ -15427,9 +15427,9 @@
               unstable_isNewReconciler: enableNewReconciler
             };
             InvalidNestedHooksDispatcherOnMountInDEV = {
-              readContext: function(context) {
+              readContext: function(context3) {
                 warnInvalidContextAccess();
-                return readContext(context);
+                return readContext(context3);
               },
               useCallback: function(callback, deps) {
                 currentHookNameInDev = "useCallback";
@@ -15437,11 +15437,11 @@
                 mountHookTypesDev();
                 return mountCallback(callback, deps);
               },
-              useContext: function(context) {
+              useContext: function(context3) {
                 currentHookNameInDev = "useContext";
                 warnInvalidHookAccess();
                 mountHookTypesDev();
-                return readContext(context);
+                return readContext(context3);
               },
               useEffect: function(create, deps) {
                 currentHookNameInDev = "useEffect";
@@ -15548,9 +15548,9 @@
               unstable_isNewReconciler: enableNewReconciler
             };
             InvalidNestedHooksDispatcherOnUpdateInDEV = {
-              readContext: function(context) {
+              readContext: function(context3) {
                 warnInvalidContextAccess();
-                return readContext(context);
+                return readContext(context3);
               },
               useCallback: function(callback, deps) {
                 currentHookNameInDev = "useCallback";
@@ -15558,11 +15558,11 @@
                 updateHookTypesDev();
                 return updateCallback(callback, deps);
               },
-              useContext: function(context) {
+              useContext: function(context3) {
                 currentHookNameInDev = "useContext";
                 warnInvalidHookAccess();
                 updateHookTypesDev();
-                return readContext(context);
+                return readContext(context3);
               },
               useEffect: function(create, deps) {
                 currentHookNameInDev = "useEffect";
@@ -15669,9 +15669,9 @@
               unstable_isNewReconciler: enableNewReconciler
             };
             InvalidNestedHooksDispatcherOnRerenderInDEV = {
-              readContext: function(context) {
+              readContext: function(context3) {
                 warnInvalidContextAccess();
-                return readContext(context);
+                return readContext(context3);
               },
               useCallback: function(callback, deps) {
                 currentHookNameInDev = "useCallback";
@@ -15679,11 +15679,11 @@
                 updateHookTypesDev();
                 return updateCallback(callback, deps);
               },
-              useContext: function(context) {
+              useContext: function(context3) {
                 currentHookNameInDev = "useContext";
                 warnInvalidHookAccess();
                 updateHookTypesDev();
-                return readContext(context);
+                return readContext(context3);
               },
               useEffect: function(create, deps) {
                 currentHookNameInDev = "useEffect";
@@ -16472,10 +16472,10 @@
                 }
               }
             }
-            var context;
+            var context3;
             {
               var unmaskedContext = getUnmaskedContext(workInProgress2, Component, true);
-              context = getMaskedContext(workInProgress2, unmaskedContext);
+              context3 = getMaskedContext(workInProgress2, unmaskedContext);
             }
             var nextChildren;
             var hasId;
@@ -16486,12 +16486,12 @@
             {
               ReactCurrentOwner$1.current = workInProgress2;
               setIsRendering(true);
-              nextChildren = renderWithHooks(current2, workInProgress2, Component, nextProps, context, renderLanes2);
+              nextChildren = renderWithHooks(current2, workInProgress2, Component, nextProps, context3, renderLanes2);
               hasId = checkDidRenderIdHook();
               if (workInProgress2.mode & StrictLegacyMode) {
                 setIsStrictModeForDevtools(true);
                 try {
-                  nextChildren = renderWithHooks(current2, workInProgress2, Component, nextProps, context, renderLanes2);
+                  nextChildren = renderWithHooks(current2, workInProgress2, Component, nextProps, context3, renderLanes2);
                   hasId = checkDidRenderIdHook();
                 } finally {
                   setIsStrictModeForDevtools(false);
@@ -16806,10 +16806,10 @@
           function mountIndeterminateComponent(_current, workInProgress2, Component, renderLanes2) {
             resetSuspendedCurrentOnMountInLegacyMode(_current, workInProgress2);
             var props = workInProgress2.pendingProps;
-            var context;
+            var context3;
             {
               var unmaskedContext = getUnmaskedContext(workInProgress2, Component, false);
-              context = getMaskedContext(workInProgress2, unmaskedContext);
+              context3 = getMaskedContext(workInProgress2, unmaskedContext);
             }
             prepareToReadContext(workInProgress2, renderLanes2);
             var value;
@@ -16830,7 +16830,7 @@
               }
               setIsRendering(true);
               ReactCurrentOwner$1.current = workInProgress2;
-              value = renderWithHooks(null, workInProgress2, Component, props, context, renderLanes2);
+              value = renderWithHooks(null, workInProgress2, Component, props, context3, renderLanes2);
               hasId = checkDidRenderIdHook();
               setIsRendering(false);
             }
@@ -16880,7 +16880,7 @@
                 if (workInProgress2.mode & StrictLegacyMode) {
                   setIsStrictModeForDevtools(true);
                   try {
-                    value = renderWithHooks(null, workInProgress2, Component, props, context, renderLanes2);
+                    value = renderWithHooks(null, workInProgress2, Component, props, context3, renderLanes2);
                     hasId = checkDidRenderIdHook();
                   } finally {
                     setIsStrictModeForDevtools(false);
@@ -17381,8 +17381,8 @@
             {
               if ((revealOrder === "forwards" || revealOrder === "backwards") && children !== void 0 && children !== null && children !== false) {
                 if (isArray(children)) {
-                  for (var i = 0; i < children.length; i++) {
-                    if (!validateSuspenseListNestedChild(children[i], i)) {
+                  for (var i2 = 0; i2 < children.length; i2++) {
+                    if (!validateSuspenseListNestedChild(children[i2], i2)) {
                       return;
                     }
                   }
@@ -17532,7 +17532,7 @@
           var hasWarnedAboutUsingNoValuePropOnContextProvider = false;
           function updateContextProvider(current2, workInProgress2, renderLanes2) {
             var providerType = workInProgress2.type;
-            var context = providerType._context;
+            var context3 = providerType._context;
             var newProps = workInProgress2.pendingProps;
             var oldProps = workInProgress2.memoizedProps;
             var newValue = newProps.value;
@@ -17548,7 +17548,7 @@
                 checkPropTypes(providerPropTypes, newProps, "prop", "Context.Provider");
               }
             }
-            pushProvider(workInProgress2, context, newValue);
+            pushProvider(workInProgress2, context3, newValue);
             {
               if (oldProps !== null) {
                 var oldValue = oldProps.value;
@@ -17557,7 +17557,7 @@
                     return bailoutOnAlreadyFinishedWork(current2, workInProgress2, renderLanes2);
                   }
                 } else {
-                  propagateContextChange(workInProgress2, context, renderLanes2);
+                  propagateContextChange(workInProgress2, context3, renderLanes2);
                 }
               }
             }
@@ -17567,17 +17567,17 @@
           }
           var hasWarnedAboutUsingContextAsConsumer = false;
           function updateContextConsumer(current2, workInProgress2, renderLanes2) {
-            var context = workInProgress2.type;
+            var context3 = workInProgress2.type;
             {
-              if (context._context === void 0) {
-                if (context !== context.Consumer) {
+              if (context3._context === void 0) {
+                if (context3 !== context3.Consumer) {
                   if (!hasWarnedAboutUsingContextAsConsumer) {
                     hasWarnedAboutUsingContextAsConsumer = true;
                     error("Rendering <Context> directly is not supported and will be removed in a future major release. Did you mean to render <Context.Consumer> instead?");
                   }
                 }
               } else {
-                context = context._context;
+                context3 = context3._context;
               }
             }
             var newProps = workInProgress2.pendingProps;
@@ -17588,7 +17588,7 @@
               }
             }
             prepareToReadContext(workInProgress2, renderLanes2);
-            var newValue = readContext(context);
+            var newValue = readContext(context3);
             {
               markComponentRenderStarted(workInProgress2);
             }
@@ -17701,8 +17701,8 @@
                 break;
               case ContextProvider: {
                 var newValue = workInProgress2.memoizedProps.value;
-                var context = workInProgress2.type._context;
-                pushProvider(workInProgress2, context, newValue);
+                var context3 = workInProgress2.type._context;
+                pushProvider(workInProgress2, context3, newValue);
                 break;
               }
               case Profiler:
@@ -18289,8 +18289,8 @@
                 bubbleProperties(workInProgress2);
                 return null;
               case ContextProvider:
-                var context = workInProgress2.type._context;
-                popProvider(context, workInProgress2);
+                var context3 = workInProgress2.type._context;
+                popProvider(context3, workInProgress2);
                 bubbleProperties(workInProgress2);
                 return null;
               case IncompleteClassComponent: {
@@ -18502,8 +18502,8 @@
                 popHostContainer(workInProgress2);
                 return null;
               case ContextProvider:
-                var context = workInProgress2.type._context;
-                popProvider(context, workInProgress2);
+                var context3 = workInProgress2.type._context;
+                popProvider(context3, workInProgress2);
                 return null;
               case OffscreenComponent:
               case LegacyHiddenComponent:
@@ -18546,8 +18546,8 @@
                 popSuspenseContext(interruptedWork);
                 break;
               case ContextProvider:
-                var context = interruptedWork.type._context;
-                popProvider(context, interruptedWork);
+                var context3 = interruptedWork.type._context;
+                popProvider(context3, interruptedWork);
                 break;
               case OffscreenComponent:
               case LegacyHiddenComponent:
@@ -19576,8 +19576,8 @@
           function recursivelyTraverseMutationEffects(root2, parentFiber, lanes) {
             var deletions = parentFiber.deletions;
             if (deletions !== null) {
-              for (var i = 0; i < deletions.length; i++) {
-                var childToDelete = deletions[i];
+              for (var i2 = 0; i2 < deletions.length; i2++) {
+                var childToDelete = deletions[i2];
                 try {
                   commitDeletionEffects(root2, parentFiber, childToDelete);
                 } catch (error2) {
@@ -20083,8 +20083,8 @@
               if ((nextEffect.flags & ChildDeletion) !== NoFlags) {
                 var deletions = fiber.deletions;
                 if (deletions !== null) {
-                  for (var i = 0; i < deletions.length; i++) {
-                    var fiberToDelete = deletions[i];
+                  for (var i2 = 0; i2 < deletions.length; i2++) {
+                    var fiberToDelete = deletions[i2];
                     nextEffect = fiberToDelete;
                     commitPassiveUnmountEffectsInsideOfDeletedTree_begin(fiberToDelete, fiber);
                   }
@@ -20726,8 +20726,8 @@
                 if (updateQueue !== null) {
                   var checks = updateQueue.stores;
                   if (checks !== null) {
-                    for (var i = 0; i < checks.length; i++) {
-                      var check = checks[i];
+                    for (var i2 = 0; i2 < checks.length; i2++) {
+                      var check = checks[i2];
                       var getSnapshot = check.getSnapshot;
                       var renderedValue = check.value;
                       try {
@@ -21304,8 +21304,8 @@
             ensureRootIsScheduled(root2, now());
             if (recoverableErrors !== null) {
               var onRecoverableError = root2.onRecoverableError;
-              for (var i = 0; i < recoverableErrors.length; i++) {
-                var recoverableError = recoverableErrors[i];
+              for (var i2 = 0; i2 < recoverableErrors.length; i2++) {
+                var recoverableError = recoverableErrors[i2];
                 var componentStack = recoverableError.stack;
                 var digest = recoverableError.digest;
                 onRecoverableError(recoverableError.value, {
@@ -21399,8 +21399,8 @@
             {
               var profilerEffects = pendingPassiveProfilerEffects;
               pendingPassiveProfilerEffects = [];
-              for (var i = 0; i < profilerEffects.length; i++) {
-                var _fiber = profilerEffects[i];
+              for (var i2 = 0; i2 < profilerEffects.length; i2++) {
+                var _fiber = profilerEffects[i2];
                 commitPassiveEffectDurations(root2, _fiber);
               }
             }
@@ -21967,9 +21967,9 @@
                 fiber._debugNeedsRemount = true;
               }
               if (needsRemount || needsRender) {
-                var _root = enqueueConcurrentRenderForLane(fiber, SyncLane);
-                if (_root !== null) {
-                  scheduleUpdateOnFiber(_root, fiber, SyncLane, NoTimestamp);
+                var _root2 = enqueueConcurrentRenderForLane(fiber, SyncLane);
+                if (_root2 !== null) {
+                  scheduleUpdateOnFiber(_root2, fiber, SyncLane, NoTimestamp);
                 }
               }
               if (child !== null && !needsRemount) {
@@ -22655,11 +22655,11 @@
             {
               markRenderScheduled(lane);
             }
-            var context = getContextForSubtree(parentComponent);
+            var context3 = getContextForSubtree(parentComponent);
             if (container.context === null) {
-              container.context = context;
+              container.context = context3;
             } else {
-              container.pendingContext = context;
+              container.pendingContext = context3;
             }
             {
               if (isRendering && current !== null && !didWarnAboutNestedUpdates) {
@@ -22833,8 +22833,8 @@
                 warn("copyWithRename() expects paths of the same length");
                 return;
               } else {
-                for (var i = 0; i < newPath.length - 1; i++) {
-                  if (oldPath[i] !== newPath[i]) {
+                for (var i2 = 0; i2 < newPath.length - 1; i2++) {
+                  if (oldPath[i2] !== newPath[i2]) {
                     warn("copyWithRename() expects paths to be the same except for the deepest key");
                     return;
                   }
@@ -23045,7 +23045,7 @@
               unmarkContainerAsRoot(container);
             }
           };
-          function createRoot(container, options2) {
+          function createRoot(container, options3) {
             if (!isValidContainer(container)) {
               throw new Error("createRoot(...): Target container is not a DOM element.");
             }
@@ -23055,27 +23055,27 @@
             var identifierPrefix = "";
             var onRecoverableError = defaultOnRecoverableError;
             var transitionCallbacks = null;
-            if (options2 !== null && options2 !== void 0) {
+            if (options3 !== null && options3 !== void 0) {
               {
-                if (options2.hydrate) {
+                if (options3.hydrate) {
                   warn("hydrate through createRoot is deprecated. Use ReactDOMClient.hydrateRoot(container, <App />) instead.");
                 } else {
-                  if (typeof options2 === "object" && options2 !== null && options2.$$typeof === REACT_ELEMENT_TYPE) {
+                  if (typeof options3 === "object" && options3 !== null && options3.$$typeof === REACT_ELEMENT_TYPE) {
                     error("You passed a JSX element to createRoot. You probably meant to call root.render instead. Example usage:\n\n  let root = createRoot(domContainer);\n  root.render(<App />);");
                   }
                 }
               }
-              if (options2.unstable_strictMode === true) {
+              if (options3.unstable_strictMode === true) {
                 isStrictMode = true;
               }
-              if (options2.identifierPrefix !== void 0) {
-                identifierPrefix = options2.identifierPrefix;
+              if (options3.identifierPrefix !== void 0) {
+                identifierPrefix = options3.identifierPrefix;
               }
-              if (options2.onRecoverableError !== void 0) {
-                onRecoverableError = options2.onRecoverableError;
+              if (options3.onRecoverableError !== void 0) {
+                onRecoverableError = options3.onRecoverableError;
               }
-              if (options2.transitionCallbacks !== void 0) {
-                transitionCallbacks = options2.transitionCallbacks;
+              if (options3.transitionCallbacks !== void 0) {
+                transitionCallbacks = options3.transitionCallbacks;
               }
             }
             var root2 = createContainer(container, ConcurrentRoot, null, isStrictMode, concurrentUpdatesByDefaultOverride, identifierPrefix, onRecoverableError);
@@ -23093,7 +23093,7 @@
             }
           }
           ReactDOMHydrationRoot.prototype.unstable_scheduleHydration = scheduleHydration;
-          function hydrateRoot(container, initialChildren, options2) {
+          function hydrateRoot(container, initialChildren, options3) {
             if (!isValidContainer(container)) {
               throw new Error("hydrateRoot(...): Target container is not a DOM element.");
             }
@@ -23103,29 +23103,29 @@
                 error("Must provide initial children as second argument to hydrateRoot. Example usage: hydrateRoot(domContainer, <App />)");
               }
             }
-            var hydrationCallbacks = options2 != null ? options2 : null;
-            var mutableSources = options2 != null && options2.hydratedSources || null;
+            var hydrationCallbacks = options3 != null ? options3 : null;
+            var mutableSources = options3 != null && options3.hydratedSources || null;
             var isStrictMode = false;
             var concurrentUpdatesByDefaultOverride = false;
             var identifierPrefix = "";
             var onRecoverableError = defaultOnRecoverableError;
-            if (options2 !== null && options2 !== void 0) {
-              if (options2.unstable_strictMode === true) {
+            if (options3 !== null && options3 !== void 0) {
+              if (options3.unstable_strictMode === true) {
                 isStrictMode = true;
               }
-              if (options2.identifierPrefix !== void 0) {
-                identifierPrefix = options2.identifierPrefix;
+              if (options3.identifierPrefix !== void 0) {
+                identifierPrefix = options3.identifierPrefix;
               }
-              if (options2.onRecoverableError !== void 0) {
-                onRecoverableError = options2.onRecoverableError;
+              if (options3.onRecoverableError !== void 0) {
+                onRecoverableError = options3.onRecoverableError;
               }
             }
             var root2 = createHydrationContainer(initialChildren, null, container, ConcurrentRoot, hydrationCallbacks, isStrictMode, concurrentUpdatesByDefaultOverride, identifierPrefix, onRecoverableError);
             markContainerAsRoot(root2.current, container);
             listenToAllSupportedEvents(container);
             if (mutableSources) {
-              for (var i = 0; i < mutableSources.length; i++) {
-                var mutableSource = mutableSources[i];
+              for (var i2 = 0; i2 < mutableSources.length; i2++) {
+                var mutableSource = mutableSources[i2];
                 registerMutableSourceForHydration(root2, mutableSource);
               }
             }
@@ -23224,11 +23224,11 @@
               if (typeof callback === "function") {
                 var _originalCallback = callback;
                 callback = function() {
-                  var instance = getPublicRootInstance(_root);
+                  var instance = getPublicRootInstance(_root2);
                   _originalCallback.call(instance);
                 };
               }
-              var _root = createContainer(
+              var _root2 = createContainer(
                 container,
                 LegacyRoot,
                 null,
@@ -23241,14 +23241,14 @@
                 // identifierPrefix
                 noopOnRecoverableError
               );
-              container._reactRootContainer = _root;
-              markContainerAsRoot(_root.current, container);
+              container._reactRootContainer = _root2;
+              markContainerAsRoot(_root2.current, container);
               var _rootContainerElement = container.nodeType === COMMENT_NODE ? container.parentNode : container;
               listenToAllSupportedEvents(_rootContainerElement);
               flushSync(function() {
-                updateContainer(initialChildren, _root, parentComponent, callback);
+                updateContainer(initialChildren, _root2, parentComponent, callback);
               });
-              return _root;
+              return _root2;
             }
           }
           function warnOnInvalidCallback$1(callback, callerName) {
@@ -23410,21 +23410,21 @@
             // This is an array for better minification.
             Events: [getInstanceFromNode, getNodeFromInstance, getFiberCurrentPropsFromNode, enqueueStateRestore, restoreStateIfNeeded, batchedUpdates$1]
           };
-          function createRoot$1(container, options2) {
+          function createRoot$1(container, options3) {
             {
               if (!Internals.usingClientEntryPoint && true) {
                 error('You are importing createRoot from "react-dom" which is not supported. You should instead import it from "react-dom/client".');
               }
             }
-            return createRoot(container, options2);
+            return createRoot(container, options3);
           }
-          function hydrateRoot$1(container, initialChildren, options2) {
+          function hydrateRoot$1(container, initialChildren, options3) {
             {
               if (!Internals.usingClientEntryPoint && true) {
                 error('You are importing hydrateRoot from "react-dom" which is not supported. You should instead import it from "react-dom/client".');
               }
             }
-            return hydrateRoot(container, initialChildren, options2);
+            return hydrateRoot(container, initialChildren, options3);
           }
           function flushSync$1(fn) {
             {
@@ -23450,18 +23450,18 @@
               }
             }
           }
-          exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = Internals;
-          exports.createPortal = createPortal$1;
-          exports.createRoot = createRoot$1;
-          exports.findDOMNode = findDOMNode;
-          exports.flushSync = flushSync$1;
-          exports.hydrate = hydrate;
-          exports.hydrateRoot = hydrateRoot$1;
-          exports.render = render;
-          exports.unmountComponentAtNode = unmountComponentAtNode;
-          exports.unstable_batchedUpdates = batchedUpdates$1;
-          exports.unstable_renderSubtreeIntoContainer = renderSubtreeIntoContainer;
-          exports.version = ReactVersion;
+          exports2.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = Internals;
+          exports2.createPortal = createPortal$1;
+          exports2.createRoot = createRoot$1;
+          exports2.findDOMNode = findDOMNode;
+          exports2.flushSync = flushSync$1;
+          exports2.hydrate = hydrate;
+          exports2.hydrateRoot = hydrateRoot$1;
+          exports2.render = render;
+          exports2.unmountComponentAtNode = unmountComponentAtNode;
+          exports2.unstable_batchedUpdates = batchedUpdates$1;
+          exports2.unstable_renderSubtreeIntoContainer = renderSubtreeIntoContainer;
+          exports2.version = ReactVersion;
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
           }
@@ -23472,54 +23472,2345 @@
 
   // ../testeranto/node_modules/react-dom/index.js
   var require_react_dom = __commonJS({
-    "../testeranto/node_modules/react-dom/index.js"(exports, module) {
+    "../testeranto/node_modules/react-dom/index.js"(exports2, module2) {
       "use strict";
       if (false) {
         checkDCE();
-        module.exports = null;
+        module2.exports = null;
       } else {
-        module.exports = require_react_dom_development();
+        module2.exports = require_react_dom_development();
       }
     }
   });
 
   // ../testeranto/node_modules/react-dom/client.js
   var require_client = __commonJS({
-    "../testeranto/node_modules/react-dom/client.js"(exports) {
+    "../testeranto/node_modules/react-dom/client.js"(exports2) {
       "use strict";
       var m = require_react_dom();
       if (false) {
-        exports.createRoot = m.createRoot;
-        exports.hydrateRoot = m.hydrateRoot;
+        exports2.createRoot = m.createRoot;
+        exports2.hydrateRoot = m.hydrateRoot;
       } else {
-        i = m.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
-        exports.createRoot = function(c, o) {
-          i.usingClientEntryPoint = true;
+        i2 = m.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+        exports2.createRoot = function(c, o2) {
+          i2.usingClientEntryPoint = true;
           try {
-            return m.createRoot(c, o);
+            return m.createRoot(c, o2);
           } finally {
-            i.usingClientEntryPoint = false;
+            i2.usingClientEntryPoint = false;
           }
         };
-        exports.hydrateRoot = function(c, h, o) {
-          i.usingClientEntryPoint = true;
+        exports2.hydrateRoot = function(c, h, o2) {
+          i2.usingClientEntryPoint = true;
           try {
-            return m.hydrateRoot(c, h, o);
+            return m.hydrateRoot(c, h, o2);
           } finally {
-            i.usingClientEntryPoint = false;
+            i2.usingClientEntryPoint = false;
           }
         };
       }
-      var i;
+      var i2;
+    }
+  });
+
+  // ../testeranto/node_modules/classnames/index.js
+  var require_classnames = __commonJS({
+    "../testeranto/node_modules/classnames/index.js"(exports2, module2) {
+      (function() {
+        "use strict";
+        var hasOwn = {}.hasOwnProperty;
+        var nativeCodeString = "[native code]";
+        function classNames8() {
+          var classes = [];
+          for (var i2 = 0; i2 < arguments.length; i2++) {
+            var arg = arguments[i2];
+            if (!arg)
+              continue;
+            var argType = typeof arg;
+            if (argType === "string" || argType === "number") {
+              classes.push(arg);
+            } else if (Array.isArray(arg)) {
+              if (arg.length) {
+                var inner = classNames8.apply(null, arg);
+                if (inner) {
+                  classes.push(inner);
+                }
+              }
+            } else if (argType === "object") {
+              if (arg.toString !== Object.prototype.toString && !arg.toString.toString().includes("[native code]")) {
+                classes.push(arg.toString());
+                continue;
+              }
+              for (var key in arg) {
+                if (hasOwn.call(arg, key) && arg[key]) {
+                  classes.push(key);
+                }
+              }
+            }
+          }
+          return classes.join(" ");
+        }
+        if (typeof module2 !== "undefined" && module2.exports) {
+          classNames8.default = classNames8;
+          module2.exports = classNames8;
+        } else if (typeof define === "function" && typeof define.amd === "object" && define.amd) {
+          define("classnames", [], function() {
+            return classNames8;
+          });
+        } else {
+          window.classNames = classNames8;
+        }
+      })();
+    }
+  });
+
+  // ../testeranto/node_modules/react/cjs/react-jsx-runtime.development.js
+  var require_react_jsx_runtime_development = __commonJS({
+    "../testeranto/node_modules/react/cjs/react-jsx-runtime.development.js"(exports2) {
+      "use strict";
+      if (true) {
+        (function() {
+          "use strict";
+          var React43 = require_react();
+          var REACT_ELEMENT_TYPE = Symbol.for("react.element");
+          var REACT_PORTAL_TYPE = Symbol.for("react.portal");
+          var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
+          var REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode");
+          var REACT_PROFILER_TYPE = Symbol.for("react.profiler");
+          var REACT_PROVIDER_TYPE = Symbol.for("react.provider");
+          var REACT_CONTEXT_TYPE = Symbol.for("react.context");
+          var REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref");
+          var REACT_SUSPENSE_TYPE = Symbol.for("react.suspense");
+          var REACT_SUSPENSE_LIST_TYPE = Symbol.for("react.suspense_list");
+          var REACT_MEMO_TYPE = Symbol.for("react.memo");
+          var REACT_LAZY_TYPE = Symbol.for("react.lazy");
+          var REACT_OFFSCREEN_TYPE = Symbol.for("react.offscreen");
+          var MAYBE_ITERATOR_SYMBOL = Symbol.iterator;
+          var FAUX_ITERATOR_SYMBOL = "@@iterator";
+          function getIteratorFn(maybeIterable) {
+            if (maybeIterable === null || typeof maybeIterable !== "object") {
+              return null;
+            }
+            var maybeIterator = MAYBE_ITERATOR_SYMBOL && maybeIterable[MAYBE_ITERATOR_SYMBOL] || maybeIterable[FAUX_ITERATOR_SYMBOL];
+            if (typeof maybeIterator === "function") {
+              return maybeIterator;
+            }
+            return null;
+          }
+          var ReactSharedInternals = React43.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          function error(format) {
+            {
+              {
+                for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+                  args[_key2 - 1] = arguments[_key2];
+                }
+                printWarning("error", format, args);
+              }
+            }
+          }
+          function printWarning(level, format, args) {
+            {
+              var ReactDebugCurrentFrame2 = ReactSharedInternals.ReactDebugCurrentFrame;
+              var stack = ReactDebugCurrentFrame2.getStackAddendum();
+              if (stack !== "") {
+                format += "%s";
+                args = args.concat([stack]);
+              }
+              var argsWithFormat = args.map(function(item) {
+                return String(item);
+              });
+              argsWithFormat.unshift("Warning: " + format);
+              Function.prototype.apply.call(console[level], console, argsWithFormat);
+            }
+          }
+          var enableScopeAPI = false;
+          var enableCacheElement = false;
+          var enableTransitionTracing = false;
+          var enableLegacyHidden = false;
+          var enableDebugTracing = false;
+          var REACT_MODULE_REFERENCE;
+          {
+            REACT_MODULE_REFERENCE = Symbol.for("react.module.reference");
+          }
+          function isValidElementType(type) {
+            if (typeof type === "string" || typeof type === "function") {
+              return true;
+            }
+            if (type === REACT_FRAGMENT_TYPE || type === REACT_PROFILER_TYPE || enableDebugTracing || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || enableLegacyHidden || type === REACT_OFFSCREEN_TYPE || enableScopeAPI || enableCacheElement || enableTransitionTracing) {
+              return true;
+            }
+            if (typeof type === "object" && type !== null) {
+              if (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || // This needs to include all possible module reference object
+              // types supported by any Flight configuration anywhere since
+              // we don't know which Flight build this will end up being used
+              // with.
+              type.$$typeof === REACT_MODULE_REFERENCE || type.getModuleId !== void 0) {
+                return true;
+              }
+            }
+            return false;
+          }
+          function getWrappedName(outerType, innerType, wrapperName) {
+            var displayName = outerType.displayName;
+            if (displayName) {
+              return displayName;
+            }
+            var functionName = innerType.displayName || innerType.name || "";
+            return functionName !== "" ? wrapperName + "(" + functionName + ")" : wrapperName;
+          }
+          function getContextName(type) {
+            return type.displayName || "Context";
+          }
+          function getComponentNameFromType(type) {
+            if (type == null) {
+              return null;
+            }
+            {
+              if (typeof type.tag === "number") {
+                error("Received an unexpected object in getComponentNameFromType(). This is likely a bug in React. Please file an issue.");
+              }
+            }
+            if (typeof type === "function") {
+              return type.displayName || type.name || null;
+            }
+            if (typeof type === "string") {
+              return type;
+            }
+            switch (type) {
+              case REACT_FRAGMENT_TYPE:
+                return "Fragment";
+              case REACT_PORTAL_TYPE:
+                return "Portal";
+              case REACT_PROFILER_TYPE:
+                return "Profiler";
+              case REACT_STRICT_MODE_TYPE:
+                return "StrictMode";
+              case REACT_SUSPENSE_TYPE:
+                return "Suspense";
+              case REACT_SUSPENSE_LIST_TYPE:
+                return "SuspenseList";
+            }
+            if (typeof type === "object") {
+              switch (type.$$typeof) {
+                case REACT_CONTEXT_TYPE:
+                  var context3 = type;
+                  return getContextName(context3) + ".Consumer";
+                case REACT_PROVIDER_TYPE:
+                  var provider = type;
+                  return getContextName(provider._context) + ".Provider";
+                case REACT_FORWARD_REF_TYPE:
+                  return getWrappedName(type, type.render, "ForwardRef");
+                case REACT_MEMO_TYPE:
+                  var outerName = type.displayName || null;
+                  if (outerName !== null) {
+                    return outerName;
+                  }
+                  return getComponentNameFromType(type.type) || "Memo";
+                case REACT_LAZY_TYPE: {
+                  var lazyComponent = type;
+                  var payload = lazyComponent._payload;
+                  var init = lazyComponent._init;
+                  try {
+                    return getComponentNameFromType(init(payload));
+                  } catch (x) {
+                    return null;
+                  }
+                }
+              }
+            }
+            return null;
+          }
+          var assign = Object.assign;
+          var disabledDepth = 0;
+          var prevLog;
+          var prevInfo;
+          var prevWarn;
+          var prevError;
+          var prevGroup;
+          var prevGroupCollapsed;
+          var prevGroupEnd;
+          function disabledLog() {
+          }
+          disabledLog.__reactDisabledLog = true;
+          function disableLogs() {
+            {
+              if (disabledDepth === 0) {
+                prevLog = console.log;
+                prevInfo = console.info;
+                prevWarn = console.warn;
+                prevError = console.error;
+                prevGroup = console.group;
+                prevGroupCollapsed = console.groupCollapsed;
+                prevGroupEnd = console.groupEnd;
+                var props = {
+                  configurable: true,
+                  enumerable: true,
+                  value: disabledLog,
+                  writable: true
+                };
+                Object.defineProperties(console, {
+                  info: props,
+                  log: props,
+                  warn: props,
+                  error: props,
+                  group: props,
+                  groupCollapsed: props,
+                  groupEnd: props
+                });
+              }
+              disabledDepth++;
+            }
+          }
+          function reenableLogs() {
+            {
+              disabledDepth--;
+              if (disabledDepth === 0) {
+                var props = {
+                  configurable: true,
+                  enumerable: true,
+                  writable: true
+                };
+                Object.defineProperties(console, {
+                  log: assign({}, props, {
+                    value: prevLog
+                  }),
+                  info: assign({}, props, {
+                    value: prevInfo
+                  }),
+                  warn: assign({}, props, {
+                    value: prevWarn
+                  }),
+                  error: assign({}, props, {
+                    value: prevError
+                  }),
+                  group: assign({}, props, {
+                    value: prevGroup
+                  }),
+                  groupCollapsed: assign({}, props, {
+                    value: prevGroupCollapsed
+                  }),
+                  groupEnd: assign({}, props, {
+                    value: prevGroupEnd
+                  })
+                });
+              }
+              if (disabledDepth < 0) {
+                error("disabledDepth fell below zero. This is a bug in React. Please file an issue.");
+              }
+            }
+          }
+          var ReactCurrentDispatcher = ReactSharedInternals.ReactCurrentDispatcher;
+          var prefix;
+          function describeBuiltInComponentFrame(name, source, ownerFn) {
+            {
+              if (prefix === void 0) {
+                try {
+                  throw Error();
+                } catch (x) {
+                  var match = x.stack.trim().match(/\n( *(at )?)/);
+                  prefix = match && match[1] || "";
+                }
+              }
+              return "\n" + prefix + name;
+            }
+          }
+          var reentry = false;
+          var componentFrameCache;
+          {
+            var PossiblyWeakMap = typeof WeakMap === "function" ? WeakMap : Map;
+            componentFrameCache = new PossiblyWeakMap();
+          }
+          function describeNativeComponentFrame(fn, construct) {
+            if (!fn || reentry) {
+              return "";
+            }
+            {
+              var frame = componentFrameCache.get(fn);
+              if (frame !== void 0) {
+                return frame;
+              }
+            }
+            var control;
+            reentry = true;
+            var previousPrepareStackTrace = Error.prepareStackTrace;
+            Error.prepareStackTrace = void 0;
+            var previousDispatcher;
+            {
+              previousDispatcher = ReactCurrentDispatcher.current;
+              ReactCurrentDispatcher.current = null;
+              disableLogs();
+            }
+            try {
+              if (construct) {
+                var Fake = function() {
+                  throw Error();
+                };
+                Object.defineProperty(Fake.prototype, "props", {
+                  set: function() {
+                    throw Error();
+                  }
+                });
+                if (typeof Reflect === "object" && Reflect.construct) {
+                  try {
+                    Reflect.construct(Fake, []);
+                  } catch (x) {
+                    control = x;
+                  }
+                  Reflect.construct(fn, [], Fake);
+                } else {
+                  try {
+                    Fake.call();
+                  } catch (x) {
+                    control = x;
+                  }
+                  fn.call(Fake.prototype);
+                }
+              } else {
+                try {
+                  throw Error();
+                } catch (x) {
+                  control = x;
+                }
+                fn();
+              }
+            } catch (sample) {
+              if (sample && control && typeof sample.stack === "string") {
+                var sampleLines = sample.stack.split("\n");
+                var controlLines = control.stack.split("\n");
+                var s = sampleLines.length - 1;
+                var c = controlLines.length - 1;
+                while (s >= 1 && c >= 0 && sampleLines[s] !== controlLines[c]) {
+                  c--;
+                }
+                for (; s >= 1 && c >= 0; s--, c--) {
+                  if (sampleLines[s] !== controlLines[c]) {
+                    if (s !== 1 || c !== 1) {
+                      do {
+                        s--;
+                        c--;
+                        if (c < 0 || sampleLines[s] !== controlLines[c]) {
+                          var _frame = "\n" + sampleLines[s].replace(" at new ", " at ");
+                          if (fn.displayName && _frame.includes("<anonymous>")) {
+                            _frame = _frame.replace("<anonymous>", fn.displayName);
+                          }
+                          {
+                            if (typeof fn === "function") {
+                              componentFrameCache.set(fn, _frame);
+                            }
+                          }
+                          return _frame;
+                        }
+                      } while (s >= 1 && c >= 0);
+                    }
+                    break;
+                  }
+                }
+              }
+            } finally {
+              reentry = false;
+              {
+                ReactCurrentDispatcher.current = previousDispatcher;
+                reenableLogs();
+              }
+              Error.prepareStackTrace = previousPrepareStackTrace;
+            }
+            var name = fn ? fn.displayName || fn.name : "";
+            var syntheticFrame = name ? describeBuiltInComponentFrame(name) : "";
+            {
+              if (typeof fn === "function") {
+                componentFrameCache.set(fn, syntheticFrame);
+              }
+            }
+            return syntheticFrame;
+          }
+          function describeFunctionComponentFrame(fn, source, ownerFn) {
+            {
+              return describeNativeComponentFrame(fn, false);
+            }
+          }
+          function shouldConstruct(Component) {
+            var prototype = Component.prototype;
+            return !!(prototype && prototype.isReactComponent);
+          }
+          function describeUnknownElementTypeFrameInDEV(type, source, ownerFn) {
+            if (type == null) {
+              return "";
+            }
+            if (typeof type === "function") {
+              {
+                return describeNativeComponentFrame(type, shouldConstruct(type));
+              }
+            }
+            if (typeof type === "string") {
+              return describeBuiltInComponentFrame(type);
+            }
+            switch (type) {
+              case REACT_SUSPENSE_TYPE:
+                return describeBuiltInComponentFrame("Suspense");
+              case REACT_SUSPENSE_LIST_TYPE:
+                return describeBuiltInComponentFrame("SuspenseList");
+            }
+            if (typeof type === "object") {
+              switch (type.$$typeof) {
+                case REACT_FORWARD_REF_TYPE:
+                  return describeFunctionComponentFrame(type.render);
+                case REACT_MEMO_TYPE:
+                  return describeUnknownElementTypeFrameInDEV(type.type, source, ownerFn);
+                case REACT_LAZY_TYPE: {
+                  var lazyComponent = type;
+                  var payload = lazyComponent._payload;
+                  var init = lazyComponent._init;
+                  try {
+                    return describeUnknownElementTypeFrameInDEV(init(payload), source, ownerFn);
+                  } catch (x) {
+                  }
+                }
+              }
+            }
+            return "";
+          }
+          var hasOwnProperty = Object.prototype.hasOwnProperty;
+          var loggedTypeFailures = {};
+          var ReactDebugCurrentFrame = ReactSharedInternals.ReactDebugCurrentFrame;
+          function setCurrentlyValidatingElement(element) {
+            {
+              if (element) {
+                var owner = element._owner;
+                var stack = describeUnknownElementTypeFrameInDEV(element.type, element._source, owner ? owner.type : null);
+                ReactDebugCurrentFrame.setExtraStackFrame(stack);
+              } else {
+                ReactDebugCurrentFrame.setExtraStackFrame(null);
+              }
+            }
+          }
+          function checkPropTypes(typeSpecs, values, location, componentName, element) {
+            {
+              var has = Function.call.bind(hasOwnProperty);
+              for (var typeSpecName in typeSpecs) {
+                if (has(typeSpecs, typeSpecName)) {
+                  var error$1 = void 0;
+                  try {
+                    if (typeof typeSpecs[typeSpecName] !== "function") {
+                      var err = Error((componentName || "React class") + ": " + location + " type `" + typeSpecName + "` is invalid; it must be a function, usually from the `prop-types` package, but received `" + typeof typeSpecs[typeSpecName] + "`.This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`.");
+                      err.name = "Invariant Violation";
+                      throw err;
+                    }
+                    error$1 = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED");
+                  } catch (ex) {
+                    error$1 = ex;
+                  }
+                  if (error$1 && !(error$1 instanceof Error)) {
+                    setCurrentlyValidatingElement(element);
+                    error("%s: type specification of %s `%s` is invalid; the type checker function must return `null` or an `Error` but returned a %s. You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument).", componentName || "React class", location, typeSpecName, typeof error$1);
+                    setCurrentlyValidatingElement(null);
+                  }
+                  if (error$1 instanceof Error && !(error$1.message in loggedTypeFailures)) {
+                    loggedTypeFailures[error$1.message] = true;
+                    setCurrentlyValidatingElement(element);
+                    error("Failed %s type: %s", location, error$1.message);
+                    setCurrentlyValidatingElement(null);
+                  }
+                }
+              }
+            }
+          }
+          var isArrayImpl = Array.isArray;
+          function isArray(a) {
+            return isArrayImpl(a);
+          }
+          function typeName(value) {
+            {
+              var hasToStringTag = typeof Symbol === "function" && Symbol.toStringTag;
+              var type = hasToStringTag && value[Symbol.toStringTag] || value.constructor.name || "Object";
+              return type;
+            }
+          }
+          function willCoercionThrow(value) {
+            {
+              try {
+                testStringCoercion(value);
+                return false;
+              } catch (e) {
+                return true;
+              }
+            }
+          }
+          function testStringCoercion(value) {
+            return "" + value;
+          }
+          function checkKeyStringCoercion(value) {
+            {
+              if (willCoercionThrow(value)) {
+                error("The provided key is an unsupported type %s. This value must be coerced to a string before before using it here.", typeName(value));
+                return testStringCoercion(value);
+              }
+            }
+          }
+          var ReactCurrentOwner = ReactSharedInternals.ReactCurrentOwner;
+          var RESERVED_PROPS = {
+            key: true,
+            ref: true,
+            __self: true,
+            __source: true
+          };
+          var specialPropKeyWarningShown;
+          var specialPropRefWarningShown;
+          var didWarnAboutStringRefs;
+          {
+            didWarnAboutStringRefs = {};
+          }
+          function hasValidRef(config) {
+            {
+              if (hasOwnProperty.call(config, "ref")) {
+                var getter = Object.getOwnPropertyDescriptor(config, "ref").get;
+                if (getter && getter.isReactWarning) {
+                  return false;
+                }
+              }
+            }
+            return config.ref !== void 0;
+          }
+          function hasValidKey(config) {
+            {
+              if (hasOwnProperty.call(config, "key")) {
+                var getter = Object.getOwnPropertyDescriptor(config, "key").get;
+                if (getter && getter.isReactWarning) {
+                  return false;
+                }
+              }
+            }
+            return config.key !== void 0;
+          }
+          function warnIfStringRefCannotBeAutoConverted(config, self2) {
+            {
+              if (typeof config.ref === "string" && ReactCurrentOwner.current && self2 && ReactCurrentOwner.current.stateNode !== self2) {
+                var componentName = getComponentNameFromType(ReactCurrentOwner.current.type);
+                if (!didWarnAboutStringRefs[componentName]) {
+                  error('Component "%s" contains the string ref "%s". Support for string refs will be removed in a future major release. This case cannot be automatically converted to an arrow function. We ask you to manually fix this case by using useRef() or createRef() instead. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref', getComponentNameFromType(ReactCurrentOwner.current.type), config.ref);
+                  didWarnAboutStringRefs[componentName] = true;
+                }
+              }
+            }
+          }
+          function defineKeyPropWarningGetter(props, displayName) {
+            {
+              var warnAboutAccessingKey = function() {
+                if (!specialPropKeyWarningShown) {
+                  specialPropKeyWarningShown = true;
+                  error("%s: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", displayName);
+                }
+              };
+              warnAboutAccessingKey.isReactWarning = true;
+              Object.defineProperty(props, "key", {
+                get: warnAboutAccessingKey,
+                configurable: true
+              });
+            }
+          }
+          function defineRefPropWarningGetter(props, displayName) {
+            {
+              var warnAboutAccessingRef = function() {
+                if (!specialPropRefWarningShown) {
+                  specialPropRefWarningShown = true;
+                  error("%s: `ref` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", displayName);
+                }
+              };
+              warnAboutAccessingRef.isReactWarning = true;
+              Object.defineProperty(props, "ref", {
+                get: warnAboutAccessingRef,
+                configurable: true
+              });
+            }
+          }
+          var ReactElement = function(type, key, ref, self2, source, owner, props) {
+            var element = {
+              // This tag allows us to uniquely identify this as a React Element
+              $$typeof: REACT_ELEMENT_TYPE,
+              // Built-in properties that belong on the element
+              type,
+              key,
+              ref,
+              props,
+              // Record the component responsible for creating this element.
+              _owner: owner
+            };
+            {
+              element._store = {};
+              Object.defineProperty(element._store, "validated", {
+                configurable: false,
+                enumerable: false,
+                writable: true,
+                value: false
+              });
+              Object.defineProperty(element, "_self", {
+                configurable: false,
+                enumerable: false,
+                writable: false,
+                value: self2
+              });
+              Object.defineProperty(element, "_source", {
+                configurable: false,
+                enumerable: false,
+                writable: false,
+                value: source
+              });
+              if (Object.freeze) {
+                Object.freeze(element.props);
+                Object.freeze(element);
+              }
+            }
+            return element;
+          };
+          function jsxDEV(type, config, maybeKey, source, self2) {
+            {
+              var propName;
+              var props = {};
+              var key = null;
+              var ref = null;
+              if (maybeKey !== void 0) {
+                {
+                  checkKeyStringCoercion(maybeKey);
+                }
+                key = "" + maybeKey;
+              }
+              if (hasValidKey(config)) {
+                {
+                  checkKeyStringCoercion(config.key);
+                }
+                key = "" + config.key;
+              }
+              if (hasValidRef(config)) {
+                ref = config.ref;
+                warnIfStringRefCannotBeAutoConverted(config, self2);
+              }
+              for (propName in config) {
+                if (hasOwnProperty.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
+                  props[propName] = config[propName];
+                }
+              }
+              if (type && type.defaultProps) {
+                var defaultProps5 = type.defaultProps;
+                for (propName in defaultProps5) {
+                  if (props[propName] === void 0) {
+                    props[propName] = defaultProps5[propName];
+                  }
+                }
+              }
+              if (key || ref) {
+                var displayName = typeof type === "function" ? type.displayName || type.name || "Unknown" : type;
+                if (key) {
+                  defineKeyPropWarningGetter(props, displayName);
+                }
+                if (ref) {
+                  defineRefPropWarningGetter(props, displayName);
+                }
+              }
+              return ReactElement(type, key, ref, self2, source, ReactCurrentOwner.current, props);
+            }
+          }
+          var ReactCurrentOwner$1 = ReactSharedInternals.ReactCurrentOwner;
+          var ReactDebugCurrentFrame$1 = ReactSharedInternals.ReactDebugCurrentFrame;
+          function setCurrentlyValidatingElement$1(element) {
+            {
+              if (element) {
+                var owner = element._owner;
+                var stack = describeUnknownElementTypeFrameInDEV(element.type, element._source, owner ? owner.type : null);
+                ReactDebugCurrentFrame$1.setExtraStackFrame(stack);
+              } else {
+                ReactDebugCurrentFrame$1.setExtraStackFrame(null);
+              }
+            }
+          }
+          var propTypesMisspellWarningShown;
+          {
+            propTypesMisspellWarningShown = false;
+          }
+          function isValidElement2(object) {
+            {
+              return typeof object === "object" && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
+            }
+          }
+          function getDeclarationErrorAddendum() {
+            {
+              if (ReactCurrentOwner$1.current) {
+                var name = getComponentNameFromType(ReactCurrentOwner$1.current.type);
+                if (name) {
+                  return "\n\nCheck the render method of `" + name + "`.";
+                }
+              }
+              return "";
+            }
+          }
+          function getSourceInfoErrorAddendum(source) {
+            {
+              if (source !== void 0) {
+                var fileName = source.fileName.replace(/^.*[\\\/]/, "");
+                var lineNumber = source.lineNumber;
+                return "\n\nCheck your code at " + fileName + ":" + lineNumber + ".";
+              }
+              return "";
+            }
+          }
+          var ownerHasKeyUseWarning = {};
+          function getCurrentComponentErrorInfo(parentType) {
+            {
+              var info = getDeclarationErrorAddendum();
+              if (!info) {
+                var parentName = typeof parentType === "string" ? parentType : parentType.displayName || parentType.name;
+                if (parentName) {
+                  info = "\n\nCheck the top-level render call using <" + parentName + ">.";
+                }
+              }
+              return info;
+            }
+          }
+          function validateExplicitKey(element, parentType) {
+            {
+              if (!element._store || element._store.validated || element.key != null) {
+                return;
+              }
+              element._store.validated = true;
+              var currentComponentErrorInfo = getCurrentComponentErrorInfo(parentType);
+              if (ownerHasKeyUseWarning[currentComponentErrorInfo]) {
+                return;
+              }
+              ownerHasKeyUseWarning[currentComponentErrorInfo] = true;
+              var childOwner = "";
+              if (element && element._owner && element._owner !== ReactCurrentOwner$1.current) {
+                childOwner = " It was passed a child from " + getComponentNameFromType(element._owner.type) + ".";
+              }
+              setCurrentlyValidatingElement$1(element);
+              error('Each child in a list should have a unique "key" prop.%s%s See https://reactjs.org/link/warning-keys for more information.', currentComponentErrorInfo, childOwner);
+              setCurrentlyValidatingElement$1(null);
+            }
+          }
+          function validateChildKeys(node, parentType) {
+            {
+              if (typeof node !== "object") {
+                return;
+              }
+              if (isArray(node)) {
+                for (var i2 = 0; i2 < node.length; i2++) {
+                  var child = node[i2];
+                  if (isValidElement2(child)) {
+                    validateExplicitKey(child, parentType);
+                  }
+                }
+              } else if (isValidElement2(node)) {
+                if (node._store) {
+                  node._store.validated = true;
+                }
+              } else if (node) {
+                var iteratorFn = getIteratorFn(node);
+                if (typeof iteratorFn === "function") {
+                  if (iteratorFn !== node.entries) {
+                    var iterator = iteratorFn.call(node);
+                    var step;
+                    while (!(step = iterator.next()).done) {
+                      if (isValidElement2(step.value)) {
+                        validateExplicitKey(step.value, parentType);
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          function validatePropTypes(element) {
+            {
+              var type = element.type;
+              if (type === null || type === void 0 || typeof type === "string") {
+                return;
+              }
+              var propTypes2;
+              if (typeof type === "function") {
+                propTypes2 = type.propTypes;
+              } else if (typeof type === "object" && (type.$$typeof === REACT_FORWARD_REF_TYPE || // Note: Memo only checks outer props here.
+              // Inner props are checked in the reconciler.
+              type.$$typeof === REACT_MEMO_TYPE)) {
+                propTypes2 = type.propTypes;
+              } else {
+                return;
+              }
+              if (propTypes2) {
+                var name = getComponentNameFromType(type);
+                checkPropTypes(propTypes2, element.props, "prop", name, element);
+              } else if (type.PropTypes !== void 0 && !propTypesMisspellWarningShown) {
+                propTypesMisspellWarningShown = true;
+                var _name = getComponentNameFromType(type);
+                error("Component %s declared `PropTypes` instead of `propTypes`. Did you misspell the property assignment?", _name || "Unknown");
+              }
+              if (typeof type.getDefaultProps === "function" && !type.getDefaultProps.isReactClassApproved) {
+                error("getDefaultProps is only used on classic React.createClass definitions. Use a static property named `defaultProps` instead.");
+              }
+            }
+          }
+          function validateFragmentProps(fragment) {
+            {
+              var keys = Object.keys(fragment.props);
+              for (var i2 = 0; i2 < keys.length; i2++) {
+                var key = keys[i2];
+                if (key !== "children" && key !== "key") {
+                  setCurrentlyValidatingElement$1(fragment);
+                  error("Invalid prop `%s` supplied to `React.Fragment`. React.Fragment can only have `key` and `children` props.", key);
+                  setCurrentlyValidatingElement$1(null);
+                  break;
+                }
+              }
+              if (fragment.ref !== null) {
+                setCurrentlyValidatingElement$1(fragment);
+                error("Invalid attribute `ref` supplied to `React.Fragment`.");
+                setCurrentlyValidatingElement$1(null);
+              }
+            }
+          }
+          function jsxWithValidation(type, props, key, isStaticChildren, source, self2) {
+            {
+              var validType = isValidElementType(type);
+              if (!validType) {
+                var info = "";
+                if (type === void 0 || typeof type === "object" && type !== null && Object.keys(type).length === 0) {
+                  info += " You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.";
+                }
+                var sourceInfo = getSourceInfoErrorAddendum(source);
+                if (sourceInfo) {
+                  info += sourceInfo;
+                } else {
+                  info += getDeclarationErrorAddendum();
+                }
+                var typeString;
+                if (type === null) {
+                  typeString = "null";
+                } else if (isArray(type)) {
+                  typeString = "array";
+                } else if (type !== void 0 && type.$$typeof === REACT_ELEMENT_TYPE) {
+                  typeString = "<" + (getComponentNameFromType(type.type) || "Unknown") + " />";
+                  info = " Did you accidentally export a JSX literal instead of a component?";
+                } else {
+                  typeString = typeof type;
+                }
+                error("React.jsx: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", typeString, info);
+              }
+              var element = jsxDEV(type, props, key, source, self2);
+              if (element == null) {
+                return element;
+              }
+              if (validType) {
+                var children = props.children;
+                if (children !== void 0) {
+                  if (isStaticChildren) {
+                    if (isArray(children)) {
+                      for (var i2 = 0; i2 < children.length; i2++) {
+                        validateChildKeys(children[i2], type);
+                      }
+                      if (Object.freeze) {
+                        Object.freeze(children);
+                      }
+                    } else {
+                      error("React.jsx: Static children should always be an array. You are likely explicitly calling React.jsxs or React.jsxDEV. Use the Babel transform instead.");
+                    }
+                  } else {
+                    validateChildKeys(children, type);
+                  }
+                }
+              }
+              if (type === REACT_FRAGMENT_TYPE) {
+                validateFragmentProps(element);
+              } else {
+                validatePropTypes(element);
+              }
+              return element;
+            }
+          }
+          function jsxWithValidationStatic(type, props, key) {
+            {
+              return jsxWithValidation(type, props, key, true);
+            }
+          }
+          function jsxWithValidationDynamic(type, props, key) {
+            {
+              return jsxWithValidation(type, props, key, false);
+            }
+          }
+          var jsx = jsxWithValidationDynamic;
+          var jsxs = jsxWithValidationStatic;
+          exports2.Fragment = REACT_FRAGMENT_TYPE;
+          exports2.jsx = jsx;
+          exports2.jsxs = jsxs;
+        })();
+      }
+    }
+  });
+
+  // ../testeranto/node_modules/react/jsx-runtime.js
+  var require_jsx_runtime = __commonJS({
+    "../testeranto/node_modules/react/jsx-runtime.js"(exports2, module2) {
+      "use strict";
+      if (false) {
+        module2.exports = null;
+      } else {
+        module2.exports = require_react_jsx_runtime_development();
+      }
+    }
+  });
+
+  // ../testeranto/node_modules/prop-types-extra/lib/utils/createChainableTypeChecker.js
+  var require_createChainableTypeChecker = __commonJS({
+    "../testeranto/node_modules/prop-types-extra/lib/utils/createChainableTypeChecker.js"(exports2, module2) {
+      "use strict";
+      Object.defineProperty(exports2, "__esModule", {
+        value: true
+      });
+      exports2.default = createChainableTypeChecker;
+      function createChainableTypeChecker(validate) {
+        function checkType(isRequired, props, propName, componentName, location, propFullName) {
+          var componentNameSafe = componentName || "<<anonymous>>";
+          var propFullNameSafe = propFullName || propName;
+          if (props[propName] == null) {
+            if (isRequired) {
+              return new Error("Required " + location + " `" + propFullNameSafe + "` was not specified " + ("in `" + componentNameSafe + "`."));
+            }
+            return null;
+          }
+          for (var _len = arguments.length, args = Array(_len > 6 ? _len - 6 : 0), _key = 6; _key < _len; _key++) {
+            args[_key - 6] = arguments[_key];
+          }
+          return validate.apply(void 0, [props, propName, componentNameSafe, location, propFullNameSafe].concat(args));
+        }
+        var chainedCheckType = checkType.bind(null, false);
+        chainedCheckType.isRequired = checkType.bind(null, true);
+        return chainedCheckType;
+      }
+      module2.exports = exports2["default"];
+    }
+  });
+
+  // ../testeranto/node_modules/prop-types-extra/lib/all.js
+  var require_all = __commonJS({
+    "../testeranto/node_modules/prop-types-extra/lib/all.js"(exports2, module2) {
+      "use strict";
+      Object.defineProperty(exports2, "__esModule", {
+        value: true
+      });
+      exports2.default = all2;
+      var _createChainableTypeChecker = require_createChainableTypeChecker();
+      var _createChainableTypeChecker2 = _interopRequireDefault(_createChainableTypeChecker);
+      function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : { default: obj };
+      }
+      function all2() {
+        for (var _len = arguments.length, validators = Array(_len), _key = 0; _key < _len; _key++) {
+          validators[_key] = arguments[_key];
+        }
+        function allPropTypes() {
+          for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+            args[_key2] = arguments[_key2];
+          }
+          var error = null;
+          validators.forEach(function(validator) {
+            if (error != null) {
+              return;
+            }
+            var result = validator.apply(void 0, args);
+            if (result != null) {
+              error = result;
+            }
+          });
+          return error;
+        }
+        return (0, _createChainableTypeChecker2.default)(allPropTypes);
+      }
+      module2.exports = exports2["default"];
+    }
+  });
+
+  // ../testeranto/node_modules/invariant/browser.js
+  var require_browser = __commonJS({
+    "../testeranto/node_modules/invariant/browser.js"(exports2, module2) {
+      "use strict";
+      var invariant3 = function(condition, format, a, b, c, d, e, f) {
+        if (true) {
+          if (format === void 0) {
+            throw new Error("invariant requires an error message argument");
+          }
+        }
+        if (!condition) {
+          var error;
+          if (format === void 0) {
+            error = new Error(
+              "Minified exception occurred; use the non-minified dev environment for the full error message and additional helpful warnings."
+            );
+          } else {
+            var args = [a, b, c, d, e, f];
+            var argIndex = 0;
+            error = new Error(
+              format.replace(/%s/g, function() {
+                return args[argIndex++];
+              })
+            );
+            error.name = "Invariant Violation";
+          }
+          error.framesToPop = 1;
+          throw error;
+        }
+      };
+      module2.exports = invariant3;
+    }
+  });
+
+  // ../testeranto/node_modules/react-is/cjs/react-is.development.js
+  var require_react_is_development = __commonJS({
+    "../testeranto/node_modules/react-is/cjs/react-is.development.js"(exports2) {
+      "use strict";
+      if (true) {
+        (function() {
+          "use strict";
+          var hasSymbol = typeof Symbol === "function" && Symbol.for;
+          var REACT_ELEMENT_TYPE = hasSymbol ? Symbol.for("react.element") : 60103;
+          var REACT_PORTAL_TYPE = hasSymbol ? Symbol.for("react.portal") : 60106;
+          var REACT_FRAGMENT_TYPE = hasSymbol ? Symbol.for("react.fragment") : 60107;
+          var REACT_STRICT_MODE_TYPE = hasSymbol ? Symbol.for("react.strict_mode") : 60108;
+          var REACT_PROFILER_TYPE = hasSymbol ? Symbol.for("react.profiler") : 60114;
+          var REACT_PROVIDER_TYPE = hasSymbol ? Symbol.for("react.provider") : 60109;
+          var REACT_CONTEXT_TYPE = hasSymbol ? Symbol.for("react.context") : 60110;
+          var REACT_ASYNC_MODE_TYPE = hasSymbol ? Symbol.for("react.async_mode") : 60111;
+          var REACT_CONCURRENT_MODE_TYPE = hasSymbol ? Symbol.for("react.concurrent_mode") : 60111;
+          var REACT_FORWARD_REF_TYPE = hasSymbol ? Symbol.for("react.forward_ref") : 60112;
+          var REACT_SUSPENSE_TYPE = hasSymbol ? Symbol.for("react.suspense") : 60113;
+          var REACT_SUSPENSE_LIST_TYPE = hasSymbol ? Symbol.for("react.suspense_list") : 60120;
+          var REACT_MEMO_TYPE = hasSymbol ? Symbol.for("react.memo") : 60115;
+          var REACT_LAZY_TYPE = hasSymbol ? Symbol.for("react.lazy") : 60116;
+          var REACT_BLOCK_TYPE = hasSymbol ? Symbol.for("react.block") : 60121;
+          var REACT_FUNDAMENTAL_TYPE = hasSymbol ? Symbol.for("react.fundamental") : 60117;
+          var REACT_RESPONDER_TYPE = hasSymbol ? Symbol.for("react.responder") : 60118;
+          var REACT_SCOPE_TYPE = hasSymbol ? Symbol.for("react.scope") : 60119;
+          function isValidElementType(type) {
+            return typeof type === "string" || typeof type === "function" || // Note: its typeof might be other than 'symbol' or 'number' if it's a polyfill.
+            type === REACT_FRAGMENT_TYPE || type === REACT_CONCURRENT_MODE_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || typeof type === "object" && type !== null && (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_FUNDAMENTAL_TYPE || type.$$typeof === REACT_RESPONDER_TYPE || type.$$typeof === REACT_SCOPE_TYPE || type.$$typeof === REACT_BLOCK_TYPE);
+          }
+          function typeOf(object) {
+            if (typeof object === "object" && object !== null) {
+              var $$typeof = object.$$typeof;
+              switch ($$typeof) {
+                case REACT_ELEMENT_TYPE:
+                  var type = object.type;
+                  switch (type) {
+                    case REACT_ASYNC_MODE_TYPE:
+                    case REACT_CONCURRENT_MODE_TYPE:
+                    case REACT_FRAGMENT_TYPE:
+                    case REACT_PROFILER_TYPE:
+                    case REACT_STRICT_MODE_TYPE:
+                    case REACT_SUSPENSE_TYPE:
+                      return type;
+                    default:
+                      var $$typeofType = type && type.$$typeof;
+                      switch ($$typeofType) {
+                        case REACT_CONTEXT_TYPE:
+                        case REACT_FORWARD_REF_TYPE:
+                        case REACT_LAZY_TYPE:
+                        case REACT_MEMO_TYPE:
+                        case REACT_PROVIDER_TYPE:
+                          return $$typeofType;
+                        default:
+                          return $$typeof;
+                      }
+                  }
+                case REACT_PORTAL_TYPE:
+                  return $$typeof;
+              }
+            }
+            return void 0;
+          }
+          var AsyncMode = REACT_ASYNC_MODE_TYPE;
+          var ConcurrentMode = REACT_CONCURRENT_MODE_TYPE;
+          var ContextConsumer = REACT_CONTEXT_TYPE;
+          var ContextProvider = REACT_PROVIDER_TYPE;
+          var Element2 = REACT_ELEMENT_TYPE;
+          var ForwardRef = REACT_FORWARD_REF_TYPE;
+          var Fragment = REACT_FRAGMENT_TYPE;
+          var Lazy = REACT_LAZY_TYPE;
+          var Memo = REACT_MEMO_TYPE;
+          var Portal = REACT_PORTAL_TYPE;
+          var Profiler = REACT_PROFILER_TYPE;
+          var StrictMode = REACT_STRICT_MODE_TYPE;
+          var Suspense = REACT_SUSPENSE_TYPE;
+          var hasWarnedAboutDeprecatedIsAsyncMode = false;
+          function isAsyncMode(object) {
+            {
+              if (!hasWarnedAboutDeprecatedIsAsyncMode) {
+                hasWarnedAboutDeprecatedIsAsyncMode = true;
+                console["warn"]("The ReactIs.isAsyncMode() alias has been deprecated, and will be removed in React 17+. Update your code to use ReactIs.isConcurrentMode() instead. It has the exact same API.");
+              }
+            }
+            return isConcurrentMode(object) || typeOf(object) === REACT_ASYNC_MODE_TYPE;
+          }
+          function isConcurrentMode(object) {
+            return typeOf(object) === REACT_CONCURRENT_MODE_TYPE;
+          }
+          function isContextConsumer(object) {
+            return typeOf(object) === REACT_CONTEXT_TYPE;
+          }
+          function isContextProvider(object) {
+            return typeOf(object) === REACT_PROVIDER_TYPE;
+          }
+          function isElement(object) {
+            return typeof object === "object" && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
+          }
+          function isForwardRef(object) {
+            return typeOf(object) === REACT_FORWARD_REF_TYPE;
+          }
+          function isFragment(object) {
+            return typeOf(object) === REACT_FRAGMENT_TYPE;
+          }
+          function isLazy(object) {
+            return typeOf(object) === REACT_LAZY_TYPE;
+          }
+          function isMemo(object) {
+            return typeOf(object) === REACT_MEMO_TYPE;
+          }
+          function isPortal(object) {
+            return typeOf(object) === REACT_PORTAL_TYPE;
+          }
+          function isProfiler(object) {
+            return typeOf(object) === REACT_PROFILER_TYPE;
+          }
+          function isStrictMode(object) {
+            return typeOf(object) === REACT_STRICT_MODE_TYPE;
+          }
+          function isSuspense(object) {
+            return typeOf(object) === REACT_SUSPENSE_TYPE;
+          }
+          exports2.AsyncMode = AsyncMode;
+          exports2.ConcurrentMode = ConcurrentMode;
+          exports2.ContextConsumer = ContextConsumer;
+          exports2.ContextProvider = ContextProvider;
+          exports2.Element = Element2;
+          exports2.ForwardRef = ForwardRef;
+          exports2.Fragment = Fragment;
+          exports2.Lazy = Lazy;
+          exports2.Memo = Memo;
+          exports2.Portal = Portal;
+          exports2.Profiler = Profiler;
+          exports2.StrictMode = StrictMode;
+          exports2.Suspense = Suspense;
+          exports2.isAsyncMode = isAsyncMode;
+          exports2.isConcurrentMode = isConcurrentMode;
+          exports2.isContextConsumer = isContextConsumer;
+          exports2.isContextProvider = isContextProvider;
+          exports2.isElement = isElement;
+          exports2.isForwardRef = isForwardRef;
+          exports2.isFragment = isFragment;
+          exports2.isLazy = isLazy;
+          exports2.isMemo = isMemo;
+          exports2.isPortal = isPortal;
+          exports2.isProfiler = isProfiler;
+          exports2.isStrictMode = isStrictMode;
+          exports2.isSuspense = isSuspense;
+          exports2.isValidElementType = isValidElementType;
+          exports2.typeOf = typeOf;
+        })();
+      }
+    }
+  });
+
+  // ../testeranto/node_modules/react-is/index.js
+  var require_react_is = __commonJS({
+    "../testeranto/node_modules/react-is/index.js"(exports2, module2) {
+      "use strict";
+      if (false) {
+        module2.exports = null;
+      } else {
+        module2.exports = require_react_is_development();
+      }
+    }
+  });
+
+  // ../testeranto/node_modules/object-assign/index.js
+  var require_object_assign = __commonJS({
+    "../testeranto/node_modules/object-assign/index.js"(exports2, module2) {
+      "use strict";
+      var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+      var hasOwnProperty = Object.prototype.hasOwnProperty;
+      var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+      function toObject(val) {
+        if (val === null || val === void 0) {
+          throw new TypeError("Object.assign cannot be called with null or undefined");
+        }
+        return Object(val);
+      }
+      function shouldUseNative() {
+        try {
+          if (!Object.assign) {
+            return false;
+          }
+          var test1 = new String("abc");
+          test1[5] = "de";
+          if (Object.getOwnPropertyNames(test1)[0] === "5") {
+            return false;
+          }
+          var test2 = {};
+          for (var i2 = 0; i2 < 10; i2++) {
+            test2["_" + String.fromCharCode(i2)] = i2;
+          }
+          var order2 = Object.getOwnPropertyNames(test2).map(function(n) {
+            return test2[n];
+          });
+          if (order2.join("") !== "0123456789") {
+            return false;
+          }
+          var test3 = {};
+          "abcdefghijklmnopqrst".split("").forEach(function(letter) {
+            test3[letter] = letter;
+          });
+          if (Object.keys(Object.assign({}, test3)).join("") !== "abcdefghijklmnopqrst") {
+            return false;
+          }
+          return true;
+        } catch (err) {
+          return false;
+        }
+      }
+      module2.exports = shouldUseNative() ? Object.assign : function(target, source) {
+        var from;
+        var to = toObject(target);
+        var symbols;
+        for (var s = 1; s < arguments.length; s++) {
+          from = Object(arguments[s]);
+          for (var key in from) {
+            if (hasOwnProperty.call(from, key)) {
+              to[key] = from[key];
+            }
+          }
+          if (getOwnPropertySymbols) {
+            symbols = getOwnPropertySymbols(from);
+            for (var i2 = 0; i2 < symbols.length; i2++) {
+              if (propIsEnumerable.call(from, symbols[i2])) {
+                to[symbols[i2]] = from[symbols[i2]];
+              }
+            }
+          }
+        }
+        return to;
+      };
+    }
+  });
+
+  // ../testeranto/node_modules/prop-types/lib/ReactPropTypesSecret.js
+  var require_ReactPropTypesSecret = __commonJS({
+    "../testeranto/node_modules/prop-types/lib/ReactPropTypesSecret.js"(exports2, module2) {
+      "use strict";
+      var ReactPropTypesSecret = "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED";
+      module2.exports = ReactPropTypesSecret;
+    }
+  });
+
+  // ../testeranto/node_modules/prop-types/lib/has.js
+  var require_has = __commonJS({
+    "../testeranto/node_modules/prop-types/lib/has.js"(exports2, module2) {
+      module2.exports = Function.call.bind(Object.prototype.hasOwnProperty);
+    }
+  });
+
+  // ../testeranto/node_modules/prop-types/checkPropTypes.js
+  var require_checkPropTypes = __commonJS({
+    "../testeranto/node_modules/prop-types/checkPropTypes.js"(exports2, module2) {
+      "use strict";
+      var printWarning = function() {
+      };
+      if (true) {
+        ReactPropTypesSecret = require_ReactPropTypesSecret();
+        loggedTypeFailures = {};
+        has = require_has();
+        printWarning = function(text) {
+          var message = "Warning: " + text;
+          if (typeof console !== "undefined") {
+            console.error(message);
+          }
+          try {
+            throw new Error(message);
+          } catch (x) {
+          }
+        };
+      }
+      var ReactPropTypesSecret;
+      var loggedTypeFailures;
+      var has;
+      function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
+        if (true) {
+          for (var typeSpecName in typeSpecs) {
+            if (has(typeSpecs, typeSpecName)) {
+              var error;
+              try {
+                if (typeof typeSpecs[typeSpecName] !== "function") {
+                  var err = Error(
+                    (componentName || "React class") + ": " + location + " type `" + typeSpecName + "` is invalid; it must be a function, usually from the `prop-types` package, but received `" + typeof typeSpecs[typeSpecName] + "`.This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`."
+                  );
+                  err.name = "Invariant Violation";
+                  throw err;
+                }
+                error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
+              } catch (ex) {
+                error = ex;
+              }
+              if (error && !(error instanceof Error)) {
+                printWarning(
+                  (componentName || "React class") + ": type specification of " + location + " `" + typeSpecName + "` is invalid; the type checker function must return `null` or an `Error` but returned a " + typeof error + ". You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument)."
+                );
+              }
+              if (error instanceof Error && !(error.message in loggedTypeFailures)) {
+                loggedTypeFailures[error.message] = true;
+                var stack = getStack ? getStack() : "";
+                printWarning(
+                  "Failed " + location + " type: " + error.message + (stack != null ? stack : "")
+                );
+              }
+            }
+          }
+        }
+      }
+      checkPropTypes.resetWarningCache = function() {
+        if (true) {
+          loggedTypeFailures = {};
+        }
+      };
+      module2.exports = checkPropTypes;
+    }
+  });
+
+  // ../testeranto/node_modules/prop-types/factoryWithTypeCheckers.js
+  var require_factoryWithTypeCheckers = __commonJS({
+    "../testeranto/node_modules/prop-types/factoryWithTypeCheckers.js"(exports2, module2) {
+      "use strict";
+      var ReactIs = require_react_is();
+      var assign = require_object_assign();
+      var ReactPropTypesSecret = require_ReactPropTypesSecret();
+      var has = require_has();
+      var checkPropTypes = require_checkPropTypes();
+      var printWarning = function() {
+      };
+      if (true) {
+        printWarning = function(text) {
+          var message = "Warning: " + text;
+          if (typeof console !== "undefined") {
+            console.error(message);
+          }
+          try {
+            throw new Error(message);
+          } catch (x) {
+          }
+        };
+      }
+      function emptyFunctionThatReturnsNull() {
+        return null;
+      }
+      module2.exports = function(isValidElement2, throwOnDirectAccess) {
+        var ITERATOR_SYMBOL = typeof Symbol === "function" && Symbol.iterator;
+        var FAUX_ITERATOR_SYMBOL = "@@iterator";
+        function getIteratorFn(maybeIterable) {
+          var iteratorFn = maybeIterable && (ITERATOR_SYMBOL && maybeIterable[ITERATOR_SYMBOL] || maybeIterable[FAUX_ITERATOR_SYMBOL]);
+          if (typeof iteratorFn === "function") {
+            return iteratorFn;
+          }
+        }
+        var ANONYMOUS = "<<anonymous>>";
+        var ReactPropTypes = {
+          array: createPrimitiveTypeChecker("array"),
+          bigint: createPrimitiveTypeChecker("bigint"),
+          bool: createPrimitiveTypeChecker("boolean"),
+          func: createPrimitiveTypeChecker("function"),
+          number: createPrimitiveTypeChecker("number"),
+          object: createPrimitiveTypeChecker("object"),
+          string: createPrimitiveTypeChecker("string"),
+          symbol: createPrimitiveTypeChecker("symbol"),
+          any: createAnyTypeChecker(),
+          arrayOf: createArrayOfTypeChecker,
+          element: createElementTypeChecker(),
+          elementType: createElementTypeTypeChecker(),
+          instanceOf: createInstanceTypeChecker,
+          node: createNodeChecker(),
+          objectOf: createObjectOfTypeChecker,
+          oneOf: createEnumTypeChecker,
+          oneOfType: createUnionTypeChecker,
+          shape: createShapeTypeChecker,
+          exact: createStrictShapeTypeChecker
+        };
+        function is(x, y) {
+          if (x === y) {
+            return x !== 0 || 1 / x === 1 / y;
+          } else {
+            return x !== x && y !== y;
+          }
+        }
+        function PropTypeError(message, data) {
+          this.message = message;
+          this.data = data && typeof data === "object" ? data : {};
+          this.stack = "";
+        }
+        PropTypeError.prototype = Error.prototype;
+        function createChainableTypeChecker(validate) {
+          if (true) {
+            var manualPropTypeCallCache = {};
+            var manualPropTypeWarningCount = 0;
+          }
+          function checkType(isRequired, props, propName, componentName, location, propFullName, secret) {
+            componentName = componentName || ANONYMOUS;
+            propFullName = propFullName || propName;
+            if (secret !== ReactPropTypesSecret) {
+              if (throwOnDirectAccess) {
+                var err = new Error(
+                  "Calling PropTypes validators directly is not supported by the `prop-types` package. Use `PropTypes.checkPropTypes()` to call them. Read more at http://fb.me/use-check-prop-types"
+                );
+                err.name = "Invariant Violation";
+                throw err;
+              } else if (typeof console !== "undefined") {
+                var cacheKey = componentName + ":" + propName;
+                if (!manualPropTypeCallCache[cacheKey] && // Avoid spamming the console because they are often not actionable except for lib authors
+                manualPropTypeWarningCount < 3) {
+                  printWarning(
+                    "You are manually calling a React.PropTypes validation function for the `" + propFullName + "` prop on `" + componentName + "`. This is deprecated and will throw in the standalone `prop-types` package. You may be seeing this warning due to a third-party PropTypes library. See https://fb.me/react-warning-dont-call-proptypes for details."
+                  );
+                  manualPropTypeCallCache[cacheKey] = true;
+                  manualPropTypeWarningCount++;
+                }
+              }
+            }
+            if (props[propName] == null) {
+              if (isRequired) {
+                if (props[propName] === null) {
+                  return new PropTypeError("The " + location + " `" + propFullName + "` is marked as required " + ("in `" + componentName + "`, but its value is `null`."));
+                }
+                return new PropTypeError("The " + location + " `" + propFullName + "` is marked as required in " + ("`" + componentName + "`, but its value is `undefined`."));
+              }
+              return null;
+            } else {
+              return validate(props, propName, componentName, location, propFullName);
+            }
+          }
+          var chainedCheckType = checkType.bind(null, false);
+          chainedCheckType.isRequired = checkType.bind(null, true);
+          return chainedCheckType;
+        }
+        function createPrimitiveTypeChecker(expectedType) {
+          function validate(props, propName, componentName, location, propFullName, secret) {
+            var propValue = props[propName];
+            var propType = getPropType(propValue);
+            if (propType !== expectedType) {
+              var preciseType = getPreciseType(propValue);
+              return new PropTypeError(
+                "Invalid " + location + " `" + propFullName + "` of type " + ("`" + preciseType + "` supplied to `" + componentName + "`, expected ") + ("`" + expectedType + "`."),
+                { expectedType }
+              );
+            }
+            return null;
+          }
+          return createChainableTypeChecker(validate);
+        }
+        function createAnyTypeChecker() {
+          return createChainableTypeChecker(emptyFunctionThatReturnsNull);
+        }
+        function createArrayOfTypeChecker(typeChecker) {
+          function validate(props, propName, componentName, location, propFullName) {
+            if (typeof typeChecker !== "function") {
+              return new PropTypeError("Property `" + propFullName + "` of component `" + componentName + "` has invalid PropType notation inside arrayOf.");
+            }
+            var propValue = props[propName];
+            if (!Array.isArray(propValue)) {
+              var propType = getPropType(propValue);
+              return new PropTypeError("Invalid " + location + " `" + propFullName + "` of type " + ("`" + propType + "` supplied to `" + componentName + "`, expected an array."));
+            }
+            for (var i2 = 0; i2 < propValue.length; i2++) {
+              var error = typeChecker(propValue, i2, componentName, location, propFullName + "[" + i2 + "]", ReactPropTypesSecret);
+              if (error instanceof Error) {
+                return error;
+              }
+            }
+            return null;
+          }
+          return createChainableTypeChecker(validate);
+        }
+        function createElementTypeChecker() {
+          function validate(props, propName, componentName, location, propFullName) {
+            var propValue = props[propName];
+            if (!isValidElement2(propValue)) {
+              var propType = getPropType(propValue);
+              return new PropTypeError("Invalid " + location + " `" + propFullName + "` of type " + ("`" + propType + "` supplied to `" + componentName + "`, expected a single ReactElement."));
+            }
+            return null;
+          }
+          return createChainableTypeChecker(validate);
+        }
+        function createElementTypeTypeChecker() {
+          function validate(props, propName, componentName, location, propFullName) {
+            var propValue = props[propName];
+            if (!ReactIs.isValidElementType(propValue)) {
+              var propType = getPropType(propValue);
+              return new PropTypeError("Invalid " + location + " `" + propFullName + "` of type " + ("`" + propType + "` supplied to `" + componentName + "`, expected a single ReactElement type."));
+            }
+            return null;
+          }
+          return createChainableTypeChecker(validate);
+        }
+        function createInstanceTypeChecker(expectedClass) {
+          function validate(props, propName, componentName, location, propFullName) {
+            if (!(props[propName] instanceof expectedClass)) {
+              var expectedClassName = expectedClass.name || ANONYMOUS;
+              var actualClassName = getClassName(props[propName]);
+              return new PropTypeError("Invalid " + location + " `" + propFullName + "` of type " + ("`" + actualClassName + "` supplied to `" + componentName + "`, expected ") + ("instance of `" + expectedClassName + "`."));
+            }
+            return null;
+          }
+          return createChainableTypeChecker(validate);
+        }
+        function createEnumTypeChecker(expectedValues) {
+          if (!Array.isArray(expectedValues)) {
+            if (true) {
+              if (arguments.length > 1) {
+                printWarning(
+                  "Invalid arguments supplied to oneOf, expected an array, got " + arguments.length + " arguments. A common mistake is to write oneOf(x, y, z) instead of oneOf([x, y, z])."
+                );
+              } else {
+                printWarning("Invalid argument supplied to oneOf, expected an array.");
+              }
+            }
+            return emptyFunctionThatReturnsNull;
+          }
+          function validate(props, propName, componentName, location, propFullName) {
+            var propValue = props[propName];
+            for (var i2 = 0; i2 < expectedValues.length; i2++) {
+              if (is(propValue, expectedValues[i2])) {
+                return null;
+              }
+            }
+            var valuesString = JSON.stringify(expectedValues, function replacer(key, value) {
+              var type = getPreciseType(value);
+              if (type === "symbol") {
+                return String(value);
+              }
+              return value;
+            });
+            return new PropTypeError("Invalid " + location + " `" + propFullName + "` of value `" + String(propValue) + "` " + ("supplied to `" + componentName + "`, expected one of " + valuesString + "."));
+          }
+          return createChainableTypeChecker(validate);
+        }
+        function createObjectOfTypeChecker(typeChecker) {
+          function validate(props, propName, componentName, location, propFullName) {
+            if (typeof typeChecker !== "function") {
+              return new PropTypeError("Property `" + propFullName + "` of component `" + componentName + "` has invalid PropType notation inside objectOf.");
+            }
+            var propValue = props[propName];
+            var propType = getPropType(propValue);
+            if (propType !== "object") {
+              return new PropTypeError("Invalid " + location + " `" + propFullName + "` of type " + ("`" + propType + "` supplied to `" + componentName + "`, expected an object."));
+            }
+            for (var key in propValue) {
+              if (has(propValue, key)) {
+                var error = typeChecker(propValue, key, componentName, location, propFullName + "." + key, ReactPropTypesSecret);
+                if (error instanceof Error) {
+                  return error;
+                }
+              }
+            }
+            return null;
+          }
+          return createChainableTypeChecker(validate);
+        }
+        function createUnionTypeChecker(arrayOfTypeCheckers) {
+          if (!Array.isArray(arrayOfTypeCheckers)) {
+            true ? printWarning("Invalid argument supplied to oneOfType, expected an instance of array.") : void 0;
+            return emptyFunctionThatReturnsNull;
+          }
+          for (var i2 = 0; i2 < arrayOfTypeCheckers.length; i2++) {
+            var checker = arrayOfTypeCheckers[i2];
+            if (typeof checker !== "function") {
+              printWarning(
+                "Invalid argument supplied to oneOfType. Expected an array of check functions, but received " + getPostfixForTypeWarning(checker) + " at index " + i2 + "."
+              );
+              return emptyFunctionThatReturnsNull;
+            }
+          }
+          function validate(props, propName, componentName, location, propFullName) {
+            var expectedTypes = [];
+            for (var i3 = 0; i3 < arrayOfTypeCheckers.length; i3++) {
+              var checker2 = arrayOfTypeCheckers[i3];
+              var checkerResult = checker2(props, propName, componentName, location, propFullName, ReactPropTypesSecret);
+              if (checkerResult == null) {
+                return null;
+              }
+              if (checkerResult.data && has(checkerResult.data, "expectedType")) {
+                expectedTypes.push(checkerResult.data.expectedType);
+              }
+            }
+            var expectedTypesMessage = expectedTypes.length > 0 ? ", expected one of type [" + expectedTypes.join(", ") + "]" : "";
+            return new PropTypeError("Invalid " + location + " `" + propFullName + "` supplied to " + ("`" + componentName + "`" + expectedTypesMessage + "."));
+          }
+          return createChainableTypeChecker(validate);
+        }
+        function createNodeChecker() {
+          function validate(props, propName, componentName, location, propFullName) {
+            if (!isNode(props[propName])) {
+              return new PropTypeError("Invalid " + location + " `" + propFullName + "` supplied to " + ("`" + componentName + "`, expected a ReactNode."));
+            }
+            return null;
+          }
+          return createChainableTypeChecker(validate);
+        }
+        function invalidValidatorError(componentName, location, propFullName, key, type) {
+          return new PropTypeError(
+            (componentName || "React class") + ": " + location + " type `" + propFullName + "." + key + "` is invalid; it must be a function, usually from the `prop-types` package, but received `" + type + "`."
+          );
+        }
+        function createShapeTypeChecker(shapeTypes) {
+          function validate(props, propName, componentName, location, propFullName) {
+            var propValue = props[propName];
+            var propType = getPropType(propValue);
+            if (propType !== "object") {
+              return new PropTypeError("Invalid " + location + " `" + propFullName + "` of type `" + propType + "` " + ("supplied to `" + componentName + "`, expected `object`."));
+            }
+            for (var key in shapeTypes) {
+              var checker = shapeTypes[key];
+              if (typeof checker !== "function") {
+                return invalidValidatorError(componentName, location, propFullName, key, getPreciseType(checker));
+              }
+              var error = checker(propValue, key, componentName, location, propFullName + "." + key, ReactPropTypesSecret);
+              if (error) {
+                return error;
+              }
+            }
+            return null;
+          }
+          return createChainableTypeChecker(validate);
+        }
+        function createStrictShapeTypeChecker(shapeTypes) {
+          function validate(props, propName, componentName, location, propFullName) {
+            var propValue = props[propName];
+            var propType = getPropType(propValue);
+            if (propType !== "object") {
+              return new PropTypeError("Invalid " + location + " `" + propFullName + "` of type `" + propType + "` " + ("supplied to `" + componentName + "`, expected `object`."));
+            }
+            var allKeys = assign({}, props[propName], shapeTypes);
+            for (var key in allKeys) {
+              var checker = shapeTypes[key];
+              if (has(shapeTypes, key) && typeof checker !== "function") {
+                return invalidValidatorError(componentName, location, propFullName, key, getPreciseType(checker));
+              }
+              if (!checker) {
+                return new PropTypeError(
+                  "Invalid " + location + " `" + propFullName + "` key `" + key + "` supplied to `" + componentName + "`.\nBad object: " + JSON.stringify(props[propName], null, "  ") + "\nValid keys: " + JSON.stringify(Object.keys(shapeTypes), null, "  ")
+                );
+              }
+              var error = checker(propValue, key, componentName, location, propFullName + "." + key, ReactPropTypesSecret);
+              if (error) {
+                return error;
+              }
+            }
+            return null;
+          }
+          return createChainableTypeChecker(validate);
+        }
+        function isNode(propValue) {
+          switch (typeof propValue) {
+            case "number":
+            case "string":
+            case "undefined":
+              return true;
+            case "boolean":
+              return !propValue;
+            case "object":
+              if (Array.isArray(propValue)) {
+                return propValue.every(isNode);
+              }
+              if (propValue === null || isValidElement2(propValue)) {
+                return true;
+              }
+              var iteratorFn = getIteratorFn(propValue);
+              if (iteratorFn) {
+                var iterator = iteratorFn.call(propValue);
+                var step;
+                if (iteratorFn !== propValue.entries) {
+                  while (!(step = iterator.next()).done) {
+                    if (!isNode(step.value)) {
+                      return false;
+                    }
+                  }
+                } else {
+                  while (!(step = iterator.next()).done) {
+                    var entry = step.value;
+                    if (entry) {
+                      if (!isNode(entry[1])) {
+                        return false;
+                      }
+                    }
+                  }
+                }
+              } else {
+                return false;
+              }
+              return true;
+            default:
+              return false;
+          }
+        }
+        function isSymbol(propType, propValue) {
+          if (propType === "symbol") {
+            return true;
+          }
+          if (!propValue) {
+            return false;
+          }
+          if (propValue["@@toStringTag"] === "Symbol") {
+            return true;
+          }
+          if (typeof Symbol === "function" && propValue instanceof Symbol) {
+            return true;
+          }
+          return false;
+        }
+        function getPropType(propValue) {
+          var propType = typeof propValue;
+          if (Array.isArray(propValue)) {
+            return "array";
+          }
+          if (propValue instanceof RegExp) {
+            return "object";
+          }
+          if (isSymbol(propType, propValue)) {
+            return "symbol";
+          }
+          return propType;
+        }
+        function getPreciseType(propValue) {
+          if (typeof propValue === "undefined" || propValue === null) {
+            return "" + propValue;
+          }
+          var propType = getPropType(propValue);
+          if (propType === "object") {
+            if (propValue instanceof Date) {
+              return "date";
+            } else if (propValue instanceof RegExp) {
+              return "regexp";
+            }
+          }
+          return propType;
+        }
+        function getPostfixForTypeWarning(value) {
+          var type = getPreciseType(value);
+          switch (type) {
+            case "array":
+            case "object":
+              return "an " + type;
+            case "boolean":
+            case "date":
+            case "regexp":
+              return "a " + type;
+            default:
+              return type;
+          }
+        }
+        function getClassName(propValue) {
+          if (!propValue.constructor || !propValue.constructor.name) {
+            return ANONYMOUS;
+          }
+          return propValue.constructor.name;
+        }
+        ReactPropTypes.checkPropTypes = checkPropTypes;
+        ReactPropTypes.resetWarningCache = checkPropTypes.resetWarningCache;
+        ReactPropTypes.PropTypes = ReactPropTypes;
+        return ReactPropTypes;
+      };
+    }
+  });
+
+  // ../testeranto/node_modules/prop-types/index.js
+  var require_prop_types = __commonJS({
+    "../testeranto/node_modules/prop-types/index.js"(exports2, module2) {
+      if (true) {
+        ReactIs = require_react_is();
+        throwOnDirectAccess = true;
+        module2.exports = require_factoryWithTypeCheckers()(ReactIs.isElement, throwOnDirectAccess);
+      } else {
+        module2.exports = null();
+      }
+      var ReactIs;
+      var throwOnDirectAccess;
+    }
+  });
+
+  // ../testeranto/node_modules/react-sigma/sigma/plugins.filter.js
+  var require_plugins_filter = __commonJS({
+    "../testeranto/node_modules/react-sigma/sigma/plugins.filter.js"(exports, module) {
+      var Sigma = function(e) {
+        var r = {};
+        function t(n) {
+          if (r[n])
+            return r[n].exports;
+          var o2 = r[n] = { i: n, l: false, exports: {} };
+          return e[n].call(o2.exports, o2, o2.exports, t), o2.l = true, o2.exports;
+        }
+        return t.m = e, t.c = r, t.d = function(e2, r2, n) {
+          t.o(e2, r2) || Object.defineProperty(e2, r2, { enumerable: true, get: n });
+        }, t.r = function(e2) {
+          "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e2, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(e2, "__esModule", { value: true });
+        }, t.t = function(e2, r2) {
+          if (1 & r2 && (e2 = t(e2)), 8 & r2)
+            return e2;
+          if (4 & r2 && "object" == typeof e2 && e2 && e2.__esModule)
+            return e2;
+          var n = /* @__PURE__ */ Object.create(null);
+          if (t.r(n), Object.defineProperty(n, "default", { enumerable: true, value: e2 }), 2 & r2 && "string" != typeof e2)
+            for (var o2 in e2)
+              t.d(n, o2, function(r3) {
+                return e2[r3];
+              }.bind(null, o2));
+          return n;
+        }, t.n = function(e2) {
+          var r2 = e2 && e2.__esModule ? function() {
+            return e2.default;
+          } : function() {
+            return e2;
+          };
+          return t.d(r2, "a", r2), r2;
+        }, t.o = function(e2, r2) {
+          return Object.prototype.hasOwnProperty.call(e2, r2);
+        }, t.p = "", t(t.s = 185);
+      }({ 185: function(module, exports) {
+        (function() {
+          (function(undefined) {
+            "use strict";
+            if ("undefined" == typeof sigma)
+              throw "sigma is not declared";
+            sigma.utils.pkg("sigma.plugins"), sigma.classes.graph.hasMethod("adjacentNodes") || sigma.classes.graph.addMethod("adjacentNodes", function(e) {
+              if ("string" != typeof e)
+                throw "adjacentNodes: the node id must be a string.";
+              var r, t = [];
+              for (r in this.allNeighborsIndex[e])
+                t.push(this.nodesIndex[r]);
+              return t;
+            }), sigma.classes.graph.hasMethod("adjacentEdges") || sigma.classes.graph.addMethod("adjacentEdges", function(e) {
+              if ("string" != typeof e)
+                throw "adjacentEdges: the node id must be a string.";
+              var r, t, n = this.allNeighborsIndex[e], o2 = [];
+              for (t in n)
+                for (r in n[t])
+                  o2.push(n[t][r]);
+              return o2;
+            });
+            var _g = undefined, _s = undefined, _chain = [], _keysIndex = /* @__PURE__ */ Object.create(null), Processors = {};
+            function register(e, r, t) {
+              if (t != undefined && "string" != typeof t)
+                throw 'The filter key "' + t.toString() + '" must be a string.';
+              if (t != undefined && !t.length)
+                throw "The filter key must be a non-empty string.";
+              if ("function" != typeof e)
+                throw 'The predicate of key "' + t + '" must be a function.';
+              if ("undo" === t)
+                throw '"undo" is a reserved key.';
+              if (_keysIndex[t])
+                throw 'The filter "' + t + '" already exists.';
+              t && (_keysIndex[t] = true), _chain.push({ key: t, processor: e, predicate: r });
+            }
+            function unregister(e) {
+              for (var r in _chain = _chain.filter(function(r2) {
+                return !(r2.key in e);
+              }), e)
+                delete _keysIndex[r];
+            }
+            function Filter(e) {
+              _s = e, _g = e.graph;
+            }
+            function deepCopy(o) {
+              var copy = /* @__PURE__ */ Object.create(null);
+              for (var i in o)
+                "object" == typeof o[i] && null !== o[i] ? copy[i] = deepCopy(o[i]) : "function" == typeof o[i] && null !== o[i] ? eval(" copy[i] = " + o[i].toString()) : copy[i] = o[i];
+              return copy;
+            }
+            function cloneChain(e) {
+              for (var r = e.slice(0), t = 0, n = r.length; t < n; t++)
+                r[t] = deepCopy(r[t]), "function" == typeof r[t].processor && (r[t].processor = "filter.processors." + r[t].processor.name);
+              return r;
+            }
+            Processors.nodes = function(e) {
+              for (var r = _g.nodes(), t = r.length, n = _g.edges(), o2 = n.length; t--; )
+                r[t].hidden = !e.call(_g, r[t]) || r[t].hidden;
+              for (; o2--; )
+                (_g.nodes(n[o2].source).hidden || _g.nodes(n[o2].target).hidden) && (n[o2].hidden = true);
+            }, Processors.edges = function(e) {
+              for (var r = _g.edges(), t = r.length; t--; )
+                r[t].hidden = !e.call(_g, r[t]) || r[t].hidden;
+            }, Processors.neighbors = function(e) {
+              for (var r = _g.nodes(), t = r.length, n = _g.edges(), o2 = n.length, i2 = _g.adjacentNodes(e), s = i2.length, c = {}; s--; )
+                c[i2[s].id] = true;
+              for (; t--; )
+                r[t].id === e || r[t].id in c || (r[t].hidden = true);
+              for (; o2--; )
+                (_g.nodes(n[o2].source).hidden || _g.nodes(n[o2].target).hidden) && (n[o2].hidden = true);
+            }, Filter.prototype.nodesBy = function(e, r) {
+              return register(Processors.nodes, e, r), this;
+            }, Filter.prototype.edgesBy = function(e, r) {
+              return register(Processors.edges, e, r), this;
+            }, Filter.prototype.neighborsOf = function(e, r) {
+              if ("string" != typeof e)
+                throw 'The node id "' + e.toString() + '" must be a string.';
+              if (!e.length)
+                throw "The node id must be a non-empty string.";
+              return register(Processors.neighbors, e, r), this;
+            }, Filter.prototype.apply = function() {
+              for (var e = 0, r = _chain.length; e < r; ++e)
+                _chain[e].processor(_chain[e].predicate);
+              return _chain[0] && "undo" === _chain[0].key && _chain.shift(), _s.refresh(), this;
+            }, Filter.prototype.undo = function(e) {
+              var r = /* @__PURE__ */ Object.create(null), t = arguments.length;
+              if (1 === t)
+                if ("[object Array]" === Object.prototype.toString.call(e))
+                  for (var n = 0, o2 = e.length; n < o2; n++)
+                    r[e[n]] = true;
+                else
+                  r[e] = true;
+              else if (t > 1)
+                for (n = 0; n < t; n++)
+                  r[arguments[n]] = true;
+              else
+                this.clear();
+              function i2() {
+                for (var e2 = _g.nodes(), r2 = e2.length, t2 = _g.edges(), n2 = t2.length; r2--; )
+                  e2[r2].hidden = false;
+                for (; n2--; )
+                  t2[n2].hidden = false;
+              }
+              return unregister(r), _chain.unshift({ key: "undo", processor: i2 }), this;
+            }, Filter.prototype.clear = function() {
+              return _chain.length = 0, _keysIndex = /* @__PURE__ */ Object.create(null), this;
+            }, Filter.prototype.export = function() {
+              return cloneChain(_chain);
+            }, Filter.prototype.import = function(e) {
+              if (e === undefined)
+                throw "Wrong arguments.";
+              if ("[object Array]" !== Object.prototype.toString.call(e))
+                throw 'The chain" must be an array.';
+              for (var r = cloneChain(e), t = 0, n = r.length; t < n; t++) {
+                if (r[t].predicate === undefined || r[t].processor === undefined)
+                  throw "Wrong arguments.";
+                if (r[t].key != undefined && "string" != typeof r[t].key)
+                  throw 'The filter key "' + r[t].key.toString() + '" must be a string.';
+                if ("function" != typeof r[t].predicate)
+                  throw 'The predicate of key "' + r[t].key + '" must be a function.';
+                if ("string" != typeof r[t].processor)
+                  throw 'The processor of key "' + r[t].key + '" must be a string.';
+                switch (r[t].processor) {
+                  case "filter.processors.nodes":
+                    r[t].processor = Processors.nodes;
+                    break;
+                  case "filter.processors.edges":
+                    r[t].processor = Processors.edges;
+                    break;
+                  case "filter.processors.neighbors":
+                    r[t].processor = Processors.neighbors;
+                    break;
+                  default:
+                    throw "Unknown processor " + r[t].processor;
+                }
+              }
+              return _chain = r, this;
+            };
+            var filter = null;
+            sigma.plugins.filter = function(e) {
+              return filter = new Filter(e);
+            };
+          }).call(this);
+        }).call(window);
+      } });
+    }
+  });
+
+  // ../testeranto/node_modules/react-sigma/sigma/layout.forceAtlas2.js
+  var require_layout_forceAtlas2 = __commonJS({
+    "../testeranto/node_modules/react-sigma/sigma/layout.forceAtlas2.js"(exports, module) {
+      var Sigma = function(e) {
+        var t = {};
+        function s(r) {
+          if (t[r])
+            return t[r].exports;
+          var n = t[r] = { i: r, l: false, exports: {} };
+          return e[r].call(n.exports, n, n.exports, s), n.l = true, n.exports;
+        }
+        return s.m = e, s.c = t, s.d = function(e2, t2, r) {
+          s.o(e2, t2) || Object.defineProperty(e2, t2, { enumerable: true, get: r });
+        }, s.r = function(e2) {
+          "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e2, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(e2, "__esModule", { value: true });
+        }, s.t = function(e2, t2) {
+          if (1 & t2 && (e2 = s(e2)), 8 & t2)
+            return e2;
+          if (4 & t2 && "object" == typeof e2 && e2 && e2.__esModule)
+            return e2;
+          var r = /* @__PURE__ */ Object.create(null);
+          if (s.r(r), Object.defineProperty(r, "default", { enumerable: true, value: e2 }), 2 & t2 && "string" != typeof e2)
+            for (var n in e2)
+              s.d(r, n, function(t3) {
+                return e2[t3];
+              }.bind(null, n));
+          return r;
+        }, s.n = function(e2) {
+          var t2 = e2 && e2.__esModule ? function() {
+            return e2.default;
+          } : function() {
+            return e2;
+          };
+          return s.d(t2, "a", t2), t2;
+        }, s.o = function(e2, t2) {
+          return Object.prototype.hasOwnProperty.call(e2, t2);
+        }, s.p = "", s(s.s = 186);
+      }({ 186: function(e, t, s) {
+        s(187), e.exports = s(188);
+      }, 187: function(module, exports, __webpack_require__) {
+        (function() {
+          (function(undefined) {
+            "use strict";
+            if ("undefined" == typeof sigma)
+              throw "sigma is not declared";
+            var _root = this, webWorkers = "Worker" in _root;
+            function Supervisor(sigInst, options) {
+              var _this = this, workerFn = sigInst.getForceAtlas2Worker && sigInst.getForceAtlas2Worker();
+              if (options = options || {}, _root.URL = _root.URL || _root.webkitURL, this.sigInst = sigInst, this.graph = this.sigInst.graph, this.ppn = 10, this.ppe = 3, this.config = {}, this.shouldUseWorker = false !== options.worker && webWorkers, this.workerUrl = options.workerUrl, this.started = false, this.running = false, this.shouldUseWorker) {
+                if (this.workerUrl)
+                  this.worker = new Worker(this.workerUrl);
+                else {
+                  var blob = this.makeBlob(workerFn);
+                  this.worker = new Worker(URL.createObjectURL(blob));
+                }
+                this.worker.postMessage = this.worker.webkitPostMessage || this.worker.postMessage;
+              } else
+                eval(workerFn);
+              this.msgName = this.worker ? "message" : "newCoords", this.listener = function(e) {
+                _this.nodesByteArray = new Float32Array(e.data.nodes), _this.running && (_this.applyLayoutChanges(), _this.sendByteArrayToWorker(), _this.sigInst.refresh());
+              }, (this.worker || document).addEventListener(this.msgName, this.listener), this.graphToByteArrays(), sigInst.bind("kill", function() {
+                sigInst.killForceAtlas2();
+              });
+            }
+            Supervisor.prototype.makeBlob = function(e) {
+              var t;
+              try {
+                t = new Blob([e], { type: "application/javascript" });
+              } catch (s) {
+                _root.BlobBuilder = _root.BlobBuilder || _root.WebKitBlobBuilder || _root.MozBlobBuilder, (t = new BlobBuilder()).append(e), t = t.getBlob();
+              }
+              return t;
+            }, Supervisor.prototype.graphToByteArrays = function() {
+              var e, t, s, r = this.graph.nodes(), n = this.graph.edges(), i2 = r.length * this.ppn, o2 = n.length * this.ppe, a = {};
+              for (this.nodesByteArray = new Float32Array(i2), this.edgesByteArray = new Float32Array(o2), e = t = 0, s = r.length; e < s; e++)
+                a[r[e].id] = t, this.nodesByteArray[t] = r[e].x, this.nodesByteArray[t + 1] = r[e].y, this.nodesByteArray[t + 2] = 0, this.nodesByteArray[t + 3] = 0, this.nodesByteArray[t + 4] = 0, this.nodesByteArray[t + 5] = 0, this.nodesByteArray[t + 6] = 1 + this.graph.degree(r[e].id), this.nodesByteArray[t + 7] = 1, this.nodesByteArray[t + 8] = r[e].size, this.nodesByteArray[t + 9] = 0, t += this.ppn;
+              for (e = t = 0, s = n.length; e < s; e++)
+                this.edgesByteArray[t] = a[n[e].source], this.edgesByteArray[t + 1] = a[n[e].target], this.edgesByteArray[t + 2] = n[e].weight || 0, t += this.ppe;
+            }, Supervisor.prototype.applyLayoutChanges = function() {
+              for (var e = this.graph.nodes(), t = 0, s = 0, r = this.nodesByteArray.length; s < r; s += this.ppn)
+                e[t].x = this.nodesByteArray[s], e[t].y = this.nodesByteArray[s + 1], t++;
+            }, Supervisor.prototype.sendByteArrayToWorker = function(e) {
+              var t = { action: e || "loop", nodes: this.nodesByteArray.buffer }, s = [this.nodesByteArray.buffer];
+              "start" === e && (t.config = this.config || {}, t.edges = this.edgesByteArray.buffer, s.push(this.edgesByteArray.buffer)), this.shouldUseWorker ? this.worker.postMessage(t, s) : _root.postMessage(t, "*");
+            }, Supervisor.prototype.start = function() {
+              if (!this.running) {
+                var e;
+                for (e in this.running = true, this.sigInst.cameras)
+                  this.sigInst.cameras[e].edgequadtree._enabled = false;
+                this.started ? this.sendByteArrayToWorker() : (this.sendByteArrayToWorker("start"), this.started = true);
+              }
+            }, Supervisor.prototype.stop = function() {
+              if (this.running) {
+                var e, t, s;
+                for (e in this.sigInst.cameras)
+                  (t = this.sigInst.cameras[e]).edgequadtree._enabled = true, s = sigma.utils.getBoundaries(this.graph, t.readPrefix), t.settings("drawEdges") && t.settings("enableEdgeHovering") && t.edgequadtree.index(this.sigInst.graph, { prefix: t.readPrefix, bounds: { x: s.minX, y: s.minY, width: s.maxX - s.minX, height: s.maxY - s.minY } });
+                this.running = false;
+              }
+            }, Supervisor.prototype.killWorker = function() {
+              this.worker ? this.worker.terminate() : (_root.postMessage({ action: "kill" }, "*"), document.removeEventListener(this.msgName, this.listener));
+            }, Supervisor.prototype.configure = function(e) {
+              if (this.config = e, this.started) {
+                var t = { action: "config", config: this.config };
+                this.shouldUseWorker ? this.worker.postMessage(t) : _root.postMessage(t, "*");
+              }
+            }, sigma.prototype.startForceAtlas2 = function(e) {
+              return this.supervisor || (this.supervisor = new Supervisor(this, e)), e && this.supervisor.configure(e), this.supervisor.start(), this;
+            }, sigma.prototype.stopForceAtlas2 = function() {
+              return this.supervisor ? (this.supervisor.stop(), this) : this;
+            }, sigma.prototype.killForceAtlas2 = function() {
+              return this.supervisor ? (this.supervisor.stop(), this.supervisor.killWorker(), this.supervisor = null, this) : this;
+            }, sigma.prototype.configForceAtlas2 = function(e) {
+              return this.supervisor || (this.supervisor = new Supervisor(this, e)), this.supervisor.configure(e), this;
+            }, sigma.prototype.isForceAtlas2Running = function(e) {
+              return !!this.supervisor && this.supervisor.running;
+            };
+          }).call(window);
+        }).call(window);
+      }, 188: function(module, exports) {
+        (function() {
+          (function(undefined) {
+            "use strict";
+            var _root = this, inWebWorker = !("document" in _root), Worker = function(e) {
+              var t, s, r, n = { ppn: 10, ppe: 3, ppr: 9, maxForce: 10, iterations: 0, converged: false, settings: { linLogMode: false, outboundAttractionDistribution: false, adjustSizes: false, edgeWeightInfluence: 0, scalingRatio: 1, strongGravityMode: false, gravity: 1, slowDown: 1, barnesHutOptimize: false, barnesHutTheta: 0.5, startingIterations: 1, iterationsPerRender: 1 } };
+              var i2, o2 = { x: 0, y: 1, dx: 2, dy: 3, old_dx: 4, old_dy: 5, mass: 6, convergence: 7, size: 8, fixed: 9 }, a = { source: 0, target: 1, weight: 2 }, d = { node: 0, centerX: 1, centerY: 2, size: 3, nextSibling: 4, firstChild: 5, mass: 6, massCenterX: 7, massCenterY: 8 };
+              function h(e2, t2) {
+                if (e2 % n.ppn != 0)
+                  throw "np: non correct (" + e2 + ").";
+                if (e2 !== parseInt(e2))
+                  throw "np: non int.";
+                if (t2 in o2)
+                  return e2 + o2[t2];
+                throw "ForceAtlas2.Worker - Inexistant node property given (" + t2 + ").";
+              }
+              function p(e2, t2) {
+                if (e2 % n.ppe != 0)
+                  throw "ep: non correct (" + e2 + ").";
+                if (e2 !== parseInt(e2))
+                  throw "ep: non int.";
+                if (t2 in a)
+                  return e2 + a[t2];
+                throw "ForceAtlas2.Worker - Inexistant edge property given (" + t2 + ").";
+              }
+              function g(e2, t2) {
+                if (e2 % n.ppr != 0)
+                  throw "rp: non correct (" + e2 + ").";
+                if (e2 !== parseInt(e2))
+                  throw "rp: non int.";
+                if (t2 in d)
+                  return e2 + d[t2];
+                throw "ForceAtlas2.Worker - Inexistant region property given (" + t2 + ").";
+              }
+              function l(e2) {
+                n.settings = function() {
+                  var e3, t2, s2 = {};
+                  for (e3 = arguments.length - 1; e3 >= 0; e3--)
+                    for (t2 in arguments[e3])
+                      s2[t2] = arguments[e3][t2];
+                  return s2;
+                }(e2, n.settings);
+              }
+              function u() {
+                var e2, i3, o3, a3, d2, l2, u2, c2, f2, y, m, x, w, v, b, k, M, A, _;
+                for (o3 = 0; o3 < n.nodesLength; o3 += n.ppn)
+                  t[h(o3, "old_dx")] = t[h(o3, "dx")], t[h(o3, "old_dy")] = t[h(o3, "dy")], t[h(o3, "dx")] = 0, t[h(o3, "dy")] = 0;
+                if (n.settings.outboundAttractionDistribution) {
+                  for (f2 = 0, o3 = 0; o3 < n.nodesLength; o3 += n.ppn)
+                    f2 += t[h(o3, "mass")];
+                  f2 /= n.nodesLength;
+                }
+                if (n.settings.barnesHutOptimize) {
+                  var C, B, S = 1 / 0, W = -1 / 0, Y = 1 / 0, F = -1 / 0;
+                  for (r = [], o3 = 0; o3 < n.nodesLength; o3 += n.ppn)
+                    S = Math.min(S, t[h(o3, "x")]), W = Math.max(W, t[h(o3, "x")]), Y = Math.min(Y, t[h(o3, "y")]), F = Math.max(F, t[h(o3, "y")]);
+                  for (r[g(0, "node")] = -1, r[g(0, "centerX")] = (S + W) / 2, r[g(0, "centerY")] = (Y + F) / 2, r[g(0, "size")] = Math.max(W - S, F - Y), r[g(0, "nextSibling")] = -1, r[g(0, "firstChild")] = -1, r[g(0, "mass")] = 0, r[g(0, "massCenterX")] = 0, r[g(0, "massCenterY")] = 0, e2 = 1, o3 = 0; o3 < n.nodesLength; o3 += n.ppn)
+                    for (i3 = 0; ; )
+                      if (r[g(i3, "firstChild")] >= 0)
+                        C = t[h(o3, "x")] < r[g(i3, "centerX")] ? t[h(o3, "y")] < r[g(i3, "centerY")] ? r[g(i3, "firstChild")] : r[g(i3, "firstChild")] + n.ppr : t[h(o3, "y")] < r[g(i3, "centerY")] ? r[g(i3, "firstChild")] + 2 * n.ppr : r[g(i3, "firstChild")] + 3 * n.ppr, r[g(i3, "massCenterX")] = (r[g(i3, "massCenterX")] * r[g(i3, "mass")] + t[h(o3, "x")] * t[h(o3, "mass")]) / (r[g(i3, "mass")] + t[h(o3, "mass")]), r[g(i3, "massCenterY")] = (r[g(i3, "massCenterY")] * r[g(i3, "mass")] + t[h(o3, "y")] * t[h(o3, "mass")]) / (r[g(i3, "mass")] + t[h(o3, "mass")]), r[g(i3, "mass")] += t[h(o3, "mass")], i3 = C;
+                      else {
+                        if (r[g(i3, "node")] < 0) {
+                          r[g(i3, "node")] = o3;
+                          break;
+                        }
+                        if (r[g(i3, "firstChild")] = e2 * n.ppr, u2 = r[g(i3, "size")] / 2, c2 = r[g(i3, "firstChild")], r[g(c2, "node")] = -1, r[g(c2, "centerX")] = r[g(i3, "centerX")] - u2, r[g(c2, "centerY")] = r[g(i3, "centerY")] - u2, r[g(c2, "size")] = u2, r[g(c2, "nextSibling")] = c2 + n.ppr, r[g(c2, "firstChild")] = -1, r[g(c2, "mass")] = 0, r[g(c2, "massCenterX")] = 0, r[g(c2, "massCenterY")] = 0, c2 += n.ppr, r[g(c2, "node")] = -1, r[g(c2, "centerX")] = r[g(i3, "centerX")] - u2, r[g(c2, "centerY")] = r[g(i3, "centerY")] + u2, r[g(c2, "size")] = u2, r[g(c2, "nextSibling")] = c2 + n.ppr, r[g(c2, "firstChild")] = -1, r[g(c2, "mass")] = 0, r[g(c2, "massCenterX")] = 0, r[g(c2, "massCenterY")] = 0, c2 += n.ppr, r[g(c2, "node")] = -1, r[g(c2, "centerX")] = r[g(i3, "centerX")] + u2, r[g(c2, "centerY")] = r[g(i3, "centerY")] - u2, r[g(c2, "size")] = u2, r[g(c2, "nextSibling")] = c2 + n.ppr, r[g(c2, "firstChild")] = -1, r[g(c2, "mass")] = 0, r[g(c2, "massCenterX")] = 0, r[g(c2, "massCenterY")] = 0, c2 += n.ppr, r[g(c2, "node")] = -1, r[g(c2, "centerX")] = r[g(i3, "centerX")] + u2, r[g(c2, "centerY")] = r[g(i3, "centerY")] + u2, r[g(c2, "size")] = u2, r[g(c2, "nextSibling")] = r[g(i3, "nextSibling")], r[g(c2, "firstChild")] = -1, r[g(c2, "mass")] = 0, r[g(c2, "massCenterX")] = 0, r[g(c2, "massCenterY")] = 0, e2 += 4, C = t[h(r[g(i3, "node")], "x")] < r[g(i3, "centerX")] ? t[h(r[g(i3, "node")], "y")] < r[g(i3, "centerY")] ? r[g(i3, "firstChild")] : r[g(i3, "firstChild")] + n.ppr : t[h(r[g(i3, "node")], "y")] < r[g(i3, "centerY")] ? r[g(i3, "firstChild")] + 2 * n.ppr : r[g(i3, "firstChild")] + 3 * n.ppr, r[g(i3, "mass")] = t[h(r[g(i3, "node")], "mass")], r[g(i3, "massCenterX")] = t[h(r[g(i3, "node")], "x")], r[g(i3, "massCenterY")] = t[h(r[g(i3, "node")], "y")], r[g(C, "node")] = r[g(i3, "node")], r[g(i3, "node")] = -1, C !== (B = t[h(o3, "x")] < r[g(i3, "centerX")] ? t[h(o3, "y")] < r[g(i3, "centerY")] ? r[g(i3, "firstChild")] : r[g(i3, "firstChild")] + n.ppr : t[h(o3, "y")] < r[g(i3, "centerY")] ? r[g(i3, "firstChild")] + 2 * n.ppr : r[g(i3, "firstChild")] + 3 * n.ppr)) {
+                          r[g(B, "node")] = o3;
+                          break;
+                        }
+                        i3 = C;
+                      }
+                }
+                if (n.settings.barnesHutOptimize)
+                  for (y = n.settings.scalingRatio, o3 = 0; o3 < n.nodesLength; o3 += n.ppn)
+                    for (i3 = 0; ; )
+                      if (r[g(i3, "firstChild")] >= 0) {
+                        if (v = Math.sqrt(Math.pow(t[h(o3, "x")] - r[g(i3, "massCenterX")], 2) + Math.pow(t[h(o3, "y")] - r[g(i3, "massCenterY")], 2)), 2 * r[g(i3, "size")] / v < n.settings.barnesHutTheta) {
+                          if (m = t[h(o3, "x")] - r[g(i3, "massCenterX")], x = t[h(o3, "y")] - r[g(i3, "massCenterY")], n.settings.adjustSizes ? v > 0 ? (b = y * t[h(o3, "mass")] * r[g(i3, "mass")] / v / v, t[h(o3, "dx")] += m * b, t[h(o3, "dy")] += x * b) : v < 0 && (b = -y * t[h(o3, "mass")] * r[g(i3, "mass")] / v, t[h(o3, "dx")] += m * b, t[h(o3, "dy")] += x * b) : v > 0 && (b = y * t[h(o3, "mass")] * r[g(i3, "mass")] / v / v, t[h(o3, "dx")] += m * b, t[h(o3, "dy")] += x * b), r[g(i3, "nextSibling")] < 0)
+                            break;
+                          i3 = r[g(i3, "nextSibling")];
+                          continue;
+                        }
+                        i3 = r[g(i3, "firstChild")];
+                      } else {
+                        if (r[g(i3, "node")] >= 0 && r[g(i3, "node")] !== o3 && (m = t[h(o3, "x")] - t[h(r[g(i3, "node")], "x")], x = t[h(o3, "y")] - t[h(r[g(i3, "node")], "y")], v = Math.sqrt(m * m + x * x), n.settings.adjustSizes ? v > 0 ? (b = y * t[h(o3, "mass")] * t[h(r[g(i3, "node")], "mass")] / v / v, t[h(o3, "dx")] += m * b, t[h(o3, "dy")] += x * b) : v < 0 && (b = -y * t[h(o3, "mass")] * t[h(r[g(i3, "node")], "mass")] / v, t[h(o3, "dx")] += m * b, t[h(o3, "dy")] += x * b) : v > 0 && (b = y * t[h(o3, "mass")] * t[h(r[g(i3, "node")], "mass")] / v / v, t[h(o3, "dx")] += m * b, t[h(o3, "dy")] += x * b)), r[g(i3, "nextSibling")] < 0)
+                          break;
+                        i3 = r[g(i3, "nextSibling")];
+                      }
+                else
+                  for (y = n.settings.scalingRatio, a3 = 0; a3 < n.nodesLength; a3 += n.ppn)
+                    for (d2 = 0; d2 < a3; d2 += n.ppn)
+                      m = t[h(a3, "x")] - t[h(d2, "x")], x = t[h(a3, "y")] - t[h(d2, "y")], n.settings.adjustSizes ? (v = Math.sqrt(m * m + x * x) - t[h(a3, "size")] - t[h(d2, "size")]) > 0 ? (b = y * t[h(a3, "mass")] * t[h(d2, "mass")] / v / v, t[h(a3, "dx")] += m * b, t[h(a3, "dy")] += x * b, t[h(d2, "dx")] += m * b, t[h(d2, "dy")] += x * b) : v < 0 && (b = 100 * y * t[h(a3, "mass")] * t[h(d2, "mass")], t[h(a3, "dx")] += m * b, t[h(a3, "dy")] += x * b, t[h(d2, "dx")] -= m * b, t[h(d2, "dy")] -= x * b) : (v = Math.sqrt(m * m + x * x)) > 0 && (b = y * t[h(a3, "mass")] * t[h(d2, "mass")] / v / v, t[h(a3, "dx")] += m * b, t[h(a3, "dy")] += x * b, t[h(d2, "dx")] -= m * b, t[h(d2, "dy")] -= x * b);
+                for (c2 = n.settings.gravity / n.settings.scalingRatio, y = n.settings.scalingRatio, o3 = 0; o3 < n.nodesLength; o3 += n.ppn)
+                  b = 0, m = t[h(o3, "x")], x = t[h(o3, "y")], v = Math.sqrt(Math.pow(m, 2) + Math.pow(x, 2)), n.settings.strongGravityMode ? v > 0 && (b = y * t[h(o3, "mass")] * c2) : v > 0 && (b = y * t[h(o3, "mass")] * c2 / v), t[h(o3, "dx")] -= m * b, t[h(o3, "dy")] -= x * b;
+                for (y = 1 * (n.settings.outboundAttractionDistribution ? f2 : 1), l2 = 0; l2 < n.edgesLength; l2 += n.ppe)
+                  a3 = s[p(l2, "source")], d2 = s[p(l2, "target")], u2 = s[p(l2, "weight")], w = Math.pow(u2, n.settings.edgeWeightInfluence), m = t[h(a3, "x")] - t[h(d2, "x")], x = t[h(a3, "y")] - t[h(d2, "y")], n.settings.adjustSizes ? (v = Math.sqrt(Math.pow(m, 2) + Math.pow(x, 2) - t[h(a3, "size")] - t[h(d2, "size")]), n.settings.linLogMode ? n.settings.outboundAttractionDistribution ? v > 0 && (b = -y * w * Math.log(1 + v) / v / t[h(a3, "mass")]) : v > 0 && (b = -y * w * Math.log(1 + v) / v) : n.settings.outboundAttractionDistribution ? v > 0 && (b = -y * w / t[h(a3, "mass")]) : v > 0 && (b = -y * w)) : (v = Math.sqrt(Math.pow(m, 2) + Math.pow(x, 2)), n.settings.linLogMode ? n.settings.outboundAttractionDistribution ? v > 0 && (b = -y * w * Math.log(1 + v) / v / t[h(a3, "mass")]) : v > 0 && (b = -y * w * Math.log(1 + v) / v) : n.settings.outboundAttractionDistribution ? (v = 1, b = -y * w / t[h(a3, "mass")]) : (v = 1, b = -y * w)), v > 0 && (t[h(a3, "dx")] += m * b, t[h(a3, "dy")] += x * b, t[h(d2, "dx")] -= m * b, t[h(d2, "dy")] -= x * b);
+                if (n.settings.adjustSizes)
+                  for (o3 = 0; o3 < n.nodesLength; o3 += n.ppn)
+                    t[h(o3, "fixed")] || ((k = Math.sqrt(Math.pow(t[h(o3, "dx")], 2) + Math.pow(t[h(o3, "dy")], 2))) > n.maxForce && (t[h(o3, "dx")] = t[h(o3, "dx")] * n.maxForce / k, t[h(o3, "dy")] = t[h(o3, "dy")] * n.maxForce / k), M = t[h(o3, "mass")] * Math.sqrt((t[h(o3, "old_dx")] - t[h(o3, "dx")]) * (t[h(o3, "old_dx")] - t[h(o3, "dx")]) + (t[h(o3, "old_dy")] - t[h(o3, "dy")]) * (t[h(o3, "old_dy")] - t[h(o3, "dy")])), A = Math.sqrt((t[h(o3, "old_dx")] + t[h(o3, "dx")]) * (t[h(o3, "old_dx")] + t[h(o3, "dx")]) + (t[h(o3, "old_dy")] + t[h(o3, "dy")]) * (t[h(o3, "old_dy")] + t[h(o3, "dy")])) / 2, _ = 0.1 * Math.log(1 + A) / (1 + Math.sqrt(M)), t[h(o3, "x")] = t[h(o3, "x")] + t[h(o3, "dx")] * (_ / n.settings.slowDown), t[h(o3, "y")] = t[h(o3, "y")] + t[h(o3, "dy")] * (_ / n.settings.slowDown));
+                else
+                  for (o3 = 0; o3 < n.nodesLength; o3 += n.ppn)
+                    t[h(o3, "fixed")] || (M = t[h(o3, "mass")] * Math.sqrt((t[h(o3, "old_dx")] - t[h(o3, "dx")]) * (t[h(o3, "old_dx")] - t[h(o3, "dx")]) + (t[h(o3, "old_dy")] - t[h(o3, "dy")]) * (t[h(o3, "old_dy")] - t[h(o3, "dy")])), A = Math.sqrt((t[h(o3, "old_dx")] + t[h(o3, "dx")]) * (t[h(o3, "old_dx")] + t[h(o3, "dx")]) + (t[h(o3, "old_dy")] + t[h(o3, "dy")]) * (t[h(o3, "old_dy")] + t[h(o3, "dy")])) / 2, _ = t[h(o3, "convergence")] * Math.log(1 + A) / (1 + Math.sqrt(M)), t[h(o3, "convergence")] = Math.min(1, Math.sqrt(_ * (Math.pow(t[h(o3, "dx")], 2) + Math.pow(t[h(o3, "dy")], 2)) / (1 + Math.sqrt(M)))), t[h(o3, "x")] = t[h(o3, "x")] + t[h(o3, "dx")] * (_ / n.settings.slowDown), t[h(o3, "y")] = t[h(o3, "y")] + t[h(o3, "dy")] * (_ / n.settings.slowDown));
+                n.iterations++;
+              }
+              function c(e2) {
+                for (var t2 = 0; t2 < e2; t2++)
+                  u();
+                i2();
+              }
+              i2 = "undefined" != typeof window && window.document ? function() {
+                var e2;
+                document.createEvent ? (e2 = document.createEvent("Event")).initEvent("newCoords", true, false) : (e2 = document.createEventObject()).eventType = "newCoords", e2.eventName = "newCoords", e2.data = { nodes: t.buffer }, requestAnimationFrame(function() {
+                  document.dispatchEvent(e2);
+                });
+              } : function() {
+                self.postMessage({ nodes: t.buffer }, [t.buffer]);
+              };
+              var f = function(e2) {
+                switch (e2.data.action) {
+                  case "start":
+                    i3 = new Float32Array(e2.data.nodes), o3 = new Float32Array(e2.data.edges), a3 = (a3 = e2.data.config) || {}, t = i3, s = o3, n.nodesLength = t.length, n.edgesLength = s.length, l(a3), c(n.settings.startingIterations);
+                    break;
+                  case "loop":
+                    t = new Float32Array(e2.data.nodes), c(n.settings.iterationsPerRender);
+                    break;
+                  case "config":
+                    l(e2.data.config);
+                    break;
+                  case "kill":
+                    !function(e3) {
+                      var t2;
+                      for (t2 in e3)
+                        "hasOwnProperty" in e3 && !e3.hasOwnProperty(t2) || delete e3[t2];
+                    }(n), t = null, s = null, r = null, self.removeEventListener("message", f);
+                }
+                var i3, o3, a3;
+              };
+              self.addEventListener("message", f);
+            };
+            function crush(e) {
+              var t, s, r, n = ["x", "y", "dx", "dy", "old_dx", "old_dy", "mass", "convergence", "size", "fixed"], i2 = ["source", "target", "weight"], o2 = ["node", "centerX", "centerY", "size", "nextSibling", "firstChild", "mass", "massCenterX", "massCenterY"];
+              for (s = 0, r = o2.length; s < r; s++)
+                t = new RegExp("rp\\(([^,]*), '" + o2[s] + "'\\)", "g"), e = e.replace(t, 0 === s ? "$1" : "$1 + " + s);
+              for (s = 0, r = n.length; s < r; s++)
+                t = new RegExp("np\\(([^,]*), '" + n[s] + "'\\)", "g"), e = e.replace(t, 0 === s ? "$1" : "$1 + " + s);
+              for (s = 0, r = i2.length; s < r; s++)
+                t = new RegExp("ep\\(([^,]*), '" + i2[s] + "'\\)", "g"), e = e.replace(t, 0 === s ? "$1" : "$1 + " + s);
+              return e;
+            }
+            function getWorkerFn() {
+              return ";(" + (crush ? crush(Worker.toString()) : Worker.toString()) + ").call(this);";
+            }
+            if (inWebWorker)
+              eval(getWorkerFn());
+            else {
+              if ("undefined" == typeof sigma)
+                throw "sigma is not declared";
+              sigma.prototype.getForceAtlas2Worker = getWorkerFn;
+            }
+          }).call(window);
+        }).call(window);
+      } });
     }
   });
 
   // ../testeranto/node_modules/graphology/dist/graphology.umd.min.js
   var require_graphology_umd_min = __commonJS({
-    "../testeranto/node_modules/graphology/dist/graphology.umd.min.js"(exports, module) {
+    "../testeranto/node_modules/graphology/dist/graphology.umd.min.js"(exports2, module2) {
       !function(t, e) {
-        "object" == typeof exports && "undefined" != typeof module ? module.exports = e() : "function" == typeof define && define.amd ? define(e) : (t = "undefined" != typeof globalThis ? globalThis : t || self).graphology = e();
-      }(exports, function() {
+        "object" == typeof exports2 && "undefined" != typeof module2 ? module2.exports = e() : "function" == typeof define && define.amd ? define(e) : (t = "undefined" != typeof globalThis ? globalThis : t || self).graphology = e();
+      }(exports2, function() {
         "use strict";
         function t(e2) {
           return t = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(t2) {
@@ -23541,7 +25832,7 @@
             return t3.__proto__ = e3, t3;
           }, r(t2, e2);
         }
-        function i() {
+        function i2() {
           if ("undefined" == typeof Reflect || !Reflect.construct)
             return false;
           if (Reflect.construct.sham)
@@ -23555,31 +25846,31 @@
             return false;
           }
         }
-        function o(t2, e2, n2) {
-          return o = i() ? Reflect.construct.bind() : function(t3, e3, n3) {
-            var i2 = [null];
-            i2.push.apply(i2, e3);
-            var o2 = new (Function.bind.apply(t3, i2))();
-            return n3 && r(o2, n3.prototype), o2;
-          }, o.apply(null, arguments);
+        function o2(t2, e2, n2) {
+          return o2 = i2() ? Reflect.construct.bind() : function(t3, e3, n3) {
+            var i3 = [null];
+            i3.push.apply(i3, e3);
+            var o3 = new (Function.bind.apply(t3, i3))();
+            return n3 && r(o3, n3.prototype), o3;
+          }, o2.apply(null, arguments);
         }
         function a(t2) {
           var e2 = "function" == typeof Map ? /* @__PURE__ */ new Map() : void 0;
           return a = function(t3) {
-            if (null === t3 || (i2 = t3, -1 === Function.toString.call(i2).indexOf("[native code]")))
+            if (null === t3 || (i3 = t3, -1 === Function.toString.call(i3).indexOf("[native code]")))
               return t3;
-            var i2;
+            var i3;
             if ("function" != typeof t3)
               throw new TypeError("Super expression must either be null or a function");
             if (void 0 !== e2) {
               if (e2.has(t3))
                 return e2.get(t3);
-              e2.set(t3, a2);
+              e2.set(t3, a3);
             }
-            function a2() {
-              return o(t3, arguments, n(this).constructor);
+            function a3() {
+              return o2(t3, arguments, n(this).constructor);
             }
-            return a2.prototype = Object.create(t3.prototype, { constructor: { value: a2, enumerable: false, writable: true, configurable: true } }), r(a2, t3);
+            return a3.prototype = Object.create(t3.prototype, { constructor: { value: a3, enumerable: false, writable: true, configurable: true } }), r(a3, t3);
           }, a(t2);
         }
         function c(t2) {
@@ -23595,8 +25886,8 @@
           return t2;
         };
         function d(t2, e2, n2, r2) {
-          var i2 = t2._nodes.get(e2), o2 = null;
-          return i2 ? o2 = "mixed" === r2 ? i2.out && i2.out[n2] || i2.undirected && i2.undirected[n2] : "directed" === r2 ? i2.out && i2.out[n2] : i2.undirected && i2.undirected[n2] : o2;
+          var i3 = t2._nodes.get(e2), o3 = null;
+          return i3 ? o3 = "mixed" === r2 ? i3.out && i3.out[n2] || i3.undirected && i3.undirected[n2] : "directed" === r2 ? i3.out && i3.out[n2] : i3.undirected && i3.undirected[n2] : o3;
         }
         function s(e2) {
           return "object" === t(e2) && null !== e2 && e2.constructor === Object;
@@ -23634,15 +25925,15 @@
         }
         y.exports = m, y.exports.once = function(t2, e2) {
           return new Promise(function(n2, r2) {
-            function i2(n3) {
-              t2.removeListener(e2, o2), r2(n3);
+            function i3(n3) {
+              t2.removeListener(e2, o3), r2(n3);
             }
-            function o2() {
-              "function" == typeof t2.removeListener && t2.removeListener("error", i2), n2([].slice.call(arguments));
+            function o3() {
+              "function" == typeof t2.removeListener && t2.removeListener("error", i3), n2([].slice.call(arguments));
             }
-            U(t2, e2, o2, { once: true }), "error" !== e2 && function(t3, e3, n3) {
+            U(t2, e2, o3, { once: true }), "error" !== e2 && function(t3, e3, n3) {
               "function" == typeof t3.on && U(t3, "error", e3, n3);
-            }(t2, i2, { once: true });
+            }(t2, i3, { once: true });
           });
         }, m.EventEmitter = m, m.prototype._events = void 0, m.prototype._eventsCount = 0, m.prototype._maxListeners = void 0;
         var k = 10;
@@ -23654,13 +25945,13 @@
           return void 0 === t2._maxListeners ? m.defaultMaxListeners : t2._maxListeners;
         }
         function x(t2, e2, n2, r2) {
-          var i2, o2, a2, c2;
-          if (_(n2), void 0 === (o2 = t2._events) ? (o2 = t2._events = /* @__PURE__ */ Object.create(null), t2._eventsCount = 0) : (void 0 !== o2.newListener && (t2.emit("newListener", e2, n2.listener ? n2.listener : n2), o2 = t2._events), a2 = o2[e2]), void 0 === a2)
-            a2 = o2[e2] = n2, ++t2._eventsCount;
-          else if ("function" == typeof a2 ? a2 = o2[e2] = r2 ? [n2, a2] : [a2, n2] : r2 ? a2.unshift(n2) : a2.push(n2), (i2 = G(t2)) > 0 && a2.length > i2 && !a2.warned) {
-            a2.warned = true;
-            var u2 = new Error("Possible EventEmitter memory leak detected. " + a2.length + " " + String(e2) + " listeners added. Use emitter.setMaxListeners() to increase limit");
-            u2.name = "MaxListenersExceededWarning", u2.emitter = t2, u2.type = e2, u2.count = a2.length, c2 = u2, console && console.warn && console.warn(c2);
+          var i3, o3, a3, c2;
+          if (_(n2), void 0 === (o3 = t2._events) ? (o3 = t2._events = /* @__PURE__ */ Object.create(null), t2._eventsCount = 0) : (void 0 !== o3.newListener && (t2.emit("newListener", e2, n2.listener ? n2.listener : n2), o3 = t2._events), a3 = o3[e2]), void 0 === a3)
+            a3 = o3[e2] = n2, ++t2._eventsCount;
+          else if ("function" == typeof a3 ? a3 = o3[e2] = r2 ? [n2, a3] : [a3, n2] : r2 ? a3.unshift(n2) : a3.push(n2), (i3 = G(t2)) > 0 && a3.length > i3 && !a3.warned) {
+            a3.warned = true;
+            var u2 = new Error("Possible EventEmitter memory leak detected. " + a3.length + " " + String(e2) + " listeners added. Use emitter.setMaxListeners() to increase limit");
+            u2.name = "MaxListenersExceededWarning", u2.emitter = t2, u2.type = e2, u2.count = a3.length, c2 = u2, console && console.warn && console.warn(c2);
           }
           return t2;
         }
@@ -23669,19 +25960,19 @@
             return this.target.removeListener(this.type, this.wrapFn), this.fired = true, 0 === arguments.length ? this.listener.call(this.target) : this.listener.apply(this.target, arguments);
         }
         function A(t2, e2, n2) {
-          var r2 = { fired: false, wrapFn: void 0, target: t2, type: e2, listener: n2 }, i2 = E.bind(r2);
-          return i2.listener = n2, r2.wrapFn = i2, i2;
+          var r2 = { fired: false, wrapFn: void 0, target: t2, type: e2, listener: n2 }, i3 = E.bind(r2);
+          return i3.listener = n2, r2.wrapFn = i3, i3;
         }
         function L(t2, e2, n2) {
           var r2 = t2._events;
           if (void 0 === r2)
             return [];
-          var i2 = r2[e2];
-          return void 0 === i2 ? [] : "function" == typeof i2 ? n2 ? [i2.listener || i2] : [i2] : n2 ? function(t3) {
+          var i3 = r2[e2];
+          return void 0 === i3 ? [] : "function" == typeof i3 ? n2 ? [i3.listener || i3] : [i3] : n2 ? function(t3) {
             for (var e3 = new Array(t3.length), n3 = 0; n3 < e3.length; ++n3)
               e3[n3] = t3[n3].listener || t3[n3];
             return e3;
-          }(i2) : D(i2, i2.length);
+          }(i3) : D(i3, i3.length);
         }
         function S(t2) {
           var e2 = this._events;
@@ -23705,8 +25996,8 @@
           else {
             if ("function" != typeof t2.addEventListener)
               throw new TypeError('The "emitter" argument must be of type EventEmitter. Received type ' + typeof t2);
-            t2.addEventListener(e2, function i2(o2) {
-              r2.once && t2.removeEventListener(e2, i2), n2(o2);
+            t2.addEventListener(e2, function i3(o3) {
+              r2.once && t2.removeEventListener(e2, i3), n2(o3);
             });
           }
         }
@@ -23732,19 +26023,19 @@
         }, m.prototype.emit = function(t2) {
           for (var e2 = [], n2 = 1; n2 < arguments.length; n2++)
             e2.push(arguments[n2]);
-          var r2 = "error" === t2, i2 = this._events;
-          if (void 0 !== i2)
-            r2 = r2 && void 0 === i2.error;
+          var r2 = "error" === t2, i3 = this._events;
+          if (void 0 !== i3)
+            r2 = r2 && void 0 === i3.error;
           else if (!r2)
             return false;
           if (r2) {
-            var o2;
-            if (e2.length > 0 && (o2 = e2[0]), o2 instanceof Error)
-              throw o2;
-            var a2 = new Error("Unhandled error." + (o2 ? " (" + o2.message + ")" : ""));
-            throw a2.context = o2, a2;
+            var o3;
+            if (e2.length > 0 && (o3 = e2[0]), o3 instanceof Error)
+              throw o3;
+            var a3 = new Error("Unhandled error." + (o3 ? " (" + o3.message + ")" : ""));
+            throw a3.context = o3, a3;
           }
-          var c2 = i2[t2];
+          var c2 = i3[t2];
           if (void 0 === c2)
             return false;
           if ("function" == typeof c2)
@@ -23764,7 +26055,7 @@
         }, m.prototype.prependOnceListener = function(t2, e2) {
           return _(e2), this.prependListener(t2, A(this, t2, e2)), this;
         }, m.prototype.removeListener = function(t2, e2) {
-          var n2, r2, i2, o2, a2;
+          var n2, r2, i3, o3, a3;
           if (_(e2), void 0 === (r2 = this._events))
             return this;
           if (void 0 === (n2 = r2[t2]))
@@ -23772,18 +26063,18 @@
           if (n2 === e2 || n2.listener === e2)
             0 == --this._eventsCount ? this._events = /* @__PURE__ */ Object.create(null) : (delete r2[t2], r2.removeListener && this.emit("removeListener", t2, n2.listener || e2));
           else if ("function" != typeof n2) {
-            for (i2 = -1, o2 = n2.length - 1; o2 >= 0; o2--)
-              if (n2[o2] === e2 || n2[o2].listener === e2) {
-                a2 = n2[o2].listener, i2 = o2;
+            for (i3 = -1, o3 = n2.length - 1; o3 >= 0; o3--)
+              if (n2[o3] === e2 || n2[o3].listener === e2) {
+                a3 = n2[o3].listener, i3 = o3;
                 break;
               }
-            if (i2 < 0)
+            if (i3 < 0)
               return this;
-            0 === i2 ? n2.shift() : function(t3, e3) {
+            0 === i3 ? n2.shift() : function(t3, e3) {
               for (; e3 + 1 < t3.length; e3++)
                 t3[e3] = t3[e3 + 1];
               t3.pop();
-            }(n2, i2), 1 === n2.length && (r2[t2] = n2[0]), void 0 !== r2.removeListener && this.emit("removeListener", t2, a2 || e2);
+            }(n2, i3), 1 === n2.length && (r2[t2] = n2[0]), void 0 !== r2.removeListener && this.emit("removeListener", t2, a3 || e2);
           }
           return this;
         }, m.prototype.off = m.prototype.removeListener, m.prototype.removeAllListeners = function(t2) {
@@ -23793,9 +26084,9 @@
           if (void 0 === n2.removeListener)
             return 0 === arguments.length ? (this._events = /* @__PURE__ */ Object.create(null), this._eventsCount = 0) : void 0 !== n2[t2] && (0 == --this._eventsCount ? this._events = /* @__PURE__ */ Object.create(null) : delete n2[t2]), this;
           if (0 === arguments.length) {
-            var i2, o2 = Object.keys(n2);
-            for (r2 = 0; r2 < o2.length; ++r2)
-              "removeListener" !== (i2 = o2[r2]) && this.removeAllListeners(i2);
+            var i3, o3 = Object.keys(n2);
+            for (r2 = 0; r2 < o3.length; ++r2)
+              "removeListener" !== (i3 = o3[r2]) && this.removeAllListeners(i3);
             return this.removeAllListeners("removeListener"), this._events = /* @__PURE__ */ Object.create(null), this._eventsCount = 0, this;
           }
           if ("function" == typeof (e2 = n2[t2]))
@@ -23842,12 +26133,12 @@
             throw new Error("obliterator: target is not iterable nor a valid iterator.");
           return e2;
         }, R = P, K = function(t2, e2) {
-          for (var n2, r2 = arguments.length > 1 ? e2 : 1 / 0, i2 = r2 !== 1 / 0 ? new Array(r2) : [], o2 = 0, a2 = R(t2); ; ) {
-            if (o2 === r2)
-              return i2;
-            if ((n2 = a2.next()).done)
-              return o2 !== e2 && (i2.length = o2), i2;
-            i2[o2++] = n2.value;
+          for (var n2, r2 = arguments.length > 1 ? e2 : 1 / 0, i3 = r2 !== 1 / 0 ? new Array(r2) : [], o3 = 0, a3 = R(t2); ; ) {
+            if (o3 === r2)
+              return i3;
+            if ((n2 = a3.next()).done)
+              return o3 !== e2 && (i3.length = o3), i3;
+            i3[o3++] = n2.value;
           }
         }, T = function(t2) {
           function n2(e2) {
@@ -23883,8 +26174,8 @@
         function J(t2, e2) {
           this.key = t2, this.attributes = e2, this.clear();
         }
-        function V(t2, e2, n2, r2, i2) {
-          this.key = e2, this.attributes = i2, this.undirected = t2, this.source = n2, this.target = r2;
+        function V(t2, e2, n2, r2, i3) {
+          this.key = e2, this.attributes = i3, this.undirected = t2, this.source = n2, this.target = r2;
         }
         Y.prototype.clear = function() {
           this.inDegree = 0, this.outDegree = 0, this.undirectedDegree = 0, this.undirectedLoops = 0, this.directedLoops = 0, this.in = {}, this.out = {}, this.undirected = {};
@@ -23900,10 +26191,10 @@
         }, V.prototype.attachMulti = function() {
           var t2 = "out", e2 = "in", n2 = this.source.key, r2 = this.target.key;
           this.undirected && (t2 = e2 = "undirected");
-          var i2 = this.source[t2], o2 = i2[r2];
-          if (void 0 === o2)
-            return i2[r2] = this, void (this.undirected && n2 === r2 || (this.target[e2][n2] = this));
-          o2.previous = this, this.next = o2, i2[r2] = this, this.target[e2][n2] = this;
+          var i3 = this.source[t2], o3 = i3[r2];
+          if (void 0 === o3)
+            return i3[r2] = this, void (this.undirected && n2 === r2 || (this.target[e2][n2] = this));
+          o3.previous = this, this.next = o3, i3[r2] = this, this.target[e2][n2] = this;
         }, V.prototype.detach = function() {
           var t2 = this.source.key, e2 = this.target.key, n2 = "out", r2 = "in";
           this.undirected && (n2 = r2 = "undirected"), delete this.source[n2][e2], delete this.target[r2][t2];
@@ -23911,37 +26202,37 @@
           var t2 = this.source.key, e2 = this.target.key, n2 = "out", r2 = "in";
           this.undirected && (n2 = r2 = "undirected"), void 0 === this.previous ? void 0 === this.next ? (delete this.source[n2][e2], delete this.target[r2][t2]) : (this.next.previous = void 0, this.source[n2][e2] = this.next, this.target[r2][t2] = this.next) : (this.previous.next = this.next, void 0 !== this.next && (this.next.previous = this.previous));
         };
-        function H(t2, e2, n2, r2, i2, o2, a2) {
+        function H(t2, e2, n2, r2, i3, o3, a3) {
           var c2, u2, d2, s2;
           if (r2 = "" + r2, 0 === n2) {
             if (!(c2 = t2._nodes.get(r2)))
               throw new F("Graph.".concat(e2, ': could not find the "').concat(r2, '" node in the graph.'));
-            d2 = i2, s2 = o2;
+            d2 = i3, s2 = o3;
           } else if (3 === n2) {
-            if (i2 = "" + i2, !(u2 = t2._edges.get(i2)))
-              throw new F("Graph.".concat(e2, ': could not find the "').concat(i2, '" edge in the graph.'));
+            if (i3 = "" + i3, !(u2 = t2._edges.get(i3)))
+              throw new F("Graph.".concat(e2, ': could not find the "').concat(i3, '" edge in the graph.'));
             var h2 = u2.source.key, p2 = u2.target.key;
             if (r2 === h2)
               c2 = u2.target;
             else {
               if (r2 !== p2)
-                throw new F("Graph.".concat(e2, ': the "').concat(r2, '" node is not attached to the "').concat(i2, '" edge (').concat(h2, ", ").concat(p2, ")."));
+                throw new F("Graph.".concat(e2, ': the "').concat(r2, '" node is not attached to the "').concat(i3, '" edge (').concat(h2, ", ").concat(p2, ")."));
               c2 = u2.source;
             }
-            d2 = o2, s2 = a2;
+            d2 = o3, s2 = a3;
           } else {
             if (!(u2 = t2._edges.get(r2)))
               throw new F("Graph.".concat(e2, ': could not find the "').concat(r2, '" edge in the graph.'));
-            c2 = 1 === n2 ? u2.source : u2.target, d2 = i2, s2 = o2;
+            c2 = 1 === n2 ? u2.source : u2.target, d2 = i3, s2 = o3;
           }
           return [c2, d2, s2];
         }
         var Q = [{ name: function(t2) {
           return "get".concat(t2, "Attribute");
         }, attacher: function(t2, e2, n2) {
-          t2.prototype[e2] = function(t3, r2, i2) {
-            var o2 = H(this, e2, n2, t3, r2, i2), a2 = o2[0], c2 = o2[1];
-            return a2.attributes[c2];
+          t2.prototype[e2] = function(t3, r2, i3) {
+            var o3 = H(this, e2, n2, t3, r2, i3), a3 = o3[0], c2 = o3[1];
+            return a3.attributes[c2];
           };
         } }, { name: function(t2) {
           return "get".concat(t2, "Attributes");
@@ -23952,22 +26243,22 @@
         } }, { name: function(t2) {
           return "has".concat(t2, "Attribute");
         }, attacher: function(t2, e2, n2) {
-          t2.prototype[e2] = function(t3, r2, i2) {
-            var o2 = H(this, e2, n2, t3, r2, i2), a2 = o2[0], c2 = o2[1];
-            return a2.attributes.hasOwnProperty(c2);
+          t2.prototype[e2] = function(t3, r2, i3) {
+            var o3 = H(this, e2, n2, t3, r2, i3), a3 = o3[0], c2 = o3[1];
+            return a3.attributes.hasOwnProperty(c2);
           };
         } }, { name: function(t2) {
           return "set".concat(t2, "Attribute");
         }, attacher: function(t2, e2, n2) {
-          t2.prototype[e2] = function(t3, r2, i2, o2) {
-            var a2 = H(this, e2, n2, t3, r2, i2, o2), c2 = a2[0], u2 = a2[1], d2 = a2[2];
+          t2.prototype[e2] = function(t3, r2, i3, o3) {
+            var a3 = H(this, e2, n2, t3, r2, i3, o3), c2 = a3[0], u2 = a3[1], d2 = a3[2];
             return c2.attributes[u2] = d2, this.emit("nodeAttributesUpdated", { key: c2.key, type: "set", attributes: c2.attributes, name: u2 }), this;
           };
         } }, { name: function(t2) {
           return "update".concat(t2, "Attribute");
         }, attacher: function(t2, e2, n2) {
-          t2.prototype[e2] = function(t3, r2, i2, o2) {
-            var a2 = H(this, e2, n2, t3, r2, i2, o2), c2 = a2[0], u2 = a2[1], d2 = a2[2];
+          t2.prototype[e2] = function(t3, r2, i3, o3) {
+            var a3 = H(this, e2, n2, t3, r2, i3, o3), c2 = a3[0], u2 = a3[1], d2 = a3[2];
             if ("function" != typeof d2)
               throw new B("Graph.".concat(e2, ": updater should be a function."));
             var s2 = c2.attributes, h2 = d2(s2[u2]);
@@ -23976,58 +26267,58 @@
         } }, { name: function(t2) {
           return "remove".concat(t2, "Attribute");
         }, attacher: function(t2, e2, n2) {
-          t2.prototype[e2] = function(t3, r2, i2) {
-            var o2 = H(this, e2, n2, t3, r2, i2), a2 = o2[0], c2 = o2[1];
-            return delete a2.attributes[c2], this.emit("nodeAttributesUpdated", { key: a2.key, type: "remove", attributes: a2.attributes, name: c2 }), this;
+          t2.prototype[e2] = function(t3, r2, i3) {
+            var o3 = H(this, e2, n2, t3, r2, i3), a3 = o3[0], c2 = o3[1];
+            return delete a3.attributes[c2], this.emit("nodeAttributesUpdated", { key: a3.key, type: "remove", attributes: a3.attributes, name: c2 }), this;
           };
         } }, { name: function(t2) {
           return "replace".concat(t2, "Attributes");
         }, attacher: function(t2, e2, n2) {
-          t2.prototype[e2] = function(t3, r2, i2) {
-            var o2 = H(this, e2, n2, t3, r2, i2), a2 = o2[0], c2 = o2[1];
+          t2.prototype[e2] = function(t3, r2, i3) {
+            var o3 = H(this, e2, n2, t3, r2, i3), a3 = o3[0], c2 = o3[1];
             if (!s(c2))
               throw new B("Graph.".concat(e2, ": provided attributes are not a plain object."));
-            return a2.attributes = c2, this.emit("nodeAttributesUpdated", { key: a2.key, type: "replace", attributes: a2.attributes }), this;
+            return a3.attributes = c2, this.emit("nodeAttributesUpdated", { key: a3.key, type: "replace", attributes: a3.attributes }), this;
           };
         } }, { name: function(t2) {
           return "merge".concat(t2, "Attributes");
         }, attacher: function(t2, e2, n2) {
-          t2.prototype[e2] = function(t3, r2, i2) {
-            var o2 = H(this, e2, n2, t3, r2, i2), a2 = o2[0], c2 = o2[1];
+          t2.prototype[e2] = function(t3, r2, i3) {
+            var o3 = H(this, e2, n2, t3, r2, i3), a3 = o3[0], c2 = o3[1];
             if (!s(c2))
               throw new B("Graph.".concat(e2, ": provided attributes are not a plain object."));
-            return u(a2.attributes, c2), this.emit("nodeAttributesUpdated", { key: a2.key, type: "merge", attributes: a2.attributes, data: c2 }), this;
+            return u(a3.attributes, c2), this.emit("nodeAttributesUpdated", { key: a3.key, type: "merge", attributes: a3.attributes, data: c2 }), this;
           };
         } }, { name: function(t2) {
           return "update".concat(t2, "Attributes");
         }, attacher: function(t2, e2, n2) {
-          t2.prototype[e2] = function(t3, r2, i2) {
-            var o2 = H(this, e2, n2, t3, r2, i2), a2 = o2[0], c2 = o2[1];
+          t2.prototype[e2] = function(t3, r2, i3) {
+            var o3 = H(this, e2, n2, t3, r2, i3), a3 = o3[0], c2 = o3[1];
             if ("function" != typeof c2)
               throw new B("Graph.".concat(e2, ": provided updater is not a function."));
-            return a2.attributes = c2(a2.attributes), this.emit("nodeAttributesUpdated", { key: a2.key, type: "update", attributes: a2.attributes }), this;
+            return a3.attributes = c2(a3.attributes), this.emit("nodeAttributesUpdated", { key: a3.key, type: "update", attributes: a3.attributes }), this;
           };
         } }];
         var X = [{ name: function(t2) {
           return "get".concat(t2, "Attribute");
         }, attacher: function(t2, e2, n2) {
           t2.prototype[e2] = function(t3, r2) {
-            var i2;
+            var i3;
             if ("mixed" !== this.type && "mixed" !== n2 && n2 !== this.type)
               throw new I("Graph.".concat(e2, ": cannot find this type of edges in your ").concat(this.type, " graph."));
             if (arguments.length > 2) {
               if (this.multi)
                 throw new I("Graph.".concat(e2, ": cannot use a {source,target} combo when asking about an edge's attributes in a MultiGraph since we cannot infer the one you want information about."));
-              var o2 = "" + t3, a2 = "" + r2;
-              if (r2 = arguments[2], !(i2 = d(this, o2, a2, n2)))
-                throw new F("Graph.".concat(e2, ': could not find an edge for the given path ("').concat(o2, '" - "').concat(a2, '").'));
+              var o3 = "" + t3, a3 = "" + r2;
+              if (r2 = arguments[2], !(i3 = d(this, o3, a3, n2)))
+                throw new F("Graph.".concat(e2, ': could not find an edge for the given path ("').concat(o3, '" - "').concat(a3, '").'));
             } else {
               if ("mixed" !== n2)
                 throw new I("Graph.".concat(e2, ": calling this method with only a key (vs. a source and target) does not make sense since an edge with this key could have the other type."));
-              if (t3 = "" + t3, !(i2 = this._edges.get(t3)))
+              if (t3 = "" + t3, !(i3 = this._edges.get(t3)))
                 throw new F("Graph.".concat(e2, ': could not find the "').concat(t3, '" edge in the graph.'));
             }
-            return i2.attributes[r2];
+            return i3.attributes[r2];
           };
         } }, { name: function(t2) {
           return "get".concat(t2, "Attributes");
@@ -24039,9 +26330,9 @@
             if (arguments.length > 1) {
               if (this.multi)
                 throw new I("Graph.".concat(e2, ": cannot use a {source,target} combo when asking about an edge's attributes in a MultiGraph since we cannot infer the one you want information about."));
-              var i2 = "" + t3, o2 = "" + arguments[1];
-              if (!(r2 = d(this, i2, o2, n2)))
-                throw new F("Graph.".concat(e2, ': could not find an edge for the given path ("').concat(i2, '" - "').concat(o2, '").'));
+              var i3 = "" + t3, o3 = "" + arguments[1];
+              if (!(r2 = d(this, i3, o3, n2)))
+                throw new F("Graph.".concat(e2, ': could not find an edge for the given path ("').concat(i3, '" - "').concat(o3, '").'));
             } else {
               if ("mixed" !== n2)
                 throw new I("Graph.".concat(e2, ": calling this method with only a key (vs. a source and target) does not make sense since an edge with this key could have the other type."));
@@ -24054,156 +26345,156 @@
           return "has".concat(t2, "Attribute");
         }, attacher: function(t2, e2, n2) {
           t2.prototype[e2] = function(t3, r2) {
-            var i2;
+            var i3;
             if ("mixed" !== this.type && "mixed" !== n2 && n2 !== this.type)
               throw new I("Graph.".concat(e2, ": cannot find this type of edges in your ").concat(this.type, " graph."));
             if (arguments.length > 2) {
               if (this.multi)
                 throw new I("Graph.".concat(e2, ": cannot use a {source,target} combo when asking about an edge's attributes in a MultiGraph since we cannot infer the one you want information about."));
-              var o2 = "" + t3, a2 = "" + r2;
-              if (r2 = arguments[2], !(i2 = d(this, o2, a2, n2)))
-                throw new F("Graph.".concat(e2, ': could not find an edge for the given path ("').concat(o2, '" - "').concat(a2, '").'));
+              var o3 = "" + t3, a3 = "" + r2;
+              if (r2 = arguments[2], !(i3 = d(this, o3, a3, n2)))
+                throw new F("Graph.".concat(e2, ': could not find an edge for the given path ("').concat(o3, '" - "').concat(a3, '").'));
             } else {
               if ("mixed" !== n2)
                 throw new I("Graph.".concat(e2, ": calling this method with only a key (vs. a source and target) does not make sense since an edge with this key could have the other type."));
-              if (t3 = "" + t3, !(i2 = this._edges.get(t3)))
+              if (t3 = "" + t3, !(i3 = this._edges.get(t3)))
                 throw new F("Graph.".concat(e2, ': could not find the "').concat(t3, '" edge in the graph.'));
             }
-            return i2.attributes.hasOwnProperty(r2);
+            return i3.attributes.hasOwnProperty(r2);
           };
         } }, { name: function(t2) {
           return "set".concat(t2, "Attribute");
         }, attacher: function(t2, e2, n2) {
-          t2.prototype[e2] = function(t3, r2, i2) {
-            var o2;
+          t2.prototype[e2] = function(t3, r2, i3) {
+            var o3;
             if ("mixed" !== this.type && "mixed" !== n2 && n2 !== this.type)
               throw new I("Graph.".concat(e2, ": cannot find this type of edges in your ").concat(this.type, " graph."));
             if (arguments.length > 3) {
               if (this.multi)
                 throw new I("Graph.".concat(e2, ": cannot use a {source,target} combo when asking about an edge's attributes in a MultiGraph since we cannot infer the one you want information about."));
-              var a2 = "" + t3, c2 = "" + r2;
-              if (r2 = arguments[2], i2 = arguments[3], !(o2 = d(this, a2, c2, n2)))
-                throw new F("Graph.".concat(e2, ': could not find an edge for the given path ("').concat(a2, '" - "').concat(c2, '").'));
+              var a3 = "" + t3, c2 = "" + r2;
+              if (r2 = arguments[2], i3 = arguments[3], !(o3 = d(this, a3, c2, n2)))
+                throw new F("Graph.".concat(e2, ': could not find an edge for the given path ("').concat(a3, '" - "').concat(c2, '").'));
             } else {
               if ("mixed" !== n2)
                 throw new I("Graph.".concat(e2, ": calling this method with only a key (vs. a source and target) does not make sense since an edge with this key could have the other type."));
-              if (t3 = "" + t3, !(o2 = this._edges.get(t3)))
+              if (t3 = "" + t3, !(o3 = this._edges.get(t3)))
                 throw new F("Graph.".concat(e2, ': could not find the "').concat(t3, '" edge in the graph.'));
             }
-            return o2.attributes[r2] = i2, this.emit("edgeAttributesUpdated", { key: o2.key, type: "set", attributes: o2.attributes, name: r2 }), this;
+            return o3.attributes[r2] = i3, this.emit("edgeAttributesUpdated", { key: o3.key, type: "set", attributes: o3.attributes, name: r2 }), this;
           };
         } }, { name: function(t2) {
           return "update".concat(t2, "Attribute");
         }, attacher: function(t2, e2, n2) {
-          t2.prototype[e2] = function(t3, r2, i2) {
-            var o2;
+          t2.prototype[e2] = function(t3, r2, i3) {
+            var o3;
             if ("mixed" !== this.type && "mixed" !== n2 && n2 !== this.type)
               throw new I("Graph.".concat(e2, ": cannot find this type of edges in your ").concat(this.type, " graph."));
             if (arguments.length > 3) {
               if (this.multi)
                 throw new I("Graph.".concat(e2, ": cannot use a {source,target} combo when asking about an edge's attributes in a MultiGraph since we cannot infer the one you want information about."));
-              var a2 = "" + t3, c2 = "" + r2;
-              if (r2 = arguments[2], i2 = arguments[3], !(o2 = d(this, a2, c2, n2)))
-                throw new F("Graph.".concat(e2, ': could not find an edge for the given path ("').concat(a2, '" - "').concat(c2, '").'));
+              var a3 = "" + t3, c2 = "" + r2;
+              if (r2 = arguments[2], i3 = arguments[3], !(o3 = d(this, a3, c2, n2)))
+                throw new F("Graph.".concat(e2, ': could not find an edge for the given path ("').concat(a3, '" - "').concat(c2, '").'));
             } else {
               if ("mixed" !== n2)
                 throw new I("Graph.".concat(e2, ": calling this method with only a key (vs. a source and target) does not make sense since an edge with this key could have the other type."));
-              if (t3 = "" + t3, !(o2 = this._edges.get(t3)))
+              if (t3 = "" + t3, !(o3 = this._edges.get(t3)))
                 throw new F("Graph.".concat(e2, ': could not find the "').concat(t3, '" edge in the graph.'));
             }
-            if ("function" != typeof i2)
+            if ("function" != typeof i3)
               throw new B("Graph.".concat(e2, ": updater should be a function."));
-            return o2.attributes[r2] = i2(o2.attributes[r2]), this.emit("edgeAttributesUpdated", { key: o2.key, type: "set", attributes: o2.attributes, name: r2 }), this;
+            return o3.attributes[r2] = i3(o3.attributes[r2]), this.emit("edgeAttributesUpdated", { key: o3.key, type: "set", attributes: o3.attributes, name: r2 }), this;
           };
         } }, { name: function(t2) {
           return "remove".concat(t2, "Attribute");
         }, attacher: function(t2, e2, n2) {
           t2.prototype[e2] = function(t3, r2) {
-            var i2;
+            var i3;
             if ("mixed" !== this.type && "mixed" !== n2 && n2 !== this.type)
               throw new I("Graph.".concat(e2, ": cannot find this type of edges in your ").concat(this.type, " graph."));
             if (arguments.length > 2) {
               if (this.multi)
                 throw new I("Graph.".concat(e2, ": cannot use a {source,target} combo when asking about an edge's attributes in a MultiGraph since we cannot infer the one you want information about."));
-              var o2 = "" + t3, a2 = "" + r2;
-              if (r2 = arguments[2], !(i2 = d(this, o2, a2, n2)))
-                throw new F("Graph.".concat(e2, ': could not find an edge for the given path ("').concat(o2, '" - "').concat(a2, '").'));
+              var o3 = "" + t3, a3 = "" + r2;
+              if (r2 = arguments[2], !(i3 = d(this, o3, a3, n2)))
+                throw new F("Graph.".concat(e2, ': could not find an edge for the given path ("').concat(o3, '" - "').concat(a3, '").'));
             } else {
               if ("mixed" !== n2)
                 throw new I("Graph.".concat(e2, ": calling this method with only a key (vs. a source and target) does not make sense since an edge with this key could have the other type."));
-              if (t3 = "" + t3, !(i2 = this._edges.get(t3)))
+              if (t3 = "" + t3, !(i3 = this._edges.get(t3)))
                 throw new F("Graph.".concat(e2, ': could not find the "').concat(t3, '" edge in the graph.'));
             }
-            return delete i2.attributes[r2], this.emit("edgeAttributesUpdated", { key: i2.key, type: "remove", attributes: i2.attributes, name: r2 }), this;
+            return delete i3.attributes[r2], this.emit("edgeAttributesUpdated", { key: i3.key, type: "remove", attributes: i3.attributes, name: r2 }), this;
           };
         } }, { name: function(t2) {
           return "replace".concat(t2, "Attributes");
         }, attacher: function(t2, e2, n2) {
           t2.prototype[e2] = function(t3, r2) {
-            var i2;
+            var i3;
             if ("mixed" !== this.type && "mixed" !== n2 && n2 !== this.type)
               throw new I("Graph.".concat(e2, ": cannot find this type of edges in your ").concat(this.type, " graph."));
             if (arguments.length > 2) {
               if (this.multi)
                 throw new I("Graph.".concat(e2, ": cannot use a {source,target} combo when asking about an edge's attributes in a MultiGraph since we cannot infer the one you want information about."));
-              var o2 = "" + t3, a2 = "" + r2;
-              if (r2 = arguments[2], !(i2 = d(this, o2, a2, n2)))
-                throw new F("Graph.".concat(e2, ': could not find an edge for the given path ("').concat(o2, '" - "').concat(a2, '").'));
+              var o3 = "" + t3, a3 = "" + r2;
+              if (r2 = arguments[2], !(i3 = d(this, o3, a3, n2)))
+                throw new F("Graph.".concat(e2, ': could not find an edge for the given path ("').concat(o3, '" - "').concat(a3, '").'));
             } else {
               if ("mixed" !== n2)
                 throw new I("Graph.".concat(e2, ": calling this method with only a key (vs. a source and target) does not make sense since an edge with this key could have the other type."));
-              if (t3 = "" + t3, !(i2 = this._edges.get(t3)))
+              if (t3 = "" + t3, !(i3 = this._edges.get(t3)))
                 throw new F("Graph.".concat(e2, ': could not find the "').concat(t3, '" edge in the graph.'));
             }
             if (!s(r2))
               throw new B("Graph.".concat(e2, ": provided attributes are not a plain object."));
-            return i2.attributes = r2, this.emit("edgeAttributesUpdated", { key: i2.key, type: "replace", attributes: i2.attributes }), this;
+            return i3.attributes = r2, this.emit("edgeAttributesUpdated", { key: i3.key, type: "replace", attributes: i3.attributes }), this;
           };
         } }, { name: function(t2) {
           return "merge".concat(t2, "Attributes");
         }, attacher: function(t2, e2, n2) {
           t2.prototype[e2] = function(t3, r2) {
-            var i2;
+            var i3;
             if ("mixed" !== this.type && "mixed" !== n2 && n2 !== this.type)
               throw new I("Graph.".concat(e2, ": cannot find this type of edges in your ").concat(this.type, " graph."));
             if (arguments.length > 2) {
               if (this.multi)
                 throw new I("Graph.".concat(e2, ": cannot use a {source,target} combo when asking about an edge's attributes in a MultiGraph since we cannot infer the one you want information about."));
-              var o2 = "" + t3, a2 = "" + r2;
-              if (r2 = arguments[2], !(i2 = d(this, o2, a2, n2)))
-                throw new F("Graph.".concat(e2, ': could not find an edge for the given path ("').concat(o2, '" - "').concat(a2, '").'));
+              var o3 = "" + t3, a3 = "" + r2;
+              if (r2 = arguments[2], !(i3 = d(this, o3, a3, n2)))
+                throw new F("Graph.".concat(e2, ': could not find an edge for the given path ("').concat(o3, '" - "').concat(a3, '").'));
             } else {
               if ("mixed" !== n2)
                 throw new I("Graph.".concat(e2, ": calling this method with only a key (vs. a source and target) does not make sense since an edge with this key could have the other type."));
-              if (t3 = "" + t3, !(i2 = this._edges.get(t3)))
+              if (t3 = "" + t3, !(i3 = this._edges.get(t3)))
                 throw new F("Graph.".concat(e2, ': could not find the "').concat(t3, '" edge in the graph.'));
             }
             if (!s(r2))
               throw new B("Graph.".concat(e2, ": provided attributes are not a plain object."));
-            return u(i2.attributes, r2), this.emit("edgeAttributesUpdated", { key: i2.key, type: "merge", attributes: i2.attributes, data: r2 }), this;
+            return u(i3.attributes, r2), this.emit("edgeAttributesUpdated", { key: i3.key, type: "merge", attributes: i3.attributes, data: r2 }), this;
           };
         } }, { name: function(t2) {
           return "update".concat(t2, "Attributes");
         }, attacher: function(t2, e2, n2) {
           t2.prototype[e2] = function(t3, r2) {
-            var i2;
+            var i3;
             if ("mixed" !== this.type && "mixed" !== n2 && n2 !== this.type)
               throw new I("Graph.".concat(e2, ": cannot find this type of edges in your ").concat(this.type, " graph."));
             if (arguments.length > 2) {
               if (this.multi)
                 throw new I("Graph.".concat(e2, ": cannot use a {source,target} combo when asking about an edge's attributes in a MultiGraph since we cannot infer the one you want information about."));
-              var o2 = "" + t3, a2 = "" + r2;
-              if (r2 = arguments[2], !(i2 = d(this, o2, a2, n2)))
-                throw new F("Graph.".concat(e2, ': could not find an edge for the given path ("').concat(o2, '" - "').concat(a2, '").'));
+              var o3 = "" + t3, a3 = "" + r2;
+              if (r2 = arguments[2], !(i3 = d(this, o3, a3, n2)))
+                throw new F("Graph.".concat(e2, ': could not find an edge for the given path ("').concat(o3, '" - "').concat(a3, '").'));
             } else {
               if ("mixed" !== n2)
                 throw new I("Graph.".concat(e2, ": calling this method with only a key (vs. a source and target) does not make sense since an edge with this key could have the other type."));
-              if (t3 = "" + t3, !(i2 = this._edges.get(t3)))
+              if (t3 = "" + t3, !(i3 = this._edges.get(t3)))
                 throw new F("Graph.".concat(e2, ': could not find the "').concat(t3, '" edge in the graph.'));
             }
             if ("function" != typeof r2)
               throw new B("Graph.".concat(e2, ": provided updater is not a function."));
-            return i2.attributes = r2(i2.attributes), this.emit("edgeAttributesUpdated", { key: i2.key, type: "update", attributes: i2.attributes }), this;
+            return i3.attributes = r2(i3.attributes), this.emit("edgeAttributesUpdated", { key: i3.key, type: "update", attributes: i3.attributes }), this;
           };
         } }];
         var Z = O, $ = P, tt = function() {
@@ -24223,62 +26514,62 @@
           });
         }, et = [{ name: "edges", type: "mixed" }, { name: "inEdges", type: "directed", direction: "in" }, { name: "outEdges", type: "directed", direction: "out" }, { name: "inboundEdges", type: "mixed", direction: "in" }, { name: "outboundEdges", type: "mixed", direction: "out" }, { name: "directedEdges", type: "directed" }, { name: "undirectedEdges", type: "undirected" }];
         function nt(t2, e2, n2, r2) {
-          var i2 = false;
-          for (var o2 in e2)
-            if (o2 !== r2) {
-              var a2 = e2[o2];
-              if (i2 = n2(a2.key, a2.attributes, a2.source.key, a2.target.key, a2.source.attributes, a2.target.attributes, a2.undirected), t2 && i2)
-                return a2.key;
+          var i3 = false;
+          for (var o3 in e2)
+            if (o3 !== r2) {
+              var a3 = e2[o3];
+              if (i3 = n2(a3.key, a3.attributes, a3.source.key, a3.target.key, a3.source.attributes, a3.target.attributes, a3.undirected), t2 && i3)
+                return a3.key;
             }
         }
         function rt(t2, e2, n2, r2) {
-          var i2, o2, a2, c2 = false;
+          var i3, o3, a3, c2 = false;
           for (var u2 in e2)
             if (u2 !== r2) {
-              i2 = e2[u2];
+              i3 = e2[u2];
               do {
-                if (o2 = i2.source, a2 = i2.target, c2 = n2(i2.key, i2.attributes, o2.key, a2.key, o2.attributes, a2.attributes, i2.undirected), t2 && c2)
-                  return i2.key;
-                i2 = i2.next;
-              } while (void 0 !== i2);
+                if (o3 = i3.source, a3 = i3.target, c2 = n2(i3.key, i3.attributes, o3.key, a3.key, o3.attributes, a3.attributes, i3.undirected), t2 && c2)
+                  return i3.key;
+                i3 = i3.next;
+              } while (void 0 !== i3);
             }
         }
         function it(t2, e2) {
-          var n2, r2 = Object.keys(t2), i2 = r2.length, o2 = 0;
+          var n2, r2 = Object.keys(t2), i3 = r2.length, o3 = 0;
           return new O(function() {
             do {
               if (n2)
                 n2 = n2.next;
               else {
-                if (o2 >= i2)
+                if (o3 >= i3)
                   return { done: true };
-                var a2 = r2[o2++];
-                if (a2 === e2) {
+                var a3 = r2[o3++];
+                if (a3 === e2) {
                   n2 = void 0;
                   continue;
                 }
-                n2 = t2[a2];
+                n2 = t2[a3];
               }
             } while (!n2);
             return { done: false, value: { edge: n2.key, attributes: n2.attributes, source: n2.source.key, target: n2.target.key, sourceAttributes: n2.source.attributes, targetAttributes: n2.target.attributes, undirected: n2.undirected } };
           });
         }
         function ot(t2, e2, n2, r2) {
-          var i2 = e2[n2];
-          if (i2) {
-            var o2 = i2.source, a2 = i2.target;
-            return r2(i2.key, i2.attributes, o2.key, a2.key, o2.attributes, a2.attributes, i2.undirected) && t2 ? i2.key : void 0;
+          var i3 = e2[n2];
+          if (i3) {
+            var o3 = i3.source, a3 = i3.target;
+            return r2(i3.key, i3.attributes, o3.key, a3.key, o3.attributes, a3.attributes, i3.undirected) && t2 ? i3.key : void 0;
           }
         }
         function at(t2, e2, n2, r2) {
-          var i2 = e2[n2];
-          if (i2) {
-            var o2 = false;
+          var i3 = e2[n2];
+          if (i3) {
+            var o3 = false;
             do {
-              if (o2 = r2(i2.key, i2.attributes, i2.source.key, i2.target.key, i2.source.attributes, i2.target.attributes, i2.undirected), t2 && o2)
-                return i2.key;
-              i2 = i2.next;
-            } while (void 0 !== i2);
+              if (o3 = r2(i3.key, i3.attributes, i3.source.key, i3.target.key, i3.source.attributes, i3.target.attributes, i3.undirected), t2 && o3)
+                return i3.key;
+              i3 = i3.next;
+            } while (void 0 !== i3);
           }
         }
         function ct(t2, e2) {
@@ -24295,16 +26586,16 @@
             return [];
           if ("mixed" === e2 || e2 === t2.type)
             return "function" == typeof Array.from ? Array.from(t2._edges.keys()) : K(t2._edges.keys(), t2._edges.size);
-          for (var n2, r2, i2 = "undirected" === e2 ? t2.undirectedSize : t2.directedSize, o2 = new Array(i2), a2 = "undirected" === e2, c2 = t2._edges.values(), u2 = 0; true !== (n2 = c2.next()).done; )
-            (r2 = n2.value).undirected === a2 && (o2[u2++] = r2.key);
-          return o2;
+          for (var n2, r2, i3 = "undirected" === e2 ? t2.undirectedSize : t2.directedSize, o3 = new Array(i3), a3 = "undirected" === e2, c2 = t2._edges.values(), u2 = 0; true !== (n2 = c2.next()).done; )
+            (r2 = n2.value).undirected === a3 && (o3[u2++] = r2.key);
+          return o3;
         }
         function dt(t2, e2, n2, r2) {
           if (0 !== e2.size) {
-            for (var i2, o2, a2 = "mixed" !== n2 && n2 !== e2.type, c2 = "undirected" === n2, u2 = false, d2 = e2._edges.values(); true !== (i2 = d2.next()).done; )
-              if (o2 = i2.value, !a2 || o2.undirected === c2) {
-                var s2 = o2, h2 = s2.key, p2 = s2.attributes, f2 = s2.source, l2 = s2.target;
-                if (u2 = r2(h2, p2, f2.key, l2.key, f2.attributes, l2.attributes, o2.undirected), t2 && u2)
+            for (var i3, o3, a3 = "mixed" !== n2 && n2 !== e2.type, c2 = "undirected" === n2, u2 = false, d2 = e2._edges.values(); true !== (i3 = d2.next()).done; )
+              if (o3 = i3.value, !a3 || o3.undirected === c2) {
+                var s2 = o3, h2 = s2.key, p2 = s2.attributes, f2 = s2.source, l2 = s2.target;
+                if (u2 = r2(h2, p2, f2.key, l2.key, f2.attributes, l2.attributes, o3.undirected), t2 && u2)
                   return h2;
               }
           }
@@ -24312,10 +26603,10 @@
         function st(t2, e2) {
           if (0 === t2.size)
             return O.empty();
-          var n2 = "mixed" !== e2 && e2 !== t2.type, r2 = "undirected" === e2, i2 = t2._edges.values();
+          var n2 = "mixed" !== e2 && e2 !== t2.type, r2 = "undirected" === e2, i3 = t2._edges.values();
           return new O(function() {
             for (var t3, e3; ; ) {
-              if ((t3 = i2.next()).done)
+              if ((t3 = i3.next()).done)
                 return t3;
               if (e3 = t3.value, !n2 || e3.undirected === r2)
                 break;
@@ -24323,100 +26614,100 @@
             return { value: { edge: e3.key, attributes: e3.attributes, source: e3.source.key, target: e3.target.key, sourceAttributes: e3.source.attributes, targetAttributes: e3.target.attributes, undirected: e3.undirected }, done: false };
           });
         }
-        function ht(t2, e2, n2, r2, i2, o2) {
-          var a2, c2 = e2 ? rt : nt;
+        function ht(t2, e2, n2, r2, i3, o3) {
+          var a3, c2 = e2 ? rt : nt;
           if ("undirected" !== n2) {
-            if ("out" !== r2 && (a2 = c2(t2, i2.in, o2), t2 && a2))
-              return a2;
-            if ("in" !== r2 && (a2 = c2(t2, i2.out, o2, r2 ? void 0 : i2.key), t2 && a2))
-              return a2;
+            if ("out" !== r2 && (a3 = c2(t2, i3.in, o3), t2 && a3))
+              return a3;
+            if ("in" !== r2 && (a3 = c2(t2, i3.out, o3, r2 ? void 0 : i3.key), t2 && a3))
+              return a3;
           }
-          if ("directed" !== n2 && (a2 = c2(t2, i2.undirected, o2), t2 && a2))
-            return a2;
+          if ("directed" !== n2 && (a3 = c2(t2, i3.undirected, o3), t2 && a3))
+            return a3;
         }
         function pt(t2, e2, n2, r2) {
-          var i2 = [];
+          var i3 = [];
           return ht(false, t2, e2, n2, r2, function(t3) {
-            i2.push(t3);
-          }), i2;
+            i3.push(t3);
+          }), i3;
         }
         function ft(t2, e2, n2) {
           var r2 = O.empty();
           return "undirected" !== t2 && ("out" !== e2 && void 0 !== n2.in && (r2 = tt(r2, it(n2.in))), "in" !== e2 && void 0 !== n2.out && (r2 = tt(r2, it(n2.out, e2 ? void 0 : n2.key)))), "directed" !== t2 && void 0 !== n2.undirected && (r2 = tt(r2, it(n2.undirected))), r2;
         }
-        function lt(t2, e2, n2, r2, i2, o2, a2) {
+        function lt(t2, e2, n2, r2, i3, o3, a3) {
           var c2, u2 = n2 ? at : ot;
           if ("undirected" !== e2) {
-            if (void 0 !== i2.in && "out" !== r2 && (c2 = u2(t2, i2.in, o2, a2), t2 && c2))
+            if (void 0 !== i3.in && "out" !== r2 && (c2 = u2(t2, i3.in, o3, a3), t2 && c2))
               return c2;
-            if (void 0 !== i2.out && "in" !== r2 && (r2 || i2.key !== o2) && (c2 = u2(t2, i2.out, o2, a2), t2 && c2))
+            if (void 0 !== i3.out && "in" !== r2 && (r2 || i3.key !== o3) && (c2 = u2(t2, i3.out, o3, a3), t2 && c2))
               return c2;
           }
-          if ("directed" !== e2 && void 0 !== i2.undirected && (c2 = u2(t2, i2.undirected, o2, a2), t2 && c2))
+          if ("directed" !== e2 && void 0 !== i3.undirected && (c2 = u2(t2, i3.undirected, o3, a3), t2 && c2))
             return c2;
         }
-        function gt(t2, e2, n2, r2, i2) {
-          var o2 = [];
-          return lt(false, t2, e2, n2, r2, i2, function(t3) {
-            o2.push(t3);
-          }), o2;
+        function gt(t2, e2, n2, r2, i3) {
+          var o3 = [];
+          return lt(false, t2, e2, n2, r2, i3, function(t3) {
+            o3.push(t3);
+          }), o3;
         }
         function yt(t2, e2, n2, r2) {
-          var i2 = O.empty();
-          return "undirected" !== t2 && (void 0 !== n2.in && "out" !== e2 && r2 in n2.in && (i2 = tt(i2, ct(n2.in, r2))), void 0 !== n2.out && "in" !== e2 && r2 in n2.out && (e2 || n2.key !== r2) && (i2 = tt(i2, ct(n2.out, r2)))), "directed" !== t2 && void 0 !== n2.undirected && r2 in n2.undirected && (i2 = tt(i2, ct(n2.undirected, r2))), i2;
+          var i3 = O.empty();
+          return "undirected" !== t2 && (void 0 !== n2.in && "out" !== e2 && r2 in n2.in && (i3 = tt(i3, ct(n2.in, r2))), void 0 !== n2.out && "in" !== e2 && r2 in n2.out && (e2 || n2.key !== r2) && (i3 = tt(i3, ct(n2.out, r2)))), "directed" !== t2 && void 0 !== n2.undirected && r2 in n2.undirected && (i3 = tt(i3, ct(n2.undirected, r2))), i3;
         }
         var wt = [{ name: "neighbors", type: "mixed" }, { name: "inNeighbors", type: "directed", direction: "in" }, { name: "outNeighbors", type: "directed", direction: "out" }, { name: "inboundNeighbors", type: "mixed", direction: "in" }, { name: "outboundNeighbors", type: "mixed", direction: "out" }, { name: "directedNeighbors", type: "directed" }, { name: "undirectedNeighbors", type: "undirected" }];
         function vt() {
           this.A = null, this.B = null;
         }
-        function bt(t2, e2, n2, r2, i2) {
-          for (var o2 in r2) {
-            var a2 = r2[o2], c2 = a2.source, u2 = a2.target, d2 = c2 === n2 ? u2 : c2;
+        function bt(t2, e2, n2, r2, i3) {
+          for (var o3 in r2) {
+            var a3 = r2[o3], c2 = a3.source, u2 = a3.target, d2 = c2 === n2 ? u2 : c2;
             if (!e2 || !e2.has(d2.key)) {
-              var s2 = i2(d2.key, d2.attributes);
+              var s2 = i3(d2.key, d2.attributes);
               if (t2 && s2)
                 return d2.key;
             }
           }
         }
-        function mt(t2, e2, n2, r2, i2) {
+        function mt(t2, e2, n2, r2, i3) {
           if ("mixed" !== e2) {
             if ("undirected" === e2)
-              return bt(t2, null, r2, r2.undirected, i2);
+              return bt(t2, null, r2, r2.undirected, i3);
             if ("string" == typeof n2)
-              return bt(t2, null, r2, r2[n2], i2);
+              return bt(t2, null, r2, r2[n2], i3);
           }
-          var o2, a2 = new vt();
+          var o3, a3 = new vt();
           if ("undirected" !== e2) {
             if ("out" !== n2) {
-              if (o2 = bt(t2, null, r2, r2.in, i2), t2 && o2)
-                return o2;
-              a2.wrap(r2.in);
+              if (o3 = bt(t2, null, r2, r2.in, i3), t2 && o3)
+                return o3;
+              a3.wrap(r2.in);
             }
             if ("in" !== n2) {
-              if (o2 = bt(t2, a2, r2, r2.out, i2), t2 && o2)
-                return o2;
-              a2.wrap(r2.out);
+              if (o3 = bt(t2, a3, r2, r2.out, i3), t2 && o3)
+                return o3;
+              a3.wrap(r2.out);
             }
           }
-          if ("directed" !== e2 && (o2 = bt(t2, a2, r2, r2.undirected, i2), t2 && o2))
-            return o2;
+          if ("directed" !== e2 && (o3 = bt(t2, a3, r2, r2.undirected, i3), t2 && o3))
+            return o3;
         }
         function kt(t2, e2, n2) {
-          var r2 = Object.keys(n2), i2 = r2.length, o2 = 0;
+          var r2 = Object.keys(n2), i3 = r2.length, o3 = 0;
           return new O(function() {
-            var a2 = null;
+            var a3 = null;
             do {
-              if (o2 >= i2)
+              if (o3 >= i3)
                 return t2 && t2.wrap(n2), { done: true };
-              var c2 = n2[r2[o2++]], u2 = c2.source, d2 = c2.target;
-              a2 = u2 === e2 ? d2 : u2, t2 && t2.has(a2.key) && (a2 = null);
-            } while (null === a2);
-            return { done: false, value: { neighbor: a2.key, attributes: a2.attributes } };
+              var c2 = n2[r2[o3++]], u2 = c2.source, d2 = c2.target;
+              a3 = u2 === e2 ? d2 : u2, t2 && t2.has(a3.key) && (a3 = null);
+            } while (null === a3);
+            return { done: false, value: { neighbor: a3.key, attributes: a3.attributes } };
           });
         }
         function _t(t2, e2) {
-          var n2 = e2.name, r2 = e2.type, i2 = e2.direction;
+          var n2 = e2.name, r2 = e2.type, i3 = e2.direction;
           t2.prototype[n2] = function(t3) {
             if ("mixed" !== r2 && "mixed" !== this.type && r2 !== this.type)
               return [];
@@ -24435,18 +26726,18 @@
               return mt(false, t4, e4, n3, function(t5) {
                 r3.push(t5);
               }), r3;
-            }("mixed" === r2 ? this.type : r2, i2, e3);
+            }("mixed" === r2 ? this.type : r2, i3, e3);
           };
         }
         function Gt(t2, e2) {
-          var n2 = e2.name, r2 = e2.type, i2 = e2.direction, o2 = n2.slice(0, -1) + "Entries";
-          t2.prototype[o2] = function(t3) {
+          var n2 = e2.name, r2 = e2.type, i3 = e2.direction, o3 = n2.slice(0, -1) + "Entries";
+          t2.prototype[o3] = function(t3) {
             if ("mixed" !== r2 && "mixed" !== this.type && r2 !== this.type)
               return O.empty();
             t3 = "" + t3;
             var e3 = this._nodes.get(t3);
             if (void 0 === e3)
-              throw new F("Graph.".concat(o2, ': could not find the "').concat(t3, '" node in the graph.'));
+              throw new F("Graph.".concat(o3, ': could not find the "').concat(t3, '" node in the graph.'));
             return function(t4, e4, n3) {
               if ("mixed" !== t4) {
                 if ("undirected" === t4)
@@ -24454,35 +26745,35 @@
                 if ("string" == typeof e4)
                   return kt(null, n3, n3[e4]);
               }
-              var r3 = O.empty(), i3 = new vt();
-              return "undirected" !== t4 && ("out" !== e4 && (r3 = tt(r3, kt(i3, n3, n3.in))), "in" !== e4 && (r3 = tt(r3, kt(i3, n3, n3.out)))), "directed" !== t4 && (r3 = tt(r3, kt(i3, n3, n3.undirected))), r3;
-            }("mixed" === r2 ? this.type : r2, i2, e3);
+              var r3 = O.empty(), i4 = new vt();
+              return "undirected" !== t4 && ("out" !== e4 && (r3 = tt(r3, kt(i4, n3, n3.in))), "in" !== e4 && (r3 = tt(r3, kt(i4, n3, n3.out)))), "directed" !== t4 && (r3 = tt(r3, kt(i4, n3, n3.undirected))), r3;
+            }("mixed" === r2 ? this.type : r2, i3, e3);
           };
         }
-        function xt(t2, e2, n2, r2, i2) {
-          for (var o2, a2, c2, u2, d2, s2, h2, p2 = r2._nodes.values(), f2 = r2.type; true !== (o2 = p2.next()).done; ) {
+        function xt(t2, e2, n2, r2, i3) {
+          for (var o3, a3, c2, u2, d2, s2, h2, p2 = r2._nodes.values(), f2 = r2.type; true !== (o3 = p2.next()).done; ) {
             var l2 = false;
-            if (a2 = o2.value, "undirected" !== f2)
-              for (c2 in u2 = a2.out) {
+            if (a3 = o3.value, "undirected" !== f2)
+              for (c2 in u2 = a3.out) {
                 d2 = u2[c2];
                 do {
-                  if (s2 = d2.target, l2 = true, h2 = i2(a2.key, s2.key, a2.attributes, s2.attributes, d2.key, d2.attributes, d2.undirected), t2 && h2)
+                  if (s2 = d2.target, l2 = true, h2 = i3(a3.key, s2.key, a3.attributes, s2.attributes, d2.key, d2.attributes, d2.undirected), t2 && h2)
                     return d2;
                   d2 = d2.next;
                 } while (d2);
               }
             if ("directed" !== f2) {
-              for (c2 in u2 = a2.undirected)
-                if (!(e2 && a2.key > c2)) {
+              for (c2 in u2 = a3.undirected)
+                if (!(e2 && a3.key > c2)) {
                   d2 = u2[c2];
                   do {
-                    if ((s2 = d2.target).key !== c2 && (s2 = d2.source), l2 = true, h2 = i2(a2.key, s2.key, a2.attributes, s2.attributes, d2.key, d2.attributes, d2.undirected), t2 && h2)
+                    if ((s2 = d2.target).key !== c2 && (s2 = d2.source), l2 = true, h2 = i3(a3.key, s2.key, a3.attributes, s2.attributes, d2.key, d2.attributes, d2.undirected), t2 && h2)
                       return d2;
                     d2 = d2.next;
                   } while (d2);
                 }
             }
-            if (n2 && !l2 && (h2 = i2(a2.key, null, a2.attributes, null, null, null, null), t2 && h2))
+            if (n2 && !l2 && (h2 = i3(a3.key, null, a3.attributes, null, null, null, null), t2 && h2))
               return null;
           }
         }
@@ -24518,33 +26809,33 @@
           var r2 = new t2.NodeDataClass(e2, n2);
           return t2._nodes.set(e2, r2), t2.emit("nodeAdded", { key: e2, attributes: n2 }), r2;
         }
-        function jt(t2, e2, n2, r2, i2, o2, a2, c2) {
+        function jt(t2, e2, n2, r2, i3, o3, a3, c2) {
           if (!r2 && "undirected" === t2.type)
             throw new I("Graph.".concat(e2, ": you cannot add a directed edge to an undirected graph. Use the #.addEdge or #.addUndirectedEdge instead."));
           if (r2 && "directed" === t2.type)
             throw new I("Graph.".concat(e2, ": you cannot add an undirected edge to a directed graph. Use the #.addEdge or #.addDirectedEdge instead."));
           if (c2 && !s(c2))
             throw new B("Graph.".concat(e2, ': invalid attributes. Expecting an object but got "').concat(c2, '"'));
-          if (o2 = "" + o2, a2 = "" + a2, c2 = c2 || {}, !t2.allowSelfLoops && o2 === a2)
-            throw new I("Graph.".concat(e2, ': source & target are the same ("').concat(o2, `"), thus creating a loop explicitly forbidden by this graph 'allowSelfLoops' option set to false.`));
-          var u2 = t2._nodes.get(o2), d2 = t2._nodes.get(a2);
+          if (o3 = "" + o3, a3 = "" + a3, c2 = c2 || {}, !t2.allowSelfLoops && o3 === a3)
+            throw new I("Graph.".concat(e2, ': source & target are the same ("').concat(o3, `"), thus creating a loop explicitly forbidden by this graph 'allowSelfLoops' option set to false.`));
+          var u2 = t2._nodes.get(o3), d2 = t2._nodes.get(a3);
           if (!u2)
-            throw new F("Graph.".concat(e2, ': source node "').concat(o2, '" not found.'));
+            throw new F("Graph.".concat(e2, ': source node "').concat(o3, '" not found.'));
           if (!d2)
-            throw new F("Graph.".concat(e2, ': target node "').concat(a2, '" not found.'));
-          var h2 = { key: null, undirected: r2, source: o2, target: a2, attributes: c2 };
+            throw new F("Graph.".concat(e2, ': target node "').concat(a3, '" not found.'));
+          var h2 = { key: null, undirected: r2, source: o3, target: a3, attributes: c2 };
           if (n2)
-            i2 = t2._edgeKeyGenerator();
-          else if (i2 = "" + i2, t2._edges.has(i2))
-            throw new I("Graph.".concat(e2, ': the "').concat(i2, '" edge already exists in the graph.'));
-          if (!t2.multi && (r2 ? void 0 !== u2.undirected[a2] : void 0 !== u2.out[a2]))
-            throw new I("Graph.".concat(e2, ': an edge linking "').concat(o2, '" to "').concat(a2, `" already exists. If you really want to add multiple edges linking those nodes, you should create a multi graph by using the 'multi' option.`));
-          var p2 = new V(r2, i2, u2, d2, c2);
-          t2._edges.set(i2, p2);
-          var f2 = o2 === a2;
-          return r2 ? (u2.undirectedDegree++, d2.undirectedDegree++, f2 && (u2.undirectedLoops++, t2._undirectedSelfLoopCount++)) : (u2.outDegree++, d2.inDegree++, f2 && (u2.directedLoops++, t2._directedSelfLoopCount++)), t2.multi ? p2.attachMulti() : p2.attach(), r2 ? t2._undirectedSize++ : t2._directedSize++, h2.key = i2, t2.emit("edgeAdded", h2), i2;
+            i3 = t2._edgeKeyGenerator();
+          else if (i3 = "" + i3, t2._edges.has(i3))
+            throw new I("Graph.".concat(e2, ': the "').concat(i3, '" edge already exists in the graph.'));
+          if (!t2.multi && (r2 ? void 0 !== u2.undirected[a3] : void 0 !== u2.out[a3]))
+            throw new I("Graph.".concat(e2, ': an edge linking "').concat(o3, '" to "').concat(a3, `" already exists. If you really want to add multiple edges linking those nodes, you should create a multi graph by using the 'multi' option.`));
+          var p2 = new V(r2, i3, u2, d2, c2);
+          t2._edges.set(i3, p2);
+          var f2 = o3 === a3;
+          return r2 ? (u2.undirectedDegree++, d2.undirectedDegree++, f2 && (u2.undirectedLoops++, t2._undirectedSelfLoopCount++)) : (u2.outDegree++, d2.inDegree++, f2 && (u2.directedLoops++, t2._directedSelfLoopCount++)), t2.multi ? p2.attachMulti() : p2.attach(), r2 ? t2._undirectedSize++ : t2._directedSize++, h2.key = i3, t2.emit("edgeAdded", h2), i3;
         }
-        function Ct(t2, e2, n2, r2, i2, o2, a2, c2, d2) {
+        function Ct(t2, e2, n2, r2, i3, o3, a3, c2, d2) {
           if (!r2 && "undirected" === t2.type)
             throw new I("Graph.".concat(e2, ": you cannot merge/update a directed edge to an undirected graph. Use the #.mergeEdge/#.updateEdge or #.addUndirectedEdge instead."));
           if (r2 && "directed" === t2.type)
@@ -24557,15 +26848,15 @@
               throw new B("Graph.".concat(e2, ': invalid attributes. Expecting an object but got "').concat(c2, '"'));
           }
           var h2;
-          if (o2 = "" + o2, a2 = "" + a2, d2 && (h2 = c2, c2 = void 0), !t2.allowSelfLoops && o2 === a2)
-            throw new I("Graph.".concat(e2, ': source & target are the same ("').concat(o2, `"), thus creating a loop explicitly forbidden by this graph 'allowSelfLoops' option set to false.`));
-          var p2, f2, l2 = t2._nodes.get(o2), g2 = t2._nodes.get(a2);
-          if (!n2 && (p2 = t2._edges.get(i2))) {
-            if (!(p2.source.key === o2 && p2.target.key === a2 || r2 && p2.source.key === a2 && p2.target.key === o2))
-              throw new I("Graph.".concat(e2, ': inconsistency detected when attempting to merge the "').concat(i2, '" edge with "').concat(o2, '" source & "').concat(a2, '" target vs. ("').concat(p2.source.key, '", "').concat(p2.target.key, '").'));
+          if (o3 = "" + o3, a3 = "" + a3, d2 && (h2 = c2, c2 = void 0), !t2.allowSelfLoops && o3 === a3)
+            throw new I("Graph.".concat(e2, ': source & target are the same ("').concat(o3, `"), thus creating a loop explicitly forbidden by this graph 'allowSelfLoops' option set to false.`));
+          var p2, f2, l2 = t2._nodes.get(o3), g2 = t2._nodes.get(a3);
+          if (!n2 && (p2 = t2._edges.get(i3))) {
+            if (!(p2.source.key === o3 && p2.target.key === a3 || r2 && p2.source.key === a3 && p2.target.key === o3))
+              throw new I("Graph.".concat(e2, ': inconsistency detected when attempting to merge the "').concat(i3, '" edge with "').concat(o3, '" source & "').concat(a3, '" target vs. ("').concat(p2.source.key, '", "').concat(p2.target.key, '").'));
             f2 = p2;
           }
-          if (f2 || t2.multi || !l2 || (f2 = r2 ? l2.undirected[a2] : l2.out[a2]), f2) {
+          if (f2 || t2.multi || !l2 || (f2 = r2 ? l2.undirected[a3] : l2.out[a3]), f2) {
             var y2 = [f2.key, false, false, false];
             if (d2 ? !h2 : !c2)
               return y2;
@@ -24577,20 +26868,20 @@
             return y2;
           }
           c2 = c2 || {}, d2 && h2 && (c2 = h2(c2));
-          var v2 = { key: null, undirected: r2, source: o2, target: a2, attributes: c2 };
+          var v2 = { key: null, undirected: r2, source: o3, target: a3, attributes: c2 };
           if (n2)
-            i2 = t2._edgeKeyGenerator();
-          else if (i2 = "" + i2, t2._edges.has(i2))
-            throw new I("Graph.".concat(e2, ': the "').concat(i2, '" edge already exists in the graph.'));
+            i3 = t2._edgeKeyGenerator();
+          else if (i3 = "" + i3, t2._edges.has(i3))
+            throw new I("Graph.".concat(e2, ': the "').concat(i3, '" edge already exists in the graph.'));
           var b2 = false, m2 = false;
-          l2 || (l2 = Ot(t2, o2, {}), b2 = true, o2 === a2 && (g2 = l2, m2 = true)), g2 || (g2 = Ot(t2, a2, {}), m2 = true), p2 = new V(r2, i2, l2, g2, c2), t2._edges.set(i2, p2);
-          var k2 = o2 === a2;
-          return r2 ? (l2.undirectedDegree++, g2.undirectedDegree++, k2 && (l2.undirectedLoops++, t2._undirectedSelfLoopCount++)) : (l2.outDegree++, g2.inDegree++, k2 && (l2.directedLoops++, t2._directedSelfLoopCount++)), t2.multi ? p2.attachMulti() : p2.attach(), r2 ? t2._undirectedSize++ : t2._directedSize++, v2.key = i2, t2.emit("edgeAdded", v2), [i2, true, b2, m2];
+          l2 || (l2 = Ot(t2, o3, {}), b2 = true, o3 === a3 && (g2 = l2, m2 = true)), g2 || (g2 = Ot(t2, a3, {}), m2 = true), p2 = new V(r2, i3, l2, g2, c2), t2._edges.set(i3, p2);
+          var k2 = o3 === a3;
+          return r2 ? (l2.undirectedDegree++, g2.undirectedDegree++, k2 && (l2.undirectedLoops++, t2._undirectedSelfLoopCount++)) : (l2.outDegree++, g2.inDegree++, k2 && (l2.directedLoops++, t2._directedSelfLoopCount++)), t2.multi ? p2.attachMulti() : p2.attach(), r2 ? t2._undirectedSize++ : t2._directedSize++, v2.key = i3, t2.emit("edgeAdded", v2), [i3, true, b2, m2];
         }
         function Mt(t2, e2) {
           t2._edges.delete(e2.key);
-          var n2 = e2.source, r2 = e2.target, i2 = e2.attributes, o2 = e2.undirected, a2 = n2 === r2;
-          o2 ? (n2.undirectedDegree--, r2.undirectedDegree--, a2 && (n2.undirectedLoops--, t2._undirectedSelfLoopCount--)) : (n2.outDegree--, r2.inDegree--, a2 && (n2.directedLoops--, t2._directedSelfLoopCount--)), t2.multi ? e2.detachMulti() : e2.detach(), o2 ? t2._undirectedSize-- : t2._directedSize--, t2.emit("edgeDropped", { key: e2.key, attributes: i2, source: n2.key, target: r2.key, undirected: o2 });
+          var n2 = e2.source, r2 = e2.target, i3 = e2.attributes, o3 = e2.undirected, a3 = n2 === r2;
+          o3 ? (n2.undirectedDegree--, r2.undirectedDegree--, a3 && (n2.undirectedLoops--, t2._undirectedSelfLoopCount--)) : (n2.outDegree--, r2.inDegree--, a3 && (n2.directedLoops--, t2._directedSelfLoopCount--)), t2.multi ? e2.detachMulti() : e2.detach(), o3 ? t2._undirectedSize-- : t2._directedSize--, t2.emit("edgeDropped", { key: e2.key, attributes: i3, source: n2.key, target: r2.key, undirected: o3 });
         }
         var zt = function(n2) {
           function r2(t2) {
@@ -24603,11 +26894,11 @@
               throw new B(`Graph.constructor: invalid 'allowSelfLoops' option. Expecting a boolean but got "`.concat(t2.allowSelfLoops, '".'));
             var r3 = "mixed" === t2.type ? Y : "directed" === t2.type ? q : J;
             p(c(e2), "NodeDataClass", r3);
-            var i3 = "geid_" + St() + "_", o2 = 0;
+            var i4 = "geid_" + St() + "_", o3 = 0;
             return p(c(e2), "_attributes", {}), p(c(e2), "_nodes", /* @__PURE__ */ new Map()), p(c(e2), "_edges", /* @__PURE__ */ new Map()), p(c(e2), "_directedSize", 0), p(c(e2), "_undirectedSize", 0), p(c(e2), "_directedSelfLoopCount", 0), p(c(e2), "_undirectedSelfLoopCount", 0), p(c(e2), "_edgeKeyGenerator", function() {
               var t3;
               do {
-                t3 = i3 + o2++;
+                t3 = i4 + o3++;
               } while (e2._edges.has(t3));
               return t3;
             }), p(c(e2), "_options", t2), Ut.forEach(function(t3) {
@@ -24631,12 +26922,12 @@
             }), e2;
           }
           e(r2, n2);
-          var i2 = r2.prototype;
-          return i2._resetInstanceCounters = function() {
+          var i3 = r2.prototype;
+          return i3._resetInstanceCounters = function() {
             this._directedSize = 0, this._undirectedSize = 0, this._directedSelfLoopCount = 0, this._undirectedSelfLoopCount = 0;
-          }, i2.hasNode = function(t2) {
+          }, i3.hasNode = function(t2) {
             return this._nodes.has("" + t2);
-          }, i2.hasDirectedEdge = function(t2, e2) {
+          }, i3.hasDirectedEdge = function(t2, e2) {
             if ("undirected" === this.type)
               return false;
             if (1 === arguments.length) {
@@ -24645,11 +26936,11 @@
             }
             if (2 === arguments.length) {
               t2 = "" + t2, e2 = "" + e2;
-              var i3 = this._nodes.get(t2);
-              return !!i3 && i3.out.hasOwnProperty(e2);
+              var i4 = this._nodes.get(t2);
+              return !!i4 && i4.out.hasOwnProperty(e2);
             }
             throw new B("Graph.hasDirectedEdge: invalid arity (".concat(arguments.length, ", instead of 1 or 2). You can either ask for an edge id or for the existence of an edge between a source & a target."));
-          }, i2.hasUndirectedEdge = function(t2, e2) {
+          }, i3.hasUndirectedEdge = function(t2, e2) {
             if ("directed" === this.type)
               return false;
             if (1 === arguments.length) {
@@ -24658,11 +26949,11 @@
             }
             if (2 === arguments.length) {
               t2 = "" + t2, e2 = "" + e2;
-              var i3 = this._nodes.get(t2);
-              return !!i3 && i3.undirected.hasOwnProperty(e2);
+              var i4 = this._nodes.get(t2);
+              return !!i4 && i4.undirected.hasOwnProperty(e2);
             }
             throw new B("Graph.hasDirectedEdge: invalid arity (".concat(arguments.length, ", instead of 1 or 2). You can either ask for an edge id or for the existence of an edge between a source & a target."));
-          }, i2.hasEdge = function(t2, e2) {
+          }, i3.hasEdge = function(t2, e2) {
             if (1 === arguments.length) {
               var n3 = "" + t2;
               return this._edges.has(n3);
@@ -24673,7 +26964,7 @@
               return !!r3 && (void 0 !== r3.out && r3.out.hasOwnProperty(e2) || void 0 !== r3.undirected && r3.undirected.hasOwnProperty(e2));
             }
             throw new B("Graph.hasEdge: invalid arity (".concat(arguments.length, ", instead of 1 or 2). You can either ask for an edge id or for the existence of an edge between a source & a target."));
-          }, i2.directedEdge = function(t2, e2) {
+          }, i3.directedEdge = function(t2, e2) {
             if ("undirected" !== this.type) {
               if (t2 = "" + t2, e2 = "" + e2, this.multi)
                 throw new I("Graph.directedEdge: this method is irrelevant with multigraphs since there might be multiple edges between source & target. See #.directedEdges instead.");
@@ -24685,7 +26976,7 @@
               var r3 = n3.out && n3.out[e2] || void 0;
               return r3 ? r3.key : void 0;
             }
-          }, i2.undirectedEdge = function(t2, e2) {
+          }, i3.undirectedEdge = function(t2, e2) {
             if ("directed" !== this.type) {
               if (t2 = "" + t2, e2 = "" + e2, this.multi)
                 throw new I("Graph.undirectedEdge: this method is irrelevant with multigraphs since there might be multiple edges between source & target. See #.undirectedEdges instead.");
@@ -24697,7 +26988,7 @@
               var r3 = n3.undirected && n3.undirected[e2] || void 0;
               return r3 ? r3.key : void 0;
             }
-          }, i2.edge = function(t2, e2) {
+          }, i3.edge = function(t2, e2) {
             if (this.multi)
               throw new I("Graph.edge: this method is irrelevant with multigraphs since there might be multiple edges between source & target. See #.edges instead.");
             t2 = "" + t2, e2 = "" + e2;
@@ -24709,192 +27000,192 @@
             var r3 = n3.out && n3.out[e2] || n3.undirected && n3.undirected[e2] || void 0;
             if (r3)
               return r3.key;
-          }, i2.areDirectedNeighbors = function(t2, e2) {
+          }, i3.areDirectedNeighbors = function(t2, e2) {
             t2 = "" + t2, e2 = "" + e2;
             var n3 = this._nodes.get(t2);
             if (!n3)
               throw new F('Graph.areDirectedNeighbors: could not find the "'.concat(t2, '" node in the graph.'));
             return "undirected" !== this.type && (e2 in n3.in || e2 in n3.out);
-          }, i2.areOutNeighbors = function(t2, e2) {
+          }, i3.areOutNeighbors = function(t2, e2) {
             t2 = "" + t2, e2 = "" + e2;
             var n3 = this._nodes.get(t2);
             if (!n3)
               throw new F('Graph.areOutNeighbors: could not find the "'.concat(t2, '" node in the graph.'));
             return "undirected" !== this.type && e2 in n3.out;
-          }, i2.areInNeighbors = function(t2, e2) {
+          }, i3.areInNeighbors = function(t2, e2) {
             t2 = "" + t2, e2 = "" + e2;
             var n3 = this._nodes.get(t2);
             if (!n3)
               throw new F('Graph.areInNeighbors: could not find the "'.concat(t2, '" node in the graph.'));
             return "undirected" !== this.type && e2 in n3.in;
-          }, i2.areUndirectedNeighbors = function(t2, e2) {
+          }, i3.areUndirectedNeighbors = function(t2, e2) {
             t2 = "" + t2, e2 = "" + e2;
             var n3 = this._nodes.get(t2);
             if (!n3)
               throw new F('Graph.areUndirectedNeighbors: could not find the "'.concat(t2, '" node in the graph.'));
             return "directed" !== this.type && e2 in n3.undirected;
-          }, i2.areNeighbors = function(t2, e2) {
+          }, i3.areNeighbors = function(t2, e2) {
             t2 = "" + t2, e2 = "" + e2;
             var n3 = this._nodes.get(t2);
             if (!n3)
               throw new F('Graph.areNeighbors: could not find the "'.concat(t2, '" node in the graph.'));
             return "undirected" !== this.type && (e2 in n3.in || e2 in n3.out) || "directed" !== this.type && e2 in n3.undirected;
-          }, i2.areInboundNeighbors = function(t2, e2) {
+          }, i3.areInboundNeighbors = function(t2, e2) {
             t2 = "" + t2, e2 = "" + e2;
             var n3 = this._nodes.get(t2);
             if (!n3)
               throw new F('Graph.areInboundNeighbors: could not find the "'.concat(t2, '" node in the graph.'));
             return "undirected" !== this.type && e2 in n3.in || "directed" !== this.type && e2 in n3.undirected;
-          }, i2.areOutboundNeighbors = function(t2, e2) {
+          }, i3.areOutboundNeighbors = function(t2, e2) {
             t2 = "" + t2, e2 = "" + e2;
             var n3 = this._nodes.get(t2);
             if (!n3)
               throw new F('Graph.areOutboundNeighbors: could not find the "'.concat(t2, '" node in the graph.'));
             return "undirected" !== this.type && e2 in n3.out || "directed" !== this.type && e2 in n3.undirected;
-          }, i2.inDegree = function(t2) {
+          }, i3.inDegree = function(t2) {
             t2 = "" + t2;
             var e2 = this._nodes.get(t2);
             if (!e2)
               throw new F('Graph.inDegree: could not find the "'.concat(t2, '" node in the graph.'));
             return "undirected" === this.type ? 0 : e2.inDegree;
-          }, i2.outDegree = function(t2) {
+          }, i3.outDegree = function(t2) {
             t2 = "" + t2;
             var e2 = this._nodes.get(t2);
             if (!e2)
               throw new F('Graph.outDegree: could not find the "'.concat(t2, '" node in the graph.'));
             return "undirected" === this.type ? 0 : e2.outDegree;
-          }, i2.directedDegree = function(t2) {
+          }, i3.directedDegree = function(t2) {
             t2 = "" + t2;
             var e2 = this._nodes.get(t2);
             if (!e2)
               throw new F('Graph.directedDegree: could not find the "'.concat(t2, '" node in the graph.'));
             return "undirected" === this.type ? 0 : e2.inDegree + e2.outDegree;
-          }, i2.undirectedDegree = function(t2) {
+          }, i3.undirectedDegree = function(t2) {
             t2 = "" + t2;
             var e2 = this._nodes.get(t2);
             if (!e2)
               throw new F('Graph.undirectedDegree: could not find the "'.concat(t2, '" node in the graph.'));
             return "directed" === this.type ? 0 : e2.undirectedDegree;
-          }, i2.inboundDegree = function(t2) {
+          }, i3.inboundDegree = function(t2) {
             t2 = "" + t2;
             var e2 = this._nodes.get(t2);
             if (!e2)
               throw new F('Graph.inboundDegree: could not find the "'.concat(t2, '" node in the graph.'));
             var n3 = 0;
             return "directed" !== this.type && (n3 += e2.undirectedDegree), "undirected" !== this.type && (n3 += e2.inDegree), n3;
-          }, i2.outboundDegree = function(t2) {
+          }, i3.outboundDegree = function(t2) {
             t2 = "" + t2;
             var e2 = this._nodes.get(t2);
             if (!e2)
               throw new F('Graph.outboundDegree: could not find the "'.concat(t2, '" node in the graph.'));
             var n3 = 0;
             return "directed" !== this.type && (n3 += e2.undirectedDegree), "undirected" !== this.type && (n3 += e2.outDegree), n3;
-          }, i2.degree = function(t2) {
+          }, i3.degree = function(t2) {
             t2 = "" + t2;
             var e2 = this._nodes.get(t2);
             if (!e2)
               throw new F('Graph.degree: could not find the "'.concat(t2, '" node in the graph.'));
             var n3 = 0;
             return "directed" !== this.type && (n3 += e2.undirectedDegree), "undirected" !== this.type && (n3 += e2.inDegree + e2.outDegree), n3;
-          }, i2.inDegreeWithoutSelfLoops = function(t2) {
+          }, i3.inDegreeWithoutSelfLoops = function(t2) {
             t2 = "" + t2;
             var e2 = this._nodes.get(t2);
             if (!e2)
               throw new F('Graph.inDegreeWithoutSelfLoops: could not find the "'.concat(t2, '" node in the graph.'));
             return "undirected" === this.type ? 0 : e2.inDegree - e2.directedLoops;
-          }, i2.outDegreeWithoutSelfLoops = function(t2) {
+          }, i3.outDegreeWithoutSelfLoops = function(t2) {
             t2 = "" + t2;
             var e2 = this._nodes.get(t2);
             if (!e2)
               throw new F('Graph.outDegreeWithoutSelfLoops: could not find the "'.concat(t2, '" node in the graph.'));
             return "undirected" === this.type ? 0 : e2.outDegree - e2.directedLoops;
-          }, i2.directedDegreeWithoutSelfLoops = function(t2) {
+          }, i3.directedDegreeWithoutSelfLoops = function(t2) {
             t2 = "" + t2;
             var e2 = this._nodes.get(t2);
             if (!e2)
               throw new F('Graph.directedDegreeWithoutSelfLoops: could not find the "'.concat(t2, '" node in the graph.'));
             return "undirected" === this.type ? 0 : e2.inDegree + e2.outDegree - 2 * e2.directedLoops;
-          }, i2.undirectedDegreeWithoutSelfLoops = function(t2) {
+          }, i3.undirectedDegreeWithoutSelfLoops = function(t2) {
             t2 = "" + t2;
             var e2 = this._nodes.get(t2);
             if (!e2)
               throw new F('Graph.undirectedDegreeWithoutSelfLoops: could not find the "'.concat(t2, '" node in the graph.'));
             return "directed" === this.type ? 0 : e2.undirectedDegree - 2 * e2.undirectedLoops;
-          }, i2.inboundDegreeWithoutSelfLoops = function(t2) {
+          }, i3.inboundDegreeWithoutSelfLoops = function(t2) {
             t2 = "" + t2;
             var e2 = this._nodes.get(t2);
             if (!e2)
               throw new F('Graph.inboundDegreeWithoutSelfLoops: could not find the "'.concat(t2, '" node in the graph.'));
             var n3 = 0, r3 = 0;
             return "directed" !== this.type && (n3 += e2.undirectedDegree, r3 += 2 * e2.undirectedLoops), "undirected" !== this.type && (n3 += e2.inDegree, r3 += e2.directedLoops), n3 - r3;
-          }, i2.outboundDegreeWithoutSelfLoops = function(t2) {
+          }, i3.outboundDegreeWithoutSelfLoops = function(t2) {
             t2 = "" + t2;
             var e2 = this._nodes.get(t2);
             if (!e2)
               throw new F('Graph.outboundDegreeWithoutSelfLoops: could not find the "'.concat(t2, '" node in the graph.'));
             var n3 = 0, r3 = 0;
             return "directed" !== this.type && (n3 += e2.undirectedDegree, r3 += 2 * e2.undirectedLoops), "undirected" !== this.type && (n3 += e2.outDegree, r3 += e2.directedLoops), n3 - r3;
-          }, i2.degreeWithoutSelfLoops = function(t2) {
+          }, i3.degreeWithoutSelfLoops = function(t2) {
             t2 = "" + t2;
             var e2 = this._nodes.get(t2);
             if (!e2)
               throw new F('Graph.degreeWithoutSelfLoops: could not find the "'.concat(t2, '" node in the graph.'));
             var n3 = 0, r3 = 0;
             return "directed" !== this.type && (n3 += e2.undirectedDegree, r3 += 2 * e2.undirectedLoops), "undirected" !== this.type && (n3 += e2.inDegree + e2.outDegree, r3 += 2 * e2.directedLoops), n3 - r3;
-          }, i2.source = function(t2) {
+          }, i3.source = function(t2) {
             t2 = "" + t2;
             var e2 = this._edges.get(t2);
             if (!e2)
               throw new F('Graph.source: could not find the "'.concat(t2, '" edge in the graph.'));
             return e2.source.key;
-          }, i2.target = function(t2) {
+          }, i3.target = function(t2) {
             t2 = "" + t2;
             var e2 = this._edges.get(t2);
             if (!e2)
               throw new F('Graph.target: could not find the "'.concat(t2, '" edge in the graph.'));
             return e2.target.key;
-          }, i2.extremities = function(t2) {
+          }, i3.extremities = function(t2) {
             t2 = "" + t2;
             var e2 = this._edges.get(t2);
             if (!e2)
               throw new F('Graph.extremities: could not find the "'.concat(t2, '" edge in the graph.'));
             return [e2.source.key, e2.target.key];
-          }, i2.opposite = function(t2, e2) {
+          }, i3.opposite = function(t2, e2) {
             t2 = "" + t2, e2 = "" + e2;
             var n3 = this._edges.get(e2);
             if (!n3)
               throw new F('Graph.opposite: could not find the "'.concat(e2, '" edge in the graph.'));
-            var r3 = n3.source.key, i3 = n3.target.key;
+            var r3 = n3.source.key, i4 = n3.target.key;
             if (t2 === r3)
-              return i3;
-            if (t2 === i3)
+              return i4;
+            if (t2 === i4)
               return r3;
-            throw new F('Graph.opposite: the "'.concat(t2, '" node is not attached to the "').concat(e2, '" edge (').concat(r3, ", ").concat(i3, ")."));
-          }, i2.hasExtremity = function(t2, e2) {
+            throw new F('Graph.opposite: the "'.concat(t2, '" node is not attached to the "').concat(e2, '" edge (').concat(r3, ", ").concat(i4, ")."));
+          }, i3.hasExtremity = function(t2, e2) {
             t2 = "" + t2, e2 = "" + e2;
             var n3 = this._edges.get(t2);
             if (!n3)
               throw new F('Graph.hasExtremity: could not find the "'.concat(t2, '" edge in the graph.'));
             return n3.source.key === e2 || n3.target.key === e2;
-          }, i2.isUndirected = function(t2) {
+          }, i3.isUndirected = function(t2) {
             t2 = "" + t2;
             var e2 = this._edges.get(t2);
             if (!e2)
               throw new F('Graph.isUndirected: could not find the "'.concat(t2, '" edge in the graph.'));
             return e2.undirected;
-          }, i2.isDirected = function(t2) {
+          }, i3.isDirected = function(t2) {
             t2 = "" + t2;
             var e2 = this._edges.get(t2);
             if (!e2)
               throw new F('Graph.isDirected: could not find the "'.concat(t2, '" edge in the graph.'));
             return !e2.undirected;
-          }, i2.isSelfLoop = function(t2) {
+          }, i3.isSelfLoop = function(t2) {
             t2 = "" + t2;
             var e2 = this._edges.get(t2);
             if (!e2)
               throw new F('Graph.isSelfLoop: could not find the "'.concat(t2, '" edge in the graph.'));
             return e2.source === e2.target;
-          }, i2.addNode = function(t2, e2) {
+          }, i3.addNode = function(t2, e2) {
             var n3 = function(t3, e3, n4) {
               if (n4 && !s(n4))
                 throw new B('Graph.addNode: invalid attributes. Expecting an object but got "'.concat(n4, '"'));
@@ -24904,13 +27195,13 @@
               return t3._nodes.set(e3, r3), t3.emit("nodeAdded", { key: e3, attributes: n4 }), r3;
             }(this, t2, e2);
             return n3.key;
-          }, i2.mergeNode = function(t2, e2) {
+          }, i3.mergeNode = function(t2, e2) {
             if (e2 && !s(e2))
               throw new B('Graph.mergeNode: invalid attributes. Expecting an object but got "'.concat(e2, '"'));
             t2 = "" + t2, e2 = e2 || {};
             var n3 = this._nodes.get(t2);
             return n3 ? (e2 && (u(n3.attributes, e2), this.emit("nodeAttributesUpdated", { type: "merge", key: t2, attributes: n3.attributes, data: e2 })), [t2, false]) : (n3 = new this.NodeDataClass(t2, e2), this._nodes.set(t2, n3), this.emit("nodeAdded", { key: t2, attributes: e2 }), [t2, true]);
-          }, i2.updateNode = function(t2, e2) {
+          }, i3.updateNode = function(t2, e2) {
             if (e2 && "function" != typeof e2)
               throw new B('Graph.updateNode: invalid updater function. Expecting a function but got "'.concat(e2, '"'));
             t2 = "" + t2;
@@ -24922,9 +27213,9 @@
               }
               return [t2, false];
             }
-            var i3 = e2 ? e2({}) : {};
-            return n3 = new this.NodeDataClass(t2, i3), this._nodes.set(t2, n3), this.emit("nodeAdded", { key: t2, attributes: i3 }), [t2, true];
-          }, i2.dropNode = function(t2) {
+            var i4 = e2 ? e2({}) : {};
+            return n3 = new this.NodeDataClass(t2, i4), this._nodes.set(t2, n3), this.emit("nodeAdded", { key: t2, attributes: i4 }), [t2, true];
+          }, i3.dropNode = function(t2) {
             t2 = "" + t2;
             var e2, n3 = this._nodes.get(t2);
             if (!n3)
@@ -24936,22 +27227,22 @@
                   Mt(this, e2), e2 = e2.next;
                 } while (e2);
               }
-              for (var i3 in n3.in) {
-                e2 = n3.in[i3];
+              for (var i4 in n3.in) {
+                e2 = n3.in[i4];
                 do {
                   Mt(this, e2), e2 = e2.next;
                 } while (e2);
               }
             }
             if ("directed" !== this.type)
-              for (var o2 in n3.undirected) {
-                e2 = n3.undirected[o2];
+              for (var o3 in n3.undirected) {
+                e2 = n3.undirected[o3];
                 do {
                   Mt(this, e2), e2 = e2.next;
                 } while (e2);
               }
             this._nodes.delete(t2), this.emit("nodeDropped", { key: t2, attributes: n3.attributes });
-          }, i2.dropEdge = function(t2) {
+          }, i3.dropEdge = function(t2) {
             var e2;
             if (arguments.length > 1) {
               var n3 = "" + arguments[0], r3 = "" + arguments[1];
@@ -24960,7 +27251,7 @@
             } else if (t2 = "" + t2, !(e2 = this._edges.get(t2)))
               throw new F('Graph.dropEdge: could not find the "'.concat(t2, '" edge in the graph.'));
             return Mt(this, e2), this;
-          }, i2.dropDirectedEdge = function(t2, e2) {
+          }, i3.dropDirectedEdge = function(t2, e2) {
             if (arguments.length < 2)
               throw new I("Graph.dropDirectedEdge: it does not make sense to try and drop a directed edge by key. What if the edge with this key is undirected? Use #.dropEdge for this purpose instead.");
             if (this.multi)
@@ -24969,7 +27260,7 @@
             if (!n3)
               throw new F('Graph.dropDirectedEdge: could not find a "'.concat(t2, '" -> "').concat(e2, '" edge in the graph.'));
             return Mt(this, n3), this;
-          }, i2.dropUndirectedEdge = function(t2, e2) {
+          }, i3.dropUndirectedEdge = function(t2, e2) {
             if (arguments.length < 2)
               throw new I("Graph.dropUndirectedEdge: it does not make sense to drop a directed edge by key. What if the edge with this key is undirected? Use #.dropEdge for this purpose instead.");
             if (this.multi)
@@ -24978,119 +27269,119 @@
             if (!n3)
               throw new F('Graph.dropUndirectedEdge: could not find a "'.concat(t2, '" -> "').concat(e2, '" edge in the graph.'));
             return Mt(this, n3), this;
-          }, i2.clear = function() {
+          }, i3.clear = function() {
             this._edges.clear(), this._nodes.clear(), this._resetInstanceCounters(), this.emit("cleared");
-          }, i2.clearEdges = function() {
+          }, i3.clearEdges = function() {
             for (var t2, e2 = this._nodes.values(); true !== (t2 = e2.next()).done; )
               t2.value.clear();
             this._edges.clear(), this._resetInstanceCounters(), this.emit("edgesCleared");
-          }, i2.getAttribute = function(t2) {
+          }, i3.getAttribute = function(t2) {
             return this._attributes[t2];
-          }, i2.getAttributes = function() {
+          }, i3.getAttributes = function() {
             return this._attributes;
-          }, i2.hasAttribute = function(t2) {
+          }, i3.hasAttribute = function(t2) {
             return this._attributes.hasOwnProperty(t2);
-          }, i2.setAttribute = function(t2, e2) {
+          }, i3.setAttribute = function(t2, e2) {
             return this._attributes[t2] = e2, this.emit("attributesUpdated", { type: "set", attributes: this._attributes, name: t2 }), this;
-          }, i2.updateAttribute = function(t2, e2) {
+          }, i3.updateAttribute = function(t2, e2) {
             if ("function" != typeof e2)
               throw new B("Graph.updateAttribute: updater should be a function.");
             var n3 = this._attributes[t2];
             return this._attributes[t2] = e2(n3), this.emit("attributesUpdated", { type: "set", attributes: this._attributes, name: t2 }), this;
-          }, i2.removeAttribute = function(t2) {
+          }, i3.removeAttribute = function(t2) {
             return delete this._attributes[t2], this.emit("attributesUpdated", { type: "remove", attributes: this._attributes, name: t2 }), this;
-          }, i2.replaceAttributes = function(t2) {
+          }, i3.replaceAttributes = function(t2) {
             if (!s(t2))
               throw new B("Graph.replaceAttributes: provided attributes are not a plain object.");
             return this._attributes = t2, this.emit("attributesUpdated", { type: "replace", attributes: this._attributes }), this;
-          }, i2.mergeAttributes = function(t2) {
+          }, i3.mergeAttributes = function(t2) {
             if (!s(t2))
               throw new B("Graph.mergeAttributes: provided attributes are not a plain object.");
             return u(this._attributes, t2), this.emit("attributesUpdated", { type: "merge", attributes: this._attributes, data: t2 }), this;
-          }, i2.updateAttributes = function(t2) {
+          }, i3.updateAttributes = function(t2) {
             if ("function" != typeof t2)
               throw new B("Graph.updateAttributes: provided updater is not a function.");
             return this._attributes = t2(this._attributes), this.emit("attributesUpdated", { type: "update", attributes: this._attributes }), this;
-          }, i2.updateEachNodeAttributes = function(t2, e2) {
+          }, i3.updateEachNodeAttributes = function(t2, e2) {
             if ("function" != typeof t2)
               throw new B("Graph.updateEachNodeAttributes: expecting an updater function.");
             if (e2 && !l(e2))
               throw new B("Graph.updateEachNodeAttributes: invalid hints. Expecting an object having the following shape: {attributes?: [string]}");
-            for (var n3, r3, i3 = this._nodes.values(); true !== (n3 = i3.next()).done; )
+            for (var n3, r3, i4 = this._nodes.values(); true !== (n3 = i4.next()).done; )
               (r3 = n3.value).attributes = t2(r3.key, r3.attributes);
             this.emit("eachNodeAttributesUpdated", { hints: e2 || null });
-          }, i2.updateEachEdgeAttributes = function(t2, e2) {
+          }, i3.updateEachEdgeAttributes = function(t2, e2) {
             if ("function" != typeof t2)
               throw new B("Graph.updateEachEdgeAttributes: expecting an updater function.");
             if (e2 && !l(e2))
               throw new B("Graph.updateEachEdgeAttributes: invalid hints. Expecting an object having the following shape: {attributes?: [string]}");
-            for (var n3, r3, i3, o2, a2 = this._edges.values(); true !== (n3 = a2.next()).done; )
-              i3 = (r3 = n3.value).source, o2 = r3.target, r3.attributes = t2(r3.key, r3.attributes, i3.key, o2.key, i3.attributes, o2.attributes, r3.undirected);
+            for (var n3, r3, i4, o3, a3 = this._edges.values(); true !== (n3 = a3.next()).done; )
+              i4 = (r3 = n3.value).source, o3 = r3.target, r3.attributes = t2(r3.key, r3.attributes, i4.key, o3.key, i4.attributes, o3.attributes, r3.undirected);
             this.emit("eachEdgeAttributesUpdated", { hints: e2 || null });
-          }, i2.forEachAdjacencyEntry = function(t2) {
+          }, i3.forEachAdjacencyEntry = function(t2) {
             if ("function" != typeof t2)
               throw new B("Graph.forEachAdjacencyEntry: expecting a callback.");
             xt(false, false, false, this, t2);
-          }, i2.forEachAdjacencyEntryWithOrphans = function(t2) {
+          }, i3.forEachAdjacencyEntryWithOrphans = function(t2) {
             if ("function" != typeof t2)
               throw new B("Graph.forEachAdjacencyEntryWithOrphans: expecting a callback.");
             xt(false, false, true, this, t2);
-          }, i2.forEachAssymetricAdjacencyEntry = function(t2) {
+          }, i3.forEachAssymetricAdjacencyEntry = function(t2) {
             if ("function" != typeof t2)
               throw new B("Graph.forEachAssymetricAdjacencyEntry: expecting a callback.");
             xt(false, true, false, this, t2);
-          }, i2.forEachAssymetricAdjacencyEntryWithOrphans = function(t2) {
+          }, i3.forEachAssymetricAdjacencyEntryWithOrphans = function(t2) {
             if ("function" != typeof t2)
               throw new B("Graph.forEachAssymetricAdjacencyEntryWithOrphans: expecting a callback.");
             xt(false, true, true, this, t2);
-          }, i2.nodes = function() {
+          }, i3.nodes = function() {
             return "function" == typeof Array.from ? Array.from(this._nodes.keys()) : K(this._nodes.keys(), this._nodes.size);
-          }, i2.forEachNode = function(t2) {
+          }, i3.forEachNode = function(t2) {
             if ("function" != typeof t2)
               throw new B("Graph.forEachNode: expecting a callback.");
             for (var e2, n3, r3 = this._nodes.values(); true !== (e2 = r3.next()).done; )
               t2((n3 = e2.value).key, n3.attributes);
-          }, i2.findNode = function(t2) {
+          }, i3.findNode = function(t2) {
             if ("function" != typeof t2)
               throw new B("Graph.findNode: expecting a callback.");
             for (var e2, n3, r3 = this._nodes.values(); true !== (e2 = r3.next()).done; )
               if (t2((n3 = e2.value).key, n3.attributes))
                 return n3.key;
-          }, i2.mapNodes = function(t2) {
+          }, i3.mapNodes = function(t2) {
             if ("function" != typeof t2)
               throw new B("Graph.mapNode: expecting a callback.");
-            for (var e2, n3, r3 = this._nodes.values(), i3 = new Array(this.order), o2 = 0; true !== (e2 = r3.next()).done; )
-              n3 = e2.value, i3[o2++] = t2(n3.key, n3.attributes);
-            return i3;
-          }, i2.someNode = function(t2) {
+            for (var e2, n3, r3 = this._nodes.values(), i4 = new Array(this.order), o3 = 0; true !== (e2 = r3.next()).done; )
+              n3 = e2.value, i4[o3++] = t2(n3.key, n3.attributes);
+            return i4;
+          }, i3.someNode = function(t2) {
             if ("function" != typeof t2)
               throw new B("Graph.someNode: expecting a callback.");
             for (var e2, n3, r3 = this._nodes.values(); true !== (e2 = r3.next()).done; )
               if (t2((n3 = e2.value).key, n3.attributes))
                 return true;
             return false;
-          }, i2.everyNode = function(t2) {
+          }, i3.everyNode = function(t2) {
             if ("function" != typeof t2)
               throw new B("Graph.everyNode: expecting a callback.");
             for (var e2, n3, r3 = this._nodes.values(); true !== (e2 = r3.next()).done; )
               if (!t2((n3 = e2.value).key, n3.attributes))
                 return false;
             return true;
-          }, i2.filterNodes = function(t2) {
+          }, i3.filterNodes = function(t2) {
             if ("function" != typeof t2)
               throw new B("Graph.filterNodes: expecting a callback.");
-            for (var e2, n3, r3 = this._nodes.values(), i3 = []; true !== (e2 = r3.next()).done; )
-              t2((n3 = e2.value).key, n3.attributes) && i3.push(n3.key);
-            return i3;
-          }, i2.reduceNodes = function(t2, e2) {
+            for (var e2, n3, r3 = this._nodes.values(), i4 = []; true !== (e2 = r3.next()).done; )
+              t2((n3 = e2.value).key, n3.attributes) && i4.push(n3.key);
+            return i4;
+          }, i3.reduceNodes = function(t2, e2) {
             if ("function" != typeof t2)
               throw new B("Graph.reduceNodes: expecting a callback.");
             if (arguments.length < 2)
               throw new B("Graph.reduceNodes: missing initial value. You must provide it because the callback takes more than one argument and we cannot infer the initial value from the first iteration, as you could with a simple array.");
-            for (var n3, r3, i3 = e2, o2 = this._nodes.values(); true !== (n3 = o2.next()).done; )
-              i3 = t2(i3, (r3 = n3.value).key, r3.attributes);
-            return i3;
-          }, i2.nodeEntries = function() {
+            for (var n3, r3, i4 = e2, o3 = this._nodes.values(); true !== (n3 = o3.next()).done; )
+              i4 = t2(i4, (r3 = n3.value).key, r3.attributes);
+            return i4;
+          }, i3.nodeEntries = function() {
             var t2 = this._nodes.values();
             return new O(function() {
               var e2 = t2.next();
@@ -25099,7 +27390,7 @@
               var n3 = e2.value;
               return { value: { node: n3.key, attributes: n3.attributes }, done: false };
             });
-          }, i2.export = function() {
+          }, i3.export = function() {
             var t2 = this, e2 = new Array(this._nodes.size), n3 = 0;
             this._nodes.forEach(function(t3, r4) {
               e2[n3++] = function(t4, e3) {
@@ -25108,19 +27399,19 @@
               }(r4, t3);
             });
             var r3 = new Array(this._edges.size);
-            return n3 = 0, this._edges.forEach(function(e3, i3) {
+            return n3 = 0, this._edges.forEach(function(e3, i4) {
               r3[n3++] = function(t3, e4, n4) {
                 var r4 = { key: e4, source: n4.source.key, target: n4.target.key };
                 return h(n4.attributes) || (r4.attributes = u({}, n4.attributes)), "mixed" === t3 && n4.undirected && (r4.undirected = true), r4;
-              }(t2.type, i3, e3);
+              }(t2.type, i4, e3);
             }), { options: { type: this.type, multi: this.multi, allowSelfLoops: this.allowSelfLoops }, attributes: this.getAttributes(), nodes: e2, edges: r3 };
-          }, i2.import = function(t2) {
-            var e2, n3, i3, o2, a2, c2 = this, u2 = arguments.length > 1 && void 0 !== arguments[1] && arguments[1];
+          }, i3.import = function(t2) {
+            var e2, n3, i4, o3, a3, c2 = this, u2 = arguments.length > 1 && void 0 !== arguments[1] && arguments[1];
             if (t2 instanceof r2)
               return t2.forEachNode(function(t3, e3) {
                 u2 ? c2.mergeNode(t3, e3) : c2.addNode(t3, e3);
-              }), t2.forEachEdge(function(t3, e3, n4, r3, i4, o3, a3) {
-                u2 ? a3 ? c2.mergeUndirectedEdgeWithKey(t3, n4, r3, e3) : c2.mergeDirectedEdgeWithKey(t3, n4, r3, e3) : a3 ? c2.addUndirectedEdgeWithKey(t3, n4, r3, e3) : c2.addDirectedEdgeWithKey(t3, n4, r3, e3);
+              }), t2.forEachEdge(function(t3, e3, n4, r3, i5, o4, a4) {
+                u2 ? a4 ? c2.mergeUndirectedEdgeWithKey(t3, n4, r3, e3) : c2.mergeDirectedEdgeWithKey(t3, n4, r3, e3) : a4 ? c2.addUndirectedEdgeWithKey(t3, n4, r3, e3) : c2.addDirectedEdgeWithKey(t3, n4, r3, e3);
               }), this;
             if (!s(t2))
               throw new B("Graph.import: invalid argument. Expecting a serialized graph or, alternatively, a Graph instance.");
@@ -25130,64 +27421,64 @@
               u2 ? this.mergeAttributes(t2.attributes) : this.replaceAttributes(t2.attributes);
             }
             if (t2.nodes) {
-              if (i3 = t2.nodes, !Array.isArray(i3))
+              if (i4 = t2.nodes, !Array.isArray(i4))
                 throw new B("Graph.import: invalid nodes. Expecting an array.");
-              for (e2 = 0, n3 = i3.length; e2 < n3; e2++) {
-                Et(o2 = i3[e2]);
-                var d2 = o2, h2 = d2.key, p2 = d2.attributes;
+              for (e2 = 0, n3 = i4.length; e2 < n3; e2++) {
+                Et(o3 = i4[e2]);
+                var d2 = o3, h2 = d2.key, p2 = d2.attributes;
                 u2 ? this.mergeNode(h2, p2) : this.addNode(h2, p2);
               }
             }
             if (t2.edges) {
               var f2 = false;
-              if ("undirected" === this.type && (f2 = true), i3 = t2.edges, !Array.isArray(i3))
+              if ("undirected" === this.type && (f2 = true), i4 = t2.edges, !Array.isArray(i4))
                 throw new B("Graph.import: invalid edges. Expecting an array.");
-              for (e2 = 0, n3 = i3.length; e2 < n3; e2++) {
-                At(a2 = i3[e2]);
-                var l2 = a2, g2 = l2.source, y2 = l2.target, w2 = l2.attributes, v2 = l2.undirected, b2 = void 0 === v2 ? f2 : v2;
-                "key" in a2 ? (u2 ? b2 ? this.mergeUndirectedEdgeWithKey : this.mergeDirectedEdgeWithKey : b2 ? this.addUndirectedEdgeWithKey : this.addDirectedEdgeWithKey).call(this, a2.key, g2, y2, w2) : (u2 ? b2 ? this.mergeUndirectedEdge : this.mergeDirectedEdge : b2 ? this.addUndirectedEdge : this.addDirectedEdge).call(this, g2, y2, w2);
+              for (e2 = 0, n3 = i4.length; e2 < n3; e2++) {
+                At(a3 = i4[e2]);
+                var l2 = a3, g2 = l2.source, y2 = l2.target, w2 = l2.attributes, v2 = l2.undirected, b2 = void 0 === v2 ? f2 : v2;
+                "key" in a3 ? (u2 ? b2 ? this.mergeUndirectedEdgeWithKey : this.mergeDirectedEdgeWithKey : b2 ? this.addUndirectedEdgeWithKey : this.addDirectedEdgeWithKey).call(this, a3.key, g2, y2, w2) : (u2 ? b2 ? this.mergeUndirectedEdge : this.mergeDirectedEdge : b2 ? this.addUndirectedEdge : this.addDirectedEdge).call(this, g2, y2, w2);
               }
             }
             return this;
-          }, i2.nullCopy = function(t2) {
+          }, i3.nullCopy = function(t2) {
             var e2 = new r2(u({}, this._options, t2));
             return e2.replaceAttributes(u({}, this.getAttributes())), e2;
-          }, i2.emptyCopy = function(t2) {
+          }, i3.emptyCopy = function(t2) {
             var e2 = this.nullCopy(t2);
             return this._nodes.forEach(function(t3, n3) {
               var r3 = u({}, t3.attributes);
               t3 = new e2.NodeDataClass(n3, r3), e2._nodes.set(n3, t3);
             }), e2;
-          }, i2.copy = function(t2) {
+          }, i3.copy = function(t2) {
             if ("string" == typeof (t2 = t2 || {}).type && t2.type !== this.type && "mixed" !== t2.type)
               throw new I('Graph.copy: cannot create an incompatible copy from "'.concat(this.type, '" type to "').concat(t2.type, '" because this would mean losing information about the current graph.'));
             if ("boolean" == typeof t2.multi && t2.multi !== this.multi && true !== t2.multi)
               throw new I("Graph.copy: cannot create an incompatible copy by downgrading a multi graph to a simple one because this would mean losing information about the current graph.");
             if ("boolean" == typeof t2.allowSelfLoops && t2.allowSelfLoops !== this.allowSelfLoops && true !== t2.allowSelfLoops)
               throw new I("Graph.copy: cannot create an incompatible copy from a graph allowing self loops to one that does not because this would mean losing information about the current graph.");
-            for (var e2, n3, r3 = this.emptyCopy(t2), i3 = this._edges.values(); true !== (e2 = i3.next()).done; )
+            for (var e2, n3, r3 = this.emptyCopy(t2), i4 = this._edges.values(); true !== (e2 = i4.next()).done; )
               jt(r3, "copy", false, (n3 = e2.value).undirected, n3.key, n3.source.key, n3.target.key, u({}, n3.attributes));
             return r3;
-          }, i2.toJSON = function() {
+          }, i3.toJSON = function() {
             return this.export();
-          }, i2.toString = function() {
+          }, i3.toString = function() {
             return "[object Graph]";
-          }, i2.inspect = function() {
+          }, i3.inspect = function() {
             var e2 = this, n3 = {};
             this._nodes.forEach(function(t2, e3) {
               n3[e3] = t2.attributes;
             });
-            var r3 = {}, i3 = {};
+            var r3 = {}, i4 = {};
             this._edges.forEach(function(t2, n4) {
-              var o3, a3 = t2.undirected ? "--" : "->", c2 = "", u2 = t2.source.key, d2 = t2.target.key;
-              t2.undirected && u2 > d2 && (o3 = u2, u2 = d2, d2 = o3);
-              var s2 = "(".concat(u2, ")").concat(a3, "(").concat(d2, ")");
-              n4.startsWith("geid_") ? e2.multi && (void 0 === i3[s2] ? i3[s2] = 0 : i3[s2]++, c2 += "".concat(i3[s2], ". ")) : c2 += "[".concat(n4, "]: "), r3[c2 += s2] = t2.attributes;
+              var o4, a4 = t2.undirected ? "--" : "->", c2 = "", u2 = t2.source.key, d2 = t2.target.key;
+              t2.undirected && u2 > d2 && (o4 = u2, u2 = d2, d2 = o4);
+              var s2 = "(".concat(u2, ")").concat(a4, "(").concat(d2, ")");
+              n4.startsWith("geid_") ? e2.multi && (void 0 === i4[s2] ? i4[s2] = 0 : i4[s2]++, c2 += "".concat(i4[s2], ". ")) : c2 += "[".concat(n4, "]: "), r3[c2 += s2] = t2.attributes;
             });
-            var o2 = {};
-            for (var a2 in this)
-              this.hasOwnProperty(a2) && !Ut.has(a2) && "function" != typeof this[a2] && "symbol" !== t(a2) && (o2[a2] = this[a2]);
-            return o2.attributes = this._attributes, o2.nodes = n3, o2.edges = r3, p(o2, "constructor", this.constructor), o2;
+            var o3 = {};
+            for (var a3 in this)
+              this.hasOwnProperty(a3) && !Ut.has(a3) && "function" != typeof this[a3] && "symbol" !== t(a3) && (o3[a3] = this[a3]);
+            return o3.attributes = this._attributes, o3.nodes = n3, o3.edges = r3, p(o3, "constructor", this.constructor), o3;
           }, r2;
         }(y.exports.EventEmitter);
         "undefined" != typeof Symbol && (zt.prototype[Symbol.for("nodejs.util.inspect.custom")] = zt.prototype.inspect), [{ name: function(t2) {
@@ -25205,10 +27496,10 @@
         }, type: "undirected" }].forEach(function(t2) {
           ["add", "merge", "update"].forEach(function(e2) {
             var n2 = t2.name(e2), r2 = "add" === e2 ? jt : Ct;
-            t2.generateKey ? zt.prototype[n2] = function(i2, o2, a2) {
-              return r2(this, n2, true, "undirected" === (t2.type || this.type), null, i2, o2, a2, "update" === e2);
-            } : zt.prototype[n2] = function(i2, o2, a2, c2) {
-              return r2(this, n2, false, "undirected" === (t2.type || this.type), i2, o2, a2, c2, "update" === e2);
+            t2.generateKey ? zt.prototype[n2] = function(i3, o3, a3) {
+              return r2(this, n2, true, "undirected" === (t2.type || this.type), null, i3, o3, a3, "update" === e2);
+            } : zt.prototype[n2] = function(i3, o3, a3, c2) {
+              return r2(this, n2, false, "undirected" === (t2.type || this.type), i3, o3, a3, c2, "update" === e2);
             };
           });
         }), function(t2) {
@@ -25224,7 +27515,7 @@
         }(zt), function(t2) {
           et.forEach(function(e2) {
             !function(t3, e3) {
-              var n2 = e3.name, r2 = e3.type, i2 = e3.direction;
+              var n2 = e3.name, r2 = e3.type, i3 = e3.direction;
               t3.prototype[n2] = function(t4, e4) {
                 if ("mixed" !== r2 && "mixed" !== this.type && r2 !== this.type)
                   return [];
@@ -25232,69 +27523,69 @@
                   return ut(this, r2);
                 if (1 === arguments.length) {
                   t4 = "" + t4;
-                  var o2 = this._nodes.get(t4);
-                  if (void 0 === o2)
+                  var o3 = this._nodes.get(t4);
+                  if (void 0 === o3)
                     throw new F("Graph.".concat(n2, ': could not find the "').concat(t4, '" node in the graph.'));
-                  return pt(this.multi, "mixed" === r2 ? this.type : r2, i2, o2);
+                  return pt(this.multi, "mixed" === r2 ? this.type : r2, i3, o3);
                 }
                 if (2 === arguments.length) {
                   t4 = "" + t4, e4 = "" + e4;
-                  var a2 = this._nodes.get(t4);
-                  if (!a2)
+                  var a3 = this._nodes.get(t4);
+                  if (!a3)
                     throw new F("Graph.".concat(n2, ':  could not find the "').concat(t4, '" source node in the graph.'));
                   if (!this._nodes.has(e4))
                     throw new F("Graph.".concat(n2, ':  could not find the "').concat(e4, '" target node in the graph.'));
-                  return gt(r2, this.multi, i2, a2, e4);
+                  return gt(r2, this.multi, i3, a3, e4);
                 }
                 throw new B("Graph.".concat(n2, ": too many arguments (expecting 0, 1 or 2 and got ").concat(arguments.length, ")."));
               };
             }(t2, e2), function(t3, e3) {
-              var n2 = e3.name, r2 = e3.type, i2 = e3.direction, o2 = "forEach" + n2[0].toUpperCase() + n2.slice(1, -1);
-              t3.prototype[o2] = function(t4, e4, n3) {
+              var n2 = e3.name, r2 = e3.type, i3 = e3.direction, o3 = "forEach" + n2[0].toUpperCase() + n2.slice(1, -1);
+              t3.prototype[o3] = function(t4, e4, n3) {
                 if ("mixed" === r2 || "mixed" === this.type || r2 === this.type) {
                   if (1 === arguments.length)
                     return dt(false, this, r2, n3 = t4);
                   if (2 === arguments.length) {
                     t4 = "" + t4, n3 = e4;
-                    var a3 = this._nodes.get(t4);
-                    if (void 0 === a3)
-                      throw new F("Graph.".concat(o2, ': could not find the "').concat(t4, '" node in the graph.'));
-                    return ht(false, this.multi, "mixed" === r2 ? this.type : r2, i2, a3, n3);
+                    var a4 = this._nodes.get(t4);
+                    if (void 0 === a4)
+                      throw new F("Graph.".concat(o3, ': could not find the "').concat(t4, '" node in the graph.'));
+                    return ht(false, this.multi, "mixed" === r2 ? this.type : r2, i3, a4, n3);
                   }
                   if (3 === arguments.length) {
                     t4 = "" + t4, e4 = "" + e4;
                     var c3 = this._nodes.get(t4);
                     if (!c3)
-                      throw new F("Graph.".concat(o2, ':  could not find the "').concat(t4, '" source node in the graph.'));
+                      throw new F("Graph.".concat(o3, ':  could not find the "').concat(t4, '" source node in the graph.'));
                     if (!this._nodes.has(e4))
-                      throw new F("Graph.".concat(o2, ':  could not find the "').concat(e4, '" target node in the graph.'));
-                    return lt(false, r2, this.multi, i2, c3, e4, n3);
+                      throw new F("Graph.".concat(o3, ':  could not find the "').concat(e4, '" target node in the graph.'));
+                    return lt(false, r2, this.multi, i3, c3, e4, n3);
                   }
-                  throw new B("Graph.".concat(o2, ": too many arguments (expecting 1, 2 or 3 and got ").concat(arguments.length, ")."));
+                  throw new B("Graph.".concat(o3, ": too many arguments (expecting 1, 2 or 3 and got ").concat(arguments.length, ")."));
                 }
               };
-              var a2 = "map" + n2[0].toUpperCase() + n2.slice(1);
-              t3.prototype[a2] = function() {
+              var a3 = "map" + n2[0].toUpperCase() + n2.slice(1);
+              t3.prototype[a3] = function() {
                 var t4, e4 = Array.prototype.slice.call(arguments), n3 = e4.pop();
                 if (0 === e4.length) {
-                  var i3 = 0;
-                  "directed" !== r2 && (i3 += this.undirectedSize), "undirected" !== r2 && (i3 += this.directedSize), t4 = new Array(i3);
-                  var a3 = 0;
-                  e4.push(function(e5, r3, i4, o3, c3, u3, d2) {
-                    t4[a3++] = n3(e5, r3, i4, o3, c3, u3, d2);
+                  var i4 = 0;
+                  "directed" !== r2 && (i4 += this.undirectedSize), "undirected" !== r2 && (i4 += this.directedSize), t4 = new Array(i4);
+                  var a4 = 0;
+                  e4.push(function(e5, r3, i5, o4, c3, u3, d2) {
+                    t4[a4++] = n3(e5, r3, i5, o4, c3, u3, d2);
                   });
                 } else
-                  t4 = [], e4.push(function(e5, r3, i4, o3, a4, c3, u3) {
-                    t4.push(n3(e5, r3, i4, o3, a4, c3, u3));
+                  t4 = [], e4.push(function(e5, r3, i5, o4, a5, c3, u3) {
+                    t4.push(n3(e5, r3, i5, o4, a5, c3, u3));
                   });
-                return this[o2].apply(this, e4), t4;
+                return this[o3].apply(this, e4), t4;
               };
               var c2 = "filter" + n2[0].toUpperCase() + n2.slice(1);
               t3.prototype[c2] = function() {
                 var t4 = Array.prototype.slice.call(arguments), e4 = t4.pop(), n3 = [];
-                return t4.push(function(t5, r3, i3, o3, a3, c3, u3) {
-                  e4(t5, r3, i3, o3, a3, c3, u3) && n3.push(t5);
-                }), this[o2].apply(this, t4), n3;
+                return t4.push(function(t5, r3, i4, o4, a4, c3, u3) {
+                  e4(t5, r3, i4, o4, a4, c3, u3) && n3.push(t5);
+                }), this[o3].apply(this, t4), n3;
               };
               var u2 = "reduce" + n2[0].toUpperCase() + n2.slice(1);
               t3.prototype[u2] = function() {
@@ -25305,52 +27596,52 @@
                   throw new B("Graph.".concat(u2, ": missing initial value. You must provide it because the callback takes more than one argument and we cannot infer the initial value from the first iteration, as you could with a simple array."));
                 2 === n3.length ? (t4 = n3[0], e4 = n3[1], n3 = []) : 3 === n3.length ? (t4 = n3[1], e4 = n3[2], n3 = [n3[0]]) : 4 === n3.length && (t4 = n3[2], e4 = n3[3], n3 = [n3[0], n3[1]]);
                 var r3 = e4;
-                return n3.push(function(e5, n4, i3, o3, a3, c3, u3) {
-                  r3 = t4(r3, e5, n4, i3, o3, a3, c3, u3);
-                }), this[o2].apply(this, n3), r3;
+                return n3.push(function(e5, n4, i4, o4, a4, c3, u3) {
+                  r3 = t4(r3, e5, n4, i4, o4, a4, c3, u3);
+                }), this[o3].apply(this, n3), r3;
               };
             }(t2, e2), function(t3, e3) {
-              var n2 = e3.name, r2 = e3.type, i2 = e3.direction, o2 = "find" + n2[0].toUpperCase() + n2.slice(1, -1);
-              t3.prototype[o2] = function(t4, e4, n3) {
+              var n2 = e3.name, r2 = e3.type, i3 = e3.direction, o3 = "find" + n2[0].toUpperCase() + n2.slice(1, -1);
+              t3.prototype[o3] = function(t4, e4, n3) {
                 if ("mixed" !== r2 && "mixed" !== this.type && r2 !== this.type)
                   return false;
                 if (1 === arguments.length)
                   return dt(true, this, r2, n3 = t4);
                 if (2 === arguments.length) {
                   t4 = "" + t4, n3 = e4;
-                  var a3 = this._nodes.get(t4);
-                  if (void 0 === a3)
-                    throw new F("Graph.".concat(o2, ': could not find the "').concat(t4, '" node in the graph.'));
-                  return ht(true, this.multi, "mixed" === r2 ? this.type : r2, i2, a3, n3);
+                  var a4 = this._nodes.get(t4);
+                  if (void 0 === a4)
+                    throw new F("Graph.".concat(o3, ': could not find the "').concat(t4, '" node in the graph.'));
+                  return ht(true, this.multi, "mixed" === r2 ? this.type : r2, i3, a4, n3);
                 }
                 if (3 === arguments.length) {
                   t4 = "" + t4, e4 = "" + e4;
                   var c3 = this._nodes.get(t4);
                   if (!c3)
-                    throw new F("Graph.".concat(o2, ':  could not find the "').concat(t4, '" source node in the graph.'));
+                    throw new F("Graph.".concat(o3, ':  could not find the "').concat(t4, '" source node in the graph.'));
                   if (!this._nodes.has(e4))
-                    throw new F("Graph.".concat(o2, ':  could not find the "').concat(e4, '" target node in the graph.'));
-                  return lt(true, r2, this.multi, i2, c3, e4, n3);
+                    throw new F("Graph.".concat(o3, ':  could not find the "').concat(e4, '" target node in the graph.'));
+                  return lt(true, r2, this.multi, i3, c3, e4, n3);
                 }
-                throw new B("Graph.".concat(o2, ": too many arguments (expecting 1, 2 or 3 and got ").concat(arguments.length, ")."));
+                throw new B("Graph.".concat(o3, ": too many arguments (expecting 1, 2 or 3 and got ").concat(arguments.length, ")."));
               };
-              var a2 = "some" + n2[0].toUpperCase() + n2.slice(1, -1);
-              t3.prototype[a2] = function() {
+              var a3 = "some" + n2[0].toUpperCase() + n2.slice(1, -1);
+              t3.prototype[a3] = function() {
                 var t4 = Array.prototype.slice.call(arguments), e4 = t4.pop();
-                return t4.push(function(t5, n3, r3, i3, o3, a3, c3) {
-                  return e4(t5, n3, r3, i3, o3, a3, c3);
-                }), !!this[o2].apply(this, t4);
+                return t4.push(function(t5, n3, r3, i4, o4, a4, c3) {
+                  return e4(t5, n3, r3, i4, o4, a4, c3);
+                }), !!this[o3].apply(this, t4);
               };
               var c2 = "every" + n2[0].toUpperCase() + n2.slice(1, -1);
               t3.prototype[c2] = function() {
                 var t4 = Array.prototype.slice.call(arguments), e4 = t4.pop();
-                return t4.push(function(t5, n3, r3, i3, o3, a3, c3) {
-                  return !e4(t5, n3, r3, i3, o3, a3, c3);
-                }), !this[o2].apply(this, t4);
+                return t4.push(function(t5, n3, r3, i4, o4, a4, c3) {
+                  return !e4(t5, n3, r3, i4, o4, a4, c3);
+                }), !this[o3].apply(this, t4);
               };
             }(t2, e2), function(t3, e3) {
-              var n2 = e3.name, r2 = e3.type, i2 = e3.direction, o2 = n2.slice(0, -1) + "Entries";
-              t3.prototype[o2] = function(t4, e4) {
+              var n2 = e3.name, r2 = e3.type, i3 = e3.direction, o3 = n2.slice(0, -1) + "Entries";
+              t3.prototype[o3] = function(t4, e4) {
                 if ("mixed" !== r2 && "mixed" !== this.type && r2 !== this.type)
                   return O.empty();
                 if (!arguments.length)
@@ -25359,46 +27650,46 @@
                   t4 = "" + t4;
                   var n3 = this._nodes.get(t4);
                   if (!n3)
-                    throw new F("Graph.".concat(o2, ': could not find the "').concat(t4, '" node in the graph.'));
-                  return ft(r2, i2, n3);
+                    throw new F("Graph.".concat(o3, ': could not find the "').concat(t4, '" node in the graph.'));
+                  return ft(r2, i3, n3);
                 }
                 if (2 === arguments.length) {
                   t4 = "" + t4, e4 = "" + e4;
-                  var a2 = this._nodes.get(t4);
-                  if (!a2)
-                    throw new F("Graph.".concat(o2, ':  could not find the "').concat(t4, '" source node in the graph.'));
+                  var a3 = this._nodes.get(t4);
+                  if (!a3)
+                    throw new F("Graph.".concat(o3, ':  could not find the "').concat(t4, '" source node in the graph.'));
                   if (!this._nodes.has(e4))
-                    throw new F("Graph.".concat(o2, ':  could not find the "').concat(e4, '" target node in the graph.'));
-                  return yt(r2, i2, a2, e4);
+                    throw new F("Graph.".concat(o3, ':  could not find the "').concat(e4, '" target node in the graph.'));
+                  return yt(r2, i3, a3, e4);
                 }
-                throw new B("Graph.".concat(o2, ": too many arguments (expecting 0, 1 or 2 and got ").concat(arguments.length, ")."));
+                throw new B("Graph.".concat(o3, ": too many arguments (expecting 0, 1 or 2 and got ").concat(arguments.length, ")."));
               };
             }(t2, e2);
           });
         }(zt), function(t2) {
           wt.forEach(function(e2) {
             _t(t2, e2), function(t3, e3) {
-              var n2 = e3.name, r2 = e3.type, i2 = e3.direction, o2 = "forEach" + n2[0].toUpperCase() + n2.slice(1, -1);
-              t3.prototype[o2] = function(t4, e4) {
+              var n2 = e3.name, r2 = e3.type, i3 = e3.direction, o3 = "forEach" + n2[0].toUpperCase() + n2.slice(1, -1);
+              t3.prototype[o3] = function(t4, e4) {
                 if ("mixed" === r2 || "mixed" === this.type || r2 === this.type) {
                   t4 = "" + t4;
                   var n3 = this._nodes.get(t4);
                   if (void 0 === n3)
-                    throw new F("Graph.".concat(o2, ': could not find the "').concat(t4, '" node in the graph.'));
-                  mt(false, "mixed" === r2 ? this.type : r2, i2, n3, e4);
+                    throw new F("Graph.".concat(o3, ': could not find the "').concat(t4, '" node in the graph.'));
+                  mt(false, "mixed" === r2 ? this.type : r2, i3, n3, e4);
                 }
               };
-              var a2 = "map" + n2[0].toUpperCase() + n2.slice(1);
-              t3.prototype[a2] = function(t4, e4) {
+              var a3 = "map" + n2[0].toUpperCase() + n2.slice(1);
+              t3.prototype[a3] = function(t4, e4) {
                 var n3 = [];
-                return this[o2](t4, function(t5, r3) {
+                return this[o3](t4, function(t5, r3) {
                   n3.push(e4(t5, r3));
                 }), n3;
               };
               var c2 = "filter" + n2[0].toUpperCase() + n2.slice(1);
               t3.prototype[c2] = function(t4, e4) {
                 var n3 = [];
-                return this[o2](t4, function(t5, r3) {
+                return this[o3](t4, function(t5, r3) {
                   e4(t5, r3) && n3.push(t5);
                 }), n3;
               };
@@ -25407,28 +27698,28 @@
                 if (arguments.length < 3)
                   throw new B("Graph.".concat(u2, ": missing initial value. You must provide it because the callback takes more than one argument and we cannot infer the initial value from the first iteration, as you could with a simple array."));
                 var r3 = n3;
-                return this[o2](t4, function(t5, n4) {
+                return this[o3](t4, function(t5, n4) {
                   r3 = e4(r3, t5, n4);
                 }), r3;
               };
             }(t2, e2), function(t3, e3) {
-              var n2 = e3.name, r2 = e3.type, i2 = e3.direction, o2 = n2[0].toUpperCase() + n2.slice(1, -1), a2 = "find" + o2;
-              t3.prototype[a2] = function(t4, e4) {
+              var n2 = e3.name, r2 = e3.type, i3 = e3.direction, o3 = n2[0].toUpperCase() + n2.slice(1, -1), a3 = "find" + o3;
+              t3.prototype[a3] = function(t4, e4) {
                 if ("mixed" === r2 || "mixed" === this.type || r2 === this.type) {
                   t4 = "" + t4;
                   var n3 = this._nodes.get(t4);
                   if (void 0 === n3)
-                    throw new F("Graph.".concat(a2, ': could not find the "').concat(t4, '" node in the graph.'));
-                  return mt(true, "mixed" === r2 ? this.type : r2, i2, n3, e4);
+                    throw new F("Graph.".concat(a3, ': could not find the "').concat(t4, '" node in the graph.'));
+                  return mt(true, "mixed" === r2 ? this.type : r2, i3, n3, e4);
                 }
               };
-              var c2 = "some" + o2;
+              var c2 = "some" + o3;
               t3.prototype[c2] = function(t4, e4) {
-                return !!this[a2](t4, e4);
+                return !!this[a3](t4, e4);
               };
-              var u2 = "every" + o2;
+              var u2 = "every" + o3;
               t3.prototype[u2] = function(t4, e4) {
-                return !this[a2](t4, function(t5, n3) {
+                return !this[a3](t4, function(t5, n3) {
                   return !e4(t5, n3);
                 });
               };
@@ -25486,8 +27777,8 @@
         }(zt);
         function Bt(t2) {
           t2.from = function(e2, n2) {
-            var r2 = u({}, e2.options, n2), i2 = new t2(r2);
-            return i2.import(e2), i2;
+            var r2 = u({}, e2.options, n2), i3 = new t2(r2);
+            return i3.import(e2), i3;
           };
         }
         return Bt(zt), Bt(Wt), Bt(Pt), Bt(Rt), Bt(Kt), Bt(Tt), zt.Graph = zt, zt.DirectedGraph = Wt, zt.UndirectedGraph = Pt, zt.MultiGraph = Rt, zt.MultiDirectedGraph = Kt, zt.MultiUndirectedGraph = Tt, zt.InvalidArgumentsGraphError = B, zt.NotFoundGraphError = F, zt.UsageGraphError = I, zt;
@@ -25496,8 +27787,7790 @@
   });
 
   // ../testeranto/dist/module/Report.js
-  var import_react = __toESM(require_react(), 1);
+  var import_react44 = __toESM(require_react(), 1);
   var import_client = __toESM(require_client(), 1);
+
+  // ../testeranto/node_modules/react-bootstrap/esm/Col.js
+  var import_classnames = __toESM(require_classnames());
+  var React2 = __toESM(require_react());
+
+  // ../testeranto/node_modules/react-bootstrap/esm/ThemeProvider.js
+  var React = __toESM(require_react());
+  var import_react = __toESM(require_react());
+  var import_jsx_runtime = __toESM(require_jsx_runtime());
+  var DEFAULT_BREAKPOINTS = ["xxl", "xl", "lg", "md", "sm", "xs"];
+  var DEFAULT_MIN_BREAKPOINT = "xs";
+  var ThemeContext = /* @__PURE__ */ React.createContext({
+    prefixes: {},
+    breakpoints: DEFAULT_BREAKPOINTS,
+    minBreakpoint: DEFAULT_MIN_BREAKPOINT
+  });
+  var {
+    Consumer,
+    Provider
+  } = ThemeContext;
+  function useBootstrapPrefix(prefix, defaultPrefix) {
+    const {
+      prefixes
+    } = (0, import_react.useContext)(ThemeContext);
+    return prefix || prefixes[defaultPrefix] || defaultPrefix;
+  }
+  function useBootstrapBreakpoints() {
+    const {
+      breakpoints
+    } = (0, import_react.useContext)(ThemeContext);
+    return breakpoints;
+  }
+  function useBootstrapMinBreakpoint() {
+    const {
+      minBreakpoint
+    } = (0, import_react.useContext)(ThemeContext);
+    return minBreakpoint;
+  }
+
+  // ../testeranto/node_modules/react-bootstrap/esm/Col.js
+  var import_jsx_runtime2 = __toESM(require_jsx_runtime());
+  function useCol({
+    as,
+    bsPrefix,
+    className,
+    ...props
+  }) {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "col");
+    const breakpoints = useBootstrapBreakpoints();
+    const minBreakpoint = useBootstrapMinBreakpoint();
+    const spans = [];
+    const classes = [];
+    breakpoints.forEach((brkPoint) => {
+      const propValue = props[brkPoint];
+      delete props[brkPoint];
+      let span;
+      let offset;
+      let order;
+      if (typeof propValue === "object" && propValue != null) {
+        ({
+          span,
+          offset,
+          order
+        } = propValue);
+      } else {
+        span = propValue;
+      }
+      const infix = brkPoint !== minBreakpoint ? `-${brkPoint}` : "";
+      if (span)
+        spans.push(span === true ? `${bsPrefix}${infix}` : `${bsPrefix}${infix}-${span}`);
+      if (order != null)
+        classes.push(`order${infix}-${order}`);
+      if (offset != null)
+        classes.push(`offset${infix}-${offset}`);
+    });
+    return [{
+      ...props,
+      className: (0, import_classnames.default)(className, ...spans, ...classes)
+    }, {
+      as,
+      bsPrefix,
+      spans
+    }];
+  }
+  var Col = /* @__PURE__ */ React2.forwardRef(
+    // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+    (props, ref) => {
+      const [{
+        className,
+        ...colProps
+      }, {
+        as: Component = "div",
+        bsPrefix,
+        spans
+      }] = useCol(props);
+      return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Component, {
+        ...colProps,
+        ref,
+        className: (0, import_classnames.default)(className, !spans.length && bsPrefix)
+      });
+    }
+  );
+  Col.displayName = "Col";
+  var Col_default = Col;
+
+  // ../testeranto/node_modules/react-bootstrap/esm/Nav.js
+  var import_classnames4 = __toESM(require_classnames());
+  var import_all = __toESM(require_all());
+  var React15 = __toESM(require_react());
+  var import_react21 = __toESM(require_react());
+
+  // ../testeranto/node_modules/@babel/runtime/helpers/esm/extends.js
+  function _extends() {
+    _extends = Object.assign ? Object.assign.bind() : function(target) {
+      for (var i2 = 1; i2 < arguments.length; i2++) {
+        var source = arguments[i2];
+        for (var key in source) {
+          if (Object.prototype.hasOwnProperty.call(source, key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    };
+    return _extends.apply(this, arguments);
+  }
+
+  // ../testeranto/node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
+  function _objectWithoutPropertiesLoose(source, excluded) {
+    if (source == null)
+      return {};
+    var target = {};
+    var sourceKeys = Object.keys(source);
+    var key, i2;
+    for (i2 = 0; i2 < sourceKeys.length; i2++) {
+      key = sourceKeys[i2];
+      if (excluded.indexOf(key) >= 0)
+        continue;
+      target[key] = source[key];
+    }
+    return target;
+  }
+
+  // ../testeranto/node_modules/uncontrollable/lib/esm/hook.js
+  var import_react2 = __toESM(require_react());
+
+  // ../testeranto/node_modules/uncontrollable/lib/esm/utils.js
+  var import_invariant = __toESM(require_browser());
+  function defaultKey(key) {
+    return "default" + key.charAt(0).toUpperCase() + key.substr(1);
+  }
+
+  // ../testeranto/node_modules/uncontrollable/lib/esm/hook.js
+  function _toPropertyKey(arg) {
+    var key = _toPrimitive(arg, "string");
+    return typeof key === "symbol" ? key : String(key);
+  }
+  function _toPrimitive(input, hint) {
+    if (typeof input !== "object" || input === null)
+      return input;
+    var prim = input[Symbol.toPrimitive];
+    if (prim !== void 0) {
+      var res = prim.call(input, hint || "default");
+      if (typeof res !== "object")
+        return res;
+      throw new TypeError("@@toPrimitive must return a primitive value.");
+    }
+    return (hint === "string" ? String : Number)(input);
+  }
+  function useUncontrolledProp(propValue, defaultValue, handler) {
+    var wasPropRef = (0, import_react2.useRef)(propValue !== void 0);
+    var _useState = (0, import_react2.useState)(defaultValue), stateValue = _useState[0], setState = _useState[1];
+    var isProp2 = propValue !== void 0;
+    var wasProp = wasPropRef.current;
+    wasPropRef.current = isProp2;
+    if (!isProp2 && wasProp && stateValue !== defaultValue) {
+      setState(defaultValue);
+    }
+    return [isProp2 ? propValue : stateValue, (0, import_react2.useCallback)(function(value) {
+      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
+      if (handler)
+        handler.apply(void 0, [value].concat(args));
+      setState(value);
+    }, [handler])];
+  }
+  function useUncontrolled(props, config) {
+    return Object.keys(config).reduce(function(result, fieldName) {
+      var _extends22;
+      var _ref = result, defaultValue = _ref[defaultKey(fieldName)], propsValue = _ref[fieldName], rest = _objectWithoutPropertiesLoose(_ref, [defaultKey(fieldName), fieldName].map(_toPropertyKey));
+      var handlerName = config[fieldName];
+      var _useUncontrolledProp = useUncontrolledProp(propsValue, defaultValue, props[handlerName]), value = _useUncontrolledProp[0], handler = _useUncontrolledProp[1];
+      return _extends({}, rest, (_extends22 = {}, _extends22[fieldName] = value, _extends22[handlerName] = handler, _extends22));
+    }, props);
+  }
+
+  // ../testeranto/node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js
+  function _setPrototypeOf(o2, p) {
+    _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf14(o3, p2) {
+      o3.__proto__ = p2;
+      return o3;
+    };
+    return _setPrototypeOf(o2, p);
+  }
+
+  // ../testeranto/node_modules/@babel/runtime/helpers/esm/inheritsLoose.js
+  function _inheritsLoose(subClass, superClass) {
+    subClass.prototype = Object.create(superClass.prototype);
+    subClass.prototype.constructor = subClass;
+    _setPrototypeOf(subClass, superClass);
+  }
+
+  // ../testeranto/node_modules/uncontrollable/lib/esm/uncontrollable.js
+  var import_react3 = __toESM(require_react());
+
+  // ../testeranto/node_modules/react-lifecycles-compat/react-lifecycles-compat.es.js
+  function componentWillMount() {
+    var state = this.constructor.getDerivedStateFromProps(this.props, this.state);
+    if (state !== null && state !== void 0) {
+      this.setState(state);
+    }
+  }
+  function componentWillReceiveProps(nextProps) {
+    function updater(prevState) {
+      var state = this.constructor.getDerivedStateFromProps(nextProps, prevState);
+      return state !== null && state !== void 0 ? state : null;
+    }
+    this.setState(updater.bind(this));
+  }
+  function componentWillUpdate(nextProps, nextState) {
+    try {
+      var prevProps = this.props;
+      var prevState = this.state;
+      this.props = nextProps;
+      this.state = nextState;
+      this.__reactInternalSnapshotFlag = true;
+      this.__reactInternalSnapshot = this.getSnapshotBeforeUpdate(
+        prevProps,
+        prevState
+      );
+    } finally {
+      this.props = prevProps;
+      this.state = prevState;
+    }
+  }
+  componentWillMount.__suppressDeprecationWarning = true;
+  componentWillReceiveProps.__suppressDeprecationWarning = true;
+  componentWillUpdate.__suppressDeprecationWarning = true;
+
+  // ../testeranto/node_modules/uncontrollable/lib/esm/uncontrollable.js
+  var import_invariant2 = __toESM(require_browser());
+
+  // ../testeranto/node_modules/dom-helpers/esm/querySelectorAll.js
+  var toArray = Function.prototype.bind.call(Function.prototype.call, [].slice);
+  function qsa(element, selector) {
+    return toArray(element.querySelectorAll(selector));
+  }
+
+  // ../testeranto/node_modules/@restart/ui/esm/Nav.js
+  var React9 = __toESM(require_react());
+  var import_react9 = __toESM(require_react());
+
+  // ../testeranto/node_modules/@restart/hooks/esm/useForceUpdate.js
+  var import_react4 = __toESM(require_react());
+  function useForceUpdate() {
+    var _useReducer = (0, import_react4.useReducer)(function(state) {
+      return !state;
+    }, false), dispatch = _useReducer[1];
+    return dispatch;
+  }
+
+  // ../testeranto/node_modules/@restart/hooks/esm/useMergedRefs.js
+  var import_react5 = __toESM(require_react());
+  var toFnRef = function toFnRef2(ref) {
+    return !ref || typeof ref === "function" ? ref : function(value) {
+      ref.current = value;
+    };
+  };
+  function mergeRefs(refA, refB) {
+    var a = toFnRef(refA);
+    var b = toFnRef(refB);
+    return function(value) {
+      if (a)
+        a(value);
+      if (b)
+        b(value);
+    };
+  }
+  function useMergedRefs(refA, refB) {
+    return (0, import_react5.useMemo)(function() {
+      return mergeRefs(refA, refB);
+    }, [refA, refB]);
+  }
+  var useMergedRefs_default = useMergedRefs;
+
+  // ../testeranto/node_modules/@restart/ui/esm/NavContext.js
+  var React4 = __toESM(require_react());
+  var NavContext = /* @__PURE__ */ React4.createContext(null);
+  NavContext.displayName = "NavContext";
+  var NavContext_default = NavContext;
+
+  // ../testeranto/node_modules/@restart/ui/esm/SelectableContext.js
+  var React5 = __toESM(require_react());
+  var SelectableContext = /* @__PURE__ */ React5.createContext(null);
+  var makeEventKey = (eventKey, href = null) => {
+    if (eventKey != null)
+      return String(eventKey);
+    return href || null;
+  };
+  var SelectableContext_default = SelectableContext;
+
+  // ../testeranto/node_modules/@restart/ui/esm/TabContext.js
+  var React6 = __toESM(require_react());
+  var TabContext = /* @__PURE__ */ React6.createContext(null);
+  var TabContext_default = TabContext;
+
+  // ../testeranto/node_modules/@restart/ui/esm/DataKey.js
+  var ATTRIBUTE_PREFIX = `data-rr-ui-`;
+  var PROPERTY_PREFIX = `rrUi`;
+  function dataAttr(property) {
+    return `${ATTRIBUTE_PREFIX}${property}`;
+  }
+  function dataProp(property) {
+    return `${PROPERTY_PREFIX}${property}`;
+  }
+
+  // ../testeranto/node_modules/@restart/ui/esm/NavItem.js
+  var React8 = __toESM(require_react());
+  var import_react8 = __toESM(require_react());
+
+  // ../testeranto/node_modules/@restart/hooks/esm/useEventCallback.js
+  var import_react7 = __toESM(require_react());
+
+  // ../testeranto/node_modules/@restart/hooks/esm/useCommittedRef.js
+  var import_react6 = __toESM(require_react());
+  function useCommittedRef(value) {
+    var ref = (0, import_react6.useRef)(value);
+    (0, import_react6.useEffect)(function() {
+      ref.current = value;
+    }, [value]);
+    return ref;
+  }
+  var useCommittedRef_default = useCommittedRef;
+
+  // ../testeranto/node_modules/@restart/hooks/esm/useEventCallback.js
+  function useEventCallback(fn) {
+    var ref = useCommittedRef_default(fn);
+    return (0, import_react7.useCallback)(function() {
+      return ref.current && ref.current.apply(ref, arguments);
+    }, [ref]);
+  }
+
+  // ../testeranto/node_modules/@restart/ui/esm/Button.js
+  var React7 = __toESM(require_react());
+  var import_jsx_runtime3 = __toESM(require_jsx_runtime());
+  var _excluded = ["as", "disabled"];
+  function _objectWithoutPropertiesLoose2(source, excluded) {
+    if (source == null)
+      return {};
+    var target = {};
+    var sourceKeys = Object.keys(source);
+    var key, i2;
+    for (i2 = 0; i2 < sourceKeys.length; i2++) {
+      key = sourceKeys[i2];
+      if (excluded.indexOf(key) >= 0)
+        continue;
+      target[key] = source[key];
+    }
+    return target;
+  }
+  function isTrivialHref(href) {
+    return !href || href.trim() === "#";
+  }
+  function useButtonProps({
+    tagName,
+    disabled,
+    href,
+    target,
+    rel,
+    role,
+    onClick,
+    tabIndex = 0,
+    type
+  }) {
+    if (!tagName) {
+      if (href != null || target != null || rel != null) {
+        tagName = "a";
+      } else {
+        tagName = "button";
+      }
+    }
+    const meta = {
+      tagName
+    };
+    if (tagName === "button") {
+      return [{
+        type: type || "button",
+        disabled
+      }, meta];
+    }
+    const handleClick = (event) => {
+      if (disabled || tagName === "a" && isTrivialHref(href)) {
+        event.preventDefault();
+      }
+      if (disabled) {
+        event.stopPropagation();
+        return;
+      }
+      onClick == null ? void 0 : onClick(event);
+    };
+    const handleKeyDown = (event) => {
+      if (event.key === " ") {
+        event.preventDefault();
+        handleClick(event);
+      }
+    };
+    if (tagName === "a") {
+      href || (href = "#");
+      if (disabled) {
+        href = void 0;
+      }
+    }
+    return [{
+      role: role != null ? role : "button",
+      // explicitly undefined so that it overrides the props disabled in a spread
+      // e.g. <Tag {...props} {...hookProps} />
+      disabled: void 0,
+      tabIndex: disabled ? void 0 : tabIndex,
+      href,
+      target: tagName === "a" ? target : void 0,
+      "aria-disabled": !disabled ? void 0 : disabled,
+      rel: tagName === "a" ? rel : void 0,
+      onClick: handleClick,
+      onKeyDown: handleKeyDown
+    }, meta];
+  }
+  var Button = /* @__PURE__ */ React7.forwardRef((_ref, ref) => {
+    let {
+      as: asProp,
+      disabled
+    } = _ref, props = _objectWithoutPropertiesLoose2(_ref, _excluded);
+    const [buttonProps, {
+      tagName: Component
+    }] = useButtonProps(Object.assign({
+      tagName: asProp,
+      disabled
+    }, props));
+    return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(Component, Object.assign({}, props, buttonProps, {
+      ref
+    }));
+  });
+  Button.displayName = "Button";
+  var Button_default = Button;
+
+  // ../testeranto/node_modules/@restart/ui/esm/NavItem.js
+  var import_jsx_runtime4 = __toESM(require_jsx_runtime());
+  var _excluded2 = ["as", "active", "eventKey"];
+  function _objectWithoutPropertiesLoose3(source, excluded) {
+    if (source == null)
+      return {};
+    var target = {};
+    var sourceKeys = Object.keys(source);
+    var key, i2;
+    for (i2 = 0; i2 < sourceKeys.length; i2++) {
+      key = sourceKeys[i2];
+      if (excluded.indexOf(key) >= 0)
+        continue;
+      target[key] = source[key];
+    }
+    return target;
+  }
+  function useNavItem({
+    key,
+    onClick,
+    active,
+    id,
+    role,
+    disabled
+  }) {
+    const parentOnSelect = (0, import_react8.useContext)(SelectableContext_default);
+    const navContext = (0, import_react8.useContext)(NavContext_default);
+    const tabContext = (0, import_react8.useContext)(TabContext_default);
+    let isActive = active;
+    const props = {
+      role
+    };
+    if (navContext) {
+      if (!role && navContext.role === "tablist")
+        props.role = "tab";
+      const contextControllerId = navContext.getControllerId(key != null ? key : null);
+      const contextControlledId = navContext.getControlledId(key != null ? key : null);
+      props[dataAttr("event-key")] = key;
+      props.id = contextControllerId || id;
+      isActive = active == null && key != null ? navContext.activeKey === key : active;
+      if (isActive || !(tabContext != null && tabContext.unmountOnExit) && !(tabContext != null && tabContext.mountOnEnter))
+        props["aria-controls"] = contextControlledId;
+    }
+    if (props.role === "tab") {
+      props["aria-selected"] = isActive;
+      if (!isActive) {
+        props.tabIndex = -1;
+      }
+      if (disabled) {
+        props.tabIndex = -1;
+        props["aria-disabled"] = true;
+      }
+    }
+    props.onClick = useEventCallback((e) => {
+      if (disabled)
+        return;
+      onClick == null ? void 0 : onClick(e);
+      if (key == null) {
+        return;
+      }
+      if (parentOnSelect && !e.isPropagationStopped()) {
+        parentOnSelect(key, e);
+      }
+    });
+    return [props, {
+      isActive
+    }];
+  }
+  var NavItem = /* @__PURE__ */ React8.forwardRef((_ref, ref) => {
+    let {
+      as: Component = Button_default,
+      active,
+      eventKey
+    } = _ref, options2 = _objectWithoutPropertiesLoose3(_ref, _excluded2);
+    const [props, meta] = useNavItem(Object.assign({
+      key: makeEventKey(eventKey, options2.href),
+      active
+    }, options2));
+    props[dataAttr("active")] = meta.isActive;
+    return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Component, Object.assign({}, options2, props, {
+      ref
+    }));
+  });
+  NavItem.displayName = "NavItem";
+  var NavItem_default = NavItem;
+
+  // ../testeranto/node_modules/@restart/ui/esm/Nav.js
+  var import_jsx_runtime5 = __toESM(require_jsx_runtime());
+  var _excluded3 = ["as", "onSelect", "activeKey", "role", "onKeyDown"];
+  function _objectWithoutPropertiesLoose4(source, excluded) {
+    if (source == null)
+      return {};
+    var target = {};
+    var sourceKeys = Object.keys(source);
+    var key, i2;
+    for (i2 = 0; i2 < sourceKeys.length; i2++) {
+      key = sourceKeys[i2];
+      if (excluded.indexOf(key) >= 0)
+        continue;
+      target[key] = source[key];
+    }
+    return target;
+  }
+  var noop = () => {
+  };
+  var EVENT_KEY_ATTR = dataAttr("event-key");
+  var Nav = /* @__PURE__ */ React9.forwardRef((_ref, ref) => {
+    let {
+      // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+      as: Component = "div",
+      onSelect,
+      activeKey,
+      role,
+      onKeyDown
+    } = _ref, props = _objectWithoutPropertiesLoose4(_ref, _excluded3);
+    const forceUpdate = useForceUpdate();
+    const needsRefocusRef = (0, import_react9.useRef)(false);
+    const parentOnSelect = (0, import_react9.useContext)(SelectableContext_default);
+    const tabContext = (0, import_react9.useContext)(TabContext_default);
+    let getControlledId, getControllerId;
+    if (tabContext) {
+      role = role || "tablist";
+      activeKey = tabContext.activeKey;
+      getControlledId = tabContext.getControlledId;
+      getControllerId = tabContext.getControllerId;
+    }
+    const listNode = (0, import_react9.useRef)(null);
+    const getNextActiveTab = (offset) => {
+      const currentListNode = listNode.current;
+      if (!currentListNode)
+        return null;
+      const items = qsa(currentListNode, `[${EVENT_KEY_ATTR}]:not([aria-disabled=true])`);
+      const activeChild = currentListNode.querySelector("[aria-selected=true]");
+      if (!activeChild || activeChild !== document.activeElement)
+        return null;
+      const index = items.indexOf(activeChild);
+      if (index === -1)
+        return null;
+      let nextIndex = index + offset;
+      if (nextIndex >= items.length)
+        nextIndex = 0;
+      if (nextIndex < 0)
+        nextIndex = items.length - 1;
+      return items[nextIndex];
+    };
+    const handleSelect = (key, event) => {
+      if (key == null)
+        return;
+      onSelect == null ? void 0 : onSelect(key, event);
+      parentOnSelect == null ? void 0 : parentOnSelect(key, event);
+    };
+    const handleKeyDown = (event) => {
+      onKeyDown == null ? void 0 : onKeyDown(event);
+      if (!tabContext) {
+        return;
+      }
+      let nextActiveChild;
+      switch (event.key) {
+        case "ArrowLeft":
+        case "ArrowUp":
+          nextActiveChild = getNextActiveTab(-1);
+          break;
+        case "ArrowRight":
+        case "ArrowDown":
+          nextActiveChild = getNextActiveTab(1);
+          break;
+        default:
+          return;
+      }
+      if (!nextActiveChild)
+        return;
+      event.preventDefault();
+      handleSelect(nextActiveChild.dataset[dataProp("EventKey")] || null, event);
+      needsRefocusRef.current = true;
+      forceUpdate();
+    };
+    (0, import_react9.useEffect)(() => {
+      if (listNode.current && needsRefocusRef.current) {
+        const activeChild = listNode.current.querySelector(`[${EVENT_KEY_ATTR}][aria-selected=true]`);
+        activeChild == null ? void 0 : activeChild.focus();
+      }
+      needsRefocusRef.current = false;
+    });
+    const mergedRef = useMergedRefs_default(ref, listNode);
+    return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(SelectableContext_default.Provider, {
+      value: handleSelect,
+      children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(NavContext_default.Provider, {
+        value: {
+          role,
+          // used by NavLink to determine it's role
+          activeKey: makeEventKey(activeKey),
+          getControlledId: getControlledId || noop,
+          getControllerId: getControllerId || noop
+        },
+        children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(Component, Object.assign({}, props, {
+          onKeyDown: handleKeyDown,
+          ref: mergedRef,
+          role
+        }))
+      })
+    });
+  });
+  Nav.displayName = "Nav";
+  var Nav_default = Object.assign(Nav, {
+    Item: NavItem_default
+  });
+
+  // ../testeranto/node_modules/react-bootstrap/esm/NavbarContext.js
+  var React10 = __toESM(require_react());
+  var context = /* @__PURE__ */ React10.createContext(null);
+  context.displayName = "NavbarContext";
+  var NavbarContext_default = context;
+
+  // ../testeranto/node_modules/react-bootstrap/esm/CardHeaderContext.js
+  var React11 = __toESM(require_react());
+  var context2 = /* @__PURE__ */ React11.createContext(null);
+  context2.displayName = "CardHeaderContext";
+  var CardHeaderContext_default = context2;
+
+  // ../testeranto/node_modules/react-bootstrap/esm/createWithBsPrefix.js
+  var import_classnames2 = __toESM(require_classnames());
+
+  // ../testeranto/node_modules/dom-helpers/esm/camelize.js
+  var rHyphen = /-(.)/g;
+  function camelize(string) {
+    return string.replace(rHyphen, function(_, chr) {
+      return chr.toUpperCase();
+    });
+  }
+
+  // ../testeranto/node_modules/react-bootstrap/esm/createWithBsPrefix.js
+  var React12 = __toESM(require_react());
+  var import_jsx_runtime6 = __toESM(require_jsx_runtime());
+  var pascalCase = (str) => str[0].toUpperCase() + camelize(str).slice(1);
+  function createWithBsPrefix(prefix, {
+    displayName = pascalCase(prefix),
+    Component,
+    defaultProps: defaultProps5
+  } = {}) {
+    const BsComponent = /* @__PURE__ */ React12.forwardRef(({
+      className,
+      bsPrefix,
+      as: Tag = Component || "div",
+      ...props
+    }, ref) => {
+      const resolvedPrefix = useBootstrapPrefix(bsPrefix, prefix);
+      return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(Tag, {
+        ref,
+        className: (0, import_classnames2.default)(className, resolvedPrefix),
+        ...props
+      });
+    });
+    BsComponent.defaultProps = defaultProps5;
+    BsComponent.displayName = displayName;
+    return BsComponent;
+  }
+
+  // ../testeranto/node_modules/react-bootstrap/esm/NavItem.js
+  var NavItem_default2 = createWithBsPrefix("nav-item");
+
+  // ../testeranto/node_modules/react-bootstrap/esm/NavLink.js
+  var import_classnames3 = __toESM(require_classnames());
+  var React14 = __toESM(require_react());
+
+  // ../testeranto/node_modules/@restart/ui/esm/Anchor.js
+  var React13 = __toESM(require_react());
+
+  // ../testeranto/node_modules/@restart/hooks/esm/useCallbackRef.js
+  var import_react10 = __toESM(require_react());
+
+  // ../testeranto/node_modules/@restart/hooks/esm/useEventListener.js
+  var import_react11 = __toESM(require_react());
+
+  // ../testeranto/node_modules/@restart/hooks/esm/useGlobalListener.js
+  var import_react12 = __toESM(require_react());
+
+  // ../testeranto/node_modules/@restart/hooks/esm/useInterval.js
+  var import_react13 = __toESM(require_react());
+
+  // ../testeranto/node_modules/@restart/hooks/esm/useRafInterval.js
+  var import_react14 = __toESM(require_react());
+
+  // ../testeranto/node_modules/@restart/hooks/esm/useMergeState.js
+  var import_react15 = __toESM(require_react());
+
+  // ../testeranto/node_modules/@restart/hooks/esm/useMounted.js
+  var import_react16 = __toESM(require_react());
+
+  // ../testeranto/node_modules/@restart/hooks/esm/usePrevious.js
+  var import_react17 = __toESM(require_react());
+
+  // ../testeranto/node_modules/@restart/hooks/esm/useImage.js
+  var import_react18 = __toESM(require_react());
+
+  // ../testeranto/node_modules/@restart/hooks/esm/useResizeObserver.js
+  var import_react20 = __toESM(require_react());
+
+  // ../testeranto/node_modules/@restart/hooks/esm/useIsomorphicEffect.js
+  var import_react19 = __toESM(require_react());
+  var isReactNative = typeof global !== "undefined" && // @ts-ignore
+  global.navigator && // @ts-ignore
+  global.navigator.product === "ReactNative";
+
+  // ../testeranto/node_modules/@restart/ui/esm/Anchor.js
+  var import_jsx_runtime7 = __toESM(require_jsx_runtime());
+  var _excluded4 = ["onKeyDown"];
+  function _objectWithoutPropertiesLoose5(source, excluded) {
+    if (source == null)
+      return {};
+    var target = {};
+    var sourceKeys = Object.keys(source);
+    var key, i2;
+    for (i2 = 0; i2 < sourceKeys.length; i2++) {
+      key = sourceKeys[i2];
+      if (excluded.indexOf(key) >= 0)
+        continue;
+      target[key] = source[key];
+    }
+    return target;
+  }
+  function isTrivialHref2(href) {
+    return !href || href.trim() === "#";
+  }
+  var Anchor = /* @__PURE__ */ React13.forwardRef((_ref, ref) => {
+    let {
+      onKeyDown
+    } = _ref, props = _objectWithoutPropertiesLoose5(_ref, _excluded4);
+    const [buttonProps] = useButtonProps(Object.assign({
+      tagName: "a"
+    }, props));
+    const handleKeyDown = useEventCallback((e) => {
+      buttonProps.onKeyDown(e);
+      onKeyDown == null ? void 0 : onKeyDown(e);
+    });
+    if (isTrivialHref2(props.href) || props.role === "button") {
+      return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("a", Object.assign({
+        ref
+      }, props, buttonProps, {
+        onKeyDown: handleKeyDown
+      }));
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("a", Object.assign({
+      ref
+    }, props, {
+      onKeyDown
+    }));
+  });
+  Anchor.displayName = "Anchor";
+  var Anchor_default = Anchor;
+
+  // ../testeranto/node_modules/react-bootstrap/esm/NavLink.js
+  var import_jsx_runtime8 = __toESM(require_jsx_runtime());
+  var defaultProps = {
+    disabled: false
+  };
+  var NavLink = /* @__PURE__ */ React14.forwardRef(({
+    bsPrefix,
+    className,
+    as: Component = Anchor_default,
+    active,
+    eventKey,
+    ...props
+  }, ref) => {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "nav-link");
+    const [navItemProps, meta] = useNavItem({
+      key: makeEventKey(eventKey, props.href),
+      active,
+      ...props
+    });
+    return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(Component, {
+      ...props,
+      ...navItemProps,
+      ref,
+      className: (0, import_classnames3.default)(className, bsPrefix, props.disabled && "disabled", meta.isActive && "active")
+    });
+  });
+  NavLink.displayName = "NavLink";
+  NavLink.defaultProps = defaultProps;
+  var NavLink_default = NavLink;
+
+  // ../testeranto/node_modules/react-bootstrap/esm/Nav.js
+  var import_jsx_runtime9 = __toESM(require_jsx_runtime());
+  var defaultProps2 = {
+    justify: false,
+    fill: false
+  };
+  var Nav2 = /* @__PURE__ */ React15.forwardRef((uncontrolledProps, ref) => {
+    const {
+      as = "div",
+      bsPrefix: initialBsPrefix,
+      variant,
+      fill,
+      justify,
+      navbar,
+      navbarScroll,
+      className,
+      activeKey,
+      ...props
+    } = useUncontrolled(uncontrolledProps, {
+      activeKey: "onSelect"
+    });
+    const bsPrefix = useBootstrapPrefix(initialBsPrefix, "nav");
+    let navbarBsPrefix;
+    let cardHeaderBsPrefix;
+    let isNavbar = false;
+    const navbarContext = (0, import_react21.useContext)(NavbarContext_default);
+    const cardHeaderContext = (0, import_react21.useContext)(CardHeaderContext_default);
+    if (navbarContext) {
+      navbarBsPrefix = navbarContext.bsPrefix;
+      isNavbar = navbar == null ? true : navbar;
+    } else if (cardHeaderContext) {
+      ({
+        cardHeaderBsPrefix
+      } = cardHeaderContext);
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(Nav_default, {
+      as,
+      ref,
+      activeKey,
+      className: (0, import_classnames4.default)(className, {
+        [bsPrefix]: !isNavbar,
+        [`${navbarBsPrefix}-nav`]: isNavbar,
+        [`${navbarBsPrefix}-nav-scroll`]: isNavbar && navbarScroll,
+        [`${cardHeaderBsPrefix}-${variant}`]: !!cardHeaderBsPrefix,
+        [`${bsPrefix}-${variant}`]: !!variant,
+        [`${bsPrefix}-fill`]: fill,
+        [`${bsPrefix}-justified`]: justify
+      }),
+      ...props
+    });
+  });
+  Nav2.displayName = "Nav";
+  Nav2.defaultProps = defaultProps2;
+  var Nav_default2 = Object.assign(Nav2, {
+    Item: NavItem_default2,
+    Link: NavLink_default
+  });
+
+  // ../testeranto/node_modules/react-bootstrap/esm/Row.js
+  var import_classnames5 = __toESM(require_classnames());
+  var React16 = __toESM(require_react());
+  var import_jsx_runtime10 = __toESM(require_jsx_runtime());
+  var Row = /* @__PURE__ */ React16.forwardRef(({
+    bsPrefix,
+    className,
+    // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+    as: Component = "div",
+    ...props
+  }, ref) => {
+    const decoratedBsPrefix = useBootstrapPrefix(bsPrefix, "row");
+    const breakpoints = useBootstrapBreakpoints();
+    const minBreakpoint = useBootstrapMinBreakpoint();
+    const sizePrefix = `${decoratedBsPrefix}-cols`;
+    const classes = [];
+    breakpoints.forEach((brkPoint) => {
+      const propValue = props[brkPoint];
+      delete props[brkPoint];
+      let cols;
+      if (propValue != null && typeof propValue === "object") {
+        ({
+          cols
+        } = propValue);
+      } else {
+        cols = propValue;
+      }
+      const infix = brkPoint !== minBreakpoint ? `-${brkPoint}` : "";
+      if (cols != null)
+        classes.push(`${sizePrefix}${infix}-${cols}`);
+    });
+    return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(Component, {
+      ref,
+      ...props,
+      className: (0, import_classnames5.default)(className, decoratedBsPrefix, ...classes)
+    });
+  });
+  Row.displayName = "Row";
+  var Row_default = Row;
+
+  // ../testeranto/node_modules/react-bootstrap/esm/Tab.js
+  var import_prop_types3 = __toESM(require_prop_types());
+  var React25 = __toESM(require_react());
+
+  // ../testeranto/node_modules/react-bootstrap/esm/TabContainer.js
+  var React23 = __toESM(require_react());
+
+  // ../testeranto/node_modules/@restart/ui/esm/Tabs.js
+  var React18 = __toESM(require_react());
+  var import_react25 = __toESM(require_react());
+
+  // ../testeranto/node_modules/@react-aria/ssr/dist/module.js
+  var import_react22 = __toESM(require_react());
+  var $704cf1d3b684cc5c$var$defaultContext = {
+    prefix: String(Math.round(Math.random() * 1e10)),
+    current: 0
+  };
+  var $704cf1d3b684cc5c$var$SSRContext = /* @__PURE__ */ (0, import_react22.default).createContext($704cf1d3b684cc5c$var$defaultContext);
+  var $704cf1d3b684cc5c$var$canUseDOM = Boolean(typeof window !== "undefined" && window.document && window.document.createElement);
+  function $704cf1d3b684cc5c$export$619500959fc48b26(defaultId) {
+    let ctx = (0, import_react22.useContext)($704cf1d3b684cc5c$var$SSRContext);
+    if (ctx === $704cf1d3b684cc5c$var$defaultContext && !$704cf1d3b684cc5c$var$canUseDOM)
+      console.warn("When server rendering, you must wrap your application in an <SSRProvider> to ensure consistent ids are generated between the client and server.");
+    return (0, import_react22.useMemo)(() => defaultId || `react-aria${ctx.prefix}-${++ctx.current}`, [
+      defaultId
+    ]);
+  }
+
+  // ../testeranto/node_modules/@restart/ui/esm/TabPanel.js
+  var React17 = __toESM(require_react());
+  var import_react24 = __toESM(require_react());
+
+  // ../testeranto/node_modules/@restart/ui/esm/NoopTransition.js
+  var import_react23 = __toESM(require_react());
+  function NoopTransition({
+    children,
+    in: inProp,
+    mountOnEnter,
+    unmountOnExit
+  }) {
+    const hasEnteredRef = (0, import_react23.useRef)(inProp);
+    (0, import_react23.useEffect)(() => {
+      if (inProp)
+        hasEnteredRef.current = true;
+    }, [inProp]);
+    if (inProp)
+      return children;
+    if (unmountOnExit) {
+      return null;
+    }
+    if (!hasEnteredRef.current && mountOnEnter) {
+      return null;
+    }
+    return children;
+  }
+  var NoopTransition_default = NoopTransition;
+
+  // ../testeranto/node_modules/@restart/ui/esm/TabPanel.js
+  var import_jsx_runtime11 = __toESM(require_jsx_runtime());
+  var _excluded5 = ["active", "eventKey", "mountOnEnter", "transition", "unmountOnExit", "role", "onEnter", "onEntering", "onEntered", "onExit", "onExiting", "onExited"];
+  var _excluded22 = ["activeKey", "getControlledId", "getControllerId"];
+  var _excluded32 = ["as"];
+  function _objectWithoutPropertiesLoose6(source, excluded) {
+    if (source == null)
+      return {};
+    var target = {};
+    var sourceKeys = Object.keys(source);
+    var key, i2;
+    for (i2 = 0; i2 < sourceKeys.length; i2++) {
+      key = sourceKeys[i2];
+      if (excluded.indexOf(key) >= 0)
+        continue;
+      target[key] = source[key];
+    }
+    return target;
+  }
+  function useTabPanel(_ref) {
+    let {
+      active,
+      eventKey,
+      mountOnEnter,
+      transition,
+      unmountOnExit,
+      role = "tabpanel",
+      onEnter,
+      onEntering,
+      onEntered,
+      onExit,
+      onExiting,
+      onExited
+    } = _ref, props = _objectWithoutPropertiesLoose6(_ref, _excluded5);
+    const context3 = (0, import_react24.useContext)(TabContext_default);
+    if (!context3)
+      return [Object.assign({}, props, {
+        role
+      }), {
+        eventKey,
+        isActive: active,
+        mountOnEnter,
+        transition,
+        unmountOnExit,
+        onEnter,
+        onEntering,
+        onEntered,
+        onExit,
+        onExiting,
+        onExited
+      }];
+    const {
+      activeKey,
+      getControlledId,
+      getControllerId
+    } = context3, rest = _objectWithoutPropertiesLoose6(context3, _excluded22);
+    const key = makeEventKey(eventKey);
+    return [Object.assign({}, props, {
+      role,
+      id: getControlledId(eventKey),
+      "aria-labelledby": getControllerId(eventKey)
+    }), {
+      eventKey,
+      isActive: active == null && key != null ? makeEventKey(activeKey) === key : active,
+      transition: transition || rest.transition,
+      mountOnEnter: mountOnEnter != null ? mountOnEnter : rest.mountOnEnter,
+      unmountOnExit: unmountOnExit != null ? unmountOnExit : rest.unmountOnExit,
+      onEnter,
+      onEntering,
+      onEntered,
+      onExit,
+      onExiting,
+      onExited
+    }];
+  }
+  var TabPanel = /* @__PURE__ */ React17.forwardRef(
+    // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+    (_ref2, ref) => {
+      let {
+        as: Component = "div"
+      } = _ref2, props = _objectWithoutPropertiesLoose6(_ref2, _excluded32);
+      const [tabPanelProps, {
+        isActive,
+        onEnter,
+        onEntering,
+        onEntered,
+        onExit,
+        onExiting,
+        onExited,
+        mountOnEnter,
+        unmountOnExit,
+        transition: Transition2 = NoopTransition_default
+      }] = useTabPanel(props);
+      return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(TabContext_default.Provider, {
+        value: null,
+        children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(SelectableContext_default.Provider, {
+          value: null,
+          children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Transition2, {
+            in: isActive,
+            onEnter,
+            onEntering,
+            onEntered,
+            onExit,
+            onExiting,
+            onExited,
+            mountOnEnter,
+            unmountOnExit,
+            children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Component, Object.assign({}, tabPanelProps, {
+              ref,
+              hidden: !isActive,
+              "aria-hidden": !isActive
+            }))
+          })
+        })
+      });
+    }
+  );
+  TabPanel.displayName = "TabPanel";
+  var TabPanel_default = TabPanel;
+
+  // ../testeranto/node_modules/@restart/ui/esm/Tabs.js
+  var import_jsx_runtime12 = __toESM(require_jsx_runtime());
+  var Tabs = (props) => {
+    const {
+      id: userId,
+      generateChildId: generateCustomChildId,
+      onSelect: propsOnSelect,
+      activeKey: propsActiveKey,
+      defaultActiveKey,
+      transition,
+      mountOnEnter,
+      unmountOnExit,
+      children
+    } = props;
+    const [activeKey, onSelect] = useUncontrolledProp(propsActiveKey, defaultActiveKey, propsOnSelect);
+    const id = $704cf1d3b684cc5c$export$619500959fc48b26(userId);
+    const generateChildId = (0, import_react25.useMemo)(() => generateCustomChildId || ((key, type) => id ? `${id}-${type}-${key}` : null), [id, generateCustomChildId]);
+    const tabContext = (0, import_react25.useMemo)(() => ({
+      onSelect,
+      activeKey,
+      transition,
+      mountOnEnter: mountOnEnter || false,
+      unmountOnExit: unmountOnExit || false,
+      getControlledId: (key) => generateChildId(key, "tabpane"),
+      getControllerId: (key) => generateChildId(key, "tab")
+    }), [onSelect, activeKey, transition, mountOnEnter, unmountOnExit, generateChildId]);
+    return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(TabContext_default.Provider, {
+      value: tabContext,
+      children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(SelectableContext_default.Provider, {
+        value: onSelect || null,
+        children
+      })
+    });
+  };
+  Tabs.Panel = TabPanel_default;
+  var Tabs_default = Tabs;
+
+  // ../testeranto/node_modules/react-bootstrap/esm/Fade.js
+  var import_classnames6 = __toESM(require_classnames());
+  var React22 = __toESM(require_react());
+  var import_react29 = __toESM(require_react());
+
+  // ../testeranto/node_modules/react-transition-group/esm/Transition.js
+  var import_prop_types2 = __toESM(require_prop_types());
+  var import_react27 = __toESM(require_react());
+  var import_react_dom = __toESM(require_react_dom());
+
+  // ../testeranto/node_modules/react-transition-group/esm/config.js
+  var config_default = {
+    disabled: false
+  };
+
+  // ../testeranto/node_modules/react-transition-group/esm/utils/PropTypes.js
+  var import_prop_types = __toESM(require_prop_types());
+  var timeoutsShape = true ? import_prop_types.default.oneOfType([import_prop_types.default.number, import_prop_types.default.shape({
+    enter: import_prop_types.default.number,
+    exit: import_prop_types.default.number,
+    appear: import_prop_types.default.number
+  }).isRequired]) : null;
+  var classNamesShape = true ? import_prop_types.default.oneOfType([import_prop_types.default.string, import_prop_types.default.shape({
+    enter: import_prop_types.default.string,
+    exit: import_prop_types.default.string,
+    active: import_prop_types.default.string
+  }), import_prop_types.default.shape({
+    enter: import_prop_types.default.string,
+    enterDone: import_prop_types.default.string,
+    enterActive: import_prop_types.default.string,
+    exit: import_prop_types.default.string,
+    exitDone: import_prop_types.default.string,
+    exitActive: import_prop_types.default.string
+  })]) : null;
+
+  // ../testeranto/node_modules/react-transition-group/esm/TransitionGroupContext.js
+  var import_react26 = __toESM(require_react());
+  var TransitionGroupContext_default = import_react26.default.createContext(null);
+
+  // ../testeranto/node_modules/react-transition-group/esm/utils/reflow.js
+  var forceReflow = function forceReflow2(node) {
+    return node.scrollTop;
+  };
+
+  // ../testeranto/node_modules/react-transition-group/esm/Transition.js
+  var UNMOUNTED = "unmounted";
+  var EXITED = "exited";
+  var ENTERING = "entering";
+  var ENTERED = "entered";
+  var EXITING = "exiting";
+  var Transition = /* @__PURE__ */ function(_React$Component) {
+    _inheritsLoose(Transition2, _React$Component);
+    function Transition2(props, context3) {
+      var _this2;
+      _this2 = _React$Component.call(this, props, context3) || this;
+      var parentGroup = context3;
+      var appear = parentGroup && !parentGroup.isMounting ? props.enter : props.appear;
+      var initialStatus;
+      _this2.appearStatus = null;
+      if (props.in) {
+        if (appear) {
+          initialStatus = EXITED;
+          _this2.appearStatus = ENTERING;
+        } else {
+          initialStatus = ENTERED;
+        }
+      } else {
+        if (props.unmountOnExit || props.mountOnEnter) {
+          initialStatus = UNMOUNTED;
+        } else {
+          initialStatus = EXITED;
+        }
+      }
+      _this2.state = {
+        status: initialStatus
+      };
+      _this2.nextCallback = null;
+      return _this2;
+    }
+    Transition2.getDerivedStateFromProps = function getDerivedStateFromProps(_ref, prevState) {
+      var nextIn = _ref.in;
+      if (nextIn && prevState.status === UNMOUNTED) {
+        return {
+          status: EXITED
+        };
+      }
+      return null;
+    };
+    var _proto = Transition2.prototype;
+    _proto.componentDidMount = function componentDidMount() {
+      this.updateStatus(true, this.appearStatus);
+    };
+    _proto.componentDidUpdate = function componentDidUpdate(prevProps) {
+      var nextStatus = null;
+      if (prevProps !== this.props) {
+        var status = this.state.status;
+        if (this.props.in) {
+          if (status !== ENTERING && status !== ENTERED) {
+            nextStatus = ENTERING;
+          }
+        } else {
+          if (status === ENTERING || status === ENTERED) {
+            nextStatus = EXITING;
+          }
+        }
+      }
+      this.updateStatus(false, nextStatus);
+    };
+    _proto.componentWillUnmount = function componentWillUnmount() {
+      this.cancelNextCallback();
+    };
+    _proto.getTimeouts = function getTimeouts() {
+      var timeout2 = this.props.timeout;
+      var exit, enter, appear;
+      exit = enter = appear = timeout2;
+      if (timeout2 != null && typeof timeout2 !== "number") {
+        exit = timeout2.exit;
+        enter = timeout2.enter;
+        appear = timeout2.appear !== void 0 ? timeout2.appear : enter;
+      }
+      return {
+        exit,
+        enter,
+        appear
+      };
+    };
+    _proto.updateStatus = function updateStatus(mounting, nextStatus) {
+      if (mounting === void 0) {
+        mounting = false;
+      }
+      if (nextStatus !== null) {
+        this.cancelNextCallback();
+        if (nextStatus === ENTERING) {
+          if (this.props.unmountOnExit || this.props.mountOnEnter) {
+            var node = this.props.nodeRef ? this.props.nodeRef.current : import_react_dom.default.findDOMNode(this);
+            if (node)
+              forceReflow(node);
+          }
+          this.performEnter(mounting);
+        } else {
+          this.performExit();
+        }
+      } else if (this.props.unmountOnExit && this.state.status === EXITED) {
+        this.setState({
+          status: UNMOUNTED
+        });
+      }
+    };
+    _proto.performEnter = function performEnter(mounting) {
+      var _this2 = this;
+      var enter = this.props.enter;
+      var appearing = this.context ? this.context.isMounting : mounting;
+      var _ref2 = this.props.nodeRef ? [appearing] : [import_react_dom.default.findDOMNode(this), appearing], maybeNode = _ref2[0], maybeAppearing = _ref2[1];
+      var timeouts = this.getTimeouts();
+      var enterTimeout = appearing ? timeouts.appear : timeouts.enter;
+      if (!mounting && !enter || config_default.disabled) {
+        this.safeSetState({
+          status: ENTERED
+        }, function() {
+          _this2.props.onEntered(maybeNode);
+        });
+        return;
+      }
+      this.props.onEnter(maybeNode, maybeAppearing);
+      this.safeSetState({
+        status: ENTERING
+      }, function() {
+        _this2.props.onEntering(maybeNode, maybeAppearing);
+        _this2.onTransitionEnd(enterTimeout, function() {
+          _this2.safeSetState({
+            status: ENTERED
+          }, function() {
+            _this2.props.onEntered(maybeNode, maybeAppearing);
+          });
+        });
+      });
+    };
+    _proto.performExit = function performExit() {
+      var _this3 = this;
+      var exit = this.props.exit;
+      var timeouts = this.getTimeouts();
+      var maybeNode = this.props.nodeRef ? void 0 : import_react_dom.default.findDOMNode(this);
+      if (!exit || config_default.disabled) {
+        this.safeSetState({
+          status: EXITED
+        }, function() {
+          _this3.props.onExited(maybeNode);
+        });
+        return;
+      }
+      this.props.onExit(maybeNode);
+      this.safeSetState({
+        status: EXITING
+      }, function() {
+        _this3.props.onExiting(maybeNode);
+        _this3.onTransitionEnd(timeouts.exit, function() {
+          _this3.safeSetState({
+            status: EXITED
+          }, function() {
+            _this3.props.onExited(maybeNode);
+          });
+        });
+      });
+    };
+    _proto.cancelNextCallback = function cancelNextCallback() {
+      if (this.nextCallback !== null) {
+        this.nextCallback.cancel();
+        this.nextCallback = null;
+      }
+    };
+    _proto.safeSetState = function safeSetState(nextState, callback) {
+      callback = this.setNextCallback(callback);
+      this.setState(nextState, callback);
+    };
+    _proto.setNextCallback = function setNextCallback(callback) {
+      var _this4 = this;
+      var active = true;
+      this.nextCallback = function(event) {
+        if (active) {
+          active = false;
+          _this4.nextCallback = null;
+          callback(event);
+        }
+      };
+      this.nextCallback.cancel = function() {
+        active = false;
+      };
+      return this.nextCallback;
+    };
+    _proto.onTransitionEnd = function onTransitionEnd(timeout2, handler) {
+      this.setNextCallback(handler);
+      var node = this.props.nodeRef ? this.props.nodeRef.current : import_react_dom.default.findDOMNode(this);
+      var doesNotHaveTimeoutOrListener = timeout2 == null && !this.props.addEndListener;
+      if (!node || doesNotHaveTimeoutOrListener) {
+        setTimeout(this.nextCallback, 0);
+        return;
+      }
+      if (this.props.addEndListener) {
+        var _ref3 = this.props.nodeRef ? [this.nextCallback] : [node, this.nextCallback], maybeNode = _ref3[0], maybeNextCallback = _ref3[1];
+        this.props.addEndListener(maybeNode, maybeNextCallback);
+      }
+      if (timeout2 != null) {
+        setTimeout(this.nextCallback, timeout2);
+      }
+    };
+    _proto.render = function render() {
+      var status = this.state.status;
+      if (status === UNMOUNTED) {
+        return null;
+      }
+      var _this$props = this.props, children = _this$props.children, _in = _this$props.in, _mountOnEnter = _this$props.mountOnEnter, _unmountOnExit = _this$props.unmountOnExit, _appear = _this$props.appear, _enter = _this$props.enter, _exit = _this$props.exit, _timeout = _this$props.timeout, _addEndListener = _this$props.addEndListener, _onEnter = _this$props.onEnter, _onEntering = _this$props.onEntering, _onEntered = _this$props.onEntered, _onExit = _this$props.onExit, _onExiting = _this$props.onExiting, _onExited = _this$props.onExited, _nodeRef = _this$props.nodeRef, childProps = _objectWithoutPropertiesLoose(_this$props, ["children", "in", "mountOnEnter", "unmountOnExit", "appear", "enter", "exit", "timeout", "addEndListener", "onEnter", "onEntering", "onEntered", "onExit", "onExiting", "onExited", "nodeRef"]);
+      return (
+        // allows for nested Transitions
+        /* @__PURE__ */ import_react27.default.createElement(TransitionGroupContext_default.Provider, {
+          value: null
+        }, typeof children === "function" ? children(status, childProps) : import_react27.default.cloneElement(import_react27.default.Children.only(children), childProps))
+      );
+    };
+    return Transition2;
+  }(import_react27.default.Component);
+  Transition.contextType = TransitionGroupContext_default;
+  Transition.propTypes = true ? {
+    /**
+     * A React reference to DOM element that need to transition:
+     * https://stackoverflow.com/a/51127130/4671932
+     *
+     *   - When `nodeRef` prop is used, `node` is not passed to callback functions
+     *      (e.g. `onEnter`) because user already has direct access to the node.
+     *   - When changing `key` prop of `Transition` in a `TransitionGroup` a new
+     *     `nodeRef` need to be provided to `Transition` with changed `key` prop
+     *     (see
+     *     [test/CSSTransition-test.js](https://github.com/reactjs/react-transition-group/blob/13435f897b3ab71f6e19d724f145596f5910581c/test/CSSTransition-test.js#L362-L437)).
+     */
+    nodeRef: import_prop_types2.default.shape({
+      current: typeof Element === "undefined" ? import_prop_types2.default.any : function(propValue, key, componentName, location, propFullName, secret) {
+        var value = propValue[key];
+        return import_prop_types2.default.instanceOf(value && "ownerDocument" in value ? value.ownerDocument.defaultView.Element : Element)(propValue, key, componentName, location, propFullName, secret);
+      }
+    }),
+    /**
+     * A `function` child can be used instead of a React element. This function is
+     * called with the current transition status (`'entering'`, `'entered'`,
+     * `'exiting'`, `'exited'`), which can be used to apply context
+     * specific props to a component.
+     *
+     * ```jsx
+     * <Transition in={this.state.in} timeout={150}>
+     *   {state => (
+     *     <MyComponent className={`fade fade-${state}`} />
+     *   )}
+     * </Transition>
+     * ```
+     */
+    children: import_prop_types2.default.oneOfType([import_prop_types2.default.func.isRequired, import_prop_types2.default.element.isRequired]).isRequired,
+    /**
+     * Show the component; triggers the enter or exit states
+     */
+    in: import_prop_types2.default.bool,
+    /**
+     * By default the child component is mounted immediately along with
+     * the parent `Transition` component. If you want to "lazy mount" the component on the
+     * first `in={true}` you can set `mountOnEnter`. After the first enter transition the component will stay
+     * mounted, even on "exited", unless you also specify `unmountOnExit`.
+     */
+    mountOnEnter: import_prop_types2.default.bool,
+    /**
+     * By default the child component stays mounted after it reaches the `'exited'` state.
+     * Set `unmountOnExit` if you'd prefer to unmount the component after it finishes exiting.
+     */
+    unmountOnExit: import_prop_types2.default.bool,
+    /**
+     * By default the child component does not perform the enter transition when
+     * it first mounts, regardless of the value of `in`. If you want this
+     * behavior, set both `appear` and `in` to `true`.
+     *
+     * > **Note**: there are no special appear states like `appearing`/`appeared`, this prop
+     * > only adds an additional enter transition. However, in the
+     * > `<CSSTransition>` component that first enter transition does result in
+     * > additional `.appear-*` classes, that way you can choose to style it
+     * > differently.
+     */
+    appear: import_prop_types2.default.bool,
+    /**
+     * Enable or disable enter transitions.
+     */
+    enter: import_prop_types2.default.bool,
+    /**
+     * Enable or disable exit transitions.
+     */
+    exit: import_prop_types2.default.bool,
+    /**
+     * The duration of the transition, in milliseconds.
+     * Required unless `addEndListener` is provided.
+     *
+     * You may specify a single timeout for all transitions:
+     *
+     * ```jsx
+     * timeout={500}
+     * ```
+     *
+     * or individually:
+     *
+     * ```jsx
+     * timeout={{
+     *  appear: 500,
+     *  enter: 300,
+     *  exit: 500,
+     * }}
+     * ```
+     *
+     * - `appear` defaults to the value of `enter`
+     * - `enter` defaults to `0`
+     * - `exit` defaults to `0`
+     *
+     * @type {number | { enter?: number, exit?: number, appear?: number }}
+     */
+    timeout: function timeout(props) {
+      var pt = timeoutsShape;
+      if (!props.addEndListener)
+        pt = pt.isRequired;
+      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
+      return pt.apply(void 0, [props].concat(args));
+    },
+    /**
+     * Add a custom transition end trigger. Called with the transitioning
+     * DOM node and a `done` callback. Allows for more fine grained transition end
+     * logic. Timeouts are still used as a fallback if provided.
+     *
+     * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+     *
+     * ```jsx
+     * addEndListener={(node, done) => {
+     *   // use the css transitionend event to mark the finish of a transition
+     *   node.addEventListener('transitionend', done, false);
+     * }}
+     * ```
+     */
+    addEndListener: import_prop_types2.default.func,
+    /**
+     * Callback fired before the "entering" status is applied. An extra parameter
+     * `isAppearing` is supplied to indicate if the enter stage is occurring on the initial mount
+     *
+     * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+     *
+     * @type Function(node: HtmlElement, isAppearing: bool) -> void
+     */
+    onEnter: import_prop_types2.default.func,
+    /**
+     * Callback fired after the "entering" status is applied. An extra parameter
+     * `isAppearing` is supplied to indicate if the enter stage is occurring on the initial mount
+     *
+     * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+     *
+     * @type Function(node: HtmlElement, isAppearing: bool)
+     */
+    onEntering: import_prop_types2.default.func,
+    /**
+     * Callback fired after the "entered" status is applied. An extra parameter
+     * `isAppearing` is supplied to indicate if the enter stage is occurring on the initial mount
+     *
+     * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+     *
+     * @type Function(node: HtmlElement, isAppearing: bool) -> void
+     */
+    onEntered: import_prop_types2.default.func,
+    /**
+     * Callback fired before the "exiting" status is applied.
+     *
+     * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+     *
+     * @type Function(node: HtmlElement) -> void
+     */
+    onExit: import_prop_types2.default.func,
+    /**
+     * Callback fired after the "exiting" status is applied.
+     *
+     * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+     *
+     * @type Function(node: HtmlElement) -> void
+     */
+    onExiting: import_prop_types2.default.func,
+    /**
+     * Callback fired after the "exited" status is applied.
+     *
+     * **Note**: when `nodeRef` prop is passed, `node` is not passed
+     *
+     * @type Function(node: HtmlElement) -> void
+     */
+    onExited: import_prop_types2.default.func
+  } : {};
+  function noop2() {
+  }
+  Transition.defaultProps = {
+    in: false,
+    mountOnEnter: false,
+    unmountOnExit: false,
+    appear: false,
+    enter: true,
+    exit: true,
+    onEnter: noop2,
+    onEntering: noop2,
+    onEntered: noop2,
+    onExit: noop2,
+    onExiting: noop2,
+    onExited: noop2
+  };
+  Transition.UNMOUNTED = UNMOUNTED;
+  Transition.EXITED = EXITED;
+  Transition.ENTERING = ENTERING;
+  Transition.ENTERED = ENTERED;
+  Transition.EXITING = EXITING;
+  var Transition_default = Transition;
+
+  // ../testeranto/node_modules/dom-helpers/esm/ownerDocument.js
+  function ownerDocument(node) {
+    return node && node.ownerDocument || document;
+  }
+
+  // ../testeranto/node_modules/dom-helpers/esm/ownerWindow.js
+  function ownerWindow(node) {
+    var doc = ownerDocument(node);
+    return doc && doc.defaultView || window;
+  }
+
+  // ../testeranto/node_modules/dom-helpers/esm/getComputedStyle.js
+  function getComputedStyle(node, psuedoElement) {
+    return ownerWindow(node).getComputedStyle(node, psuedoElement);
+  }
+
+  // ../testeranto/node_modules/dom-helpers/esm/hyphenate.js
+  var rUpper = /([A-Z])/g;
+  function hyphenate(string) {
+    return string.replace(rUpper, "-$1").toLowerCase();
+  }
+
+  // ../testeranto/node_modules/dom-helpers/esm/hyphenateStyle.js
+  var msPattern = /^ms-/;
+  function hyphenateStyleName(string) {
+    return hyphenate(string).replace(msPattern, "-ms-");
+  }
+
+  // ../testeranto/node_modules/dom-helpers/esm/isTransform.js
+  var supportedTransforms = /^((translate|rotate|scale)(X|Y|Z|3d)?|matrix(3d)?|perspective|skew(X|Y)?)$/i;
+  function isTransform(value) {
+    return !!(value && supportedTransforms.test(value));
+  }
+
+  // ../testeranto/node_modules/dom-helpers/esm/css.js
+  function style(node, property) {
+    var css = "";
+    var transforms = "";
+    if (typeof property === "string") {
+      return node.style.getPropertyValue(hyphenateStyleName(property)) || getComputedStyle(node).getPropertyValue(hyphenateStyleName(property));
+    }
+    Object.keys(property).forEach(function(key) {
+      var value = property[key];
+      if (!value && value !== 0) {
+        node.style.removeProperty(hyphenateStyleName(key));
+      } else if (isTransform(key)) {
+        transforms += key + "(" + value + ") ";
+      } else {
+        css += hyphenateStyleName(key) + ": " + value + ";";
+      }
+    });
+    if (transforms) {
+      css += "transform: " + transforms + ";";
+    }
+    node.style.cssText += ";" + css;
+  }
+  var css_default = style;
+
+  // ../testeranto/node_modules/dom-helpers/esm/canUseDOM.js
+  var canUseDOM_default = !!(typeof window !== "undefined" && window.document && window.document.createElement);
+
+  // ../testeranto/node_modules/dom-helpers/esm/addEventListener.js
+  var optionsSupported = false;
+  var onceSupported = false;
+  try {
+    options2 = {
+      get passive() {
+        return optionsSupported = true;
+      },
+      get once() {
+        return onceSupported = optionsSupported = true;
+      }
+    };
+    if (canUseDOM_default) {
+      window.addEventListener("test", options2, options2);
+      window.removeEventListener("test", options2, true);
+    }
+  } catch (e) {
+  }
+  var options2;
+  function addEventListener(node, eventName, handler, options2) {
+    if (options2 && typeof options2 !== "boolean" && !onceSupported) {
+      var once = options2.once, capture = options2.capture;
+      var wrappedHandler = handler;
+      if (!onceSupported && once) {
+        wrappedHandler = handler.__once || function onceHandler(event) {
+          this.removeEventListener(eventName, onceHandler, capture);
+          handler.call(this, event);
+        };
+        handler.__once = wrappedHandler;
+      }
+      node.addEventListener(eventName, wrappedHandler, optionsSupported ? options2 : capture);
+    }
+    node.addEventListener(eventName, handler, options2);
+  }
+  var addEventListener_default = addEventListener;
+
+  // ../testeranto/node_modules/dom-helpers/esm/removeEventListener.js
+  function removeEventListener(node, eventName, handler, options2) {
+    var capture = options2 && typeof options2 !== "boolean" ? options2.capture : options2;
+    node.removeEventListener(eventName, handler, capture);
+    if (handler.__once) {
+      node.removeEventListener(eventName, handler.__once, capture);
+    }
+  }
+  var removeEventListener_default = removeEventListener;
+
+  // ../testeranto/node_modules/dom-helpers/esm/listen.js
+  function listen(node, eventName, handler, options2) {
+    addEventListener_default(node, eventName, handler, options2);
+    return function() {
+      removeEventListener_default(node, eventName, handler, options2);
+    };
+  }
+  var listen_default = listen;
+
+  // ../testeranto/node_modules/dom-helpers/esm/triggerEvent.js
+  function triggerEvent(node, eventName, bubbles, cancelable) {
+    if (bubbles === void 0) {
+      bubbles = false;
+    }
+    if (cancelable === void 0) {
+      cancelable = true;
+    }
+    if (node) {
+      var event = document.createEvent("HTMLEvents");
+      event.initEvent(eventName, bubbles, cancelable);
+      node.dispatchEvent(event);
+    }
+  }
+
+  // ../testeranto/node_modules/dom-helpers/esm/transitionEnd.js
+  function parseDuration(node) {
+    var str = css_default(node, "transitionDuration") || "";
+    var mult = str.indexOf("ms") === -1 ? 1e3 : 1;
+    return parseFloat(str) * mult;
+  }
+  function emulateTransitionEnd(element, duration, padding) {
+    if (padding === void 0) {
+      padding = 5;
+    }
+    var called = false;
+    var handle = setTimeout(function() {
+      if (!called)
+        triggerEvent(element, "transitionend", true);
+    }, duration + padding);
+    var remove = listen_default(element, "transitionend", function() {
+      called = true;
+    }, {
+      once: true
+    });
+    return function() {
+      clearTimeout(handle);
+      remove();
+    };
+  }
+  function transitionEnd(element, handler, duration, padding) {
+    if (duration == null)
+      duration = parseDuration(element) || 0;
+    var removeEmulate = emulateTransitionEnd(element, duration, padding);
+    var remove = listen_default(element, "transitionend", handler);
+    return function() {
+      removeEmulate();
+      remove();
+    };
+  }
+
+  // ../testeranto/node_modules/react-bootstrap/esm/transitionEndListener.js
+  function parseDuration2(node, property) {
+    const str = css_default(node, property) || "";
+    const mult = str.indexOf("ms") === -1 ? 1e3 : 1;
+    return parseFloat(str) * mult;
+  }
+  function transitionEndListener(element, handler) {
+    const duration = parseDuration2(element, "transitionDuration");
+    const delay = parseDuration2(element, "transitionDelay");
+    const remove = transitionEnd(element, (e) => {
+      if (e.target === element) {
+        remove();
+        handler(e);
+      }
+    }, duration + delay);
+  }
+
+  // ../testeranto/node_modules/react-bootstrap/esm/triggerBrowserReflow.js
+  function triggerBrowserReflow(node) {
+    node.offsetHeight;
+  }
+
+  // ../testeranto/node_modules/react-bootstrap/esm/TransitionWrapper.js
+  var import_react28 = __toESM(require_react());
+
+  // ../testeranto/node_modules/react-bootstrap/esm/safeFindDOMNode.js
+  var import_react_dom2 = __toESM(require_react_dom());
+  function safeFindDOMNode(componentOrElement) {
+    if (componentOrElement && "setState" in componentOrElement) {
+      return import_react_dom2.default.findDOMNode(componentOrElement);
+    }
+    return componentOrElement != null ? componentOrElement : null;
+  }
+
+  // ../testeranto/node_modules/react-bootstrap/esm/TransitionWrapper.js
+  var import_jsx_runtime13 = __toESM(require_jsx_runtime());
+  var TransitionWrapper = /* @__PURE__ */ import_react28.default.forwardRef(({
+    onEnter,
+    onEntering,
+    onEntered,
+    onExit,
+    onExiting,
+    onExited,
+    addEndListener,
+    children,
+    childRef,
+    ...props
+  }, ref) => {
+    const nodeRef = (0, import_react28.useRef)(null);
+    const mergedRef = useMergedRefs_default(nodeRef, childRef);
+    const attachRef = (r) => {
+      mergedRef(safeFindDOMNode(r));
+    };
+    const normalize = (callback) => (param) => {
+      if (callback && nodeRef.current) {
+        callback(nodeRef.current, param);
+      }
+    };
+    const handleEnter = (0, import_react28.useCallback)(normalize(onEnter), [onEnter]);
+    const handleEntering = (0, import_react28.useCallback)(normalize(onEntering), [onEntering]);
+    const handleEntered = (0, import_react28.useCallback)(normalize(onEntered), [onEntered]);
+    const handleExit = (0, import_react28.useCallback)(normalize(onExit), [onExit]);
+    const handleExiting = (0, import_react28.useCallback)(normalize(onExiting), [onExiting]);
+    const handleExited = (0, import_react28.useCallback)(normalize(onExited), [onExited]);
+    const handleAddEndListener = (0, import_react28.useCallback)(normalize(addEndListener), [addEndListener]);
+    return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Transition_default, {
+      ref,
+      ...props,
+      onEnter: handleEnter,
+      onEntered: handleEntered,
+      onEntering: handleEntering,
+      onExit: handleExit,
+      onExited: handleExited,
+      onExiting: handleExiting,
+      addEndListener: handleAddEndListener,
+      nodeRef,
+      children: typeof children === "function" ? (status, innerProps) => children(status, {
+        ...innerProps,
+        ref: attachRef
+      }) : /* @__PURE__ */ import_react28.default.cloneElement(children, {
+        ref: attachRef
+      })
+    });
+  });
+  var TransitionWrapper_default = TransitionWrapper;
+
+  // ../testeranto/node_modules/react-bootstrap/esm/Fade.js
+  var import_jsx_runtime14 = __toESM(require_jsx_runtime());
+  var defaultProps3 = {
+    in: false,
+    timeout: 300,
+    mountOnEnter: false,
+    unmountOnExit: false,
+    appear: false
+  };
+  var fadeStyles = {
+    [ENTERING]: "show",
+    [ENTERED]: "show"
+  };
+  var Fade = /* @__PURE__ */ React22.forwardRef(({
+    className,
+    children,
+    transitionClasses = {},
+    ...props
+  }, ref) => {
+    const handleEnter = (0, import_react29.useCallback)((node, isAppearing) => {
+      triggerBrowserReflow(node);
+      props.onEnter == null ? void 0 : props.onEnter(node, isAppearing);
+    }, [props]);
+    return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(TransitionWrapper_default, {
+      ref,
+      addEndListener: transitionEndListener,
+      ...props,
+      onEnter: handleEnter,
+      childRef: children.ref,
+      children: (status, innerProps) => /* @__PURE__ */ React22.cloneElement(children, {
+        ...innerProps,
+        className: (0, import_classnames6.default)("fade", className, children.props.className, fadeStyles[status], transitionClasses[status])
+      })
+    });
+  });
+  Fade.defaultProps = defaultProps3;
+  Fade.displayName = "Fade";
+  var Fade_default = Fade;
+
+  // ../testeranto/node_modules/react-bootstrap/esm/getTabTransitionComponent.js
+  function getTabTransitionComponent(transition) {
+    if (typeof transition === "boolean") {
+      return transition ? Fade_default : NoopTransition_default;
+    }
+    return transition;
+  }
+
+  // ../testeranto/node_modules/react-bootstrap/esm/TabContainer.js
+  var import_jsx_runtime15 = __toESM(require_jsx_runtime());
+  var TabContainer = ({
+    transition,
+    ...props
+  }) => /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Tabs_default, {
+    ...props,
+    transition: getTabTransitionComponent(transition)
+  });
+  TabContainer.displayName = "TabContainer";
+  var TabContainer_default = TabContainer;
+
+  // ../testeranto/node_modules/react-bootstrap/esm/TabContent.js
+  var TabContent_default = createWithBsPrefix("tab-content");
+
+  // ../testeranto/node_modules/react-bootstrap/esm/TabPane.js
+  var import_classnames7 = __toESM(require_classnames());
+  var React24 = __toESM(require_react());
+  var import_jsx_runtime16 = __toESM(require_jsx_runtime());
+  var TabPane = /* @__PURE__ */ React24.forwardRef(({
+    bsPrefix,
+    transition,
+    ...props
+  }, ref) => {
+    const [{
+      className,
+      // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+      as: Component = "div",
+      ...rest
+    }, {
+      isActive,
+      onEnter,
+      onEntering,
+      onEntered,
+      onExit,
+      onExiting,
+      onExited,
+      mountOnEnter,
+      unmountOnExit,
+      transition: Transition2 = Fade_default
+    }] = useTabPanel({
+      ...props,
+      transition: getTabTransitionComponent(transition)
+    });
+    const prefix = useBootstrapPrefix(bsPrefix, "tab-pane");
+    return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(TabContext_default.Provider, {
+      value: null,
+      children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(SelectableContext_default.Provider, {
+        value: null,
+        children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(Transition2, {
+          in: isActive,
+          onEnter,
+          onEntering,
+          onEntered,
+          onExit,
+          onExiting,
+          onExited,
+          mountOnEnter,
+          unmountOnExit,
+          children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(Component, {
+            ...rest,
+            ref,
+            className: (0, import_classnames7.default)(className, prefix, isActive && "active")
+          })
+        })
+      })
+    });
+  });
+  TabPane.displayName = "TabPane";
+  var TabPane_default = TabPane;
+
+  // ../testeranto/node_modules/react-bootstrap/esm/Tab.js
+  var import_jsx_runtime17 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime18 = __toESM(require_jsx_runtime());
+  var propTypes = {
+    eventKey: import_prop_types3.default.oneOfType([import_prop_types3.default.string, import_prop_types3.default.number]),
+    /**
+     * Content for the tab title.
+     */
+    title: import_prop_types3.default.node.isRequired,
+    /**
+     * The disabled state of the tab.
+     */
+    disabled: import_prop_types3.default.bool,
+    /**
+     * Class to pass to the underlying nav link.
+     */
+    tabClassName: import_prop_types3.default.string,
+    /**
+     * Object containing attributes to pass to underlying nav link.
+     */
+    tabAttrs: import_prop_types3.default.object
+  };
+  var Tab = () => {
+    throw new Error("ReactBootstrap: The `Tab` component is not meant to be rendered! It's an abstract component that is only valid as a direct Child of the `Tabs` Component. For custom tabs components use TabPane and TabsContainer directly");
+    return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_jsx_runtime17.Fragment, {});
+  };
+  Tab.propTypes = propTypes;
+  var Tab_default = Object.assign(Tab, {
+    Container: TabContainer_default,
+    Content: TabContent_default,
+    Pane: TabPane_default
+  });
+
+  // ../testeranto/node_modules/react-bootstrap/esm/Tabs.js
+  var React27 = __toESM(require_react());
+
+  // ../testeranto/node_modules/react-bootstrap/esm/ElementChildren.js
+  var React26 = __toESM(require_react());
+  function map(children, func) {
+    let index = 0;
+    return React26.Children.map(children, (child) => /* @__PURE__ */ React26.isValidElement(child) ? func(child, index++) : child);
+  }
+  function forEach(children, func) {
+    let index = 0;
+    React26.Children.forEach(children, (child) => {
+      if (/* @__PURE__ */ React26.isValidElement(child))
+        func(child, index++);
+    });
+  }
+
+  // ../testeranto/node_modules/react-bootstrap/esm/Tabs.js
+  var import_jsx_runtime19 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime20 = __toESM(require_jsx_runtime());
+  var defaultProps4 = {
+    variant: "tabs",
+    mountOnEnter: false,
+    unmountOnExit: false
+  };
+  function getDefaultActiveKey(children) {
+    let defaultActiveKey;
+    forEach(children, (child) => {
+      if (defaultActiveKey == null) {
+        defaultActiveKey = child.props.eventKey;
+      }
+    });
+    return defaultActiveKey;
+  }
+  function renderTab(child) {
+    const {
+      title,
+      eventKey,
+      disabled,
+      tabClassName,
+      tabAttrs,
+      id
+    } = child.props;
+    if (title == null) {
+      return null;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(NavItem_default2, {
+      as: "li",
+      role: "presentation",
+      children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(NavLink_default, {
+        as: "button",
+        type: "button",
+        eventKey,
+        disabled,
+        id,
+        className: tabClassName,
+        ...tabAttrs,
+        children: title
+      })
+    });
+  }
+  var Tabs2 = (props) => {
+    const {
+      id,
+      onSelect,
+      transition,
+      mountOnEnter,
+      unmountOnExit,
+      children,
+      activeKey = getDefaultActiveKey(children),
+      ...controlledProps
+    } = useUncontrolled(props, {
+      activeKey: "onSelect"
+    });
+    return /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(Tabs_default, {
+      id,
+      activeKey,
+      onSelect,
+      transition: getTabTransitionComponent(transition),
+      mountOnEnter,
+      unmountOnExit,
+      children: [/* @__PURE__ */ (0, import_jsx_runtime19.jsx)(Nav_default2, {
+        ...controlledProps,
+        role: "tablist",
+        as: "ul",
+        children: map(children, renderTab)
+      }), /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(TabContent_default, {
+        children: map(children, (child) => {
+          const childProps = {
+            ...child.props
+          };
+          delete childProps.title;
+          delete childProps.disabled;
+          delete childProps.tabClassName;
+          delete childProps.tabAttrs;
+          return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(TabPane_default, {
+            ...childProps
+          });
+        })
+      })]
+    });
+  };
+  Tabs2.defaultProps = defaultProps4;
+  Tabs2.displayName = "Tabs";
+  var Tabs_default2 = Tabs2;
+
+  // ../testeranto/node_modules/react-sigma/es/Sigma.js
+  var import_react31 = __toESM(require_react());
+
+  // ../testeranto/node_modules/react-sigma/es/tools.js
+  var import_react30 = __toESM(require_react());
+  function embedProps(elements, extraProps) {
+    return import_react30.default.Children.map(elements, function(element) {
+      return /* @__PURE__ */ import_react30.default.cloneElement(element, extraProps);
+    });
+  }
+
+  // ../testeranto/node_modules/react-sigma/sigma/main.js
+  var Sigma2 = function(e) {
+    var t = {};
+    function i2(n) {
+      if (t[n])
+        return t[n].exports;
+      var s = t[n] = { i: n, l: false, exports: {} };
+      return e[n].call(s.exports, s, s.exports, i2), s.l = true, s.exports;
+    }
+    return i2.m = e, i2.c = t, i2.d = function(e2, t2, n) {
+      i2.o(e2, t2) || Object.defineProperty(e2, t2, { enumerable: true, get: n });
+    }, i2.r = function(e2) {
+      "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e2, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(e2, "__esModule", { value: true });
+    }, i2.t = function(e2, t2) {
+      if (1 & t2 && (e2 = i2(e2)), 8 & t2)
+        return e2;
+      if (4 & t2 && "object" == typeof e2 && e2 && e2.__esModule)
+        return e2;
+      var n = /* @__PURE__ */ Object.create(null);
+      if (i2.r(n), Object.defineProperty(n, "default", { enumerable: true, value: e2 }), 2 & t2 && "string" != typeof e2)
+        for (var s in e2)
+          i2.d(n, s, function(t3) {
+            return e2[t3];
+          }.bind(null, s));
+      return n;
+    }, i2.n = function(e2) {
+      var t2 = e2 && e2.__esModule ? function() {
+        return e2.default;
+      } : function() {
+        return e2;
+      };
+      return i2.d(t2, "a", t2), t2;
+    }, i2.o = function(e2, t2) {
+      return Object.prototype.hasOwnProperty.call(e2, t2);
+    }, i2.p = "", i2(i2.s = 115);
+  }({ 115: function(e, t, i2) {
+    "use strict";
+    i2.r(t);
+    i2(116), i2(117), i2(118), i2(119), i2(120), i2(121), i2(122), i2(123), i2(124), i2(125), i2(126), i2(127), i2(128), i2(129), i2(130), i2(131), i2(132), i2(133), i2(134), i2(135), i2(136), i2(137), i2(138), i2(139), i2(140), i2(141);
+    let n = window.sigma;
+    n.renderers.def = n.renderers.canvas, t.default = n;
+  }, 116: function(e, t) {
+    (function() {
+      (function(e2) {
+        "use strict";
+        var t2 = {}, i2 = function(e3) {
+          var n, s, r, a, o2;
+          i2.classes.dispatcher.extend(this);
+          var d = this, l = e3 || {};
+          if ("string" == typeof l || l instanceof HTMLElement ? l = { renderers: [l] } : "[object Array]" === Object.prototype.toString.call(l) && (l = { renderers: l }), a = l.renderers || l.renderer || l.container, l.renderers && 0 !== l.renderers.length || ("string" == typeof a || a instanceof HTMLElement || "object" == typeof a && "container" in a) && (l.renderers = [a]), l.id) {
+            if (t2[l.id])
+              throw 'sigma: Instance "' + l.id + '" already exists.';
+            Object.defineProperty(this, "id", { value: l.id });
+          } else {
+            for (o2 = 0; t2[o2]; )
+              o2++;
+            Object.defineProperty(this, "id", { value: "" + o2 });
+          }
+          for (t2[this.id] = this, this.settings = new i2.classes.configurable(i2.settings, l.settings || {}), Object.defineProperty(this, "graph", { value: new i2.classes.graph(this.settings), configurable: true }), Object.defineProperty(this, "middlewares", { value: [], configurable: true }), Object.defineProperty(this, "cameras", { value: {}, configurable: true }), Object.defineProperty(this, "renderers", { value: {}, configurable: true }), Object.defineProperty(this, "renderersPerCamera", { value: {}, configurable: true }), Object.defineProperty(this, "cameraFrames", { value: {}, configurable: true }), Object.defineProperty(this, "camera", { get: function() {
+            return this.cameras[0];
+          } }), Object.defineProperty(this, "events", { value: ["click", "rightClick", "clickStage", "doubleClickStage", "rightClickStage", "clickNode", "clickNodes", "doubleClickNode", "doubleClickNodes", "rightClickNode", "rightClickNodes", "overNode", "overNodes", "outNode", "outNodes", "downNode", "downNodes", "upNode", "upNodes"], configurable: true }), this._handler = function(e4) {
+            var t3, i3 = {};
+            for (t3 in e4.data)
+              i3[t3] = e4.data[t3];
+            i3.renderer = e4.target, this.dispatchEvent(e4.type, i3);
+          }.bind(this), n = 0, s = (r = l.renderers || []).length; n < s; n++)
+            this.addRenderer(r[n]);
+          for (n = 0, s = (r = l.middlewares || []).length; n < s; n++)
+            this.middlewares.push("string" == typeof r[n] ? i2.middlewares[r[n]] : r[n]);
+          "object" == typeof l.graph && l.graph && (this.graph.read(l.graph), this.refresh()), window.addEventListener("resize", function() {
+            d.settings && d.refresh();
+          });
+        };
+        if (i2.prototype.addCamera = function(t3) {
+          var n, s = this;
+          if (!arguments.length) {
+            for (t3 = 0; this.cameras["" + t3]; )
+              t3++;
+            t3 = "" + t3;
+          }
+          if (this.cameras[t3])
+            throw 'sigma.addCamera: The camera "' + t3 + '" already exists.';
+          return n = new i2.classes.camera(t3, this.graph, this.settings), this.cameras[t3] = n, n.quadtree = new i2.classes.quad(), i2.classes.edgequad !== e2 && (n.edgequadtree = new i2.classes.edgequad()), n.bind("coordinatesUpdated", function(e3) {
+            s.renderCamera(n, n.isAnimated);
+          }), this.renderersPerCamera[t3] = [], n;
+        }, i2.prototype.killCamera = function(e3) {
+          if (!(e3 = "string" == typeof e3 ? this.cameras[e3] : e3))
+            throw "sigma.killCamera: The camera is undefined.";
+          var t3, i3 = this.renderersPerCamera[e3.id];
+          for (t3 = i3.length - 1; t3 >= 0; t3--)
+            this.killRenderer(i3[t3]);
+          return delete this.renderersPerCamera[e3.id], delete this.cameraFrames[e3.id], delete this.cameras[e3.id], e3.kill && e3.kill(), this;
+        }, i2.prototype.addRenderer = function(e3) {
+          var t3, n, s, r, a = e3 || {};
+          if ("string" == typeof a ? a = { container: document.getElementById(a) } : a instanceof HTMLElement && (a = { container: a }), "string" == typeof a.container && (a.container = document.getElementById(a.container)), "id" in a)
+            t3 = a.id;
+          else {
+            for (t3 = 0; this.renderers["" + t3]; )
+              t3++;
+            t3 = "" + t3;
+          }
+          if (this.renderers[t3])
+            throw 'sigma.addRenderer: The renderer "' + t3 + '" already exists.';
+          if (n = (n = "function" == typeof a.type ? a.type : i2.renderers[a.type]) || i2.renderers.def, s = "camera" in a ? a.camera instanceof i2.classes.camera ? a.camera : this.cameras[a.camera] || this.addCamera(a.camera) : this.addCamera(), this.cameras[s.id] !== s)
+            throw "sigma.addRenderer: The camera is not properly referenced.";
+          return r = new n(this.graph, s, this.settings, a), this.renderers[t3] = r, Object.defineProperty(r, "id", { value: t3 }), r.bind && r.bind(["click", "rightClick", "clickStage", "doubleClickStage", "rightClickStage", "clickNode", "clickNodes", "clickEdge", "clickEdges", "doubleClickNode", "doubleClickNodes", "doubleClickEdge", "doubleClickEdges", "rightClickNode", "rightClickNodes", "rightClickEdge", "rightClickEdges", "overNode", "overNodes", "overEdge", "overEdges", "outNode", "outNodes", "outEdge", "outEdges", "downNode", "downNodes", "downEdge", "downEdges", "upNode", "upNodes", "upEdge", "upEdges"], this._handler), this.renderersPerCamera[s.id].push(r), r;
+        }, i2.prototype.killRenderer = function(e3) {
+          if (!(e3 = "string" == typeof e3 ? this.renderers[e3] : e3))
+            throw "sigma.killRenderer: The renderer is undefined.";
+          var t3 = this.renderersPerCamera[e3.camera.id], i3 = t3.indexOf(e3);
+          return i3 >= 0 && t3.splice(i3, 1), e3.kill && e3.kill(), delete this.renderers[e3.id], this;
+        }, i2.prototype.refresh = function(t3) {
+          var n, s, r, a, o2, d, l = 0;
+          for (t3 = t3 || {}, n = 0, s = (a = this.middlewares || []).length; n < s; n++)
+            a[n].call(this, 0 === n ? "" : "tmp" + l + ":", n === s - 1 ? "ready:" : "tmp" + ++l + ":");
+          for (r in this.cameras)
+            (o2 = this.cameras[r]).settings("autoRescale") && this.renderersPerCamera[o2.id] && this.renderersPerCamera[o2.id].length ? i2.middlewares.rescale.call(this, a.length ? "ready:" : "", o2.readPrefix, { width: this.renderersPerCamera[o2.id][0].width, height: this.renderersPerCamera[o2.id][0].height }) : i2.middlewares.copy.call(this, a.length ? "ready:" : "", o2.readPrefix), t3.skipIndexation || (d = i2.utils.getBoundaries(this.graph, o2.readPrefix), o2.quadtree.index(this.graph.nodes(), { prefix: o2.readPrefix, bounds: { x: d.minX, y: d.minY, width: d.maxX - d.minX, height: d.maxY - d.minY } }), o2.edgequadtree !== e2 && o2.settings("drawEdges") && o2.settings("enableEdgeHovering") && o2.edgequadtree.index(this.graph, { prefix: o2.readPrefix, bounds: { x: d.minX, y: d.minY, width: d.maxX - d.minX, height: d.maxY - d.minY } }));
+          for (n = 0, s = (a = Object.keys(this.renderers)).length; n < s; n++)
+            if (this.renderers[a[n]].process)
+              if (this.settings("skipErrors"))
+                try {
+                  this.renderers[a[n]].process();
+                } catch (e3) {
+                  console.log('Warning: The renderer "' + a[n] + '" crashed on ".process()"');
+                }
+              else
+                this.renderers[a[n]].process();
+          return this.render(), this;
+        }, i2.prototype.render = function() {
+          var e3, t3, i3;
+          for (e3 = 0, t3 = (i3 = Object.keys(this.renderers)).length; e3 < t3; e3++)
+            if (this.settings("skipErrors"))
+              try {
+                this.renderers[i3[e3]].render();
+              } catch (t4) {
+                this.settings("verbose") && console.log('Warning: The renderer "' + i3[e3] + '" crashed on ".render()"');
+              }
+            else
+              this.renderers[i3[e3]].render();
+          return this;
+        }, i2.prototype.renderCamera = function(e3, t3) {
+          var i3, n, s, r = this;
+          if (t3)
+            for (i3 = 0, n = (s = this.renderersPerCamera[e3.id]).length; i3 < n; i3++)
+              if (this.settings("skipErrors"))
+                try {
+                  s[i3].render();
+                } catch (e4) {
+                  this.settings("verbose") && console.log('Warning: The renderer "' + s[i3].id + '" crashed on ".render()"');
+                }
+              else
+                s[i3].render();
+          else if (!this.cameraFrames[e3.id]) {
+            for (i3 = 0, n = (s = this.renderersPerCamera[e3.id]).length; i3 < n; i3++)
+              if (this.settings("skipErrors"))
+                try {
+                  s[i3].render();
+                } catch (e4) {
+                  this.settings("verbose") && console.log('Warning: The renderer "' + s[i3].id + '" crashed on ".render()"');
+                }
+              else
+                s[i3].render();
+            this.cameraFrames[e3.id] = requestAnimationFrame(function() {
+              delete r.cameraFrames[e3.id];
+            });
+          }
+          return this;
+        }, i2.prototype.kill = function() {
+          var e3;
+          for (e3 in this.dispatchEvent("kill"), this.graph.kill(), delete this.middlewares, this.renderers)
+            this.killRenderer(this.renderers[e3]);
+          for (e3 in this.cameras)
+            this.killCamera(this.cameras[e3]);
+          for (e3 in delete this.renderers, delete this.cameras, this)
+            this.hasOwnProperty(e3) && delete this[e3];
+          delete t2[this.id];
+        }, i2.instances = function(e3) {
+          return arguments.length ? t2[e3] : i2.utils.extend({}, t2);
+        }, i2.version = "1.2.1", void 0 !== this.sigma)
+          throw "An object called sigma is already in the global scope.";
+        this.sigma = i2;
+      }).call(this);
+    }).call(window);
+  }, 117: function(e, t, i2) {
+    (function() {
+      !function(i3) {
+        "use strict";
+        if (i3.conrad)
+          throw new Error("conrad already exists");
+        var n, s = false, r = {}, a = {}, o2 = [], d = {}, l = [], h = false, c = { frameDuration: 20, history: true }, u = /* @__PURE__ */ Object.create(null);
+        function g(e2, t2) {
+          var i4, n2, s2, r2, a3, o3, d2 = Array.isArray(e2) ? e2 : e2.split(/ /);
+          for (t2 = void 0 === t2 ? {} : t2, i4 = 0, s2 = d2.length; i4 !== s2; i4 += 1)
+            if (o3 = d2[i4], u[o3])
+              for (a3 = { type: o3, data: t2 || {} }, n2 = 0, r2 = u[o3].length; n2 !== r2; n2 += 1)
+                try {
+                  u[o3][n2].handler(a3);
+                } catch (e3) {
+                }
+        }
+        function f() {
+          var e2, t2, i4, n2, s2 = false, r2 = E(), a3 = o2.shift();
+          if (i4 = a3.job(), r2 = E() - r2, a3.done++, a3.time += r2, a3.currentTime += r2, a3.weightTime = a3.currentTime / (a3.weight || 1), a3.averageTime = a3.time / a3.done, !(n2 = a3.count ? a3.count <= a3.done : !i4)) {
+            for (e2 = 0, t2 = o2.length; e2 < t2; e2++)
+              if (o2[e2].weightTime > a3.weightTime) {
+                o2.splice(e2, 0, a3), s2 = true;
+                break;
+              }
+            s2 || o2.push(a3);
+          }
+          return n2 ? a3 : null;
+        }
+        function m(e2) {
+          var t2 = o2.length;
+          a[e2.id] = e2, e2.status = "running", t2 && (e2.weightTime = o2[t2 - 1].weightTime, e2.currentTime = e2.weightTime * (e2.weight || 1)), e2.startTime = E(), g("jobStarted", b(e2)), o2.push(e2);
+        }
+        function y() {
+          var e2, t2, i4;
+          for (e2 in r)
+            (t2 = r[e2]).after ? d[e2] = t2 : m(t2), delete r[e2];
+          for (s = !!o2.length; o2.length && E() - n < c.frameDuration; )
+            if (i4 = f())
+              for (e2 in p(i4.id), d)
+                d[e2].after === i4.id && (m(d[e2]), delete d[e2]);
+          s ? (n = E(), g("enterFrame"), setTimeout(y, 0)) : g("stop");
+        }
+        function p(e2) {
+          var t2, i4, n2, s2, h2 = false;
+          if (Array.isArray(e2))
+            for (t2 = 0, i4 = e2.length; t2 < i4; t2++)
+              p(e2[t2]);
+          else {
+            if ("string" != typeof e2)
+              throw new Error("[conrad.killJob] Wrong arguments.");
+            for (t2 = 0, i4 = (n2 = [a, d, r]).length; t2 < i4; t2++)
+              e2 in n2[t2] && (s2 = n2[t2][e2], c.history && (s2.status = "done", l.push(s2)), g("jobEnded", b(s2)), delete n2[t2][e2], "function" == typeof s2.end && s2.end(), h2 = true);
+            for (t2 = 0, i4 = (n2 = o2).length; t2 < i4; t2++)
+              if (n2[t2].id === e2) {
+                n2.splice(t2, 1);
+                break;
+              }
+            if (!h2)
+              throw new Error('[conrad.killJob] Job "' + e2 + '" not found.');
+          }
+          return this;
+        }
+        function x(e2) {
+          var t2 = r[e2] || a[e2] || d[e2];
+          return t2 ? v(t2) : null;
+        }
+        function v() {
+          var e2, t2, i4 = {};
+          for (e2 = arguments.length - 1; e2 >= 0; e2--)
+            for (t2 in arguments[e2])
+              i4[t2] = arguments[e2][t2];
+          return i4;
+        }
+        function b(e2) {
+          var t2, i4, n2;
+          if (!e2)
+            return e2;
+          if (Array.isArray(e2))
+            for (t2 = [], i4 = 0, n2 = e2.length; i4 < n2; i4++)
+              t2.push(b(e2[i4]));
+          else if ("object" == typeof e2)
+            for (i4 in t2 = {}, e2)
+              t2[i4] = b(e2[i4]);
+          else
+            t2 = e2;
+          return t2;
+        }
+        function w(e2) {
+          var t2, i4 = [];
+          for (t2 in e2)
+            i4.push(e2[t2]);
+          return i4;
+        }
+        function E() {
+          return Date.now ? Date.now() : (/* @__PURE__ */ new Date()).getTime();
+        }
+        Array.isArray || (Array.isArray = function(e2) {
+          return "[object Array]" === Object.prototype.toString.call(e2);
+        });
+        var C = { hasJob: x, addJob: function e2(t2, i4) {
+          var a3, o3, d2;
+          if (Array.isArray(t2)) {
+            for (h = true, a3 = 0, o3 = t2.length; a3 < o3; a3++)
+              e2(t2[a3].id, v(t2[a3], i4));
+            h = false, s || (n = E(), g("start"), y());
+          } else if ("object" == typeof t2)
+            if ("string" == typeof t2.id)
+              e2(t2.id, t2);
+            else {
+              for (a3 in h = true, t2)
+                "function" == typeof t2[a3] ? e2(a3, v({ job: t2[a3] }, i4)) : e2(a3, v(t2[a3], i4));
+              h = false, s || (n = E(), g("start"), y());
+            }
+          else {
+            if ("string" != typeof t2)
+              throw new Error("[conrad.addJob] Wrong arguments.");
+            if (x(t2))
+              throw new Error('[conrad.addJob] Job with id "' + t2 + '" already exists.');
+            if ("function" == typeof i4)
+              d2 = { id: t2, done: 0, time: 0, status: "waiting", currentTime: 0, averageTime: 0, weightTime: 0, job: i4 };
+            else {
+              if ("object" != typeof i4)
+                throw new Error("[conrad.addJob] Wrong arguments.");
+              d2 = v({ id: t2, done: 0, time: 0, status: "waiting", currentTime: 0, averageTime: 0, weightTime: 0 }, i4);
+            }
+            r[t2] = d2, g("jobAdded", b(d2)), s || h || (n = E(), g("start"), y());
+          }
+          return this;
+        }, killJob: p, killAll: function() {
+          var e2, t2 = v(r, a, d);
+          if (c.history)
+            for (e2 in t2)
+              t2[e2].status = "done", l.push(t2[e2]), "function" == typeof t2[e2].end && t2[e2].end();
+          return r = {}, d = {}, a = {}, o2 = [], s = false, this;
+        }, settings: function(e2, t2) {
+          var i4;
+          if ("string" == typeof a1 && 1 === arguments.length)
+            return c[a1];
+          for (var n2 in i4 = "object" == typeof a1 && 1 === arguments.length && a1 || {}, "string" == typeof a1 && (i4[a1] = a2), i4)
+            void 0 !== i4[n2] ? c[n2] = i4[n2] : delete c[n2];
+          return this;
+        }, getStats: function(e2, t2) {
+          var i4, n2, s2, o3, h2, c2, u2;
+          if (!arguments.length) {
+            for (n2 in h2 = [], r)
+              h2.push(r[n2]);
+            for (n2 in d)
+              h2.push(d[n2]);
+            for (n2 in a)
+              h2.push(a[n2]);
+            h2 = h2.concat(l);
+          }
+          if ("string" == typeof e2)
+            switch (e2) {
+              case "waiting":
+                h2 = w(d);
+                break;
+              case "running":
+                h2 = w(a);
+                break;
+              case "done":
+                h2 = l;
+                break;
+              default:
+                c2 = e2;
+            }
+          if (e2 instanceof RegExp && (c2 = e2), !c2 && ("string" == typeof t2 || t2 instanceof RegExp) && (c2 = t2), c2) {
+            if (u2 = "string" == typeof c2, h2 instanceof Array)
+              i4 = h2;
+            else if ("object" == typeof h2)
+              for (n2 in i4 = [], h2)
+                i4 = i4.concat(h2[n2]);
+            else {
+              for (n2 in i4 = [], r)
+                i4.push(r[n2]);
+              for (n2 in d)
+                i4.push(d[n2]);
+              for (n2 in a)
+                i4.push(a[n2]);
+              i4 = i4.concat(l);
+            }
+            for (h2 = [], s2 = 0, o3 = i4.length; s2 < o3; s2++)
+              (u2 ? i4[s2].id === c2 : i4[s2].id.match(c2)) && h2.push(i4[s2]);
+          }
+          return b(h2);
+        }, isRunning: function() {
+          return s;
+        }, clearHistory: function() {
+          return l = [], this;
+        }, bind: function e2(t2, i4) {
+          var n2, s2, r2, a3;
+          if (arguments.length) {
+            if (1 === arguments.length && Object(arguments[0]) === arguments[0])
+              for (t2 in arguments[0])
+                e2(t2, arguments[0][t2]);
+            else if (arguments.length > 1)
+              for (n2 = 0, s2 = (a3 = Array.isArray(t2) ? t2 : t2.split(/ /)).length; n2 !== s2; n2 += 1)
+                r2 = a3[n2], u[r2] || (u[r2] = []), u[r2].push({ handler: i4 });
+          }
+        }, unbind: function(e2, t2) {
+          var i4, n2, s2, r2, a3, o3, d2 = Array.isArray(e2) ? e2 : e2.split(/ /);
+          if (arguments.length)
+            if (t2)
+              for (i4 = 0, n2 = d2.length; i4 !== n2; i4 += 1) {
+                if (o3 = d2[i4], u[o3]) {
+                  for (a3 = [], s2 = 0, r2 = u[o3].length; s2 !== r2; s2 += 1)
+                    u[o3][s2].handler !== t2 && a3.push(u[o3][s2]);
+                  u[o3] = a3;
+                }
+                u[o3] && 0 === u[o3].length && delete u[o3];
+              }
+            else
+              for (i4 = 0, n2 = d2.length; i4 !== n2; i4 += 1)
+                delete u[d2[i4]];
+          else
+            u = /* @__PURE__ */ Object.create(null);
+        }, version: "0.1.0" };
+        e.exports && (t = e.exports = C), t.conrad = C, i3.conrad = C;
+      }(this);
+    }).call(window);
+  }, 118: function(e, t) {
+    (function() {
+      (function(e2) {
+        "use strict";
+        if ("undefined" == typeof sigma)
+          throw "sigma is not declared";
+        var t2, i2 = this;
+        sigma.utils = sigma.utils || {}, sigma.utils.extend = function() {
+          var e3, t3, i3 = {}, n2 = arguments.length;
+          for (e3 = n2 - 1; e3 >= 0; e3--)
+            for (t3 in arguments[e3])
+              i3[t3] = arguments[e3][t3];
+          return i3;
+        }, sigma.utils.dateNow = function() {
+          return Date.now ? Date.now() : (/* @__PURE__ */ new Date()).getTime();
+        }, sigma.utils.pkg = function(e3) {
+          return (e3 || "").split(".").reduce(function(e4, t3) {
+            return t3 in e4 ? e4[t3] : e4[t3] = {};
+          }, i2);
+        }, sigma.utils.id = (t2 = 0, function() {
+          return ++t2;
+        });
+        var n = {};
+        sigma.utils.floatColor = function(e3) {
+          if (n[e3])
+            return n[e3];
+          var t3 = e3, i3 = 0, s = 0, r = 0;
+          "#" === e3[0] ? 3 === (e3 = e3.slice(1)).length ? (i3 = parseInt(e3.charAt(0) + e3.charAt(0), 16), s = parseInt(e3.charAt(1) + e3.charAt(1), 16), r = parseInt(e3.charAt(2) + e3.charAt(2), 16)) : (i3 = parseInt(e3.charAt(0) + e3.charAt(1), 16), s = parseInt(e3.charAt(2) + e3.charAt(3), 16), r = parseInt(e3.charAt(4) + e3.charAt(5), 16)) : e3.match(/^ *rgba? *\(/) && (i3 = +(e3 = e3.match(/^ *rgba? *\( *([0-9]*) *, *([0-9]*) *, *([0-9]*) *(,.*)?\) *$/))[1], s = +e3[2], r = +e3[3]);
+          var a = 256 * i3 * 256 + 256 * s + r;
+          return n[t3] = a, a;
+        }, sigma.utils.zoomTo = function(e3, t3, i3, n2, s) {
+          var r, a, o2, d = e3.settings;
+          (a = Math.max(d("zoomMin"), Math.min(d("zoomMax"), e3.ratio * n2))) !== e3.ratio && (o2 = { x: t3 * (1 - (n2 = a / e3.ratio)) + e3.x, y: i3 * (1 - n2) + e3.y, ratio: a }, s && s.duration ? (r = sigma.misc.animation.killAll(e3), s = sigma.utils.extend(s, { easing: r ? "quadraticOut" : "quadraticInOut" }), sigma.misc.animation.camera(e3, o2, s)) : (e3.goTo(o2), s && s.onComplete && s.onComplete()));
+        }, sigma.utils.getQuadraticControlPoint = function(e3, t3, i3, n2) {
+          return { x: (e3 + i3) / 2 + (n2 - t3) / 4, y: (t3 + n2) / 2 + (e3 - i3) / 4 };
+        }, sigma.utils.getPointOnQuadraticCurve = function(e3, t3, i3, n2, s, r, a) {
+          return { x: Math.pow(1 - e3, 2) * t3 + 2 * (1 - e3) * e3 * r + Math.pow(e3, 2) * n2, y: Math.pow(1 - e3, 2) * i3 + 2 * (1 - e3) * e3 * a + Math.pow(e3, 2) * s };
+        }, sigma.utils.getPointOnBezierCurve = function(e3, t3, i3, n2, s, r, a, o2, d) {
+          var l = Math.pow(1 - e3, 3), h = 3 * e3 * Math.pow(1 - e3, 2), c = 3 * Math.pow(e3, 2) * (1 - e3), u = Math.pow(e3, 3);
+          return { x: l * t3 + h * r + c * o2 + u * n2, y: l * i3 + h * a + c * d + u * s };
+        }, sigma.utils.getSelfLoopControlPoints = function(e3, t3, i3) {
+          return { x1: e3 - 7 * i3, y1: t3, x2: e3, y2: t3 + 7 * i3 };
+        }, sigma.utils.getDistance = function(e3, t3, i3, n2) {
+          return Math.sqrt(Math.pow(i3 - e3, 2) + Math.pow(n2 - t3, 2));
+        }, sigma.utils.getCircleIntersection = function(e3, t3, i3, n2, s, r) {
+          var a, o2, d, l, h, c, u, g, f;
+          return o2 = n2 - e3, d = s - t3, !((l = Math.sqrt(d * d + o2 * o2)) > i3 + r) && (!(l < Math.abs(i3 - r)) && (f = t3 + d * (a = (i3 * i3 - r * r + l * l) / (2 * l)) / l, { xi: (g = e3 + o2 * a / l) + (c = (h = Math.sqrt(i3 * i3 - a * a)) / l * -d), xi_prime: g - c, yi: f + (u = o2 * (h / l)), yi_prime: f - u }));
+        }, sigma.utils.isPointOnSegment = function(e3, t3, i3, n2, s, r, a) {
+          return Math.abs((t3 - n2) * (s - i3) - (e3 - i3) * (r - n2)) / sigma.utils.getDistance(i3, n2, s, r) < a && Math.min(i3, s) <= e3 && e3 <= Math.max(i3, s) && Math.min(n2, r) <= t3 && t3 <= Math.max(n2, r);
+        }, sigma.utils.isPointOnQuadraticCurve = function(e3, t3, i3, n2, s, r, a, o2, d) {
+          var l = sigma.utils.getDistance(i3, n2, s, r);
+          if (Math.abs(e3 - i3) > l || Math.abs(t3 - n2) > l)
+            return false;
+          for (var h, c = 0.5, u = sigma.utils.getDistance(e3, t3, i3, n2) < sigma.utils.getDistance(e3, t3, s, r) ? -0.01 : 0.01, g = 100, f = sigma.utils.getPointOnQuadraticCurve(c, i3, n2, s, r, a, o2), m = sigma.utils.getDistance(e3, t3, f.x, f.y); g-- > 0 && c >= 0 && c <= 1 && m > d && (u > 1e-3 || u < -1e-3); )
+            h = m, f = sigma.utils.getPointOnQuadraticCurve(c, i3, n2, s, r, a, o2), (m = sigma.utils.getDistance(e3, t3, f.x, f.y)) > h ? c += u = -u / 2 : c + u < 0 || c + u > 1 ? (u /= 2, m = h) : c += u;
+          return m < d;
+        }, sigma.utils.isPointOnBezierCurve = function(e3, t3, i3, n2, s, r, a, o2, d, l, h) {
+          var c = sigma.utils.getDistance(i3, n2, a, o2);
+          if (Math.abs(e3 - i3) > c || Math.abs(t3 - n2) > c)
+            return false;
+          for (var u, g = 0.5, f = sigma.utils.getDistance(e3, t3, i3, n2) < sigma.utils.getDistance(e3, t3, s, r) ? -0.01 : 0.01, m = 100, y = sigma.utils.getPointOnBezierCurve(g, i3, n2, s, r, a, o2, d, l), p = sigma.utils.getDistance(e3, t3, y.x, y.y); m-- > 0 && g >= 0 && g <= 1 && p > h && (f > 1e-3 || f < -1e-3); )
+            u = p, y = sigma.utils.getPointOnBezierCurve(g, i3, n2, s, r, a, o2, d, l), (p = sigma.utils.getDistance(e3, t3, y.x, y.y)) > u ? g += f = -f / 2 : g + f < 0 || g + f > 1 ? (f /= 2, p = u) : g += f;
+          return p < h;
+        }, sigma.utils.getX = function(t3) {
+          return t3.offsetX !== e2 && t3.offsetX || t3.layerX !== e2 && t3.layerX || t3.clientX !== e2 && t3.clientX;
+        }, sigma.utils.getY = function(t3) {
+          return t3.offsetY !== e2 && t3.offsetY || t3.layerY !== e2 && t3.layerY || t3.clientY !== e2 && t3.clientY;
+        }, sigma.utils.getPixelRatio = function() {
+          var t3 = 1;
+          return window.screen.deviceXDPI !== e2 && window.screen.logicalXDPI !== e2 && window.screen.deviceXDPI > window.screen.logicalXDPI ? t3 = window.screen.systemXDPI / window.screen.logicalXDPI : window.devicePixelRatio !== e2 && (t3 = window.devicePixelRatio), t3;
+        }, sigma.utils.getWidth = function(t3) {
+          var i3 = t3.target.ownerSVGElement ? t3.target.ownerSVGElement.width : t3.target.width;
+          return "number" == typeof i3 && i3 || i3 !== e2 && i3.baseVal !== e2 && i3.baseVal.value;
+        }, sigma.utils.getCenter = function(e3) {
+          var t3 = -1 !== e3.target.namespaceURI.indexOf("svg") ? 1 : sigma.utils.getPixelRatio();
+          return { x: sigma.utils.getWidth(e3) / (2 * t3), y: sigma.utils.getHeight(e3) / (2 * t3) };
+        }, sigma.utils.mouseCoords = function(e3, t3, i3) {
+          return t3 = t3 || sigma.utils.getX(e3), i3 = i3 || sigma.utils.getY(e3), { x: t3 - sigma.utils.getCenter(e3).x, y: i3 - sigma.utils.getCenter(e3).y, clientX: e3.clientX, clientY: e3.clientY, ctrlKey: e3.ctrlKey, metaKey: e3.metaKey, altKey: e3.altKey, shiftKey: e3.shiftKey };
+        }, sigma.utils.getHeight = function(t3) {
+          var i3 = t3.target.ownerSVGElement ? t3.target.ownerSVGElement.height : t3.target.height;
+          return "number" == typeof i3 && i3 || i3 !== e2 && i3.baseVal !== e2 && i3.baseVal.value;
+        }, sigma.utils.getDelta = function(t3) {
+          return t3.wheelDelta !== e2 && t3.wheelDelta || t3.detail !== e2 && -t3.detail;
+        }, sigma.utils.getOffset = function(e3) {
+          for (var t3 = 0, i3 = 0; e3; )
+            i3 += parseInt(e3.offsetTop), t3 += parseInt(e3.offsetLeft), e3 = e3.offsetParent;
+          return { top: i3, left: t3 };
+        }, sigma.utils.doubleClick = function(e3, t3, i3) {
+          var n2, s = 0;
+          e3._doubleClickHandler = e3._doubleClickHandler || {}, e3._doubleClickHandler[t3] = e3._doubleClickHandler[t3] || [], (n2 = e3._doubleClickHandler[t3]).push(function(e4) {
+            if (2 === ++s)
+              return s = 0, i3(e4);
+            1 === s && setTimeout(function() {
+              s = 0;
+            }, sigma.settings.doubleClickTimeout);
+          }), e3.addEventListener(t3, n2[n2.length - 1], false);
+        }, sigma.utils.unbindDoubleClick = function(e3, t3) {
+          for (var i3, n2 = (e3._doubleClickHandler || {})[t3] || []; i3 = n2.pop(); )
+            e3.removeEventListener(t3, i3);
+          delete (e3._doubleClickHandler || {})[t3];
+        }, sigma.utils.easings = sigma.utils.easings || {}, sigma.utils.easings.linearNone = function(e3) {
+          return e3;
+        }, sigma.utils.easings.quadraticIn = function(e3) {
+          return e3 * e3;
+        }, sigma.utils.easings.quadraticOut = function(e3) {
+          return e3 * (2 - e3);
+        }, sigma.utils.easings.quadraticInOut = function(e3) {
+          return (e3 *= 2) < 1 ? 0.5 * e3 * e3 : -0.5 * (--e3 * (e3 - 2) - 1);
+        }, sigma.utils.easings.cubicIn = function(e3) {
+          return e3 * e3 * e3;
+        }, sigma.utils.easings.cubicOut = function(e3) {
+          return --e3 * e3 * e3 + 1;
+        }, sigma.utils.easings.cubicInOut = function(e3) {
+          return (e3 *= 2) < 1 ? 0.5 * e3 * e3 * e3 : 0.5 * ((e3 -= 2) * e3 * e3 + 2);
+        }, sigma.utils.loadShader = function(e3, t3, i3, n2) {
+          var s = e3.createShader(i3);
+          return e3.shaderSource(s, t3), e3.compileShader(s), e3.getShaderParameter(s, e3.COMPILE_STATUS) ? s : (n2 && n2('Error compiling shader "' + s + '":' + e3.getShaderInfoLog(s)), e3.deleteShader(s), null);
+        }, sigma.utils.loadProgram = function(e3, t3, i3, n2, s) {
+          var r, a = e3.createProgram();
+          for (r = 0; r < t3.length; ++r)
+            e3.attachShader(a, t3[r]);
+          if (i3)
+            for (r = 0; r < i3.length; ++r)
+              e3.bindAttribLocation(a, locations ? locations[r] : r, opt_attribs[r]);
+          return e3.linkProgram(a), e3.getProgramParameter(a, e3.LINK_STATUS) ? a : (s && s("Error in program linking: " + e3.getProgramInfoLog(a)), e3.deleteProgram(a), null);
+        }, sigma.utils.pkg("sigma.utils.matrices"), sigma.utils.matrices.translation = function(e3, t3) {
+          return [1, 0, 0, 0, 1, 0, e3, t3, 1];
+        }, sigma.utils.matrices.rotation = function(e3, t3) {
+          var i3 = Math.cos(e3), n2 = Math.sin(e3);
+          return t3 ? [i3, -n2, n2, i3] : [i3, -n2, 0, n2, i3, 0, 0, 0, 1];
+        }, sigma.utils.matrices.scale = function(e3, t3) {
+          return t3 ? [e3, 0, 0, e3] : [e3, 0, 0, 0, e3, 0, 0, 0, 1];
+        }, sigma.utils.matrices.multiply = function(e3, t3, i3) {
+          var n2 = i3 ? 2 : 3, s = e3[0 * n2 + 0], r = e3[0 * n2 + 1], a = e3[0 * n2 + 2], o2 = e3[1 * n2 + 0], d = e3[1 * n2 + 1], l = e3[1 * n2 + 2], h = e3[2 * n2 + 0], c = e3[2 * n2 + 1], u = e3[2 * n2 + 2], g = t3[0 * n2 + 0], f = t3[0 * n2 + 1], m = t3[0 * n2 + 2], y = t3[1 * n2 + 0], p = t3[1 * n2 + 1], x = t3[1 * n2 + 2], v = t3[2 * n2 + 0], b = t3[2 * n2 + 1], w = t3[2 * n2 + 2];
+          return i3 ? [s * g + r * y, s * f + r * p, o2 * g + d * y, o2 * f + d * p] : [s * g + r * y + a * v, s * f + r * p + a * b, s * m + r * x + a * w, o2 * g + d * y + l * v, o2 * f + d * p + l * b, o2 * m + d * x + l * w, h * g + c * y + u * v, h * f + c * p + u * b, h * m + c * x + u * w];
+        };
+      }).call(this);
+    }).call(window);
+  }, 119: function(e, t) {
+    (function() {
+      !function(e2) {
+        "use strict";
+        var t2, i2 = 0, n = ["ms", "moz", "webkit", "o"];
+        for (t2 = 0; t2 < n.length && !e2.requestAnimationFrame; t2++)
+          e2.requestAnimationFrame = e2[n[t2] + "RequestAnimationFrame"], e2.cancelAnimationFrame = e2[n[t2] + "CancelAnimationFrame"] || e2[n[t2] + "CancelRequestAnimationFrame"];
+        e2.requestAnimationFrame || (e2.requestAnimationFrame = function(t3, n2) {
+          var s = (/* @__PURE__ */ new Date()).getTime(), r = Math.max(0, 16 - (s - i2)), a = e2.setTimeout(function() {
+            t3(s + r);
+          }, r);
+          return i2 = s + r, a;
+        }), e2.cancelAnimationFrame || (e2.cancelAnimationFrame = function(e3) {
+          clearTimeout(e3);
+        }), Function.prototype.bind || (Function.prototype.bind = function(e3) {
+          if ("function" != typeof this)
+            throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
+          var t3, i3, n2 = Array.prototype.slice.call(arguments, 1), s = this;
+          return i3 = function() {
+            return s.apply(this instanceof t3 && e3 ? this : e3, n2.concat(Array.prototype.slice.call(arguments)));
+          }, (t3 = function() {
+          }).prototype = this.prototype, i3.prototype = new t3(), i3;
+        });
+      }(this);
+    }).call(window);
+  }, 120: function(e, t) {
+    (function() {
+      (function(e2) {
+        "use strict";
+        if ("undefined" == typeof sigma)
+          throw "sigma is not declared";
+        sigma.utils.pkg("sigma.settings");
+        sigma.settings = sigma.utils.extend(sigma.settings || {}, { clone: true, immutable: true, verbose: false, classPrefix: "sigma", defaultNodeType: "def", defaultEdgeType: "def", defaultLabelColor: "#000", defaultEdgeColor: "#000", defaultNodeColor: "#000", defaultLabelSize: 14, edgeColor: "source", minArrowSize: 0, font: "arial", fontStyle: "", labelColor: "default", labelSize: "fixed", labelSizeRatio: 1, labelThreshold: 8, webglOversamplingRatio: 2, borderSize: 0, defaultNodeBorderColor: "#000", hoverFont: "", singleHover: true, hoverFontStyle: "", labelHoverShadow: "default", labelHoverShadowColor: "#000", nodeHoverColor: "node", defaultNodeHoverColor: "#000", labelHoverBGColor: "default", defaultHoverLabelBGColor: "#fff", labelHoverColor: "default", defaultLabelHoverColor: "#000", edgeHoverColor: "edge", edgeHoverSizeRatio: 1, defaultEdgeHoverColor: "#000", edgeHoverExtremities: false, drawEdges: true, drawNodes: true, drawLabels: true, drawEdgeLabels: false, batchEdgesDrawing: false, hideEdgesOnMove: false, canvasEdgesBatchSize: 500, webglEdgesBatchSize: 1e3, scalingMode: "inside", sideMargin: 0, minEdgeSize: 0.5, maxEdgeSize: 1, minNodeSize: 1, maxNodeSize: 8, touchEnabled: true, mouseEnabled: true, mouseWheelEnabled: true, doubleClickEnabled: true, eventsEnabled: true, zoomingRatio: 1.7, doubleClickZoomingRatio: 2.2, zoomMin: 0.0625, zoomMax: 2, mouseZoomDuration: 200, doubleClickZoomDuration: 200, mouseInertiaDuration: 200, mouseInertiaRatio: 3, touchInertiaDuration: 200, touchInertiaRatio: 3, doubleClickTimeout: 300, doubleTapTimeout: 300, dragTimeout: 200, autoResize: true, autoRescale: true, enableCamera: true, enableHovering: true, enableEdgeHovering: false, edgeHoverPrecision: 5, rescaleIgnoreSize: false, skipErrors: false, nodesPowRatio: 0.5, edgesPowRatio: 0.5, animationsTime: 200 });
+      }).call(this);
+    }).call(window);
+  }, 121: function(e, t, i2) {
+    (function() {
+      (function() {
+        "use strict";
+        var i3 = function() {
+          Object.defineProperty(this, "_handlers", { value: {} });
+        };
+        i3.prototype.bind = function(e2, t2) {
+          var i4, n, s, r;
+          if (1 === arguments.length && "object" == typeof arguments[0])
+            for (e2 in arguments[0])
+              this.bind(e2, arguments[0][e2]);
+          else {
+            if (2 !== arguments.length || "function" != typeof arguments[1])
+              throw "bind: Wrong arguments.";
+            for (i4 = 0, n = (r = "string" == typeof e2 ? e2.split(" ") : e2).length; i4 !== n; i4 += 1)
+              (s = r[i4]) && (this._handlers[s] || (this._handlers[s] = []), this._handlers[s].push({ handler: t2 }));
+          }
+          return this;
+        }, i3.prototype.unbind = function(e2, t2) {
+          var i4, n, s, r, a, o2, d, l = "string" == typeof e2 ? e2.split(" ") : e2;
+          if (!arguments.length) {
+            for (a in this._handlers)
+              delete this._handlers[a];
+            return this;
+          }
+          if (t2)
+            for (i4 = 0, n = l.length; i4 !== n; i4 += 1) {
+              if (d = l[i4], this._handlers[d]) {
+                for (o2 = [], s = 0, r = this._handlers[d].length; s !== r; s += 1)
+                  this._handlers[d][s].handler !== t2 && o2.push(this._handlers[d][s]);
+                this._handlers[d] = o2;
+              }
+              this._handlers[d] && 0 === this._handlers[d].length && delete this._handlers[d];
+            }
+          else
+            for (i4 = 0, n = l.length; i4 !== n; i4 += 1)
+              delete this._handlers[l[i4]];
+          return this;
+        }, i3.prototype.dispatchEvent = function(e2, t2) {
+          var i4, n, s, r, a, o2, d, l = "string" == typeof e2 ? e2.split(" ") : e2;
+          for (t2 = void 0 === t2 ? {} : t2, i4 = 0, n = l.length; i4 !== n; i4 += 1)
+            if (d = l[i4], this._handlers[d]) {
+              for (o2 = this.getEvent(d, t2), a = [], s = 0, r = this._handlers[d].length; s !== r; s += 1)
+                this._handlers[d][s].handler(o2), this._handlers[d][s].one || a.push(this._handlers[d][s]);
+              this._handlers[d] = a;
+            }
+          return this;
+        }, i3.prototype.getEvent = function(e2, t2) {
+          return { type: e2, data: t2 || {}, target: this };
+        }, i3.extend = function(e2, t2) {
+          var n;
+          for (n in i3.prototype)
+            i3.prototype.hasOwnProperty(n) && (e2[n] = i3.prototype[n]);
+          i3.apply(e2, t2);
+        }, void 0 !== this.sigma ? (this.sigma.classes = this.sigma.classes || {}, this.sigma.classes.dispatcher = i3) : (e.exports && (t = e.exports = i3), t.dispatcher = i3);
+      }).call(this);
+    }).call(window);
+  }, 122: function(e, t, i2) {
+    (function() {
+      (function() {
+        "use strict";
+        var i3 = function() {
+          var e2, t2, n = {}, s = Array.prototype.slice.call(arguments, 0), r = function(e3, t3) {
+            var i4, a, o2, d;
+            if (1 !== arguments.length || "string" != typeof e3) {
+              if ("object" == typeof e3 && "string" == typeof t3)
+                return void 0 !== (e3 || {})[t3] ? e3[t3] : r(t3);
+              for (i4 = "object" == typeof e3 && void 0 === t3 ? e3 : {}, "string" == typeof e3 && (i4[e3] = t3), a = 0, o2 = (d = Object.keys(i4)).length; a < o2; a++)
+                n[d[a]] = i4[d[a]];
+              return this;
+            }
+            if (void 0 !== n[e3])
+              return n[e3];
+            for (a = 0, o2 = s.length; a < o2; a++)
+              if (void 0 !== s[a][e3])
+                return s[a][e3];
+          };
+          for (r.embedObjects = function() {
+            var e3 = s.concat(n).concat(Array.prototype.splice.call(arguments, 0));
+            return i3.apply({}, e3);
+          }, e2 = 0, t2 = arguments.length; e2 < t2; e2++)
+            r(arguments[e2]);
+          return r;
+        };
+        void 0 !== this.sigma ? (this.sigma.classes = this.sigma.classes || {}, this.sigma.classes.configurable = i3) : (e.exports && (t = e.exports = i3), t.configurable = i3);
+      }).call(this);
+    }).call(window);
+  }, 123: function(e, t, i2) {
+    (function() {
+      (function(i3) {
+        "use strict";
+        var n = /* @__PURE__ */ Object.create(null), s = /* @__PURE__ */ Object.create(null), r = /* @__PURE__ */ Object.create(null), a = /* @__PURE__ */ Object.create(null), o2 = /* @__PURE__ */ Object.create(null), d = { immutable: true, clone: true }, l = function(e2) {
+          return d[e2];
+        }, h = function(e2) {
+          var t2, i4, s2;
+          for (t2 in s2 = { settings: e2 || l, nodesArray: [], edgesArray: [], nodesIndex: /* @__PURE__ */ Object.create(null), edgesIndex: /* @__PURE__ */ Object.create(null), inNeighborsIndex: /* @__PURE__ */ Object.create(null), outNeighborsIndex: /* @__PURE__ */ Object.create(null), allNeighborsIndex: /* @__PURE__ */ Object.create(null), inNeighborsCount: /* @__PURE__ */ Object.create(null), outNeighborsCount: /* @__PURE__ */ Object.create(null), allNeighborsCount: /* @__PURE__ */ Object.create(null) }, r)
+            r[t2].call(s2);
+          for (t2 in n)
+            i4 = c(t2, s2, n[t2]), this[t2] = i4, s2[t2] = i4;
+        };
+        function c(e2, t2, i4) {
+          return function() {
+            var n2, s2;
+            for (n2 in o2[e2])
+              o2[e2][n2].apply(t2, arguments);
+            for (n2 in s2 = i4.apply(t2, arguments), a[e2])
+              a[e2][n2].apply(t2, arguments);
+            return s2;
+          };
+        }
+        function u(e2) {
+          var t2;
+          for (t2 in e2)
+            "hasOwnProperty" in e2 && !e2.hasOwnProperty(t2) || delete e2[t2];
+          return e2;
+        }
+        h.addMethod = function(e2, t2) {
+          if ("string" != typeof e2 || "function" != typeof t2 || 2 !== arguments.length)
+            throw "addMethod: Wrong arguments.";
+          if (n[e2] || h[e2])
+            throw 'The method "' + e2 + '" already exists.';
+          return n[e2] = t2, a[e2] = /* @__PURE__ */ Object.create(null), o2[e2] = /* @__PURE__ */ Object.create(null), this;
+        }, h.hasMethod = function(e2) {
+          return !(!n[e2] && !h[e2]);
+        }, h.attach = function(e2, t2, i4, n2) {
+          if ("string" != typeof e2 || "string" != typeof t2 || "function" != typeof i4 || arguments.length < 3 || arguments.length > 4)
+            throw "attach: Wrong arguments.";
+          var s2;
+          if ("constructor" === e2)
+            s2 = r;
+          else if (n2) {
+            if (!o2[e2])
+              throw 'The method "' + e2 + '" does not exist.';
+            s2 = o2[e2];
+          } else {
+            if (!a[e2])
+              throw 'The method "' + e2 + '" does not exist.';
+            s2 = a[e2];
+          }
+          if (s2[t2])
+            throw 'A function "' + t2 + '" is already attached to the method "' + e2 + '".';
+          return s2[t2] = i4, this;
+        }, h.attachBefore = function(e2, t2, i4) {
+          return this.attach(e2, t2, i4, true);
+        }, h.addIndex = function(e2, t2) {
+          if ("string" != typeof e2 || Object(t2) !== t2 || 2 !== arguments.length)
+            throw "addIndex: Wrong arguments.";
+          if (s[e2])
+            throw 'The index "' + e2 + '" already exists.';
+          var i4;
+          for (i4 in s[e2] = t2, t2) {
+            if ("function" != typeof t2[i4])
+              throw "The bindings must be functions.";
+            h.attach(i4, e2, t2[i4]);
+          }
+          return this;
+        }, h.addMethod("addNode", function(e2) {
+          if (Object(e2) !== e2 || 1 !== arguments.length)
+            throw "addNode: Wrong arguments.";
+          if ("string" != typeof e2.id && "number" != typeof e2.id)
+            throw "The node must have a string or number id.";
+          if (this.nodesIndex[e2.id])
+            throw 'The node "' + e2.id + '" already exists.';
+          var t2, i4 = e2.id, n2 = /* @__PURE__ */ Object.create(null);
+          if (this.settings("clone"))
+            for (t2 in e2)
+              "id" !== t2 && (n2[t2] = e2[t2]);
+          else
+            n2 = e2;
+          return this.settings("immutable") ? Object.defineProperty(n2, "id", { value: i4, enumerable: true }) : n2.id = i4, this.inNeighborsIndex[i4] = /* @__PURE__ */ Object.create(null), this.outNeighborsIndex[i4] = /* @__PURE__ */ Object.create(null), this.allNeighborsIndex[i4] = /* @__PURE__ */ Object.create(null), this.inNeighborsCount[i4] = 0, this.outNeighborsCount[i4] = 0, this.allNeighborsCount[i4] = 0, this.nodesArray.push(n2), this.nodesIndex[n2.id] = n2, this;
+        }), h.addMethod("addEdge", function(e2) {
+          if (Object(e2) !== e2 || 1 !== arguments.length)
+            throw "addEdge: Wrong arguments.";
+          if ("string" != typeof e2.id && "number" != typeof e2.id)
+            throw "The edge must have a string or number id.";
+          if ("string" != typeof e2.source && "number" != typeof e2.source || !this.nodesIndex[e2.source])
+            throw "The edge source must have an existing node id.";
+          if ("string" != typeof e2.target && "number" != typeof e2.target || !this.nodesIndex[e2.target])
+            throw "The edge target must have an existing node id.";
+          if (this.edgesIndex[e2.id])
+            throw 'The edge "' + e2.id + '" already exists.';
+          var t2, i4 = /* @__PURE__ */ Object.create(null);
+          if (this.settings("clone"))
+            for (t2 in e2)
+              "id" !== t2 && "source" !== t2 && "target" !== t2 && (i4[t2] = e2[t2]);
+          else
+            i4 = e2;
+          return this.settings("immutable") ? (Object.defineProperty(i4, "id", { value: e2.id, enumerable: true }), Object.defineProperty(i4, "source", { value: e2.source, enumerable: true }), Object.defineProperty(i4, "target", { value: e2.target, enumerable: true })) : (i4.id = e2.id, i4.source = e2.source, i4.target = e2.target), this.edgesArray.push(i4), this.edgesIndex[i4.id] = i4, this.inNeighborsIndex[i4.target][i4.source] || (this.inNeighborsIndex[i4.target][i4.source] = /* @__PURE__ */ Object.create(null)), this.inNeighborsIndex[i4.target][i4.source][i4.id] = i4, this.outNeighborsIndex[i4.source][i4.target] || (this.outNeighborsIndex[i4.source][i4.target] = /* @__PURE__ */ Object.create(null)), this.outNeighborsIndex[i4.source][i4.target][i4.id] = i4, this.allNeighborsIndex[i4.source][i4.target] || (this.allNeighborsIndex[i4.source][i4.target] = /* @__PURE__ */ Object.create(null)), this.allNeighborsIndex[i4.source][i4.target][i4.id] = i4, i4.target !== i4.source && (this.allNeighborsIndex[i4.target][i4.source] || (this.allNeighborsIndex[i4.target][i4.source] = /* @__PURE__ */ Object.create(null)), this.allNeighborsIndex[i4.target][i4.source][i4.id] = i4), this.inNeighborsCount[i4.target]++, this.outNeighborsCount[i4.source]++, this.allNeighborsCount[i4.target]++, this.allNeighborsCount[i4.source]++, this;
+        }), h.addMethod("dropNode", function(e2) {
+          if ("string" != typeof e2 && "number" != typeof e2 || 1 !== arguments.length)
+            throw "dropNode: Wrong arguments.";
+          if (!this.nodesIndex[e2])
+            throw 'The node "' + e2 + '" does not exist.';
+          var t2, i4, n2;
+          for (delete this.nodesIndex[e2], t2 = 0, n2 = this.nodesArray.length; t2 < n2; t2++)
+            if (this.nodesArray[t2].id === e2) {
+              this.nodesArray.splice(t2, 1);
+              break;
+            }
+          for (t2 = this.edgesArray.length - 1; t2 >= 0; t2--)
+            this.edgesArray[t2].source !== e2 && this.edgesArray[t2].target !== e2 || this.dropEdge(this.edgesArray[t2].id);
+          for (i4 in delete this.inNeighborsIndex[e2], delete this.outNeighborsIndex[e2], delete this.allNeighborsIndex[e2], delete this.inNeighborsCount[e2], delete this.outNeighborsCount[e2], delete this.allNeighborsCount[e2], this.nodesIndex)
+            delete this.inNeighborsIndex[i4][e2], delete this.outNeighborsIndex[i4][e2], delete this.allNeighborsIndex[i4][e2];
+          return this;
+        }), h.addMethod("dropEdge", function(e2) {
+          if ("string" != typeof e2 && "number" != typeof e2 || 1 !== arguments.length)
+            throw "dropEdge: Wrong arguments.";
+          if (!this.edgesIndex[e2])
+            throw 'The edge "' + e2 + '" does not exist.';
+          var t2, i4, n2;
+          for (n2 = this.edgesIndex[e2], delete this.edgesIndex[e2], t2 = 0, i4 = this.edgesArray.length; t2 < i4; t2++)
+            if (this.edgesArray[t2].id === e2) {
+              this.edgesArray.splice(t2, 1);
+              break;
+            }
+          return delete this.inNeighborsIndex[n2.target][n2.source][n2.id], Object.keys(this.inNeighborsIndex[n2.target][n2.source]).length || delete this.inNeighborsIndex[n2.target][n2.source], delete this.outNeighborsIndex[n2.source][n2.target][n2.id], Object.keys(this.outNeighborsIndex[n2.source][n2.target]).length || delete this.outNeighborsIndex[n2.source][n2.target], delete this.allNeighborsIndex[n2.source][n2.target][n2.id], Object.keys(this.allNeighborsIndex[n2.source][n2.target]).length || delete this.allNeighborsIndex[n2.source][n2.target], n2.target !== n2.source && (delete this.allNeighborsIndex[n2.target][n2.source][n2.id], Object.keys(this.allNeighborsIndex[n2.target][n2.source]).length || delete this.allNeighborsIndex[n2.target][n2.source]), this.inNeighborsCount[n2.target]--, this.outNeighborsCount[n2.source]--, this.allNeighborsCount[n2.source]--, this.allNeighborsCount[n2.target]--, this;
+        }), h.addMethod("kill", function() {
+          this.nodesArray.length = 0, this.edgesArray.length = 0, delete this.nodesArray, delete this.edgesArray, delete this.nodesIndex, delete this.edgesIndex, delete this.inNeighborsIndex, delete this.outNeighborsIndex, delete this.allNeighborsIndex, delete this.inNeighborsCount, delete this.outNeighborsCount, delete this.allNeighborsCount;
+        }), h.addMethod("clear", function() {
+          return this.nodesArray.length = 0, this.edgesArray.length = 0, u(this.nodesIndex), u(this.edgesIndex), u(this.nodesIndex), u(this.inNeighborsIndex), u(this.outNeighborsIndex), u(this.allNeighborsIndex), u(this.inNeighborsCount), u(this.outNeighborsCount), u(this.allNeighborsCount), this;
+        }), h.addMethod("read", function(e2) {
+          var t2, i4, n2;
+          for (t2 = 0, n2 = (i4 = e2.nodes || []).length; t2 < n2; t2++)
+            this.addNode(i4[t2]);
+          for (t2 = 0, n2 = (i4 = e2.edges || []).length; t2 < n2; t2++)
+            this.addEdge(i4[t2]);
+          return this;
+        }), h.addMethod("nodes", function(e2) {
+          if (!arguments.length)
+            return this.nodesArray.slice(0);
+          if (1 === arguments.length && ("string" == typeof e2 || "number" == typeof e2))
+            return this.nodesIndex[e2];
+          if (1 === arguments.length && "[object Array]" === Object.prototype.toString.call(e2)) {
+            var t2, i4, n2 = [];
+            for (t2 = 0, i4 = e2.length; t2 < i4; t2++) {
+              if ("string" != typeof e2[t2] && "number" != typeof e2[t2])
+                throw "nodes: Wrong arguments.";
+              n2.push(this.nodesIndex[e2[t2]]);
+            }
+            return n2;
+          }
+          throw "nodes: Wrong arguments.";
+        }), h.addMethod("degree", function(e2, t2) {
+          if (t2 = { in: this.inNeighborsCount, out: this.outNeighborsCount }[t2 || ""] || this.allNeighborsCount, "string" == typeof e2 || "number" == typeof e2)
+            return t2[e2];
+          if ("[object Array]" === Object.prototype.toString.call(e2)) {
+            var i4, n2, s2 = [];
+            for (i4 = 0, n2 = e2.length; i4 < n2; i4++) {
+              if ("string" != typeof e2[i4] && "number" != typeof e2[i4])
+                throw "degree: Wrong arguments.";
+              s2.push(t2[e2[i4]]);
+            }
+            return s2;
+          }
+          throw "degree: Wrong arguments.";
+        }), h.addMethod("edges", function(e2) {
+          if (!arguments.length)
+            return this.edgesArray.slice(0);
+          if (1 === arguments.length && ("string" == typeof e2 || "number" == typeof e2))
+            return this.edgesIndex[e2];
+          if (1 === arguments.length && "[object Array]" === Object.prototype.toString.call(e2)) {
+            var t2, i4, n2 = [];
+            for (t2 = 0, i4 = e2.length; t2 < i4; t2++) {
+              if ("string" != typeof e2[t2] && "number" != typeof e2[t2])
+                throw "edges: Wrong arguments.";
+              n2.push(this.edgesIndex[e2[t2]]);
+            }
+            return n2;
+          }
+          throw "edges: Wrong arguments.";
+        }), "undefined" != typeof sigma ? (sigma.classes = sigma.classes || /* @__PURE__ */ Object.create(null), sigma.classes.graph = h) : (e.exports && (t = e.exports = h), t.graph = h);
+      }).call(this);
+    }).call(window);
+  }, 124: function(e, t) {
+    (function() {
+      (function(e2) {
+        "use strict";
+        if ("undefined" == typeof sigma)
+          throw "sigma is not declared";
+        sigma.utils.pkg("sigma.classes"), sigma.classes.camera = function(e3, t2, i2, n) {
+          sigma.classes.dispatcher.extend(this), Object.defineProperty(this, "graph", { value: t2 }), Object.defineProperty(this, "id", { value: e3 }), Object.defineProperty(this, "readPrefix", { value: "read_cam" + e3 + ":" }), Object.defineProperty(this, "prefix", { value: "cam" + e3 + ":" }), this.x = 0, this.y = 0, this.ratio = 1, this.angle = 0, this.isAnimated = false, this.settings = "object" == typeof n && n ? i2.embedObject(n) : i2;
+        }, sigma.classes.camera.prototype.goTo = function(t2) {
+          if (!this.settings("enableCamera"))
+            return this;
+          var i2, n, s = t2 || {}, r = ["x", "y", "ratio", "angle"];
+          for (i2 = 0, n = r.length; i2 < n; i2++)
+            if (s[r[i2]] !== e2) {
+              if ("number" != typeof s[r[i2]] || isNaN(s[r[i2]]))
+                throw 'Value for "' + r[i2] + '" is not a number.';
+              this[r[i2]] = s[r[i2]];
+            }
+          return this.dispatchEvent("coordinatesUpdated"), this;
+        }, sigma.classes.camera.prototype.applyView = function(t2, i2, n) {
+          n = n || {}, i2 = i2 !== e2 ? i2 : this.prefix, t2 = t2 !== e2 ? t2 : this.readPrefix;
+          var s, r, a, o2 = n.nodes || this.graph.nodes(), d = n.edges || this.graph.edges(), l = Math.cos(this.angle) / this.ratio, h = Math.sin(this.angle) / this.ratio, c = Math.pow(this.ratio, this.settings("nodesPowRatio")), u = Math.pow(this.ratio, this.settings("edgesPowRatio")), g = (n.width || 0) / 2 - this.x * l - this.y * h, f = (n.height || 0) / 2 - this.y * l + this.x * h;
+          for (s = 0, r = o2.length; s < r; s++)
+            (a = o2[s])[i2 + "x"] = (a[t2 + "x"] || 0) * l + (a[t2 + "y"] || 0) * h + g, a[i2 + "y"] = (a[t2 + "y"] || 0) * l - (a[t2 + "x"] || 0) * h + f, a[i2 + "size"] = (a[t2 + "size"] || 0) / c;
+          for (s = 0, r = d.length; s < r; s++)
+            d[s][i2 + "size"] = (d[s][t2 + "size"] || 0) / u;
+          return this;
+        }, sigma.classes.camera.prototype.graphPosition = function(e3, t2, i2) {
+          var n = 0, s = 0, r = Math.cos(this.angle), a = Math.sin(this.angle);
+          return i2 || (n = -(this.x * r + this.y * a) / this.ratio, s = -(this.y * r - this.x * a) / this.ratio), { x: (e3 * r + t2 * a) / this.ratio + n, y: (t2 * r - e3 * a) / this.ratio + s };
+        }, sigma.classes.camera.prototype.cameraPosition = function(e3, t2, i2) {
+          var n = 0, s = 0, r = Math.cos(this.angle), a = Math.sin(this.angle);
+          return i2 || (n = -(this.x * r + this.y * a) / this.ratio, s = -(this.y * r - this.x * a) / this.ratio), { x: ((e3 - n) * r - (t2 - s) * a) * this.ratio, y: ((t2 - s) * r + (e3 - n) * a) * this.ratio };
+        }, sigma.classes.camera.prototype.getMatrix = function() {
+          var e3 = sigma.utils.matrices.scale(1 / this.ratio), t2 = sigma.utils.matrices.rotation(this.angle), i2 = sigma.utils.matrices.translation(-this.x, -this.y);
+          return sigma.utils.matrices.multiply(i2, sigma.utils.matrices.multiply(t2, e3));
+        }, sigma.classes.camera.prototype.getRectangle = function(e3, t2) {
+          var i2 = this.cameraPosition(e3, 0, true), n = this.cameraPosition(0, t2, true), s = this.cameraPosition(e3 / 2, t2 / 2, true), r = this.cameraPosition(e3 / 4, 0, true).x, a = this.cameraPosition(0, t2 / 4, true).y;
+          return { x1: this.x - s.x - r, y1: this.y - s.y - a, x2: this.x - s.x + r + i2.x, y2: this.y - s.y - a + i2.y, height: Math.sqrt(Math.pow(n.x, 2) + Math.pow(n.y + 2 * a, 2)) };
+        };
+      }).call(this);
+    }).call(window);
+  }, 125: function(e, t, i2) {
+    (function() {
+      (function(i3) {
+        "use strict";
+        var n = { pointToSquare: function(e2) {
+          return { x1: e2.x - e2.size, y1: e2.y - e2.size, x2: e2.x + e2.size, y2: e2.y - e2.size, height: 2 * e2.size };
+        }, isAxisAligned: function(e2) {
+          return e2.x1 === e2.x2 || e2.y1 === e2.y2;
+        }, axisAlignedTopPoints: function(e2) {
+          return e2.y1 === e2.y2 && e2.x1 < e2.x2 ? e2 : e2.x1 === e2.x2 && e2.y2 > e2.y1 ? { x1: e2.x1 - e2.height, y1: e2.y1, x2: e2.x1, y2: e2.y1, height: e2.height } : e2.x1 === e2.x2 && e2.y2 < e2.y1 ? { x1: e2.x1, y1: e2.y2, x2: e2.x2 + e2.height, y2: e2.y2, height: e2.height } : { x1: e2.x2, y1: e2.y1 - e2.height, x2: e2.x1, y2: e2.y1 - e2.height, height: e2.height };
+        }, lowerLeftCoor: function(e2) {
+          var t2 = Math.sqrt(Math.pow(e2.x2 - e2.x1, 2) + Math.pow(e2.y2 - e2.y1, 2));
+          return { x: e2.x1 - (e2.y2 - e2.y1) * e2.height / t2, y: e2.y1 + (e2.x2 - e2.x1) * e2.height / t2 };
+        }, lowerRightCoor: function(e2, t2) {
+          return { x: t2.x - e2.x1 + e2.x2, y: t2.y - e2.y1 + e2.y2 };
+        }, rectangleCorners: function(e2) {
+          var t2 = this.lowerLeftCoor(e2), i4 = this.lowerRightCoor(e2, t2);
+          return [{ x: e2.x1, y: e2.y1 }, { x: e2.x2, y: e2.y2 }, { x: t2.x, y: t2.y }, { x: i4.x, y: i4.y }];
+        }, splitSquare: function(e2) {
+          return [[{ x: e2.x, y: e2.y }, { x: e2.x + e2.width / 2, y: e2.y }, { x: e2.x, y: e2.y + e2.height / 2 }, { x: e2.x + e2.width / 2, y: e2.y + e2.height / 2 }], [{ x: e2.x + e2.width / 2, y: e2.y }, { x: e2.x + e2.width, y: e2.y }, { x: e2.x + e2.width / 2, y: e2.y + e2.height / 2 }, { x: e2.x + e2.width, y: e2.y + e2.height / 2 }], [{ x: e2.x, y: e2.y + e2.height / 2 }, { x: e2.x + e2.width / 2, y: e2.y + e2.height / 2 }, { x: e2.x, y: e2.y + e2.height }, { x: e2.x + e2.width / 2, y: e2.y + e2.height }], [{ x: e2.x + e2.width / 2, y: e2.y + e2.height / 2 }, { x: e2.x + e2.width, y: e2.y + e2.height / 2 }, { x: e2.x + e2.width / 2, y: e2.y + e2.height }, { x: e2.x + e2.width, y: e2.y + e2.height }]];
+        }, axis: function(e2, t2) {
+          return [{ x: e2[1].x - e2[0].x, y: e2[1].y - e2[0].y }, { x: e2[1].x - e2[3].x, y: e2[1].y - e2[3].y }, { x: t2[0].x - t2[2].x, y: t2[0].y - t2[2].y }, { x: t2[0].x - t2[1].x, y: t2[0].y - t2[1].y }];
+        }, projection: function(e2, t2) {
+          var i4 = (e2.x * t2.x + e2.y * t2.y) / (Math.pow(t2.x, 2) + Math.pow(t2.y, 2));
+          return { x: i4 * t2.x, y: i4 * t2.y };
+        }, axisCollision: function(e2, t2, i4) {
+          for (var n2 = [], s2 = [], r2 = 0; r2 < 4; r2++) {
+            var a3 = this.projection(t2[r2], e2), o3 = this.projection(i4[r2], e2);
+            n2.push(a3.x * e2.x + a3.y * e2.y), s2.push(o3.x * e2.x + o3.y * e2.y);
+          }
+          var d2 = Math.max.apply(Math, n2), l2 = Math.max.apply(Math, s2), h = Math.min.apply(Math, n2);
+          return Math.min.apply(Math, s2) <= d2 && l2 >= h;
+        }, collision: function(e2, t2) {
+          for (var i4 = this.axis(e2, t2), n2 = true, s2 = 0; s2 < 4; s2++)
+            n2 = n2 && this.axisCollision(i4[s2], e2, t2);
+          return n2;
+        } };
+        function s(e2, t2) {
+          for (var i4 = [], n2 = 0; n2 < 4; n2++)
+            e2.x2 >= t2[n2][0].x && e2.x1 <= t2[n2][1].x && e2.y1 + e2.height >= t2[n2][0].y && e2.y1 <= t2[n2][2].y && i4.push(n2);
+          return i4;
+        }
+        function r(e2, t2) {
+          for (var i4 = [], s2 = 0; s2 < 4; s2++)
+            n.collision(e2, t2[s2]) && i4.push(s2);
+          return i4;
+        }
+        function a(e2, t2) {
+          var i4, n2, s2 = t2.level + 1, r2 = Math.round(t2.bounds.width / 2), a3 = Math.round(t2.bounds.height / 2), o3 = Math.round(t2.bounds.x), l2 = Math.round(t2.bounds.y);
+          switch (e2) {
+            case 0:
+              i4 = o3, n2 = l2;
+              break;
+            case 1:
+              i4 = o3 + r2, n2 = l2;
+              break;
+            case 2:
+              i4 = o3, n2 = l2 + a3;
+              break;
+            case 3:
+              i4 = o3 + r2, n2 = l2 + a3;
+          }
+          return d({ x: i4, y: n2, width: r2, height: a3 }, s2, t2.maxElements, t2.maxLevel);
+        }
+        function o2(e2, t2, n2) {
+          if (n2.level < n2.maxLevel)
+            for (var r2 = s(t2, n2.corners), d2 = 0, l2 = r2.length; d2 < l2; d2++)
+              n2.nodes[r2[d2]] === i3 && (n2.nodes[r2[d2]] = a(r2[d2], n2)), o2(e2, t2, n2.nodes[r2[d2]]);
+          else
+            n2.elements.push(e2);
+        }
+        function d(e2, t2, i4, s2) {
+          return { level: t2 || 0, bounds: e2, corners: n.splitSquare(e2), maxElements: i4 || 20, maxLevel: s2 || 4, elements: [], nodes: [] };
+        }
+        var l = function() {
+          this._geom = n, this._tree = null, this._cache = { query: false, result: false };
+        };
+        l.prototype.index = function(e2, t2) {
+          if (!t2.bounds)
+            throw "sigma.classes.quad.index: bounds information not given.";
+          var i4 = t2.prefix || "";
+          this._tree = d(t2.bounds, 0, t2.maxElements, t2.maxLevel);
+          for (var s2 = 0, r2 = e2.length; s2 < r2; s2++)
+            o2(e2[s2], n.pointToSquare({ x: e2[s2][i4 + "x"], y: e2[s2][i4 + "y"], size: e2[s2][i4 + "size"] }), this._tree);
+          return this._cache = { query: false, result: false }, this._tree;
+        }, l.prototype.point = function(e2, t2) {
+          return this._tree && function e3(t3, n2) {
+            if (n2.level < n2.maxLevel) {
+              var s2 = function(e4, t4) {
+                var i4 = t4.x + t4.width / 2, n3 = t4.y + t4.height / 2, s3 = e4.y < n3, r2 = e4.x < i4;
+                return s3 ? r2 ? 0 : 1 : r2 ? 2 : 3;
+              }(t3, n2.bounds);
+              return n2.nodes[s2] !== i3 ? e3(t3, n2.nodes[s2]) : [];
+            }
+            return n2.elements;
+          }({ x: e2, y: t2 }, this._tree) || [];
+        }, l.prototype.area = function(e2) {
+          var t2, a3, o3 = JSON.stringify(e2);
+          if (this._cache.query === o3)
+            return this._cache.result;
+          n.isAxisAligned(e2) ? (t2 = s, a3 = n.axisAlignedTopPoints(e2)) : (t2 = r, a3 = n.rectangleCorners(e2));
+          var d2 = this._tree ? function e3(t3, n2, s2, r2) {
+            if (r2 = r2 || {}, n2.level < n2.maxLevel)
+              for (var a4 = s2(t3, n2.corners), o4 = 0, d3 = a4.length; o4 < d3; o4++)
+                n2.nodes[a4[o4]] !== i3 && e3(t3, n2.nodes[a4[o4]], s2, r2);
+            else
+              for (var l3 = 0, h2 = n2.elements.length; l3 < h2; l3++)
+                r2[n2.elements[l3].id] === i3 && (r2[n2.elements[l3].id] = n2.elements[l3]);
+            return r2;
+          }(a3, this._tree, t2) : [], l2 = [];
+          for (var h in d2)
+            l2.push(d2[h]);
+          return this._cache.query = o3, this._cache.result = l2, l2;
+        }, void 0 !== this.sigma ? (this.sigma.classes = this.sigma.classes || {}, this.sigma.classes.quad = l) : (e.exports && (t = e.exports = l), t.quad = l);
+      }).call(this);
+    }).call(window);
+  }, 126: function(e, t, i2) {
+    (function() {
+      (function(i3) {
+        "use strict";
+        var n = { pointToSquare: function(e2) {
+          return { x1: e2.x - e2.size, y1: e2.y - e2.size, x2: e2.x + e2.size, y2: e2.y - e2.size, height: 2 * e2.size };
+        }, lineToSquare: function(e2) {
+          return e2.y1 < e2.y2 ? e2.x1 < e2.x2 ? { x1: e2.x1 - e2.size, y1: e2.y1 - e2.size, x2: e2.x2 + e2.size, y2: e2.y1 - e2.size, height: e2.y2 - e2.y1 + 2 * e2.size } : { x1: e2.x2 - e2.size, y1: e2.y1 - e2.size, x2: e2.x1 + e2.size, y2: e2.y1 - e2.size, height: e2.y2 - e2.y1 + 2 * e2.size } : e2.x1 < e2.x2 ? { x1: e2.x1 - e2.size, y1: e2.y2 - e2.size, x2: e2.x2 + e2.size, y2: e2.y2 - e2.size, height: e2.y1 - e2.y2 + 2 * e2.size } : { x1: e2.x2 - e2.size, y1: e2.y2 - e2.size, x2: e2.x1 + e2.size, y2: e2.y2 - e2.size, height: e2.y1 - e2.y2 + 2 * e2.size };
+        }, quadraticCurveToSquare: function(e2, t2) {
+          var i4 = sigma.utils.getPointOnQuadraticCurve(0.5, e2.x1, e2.y1, e2.x2, e2.y2, t2.x, t2.y), n2 = Math.min(e2.x1, e2.x2, i4.x), s2 = Math.max(e2.x1, e2.x2, i4.x), r2 = Math.min(e2.y1, e2.y2, i4.y), a3 = Math.max(e2.y1, e2.y2, i4.y);
+          return { x1: n2 - e2.size, y1: r2 - e2.size, x2: s2 + e2.size, y2: r2 - e2.size, height: a3 - r2 + 2 * e2.size };
+        }, selfLoopToSquare: function(e2) {
+          var t2 = sigma.utils.getSelfLoopControlPoints(e2.x, e2.y, e2.size), i4 = Math.min(e2.x, t2.x1, t2.x2), n2 = Math.max(e2.x, t2.x1, t2.x2), s2 = Math.min(e2.y, t2.y1, t2.y2), r2 = Math.max(e2.y, t2.y1, t2.y2);
+          return { x1: i4 - e2.size, y1: s2 - e2.size, x2: n2 + e2.size, y2: s2 - e2.size, height: r2 - s2 + 2 * e2.size };
+        }, isAxisAligned: function(e2) {
+          return e2.x1 === e2.x2 || e2.y1 === e2.y2;
+        }, axisAlignedTopPoints: function(e2) {
+          return e2.y1 === e2.y2 && e2.x1 < e2.x2 ? e2 : e2.x1 === e2.x2 && e2.y2 > e2.y1 ? { x1: e2.x1 - e2.height, y1: e2.y1, x2: e2.x1, y2: e2.y1, height: e2.height } : e2.x1 === e2.x2 && e2.y2 < e2.y1 ? { x1: e2.x1, y1: e2.y2, x2: e2.x2 + e2.height, y2: e2.y2, height: e2.height } : { x1: e2.x2, y1: e2.y1 - e2.height, x2: e2.x1, y2: e2.y1 - e2.height, height: e2.height };
+        }, lowerLeftCoor: function(e2) {
+          var t2 = Math.sqrt(Math.pow(e2.x2 - e2.x1, 2) + Math.pow(e2.y2 - e2.y1, 2));
+          return { x: e2.x1 - (e2.y2 - e2.y1) * e2.height / t2, y: e2.y1 + (e2.x2 - e2.x1) * e2.height / t2 };
+        }, lowerRightCoor: function(e2, t2) {
+          return { x: t2.x - e2.x1 + e2.x2, y: t2.y - e2.y1 + e2.y2 };
+        }, rectangleCorners: function(e2) {
+          var t2 = this.lowerLeftCoor(e2), i4 = this.lowerRightCoor(e2, t2);
+          return [{ x: e2.x1, y: e2.y1 }, { x: e2.x2, y: e2.y2 }, { x: t2.x, y: t2.y }, { x: i4.x, y: i4.y }];
+        }, splitSquare: function(e2) {
+          return [[{ x: e2.x, y: e2.y }, { x: e2.x + e2.width / 2, y: e2.y }, { x: e2.x, y: e2.y + e2.height / 2 }, { x: e2.x + e2.width / 2, y: e2.y + e2.height / 2 }], [{ x: e2.x + e2.width / 2, y: e2.y }, { x: e2.x + e2.width, y: e2.y }, { x: e2.x + e2.width / 2, y: e2.y + e2.height / 2 }, { x: e2.x + e2.width, y: e2.y + e2.height / 2 }], [{ x: e2.x, y: e2.y + e2.height / 2 }, { x: e2.x + e2.width / 2, y: e2.y + e2.height / 2 }, { x: e2.x, y: e2.y + e2.height }, { x: e2.x + e2.width / 2, y: e2.y + e2.height }], [{ x: e2.x + e2.width / 2, y: e2.y + e2.height / 2 }, { x: e2.x + e2.width, y: e2.y + e2.height / 2 }, { x: e2.x + e2.width / 2, y: e2.y + e2.height }, { x: e2.x + e2.width, y: e2.y + e2.height }]];
+        }, axis: function(e2, t2) {
+          return [{ x: e2[1].x - e2[0].x, y: e2[1].y - e2[0].y }, { x: e2[1].x - e2[3].x, y: e2[1].y - e2[3].y }, { x: t2[0].x - t2[2].x, y: t2[0].y - t2[2].y }, { x: t2[0].x - t2[1].x, y: t2[0].y - t2[1].y }];
+        }, projection: function(e2, t2) {
+          var i4 = (e2.x * t2.x + e2.y * t2.y) / (Math.pow(t2.x, 2) + Math.pow(t2.y, 2));
+          return { x: i4 * t2.x, y: i4 * t2.y };
+        }, axisCollision: function(e2, t2, i4) {
+          for (var n2 = [], s2 = [], r2 = 0; r2 < 4; r2++) {
+            var a3 = this.projection(t2[r2], e2), o3 = this.projection(i4[r2], e2);
+            n2.push(a3.x * e2.x + a3.y * e2.y), s2.push(o3.x * e2.x + o3.y * e2.y);
+          }
+          var d2 = Math.max.apply(Math, n2), l2 = Math.max.apply(Math, s2), h = Math.min.apply(Math, n2);
+          return Math.min.apply(Math, s2) <= d2 && l2 >= h;
+        }, collision: function(e2, t2) {
+          for (var i4 = this.axis(e2, t2), n2 = true, s2 = 0; s2 < 4; s2++)
+            n2 = n2 && this.axisCollision(i4[s2], e2, t2);
+          return n2;
+        } };
+        function s(e2, t2) {
+          for (var i4 = [], n2 = 0; n2 < 4; n2++)
+            e2.x2 >= t2[n2][0].x && e2.x1 <= t2[n2][1].x && e2.y1 + e2.height >= t2[n2][0].y && e2.y1 <= t2[n2][2].y && i4.push(n2);
+          return i4;
+        }
+        function r(e2, t2) {
+          for (var i4 = [], s2 = 0; s2 < 4; s2++)
+            n.collision(e2, t2[s2]) && i4.push(s2);
+          return i4;
+        }
+        function a(e2, t2) {
+          var i4, n2, s2 = t2.level + 1, r2 = Math.round(t2.bounds.width / 2), a3 = Math.round(t2.bounds.height / 2), o3 = Math.round(t2.bounds.x), l2 = Math.round(t2.bounds.y);
+          switch (e2) {
+            case 0:
+              i4 = o3, n2 = l2;
+              break;
+            case 1:
+              i4 = o3 + r2, n2 = l2;
+              break;
+            case 2:
+              i4 = o3, n2 = l2 + a3;
+              break;
+            case 3:
+              i4 = o3 + r2, n2 = l2 + a3;
+          }
+          return d({ x: i4, y: n2, width: r2, height: a3 }, s2, t2.maxElements, t2.maxLevel);
+        }
+        function o2(e2, t2, n2) {
+          if (n2.level < n2.maxLevel)
+            for (var r2 = s(t2, n2.corners), d2 = 0, l2 = r2.length; d2 < l2; d2++)
+              n2.nodes[r2[d2]] === i3 && (n2.nodes[r2[d2]] = a(r2[d2], n2)), o2(e2, t2, n2.nodes[r2[d2]]);
+          else
+            n2.elements.push(e2);
+        }
+        function d(e2, t2, i4, s2) {
+          return { level: t2 || 0, bounds: e2, corners: n.splitSquare(e2), maxElements: i4 || 40, maxLevel: s2 || 8, elements: [], nodes: [] };
+        }
+        var l = function() {
+          this._geom = n, this._tree = null, this._cache = { query: false, result: false }, this._enabled = true;
+        };
+        l.prototype.index = function(e2, t2) {
+          if (!this._enabled)
+            return this._tree;
+          if (!t2.bounds)
+            throw "sigma.classes.edgequad.index: bounds information not given.";
+          var i4, s2, r2, a3, l2, h = t2.prefix || "";
+          this._tree = d(t2.bounds, 0, t2.maxElements, t2.maxLevel);
+          for (var c = e2.edges(), u = 0, g = c.length; u < g; u++)
+            s2 = e2.nodes(c[u].source), r2 = e2.nodes(c[u].target), l2 = { x1: s2[h + "x"], y1: s2[h + "y"], x2: r2[h + "x"], y2: r2[h + "y"], size: c[u][h + "size"] || 0 }, "curve" === c[u].type || "curvedArrow" === c[u].type ? s2.id === r2.id ? (a3 = { x: s2[h + "x"], y: s2[h + "y"], size: s2[h + "size"] || 0 }, o2(c[u], n.selfLoopToSquare(a3), this._tree)) : (i4 = sigma.utils.getQuadraticControlPoint(l2.x1, l2.y1, l2.x2, l2.y2), o2(c[u], n.quadraticCurveToSquare(l2, i4), this._tree)) : o2(c[u], n.lineToSquare(l2), this._tree);
+          return this._cache = { query: false, result: false }, this._tree;
+        }, l.prototype.point = function(e2, t2) {
+          return this._enabled && this._tree && function e3(t3, n2) {
+            if (n2.level < n2.maxLevel) {
+              var s2 = function(e4, t4) {
+                var i4 = t4.x + t4.width / 2, n3 = t4.y + t4.height / 2, s3 = e4.y < n3, r2 = e4.x < i4;
+                return s3 ? r2 ? 0 : 1 : r2 ? 2 : 3;
+              }(t3, n2.bounds);
+              return n2.nodes[s2] !== i3 ? e3(t3, n2.nodes[s2]) : [];
+            }
+            return n2.elements;
+          }({ x: e2, y: t2 }, this._tree) || [];
+        }, l.prototype.area = function(e2) {
+          if (!this._enabled)
+            return [];
+          var t2, a3, o3 = JSON.stringify(e2);
+          if (this._cache.query === o3)
+            return this._cache.result;
+          n.isAxisAligned(e2) ? (t2 = s, a3 = n.axisAlignedTopPoints(e2)) : (t2 = r, a3 = n.rectangleCorners(e2));
+          var d2 = this._tree ? function e3(t3, n2, s2, r2) {
+            if (r2 = r2 || {}, n2.level < n2.maxLevel)
+              for (var a4 = s2(t3, n2.corners), o4 = 0, d3 = a4.length; o4 < d3; o4++)
+                n2.nodes[a4[o4]] !== i3 && e3(t3, n2.nodes[a4[o4]], s2, r2);
+            else
+              for (var l3 = 0, h2 = n2.elements.length; l3 < h2; l3++)
+                r2[n2.elements[l3].id] === i3 && (r2[n2.elements[l3].id] = n2.elements[l3]);
+            return r2;
+          }(a3, this._tree, t2) : [], l2 = [];
+          for (var h in d2)
+            l2.push(d2[h]);
+          return this._cache.query = o3, this._cache.result = l2, l2;
+        }, void 0 !== this.sigma ? (this.sigma.classes = this.sigma.classes || {}, this.sigma.classes.edgequad = l) : (e.exports && (t = e.exports = l), t.edgequad = l);
+      }).call(this);
+    }).call(window);
+  }, 127: function(e, t) {
+    (function() {
+      (function(e2) {
+        "use strict";
+        if ("undefined" == typeof sigma)
+          throw "sigma is not declared";
+        sigma.utils.pkg("sigma.captors"), sigma.captors.mouse = function(e3, t2, i2) {
+          var n, s, r, a, o2, d, l, h, c, u, g, f = this, m = e3, y = t2, p = i2;
+          function x(e4) {
+            var t3, i3, u2;
+            if (p("mouseEnabled") && (f.dispatchEvent("mousemove", sigma.utils.mouseCoords(e4)), l))
+              return h = true, c = true, g && clearTimeout(g), g = setTimeout(function() {
+                h = false;
+              }, p("dragTimeout")), sigma.misc.animation.killAll(y), y.isMoving = true, u2 = y.cameraPosition(sigma.utils.getX(e4) - o2, sigma.utils.getY(e4) - d, true), t3 = n - u2.x, i3 = s - u2.y, t3 === y.x && i3 === y.y || (r = y.x, a = y.y, y.goTo({ x: t3, y: i3 })), e4.preventDefault ? e4.preventDefault() : e4.returnValue = false, e4.stopPropagation(), false;
+          }
+          function v(e4) {
+            if (p("mouseEnabled") && l) {
+              l = false, g && clearTimeout(g), y.isMoving = false;
+              var t3 = sigma.utils.getX(e4), i3 = sigma.utils.getY(e4);
+              h ? (sigma.misc.animation.killAll(y), sigma.misc.animation.camera(y, { x: y.x + p("mouseInertiaRatio") * (y.x - r), y: y.y + p("mouseInertiaRatio") * (y.y - a) }, { easing: "quadraticOut", duration: p("mouseInertiaDuration") })) : o2 === t3 && d === i3 || y.goTo({ x: y.x, y: y.y }), f.dispatchEvent("mouseup", sigma.utils.mouseCoords(e4)), h = false;
+            }
+          }
+          function b(e4) {
+            if (p("mouseEnabled"))
+              switch (n = y.x, s = y.y, r = y.x, a = y.y, o2 = sigma.utils.getX(e4), d = sigma.utils.getY(e4), c = false, u = (/* @__PURE__ */ new Date()).getTime(), e4.which) {
+                case 2:
+                  break;
+                case 3:
+                  f.dispatchEvent("rightclick", sigma.utils.mouseCoords(e4, o2, d));
+                  break;
+                default:
+                  l = true, f.dispatchEvent("mousedown", sigma.utils.mouseCoords(e4, o2, d));
+              }
+          }
+          function w(e4) {
+            p("mouseEnabled") && f.dispatchEvent("mouseout");
+          }
+          function E(e4) {
+            if (p("mouseEnabled")) {
+              var t3 = sigma.utils.mouseCoords(e4);
+              t3.isDragging = (/* @__PURE__ */ new Date()).getTime() - u > 100 && c, f.dispatchEvent("click", t3);
+            }
+            return e4.preventDefault ? e4.preventDefault() : e4.returnValue = false, e4.stopPropagation(), false;
+          }
+          function C(e4) {
+            var t3, i3, n2, s2 = sigma.utils.getDelta(e4);
+            if (p("mouseEnabled") && p("mouseWheelEnabled") && 0 !== s2)
+              return i3 = s2 > 0 ? 1 / p("zoomingRatio") : p("zoomingRatio"), t3 = y.cameraPosition(sigma.utils.getX(e4) - sigma.utils.getCenter(e4).x, sigma.utils.getY(e4) - sigma.utils.getCenter(e4).y, true), n2 = { duration: p("mouseZoomDuration") }, sigma.utils.zoomTo(y, t3.x, t3.y, i3, n2), e4.preventDefault ? e4.preventDefault() : e4.returnValue = false, e4.stopPropagation(), false;
+          }
+          sigma.classes.dispatcher.extend(this), sigma.utils.doubleClick(m, "click", function(e4) {
+            var t3, i3, n2;
+            if (p("mouseEnabled"))
+              return i3 = 1 / p("doubleClickZoomingRatio"), f.dispatchEvent("doubleclick", sigma.utils.mouseCoords(e4, o2, d)), p("doubleClickEnabled") && (t3 = y.cameraPosition(sigma.utils.getX(e4) - sigma.utils.getCenter(e4).x, sigma.utils.getY(e4) - sigma.utils.getCenter(e4).y, true), n2 = { duration: p("doubleClickZoomDuration") }, sigma.utils.zoomTo(y, t3.x, t3.y, i3, n2)), e4.preventDefault ? e4.preventDefault() : e4.returnValue = false, e4.stopPropagation(), false;
+          }), m.addEventListener("DOMMouseScroll", C, false), m.addEventListener("mousewheel", C, false), m.addEventListener("mousemove", x, false), m.addEventListener("mousedown", b, false), m.addEventListener("click", E, false), m.addEventListener("mouseout", w, false), document.addEventListener("mouseup", v, false), this.kill = function() {
+            sigma.utils.unbindDoubleClick(m, "click"), m.removeEventListener("DOMMouseScroll", C), m.removeEventListener("mousewheel", C), m.removeEventListener("mousemove", x), m.removeEventListener("mousedown", b), m.removeEventListener("click", E), m.removeEventListener("mouseout", w), document.removeEventListener("mouseup", v);
+          };
+        };
+      }).call(this);
+    }).call(window);
+  }, 128: function(e, t) {
+    (function() {
+      (function(e2) {
+        "use strict";
+        if ("undefined" == typeof sigma)
+          throw "sigma is not declared";
+        sigma.utils.pkg("sigma.captors"), sigma.captors.touch = function(e3, t2, i2) {
+          var n, s, r, a, o2, d, l, h, c, u, g, f, m, y, p, x, v = this, b = e3, w = t2, E = i2, C = [];
+          function k(e4) {
+            var t3 = sigma.utils.getOffset(b);
+            return { x: e4.pageX - t3.left, y: e4.pageY - t3.top };
+          }
+          function M(e4) {
+            var t3, i3, y2, p2, x2, v2;
+            if (E("touchEnabled"))
+              switch ((C = e4.touches).length) {
+                case 1:
+                  w.isMoving = true, m = 1, n = w.x, s = w.y, o2 = w.x, d = w.y, x2 = k(C[0]), l = x2.x, h = x2.y;
+                  break;
+                case 2:
+                  return w.isMoving = true, m = 2, x2 = k(C[0]), v2 = k(C[1]), t3 = x2.x, y2 = x2.y, i3 = v2.x, p2 = v2.y, o2 = w.x, d = w.y, r = w.angle, a = w.ratio, n = w.x, s = w.y, l = t3, h = y2, c = i3, u = p2, g = Math.atan2(u - h, c - l), f = Math.sqrt((u - h) * (u - h) + (c - l) * (c - l)), e4.preventDefault(), false;
+              }
+          }
+          function N(e4) {
+            if (E("touchEnabled")) {
+              C = e4.touches;
+              var t3 = E("touchInertiaRatio");
+              switch (x && (y = false, clearTimeout(x)), m) {
+                case 2:
+                  if (1 === e4.touches.length) {
+                    M(e4), e4.preventDefault();
+                    break;
+                  }
+                case 1:
+                  w.isMoving = false, v.dispatchEvent("stopDrag"), y && (p = false, sigma.misc.animation.camera(w, { x: w.x + t3 * (w.x - o2), y: w.y + t3 * (w.y - d) }, { easing: "quadraticOut", duration: E("touchInertiaDuration") })), y = false, m = 0;
+              }
+            }
+          }
+          function O(e4) {
+            if (!p && E("touchEnabled")) {
+              var t3, i3, b2, M2, N2, O2, z, P, S, T, j, I, A, _, L, D, q;
+              switch (C = e4.touches, y = true, x && clearTimeout(x), x = setTimeout(function() {
+                y = false;
+              }, E("dragTimeout")), m) {
+                case 1:
+                  t3 = (P = k(C[0])).x, b2 = P.y, T = w.cameraPosition(t3 - l, b2 - h, true), _ = n - T.x, L = s - T.y, _ === w.x && L === w.y || (o2 = w.x, d = w.y, w.goTo({ x: _, y: L }), v.dispatchEvent("mousemove", sigma.utils.mouseCoords(e4, P.x, P.y)), v.dispatchEvent("drag"));
+                  break;
+                case 2:
+                  P = k(C[0]), S = k(C[1]), t3 = P.x, b2 = P.y, i3 = S.x, M2 = S.y, j = w.cameraPosition((l + c) / 2 - sigma.utils.getCenter(e4).x, (h + u) / 2 - sigma.utils.getCenter(e4).y, true), z = w.cameraPosition((t3 + i3) / 2 - sigma.utils.getCenter(e4).x, (b2 + M2) / 2 - sigma.utils.getCenter(e4).y, true), I = Math.atan2(M2 - b2, i3 - t3) - g, A = Math.sqrt((M2 - b2) * (M2 - b2) + (i3 - t3) * (i3 - t3)) / f, t3 = j.x, b2 = j.y, D = a / A, b2 *= A, q = r - I, i3 = (t3 *= A) * (N2 = Math.cos(-I)) + b2 * (O2 = Math.sin(-I)), b2 = M2 = b2 * N2 - t3 * O2, _ = (t3 = i3) - z.x + n, L = b2 - z.y + s, D === w.ratio && q === w.angle && _ === w.x && L === w.y || (o2 = w.x, d = w.y, w.angle, w.ratio, w.goTo({ x: _, y: L, angle: q, ratio: D }), v.dispatchEvent("drag"));
+              }
+              return e4.preventDefault(), false;
+            }
+          }
+          sigma.classes.dispatcher.extend(this), sigma.utils.doubleClick(b, "touchstart", function(e4) {
+            var t3, i3, n2;
+            if (e4.touches && 1 === e4.touches.length && E("touchEnabled"))
+              return p = true, i3 = 1 / E("doubleClickZoomingRatio"), t3 = k(e4.touches[0]), v.dispatchEvent("doubleclick", sigma.utils.mouseCoords(e4, t3.x, t3.y)), E("doubleClickEnabled") && (t3 = w.cameraPosition(t3.x - sigma.utils.getCenter(e4).x, t3.y - sigma.utils.getCenter(e4).y, true), n2 = { duration: E("doubleClickZoomDuration"), onComplete: function() {
+                p = false;
+              } }, sigma.utils.zoomTo(w, t3.x, t3.y, i3, n2)), e4.preventDefault ? e4.preventDefault() : e4.returnValue = false, e4.stopPropagation(), false;
+          }), b.addEventListener("touchstart", M, false), b.addEventListener("touchend", N, false), b.addEventListener("touchcancel", N, false), b.addEventListener("touchleave", N, false), b.addEventListener("touchmove", O, false), this.kill = function() {
+            sigma.utils.unbindDoubleClick(b, "touchstart"), b.addEventListener("touchstart", M), b.addEventListener("touchend", N), b.addEventListener("touchcancel", N), b.addEventListener("touchleave", N), b.addEventListener("touchmove", O);
+          };
+        };
+      }).call(this);
+    }).call(window);
+  }, 129: function(e, t) {
+    (function() {
+      (function(e2) {
+        "use strict";
+        if ("undefined" == typeof sigma)
+          throw "sigma is not declared";
+        if ("undefined" == typeof conrad)
+          throw "conrad is not declared";
+        sigma.utils.pkg("sigma.renderers"), sigma.renderers.canvas = function(e3, t2, i2, n) {
+          if ("object" != typeof n)
+            throw "sigma.renderers.canvas: Wrong arguments.";
+          if (!(n.container instanceof HTMLElement))
+            throw "Container not found.";
+          var s, r, a, o2;
+          for (sigma.classes.dispatcher.extend(this), Object.defineProperty(this, "conradId", { value: sigma.utils.id() }), this.graph = e3, this.camera = t2, this.contexts = {}, this.domElements = {}, this.options = n, this.container = this.options.container, this.settings = "object" == typeof n.settings && n.settings ? i2.embedObjects(n.settings) : i2, this.nodesOnScreen = [], this.edgesOnScreen = [], this.jobs = {}, this.options.prefix = "renderer" + this.conradId + ":", this.settings("batchEdgesDrawing") ? (this.initDOM("canvas", "edges"), this.initDOM("canvas", "scene"), this.contexts.nodes = this.contexts.scene, this.contexts.labels = this.contexts.scene) : (this.initDOM("canvas", "scene"), this.contexts.edges = this.contexts.scene, this.contexts.nodes = this.contexts.scene, this.contexts.labels = this.contexts.scene), this.initDOM("canvas", "mouse"), this.contexts.hover = this.contexts.mouse, this.captors = [], s = 0, r = (a = this.options.captors || [sigma.captors.mouse, sigma.captors.touch]).length; s < r; s++)
+            o2 = "function" == typeof a[s] ? a[s] : sigma.captors[a[s]], this.captors.push(new o2(this.domElements.mouse, this.camera, this.settings));
+          sigma.misc.bindEvents.call(this, this.options.prefix), sigma.misc.drawHovers.call(this, this.options.prefix), this.resize(false);
+        }, sigma.renderers.canvas.prototype.render = function(t2) {
+          t2 = t2 || {};
+          var i2, n, s, r, a, o2, d, l, h, c, u, g, f, m = {}, y = this.graph, p = this.graph.nodes, x = (this.options.prefix, this.settings(t2, "drawEdges")), v = this.settings(t2, "drawNodes"), b = this.settings(t2, "drawLabels"), w = this.settings(t2, "drawEdgeLabels"), E = this.settings.embedObjects(t2, { prefix: this.options.prefix });
+          for (s in this.resize(false), this.settings(t2, "hideEdgesOnMove") && (this.camera.isAnimated || this.camera.isMoving) && (x = false), this.camera.applyView(e2, this.options.prefix, { width: this.width, height: this.height }), this.clear(), this.jobs)
+            conrad.hasJob(s) && conrad.killJob(s);
+          for (this.edgesOnScreen = [], this.nodesOnScreen = this.camera.quadtree.area(this.camera.getRectangle(this.width, this.height)), i2 = this.nodesOnScreen, n = 0, r = i2.length; n < r; n++)
+            m[i2[n].id] = i2[n];
+          if (x) {
+            for (i2 = y.edges(), n = 0, r = i2.length; n < r; n++)
+              !m[(a = i2[n]).source] && !m[a.target] || a.hidden || p(a.source).hidden || p(a.target).hidden || this.edgesOnScreen.push(a);
+            if (this.settings(t2, "batchEdgesDrawing"))
+              o2 = "edges_" + this.conradId, g = E("canvasEdgesBatchSize"), r = (c = this.edgesOnScreen).length, h = 0, d = Math.min(c.length, h + g), l = function() {
+                for (f = this.contexts.edges.globalCompositeOperation, this.contexts.edges.globalCompositeOperation = "destination-over", u = sigma.canvas.edges, n = h; n < d; n++)
+                  a = c[n], (u[a.type || this.settings(t2, "defaultEdgeType")] || u.def)(a, y.nodes(a.source), y.nodes(a.target), this.contexts.edges, E);
+                if (w)
+                  for (u = sigma.canvas.edges.labels, n = h; n < d; n++)
+                    (a = c[n]).hidden || (u[a.type || this.settings(t2, "defaultEdgeType")] || u.def)(a, y.nodes(a.source), y.nodes(a.target), this.contexts.labels, E);
+                return this.contexts.edges.globalCompositeOperation = f, d === c.length ? (delete this.jobs[o2], false) : (h = d + 1, d = Math.min(c.length, h + g), true);
+              }, this.jobs[o2] = l, conrad.addJob(o2, l.bind(this));
+            else {
+              for (u = sigma.canvas.edges, i2 = this.edgesOnScreen, n = 0, r = i2.length; n < r; n++)
+                a = i2[n], (u[a.type || this.settings(t2, "defaultEdgeType")] || u.def)(a, y.nodes(a.source), y.nodes(a.target), this.contexts.edges, E);
+              if (w)
+                for (u = sigma.canvas.edges.labels, i2 = this.edgesOnScreen, n = 0, r = i2.length; n < r; n++)
+                  i2[n].hidden || (u[i2[n].type || this.settings(t2, "defaultEdgeType")] || u.def)(i2[n], y.nodes(i2[n].source), y.nodes(i2[n].target), this.contexts.labels, E);
+            }
+          }
+          if (v)
+            for (u = sigma.canvas.nodes, i2 = this.nodesOnScreen, n = 0, r = i2.length; n < r; n++)
+              i2[n].hidden || (u[i2[n].type || this.settings(t2, "defaultNodeType")] || u.def)(i2[n], this.contexts.nodes, E);
+          if (b)
+            for (u = sigma.canvas.labels, i2 = this.nodesOnScreen, n = 0, r = i2.length; n < r; n++)
+              i2[n].hidden || (u[i2[n].type || this.settings(t2, "defaultNodeType")] || u.def)(i2[n], this.contexts.labels, E);
+          return this.dispatchEvent("render"), this;
+        }, sigma.renderers.canvas.prototype.initDOM = function(e3, t2) {
+          var i2 = document.createElement(e3);
+          i2.style.position = "absolute", i2.setAttribute("class", "sigma-" + t2), this.domElements[t2] = i2, this.container.appendChild(i2), "canvas" === e3.toLowerCase() && (this.contexts[t2] = i2.getContext("2d"));
+        }, sigma.renderers.canvas.prototype.resize = function(t2, i2) {
+          var n, s = this.width, r = this.height, a = sigma.utils.getPixelRatio();
+          if (t2 !== e2 && i2 !== e2 ? (this.width = t2, this.height = i2) : (this.width = this.container.offsetWidth, this.height = this.container.offsetHeight, t2 = this.width, i2 = this.height), s !== this.width || r !== this.height)
+            for (n in this.domElements)
+              this.domElements[n].style.width = t2 + "px", this.domElements[n].style.height = i2 + "px", "canvas" === this.domElements[n].tagName.toLowerCase() && (this.domElements[n].setAttribute("width", t2 * a + "px"), this.domElements[n].setAttribute("height", i2 * a + "px"), 1 !== a && this.contexts[n].scale(a, a));
+          return this;
+        }, sigma.renderers.canvas.prototype.clear = function() {
+          for (var e3 in this.contexts)
+            this.contexts[e3].clearRect(0, 0, this.width, this.height);
+          return this;
+        }, sigma.renderers.canvas.prototype.kill = function() {
+          for (var e3, t2; t2 = this.captors.pop(); )
+            t2.kill();
+          for (e3 in delete this.captors, this.domElements)
+            this.domElements[e3].parentNode.removeChild(this.domElements[e3]), delete this.domElements[e3], delete this.contexts[e3];
+          delete this.domElements, delete this.contexts;
+        }, sigma.utils.pkg("sigma.canvas.nodes"), sigma.utils.pkg("sigma.canvas.edges"), sigma.utils.pkg("sigma.canvas.labels");
+      }).call(this);
+    }).call(window);
+  }, 130: function(e, t) {
+    (function() {
+      (function(e2) {
+        "use strict";
+        if ("undefined" == typeof sigma)
+          throw "sigma is not declared";
+        sigma.utils.pkg("sigma.canvas.labels"), sigma.canvas.labels.def = function(e3, t2, i2) {
+          var n, s = i2("prefix") || "", r = e3[s + "size"];
+          r < i2("labelThreshold") || e3.label && "string" == typeof e3.label && (n = "fixed" === i2("labelSize") ? i2("defaultLabelSize") : i2("labelSizeRatio") * r, t2.font = (i2("fontStyle") ? i2("fontStyle") + " " : "") + n + "px " + i2("font"), t2.fillStyle = "node" === i2("labelColor") ? e3.color || i2("defaultNodeColor") : i2("defaultLabelColor"), t2.fillText(e3.label, Math.round(e3[s + "x"] + r + 3), Math.round(e3[s + "y"] + n / 3)));
+        };
+      }).call(this);
+    }).call(window);
+  }, 131: function(e, t) {
+    (function() {
+      (function(e2) {
+        "use strict";
+        if ("undefined" == typeof sigma)
+          throw "sigma is not declared";
+        sigma.utils.pkg("sigma.canvas.hovers"), sigma.canvas.hovers.def = function(e3, t2, i2) {
+          var n, s, r, a, o2, d = i2("hoverFontStyle") || i2("fontStyle"), l = i2("prefix") || "", h = e3[l + "size"], c = "fixed" === i2("labelSize") ? i2("defaultLabelSize") : i2("labelSizeRatio") * h;
+          t2.font = (d ? d + " " : "") + c + "px " + (i2("hoverFont") || i2("font")), t2.beginPath(), t2.fillStyle = "node" === i2("labelHoverBGColor") ? e3.color || i2("defaultNodeColor") : i2("defaultHoverLabelBGColor"), e3.label && i2("labelHoverShadow") && (t2.shadowOffsetX = 0, t2.shadowOffsetY = 0, t2.shadowBlur = 8, t2.shadowColor = i2("labelHoverShadowColor")), e3.label && "string" == typeof e3.label && (n = Math.round(e3[l + "x"] - c / 2 - 2), s = Math.round(e3[l + "y"] - c / 2 - 2), r = Math.round(t2.measureText(e3.label).width + c / 2 + h + 7), a = Math.round(c + 4), o2 = Math.round(c / 2 + 2), t2.moveTo(n, s + o2), t2.arcTo(n, s, n + o2, s, o2), t2.lineTo(n + r, s), t2.lineTo(n + r, s + a), t2.lineTo(n + o2, s + a), t2.arcTo(n, s + a, n, s + a - o2, o2), t2.lineTo(n, s + o2), t2.closePath(), t2.fill(), t2.shadowOffsetX = 0, t2.shadowOffsetY = 0, t2.shadowBlur = 0), i2("borderSize") > 0 && (t2.beginPath(), t2.fillStyle = "node" === i2("nodeBorderColor") ? e3.color || i2("defaultNodeColor") : i2("defaultNodeBorderColor"), t2.arc(e3[l + "x"], e3[l + "y"], h + i2("borderSize"), 0, 2 * Math.PI, true), t2.closePath(), t2.fill()), (sigma.canvas.nodes[e3.type] || sigma.canvas.nodes.def)(e3, t2, i2), e3.label && "string" == typeof e3.label && (t2.fillStyle = "node" === i2("labelHoverColor") ? e3.color || i2("defaultNodeColor") : i2("defaultLabelHoverColor"), t2.fillText(e3.label, Math.round(e3[l + "x"] + h + 3), Math.round(e3[l + "y"] + c / 3)));
+        };
+      }).call(this);
+    }).call(window);
+  }, 132: function(e, t) {
+    (function() {
+      !function() {
+        "use strict";
+        sigma.utils.pkg("sigma.canvas.nodes"), sigma.canvas.nodes.def = function(e2, t2, i2) {
+          var n = i2("prefix") || "";
+          t2.fillStyle = e2.color || i2("defaultNodeColor"), t2.beginPath(), t2.arc(e2[n + "x"], e2[n + "y"], e2[n + "size"], 0, 2 * Math.PI, true), t2.closePath(), t2.fill();
+        };
+      }();
+    }).call(window);
+  }, 133: function(e, t) {
+    (function() {
+      !function() {
+        "use strict";
+        sigma.utils.pkg("sigma.canvas.edges"), sigma.canvas.edges.def = function(e2, t2, i2, n, s) {
+          var r = e2.color, a = s("prefix") || "", o2 = e2[a + "size"] || 1, d = s("edgeColor"), l = s("defaultNodeColor"), h = s("defaultEdgeColor");
+          if (!r)
+            switch (d) {
+              case "source":
+                r = t2.color || l;
+                break;
+              case "target":
+                r = i2.color || l;
+                break;
+              default:
+                r = h;
+            }
+          n.strokeStyle = r, n.lineWidth = o2, n.beginPath(), n.moveTo(t2[a + "x"], t2[a + "y"]), n.lineTo(i2[a + "x"], i2[a + "y"]), n.stroke();
+        };
+      }();
+    }).call(window);
+  }, 134: function(e, t) {
+    (function() {
+      !function() {
+        "use strict";
+        sigma.utils.pkg("sigma.canvas.edgehovers"), sigma.canvas.edgehovers.def = function(e2, t2, i2, n, s) {
+          var r = e2.color, a = s("prefix") || "", o2 = e2[a + "size"] || 1, d = s("edgeColor"), l = s("defaultNodeColor"), h = s("defaultEdgeColor");
+          if (!r)
+            switch (d) {
+              case "source":
+                r = t2.color || l;
+                break;
+              case "target":
+                r = i2.color || l;
+                break;
+              default:
+                r = h;
+            }
+          r = "edge" === s("edgeHoverColor") ? e2.hover_color || r : e2.hover_color || s("defaultEdgeHoverColor") || r, o2 *= s("edgeHoverSizeRatio"), n.strokeStyle = r, n.lineWidth = o2, n.beginPath(), n.moveTo(t2[a + "x"], t2[a + "y"]), n.lineTo(i2[a + "x"], i2[a + "y"]), n.stroke();
+        };
+      }();
+    }).call(window);
+  }, 135: function(e, t) {
+    (function() {
+      (function(e2) {
+        "use strict";
+        if ("undefined" == typeof sigma)
+          throw "sigma is not declared";
+        sigma.utils.pkg("sigma.canvas.extremities"), sigma.canvas.extremities.def = function(e3, t2, i2, n, s) {
+          (sigma.canvas.hovers[t2.type] || sigma.canvas.hovers.def)(t2, n, s), (sigma.canvas.hovers[i2.type] || sigma.canvas.hovers.def)(i2, n, s);
+        };
+      }).call(this);
+    }).call(window);
+  }, 136: function(e, t) {
+    (function() {
+      (function(e2) {
+        "use strict";
+        if ("undefined" == typeof sigma)
+          throw "sigma is not declared";
+        sigma.utils.pkg("sigma.middlewares"), sigma.utils.pkg("sigma.utils"), sigma.middlewares.rescale = function(e3, t2, i2) {
+          var n, s, r, a, o2, d, l, h, c = this.graph.nodes(), u = this.graph.edges(), g = this.settings.embedObjects(i2 || {}), f = g("bounds") || sigma.utils.getBoundaries(this.graph, e3, true), m = f.minX, y = f.minY, p = f.maxX, x = f.maxY, v = f.sizeMax, b = f.weightMax, w = g("width") || 1, E = g("height") || 1, C = g("autoRescale"), k = { nodePosition: 1, nodeSize: 1, edgeSize: 1 };
+          for (C instanceof Array || (C = ["nodePosition", "nodeSize", "edgeSize"]), n = 0, s = C.length; n < s; n++)
+            if (!k[C[n]])
+              throw new Error('The rescale setting "' + C[n] + '" is not recognized.');
+          var M = ~C.indexOf("nodePosition"), N = ~C.indexOf("nodeSize"), O = ~C.indexOf("edgeSize");
+          for (l = "outside" === g("scalingMode") ? Math.max(w / Math.max(p - m, 1), E / Math.max(x - y, 1)) : Math.min(w / Math.max(p - m, 1), E / Math.max(x - y, 1)), p += h = (g("rescaleIgnoreSize") ? 0 : (g("maxNodeSize") || v) / l) + (g("sideMargin") || 0), m -= h, x += h, y -= h, l = "outside" === g("scalingMode") ? Math.max(w / Math.max(p - m, 1), E / Math.max(x - y, 1)) : Math.min(w / Math.max(p - m, 1), E / Math.max(x - y, 1)), g("maxNodeSize") || g("minNodeSize") ? g("maxNodeSize") === g("minNodeSize") ? (r = 0, a = +g("maxNodeSize")) : (r = (g("maxNodeSize") - g("minNodeSize")) / v, a = +g("minNodeSize")) : (r = 1, a = 0), g("maxEdgeSize") || g("minEdgeSize") ? g("maxEdgeSize") === g("minEdgeSize") ? (o2 = 0, d = +g("minEdgeSize")) : (o2 = (g("maxEdgeSize") - g("minEdgeSize")) / b, d = +g("minEdgeSize")) : (o2 = 1, d = 0), n = 0, s = u.length; n < s; n++)
+            u[n][t2 + "size"] = u[n][e3 + "size"] * (O ? o2 : 1) + (O ? d : 0);
+          for (n = 0, s = c.length; n < s; n++)
+            c[n][t2 + "size"] = c[n][e3 + "size"] * (N ? r : 1) + (N ? a : 0), c[n][t2 + "x"] = (c[n][e3 + "x"] - (p + m) / 2) * (M ? l : 1), c[n][t2 + "y"] = (c[n][e3 + "y"] - (x + y) / 2) * (M ? l : 1);
+        }, sigma.utils.getBoundaries = function(e3, t2, i2) {
+          var n, s, r = e3.edges(), a = e3.nodes(), o2 = -1 / 0, d = -1 / 0, l = 1 / 0, h = 1 / 0, c = -1 / 0, u = -1 / 0;
+          if (i2)
+            for (n = 0, s = r.length; n < s; n++)
+              o2 = Math.max(r[n][t2 + "size"], o2);
+          for (n = 0, s = a.length; n < s; n++)
+            d = Math.max(a[n][t2 + "size"], d), c = Math.max(a[n][t2 + "x"], c), l = Math.min(a[n][t2 + "x"], l), u = Math.max(a[n][t2 + "y"], u), h = Math.min(a[n][t2 + "y"], h);
+          return { weightMax: o2 = o2 || 1, sizeMax: d = d || 1, minX: l, minY: h, maxX: c, maxY: u };
+        };
+      }).call(this);
+    }).call(window);
+  }, 137: function(e, t) {
+    (function() {
+      (function(e2) {
+        "use strict";
+        if ("undefined" == typeof sigma)
+          throw "sigma is not declared";
+        sigma.utils.pkg("sigma.middlewares"), sigma.middlewares.copy = function(e3, t2) {
+          var i2, n, s;
+          if (t2 + "" != e3 + "") {
+            for (i2 = 0, n = (s = this.graph.nodes()).length; i2 < n; i2++)
+              s[i2][t2 + "x"] = s[i2][e3 + "x"], s[i2][t2 + "y"] = s[i2][e3 + "y"], s[i2][t2 + "size"] = s[i2][e3 + "size"];
+            for (i2 = 0, n = (s = this.graph.edges()).length; i2 < n; i2++)
+              s[i2][t2 + "size"] = s[i2][e3 + "size"];
+          }
+        };
+      }).call(this);
+    }).call(window);
+  }, 138: function(e, t) {
+    (function() {
+      (function(e2) {
+        "use strict";
+        if ("undefined" == typeof sigma)
+          throw "sigma is not declared";
+        sigma.utils.pkg("sigma.misc.animation.running");
+        var t2, i2 = (t2 = 0, function() {
+          return "" + ++t2;
+        });
+        sigma.misc.animation.camera = function(t3, n, s) {
+          if (!(t3 instanceof sigma.classes.camera && "object" == typeof n && n))
+            throw "animation.camera: Wrong arguments.";
+          if ("number" != typeof n.x && "number" != typeof n.y && "number" != typeof n.ratio && "number" != typeof n.angle)
+            throw "There must be at least one valid coordinate in the given val.";
+          var r, a, o2, d, l, h = s || {}, c = sigma.utils.dateNow();
+          return l = { x: t3.x, y: t3.y, ratio: t3.ratio, angle: t3.angle }, h.duration, d = "function" != typeof h.easing ? sigma.utils.easings[h.easing || "quadraticInOut"] : h.easing, r = function() {
+            var i3, s2 = h.duration ? (sigma.utils.dateNow() - c) / h.duration : 1;
+            s2 >= 1 ? (t3.isAnimated = false, t3.goTo({ x: n.x !== e2 ? n.x : l.x, y: n.y !== e2 ? n.y : l.y, ratio: n.ratio !== e2 ? n.ratio : l.ratio, angle: n.angle !== e2 ? n.angle : l.angle }), cancelAnimationFrame(a), delete sigma.misc.animation.running[a], "function" == typeof h.onComplete && h.onComplete()) : (i3 = d(s2), t3.isAnimated = true, t3.goTo({ x: n.x !== e2 ? l.x + (n.x - l.x) * i3 : l.x, y: n.y !== e2 ? l.y + (n.y - l.y) * i3 : l.y, ratio: n.ratio !== e2 ? l.ratio + (n.ratio - l.ratio) * i3 : l.ratio, angle: n.angle !== e2 ? l.angle + (n.angle - l.angle) * i3 : l.angle }), "function" == typeof h.onNewFrame && h.onNewFrame(), o2.frameId = requestAnimationFrame(r));
+          }, a = i2(), o2 = { frameId: requestAnimationFrame(r), target: t3, type: "camera", options: h, fn: r }, sigma.misc.animation.running[a] = o2, a;
+        }, sigma.misc.animation.kill = function(e3) {
+          if (1 !== arguments.length || "number" != typeof e3)
+            throw "animation.kill: Wrong arguments.";
+          var t3 = sigma.misc.animation.running[e3];
+          return t3 && (cancelAnimationFrame(e3), delete sigma.misc.animation.running[t3.frameId], "camera" === t3.type && (t3.target.isAnimated = false), "function" == typeof (t3.options || {}).onComplete && t3.options.onComplete()), this;
+        }, sigma.misc.animation.killAll = function(e3) {
+          var t3, i3, n = 0, s = "string" == typeof e3 ? e3 : null, r = "object" == typeof e3 ? e3 : null, a = sigma.misc.animation.running;
+          for (i3 in a)
+            s && a[i3].type !== s || r && a[i3].target !== r || (t3 = sigma.misc.animation.running[i3], cancelAnimationFrame(t3.frameId), delete sigma.misc.animation.running[i3], "camera" === t3.type && (t3.target.isAnimated = false), n++, "function" == typeof (t3.options || {}).onComplete && t3.options.onComplete());
+          return n;
+        }, sigma.misc.animation.has = function(e3) {
+          var t3, i3 = "string" == typeof e3 ? e3 : null, n = "object" == typeof e3 ? e3 : null, s = sigma.misc.animation.running;
+          for (t3 in s)
+            if (!(i3 && s[t3].type !== i3 || n && s[t3].target !== n))
+              return true;
+          return false;
+        };
+      }).call(this);
+    }).call(window);
+  }, 139: function(e, t) {
+    (function() {
+      (function(e2) {
+        "use strict";
+        if ("undefined" == typeof sigma)
+          throw "sigma is not declared";
+        sigma.utils.pkg("sigma.misc"), sigma.misc.bindEvents = function(t2) {
+          var i2, n, s, r, a = this;
+          function o2(e3) {
+            e3 && (s = "x" in e3.data ? e3.data.x : s, r = "y" in e3.data ? e3.data.y : r);
+            var i3, n2, o3, d2, l2, h, c, u, g = [], f = s + a.width / 2, m = r + a.height / 2, y = a.camera.cameraPosition(s, r), p = a.camera.quadtree.point(y.x, y.y);
+            if (p.length) {
+              for (i3 = 0, o3 = p.length; i3 < o3; i3++)
+                if (l2 = (d2 = p[i3])[t2 + "x"], h = d2[t2 + "y"], c = d2[t2 + "size"], !d2.hidden && f > l2 - c && f < l2 + c && m > h - c && m < h + c && Math.sqrt(Math.pow(f - l2, 2) + Math.pow(m - h, 2)) < c) {
+                  for (u = false, n2 = 0; n2 < g.length; n2++)
+                    if (d2.size > g[n2].size) {
+                      g.splice(n2, 0, d2), u = true;
+                      break;
+                    }
+                  u || g.push(d2);
+                }
+            }
+            return g;
+          }
+          function d(i3) {
+            if (!a.settings("enableEdgeHovering"))
+              return [];
+            var n2 = sigma.renderers.canvas && a instanceof sigma.renderers.canvas;
+            if (!n2)
+              throw new Error("The edge events feature is not compatible with the WebGL renderer");
+            i3 && (s = "x" in i3.data ? i3.data.x : s, r = "y" in i3.data ? i3.data.y : r);
+            var o3, d2, l2, h, c, u, g, f, m, y, p = a.settings("edgeHoverPrecision"), x = {}, v = [], b = s + a.width / 2, w = r + a.height / 2, E = a.camera.cameraPosition(s, r), C = [];
+            if (n2)
+              for (o3 = 0, l2 = (h = a.camera.quadtree.area(a.camera.getRectangle(a.width, a.height))).length; o3 < l2; o3++)
+                x[h[o3].id] = h[o3];
+            function k(e3, t3) {
+              for (y = false, d2 = 0; d2 < e3.length; d2++)
+                if (t3.size > e3[d2].size) {
+                  e3.splice(d2, 0, t3), y = true;
+                  break;
+                }
+              y || e3.push(t3);
+            }
+            if (a.camera.edgequadtree !== e2 && (C = a.camera.edgequadtree.point(E.x, E.y)), C.length)
+              for (o3 = 0, l2 = C.length; o3 < l2; o3++)
+                c = C[o3], g = a.graph.nodes(c.source), f = a.graph.nodes(c.target), u = c[t2 + "size"] || c["read_" + t2 + "size"], !c.hidden && !g.hidden && !f.hidden && (!n2 || x[c.source] || x[c.target]) && sigma.utils.getDistance(g[t2 + "x"], g[t2 + "y"], b, w) > g[t2 + "size"] && sigma.utils.getDistance(f[t2 + "x"], f[t2 + "y"], b, w) > f[t2 + "size"] && ("curve" == c.type || "curvedArrow" == c.type ? g.id === f.id ? (m = sigma.utils.getSelfLoopControlPoints(g[t2 + "x"], g[t2 + "y"], g[t2 + "size"]), sigma.utils.isPointOnBezierCurve(b, w, g[t2 + "x"], g[t2 + "y"], f[t2 + "x"], f[t2 + "y"], m.x1, m.y1, m.x2, m.y2, Math.max(u, p)) && k(v, c)) : (m = sigma.utils.getQuadraticControlPoint(g[t2 + "x"], g[t2 + "y"], f[t2 + "x"], f[t2 + "y"]), sigma.utils.isPointOnQuadraticCurve(b, w, g[t2 + "x"], g[t2 + "y"], f[t2 + "x"], f[t2 + "y"], m.x, m.y, Math.max(u, p)) && k(v, c)) : sigma.utils.isPointOnSegment(b, w, g[t2 + "x"], g[t2 + "y"], f[t2 + "x"], f[t2 + "y"], Math.max(u, p)) && k(v, c));
+            return v;
+          }
+          function l(e3) {
+            var t3, i3, n2 = {}, s2 = {};
+            function r2(e4) {
+              if (a.settings("eventsEnabled")) {
+                t3 = o2(e4), i3 = d(e4);
+                var r3, l2, h, c, u = [], g = [], f = {}, m = t3.length, y = [], p = [], x = {}, v = i3.length;
+                for (r3 = 0; r3 < m; r3++)
+                  f[(h = t3[r3]).id] = h, n2[h.id] || (g.push(h), n2[h.id] = h);
+                for (l2 in n2)
+                  f[l2] || (u.push(n2[l2]), delete n2[l2]);
+                for (r3 = 0, m = g.length; r3 < m; r3++)
+                  a.dispatchEvent("overNode", { node: g[r3], captor: e4.data });
+                for (r3 = 0, m = u.length; r3 < m; r3++)
+                  a.dispatchEvent("outNode", { node: u[r3], captor: e4.data });
+                for (g.length && a.dispatchEvent("overNodes", { nodes: g, captor: e4.data }), u.length && a.dispatchEvent("outNodes", { nodes: u, captor: e4.data }), r3 = 0; r3 < v; r3++)
+                  x[(c = i3[r3]).id] = c, s2[c.id] || (p.push(c), s2[c.id] = c);
+                for (l2 in s2)
+                  x[l2] || (y.push(s2[l2]), delete s2[l2]);
+                for (r3 = 0, v = p.length; r3 < v; r3++)
+                  a.dispatchEvent("overEdge", { edge: p[r3], captor: e4.data });
+                for (r3 = 0, v = y.length; r3 < v; r3++)
+                  a.dispatchEvent("outEdge", { edge: y[r3], captor: e4.data });
+                p.length && a.dispatchEvent("overEdges", { edges: p, captor: e4.data }), y.length && a.dispatchEvent("outEdges", { edges: y, captor: e4.data });
+              }
+            }
+            e3.bind("click", function(e4) {
+              a.settings("eventsEnabled") && (a.dispatchEvent("click", e4.data), t3 = o2(e4), i3 = d(e4), t3.length ? (a.dispatchEvent("clickNode", { node: t3[0], captor: e4.data }), a.dispatchEvent("clickNodes", { node: t3, captor: e4.data })) : i3.length ? (a.dispatchEvent("clickEdge", { edge: i3[0], captor: e4.data }), a.dispatchEvent("clickEdges", { edge: i3, captor: e4.data })) : a.dispatchEvent("clickStage", { captor: e4.data }));
+            }), e3.bind("mousedown", r2), e3.bind("mouseup", r2), e3.bind("mousemove", r2), e3.bind("mouseout", function(e4) {
+              if (a.settings("eventsEnabled")) {
+                var t4, i4, r3, o3, d2 = [], l2 = [];
+                for (t4 in n2)
+                  d2.push(n2[t4]);
+                for (n2 = {}, i4 = 0, r3 = d2.length; i4 < r3; i4++)
+                  a.dispatchEvent("outNode", { node: d2[i4], captor: e4.data });
+                for (d2.length && a.dispatchEvent("outNodes", { nodes: d2, captor: e4.data }), s2 = {}, i4 = 0, o3 = l2.length; i4 < o3; i4++)
+                  a.dispatchEvent("outEdge", { edge: l2[i4], captor: e4.data });
+                l2.length && a.dispatchEvent("outEdges", { edges: l2, captor: e4.data });
+              }
+            }), e3.bind("doubleclick", function(e4) {
+              a.settings("eventsEnabled") && (a.dispatchEvent("doubleClick", e4.data), t3 = o2(e4), i3 = d(e4), t3.length ? (a.dispatchEvent("doubleClickNode", { node: t3[0], captor: e4.data }), a.dispatchEvent("doubleClickNodes", { node: t3, captor: e4.data })) : i3.length ? (a.dispatchEvent("doubleClickEdge", { edge: i3[0], captor: e4.data }), a.dispatchEvent("doubleClickEdges", { edge: i3, captor: e4.data })) : a.dispatchEvent("doubleClickStage", { captor: e4.data }));
+            }), e3.bind("rightclick", function(e4) {
+              a.settings("eventsEnabled") && (a.dispatchEvent("rightClick", e4.data), t3 = o2(e4), i3 = d(e4), t3.length ? (a.dispatchEvent("rightClickNode", { node: t3[0], captor: e4.data }), a.dispatchEvent("rightClickNodes", { node: t3, captor: e4.data })) : i3.length ? (a.dispatchEvent("rightClickEdge", { edge: i3[0], captor: e4.data }), a.dispatchEvent("rightClickEdges", { edge: i3, captor: e4.data })) : a.dispatchEvent("rightClickStage", { captor: e4.data }));
+            }), a.bind("render", r2);
+          }
+          for (i2 = 0, n = this.captors.length; i2 < n; i2++)
+            l(this.captors[i2]);
+        };
+      }).call(this);
+    }).call(window);
+  }, 140: function(e, t) {
+    (function() {
+      (function(e2) {
+        "use strict";
+        if ("undefined" == typeof sigma)
+          throw "sigma is not declared";
+        sigma.utils.pkg("sigma.misc"), sigma.misc.bindDOMEvents = function(e3) {
+          var t2 = this, i2 = this.graph;
+          function n(e4) {
+            this.attr = function(t3) {
+              return e4.getAttributeNS(null, t3);
+            }, this.tag = e4.tagName, this.class = this.attr("class"), this.id = this.attr("id"), this.isNode = function() {
+              return !!~this.class.indexOf(t2.settings("classPrefix") + "-node");
+            }, this.isEdge = function() {
+              return !!~this.class.indexOf(t2.settings("classPrefix") + "-edge");
+            }, this.isHover = function() {
+              return !!~this.class.indexOf(t2.settings("classPrefix") + "-hover");
+            };
+          }
+          function s(e4) {
+            if (t2.settings("eventsEnabled")) {
+              t2.dispatchEvent("click", e4);
+              var s2 = new n(e4.target);
+              s2.isNode() ? t2.dispatchEvent("clickNode", { node: i2.nodes(s2.attr("data-node-id")) }) : t2.dispatchEvent("clickStage"), e4.preventDefault(), e4.stopPropagation();
+            }
+          }
+          function r(e4) {
+            if (t2.settings("eventsEnabled")) {
+              t2.dispatchEvent("doubleClick", e4);
+              var s2 = new n(e4.target);
+              s2.isNode() ? t2.dispatchEvent("doubleClickNode", { node: i2.nodes(s2.attr("data-node-id")) }) : t2.dispatchEvent("doubleClickStage"), e4.preventDefault(), e4.stopPropagation();
+            }
+          }
+          e3.addEventListener("click", s, false), sigma.utils.doubleClick(e3, "click", r), e3.addEventListener("touchstart", s, false), sigma.utils.doubleClick(e3, "touchstart", r), e3.addEventListener("mouseover", function(e4) {
+            var s2 = e4.toElement || e4.target;
+            if (t2.settings("eventsEnabled") && s2) {
+              var r2 = new n(s2);
+              if (r2.isNode())
+                t2.dispatchEvent("overNode", { node: i2.nodes(r2.attr("data-node-id")) });
+              else if (r2.isEdge()) {
+                var a = i2.edges(r2.attr("data-edge-id"));
+                t2.dispatchEvent("overEdge", { edge: a, source: i2.nodes(a.source), target: i2.nodes(a.target) });
+              }
+            }
+          }, true), e3.addEventListener("mouseout", function(e4) {
+            var s2 = e4.fromElement || e4.originalTarget;
+            if (t2.settings("eventsEnabled")) {
+              var r2 = new n(s2);
+              if (r2.isNode())
+                t2.dispatchEvent("outNode", { node: i2.nodes(r2.attr("data-node-id")) });
+              else if (r2.isEdge()) {
+                var a = i2.edges(r2.attr("data-edge-id"));
+                t2.dispatchEvent("outEdge", { edge: a, source: i2.nodes(a.source), target: i2.nodes(a.target) });
+              }
+            }
+          }, true);
+        };
+      }).call(this);
+    }).call(window);
+  }, 141: function(e, t) {
+    (function() {
+      (function(e2) {
+        "use strict";
+        if ("undefined" == typeof sigma)
+          throw "sigma is not declared";
+        sigma.utils.pkg("sigma.misc"), sigma.misc.drawHovers = function(e3) {
+          var t2 = this, i2 = {}, n = {};
+          function s() {
+            var s2, r, a, o2, d, l = t2.contexts.hover.canvas, h = t2.settings("defaultNodeType"), c = t2.settings("defaultEdgeType"), u = sigma.canvas.hovers, g = sigma.canvas.edgehovers, f = sigma.canvas.extremities, m = t2.settings.embedObjects({ prefix: e3 });
+            if (t2.contexts.hover.clearRect(0, 0, l.width, l.height), m("enableHovering") && m("singleHover") && Object.keys(i2).length && (u[(o2 = i2[Object.keys(i2)[0]]).type] || u[h] || u.def)(o2, t2.contexts.hover, m), m("enableHovering") && !m("singleHover"))
+              for (s2 in i2)
+                (u[i2[s2].type] || u[h] || u.def)(i2[s2], t2.contexts.hover, m);
+            if (m("enableEdgeHovering") && m("singleHover") && Object.keys(n).length && (d = n[Object.keys(n)[0]], r = t2.graph.nodes(d.source), a = t2.graph.nodes(d.target), d.hidden || ((g[d.type] || g[c] || g.def)(d, r, a, t2.contexts.hover, m), m("edgeHoverExtremities") ? (f[d.type] || f.def)(d, r, a, t2.contexts.hover, m) : ((sigma.canvas.nodes[r.type] || sigma.canvas.nodes.def)(r, t2.contexts.hover, m), (sigma.canvas.nodes[a.type] || sigma.canvas.nodes.def)(a, t2.contexts.hover, m)))), m("enableEdgeHovering") && !m("singleHover"))
+              for (s2 in n)
+                d = n[s2], r = t2.graph.nodes(d.source), a = t2.graph.nodes(d.target), d.hidden || ((g[d.type] || g[c] || g.def)(d, r, a, t2.contexts.hover, m), m("edgeHoverExtremities") ? (f[d.type] || f.def)(d, r, a, t2.contexts.hover, m) : ((sigma.canvas.nodes[r.type] || sigma.canvas.nodes.def)(r, t2.contexts.hover, m), (sigma.canvas.nodes[a.type] || sigma.canvas.nodes.def)(a, t2.contexts.hover, m)));
+          }
+          this.bind("overNode", function(e4) {
+            var t3 = e4.data.node;
+            t3.hidden || (i2[t3.id] = t3, s());
+          }), this.bind("outNode", function(e4) {
+            delete i2[e4.data.node.id], s();
+          }), this.bind("overEdge", function(e4) {
+            var t3 = e4.data.edge;
+            t3.hidden || (n[t3.id] = t3, s());
+          }), this.bind("outEdge", function(e4) {
+            delete n[e4.data.edge.id], s();
+          }), this.bind("render", function(e4) {
+            s();
+          });
+        };
+      }).call(this);
+    }).call(window);
+  } });
+
+  // ../testeranto/node_modules/react-sigma/es/Sigma.js
+  var import_prop_types4 = __toESM(require_prop_types());
+  function _typeof(obj) {
+    "@babel/helpers - typeof";
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof = function _typeof13(obj2) {
+        return typeof obj2;
+      };
+    } else {
+      _typeof = function _typeof13(obj2) {
+        return obj2 && typeof Symbol === "function" && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
+      };
+    }
+    return _typeof(obj);
+  }
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+  function _defineProperties(target, props) {
+    for (var i2 = 0; i2 < props.length; i2++) {
+      var descriptor = props[i2];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor)
+        descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+  function _createClass(Constructor, protoProps, staticProps) {
+    if (protoProps)
+      _defineProperties(Constructor.prototype, protoProps);
+    if (staticProps)
+      _defineProperties(Constructor, staticProps);
+    return Constructor;
+  }
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function");
+    }
+    subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } });
+    if (superClass)
+      _setPrototypeOf2(subClass, superClass);
+  }
+  function _setPrototypeOf2(o2, p) {
+    _setPrototypeOf2 = Object.setPrototypeOf || function _setPrototypeOf14(o3, p2) {
+      o3.__proto__ = p2;
+      return o3;
+    };
+    return _setPrototypeOf2(o2, p);
+  }
+  function _createSuper(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct();
+    return function _createSuperInternal() {
+      var Super = _getPrototypeOf(Derived), result;
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf(this).constructor;
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
+      return _possibleConstructorReturn(this, result);
+    };
+  }
+  function _possibleConstructorReturn(self2, call) {
+    if (call && (_typeof(call) === "object" || typeof call === "function")) {
+      return call;
+    }
+    return _assertThisInitialized(self2);
+  }
+  function _assertThisInitialized(self2) {
+    if (self2 === void 0) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+    return self2;
+  }
+  function _isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct)
+      return false;
+    if (Reflect.construct.sham)
+      return false;
+    if (typeof Proxy === "function")
+      return true;
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function() {
+      }));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+  function _getPrototypeOf(o2) {
+    _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf13(o3) {
+      return o3.__proto__ || Object.getPrototypeOf(o3);
+    };
+    return _getPrototypeOf(o2);
+  }
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
+    } else {
+      obj[key] = value;
+    }
+    return obj;
+  }
+  var Sigma3 = /* @__PURE__ */ function(_React$Component) {
+    _inherits(Sigma15, _React$Component);
+    var _super = _createSuper(Sigma15);
+    function Sigma15(props) {
+      var _this2;
+      _classCallCheck(this, Sigma15);
+      _this2 = _super.call(this, props);
+      _defineProperty(_assertThisInitialized(_this2), "initRenderer", function(container) {
+        if (container) {
+          var options2 = {
+            container
+          };
+          if (_this2.props.renderer)
+            options2.type = _this2.props.renderer;
+          _this2.sigmaRenderer = _this2.sigma.addRenderer(options2);
+          _this2.sigma.refresh();
+          _this2.setState({
+            renderer: true
+          });
+        } else if (_this2.sigmaRenderer) {
+          _this2.sigma.killRenderer(_this2.sigmaRenderer);
+          _this2.sigmaRenderer = null;
+          _this2.setState({
+            renderer: false
+          });
+        }
+      });
+      _this2.state = {
+        renderer: false
+      };
+      var settings2 = _this2.props.settings ? _this2.props.settings : {};
+      _this2.sigma = new sigma({
+        settings: settings2
+      });
+      if (CustomShapes)
+        CustomShapes.init(_this2.sigma);
+      Sigma15.bindHandlers(_this2.props, _this2.sigma);
+      if (_this2.props.graph) {
+        try {
+          _this2.sigma.graph.read(_this2.props.graph);
+        } catch (e) {
+          if (_this2.props.onSigmaException)
+            _this2.props.onSigmaException(e);
+        }
+      }
+      return _this2;
+    }
+    _createClass(Sigma15, [{
+      key: "componentWillUnmount",
+      value: function componentWillUnmount() {
+        this.sigma.kill();
+        this.sigmaRenderer = null;
+      }
+    }, {
+      key: "render",
+      value: function render() {
+        var children = this.state.renderer ? embedProps(this.props.children, {
+          sigma: this.sigma
+        }) : null;
+        return /* @__PURE__ */ import_react31.default.createElement("div", {
+          ref: this.initRenderer,
+          style: this.props.style
+        }, children);
+      }
+      /**
+      Initialize event handlers with sigma.
+      
+      Event handler function receives [Sigma Event](https://github.com/jacomyal/sigma.js/wiki/Events-API)
+      with the structure of following type:
+      ```
+      type Sigma$Event = {
+        data: {
+          node?: Neo4j$Node, //for node events is sigma node data
+          edge?: Neo4j$Edge, //for edge events is sigma edge data
+          captor: {   // information about event handler, for instance position on the page {clientX, clientY}
+            clientX: number,
+            clientY: number
+      }}}
+      
+      type Sigma$EventHandler = (node:Sigma$Event) => void
+      
+      ```
+      **/
+    }], [{
+      key: "bindHandlers",
+      value: function bindHandlers(handlers, sigma6) {
+        ["clickNode", "overNode", "outNode", "clickEdge", "overEdge", "outEdge", "clickStage"].forEach(function(event) {
+          var handler = "on" + event[0].toUpperCase() + event.substr(1);
+          if (handlers[handler]) {
+            sigma6.bind(event, handlers[handler]);
+          }
+        });
+      }
+    }]);
+    return Sigma15;
+  }(import_react31.default.Component);
+  _defineProperty(Sigma3, "defaultProps", {
+    settings: {
+      defaultNodeColor: "#3388AA",
+      defaultLabelSize: 8,
+      defaultLabelColor: "#777",
+      labelThreshold: 12,
+      hoverFontStyle: "text-size: 11",
+      batchEdgesDrawing: true,
+      drawEdges: true,
+      drawEdgeLabels: false
+    },
+    style: {
+      maxWidth: "inherit",
+      height: "400px"
+    }
+  });
+  _defineProperty(Sigma3, "propTypes", {
+    settings: function settings() {
+      return (typeof Sigma$Settings === "function" ? import_prop_types4.default.instanceOf(Sigma$Settings) : import_prop_types4.default.any).apply(this, arguments);
+    },
+    renderer: import_prop_types4.default.oneOf(["webgl", "canvas", "svg"]),
+    style: import_prop_types4.default.object,
+    children: import_prop_types4.default.any,
+    graph: function graph() {
+      return (typeof Sigma$Graph$Data === "function" ? import_prop_types4.default.instanceOf(Sigma$Graph$Data) : import_prop_types4.default.any).apply(this, arguments);
+    },
+    onSigmaException: import_prop_types4.default.func,
+    onClickNode: import_prop_types4.default.func,
+    onClickEdge: import_prop_types4.default.func,
+    onOverNode: import_prop_types4.default.func,
+    onOutNode: import_prop_types4.default.func,
+    onOverEdge: import_prop_types4.default.func,
+    // TODO: onOverEdge does not work?
+    onOutEdge: import_prop_types4.default.func,
+    onClickStage: import_prop_types4.default.func
+  });
+  var Sigma_default = Sigma3;
+
+  // ../testeranto/node_modules/react-sigma/es/DragNodes.js
+  var import_react32 = __toESM(require_react());
+
+  // ../testeranto/node_modules/react-sigma/sigma/sigma.plugins.dragNodes.js
+  var Sigma4 = function(e) {
+    var n = {};
+    function t(r) {
+      if (n[r])
+        return n[r].exports;
+      var o2 = n[r] = { i: r, l: false, exports: {} };
+      return e[r].call(o2.exports, o2, o2.exports, t), o2.l = true, o2.exports;
+    }
+    return t.m = e, t.c = n, t.d = function(e2, n2, r) {
+      t.o(e2, n2) || Object.defineProperty(e2, n2, { enumerable: true, get: r });
+    }, t.r = function(e2) {
+      "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e2, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(e2, "__esModule", { value: true });
+    }, t.t = function(e2, n2) {
+      if (1 & n2 && (e2 = t(e2)), 8 & n2)
+        return e2;
+      if (4 & n2 && "object" == typeof e2 && e2 && e2.__esModule)
+        return e2;
+      var r = /* @__PURE__ */ Object.create(null);
+      if (t.r(r), Object.defineProperty(r, "default", { enumerable: true, value: e2 }), 2 & n2 && "string" != typeof e2)
+        for (var o2 in e2)
+          t.d(r, o2, function(n3) {
+            return e2[n3];
+          }.bind(null, o2));
+      return r;
+    }, t.n = function(e2) {
+      var n2 = e2 && e2.__esModule ? function() {
+        return e2.default;
+      } : function() {
+        return e2;
+      };
+      return t.d(n2, "a", n2), n2;
+    }, t.o = function(e2, n2) {
+      return Object.prototype.hasOwnProperty.call(e2, n2);
+    }, t.p = "", t(t.s = 179);
+  }({ 179: function(e, n) {
+    (function() {
+      (function() {
+        "use strict";
+        if ("undefined" == typeof sigma)
+          throw "sigma is not declared";
+        function e2(e3, n3) {
+          sigma.classes.dispatcher.extend(this);
+          var t = this, r = e3, o2 = document.body, i2 = n3, d = n3.container.lastChild, a = n3.camera, s = null, u = "", l = [], c = {}, f = false, g = false;
+          function p(e4) {
+            c[e4.data.node.id] || (l.push(e4.data.node), c[e4.data.node.id] = true, l.length && !f && (s = l[l.length - 1], d.addEventListener("mousedown", m)));
+          }
+          function v(e4) {
+            var n4 = l.map(function(e5) {
+              return e5;
+            }).indexOf(e4.data.node);
+            l.splice(n4, 1), delete c[e4.data.node.id], l.length && !f ? s = l[l.length - 1] : d.removeEventListener("mousedown", m);
+          }
+          function m(e4) {
+            f = true;
+            var n4 = r.graph.nodes().length;
+            if (s && n4 > 1) {
+              var a3, u2;
+              for (a3 in d.removeEventListener("mousedown", m), o2.addEventListener("mousemove", y), o2.addEventListener("mouseup", b), r.cameras)
+                void 0 !== (u2 = r.cameras[a3]).edgequadtree && (u2.edgequadtree._enabled = false);
+              i2.settings({ mouseEnabled: false, enableHovering: false }), r.refresh(), t.dispatchEvent("startdrag", { node: s, captor: e4, renderer: i2 });
+            }
+          }
+          function b(e4) {
+            var n4, a3;
+            for (n4 in f = false, d.addEventListener("mousedown", m), o2.removeEventListener("mousemove", y), o2.removeEventListener("mouseup", b), r.cameras)
+              void 0 !== (a3 = r.cameras[n4]).edgequadtree && (a3.edgequadtree._enabled = true);
+            i2.settings({ mouseEnabled: true, enableHovering: true }), r.refresh(), g && t.dispatchEvent("drop", { node: s, captor: e4, renderer: i2 }), t.dispatchEvent("dragend", { node: s, captor: e4, renderer: i2 }), g = false, s = null;
+          }
+          function y(e4) {
+            if (navigator.userAgent.toLowerCase().indexOf("firefox") > -1) {
+              clearTimeout(n4);
+              var n4 = setTimeout(o3, 0);
+            } else
+              o3();
+            function o3() {
+              for (var n5, o4, d2, l2 = (n5 = i2.container, o4 = window.getComputedStyle(n5), d2 = function(e5) {
+                return parseInt(o4.getPropertyValue(e5).replace("px", "")) || 0;
+              }, { left: n5.getBoundingClientRect().left + d2("padding-left"), top: n5.getBoundingClientRect().top + d2("padding-top") }), c2 = e4.clientX - l2.left, f2 = e4.clientY - l2.top, p2 = Math.cos(a.angle), v2 = Math.sin(a.angle), m2 = r.graph.nodes(), b2 = [], y2 = 0; y2 < 2; y2++) {
+                var h = m2[y2], x = { x: h.x * p2 + h.y * v2, y: h.y * p2 - h.x * v2, renX: h[u + "x"], renY: h[u + "y"] };
+                b2.push(x);
+              }
+              if (b2[0].x === b2[1].x && b2[0].y === b2[1].y) {
+                var E = 0 === b2[0].renX ? 1 : b2[0].renX, w = 0 === b2[0].renY ? 1 : b2[0].renY;
+                c2 = b2[0].x / E * (c2 - b2[0].renX) + b2[0].x, f2 = b2[0].y / w * (f2 - b2[0].renY) + b2[0].y;
+              } else {
+                E = (b2[1].renX - b2[0].renX) / (b2[1].x - b2[0].x), w = (b2[1].renY - b2[0].renY) / (b2[1].y - b2[0].y);
+                b2[1].x === b2[0].x && (E = w), b2[1].y === b2[0].y && (w = E), c2 = (c2 - b2[0].renX) / E + b2[0].x, f2 = (f2 - b2[0].renY) / w + b2[0].y;
+              }
+              s.x = c2 * p2 - f2 * v2, s.y = f2 * p2 + c2 * v2, r.refresh(), g = true, t.dispatchEvent("drag", { node: s, captor: e4, renderer: i2 });
+            }
+          }
+          n3 instanceof sigma.renderers.svg && (d = n3.container.firstChild), u = n3 instanceof sigma.renderers.webgl ? n3.options.prefix.substr(5) : n3.options.prefix, n3.bind("overNode", p), n3.bind("outNode", v), n3.bind("click", function(e4) {
+            f = false, o2.removeEventListener("mousemove", y), o2.removeEventListener("mouseup", b), l.length || (s = null);
+          }), r.bind("kill", function() {
+            t.unbindAll();
+          }), this.unbindAll = function() {
+            d.removeEventListener("mousedown", m), o2.removeEventListener("mousemove", y), o2.removeEventListener("mouseup", b), i2.unbind("overNode", p), i2.unbind("outNode", v);
+          };
+        }
+        sigma.utils.pkg("sigma.plugins");
+        var n2 = {};
+        sigma.plugins.dragNodes = function(t, r) {
+          return n2[t.id] || (n2[t.id] = new e2(t, r)), t.bind("kill", function() {
+            sigma.plugins.killDragNodes(t);
+          }), n2[t.id];
+        }, sigma.plugins.killDragNodes = function(t) {
+          n2[t.id] instanceof e2 && (n2[t.id].unbindAll(), delete n2[t.id]);
+        };
+      }).call(window);
+    }).call(window);
+  } });
+
+  // ../testeranto/node_modules/react-sigma/es/DragNodes.js
+  var import_prop_types5 = __toESM(require_prop_types());
+  function _typeof2(obj) {
+    "@babel/helpers - typeof";
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof2 = function _typeof13(obj2) {
+        return typeof obj2;
+      };
+    } else {
+      _typeof2 = function _typeof13(obj2) {
+        return obj2 && typeof Symbol === "function" && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
+      };
+    }
+    return _typeof2(obj);
+  }
+  function _classCallCheck2(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+  function _defineProperties2(target, props) {
+    for (var i2 = 0; i2 < props.length; i2++) {
+      var descriptor = props[i2];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor)
+        descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+  function _createClass2(Constructor, protoProps, staticProps) {
+    if (protoProps)
+      _defineProperties2(Constructor.prototype, protoProps);
+    if (staticProps)
+      _defineProperties2(Constructor, staticProps);
+    return Constructor;
+  }
+  function _inherits2(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function");
+    }
+    subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } });
+    if (superClass)
+      _setPrototypeOf3(subClass, superClass);
+  }
+  function _setPrototypeOf3(o2, p) {
+    _setPrototypeOf3 = Object.setPrototypeOf || function _setPrototypeOf14(o3, p2) {
+      o3.__proto__ = p2;
+      return o3;
+    };
+    return _setPrototypeOf3(o2, p);
+  }
+  function _createSuper2(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct2();
+    return function _createSuperInternal() {
+      var Super = _getPrototypeOf2(Derived), result;
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf2(this).constructor;
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
+      return _possibleConstructorReturn2(this, result);
+    };
+  }
+  function _possibleConstructorReturn2(self2, call) {
+    if (call && (_typeof2(call) === "object" || typeof call === "function")) {
+      return call;
+    }
+    return _assertThisInitialized2(self2);
+  }
+  function _assertThisInitialized2(self2) {
+    if (self2 === void 0) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+    return self2;
+  }
+  function _isNativeReflectConstruct2() {
+    if (typeof Reflect === "undefined" || !Reflect.construct)
+      return false;
+    if (Reflect.construct.sham)
+      return false;
+    if (typeof Proxy === "function")
+      return true;
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function() {
+      }));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+  function _getPrototypeOf2(o2) {
+    _getPrototypeOf2 = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf13(o3) {
+      return o3.__proto__ || Object.getPrototypeOf(o3);
+    };
+    return _getPrototypeOf2(o2);
+  }
+  function _defineProperty2(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
+    } else {
+      obj[key] = value;
+    }
+    return obj;
+  }
+  var DragNodes = /* @__PURE__ */ function(_React$Component) {
+    _inherits2(DragNodes2, _React$Component);
+    var _super = _createSuper2(DragNodes2);
+    function DragNodes2(props) {
+      var _this2;
+      _classCallCheck2(this, DragNodes2);
+      _this2 = _super.call(this, props);
+      _defineProperty2(_assertThisInitialized2(_this2), "render", function() {
+        return null;
+      });
+      if (_this2.props.sigma) {
+        var dragListener = sigma.plugins.dragNodes(_this2.props.sigma, _this2.props.sigma.renderers[0]);
+        DragNodes2.bindHandlers(props, dragListener);
+      }
+      return _this2;
+    }
+    _createClass2(DragNodes2, null, [{
+      key: "bindHandlers",
+      value: function bindHandlers(handlers, dragListener) {
+        ["startdrag", "drag", "drop", "dragend"].forEach(function(event) {
+          var handler = "on" + event[0].toUpperCase() + event.substr(1);
+          if (handlers[handler]) {
+            dragListener.bind(event, handlers[handler]);
+          }
+        });
+      }
+    }]);
+    return DragNodes2;
+  }(import_react32.default.Component);
+  _defineProperty2(DragNodes, "propTypes", {
+    sigma: function(_sigma) {
+      function sigma6() {
+        return _sigma.apply(this, arguments);
+      }
+      sigma6.toString = function() {
+        return _sigma.toString();
+      };
+      return sigma6;
+    }(function() {
+      return (typeof sigma === "function" ? import_prop_types5.default.instanceOf(sigma) : import_prop_types5.default.any).apply(this, arguments);
+    }),
+    onStartdrag: import_prop_types5.default.func,
+    onDrag: import_prop_types5.default.func,
+    onDrop: import_prop_types5.default.func,
+    onDragend: import_prop_types5.default.func
+  });
+
+  // ../testeranto/node_modules/react-sigma/es/EdgeShapes.js
+  var import_react33 = __toESM(require_react());
+
+  // ../testeranto/node_modules/react-sigma/sigma/edges.js
+  var Sigma5 = function(e) {
+    var o2 = {};
+    function t(i2) {
+      if (o2[i2])
+        return o2[i2].exports;
+      var a = o2[i2] = { i: i2, l: false, exports: {} };
+      return e[i2].call(a.exports, a, a.exports, t), a.l = true, a.exports;
+    }
+    return t.m = e, t.c = o2, t.d = function(e2, o3, i2) {
+      t.o(e2, o3) || Object.defineProperty(e2, o3, { enumerable: true, get: i2 });
+    }, t.r = function(e2) {
+      "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e2, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(e2, "__esModule", { value: true });
+    }, t.t = function(e2, o3) {
+      if (1 & o3 && (e2 = t(e2)), 8 & o3)
+        return e2;
+      if (4 & o3 && "object" == typeof e2 && e2 && e2.__esModule)
+        return e2;
+      var i2 = /* @__PURE__ */ Object.create(null);
+      if (t.r(i2), Object.defineProperty(i2, "default", { enumerable: true, value: e2 }), 2 & o3 && "string" != typeof e2)
+        for (var a in e2)
+          t.d(i2, a, function(o4) {
+            return e2[o4];
+          }.bind(null, a));
+      return i2;
+    }, t.n = function(e2) {
+      var o3 = e2 && e2.__esModule ? function() {
+        return e2.default;
+      } : function() {
+        return e2;
+      };
+      return t.d(o3, "a", o3), o3;
+    }, t.o = function(e2, o3) {
+      return Object.prototype.hasOwnProperty.call(e2, o3);
+    }, t.p = "", t(t.s = 158);
+  }({ 158: function(e, o2, t) {
+    "use strict";
+    t.r(o2);
+    t(159), t(160), t(161), t(162), t(163), t(164), t(165), t(166), t(167), t(168), t(169), t(170), t(171), t(172), t(173), t(174), t(175);
+  }, 159: function(e, o2) {
+    (function() {
+      !function() {
+        "use strict";
+        sigma.utils.pkg("sigma.canvas.edges"), sigma.canvas.edges.curve = function(e2, o3, t, i2, a) {
+          var l, r = e2.color, s = a("prefix") || "", c = e2[s + "size"] || 1, n = a("edgeColor"), d = a("defaultNodeColor"), g = a("defaultEdgeColor"), u = o3[s + "size"], f = o3[s + "x"], v = o3[s + "y"], h = t[s + "x"], y = t[s + "y"];
+          if (l = o3.id === t.id ? sigma.utils.getSelfLoopControlPoints(f, v, u) : sigma.utils.getQuadraticControlPoint(f, v, h, y), !r)
+            switch (n) {
+              case "source":
+                r = o3.color || d;
+                break;
+              case "target":
+                r = t.color || d;
+                break;
+              default:
+                r = g;
+            }
+          i2.strokeStyle = r, i2.lineWidth = c, i2.beginPath(), i2.moveTo(f, v), o3.id === t.id ? i2.bezierCurveTo(l.x1, l.y1, l.x2, l.y2, h, y) : i2.quadraticCurveTo(l.x, l.y, h, y), i2.stroke();
+        };
+      }();
+    }).call(window);
+  }, 160: function(e, o2) {
+    (function() {
+      !function() {
+        "use strict";
+        sigma.utils.pkg("sigma.canvas.edges"), sigma.canvas.edges.arrow = function(e2, o3, t, i2, a) {
+          var l = e2.color, r = a("prefix") || "", s = a("edgeColor"), c = a("defaultNodeColor"), n = a("defaultEdgeColor"), d = e2[r + "size"] || 1, g = t[r + "size"], u = o3[r + "x"], f = o3[r + "y"], v = t[r + "x"], h = t[r + "y"], y = Math.max(2.5 * d, a("minArrowSize")), m = Math.sqrt(Math.pow(v - u, 2) + Math.pow(h - f, 2)), x = u + (v - u) * (m - y - g) / m, C = f + (h - f) * (m - y - g) / m, b = (v - u) * y / m, p = (h - f) * y / m;
+          if (!l)
+            switch (s) {
+              case "source":
+                l = o3.color || c;
+                break;
+              case "target":
+                l = t.color || c;
+                break;
+              default:
+                l = n;
+            }
+          i2.strokeStyle = l, i2.lineWidth = d, i2.beginPath(), i2.moveTo(u, f), i2.lineTo(x, C), i2.stroke(), i2.fillStyle = l, i2.beginPath(), i2.moveTo(x + b, C + p), i2.lineTo(x + 0.6 * p, C - 0.6 * b), i2.lineTo(x - 0.6 * p, C + 0.6 * b), i2.lineTo(x + b, C + p), i2.closePath(), i2.fill();
+        };
+      }();
+    }).call(window);
+  }, 161: function(e, o2) {
+    (function() {
+      !function() {
+        "use strict";
+        sigma.utils.pkg("sigma.canvas.edges"), sigma.canvas.edges.curvedArrow = function(e2, o3, t, i2, a) {
+          var l, r, s, c, n, d, g = e2.color, u = a("prefix") || "", f = a("edgeColor"), v = a("defaultNodeColor"), h = a("defaultEdgeColor"), y = e2[u + "size"] || 1, m = t[u + "size"], x = o3[u + "x"], C = o3[u + "y"], b = t[u + "x"], p = t[u + "y"], w = Math.max(2.5 * y, a("minArrowSize"));
+          if (l = o3.id === t.id ? sigma.utils.getSelfLoopControlPoints(x, C, m) : sigma.utils.getQuadraticControlPoint(x, C, b, p), o3.id === t.id ? (r = Math.sqrt(Math.pow(b - l.x1, 2) + Math.pow(p - l.y1, 2)), s = l.x1 + (b - l.x1) * (r - w - m) / r, c = l.y1 + (p - l.y1) * (r - w - m) / r, n = (b - l.x1) * w / r, d = (p - l.y1) * w / r) : (r = Math.sqrt(Math.pow(b - l.x, 2) + Math.pow(p - l.y, 2)), s = l.x + (b - l.x) * (r - w - m) / r, c = l.y + (p - l.y) * (r - w - m) / r, n = (b - l.x) * w / r, d = (p - l.y) * w / r), !g)
+            switch (f) {
+              case "source":
+                g = o3.color || v;
+                break;
+              case "target":
+                g = t.color || v;
+                break;
+              default:
+                g = h;
+            }
+          i2.strokeStyle = g, i2.lineWidth = y, i2.beginPath(), i2.moveTo(x, C), o3.id === t.id ? i2.bezierCurveTo(l.x2, l.y2, l.x1, l.y1, s, c) : i2.quadraticCurveTo(l.x, l.y, s, c), i2.stroke(), i2.fillStyle = g, i2.beginPath(), i2.moveTo(s + n, c + d), i2.lineTo(s + 0.6 * d, c - 0.6 * n), i2.lineTo(s - 0.6 * d, c + 0.6 * n), i2.lineTo(s + n, c + d), i2.closePath(), i2.fill();
+        };
+      }();
+    }).call(window);
+  }, 162: function(e, o2) {
+    (function() {
+      !function() {
+        "use strict";
+        sigma.utils.pkg("sigma.canvas.edgehovers"), sigma.canvas.edgehovers.curve = function(e2, o3, t, i2, a) {
+          var l, r = e2.color, s = a("prefix") || "", c = a("edgeHoverSizeRatio") * (e2[s + "size"] || 1), n = a("edgeColor"), d = a("defaultNodeColor"), g = a("defaultEdgeColor"), u = o3[s + "size"], f = o3[s + "x"], v = o3[s + "y"], h = t[s + "x"], y = t[s + "y"];
+          if (l = o3.id === t.id ? sigma.utils.getSelfLoopControlPoints(f, v, u) : sigma.utils.getQuadraticControlPoint(f, v, h, y), !r)
+            switch (n) {
+              case "source":
+                r = o3.color || d;
+                break;
+              case "target":
+                r = t.color || d;
+                break;
+              default:
+                r = g;
+            }
+          r = "edge" === a("edgeHoverColor") ? e2.hover_color || r : e2.hover_color || a("defaultEdgeHoverColor") || r, i2.strokeStyle = r, i2.lineWidth = c, i2.beginPath(), i2.moveTo(f, v), o3.id === t.id ? i2.bezierCurveTo(l.x1, l.y1, l.x2, l.y2, h, y) : i2.quadraticCurveTo(l.x, l.y, h, y), i2.stroke();
+        };
+      }();
+    }).call(window);
+  }, 163: function(e, o2) {
+    (function() {
+      !function() {
+        "use strict";
+        sigma.utils.pkg("sigma.canvas.edgehovers"), sigma.canvas.edgehovers.arrow = function(e2, o3, t, i2, a) {
+          var l = e2.color, r = a("prefix") || "", s = a("edgeColor"), c = a("defaultNodeColor"), n = a("defaultEdgeColor"), d = e2[r + "size"] || 1, g = t[r + "size"], u = o3[r + "x"], f = o3[r + "y"], v = t[r + "x"], h = t[r + "y"], y = 2.5 * (d = e2.hover ? a("edgeHoverSizeRatio") * d : d), m = Math.sqrt(Math.pow(v - u, 2) + Math.pow(h - f, 2)), x = u + (v - u) * (m - y - g) / m, C = f + (h - f) * (m - y - g) / m, b = (v - u) * y / m, p = (h - f) * y / m;
+          if (!l)
+            switch (s) {
+              case "source":
+                l = o3.color || c;
+                break;
+              case "target":
+                l = t.color || c;
+                break;
+              default:
+                l = n;
+            }
+          l = "edge" === a("edgeHoverColor") ? e2.hover_color || l : e2.hover_color || a("defaultEdgeHoverColor") || l, i2.strokeStyle = l, i2.lineWidth = d, i2.beginPath(), i2.moveTo(u, f), i2.lineTo(x, C), i2.stroke(), i2.fillStyle = l, i2.beginPath(), i2.moveTo(x + b, C + p), i2.lineTo(x + 0.6 * p, C - 0.6 * b), i2.lineTo(x - 0.6 * p, C + 0.6 * b), i2.lineTo(x + b, C + p), i2.closePath(), i2.fill();
+        };
+      }();
+    }).call(window);
+  }, 164: function(e, o2) {
+    (function() {
+      !function() {
+        "use strict";
+        sigma.utils.pkg("sigma.canvas.edgehovers"), sigma.canvas.edgehovers.curvedArrow = function(e2, o3, t, i2, a) {
+          var l, r, s, c, n, d, g, u = e2.color, f = a("prefix") || "", v = a("edgeColor"), h = a("defaultNodeColor"), y = a("defaultEdgeColor"), m = a("edgeHoverSizeRatio") * (e2[f + "size"] || 1), x = t[f + "size"], C = o3[f + "x"], b = o3[f + "y"], p = t[f + "x"], w = t[f + "y"];
+          if (l = o3.id === t.id ? sigma.utils.getSelfLoopControlPoints(C, b, x) : sigma.utils.getQuadraticControlPoint(C, b, p, w), o3.id === t.id ? (r = Math.sqrt(Math.pow(p - l.x1, 2) + Math.pow(w - l.y1, 2)), s = 2.5 * m, c = l.x1 + (p - l.x1) * (r - s - x) / r, n = l.y1 + (w - l.y1) * (r - s - x) / r, d = (p - l.x1) * s / r, g = (w - l.y1) * s / r) : (r = Math.sqrt(Math.pow(p - l.x, 2) + Math.pow(w - l.y, 2)), s = 2.5 * m, c = l.x + (p - l.x) * (r - s - x) / r, n = l.y + (w - l.y) * (r - s - x) / r, d = (p - l.x) * s / r, g = (w - l.y) * s / r), !u)
+            switch (v) {
+              case "source":
+                u = o3.color || h;
+                break;
+              case "target":
+                u = t.color || h;
+                break;
+              default:
+                u = y;
+            }
+          u = "edge" === a("edgeHoverColor") ? e2.hover_color || u : e2.hover_color || a("defaultEdgeHoverColor") || u, i2.strokeStyle = u, i2.lineWidth = m, i2.beginPath(), i2.moveTo(C, b), o3.id === t.id ? i2.bezierCurveTo(l.x2, l.y2, l.x1, l.y1, c, n) : i2.quadraticCurveTo(l.x, l.y, c, n), i2.stroke(), i2.fillStyle = u, i2.beginPath(), i2.moveTo(c + d, n + g), i2.lineTo(c + 0.6 * g, n - 0.6 * d), i2.lineTo(c - 0.6 * g, n + 0.6 * d), i2.lineTo(c + d, n + g), i2.closePath(), i2.fill();
+        };
+      }();
+    }).call(window);
+  }, 165: function(e, o2) {
+    (function() {
+      !function() {
+        "use strict";
+        sigma.utils.pkg("sigma.canvas.edgehovers"), sigma.canvas.edgehovers.dashed = function(e2, o3, t, i2, a) {
+          var l = e2.active ? e2.active_color || a("defaultEdgeActiveColor") : e2.color, r = a("prefix") || "", s = e2[r + "size"] || 1, c = a("edgeColor"), n = a("defaultNodeColor"), d = a("defaultEdgeColor");
+          if (!l)
+            switch (c) {
+              case "source":
+                l = o3.color || n;
+                break;
+              case "target":
+                l = t.color || n;
+                break;
+              default:
+                l = d;
+            }
+          l = "edge" === a("edgeHoverColor") ? e2.hover_color || l : e2.hover_color || a("defaultEdgeHoverColor") || l, s *= a("edgeHoverSizeRatio"), i2.save(), i2.setLineDash([8, 3]), i2.strokeStyle = l, i2.lineWidth = s, i2.beginPath(), i2.moveTo(o3[r + "x"], o3[r + "y"]), i2.lineTo(t[r + "x"], t[r + "y"]), i2.stroke(), i2.restore();
+        };
+      }();
+    }).call(window);
+  }, 166: function(e, o2) {
+    (function() {
+      !function() {
+        "use strict";
+        sigma.utils.pkg("sigma.canvas.edgehovers"), sigma.canvas.edgehovers.dotted = function(e2, o3, t, i2, a) {
+          var l = e2.active ? e2.active_color || a("defaultEdgeActiveColor") : e2.color, r = a("prefix") || "", s = e2[r + "size"] || 1, c = a("edgeColor"), n = a("defaultNodeColor"), d = a("defaultEdgeColor");
+          if (!l)
+            switch (c) {
+              case "source":
+                l = o3.color || n;
+                break;
+              case "target":
+                l = t.color || n;
+                break;
+              default:
+                l = d;
+            }
+          l = "edge" === a("edgeHoverColor") ? e2.hover_color || l : e2.hover_color || a("defaultEdgeHoverColor") || l, s *= a("edgeHoverSizeRatio"), i2.save(), i2.setLineDash([2]), i2.strokeStyle = l, i2.lineWidth = s, i2.beginPath(), i2.moveTo(o3[r + "x"], o3[r + "y"]), i2.lineTo(t[r + "x"], t[r + "y"]), i2.stroke(), i2.restore();
+        };
+      }();
+    }).call(window);
+  }, 167: function(e, o2) {
+    (function() {
+      !function() {
+        "use strict";
+        sigma.utils.pkg("sigma.canvas.edgehovers"), sigma.canvas.edgehovers.parallel = function(e2, o3, t, i2, a) {
+          var l, r, s = e2.active ? e2.active_color || a("defaultEdgeActiveColor") : e2.color, c = a("prefix") || "", n = e2[c + "size"] || 1, d = a("edgeColor"), g = a("defaultNodeColor"), u = a("defaultEdgeColor"), f = o3[c + "x"], v = o3[c + "y"], h = t[c + "x"], y = t[c + "y"], m = sigma.utils.getDistance(f, v, h, y);
+          if (!s)
+            switch (d) {
+              case "source":
+                s = o3.color || g;
+                break;
+              case "target":
+                s = t.color || g;
+                break;
+              default:
+                s = u;
+            }
+          s = "edge" === a("edgeHoverColor") ? e2.hover_color || s : e2.hover_color || a("defaultEdgeHoverColor") || s, n *= a("edgeHoverSizeRatio"), l = sigma.utils.getCircleIntersection(f, v, n, h, y, m), r = sigma.utils.getCircleIntersection(h, y, n, f, v, m), i2.save(), i2.strokeStyle = s, i2.lineWidth = n, i2.beginPath(), i2.moveTo(l.xi, l.yi), i2.lineTo(r.xi_prime, r.yi_prime), i2.closePath(), i2.stroke(), i2.beginPath(), i2.moveTo(l.xi_prime, l.yi_prime), i2.lineTo(r.xi, r.yi), i2.closePath(), i2.stroke(), i2.restore();
+        };
+      }();
+    }).call(window);
+  }, 168: function(e, o2) {
+    (function() {
+      !function() {
+        "use strict";
+        sigma.utils.pkg("sigma.canvas.edgehovers"), sigma.canvas.edgehovers.tapered = function(e2, o3, t, i2, a) {
+          var l = e2.active ? e2.active_color || a("defaultEdgeActiveColor") : e2.color, r = e2[(c = a("prefix") || "") + "size"] || 1, s = a("edgeColor"), c = a("prefix") || "", n = a("defaultNodeColor"), d = a("defaultEdgeColor"), g = o3[c + "x"], u = o3[c + "y"], f = t[c + "x"], v = t[c + "y"], h = sigma.utils.getDistance(g, u, f, v);
+          if (!l)
+            switch (s) {
+              case "source":
+                l = o3.color || n;
+                break;
+              case "target":
+                l = t.color || n;
+                break;
+              default:
+                l = d;
+            }
+          l = "edge" === a("edgeHoverColor") ? e2.hover_color || l : e2.hover_color || a("defaultEdgeHoverColor") || l, r *= a("edgeHoverSizeRatio");
+          var y = sigma.utils.getCircleIntersection(g, u, r, f, v, h);
+          i2.save(), i2.globalAlpha = 0.65, i2.fillStyle = l, i2.beginPath(), i2.moveTo(f, v), i2.lineTo(y.xi, y.yi), i2.lineTo(y.xi_prime, y.yi_prime), i2.closePath(), i2.fill(), i2.restore();
+        };
+      }();
+    }).call(window);
+  }, 169: function(e, o2) {
+    (function() {
+      !function() {
+        "use strict";
+        sigma.utils.pkg("sigma.canvas.edges"), sigma.canvas.edges.dashed = function(e2, o3, t, i2, a) {
+          var l = e2.active ? e2.active_color || a("defaultEdgeActiveColor") : e2.color, r = a("prefix") || "", s = e2[r + "size"] || 1, c = a("edgeColor"), n = a("defaultNodeColor"), d = a("defaultEdgeColor");
+          if (!l)
+            switch (c) {
+              case "source":
+                l = o3.color || n;
+                break;
+              case "target":
+                l = t.color || n;
+                break;
+              default:
+                l = d;
+            }
+          i2.save(), e2.active ? i2.strokeStyle = "edge" === a("edgeActiveColor") ? l || d : a("defaultEdgeActiveColor") : i2.strokeStyle = l, i2.setLineDash([8, 3]), i2.lineWidth = s, i2.beginPath(), i2.moveTo(o3[r + "x"], o3[r + "y"]), i2.lineTo(t[r + "x"], t[r + "y"]), i2.stroke(), i2.restore();
+        };
+      }();
+    }).call(window);
+  }, 170: function(e, o2) {
+    (function() {
+      !function() {
+        "use strict";
+        sigma.utils.pkg("sigma.canvas.edges"), sigma.canvas.edges.dotted = function(e2, o3, t, i2, a) {
+          var l = e2.active ? e2.active_color || a("defaultEdgeActiveColor") : e2.color, r = a("prefix") || "", s = e2[r + "size"] || 1, c = a("edgeColor"), n = a("defaultNodeColor"), d = a("defaultEdgeColor");
+          if (!l)
+            switch (c) {
+              case "source":
+                l = o3.color || n;
+                break;
+              case "target":
+                l = t.color || n;
+                break;
+              default:
+                l = d;
+            }
+          i2.save(), e2.active ? i2.strokeStyle = "edge" === a("edgeActiveColor") ? l || d : a("defaultEdgeActiveColor") : i2.strokeStyle = l, i2.setLineDash([2]), i2.lineWidth = s, i2.beginPath(), i2.moveTo(o3[r + "x"], o3[r + "y"]), i2.lineTo(t[r + "x"], t[r + "y"]), i2.stroke(), i2.restore();
+        };
+      }();
+    }).call(window);
+  }, 171: function(e, o2) {
+    (function() {
+      !function() {
+        "use strict";
+        sigma.utils.pkg("sigma.canvas.edges"), sigma.canvas.edges.parallel = function(e2, o3, t, i2, a) {
+          var l, r, s = e2.active ? e2.active_color || a("defaultEdgeActiveColor") : e2.color, c = a("prefix") || "", n = e2[c + "size"] || 1, d = a("edgeColor"), g = a("defaultNodeColor"), u = a("defaultEdgeColor"), f = o3[c + "x"], v = o3[c + "y"], h = t[c + "x"], y = t[c + "y"], m = sigma.utils.getDistance(f, v, h, y);
+          if (!s)
+            switch (d) {
+              case "source":
+                s = o3.color || g;
+                break;
+              case "target":
+                s = t.color || g;
+                break;
+              default:
+                s = u;
+            }
+          l = sigma.utils.getCircleIntersection(f, v, n, h, y, m), r = sigma.utils.getCircleIntersection(h, y, n, f, v, m), i2.save(), e2.active ? i2.strokeStyle = "edge" === a("edgeActiveColor") ? s || u : a("defaultEdgeActiveColor") : i2.strokeStyle = s, i2.lineWidth = n, i2.beginPath(), i2.moveTo(l.xi, l.yi), i2.lineTo(r.xi_prime, r.yi_prime), i2.closePath(), i2.stroke(), i2.beginPath(), i2.moveTo(l.xi_prime, l.yi_prime), i2.lineTo(r.xi, r.yi), i2.closePath(), i2.stroke(), i2.restore();
+        };
+      }();
+    }).call(window);
+  }, 172: function(e, o2) {
+    (function() {
+      !function() {
+        "use strict";
+        sigma.utils.pkg("sigma.canvas.edges"), sigma.canvas.edges.tapered = function(e2, o3, t, i2, a) {
+          var l = e2.active ? e2.active_color || a("defaultEdgeActiveColor") : e2.color, r = e2[(c = a("prefix") || "") + "size"] || 1, s = a("edgeColor"), c = a("prefix") || "", n = a("defaultNodeColor"), d = a("defaultEdgeColor"), g = o3[c + "x"], u = o3[c + "y"], f = t[c + "x"], v = t[c + "y"], h = sigma.utils.getDistance(g, u, f, v);
+          if (!l)
+            switch (s) {
+              case "source":
+                l = o3.color || n;
+                break;
+              case "target":
+                l = t.color || n;
+                break;
+              default:
+                l = d;
+            }
+          var y = sigma.utils.getCircleIntersection(g, u, r, f, v, h);
+          i2.save(), e2.active ? i2.fillStyle = "edge" === a("edgeActiveColor") ? l || d : a("defaultEdgeActiveColor") : i2.fillStyle = l, i2.globalAlpha = 0.65, i2.beginPath(), i2.moveTo(f, v), i2.lineTo(y.xi, y.yi), i2.lineTo(y.xi_prime, y.yi_prime), i2.closePath(), i2.fill(), i2.restore();
+        };
+      }();
+    }).call(window);
+  }, 173: function(e, o2) {
+    (function() {
+      (function(e2) {
+        "use strict";
+        if ("undefined" == typeof sigma)
+          throw "sigma is not declared";
+        sigma.utils.pkg("sigma.canvas.edges.labels"), sigma.canvas.edges.labels.def = function(e3, o3, t, i2, a) {
+          if ("string" == typeof e3.label && o3 != t) {
+            var l = a("prefix") || "", r = e3[l + "size"] || 1;
+            if (!(r < a("edgeLabelThreshold"))) {
+              if (0 === a("edgeLabelSizePowRatio"))
+                throw '"edgeLabelSizePowRatio" must not be 0.';
+              var s, c = (o3[l + "x"] + t[l + "x"]) / 2, n = (o3[l + "y"] + t[l + "y"]) / 2, d = t[l + "x"] - o3[l + "x"], g = t[l + "y"] - o3[l + "y"], u = o3[l + "x"] < t[l + "x"] ? 1 : -1, f = Math.atan2(g * u, d * u);
+              s = "fixed" === a("edgeLabelSize") ? a("defaultEdgeLabelSize") : a("defaultEdgeLabelSize") * r * Math.pow(r, -1 / a("edgeLabelSizePowRatio")), i2.save(), e3.active ? (i2.font = [a("activeFontStyle"), s + "px", a("activeFont") || a("font")].join(" "), i2.fillStyle = "edge" === a("edgeActiveColor") ? e3.active_color || a("defaultEdgeActiveColor") : a("defaultEdgeLabelActiveColor")) : (i2.font = [a("fontStyle"), s + "px", a("font")].join(" "), i2.fillStyle = "edge" === a("edgeLabelColor") ? e3.color || a("defaultEdgeColor") : a("defaultEdgeLabelColor")), i2.textAlign = "center", i2.textBaseline = "alphabetic", i2.translate(c, n), i2.rotate(f), i2.fillText(e3.label, 0, -r / 2 - 3), i2.restore();
+            }
+          }
+        };
+      }).call(this);
+    }).call(window);
+  }, 174: function(e, o2) {
+    (function() {
+      (function(e2) {
+        "use strict";
+        if ("undefined" == typeof sigma)
+          throw "sigma is not declared";
+        sigma.utils.pkg("sigma.canvas.edges.labels"), sigma.canvas.edges.labels.curve = function(e3, o3, t, i2, a) {
+          if ("string" == typeof e3.label) {
+            var l = a("prefix") || "", r = e3[l + "size"] || 1;
+            if (!(r < a("edgeLabelThreshold"))) {
+              var s, c, n, d = o3[l + "size"], g = o3[l + "x"], u = o3[l + "y"], f = t[l + "x"], v = t[l + "y"], h = e3.count || 0, y = f - g, m = v - u, x = g < f ? 1 : -1, C = {};
+              o3.id === t.id ? (C = sigma.utils.getSelfLoopControlPoints(g, u, d, h), c = sigma.utils.getPointOnBezierCurve(0.5, g, u, f, v, C.x1, C.y1, C.x2, C.y2), n = Math.atan2(1, 1)) : (C = sigma.utils.getQuadraticControlPoint(g, u, f, v, h), c = sigma.utils.getPointOnQuadraticCurve(0.5, g, u, f, v, C.x, C.y), n = Math.atan2(m * x, y * x)), s = "fixed" === a("edgeLabelSize") ? a("defaultEdgeLabelSize") : a("defaultEdgeLabelSize") * r * Math.pow(r, -1 / a("edgeLabelSizePowRatio")), i2.save(), e3.active ? (i2.font = [a("activeFontStyle"), s + "px", a("activeFont") || a("font")].join(" "), i2.fillStyle = "edge" === a("edgeActiveColor") ? e3.active_color || a("defaultEdgeActiveColor") : a("defaultEdgeLabelActiveColor")) : (i2.font = [a("fontStyle"), s + "px", a("font")].join(" "), i2.fillStyle = "edge" === a("edgeLabelColor") ? e3.color || a("defaultEdgeColor") : a("defaultEdgeLabelColor")), i2.textAlign = "center", i2.textBaseline = "alphabetic", i2.translate(c.x, c.y), i2.rotate(n), i2.fillText(e3.label, 0, -r / 2 - 3), i2.restore();
+            }
+          }
+        };
+      }).call(this);
+    }).call(window);
+  }, 175: function(e, o2) {
+    (function() {
+      (function(e2) {
+        "use strict";
+        if ("undefined" == typeof sigma)
+          throw "sigma is not declared";
+        sigma.utils.pkg("sigma.canvas.edges.labels"), sigma.canvas.edges.labels.curvedArrow = function(e3, o3, t, i2, a) {
+          sigma.canvas.edges.labels.curve(e3, o3, t, i2, a);
+        };
+      }).call(this);
+    }).call(window);
+  } });
+
+  // ../testeranto/node_modules/react-sigma/es/EdgeShapes.js
+  var import_prop_types6 = __toESM(require_prop_types());
+  function _typeof3(obj) {
+    "@babel/helpers - typeof";
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof3 = function _typeof13(obj2) {
+        return typeof obj2;
+      };
+    } else {
+      _typeof3 = function _typeof13(obj2) {
+        return obj2 && typeof Symbol === "function" && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
+      };
+    }
+    return _typeof3(obj);
+  }
+  function _classCallCheck3(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+  function _inherits3(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function");
+    }
+    subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } });
+    if (superClass)
+      _setPrototypeOf4(subClass, superClass);
+  }
+  function _setPrototypeOf4(o2, p) {
+    _setPrototypeOf4 = Object.setPrototypeOf || function _setPrototypeOf14(o3, p2) {
+      o3.__proto__ = p2;
+      return o3;
+    };
+    return _setPrototypeOf4(o2, p);
+  }
+  function _createSuper3(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct3();
+    return function _createSuperInternal() {
+      var Super = _getPrototypeOf3(Derived), result;
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf3(this).constructor;
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
+      return _possibleConstructorReturn3(this, result);
+    };
+  }
+  function _possibleConstructorReturn3(self2, call) {
+    if (call && (_typeof3(call) === "object" || typeof call === "function")) {
+      return call;
+    }
+    return _assertThisInitialized3(self2);
+  }
+  function _assertThisInitialized3(self2) {
+    if (self2 === void 0) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+    return self2;
+  }
+  function _isNativeReflectConstruct3() {
+    if (typeof Reflect === "undefined" || !Reflect.construct)
+      return false;
+    if (Reflect.construct.sham)
+      return false;
+    if (typeof Proxy === "function")
+      return true;
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function() {
+      }));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+  function _getPrototypeOf3(o2) {
+    _getPrototypeOf3 = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf13(o3) {
+      return o3.__proto__ || Object.getPrototypeOf(o3);
+    };
+    return _getPrototypeOf3(o2);
+  }
+  function _defineProperty3(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
+    } else {
+      obj[key] = value;
+    }
+    return obj;
+  }
+  var EdgeShapes = /* @__PURE__ */ function(_React$Component) {
+    _inherits3(EdgeShapes2, _React$Component);
+    var _super = _createSuper3(EdgeShapes2);
+    function EdgeShapes2(props) {
+      var _this2;
+      _classCallCheck3(this, EdgeShapes2);
+      _this2 = _super.call(this, props);
+      _defineProperty3(_assertThisInitialized3(_this2), "render", function() {
+        return null;
+      });
+      if (_this2.props.sigma && _this2.props["default"])
+        _this2.props.sigma.settings({
+          defaultEdgeType: _this2.props["default"]
+        });
+      return _this2;
+    }
+    return EdgeShapes2;
+  }(import_react33.default.Component);
+  _defineProperty3(EdgeShapes, "propTypes", {
+    "default": function _default() {
+      return (typeof Sigma$Edge$Shapes === "function" ? import_prop_types6.default.instanceOf(Sigma$Edge$Shapes) : import_prop_types6.default.any).apply(this, arguments);
+    },
+    sigma: function sigma2() {
+      return (typeof Sigma === "function" ? import_prop_types6.default.instanceOf(Sigma) : import_prop_types6.default.any).apply(this, arguments);
+    }
+  });
+
+  // ../testeranto/node_modules/react-sigma/es/NodeShapes.js
+  var import_react34 = __toESM(require_react());
+
+  // ../testeranto/node_modules/react-sigma/sigma/nodes.js
+  var Sigma6 = function(e) {
+    var t = {};
+    function n(i2) {
+      if (t[i2])
+        return t[i2].exports;
+      var a = t[i2] = { i: i2, l: false, exports: {} };
+      return e[i2].call(a.exports, a, a.exports, n), a.l = true, a.exports;
+    }
+    return n.m = e, n.c = t, n.d = function(e2, t2, i2) {
+      n.o(e2, t2) || Object.defineProperty(e2, t2, { enumerable: true, get: i2 });
+    }, n.r = function(e2) {
+      "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e2, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(e2, "__esModule", { value: true });
+    }, n.t = function(e2, t2) {
+      if (1 & t2 && (e2 = n(e2)), 8 & t2)
+        return e2;
+      if (4 & t2 && "object" == typeof e2 && e2 && e2.__esModule)
+        return e2;
+      var i2 = /* @__PURE__ */ Object.create(null);
+      if (n.r(i2), Object.defineProperty(i2, "default", { enumerable: true, value: e2 }), 2 & t2 && "string" != typeof e2)
+        for (var a in e2)
+          n.d(i2, a, function(t3) {
+            return e2[t3];
+          }.bind(null, a));
+      return i2;
+    }, n.n = function(e2) {
+      var t2 = e2 && e2.__esModule ? function() {
+        return e2.default;
+      } : function() {
+        return e2;
+      };
+      return n.d(t2, "a", t2), t2;
+    }, n.o = function(e2, t2) {
+      return Object.prototype.hasOwnProperty.call(e2, t2);
+    }, n.p = "", n(n.s = 176);
+  }({ 176: function(e, t, n) {
+    "use strict";
+    n.r(t);
+    n(177), n(178);
+  }, 177: function(e, t) {
+    (function() {
+      (function(e2) {
+        "use strict";
+        var t2 = [], n = function(e3, n2, i3) {
+          t2.push({ name: e3, drawShape: n2, drawBorder: i3 });
+        }, i2 = function(e3) {
+          return function(t3, n2, i3, a3, r2, l2) {
+            l2.fillStyle = r2, l2.beginPath(), e3(t3, n2, i3, a3, l2), l2.closePath(), l2.fill();
+          };
+        }, a = function(e3) {
+          return function(t3, n2, i3, a3, r2, l2) {
+            l2.strokeStyle = r2, l2.lineWidth = a3 / 5, l2.beginPath(), e3(t3, n2, i3, a3, l2), l2.closePath(), l2.stroke();
+          };
+        }, r = function(e3, t3, n2, i3, a3) {
+          var r2 = 45 * Math.PI / 180;
+          a3.moveTo(t3 + i3 * Math.sin(r2), n2 - i3 * Math.cos(r2));
+          for (var l2 = 1; l2 < 4; l2++)
+            a3.lineTo(t3 + Math.sin(r2 + 2 * Math.PI * l2 / 4) * i3, n2 - Math.cos(r2 + 2 * Math.PI * l2 / 4) * i3);
+        };
+        n("square", i2(r), a(r));
+        var l = function(e3, t3, n2, i3, a3) {
+          a3.arc(t3, n2, i3, 0, 2 * Math.PI, true);
+        };
+        n("circle", i2(l), a(l));
+        var o2 = function(e3, t3, n2, i3, a3) {
+          a3.moveTo(t3 - i3, n2), a3.lineTo(t3, n2 - i3), a3.lineTo(t3 + i3, n2), a3.lineTo(t3, n2 + i3);
+        };
+        n("diamond", i2(o2), a(o2));
+        var s = function(e3, t3, n2, i3, a3) {
+          var r2 = e3.cross && e3.cross.lineWeight || 5;
+          a3.moveTo(t3 - i3, n2 - r2), a3.lineTo(t3 - i3, n2 + r2), a3.lineTo(t3 - r2, n2 + r2), a3.lineTo(t3 - r2, n2 + i3), a3.lineTo(t3 + r2, n2 + i3), a3.lineTo(t3 + r2, n2 + r2), a3.lineTo(t3 + i3, n2 + r2), a3.lineTo(t3 + i3, n2 - r2), a3.lineTo(t3 + r2, n2 - r2), a3.lineTo(t3 + r2, n2 - i3), a3.lineTo(t3 - r2, n2 - i3), a3.lineTo(t3 - r2, n2 - r2);
+        };
+        n("cross", i2(s), a(s));
+        var u = function(e3, t3, n2, i3, a3) {
+          var r2 = e3.equilateral && e3.equilateral.numPoints || 5, l2 = (e3.equilateral && e3.equilateral.rotate || 0) * Math.PI / 180, o3 = i3;
+          a3.moveTo(t3 + o3 * Math.sin(l2), n2 - o3 * Math.cos(l2));
+          for (var s2 = 1; s2 < r2; s2++)
+            a3.lineTo(t3 + Math.sin(l2 + 2 * Math.PI * s2 / r2) * o3, n2 - Math.cos(l2 + 2 * Math.PI * s2 / r2) * o3);
+        };
+        n("equilateral", i2(u), a(u));
+        var c = function(e3, t3, n2, i3, a3) {
+          var r2 = e3.star && e3.star.numPoints || 5, l2 = i3, o3 = i3 * (e3.star && e3.star.innerRatio || 0.5), s2 = Math.PI / r2;
+          a3.moveTo(t3, n2 - i3);
+          for (var u2 = 0; u2 < r2; u2++)
+            a3.lineTo(t3 + Math.sin(s2 + 2 * Math.PI * u2 / r2) * o3, n2 - Math.cos(s2 + 2 * Math.PI * u2 / r2) * o3), a3.lineTo(t3 + Math.sin(2 * Math.PI * (u2 + 1) / r2) * l2, n2 - Math.cos(2 * Math.PI * (u2 + 1) / r2) * l2);
+        };
+        n("star", i2(c), a(c));
+        n("pacman", function(e3, t3, n2, i3, a3, r2) {
+          r2.fillStyle = "yellow", r2.beginPath(), r2.arc(t3, n2, i3, 1.25 * Math.PI, 0, false), r2.arc(t3, n2, i3, 0, 0.75 * Math.PI, false), r2.lineTo(t3, n2), r2.closePath(), r2.fill(), r2.fillStyle = "white", r2.strokeStyle = "black", r2.beginPath(), r2.arc(t3 + i3 / 3, n2 - i3 / 3, i3 / 4, 0, 2 * Math.PI, false), r2.closePath(), r2.fill(), r2.stroke(), r2.fillStyle = "black", r2.beginPath(), r2.arc(t3 + 4 * i3 / 9, n2 - i3 / 3, i3 / 8, 0, 2 * Math.PI, false), r2.closePath(), r2.fill();
+        }, null), this.ShapeLibrary = { enumerate: function() {
+          return t2;
+        }, version: "0.1" };
+      }).call(window);
+    }).call(window);
+  }, 178: function(e, t) {
+    (function() {
+      (function(e2) {
+        "use strict";
+        if ("undefined" == typeof sigma)
+          throw "sigma is not declared";
+        if ("undefined" == typeof ShapeLibrary)
+          throw "ShapeLibrary is not declared";
+        sigma.utils.pkg("sigma.canvas.nodes"), sigma.utils.pkg("sigma.svg.nodes");
+        var t2 = e2, n = {}, i2 = function(e3, i3, a3, r, l) {
+          if (t2 && e3.image && e3.image.url) {
+            var o2 = e3.image.url, s = e3.image.h || 1, u = e3.image.w || 1, c = e3.image.scale || 1, d = e3.image.clip || 1, f = n[o2];
+            f || ((f = document.createElement("IMG")).src = o2, f.status = "loading", f.onerror = function() {
+              console.log("error loading", o2), f.status = "error";
+            }, f.onload = function() {
+              console.log("redraw on image load", o2), f.status = "ok", t2.refresh();
+            }, n[o2] = f);
+            var h = u < s ? u / s : 1, m = s < u ? s / u : 1, g = r * c;
+            l.save(), l.beginPath(), l.arc(i3, a3, r * d, 0, 2 * Math.PI, true), l.closePath(), l.clip(), "ok" === f.status && l.drawImage(f, i3 + Math.sin(-0.7855) * g * h, a3 - Math.cos(-0.7855) * g * m, g * h * 2 * Math.sin(-0.7855) * -1, g * m * 2 * Math.cos(-0.7855)), l.restore();
+          }
+        }, a = function(e3, n2, a3) {
+          sigma.canvas.nodes[e3] = function(e4, t3, r) {
+            var l = r("prefix") || "", o2 = e4[l + "size"], s = e4.color || r("defaultNodeColor"), u = e4.borderColor || s, c = e4[l + "x"], d = e4[l + "y"];
+            t3.save(), n2 && n2(e4, c, d, o2, s, t3), a3 && a3(e4, c, d, o2, u, t3), i2(e4, c, d, o2, t3), t3.restore();
+          }, sigma.svg.nodes[e3] = { create: function(e4, n3) {
+            var i3 = document.createElementNS(n3("xmlns"), "g"), a4 = document.createElementNS(n3("xmlns"), "circle");
+            return i3.setAttributeNS(null, "class", n3("classPrefix") + "-node-group"), i3.setAttributeNS(null, "data-node-id", e4.id), a4.setAttributeNS(null, "data-node-id", e4.id), a4.setAttributeNS(null, "class", n3("classPrefix") + "-node"), a4.setAttributeNS(null, "fill", e4.color || n3("defaultNodeColor")), i3.appendChild(a4), function(e5, n4, i4) {
+              if (t2 && e5.image && e5.image.url) {
+                var a5 = document.createElementNS(i4("xmlns"), "circle"), r = document.createElementNS(i4("xmlns"), "clipPath"), l = i4("classPrefix") + "-clip-path-" + e5.id, o2 = document.createElementNS(i4("xmlns"), "defs"), s = document.createElementNS(i4("xmlns"), "image");
+                e5.image.url;
+                r.setAttributeNS(null, "id", l), r.appendChild(a5), o2.appendChild(r);
+                var u = /MSIE [5-9]/.test(navigator.userAgent) ? "" : document.location.href;
+                u = u.split("#")[0], s.setAttributeNS(null, "class", i4("classPrefix") + "-node-image"), s.setAttributeNS(null, "clip-path", "url(" + u + "#" + l + ")"), s.setAttributeNS(null, "pointer-events", "none"), s.setAttributeNS("http://www.w3.org/1999/xlink", "href", e5.image.url), n4.appendChild(o2), n4.appendChild(s);
+              }
+            }(e4, i3, n3), i3;
+          }, update: function(e4, t3, n3) {
+            for (var i3 = n3("classPrefix"), a4 = e4.image.clip || 1, r = e4.image.h || 1, l = e4.image.w || 1, o2 = n3("prefix") || "", s = e4.image.scale || 1, u = e4[o2 + "size"], c = e4[o2 + "x"], d = e4[o2 + "y"], f = s * u, h = l < r ? l / r : 1, m = r < l ? r / l : 1, g = 0, p = t3.childNodes; g < p.length; g++) {
+              switch (p[g].getAttribute("class")) {
+                case i3 + "-node":
+                  p[g].setAttributeNS(null, "cx", c), p[g].setAttributeNS(null, "cy", d), p[g].setAttributeNS(null, "r", u), n3("freeStyle") || p[g].setAttributeNS(null, "fill", e4.color || n3("defaultNodeColor"));
+                  break;
+                case i3 + "-node-image":
+                  p[g].setAttributeNS(null, "x", c + Math.sin(-0.7855) * f * h), p[g].setAttributeNS(null, "y", d - Math.cos(-0.7855) * f * m), p[g].setAttributeNS(null, "width", f * h * 2 * Math.sin(-0.7855) * -1), p[g].setAttributeNS(null, "height", f * m * 2 * Math.cos(-0.7855));
+                  break;
+                default:
+                  var b = p[g].firstChild;
+                  if (null != b) {
+                    var S = i3 + "-clip-path-" + e4.id;
+                    b.getAttribute("id") === S && (b.firstChild.setAttributeNS(null, "cx", c), b.firstChild.setAttributeNS(null, "cy", d), b.firstChild.setAttributeNS(null, "r", a4 * u));
+                  }
+              }
+            }
+            t3.style.display = "";
+          } };
+        };
+        ShapeLibrary.enumerate().forEach(function(e3) {
+          a(e3.name, e3.drawShape, e3.drawBorder);
+        }), this.CustomShapes = { init: function(e3) {
+          t2 = e3;
+        }, version: "0.1" };
+      }).call(window);
+    }).call(window);
+  } });
+
+  // ../testeranto/node_modules/react-sigma/es/NodeShapes.js
+  var import_prop_types7 = __toESM(require_prop_types());
+  function _typeof4(obj) {
+    "@babel/helpers - typeof";
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof4 = function _typeof13(obj2) {
+        return typeof obj2;
+      };
+    } else {
+      _typeof4 = function _typeof13(obj2) {
+        return obj2 && typeof Symbol === "function" && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
+      };
+    }
+    return _typeof4(obj);
+  }
+  function _classCallCheck4(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+  function _inherits4(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function");
+    }
+    subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } });
+    if (superClass)
+      _setPrototypeOf5(subClass, superClass);
+  }
+  function _setPrototypeOf5(o2, p) {
+    _setPrototypeOf5 = Object.setPrototypeOf || function _setPrototypeOf14(o3, p2) {
+      o3.__proto__ = p2;
+      return o3;
+    };
+    return _setPrototypeOf5(o2, p);
+  }
+  function _createSuper4(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct4();
+    return function _createSuperInternal() {
+      var Super = _getPrototypeOf4(Derived), result;
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf4(this).constructor;
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
+      return _possibleConstructorReturn4(this, result);
+    };
+  }
+  function _possibleConstructorReturn4(self2, call) {
+    if (call && (_typeof4(call) === "object" || typeof call === "function")) {
+      return call;
+    }
+    return _assertThisInitialized4(self2);
+  }
+  function _assertThisInitialized4(self2) {
+    if (self2 === void 0) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+    return self2;
+  }
+  function _isNativeReflectConstruct4() {
+    if (typeof Reflect === "undefined" || !Reflect.construct)
+      return false;
+    if (Reflect.construct.sham)
+      return false;
+    if (typeof Proxy === "function")
+      return true;
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function() {
+      }));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+  function _getPrototypeOf4(o2) {
+    _getPrototypeOf4 = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf13(o3) {
+      return o3.__proto__ || Object.getPrototypeOf(o3);
+    };
+    return _getPrototypeOf4(o2);
+  }
+  function _defineProperty4(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
+    } else {
+      obj[key] = value;
+    }
+    return obj;
+  }
+  var NodeShapes = /* @__PURE__ */ function(_React$Component) {
+    _inherits4(NodeShapes2, _React$Component);
+    var _super = _createSuper4(NodeShapes2);
+    function NodeShapes2(props) {
+      var _this2;
+      _classCallCheck4(this, NodeShapes2);
+      _this2 = _super.call(this, props);
+      _defineProperty4(_assertThisInitialized4(_this2), "render", function() {
+        return null;
+      });
+      if (_this2.props.sigma && _this2.props["default"])
+        _this2.props.sigma.settings({
+          defaultNodeType: _this2.props["default"]
+        });
+      return _this2;
+    }
+    return NodeShapes2;
+  }(import_react34.default.Component);
+  _defineProperty4(NodeShapes, "propTypes", {
+    "default": function _default2() {
+      return (typeof Sigma$Node$Shapes === "function" ? import_prop_types7.default.instanceOf(Sigma$Node$Shapes) : import_prop_types7.default.any).apply(this, arguments);
+    },
+    sigma: function(_sigma) {
+      function sigma6() {
+        return _sigma.apply(this, arguments);
+      }
+      sigma6.toString = function() {
+        return _sigma.toString();
+      };
+      return sigma6;
+    }(function() {
+      return (typeof sigma === "function" ? import_prop_types7.default.instanceOf(sigma) : import_prop_types7.default.any).apply(this, arguments);
+    })
+  });
+
+  // ../testeranto/node_modules/react-sigma/es/LoadJSON.js
+  var import_react35 = __toESM(require_react());
+
+  // ../testeranto/node_modules/react-sigma/sigma/parsers.json.js
+  var Sigma7 = function(e) {
+    var t = {};
+    function n(r) {
+      if (t[r])
+        return t[r].exports;
+      var o2 = t[r] = { i: r, l: false, exports: {} };
+      return e[r].call(o2.exports, o2, o2.exports, n), o2.l = true, o2.exports;
+    }
+    return n.m = e, n.c = t, n.d = function(e2, t2, r) {
+      n.o(e2, t2) || Object.defineProperty(e2, t2, { enumerable: true, get: r });
+    }, n.r = function(e2) {
+      "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e2, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(e2, "__esModule", { value: true });
+    }, n.t = function(e2, t2) {
+      if (1 & t2 && (e2 = n(e2)), 8 & t2)
+        return e2;
+      if (4 & t2 && "object" == typeof e2 && e2 && e2.__esModule)
+        return e2;
+      var r = /* @__PURE__ */ Object.create(null);
+      if (n.r(r), Object.defineProperty(r, "default", { enumerable: true, value: e2 }), 2 & t2 && "string" != typeof e2)
+        for (var o2 in e2)
+          n.d(r, o2, function(t3) {
+            return e2[t3];
+          }.bind(null, o2));
+      return r;
+    }, n.n = function(e2) {
+      var t2 = e2 && e2.__esModule ? function() {
+        return e2.default;
+      } : function() {
+        return e2;
+      };
+      return n.d(t2, "a", t2), t2;
+    }, n.o = function(e2, t2) {
+      return Object.prototype.hasOwnProperty.call(e2, t2);
+    }, n.p = "", n(n.s = 180);
+  }({ 180: function(e, t) {
+    (function() {
+      (function(e2) {
+        "use strict";
+        if ("undefined" == typeof sigma)
+          throw "sigma is not declared";
+        sigma.utils.pkg("sigma.parsers"), sigma.utils.pkg("sigma.utils"), sigma.utils.xhr = function() {
+          if (window.XMLHttpRequest)
+            return new XMLHttpRequest();
+          var e3, t2;
+          if (window.ActiveXObject)
+            for (t2 in e3 = ["Msxml2.XMLHTTP.6.0", "Msxml2.XMLHTTP.3.0", "Msxml2.XMLHTTP", "Microsoft.XMLHTTP"])
+              try {
+                return new ActiveXObject(e3[t2]);
+              } catch (e4) {
+              }
+          return null;
+        }, sigma.parsers.json = function(e3, t2, n) {
+          var r, o2 = sigma.utils.xhr();
+          if (!o2)
+            throw "XMLHttpRequest not supported, cannot load the file.";
+          o2.open("GET", e3, true), o2.onreadystatechange = function() {
+            4 === o2.readyState && (r = JSON.parse(o2.responseText), t2 instanceof sigma ? (t2.graph.clear(), t2.graph.read(r)) : "object" == typeof t2 ? (t2.graph = r, t2 = new sigma(t2)) : "function" == typeof t2 && (n = t2, t2 = null), n && n(t2 || r));
+          }, o2.send();
+        };
+      }).call(this);
+    }).call(window);
+  } });
+
+  // ../testeranto/node_modules/react-sigma/es/LoadJSON.js
+  var import_prop_types8 = __toESM(require_prop_types());
+  function _typeof5(obj) {
+    "@babel/helpers - typeof";
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof5 = function _typeof13(obj2) {
+        return typeof obj2;
+      };
+    } else {
+      _typeof5 = function _typeof13(obj2) {
+        return obj2 && typeof Symbol === "function" && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
+      };
+    }
+    return _typeof5(obj);
+  }
+  function _classCallCheck5(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+  function _defineProperties3(target, props) {
+    for (var i2 = 0; i2 < props.length; i2++) {
+      var descriptor = props[i2];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor)
+        descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+  function _createClass3(Constructor, protoProps, staticProps) {
+    if (protoProps)
+      _defineProperties3(Constructor.prototype, protoProps);
+    if (staticProps)
+      _defineProperties3(Constructor, staticProps);
+    return Constructor;
+  }
+  function _inherits5(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function");
+    }
+    subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } });
+    if (superClass)
+      _setPrototypeOf6(subClass, superClass);
+  }
+  function _setPrototypeOf6(o2, p) {
+    _setPrototypeOf6 = Object.setPrototypeOf || function _setPrototypeOf14(o3, p2) {
+      o3.__proto__ = p2;
+      return o3;
+    };
+    return _setPrototypeOf6(o2, p);
+  }
+  function _createSuper5(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct5();
+    return function _createSuperInternal() {
+      var Super = _getPrototypeOf5(Derived), result;
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf5(this).constructor;
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
+      return _possibleConstructorReturn5(this, result);
+    };
+  }
+  function _possibleConstructorReturn5(self2, call) {
+    if (call && (_typeof5(call) === "object" || typeof call === "function")) {
+      return call;
+    }
+    return _assertThisInitialized5(self2);
+  }
+  function _assertThisInitialized5(self2) {
+    if (self2 === void 0) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+    return self2;
+  }
+  function _isNativeReflectConstruct5() {
+    if (typeof Reflect === "undefined" || !Reflect.construct)
+      return false;
+    if (Reflect.construct.sham)
+      return false;
+    if (typeof Proxy === "function")
+      return true;
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function() {
+      }));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+  function _getPrototypeOf5(o2) {
+    _getPrototypeOf5 = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf13(o3) {
+      return o3.__proto__ || Object.getPrototypeOf(o3);
+    };
+    return _getPrototypeOf5(o2);
+  }
+  function _defineProperty5(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
+    } else {
+      obj[key] = value;
+    }
+    return obj;
+  }
+  var LoadJSON = /* @__PURE__ */ function(_React$Component) {
+    _inherits5(LoadJSON2, _React$Component);
+    var _super = _createSuper5(LoadJSON2);
+    function LoadJSON2(props) {
+      var _this2;
+      _classCallCheck5(this, LoadJSON2);
+      _this2 = _super.call(this, props);
+      _defineProperty5(_assertThisInitialized5(_this2), "onLoad", function() {
+        if (_this2.props.sigma)
+          _this2.props.sigma.refresh();
+        _this2.setState({
+          loaded: true
+        });
+        if (_this2.props.onGraphLoaded)
+          return _this2.props.onGraphLoaded();
+      });
+      _this2.state = {
+        loaded: false
+      };
+      return _this2;
+    }
+    _createClass3(LoadJSON2, [{
+      key: "componentDidMount",
+      value: function componentDidMount() {
+        this._load(this.props.path);
+      }
+    }, {
+      key: "componentDidUpdate",
+      value: function componentDidUpdate(props) {
+        if (this.props.path !== props.path) {
+          this.setState({
+            loaded: false
+          });
+          this._load(props.path);
+        }
+      }
+    }, {
+      key: "render",
+      value: function render() {
+        if (!this.state.loaded)
+          return null;
+        return /* @__PURE__ */ import_react35.default.createElement("div", null, embedProps(this.props.children, {
+          sigma: this.props.sigma
+        }));
+      }
+    }, {
+      key: "_load",
+      value: function _load(url) {
+        sigma.parsers.json(this.props.path, this.props.sigma, this.onLoad);
+      }
+    }]);
+    return LoadJSON2;
+  }(import_react35.default.Component);
+  _defineProperty5(LoadJSON, "propTypes", {
+    path: import_prop_types8.default.string.isRequired,
+    onGraphLoaded: import_prop_types8.default.func,
+    children: import_prop_types8.default.any,
+    sigma: function sigma3() {
+      return (typeof Sigma === "function" ? import_prop_types8.default.instanceOf(Sigma) : import_prop_types8.default.any).apply(this, arguments);
+    }
+  });
+
+  // ../testeranto/node_modules/react-sigma/es/LoadGEXF.js
+  var import_react36 = __toESM(require_react());
+
+  // ../testeranto/node_modules/react-sigma/sigma/parsers.gexf.js
+  var Sigma8 = function(e) {
+    var t = {};
+    function r(n) {
+      if (t[n])
+        return t[n].exports;
+      var i2 = t[n] = { i: n, l: false, exports: {} };
+      return e[n].call(i2.exports, i2, i2.exports, r), i2.l = true, i2.exports;
+    }
+    return r.m = e, r.c = t, r.d = function(e2, t2, n) {
+      r.o(e2, t2) || Object.defineProperty(e2, t2, { enumerable: true, get: n });
+    }, r.r = function(e2) {
+      "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e2, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(e2, "__esModule", { value: true });
+    }, r.t = function(e2, t2) {
+      if (1 & t2 && (e2 = r(e2)), 8 & t2)
+        return e2;
+      if (4 & t2 && "object" == typeof e2 && e2 && e2.__esModule)
+        return e2;
+      var n = /* @__PURE__ */ Object.create(null);
+      if (r.r(n), Object.defineProperty(n, "default", { enumerable: true, value: e2 }), 2 & t2 && "string" != typeof e2)
+        for (var i2 in e2)
+          r.d(n, i2, function(t3) {
+            return e2[t3];
+          }.bind(null, i2));
+      return n;
+    }, r.n = function(e2) {
+      var t2 = e2 && e2.__esModule ? function() {
+        return e2.default;
+      } : function() {
+        return e2;
+      };
+      return r.d(t2, "a", t2), t2;
+    }, r.o = function(e2, t2) {
+      return Object.prototype.hasOwnProperty.call(e2, t2);
+    }, r.p = "", r(r.s = 181);
+  }({ 181: function(e, t, r) {
+    r(182), e.exports = r(183);
+  }, 182: function(e, t, r) {
+    (function() {
+      (function(r2) {
+        "use strict";
+        var n = { getModelTags: function(e2) {
+          var t2, r3 = e2.getElementsByTagName("attributes"), n2 = {}, i3 = r3.length;
+          for (t2 = 0; t2 < i3; t2++)
+            n2[r3[t2].getAttribute("class")] = r3[t2].childNodes;
+          return n2;
+        }, nodeListToArray: function(e2) {
+          for (var t2 = [], r3 = 0, n2 = e2.length; r3 < n2; ++r3)
+            "#text" !== e2[r3].nodeName && t2.push(e2[r3]);
+          return t2;
+        }, nodeListEach: function(e2, t2) {
+          for (var r3 = 0, n2 = e2.length; r3 < n2; ++r3)
+            "#text" !== e2[r3].nodeName && t2(e2[r3]);
+        }, nodeListToHash: function(e2, t2) {
+          for (var r3 = {}, n2 = 0; n2 < e2.length; n2++)
+            if ("#text" !== e2[n2].nodeName) {
+              var i3 = t2(e2[n2]);
+              r3[i3.key] = i3.value;
+            }
+          return r3;
+        }, namedNodeMapToObject: function(e2) {
+          for (var t2 = {}, r3 = 0; r3 < e2.length; r3++)
+            t2[e2[r3].name] = e2[r3].value;
+          return t2;
+        }, getFirstElementByTagNS: function(e2, t2, r3) {
+          var n2 = e2.getElementsByTagName(t2 + ":" + r3)[0];
+          return n2 || (n2 = e2.getElementsByTagNameNS(t2, r3)[0]), n2 || (n2 = e2.getElementsByTagName(r3)[0]), n2;
+        }, getAttributeNS: function(e2, t2, n2) {
+          var i3 = e2.getAttribute(t2 + ":" + n2);
+          return i3 === r2 && (i3 = e2.getAttributeNS(t2, n2)), i3 === r2 && (i3 = e2.getAttribute(n2)), i3;
+        }, enforceType: function(e2, t2) {
+          switch (e2) {
+            case "boolean":
+              t2 = "true" === t2;
+              break;
+            case "integer":
+            case "long":
+            case "float":
+            case "double":
+              t2 = +t2;
+              break;
+            case "liststring":
+              t2 = t2 ? t2.split("|") : [];
+          }
+          return t2;
+        }, getRGB: function(e2) {
+          return e2[3] ? "rgba(" + e2.join(",") + ")" : "rgb(" + e2.slice(0, -1).join(",") + ")";
+        } };
+        function i2(e2) {
+          var t2 = {};
+          t2.els = { root: e2.getElementsByTagName("gexf")[0], graph: e2.getElementsByTagName("graph")[0], meta: e2.getElementsByTagName("meta")[0], nodes: e2.getElementsByTagName("node"), edges: e2.getElementsByTagName("edge"), model: n.getModelTags(e2) }, t2.hasViz = !!n.getAttributeNS(t2.els.root, "xmlns", "viz"), t2.version = t2.els.root.getAttribute("version") || "1.0", t2.mode = t2.els.graph.getAttribute("mode") || "static";
+          var r3 = t2.els.graph.getAttribute("defaultedgetype");
+          function i3(e3) {
+            var r4 = [];
+            return t2.els.model[e3] && n.nodeListEach(t2.els.model[e3], function(e4) {
+              var t3 = { id: e4.getAttribute("id") || e4.getAttribute("for"), type: e4.getAttribute("type") || "string", title: e4.getAttribute("title") || "" }, i4 = n.nodeListToArray(e4.childNodes);
+              i4.length > 0 && (t3.defaultValue = i4[0].textContent), r4.push(t3);
+            }), r4.length > 0 && r4;
+          }
+          function o3(e3, t3) {
+            var r4 = {}, i4 = t3.getElementsByTagName("attvalue"), o4 = n.nodeListToHash(i4, function(e4) {
+              var t4 = n.namedNodeMapToObject(e4.attributes);
+              return { key: t4.id || t4.for, value: t4.value };
+            });
+            return e3.map(function(e4) {
+              r4[e4.id] = !(e4.id in o4) && "defaultValue" in e4 ? n.enforceType(e4.type, e4.defaultValue) : n.enforceType(e4.type, o4[e4.id]);
+            }), r4;
+          }
+          t2.defaultEdgetype = r3 || "undirected";
+          var a, s, u, l = i3("node"), g = i3("edge"), d = { version: t2.version, mode: t2.mode, defaultEdgeType: t2.defaultEdgetype, meta: (u = {}, t2.els.meta ? (u.lastmodifieddate = t2.els.meta.getAttribute("lastmodifieddate"), n.nodeListEach(t2.els.meta.childNodes, function(e3) {
+            u[e3.tagName.toLowerCase()] = e3.textContent;
+          }), u) : u), model: {}, nodes: (a = l, s = [], n.nodeListEach(t2.els.nodes, function(e3) {
+            var r4 = { id: e3.getAttribute("id"), label: e3.getAttribute("label") || "" };
+            a && (r4.attributes = o3(a, e3)), t2.hasViz && (r4.viz = function(e4) {
+              var t3 = {}, r5 = n.getFirstElementByTagNS(e4, "viz", "color");
+              if (r5) {
+                var i4 = ["r", "g", "b", "a"].map(function(e5) {
+                  return r5.getAttribute(e5);
+                });
+                t3.color = n.getRGB(i4);
+              }
+              var o4 = n.getFirstElementByTagNS(e4, "viz", "position");
+              o4 && (t3.position = {}, ["x", "y", "z"].map(function(e5) {
+                t3.position[e5] = +o4.getAttribute(e5);
+              }));
+              var a3 = n.getFirstElementByTagNS(e4, "viz", "size");
+              a3 && (t3.size = +a3.getAttribute("value"));
+              var s2 = n.getFirstElementByTagNS(e4, "viz", "shape");
+              return s2 && (t3.shape = s2.getAttribute("value")), t3;
+            }(e3)), s.push(function(e4) {
+              var t3 = { id: e4.id, label: e4.label };
+              return e4.viz && (t3.viz = e4.viz), e4.attributes && (t3.attributes = e4.attributes), t3;
+            }(r4));
+          }), s), edges: function(e3, r4) {
+            var i4 = [];
+            return n.nodeListEach(t2.els.edges, function(a3) {
+              var s2 = n.namedNodeMapToObject(a3.attributes);
+              "type" in s2 || (s2.type = r4), e3 && (s2.attributes = o3(e3, a3)), t2.hasViz && (s2.viz = function(e4) {
+                var t3 = {}, r5 = n.getFirstElementByTagNS(e4, "viz", "color");
+                if (r5) {
+                  var i5 = ["r", "g", "b", "a"].map(function(e5) {
+                    return r5.getAttribute(e5);
+                  });
+                  t3.color = n.getRGB(i5);
+                }
+                var o4 = n.getFirstElementByTagNS(e4, "viz", "shape");
+                o4 && (t3.shape = o4.getAttribute("value"));
+                var a4 = n.getFirstElementByTagNS(e4, "viz", "thickness");
+                a4 && (t3.thickness = +a4.getAttribute("value"));
+                return t3;
+              }(a3)), i4.push(function(e4) {
+                var t3 = { id: e4.id, type: e4.type || "undirected", label: e4.label || "", source: e4.source, target: e4.target, weight: +e4.weight || 1 };
+                return e4.viz && (t3.viz = e4.viz), e4.attributes && (t3.attributes = e4.attributes), t3;
+              }(s2));
+            }), i4;
+          }(g, t2.defaultEdgetype) };
+          return l && (d.model.node = l), g && (d.model.edge = g), d;
+        }
+        function o2(e2, t2) {
+          var r3 = function() {
+            if (window.XMLHttpRequest)
+              return new XMLHttpRequest();
+            var e3, t3;
+            if (window.ActiveXObject)
+              for (t3 in e3 = ["Msxml2.XMLHTTP.6.0", "Msxml2.XMLHTTP.3.0", "Msxml2.XMLHTTP", "Microsoft.XMLHTTP"])
+                try {
+                  return new ActiveXObject(e3[t3]);
+                } catch (e4) {
+                }
+            return null;
+          }();
+          if (!r3)
+            throw "XMLHttpRequest not supported, cannot load the file.";
+          var n2, i3 = "function" == typeof t2;
+          return r3.overrideMimeType ? (r3.overrideMimeType("text/xml"), n2 = function(e3) {
+            return e3.responseXML;
+          }) : n2 = function(e3) {
+            return new DOMParser().parseFromString(e3.responseText, "application/xml");
+          }, r3.open("GET", e2, i3), i3 && (r3.onreadystatechange = function() {
+            4 === r3.readyState && t2(n2(r3));
+          }), r3.send(), i3 ? r3 : n2(r3);
+        }
+        if (void 0 !== this.gexf)
+          throw 'gexf: error - a variable called "gexf" already exists in the global scope';
+        this.gexf = { parse: function(e2) {
+          return i2(e2);
+        }, fetch: function(e2, t2) {
+          return "function" == typeof t2 ? o2(e2, function(e3) {
+            t2(i2(e3));
+          }) : i2(o2(e2));
+        }, version: "0.1.1" }, this.exports !== t && (e.exports = this.gexf);
+      }).call(window);
+    }).call(window);
+  }, 183: function(e, t) {
+    (function() {
+      (function(e2) {
+        "use strict";
+        if ("undefined" == typeof sigma)
+          throw "sigma is not declared";
+        sigma.utils.pkg("sigma.parsers");
+        var t2 = 0;
+        sigma.parsers.gexf = function(e3, r, n) {
+          var i2, o2, a, s;
+          function u(e4) {
+            for (a = e4.nodes, i2 = 0, o2 = a.length; i2 < o2; i2++)
+              (s = a[i2]).id = s.id, s.viz && "object" == typeof s.viz && (s.viz.position && "object" == typeof s.viz.position && (s.x = s.viz.position.x, s.y = -s.viz.position.y), s.size = s.viz.size, s.color = s.viz.color, s.viz.shape && (s.type = s.viz.shape));
+            for (a = e4.edges, i2 = 0, o2 = a.length; i2 < o2; i2++)
+              (s = a[i2]).id = "string" == typeof s.id ? s.id : "e" + t2++, s.source = "" + s.source, s.target = "" + s.target, s.viz && "object" == typeof s.viz && (s.color = s.viz.color, s.size = s.viz.thickness), s.size = s.weight, s.direction = s.type, delete s.type;
+            if (r instanceof sigma) {
+              for (r.graph.clear(), a = e4.nodes, i2 = 0, o2 = a.length; i2 < o2; i2++)
+                r.graph.addNode(a[i2]);
+              for (a = e4.edges, i2 = 0, o2 = a.length; i2 < o2; i2++)
+                r.graph.addEdge(a[i2]);
+            } else
+              "object" == typeof r ? (r.graph = e4, r = new sigma(r)) : "function" == typeof r && (n = r, r = null);
+            return n ? void n(r || e4) : e4;
+          }
+          if ("string" == typeof e3)
+            gexf.fetch(e3, u);
+          else if ("object" == typeof e3)
+            return u(gexf.parse(e3));
+        };
+      }).call(window);
+    }).call(window);
+  } });
+
+  // ../testeranto/node_modules/react-sigma/es/LoadGEXF.js
+  var import_prop_types9 = __toESM(require_prop_types());
+  function _typeof6(obj) {
+    "@babel/helpers - typeof";
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof6 = function _typeof13(obj2) {
+        return typeof obj2;
+      };
+    } else {
+      _typeof6 = function _typeof13(obj2) {
+        return obj2 && typeof Symbol === "function" && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
+      };
+    }
+    return _typeof6(obj);
+  }
+  function _classCallCheck6(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+  function _defineProperties4(target, props) {
+    for (var i2 = 0; i2 < props.length; i2++) {
+      var descriptor = props[i2];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor)
+        descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+  function _createClass4(Constructor, protoProps, staticProps) {
+    if (protoProps)
+      _defineProperties4(Constructor.prototype, protoProps);
+    if (staticProps)
+      _defineProperties4(Constructor, staticProps);
+    return Constructor;
+  }
+  function _inherits6(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function");
+    }
+    subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } });
+    if (superClass)
+      _setPrototypeOf7(subClass, superClass);
+  }
+  function _setPrototypeOf7(o2, p) {
+    _setPrototypeOf7 = Object.setPrototypeOf || function _setPrototypeOf14(o3, p2) {
+      o3.__proto__ = p2;
+      return o3;
+    };
+    return _setPrototypeOf7(o2, p);
+  }
+  function _createSuper6(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct6();
+    return function _createSuperInternal() {
+      var Super = _getPrototypeOf6(Derived), result;
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf6(this).constructor;
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
+      return _possibleConstructorReturn6(this, result);
+    };
+  }
+  function _possibleConstructorReturn6(self2, call) {
+    if (call && (_typeof6(call) === "object" || typeof call === "function")) {
+      return call;
+    }
+    return _assertThisInitialized6(self2);
+  }
+  function _assertThisInitialized6(self2) {
+    if (self2 === void 0) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+    return self2;
+  }
+  function _isNativeReflectConstruct6() {
+    if (typeof Reflect === "undefined" || !Reflect.construct)
+      return false;
+    if (Reflect.construct.sham)
+      return false;
+    if (typeof Proxy === "function")
+      return true;
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function() {
+      }));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+  function _getPrototypeOf6(o2) {
+    _getPrototypeOf6 = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf13(o3) {
+      return o3.__proto__ || Object.getPrototypeOf(o3);
+    };
+    return _getPrototypeOf6(o2);
+  }
+  function _defineProperty6(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
+    } else {
+      obj[key] = value;
+    }
+    return obj;
+  }
+  var LoadGEXF = /* @__PURE__ */ function(_React$Component) {
+    _inherits6(LoadGEXF2, _React$Component);
+    var _super = _createSuper6(LoadGEXF2);
+    function LoadGEXF2(props) {
+      var _this2;
+      _classCallCheck6(this, LoadGEXF2);
+      _this2 = _super.call(this, props);
+      _defineProperty6(_assertThisInitialized6(_this2), "onLoad", function() {
+        if (_this2.props.sigma)
+          _this2.props.sigma.refresh();
+        _this2.setState({
+          loaded: true
+        });
+        if (_this2.props.onGraphLoaded)
+          return _this2.props.onGraphLoaded();
+      });
+      _this2.state = {
+        loaded: false
+      };
+      return _this2;
+    }
+    _createClass4(LoadGEXF2, [{
+      key: "componentDidMount",
+      value: function componentDidMount() {
+        this._load(this.props.path);
+      }
+    }, {
+      key: "componentDidUpdate",
+      value: function componentDidUpdate(props) {
+        if (this.props.path !== props.path) {
+          this.setState({
+            loaded: false
+          });
+          this._load(props.path);
+        }
+      }
+    }, {
+      key: "render",
+      value: function render() {
+        if (!this.state.loaded)
+          return null;
+        return /* @__PURE__ */ import_react36.default.createElement("div", null, embedProps(this.props.children, {
+          sigma: this.props.sigma
+        }));
+      }
+    }, {
+      key: "_load",
+      value: function _load(url) {
+        sigma.parsers.gexf(this.props.path, this.props.sigma, this.onLoad);
+      }
+    }]);
+    return LoadGEXF2;
+  }(import_react36.default.Component);
+  _defineProperty6(LoadGEXF, "propTypes", {
+    path: import_prop_types9.default.string.isRequired,
+    onGraphLoaded: import_prop_types9.default.func,
+    children: import_prop_types9.default.any,
+    sigma: function sigma4() {
+      return (typeof Sigma === "function" ? import_prop_types9.default.instanceOf(Sigma) : import_prop_types9.default.any).apply(this, arguments);
+    }
+  });
+
+  // ../testeranto/node_modules/react-sigma/es/Filter.js
+  var import_react37 = __toESM(require_react());
+  var import_plugins = __toESM(require_plugins_filter());
+  var import_prop_types10 = __toESM(require_prop_types());
+  function _typeof7(obj) {
+    "@babel/helpers - typeof";
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof7 = function _typeof13(obj2) {
+        return typeof obj2;
+      };
+    } else {
+      _typeof7 = function _typeof13(obj2) {
+        return obj2 && typeof Symbol === "function" && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
+      };
+    }
+    return _typeof7(obj);
+  }
+  function _classCallCheck7(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+  function _defineProperties5(target, props) {
+    for (var i2 = 0; i2 < props.length; i2++) {
+      var descriptor = props[i2];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor)
+        descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+  function _createClass5(Constructor, protoProps, staticProps) {
+    if (protoProps)
+      _defineProperties5(Constructor.prototype, protoProps);
+    if (staticProps)
+      _defineProperties5(Constructor, staticProps);
+    return Constructor;
+  }
+  function _inherits7(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function");
+    }
+    subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } });
+    if (superClass)
+      _setPrototypeOf8(subClass, superClass);
+  }
+  function _setPrototypeOf8(o2, p) {
+    _setPrototypeOf8 = Object.setPrototypeOf || function _setPrototypeOf14(o3, p2) {
+      o3.__proto__ = p2;
+      return o3;
+    };
+    return _setPrototypeOf8(o2, p);
+  }
+  function _createSuper7(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct7();
+    return function _createSuperInternal() {
+      var Super = _getPrototypeOf7(Derived), result;
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf7(this).constructor;
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
+      return _possibleConstructorReturn7(this, result);
+    };
+  }
+  function _possibleConstructorReturn7(self2, call) {
+    if (call && (_typeof7(call) === "object" || typeof call === "function")) {
+      return call;
+    }
+    return _assertThisInitialized7(self2);
+  }
+  function _assertThisInitialized7(self2) {
+    if (self2 === void 0) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+    return self2;
+  }
+  function _isNativeReflectConstruct7() {
+    if (typeof Reflect === "undefined" || !Reflect.construct)
+      return false;
+    if (Reflect.construct.sham)
+      return false;
+    if (typeof Proxy === "function")
+      return true;
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function() {
+      }));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+  function _getPrototypeOf7(o2) {
+    _getPrototypeOf7 = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf13(o3) {
+      return o3.__proto__ || Object.getPrototypeOf(o3);
+    };
+    return _getPrototypeOf7(o2);
+  }
+  function _defineProperty7(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
+    } else {
+      obj[key] = value;
+    }
+    return obj;
+  }
+  var Filter2 = /* @__PURE__ */ function(_React$Component) {
+    _inherits7(Filter3, _React$Component);
+    var _super = _createSuper7(Filter3);
+    function Filter3() {
+      var _this2;
+      _classCallCheck7(this, Filter3);
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+      _this2 = _super.call.apply(_super, [this].concat(args));
+      _defineProperty7(_assertThisInitialized7(_this2), "render", function() {
+        return null;
+      });
+      return _this2;
+    }
+    _createClass5(Filter3, [{
+      key: "componentDidMount",
+      value: function componentDidMount() {
+        this.filter = new sigma.plugins.filter(this.props.sigma);
+        this._apply(this.props);
+      }
+      // TODO: will it work in composition with ForceAtlas for instance?
+      //It should hide nodes before rendering of subplugins, therefore used in componentWillUpdate.. is it right?
+    }, {
+      key: "componentWillUpdate",
+      value: function componentWillUpdate2(props) {
+        if (props.nodesBy !== this.props.nodesBy || props.neighborsOf !== this.props.neighborsOf)
+          this._apply(props);
+      }
+      // TODO: Composition is not working yet!!
+    }, {
+      key: "_apply",
+      value: function _apply(props) {
+        this.filter.undo(["neighborsOf", "nodesBy"]);
+        if (props.neighborsOf) {
+          this.filter.neighborsOf(props.neighborsOf, "neighborsOf");
+        }
+        if (props.nodesBy)
+          this.filter.nodesBy(props.nodesBy, "nodesBy");
+        this.filter.apply();
+        if (this.props.sigma)
+          this.props.sigma.refresh();
+      }
+    }]);
+    return Filter3;
+  }(import_react37.default.Component);
+  _defineProperty7(Filter2, "propTypes", {
+    nodesBy: function nodesBy() {
+      return (typeof Nodes$Filter === "function" ? import_prop_types10.default.instanceOf(Nodes$Filter) : import_prop_types10.default.any).apply(this, arguments);
+    },
+    neighborsOf: import_prop_types10.default.string,
+    sigma: function sigma5() {
+      return (typeof Sigma === "function" ? import_prop_types10.default.instanceOf(Sigma) : import_prop_types10.default.any).apply(this, arguments);
+    }
+  });
+
+  // ../testeranto/node_modules/react-sigma/es/ForceAtlas2.js
+  var import_react38 = __toESM(require_react());
+  var import_layout = __toESM(require_layout_forceAtlas2());
+  var import_prop_types11 = __toESM(require_prop_types());
+  function _typeof8(obj) {
+    "@babel/helpers - typeof";
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof8 = function _typeof13(obj2) {
+        return typeof obj2;
+      };
+    } else {
+      _typeof8 = function _typeof13(obj2) {
+        return obj2 && typeof Symbol === "function" && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
+      };
+    }
+    return _typeof8(obj);
+  }
+  function _classCallCheck8(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+  function _defineProperties6(target, props) {
+    for (var i2 = 0; i2 < props.length; i2++) {
+      var descriptor = props[i2];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor)
+        descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+  function _createClass6(Constructor, protoProps, staticProps) {
+    if (protoProps)
+      _defineProperties6(Constructor.prototype, protoProps);
+    if (staticProps)
+      _defineProperties6(Constructor, staticProps);
+    return Constructor;
+  }
+  function _inherits8(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function");
+    }
+    subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } });
+    if (superClass)
+      _setPrototypeOf9(subClass, superClass);
+  }
+  function _setPrototypeOf9(o2, p) {
+    _setPrototypeOf9 = Object.setPrototypeOf || function _setPrototypeOf14(o3, p2) {
+      o3.__proto__ = p2;
+      return o3;
+    };
+    return _setPrototypeOf9(o2, p);
+  }
+  function _createSuper8(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct8();
+    return function _createSuperInternal() {
+      var Super = _getPrototypeOf8(Derived), result;
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf8(this).constructor;
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
+      return _possibleConstructorReturn8(this, result);
+    };
+  }
+  function _possibleConstructorReturn8(self2, call) {
+    if (call && (_typeof8(call) === "object" || typeof call === "function")) {
+      return call;
+    }
+    return _assertThisInitialized8(self2);
+  }
+  function _assertThisInitialized8(self2) {
+    if (self2 === void 0) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+    return self2;
+  }
+  function _isNativeReflectConstruct8() {
+    if (typeof Reflect === "undefined" || !Reflect.construct)
+      return false;
+    if (Reflect.construct.sham)
+      return false;
+    if (typeof Proxy === "function")
+      return true;
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function() {
+      }));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+  function _getPrototypeOf8(o2) {
+    _getPrototypeOf8 = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf13(o3) {
+      return o3.__proto__ || Object.getPrototypeOf(o3);
+    };
+    return _getPrototypeOf8(o2);
+  }
+  function _defineProperty8(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
+    } else {
+      obj[key] = value;
+    }
+    return obj;
+  }
+  var ForceAtlas2 = /* @__PURE__ */ function(_React$Component) {
+    _inherits8(ForceAtlas22, _React$Component);
+    var _super = _createSuper8(ForceAtlas22);
+    function ForceAtlas22(props) {
+      var _this2;
+      _classCallCheck8(this, ForceAtlas22);
+      _this2 = _super.call(this, props);
+      _this2.state = {
+        running: false
+      };
+      return _this2;
+    }
+    _createClass6(ForceAtlas22, [{
+      key: "componentDidMount",
+      value: function componentDidMount() {
+        this._refreshGraph();
+      }
+    }, {
+      key: "componentDidUpdate",
+      value: function componentDidUpdate(prevProps, prevState) {
+        var s = this.props.sigma;
+        if (prevState.running && !this.state.running && s) {
+          s.stopForceAtlas2();
+          s.settings({
+            drawEdges: prevState.drawEdges === false ? false : true
+          });
+          s.refresh();
+        }
+      }
+    }, {
+      key: "componentWillUnmount",
+      value: function componentWillUnmount() {
+        if (this.props.sigma)
+          this.props.sigma.killForceAtlas2();
+        if (this.state.timer)
+          clearTimeout(this.state.timer);
+      }
+    }, {
+      key: "render",
+      value: function render() {
+        if (!this.state.running) {
+          return /* @__PURE__ */ import_react38.default.createElement("div", null, embedProps(this.props.children, {
+            sigma: this.props.sigma
+          }));
+        }
+        return null;
+      }
+    }, {
+      key: "_refreshGraph",
+      value: function _refreshGraph() {
+        var _this2 = this;
+        var s = this.props.sigma;
+        if (!sigma || !s)
+          return;
+        var drawEdges = s.settings("drawEdges");
+        if (s.graph.edges().length > 1e3)
+          s.settings({
+            drawEdges: false
+          });
+        s.startForceAtlas2(this._stripOptions(this.props));
+        var timer = setTimeout(function() {
+          _this2.setState({
+            running: false,
+            timer: void 0
+          });
+        }, this.props.timeout || s.graph.nodes().length * 8);
+        this.setState({
+          running: true,
+          timer,
+          drawEdges
+        });
+      }
+      //strip force atlas options from component props
+    }, {
+      key: "_stripOptions",
+      value: function _stripOptions(props) {
+        return Object.assign({}, props, {
+          sigma: void 0,
+          children: void 0
+        });
+      }
+    }]);
+    return ForceAtlas22;
+  }(import_react38.default.Component);
+  _defineProperty8(ForceAtlas2, "defaultProps", {
+    worker: true,
+    linLogMode: true
+  });
+  _defineProperty8(ForceAtlas2, "propTypes", {
+    worker: import_prop_types11.default.bool,
+    barnesHutOptimize: import_prop_types11.default.bool,
+    barnesHutTheta: import_prop_types11.default.number,
+    adjustSizes: import_prop_types11.default.bool,
+    iterationsPerRender: import_prop_types11.default.number,
+    linLogMode: import_prop_types11.default.bool,
+    outboundAttractionDistribution: import_prop_types11.default.bool,
+    edgeWeightInfluence: import_prop_types11.default.number,
+    scalingRatio: import_prop_types11.default.number,
+    strongGravityMode: import_prop_types11.default.bool,
+    slowDown: import_prop_types11.default.number,
+    gravity: import_prop_types11.default.number,
+    timeout: import_prop_types11.default.number,
+    sigma: function(_sigma) {
+      function sigma6() {
+        return _sigma.apply(this, arguments);
+      }
+      sigma6.toString = function() {
+        return _sigma.toString();
+      };
+      return sigma6;
+    }(function() {
+      return (typeof sigma === "function" ? import_prop_types11.default.instanceOf(sigma) : import_prop_types11.default.any).apply(this, arguments);
+    }),
+    children: import_prop_types11.default.any
+  });
+
+  // ../testeranto/node_modules/react-sigma/es/RelativeSize.js
+  var import_react39 = __toESM(require_react());
+
+  // ../testeranto/node_modules/react-sigma/sigma/plugins.relativeSize.js
+  var Sigma9 = function(e) {
+    var t = {};
+    function r(n) {
+      if (t[n])
+        return t[n].exports;
+      var o2 = t[n] = { i: n, l: false, exports: {} };
+      return e[n].call(o2.exports, o2, o2.exports, r), o2.l = true, o2.exports;
+    }
+    return r.m = e, r.c = t, r.d = function(e2, t2, n) {
+      r.o(e2, t2) || Object.defineProperty(e2, t2, { enumerable: true, get: n });
+    }, r.r = function(e2) {
+      "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e2, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(e2, "__esModule", { value: true });
+    }, r.t = function(e2, t2) {
+      if (1 & t2 && (e2 = r(e2)), 8 & t2)
+        return e2;
+      if (4 & t2 && "object" == typeof e2 && e2 && e2.__esModule)
+        return e2;
+      var n = /* @__PURE__ */ Object.create(null);
+      if (r.r(n), Object.defineProperty(n, "default", { enumerable: true, value: e2 }), 2 & t2 && "string" != typeof e2)
+        for (var o2 in e2)
+          r.d(n, o2, function(t3) {
+            return e2[t3];
+          }.bind(null, o2));
+      return n;
+    }, r.n = function(e2) {
+      var t2 = e2 && e2.__esModule ? function() {
+        return e2.default;
+      } : function() {
+        return e2;
+      };
+      return r.d(t2, "a", t2), t2;
+    }, r.o = function(e2, t2) {
+      return Object.prototype.hasOwnProperty.call(e2, t2);
+    }, r.p = "", r(r.s = 373);
+  }({ 373: function(e, t) {
+    (function() {
+      (function() {
+        "use strict";
+        if ("undefined" == typeof sigma)
+          throw "sigma is not declared";
+        sigma.utils.pkg("sigma.plugins");
+        sigma.plugins.relativeSize = function(e2, t2) {
+          for (var r = e2.graph.nodes(), n = 0; n < r.length; n++) {
+            var o2 = e2.graph.degree(r[n].id);
+            r[n].size = t2 * Math.sqrt(o2);
+          }
+          e2.refresh();
+        };
+      }).call(window);
+    }).call(window);
+  } });
+
+  // ../testeranto/node_modules/react-sigma/es/RelativeSize.js
+  var import_prop_types12 = __toESM(require_prop_types());
+  function _typeof9(obj) {
+    "@babel/helpers - typeof";
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof9 = function _typeof13(obj2) {
+        return typeof obj2;
+      };
+    } else {
+      _typeof9 = function _typeof13(obj2) {
+        return obj2 && typeof Symbol === "function" && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
+      };
+    }
+    return _typeof9(obj);
+  }
+  function _classCallCheck9(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+  function _inherits9(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function");
+    }
+    subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } });
+    if (superClass)
+      _setPrototypeOf10(subClass, superClass);
+  }
+  function _setPrototypeOf10(o2, p) {
+    _setPrototypeOf10 = Object.setPrototypeOf || function _setPrototypeOf14(o3, p2) {
+      o3.__proto__ = p2;
+      return o3;
+    };
+    return _setPrototypeOf10(o2, p);
+  }
+  function _createSuper9(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct9();
+    return function _createSuperInternal() {
+      var Super = _getPrototypeOf9(Derived), result;
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf9(this).constructor;
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
+      return _possibleConstructorReturn9(this, result);
+    };
+  }
+  function _possibleConstructorReturn9(self2, call) {
+    if (call && (_typeof9(call) === "object" || typeof call === "function")) {
+      return call;
+    }
+    return _assertThisInitialized9(self2);
+  }
+  function _assertThisInitialized9(self2) {
+    if (self2 === void 0) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+    return self2;
+  }
+  function _isNativeReflectConstruct9() {
+    if (typeof Reflect === "undefined" || !Reflect.construct)
+      return false;
+    if (Reflect.construct.sham)
+      return false;
+    if (typeof Proxy === "function")
+      return true;
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function() {
+      }));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+  function _getPrototypeOf9(o2) {
+    _getPrototypeOf9 = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf13(o3) {
+      return o3.__proto__ || Object.getPrototypeOf(o3);
+    };
+    return _getPrototypeOf9(o2);
+  }
+  function _defineProperty9(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
+    } else {
+      obj[key] = value;
+    }
+    return obj;
+  }
+  var RelativeSize = /* @__PURE__ */ function(_React$Component) {
+    _inherits9(RelativeSize2, _React$Component);
+    var _super = _createSuper9(RelativeSize2);
+    function RelativeSize2(props) {
+      var _this2;
+      _classCallCheck9(this, RelativeSize2);
+      _this2 = _super.call(this, props);
+      _defineProperty9(_assertThisInitialized9(_this2), "render", function() {
+        return null;
+      });
+      sigma.plugins.relativeSize(_this2.props.sigma, _this2.props.initialSize);
+      return _this2;
+    }
+    return RelativeSize2;
+  }(import_react39.default.Component);
+  _defineProperty9(RelativeSize, "propTypes", {
+    initialSize: import_prop_types12.default.number.isRequired,
+    sigma: function(_sigma) {
+      function sigma6() {
+        return _sigma.apply(this, arguments);
+      }
+      sigma6.toString = function() {
+        return _sigma.toString();
+      };
+      return sigma6;
+    }(function() {
+      return (typeof sigma === "function" ? import_prop_types12.default.instanceOf(sigma) : import_prop_types12.default.any).apply(this, arguments);
+    })
+  });
+  var RelativeSize_default = RelativeSize;
+
+  // ../testeranto/node_modules/react-sigma/es/NOverlap.js
+  var import_react41 = __toESM(require_react());
+
+  // ../testeranto/node_modules/react-sigma/sigma/plugins.animate.js
+  var Sigma10 = function(e) {
+    var n = {};
+    function t(r) {
+      if (n[r])
+        return n[r].exports;
+      var a = n[r] = { i: r, l: false, exports: {} };
+      return e[r].call(a.exports, a, a.exports, t), a.l = true, a.exports;
+    }
+    return t.m = e, t.c = n, t.d = function(e2, n2, r) {
+      t.o(e2, n2) || Object.defineProperty(e2, n2, { enumerable: true, get: r });
+    }, t.r = function(e2) {
+      "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e2, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(e2, "__esModule", { value: true });
+    }, t.t = function(e2, n2) {
+      if (1 & n2 && (e2 = t(e2)), 8 & n2)
+        return e2;
+      if (4 & n2 && "object" == typeof e2 && e2 && e2.__esModule)
+        return e2;
+      var r = /* @__PURE__ */ Object.create(null);
+      if (t.r(r), Object.defineProperty(r, "default", { enumerable: true, value: e2 }), 2 & n2 && "string" != typeof e2)
+        for (var a in e2)
+          t.d(r, a, function(n3) {
+            return e2[n3];
+          }.bind(null, a));
+      return r;
+    }, t.n = function(e2) {
+      var n2 = e2 && e2.__esModule ? function() {
+        return e2.default;
+      } : function() {
+        return e2;
+      };
+      return t.d(n2, "a", n2), n2;
+    }, t.o = function(e2, n2) {
+      return Object.prototype.hasOwnProperty.call(e2, n2);
+    }, t.p = "", t(t.s = 370);
+  }({ 370: function(e, n) {
+    (function() {
+      (function() {
+        "use strict";
+        if ("undefined" == typeof sigma)
+          throw "sigma is not declared";
+        sigma.utils.pkg("sigma.plugins");
+        var e2 = 0, n2 = {};
+        function t(e3) {
+          if (n2[e3])
+            return n2[e3];
+          var t2 = [0, 0, 0];
+          return e3.match(/^#/) ? t2 = 3 === (e3 = (e3 || "").replace(/^#/, "")).length ? [parseInt(e3.charAt(0) + e3.charAt(0), 16), parseInt(e3.charAt(1) + e3.charAt(1), 16), parseInt(e3.charAt(2) + e3.charAt(2), 16)] : [parseInt(e3.charAt(0) + e3.charAt(1), 16), parseInt(e3.charAt(2) + e3.charAt(3), 16), parseInt(e3.charAt(4) + e3.charAt(5), 16)] : e3.match(/^ *rgba? *\(/) && (t2 = [+(e3 = e3.match(/^ *rgba? *\( *([0-9]*) *, *([0-9]*) *, *([0-9]*) *(,.*)?\) *$/))[1], +e3[2], +e3[3]]), n2[e3] = { r: t2[0], g: t2[1], b: t2[2] }, n2[e3];
+        }
+        function r(e3, n3, r2) {
+          return e3 = t(e3), n3 = t(n3), "rgb(" + [0 | e3.r * (1 - r2) + n3.r * r2, 0 | e3.g * (1 - r2) + n3.g * r2, 0 | e3.b * (1 - r2) + n3.b * r2].join(",") + ")";
+        }
+        sigma.plugins.animate = function(n3, t2, a) {
+          var i2, o2, s, c = a || {}, u = ++e2, f = c.duration || n3.settings("animationsTime"), l = "string" == typeof c.easing ? sigma.utils.easings[c.easing] : "function" == typeof c.easing ? c.easing : sigma.utils.easings.quadraticInOut, d = sigma.utils.dateNow();
+          for (s in i2 = c.nodes && c.nodes.length ? "object" == typeof c.nodes[0] ? c.nodes : n3.graph.nodes(c.nodes) : n3.graph.nodes(), o2 = i2.reduce(function(e3, n4) {
+            var r2;
+            for (r2 in e3[n4.id] = {}, t2)
+              r2 in n4 && (e3[n4.id][r2] = n4[r2]);
+            return e3;
+          }, {}), n3.animations = n3.animations || /* @__PURE__ */ Object.create({}), sigma.plugins.kill(n3), n3.cameras)
+            n3.cameras[s].edgequadtree._enabled = false;
+          !function e3() {
+            var a3 = (sigma.utils.dateNow() - d) / f;
+            if (a3 >= 1) {
+              var s2;
+              for (s2 in i2.forEach(function(e4) {
+                for (var n4 in t2)
+                  n4 in t2 && (e4[n4] = e4[t2[n4]]);
+              }), n3.cameras)
+                n3.cameras[s2].edgequadtree._enabled = true;
+              n3.refresh(), "function" == typeof c.onComplete && c.onComplete();
+            } else
+              a3 = l(a3), i2.forEach(function(e4) {
+                for (var n4 in t2)
+                  n4 in t2 && (n4.match(/color$/) ? e4[n4] = r(o2[e4.id][n4], e4[t2[n4]], a3) : e4[n4] = e4[t2[n4]] * a3 + o2[e4.id][n4] * (1 - a3));
+              }), n3.refresh(), n3.animations[u] = requestAnimationFrame(e3);
+          }();
+        }, sigma.plugins.kill = function(e3) {
+          for (var n3 in e3.animations || {})
+            cancelAnimationFrame(e3.animations[n3]);
+          for (n3 in e3.cameras)
+            e3.cameras[n3].edgequadtree._enabled = true;
+        };
+      }).call(window);
+    }).call(window);
+  } });
+
+  // ../testeranto/node_modules/react-sigma/sigma/layout.noverlap.js
+  var Sigma11 = function(n) {
+    var i2 = {};
+    function t(e) {
+      if (i2[e])
+        return i2[e].exports;
+      var o2 = i2[e] = { i: e, l: false, exports: {} };
+      return n[e].call(o2.exports, o2, o2.exports, t), o2.l = true, o2.exports;
+    }
+    return t.m = n, t.c = i2, t.d = function(n2, i3, e) {
+      t.o(n2, i3) || Object.defineProperty(n2, i3, { enumerable: true, get: e });
+    }, t.r = function(n2) {
+      "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(n2, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(n2, "__esModule", { value: true });
+    }, t.t = function(n2, i3) {
+      if (1 & i3 && (n2 = t(n2)), 8 & i3)
+        return n2;
+      if (4 & i3 && "object" == typeof n2 && n2 && n2.__esModule)
+        return n2;
+      var e = /* @__PURE__ */ Object.create(null);
+      if (t.r(e), Object.defineProperty(e, "default", { enumerable: true, value: n2 }), 2 & i3 && "string" != typeof n2)
+        for (var o2 in n2)
+          t.d(e, o2, function(i4) {
+            return n2[i4];
+          }.bind(null, o2));
+      return e;
+    }, t.n = function(n2) {
+      var i3 = n2 && n2.__esModule ? function() {
+        return n2.default;
+      } : function() {
+        return n2;
+      };
+      return t.d(i3, "a", i3), i3;
+    }, t.o = function(n2, i3) {
+      return Object.prototype.hasOwnProperty.call(n2, i3);
+    }, t.p = "", t(t.s = 372);
+  }({ 372: function(n, i2) {
+    (function() {
+      (function(n2) {
+        "use strict";
+        if ("undefined" == typeof sigma)
+          throw new Error("sigma is not declared");
+        sigma.utils.pkg("sigma.layout.noverlap");
+        var i3 = { speed: 3, scaleNodes: 1.2, nodeMargin: 5, gridSize: 20, permittedExpansion: 1.1, rendererIndex: 0, maxIterations: 500 }, t = {}, e = {};
+        function o2() {
+          var n3 = this;
+          this.init = function(n4, t2) {
+            if (t2 = t2 || {}, this.sigInst = n4, this.config = sigma.utils.extend(t2, i3), this.easing = t2.easing, this.duration = t2.duration, t2.nodes && (this.nodes = t2.nodes, delete t2.nodes), !sigma.plugins || void 0 === sigma.plugins.animate)
+              throw new Error("sigma.plugins.animate is not declared");
+            this.running = false;
+          }, this.atomicGo = function() {
+            if (!this.running || this.iterCount < 1)
+              return false;
+            var i4, t2, e2, o3, s, r, d, a, g, f, c, u, l, h, p, _, m, x, y, M, v, z = this.nodes || this.sigInst.graph.nodes(), I = z.length, S = 1 / 0, E = -1 / 0, N = 1 / 0, b = -1 / 0;
+            for (this.iterCount--, this.running = false, i4 = 0; i4 < I; i4++)
+              (t2 = z[i4]).dn.dx = 0, t2.dn.dy = 0, S = Math.min(S, t2.dn_x - (t2.dn_size * n3.config.scaleNodes + n3.config.nodeMargin)), E = Math.max(E, t2.dn_x + (t2.dn_size * n3.config.scaleNodes + n3.config.nodeMargin)), N = Math.min(N, t2.dn_y - (t2.dn_size * n3.config.scaleNodes + n3.config.nodeMargin)), b = Math.max(b, t2.dn_y + (t2.dn_size * n3.config.scaleNodes + n3.config.nodeMargin));
+            for (o3 = E - S, s = b - N, d = (N + b) / 2, S = (r = (S + E) / 2) - n3.config.permittedExpansion * o3 / 2, E = r + n3.config.permittedExpansion * o3 / 2, N = d - n3.config.permittedExpansion * s / 2, b = d + n3.config.permittedExpansion * s / 2, a = {}, g = 0; g < n3.config.gridSize; g++)
+              for (a[g] = {}, f = 0; f < n3.config.gridSize; f++)
+                a[g][f] = [];
+            for (i4 = 0; i4 < I; i4++)
+              for (x = (t2 = z[i4]).dn_x - (t2.dn_size * n3.config.scaleNodes + n3.config.nodeMargin), y = t2.dn_x + (t2.dn_size * n3.config.scaleNodes + n3.config.nodeMargin), M = t2.dn_y - (t2.dn_size * n3.config.scaleNodes + n3.config.nodeMargin), v = t2.dn_y + (t2.dn_size * n3.config.scaleNodes + n3.config.nodeMargin), c = Math.floor(n3.config.gridSize * (x - S) / (E - S)), u = Math.floor(n3.config.gridSize * (y - S) / (E - S)), l = Math.floor(n3.config.gridSize * (M - N) / (b - N)), h = Math.floor(n3.config.gridSize * (v - N) / (b - N)), f = c; f <= u; f++)
+                for (g = l; g <= h; g++)
+                  a[g][f].push(t2.id);
+            for (p = {}, g = 0; g < n3.config.gridSize; g++)
+              for (f = 0; f < n3.config.gridSize; f++)
+                a[g][f].forEach(function(i5) {
+                  for (p[i5] || (p[i5] = []), _ = Math.max(0, g - 1); _ <= Math.min(g + 1, n3.config.gridSize - 1); _++)
+                    for (m = Math.max(0, f - 1); m <= Math.min(f + 1, n3.config.gridSize - 1); m++)
+                      a[_][m].forEach(function(n4) {
+                        n4 !== i5 && -1 === p[i5].indexOf(n4) && p[i5].push(n4);
+                      });
+                });
+            for (i4 = 0; i4 < I; i4++)
+              e2 = z[i4], p[e2.id].forEach(function(i5) {
+                var t3 = n3.sigInst.graph.nodes(i5), r2 = t3.dn_x - e2.dn_x, d2 = t3.dn_y - e2.dn_y, a3 = Math.sqrt(r2 * r2 + d2 * d2);
+                a3 < e2.dn_size * n3.config.scaleNodes + n3.config.nodeMargin + (t3.dn_size * n3.config.scaleNodes + n3.config.nodeMargin) && (n3.running = true, a3 > 0 ? (t3.dn.dx += r2 / a3 * (1 + e2.dn_size), t3.dn.dy += d2 / a3 * (1 + e2.dn_size)) : (t3.dn.dx += 0.01 * o3 * (0.5 - Math.random()), t3.dn.dy += 0.01 * s * (0.5 - Math.random())));
+              });
+            for (i4 = 0; i4 < I; i4++)
+              (t2 = z[i4]).fixed || (t2.dn_x = t2.dn_x + 0.1 * t2.dn.dx * n3.config.speed, t2.dn_y = t2.dn_y + 0.1 * t2.dn.dy * n3.config.speed);
+            return this.running && this.iterCount < 1 && (this.running = false), this.running;
+          }, this.go = function() {
+            for (this.iterCount = this.config.maxIterations; this.running; )
+              this.atomicGo();
+            this.stop();
+          }, this.start = function() {
+            if (!this.running) {
+              var i4 = this.sigInst.graph.nodes(), t2 = this.sigInst.renderers[n3.config.rendererIndex].options.prefix;
+              this.running = true;
+              for (var o3 = 0; o3 < i4.length; o3++)
+                i4[o3].dn_x = i4[o3][t2 + "x"], i4[o3].dn_y = i4[o3][t2 + "y"], i4[o3].dn_size = i4[o3][t2 + "size"], i4[o3].dn = { dx: 0, dy: 0 };
+              e[n3.sigInst.id].dispatchEvent("start"), this.go();
+            }
+          }, this.stop = function() {
+            var i4 = this.sigInst.graph.nodes();
+            if (this.running = false, this.easing)
+              e[n3.sigInst.id].dispatchEvent("interpolate"), sigma.plugins.animate(n3.sigInst, { x: "dn_x", y: "dn_y" }, { easing: n3.easing, onComplete: function() {
+                n3.sigInst.refresh();
+                for (var t3 = 0; t3 < i4.length; t3++)
+                  i4[t3].dn = null, i4[t3].dn_x = null, i4[t3].dn_y = null;
+                e[n3.sigInst.id].dispatchEvent("stop");
+              }, duration: n3.duration });
+            else {
+              for (var t2 = 0; t2 < i4.length; t2++)
+                i4[t2].x = i4[t2].dn_x, i4[t2].y = i4[t2].dn_y;
+              this.sigInst.refresh();
+              for (t2 = 0; t2 < i4.length; t2++)
+                i4[t2].dn = null, i4[t2].dn_x = null, i4[t2].dn_y = null;
+              e[n3.sigInst.id].dispatchEvent("stop");
+            }
+          }, this.kill = function() {
+            this.sigInst = null, this.config = null, this.easing = null;
+          };
+        }
+        sigma.prototype.configNoverlap = function(n3) {
+          var i4 = this;
+          if (!n3)
+            throw new Error('Missing argument: "config"');
+          return t[i4.id] || (t[i4.id] = new o2(), e[i4.id] = {}, sigma.classes.dispatcher.extend(e[i4.id]), i4.bind("kill", function() {
+            t[i4.id].kill(), t[i4.id] = null, e[i4.id] = null;
+          })), t[i4.id].init(i4, n3), e[i4.id];
+        }, sigma.prototype.startNoverlap = function(n3) {
+          return n3 && this.configNoverlap(this, n3), t[this.id].start(), e[this.id];
+        }, sigma.prototype.isNoverlapRunning = function() {
+          return !!t[this.id] && t[this.id].running;
+        };
+      }).call(this);
+    }).call(window);
+  } });
+
+  // ../testeranto/node_modules/react-sigma/es/ReactSigmaLayoutPlugin.js
+  var import_react40 = __toESM(require_react());
+
+  // ../testeranto/node_modules/react-sigma/es/Utils.js
+  function propsChanged(prev, next) {
+    for (var key in prev) {
+      if (prev[key] !== next[key])
+        return true;
+    }
+    return false;
+  }
+
+  // ../testeranto/node_modules/react-sigma/es/ReactSigmaLayoutPlugin.js
+  var import_prop_types13 = __toESM(require_prop_types());
+  function _typeof10(obj) {
+    "@babel/helpers - typeof";
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof10 = function _typeof13(obj2) {
+        return typeof obj2;
+      };
+    } else {
+      _typeof10 = function _typeof13(obj2) {
+        return obj2 && typeof Symbol === "function" && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
+      };
+    }
+    return _typeof10(obj);
+  }
+  function _classCallCheck10(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+  function _defineProperties7(target, props) {
+    for (var i2 = 0; i2 < props.length; i2++) {
+      var descriptor = props[i2];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor)
+        descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+  function _createClass7(Constructor, protoProps, staticProps) {
+    if (protoProps)
+      _defineProperties7(Constructor.prototype, protoProps);
+    if (staticProps)
+      _defineProperties7(Constructor, staticProps);
+    return Constructor;
+  }
+  function _inherits10(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function");
+    }
+    subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } });
+    if (superClass)
+      _setPrototypeOf11(subClass, superClass);
+  }
+  function _setPrototypeOf11(o2, p) {
+    _setPrototypeOf11 = Object.setPrototypeOf || function _setPrototypeOf14(o3, p2) {
+      o3.__proto__ = p2;
+      return o3;
+    };
+    return _setPrototypeOf11(o2, p);
+  }
+  function _createSuper10(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct10();
+    return function _createSuperInternal() {
+      var Super = _getPrototypeOf10(Derived), result;
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf10(this).constructor;
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
+      return _possibleConstructorReturn10(this, result);
+    };
+  }
+  function _possibleConstructorReturn10(self2, call) {
+    if (call && (_typeof10(call) === "object" || typeof call === "function")) {
+      return call;
+    }
+    return _assertThisInitialized10(self2);
+  }
+  function _assertThisInitialized10(self2) {
+    if (self2 === void 0) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+    return self2;
+  }
+  function _isNativeReflectConstruct10() {
+    if (typeof Reflect === "undefined" || !Reflect.construct)
+      return false;
+    if (Reflect.construct.sham)
+      return false;
+    if (typeof Proxy === "function")
+      return true;
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function() {
+      }));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+  function _getPrototypeOf10(o2) {
+    _getPrototypeOf10 = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf13(o3) {
+      return o3.__proto__ || Object.getPrototypeOf(o3);
+    };
+    return _getPrototypeOf10(o2);
+  }
+  function _defineProperty10(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
+    } else {
+      obj[key] = value;
+    }
+    return obj;
+  }
+  var ReactSigmaLayoutPlugin = /* @__PURE__ */ function(_React$Component) {
+    _inherits10(ReactSigmaLayoutPlugin2, _React$Component);
+    var _super = _createSuper10(ReactSigmaLayoutPlugin2);
+    function ReactSigmaLayoutPlugin2(props) {
+      var _this2;
+      _classCallCheck10(this, ReactSigmaLayoutPlugin2);
+      _this2 = _super.call(this, props);
+      _defineProperty10(_assertThisInitialized10(_this2), "_mounted", false);
+      _defineProperty10(_assertThisInitialized10(_this2), "render", function() {
+        return null;
+      });
+      _this2.state = {
+        running: false
+      };
+      return _this2;
+    }
+    _createClass7(ReactSigmaLayoutPlugin2, [{
+      key: "componentDidMount",
+      value: function componentDidMount() {
+        this._start();
+        this._mounted = true;
+      }
+      // Change sigma status only after react rendering complete
+    }, {
+      key: "componentDidUpdate",
+      value: function componentDidUpdate(prevProps, prevState) {
+        if (prevState.running && !this.state.running && this._mounted) {
+          if (this.props.sigma)
+            this.props.sigma.refresh();
+        } else if (propsChanged(prevProps, this.props)) {
+          this.props.stop();
+          this._start();
+        }
+      }
+    }, {
+      key: "componentWillUnmount",
+      value: function componentWillUnmount() {
+        this._mounted = false;
+        this.props.stop();
+      }
+      //TODO: Render composition of child components after animation
+    }, {
+      key: "_start",
+      value: function _start() {
+        var _this2 = this;
+        this.props.config(ReactSigmaLayoutPlugin2._stripOptions(this.props));
+        var listener = this.props.start();
+        listener.bind("stop", function() {
+          _this2._mounted && _this2.setState({
+            running: false
+          });
+        });
+        this.setState({
+          running: true
+        });
+      }
+    }], [{
+      key: "_stripOptions",
+      value: function _stripOptions(props) {
+        var config = {};
+        for (var key in props) {
+          if (key !== "start" && key !== "stop" && key !== "config" && key !== "sigma" && key !== "children")
+            config[key] = props[key];
+        }
+        return config;
+      }
+    }]);
+    return ReactSigmaLayoutPlugin2;
+  }(import_react40.default.Component);
+  _defineProperty10(ReactSigmaLayoutPlugin, "propTypes", {
+    config: import_prop_types13.default.func.isRequired,
+    start: import_prop_types13.default.func.isRequired,
+    stop: import_prop_types13.default.func.isRequired,
+    sigma: function(_sigma) {
+      function sigma6() {
+        return _sigma.apply(this, arguments);
+      }
+      sigma6.toString = function() {
+        return _sigma.toString();
+      };
+      return sigma6;
+    }(function() {
+      return (typeof sigma === "function" ? import_prop_types13.default.instanceOf(sigma) : import_prop_types13.default.any).apply(this, arguments);
+    })
+  });
+  var ReactSigmaLayoutPlugin_default = ReactSigmaLayoutPlugin;
+
+  // ../testeranto/node_modules/react-sigma/es/NOverlap.js
+  var import_prop_types14 = __toESM(require_prop_types());
+  function _extends2() {
+    _extends2 = Object.assign || function(target) {
+      for (var i2 = 1; i2 < arguments.length; i2++) {
+        var source = arguments[i2];
+        for (var key in source) {
+          if (Object.prototype.hasOwnProperty.call(source, key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    };
+    return _extends2.apply(this, arguments);
+  }
+  var NOverlap = function NOverlap2(props) {
+    var s = props.sigma;
+    if (s)
+      return /* @__PURE__ */ import_react41.default.createElement(ReactSigmaLayoutPlugin_default, _extends2({
+        start: function start() {
+          return s.startNoverlap();
+        },
+        config: function config(options2) {
+          return s.configNoverlap(options2);
+        },
+        stop: function stop() {
+          return !!s && !!s.stopNoverlap && s.stopNoverlap();
+        }
+      }, props));
+    return null;
+  };
+  NOverlap.propTypes = {
+    nodes: import_prop_types14.default.arrayOf(function() {
+      return (typeof Sigma$Node === "function" ? import_prop_types14.default.instanceOf(Sigma$Node).isRequired : import_prop_types14.default.any.isRequired).apply(this, arguments);
+    }),
+    nodeMargin: import_prop_types14.default.number,
+    scaleNodes: import_prop_types14.default.number,
+    gridSize: import_prop_types14.default.number,
+    permittedExpansion: import_prop_types14.default.number,
+    speed: import_prop_types14.default.number,
+    maxIterations: import_prop_types14.default.number,
+    easing: function easing() {
+      return (typeof Sigma$Easing === "function" ? import_prop_types14.default.instanceOf(Sigma$Easing) : import_prop_types14.default.any).apply(this, arguments);
+    },
+    duration: import_prop_types14.default.number,
+    sigma: function(_sigma) {
+      function sigma6() {
+        return _sigma.apply(this, arguments);
+      }
+      sigma6.toString = function() {
+        return _sigma.toString();
+      };
+      return sigma6;
+    }(function() {
+      return (typeof sigma === "function" ? import_prop_types14.default.instanceOf(sigma) : import_prop_types14.default.any).apply(this, arguments);
+    })
+  };
+
+  // ../testeranto/node_modules/react-sigma/es/NeoCypher.js
+  var import_react42 = __toESM(require_react());
+
+  // ../testeranto/node_modules/react-sigma/sigma/neo4j.cypher.js
+  var Sigma12 = function(e) {
+    var t = {};
+    function n(o2) {
+      if (t[o2])
+        return t[o2].exports;
+      var r = t[o2] = { i: o2, l: false, exports: {} };
+      return e[o2].call(r.exports, r, r.exports, n), r.l = true, r.exports;
+    }
+    return n.m = e, n.c = t, n.d = function(e2, t2, o2) {
+      n.o(e2, t2) || Object.defineProperty(e2, t2, { enumerable: true, get: o2 });
+    }, n.r = function(e2) {
+      "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e2, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(e2, "__esModule", { value: true });
+    }, n.t = function(e2, t2) {
+      if (1 & t2 && (e2 = n(e2)), 8 & t2)
+        return e2;
+      if (4 & t2 && "object" == typeof e2 && e2 && e2.__esModule)
+        return e2;
+      var o2 = /* @__PURE__ */ Object.create(null);
+      if (n.r(o2), Object.defineProperty(o2, "default", { enumerable: true, value: e2 }), 2 & t2 && "string" != typeof e2)
+        for (var r in e2)
+          n.d(o2, r, function(t3) {
+            return e2[t3];
+          }.bind(null, r));
+      return o2;
+    }, n.n = function(e2) {
+      var t2 = e2 && e2.__esModule ? function() {
+        return e2.default;
+      } : function() {
+        return e2;
+      };
+      return n.d(t2, "a", t2), t2;
+    }, n.o = function(e2, t2) {
+      return Object.prototype.hasOwnProperty.call(e2, t2);
+    }, n.p = "", n(n.s = 184);
+  }({ 184: function(e, t) {
+    (function() {
+      (function(e2) {
+        "use strict";
+        if ("undefined" == typeof sigma)
+          throw "sigma is not declared";
+        sigma.utils.pkg("sigma.neo4j"), sigma.utils.pkg("sigma.utils"), sigma.neo4j.send = function(e3, t2, n, o2, r) {
+          var a, i2, s, u = sigma.utils.xhr();
+          if (a = e3, "object" == typeof e3 && (a = e3.url, i2 = e3.user, s = e3.password), !u)
+            throw "XMLHttpRequest not supported, cannot load the file.";
+          a += t2, u.open(n, a, true), i2 && s && u.setRequestHeader("Authorization", "Basic " + btoa(i2 + ":" + s)), u.setRequestHeader("Accept", "application/json"), u.setRequestHeader("Content-type", "application/json; charset=utf-8"), u.onreadystatechange = function() {
+            4 === u.readyState && r(JSON.parse(u.responseText));
+          }, u.send(o2);
+        }, sigma.neo4j.cypher_parse = function(e3, t2) {
+          var n, o2 = { nodes: [], edges: [] }, r = {}, a = {};
+          for (n in e3.results[0].data.forEach(function(e4) {
+            e4.graph.nodes.forEach(function(e5) {
+              var n2 = t2.node(e5);
+              n2.id in r || (r[n2.id] = n2);
+            }), e4.graph.relationships.forEach(function(e5) {
+              var n2 = t2.edge(e5);
+              n2.id in a || (a[n2.id] = n2);
+            });
+          }), r)
+            o2.nodes.push(r[n]);
+          for (n in a)
+            o2.edges.push(a[n]);
+          return o2;
+        }, sigma.neo4j.cypher = function(e3, t2, n, o2, r) {
+          var a, i2;
+          r || (r = sigma.neo4j.defaultProducers), a = JSON.stringify({ statements: [{ statement: t2, resultDataContents: ["graph"], includeStats: false }] }), i2 = function(e4) {
+            return function(t3) {
+              var o3;
+              o3 = sigma.neo4j.cypher_parse(t3, r), n instanceof sigma ? (n.graph.clear(), n.graph.read(o3)) : "object" == typeof n ? ((n = new sigma(n)).graph.read(o3), n.refresh()) : "function" == typeof n && (e4 = n, n = null), e4 && e4(n || o3);
+            };
+          }, sigma.neo4j.send(e3, "/db/data/transaction/commit", "POST", a, i2(o2));
+        }, sigma.neo4j.getLabels = function(e3, t2) {
+          sigma.neo4j.send(e3, "/db/data/labels", "GET", null, t2);
+        }, sigma.neo4j.getTypes = function(e3, t2) {
+          sigma.neo4j.send(e3, "/db/data/relationship/types", "GET", null, t2);
+        }, sigma.neo4j.defaultProducers = { node: function(e3) {
+          return { id: e3.id, label: e3.id, x: Math.random(), y: Math.random(), size: 1, color: "#666666", neo4j_labels: e3.labels, neo4j_data: e3.properties };
+        }, edge: function(e3) {
+          return { id: e3.id, label: e3.type, source: e3.startNode, target: e3.endNode, color: "#7D7C8E", neo4j_type: e3.type, neo4j_data: e3.properties };
+        } };
+      }).call(window);
+    }).call(window);
+  } });
+
+  // ../testeranto/node_modules/react-sigma/es/NeoGraphItemsProducers.js
+  function _classCallCheck11(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+  function _defineProperties8(target, props) {
+    for (var i2 = 0; i2 < props.length; i2++) {
+      var descriptor = props[i2];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor)
+        descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+  function _createClass8(Constructor, protoProps, staticProps) {
+    if (protoProps)
+      _defineProperties8(Constructor.prototype, protoProps);
+    if (staticProps)
+      _defineProperties8(Constructor, staticProps);
+    return Constructor;
+  }
+  var palette = ["#5DA5DA", "#60BD68", "#B2912F", "#F15854", "#DECF3F", "#FAA43A", "#B276B2", "#F17CB0", "#4D4D4D"];
+  var NeoGraphItemsProducers = /* @__PURE__ */ function() {
+    function NeoGraphItemsProducers2() {
+      _classCallCheck11(this, NeoGraphItemsProducers2);
+      this._currentColor = 0;
+      this._colorsMap = {};
+    }
+    _createClass8(NeoGraphItemsProducers2, [{
+      key: "node",
+      value: function node(_node) {
+        return {
+          id: _node.id,
+          label: _node.properties.name,
+          x: Math.random(),
+          y: Math.random(),
+          size: 1,
+          color: this.colorsMap(_node.labels[0]),
+          neo4j_labels: _node.labels,
+          neo4j_data: _node.properties
+        };
+      }
+    }, {
+      key: "edge",
+      value: function edge(_edge) {
+        return {
+          id: _edge.id,
+          label: _edge.type,
+          source: _edge.startNode,
+          target: _edge.endNode,
+          color: this.colorsMap(_edge.type),
+          neo4j_type: _edge.type,
+          neo4j_data: _edge.properties
+        };
+      }
+    }, {
+      key: "colorsMap",
+      value: function colorsMap(label) {
+        var color = this._colorsMap[label];
+        if (!color) {
+          color = palette[this._currentColor++ % palette.length];
+          this._colorsMap[label] = color;
+        }
+        return color;
+      }
+    }]);
+    return NeoGraphItemsProducers2;
+  }();
+  var NeoGraphItemsProducers_default = NeoGraphItemsProducers;
+
+  // ../testeranto/node_modules/react-sigma/es/NeoCypher.js
+  var import_prop_types15 = __toESM(require_prop_types());
+  function _typeof11(obj) {
+    "@babel/helpers - typeof";
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof11 = function _typeof13(obj2) {
+        return typeof obj2;
+      };
+    } else {
+      _typeof11 = function _typeof13(obj2) {
+        return obj2 && typeof Symbol === "function" && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
+      };
+    }
+    return _typeof11(obj);
+  }
+  function _classCallCheck12(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+  function _defineProperties9(target, props) {
+    for (var i2 = 0; i2 < props.length; i2++) {
+      var descriptor = props[i2];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor)
+        descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+  function _createClass9(Constructor, protoProps, staticProps) {
+    if (protoProps)
+      _defineProperties9(Constructor.prototype, protoProps);
+    if (staticProps)
+      _defineProperties9(Constructor, staticProps);
+    return Constructor;
+  }
+  function _inherits11(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function");
+    }
+    subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } });
+    if (superClass)
+      _setPrototypeOf12(subClass, superClass);
+  }
+  function _setPrototypeOf12(o2, p) {
+    _setPrototypeOf12 = Object.setPrototypeOf || function _setPrototypeOf14(o3, p2) {
+      o3.__proto__ = p2;
+      return o3;
+    };
+    return _setPrototypeOf12(o2, p);
+  }
+  function _createSuper11(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct11();
+    return function _createSuperInternal() {
+      var Super = _getPrototypeOf11(Derived), result;
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf11(this).constructor;
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
+      return _possibleConstructorReturn11(this, result);
+    };
+  }
+  function _possibleConstructorReturn11(self2, call) {
+    if (call && (_typeof11(call) === "object" || typeof call === "function")) {
+      return call;
+    }
+    return _assertThisInitialized11(self2);
+  }
+  function _assertThisInitialized11(self2) {
+    if (self2 === void 0) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+    return self2;
+  }
+  function _isNativeReflectConstruct11() {
+    if (typeof Reflect === "undefined" || !Reflect.construct)
+      return false;
+    if (Reflect.construct.sham)
+      return false;
+    if (typeof Proxy === "function")
+      return true;
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function() {
+      }));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+  function _getPrototypeOf11(o2) {
+    _getPrototypeOf11 = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf13(o3) {
+      return o3.__proto__ || Object.getPrototypeOf(o3);
+    };
+    return _getPrototypeOf11(o2);
+  }
+  function _defineProperty11(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
+    } else {
+      obj[key] = value;
+    }
+    return obj;
+  }
+  var NeoCypher = /* @__PURE__ */ function(_React$Component) {
+    _inherits11(NeoCypher2, _React$Component);
+    var _super = _createSuper11(NeoCypher2);
+    function NeoCypher2(props) {
+      var _this2;
+      _classCallCheck12(this, NeoCypher2);
+      if (!props.producers) {
+        props.producers = new NeoGraphItemsProducers_default();
+      }
+      _this2 = _super.call(this, props);
+      _defineProperty11(_assertThisInitialized11(_this2), "onLoad", function() {
+        _this2.setState({
+          loaded: true
+        });
+        if (_this2.props.sigma)
+          _this2.props.sigma.refresh();
+        if (_this2.props.onGraphLoaded)
+          return _this2.props.onGraphLoaded();
+      });
+      _this2.state = {
+        loaded: false
+      };
+      return _this2;
+    }
+    _createClass9(NeoCypher2, [{
+      key: "componentDidMount",
+      value: function componentDidMount() {
+        this._runQuery(this.props.query);
+      }
+    }, {
+      key: "componentWillUpdate",
+      value: function componentWillUpdate2(props) {
+        if (this.props.query !== props.query) {
+          this.setState({
+            loaded: false
+          });
+          this._runQuery(props.query);
+        }
+      }
+    }, {
+      key: "render",
+      value: function render() {
+        if (!this.state.loaded)
+          return null;
+        return /* @__PURE__ */ import_react42.default.createElement("div", null, embedProps(this.props.children, {
+          sigma: this.props.sigma
+        }));
+      }
+    }, {
+      key: "_runQuery",
+      value: function _runQuery(query) {
+        sigma.neo4j.cypher({
+          url: this.props.url,
+          user: this.props.user,
+          password: this.props.password
+        }, query, this.props.sigma, this.onLoad, this.props.producers);
+      }
+    }]);
+    return NeoCypher2;
+  }(import_react42.default.Component);
+  _defineProperty11(NeoCypher, "propTypes", {
+    url: import_prop_types15.default.string.isRequired,
+    user: import_prop_types15.default.string.isRequired,
+    password: import_prop_types15.default.string.isRequired,
+    query: import_prop_types15.default.string.isRequired,
+    producers: import_prop_types15.default.shape({
+      node: import_prop_types15.default.func.isRequired,
+      edge: import_prop_types15.default.func.isRequired
+    }),
+    onGraphLoaded: import_prop_types15.default.func,
+    children: import_prop_types15.default.any,
+    sigma: function(_sigma) {
+      function sigma6() {
+        return _sigma.apply(this, arguments);
+      }
+      sigma6.toString = function() {
+        return _sigma.toString();
+      };
+      return sigma6;
+    }(function() {
+      return (typeof sigma === "function" ? import_prop_types15.default.instanceOf(sigma) : import_prop_types15.default.any).apply(this, arguments);
+    })
+  });
+
+  // ../testeranto/node_modules/react-sigma/es/RandomizeNodePositions.js
+  var import_react43 = __toESM(require_react());
+  var import_prop_types16 = __toESM(require_prop_types());
+  function _typeof12(obj) {
+    "@babel/helpers - typeof";
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof12 = function _typeof13(obj2) {
+        return typeof obj2;
+      };
+    } else {
+      _typeof12 = function _typeof13(obj2) {
+        return obj2 && typeof Symbol === "function" && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
+      };
+    }
+    return _typeof12(obj);
+  }
+  function _classCallCheck13(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+  function _defineProperties10(target, props) {
+    for (var i2 = 0; i2 < props.length; i2++) {
+      var descriptor = props[i2];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor)
+        descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+  function _createClass10(Constructor, protoProps, staticProps) {
+    if (protoProps)
+      _defineProperties10(Constructor.prototype, protoProps);
+    if (staticProps)
+      _defineProperties10(Constructor, staticProps);
+    return Constructor;
+  }
+  function _inherits12(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function");
+    }
+    subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } });
+    if (superClass)
+      _setPrototypeOf13(subClass, superClass);
+  }
+  function _setPrototypeOf13(o2, p) {
+    _setPrototypeOf13 = Object.setPrototypeOf || function _setPrototypeOf14(o3, p2) {
+      o3.__proto__ = p2;
+      return o3;
+    };
+    return _setPrototypeOf13(o2, p);
+  }
+  function _createSuper12(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct12();
+    return function _createSuperInternal() {
+      var Super = _getPrototypeOf12(Derived), result;
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf12(this).constructor;
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
+      return _possibleConstructorReturn12(this, result);
+    };
+  }
+  function _possibleConstructorReturn12(self2, call) {
+    if (call && (_typeof12(call) === "object" || typeof call === "function")) {
+      return call;
+    }
+    return _assertThisInitialized12(self2);
+  }
+  function _assertThisInitialized12(self2) {
+    if (self2 === void 0) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+    return self2;
+  }
+  function _isNativeReflectConstruct12() {
+    if (typeof Reflect === "undefined" || !Reflect.construct)
+      return false;
+    if (Reflect.construct.sham)
+      return false;
+    if (typeof Proxy === "function")
+      return true;
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function() {
+      }));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+  function _getPrototypeOf12(o2) {
+    _getPrototypeOf12 = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf13(o3) {
+      return o3.__proto__ || Object.getPrototypeOf(o3);
+    };
+    return _getPrototypeOf12(o2);
+  }
+  function _defineProperty12(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
+    } else {
+      obj[key] = value;
+    }
+    return obj;
+  }
+  var RandomizeNodePositions = /* @__PURE__ */ function(_React$PureComponent) {
+    _inherits12(RandomizeNodePositions2, _React$PureComponent);
+    var _super = _createSuper12(RandomizeNodePositions2);
+    function RandomizeNodePositions2(props) {
+      var _this2;
+      _classCallCheck13(this, RandomizeNodePositions2);
+      _this2 = _super.call(this, props);
+      if (_this2.props.sigma) {
+        _this2.props.sigma.graph.nodes().forEach(function(n) {
+          n.x = Math.random();
+          n.y = Math.random();
+        });
+      }
+      if (_this2.props.sigma)
+        _this2.props.sigma.refresh();
+      return _this2;
+    }
+    _createClass10(RandomizeNodePositions2, [{
+      key: "componentDidMount",
+      value: function componentDidMount() {
+        if (this.props.sigma)
+          this.props.sigma.refresh();
+      }
+    }, {
+      key: "render",
+      value: function render() {
+        return /* @__PURE__ */ import_react43.default.createElement("div", null, embedProps(this.props.children, {
+          sigma: this.props.sigma
+        }));
+      }
+    }]);
+    return RandomizeNodePositions2;
+  }(import_react43.default.PureComponent);
+  _defineProperty12(RandomizeNodePositions, "propTypes", {
+    children: import_prop_types16.default.any,
+    sigma: function(_sigma) {
+      function sigma6() {
+        return _sigma.apply(this, arguments);
+      }
+      sigma6.toString = function() {
+        return _sigma.toString();
+      };
+      return sigma6;
+    }(function() {
+      return (typeof sigma === "function" ? import_prop_types16.default.instanceOf(sigma) : import_prop_types16.default.any).apply(this, arguments);
+    })
+  });
+  var RandomizeNodePositions_default = RandomizeNodePositions;
+
+  // ../testeranto/node_modules/react-sigma/sigma/webgl.js
+  var Sigma13 = function(t) {
+    var e = {};
+    function i2(r) {
+      if (e[r])
+        return e[r].exports;
+      var o2 = e[r] = { i: r, l: false, exports: {} };
+      return t[r].call(o2.exports, o2, o2.exports, i2), o2.l = true, o2.exports;
+    }
+    return i2.m = t, i2.c = e, i2.d = function(t2, e2, r) {
+      i2.o(t2, e2) || Object.defineProperty(t2, e2, { enumerable: true, get: r });
+    }, i2.r = function(t2) {
+      "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(t2, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(t2, "__esModule", { value: true });
+    }, i2.t = function(t2, e2) {
+      if (1 & e2 && (t2 = i2(t2)), 8 & e2)
+        return t2;
+      if (4 & e2 && "object" == typeof t2 && t2 && t2.__esModule)
+        return t2;
+      var r = /* @__PURE__ */ Object.create(null);
+      if (i2.r(r), Object.defineProperty(r, "default", { enumerable: true, value: t2 }), 2 & e2 && "string" != typeof t2)
+        for (var o2 in t2)
+          i2.d(r, o2, function(e3) {
+            return t2[e3];
+          }.bind(null, o2));
+      return r;
+    }, i2.n = function(t2) {
+      var e2 = t2 && t2.__esModule ? function() {
+        return t2.default;
+      } : function() {
+        return t2;
+      };
+      return i2.d(e2, "a", e2), e2;
+    }, i2.o = function(t2, e2) {
+      return Object.prototype.hasOwnProperty.call(t2, e2);
+    }, i2.p = "", i2(i2.s = 142);
+  }({ 142: function(t, e, i2) {
+    "use strict";
+    i2.r(e);
+    i2(143), i2(144), i2(145), i2(146), i2(147), i2(148), i2(149);
+  }, 143: function(t, e) {
+    (function() {
+      (function(t2) {
+        "use strict";
+        if ("undefined" == typeof sigma)
+          throw "sigma is not declared";
+        sigma.utils.pkg("sigma.renderers"), sigma.renderers.webgl = function(t3, e2, i2, r) {
+          if ("object" != typeof r)
+            throw "sigma.renderers.webgl: Wrong arguments.";
+          if (!(r.container instanceof HTMLElement))
+            throw "Container not found.";
+          var o2, a, s, n;
+          for (sigma.classes.dispatcher.extend(this), this.jobs = {}, Object.defineProperty(this, "conradId", { value: sigma.utils.id() }), this.graph = t3, this.camera = e2, this.contexts = {}, this.domElements = {}, this.options = r, this.container = this.options.container, this.settings = "object" == typeof r.settings && r.settings ? i2.embedObjects(r.settings) : i2, this.options.prefix = this.camera.readPrefix, Object.defineProperty(this, "nodePrograms", { value: {} }), Object.defineProperty(this, "edgePrograms", { value: {} }), Object.defineProperty(this, "nodeFloatArrays", { value: {} }), Object.defineProperty(this, "edgeFloatArrays", { value: {} }), Object.defineProperty(this, "edgeIndicesArrays", { value: {} }), this.settings(r, "batchEdgesDrawing") ? (this.initDOM("canvas", "edges", true), this.initDOM("canvas", "nodes", true)) : (this.initDOM("canvas", "scene", true), this.contexts.nodes = this.contexts.scene, this.contexts.edges = this.contexts.scene), this.initDOM("canvas", "labels"), this.initDOM("canvas", "mouse"), this.contexts.hover = this.contexts.mouse, this.captors = [], o2 = 0, a = (s = this.options.captors || [sigma.captors.mouse, sigma.captors.touch]).length; o2 < a; o2++)
+            n = "function" == typeof s[o2] ? s[o2] : sigma.captors[s[o2]], this.captors.push(new n(this.domElements.mouse, this.camera, this.settings));
+          sigma.misc.bindEvents.call(this, this.camera.prefix), sigma.misc.drawHovers.call(this, this.camera.prefix), this.resize();
+        }, sigma.renderers.webgl.prototype.process = function() {
+          var t3, e2, i2, r, o2, a, s = this.graph, n = sigma.utils.extend(n, this.options), l = this.settings(n, "defaultEdgeType"), c = this.settings(n, "defaultNodeType");
+          for (r in this.nodeFloatArrays)
+            delete this.nodeFloatArrays[r];
+          for (r in this.edgeFloatArrays)
+            delete this.edgeFloatArrays[r];
+          for (r in this.edgeIndicesArrays)
+            delete this.edgeIndicesArrays[r];
+          for (e2 = 0, i2 = (t3 = s.edges()).length; e2 < i2; e2++)
+            r = (o2 = t3[e2].type || l) && sigma.webgl.edges[o2] ? o2 : "def", this.edgeFloatArrays[r] || (this.edgeFloatArrays[r] = { edges: [] }), this.edgeFloatArrays[r].edges.push(t3[e2]);
+          for (e2 = 0, i2 = (t3 = s.nodes()).length; e2 < i2; e2++)
+            r = (o2 = t3[e2].type || c) && sigma.webgl.nodes[o2] ? o2 : "def", this.nodeFloatArrays[r] || (this.nodeFloatArrays[r] = { nodes: [] }), this.nodeFloatArrays[r].nodes.push(t3[e2]);
+          for (r in this.edgeFloatArrays) {
+            for (a = sigma.webgl.edges[r], t3 = this.edgeFloatArrays[r].edges, this.edgeFloatArrays[r].array = new Float32Array(t3.length * a.POINTS * a.ATTRIBUTES), e2 = 0, i2 = t3.length; e2 < i2; e2++)
+              t3[e2].hidden || s.nodes(t3[e2].source).hidden || s.nodes(t3[e2].target).hidden || a.addEdge(t3[e2], s.nodes(t3[e2].source), s.nodes(t3[e2].target), this.edgeFloatArrays[r].array, e2 * a.POINTS * a.ATTRIBUTES, n.prefix, this.settings);
+            "function" == typeof a.computeIndices && (this.edgeIndicesArrays[r] = a.computeIndices(this.edgeFloatArrays[r].array));
+          }
+          for (r in this.nodeFloatArrays)
+            for (a = sigma.webgl.nodes[r], t3 = this.nodeFloatArrays[r].nodes, this.nodeFloatArrays[r].array = new Float32Array(t3.length * a.POINTS * a.ATTRIBUTES), e2 = 0, i2 = t3.length; e2 < i2; e2++)
+              this.nodeFloatArrays[r].array || (this.nodeFloatArrays[r].array = new Float32Array(t3.length * a.POINTS * a.ATTRIBUTES)), t3[e2].hidden || a.addNode(t3[e2], this.nodeFloatArrays[r].array, e2 * a.POINTS * a.ATTRIBUTES, n.prefix, this.settings);
+          return this;
+        }, sigma.renderers.webgl.prototype.render = function(e2) {
+          var i2, r, o2, a, s, n, l = this, c = (this.graph, this.contexts.nodes), g = this.contexts.edges, d = this.camera.getMatrix(), u = sigma.utils.extend(e2, this.options), h = this.settings(u, "drawLabels"), m = this.settings(u, "drawEdges"), f = this.settings(u, "drawNodes");
+          for (a in this.resize(false), this.settings(u, "hideEdgesOnMove") && (this.camera.isAnimated || this.camera.isMoving) && (m = false), this.clear(), d = sigma.utils.matrices.multiply(d, sigma.utils.matrices.translation(this.width / 2, this.height / 2)), this.jobs)
+            conrad.hasJob(a) && conrad.killJob(a);
+          if (m)
+            if (this.settings(u, "batchEdgesDrawing"))
+              (function() {
+                var t3, e3, i3, r2, o3, a3, s2, n2, l2, c2;
+                i3 = "edges_" + this.conradId, c2 = this.settings(u, "webglEdgesBatchSize"), (t3 = Object.keys(this.edgeFloatArrays)).length && (e3 = 0, l2 = sigma.webgl.edges[t3[e3]], o3 = this.edgeFloatArrays[t3[e3]].array, n2 = this.edgeIndicesArrays[t3[e3]], s2 = 0, a3 = Math.min(s2 + c2 * l2.POINTS, o3.length / l2.ATTRIBUTES), r2 = function() {
+                  return this.edgePrograms[t3[e3]] || (this.edgePrograms[t3[e3]] = l2.initProgram(g)), s2 < a3 && (g.useProgram(this.edgePrograms[t3[e3]]), l2.render(g, this.edgePrograms[t3[e3]], o3, { settings: this.settings, matrix: d, width: this.width, height: this.height, ratio: this.camera.ratio, scalingRatio: this.settings(u, "webglOversamplingRatio"), start: s2, count: a3 - s2, indicesData: n2 })), a3 >= o3.length / l2.ATTRIBUTES && e3 === t3.length - 1 ? (delete this.jobs[i3], false) : (a3 >= o3.length / l2.ATTRIBUTES ? (e3++, o3 = this.edgeFloatArrays[t3[e3]].array, l2 = sigma.webgl.edges[t3[e3]], s2 = 0, a3 = Math.min(s2 + c2 * l2.POINTS, o3.length / l2.ATTRIBUTES)) : (s2 = a3, a3 = Math.min(s2 + c2 * l2.POINTS, o3.length / l2.ATTRIBUTES)), true);
+                }, this.jobs[i3] = r2, conrad.addJob(i3, r2.bind(this)));
+              }).call(this);
+            else
+              for (a in this.edgeFloatArrays)
+                n = sigma.webgl.edges[a], this.edgePrograms[a] || (this.edgePrograms[a] = n.initProgram(g)), this.edgeFloatArrays[a] && (g.useProgram(this.edgePrograms[a]), n.render(g, this.edgePrograms[a], this.edgeFloatArrays[a].array, { settings: this.settings, matrix: d, width: this.width, height: this.height, ratio: this.camera.ratio, scalingRatio: this.settings(u, "webglOversamplingRatio"), indicesData: this.edgeIndicesArrays[a] }));
+          if (f)
+            for (a in c.blendFunc(c.SRC_ALPHA, c.ONE_MINUS_SRC_ALPHA), c.enable(c.BLEND), this.nodeFloatArrays)
+              n = sigma.webgl.nodes[a], this.nodePrograms[a] || (this.nodePrograms[a] = n.initProgram(c)), this.nodeFloatArrays[a] && (c.useProgram(this.nodePrograms[a]), n.render(c, this.nodePrograms[a], this.nodeFloatArrays[a].array, { settings: this.settings, matrix: d, width: this.width, height: this.height, ratio: this.camera.ratio, scalingRatio: this.settings(u, "webglOversamplingRatio") }));
+          if (i2 = this.camera.quadtree.area(this.camera.getRectangle(this.width, this.height)), this.camera.applyView(t2, t2, { nodes: i2, edges: [], width: this.width, height: this.height }), h)
+            for (s = function(t3) {
+              return l.settings({ prefix: l.camera.prefix }, t3);
+            }, r = 0, o2 = i2.length; r < o2; r++)
+              i2[r].hidden || (sigma.canvas.labels[i2[r].type || this.settings(u, "defaultNodeType")] || sigma.canvas.labels.def)(i2[r], this.contexts.labels, s);
+          return this.dispatchEvent("render"), this;
+        }, sigma.renderers.webgl.prototype.initDOM = function(t3, e2, i2) {
+          var r = document.createElement(t3), o2 = this;
+          r.style.position = "absolute", r.setAttribute("class", "sigma-" + e2), this.domElements[e2] = r, this.container.appendChild(r), "canvas" === t3.toLowerCase() && (this.contexts[e2] = r.getContext(i2 ? "experimental-webgl" : "2d", { preserveDrawingBuffer: true }), i2 && (r.addEventListener("webglcontextlost", function(t4) {
+            t4.preventDefault();
+          }, false), r.addEventListener("webglcontextrestored", function(t4) {
+            o2.render();
+          }, false)));
+        }, sigma.renderers.webgl.prototype.resize = function(e2, i2) {
+          var r, o2 = this.width, a = this.height, s = sigma.utils.getPixelRatio();
+          if (e2 !== t2 && i2 !== t2 ? (this.width = e2, this.height = i2) : (this.width = this.container.offsetWidth, this.height = this.container.offsetHeight, e2 = this.width, i2 = this.height), o2 !== this.width || a !== this.height)
+            for (r in this.domElements)
+              this.domElements[r].style.width = e2 + "px", this.domElements[r].style.height = i2 + "px", "canvas" === this.domElements[r].tagName.toLowerCase() && (this.contexts[r] && this.contexts[r].scale ? (this.domElements[r].setAttribute("width", e2 * s + "px"), this.domElements[r].setAttribute("height", i2 * s + "px"), 1 !== s && this.contexts[r].scale(s, s)) : (this.domElements[r].setAttribute("width", e2 * this.settings("webglOversamplingRatio") + "px"), this.domElements[r].setAttribute("height", i2 * this.settings("webglOversamplingRatio") + "px")));
+          for (r in this.contexts)
+            this.contexts[r] && this.contexts[r].viewport && this.contexts[r].viewport(0, 0, this.width * this.settings("webglOversamplingRatio"), this.height * this.settings("webglOversamplingRatio"));
+          return this;
+        }, sigma.renderers.webgl.prototype.clear = function() {
+          return this.contexts.labels.clearRect(0, 0, this.width, this.height), this.contexts.nodes.clear(this.contexts.nodes.COLOR_BUFFER_BIT), this.contexts.edges.clear(this.contexts.edges.COLOR_BUFFER_BIT), this;
+        }, sigma.renderers.webgl.prototype.kill = function() {
+          for (var t3, e2; e2 = this.captors.pop(); )
+            e2.kill();
+          for (t3 in delete this.captors, this.domElements)
+            this.domElements[t3].parentNode.removeChild(this.domElements[t3]), delete this.domElements[t3], delete this.contexts[t3];
+          delete this.domElements, delete this.contexts;
+        }, sigma.utils.pkg("sigma.webgl.nodes"), sigma.utils.pkg("sigma.webgl.edges"), sigma.utils.pkg("sigma.canvas.labels");
+      }).call(this);
+    }).call(window);
+  }, 144: function(t, e) {
+    (function() {
+      !function(t2) {
+        "use strict";
+        if ("undefined" == typeof sigma)
+          throw "sigma is not declared";
+        sigma.utils.pkg("sigma.renderers");
+        var e2, i2 = !!t2.WebGLRenderingContext;
+        if (i2) {
+          e2 = document.createElement("canvas");
+          try {
+            i2 = !(!e2.getContext("webgl") && !e2.getContext("experimental-webgl"));
+          } catch (t3) {
+            i2 = false;
+          }
+        }
+        sigma.renderers.def = i2 ? sigma.renderers.webgl : sigma.renderers.canvas;
+      }(this);
+    }).call(window);
+  }, 145: function(t, e) {
+    (function() {
+      !function() {
+        "use strict";
+        sigma.utils.pkg("sigma.webgl.nodes"), sigma.webgl.nodes.def = { POINTS: 3, ATTRIBUTES: 5, addNode: function(t2, e2, i2, r, o2) {
+          var a = sigma.utils.floatColor(t2.color || o2("defaultNodeColor"));
+          e2[i2++] = t2[r + "x"], e2[i2++] = t2[r + "y"], e2[i2++] = t2[r + "size"], e2[i2++] = a, e2[i2++] = 0, e2[i2++] = t2[r + "x"], e2[i2++] = t2[r + "y"], e2[i2++] = t2[r + "size"], e2[i2++] = a, e2[i2++] = 2 * Math.PI / 3, e2[i2++] = t2[r + "x"], e2[i2++] = t2[r + "y"], e2[i2++] = t2[r + "size"], e2[i2++] = a, e2[i2++] = 4 * Math.PI / 3;
+        }, render: function(t2, e2, i2, r) {
+          var o2, a = t2.getAttribLocation(e2, "a_position"), s = t2.getAttribLocation(e2, "a_size"), n = t2.getAttribLocation(e2, "a_color"), l = t2.getAttribLocation(e2, "a_angle"), c = t2.getUniformLocation(e2, "u_resolution"), g = t2.getUniformLocation(e2, "u_matrix"), d = t2.getUniformLocation(e2, "u_ratio"), u = t2.getUniformLocation(e2, "u_scale");
+          o2 = t2.createBuffer(), t2.bindBuffer(t2.ARRAY_BUFFER, o2), t2.bufferData(t2.ARRAY_BUFFER, i2, t2.DYNAMIC_DRAW), t2.uniform2f(c, r.width, r.height), t2.uniform1f(d, 1 / Math.pow(r.ratio, r.settings("nodesPowRatio"))), t2.uniform1f(u, r.scalingRatio), t2.uniformMatrix3fv(g, false, r.matrix), t2.enableVertexAttribArray(a), t2.enableVertexAttribArray(s), t2.enableVertexAttribArray(n), t2.enableVertexAttribArray(l), t2.vertexAttribPointer(a, 2, t2.FLOAT, false, this.ATTRIBUTES * Float32Array.BYTES_PER_ELEMENT, 0), t2.vertexAttribPointer(s, 1, t2.FLOAT, false, this.ATTRIBUTES * Float32Array.BYTES_PER_ELEMENT, 8), t2.vertexAttribPointer(n, 1, t2.FLOAT, false, this.ATTRIBUTES * Float32Array.BYTES_PER_ELEMENT, 12), t2.vertexAttribPointer(l, 1, t2.FLOAT, false, this.ATTRIBUTES * Float32Array.BYTES_PER_ELEMENT, 16), t2.drawArrays(t2.TRIANGLES, r.start || 0, r.count || i2.length / this.ATTRIBUTES);
+        }, initProgram: function(t2) {
+          var e2, i2;
+          return e2 = sigma.utils.loadShader(t2, ["attribute vec2 a_position;", "attribute float a_size;", "attribute float a_color;", "attribute float a_angle;", "uniform vec2 u_resolution;", "uniform float u_ratio;", "uniform float u_scale;", "uniform mat3 u_matrix;", "varying vec4 color;", "varying vec2 center;", "varying float radius;", "void main() {", "radius = a_size * u_ratio;", "vec2 position = (u_matrix * vec3(a_position, 1)).xy;", "center = position * u_scale;", "center = vec2(center.x, u_scale * u_resolution.y - center.y);", "position = position +", "2.0 * radius * vec2(cos(a_angle), sin(a_angle));", "position = (position / u_resolution * 2.0 - 1.0) * vec2(1, -1);", "radius = radius * u_scale;", "gl_Position = vec4(position, 0, 1);", "float c = a_color;", "color.b = mod(c, 256.0); c = floor(c / 256.0);", "color.g = mod(c, 256.0); c = floor(c / 256.0);", "color.r = mod(c, 256.0); c = floor(c / 256.0); color /= 255.0;", "color.a = 1.0;", "}"].join("\n"), t2.VERTEX_SHADER), i2 = sigma.utils.loadShader(t2, ["precision mediump float;", "varying vec4 color;", "varying vec2 center;", "varying float radius;", "void main(void) {", "vec4 color0 = vec4(0.0, 0.0, 0.0, 0.0);", "vec2 m = gl_FragCoord.xy - center;", "float diff = radius - sqrt(m.x * m.x + m.y * m.y);", "if (diff > 0.0)", "gl_FragColor = color;", "else", "gl_FragColor = color0;", "}"].join("\n"), t2.FRAGMENT_SHADER), sigma.utils.loadProgram(t2, [e2, i2]);
+        } };
+      }();
+    }).call(window);
+  }, 146: function(t, e) {
+    (function() {
+      !function() {
+        "use strict";
+        sigma.utils.pkg("sigma.webgl.nodes"), sigma.webgl.nodes.fast = { POINTS: 1, ATTRIBUTES: 4, addNode: function(t2, e2, i2, r, o2) {
+          e2[i2++] = t2[r + "x"], e2[i2++] = t2[r + "y"], e2[i2++] = t2[r + "size"], e2[i2++] = sigma.utils.floatColor(t2.color || o2("defaultNodeColor"));
+        }, render: function(t2, e2, i2, r) {
+          var o2, a = t2.getAttribLocation(e2, "a_position"), s = t2.getAttribLocation(e2, "a_size"), n = t2.getAttribLocation(e2, "a_color"), l = t2.getUniformLocation(e2, "u_resolution"), c = t2.getUniformLocation(e2, "u_matrix"), g = t2.getUniformLocation(e2, "u_ratio"), d = t2.getUniformLocation(e2, "u_scale");
+          o2 = t2.createBuffer(), t2.bindBuffer(t2.ARRAY_BUFFER, o2), t2.bufferData(t2.ARRAY_BUFFER, i2, t2.DYNAMIC_DRAW), t2.uniform2f(l, r.width, r.height), t2.uniform1f(g, 1 / Math.pow(r.ratio, r.settings("nodesPowRatio"))), t2.uniform1f(d, r.scalingRatio), t2.uniformMatrix3fv(c, false, r.matrix), t2.enableVertexAttribArray(a), t2.enableVertexAttribArray(s), t2.enableVertexAttribArray(n), t2.vertexAttribPointer(a, 2, t2.FLOAT, false, this.ATTRIBUTES * Float32Array.BYTES_PER_ELEMENT, 0), t2.vertexAttribPointer(s, 1, t2.FLOAT, false, this.ATTRIBUTES * Float32Array.BYTES_PER_ELEMENT, 8), t2.vertexAttribPointer(n, 1, t2.FLOAT, false, this.ATTRIBUTES * Float32Array.BYTES_PER_ELEMENT, 12), t2.drawArrays(t2.POINTS, r.start || 0, r.count || i2.length / this.ATTRIBUTES);
+        }, initProgram: function(t2) {
+          var e2, i2;
+          return e2 = sigma.utils.loadShader(t2, ["attribute vec2 a_position;", "attribute float a_size;", "attribute float a_color;", "uniform vec2 u_resolution;", "uniform float u_ratio;", "uniform float u_scale;", "uniform mat3 u_matrix;", "varying vec4 color;", "void main() {", "gl_Position = vec4(", "((u_matrix * vec3(a_position, 1)).xy /", "u_resolution * 2.0 - 1.0) * vec2(1, -1),", "0,", "1", ");", "gl_PointSize = a_size * u_ratio * u_scale * 2.0;", "float c = a_color;", "color.b = mod(c, 256.0); c = floor(c / 256.0);", "color.g = mod(c, 256.0); c = floor(c / 256.0);", "color.r = mod(c, 256.0); c = floor(c / 256.0); color /= 255.0;", "color.a = 1.0;", "}"].join("\n"), t2.VERTEX_SHADER), i2 = sigma.utils.loadShader(t2, ["precision mediump float;", "varying vec4 color;", "void main(void) {", "float border = 0.01;", "float radius = 0.5;", "vec4 color0 = vec4(0.0, 0.0, 0.0, 0.0);", "vec2 m = gl_PointCoord - vec2(0.5, 0.5);", "float dist = radius - sqrt(m.x * m.x + m.y * m.y);", "float t = 0.0;", "if (dist > border)", "t = 1.0;", "else if (dist > 0.0)", "t = dist / border;", "gl_FragColor = mix(color0, color, t);", "}"].join("\n"), t2.FRAGMENT_SHADER), sigma.utils.loadProgram(t2, [e2, i2]);
+        } };
+      }();
+    }).call(window);
+  }, 147: function(t, e) {
+    (function() {
+      !function() {
+        "use strict";
+        sigma.utils.pkg("sigma.webgl.edges"), sigma.webgl.edges.def = { POINTS: 6, ATTRIBUTES: 7, addEdge: function(t2, e2, i2, r, o2, a, s) {
+          var n = (t2[a + "size"] || 1) / 2, l = e2[a + "x"], c = e2[a + "y"], g = i2[a + "x"], d = i2[a + "y"], u = t2.color;
+          if (!u)
+            switch (s("edgeColor")) {
+              case "source":
+                u = e2.color || s("defaultNodeColor");
+                break;
+              case "target":
+                u = i2.color || s("defaultNodeColor");
+                break;
+              default:
+                u = s("defaultEdgeColor");
+            }
+          u = sigma.utils.floatColor(u), r[o2++] = l, r[o2++] = c, r[o2++] = g, r[o2++] = d, r[o2++] = n, r[o2++] = 0, r[o2++] = u, r[o2++] = g, r[o2++] = d, r[o2++] = l, r[o2++] = c, r[o2++] = n, r[o2++] = 1, r[o2++] = u, r[o2++] = g, r[o2++] = d, r[o2++] = l, r[o2++] = c, r[o2++] = n, r[o2++] = 0, r[o2++] = u, r[o2++] = g, r[o2++] = d, r[o2++] = l, r[o2++] = c, r[o2++] = n, r[o2++] = 0, r[o2++] = u, r[o2++] = l, r[o2++] = c, r[o2++] = g, r[o2++] = d, r[o2++] = n, r[o2++] = 1, r[o2++] = u, r[o2++] = l, r[o2++] = c, r[o2++] = g, r[o2++] = d, r[o2++] = n, r[o2++] = 0, r[o2++] = u;
+        }, render: function(t2, e2, i2, r) {
+          var o2, a = t2.getAttribLocation(e2, "a_color"), s = t2.getAttribLocation(e2, "a_position1"), n = t2.getAttribLocation(e2, "a_position2"), l = t2.getAttribLocation(e2, "a_thickness"), c = t2.getAttribLocation(e2, "a_minus"), g = t2.getUniformLocation(e2, "u_resolution"), d = t2.getUniformLocation(e2, "u_matrix"), u = t2.getUniformLocation(e2, "u_matrixHalfPi"), h = t2.getUniformLocation(e2, "u_matrixHalfPiMinus"), m = t2.getUniformLocation(e2, "u_ratio"), f = t2.getUniformLocation(e2, "u_scale");
+          o2 = t2.createBuffer(), t2.bindBuffer(t2.ARRAY_BUFFER, o2), t2.bufferData(t2.ARRAY_BUFFER, i2, t2.STATIC_DRAW), t2.uniform2f(g, r.width, r.height), t2.uniform1f(m, r.ratio / Math.pow(r.ratio, r.settings("edgesPowRatio"))), t2.uniform1f(f, r.scalingRatio), t2.uniformMatrix3fv(d, false, r.matrix), t2.uniformMatrix2fv(u, false, sigma.utils.matrices.rotation(Math.PI / 2, true)), t2.uniformMatrix2fv(h, false, sigma.utils.matrices.rotation(-Math.PI / 2, true)), t2.enableVertexAttribArray(a), t2.enableVertexAttribArray(s), t2.enableVertexAttribArray(n), t2.enableVertexAttribArray(l), t2.enableVertexAttribArray(c), t2.vertexAttribPointer(s, 2, t2.FLOAT, false, this.ATTRIBUTES * Float32Array.BYTES_PER_ELEMENT, 0), t2.vertexAttribPointer(n, 2, t2.FLOAT, false, this.ATTRIBUTES * Float32Array.BYTES_PER_ELEMENT, 8), t2.vertexAttribPointer(l, 1, t2.FLOAT, false, this.ATTRIBUTES * Float32Array.BYTES_PER_ELEMENT, 16), t2.vertexAttribPointer(c, 1, t2.FLOAT, false, this.ATTRIBUTES * Float32Array.BYTES_PER_ELEMENT, 20), t2.vertexAttribPointer(a, 1, t2.FLOAT, false, this.ATTRIBUTES * Float32Array.BYTES_PER_ELEMENT, 24), t2.drawArrays(t2.TRIANGLES, r.start || 0, r.count || i2.length / this.ATTRIBUTES);
+        }, initProgram: function(t2) {
+          var e2, i2;
+          return e2 = sigma.utils.loadShader(t2, ["attribute vec2 a_position1;", "attribute vec2 a_position2;", "attribute float a_thickness;", "attribute float a_minus;", "attribute float a_color;", "uniform vec2 u_resolution;", "uniform float u_ratio;", "uniform float u_scale;", "uniform mat3 u_matrix;", "uniform mat2 u_matrixHalfPi;", "uniform mat2 u_matrixHalfPiMinus;", "varying vec4 color;", "void main() {", "vec2 position = a_thickness * u_ratio *", "normalize(a_position2 - a_position1);", "mat2 matrix = a_minus * u_matrixHalfPiMinus +", "(1.0 - a_minus) * u_matrixHalfPi;", "position = matrix * position + a_position1;", "gl_Position = vec4(", "((u_matrix * vec3(position, 1)).xy /", "u_resolution * 2.0 - 1.0) * vec2(1, -1),", "0,", "1", ");", "float c = a_color;", "color.b = mod(c, 256.0); c = floor(c / 256.0);", "color.g = mod(c, 256.0); c = floor(c / 256.0);", "color.r = mod(c, 256.0); c = floor(c / 256.0); color /= 255.0;", "color.a = 1.0;", "}"].join("\n"), t2.VERTEX_SHADER), i2 = sigma.utils.loadShader(t2, ["precision mediump float;", "varying vec4 color;", "void main(void) {", "gl_FragColor = color;", "}"].join("\n"), t2.FRAGMENT_SHADER), sigma.utils.loadProgram(t2, [e2, i2]);
+        } };
+      }();
+    }).call(window);
+  }, 148: function(t, e) {
+    (function() {
+      !function() {
+        "use strict";
+        sigma.utils.pkg("sigma.webgl.edges"), sigma.webgl.edges.fast = { POINTS: 2, ATTRIBUTES: 3, addEdge: function(t2, e2, i2, r, o2, a, s) {
+          t2[a + "size"];
+          var n = e2[a + "x"], l = e2[a + "y"], c = i2[a + "x"], g = i2[a + "y"], d = t2.color;
+          if (!d)
+            switch (s("edgeColor")) {
+              case "source":
+                d = e2.color || s("defaultNodeColor");
+                break;
+              case "target":
+                d = i2.color || s("defaultNodeColor");
+                break;
+              default:
+                d = s("defaultEdgeColor");
+            }
+          d = sigma.utils.floatColor(d), r[o2++] = n, r[o2++] = l, r[o2++] = d, r[o2++] = c, r[o2++] = g, r[o2++] = d;
+        }, render: function(t2, e2, i2, r) {
+          var o2, a = t2.getAttribLocation(e2, "a_color"), s = t2.getAttribLocation(e2, "a_position"), n = t2.getUniformLocation(e2, "u_resolution"), l = t2.getUniformLocation(e2, "u_matrix");
+          o2 = t2.createBuffer(), t2.bindBuffer(t2.ARRAY_BUFFER, o2), t2.bufferData(t2.ARRAY_BUFFER, i2, t2.DYNAMIC_DRAW), t2.uniform2f(n, r.width, r.height), t2.uniformMatrix3fv(l, false, r.matrix), t2.enableVertexAttribArray(s), t2.enableVertexAttribArray(a), t2.vertexAttribPointer(s, 2, t2.FLOAT, false, this.ATTRIBUTES * Float32Array.BYTES_PER_ELEMENT, 0), t2.vertexAttribPointer(a, 1, t2.FLOAT, false, this.ATTRIBUTES * Float32Array.BYTES_PER_ELEMENT, 8), t2.lineWidth(3), t2.drawArrays(t2.LINES, r.start || 0, r.count || i2.length / this.ATTRIBUTES);
+        }, initProgram: function(t2) {
+          var e2, i2;
+          return e2 = sigma.utils.loadShader(t2, ["attribute vec2 a_position;", "attribute float a_color;", "uniform vec2 u_resolution;", "uniform mat3 u_matrix;", "varying vec4 color;", "void main() {", "gl_Position = vec4(", "((u_matrix * vec3(a_position, 1)).xy /", "u_resolution * 2.0 - 1.0) * vec2(1, -1),", "0,", "1", ");", "float c = a_color;", "color.b = mod(c, 256.0); c = floor(c / 256.0);", "color.g = mod(c, 256.0); c = floor(c / 256.0);", "color.r = mod(c, 256.0); c = floor(c / 256.0); color /= 255.0;", "color.a = 1.0;", "}"].join("\n"), t2.VERTEX_SHADER), i2 = sigma.utils.loadShader(t2, ["precision mediump float;", "varying vec4 color;", "void main(void) {", "gl_FragColor = color;", "}"].join("\n"), t2.FRAGMENT_SHADER), sigma.utils.loadProgram(t2, [e2, i2]);
+        } };
+      }();
+    }).call(window);
+  }, 149: function(t, e) {
+    (function() {
+      !function() {
+        "use strict";
+        sigma.utils.pkg("sigma.webgl.edges"), sigma.webgl.edges.arrow = { POINTS: 9, ATTRIBUTES: 11, addEdge: function(t2, e2, i2, r, o2, a, s) {
+          var n = (t2[a + "size"] || 1) / 2, l = e2[a + "x"], c = e2[a + "y"], g = i2[a + "x"], d = i2[a + "y"], u = i2[a + "size"], h = t2.color;
+          if (!h)
+            switch (s("edgeColor")) {
+              case "source":
+                h = e2.color || s("defaultNodeColor");
+                break;
+              case "target":
+                h = i2.color || s("defaultNodeColor");
+                break;
+              default:
+                h = s("defaultEdgeColor");
+            }
+          h = sigma.utils.floatColor(h), r[o2++] = l, r[o2++] = c, r[o2++] = g, r[o2++] = d, r[o2++] = n, r[o2++] = u, r[o2++] = 0, r[o2++] = 0, r[o2++] = 0, r[o2++] = 0, r[o2++] = h, r[o2++] = g, r[o2++] = d, r[o2++] = l, r[o2++] = c, r[o2++] = n, r[o2++] = u, r[o2++] = 1, r[o2++] = 1, r[o2++] = 0, r[o2++] = 0, r[o2++] = h, r[o2++] = g, r[o2++] = d, r[o2++] = l, r[o2++] = c, r[o2++] = n, r[o2++] = u, r[o2++] = 1, r[o2++] = 0, r[o2++] = 0, r[o2++] = 0, r[o2++] = h, r[o2++] = g, r[o2++] = d, r[o2++] = l, r[o2++] = c, r[o2++] = n, r[o2++] = u, r[o2++] = 1, r[o2++] = 0, r[o2++] = 0, r[o2++] = 0, r[o2++] = h, r[o2++] = l, r[o2++] = c, r[o2++] = g, r[o2++] = d, r[o2++] = n, r[o2++] = u, r[o2++] = 0, r[o2++] = 1, r[o2++] = 0, r[o2++] = 0, r[o2++] = h, r[o2++] = l, r[o2++] = c, r[o2++] = g, r[o2++] = d, r[o2++] = n, r[o2++] = u, r[o2++] = 0, r[o2++] = 0, r[o2++] = 0, r[o2++] = 0, r[o2++] = h, r[o2++] = g, r[o2++] = d, r[o2++] = l, r[o2++] = c, r[o2++] = n, r[o2++] = u, r[o2++] = 1, r[o2++] = 0, r[o2++] = 1, r[o2++] = -1, r[o2++] = h, r[o2++] = g, r[o2++] = d, r[o2++] = l, r[o2++] = c, r[o2++] = n, r[o2++] = u, r[o2++] = 1, r[o2++] = 0, r[o2++] = 1, r[o2++] = 0, r[o2++] = h, r[o2++] = g, r[o2++] = d, r[o2++] = l, r[o2++] = c, r[o2++] = n, r[o2++] = u, r[o2++] = 1, r[o2++] = 0, r[o2++] = 1, r[o2++] = 1, r[o2++] = h;
+        }, render: function(t2, e2, i2, r) {
+          var o2, a = t2.getAttribLocation(e2, "a_pos1"), s = t2.getAttribLocation(e2, "a_pos2"), n = t2.getAttribLocation(e2, "a_thickness"), l = t2.getAttribLocation(e2, "a_tSize"), c = t2.getAttribLocation(e2, "a_delay"), g = t2.getAttribLocation(e2, "a_minus"), d = t2.getAttribLocation(e2, "a_head"), u = t2.getAttribLocation(e2, "a_headPosition"), h = t2.getAttribLocation(e2, "a_color"), m = t2.getUniformLocation(e2, "u_resolution"), f = t2.getUniformLocation(e2, "u_matrix"), A = t2.getUniformLocation(e2, "u_matrixHalfPi"), _ = t2.getUniformLocation(e2, "u_matrixHalfPiMinus"), E = t2.getUniformLocation(e2, "u_ratio"), T = t2.getUniformLocation(e2, "u_nodeRatio"), b = t2.getUniformLocation(e2, "u_arrowHead"), y = t2.getUniformLocation(e2, "u_scale");
+          o2 = t2.createBuffer(), t2.bindBuffer(t2.ARRAY_BUFFER, o2), t2.bufferData(t2.ARRAY_BUFFER, i2, t2.STATIC_DRAW), t2.uniform2f(m, r.width, r.height), t2.uniform1f(E, r.ratio / Math.pow(r.ratio, r.settings("edgesPowRatio"))), t2.uniform1f(T, Math.pow(r.ratio, r.settings("nodesPowRatio")) / r.ratio), t2.uniform1f(b, 5), t2.uniform1f(y, r.scalingRatio), t2.uniformMatrix3fv(f, false, r.matrix), t2.uniformMatrix2fv(A, false, sigma.utils.matrices.rotation(Math.PI / 2, true)), t2.uniformMatrix2fv(_, false, sigma.utils.matrices.rotation(-Math.PI / 2, true)), t2.enableVertexAttribArray(a), t2.enableVertexAttribArray(s), t2.enableVertexAttribArray(n), t2.enableVertexAttribArray(l), t2.enableVertexAttribArray(c), t2.enableVertexAttribArray(g), t2.enableVertexAttribArray(d), t2.enableVertexAttribArray(u), t2.enableVertexAttribArray(h), t2.vertexAttribPointer(a, 2, t2.FLOAT, false, this.ATTRIBUTES * Float32Array.BYTES_PER_ELEMENT, 0), t2.vertexAttribPointer(s, 2, t2.FLOAT, false, this.ATTRIBUTES * Float32Array.BYTES_PER_ELEMENT, 8), t2.vertexAttribPointer(n, 1, t2.FLOAT, false, this.ATTRIBUTES * Float32Array.BYTES_PER_ELEMENT, 16), t2.vertexAttribPointer(l, 1, t2.FLOAT, false, this.ATTRIBUTES * Float32Array.BYTES_PER_ELEMENT, 20), t2.vertexAttribPointer(c, 1, t2.FLOAT, false, this.ATTRIBUTES * Float32Array.BYTES_PER_ELEMENT, 24), t2.vertexAttribPointer(g, 1, t2.FLOAT, false, this.ATTRIBUTES * Float32Array.BYTES_PER_ELEMENT, 28), t2.vertexAttribPointer(d, 1, t2.FLOAT, false, this.ATTRIBUTES * Float32Array.BYTES_PER_ELEMENT, 32), t2.vertexAttribPointer(u, 1, t2.FLOAT, false, this.ATTRIBUTES * Float32Array.BYTES_PER_ELEMENT, 36), t2.vertexAttribPointer(h, 1, t2.FLOAT, false, this.ATTRIBUTES * Float32Array.BYTES_PER_ELEMENT, 40), t2.drawArrays(t2.TRIANGLES, r.start || 0, r.count || i2.length / this.ATTRIBUTES);
+        }, initProgram: function(t2) {
+          var e2, i2;
+          return e2 = sigma.utils.loadShader(t2, ["attribute vec2 a_pos1;", "attribute vec2 a_pos2;", "attribute float a_thickness;", "attribute float a_tSize;", "attribute float a_delay;", "attribute float a_minus;", "attribute float a_head;", "attribute float a_headPosition;", "attribute float a_color;", "uniform vec2 u_resolution;", "uniform float u_ratio;", "uniform float u_nodeRatio;", "uniform float u_arrowHead;", "uniform float u_scale;", "uniform mat3 u_matrix;", "uniform mat2 u_matrixHalfPi;", "uniform mat2 u_matrixHalfPiMinus;", "varying vec4 color;", "void main() {", "vec2 pos = normalize(a_pos2 - a_pos1);", "mat2 matrix = (1.0 - a_head) *", "(", "a_minus * u_matrixHalfPiMinus +", "(1.0 - a_minus) * u_matrixHalfPi", ") + a_head * (", "a_headPosition * u_matrixHalfPiMinus * 0.6 +", "(a_headPosition * a_headPosition - 1.0) * mat2(1.0)", ");", "pos = a_pos1 + (", "(1.0 - a_head) * a_thickness * u_ratio * matrix * pos +", "a_head * u_arrowHead * a_thickness * u_ratio * matrix * pos +", "a_delay * pos * (", "a_tSize / u_nodeRatio +", "u_arrowHead * a_thickness * u_ratio", ")", ");", "gl_Position = vec4(", "((u_matrix * vec3(pos, 1)).xy /", "u_resolution * 2.0 - 1.0) * vec2(1, -1),", "0,", "1", ");", "float c = a_color;", "color.b = mod(c, 256.0); c = floor(c / 256.0);", "color.g = mod(c, 256.0); c = floor(c / 256.0);", "color.r = mod(c, 256.0); c = floor(c / 256.0); color /= 255.0;", "color.a = 1.0;", "}"].join("\n"), t2.VERTEX_SHADER), i2 = sigma.utils.loadShader(t2, ["precision mediump float;", "varying vec4 color;", "void main(void) {", "gl_FragColor = color;", "}"].join("\n"), t2.FRAGMENT_SHADER), sigma.utils.loadProgram(t2, [e2, i2]);
+        } };
+      }();
+    }).call(window);
+  } });
+
+  // ../testeranto/node_modules/react-sigma/sigma/svg.js
+  var Sigma14 = function(e) {
+    var t = {};
+    function s(i2) {
+      if (t[i2])
+        return t[i2].exports;
+      var n = t[i2] = { i: i2, l: false, exports: {} };
+      return e[i2].call(n.exports, n, n.exports, s), n.l = true, n.exports;
+    }
+    return s.m = e, s.c = t, s.d = function(e2, t2, i2) {
+      s.o(e2, t2) || Object.defineProperty(e2, t2, { enumerable: true, get: i2 });
+    }, s.r = function(e2) {
+      "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e2, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(e2, "__esModule", { value: true });
+    }, s.t = function(e2, t2) {
+      if (1 & t2 && (e2 = s(e2)), 8 & t2)
+        return e2;
+      if (4 & t2 && "object" == typeof e2 && e2 && e2.__esModule)
+        return e2;
+      var i2 = /* @__PURE__ */ Object.create(null);
+      if (s.r(i2), Object.defineProperty(i2, "default", { enumerable: true, value: e2 }), 2 & t2 && "string" != typeof e2)
+        for (var n in e2)
+          s.d(i2, n, function(t3) {
+            return e2[t3];
+          }.bind(null, n));
+      return i2;
+    }, s.n = function(e2) {
+      var t2 = e2 && e2.__esModule ? function() {
+        return e2.default;
+      } : function() {
+        return e2;
+      };
+      return s.d(t2, "a", t2), t2;
+    }, s.o = function(e2, t2) {
+      return Object.prototype.hasOwnProperty.call(e2, t2);
+    }, s.p = "", s(s.s = 150);
+  }({ 150: function(e, t, s) {
+    "use strict";
+    s.r(t);
+    s(151), s(152), s(153), s(154), s(155), s(156), s(157);
+  }, 151: function(e, t) {
+    (function() {
+      (function(e2) {
+        "use strict";
+        if ("undefined" == typeof sigma)
+          throw "sigma is not declared";
+        if ("undefined" == typeof conrad)
+          throw "conrad is not declared";
+        sigma.utils.pkg("sigma.renderers"), sigma.renderers.svg = function(e3, t2, s, i2) {
+          if ("object" != typeof i2)
+            throw "sigma.renderers.svg: Wrong arguments.";
+          if (!(i2.container instanceof HTMLElement))
+            throw "Container not found.";
+          var n, r, l, o2, a = this;
+          for (sigma.classes.dispatcher.extend(this), this.graph = e3, this.camera = t2, this.domElements = { graph: null, groups: {}, nodes: {}, edges: {}, labels: {}, hovers: {} }, this.measurementCanvas = null, this.options = i2, this.container = this.options.container, this.settings = "object" == typeof i2.settings && i2.settings ? s.embedObjects(i2.settings) : s, this.settings("freeStyle", !!this.options.freeStyle), this.settings("xmlns", "http://www.w3.org/2000/svg"), this.nodesOnScreen = [], this.edgesOnScreen = [], this.options.prefix = "renderer" + sigma.utils.id() + ":", this.initDOM("svg"), this.captors = [], n = 0, r = (l = this.options.captors || [sigma.captors.mouse, sigma.captors.touch]).length; n < r; n++)
+            o2 = "function" == typeof l[n] ? l[n] : sigma.captors[l[n]], this.captors.push(new o2(this.domElements.graph, this.camera, this.settings));
+          window.addEventListener("resize", function() {
+            a.resize();
+          }), sigma.misc.bindDOMEvents.call(this, this.domElements.graph), this.bindHovers(this.options.prefix), this.resize(false);
+        }, sigma.renderers.svg.prototype.render = function(t2) {
+          t2 = t2 || {};
+          var s, i2, n, r, l, o2, a, d, u, h = {}, c = this.graph, g = this.graph.nodes, m = (this.options.prefix, this.settings(t2, "drawEdges")), f = this.settings(t2, "drawNodes"), p = (this.settings(t2, "drawLabels"), this.settings.embedObjects(t2, { prefix: this.options.prefix, forceLabels: this.options.forceLabels }));
+          for (this.settings(t2, "hideEdgesOnMove") && (this.camera.isAnimated || this.camera.isMoving) && (m = false), this.camera.applyView(e2, this.options.prefix, { width: this.width, height: this.height }), this.hideDOMElements(this.domElements.nodes), this.hideDOMElements(this.domElements.edges), this.hideDOMElements(this.domElements.labels), this.edgesOnScreen = [], this.nodesOnScreen = this.camera.quadtree.area(this.camera.getRectangle(this.width, this.height)), i2 = 0, r = (s = this.nodesOnScreen).length; i2 < r; i2++)
+            h[s[i2].id] = s[i2];
+          for (i2 = 0, r = (s = c.edges()).length; i2 < r; i2++)
+            !h[(l = s[i2]).source] && !h[l.target] || l.hidden || g(l.source).hidden || g(l.target).hidden || this.edgesOnScreen.push(l);
+          if (d = sigma.svg.nodes, u = sigma.svg.labels, f)
+            for (i2 = 0, r = (s = this.nodesOnScreen).length; i2 < r; i2++)
+              s[i2].hidden || this.domElements.nodes[s[i2].id] || (n = (d[s[i2].type] || d.def).create(s[i2], p), this.domElements.nodes[s[i2].id] = n, this.domElements.groups.nodes.appendChild(n), n = (u[s[i2].type] || u.def).create(s[i2], p), this.domElements.labels[s[i2].id] = n, this.domElements.groups.labels.appendChild(n));
+          if (f)
+            for (i2 = 0, r = (s = this.nodesOnScreen).length; i2 < r; i2++)
+              s[i2].hidden || ((d[s[i2].type] || d.def).update(s[i2], this.domElements.nodes[s[i2].id], p), (u[s[i2].type] || u.def).update(s[i2], this.domElements.labels[s[i2].id], p));
+          if (d = sigma.svg.edges, m)
+            for (i2 = 0, r = (s = this.edgesOnScreen).length; i2 < r; i2++)
+              this.domElements.edges[s[i2].id] || (o2 = g(s[i2].source), a = g(s[i2].target), n = (d[s[i2].type] || d.def).create(s[i2], o2, a, p), this.domElements.edges[s[i2].id] = n, this.domElements.groups.edges.appendChild(n));
+          if (m)
+            for (i2 = 0, r = (s = this.edgesOnScreen).length; i2 < r; i2++)
+              o2 = g(s[i2].source), a = g(s[i2].target), (d[s[i2].type] || d.def).update(s[i2], this.domElements.edges[s[i2].id], o2, a, p);
+          return this.dispatchEvent("render"), this;
+        }, sigma.renderers.svg.prototype.initDOM = function(e3) {
+          var t2, s, i2, n = document.createElementNS(this.settings("xmlns"), e3), r = this.settings("classPrefix");
+          n.style.position = "absolute", n.setAttribute("class", r + "-svg"), n.setAttribute("xmlns", this.settings("xmlns")), n.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink"), n.setAttribute("version", "1.1");
+          var l = document.createElement("canvas");
+          l.setAttribute("class", r + "-measurement-canvas"), this.domElements.graph = this.container.appendChild(n);
+          var o2 = ["edges", "nodes", "labels", "hovers"];
+          for (i2 = 0, s = o2.length; i2 < s; i2++)
+            (t2 = document.createElementNS(this.settings("xmlns"), "g")).setAttributeNS(null, "id", r + "-group-" + o2[i2]), t2.setAttributeNS(null, "class", r + "-group"), this.domElements.groups[o2[i2]] = this.domElements.graph.appendChild(t2);
+          this.container.appendChild(l), this.measurementCanvas = l.getContext("2d");
+        }, sigma.renderers.svg.prototype.hideDOMElements = function(e3) {
+          var t2, s;
+          for (s in e3)
+            t2 = e3[s], sigma.svg.utils.hide(t2);
+          return this;
+        }, sigma.renderers.svg.prototype.bindHovers = function(e3) {
+          var t2, s = sigma.svg.hovers, i2 = this;
+          this.bind("overNode", function(n) {
+            var r = n.data.node, l = i2.settings.embedObjects({ prefix: e3 });
+            if (l("enableHovering")) {
+              var o2 = (s[r.type] || s.def).create(r, i2.domElements.nodes[r.id], i2.measurementCanvas, l);
+              i2.domElements.hovers[r.id] = o2, i2.domElements.groups.hovers.appendChild(o2), t2 = r;
+            }
+          }), this.bind("outNode", function(s2) {
+            var n = s2.data.node;
+            i2.settings.embedObjects({ prefix: e3 })("enableHovering") && (i2.domElements.groups.hovers.removeChild(i2.domElements.hovers[n.id]), t2 = null, delete i2.domElements.hovers[n.id], i2.domElements.groups.nodes.appendChild(i2.domElements.nodes[n.id]));
+          }), this.bind("render", function() {
+            if (t2) {
+              var n = i2.settings.embedObjects({ prefix: e3 });
+              i2.domElements.groups.hovers.removeChild(i2.domElements.hovers[t2.id]), delete i2.domElements.hovers[t2.id];
+              var r = (s[t2.type] || s.def).create(t2, i2.domElements.nodes[t2.id], i2.measurementCanvas, n);
+              i2.domElements.hovers[t2.id] = r, i2.domElements.groups.hovers.appendChild(r);
+            }
+          });
+        }, sigma.renderers.svg.prototype.resize = function(t2, s) {
+          var i2 = this.width, n = this.height;
+          return t2 !== e2 && s !== e2 ? (this.width = t2, this.height = s) : (this.width = this.container.offsetWidth, this.height = this.container.offsetHeight, t2 = this.width, s = this.height), i2 === this.width && n === this.height || (this.domElements.graph.style.width = t2 + "px", this.domElements.graph.style.height = s + "px", "svg" === this.domElements.graph.tagName.toLowerCase() && (this.domElements.graph.setAttribute("width", 1 * t2), this.domElements.graph.setAttribute("height", 1 * s))), this;
+        }, sigma.utils.pkg("sigma.svg.nodes"), sigma.utils.pkg("sigma.svg.edges"), sigma.utils.pkg("sigma.svg.labels");
+      }).call(this);
+    }).call(window);
+  }, 152: function(e, t) {
+    (function() {
+      !function() {
+        "use strict";
+        sigma.utils.pkg("sigma.svg.utils"), sigma.svg.utils = { show: function(e2) {
+          return e2.style.display = "", this;
+        }, hide: function(e2) {
+          return e2.style.display = "none", this;
+        } };
+      }();
+    }).call(window);
+  }, 153: function(e, t) {
+    (function() {
+      !function() {
+        "use strict";
+        sigma.utils.pkg("sigma.svg.nodes"), sigma.svg.nodes.def = { create: function(e2, t2) {
+          t2("prefix");
+          var s = document.createElementNS(t2("xmlns"), "circle");
+          return s.setAttributeNS(null, "data-node-id", e2.id), s.setAttributeNS(null, "class", t2("classPrefix") + "-node"), s.setAttributeNS(null, "fill", e2.color || t2("defaultNodeColor")), s;
+        }, update: function(e2, t2, s) {
+          var i2 = s("prefix") || "";
+          return t2.setAttributeNS(null, "cx", e2[i2 + "x"]), t2.setAttributeNS(null, "cy", e2[i2 + "y"]), t2.setAttributeNS(null, "r", e2[i2 + "size"]), s("freeStyle") || t2.setAttributeNS(null, "fill", e2.color || s("defaultNodeColor")), t2.style.display = "", this;
+        } };
+      }();
+    }).call(window);
+  }, 154: function(e, t) {
+    (function() {
+      !function() {
+        "use strict";
+        sigma.utils.pkg("sigma.svg.edges"), sigma.svg.edges.def = { create: function(e2, t2, s, i2) {
+          var n = e2.color, r = (i2("prefix"), i2("edgeColor")), l = i2("defaultNodeColor"), o2 = i2("defaultEdgeColor");
+          if (!n)
+            switch (r) {
+              case "source":
+                n = t2.color || l;
+                break;
+              case "target":
+                n = s.color || l;
+                break;
+              default:
+                n = o2;
+            }
+          var a = document.createElementNS(i2("xmlns"), "line");
+          return a.setAttributeNS(null, "data-edge-id", e2.id), a.setAttributeNS(null, "class", i2("classPrefix") + "-edge"), a.setAttributeNS(null, "stroke", n), a;
+        }, update: function(e2, t2, s, i2, n) {
+          var r = n("prefix") || "";
+          return t2.setAttributeNS(null, "stroke-width", e2[r + "size"] || 1), t2.setAttributeNS(null, "x1", s[r + "x"]), t2.setAttributeNS(null, "y1", s[r + "y"]), t2.setAttributeNS(null, "x2", i2[r + "x"]), t2.setAttributeNS(null, "y2", i2[r + "y"]), t2.style.display = "", this;
+        } };
+      }();
+    }).call(window);
+  }, 155: function(e, t) {
+    (function() {
+      !function() {
+        "use strict";
+        sigma.utils.pkg("sigma.svg.edges"), sigma.svg.edges.curve = { create: function(e2, t2, s, i2) {
+          var n = e2.color, r = (i2("prefix"), i2("edgeColor")), l = i2("defaultNodeColor"), o2 = i2("defaultEdgeColor");
+          if (!n)
+            switch (r) {
+              case "source":
+                n = t2.color || l;
+                break;
+              case "target":
+                n = s.color || l;
+                break;
+              default:
+                n = o2;
+            }
+          var a = document.createElementNS(i2("xmlns"), "path");
+          return a.setAttributeNS(null, "data-edge-id", e2.id), a.setAttributeNS(null, "class", i2("classPrefix") + "-edge"), a.setAttributeNS(null, "stroke", n), a;
+        }, update: function(e2, t2, s, i2, n) {
+          var r = n("prefix") || "";
+          t2.setAttributeNS(null, "stroke-width", e2[r + "size"] || 1);
+          var l = (s[r + "x"] + i2[r + "x"]) / 2 + (i2[r + "y"] - s[r + "y"]) / 4, o2 = (s[r + "y"] + i2[r + "y"]) / 2 + (s[r + "x"] - i2[r + "x"]) / 4, a = "M" + s[r + "x"] + "," + s[r + "y"] + " Q" + l + "," + o2 + " " + i2[r + "x"] + "," + i2[r + "y"];
+          return t2.setAttributeNS(null, "d", a), t2.setAttributeNS(null, "fill", "none"), t2.style.display = "", this;
+        } };
+      }();
+    }).call(window);
+  }, 156: function(e, t) {
+    (function() {
+      (function(e2) {
+        "use strict";
+        if ("undefined" == typeof sigma)
+          throw "sigma is not declared";
+        sigma.utils.pkg("sigma.svg.labels"), sigma.svg.labels.def = { create: function(e3, t2) {
+          var s = e3[(t2("prefix") || "") + "size"], i2 = document.createElementNS(t2("xmlns"), "text"), n = "fixed" === t2("labelSize") ? t2("defaultLabelSize") : t2("labelSizeRatio") * s, r = "node" === t2("labelColor") ? e3.color || t2("defaultNodeColor") : t2("defaultLabelColor");
+          return i2.setAttributeNS(null, "data-label-target", e3.id), i2.setAttributeNS(null, "class", t2("classPrefix") + "-label"), i2.setAttributeNS(null, "font-size", n), i2.setAttributeNS(null, "font-family", t2("font")), i2.setAttributeNS(null, "fill", r), i2.innerHTML = e3.label, i2.textContent = e3.label, i2;
+        }, update: function(e3, t2, s) {
+          var i2 = s("prefix") || "", n = e3[i2 + "size"], r = "fixed" === s("labelSize") ? s("defaultLabelSize") : s("labelSizeRatio") * n;
+          if ((s("forceLabels") || !(n < s("labelThreshold"))) && "string" == typeof e3.label)
+            return t2.setAttributeNS(null, "x", Math.round(e3[i2 + "x"] + n + 3)), t2.setAttributeNS(null, "y", Math.round(e3[i2 + "y"] + r / 3)), t2.style.display = "", this;
+        } };
+      }).call(this);
+    }).call(window);
+  }, 157: function(e, t) {
+    (function() {
+      (function(e2) {
+        "use strict";
+        if ("undefined" == typeof sigma)
+          throw "sigma is not declared";
+        sigma.utils.pkg("sigma.svg.hovers"), sigma.svg.hovers.def = { create: function(e3, t2, s, i2) {
+          i2("hoverFontStyle") || i2("fontStyle");
+          var n, r, l, o2 = i2("prefix") || "", a = e3[o2 + "size"], d = "fixed" === i2("labelSize") ? i2("defaultLabelSize") : i2("labelSizeRatio") * a, u = "node" === i2("labelHoverColor") ? e3.color || i2("defaultNodeColor") : i2("defaultLabelHoverColor"), h = document.createElementNS(i2("xmlns"), "g"), c = document.createElementNS(i2("xmlns"), "rect"), g = document.createElementNS(i2("xmlns"), "circle"), m = document.createElementNS(i2("xmlns"), "text");
+          return h.setAttributeNS(null, "class", i2("classPrefix") + "-hover"), h.setAttributeNS(null, "data-node-id", e3.id), "string" == typeof e3.label && (m.innerHTML = e3.label, m.textContent = e3.label, m.setAttributeNS(null, "class", i2("classPrefix") + "-hover-label"), m.setAttributeNS(null, "font-size", d), m.setAttributeNS(null, "font-family", i2("font")), m.setAttributeNS(null, "fill", u), m.setAttributeNS(null, "x", Math.round(e3[o2 + "x"] + a + 3)), m.setAttributeNS(null, "y", Math.round(e3[o2 + "y"] + d / 3)), Math.round(e3[o2 + "x"] - d / 2 - 2), Math.round(e3[o2 + "y"] - d / 2 - 2), n = Math.round(s.measureText(e3.label).width + d / 2 + a + 9), r = Math.round(d + 4), l = Math.round(d / 2 + 2), g.setAttributeNS(null, "class", i2("classPrefix") + "-hover-area"), g.setAttributeNS(null, "fill", "#fff"), g.setAttributeNS(null, "cx", e3[o2 + "x"]), g.setAttributeNS(null, "cy", e3[o2 + "y"]), g.setAttributeNS(null, "r", l), c.setAttributeNS(null, "class", i2("classPrefix") + "-hover-area"), c.setAttributeNS(null, "fill", "#fff"), c.setAttributeNS(null, "x", e3[o2 + "x"] + l / 4), c.setAttributeNS(null, "y", e3[o2 + "y"] - l), c.setAttributeNS(null, "width", n), c.setAttributeNS(null, "height", r)), h.appendChild(g), h.appendChild(c), h.appendChild(m), h.appendChild(t2), h;
+        } };
+      }).call(this);
+    }).call(window);
+  } });
 
   // ../testeranto/dist/module/Features.js
   var import_graphology = __toESM(require_graphology_umd_min(), 1);
@@ -25534,41 +35607,414 @@
   };
 
   // ../testeranto/dist/module/Report.js
+  var graphToIGraphData = (g) => {
+    return {
+      nodes: g.nodes().map((n) => {
+        return {
+          id: n,
+          label: n
+        };
+      }),
+      edges: g.mapEdges((id, attributes, source, target) => {
+        return {
+          id,
+          label: id,
+          source,
+          target
+        };
+      })
+    };
+  };
   document.addEventListener("DOMContentLoaded", function() {
     const elem = document.getElementById("root");
     if (elem) {
-      import_client.default.createRoot(elem).render(import_react.default.createElement(Report, {}));
+      import_client.default.createRoot(elem).render(import_react44.default.createElement(Report, {}));
     }
   });
   var Report = () => {
-    const [tests, setTests] = (0, import_react.useState)({ tests: [] });
-    const [features, setFeatures] = (0, import_react.useState)({
-      features: new TesterantoFeatures({}, {
-        undirected: [],
-        directed: [],
-        dags: []
-      })
-    });
-    (0, import_react.useEffect)(() => {
+    const [tests, setTests] = (0, import_react44.useState)([]);
+    const [features, setFeatures] = (0, import_react44.useState)(new TesterantoFeatures({}, {
+      undirected: [],
+      directed: [],
+      dags: []
+    }));
+    (0, import_react44.useEffect)(() => {
       const importTests = async () => {
-        const module = await import("tests.test.js");
-        setTests(module.default);
+        const module2 = await import("tests.test.js");
+        setTests(module2.default);
       };
       importTests();
     }, []);
-    (0, import_react.useEffect)(() => {
+    (0, import_react44.useEffect)(() => {
       const importFeatures = async () => {
-        const module = await import("features.test.js");
-        setFeatures(module.default);
+        const module2 = await import("features.test.js");
+        setFeatures(module2.default);
       };
       importFeatures();
     }, []);
-    return import_react.default.createElement(
+    return import_react44.default.createElement(
       "div",
       null,
-      import_react.default.createElement("pre", null, JSON.stringify(features, null, 2)),
-      import_react.default.createElement("pre", null, JSON.stringify(tests, null, 2)),
-      import_react.default.createElement("div", null, "This is my functional component!")
+      import_react44.default.createElement("style", null, `
+pre, code, p {
+  max-width: 30rem;
+}
+footer {
+  background-color: lightgray;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
+          `),
+      features && tests && import_react44.default.createElement(
+        Tabs_default2,
+        { defaultActiveKey: "home" },
+        import_react44.default.createElement(
+          Tab_default,
+          { eventKey: "home", title: "config" },
+          import_react44.default.createElement("pre", null, JSON.stringify(features, null, 2)),
+          import_react44.default.createElement("pre", null, JSON.stringify(tests, null, 2))
+        ),
+        import_react44.default.createElement(
+          Tab_default,
+          { eventKey: "features", title: "features" },
+          import_react44.default.createElement(
+            Tab_default.Container,
+            { id: "left-tabs-example5", defaultActiveKey: "feature-0" },
+            import_react44.default.createElement(
+              Row_default,
+              null,
+              import_react44.default.createElement(
+                Col_default,
+                { sm: 2 },
+                import_react44.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, Object.keys(features.features).map((featureKey, ndx) => import_react44.default.createElement(
+                  Nav_default2.Item,
+                  { key: ndx },
+                  import_react44.default.createElement(Nav_default2.Link, { eventKey: `feature-${ndx}` }, featureKey)
+                )))
+              ),
+              import_react44.default.createElement(
+                Col_default,
+                { sm: 6 },
+                import_react44.default.createElement(Tab_default.Content, null, Object.keys(features.features).map((featureKey, ndx) => {
+                  const feature = features[featureKey];
+                  return import_react44.default.createElement(
+                    Tab_default.Pane,
+                    { eventKey: `feature-${ndx}`, key: ndx },
+                    import_react44.default.createElement("pre", null, JSON.stringify(feature, null, 2))
+                  );
+                }))
+              ),
+              import_react44.default.createElement(
+                Col_default,
+                { sm: 4 },
+                import_react44.default.createElement(
+                  Tabs_default2,
+                  { defaultActiveKey: "feature.networks" },
+                  import_react44.default.createElement(
+                    Tab_default,
+                    { eventKey: "feature.networks", title: "networks" },
+                    import_react44.default.createElement(
+                      Tabs_default2,
+                      { defaultActiveKey: "dag" },
+                      import_react44.default.createElement(
+                        Tab_default,
+                        { eventKey: "dag", title: "DAG" },
+                        import_react44.default.createElement(
+                          Tab_default.Content,
+                          null,
+                          import_react44.default.createElement("pre", null, JSON.stringify(features.graphs.dags, null, 2))
+                        )
+                      ),
+                      import_react44.default.createElement(
+                        Tab_default,
+                        { eventKey: "directed", title: "Directed" },
+                        import_react44.default.createElement(
+                          Tab_default.Content,
+                          null,
+                          import_react44.default.createElement("pre", null, JSON.stringify(features.graphs.directed, null, 2))
+                        )
+                      ),
+                      import_react44.default.createElement(
+                        Tab_default,
+                        { eventKey: "undirected", title: "Undirected" },
+                        import_react44.default.createElement(
+                          Tab_default.Content,
+                          null,
+                          import_react44.default.createElement("pre", null, JSON.stringify(features.graphs.undirected, null, 2))
+                        )
+                      )
+                    )
+                  ),
+                  import_react44.default.createElement(
+                    Tab_default,
+                    { eventKey: "feature.tests", title: "tests" },
+                    import_react44.default.createElement("pre", { id: "theProps" }, JSON.stringify(tests, null, 2))
+                  )
+                )
+              )
+            )
+          )
+        ),
+        import_react44.default.createElement(
+          Tab_default,
+          { eventKey: "networks", title: "networks" },
+          import_react44.default.createElement(
+            Tab_default.Container,
+            { id: "left-tabs-example88", defaultActiveKey: `dag` },
+            import_react44.default.createElement(
+              Row_default,
+              null,
+              import_react44.default.createElement(
+                Tabs_default2,
+                { defaultActiveKey: "dag" },
+                import_react44.default.createElement(
+                  Tab_default,
+                  { eventKey: "dag", title: "DAG" },
+                  import_react44.default.createElement(
+                    Tab_default.Content,
+                    null,
+                    import_react44.default.createElement(
+                      Row_default,
+                      null,
+                      import_react44.default.createElement(
+                        Col_default,
+                        { sm: 2 },
+                        import_react44.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, features.graphs.dags.map((g, ndx2) => import_react44.default.createElement(
+                          Nav_default2.Item,
+                          { key: ndx2 },
+                          import_react44.default.createElement(Nav_default2.Link, { eventKey: `networks-dags-${ndx2}` }, g.name)
+                        )))
+                      ),
+                      import_react44.default.createElement(
+                        Col_default,
+                        { sm: 6 },
+                        import_react44.default.createElement(Tab_default.Content, null, features.graphs.dags[0] && import_react44.default.createElement(
+                          import_react44.default.Fragment,
+                          null,
+                          import_react44.default.createElement(
+                            Sigma_default,
+                            { graph: graphToIGraphData(features.graphs.dags[0].graph), settings: { drawEdges: true, clone: false } },
+                            import_react44.default.createElement(RelativeSize_default, { initialSize: 25 }),
+                            import_react44.default.createElement(RandomizeNodePositions_default, null)
+                          ),
+                          import_react44.default.createElement("pre", null, JSON.stringify(features.graphs.dags[0].graph, null, 2))
+                        ))
+                      ),
+                      import_react44.default.createElement(
+                        Col_default,
+                        { sm: 4 },
+                        import_react44.default.createElement(
+                          Tabs_default2,
+                          { defaultActiveKey: "networks.features" },
+                          import_react44.default.createElement(
+                            Tab_default,
+                            { eventKey: "networks.features", title: "features" },
+                            import_react44.default.createElement("pre", { id: "theProps" }, JSON.stringify(features, null, 2))
+                          ),
+                          import_react44.default.createElement(
+                            Tab_default,
+                            { eventKey: "feature.tests", title: "tests" },
+                            import_react44.default.createElement("pre", { id: "theProps" }, JSON.stringify(tests, null, 2))
+                          )
+                        )
+                      )
+                    )
+                  )
+                ),
+                import_react44.default.createElement(
+                  Tab_default,
+                  { eventKey: "directed", title: "Directed" },
+                  import_react44.default.createElement(
+                    Tab_default.Content,
+                    null,
+                    import_react44.default.createElement(
+                      Row_default,
+                      null,
+                      import_react44.default.createElement(
+                        Col_default,
+                        { sm: 2 },
+                        import_react44.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, features.graphs.directed.map((g, ndx2) => import_react44.default.createElement(
+                          Nav_default2.Item,
+                          { key: ndx2 },
+                          import_react44.default.createElement(Nav_default2.Link, { eventKey: `networks-directed-${ndx2}` }, g.name)
+                        )))
+                      ),
+                      import_react44.default.createElement(
+                        Col_default,
+                        { sm: 6 },
+                        import_react44.default.createElement(Tab_default.Content, null, features.graphs.directed[0] && import_react44.default.createElement(
+                          import_react44.default.Fragment,
+                          null,
+                          import_react44.default.createElement(
+                            Sigma_default,
+                            { graph: graphToIGraphData(features.graphs.directed[0].graph), settings: { drawEdges: true, clone: false } },
+                            import_react44.default.createElement(RelativeSize_default, { initialSize: 25 }),
+                            import_react44.default.createElement(RandomizeNodePositions_default, null)
+                          ),
+                          import_react44.default.createElement("pre", null, JSON.stringify(features.graphs.directed[0].graph, null, 2))
+                        ))
+                      ),
+                      import_react44.default.createElement(
+                        Col_default,
+                        { sm: 4 },
+                        import_react44.default.createElement(
+                          Tabs_default2,
+                          { defaultActiveKey: "networks.features" },
+                          import_react44.default.createElement(
+                            Tab_default,
+                            { eventKey: "networks.features", title: "features" },
+                            import_react44.default.createElement("pre", { id: "theProps" }, JSON.stringify(features, null, 2))
+                          ),
+                          import_react44.default.createElement(
+                            Tab_default,
+                            { eventKey: "feature.tests", title: "tests" },
+                            import_react44.default.createElement("pre", { id: "theProps" }, JSON.stringify(tests, null, 2))
+                          )
+                        )
+                      )
+                    )
+                  )
+                ),
+                import_react44.default.createElement(
+                  Tab_default,
+                  { eventKey: "undirected", title: "Undirected" },
+                  import_react44.default.createElement(
+                    Tab_default.Content,
+                    null,
+                    import_react44.default.createElement(
+                      Row_default,
+                      null,
+                      import_react44.default.createElement(
+                        Col_default,
+                        { sm: 2 },
+                        import_react44.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, features.graphs.undirected.map((g, ndx2) => import_react44.default.createElement(
+                          Nav_default2.Item,
+                          { key: ndx2 },
+                          import_react44.default.createElement(Nav_default2.Link, { eventKey: `networks-undirected-${ndx2}` }, g.name)
+                        )))
+                      ),
+                      import_react44.default.createElement(
+                        Col_default,
+                        { sm: 6 },
+                        import_react44.default.createElement(Tab_default.Content, null, features.graphs.undirected[0] && import_react44.default.createElement(
+                          import_react44.default.Fragment,
+                          null,
+                          import_react44.default.createElement(
+                            Sigma_default,
+                            { graph: graphToIGraphData(features.graphs.undirected[0].graph), settings: { drawEdges: true, clone: false } },
+                            import_react44.default.createElement(RelativeSize_default, { initialSize: 25 }),
+                            import_react44.default.createElement(RandomizeNodePositions_default, null)
+                          ),
+                          import_react44.default.createElement("pre", null, JSON.stringify(features.graphs.undirected[0].graph, null, 2))
+                        ))
+                      ),
+                      import_react44.default.createElement(
+                        Col_default,
+                        { sm: 4 },
+                        import_react44.default.createElement(
+                          Tabs_default2,
+                          { defaultActiveKey: "networks.features" },
+                          import_react44.default.createElement(
+                            Tab_default,
+                            { eventKey: "networks.features", title: "features" },
+                            import_react44.default.createElement("pre", { id: "theProps" }, JSON.stringify(features, null, 2))
+                          ),
+                          import_react44.default.createElement(
+                            Tab_default,
+                            { eventKey: "feature.tests", title: "tests" },
+                            import_react44.default.createElement("pre", { id: "theProps" }, JSON.stringify(tests, null, 2))
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        ),
+        import_react44.default.createElement(
+          Tab_default,
+          { eventKey: "results", title: "tests" },
+          import_react44.default.createElement(
+            Tab_default.Container,
+            { id: "left-tabs-example5", defaultActiveKey: "feature-0" },
+            import_react44.default.createElement(
+              Row_default,
+              null,
+              import_react44.default.createElement(Col_default, { sm: 2 }),
+              import_react44.default.createElement(
+                Col_default,
+                { sm: 6 },
+                import_react44.default.createElement(Tab_default.Content, null, tests.map((t, ndx) => {
+                  return import_react44.default.createElement(
+                    Tab_default.Pane,
+                    { eventKey: `feature-${ndx}`, key: ndx },
+                    import_react44.default.createElement("pre", null, JSON.stringify(t, null, 2))
+                  );
+                }))
+              ),
+              import_react44.default.createElement(
+                Col_default,
+                { sm: 4 },
+                import_react44.default.createElement(
+                  Tabs_default2,
+                  { defaultActiveKey: "feature.networks" },
+                  import_react44.default.createElement(
+                    Tab_default,
+                    { eventKey: "feature.networks", title: "networks" },
+                    import_react44.default.createElement(
+                      Tabs_default2,
+                      { defaultActiveKey: "dag" },
+                      import_react44.default.createElement(
+                        Tab_default,
+                        { eventKey: "dag", title: "DAG" },
+                        import_react44.default.createElement(
+                          Tab_default.Content,
+                          null,
+                          import_react44.default.createElement("pre", null, JSON.stringify(features.graphs.dags, null, 2))
+                        )
+                      ),
+                      import_react44.default.createElement(
+                        Tab_default,
+                        { eventKey: "directed", title: "Directed" },
+                        import_react44.default.createElement(
+                          Tab_default.Content,
+                          null,
+                          import_react44.default.createElement("pre", null, JSON.stringify(features.graphs.directed, null, 2))
+                        )
+                      ),
+                      import_react44.default.createElement(
+                        Tab_default,
+                        { eventKey: "undirected", title: "Undirected" },
+                        import_react44.default.createElement(
+                          Tab_default.Content,
+                          null,
+                          import_react44.default.createElement("pre", null, JSON.stringify(features.graphs.undirected, null, 2))
+                        )
+                      )
+                    )
+                  ),
+                  import_react44.default.createElement(
+                    Tab_default,
+                    { eventKey: "tests.features", title: "features" },
+                    import_react44.default.createElement("pre", { id: "theProps" }, JSON.stringify(features, null, 2))
+                  )
+                )
+              )
+            )
+          )
+        )
+      ),
+      import_react44.default.createElement(
+        "footer",
+        null,
+        "made with \u2764\uFE0F and ",
+        import_react44.default.createElement("a", { href: "https://adamwong246.github.io/testeranto/" }, "testeranto ")
+      )
     );
   };
 })();
@@ -25619,4 +36065,39 @@ react-dom/cjs/react-dom.development.js:
    * @internal
    * @license Modernizr 3.0.0pre (Custom Build) | MIT
    *)
+
+classnames/index.js:
+  (*!
+  	Copyright (c) 2018 Jed Watson.
+  	Licensed under the MIT License (MIT), see
+  	http://jedwatson.github.io/classnames
+  *)
+
+react/cjs/react-jsx-runtime.development.js:
+  (**
+   * @license React
+   * react-jsx-runtime.development.js
+   *
+   * Copyright (c) Facebook, Inc. and its affiliates.
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE file in the root directory of this source tree.
+   *)
+
+react-is/cjs/react-is.development.js:
+  (** @license React v16.13.1
+   * react-is.development.js
+   *
+   * Copyright (c) Facebook, Inc. and its affiliates.
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE file in the root directory of this source tree.
+   *)
+
+object-assign/index.js:
+  (*
+  object-assign
+  (c) Sindre Sorhus
+  @license MIT
+  *)
 */
