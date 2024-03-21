@@ -25,8 +25,8 @@ export class BaseSuite {
     async run(input, testResourceConfiguration, artifactory, tLog) {
         this.testResourceConfiguration = testResourceConfiguration;
         const subject = await this.setup(input, artifactory("-1"));
-        tLog("\nSuite:", this.name, testResourceConfiguration);
-        tLog("subject:", subject);
+        tLog("\nSuite:", this.name);
+        // tLog("subject:", subject);
         for (const k of Object.keys(this.givens)) {
             const giver = this.givens[k];
             try {
@@ -69,18 +69,18 @@ export class BaseGiven {
             name: this.name,
             whens: this.whens.map((w) => w.toObj()),
             thens: this.thens.map((t) => t.toObj()),
-            errors: this.error,
+            error: this.error ? [this.error, this.error.stack] : null,
             features: this.features,
         };
     }
     async afterEach(store, key, artifactory) {
-        return;
+        return store;
     }
     async give(subject, key, testResourceConfiguration, tester, artifactory, tLog) {
         tLog(`\n Given: ${this.name}`);
         try {
             this.store = await this.givenThat(subject, testResourceConfiguration, artifactory);
-            tLog(`\n Given this.store`);
+            // tLog(`\n Given this.store`, this.store);
             for (const whenStep of this.whens) {
                 await whenStep.test(this.store, testResourceConfiguration, tLog);
             }
@@ -91,6 +91,7 @@ export class BaseGiven {
         }
         catch (e) {
             this.error = e;
+            tLog(e);
             tLog("\u0007"); // bell
             // throw e;
         }
@@ -233,9 +234,7 @@ class TesterantoLevelZero {
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 class TesterantoLevelOne {
-    constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResourceRequirement, 
-    // nameKey: string,
-    logWriter) {
+    constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResourceRequirement, logWriter) {
         const classySuites = Object.entries(testImplementation.Suites).reduce((a, [key]) => {
             a[key] = (somestring, givens, checks) => {
                 return new suiteKlasser.prototype.constructor(somestring, givens, checks);
@@ -297,9 +296,15 @@ class TesterantoLevelOne {
                     const suiteDone = await runner(testResourceConfiguration, tLog);
                     const resultsFilePath = (`${testResourceConfiguration.fs}/results.json`);
                     logWriter.writeFileSync(resultsFilePath, JSON.stringify(suiteDone.toObj(), null, 2));
+                    // logWriter.writeFileSync(
+                    //   `${testResourceConfiguration.fs}/results2.json`,
+                    //   JSON.stringify(suiteDone.givens, null, 2)
+                    // );
                     access.close();
-                    const numberOfFailures = Object.keys(suiteDone.givens).filter((k) => suiteDone.givens[k].error).length;
-                    console.log(`suiteDone.givens`, suiteDone.givens);
+                    const numberOfFailures = Object.keys(suiteDone.givens).filter((k) => {
+                        // console.log(`suiteDone.givens[k].error`, suiteDone.givens[k].error);
+                        return suiteDone.givens[k].error;
+                    }).length;
                     console.log(`exiting gracefully with ${numberOfFailures} failures.`);
                 },
             };
@@ -309,12 +314,10 @@ class TesterantoLevelOne {
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////
 export default class TesterantoLevelTwo extends TesterantoLevelOne {
-    constructor(input, testSpecification, testImplementation, testInterface, 
-    // nameKey: string,
-    testResourceRequirement = defaultTestResourceRequirement, assertioner, beforeEach, afterEach, afterAll, butThen, andWhen, actionHandler, logWriter) {
+    constructor(input, testSpecification, testImplementation, testInterface, testResourceRequirement = defaultTestResourceRequirement, assertioner, beforeEach, afterEach, afterAll, butThen, andWhen, actionHandler, logWriter) {
         super(testImplementation, testSpecification, input, class extends BaseSuite {
             async setup(s, artifactory) {
-                return (testInterface.beforeAll || (async (input, artificer) => input))(s, artifactory);
+                return (testInterface.beforeAll || (async (input, artificer) => input))(s, artifactory, this.testResourceConfiguration);
             }
             test(t) {
                 return assertioner(t);

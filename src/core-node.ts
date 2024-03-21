@@ -97,7 +97,10 @@ export default async <
         process.send({
           type: "testeranto:hola",
           data: {
-            testResourceRequirement,
+            requirement: {
+              ...testResourceRequirement,
+              name: partialTestResource.name
+            }
           },
         });
 

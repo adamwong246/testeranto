@@ -1,5 +1,12 @@
 const defaultTestResource: ITTestResourceConfiguration = { name: "", fs: ".", ports: [] };
 
+export type IImplementer<IImplementation> = {
+  name: string;
+  fs: string;
+  ports: number[];
+};
+
+
 export type ITTestResourceConfiguration = {
   name: string;
   fs: string;
@@ -211,8 +218,8 @@ export abstract class BaseSuite<
 
     const subject = await this.setup(input, artifactory("-1"));
 
-    tLog("\nSuite:", this.name, testResourceConfiguration);
-    tLog("subject:", subject);
+    tLog("\nSuite:", this.name);
+    // tLog("subject:", subject);
 
     for (const k of Object.keys(this.givens)) {
       const giver = this.givens[k];
@@ -289,7 +296,7 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
       name: this.name,
       whens: this.whens.map((w) => w.toObj()),
       thens: this.thens.map((t) => t.toObj()),
-      errors: this.error,
+      error: this.error ? [this.error, this.error.stack] : null,
       features: this.features,
     };
   }
@@ -305,7 +312,7 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
     key: string,
     artifactory: ITestArtifactory
   ): Promise<unknown> {
-    return;
+    return store;
   }
 
   async give(
@@ -325,9 +332,8 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
         artifactory
       );
 
-      tLog(`\n Given this.store`);
+      // tLog(`\n Given this.store`, this.store);
       for (const whenStep of this.whens) {
-
         await whenStep.test(this.store, testResourceConfiguration, tLog);
       }
       for (const thenStep of this.thens) {
@@ -340,6 +346,7 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
       }
     } catch (e) {
       this.error = e;
+      tLog(e);
       tLog("\u0007"); // bell
       // throw e;
     } finally {
@@ -1013,12 +1020,19 @@ abstract class TesterantoLevelOne<
             resultsFilePath,
             JSON.stringify(suiteDone.toObj(), null, 2)
           );
+          // logWriter.writeFileSync(
+          //   `${testResourceConfiguration.fs}/results2.json`,
+          //   JSON.stringify(suiteDone.givens, null, 2)
+          // );
           access.close();
 
           const numberOfFailures = Object.keys(suiteDone.givens).filter(
-            (k) => suiteDone.givens[k].error
+            (k) => {
+              // console.log(`suiteDone.givens[k].error`, suiteDone.givens[k].error);
+              return suiteDone.givens[k].error
+            }
           ).length;
-          console.log(`suiteDone.givens`, suiteDone.givens);
+
           console.log(`exiting gracefully with ${numberOfFailures} failures.`);
         },
       };
@@ -1070,7 +1084,13 @@ export default class TesterantoLevelTwo<TestShape extends ITTestShape,
         key: string,
         artificer: ITestArtificer
       ) => Promise<unknown>;
-      beforeAll?: (input: Input, artificer: ITestArtificer) => Promise<Subject>;
+
+      beforeAll?: (
+        input: Input,
+        artificer: ITestArtificer,
+        testResource: ITTestResourceConfiguration
+      ) => Promise<Subject>;
+
       beforeEach?: (
         subject: Subject,
         initialValues,
@@ -1119,7 +1139,14 @@ export default class TesterantoLevelTwo<TestShape extends ITTestShape,
         TestShape
       > {
         async setup(s: Input, artifactory): Promise<Subject> {
-          return (testInterface.beforeAll || (async (input: Input, artificer: ITestArtificer) => input as any))(s, artifactory);
+          return (testInterface.beforeAll || (async (
+            input: Input,
+            artificer: ITestArtificer,
+          ) => input as any))(
+            s,
+            artifactory,
+            this.testResourceConfiguration
+          );
         }
         test(t: ThenShape): unknown {
           return assertioner(t);

@@ -1,12 +1,8 @@
 import { defaultTestResourceRequirement, } from "./core";
 import TesterantoLevelTwo from "./core";
 const webSocket = new WebSocket("ws://localhost:8080");
-export default async (input, testSpecification, testImplementation, testInterface, 
-// nameKey: string,
-testResourceRequirement = defaultTestResourceRequirement) => {
-    const mrt = new TesterantoLevelTwo(input, testSpecification, testImplementation, testInterface, 
-    // nameKey,
-    testResourceRequirement, testInterface.assertioner || (async (t) => t), testInterface.beforeEach ||
+export default async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = defaultTestResourceRequirement) => {
+    const mrt = new TesterantoLevelTwo(input, testSpecification, testImplementation, testInterface, testResourceRequirement, testInterface.assertioner || (async (t) => t), testInterface.beforeEach ||
         async function (subject, initialValues, testResource) {
             return subject;
         }, testInterface.afterEach || (async (s) => s), testInterface.afterAll || ((store) => undefined), testInterface.butThen || (async (a) => a), testInterface.andWhen, testInterface.actionHandler ||

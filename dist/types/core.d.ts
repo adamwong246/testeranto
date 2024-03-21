@@ -1,3 +1,8 @@
+export declare type IImplementer<IImplementation> = {
+    name: string;
+    fs: string;
+    ports: number[];
+};
 export declare type ITTestResourceConfiguration = {
     name: string;
     fs: string;
@@ -106,7 +111,7 @@ export declare abstract class BaseSuite<IInput, ISubject, IStore, ISelection, IT
                 name: string;
                 error: boolean;
             }[];
-            errors: Error;
+            error: (string | Error | undefined)[] | null;
             features: string[];
         }[];
         fails: BaseGiven<ISubject, IStore, ISelection, IThenShape>[];
@@ -136,7 +141,7 @@ export declare abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape
             name: string;
             error: boolean;
         }[];
-        errors: Error;
+        error: (string | Error | undefined)[] | null;
         features: string[];
     };
     abstract givenThat(subject: ISubject, testResourceConfiguration: any, artifactory: ITestArtifactory): Promise<IStore>;
@@ -201,7 +206,7 @@ export default class TesterantoLevelTwo<TestShape extends ITTestShape, InitialSt
         assertioner?: (t: ThenShape) => any;
         afterAll?: (store: Store, artificer: ITestArtificer) => any;
         afterEach?: (store: Store, key: string, artificer: ITestArtificer) => Promise<unknown>;
-        beforeAll?: (input: Input, artificer: ITestArtificer) => Promise<Subject>;
+        beforeAll?: (input: Input, artificer: ITestArtificer, testResource: ITTestResourceConfiguration) => Promise<Subject>;
         beforeEach?: (subject: Subject, initialValues: any, testResource: ITTestResourceConfiguration, artificer: ITestArtificer) => Promise<Store>;
     }, testResourceRequirement: ITTestResourceRequest | undefined, assertioner: (t: ThenShape) => any, beforeEach: (subject: Subject, initialValues: any, testResource: ITTestResourceConfiguration, artificer: ITestArtificer) => Promise<Store>, afterEach: (store: Store, key: string, artificer: ITestArtificer) => Promise<unknown>, afterAll: (store: Store, artificer: ITestArtificer) => any, butThen: (s: Store, bt: (storeState: Selection) => ThenShape, testResource: ITTestResourceConfiguration) => any, andWhen: (store: Store, actioner: any, testResource: ITTestResourceConfiguration) => Promise<Selection>, actionHandler: (b: (...any: any[]) => any) => any, logWriter: ILogWriter);
 }

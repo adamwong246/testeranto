@@ -1,14 +1,72 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import Graph from "graphology";
+import { Sigma, RandomizeNodePositions, RelativeSize } from 'react-sigma';
 
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
 import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
 import Row from 'react-bootstrap/Row';
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import type { IBaseConfig } from "./IBaseConfig";
+import { ITestTypes } from "./Project";
+
+type IGraphData = {
+  nodes: { id: string, label: string }[],
+  edges: { id: string, source: string, target: string, label: string }[]
+}
+
+const graphToIGraphData: (g: Graph) => IGraphData = (g) => {
+  return {
+    nodes: g.nodes().map((n) => {
+      return {
+        id: n,
+        label: n
+      }
+    }),
+    edges: g.mapEdges((id, attributes, source, target) => {
+      return {
+        id,
+        label: id,
+        source,
+        target,
+      }
+    })
+  }
+}
+
+// type ITree = Record<string, string | ITree>
+
+// const Tree = (props: { tests: ITestTypes[], base?: "" }) => {
+//   const tree = {};
+
+//   props.tests.forEach((test) => {
+//     const parts = test[0].split("/");
+//     let node = tree;
+
+//     for (let i = 0; i < parts.length; i++) {
+//       const part = parts[i];
+//       if (!node[part]) {
+//         node[part] = {};
+//       }
+
+//       node = node[part];
+//     }
+//   });
+
+
+//   return <ul>
+//     {
+//       Array.from(fileset).map((f, n) =>
+//         <li key={n}>
+//           {f}
+//         </li>
+//       )
+//     }
+//   </ul>;
+// }
 
 export class Report extends React.Component<
   { config: IBaseConfig }, { tests: Record<string, { logs, results }> }> {
@@ -22,7 +80,7 @@ export class Report extends React.Component<
 
   componentDidMount() {
     this.props.config.tests.map((fPath2, fndx) => {
-      const fPath = this.props.config.outdir + '/' + fPath2;
+      const fPath = this.props.config.outdir + '/' + fPath2[0];
 
       console.log("fPath", fPath);
 
@@ -46,35 +104,34 @@ export class Report extends React.Component<
   }
 
   render() {
-
-
-
     return (
       <div>
         <style>
           {`
-pre, core, p {
+pre, code, p {
   max-width: 30rem;
+}
+footer {
+  background-color: lightgray;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  position: fixed;
+  bottom: 0;
+  right: 0;
 }
           `}
         </style>
 
-        {/* <pre id="theProps">{JSON.stringify(this.props)}</pre>
-        <pre id="theState">{JSON.stringify(this.state)}</pre>
-        <p>count: {this.state.count} times</p> */}
-
         < Tabs defaultActiveKey="home" >
 
-
           <Tab eventKey="home" title="config">
-            <pre id="theProps">{JSON.stringify(this.state, null, 2)}</pre>
-            {/* <pre id="theProps">{JSON.stringify(this.props.config, null, 2)}</pre> */}
+            <pre id="theProps">{JSON.stringify(this.props, null, 2)}</pre>
           </Tab>
 
           <Tab eventKey="features" title="features">
             <Tab.Container id="left-tabs-example5" defaultActiveKey="feature-0">
               <Row>
-                <Col sm={3}>
+                <Col sm={2}>
                   <Nav variant="pills" className="flex-column">
                     {Object.keys(this.props.config.features.features).map((featureKey, ndx) => <Nav.Item key={ndx}>
                       <Nav.Link eventKey={`feature-${ndx}`}>
@@ -83,190 +140,260 @@ pre, core, p {
                     </Nav.Item>)}
                   </Nav>
                 </Col>
-                <Col sm={9}>
-                  {/* <Tab.Content>
-                    {data.features.features.map((feature, ndx) => <Tab.Pane eventKey={`feature-${ndx}`} key={ndx}>
-                      <p>{feature.name}</p>
-
-
-                      <Tab.Container id="left-tabs-example5" defaultActiveKey="relations-0">
-                        <Row>
-                          <Col sm={3}>
-                            <Nav variant="pills" className="flex-column">
-                              {feature.inNetworks.map((summary, ndx2) => <Nav.Item key={ndx2}>
-                                <Nav.Link eventKey={`relations-${ndx2}`}>
-                                  {summary.network}
-                                </Nav.Link>
-                              </Nav.Item>)}
-                            </Nav>
-                          </Col>
-                          <Col sm={9}>
-                            <Tab.Content>
-                              {feature.inNetworks.map((summary, ndx2) => <Tab.Pane eventKey={`relations-${ndx2}`} key={ndx2}>
-                                <pre>{
-                                  JSON.stringify(summary.neighbors, null, 2)
-                                }</pre>
-                              </Tab.Pane>)}
-                            </Tab.Content>
-                          </Col>
-                        </Row>
-                      </Tab.Container>
-
-
-
-                    </Tab.Pane>)}
-                  </Tab.Content> */}
-
-
-                </Col>
-              </Row>
-            </Tab.Container>
-          </Tab>
-
-
-
-          <Tab eventKey="networks" title="networks">
-            <Tab.Container id="left-tabs-example88" defaultActiveKey={`networks-dags`}>
-              <Row>
-                <Col sm={3}>
-                  <Nav variant="pills" className="flex-column">
-                    <Nav.Link eventKey={`networks-dags`}>
-                      DAG
-                    </Nav.Link>
-                    <Nav.Link eventKey={`networks-directed`}>
-                      Directed (not acyclic)
-                    </Nav.Link>
-                    <Nav.Link eventKey={`networks-undirected`}>
-                      Undirected
-                    </Nav.Link>
-                  </Nav>
-                </Col>
-                <Col sm={9}>
+                <Col sm={6}>
                   <Tab.Content>
-                    <Tab.Pane eventKey={`networks-dags`} >
-                      <Tab.Container defaultActiveKey={`networks-dags-0`}>
-                        <Row>
-                          <Col sm={3}>
-                            <Nav variant="pills" className="flex-column">
-                              {this.props.config.features.graphs.dags.map((g, ndx2) => <Nav.Item key={ndx2}>
-                                <Nav.Link eventKey={`networks-dags-${ndx2}`}>
-                                  {g.name}
-                                </Nav.Link>
-                              </Nav.Item>)}
-                            </Nav>
-                          </Col>
-                          <Col sm={9}>
-                            <Tab.Content>
-                              <pre>{JSON.stringify(this.props.config.features.graphs.dags[0].graph, null, 2)}</pre>
-
-                            </Tab.Content>
-                          </Col>
-                        </Row>
-                      </Tab.Container>
-                    </Tab.Pane>
-                    <Tab.Pane eventKey={`networks-directed`} >
-                      <Tab.Container defaultActiveKey={`networks-directed-0`}>
-                        <Row>
-                          <Col sm={3}>
-                            <Nav variant="pills" className="flex-column">
-                              {this.props.config.features.graphs.directed.map((g, ndx2) => <Nav.Item key={ndx2}>
-                                <Nav.Link eventKey={`networks-directed-${ndx2}`}>
-                                  {g.name}
-                                </Nav.Link>
-                              </Nav.Item>)}
-                            </Nav>
-                          </Col>
-                          <Col sm={9}>
-                            <Tab.Content>
-                              <pre>{JSON.stringify(this.props.config.features.graphs.directed[0].graph, null, 2)}</pre>
-                            </Tab.Content>
-                          </Col>
-                        </Row>
-                      </Tab.Container>
-                    </Tab.Pane>
-                    <Tab.Pane eventKey={`networks-undirected`} >
-                      <Tab.Container defaultActiveKey={`networks-undirected-0`}>
-                        <Row>
-                          <Col sm={3}>
-                            <Nav variant="pills" className="flex-column">
-                              {this.props.config.features.graphs.undirected.map((g: any, ndx2) => <Nav.Item key={ndx2}>
-                                <Nav.Link eventKey={`networks-undirected-${ndx2}`}>
-                                  {g.name}
-                                </Nav.Link>
-                              </Nav.Item>)}
-                            </Nav>
-                          </Col>
-                          <Col sm={9}>
-                            <Tab.Content>
-                              <pre>{JSON.stringify(this.props.config.features.graphs.undirected[0].graph, null, 2)}</pre>
-                            </Tab.Content>
-                          </Col>
-                        </Row>
-                      </Tab.Container>
-                    </Tab.Pane>
-                  </Tab.Content>
-                </Col>
-              </Row>
-            </Tab.Container>
-          </Tab>
-
-
-          <Tab eventKey="results" title="tests">
-            <Tab.Container id="left-tabs-example" defaultActiveKey="first">
-              <Row>
-                <Col sm={6} xl={3}>
-                  <Nav variant="pills" className="flex-column">
-                    {Object.keys(this.state.tests).sort().map((suiteKey, ndx) => <Nav.Item key={ndx}>
-                      <Nav.Link eventKey={`suite-${ndx}`}>
-
-                        {(this.state.tests[suiteKey].results.fails.length > 0 ?
-                          `❌` :
-                          `✅`)
-                        } {suiteKey.split(`/`).filter((word) => word !== `.`).slice(2).join('/')}
-
-                      </Nav.Link>
-                    </Nav.Item>)}
-                  </Nav>
-                </Col>
-                <Col sm={6} xl={9}>
-                  <Tab.Content>
-                    {Object.keys(this.state.tests).sort().map((suiteKey, ndx) => <Tab.Pane eventKey={`suite-${ndx}`} key={ndx}>
-
-                      {
-                        (() => {
-                          return (
-                            <Tab.Container id="left-tabs-example2" defaultActiveKey={`given-0`}>
-                              < Tabs defaultActiveKey="test-drilldown" >
-                                <Tab eventKey="test-results" title="results">
-                                  <pre>{
-                                    JSON.stringify(this.state.tests[suiteKey].results, null, 2)
-                                  }</pre>
-                                </Tab>
-                                <Tab eventKey="test-logs" title="logs">
-                                  <pre>{this.state.tests[suiteKey].logs}</pre>
-                                </Tab>
-                              </Tabs>
-                            </Tab.Container>
-                          )
-                        })()
-                      }
-
-                    </Tab.Pane>
+                    {Object.keys(this.props.config.features.features).map((featureKey, ndx) => {
+                      const feature = this.props.config.features.features[featureKey];
+                      return (
+                        <Tab.Pane eventKey={`feature-${ndx}`} key={ndx}>
+                          <pre>{JSON.stringify(feature, null, 2)}</pre>
+                        </Tab.Pane>
+                      )
+                    }
                     )}
                   </Tab.Content>
                 </Col>
+
+                <Col sm={4}>
+                  < Tabs defaultActiveKey="feature.networks" >
+                    <Tab eventKey="feature.networks" title="networks">
+                      < Tabs defaultActiveKey="dag" >
+
+                        <Tab eventKey="dag" title="DAG">
+                          <Tab.Content>
+                            <pre>{JSON.stringify(this.props.config.features.graphs.dags, null, 2)}</pre>
+                          </Tab.Content>
+                        </Tab>
+
+                        <Tab eventKey="directed" title="Directed">
+                          <Tab.Content>
+                            <pre>{JSON.stringify(this.props.config.features.graphs.directed, null, 2)}</pre>
+                          </Tab.Content>
+                        </Tab>
+
+                        <Tab eventKey="undirected" title="Undirected">
+                          <Tab.Content>
+                            <pre>{JSON.stringify(this.props.config.features.graphs.undirected, null, 2)}</pre>
+                          </Tab.Content>
+                        </Tab>
+
+                      </Tabs>
+                    </Tab>
+
+                    <Tab eventKey="feature.tests" title="tests">
+                      <pre id="theProps">{JSON.stringify(this.props, null, 2)}</pre>
+                    </Tab>
+                  </Tabs>
+                </Col>
+
               </Row>
             </Tab.Container>
           </Tab>
 
+          <Tab eventKey="networks" title="networks">
+            <Tab.Container id="left-tabs-example88" defaultActiveKey={`dag`}>
+              <Row>
+                < Tabs defaultActiveKey="dag" >
+
+                  <Tab eventKey="dag" title="DAG">
+                    <Tab.Content>
+
+                      <Row>
+                        <Col sm={2}>
+                          <Nav variant="pills" className="flex-column">
+                            {this.props.config.features.graphs.dags.map((g, ndx2) => <Nav.Item key={ndx2}>
+                              <Nav.Link eventKey={`networks-dags-${ndx2}`}>
+                                {g.name}
+                              </Nav.Link>
+                            </Nav.Item>
+                            )}
+                          </Nav>
+                        </Col>
+                        <Col sm={6}>
+                          <Tab.Content>
+
+                            <Sigma graph={graphToIGraphData(this.props.config.features.graphs.dags[0].graph)} settings={{ drawEdges: true, clone: false }}>
+                              <RelativeSize initialSize={25} />
+                              <RandomizeNodePositions />
+                            </Sigma>
+
+                            <pre>{JSON.stringify(this.props.config.features.graphs.dags[0].graph, null, 2)}</pre>
+                          </Tab.Content>
+                        </Col>
+
+                        <Col sm={4}>
+                          < Tabs defaultActiveKey="networks.features" >
+                            <Tab eventKey="networks.features" title="features">
+                              <pre id="theProps">{JSON.stringify(this.props.config.features, null, 2)}</pre>
+                            </Tab>
+
+                            <Tab eventKey="feature.tests" title="tests">
+                              <pre id="theProps">{JSON.stringify(this.props.config.tests, null, 2)}</pre>
+                            </Tab>
+                          </Tabs>
+                        </Col>
+
+                      </Row>
+
+                    </Tab.Content>
+                  </Tab>
+
+                  <Tab eventKey="directed" title="Directed">
+                    <Tab.Content>
+
+                      <Row>
+                        <Col sm={2}>
+                          <Nav variant="pills" className="flex-column">
+                            {this.props.config.features.graphs.directed.map((g, ndx2) => <Nav.Item key={ndx2}>
+                              <Nav.Link eventKey={`networks-directed-${ndx2}`}>
+                                {g.name}
+                              </Nav.Link>
+                            </Nav.Item>
+                            )}
+                          </Nav>
+                        </Col>
+                        <Col sm={6}>
+                          <Tab.Content>
+
+                            <Sigma graph={graphToIGraphData(this.props.config.features.graphs.directed[0].graph)} settings={{ drawEdges: true, clone: false }}>
+                              <RelativeSize initialSize={25} />
+                              <RandomizeNodePositions />
+                            </Sigma>
+
+                            <pre>{JSON.stringify(this.props.config.features.graphs.directed[0].graph, null, 2)}</pre>
+                          </Tab.Content>
+                        </Col>
+                        <Col sm={4}>
+                          < Tabs defaultActiveKey="networks.features" >
+                            <Tab eventKey="networks.features" title="features">
+                              <pre id="theProps">{JSON.stringify(this.props.config.features, null, 2)}</pre>
+                            </Tab>
+
+                            <Tab eventKey="feature.tests" title="tests">
+                              <pre id="theProps">{JSON.stringify(this.props.config.tests, null, 2)}</pre>
+                            </Tab>
+                          </Tabs>
+                        </Col>
+                      </Row>
+
+                    </Tab.Content>
+                  </Tab>
+
+                  <Tab eventKey="undirected" title="Undirected">
+                    <Tab.Content>
+                      <Row>
+                        <Col sm={2}>
+                          <Nav variant="pills" className="flex-column">
+                            {this.props.config.features.graphs.undirected.map((g, ndx2) => <Nav.Item key={ndx2}>
+                              <Nav.Link eventKey={`networks-undirected-${ndx2}`}>
+                                {g.name}
+                              </Nav.Link>
+                            </Nav.Item>
+                            )}
+                          </Nav>
+                        </Col>
+                        <Col sm={6}>
+                          <Tab.Content>
+
+                            <Sigma graph={graphToIGraphData(this.props.config.features.graphs.undirected[0].graph)} settings={{ drawEdges: true, clone: false }}>
+                              <RelativeSize initialSize={25} />
+                              <RandomizeNodePositions />
+                            </Sigma>
+
+                            <pre>{JSON.stringify(this.props.config.features.graphs.undirected[0].graph, null, 2)}</pre>
+                          </Tab.Content>
+                        </Col>
+                        <Col sm={4}>
+                          < Tabs defaultActiveKey="networks.features" >
+                            <Tab eventKey="networks.features" title="features">
+                              <pre id="theProps">{JSON.stringify(this.props.config.features, null, 2)}</pre>
+                            </Tab>
+
+                            <Tab eventKey="feature.tests" title="tests">
+                              <pre id="theProps">{JSON.stringify(this.props.config.tests, null, 2)}</pre>
+                            </Tab>
+                          </Tabs>
+                        </Col>
+                      </Row>
+                    </Tab.Content>
+                  </Tab>
+
+                </Tabs>
+
+
+              </Row>
+            </Tab.Container>
+          </Tab>
+
+          <Tab eventKey="results" title="tests">
+            <Tab.Container id="left-tabs-example5" defaultActiveKey="feature-0">
+              <Row>
+                <Col sm={2}>
+                  {/* <Tree tests={this.props.config.tests} /> */}
+                  {/* <Nav variant="pills" className="flex-column">
+                    {
+                      this.props.config.tests.map((t, ndx) =>
+                        <Nav.Item key={ndx}>
+                          <Nav.Link eventKey={`test-${ndx}`}>
+                            {t[0]} - {t[1]}
+                          </Nav.Link>
+                        </Nav.Item>
+                      )
+                    }
+                  </Nav> */}
+                </Col>
+                <Col sm={6}>
+                  <Tab.Content>
+                    {this.props.config.tests.map((t, ndx) => {
+                      return (
+                        <Tab.Pane eventKey={`feature-${ndx}`} key={ndx}>
+                          <pre>{JSON.stringify(t, null, 2)}</pre>
+                        </Tab.Pane>
+                      )
+                    }
+                    )}
+                  </Tab.Content>
+                </Col>
+
+                <Col sm={4}>
+                  < Tabs defaultActiveKey="feature.networks" >
+                    <Tab eventKey="feature.networks" title="networks">
+                      < Tabs defaultActiveKey="dag" >
+
+                        <Tab eventKey="dag" title="DAG">
+                          <Tab.Content>
+                            <pre>{JSON.stringify(this.props.config.features.graphs.dags, null, 2)}</pre>
+                          </Tab.Content>
+                        </Tab>
+
+                        <Tab eventKey="directed" title="Directed">
+                          <Tab.Content>
+                            <pre>{JSON.stringify(this.props.config.features.graphs.directed, null, 2)}</pre>
+                          </Tab.Content>
+                        </Tab>
+
+                        <Tab eventKey="undirected" title="Undirected">
+                          <Tab.Content>
+                            <pre>{JSON.stringify(this.props.config.features.graphs.undirected, null, 2)}</pre>
+                          </Tab.Content>
+                        </Tab>
+
+                      </Tabs>
+                    </Tab>
+
+                    <Tab eventKey="tests.features" title="features">
+                      <pre id="theProps">{JSON.stringify(this.props.config.features.features, null, 2)}</pre>
+                    </Tab>
+                  </Tabs>
+                </Col>
+
+              </Row>
+            </Tab.Container>
+          </Tab>
 
         </Tabs >
 
-        <footer style={{
-          position: 'fixed',
-          bottom: 0,
-          right: 0,
-        }}>made with ❤️ and <a href="https://adamwong246.github.io/testeranto/" >testeranto </a></footer>
+        <footer>made with ❤️ and <a href="https://adamwong246.github.io/testeranto/" >testeranto </a></footer>
 
       </div >
 
@@ -274,3 +401,49 @@ pre, core, p {
   }
 }
 
+
+{/* <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+  <Row>
+    <Col sm={6} xl={3}>
+      <Nav variant="pills" className="flex-column">
+        {Object.keys(this.state.tests).sort().map((suiteKey, ndx) => <Nav.Item key={ndx}>
+          <Nav.Link eventKey={`suite-${ndx}`}>
+
+            {(this.state.tests[suiteKey].results.fails.length > 0 ?
+              `❌` :
+              `✅`)
+            } {suiteKey.split(`/`).filter((word) => word !== `.`).slice(2).join('/')}
+
+          </Nav.Link>
+        </Nav.Item>)}
+      </Nav>
+    </Col>
+    <Col sm={6} xl={9}>
+      <Tab.Content>
+        {Object.keys(this.state.tests).sort().map((suiteKey, ndx) => <Tab.Pane eventKey={`suite-${ndx}`} key={ndx}>
+
+          {
+            (() => {
+              return (
+                <Tab.Container id="left-tabs-example2" defaultActiveKey={`given-0`}>
+                  < Tabs defaultActiveKey="test-drilldown" >
+                    <Tab eventKey="test-results" title="results">
+                      <pre>{
+                        JSON.stringify(this.state.tests[suiteKey].results, null, 2)
+                      }</pre>
+                    </Tab>
+                    <Tab eventKey="test-logs" title="logs">
+                      <pre>{this.state.tests[suiteKey].logs}</pre>
+                    </Tab>
+                  </Tabs>
+                </Tab.Container>
+              )
+            })()
+          }
+
+        </Tab.Pane>
+        )}
+      </Tab.Content>
+    </Col>
+  </Row>
+</Tab.Container> */}

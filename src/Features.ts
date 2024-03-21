@@ -1,3 +1,4 @@
+import Graph from "graphology";
 import pkg from "graphology";
 
 /* @ts-ignore:next-line */
@@ -21,7 +22,7 @@ export class BaseFeature {
 
 export class TesterantoGraphUndirected implements TesterantoGraph {
   name: string;
-  graph: typeof UndirectedGraph;
+  graph: Graph;
   constructor(name: string) {
     this.name = name;
     this.graph = new UndirectedGraph();
@@ -33,7 +34,7 @@ export class TesterantoGraphUndirected implements TesterantoGraph {
 
 export class TesterantoGraphDirected implements TesterantoGraph {
   name: string;
-  graph: typeof DirectedGraph;
+  graph: Graph;
   constructor(name: string) {
     this.name = name;
     this.graph = new DirectedGraph();
@@ -45,7 +46,7 @@ export class TesterantoGraphDirected implements TesterantoGraph {
 
 export class TesterantoGraphDirectedAcyclic implements TesterantoGraph {
   name: string;
-  graph: typeof DirectedGraph;
+  graph: Graph;
   constructor(name: string) {
     this.name = name;
     this.graph = new DirectedGraph();

@@ -62,12 +62,8 @@ const startup = async (testResourceArg, t, testResourceRequirement) => {
         // }
     }
 };
-exports.default = async (input, testSpecification, testImplementation, testInterface, 
-// nameKey: string,
-testResourceRequirement = core_1.defaultTestResourceRequirement) => {
-    const mrt = new core_2.default(input, testSpecification, testImplementation, testInterface, 
-    // nameKey,
-    testResourceRequirement, testInterface.assertioner || (async (t) => t), testInterface.beforeEach ||
+exports.default = async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = core_1.defaultTestResourceRequirement) => {
+    const mrt = new core_2.default(input, testSpecification, testImplementation, testInterface, testResourceRequirement, testInterface.assertioner || (async (t) => t), testInterface.beforeEach ||
         async function (subject, initialValues, testResource) {
             return subject;
         }, testInterface.afterEach || (async (s) => s), testInterface.afterAll || ((store) => undefined), testInterface.butThen || (async (a) => a), testInterface.andWhen, testInterface.actionHandler ||

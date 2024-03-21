@@ -14,7 +14,13 @@ const OPEN_PORT = "";
 
 export type IRunTime = `node` | `electron` | `puppeteer`;
 export type IRunTimes = { runtime: IRunTime; entrypoint: string }[];
-export type ITestTypes = [string, IRunTime];
+
+export type ITestTypes = [
+  string,
+  IRunTime,
+  ITestTypes[]
+];
+
 type IScehdulerProtocols = `ipc` | `ws`;
 
 type IPm2ProcessB = {
@@ -47,7 +53,11 @@ export default class Scheduler {
       cancellablePromise: string;
     }
   >;
-  resourceQueue: { requirement: ITTestResourceRequirement, protocol: IScehdulerProtocols }[];
+  resourceQueue: {
+    requirement: ITTestResourceRequirement,
+    protocol: IScehdulerProtocols,
+    // name: string,
+  }[];
   summary: Record<string, boolean | undefined>;
   mode: `up` | `down`;
   websockets: Record<string, WebSocket>;
@@ -149,9 +159,12 @@ export default class Scheduler {
           clearInterval(bootInterval);
 
           pm2.launchBus((err, pm2_bus) => {
-            pm2_bus.on("testeranto:hola", (packet: { data: { testResourceRequirement: ITTestResourceRequirement } }) => {
+            pm2_bus.on("testeranto:hola", (packet: { data: { requirement: ITTestResourceRequirement } }) => {
               console.log("hola IPC", packet);
-              this.requestResource(packet.data.testResourceRequirement, 'ipc');
+              this.requestResource(
+                packet.data.requirement,
+                'ipc'
+              );
             });
 
             pm2_bus.on("testeranto:adios", (packet: IPm2ProcessB) => {
@@ -345,7 +358,8 @@ export default class Scheduler {
     // });
 
 
-    console.log("webSocketServer.clients", webSocketServer.clients.size);
+    // console.log("webSocketServer.clients", webSocketServer.clients.size);
+    console.log("resourceQueue", this.resourceQueue);
 
     this.tick();
     // this.checkForShutDown();
@@ -364,6 +378,8 @@ export default class Scheduler {
     if (!resourceRequest) {
       console.log("feed me a test!");
       return;
+    } else {
+      console.log("handling", resourceRequest);
     }
 
     if (resourceRequest.protocol === "ipc") {
@@ -473,13 +489,15 @@ export default class Scheduler {
     requirement: ITTestResourceRequirement;
     protocol: IScehdulerProtocols;
   }) {
-
+    console.log("allocateViaIpc", resourceRequest)
     const pName = resourceRequest.requirement.name;
     const testResourceRequirement = resourceRequest.requirement;
 
     pm2.list((err, processes) => {
+      // console.log("mark1", processes);
       console.error(err);
       processes.forEach((p) => {
+        console.log("p.pid, p.name, p.pm_id", p.pid, p.name, p.pm_id);
         if (p.name === pName && p.pid) {
           const message = {
             // these fields must be present
@@ -497,9 +515,11 @@ export default class Scheduler {
             },
           };
 
+          console.log("message", message);
+
           if (testResourceRequirement?.ports === 0) {
             pm2.sendDataToProcessId(
-              p.pid,
+              p.pm_id as number,
               message,
               function (err, res) {
                 // console.log("sendDataToProcessId", err, res, message);
@@ -543,7 +563,7 @@ export default class Scheduler {
                 },
               };
               pm2.sendDataToProcessId(
-                p.pid,
+                p.pm_id as number,
                 message,
                 function (err, res) {
                   // no-op
@@ -578,6 +598,33 @@ export default class Scheduler {
   //   });
   // }
 }
+
+const getRunnables = (
+  tests: ITestTypes[],
+  payload = [new Set<string>(), new Set<string>()]
+): [Set<string>, Set<string>] => {
+  // const sidekicks: [Set<string>, Set<string>] = [new Set<string>(), new Set<string>()];
+  // tests.reduce((pt, cv, cndx, cry) => {
+  // }, sidekicks);
+  // return sidekicks;
+  return tests.reduce((pt, cv, cndx, cry) => {
+
+    if (cv[1] === "node") {
+      pt[0].add(cv[0]);
+    } else if (cv[1] === "electron") {
+      pt[1].add(cv[0]);
+    }
+
+    if (cv[2].length) {
+      getRunnables(cv[2], payload);
+    }
+
+    return pt;
+  }, payload as [Set<string>, Set<string>]);
+
+}
+
+export class ITProjectTests { }
 
 export class ITProject {
   buildMode: "on" | "off" | "watch";
@@ -653,53 +700,26 @@ export class ITProject {
     //   ],
     // };
 
+    const runnables = getRunnables(this.tests);
+    console.log("runnables", runnables);
+
     const nodeEntryPoints = this.getSecondaryEndpointsPoints("node");
 
     const esbuildConfigNode: BuildOptions = {
-      // define: {
-      //   'process.env.FLUENTFFMPEG_COV': "0",
-      // },
       packages: "external",
       platform: "node",
-      // format: "esm",
       outbase: this.outbase,
       outdir: this.outdir,
       jsx: `transform`,
       entryPoints: [
-        ...nodeEntryPoints,
+        // ...nodeEntryPoints,
+        ...runnables[0]
       ],
       bundle: true,
       minify: this.minify === true,
       write: true,
-      // outExtension: { ".js": ".cjs" },
-      // splitting: true,
       plugins: [
         ...(this.loaders || []),
-        // {
-        //   name: "testeranto-redirect",
-        //   setup(build) {
-        //     build.onResolve({ filter: /^.*\/testeranto\/$/ }, async (OnResolveArgs: {
-        //       path: string,
-        //       importer: string,
-        //       namespace: string,
-        //       resolveDir: string,
-        //       kind: ImportKind,
-        //       pluginData: any
-        //     }) => {
-        //       return {
-        //         path: path.join(
-        //           process.cwd(),
-        //           // `..`,
-        //           "node_modules",
-        //           "foo"
-        //           // ...args
-        //           // `testeranto`,
-        //           // 'dist'
-        //         ),
-        //       };
-        //     });
-        //   },
-        // },
       ],
     };
 
@@ -741,13 +761,14 @@ export class ITProject {
       outdir: this.outdir,
       jsx: `transform`,
       entryPoints: [
-        ...this.getSecondaryEndpointsPoints("electron"),
-        ...this.getSecondaryEndpointsPoints("puppeteer"),
+        // ...this.getSecondaryEndpointsPoints("electron"),
+        // ...this.getSecondaryEndpointsPoints("puppeteer"),
+        // ...sideKicks[1]
+        ...runnables[1]
       ],
       bundle: true,
       minify: this.minify === true,
       write: true,
-      // outExtension: { ".js": ".mjs" },
       splitting: true,
       plugins: [
         ...(this.loaders || []),

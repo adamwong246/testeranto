@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ITProject = void 0;
+exports.ITProject = exports.ITProjectTests = void 0;
 const ws_1 = require("ws");
 const esbuild_1 = __importDefault(require("esbuild"));
 const fs_1 = __importDefault(require("fs"));
@@ -32,7 +32,8 @@ class Scheduler {
             //     console.log(proc.name, proc.pid, proc.pm_id, proc.monit)
             //   })
             // });
-            console.log("webSocketServer.clients", webSocketServer.clients.size);
+            // console.log("webSocketServer.clients", webSocketServer.clients.size);
+            console.log("resourceQueue", this.resourceQueue);
             this.tick();
             // this.checkForShutDown();
             console.log(this.spinner(), this.mode === `up`
@@ -118,7 +119,7 @@ class Scheduler {
                     pm2_1.default.launchBus((err, pm2_bus) => {
                         pm2_bus.on("testeranto:hola", (packet) => {
                             console.log("hola IPC", packet);
-                            this.requestResource(packet.data.testResourceRequirement, 'ipc');
+                            this.requestResource(packet.data.requirement, 'ipc');
                         });
                         pm2_bus.on("testeranto:adios", (packet) => {
                             console.log("adios IPC", packet);
@@ -246,6 +247,9 @@ class Scheduler {
             console.log("feed me a test!");
             return;
         }
+        else {
+            console.log("handling", resourceRequest);
+        }
         if (resourceRequest.protocol === "ipc") {
             this.allocateViaIpc(resourceRequest);
         }
@@ -324,11 +328,14 @@ class Scheduler {
         });
     }
     allocateViaIpc(resourceRequest) {
+        console.log("allocateViaIpc", resourceRequest);
         const pName = resourceRequest.requirement.name;
         const testResourceRequirement = resourceRequest.requirement;
         pm2_1.default.list((err, processes) => {
+            // console.log("mark1", processes);
             console.error(err);
             processes.forEach((p) => {
+                console.log("p.pid, p.name, p.pm_id", p.pid, p.name, p.pm_id);
                 if (p.name === pName && p.pid) {
                     const message = {
                         // these fields must be present
@@ -344,8 +351,9 @@ class Scheduler {
                             id: p.pm_id,
                         },
                     };
+                    console.log("message", message);
                     if ((testResourceRequirement === null || testResourceRequirement === void 0 ? void 0 : testResourceRequirement.ports) === 0) {
-                        pm2_1.default.sendDataToProcessId(p.pid, message, function (err, res) {
+                        pm2_1.default.sendDataToProcessId(p.pm_id, message, function (err, res) {
                             // console.log("sendDataToProcessId", err, res, message);
                         });
                     }
@@ -376,7 +384,7 @@ class Scheduler {
                                     id: p.pid,
                                 },
                             };
-                            pm2_1.default.sendDataToProcessId(p.pid, message, function (err, res) {
+                            pm2_1.default.sendDataToProcessId(p.pm_id, message, function (err, res) {
                                 // no-op
                             });
                             // mark the selected ports as occupied
@@ -395,6 +403,27 @@ class Scheduler {
     }
 }
 exports.default = Scheduler;
+const getRunnables = (tests, payload = [new Set(), new Set()]) => {
+    // const sidekicks: [Set<string>, Set<string>] = [new Set<string>(), new Set<string>()];
+    // tests.reduce((pt, cv, cndx, cry) => {
+    // }, sidekicks);
+    // return sidekicks;
+    return tests.reduce((pt, cv, cndx, cry) => {
+        if (cv[1] === "node") {
+            pt[0].add(cv[0]);
+        }
+        else if (cv[1] === "electron") {
+            pt[1].add(cv[0]);
+        }
+        if (cv[2].length) {
+            getRunnables(cv[2], payload);
+        }
+        return pt;
+    }, payload);
+};
+class ITProjectTests {
+}
+exports.ITProjectTests = ITProjectTests;
 class ITProject {
     constructor(config) {
         this.buildMode = config.buildMode;
@@ -437,52 +466,24 @@ class ITProject {
         //     },
         //   ],
         // };
+        const runnables = getRunnables(this.tests);
+        console.log("runnables", runnables);
         const nodeEntryPoints = this.getSecondaryEndpointsPoints("node");
         const esbuildConfigNode = {
-            // define: {
-            //   'process.env.FLUENTFFMPEG_COV': "0",
-            // },
             packages: "external",
             platform: "node",
-            // format: "esm",
             outbase: this.outbase,
             outdir: this.outdir,
             jsx: `transform`,
             entryPoints: [
-                ...nodeEntryPoints,
+                // ...nodeEntryPoints,
+                ...runnables[0]
             ],
             bundle: true,
             minify: this.minify === true,
             write: true,
-            // outExtension: { ".js": ".cjs" },
-            // splitting: true,
             plugins: [
                 ...(this.loaders || []),
-                // {
-                //   name: "testeranto-redirect",
-                //   setup(build) {
-                //     build.onResolve({ filter: /^.*\/testeranto\/$/ }, async (OnResolveArgs: {
-                //       path: string,
-                //       importer: string,
-                //       namespace: string,
-                //       resolveDir: string,
-                //       kind: ImportKind,
-                //       pluginData: any
-                //     }) => {
-                //       return {
-                //         path: path.join(
-                //           process.cwd(),
-                //           // `..`,
-                //           "node_modules",
-                //           "foo"
-                //           // ...args
-                //           // `testeranto`,
-                //           // 'dist'
-                //         ),
-                //       };
-                //     });
-                //   },
-                // },
             ],
         };
         Promise.resolve(Promise.all([...this.getSecondaryEndpointsPoints("puppeteer"),
@@ -521,13 +522,14 @@ class ITProject {
             outdir: this.outdir,
             jsx: `transform`,
             entryPoints: [
-                ...this.getSecondaryEndpointsPoints("electron"),
-                ...this.getSecondaryEndpointsPoints("puppeteer"),
+                // ...this.getSecondaryEndpointsPoints("electron"),
+                // ...this.getSecondaryEndpointsPoints("puppeteer"),
+                // ...sideKicks[1]
+                ...runnables[1]
             ],
             bundle: true,
             minify: this.minify === true,
             write: true,
-            // outExtension: { ".js": ".mjs" },
             splitting: true,
             plugins: [
                 ...(this.loaders || []),

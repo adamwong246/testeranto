@@ -7,7 +7,11 @@ export declare type IRunTimes = {
     runtime: IRunTime;
     entrypoint: string;
 }[];
-export declare type ITestTypes = [string, IRunTime];
+export declare type ITestTypes = [
+    string,
+    IRunTime,
+    ITestTypes[]
+];
 declare type IScehdulerProtocols = `ipc` | `ws`;
 export default class Scheduler {
     private spinCycle;
@@ -34,6 +38,8 @@ export default class Scheduler {
     private tick;
     private allocateViaWs;
     private allocateViaIpc;
+}
+export declare class ITProjectTests {
 }
 export declare class ITProject {
     buildMode: "on" | "off" | "watch";
