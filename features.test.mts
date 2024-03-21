@@ -15,7 +15,7 @@ export class MyFeature extends BaseFeature {
 }
 
 export const features = {
-  root: new MyFeature("kokomo bay"),
+  root: new MyFeature("kokomo bay!"),
   mint: new MyFeature("An ERC721 which is redeemable?!!!"),
   redemption: new MyFeature(
     "Redeems an ERC-721, marking its state as redeemed"

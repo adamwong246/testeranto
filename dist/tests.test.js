@@ -1,6 +1,7 @@
-import { ITestTypes } from "testeranto/src/Project";
+import "./chunk-4ATCX2XT.js";
 
-export default [
+// tests.test.mts
+var tests_test_default = [
   [
     "./src/app.redux.test.ts",
     "node",
@@ -17,8 +18,7 @@ export default [
   ["./src/Rectangle/Rectangle.test.electron.ts", "electron", []],
   ["./src/Rectangle/Rectangle.test.node.ts", "node", []],
   ["./src/server.http.test.ts", "node", [["src/ClassicalComponent.tsx", "electron", []], ["src/LoginPage.tsx", "electron", []]]],
-  ["./src/MyFirstContract.solidity-precompiled.test.ts", "node", []],
-
+  ["./src/MyFirstContract.solidity-precompiled.test.ts", "node", []]
   // ["./src/Rectangle.test.puppeteer.ts", "puppeteer", []], // maybe works?
   // [
   //   "./src/ClassicalComponent.esbuild-puppeteer.test.ts",
@@ -30,4 +30,7 @@ export default [
   // "./myTests/storefront/beta/index.test.ts",
   // "./myTests/httpServer/server.puppeteer.test.ts",
   // "./myTests/httpServer/server.http2x.test.ts",
-] as ITestTypes[]
+];
+export {
+  tests_test_default as default
+};

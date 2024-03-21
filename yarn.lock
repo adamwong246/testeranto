@@ -8476,7 +8476,7 @@ react-transition-group@^4.4.5:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-"react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8 || ^17.0 || ^18.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0-rc.1 || ^18.0.0", "react@^16.9.0 || ^17.0.0 || ^18", react@^18.0.0, react@^18.2.0, react@>=0.14.0, react@>=15.0.0, react@>=15.3, react@>=16.14.0, react@>=16.6.0, react@>=16.8.0, "react@file:../testeranto/node_modules/react":
+"react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8 || ^17.0 || ^18.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0-rc.1 || ^18.0.0", "react@^16.9.0 || ^17.0.0 || ^18", react@^18.0.0, react@^18.2.0, react@>=0.14.0, react@>=15.0.0, react@>=15.3, react@>=16.14.0, react@>=16.6.0, react@>=16.8.0, react@18.2.0:
   version "18.2.0"
   resolved "file:../testeranto/node_modules/react"
   dependencies:
@@ -9633,7 +9633,7 @@ terser@^5.26.0:
     commander "^2.20.0"
     source-map-support "~0.5.20"
 
-testeranto@../testeranto:
+"testeranto@file:../testeranto":
   version "0.40.0"
   resolved "file:../testeranto"
   dependencies:

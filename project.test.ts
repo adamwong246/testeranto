@@ -1,13 +1,13 @@
 import { ITProject } from "testeranto/src/Project";
 
 import { solCompile } from "./myTests/truffle.mjs";
-import features from "./features.test.mjs";
-import tests from "./tests.test.mjs";
+// import features from "./features.test.mjs";
+// import tests from "./tests.test.mjs";
 
 export default new ITProject({
 
-  features,
-  tests,
+  features: 'features.test.mts',
+  tests: 'tests.test.mts',
 
   __dirname: `~/Code/kokomoBay`,
 
