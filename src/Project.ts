@@ -761,10 +761,7 @@ export class ITProject {
       outdir: this.outdir,
       jsx: `transform`,
       entryPoints: [
-        // ...this.getSecondaryEndpointsPoints("electron"),
-        // ...this.getSecondaryEndpointsPoints("puppeteer"),
-        // ...sideKicks[1]
-        ...runnables[1]
+        ...runnables[1],
       ],
       bundle: true,
       minify: this.minify === true,
@@ -789,6 +786,18 @@ export class ITProject {
         },
       ],
     };
+
+
+    esbuild.build({
+      bundle: true,
+      entryPoints: ["./node_modules/testeranto/dist/module/Report.js"],
+      minify: this.minify === true,
+      outbase: this.outbase,
+      write: true,
+      outfile: `${this.outdir}/Report.js`
+      // outfile: "Report.js",
+      // outdir: this.outdir,
+    });
 
     console.log("buildMode   -", this.buildMode);
     console.log("runMode     -", this.runMode);
