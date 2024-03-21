@@ -65,19 +65,9 @@
     "cucumber",
     "ATDD"
   ],
-  "bin": {
-    "testerantoRun": "./bin/testerantoRun.sh",
-    "testerantoWatch": "./bin/testerantoWatch.sh"
-  },
   "scripts": {
     "build": "sh prebuild.sh; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; sh postBuild.sh",
-    "dev": "tsc -p tsconfig.module.json --watch & tsc -p tsconfig.common.json --watch & tsc -p tsconfig.types.json --watch",
-    "bundle:reporter": "esbuild ./src/Report.tsx --bundle --outfile=./dist/module/Report",
-    "simpleserver": "cd dist && python -m SimpleHTTPServer 8080",
-    "clean:dist": "rm -rf ./dist/results && rm -rf ./dist/tests  && rm -f ./dist/reporter.css && rm -f ./dist/reporter.js && rm -f ./dist/*.jpg ",
-    "clean:npm": "rm -rf node_modules && yarn install",
-    "clean": "yarn clean:dist && yarn clean:npm",
-    "tableflip": "yarn clean && yarn bundle:reporter"
+    "dev": "tsc -p tsconfig.module.json --watch & tsc -p tsconfig.common.json --watch & tsc -p tsconfig.types.json --watch"
   },
   "peerDependencies": {
     "electron": "^24.2.0",

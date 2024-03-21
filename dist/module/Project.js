@@ -77,7 +77,6 @@ export default class Scheduler {
                     const name = payload.data.name;
                     const messageType = payload.type;
                     const requestedResources = payload.data;
-                    // const wsName = parseInt(webSocket.url.substr(1), 10)
                     this.websockets[name] = webSocket;
                     console.log('connected: ' + name + ' in ' + Object.getOwnPropertyNames(this.websockets));
                     if (messageType === "testeranto:hola") {
@@ -120,7 +119,7 @@ export default class Scheduler {
                             this.releaseTestResources(packet.data.name);
                         });
                     });
-                    const inputFilePaths = this.project
+                    this.project
                         .tests
                         .reduce((m, [inputFilePath, runtime]) => {
                         const script = makePath(inputFilePath);
@@ -136,7 +135,6 @@ export default class Scheduler {
                             const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
                             const sourceFileNameWithoutExtensions = sourceFileName.split(".").slice(0, -1).join(".");
                             const htmlFilePath = path.normalize(`/${project.outdir}/${sourceDir.join("/")}/${sourceFileNameWithoutExtensions}.html`);
-                            // const name = script;
                             pm2.start({
                                 script: `node ./node_modules/testeranto/dist/common/Puppeteer.js ${htmlFilePath} '${JSON.stringify({
                                     name: inputFilePath,
@@ -159,8 +157,6 @@ export default class Scheduler {
                             const fname = fileAsList[fileAsList.length - 1];
                             const fnameOnly = fname.split(".").slice(0, -1).join(".");
                             const htmlFile = [this.project.outdir, ...fileListHead, `${fnameOnly}.html`].join("/");
-                            // const htmlFilePath = path.normalize(`${process.cwd()}/${this.outdir}/${sourceDir.join("/")}/${sourceFileNameMinusJs}.html`);
-                            // const name = `electron ${htmlFile}`;
                             pm2.start({
                                 script: `yarn electron node_modules/testeranto/dist/common/electron.js ${htmlFile} '${JSON.stringify({
                                     name: inputFilePath,
@@ -178,7 +174,6 @@ export default class Scheduler {
                             });
                         }
                         else if (runtime === "node") {
-                            // const name = `node ${inputFilePath}`
                             pm2.start({
                                 name: inputFilePath,
                                 script: `node ${script} '${JSON.stringify({
@@ -198,7 +193,6 @@ export default class Scheduler {
                         }
                         return [inputFilePath, ...m];
                     }, []);
-                    // console.log("inputFilePaths", inputFilePaths);
                     setInterval(this.mainLoop, TIMEOUT).unref();
                 }
             }, TIMEOUT).unref();
@@ -397,10 +391,6 @@ export default class Scheduler {
     }
 }
 const getRunnables = (tests, payload = [new Set(), new Set()]) => {
-    // const sidekicks: [Set<string>, Set<string>] = [new Set<string>(), new Set<string>()];
-    // tests.reduce((pt, cv, cndx, cry) => {
-    // }, sidekicks);
-    // return sidekicks;
     return tests.reduce((pt, cv, cndx, cry) => {
         if (cv[1] === "node") {
             pt[0].add(cv[0]);
@@ -436,8 +426,6 @@ export class ITProject {
             import(featurePath).then((features) => {
                 this.features = features.default;
                 const runnables = getRunnables(this.tests);
-                console.log("runnables", runnables);
-                // const nodeEntryPoints = this.getSecondaryEndpointsPoints("node");
                 const esbuildConfigNode = {
                     packages: "external",
                     external: ["tests.test.js", "features.test.js"],
@@ -446,7 +434,6 @@ export class ITProject {
                     outdir: this.outdir,
                     jsx: `transform`,
                     entryPoints: [
-                        // ...nodeEntryPoints,
                         ...runnables[0]
                     ],
                     bundle: true,
@@ -615,8 +602,6 @@ export class ITProject {
             });
         });
     }
-    // tests: string;
-    // features: string;
     getSecondaryEndpointsPoints(runtime) {
         if (runtime) {
             return this.tests

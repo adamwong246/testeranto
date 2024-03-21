@@ -1,6 +1,3 @@
-
-
-
 declare module 'tests.test.js' {
 
   type ITestTypes = [
@@ -9,18 +6,14 @@ declare module 'tests.test.js' {
     ITestTypes[]
   ];
 
-  const content: {
-    tests: ITestTypes[]
-  };
+  const content: ITestTypes[];
   export default content;
 }
 
 
 declare module 'features.test.js' {
   import { TesterantoFeatures } from "./src/Features";
-  const content: {
-    features: TesterantoFeatures
-  };
+  const content: TesterantoFeatures;
   export default content;
 }
 
