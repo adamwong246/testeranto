@@ -6,7 +6,6 @@
   "homepage": "https://github.com/ChromaPDX/kokomoBay",
   "author": "adam wong <adamwong246@gmail.com>",
   "license": "MIT",
-  "type": "module",
   "keywords": [
     "typescript",
     "test",
@@ -15,7 +14,7 @@
   ],
   "scripts": {
     "nuke": "yarn pm2 stop all; yarn pm2 delete all; yarn pm2 save; rm -rf dist/**",
-    "test": "yarn ts-node project.test.ts"
+    "test": "ts-node-esm project.test.mts"
   },
   "types": "index.d.ts",
   "dependencies": {
@@ -62,6 +61,7 @@
     "react-test-renderer": "^18.2.0",
     "truffle": "^5.7.3",
     "ts-loader": "^9.3.1",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^4.9.5",
     "web3": "^1.8.1",
     "web3-eth-contract": "^1.8.1"

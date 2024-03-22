@@ -9,8 +9,8 @@ import {
 } from "./chunk-4ATCX2XT.js";
 
 // src/ClassicalComponent.tsx
-var import_react = __toESM(require_react(), 1);
-var import_client = __toESM(require_client(), 1);
+var import_react = __toESM(require_react());
+var import_client = __toESM(require_client());
 var ClassicalComponent = class extends import_react.default.Component {
   constructor(props) {
     super(props);

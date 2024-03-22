@@ -1,11 +1,7 @@
 import { ITestTypes } from "testeranto/src/Project";
 
 export default [
-  [
-    "./src/app.redux.test.ts",
-    "node",
-    []
-  ],
+  ["./src/app.redux.test.ts", "node", []],
   ["./src/app.reduxToolkit.test.ts", "node", []],
   ["./src/ClassicalComponent.electron.test.ts", "electron", []],
   ["./src/ClassicalComponent.react-test-renderer.test.tsx", "node", []],
@@ -19,12 +15,14 @@ export default [
   ["./src/server.http.test.ts", "node", [["src/ClassicalComponent.tsx", "electron", []], ["src/LoginPage.tsx", "electron", []]]],
   ["./src/MyFirstContract.solidity-precompiled.test.ts", "node", []],
 
-  // ["./src/Rectangle.test.puppeteer.ts", "puppeteer", []], // maybe works?
   // [
   //   "./src/ClassicalComponent.esbuild-puppeteer.test.ts",
   //   "node",
   //   [["src/ClassicalComponent.tsx", "electron", []]]
   // ],
+
+  // ["./src/Rectangle.test.puppeteer.ts", "puppeteer", []], // maybe works?
+
   // not working
   // "./myTests/storefront/alpha/index.test.ts",
   // "./myTests/storefront/beta/index.test.ts",

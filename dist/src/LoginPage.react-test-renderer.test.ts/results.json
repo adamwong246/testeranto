@@ -1,0 +1,24 @@
+{
+  "name": "Testing the LoginPage as react",
+  "givens": [
+    {
+      "name": "default",
+      "whens": [
+        {
+          "name": "TheEmailIsSetTo: adam@mail.com"
+        },
+        {
+          "name": "ThePasswordIsSetTo: foo"
+        }
+      ],
+      "thens": [
+        {
+          "name": "ThereIsNotAnEmailError: undefined"
+        }
+      ],
+      "error": null,
+      "features": []
+    }
+  ],
+  "fails": []
+}

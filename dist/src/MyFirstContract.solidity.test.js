@@ -116,9 +116,9 @@ var features_test_default = new import_Features.TesterantoFeatures(features, {
 });
 
 // myTests/solidity.testeranto.test.ts
-var import_ganache = __toESM(require("ganache"), 1);
-var import_web3 = __toESM(require("web3"), 1);
-var import_core_node = __toESM(require("testeranto/src/core-node"), 1);
+var import_ganache = __toESM(require("ganache"));
+var import_web3 = __toESM(require("web3"));
+var import_core_node = __toESM(require("testeranto/src/core-node"));
 
 // myTests/truffle.mts
 var import_promises = __toESM(require("fs/promises"), 1);

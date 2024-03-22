@@ -7,7 +7,7 @@ import {
 } from "../chunk-INCPOGSQ.js";
 import {
   LoginPage_default
-} from "../chunk-UOEBFRZF.js";
+} from "../chunk-3TPAPAKL.js";
 import {
   require_react
 } from "../chunk-YZAXQEPE.js";
@@ -16,8 +16,8 @@ import {
 } from "../chunk-4ATCX2XT.js";
 
 // myTests/react-jsx.testeranto.test.ts
-var import_react = __toESM(require_react(), 1);
-var import_client = __toESM(require_client(), 1);
+var import_react = __toESM(require_react());
+var import_client = __toESM(require_client());
 var react_jsx_testeranto_test_default = (testImplementations, testSpecifications, testInput) => {
   const TesterantoComponent = function(props) {
     const myContainer = (0, import_react.useRef)(null);

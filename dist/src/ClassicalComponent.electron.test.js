@@ -4,7 +4,7 @@ import {
 } from "../chunk-UZ5QK7XM.js";
 import {
   ClassicalComponent
-} from "../chunk-RSQCRBYX.js";
+} from "../chunk-GQ66M77R.js";
 import {
   require_client
 } from "../chunk-INCPOGSQ.js";
@@ -61,8 +61,8 @@ var testSpecification = (Suite, Given, When, Then, Check) => {
 };
 
 // myTests/react-component.testeranto.test.tsx
-var import_react = __toESM(require_react(), 1);
-var import_client = __toESM(require_client(), 1);
+var import_react = __toESM(require_react());
+var import_client = __toESM(require_client());
 var react_component_testeranto_test_default = (testImplementations, testSpecifications, testInput) => {
   class TesterantoComponent extends testInput {
     constructor(props) {
