@@ -6,9 +6,9 @@ import {
   ITestJob,
   ITestSpecification,
   defaultTestResourceRequirement,
-} from "./core";
-import TesterantoLevelTwo from "./core";
-import { NodeWriter } from "./NodeWriter";
+} from "./core.js";
+import TesterantoLevelTwo from "./core.js";
+import { NodeWriter } from "./NodeWriter.js";
 
 console.log("node-core argv", process.argv);
 

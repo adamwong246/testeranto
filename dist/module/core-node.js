@@ -1,6 +1,6 @@
-import { defaultTestResourceRequirement, } from "./core";
-import TesterantoLevelTwo from "./core";
-import { NodeWriter } from "./NodeWriter";
+import { defaultTestResourceRequirement, } from "./core.js";
+import TesterantoLevelTwo from "./core.js";
+import { NodeWriter } from "./NodeWriter.js";
 console.log("node-core argv", process.argv);
 export default async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = defaultTestResourceRequirement) => {
     const mrt = new TesterantoLevelTwo(input, testSpecification, testImplementation, testInterface, testResourceRequirement, testInterface.assertioner || (async (t) => t), testInterface.beforeEach || async function (subject, initialValues, testResource) {

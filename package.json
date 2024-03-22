@@ -2,6 +2,7 @@
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
   "version": "0.40.0",
+  "type": "module",
   "types": "./dist/index.d.mts",
   "main": "dist/common/index.js",
   "module": "dist/module/index.js",
@@ -53,6 +54,10 @@
     "./dist/module/core": {
       "import": "./dist/module/core.js",
       "require": "./dist/common/core.js"
+    },
+    "./dist/module/NodeWriter": {
+      "import": "./dist/module/NodeWriter.js",
+      "require": "./dist/common/NodeWriter.js"
     }
   },
   "repository": "git@github.com:adamwong246/testeranto.git",
