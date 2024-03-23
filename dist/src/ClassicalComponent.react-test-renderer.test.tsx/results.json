@@ -81,36 +81,10 @@
       ],
       "thens": [
         {
-          "name": "TheStatusIs: [object Object]",
-          "error": true
+          "name": "TheStatusIs: [object Object]"
         }
       ],
-      "error": [
-        {
-          "generatedMessage": true,
-          "code": "ERR_ASSERTION",
-          "actual": {
-            "type": "pre",
-            "props": {
-              "id": "theState"
-            },
-            "children": [
-              "{\"count\":2}"
-            ]
-          },
-          "expected": {
-            "type": "pre",
-            "props": {
-              "id": "theState"
-            },
-            "children": [
-              "{\"count\":22}"
-            ]
-          },
-          "operator": "deepEqual"
-        },
-        "AssertionError [ERR_ASSERTION]: Expected values to be loosely deep-equal:\n\n{\n  children: [\n    '{\"count\":2}'\n  ],\n  props: {\n    id: 'theState'\n  },\n  type: 'pre'\n}\n\nshould loosely deep-equal\n\n{\n  children: [\n    '{\"count\":22}'\n  ],\n  props: {\n    id: 'theState'\n  },\n  type: 'pre'\n}\n    at Then.thenCB (/Users/adam/Code/kokomoBay/dist/src/ClassicalComponent.react-test-renderer.test.js:165:38)\n    at Then.test (/Users/adam/Code/testeranto/dist/common/core.js:151:25)\n    at async Given.give (/Users/adam/Code/testeranto/dist/common/core.js:92:27)\n    at async TesterantoLevelTwo.constructor.run (/Users/adam/Code/testeranto/dist/common/core.js:36:30)\n    at async /Users/adam/Code/testeranto/dist/common/core.js:283:20\n    at async Object.receiveTestResourceConfig (/Users/adam/Code/testeranto/dist/common/core.js:304:39)\n    at async exports.default (/Users/adam/Code/testeranto/dist/common/Node.js:21:28)"
-      ],
+      "error": null,
       "features": [
         "test"
       ]

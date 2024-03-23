@@ -24,5 +24,3 @@ Suite:,a classical react component
  When:,IClickTheButton: undefined
  When:,IClickTheButton: undefined
  Then:,TheStatusIs: [object Object]
-AssertionError: expected '{"count":2}' to deeply equal '{"count":22}'
-

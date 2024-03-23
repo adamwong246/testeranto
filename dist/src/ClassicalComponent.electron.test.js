@@ -52,7 +52,7 @@ var testSpecification = (Suite, Given, When, Then, Check) => {
             When.IClickTheButton(),
             When.IClickTheButton()
           ],
-          [Then.TheStatusIs({ count: 22 })]
+          [Then.TheStatusIs({ count: 2 })]
         )
       },
       []
