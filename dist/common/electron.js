@@ -6,13 +6,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const electron_1 = require("electron");
 const path_1 = __importDefault(require("path"));
 const url_1 = __importDefault(require("url"));
-console.log("hello electron", process.argv);
+// console.log("hello electron", process.argv);
 // console.log("hello electron stdin", process.stdin); works
 // console.log("hello electron send", process.send); does not work
 let win;
 function createWindow() {
     win = new electron_1.BrowserWindow({
         webPreferences: {
+            devTools: true,
             nodeIntegration: true,
             nodeIntegrationInWorker: true,
             contextIsolation: false,
@@ -32,6 +33,11 @@ function createWindow() {
     });
     console.log("loading", u);
     win.loadURL(u);
-    win.webContents;
+    // win.webContents
+    win.webContents.openDevTools();
 }
 electron_1.app.on("ready", createWindow);
+electron_1.ipcMain.handle('quit-app', (x, failed) => {
+    console.log("quit-app", failed);
+    electron_1.app.exit(failed ? 1 : 0);
+});

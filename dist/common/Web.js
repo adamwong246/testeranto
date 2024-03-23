@@ -1,19 +1,21 @@
-import { defaultTestResourceRequirement, } from "./core";
-import TesterantoLevelTwo from "./core";
-console.log("hello core-electron");
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = require("./core");
+const core_2 = __importDefault(require("./core"));
 const webSocket = new WebSocket("ws://localhost:8080");
 const startup = async (testResourceArg, t, testResourceRequirement) => {
-    console.log("core-electron startup", testResourceArg);
     const partialTestResource = JSON.parse(testResourceArg);
     if (partialTestResource.fs && partialTestResource.ports) {
-        await t.receiveTestResourceConfig(partialTestResource);
-        // process.exit(0); // :-)
+        const failed = await t.receiveTestResourceConfig(partialTestResource);
+        window.exit(failed);
     }
     else {
         console.log("test configuration is incomplete", partialTestResource);
         console.log("requesting test resources via ws", testResourceRequirement);
         webSocket.addEventListener("open", (event) => {
-            // console.log("Hello webSockets!");
             webSocket.addEventListener("message", (event) => {
                 console.log("Message from server ", event.data);
             });
@@ -30,16 +32,17 @@ const startup = async (testResourceArg, t, testResourceRequirement) => {
                 const resourcesFromPm2 = msg.data.testResourceConfiguration;
                 const secondTestResource = Object.assign(Object.assign({ fs: "." }, JSON.parse(JSON.stringify(partialTestResource))), JSON.parse(JSON.stringify(resourcesFromPm2)));
                 console.log("secondTestResource", secondTestResource);
-                if (await t.receiveTestResourceConfig(secondTestResource)) {
-                    webSocket.send(JSON.stringify({
-                        type: "testeranto:adios",
-                        data: {
-                            testResourceConfiguration: t.test.testResourceConfiguration,
-                            results: t.toObj(),
-                        },
-                    }));
-                    document.write("all done");
-                }
+                const failed = await t.receiveTestResourceConfig(partialTestResource);
+                webSocket.send(JSON.stringify({
+                    type: "testeranto:adios",
+                    data: {
+                        testResourceConfiguration: t.test.testResourceConfiguration,
+                        results: t.toObj(),
+                    },
+                }));
+                document.write("all done");
+                // app.exit(failed ? 1 : 0);
+                // process.exit(failed ? 1 : 0);
             });
         });
         // else {
@@ -57,8 +60,8 @@ const startup = async (testResourceArg, t, testResourceRequirement) => {
         // }
     }
 };
-export default async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = defaultTestResourceRequirement) => {
-    const mrt = new TesterantoLevelTwo(input, testSpecification, testImplementation, testInterface, testResourceRequirement, testInterface.assertioner || (async (t) => t), testInterface.beforeEach ||
+exports.default = async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = core_1.defaultTestResourceRequirement) => {
+    const mrt = new core_2.default(input, testSpecification, testImplementation, testInterface, testResourceRequirement, testInterface.assertioner || (async (t) => t), testInterface.beforeEach ||
         async function (subject, initialValues, testResource) {
             return subject;
         }, testInterface.afterEach || (async (s) => s), testInterface.afterAll || ((store) => undefined), testInterface.butThen || (async (a) => a), testInterface.andWhen, testInterface.actionHandler ||
@@ -68,7 +71,8 @@ export default async (input, testSpecification, testImplementation, testInterfac
     const t = mrt[0];
     const testResourceArg = decodeURIComponent(new URLSearchParams(location.search).get('requesting') || '');
     try {
-        startup(testResourceArg, t, testResourceRequirement);
+        await startup(testResourceArg, t, testResourceRequirement);
+        // process.exit(0);
     }
     catch (e) {
         console.error(e);

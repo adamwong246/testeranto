@@ -10,8 +10,6 @@ import {
 import TesterantoLevelTwo from "./core.js";
 import { NodeWriter } from "./NodeWriter.js";
 
-console.log("node-core argv", process.argv);
-
 export default async <
   TestShape extends ITTestShape,
   Input,
@@ -85,7 +83,10 @@ export default async <
     ) as ITTestResourceConfiguration;
 
     if (testResourceRequirement.ports == 0) {
-      await t.receiveTestResourceConfig(partialTestResource);
+
+      const failed = await t.receiveTestResourceConfig(partialTestResource);
+      process.exit(failed ? 1 : 0);
+
     } else {
       console.log("test configuration is incomplete", partialTestResource);
       if (process.send) {
@@ -119,27 +120,30 @@ export default async <
 
             console.log("secondTestResource", secondTestResource);
 
-            if (await t.receiveTestResourceConfig(secondTestResource)) {
-              /* @ts-ignore:next-line */
-              process.send(
-                {
-                  type: "testeranto:adios",
-                  data: {
-                    testResourceConfiguration:
-                      t.test.testResourceConfiguration,
-                    results: t.toObj(),
-                  },
+
+            const failed = await t.receiveTestResourceConfig(secondTestResource)
+
+            /* @ts-ignore:next-line */
+            process.send(
+              {
+                type: "testeranto:adios",
+                data: {
+                  testResourceConfiguration:
+                    t.test.testResourceConfiguration,
+                  results: t.toObj(),
                 },
-                (err) => {
-                  if (!err) {
-                    console.log(`✅`);
-                  } else {
-                    console.error(`❗️`, err);
-                  }
-                  // process.exit(0); // :-)
+              },
+              (err) => {
+                if (!err) {
+                  process.exit(failed ? 1 : 0);
+                } else {
+                  console.error(err);
+                  process.exit(1);
                 }
-              );
-            }
+
+              }
+            );
+
           }
         );
       } else {
@@ -153,7 +157,6 @@ export default async <
             ...JSON.parse(JSON.stringify(partialTestResource)),
           } as ITTestResourceConfiguration;
           await t.receiveTestResourceConfig(secondTestResource);
-          // process.exit(0); // :-)
         });
       }
     }

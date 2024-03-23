@@ -23,13 +23,13 @@
       "import": "./dist/module/Project.js",
       "require": "./dist/common/Project.js"
     },
-    "./src/core-electron": {
-      "import": "./dist/module/core-electron.js",
-      "require": "./dist/common/core-electron.js"
+    "./src/Web": {
+      "import": "./dist/module/Web.js",
+      "require": "./dist/common/Web.js"
     },
-    "./src/core-node": {
-      "import": "./dist/module/core-node.js",
-      "require": "./dist/common/core-node.js"
+    "./src/Node": {
+      "import": "./dist/module/Node.js",
+      "require": "./dist/common/Node.js"
     },
     "./src/core-puppeteer": {
       "import": "./dist/module/core-puppeteer.js",

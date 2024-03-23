@@ -12,7 +12,6 @@ exports.NodeWriter = {
         const partialTestResource = JSON.parse(testResourceArg);
         if (partialTestResource.fs && partialTestResource.ports) {
             await t.receiveTestResourceConfig(partialTestResource);
-            // process.exit(0); // :-)
         }
         else {
             console.log("test configuration is incomplete", partialTestResource);

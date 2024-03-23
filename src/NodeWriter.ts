@@ -23,7 +23,7 @@ export const NodeWriter: ILogWriter = {
 
     if (partialTestResource.fs && partialTestResource.ports) {
       await t.receiveTestResourceConfig(partialTestResource);
-      // process.exit(0); // :-)
+
     } else {
       console.log("test configuration is incomplete", partialTestResource);
       if (process.send) {
@@ -87,6 +87,7 @@ export const NodeWriter: ILogWriter = {
             ...JSON.parse(JSON.stringify(resourcesFromStdin)),
             ...JSON.parse(JSON.stringify(partialTestResource)),
           } as ITTestResourceConfiguration;
+
           await t.receiveTestResourceConfig(secondTestResource);
           // process.exit(0); // :-)
         });

@@ -314,6 +314,7 @@ class TesterantoLevelOne {
                         return suiteDone.givens[k].error;
                     }).length;
                     console.log(`exiting gracefully with ${numberOfFailures} failures.`);
+                    return numberOfFailures !== 0;
                 },
             };
         });
@@ -372,9 +373,7 @@ class TesterantoLevelTwo extends TesterantoLevelOne {
             afterEach(store, key, artifactory) {
                 return new Promise((res) => res(afterEach(store, key, artifactory)));
             }
-        }, testResourceRequirement, 
-        // nameKey,
-        logWriter);
+        }, testResourceRequirement, logWriter);
     }
 }
 exports.default = TesterantoLevelTwo;

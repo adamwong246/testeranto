@@ -114,7 +114,7 @@ export type ITestJob = {
   test: IT;
   runner: IRunner;
   testResourceRequirement: ITTestResourceRequirement;
-  receiveTestResourceConfig: (testResource?) => boolean;
+  receiveTestResourceConfig: (testResource?) => Promise<boolean>;
 };
 
 export type ITestResults = Promise<{ test: IT }>[];
@@ -1032,8 +1032,8 @@ abstract class TesterantoLevelOne<
               return suiteDone.givens[k].error
             }
           ).length;
-
           console.log(`exiting gracefully with ${numberOfFailures} failures.`);
+          return numberOfFailures !== 0;
         },
       };
     });
@@ -1266,7 +1266,6 @@ export default class TesterantoLevelTwo<TestShape extends ITTestShape,
       } as any,
 
       testResourceRequirement,
-      // nameKey,
       logWriter
     );
   }

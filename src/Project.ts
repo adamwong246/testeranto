@@ -12,7 +12,7 @@ import { ITTestResourceRequirement } from './core';
 const TIMEOUT = 2000;
 const OPEN_PORT = "";
 
-export type IRunTime = `node` | `electron` | `puppeteer`;
+export type IRunTime = `node` | `web`;
 export type IRunTimes = { runtime: IRunTime; entrypoint: string }[];
 
 export type ITestTypes = [
@@ -148,11 +148,11 @@ export default class Scheduler {
         ).every((b) => b);
 
         if (!allFilesExist) {
-          console.log(
-            this.spinner(),
-            "waiting for files to be bundled...",
-            filesToLookup
-          );
+          console.log(this.spinner(), "waiting for files to build...")
+          filesToLookup.forEach((f) => {
+            console.log(f.exists, "\t", f.filepath);
+          })
+
         } else {
           clearInterval(bootInterval);
 
@@ -188,39 +188,40 @@ export default class Scheduler {
                 }
               )}'`;
 
-              if (runtime === "puppeteer") {
-                const sourceFileSplit = inputFilePath.split("/");
-                const sourceDir = sourceFileSplit.slice(0, -1);
-                const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
-                const sourceFileNameWithoutExtensions = sourceFileName.split(".").slice(0, -1).join(".")
-                const htmlFilePath = path.normalize(`/${project.outdir}/${sourceDir.join("/")}/${sourceFileNameWithoutExtensions}.html`);
+              // if (runtime === "puppeteer") {
+              //   const sourceFileSplit = inputFilePath.split("/");
+              //   const sourceDir = sourceFileSplit.slice(0, -1);
+              //   const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
+              //   const sourceFileNameWithoutExtensions = sourceFileName.split(".").slice(0, -1).join(".")
+              //   const htmlFilePath = path.normalize(`/${project.outdir}/${sourceDir.join("/")}/${sourceFileNameWithoutExtensions}.html`);
 
-                pm2.start(
-                  {
-                    script: `node ./node_modules/testeranto/dist/common/Puppeteer.js ${htmlFilePath} '${JSON.stringify(
-                      {
-                        name: inputFilePath,
-                        ports: [],
-                        fs:
-                          path.resolve(
-                            process.cwd(),
-                            project.outdir,
-                            inputFilePath
-                          ),
-                      }
-                    )}'`,
-                    name: inputFilePath,
-                    autorestart: false,
-                    args: partialTestResourceByCommandLineArg,
-                  },
-                  (err, proc) => {
-                    if (err) {
-                      console.error(err);
-                      return pm2.disconnect();
-                    }
-                  }
-                );
-              } else if (runtime === "electron") {
+              //   pm2.start(
+              //     {
+              //       script: `node ./node_modules/testeranto/dist/common/Puppeteer.js ${htmlFilePath} '${JSON.stringify(
+              //         {
+              //           name: inputFilePath,
+              //           ports: [],
+              //           fs:
+              //             path.resolve(
+              //               process.cwd(),
+              //               project.outdir,
+              //               inputFilePath
+              //             ),
+              //         }
+              //       )}'`,
+              //       name: inputFilePath,
+              //       autorestart: false,
+              //       args: partialTestResourceByCommandLineArg,
+              //     },
+              //     (err, proc) => {
+              //       if (err) {
+              //         console.error(err);
+              //         return pm2.disconnect();
+              //       }
+              //     }
+              //   );
+              // } else
+              if (runtime === "web") {
                 const fileAsList = inputFilePath.split("/");
                 const fileListHead = fileAsList.slice(0, -1);
                 const fname = fileAsList[fileAsList.length - 1];
@@ -339,15 +340,20 @@ export default class Scheduler {
     //   this.project.getSecondaryEndpointsPoints().length
     // );
 
-    // pm2.list((err, procs) => {
-    //   procs.forEach((proc) => {
-    //     console.log(proc.name, proc.pid, proc.pm_id, proc.monit)
-    //   })
-    // });
+    const procsTable: any[] = [];
+    pm2.list((err, procs) => {
+      procs.forEach((proc) => {
+        procsTable.push({ name: proc.name, pid: proc.pid, pmid: proc.pm_id, mem: proc.monit?.memory, cpu: proc.monit?.cpu })
+      })
+      console.log("PM2");
+      console.table(procsTable);
+    });
 
 
+    console.log("resourceQueue");
+    console.table(this.resourceQueue);
     // console.log("webSocketServer.clients", webSocketServer.clients.size);
-    console.log("resourceQueue", this.resourceQueue);
+    // console.log("resourceQueue", this.resourceQueue);
 
     this.tick();
     // this.checkForShutDown();
@@ -482,7 +488,6 @@ export default class Scheduler {
     const testResourceRequirement = resourceRequest.requirement;
 
     pm2.list((err, processes) => {
-      // console.log("mark1", processes);
       console.error(err);
       processes.forEach((p) => {
         console.log("p.pid, p.name, p.pm_id", p.pid, p.name, p.pm_id);
@@ -595,7 +600,7 @@ const getRunnables = (
 
     if (cv[1] === "node") {
       pt[0].add(cv[0]);
-    } else if (cv[1] === "electron") {
+    } else if (cv[1] === "web") {
       pt[1].add(cv[0]);
     }
 
@@ -681,8 +686,9 @@ export class ITProject {
         };
 
         Promise.resolve(Promise.all(
-          [...this.getSecondaryEndpointsPoints("puppeteer"),
-          ...this.getSecondaryEndpointsPoints("electron")]
+          [
+            ...this.getSecondaryEndpointsPoints("web")
+          ]
             .map(async (sourceFilePath) => {
               const sourceFileSplit = sourceFilePath.split("/");
               const sourceDir = sourceFileSplit.slice(0, -1);
@@ -745,7 +751,6 @@ export class ITProject {
             },
           ],
         };
-
 
         esbuild.build({
           bundle: true,

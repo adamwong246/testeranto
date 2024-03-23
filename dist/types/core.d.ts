@@ -66,7 +66,7 @@ export declare type ITestJob = {
     test: IT;
     runner: IRunner;
     testResourceRequirement: ITTestResourceRequirement;
-    receiveTestResourceConfig: (testResource?: any) => boolean;
+    receiveTestResourceConfig: (testResource?: any) => Promise<boolean>;
 };
 export declare type ITestResults = Promise<{
     test: IT;

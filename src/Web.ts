@@ -10,8 +10,6 @@ import {
 } from "./core";
 import TesterantoLevelTwo from "./core";
 
-console.log("hello core-electron");
-
 const webSocket = new WebSocket("ws://localhost:8080");
 
 const startup = async (
@@ -19,16 +17,14 @@ const startup = async (
   t: ITestJob,
   testResourceRequirement: ITTestResourceRequest
 ) => {
-
-  console.log("core-electron startup", testResourceArg);
-
   const partialTestResource = JSON.parse(
     testResourceArg
   ) as ITTestResourceConfiguration;
 
   if (partialTestResource.fs && partialTestResource.ports) {
-    await t.receiveTestResourceConfig(partialTestResource);
-    // process.exit(0); // :-)
+    const failed = await t.receiveTestResourceConfig(partialTestResource);
+    (window as any).exit(failed)
+
   } else {
     console.log("test configuration is incomplete", partialTestResource);
     console.log(
@@ -37,7 +33,6 @@ const startup = async (
     );
 
     webSocket.addEventListener("open", (event) => {
-      // console.log("Hello webSockets!");
       webSocket.addEventListener("message", (event) => {
         console.log("Message from server ", event.data);
       });
@@ -65,20 +60,22 @@ const startup = async (
 
           console.log("secondTestResource", secondTestResource);
 
-          if (await t.receiveTestResourceConfig(secondTestResource)) {
-            webSocket.send(
-              JSON.stringify({
-                type: "testeranto:adios",
-                data: {
-                  testResourceConfiguration:
-                    t.test.testResourceConfiguration,
-                  results: t.toObj(),
-                },
-              })
-            );
+          const failed = await t.receiveTestResourceConfig(partialTestResource);
 
-            document.write("all done")
-          }
+          webSocket.send(
+            JSON.stringify({
+              type: "testeranto:adios",
+              data: {
+                testResourceConfiguration:
+                  t.test.testResourceConfiguration,
+                results: t.toObj(),
+              },
+            })
+          );
+
+          document.write("all done")
+          // app.exit(failed ? 1 : 0);
+          // process.exit(failed ? 1 : 0);
         }
       );
 
@@ -173,7 +170,8 @@ export default async <
   const t: ITestJob = mrt[0];
   const testResourceArg = decodeURIComponent(new URLSearchParams(location.search).get('requesting') || '');
   try {
-    startup(testResourceArg, t, testResourceRequirement);
+    await startup(testResourceArg, t, testResourceRequirement);
+    // process.exit(0);
   } catch (e) {
     console.error(e);
     process.exit(-1);

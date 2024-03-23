@@ -2,7 +2,7 @@ import WebSocket from 'ws';
 import { TesterantoFeatures } from "./Features";
 import { IBaseConfig, ICollateMode } from "./IBaseConfig";
 import { ITTestResourceRequirement } from './core';
-export declare type IRunTime = `node` | `electron` | `puppeteer`;
+export declare type IRunTime = `node` | `web`;
 export declare type IRunTimes = {
     runtime: IRunTime;
     entrypoint: string;
