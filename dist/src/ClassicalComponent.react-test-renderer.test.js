@@ -38,8 +38,8 @@ var import_assert = __toESM(require("assert"));
 // myTests/react-test-renderer-componnent.testeranto.test.ts
 var import_react = __toESM(require("react"));
 var import_react_test_renderer = __toESM(require("react-test-renderer"));
-var import_core_node = __toESM(require("testeranto/src/core-node"));
-var ReactTestRendererTesteranto = (testImplementations, testSpecifications, testInput) => (0, import_core_node.default)(
+var import_Node = __toESM(require("testeranto/src/Node"));
+var ReactTestRendererTesteranto = (testImplementations, testSpecifications, testInput) => (0, import_Node.default)(
   testInput,
   testSpecifications,
   testImplementations,
@@ -129,7 +129,7 @@ var testSpecification = (Suite, Given, When, Then, Check) => {
             When.IClickTheButton(),
             When.IClickTheButton()
           ],
-          [Then.TheStatusIs({ count: 2 })]
+          [Then.TheStatusIs({ count: 22 })]
         )
       },
       []

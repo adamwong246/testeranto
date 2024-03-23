@@ -1,4 +1,5 @@
-import Testeranto from "testeranto/src/core-node";
+import { whyIsNodeStillRunning } from 'why-is-node-still-running';
+import Testeranto from "testeranto/src/Node";
 
 import Rectangle from "../../src/Rectangle";
 import {
@@ -25,7 +26,13 @@ export const RectangleTesteranto = Testeranto<
   RectangleTesterantoBasePrototype,
   RectangleTesterantoBaseTestSpecification,
   RectangleTesterantoBaseTestImplementation,
-  RectangleTesterantoBaseInterface,
+  {
+    afterAll: async function (renderer, actioner) {
+      // console.log("goodbye");
+      // whyIsNodeStillRunning();
+    },
+    ...RectangleTesterantoBaseInterface
+  },
 );
 
 export { };

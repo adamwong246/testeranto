@@ -6,7 +6,7 @@ import { ethers } from "ethers";
 import { Contract as ContractEthers } from 'ethers';
 import { Contract as ContractWeb3 } from 'web3-eth-contract';
 
-import Testeranto from "testeranto/src/core-node";
+import Testeranto from "testeranto/src/Node";
 import {
   ITestImplementation, ITestSpecification, ITTestShape
 } from "testeranto/src/core";

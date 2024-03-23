@@ -4,7 +4,7 @@
 import { assert } from "chai";
 import http from "http";
 
-import Testeranto from "testeranto/src/core-node";
+import Testeranto from "testeranto/src/Node";
 import {
   ITestArtificer,
   ITestImplementation, ITestSpecification, ITTestShape, Modify
@@ -18,6 +18,8 @@ type Selection = string;
 type Input = () => Store;
 type Subject = () => Store;
 type InitialState = unknown;
+
+var timeout: NodeJS.Timeout;
 
 export type IHttpTesterantoTestImplementation<ITestShape extends ITTestShape> = Modify<ITestImplementation<
   InitialState,
@@ -36,7 +38,8 @@ export type IHttpTesterantoTestImplementation<ITestShape extends ITTestShape> = 
 // we need to sleep to give the http time to drain the connectionss
 function sleep(ms) {
   return new Promise((resolve) => {
-    setTimeout(resolve, ms);
+    timeout = setTimeout(resolve, ms);
+    timeout.unref();
   });
 }
 
@@ -115,7 +118,13 @@ export const HttpTesteranto = <
             res();
           })
         })
-      }
+      },
+      // afterAll: function (): Promise<void> {
+      //   return new Promise((res) => {
+      //     console.log("goodbye");
+      //     whyIsNodeStillRunning();
+      //   })
+      // }
     },
     { ports: 1 },
   )

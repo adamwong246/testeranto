@@ -1,7 +1,7 @@
 import React from "react";
 import renderer, { act } from "react-test-renderer";
 
-import Testeranto from "testeranto/src/core-node";
+import Testeranto from "testeranto/src/Node";
 import { ITestImplementation, ITestSpecification, ITTestShape } from "testeranto/src/core";
 
 type Input = () => React.JSX.Element;

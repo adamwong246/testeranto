@@ -56,7 +56,7 @@ export const testSpecification = (Suite, Given, When, Then, Check) => {
             When.IClickTheButton(),
             When.IClickTheButton(),
           ],
-          [Then.TheStatusIs({ count: 2 })]
+          [Then.TheStatusIs({ count: 22 })]
         )
       },
       []

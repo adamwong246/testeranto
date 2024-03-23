@@ -1,7 +1,7 @@
 import {
-  assert,
-  core_electron_default
-} from "../../chunk-UZ5QK7XM.js";
+  Web_default,
+  assert
+} from "../../chunk-BVWPBNJS.js";
 import "../../chunk-4ATCX2XT.js";
 
 // src/Rectangle.ts
@@ -127,7 +127,7 @@ var RectangleTesterantoBaseInterface = {
 var RectangleTesterantoBasePrototype = Rectangle_default.prototype;
 
 // src/Rectangle/Rectangle.test.electron.ts
-var RectangleTesteranto = core_electron_default(
+var RectangleTesteranto = Web_default(
   RectangleTesterantoBasePrototype,
   RectangleTesterantoBaseTestSpecification,
   RectangleTesterantoBaseTestImplementation,

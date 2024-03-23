@@ -1,4 +1,4 @@
-import Testeranto from "testeranto/src/core-electron";
+import Testeranto from "testeranto/src/Web";
 
 import Rectangle from "../../src/Rectangle";
 import {

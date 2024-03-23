@@ -13,7 +13,7 @@
     "ATDD"
   ],
   "scripts": {
-    "nuke": "yarn pm2 stop all; yarn pm2 delete all; yarn pm2 save; rm -rf dist/**",
+    "nuke": "pm2 stop all; pm2 delete all; pm2 save; rm -rf dist/**",
     "test": "ts-node-esm project.test.mts"
   },
   "types": "index.d.ts",
@@ -29,8 +29,9 @@
     "node-fetch": "^3.3.2",
     "puppeteer-screen-recorder": "^2.1.2",
     "react-bootstrap": "^2.10.2",
-    "testeranto": "../testeranto",
-    "url": "^0.11.3"
+    "ts-node": "^10.9.2",
+    "url": "^0.11.3",
+    "why-is-node-still-running": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.19.6",

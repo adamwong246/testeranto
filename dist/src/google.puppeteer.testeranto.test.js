@@ -37,11 +37,11 @@ var import_chai = require("chai");
 
 // myTests/puppeteer.testeranto.test.ts
 var import_html = __toESM(require("html"));
-var import_core_node = __toESM(require("testeranto/src/core-node"));
+var import_Node = __toESM(require("testeranto/src/Node"));
 var import_stream = require("stream");
 var import_puppeteer = __toESM(require("puppeteer"));
 var import_puppeteer_screen_recorder = require("puppeteer-screen-recorder");
-var PuppeteerTesteranto = (input, testImplementations, testSpecifications) => (0, import_core_node.default)(
+var PuppeteerTesteranto = (input, testImplementations, testSpecifications) => (0, import_Node.default)(
   input,
   testSpecifications,
   testImplementations,

@@ -165,8 +165,8 @@ var app_default = () => {
 
 // myTests/reduxToolkit.testeranto.test.ts
 var import_redux = require("redux");
-var import_core_node = __toESM(require("testeranto/src/core-node"));
-var ReduxToolkitTesteranto = (testImplementations, testSpecifications, testInput) => (0, import_core_node.default)(
+var import_Node = __toESM(require("testeranto/src/Node"));
+var ReduxToolkitTesteranto = (testImplementations, testSpecifications, testInput) => (0, import_Node.default)(
   testInput,
   testSpecifications,
   testImplementations,

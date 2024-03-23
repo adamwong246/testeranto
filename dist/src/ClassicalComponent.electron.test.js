@@ -1,16 +1,16 @@
 import {
-  assert,
-  core_electron_default
-} from "../chunk-UZ5QK7XM.js";
+  Web_default,
+  assert
+} from "../chunk-BVWPBNJS.js";
 import {
   ClassicalComponent
-} from "../chunk-GQ66M77R.js";
+} from "../chunk-5WTZHB7C.js";
 import {
   require_client
-} from "../chunk-INCPOGSQ.js";
+} from "../chunk-6LWWU2HF.js";
 import {
   require_react
-} from "../chunk-YZAXQEPE.js";
+} from "../chunk-WLWHQ7FI.js";
 import {
   __toESM
 } from "../chunk-4ATCX2XT.js";
@@ -52,7 +52,7 @@ var testSpecification = (Suite, Given, When, Then, Check) => {
             When.IClickTheButton(),
             When.IClickTheButton()
           ],
-          [Then.TheStatusIs({ count: 2 })]
+          [Then.TheStatusIs({ count: 22 })]
         )
       },
       []
@@ -70,36 +70,30 @@ var react_component_testeranto_test_default = (testImplementations, testSpecific
       this.done = props.done;
     }
     componentDidMount() {
-      console.info("componentDidMount");
       super.componentDidMount && super.componentDidMount();
       return this.done(this);
     }
   }
-  return core_electron_default(
+  return Web_default(
     testInput,
     testSpecifications,
     testImplementations,
     {
       beforeAll: async (prototype, artificer) => {
-        console.log("beforeAll");
         artificer("./before.txt", "hello artificer");
         return await new Promise((resolve, rej) => {
           document.addEventListener("DOMContentLoaded", function() {
-            console.log("DOMContentLoaded");
             const elem = document.getElementById("root");
             if (elem) {
-              console.log("elem", elem);
               resolve({ htmlElement: elem });
             }
           });
         });
       },
       beforeEach: async ({ htmlElement }, ndx, testRsource, artificer) => {
-        console.log("beforeEach");
         return new Promise((resolve, rej) => {
           const reactElement = import_react.default.createElement(TesterantoComponent, {
             done: (reactElement2) => {
-              console.log("mark4", reactElement2);
               resolve(
                 {
                   htmlElement,

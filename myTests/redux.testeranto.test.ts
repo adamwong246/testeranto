@@ -5,7 +5,7 @@ import {
 } from "@reduxjs/toolkit";
 import { createStore, Store, AnyAction } from "redux";
 
-import Testeranto from "testeranto/src/core-node";
+import Testeranto from "testeranto/src/Node";
 import { ITestImplementation, ITestSpecification, ITTestShape, Modify } from "testeranto/src/core";
 
 export type WhenShape = [

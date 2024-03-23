@@ -21,5 +21,3 @@ Suite:,a classical react component
 
  Given: AnEmptyState
  When:,IClickTheButton: undefined
- When:,IClickTheButton: undefined
- Then:,TheStatusIs: [object Object]

@@ -4,7 +4,7 @@ import React, {
 import ReactDom from "react-dom/client";
 
 import { ITTestShape, ITestImplementation, ITestSpecification } from "testeranto/src/core";
-import Testeranto from "testeranto/src/core-electron";
+import Testeranto from "testeranto/src/Web";
 
 type Input = [string, (string) => string, any];
 type InitialState = unknown;

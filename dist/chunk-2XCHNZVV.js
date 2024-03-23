@@ -1,7 +1,7 @@
 import {
   require_react,
   require_react_dom
-} from "./chunk-YZAXQEPE.js";
+} from "./chunk-WLWHQ7FI.js";
 import {
   __commonJS,
   __spreadProps,

@@ -5,7 +5,7 @@
 import { assert } from "chai";
 import http from "http";
 
-import Testeranto from "testeranto/src/core-node";
+import Testeranto from "testeranto/src/Node";
 import {
   ITestArtificer,
   ITestImplementation, ITestSpecification, ITTestShape, Modify

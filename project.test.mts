@@ -8,7 +8,7 @@ export default new ITProject({
   __dirname: `~/Code/kokomoBay`,
   outbase: ".",
   outdir: "dist",
-  buildMode: "watch",
+  buildMode: "on",
   runMode: true,
   clearScreen: false,
   collateEntry: "index.tsx",

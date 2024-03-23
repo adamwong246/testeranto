@@ -4351,6 +4351,7 @@ var TesterantoLevelOne = class {
             return suiteDone.givens[k].error;
           }).length;
           console.log(`exiting gracefully with ${numberOfFailures} failures.`);
+          return numberOfFailures !== 0;
         }
       };
     });
@@ -4359,79 +4360,66 @@ var TesterantoLevelOne = class {
 };
 var TesterantoLevelTwo = class extends TesterantoLevelOne {
   constructor(input, testSpecification, testImplementation, testInterface, testResourceRequirement = defaultTestResourceRequirement, assertioner, beforeEach, afterEach, afterAll, butThen, andWhen, actionHandler, logWriter) {
-    super(
-      testImplementation,
-      testSpecification,
-      input,
-      class extends BaseSuite {
-        async setup(s, artifactory) {
-          return (testInterface.beforeAll || (async (input2, artificer) => input2))(s, artifactory, this.testResourceConfiguration);
-        }
-        test(t) {
-          return assertioner(t);
-        }
-      },
-      class Given extends BaseGiven {
-        constructor(name, features, whens, thens, initialValues) {
-          super(name, features, whens, thens);
-          this.initialValues = initialValues;
-        }
-        async givenThat(subject, testResource, artifactory) {
-          return beforeEach(subject, this.initialValues, testResource, artifactory);
-        }
-        afterEach(store, key, artifactory) {
-          return new Promise((res) => res(afterEach(store, key, artifactory)));
-        }
-        afterAll(store, artifactory) {
-          return afterAll(store, artifactory);
-        }
-      },
-      class When extends BaseWhen {
-        constructor(name, actioner, payload) {
-          super(name, (store) => {
-            return actionHandler(actioner);
-          });
-          this.payload = payload;
-        }
-        async andWhen(store, actioner, testResource) {
-          return await andWhen(store, actioner, testResource);
-        }
-      },
-      class Then extends BaseThen {
-        constructor(name, callback) {
-          super(name, callback);
-        }
-        async butThen(store, testResourceConfiguration) {
-          return await butThen(store, this.thenCB, testResourceConfiguration);
-        }
-      },
-      class Check extends BaseCheck {
-        constructor(name, features, checkCallback, whens, thens, initialValues) {
-          super(name, features, checkCallback, whens, thens);
-          this.initialValues = initialValues;
-        }
-        async checkThat(subject, testResourceConfiguration, artifactory) {
-          return beforeEach(subject, this.initialValues, testResourceConfiguration, artifactory);
-        }
-        afterEach(store, key, artifactory) {
-          return new Promise((res) => res(afterEach(store, key, artifactory)));
-        }
-      },
-      testResourceRequirement,
-      // nameKey,
-      logWriter
-    );
+    super(testImplementation, testSpecification, input, class extends BaseSuite {
+      async setup(s, artifactory) {
+        return (testInterface.beforeAll || (async (input2, artificer) => input2))(s, artifactory, this.testResourceConfiguration);
+      }
+      test(t) {
+        return assertioner(t);
+      }
+    }, class Given extends BaseGiven {
+      constructor(name, features, whens, thens, initialValues) {
+        super(name, features, whens, thens);
+        this.initialValues = initialValues;
+      }
+      async givenThat(subject, testResource, artifactory) {
+        return beforeEach(subject, this.initialValues, testResource, artifactory);
+      }
+      afterEach(store, key, artifactory) {
+        return new Promise((res) => res(afterEach(store, key, artifactory)));
+      }
+      afterAll(store, artifactory) {
+        return afterAll(store, artifactory);
+      }
+    }, class When extends BaseWhen {
+      constructor(name, actioner, payload) {
+        super(name, (store) => {
+          return actionHandler(actioner);
+        });
+        this.payload = payload;
+      }
+      async andWhen(store, actioner, testResource) {
+        return await andWhen(store, actioner, testResource);
+      }
+    }, class Then extends BaseThen {
+      constructor(name, callback) {
+        super(name, callback);
+      }
+      async butThen(store, testResourceConfiguration) {
+        return await butThen(store, this.thenCB, testResourceConfiguration);
+      }
+    }, class Check extends BaseCheck {
+      constructor(name, features, checkCallback, whens, thens, initialValues) {
+        super(name, features, checkCallback, whens, thens);
+        this.initialValues = initialValues;
+      }
+      async checkThat(subject, testResourceConfiguration, artifactory) {
+        return beforeEach(subject, this.initialValues, testResourceConfiguration, artifactory);
+      }
+      afterEach(store, key, artifactory) {
+        return new Promise((res) => res(afterEach(store, key, artifactory)));
+      }
+    }, testResourceRequirement, logWriter);
   }
 };
 
-// ../testeranto/dist/module/core-electron.js
-console.log("hello core-electron");
+// ../testeranto/dist/module/Web.js
 var webSocket = new WebSocket("ws://localhost:8080");
 var startup = async (testResourceArg, t, testResourceRequirement) => {
-  console.log("core-electron startup", testResourceArg);
   const partialTestResource = JSON.parse(testResourceArg);
   if (partialTestResource.fs && partialTestResource.ports) {
-    await t.receiveTestResourceConfig(partialTestResource);
+    const failed = await t.receiveTestResourceConfig(partialTestResource);
+    window.exit(failed);
   } else {
     console.log("test configuration is incomplete", partialTestResource);
     console.log("requesting test resources via ws", testResourceRequirement);
@@ -4452,21 +4440,20 @@ var startup = async (testResourceArg, t, testResourceRequirement) => {
         const resourcesFromPm2 = msg.data.testResourceConfiguration;
         const secondTestResource = Object.assign(Object.assign({ fs: "." }, JSON.parse(JSON.stringify(partialTestResource))), JSON.parse(JSON.stringify(resourcesFromPm2)));
         console.log("secondTestResource", secondTestResource);
-        if (await t.receiveTestResourceConfig(secondTestResource)) {
-          webSocket.send(JSON.stringify({
-            type: "testeranto:adios",
-            data: {
-              testResourceConfiguration: t.test.testResourceConfiguration,
-              results: t.toObj()
-            }
-          }));
-          document.write("all done");
-        }
+        const failed = await t.receiveTestResourceConfig(partialTestResource);
+        webSocket.send(JSON.stringify({
+          type: "testeranto:adios",
+          data: {
+            testResourceConfiguration: t.test.testResourceConfiguration,
+            results: t.toObj()
+          }
+        }));
+        document.write("all done");
       };
     });
   }
 };
-var core_electron_default = async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = defaultTestResourceRequirement) => {
+var Web_default = async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = defaultTestResourceRequirement) => {
   const mrt = new TesterantoLevelTwo(input, testSpecification, testImplementation, testInterface, testResourceRequirement, testInterface.assertioner || (async (t2) => t2), testInterface.beforeEach || async function(subject, initialValues, testResource) {
     return subject;
   }, testInterface.afterEach || (async (s) => s), testInterface.afterAll || ((store) => void 0), testInterface.butThen || (async (a) => a), testInterface.andWhen, testInterface.actionHandler || function(b) {
@@ -4475,7 +4462,7 @@ var core_electron_default = async (input, testSpecification, testImplementation,
   const t = mrt[0];
   const testResourceArg = decodeURIComponent(new URLSearchParams(location.search).get("requesting") || "");
   try {
-    startup(testResourceArg, t, testResourceRequirement);
+    await startup(testResourceArg, t, testResourceRequirement);
   } catch (e) {
     console.error(e);
     process.exit(-1);
@@ -4484,7 +4471,7 @@ var core_electron_default = async (input, testSpecification, testImplementation,
 
 export {
   assert,
-  core_electron_default
+  Web_default
 };
 /*! Bundled license information:
 

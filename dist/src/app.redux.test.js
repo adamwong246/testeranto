@@ -155,8 +155,8 @@ var AppSpecification = (Suite, Given, When, Then, Check) => {
 
 // myTests/redux.testeranto.test.ts
 var import_redux = require("redux");
-var import_core_node = __toESM(require("testeranto/src/core-node"));
-var ReduxTesteranto = (testInput, testSpecifications, testImplementations) => (0, import_core_node.default)(
+var import_Node = __toESM(require("testeranto/src/Node"));
+var ReduxTesteranto = (testInput, testSpecifications, testImplementations) => (0, import_Node.default)(
   testInput,
   testSpecifications,
   testImplementations,

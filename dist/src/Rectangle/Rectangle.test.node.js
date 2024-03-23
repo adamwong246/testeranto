@@ -3,8 +3,22 @@ var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b ||= {})
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
 var __export = (target, all) => {
   for (var name in all)
     __defProp(target, name, { get: all[name], enumerable: true });
@@ -33,7 +47,7 @@ __export(Rectangle_test_node_exports, {
   RectangleTesteranto: () => RectangleTesteranto
 });
 module.exports = __toCommonJS(Rectangle_test_node_exports);
-var import_core_node = __toESM(require("testeranto/src/core-node"));
+var import_Node = __toESM(require("testeranto/src/Node"));
 
 // src/Rectangle.test.ts
 var import_chai = require("chai");
@@ -161,11 +175,14 @@ var RectangleTesterantoBaseInterface = {
 var RectangleTesterantoBasePrototype = Rectangle_default.prototype;
 
 // src/Rectangle/Rectangle.test.node.ts
-var RectangleTesteranto = (0, import_core_node.default)(
+var RectangleTesteranto = (0, import_Node.default)(
   RectangleTesterantoBasePrototype,
   RectangleTesterantoBaseTestSpecification,
   RectangleTesterantoBaseTestImplementation,
-  RectangleTesterantoBaseInterface
+  __spreadValues({
+    afterAll: async function(renderer, actioner) {
+    }
+  }, RectangleTesterantoBaseInterface)
 );
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {

@@ -119,7 +119,7 @@ var features_test_default = new import_Features.TesterantoFeatures(features, {
 var import_ganache = __toESM(require("ganache"));
 var import_web3 = __toESM(require("web3"));
 var import_ethers = require("ethers");
-var import_core_node = __toESM(require("testeranto/src/core-node"));
+var import_Node = __toESM(require("testeranto/src/Node"));
 
 // myTests/truffle.mts
 var import_promises = __toESM(require("fs/promises"), 1);
@@ -174,7 +174,7 @@ var solCompile = async (entrySolidityFile) => {
 };
 
 // myTests/solidity-rpc.testeranto.test.ts
-var SolidityRpcTesteranto = (testImplementations, testSpecifications, testInput, contractName) => (0, import_core_node.default)(
+var SolidityRpcTesteranto = (testImplementations, testSpecifications, testInput, contractName) => (0, import_Node.default)(
   testInput,
   testSpecifications,
   testImplementations,

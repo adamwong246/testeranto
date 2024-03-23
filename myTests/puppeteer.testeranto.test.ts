@@ -2,7 +2,7 @@
 
 import { assert } from "chai";
 import html from "html";
-import Testeranto from "testeranto/src/core-node";
+import Testeranto from "testeranto/src/Node";
 import {
   ITestImplementation,
   ITestSpecification,

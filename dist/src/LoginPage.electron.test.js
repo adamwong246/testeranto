@@ -1,16 +1,16 @@
 import {
-  assert,
-  core_electron_default
-} from "../chunk-UZ5QK7XM.js";
+  Web_default,
+  assert
+} from "../chunk-BVWPBNJS.js";
 import {
   require_client
-} from "../chunk-INCPOGSQ.js";
+} from "../chunk-6LWWU2HF.js";
 import {
   LoginPage_default
-} from "../chunk-3TPAPAKL.js";
+} from "../chunk-2XCHNZVV.js";
 import {
   require_react
-} from "../chunk-YZAXQEPE.js";
+} from "../chunk-WLWHQ7FI.js";
 import {
   __toESM
 } from "../chunk-4ATCX2XT.js";
@@ -29,7 +29,7 @@ var react_jsx_testeranto_test_default = (testImplementations, testSpecifications
     }, []);
     return import_react.default.createElement("div", { ref: myContainer }, testInput());
   };
-  return core_electron_default(
+  return Web_default(
     testInput,
     testSpecifications,
     testImplementations,

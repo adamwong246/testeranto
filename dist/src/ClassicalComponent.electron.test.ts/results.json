@@ -84,7 +84,18 @@
           "name": "TheStatusIs: [object Object]"
         }
       ],
-      "error": null,
+      "error": [
+        {
+          "name": "AssertionError",
+          "message": "expected '{\"count\":2}' to deeply equal '{\"count\":22}'",
+          "showDiff": true,
+          "actual": "{\"count\":2}",
+          "expected": "{\"count\":22}",
+          "operator": "strictEqual",
+          "stack": "AssertionError: expected '{\"count\":2}' to deeply equal '{\"count\":22}'\n    at Then.thenCB (file:///Users/adam/Code/kokomoBay/dist/src/ClassicalComponent.electron.test.js:158:16)\n    at Then.test (file:///Users/adam/Code/kokomoBay/dist/chunk-BVWPBNJS.js:4216:19)\n    at async Given.give (file:///Users/adam/Code/kokomoBay/dist/chunk-BVWPBNJS.js:4164:19)\n    at async TesterantoLevelTwo.constructor.run (file:///Users/adam/Code/kokomoBay/dist/chunk-BVWPBNJS.js:4113:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/chunk-BVWPBNJS.js:4325:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/chunk-BVWPBNJS.js:4346:29)\n    at async startup (file:///Users/adam/Code/kokomoBay/dist/chunk-BVWPBNJS.js:4421:20)\n    at async Web_default (file:///Users/adam/Code/kokomoBay/dist/chunk-BVWPBNJS.js:4465:5)"
+        },
+        "AssertionError: expected '{\"count\":2}' to deeply equal '{\"count\":22}'\n    at Then.thenCB (file:///Users/adam/Code/kokomoBay/dist/src/ClassicalComponent.electron.test.js:158:16)\n    at Then.test (file:///Users/adam/Code/kokomoBay/dist/chunk-BVWPBNJS.js:4216:19)\n    at async Given.give (file:///Users/adam/Code/kokomoBay/dist/chunk-BVWPBNJS.js:4164:19)\n    at async TesterantoLevelTwo.constructor.run (file:///Users/adam/Code/kokomoBay/dist/chunk-BVWPBNJS.js:4113:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/chunk-BVWPBNJS.js:4325:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/chunk-BVWPBNJS.js:4346:29)\n    at async startup (file:///Users/adam/Code/kokomoBay/dist/chunk-BVWPBNJS.js:4421:20)\n    at async Web_default (file:///Users/adam/Code/kokomoBay/dist/chunk-BVWPBNJS.js:4465:5)"
+      ],
       "features": [
         "test"
       ]

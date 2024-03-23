@@ -2,9 +2,9 @@ import {
   __commonJS
 } from "./chunk-4ATCX2XT.js";
 
-// ../testeranto/node_modules/react/cjs/react.development.js
+// node_modules/react/cjs/react.development.js
 var require_react_development = __commonJS({
-  "../testeranto/node_modules/react/cjs/react.development.js"(exports, module) {
+  "node_modules/react/cjs/react.development.js"(exports, module) {
     "use strict";
     if (true) {
       (function() {
@@ -1875,9 +1875,9 @@ var require_react_development = __commonJS({
   }
 });
 
-// ../testeranto/node_modules/react/index.js
+// node_modules/react/index.js
 var require_react = __commonJS({
-  "../testeranto/node_modules/react/index.js"(exports, module) {
+  "node_modules/react/index.js"(exports, module) {
     "use strict";
     if (false) {
       module.exports = null;

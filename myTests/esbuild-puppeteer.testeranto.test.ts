@@ -6,7 +6,7 @@ import esbuild from "esbuild";
 import { PuppeteerScreenRecorder } from "puppeteer-screen-recorder";
 import { PassThrough } from "stream";
 
-import Testeranto from "testeranto/src/core-node";
+import Testeranto from "testeranto/src/Node";
 import {
   ITestImplementation,
   ITestSpecification,
