@@ -1,8 +1,6 @@
 // A testeranto which sideloads another process and operates puppeteer
 
-import fs from "fs";
 import puppeteer, { Browser, Page } from "puppeteer";
-import esbuild from "esbuild";
 import { PuppeteerScreenRecorder } from "puppeteer-screen-recorder";
 import { PassThrough } from "stream";
 
@@ -31,30 +29,25 @@ type Subject = {
   htmlBundle: string;
 };
 
-function sleep(ms) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-}
-
-const htmlTemplate = (jsbundle: string): string => `
+const htmlTemplate = (jsBundle: string): string => `
 <!DOCTYPE html><html lang="en">
   <head>
-    <script type="module">
-      ${jsbundle}
-
-      // window.ClassicalComponent = ClassicalComponent;
-      console.log('window.ClassicalComponent')
+    <script type="importmap">
+      {
+      "imports": {
+        "main.js": "http://localhost:8000/${jsBundle}"
+      }
+    }
     </script>
+
+    <script type="module" crossorigin="anonymous" src="http://localhost:8000/${jsBundle}"></script>
     <script type="module">
-    // console.log(window.ClassicalComponent)
-      // import { LaunchClassicalComponent } from "ClassicalComponent";
-      // LaunchClassicalComponent();
+      import LaunchClassicalComponent from "main.js"
+      LaunchClassicalComponent()
     </script>
   </head>
 
   <body>
-    <h2>hello esbuild-puppeteer.testeranto</h2>
     <div id="root">
     </div>
   </body>
@@ -90,29 +83,24 @@ export const EsbuildPuppeteerTesteranto = <ITestShape extends ITTestShape>(
       beforeAll: async function (
         prebuilt: Input,
         artificer,
-        // testResource
       ): Promise<Subject> {
         const browser = await await puppeteer.launch({
-          headless: false,
-          devtools: true,
+          args: [
+            '--disable-web-security',
+            '--disable-features=IsolateOrigins',
+            '--disable-site-isolation-trials'
+          ],
+
+          headless: true,
+          devtools: false,
           executablePath:
             "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
         });
 
         return new Promise((res, rej) => {
-          fs.readFile(`./dist/` + testInput, 'utf8', (err, data) => {
-            if (err) {
-              console.error(err);
-              return;
-            }
-            // console.log(data);
-
-            res({
-              browser,
-              htmlBundle: htmlTemplate(
-                data,
-              ),
-            });
+          res({
+            browser,
+            htmlBundle: htmlTemplate("./dist/src/ClassicalComponent.js"),
           });
         });
 
@@ -180,6 +168,7 @@ export const EsbuildPuppeteerTesteranto = <ITestShape extends ITTestShape>(
 
         artificer("./screencap.mp4", pipeStream);
 
+
         return page.setContent(subject.htmlBundle).then(async () => {
           await recorder.startStream(pipeStream);
           artificer(
@@ -213,8 +202,7 @@ export const EsbuildPuppeteerTesteranto = <ITestShape extends ITTestShape>(
         return;
       },
       afterAll: (store: Store, artificer) => {
-        // store.page.browser().close();
-        sleep(1000)
+        store.page.browser().close();
         return;
       },
     },

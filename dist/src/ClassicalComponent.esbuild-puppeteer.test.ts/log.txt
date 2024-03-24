@@ -1,0 +1,43 @@
+
+Suite:,a classical react component
+
+ Given: AnEmptyState
+testArtiFactory =>,./screencap.mp4
+testArtiFactory =>,./beforeEachScreenshot.png
+ Then:,ThePropsIs: [object Object]
+AssertionError: expected '{}' to deeply equal '{"children":[]}'
+
+testArtiFactory =>,./afterEachScreenshot.png
+testArtiFactory =>,./afterEachLogs.txt
+
+ Given: AnEmptyState
+testArtiFactory =>,./screencap.mp4
+testArtiFactory =>,./beforeEachScreenshot.png
+ When:,IClickTheButton: undefined
+ Then:,ThePropsIs: [object Object]
+AssertionError: expected '{}' to deeply equal '{"children":[]}'
+
+testArtiFactory =>,./afterEachScreenshot.png
+testArtiFactory =>,./afterEachLogs.txt
+
+ Given: AnEmptyState
+testArtiFactory =>,./screencap.mp4
+testArtiFactory =>,./beforeEachScreenshot.png
+ When:,IClickTheButton: undefined
+ When:,IClickTheButton: undefined
+ When:,IClickTheButton: undefined
+ When:,IClickTheButton: undefined
+ When:,IClickTheButton: undefined
+ When:,IClickTheButton: undefined
+ Then:,TheStatusIs: [object Object]
+testArtiFactory =>,./afterEachScreenshot.png
+testArtiFactory =>,./afterEachLogs.txt
+
+ Given: AnEmptyState
+testArtiFactory =>,./screencap.mp4
+testArtiFactory =>,./beforeEachScreenshot.png
+ When:,IClickTheButton: undefined
+ When:,IClickTheButton: undefined
+ Then:,TheStatusIs: [object Object]
+testArtiFactory =>,./afterEachScreenshot.png
+testArtiFactory =>,./afterEachLogs.txt

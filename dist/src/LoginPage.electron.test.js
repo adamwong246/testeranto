@@ -1,12 +1,12 @@
 import {
+  Web_default,
+  assert
+} from "../chunk-BVWPBNJS.js";
+import {
   require_client,
   require_react,
   require_react_dom
 } from "../chunk-YI7SC5VN.js";
-import {
-  Web_default,
-  assert
-} from "../chunk-BVWPBNJS.js";
 import {
   __commonJS,
   __spreadProps,

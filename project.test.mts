@@ -3,15 +3,15 @@ import { ITProject } from "testeranto/src/Project";
 import { solCompile } from "./myTests/truffle.mjs";
 
 export default new ITProject({
-  devMode: true,
-  clearScreen: false,
-
-  features: 'features.test.mts',
-  tests: 'tests.test.mts',
   __dirname: `~/Code/kokomoBay`,
+  buildPort: 8000,
+  clearScreen: false,
+  devMode: true,
+  features: 'features.test.mts',
+  minify: false,
   outbase: ".",
   outdir: "dist",
-  minify: false,
+  tests: 'tests.test.mts',
 
   ports: ["3001", "3002", "3003", "3004", "3005", "3006", "3007"],
 

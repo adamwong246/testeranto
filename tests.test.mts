@@ -10,25 +10,17 @@ export default [
   ["./src/LoginPage.react-test-renderer.test.ts", "node", []],
   ["./src/Rectangle/Rectangle.test.electron.ts", "web", []],
   ["./src/Rectangle/Rectangle.test.node.ts", "node", []],
+  [
+    "./src/ClassicalComponent.esbuild-puppeteer.test.ts",
+    "node",
+    [["src/ClassicalComponent.tsx", "web", []]]
+  ],
 
   // ["./src/MyFirstContract.solidity.test.ts", "node", []],
   // ["./src/MyFirstContract.solidity-precompiled.test.ts", "node", []],
-
   // ["./src/MyFirstContract.solidity-rpc.test.ts", "node", []],
-
-
-
-
   // ["./src/server.http.test.ts", "node", [["src/ClassicalComponent.tsx", "web", []], ["src/LoginPage.tsx", "web", []]]],
-
-  // [
-  //   "./src/ClassicalComponent.esbuild-puppeteer.test.ts",
-  //   "node",
-  //   [["src/ClassicalComponent.tsx", "web", []]]
-  // ],
-
   // ["./src/Rectangle.test.puppeteer.ts", "puppeteer", []], // maybe works?
-
   // not working
   // "./myTests/storefront/alpha/index.test.ts",
   // "./myTests/storefront/beta/index.test.ts",

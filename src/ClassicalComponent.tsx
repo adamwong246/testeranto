@@ -66,3 +66,5 @@ export const LaunchClassicalComponent = () => {
     }
   });
 }
+
+export default LaunchClassicalComponent;
