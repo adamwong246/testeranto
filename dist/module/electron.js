@@ -17,6 +17,7 @@ function createWindow() {
         },
         width: 800,
         height: 600,
+        show: false,
     });
     const u = url.format({
         pathname: path.join(process.cwd(), process.argv[2]),

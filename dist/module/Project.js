@@ -4,229 +4,409 @@ import fs from "fs";
 import path from "path";
 import fsExists from "fs.promises.exists";
 import pm2 from "pm2";
+import readline from 'readline';
+readline.emitKeypressEvents(process.stdin);
+if (process.stdin.isTTY)
+    process.stdin.setRawMode(true);
 const TIMEOUT = 2000;
 const OPEN_PORT = "";
 let webSocketServer;
-export default class Scheduler {
-    constructor(project) {
+const getRunnables = (tests, payload = [new Set(), new Set()]) => {
+    return tests.reduce((pt, cv, cndx, cry) => {
+        if (cv[1] === "node") {
+            pt[0].add(cv[0]);
+        }
+        else if (cv[1] === "web") {
+            pt[1].add(cv[0]);
+        }
+        if (cv[2].length) {
+            getRunnables(cv[2], payload);
+        }
+        return pt;
+    }, payload);
+};
+export class ITProject {
+    constructor(config) {
         this.spinCycle = 0;
         this.spinAnimation = "←↖↑↗→↘↓↙";
         this.mainLoop = async () => {
-            if (this.project.clearScreen) {
+            if (this.clearScreen) {
                 console.clear();
             }
-            // console.log(
-            //   `# of processes in resourceQueue:`,
-            //   this.resourceQueue.length,
-            //   "/",
-            //   this.project.getSecondaryEndpointsPoints().length
-            // );
             const procsTable = [];
             pm2.list((err, procs) => {
                 procs.forEach((proc) => {
                     var _a, _b;
-                    procsTable.push({ name: proc.name, pid: proc.pid, pmid: proc.pm_id, mem: (_a = proc.monit) === null || _a === void 0 ? void 0 : _a.memory, cpu: (_b = proc.monit) === null || _b === void 0 ? void 0 : _b.cpu });
+                    procsTable.push({ name: proc.name, pid: proc.pid, pm_id: proc.pm_id, mem: (_a = proc.monit) === null || _a === void 0 ? void 0 : _a.memory, cpu: (_b = proc.monit) === null || _b === void 0 ? void 0 : _b.cpu });
                 });
-                console.log("PM2");
                 console.table(procsTable);
+                console.table(this.resourceQueue);
+                // console.log("webSocketServer.clients", webSocketServer.clients.size);
+                // console.log("resourceQueue", this.resourceQueue);
+                const resourceRequest = this.resourceQueue.pop();
+                if (!resourceRequest) {
+                    if (!this.devMode && this.mode === "up") {
+                        this.initiateShutdown("resource request queue is empty");
+                    }
+                    if (this.mode === "down" && procsTable.every((p) => p.pid === 0)) {
+                        this.shutdown();
+                    }
+                }
+                else {
+                    console.log("handling", resourceRequest);
+                    if (resourceRequest.protocol === "ipc") {
+                        this.allocateViaIpc(resourceRequest);
+                    }
+                    else if (resourceRequest.protocol === "ws") {
+                        this.allocateViaWs(resourceRequest);
+                    }
+                }
+                if (this.devMode) {
+                    if (this.mode === "up") {
+                        console.log(this.spinner(), "Running tests while watching for changes. Use 'q' to initiate shutdown");
+                    }
+                    else {
+                        console.log(this.spinner(), "Shutdown is in progress. Please wait.");
+                    }
+                }
+                else {
+                    if (this.mode === "up") {
+                        console.log(this.spinner(), "Running tests without watching for changes. Use 'q' to initiate shutdown");
+                    }
+                    else {
+                        console.log(this.spinner(), "Shutdown is in progress. Please wait.");
+                    }
+                }
+                // console.log(this.spinner());
+                // console.log(
+                //   this.spinner(),
+                //   this.mode === `up`
+                //     ? `press "q" to initiate graceful shutdown`
+                //     : `please wait while testeranto shuts down gracefully...`
+                // );
             });
-            console.log("resourceQueue");
-            console.table(this.resourceQueue);
-            // console.log("webSocketServer.clients", webSocketServer.clients.size);
-            // console.log("resourceQueue", this.resourceQueue);
-            this.tick();
-            // this.checkForShutDown();
-            console.log(this.spinner(), this.mode === `up`
-                ? `press "q" to initiate graceful shutdown`
-                : `please wait while testeranto shuts down gracefully...`);
         };
-        this.project = project;
         this.resourceQueue = [];
         this.jobs = {};
         this.ports = {};
         this.websockets = {};
-        Object.values(this.project.ports).forEach((port) => {
-            this.ports[port] = OPEN_PORT;
+        this.clearScreen = config.clearScreen;
+        this.devMode = config.devMode;
+        const testPath = `${process.cwd()}/${config.tests}`;
+        const featurePath = `${process.cwd()}/${config.features}`;
+        process.on('SIGINT', () => this.initiateShutdown("CTRL+C"));
+        process.on('SIGQUIT', () => this.initiateShutdown("Keyboard quit"));
+        process.on('SIGTERM', () => this.initiateShutdown("'kill' command"));
+        process.stdin.on('keypress', (str, key) => {
+            if (key.name === 'q') {
+                this.initiateShutdown("'q' command");
+            }
         });
-        this.mode = `up`;
-        this.summary = {};
-        pm2.connect(async (err) => {
-            if (err) {
-                console.error(err);
-                process.exit(-1);
-            }
-            else {
-                console.log(`pm2 is connected`);
-            }
-            // run a websocket as an alternative to node IPC
-            webSocketServer = new WebSocketServer({
-                port: 8080,
-                host: "localhost",
-            });
-            webSocketServer.on('open', () => {
-                console.log('open');
-                process.exit();
-            });
-            webSocketServer.on('close', (data) => {
-                console.log('webSocketServer close: %s', data);
-                process.exit();
-            });
-            webSocketServer.on('listening', () => {
-                console.log("webSocketServer listening", webSocketServer.address());
-                // process.exit()
-            });
-            webSocketServer.on('connection', (webSocket) => {
-                console.log('webSocketServer connection');
-                webSocket.on('message', (webSocketData) => {
-                    console.log('webSocket message: %s', webSocketData);
-                    const payload = webSocketData.valueOf();
-                    const name = payload.data.name;
-                    const messageType = payload.type;
-                    const requestedResources = payload.data;
-                    this.websockets[name] = webSocket;
-                    console.log('connected: ' + name + ' in ' + Object.getOwnPropertyNames(this.websockets));
-                    if (messageType === "testeranto:hola") {
-                        console.log("hola WS", requestedResources);
-                        this.requestResource(requestedResources, 'ws');
-                    }
-                    else if (messageType === "testeranto:adios") {
-                        console.log("adios WS", name);
-                        this.releaseTestResources(name);
-                    }
+        import(testPath).then((tests) => {
+            this.tests = tests.default;
+            import(featurePath).then((features) => {
+                this.features = features.default;
+                const runnables = getRunnables(this.tests);
+                const esbuildConfigNode = {
+                    packages: "external",
+                    external: ["tests.test.js", "features.test.js"],
+                    platform: "node",
+                    outbase: config.outbase,
+                    outdir: config.outdir,
+                    jsx: `transform`,
+                    entryPoints: [
+                        ...runnables[0]
+                    ],
+                    bundle: true,
+                    minify: config.minify === true,
+                    write: true,
+                    plugins: [
+                        ...(config.loaders || []),
+                    ],
+                };
+                Promise.resolve(Promise.all([
+                    ...this.getSecondaryEndpointsPoints("web")
+                ]
+                    .map(async (sourceFilePath) => {
+                    const sourceFileSplit = sourceFilePath.split("/");
+                    const sourceDir = sourceFileSplit.slice(0, -1);
+                    const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
+                    const sourceFileNameMinusJs = sourceFileName.split(".").slice(0, -1).join(".");
+                    const htmlFilePath = path.normalize(`${process.cwd()}/${config.outdir}/${sourceDir.join("/")}/${sourceFileNameMinusJs}.html`);
+                    const jsfilePath = `./${sourceFileNameMinusJs}.js`;
+                    return fs.promises.mkdir(path.dirname(htmlFilePath), { recursive: true }).then(x => fs.writeFileSync(htmlFilePath, `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script type="module" src="${jsfilePath}"></script>
+</head>
+
+<body>
+  <h1>${htmlFilePath}</h1>
+  <div id="root">
+    
+  </div>
+</body>
+
+<footer></footer>
+
+</html>
+`));
+                })));
+                const esbuildConfigWeb = {
+                    external: ["stream", "tests.test.js", "features.test.js"],
+                    platform: "browser",
+                    format: "esm",
+                    outbase: config.outbase,
+                    outdir: config.outdir,
+                    jsx: `transform`,
+                    entryPoints: [
+                        ...runnables[1],
+                        testPath,
+                        featurePath,
+                    ],
+                    bundle: true,
+                    minify: config.minify === true,
+                    write: true,
+                    splitting: true,
+                    plugins: [
+                        ...(config.loaders || []),
+                        {
+                            name: "testeranto-redirect",
+                            setup(build) {
+                                build.onResolve({ filter: /^.*\/testeranto\/$/ }, (args) => {
+                                    return {
+                                        path: path.join(process.cwd(), `..`, "node_modules", `testeranto`),
+                                    };
+                                });
+                            },
+                        },
+                    ],
+                };
+                esbuild.build({
+                    bundle: true,
+                    entryPoints: ["./node_modules/testeranto/dist/module/Report.js"],
+                    minify: config.minify === true,
+                    outbase: config.outbase,
+                    write: true,
+                    outfile: `${config.outdir}/Report.js`,
+                    external: ["tests.test.js", "features.test.js"]
                 });
-            });
-            const makePath = (fPath) => {
-                const ext = path.extname(fPath);
-                const x = "./" + project.outdir + "/" + fPath.replace(ext, "") + ".js";
-                return path.resolve(x);
-            };
-            const bootInterval = setInterval(async () => {
-                const filesToLookup = this.project.tests
-                    .map(([p, rt]) => {
-                    const filepath = makePath(p);
-                    return {
-                        filepath,
-                        exists: fsExists(filepath),
+                fs.writeFileSync(`${config.outdir}/report.html`, `
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="description" content="Webpage description goes here" />
+  <meta charset="utf-8" />
+  <title>kokomoBay - testeranto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="" />
+  <link rel="stylesheet" href="/dist/report.css" />
+
+  <script type="importmap">
+    {
+    "imports": {
+      "tests.test.js": "/dist/tests.test.js",
+      "features.test.js": "/dist/features.test.js"
+    }
+  }
+  </script>
+
+
+  <script src="/dist/report.js"></script>
+</head>
+
+<body>
+  <div id="root">
+    react is loading
+  </div>
+</body>
+
+</html>
+        `);
+                Promise.all([
+                    esbuild.context(esbuildConfigNode).then(async (nodeContext) => {
+                        nodeContext.watch();
+                    }),
+                    esbuild.context(esbuildConfigWeb).then(async (esbuildWeb) => {
+                        esbuildWeb.serve({
+                            port: 8000,
+                            servedir: ".",
+                        }).then((esbuildServerResult) => {
+                            console.log("esbuildServer result", esbuildServerResult);
+                        }, (esbuildServerFailure) => {
+                            console.log("esbuildServer failure", esbuildServerFailure);
+                            process.exit(-1);
+                        });
+                    })
+                ]);
+                Object.values(config.ports).forEach((port) => {
+                    this.ports[port] = OPEN_PORT;
+                });
+                this.mode = `up`;
+                this.summary = {};
+                pm2.connect(async (err) => {
+                    if (err) {
+                        console.error(err);
+                        process.exit(-1);
+                    }
+                    else {
+                        console.log(`pm2 is connected`);
+                    }
+                    // run a websocket as an alternative to node IPC
+                    webSocketServer = new WebSocketServer({
+                        port: 8080,
+                        host: "localhost",
+                    });
+                    webSocketServer.on('open', () => {
+                        console.log('open');
+                        // process.exit()
+                    });
+                    webSocketServer.on('close', (data) => {
+                        console.log('webSocketServer close: %s', data);
+                        // process.exit()
+                    });
+                    webSocketServer.on('listening', () => {
+                        console.log("webSocketServer listening", webSocketServer.address());
+                        // process.exit()
+                    });
+                    webSocketServer.on('connection', (webSocket) => {
+                        console.log('webSocketServer connection');
+                        webSocket.on('message', (webSocketData) => {
+                            console.log('webSocket message: %s', webSocketData);
+                            const payload = webSocketData.valueOf();
+                            const name = payload.data.name;
+                            const messageType = payload.type;
+                            const requestedResources = payload.data;
+                            this.websockets[name] = webSocket;
+                            console.log('connected: ' + name + ' in ' + Object.getOwnPropertyNames(this.websockets));
+                            if (messageType === "testeranto:hola") {
+                                console.log("hola WS", requestedResources);
+                                this.requestResource(requestedResources, 'ws');
+                            }
+                            else if (messageType === "testeranto:adios") {
+                                console.log("adios WS", name);
+                                this.releaseTestResources(name);
+                            }
+                        });
+                    });
+                    const makePath = (fPath) => {
+                        const ext = path.extname(fPath);
+                        const x = "./" + config.outdir + "/" + fPath.replace(ext, "") + ".js";
+                        return path.resolve(x);
                     };
+                    const bootInterval = setInterval(async () => {
+                        const filesToLookup = this.tests
+                            .map(([p, rt]) => {
+                            const filepath = makePath(p);
+                            return {
+                                filepath,
+                                exists: fsExists(filepath),
+                            };
+                        });
+                        const allFilesExist = (await Promise.all(filesToLookup.map((f) => f.exists))).every((b) => b);
+                        if (!allFilesExist) {
+                            console.log(this.spinner(), "waiting for files to build...");
+                            filesToLookup.forEach((f) => {
+                                console.log(f.exists, "\t", f.filepath);
+                            });
+                        }
+                        else {
+                            clearInterval(bootInterval);
+                            pm2.launchBus((err, pm2_bus) => {
+                                pm2_bus.on("testeranto:hola", (packet) => {
+                                    console.log("hola IPC", packet);
+                                    this.requestResource(packet.data.requirement, 'ipc');
+                                });
+                                pm2_bus.on("testeranto:adios", (packet) => {
+                                    console.log("adios IPC", packet);
+                                    this.releaseTestResources(packet.data.name);
+                                });
+                            });
+                            this
+                                .tests
+                                .reduce((m, [inputFilePath, runtime]) => {
+                                const script = makePath(inputFilePath);
+                                this.summary[inputFilePath] = undefined;
+                                const partialTestResourceByCommandLineArg = `${script} '${JSON.stringify({
+                                    name: inputFilePath,
+                                    ports: [],
+                                    fs: path.resolve(process.cwd(), config.outdir, inputFilePath),
+                                })}'`;
+                                if (runtime === "web") {
+                                    const fileAsList = inputFilePath.split("/");
+                                    const fileListHead = fileAsList.slice(0, -1);
+                                    const fname = fileAsList[fileAsList.length - 1];
+                                    const fnameOnly = fname.split(".").slice(0, -1).join(".");
+                                    const htmlFile = [config.outdir, ...fileListHead, `${fnameOnly}.html`].join("/");
+                                    const jsFile = htmlFile.split(".html")[0] + ".js";
+                                    console.log("watching", jsFile);
+                                    pm2.start({
+                                        script: `yarn electron node_modules/testeranto/dist/common/electron.js ${htmlFile} '${JSON.stringify({
+                                            name: inputFilePath,
+                                            ports: [],
+                                            fs: path.resolve(process.cwd(), config.outdir, inputFilePath),
+                                        })}'`,
+                                        name: inputFilePath,
+                                        autorestart: false,
+                                        args: partialTestResourceByCommandLineArg,
+                                        watch: [jsFile],
+                                    }, (err, proc) => {
+                                        if (err) {
+                                            console.error(err);
+                                            return pm2.disconnect();
+                                        }
+                                    });
+                                }
+                                else if (runtime === "node") {
+                                    pm2.start({
+                                        name: inputFilePath,
+                                        script: `node ${script} '${JSON.stringify({
+                                            name: inputFilePath,
+                                            ports: [],
+                                            fs: path.resolve(process.cwd(), config.outdir, inputFilePath),
+                                        })}'`,
+                                        autorestart: false,
+                                        watch: [script],
+                                        args: partialTestResourceByCommandLineArg
+                                    }, (err, proc) => {
+                                        if (err) {
+                                            console.error(err);
+                                            return pm2.disconnect();
+                                        }
+                                    });
+                                }
+                                return [inputFilePath, ...m];
+                            }, []);
+                            setInterval(this.mainLoop, TIMEOUT).unref();
+                        }
+                    }, TIMEOUT).unref();
                 });
-                const allFilesExist = (await Promise.all(filesToLookup.map((f) => f.exists))).every((b) => b);
-                if (!allFilesExist) {
-                    console.log(this.spinner(), "waiting for files to build...");
-                    filesToLookup.forEach((f) => {
-                        console.log(f.exists, "\t", f.filepath);
-                    });
-                }
-                else {
-                    clearInterval(bootInterval);
-                    pm2.launchBus((err, pm2_bus) => {
-                        pm2_bus.on("testeranto:hola", (packet) => {
-                            console.log("hola IPC", packet);
-                            this.requestResource(packet.data.requirement, 'ipc');
-                        });
-                        pm2_bus.on("testeranto:adios", (packet) => {
-                            console.log("adios IPC", packet);
-                            this.releaseTestResources(packet.data.name);
-                        });
-                    });
-                    this.project
-                        .tests
-                        .reduce((m, [inputFilePath, runtime]) => {
-                        const script = makePath(inputFilePath);
-                        this.summary[inputFilePath] = undefined;
-                        const partialTestResourceByCommandLineArg = `${script} '${JSON.stringify({
-                            name: inputFilePath,
-                            ports: [],
-                            fs: path.resolve(process.cwd(), project.outdir, inputFilePath),
-                        })}'`;
-                        // if (runtime === "puppeteer") {
-                        //   const sourceFileSplit = inputFilePath.split("/");
-                        //   const sourceDir = sourceFileSplit.slice(0, -1);
-                        //   const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
-                        //   const sourceFileNameWithoutExtensions = sourceFileName.split(".").slice(0, -1).join(".")
-                        //   const htmlFilePath = path.normalize(`/${project.outdir}/${sourceDir.join("/")}/${sourceFileNameWithoutExtensions}.html`);
-                        //   pm2.start(
-                        //     {
-                        //       script: `node ./node_modules/testeranto/dist/common/Puppeteer.js ${htmlFilePath} '${JSON.stringify(
-                        //         {
-                        //           name: inputFilePath,
-                        //           ports: [],
-                        //           fs:
-                        //             path.resolve(
-                        //               process.cwd(),
-                        //               project.outdir,
-                        //               inputFilePath
-                        //             ),
-                        //         }
-                        //       )}'`,
-                        //       name: inputFilePath,
-                        //       autorestart: false,
-                        //       args: partialTestResourceByCommandLineArg,
-                        //     },
-                        //     (err, proc) => {
-                        //       if (err) {
-                        //         console.error(err);
-                        //         return pm2.disconnect();
-                        //       }
-                        //     }
-                        //   );
-                        // } else
-                        if (runtime === "web") {
-                            const fileAsList = inputFilePath.split("/");
-                            const fileListHead = fileAsList.slice(0, -1);
-                            const fname = fileAsList[fileAsList.length - 1];
-                            const fnameOnly = fname.split(".").slice(0, -1).join(".");
-                            const htmlFile = [this.project.outdir, ...fileListHead, `${fnameOnly}.html`].join("/");
-                            pm2.start({
-                                script: `yarn electron node_modules/testeranto/dist/common/electron.js ${htmlFile} '${JSON.stringify({
-                                    name: inputFilePath,
-                                    ports: [],
-                                    fs: path.resolve(process.cwd(), project.outdir, inputFilePath),
-                                })}'`,
-                                name: inputFilePath,
-                                autorestart: false,
-                                args: partialTestResourceByCommandLineArg,
-                            }, (err, proc) => {
-                                if (err) {
-                                    console.error(err);
-                                    return pm2.disconnect();
-                                }
-                            });
-                        }
-                        else if (runtime === "node") {
-                            pm2.start({
-                                name: inputFilePath,
-                                script: `node ${script} '${JSON.stringify({
-                                    name: inputFilePath,
-                                    ports: [],
-                                    fs: path.resolve(process.cwd(), project.outdir, inputFilePath),
-                                })}'`,
-                                autorestart: false,
-                                watch: [script],
-                                args: partialTestResourceByCommandLineArg
-                            }, (err, proc) => {
-                                if (err) {
-                                    console.error(err);
-                                    return pm2.disconnect();
-                                }
-                            });
-                        }
-                        return [inputFilePath, ...m];
-                    }, []);
-                    setInterval(this.mainLoop, TIMEOUT).unref();
-                }
-            }, TIMEOUT).unref();
+            });
         });
     }
+    getSecondaryEndpointsPoints(runtime) {
+        if (runtime) {
+            return this.tests
+                .filter((t) => {
+                return (t[1] === runtime);
+            })
+                .map((tc) => tc[0]);
+        }
+        return this.tests
+            .map((tc) => tc[0]);
+    }
+    initiateShutdown(reason) {
+        console.log("Shutdown initiated because", reason);
+        this.mode = "down";
+    }
     shutdown() {
-        this.mode = `down`;
-        pm2.list((err, processes) => {
-            processes.forEach((proc) => {
-                proc.pm_id &&
-                    pm2.stop(proc.pm_id, (err, proc) => {
-                        console.error(err);
-                    });
-            });
-        });
+        console.log("Stopping PM2");
+        pm2.stop("all", (e) => console.error(e));
+        pm2.killDaemon((e) => console.error(e));
+        pm2.disconnect();
+        process.exit();
     }
     spinner() {
         this.spinCycle = (this.spinCycle + 1) % this.spinAnimation.length;
@@ -247,22 +427,6 @@ export default class Scheduler {
                 }
             });
         });
-    }
-    tick() {
-        const resourceRequest = this.resourceQueue.pop();
-        if (!resourceRequest) {
-            console.log("feed me a test!");
-            return;
-        }
-        else {
-            console.log("handling", resourceRequest);
-        }
-        if (resourceRequest.protocol === "ipc") {
-            this.allocateViaIpc(resourceRequest);
-        }
-        else if (resourceRequest.protocol === "ws") {
-            this.allocateViaWs(resourceRequest);
-        }
     }
     allocateViaWs(resourceRequest) {
         const pName = resourceRequest.requirement.name;
@@ -408,333 +572,3 @@ export default class Scheduler {
         });
     }
 }
-const getRunnables = (tests, payload = [new Set(), new Set()]) => {
-    return tests.reduce((pt, cv, cndx, cry) => {
-        if (cv[1] === "node") {
-            pt[0].add(cv[0]);
-        }
-        else if (cv[1] === "web") {
-            pt[1].add(cv[0]);
-        }
-        if (cv[2].length) {
-            getRunnables(cv[2], payload);
-        }
-        return pt;
-    }, payload);
-};
-export class ITProjectTests {
-}
-export class ITProject {
-    constructor(config) {
-        this.buildMode = config.buildMode;
-        this.clearScreen = config.clearScreen;
-        this.collateEntry = config.collateEntry;
-        this.collateMode = config.collateMode;
-        this.loaders = config.loaders;
-        this.minify = config.minify;
-        this.outbase = config.outbase;
-        this.outdir = config.outdir;
-        this.ports = config.ports;
-        this.runMode = config.runMode;
-        this.__dirname = config.__dirname;
-        const testPath = `${process.cwd()}/${config.tests}`;
-        const featurePath = `${process.cwd()}/${config.features}`;
-        import(testPath).then((tests) => {
-            this.tests = tests.default;
-            import(featurePath).then((features) => {
-                this.features = features.default;
-                const runnables = getRunnables(this.tests);
-                const esbuildConfigNode = {
-                    packages: "external",
-                    external: ["tests.test.js", "features.test.js"],
-                    platform: "node",
-                    outbase: this.outbase,
-                    outdir: this.outdir,
-                    jsx: `transform`,
-                    entryPoints: [
-                        ...runnables[0]
-                    ],
-                    bundle: true,
-                    minify: this.minify === true,
-                    write: true,
-                    plugins: [
-                        ...(this.loaders || []),
-                    ],
-                };
-                Promise.resolve(Promise.all([
-                    ...this.getSecondaryEndpointsPoints("web")
-                ]
-                    .map(async (sourceFilePath) => {
-                    const sourceFileSplit = sourceFilePath.split("/");
-                    const sourceDir = sourceFileSplit.slice(0, -1);
-                    const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
-                    const sourceFileNameMinusJs = sourceFileName.split(".").slice(0, -1).join(".");
-                    const htmlFilePath = path.normalize(`${process.cwd()}/${this.outdir}/${sourceDir.join("/")}/${sourceFileNameMinusJs}.html`);
-                    const jsfilePath = `./${sourceFileNameMinusJs}.js`;
-                    return fs.promises.mkdir(path.dirname(htmlFilePath), { recursive: true }).then(x => fs.writeFileSync(htmlFilePath, `
-      <!DOCTYPE html>
-          <html lang="en">
-          <head>
-            <script type="module" src="${jsfilePath}"></script>
-          </head>
-
-          <body>
-            <h1>${htmlFilePath}</h1>
-            <div id="root">
-              
-            </div>
-          </body>
-
-          <footer></footer>
-
-          </html>
-      `));
-                })));
-                const esbuildConfigWeb = {
-                    external: ["stream", "tests.test.js", "features.test.js"],
-                    platform: "browser",
-                    format: "esm",
-                    outbase: this.outbase,
-                    outdir: this.outdir,
-                    jsx: `transform`,
-                    entryPoints: [
-                        ...runnables[1],
-                        testPath,
-                        featurePath,
-                    ],
-                    bundle: true,
-                    minify: this.minify === true,
-                    write: true,
-                    splitting: true,
-                    plugins: [
-                        ...(this.loaders || []),
-                        {
-                            name: "testeranto-redirect",
-                            setup(build) {
-                                build.onResolve({ filter: /^.*\/testeranto\/$/ }, (args) => {
-                                    return {
-                                        path: path.join(process.cwd(), `..`, "node_modules", `testeranto`),
-                                    };
-                                });
-                            },
-                        },
-                    ],
-                };
-                esbuild.build({
-                    bundle: true,
-                    entryPoints: ["./node_modules/testeranto/dist/module/Report.js"],
-                    minify: this.minify === true,
-                    outbase: this.outbase,
-                    write: true,
-                    outfile: `${this.outdir}/Report.js`,
-                    external: ["tests.test.js", "features.test.js"]
-                });
-                fs.writeFileSync(`${this.outdir}/report.html`, `
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta name="description" content="Webpage description goes here" />
-  <meta charset="utf-8" />
-  <title>kokomoBay - testeranto</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="author" content="" />
-  <link rel="stylesheet" href="/dist/report.css" />
-
-  <script type="importmap">
-    {
-    "imports": {
-      "tests.test.js": "/dist/tests.test.js",
-      "features.test.js": "/dist/features.test.js"
-    }
-  }
-  </script>
-
-
-  <script src="/dist/report.js"></script>
-</head>
-
-<body>
-  <div id="root">
-    react is loading
-  </div>
-</body>
-
-</html>
-        `);
-                console.log("buildMode   -", this.buildMode);
-                console.log("runMode     -", this.runMode);
-                console.log("collateMode -", this.collateMode);
-                if (this.buildMode === "on") {
-                    console.log("esbuildConfigNode", esbuildConfigNode);
-                    esbuild.build(esbuildConfigNode).then(async (eBuildResult) => {
-                        console.log("node tests", eBuildResult);
-                    });
-                    esbuild.build(esbuildConfigWeb).then(async (eBuildResult) => {
-                        console.log("electron tests", eBuildResult);
-                    });
-                }
-                else if (this.buildMode === "watch") {
-                    Promise.all([
-                        esbuild.context(esbuildConfigNode).then(async (nodeContext) => {
-                            nodeContext.watch();
-                        }),
-                        esbuild.context(esbuildConfigWeb).then(async (esbuildWeb) => {
-                            if (this.runMode) {
-                                // unlike the server side, we need to run an http server to handle chunks imported into web-tests.
-                                esbuildWeb.serve({
-                                    port: 8000,
-                                    servedir: ".",
-                                    onRequest: (args) => {
-                                        // console.log("onRequest", args)
-                                    }
-                                }).then((esbuildServerResult) => {
-                                    console.log("esbuildServer result", esbuildServerResult);
-                                }, (esbuildServerFailure) => {
-                                    console.log("esbuildServer failure", esbuildServerFailure);
-                                    process.exit(-1);
-                                });
-                            }
-                        })
-                    ]);
-                }
-                else {
-                    console.log("skipping 'build' phase");
-                }
-                if (this.runMode) {
-                    const scheduler = new Scheduler(this);
-                    process.stdin.on("keypress", (str, key) => {
-                        if (key.name === "q") {
-                            // process.stdin.setRawMode(false);
-                            console.log("Shutting down gracefully...");
-                            scheduler.shutdown();
-                        }
-                        if (key.ctrl && key.name === "c") {
-                            console.log("Shutting down ungracefully!");
-                            process.exit(-1);
-                        }
-                    });
-                }
-                else {
-                    console.log("skipping 'run' phase");
-                }
-            });
-        });
-    }
-    getSecondaryEndpointsPoints(runtime) {
-        if (runtime) {
-            return this.tests
-                .filter((t) => {
-                return (t[1] === runtime);
-            })
-                .map((tc) => tc[0]);
-        }
-        return this.tests
-            .map((tc) => tc[0]);
-    }
-}
-// if (this.collateMode === "on") {
-//   esbuild.build(collateOpts).then(async (eBuildResult) => {
-//     console.log("ts collation", eBuildResult);
-//   });
-// } else if (this.collateMode === "watch") {
-//   esbuild.context(collateOpts).then(async (ectx) => {
-//     ectx.watch();
-//   });
-// } else if (this.collateMode === "serve") {
-//   esbuild.context(collateOpts).then((esbuildContext) => {
-//     hotReload(esbuildContext, collateDir);
-//   });
-// } else if (this.collateMode === "watch+serve") {
-//   esbuild.context(collateOpts).then((esbuildContext) => {
-//     hotReload(esbuildContext, collateDir);
-//     esbuildContext.watch();
-//     console.log(`serving collated reports @ ${"http://localhost:8000/"}`);
-//   });
-// } else if (this.collateMode === "dev") {
-//   console.log("mark2", process.cwd());
-//   esbuild.build({
-//     bundle: true,
-//     entryPoints: [config.collateEntry],
-//     format: "iife",
-//     jsx: `transform`,
-//     minify: this.minify === true,
-//     outbase: this.outbase,
-//     outdir: collateDir,
-//     write: true,
-//   });
-// } else {
-//   console.log("skipping 'collate' phase");
-// }
-// const hotReload = (ectx, collateDir, port?: string) => {
-//   ectx.serve({ servedir: collateDir, host: "localhost" }).then(() => {
-//     if (port) {
-//       createServer((req, res) => {
-//         const { url, method, headers } = req;
-//         if (req.url === "/esbuild")
-//           return clients.push(
-//             /* @ts-ignore:next-line */
-//             res.writeHead(200, {
-//               "Content-Type": "text/event-stream",
-//               "Cache-Control": "no-cache",
-//               Connection: "keep-alive",
-//             })
-//           );
-//         /* @ts-ignore:next-line */
-//         const path = ~url.split("/").pop().indexOf(".") ? url : `/index.html`; //for PWA with router
-//         req.pipe(
-//           request(
-//             { hostname: "0.0.0.0", port, path, method, headers },
-//             (prxRes) => {
-//               /* @ts-ignore:next-line */
-//               res.writeHead(prxRes.statusCode, prxRes.headers);
-//               prxRes.pipe(res, { end: true });
-//             }
-//           ),
-//           { end: true }
-//         );
-//       }).listen(port);
-//       setTimeout(() => {
-//         console.log("tick");
-//         const op = {
-//           darwin: ["open"],
-//           linux: ["xdg-open"],
-//           win32: ["cmd", "/c", "start"],
-//         };
-//         const ptf = process.platform;
-//         if (clients.length === 0)
-//           spawn(op[ptf][0], [
-//             ...[op[ptf].slice(1)],
-//             `http://localhost:${port}`,
-//           ]);
-//       }, 1000); //open the default browser only if it is not opened yet
-//     }
-//   });
-// };
-// const collateDir = ".";
-// const collateOpts: BuildOptions = {
-//   format: "iife",
-//   outbase: this.outbase,
-//   outdir: collateDir,
-//   jsx: `transform`,
-//   entryPoints: [config.collateEntry],
-//   bundle: true,
-//   write: true,
-//   banner: {
-//     js: ' (() => new EventSource("/esbuild").onmessage = () => location.reload())();',
-//   },
-//   plugins: [
-//     {
-//       name: "hot-refresh",
-//       setup(build) {
-//         build.onEnd((result) => {
-//           console.log(`collation transpilation`, result);
-//           /* @ts-ignore:next-line */
-//           clients.forEach((res) => res.write("data: update\n\n"));
-//           clients.length = 0;
-//           // console.log(error ? error : '...')
-//         });
-//       },
-//     },
-//   ],
-// };

@@ -85,7 +85,7 @@ export default async <
     if (testResourceRequirement.ports == 0) {
 
       const failed = await t.receiveTestResourceConfig(partialTestResource);
-      process.exit(failed ? 1 : 0);
+      // process.exit(failed ? 1 : 0);
 
     } else {
       console.log("test configuration is incomplete", partialTestResource);
@@ -135,10 +135,10 @@ export default async <
               },
               (err) => {
                 if (!err) {
-                  process.exit(failed ? 1 : 0);
+                  // process.exit(failed ? 1 : 0);
                 } else {
                   console.error(err);
-                  process.exit(1);
+                  // process.exit(1);
                 }
 
               }
