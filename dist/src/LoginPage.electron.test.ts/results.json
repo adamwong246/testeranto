@@ -5,6 +5,93 @@
       "name": "default",
       "whens": [
         {
+          "name": "TheEmailIsSetTo: adam@email.com"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheEmailIs: adam@email.com"
+        }
+      ],
+      "error": null,
+      "features": []
+    },
+    {
+      "name": "default",
+      "whens": [
+        {
+          "name": "TheEmailIsSetTo: adam@email.com"
+        },
+        {
+          "name": "ThePasswordIsSetTo: secret"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheEmailIsNot: wade@rpc"
+        },
+        {
+          "name": "TheEmailIs: adam@email.com",
+          "error": true
+        },
+        {
+          "name": "ThePasswordIs: secret"
+        },
+        {
+          "name": "ThePasswordIsNot: idk"
+        }
+      ],
+      "error": [
+        {
+          "name": "AssertionError",
+          "message": "expected 'adam@email.comadam@email.com' to equal 'adam@email.com'",
+          "showDiff": true,
+          "actual": "adam@email.comadam@email.com",
+          "expected": "adam@email.com",
+          "operator": "strictEqual",
+          "stack": "AssertionError: expected 'adam@email.comadam@email.com' to equal 'adam@email.com'\n    at Then.thenCB (file:///Users/adam/Code/kokomoBay/dist/src/LoginPage.electron.test.js:2902:16)\n    at Then.test (file:///Users/adam/Code/kokomoBay/dist/chunk-BVWPBNJS.js:4216:19)\n    at async Given.give (file:///Users/adam/Code/kokomoBay/dist/chunk-BVWPBNJS.js:4164:19)\n    at async TesterantoLevelTwo.constructor.run (file:///Users/adam/Code/kokomoBay/dist/chunk-BVWPBNJS.js:4113:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/chunk-BVWPBNJS.js:4325:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/chunk-BVWPBNJS.js:4346:29)\n    at async startup (file:///Users/adam/Code/kokomoBay/dist/chunk-BVWPBNJS.js:4421:20)\n    at async Web_default (file:///Users/adam/Code/kokomoBay/dist/chunk-BVWPBNJS.js:4465:5)"
+        },
+        "AssertionError: expected 'adam@email.comadam@email.com' to equal 'adam@email.com'\n    at Then.thenCB (file:///Users/adam/Code/kokomoBay/dist/src/LoginPage.electron.test.js:2902:16)\n    at Then.test (file:///Users/adam/Code/kokomoBay/dist/chunk-BVWPBNJS.js:4216:19)\n    at async Given.give (file:///Users/adam/Code/kokomoBay/dist/chunk-BVWPBNJS.js:4164:19)\n    at async TesterantoLevelTwo.constructor.run (file:///Users/adam/Code/kokomoBay/dist/chunk-BVWPBNJS.js:4113:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/chunk-BVWPBNJS.js:4325:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/chunk-BVWPBNJS.js:4346:29)\n    at async startup (file:///Users/adam/Code/kokomoBay/dist/chunk-BVWPBNJS.js:4421:20)\n    at async Web_default (file:///Users/adam/Code/kokomoBay/dist/chunk-BVWPBNJS.js:4465:5)"
+      ],
+      "features": []
+    },
+    {
+      "name": "default",
+      "whens": [
+        {
+          "name": "TheEmailIsSetTo: adam"
+        }
+      ],
+      "thens": [
+        {
+          "name": "ThereIsNotAnEmailError: undefined"
+        }
+      ],
+      "error": null,
+      "features": []
+    },
+    {
+      "name": "default",
+      "whens": [
+        {
+          "name": "TheEmailIsSetTo: bob"
+        },
+        {
+          "name": "TheLoginIsSubmitted: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "ThereIsNotAnEmailError: undefined"
+        }
+      ],
+      "error": null,
+      "features": []
+    },
+    {
+      "name": "default",
+      "whens": [
+        {
           "name": "TheEmailIsSetTo: adam@mail.com"
         },
         {

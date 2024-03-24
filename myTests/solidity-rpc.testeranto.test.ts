@@ -66,6 +66,7 @@ export const SolidityRpcTesteranto = <
           // https://github.com/trufflesuite/ganache#programmatic-use
           const server = Ganache.server(options);
 
+
           // start the ganache chain
           server.listen(port, async err => {
             console.log(`ganache listening on port ${port}...`);
@@ -85,7 +86,7 @@ export const SolidityRpcTesteranto = <
             /////////////////////////////////////////////
 
             const web3FarSideProvider = new ethers.providers.JsonRpcProvider(`http://localhost:${port}`);
-
+            // web3FarSideProvider.
             // create a test wallet from a ganache account
             const web3FarSideSigner = new ethers.Wallet(
               providerFarSide.getInitialAccounts()[accounts[1]].secretKey,
@@ -114,6 +115,10 @@ export const SolidityRpcTesteranto = <
 
       andWhen: async ({ contractFarSide, accounts }, callback: any) =>
         (callback())({ contractFarSide, accounts }),
+
+      afterAll: ({ server }) => {
+        server.close();
+      }
     },
     { ports: 1 },
   )

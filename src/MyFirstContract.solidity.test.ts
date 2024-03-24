@@ -4,27 +4,10 @@ import { assert } from "chai";
 import { features } from "../features.test.mjs";
 import { SolidityTesteranto } from "../myTests/solidity.testeranto.test";
 
-import { commonGivens } from './MyFirstContractGivens.test';
+import { IMyFirstContractTestSpecification, commonGivens } from './MyFirstContractGivens.test';
 
 export const MyFirstContractTesteranto = SolidityTesteranto<
-  {
-    suites: {
-      Default;
-    };
-    givens: {
-      Default;
-    };
-    whens: {
-      Increment: [number];
-      Decrement: [number];
-    };
-    thens: {
-      Get: [{ asTestUser: number, expectation: number }];
-    };
-    checks: {
-      AnEmptyState: [];
-    };
-  }
+  IMyFirstContractTestSpecification
 >(
   {
     Suites: {

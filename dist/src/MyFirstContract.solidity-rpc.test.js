@@ -213,7 +213,10 @@ var SolidityRpcTesteranto = (testImplementations, testSpecifications, testInput,
       });
     },
     afterEach: async ({ server }) => await server.close(),
-    andWhen: async ({ contractFarSide, accounts }, callback) => callback()({ contractFarSide, accounts })
+    andWhen: async ({ contractFarSide, accounts }, callback) => callback()({ contractFarSide, accounts }),
+    afterAll: ({ server }) => {
+      server.close();
+    }
   },
   { ports: 1 }
 );

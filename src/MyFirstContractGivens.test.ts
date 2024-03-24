@@ -1,3 +1,22 @@
+export type IMyFirstContractTestSpecification = {
+  suites: {
+    Default;
+  };
+  givens: {
+    Default;
+  };
+  whens: {
+    Increment: [number];
+    Decrement: [number];
+  };
+  thens: {
+    Get: [{ asTestUser: number, expectation: number }];
+  };
+  checks: {
+    AnEmptyState: [];
+  };
+}
+
 export const commonGivens = (Given, When, Then, features) => {
   return {
     "test0": Given.Default(

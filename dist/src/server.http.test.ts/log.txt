@@ -1,5 +1,0 @@
-
-Suite:,Testing the Node server with fetch!
-
- Given: AnEmptyState
- Then:,TheStatusIs: some great status

@@ -157,38 +157,38 @@ var LoginPageImplementations = (Suite, Given, When, Then, Check) => {
     Suite.Default(
       "Testing the LoginPage as react",
       {
-        // "test0": Given.default(
-        //   [],
-        //   [
-        //     When.TheEmailIsSetTo("adam@email.com")
-        //   ],
-        //   [
-        //     Then.TheEmailIs("adam@email.com")
-        //   ]
-        // ),
-        // "test1": Given.default(
-        //   [],
-        //   [
-        //     When.TheEmailIsSetTo("adam@email.com"),
-        //     When.ThePasswordIsSetTo("secret"),
-        //   ],
-        //   [
-        //     Then.TheEmailIsNot("wade@rpc"),
-        //     Then.TheEmailIs("adam@email.com"),
-        //     Then.ThePasswordIs("secret"),
-        //     Then.ThePasswordIsNot("idk"),
-        //   ]
-        // ),
-        // "test2": Given.default(
-        //   [],
-        //   [When.TheEmailIsSetTo("adam")],
-        //   [Then.ThereIsNotAnEmailError()]
-        // ),
-        // "test3": Given.default(
-        //   [],
-        //   [When.TheEmailIsSetTo("bob"), When.TheLoginIsSubmitted()],
-        //   [Then.ThereIsNotAnEmailError()]
-        // ),
+        "test0": Given.default(
+          [],
+          [
+            When.TheEmailIsSetTo("adam@email.com")
+          ],
+          [
+            Then.TheEmailIs("adam@email.com")
+          ]
+        ),
+        "test1": Given.default(
+          [],
+          [
+            When.TheEmailIsSetTo("adam@email.com"),
+            When.ThePasswordIsSetTo("secret")
+          ],
+          [
+            Then.TheEmailIsNot("wade@rpc"),
+            Then.TheEmailIs("adam@email.com"),
+            Then.ThePasswordIs("secret"),
+            Then.ThePasswordIsNot("idk")
+          ]
+        ),
+        "test2": Given.default(
+          [],
+          [When.TheEmailIsSetTo("adam")],
+          [Then.ThereIsNotAnEmailError()]
+        ),
+        "test3": Given.default(
+          [],
+          [When.TheEmailIsSetTo("bob"), When.TheLoginIsSubmitted()],
+          [Then.ThereIsNotAnEmailError()]
+        ),
         "test4": Given.default(
           [],
           [

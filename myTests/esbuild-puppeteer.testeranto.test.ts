@@ -40,12 +40,16 @@ function sleep(ms) {
 const htmlTemplate = (jsbundle: string): string => `
 <!DOCTYPE html><html lang="en">
   <head>
-    <script type="module" src="./ClassicalComponent">
+    <script type="module">
       ${jsbundle}
+
+      // window.ClassicalComponent = ClassicalComponent;
+      console.log('window.ClassicalComponent')
     </script>
     <script type="module">
-      import { LaunchClassicalComponent } from "ClassicalComponent";
-      LaunchClassicalComponent();
+    // console.log(window.ClassicalComponent)
+      // import { LaunchClassicalComponent } from "ClassicalComponent";
+      // LaunchClassicalComponent();
     </script>
   </head>
 
@@ -96,12 +100,12 @@ export const EsbuildPuppeteerTesteranto = <ITestShape extends ITTestShape>(
         });
 
         return new Promise((res, rej) => {
-          fs.readFile(`./js-bazel/` + testInput, 'utf8', (err, data) => {
+          fs.readFile(`./dist/` + testInput, 'utf8', (err, data) => {
             if (err) {
               console.error(err);
               return;
             }
-            console.log(data);
+            // console.log(data);
 
             res({
               browser,
@@ -142,13 +146,16 @@ export const EsbuildPuppeteerTesteranto = <ITestShape extends ITTestShape>(
         await page.setRequestInterception(true);
 
         page
-          .on("console", (message) =>
+          .on("console", (message) => {
+            console.log(message)
             consoleLogs.push(
               `${message
                 .type()
                 .substr(0, 3)
                 .toUpperCase()}\t\t\t${message.text()}`
             )
+          }
+
           )
           .on("pageerror", ({ message }) => consoleLogs.push(message))
           .on("response", async (response) => {
@@ -206,7 +213,8 @@ export const EsbuildPuppeteerTesteranto = <ITestShape extends ITTestShape>(
         return;
       },
       afterAll: (store: Store, artificer) => {
-        store.page.browser().close();
+        // store.page.browser().close();
+        sleep(1000)
         return;
       },
     },
