@@ -1,0 +1,91 @@
+{
+  "name": "Testing the Redux store",
+  "givens": [
+    {
+      "name": "AnEmptyState",
+      "whens": [
+        {
+          "name": "TheEmailIsSetTo: adam@email.com"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheEmailIs: adam@email.com"
+        }
+      ],
+      "error": null,
+      "features": [
+        "hello"
+      ]
+    },
+    {
+      "name": "AStateWithEmail",
+      "whens": [],
+      "thens": [
+        {
+          "name": "TheEmailIsNot: adam@email.com"
+        },
+        {
+          "name": "TheEmailIs: bob@mail.com"
+        }
+      ],
+      "error": null,
+      "features": [
+        "hello"
+      ]
+    },
+    {
+      "name": "AnEmptyState",
+      "whens": [
+        {
+          "name": "TheEmailIsSetTo: hello"
+        },
+        {
+          "name": "TheEmailIsSetTo: aloha"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheEmailIs: aloha"
+        }
+      ],
+      "error": null,
+      "features": [
+        "hello"
+      ]
+    },
+    {
+      "name": "AnEmptyState",
+      "whens": [],
+      "thens": [
+        {
+          "name": "TheEmailIs: "
+        }
+      ],
+      "error": null,
+      "features": [
+        "aloha",
+        "hello"
+      ]
+    },
+    {
+      "name": "AnEmptyState",
+      "whens": [
+        {
+          "name": "TheEmailIsSetTo: hey there"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheEmailIs: hey there"
+        }
+      ],
+      "error": null,
+      "features": [
+        "aloha",
+        "hello"
+      ]
+    }
+  ],
+  "fails": []
+}

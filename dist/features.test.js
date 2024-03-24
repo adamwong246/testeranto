@@ -1,7 +1,7 @@
 import {
   __commonJS,
   __toESM
-} from "./chunk-L4YLJHLJ.js";
+} from "./chunk-4ATCX2XT.js";
 
 // ../testeranto/node_modules/graphology/dist/graphology.umd.min.js
 var require_graphology_umd_min = __commonJS({

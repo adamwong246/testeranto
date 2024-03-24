@@ -1,16 +1,16 @@
-import "./chunk-L4YLJHLJ.js";
+import "./chunk-4ATCX2XT.js";
 
 // tests.test.mts
 var tests_test_default = [
+  ["./src/google.puppeteer.testeranto.test.ts", "node", []],
   ["./src/app.redux.test.ts", "node", []],
-  // ["./src/app.reduxToolkit.test.ts", "node", []],
-  // ["./src/google.puppeteer.testeranto.test.ts", "node", []],
+  ["./src/app.reduxToolkit.test.ts", "node", []],
   ["./src/ClassicalComponent.electron.test.ts", "web", []],
-  ["./src/ClassicalComponent.react-test-renderer.test.tsx", "node", []]
-  // ["./src/LoginPage.electron.test.ts", "web", []],
-  // ["./src/LoginPage.react-test-renderer.test.ts", "node", []],
-  // ["./src/Rectangle/Rectangle.test.electron.ts", "web", []],
-  // ["./src/Rectangle/Rectangle.test.node.ts", "node", []],
+  ["./src/ClassicalComponent.react-test-renderer.test.tsx", "node", []],
+  ["./src/LoginPage.electron.test.ts", "web", []],
+  ["./src/LoginPage.react-test-renderer.test.ts", "node", []],
+  ["./src/Rectangle/Rectangle.test.electron.ts", "web", []],
+  ["./src/Rectangle/Rectangle.test.node.ts", "node", []]
   // ["./src/MyFirstContract.solidity.test.ts", "node", []],
   // ["./src/MyFirstContract.solidity-precompiled.test.ts", "node", []],
   // ["./src/MyFirstContract.solidity-rpc.test.ts", "node", []],
