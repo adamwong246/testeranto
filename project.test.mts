@@ -3,7 +3,7 @@ import { ITProject } from "testeranto/src/Project";
 import { solCompile } from "./myTests/truffle.mjs";
 
 export default new ITProject({
-  devMode: false,
+  devMode: true,
   clearScreen: false,
 
   features: 'features.test.mts',
