@@ -952,7 +952,14 @@ abstract class TesterantoLevelOne<
     );
 
     const suiteRunner =
-      (suite) =>
+      (suite: BaseSuite<
+        IInput,
+        ISubject,
+        IStore,
+        ISelection,
+        IThenShape,
+        ITestShape
+      >) =>
         async (
           testResourceConfiguration: ITTestResourceConfiguration,
           tLog: ITLog

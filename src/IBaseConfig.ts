@@ -1,31 +1,13 @@
-// export type ICollateMode =
-//   | "on"
-//   | "off"
-//   | "watch"
-//   | `serve`
-//   | `watch+serve`
-//   | `dev`;
-
 export type IBaseConfig = {
+  __dirname: string;
+  buildPort: 8000,
   clearScreen: boolean;
+  devMode: boolean;
+  features: string;
   loaders: any[];
   minify: boolean;
   outbase: string;
   outdir: string;
   ports: string[];
-  __dirname: string;
-
-  devMode: boolean;
-
-  // collateMode: ICollateMode;
-
-  // collateDir: string;
-  // collateEntry: string;
-  // resultsdir: string;
-  // runMode: boolean;
-  // buildMode: "on" | "off" | "watch";
-
-
   tests: string;
-  features: string;
 };
