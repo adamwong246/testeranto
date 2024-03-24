@@ -122,6 +122,15 @@ export class ITProject {
                     write: true,
                     plugins: [
                         ...(config.loaders || []),
+                        {
+                            name: 'rebuild-notify',
+                            setup(build) {
+                                build.onEnd(result => {
+                                    console.log(`node build ended with ${result.errors.length} errors`);
+                                    // HERE: somehow restart the server from here, e.g., by sending a signal that you trap and react to inside the server.
+                                });
+                            }
+                        },
                     ],
                 };
                 Promise.resolve(Promise.all([
@@ -172,15 +181,29 @@ export class ITProject {
                     plugins: [
                         ...(config.loaders || []),
                         {
-                            name: "testeranto-redirect",
+                            name: 'rebuild-notify',
                             setup(build) {
-                                build.onResolve({ filter: /^.*\/testeranto\/$/ }, (args) => {
-                                    return {
-                                        path: path.join(process.cwd(), `..`, "node_modules", `testeranto`),
-                                    };
+                                build.onEnd(result => {
+                                    console.log(`web build ended with ${result.errors.length} errors`);
+                                    // HERE: somehow restart the server from here, e.g., by sending a signal that you trap and react to inside the server.
                                 });
-                            },
+                            }
                         },
+                        // {
+                        //   name: "testeranto-redirect",
+                        //   setup(build) {
+                        //     build.onResolve({ filter: /^.*\/testeranto\/$/ }, (args) => {
+                        //       return {
+                        //         path: path.join(
+                        //           process.cwd(),
+                        //           `..`,
+                        //           "node_modules",
+                        //           `testeranto`
+                        //         ),
+                        //       };
+                        //     });
+                        //   },
+                        // },
                     ],
                 };
                 esbuild.build({
@@ -227,13 +250,16 @@ export class ITProject {
         `);
                 Promise.all([
                     esbuild.context(esbuildConfigNode).then(async (nodeContext) => {
-                        nodeContext.watch();
+                        await nodeContext.watch();
+                        console.log("esbuildConfigNode watched");
                     }),
                     esbuild.context(esbuildConfigWeb).then(async (esbuildWeb) => {
                         esbuildWeb.serve({
                             port: 8000,
                             servedir: ".",
-                        }).then((esbuildServerResult) => {
+                        }).then(async (esbuildServerResult) => {
+                            console.log("esbuildConfigWeb watched");
+                            await esbuildWeb.watch();
                             console.log("esbuildServer result", esbuildServerResult);
                         }, (esbuildServerFailure) => {
                             console.log("esbuildServer failure", esbuildServerFailure);
