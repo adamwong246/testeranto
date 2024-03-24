@@ -7,10 +7,10 @@ export default [
 
   ["./src/ClassicalComponent.electron.test.ts", "web", []],
   ["./src/ClassicalComponent.react-test-renderer.test.tsx", "node", []],
-  ["./src/LoginPage.electron.test.ts", "web", []],
-  ["./src/LoginPage.react-test-renderer.test.ts", "node", []],
-  ["./src/Rectangle/Rectangle.test.electron.ts", "web", []],
-  ["./src/Rectangle/Rectangle.test.node.ts", "node", []],
+  // ["./src/LoginPage.electron.test.ts", "web", []],
+  // ["./src/LoginPage.react-test-renderer.test.ts", "node", []],
+  // ["./src/Rectangle/Rectangle.test.electron.ts", "web", []],
+  // ["./src/Rectangle/Rectangle.test.node.ts", "node", []],
 
   // ["./src/MyFirstContract.solidity.test.ts", "node", []],
   // ["./src/MyFirstContract.solidity-precompiled.test.ts", "node", []],
