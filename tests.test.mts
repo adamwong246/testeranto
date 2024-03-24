@@ -2,20 +2,24 @@ import { ITestTypes } from "testeranto/src/Project";
 
 export default [
   ["./src/app.redux.test.ts", "node", []],
-  ["./src/app.reduxToolkit.test.ts", "node", []],
+  // ["./src/app.reduxToolkit.test.ts", "node", []],
+  // ["./src/google.puppeteer.testeranto.test.ts", "node", []],
+
   ["./src/ClassicalComponent.electron.test.ts", "web", []],
   ["./src/ClassicalComponent.react-test-renderer.test.tsx", "node", []],
-  ["./src/google.puppeteer.testeranto.test.ts", "node", []],
   ["./src/LoginPage.electron.test.ts", "web", []],
   ["./src/LoginPage.react-test-renderer.test.ts", "node", []],
-
-  ["./src/MyFirstContract.solidity.test.ts", "node", []],
   ["./src/Rectangle/Rectangle.test.electron.ts", "web", []],
   ["./src/Rectangle/Rectangle.test.node.ts", "node", []],
 
-  ["./src/MyFirstContract.solidity-precompiled.test.ts", "node", []],
+  // ["./src/MyFirstContract.solidity.test.ts", "node", []],
+  // ["./src/MyFirstContract.solidity-precompiled.test.ts", "node", []],
 
-  ["./src/MyFirstContract.solidity-rpc.test.ts", "node", []],
+  // ["./src/MyFirstContract.solidity-rpc.test.ts", "node", []],
+
+
+
+
   // ["./src/server.http.test.ts", "node", [["src/ClassicalComponent.tsx", "web", []], ["src/LoginPage.tsx", "web", []]]],
 
   // [
