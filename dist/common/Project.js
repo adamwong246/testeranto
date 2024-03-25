@@ -254,19 +254,19 @@ class ITProject {
   <title>kokomoBay - testeranto</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="author" content="" />
-  <link rel="stylesheet" href="/dist/report.css" />
+  <link rel="stylesheet" href="./Report.css" />
 
   <script type="importmap">
     {
     "imports": {
-      "tests.test.js": "/dist/tests.test.js",
-      "features.test.js": "/dist/features.test.js"
+      "tests.test.js": "./tests.test.js",
+      "features.test.js": "./features.test.js"
     }
   }
   </script>
 
 
-  <script src="/dist/report.js"></script>
+  <script src="./Report.js"></script>
 </head>
 
 <body>
