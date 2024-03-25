@@ -28,7 +28,7 @@ export declare type ILogWriter = {
     createWriteStream: (line: string) => any | any;
     writeFileSync: (fp: string, contents: string) => any;
     mkdirSync: (fp: string) => any;
-    testArtiFactoryfileWriter: (tLog: ITLog) => (fp: any) => (givenNdx: any) => (key: any, value: any) => void;
+    testArtiFactoryfileWriter: (tLog: ITLog) => (fPath: string, value: unknown) => void;
 };
 declare type IGivens<ISubject, IStore, ISelection, IThenShape> = Record<string, BaseGiven<ISubject, IStore, ISelection, IThenShape>>;
 declare type ITestCheckCallback<ITestShape extends ITTestShape> = {
@@ -71,7 +71,7 @@ export declare type ITestResults = Promise<{
     test: IT;
 }>[];
 export declare const defaultTestResourceRequirement: ITTestResourceRequest;
-export declare type ITestArtifactory = (key: string, value: string) => unknown;
+export declare type ITestArtifactory = (key: string, value: unknown) => unknown;
 export declare type ITLog = (...string: any[]) => void;
 export declare type ITestImplementation<IState, ISelection, IWhenShape, IThenShape, ITestShape extends ITTestShape> = {
     Suites: {
@@ -97,7 +97,8 @@ export declare abstract class BaseSuite<IInput, ISubject, IStore, ISelection, IT
     store: IStore;
     fails: BaseGiven<ISubject, IStore, ISelection, IThenShape>[];
     testResourceConfiguration: ITTestResourceConfiguration;
-    constructor(name: string, givens?: IGivens<ISubject, IStore, ISelection, IThenShape>, checks?: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape>[]);
+    index: number;
+    constructor(name: string, index: number, givens?: IGivens<ISubject, IStore, ISelection, IThenShape>, checks?: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape>[]);
     toObj(): {
         name: string;
         givens: {
@@ -117,7 +118,7 @@ export declare abstract class BaseSuite<IInput, ISubject, IStore, ISelection, IT
     };
     setup(s: IInput, artifactory: ITestArtifactory): Promise<ISubject>;
     test(t: IThenShape): unknown;
-    run(input: any, testResourceConfiguration: ITTestResourceConfiguration, artifactory: (gndex: string) => (a: string, b: string) => void, tLog: (...string: any[]) => void): Promise<BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape>>;
+    run(input: any, testResourceConfiguration: ITTestResourceConfiguration, artifactory: (fPath: string, value: unknown) => void, tLog: (...string: any[]) => void): Promise<BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape>>;
 }
 export declare abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
     name: string;
@@ -195,7 +196,7 @@ declare abstract class TesterantoLevelOne<ITestShape extends ITTestShape, IIniti
         [K in keyof ITestShape["whens"]]: (...a: ITestShape["whens"][K]) => BaseWhen<IStore, ISelection, IThenShape>;
     }, Then: {
         [K in keyof ITestShape["thens"]]: (...a: ITestShape["thens"][K]) => BaseThen<ISelection, IStore, IThenShape>;
-    }, Check: ITestCheckCallback<ITestShape>, logWriter: ILogWriter) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape>[], input: IInput, suiteKlasser: (name: string, givens: IGivens<ISubject, IStore, ISelection, IThenShape>, checks: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape>[]) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape>, givenKlasser: (n: any, f: any, w: any, t: any, z?: any) => BaseGiven<ISubject, IStore, ISelection, IThenShape>, whenKlasser: (s: any, o: any) => BaseWhen<IStore, ISelection, IThenShape>, thenKlasser: (s: any, o: any) => BaseThen<IStore, ISelection, IThenShape>, checkKlasser: (n: any, f: any, cb: any, w: any, t: any) => BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape>, testResourceRequirement: any, logWriter: ILogWriter);
+    }, Check: ITestCheckCallback<ITestShape>, logWriter: ILogWriter) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape>[], input: IInput, suiteKlasser: (name: string, index: number, givens: IGivens<ISubject, IStore, ISelection, IThenShape>, checks: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape>[]) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape>, givenKlasser: (n: any, f: any, w: any, t: any, z?: any) => BaseGiven<ISubject, IStore, ISelection, IThenShape>, whenKlasser: (s: any, o: any) => BaseWhen<IStore, ISelection, IThenShape>, thenKlasser: (s: any, o: any) => BaseThen<IStore, ISelection, IThenShape>, checkKlasser: (n: any, f: any, cb: any, w: any, t: any) => BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape>, testResourceRequirement: any, logWriter: ILogWriter);
 }
 export default class TesterantoLevelTwo<TestShape extends ITTestShape, InitialStateShape, Selection, Store, Subject, WhenShape, ThenShape, Input> extends TesterantoLevelOne<TestShape, InitialStateShape, Selection, Store, Subject, WhenShape, ThenShape, Input> {
     constructor(input: Input, testSpecification: ITestSpecification<TestShape>, testImplementation: any, testInterface: {

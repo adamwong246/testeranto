@@ -37,7 +37,9 @@ export type ILogWriter = {
   createWriteStream: (line: string) => any | any,
   writeFileSync: (fp: string, contents: string) => any
   mkdirSync: (fp: string) => any
-  testArtiFactoryfileWriter: (tLog: ITLog) => (fp: any) => (givenNdx: any) => (key: any, value: any) => void
+  testArtiFactoryfileWriter: (tLog: ITLog) =>
+    (fPath: string, value: unknown) =>
+      void
 }
 
 type IGivens<ISubject, IStore, ISelection, IThenShape> = Record<string, BaseGiven<ISubject, IStore, ISelection, IThenShape>>;
@@ -122,7 +124,7 @@ export const defaultTestResourceRequirement: ITTestResourceRequest = {
   ports: 0
 };
 
-export type ITestArtifactory = (key: string, value: string) => unknown;
+export type ITestArtifactory = (key: string, value: unknown) => unknown;
 export type ITLog = (...string) => void;
 
 export type ITestImplementation<
@@ -171,9 +173,11 @@ export abstract class BaseSuite<
   store: IStore;
   fails: BaseGiven<ISubject, IStore, ISelection, IThenShape>[];
   testResourceConfiguration: ITTestResourceConfiguration;
+  index: number;
 
   constructor(
     name: string,
+    index: number,
     givens: IGivens<ISubject, IStore, ISelection, IThenShape> = {},
     checks: BaseCheck<
       ISubject,
@@ -184,6 +188,7 @@ export abstract class BaseSuite<
     >[] = []
   ) {
     this.name = name;
+    this.index = index;
     this.givens = givens;
     this.checks = checks;
     this.fails = [];
@@ -208,18 +213,21 @@ export abstract class BaseSuite<
   async run(
     input,
     testResourceConfiguration: ITTestResourceConfiguration,
-    artifactory: (gndex: string) => (a: string, b: string) => void,
+    artifactory: (
+      fPath: string,
+      value: unknown
+    ) => void,
     tLog: (...string) => void
   ): Promise<
     BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape>
   > {
     this.testResourceConfiguration = testResourceConfiguration;
 
-    const subject = await this.setup(input, artifactory("-1"));
+    const suiteArtifactory = (fPath: string, value: unknown) =>
+      artifactory(`suite-${this.index}-${this.name}/${fPath}`, value)
+    const subject = await this.setup(input, suiteArtifactory);
 
-    tLog("\nSuite:", this.name);
-    // tLog("subject:", subject);
-
+    tLog("\nSuite:", this.index, this.name);
     for (const k of Object.keys(this.givens)) {
       const giver = this.givens[k];
       try {
@@ -228,7 +236,7 @@ export abstract class BaseSuite<
           k,
           testResourceConfiguration,
           this.test,
-          artifactory(k),
+          suiteArtifactory,
           tLog
         );
       } catch (e) {
@@ -243,7 +251,7 @@ export abstract class BaseSuite<
         thater.name,
         testResourceConfiguration,
         this.test,
-        artifactory,
+        suiteArtifactory,
         tLog
       );
     }
@@ -324,11 +332,14 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
   ) {
     tLog(`\n Given: ${this.name}`);
 
+    const givenArtifactory = (fPath: string, value: unknown) =>
+      artifactory(`given-${key}/${fPath}`, value)
+
     try {
       this.store = await this.givenThat(
         subject,
         testResourceConfiguration,
-        artifactory
+        givenArtifactory
       );
 
       // tLog(`\n Given this.store`, this.store);
@@ -350,7 +361,7 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
       // throw e;
     } finally {
       try {
-        await this.afterEach(this.store, key, artifactory);
+        await this.afterEach(this.store, key, givenArtifactory);
       } catch (e) {
         console.error("afterEach failed! no error will be recorded!", e);
       }
@@ -569,6 +580,7 @@ abstract class TesterantoLevelZero<
     keyof SuiteExtensions,
     (
       name: string,
+      index: number,
       givens: IGivens<ISubject, IStore, ISelection, IThenShape>,
       checks: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITTestShape>[]
     ) => BaseSuite<
@@ -620,6 +632,7 @@ abstract class TesterantoLevelZero<
       keyof SuiteExtensions,
       (
         name: string,
+        index: number,
         givens: IGivens<ISubject, IStore, ISelection, IThenShape>,
         checks: BaseCheck<
           ISubject,
@@ -801,6 +814,7 @@ abstract class TesterantoLevelOne<
 
     suiteKlasser: (
       name: string,
+      index: number,
       givens: IGivens<ISubject, IStore, ISelection, IThenShape>,
       checks: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape>[]
     ) => BaseSuite<
@@ -832,10 +846,11 @@ abstract class TesterantoLevelOne<
     logWriter: ILogWriter
   ) {
     const classySuites = Object.entries(testImplementation.Suites).reduce(
-      (a, [key]) => {
+      (a, [key], index) => {
         a[key] = (somestring, givens, checks) => {
           return new suiteKlasser.prototype.constructor(
             somestring,
+            index,
             givens,
             checks
           );
@@ -845,9 +860,9 @@ abstract class TesterantoLevelOne<
       {}
     );
 
-    const classyGivens = Object.entries(testImplementation.Givens)
+    const classyGivens = Object.keys(testImplementation.Givens)
       .reduce(
-        (a, [key, z]: [string, any]) => {
+        (a, key: string) => {
           a[key] = (
             features,
             whens,
@@ -859,7 +874,7 @@ abstract class TesterantoLevelOne<
               features,
               whens,
               thens,
-              z(...xtrasW)
+              testImplementation.Givens[key](...xtrasW)
             );
           };
           return a;
@@ -968,7 +983,14 @@ abstract class TesterantoLevelOne<
           return await suite.run(
             input,
             testResourceConfiguration,
-            logWriter.testArtiFactoryfileWriter(tLog)(testResourceConfiguration.fs + "/"),
+            (
+              fPath: string,
+              value: unknown
+            ) =>
+              logWriter.testArtiFactoryfileWriter(tLog)(
+                testResourceConfiguration.fs + "/" + fPath,
+                value
+              ),
             tLog
           );
         };
@@ -1181,7 +1203,9 @@ export default class TesterantoLevelTwo<TestShape extends ITTestShape,
             subject,
             this.initialValues,
             testResource,
-            artifactory
+            (fPath: string, value: unknown) =>
+              // TODO does not work?
+              artifactory(`beforeEach/${fPath}`, value)
           );
         }
         afterEach(
@@ -1190,11 +1214,14 @@ export default class TesterantoLevelTwo<TestShape extends ITTestShape,
           artifactory
         ): Promise<unknown> {
           return new Promise((res) =>
-            res(afterEach(store, key, artifactory))
+            res(afterEach(store, key, (fPath: string, value: unknown) =>
+              artifactory(`after/${fPath}`, value)))
           );
         }
         afterAll(store, artifactory) {
-          return afterAll(store, artifactory);
+          return afterAll(store, (fPath: string, value: unknown) =>
+            // TODO does not work?
+            artifactory(`afterAll4-${this.name}/${fPath}`, value));
         }
       } as any,
 
@@ -1256,7 +1283,7 @@ export default class TesterantoLevelTwo<TestShape extends ITTestShape,
             subject,
             this.initialValues,
             testResourceConfiguration,
-            artifactory
+            (fPath: string, value: unknown) => artifactory(`before/${fPath}`, value)
           );
         }
 
@@ -1266,7 +1293,9 @@ export default class TesterantoLevelTwo<TestShape extends ITTestShape,
           artifactory
         ): Promise<unknown> {
           return new Promise((res) =>
-            res(afterEach(store, key, artifactory))
+            res(afterEach(store, key, (fPath: string, value: unknown) =>
+              // TODO does not work?
+              artifactory(`afterEach2-${this.name}/${fPath}`, value)))
           );
         }
       } as any,

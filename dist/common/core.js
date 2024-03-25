@@ -6,8 +6,9 @@ exports.defaultTestResourceRequirement = {
     ports: 0
 };
 class BaseSuite {
-    constructor(name, givens = {}, checks = []) {
+    constructor(name, index, givens = {}, checks = []) {
         this.name = name;
+        this.index = index;
         this.givens = givens;
         this.checks = checks;
         this.fails = [];
@@ -27,13 +28,13 @@ class BaseSuite {
     }
     async run(input, testResourceConfiguration, artifactory, tLog) {
         this.testResourceConfiguration = testResourceConfiguration;
-        const subject = await this.setup(input, artifactory("-1"));
-        tLog("\nSuite:", this.name);
-        // tLog("subject:", subject);
+        const suiteArtifactory = (fPath, value) => artifactory(`suite-${this.index}-${this.name}/${fPath}`, value);
+        const subject = await this.setup(input, suiteArtifactory);
+        tLog("\nSuite:", this.index, this.name);
         for (const k of Object.keys(this.givens)) {
             const giver = this.givens[k];
             try {
-                this.store = await giver.give(subject, k, testResourceConfiguration, this.test, artifactory(k), tLog);
+                this.store = await giver.give(subject, k, testResourceConfiguration, this.test, suiteArtifactory, tLog);
             }
             catch (e) {
                 console.error(e);
@@ -42,7 +43,7 @@ class BaseSuite {
             }
         }
         for (const [ndx, thater] of this.checks.entries()) {
-            await thater.check(subject, thater.name, testResourceConfiguration, this.test, artifactory, tLog);
+            await thater.check(subject, thater.name, testResourceConfiguration, this.test, suiteArtifactory, tLog);
         }
         // @TODO fix me
         for (const k of Object.keys(this.givens)) {
@@ -82,8 +83,9 @@ class BaseGiven {
     }
     async give(subject, key, testResourceConfiguration, tester, artifactory, tLog) {
         tLog(`\n Given: ${this.name}`);
+        const givenArtifactory = (fPath, value) => artifactory(`given-${key}/${fPath}`, value);
         try {
-            this.store = await this.givenThat(subject, testResourceConfiguration, artifactory);
+            this.store = await this.givenThat(subject, testResourceConfiguration, givenArtifactory);
             // tLog(`\n Given this.store`, this.store);
             for (const whenStep of this.whens) {
                 await whenStep.test(this.store, testResourceConfiguration, tLog);
@@ -101,7 +103,7 @@ class BaseGiven {
         }
         finally {
             try {
-                await this.afterEach(this.store, key, artifactory);
+                await this.afterEach(this.store, key, givenArtifactory);
             }
             catch (e) {
                 console.error("afterEach failed! no error will be recorded!", e);
@@ -243,16 +245,16 @@ class TesterantoLevelZero {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 class TesterantoLevelOne {
     constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResourceRequirement, logWriter) {
-        const classySuites = Object.entries(testImplementation.Suites).reduce((a, [key]) => {
+        const classySuites = Object.entries(testImplementation.Suites).reduce((a, [key], index) => {
             a[key] = (somestring, givens, checks) => {
-                return new suiteKlasser.prototype.constructor(somestring, givens, checks);
+                return new suiteKlasser.prototype.constructor(somestring, index, givens, checks);
             };
             return a;
         }, {});
-        const classyGivens = Object.entries(testImplementation.Givens)
-            .reduce((a, [key, z]) => {
+        const classyGivens = Object.keys(testImplementation.Givens)
+            .reduce((a, key) => {
             a[key] = (features, whens, thens, ...xtrasW) => {
-                return new givenKlasser.prototype.constructor(key, features, whens, thens, z(...xtrasW));
+                return new givenKlasser.prototype.constructor(key, features, whens, thens, testImplementation.Givens[key](...xtrasW));
             };
             return a;
         }, {});
@@ -280,7 +282,7 @@ class TesterantoLevelOne {
         /* @ts-ignore:next-line */
         classyTesteranto.Suites(), classyTesteranto.Given(), classyTesteranto.When(), classyTesteranto.Then(), classyTesteranto.Check(), logWriter);
         const suiteRunner = (suite) => async (testResourceConfiguration, tLog) => {
-            return await suite.run(input, testResourceConfiguration, logWriter.testArtiFactoryfileWriter(tLog)(testResourceConfiguration.fs + "/"), tLog);
+            return await suite.run(input, testResourceConfiguration, (fPath, value) => logWriter.testArtiFactoryfileWriter(tLog)(testResourceConfiguration.fs + "/" + fPath, value), tLog);
         };
         /* @ts-ignore:next-line */
         const toReturn = suites.map((suite) => {
@@ -337,13 +339,17 @@ class TesterantoLevelTwo extends TesterantoLevelOne {
                 this.initialValues = initialValues;
             }
             async givenThat(subject, testResource, artifactory) {
-                return beforeEach(subject, this.initialValues, testResource, artifactory);
+                return beforeEach(subject, this.initialValues, testResource, (fPath, value) => 
+                // TODO does not work?
+                artifactory(`beforeEach/${fPath}`, value));
             }
             afterEach(store, key, artifactory) {
-                return new Promise((res) => res(afterEach(store, key, artifactory)));
+                return new Promise((res) => res(afterEach(store, key, (fPath, value) => artifactory(`after/${fPath}`, value))));
             }
             afterAll(store, artifactory) {
-                return afterAll(store, artifactory);
+                return afterAll(store, (fPath, value) => 
+                // TODO does not work?
+                artifactory(`afterAll4-${this.name}/${fPath}`, value));
             }
         }, class When extends BaseWhen {
             constructor(name, actioner, payload) {
@@ -368,10 +374,12 @@ class TesterantoLevelTwo extends TesterantoLevelOne {
                 this.initialValues = initialValues;
             }
             async checkThat(subject, testResourceConfiguration, artifactory) {
-                return beforeEach(subject, this.initialValues, testResourceConfiguration, artifactory);
+                return beforeEach(subject, this.initialValues, testResourceConfiguration, (fPath, value) => artifactory(`before/${fPath}`, value));
             }
             afterEach(store, key, artifactory) {
-                return new Promise((res) => res(afterEach(store, key, artifactory)));
+                return new Promise((res) => res(afterEach(store, key, (fPath, value) => 
+                // TODO does not work?
+                artifactory(`afterEach2-${this.name}/${fPath}`, value))));
             }
         }, testResourceRequirement, logWriter);
     }

@@ -11,9 +11,8 @@ export const NodeWriter = {
     mkdirSync: async (fp) => {
         await fs.mkdirSync(fp, { recursive: true });
     },
-    testArtiFactoryfileWriter: (tLog) => (fp) => (givenNdx) => (key, value) => {
-        tLog("testArtiFactory =>", key);
-        const fPath = `${fp}/${givenNdx}/${key}`;
+    testArtiFactoryfileWriter: (tLog) => (fPath, value) => {
+        tLog("testArtiFactory =>", fPath);
         const cleanPath = path.resolve(fPath);
         fPaths.push(cleanPath.replace(process.cwd(), ``));
         const targetDir = cleanPath.split("/").slice(0, -1).join("/");
