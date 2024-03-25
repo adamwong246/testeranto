@@ -23,13 +23,14 @@
     "strict": false,
     "forceConsistentCasingInFileNames": true,
     "noEmit": false,
+    "emitDeclarationOnly": true,
     "incremental": true,
     "esModuleInterop": true,
     "isolatedModules": true,
     "declaration": true,
-    "outDir": "dist",
+    "outDir": "dist/types/",
     "alwaysStrict": true
   },
-  "include": ["src/**/*.*ts", "src/**/*.*tsx", "index.d.ts"],
-  "exclude": ["node_modules", "trash"]
+  "include": ["src/**/*.*ts", "index.d.ts"],
+  "exclude": ["node_modules"]
 }

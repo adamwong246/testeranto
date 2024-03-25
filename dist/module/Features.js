@@ -1,4 +1,4 @@
-import pkg from 'graphology';
+import pkg from "graphology";
 /* @ts-ignore:next-line */
 const { DirectedGraph, UndirectedGraph } = pkg;
 class TesterantoGraph {
@@ -11,7 +11,6 @@ export class BaseFeature {
         this.name = name;
     }
 }
-;
 export class TesterantoGraphUndirected {
     constructor(name) {
         this.name = name;
@@ -48,24 +47,28 @@ export class TesterantoFeatures {
         return [
             ...this.graphs.undirected.values(),
             ...this.graphs.directed.values(),
-            ...this.graphs.dags.values()
+            ...this.graphs.dags.values(),
         ];
     }
     toObj() {
         return {
             features: Object.entries(this.features).map(([name, feature]) => {
-                return Object.assign(Object.assign({}, feature), { inNetworks: this.networks().filter((network) => {
+                return Object.assign(Object.assign({}, feature), { inNetworks: this.networks()
+                        .filter((network) => {
                         return network.graph.hasNode(feature.name);
-                    }).map((network) => {
+                    })
+                        .map((network) => {
                         return {
                             network: network.name,
-                            neighbors: network.graph.neighbors(feature.name)
+                            neighbors: network.graph.neighbors(feature.name),
                         };
                     }) });
             }),
             networks: this.networks().map((network) => {
                 return Object.assign({}, network);
-            })
+            }),
         };
     }
 }
+export { DirectedGraph };
+export default {};

@@ -26,10 +26,10 @@
     "incremental": true,
     "esModuleInterop": true,
     "isolatedModules": true,
-    "declaration": true,
-    "outDir": "dist",
+    "declaration": false,
+    "outDir": "dist/module/",
     "alwaysStrict": true
   },
   "include": ["src/**/*.*ts", "src/**/*.*tsx", "index.d.ts"],
-  "exclude": ["node_modules", "trash"]
+  "exclude": ["node_modules"]
 }

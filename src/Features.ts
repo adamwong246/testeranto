@@ -1,4 +1,5 @@
-import pkg from 'graphology';
+import Graph from "graphology";
+import pkg from "graphology";
 
 /* @ts-ignore:next-line */
 const { DirectedGraph, UndirectedGraph } = pkg;
@@ -17,11 +18,11 @@ export class BaseFeature {
   constructor(name: string) {
     this.name = name;
   }
-};
+}
 
 export class TesterantoGraphUndirected implements TesterantoGraph {
   name: string;
-  graph: typeof UndirectedGraph
+  graph: Graph;
   constructor(name: string) {
     this.name = name;
     this.graph = new UndirectedGraph();
@@ -33,7 +34,7 @@ export class TesterantoGraphUndirected implements TesterantoGraph {
 
 export class TesterantoGraphDirected implements TesterantoGraph {
   name: string;
-  graph: typeof DirectedGraph;
+  graph: Graph;
   constructor(name: string) {
     this.name = name;
     this.graph = new DirectedGraph();
@@ -45,7 +46,7 @@ export class TesterantoGraphDirected implements TesterantoGraph {
 
 export class TesterantoGraphDirectedAcyclic implements TesterantoGraph {
   name: string;
-  graph: typeof DirectedGraph;
+  graph: Graph;
   constructor(name: string) {
     this.name = name;
     this.graph = new DirectedGraph();
@@ -58,17 +59,17 @@ export class TesterantoGraphDirectedAcyclic implements TesterantoGraph {
 export class TesterantoFeatures {
   features: Record<string, BaseFeature>;
   graphs: {
-    undirected: TesterantoGraphUndirected[],
-    directed: TesterantoGraphDirected[],
-    dags: TesterantoGraphDirectedAcyclic[]
-  }
+    undirected: TesterantoGraphUndirected[];
+    directed: TesterantoGraphDirected[];
+    dags: TesterantoGraphDirectedAcyclic[];
+  };
 
   constructor(
     features: Record<string, BaseFeature>,
     graphs: {
-      undirected: TesterantoGraphUndirected[],
-      directed: TesterantoGraphDirected[],
-      dags: TesterantoGraphDirectedAcyclic[]
+      undirected: TesterantoGraphUndirected[];
+      directed: TesterantoGraphDirected[];
+      dags: TesterantoGraphDirectedAcyclic[];
     }
   ) {
     this.features = features;
@@ -79,8 +80,8 @@ export class TesterantoFeatures {
     return [
       ...this.graphs.undirected.values(),
       ...this.graphs.directed.values(),
-      ...this.graphs.dags.values()
-    ]
+      ...this.graphs.dags.values(),
+    ];
   }
 
   toObj() {
@@ -88,27 +89,32 @@ export class TesterantoFeatures {
       features: Object.entries(this.features).map(([name, feature]) => {
         return {
           ...feature,
-          inNetworks: this.networks().filter((network) => {
-            return network.graph.hasNode(feature.name);
-          }).map((network) => {
-            return {
-
-              network: network.name,
-              neighbors: network.graph.neighbors(feature.name)
-            }
-          })
-        }
+          inNetworks: this.networks()
+            .filter((network) => {
+              return network.graph.hasNode(feature.name);
+            })
+            .map((network) => {
+              return {
+                network: network.name,
+                neighbors: network.graph.neighbors(feature.name),
+              };
+            }),
+        };
       }),
       networks: this.networks().map((network) => {
         return {
-          ...network
-        }
-      })
+          ...network,
+        };
+      }),
     };
   }
 }
 
 export type IT_FeatureNetwork = {
-  name: string,
+  name: string;
   // graph: DirectedGraph
 };
+
+export { DirectedGraph };
+
+export default {};

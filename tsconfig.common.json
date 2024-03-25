@@ -1,7 +1,7 @@
 {
   "ts-node": {
     "compilerOptions": {
-      "module": "esnext"
+      "module": "commonjs"
     }
   },
   "declaration": true,
@@ -12,13 +12,13 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": false,
-    "module": "esnext",
+    "module": "commonjs",
     "target": "es2017",
     "allowJs": true,
     "jsx": "react",
     "resolveJsonModule": true,
     "strictNullChecks": true,
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": ["dom", "dom.iterable"],
     "skipLibCheck": true,
     "strict": false,
     "forceConsistentCasingInFileNames": true,
@@ -26,10 +26,10 @@
     "incremental": true,
     "esModuleInterop": true,
     "isolatedModules": true,
-    "declaration": true,
-    "outDir": "dist",
+    "declaration": false,
+    "outDir": "dist/common/",
     "alwaysStrict": true
   },
-  "include": ["src/**/*.*ts", "src/**/*.*tsx", "index.d.ts"],
-  "exclude": ["node_modules", "trash"]
+  "include": ["src/**/*.*ts", "index.d.ts"],
+  "exclude": ["node_modules"]
 }
