@@ -1,7 +1,7 @@
 import {
   Web_default,
   assert
-} from "../chunk-OLKJ7VW4.js";
+} from "../chunk-2GR5DWQ4.js";
 import {
   require_client,
   require_react,

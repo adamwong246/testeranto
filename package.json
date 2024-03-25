@@ -1,7 +1,7 @@
 {
   "name": "kokomo-bay",
   "description": "",
-  "version": "0.0.7",
+  "version": "0.1.0",
   "repository": "git@github.com:ChromaPDX/kokomoBay.git",
   "homepage": "https://github.com/ChromaPDX/kokomoBay",
   "author": "adam wong <adamwong246@gmail.com>",
@@ -29,6 +29,7 @@
     "node-fetch": "^3.3.2",
     "puppeteer-screen-recorder": "^2.1.2",
     "react-bootstrap": "^2.10.2",
+    "testeranto": "^0.40.3",
     "ts-node": "^10.9.2",
     "url": "^0.11.3",
     "why-is-node-still-running": "^1.0.0"

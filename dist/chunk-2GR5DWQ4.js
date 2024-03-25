@@ -4078,7 +4078,7 @@ var should = import_index.default.should;
 var assert = import_index.default.assert;
 var core = import_index.default.core;
 
-// ../testeranto/dist/module/core.js
+// node_modules/testeranto/dist/module/core.js
 var defaultTestResource = { name: "", fs: ".", ports: [] };
 var defaultTestResourceRequirement = {
   ports: 0
@@ -4425,7 +4425,7 @@ var TesterantoLevelTwo = class extends TesterantoLevelOne {
   }
 };
 
-// ../testeranto/dist/module/Web.js
+// node_modules/testeranto/dist/module/Web.js
 var webSocket = new WebSocket("ws://localhost:8080");
 var Web_default = async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = defaultTestResourceRequirement) => {
   const mrt = new TesterantoLevelTwo(input, testSpecification, testImplementation, testInterface, testResourceRequirement, testInterface.assertioner || (async (t2) => t2), testInterface.beforeEach || async function(subject, initialValues, testResource) {
