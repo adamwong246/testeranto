@@ -1,6 +1,5 @@
 import {
   ITTestResourceConfiguration,
-  ITTestResourceRequirement,
   ITTestResourceRequest,
   ITTestShape,
   ITestArtificer,
@@ -11,94 +10,6 @@ import {
 import TesterantoLevelTwo from "./core";
 
 const webSocket = new WebSocket("ws://localhost:8080");
-
-const startup = async (
-  testResourceArg: string,
-  t: ITestJob,
-  testResourceRequirement: ITTestResourceRequest
-) => {
-  const partialTestResource = JSON.parse(
-    testResourceArg
-  ) as ITTestResourceConfiguration;
-
-  if (partialTestResource.fs && partialTestResource.ports) {
-    const failed = await t.receiveTestResourceConfig(partialTestResource);
-    (window as any).exit(failed)
-
-  } else {
-    console.log("test configuration is incomplete", partialTestResource);
-    console.log(
-      "requesting test resources via ws",
-      testResourceRequirement
-    );
-
-    webSocket.addEventListener("open", (event) => {
-      webSocket.addEventListener("message", (event) => {
-        console.log("Message from server ", event.data);
-      });
-
-      const r = JSON.stringify({
-        type: "testeranto:hola",
-        data: {
-          testResourceRequirement,
-        },
-      });
-
-      webSocket.send(r);
-
-      console.log("awaiting test resources via websocket...", r);
-      webSocket.onmessage = (
-        async (msg: MessageEvent<any>) => {
-          console.log("message: ", msg);
-
-          const resourcesFromPm2 = msg.data.testResourceConfiguration;
-          const secondTestResource = {
-            fs: ".",
-            ...JSON.parse(JSON.stringify(partialTestResource)),
-            ...JSON.parse(JSON.stringify(resourcesFromPm2)),
-          } as ITTestResourceConfiguration;
-
-          console.log("secondTestResource", secondTestResource);
-
-          const failed = await t.receiveTestResourceConfig(partialTestResource);
-
-          webSocket.send(
-            JSON.stringify({
-              type: "testeranto:adios",
-              data: {
-                testResourceConfiguration:
-                  t.test.testResourceConfiguration,
-                results: t.toObj(),
-              },
-            })
-          );
-
-          document.write("all done")
-          // app.exit(failed ? 1 : 0);
-          // process.exit(failed ? 1 : 0);
-        }
-      );
-
-    });
-
-
-
-    // else {
-    //   console.log("Pass run-time test resources by STDIN", process.stdin);
-    //   process.stdin.on("data", async (data) => {
-    //     console.log("data: ", data);
-
-    //     const resourcesFromStdin = JSON.parse(data.toString());
-    //     const secondTestResource = {
-    //       ...JSON.parse(JSON.stringify(resourcesFromStdin)),
-    //       ...JSON.parse(JSON.stringify(partialTestResource)),
-    //     } as ITTestResourceConfiguration;
-    //     await t.receiveTestResourceConfig(secondTestResource);
-    //     // process.exit(0); // :-)
-    //   });
-    // }
-  }
-};
 
 export default async <
   TestShape extends ITTestShape,
@@ -162,16 +73,77 @@ export default async <
     function (b: (...any: any[]) => any) {
       return b;
     },
-    {
-      ...(window as any).NodeWriter,
-      startup,
-    }
+    (window as any).NodeWriter
   );
   const t: ITestJob = mrt[0];
-  const testResourceArg = decodeURIComponent(new URLSearchParams(location.search).get('requesting') || '');
+  const testResourceArg = decodeURIComponent(
+    new URLSearchParams(location.search).get('requesting') || ''
+  );
   try {
-    await startup(testResourceArg, t, testResourceRequirement);
-    // process.exit(0);
+    const partialTestResource = JSON.parse(
+      testResourceArg
+    ) as ITTestResourceConfiguration;
+
+    if (partialTestResource.fs && partialTestResource.ports) {
+      const failed = await t.receiveTestResourceConfig(partialTestResource);
+      (window as any).exit(failed)
+
+    } else {
+      console.log("test configuration is incomplete", partialTestResource);
+      console.log(
+        "requesting test resources via ws",
+        testResourceRequirement
+      );
+
+      webSocket.addEventListener("open", (event) => {
+        webSocket.addEventListener("message", (event) => {
+          console.log("Message from server ", event.data);
+        });
+
+        const r = JSON.stringify({
+          type: "testeranto:hola",
+          data: {
+            testResourceRequirement,
+          },
+        });
+
+        webSocket.send(r);
+
+        console.log("awaiting test resources via websocket...", r);
+        webSocket.onmessage = (
+          async (msg: MessageEvent<any>) => {
+            console.log("message: ", msg);
+
+            const resourcesFromPm2 = msg.data.testResourceConfiguration;
+            const secondTestResource = {
+              fs: ".",
+              ...JSON.parse(JSON.stringify(partialTestResource)),
+              ...JSON.parse(JSON.stringify(resourcesFromPm2)),
+            } as ITTestResourceConfiguration;
+
+            console.log("secondTestResource", secondTestResource);
+
+            const failed = await t.receiveTestResourceConfig(partialTestResource);
+
+            webSocket.send(
+              JSON.stringify({
+                type: "testeranto:adios",
+                data: {
+                  testResourceConfiguration:
+                    t.test.testResourceConfiguration,
+                  results: t.toObj(),
+                },
+              })
+            );
+
+            document.write("all done")
+            // app.exit(failed ? 1 : 0);
+            // process.exit(failed ? 1 : 0);
+          }
+        );
+      });
+    }
+
   } catch (e) {
     console.error(e);
     process.exit(-1);

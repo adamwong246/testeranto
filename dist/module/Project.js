@@ -255,7 +255,7 @@ export class ITProject {
                     }),
                     esbuild.context(esbuildConfigWeb).then(async (esbuildWeb) => {
                         esbuildWeb.serve({
-                            port: 8000,
+                            port: config.buildPort,
                             servedir: ".",
                         }).then(async (esbuildServerResult) => {
                             console.log("esbuildConfigWeb watched");

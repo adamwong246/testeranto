@@ -29,7 +29,6 @@ export declare type ILogWriter = {
     writeFileSync: (fp: string, contents: string) => any;
     mkdirSync: (fp: string) => any;
     testArtiFactoryfileWriter: (tLog: ITLog) => (fp: any) => (givenNdx: any) => (key: any, value: any) => void;
-    startup: (testResource: string, t: ITestJob, testResourceRequirement: ITTestResourceRequirement) => Promise<any>;
 };
 declare type IGivens<ISubject, IStore, ISelection, IThenShape> = Record<string, BaseGiven<ISubject, IStore, ISelection, IThenShape>>;
 declare type ITestCheckCallback<ITestShape extends ITTestShape> = {

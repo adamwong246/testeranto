@@ -140,10 +140,8 @@ export default async <
                   console.error(err);
                   // process.exit(1);
                 }
-
               }
             );
-
           }
         );
       } else {

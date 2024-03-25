@@ -1,7 +1,6 @@
 import fs from "fs";
 import path from "path";
 import { PassThrough } from "stream";
-import pm2 from "pm2";
 
 import {
   ILogWriter, ITLog, ITTestResourceConfiguration, ITTestResourceRequirement, ITestJob
@@ -11,89 +10,6 @@ type IFPaths = string[];
 const fPaths: IFPaths = [];
 
 export const NodeWriter: ILogWriter = {
-  startup: async (
-    testResourceArg: string,
-    t: ITestJob,
-    testResourceRequirement: ITTestResourceRequirement
-  ) => {
-
-    const partialTestResource = JSON.parse(
-      testResourceArg
-    ) as ITTestResourceConfiguration;
-
-    if (partialTestResource.fs && partialTestResource.ports) {
-      await t.receiveTestResourceConfig(partialTestResource);
-
-    } else {
-      console.log("test configuration is incomplete", partialTestResource);
-      if (process.send) {
-        console.log(
-          "requesting test resources from pm2 ...",
-          testResourceRequirement
-        );
-        /* @ts-ignore:next-line */
-        process.send({
-          type: "testeranto:hola",
-          data: {
-            testResourceRequirement,
-          },
-        });
-
-        console.log("awaiting test resources from pm2...");
-        process.on(
-          "message",
-          async function (packet: { data: { testResourceConfiguration } }) {
-            console.log("message: ", packet);
-
-            const resourcesFromPm2 = packet.data.testResourceConfiguration;
-            const secondTestResource = {
-              fs: ".",
-              ...JSON.parse(JSON.stringify(partialTestResource)),
-              ...JSON.parse(JSON.stringify(resourcesFromPm2)),
-            } as ITTestResourceConfiguration;
-
-            console.log("secondTestResource", secondTestResource);
-
-            if (await t.receiveTestResourceConfig(secondTestResource)) {
-              /* @ts-ignore:next-line */
-              process.send(
-                {
-                  type: "testeranto:adios",
-                  data: {
-                    testResourceConfiguration:
-                      t.test.testResourceConfiguration,
-                    results: t.toObj(),
-                  },
-                },
-                (err) => {
-                  if (!err) {
-                    console.log(`✅`);
-                  } else {
-                    console.error(`❗️`, err);
-                  }
-                  // process.exit(0); // :-)
-                }
-              );
-            }
-          }
-        );
-      } else {
-        console.log("Pass run-time test resources by STDIN", process.stdin);
-        process.stdin.on("data", async (data) => {
-          console.log("data: ", data);
-
-          const resourcesFromStdin = JSON.parse(data.toString());
-          const secondTestResource = {
-            ...JSON.parse(JSON.stringify(resourcesFromStdin)),
-            ...JSON.parse(JSON.stringify(partialTestResource)),
-          } as ITTestResourceConfiguration;
-
-          await t.receiveTestResourceConfig(secondTestResource);
-          // process.exit(0); // :-)
-        });
-      }
-    }
-  },
   createWriteStream: (filepath: string) => {
     return fs.createWriteStream(filepath);
   },
