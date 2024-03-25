@@ -3,9 +3,9 @@ import {
   __toESM
 } from "./chunk-4ATCX2XT.js";
 
-// node_modules/graphology/dist/graphology.umd.min.js
+// ../testeranto/node_modules/graphology/dist/graphology.umd.min.js
 var require_graphology_umd_min = __commonJS({
-  "node_modules/graphology/dist/graphology.umd.min.js"(exports, module) {
+  "../testeranto/node_modules/graphology/dist/graphology.umd.min.js"(exports, module) {
     !function(t, e) {
       "object" == typeof exports && "undefined" != typeof module ? module.exports = e() : "function" == typeof define && define.amd ? define(e) : (t = "undefined" != typeof globalThis ? globalThis : t || self).graphology = e();
     }(exports, function() {
@@ -88,7 +88,7 @@ var require_graphology_umd_min = __commonJS({
         return i2 ? o2 = "mixed" === r2 ? i2.out && i2.out[n2] || i2.undirected && i2.undirected[n2] : "directed" === r2 ? i2.out && i2.out[n2] : i2.undirected && i2.undirected[n2] : o2;
       }
       function s(e2) {
-        return "object" === t(e2) && null !== e2;
+        return "object" === t(e2) && null !== e2 && e2.constructor === Object;
       }
       function h(t2) {
         var e2;
@@ -1984,7 +1984,7 @@ var require_graphology_umd_min = __commonJS({
   }
 });
 
-// node_modules/testeranto/dist/module/Features.js
+// ../testeranto/dist/module/Features.js
 var import_graphology = __toESM(require_graphology_umd_min(), 1);
 var { DirectedGraph, UndirectedGraph } = import_graphology.default;
 var BaseFeature = class {
