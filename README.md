@@ -1,7 +1,5 @@
 # testeranto
 
-![demo](testerantoDemo.gif)
-
 home: [adamwong246.github.io/testeranto](https://adamwong246.github.io/testeranto/)
 
 source: [github.com/adamwong246/testeranto](https://github.com/adamwong246/testeranto)
