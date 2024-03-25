@@ -4291,15 +4291,7 @@ var TesterantoLevelOne = class {
     }, {});
     const classyGivens = Object.keys(testImplementation.Givens).reduce((a, key) => {
       a[key] = (features, whens, thens, ...xtrasW) => {
-        return new givenKlasser.prototype.constructor(
-          // TODO why is key used twice?
-          key,
-          key,
-          features,
-          whens,
-          thens,
-          testImplementation.Givens[key](...xtrasW)
-        );
+        return new givenKlasser.prototype.constructor(key, features, whens, thens, testImplementation.Givens[key](...xtrasW));
       };
       return a;
     }, {});
@@ -4379,7 +4371,7 @@ var TesterantoLevelTwo = class extends TesterantoLevelOne {
         return assertioner(t);
       }
     }, class Given extends BaseGiven {
-      constructor(id, name, features, whens, thens, initialValues) {
+      constructor(name, features, whens, thens, initialValues) {
         super(name, features, whens, thens);
         this.initialValues = initialValues;
       }

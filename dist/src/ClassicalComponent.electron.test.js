@@ -1,7 +1,7 @@
 import {
   Web_default,
   assert
-} from "../chunk-GUCVQZA5.js";
+} from "../chunk-OLKJ7VW4.js";
 import {
   ClassicalComponent
 } from "../chunk-S6FS72L5.js";
