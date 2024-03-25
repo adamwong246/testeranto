@@ -165,14 +165,10 @@ export const EsbuildPuppeteerTesteranto = <ITestShape extends ITTestShape>(
           });
 
         const pipeStream = new PassThrough();
-
-        artificer("./screencap.mp4", pipeStream);
-
-
         return page.setContent(subject.htmlBundle).then(async () => {
           await recorder.startStream(pipeStream);
           artificer(
-            "./beforeEachScreenshot.png",
+            "./screenshot.png",
             await (await page).screenshot()
           );
           return {
@@ -194,11 +190,12 @@ export const EsbuildPuppeteerTesteranto = <ITestShape extends ITTestShape>(
         ndx,
         artificer
       ) {
+        artificer("./screencap.mp4", pipeStream);
         await recorder.stop();
         pipeStream.end();
         // page.close();
-        artificer("./afterEachScreenshot.png", await (await page).screenshot());
-        artificer("./afterEachLogs.txt", consoleLogs.join(`\n`));
+        artificer(`./screenshot.png`, await page.screenshot());
+        artificer("./consoleLogs.txt", consoleLogs.join(`\n`));
         return;
       },
       afterAll: (store: Store, artificer) => {

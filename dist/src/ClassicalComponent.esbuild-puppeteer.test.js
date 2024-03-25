@@ -132,11 +132,10 @@ var EsbuildPuppeteerTesteranto = (testImplementations, testSpecifications, testI
         request.continue();
       });
       const pipeStream = new import_stream.PassThrough();
-      artificer("./screencap.mp4", pipeStream);
       return page.setContent(subject.htmlBundle).then(async () => {
         await recorder.startStream(pipeStream);
         artificer(
-          "./beforeEachScreenshot.png",
+          "./screenshot.png",
           await (await page).screenshot()
         );
         return {
@@ -154,10 +153,11 @@ var EsbuildPuppeteerTesteranto = (testImplementations, testSpecifications, testI
       return { page };
     },
     afterEach: async function({ page, recorder, consoleLogs, pipeStream }, ndx, artificer) {
+      artificer("./screencap.mp4", pipeStream);
       await recorder.stop();
       pipeStream.end();
-      artificer("./afterEachScreenshot.png", await (await page).screenshot());
-      artificer("./afterEachLogs.txt", consoleLogs.join(`
+      artificer(`./screenshot.png`, await page.screenshot());
+      artificer("./consoleLogs.txt", consoleLogs.join(`
 `));
       return;
     },

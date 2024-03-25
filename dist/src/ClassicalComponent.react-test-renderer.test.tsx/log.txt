@@ -1,5 +1,5 @@
 
-Suite:,a classical react component
+Suite:,0,a classical react component
 
  Given: AnEmptyState
  Then:,ThePropsIs: [object Object]

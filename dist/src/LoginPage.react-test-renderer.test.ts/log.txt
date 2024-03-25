@@ -1,5 +1,5 @@
 
-Suite:,Testing the LoginPage as react
+Suite:,0,Testing the LoginPage as react
 
  Given: default
  When:,TheEmailIsSetTo: adam@email.com

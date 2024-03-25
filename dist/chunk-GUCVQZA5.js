@@ -4084,8 +4084,9 @@ var defaultTestResourceRequirement = {
   ports: 0
 };
 var BaseSuite = class {
-  constructor(name, givens = {}, checks = []) {
+  constructor(name, index, givens = {}, checks = []) {
     this.name = name;
+    this.index = index;
     this.givens = givens;
     this.checks = checks;
     this.fails = [];
@@ -4105,12 +4106,13 @@ var BaseSuite = class {
   }
   async run(input, testResourceConfiguration, artifactory, tLog) {
     this.testResourceConfiguration = testResourceConfiguration;
-    const subject = await this.setup(input, artifactory("-1"));
-    tLog("\nSuite:", this.name);
+    const suiteArtifactory = (fPath, value) => artifactory(`suite-${this.index}-${this.name}/${fPath}`, value);
+    const subject = await this.setup(input, suiteArtifactory);
+    tLog("\nSuite:", this.index, this.name);
     for (const k of Object.keys(this.givens)) {
       const giver = this.givens[k];
       try {
-        this.store = await giver.give(subject, k, testResourceConfiguration, this.test, artifactory(k), tLog);
+        this.store = await giver.give(subject, k, testResourceConfiguration, this.test, suiteArtifactory, tLog);
       } catch (e) {
         console.error(e);
         this.fails.push(giver);
@@ -4118,7 +4120,7 @@ var BaseSuite = class {
       }
     }
     for (const [ndx, thater] of this.checks.entries()) {
-      await thater.check(subject, thater.name, testResourceConfiguration, this.test, artifactory, tLog);
+      await thater.check(subject, thater.name, testResourceConfiguration, this.test, suiteArtifactory, tLog);
     }
     for (const k of Object.keys(this.givens)) {
       const giver = this.givens[k];
@@ -4155,8 +4157,9 @@ var BaseGiven = class {
   async give(subject, key, testResourceConfiguration, tester, artifactory, tLog) {
     tLog(`
  Given: ${this.name}`);
+    const givenArtifactory = (fPath, value) => artifactory(`given-${key}/${fPath}`, value);
     try {
-      this.store = await this.givenThat(subject, testResourceConfiguration, artifactory);
+      this.store = await this.givenThat(subject, testResourceConfiguration, givenArtifactory);
       for (const whenStep of this.whens) {
         await whenStep.test(this.store, testResourceConfiguration, tLog);
       }
@@ -4170,7 +4173,7 @@ var BaseGiven = class {
       tLog("\x07");
     } finally {
       try {
-        await this.afterEach(this.store, key, artifactory);
+        await this.afterEach(this.store, key, givenArtifactory);
       } catch (e) {
         console.error("afterEach failed! no error will be recorded!", e);
       }
@@ -4280,15 +4283,23 @@ var TesterantoLevelZero = class {
 };
 var TesterantoLevelOne = class {
   constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResourceRequirement, logWriter) {
-    const classySuites = Object.entries(testImplementation.Suites).reduce((a, [key]) => {
+    const classySuites = Object.entries(testImplementation.Suites).reduce((a, [key], index) => {
       a[key] = (somestring, givens, checks) => {
-        return new suiteKlasser.prototype.constructor(somestring, givens, checks);
+        return new suiteKlasser.prototype.constructor(somestring, index, givens, checks);
       };
       return a;
     }, {});
-    const classyGivens = Object.entries(testImplementation.Givens).reduce((a, [key, z]) => {
+    const classyGivens = Object.keys(testImplementation.Givens).reduce((a, key) => {
       a[key] = (features, whens, thens, ...xtrasW) => {
-        return new givenKlasser.prototype.constructor(key, features, whens, thens, z(...xtrasW));
+        return new givenKlasser.prototype.constructor(
+          // TODO why is key used twice?
+          key,
+          key,
+          features,
+          whens,
+          thens,
+          testImplementation.Givens[key](...xtrasW)
+        );
       };
       return a;
     }, {});
@@ -4322,7 +4333,7 @@ var TesterantoLevelOne = class {
       logWriter
     );
     const suiteRunner = (suite) => async (testResourceConfiguration, tLog) => {
-      return await suite.run(input, testResourceConfiguration, logWriter.testArtiFactoryfileWriter(tLog)(testResourceConfiguration.fs + "/"), tLog);
+      return await suite.run(input, testResourceConfiguration, (fPath, value) => logWriter.testArtiFactoryfileWriter(tLog)(testResourceConfiguration.fs + "/" + fPath, value), tLog);
     };
     const toReturn = suites.map((suite) => {
       const runner = suiteRunner(suite);
@@ -4368,18 +4379,24 @@ var TesterantoLevelTwo = class extends TesterantoLevelOne {
         return assertioner(t);
       }
     }, class Given extends BaseGiven {
-      constructor(name, features, whens, thens, initialValues) {
+      constructor(id, name, features, whens, thens, initialValues) {
         super(name, features, whens, thens);
         this.initialValues = initialValues;
       }
       async givenThat(subject, testResource, artifactory) {
-        return beforeEach(subject, this.initialValues, testResource, artifactory);
+        return beforeEach(subject, this.initialValues, testResource, (fPath, value) => (
+          // TODO does not work?
+          artifactory(`beforeEach/${fPath}`, value)
+        ));
       }
       afterEach(store, key, artifactory) {
-        return new Promise((res) => res(afterEach(store, key, artifactory)));
+        return new Promise((res) => res(afterEach(store, key, (fPath, value) => artifactory(`after/${fPath}`, value))));
       }
       afterAll(store, artifactory) {
-        return afterAll(store, artifactory);
+        return afterAll(store, (fPath, value) => (
+          // TODO does not work?
+          artifactory(`afterAll4-${this.name}/${fPath}`, value)
+        ));
       }
     }, class When extends BaseWhen {
       constructor(name, actioner, payload) {
@@ -4404,10 +4421,13 @@ var TesterantoLevelTwo = class extends TesterantoLevelOne {
         this.initialValues = initialValues;
       }
       async checkThat(subject, testResourceConfiguration, artifactory) {
-        return beforeEach(subject, this.initialValues, testResourceConfiguration, artifactory);
+        return beforeEach(subject, this.initialValues, testResourceConfiguration, (fPath, value) => artifactory(`before/${fPath}`, value));
       }
       afterEach(store, key, artifactory) {
-        return new Promise((res) => res(afterEach(store, key, artifactory)));
+        return new Promise((res) => res(afterEach(store, key, (fPath, value) => (
+          // TODO does not work?
+          artifactory(`afterEach2-${this.name}/${fPath}`, value)
+        ))));
       }
     }, testResourceRequirement, logWriter);
   }
@@ -4415,54 +4435,51 @@ var TesterantoLevelTwo = class extends TesterantoLevelOne {
 
 // ../testeranto/dist/module/Web.js
 var webSocket = new WebSocket("ws://localhost:8080");
-var startup = async (testResourceArg, t, testResourceRequirement) => {
-  const partialTestResource = JSON.parse(testResourceArg);
-  if (partialTestResource.fs && partialTestResource.ports) {
-    const failed = await t.receiveTestResourceConfig(partialTestResource);
-    window.exit(failed);
-  } else {
-    console.log("test configuration is incomplete", partialTestResource);
-    console.log("requesting test resources via ws", testResourceRequirement);
-    webSocket.addEventListener("open", (event) => {
-      webSocket.addEventListener("message", (event2) => {
-        console.log("Message from server ", event2.data);
-      });
-      const r = JSON.stringify({
-        type: "testeranto:hola",
-        data: {
-          testResourceRequirement
-        }
-      });
-      webSocket.send(r);
-      console.log("awaiting test resources via websocket...", r);
-      webSocket.onmessage = async (msg) => {
-        console.log("message: ", msg);
-        const resourcesFromPm2 = msg.data.testResourceConfiguration;
-        const secondTestResource = Object.assign(Object.assign({ fs: "." }, JSON.parse(JSON.stringify(partialTestResource))), JSON.parse(JSON.stringify(resourcesFromPm2)));
-        console.log("secondTestResource", secondTestResource);
-        const failed = await t.receiveTestResourceConfig(partialTestResource);
-        webSocket.send(JSON.stringify({
-          type: "testeranto:adios",
-          data: {
-            testResourceConfiguration: t.test.testResourceConfiguration,
-            results: t.toObj()
-          }
-        }));
-        document.write("all done");
-      };
-    });
-  }
-};
 var Web_default = async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = defaultTestResourceRequirement) => {
   const mrt = new TesterantoLevelTwo(input, testSpecification, testImplementation, testInterface, testResourceRequirement, testInterface.assertioner || (async (t2) => t2), testInterface.beforeEach || async function(subject, initialValues, testResource) {
     return subject;
   }, testInterface.afterEach || (async (s) => s), testInterface.afterAll || ((store) => void 0), testInterface.butThen || (async (a) => a), testInterface.andWhen, testInterface.actionHandler || function(b) {
     return b;
-  }, Object.assign(Object.assign({}, window.NodeWriter), { startup }));
+  }, window.NodeWriter);
   const t = mrt[0];
   const testResourceArg = decodeURIComponent(new URLSearchParams(location.search).get("requesting") || "");
   try {
-    await startup(testResourceArg, t, testResourceRequirement);
+    const partialTestResource = JSON.parse(testResourceArg);
+    if (partialTestResource.fs && partialTestResource.ports) {
+      const failed = await t.receiveTestResourceConfig(partialTestResource);
+      window.exit(failed);
+    } else {
+      console.log("test configuration is incomplete", partialTestResource);
+      console.log("requesting test resources via ws", testResourceRequirement);
+      webSocket.addEventListener("open", (event) => {
+        webSocket.addEventListener("message", (event2) => {
+          console.log("Message from server ", event2.data);
+        });
+        const r = JSON.stringify({
+          type: "testeranto:hola",
+          data: {
+            testResourceRequirement
+          }
+        });
+        webSocket.send(r);
+        console.log("awaiting test resources via websocket...", r);
+        webSocket.onmessage = async (msg) => {
+          console.log("message: ", msg);
+          const resourcesFromPm2 = msg.data.testResourceConfiguration;
+          const secondTestResource = Object.assign(Object.assign({ fs: "." }, JSON.parse(JSON.stringify(partialTestResource))), JSON.parse(JSON.stringify(resourcesFromPm2)));
+          console.log("secondTestResource", secondTestResource);
+          const failed = await t.receiveTestResourceConfig(partialTestResource);
+          webSocket.send(JSON.stringify({
+            type: "testeranto:adios",
+            data: {
+              testResourceConfiguration: t.test.testResourceConfiguration,
+              results: t.toObj()
+            }
+          }));
+          document.write("all done");
+        };
+      });
+    }
   } catch (e) {
     console.error(e);
     process.exit(-1);

@@ -1,5 +1,5 @@
 
-Suite:,Testing the Redux store
+Suite:,0,Testing the Redux store
 
  Given: AnEmptyState
  When:,TheEmailIsSetTo: adam@email.com

@@ -6,7 +6,7 @@ export default new ITProject({
   __dirname: `~/Code/kokomoBay`,
   buildPort: 8000,
   clearScreen: false,
-  devMode: true,
+  devMode: false,
   features: 'features.test.mts',
   minify: false,
   outbase: ".",

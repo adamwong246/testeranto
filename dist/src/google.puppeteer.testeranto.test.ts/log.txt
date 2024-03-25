@@ -1,12 +1,12 @@
 
-Suite:,Testing the AOF portal.
+Suite:,0,Testing the AOF portal.
 
  Given: AnEmptyState
-testArtiFactory =>,./screencap.mp4
+testArtiFactory =>,/Users/adam/Code/kokomoBay/dist/src/google.puppeteer.testeranto.test.ts/suite-0-Testing the AOF portal./given-test0/beforeEach/./screencap.mp4
  When:,IGoto: https://www.google.com
  Then:,WaitForXPath: //*[@value="I'm Feeling Lucky"]
-testArtiFactory =>,./afterEachScreenshot.png
-testArtiFactory =>,./consoleLogs.txt
-testArtiFactory =>,./pageErrors.txt
-testArtiFactory =>,./urls.txt
-testArtiFactory =>,./afterEach.html
+testArtiFactory =>,/Users/adam/Code/kokomoBay/dist/src/google.puppeteer.testeranto.test.ts/suite-0-Testing the AOF portal./given-test0/after/./afterEachScreenshot.png
+testArtiFactory =>,/Users/adam/Code/kokomoBay/dist/src/google.puppeteer.testeranto.test.ts/suite-0-Testing the AOF portal./given-test0/after/./consoleLogs.txt
+testArtiFactory =>,/Users/adam/Code/kokomoBay/dist/src/google.puppeteer.testeranto.test.ts/suite-0-Testing the AOF portal./given-test0/after/./pageErrors.txt
+testArtiFactory =>,/Users/adam/Code/kokomoBay/dist/src/google.puppeteer.testeranto.test.ts/suite-0-Testing the AOF portal./given-test0/after/./urls.txt
+testArtiFactory =>,/Users/adam/Code/kokomoBay/dist/src/google.puppeteer.testeranto.test.ts/suite-0-Testing the AOF portal./given-test0/after/./afterEach.html
