@@ -56,6 +56,11 @@ const getRunnables = (tests, payload = [new Set(), new Set()]) => {
 };
 class ITProject {
     constructor(config) {
+        this.exitCodes = {};
+        this.mode = `up`;
+        this.ports = {};
+        this.websockets = {};
+        this.resourceQueue = [];
         this.spinCycle = 0;
         this.spinAnimation = "←↖↑↗→↘↓↙";
         this.mainLoop = async () => {
@@ -115,12 +120,11 @@ class ITProject {
                 // );
             });
         };
-        this.resourceQueue = [];
-        this.jobs = {};
-        this.ports = {};
-        this.websockets = {};
         this.clearScreen = config.clearScreen;
         this.devMode = config.devMode;
+        Object.values(config.ports).forEach((port) => {
+            this.ports[port] = OPEN_PORT;
+        });
         const testPath = `${process.cwd()}/${config.tests}`;
         const featurePath = `${process.cwd()}/${config.features}`;
         process.on('SIGINT', () => this.initiateShutdown("CTRL+C"));
@@ -135,7 +139,7 @@ class ITProject {
             this.tests = tests.default;
             Promise.resolve().then(() => __importStar(require(featurePath))).then((features) => {
                 this.features = features.default;
-                const runnables = getRunnables(this.tests);
+                const [nodeEntryPoints, webEntryPoints] = getRunnables(this.tests);
                 const esbuildConfigNode = {
                     packages: "external",
                     external: ["tests.test.js", "features.test.js"],
@@ -143,9 +147,7 @@ class ITProject {
                     outbase: config.outbase,
                     outdir: config.outdir,
                     jsx: `transform`,
-                    entryPoints: [
-                        ...runnables[0]
-                    ],
+                    entryPoints: [...nodeEntryPoints],
                     bundle: true,
                     minify: config.minify === true,
                     write: true,
@@ -199,7 +201,7 @@ class ITProject {
                     outdir: config.outdir,
                     jsx: `transform`,
                     entryPoints: [
-                        ...runnables[1],
+                        ...webEntryPoints,
                         testPath,
                         featurePath,
                     ],
@@ -280,27 +282,11 @@ class ITProject {
                 Promise.all([
                     esbuild_1.default.context(esbuildConfigNode).then(async (nodeContext) => {
                         await nodeContext.watch();
-                        console.log("esbuildConfigNode watched");
                     }),
                     esbuild_1.default.context(esbuildConfigWeb).then(async (esbuildWeb) => {
-                        esbuildWeb.serve({
-                            port: config.buildPort,
-                            servedir: ".",
-                        }).then(async (esbuildServerResult) => {
-                            console.log("esbuildConfigWeb watched");
-                            await esbuildWeb.watch();
-                            console.log("esbuildServer result", esbuildServerResult);
-                        }, (esbuildServerFailure) => {
-                            console.log("esbuildServer failure", esbuildServerFailure);
-                            process.exit(-1);
-                        });
+                        await esbuildWeb.watch();
                     })
                 ]);
-                Object.values(config.ports).forEach((port) => {
-                    this.ports[port] = OPEN_PORT;
-                });
-                this.mode = `up`;
-                this.summary = {};
                 pm2_1.default.connect(async (err) => {
                     if (err) {
                         console.error(err);
@@ -383,7 +369,6 @@ class ITProject {
                                 .tests
                                 .reduce((m, [inputFilePath, runtime]) => {
                                 const script = makePath(inputFilePath);
-                                this.summary[inputFilePath] = undefined;
                                 const partialTestResourceByCommandLineArg = `${script} '${JSON.stringify({
                                     name: inputFilePath,
                                     ports: [],
@@ -441,6 +426,9 @@ class ITProject {
             });
         });
     }
+    requestResource(requirement, protocol) {
+        this.resourceQueue.push({ requirement, protocol });
+    }
     getSecondaryEndpointsPoints(runtime) {
         if (runtime) {
             return this.tests
@@ -466,9 +454,6 @@ class ITProject {
     spinner() {
         this.spinCycle = (this.spinCycle + 1) % this.spinAnimation.length;
         return this.spinAnimation[this.spinCycle];
-    }
-    requestResource(requirement, protocol) {
-        this.resourceQueue.push({ requirement, protocol });
     }
     async releaseTestResources(name) {
         pm2_1.default.list((err, processes) => {

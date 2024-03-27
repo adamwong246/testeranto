@@ -7,7 +7,7 @@ import pm2 from "pm2";
 import readline from 'readline';
 
 import { TesterantoFeatures } from "./Features";
-import { IBaseConfig } from "./IBaseConfig";
+import { IBaseConfig, IRunTime, ITestTypes } from "./Types";
 import { ITTestResourceRequirement } from './core';
 
 readline.emitKeypressEvents(process.stdin);
@@ -18,16 +18,9 @@ if (process.stdin.isTTY)
 const TIMEOUT = 2000;
 const OPEN_PORT = "";
 
-export type IRunTime = `node` | `web`;
-export type IRunTimes = { runtime: IRunTime; entrypoint: string }[];
+let webSocketServer: WebSocketServer;
 
-export type ITestTypes = [
-  string,
-  IRunTime,
-  ITestTypes[]
-];
-
-type IScehdulerProtocols = `ipc` | `ws`;
+type ISchedulerProtocols = `ipc` | `ws`;
 
 type IPm2ProcessB = {
   process: {
@@ -43,8 +36,6 @@ type IPm2ProcessB = {
   };
   at: string;
 };
-
-let webSocketServer: WebSocketServer;
 
 const getRunnables = (
   tests: ITestTypes[],
@@ -68,36 +59,30 @@ const getRunnables = (
 }
 
 export class ITProject {
-  ports: Record<string, string>;
-  jobs: Record<
-    string,
-    {
-      aborter: () => any;
-      cancellablePromise: string;
-    }
-  >;
-  resourceQueue: {
-    requirement: ITTestResourceRequirement,
-    protocol: IScehdulerProtocols,
-  }[];
-  summary: Record<string, boolean | undefined>;
-  mode: `up` | `down`;
-  websockets: Record<string, WebSocket>;
   clearScreen: boolean;
   devMode: boolean;
-  tests: ITestTypes[];
+  exitCodes: Record<number, string> = {};
   features: TesterantoFeatures;
+  mode: `up` | `down` = `up`;
+  ports: Record<string, string> = {};
+  tests: ITestTypes[];
+  websockets: Record<string, WebSocket> = {};
+
+  resourceQueue: {
+    requirement: ITTestResourceRequirement,
+    protocol: ISchedulerProtocols,
+  }[] = [];
 
   private spinCycle = 0;
   private spinAnimation = "←↖↑↗→↘↓↙";
 
   constructor(config: IBaseConfig) {
-    this.resourceQueue = [];
-    this.jobs = {};
-    this.ports = {};
-    this.websockets = {};
     this.clearScreen = config.clearScreen;
     this.devMode = config.devMode;
+
+    Object.values(config.ports).forEach((port) => {
+      this.ports[port] = OPEN_PORT;
+    });
 
     const testPath = `${process.cwd()}/${config.tests}`;
     const featurePath = `${process.cwd()}/${config.features}`;
@@ -118,7 +103,7 @@ export class ITProject {
       import(featurePath).then((features) => {
         this.features = features.default;
 
-        const runnables = getRunnables(this.tests);
+        const [nodeEntryPoints, webEntryPoints] = getRunnables(this.tests);
         const esbuildConfigNode: BuildOptions = {
           packages: "external",
           external: ["tests.test.js", "features.test.js"],
@@ -126,9 +111,7 @@ export class ITProject {
           outbase: config.outbase,
           outdir: config.outdir,
           jsx: `transform`,
-          entryPoints: [
-            ...runnables[0]
-          ],
+          entryPoints: [...nodeEntryPoints],
           bundle: true,
           minify: config.minify === true,
           write: true,
@@ -186,7 +169,7 @@ export class ITProject {
           outdir: config.outdir,
           jsx: `transform`,
           entryPoints: [
-            ...runnables[1],
+            ...webEntryPoints,
             testPath,
             featurePath,
           ],
@@ -270,32 +253,15 @@ export class ITProject {
         `)
 
         Promise.all([
+
           esbuild.context(esbuildConfigNode).then(async (nodeContext) => {
             await nodeContext.watch();
-            console.log("esbuildConfigNode watched");
           }),
-          esbuild.context(esbuildConfigWeb).then(async (esbuildWeb) => {
 
-            esbuildWeb.serve({
-              port: config.buildPort,
-              servedir: ".",
-            }).then(async (esbuildServerResult) => {
-              console.log("esbuildConfigWeb watched");
-              await esbuildWeb.watch();
-              console.log("esbuildServer result", esbuildServerResult)
-            }, (esbuildServerFailure) => {
-              console.log("esbuildServer failure", esbuildServerFailure)
-              process.exit(-1)
-            })
+          esbuild.context(esbuildConfigWeb).then(async (esbuildWeb) => {
+            await esbuildWeb.watch();
           })
         ]);
-
-        Object.values(config.ports).forEach((port) => {
-          this.ports[port] = OPEN_PORT;
-        });
-
-        this.mode = `up`;
-        this.summary = {};
 
         pm2.connect(async (err) => {
           if (err) {
@@ -396,7 +362,6 @@ export class ITProject {
                 .tests
                 .reduce((m, [inputFilePath, runtime]) => {
                   const script = makePath(inputFilePath);
-                  this.summary[inputFilePath] = undefined;
                   const partialTestResourceByCommandLineArg = `${script} '${JSON.stringify(
                     {
                       name: inputFilePath,
@@ -408,7 +373,6 @@ export class ITProject {
                       ),
                     }
                   )}'`;
-
 
                   if (runtime === "web") {
                     const fileAsList = inputFilePath.split("/");
@@ -485,7 +449,14 @@ export class ITProject {
     })
   }
 
-  getSecondaryEndpointsPoints(runtime?: IRunTime): string[] {
+  public requestResource(
+    requirement: ITTestResourceRequirement,
+    protocol: ISchedulerProtocols
+  ) {
+    this.resourceQueue.push({ requirement, protocol });
+  }
+
+  public getSecondaryEndpointsPoints(runtime?: IRunTime): string[] {
     if (runtime) {
       return this.tests
         .filter((t) => {
@@ -503,7 +474,7 @@ export class ITProject {
     this.mode = "down";
   }
 
-  public shutdown() {
+  private shutdown() {
     console.log("Stopping PM2");
     pm2.stop("all", (e) => console.error(e));
     pm2.killDaemon((e) => console.error(e));
@@ -514,13 +485,6 @@ export class ITProject {
   private spinner() {
     this.spinCycle = (this.spinCycle + 1) % this.spinAnimation.length;
     return this.spinAnimation[this.spinCycle];
-  }
-
-  private requestResource(
-    requirement: ITTestResourceRequirement,
-    protocol: IScehdulerProtocols
-  ) {
-    this.resourceQueue.push({ requirement, protocol });
   }
 
   private async releaseTestResources(name: string) {
@@ -539,7 +503,7 @@ export class ITProject {
 
   private allocateViaWs(resourceRequest: {
     requirement: ITTestResourceRequirement;
-    protocol: IScehdulerProtocols;
+    protocol: ISchedulerProtocols;
   }) {
 
     const pName = resourceRequest.requirement.name;
@@ -635,7 +599,7 @@ export class ITProject {
 
   private allocateViaIpc(resourceRequest: {
     requirement: ITTestResourceRequirement;
-    protocol: IScehdulerProtocols;
+    protocol: ISchedulerProtocols;
   }) {
     console.log("allocateViaIpc", resourceRequest)
     const pName = resourceRequest.requirement.name;

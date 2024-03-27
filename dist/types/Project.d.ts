@@ -1,43 +1,29 @@
 import WebSocket from 'ws';
 import { TesterantoFeatures } from "./Features";
-import { IBaseConfig } from "./IBaseConfig";
+import { IBaseConfig, IRunTime, ITestTypes } from "./Types";
 import { ITTestResourceRequirement } from './core';
-export declare type IRunTime = `node` | `web`;
-export declare type IRunTimes = {
-    runtime: IRunTime;
-    entrypoint: string;
-}[];
-export declare type ITestTypes = [
-    string,
-    IRunTime,
-    ITestTypes[]
-];
-declare type IScehdulerProtocols = `ipc` | `ws`;
+declare type ISchedulerProtocols = `ipc` | `ws`;
 export declare class ITProject {
-    ports: Record<string, string>;
-    jobs: Record<string, {
-        aborter: () => any;
-        cancellablePromise: string;
-    }>;
-    resourceQueue: {
-        requirement: ITTestResourceRequirement;
-        protocol: IScehdulerProtocols;
-    }[];
-    summary: Record<string, boolean | undefined>;
-    mode: `up` | `down`;
-    websockets: Record<string, WebSocket>;
     clearScreen: boolean;
     devMode: boolean;
-    tests: ITestTypes[];
+    exitCodes: Record<number, string>;
     features: TesterantoFeatures;
+    mode: `up` | `down`;
+    ports: Record<string, string>;
+    tests: ITestTypes[];
+    websockets: Record<string, WebSocket>;
+    resourceQueue: {
+        requirement: ITTestResourceRequirement;
+        protocol: ISchedulerProtocols;
+    }[];
     private spinCycle;
     private spinAnimation;
     constructor(config: IBaseConfig);
+    requestResource(requirement: ITTestResourceRequirement, protocol: ISchedulerProtocols): void;
     getSecondaryEndpointsPoints(runtime?: IRunTime): string[];
     initiateShutdown(reason: string): void;
-    shutdown(): void;
+    private shutdown;
     private spinner;
-    private requestResource;
     private releaseTestResources;
     private allocateViaWs;
     private allocateViaIpc;

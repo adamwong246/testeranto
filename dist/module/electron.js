@@ -1,9 +1,6 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 import path from "path";
 import url from "url";
-// console.log("hello electron", process.argv);
-// console.log("hello electron stdin", process.stdin); works
-// console.log("hello electron send", process.send); does not work
 let win;
 function createWindow() {
     win = new BrowserWindow({
@@ -29,7 +26,6 @@ function createWindow() {
     });
     console.log("loading", u);
     win.loadURL(u);
-    // win.webContents
     win.webContents.openDevTools();
 }
 app.on("ready", createWindow);

@@ -1,6 +1,5 @@
 export declare type IBaseConfig = {
     __dirname: string;
-    buildPort: 8000;
     clearScreen: boolean;
     devMode: boolean;
     features: string;
@@ -11,3 +10,9 @@ export declare type IBaseConfig = {
     ports: string[];
     tests: string;
 };
+export declare type IRunTime = `node` | `web`;
+export declare type ITestTypes = [
+    string,
+    IRunTime,
+    ITestTypes[]
+];

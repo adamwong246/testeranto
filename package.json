@@ -1,15 +1,14 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.42.0",
+  "version": "0.43.0",
   "type": "module",
   "types": "./dist/index.d.mts",
-  "main": "dist/common/index.js",
   "module": "dist/module/index.js",
   "exports": {
-    ".": {
-      "import": "./dist/module/index.js",
-      "require": "./dist/common/index.js"
+    "./src/Types": {
+      "import": "./dist/module/Types.js",
+      "require": "./dist/common/Types.js"
     },
     "./src/Features": {
       "import": "./dist/module/Features.js",
@@ -30,14 +29,6 @@
     "./src/Node": {
       "import": "./dist/module/Node.js",
       "require": "./dist/common/Node.js"
-    },
-    "./src/core-puppeteer": {
-      "import": "./dist/module/core-puppeteer.js",
-      "require": "./dist/common/core-puppeteer.js"
-    },
-    "./src/Puppeteer": {
-      "import": "./dist/module/Puppeteer.js",
-      "require": "./dist/common/Puppeteer.js"
     },
     "./src/electron": {
       "import": "./dist/module/electron.js",
