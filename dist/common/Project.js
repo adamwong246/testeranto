@@ -139,31 +139,6 @@ class ITProject {
             this.tests = tests.default;
             Promise.resolve().then(() => __importStar(require(featurePath))).then((features) => {
                 this.features = features.default;
-                const [nodeEntryPoints, webEntryPoints] = getRunnables(this.tests);
-                const esbuildConfigNode = {
-                    packages: "external",
-                    external: ["tests.test.js", "features.test.js"],
-                    platform: "node",
-                    outbase: config.outbase,
-                    outdir: config.outdir,
-                    jsx: `transform`,
-                    entryPoints: [...nodeEntryPoints],
-                    bundle: true,
-                    minify: config.minify === true,
-                    write: true,
-                    plugins: [
-                        ...(config.loaders || []),
-                        {
-                            name: 'rebuild-notify',
-                            setup(build) {
-                                build.onEnd(result => {
-                                    console.log(`node build ended with ${result.errors.length} errors`);
-                                    // HERE: somehow restart the server from here, e.g., by sending a signal that you trap and react to inside the server.
-                                });
-                            }
-                        },
-                    ],
-                };
                 Promise.resolve(Promise.all([
                     ...this.getSecondaryEndpointsPoints("web")
                 ]
@@ -193,13 +168,48 @@ class ITProject {
 </html>
 `));
                 })));
-                const esbuildConfigWeb = {
-                    external: ["stream", "tests.test.js", "features.test.js"],
-                    platform: "browser",
-                    format: "esm",
+                const [nodeEntryPoints, webEntryPoints] = getRunnables(this.tests);
+                const esbuildConfigNode = {
+                    target: "esnext",
+                    packages: "external",
+                    // format: "esm",
+                    // splitting: true,
+                    external: ["tests.test.js", "features.test.js"],
+                    platform: "node",
                     outbase: config.outbase,
                     outdir: config.outdir,
-                    jsx: `transform`,
+                    jsx: 'transform',
+                    entryPoints: [...nodeEntryPoints],
+                    bundle: true,
+                    minify: config.minify === true,
+                    write: true,
+                    loader: {
+                        '.js': 'jsx',
+                        '.png': 'binary',
+                        '.jpg': 'binary',
+                    },
+                    plugins: [
+                        ...(config.plugins || []),
+                        {
+                            name: 'rebuild-notify',
+                            setup(build) {
+                                build.onEnd(result => {
+                                    console.log(`node build ended with ${result.errors.length} errors`);
+                                    // HERE: somehow restart the server from here, e.g., by sending a signal that you trap and react to inside the server.
+                                });
+                            }
+                        },
+                    ],
+                };
+                const esbuildConfigWeb = {
+                    packages: "external",
+                    // format: "esm",
+                    // splitting: true,
+                    external: ["stream", "tests.test.js", "features.test.js"],
+                    platform: "browser",
+                    outbase: config.outbase,
+                    outdir: config.outdir,
+                    jsx: 'transform',
                     entryPoints: [
                         ...webEntryPoints,
                         testPath,
@@ -208,9 +218,13 @@ class ITProject {
                     bundle: true,
                     minify: config.minify === true,
                     write: true,
-                    splitting: true,
+                    loader: {
+                        '.js': 'jsx',
+                        '.png': 'binary',
+                        '.jpg': 'binary',
+                    },
                     plugins: [
-                        ...(config.loaders || []),
+                        ...(config.plugins || []),
                         {
                             name: 'rebuild-notify',
                             setup(build) {
@@ -220,21 +234,6 @@ class ITProject {
                                 });
                             }
                         },
-                        // {
-                        //   name: "testeranto-redirect",
-                        //   setup(build) {
-                        //     build.onResolve({ filter: /^.*\/testeranto\/$/ }, (args) => {
-                        //       return {
-                        //         path: path.join(
-                        //           process.cwd(),
-                        //           `..`,
-                        //           "node_modules",
-                        //           `testeranto`
-                        //         ),
-                        //       };
-                        //     });
-                        //   },
-                        // },
                     ],
                 };
                 esbuild_1.default.build({

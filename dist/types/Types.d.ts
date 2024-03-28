@@ -1,9 +1,8 @@
 export declare type IBaseConfig = {
-    __dirname: string;
     clearScreen: boolean;
     devMode: boolean;
     features: string;
-    loaders: any[];
+    plugins: any[];
     minify: boolean;
     outbase: string;
     outdir: string;
