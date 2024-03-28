@@ -147,7 +147,7 @@ export class ITProject {
           },
           target: "esnext",
 
-          // packages: "external",
+          packages: "external",
           format: "esm",
           splitting: true,
           outExtension: { '.js': '.mjs' },

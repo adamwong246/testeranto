@@ -178,7 +178,7 @@ class ITProject {
                         js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`
                     },
                     target: "esnext",
-                    // packages: "external",
+                    packages: "external",
                     format: "esm",
                     splitting: true,
                     outExtension: { '.js': '.mjs' },
