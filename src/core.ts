@@ -37,7 +37,7 @@ export type ILogWriter = {
   createWriteStream: (line: string) => any | any,
   writeFileSync: (fp: string, contents: string) => any
   mkdirSync: (fp: string) => any
-  testArtiFactoryfileWriter: (tLog: ITLog) =>
+  testArtiFactoryfileWriter: (tLog: ITLog, n: (Promise) => void) =>
     (fPath: string, value: unknown) =>
       void
 }
@@ -100,7 +100,9 @@ export type IRunTimeAndSubject = {
   entrypoint: string;
 };
 
-type IRunner = (x: ITTestResourceConfiguration, t: ITLog) => Promise<boolean>;
+type IRunner = (x: ITTestResourceConfiguration, t: ITLog) => Promise<
+  BaseSuite<any, any, any, any, any, any>
+>;
 
 export type IT = {
   toObj(): object;
@@ -115,7 +117,11 @@ export type ITestJob = {
   test: IT;
   runner: IRunner;
   testResourceRequirement: ITTestResourceRequirement;
-  receiveTestResourceConfig: (testResource?) => Promise<boolean>;
+  receiveTestResourceConfig: (testResource?) => Promise<{
+    failed: number,
+    artifacts: Promise<unknown>[],
+    logPromise: Promise<unknown>
+  }>
 };
 
 export type ITestResults = Promise<{ test: IT }>[];
@@ -751,6 +757,10 @@ abstract class TesterantoLevelOne<
   IThenShape,
   IInput
 > {
+
+  artifacts: Promise<unknown>[] = [];
+  testJobs: ITestJob[];
+
   constructor(
     testImplementation: ITestImplementation<
       IInitialState,
@@ -987,7 +997,9 @@ abstract class TesterantoLevelOne<
               fPath: string,
               value: unknown
             ) =>
-              logWriter.testArtiFactoryfileWriter(tLog)(
+              logWriter.testArtiFactoryfileWriter(tLog, (p: Promise<void>) => {
+                artifacts.push(p);
+              })(
                 testResourceConfiguration.fs + "/" + fPath,
                 value
               ),
@@ -995,8 +1007,9 @@ abstract class TesterantoLevelOne<
           );
         };
 
-    /* @ts-ignore:next-line */
-    const toReturn: ITestJob[] = suites.map((suite) => {
+    const artifacts = this.artifacts;
+
+    this.testJobs = suites.map((suite) => {
       const runner = suiteRunner(suite);
 
       return {
@@ -1048,11 +1061,11 @@ abstract class TesterantoLevelOne<
             resultsFilePath,
             JSON.stringify(suiteDone.toObj(), null, 2)
           );
-          // logWriter.writeFileSync(
-          //   `${testResourceConfiguration.fs}/results2.json`,
-          //   JSON.stringify(suiteDone.givens, null, 2)
-          // );
-          access.close();
+
+          const logPromise = new Promise((res, rej) => {
+            access.on("finish", () => { res(true); });
+          })
+          access.end();
 
           const numberOfFailures = Object.keys(suiteDone.givens).filter(
             (k) => {
@@ -1061,13 +1074,16 @@ abstract class TesterantoLevelOne<
             }
           ).length;
           console.log(`exiting gracefully with ${numberOfFailures} failures.`);
-          return numberOfFailures !== 0;
+          return {
+            failed: numberOfFailures,
+            artifacts,
+            logPromise
+          };
         },
       };
     });
-
-    return toReturn;
   }
+
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////
 

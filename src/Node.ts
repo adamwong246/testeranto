@@ -75,8 +75,9 @@ export default async <
     NodeWriter
   );
 
-  const t: ITestJob = mrt[0];
+  const t: ITestJob = mrt.testJobs[0];
   const testResourceArg = process.argv[2] || `{}`;
+
   try {
     const partialTestResource = JSON.parse(
       testResourceArg
@@ -84,8 +85,14 @@ export default async <
 
     if (testResourceRequirement.ports == 0) {
 
-      const failed = await t.receiveTestResourceConfig(partialTestResource);
-      // process.exit(failed ? 1 : 0);
+      const {
+        failed,
+        artifacts,
+        logPromise
+      } = await t.receiveTestResourceConfig(partialTestResource);
+      Promise.all([...artifacts, logPromise]).then(async () => {
+        process.exit(await failed ? 1 : 0);
+      })
 
     } else {
       console.log("test configuration is incomplete", partialTestResource);
@@ -121,7 +128,11 @@ export default async <
             console.log("secondTestResource", secondTestResource);
 
 
-            const failed = await t.receiveTestResourceConfig(secondTestResource)
+            const {
+              failed,
+              artifacts,
+              logPromise
+            } = await t.receiveTestResourceConfig(partialTestResource);
 
             /* @ts-ignore:next-line */
             process.send(
@@ -133,12 +144,14 @@ export default async <
                   results: t.toObj(),
                 },
               },
-              (err) => {
+              async (err) => {
                 if (!err) {
-                  // process.exit(failed ? 1 : 0);
+                  Promise.all([...artifacts, logPromise]).then(async () => {
+                    process.exit(await failed ? 1 : 0);
+                  })
                 } else {
                   console.error(err);
-                  // process.exit(1);
+                  process.exit(1);
                 }
               }
             );

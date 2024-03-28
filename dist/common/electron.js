@@ -31,10 +31,10 @@ function createWindow() {
     });
     console.log("loading", u);
     win.loadURL(u);
-    win.webContents.openDevTools();
+    // win.webContents.openDevTools()
 }
 electron_1.app.on("ready", createWindow);
 electron_1.ipcMain.handle('quit-app', (x, failed) => {
     console.log("quit-app", failed);
-    electron_1.app.exit(failed ? 1 : 0);
+    electron_1.app.exit(failed);
 });

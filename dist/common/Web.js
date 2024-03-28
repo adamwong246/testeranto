@@ -14,13 +14,19 @@ exports.default = async (input, testSpecification, testImplementation, testInter
         function (b) {
             return b;
         }, window.NodeWriter);
-    const t = mrt[0];
+    const tl2 = mrt;
+    const t = tl2.testJobs[0];
     const testResourceArg = decodeURIComponent(new URLSearchParams(location.search).get('requesting') || '');
     try {
         const partialTestResource = JSON.parse(testResourceArg);
         if (partialTestResource.fs && partialTestResource.ports) {
-            const failed = await t.receiveTestResourceConfig(partialTestResource);
-            window.exit(failed);
+            // const failed = await t.receiveTestResourceConfig(partialTestResource);
+            // (window as any).exit(failed)
+            const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(partialTestResource);
+            Promise.all([...artifacts, logPromise]).then(async () => {
+                // process.exit(await failed ? 1 : 0);
+                window.exit(failed);
+            });
         }
         else {
             console.log("test configuration is incomplete", partialTestResource);
@@ -42,7 +48,11 @@ exports.default = async (input, testSpecification, testImplementation, testInter
                     const resourcesFromPm2 = msg.data.testResourceConfiguration;
                     const secondTestResource = Object.assign(Object.assign({ fs: "." }, JSON.parse(JSON.stringify(partialTestResource))), JSON.parse(JSON.stringify(resourcesFromPm2)));
                     console.log("secondTestResource", secondTestResource);
-                    const failed = await t.receiveTestResourceConfig(partialTestResource);
+                    const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(partialTestResource);
+                    Promise.all([...artifacts, logPromise]).then(async () => {
+                        // process.exit(await failed ? 1 : 0);
+                        window.exit(failed);
+                    });
                     webSocket.send(JSON.stringify({
                         type: "testeranto:adios",
                         data: {
@@ -59,6 +69,6 @@ exports.default = async (input, testSpecification, testImplementation, testInter
     }
     catch (e) {
         console.error(e);
-        process.exit(-1);
+        // process.exit(-1);
     }
 };

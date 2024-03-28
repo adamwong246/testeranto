@@ -82,7 +82,7 @@ class ITProject {
                     if (!this.devMode && this.mode === "up") {
                         this.initiateShutdown("resource request queue is empty");
                     }
-                    if (this.mode === "down" && procsTable.every((p) => p.pid === 0)) {
+                    if (this.mode === "down" && procsTable.every((p) => p.pid === 0 || p.pid === undefined)) {
                         this.shutdown();
                     }
                 }
@@ -148,7 +148,7 @@ class ITProject {
                     const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
                     const sourceFileNameMinusJs = sourceFileName.split(".").slice(0, -1).join(".");
                     const htmlFilePath = path_1.default.normalize(`${process.cwd()}/${config.outdir}/${sourceDir.join("/")}/${sourceFileNameMinusJs}.html`);
-                    const jsfilePath = `./${sourceFileNameMinusJs}.js`;
+                    const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
                     return fs_1.default.promises.mkdir(path_1.default.dirname(htmlFilePath), { recursive: true }).then(x => fs_1.default.writeFileSync(htmlFilePath, `
 <!DOCTYPE html>
 <html lang="en">
@@ -170,12 +170,20 @@ class ITProject {
                 })));
                 const [nodeEntryPoints, webEntryPoints] = getRunnables(this.tests);
                 const esbuildConfigNode = {
+                    define: {
+                        "process.env.FLUENTFFMPEG_COV": "0"
+                    },
+                    absWorkingDir: process.cwd(),
+                    banner: {
+                        js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`
+                    },
                     target: "esnext",
-                    packages: "external",
-                    // format: "esm",
-                    // splitting: true,
-                    external: ["tests.test.js", "features.test.js"],
+                    // packages: "external",
+                    format: "esm",
+                    splitting: true,
+                    outExtension: { '.js': '.mjs' },
                     platform: "node",
+                    external: ["tests.test.js", "features.test.js"],
                     outbase: config.outbase,
                     outdir: config.outdir,
                     jsx: 'transform',
@@ -202,9 +210,10 @@ class ITProject {
                     ],
                 };
                 const esbuildConfigWeb = {
-                    packages: "external",
-                    // format: "esm",
-                    // splitting: true,
+                    // packages: "external",
+                    format: "esm",
+                    splitting: true,
+                    outExtension: { '.js': '.mjs' },
                     external: ["stream", "tests.test.js", "features.test.js"],
                     platform: "browser",
                     outbase: config.outbase,
@@ -331,15 +340,13 @@ class ITProject {
                             }
                         });
                     });
-                    const makePath = (fPath) => {
-                        const ext = path_1.default.extname(fPath);
-                        const x = "./" + config.outdir + "/" + fPath.replace(ext, "") + ".js";
-                        return path_1.default.resolve(x);
+                    const makePath = (fPath, rt) => {
+                        return path_1.default.resolve("./" + config.outdir + "/" + fPath.replace(path_1.default.extname(fPath), "") + ".mjs");
                     };
                     const bootInterval = setInterval(async () => {
                         const filesToLookup = this.tests
                             .map(([p, rt]) => {
-                            const filepath = makePath(p);
+                            const filepath = makePath(p, rt);
                             return {
                                 filepath,
                                 exists: (0, fs_promises_exists_1.default)(filepath),
@@ -367,7 +374,7 @@ class ITProject {
                             this
                                 .tests
                                 .reduce((m, [inputFilePath, runtime]) => {
-                                const script = makePath(inputFilePath);
+                                const script = makePath(inputFilePath, runtime);
                                 const partialTestResourceByCommandLineArg = `${script} '${JSON.stringify({
                                     name: inputFilePath,
                                     ports: [],
@@ -379,7 +386,7 @@ class ITProject {
                                     const fname = fileAsList[fileAsList.length - 1];
                                     const fnameOnly = fname.split(".").slice(0, -1).join(".");
                                     const htmlFile = [config.outdir, ...fileListHead, `${fnameOnly}.html`].join("/");
-                                    const jsFile = htmlFile.split(".html")[0] + ".js";
+                                    const jsFile = htmlFile.split(".html")[0] + ".mjs";
                                     console.log("watching", jsFile);
                                     pm2_1.default.start({
                                         script: `yarn electron node_modules/testeranto/dist/common/electron.js ${htmlFile} '${JSON.stringify({

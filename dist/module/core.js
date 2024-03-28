@@ -237,6 +237,7 @@ class TesterantoLevelZero {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 class TesterantoLevelOne {
     constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResourceRequirement, logWriter) {
+        this.artifacts = [];
         const classySuites = Object.entries(testImplementation.Suites).reduce((a, [key], index) => {
             a[key] = (somestring, givens, checks) => {
                 return new suiteKlasser.prototype.constructor(somestring, index, givens, checks);
@@ -274,10 +275,12 @@ class TesterantoLevelOne {
         /* @ts-ignore:next-line */
         classyTesteranto.Suites(), classyTesteranto.Given(), classyTesteranto.When(), classyTesteranto.Then(), classyTesteranto.Check(), logWriter);
         const suiteRunner = (suite) => async (testResourceConfiguration, tLog) => {
-            return await suite.run(input, testResourceConfiguration, (fPath, value) => logWriter.testArtiFactoryfileWriter(tLog)(testResourceConfiguration.fs + "/" + fPath, value), tLog);
+            return await suite.run(input, testResourceConfiguration, (fPath, value) => logWriter.testArtiFactoryfileWriter(tLog, (p) => {
+                artifacts.push(p);
+            })(testResourceConfiguration.fs + "/" + fPath, value), tLog);
         };
-        /* @ts-ignore:next-line */
-        const toReturn = suites.map((suite) => {
+        const artifacts = this.artifacts;
+        this.testJobs = suites.map((suite) => {
             const runner = suiteRunner(suite);
             return {
                 test: suite,
@@ -298,21 +301,23 @@ class TesterantoLevelOne {
                     const suiteDone = await runner(testResourceConfiguration, tLog);
                     const resultsFilePath = (`${testResourceConfiguration.fs}/results.json`);
                     logWriter.writeFileSync(resultsFilePath, JSON.stringify(suiteDone.toObj(), null, 2));
-                    // logWriter.writeFileSync(
-                    //   `${testResourceConfiguration.fs}/results2.json`,
-                    //   JSON.stringify(suiteDone.givens, null, 2)
-                    // );
-                    access.close();
+                    const logPromise = new Promise((res, rej) => {
+                        access.on("finish", () => { res(true); });
+                    });
+                    access.end();
                     const numberOfFailures = Object.keys(suiteDone.givens).filter((k) => {
                         // console.log(`suiteDone.givens[k].error`, suiteDone.givens[k].error);
                         return suiteDone.givens[k].error;
                     }).length;
                     console.log(`exiting gracefully with ${numberOfFailures} failures.`);
-                    return numberOfFailures !== 0;
+                    return {
+                        failed: numberOfFailures,
+                        artifacts,
+                        logPromise
+                    };
                 },
             };
         });
-        return toReturn;
     }
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////

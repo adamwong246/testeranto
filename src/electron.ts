@@ -30,14 +30,14 @@ function createWindow() {
   });
   console.log("loading", u);
   win.loadURL(u);
-  win.webContents.openDevTools()
+  // win.webContents.openDevTools()
 }
 
 app.on("ready", createWindow);
 
-ipcMain.handle('quit-app', (x, failed: boolean) => {
+ipcMain.handle('quit-app', (x, failed: number) => {
   console.log("quit-app", failed);
-  app.exit(failed ? 1 : 0);
+  app.exit(failed);
 });
 
 export { };

@@ -13,13 +13,15 @@ exports.default = async (input, testSpecification, testImplementation, testInter
         function (b) {
             return b;
         }, NodeWriter_js_1.NodeWriter);
-    const t = mrt[0];
+    const t = mrt.testJobs[0];
     const testResourceArg = process.argv[2] || `{}`;
     try {
         const partialTestResource = JSON.parse(testResourceArg);
         if (testResourceRequirement.ports == 0) {
-            const failed = await t.receiveTestResourceConfig(partialTestResource);
-            // process.exit(failed ? 1 : 0);
+            const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(partialTestResource);
+            Promise.all([...artifacts, logPromise]).then(async () => {
+                process.exit(await failed ? 1 : 0);
+            });
         }
         else {
             console.log("test configuration is incomplete", partialTestResource);
@@ -38,7 +40,7 @@ exports.default = async (input, testSpecification, testImplementation, testInter
                     const resourcesFromPm2 = packet.data.testResourceConfiguration;
                     const secondTestResource = Object.assign(Object.assign({ fs: "." }, JSON.parse(JSON.stringify(partialTestResource))), JSON.parse(JSON.stringify(resourcesFromPm2)));
                     console.log("secondTestResource", secondTestResource);
-                    const failed = await t.receiveTestResourceConfig(secondTestResource);
+                    const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(partialTestResource);
                     /* @ts-ignore:next-line */
                     process.send({
                         type: "testeranto:adios",
@@ -46,13 +48,15 @@ exports.default = async (input, testSpecification, testImplementation, testInter
                             testResourceConfiguration: t.test.testResourceConfiguration,
                             results: t.toObj(),
                         },
-                    }, (err) => {
+                    }, async (err) => {
                         if (!err) {
-                            // process.exit(failed ? 1 : 0);
+                            Promise.all([...artifacts, logPromise]).then(async () => {
+                                process.exit(await failed ? 1 : 0);
+                            });
                         }
                         else {
                             console.error(err);
-                            // process.exit(1);
+                            process.exit(1);
                         }
                     });
                 });

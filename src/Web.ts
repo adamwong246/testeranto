@@ -54,6 +54,7 @@ export default async <
   },
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
 ) => {
+
   const mrt = new TesterantoLevelTwo(
     input,
     testSpecification,
@@ -75,18 +76,32 @@ export default async <
     },
     (window as any).NodeWriter
   );
-  const t: ITestJob = mrt[0];
+
+  const tl2: TesterantoLevelTwo<any, any, any, any, any, any, any, any> = mrt;
+  const t: ITestJob = tl2.testJobs[0];
   const testResourceArg = decodeURIComponent(
     new URLSearchParams(location.search).get('requesting') || ''
   );
+
   try {
     const partialTestResource = JSON.parse(
       testResourceArg
     ) as ITTestResourceConfiguration;
 
     if (partialTestResource.fs && partialTestResource.ports) {
-      const failed = await t.receiveTestResourceConfig(partialTestResource);
-      (window as any).exit(failed)
+      // const failed = await t.receiveTestResourceConfig(partialTestResource);
+      // (window as any).exit(failed)
+
+      const {
+        failed,
+        artifacts,
+        logPromise
+      } = await t.receiveTestResourceConfig(partialTestResource);
+      Promise.all([...artifacts, logPromise]).then(async () => {
+        // process.exit(await failed ? 1 : 0);
+        (window as any).exit(failed)
+      })
+
 
     } else {
       console.log("test configuration is incomplete", partialTestResource);
@@ -123,7 +138,15 @@ export default async <
 
             console.log("secondTestResource", secondTestResource);
 
-            const failed = await t.receiveTestResourceConfig(partialTestResource);
+            const {
+              failed,
+              artifacts,
+              logPromise
+            } = await t.receiveTestResourceConfig(partialTestResource);
+            Promise.all([...artifacts, logPromise]).then(async () => {
+              // process.exit(await failed ? 1 : 0);
+              (window as any).exit(failed)
+            })
 
             webSocket.send(
               JSON.stringify({
@@ -146,6 +169,6 @@ export default async <
 
   } catch (e) {
     console.error(e);
-    process.exit(-1);
+    // process.exit(-1);
   }
 };

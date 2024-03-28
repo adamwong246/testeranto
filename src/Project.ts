@@ -113,7 +113,7 @@ export class ITProject {
               const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
               const sourceFileNameMinusJs = sourceFileName.split(".").slice(0, -1).join(".");
               const htmlFilePath = path.normalize(`${process.cwd()}/${config.outdir}/${sourceDir.join("/")}/${sourceFileNameMinusJs}.html`);
-              const jsfilePath = `./${sourceFileNameMinusJs}.js`;
+              const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
               return fs.promises.mkdir(path.dirname(htmlFilePath), { recursive: true }).then(x => fs.writeFileSync(htmlFilePath,
                 `
 <!DOCTYPE html>
@@ -138,14 +138,23 @@ export class ITProject {
         const [nodeEntryPoints, webEntryPoints] = getRunnables(this.tests);
 
         const esbuildConfigNode: BuildOptions = {
+          define: {
+            "process.env.FLUENTFFMPEG_COV": "0"
+          },
+          absWorkingDir: process.cwd(),
+          banner: {
+            js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`
+          },
           target: "esnext",
 
-          packages: "external",
-          // format: "esm",
-          // splitting: true,
+          // packages: "external",
+          format: "esm",
+          splitting: true,
+          outExtension: { '.js': '.mjs' },
+          platform: "node",
 
           external: ["tests.test.js", "features.test.js"],
-          platform: "node",
+
           outbase: config.outbase,
           outdir: config.outdir,
           jsx: 'transform',
@@ -172,9 +181,10 @@ export class ITProject {
           ],
         };
         const esbuildConfigWeb: BuildOptions = {
-          packages: "external",
-          // format: "esm",
-          // splitting: true,
+          // packages: "external",
+          format: "esm",
+          splitting: true,
+          outExtension: { '.js': '.mjs' },
 
           external: ["stream", "tests.test.js", "features.test.js"],
           platform: "browser",
@@ -318,16 +328,14 @@ export class ITProject {
             });
           });
 
-          const makePath = (fPath: string): string => {
-            const ext = path.extname(fPath);
-            const x = "./" + config.outdir + "/" + fPath.replace(ext, "") + ".js";
-            return path.resolve(x);
+          const makePath = (fPath: string, rt: IRunTime): string => {
+            return path.resolve("./" + config.outdir + "/" + fPath.replace(path.extname(fPath), "") + ".mjs");
           };
 
           const bootInterval = setInterval(async () => {
             const filesToLookup = this.tests
               .map(([p, rt]) => {
-                const filepath = makePath(p);
+                const filepath = makePath(p, rt);
                 return {
                   filepath,
                   exists: fsExists(filepath),
@@ -364,7 +372,7 @@ export class ITProject {
               this
                 .tests
                 .reduce((m, [inputFilePath, runtime]) => {
-                  const script = makePath(inputFilePath);
+                  const script = makePath(inputFilePath, runtime);
                   const partialTestResourceByCommandLineArg = `${script} '${JSON.stringify(
                     {
                       name: inputFilePath,
@@ -383,7 +391,7 @@ export class ITProject {
                     const fname = fileAsList[fileAsList.length - 1];
                     const fnameOnly = fname.split(".").slice(0, -1).join(".");
                     const htmlFile = [config.outdir, ...fileListHead, `${fnameOnly}.html`].join("/");
-                    const jsFile = htmlFile.split(".html")[0] + ".js"
+                    const jsFile = htmlFile.split(".html")[0] + ".mjs"
                     console.log("watching", jsFile);
 
                     pm2.start(
@@ -722,7 +730,7 @@ export class ITProject {
           this.initiateShutdown("resource request queue is empty");
         }
 
-        if (this.mode === "down" && procsTable.every((p) => p.pid === 0)) {
+        if (this.mode === "down" && procsTable.every((p) => p.pid === 0 || p.pid === undefined)) {
           this.shutdown();
         }
       } else {

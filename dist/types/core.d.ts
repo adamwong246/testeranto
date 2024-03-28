@@ -28,7 +28,7 @@ export declare type ILogWriter = {
     createWriteStream: (line: string) => any | any;
     writeFileSync: (fp: string, contents: string) => any;
     mkdirSync: (fp: string) => any;
-    testArtiFactoryfileWriter: (tLog: ITLog) => (fPath: string, value: unknown) => void;
+    testArtiFactoryfileWriter: (tLog: ITLog, n: (Promise: any) => void) => (fPath: string, value: unknown) => void;
 };
 declare type IGivens<ISubject, IStore, ISelection, IThenShape> = Record<string, BaseGiven<ISubject, IStore, ISelection, IThenShape>>;
 declare type ITestCheckCallback<ITestShape extends ITTestShape> = {
@@ -52,7 +52,7 @@ export declare type IRunTimeAndSubject = {
     runtime: "just node" | "just web" | "both web and node";
     entrypoint: string;
 };
-declare type IRunner = (x: ITTestResourceConfiguration, t: ITLog) => Promise<boolean>;
+declare type IRunner = (x: ITTestResourceConfiguration, t: ITLog) => Promise<BaseSuite<any, any, any, any, any, any>>;
 export declare type IT = {
     toObj(): object;
     name: string;
@@ -65,7 +65,11 @@ export declare type ITestJob = {
     test: IT;
     runner: IRunner;
     testResourceRequirement: ITTestResourceRequirement;
-    receiveTestResourceConfig: (testResource?: any) => Promise<boolean>;
+    receiveTestResourceConfig: (testResource?: any) => Promise<{
+        failed: number;
+        artifacts: Promise<unknown>[];
+        logPromise: Promise<unknown>;
+    }>;
 };
 export declare type ITestResults = Promise<{
     test: IT;
@@ -188,6 +192,8 @@ export declare abstract class BaseCheck<ISubject, IStore, ISelection, IThenShape
     check(subject: ISubject, key: string, testResourceConfiguration: any, tester: any, artifactory: ITestArtifactory, tLog: ITLog): Promise<void>;
 }
 declare abstract class TesterantoLevelOne<ITestShape extends ITTestShape, IInitialState, ISelection, IStore, ISubject, IWhenShape, IThenShape, IInput> {
+    artifacts: Promise<unknown>[];
+    testJobs: ITestJob[];
     constructor(testImplementation: ITestImplementation<IInitialState, ISelection, IWhenShape, IThenShape, ITestShape>, testSpecification: (Suite: {
         [K in keyof ITestShape["suites"]]: (feature: string, givens: IGivens<ISubject, IStore, ISelection, IThenShape>, checks: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape>[]) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape>;
     }, Given: {
