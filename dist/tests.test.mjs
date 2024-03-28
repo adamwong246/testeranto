@@ -1,6 +1,7 @@
-import { ITestTypes } from "testeranto/src/Types";
+import "./chunk-YWLLX3TT.mjs";
 
-export default [
+// tests.test.mts
+var tests_test_default = [
   ["./src/google.puppeteer.testeranto.test.ts", "node", []],
   ["./src/app.redux.test.ts", "node", []],
   ["./src/app.reduxToolkit.test.ts", "node", []],
@@ -14,8 +15,7 @@ export default [
     "./src/ClassicalComponent.esbuild-puppeteer.test.ts",
     "node",
     [["src/ClassicalComponent.tsx", "web", []]]
-  ],
-
+  ]
   // ["./src/MyFirstContract.solidity.test.ts", "node", []],
   // ["./src/MyFirstContract.solidity-precompiled.test.ts", "node", []],
   // ["./src/MyFirstContract.solidity-rpc.test.ts", "node", []],
@@ -26,4 +26,7 @@ export default [
   // "./myTests/storefront/beta/index.test.ts",
   // "./myTests/httpServer/server.puppeteer.test.ts",
   // "./myTests/httpServer/server.http2x.test.ts",
-] as ITestTypes[]
+];
+export {
+  tests_test_default as default
+};

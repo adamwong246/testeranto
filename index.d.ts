@@ -9,3 +9,4 @@ declare module '*.sol' {
   };
   export default content;
 }
+

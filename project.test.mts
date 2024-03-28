@@ -3,8 +3,6 @@ import { ITProject } from "testeranto/src/Project";
 import { solCompile } from "./myTests/truffle.mjs";
 
 export default new ITProject({
-  __dirname: `~/Code/kokomoBay`,
-  buildPort: 8000,
   clearScreen: false,
   devMode: false,
   features: 'features.test.mts',
@@ -15,7 +13,7 @@ export default new ITProject({
 
   ports: ["3001", "3002", "3003", "3004", "3005", "3006", "3007"],
 
-  loaders: [
+  plugins: [
     {
       name: 'solidity',
       setup(build) {

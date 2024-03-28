@@ -1,5 +1,4 @@
 import { createSelector, createSlice, createStore } from "@reduxjs/toolkit";
-
 import { ILoginPageError, ILoginPageSelection } from "./LoginPage";
 
 export type IStoreState = {

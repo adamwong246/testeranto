@@ -1,6 +1,6 @@
 {
   "files": [
-    "project.test.ts",
+    "project.test.mts",
   ],
   "include": ["index.d.ts", "project.test.ts"],
   "ts-node": {
