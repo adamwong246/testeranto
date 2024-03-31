@@ -1,11 +1,15 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.47.10",
+  "version": "0.47.11",
   "type": "module",
   "types": "./dist/index.d.mts",
   "module": "dist/module/index.js",
   "exports": {
+    "./src/subPackages/": {
+      "import": "./src/subPackages/",
+      "require": "./src/subPackages/"
+    },
     "./src/Types": {
       "import": "./dist/module/Types.js",
       "require": "./dist/common/Types.js"
@@ -102,6 +106,7 @@
     "puppeteer": "18.1.0",
     "react-bootstrap": "^2.7.0",
     "react-sigma": "^1.2.35",
+    "react-test-renderer": "^18.2.0",
     "ws": "^8.16.0"
   }
 }
