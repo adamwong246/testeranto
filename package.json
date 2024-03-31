@@ -1,14 +1,14 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.47.12",
+  "version": "0.47.13",
   "type": "module",
   "types": "./dist/index.d.mts",
   "module": "dist/module/index.js",
   "exports": {
-    "./src/subPackages/": {
-      "import": "./src/subPackages/",
-      "require": "./src/subPackages/"
+    "./src/subPackages/**": {
+      "import": "./dist/module/src/subPackages/**",
+      "require": "./dist/module/src/subPackages/**"
     },
     "./src/Types": {
       "import": "./dist/module/Types.js",
