@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.47.28",
+  "version": "0.47.29",
   "type": "module",
   "types": "./dist/index.d.mts",
   "module": "dist/module/index.js",
@@ -83,7 +83,7 @@
     "@types/node": "^18.14.0",
     "@types/react": "^18.2.66",
     "@types/react-bootstrap": "^0.32.32",
-    "@types/react-dom": "18.2.73",
+    "@types/react-dom": "18.2.23",
     "@types/react-test-renderer": "18.0.7",
     "@types/ws": "^8.5.10",
     "@typescript-eslint/eslint-plugin": "^5.46.0",
