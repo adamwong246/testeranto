@@ -30,10 +30,26 @@ function createWindow() {
   });
   console.log("loading", u);
   win.loadURL(u);
-  // win.webContents.openDevTools()
+  win.webContents.openDevTools()
 }
 
 app.on("ready", createWindow);
+
+ipcMain.handle('web-log', (x, message: string) => {
+  console.log("web-log)", message);
+});
+
+ipcMain.handle('web-error', (x, message: string) => {
+  console.log("web-error)", message);
+});
+
+ipcMain.handle('web-warn', (x, message: string) => {
+  console.log("web-warn)", message);
+});
+
+ipcMain.handle('web-info', (x, message: string) => {
+  console.log("web-info)", message);
+});
 
 ipcMain.handle('quit-app', (x, failed: number) => {
   console.log("quit-app", failed);

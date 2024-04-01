@@ -31,9 +31,21 @@ function createWindow() {
     });
     console.log("loading", u);
     win.loadURL(u);
-    // win.webContents.openDevTools()
+    win.webContents.openDevTools();
 }
 electron_1.app.on("ready", createWindow);
+electron_1.ipcMain.handle('web-log', (x, message) => {
+    console.log("web-log)", message);
+});
+electron_1.ipcMain.handle('web-error', (x, message) => {
+    console.log("web-error)", message);
+});
+electron_1.ipcMain.handle('web-warn', (x, message) => {
+    console.log("web-warn)", message);
+});
+electron_1.ipcMain.handle('web-info', (x, message) => {
+    console.log("web-info)", message);
+});
 electron_1.ipcMain.handle('quit-app', (x, failed) => {
     console.log("quit-app", failed);
     electron_1.app.exit(failed);

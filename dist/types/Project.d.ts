@@ -24,7 +24,8 @@ export declare class ITProject {
     initiateShutdown(reason: string): void;
     private shutdown;
     private spinner;
-    private releaseTestResources;
+    private releaseTestResourceWs;
+    private releaseTestResourcePm2;
     private allocateViaWs;
     private allocateViaIpc;
     private mainLoop;

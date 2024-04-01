@@ -10,46 +10,94 @@ import {
 import TesterantoLevelTwo from "./core.js";
 import { NodeWriter } from "./NodeWriter.js";
 
+const receiveTestResourceConfigUnscheduled = async (t, testresource) => {
+  const {
+    failed,
+    artifacts,
+    logPromise
+  } = await t.receiveTestResourceConfig(testresource);
+
+  Promise.all([...artifacts, logPromise]).then(async () => {
+    process.exit(await failed ? 1 : 0);
+  })
+}
+
+const receiveTestResourceConfigScheduled = async (t, testresource) => {
+  const {
+    failed,
+    artifacts,
+    logPromise
+  } = await t.receiveTestResourceConfig(testresource);
+
+  /* @ts-ignore:next-line */
+  process.send(
+    {
+      type: "testeranto:adios",
+      data: {
+        failed,
+        testResourceConfiguration:
+          t.test.testResourceConfiguration,
+        results: t.toObj(),
+      },
+    },
+    async (err) => {
+      if (!err) {
+        Promise.all([...artifacts, logPromise]).then(async () => {
+          process.exit(await failed ? 1 : 0);
+        })
+      } else {
+        console.error(err);
+        process.exit(1);
+      }
+    });
+}
+
 export default async <
   TestShape extends ITTestShape,
-  Input,
-  Subject,
-  Store,
-  Selection,
-  WhenShape,
-  ThenShape,
-  InitialStateShape
+  IInput,
+  ISubject,
+  IStore,
+  ISelection,
+  IWhenShape,
+  IThenShape,
+  IState
 >(
-  input: Input,
-  testSpecification: ITestSpecification<TestShape>,
+  input: IInput,
+  testSpecification: ITestSpecification<
+    TestShape,
+    ISubject,
+    IStore,
+    ISelection,
+    IThenShape
+  >,
   testImplementation,
   testInterface: {
     actionHandler?: (b: (...any) => any) => any;
     andWhen: (
-      store: Store,
+      store: IStore,
       actioner,
       testResource: ITTestResourceConfiguration
-    ) => Promise<Selection>;
+    ) => Promise<ISelection>;
     butThen?: (
-      store: Store,
+      store: IStore,
       callback,
       testResource: ITTestResourceConfiguration
-    ) => Promise<Selection>;
-    assertioner?: (t: ThenShape) => any;
+    ) => Promise<ISelection>;
+    assertioner?: (t: IThenShape) => any;
 
-    afterAll?: (store: Store, artificer: ITestArtificer) => any;
+    afterAll?: (store: IStore, artificer: ITestArtificer) => any;
     afterEach?: (
-      store: Store,
+      store: IStore,
       key: string,
       artificer: ITestArtificer
     ) => Promise<unknown>;
-    beforeAll?: (input: Input, artificer: ITestArtificer) => Promise<Subject>;
+    beforeAll?: (input: IInput, artificer: ITestArtificer) => Promise<ISubject>;
     beforeEach?: (
-      subject: Subject,
+      subject: ISubject,
       initialValues,
       testResource: ITTestResourceConfiguration,
       artificer: ITestArtificer
-    ) => Promise<Store>;
+    ) => Promise<IStore>;
   },
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
 ) => {
@@ -61,11 +109,11 @@ export default async <
     testInterface,
     testResourceRequirement,
     testInterface.assertioner || (async (t) => t as any),
-    testInterface.beforeEach || async function (subject: Subject, initialValues: any, testResource: any) {
+    testInterface.beforeEach || async function (subject: ISubject, initialValues: any, testResource: any) {
       return subject as any;
     },
     testInterface.afterEach || (async (s) => s),
-    testInterface.afterAll || ((store: Store) => undefined),
+    testInterface.afterAll || ((store: IStore) => undefined),
     testInterface.butThen || (async (a) => a as any),
     testInterface.andWhen,
     testInterface.actionHandler ||
@@ -75,7 +123,8 @@ export default async <
     NodeWriter
   );
 
-  const t: ITestJob = mrt.testJobs[0];
+  const tl2: TesterantoLevelTwo<any, any, any, any, any, any, any, any> = mrt;
+  const t: ITestJob = tl2.testJobs[0];
   const testResourceArg = process.argv[2] || `{}`;
 
   try {
@@ -83,95 +132,41 @@ export default async <
       testResourceArg
     ) as ITTestResourceConfiguration;
 
-    if (testResourceRequirement.ports == 0) {
+    if (partialTestResource.scheduled) {
+      console.log("test is scheduled", partialTestResource);
 
-      const {
-        failed,
-        artifacts,
-        logPromise
-      } = await t.receiveTestResourceConfig(partialTestResource);
-      Promise.all([...artifacts, logPromise]).then(async () => {
-        process.exit(await failed ? 1 : 0);
-      })
-
-    } else {
-      console.log("test configuration is incomplete", partialTestResource);
-      if (process.send) {
-        console.log(
-          "requesting test resources via IPC ...",
-          testResourceRequirement
-        );
-        /* @ts-ignore:next-line */
-        process.send({
-          type: "testeranto:hola",
-          data: {
-            requirement: {
-              ...testResourceRequirement,
-              name: partialTestResource.name
-            }
-          },
-        });
-
-        console.log("awaiting test resources via IPC...");
-        process.on(
-          "message",
-          async function (packet: { data: { testResourceConfiguration } }) {
-            console.log("message: ", packet);
-
-            const resourcesFromPm2 = packet.data.testResourceConfiguration;
-            const secondTestResource = {
-              fs: ".",
-              ...JSON.parse(JSON.stringify(partialTestResource)),
-              ...JSON.parse(JSON.stringify(resourcesFromPm2)),
-            } as ITTestResourceConfiguration;
-
-            console.log("secondTestResource", secondTestResource);
-
-
-            const {
-              failed,
-              artifacts,
-              logPromise
-            } = await t.receiveTestResourceConfig(partialTestResource);
-
-            /* @ts-ignore:next-line */
-            process.send(
-              {
-                type: "testeranto:adios",
-                data: {
-                  testResourceConfiguration:
-                    t.test.testResourceConfiguration,
-                  results: t.toObj(),
-                },
-              },
-              async (err) => {
-                if (!err) {
-                  Promise.all([...artifacts, logPromise]).then(async () => {
-                    process.exit(await failed ? 1 : 0);
-                  })
-                } else {
-                  console.error(err);
-                  process.exit(1);
-                }
-              }
-            );
+      console.log(
+        "requesting test resources via IPC ...",
+        testResourceRequirement
+      );
+      /* @ts-ignore:next-line */
+      process.send({
+        type: "testeranto:hola",
+        data: {
+          requirement: {
+            ...testResourceRequirement,
+            name: partialTestResource.name
           }
-        );
-      } else {
-        console.log("Pass run-time test resources by STDIN", process.stdin);
-        process.stdin.on("data", async (data) => {
-          console.log("data: ", data);
+        },
+      });
 
-          const resourcesFromStdin = JSON.parse(data.toString());
+      console.log("awaiting test resources via IPC...");
+      process.on(
+        "message",
+        async function (packet: { data: { testResourceConfiguration } }) {
+          const resourcesFromPm2 = packet.data.testResourceConfiguration;
           const secondTestResource = {
-            ...JSON.parse(JSON.stringify(resourcesFromStdin)),
+            fs: ".",
             ...JSON.parse(JSON.stringify(partialTestResource)),
+            ...JSON.parse(JSON.stringify(resourcesFromPm2)),
           } as ITTestResourceConfiguration;
-          await t.receiveTestResourceConfig(secondTestResource);
-        });
-      }
-    }
+          receiveTestResourceConfigScheduled(t, secondTestResource);
 
+        }
+      );
+    } else {
+      receiveTestResourceConfigUnscheduled(t, partialTestResource);
+    }
   } catch (e) {
     console.error(e);
     process.exit(-1);

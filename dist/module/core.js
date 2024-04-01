@@ -1,4 +1,9 @@
-const defaultTestResource = { name: "", fs: ".", ports: [] };
+const defaultTestResource = {
+    name: "",
+    fs: ".",
+    ports: [],
+    scheduled: false
+};
 export const defaultTestResourceRequirement = {
     ports: 0
 };
@@ -51,7 +56,6 @@ export class BaseSuite {
         return this;
     }
 }
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
 export class BaseGiven {
     constructor(name, features, whens, thens) {
         this.name = name;

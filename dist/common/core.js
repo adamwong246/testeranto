@@ -1,7 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BaseCheck = exports.BaseThen = exports.BaseWhen = exports.BaseGiven = exports.BaseSuite = exports.defaultTestResourceRequirement = void 0;
-const defaultTestResource = { name: "", fs: ".", ports: [] };
+const defaultTestResource = {
+    name: "",
+    fs: ".",
+    ports: [],
+    scheduled: false
+};
 exports.defaultTestResourceRequirement = {
     ports: 0
 };
@@ -55,7 +60,6 @@ class BaseSuite {
     }
 }
 exports.BaseSuite = BaseSuite;
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
 class BaseGiven {
     constructor(name, features, whens, thens) {
         this.name = name;

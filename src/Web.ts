@@ -11,46 +11,90 @@ import TesterantoLevelTwo from "./core";
 
 const webSocket = new WebSocket("ws://localhost:8080");
 
+const receiveTestResourceConfigUnscheduled = async (t, testresource) => {
+  const {
+    failed,
+    artifacts,
+    logPromise
+  } = await t.receiveTestResourceConfig(testresource);
+
+  Promise.all([...artifacts, logPromise]).then(async () => {
+    // ipcRenderer.invoke('quit-app', failed);
+    (window as any).exit(failed)
+  })
+}
+
+const receiveTestResourceConfigScheduled = async (t, testresource) => {
+  const {
+    failed,
+    artifacts,
+    logPromise
+  } = await t.receiveTestResourceConfig(testresource);
+
+  webSocket.send(
+    JSON.stringify({
+      type: "testeranto:adios",
+      data: {
+        failed,
+        testResourceConfiguration:
+          t.test.testResourceConfiguration,
+        results: t.toObj(),
+      },
+    })
+  );
+
+  Promise.all([...artifacts, logPromise]).then(async () => {
+    // ipcRenderer.invoke('quit-app', failed);
+    (window as any).exit(failed)
+  })
+}
+
 export default async <
   TestShape extends ITTestShape,
-  Input,
-  Subject,
-  Store,
-  Selection,
+  IInput,
+  ISubject,
+  IStore,
+  ISelection,
   WhenShape,
-  ThenShape,
-  InitialStateShape
+  IThenShape,
+  IState
 >(
-  input: Input,
-  testSpecification: ITestSpecification<TestShape>,
+  input: IInput,
+  testSpecification: ITestSpecification<
+    TestShape,
+    ISubject,
+    IStore,
+    ISelection,
+    IThenShape
+  >,
   testImplementation,
   testInterface: {
     actionHandler?: (b: (...any) => any) => any;
     andWhen: (
-      store: Store,
+      store: IStore,
       actioner,
       testResource: ITTestResourceConfiguration
-    ) => Promise<Selection>;
+    ) => Promise<ISelection>;
     butThen?: (
-      store: Store,
+      store: IStore,
       callback,
       testResource: ITTestResourceConfiguration
-    ) => Promise<Selection>;
-    assertioner?: (t: ThenShape) => any;
+    ) => Promise<ISelection>;
+    assertioner?: (t: IThenShape) => any;
 
-    afterAll?: (store: Store, artificer: ITestArtificer) => any;
+    afterAll?: (store: IStore, artificer: ITestArtificer) => any;
     afterEach?: (
-      store: Store,
+      store: IStore,
       key: string,
       artificer: ITestArtificer
     ) => Promise<unknown>;
-    beforeAll?: (input: Input, artificer: ITestArtificer) => Promise<Subject>;
+    beforeAll?: (input: IInput, artificer: ITestArtificer) => Promise<ISubject>;
     beforeEach?: (
-      subject: Subject,
+      subject: ISubject,
       initialValues,
       testResource: ITTestResourceConfiguration,
       artificer: ITestArtificer
-    ) => Promise<Store>;
+    ) => Promise<IStore>;
   },
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
 ) => {
@@ -67,7 +111,7 @@ export default async <
       return subject as any;
     },
     testInterface.afterEach || (async (s) => s),
-    testInterface.afterAll || ((store: Store) => undefined),
+    testInterface.afterAll || ((store: IStore) => undefined),
     testInterface.butThen || (async (a) => a as any),
     testInterface.andWhen,
     testInterface.actionHandler ||
@@ -88,28 +132,12 @@ export default async <
       testResourceArg
     ) as ITTestResourceConfiguration;
 
-    if (partialTestResource.fs && partialTestResource.ports) {
-      // const failed = await t.receiveTestResourceConfig(partialTestResource);
-      // (window as any).exit(failed)
+    console.log("initial test resource", partialTestResource);
 
-      const {
-        failed,
-        artifacts,
-        logPromise
-      } = await t.receiveTestResourceConfig(partialTestResource);
-      Promise.all([...artifacts, logPromise]).then(async () => {
-        // process.exit(await failed ? 1 : 0);
-        (window as any).exit(failed)
-      })
+    if (partialTestResource.scheduled) {
+      console.log("test is scheduled");
 
-
-    } else {
-      console.log("test configuration is incomplete", partialTestResource);
-      console.log(
-        "requesting test resources via ws",
-        testResourceRequirement
-      );
-
+      console.log("awaiting test resources via WS...");
       webSocket.addEventListener("open", (event) => {
         webSocket.addEventListener("message", (event) => {
           console.log("Message from server ", event.data);
@@ -118,7 +146,10 @@ export default async <
         const r = JSON.stringify({
           type: "testeranto:hola",
           data: {
-            testResourceRequirement,
+            requirement: {
+              ...testResourceRequirement,
+              name: partialTestResource.name
+            }
           },
         });
 
@@ -129,43 +160,71 @@ export default async <
           async (msg: MessageEvent<any>) => {
             console.log("message: ", msg);
 
-            const resourcesFromPm2 = msg.data.testResourceConfiguration;
+            const resourcesFromWs = JSON.parse(msg.data);
+            console.log("secondary test resource", resourcesFromWs);
+
             const secondTestResource = {
               fs: ".",
               ...JSON.parse(JSON.stringify(partialTestResource)),
-              ...JSON.parse(JSON.stringify(resourcesFromPm2)),
+              ...JSON.parse(JSON.stringify(resourcesFromWs)),
             } as ITTestResourceConfiguration;
 
-            console.log("secondTestResource", secondTestResource);
-
-            const {
-              failed,
-              artifacts,
-              logPromise
-            } = await t.receiveTestResourceConfig(partialTestResource);
-            Promise.all([...artifacts, logPromise]).then(async () => {
-              // process.exit(await failed ? 1 : 0);
-              (window as any).exit(failed)
-            })
-
-            webSocket.send(
-              JSON.stringify({
-                type: "testeranto:adios",
-                data: {
-                  testResourceConfiguration:
-                    t.test.testResourceConfiguration,
-                  results: t.toObj(),
-                },
-              })
-            );
-
-            document.write("all done")
-            // app.exit(failed ? 1 : 0);
-            // process.exit(failed ? 1 : 0);
+            console.log("final test resource", secondTestResource);
+            receiveTestResourceConfigScheduled(t, secondTestResource);
           }
         );
       });
+    } else {
+      receiveTestResourceConfigUnscheduled(t, partialTestResource);
     }
+
+    // const partialTestResource = JSON.parse(
+    //   testResourceArg
+    // ) as ITTestResourceConfiguration;
+
+    // if (partialTestResource.fs && partialTestResource.ports) {
+    //   receiveTestResourceConfig(t, partialTestResource);
+
+
+    // } else {
+    //   console.log("test configuration is incomplete", partialTestResource);
+    //   console.log(
+    //     "requesting test resources via ws",
+    //     testResourceRequirement
+    //   );
+
+    //   webSocket.addEventListener("open", (event) => {
+    //     webSocket.addEventListener("message", (event) => {
+    //       console.log("Message from server ", event.data);
+    //     });
+
+    //     const r = JSON.stringify({
+    //       type: "testeranto:hola",
+    //       data: {
+    //         testResourceRequirement,
+    //       },
+    //     });
+
+    //     webSocket.send(r);
+
+    //     console.log("awaiting test resources via websocket...", r);
+    //     webSocket.onmessage = (
+    //       async (msg: MessageEvent<any>) => {
+    //         console.log("message: ", msg);
+
+    //         const resourcesFromPm2 = msg.data.testResourceConfiguration;
+    //         const secondTestResource = {
+    //           fs: ".",
+    //           ...JSON.parse(JSON.stringify(partialTestResource)),
+    //           ...JSON.parse(JSON.stringify(resourcesFromPm2)),
+    //         } as ITTestResourceConfiguration;
+
+    //         console.log("secondTestResource", secondTestResource);
+    //         receiveTestResourceConfig(t, secondTestResource);
+    //       }
+    //     );
+    //   });
+    // }
 
   } catch (e) {
     console.error(e);

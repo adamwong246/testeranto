@@ -1,12 +1,12 @@
 import { ITTestResourceConfiguration, ITTestResourceRequest, ITTestShape, ITestArtificer, ITestSpecification } from "./core.js";
-declare const _default: <TestShape extends ITTestShape, Input, Subject, Store, Selection_1, WhenShape, ThenShape, InitialStateShape>(input: Input, testSpecification: ITestSpecification<TestShape>, testImplementation: any, testInterface: {
+declare const _default: <TestShape extends ITTestShape, IInput, ISubject, IStore, ISelection, IWhenShape, IThenShape, IState>(input: IInput, testSpecification: ITestSpecification<TestShape, ISubject, IStore, ISelection, IThenShape>, testImplementation: any, testInterface: {
     actionHandler?: ((b: (...any: any[]) => any) => any) | undefined;
-    andWhen: (store: Store, actioner: any, testResource: ITTestResourceConfiguration) => Promise<Selection_1>;
-    butThen?: ((store: Store, callback: any, testResource: ITTestResourceConfiguration) => Promise<Selection_1>) | undefined;
-    assertioner?: ((t: ThenShape) => any) | undefined;
-    afterAll?: ((store: Store, artificer: ITestArtificer) => any) | undefined;
-    afterEach?: ((store: Store, key: string, artificer: ITestArtificer) => Promise<unknown>) | undefined;
-    beforeAll?: ((input: Input, artificer: ITestArtificer) => Promise<Subject>) | undefined;
-    beforeEach?: ((subject: Subject, initialValues: any, testResource: ITTestResourceConfiguration, artificer: ITestArtificer) => Promise<Store>) | undefined;
+    andWhen: (store: IStore, actioner: any, testResource: ITTestResourceConfiguration) => Promise<ISelection>;
+    butThen?: ((store: IStore, callback: any, testResource: ITTestResourceConfiguration) => Promise<ISelection>) | undefined;
+    assertioner?: ((t: IThenShape) => any) | undefined;
+    afterAll?: ((store: IStore, artificer: ITestArtificer) => any) | undefined;
+    afterEach?: ((store: IStore, key: string, artificer: ITestArtificer) => Promise<unknown>) | undefined;
+    beforeAll?: ((input: IInput, artificer: ITestArtificer) => Promise<ISubject>) | undefined;
+    beforeEach?: ((subject: ISubject, initialValues: any, testResource: ITTestResourceConfiguration, artificer: ITestArtificer) => Promise<IStore>) | undefined;
 }, testResourceRequirement?: ITTestResourceRequest) => Promise<void>;
 export default _default;
