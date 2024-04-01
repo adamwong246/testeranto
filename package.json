@@ -1,14 +1,74 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.47.30",
+  "version": "0.47.31",
   "type": "module",
   "types": "./dist/index.d.mts",
   "module": "dist/module/index.js",
   "exports": {
-    "./src/subPackages/*": {
-      "import": "./dist/module/src/subPackages/*.js",
-      "require": "./dist/module/src/subPackages/*.js"
+    "./src/subPackages/react/jsx/index": {
+      "import": "./dist/module/subPackages/react/jsx/index.js",
+      "require": "./dist/common/subPackages/react/jsx/index.js"
+    },
+    "./src/subPackages/react/jsx/web": {
+      "import": "./dist/module/subPackages/react/jsx/web.js",
+      "require": "./dist/common/subPackages/react/jsx/web.js"
+    },
+    "./src/subPackages/react/jsx/node": {
+      "import": "./dist/module/subPackages/react/jsx/node.js",
+      "require": "./dist/common/subPackages/react/jsx/node.js"
+    },
+    "./src/subPackages/react/component/index": {
+      "import": "./dist/module/subPackages/react/component/index.js",
+      "require": "./dist/common/subPackages/react/component/index.js"
+    },
+    "./src/subPackages/react/component/web": {
+      "import": "./dist/module/subPackages/react/component/web.js",
+      "require": "./dist/common/subPackages/react/component/web.js"
+    },
+    "./src/subPackages/react/component/node": {
+      "import": "./dist/module/subPackages/react/component/node.js",
+      "require": "./dist/common/subPackages/react/component/node.js"
+    },
+    "./src/subPackages/react-test-renderer/component/index": {
+      "import": "./dist/module/subPackages/react-test-renderer/component/index.js",
+      "require": "./dist/common/subPackages/react-test-renderer/component/index.js"
+    },
+    "./src/subPackages/react-test-renderer/component/web": {
+      "import": "./dist/module/subPackages/react-test-renderer/component/web.js",
+      "require": "./dist/common/subPackages/react-test-renderer/component/web.js"
+    },
+    "./src/subPackages/react-test-renderer/component/node": {
+      "import": "./dist/module/subPackages/react-test-renderer/component/node.js",
+      "require": "./dist/common/subPackages/react-test-renderer/component/node.js"
+    },
+    "./src/subPackages/react-test-renderer/jsx/index": {
+      "import": "./dist/module/subPackages/react-test-renderer/jsx/index.js",
+      "require": "./dist/common/subPackages/react-test-renderer/jsx/index.js"
+    },
+    "./src/subPackages/react-test-renderer/jsx/web": {
+      "import": "./dist/module/subPackages/react-test-renderer/jsx/web.js",
+      "require": "./dist/common/subPackages/react-test-renderer/jsx/web.js"
+    },
+    "./src/subPackages/react-test-renderer/jsx/node": {
+      "import": "./dist/module/subPackages/react-test-renderer/jsx/node.js",
+      "require": "./dist/common/subPackages/react-test-renderer/jsx/node.js"
+    },
+    "./src/subPackages/react-dom/jsx/web": {
+      "import": "./dist/module/subPackages/react-dom/jsx/web.js",
+      "require": "./dist/common/subPackages/react-dom/jsx/web.js"
+    },
+    "./src/subPackages/react-dom/jsx/node": {
+      "import": "./dist/module/subPackages/react-dom/jsx/node.js",
+      "require": "./dist/common/subPackages/react-dom/jsx/node.js"
+    },
+    "./src/subPackages/react-dom/component/web": {
+      "import": "./dist/module/subPackages/react-dom/component/web.js",
+      "require": "./dist/common/subPackages/react-dom/component/web.js"
+    },
+    "./src/subPackages/react-dom/component/node": {
+      "import": "./dist/module/subPackages/react-dom/component/node.js",
+      "require": "./dist/common/subPackages/react-dom/component/node.js"
     },
     "./src/Types": {
       "import": "./dist/module/Types.js",
@@ -72,7 +132,7 @@
   "peerDependencies": {
     "@types/react": "^18.2.66",
     "@types/react-dom": "18.2.23",
-    "@types/react-test-renderer": "18.2.0",
+    "@types/react-test-renderer": "18.0.7",
     "react": "18.2.0",
     "react-dom": "^18.2.0",
     "ts-node": "^10.9.1",
@@ -81,7 +141,7 @@
   "devDependencies": {
     "@swc/core": "^1.3.26",
     "@types/node": "^18.14.0",
-    "@types/react": "^18.2.66",
+    "@types/react": "18.2.55",
     "@types/react-bootstrap": "^0.32.32",
     "@types/react-dom": "18.2.23",
     "@types/react-test-renderer": "18.0.7",
@@ -114,7 +174,7 @@
     "puppeteer": "18.1.0",
     "react-bootstrap": "^2.7.0",
     "react-sigma": "^1.2.35",
-    "react-test-renderer": "^18.2.0",
+    "react-test-renderer": "18.2.0",
     "ws": "^8.16.0"
   }
 }
