@@ -1,19 +1,17 @@
-import WebSocket, { WebSocketServer } from 'ws';
 import esbuild, { BuildOptions } from "esbuild";
 import fs from "fs";
-import path from "path";
 import fsExists from "fs.promises.exists";
+import path from "path";
 import pm2 from "pm2";
 import readline from 'readline';
+import WebSocket, { WebSocketServer } from 'ws';
 
 import { TesterantoFeatures } from "./Features";
 import { IBaseConfig, IRunTime, ITestTypes } from "./Types";
 import { ITTestResourceRequirement } from './core';
 
 readline.emitKeypressEvents(process.stdin);
-
-if (process.stdin.isTTY)
-  process.stdin.setRawMode(true);
+if (process.stdin.isTTY) process.stdin.setRawMode(true);
 
 const TIMEOUT = 2000;
 const OPEN_PORT = "";
@@ -90,16 +88,13 @@ export class ITProject {
     this.clearScreen = config.clearScreen;
     this.devMode = config.devMode;
 
+    // mark each port as open
     Object.values(config.ports).forEach((port) => {
       this.ports[port] = OPEN_PORT;
     });
 
     const testPath = `${process.cwd()}/${config.tests}`;
     const featurePath = `${process.cwd()}/${config.features}`;
-
-    process.on('SIGINT', () => this.initiateShutdown("CTRL+C"));
-    process.on('SIGQUIT', () => this.initiateShutdown("Keyboard quit"));
-    process.on('SIGTERM', () => this.initiateShutdown("'kill' command"));
 
     process.stdin.on('keypress', (str, key) => {
       if (key.name === 'q') {
@@ -162,14 +157,13 @@ export class ITProject {
             js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`
           },
           target: "esnext",
-
-          // packages: "external",
           format: "esm",
           splitting: true,
           outExtension: { '.js': '.mjs' },
           platform: "node",
-
-          external: ["tests.test.js", "features.test.js", "react"],
+          external: [
+            "tests.test.js",
+            "features.test.js", "react"],
 
           outbase: config.outbase,
           outdir: config.outdir,
@@ -184,7 +178,7 @@ export class ITProject {
             '.jpg': 'binary',
           },
           plugins: [
-            ...(config.plugins || []),
+            ...(config.nodePlugins || []),
             {
               name: 'rebuild-notify',
               setup(build) {
@@ -192,14 +186,12 @@ export class ITProject {
                   console.log(`node build ended with ${result.errors.length} errors`);
                   console.log(result)
                   result.errors.length !== 0 && process.exit(-1);
-                  // HERE: somehow restart the server from here, e.g., by sending a signal that you trap and react to inside the server.
                 })
               }
             },
           ],
         };
         const esbuildConfigWeb: BuildOptions = {
-          // packages: "external",
           target: "esnext",
           format: "esm",
           splitting: true,
@@ -210,13 +202,15 @@ export class ITProject {
           },
 
           external: [
+            "tests.test.js",
+            "features.test.js",
             // "url", 
+            // "react",
             "electron",
             "path",
             "fs",
-            // "react",
             "stream",
-            "tests.test.js", "features.test.js"],
+          ],
           platform: "browser",
 
           outbase: config.outbase,
@@ -237,8 +231,7 @@ export class ITProject {
             '.jpg': 'binary',
           },
           plugins: [
-            ...(config.plugins || []),
-
+            ...(config.webPlugins || []),
             {
               name: 'rebuild-notify',
               setup(build) {
@@ -246,7 +239,6 @@ export class ITProject {
                   console.log(`web build ended with ${result.errors.length} errors`);
                   console.log(result)
                   result.errors.length !== 0 && process.exit(-1);
-                  // HERE: somehow restart the server from here, e.g., by sending a signal that you trap and react to inside the server.
                 })
               }
             },
@@ -298,24 +290,33 @@ export class ITProject {
         `)
 
         Promise.all([
-          esbuild.context(esbuildConfigNode).then(async (nodeContext) => {
-            await nodeContext.watch();
-          }),
-          esbuild.context(esbuildConfigWeb).then(async (esbuildWeb) => {
-            await esbuildWeb.watch();
-          })
+          esbuild.context(esbuildConfigNode)
+            .then(async (nodeContext) => {
+              await nodeContext.watch();
+            }),
+
+          esbuild.context(esbuildConfigWeb)
+            .then(async (esbuildWeb) => {
+              await esbuildWeb.watch();
+            })
+
         ]).then(() => {
+
           if (config.devMode === false) {
             console.log("Your tests were built but not run because devMode was false. Exiting gracefully");
             process.exit(0);
+
           } else {
+
             pm2.connect(async (err) => {
+
               if (err) {
                 console.error(err);
                 process.exit(-1);
               } else {
                 console.log(`pm2 is connected`);
               }
+
               // run a websocket as an alternative to node IPC
               webSocketServer = new WebSocketServer({
                 port: 8080,
@@ -324,36 +325,19 @@ export class ITProject {
 
               webSocketServer.on('open', () => {
                 console.log('open');
-                // process.exit()
               });
 
               webSocketServer.on('close', (data) => {
                 console.log('webSocketServer close: %s', data);
-                // process.exit()
               });
 
               webSocketServer.on('listening', () => {
                 console.log("webSocketServer listening", webSocketServer.address());
-                // process.exit()
               });
 
               webSocketServer.on('connection', (webSocket: WebSocket) => {
-                console.log('webSocketServer connection');
-
                 webSocket.on('message', (webSocketData) => {
-                  // console.log('webSocket message: %s', webSocketData);
                   const payload = JSON.parse(webSocketData.valueOf().toString() as any);
-
-                  // console.log('webSocket payload', JSON.stringify(payload.data.testResourceConfiguration.name, null, 2));
-                  //  as {
-                  //   type: string,
-                  //   data: ITTestResourceRequirement & {
-                  //     testResourceConfiguration: {
-                  //       name: string;
-                  //     }
-                  //   }
-                  // };
-
                   const messageType = payload.type;
 
                   if (messageType === "testeranto:hola") {
@@ -400,7 +384,6 @@ export class ITProject {
 
                   pm2.launchBus((err, pm2_bus) => {
                     pm2_bus.on("testeranto:hola", (packet: { data: { requirement: ITTestResourceRequirement } }) => {
-                      console.log("hola IPC", packet);
                       this.requestResource(
                         packet.data.requirement,
                         'ipc'
@@ -537,14 +520,12 @@ export class ITProject {
   }
 
   private shutdown() {
-
     let i = 0;
     new Promise((res, reh) => {
       console.log("final results: ");
       const procsTable: any[] = [];
       pm2.list((err, procs) => {
         procs.forEach((proc, ndx) => {
-
           const exitCode = this.exitCodes[proc.name as string]
           if (exitCode !== 0) {
             i++;
@@ -562,11 +543,8 @@ export class ITProject {
         })
       })
     }).then((failures: number) => {
-      console.log("Stopping PM2");
       pm2.stop("all", (e) => console.error(e));
-      // pm2.killDaemon((e) => console.error(e));
       pm2.disconnect();
-
       console.log(`gracefully exiting with ${failures} failures`)
       process.exit(failures);
     })

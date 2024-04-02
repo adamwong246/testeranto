@@ -6,7 +6,7 @@ import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../c
 export type IWhenShape = any;
 export type IThenShape = any;
 export type InitialState = unknown;
-export type IInput = () => JSX.Element;
+export type IInput = (props?) => JSX.Element;
 export type ISelection = renderer.ReactTestRenderer;
 export type IStore = renderer.ReactTestRenderer;
 export type ISubject = renderer.ReactTestRenderer;

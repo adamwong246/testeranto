@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.48.3",
+  "version": "0.48.4",
   "type": "module",
   "types": "./dist/index.d.mts",
   "module": "dist/module/index.js",
@@ -172,6 +172,7 @@
     "eslint-plugin-react": "^7.31.11",
     "fs-extra": "^11.2.0",
     "fs.promises.exists": "^1.1.4",
+    "glob": "^10.3.12",
     "graphology": "^0.25.1",
     "graphology-dag": "^0.2.0",
     "graphology-types": "^0.24.5",

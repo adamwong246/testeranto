@@ -2,7 +2,8 @@ export declare type IBaseConfig = {
     clearScreen: boolean;
     devMode: boolean;
     features: string;
-    plugins: any[];
+    webPlugins: any[];
+    nodePlugins: any[];
     minify: boolean;
     outbase: string;
     outdir: string;

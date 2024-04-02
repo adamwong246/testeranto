@@ -1,10 +1,10 @@
-import { WebSocketServer } from 'ws';
 import esbuild from "esbuild";
 import fs from "fs";
-import path from "path";
 import fsExists from "fs.promises.exists";
+import path from "path";
 import pm2 from "pm2";
 import readline from 'readline';
+import { WebSocketServer } from 'ws';
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
     process.stdin.setRawMode(true);
@@ -93,14 +93,12 @@ export class ITProject {
         };
         this.clearScreen = config.clearScreen;
         this.devMode = config.devMode;
+        // mark each port as open
         Object.values(config.ports).forEach((port) => {
             this.ports[port] = OPEN_PORT;
         });
         const testPath = `${process.cwd()}/${config.tests}`;
         const featurePath = `${process.cwd()}/${config.features}`;
-        process.on('SIGINT', () => this.initiateShutdown("CTRL+C"));
-        process.on('SIGQUIT', () => this.initiateShutdown("Keyboard quit"));
-        process.on('SIGTERM', () => this.initiateShutdown("'kill' command"));
         process.stdin.on('keypress', (str, key) => {
             if (key.name === 'q') {
                 this.initiateShutdown("'q' command");
@@ -155,12 +153,14 @@ export class ITProject {
                         js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`
                     },
                     target: "esnext",
-                    // packages: "external",
                     format: "esm",
                     splitting: true,
                     outExtension: { '.js': '.mjs' },
                     platform: "node",
-                    external: ["tests.test.js", "features.test.js", "react"],
+                    external: [
+                        "tests.test.js",
+                        "features.test.js", "react"
+                    ],
                     outbase: config.outbase,
                     outdir: config.outdir,
                     jsx: 'transform',
@@ -174,7 +174,7 @@ export class ITProject {
                         '.jpg': 'binary',
                     },
                     plugins: [
-                        ...(config.plugins || []),
+                        ...(config.nodePlugins || []),
                         {
                             name: 'rebuild-notify',
                             setup(build) {
@@ -182,14 +182,12 @@ export class ITProject {
                                     console.log(`node build ended with ${result.errors.length} errors`);
                                     console.log(result);
                                     result.errors.length !== 0 && process.exit(-1);
-                                    // HERE: somehow restart the server from here, e.g., by sending a signal that you trap and react to inside the server.
                                 });
                             }
                         },
                     ],
                 };
                 const esbuildConfigWeb = {
-                    // packages: "external",
                     target: "esnext",
                     format: "esm",
                     splitting: true,
@@ -198,13 +196,14 @@ export class ITProject {
                         react: path.resolve("./node_modules/react")
                     },
                     external: [
+                        "tests.test.js",
+                        "features.test.js",
                         // "url", 
+                        // "react",
                         "electron",
                         "path",
                         "fs",
-                        // "react",
                         "stream",
-                        "tests.test.js", "features.test.js"
                     ],
                     platform: "browser",
                     outbase: config.outbase,
@@ -224,7 +223,7 @@ export class ITProject {
                         '.jpg': 'binary',
                     },
                     plugins: [
-                        ...(config.plugins || []),
+                        ...(config.webPlugins || []),
                         {
                             name: 'rebuild-notify',
                             setup(build) {
@@ -232,7 +231,6 @@ export class ITProject {
                                     console.log(`web build ended with ${result.errors.length} errors`);
                                     console.log(result);
                                     result.errors.length !== 0 && process.exit(-1);
-                                    // HERE: somehow restart the server from here, e.g., by sending a signal that you trap and react to inside the server.
                                 });
                             }
                         },
@@ -281,10 +279,12 @@ export class ITProject {
 </html>
         `);
                 Promise.all([
-                    esbuild.context(esbuildConfigNode).then(async (nodeContext) => {
+                    esbuild.context(esbuildConfigNode)
+                        .then(async (nodeContext) => {
                         await nodeContext.watch();
                     }),
-                    esbuild.context(esbuildConfigWeb).then(async (esbuildWeb) => {
+                    esbuild.context(esbuildConfigWeb)
+                        .then(async (esbuildWeb) => {
                         await esbuildWeb.watch();
                     })
                 ]).then(() => {
@@ -308,30 +308,16 @@ export class ITProject {
                             });
                             webSocketServer.on('open', () => {
                                 console.log('open');
-                                // process.exit()
                             });
                             webSocketServer.on('close', (data) => {
                                 console.log('webSocketServer close: %s', data);
-                                // process.exit()
                             });
                             webSocketServer.on('listening', () => {
                                 console.log("webSocketServer listening", webSocketServer.address());
-                                // process.exit()
                             });
                             webSocketServer.on('connection', (webSocket) => {
-                                console.log('webSocketServer connection');
                                 webSocket.on('message', (webSocketData) => {
-                                    // console.log('webSocket message: %s', webSocketData);
                                     const payload = JSON.parse(webSocketData.valueOf().toString());
-                                    // console.log('webSocket payload', JSON.stringify(payload.data.testResourceConfiguration.name, null, 2));
-                                    //  as {
-                                    //   type: string,
-                                    //   data: ITTestResourceRequirement & {
-                                    //     testResourceConfiguration: {
-                                    //       name: string;
-                                    //     }
-                                    //   }
-                                    // };
                                     const messageType = payload.type;
                                     if (messageType === "testeranto:hola") {
                                         const name = payload.data.requirement.name;
@@ -369,7 +355,6 @@ export class ITProject {
                                     clearInterval(bootInterval);
                                     pm2.launchBus((err, pm2_bus) => {
                                         pm2_bus.on("testeranto:hola", (packet) => {
-                                            console.log("hola IPC", packet);
                                             this.requestResource(packet.data.requirement, 'ipc');
                                         });
                                         pm2_bus.on("testeranto:adios", (payload) => {
@@ -485,9 +470,7 @@ export class ITProject {
                 });
             });
         }).then((failures) => {
-            console.log("Stopping PM2");
             pm2.stop("all", (e) => console.error(e));
-            // pm2.killDaemon((e) => console.error(e));
             pm2.disconnect();
             console.log(`gracefully exiting with ${failures} failures`);
             process.exit(failures);
