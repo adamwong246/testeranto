@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.48.6",
+  "version": "0.48.7",
   "type": "module",
   "types": "./dist/index.d.mts",
   "module": "dist/module/index.js",
@@ -53,6 +53,18 @@
     "./src/subPackages/react-test-renderer/jsx/node": {
       "import": "./dist/module/subPackages/react-test-renderer/jsx/node.js",
       "require": "./dist/common/subPackages/react-test-renderer/jsx/node.js"
+    },
+    "./src/subPackages/react-test-renderer/jsx-promised/index": {
+      "import": "./dist/module/subPackages/react-test-renderer/jsx-promised/index.js",
+      "require": "./dist/common/subPackages/react-test-renderer/jsx-promised/index.js"
+    },
+    "./src/subPackages/react-test-renderer/jsx-promised/web": {
+      "import": "./dist/module/subPackages/react-test-renderer/jsx-promised/web.js",
+      "require": "./dist/common/subPackages/react-test-renderer/jsx-promised/web.js"
+    },
+    "./src/subPackages/react-test-renderer/jsx-promised/node": {
+      "import": "./dist/module/subPackages/react-test-renderer/jsx-promised/node.js",
+      "require": "./dist/common/subPackages/react-test-renderer/jsx-promised/node.js"
     },
     "./src/subPackages/react-test-renderer/fc/node": {
       "import": "./dist/module/subPackages/react-test-renderer/fc/node.js",
