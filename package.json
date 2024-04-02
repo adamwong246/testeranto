@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.48.1",
+  "version": "0.48.2",
   "type": "module",
   "types": "./dist/index.d.mts",
   "module": "dist/module/index.js",
@@ -57,6 +57,10 @@
     "./src/subPackages/react-test-renderer/fc/node": {
       "import": "./dist/module/subPackages/react-test-renderer/fc/node.js",
       "require": "./dist/common/subPackages/react-test-renderer/fc/node.js"
+    },
+    "./src/subPackages/react-test-renderer/MemoExoticComponent/node": {
+      "import": "./dist/module/subPackages/react-test-renderer/MemoExoticComponent/node.js",
+      "require": "./dist/common/subPackages/react-test-renderer/MemoExoticComponent/node.js"
     },
     "./src/subPackages/react-dom/jsx/web": {
       "import": "./dist/module/subPackages/react-dom/jsx/web.js",
