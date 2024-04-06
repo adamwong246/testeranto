@@ -1,6 +1,6 @@
+import Testeranto from "../../../Web";
 import React, { useEffect, useRef, } from "react";
 import ReactDom from "react-dom/client";
-import Testeranto from "../../../../src/Web";
 export default (testImplementations, testSpecifications, testInput) => {
     const TesterantoComponent = function (props) {
         const myContainer = useRef(null);

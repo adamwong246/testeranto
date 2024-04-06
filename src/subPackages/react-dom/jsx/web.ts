@@ -1,10 +1,11 @@
+import Testeranto from "../../../Web";
+
 import React, {
   useEffect, useRef,
 } from "react";
 import ReactDom from "react-dom/client";
 
 import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../core";
-import Testeranto from "../../../../src/Web";
 
 type Input = [string, (string) => string, any];
 type InitialState = unknown;

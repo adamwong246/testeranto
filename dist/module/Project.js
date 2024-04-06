@@ -5,6 +5,7 @@ import path from "path";
 import pm2 from "pm2";
 import readline from 'readline';
 import { WebSocketServer } from 'ws';
+import { glob } from "glob";
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
     process.stdin.setRawMode(true);
@@ -112,7 +113,7 @@ export class ITProject {
         });
         import(testPath).then((tests) => {
             this.tests = tests.default;
-            import(featurePath).then((features) => {
+            import(featurePath).then(async (features) => {
                 this.features = features.default;
                 Promise.resolve(Promise.all([
                     ...this.getSecondaryEndpointsPoints("web")
@@ -236,6 +237,13 @@ export class ITProject {
                         },
                     ],
                 };
+                glob('./dist/chunk-*.mjs', { ignore: 'node_modules/**' }).then((chunks) => {
+                    console.log("deleting chunks", chunks);
+                    chunks.forEach((chunk) => {
+                        console.log("deleting chunk", chunk);
+                        fs.unlinkSync(chunk);
+                    });
+                });
                 esbuild.build({
                     bundle: true,
                     entryPoints: ["./node_modules/testeranto/dist/module/Report.js"],

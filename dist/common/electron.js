@@ -19,7 +19,7 @@ function createWindow() {
         },
         width: 800,
         height: 600,
-        show: false,
+        show: true,
     });
     const u = url_1.default.format({
         pathname: path_1.default.join(process.cwd(), process.argv[2]),
@@ -48,5 +48,5 @@ electron_1.ipcMain.handle('web-info', (x, message) => {
 });
 electron_1.ipcMain.handle('quit-app', (x, failed) => {
     console.log("quit-app", failed);
-    electron_1.app.exit(failed);
+    // app.exit(failed);
 });

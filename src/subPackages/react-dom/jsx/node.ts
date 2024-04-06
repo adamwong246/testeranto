@@ -1,9 +1,10 @@
+import Testeranto from "../../../Node";
+
 import React, { ReactNode, createElement } from "react";
 import { renderToStaticMarkup, renderToStaticNodeStream } from "react-dom/server";
 import Stream from 'stream'
 
 import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../core";
-import Testeranto from "../../../Node";
 
 export type IInput = () => JSX.Element;
 type InitialState = unknown;

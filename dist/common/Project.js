@@ -34,6 +34,7 @@ const path_1 = __importDefault(require("path"));
 const pm2_1 = __importDefault(require("pm2"));
 const readline_1 = __importDefault(require("readline"));
 const ws_1 = require("ws");
+const glob_1 = require("glob");
 readline_1.default.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
     process.stdin.setRawMode(true);
@@ -141,7 +142,7 @@ class ITProject {
         });
         Promise.resolve().then(() => __importStar(require(testPath))).then((tests) => {
             this.tests = tests.default;
-            Promise.resolve().then(() => __importStar(require(featurePath))).then((features) => {
+            Promise.resolve().then(() => __importStar(require(featurePath))).then(async (features) => {
                 this.features = features.default;
                 Promise.resolve(Promise.all([
                     ...this.getSecondaryEndpointsPoints("web")
@@ -265,6 +266,13 @@ class ITProject {
                         },
                     ],
                 };
+                (0, glob_1.glob)('./dist/chunk-*.mjs', { ignore: 'node_modules/**' }).then((chunks) => {
+                    console.log("deleting chunks", chunks);
+                    chunks.forEach((chunk) => {
+                        console.log("deleting chunk", chunk);
+                        fs_1.default.unlinkSync(chunk);
+                    });
+                });
                 esbuild_1.default.build({
                     bundle: true,
                     entryPoints: ["./node_modules/testeranto/dist/module/Report.js"],

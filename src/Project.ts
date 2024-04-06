@@ -9,6 +9,7 @@ import WebSocket, { WebSocketServer } from 'ws';
 import { TesterantoFeatures } from "./Features";
 import { IBaseConfig, IRunTime, ITestTypes } from "./Types";
 import { ITTestResourceRequirement } from './core';
+import { glob } from "glob";
 
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
@@ -111,7 +112,7 @@ export class ITProject {
     import(testPath).then((tests) => {
       this.tests = tests.default;
 
-      import(featurePath).then((features) => {
+      import(featurePath).then(async (features) => {
         this.features = features.default;
 
         Promise.resolve(Promise.all(
@@ -244,6 +245,15 @@ export class ITProject {
             },
           ],
         };
+
+        glob('./dist/chunk-*.mjs', { ignore: 'node_modules/**' }).then((chunks) => {
+          console.log("deleting chunks", chunks)
+          chunks.forEach((chunk) => {
+            console.log("deleting chunk", chunk)
+            fs.unlinkSync(chunk);
+          })
+
+        })
 
         esbuild.build({
           bundle: true,

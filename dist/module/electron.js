@@ -14,7 +14,7 @@ function createWindow() {
         },
         width: 800,
         height: 600,
-        show: false,
+        show: true,
     });
     const u = url.format({
         pathname: path.join(process.cwd(), process.argv[2]),
@@ -43,5 +43,5 @@ ipcMain.handle('web-info', (x, message) => {
 });
 ipcMain.handle('quit-app', (x, failed) => {
     console.log("quit-app", failed);
-    app.exit(failed);
+    // app.exit(failed);
 });
