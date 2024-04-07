@@ -5,17 +5,11 @@ import Stream from 'stream';
 export { renderToStaticMarkup, renderToStaticNodeStream, Stream };
 export default (testImplementations, testSpecifications, testInput) => {
     return Testeranto(testInput, testSpecifications, testImplementations, {
-        // beforeAll: async (
-        //   prototype,
-        //   artificer
-        // ): Promise<ISubject> => {
-        //   return await new Promise((resolve, rej) => {
-        //     const elem = document.getElementById("root");
-        //     if (elem) {
-        //       resolve({ htmlElement: elem });
-        //     }
-        //   })
-        // },
+        beforeAll: async (prototype, artificer) => {
+            return await new Promise((resolve, rej) => {
+                resolve();
+            });
+        },
         beforeEach: async (reactComponent, ndx, testRsource, artificer) => {
             return new Promise((resolve, rej) => {
                 // Ignore these type errors

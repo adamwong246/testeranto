@@ -24,6 +24,7 @@ const receiveTestResourceConfigScheduled = async (t, testresource) => {
     });
 };
 export default async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = defaultTestResourceRequirement) => {
+    console.log("web NodeWriter", window.NodeWriter);
     const mrt = new TesterantoLevelTwo(input, testSpecification, testImplementation, testInterface, testResourceRequirement, testInterface.assertioner || (async (t) => t), testInterface.beforeEach ||
         async function (subject, initialValues, testResource) {
             return subject;

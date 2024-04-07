@@ -250,6 +250,7 @@ class TesterantoLevelZero {
 class TesterantoLevelOne {
     constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResourceRequirement, logWriter) {
         this.artifacts = [];
+        console.log("core TesterantoLevelOne logWriter", logWriter);
         const classySuites = Object.entries(testImplementation.Suites).reduce((a, [key], index) => {
             a[key] = (somestring, givens, checks) => {
                 return new suiteKlasser.prototype.constructor(somestring, index, givens, checks);

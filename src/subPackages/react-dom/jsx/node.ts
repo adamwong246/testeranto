@@ -5,14 +5,13 @@ import { renderToStaticMarkup, renderToStaticNodeStream } from "react-dom/server
 import Stream from 'stream'
 
 import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../core";
+import {
+  IInput, ISelection, IStore,
+  // ISubject,
+  IThenShape, IWhenShape, IState
+} from ".";
 
-export type IInput = () => JSX.Element;
-type InitialState = unknown;
-type IWhenShape = any;
-export type IThenShape = any;
-export type ISelection = ReactNode;
-export type IStore = ReactNode;
-export type ISubject = ReactNode;
+export type ISubject = void;
 
 export {
   renderToStaticMarkup, renderToStaticNodeStream, Stream
@@ -20,7 +19,7 @@ export {
 
 export default <ITestShape extends ITTestShape>(
   testImplementations: ITestImplementation<
-    InitialState,
+    IState,
     ISelection,
     IWhenShape,
     IThenShape,
@@ -43,24 +42,20 @@ export default <ITestShape extends ITTestShape>(
     ISelection,
     IThenShape,
     IWhenShape,
-    InitialState
+    IState
   >(
     testInput,
     testSpecifications,
     testImplementations,
     {
-      // beforeAll: async (
-      //   prototype,
-      //   artificer
-      // ): Promise<ISubject> => {
-      //   return await new Promise((resolve, rej) => {
-      //     const elem = document.getElementById("root");
-      //     if (elem) {
-      //       resolve({ htmlElement: elem });
-      //     }
-
-      //   })
-      // },
+      beforeAll: async (
+        prototype,
+        artificer
+      ): Promise<ISubject> => {
+        return await new Promise((resolve, rej) => {
+          resolve();
+        })
+      },
       beforeEach: async (
         reactComponent,
         ndx,

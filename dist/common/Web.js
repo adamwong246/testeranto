@@ -29,6 +29,7 @@ const receiveTestResourceConfigScheduled = async (t, testresource) => {
     });
 };
 exports.default = async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = core_1.defaultTestResourceRequirement) => {
+    console.log("web NodeWriter", window.NodeWriter);
     const mrt = new core_2.default(input, testSpecification, testImplementation, testInterface, testResourceRequirement, testInterface.assertioner || (async (t) => t), testInterface.beforeEach ||
         async function (subject, initialValues, testResource) {
             return subject;

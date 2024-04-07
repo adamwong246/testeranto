@@ -30,47 +30,50 @@ const Web_1 = __importDefault(require("../../../Web"));
 const react_1 = __importStar(require("react"));
 const client_1 = __importDefault(require("react-dom/client"));
 exports.default = (testImplementations, testSpecifications, testInput) => {
-    const TesterantoComponent = function (props) {
-        const myContainer = (0, react_1.useRef)(null);
-        (0, react_1.useEffect)(() => {
-            console.log("This only happens ONCE. It happens AFTER the initial render.");
-            // eslint-disable-next-line react/prop-types
-            props.done(myContainer.current);
-        }, []);
-        return react_1.default.createElement('div', { ref: myContainer }, testInput()); //testInput();
-    };
-    return (0, Web_1.default)(testInput, testSpecifications, testImplementations, {
-        beforeAll: async (prototype, artificer) => {
-            artificer("./before.txt", "hello artificer");
-            return await new Promise((resolve, rej) => {
-                document.addEventListener("DOMContentLoaded", function () {
-                    const elem = document.getElementById("root");
-                    if (elem) {
-                        resolve({ root: elem });
-                    }
-                });
+    document.addEventListener("DOMContentLoaded", function () {
+        console.log("DOMContentLoaded");
+        const rootElement = document.getElementById("root");
+        if (rootElement) {
+            const TesterantoComponent = function ({ done, innerComp }) {
+                const myContainer = (0, react_1.useRef)(null);
+                (0, react_1.useEffect)(() => {
+                    console.log("useEffect called");
+                    done(myContainer.current);
+                }, []);
+                return react_1.default.createElement('div', { ref: myContainer }, innerComp());
+            };
+            (0, Web_1.default)(testInput, testSpecifications, testImplementations, {
+                beforeAll: async (input, artificer) => {
+                    console.log("beforeAll", input);
+                    return await new Promise((resolve, rej) => {
+                        resolve(rootElement);
+                    });
+                },
+                beforeEach: async (subject, ndx, testRsource, artificer) => {
+                    return new Promise((resolve, rej) => {
+                        console.log("beforeEach", subject);
+                        client_1.default.createRoot(rootElement).
+                            render(
+                        // ignore this type error
+                        react_1.default.createElement(TesterantoComponent, {
+                            done: (reactElement) => resolve(reactElement),
+                            innerComp: testInput
+                        }, []));
+                    });
+                },
+                andWhen: function (s, actioner) {
+                    return actioner()(s);
+                },
+                butThen: async function (s) {
+                    return s;
+                },
+                afterEach: async function (store, ndx, artificer) {
+                    return {};
+                },
+                afterAll: (store, artificer) => {
+                    return;
+                },
             });
-        },
-        beforeEach: async ({ root }, ndx, testRsource, artificer) => {
-            return new Promise((resolve, rej) => {
-                client_1.default.createRoot(root).
-                    render(react_1.default.createElement(TesterantoComponent, {
-                    done: (react) => resolve({ root, react })
-                }, []));
-            });
-        },
-        andWhen: function (s, actioner) {
-            return actioner()(s);
-        },
-        butThen: async function (s) {
-            return s;
-        },
-        afterEach: async function (store, ndx, artificer) {
-            return {};
-        },
-        afterAll: (store, artificer) => {
-            // store.page.browser().close();
-            return;
-        },
+        }
     });
 };

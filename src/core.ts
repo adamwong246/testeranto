@@ -809,6 +809,9 @@ abstract class TesterantoLevelOne<
     testResourceRequirement,
     logWriter: ILogWriter
   ) {
+
+    console.log("core TesterantoLevelOne logWriter", logWriter);
+
     const classySuites = Object.entries(testImplementation.Suites).reduce(
       (a, [key], index) => {
         a[key] = (somestring, givens, checks) => {

@@ -9,6 +9,8 @@ import {
 } from "./core";
 import TesterantoLevelTwo from "./core";
 
+
+
 const webSocket = new WebSocket("ws://localhost:8080");
 
 const receiveTestResourceConfigUnscheduled = async (t, testresource) => {
@@ -98,6 +100,8 @@ export default async <
   },
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
 ) => {
+
+  console.log("web NodeWriter", (window as any).NodeWriter);
 
   const mrt = new TesterantoLevelTwo(
     input,

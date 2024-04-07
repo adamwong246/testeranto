@@ -74,20 +74,22 @@ export class ITProject {
                         this.allocateViaWs(resourceRequest);
                     }
                 }
+                const upMessage = "Running tests while watching for changes. Use 'q' to initiate shutdown and `x` to kill.";
+                const downMessage = "Shutdown is in progress. Please wait.";
                 if (this.devMode) {
                     if (this.mode === "up") {
-                        console.log(this.spinner(), "Running tests while watching for changes. Use 'q' to initiate shutdown");
+                        console.log(this.spinner(), upMessage);
                     }
                     else {
-                        console.log(this.spinner(), "Shutdown is in progress. Please wait.");
+                        console.log(this.spinner(), downMessage);
                     }
                 }
                 else {
                     if (this.mode === "up") {
-                        console.log(this.spinner(), "Running tests without watching for changes. Use 'q' to initiate shutdown");
+                        console.log(this.spinner(), upMessage);
                     }
                     else {
-                        console.log(this.spinner(), "Shutdown is in progress. Please wait.");
+                        console.log(this.spinner(), downMessage);
                     }
                 }
             });
