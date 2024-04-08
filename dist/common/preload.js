@@ -8,21 +8,21 @@ window.exit = (x) => {
 };
 var oldLog = console.log;
 console.log = function (message) {
-    electron_1.ipcRenderer.invoke('web-log', message);
+    electron_1.ipcRenderer.invoke('web-log', message.toString());
     oldLog.apply(console, arguments);
 };
 var oldLog = console.error;
 console.error = function (message) {
-    electron_1.ipcRenderer.invoke('web-error', message);
+    electron_1.ipcRenderer.invoke('web-error', message.toString());
     oldLog.apply(console, arguments);
 };
 var oldLog = console.warn;
 console.warn = function (message) {
-    electron_1.ipcRenderer.invoke('web-warn', message);
+    electron_1.ipcRenderer.invoke('web-warn', message.toString());
     oldLog.apply(console, arguments);
 };
 var oldLog = console.info;
 console.info = function (message) {
-    electron_1.ipcRenderer.invoke('web-info', message);
+    electron_1.ipcRenderer.invoke('web-info', message.toString());
     oldLog.apply(console, arguments);
 };

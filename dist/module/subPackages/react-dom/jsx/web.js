@@ -9,7 +9,14 @@ export default (testImplementations, testSpecifications, testInput) => {
             const TesterantoComponent = function ({ done, innerComp }) {
                 const myContainer = useRef(null);
                 useEffect(() => {
-                    console.log("useEffect called");
+                    console.log("useEffect called", myContainer.current);
+                    if (!myContainer.current) {
+                        // do componentDidMount logic
+                        myContainer.current = true;
+                    }
+                    else {
+                        // do componentDidUpdate logic
+                    }
                     done(myContainer.current);
                 }, []);
                 return React.createElement('div', { ref: myContainer }, innerComp());
@@ -28,22 +35,34 @@ export default (testImplementations, testSpecifications, testInput) => {
                             render(
                         // ignore this type error
                         React.createElement(TesterantoComponent, {
-                            done: (reactElement) => resolve(reactElement),
+                            done: (reactElement) => {
+                                process.nextTick(() => {
+                                    resolve(reactElement); // do something
+                                });
+                            },
                             innerComp: testInput
                         }, []));
                     });
                 },
                 andWhen: function (s, actioner) {
-                    return actioner()(s);
+                    return new Promise((resolve, rej) => {
+                        process.nextTick(() => { resolve(actioner()(s)); });
+                    });
                 },
                 butThen: async function (s) {
-                    return s;
+                    return new Promise((resolve, rej) => {
+                        process.nextTick(() => { resolve(s); });
+                    });
                 },
                 afterEach: async function (store, ndx, artificer) {
-                    return {};
+                    return new Promise((resolve, rej) => {
+                        process.nextTick(() => { resolve({}); });
+                    });
                 },
                 afterAll: (store, artificer) => {
-                    return;
+                    return new Promise((resolve, rej) => {
+                        process.nextTick(() => { resolve({}); });
+                    });
                 },
             });
         }

@@ -4,5 +4,5 @@ export type IInput = () => JSX.Element;
 export type IState = unknown;
 export type IWhenShape = any;
 export type IThenShape = any;
-export type ISelection = ReactNode;
-export type IStore = ReactNode;
+export type ISelection = HTMLElement;
+export type IStore = HTMLElement;

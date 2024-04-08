@@ -39,8 +39,16 @@ export default <ITestShape extends ITTestShape>(
         const myContainer = useRef<any>(null);
         useEffect(() => {
           console.log(
-            "useEffect called"
+            "useEffect called", myContainer.current
           );
+
+          if (!myContainer.current) {
+            // do componentDidMount logic
+            myContainer.current = true;
+          } else {
+            // do componentDidUpdate logic
+          }
+
           done(myContainer.current);
         }, []);
 
@@ -90,27 +98,40 @@ export default <ITestShape extends ITTestShape>(
                   // ignore this type error
                   React.createElement(
                     TesterantoComponent, {
-                    done: (reactElement: any) => resolve(reactElement),
+                    done: (reactElement: any) => {
+                      process.nextTick(() => {
+                        resolve(reactElement)// do something
+                      });
+
+                    },
                     innerComp: testInput
                   },
                     []));
             });
           },
           andWhen: function (s: IStore, actioner): Promise<ISelection> {
-            return actioner()(s);
+            return new Promise((resolve, rej) => {
+              process.nextTick(() => { resolve(actioner()(s)) })
+            });
           },
           butThen: async function (s: IStore): Promise<ISelection> {
-            return s;
+            return new Promise((resolve, rej) => {
+              process.nextTick(() => { resolve(s) })
+            });
           },
           afterEach: async function (
             store: IStore,
             ndx,
             artificer
           ) {
-            return {};
+            return new Promise((resolve, rej) => {
+              process.nextTick(() => { resolve({}) })
+            });
           },
           afterAll: (store: IStore, artificer) => {
-            return;
+            return new Promise((resolve, rej) => {
+              process.nextTick(() => { resolve({}) })
+            });
           },
         },
       )
