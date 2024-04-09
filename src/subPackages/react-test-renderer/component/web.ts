@@ -1,8 +1,8 @@
 import Testeranto from "../../../Web";
 
-import { ITTestShape } from "../../../core";
+import { ITTestShape } from "../../../lib";
 
-import { IImpl, ISpec, IInput, testInterface } from ".";
+import { IImpl, ISpec, IInput, testInterface } from "./index";
 
 export default <
   ITestShape extends ITTestShape,

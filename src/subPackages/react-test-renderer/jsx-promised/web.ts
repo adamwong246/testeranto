@@ -1,12 +1,10 @@
 import test from "../../../Web";
 
-import { ITTestShape } from "../../../core";
-
-import { testInterface } from "./index";
+import { ITTestShape } from "../../../lib";
 
 import {
-  ITestImpl, ITestSpec, IInput, ISubject, IStore, ISelection, IThenShape, IWhenShape, InitialState
-} from ".";
+  testInterface, ITestImpl, ITestSpec, IInput, ISubject, IStore, ISelection, IThenShape, IWhenShape, InitialState
+} from "./index";
 
 export default <ITestShape extends ITTestShape>(
   testImplementations: ITestImpl<ITestShape>,

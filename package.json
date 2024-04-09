@@ -1,98 +1,98 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.49.10",
+  "version": "0.50.0",
   "type": "module",
   "types": "./dist/index.d.mts",
   "module": "dist/module/index.js",
   "exports": {
-    "./src/subPackages/react/jsx/index": {
-      "import": "./dist/module/subPackages/react/jsx/index.js",
-      "require": "./dist/common/subPackages/react/jsx/index.js"
+    "./src/SubPackages/react/jsx/index": {
+      "import": "./dist/module/SubPackages/react/jsx/index.js",
+      "require": "./dist/common/SubPackages/react/jsx/index.js"
     },
-    "./src/subPackages/react/jsx/web": {
-      "import": "./dist/module/subPackages/react/jsx/web.js",
-      "require": "./dist/common/subPackages/react/jsx/web.js"
+    "./src/SubPackages/react/jsx/web": {
+      "import": "./dist/module/SubPackages/react/jsx/web.js",
+      "require": "./dist/common/SubPackages/react/jsx/web.js"
     },
-    "./src/subPackages/react/jsx/node": {
-      "import": "./dist/module/subPackages/react/jsx/node.js",
-      "require": "./dist/common/subPackages/react/jsx/node.js"
+    "./src/SubPackages/react/jsx/node": {
+      "import": "./dist/module/SubPackages/react/jsx/node.js",
+      "require": "./dist/common/SubPackages/react/jsx/node.js"
     },
-    "./src/subPackages/react/component/index": {
-      "import": "./dist/module/subPackages/react/component/index.js",
-      "require": "./dist/common/subPackages/react/component/index.js"
+    "./src/SubPackages/react/component/index": {
+      "import": "./dist/module/SubPackages/react/component/index.js",
+      "require": "./dist/common/SubPackages/react/component/index.js"
     },
-    "./src/subPackages/react/component/web": {
-      "import": "./dist/module/subPackages/react/component/web.js",
-      "require": "./dist/common/subPackages/react/component/web.js"
+    "./src/SubPackages/react/component/web": {
+      "import": "./dist/module/SubPackages/react/component/web.js",
+      "require": "./dist/common/SubPackages/react/component/web.js"
     },
-    "./src/subPackages/react/component/node": {
-      "import": "./dist/module/subPackages/react/component/node.js",
-      "require": "./dist/common/subPackages/react/component/node.js"
+    "./src/SubPackages/react/component/node": {
+      "import": "./dist/module/SubPackages/react/component/node.js",
+      "require": "./dist/common/SubPackages/react/component/node.js"
     },
-    "./src/subPackages/react-test-renderer/component/index": {
-      "import": "./dist/module/subPackages/react-test-renderer/component/index.js",
-      "require": "./dist/common/subPackages/react-test-renderer/component/index.js"
+    "./src/SubPackages/react-test-renderer/component/index": {
+      "import": "./dist/module/SubPackages/react-test-renderer/component/index.js",
+      "require": "./dist/common/SubPackages/react-test-renderer/component/index.js"
     },
-    "./src/subPackages/react-test-renderer/component/web": {
-      "import": "./dist/module/subPackages/react-test-renderer/component/web.js",
-      "require": "./dist/common/subPackages/react-test-renderer/component/web.js"
+    "./src/SubPackages/react-test-renderer/component/web": {
+      "import": "./dist/module/SubPackages/react-test-renderer/component/web.js",
+      "require": "./dist/common/SubPackages/react-test-renderer/component/web.js"
     },
-    "./src/subPackages/react-test-renderer/component/node": {
-      "import": "./dist/module/subPackages/react-test-renderer/component/node.js",
-      "require": "./dist/common/subPackages/react-test-renderer/component/node.js"
+    "./src/SubPackages/react-test-renderer/component/node": {
+      "import": "./dist/module/SubPackages/react-test-renderer/component/node.js",
+      "require": "./dist/common/SubPackages/react-test-renderer/component/node.js"
     },
-    "./src/subPackages/react-test-renderer/jsx/index": {
-      "import": "./dist/module/subPackages/react-test-renderer/jsx/index.js",
-      "require": "./dist/common/subPackages/react-test-renderer/jsx/index.js"
+    "./src/SubPackages/react-test-renderer/jsx/index": {
+      "import": "./dist/module/SubPackages/react-test-renderer/jsx/index.js",
+      "require": "./dist/common/SubPackages/react-test-renderer/jsx/index.js"
     },
-    "./src/subPackages/react-test-renderer/jsx/web": {
-      "import": "./dist/module/subPackages/react-test-renderer/jsx/web.js",
-      "require": "./dist/common/subPackages/react-test-renderer/jsx/web.js"
+    "./src/SubPackages/react-test-renderer/jsx/web": {
+      "import": "./dist/module/SubPackages/react-test-renderer/jsx/web.js",
+      "require": "./dist/common/SubPackages/react-test-renderer/jsx/web.js"
     },
-    "./src/subPackages/react-test-renderer/jsx/node": {
-      "import": "./dist/module/subPackages/react-test-renderer/jsx/node.js",
-      "require": "./dist/common/subPackages/react-test-renderer/jsx/node.js"
+    "./src/SubPackages/react-test-renderer/jsx/node": {
+      "import": "./dist/module/SubPackages/react-test-renderer/jsx/node.js",
+      "require": "./dist/common/SubPackages/react-test-renderer/jsx/node.js"
     },
-    "./src/subPackages/react-test-renderer/jsx-promised/index": {
-      "import": "./dist/module/subPackages/react-test-renderer/jsx-promised/index.js",
-      "require": "./dist/common/subPackages/react-test-renderer/jsx-promised/index.js"
+    "./src/SubPackages/react-test-renderer/jsx-promised/index": {
+      "import": "./dist/module/SubPackages/react-test-renderer/jsx-promised/index.js",
+      "require": "./dist/common/SubPackages/react-test-renderer/jsx-promised/index.js"
     },
-    "./src/subPackages/react-test-renderer/jsx-promised/web": {
-      "import": "./dist/module/subPackages/react-test-renderer/jsx-promised/web.js",
-      "require": "./dist/common/subPackages/react-test-renderer/jsx-promised/web.js"
+    "./src/SubPackages/react-test-renderer/jsx-promised/web": {
+      "import": "./dist/module/SubPackages/react-test-renderer/jsx-promised/web.js",
+      "require": "./dist/common/SubPackages/react-test-renderer/jsx-promised/web.js"
     },
-    "./src/subPackages/react-test-renderer/jsx-promised/node": {
-      "import": "./dist/module/subPackages/react-test-renderer/jsx-promised/node.js",
-      "require": "./dist/common/subPackages/react-test-renderer/jsx-promised/node.js"
+    "./src/SubPackages/react-test-renderer/jsx-promised/node": {
+      "import": "./dist/module/SubPackages/react-test-renderer/jsx-promised/node.js",
+      "require": "./dist/common/SubPackages/react-test-renderer/jsx-promised/node.js"
     },
-    "./src/subPackages/react-test-renderer/fc/node": {
-      "import": "./dist/module/subPackages/react-test-renderer/fc/node.js",
-      "require": "./dist/common/subPackages/react-test-renderer/fc/node.js"
+    "./src/SubPackages/react-test-renderer/fc/node": {
+      "import": "./dist/module/SubPackages/react-test-renderer/fc/node.js",
+      "require": "./dist/common/SubPackages/react-test-renderer/fc/node.js"
     },
-    "./src/subPackages/react-test-renderer/MemoExoticComponent/node": {
-      "import": "./dist/module/subPackages/react-test-renderer/MemoExoticComponent/node.js",
-      "require": "./dist/common/subPackages/react-test-renderer/MemoExoticComponent/node.js"
+    "./src/SubPackages/react-test-renderer/MemoExoticComponent/node": {
+      "import": "./dist/module/SubPackages/react-test-renderer/MemoExoticComponent/node.js",
+      "require": "./dist/common/SubPackages/react-test-renderer/MemoExoticComponent/node.js"
     },
-    "./src/subPackages/react-dom/jsx/web": {
-      "import": "./dist/module/subPackages/react-dom/jsx/web.js",
-      "require": "./dist/common/subPackages/react-dom/jsx/web.js"
+    "./src/SubPackages/react-dom/jsx/web": {
+      "import": "./dist/module/SubPackages/react-dom/jsx/web.js",
+      "require": "./dist/common/SubPackages/react-dom/jsx/web.js"
     },
-    "./src/subPackages/react-dom/jsx/node": {
-      "import": "./dist/module/subPackages/react-dom/jsx/node.js",
-      "require": "./dist/common/subPackages/react-dom/jsx/node.js"
+    "./src/SubPackages/react-dom/jsx/node": {
+      "import": "./dist/module/SubPackages/react-dom/jsx/node.js",
+      "require": "./dist/common/SubPackages/react-dom/jsx/node.js"
     },
-    "./src/subPackages/react-dom/jsx/index": {
-      "import": "./dist/module/subPackages/react-dom/jsx/index.js",
-      "require": "./dist/common/subPackages/react-dom/jsx/index.js"
+    "./src/SubPackages/react-dom/jsx/index": {
+      "import": "./dist/module/SubPackages/react-dom/jsx/index.js",
+      "require": "./dist/common/SubPackages/react-dom/jsx/index.js"
     },
-    "./src/subPackages/react-dom/component/web": {
-      "import": "./dist/module/subPackages/react-dom/component/web.js",
-      "require": "./dist/common/subPackages/react-dom/component/web.js"
+    "./src/SubPackages/react-dom/component/web": {
+      "import": "./dist/module/SubPackages/react-dom/component/web.js",
+      "require": "./dist/common/SubPackages/react-dom/component/web.js"
     },
-    "./src/subPackages/react-dom/component/node": {
-      "import": "./dist/module/subPackages/react-dom/component/node.js",
-      "require": "./dist/common/subPackages/react-dom/component/node.js"
+    "./src/SubPackages/react-dom/component/node": {
+      "import": "./dist/module/SubPackages/react-dom/component/node.js",
+      "require": "./dist/common/SubPackages/react-dom/component/node.js"
     },
     "./src/Types": {
       "import": "./dist/module/Types.js",
@@ -121,10 +121,6 @@
     "./src/electron": {
       "import": "./dist/module/electron.js",
       "require": "./dist/common/electron.js"
-    },
-    "./src/core": {
-      "import": "./dist/module/core.js",
-      "require": "./dist/common/core.js"
     },
     "./src/preload": {
       "import": "./dist/module/preload.js",

@@ -28,7 +28,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const Web_1 = __importDefault(require("../../../Web"));
 const react_1 = __importStar(require("react"));
-const client_1 = __importDefault(require("react-dom/client"));
+const react_dom_1 = require("react-dom");
 exports.default = (testImplementations, testSpecifications, testInput) => {
     document.addEventListener("DOMContentLoaded", function () {
         console.log("DOMContentLoaded");
@@ -38,13 +38,12 @@ exports.default = (testImplementations, testSpecifications, testInput) => {
                 const myContainer = (0, react_1.useRef)(null);
                 (0, react_1.useEffect)(() => {
                     console.log("useEffect called", myContainer.current);
-                    if (!myContainer.current) {
-                        // do componentDidMount logic
-                        myContainer.current = true;
-                    }
-                    else {
-                        // do componentDidUpdate logic
-                    }
+                    // if (!myContainer.current) {
+                    //   // do componentDidMount logic
+                    //   myContainer.current = true;
+                    // } else {
+                    //   // do componentDidUpdate logic
+                    // }
                     done(myContainer.current);
                 }, []);
                 return react_1.default.createElement('div', { ref: myContainer }, innerComp());
@@ -59,17 +58,14 @@ exports.default = (testImplementations, testSpecifications, testInput) => {
                 beforeEach: async (subject, ndx, testRsource, artificer) => {
                     return new Promise((resolve, rej) => {
                         console.log("beforeEach", subject);
-                        client_1.default.createRoot(rootElement).
-                            render(
-                        // ignore this type error
-                        react_1.default.createElement(TesterantoComponent, {
+                        (0, react_dom_1.createPortal)(TesterantoComponent({
+                            innerComp: testInput,
                             done: (reactElement) => {
                                 process.nextTick(() => {
                                     resolve(reactElement); // do something
                                 });
-                            },
-                            innerComp: testInput
-                        }, []));
+                            }
+                        }), rootElement);
                     });
                 },
                 andWhen: function (s, actioner) {

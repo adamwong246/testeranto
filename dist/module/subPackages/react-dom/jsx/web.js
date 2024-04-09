@@ -1,6 +1,6 @@
 import Testeranto from "../../../Web";
 import React, { useEffect, useRef, } from "react";
-import ReactDom from "react-dom/client";
+import { createPortal } from 'react-dom';
 export default (testImplementations, testSpecifications, testInput) => {
     document.addEventListener("DOMContentLoaded", function () {
         console.log("DOMContentLoaded");
@@ -10,13 +10,12 @@ export default (testImplementations, testSpecifications, testInput) => {
                 const myContainer = useRef(null);
                 useEffect(() => {
                     console.log("useEffect called", myContainer.current);
-                    if (!myContainer.current) {
-                        // do componentDidMount logic
-                        myContainer.current = true;
-                    }
-                    else {
-                        // do componentDidUpdate logic
-                    }
+                    // if (!myContainer.current) {
+                    //   // do componentDidMount logic
+                    //   myContainer.current = true;
+                    // } else {
+                    //   // do componentDidUpdate logic
+                    // }
                     done(myContainer.current);
                 }, []);
                 return React.createElement('div', { ref: myContainer }, innerComp());
@@ -31,17 +30,14 @@ export default (testImplementations, testSpecifications, testInput) => {
                 beforeEach: async (subject, ndx, testRsource, artificer) => {
                     return new Promise((resolve, rej) => {
                         console.log("beforeEach", subject);
-                        ReactDom.createRoot(rootElement).
-                            render(
-                        // ignore this type error
-                        React.createElement(TesterantoComponent, {
+                        createPortal(TesterantoComponent({
+                            innerComp: testInput,
                             done: (reactElement) => {
                                 process.nextTick(() => {
                                     resolve(reactElement); // do something
                                 });
-                            },
-                            innerComp: testInput
-                        }, []));
+                            }
+                        }), rootElement);
                     });
                 },
                 andWhen: function (s, actioner) {

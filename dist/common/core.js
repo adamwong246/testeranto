@@ -1,226 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BaseCheck = exports.BaseThen = exports.BaseWhen = exports.BaseGiven = exports.BaseSuite = exports.defaultTestResourceRequirement = void 0;
-const defaultTestResource = {
-    name: "",
-    fs: ".",
-    ports: [],
-    scheduled: false
-};
-exports.defaultTestResourceRequirement = {
-    ports: 0
-};
-class BaseSuite {
-    constructor(name, index, givens = {}, checks = []) {
-        this.name = name;
-        this.index = index;
-        this.givens = givens;
-        this.checks = checks;
-        this.fails = [];
-    }
-    toObj() {
-        return {
-            name: this.name,
-            givens: Object.keys(this.givens).map((k) => this.givens[k].toObj()),
-            fails: this.fails,
-        };
-    }
-    setup(s, artifactory) {
-        return new Promise((res) => res(s));
-    }
-    test(t) {
-        return t;
-    }
-    async run(input, testResourceConfiguration, artifactory, tLog) {
-        this.testResourceConfiguration = testResourceConfiguration;
-        const suiteArtifactory = (fPath, value) => artifactory(`suite-${this.index}-${this.name}/${fPath}`, value);
-        const subject = await this.setup(input, suiteArtifactory);
-        tLog("\nSuite:", this.index, this.name);
-        for (const k of Object.keys(this.givens)) {
-            const giver = this.givens[k];
-            try {
-                this.store = await giver.give(subject, k, testResourceConfiguration, this.test, suiteArtifactory, tLog);
-            }
-            catch (e) {
-                console.error(e);
-                this.fails.push(giver);
-                return this;
-            }
-        }
-        for (const [ndx, thater] of this.checks.entries()) {
-            await thater.check(subject, thater.name, testResourceConfiguration, this.test, suiteArtifactory, tLog);
-        }
-        // @TODO fix me
-        for (const k of Object.keys(this.givens)) {
-            const giver = this.givens[k];
-            giver.afterAll(this.store, artifactory);
-        }
-        ////////////////
-        return this;
-    }
-}
-exports.BaseSuite = BaseSuite;
-class BaseGiven {
-    constructor(name, features, whens, thens) {
-        this.name = name;
-        this.features = features;
-        this.whens = whens;
-        this.thens = thens;
-    }
-    beforeAll(store, artifactory) {
-        return store;
-    }
-    afterAll(store, artifactory) {
-        return store;
-    }
-    toObj() {
-        return {
-            name: this.name,
-            whens: this.whens.map((w) => w.toObj()),
-            thens: this.thens.map((t) => t.toObj()),
-            error: this.error ? [this.error, this.error.stack] : null,
-            features: this.features,
-        };
-    }
-    async afterEach(store, key, artifactory) {
-        return store;
-    }
-    async give(subject, key, testResourceConfiguration, tester, artifactory, tLog) {
-        tLog(`\n Given: ${this.name}`);
-        const givenArtifactory = (fPath, value) => artifactory(`given-${key}/${fPath}`, value);
-        try {
-            this.store = await this.givenThat(subject, testResourceConfiguration, givenArtifactory);
-            // tLog(`\n Given this.store`, this.store);
-            for (const whenStep of this.whens) {
-                await whenStep.test(this.store, testResourceConfiguration, tLog);
-            }
-            for (const thenStep of this.thens) {
-                const t = await thenStep.test(this.store, testResourceConfiguration, tLog);
-                tester(t);
-            }
-        }
-        catch (e) {
-            this.error = e;
-            tLog(e);
-            tLog("\u0007"); // bell
-            // throw e;
-        }
-        finally {
-            try {
-                await this.afterEach(this.store, key, givenArtifactory);
-            }
-            catch (e) {
-                console.error("afterEach failed! no error will be recorded!", e);
-            }
-        }
-        return this.store;
-    }
-}
-exports.BaseGiven = BaseGiven;
-class BaseWhen {
-    constructor(name, actioner) {
-        this.name = name;
-        this.actioner = actioner;
-    }
-    toObj() {
-        return {
-            name: this.name,
-            error: this.error,
-        };
-    }
-    async test(store, testResourceConfiguration, tLog) {
-        tLog(" When:", this.name);
-        try {
-            return await this.andWhen(store, this.actioner, testResourceConfiguration);
-        }
-        catch (e) {
-            this.error = true;
-            throw e;
-        }
-    }
-}
-exports.BaseWhen = BaseWhen;
-class BaseThen {
-    constructor(name, thenCB) {
-        this.name = name;
-        this.thenCB = thenCB;
-    }
-    toObj() {
-        return {
-            name: this.name,
-            error: this.error,
-        };
-    }
-    async test(store, testResourceConfiguration, tLog) {
-        tLog(" Then:", this.name);
-        try {
-            return this.thenCB(await this.butThen(store, testResourceConfiguration));
-        }
-        catch (e) {
-            console.log("test failed", e);
-            this.error = true;
-            throw e;
-        }
-        // try {
-        //   return await (this.thenCB(
-        //     await (async () => {
-        //       try {
-        //         return await (
-        //           (() => {
-        //             try {
-        //               return this.butThen(store, testResourceConfiguration)
-        //             } catch (e) {
-        //               this.error = true;
-        //               throw e
-        //             }
-        //           })()
-        //         );
-        //       } catch (e) {
-        //         this.error = true;
-        //         throw e
-        //       }
-        //     })()
-        //   ));
-        // } catch (e) {
-        //   this.error = true;
-        //   throw e
-        // }
-    }
-}
-exports.BaseThen = BaseThen;
-class BaseCheck {
-    constructor(name, features, checkCB, whens, thens) {
-        this.name = name;
-        this.features = features;
-        this.checkCB = checkCB;
-        this.whens = whens;
-        this.thens = thens;
-    }
-    async afterEach(store, key, cb) {
-        return;
-    }
-    async check(subject, key, testResourceConfiguration, tester, artifactory, tLog) {
-        tLog(`\n Check: ${this.name}`);
-        const store = await this.checkThat(subject, testResourceConfiguration, artifactory);
-        await this.checkCB(Object.entries(this.whens).reduce((a, [key, when]) => {
-            a[key] = async (payload) => {
-                return await when(payload, testResourceConfiguration).test(store, testResourceConfiguration, tLog);
-            };
-            return a;
-        }, {}), Object.entries(this.thens).reduce((a, [key, then]) => {
-            a[key] = async (payload) => {
-                const t = await then(payload, testResourceConfiguration).test(store, testResourceConfiguration, tLog);
-                tester(t);
-            };
-            return a;
-        }, {}));
-        await this.afterEach(store, key);
-        return;
-    }
-}
-exports.BaseCheck = BaseCheck;
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
-class TesterantoLevelZero {
+const base_1 = require("./base");
+const lib_1 = require("./lib");
+class BaseBuilder {
     constructor(cc, suitesOverrides, givenOverides, whenOverides, thenOverides, checkOverides) {
         this.cc = cc;
         this.constructorator = cc;
@@ -246,11 +28,9 @@ class TesterantoLevelZero {
         return this.checkOverides;
     }
 }
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
-class TesterantoLevelOne {
+class ClassBuilder {
     constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResourceRequirement, logWriter) {
         this.artifacts = [];
-        console.log("core TesterantoLevelOne logWriter", logWriter);
         const classySuites = Object.entries(testImplementation.Suites).reduce((a, [key], index) => {
             a[key] = (somestring, givens, checks) => {
                 return new suiteKlasser.prototype.constructor(somestring, index, givens, checks);
@@ -260,7 +40,9 @@ class TesterantoLevelOne {
         const classyGivens = Object.keys(testImplementation.Givens)
             .reduce((a, key) => {
             a[key] = (features, whens, thens, ...xtrasW) => {
-                return new givenKlasser.prototype.constructor(key, features, whens, thens, testImplementation.Givens[key](...xtrasW));
+                // const f = testImplementation.Givens[key](...xtrasW);
+                return new givenKlasser.prototype.constructor(key, features, whens, thens, ((phunkshun) => {
+                })(testImplementation.Givens[key]));
             };
             return a;
         }, {});
@@ -282,7 +64,7 @@ class TesterantoLevelOne {
             };
             return a;
         }, {});
-        const classyTesteranto = new (class extends TesterantoLevelZero {
+        const classyTesteranto = new (class extends BaseBuilder {
         })(input, classySuites, classyGivens, classyWhens, classyThens, classyChecks);
         const suites = testSpecification(
         /* @ts-ignore:next-line */
@@ -302,7 +84,12 @@ class TesterantoLevelOne {
                     return suite.toObj();
                 },
                 runner,
-                receiveTestResourceConfig: async function (testResourceConfiguration = defaultTestResource) {
+                receiveTestResourceConfig: async function (testResourceConfiguration = {
+                    name: "",
+                    fs: ".",
+                    ports: [],
+                    scheduled: false
+                }) {
                     console.log(`testResourceConfiguration ${JSON.stringify(testResourceConfiguration, null, 2)}`);
                     await logWriter.mkdirSync(testResourceConfiguration.fs);
                     const logFilePath = (`${testResourceConfiguration.fs}/log.txt`);
@@ -333,17 +120,16 @@ class TesterantoLevelOne {
         });
     }
 }
-////////////////////////////////////////////////////////////////////////////////////////////////
-class TesterantoLevelTwo extends TesterantoLevelOne {
-    constructor(input, testSpecification, testImplementation, testInterface, testResourceRequirement = exports.defaultTestResourceRequirement, assertioner, beforeEach, afterEach, afterAll, butThen, andWhen, actionHandler, logWriter) {
-        super(testImplementation, testSpecification, input, class extends BaseSuite {
+class Testeranto extends ClassBuilder {
+    constructor(input, testSpecification, testImplementation, testInterface, testResourceRequirement = lib_1.defaultTestResourceRequirement, assertioner, beforeEach, afterEach, afterAll, butThen, andWhen, actionHandler, logWriter) {
+        super(testImplementation, testSpecification, input, class extends base_1.BaseSuite {
             async setup(s, artifactory) {
                 return (testInterface.beforeAll || (async (input, artificer) => input))(s, artifactory, this.testResourceConfiguration);
             }
             test(t) {
                 return assertioner(t);
             }
-        }, class Given extends BaseGiven {
+        }, class Given extends base_1.BaseGiven {
             constructor(name, features, whens, thens, initialValues) {
                 super(name, features, whens, thens);
                 this.initialValues = initialValues;
@@ -361,7 +147,7 @@ class TesterantoLevelTwo extends TesterantoLevelOne {
                 // TODO does not work?
                 artifactory(`afterAll4-${this.name}/${fPath}`, value));
             }
-        }, class When extends BaseWhen {
+        }, class When extends base_1.BaseWhen {
             constructor(name, actioner, payload) {
                 super(name, (store) => {
                     return actionHandler(actioner);
@@ -371,14 +157,14 @@ class TesterantoLevelTwo extends TesterantoLevelOne {
             async andWhen(store, actioner, testResource) {
                 return await andWhen(store, actioner, testResource);
             }
-        }, class Then extends BaseThen {
+        }, class Then extends base_1.BaseThen {
             constructor(name, callback) {
                 super(name, callback);
             }
             async butThen(store, testResourceConfiguration) {
                 return await butThen(store, this.thenCB, testResourceConfiguration);
             }
-        }, class Check extends BaseCheck {
+        }, class Check extends base_1.BaseCheck {
             constructor(name, features, checkCallback, whens, thens, initialValues) {
                 super(name, features, checkCallback, whens, thens);
                 this.initialValues = initialValues;
@@ -394,4 +180,4 @@ class TesterantoLevelTwo extends TesterantoLevelOne {
         }, testResourceRequirement, logWriter);
     }
 }
-exports.default = TesterantoLevelTwo;
+exports.default = Testeranto;

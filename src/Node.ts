@@ -1,14 +1,10 @@
+
+import Testeranto from "./core.js";
 import {
-  ITTestResourceConfiguration,
-  ITTestResourceRequest,
-  ITTestShape,
-  ITestArtificer,
-  ITestJob,
-  ITestSpecification,
-  defaultTestResourceRequirement,
-} from "./core.js";
-import TesterantoLevelTwo from "./core.js";
-import { NodeWriter } from "./NodeWriter.js";
+  defaultTestResourceRequirement, ITestArtificer, ITestJob, ITTestResourceConfiguration, ITTestResourceRequest, ITTestShape
+} from "./lib.js";
+import { NodeWriter } from "./nodeWriter.js";
+import { ITestSpecification } from "./Types.js";
 
 const receiveTestResourceConfigUnscheduled = async (t, testresource) => {
   const {
@@ -102,7 +98,7 @@ export default async <
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
 ) => {
 
-  const mrt = new TesterantoLevelTwo(
+  const mrt = new Testeranto(
     input,
     testSpecification,
     testImplementation,
@@ -123,7 +119,7 @@ export default async <
     NodeWriter
   );
 
-  const tl2: TesterantoLevelTwo<any, any, any, any, any, any, any, any> = mrt;
+  const tl2: Testeranto<any, any, any, any, any, any, any, any> = mrt;
   const t: ITestJob = tl2.testJobs[0];
   const testResourceArg = process.argv[2] || `{}`;
 

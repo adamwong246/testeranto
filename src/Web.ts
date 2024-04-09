@@ -1,13 +1,8 @@
+import { ITestSpecification } from "./Types";
+import Testeranto from "./core";
 import {
-  ITTestResourceConfiguration,
-  ITTestResourceRequest,
-  ITTestShape,
-  ITestArtificer,
-  ITestJob,
-  ITestSpecification,
-  defaultTestResourceRequirement,
-} from "./core";
-import TesterantoLevelTwo from "./core";
+  ITTestResourceConfiguration, ITTestResourceRequest, ITTestShape, ITestArtificer, ITestJob, defaultTestResourceRequirement
+} from "./lib";
 
 let webSocket: WebSocket;
 try {
@@ -15,7 +10,6 @@ try {
 } catch (e) {
   console.error(e)
 }
-
 
 const receiveTestResourceConfigUnscheduled = async (t, testresource) => {
   const {
@@ -107,7 +101,7 @@ export default async <
 
   console.log("web NodeWriter", (window as any).NodeWriter);
 
-  const mrt = new TesterantoLevelTwo(
+  const mrt = new Testeranto(
     input,
     testSpecification,
     testImplementation,
@@ -129,7 +123,7 @@ export default async <
     (window as any).NodeWriter
   );
 
-  const tl2: TesterantoLevelTwo<any, any, any, any, any, any, any, any> = mrt;
+  const tl2: Testeranto<any, any, any, any, any, any, any, any> = mrt;
   const t: ITestJob = tl2.testJobs[0];
   const testResourceArg = decodeURIComponent(
     new URLSearchParams(location.search).get('requesting') || ''

@@ -1,6 +1,6 @@
-import { defaultTestResourceRequirement, } from "./core.js";
-import TesterantoLevelTwo from "./core.js";
-import { NodeWriter } from "./NodeWriter.js";
+import Testeranto from "./core.js";
+import { defaultTestResourceRequirement } from "./lib.js";
+import { NodeWriter } from "./nodeWriter.js";
 const receiveTestResourceConfigUnscheduled = async (t, testresource) => {
     const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(testresource);
     Promise.all([...artifacts, logPromise]).then(async () => {
@@ -30,7 +30,7 @@ const receiveTestResourceConfigScheduled = async (t, testresource) => {
     });
 };
 export default async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = defaultTestResourceRequirement) => {
-    const mrt = new TesterantoLevelTwo(input, testSpecification, testImplementation, testInterface, testResourceRequirement, testInterface.assertioner || (async (t) => t), testInterface.beforeEach || async function (subject, initialValues, testResource) {
+    const mrt = new Testeranto(input, testSpecification, testImplementation, testInterface, testResourceRequirement, testInterface.assertioner || (async (t) => t), testInterface.beforeEach || async function (subject, initialValues, testResource) {
         return subject;
     }, testInterface.afterEach || (async (s) => s), testInterface.afterAll || ((store) => undefined), testInterface.butThen || (async (a) => a), testInterface.andWhen, testInterface.actionHandler ||
         function (b) {

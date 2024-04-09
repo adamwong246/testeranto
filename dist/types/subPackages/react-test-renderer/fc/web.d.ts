@@ -1,6 +1,7 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../core";
+import { ITTestShape } from "../../../lib";
+import { ITestSpecification, ITestImplementation } from "../../../Types";
 export declare type IInput = React.FC;
 export declare type IWhenShape = unknown;
 export declare type IThenShape = unknown;

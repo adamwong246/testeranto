@@ -1,14 +1,11 @@
 import React from "react";
 
-import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../core";
 import Testeranto from "../../../Web";
-
-import { CElement } from "react";
+import { ITTestShape } from "../../../lib";
+import { ITestImplementation, ITestSpecification } from "../../../Types";
 
 type IWhenShape = any;
 type IThenShape = any;
-
-type Super<T> = T extends infer U ? U : object;
 
 type IInput = typeof React.Component;  //Super<React.Element>;  //number;  //typeof React.Component;
 // type IState  is the props

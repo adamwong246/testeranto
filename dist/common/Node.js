@@ -3,9 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const core_js_1 = require("./core.js");
-const core_js_2 = __importDefault(require("./core.js"));
-const NodeWriter_js_1 = require("./NodeWriter.js");
+const core_js_1 = __importDefault(require("./core.js"));
+const lib_js_1 = require("./lib.js");
+const nodeWriter_js_1 = require("./nodeWriter.js");
 const receiveTestResourceConfigUnscheduled = async (t, testresource) => {
     const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(testresource);
     Promise.all([...artifacts, logPromise]).then(async () => {
@@ -34,13 +34,13 @@ const receiveTestResourceConfigScheduled = async (t, testresource) => {
         }
     });
 };
-exports.default = async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = core_js_1.defaultTestResourceRequirement) => {
-    const mrt = new core_js_2.default(input, testSpecification, testImplementation, testInterface, testResourceRequirement, testInterface.assertioner || (async (t) => t), testInterface.beforeEach || async function (subject, initialValues, testResource) {
+exports.default = async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = lib_js_1.defaultTestResourceRequirement) => {
+    const mrt = new core_js_1.default(input, testSpecification, testImplementation, testInterface, testResourceRequirement, testInterface.assertioner || (async (t) => t), testInterface.beforeEach || async function (subject, initialValues, testResource) {
         return subject;
     }, testInterface.afterEach || (async (s) => s), testInterface.afterAll || ((store) => undefined), testInterface.butThen || (async (a) => a), testInterface.andWhen, testInterface.actionHandler ||
         function (b) {
             return b;
-        }, NodeWriter_js_1.NodeWriter);
+        }, nodeWriter_js_1.NodeWriter);
     const tl2 = mrt;
     const t = tl2.testJobs[0];
     const testResourceArg = process.argv[2] || `{}`;

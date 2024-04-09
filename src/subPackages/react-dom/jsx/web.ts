@@ -3,17 +3,22 @@ import Testeranto from "../../../Web";
 import React, {
   useEffect, useRef,
 } from "react";
-import ReactDom from "react-dom/client";
+import { createPortal } from 'react-dom';
 
-import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../core";
+import { ITTestShape } from "../../../lib";
+import { ITestImplementation, ITestSpecification } from "../../../Types";
+
 import {
   IInput, ISelection, IStore,
   IThenShape, IWhenShape, IState
-} from ".";
+} from "./index";
 
 export type ISubject = HTMLElement;
 
-export default <ITestShape extends ITTestShape>(
+export default <
+  ITestShape extends ITTestShape,
+// IProps
+>(
   testImplementations: ITestImplementation<
     IState,
     ISelection,
@@ -23,6 +28,7 @@ export default <ITestShape extends ITTestShape>(
   >,
   testSpecifications: ITestSpecification<
     ITestShape,
+    // [HTMLElement, IProps], // ISubject,
     ISubject,
     IStore,
     ISelection,
@@ -42,12 +48,12 @@ export default <ITestShape extends ITTestShape>(
             "useEffect called", myContainer.current
           );
 
-          if (!myContainer.current) {
-            // do componentDidMount logic
-            myContainer.current = true;
-          } else {
-            // do componentDidUpdate logic
-          }
+          // if (!myContainer.current) {
+          //   // do componentDidMount logic
+          //   myContainer.current = true;
+          // } else {
+          //   // do componentDidUpdate logic
+          // }
 
           done(myContainer.current);
         }, []);
@@ -62,6 +68,7 @@ export default <ITestShape extends ITTestShape>(
       Testeranto<
         ITestShape,
         IInput,
+        // [HTMLElement, IProps], // ISubject,
         ISubject,
         IStore,
         ISelection,
@@ -76,7 +83,7 @@ export default <ITestShape extends ITTestShape>(
           beforeAll: async (
             input,
             artificer
-          ): Promise<ISubject> => {
+          ): Promise<HTMLElement> => {
             console.log("beforeAll", input);
             return await new Promise((resolve, rej) => {
               resolve(rootElement);
@@ -93,20 +100,19 @@ export default <ITestShape extends ITTestShape>(
 
               console.log("beforeEach", subject);
 
-              ReactDom.createRoot(rootElement).
-                render(
-                  // ignore this type error
-                  React.createElement(
-                    TesterantoComponent, {
-                    done: (reactElement: any) => {
-                      process.nextTick(() => {
-                        resolve(reactElement)// do something
-                      });
-
-                    },
-                    innerComp: testInput
-                  },
-                    []));
+              createPortal(
+                TesterantoComponent({
+                  innerComp: testInput,
+                  done: (reactElement: any) => {
+                    process.nextTick(() => {
+                      resolve(reactElement)// do something
+                    })
+                  }
+                }
+                  ,
+                ),
+                rootElement
+              );
             });
           },
           andWhen: function (s: IStore, actioner): Promise<ISelection> {

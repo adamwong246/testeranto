@@ -1,10 +1,10 @@
 import Testeranto from "../../../Web";
 
-import { ITTestShape } from "../../../core";
+import { ITTestShape } from "../../../lib";
 
 import {
   ITestImpl, ITestSpec, IInput, ISubject, IStore, ISelection, IThenShape, IWhenShape, InitialState, testInterface
-} from ".";
+} from "./index";
 
 export default <ITestShape extends ITTestShape>(
   testImplementations: ITestImpl<ITestShape>,

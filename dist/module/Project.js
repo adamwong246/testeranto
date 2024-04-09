@@ -117,7 +117,7 @@ export class ITProject {
             this.tests = tests.default;
             import(featurePath).then(async (features) => {
                 this.features = features.default;
-                Promise.resolve(Promise.all([
+                await Promise.resolve(Promise.all([
                     ...this.getSecondaryEndpointsPoints("web")
                 ]
                     .map(async (sourceFilePath) => {

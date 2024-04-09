@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const NodeWriter_1 = require("./NodeWriter");
+const nodeWriter_1 = require("./nodeWriter");
 const electron_1 = require("electron");
-window.NodeWriter = NodeWriter_1.NodeWriter;
+window.NodeWriter = nodeWriter_1.NodeWriter;
 window.exit = (x) => {
     electron_1.ipcRenderer.invoke('quit-app', x);
 };

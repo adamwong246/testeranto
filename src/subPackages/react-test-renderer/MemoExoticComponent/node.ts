@@ -3,11 +3,9 @@ import test from "../../../Node";
 import React from "react";
 import renderer, { act } from "react-test-renderer";
 
-import {
-  ITestImplementation,
-  ITestSpecification,
-  ITTestShape,
-} from "../../../core";
+import { ITTestShape } from "../../../lib";
+import { ITestImplementation, ITestSpecification } from "../../../Types";
+
 
 type Input = React.MemoExoticComponent<() => JSX.Element>;
 type WhenShape = unknown;

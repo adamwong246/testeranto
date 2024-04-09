@@ -1,5 +1,6 @@
 import React from "react";
-import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../core";
+import { ITTestShape } from "../../../lib";
+import { ITestImplementation, ITestSpecification } from "../../../Types";
 declare type IWhenShape = any;
 declare type IThenShape = any;
 declare type IInput = typeof React.Component;

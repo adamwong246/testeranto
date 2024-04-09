@@ -3,9 +3,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const core_1 = require("./core");
-const core_2 = __importDefault(require("./core"));
-const webSocket = new WebSocket("ws://localhost:8080");
+const core_1 = __importDefault(require("./core"));
+const lib_1 = require("./lib");
+let webSocket;
+try {
+    webSocket = new WebSocket("ws://localhost:8080");
+}
+catch (e) {
+    console.error(e);
+}
 const receiveTestResourceConfigUnscheduled = async (t, testresource) => {
     const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(testresource);
     Promise.all([...artifacts, logPromise]).then(async () => {
@@ -28,9 +34,9 @@ const receiveTestResourceConfigScheduled = async (t, testresource) => {
         window.exit(failed);
     });
 };
-exports.default = async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = core_1.defaultTestResourceRequirement) => {
+exports.default = async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = lib_1.defaultTestResourceRequirement) => {
     console.log("web NodeWriter", window.NodeWriter);
-    const mrt = new core_2.default(input, testSpecification, testImplementation, testInterface, testResourceRequirement, testInterface.assertioner || (async (t) => t), testInterface.beforeEach ||
+    const mrt = new core_1.default(input, testSpecification, testImplementation, testInterface, testResourceRequirement, testInterface.assertioner || (async (t) => t), testInterface.beforeEach ||
         async function (subject, initialValues, testResource) {
             return subject;
         }, testInterface.afterEach || (async (s) => s), testInterface.afterAll || ((store) => undefined), testInterface.butThen || (async (a) => a), testInterface.andWhen, testInterface.actionHandler ||

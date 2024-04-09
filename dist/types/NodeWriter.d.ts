@@ -1,2 +1,2 @@
-import { ILogWriter } from "./core";
+import { ILogWriter } from "./lib";
 export declare const NodeWriter: ILogWriter;

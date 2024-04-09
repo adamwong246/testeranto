@@ -1,4 +1,5 @@
-import { ITTestResourceConfiguration, ITTestResourceRequest, ITTestShape, ITestArtificer, ITestSpecification } from "./core";
+import { ITestSpecification } from "./Types";
+import { ITTestResourceConfiguration, ITTestResourceRequest, ITTestShape, ITestArtificer } from "./lib";
 declare const _default: <TestShape extends ITTestShape, IInput, ISubject, IStore, ISelection, WhenShape, IThenShape, IState>(input: IInput, testSpecification: ITestSpecification<TestShape, ISubject, IStore, ISelection, IThenShape>, testImplementation: any, testInterface: {
     actionHandler?: ((b: (...any: any[]) => any) => any) | undefined;
     andWhen: (store: IStore, actioner: any, testResource: ITTestResourceConfiguration) => Promise<ISelection>;

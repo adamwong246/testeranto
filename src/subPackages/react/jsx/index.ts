@@ -1,7 +1,8 @@
-import { CElement, useEffect, useRef } from "react";
-import React from "react";
+import { CElement } from "react";
 
-import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../core";
+import { ITTestShape } from "../../../lib";
+import { ITestImplementation, ITestSpecification } from "../../../Types";
+
 
 export type IWhenShape = any;
 export type IThenShape = any;

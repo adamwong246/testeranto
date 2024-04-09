@@ -1,6 +1,6 @@
 /// <reference types="react" />
-import { ITTestShape } from "../../../core";
-import { IImpl, ISpec, IInput } from ".";
+import { ITTestShape } from "../../../lib";
+import { IImpl, ISpec, IInput } from "./index";
 declare const _default: <ITestShape extends ITTestShape, IProps, IState>(testImplementations: IImpl<ITestShape, IProps>, testSpecifications: ISpec<ITestShape>, testInput: {
     new (props: IProps | Readonly<IProps>): import("react").Component<IProps, IState, any>;
     new (props: IProps, context: any): import("react").Component<IProps, IState, any>;

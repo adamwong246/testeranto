@@ -1,6 +1,7 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import { ITestImplementation, ITestSpecification, ITTestShape } from "../../../core";
+import { ITTestShape } from "../../../lib";
+import { ITestImplementation, ITestSpecification } from "../../../Types";
 declare type Input = React.MemoExoticComponent<() => JSX.Element>;
 declare type WhenShape = unknown;
 declare type ThenShape = unknown;

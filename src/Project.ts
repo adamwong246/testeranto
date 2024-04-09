@@ -5,11 +5,11 @@ import path from "path";
 import pm2 from "pm2";
 import readline from 'readline';
 import WebSocket, { WebSocketServer } from 'ws';
+import { glob } from "glob";
 
 import { TesterantoFeatures } from "./Features";
 import { IBaseConfig, IRunTime, ITestTypes } from "./Types";
-import { ITTestResourceRequirement } from './core';
-import { glob } from "glob";
+import { ITTestResourceRequirement } from "./lib";
 
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);

@@ -1,7 +1,9 @@
 import React from "react";
 import renderer, { act } from "react-test-renderer";
 
-import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../core";
+import { ITTestShape } from "../../../lib";
+import { ITestImplementation, ITestSpecification } from "../../../Types";
+
 
 export type IWhenShape = any;
 export type IThenShape = any;

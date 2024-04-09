@@ -3,11 +3,8 @@ import test from "../../../Node";
 import React from "react";
 import renderer, { act } from "react-test-renderer";
 
-import {
-  ITTestShape,
-  ITestImplementation,
-  ITestSpecification
-} from "../../../core";
+import { ITTestShape } from "../../../lib";
+import { ITestSpecification, ITestImplementation } from "../../../Types";
 
 export type IInput = React.FC;
 export type IWhenShape = unknown;

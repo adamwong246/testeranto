@@ -1,18 +1,18 @@
 import Testeranto from "../../../Node";
 
-import React, { ReactNode, createElement } from "react";
+import { createElement } from "react";
 import { renderToStaticMarkup, renderToStaticNodeStream } from "react-dom/server";
 import Stream from 'stream'
 
-import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../core";
+import { ITTestShape } from "../../../lib";
+import { ITestImplementation, ITestSpecification } from "../../../Types";
+
 import {
   IInput, ISelection, IStore,
-  // ISubject,
   IThenShape, IWhenShape, IState
-} from ".";
+} from "./index";
 
-export type ISubject = void;
-
+type ISubject = void;
 export {
   renderToStaticMarkup, renderToStaticNodeStream, Stream
 }

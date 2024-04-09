@@ -1,6 +1,12 @@
-import { defaultTestResourceRequirement, } from "./core";
-import TesterantoLevelTwo from "./core";
-const webSocket = new WebSocket("ws://localhost:8080");
+import Testeranto from "./core";
+import { defaultTestResourceRequirement } from "./lib";
+let webSocket;
+try {
+    webSocket = new WebSocket("ws://localhost:8080");
+}
+catch (e) {
+    console.error(e);
+}
 const receiveTestResourceConfigUnscheduled = async (t, testresource) => {
     const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(testresource);
     Promise.all([...artifacts, logPromise]).then(async () => {
@@ -25,7 +31,7 @@ const receiveTestResourceConfigScheduled = async (t, testresource) => {
 };
 export default async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = defaultTestResourceRequirement) => {
     console.log("web NodeWriter", window.NodeWriter);
-    const mrt = new TesterantoLevelTwo(input, testSpecification, testImplementation, testInterface, testResourceRequirement, testInterface.assertioner || (async (t) => t), testInterface.beforeEach ||
+    const mrt = new Testeranto(input, testSpecification, testImplementation, testInterface, testResourceRequirement, testInterface.assertioner || (async (t) => t), testInterface.beforeEach ||
         async function (subject, initialValues, testResource) {
             return subject;
         }, testInterface.afterEach || (async (s) => s), testInterface.afterAll || ((store) => undefined), testInterface.butThen || (async (a) => a), testInterface.andWhen, testInterface.actionHandler ||

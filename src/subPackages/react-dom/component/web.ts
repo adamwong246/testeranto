@@ -1,8 +1,9 @@
 import React, { CElement, createElement } from "react";
 import ReactDom from "react-dom/client";
 
-import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../core";
 import Testeranto from "../../../Web";
+import { ITTestShape } from "../../../lib";
+import { ITestImplementation, ITestSpecification } from "../../../Types";
 
 type IInput = typeof React.Component;
 type InitialState = unknown;

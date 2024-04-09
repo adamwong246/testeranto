@@ -1,7 +1,8 @@
 import React, { ReactNode } from "react";
 import { renderToStaticMarkup, renderToStaticNodeStream } from "react-dom/server";
 import Stream from 'stream';
-import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../core";
+import { ITTestShape } from "../../../lib";
+import { ITestImplementation, ITestSpecification } from "../../../Types";
 declare type IInput = typeof React.Component;
 declare type InitialState = unknown;
 declare type IWhenShape = any;

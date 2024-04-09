@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Web_1 = __importDefault(require("../../../Web"));
-const _1 = require(".");
+const index_1 = require("./index");
 exports.default = (testImplementations, testSpecifications, testInput) => {
-    return (0, Web_1.default)(testInput, testSpecifications, testImplementations, (0, _1.testInterface)(testInput));
+    return (0, Web_1.default)(testInput, testSpecifications, testImplementations, (0, index_1.testInterface)(testInput));
 };

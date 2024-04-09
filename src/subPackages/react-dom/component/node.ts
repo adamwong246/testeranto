@@ -2,8 +2,9 @@ import React, { ReactNode, createElement } from "react";
 import { renderToStaticMarkup, renderToStaticNodeStream } from "react-dom/server";
 import Stream from 'stream'
 
-import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../core";
 import Testeranto from "../../../Node";
+import { ITTestShape } from "../../../lib";
+import { ITestImplementation, ITestSpecification } from "../../../Types";
 
 type IInput = typeof React.Component;
 type InitialState = unknown;

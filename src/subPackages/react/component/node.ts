@@ -1,7 +1,8 @@
 import React from "react";
 
-import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../core";
 import Testeranto from "../../../Node";
+import { ITTestShape } from "../../../lib";
+import { ITestImplementation, ITestSpecification } from "../../../Types";
 
 type IWhenShape = any;
 type IThenShape = any;

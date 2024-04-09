@@ -1,11 +1,11 @@
 import React from "react";
 import renderer, { act } from "react-test-renderer";
 
-import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../core";
+import { ITTestShape } from "../../../lib";
+import { ITestImplementation, ITestSpecification } from "../../../Types";
 
 export type ISuper<T> = T extends infer U ? U : object;
 
-// export type IInput<P, S> = React.Component<P, S>
 export type IInput<P, S> = typeof React.Component<P, S>;
 export type InitialState = unknown;
 export type IWhenShape = any;

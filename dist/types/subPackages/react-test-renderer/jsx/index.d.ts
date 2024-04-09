@@ -1,5 +1,6 @@
 import renderer from "react-test-renderer";
-import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../core";
+import { ITTestShape } from "../../../lib";
+import { ITestImplementation, ITestSpecification } from "../../../Types";
 export declare type IWhenShape = any;
 export declare type IThenShape = any;
 export declare type InitialState = unknown;

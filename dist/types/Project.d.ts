@@ -1,7 +1,7 @@
 import WebSocket from 'ws';
 import { TesterantoFeatures } from "./Features";
 import { IBaseConfig, IRunTime, ITestTypes } from "./Types";
-import { ITTestResourceRequirement } from './core';
+import { ITTestResourceRequirement } from "./lib";
 declare type ISchedulerProtocols = `ipc` | `ws`;
 export declare class ITProject {
     clearScreen: boolean;
