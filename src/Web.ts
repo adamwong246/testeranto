@@ -9,9 +9,13 @@ import {
 } from "./core";
 import TesterantoLevelTwo from "./core";
 
+let webSocket: WebSocket;
+try {
+  webSocket = new WebSocket("ws://localhost:8080");
+} catch (e) {
+  console.error(e)
+}
 
-
-const webSocket = new WebSocket("ws://localhost:8080");
 
 const receiveTestResourceConfigUnscheduled = async (t, testresource) => {
   const {

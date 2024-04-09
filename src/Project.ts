@@ -115,7 +115,7 @@ export class ITProject {
       import(featurePath).then(async (features) => {
         this.features = features.default;
 
-        Promise.resolve(Promise.all(
+        await Promise.resolve(Promise.all(
           [
             ...this.getSecondaryEndpointsPoints("web")
           ]
@@ -145,7 +145,8 @@ export class ITProject {
 
 </html>
 `))
-            })));
+            })
+        ));
 
         const [nodeEntryPoints, webEntryPoints] = getRunnables(this.tests);
 
