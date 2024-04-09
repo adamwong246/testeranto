@@ -1,9 +1,9 @@
-import { ITestImplementation, ITestSpecification } from "./Types";
+import { ITTestShape, ITestImplementation, ITestSpecification } from "./Types";
 import {
   BaseWhen, BaseThen, BaseCheck, BaseSuite, BaseGiven, IGivens
 } from "./base";
 import {
-  ILogWriter, ITLog, ITTestResourceConfiguration, ITTestResourceRequest, ITTestShape, ITestArtificer, ITestCheckCallback, ITestJob, defaultTestResourceRequirement
+  ILogWriter, ITLog, ITTestResourceConfiguration, ITTestResourceRequest, ITestArtificer, ITestCheckCallback, ITestJob, defaultTestResourceRequirement
 } from "./lib";
 
 abstract class BaseBuilder<
@@ -199,6 +199,7 @@ abstract class ClassBuilder<
 
   constructor(
     testImplementation: ITestImplementation<
+      IInput,
       IInitialState,
       ISelection,
       IWhenShape,

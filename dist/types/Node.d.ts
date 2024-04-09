@@ -1,5 +1,5 @@
-import { ITestArtificer, ITTestResourceConfiguration, ITTestResourceRequest, ITTestShape } from "./lib.js";
-import { ITestSpecification } from "./Types.js";
+import { ITestArtificer, ITTestResourceConfiguration, ITTestResourceRequest } from "./lib.js";
+import { ITestSpecification, ITTestShape } from "./Types.js";
 declare const _default: <TestShape extends ITTestShape, IInput, ISubject, IStore, ISelection, IWhenShape, IThenShape, IState>(input: IInput, testSpecification: ITestSpecification<TestShape, ISubject, IStore, ISelection, IThenShape>, testImplementation: any, testInterface: {
     actionHandler?: ((b: (...any: any[]) => any) => any) | undefined;
     andWhen: (store: IStore, actioner: any, testResource: ITTestResourceConfiguration) => Promise<ISelection>;

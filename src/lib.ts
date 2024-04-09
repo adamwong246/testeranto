@@ -1,3 +1,4 @@
+import { ITTestShape } from "./Types";
 import {
   IGivens, BaseCheck, BaseSuite, BaseThen, BaseWhen
 } from "./base";
@@ -17,14 +18,6 @@ export type ITTestResourceRequirement = {
 
 export type ITTestResourceRequest = {
   ports: number;
-};
-
-export type ITTestShape = {
-  suites;
-  givens;
-  whens;
-  thens;
-  checks;
 };
 
 export type ITLog = (...string) => void;

@@ -1,5 +1,6 @@
+import { ITTestShape } from "./Types";
 import {
-  ITTestShape, ITTestResourceConfiguration, ITestArtifactory, ITLog
+  ITTestResourceConfiguration, ITestArtifactory, ITLog
 } from "./lib";
 
 export type IGivens<

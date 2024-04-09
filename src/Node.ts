@@ -1,10 +1,10 @@
 
 import Testeranto from "./core.js";
 import {
-  defaultTestResourceRequirement, ITestArtificer, ITestJob, ITTestResourceConfiguration, ITTestResourceRequest, ITTestShape
+  defaultTestResourceRequirement, ITestArtificer, ITestJob, ITTestResourceConfiguration, ITTestResourceRequest
 } from "./lib.js";
 import { NodeWriter } from "./nodeWriter.js";
-import { ITestSpecification } from "./Types.js";
+import { ITestSpecification, ITTestShape } from "./Types.js";
 
 const receiveTestResourceConfigUnscheduled = async (t, testresource) => {
   const {

@@ -1,9 +1,9 @@
 /// <reference types="react" />
-import { ITTestShape } from "../../../lib";
+import { ITTestShape } from "../../../Types";
 import { IImpl, ISpec, IInput } from "./index";
-declare const _default: <ITestShape extends ITTestShape, IProps, IState>(testImplementations: IImpl<ITestShape, IProps>, testSpecifications: ISpec<ITestShape>, testInput: {
-    new (props: IProps | Readonly<IProps>): import("react").Component<IProps, IState, any>;
-    new (props: IProps, context: any): import("react").Component<IProps, IState, any>;
+declare const _default: <ITestShape extends ITTestShape, IReactProps, IReactState>(testImplementations: IImpl<ITestShape, IReactProps, IReactState>, testSpecifications: ISpec<ITestShape>, testInput: {
+    new (props: IReactProps | Readonly<IReactProps>): import("react").Component<IReactProps, IReactState, any>;
+    new (props: IReactProps, context: any): import("react").Component<IReactProps, IReactState, any>;
     contextType?: import("react").Context<any> | undefined;
 }) => Promise<void>;
 export default _default;

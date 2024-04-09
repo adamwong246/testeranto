@@ -1,5 +1,12 @@
 import { IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen, BaseGiven } from "./base";
-import { ITTestShape, ITestCheckCallback } from "./lib";
+import { ITestCheckCallback } from "./lib";
+export declare type ITTestShape = {
+    suites: any;
+    givens: any;
+    whens: any;
+    thens: any;
+    checks: any;
+};
 export declare type IBaseConfig = {
     clearScreen: boolean;
     devMode: boolean;
@@ -27,20 +34,20 @@ export declare type ITestSpecification<ITestShape extends ITTestShape, ISubject,
 }, Then: {
     [K in keyof ITestShape["thens"]]: (...xtrasD: ITestShape["thens"][K]) => BaseThen<ISelection, IStore, IThenShape>;
 }, Check: ITestCheckCallback<ITestShape>) => any[];
-export declare type ITestImplementation<IState, ISelection, IWhenShape, IThenShape, ITestShape extends ITTestShape> = {
+export declare type ITestImplementation<IInput, IState, ISelection, IWhenShape, IThenShape, ITestShape extends ITTestShape> = {
     Suites: {
         [K in keyof ITestShape["suites"]]: string;
     };
     Givens: {
-        [K in keyof ITestShape["givens"]]: (...Ig: ITestShape["givens"][K]) => IState;
+        [K in keyof ITestShape["givens"]]: (...Ig: ITestShape["givens"][K]) => (input: IInput) => IState;
     };
     Whens: {
-        [K in keyof ITestShape["whens"]]: (...Iw: ITestShape["whens"][K]) => (zel: ISelection) => IWhenShape;
+        [K in keyof ITestShape["whens"]]: (...Iw: ITestShape["whens"][K]) => (selection: ISelection) => IWhenShape;
     };
     Thens: {
-        [K in keyof ITestShape["thens"]]: (...It: ITestShape["thens"][K]) => (ssel: ISelection) => IThenShape;
+        [K in keyof ITestShape["thens"]]: (...It: ITestShape["thens"][K]) => (selection: ISelection) => IThenShape;
     };
     Checks: {
-        [K in keyof ITestShape["checks"]]: (...Ic: ITestShape["checks"][K]) => IState;
+        [K in keyof ITestShape["checks"]]: (...Ic: ITestShape["checks"][K]) => (input: IInput) => IState;
     };
 };

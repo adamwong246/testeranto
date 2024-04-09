@@ -1,16 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.testInterface = void 0;
-// const TesterantoComponent = (testInput) => (props) => {
-//   const myContainer = useRef(null);
-//   useEffect(() => {
-//     console.log(
-//       "useeffectCalled"
-//     );
-//     props.done(myContainer.current);
-//   }, []);
-//   return React.createElement('div', { ref: myContainer }, testInput());  //testInput();
-// };
 const testInterface = (testInput) => {
     return {
         beforeEach: async (x, ndx, testRsource, artificer) => {

@@ -5,8 +5,7 @@ import React, {
 } from "react";
 import { createPortal } from 'react-dom';
 
-import { ITTestShape } from "../../../lib";
-import { ITestImplementation, ITestSpecification } from "../../../Types";
+import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../Types";
 
 import {
   IInput, ISelection, IStore,
@@ -20,6 +19,7 @@ export default <
 // IProps
 >(
   testImplementations: ITestImplementation<
+    IInput,
     IState,
     ISelection,
     IWhenShape,

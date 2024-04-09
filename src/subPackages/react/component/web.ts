@@ -1,8 +1,7 @@
 import React from "react";
 
 import Testeranto from "../../../Web";
-import { ITTestShape } from "../../../lib";
-import { ITestImplementation, ITestSpecification } from "../../../Types";
+import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../Types";
 
 type IWhenShape = any;
 type IThenShape = any;
@@ -17,6 +16,7 @@ export type IImpl<
   ISpec extends ITTestShape,
   IState
 > = ITestImplementation<
+  IInput,
   IState,
   ISelection,
   IWhenShape,
@@ -39,6 +39,7 @@ export default <
   IState
 >(
   testImplementations: ITestImplementation<
+    IInput,
     IState,
     ISelection,
     IWhenShape,

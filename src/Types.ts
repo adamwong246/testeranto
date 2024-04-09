@@ -2,8 +2,16 @@ import {
   IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen, BaseGiven
 } from "./base";
 import {
-  ITTestShape, ITestCheckCallback
+  ITestCheckCallback
 } from "./lib";
+
+export type ITTestShape = {
+  suites;
+  givens;
+  whens;
+  thens;
+  checks;
+};
 
 export type IBaseConfig = {
   clearScreen: boolean;
@@ -100,6 +108,7 @@ export type ITestSpecification<
 ) => any[];
 
 export type ITestImplementation<
+  IInput,
   IState,
   ISelection,
   IWhenShape,
@@ -112,23 +121,29 @@ export type ITestImplementation<
   Givens: {
     [K in keyof ITestShape["givens"]]: (
       ...Ig: ITestShape["givens"][K]
-    ) => IState;
+    ) =>
+      (input: IInput) =>
+        IState;
   };
   Whens: {
     [K in keyof ITestShape["whens"]]: (
       ...Iw: ITestShape["whens"][K]
     ) =>
-      (zel: ISelection) =>
+      (selection: ISelection) =>
         IWhenShape;
   };
   Thens: {
     [K in keyof ITestShape["thens"]]: (
       ...It: ITestShape["thens"][K]
-    ) => (ssel: ISelection) => IThenShape;
+    ) =>
+      (selection: ISelection) =>
+        IThenShape;
   };
   Checks: {
     [K in keyof ITestShape["checks"]]: (
       ...Ic: ITestShape["checks"][K]
-    ) => IState;
+    ) =>
+      (input: IInput) =>
+        IState;
   };
 };

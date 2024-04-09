@@ -1,21 +1,20 @@
+import { ITTestShape } from "../../../Types";
 import Testeranto from "../../../Web";
-
-import { ITTestShape } from "../../../lib";
 
 import { IImpl, ISpec, IInput, testInterface } from "./index";
 
 export default <
   ITestShape extends ITTestShape,
-  IProps,
-  IState
+  IReactProps,
+  IReactState
 >(
-  testImplementations: IImpl<ITestShape, IProps>,
+  testImplementations: IImpl<ITestShape, IReactProps, IReactState>,
   testSpecifications: ISpec<ITestShape>,
-  testInput: IInput<IProps, IState>,
+  testInput: IInput<IReactProps, IReactState>,
 ) =>
   Testeranto<
     ITestShape,
-    IInput<IProps, IState>,
+    IInput<IReactProps, IReactState>,
     any,
     any,
     any,

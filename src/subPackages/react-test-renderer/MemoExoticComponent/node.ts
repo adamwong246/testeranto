@@ -3,16 +3,15 @@ import test from "../../../Node";
 import React from "react";
 import renderer, { act } from "react-test-renderer";
 
-import { ITTestShape } from "../../../lib";
-import { ITestImplementation, ITestSpecification } from "../../../Types";
+import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../Types";
 
-
-type Input = React.MemoExoticComponent<() => JSX.Element>;
+type IInput = React.MemoExoticComponent<() => JSX.Element>;
 type WhenShape = unknown;
 type ThenShape = unknown;
 
 export default <ITestShape extends ITTestShape, PropShape>(
   testImplementations: ITestImplementation<
+    IInput,
     PropShape,
     renderer.ReactTestRenderer,
     WhenShape,
@@ -26,11 +25,11 @@ export default <ITestShape extends ITTestShape, PropShape>(
     any,
     any
   >,
-  testInput: Input
+  testInput: IInput
 ) =>
   test<
     ITestShape,
-    Input,
+    IInput,
     any,
     any,
     unknown,

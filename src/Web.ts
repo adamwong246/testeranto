@@ -1,7 +1,7 @@
-import { ITestSpecification } from "./Types";
+import { ITTestShape, ITestSpecification } from "./Types";
 import Testeranto from "./core";
 import {
-  ITTestResourceConfiguration, ITTestResourceRequest, ITTestShape, ITestArtificer, ITestJob, defaultTestResourceRequirement
+  ITTestResourceConfiguration, ITTestResourceRequest, ITestArtificer, ITestJob, defaultTestResourceRequirement
 } from "./lib";
 
 let webSocket: WebSocket;

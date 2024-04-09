@@ -1,10 +1,10 @@
-import { ITestImplementation, ITestSpecification } from "./Types";
+import { ITTestShape, ITestImplementation, ITestSpecification } from "./Types";
 import { BaseWhen, BaseThen, BaseCheck, BaseSuite, BaseGiven, IGivens } from "./base";
-import { ILogWriter, ITTestResourceConfiguration, ITTestResourceRequest, ITTestShape, ITestArtificer, ITestCheckCallback, ITestJob } from "./lib";
+import { ILogWriter, ITTestResourceConfiguration, ITTestResourceRequest, ITestArtificer, ITestCheckCallback, ITestJob } from "./lib";
 declare abstract class ClassBuilder<ITestShape extends ITTestShape, IInitialState, ISelection, IStore, ISubject, IWhenShape, IThenShape, IInput> {
     artifacts: Promise<unknown>[];
     testJobs: ITestJob[];
-    constructor(testImplementation: ITestImplementation<IInitialState, ISelection, IWhenShape, IThenShape, ITestShape>, testSpecification: (Suite: {
+    constructor(testImplementation: ITestImplementation<IInput, IInitialState, ISelection, IWhenShape, IThenShape, ITestShape>, testSpecification: (Suite: {
         [K in keyof ITestShape["suites"]]: (feature: string, givens: IGivens<ISubject, IStore, ISelection, IThenShape>, checks: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape>[]) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape>;
     }, Given: {
         [K in keyof ITestShape["givens"]]: (features: string[], whens: BaseWhen<IStore, ISelection, IThenShape>[], thens: BaseThen<ISelection, IStore, IThenShape>[], ...a: ITestShape["givens"][K]) => BaseGiven<ISubject, IStore, ISelection, IThenShape>;

@@ -1,6 +1,5 @@
+import { ITTestShape } from "../../../Types";
 import Testeranto from "../../../Web";
-
-import { ITTestShape } from "../../../lib";
 
 import {
   ITestImpl, ITestSpec, IInput, ISubject, IStore, ISelection, IThenShape, IWhenShape, InitialState, testInterface

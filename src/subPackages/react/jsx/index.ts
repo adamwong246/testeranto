@@ -1,8 +1,6 @@
 import { CElement } from "react";
 
-import { ITTestShape } from "../../../lib";
-import { ITestImplementation, ITestSpecification } from "../../../Types";
-
+import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../Types";
 
 export type IWhenShape = any;
 export type IThenShape = any;
@@ -15,6 +13,7 @@ export type ISubject = CElement<any, any>
 export type ITestImpl<
   ITestShape extends ITTestShape
 > = ITestImplementation<
+  IInput,
   InitialState,
   ISelection,
   IWhenShape,
@@ -31,20 +30,6 @@ export type ITestSpec<
   ISelection,
   IThenShape
 >
-
-// const TesterantoComponent = (testInput) => (props) => {
-//   const myContainer = useRef(null);
-
-//   useEffect(() => {
-//     console.log(
-//       "useeffectCalled"
-//     );
-
-//     props.done(myContainer.current);
-//   }, []);
-
-//   return React.createElement('div', { ref: myContainer }, testInput());  //testInput();
-// };
 
 export const testInterface = (testInput) => {
   return {

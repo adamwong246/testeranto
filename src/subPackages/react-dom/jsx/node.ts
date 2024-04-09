@@ -4,8 +4,7 @@ import { createElement } from "react";
 import { renderToStaticMarkup, renderToStaticNodeStream } from "react-dom/server";
 import Stream from 'stream'
 
-import { ITTestShape } from "../../../lib";
-import { ITestImplementation, ITestSpecification } from "../../../Types";
+import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../Types";
 
 import {
   IInput, ISelection, IStore,
@@ -19,6 +18,7 @@ export {
 
 export default <ITestShape extends ITTestShape>(
   testImplementations: ITestImplementation<
+    IInput,
     IState,
     ISelection,
     IWhenShape,

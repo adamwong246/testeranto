@@ -1,5 +1,5 @@
+import { ITTestShape } from "../../../Types";
 import test from "../../../Web";
-import { ITTestShape } from "../../../lib";
 
 import {
   ITestImpl, ITestSpec, IInput, ISubject, IStore, ISelection, IThenShape, IWhenShape, InitialState, testInterface

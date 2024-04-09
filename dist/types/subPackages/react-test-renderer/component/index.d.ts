@@ -1,7 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import { ITTestShape } from "../../../lib";
-import { ITestImplementation, ITestSpecification } from "../../../Types";
+import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../Types";
 export declare type ISuper<T> = T extends infer U ? U : object;
 export declare type IInput<P, S> = typeof React.Component<P, S>;
 export declare type InitialState = unknown;
@@ -10,7 +9,7 @@ export declare type IThenShape = any;
 export declare type ISelection = renderer.ReactTestRenderer;
 export declare type IStore = renderer.ReactTestRenderer;
 export declare type ISubject = renderer.ReactTestRenderer;
-export declare type IImpl<ITestShape extends ITTestShape, IProps> = ITestImplementation<IProps, renderer.ReactTestRenderer, IWhenShape, IThenShape, ITestShape>;
+export declare type IImpl<ITestShape extends ITTestShape, IReactProps, IReactState> = ITestImplementation<IInput<IReactProps, IReactState>, IReactProps, renderer.ReactTestRenderer, IWhenShape, IThenShape, ITestShape>;
 export declare type ISpec<ITestShape extends ITTestShape> = ITestSpecification<ITestShape, ISubject, IStore, ISelection, IThenShape>;
 export declare const testInterface: {
     beforeEach: (CComponent: any, props: any) => Promise<renderer.ReactTestRenderer>;

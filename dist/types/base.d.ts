@@ -1,4 +1,5 @@
-import { ITTestShape, ITTestResourceConfiguration, ITestArtifactory, ITLog } from "./lib";
+import { ITTestShape } from "./Types";
+import { ITTestResourceConfiguration, ITestArtifactory, ITLog } from "./lib";
 export declare type IGivens<ISubject, IStore, ISelection, IThenShape> = Record<string, BaseGiven<ISubject, IStore, ISelection, IThenShape>>;
 export declare abstract class BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape extends ITTestShape> {
     name: string;

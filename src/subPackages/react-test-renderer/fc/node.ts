@@ -3,8 +3,7 @@ import test from "../../../Node";
 import React from "react";
 import renderer, { act } from "react-test-renderer";
 
-import { ITTestShape } from "../../../lib";
-import { ITestSpecification, ITestImplementation } from "../../../Types";
+import { ITestSpecification, ITestImplementation, ITTestShape } from "../../../Types";
 
 export type IInput = React.FC;
 export type IWhenShape = unknown;
@@ -22,6 +21,7 @@ export default <
   IPropShape
 >(
   testImplementations: ITestImplementation<
+    IInput,
     IPropShape,
     renderer.ReactTestRenderer,
     IWhenShape,

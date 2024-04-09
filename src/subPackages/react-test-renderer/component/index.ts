@@ -1,8 +1,7 @@
 import React from "react";
 import renderer, { act } from "react-test-renderer";
 
-import { ITTestShape } from "../../../lib";
-import { ITestImplementation, ITestSpecification } from "../../../Types";
+import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../Types";
 
 export type ISuper<T> = T extends infer U ? U : object;
 
@@ -16,9 +15,11 @@ export type ISubject = renderer.ReactTestRenderer;
 
 export type IImpl<
   ITestShape extends ITTestShape,
-  IProps
+  IReactProps,
+  IReactState,
 > = ITestImplementation<
-  IProps,
+  IInput<IReactProps, IReactState>,
+  IReactProps,
   renderer.ReactTestRenderer,
   IWhenShape,
   IThenShape,

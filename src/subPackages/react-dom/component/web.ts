@@ -2,8 +2,7 @@ import React, { CElement, createElement } from "react";
 import ReactDom from "react-dom/client";
 
 import Testeranto from "../../../Web";
-import { ITTestShape } from "../../../lib";
-import { ITestImplementation, ITestSpecification } from "../../../Types";
+import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../Types";
 
 type IInput = typeof React.Component;
 type InitialState = unknown;
@@ -25,6 +24,7 @@ type ISubject = {
 
 export default <ITestShape extends ITTestShape>(
   testImplementations: ITestImplementation<
+    IInput,
     InitialState,
     ISelection,
     IWhenShape,
