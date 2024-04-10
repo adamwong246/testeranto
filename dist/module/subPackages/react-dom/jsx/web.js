@@ -40,9 +40,9 @@ export default (testImplementations, testSpecifications, testInput) => {
                         }), rootElement);
                     });
                 },
-                andWhen: function (s, actioner) {
+                andWhen: function (s, whenCB) {
                     return new Promise((resolve, rej) => {
-                        process.nextTick(() => { resolve(actioner()(s)); });
+                        process.nextTick(() => { resolve(whenCB()(s)); });
                     });
                 },
                 butThen: async function (s) {

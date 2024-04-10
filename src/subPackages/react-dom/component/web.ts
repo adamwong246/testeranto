@@ -105,8 +105,8 @@ export default <ITestShape extends ITTestShape>(
               ));
             });
           },
-          andWhen: function (s: IStore, actioner): Promise<ISelection> {
-            return actioner()(s);
+          andWhen: function (s: IStore, whenCB): Promise<ISelection> {
+            return whenCB()(s);
           },
           butThen: async function (s: IStore): Promise<ISelection> {
             return s;

@@ -61,9 +61,9 @@ export default <
       },
       andWhen: async function (
         renderer: renderer.ReactTestRenderer,
-        actioner: () => (a: any) => any
+        whenCB: () => (a: any) => any
       ): Promise<renderer.ReactTestRenderer> {
-        await act(() => actioner()(renderer));
+        await act(() => whenCB()(renderer));
         return renderer;
       },
       afterEach: async (store, key, artificer) => {

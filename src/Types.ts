@@ -138,12 +138,12 @@ export type ITestInterface<IStore, ISelection, ISubject, IThenShape, IInput> = {
   actionHandler?: (b: (...any) => any) => any;
   andWhen: (
     store: IStore,
-    actioner,
+    whenCB,
     testResource: ITTestResourceConfiguration
   ) => Promise<ISelection>;
   butThen?: (
     store: IStore,
-    callback,
+    thenCB,
     testResource: ITTestResourceConfiguration
   ) => Promise<ISelection>;
   assertioner?: (t: IThenShape) => any;

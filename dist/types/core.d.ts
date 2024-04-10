@@ -17,13 +17,13 @@ declare abstract class ClassBuilder<ITestShape extends ITTestShape, IInitialStat
 export default class Testeranto<TestShape extends ITTestShape, IState, ISelection, IStore, ISubject, WhenShape, ThenShape, IInput> extends ClassBuilder<TestShape, IState, ISelection, IStore, ISubject, WhenShape, ThenShape, IInput> {
     constructor(input: IInput, testSpecification: ITestSpecification<TestShape, ISubject, IStore, ISelection, ThenShape>, testImplementation: any, testInterface: {
         actionHandler?: (b: (...any: any[]) => any) => any;
-        andWhen: (store: IStore, actioner: any, testResource: ITTestResourceConfiguration) => Promise<ISelection>;
-        butThen?: (store: IStore, callback: any, testResource: ITTestResourceConfiguration) => Promise<ISelection>;
+        andWhen: (store: IStore, whenCB: any, testResource: ITTestResourceConfiguration) => Promise<ISelection>;
+        butThen?: (store: IStore, thenCB: any, testResource: ITTestResourceConfiguration) => Promise<ISelection>;
         assertioner?: (t: ThenShape) => any;
         afterAll?: (store: IStore, artificer: ITestArtificer) => any;
         afterEach?: (store: IStore, key: string, artificer: ITestArtificer) => Promise<unknown>;
         beforeAll?: (input: IInput, artificer: ITestArtificer, testResource: ITTestResourceConfiguration) => Promise<ISubject>;
         beforeEach?: (subject: ISubject, initialValues: any, testResource: ITTestResourceConfiguration, artificer: ITestArtificer) => Promise<IStore>;
-    }, testResourceRequirement: ITTestResourceRequest | undefined, assertioner: (t: ThenShape) => any, beforeEach: (subject: ISubject, initialValues: any, testResource: ITTestResourceConfiguration, artificer: ITestArtificer) => Promise<IStore>, afterEach: (store: IStore, key: string, artificer: ITestArtificer) => Promise<unknown>, afterAll: (store: IStore, artificer: ITestArtificer) => any, butThen: (s: IStore, bt: (storeState: ISelection) => ThenShape, testResource: ITTestResourceConfiguration) => any, andWhen: (store: IStore, actioner: any, testResource: ITTestResourceConfiguration) => Promise<ISelection>, actionHandler: (b: (...any: any[]) => any) => any, logWriter: ILogWriter);
+    }, testResourceRequirement: ITTestResourceRequest | undefined, logWriter: ILogWriter, beforeEach: (subject: ISubject, initialValues: any, testResource: ITTestResourceConfiguration, artificer: ITestArtificer) => Promise<IStore>, afterEach: (store: IStore, key: string, artificer: ITestArtificer) => Promise<unknown>, afterAll: (store: IStore, artificer: ITestArtificer) => any, butThen: (s: IStore, thenCB: (storeState: ISelection) => ThenShape, testResource: ITTestResourceConfiguration) => any, andWhen: (store: IStore, whenCB: any, testResource: ITTestResourceConfiguration) => Promise<ISelection>, actionHandler: (b: (...any: any[]) => any) => any, assertioner: (t: ThenShape) => any);
 }
 export {};

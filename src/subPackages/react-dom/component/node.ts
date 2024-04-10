@@ -72,8 +72,8 @@ export default <ITestShape extends ITTestShape>(
           resolve(createElement(testInput));
         });
       },
-      andWhen: async function (s: IStore, actioner): Promise<ISelection> {
-        // return actioner()(s);
+      andWhen: async function (s: IStore, whenCB): Promise<ISelection> {
+        // return whenCB()(s);
         return s
       },
       butThen: async function (s: IStore): Promise<ISelection> {
@@ -143,7 +143,7 @@ export default <ITestShape extends ITTestShape>(
 //           resolve(ReactDOMServer.renderToStaticMarkup(element));
 //         });
 //       },
-//       andWhen: function (s: IStore, actioner): Promise<ISelection> {
+//       andWhen: function (s: IStore, whenCB): Promise<ISelection> {
 //         throw new Error(`"andWhens" are not permitted`);
 //       }
 //     },

@@ -9,8 +9,8 @@ export const testInterface = {
             res(component);
         });
     },
-    andWhen: async function (renderer, actioner) {
-        await act(() => actioner()(renderer));
+    andWhen: async function (renderer, whenCB) {
+        await act(() => whenCB()(renderer));
         return renderer;
     }
 };

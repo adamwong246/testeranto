@@ -12,5 +12,5 @@ export declare type ITestImpl<ITestShape extends ITTestShape> = ITestImplementat
 export declare type ITestSpec<ITestShape extends ITTestShape> = ITestSpecification<ITestShape, ISubject, IStore, ISelection, IThenShape>;
 export declare const testInterface: (testInput: any) => {
     beforeEach: (x: any, ndx: any, testRsource: any, artificer: any) => Promise<IStore>;
-    andWhen: (s: IStore, actioner: any) => Promise<ISelection>;
+    andWhen: (s: IStore, whenCB: any) => Promise<ISelection>;
 };

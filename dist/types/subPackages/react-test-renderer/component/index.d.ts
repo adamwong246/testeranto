@@ -14,7 +14,7 @@ export declare type IImpl<ITestShape extends ITTestShape, IProps> = ITestImpleme
 export declare type ISpec<ITestShape extends ITTestShape> = ITestSpecification<ITestShape, ISubject, IStore, ISelection, IThenShape>;
 export declare const testInterface: {
     beforeEach: (CComponent: any, props: any) => Promise<renderer.ReactTestRenderer>;
-    andWhen: (renderer: renderer.ReactTestRenderer, actioner: any) => Promise<renderer.ReactTestRenderer>;
+    andWhen: (renderer: renderer.ReactTestRenderer, whenCB: any) => Promise<renderer.ReactTestRenderer>;
     butThen: (s: IStore) => Promise<ISelection>;
     afterEach: (store: IStore, ndx: any, artificer: any) => Promise<{}>;
     afterAll: (store: IStore, artificer: any) => void;

@@ -104,9 +104,9 @@ export class BaseGiven {
     }
 }
 export class BaseWhen {
-    constructor(name, actioner) {
+    constructor(name, whenCB) {
         this.name = name;
-        this.actioner = actioner;
+        this.whenCB = whenCB;
     }
     toObj() {
         return {
@@ -117,7 +117,7 @@ export class BaseWhen {
     async test(store, testResourceConfiguration, tLog) {
         tLog(" When:", this.name);
         try {
-            return await this.andWhen(store, this.actioner, testResourceConfiguration);
+            return await this.andWhen(store, this.whenCB, testResourceConfiguration);
         }
         catch (e) {
             this.error = true;

@@ -44,9 +44,9 @@ export const testInterface = {
   },
   andWhen: async function (
     renderer: renderer.ReactTestRenderer,
-    actioner: () => (any) => any
+    whenCB: () => (any) => any
   ): Promise<renderer.ReactTestRenderer> {
-    await act(() => actioner()(renderer));
+    await act(() => whenCB()(renderer));
     return renderer
   }
 }

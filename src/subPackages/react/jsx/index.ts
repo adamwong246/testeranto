@@ -58,8 +58,8 @@ export const testInterface = (testInput) => {
         resolve(testInput())
       });
     },
-    andWhen: function (s: IStore, actioner): Promise<ISelection> {
-      return actioner()(s);
+    andWhen: function (s: IStore, whenCB): Promise<ISelection> {
+      return whenCB()(s);
     },
   }
 }

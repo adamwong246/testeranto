@@ -115,9 +115,9 @@ export default <
               );
             });
           },
-          andWhen: function (s: IStore, actioner): Promise<ISelection> {
+          andWhen: function (s: IStore, whenCB): Promise<ISelection> {
             return new Promise((resolve, rej) => {
-              process.nextTick(() => { resolve(actioner()(s)) })
+              process.nextTick(() => { resolve(whenCB()(s)) })
             });
           },
           butThen: async function (s: IStore): Promise<ISelection> {

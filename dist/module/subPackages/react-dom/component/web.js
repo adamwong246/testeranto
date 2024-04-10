@@ -38,8 +38,8 @@ export default (testImplementations, testSpecifications, testInput) => {
                         }, []));
                     });
                 },
-                andWhen: function (s, actioner) {
-                    return actioner()(s);
+                andWhen: function (s, whenCB) {
+                    return whenCB()(s);
                 },
                 butThen: async function (s) {
                     return s;

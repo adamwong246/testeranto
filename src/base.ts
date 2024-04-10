@@ -228,19 +228,19 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
 
 export abstract class BaseWhen<IStore, ISelection, IThenShape> {
   public name: string;
-  actioner: (x: ISelection) => IThenShape;
+  whenCB: (x: ISelection) => IThenShape;
   error: boolean;
 
   constructor(
     name: string,
-    actioner: (xyz: ISelection) => IThenShape) {
+    whenCB: (xyz: ISelection) => IThenShape) {
     this.name = name;
-    this.actioner = actioner;
+    this.whenCB = whenCB;
   }
 
   abstract andWhen(
     store: IStore,
-    actioner: (x: ISelection) => IThenShape,
+    whenCB: (x: ISelection) => IThenShape,
     testResource
   );
 
@@ -256,7 +256,7 @@ export abstract class BaseWhen<IStore, ISelection, IThenShape> {
     try {
       return await this.andWhen(
         store,
-        this.actioner,
+        this.whenCB,
         testResourceConfiguration
       );
     } catch (e) {

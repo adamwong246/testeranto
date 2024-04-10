@@ -35,12 +35,7 @@ const receiveTestResourceConfigScheduled = async (t, testresource) => {
     });
 };
 exports.default = async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = lib_js_1.defaultTestResourceRequirement) => {
-    const mrt = new core_js_1.default(input, testSpecification, testImplementation, testInterface, testResourceRequirement, testInterface.assertioner || (async (t) => t), testInterface.beforeEach || async function (subject, initialValues, testResource) {
-        return subject;
-    }, testInterface.afterEach || (async (s) => s), testInterface.afterAll || ((store) => undefined), testInterface.butThen || (async (a) => a), testInterface.andWhen, testInterface.actionHandler ||
-        function (b) {
-            return b;
-        }, nodeWriter_js_1.NodeWriter);
+    const mrt = new core_js_1.default(input, testSpecification, testImplementation, testInterface, testResourceRequirement, nodeWriter_js_1.NodeWriter, testInterface.beforeEach || async function (subject, initialValues, testResource) { return subject; }, testInterface.afterEach || (async (s) => s), testInterface.afterAll || ((store) => undefined), testInterface.butThen || (async (a) => a), testInterface.andWhen, testInterface.actionHandler || function (b) { return b; }, testInterface.assertioner || (async (t) => t));
     const tl2 = mrt;
     const t = tl2.testJobs[0];
     const testResourceArg = process.argv[2] || `{}`;

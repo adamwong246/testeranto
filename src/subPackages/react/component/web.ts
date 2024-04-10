@@ -69,8 +69,8 @@ export default <
           }, []));
         });
       },
-      andWhen: function (s: Store, actioner): Promise<ISelection> {
-        return actioner()(s);
+      andWhen: function (s: Store, whenCB): Promise<ISelection> {
+        return whenCB()(s);
       },
     },
   )

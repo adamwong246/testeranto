@@ -12,8 +12,8 @@ exports.default = (testImplementations, testSpecifications, testInput) => {
                 resolve(react_1.default.createElement(testInput, {}, []));
             });
         },
-        andWhen: function (s, actioner) {
-            return actioner()(s);
+        andWhen: function (s, whenCB) {
+            return whenCB()(s);
         },
     });
 };

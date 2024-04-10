@@ -121,7 +121,7 @@ class ClassBuilder {
     }
 }
 class Testeranto extends ClassBuilder {
-    constructor(input, testSpecification, testImplementation, testInterface, testResourceRequirement = lib_1.defaultTestResourceRequirement, assertioner, beforeEach, afterEach, afterAll, butThen, andWhen, actionHandler, logWriter) {
+    constructor(input, testSpecification, testImplementation, testInterface, testResourceRequirement = lib_1.defaultTestResourceRequirement, logWriter, beforeEach, afterEach, afterAll, butThen, andWhen, actionHandler, assertioner) {
         super(testImplementation, testSpecification, input, class extends base_1.BaseSuite {
             async setup(s, artifactory) {
                 return (testInterface.beforeAll || (async (input, artificer) => input))(s, artifactory, this.testResourceConfiguration);
@@ -148,18 +148,18 @@ class Testeranto extends ClassBuilder {
                 artifactory(`afterAll4-${this.name}/${fPath}`, value));
             }
         }, class When extends base_1.BaseWhen {
-            constructor(name, actioner, payload) {
+            constructor(name, whenCB, payload) {
                 super(name, (store) => {
-                    return actionHandler(actioner);
+                    return actionHandler(whenCB);
                 });
                 this.payload = payload;
             }
-            async andWhen(store, actioner, testResource) {
-                return await andWhen(store, actioner, testResource);
+            async andWhen(store, whenCB, testResource) {
+                return await andWhen(store, whenCB, testResource);
             }
         }, class Then extends base_1.BaseThen {
-            constructor(name, callback) {
-                super(name, callback);
+            constructor(name, thenCB) {
+                super(name, thenCB);
             }
             async butThen(store, testResourceConfiguration) {
                 return await butThen(store, this.thenCB, testResourceConfiguration);

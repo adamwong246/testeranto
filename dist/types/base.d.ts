@@ -60,10 +60,10 @@ export declare abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape
 }
 export declare abstract class BaseWhen<IStore, ISelection, IThenShape> {
     name: string;
-    actioner: (x: ISelection) => IThenShape;
+    whenCB: (x: ISelection) => IThenShape;
     error: boolean;
-    constructor(name: string, actioner: (xyz: ISelection) => IThenShape);
-    abstract andWhen(store: IStore, actioner: (x: ISelection) => IThenShape, testResource: any): any;
+    constructor(name: string, whenCB: (xyz: ISelection) => IThenShape);
+    abstract andWhen(store: IStore, whenCB: (x: ISelection) => IThenShape, testResource: any): any;
     toObj(): {
         name: string;
         error: boolean;

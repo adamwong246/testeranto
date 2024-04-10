@@ -562,12 +562,12 @@ export default class Testeranto<TestShape extends ITTestShape,
       actionHandler?: (b: (...any) => any) => any;
       andWhen: (
         store: IStore,
-        actioner,
+        whenCB,
         testResource: ITTestResourceConfiguration
       ) => Promise<ISelection>;
       butThen?: (
         store: IStore,
-        callback,
+        thenCB,
         testResource: ITTestResourceConfiguration
       ) => Promise<ISelection>;
       assertioner?: (t: ThenShape) => any;
@@ -611,12 +611,12 @@ export default class Testeranto<TestShape extends ITTestShape,
     ) => any,
     butThen: (
       s: IStore,
-      bt: (storeState: ISelection) => ThenShape,
+      thenCB: (storeState: ISelection) => ThenShape,
       testResource: ITTestResourceConfiguration,
     ) => any,
     andWhen: (
       store: IStore,
-      actioner,
+      whenCB,
       testResource: ITTestResourceConfiguration
     ) => Promise<ISelection>,
     actionHandler: (b: (...any) => any) => any,
@@ -700,23 +700,27 @@ export default class Testeranto<TestShape extends ITTestShape,
 
         constructor(
           name: string,
-          actioner: (...any) => any, payload?: any) {
+          whenCB: (...any) => any, payload?: any) {
           super(
             name,
             (store) => {
-              return actionHandler(actioner);
+              return actionHandler(whenCB);
             });
           this.payload = payload;
         }
 
-        async andWhen(store, actioner, testResource) {
-          return await andWhen(store, actioner, testResource);
+        async andWhen(store, whenCB, testResource) {
+          return await andWhen(store, whenCB, testResource);
         }
       } as any,
 
       class Then extends BaseThen<ISelection, IStore, ThenShape> {
-        constructor(name: string, callback: (val: ISelection) => ThenShape) {
-          super(name, callback);
+        constructor(
+          name: string,
+          thenCB:
+            (val: ISelection) => ThenShape
+        ) {
+          super(name, thenCB);
         }
 
         async butThen(

@@ -56,9 +56,9 @@ export default <ITestShape extends ITTestShape, PropShape>(
       },
       andWhen: async function (
         renderer: renderer.ReactTestRenderer,
-        actioner: () => (a: any) => any
+        whenCB: () => (a: any) => any
       ): Promise<renderer.ReactTestRenderer> {
-        await act(() => actioner()(renderer));
+        await act(() => whenCB()(renderer));
         return renderer;
       },
     }

@@ -15,8 +15,8 @@ export const testInterface = (testInput) => {
                 resolve(testInput());
             });
         },
-        andWhen: function (s, actioner) {
-            return actioner()(s);
+        andWhen: function (s, whenCB) {
+            return whenCB()(s);
         },
     };
 };

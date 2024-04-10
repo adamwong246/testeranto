@@ -30,14 +30,7 @@ const receiveTestResourceConfigScheduled = async (t, testresource) => {
     });
 };
 export default async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = defaultTestResourceRequirement) => {
-    console.log("web NodeWriter", window.NodeWriter);
-    const mrt = new Testeranto(input, testSpecification, testImplementation, testInterface, testResourceRequirement, testInterface.assertioner || (async (t) => t), testInterface.beforeEach ||
-        async function (subject, initialValues, testResource) {
-            return subject;
-        }, testInterface.afterEach || (async (s) => s), testInterface.afterAll || ((store) => undefined), testInterface.butThen || (async (a) => a), testInterface.andWhen, testInterface.actionHandler ||
-        function (b) {
-            return b;
-        }, window.NodeWriter);
+    const mrt = new Testeranto(input, testSpecification, testImplementation, testInterface, testResourceRequirement, window.NodeWriter, testInterface.beforeEach || async function (subject, initialValues, testResource) { return subject; }, testInterface.afterEach || (async (s) => s), testInterface.afterAll || ((store) => undefined), testInterface.butThen || (async (a) => a), testInterface.andWhen, testInterface.actionHandler || function (b) { return b; }, testInterface.assertioner || (async (t) => t));
     const tl2 = mrt;
     const t = tl2.testJobs[0];
     const testResourceArg = decodeURIComponent(new URLSearchParams(location.search).get('requesting') || '');

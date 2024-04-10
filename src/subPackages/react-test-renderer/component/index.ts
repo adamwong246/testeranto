@@ -48,9 +48,9 @@ export type ISpec<
 //   },
 //   andWhen: async function (
 //     renderer: renderer.ReactTestRenderer,
-//     actioner: () => (any) => any
+//     whenCB: () => (any) => any
 //   ): Promise<renderer.ReactTestRenderer> {
-//     await act(() => actioner()(renderer));
+//     await act(() => whenCB()(renderer));
 //     return renderer
 //   }
 // }
@@ -68,15 +68,15 @@ export const testInterface = {
   },
   andWhen: async function (
     renderer: renderer.ReactTestRenderer,
-    actioner: any
+    whenCB: any
   ): Promise<renderer.ReactTestRenderer> {
     // console.log("andWhen", renderer)
-    await act(() => actioner()(renderer));
+    await act(() => whenCB()(renderer));
     return renderer
   },
 
-  // andWhen: function (s: Store, actioner): Promise<Selection> {
-  //   return actioner()(s);
+  // andWhen: function (s: Store, whenCB): Promise<Selection> {
+  //   return whenCB()(s);
   // },
   butThen: async function (s: IStore): Promise<ISelection> {
 

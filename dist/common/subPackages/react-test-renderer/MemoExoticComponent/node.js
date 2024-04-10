@@ -37,8 +37,8 @@ exports.default = (testImplementations, testSpecifications, testInput) => (0, No
         });
         return component;
     },
-    andWhen: async function (renderer, actioner) {
-        await (0, react_test_renderer_1.act)(() => actioner()(renderer));
+    andWhen: async function (renderer, whenCB) {
+        await (0, react_test_renderer_1.act)(() => whenCB()(renderer));
         return renderer;
     },
 });
