@@ -1,4 +1,4 @@
-import { ITestSpecification } from "./Types";
+import { ITestInterface, ITestSpecification } from "./Types";
 import Testeranto from "./core";
 import {
   ITTestResourceConfiguration, ITTestResourceRequest, ITTestShape, ITestArtificer, ITestJob, defaultTestResourceRequirement
@@ -68,39 +68,9 @@ export default async <
     IThenShape
   >,
   testImplementation,
-  testInterface: {
-    actionHandler?: (b: (...any) => any) => any;
-    andWhen: (
-      store: IStore,
-      actioner,
-      testResource: ITTestResourceConfiguration
-    ) => Promise<ISelection>;
-    butThen?: (
-      store: IStore,
-      callback,
-      testResource: ITTestResourceConfiguration
-    ) => Promise<ISelection>;
-    assertioner?: (t: IThenShape) => any;
-
-    afterAll?: (store: IStore, artificer: ITestArtificer) => any;
-    afterEach?: (
-      store: IStore,
-      key: string,
-      artificer: ITestArtificer
-    ) => Promise<unknown>;
-    beforeAll?: (input: IInput, artificer: ITestArtificer) => Promise<ISubject>;
-    beforeEach?: (
-      subject: ISubject,
-      initialValues,
-      testResource: ITTestResourceConfiguration,
-      artificer: ITestArtificer
-    ) => Promise<IStore>;
-  },
+  testInterface: ITestInterface<IStore, ISelection, ISubject, IThenShape, IInput>,
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
 ) => {
-
-  console.log("web NodeWriter", (window as any).NodeWriter);
-
   const mrt = new Testeranto(
     input,
     testSpecification,
@@ -108,20 +78,13 @@ export default async <
     testInterface,
     testResourceRequirement,
     (window as any).NodeWriter,
-    testInterface.assertioner || (async (t) => t as any),
-    testInterface.beforeEach ||
-    async function (subject: any, initialValues: any, testResource: any) {
-      return subject as any;
-    },
+    testInterface.beforeEach || async function (subject: any, initialValues: any, testResource: any) { return subject as any; },
     testInterface.afterEach || (async (s) => s),
     testInterface.afterAll || ((store: IStore) => undefined),
     testInterface.butThen || (async (a) => a as any),
     testInterface.andWhen,
-    testInterface.actionHandler ||
-    function (b: (...any: any[]) => any) {
-      return b;
-    },
-
+    testInterface.actionHandler || function (b: (...any: any[]) => any) { return b; },
+    testInterface.assertioner || (async (t) => t as any),
   );
 
   const tl2: Testeranto<any, any, any, any, any, any, any, any> = mrt;

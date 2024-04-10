@@ -594,7 +594,6 @@ export default class Testeranto<TestShape extends ITTestShape,
     },
     testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
     logWriter: ILogWriter,
-    assertioner: (t: ThenShape) => any,
     beforeEach: (
       subject: ISubject,
       initialValues,
@@ -606,7 +605,10 @@ export default class Testeranto<TestShape extends ITTestShape,
       key: string,
       artificer: ITestArtificer
     ) => Promise<unknown>,
-    afterAll: (store: IStore, artificer: ITestArtificer) => any,
+    afterAll: (
+      store: IStore,
+      artificer: ITestArtificer
+    ) => any,
     butThen: (
       s: IStore,
       bt: (storeState: ISelection) => ThenShape,
@@ -618,6 +620,7 @@ export default class Testeranto<TestShape extends ITTestShape,
       testResource: ITTestResourceConfiguration
     ) => Promise<ISelection>,
     actionHandler: (b: (...any) => any) => any,
+    assertioner: (t: ThenShape) => any,
 
   ) {
     super(

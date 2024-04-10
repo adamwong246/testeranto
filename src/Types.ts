@@ -2,7 +2,8 @@ import {
   IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen, BaseGiven
 } from "./base";
 import {
-  ITTestShape, ITestCheckCallback
+  ITTestResourceConfiguration,
+  ITTestShape, ITestArtificer, ITestCheckCallback
 } from "./lib";
 
 export type IBaseConfig = {
@@ -131,4 +132,33 @@ export type ITestImplementation<
       ...Ic: ITestShape["checks"][K]
     ) => IState;
   };
+};
+
+export type ITestInterface<IStore, ISelection, ISubject, IThenShape, IInput> = {
+  actionHandler?: (b: (...any) => any) => any;
+  andWhen: (
+    store: IStore,
+    actioner,
+    testResource: ITTestResourceConfiguration
+  ) => Promise<ISelection>;
+  butThen?: (
+    store: IStore,
+    callback,
+    testResource: ITTestResourceConfiguration
+  ) => Promise<ISelection>;
+  assertioner?: (t: IThenShape) => any;
+
+  afterAll?: (store: IStore, artificer: ITestArtificer) => any;
+  afterEach?: (
+    store: IStore,
+    key: string,
+    artificer: ITestArtificer
+  ) => Promise<unknown>;
+  beforeAll?: (input: IInput, artificer: ITestArtificer) => Promise<ISubject>;
+  beforeEach?: (
+    subject: ISubject,
+    initialValues,
+    testResource: ITTestResourceConfiguration,
+    artificer: ITestArtificer
+  ) => Promise<IStore>;
 };
