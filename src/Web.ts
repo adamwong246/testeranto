@@ -107,6 +107,7 @@ export default async <
     testImplementation,
     testInterface,
     testResourceRequirement,
+    (window as any).NodeWriter,
     testInterface.assertioner || (async (t) => t as any),
     testInterface.beforeEach ||
     async function (subject: any, initialValues: any, testResource: any) {
@@ -120,7 +121,7 @@ export default async <
     function (b: (...any: any[]) => any) {
       return b;
     },
-    (window as any).NodeWriter
+
   );
 
   const tl2: Testeranto<any, any, any, any, any, any, any, any> = mrt;

@@ -593,6 +593,7 @@ export default class Testeranto<TestShape extends ITTestShape,
       ) => Promise<IStore>;
     },
     testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
+    logWriter: ILogWriter,
     assertioner: (t: ThenShape) => any,
     beforeEach: (
       subject: ISubject,
@@ -617,7 +618,7 @@ export default class Testeranto<TestShape extends ITTestShape,
       testResource: ITTestResourceConfiguration
     ) => Promise<ISelection>,
     actionHandler: (b: (...any) => any) => any,
-    logWriter: ILogWriter
+
   ) {
     super(
       testImplementation,

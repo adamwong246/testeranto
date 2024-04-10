@@ -104,6 +104,7 @@ export default async <
     testImplementation,
     testInterface,
     testResourceRequirement,
+    NodeWriter,
     testInterface.assertioner || (async (t) => t as any),
     testInterface.beforeEach || async function (subject: ISubject, initialValues: any, testResource: any) {
       return subject as any;
@@ -116,7 +117,7 @@ export default async <
     function (b: (...any: any[]) => any) {
       return b;
     },
-    NodeWriter
+
   );
 
   const tl2: Testeranto<any, any, any, any, any, any, any, any> = mrt;
