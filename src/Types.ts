@@ -134,7 +134,9 @@ export type ITestImplementation<
   };
 };
 
-export type ITestInterface<IStore, ISelection, ISubject, IThenShape, IInput> = {
+export type ITestInterface<
+  IStore, ISelection, ISubject, IThenShape, IInput
+> = {
   actionHandler?: (b: (...any) => any) => any;
   andWhen: (
     store: IStore,

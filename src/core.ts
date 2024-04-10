@@ -535,8 +535,8 @@ export default class Testeranto<TestShape extends ITTestShape,
   ISelection,
   IStore,
   ISubject,
-  WhenShape,
-  ThenShape,
+  IWhenShape,
+  IThenShape,
   IInput
 > extends ClassBuilder<
   TestShape,
@@ -544,8 +544,8 @@ export default class Testeranto<TestShape extends ITTestShape,
   ISelection,
   IStore,
   ISubject,
-  WhenShape,
-  ThenShape,
+  IWhenShape,
+  IThenShape,
   IInput
 > {
   constructor(
@@ -555,7 +555,7 @@ export default class Testeranto<TestShape extends ITTestShape,
       ISubject,
       IStore,
       ISelection,
-      ThenShape
+      IThenShape
     >,
     testImplementation,
     testInterface: {
@@ -570,7 +570,7 @@ export default class Testeranto<TestShape extends ITTestShape,
         thenCB,
         testResource: ITTestResourceConfiguration
       ) => Promise<ISelection>;
-      assertioner?: (t: ThenShape) => any;
+      assertioner?: (t: IThenShape) => any;
 
       afterAll?: (store: IStore, artificer: ITestArtificer) => any;
       afterEach?: (
@@ -611,7 +611,7 @@ export default class Testeranto<TestShape extends ITTestShape,
     ) => any,
     butThen: (
       s: IStore,
-      thenCB: (storeState: ISelection) => ThenShape,
+      thenCB: (storeState: ISelection) => IThenShape,
       testResource: ITTestResourceConfiguration,
     ) => any,
     andWhen: (
@@ -620,7 +620,7 @@ export default class Testeranto<TestShape extends ITTestShape,
       testResource: ITTestResourceConfiguration
     ) => Promise<ISelection>,
     actionHandler: (b: (...any) => any) => any,
-    assertioner: (t: ThenShape) => any,
+    assertioner: (t: IThenShape) => any,
 
   ) {
     super(
@@ -633,7 +633,7 @@ export default class Testeranto<TestShape extends ITTestShape,
         ISubject,
         IStore,
         ISelection,
-        ThenShape,
+        IThenShape,
         TestShape
       > {
         async setup(s: IInput, artifactory): Promise<ISubject> {
@@ -646,18 +646,18 @@ export default class Testeranto<TestShape extends ITTestShape,
             this.testResourceConfiguration
           );
         }
-        test(t: ThenShape): unknown {
+        test(t: IThenShape): unknown {
           return assertioner(t);
         }
       } as any,
 
-      class Given extends BaseGiven<ISubject, IStore, ISelection, ThenShape> {
+      class Given extends BaseGiven<ISubject, IStore, ISelection, IThenShape> {
         initialValues: any;
         constructor(
           name: string,
           features: string[],
-          whens: BaseWhen<IStore, ISelection, ThenShape>[],
-          thens: BaseThen<ISelection, IStore, ThenShape>[],
+          whens: BaseWhen<IStore, ISelection, IThenShape>[],
+          thens: BaseThen<ISelection, IStore, IThenShape>[],
           initialValues: any
         ) {
           super(
@@ -695,7 +695,7 @@ export default class Testeranto<TestShape extends ITTestShape,
         }
       } as any,
 
-      class When extends BaseWhen<IStore, ISelection, WhenShape> {
+      class When extends BaseWhen<IStore, ISelection, IWhenShape> {
         payload?: any;
 
         constructor(
@@ -714,11 +714,11 @@ export default class Testeranto<TestShape extends ITTestShape,
         }
       } as any,
 
-      class Then extends BaseThen<ISelection, IStore, ThenShape> {
+      class Then extends BaseThen<ISelection, IStore, IThenShape> {
         constructor(
           name: string,
           thenCB:
-            (val: ISelection) => ThenShape
+            (val: ISelection) => IThenShape
         ) {
           super(name, thenCB);
         }
@@ -735,7 +735,7 @@ export default class Testeranto<TestShape extends ITTestShape,
         ISubject,
         IStore,
         ISelection,
-        ThenShape,
+        IThenShape,
         TestShape
       > {
         initialValues: any;
