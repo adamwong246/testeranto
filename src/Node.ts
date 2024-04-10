@@ -75,16 +75,14 @@ export default async <
     input,
     testSpecification,
     testImplementation,
-    testInterface,
     testResourceRequirement,
     NodeWriter,
+    testInterface.beforeAll || (async (s) => s),
     testInterface.beforeEach || async function (subject: any, initialValues: any, testResource: any) { return subject as any; },
     testInterface.afterEach || (async (s) => s),
     testInterface.afterAll || ((store: IStore) => undefined),
     testInterface.butThen || (async (a) => a as any),
     testInterface.andWhen,
-    testInterface.actionHandler || function (b: (...any: any[]) => any) { return b; },
-    testInterface.assertioner || (async (t) => t as any),
   );
 
   const tl2: Testeranto<any, any, any, any, any, any, any, any> = mrt;

@@ -137,7 +137,6 @@ export type ITestImplementation<
 export type ITestInterface<
   IStore, ISelection, ISubject, IThenShape, IInput
 > = {
-  actionHandler?: (b: (...any) => any) => any;
   andWhen: (
     store: IStore,
     whenCB,
@@ -148,7 +147,6 @@ export type ITestInterface<
     thenCB,
     testResource: ITTestResourceConfiguration
   ) => Promise<ISelection>;
-  assertioner?: (t: IThenShape) => any;
 
   afterAll?: (store: IStore, artificer: ITestArtificer) => any;
   afterEach?: (

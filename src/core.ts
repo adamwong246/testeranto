@@ -558,42 +558,13 @@ export default class Testeranto<TestShape extends ITTestShape,
       IThenShape
     >,
     testImplementation,
-    testInterface: {
-      actionHandler?: (b: (...any) => any) => any;
-      andWhen: (
-        store: IStore,
-        whenCB,
-        testResource: ITTestResourceConfiguration
-      ) => Promise<ISelection>;
-      butThen?: (
-        store: IStore,
-        thenCB,
-        testResource: ITTestResourceConfiguration
-      ) => Promise<ISelection>;
-      assertioner?: (t: IThenShape) => any;
-
-      afterAll?: (store: IStore, artificer: ITestArtificer) => any;
-      afterEach?: (
-        store: IStore,
-        key: string,
-        artificer: ITestArtificer
-      ) => Promise<unknown>;
-
-      beforeAll?: (
-        input: IInput,
-        artificer: ITestArtificer,
-        testResource: ITTestResourceConfiguration
-      ) => Promise<ISubject>;
-
-      beforeEach?: (
-        subject: ISubject,
-        initialValues,
-        testResource: ITTestResourceConfiguration,
-        artificer: ITestArtificer
-      ) => Promise<IStore>;
-    },
     testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
     logWriter: ILogWriter,
+    beforeAll: (
+      input: IInput,
+      artificer: ITestArtificer,
+      testResource: ITTestResourceConfiguration
+    ) => Promise<ISubject>,
     beforeEach: (
       subject: ISubject,
       initialValues,
@@ -619,9 +590,6 @@ export default class Testeranto<TestShape extends ITTestShape,
       whenCB,
       testResource: ITTestResourceConfiguration
     ) => Promise<ISelection>,
-    actionHandler: (b: (...any) => any) => any,
-    assertioner: (t: IThenShape) => any,
-
   ) {
     super(
       testImplementation,
@@ -637,7 +605,7 @@ export default class Testeranto<TestShape extends ITTestShape,
         TestShape
       > {
         async setup(s: IInput, artifactory): Promise<ISubject> {
-          return (testInterface.beforeAll || (async (
+          return (beforeAll || (async (
             input: IInput,
             artificer: ITestArtificer,
           ) => input as any))(
@@ -645,9 +613,6 @@ export default class Testeranto<TestShape extends ITTestShape,
             artifactory,
             this.testResourceConfiguration
           );
-        }
-        test(t: IThenShape): unknown {
-          return assertioner(t);
         }
       } as any,
 
@@ -703,9 +668,7 @@ export default class Testeranto<TestShape extends ITTestShape,
           whenCB: (...any) => any, payload?: any) {
           super(
             name,
-            (store) => {
-              return actionHandler(whenCB);
-            });
+            whenCB);
           this.payload = payload;
         }
 
