@@ -1,6 +1,10 @@
 import {
-  ITTestShape, ITTestResourceConfiguration, ITestArtifactory, ITLog
+  ITTestShape, ITTestResourceConfiguration, ITestArtifactory, ITLog,
+  ITestJob,
+  ILogWriter,
+  ITestCheckCallback
 } from "./lib";
+import { ITestImplementation } from "./Types";
 
 export type IGivens<
   ISubject,
@@ -203,8 +207,6 @@ export abstract class BaseGiven<
 
     const givenArtifactory = (fPath: string, value: unknown) =>
       artifactory(`given-${key}/${fPath}`, value)
-
-    console.log("mark60" + this.givenCB)
     try {
       this.store = await this.givenThat(
         subject,
@@ -429,4 +431,550 @@ export abstract class BaseCheck<
     await this.afterEach(store, key);
     return;
   }
+}
+
+export abstract class BaseBuilder<
+  IInput,
+  ISubject,
+  IStore,
+  ISelection,
+  SuiteExtensions,
+  GivenExtensions,
+  WhenExtensions,
+  ThenExtensions,
+  CheckExtensions,
+  IThenShape,
+  IGivenShape,
+  ITestShape extends ITTestShape,
+> {
+
+  artifacts: Promise<unknown>[] = [];
+  testJobs: ITestJob[];
+
+  constructorator: IStore;
+
+  suitesOverrides: Record<
+    keyof SuiteExtensions,
+    (
+      name: string,
+      index: number,
+      givens: IGivens<ISubject, IStore, ISelection, IThenShape, IGivenShape>,
+      checks: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITTestShape>[]
+    ) => BaseSuite<
+      IInput,
+      ISubject,
+      IStore,
+      ISelection,
+      IThenShape,
+      ITTestShape,
+      IGivenShape
+    >
+  >;
+
+  givenOverides: Record<
+    keyof GivenExtensions,
+    (
+      name: string,
+      features: string[],
+      whens: BaseWhen<IStore, ISelection, IThenShape>[],
+      thens: BaseThen<ISelection, IStore, IThenShape>[],
+      gcb,
+    ) => BaseGiven<ISubject, IStore, ISelection, IThenShape, IGivenShape>
+  >;
+
+  whenOverides: Record<
+    keyof WhenExtensions,
+    (any) => BaseWhen<IStore, ISelection, IThenShape>
+  >;
+
+  thenOverides: Record<
+    keyof ThenExtensions,
+    (
+      selection: ISelection,
+      expectation: any
+    ) => BaseThen<ISelection, IStore, IThenShape>
+  >;
+
+  checkOverides: Record<
+    keyof CheckExtensions,
+    (
+      feature: string,
+      callback: (whens, thens) => any,
+      ...xtraArgs
+    ) => BaseCheck<ISubject, IStore, ISelection, IThenShape, ITTestShape>
+  >;
+
+  constructor(
+    public readonly cc: IStore,
+    suitesOverrides: Record<
+      keyof SuiteExtensions,
+      (
+        name: string,
+        index: number,
+        givens: IGivens<ISubject, IStore, ISelection, IThenShape, IGivenShape>,
+        checks: BaseCheck<
+          ISubject,
+          IStore,
+          ISelection,
+          IThenShape,
+          ITTestShape
+        >[]
+      ) => BaseSuite<
+        IInput,
+        ISubject,
+        IStore,
+        ISelection,
+        IThenShape,
+        ITTestShape,
+        IGivenShape
+      >
+    >,
+
+    givenOverides: Record<
+      keyof GivenExtensions,
+      (
+        name: string,
+        features: string[],
+        whens: BaseWhen<IStore, ISelection, IThenShape>[],
+        thens: BaseThen<ISelection, IStore, IThenShape>[],
+        gcb,
+      ) => BaseGiven<ISubject, IStore, ISelection, IThenShape, IGivenShape>
+    >,
+
+    whenOverides: Record<
+      keyof WhenExtensions,
+      (c: any) => BaseWhen<IStore, ISelection, IThenShape>
+    >,
+
+    thenOverides: Record<
+      keyof ThenExtensions,
+      (
+        selection: ISelection,
+        expectation: any
+      ) => BaseThen<ISelection, IStore, IThenShape>
+    >,
+
+    checkOverides: Record<
+      keyof CheckExtensions,
+      (
+        feature: string,
+        callback: (whens, thens) => any,
+        ...xtraArgs
+      ) => BaseCheck<ISubject, IStore, ISelection, IThenShape, ITTestShape>
+    >,
+    logWriter,
+    testResourceRequirement,
+    testSpecification,
+  ) {
+    this.constructorator = cc;
+    this.suitesOverrides = suitesOverrides;
+    this.givenOverides = givenOverides;
+    this.whenOverides = whenOverides;
+    this.thenOverides = thenOverides;
+    this.checkOverides = checkOverides;
+
+    const suites = testSpecification(
+      this.Suites(),
+      this.Given(),
+      this.When(),
+      this.Then(),
+      this.Check(),
+      logWriter
+    );
+
+    const suiteRunner =
+      (suite: BaseSuite<
+        IInput,
+        ISubject,
+        IStore,
+        ISelection,
+        IThenShape,
+        ITestShape,
+        IGivenShape
+      >) =>
+        async (
+          testResourceConfiguration: ITTestResourceConfiguration,
+          tLog: ITLog
+        ): Promise<BaseSuite<
+          IInput, ISubject, IStore, ISelection, IThenShape, ITestShape, IGivenShape
+        >> => {
+          return await suite.run(
+            cc,
+            testResourceConfiguration,
+            (
+              fPath: string,
+              value: unknown
+            ) =>
+              logWriter.testArtiFactoryfileWriter(tLog, (p: Promise<void>) => {
+                artifacts.push(p);
+              })(
+                testResourceConfiguration.fs + "/" + fPath,
+                value
+              ),
+            tLog
+          );
+        };
+
+    const artifacts = this.artifacts;
+
+    this.testJobs = suites.map((suite) => {
+      const runner = suiteRunner(suite);
+
+      return {
+        test: suite,
+        testResourceRequirement,
+
+        toObj: () => {
+          return suite.toObj();
+        },
+
+        runner,
+
+        receiveTestResourceConfig: async function (
+          testResourceConfiguration = {
+            name: "",
+            fs: ".",
+            ports: [],
+            scheduled: false
+          }
+        ) {
+          console.log(
+            `testResourceConfiguration ${JSON.stringify(
+              testResourceConfiguration,
+              null,
+              2
+            )}`
+          );
+
+          await logWriter.mkdirSync(testResourceConfiguration.fs);
+
+          const logFilePath = (
+            `${testResourceConfiguration.fs}/log.txt`
+          );
+
+          const access = await logWriter.createWriteStream(logFilePath);
+
+          const tLog = (...l: string[]) => {
+            console.log(...l);
+            access.write(`${l.toString()}\n`);
+          };
+          const suiteDone: BaseSuite<
+            IInput,
+            ISubject,
+            IStore,
+            ISelection,
+            IThenShape,
+            ITestShape,
+            IGivenShape
+          > = await runner(testResourceConfiguration, tLog);
+          const resultsFilePath = (
+            `${testResourceConfiguration.fs}/results.json`
+          );
+
+          logWriter.writeFileSync(
+            resultsFilePath,
+            JSON.stringify(suiteDone.toObj(), null, 2)
+          );
+
+          const logPromise = new Promise((res, rej) => {
+            access.on("finish", () => { res(true); });
+          })
+          access.end();
+
+          const numberOfFailures = Object.keys(suiteDone.givens).filter(
+            (k) => {
+              // console.log(`suiteDone.givens[k].error`, suiteDone.givens[k].error);
+              return suiteDone.givens[k].error
+            }
+          ).length;
+          console.log(`exiting gracefully with ${numberOfFailures} failures.`);
+          return {
+            failed: numberOfFailures,
+            artifacts,
+            logPromise
+          };
+        },
+      };
+    });
+  }
+
+  Suites() {
+    return this.suitesOverrides;
+  }
+
+  Given(): Record<
+    keyof GivenExtensions,
+    (
+      name: string,
+      features: string[],
+      whens: BaseWhen<IStore, ISelection, IThenShape>[],
+      thens: BaseThen<ISelection, IStore, IThenShape>[],
+      gcb,
+    ) => BaseGiven<ISubject, IStore, ISelection, IThenShape, IGivenShape>
+  > {
+    return this.givenOverides;
+  }
+
+  When(): Record<
+    keyof WhenExtensions,
+    (arg0: IStore, ...arg1: any) => BaseWhen<IStore, ISelection, IThenShape>
+  > {
+    return this.whenOverides;
+  }
+
+  Then(): Record<
+    keyof ThenExtensions,
+    (
+      selection: ISelection,
+      expectation: any
+    ) => BaseThen<ISelection, IStore, IThenShape>
+  > {
+    return this.thenOverides;
+  }
+
+  Check(): Record<
+    keyof CheckExtensions,
+    (
+      feature: string,
+      callback: (whens, thens) => any,
+      whens,
+      thens
+    ) => BaseCheck<ISubject, IStore, ISelection, IThenShape, ITTestShape>
+  > {
+    return this.checkOverides;
+  }
+}
+
+export abstract class ClassBuilder<
+  ITestShape extends ITTestShape,
+  IInitialState,
+  ISelection,
+  IStore,
+  ISubject,
+  IWhenShape,
+  IThenShape,
+  IInput,
+  IGivenShape
+> extends BaseBuilder<
+  any,
+  any,
+  any,
+  any,
+  any,
+  any,
+  any,
+  any,
+  any,
+  any,
+  any,
+  any
+
+> {
+
+  constructor(
+    testImplementation: ITestImplementation<
+      IInitialState,
+      ISelection,
+      IWhenShape,
+      IThenShape,
+      ITestShape,
+      IGivenShape
+    >,
+
+    testSpecification: (
+      Suite: {
+        [K in keyof ITestShape["suites"]]: (
+          feature: string,
+          givens: IGivens<ISubject, IStore, ISelection, IThenShape, IGivenShape>,
+          checks: BaseCheck<
+            ISubject,
+            IStore,
+            ISelection,
+            IThenShape,
+            ITestShape
+          >[]
+        ) => BaseSuite<
+          IInput,
+          ISubject,
+          IStore,
+          ISelection,
+          IThenShape,
+          ITestShape,
+          IGivenShape
+        >;
+      },
+      Given: {
+        [K in keyof ITestShape["givens"]]: (
+          features: string[],
+          whens: BaseWhen<IStore, ISelection, IThenShape>[],
+          thens: BaseThen<ISelection, IStore, IThenShape>[],
+          ...a: ITestShape["givens"][K]
+        ) => BaseGiven<ISubject, IStore, ISelection, IThenShape, IGivenShape>;
+      },
+      When: {
+        [K in keyof ITestShape["whens"]]: (
+          ...a: ITestShape["whens"][K]
+        ) => BaseWhen<IStore, ISelection, IThenShape>;
+      },
+      Then: {
+        [K in keyof ITestShape["thens"]]: (
+          ...a: ITestShape["thens"][K]
+        ) => BaseThen<ISelection, IStore, IThenShape>;
+      },
+      Check: ITestCheckCallback<ITestShape>,
+      logWriter: ILogWriter
+    ) => BaseSuite<
+      IInput,
+      ISubject,
+      IStore,
+      ISelection,
+      IThenShape,
+      ITestShape,
+      IGivenShape
+    >[],
+
+    input: IInput,
+
+    suiteKlasser: (
+      name: string,
+      index: number,
+      givens: IGivens<ISubject, IStore, ISelection, IThenShape, IGivenShape>,
+      checks: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape>[]
+    ) => BaseSuite<
+      IInput,
+      ISubject,
+      IStore,
+      ISelection,
+      IThenShape,
+      ITestShape,
+      IGivenShape
+    >,
+    givenKlasser: (
+      name,
+      features,
+      whens,
+      thens,
+      givenCB
+    ) => BaseGiven<ISubject, IStore, ISelection, IThenShape, IGivenShape>,
+    whenKlasser: (s, o) => BaseWhen<IStore, ISelection, IThenShape>,
+    thenKlasser: (s, o) => BaseThen<IStore, ISelection, IThenShape>,
+    checkKlasser: (
+      n,
+      f,
+      cb,
+      w,
+      t
+    ) => BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape>,
+
+    testResourceRequirement,
+    logWriter: ILogWriter
+  ) {
+    const classySuites = Object.entries(testImplementation.Suites).reduce(
+      (a, [key], index) => {
+        a[key] = (somestring, givens, checks) => {
+          return new suiteKlasser.prototype.constructor(
+            somestring,
+            index,
+            givens,
+            checks
+          );
+        };
+        return a;
+      },
+      {}
+    );
+    const classyGivens = Object.entries(testImplementation.Givens)
+      .reduce(
+        (a, [key, givEn]) => {
+          a[key] = (
+            features,
+            whens,
+            thens,
+            givEn
+          ) => {
+            return new (givenKlasser.prototype).constructor(
+              key,
+              features,
+              whens,
+              thens,
+
+              ((phunkshun) => {
+                return phunkshun
+              })(testImplementation.Givens[key]),
+
+              { asd: "qwe" },
+
+              // givEn(a[key]),
+              // a[key](givEn),
+              // ((payload) => {
+              //   console.log("mark 6", a[key], payload)
+              //   return a[key](payload);
+              // })(testImplementation.Givens[key]),
+              // ",",
+
+
+              // {},
+              // ".",
+              // (x) => givEn(x)
+            );
+          };
+          return a;
+        },
+        {}
+      );
+
+    const classyWhens = Object.entries(testImplementation.Whens).reduce(
+      (a, [key, whEn]) => {
+        a[key] = (payload?: any) => {
+          return new whenKlasser.prototype.constructor(
+            `${whEn.name}: ${payload && payload.toString()}`,
+            whEn(payload)
+          );
+        };
+        return a;
+      },
+      {}
+    );
+
+    const classyThens = Object.entries(testImplementation.Thens).reduce(
+      (a, [key, thEn]) => {
+        a[key] = (expected: any, x) => {
+          return new thenKlasser.prototype.constructor(
+            `${thEn.name}: ${expected && expected.toString()}`,
+            thEn(expected)
+          );
+        };
+        return a;
+      },
+      {}
+    );
+
+    const classyChecks = Object.entries(testImplementation.Checks).reduce(
+      (a, [key, z]) => {
+        a[key] = (somestring, features, callback) => {
+          return new checkKlasser.prototype.constructor(
+            somestring,
+            features,
+            callback,
+            classyWhens,
+            classyThens
+          );
+        };
+        return a;
+      },
+      {}
+    );
+    super(
+      input,
+      classySuites,
+      classyGivens,
+      classyWhens,
+      classyThens,
+      classyChecks,
+      logWriter,
+      testResourceRequirement,
+      testSpecification
+    );
+  }
+
 }

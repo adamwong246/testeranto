@@ -1,4 +1,5 @@
-import { ITTestShape, ITTestResourceConfiguration, ITestArtifactory, ITLog } from "./lib";
+import { ITTestShape, ITTestResourceConfiguration, ITestArtifactory, ITLog, ITestJob, ILogWriter, ITestCheckCallback } from "./lib";
+import { ITestImplementation } from "./Types";
 export declare type IGivens<ISubject, IStore, ISelection, IThenShape, IGivenShape> = Record<string, BaseGiven<ISubject, IStore, ISelection, IThenShape, IGivenShape>>;
 export declare abstract class BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape extends ITTestShape, IGivenShape> {
     name: string;
@@ -97,4 +98,32 @@ export declare abstract class BaseCheck<ISubject, IStore, ISelection, IThenShape
     abstract checkThat(subject: ISubject, testResourceConfiguration: any, artifactory: ITestArtifactory): Promise<IStore>;
     afterEach(store: IStore, key: string, cb?: any): Promise<unknown>;
     check(subject: ISubject, key: string, testResourceConfiguration: any, tester: any, artifactory: ITestArtifactory, tLog: ITLog): Promise<void>;
+}
+export declare abstract class BaseBuilder<IInput, ISubject, IStore, ISelection, SuiteExtensions, GivenExtensions, WhenExtensions, ThenExtensions, CheckExtensions, IThenShape, IGivenShape, ITestShape extends ITTestShape> {
+    readonly cc: IStore;
+    artifacts: Promise<unknown>[];
+    testJobs: ITestJob[];
+    constructorator: IStore;
+    suitesOverrides: Record<keyof SuiteExtensions, (name: string, index: number, givens: IGivens<ISubject, IStore, ISelection, IThenShape, IGivenShape>, checks: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITTestShape>[]) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITTestShape, IGivenShape>>;
+    givenOverides: Record<keyof GivenExtensions, (name: string, features: string[], whens: BaseWhen<IStore, ISelection, IThenShape>[], thens: BaseThen<ISelection, IStore, IThenShape>[], gcb: any) => BaseGiven<ISubject, IStore, ISelection, IThenShape, IGivenShape>>;
+    whenOverides: Record<keyof WhenExtensions, (any: any) => BaseWhen<IStore, ISelection, IThenShape>>;
+    thenOverides: Record<keyof ThenExtensions, (selection: ISelection, expectation: any) => BaseThen<ISelection, IStore, IThenShape>>;
+    checkOverides: Record<keyof CheckExtensions, (feature: string, callback: (whens: any, thens: any) => any, ...xtraArgs: any[]) => BaseCheck<ISubject, IStore, ISelection, IThenShape, ITTestShape>>;
+    constructor(cc: IStore, suitesOverrides: Record<keyof SuiteExtensions, (name: string, index: number, givens: IGivens<ISubject, IStore, ISelection, IThenShape, IGivenShape>, checks: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITTestShape>[]) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITTestShape, IGivenShape>>, givenOverides: Record<keyof GivenExtensions, (name: string, features: string[], whens: BaseWhen<IStore, ISelection, IThenShape>[], thens: BaseThen<ISelection, IStore, IThenShape>[], gcb: any) => BaseGiven<ISubject, IStore, ISelection, IThenShape, IGivenShape>>, whenOverides: Record<keyof WhenExtensions, (c: any) => BaseWhen<IStore, ISelection, IThenShape>>, thenOverides: Record<keyof ThenExtensions, (selection: ISelection, expectation: any) => BaseThen<ISelection, IStore, IThenShape>>, checkOverides: Record<keyof CheckExtensions, (feature: string, callback: (whens: any, thens: any) => any, ...xtraArgs: any[]) => BaseCheck<ISubject, IStore, ISelection, IThenShape, ITTestShape>>, logWriter: any, testResourceRequirement: any, testSpecification: any);
+    Suites(): Record<keyof SuiteExtensions, (name: string, index: number, givens: IGivens<ISubject, IStore, ISelection, IThenShape, IGivenShape>, checks: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITTestShape>[]) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITTestShape, IGivenShape>>;
+    Given(): Record<keyof GivenExtensions, (name: string, features: string[], whens: BaseWhen<IStore, ISelection, IThenShape>[], thens: BaseThen<ISelection, IStore, IThenShape>[], gcb: any) => BaseGiven<ISubject, IStore, ISelection, IThenShape, IGivenShape>>;
+    When(): Record<keyof WhenExtensions, (arg0: IStore, ...arg1: any) => BaseWhen<IStore, ISelection, IThenShape>>;
+    Then(): Record<keyof ThenExtensions, (selection: ISelection, expectation: any) => BaseThen<ISelection, IStore, IThenShape>>;
+    Check(): Record<keyof CheckExtensions, (feature: string, callback: (whens: any, thens: any) => any, whens: any, thens: any) => BaseCheck<ISubject, IStore, ISelection, IThenShape, ITTestShape>>;
+}
+export declare abstract class ClassBuilder<ITestShape extends ITTestShape, IInitialState, ISelection, IStore, ISubject, IWhenShape, IThenShape, IInput, IGivenShape> extends BaseBuilder<any, any, any, any, any, any, any, any, any, any, any, any> {
+    constructor(testImplementation: ITestImplementation<IInitialState, ISelection, IWhenShape, IThenShape, ITestShape, IGivenShape>, testSpecification: (Suite: {
+        [K in keyof ITestShape["suites"]]: (feature: string, givens: IGivens<ISubject, IStore, ISelection, IThenShape, IGivenShape>, checks: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape>[]) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape, IGivenShape>;
+    }, Given: {
+        [K in keyof ITestShape["givens"]]: (features: string[], whens: BaseWhen<IStore, ISelection, IThenShape>[], thens: BaseThen<ISelection, IStore, IThenShape>[], ...a: ITestShape["givens"][K]) => BaseGiven<ISubject, IStore, ISelection, IThenShape, IGivenShape>;
+    }, When: {
+        [K in keyof ITestShape["whens"]]: (...a: ITestShape["whens"][K]) => BaseWhen<IStore, ISelection, IThenShape>;
+    }, Then: {
+        [K in keyof ITestShape["thens"]]: (...a: ITestShape["thens"][K]) => BaseThen<ISelection, IStore, IThenShape>;
+    }, Check: ITestCheckCallback<ITestShape>, logWriter: ILogWriter) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape, IGivenShape>[], input: IInput, suiteKlasser: (name: string, index: number, givens: IGivens<ISubject, IStore, ISelection, IThenShape, IGivenShape>, checks: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape>[]) => BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape, IGivenShape>, givenKlasser: (name: any, features: any, whens: any, thens: any, givenCB: any) => BaseGiven<ISubject, IStore, ISelection, IThenShape, IGivenShape>, whenKlasser: (s: any, o: any) => BaseWhen<IStore, ISelection, IThenShape>, thenKlasser: (s: any, o: any) => BaseThen<IStore, ISelection, IThenShape>, checkKlasser: (n: any, f: any, cb: any, w: any, t: any) => BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape>, testResourceRequirement: any, logWriter: ILogWriter);
 }

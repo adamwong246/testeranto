@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BaseCheck = exports.BaseThen = exports.BaseWhen = exports.BaseGiven = exports.BaseSuite = void 0;
+exports.ClassBuilder = exports.BaseBuilder = exports.BaseCheck = exports.BaseThen = exports.BaseWhen = exports.BaseGiven = exports.BaseSuite = void 0;
 class BaseSuite {
     constructor(name, index, givens = {}, checks = []) {
         this.name = name;
@@ -80,7 +80,6 @@ class BaseGiven {
     async give(subject, key, testResourceConfiguration, tester, artifactory, tLog) {
         tLog(`\n Given: ${this.name}`);
         const givenArtifactory = (fPath, value) => artifactory(`given-${key}/${fPath}`, value);
-        console.log("mark60" + this.givenCB);
         try {
             this.store = await this.givenThat(subject, testResourceConfiguration, givenArtifactory, this.givenCB);
             // tLog(`\n Given this.store`, this.store);
@@ -212,3 +211,120 @@ class BaseCheck {
     }
 }
 exports.BaseCheck = BaseCheck;
+class BaseBuilder {
+    constructor(cc, suitesOverrides, givenOverides, whenOverides, thenOverides, checkOverides, logWriter, testResourceRequirement, testSpecification) {
+        this.cc = cc;
+        this.artifacts = [];
+        this.constructorator = cc;
+        this.suitesOverrides = suitesOverrides;
+        this.givenOverides = givenOverides;
+        this.whenOverides = whenOverides;
+        this.thenOverides = thenOverides;
+        this.checkOverides = checkOverides;
+        const suites = testSpecification(this.Suites(), this.Given(), this.When(), this.Then(), this.Check(), logWriter);
+        const suiteRunner = (suite) => async (testResourceConfiguration, tLog) => {
+            return await suite.run(cc, testResourceConfiguration, (fPath, value) => logWriter.testArtiFactoryfileWriter(tLog, (p) => {
+                artifacts.push(p);
+            })(testResourceConfiguration.fs + "/" + fPath, value), tLog);
+        };
+        const artifacts = this.artifacts;
+        this.testJobs = suites.map((suite) => {
+            const runner = suiteRunner(suite);
+            return {
+                test: suite,
+                testResourceRequirement,
+                toObj: () => {
+                    return suite.toObj();
+                },
+                runner,
+                receiveTestResourceConfig: async function (testResourceConfiguration = {
+                    name: "",
+                    fs: ".",
+                    ports: [],
+                    scheduled: false
+                }) {
+                    console.log(`testResourceConfiguration ${JSON.stringify(testResourceConfiguration, null, 2)}`);
+                    await logWriter.mkdirSync(testResourceConfiguration.fs);
+                    const logFilePath = (`${testResourceConfiguration.fs}/log.txt`);
+                    const access = await logWriter.createWriteStream(logFilePath);
+                    const tLog = (...l) => {
+                        console.log(...l);
+                        access.write(`${l.toString()}\n`);
+                    };
+                    const suiteDone = await runner(testResourceConfiguration, tLog);
+                    const resultsFilePath = (`${testResourceConfiguration.fs}/results.json`);
+                    logWriter.writeFileSync(resultsFilePath, JSON.stringify(suiteDone.toObj(), null, 2));
+                    const logPromise = new Promise((res, rej) => {
+                        access.on("finish", () => { res(true); });
+                    });
+                    access.end();
+                    const numberOfFailures = Object.keys(suiteDone.givens).filter((k) => {
+                        // console.log(`suiteDone.givens[k].error`, suiteDone.givens[k].error);
+                        return suiteDone.givens[k].error;
+                    }).length;
+                    console.log(`exiting gracefully with ${numberOfFailures} failures.`);
+                    return {
+                        failed: numberOfFailures,
+                        artifacts,
+                        logPromise
+                    };
+                },
+            };
+        });
+    }
+    Suites() {
+        return this.suitesOverrides;
+    }
+    Given() {
+        return this.givenOverides;
+    }
+    When() {
+        return this.whenOverides;
+    }
+    Then() {
+        return this.thenOverides;
+    }
+    Check() {
+        return this.checkOverides;
+    }
+}
+exports.BaseBuilder = BaseBuilder;
+class ClassBuilder extends BaseBuilder {
+    constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResourceRequirement, logWriter) {
+        const classySuites = Object.entries(testImplementation.Suites).reduce((a, [key], index) => {
+            a[key] = (somestring, givens, checks) => {
+                return new suiteKlasser.prototype.constructor(somestring, index, givens, checks);
+            };
+            return a;
+        }, {});
+        const classyGivens = Object.entries(testImplementation.Givens)
+            .reduce((a, [key, givEn]) => {
+            a[key] = (features, whens, thens, givEn) => {
+                return new (givenKlasser.prototype).constructor(key, features, whens, thens, ((phunkshun) => {
+                    return phunkshun;
+                })(testImplementation.Givens[key]), { asd: "qwe" });
+            };
+            return a;
+        }, {});
+        const classyWhens = Object.entries(testImplementation.Whens).reduce((a, [key, whEn]) => {
+            a[key] = (payload) => {
+                return new whenKlasser.prototype.constructor(`${whEn.name}: ${payload && payload.toString()}`, whEn(payload));
+            };
+            return a;
+        }, {});
+        const classyThens = Object.entries(testImplementation.Thens).reduce((a, [key, thEn]) => {
+            a[key] = (expected, x) => {
+                return new thenKlasser.prototype.constructor(`${thEn.name}: ${expected && expected.toString()}`, thEn(expected));
+            };
+            return a;
+        }, {});
+        const classyChecks = Object.entries(testImplementation.Checks).reduce((a, [key, z]) => {
+            a[key] = (somestring, features, callback) => {
+                return new checkKlasser.prototype.constructor(somestring, features, callback, classyWhens, classyThens);
+            };
+            return a;
+        }, {});
+        super(input, classySuites, classyGivens, classyWhens, classyThens, classyChecks, logWriter, testResourceRequirement, testSpecification);
+    }
+}
+exports.ClassBuilder = ClassBuilder;
