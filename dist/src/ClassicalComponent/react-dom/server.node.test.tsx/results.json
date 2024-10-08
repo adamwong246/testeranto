@@ -1,0 +1,22 @@
+{
+  "name": "Classical Component, react-dom, server.node",
+  "givens": [
+    {
+      "name": "AnEmptyState",
+      "whens": [],
+      "thens": [
+        {
+          "name": "renderToStaticMarkup: <div style=\"border:3px solid green\"><h1>Hello Marcus</h1><pre id=\"theProps\">{}</pre><p>foo: </p><pre id=\"theState\">{&quot;count&quot;:0}</pre><p>count: 0 times</p><button id=\"theButton\">Click</button></div>"
+        },
+        {
+          "name": "renderToStaticNodeStream: [object ReadableStream]"
+        }
+      ],
+      "error": null,
+      "features": [
+        "test"
+      ]
+    }
+  ],
+  "fails": []
+}

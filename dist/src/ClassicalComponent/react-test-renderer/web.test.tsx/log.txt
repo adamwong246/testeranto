@@ -1,0 +1,25 @@
+
+Suite:,0,a classical react component
+
+ Given: AnEmptyState
+ Then:,ThePropsIs: {"foo":"bar"}
+ Then:,TheStatusIs: [object Object]
+
+ Given: AnEmptyState
+ When:,IClickTheButton: undefined
+ Then:,ThePropsIs: {"foo":"bar"}
+ Then:,TheStatusIs: [object Object]
+
+ Given: AnEmptyState
+ When:,IClickTheButton: undefined
+ When:,IClickTheButton: undefined
+ When:,IClickTheButton: undefined
+ When:,IClickTheButton: undefined
+ When:,IClickTheButton: undefined
+ When:,IClickTheButton: undefined
+ Then:,TheStatusIs: [object Object]
+
+ Given: AnEmptyState
+ When:,IClickTheButton: undefined
+ When:,IClickTheButton: undefined
+ Then:,TheStatusIs: [object Object]

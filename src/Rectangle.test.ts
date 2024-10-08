@@ -1,10 +1,12 @@
 import { assert } from "chai";
 
-import { ITTestShape, ITestSpecification } from "testeranto/src/core";
+import type { ITestSpecification } from "testeranto/src/Types";
+import type { ITTestShape, ITTTestShape } from "testeranto/src/lib";
 
 import Rectangle from "./Rectangle";
 
-export type IRectangleTestShape = {
+export type IRectangleTestShape = ITTTestShape<{
+  asD: boolean,
   suites: {
     Default: string;
   },
@@ -32,9 +34,40 @@ export type IRectangleTestShape = {
     WidthOfOneAndHeightOfOne;
     WidthAndHeightOf: [number, number];
   }
-} & ITTestShape;
+}>;
 
-export const RectangleTesterantoBaseTestSpecification: ITestSpecification<IRectangleTestShape> =
+export const RectangleTesterantoBaseTestSpecification: ITestSpecification<
+  {
+    asd: true,
+    suites: {
+      Default: string;
+    },
+    givens: {
+      Default: any;
+      WidthOfOneAndHeightOfOne;
+      WidthAndHeightOf: [number, number];
+    },
+    whens: {
+      HeightIsPubliclySetTo: [number];
+      WidthIsPubliclySetTo: [number];
+      setWidth: [number];
+      setHeight: [number];
+    },
+    thens: {
+      AreaPlusCircumference: [number];
+      circumference: [number];
+      getWidth: [number];
+      getHeight: [number];
+      area: [number];
+      prototype: [string];
+    },
+    checks: {
+      Default;
+      WidthOfOneAndHeightOfOne;
+      WidthAndHeightOf: [number, number];
+    }
+  }, any, any, any, any, any
+> =
   (Suite, Given, When, Then, Check) => {
     return [
       Suite.Default(

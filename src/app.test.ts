@@ -1,6 +1,6 @@
 import {
   ITestSpecification,
-} from "testeranto/src/core";
+} from "testeranto/src/Types";
 
 export type IAppSpecification = {
   suites: {
@@ -26,7 +26,13 @@ export type IAppSpecification = {
   };
 };
 
-export const AppSpecification: ITestSpecification<IAppSpecification> = (Suite, Given, When, Then, Check) => {
+export const AppSpecification: ITestSpecification<
+  IAppSpecification,
+  any,
+  any,
+  any,
+  any
+> = (Suite, Given, When, Then, Check) => {
   return [
     Suite.Default(
       "Testing the Redux store",

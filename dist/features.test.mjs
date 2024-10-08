@@ -1,11 +1,11 @@
 import {
   __commonJS,
   __toESM
-} from "./chunk-YWLLX3TT.mjs";
+} from "./chunk-XALKSG2U.mjs";
 
-// ../testeranto/node_modules/graphology/dist/graphology.umd.min.js
+// node_modules/testeranto/node_modules/graphology/dist/graphology.umd.min.js
 var require_graphology_umd_min = __commonJS({
-  "../testeranto/node_modules/graphology/dist/graphology.umd.min.js"(exports, module) {
+  "node_modules/testeranto/node_modules/graphology/dist/graphology.umd.min.js"(exports, module) {
     !function(t, e) {
       "object" == typeof exports && "undefined" != typeof module ? module.exports = e() : "function" == typeof define && define.amd ? define(e) : (t = "undefined" != typeof globalThis ? globalThis : t || self).graphology = e();
     }(exports, function() {
@@ -1984,7 +1984,7 @@ var require_graphology_umd_min = __commonJS({
   }
 });
 
-// ../testeranto/dist/module/Features.js
+// node_modules/testeranto/dist/module/Features.js
 var import_graphology = __toESM(require_graphology_umd_min(), 1);
 var { DirectedGraph, UndirectedGraph } = import_graphology.default;
 var BaseFeature = class {
@@ -2052,6 +2052,7 @@ var TesterantoFeatures = class {
 
 // features.test.mts
 var MyFeature = class extends BaseFeature {
+  due;
   constructor(name, due) {
     super(name);
     this.due = due;

@@ -1,4 +1,3 @@
-import { whyIsNodeStillRunning } from 'why-is-node-still-running';
 import Testeranto from "testeranto/src/Node";
 
 import Rectangle from "../../src/Rectangle";

@@ -7,21 +7,30 @@ export type IStoreState = {
   error: ILoginPageError;
 };
 
+const initialState: IStoreState = {
+  password: "",
+  email: "",
+  error: "no_error",
+};
+
 export const loginApp = createSlice<
   IStoreState,
   {
+    reset: (s: IStoreState) => void;
     setPassword: (s: IStoreState, b) => void;
     setEmail: (s: IStoreState, b) => void;
     signIn: (s: IStoreState) => void;
   }
 >({
   name: "login app",
-  initialState: {
-    password: "",
-    email: "",
-    error: "no_error",
-  },
+  initialState,
   reducers: {
+    reset: (state) => {
+      console.log("mark20")
+      state.password = initialState.password;
+      state.email = initialState.email;
+      state.error = initialState.error;
+    },
     setPassword: (state, action) => {
       state.password = action.payload;
     },
@@ -29,6 +38,7 @@ export const loginApp = createSlice<
       state.email = action.payload;
     },
     signIn: (state) => {
+      console.log("mark31")
       state.error = checkForErrors(state);
     },
   },
@@ -47,6 +57,7 @@ const validateEmail = (email) => {
 };
 
 const checkForErrors = (storeState: IStoreState): ILoginPageError => {
+  console.log("mark32")
   if (!validateEmail(storeState.email)) {
     return "invalidEmail";
   }
