@@ -15,7 +15,8 @@ export type ISpec<ITestShape extends ITTestShape> = ITestSpecification<
   any,
   any,
   any,
-  IThenShape
+  IThenShape,
+  any
 >
 export default <
   ITestShape extends ITTestShape,
@@ -26,7 +27,8 @@ export default <
     renderer.ReactTestRenderer,
     IWhenShape,
     IThenShape,
-    ITestShape
+    ITestShape,
+    any
   >,
   testSpecifications: ISpec<ITestShape>,
   testInput: IInput

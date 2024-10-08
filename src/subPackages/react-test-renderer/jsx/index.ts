@@ -4,7 +4,6 @@ import renderer, { act } from "react-test-renderer";
 import { ITTestShape } from "../../../lib";
 import { ITestImplementation, ITestSpecification } from "../../../Types";
 
-
 export type IWhenShape = any;
 export type IThenShape = any;
 export type InitialState = unknown;
@@ -20,7 +19,8 @@ export type ITestImpl<
   ISelection,
   IWhenShape,
   IThenShape,
-  ITestShape
+  ITestShape,
+  any
 >
 
 export type ITestSpec<
@@ -30,24 +30,27 @@ export type ITestSpec<
   ISubject,
   IStore,
   ISelection,
-  IThenShape
+  IThenShape,
+  any
 >
 
-export const testInterface = {
-  beforeEach: function (CComponent, props): Promise<renderer.ReactTestRenderer> {
-    let component;
-    act(() => {
-      component = renderer.create(
-        React.createElement(CComponent, props, [])
-      );
-    });
-    return component;
-  },
-  andWhen: async function (
-    renderer: renderer.ReactTestRenderer,
-    whenCB: () => (any) => any
-  ): Promise<renderer.ReactTestRenderer> {
-    await act(() => whenCB()(renderer));
-    return renderer
+export const testInterface = (testInput) => {
+  return {
+    beforeEach: function (CComponent, props): Promise<renderer.ReactTestRenderer> {
+      let component;
+      act(() => {
+        component = renderer.create(
+          React.createElement(CComponent, props, [])
+        );
+      });
+      return component;
+    },
+    andWhen: async function (
+      renderer: renderer.ReactTestRenderer,
+      whenCB: (any) => any
+    ): Promise<renderer.ReactTestRenderer> {
+      await act(() => whenCB(renderer));
+      return renderer
+    }
   }
 }

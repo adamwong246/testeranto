@@ -30,12 +30,13 @@ const receiveTestResourceConfigScheduled = async (t, testresource) => {
         },
     }));
     Promise.all([...artifacts, logPromise]).then(async () => {
+        // app.quit()
         // ipcRenderer.invoke('quit-app', failed);
         window.exit(failed);
     });
 };
 exports.default = async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = lib_1.defaultTestResourceRequirement) => {
-    const mrt = new core_1.default(input, testSpecification, testImplementation, testInterface, testResourceRequirement, window.NodeWriter, testInterface.beforeEach || async function (subject, initialValues, testResource) { return subject; }, testInterface.afterEach || (async (s) => s), testInterface.afterAll || ((store) => undefined), testInterface.butThen || (async (a) => a), testInterface.andWhen, testInterface.actionHandler || function (b) { return b; }, testInterface.assertioner || (async (t) => t));
+    const mrt = new core_1.default(input, testSpecification, testImplementation, testResourceRequirement, window.NodeWriter, testInterface.beforeAll || (async (s) => s), testInterface.beforeEach || async function (subject, initialValues, testResource) { return subject; }, testInterface.afterEach || (async (s) => s), testInterface.afterAll || ((store) => undefined), testInterface.butThen || (async (a) => a), testInterface.andWhen);
     const tl2 = mrt;
     const t = tl2.testJobs[0];
     const testResourceArg = decodeURIComponent(new URLSearchParams(location.search).get('requesting') || '');

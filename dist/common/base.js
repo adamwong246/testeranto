@@ -52,11 +52,12 @@ class BaseSuite {
 }
 exports.BaseSuite = BaseSuite;
 class BaseGiven {
-    constructor(name, features, whens, thens) {
+    constructor(name, features, whens, thens, givenCB) {
         this.name = name;
         this.features = features;
         this.whens = whens;
         this.thens = thens;
+        this.givenCB = givenCB;
     }
     beforeAll(store, artifactory) {
         return store;
@@ -79,8 +80,9 @@ class BaseGiven {
     async give(subject, key, testResourceConfiguration, tester, artifactory, tLog) {
         tLog(`\n Given: ${this.name}`);
         const givenArtifactory = (fPath, value) => artifactory(`given-${key}/${fPath}`, value);
+        console.log("mark60" + this.givenCB);
         try {
-            this.store = await this.givenThat(subject, testResourceConfiguration, givenArtifactory);
+            this.store = await this.givenThat(subject, testResourceConfiguration, givenArtifactory, this.givenCB);
             // tLog(`\n Given this.store`, this.store);
             for (const whenStep of this.whens) {
                 await whenStep.test(this.store, testResourceConfiguration, tLog);

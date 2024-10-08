@@ -20,7 +20,8 @@ export type IImpl<
   ISelection,
   IWhenShape,
   IThenShape,
-  ISpec
+  ISpec,
+  any
 >
 
 export type ISpec<
@@ -30,7 +31,8 @@ export type ISpec<
   ISubject,
   IStore,
   ISelection,
-  IThenShape
+  IThenShape,
+  any
 >;
 
 export default <
@@ -42,7 +44,8 @@ export default <
     ISelection,
     IWhenShape,
     IThenShape,
-    ITestShape
+    ITestShape,
+    any
   >,
   testSpecifications: ISpec<ITestShape>,
   testInput: IInput
@@ -55,7 +58,8 @@ export default <
     ISelection,
     IThenShape,
     IWhenShape,
-    IState
+    IState,
+    any
   >(
     testInput,
     testSpecifications,

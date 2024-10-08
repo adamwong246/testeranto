@@ -20,6 +20,13 @@ export declare type ITTestShape = {
     thens: any;
     checks: any;
 };
+export declare type ITTTestShape<T extends ITTestShape> = {
+    suites: any;
+    givens: any;
+    whens: any;
+    thens: any;
+    checks: any;
+};
 export declare type ITLog = (...string: any[]) => void;
 export declare type ILogWriter = {
     createWriteStream: (line: string) => any | any;
@@ -31,14 +38,14 @@ export declare type ITestArtificer = (key: string, data: any) => void;
 declare type ITest = {
     toObj(): object;
     name: string;
-    givens: IGivens<unknown, unknown, unknown, unknown>;
+    givens: IGivens<unknown, unknown, unknown, unknown, unknown>;
     checks: BaseCheck<unknown, unknown, unknown, unknown, ITTestShape>[];
     testResourceConfiguration: ITTestResourceConfiguration;
 };
 export declare type ITestJob = {
     toObj(): object;
     test: ITest;
-    runner: (x: ITTestResourceConfiguration, t: ITLog) => Promise<BaseSuite<any, any, any, any, any, any>>;
+    runner: (x: ITTestResourceConfiguration, t: ITLog) => Promise<BaseSuite<any, any, any, any, any, any, any>>;
     testResourceRequirement: ITTestResourceRequirement;
     receiveTestResourceConfig: (testResource?: any) => Promise<{
         failed: number;

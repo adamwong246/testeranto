@@ -9,7 +9,8 @@ import {
 export default <ITestShape extends ITTestShape>(
   testImplementations: ITestImpl<ITestShape>,
   testSpecifications: ITestSpec<ITestShape>,
-  testInput: IInput
+  testInput: IInput,
+  testInterface2 = testInterface,
 ) => {
   return Testeranto<
     ITestShape,
@@ -24,6 +25,6 @@ export default <ITestShape extends ITTestShape>(
     testInput,
     testSpecifications,
     testImplementations,
-    testInterface(testInput),
+    testInterface2(testInput),
   )
 };

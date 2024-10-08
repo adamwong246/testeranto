@@ -24,22 +24,27 @@ type ISubject = {
 };
 
 export default <ITestShape extends ITTestShape>(
-  testImplementations: ITestImplementation<
-    InitialState,
-    ISelection,
-    IWhenShape,
-    IThenShape,
-    ITestShape
-  >,
+  testInput: IInput,
   testSpecifications: ITestSpecification<
     ITestShape,
     ISubject,
     IStore,
     ISelection,
-    IThenShape
+    IThenShape,
+    any
   >,
-  testInput: IInput
+  testImplementations: ITestImplementation<
+    InitialState,
+    ISelection,
+    IWhenShape,
+    IThenShape,
+    ITestShape,
+    any
+  >,
+
 ) => {
+
+  console.log("mark80" + testImplementations);
 
   document.addEventListener("DOMContentLoaded", function () {
     console.log("DOMContentLoaded")
@@ -72,9 +77,10 @@ export default <ITestShape extends ITTestShape>(
         testImplementations,
         {
           beforeAll: async (
-            prototype,
+            initialProps,
             artificer
           ): Promise<ISubject> => {
+            // console.log("mark41", initialProps)
             return await new Promise((resolve, rej) => {
               const elem = document.getElementById("root");
               if (elem) {
@@ -85,14 +91,17 @@ export default <ITestShape extends ITTestShape>(
           },
           beforeEach: async (
             { htmlElement },
-            ndx,
-            testRsource,
-            artificer
+            initialValues,
+            testResource,
+            artificer,
           ): Promise<IStore> => {
+            console.log("mark444", initialValues)
+            // debugger
             return new Promise((resolve, rej) => {
               // Ignore these type errors
               ReactDom.createRoot(htmlElement).render(createElement(
                 TesterantoComponent, {
+                ...initialValues.props,
                 done: (reactElement) => {
                   resolve(
                     {
@@ -106,7 +115,8 @@ export default <ITestShape extends ITTestShape>(
             });
           },
           andWhen: function (s: IStore, whenCB): Promise<ISelection> {
-            return whenCB()(s);
+            console.log("mark31", whenCB)
+            return whenCB(s);
           },
           butThen: async function (s: IStore): Promise<ISelection> {
             return s;

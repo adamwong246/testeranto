@@ -6,14 +6,16 @@ export type IGivens<
   ISubject,
   IStore,
   ISelection,
-  IThenShape
+  IThenShape,
+  IGivenShape
 > = Record<
   string,
   BaseGiven<
     ISubject,
     IStore,
     ISelection,
-    IThenShape
+    IThenShape,
+    IGivenShape
   >
 >;
 
@@ -23,20 +25,21 @@ export abstract class BaseSuite<
   IStore,
   ISelection,
   IThenShape,
-  ITestShape extends ITTestShape
+  ITestShape extends ITTestShape,
+  IGivenShape
 > {
   name: string;
-  givens: IGivens<ISubject, IStore, ISelection, IThenShape>;
+  givens: IGivens<ISubject, IStore, ISelection, IThenShape, IGivenShape>;
   checks: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape>[];
   store: IStore;
-  fails: BaseGiven<ISubject, IStore, ISelection, IThenShape>[];
+  fails: BaseGiven<ISubject, IStore, ISelection, IThenShape, IGivenShape>[];
   testResourceConfiguration: ITTestResourceConfiguration;
   index: number;
 
   constructor(
     name: string,
     index: number,
-    givens: IGivens<ISubject, IStore, ISelection, IThenShape> = {},
+    givens: IGivens<ISubject, IStore, ISelection, IThenShape, IGivenShape> = {},
     checks: BaseCheck<
       ISubject,
       IStore,
@@ -77,7 +80,7 @@ export abstract class BaseSuite<
     ) => void,
     tLog: (...string) => void
   ): Promise<
-    BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape>
+    BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape, IGivenShape>
   > {
     this.testResourceConfiguration = testResourceConfiguration;
 
@@ -125,7 +128,13 @@ export abstract class BaseSuite<
   }
 }
 
-export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
+export abstract class BaseGiven<
+  ISubject,
+  IStore,
+  ISelection,
+  IThenShape,
+  IGivenShape
+> {
   name: string;
   features: string[];
   whens: BaseWhen<IStore, ISelection, IThenShape>[];
@@ -133,17 +142,20 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
   error: Error;
   store: IStore;
   recommendedFsPath: string;
+  givenCB: IGivenShape;
 
   constructor(
     name: string,
     features: string[],
     whens: BaseWhen<IStore, ISelection, IThenShape>[],
-    thens: BaseThen<ISelection, IStore, IThenShape>[]
+    thens: BaseThen<ISelection, IStore, IThenShape>[],
+    givenCB: IGivenShape,
   ) {
     this.name = name;
     this.features = features;
     this.whens = whens;
     this.thens = thens;
+    this.givenCB = givenCB;
   }
 
   beforeAll(store: IStore, artifactory: ITestArtifactory) {
@@ -167,7 +179,8 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
   abstract givenThat(
     subject: ISubject,
     testResourceConfiguration,
-    artifactory: ITestArtifactory
+    artifactory: ITestArtifactory,
+    givenCB: IGivenShape
   ): Promise<IStore>;
 
   async afterEach(
@@ -191,11 +204,13 @@ export abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
     const givenArtifactory = (fPath: string, value: unknown) =>
       artifactory(`given-${key}/${fPath}`, value)
 
+    console.log("mark60" + this.givenCB)
     try {
       this.store = await this.givenThat(
         subject,
         testResourceConfiguration,
-        givenArtifactory
+        givenArtifactory,
+        this.givenCB
       );
 
       // tLog(`\n Given this.store`, this.store);

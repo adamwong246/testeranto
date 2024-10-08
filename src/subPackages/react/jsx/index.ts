@@ -19,7 +19,8 @@ export type ITestImpl<
   ISelection,
   IWhenShape,
   IThenShape,
-  ITestShape
+  ITestShape,
+  any
 >
 
 export type ITestSpec<
@@ -29,22 +30,9 @@ export type ITestSpec<
   ISubject,
   IStore,
   ISelection,
-  IThenShape
+  IThenShape,
+  any
 >
-
-// const TesterantoComponent = (testInput) => (props) => {
-//   const myContainer = useRef(null);
-
-//   useEffect(() => {
-//     console.log(
-//       "useeffectCalled"
-//     );
-
-//     props.done(myContainer.current);
-//   }, []);
-
-//   return React.createElement('div', { ref: myContainer }, testInput());  //testInput();
-// };
 
 export const testInterface = (testInput) => {
   return {
@@ -59,7 +47,9 @@ export const testInterface = (testInput) => {
       });
     },
     andWhen: function (s: IStore, whenCB): Promise<ISelection> {
-      return whenCB()(s);
+      // console.log("mark18")
+      // debugger
+      return whenCB(s);
     },
   }
 }

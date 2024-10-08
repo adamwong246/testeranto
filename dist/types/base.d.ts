@@ -1,14 +1,14 @@
 import { ITTestShape, ITTestResourceConfiguration, ITestArtifactory, ITLog } from "./lib";
-export declare type IGivens<ISubject, IStore, ISelection, IThenShape> = Record<string, BaseGiven<ISubject, IStore, ISelection, IThenShape>>;
-export declare abstract class BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape extends ITTestShape> {
+export declare type IGivens<ISubject, IStore, ISelection, IThenShape, IGivenShape> = Record<string, BaseGiven<ISubject, IStore, ISelection, IThenShape, IGivenShape>>;
+export declare abstract class BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape extends ITTestShape, IGivenShape> {
     name: string;
-    givens: IGivens<ISubject, IStore, ISelection, IThenShape>;
+    givens: IGivens<ISubject, IStore, ISelection, IThenShape, IGivenShape>;
     checks: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape>[];
     store: IStore;
-    fails: BaseGiven<ISubject, IStore, ISelection, IThenShape>[];
+    fails: BaseGiven<ISubject, IStore, ISelection, IThenShape, IGivenShape>[];
     testResourceConfiguration: ITTestResourceConfiguration;
     index: number;
-    constructor(name: string, index: number, givens?: IGivens<ISubject, IStore, ISelection, IThenShape>, checks?: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape>[]);
+    constructor(name: string, index: number, givens?: IGivens<ISubject, IStore, ISelection, IThenShape, IGivenShape>, checks?: BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape>[]);
     toObj(): {
         name: string;
         givens: {
@@ -24,13 +24,13 @@ export declare abstract class BaseSuite<IInput, ISubject, IStore, ISelection, IT
             error: (string | Error | undefined)[] | null;
             features: string[];
         }[];
-        fails: BaseGiven<ISubject, IStore, ISelection, IThenShape>[];
+        fails: BaseGiven<ISubject, IStore, ISelection, IThenShape, IGivenShape>[];
     };
     setup(s: IInput, artifactory: ITestArtifactory): Promise<ISubject>;
     test(t: IThenShape): unknown;
-    run(input: any, testResourceConfiguration: ITTestResourceConfiguration, artifactory: (fPath: string, value: unknown) => void, tLog: (...string: any[]) => void): Promise<BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape>>;
+    run(input: any, testResourceConfiguration: ITTestResourceConfiguration, artifactory: (fPath: string, value: unknown) => void, tLog: (...string: any[]) => void): Promise<BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape, IGivenShape>>;
 }
-export declare abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape> {
+export declare abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape, IGivenShape> {
     name: string;
     features: string[];
     whens: BaseWhen<IStore, ISelection, IThenShape>[];
@@ -38,7 +38,8 @@ export declare abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape
     error: Error;
     store: IStore;
     recommendedFsPath: string;
-    constructor(name: string, features: string[], whens: BaseWhen<IStore, ISelection, IThenShape>[], thens: BaseThen<ISelection, IStore, IThenShape>[]);
+    givenCB: IGivenShape;
+    constructor(name: string, features: string[], whens: BaseWhen<IStore, ISelection, IThenShape>[], thens: BaseThen<ISelection, IStore, IThenShape>[], givenCB: IGivenShape);
     beforeAll(store: IStore, artifactory: ITestArtifactory): IStore;
     afterAll(store: IStore, artifactory: ITestArtifactory): IStore;
     toObj(): {
@@ -54,7 +55,7 @@ export declare abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape
         error: (string | Error | undefined)[] | null;
         features: string[];
     };
-    abstract givenThat(subject: ISubject, testResourceConfiguration: any, artifactory: ITestArtifactory): Promise<IStore>;
+    abstract givenThat(subject: ISubject, testResourceConfiguration: any, artifactory: ITestArtifactory, givenCB: IGivenShape): Promise<IStore>;
     afterEach(store: IStore, key: string, artifactory: ITestArtifactory): Promise<unknown>;
     give(subject: ISubject, key: string, testResourceConfiguration: any, tester: any, artifactory: ITestArtifactory, tLog: ITLog): Promise<IStore>;
 }

@@ -32,7 +32,8 @@ export type ITestSpecification<
   ISubject,
   IStore,
   ISelection,
-  IThenShape
+  IThenShape,
+  IGivenShape
 > = (
   Suite: {
     [K in keyof ITestShape["suites"]]: (
@@ -41,7 +42,8 @@ export type ITestSpecification<
         ISubject,
         IStore,
         ISelection,
-        IThenShape
+        IThenShape,
+        IGivenShape
       >,
       checks: BaseCheck<
         ISubject,
@@ -56,7 +58,8 @@ export type ITestSpecification<
       IStore,
       ISelection,
       IThenShape,
-      ITestShape
+      ITestShape,
+      IGivenShape
     >;
   },
   Given: {
@@ -77,7 +80,8 @@ export type ITestSpecification<
       ISubject,
       IStore,
       ISelection,
-      IThenShape
+      IThenShape,
+      IGivenShape
     >;
   },
   When: {
@@ -105,7 +109,8 @@ export type ITestImplementation<
   ISelection,
   IWhenShape,
   IThenShape,
-  ITestShape extends ITTestShape
+  ITestShape extends ITTestShape,
+  IGivenShape
 > = {
   Suites: {
     [K in keyof ITestShape["suites"]]: string;
@@ -113,7 +118,7 @@ export type ITestImplementation<
   Givens: {
     [K in keyof ITestShape["givens"]]: (
       ...Ig: ITestShape["givens"][K]
-    ) => IState;
+    ) => (s: IState) => IGivenShape;
   };
   Whens: {
     [K in keyof ITestShape["whens"]]: (

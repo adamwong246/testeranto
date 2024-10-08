@@ -43,5 +43,5 @@ ipcMain.handle('web-info', (x, message) => {
 });
 ipcMain.handle('quit-app', (x, failed) => {
     console.log("quit-app", failed);
-    // app.exit(failed);
+    app.exit(failed);
 });

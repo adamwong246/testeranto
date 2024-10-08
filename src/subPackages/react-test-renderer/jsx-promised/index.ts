@@ -18,7 +18,8 @@ export type ITestImpl<
   ISelection,
   IWhenShape,
   IThenShape,
-  ITestShape
+  ITestShape,
+  any
 >
 
 export type ITestSpec<
@@ -28,7 +29,8 @@ export type ITestSpec<
   ISubject,
   IStore,
   ISelection,
-  IThenShape
+  IThenShape,
+  any
 >
 
 export const testInterface = {

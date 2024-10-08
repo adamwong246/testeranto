@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.50.0",
+  "version": "0.51.0",
   "type": "module",
   "types": "./dist/index.d.mts",
   "module": "dist/module/index.js",
@@ -31,8 +31,8 @@
       "require": "./dist/common/SubPackages/react/component/node.js"
     },
     "./src/SubPackages/react-test-renderer/component/index": {
-      "import": "./dist/module/SubPackages/react-test-renderer/component/index.js",
-      "require": "./dist/common/SubPackages/react-test-renderer/component/index.js"
+      "import": "./dist/module/SubPackages/react-test-renderer/component/index.ts",
+      "require": "./dist/common/SubPackages/react-test-renderer/component/index.ts"
     },
     "./src/SubPackages/react-test-renderer/component/web": {
       "import": "./dist/module/SubPackages/react-test-renderer/component/web.js",
@@ -95,8 +95,12 @@
       "require": "./dist/common/SubPackages/react-dom/component/node.js"
     },
     "./src/Types": {
-      "import": "./dist/module/Types.js",
-      "require": "./dist/common/Types.js"
+      "import": "./src/Types.ts",
+      "require": "./src/Types.ts"
+    },
+    "./src/lib": {
+      "import": "./src/lib.ts",
+      "require": "./src/lib.ts"
     },
     "./src/Features": {
       "import": "./dist/module/Features.js",

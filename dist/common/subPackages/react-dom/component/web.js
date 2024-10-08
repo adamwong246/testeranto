@@ -6,7 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = require("react");
 const client_1 = __importDefault(require("react-dom/client"));
 const Web_1 = __importDefault(require("../../../Web"));
-exports.default = (testImplementations, testSpecifications, testInput) => {
+exports.default = (testInput, testSpecifications, testImplementations) => {
+    console.log("mark80" + testImplementations);
     document.addEventListener("DOMContentLoaded", function () {
         console.log("DOMContentLoaded");
         const elem = document.getElementById("root");
@@ -22,7 +23,8 @@ exports.default = (testImplementations, testSpecifications, testInput) => {
                 }
             }
             return (0, Web_1.default)(testInput, testSpecifications, testImplementations, {
-                beforeAll: async (prototype, artificer) => {
+                beforeAll: async (initialProps, artificer) => {
+                    // console.log("mark41", initialProps)
                     return await new Promise((resolve, rej) => {
                         const elem = document.getElementById("root");
                         if (elem) {
@@ -30,21 +32,22 @@ exports.default = (testImplementations, testSpecifications, testInput) => {
                         }
                     });
                 },
-                beforeEach: async ({ htmlElement }, ndx, testRsource, artificer) => {
+                beforeEach: async ({ htmlElement }, initialValues, testResource, artificer) => {
+                    console.log("mark444", initialValues);
+                    // debugger
                     return new Promise((resolve, rej) => {
                         // Ignore these type errors
-                        client_1.default.createRoot(htmlElement).render((0, react_1.createElement)(TesterantoComponent, {
-                            done: (reactElement) => {
+                        client_1.default.createRoot(htmlElement).render((0, react_1.createElement)(TesterantoComponent, Object.assign(Object.assign({}, initialValues.props), { done: (reactElement) => {
                                 resolve({
                                     htmlElement,
                                     reactElement,
                                 });
-                            }
-                        }, []));
+                            } }), []));
                     });
                 },
                 andWhen: function (s, whenCB) {
-                    return whenCB()(s);
+                    console.log("mark31", whenCB);
+                    return whenCB(s);
                 },
                 butThen: async function (s) {
                     return s;

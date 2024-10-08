@@ -35,12 +35,14 @@ class ClassBuilder {
             };
             return a;
         }, {});
-        const classyGivens = Object.keys(testImplementation.Givens)
-            .reduce((a, key) => {
-            a[key] = (features, whens, thens, ...xtrasW) => {
-                // const f = testImplementation.Givens[key](...xtrasW);
-                return new givenKlasser.prototype.constructor(key, features, whens, thens, ((phunkshun) => {
-                })(testImplementation.Givens[key]));
+        const classyGivens = Object.entries(testImplementation.Givens)
+            .reduce((a, [key, givEn]) => {
+            a[key] = (features, whens, thens, givEn) => {
+                console.log("mark42" + JSON.stringify(testImplementation));
+                return new (givenKlasser.prototype).constructor(key, features, whens, thens, ((phunkshun) => {
+                    console.log("mark43", phunkshun);
+                    return phunkshun;
+                })(testImplementation.Givens[key]), { asd: "qwe" });
             };
             return a;
         }, {});
@@ -119,21 +121,20 @@ class ClassBuilder {
     }
 }
 export default class Testeranto extends ClassBuilder {
-    constructor(input, testSpecification, testImplementation, testInterface, testResourceRequirement = defaultTestResourceRequirement, logWriter, beforeEach, afterEach, afterAll, butThen, andWhen, actionHandler, assertioner) {
+    constructor(input, testSpecification, testImplementation, testResourceRequirement = defaultTestResourceRequirement, logWriter, beforeAll, beforeEach, afterEach, afterAll, butThen, andWhen) {
         super(testImplementation, testSpecification, input, class extends BaseSuite {
             async setup(s, artifactory) {
-                return (testInterface.beforeAll || (async (input, artificer) => input))(s, artifactory, this.testResourceConfiguration);
-            }
-            test(t) {
-                return assertioner(t);
+                return (beforeAll || (async (input, artificer) => input))(s, artifactory, this.testResourceConfiguration);
             }
         }, class Given extends BaseGiven {
-            constructor(name, features, whens, thens, initialValues) {
-                super(name, features, whens, thens);
+            constructor(name, features, whens, thens, givenCB, initialValues) {
+                super(name, features, whens, thens, givenCB);
                 this.initialValues = initialValues;
             }
-            async givenThat(subject, testResource, artifactory) {
-                return beforeEach(subject, this.initialValues, testResource, (fPath, value) => 
+            async givenThat(subject, testResource, artifactory, initialValues) {
+                console.log("mark 0 initialValues" + JSON.stringify(initialValues));
+                // process.exit(-1)
+                return beforeEach(subject, initialValues, testResource, (fPath, value) => 
                 // TODO does not work?
                 artifactory(`beforeEach/${fPath}`, value));
             }
@@ -147,9 +148,7 @@ export default class Testeranto extends ClassBuilder {
             }
         }, class When extends BaseWhen {
             constructor(name, whenCB, payload) {
-                super(name, (store) => {
-                    return actionHandler(whenCB);
-                });
+                super(name, whenCB);
                 this.payload = payload;
             }
             async andWhen(store, whenCB, testResource) {
@@ -176,5 +175,8 @@ export default class Testeranto extends ClassBuilder {
                 artifactory(`afterEach2-${this.name}/${fPath}`, value))));
             }
         }, testResourceRequirement, logWriter);
+        // console.log("mark90" + JSON.stringify(arguments));
+        // console.log("mark90" + JSON.stringify(testImplementation));
+        // debugger
     }
 }

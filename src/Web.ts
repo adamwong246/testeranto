@@ -44,6 +44,7 @@ const receiveTestResourceConfigScheduled = async (t, testresource) => {
   );
 
   Promise.all([...artifacts, logPromise]).then(async () => {
+    // app.quit()
     // ipcRenderer.invoke('quit-app', failed);
     (window as any).exit(failed)
   })
@@ -65,7 +66,8 @@ export default async <
     ISubject,
     IStore,
     ISelection,
-    IThenShape
+    IThenShape,
+    any
   >,
   testImplementation,
   testInterface: ITestInterface<IStore, ISelection, ISubject, IThenShape, IInput>,
@@ -85,7 +87,7 @@ export default async <
     testInterface.andWhen,
   );
 
-  const tl2: Testeranto<any, any, any, any, any, any, any, any> = mrt;
+  const tl2: Testeranto<any, any, any, any, any, any, any, any, any> = mrt;
   const t: ITestJob = tl2.testJobs[0];
   const testResourceArg = decodeURIComponent(
     new URLSearchParams(location.search).get('requesting') || ''

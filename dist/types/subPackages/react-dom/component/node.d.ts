@@ -11,5 +11,5 @@ export declare type ISelection = ReactNode;
 export declare type IStore = ReactNode;
 export declare type ISubject = ReactNode;
 export { renderToStaticMarkup, renderToStaticNodeStream, Stream };
-declare const _default: <ITestShape extends ITTestShape>(testImplementations: ITestImplementation<unknown, React.ReactNode, any, any, ITestShape>, testSpecifications: ITestSpecification<ITestShape, React.ReactNode, React.ReactNode, React.ReactNode, any>, testInput: IInput) => Promise<void>;
+declare const _default: <ITestShape extends ITTestShape>(testImplementations: ITestImplementation<unknown, React.ReactNode, any, any, ITestShape, any>, testSpecifications: ITestSpecification<ITestShape, React.ReactNode, React.ReactNode, React.ReactNode, any, any>, testInput: IInput) => Promise<void>;
 export default _default;

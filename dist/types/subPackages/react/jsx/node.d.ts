@@ -1,4 +1,7 @@
 import { ITTestShape } from "../../../lib";
-import { ITestImpl, ITestSpec, IInput } from "./index";
-declare const _default: <ITestShape extends ITTestShape>(testImplementations: ITestImpl<ITestShape>, testSpecifications: ITestSpec<ITestShape>, testInput: IInput) => Promise<void>;
+import { ITestImpl, ITestSpec, IInput, IStore, ISelection } from "./index";
+declare const _default: <ITestShape extends ITTestShape>(testImplementations: ITestImpl<ITestShape>, testSpecifications: ITestSpec<ITestShape>, testInput: IInput, testInterface2?: (testInput: any) => {
+    beforeEach: (x: any, ndx: any, testRsource: any, artificer: any) => Promise<IStore>;
+    andWhen: (s: IStore, whenCB: any) => Promise<ISelection>;
+}) => Promise<void>;
 export default _default;

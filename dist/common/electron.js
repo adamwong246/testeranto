@@ -48,5 +48,5 @@ electron_1.ipcMain.handle('web-info', (x, message) => {
 });
 electron_1.ipcMain.handle('quit-app', (x, failed) => {
     console.log("quit-app", failed);
-    // app.exit(failed);
+    electron_1.app.exit(failed);
 });

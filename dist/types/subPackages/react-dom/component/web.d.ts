@@ -16,5 +16,5 @@ declare type IStore = {
 declare type ISubject = {
     htmlElement: HTMLElement;
 };
-declare const _default: <ITestShape extends ITTestShape>(testImplementations: ITestImplementation<unknown, ISelection, any, any, ITestShape>, testSpecifications: ITestSpecification<ITestShape, ISubject, IStore, ISelection, any>, testInput: IInput) => void;
+declare const _default: <ITestShape extends ITTestShape>(testInput: IInput, testSpecifications: ITestSpecification<ITestShape, ISubject, IStore, ISelection, any, any>, testImplementations: ITestImplementation<unknown, ISelection, any, any, ITestShape, any>) => void;
 export default _default;

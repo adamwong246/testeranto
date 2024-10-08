@@ -4,6 +4,7 @@ const nodeWriter_1 = require("./nodeWriter");
 const electron_1 = require("electron");
 window.NodeWriter = nodeWriter_1.NodeWriter;
 window.exit = (x) => {
+    console.log("mark15");
     electron_1.ipcRenderer.invoke('quit-app', x);
 };
 var oldLog = console.log;

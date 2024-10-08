@@ -27,6 +27,14 @@ export type ITTestShape = {
   checks;
 };
 
+export type ITTTestShape<T extends ITTestShape> = {
+  suites;
+  givens;
+  whens;
+  thens;
+  checks;
+};
+
 export type ITLog = (...string) => void;
 
 export type ILogWriter = {
@@ -43,7 +51,7 @@ export type ITestArtificer = (key: string, data: any) => void;
 type ITest = {
   toObj(): object;
   name: string;
-  givens: IGivens<unknown, unknown, unknown, unknown>;
+  givens: IGivens<unknown, unknown, unknown, unknown, unknown>;
   checks: BaseCheck<unknown, unknown, unknown, unknown, ITTestShape>[];
   testResourceConfiguration: ITTestResourceConfiguration;
 };
@@ -52,7 +60,7 @@ export type ITestJob = {
   toObj(): object;
   test: ITest;
   runner: (x: ITTestResourceConfiguration, t: ITLog) => Promise<
-    BaseSuite<any, any, any, any, any, any>
+    BaseSuite<any, any, any, any, any, any, any>
   >;
   testResourceRequirement: ITTestResourceRequirement;
   receiveTestResourceConfig: (testResource?) => Promise<{

@@ -1,3 +1,4 @@
+import React from "react";
 import renderer, { act } from "react-test-renderer";
 // export const testInterface = {
 //   beforeEach: function (CComponent, props): Promise<renderer.ReactTestRenderer> {
@@ -20,18 +21,27 @@ import renderer, { act } from "react-test-renderer";
 //   }
 // }
 export const testInterface = {
-    beforeEach: function (CComponent, props) {
+    beforeEach: function (CComponent, propsAndChildren) {
+        function Link(props) {
+            const p = props.props;
+            const c = props.children;
+            return React.createElement(CComponent, p, c);
+        }
         return new Promise((res, rej) => {
-            act(() => {
-                const x = renderer.create(new CComponent(props));
-                console.log("beforeEach", x.getInstance());
-                res(x);
+            act(async () => {
+                const p = propsAndChildren;
+                // console.log("beforeEach1", CComponent, p)
+                const y = new CComponent(p.props);
+                // console.log("beforeEach2", y)
+                const testRenderer = await renderer.create(Link(propsAndChildren));
+                // console.log("beforeEach3", testRenderer.getInstance())
+                res(testRenderer);
             });
         });
     },
     andWhen: async function (renderer, whenCB) {
-        // console.log("andWhen", renderer)
-        await act(() => whenCB()(renderer));
+        console.log("andWhen", whenCB);
+        await act(() => whenCB(renderer));
         return renderer;
     },
     // andWhen: function (s: Store, whenCB): Promise<Selection> {

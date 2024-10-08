@@ -5,5 +5,5 @@ import { ITestImplementation, ITestSpecification } from "../../../Types";
 import { IInput, ISelection, IStore, IThenShape, IWhenShape, IState } from "./index";
 declare type ISubject = void;
 export { renderToStaticMarkup, renderToStaticNodeStream, Stream };
-declare const _default: <ITestShape extends ITTestShape>(testImplementations: ITestImplementation<unknown, HTMLElement, any, any, ITestShape>, testSpecifications: ITestSpecification<ITestShape, void, HTMLElement, HTMLElement, any>, testInput: IInput) => Promise<void>;
+declare const _default: <ITestShape extends ITTestShape>(testImplementations: ITestImplementation<unknown, HTMLElement, any, any, ITestShape, any>, testSpecifications: ITestSpecification<ITestShape, void, HTMLElement, HTMLElement, any, any>, testInput: IInput) => Promise<void>;
 export default _default;

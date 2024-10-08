@@ -3,6 +3,7 @@ import { ipcRenderer } from "electron";
 
 (window as any).NodeWriter = NodeWriter;
 (window as any).exit = (x) => {
+  console.log("mark15");
   ipcRenderer.invoke('quit-app', x);
 }
 

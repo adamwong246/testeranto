@@ -56,7 +56,8 @@ export default async <
   ISelection,
   IWhenShape,
   IThenShape,
-  IState
+  IState,
+  IGivenShape
 >(
   input: IInput,
   testSpecification: ITestSpecification<
@@ -64,7 +65,8 @@ export default async <
     ISubject,
     IStore,
     ISelection,
-    IThenShape
+    IThenShape,
+    IGivenShape
   >,
   testImplementation,
   testInterface: ITestInterface<IStore, ISelection, ISubject, IThenShape, IInput>,
@@ -83,9 +85,11 @@ export default async <
     testInterface.afterAll || ((store: IStore) => undefined),
     testInterface.butThen || (async (a) => a as any),
     testInterface.andWhen,
+    // testInterface.givenThat || (async (a) => a as any),
+
   );
 
-  const tl2: Testeranto<any, any, any, any, any, any, any, any> = mrt;
+  const tl2: Testeranto<any, any, any, any, any, any, any, any, any> = mrt;
   const t: ITestJob = tl2.testJobs[0];
   const testResourceArg = process.argv[2] || `{}`;
 

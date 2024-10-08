@@ -24,14 +24,16 @@ export default <ITestShape extends ITTestShape>(
     ISelection,
     IWhenShape,
     IThenShape,
-    ITestShape
+    ITestShape,
+    any
   >,
   testSpecifications: ITestSpecification<
     ITestShape,
     ISubject,
     IStore,
     ISelection,
-    IThenShape
+    IThenShape,
+    any
   >,
   testInput: IInput
 ) => {
@@ -43,7 +45,8 @@ export default <ITestShape extends ITTestShape>(
     ISelection,
     IThenShape,
     IWhenShape,
-    InitialState
+    InitialState,
+    any
   >(
     testInput,
     testSpecifications,
@@ -73,8 +76,8 @@ export default <ITestShape extends ITTestShape>(
         });
       },
       andWhen: async function (s: IStore, whenCB): Promise<ISelection> {
-        // return whenCB()(s);
-        return s
+        return whenCB(s);
+        // return s
       },
       butThen: async function (s: IStore): Promise<ISelection> {
         return s;

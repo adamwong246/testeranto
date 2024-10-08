@@ -8,9 +8,9 @@ export declare type IInput = (props?: any) => JSX.Element;
 export declare type ISelection = renderer.ReactTestRenderer;
 export declare type IStore = renderer.ReactTestRenderer;
 export declare type ISubject = renderer.ReactTestRenderer;
-export declare type ITestImpl<ITestShape extends ITTestShape> = ITestImplementation<InitialState, ISelection, IWhenShape, IThenShape, ITestShape>;
-export declare type ITestSpec<ITestShape extends ITTestShape> = ITestSpecification<ITestShape, ISubject, IStore, ISelection, IThenShape>;
-export declare const testInterface: {
+export declare type ITestImpl<ITestShape extends ITTestShape> = ITestImplementation<InitialState, ISelection, IWhenShape, IThenShape, ITestShape, any>;
+export declare type ITestSpec<ITestShape extends ITTestShape> = ITestSpecification<ITestShape, ISubject, IStore, ISelection, IThenShape, any>;
+export declare const testInterface: (testInput: any) => {
     beforeEach: (CComponent: any, props: any) => Promise<renderer.ReactTestRenderer>;
-    andWhen: (renderer: renderer.ReactTestRenderer, whenCB: () => (any: any) => any) => Promise<renderer.ReactTestRenderer>;
+    andWhen: (renderer: renderer.ReactTestRenderer, whenCB: (any: any) => any) => Promise<renderer.ReactTestRenderer>;
 };

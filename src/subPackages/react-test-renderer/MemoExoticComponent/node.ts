@@ -17,10 +17,12 @@ export default <ITestShape extends ITTestShape, PropShape>(
     renderer.ReactTestRenderer,
     WhenShape,
     ThenShape,
-    ITestShape
+    ITestShape,
+    any
   >,
   testSpecifications: ITestSpecification<
     ITestShape,
+    any,
     any,
     any,
     any,
@@ -36,7 +38,8 @@ export default <ITestShape extends ITTestShape, PropShape>(
     unknown,
     unknown,
     unknown,
-    unknown
+    unknown,
+    any
   >(
     testInput,
     testSpecifications,

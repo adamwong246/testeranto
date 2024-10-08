@@ -23,14 +23,16 @@ export default <ITestShape extends ITTestShape>(
     ISelection,
     IWhenShape,
     IThenShape,
-    ITestShape
+    ITestShape,
+    any
   >,
   testSpecifications: ITestSpecification<
     ITestShape,
     ISubject,
     IStore,
     ISelection,
-    IThenShape
+    IThenShape,
+    any
   >,
   testInput: IInput
 ) => {
@@ -42,7 +44,8 @@ export default <ITestShape extends ITTestShape>(
     ISelection,
     IThenShape,
     IWhenShape,
-    IState
+    IState,
+    any
   >(
     testInput,
     testSpecifications,

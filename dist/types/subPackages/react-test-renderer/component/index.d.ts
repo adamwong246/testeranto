@@ -10,10 +10,10 @@ export declare type IThenShape = any;
 export declare type ISelection = renderer.ReactTestRenderer;
 export declare type IStore = renderer.ReactTestRenderer;
 export declare type ISubject = renderer.ReactTestRenderer;
-export declare type IImpl<ITestShape extends ITTestShape, IProps> = ITestImplementation<IProps, renderer.ReactTestRenderer, IWhenShape, IThenShape, ITestShape>;
-export declare type ISpec<ITestShape extends ITTestShape> = ITestSpecification<ITestShape, ISubject, IStore, ISelection, IThenShape>;
+export declare type IImpl<ITestShape extends ITTestShape, IProps> = ITestImplementation<IProps, renderer.ReactTestRenderer, IWhenShape, IThenShape, ITestShape, any>;
+export declare type ISpec<ITestShape extends ITTestShape> = ITestSpecification<ITestShape, ISubject, IStore, ISelection, IThenShape, any>;
 export declare const testInterface: {
-    beforeEach: (CComponent: any, props: any) => Promise<renderer.ReactTestRenderer>;
+    beforeEach: (CComponent: any, propsAndChildren: any) => Promise<renderer.ReactTestRenderer>;
     andWhen: (renderer: renderer.ReactTestRenderer, whenCB: any) => Promise<renderer.ReactTestRenderer>;
     butThen: (s: IStore) => Promise<ISelection>;
     afterEach: (store: IStore, ndx: any, artificer: any) => Promise<{}>;

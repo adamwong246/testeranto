@@ -23,8 +23,8 @@ export default (testImplementations, testSpecifications, testInput) => {
             });
         },
         andWhen: async function (s, whenCB) {
-            // return whenCB()(s);
-            return s;
+            return whenCB(s);
+            // return s
         },
         butThen: async function (s) {
             return s;

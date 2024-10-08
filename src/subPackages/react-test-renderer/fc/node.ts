@@ -15,7 +15,8 @@ export type ISpec<ITestShape extends ITTestShape> = ITestSpecification<
   any,
   any,
   any,
-  IThenShape
+  IThenShape,
+  any
 >
 export default <
   ITestShape extends ITTestShape,
@@ -26,7 +27,8 @@ export default <
     renderer.ReactTestRenderer,
     IWhenShape,
     IThenShape,
-    ITestShape
+    ITestShape,
+    any
   >,
   testSpecifications: ISpec<ITestShape>,
   testInput: IInput
@@ -36,7 +38,11 @@ export default <
     IInput,
     any,
     renderer.ReactTestRenderer,
-    unknown, unknown, unknown, unknown
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    any
   >(
     testInput,
     testSpecifications,
@@ -51,7 +57,10 @@ export default <
           let component: renderer.ReactTestRenderer;
           act(() => {
             component = renderer.create(
-              React.createElement(CComponent, props, [])
+              React.createElement(
+                CComponent,
+                props,
+                [])
             );
             res(component);
           });
