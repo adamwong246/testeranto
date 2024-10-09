@@ -29,19 +29,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.testInterface = void 0;
 const react_1 = __importDefault(require("react"));
 const react_test_renderer_1 = __importStar(require("react-test-renderer"));
-const testInterface = (testInput) => {
-    return {
-        beforeEach: function (CComponent, props) {
-            let component;
-            (0, react_test_renderer_1.act)(() => {
-                component = react_test_renderer_1.default.create(react_1.default.createElement(CComponent, props, []));
-            });
-            return component;
-        },
-        andWhen: async function (renderer, whenCB) {
-            await (0, react_test_renderer_1.act)(() => whenCB(renderer));
-            return renderer;
-        }
-    };
+exports.testInterface = {
+    beforeEach: function (CComponent, props) {
+        let component;
+        (0, react_test_renderer_1.act)(() => {
+            component = react_test_renderer_1.default.create(react_1.default.createElement(CComponent, props, []));
+        });
+        return component;
+    },
+    andWhen: async function (renderer, whenCB) {
+        await (0, react_test_renderer_1.act)(() => whenCB(renderer));
+        return renderer;
+    }
 };
-exports.testInterface = testInterface;

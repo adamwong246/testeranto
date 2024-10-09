@@ -83,7 +83,6 @@ export default abstract class Testeranto<
       whenCB,
       testResource: ITTestResourceConfiguration
     ) => Promise<ISelection>,
-    assertioner: (x: any) => unknown
   ) {
     super(
       testImplementation,
@@ -99,6 +98,7 @@ export default abstract class Testeranto<
         TestShape,
         IGivenShape
       > {
+
         async setup(s: IInput, artifactory): Promise<ISubject> {
           return (beforeAll || (async (
             input: IInput,
@@ -113,24 +113,6 @@ export default abstract class Testeranto<
 
       class Given extends BaseGiven<ISubject, IStore, ISelection, IThenShape, IGivenShape> {
 
-        constructor(
-          name: string,
-          features: string[],
-          whens: BaseWhen<IStore, ISelection, IThenShape>[],
-          thens: BaseThen<ISelection, IStore, IThenShape>[],
-          givenCB: IGivenShape,
-          initialValues: any,
-        ) {
-          super(
-            name,
-            features,
-            whens,
-            thens,
-            givenCB,
-            initialValues
-          );
-
-        }
         async givenThat(subject, testResource, artifactory, initializer) {
           return beforeEach(
             subject,
@@ -142,6 +124,7 @@ export default abstract class Testeranto<
             this.initialValues
           );
         }
+
         afterEach(
           store: IStore,
           key: string,
@@ -160,17 +143,6 @@ export default abstract class Testeranto<
       } as any,
 
       class When extends BaseWhen<IStore, ISelection, IWhenShape> {
-        payload?: any;
-
-        constructor(
-          name: string,
-          whenCB: (...any) => any, payload?: any) {
-          super(
-            name,
-            whenCB);
-          this.payload = payload;
-        }
-
         async andWhen(store, whenCB, testResource) {
           return await andWhen(store, whenCB, testResource);
         }
@@ -178,27 +150,11 @@ export default abstract class Testeranto<
 
       class Then extends BaseThen<ISelection, IStore, IThenShape> {
 
-        constructor(
-          name: string,
-          thenCB:
-            (val: ISelection) => IThenShape
-        ) {
-          super(name, thenCB);
-        }
-
-        assertion(x: any) {
-          return assertioner(x);
-        }
         async butThen(
           store: any,
           testResourceConfiguration?: any
         ): Promise<ISelection> {
           const newState = await butThen(store, this.thenCB, testResourceConfiguration);
-          // console.log("mark600", newState)
-          // if (assertioner) {
-          //   console.log("mark601", assertioner.toString())
-          //   assertioner(newState);
-          // }
           return newState;
         }
       } as any,

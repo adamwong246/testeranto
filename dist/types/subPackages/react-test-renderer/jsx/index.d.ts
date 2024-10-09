@@ -10,7 +10,7 @@ export declare type IStore = renderer.ReactTestRenderer;
 export declare type ISubject = renderer.ReactTestRenderer;
 export declare type ITestImpl<ITestShape extends ITTestShape> = ITestImplementation<InitialState, ISelection, IWhenShape, IThenShape, ITestShape, any>;
 export declare type ITestSpec<ITestShape extends ITTestShape> = ITestSpecification<ITestShape, ISubject, IStore, ISelection, IThenShape, any>;
-export declare const testInterface: (testInput: any) => {
+export declare const testInterface: {
     beforeEach: (CComponent: any, props: any) => Promise<renderer.ReactTestRenderer>;
     andWhen: (renderer: renderer.ReactTestRenderer, whenCB: (any: any) => any) => Promise<renderer.ReactTestRenderer>;
 };

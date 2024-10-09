@@ -34,7 +34,7 @@ export type ITestSpec<
   any
 >
 
-export const testInterface = (testInput) => {
+export const testInterface = (z) => {
   return {
     beforeEach: async (
       x,
@@ -43,12 +43,10 @@ export const testInterface = (testInput) => {
       artificer
     ): Promise<IStore> => {
       return new Promise((resolve, rej) => {
-        resolve(testInput())
+        resolve(x())
       });
     },
     andWhen: function (s: IStore, whenCB): Promise<ISelection> {
-      // console.log("mark18")
-      // debugger
       return whenCB(s);
     },
   }

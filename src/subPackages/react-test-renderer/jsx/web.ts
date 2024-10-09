@@ -25,6 +25,6 @@ export default <ITestShape extends ITTestShape>(
     testInput,
     testSpecifications,
     testImplementations,
-    testInterface2(testInput),
+    testInterface2,
   )
 };

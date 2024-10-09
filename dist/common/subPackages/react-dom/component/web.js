@@ -7,9 +7,7 @@ const react_1 = require("react");
 const client_1 = __importDefault(require("react-dom/client"));
 const Web_1 = __importDefault(require("../../../Web"));
 exports.default = (testInput, testSpecifications, testImplementations) => {
-    console.log("mark80" + testImplementations);
     document.addEventListener("DOMContentLoaded", function () {
-        console.log("DOMContentLoaded");
         const elem = document.getElementById("root");
         if (elem) {
             class TesterantoComponent extends testInput {
@@ -24,7 +22,6 @@ exports.default = (testInput, testSpecifications, testImplementations) => {
             }
             return (0, Web_1.default)(testInput, testSpecifications, testImplementations, {
                 beforeAll: async (initialProps, artificer) => {
-                    // console.log("mark41", initialProps)
                     return await new Promise((resolve, rej) => {
                         const elem = document.getElementById("root");
                         if (elem) {
@@ -33,8 +30,6 @@ exports.default = (testInput, testSpecifications, testImplementations) => {
                     });
                 },
                 beforeEach: async ({ htmlElement }, initialValues, testResource, artificer) => {
-                    console.log("mark444", initialValues);
-                    // debugger
                     return new Promise((resolve, rej) => {
                         // Ignore these type errors
                         client_1.default.createRoot(htmlElement).render((0, react_1.createElement)(TesterantoComponent, Object.assign(Object.assign({}, initialValues.props), { done: (reactElement) => {
@@ -46,7 +41,6 @@ exports.default = (testInput, testSpecifications, testImplementations) => {
                     });
                 },
                 andWhen: function (s, whenCB) {
-                    console.log("mark31", whenCB);
                     return whenCB(s);
                 },
                 butThen: async function (s) {

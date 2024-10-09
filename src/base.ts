@@ -306,8 +306,6 @@ export abstract class BaseThen<ISelection, IStore, IThenShape> {
 
   abstract butThen(store: any, testResourceConfiguration?): Promise<ISelection>;
 
-  abstract assertion(x);
-
   async test(
     store: IStore,
     testResourceConfiguration,
@@ -316,8 +314,6 @@ export abstract class BaseThen<ISelection, IStore, IThenShape> {
     tLog(" Then:", this.name);
     try {
       const x = this.thenCB(await this.butThen(store, testResourceConfiguration));
-      console.log("mark800", x, this.assertion)
-      this.assertion(x);
       return x;
     } catch (e) {
       console.log("test failed", e);
@@ -883,9 +879,6 @@ export abstract class ClassBuilder<
               features,
               whens,
               thens,
-              // ((phunkshun) => {
-              //   return phunkshun
-              // })(testImplementation.Givens[key]),
               testImplementation.Givens[key],
               givEn
             );

@@ -2,7 +2,6 @@ import { NodeWriter } from "./nodeWriter";
 import { ipcRenderer } from "electron";
 window.NodeWriter = NodeWriter;
 window.exit = (x) => {
-    console.log("mark15");
     ipcRenderer.invoke('quit-app', x);
 };
 var oldLog = console.log;

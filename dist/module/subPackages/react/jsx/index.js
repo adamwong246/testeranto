@@ -1,13 +1,11 @@
-export const testInterface = (testInput) => {
+export const testInterface = (z) => {
     return {
         beforeEach: async (x, ndx, testRsource, artificer) => {
             return new Promise((resolve, rej) => {
-                resolve(testInput());
+                resolve(x());
             });
         },
         andWhen: function (s, whenCB) {
-            // console.log("mark18")
-            // debugger
             return whenCB(s);
         },
     };

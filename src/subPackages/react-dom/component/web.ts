@@ -43,11 +43,7 @@ export default <ITestShape extends ITTestShape>(
   >,
 
 ) => {
-
-  console.log("mark80" + testImplementations);
-
   document.addEventListener("DOMContentLoaded", function () {
-    console.log("DOMContentLoaded")
     const elem = document.getElementById("root");
     if (elem) {
       class TesterantoComponent extends testInput {
@@ -81,7 +77,6 @@ export default <ITestShape extends ITTestShape>(
             initialProps,
             artificer
           ): Promise<ISubject> => {
-            // console.log("mark41", initialProps)
             return await new Promise((resolve, rej) => {
               const elem = document.getElementById("root");
               if (elem) {
@@ -96,8 +91,6 @@ export default <ITestShape extends ITTestShape>(
             testResource,
             artificer,
           ): Promise<IStore> => {
-            console.log("mark444", initialValues)
-            // debugger
             return new Promise((resolve, rej) => {
               // Ignore these type errors
               ReactDom.createRoot(htmlElement).render(createElement(
@@ -116,7 +109,6 @@ export default <ITestShape extends ITTestShape>(
             });
           },
           andWhen: function (s: IStore, whenCB): Promise<ISelection> {
-            console.log("mark31", whenCB)
             return whenCB(s);
           },
           butThen: async function (s: IStore): Promise<ISelection> {

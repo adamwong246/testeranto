@@ -34,23 +34,21 @@ export type ITestSpec<
   any
 >
 
-export const testInterface = (testInput) => {
-  return {
-    beforeEach: function (CComponent, props): Promise<renderer.ReactTestRenderer> {
-      let component;
-      act(() => {
-        component = renderer.create(
-          React.createElement(CComponent, props, [])
-        );
-      });
-      return component;
-    },
-    andWhen: async function (
-      renderer: renderer.ReactTestRenderer,
-      whenCB: (any) => any
-    ): Promise<renderer.ReactTestRenderer> {
-      await act(() => whenCB(renderer));
-      return renderer
-    }
+export const testInterface = {
+  beforeEach: function (CComponent, props): Promise<renderer.ReactTestRenderer> {
+    let component;
+    act(() => {
+      component = renderer.create(
+        React.createElement(CComponent, props, [])
+      );
+    });
+    return component;
+  },
+  andWhen: async function (
+    renderer: renderer.ReactTestRenderer,
+    whenCB: (any) => any
+  ): Promise<renderer.ReactTestRenderer> {
+    await act(() => whenCB(renderer));
+    return renderer
   }
-}
+};

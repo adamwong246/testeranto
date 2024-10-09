@@ -2,9 +2,8 @@ import Testeranto from "./core.js";
 import { defaultTestResourceRequirement } from "./lib.js";
 import { NodeWriter } from "./nodeWriter.js";
 class NodeTesteranto extends Testeranto {
-    constructor(input, testSpecification, testImplementation, testResourceRequirement, beforeAll, beforeEach, afterEach, afterAll, butThen, andWhen, assertioner) {
-        console.log("markl801", assertioner);
-        super(input, testSpecification, testImplementation, testResourceRequirement, NodeWriter, beforeAll, beforeEach, afterEach, afterAll, butThen, andWhen, assertioner);
+    constructor(input, testSpecification, testImplementation, testResourceRequirement, beforeAll, beforeEach, afterEach, afterAll, butThen, andWhen) {
+        super(input, testSpecification, testImplementation, testResourceRequirement, NodeWriter, beforeAll, beforeEach, afterEach, afterAll, butThen, andWhen);
         const t = this.testJobs[0];
         const testResourceArg = process.argv[2] || `{}`;
         try {
@@ -67,5 +66,5 @@ class NodeTesteranto extends Testeranto {
 }
 ;
 export default async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = defaultTestResourceRequirement) => {
-    new NodeTesteranto(input, testSpecification, testImplementation, testResourceRequirement, testInterface.beforeAll || (async (s) => s), testInterface.beforeEach || async function (subject, initialValues, testResource) { return subject; }, testInterface.afterEach || (async (s) => s), testInterface.afterAll || ((store) => undefined), testInterface.butThen || (async (a) => a), testInterface.andWhen, testInterface.assertioner || ((...x) => x));
+    new NodeTesteranto(input, testSpecification, testImplementation, testResourceRequirement, testInterface.beforeAll || (async (s) => s), testInterface.beforeEach || async function (subject, initialValues, testResource) { return subject; }, testInterface.afterEach || (async (s) => s), testInterface.afterAll || ((store) => undefined), testInterface.butThen || (async (a) => a), testInterface.andWhen || ((a) => a));
 };

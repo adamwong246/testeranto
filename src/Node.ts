@@ -42,9 +42,7 @@ class NodeTesteranto<
     afterAll,
     butThen,
     andWhen,
-    assertioner: (x: any) => unknown
   ) {
-    console.log("markl801", assertioner)
     super(
       input,
       testSpecification,
@@ -57,7 +55,6 @@ class NodeTesteranto<
       afterAll,
       butThen,
       andWhen,
-      assertioner
     );
 
     const t: ITestJob = this.testJobs[0];
@@ -189,8 +186,7 @@ export default async <
     testInterface.afterEach || (async (s) => s),
     testInterface.afterAll || ((store: IStore) => undefined),
     testInterface.butThen || (async (a) => a as any),
-    testInterface.andWhen,
-    testInterface.assertioner || ((...x) => x)
+    testInterface.andWhen || ((a) => a),
   )
 
 };
