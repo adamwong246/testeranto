@@ -168,8 +168,17 @@ export const RectangleTesterantoBaseTestImplementation = {
 };
 
 export const RectangleTesterantoBaseInterface = {
+  beforeEach: (
+    subject: any, //Reducer<any, AnyAction>,
+    initializer: any,
+    art: any,
+    tr: any,
+    initialValues
+  ): Rectangle => {
+    return new Rectangle();
+  },
   andWhen: async function (renderer, actioner) {
-    actioner()(renderer);
+    actioner(renderer);
     return renderer;
   },
 };

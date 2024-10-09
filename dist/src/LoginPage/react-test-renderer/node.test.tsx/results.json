@@ -10,10 +10,14 @@
       ],
       "thens": [
         {
-          "name": "TheEmailIs: adam@email.com"
+          "name": "TheEmailIs: adam@email.com",
+          "error": true
         }
       ],
-      "error": null,
+      "error": [
+        {},
+        "TypeError: Cannot read properties of undefined (reading 'findByProps')\n    at Then.thenCB (file:///Users/adam/Code/kokomoBay/dist/src/LoginPage/react-test-renderer/node.test.mjs:18554:24)\n    at Then.test (file:///Users/adam/Code/kokomoBay/dist/chunk-WJAA5JYT.mjs:171:22)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Given.give (file:///Users/adam/Code/kokomoBay/dist/chunk-WJAA5JYT.mjs:119:19)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/chunk-WJAA5JYT.mjs:65:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/chunk-WJAA5JYT.mjs:224:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/chunk-WJAA5JYT.mjs:253:29)\n    at async NodeTesteranto.receiveTestResourceConfigScheduled (file:///Users/adam/Code/kokomoBay/dist/chunk-WJAA5JYT.mjs:471:47)"
+      ],
       "features": []
     },
     {
@@ -28,7 +32,8 @@
       ],
       "thens": [
         {
-          "name": "TheEmailIsNot: wade@rpc"
+          "name": "TheEmailIsNot: wade@rpc",
+          "error": true
         },
         {
           "name": "TheEmailIs: adam@email.com"
@@ -40,7 +45,10 @@
           "name": "ThePasswordIsNot: idk"
         }
       ],
-      "error": null,
+      "error": [
+        {},
+        "TypeError: Cannot read properties of undefined (reading 'findByProps')\n    at Then.thenCB (file:///Users/adam/Code/kokomoBay/dist/src/LoginPage/react-test-renderer/node.test.mjs:18559:22)\n    at Then.test (file:///Users/adam/Code/kokomoBay/dist/chunk-WJAA5JYT.mjs:171:22)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Given.give (file:///Users/adam/Code/kokomoBay/dist/chunk-WJAA5JYT.mjs:119:19)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/chunk-WJAA5JYT.mjs:65:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/chunk-WJAA5JYT.mjs:224:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/chunk-WJAA5JYT.mjs:253:29)\n    at async NodeTesteranto.receiveTestResourceConfigScheduled (file:///Users/adam/Code/kokomoBay/dist/chunk-WJAA5JYT.mjs:471:47)"
+      ],
       "features": []
     },
     {
@@ -52,10 +60,14 @@
       ],
       "thens": [
         {
-          "name": "ThereIsNotAnEmailError: undefined"
+          "name": "ThereIsNotAnEmailError: undefined",
+          "error": true
         }
       ],
-      "error": null,
+      "error": [
+        {},
+        "TypeError: Cannot read properties of undefined (reading 'findByProps')\n    at Then.thenCB (file:///Users/adam/Code/kokomoBay/dist/src/LoginPage/react-test-renderer/node.test.mjs:18577:41)\n    at Then.test (file:///Users/adam/Code/kokomoBay/dist/chunk-WJAA5JYT.mjs:171:22)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Given.give (file:///Users/adam/Code/kokomoBay/dist/chunk-WJAA5JYT.mjs:119:19)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/chunk-WJAA5JYT.mjs:65:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/chunk-WJAA5JYT.mjs:224:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/chunk-WJAA5JYT.mjs:253:29)\n    at async NodeTesteranto.receiveTestResourceConfigScheduled (file:///Users/adam/Code/kokomoBay/dist/chunk-WJAA5JYT.mjs:471:47)"
+      ],
       "features": []
     },
     {
@@ -70,10 +82,14 @@
       ],
       "thens": [
         {
-          "name": "ThereIsAnEmailError: undefined"
+          "name": "ThereIsAnEmailError: undefined",
+          "error": true
         }
       ],
-      "error": null,
+      "error": [
+        {},
+        "TypeError: Cannot read properties of undefined (reading 'findByProps')\n    at Then.thenCB (file:///Users/adam/Code/kokomoBay/dist/src/LoginPage/react-test-renderer/node.test.mjs:18572:24)\n    at Then.test (file:///Users/adam/Code/kokomoBay/dist/chunk-WJAA5JYT.mjs:171:22)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Given.give (file:///Users/adam/Code/kokomoBay/dist/chunk-WJAA5JYT.mjs:119:19)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/chunk-WJAA5JYT.mjs:65:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/chunk-WJAA5JYT.mjs:224:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/chunk-WJAA5JYT.mjs:253:29)\n    at async NodeTesteranto.receiveTestResourceConfigScheduled (file:///Users/adam/Code/kokomoBay/dist/chunk-WJAA5JYT.mjs:471:47)"
+      ],
       "features": []
     },
     {
@@ -88,10 +104,14 @@
       ],
       "thens": [
         {
-          "name": "ThereIsNotAnEmailError: undefined"
+          "name": "ThereIsNotAnEmailError: undefined",
+          "error": true
         }
       ],
-      "error": null,
+      "error": [
+        {},
+        "TypeError: Cannot read properties of undefined (reading 'findByProps')\n    at Then.thenCB (file:///Users/adam/Code/kokomoBay/dist/src/LoginPage/react-test-renderer/node.test.mjs:18577:41)\n    at Then.test (file:///Users/adam/Code/kokomoBay/dist/chunk-WJAA5JYT.mjs:171:22)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Given.give (file:///Users/adam/Code/kokomoBay/dist/chunk-WJAA5JYT.mjs:119:19)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/chunk-WJAA5JYT.mjs:65:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/chunk-WJAA5JYT.mjs:224:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/chunk-WJAA5JYT.mjs:253:29)\n    at async NodeTesteranto.receiveTestResourceConfigScheduled (file:///Users/adam/Code/kokomoBay/dist/chunk-WJAA5JYT.mjs:471:47)"
+      ],
       "features": []
     }
   ],

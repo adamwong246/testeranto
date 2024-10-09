@@ -31,6 +31,7 @@ export const AppSpecification: ITestSpecification<
   any,
   any,
   any,
+  any,
   any
 > = (Suite, Given, When, Then, Check) => {
   return [
@@ -50,15 +51,18 @@ export const AppSpecification: ITestSpecification<
             Then.TheEmailIs("bob@mail.com"),
           ],
           "bob@mail.com"
-        ), "test2": Given.AnEmptyState(
+        ),
+        "test2": Given.AnEmptyState(
           ['hello'],
           [When.TheEmailIsSetTo("hello"), When.TheEmailIsSetTo("aloha")],
           [Then.TheEmailIs("aloha")]
-        ), "test3": Given.AnEmptyState(
+        ),
+        "test3": Given.AnEmptyState(
           [`aloha`, `hello`],
           [],
           [Then.TheEmailIs("")]
-        ), "test4": Given.AnEmptyState(
+        ),
+        "test4": Given.AnEmptyState(
           [`aloha`, `hello`],
           [When.TheEmailIsSetTo("hey there")],
           [Then.TheEmailIs("hey there")]

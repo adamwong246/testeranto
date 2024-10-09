@@ -3,7 +3,7 @@ import assert from "assert";
 
 import { ITTestShape, ITestImplementation, ITestSpecification } from "testeranto/src/core";
 
-import { ReactTestRendererTesteranto } from "../myTests/react-test-renderer-jsx.testeranto.test";
+import Testeranto from "testeranto/src/SubPackages/react-test-renderer/jsx/node";
 
 import ReactStateAndHook, { IProps } from "./ReactStateAndHook";
 import { WhenShape, ThenShape } from "./Rectangle.test";
@@ -101,10 +101,7 @@ const Implementation = {
   ISpec
 >;
 
-export const ClassicalComponentReactTestRendererTesteranto = ReactTestRendererTesteranto<
-  ISpec,
-  IProps
->(
+export const ClassicalComponentReactTestRendererTesteranto = Testeranto(
   Implementation,
   Specification,
   ReactStateAndHook

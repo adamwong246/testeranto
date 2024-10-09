@@ -1,18 +1,19 @@
 import {
   LoginPageSpecs,
   LoginPage_default,
-  actions,
   require_scheduler
-} from "../../../chunk-PLYQIJ6K.mjs";
+} from "../../../chunk-HBI2QHKW.mjs";
 import {
   require_react_test_renderer
-} from "../../../chunk-OGXIPNOP.mjs";
+} from "../../../chunk-SDPG7AIW.mjs";
 import "../../../chunk-7AHWTSRZ.mjs";
 import {
-  Web_default,
-  assert,
   require_react
-} from "../../../chunk-4FYH3N7I.mjs";
+} from "../../../chunk-FH7RWEQP.mjs";
+import {
+  Web_default,
+  assert
+} from "../../../chunk-I5OLLSFW.mjs";
 import {
   __commonJS,
   __toESM
@@ -13597,50 +13598,28 @@ var require_react_test_renderer2 = __commonJS({
 // node_modules/testeranto/dist/module/SubPackages/react-test-renderer/jsx/index.js
 var import_react = __toESM(require_react(), 1);
 var import_react_test_renderer = __toESM(require_react_test_renderer(), 1);
-var testInterface = (testInput) => {
-  return {
-    beforeEach: function(CComponent, props) {
-      let component;
-      (0, import_react_test_renderer.act)(() => {
-        component = import_react_test_renderer.default.create(import_react.default.createElement(CComponent, props, []));
-      });
-      return component;
-    },
-    andWhen: async function(renderer3, whenCB) {
-      await (0, import_react_test_renderer.act)(() => whenCB(renderer3));
-      return renderer3;
-    }
-  };
+var testInterface = {
+  beforeEach: function(CComponent, props) {
+    let component;
+    (0, import_react_test_renderer.act)(() => {
+      component = import_react_test_renderer.default.create(import_react.default.createElement(CComponent, props, []));
+    });
+    return component;
+  },
+  andWhen: async function(renderer3, whenCB) {
+    await (0, import_react_test_renderer.act)(() => whenCB(renderer3));
+    return renderer3;
+  }
 };
 
 // node_modules/testeranto/dist/module/SubPackages/react-test-renderer/jsx/web.js
 var web_default = (testImplementations, testSpecifications, testInput, testInterface2 = testInterface) => {
-  return Web_default(testInput, testSpecifications, testImplementations, testInterface2(testInput));
+  return Web_default(testInput, testSpecifications, testImplementations, testInterface2);
 };
 
 // src/LoginPage/react-test-renderer/test.tsx
 var import_react2 = __toESM(require_react());
 var import_react_test_renderer2 = __toESM(require_react_test_renderer2());
-var LoginPageReactTestRendererTestInterface = (testInput) => {
-  return {
-    beforeEach: function(CComponent, props) {
-      let component;
-      (0, import_react_test_renderer2.act)(() => {
-        const t = testInput(props);
-        t.props.store.dispatch(actions.reset());
-        component = import_react_test_renderer2.default.create(
-          import_react2.default.createElement(testInput, props, [])
-        );
-      });
-      return component;
-    },
-    andWhen: async function(renderer3, whenCB) {
-      await (0, import_react_test_renderer2.act)(() => whenCB(renderer3));
-      renderer3.update(import_react2.default.createElement(testInput, {}, []));
-      return renderer3;
-    }
-  };
-};
 var loginPageImpl = {
   Suites: {
     Default: "a default suite"
@@ -13698,8 +13677,8 @@ var loginPageImpl = {
 var web_test_default = web_default(
   loginPageImpl,
   LoginPageSpecs,
-  LoginPage_default,
-  LoginPageReactTestRendererTestInterface
+  LoginPage_default
+  // LoginPageReactTestRendererTestInterface
 );
 export {
   web_test_default as default

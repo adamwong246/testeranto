@@ -26,11 +26,11 @@ const ClassicalComponentReactDomImplementation = {
           btxpctn.children = [];
 
           const elem = htmlElement.querySelector("#theProps")
-          console.log("elem")
-          console.log(elem)
+          // console.log("elem")
+          // console.log(elem)
           const found = elem.innerHTML;
-          console.log("found")
-          console.log(found)
+          // console.log("found")
+          // console.log(found)
 
           assert.deepEqual(
             JSON.parse(found),
@@ -42,11 +42,11 @@ const ClassicalComponentReactDomImplementation = {
       (expectation) =>
         async ({ htmlElement }) => {
           const elem = htmlElement.querySelector("#theState")
-          console.log("elem")
-          console.log(elem)
+          // console.log("elem")
+          // console.log(elem)
           const found = elem.innerHTML;
-          console.log("found")
-          console.log(found)
+          // console.log("found")
+          // console.log(found)
 
           assert.deepEqual(
             found,
@@ -61,9 +61,6 @@ const ClassicalComponentReactDomImplementation = {
     },
   },
 };
-
-console.log("mark100" + ClassicalComponentReactDomImplementation.Whens.IClickTheButton)
-
 
 export default test(
   ClassicalComponent,

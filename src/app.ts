@@ -26,7 +26,7 @@ export const loginApp = createSlice<
   initialState,
   reducers: {
     reset: (state) => {
-      console.log("mark20")
+
       state.password = initialState.password;
       state.email = initialState.email;
       state.error = initialState.error;
@@ -38,7 +38,6 @@ export const loginApp = createSlice<
       state.email = action.payload;
     },
     signIn: (state) => {
-      console.log("mark31")
       state.error = checkForErrors(state);
     },
   },

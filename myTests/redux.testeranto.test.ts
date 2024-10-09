@@ -39,26 +39,25 @@ export const ReduxTesteranto = <
     }
   }>,
 ) =>
-  Testeranto<
-    ITestShape,
-    Input,
-    Reducer,
-    Store,
-    IStoreShape,
-    WhenShape,
-    ThenShape,
-    IStoreShape
-  >(
+  Testeranto(
     testInput,
     testSpecifications,
     testImplementations,
     {
-      beforeEach: function (subject: Reducer<any, AnyAction>, initialValues: any): Promise<Store<any, AnyAction>> {
-        return createStore<IStoreShape, any, any, any>(subject, initialValues)
+      beforeEach: function (
+        subject: Reducer<any, AnyAction>,
+        initializer: any,
+        art: any,
+        tr: any,
+        initialValues
+
+      ): Promise<Store<any, AnyAction>> {
+        return createStore<IStoreShape, any, any, any>(subject, initializer()(initialValues))
       },
-      andWhen: function (store: Store<any, AnyAction>, actioner: any): Promise<IStoreShape> {
-        const a = actioner();
-        return store.dispatch(a[0](a[1]));
+      andWhen: async function (store: Store<any, AnyAction>, actioner: any): Promise<Store<any, AnyAction>> {
+        const a = actioner;
+        store.dispatch(a[0](a[1]));
+        return await store;
       },
       butThen: function (store: Store<any, AnyAction>): Promise<IStoreShape> {
         return store.getState();

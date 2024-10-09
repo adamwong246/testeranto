@@ -17,10 +17,11 @@ export const AppReduxTesteranto = ReduxTesteranto<
       Default: "some default Suite",
     },
     Givens: {
-      AnEmptyState: () => {
+      AnEmptyState: () => () => {
         return loginApp.getInitialState();
       },
-      AStateWithEmail: (email) => {
+      AStateWithEmail: (x) => (email) => {
+        console.log("mark106", email, x)
         return { ...loginApp.getInitialState(), email };
       },
     },
@@ -30,8 +31,11 @@ export const AppReduxTesteranto = ReduxTesteranto<
       ThePasswordIsSetTo: (password) => [loginApp.actions.setPassword, password],
     },
     Thens: {
-      TheEmailIs: (email) => (storeState) =>
-        assert.equal(storeState.email, email),
+      TheEmailIs: (email) => (storeState) => {
+        console.log("mark40", email, storeState);
+        assert.equal(storeState.email, email)
+      }
+      ,
       TheEmailIsNot: (email) => (storeState) =>
         assert.notEqual(storeState.email, email),
       ThePasswordIs: (password) => (selection) =>

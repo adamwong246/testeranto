@@ -20,10 +20,10 @@ export const AppReduxToolkitTesteranto = ReduxToolkitTesteranto<
       Default: "some default Suite",
     },
     Givens: {
-      AnEmptyState: () => {
+      AnEmptyState: () => () => {
         return loginApp.getInitialState();
       },
-      AStateWithEmail: (email) => {
+      AStateWithEmail: () => (email) => {
         return { ...loginApp.getInitialState(), email };
       },
     },

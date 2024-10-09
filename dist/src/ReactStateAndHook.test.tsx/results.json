@@ -1,0 +1,76 @@
+{
+  "name": "Testing the ReactStateAndHook element",
+  "givens": [
+    {
+      "name": "Default",
+      "whens": [],
+      "thens": [
+        {
+          "name": "TheCounterIs: 0"
+        }
+      ],
+      "error": null,
+      "features": [
+        "hello"
+      ]
+    },
+    {
+      "name": "Default",
+      "whens": [
+        {
+          "name": "IClick: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheCounterIs: 1"
+        }
+      ],
+      "error": null,
+      "features": [
+        "hello"
+      ]
+    },
+    {
+      "name": "Default",
+      "whens": [
+        {
+          "name": "IClick: undefined"
+        },
+        {
+          "name": "IClick: undefined"
+        },
+        {
+          "name": "IClick: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheCounterIs: 3"
+        }
+      ],
+      "error": null,
+      "features": [
+        "hello"
+      ]
+    },
+    {
+      "name": "Default",
+      "whens": [
+        {
+          "name": "IClick: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheCounterIs: 1"
+        }
+      ],
+      "error": null,
+      "features": [
+        "hello"
+      ]
+    }
+  ],
+  "fails": []
+}

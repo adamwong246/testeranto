@@ -43,31 +43,30 @@ export const ReduxToolkitTesteranto = <
   testSpecifications: ITestSpecification<ITestShape>,
   testInput: Input<IStoreShape, ISelectionShape>
 ) =>
-  Testeranto<
-    ITestShape,
-    Input<IStoreShape, ISelectionShape>,
-    Input<IStoreShape, ISelectionShape>,
-    Store,
-    IStoreShape,
-    WhenShape,
-    ThenShape,
-    IStoreShape
-  >(
+  Testeranto(
     testInput,
     testSpecifications,
     testImplementations,
     {
-      beforeEach: (subject: Input<IStoreShape, ISelectionShape>, initialValues: any): Promise<Store<any, AnyAction>> =>
-        createStore<IStoreShape, any, any, any>(subject.reducer, initialValues),
-      andWhen: function (store: Store<any, AnyAction>, actioner): Promise<IStoreShape> {
-        const a = actioner();
-        return store.dispatch(a[0](a[1]));
+      beforeEach: (
+        subject: any, //Reducer<any, AnyAction>,
+        initializer: any,
+        art: any,
+        tr: any,
+        initialValues
+      ): Promise<Store<any, AnyAction>> => {
+        return createStore<IStoreShape, any, any, any>(subject.reducer, initializer()(initialValues));
       },
-      butThen: function (store: Store<any, AnyAction>): Promise<IStoreShape> {
-        return store.getState();
+      andWhen: async function (store: Store<any, AnyAction>, actioner): Promise<any> {
+        const a = actioner;
+        store.dispatch(a[0](a[1]));
+        return await store;
       },
-      assertioner: function (t: ThenShape) {
-        return t[0](t[1], t[2], t[3]);
-      }
+      butThen: function (store: Store<any, AnyAction>, assertion): Promise<IStoreShape> {
+        const state = store.getState();
+        const t = assertion(state);
+        t[0](t[1], t[2], t[3]);
+        return state
+      },
     }
   )

@@ -4,17 +4,20 @@ import {
   LoginPage_default,
   actions,
   require_scheduler
-} from "../../../chunk-WM6WS5W3.mjs";
+} from "../../../chunk-ZMB67C4P.mjs";
 import {
-  require_react_test_renderer
-} from "../../../chunk-EUUNK4WX.mjs";
+  node_default
+} from "../../../chunk-57PASGDD.mjs";
+import "../../../chunk-MUMSTHS5.mjs";
+import "../../../chunk-NXTG6YV5.mjs";
 import {
-  Node_default,
+  assert
+} from "../../../chunk-NLCBXMNY.mjs";
+import {
   __commonJS,
   __require,
-  __toESM,
-  assert
-} from "../../../chunk-SH5JMW7W.mjs";
+  __toESM
+} from "../../../chunk-WJAA5JYT.mjs";
 
 // node_modules/scheduler/cjs/scheduler-unstable_mock.production.min.js
 var require_scheduler_unstable_mock_production_min = __commonJS({
@@ -5485,10 +5488,10 @@ var require_react_test_renderer_development = __commonJS({
     if (process.env.NODE_ENV !== "production") {
       (function() {
         "use strict";
-        var React3 = __require("react");
+        var React2 = __require("react");
         var Scheduler = require_unstable_mock();
         var Scheduler$1 = require_scheduler();
-        var ReactSharedInternals = React3.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+        var ReactSharedInternals = React2.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
         function warn(format) {
           {
             {
@@ -8525,7 +8528,7 @@ var require_react_test_renderer_development = __commonJS({
           }
         }
         var fakeInternalInstance = {};
-        var emptyRefsObject = new React3.Component().refs;
+        var emptyRefsObject = new React2.Component().refs;
         var didWarnAboutStateAssignmentForComponent;
         var didWarnAboutUninitializedState;
         var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -18047,7 +18050,7 @@ var require_react_test_renderer_development = __commonJS({
             reconcilerVersion: ReactVersion
           });
         }
-        var act3 = React3.unstable_act;
+        var act2 = React2.unstable_act;
         var defaultTestOptions = {
           createNodeMock: function() {
             return null;
@@ -18486,7 +18489,7 @@ var require_react_test_renderer_development = __commonJS({
           rendererPackageName: "react-test-renderer"
         });
         exports._Scheduler = Scheduler;
-        exports.act = act3;
+        exports.act = act2;
         exports.create = create;
         exports.unstable_batchedUpdates = batchedUpdates;
       })();
@@ -18495,7 +18498,7 @@ var require_react_test_renderer_development = __commonJS({
 });
 
 // node_modules/react-test-renderer/index.js
-var require_react_test_renderer2 = __commonJS({
+var require_react_test_renderer = __commonJS({
   "node_modules/react-test-renderer/index.js"(exports, module) {
     "use strict";
     if (process.env.NODE_ENV === "production") {
@@ -18506,50 +18509,26 @@ var require_react_test_renderer2 = __commonJS({
   }
 });
 
-// node_modules/testeranto/dist/module/SubPackages/react-test-renderer/jsx/index.js
-var import_react_test_renderer = __toESM(require_react_test_renderer(), 1);
-import React from "react";
-var testInterface = (testInput) => {
-  return {
-    beforeEach: function(CComponent, props) {
-      let component;
-      (0, import_react_test_renderer.act)(() => {
-        component = import_react_test_renderer.default.create(React.createElement(CComponent, props, []));
-      });
-      return component;
-    },
-    andWhen: async function(renderer3, whenCB) {
-      await (0, import_react_test_renderer.act)(() => whenCB(renderer3));
-      return renderer3;
-    }
-  };
-};
-
-// node_modules/testeranto/dist/module/SubPackages/react-test-renderer/jsx/node.js
-var node_default = (testImplementations, testSpecifications, testInput, testInterface2 = testInterface) => {
-  return Node_default(testInput, testSpecifications, testImplementations, testInterface2(testInput));
-};
-
 // src/LoginPage/react-test-renderer/test.tsx
-var import_react_test_renderer2 = __toESM(require_react_test_renderer2());
-import React2 from "react";
+var import_react_test_renderer = __toESM(require_react_test_renderer());
+import React from "react";
 var LoginPageReactTestRendererTestInterface = (testInput) => {
   return {
     beforeEach: function(CComponent, props) {
       let component;
-      (0, import_react_test_renderer2.act)(() => {
+      (0, import_react_test_renderer.act)(() => {
         const t = testInput(props);
         t.props.store.dispatch(actions.reset());
-        component = import_react_test_renderer2.default.create(
-          React2.createElement(testInput, props, [])
+        component = import_react_test_renderer.default.create(
+          React.createElement(testInput, props, [])
         );
       });
       return component;
     },
-    andWhen: async function(renderer3, whenCB) {
-      await (0, import_react_test_renderer2.act)(() => whenCB(renderer3));
-      renderer3.update(React2.createElement(testInput, {}, []));
-      return renderer3;
+    andWhen: async function(renderer2, whenCB) {
+      await (0, import_react_test_renderer.act)(() => whenCB(renderer2));
+      renderer2.update(React.createElement(testInput, {}, []));
+      return renderer2;
     }
   };
 };

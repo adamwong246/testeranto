@@ -2,19 +2,20 @@ import {
   LoginPageSpecs,
   LoginPage_default,
   actions
-} from "../../../chunk-PLYQIJ6K.mjs";
+} from "../../../chunk-HBI2QHKW.mjs";
+import "../../../chunk-FH7RWEQP.mjs";
 import {
   Web_default,
   assert
-} from "../../../chunk-4FYH3N7I.mjs";
+} from "../../../chunk-I5OLLSFW.mjs";
 import "../../../chunk-XALKSG2U.mjs";
 
 // node_modules/testeranto/dist/module/SubPackages/react/jsx/index.js
-var testInterface = (testInput) => {
+var testInterface = (z) => {
   return {
     beforeEach: async (x, ndx, testRsource, artificer) => {
       return new Promise((resolve, rej) => {
-        resolve(testInput());
+        resolve(x());
       });
     },
     andWhen: function(s, whenCB) {

@@ -1,15 +1,17 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
-  require_react_test_renderer
-} from "../../../chunk-EUUNK4WX.mjs";
-import {
   ClassicalComponent
 } from "../../../chunk-LSA22GKC.mjs";
 import {
-  Node_default,
-  __toESM,
+  require_react_test_renderer
+} from "../../../chunk-MUMSTHS5.mjs";
+import {
   assert
-} from "../../../chunk-SH5JMW7W.mjs";
+} from "../../../chunk-NLCBXMNY.mjs";
+import {
+  Node_default,
+  __toESM
+} from "../../../chunk-WJAA5JYT.mjs";
 
 // node_modules/testeranto/dist/module/SubPackages/react-test-renderer/component/index.js
 var import_react_test_renderer = __toESM(require_react_test_renderer(), 1);

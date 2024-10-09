@@ -3,18 +3,21 @@ import {
   LoginPageSpecs,
   LoginPage_default,
   actions
-} from "../../../chunk-WM6WS5W3.mjs";
+} from "../../../chunk-ZMB67C4P.mjs";
+import "../../../chunk-NXTG6YV5.mjs";
 import {
-  Node_default,
   assert
-} from "../../../chunk-SH5JMW7W.mjs";
+} from "../../../chunk-NLCBXMNY.mjs";
+import {
+  Node_default
+} from "../../../chunk-WJAA5JYT.mjs";
 
 // node_modules/testeranto/dist/module/SubPackages/react/jsx/index.js
-var testInterface = (testInput) => {
+var testInterface = (z) => {
   return {
     beforeEach: async (x, ndx, testRsource, artificer) => {
       return new Promise((resolve, rej) => {
-        resolve(testInput());
+        resolve(x());
       });
     },
     andWhen: function(s, whenCB) {

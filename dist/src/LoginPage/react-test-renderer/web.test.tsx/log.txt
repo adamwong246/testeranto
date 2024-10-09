@@ -26,3 +26,5 @@ Suite:,0,Testing the LoginPage as react
  When:,TheEmailIsSetTo: adam@mail.com
  When:,ThePasswordIsSetTo: foo
  Then:,ThereIsNotAnEmailError: undefined
+AssertionError: expected [ Array(1) ] to be empty
+
