@@ -38,7 +38,7 @@ export type ISpec<
 
 export default <
   ITestShape extends ITTestShape,
-  IState
+  IState,
 >(
   testImplementations: ITestImplementation<
     IState,
@@ -59,7 +59,8 @@ export default <
     ISelection,
     IThenShape,
     IWhenShape,
-    IState
+    IState,
+    any
   >(
     testInput,
     testSpecifications,

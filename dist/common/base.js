@@ -52,12 +52,13 @@ class BaseSuite {
 }
 exports.BaseSuite = BaseSuite;
 class BaseGiven {
-    constructor(name, features, whens, thens, givenCB) {
+    constructor(name, features, whens, thens, givenCB, initialValues) {
         this.name = name;
         this.features = features;
         this.whens = whens;
         this.thens = thens;
         this.givenCB = givenCB;
+        this.initialValues = initialValues;
     }
     beforeAll(store, artifactory) {
         return store;
@@ -215,6 +216,7 @@ class BaseBuilder {
     constructor(cc, suitesOverrides, givenOverides, whenOverides, thenOverides, checkOverides, logWriter, testResourceRequirement, testSpecification) {
         this.cc = cc;
         this.artifacts = [];
+        this.testResourceRequirement = testResourceRequirement;
         this.constructorator = cc;
         this.suitesOverrides = suitesOverrides;
         this.givenOverides = givenOverides;

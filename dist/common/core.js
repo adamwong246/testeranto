@@ -10,8 +10,7 @@ class Testeranto extends base_1.ClassBuilder {
             }
         }, class Given extends base_1.BaseGiven {
             constructor(name, features, whens, thens, givenCB, initialValues) {
-                super(name, features, whens, thens, givenCB);
-                this.initialValues = initialValues;
+                super(name, features, whens, thens, givenCB, initialValues);
             }
             async givenThat(subject, testResource, artifactory, initialValues) {
                 return beforeEach(subject, initialValues, testResource, (fPath, value) => 

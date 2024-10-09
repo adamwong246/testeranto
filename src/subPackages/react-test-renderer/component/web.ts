@@ -21,6 +21,7 @@ export default <
     any,
     any,
     any,
+    any,
     any
   >(
     testInput,

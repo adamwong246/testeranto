@@ -76,7 +76,8 @@ export default <
         ISelection,
         IThenShape,
         IWhenShape,
-        IState
+        IState,
+        any
       >(
         testInput,
         testSpecifications,

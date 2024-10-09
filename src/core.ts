@@ -1,12 +1,24 @@
-import { ITestImplementation, ITestSpecification } from "./Types";
+import { ITestSpecification } from "./Types";
 import {
-  BaseWhen, BaseThen, BaseCheck, BaseSuite, BaseGiven, ClassBuilder
+  BaseWhen,
+  BaseThen,
+  BaseCheck,
+  BaseSuite,
+  BaseGiven,
+  ClassBuilder
 } from "./base";
 import {
-  ILogWriter, ITLog, ITTestResourceConfiguration, ITTestResourceRequest, ITTestShape, ITestArtificer, ITestCheckCallback, ITestJob, defaultTestResourceRequirement
+  ILogWriter,
+  ITTestResourceConfiguration,
+  ITTestResourceRequest,
+  ITTestShape,
+  ITestArtificer,
+  ITestJob,
+  defaultTestResourceRequirement
 } from "./lib";
 
-export default class Testeranto<TestShape extends ITTestShape,
+export default abstract class Testeranto<
+  TestShape extends ITTestShape,
   IState,
   ISelection,
   IStore,
@@ -98,7 +110,7 @@ export default class Testeranto<TestShape extends ITTestShape,
       } as any,
 
       class Given extends BaseGiven<ISubject, IStore, ISelection, IThenShape, IGivenShape> {
-        initialValues: any;
+
         constructor(
           name: string,
           features: string[],
@@ -112,9 +124,10 @@ export default class Testeranto<TestShape extends ITTestShape,
             features,
             whens,
             thens,
-            givenCB
+            givenCB,
+            initialValues
           );
-          this.initialValues = initialValues;
+
         }
         async givenThat(subject, testResource, artifactory, initialValues) {
           return beforeEach(
@@ -224,4 +237,8 @@ export default class Testeranto<TestShape extends ITTestShape,
       logWriter
     );
   }
+
+  abstract receiveTestResourceConfigUnscheduled(t: ITestJob, partialTestResource: ITTestResourceConfiguration);
+  abstract receiveTestResourceConfigScheduled(t: ITestJob, partialTestResource: ITTestResourceConfiguration);
+
 }

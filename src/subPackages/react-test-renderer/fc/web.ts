@@ -38,7 +38,8 @@ export default <
     IInput,
     any,
     renderer.ReactTestRenderer,
-    unknown, unknown, unknown, unknown
+    unknown, unknown, unknown, unknown,
+    any
   >(
     testInput,
     testSpecifications,

@@ -2,7 +2,8 @@ import {
   ITTestShape, ITTestResourceConfiguration, ITestArtifactory, ITLog,
   ITestJob,
   ILogWriter,
-  ITestCheckCallback
+  ITestCheckCallback,
+  ITTestResourceRequest
 } from "./lib";
 import { ITestImplementation } from "./Types";
 
@@ -147,6 +148,7 @@ export abstract class BaseGiven<
   store: IStore;
   recommendedFsPath: string;
   givenCB: IGivenShape;
+  initialValues: any;
 
   constructor(
     name: string,
@@ -154,12 +156,14 @@ export abstract class BaseGiven<
     whens: BaseWhen<IStore, ISelection, IThenShape>[],
     thens: BaseThen<ISelection, IStore, IThenShape>[],
     givenCB: IGivenShape,
+    initialValues: any
   ) {
     this.name = name;
     this.features = features;
     this.whens = whens;
     this.thens = thens;
     this.givenCB = givenCB;
+    this.initialValues = initialValues;
   }
 
   beforeAll(store: IStore, artifactory: ITestArtifactory) {
@@ -448,6 +452,7 @@ export abstract class BaseBuilder<
   ITestShape extends ITTestShape,
 > {
 
+  testResourceRequirement: ITTestResourceRequest;
   artifacts: Promise<unknown>[] = [];
   testJobs: ITestJob[];
 
@@ -566,6 +571,7 @@ export abstract class BaseBuilder<
     testResourceRequirement,
     testSpecification,
   ) {
+    this.testResourceRequirement = testResourceRequirement;
     this.constructorator = cc;
     this.suitesOverrides = suitesOverrides;
     this.givenOverides = givenOverides;

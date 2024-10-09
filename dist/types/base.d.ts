@@ -1,4 +1,4 @@
-import { ITTestShape, ITTestResourceConfiguration, ITestArtifactory, ITLog, ITestJob, ILogWriter, ITestCheckCallback } from "./lib";
+import { ITTestShape, ITTestResourceConfiguration, ITestArtifactory, ITLog, ITestJob, ILogWriter, ITestCheckCallback, ITTestResourceRequest } from "./lib";
 import { ITestImplementation } from "./Types";
 export declare type IGivens<ISubject, IStore, ISelection, IThenShape, IGivenShape> = Record<string, BaseGiven<ISubject, IStore, ISelection, IThenShape, IGivenShape>>;
 export declare abstract class BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape extends ITTestShape, IGivenShape> {
@@ -40,7 +40,8 @@ export declare abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape
     store: IStore;
     recommendedFsPath: string;
     givenCB: IGivenShape;
-    constructor(name: string, features: string[], whens: BaseWhen<IStore, ISelection, IThenShape>[], thens: BaseThen<ISelection, IStore, IThenShape>[], givenCB: IGivenShape);
+    initialValues: any;
+    constructor(name: string, features: string[], whens: BaseWhen<IStore, ISelection, IThenShape>[], thens: BaseThen<ISelection, IStore, IThenShape>[], givenCB: IGivenShape, initialValues: any);
     beforeAll(store: IStore, artifactory: ITestArtifactory): IStore;
     afterAll(store: IStore, artifactory: ITestArtifactory): IStore;
     toObj(): {
@@ -101,6 +102,7 @@ export declare abstract class BaseCheck<ISubject, IStore, ISelection, IThenShape
 }
 export declare abstract class BaseBuilder<IInput, ISubject, IStore, ISelection, SuiteExtensions, GivenExtensions, WhenExtensions, ThenExtensions, CheckExtensions, IThenShape, IGivenShape, ITestShape extends ITTestShape> {
     readonly cc: IStore;
+    testResourceRequirement: ITTestResourceRequest;
     artifacts: Promise<unknown>[];
     testJobs: ITestJob[];
     constructorator: IStore;

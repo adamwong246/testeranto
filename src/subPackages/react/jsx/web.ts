@@ -20,7 +20,8 @@ export default <ITestShape extends ITTestShape>(
     ISelection,
     IThenShape,
     IWhenShape,
-    InitialState
+    InitialState,
+    any
   >(
     testInput,
     testSpecifications,
