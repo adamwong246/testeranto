@@ -42,7 +42,9 @@ class NodeTesteranto<
     afterAll,
     butThen,
     andWhen,
+    assertioner: (x: any) => unknown
   ) {
+    console.log("markl801", assertioner)
     super(
       input,
       testSpecification,
@@ -54,7 +56,8 @@ class NodeTesteranto<
       afterEach,
       afterAll,
       butThen,
-      andWhen
+      andWhen,
+      assertioner
     );
 
     const t: ITestJob = this.testJobs[0];
@@ -93,7 +96,6 @@ class NodeTesteranto<
               ...JSON.parse(JSON.stringify(partialTestResource)),
               ...JSON.parse(JSON.stringify(resourcesFromPm2)),
             } as ITTestResourceConfiguration;
-            console.log("receiveTestResourceConfigScheduled", this)
             this.receiveTestResourceConfigScheduled(t, secondTestResource);
 
           }
@@ -188,6 +190,7 @@ export default async <
     testInterface.afterAll || ((store: IStore) => undefined),
     testInterface.butThen || (async (a) => a as any),
     testInterface.andWhen,
+    testInterface.assertioner || ((...x) => x)
   )
 
 };

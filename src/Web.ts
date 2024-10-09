@@ -43,7 +43,9 @@ class WebTesteranto<
     afterAll,
     butThen,
     andWhen,
+    assertioner: (x: any) => unknown
   ) {
+    console.log("markl800", assertioner)
     super(
       input,
       testSpecification,
@@ -55,7 +57,8 @@ class WebTesteranto<
       afterEach,
       afterAll,
       butThen,
-      andWhen
+      andWhen,
+      assertioner
     );
 
     const t: ITestJob = this.testJobs[0];
@@ -246,6 +249,7 @@ export default async <
     testInterface.afterAll || ((store: IStore) => undefined),
     testInterface.butThen || (async (a) => a as any),
     testInterface.andWhen,
+    testInterface.assertioner || ((...x) => x)
   )
 
 };

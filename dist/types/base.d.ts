@@ -83,6 +83,7 @@ export declare abstract class BaseThen<ISelection, IStore, IThenShape> {
         error: boolean;
     };
     abstract butThen(store: any, testResourceConfiguration?: any): Promise<ISelection>;
+    abstract assertion(x: any): any;
     test(store: IStore, testResourceConfiguration: any, tLog: ITLog): Promise<IThenShape | undefined>;
 }
 export declare abstract class BaseCheck<ISubject, IStore, ISelection, IThenShape, ITestShape extends ITTestShape> {

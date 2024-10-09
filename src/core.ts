@@ -59,9 +59,10 @@ export default abstract class Testeranto<
     ) => Promise<ISubject>,
     beforeEach: (
       subject: ISubject,
-      initialValues,
+      initializer,
       testResource: ITTestResourceConfiguration,
-      artificer: ITestArtificer
+      artificer: ITestArtificer,
+      initialValues
     ) => Promise<IStore>,
     afterEach: (
       store: IStore,
@@ -82,6 +83,7 @@ export default abstract class Testeranto<
       whenCB,
       testResource: ITTestResourceConfiguration
     ) => Promise<ISelection>,
+    assertioner: (x: any) => unknown
   ) {
     super(
       testImplementation,
@@ -129,14 +131,15 @@ export default abstract class Testeranto<
           );
 
         }
-        async givenThat(subject, testResource, artifactory, initialValues) {
+        async givenThat(subject, testResource, artifactory, initializer) {
           return beforeEach(
             subject,
-            initialValues,
+            initializer,
             testResource,
             (fPath: string, value: unknown) =>
               // TODO does not work?
-              artifactory(`beforeEach/${fPath}`, value)
+              artifactory(`beforeEach/${fPath}`, value),
+            this.initialValues
           );
         }
         afterEach(
@@ -174,6 +177,7 @@ export default abstract class Testeranto<
       } as any,
 
       class Then extends BaseThen<ISelection, IStore, IThenShape> {
+
         constructor(
           name: string,
           thenCB:
@@ -182,11 +186,20 @@ export default abstract class Testeranto<
           super(name, thenCB);
         }
 
+        assertion(x: any) {
+          return assertioner(x);
+        }
         async butThen(
           store: any,
           testResourceConfiguration?: any
         ): Promise<ISelection> {
-          return await butThen(store, this.thenCB, testResourceConfiguration);
+          const newState = await butThen(store, this.thenCB, testResourceConfiguration);
+          // console.log("mark600", newState)
+          // if (assertioner) {
+          //   console.log("mark601", assertioner.toString())
+          //   assertioner(newState);
+          // }
+          return newState;
         }
       } as any,
 
@@ -216,7 +229,8 @@ export default abstract class Testeranto<
             subject,
             this.initialValues,
             testResourceConfiguration,
-            (fPath: string, value: unknown) => artifactory(`before/${fPath}`, value)
+            (fPath: string, value: unknown) => artifactory(`before/${fPath}`, value),
+            this.initialValues
           );
         }
 

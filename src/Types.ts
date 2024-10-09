@@ -152,7 +152,7 @@ export type ITestInterface<
     thenCB,
     testResource: ITTestResourceConfiguration
   ) => Promise<ISelection>;
-
+  assertioner?: (x: any) => unknown
   afterAll?: (store: IStore, artificer: ITestArtificer) => any;
   afterEach?: (
     store: IStore,

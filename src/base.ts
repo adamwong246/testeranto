@@ -306,6 +306,8 @@ export abstract class BaseThen<ISelection, IStore, IThenShape> {
 
   abstract butThen(store: any, testResourceConfiguration?): Promise<ISelection>;
 
+  abstract assertion(x);
+
   async test(
     store: IStore,
     testResourceConfiguration,
@@ -313,37 +315,15 @@ export abstract class BaseThen<ISelection, IStore, IThenShape> {
   ): Promise<IThenShape | undefined> {
     tLog(" Then:", this.name);
     try {
-      return this.thenCB(await this.butThen(store, testResourceConfiguration));
+      const x = this.thenCB(await this.butThen(store, testResourceConfiguration));
+      console.log("mark800", x, this.assertion)
+      this.assertion(x);
+      return x;
     } catch (e) {
       console.log("test failed", e);
       this.error = true;
       throw e;
     }
-
-    // try {
-    //   return await (this.thenCB(
-    //     await (async () => {
-    //       try {
-    //         return await (
-    //           (() => {
-    //             try {
-    //               return this.butThen(store, testResourceConfiguration)
-    //             } catch (e) {
-    //               this.error = true;
-    //               throw e
-    //             }
-    //           })()
-    //         );
-    //       } catch (e) {
-    //         this.error = true;
-    //         throw e
-    //       }
-    //     })()
-    //   ));
-    // } catch (e) {
-    //   this.error = true;
-    //   throw e
-    // }
   }
 }
 
@@ -896,32 +876,18 @@ export abstract class ClassBuilder<
             features,
             whens,
             thens,
-            givEn
+            givEn,
           ) => {
             return new (givenKlasser.prototype).constructor(
               key,
               features,
               whens,
               thens,
-
-              ((phunkshun) => {
-                return phunkshun
-              })(testImplementation.Givens[key]),
-
-              { asd: "qwe" },
-
-              // givEn(a[key]),
-              // a[key](givEn),
-              // ((payload) => {
-              //   console.log("mark 6", a[key], payload)
-              //   return a[key](payload);
+              // ((phunkshun) => {
+              //   return phunkshun
               // })(testImplementation.Givens[key]),
-              // ",",
-
-
-              // {},
-              // ".",
-              // (x) => givEn(x)
+              testImplementation.Givens[key],
+              givEn
             );
           };
           return a;

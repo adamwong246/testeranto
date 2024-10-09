@@ -14,7 +14,7 @@ import { ITTestResourceRequirement } from "./lib";
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
 
-const TIMEOUT = 2000;
+const TIMEOUT = 500;
 const OPEN_PORT = "";
 
 let webSocketServer: WebSocketServer;

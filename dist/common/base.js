@@ -147,37 +147,16 @@ class BaseThen {
     async test(store, testResourceConfiguration, tLog) {
         tLog(" Then:", this.name);
         try {
-            return this.thenCB(await this.butThen(store, testResourceConfiguration));
+            const x = this.thenCB(await this.butThen(store, testResourceConfiguration));
+            console.log("mark800", x, this.assertion);
+            this.assertion(x);
+            return x;
         }
         catch (e) {
             console.log("test failed", e);
             this.error = true;
             throw e;
         }
-        // try {
-        //   return await (this.thenCB(
-        //     await (async () => {
-        //       try {
-        //         return await (
-        //           (() => {
-        //             try {
-        //               return this.butThen(store, testResourceConfiguration)
-        //             } catch (e) {
-        //               this.error = true;
-        //               throw e
-        //             }
-        //           })()
-        //         );
-        //       } catch (e) {
-        //         this.error = true;
-        //         throw e
-        //       }
-        //     })()
-        //   ));
-        // } catch (e) {
-        //   this.error = true;
-        //   throw e
-        // }
     }
 }
 exports.BaseThen = BaseThen;
@@ -302,9 +281,11 @@ class ClassBuilder extends BaseBuilder {
         const classyGivens = Object.entries(testImplementation.Givens)
             .reduce((a, [key, givEn]) => {
             a[key] = (features, whens, thens, givEn) => {
-                return new (givenKlasser.prototype).constructor(key, features, whens, thens, ((phunkshun) => {
-                    return phunkshun;
-                })(testImplementation.Givens[key]), { asd: "qwe" });
+                return new (givenKlasser.prototype).constructor(key, features, whens, thens, 
+                // ((phunkshun) => {
+                //   return phunkshun
+                // })(testImplementation.Givens[key]),
+                testImplementation.Givens[key], givEn);
             };
             return a;
         }, {});

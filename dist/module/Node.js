@@ -2,8 +2,9 @@ import Testeranto from "./core.js";
 import { defaultTestResourceRequirement } from "./lib.js";
 import { NodeWriter } from "./nodeWriter.js";
 class NodeTesteranto extends Testeranto {
-    constructor(input, testSpecification, testImplementation, testResourceRequirement, beforeAll, beforeEach, afterEach, afterAll, butThen, andWhen) {
-        super(input, testSpecification, testImplementation, testResourceRequirement, NodeWriter, beforeAll, beforeEach, afterEach, afterAll, butThen, andWhen);
+    constructor(input, testSpecification, testImplementation, testResourceRequirement, beforeAll, beforeEach, afterEach, afterAll, butThen, andWhen, assertioner) {
+        console.log("markl801", assertioner);
+        super(input, testSpecification, testImplementation, testResourceRequirement, NodeWriter, beforeAll, beforeEach, afterEach, afterAll, butThen, andWhen, assertioner);
         const t = this.testJobs[0];
         const testResourceArg = process.argv[2] || `{}`;
         try {
@@ -22,7 +23,6 @@ class NodeTesteranto extends Testeranto {
                 process.on("message", async (packet) => {
                     const resourcesFromPm2 = packet.data.testResourceConfiguration;
                     const secondTestResource = Object.assign(Object.assign({ fs: "." }, JSON.parse(JSON.stringify(partialTestResource))), JSON.parse(JSON.stringify(resourcesFromPm2)));
-                    console.log("receiveTestResourceConfigScheduled", this);
                     this.receiveTestResourceConfigScheduled(t, secondTestResource);
                 });
             }
@@ -67,5 +67,5 @@ class NodeTesteranto extends Testeranto {
 }
 ;
 export default async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = defaultTestResourceRequirement) => {
-    new NodeTesteranto(input, testSpecification, testImplementation, testResourceRequirement, testInterface.beforeAll || (async (s) => s), testInterface.beforeEach || async function (subject, initialValues, testResource) { return subject; }, testInterface.afterEach || (async (s) => s), testInterface.afterAll || ((store) => undefined), testInterface.butThen || (async (a) => a), testInterface.andWhen);
+    new NodeTesteranto(input, testSpecification, testImplementation, testResourceRequirement, testInterface.beforeAll || (async (s) => s), testInterface.beforeEach || async function (subject, initialValues, testResource) { return subject; }, testInterface.afterEach || (async (s) => s), testInterface.afterAll || ((store) => undefined), testInterface.butThen || (async (a) => a), testInterface.andWhen, testInterface.assertioner || ((...x) => x));
 };
