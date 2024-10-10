@@ -2,17 +2,15 @@ import {
   LoginPageSpecs,
   LoginPage_default,
   actions
-} from "../../../chunk-GMVT2KMC.mjs";
-import "../../../chunk-K6VSGQWW.mjs";
-import "../../../chunk-Y2IYZMNU.mjs";
-import "../../../chunk-P32AR2RA.mjs";
+} from "../../../chunk-HITIKDM3.mjs";
+import "../../../chunk-44S2XTSJ.mjs";
 import {
   assert
-} from "../../../chunk-TM6NCEZK.mjs";
+} from "../../../chunk-JBK64OIJ.mjs";
 import {
   Node_default,
   init_cjs_shim
-} from "../../../chunk-ZUOHA3DK.mjs";
+} from "../../../chunk-37RU6URC.mjs";
 
 // src/LoginPage/react/node.test.tsx
 init_cjs_shim();

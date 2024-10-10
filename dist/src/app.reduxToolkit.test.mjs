@@ -1,20 +1,19 @@
 import {
   AppSpecification
-} from "../chunk-ARZS2VHP.mjs";
+} from "../chunk-FQ5MI744.mjs";
 import {
   app_default,
   loginApp,
   require_redux
-} from "../chunk-Y2IYZMNU.mjs";
-import "../chunk-P32AR2RA.mjs";
+} from "../chunk-44S2XTSJ.mjs";
 import {
   assert
-} from "../chunk-TM6NCEZK.mjs";
+} from "../chunk-JBK64OIJ.mjs";
 import {
   Node_default,
   __toESM,
   init_cjs_shim
-} from "../chunk-ZUOHA3DK.mjs";
+} from "../chunk-37RU6URC.mjs";
 
 // src/app.reduxToolkit.test.ts
 init_cjs_shim();
@@ -22,11 +21,11 @@ init_cjs_shim();
 // myTests/reduxToolkit.testeranto.test.ts
 init_cjs_shim();
 var import_redux = __toESM(require_redux(), 1);
-var ReduxToolkitTesteranto = (testImplementations, testSpecifications, testInput) => Node_default(
-  testInput,
-  testSpecifications,
-  testImplementations,
-  {
+var ReduxToolkitTesteranto = (testImplementations, testSpecifications, testInput) => {
+  const testInterface = {
+    assertThis: (t) => {
+      t[0](t[1], t[2], t[3]);
+    },
     beforeEach: (subject, initializer, art, tr, initialValues) => {
       return (0, import_redux.createStore)(subject.reducer, initializer()(initialValues));
     },
@@ -35,14 +34,17 @@ var ReduxToolkitTesteranto = (testImplementations, testSpecifications, testInput
       store.dispatch(a[0](a[1]));
       return await store;
     },
-    butThen: function(store, assertion) {
-      const state = store.getState();
-      const t = assertion(state);
-      t[0](t[1], t[2], t[3]);
-      return state;
+    butThen: function(store, tr) {
+      return store.getState();
     }
-  }
-);
+  };
+  return Node_default(
+    testInput,
+    testSpecifications,
+    testImplementations,
+    testInterface
+  );
+};
 
 // src/app.reduxToolkit.test.ts
 var core = app_default();

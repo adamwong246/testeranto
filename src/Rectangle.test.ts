@@ -1,6 +1,6 @@
 import { assert } from "chai";
 
-import type { ITestSpecification } from "testeranto/src/Types";
+import type { ITestInterface, ITestSpecification } from "testeranto/src/Types";
 import type { ITTestShape, ITTTestShape } from "testeranto/src/lib";
 
 import Rectangle from "./Rectangle";
@@ -167,7 +167,13 @@ export const RectangleTesterantoBaseTestImplementation = {
   },
 };
 
-export const RectangleTesterantoBaseInterface = {
+export const RectangleTesterantoBaseInterface: ITestInterface<
+  any,
+  any,
+  any,
+  ThenShape,
+  Rectangle
+> = {
   beforeEach: (
     subject: any, //Reducer<any, AnyAction>,
     initializer: any,

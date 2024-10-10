@@ -1,17 +1,15 @@
 import {
   ClassicalComponent,
   ClassicalComponentSpec
-} from "../../../chunk-RCXHALEU.mjs";
+} from "../../../chunk-N2QNK5KN.mjs";
 import {
   require_scheduler
 } from "../../../chunk-7AHWTSRZ.mjs";
 import {
-  require_react
-} from "../../../chunk-FH7RWEQP.mjs";
-import {
   Web_default,
-  assert
-} from "../../../chunk-OERKCY6Y.mjs";
+  assert,
+  require_react
+} from "../../../chunk-2LOR6N5V.mjs";
 import {
   __commonJS,
   __toESM
@@ -21171,6 +21169,7 @@ var web_default = (testInput, testSpecifications, testImplementations) => {
       }
       return Web_default(testInput, testSpecifications, testImplementations, {
         beforeAll: async (initialProps, artificer) => {
+          console.log("mark5", initialProps);
           return await new Promise((resolve, rej) => {
             const elem2 = document.getElementById("root");
             if (elem2) {

@@ -1,18 +1,16 @@
 import {
   require_react_test_renderer
-} from "../../../chunk-SDPG7AIW.mjs";
+} from "../../../chunk-7DN5AMAG.mjs";
 import {
   ClassicalComponent,
   ClassicalComponentSpec
-} from "../../../chunk-RCXHALEU.mjs";
+} from "../../../chunk-N2QNK5KN.mjs";
 import "../../../chunk-7AHWTSRZ.mjs";
 import {
-  require_react
-} from "../../../chunk-FH7RWEQP.mjs";
-import {
   Web_default,
-  assert
-} from "../../../chunk-OERKCY6Y.mjs";
+  assert,
+  require_react
+} from "../../../chunk-2LOR6N5V.mjs";
 import {
   __toESM
 } from "../../../chunk-XALKSG2U.mjs";

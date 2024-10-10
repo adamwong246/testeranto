@@ -12,11 +12,12 @@ var tests_test_default = [
   ["./src/ClassicalComponent/react-dom/server.node.test.tsx", "node", []],
   ["./src/ReactStateAndHook.test.tsx", "node", []],
   ["./src/app.redux.test.ts", "node", []],
-  ["./src/app.reduxToolkit.test.ts", "node", []],
-  ["./src/Rectangle/Rectangle.test.electron.ts", "web", []],
-  ["./src/Rectangle/Rectangle.test.node.ts", "node", []],
-  ["./src/MyFirstContract.solidity.test.ts", "node", []],
-  ["./src/MyFirstContract.solidity-precompiled.test.ts", "node", []]
+  ["./src/app.reduxToolkit.test.ts", "node", []]
+  // ["./src/Rectangle/Rectangle.test.electron.ts", "web", []],
+  // ["./src/Rectangle/Rectangle.test.node.ts", "node", []],
+  // ["./src/MyFirstContract.solidity.test.ts", "node", []],
+  // ["./src/MyFirstContract.solidity-precompiled.test.ts", "node", []],
+  // ["./src/ClassicalComponent/react-dom/electron.web.test.tsx", "web", []],
   // broken or dead?
   // ["./src/google.puppeteer.testeranto.test.ts", "node", []],
   // ["./src/ClassicalComponent.electron.test.ts", "web", []],

@@ -1,17 +1,17 @@
 import {
   ClassicalComponent
-} from "../../../chunk-44RV3NTB.mjs";
+} from "../../../chunk-KTQGPXVF.mjs";
 import {
   require_react_test_renderer
-} from "../../../chunk-SZTMN6AQ.mjs";
+} from "../../../chunk-TKIKOOI7.mjs";
 import {
   assert
-} from "../../../chunk-TM6NCEZK.mjs";
+} from "../../../chunk-JBK64OIJ.mjs";
 import {
   Node_default,
   __toESM,
   init_cjs_shim
-} from "../../../chunk-ZUOHA3DK.mjs";
+} from "../../../chunk-37RU6URC.mjs";
 
 // src/ClassicalComponent/react-test-renderer/node.test.tsx
 init_cjs_shim();
