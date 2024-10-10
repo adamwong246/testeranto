@@ -17,6 +17,27 @@ export default new ITProject({
 
   nodePlugins: [
     {
+      name: 'ganache-shim',
+      setup(build) {
+        build.onResolve({ filter: /.*/ }, args => {
+          // console.log("mark4", args.path);
+
+          // return ({
+          //   path: "MyFirstContract",
+          //   namespace: 'ganache-shim',
+          // })
+        })
+        // build.onLoad({ filter: /.*/, namespace: 'ganache-shim' }, async (argz) => {
+        //   return ({
+        //     contents: JSON.stringify((await solCompile(argz.path))),
+        //     loader: 'json',
+        //     watchDirs: [process.cwd() + "/contracts"]
+        //   })
+        // })
+      },
+    },
+
+    {
       name: 'solidity',
       setup(build) {
         build.onResolve({ filter: /^.*\.sol$/ }, args => {

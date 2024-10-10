@@ -1,12 +1,19 @@
-import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
   assert
-} from "../../chunk-NLCBXMNY.mjs";
+} from "../../chunk-TM6NCEZK.mjs";
 import {
-  Node_default
-} from "../../chunk-WJAA5JYT.mjs";
+  Node_default,
+  init_cjs_shim
+} from "../../chunk-ZUOHA3DK.mjs";
+
+// src/Rectangle/Rectangle.test.node.ts
+init_cjs_shim();
+
+// src/Rectangle.test.ts
+init_cjs_shim();
 
 // src/Rectangle.ts
+init_cjs_shim();
 var Rectangle = class {
   height;
   width;

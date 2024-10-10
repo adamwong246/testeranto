@@ -1,18 +1,27 @@
-import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
   LoginPageSpecs,
   LoginPage_default,
   actions
-} from "../../../chunk-ZMB67C4P.mjs";
-import "../../../chunk-NXTG6YV5.mjs";
+} from "../../../chunk-GMVT2KMC.mjs";
+import "../../../chunk-K6VSGQWW.mjs";
+import "../../../chunk-Y2IYZMNU.mjs";
+import "../../../chunk-P32AR2RA.mjs";
 import {
   assert
-} from "../../../chunk-NLCBXMNY.mjs";
+} from "../../../chunk-TM6NCEZK.mjs";
 import {
-  Node_default
-} from "../../../chunk-WJAA5JYT.mjs";
+  Node_default,
+  init_cjs_shim
+} from "../../../chunk-ZUOHA3DK.mjs";
+
+// src/LoginPage/react/node.test.tsx
+init_cjs_shim();
+
+// node_modules/testeranto/dist/module/SubPackages/react/jsx/node.js
+init_cjs_shim();
 
 // node_modules/testeranto/dist/module/SubPackages/react/jsx/index.js
+init_cjs_shim();
 var testInterface = (z) => {
   return {
     beforeEach: async (x, ndx, testRsource, artificer) => {
@@ -32,6 +41,7 @@ var node_default = (testImplementations, testSpecifications, testInput, testInte
 };
 
 // src/LoginPage/react/test.tsx
+init_cjs_shim();
 var LoginPageReactTestInterface = (testInput) => {
   return {
     beforeEach: async (x, ndx, testRsource, artificer) => {

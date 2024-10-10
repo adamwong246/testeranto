@@ -561,10 +561,10 @@
               props.children = childArray;
             }
             if (type && type.defaultProps) {
-              var defaultProps = type.defaultProps;
-              for (propName in defaultProps) {
+              var defaultProps5 = type.defaultProps;
+              for (propName in defaultProps5) {
                 if (props[propName] === void 0) {
-                  props[propName] = defaultProps[propName];
+                  props[propName] = defaultProps5[propName];
                 }
               }
             }
@@ -607,14 +607,14 @@
                 }
                 key = "" + config.key;
               }
-              var defaultProps;
+              var defaultProps5;
               if (element.type && element.type.defaultProps) {
-                defaultProps = element.type.defaultProps;
+                defaultProps5 = element.type.defaultProps;
               }
               for (propName in config) {
                 if (hasOwnProperty.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
-                  if (config[propName] === void 0 && defaultProps !== void 0) {
-                    props[propName] = defaultProps[propName];
+                  if (config[propName] === void 0 && defaultProps5 !== void 0) {
+                    props[propName] = defaultProps5[propName];
                   } else {
                     props[propName] = config[propName];
                   }
@@ -945,17 +945,17 @@
               _init: lazyInitializer
             };
             {
-              var defaultProps;
+              var defaultProps5;
               var propTypes2;
               Object.defineProperties(lazyType, {
                 defaultProps: {
                   configurable: true,
                   get: function() {
-                    return defaultProps;
+                    return defaultProps5;
                   },
                   set: function(newDefaultProps) {
                     error("React.lazy(...): It is not supported to assign `defaultProps` to a lazy component import. Either specify them where the component is defined, or create a wrapping component around it.");
-                    defaultProps = newDefaultProps;
+                    defaultProps5 = newDefaultProps;
                     Object.defineProperty(lazyType, "defaultProps", {
                       enumerable: true
                     });
@@ -978,7 +978,7 @@
             }
             return lazyType;
           }
-          function forwardRef15(render) {
+          function forwardRef14(render) {
             {
               if (render != null && render.$$typeof === REACT_MEMO_TYPE) {
                 error("forwardRef requires a render function but received a `memo` component. Instead of forwardRef(memo(...)), use memo(forwardRef(...)).");
@@ -1875,7 +1875,7 @@
           exports2.createElement = createElement$1;
           exports2.createFactory = createFactory;
           exports2.createRef = createRef;
-          exports2.forwardRef = forwardRef15;
+          exports2.forwardRef = forwardRef14;
           exports2.isValidElement = isValidElement2;
           exports2.lazy = lazy;
           exports2.memo = memo;
@@ -2389,9 +2389,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React44 = require_react();
+          var React43 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React44.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React43.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -3996,7 +3996,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React44.Children.forEach(props.children, function(child) {
+                  React43.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -4427,7 +4427,7 @@
             var warnedStyleValues = {};
             var warnedForNaNValue = false;
             var warnedForInfinityValue = false;
-            var camelize = function(string) {
+            var camelize2 = function(string) {
               return string.replace(hyphenPattern, function(_, character) {
                 return character.toUpperCase();
               });
@@ -4443,7 +4443,7 @@
                 // As Andi Smith suggests
                 // (http://www.andismith.com/blog/2012/02/modernizr-prefixed/), an `-ms` prefix
                 // is converted to lowercase `ms`.
-                camelize(name.replace(msPattern$1, "ms-"))
+                camelize2(name.replace(msPattern$1, "ms-"))
               );
             };
             var warnBadVendoredStyleName = function(name) {
@@ -11765,10 +11765,10 @@
           function resolveDefaultProps(Component, baseProps) {
             if (Component && Component.defaultProps) {
               var props = assign({}, baseProps);
-              var defaultProps = Component.defaultProps;
-              for (var propName in defaultProps) {
+              var defaultProps5 = Component.defaultProps;
+              for (var propName in defaultProps5) {
                 if (props[propName] === void 0) {
-                  props[propName] = defaultProps[propName];
+                  props[propName] = defaultProps5[propName];
                 }
               }
               return props;
@@ -12443,7 +12443,7 @@
             }
           }
           var fakeInternalInstance = {};
-          var emptyRefsObject = new React44.Component().refs;
+          var emptyRefsObject = new React43.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -13955,11 +13955,11 @@
           }
           function registerMutableSourceForHydration(root2, mutableSource) {
             var getVersion = mutableSource._getVersion;
-            var version2 = getVersion(mutableSource._source);
+            var version = getVersion(mutableSource._source);
             if (root2.mutableSourceEagerHydrationData == null) {
-              root2.mutableSourceEagerHydrationData = [mutableSource, version2];
+              root2.mutableSourceEagerHydrationData = [mutableSource, version];
             } else {
-              root2.mutableSourceEagerHydrationData.push(mutableSource, version2);
+              root2.mutableSourceEagerHydrationData.push(mutableSource, version);
             }
           }
           var ReactCurrentDispatcher$1 = ReactSharedInternals.ReactCurrentDispatcher, ReactCurrentBatchConfig$2 = ReactSharedInternals.ReactCurrentBatchConfig;
@@ -23521,7 +23521,7 @@
         "use strict";
         var hasOwn = {}.hasOwnProperty;
         var nativeCodeString = "[native code]";
-        function classNames9() {
+        function classNames8() {
           var classes = [];
           for (var i2 = 0; i2 < arguments.length; i2++) {
             var arg = arguments[i2];
@@ -23532,7 +23532,7 @@
               classes.push(arg);
             } else if (Array.isArray(arg)) {
               if (arg.length) {
-                var inner = classNames9.apply(null, arg);
+                var inner = classNames8.apply(null, arg);
                 if (inner) {
                   classes.push(inner);
                 }
@@ -23552,14 +23552,14 @@
           return classes.join(" ");
         }
         if (typeof module2 !== "undefined" && module2.exports) {
-          classNames9.default = classNames9;
-          module2.exports = classNames9;
+          classNames8.default = classNames8;
+          module2.exports = classNames8;
         } else if (typeof define === "function" && typeof define.amd === "object" && define.amd) {
           define("classnames", [], function() {
-            return classNames9;
+            return classNames8;
           });
         } else {
-          window.classNames = classNames9;
+          window.classNames = classNames8;
         }
       })();
     }
@@ -23572,7 +23572,7 @@
       if (true) {
         (function() {
           "use strict";
-          var React44 = require_react();
+          var React43 = require_react();
           var REACT_ELEMENT_TYPE = Symbol.for("react.element");
           var REACT_PORTAL_TYPE = Symbol.for("react.portal");
           var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
@@ -23598,7 +23598,7 @@
             }
             return null;
           }
-          var ReactSharedInternals = React44.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React43.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function error(format) {
             {
               {
@@ -24190,10 +24190,10 @@
                 }
               }
               if (type && type.defaultProps) {
-                var defaultProps = type.defaultProps;
-                for (propName in defaultProps) {
+                var defaultProps5 = type.defaultProps;
+                for (propName in defaultProps5) {
                   if (props[propName] === void 0) {
-                    props[propName] = defaultProps[propName];
+                    props[propName] = defaultProps5[propName];
                   }
                 }
               }
@@ -25336,1891 +25336,6 @@
     }
   });
 
-  // node_modules/react/cjs/react.development.js
-  var require_react_development2 = __commonJS({
-    "node_modules/react/cjs/react.development.js"(exports2, module2) {
-      "use strict";
-      if (true) {
-        (function() {
-          "use strict";
-          if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
-            __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
-          }
-          var ReactVersion = "18.2.0";
-          var REACT_ELEMENT_TYPE = Symbol.for("react.element");
-          var REACT_PORTAL_TYPE = Symbol.for("react.portal");
-          var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
-          var REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode");
-          var REACT_PROFILER_TYPE = Symbol.for("react.profiler");
-          var REACT_PROVIDER_TYPE = Symbol.for("react.provider");
-          var REACT_CONTEXT_TYPE = Symbol.for("react.context");
-          var REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref");
-          var REACT_SUSPENSE_TYPE = Symbol.for("react.suspense");
-          var REACT_SUSPENSE_LIST_TYPE = Symbol.for("react.suspense_list");
-          var REACT_MEMO_TYPE = Symbol.for("react.memo");
-          var REACT_LAZY_TYPE = Symbol.for("react.lazy");
-          var REACT_OFFSCREEN_TYPE = Symbol.for("react.offscreen");
-          var MAYBE_ITERATOR_SYMBOL = Symbol.iterator;
-          var FAUX_ITERATOR_SYMBOL = "@@iterator";
-          function getIteratorFn(maybeIterable) {
-            if (maybeIterable === null || typeof maybeIterable !== "object") {
-              return null;
-            }
-            var maybeIterator = MAYBE_ITERATOR_SYMBOL && maybeIterable[MAYBE_ITERATOR_SYMBOL] || maybeIterable[FAUX_ITERATOR_SYMBOL];
-            if (typeof maybeIterator === "function") {
-              return maybeIterator;
-            }
-            return null;
-          }
-          var ReactCurrentDispatcher = {
-            /**
-             * @internal
-             * @type {ReactComponent}
-             */
-            current: null
-          };
-          var ReactCurrentBatchConfig = {
-            transition: null
-          };
-          var ReactCurrentActQueue = {
-            current: null,
-            // Used to reproduce behavior of `batchedUpdates` in legacy mode.
-            isBatchingLegacy: false,
-            didScheduleLegacyUpdate: false
-          };
-          var ReactCurrentOwner = {
-            /**
-             * @internal
-             * @type {ReactComponent}
-             */
-            current: null
-          };
-          var ReactDebugCurrentFrame = {};
-          var currentExtraStackFrame = null;
-          function setExtraStackFrame(stack) {
-            {
-              currentExtraStackFrame = stack;
-            }
-          }
-          {
-            ReactDebugCurrentFrame.setExtraStackFrame = function(stack) {
-              {
-                currentExtraStackFrame = stack;
-              }
-            };
-            ReactDebugCurrentFrame.getCurrentStack = null;
-            ReactDebugCurrentFrame.getStackAddendum = function() {
-              var stack = "";
-              if (currentExtraStackFrame) {
-                stack += currentExtraStackFrame;
-              }
-              var impl = ReactDebugCurrentFrame.getCurrentStack;
-              if (impl) {
-                stack += impl() || "";
-              }
-              return stack;
-            };
-          }
-          var enableScopeAPI = false;
-          var enableCacheElement = false;
-          var enableTransitionTracing = false;
-          var enableLegacyHidden = false;
-          var enableDebugTracing = false;
-          var ReactSharedInternals = {
-            ReactCurrentDispatcher,
-            ReactCurrentBatchConfig,
-            ReactCurrentOwner
-          };
-          {
-            ReactSharedInternals.ReactDebugCurrentFrame = ReactDebugCurrentFrame;
-            ReactSharedInternals.ReactCurrentActQueue = ReactCurrentActQueue;
-          }
-          function warn(format) {
-            {
-              {
-                for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-                  args[_key - 1] = arguments[_key];
-                }
-                printWarning("warn", format, args);
-              }
-            }
-          }
-          function error(format) {
-            {
-              {
-                for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-                  args[_key2 - 1] = arguments[_key2];
-                }
-                printWarning("error", format, args);
-              }
-            }
-          }
-          function printWarning(level, format, args) {
-            {
-              var ReactDebugCurrentFrame2 = ReactSharedInternals.ReactDebugCurrentFrame;
-              var stack = ReactDebugCurrentFrame2.getStackAddendum();
-              if (stack !== "") {
-                format += "%s";
-                args = args.concat([stack]);
-              }
-              var argsWithFormat = args.map(function(item) {
-                return String(item);
-              });
-              argsWithFormat.unshift("Warning: " + format);
-              Function.prototype.apply.call(console[level], console, argsWithFormat);
-            }
-          }
-          var didWarnStateUpdateForUnmountedComponent = {};
-          function warnNoop(publicInstance, callerName) {
-            {
-              var _constructor = publicInstance.constructor;
-              var componentName = _constructor && (_constructor.displayName || _constructor.name) || "ReactClass";
-              var warningKey = componentName + "." + callerName;
-              if (didWarnStateUpdateForUnmountedComponent[warningKey]) {
-                return;
-              }
-              error("Can't call %s on a component that is not yet mounted. This is a no-op, but it might indicate a bug in your application. Instead, assign to `this.state` directly or define a `state = {};` class property with the desired state in the %s component.", callerName, componentName);
-              didWarnStateUpdateForUnmountedComponent[warningKey] = true;
-            }
-          }
-          var ReactNoopUpdateQueue = {
-            /**
-             * Checks whether or not this composite component is mounted.
-             * @param {ReactClass} publicInstance The instance we want to test.
-             * @return {boolean} True if mounted, false otherwise.
-             * @protected
-             * @final
-             */
-            isMounted: function(publicInstance) {
-              return false;
-            },
-            /**
-             * Forces an update. This should only be invoked when it is known with
-             * certainty that we are **not** in a DOM transaction.
-             *
-             * You may want to call this when you know that some deeper aspect of the
-             * component's state has changed but `setState` was not called.
-             *
-             * This will not invoke `shouldComponentUpdate`, but it will invoke
-             * `componentWillUpdate` and `componentDidUpdate`.
-             *
-             * @param {ReactClass} publicInstance The instance that should rerender.
-             * @param {?function} callback Called after component is updated.
-             * @param {?string} callerName name of the calling function in the public API.
-             * @internal
-             */
-            enqueueForceUpdate: function(publicInstance, callback, callerName) {
-              warnNoop(publicInstance, "forceUpdate");
-            },
-            /**
-             * Replaces all of the state. Always use this or `setState` to mutate state.
-             * You should treat `this.state` as immutable.
-             *
-             * There is no guarantee that `this.state` will be immediately updated, so
-             * accessing `this.state` after calling this method may return the old value.
-             *
-             * @param {ReactClass} publicInstance The instance that should rerender.
-             * @param {object} completeState Next state.
-             * @param {?function} callback Called after component is updated.
-             * @param {?string} callerName name of the calling function in the public API.
-             * @internal
-             */
-            enqueueReplaceState: function(publicInstance, completeState, callback, callerName) {
-              warnNoop(publicInstance, "replaceState");
-            },
-            /**
-             * Sets a subset of the state. This only exists because _pendingState is
-             * internal. This provides a merging strategy that is not available to deep
-             * properties which is confusing. TODO: Expose pendingState or don't use it
-             * during the merge.
-             *
-             * @param {ReactClass} publicInstance The instance that should rerender.
-             * @param {object} partialState Next partial state to be merged with state.
-             * @param {?function} callback Called after component is updated.
-             * @param {?string} Name of the calling function in the public API.
-             * @internal
-             */
-            enqueueSetState: function(publicInstance, partialState, callback, callerName) {
-              warnNoop(publicInstance, "setState");
-            }
-          };
-          var assign = Object.assign;
-          var emptyObject = {};
-          {
-            Object.freeze(emptyObject);
-          }
-          function Component(props, context3, updater) {
-            this.props = props;
-            this.context = context3;
-            this.refs = emptyObject;
-            this.updater = updater || ReactNoopUpdateQueue;
-          }
-          Component.prototype.isReactComponent = {};
-          Component.prototype.setState = function(partialState, callback) {
-            if (typeof partialState !== "object" && typeof partialState !== "function" && partialState != null) {
-              throw new Error("setState(...): takes an object of state variables to update or a function which returns an object of state variables.");
-            }
-            this.updater.enqueueSetState(this, partialState, callback, "setState");
-          };
-          Component.prototype.forceUpdate = function(callback) {
-            this.updater.enqueueForceUpdate(this, callback, "forceUpdate");
-          };
-          {
-            var deprecatedAPIs = {
-              isMounted: ["isMounted", "Instead, make sure to clean up subscriptions and pending requests in componentWillUnmount to prevent memory leaks."],
-              replaceState: ["replaceState", "Refactor your code to use setState instead (see https://github.com/facebook/react/issues/3236)."]
-            };
-            var defineDeprecationWarning = function(methodName, info) {
-              Object.defineProperty(Component.prototype, methodName, {
-                get: function() {
-                  warn("%s(...) is deprecated in plain JavaScript React classes. %s", info[0], info[1]);
-                  return void 0;
-                }
-              });
-            };
-            for (var fnName in deprecatedAPIs) {
-              if (deprecatedAPIs.hasOwnProperty(fnName)) {
-                defineDeprecationWarning(fnName, deprecatedAPIs[fnName]);
-              }
-            }
-          }
-          function ComponentDummy() {
-          }
-          ComponentDummy.prototype = Component.prototype;
-          function PureComponent(props, context3, updater) {
-            this.props = props;
-            this.context = context3;
-            this.refs = emptyObject;
-            this.updater = updater || ReactNoopUpdateQueue;
-          }
-          var pureComponentPrototype = PureComponent.prototype = new ComponentDummy();
-          pureComponentPrototype.constructor = PureComponent;
-          assign(pureComponentPrototype, Component.prototype);
-          pureComponentPrototype.isPureReactComponent = true;
-          function createRef() {
-            var refObject = {
-              current: null
-            };
-            {
-              Object.seal(refObject);
-            }
-            return refObject;
-          }
-          var isArrayImpl = Array.isArray;
-          function isArray(a) {
-            return isArrayImpl(a);
-          }
-          function typeName(value) {
-            {
-              var hasToStringTag = typeof Symbol === "function" && Symbol.toStringTag;
-              var type = hasToStringTag && value[Symbol.toStringTag] || value.constructor.name || "Object";
-              return type;
-            }
-          }
-          function willCoercionThrow(value) {
-            {
-              try {
-                testStringCoercion(value);
-                return false;
-              } catch (e) {
-                return true;
-              }
-            }
-          }
-          function testStringCoercion(value) {
-            return "" + value;
-          }
-          function checkKeyStringCoercion(value) {
-            {
-              if (willCoercionThrow(value)) {
-                error("The provided key is an unsupported type %s. This value must be coerced to a string before before using it here.", typeName(value));
-                return testStringCoercion(value);
-              }
-            }
-          }
-          function getWrappedName(outerType, innerType, wrapperName) {
-            var displayName = outerType.displayName;
-            if (displayName) {
-              return displayName;
-            }
-            var functionName = innerType.displayName || innerType.name || "";
-            return functionName !== "" ? wrapperName + "(" + functionName + ")" : wrapperName;
-          }
-          function getContextName(type) {
-            return type.displayName || "Context";
-          }
-          function getComponentNameFromType(type) {
-            if (type == null) {
-              return null;
-            }
-            {
-              if (typeof type.tag === "number") {
-                error("Received an unexpected object in getComponentNameFromType(). This is likely a bug in React. Please file an issue.");
-              }
-            }
-            if (typeof type === "function") {
-              return type.displayName || type.name || null;
-            }
-            if (typeof type === "string") {
-              return type;
-            }
-            switch (type) {
-              case REACT_FRAGMENT_TYPE:
-                return "Fragment";
-              case REACT_PORTAL_TYPE:
-                return "Portal";
-              case REACT_PROFILER_TYPE:
-                return "Profiler";
-              case REACT_STRICT_MODE_TYPE:
-                return "StrictMode";
-              case REACT_SUSPENSE_TYPE:
-                return "Suspense";
-              case REACT_SUSPENSE_LIST_TYPE:
-                return "SuspenseList";
-            }
-            if (typeof type === "object") {
-              switch (type.$$typeof) {
-                case REACT_CONTEXT_TYPE:
-                  var context3 = type;
-                  return getContextName(context3) + ".Consumer";
-                case REACT_PROVIDER_TYPE:
-                  var provider = type;
-                  return getContextName(provider._context) + ".Provider";
-                case REACT_FORWARD_REF_TYPE:
-                  return getWrappedName(type, type.render, "ForwardRef");
-                case REACT_MEMO_TYPE:
-                  var outerName = type.displayName || null;
-                  if (outerName !== null) {
-                    return outerName;
-                  }
-                  return getComponentNameFromType(type.type) || "Memo";
-                case REACT_LAZY_TYPE: {
-                  var lazyComponent = type;
-                  var payload = lazyComponent._payload;
-                  var init = lazyComponent._init;
-                  try {
-                    return getComponentNameFromType(init(payload));
-                  } catch (x) {
-                    return null;
-                  }
-                }
-              }
-            }
-            return null;
-          }
-          var hasOwnProperty = Object.prototype.hasOwnProperty;
-          var RESERVED_PROPS = {
-            key: true,
-            ref: true,
-            __self: true,
-            __source: true
-          };
-          var specialPropKeyWarningShown, specialPropRefWarningShown, didWarnAboutStringRefs;
-          {
-            didWarnAboutStringRefs = {};
-          }
-          function hasValidRef(config) {
-            {
-              if (hasOwnProperty.call(config, "ref")) {
-                var getter = Object.getOwnPropertyDescriptor(config, "ref").get;
-                if (getter && getter.isReactWarning) {
-                  return false;
-                }
-              }
-            }
-            return config.ref !== void 0;
-          }
-          function hasValidKey(config) {
-            {
-              if (hasOwnProperty.call(config, "key")) {
-                var getter = Object.getOwnPropertyDescriptor(config, "key").get;
-                if (getter && getter.isReactWarning) {
-                  return false;
-                }
-              }
-            }
-            return config.key !== void 0;
-          }
-          function defineKeyPropWarningGetter(props, displayName) {
-            var warnAboutAccessingKey = function() {
-              {
-                if (!specialPropKeyWarningShown) {
-                  specialPropKeyWarningShown = true;
-                  error("%s: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", displayName);
-                }
-              }
-            };
-            warnAboutAccessingKey.isReactWarning = true;
-            Object.defineProperty(props, "key", {
-              get: warnAboutAccessingKey,
-              configurable: true
-            });
-          }
-          function defineRefPropWarningGetter(props, displayName) {
-            var warnAboutAccessingRef = function() {
-              {
-                if (!specialPropRefWarningShown) {
-                  specialPropRefWarningShown = true;
-                  error("%s: `ref` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", displayName);
-                }
-              }
-            };
-            warnAboutAccessingRef.isReactWarning = true;
-            Object.defineProperty(props, "ref", {
-              get: warnAboutAccessingRef,
-              configurable: true
-            });
-          }
-          function warnIfStringRefCannotBeAutoConverted(config) {
-            {
-              if (typeof config.ref === "string" && ReactCurrentOwner.current && config.__self && ReactCurrentOwner.current.stateNode !== config.__self) {
-                var componentName = getComponentNameFromType(ReactCurrentOwner.current.type);
-                if (!didWarnAboutStringRefs[componentName]) {
-                  error('Component "%s" contains the string ref "%s". Support for string refs will be removed in a future major release. This case cannot be automatically converted to an arrow function. We ask you to manually fix this case by using useRef() or createRef() instead. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref', componentName, config.ref);
-                  didWarnAboutStringRefs[componentName] = true;
-                }
-              }
-            }
-          }
-          var ReactElement = function(type, key, ref, self2, source, owner, props) {
-            var element = {
-              // This tag allows us to uniquely identify this as a React Element
-              $$typeof: REACT_ELEMENT_TYPE,
-              // Built-in properties that belong on the element
-              type,
-              key,
-              ref,
-              props,
-              // Record the component responsible for creating this element.
-              _owner: owner
-            };
-            {
-              element._store = {};
-              Object.defineProperty(element._store, "validated", {
-                configurable: false,
-                enumerable: false,
-                writable: true,
-                value: false
-              });
-              Object.defineProperty(element, "_self", {
-                configurable: false,
-                enumerable: false,
-                writable: false,
-                value: self2
-              });
-              Object.defineProperty(element, "_source", {
-                configurable: false,
-                enumerable: false,
-                writable: false,
-                value: source
-              });
-              if (Object.freeze) {
-                Object.freeze(element.props);
-                Object.freeze(element);
-              }
-            }
-            return element;
-          };
-          function createElement(type, config, children) {
-            var propName;
-            var props = {};
-            var key = null;
-            var ref = null;
-            var self2 = null;
-            var source = null;
-            if (config != null) {
-              if (hasValidRef(config)) {
-                ref = config.ref;
-                {
-                  warnIfStringRefCannotBeAutoConverted(config);
-                }
-              }
-              if (hasValidKey(config)) {
-                {
-                  checkKeyStringCoercion(config.key);
-                }
-                key = "" + config.key;
-              }
-              self2 = config.__self === void 0 ? null : config.__self;
-              source = config.__source === void 0 ? null : config.__source;
-              for (propName in config) {
-                if (hasOwnProperty.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
-                  props[propName] = config[propName];
-                }
-              }
-            }
-            var childrenLength = arguments.length - 2;
-            if (childrenLength === 1) {
-              props.children = children;
-            } else if (childrenLength > 1) {
-              var childArray = Array(childrenLength);
-              for (var i2 = 0; i2 < childrenLength; i2++) {
-                childArray[i2] = arguments[i2 + 2];
-              }
-              {
-                if (Object.freeze) {
-                  Object.freeze(childArray);
-                }
-              }
-              props.children = childArray;
-            }
-            if (type && type.defaultProps) {
-              var defaultProps = type.defaultProps;
-              for (propName in defaultProps) {
-                if (props[propName] === void 0) {
-                  props[propName] = defaultProps[propName];
-                }
-              }
-            }
-            {
-              if (key || ref) {
-                var displayName = typeof type === "function" ? type.displayName || type.name || "Unknown" : type;
-                if (key) {
-                  defineKeyPropWarningGetter(props, displayName);
-                }
-                if (ref) {
-                  defineRefPropWarningGetter(props, displayName);
-                }
-              }
-            }
-            return ReactElement(type, key, ref, self2, source, ReactCurrentOwner.current, props);
-          }
-          function cloneAndReplaceKey(oldElement, newKey) {
-            var newElement = ReactElement(oldElement.type, newKey, oldElement.ref, oldElement._self, oldElement._source, oldElement._owner, oldElement.props);
-            return newElement;
-          }
-          function cloneElement2(element, config, children) {
-            if (element === null || element === void 0) {
-              throw new Error("React.cloneElement(...): The argument must be a React element, but you passed " + element + ".");
-            }
-            var propName;
-            var props = assign({}, element.props);
-            var key = element.key;
-            var ref = element.ref;
-            var self2 = element._self;
-            var source = element._source;
-            var owner = element._owner;
-            if (config != null) {
-              if (hasValidRef(config)) {
-                ref = config.ref;
-                owner = ReactCurrentOwner.current;
-              }
-              if (hasValidKey(config)) {
-                {
-                  checkKeyStringCoercion(config.key);
-                }
-                key = "" + config.key;
-              }
-              var defaultProps;
-              if (element.type && element.type.defaultProps) {
-                defaultProps = element.type.defaultProps;
-              }
-              for (propName in config) {
-                if (hasOwnProperty.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
-                  if (config[propName] === void 0 && defaultProps !== void 0) {
-                    props[propName] = defaultProps[propName];
-                  } else {
-                    props[propName] = config[propName];
-                  }
-                }
-              }
-            }
-            var childrenLength = arguments.length - 2;
-            if (childrenLength === 1) {
-              props.children = children;
-            } else if (childrenLength > 1) {
-              var childArray = Array(childrenLength);
-              for (var i2 = 0; i2 < childrenLength; i2++) {
-                childArray[i2] = arguments[i2 + 2];
-              }
-              props.children = childArray;
-            }
-            return ReactElement(element.type, key, ref, self2, source, owner, props);
-          }
-          function isValidElement2(object) {
-            return typeof object === "object" && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
-          }
-          var SEPARATOR = ".";
-          var SUBSEPARATOR = ":";
-          function escape(key) {
-            var escapeRegex = /[=:]/g;
-            var escaperLookup = {
-              "=": "=0",
-              ":": "=2"
-            };
-            var escapedString = key.replace(escapeRegex, function(match) {
-              return escaperLookup[match];
-            });
-            return "$" + escapedString;
-          }
-          var didWarnAboutMaps = false;
-          var userProvidedKeyEscapeRegex = /\/+/g;
-          function escapeUserProvidedKey(text) {
-            return text.replace(userProvidedKeyEscapeRegex, "$&/");
-          }
-          function getElementKey(element, index) {
-            if (typeof element === "object" && element !== null && element.key != null) {
-              {
-                checkKeyStringCoercion(element.key);
-              }
-              return escape("" + element.key);
-            }
-            return index.toString(36);
-          }
-          function mapIntoArray(children, array, escapedPrefix, nameSoFar, callback) {
-            var type = typeof children;
-            if (type === "undefined" || type === "boolean") {
-              children = null;
-            }
-            var invokeCallback = false;
-            if (children === null) {
-              invokeCallback = true;
-            } else {
-              switch (type) {
-                case "string":
-                case "number":
-                  invokeCallback = true;
-                  break;
-                case "object":
-                  switch (children.$$typeof) {
-                    case REACT_ELEMENT_TYPE:
-                    case REACT_PORTAL_TYPE:
-                      invokeCallback = true;
-                  }
-              }
-            }
-            if (invokeCallback) {
-              var _child = children;
-              var mappedChild = callback(_child);
-              var childKey = nameSoFar === "" ? SEPARATOR + getElementKey(_child, 0) : nameSoFar;
-              if (isArray(mappedChild)) {
-                var escapedChildKey = "";
-                if (childKey != null) {
-                  escapedChildKey = escapeUserProvidedKey(childKey) + "/";
-                }
-                mapIntoArray(mappedChild, array, escapedChildKey, "", function(c) {
-                  return c;
-                });
-              } else if (mappedChild != null) {
-                if (isValidElement2(mappedChild)) {
-                  {
-                    if (mappedChild.key && (!_child || _child.key !== mappedChild.key)) {
-                      checkKeyStringCoercion(mappedChild.key);
-                    }
-                  }
-                  mappedChild = cloneAndReplaceKey(
-                    mappedChild,
-                    // Keep both the (mapped) and old keys if they differ, just as
-                    // traverseAllChildren used to do for objects as children
-                    escapedPrefix + // $FlowFixMe Flow incorrectly thinks React.Portal doesn't have a key
-                    (mappedChild.key && (!_child || _child.key !== mappedChild.key) ? (
-                      // $FlowFixMe Flow incorrectly thinks existing element's key can be a number
-                      // eslint-disable-next-line react-internal/safe-string-coercion
-                      escapeUserProvidedKey("" + mappedChild.key) + "/"
-                    ) : "") + childKey
-                  );
-                }
-                array.push(mappedChild);
-              }
-              return 1;
-            }
-            var child;
-            var nextName;
-            var subtreeCount = 0;
-            var nextNamePrefix = nameSoFar === "" ? SEPARATOR : nameSoFar + SUBSEPARATOR;
-            if (isArray(children)) {
-              for (var i2 = 0; i2 < children.length; i2++) {
-                child = children[i2];
-                nextName = nextNamePrefix + getElementKey(child, i2);
-                subtreeCount += mapIntoArray(child, array, escapedPrefix, nextName, callback);
-              }
-            } else {
-              var iteratorFn = getIteratorFn(children);
-              if (typeof iteratorFn === "function") {
-                var iterableChildren = children;
-                {
-                  if (iteratorFn === iterableChildren.entries) {
-                    if (!didWarnAboutMaps) {
-                      warn("Using Maps as children is not supported. Use an array of keyed ReactElements instead.");
-                    }
-                    didWarnAboutMaps = true;
-                  }
-                }
-                var iterator = iteratorFn.call(iterableChildren);
-                var step;
-                var ii = 0;
-                while (!(step = iterator.next()).done) {
-                  child = step.value;
-                  nextName = nextNamePrefix + getElementKey(child, ii++);
-                  subtreeCount += mapIntoArray(child, array, escapedPrefix, nextName, callback);
-                }
-              } else if (type === "object") {
-                var childrenString = String(children);
-                throw new Error("Objects are not valid as a React child (found: " + (childrenString === "[object Object]" ? "object with keys {" + Object.keys(children).join(", ") + "}" : childrenString) + "). If you meant to render a collection of children, use an array instead.");
-              }
-            }
-            return subtreeCount;
-          }
-          function mapChildren(children, func, context3) {
-            if (children == null) {
-              return children;
-            }
-            var result = [];
-            var count = 0;
-            mapIntoArray(children, result, "", "", function(child) {
-              return func.call(context3, child, count++);
-            });
-            return result;
-          }
-          function countChildren(children) {
-            var n = 0;
-            mapChildren(children, function() {
-              n++;
-            });
-            return n;
-          }
-          function forEachChildren(children, forEachFunc, forEachContext) {
-            mapChildren(children, function() {
-              forEachFunc.apply(this, arguments);
-            }, forEachContext);
-          }
-          function toArray2(children) {
-            return mapChildren(children, function(child) {
-              return child;
-            }) || [];
-          }
-          function onlyChild(children) {
-            if (!isValidElement2(children)) {
-              throw new Error("React.Children.only expected to receive a single React element child.");
-            }
-            return children;
-          }
-          function createContext7(defaultValue) {
-            var context3 = {
-              $$typeof: REACT_CONTEXT_TYPE,
-              // As a workaround to support multiple concurrent renderers, we categorize
-              // some renderers as primary and others as secondary. We only expect
-              // there to be two concurrent renderers at most: React Native (primary) and
-              // Fabric (secondary); React DOM (primary) and React ART (secondary).
-              // Secondary renderers store their context values on separate fields.
-              _currentValue: defaultValue,
-              _currentValue2: defaultValue,
-              // Used to track how many concurrent renderers this context currently
-              // supports within in a single renderer. Such as parallel server rendering.
-              _threadCount: 0,
-              // These are circular
-              Provider: null,
-              Consumer: null,
-              // Add these to use same hidden class in VM as ServerContext
-              _defaultValue: null,
-              _globalName: null
-            };
-            context3.Provider = {
-              $$typeof: REACT_PROVIDER_TYPE,
-              _context: context3
-            };
-            var hasWarnedAboutUsingNestedContextConsumers = false;
-            var hasWarnedAboutUsingConsumerProvider = false;
-            var hasWarnedAboutDisplayNameOnConsumer = false;
-            {
-              var Consumer2 = {
-                $$typeof: REACT_CONTEXT_TYPE,
-                _context: context3
-              };
-              Object.defineProperties(Consumer2, {
-                Provider: {
-                  get: function() {
-                    if (!hasWarnedAboutUsingConsumerProvider) {
-                      hasWarnedAboutUsingConsumerProvider = true;
-                      error("Rendering <Context.Consumer.Provider> is not supported and will be removed in a future major release. Did you mean to render <Context.Provider> instead?");
-                    }
-                    return context3.Provider;
-                  },
-                  set: function(_Provider) {
-                    context3.Provider = _Provider;
-                  }
-                },
-                _currentValue: {
-                  get: function() {
-                    return context3._currentValue;
-                  },
-                  set: function(_currentValue) {
-                    context3._currentValue = _currentValue;
-                  }
-                },
-                _currentValue2: {
-                  get: function() {
-                    return context3._currentValue2;
-                  },
-                  set: function(_currentValue2) {
-                    context3._currentValue2 = _currentValue2;
-                  }
-                },
-                _threadCount: {
-                  get: function() {
-                    return context3._threadCount;
-                  },
-                  set: function(_threadCount) {
-                    context3._threadCount = _threadCount;
-                  }
-                },
-                Consumer: {
-                  get: function() {
-                    if (!hasWarnedAboutUsingNestedContextConsumers) {
-                      hasWarnedAboutUsingNestedContextConsumers = true;
-                      error("Rendering <Context.Consumer.Consumer> is not supported and will be removed in a future major release. Did you mean to render <Context.Consumer> instead?");
-                    }
-                    return context3.Consumer;
-                  }
-                },
-                displayName: {
-                  get: function() {
-                    return context3.displayName;
-                  },
-                  set: function(displayName) {
-                    if (!hasWarnedAboutDisplayNameOnConsumer) {
-                      warn("Setting `displayName` on Context.Consumer has no effect. You should set it directly on the context with Context.displayName = '%s'.", displayName);
-                      hasWarnedAboutDisplayNameOnConsumer = true;
-                    }
-                  }
-                }
-              });
-              context3.Consumer = Consumer2;
-            }
-            {
-              context3._currentRenderer = null;
-              context3._currentRenderer2 = null;
-            }
-            return context3;
-          }
-          var Uninitialized = -1;
-          var Pending = 0;
-          var Resolved = 1;
-          var Rejected = 2;
-          function lazyInitializer(payload) {
-            if (payload._status === Uninitialized) {
-              var ctor = payload._result;
-              var thenable = ctor();
-              thenable.then(function(moduleObject2) {
-                if (payload._status === Pending || payload._status === Uninitialized) {
-                  var resolved = payload;
-                  resolved._status = Resolved;
-                  resolved._result = moduleObject2;
-                }
-              }, function(error2) {
-                if (payload._status === Pending || payload._status === Uninitialized) {
-                  var rejected = payload;
-                  rejected._status = Rejected;
-                  rejected._result = error2;
-                }
-              });
-              if (payload._status === Uninitialized) {
-                var pending = payload;
-                pending._status = Pending;
-                pending._result = thenable;
-              }
-            }
-            if (payload._status === Resolved) {
-              var moduleObject = payload._result;
-              {
-                if (moduleObject === void 0) {
-                  error("lazy: Expected the result of a dynamic import() call. Instead received: %s\n\nYour code should look like: \n  const MyComponent = lazy(() => import('./MyComponent'))\n\nDid you accidentally put curly braces around the import?", moduleObject);
-                }
-              }
-              {
-                if (!("default" in moduleObject)) {
-                  error("lazy: Expected the result of a dynamic import() call. Instead received: %s\n\nYour code should look like: \n  const MyComponent = lazy(() => import('./MyComponent'))", moduleObject);
-                }
-              }
-              return moduleObject.default;
-            } else {
-              throw payload._result;
-            }
-          }
-          function lazy(ctor) {
-            var payload = {
-              // We use these fields to store the result.
-              _status: Uninitialized,
-              _result: ctor
-            };
-            var lazyType = {
-              $$typeof: REACT_LAZY_TYPE,
-              _payload: payload,
-              _init: lazyInitializer
-            };
-            {
-              var defaultProps;
-              var propTypes2;
-              Object.defineProperties(lazyType, {
-                defaultProps: {
-                  configurable: true,
-                  get: function() {
-                    return defaultProps;
-                  },
-                  set: function(newDefaultProps) {
-                    error("React.lazy(...): It is not supported to assign `defaultProps` to a lazy component import. Either specify them where the component is defined, or create a wrapping component around it.");
-                    defaultProps = newDefaultProps;
-                    Object.defineProperty(lazyType, "defaultProps", {
-                      enumerable: true
-                    });
-                  }
-                },
-                propTypes: {
-                  configurable: true,
-                  get: function() {
-                    return propTypes2;
-                  },
-                  set: function(newPropTypes) {
-                    error("React.lazy(...): It is not supported to assign `propTypes` to a lazy component import. Either specify them where the component is defined, or create a wrapping component around it.");
-                    propTypes2 = newPropTypes;
-                    Object.defineProperty(lazyType, "propTypes", {
-                      enumerable: true
-                    });
-                  }
-                }
-              });
-            }
-            return lazyType;
-          }
-          function forwardRef15(render) {
-            {
-              if (render != null && render.$$typeof === REACT_MEMO_TYPE) {
-                error("forwardRef requires a render function but received a `memo` component. Instead of forwardRef(memo(...)), use memo(forwardRef(...)).");
-              } else if (typeof render !== "function") {
-                error("forwardRef requires a render function but was given %s.", render === null ? "null" : typeof render);
-              } else {
-                if (render.length !== 0 && render.length !== 2) {
-                  error("forwardRef render functions accept exactly two parameters: props and ref. %s", render.length === 1 ? "Did you forget to use the ref parameter?" : "Any additional parameter will be undefined.");
-                }
-              }
-              if (render != null) {
-                if (render.defaultProps != null || render.propTypes != null) {
-                  error("forwardRef render functions do not support propTypes or defaultProps. Did you accidentally pass a React component?");
-                }
-              }
-            }
-            var elementType = {
-              $$typeof: REACT_FORWARD_REF_TYPE,
-              render
-            };
-            {
-              var ownName;
-              Object.defineProperty(elementType, "displayName", {
-                enumerable: false,
-                configurable: true,
-                get: function() {
-                  return ownName;
-                },
-                set: function(name) {
-                  ownName = name;
-                  if (!render.name && !render.displayName) {
-                    render.displayName = name;
-                  }
-                }
-              });
-            }
-            return elementType;
-          }
-          var REACT_MODULE_REFERENCE;
-          {
-            REACT_MODULE_REFERENCE = Symbol.for("react.module.reference");
-          }
-          function isValidElementType(type) {
-            if (typeof type === "string" || typeof type === "function") {
-              return true;
-            }
-            if (type === REACT_FRAGMENT_TYPE || type === REACT_PROFILER_TYPE || enableDebugTracing || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || enableLegacyHidden || type === REACT_OFFSCREEN_TYPE || enableScopeAPI || enableCacheElement || enableTransitionTracing) {
-              return true;
-            }
-            if (typeof type === "object" && type !== null) {
-              if (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || // This needs to include all possible module reference object
-              // types supported by any Flight configuration anywhere since
-              // we don't know which Flight build this will end up being used
-              // with.
-              type.$$typeof === REACT_MODULE_REFERENCE || type.getModuleId !== void 0) {
-                return true;
-              }
-            }
-            return false;
-          }
-          function memo(type, compare) {
-            {
-              if (!isValidElementType(type)) {
-                error("memo: The first argument must be a component. Instead received: %s", type === null ? "null" : typeof type);
-              }
-            }
-            var elementType = {
-              $$typeof: REACT_MEMO_TYPE,
-              type,
-              compare: compare === void 0 ? null : compare
-            };
-            {
-              var ownName;
-              Object.defineProperty(elementType, "displayName", {
-                enumerable: false,
-                configurable: true,
-                get: function() {
-                  return ownName;
-                },
-                set: function(name) {
-                  ownName = name;
-                  if (!type.name && !type.displayName) {
-                    type.displayName = name;
-                  }
-                }
-              });
-            }
-            return elementType;
-          }
-          function resolveDispatcher() {
-            var dispatcher = ReactCurrentDispatcher.current;
-            {
-              if (dispatcher === null) {
-                error("Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:\n1. You might have mismatching versions of React and the renderer (such as React DOM)\n2. You might be breaking the Rules of Hooks\n3. You might have more than one copy of React in the same app\nSee https://reactjs.org/link/invalid-hook-call for tips about how to debug and fix this problem.");
-              }
-            }
-            return dispatcher;
-          }
-          function useContext6(Context) {
-            var dispatcher = resolveDispatcher();
-            {
-              if (Context._context !== void 0) {
-                var realContext = Context._context;
-                if (realContext.Consumer === Context) {
-                  error("Calling useContext(Context.Consumer) is not supported, may cause bugs, and will be removed in a future major release. Did you mean to call useContext(Context) instead?");
-                } else if (realContext.Provider === Context) {
-                  error("Calling useContext(Context.Provider) is not supported. Did you mean to call useContext(Context) instead?");
-                }
-              }
-            }
-            return dispatcher.useContext(Context);
-          }
-          function useState7(initialState) {
-            var dispatcher = resolveDispatcher();
-            return dispatcher.useState(initialState);
-          }
-          function useReducer2(reducer, initialArg, init) {
-            var dispatcher = resolveDispatcher();
-            return dispatcher.useReducer(reducer, initialArg, init);
-          }
-          function useRef8(initialValue) {
-            var dispatcher = resolveDispatcher();
-            return dispatcher.useRef(initialValue);
-          }
-          function useEffect12(create, deps) {
-            var dispatcher = resolveDispatcher();
-            return dispatcher.useEffect(create, deps);
-          }
-          function useInsertionEffect(create, deps) {
-            var dispatcher = resolveDispatcher();
-            return dispatcher.useInsertionEffect(create, deps);
-          }
-          function useLayoutEffect2(create, deps) {
-            var dispatcher = resolveDispatcher();
-            return dispatcher.useLayoutEffect(create, deps);
-          }
-          function useCallback7(callback, deps) {
-            var dispatcher = resolveDispatcher();
-            return dispatcher.useCallback(callback, deps);
-          }
-          function useMemo4(create, deps) {
-            var dispatcher = resolveDispatcher();
-            return dispatcher.useMemo(create, deps);
-          }
-          function useImperativeHandle(ref, create, deps) {
-            var dispatcher = resolveDispatcher();
-            return dispatcher.useImperativeHandle(ref, create, deps);
-          }
-          function useDebugValue(value, formatterFn) {
-            {
-              var dispatcher = resolveDispatcher();
-              return dispatcher.useDebugValue(value, formatterFn);
-            }
-          }
-          function useTransition() {
-            var dispatcher = resolveDispatcher();
-            return dispatcher.useTransition();
-          }
-          function useDeferredValue(value) {
-            var dispatcher = resolveDispatcher();
-            return dispatcher.useDeferredValue(value);
-          }
-          function useId() {
-            var dispatcher = resolveDispatcher();
-            return dispatcher.useId();
-          }
-          function useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot) {
-            var dispatcher = resolveDispatcher();
-            return dispatcher.useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
-          }
-          var disabledDepth = 0;
-          var prevLog;
-          var prevInfo;
-          var prevWarn;
-          var prevError;
-          var prevGroup;
-          var prevGroupCollapsed;
-          var prevGroupEnd;
-          function disabledLog() {
-          }
-          disabledLog.__reactDisabledLog = true;
-          function disableLogs() {
-            {
-              if (disabledDepth === 0) {
-                prevLog = console.log;
-                prevInfo = console.info;
-                prevWarn = console.warn;
-                prevError = console.error;
-                prevGroup = console.group;
-                prevGroupCollapsed = console.groupCollapsed;
-                prevGroupEnd = console.groupEnd;
-                var props = {
-                  configurable: true,
-                  enumerable: true,
-                  value: disabledLog,
-                  writable: true
-                };
-                Object.defineProperties(console, {
-                  info: props,
-                  log: props,
-                  warn: props,
-                  error: props,
-                  group: props,
-                  groupCollapsed: props,
-                  groupEnd: props
-                });
-              }
-              disabledDepth++;
-            }
-          }
-          function reenableLogs() {
-            {
-              disabledDepth--;
-              if (disabledDepth === 0) {
-                var props = {
-                  configurable: true,
-                  enumerable: true,
-                  writable: true
-                };
-                Object.defineProperties(console, {
-                  log: assign({}, props, {
-                    value: prevLog
-                  }),
-                  info: assign({}, props, {
-                    value: prevInfo
-                  }),
-                  warn: assign({}, props, {
-                    value: prevWarn
-                  }),
-                  error: assign({}, props, {
-                    value: prevError
-                  }),
-                  group: assign({}, props, {
-                    value: prevGroup
-                  }),
-                  groupCollapsed: assign({}, props, {
-                    value: prevGroupCollapsed
-                  }),
-                  groupEnd: assign({}, props, {
-                    value: prevGroupEnd
-                  })
-                });
-              }
-              if (disabledDepth < 0) {
-                error("disabledDepth fell below zero. This is a bug in React. Please file an issue.");
-              }
-            }
-          }
-          var ReactCurrentDispatcher$1 = ReactSharedInternals.ReactCurrentDispatcher;
-          var prefix;
-          function describeBuiltInComponentFrame(name, source, ownerFn) {
-            {
-              if (prefix === void 0) {
-                try {
-                  throw Error();
-                } catch (x) {
-                  var match = x.stack.trim().match(/\n( *(at )?)/);
-                  prefix = match && match[1] || "";
-                }
-              }
-              return "\n" + prefix + name;
-            }
-          }
-          var reentry = false;
-          var componentFrameCache;
-          {
-            var PossiblyWeakMap = typeof WeakMap === "function" ? WeakMap : Map;
-            componentFrameCache = new PossiblyWeakMap();
-          }
-          function describeNativeComponentFrame(fn, construct) {
-            if (!fn || reentry) {
-              return "";
-            }
-            {
-              var frame = componentFrameCache.get(fn);
-              if (frame !== void 0) {
-                return frame;
-              }
-            }
-            var control;
-            reentry = true;
-            var previousPrepareStackTrace = Error.prepareStackTrace;
-            Error.prepareStackTrace = void 0;
-            var previousDispatcher;
-            {
-              previousDispatcher = ReactCurrentDispatcher$1.current;
-              ReactCurrentDispatcher$1.current = null;
-              disableLogs();
-            }
-            try {
-              if (construct) {
-                var Fake = function() {
-                  throw Error();
-                };
-                Object.defineProperty(Fake.prototype, "props", {
-                  set: function() {
-                    throw Error();
-                  }
-                });
-                if (typeof Reflect === "object" && Reflect.construct) {
-                  try {
-                    Reflect.construct(Fake, []);
-                  } catch (x) {
-                    control = x;
-                  }
-                  Reflect.construct(fn, [], Fake);
-                } else {
-                  try {
-                    Fake.call();
-                  } catch (x) {
-                    control = x;
-                  }
-                  fn.call(Fake.prototype);
-                }
-              } else {
-                try {
-                  throw Error();
-                } catch (x) {
-                  control = x;
-                }
-                fn();
-              }
-            } catch (sample) {
-              if (sample && control && typeof sample.stack === "string") {
-                var sampleLines = sample.stack.split("\n");
-                var controlLines = control.stack.split("\n");
-                var s = sampleLines.length - 1;
-                var c = controlLines.length - 1;
-                while (s >= 1 && c >= 0 && sampleLines[s] !== controlLines[c]) {
-                  c--;
-                }
-                for (; s >= 1 && c >= 0; s--, c--) {
-                  if (sampleLines[s] !== controlLines[c]) {
-                    if (s !== 1 || c !== 1) {
-                      do {
-                        s--;
-                        c--;
-                        if (c < 0 || sampleLines[s] !== controlLines[c]) {
-                          var _frame = "\n" + sampleLines[s].replace(" at new ", " at ");
-                          if (fn.displayName && _frame.includes("<anonymous>")) {
-                            _frame = _frame.replace("<anonymous>", fn.displayName);
-                          }
-                          {
-                            if (typeof fn === "function") {
-                              componentFrameCache.set(fn, _frame);
-                            }
-                          }
-                          return _frame;
-                        }
-                      } while (s >= 1 && c >= 0);
-                    }
-                    break;
-                  }
-                }
-              }
-            } finally {
-              reentry = false;
-              {
-                ReactCurrentDispatcher$1.current = previousDispatcher;
-                reenableLogs();
-              }
-              Error.prepareStackTrace = previousPrepareStackTrace;
-            }
-            var name = fn ? fn.displayName || fn.name : "";
-            var syntheticFrame = name ? describeBuiltInComponentFrame(name) : "";
-            {
-              if (typeof fn === "function") {
-                componentFrameCache.set(fn, syntheticFrame);
-              }
-            }
-            return syntheticFrame;
-          }
-          function describeFunctionComponentFrame(fn, source, ownerFn) {
-            {
-              return describeNativeComponentFrame(fn, false);
-            }
-          }
-          function shouldConstruct(Component2) {
-            var prototype = Component2.prototype;
-            return !!(prototype && prototype.isReactComponent);
-          }
-          function describeUnknownElementTypeFrameInDEV(type, source, ownerFn) {
-            if (type == null) {
-              return "";
-            }
-            if (typeof type === "function") {
-              {
-                return describeNativeComponentFrame(type, shouldConstruct(type));
-              }
-            }
-            if (typeof type === "string") {
-              return describeBuiltInComponentFrame(type);
-            }
-            switch (type) {
-              case REACT_SUSPENSE_TYPE:
-                return describeBuiltInComponentFrame("Suspense");
-              case REACT_SUSPENSE_LIST_TYPE:
-                return describeBuiltInComponentFrame("SuspenseList");
-            }
-            if (typeof type === "object") {
-              switch (type.$$typeof) {
-                case REACT_FORWARD_REF_TYPE:
-                  return describeFunctionComponentFrame(type.render);
-                case REACT_MEMO_TYPE:
-                  return describeUnknownElementTypeFrameInDEV(type.type, source, ownerFn);
-                case REACT_LAZY_TYPE: {
-                  var lazyComponent = type;
-                  var payload = lazyComponent._payload;
-                  var init = lazyComponent._init;
-                  try {
-                    return describeUnknownElementTypeFrameInDEV(init(payload), source, ownerFn);
-                  } catch (x) {
-                  }
-                }
-              }
-            }
-            return "";
-          }
-          var loggedTypeFailures = {};
-          var ReactDebugCurrentFrame$1 = ReactSharedInternals.ReactDebugCurrentFrame;
-          function setCurrentlyValidatingElement(element) {
-            {
-              if (element) {
-                var owner = element._owner;
-                var stack = describeUnknownElementTypeFrameInDEV(element.type, element._source, owner ? owner.type : null);
-                ReactDebugCurrentFrame$1.setExtraStackFrame(stack);
-              } else {
-                ReactDebugCurrentFrame$1.setExtraStackFrame(null);
-              }
-            }
-          }
-          function checkPropTypes(typeSpecs, values, location, componentName, element) {
-            {
-              var has = Function.call.bind(hasOwnProperty);
-              for (var typeSpecName in typeSpecs) {
-                if (has(typeSpecs, typeSpecName)) {
-                  var error$1 = void 0;
-                  try {
-                    if (typeof typeSpecs[typeSpecName] !== "function") {
-                      var err = Error((componentName || "React class") + ": " + location + " type `" + typeSpecName + "` is invalid; it must be a function, usually from the `prop-types` package, but received `" + typeof typeSpecs[typeSpecName] + "`.This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`.");
-                      err.name = "Invariant Violation";
-                      throw err;
-                    }
-                    error$1 = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED");
-                  } catch (ex) {
-                    error$1 = ex;
-                  }
-                  if (error$1 && !(error$1 instanceof Error)) {
-                    setCurrentlyValidatingElement(element);
-                    error("%s: type specification of %s `%s` is invalid; the type checker function must return `null` or an `Error` but returned a %s. You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument).", componentName || "React class", location, typeSpecName, typeof error$1);
-                    setCurrentlyValidatingElement(null);
-                  }
-                  if (error$1 instanceof Error && !(error$1.message in loggedTypeFailures)) {
-                    loggedTypeFailures[error$1.message] = true;
-                    setCurrentlyValidatingElement(element);
-                    error("Failed %s type: %s", location, error$1.message);
-                    setCurrentlyValidatingElement(null);
-                  }
-                }
-              }
-            }
-          }
-          function setCurrentlyValidatingElement$1(element) {
-            {
-              if (element) {
-                var owner = element._owner;
-                var stack = describeUnknownElementTypeFrameInDEV(element.type, element._source, owner ? owner.type : null);
-                setExtraStackFrame(stack);
-              } else {
-                setExtraStackFrame(null);
-              }
-            }
-          }
-          var propTypesMisspellWarningShown;
-          {
-            propTypesMisspellWarningShown = false;
-          }
-          function getDeclarationErrorAddendum() {
-            if (ReactCurrentOwner.current) {
-              var name = getComponentNameFromType(ReactCurrentOwner.current.type);
-              if (name) {
-                return "\n\nCheck the render method of `" + name + "`.";
-              }
-            }
-            return "";
-          }
-          function getSourceInfoErrorAddendum(source) {
-            if (source !== void 0) {
-              var fileName = source.fileName.replace(/^.*[\\\/]/, "");
-              var lineNumber = source.lineNumber;
-              return "\n\nCheck your code at " + fileName + ":" + lineNumber + ".";
-            }
-            return "";
-          }
-          function getSourceInfoErrorAddendumForProps(elementProps) {
-            if (elementProps !== null && elementProps !== void 0) {
-              return getSourceInfoErrorAddendum(elementProps.__source);
-            }
-            return "";
-          }
-          var ownerHasKeyUseWarning = {};
-          function getCurrentComponentErrorInfo(parentType) {
-            var info = getDeclarationErrorAddendum();
-            if (!info) {
-              var parentName = typeof parentType === "string" ? parentType : parentType.displayName || parentType.name;
-              if (parentName) {
-                info = "\n\nCheck the top-level render call using <" + parentName + ">.";
-              }
-            }
-            return info;
-          }
-          function validateExplicitKey(element, parentType) {
-            if (!element._store || element._store.validated || element.key != null) {
-              return;
-            }
-            element._store.validated = true;
-            var currentComponentErrorInfo = getCurrentComponentErrorInfo(parentType);
-            if (ownerHasKeyUseWarning[currentComponentErrorInfo]) {
-              return;
-            }
-            ownerHasKeyUseWarning[currentComponentErrorInfo] = true;
-            var childOwner = "";
-            if (element && element._owner && element._owner !== ReactCurrentOwner.current) {
-              childOwner = " It was passed a child from " + getComponentNameFromType(element._owner.type) + ".";
-            }
-            {
-              setCurrentlyValidatingElement$1(element);
-              error('Each child in a list should have a unique "key" prop.%s%s See https://reactjs.org/link/warning-keys for more information.', currentComponentErrorInfo, childOwner);
-              setCurrentlyValidatingElement$1(null);
-            }
-          }
-          function validateChildKeys(node, parentType) {
-            if (typeof node !== "object") {
-              return;
-            }
-            if (isArray(node)) {
-              for (var i2 = 0; i2 < node.length; i2++) {
-                var child = node[i2];
-                if (isValidElement2(child)) {
-                  validateExplicitKey(child, parentType);
-                }
-              }
-            } else if (isValidElement2(node)) {
-              if (node._store) {
-                node._store.validated = true;
-              }
-            } else if (node) {
-              var iteratorFn = getIteratorFn(node);
-              if (typeof iteratorFn === "function") {
-                if (iteratorFn !== node.entries) {
-                  var iterator = iteratorFn.call(node);
-                  var step;
-                  while (!(step = iterator.next()).done) {
-                    if (isValidElement2(step.value)) {
-                      validateExplicitKey(step.value, parentType);
-                    }
-                  }
-                }
-              }
-            }
-          }
-          function validatePropTypes(element) {
-            {
-              var type = element.type;
-              if (type === null || type === void 0 || typeof type === "string") {
-                return;
-              }
-              var propTypes2;
-              if (typeof type === "function") {
-                propTypes2 = type.propTypes;
-              } else if (typeof type === "object" && (type.$$typeof === REACT_FORWARD_REF_TYPE || // Note: Memo only checks outer props here.
-              // Inner props are checked in the reconciler.
-              type.$$typeof === REACT_MEMO_TYPE)) {
-                propTypes2 = type.propTypes;
-              } else {
-                return;
-              }
-              if (propTypes2) {
-                var name = getComponentNameFromType(type);
-                checkPropTypes(propTypes2, element.props, "prop", name, element);
-              } else if (type.PropTypes !== void 0 && !propTypesMisspellWarningShown) {
-                propTypesMisspellWarningShown = true;
-                var _name = getComponentNameFromType(type);
-                error("Component %s declared `PropTypes` instead of `propTypes`. Did you misspell the property assignment?", _name || "Unknown");
-              }
-              if (typeof type.getDefaultProps === "function" && !type.getDefaultProps.isReactClassApproved) {
-                error("getDefaultProps is only used on classic React.createClass definitions. Use a static property named `defaultProps` instead.");
-              }
-            }
-          }
-          function validateFragmentProps(fragment) {
-            {
-              var keys = Object.keys(fragment.props);
-              for (var i2 = 0; i2 < keys.length; i2++) {
-                var key = keys[i2];
-                if (key !== "children" && key !== "key") {
-                  setCurrentlyValidatingElement$1(fragment);
-                  error("Invalid prop `%s` supplied to `React.Fragment`. React.Fragment can only have `key` and `children` props.", key);
-                  setCurrentlyValidatingElement$1(null);
-                  break;
-                }
-              }
-              if (fragment.ref !== null) {
-                setCurrentlyValidatingElement$1(fragment);
-                error("Invalid attribute `ref` supplied to `React.Fragment`.");
-                setCurrentlyValidatingElement$1(null);
-              }
-            }
-          }
-          function createElementWithValidation(type, props, children) {
-            var validType = isValidElementType(type);
-            if (!validType) {
-              var info = "";
-              if (type === void 0 || typeof type === "object" && type !== null && Object.keys(type).length === 0) {
-                info += " You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.";
-              }
-              var sourceInfo = getSourceInfoErrorAddendumForProps(props);
-              if (sourceInfo) {
-                info += sourceInfo;
-              } else {
-                info += getDeclarationErrorAddendum();
-              }
-              var typeString;
-              if (type === null) {
-                typeString = "null";
-              } else if (isArray(type)) {
-                typeString = "array";
-              } else if (type !== void 0 && type.$$typeof === REACT_ELEMENT_TYPE) {
-                typeString = "<" + (getComponentNameFromType(type.type) || "Unknown") + " />";
-                info = " Did you accidentally export a JSX literal instead of a component?";
-              } else {
-                typeString = typeof type;
-              }
-              {
-                error("React.createElement: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", typeString, info);
-              }
-            }
-            var element = createElement.apply(this, arguments);
-            if (element == null) {
-              return element;
-            }
-            if (validType) {
-              for (var i2 = 2; i2 < arguments.length; i2++) {
-                validateChildKeys(arguments[i2], type);
-              }
-            }
-            if (type === REACT_FRAGMENT_TYPE) {
-              validateFragmentProps(element);
-            } else {
-              validatePropTypes(element);
-            }
-            return element;
-          }
-          var didWarnAboutDeprecatedCreateFactory = false;
-          function createFactoryWithValidation(type) {
-            var validatedFactory = createElementWithValidation.bind(null, type);
-            validatedFactory.type = type;
-            {
-              if (!didWarnAboutDeprecatedCreateFactory) {
-                didWarnAboutDeprecatedCreateFactory = true;
-                warn("React.createFactory() is deprecated and will be removed in a future major release. Consider using JSX or use React.createElement() directly instead.");
-              }
-              Object.defineProperty(validatedFactory, "type", {
-                enumerable: false,
-                get: function() {
-                  warn("Factory.type is deprecated. Access the class directly before passing it to createFactory.");
-                  Object.defineProperty(this, "type", {
-                    value: type
-                  });
-                  return type;
-                }
-              });
-            }
-            return validatedFactory;
-          }
-          function cloneElementWithValidation(element, props, children) {
-            var newElement = cloneElement2.apply(this, arguments);
-            for (var i2 = 2; i2 < arguments.length; i2++) {
-              validateChildKeys(arguments[i2], newElement.type);
-            }
-            validatePropTypes(newElement);
-            return newElement;
-          }
-          function startTransition(scope, options2) {
-            var prevTransition = ReactCurrentBatchConfig.transition;
-            ReactCurrentBatchConfig.transition = {};
-            var currentTransition = ReactCurrentBatchConfig.transition;
-            {
-              ReactCurrentBatchConfig.transition._updatedFibers = /* @__PURE__ */ new Set();
-            }
-            try {
-              scope();
-            } finally {
-              ReactCurrentBatchConfig.transition = prevTransition;
-              {
-                if (prevTransition === null && currentTransition._updatedFibers) {
-                  var updatedFibersCount = currentTransition._updatedFibers.size;
-                  if (updatedFibersCount > 10) {
-                    warn("Detected a large number of updates inside startTransition. If this is due to a subscription please re-write it to use React provided hooks. Otherwise concurrent mode guarantees are off the table.");
-                  }
-                  currentTransition._updatedFibers.clear();
-                }
-              }
-            }
-          }
-          var didWarnAboutMessageChannel = false;
-          var enqueueTaskImpl = null;
-          function enqueueTask(task) {
-            if (enqueueTaskImpl === null) {
-              try {
-                var requireString = ("require" + Math.random()).slice(0, 7);
-                var nodeRequire = module2 && module2[requireString];
-                enqueueTaskImpl = nodeRequire.call(module2, "timers").setImmediate;
-              } catch (_err) {
-                enqueueTaskImpl = function(callback) {
-                  {
-                    if (didWarnAboutMessageChannel === false) {
-                      didWarnAboutMessageChannel = true;
-                      if (typeof MessageChannel === "undefined") {
-                        error("This browser does not have a MessageChannel implementation, so enqueuing tasks via await act(async () => ...) will fail. Please file an issue at https://github.com/facebook/react/issues if you encounter this warning.");
-                      }
-                    }
-                  }
-                  var channel = new MessageChannel();
-                  channel.port1.onmessage = callback;
-                  channel.port2.postMessage(void 0);
-                };
-              }
-            }
-            return enqueueTaskImpl(task);
-          }
-          var actScopeDepth = 0;
-          var didWarnNoAwaitAct = false;
-          function act(callback) {
-            {
-              var prevActScopeDepth = actScopeDepth;
-              actScopeDepth++;
-              if (ReactCurrentActQueue.current === null) {
-                ReactCurrentActQueue.current = [];
-              }
-              var prevIsBatchingLegacy = ReactCurrentActQueue.isBatchingLegacy;
-              var result;
-              try {
-                ReactCurrentActQueue.isBatchingLegacy = true;
-                result = callback();
-                if (!prevIsBatchingLegacy && ReactCurrentActQueue.didScheduleLegacyUpdate) {
-                  var queue = ReactCurrentActQueue.current;
-                  if (queue !== null) {
-                    ReactCurrentActQueue.didScheduleLegacyUpdate = false;
-                    flushActQueue(queue);
-                  }
-                }
-              } catch (error2) {
-                popActScope(prevActScopeDepth);
-                throw error2;
-              } finally {
-                ReactCurrentActQueue.isBatchingLegacy = prevIsBatchingLegacy;
-              }
-              if (result !== null && typeof result === "object" && typeof result.then === "function") {
-                var thenableResult = result;
-                var wasAwaited = false;
-                var thenable = {
-                  then: function(resolve, reject) {
-                    wasAwaited = true;
-                    thenableResult.then(function(returnValue2) {
-                      popActScope(prevActScopeDepth);
-                      if (actScopeDepth === 0) {
-                        recursivelyFlushAsyncActWork(returnValue2, resolve, reject);
-                      } else {
-                        resolve(returnValue2);
-                      }
-                    }, function(error2) {
-                      popActScope(prevActScopeDepth);
-                      reject(error2);
-                    });
-                  }
-                };
-                {
-                  if (!didWarnNoAwaitAct && typeof Promise !== "undefined") {
-                    Promise.resolve().then(function() {
-                    }).then(function() {
-                      if (!wasAwaited) {
-                        didWarnNoAwaitAct = true;
-                        error("You called act(async () => ...) without await. This could lead to unexpected testing behaviour, interleaving multiple act calls and mixing their scopes. You should - await act(async () => ...);");
-                      }
-                    });
-                  }
-                }
-                return thenable;
-              } else {
-                var returnValue = result;
-                popActScope(prevActScopeDepth);
-                if (actScopeDepth === 0) {
-                  var _queue = ReactCurrentActQueue.current;
-                  if (_queue !== null) {
-                    flushActQueue(_queue);
-                    ReactCurrentActQueue.current = null;
-                  }
-                  var _thenable = {
-                    then: function(resolve, reject) {
-                      if (ReactCurrentActQueue.current === null) {
-                        ReactCurrentActQueue.current = [];
-                        recursivelyFlushAsyncActWork(returnValue, resolve, reject);
-                      } else {
-                        resolve(returnValue);
-                      }
-                    }
-                  };
-                  return _thenable;
-                } else {
-                  var _thenable2 = {
-                    then: function(resolve, reject) {
-                      resolve(returnValue);
-                    }
-                  };
-                  return _thenable2;
-                }
-              }
-            }
-          }
-          function popActScope(prevActScopeDepth) {
-            {
-              if (prevActScopeDepth !== actScopeDepth - 1) {
-                error("You seem to have overlapping act() calls, this is not supported. Be sure to await previous act() calls before making a new one. ");
-              }
-              actScopeDepth = prevActScopeDepth;
-            }
-          }
-          function recursivelyFlushAsyncActWork(returnValue, resolve, reject) {
-            {
-              var queue = ReactCurrentActQueue.current;
-              if (queue !== null) {
-                try {
-                  flushActQueue(queue);
-                  enqueueTask(function() {
-                    if (queue.length === 0) {
-                      ReactCurrentActQueue.current = null;
-                      resolve(returnValue);
-                    } else {
-                      recursivelyFlushAsyncActWork(returnValue, resolve, reject);
-                    }
-                  });
-                } catch (error2) {
-                  reject(error2);
-                }
-              } else {
-                resolve(returnValue);
-              }
-            }
-          }
-          var isFlushing = false;
-          function flushActQueue(queue) {
-            {
-              if (!isFlushing) {
-                isFlushing = true;
-                var i2 = 0;
-                try {
-                  for (; i2 < queue.length; i2++) {
-                    var callback = queue[i2];
-                    do {
-                      callback = callback(true);
-                    } while (callback !== null);
-                  }
-                  queue.length = 0;
-                } catch (error2) {
-                  queue = queue.slice(i2 + 1);
-                  throw error2;
-                } finally {
-                  isFlushing = false;
-                }
-              }
-            }
-          }
-          var createElement$1 = createElementWithValidation;
-          var cloneElement$1 = cloneElementWithValidation;
-          var createFactory = createFactoryWithValidation;
-          var Children2 = {
-            map: mapChildren,
-            forEach: forEachChildren,
-            count: countChildren,
-            toArray: toArray2,
-            only: onlyChild
-          };
-          exports2.Children = Children2;
-          exports2.Component = Component;
-          exports2.Fragment = REACT_FRAGMENT_TYPE;
-          exports2.Profiler = REACT_PROFILER_TYPE;
-          exports2.PureComponent = PureComponent;
-          exports2.StrictMode = REACT_STRICT_MODE_TYPE;
-          exports2.Suspense = REACT_SUSPENSE_TYPE;
-          exports2.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactSharedInternals;
-          exports2.cloneElement = cloneElement$1;
-          exports2.createContext = createContext7;
-          exports2.createElement = createElement$1;
-          exports2.createFactory = createFactory;
-          exports2.createRef = createRef;
-          exports2.forwardRef = forwardRef15;
-          exports2.isValidElement = isValidElement2;
-          exports2.lazy = lazy;
-          exports2.memo = memo;
-          exports2.startTransition = startTransition;
-          exports2.unstable_act = act;
-          exports2.useCallback = useCallback7;
-          exports2.useContext = useContext6;
-          exports2.useDebugValue = useDebugValue;
-          exports2.useDeferredValue = useDeferredValue;
-          exports2.useEffect = useEffect12;
-          exports2.useId = useId;
-          exports2.useImperativeHandle = useImperativeHandle;
-          exports2.useInsertionEffect = useInsertionEffect;
-          exports2.useLayoutEffect = useLayoutEffect2;
-          exports2.useMemo = useMemo4;
-          exports2.useReducer = useReducer2;
-          exports2.useRef = useRef8;
-          exports2.useState = useState7;
-          exports2.useSyncExternalStore = useSyncExternalStore;
-          exports2.useTransition = useTransition;
-          exports2.version = ReactVersion;
-          if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop === "function") {
-            __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
-          }
-        })();
-      }
-    }
-  });
-
-  // node_modules/react/index.js
-  var require_react2 = __commonJS({
-    "node_modules/react/index.js"(exports2, module2) {
-      "use strict";
-      if (false) {
-        module2.exports = null;
-      } else {
-        module2.exports = require_react_development2();
-      }
-    }
-  });
-
   // node_modules/testeranto/node_modules/react-sigma/sigma/plugins.filter.js
   var require_plugins_filter = __commonJS({
     "node_modules/testeranto/node_modules/react-sigma/sigma/plugins.filter.js"(exports, module) {
@@ -27690,1983 +25805,3663 @@
     }
   });
 
-  // node_modules/testeranto/node_modules/graphology/dist/graphology.umd.min.js
-  var require_graphology_umd_min = __commonJS({
-    "node_modules/testeranto/node_modules/graphology/dist/graphology.umd.min.js"(exports2, module2) {
-      !function(t, e) {
-        "object" == typeof exports2 && "undefined" != typeof module2 ? module2.exports = e() : "function" == typeof define && define.amd ? define(e) : (t = "undefined" != typeof globalThis ? globalThis : t || self).graphology = e();
-      }(exports2, function() {
+  // node_modules/testeranto/node_modules/graphology/dist/graphology.umd.js
+  var require_graphology_umd = __commonJS({
+    "node_modules/testeranto/node_modules/graphology/dist/graphology.umd.js"(exports2, module2) {
+      (function(global2, factory) {
+        typeof exports2 === "object" && typeof module2 !== "undefined" ? module2.exports = factory() : typeof define === "function" && define.amd ? define(factory) : (global2 = typeof globalThis !== "undefined" ? globalThis : global2 || self, global2.graphology = factory());
+      })(exports2, function() {
         "use strict";
-        function t(e2) {
-          return t = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(t2) {
-            return typeof t2;
-          } : function(t2) {
-            return t2 && "function" == typeof Symbol && t2.constructor === Symbol && t2 !== Symbol.prototype ? "symbol" : typeof t2;
-          }, t(e2);
+        function _typeof13(obj) {
+          "@babel/helpers - typeof";
+          return _typeof13 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj2) {
+            return typeof obj2;
+          } : function(obj2) {
+            return obj2 && "function" == typeof Symbol && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
+          }, _typeof13(obj);
         }
-        function e(t2, e2) {
-          t2.prototype = Object.create(e2.prototype), t2.prototype.constructor = t2, r(t2, e2);
+        function _inheritsLoose2(subClass, superClass) {
+          subClass.prototype = Object.create(superClass.prototype);
+          subClass.prototype.constructor = subClass;
+          _setPrototypeOf14(subClass, superClass);
         }
-        function n(t2) {
-          return n = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function(t3) {
-            return t3.__proto__ || Object.getPrototypeOf(t3);
-          }, n(t2);
+        function _getPrototypeOf13(o2) {
+          _getPrototypeOf13 = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf14(o3) {
+            return o3.__proto__ || Object.getPrototypeOf(o3);
+          };
+          return _getPrototypeOf13(o2);
         }
-        function r(t2, e2) {
-          return r = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function(t3, e3) {
-            return t3.__proto__ = e3, t3;
-          }, r(t2, e2);
+        function _setPrototypeOf14(o2, p) {
+          _setPrototypeOf14 = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf15(o3, p2) {
+            o3.__proto__ = p2;
+            return o3;
+          };
+          return _setPrototypeOf14(o2, p);
         }
-        function i2() {
-          if ("undefined" == typeof Reflect || !Reflect.construct)
+        function _isNativeReflectConstruct13() {
+          if (typeof Reflect === "undefined" || !Reflect.construct)
             return false;
           if (Reflect.construct.sham)
             return false;
-          if ("function" == typeof Proxy)
+          if (typeof Proxy === "function")
             return true;
           try {
-            return Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function() {
-            })), true;
-          } catch (t2) {
+            Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function() {
+            }));
+            return true;
+          } catch (e) {
             return false;
           }
         }
-        function o2(t2, e2, n2) {
-          return o2 = i2() ? Reflect.construct.bind() : function(t3, e3, n3) {
-            var i3 = [null];
-            i3.push.apply(i3, e3);
-            var o3 = new (Function.bind.apply(t3, i3))();
-            return n3 && r(o3, n3.prototype), o3;
-          }, o2.apply(null, arguments);
+        function _construct(Parent, args, Class) {
+          if (_isNativeReflectConstruct13()) {
+            _construct = Reflect.construct.bind();
+          } else {
+            _construct = function _construct2(Parent2, args2, Class2) {
+              var a = [null];
+              a.push.apply(a, args2);
+              var Constructor = Function.bind.apply(Parent2, a);
+              var instance = new Constructor();
+              if (Class2)
+                _setPrototypeOf14(instance, Class2.prototype);
+              return instance;
+            };
+          }
+          return _construct.apply(null, arguments);
         }
-        function a(t2) {
-          var e2 = "function" == typeof Map ? /* @__PURE__ */ new Map() : void 0;
-          return a = function(t3) {
-            if (null === t3 || (i3 = t3, -1 === Function.toString.call(i3).indexOf("[native code]")))
-              return t3;
-            var i3;
-            if ("function" != typeof t3)
+        function _isNativeFunction(fn) {
+          return Function.toString.call(fn).indexOf("[native code]") !== -1;
+        }
+        function _wrapNativeSuper(Class) {
+          var _cache = typeof Map === "function" ? /* @__PURE__ */ new Map() : void 0;
+          _wrapNativeSuper = function _wrapNativeSuper2(Class2) {
+            if (Class2 === null || !_isNativeFunction(Class2))
+              return Class2;
+            if (typeof Class2 !== "function") {
               throw new TypeError("Super expression must either be null or a function");
-            if (void 0 !== e2) {
-              if (e2.has(t3))
-                return e2.get(t3);
-              e2.set(t3, a3);
             }
-            function a3() {
-              return o2(t3, arguments, n(this).constructor);
+            if (typeof _cache !== "undefined") {
+              if (_cache.has(Class2))
+                return _cache.get(Class2);
+              _cache.set(Class2, Wrapper);
             }
-            return a3.prototype = Object.create(t3.prototype, { constructor: { value: a3, enumerable: false, writable: true, configurable: true } }), r(a3, t3);
-          }, a(t2);
+            function Wrapper() {
+              return _construct(Class2, arguments, _getPrototypeOf13(this).constructor);
+            }
+            Wrapper.prototype = Object.create(Class2.prototype, {
+              constructor: {
+                value: Wrapper,
+                enumerable: false,
+                writable: true,
+                configurable: true
+              }
+            });
+            return _setPrototypeOf14(Wrapper, Class2);
+          };
+          return _wrapNativeSuper(Class);
         }
-        function c(t2) {
-          if (void 0 === t2)
+        function _assertThisInitialized13(self2) {
+          if (self2 === void 0) {
             throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-          return t2;
+          }
+          return self2;
         }
-        var u = function() {
-          for (var t2 = arguments[0], e2 = 1, n2 = arguments.length; e2 < n2; e2++)
-            if (arguments[e2])
-              for (var r2 in arguments[e2])
-                t2[r2] = arguments[e2][r2];
-          return t2;
-        };
-        function d(t2, e2, n2, r2) {
-          var i3 = t2._nodes.get(e2), o3 = null;
-          return i3 ? o3 = "mixed" === r2 ? i3.out && i3.out[n2] || i3.undirected && i3.undirected[n2] : "directed" === r2 ? i3.out && i3.out[n2] : i3.undirected && i3.undirected[n2] : o3;
+        function assignPolyfill() {
+          var target = arguments[0];
+          for (var i2 = 1, l = arguments.length; i2 < l; i2++) {
+            if (!arguments[i2])
+              continue;
+            for (var k in arguments[i2]) {
+              target[k] = arguments[i2][k];
+            }
+          }
+          return target;
         }
-        function s(e2) {
-          return "object" === t(e2) && null !== e2 && e2.constructor === Object;
+        var assign = assignPolyfill;
+        if (typeof Object.assign === "function")
+          assign = Object.assign;
+        function getMatchingEdge(graph2, source, target, type) {
+          var sourceData = graph2._nodes.get(source);
+          var edge = null;
+          if (!sourceData)
+            return edge;
+          if (type === "mixed") {
+            edge = sourceData.out && sourceData.out[target] || sourceData.undirected && sourceData.undirected[target];
+          } else if (type === "directed") {
+            edge = sourceData.out && sourceData.out[target];
+          } else {
+            edge = sourceData.undirected && sourceData.undirected[target];
+          }
+          return edge;
         }
-        function h(t2) {
-          var e2;
-          for (e2 in t2)
+        function isPlainObject(value) {
+          return _typeof13(value) === "object" && value !== null && value.constructor === Object;
+        }
+        function isEmpty(o2) {
+          var k;
+          for (k in o2) {
+            return false;
+          }
+          return true;
+        }
+        function privateProperty(target, name, value) {
+          Object.defineProperty(target, name, {
+            enumerable: false,
+            configurable: false,
+            writable: true,
+            value
+          });
+        }
+        function readOnlyProperty(target, name, value) {
+          var descriptor = {
+            enumerable: true,
+            configurable: true
+          };
+          if (typeof value === "function") {
+            descriptor.get = value;
+          } else {
+            descriptor.value = value;
+            descriptor.writable = false;
+          }
+          Object.defineProperty(target, name, descriptor);
+        }
+        function validateHints(hints) {
+          if (!isPlainObject(hints))
+            return false;
+          if (hints.attributes && !Array.isArray(hints.attributes))
             return false;
           return true;
         }
-        function p(t2, e2, n2) {
-          Object.defineProperty(t2, e2, { enumerable: false, configurable: false, writable: true, value: n2 });
+        function incrementalIdStartingFromRandomByte() {
+          var i2 = Math.floor(Math.random() * 256) & 255;
+          return function() {
+            return i2++;
+          };
         }
-        function f(t2, e2, n2) {
-          var r2 = { enumerable: true, configurable: true };
-          "function" == typeof n2 ? r2.get = n2 : (r2.value = n2, r2.writable = false), Object.defineProperty(t2, e2, r2);
-        }
-        function l(t2) {
-          return !!s(t2) && !(t2.attributes && !Array.isArray(t2.attributes));
-        }
-        "function" == typeof Object.assign && (u = Object.assign);
-        var g, y = { exports: {} }, w = "object" == typeof Reflect ? Reflect : null, v = w && "function" == typeof w.apply ? w.apply : function(t2, e2, n2) {
-          return Function.prototype.apply.call(t2, e2, n2);
+        var events = { exports: {} };
+        var R = typeof Reflect === "object" ? Reflect : null;
+        var ReflectApply = R && typeof R.apply === "function" ? R.apply : function ReflectApply2(target, receiver, args) {
+          return Function.prototype.apply.call(target, receiver, args);
         };
-        g = w && "function" == typeof w.ownKeys ? w.ownKeys : Object.getOwnPropertySymbols ? function(t2) {
-          return Object.getOwnPropertyNames(t2).concat(Object.getOwnPropertySymbols(t2));
-        } : function(t2) {
-          return Object.getOwnPropertyNames(t2);
+        var ReflectOwnKeys;
+        if (R && typeof R.ownKeys === "function") {
+          ReflectOwnKeys = R.ownKeys;
+        } else if (Object.getOwnPropertySymbols) {
+          ReflectOwnKeys = function ReflectOwnKeys2(target) {
+            return Object.getOwnPropertyNames(target).concat(Object.getOwnPropertySymbols(target));
+          };
+        } else {
+          ReflectOwnKeys = function ReflectOwnKeys2(target) {
+            return Object.getOwnPropertyNames(target);
+          };
+        }
+        function ProcessEmitWarning(warning) {
+          if (console && console.warn)
+            console.warn(warning);
+        }
+        var NumberIsNaN = Number.isNaN || function NumberIsNaN2(value) {
+          return value !== value;
         };
-        var b = Number.isNaN || function(t2) {
-          return t2 != t2;
-        };
-        function m() {
-          m.init.call(this);
+        function EventEmitter() {
+          EventEmitter.init.call(this);
         }
-        y.exports = m, y.exports.once = function(t2, e2) {
-          return new Promise(function(n2, r2) {
-            function i3(n3) {
-              t2.removeListener(e2, o3), r2(n3);
-            }
-            function o3() {
-              "function" == typeof t2.removeListener && t2.removeListener("error", i3), n2([].slice.call(arguments));
-            }
-            U(t2, e2, o3, { once: true }), "error" !== e2 && function(t3, e3, n3) {
-              "function" == typeof t3.on && U(t3, "error", e3, n3);
-            }(t2, i3, { once: true });
-          });
-        }, m.EventEmitter = m, m.prototype._events = void 0, m.prototype._eventsCount = 0, m.prototype._maxListeners = void 0;
-        var k = 10;
-        function _(t2) {
-          if ("function" != typeof t2)
-            throw new TypeError('The "listener" argument must be of type Function. Received type ' + typeof t2);
-        }
-        function G(t2) {
-          return void 0 === t2._maxListeners ? m.defaultMaxListeners : t2._maxListeners;
-        }
-        function x(t2, e2, n2, r2) {
-          var i3, o3, a3, c2;
-          if (_(n2), void 0 === (o3 = t2._events) ? (o3 = t2._events = /* @__PURE__ */ Object.create(null), t2._eventsCount = 0) : (void 0 !== o3.newListener && (t2.emit("newListener", e2, n2.listener ? n2.listener : n2), o3 = t2._events), a3 = o3[e2]), void 0 === a3)
-            a3 = o3[e2] = n2, ++t2._eventsCount;
-          else if ("function" == typeof a3 ? a3 = o3[e2] = r2 ? [n2, a3] : [a3, n2] : r2 ? a3.unshift(n2) : a3.push(n2), (i3 = G(t2)) > 0 && a3.length > i3 && !a3.warned) {
-            a3.warned = true;
-            var u2 = new Error("Possible EventEmitter memory leak detected. " + a3.length + " " + String(e2) + " listeners added. Use emitter.setMaxListeners() to increase limit");
-            u2.name = "MaxListenersExceededWarning", u2.emitter = t2, u2.type = e2, u2.count = a3.length, c2 = u2, console && console.warn && console.warn(c2);
+        events.exports = EventEmitter;
+        events.exports.once = once;
+        EventEmitter.EventEmitter = EventEmitter;
+        EventEmitter.prototype._events = void 0;
+        EventEmitter.prototype._eventsCount = 0;
+        EventEmitter.prototype._maxListeners = void 0;
+        var defaultMaxListeners = 10;
+        function checkListener(listener) {
+          if (typeof listener !== "function") {
+            throw new TypeError('The "listener" argument must be of type Function. Received type ' + typeof listener);
           }
-          return t2;
         }
-        function E() {
-          if (!this.fired)
-            return this.target.removeListener(this.type, this.wrapFn), this.fired = true, 0 === arguments.length ? this.listener.call(this.target) : this.listener.apply(this.target, arguments);
+        Object.defineProperty(EventEmitter, "defaultMaxListeners", {
+          enumerable: true,
+          get: function() {
+            return defaultMaxListeners;
+          },
+          set: function(arg) {
+            if (typeof arg !== "number" || arg < 0 || NumberIsNaN(arg)) {
+              throw new RangeError('The value of "defaultMaxListeners" is out of range. It must be a non-negative number. Received ' + arg + ".");
+            }
+            defaultMaxListeners = arg;
+          }
+        });
+        EventEmitter.init = function() {
+          if (this._events === void 0 || this._events === Object.getPrototypeOf(this)._events) {
+            this._events = /* @__PURE__ */ Object.create(null);
+            this._eventsCount = 0;
+          }
+          this._maxListeners = this._maxListeners || void 0;
+        };
+        EventEmitter.prototype.setMaxListeners = function setMaxListeners(n) {
+          if (typeof n !== "number" || n < 0 || NumberIsNaN(n)) {
+            throw new RangeError('The value of "n" is out of range. It must be a non-negative number. Received ' + n + ".");
+          }
+          this._maxListeners = n;
+          return this;
+        };
+        function _getMaxListeners(that) {
+          if (that._maxListeners === void 0)
+            return EventEmitter.defaultMaxListeners;
+          return that._maxListeners;
         }
-        function A(t2, e2, n2) {
-          var r2 = { fired: false, wrapFn: void 0, target: t2, type: e2, listener: n2 }, i3 = E.bind(r2);
-          return i3.listener = n2, r2.wrapFn = i3, i3;
+        EventEmitter.prototype.getMaxListeners = function getMaxListeners() {
+          return _getMaxListeners(this);
+        };
+        EventEmitter.prototype.emit = function emit(type) {
+          var args = [];
+          for (var i2 = 1; i2 < arguments.length; i2++)
+            args.push(arguments[i2]);
+          var doError = type === "error";
+          var events2 = this._events;
+          if (events2 !== void 0)
+            doError = doError && events2.error === void 0;
+          else if (!doError)
+            return false;
+          if (doError) {
+            var er;
+            if (args.length > 0)
+              er = args[0];
+            if (er instanceof Error) {
+              throw er;
+            }
+            var err = new Error("Unhandled error." + (er ? " (" + er.message + ")" : ""));
+            err.context = er;
+            throw err;
+          }
+          var handler = events2[type];
+          if (handler === void 0)
+            return false;
+          if (typeof handler === "function") {
+            ReflectApply(handler, this, args);
+          } else {
+            var len = handler.length;
+            var listeners = arrayClone(handler, len);
+            for (var i2 = 0; i2 < len; ++i2)
+              ReflectApply(listeners[i2], this, args);
+          }
+          return true;
+        };
+        function _addListener(target, type, listener, prepend) {
+          var m;
+          var events2;
+          var existing;
+          checkListener(listener);
+          events2 = target._events;
+          if (events2 === void 0) {
+            events2 = target._events = /* @__PURE__ */ Object.create(null);
+            target._eventsCount = 0;
+          } else {
+            if (events2.newListener !== void 0) {
+              target.emit("newListener", type, listener.listener ? listener.listener : listener);
+              events2 = target._events;
+            }
+            existing = events2[type];
+          }
+          if (existing === void 0) {
+            existing = events2[type] = listener;
+            ++target._eventsCount;
+          } else {
+            if (typeof existing === "function") {
+              existing = events2[type] = prepend ? [listener, existing] : [existing, listener];
+            } else if (prepend) {
+              existing.unshift(listener);
+            } else {
+              existing.push(listener);
+            }
+            m = _getMaxListeners(target);
+            if (m > 0 && existing.length > m && !existing.warned) {
+              existing.warned = true;
+              var w = new Error("Possible EventEmitter memory leak detected. " + existing.length + " " + String(type) + " listeners added. Use emitter.setMaxListeners() to increase limit");
+              w.name = "MaxListenersExceededWarning";
+              w.emitter = target;
+              w.type = type;
+              w.count = existing.length;
+              ProcessEmitWarning(w);
+            }
+          }
+          return target;
         }
-        function L(t2, e2, n2) {
-          var r2 = t2._events;
-          if (void 0 === r2)
+        EventEmitter.prototype.addListener = function addListener(type, listener) {
+          return _addListener(this, type, listener, false);
+        };
+        EventEmitter.prototype.on = EventEmitter.prototype.addListener;
+        EventEmitter.prototype.prependListener = function prependListener(type, listener) {
+          return _addListener(this, type, listener, true);
+        };
+        function onceWrapper() {
+          if (!this.fired) {
+            this.target.removeListener(this.type, this.wrapFn);
+            this.fired = true;
+            if (arguments.length === 0)
+              return this.listener.call(this.target);
+            return this.listener.apply(this.target, arguments);
+          }
+        }
+        function _onceWrap(target, type, listener) {
+          var state = {
+            fired: false,
+            wrapFn: void 0,
+            target,
+            type,
+            listener
+          };
+          var wrapped = onceWrapper.bind(state);
+          wrapped.listener = listener;
+          state.wrapFn = wrapped;
+          return wrapped;
+        }
+        EventEmitter.prototype.once = function once2(type, listener) {
+          checkListener(listener);
+          this.on(type, _onceWrap(this, type, listener));
+          return this;
+        };
+        EventEmitter.prototype.prependOnceListener = function prependOnceListener(type, listener) {
+          checkListener(listener);
+          this.prependListener(type, _onceWrap(this, type, listener));
+          return this;
+        };
+        EventEmitter.prototype.removeListener = function removeListener(type, listener) {
+          var list, events2, position, i2, originalListener;
+          checkListener(listener);
+          events2 = this._events;
+          if (events2 === void 0)
+            return this;
+          list = events2[type];
+          if (list === void 0)
+            return this;
+          if (list === listener || list.listener === listener) {
+            if (--this._eventsCount === 0)
+              this._events = /* @__PURE__ */ Object.create(null);
+            else {
+              delete events2[type];
+              if (events2.removeListener)
+                this.emit("removeListener", type, list.listener || listener);
+            }
+          } else if (typeof list !== "function") {
+            position = -1;
+            for (i2 = list.length - 1; i2 >= 0; i2--) {
+              if (list[i2] === listener || list[i2].listener === listener) {
+                originalListener = list[i2].listener;
+                position = i2;
+                break;
+              }
+            }
+            if (position < 0)
+              return this;
+            if (position === 0)
+              list.shift();
+            else {
+              spliceOne(list, position);
+            }
+            if (list.length === 1)
+              events2[type] = list[0];
+            if (events2.removeListener !== void 0)
+              this.emit("removeListener", type, originalListener || listener);
+          }
+          return this;
+        };
+        EventEmitter.prototype.off = EventEmitter.prototype.removeListener;
+        EventEmitter.prototype.removeAllListeners = function removeAllListeners(type) {
+          var listeners, events2, i2;
+          events2 = this._events;
+          if (events2 === void 0)
+            return this;
+          if (events2.removeListener === void 0) {
+            if (arguments.length === 0) {
+              this._events = /* @__PURE__ */ Object.create(null);
+              this._eventsCount = 0;
+            } else if (events2[type] !== void 0) {
+              if (--this._eventsCount === 0)
+                this._events = /* @__PURE__ */ Object.create(null);
+              else
+                delete events2[type];
+            }
+            return this;
+          }
+          if (arguments.length === 0) {
+            var keys = Object.keys(events2);
+            var key;
+            for (i2 = 0; i2 < keys.length; ++i2) {
+              key = keys[i2];
+              if (key === "removeListener")
+                continue;
+              this.removeAllListeners(key);
+            }
+            this.removeAllListeners("removeListener");
+            this._events = /* @__PURE__ */ Object.create(null);
+            this._eventsCount = 0;
+            return this;
+          }
+          listeners = events2[type];
+          if (typeof listeners === "function") {
+            this.removeListener(type, listeners);
+          } else if (listeners !== void 0) {
+            for (i2 = listeners.length - 1; i2 >= 0; i2--) {
+              this.removeListener(type, listeners[i2]);
+            }
+          }
+          return this;
+        };
+        function _listeners(target, type, unwrap) {
+          var events2 = target._events;
+          if (events2 === void 0)
             return [];
-          var i3 = r2[e2];
-          return void 0 === i3 ? [] : "function" == typeof i3 ? n2 ? [i3.listener || i3] : [i3] : n2 ? function(t3) {
-            for (var e3 = new Array(t3.length), n3 = 0; n3 < e3.length; ++n3)
-              e3[n3] = t3[n3].listener || t3[n3];
-            return e3;
-          }(i3) : D(i3, i3.length);
+          var evlistener = events2[type];
+          if (evlistener === void 0)
+            return [];
+          if (typeof evlistener === "function")
+            return unwrap ? [evlistener.listener || evlistener] : [evlistener];
+          return unwrap ? unwrapListeners(evlistener) : arrayClone(evlistener, evlistener.length);
         }
-        function S(t2) {
-          var e2 = this._events;
-          if (void 0 !== e2) {
-            var n2 = e2[t2];
-            if ("function" == typeof n2)
+        EventEmitter.prototype.listeners = function listeners(type) {
+          return _listeners(this, type, true);
+        };
+        EventEmitter.prototype.rawListeners = function rawListeners(type) {
+          return _listeners(this, type, false);
+        };
+        EventEmitter.listenerCount = function(emitter, type) {
+          if (typeof emitter.listenerCount === "function") {
+            return emitter.listenerCount(type);
+          } else {
+            return listenerCount.call(emitter, type);
+          }
+        };
+        EventEmitter.prototype.listenerCount = listenerCount;
+        function listenerCount(type) {
+          var events2 = this._events;
+          if (events2 !== void 0) {
+            var evlistener = events2[type];
+            if (typeof evlistener === "function") {
               return 1;
-            if (void 0 !== n2)
-              return n2.length;
+            } else if (evlistener !== void 0) {
+              return evlistener.length;
+            }
           }
           return 0;
         }
-        function D(t2, e2) {
-          for (var n2 = new Array(e2), r2 = 0; r2 < e2; ++r2)
-            n2[r2] = t2[r2];
-          return n2;
-        }
-        function U(t2, e2, n2, r2) {
-          if ("function" == typeof t2.on)
-            r2.once ? t2.once(e2, n2) : t2.on(e2, n2);
-          else {
-            if ("function" != typeof t2.addEventListener)
-              throw new TypeError('The "emitter" argument must be of type EventEmitter. Received type ' + typeof t2);
-            t2.addEventListener(e2, function i3(o3) {
-              r2.once && t2.removeEventListener(e2, i3), n2(o3);
-            });
-          }
-        }
-        function N(t2) {
-          if ("function" != typeof t2)
-            throw new Error("obliterator/iterator: expecting a function!");
-          this.next = t2;
-        }
-        Object.defineProperty(m, "defaultMaxListeners", { enumerable: true, get: function() {
-          return k;
-        }, set: function(t2) {
-          if ("number" != typeof t2 || t2 < 0 || b(t2))
-            throw new RangeError('The value of "defaultMaxListeners" is out of range. It must be a non-negative number. Received ' + t2 + ".");
-          k = t2;
-        } }), m.init = function() {
-          void 0 !== this._events && this._events !== Object.getPrototypeOf(this)._events || (this._events = /* @__PURE__ */ Object.create(null), this._eventsCount = 0), this._maxListeners = this._maxListeners || void 0;
-        }, m.prototype.setMaxListeners = function(t2) {
-          if ("number" != typeof t2 || t2 < 0 || b(t2))
-            throw new RangeError('The value of "n" is out of range. It must be a non-negative number. Received ' + t2 + ".");
-          return this._maxListeners = t2, this;
-        }, m.prototype.getMaxListeners = function() {
-          return G(this);
-        }, m.prototype.emit = function(t2) {
-          for (var e2 = [], n2 = 1; n2 < arguments.length; n2++)
-            e2.push(arguments[n2]);
-          var r2 = "error" === t2, i3 = this._events;
-          if (void 0 !== i3)
-            r2 = r2 && void 0 === i3.error;
-          else if (!r2)
-            return false;
-          if (r2) {
-            var o3;
-            if (e2.length > 0 && (o3 = e2[0]), o3 instanceof Error)
-              throw o3;
-            var a3 = new Error("Unhandled error." + (o3 ? " (" + o3.message + ")" : ""));
-            throw a3.context = o3, a3;
-          }
-          var c2 = i3[t2];
-          if (void 0 === c2)
-            return false;
-          if ("function" == typeof c2)
-            v(c2, this, e2);
-          else {
-            var u2 = c2.length, d2 = D(c2, u2);
-            for (n2 = 0; n2 < u2; ++n2)
-              v(d2[n2], this, e2);
-          }
-          return true;
-        }, m.prototype.addListener = function(t2, e2) {
-          return x(this, t2, e2, false);
-        }, m.prototype.on = m.prototype.addListener, m.prototype.prependListener = function(t2, e2) {
-          return x(this, t2, e2, true);
-        }, m.prototype.once = function(t2, e2) {
-          return _(e2), this.on(t2, A(this, t2, e2)), this;
-        }, m.prototype.prependOnceListener = function(t2, e2) {
-          return _(e2), this.prependListener(t2, A(this, t2, e2)), this;
-        }, m.prototype.removeListener = function(t2, e2) {
-          var n2, r2, i3, o3, a3;
-          if (_(e2), void 0 === (r2 = this._events))
-            return this;
-          if (void 0 === (n2 = r2[t2]))
-            return this;
-          if (n2 === e2 || n2.listener === e2)
-            0 == --this._eventsCount ? this._events = /* @__PURE__ */ Object.create(null) : (delete r2[t2], r2.removeListener && this.emit("removeListener", t2, n2.listener || e2));
-          else if ("function" != typeof n2) {
-            for (i3 = -1, o3 = n2.length - 1; o3 >= 0; o3--)
-              if (n2[o3] === e2 || n2[o3].listener === e2) {
-                a3 = n2[o3].listener, i3 = o3;
-                break;
-              }
-            if (i3 < 0)
-              return this;
-            0 === i3 ? n2.shift() : function(t3, e3) {
-              for (; e3 + 1 < t3.length; e3++)
-                t3[e3] = t3[e3 + 1];
-              t3.pop();
-            }(n2, i3), 1 === n2.length && (r2[t2] = n2[0]), void 0 !== r2.removeListener && this.emit("removeListener", t2, a3 || e2);
-          }
-          return this;
-        }, m.prototype.off = m.prototype.removeListener, m.prototype.removeAllListeners = function(t2) {
-          var e2, n2, r2;
-          if (void 0 === (n2 = this._events))
-            return this;
-          if (void 0 === n2.removeListener)
-            return 0 === arguments.length ? (this._events = /* @__PURE__ */ Object.create(null), this._eventsCount = 0) : void 0 !== n2[t2] && (0 == --this._eventsCount ? this._events = /* @__PURE__ */ Object.create(null) : delete n2[t2]), this;
-          if (0 === arguments.length) {
-            var i3, o3 = Object.keys(n2);
-            for (r2 = 0; r2 < o3.length; ++r2)
-              "removeListener" !== (i3 = o3[r2]) && this.removeAllListeners(i3);
-            return this.removeAllListeners("removeListener"), this._events = /* @__PURE__ */ Object.create(null), this._eventsCount = 0, this;
-          }
-          if ("function" == typeof (e2 = n2[t2]))
-            this.removeListener(t2, e2);
-          else if (void 0 !== e2)
-            for (r2 = e2.length - 1; r2 >= 0; r2--)
-              this.removeListener(t2, e2[r2]);
-          return this;
-        }, m.prototype.listeners = function(t2) {
-          return L(this, t2, true);
-        }, m.prototype.rawListeners = function(t2) {
-          return L(this, t2, false);
-        }, m.listenerCount = function(t2, e2) {
-          return "function" == typeof t2.listenerCount ? t2.listenerCount(e2) : S.call(t2, e2);
-        }, m.prototype.listenerCount = S, m.prototype.eventNames = function() {
-          return this._eventsCount > 0 ? g(this._events) : [];
-        }, "undefined" != typeof Symbol && (N.prototype[Symbol.iterator] = function() {
-          return this;
-        }), N.of = function() {
-          var t2 = arguments, e2 = t2.length, n2 = 0;
-          return new N(function() {
-            return n2 >= e2 ? { done: true } : { done: false, value: t2[n2++] };
-          });
-        }, N.empty = function() {
-          return new N(function() {
-            return { done: true };
-          });
-        }, N.fromSequence = function(t2) {
-          var e2 = 0, n2 = t2.length;
-          return new N(function() {
-            return e2 >= n2 ? { done: true } : { done: false, value: t2[e2++] };
-          });
-        }, N.is = function(t2) {
-          return t2 instanceof N || "object" == typeof t2 && null !== t2 && "function" == typeof t2.next;
+        EventEmitter.prototype.eventNames = function eventNames() {
+          return this._eventsCount > 0 ? ReflectOwnKeys(this._events) : [];
         };
-        var O = N, j = {};
-        j.ARRAY_BUFFER_SUPPORT = "undefined" != typeof ArrayBuffer, j.SYMBOL_SUPPORT = "undefined" != typeof Symbol;
-        var C = O, M = j, z = M.ARRAY_BUFFER_SUPPORT, W = M.SYMBOL_SUPPORT;
-        var P = function(t2) {
-          var e2 = function(t3) {
-            return "string" == typeof t3 || Array.isArray(t3) || z && ArrayBuffer.isView(t3) ? C.fromSequence(t3) : "object" != typeof t3 || null === t3 ? null : W && "function" == typeof t3[Symbol.iterator] ? t3[Symbol.iterator]() : "function" == typeof t3.next ? t3 : null;
-          }(t2);
-          if (!e2)
-            throw new Error("obliterator: target is not iterable nor a valid iterator.");
-          return e2;
-        }, R = P, K = function(t2, e2) {
-          for (var n2, r2 = arguments.length > 1 ? e2 : 1 / 0, i3 = r2 !== 1 / 0 ? new Array(r2) : [], o3 = 0, a3 = R(t2); ; ) {
-            if (o3 === r2)
-              return i3;
-            if ((n2 = a3.next()).done)
-              return o3 !== e2 && (i3.length = o3), i3;
-            i3[o3++] = n2.value;
-          }
-        }, T = function(t2) {
-          function n2(e2) {
-            var n3;
-            return (n3 = t2.call(this) || this).name = "GraphError", n3.message = e2, n3;
-          }
-          return e(n2, t2), n2;
-        }(a(Error)), B = function(t2) {
-          function n2(e2) {
-            var r2;
-            return (r2 = t2.call(this, e2) || this).name = "InvalidArgumentsGraphError", "function" == typeof Error.captureStackTrace && Error.captureStackTrace(c(r2), n2.prototype.constructor), r2;
-          }
-          return e(n2, t2), n2;
-        }(T), F = function(t2) {
-          function n2(e2) {
-            var r2;
-            return (r2 = t2.call(this, e2) || this).name = "NotFoundGraphError", "function" == typeof Error.captureStackTrace && Error.captureStackTrace(c(r2), n2.prototype.constructor), r2;
-          }
-          return e(n2, t2), n2;
-        }(T), I = function(t2) {
-          function n2(e2) {
-            var r2;
-            return (r2 = t2.call(this, e2) || this).name = "UsageGraphError", "function" == typeof Error.captureStackTrace && Error.captureStackTrace(c(r2), n2.prototype.constructor), r2;
-          }
-          return e(n2, t2), n2;
-        }(T);
-        function Y(t2, e2) {
-          this.key = t2, this.attributes = e2, this.clear();
+        function arrayClone(arr, n) {
+          var copy2 = new Array(n);
+          for (var i2 = 0; i2 < n; ++i2)
+            copy2[i2] = arr[i2];
+          return copy2;
         }
-        function q(t2, e2) {
-          this.key = t2, this.attributes = e2, this.clear();
+        function spliceOne(list, index) {
+          for (; index + 1 < list.length; index++)
+            list[index] = list[index + 1];
+          list.pop();
         }
-        function J(t2, e2) {
-          this.key = t2, this.attributes = e2, this.clear();
+        function unwrapListeners(arr) {
+          var ret = new Array(arr.length);
+          for (var i2 = 0; i2 < ret.length; ++i2) {
+            ret[i2] = arr[i2].listener || arr[i2];
+          }
+          return ret;
         }
-        function V(t2, e2, n2, r2, i3) {
-          this.key = e2, this.attributes = i3, this.undirected = t2, this.source = n2, this.target = r2;
-        }
-        Y.prototype.clear = function() {
-          this.inDegree = 0, this.outDegree = 0, this.undirectedDegree = 0, this.undirectedLoops = 0, this.directedLoops = 0, this.in = {}, this.out = {}, this.undirected = {};
-        }, q.prototype.clear = function() {
-          this.inDegree = 0, this.outDegree = 0, this.directedLoops = 0, this.in = {}, this.out = {};
-        }, J.prototype.clear = function() {
-          this.undirectedDegree = 0, this.undirectedLoops = 0, this.undirected = {};
-        }, V.prototype.attach = function() {
-          var t2 = "out", e2 = "in";
-          this.undirected && (t2 = e2 = "undirected");
-          var n2 = this.source.key, r2 = this.target.key;
-          this.source[t2][r2] = this, this.undirected && n2 === r2 || (this.target[e2][n2] = this);
-        }, V.prototype.attachMulti = function() {
-          var t2 = "out", e2 = "in", n2 = this.source.key, r2 = this.target.key;
-          this.undirected && (t2 = e2 = "undirected");
-          var i3 = this.source[t2], o3 = i3[r2];
-          if (void 0 === o3)
-            return i3[r2] = this, void (this.undirected && n2 === r2 || (this.target[e2][n2] = this));
-          o3.previous = this, this.next = o3, i3[r2] = this, this.target[e2][n2] = this;
-        }, V.prototype.detach = function() {
-          var t2 = this.source.key, e2 = this.target.key, n2 = "out", r2 = "in";
-          this.undirected && (n2 = r2 = "undirected"), delete this.source[n2][e2], delete this.target[r2][t2];
-        }, V.prototype.detachMulti = function() {
-          var t2 = this.source.key, e2 = this.target.key, n2 = "out", r2 = "in";
-          this.undirected && (n2 = r2 = "undirected"), void 0 === this.previous ? void 0 === this.next ? (delete this.source[n2][e2], delete this.target[r2][t2]) : (this.next.previous = void 0, this.source[n2][e2] = this.next, this.target[r2][t2] = this.next) : (this.previous.next = this.next, void 0 !== this.next && (this.next.previous = this.previous));
-        };
-        function H(t2, e2, n2, r2, i3, o3, a3) {
-          var c2, u2, d2, s2;
-          if (r2 = "" + r2, 0 === n2) {
-            if (!(c2 = t2._nodes.get(r2)))
-              throw new F("Graph.".concat(e2, ': could not find the "').concat(r2, '" node in the graph.'));
-            d2 = i3, s2 = o3;
-          } else if (3 === n2) {
-            if (i3 = "" + i3, !(u2 = t2._edges.get(i3)))
-              throw new F("Graph.".concat(e2, ': could not find the "').concat(i3, '" edge in the graph.'));
-            var h2 = u2.source.key, p2 = u2.target.key;
-            if (r2 === h2)
-              c2 = u2.target;
-            else {
-              if (r2 !== p2)
-                throw new F("Graph.".concat(e2, ': the "').concat(r2, '" node is not attached to the "').concat(i3, '" edge (').concat(h2, ", ").concat(p2, ")."));
-              c2 = u2.source;
+        function once(emitter, name) {
+          return new Promise(function(resolve, reject) {
+            function errorListener(err) {
+              emitter.removeListener(name, resolver);
+              reject(err);
             }
-            d2 = o3, s2 = a3;
+            function resolver() {
+              if (typeof emitter.removeListener === "function") {
+                emitter.removeListener("error", errorListener);
+              }
+              resolve([].slice.call(arguments));
+            }
+            eventTargetAgnosticAddListener(emitter, name, resolver, {
+              once: true
+            });
+            if (name !== "error") {
+              addErrorHandlerIfEventEmitter(emitter, errorListener, {
+                once: true
+              });
+            }
+          });
+        }
+        function addErrorHandlerIfEventEmitter(emitter, handler, flags) {
+          if (typeof emitter.on === "function") {
+            eventTargetAgnosticAddListener(emitter, "error", handler, flags);
+          }
+        }
+        function eventTargetAgnosticAddListener(emitter, name, listener, flags) {
+          if (typeof emitter.on === "function") {
+            if (flags.once) {
+              emitter.once(name, listener);
+            } else {
+              emitter.on(name, listener);
+            }
+          } else if (typeof emitter.addEventListener === "function") {
+            emitter.addEventListener(name, function wrapListener(arg) {
+              if (flags.once) {
+                emitter.removeEventListener(name, wrapListener);
+              }
+              listener(arg);
+            });
           } else {
-            if (!(u2 = t2._edges.get(r2)))
-              throw new F("Graph.".concat(e2, ': could not find the "').concat(r2, '" edge in the graph.'));
-            c2 = 1 === n2 ? u2.source : u2.target, d2 = i3, s2 = o3;
-          }
-          return [c2, d2, s2];
-        }
-        var Q = [{ name: function(t2) {
-          return "get".concat(t2, "Attribute");
-        }, attacher: function(t2, e2, n2) {
-          t2.prototype[e2] = function(t3, r2, i3) {
-            var o3 = H(this, e2, n2, t3, r2, i3), a3 = o3[0], c2 = o3[1];
-            return a3.attributes[c2];
-          };
-        } }, { name: function(t2) {
-          return "get".concat(t2, "Attributes");
-        }, attacher: function(t2, e2, n2) {
-          t2.prototype[e2] = function(t3, r2) {
-            return H(this, e2, n2, t3, r2)[0].attributes;
-          };
-        } }, { name: function(t2) {
-          return "has".concat(t2, "Attribute");
-        }, attacher: function(t2, e2, n2) {
-          t2.prototype[e2] = function(t3, r2, i3) {
-            var o3 = H(this, e2, n2, t3, r2, i3), a3 = o3[0], c2 = o3[1];
-            return a3.attributes.hasOwnProperty(c2);
-          };
-        } }, { name: function(t2) {
-          return "set".concat(t2, "Attribute");
-        }, attacher: function(t2, e2, n2) {
-          t2.prototype[e2] = function(t3, r2, i3, o3) {
-            var a3 = H(this, e2, n2, t3, r2, i3, o3), c2 = a3[0], u2 = a3[1], d2 = a3[2];
-            return c2.attributes[u2] = d2, this.emit("nodeAttributesUpdated", { key: c2.key, type: "set", attributes: c2.attributes, name: u2 }), this;
-          };
-        } }, { name: function(t2) {
-          return "update".concat(t2, "Attribute");
-        }, attacher: function(t2, e2, n2) {
-          t2.prototype[e2] = function(t3, r2, i3, o3) {
-            var a3 = H(this, e2, n2, t3, r2, i3, o3), c2 = a3[0], u2 = a3[1], d2 = a3[2];
-            if ("function" != typeof d2)
-              throw new B("Graph.".concat(e2, ": updater should be a function."));
-            var s2 = c2.attributes, h2 = d2(s2[u2]);
-            return s2[u2] = h2, this.emit("nodeAttributesUpdated", { key: c2.key, type: "set", attributes: c2.attributes, name: u2 }), this;
-          };
-        } }, { name: function(t2) {
-          return "remove".concat(t2, "Attribute");
-        }, attacher: function(t2, e2, n2) {
-          t2.prototype[e2] = function(t3, r2, i3) {
-            var o3 = H(this, e2, n2, t3, r2, i3), a3 = o3[0], c2 = o3[1];
-            return delete a3.attributes[c2], this.emit("nodeAttributesUpdated", { key: a3.key, type: "remove", attributes: a3.attributes, name: c2 }), this;
-          };
-        } }, { name: function(t2) {
-          return "replace".concat(t2, "Attributes");
-        }, attacher: function(t2, e2, n2) {
-          t2.prototype[e2] = function(t3, r2, i3) {
-            var o3 = H(this, e2, n2, t3, r2, i3), a3 = o3[0], c2 = o3[1];
-            if (!s(c2))
-              throw new B("Graph.".concat(e2, ": provided attributes are not a plain object."));
-            return a3.attributes = c2, this.emit("nodeAttributesUpdated", { key: a3.key, type: "replace", attributes: a3.attributes }), this;
-          };
-        } }, { name: function(t2) {
-          return "merge".concat(t2, "Attributes");
-        }, attacher: function(t2, e2, n2) {
-          t2.prototype[e2] = function(t3, r2, i3) {
-            var o3 = H(this, e2, n2, t3, r2, i3), a3 = o3[0], c2 = o3[1];
-            if (!s(c2))
-              throw new B("Graph.".concat(e2, ": provided attributes are not a plain object."));
-            return u(a3.attributes, c2), this.emit("nodeAttributesUpdated", { key: a3.key, type: "merge", attributes: a3.attributes, data: c2 }), this;
-          };
-        } }, { name: function(t2) {
-          return "update".concat(t2, "Attributes");
-        }, attacher: function(t2, e2, n2) {
-          t2.prototype[e2] = function(t3, r2, i3) {
-            var o3 = H(this, e2, n2, t3, r2, i3), a3 = o3[0], c2 = o3[1];
-            if ("function" != typeof c2)
-              throw new B("Graph.".concat(e2, ": provided updater is not a function."));
-            return a3.attributes = c2(a3.attributes), this.emit("nodeAttributesUpdated", { key: a3.key, type: "update", attributes: a3.attributes }), this;
-          };
-        } }];
-        var X = [{ name: function(t2) {
-          return "get".concat(t2, "Attribute");
-        }, attacher: function(t2, e2, n2) {
-          t2.prototype[e2] = function(t3, r2) {
-            var i3;
-            if ("mixed" !== this.type && "mixed" !== n2 && n2 !== this.type)
-              throw new I("Graph.".concat(e2, ": cannot find this type of edges in your ").concat(this.type, " graph."));
-            if (arguments.length > 2) {
-              if (this.multi)
-                throw new I("Graph.".concat(e2, ": cannot use a {source,target} combo when asking about an edge's attributes in a MultiGraph since we cannot infer the one you want information about."));
-              var o3 = "" + t3, a3 = "" + r2;
-              if (r2 = arguments[2], !(i3 = d(this, o3, a3, n2)))
-                throw new F("Graph.".concat(e2, ': could not find an edge for the given path ("').concat(o3, '" - "').concat(a3, '").'));
-            } else {
-              if ("mixed" !== n2)
-                throw new I("Graph.".concat(e2, ": calling this method with only a key (vs. a source and target) does not make sense since an edge with this key could have the other type."));
-              if (t3 = "" + t3, !(i3 = this._edges.get(t3)))
-                throw new F("Graph.".concat(e2, ': could not find the "').concat(t3, '" edge in the graph.'));
-            }
-            return i3.attributes[r2];
-          };
-        } }, { name: function(t2) {
-          return "get".concat(t2, "Attributes");
-        }, attacher: function(t2, e2, n2) {
-          t2.prototype[e2] = function(t3) {
-            var r2;
-            if ("mixed" !== this.type && "mixed" !== n2 && n2 !== this.type)
-              throw new I("Graph.".concat(e2, ": cannot find this type of edges in your ").concat(this.type, " graph."));
-            if (arguments.length > 1) {
-              if (this.multi)
-                throw new I("Graph.".concat(e2, ": cannot use a {source,target} combo when asking about an edge's attributes in a MultiGraph since we cannot infer the one you want information about."));
-              var i3 = "" + t3, o3 = "" + arguments[1];
-              if (!(r2 = d(this, i3, o3, n2)))
-                throw new F("Graph.".concat(e2, ': could not find an edge for the given path ("').concat(i3, '" - "').concat(o3, '").'));
-            } else {
-              if ("mixed" !== n2)
-                throw new I("Graph.".concat(e2, ": calling this method with only a key (vs. a source and target) does not make sense since an edge with this key could have the other type."));
-              if (t3 = "" + t3, !(r2 = this._edges.get(t3)))
-                throw new F("Graph.".concat(e2, ': could not find the "').concat(t3, '" edge in the graph.'));
-            }
-            return r2.attributes;
-          };
-        } }, { name: function(t2) {
-          return "has".concat(t2, "Attribute");
-        }, attacher: function(t2, e2, n2) {
-          t2.prototype[e2] = function(t3, r2) {
-            var i3;
-            if ("mixed" !== this.type && "mixed" !== n2 && n2 !== this.type)
-              throw new I("Graph.".concat(e2, ": cannot find this type of edges in your ").concat(this.type, " graph."));
-            if (arguments.length > 2) {
-              if (this.multi)
-                throw new I("Graph.".concat(e2, ": cannot use a {source,target} combo when asking about an edge's attributes in a MultiGraph since we cannot infer the one you want information about."));
-              var o3 = "" + t3, a3 = "" + r2;
-              if (r2 = arguments[2], !(i3 = d(this, o3, a3, n2)))
-                throw new F("Graph.".concat(e2, ': could not find an edge for the given path ("').concat(o3, '" - "').concat(a3, '").'));
-            } else {
-              if ("mixed" !== n2)
-                throw new I("Graph.".concat(e2, ": calling this method with only a key (vs. a source and target) does not make sense since an edge with this key could have the other type."));
-              if (t3 = "" + t3, !(i3 = this._edges.get(t3)))
-                throw new F("Graph.".concat(e2, ': could not find the "').concat(t3, '" edge in the graph.'));
-            }
-            return i3.attributes.hasOwnProperty(r2);
-          };
-        } }, { name: function(t2) {
-          return "set".concat(t2, "Attribute");
-        }, attacher: function(t2, e2, n2) {
-          t2.prototype[e2] = function(t3, r2, i3) {
-            var o3;
-            if ("mixed" !== this.type && "mixed" !== n2 && n2 !== this.type)
-              throw new I("Graph.".concat(e2, ": cannot find this type of edges in your ").concat(this.type, " graph."));
-            if (arguments.length > 3) {
-              if (this.multi)
-                throw new I("Graph.".concat(e2, ": cannot use a {source,target} combo when asking about an edge's attributes in a MultiGraph since we cannot infer the one you want information about."));
-              var a3 = "" + t3, c2 = "" + r2;
-              if (r2 = arguments[2], i3 = arguments[3], !(o3 = d(this, a3, c2, n2)))
-                throw new F("Graph.".concat(e2, ': could not find an edge for the given path ("').concat(a3, '" - "').concat(c2, '").'));
-            } else {
-              if ("mixed" !== n2)
-                throw new I("Graph.".concat(e2, ": calling this method with only a key (vs. a source and target) does not make sense since an edge with this key could have the other type."));
-              if (t3 = "" + t3, !(o3 = this._edges.get(t3)))
-                throw new F("Graph.".concat(e2, ': could not find the "').concat(t3, '" edge in the graph.'));
-            }
-            return o3.attributes[r2] = i3, this.emit("edgeAttributesUpdated", { key: o3.key, type: "set", attributes: o3.attributes, name: r2 }), this;
-          };
-        } }, { name: function(t2) {
-          return "update".concat(t2, "Attribute");
-        }, attacher: function(t2, e2, n2) {
-          t2.prototype[e2] = function(t3, r2, i3) {
-            var o3;
-            if ("mixed" !== this.type && "mixed" !== n2 && n2 !== this.type)
-              throw new I("Graph.".concat(e2, ": cannot find this type of edges in your ").concat(this.type, " graph."));
-            if (arguments.length > 3) {
-              if (this.multi)
-                throw new I("Graph.".concat(e2, ": cannot use a {source,target} combo when asking about an edge's attributes in a MultiGraph since we cannot infer the one you want information about."));
-              var a3 = "" + t3, c2 = "" + r2;
-              if (r2 = arguments[2], i3 = arguments[3], !(o3 = d(this, a3, c2, n2)))
-                throw new F("Graph.".concat(e2, ': could not find an edge for the given path ("').concat(a3, '" - "').concat(c2, '").'));
-            } else {
-              if ("mixed" !== n2)
-                throw new I("Graph.".concat(e2, ": calling this method with only a key (vs. a source and target) does not make sense since an edge with this key could have the other type."));
-              if (t3 = "" + t3, !(o3 = this._edges.get(t3)))
-                throw new F("Graph.".concat(e2, ': could not find the "').concat(t3, '" edge in the graph.'));
-            }
-            if ("function" != typeof i3)
-              throw new B("Graph.".concat(e2, ": updater should be a function."));
-            return o3.attributes[r2] = i3(o3.attributes[r2]), this.emit("edgeAttributesUpdated", { key: o3.key, type: "set", attributes: o3.attributes, name: r2 }), this;
-          };
-        } }, { name: function(t2) {
-          return "remove".concat(t2, "Attribute");
-        }, attacher: function(t2, e2, n2) {
-          t2.prototype[e2] = function(t3, r2) {
-            var i3;
-            if ("mixed" !== this.type && "mixed" !== n2 && n2 !== this.type)
-              throw new I("Graph.".concat(e2, ": cannot find this type of edges in your ").concat(this.type, " graph."));
-            if (arguments.length > 2) {
-              if (this.multi)
-                throw new I("Graph.".concat(e2, ": cannot use a {source,target} combo when asking about an edge's attributes in a MultiGraph since we cannot infer the one you want information about."));
-              var o3 = "" + t3, a3 = "" + r2;
-              if (r2 = arguments[2], !(i3 = d(this, o3, a3, n2)))
-                throw new F("Graph.".concat(e2, ': could not find an edge for the given path ("').concat(o3, '" - "').concat(a3, '").'));
-            } else {
-              if ("mixed" !== n2)
-                throw new I("Graph.".concat(e2, ": calling this method with only a key (vs. a source and target) does not make sense since an edge with this key could have the other type."));
-              if (t3 = "" + t3, !(i3 = this._edges.get(t3)))
-                throw new F("Graph.".concat(e2, ': could not find the "').concat(t3, '" edge in the graph.'));
-            }
-            return delete i3.attributes[r2], this.emit("edgeAttributesUpdated", { key: i3.key, type: "remove", attributes: i3.attributes, name: r2 }), this;
-          };
-        } }, { name: function(t2) {
-          return "replace".concat(t2, "Attributes");
-        }, attacher: function(t2, e2, n2) {
-          t2.prototype[e2] = function(t3, r2) {
-            var i3;
-            if ("mixed" !== this.type && "mixed" !== n2 && n2 !== this.type)
-              throw new I("Graph.".concat(e2, ": cannot find this type of edges in your ").concat(this.type, " graph."));
-            if (arguments.length > 2) {
-              if (this.multi)
-                throw new I("Graph.".concat(e2, ": cannot use a {source,target} combo when asking about an edge's attributes in a MultiGraph since we cannot infer the one you want information about."));
-              var o3 = "" + t3, a3 = "" + r2;
-              if (r2 = arguments[2], !(i3 = d(this, o3, a3, n2)))
-                throw new F("Graph.".concat(e2, ': could not find an edge for the given path ("').concat(o3, '" - "').concat(a3, '").'));
-            } else {
-              if ("mixed" !== n2)
-                throw new I("Graph.".concat(e2, ": calling this method with only a key (vs. a source and target) does not make sense since an edge with this key could have the other type."));
-              if (t3 = "" + t3, !(i3 = this._edges.get(t3)))
-                throw new F("Graph.".concat(e2, ': could not find the "').concat(t3, '" edge in the graph.'));
-            }
-            if (!s(r2))
-              throw new B("Graph.".concat(e2, ": provided attributes are not a plain object."));
-            return i3.attributes = r2, this.emit("edgeAttributesUpdated", { key: i3.key, type: "replace", attributes: i3.attributes }), this;
-          };
-        } }, { name: function(t2) {
-          return "merge".concat(t2, "Attributes");
-        }, attacher: function(t2, e2, n2) {
-          t2.prototype[e2] = function(t3, r2) {
-            var i3;
-            if ("mixed" !== this.type && "mixed" !== n2 && n2 !== this.type)
-              throw new I("Graph.".concat(e2, ": cannot find this type of edges in your ").concat(this.type, " graph."));
-            if (arguments.length > 2) {
-              if (this.multi)
-                throw new I("Graph.".concat(e2, ": cannot use a {source,target} combo when asking about an edge's attributes in a MultiGraph since we cannot infer the one you want information about."));
-              var o3 = "" + t3, a3 = "" + r2;
-              if (r2 = arguments[2], !(i3 = d(this, o3, a3, n2)))
-                throw new F("Graph.".concat(e2, ': could not find an edge for the given path ("').concat(o3, '" - "').concat(a3, '").'));
-            } else {
-              if ("mixed" !== n2)
-                throw new I("Graph.".concat(e2, ": calling this method with only a key (vs. a source and target) does not make sense since an edge with this key could have the other type."));
-              if (t3 = "" + t3, !(i3 = this._edges.get(t3)))
-                throw new F("Graph.".concat(e2, ': could not find the "').concat(t3, '" edge in the graph.'));
-            }
-            if (!s(r2))
-              throw new B("Graph.".concat(e2, ": provided attributes are not a plain object."));
-            return u(i3.attributes, r2), this.emit("edgeAttributesUpdated", { key: i3.key, type: "merge", attributes: i3.attributes, data: r2 }), this;
-          };
-        } }, { name: function(t2) {
-          return "update".concat(t2, "Attributes");
-        }, attacher: function(t2, e2, n2) {
-          t2.prototype[e2] = function(t3, r2) {
-            var i3;
-            if ("mixed" !== this.type && "mixed" !== n2 && n2 !== this.type)
-              throw new I("Graph.".concat(e2, ": cannot find this type of edges in your ").concat(this.type, " graph."));
-            if (arguments.length > 2) {
-              if (this.multi)
-                throw new I("Graph.".concat(e2, ": cannot use a {source,target} combo when asking about an edge's attributes in a MultiGraph since we cannot infer the one you want information about."));
-              var o3 = "" + t3, a3 = "" + r2;
-              if (r2 = arguments[2], !(i3 = d(this, o3, a3, n2)))
-                throw new F("Graph.".concat(e2, ': could not find an edge for the given path ("').concat(o3, '" - "').concat(a3, '").'));
-            } else {
-              if ("mixed" !== n2)
-                throw new I("Graph.".concat(e2, ": calling this method with only a key (vs. a source and target) does not make sense since an edge with this key could have the other type."));
-              if (t3 = "" + t3, !(i3 = this._edges.get(t3)))
-                throw new F("Graph.".concat(e2, ': could not find the "').concat(t3, '" edge in the graph.'));
-            }
-            if ("function" != typeof r2)
-              throw new B("Graph.".concat(e2, ": provided updater is not a function."));
-            return i3.attributes = r2(i3.attributes), this.emit("edgeAttributesUpdated", { key: i3.key, type: "update", attributes: i3.attributes }), this;
-          };
-        } }];
-        var Z = O, $ = P, tt = function() {
-          var t2 = arguments, e2 = null, n2 = -1;
-          return new Z(function() {
-            for (var r2 = null; ; ) {
-              if (null === e2) {
-                if (++n2 >= t2.length)
-                  return { done: true };
-                e2 = $(t2[n2]);
-              }
-              if (true !== (r2 = e2.next()).done)
-                break;
-              e2 = null;
-            }
-            return r2;
-          });
-        }, et = [{ name: "edges", type: "mixed" }, { name: "inEdges", type: "directed", direction: "in" }, { name: "outEdges", type: "directed", direction: "out" }, { name: "inboundEdges", type: "mixed", direction: "in" }, { name: "outboundEdges", type: "mixed", direction: "out" }, { name: "directedEdges", type: "directed" }, { name: "undirectedEdges", type: "undirected" }];
-        function nt(t2, e2, n2, r2) {
-          var i3 = false;
-          for (var o3 in e2)
-            if (o3 !== r2) {
-              var a3 = e2[o3];
-              if (i3 = n2(a3.key, a3.attributes, a3.source.key, a3.target.key, a3.source.attributes, a3.target.attributes, a3.undirected), t2 && i3)
-                return a3.key;
-            }
-        }
-        function rt(t2, e2, n2, r2) {
-          var i3, o3, a3, c2 = false;
-          for (var u2 in e2)
-            if (u2 !== r2) {
-              i3 = e2[u2];
-              do {
-                if (o3 = i3.source, a3 = i3.target, c2 = n2(i3.key, i3.attributes, o3.key, a3.key, o3.attributes, a3.attributes, i3.undirected), t2 && c2)
-                  return i3.key;
-                i3 = i3.next;
-              } while (void 0 !== i3);
-            }
-        }
-        function it(t2, e2) {
-          var n2, r2 = Object.keys(t2), i3 = r2.length, o3 = 0;
-          return new O(function() {
-            do {
-              if (n2)
-                n2 = n2.next;
-              else {
-                if (o3 >= i3)
-                  return { done: true };
-                var a3 = r2[o3++];
-                if (a3 === e2) {
-                  n2 = void 0;
-                  continue;
-                }
-                n2 = t2[a3];
-              }
-            } while (!n2);
-            return { done: false, value: { edge: n2.key, attributes: n2.attributes, source: n2.source.key, target: n2.target.key, sourceAttributes: n2.source.attributes, targetAttributes: n2.target.attributes, undirected: n2.undirected } };
-          });
-        }
-        function ot(t2, e2, n2, r2) {
-          var i3 = e2[n2];
-          if (i3) {
-            var o3 = i3.source, a3 = i3.target;
-            return r2(i3.key, i3.attributes, o3.key, a3.key, o3.attributes, a3.attributes, i3.undirected) && t2 ? i3.key : void 0;
+            throw new TypeError('The "emitter" argument must be of type EventEmitter. Received type ' + typeof emitter);
           }
         }
-        function at(t2, e2, n2, r2) {
-          var i3 = e2[n2];
-          if (i3) {
-            var o3 = false;
-            do {
-              if (o3 = r2(i3.key, i3.attributes, i3.source.key, i3.target.key, i3.source.attributes, i3.target.attributes, i3.undirected), t2 && o3)
-                return i3.key;
-              i3 = i3.next;
-            } while (void 0 !== i3);
-          }
+        function Iterator$2(next) {
+          if (typeof next !== "function")
+            throw new Error("obliterator/iterator: expecting a function!");
+          this.next = next;
         }
-        function ct(t2, e2) {
-          var n2 = t2[e2];
-          return void 0 !== n2.next ? new O(function() {
-            if (!n2)
-              return { done: true };
-            var t3 = { edge: n2.key, attributes: n2.attributes, source: n2.source.key, target: n2.target.key, sourceAttributes: n2.source.attributes, targetAttributes: n2.target.attributes, undirected: n2.undirected };
-            return n2 = n2.next, { done: false, value: t3 };
-          }) : O.of({ edge: n2.key, attributes: n2.attributes, source: n2.source.key, target: n2.target.key, sourceAttributes: n2.source.attributes, targetAttributes: n2.target.attributes, undirected: n2.undirected });
-        }
-        function ut(t2, e2) {
-          if (0 === t2.size)
-            return [];
-          if ("mixed" === e2 || e2 === t2.type)
-            return "function" == typeof Array.from ? Array.from(t2._edges.keys()) : K(t2._edges.keys(), t2._edges.size);
-          for (var n2, r2, i3 = "undirected" === e2 ? t2.undirectedSize : t2.directedSize, o3 = new Array(i3), a3 = "undirected" === e2, c2 = t2._edges.values(), u2 = 0; true !== (n2 = c2.next()).done; )
-            (r2 = n2.value).undirected === a3 && (o3[u2++] = r2.key);
-          return o3;
-        }
-        function dt(t2, e2, n2, r2) {
-          if (0 !== e2.size) {
-            for (var i3, o3, a3 = "mixed" !== n2 && n2 !== e2.type, c2 = "undirected" === n2, u2 = false, d2 = e2._edges.values(); true !== (i3 = d2.next()).done; )
-              if (o3 = i3.value, !a3 || o3.undirected === c2) {
-                var s2 = o3, h2 = s2.key, p2 = s2.attributes, f2 = s2.source, l2 = s2.target;
-                if (u2 = r2(h2, p2, f2.key, l2.key, f2.attributes, l2.attributes, o3.undirected), t2 && u2)
-                  return h2;
-              }
-          }
-        }
-        function st(t2, e2) {
-          if (0 === t2.size)
-            return O.empty();
-          var n2 = "mixed" !== e2 && e2 !== t2.type, r2 = "undirected" === e2, i3 = t2._edges.values();
-          return new O(function() {
-            for (var t3, e3; ; ) {
-              if ((t3 = i3.next()).done)
-                return t3;
-              if (e3 = t3.value, !n2 || e3.undirected === r2)
-                break;
-            }
-            return { value: { edge: e3.key, attributes: e3.attributes, source: e3.source.key, target: e3.target.key, sourceAttributes: e3.source.attributes, targetAttributes: e3.target.attributes, undirected: e3.undirected }, done: false };
-          });
-        }
-        function ht(t2, e2, n2, r2, i3, o3) {
-          var a3, c2 = e2 ? rt : nt;
-          if ("undirected" !== n2) {
-            if ("out" !== r2 && (a3 = c2(t2, i3.in, o3), t2 && a3))
-              return a3;
-            if ("in" !== r2 && (a3 = c2(t2, i3.out, o3, r2 ? void 0 : i3.key), t2 && a3))
-              return a3;
-          }
-          if ("directed" !== n2 && (a3 = c2(t2, i3.undirected, o3), t2 && a3))
-            return a3;
-        }
-        function pt(t2, e2, n2, r2) {
-          var i3 = [];
-          return ht(false, t2, e2, n2, r2, function(t3) {
-            i3.push(t3);
-          }), i3;
-        }
-        function ft(t2, e2, n2) {
-          var r2 = O.empty();
-          return "undirected" !== t2 && ("out" !== e2 && void 0 !== n2.in && (r2 = tt(r2, it(n2.in))), "in" !== e2 && void 0 !== n2.out && (r2 = tt(r2, it(n2.out, e2 ? void 0 : n2.key)))), "directed" !== t2 && void 0 !== n2.undirected && (r2 = tt(r2, it(n2.undirected))), r2;
-        }
-        function lt(t2, e2, n2, r2, i3, o3, a3) {
-          var c2, u2 = n2 ? at : ot;
-          if ("undirected" !== e2) {
-            if (void 0 !== i3.in && "out" !== r2 && (c2 = u2(t2, i3.in, o3, a3), t2 && c2))
-              return c2;
-            if (void 0 !== i3.out && "in" !== r2 && (r2 || i3.key !== o3) && (c2 = u2(t2, i3.out, o3, a3), t2 && c2))
-              return c2;
-          }
-          if ("directed" !== e2 && void 0 !== i3.undirected && (c2 = u2(t2, i3.undirected, o3, a3), t2 && c2))
-            return c2;
-        }
-        function gt(t2, e2, n2, r2, i3) {
-          var o3 = [];
-          return lt(false, t2, e2, n2, r2, i3, function(t3) {
-            o3.push(t3);
-          }), o3;
-        }
-        function yt(t2, e2, n2, r2) {
-          var i3 = O.empty();
-          return "undirected" !== t2 && (void 0 !== n2.in && "out" !== e2 && r2 in n2.in && (i3 = tt(i3, ct(n2.in, r2))), void 0 !== n2.out && "in" !== e2 && r2 in n2.out && (e2 || n2.key !== r2) && (i3 = tt(i3, ct(n2.out, r2)))), "directed" !== t2 && void 0 !== n2.undirected && r2 in n2.undirected && (i3 = tt(i3, ct(n2.undirected, r2))), i3;
-        }
-        var wt = [{ name: "neighbors", type: "mixed" }, { name: "inNeighbors", type: "directed", direction: "in" }, { name: "outNeighbors", type: "directed", direction: "out" }, { name: "inboundNeighbors", type: "mixed", direction: "in" }, { name: "outboundNeighbors", type: "mixed", direction: "out" }, { name: "directedNeighbors", type: "directed" }, { name: "undirectedNeighbors", type: "undirected" }];
-        function vt() {
-          this.A = null, this.B = null;
-        }
-        function bt(t2, e2, n2, r2, i3) {
-          for (var o3 in r2) {
-            var a3 = r2[o3], c2 = a3.source, u2 = a3.target, d2 = c2 === n2 ? u2 : c2;
-            if (!e2 || !e2.has(d2.key)) {
-              var s2 = i3(d2.key, d2.attributes);
-              if (t2 && s2)
-                return d2.key;
-            }
-          }
-        }
-        function mt(t2, e2, n2, r2, i3) {
-          if ("mixed" !== e2) {
-            if ("undirected" === e2)
-              return bt(t2, null, r2, r2.undirected, i3);
-            if ("string" == typeof n2)
-              return bt(t2, null, r2, r2[n2], i3);
-          }
-          var o3, a3 = new vt();
-          if ("undirected" !== e2) {
-            if ("out" !== n2) {
-              if (o3 = bt(t2, null, r2, r2.in, i3), t2 && o3)
-                return o3;
-              a3.wrap(r2.in);
-            }
-            if ("in" !== n2) {
-              if (o3 = bt(t2, a3, r2, r2.out, i3), t2 && o3)
-                return o3;
-              a3.wrap(r2.out);
-            }
-          }
-          if ("directed" !== e2 && (o3 = bt(t2, a3, r2, r2.undirected, i3), t2 && o3))
-            return o3;
-        }
-        function kt(t2, e2, n2) {
-          var r2 = Object.keys(n2), i3 = r2.length, o3 = 0;
-          return new O(function() {
-            var a3 = null;
-            do {
-              if (o3 >= i3)
-                return t2 && t2.wrap(n2), { done: true };
-              var c2 = n2[r2[o3++]], u2 = c2.source, d2 = c2.target;
-              a3 = u2 === e2 ? d2 : u2, t2 && t2.has(a3.key) && (a3 = null);
-            } while (null === a3);
-            return { done: false, value: { neighbor: a3.key, attributes: a3.attributes } };
-          });
-        }
-        function _t(t2, e2) {
-          var n2 = e2.name, r2 = e2.type, i3 = e2.direction;
-          t2.prototype[n2] = function(t3) {
-            if ("mixed" !== r2 && "mixed" !== this.type && r2 !== this.type)
-              return [];
-            t3 = "" + t3;
-            var e3 = this._nodes.get(t3);
-            if (void 0 === e3)
-              throw new F("Graph.".concat(n2, ': could not find the "').concat(t3, '" node in the graph.'));
-            return function(t4, e4, n3) {
-              if ("mixed" !== t4) {
-                if ("undirected" === t4)
-                  return Object.keys(n3.undirected);
-                if ("string" == typeof e4)
-                  return Object.keys(n3[e4]);
-              }
-              var r3 = [];
-              return mt(false, t4, e4, n3, function(t5) {
-                r3.push(t5);
-              }), r3;
-            }("mixed" === r2 ? this.type : r2, i3, e3);
-          };
-        }
-        function Gt(t2, e2) {
-          var n2 = e2.name, r2 = e2.type, i3 = e2.direction, o3 = n2.slice(0, -1) + "Entries";
-          t2.prototype[o3] = function(t3) {
-            if ("mixed" !== r2 && "mixed" !== this.type && r2 !== this.type)
-              return O.empty();
-            t3 = "" + t3;
-            var e3 = this._nodes.get(t3);
-            if (void 0 === e3)
-              throw new F("Graph.".concat(o3, ': could not find the "').concat(t3, '" node in the graph.'));
-            return function(t4, e4, n3) {
-              if ("mixed" !== t4) {
-                if ("undirected" === t4)
-                  return kt(null, n3, n3.undirected);
-                if ("string" == typeof e4)
-                  return kt(null, n3, n3[e4]);
-              }
-              var r3 = O.empty(), i4 = new vt();
-              return "undirected" !== t4 && ("out" !== e4 && (r3 = tt(r3, kt(i4, n3, n3.in))), "in" !== e4 && (r3 = tt(r3, kt(i4, n3, n3.out)))), "directed" !== t4 && (r3 = tt(r3, kt(i4, n3, n3.undirected))), r3;
-            }("mixed" === r2 ? this.type : r2, i3, e3);
-          };
-        }
-        function xt(t2, e2, n2, r2, i3) {
-          for (var o3, a3, c2, u2, d2, s2, h2, p2 = r2._nodes.values(), f2 = r2.type; true !== (o3 = p2.next()).done; ) {
-            var l2 = false;
-            if (a3 = o3.value, "undirected" !== f2)
-              for (c2 in u2 = a3.out) {
-                d2 = u2[c2];
-                do {
-                  if (s2 = d2.target, l2 = true, h2 = i3(a3.key, s2.key, a3.attributes, s2.attributes, d2.key, d2.attributes, d2.undirected), t2 && h2)
-                    return d2;
-                  d2 = d2.next;
-                } while (d2);
-              }
-            if ("directed" !== f2) {
-              for (c2 in u2 = a3.undirected)
-                if (!(e2 && a3.key > c2)) {
-                  d2 = u2[c2];
-                  do {
-                    if ((s2 = d2.target).key !== c2 && (s2 = d2.source), l2 = true, h2 = i3(a3.key, s2.key, a3.attributes, s2.attributes, d2.key, d2.attributes, d2.undirected), t2 && h2)
-                      return d2;
-                    d2 = d2.next;
-                  } while (d2);
-                }
-            }
-            if (n2 && !l2 && (h2 = i3(a3.key, null, a3.attributes, null, null, null, null), t2 && h2))
-              return null;
-          }
-        }
-        function Et(t2) {
-          if (!s(t2))
-            throw new B('Graph.import: invalid serialized node. A serialized node should be a plain object with at least a "key" property.');
-          if (!("key" in t2))
-            throw new B("Graph.import: serialized node is missing its key.");
-          if ("attributes" in t2 && (!s(t2.attributes) || null === t2.attributes))
-            throw new B("Graph.import: invalid attributes. Attributes should be a plain object, null or omitted.");
-        }
-        function At(t2) {
-          if (!s(t2))
-            throw new B('Graph.import: invalid serialized edge. A serialized edge should be a plain object with at least a "source" & "target" property.');
-          if (!("source" in t2))
-            throw new B("Graph.import: serialized edge is missing its source.");
-          if (!("target" in t2))
-            throw new B("Graph.import: serialized edge is missing its target.");
-          if ("attributes" in t2 && (!s(t2.attributes) || null === t2.attributes))
-            throw new B("Graph.import: invalid attributes. Attributes should be a plain object, null or omitted.");
-          if ("undirected" in t2 && "boolean" != typeof t2.undirected)
-            throw new B("Graph.import: invalid undirectedness information. Undirected should be boolean or omitted.");
-        }
-        vt.prototype.wrap = function(t2) {
-          null === this.A ? this.A = t2 : null === this.B && (this.B = t2);
-        }, vt.prototype.has = function(t2) {
-          return null !== this.A && t2 in this.A || null !== this.B && t2 in this.B;
-        };
-        var Lt, St = (Lt = 255 & Math.floor(256 * Math.random()), function() {
-          return Lt++;
-        }), Dt = /* @__PURE__ */ new Set(["directed", "undirected", "mixed"]), Ut = /* @__PURE__ */ new Set(["domain", "_events", "_eventsCount", "_maxListeners"]), Nt = { allowSelfLoops: true, multi: false, type: "mixed" };
-        function Ot(t2, e2, n2) {
-          var r2 = new t2.NodeDataClass(e2, n2);
-          return t2._nodes.set(e2, r2), t2.emit("nodeAdded", { key: e2, attributes: n2 }), r2;
-        }
-        function jt(t2, e2, n2, r2, i3, o3, a3, c2) {
-          if (!r2 && "undirected" === t2.type)
-            throw new I("Graph.".concat(e2, ": you cannot add a directed edge to an undirected graph. Use the #.addEdge or #.addUndirectedEdge instead."));
-          if (r2 && "directed" === t2.type)
-            throw new I("Graph.".concat(e2, ": you cannot add an undirected edge to a directed graph. Use the #.addEdge or #.addDirectedEdge instead."));
-          if (c2 && !s(c2))
-            throw new B("Graph.".concat(e2, ': invalid attributes. Expecting an object but got "').concat(c2, '"'));
-          if (o3 = "" + o3, a3 = "" + a3, c2 = c2 || {}, !t2.allowSelfLoops && o3 === a3)
-            throw new I("Graph.".concat(e2, ': source & target are the same ("').concat(o3, `"), thus creating a loop explicitly forbidden by this graph 'allowSelfLoops' option set to false.`));
-          var u2 = t2._nodes.get(o3), d2 = t2._nodes.get(a3);
-          if (!u2)
-            throw new F("Graph.".concat(e2, ': source node "').concat(o3, '" not found.'));
-          if (!d2)
-            throw new F("Graph.".concat(e2, ': target node "').concat(a3, '" not found.'));
-          var h2 = { key: null, undirected: r2, source: o3, target: a3, attributes: c2 };
-          if (n2)
-            i3 = t2._edgeKeyGenerator();
-          else if (i3 = "" + i3, t2._edges.has(i3))
-            throw new I("Graph.".concat(e2, ': the "').concat(i3, '" edge already exists in the graph.'));
-          if (!t2.multi && (r2 ? void 0 !== u2.undirected[a3] : void 0 !== u2.out[a3]))
-            throw new I("Graph.".concat(e2, ': an edge linking "').concat(o3, '" to "').concat(a3, `" already exists. If you really want to add multiple edges linking those nodes, you should create a multi graph by using the 'multi' option.`));
-          var p2 = new V(r2, i3, u2, d2, c2);
-          t2._edges.set(i3, p2);
-          var f2 = o3 === a3;
-          return r2 ? (u2.undirectedDegree++, d2.undirectedDegree++, f2 && (u2.undirectedLoops++, t2._undirectedSelfLoopCount++)) : (u2.outDegree++, d2.inDegree++, f2 && (u2.directedLoops++, t2._directedSelfLoopCount++)), t2.multi ? p2.attachMulti() : p2.attach(), r2 ? t2._undirectedSize++ : t2._directedSize++, h2.key = i3, t2.emit("edgeAdded", h2), i3;
-        }
-        function Ct(t2, e2, n2, r2, i3, o3, a3, c2, d2) {
-          if (!r2 && "undirected" === t2.type)
-            throw new I("Graph.".concat(e2, ": you cannot merge/update a directed edge to an undirected graph. Use the #.mergeEdge/#.updateEdge or #.addUndirectedEdge instead."));
-          if (r2 && "directed" === t2.type)
-            throw new I("Graph.".concat(e2, ": you cannot merge/update an undirected edge to a directed graph. Use the #.mergeEdge/#.updateEdge or #.addDirectedEdge instead."));
-          if (c2) {
-            if (d2) {
-              if ("function" != typeof c2)
-                throw new B("Graph.".concat(e2, ': invalid updater function. Expecting a function but got "').concat(c2, '"'));
-            } else if (!s(c2))
-              throw new B("Graph.".concat(e2, ': invalid attributes. Expecting an object but got "').concat(c2, '"'));
-          }
-          var h2;
-          if (o3 = "" + o3, a3 = "" + a3, d2 && (h2 = c2, c2 = void 0), !t2.allowSelfLoops && o3 === a3)
-            throw new I("Graph.".concat(e2, ': source & target are the same ("').concat(o3, `"), thus creating a loop explicitly forbidden by this graph 'allowSelfLoops' option set to false.`));
-          var p2, f2, l2 = t2._nodes.get(o3), g2 = t2._nodes.get(a3);
-          if (!n2 && (p2 = t2._edges.get(i3))) {
-            if (!(p2.source.key === o3 && p2.target.key === a3 || r2 && p2.source.key === a3 && p2.target.key === o3))
-              throw new I("Graph.".concat(e2, ': inconsistency detected when attempting to merge the "').concat(i3, '" edge with "').concat(o3, '" source & "').concat(a3, '" target vs. ("').concat(p2.source.key, '", "').concat(p2.target.key, '").'));
-            f2 = p2;
-          }
-          if (f2 || t2.multi || !l2 || (f2 = r2 ? l2.undirected[a3] : l2.out[a3]), f2) {
-            var y2 = [f2.key, false, false, false];
-            if (d2 ? !h2 : !c2)
-              return y2;
-            if (d2) {
-              var w2 = f2.attributes;
-              f2.attributes = h2(w2), t2.emit("edgeAttributesUpdated", { type: "replace", key: f2.key, attributes: f2.attributes });
-            } else
-              u(f2.attributes, c2), t2.emit("edgeAttributesUpdated", { type: "merge", key: f2.key, attributes: f2.attributes, data: c2 });
-            return y2;
-          }
-          c2 = c2 || {}, d2 && h2 && (c2 = h2(c2));
-          var v2 = { key: null, undirected: r2, source: o3, target: a3, attributes: c2 };
-          if (n2)
-            i3 = t2._edgeKeyGenerator();
-          else if (i3 = "" + i3, t2._edges.has(i3))
-            throw new I("Graph.".concat(e2, ': the "').concat(i3, '" edge already exists in the graph.'));
-          var b2 = false, m2 = false;
-          l2 || (l2 = Ot(t2, o3, {}), b2 = true, o3 === a3 && (g2 = l2, m2 = true)), g2 || (g2 = Ot(t2, a3, {}), m2 = true), p2 = new V(r2, i3, l2, g2, c2), t2._edges.set(i3, p2);
-          var k2 = o3 === a3;
-          return r2 ? (l2.undirectedDegree++, g2.undirectedDegree++, k2 && (l2.undirectedLoops++, t2._undirectedSelfLoopCount++)) : (l2.outDegree++, g2.inDegree++, k2 && (l2.directedLoops++, t2._directedSelfLoopCount++)), t2.multi ? p2.attachMulti() : p2.attach(), r2 ? t2._undirectedSize++ : t2._directedSize++, v2.key = i3, t2.emit("edgeAdded", v2), [i3, true, b2, m2];
-        }
-        function Mt(t2, e2) {
-          t2._edges.delete(e2.key);
-          var n2 = e2.source, r2 = e2.target, i3 = e2.attributes, o3 = e2.undirected, a3 = n2 === r2;
-          o3 ? (n2.undirectedDegree--, r2.undirectedDegree--, a3 && (n2.undirectedLoops--, t2._undirectedSelfLoopCount--)) : (n2.outDegree--, r2.inDegree--, a3 && (n2.directedLoops--, t2._directedSelfLoopCount--)), t2.multi ? e2.detachMulti() : e2.detach(), o3 ? t2._undirectedSize-- : t2._directedSize--, t2.emit("edgeDropped", { key: e2.key, attributes: i3, source: n2.key, target: r2.key, undirected: o3 });
-        }
-        var zt = function(n2) {
-          function r2(t2) {
-            var e2;
-            if (e2 = n2.call(this) || this, "boolean" != typeof (t2 = u({}, Nt, t2)).multi)
-              throw new B(`Graph.constructor: invalid 'multi' option. Expecting a boolean but got "`.concat(t2.multi, '".'));
-            if (!Dt.has(t2.type))
-              throw new B(`Graph.constructor: invalid 'type' option. Should be one of "mixed", "directed" or "undirected" but got "`.concat(t2.type, '".'));
-            if ("boolean" != typeof t2.allowSelfLoops)
-              throw new B(`Graph.constructor: invalid 'allowSelfLoops' option. Expecting a boolean but got "`.concat(t2.allowSelfLoops, '".'));
-            var r3 = "mixed" === t2.type ? Y : "directed" === t2.type ? q : J;
-            p(c(e2), "NodeDataClass", r3);
-            var i4 = "geid_" + St() + "_", o3 = 0;
-            return p(c(e2), "_attributes", {}), p(c(e2), "_nodes", /* @__PURE__ */ new Map()), p(c(e2), "_edges", /* @__PURE__ */ new Map()), p(c(e2), "_directedSize", 0), p(c(e2), "_undirectedSize", 0), p(c(e2), "_directedSelfLoopCount", 0), p(c(e2), "_undirectedSelfLoopCount", 0), p(c(e2), "_edgeKeyGenerator", function() {
-              var t3;
-              do {
-                t3 = i4 + o3++;
-              } while (e2._edges.has(t3));
-              return t3;
-            }), p(c(e2), "_options", t2), Ut.forEach(function(t3) {
-              return p(c(e2), t3, e2[t3]);
-            }), f(c(e2), "order", function() {
-              return e2._nodes.size;
-            }), f(c(e2), "size", function() {
-              return e2._edges.size;
-            }), f(c(e2), "directedSize", function() {
-              return e2._directedSize;
-            }), f(c(e2), "undirectedSize", function() {
-              return e2._undirectedSize;
-            }), f(c(e2), "selfLoopCount", function() {
-              return e2._directedSelfLoopCount + e2._undirectedSelfLoopCount;
-            }), f(c(e2), "directedSelfLoopCount", function() {
-              return e2._directedSelfLoopCount;
-            }), f(c(e2), "undirectedSelfLoopCount", function() {
-              return e2._undirectedSelfLoopCount;
-            }), f(c(e2), "multi", e2._options.multi), f(c(e2), "type", e2._options.type), f(c(e2), "allowSelfLoops", e2._options.allowSelfLoops), f(c(e2), "implementation", function() {
-              return "graphology";
-            }), e2;
-          }
-          e(r2, n2);
-          var i3 = r2.prototype;
-          return i3._resetInstanceCounters = function() {
-            this._directedSize = 0, this._undirectedSize = 0, this._directedSelfLoopCount = 0, this._undirectedSelfLoopCount = 0;
-          }, i3.hasNode = function(t2) {
-            return this._nodes.has("" + t2);
-          }, i3.hasDirectedEdge = function(t2, e2) {
-            if ("undirected" === this.type)
-              return false;
-            if (1 === arguments.length) {
-              var n3 = "" + t2, r3 = this._edges.get(n3);
-              return !!r3 && !r3.undirected;
-            }
-            if (2 === arguments.length) {
-              t2 = "" + t2, e2 = "" + e2;
-              var i4 = this._nodes.get(t2);
-              return !!i4 && i4.out.hasOwnProperty(e2);
-            }
-            throw new B("Graph.hasDirectedEdge: invalid arity (".concat(arguments.length, ", instead of 1 or 2). You can either ask for an edge id or for the existence of an edge between a source & a target."));
-          }, i3.hasUndirectedEdge = function(t2, e2) {
-            if ("directed" === this.type)
-              return false;
-            if (1 === arguments.length) {
-              var n3 = "" + t2, r3 = this._edges.get(n3);
-              return !!r3 && r3.undirected;
-            }
-            if (2 === arguments.length) {
-              t2 = "" + t2, e2 = "" + e2;
-              var i4 = this._nodes.get(t2);
-              return !!i4 && i4.undirected.hasOwnProperty(e2);
-            }
-            throw new B("Graph.hasDirectedEdge: invalid arity (".concat(arguments.length, ", instead of 1 or 2). You can either ask for an edge id or for the existence of an edge between a source & a target."));
-          }, i3.hasEdge = function(t2, e2) {
-            if (1 === arguments.length) {
-              var n3 = "" + t2;
-              return this._edges.has(n3);
-            }
-            if (2 === arguments.length) {
-              t2 = "" + t2, e2 = "" + e2;
-              var r3 = this._nodes.get(t2);
-              return !!r3 && (void 0 !== r3.out && r3.out.hasOwnProperty(e2) || void 0 !== r3.undirected && r3.undirected.hasOwnProperty(e2));
-            }
-            throw new B("Graph.hasEdge: invalid arity (".concat(arguments.length, ", instead of 1 or 2). You can either ask for an edge id or for the existence of an edge between a source & a target."));
-          }, i3.directedEdge = function(t2, e2) {
-            if ("undirected" !== this.type) {
-              if (t2 = "" + t2, e2 = "" + e2, this.multi)
-                throw new I("Graph.directedEdge: this method is irrelevant with multigraphs since there might be multiple edges between source & target. See #.directedEdges instead.");
-              var n3 = this._nodes.get(t2);
-              if (!n3)
-                throw new F('Graph.directedEdge: could not find the "'.concat(t2, '" source node in the graph.'));
-              if (!this._nodes.has(e2))
-                throw new F('Graph.directedEdge: could not find the "'.concat(e2, '" target node in the graph.'));
-              var r3 = n3.out && n3.out[e2] || void 0;
-              return r3 ? r3.key : void 0;
-            }
-          }, i3.undirectedEdge = function(t2, e2) {
-            if ("directed" !== this.type) {
-              if (t2 = "" + t2, e2 = "" + e2, this.multi)
-                throw new I("Graph.undirectedEdge: this method is irrelevant with multigraphs since there might be multiple edges between source & target. See #.undirectedEdges instead.");
-              var n3 = this._nodes.get(t2);
-              if (!n3)
-                throw new F('Graph.undirectedEdge: could not find the "'.concat(t2, '" source node in the graph.'));
-              if (!this._nodes.has(e2))
-                throw new F('Graph.undirectedEdge: could not find the "'.concat(e2, '" target node in the graph.'));
-              var r3 = n3.undirected && n3.undirected[e2] || void 0;
-              return r3 ? r3.key : void 0;
-            }
-          }, i3.edge = function(t2, e2) {
-            if (this.multi)
-              throw new I("Graph.edge: this method is irrelevant with multigraphs since there might be multiple edges between source & target. See #.edges instead.");
-            t2 = "" + t2, e2 = "" + e2;
-            var n3 = this._nodes.get(t2);
-            if (!n3)
-              throw new F('Graph.edge: could not find the "'.concat(t2, '" source node in the graph.'));
-            if (!this._nodes.has(e2))
-              throw new F('Graph.edge: could not find the "'.concat(e2, '" target node in the graph.'));
-            var r3 = n3.out && n3.out[e2] || n3.undirected && n3.undirected[e2] || void 0;
-            if (r3)
-              return r3.key;
-          }, i3.areDirectedNeighbors = function(t2, e2) {
-            t2 = "" + t2, e2 = "" + e2;
-            var n3 = this._nodes.get(t2);
-            if (!n3)
-              throw new F('Graph.areDirectedNeighbors: could not find the "'.concat(t2, '" node in the graph.'));
-            return "undirected" !== this.type && (e2 in n3.in || e2 in n3.out);
-          }, i3.areOutNeighbors = function(t2, e2) {
-            t2 = "" + t2, e2 = "" + e2;
-            var n3 = this._nodes.get(t2);
-            if (!n3)
-              throw new F('Graph.areOutNeighbors: could not find the "'.concat(t2, '" node in the graph.'));
-            return "undirected" !== this.type && e2 in n3.out;
-          }, i3.areInNeighbors = function(t2, e2) {
-            t2 = "" + t2, e2 = "" + e2;
-            var n3 = this._nodes.get(t2);
-            if (!n3)
-              throw new F('Graph.areInNeighbors: could not find the "'.concat(t2, '" node in the graph.'));
-            return "undirected" !== this.type && e2 in n3.in;
-          }, i3.areUndirectedNeighbors = function(t2, e2) {
-            t2 = "" + t2, e2 = "" + e2;
-            var n3 = this._nodes.get(t2);
-            if (!n3)
-              throw new F('Graph.areUndirectedNeighbors: could not find the "'.concat(t2, '" node in the graph.'));
-            return "directed" !== this.type && e2 in n3.undirected;
-          }, i3.areNeighbors = function(t2, e2) {
-            t2 = "" + t2, e2 = "" + e2;
-            var n3 = this._nodes.get(t2);
-            if (!n3)
-              throw new F('Graph.areNeighbors: could not find the "'.concat(t2, '" node in the graph.'));
-            return "undirected" !== this.type && (e2 in n3.in || e2 in n3.out) || "directed" !== this.type && e2 in n3.undirected;
-          }, i3.areInboundNeighbors = function(t2, e2) {
-            t2 = "" + t2, e2 = "" + e2;
-            var n3 = this._nodes.get(t2);
-            if (!n3)
-              throw new F('Graph.areInboundNeighbors: could not find the "'.concat(t2, '" node in the graph.'));
-            return "undirected" !== this.type && e2 in n3.in || "directed" !== this.type && e2 in n3.undirected;
-          }, i3.areOutboundNeighbors = function(t2, e2) {
-            t2 = "" + t2, e2 = "" + e2;
-            var n3 = this._nodes.get(t2);
-            if (!n3)
-              throw new F('Graph.areOutboundNeighbors: could not find the "'.concat(t2, '" node in the graph.'));
-            return "undirected" !== this.type && e2 in n3.out || "directed" !== this.type && e2 in n3.undirected;
-          }, i3.inDegree = function(t2) {
-            t2 = "" + t2;
-            var e2 = this._nodes.get(t2);
-            if (!e2)
-              throw new F('Graph.inDegree: could not find the "'.concat(t2, '" node in the graph.'));
-            return "undirected" === this.type ? 0 : e2.inDegree;
-          }, i3.outDegree = function(t2) {
-            t2 = "" + t2;
-            var e2 = this._nodes.get(t2);
-            if (!e2)
-              throw new F('Graph.outDegree: could not find the "'.concat(t2, '" node in the graph.'));
-            return "undirected" === this.type ? 0 : e2.outDegree;
-          }, i3.directedDegree = function(t2) {
-            t2 = "" + t2;
-            var e2 = this._nodes.get(t2);
-            if (!e2)
-              throw new F('Graph.directedDegree: could not find the "'.concat(t2, '" node in the graph.'));
-            return "undirected" === this.type ? 0 : e2.inDegree + e2.outDegree;
-          }, i3.undirectedDegree = function(t2) {
-            t2 = "" + t2;
-            var e2 = this._nodes.get(t2);
-            if (!e2)
-              throw new F('Graph.undirectedDegree: could not find the "'.concat(t2, '" node in the graph.'));
-            return "directed" === this.type ? 0 : e2.undirectedDegree;
-          }, i3.inboundDegree = function(t2) {
-            t2 = "" + t2;
-            var e2 = this._nodes.get(t2);
-            if (!e2)
-              throw new F('Graph.inboundDegree: could not find the "'.concat(t2, '" node in the graph.'));
-            var n3 = 0;
-            return "directed" !== this.type && (n3 += e2.undirectedDegree), "undirected" !== this.type && (n3 += e2.inDegree), n3;
-          }, i3.outboundDegree = function(t2) {
-            t2 = "" + t2;
-            var e2 = this._nodes.get(t2);
-            if (!e2)
-              throw new F('Graph.outboundDegree: could not find the "'.concat(t2, '" node in the graph.'));
-            var n3 = 0;
-            return "directed" !== this.type && (n3 += e2.undirectedDegree), "undirected" !== this.type && (n3 += e2.outDegree), n3;
-          }, i3.degree = function(t2) {
-            t2 = "" + t2;
-            var e2 = this._nodes.get(t2);
-            if (!e2)
-              throw new F('Graph.degree: could not find the "'.concat(t2, '" node in the graph.'));
-            var n3 = 0;
-            return "directed" !== this.type && (n3 += e2.undirectedDegree), "undirected" !== this.type && (n3 += e2.inDegree + e2.outDegree), n3;
-          }, i3.inDegreeWithoutSelfLoops = function(t2) {
-            t2 = "" + t2;
-            var e2 = this._nodes.get(t2);
-            if (!e2)
-              throw new F('Graph.inDegreeWithoutSelfLoops: could not find the "'.concat(t2, '" node in the graph.'));
-            return "undirected" === this.type ? 0 : e2.inDegree - e2.directedLoops;
-          }, i3.outDegreeWithoutSelfLoops = function(t2) {
-            t2 = "" + t2;
-            var e2 = this._nodes.get(t2);
-            if (!e2)
-              throw new F('Graph.outDegreeWithoutSelfLoops: could not find the "'.concat(t2, '" node in the graph.'));
-            return "undirected" === this.type ? 0 : e2.outDegree - e2.directedLoops;
-          }, i3.directedDegreeWithoutSelfLoops = function(t2) {
-            t2 = "" + t2;
-            var e2 = this._nodes.get(t2);
-            if (!e2)
-              throw new F('Graph.directedDegreeWithoutSelfLoops: could not find the "'.concat(t2, '" node in the graph.'));
-            return "undirected" === this.type ? 0 : e2.inDegree + e2.outDegree - 2 * e2.directedLoops;
-          }, i3.undirectedDegreeWithoutSelfLoops = function(t2) {
-            t2 = "" + t2;
-            var e2 = this._nodes.get(t2);
-            if (!e2)
-              throw new F('Graph.undirectedDegreeWithoutSelfLoops: could not find the "'.concat(t2, '" node in the graph.'));
-            return "directed" === this.type ? 0 : e2.undirectedDegree - 2 * e2.undirectedLoops;
-          }, i3.inboundDegreeWithoutSelfLoops = function(t2) {
-            t2 = "" + t2;
-            var e2 = this._nodes.get(t2);
-            if (!e2)
-              throw new F('Graph.inboundDegreeWithoutSelfLoops: could not find the "'.concat(t2, '" node in the graph.'));
-            var n3 = 0, r3 = 0;
-            return "directed" !== this.type && (n3 += e2.undirectedDegree, r3 += 2 * e2.undirectedLoops), "undirected" !== this.type && (n3 += e2.inDegree, r3 += e2.directedLoops), n3 - r3;
-          }, i3.outboundDegreeWithoutSelfLoops = function(t2) {
-            t2 = "" + t2;
-            var e2 = this._nodes.get(t2);
-            if (!e2)
-              throw new F('Graph.outboundDegreeWithoutSelfLoops: could not find the "'.concat(t2, '" node in the graph.'));
-            var n3 = 0, r3 = 0;
-            return "directed" !== this.type && (n3 += e2.undirectedDegree, r3 += 2 * e2.undirectedLoops), "undirected" !== this.type && (n3 += e2.outDegree, r3 += e2.directedLoops), n3 - r3;
-          }, i3.degreeWithoutSelfLoops = function(t2) {
-            t2 = "" + t2;
-            var e2 = this._nodes.get(t2);
-            if (!e2)
-              throw new F('Graph.degreeWithoutSelfLoops: could not find the "'.concat(t2, '" node in the graph.'));
-            var n3 = 0, r3 = 0;
-            return "directed" !== this.type && (n3 += e2.undirectedDegree, r3 += 2 * e2.undirectedLoops), "undirected" !== this.type && (n3 += e2.inDegree + e2.outDegree, r3 += 2 * e2.directedLoops), n3 - r3;
-          }, i3.source = function(t2) {
-            t2 = "" + t2;
-            var e2 = this._edges.get(t2);
-            if (!e2)
-              throw new F('Graph.source: could not find the "'.concat(t2, '" edge in the graph.'));
-            return e2.source.key;
-          }, i3.target = function(t2) {
-            t2 = "" + t2;
-            var e2 = this._edges.get(t2);
-            if (!e2)
-              throw new F('Graph.target: could not find the "'.concat(t2, '" edge in the graph.'));
-            return e2.target.key;
-          }, i3.extremities = function(t2) {
-            t2 = "" + t2;
-            var e2 = this._edges.get(t2);
-            if (!e2)
-              throw new F('Graph.extremities: could not find the "'.concat(t2, '" edge in the graph.'));
-            return [e2.source.key, e2.target.key];
-          }, i3.opposite = function(t2, e2) {
-            t2 = "" + t2, e2 = "" + e2;
-            var n3 = this._edges.get(e2);
-            if (!n3)
-              throw new F('Graph.opposite: could not find the "'.concat(e2, '" edge in the graph.'));
-            var r3 = n3.source.key, i4 = n3.target.key;
-            if (t2 === r3)
-              return i4;
-            if (t2 === i4)
-              return r3;
-            throw new F('Graph.opposite: the "'.concat(t2, '" node is not attached to the "').concat(e2, '" edge (').concat(r3, ", ").concat(i4, ")."));
-          }, i3.hasExtremity = function(t2, e2) {
-            t2 = "" + t2, e2 = "" + e2;
-            var n3 = this._edges.get(t2);
-            if (!n3)
-              throw new F('Graph.hasExtremity: could not find the "'.concat(t2, '" edge in the graph.'));
-            return n3.source.key === e2 || n3.target.key === e2;
-          }, i3.isUndirected = function(t2) {
-            t2 = "" + t2;
-            var e2 = this._edges.get(t2);
-            if (!e2)
-              throw new F('Graph.isUndirected: could not find the "'.concat(t2, '" edge in the graph.'));
-            return e2.undirected;
-          }, i3.isDirected = function(t2) {
-            t2 = "" + t2;
-            var e2 = this._edges.get(t2);
-            if (!e2)
-              throw new F('Graph.isDirected: could not find the "'.concat(t2, '" edge in the graph.'));
-            return !e2.undirected;
-          }, i3.isSelfLoop = function(t2) {
-            t2 = "" + t2;
-            var e2 = this._edges.get(t2);
-            if (!e2)
-              throw new F('Graph.isSelfLoop: could not find the "'.concat(t2, '" edge in the graph.'));
-            return e2.source === e2.target;
-          }, i3.addNode = function(t2, e2) {
-            var n3 = function(t3, e3, n4) {
-              if (n4 && !s(n4))
-                throw new B('Graph.addNode: invalid attributes. Expecting an object but got "'.concat(n4, '"'));
-              if (e3 = "" + e3, n4 = n4 || {}, t3._nodes.has(e3))
-                throw new I('Graph.addNode: the "'.concat(e3, '" node already exist in the graph.'));
-              var r3 = new t3.NodeDataClass(e3, n4);
-              return t3._nodes.set(e3, r3), t3.emit("nodeAdded", { key: e3, attributes: n4 }), r3;
-            }(this, t2, e2);
-            return n3.key;
-          }, i3.mergeNode = function(t2, e2) {
-            if (e2 && !s(e2))
-              throw new B('Graph.mergeNode: invalid attributes. Expecting an object but got "'.concat(e2, '"'));
-            t2 = "" + t2, e2 = e2 || {};
-            var n3 = this._nodes.get(t2);
-            return n3 ? (e2 && (u(n3.attributes, e2), this.emit("nodeAttributesUpdated", { type: "merge", key: t2, attributes: n3.attributes, data: e2 })), [t2, false]) : (n3 = new this.NodeDataClass(t2, e2), this._nodes.set(t2, n3), this.emit("nodeAdded", { key: t2, attributes: e2 }), [t2, true]);
-          }, i3.updateNode = function(t2, e2) {
-            if (e2 && "function" != typeof e2)
-              throw new B('Graph.updateNode: invalid updater function. Expecting a function but got "'.concat(e2, '"'));
-            t2 = "" + t2;
-            var n3 = this._nodes.get(t2);
-            if (n3) {
-              if (e2) {
-                var r3 = n3.attributes;
-                n3.attributes = e2(r3), this.emit("nodeAttributesUpdated", { type: "replace", key: t2, attributes: n3.attributes });
-              }
-              return [t2, false];
-            }
-            var i4 = e2 ? e2({}) : {};
-            return n3 = new this.NodeDataClass(t2, i4), this._nodes.set(t2, n3), this.emit("nodeAdded", { key: t2, attributes: i4 }), [t2, true];
-          }, i3.dropNode = function(t2) {
-            t2 = "" + t2;
-            var e2, n3 = this._nodes.get(t2);
-            if (!n3)
-              throw new F('Graph.dropNode: could not find the "'.concat(t2, '" node in the graph.'));
-            if ("undirected" !== this.type) {
-              for (var r3 in n3.out) {
-                e2 = n3.out[r3];
-                do {
-                  Mt(this, e2), e2 = e2.next;
-                } while (e2);
-              }
-              for (var i4 in n3.in) {
-                e2 = n3.in[i4];
-                do {
-                  Mt(this, e2), e2 = e2.next;
-                } while (e2);
-              }
-            }
-            if ("directed" !== this.type)
-              for (var o3 in n3.undirected) {
-                e2 = n3.undirected[o3];
-                do {
-                  Mt(this, e2), e2 = e2.next;
-                } while (e2);
-              }
-            this._nodes.delete(t2), this.emit("nodeDropped", { key: t2, attributes: n3.attributes });
-          }, i3.dropEdge = function(t2) {
-            var e2;
-            if (arguments.length > 1) {
-              var n3 = "" + arguments[0], r3 = "" + arguments[1];
-              if (!(e2 = d(this, n3, r3, this.type)))
-                throw new F('Graph.dropEdge: could not find the "'.concat(n3, '" -> "').concat(r3, '" edge in the graph.'));
-            } else if (t2 = "" + t2, !(e2 = this._edges.get(t2)))
-              throw new F('Graph.dropEdge: could not find the "'.concat(t2, '" edge in the graph.'));
-            return Mt(this, e2), this;
-          }, i3.dropDirectedEdge = function(t2, e2) {
-            if (arguments.length < 2)
-              throw new I("Graph.dropDirectedEdge: it does not make sense to try and drop a directed edge by key. What if the edge with this key is undirected? Use #.dropEdge for this purpose instead.");
-            if (this.multi)
-              throw new I("Graph.dropDirectedEdge: cannot use a {source,target} combo when dropping an edge in a MultiGraph since we cannot infer the one you want to delete as there could be multiple ones.");
-            var n3 = d(this, t2 = "" + t2, e2 = "" + e2, "directed");
-            if (!n3)
-              throw new F('Graph.dropDirectedEdge: could not find a "'.concat(t2, '" -> "').concat(e2, '" edge in the graph.'));
-            return Mt(this, n3), this;
-          }, i3.dropUndirectedEdge = function(t2, e2) {
-            if (arguments.length < 2)
-              throw new I("Graph.dropUndirectedEdge: it does not make sense to drop a directed edge by key. What if the edge with this key is undirected? Use #.dropEdge for this purpose instead.");
-            if (this.multi)
-              throw new I("Graph.dropUndirectedEdge: cannot use a {source,target} combo when dropping an edge in a MultiGraph since we cannot infer the one you want to delete as there could be multiple ones.");
-            var n3 = d(this, t2, e2, "undirected");
-            if (!n3)
-              throw new F('Graph.dropUndirectedEdge: could not find a "'.concat(t2, '" -> "').concat(e2, '" edge in the graph.'));
-            return Mt(this, n3), this;
-          }, i3.clear = function() {
-            this._edges.clear(), this._nodes.clear(), this._resetInstanceCounters(), this.emit("cleared");
-          }, i3.clearEdges = function() {
-            for (var t2, e2 = this._nodes.values(); true !== (t2 = e2.next()).done; )
-              t2.value.clear();
-            this._edges.clear(), this._resetInstanceCounters(), this.emit("edgesCleared");
-          }, i3.getAttribute = function(t2) {
-            return this._attributes[t2];
-          }, i3.getAttributes = function() {
-            return this._attributes;
-          }, i3.hasAttribute = function(t2) {
-            return this._attributes.hasOwnProperty(t2);
-          }, i3.setAttribute = function(t2, e2) {
-            return this._attributes[t2] = e2, this.emit("attributesUpdated", { type: "set", attributes: this._attributes, name: t2 }), this;
-          }, i3.updateAttribute = function(t2, e2) {
-            if ("function" != typeof e2)
-              throw new B("Graph.updateAttribute: updater should be a function.");
-            var n3 = this._attributes[t2];
-            return this._attributes[t2] = e2(n3), this.emit("attributesUpdated", { type: "set", attributes: this._attributes, name: t2 }), this;
-          }, i3.removeAttribute = function(t2) {
-            return delete this._attributes[t2], this.emit("attributesUpdated", { type: "remove", attributes: this._attributes, name: t2 }), this;
-          }, i3.replaceAttributes = function(t2) {
-            if (!s(t2))
-              throw new B("Graph.replaceAttributes: provided attributes are not a plain object.");
-            return this._attributes = t2, this.emit("attributesUpdated", { type: "replace", attributes: this._attributes }), this;
-          }, i3.mergeAttributes = function(t2) {
-            if (!s(t2))
-              throw new B("Graph.mergeAttributes: provided attributes are not a plain object.");
-            return u(this._attributes, t2), this.emit("attributesUpdated", { type: "merge", attributes: this._attributes, data: t2 }), this;
-          }, i3.updateAttributes = function(t2) {
-            if ("function" != typeof t2)
-              throw new B("Graph.updateAttributes: provided updater is not a function.");
-            return this._attributes = t2(this._attributes), this.emit("attributesUpdated", { type: "update", attributes: this._attributes }), this;
-          }, i3.updateEachNodeAttributes = function(t2, e2) {
-            if ("function" != typeof t2)
-              throw new B("Graph.updateEachNodeAttributes: expecting an updater function.");
-            if (e2 && !l(e2))
-              throw new B("Graph.updateEachNodeAttributes: invalid hints. Expecting an object having the following shape: {attributes?: [string]}");
-            for (var n3, r3, i4 = this._nodes.values(); true !== (n3 = i4.next()).done; )
-              (r3 = n3.value).attributes = t2(r3.key, r3.attributes);
-            this.emit("eachNodeAttributesUpdated", { hints: e2 || null });
-          }, i3.updateEachEdgeAttributes = function(t2, e2) {
-            if ("function" != typeof t2)
-              throw new B("Graph.updateEachEdgeAttributes: expecting an updater function.");
-            if (e2 && !l(e2))
-              throw new B("Graph.updateEachEdgeAttributes: invalid hints. Expecting an object having the following shape: {attributes?: [string]}");
-            for (var n3, r3, i4, o3, a3 = this._edges.values(); true !== (n3 = a3.next()).done; )
-              i4 = (r3 = n3.value).source, o3 = r3.target, r3.attributes = t2(r3.key, r3.attributes, i4.key, o3.key, i4.attributes, o3.attributes, r3.undirected);
-            this.emit("eachEdgeAttributesUpdated", { hints: e2 || null });
-          }, i3.forEachAdjacencyEntry = function(t2) {
-            if ("function" != typeof t2)
-              throw new B("Graph.forEachAdjacencyEntry: expecting a callback.");
-            xt(false, false, false, this, t2);
-          }, i3.forEachAdjacencyEntryWithOrphans = function(t2) {
-            if ("function" != typeof t2)
-              throw new B("Graph.forEachAdjacencyEntryWithOrphans: expecting a callback.");
-            xt(false, false, true, this, t2);
-          }, i3.forEachAssymetricAdjacencyEntry = function(t2) {
-            if ("function" != typeof t2)
-              throw new B("Graph.forEachAssymetricAdjacencyEntry: expecting a callback.");
-            xt(false, true, false, this, t2);
-          }, i3.forEachAssymetricAdjacencyEntryWithOrphans = function(t2) {
-            if ("function" != typeof t2)
-              throw new B("Graph.forEachAssymetricAdjacencyEntryWithOrphans: expecting a callback.");
-            xt(false, true, true, this, t2);
-          }, i3.nodes = function() {
-            return "function" == typeof Array.from ? Array.from(this._nodes.keys()) : K(this._nodes.keys(), this._nodes.size);
-          }, i3.forEachNode = function(t2) {
-            if ("function" != typeof t2)
-              throw new B("Graph.forEachNode: expecting a callback.");
-            for (var e2, n3, r3 = this._nodes.values(); true !== (e2 = r3.next()).done; )
-              t2((n3 = e2.value).key, n3.attributes);
-          }, i3.findNode = function(t2) {
-            if ("function" != typeof t2)
-              throw new B("Graph.findNode: expecting a callback.");
-            for (var e2, n3, r3 = this._nodes.values(); true !== (e2 = r3.next()).done; )
-              if (t2((n3 = e2.value).key, n3.attributes))
-                return n3.key;
-          }, i3.mapNodes = function(t2) {
-            if ("function" != typeof t2)
-              throw new B("Graph.mapNode: expecting a callback.");
-            for (var e2, n3, r3 = this._nodes.values(), i4 = new Array(this.order), o3 = 0; true !== (e2 = r3.next()).done; )
-              n3 = e2.value, i4[o3++] = t2(n3.key, n3.attributes);
-            return i4;
-          }, i3.someNode = function(t2) {
-            if ("function" != typeof t2)
-              throw new B("Graph.someNode: expecting a callback.");
-            for (var e2, n3, r3 = this._nodes.values(); true !== (e2 = r3.next()).done; )
-              if (t2((n3 = e2.value).key, n3.attributes))
-                return true;
-            return false;
-          }, i3.everyNode = function(t2) {
-            if ("function" != typeof t2)
-              throw new B("Graph.everyNode: expecting a callback.");
-            for (var e2, n3, r3 = this._nodes.values(); true !== (e2 = r3.next()).done; )
-              if (!t2((n3 = e2.value).key, n3.attributes))
-                return false;
-            return true;
-          }, i3.filterNodes = function(t2) {
-            if ("function" != typeof t2)
-              throw new B("Graph.filterNodes: expecting a callback.");
-            for (var e2, n3, r3 = this._nodes.values(), i4 = []; true !== (e2 = r3.next()).done; )
-              t2((n3 = e2.value).key, n3.attributes) && i4.push(n3.key);
-            return i4;
-          }, i3.reduceNodes = function(t2, e2) {
-            if ("function" != typeof t2)
-              throw new B("Graph.reduceNodes: expecting a callback.");
-            if (arguments.length < 2)
-              throw new B("Graph.reduceNodes: missing initial value. You must provide it because the callback takes more than one argument and we cannot infer the initial value from the first iteration, as you could with a simple array.");
-            for (var n3, r3, i4 = e2, o3 = this._nodes.values(); true !== (n3 = o3.next()).done; )
-              i4 = t2(i4, (r3 = n3.value).key, r3.attributes);
-            return i4;
-          }, i3.nodeEntries = function() {
-            var t2 = this._nodes.values();
-            return new O(function() {
-              var e2 = t2.next();
-              if (e2.done)
-                return e2;
-              var n3 = e2.value;
-              return { value: { node: n3.key, attributes: n3.attributes }, done: false };
-            });
-          }, i3.export = function() {
-            var t2 = this, e2 = new Array(this._nodes.size), n3 = 0;
-            this._nodes.forEach(function(t3, r4) {
-              e2[n3++] = function(t4, e3) {
-                var n4 = { key: t4 };
-                return h(e3.attributes) || (n4.attributes = u({}, e3.attributes)), n4;
-              }(r4, t3);
-            });
-            var r3 = new Array(this._edges.size);
-            return n3 = 0, this._edges.forEach(function(e3, i4) {
-              r3[n3++] = function(t3, e4, n4) {
-                var r4 = { key: e4, source: n4.source.key, target: n4.target.key };
-                return h(n4.attributes) || (r4.attributes = u({}, n4.attributes)), "mixed" === t3 && n4.undirected && (r4.undirected = true), r4;
-              }(t2.type, i4, e3);
-            }), { options: { type: this.type, multi: this.multi, allowSelfLoops: this.allowSelfLoops }, attributes: this.getAttributes(), nodes: e2, edges: r3 };
-          }, i3.import = function(t2) {
-            var e2, n3, i4, o3, a3, c2 = this, u2 = arguments.length > 1 && void 0 !== arguments[1] && arguments[1];
-            if (t2 instanceof r2)
-              return t2.forEachNode(function(t3, e3) {
-                u2 ? c2.mergeNode(t3, e3) : c2.addNode(t3, e3);
-              }), t2.forEachEdge(function(t3, e3, n4, r3, i5, o4, a4) {
-                u2 ? a4 ? c2.mergeUndirectedEdgeWithKey(t3, n4, r3, e3) : c2.mergeDirectedEdgeWithKey(t3, n4, r3, e3) : a4 ? c2.addUndirectedEdgeWithKey(t3, n4, r3, e3) : c2.addDirectedEdgeWithKey(t3, n4, r3, e3);
-              }), this;
-            if (!s(t2))
-              throw new B("Graph.import: invalid argument. Expecting a serialized graph or, alternatively, a Graph instance.");
-            if (t2.attributes) {
-              if (!s(t2.attributes))
-                throw new B("Graph.import: invalid attributes. Expecting a plain object.");
-              u2 ? this.mergeAttributes(t2.attributes) : this.replaceAttributes(t2.attributes);
-            }
-            if (t2.nodes) {
-              if (i4 = t2.nodes, !Array.isArray(i4))
-                throw new B("Graph.import: invalid nodes. Expecting an array.");
-              for (e2 = 0, n3 = i4.length; e2 < n3; e2++) {
-                Et(o3 = i4[e2]);
-                var d2 = o3, h2 = d2.key, p2 = d2.attributes;
-                u2 ? this.mergeNode(h2, p2) : this.addNode(h2, p2);
-              }
-            }
-            if (t2.edges) {
-              var f2 = false;
-              if ("undirected" === this.type && (f2 = true), i4 = t2.edges, !Array.isArray(i4))
-                throw new B("Graph.import: invalid edges. Expecting an array.");
-              for (e2 = 0, n3 = i4.length; e2 < n3; e2++) {
-                At(a3 = i4[e2]);
-                var l2 = a3, g2 = l2.source, y2 = l2.target, w2 = l2.attributes, v2 = l2.undirected, b2 = void 0 === v2 ? f2 : v2;
-                "key" in a3 ? (u2 ? b2 ? this.mergeUndirectedEdgeWithKey : this.mergeDirectedEdgeWithKey : b2 ? this.addUndirectedEdgeWithKey : this.addDirectedEdgeWithKey).call(this, a3.key, g2, y2, w2) : (u2 ? b2 ? this.mergeUndirectedEdge : this.mergeDirectedEdge : b2 ? this.addUndirectedEdge : this.addDirectedEdge).call(this, g2, y2, w2);
-              }
-            }
+        if (typeof Symbol !== "undefined")
+          Iterator$2.prototype[Symbol.iterator] = function() {
             return this;
-          }, i3.nullCopy = function(t2) {
-            var e2 = new r2(u({}, this._options, t2));
-            return e2.replaceAttributes(u({}, this.getAttributes())), e2;
-          }, i3.emptyCopy = function(t2) {
-            var e2 = this.nullCopy(t2);
-            return this._nodes.forEach(function(t3, n3) {
-              var r3 = u({}, t3.attributes);
-              t3 = new e2.NodeDataClass(n3, r3), e2._nodes.set(n3, t3);
-            }), e2;
-          }, i3.copy = function(t2) {
-            if ("string" == typeof (t2 = t2 || {}).type && t2.type !== this.type && "mixed" !== t2.type)
-              throw new I('Graph.copy: cannot create an incompatible copy from "'.concat(this.type, '" type to "').concat(t2.type, '" because this would mean losing information about the current graph.'));
-            if ("boolean" == typeof t2.multi && t2.multi !== this.multi && true !== t2.multi)
-              throw new I("Graph.copy: cannot create an incompatible copy by downgrading a multi graph to a simple one because this would mean losing information about the current graph.");
-            if ("boolean" == typeof t2.allowSelfLoops && t2.allowSelfLoops !== this.allowSelfLoops && true !== t2.allowSelfLoops)
-              throw new I("Graph.copy: cannot create an incompatible copy from a graph allowing self loops to one that does not because this would mean losing information about the current graph.");
-            for (var e2, n3, r3 = this.emptyCopy(t2), i4 = this._edges.values(); true !== (e2 = i4.next()).done; )
-              jt(r3, "copy", false, (n3 = e2.value).undirected, n3.key, n3.source.key, n3.target.key, u({}, n3.attributes));
-            return r3;
-          }, i3.toJSON = function() {
-            return this.export();
-          }, i3.toString = function() {
-            return "[object Graph]";
-          }, i3.inspect = function() {
-            var e2 = this, n3 = {};
-            this._nodes.forEach(function(t2, e3) {
-              n3[e3] = t2.attributes;
-            });
-            var r3 = {}, i4 = {};
-            this._edges.forEach(function(t2, n4) {
-              var o4, a4 = t2.undirected ? "--" : "->", c2 = "", u2 = t2.source.key, d2 = t2.target.key;
-              t2.undirected && u2 > d2 && (o4 = u2, u2 = d2, d2 = o4);
-              var s2 = "(".concat(u2, ")").concat(a4, "(").concat(d2, ")");
-              n4.startsWith("geid_") ? e2.multi && (void 0 === i4[s2] ? i4[s2] = 0 : i4[s2]++, c2 += "".concat(i4[s2], ". ")) : c2 += "[".concat(n4, "]: "), r3[c2 += s2] = t2.attributes;
-            });
-            var o3 = {};
-            for (var a3 in this)
-              this.hasOwnProperty(a3) && !Ut.has(a3) && "function" != typeof this[a3] && "symbol" !== t(a3) && (o3[a3] = this[a3]);
-            return o3.attributes = this._attributes, o3.nodes = n3, o3.edges = r3, p(o3, "constructor", this.constructor), o3;
-          }, r2;
-        }(y.exports.EventEmitter);
-        "undefined" != typeof Symbol && (zt.prototype[Symbol.for("nodejs.util.inspect.custom")] = zt.prototype.inspect), [{ name: function(t2) {
-          return "".concat(t2, "Edge");
-        }, generateKey: true }, { name: function(t2) {
-          return "".concat(t2, "DirectedEdge");
-        }, generateKey: true, type: "directed" }, { name: function(t2) {
-          return "".concat(t2, "UndirectedEdge");
-        }, generateKey: true, type: "undirected" }, { name: function(t2) {
-          return "".concat(t2, "EdgeWithKey");
-        } }, { name: function(t2) {
-          return "".concat(t2, "DirectedEdgeWithKey");
-        }, type: "directed" }, { name: function(t2) {
-          return "".concat(t2, "UndirectedEdgeWithKey");
-        }, type: "undirected" }].forEach(function(t2) {
-          ["add", "merge", "update"].forEach(function(e2) {
-            var n2 = t2.name(e2), r2 = "add" === e2 ? jt : Ct;
-            t2.generateKey ? zt.prototype[n2] = function(i3, o3, a3) {
-              return r2(this, n2, true, "undirected" === (t2.type || this.type), null, i3, o3, a3, "update" === e2);
-            } : zt.prototype[n2] = function(i3, o3, a3, c2) {
-              return r2(this, n2, false, "undirected" === (t2.type || this.type), i3, o3, a3, c2, "update" === e2);
+          };
+        Iterator$2.of = function() {
+          var args = arguments, l = args.length, i2 = 0;
+          return new Iterator$2(function() {
+            if (i2 >= l)
+              return {
+                done: true
+              };
+            return {
+              done: false,
+              value: args[i2++]
             };
           });
-        }), function(t2) {
-          Q.forEach(function(e2) {
-            var n2 = e2.name, r2 = e2.attacher;
-            r2(t2, n2("Node"), 0), r2(t2, n2("Source"), 1), r2(t2, n2("Target"), 2), r2(t2, n2("Opposite"), 3);
+        };
+        Iterator$2.empty = function() {
+          var iterator2 = new Iterator$2(function() {
+            return {
+              done: true
+            };
           });
-        }(zt), function(t2) {
-          X.forEach(function(e2) {
-            var n2 = e2.name, r2 = e2.attacher;
-            r2(t2, n2("Edge"), "mixed"), r2(t2, n2("DirectedEdge"), "directed"), r2(t2, n2("UndirectedEdge"), "undirected");
+          return iterator2;
+        };
+        Iterator$2.fromSequence = function(sequence) {
+          var i2 = 0, l = sequence.length;
+          return new Iterator$2(function() {
+            if (i2 >= l)
+              return {
+                done: true
+              };
+            return {
+              done: false,
+              value: sequence[i2++]
+            };
           });
-        }(zt), function(t2) {
-          et.forEach(function(e2) {
-            !function(t3, e3) {
-              var n2 = e3.name, r2 = e3.type, i3 = e3.direction;
-              t3.prototype[n2] = function(t4, e4) {
-                if ("mixed" !== r2 && "mixed" !== this.type && r2 !== this.type)
-                  return [];
-                if (!arguments.length)
-                  return ut(this, r2);
-                if (1 === arguments.length) {
-                  t4 = "" + t4;
-                  var o3 = this._nodes.get(t4);
-                  if (void 0 === o3)
-                    throw new F("Graph.".concat(n2, ': could not find the "').concat(t4, '" node in the graph.'));
-                  return pt(this.multi, "mixed" === r2 ? this.type : r2, i3, o3);
-                }
-                if (2 === arguments.length) {
-                  t4 = "" + t4, e4 = "" + e4;
-                  var a3 = this._nodes.get(t4);
-                  if (!a3)
-                    throw new F("Graph.".concat(n2, ':  could not find the "').concat(t4, '" source node in the graph.'));
-                  if (!this._nodes.has(e4))
-                    throw new F("Graph.".concat(n2, ':  could not find the "').concat(e4, '" target node in the graph.'));
-                  return gt(r2, this.multi, i3, a3, e4);
-                }
-                throw new B("Graph.".concat(n2, ": too many arguments (expecting 0, 1 or 2 and got ").concat(arguments.length, ")."));
-              };
-            }(t2, e2), function(t3, e3) {
-              var n2 = e3.name, r2 = e3.type, i3 = e3.direction, o3 = "forEach" + n2[0].toUpperCase() + n2.slice(1, -1);
-              t3.prototype[o3] = function(t4, e4, n3) {
-                if ("mixed" === r2 || "mixed" === this.type || r2 === this.type) {
-                  if (1 === arguments.length)
-                    return dt(false, this, r2, n3 = t4);
-                  if (2 === arguments.length) {
-                    t4 = "" + t4, n3 = e4;
-                    var a4 = this._nodes.get(t4);
-                    if (void 0 === a4)
-                      throw new F("Graph.".concat(o3, ': could not find the "').concat(t4, '" node in the graph.'));
-                    return ht(false, this.multi, "mixed" === r2 ? this.type : r2, i3, a4, n3);
-                  }
-                  if (3 === arguments.length) {
-                    t4 = "" + t4, e4 = "" + e4;
-                    var c3 = this._nodes.get(t4);
-                    if (!c3)
-                      throw new F("Graph.".concat(o3, ':  could not find the "').concat(t4, '" source node in the graph.'));
-                    if (!this._nodes.has(e4))
-                      throw new F("Graph.".concat(o3, ':  could not find the "').concat(e4, '" target node in the graph.'));
-                    return lt(false, r2, this.multi, i3, c3, e4, n3);
-                  }
-                  throw new B("Graph.".concat(o3, ": too many arguments (expecting 1, 2 or 3 and got ").concat(arguments.length, ")."));
-                }
-              };
-              var a3 = "map" + n2[0].toUpperCase() + n2.slice(1);
-              t3.prototype[a3] = function() {
-                var t4, e4 = Array.prototype.slice.call(arguments), n3 = e4.pop();
-                if (0 === e4.length) {
-                  var i4 = 0;
-                  "directed" !== r2 && (i4 += this.undirectedSize), "undirected" !== r2 && (i4 += this.directedSize), t4 = new Array(i4);
-                  var a4 = 0;
-                  e4.push(function(e5, r3, i5, o4, c3, u3, d2) {
-                    t4[a4++] = n3(e5, r3, i5, o4, c3, u3, d2);
-                  });
-                } else
-                  t4 = [], e4.push(function(e5, r3, i5, o4, a5, c3, u3) {
-                    t4.push(n3(e5, r3, i5, o4, a5, c3, u3));
-                  });
-                return this[o3].apply(this, e4), t4;
-              };
-              var c2 = "filter" + n2[0].toUpperCase() + n2.slice(1);
-              t3.prototype[c2] = function() {
-                var t4 = Array.prototype.slice.call(arguments), e4 = t4.pop(), n3 = [];
-                return t4.push(function(t5, r3, i4, o4, a4, c3, u3) {
-                  e4(t5, r3, i4, o4, a4, c3, u3) && n3.push(t5);
-                }), this[o3].apply(this, t4), n3;
-              };
-              var u2 = "reduce" + n2[0].toUpperCase() + n2.slice(1);
-              t3.prototype[u2] = function() {
-                var t4, e4, n3 = Array.prototype.slice.call(arguments);
-                if (n3.length < 2 || n3.length > 4)
-                  throw new B("Graph.".concat(u2, ": invalid number of arguments (expecting 2, 3 or 4 and got ").concat(n3.length, ")."));
-                if ("function" == typeof n3[n3.length - 1] && "function" != typeof n3[n3.length - 2])
-                  throw new B("Graph.".concat(u2, ": missing initial value. You must provide it because the callback takes more than one argument and we cannot infer the initial value from the first iteration, as you could with a simple array."));
-                2 === n3.length ? (t4 = n3[0], e4 = n3[1], n3 = []) : 3 === n3.length ? (t4 = n3[1], e4 = n3[2], n3 = [n3[0]]) : 4 === n3.length && (t4 = n3[2], e4 = n3[3], n3 = [n3[0], n3[1]]);
-                var r3 = e4;
-                return n3.push(function(e5, n4, i4, o4, a4, c3, u3) {
-                  r3 = t4(r3, e5, n4, i4, o4, a4, c3, u3);
-                }), this[o3].apply(this, n3), r3;
-              };
-            }(t2, e2), function(t3, e3) {
-              var n2 = e3.name, r2 = e3.type, i3 = e3.direction, o3 = "find" + n2[0].toUpperCase() + n2.slice(1, -1);
-              t3.prototype[o3] = function(t4, e4, n3) {
-                if ("mixed" !== r2 && "mixed" !== this.type && r2 !== this.type)
-                  return false;
-                if (1 === arguments.length)
-                  return dt(true, this, r2, n3 = t4);
-                if (2 === arguments.length) {
-                  t4 = "" + t4, n3 = e4;
-                  var a4 = this._nodes.get(t4);
-                  if (void 0 === a4)
-                    throw new F("Graph.".concat(o3, ': could not find the "').concat(t4, '" node in the graph.'));
-                  return ht(true, this.multi, "mixed" === r2 ? this.type : r2, i3, a4, n3);
-                }
-                if (3 === arguments.length) {
-                  t4 = "" + t4, e4 = "" + e4;
-                  var c3 = this._nodes.get(t4);
-                  if (!c3)
-                    throw new F("Graph.".concat(o3, ':  could not find the "').concat(t4, '" source node in the graph.'));
-                  if (!this._nodes.has(e4))
-                    throw new F("Graph.".concat(o3, ':  could not find the "').concat(e4, '" target node in the graph.'));
-                  return lt(true, r2, this.multi, i3, c3, e4, n3);
-                }
-                throw new B("Graph.".concat(o3, ": too many arguments (expecting 1, 2 or 3 and got ").concat(arguments.length, ")."));
-              };
-              var a3 = "some" + n2[0].toUpperCase() + n2.slice(1, -1);
-              t3.prototype[a3] = function() {
-                var t4 = Array.prototype.slice.call(arguments), e4 = t4.pop();
-                return t4.push(function(t5, n3, r3, i4, o4, a4, c3) {
-                  return e4(t5, n3, r3, i4, o4, a4, c3);
-                }), !!this[o3].apply(this, t4);
-              };
-              var c2 = "every" + n2[0].toUpperCase() + n2.slice(1, -1);
-              t3.prototype[c2] = function() {
-                var t4 = Array.prototype.slice.call(arguments), e4 = t4.pop();
-                return t4.push(function(t5, n3, r3, i4, o4, a4, c3) {
-                  return !e4(t5, n3, r3, i4, o4, a4, c3);
-                }), !this[o3].apply(this, t4);
-              };
-            }(t2, e2), function(t3, e3) {
-              var n2 = e3.name, r2 = e3.type, i3 = e3.direction, o3 = n2.slice(0, -1) + "Entries";
-              t3.prototype[o3] = function(t4, e4) {
-                if ("mixed" !== r2 && "mixed" !== this.type && r2 !== this.type)
-                  return O.empty();
-                if (!arguments.length)
-                  return st(this, r2);
-                if (1 === arguments.length) {
-                  t4 = "" + t4;
-                  var n3 = this._nodes.get(t4);
-                  if (!n3)
-                    throw new F("Graph.".concat(o3, ': could not find the "').concat(t4, '" node in the graph.'));
-                  return ft(r2, i3, n3);
-                }
-                if (2 === arguments.length) {
-                  t4 = "" + t4, e4 = "" + e4;
-                  var a3 = this._nodes.get(t4);
-                  if (!a3)
-                    throw new F("Graph.".concat(o3, ':  could not find the "').concat(t4, '" source node in the graph.'));
-                  if (!this._nodes.has(e4))
-                    throw new F("Graph.".concat(o3, ':  could not find the "').concat(e4, '" target node in the graph.'));
-                  return yt(r2, i3, a3, e4);
-                }
-                throw new B("Graph.".concat(o3, ": too many arguments (expecting 0, 1 or 2 and got ").concat(arguments.length, ")."));
-              };
-            }(t2, e2);
-          });
-        }(zt), function(t2) {
-          wt.forEach(function(e2) {
-            _t(t2, e2), function(t3, e3) {
-              var n2 = e3.name, r2 = e3.type, i3 = e3.direction, o3 = "forEach" + n2[0].toUpperCase() + n2.slice(1, -1);
-              t3.prototype[o3] = function(t4, e4) {
-                if ("mixed" === r2 || "mixed" === this.type || r2 === this.type) {
-                  t4 = "" + t4;
-                  var n3 = this._nodes.get(t4);
-                  if (void 0 === n3)
-                    throw new F("Graph.".concat(o3, ': could not find the "').concat(t4, '" node in the graph.'));
-                  mt(false, "mixed" === r2 ? this.type : r2, i3, n3, e4);
-                }
-              };
-              var a3 = "map" + n2[0].toUpperCase() + n2.slice(1);
-              t3.prototype[a3] = function(t4, e4) {
-                var n3 = [];
-                return this[o3](t4, function(t5, r3) {
-                  n3.push(e4(t5, r3));
-                }), n3;
-              };
-              var c2 = "filter" + n2[0].toUpperCase() + n2.slice(1);
-              t3.prototype[c2] = function(t4, e4) {
-                var n3 = [];
-                return this[o3](t4, function(t5, r3) {
-                  e4(t5, r3) && n3.push(t5);
-                }), n3;
-              };
-              var u2 = "reduce" + n2[0].toUpperCase() + n2.slice(1);
-              t3.prototype[u2] = function(t4, e4, n3) {
-                if (arguments.length < 3)
-                  throw new B("Graph.".concat(u2, ": missing initial value. You must provide it because the callback takes more than one argument and we cannot infer the initial value from the first iteration, as you could with a simple array."));
-                var r3 = n3;
-                return this[o3](t4, function(t5, n4) {
-                  r3 = e4(r3, t5, n4);
-                }), r3;
-              };
-            }(t2, e2), function(t3, e3) {
-              var n2 = e3.name, r2 = e3.type, i3 = e3.direction, o3 = n2[0].toUpperCase() + n2.slice(1, -1), a3 = "find" + o3;
-              t3.prototype[a3] = function(t4, e4) {
-                if ("mixed" === r2 || "mixed" === this.type || r2 === this.type) {
-                  t4 = "" + t4;
-                  var n3 = this._nodes.get(t4);
-                  if (void 0 === n3)
-                    throw new F("Graph.".concat(a3, ': could not find the "').concat(t4, '" node in the graph.'));
-                  return mt(true, "mixed" === r2 ? this.type : r2, i3, n3, e4);
-                }
-              };
-              var c2 = "some" + o3;
-              t3.prototype[c2] = function(t4, e4) {
-                return !!this[a3](t4, e4);
-              };
-              var u2 = "every" + o3;
-              t3.prototype[u2] = function(t4, e4) {
-                return !this[a3](t4, function(t5, n3) {
-                  return !e4(t5, n3);
-                });
-              };
-            }(t2, e2), Gt(t2, e2);
-          });
-        }(zt);
-        var Wt = function(t2) {
-          function n2(e2) {
-            var n3 = u({ type: "directed" }, e2);
-            if ("multi" in n3 && false !== n3.multi)
-              throw new B("DirectedGraph.from: inconsistent indication that the graph should be multi in given options!");
-            if ("directed" !== n3.type)
-              throw new B('DirectedGraph.from: inconsistent "' + n3.type + '" type in given options!');
-            return t2.call(this, n3) || this;
+        };
+        Iterator$2.is = function(value) {
+          if (value instanceof Iterator$2)
+            return true;
+          return typeof value === "object" && value !== null && typeof value.next === "function";
+        };
+        var iterator = Iterator$2;
+        var support$1 = {};
+        support$1.ARRAY_BUFFER_SUPPORT = typeof ArrayBuffer !== "undefined";
+        support$1.SYMBOL_SUPPORT = typeof Symbol !== "undefined";
+        var Iterator$1 = iterator;
+        var support = support$1;
+        var ARRAY_BUFFER_SUPPORT = support.ARRAY_BUFFER_SUPPORT;
+        var SYMBOL_SUPPORT = support.SYMBOL_SUPPORT;
+        function iterOrNull(target) {
+          if (typeof target === "string" || Array.isArray(target) || ARRAY_BUFFER_SUPPORT && ArrayBuffer.isView(target))
+            return Iterator$1.fromSequence(target);
+          if (typeof target !== "object" || target === null)
+            return null;
+          if (SYMBOL_SUPPORT && typeof target[Symbol.iterator] === "function")
+            return target[Symbol.iterator]();
+          if (typeof target.next === "function")
+            return target;
+          return null;
+        }
+        var iter$2 = function iter2(target) {
+          var iterator2 = iterOrNull(target);
+          if (!iterator2)
+            throw new Error("obliterator: target is not iterable nor a valid iterator.");
+          return iterator2;
+        };
+        var iter$1 = iter$2;
+        var take = function take2(iterable, n) {
+          var l = arguments.length > 1 ? n : Infinity, array = l !== Infinity ? new Array(l) : [], step, i2 = 0;
+          var iterator2 = iter$1(iterable);
+          while (true) {
+            if (i2 === l)
+              return array;
+            step = iterator2.next();
+            if (step.done) {
+              if (i2 !== n)
+                array.length = i2;
+              return array;
+            }
+            array[i2++] = step.value;
           }
-          return e(n2, t2), n2;
-        }(zt), Pt = function(t2) {
-          function n2(e2) {
-            var n3 = u({ type: "undirected" }, e2);
-            if ("multi" in n3 && false !== n3.multi)
-              throw new B("UndirectedGraph.from: inconsistent indication that the graph should be multi in given options!");
-            if ("undirected" !== n3.type)
-              throw new B('UndirectedGraph.from: inconsistent "' + n3.type + '" type in given options!');
-            return t2.call(this, n3) || this;
+        };
+        var GraphError = /* @__PURE__ */ function(_Error) {
+          _inheritsLoose2(GraphError2, _Error);
+          function GraphError2(message) {
+            var _this2;
+            _this2 = _Error.call(this) || this;
+            _this2.name = "GraphError";
+            _this2.message = message;
+            return _this2;
           }
-          return e(n2, t2), n2;
-        }(zt), Rt = function(t2) {
-          function n2(e2) {
-            var n3 = u({ multi: true }, e2);
-            if ("multi" in n3 && true !== n3.multi)
-              throw new B("MultiGraph.from: inconsistent indication that the graph should be simple in given options!");
-            return t2.call(this, n3) || this;
+          return GraphError2;
+        }(/* @__PURE__ */ _wrapNativeSuper(Error));
+        var InvalidArgumentsGraphError = /* @__PURE__ */ function(_GraphError) {
+          _inheritsLoose2(InvalidArgumentsGraphError2, _GraphError);
+          function InvalidArgumentsGraphError2(message) {
+            var _this2;
+            _this2 = _GraphError.call(this, message) || this;
+            _this2.name = "InvalidArgumentsGraphError";
+            if (typeof Error.captureStackTrace === "function")
+              Error.captureStackTrace(_assertThisInitialized13(_this2), InvalidArgumentsGraphError2.prototype.constructor);
+            return _this2;
           }
-          return e(n2, t2), n2;
-        }(zt), Kt = function(t2) {
-          function n2(e2) {
-            var n3 = u({ type: "directed", multi: true }, e2);
-            if ("multi" in n3 && true !== n3.multi)
-              throw new B("MultiDirectedGraph.from: inconsistent indication that the graph should be simple in given options!");
-            if ("directed" !== n3.type)
-              throw new B('MultiDirectedGraph.from: inconsistent "' + n3.type + '" type in given options!');
-            return t2.call(this, n3) || this;
+          return InvalidArgumentsGraphError2;
+        }(GraphError);
+        var NotFoundGraphError = /* @__PURE__ */ function(_GraphError2) {
+          _inheritsLoose2(NotFoundGraphError2, _GraphError2);
+          function NotFoundGraphError2(message) {
+            var _this3;
+            _this3 = _GraphError2.call(this, message) || this;
+            _this3.name = "NotFoundGraphError";
+            if (typeof Error.captureStackTrace === "function")
+              Error.captureStackTrace(_assertThisInitialized13(_this3), NotFoundGraphError2.prototype.constructor);
+            return _this3;
           }
-          return e(n2, t2), n2;
-        }(zt), Tt = function(t2) {
-          function n2(e2) {
-            var n3 = u({ type: "undirected", multi: true }, e2);
-            if ("multi" in n3 && true !== n3.multi)
-              throw new B("MultiUndirectedGraph.from: inconsistent indication that the graph should be simple in given options!");
-            if ("undirected" !== n3.type)
-              throw new B('MultiUndirectedGraph.from: inconsistent "' + n3.type + '" type in given options!');
-            return t2.call(this, n3) || this;
+          return NotFoundGraphError2;
+        }(GraphError);
+        var UsageGraphError = /* @__PURE__ */ function(_GraphError3) {
+          _inheritsLoose2(UsageGraphError2, _GraphError3);
+          function UsageGraphError2(message) {
+            var _this4;
+            _this4 = _GraphError3.call(this, message) || this;
+            _this4.name = "UsageGraphError";
+            if (typeof Error.captureStackTrace === "function")
+              Error.captureStackTrace(_assertThisInitialized13(_this4), UsageGraphError2.prototype.constructor);
+            return _this4;
           }
-          return e(n2, t2), n2;
-        }(zt);
-        function Bt(t2) {
-          t2.from = function(e2, n2) {
-            var r2 = u({}, e2.options, n2), i3 = new t2(r2);
-            return i3.import(e2), i3;
+          return UsageGraphError2;
+        }(GraphError);
+        function MixedNodeData(key, attributes) {
+          this.key = key;
+          this.attributes = attributes;
+          this.clear();
+        }
+        MixedNodeData.prototype.clear = function() {
+          this.inDegree = 0;
+          this.outDegree = 0;
+          this.undirectedDegree = 0;
+          this.undirectedLoops = 0;
+          this.directedLoops = 0;
+          this["in"] = {};
+          this.out = {};
+          this.undirected = {};
+        };
+        function DirectedNodeData(key, attributes) {
+          this.key = key;
+          this.attributes = attributes;
+          this.clear();
+        }
+        DirectedNodeData.prototype.clear = function() {
+          this.inDegree = 0;
+          this.outDegree = 0;
+          this.directedLoops = 0;
+          this["in"] = {};
+          this.out = {};
+        };
+        function UndirectedNodeData(key, attributes) {
+          this.key = key;
+          this.attributes = attributes;
+          this.clear();
+        }
+        UndirectedNodeData.prototype.clear = function() {
+          this.undirectedDegree = 0;
+          this.undirectedLoops = 0;
+          this.undirected = {};
+        };
+        function EdgeData(undirected, key, source, target, attributes) {
+          this.key = key;
+          this.attributes = attributes;
+          this.undirected = undirected;
+          this.source = source;
+          this.target = target;
+        }
+        EdgeData.prototype.attach = function() {
+          var outKey = "out";
+          var inKey = "in";
+          if (this.undirected)
+            outKey = inKey = "undirected";
+          var source = this.source.key;
+          var target = this.target.key;
+          this.source[outKey][target] = this;
+          if (this.undirected && source === target)
+            return;
+          this.target[inKey][source] = this;
+        };
+        EdgeData.prototype.attachMulti = function() {
+          var outKey = "out";
+          var inKey = "in";
+          var source = this.source.key;
+          var target = this.target.key;
+          if (this.undirected)
+            outKey = inKey = "undirected";
+          var adj = this.source[outKey];
+          var head = adj[target];
+          if (typeof head === "undefined") {
+            adj[target] = this;
+            if (!(this.undirected && source === target)) {
+              this.target[inKey][source] = this;
+            }
+            return;
+          }
+          head.previous = this;
+          this.next = head;
+          adj[target] = this;
+          this.target[inKey][source] = this;
+        };
+        EdgeData.prototype.detach = function() {
+          var source = this.source.key;
+          var target = this.target.key;
+          var outKey = "out";
+          var inKey = "in";
+          if (this.undirected)
+            outKey = inKey = "undirected";
+          delete this.source[outKey][target];
+          delete this.target[inKey][source];
+        };
+        EdgeData.prototype.detachMulti = function() {
+          var source = this.source.key;
+          var target = this.target.key;
+          var outKey = "out";
+          var inKey = "in";
+          if (this.undirected)
+            outKey = inKey = "undirected";
+          if (this.previous === void 0) {
+            if (this.next === void 0) {
+              delete this.source[outKey][target];
+              delete this.target[inKey][source];
+            } else {
+              this.next.previous = void 0;
+              this.source[outKey][target] = this.next;
+              this.target[inKey][source] = this.next;
+            }
+          } else {
+            this.previous.next = this.next;
+            if (this.next !== void 0) {
+              this.next.previous = this.previous;
+            }
+          }
+        };
+        var NODE = 0;
+        var SOURCE = 1;
+        var TARGET = 2;
+        var OPPOSITE = 3;
+        function findRelevantNodeData(graph2, method, mode, nodeOrEdge, nameOrEdge, add1, add2) {
+          var nodeData, edgeData, arg1, arg2;
+          nodeOrEdge = "" + nodeOrEdge;
+          if (mode === NODE) {
+            nodeData = graph2._nodes.get(nodeOrEdge);
+            if (!nodeData)
+              throw new NotFoundGraphError("Graph.".concat(method, ': could not find the "').concat(nodeOrEdge, '" node in the graph.'));
+            arg1 = nameOrEdge;
+            arg2 = add1;
+          } else if (mode === OPPOSITE) {
+            nameOrEdge = "" + nameOrEdge;
+            edgeData = graph2._edges.get(nameOrEdge);
+            if (!edgeData)
+              throw new NotFoundGraphError("Graph.".concat(method, ': could not find the "').concat(nameOrEdge, '" edge in the graph.'));
+            var source = edgeData.source.key;
+            var target = edgeData.target.key;
+            if (nodeOrEdge === source) {
+              nodeData = edgeData.target;
+            } else if (nodeOrEdge === target) {
+              nodeData = edgeData.source;
+            } else {
+              throw new NotFoundGraphError("Graph.".concat(method, ': the "').concat(nodeOrEdge, '" node is not attached to the "').concat(nameOrEdge, '" edge (').concat(source, ", ").concat(target, ")."));
+            }
+            arg1 = add1;
+            arg2 = add2;
+          } else {
+            edgeData = graph2._edges.get(nodeOrEdge);
+            if (!edgeData)
+              throw new NotFoundGraphError("Graph.".concat(method, ': could not find the "').concat(nodeOrEdge, '" edge in the graph.'));
+            if (mode === SOURCE) {
+              nodeData = edgeData.source;
+            } else {
+              nodeData = edgeData.target;
+            }
+            arg1 = nameOrEdge;
+            arg2 = add1;
+          }
+          return [nodeData, arg1, arg2];
+        }
+        function attachNodeAttributeGetter(Class, method, mode) {
+          Class.prototype[method] = function(nodeOrEdge, nameOrEdge, add1) {
+            var _findRelevantNodeData = findRelevantNodeData(this, method, mode, nodeOrEdge, nameOrEdge, add1), data = _findRelevantNodeData[0], name = _findRelevantNodeData[1];
+            return data.attributes[name];
           };
         }
-        return Bt(zt), Bt(Wt), Bt(Pt), Bt(Rt), Bt(Kt), Bt(Tt), zt.Graph = zt, zt.DirectedGraph = Wt, zt.UndirectedGraph = Pt, zt.MultiGraph = Rt, zt.MultiDirectedGraph = Kt, zt.MultiUndirectedGraph = Tt, zt.InvalidArgumentsGraphError = B, zt.NotFoundGraphError = F, zt.UsageGraphError = I, zt;
+        function attachNodeAttributesGetter(Class, method, mode) {
+          Class.prototype[method] = function(nodeOrEdge, nameOrEdge) {
+            var _findRelevantNodeData2 = findRelevantNodeData(this, method, mode, nodeOrEdge, nameOrEdge), data = _findRelevantNodeData2[0];
+            return data.attributes;
+          };
+        }
+        function attachNodeAttributeChecker(Class, method, mode) {
+          Class.prototype[method] = function(nodeOrEdge, nameOrEdge, add1) {
+            var _findRelevantNodeData3 = findRelevantNodeData(this, method, mode, nodeOrEdge, nameOrEdge, add1), data = _findRelevantNodeData3[0], name = _findRelevantNodeData3[1];
+            return data.attributes.hasOwnProperty(name);
+          };
+        }
+        function attachNodeAttributeSetter(Class, method, mode) {
+          Class.prototype[method] = function(nodeOrEdge, nameOrEdge, add1, add2) {
+            var _findRelevantNodeData4 = findRelevantNodeData(this, method, mode, nodeOrEdge, nameOrEdge, add1, add2), data = _findRelevantNodeData4[0], name = _findRelevantNodeData4[1], value = _findRelevantNodeData4[2];
+            data.attributes[name] = value;
+            this.emit("nodeAttributesUpdated", {
+              key: data.key,
+              type: "set",
+              attributes: data.attributes,
+              name
+            });
+            return this;
+          };
+        }
+        function attachNodeAttributeUpdater(Class, method, mode) {
+          Class.prototype[method] = function(nodeOrEdge, nameOrEdge, add1, add2) {
+            var _findRelevantNodeData5 = findRelevantNodeData(this, method, mode, nodeOrEdge, nameOrEdge, add1, add2), data = _findRelevantNodeData5[0], name = _findRelevantNodeData5[1], updater = _findRelevantNodeData5[2];
+            if (typeof updater !== "function")
+              throw new InvalidArgumentsGraphError("Graph.".concat(method, ": updater should be a function."));
+            var attributes = data.attributes;
+            var value = updater(attributes[name]);
+            attributes[name] = value;
+            this.emit("nodeAttributesUpdated", {
+              key: data.key,
+              type: "set",
+              attributes: data.attributes,
+              name
+            });
+            return this;
+          };
+        }
+        function attachNodeAttributeRemover(Class, method, mode) {
+          Class.prototype[method] = function(nodeOrEdge, nameOrEdge, add1) {
+            var _findRelevantNodeData6 = findRelevantNodeData(this, method, mode, nodeOrEdge, nameOrEdge, add1), data = _findRelevantNodeData6[0], name = _findRelevantNodeData6[1];
+            delete data.attributes[name];
+            this.emit("nodeAttributesUpdated", {
+              key: data.key,
+              type: "remove",
+              attributes: data.attributes,
+              name
+            });
+            return this;
+          };
+        }
+        function attachNodeAttributesReplacer(Class, method, mode) {
+          Class.prototype[method] = function(nodeOrEdge, nameOrEdge, add1) {
+            var _findRelevantNodeData7 = findRelevantNodeData(this, method, mode, nodeOrEdge, nameOrEdge, add1), data = _findRelevantNodeData7[0], attributes = _findRelevantNodeData7[1];
+            if (!isPlainObject(attributes))
+              throw new InvalidArgumentsGraphError("Graph.".concat(method, ": provided attributes are not a plain object."));
+            data.attributes = attributes;
+            this.emit("nodeAttributesUpdated", {
+              key: data.key,
+              type: "replace",
+              attributes: data.attributes
+            });
+            return this;
+          };
+        }
+        function attachNodeAttributesMerger(Class, method, mode) {
+          Class.prototype[method] = function(nodeOrEdge, nameOrEdge, add1) {
+            var _findRelevantNodeData8 = findRelevantNodeData(this, method, mode, nodeOrEdge, nameOrEdge, add1), data = _findRelevantNodeData8[0], attributes = _findRelevantNodeData8[1];
+            if (!isPlainObject(attributes))
+              throw new InvalidArgumentsGraphError("Graph.".concat(method, ": provided attributes are not a plain object."));
+            assign(data.attributes, attributes);
+            this.emit("nodeAttributesUpdated", {
+              key: data.key,
+              type: "merge",
+              attributes: data.attributes,
+              data: attributes
+            });
+            return this;
+          };
+        }
+        function attachNodeAttributesUpdater(Class, method, mode) {
+          Class.prototype[method] = function(nodeOrEdge, nameOrEdge, add1) {
+            var _findRelevantNodeData9 = findRelevantNodeData(this, method, mode, nodeOrEdge, nameOrEdge, add1), data = _findRelevantNodeData9[0], updater = _findRelevantNodeData9[1];
+            if (typeof updater !== "function")
+              throw new InvalidArgumentsGraphError("Graph.".concat(method, ": provided updater is not a function."));
+            data.attributes = updater(data.attributes);
+            this.emit("nodeAttributesUpdated", {
+              key: data.key,
+              type: "update",
+              attributes: data.attributes
+            });
+            return this;
+          };
+        }
+        var NODE_ATTRIBUTES_METHODS = [{
+          name: function name(element) {
+            return "get".concat(element, "Attribute");
+          },
+          attacher: attachNodeAttributeGetter
+        }, {
+          name: function name(element) {
+            return "get".concat(element, "Attributes");
+          },
+          attacher: attachNodeAttributesGetter
+        }, {
+          name: function name(element) {
+            return "has".concat(element, "Attribute");
+          },
+          attacher: attachNodeAttributeChecker
+        }, {
+          name: function name(element) {
+            return "set".concat(element, "Attribute");
+          },
+          attacher: attachNodeAttributeSetter
+        }, {
+          name: function name(element) {
+            return "update".concat(element, "Attribute");
+          },
+          attacher: attachNodeAttributeUpdater
+        }, {
+          name: function name(element) {
+            return "remove".concat(element, "Attribute");
+          },
+          attacher: attachNodeAttributeRemover
+        }, {
+          name: function name(element) {
+            return "replace".concat(element, "Attributes");
+          },
+          attacher: attachNodeAttributesReplacer
+        }, {
+          name: function name(element) {
+            return "merge".concat(element, "Attributes");
+          },
+          attacher: attachNodeAttributesMerger
+        }, {
+          name: function name(element) {
+            return "update".concat(element, "Attributes");
+          },
+          attacher: attachNodeAttributesUpdater
+        }];
+        function attachNodeAttributesMethods(Graph3) {
+          NODE_ATTRIBUTES_METHODS.forEach(function(_ref) {
+            var name = _ref.name, attacher = _ref.attacher;
+            attacher(Graph3, name("Node"), NODE);
+            attacher(Graph3, name("Source"), SOURCE);
+            attacher(Graph3, name("Target"), TARGET);
+            attacher(Graph3, name("Opposite"), OPPOSITE);
+          });
+        }
+        function attachEdgeAttributeGetter(Class, method, type) {
+          Class.prototype[method] = function(element, name) {
+            var data;
+            if (this.type !== "mixed" && type !== "mixed" && type !== this.type)
+              throw new UsageGraphError("Graph.".concat(method, ": cannot find this type of edges in your ").concat(this.type, " graph."));
+            if (arguments.length > 2) {
+              if (this.multi)
+                throw new UsageGraphError("Graph.".concat(method, ": cannot use a {source,target} combo when asking about an edge's attributes in a MultiGraph since we cannot infer the one you want information about."));
+              var source = "" + element;
+              var target = "" + name;
+              name = arguments[2];
+              data = getMatchingEdge(this, source, target, type);
+              if (!data)
+                throw new NotFoundGraphError("Graph.".concat(method, ': could not find an edge for the given path ("').concat(source, '" - "').concat(target, '").'));
+            } else {
+              if (type !== "mixed")
+                throw new UsageGraphError("Graph.".concat(method, ": calling this method with only a key (vs. a source and target) does not make sense since an edge with this key could have the other type."));
+              element = "" + element;
+              data = this._edges.get(element);
+              if (!data)
+                throw new NotFoundGraphError("Graph.".concat(method, ': could not find the "').concat(element, '" edge in the graph.'));
+            }
+            return data.attributes[name];
+          };
+        }
+        function attachEdgeAttributesGetter(Class, method, type) {
+          Class.prototype[method] = function(element) {
+            var data;
+            if (this.type !== "mixed" && type !== "mixed" && type !== this.type)
+              throw new UsageGraphError("Graph.".concat(method, ": cannot find this type of edges in your ").concat(this.type, " graph."));
+            if (arguments.length > 1) {
+              if (this.multi)
+                throw new UsageGraphError("Graph.".concat(method, ": cannot use a {source,target} combo when asking about an edge's attributes in a MultiGraph since we cannot infer the one you want information about."));
+              var source = "" + element, target = "" + arguments[1];
+              data = getMatchingEdge(this, source, target, type);
+              if (!data)
+                throw new NotFoundGraphError("Graph.".concat(method, ': could not find an edge for the given path ("').concat(source, '" - "').concat(target, '").'));
+            } else {
+              if (type !== "mixed")
+                throw new UsageGraphError("Graph.".concat(method, ": calling this method with only a key (vs. a source and target) does not make sense since an edge with this key could have the other type."));
+              element = "" + element;
+              data = this._edges.get(element);
+              if (!data)
+                throw new NotFoundGraphError("Graph.".concat(method, ': could not find the "').concat(element, '" edge in the graph.'));
+            }
+            return data.attributes;
+          };
+        }
+        function attachEdgeAttributeChecker(Class, method, type) {
+          Class.prototype[method] = function(element, name) {
+            var data;
+            if (this.type !== "mixed" && type !== "mixed" && type !== this.type)
+              throw new UsageGraphError("Graph.".concat(method, ": cannot find this type of edges in your ").concat(this.type, " graph."));
+            if (arguments.length > 2) {
+              if (this.multi)
+                throw new UsageGraphError("Graph.".concat(method, ": cannot use a {source,target} combo when asking about an edge's attributes in a MultiGraph since we cannot infer the one you want information about."));
+              var source = "" + element;
+              var target = "" + name;
+              name = arguments[2];
+              data = getMatchingEdge(this, source, target, type);
+              if (!data)
+                throw new NotFoundGraphError("Graph.".concat(method, ': could not find an edge for the given path ("').concat(source, '" - "').concat(target, '").'));
+            } else {
+              if (type !== "mixed")
+                throw new UsageGraphError("Graph.".concat(method, ": calling this method with only a key (vs. a source and target) does not make sense since an edge with this key could have the other type."));
+              element = "" + element;
+              data = this._edges.get(element);
+              if (!data)
+                throw new NotFoundGraphError("Graph.".concat(method, ': could not find the "').concat(element, '" edge in the graph.'));
+            }
+            return data.attributes.hasOwnProperty(name);
+          };
+        }
+        function attachEdgeAttributeSetter(Class, method, type) {
+          Class.prototype[method] = function(element, name, value) {
+            var data;
+            if (this.type !== "mixed" && type !== "mixed" && type !== this.type)
+              throw new UsageGraphError("Graph.".concat(method, ": cannot find this type of edges in your ").concat(this.type, " graph."));
+            if (arguments.length > 3) {
+              if (this.multi)
+                throw new UsageGraphError("Graph.".concat(method, ": cannot use a {source,target} combo when asking about an edge's attributes in a MultiGraph since we cannot infer the one you want information about."));
+              var source = "" + element;
+              var target = "" + name;
+              name = arguments[2];
+              value = arguments[3];
+              data = getMatchingEdge(this, source, target, type);
+              if (!data)
+                throw new NotFoundGraphError("Graph.".concat(method, ': could not find an edge for the given path ("').concat(source, '" - "').concat(target, '").'));
+            } else {
+              if (type !== "mixed")
+                throw new UsageGraphError("Graph.".concat(method, ": calling this method with only a key (vs. a source and target) does not make sense since an edge with this key could have the other type."));
+              element = "" + element;
+              data = this._edges.get(element);
+              if (!data)
+                throw new NotFoundGraphError("Graph.".concat(method, ': could not find the "').concat(element, '" edge in the graph.'));
+            }
+            data.attributes[name] = value;
+            this.emit("edgeAttributesUpdated", {
+              key: data.key,
+              type: "set",
+              attributes: data.attributes,
+              name
+            });
+            return this;
+          };
+        }
+        function attachEdgeAttributeUpdater(Class, method, type) {
+          Class.prototype[method] = function(element, name, updater) {
+            var data;
+            if (this.type !== "mixed" && type !== "mixed" && type !== this.type)
+              throw new UsageGraphError("Graph.".concat(method, ": cannot find this type of edges in your ").concat(this.type, " graph."));
+            if (arguments.length > 3) {
+              if (this.multi)
+                throw new UsageGraphError("Graph.".concat(method, ": cannot use a {source,target} combo when asking about an edge's attributes in a MultiGraph since we cannot infer the one you want information about."));
+              var source = "" + element;
+              var target = "" + name;
+              name = arguments[2];
+              updater = arguments[3];
+              data = getMatchingEdge(this, source, target, type);
+              if (!data)
+                throw new NotFoundGraphError("Graph.".concat(method, ': could not find an edge for the given path ("').concat(source, '" - "').concat(target, '").'));
+            } else {
+              if (type !== "mixed")
+                throw new UsageGraphError("Graph.".concat(method, ": calling this method with only a key (vs. a source and target) does not make sense since an edge with this key could have the other type."));
+              element = "" + element;
+              data = this._edges.get(element);
+              if (!data)
+                throw new NotFoundGraphError("Graph.".concat(method, ': could not find the "').concat(element, '" edge in the graph.'));
+            }
+            if (typeof updater !== "function")
+              throw new InvalidArgumentsGraphError("Graph.".concat(method, ": updater should be a function."));
+            data.attributes[name] = updater(data.attributes[name]);
+            this.emit("edgeAttributesUpdated", {
+              key: data.key,
+              type: "set",
+              attributes: data.attributes,
+              name
+            });
+            return this;
+          };
+        }
+        function attachEdgeAttributeRemover(Class, method, type) {
+          Class.prototype[method] = function(element, name) {
+            var data;
+            if (this.type !== "mixed" && type !== "mixed" && type !== this.type)
+              throw new UsageGraphError("Graph.".concat(method, ": cannot find this type of edges in your ").concat(this.type, " graph."));
+            if (arguments.length > 2) {
+              if (this.multi)
+                throw new UsageGraphError("Graph.".concat(method, ": cannot use a {source,target} combo when asking about an edge's attributes in a MultiGraph since we cannot infer the one you want information about."));
+              var source = "" + element;
+              var target = "" + name;
+              name = arguments[2];
+              data = getMatchingEdge(this, source, target, type);
+              if (!data)
+                throw new NotFoundGraphError("Graph.".concat(method, ': could not find an edge for the given path ("').concat(source, '" - "').concat(target, '").'));
+            } else {
+              if (type !== "mixed")
+                throw new UsageGraphError("Graph.".concat(method, ": calling this method with only a key (vs. a source and target) does not make sense since an edge with this key could have the other type."));
+              element = "" + element;
+              data = this._edges.get(element);
+              if (!data)
+                throw new NotFoundGraphError("Graph.".concat(method, ': could not find the "').concat(element, '" edge in the graph.'));
+            }
+            delete data.attributes[name];
+            this.emit("edgeAttributesUpdated", {
+              key: data.key,
+              type: "remove",
+              attributes: data.attributes,
+              name
+            });
+            return this;
+          };
+        }
+        function attachEdgeAttributesReplacer(Class, method, type) {
+          Class.prototype[method] = function(element, attributes) {
+            var data;
+            if (this.type !== "mixed" && type !== "mixed" && type !== this.type)
+              throw new UsageGraphError("Graph.".concat(method, ": cannot find this type of edges in your ").concat(this.type, " graph."));
+            if (arguments.length > 2) {
+              if (this.multi)
+                throw new UsageGraphError("Graph.".concat(method, ": cannot use a {source,target} combo when asking about an edge's attributes in a MultiGraph since we cannot infer the one you want information about."));
+              var source = "" + element, target = "" + attributes;
+              attributes = arguments[2];
+              data = getMatchingEdge(this, source, target, type);
+              if (!data)
+                throw new NotFoundGraphError("Graph.".concat(method, ': could not find an edge for the given path ("').concat(source, '" - "').concat(target, '").'));
+            } else {
+              if (type !== "mixed")
+                throw new UsageGraphError("Graph.".concat(method, ": calling this method with only a key (vs. a source and target) does not make sense since an edge with this key could have the other type."));
+              element = "" + element;
+              data = this._edges.get(element);
+              if (!data)
+                throw new NotFoundGraphError("Graph.".concat(method, ': could not find the "').concat(element, '" edge in the graph.'));
+            }
+            if (!isPlainObject(attributes))
+              throw new InvalidArgumentsGraphError("Graph.".concat(method, ": provided attributes are not a plain object."));
+            data.attributes = attributes;
+            this.emit("edgeAttributesUpdated", {
+              key: data.key,
+              type: "replace",
+              attributes: data.attributes
+            });
+            return this;
+          };
+        }
+        function attachEdgeAttributesMerger(Class, method, type) {
+          Class.prototype[method] = function(element, attributes) {
+            var data;
+            if (this.type !== "mixed" && type !== "mixed" && type !== this.type)
+              throw new UsageGraphError("Graph.".concat(method, ": cannot find this type of edges in your ").concat(this.type, " graph."));
+            if (arguments.length > 2) {
+              if (this.multi)
+                throw new UsageGraphError("Graph.".concat(method, ": cannot use a {source,target} combo when asking about an edge's attributes in a MultiGraph since we cannot infer the one you want information about."));
+              var source = "" + element, target = "" + attributes;
+              attributes = arguments[2];
+              data = getMatchingEdge(this, source, target, type);
+              if (!data)
+                throw new NotFoundGraphError("Graph.".concat(method, ': could not find an edge for the given path ("').concat(source, '" - "').concat(target, '").'));
+            } else {
+              if (type !== "mixed")
+                throw new UsageGraphError("Graph.".concat(method, ": calling this method with only a key (vs. a source and target) does not make sense since an edge with this key could have the other type."));
+              element = "" + element;
+              data = this._edges.get(element);
+              if (!data)
+                throw new NotFoundGraphError("Graph.".concat(method, ': could not find the "').concat(element, '" edge in the graph.'));
+            }
+            if (!isPlainObject(attributes))
+              throw new InvalidArgumentsGraphError("Graph.".concat(method, ": provided attributes are not a plain object."));
+            assign(data.attributes, attributes);
+            this.emit("edgeAttributesUpdated", {
+              key: data.key,
+              type: "merge",
+              attributes: data.attributes,
+              data: attributes
+            });
+            return this;
+          };
+        }
+        function attachEdgeAttributesUpdater(Class, method, type) {
+          Class.prototype[method] = function(element, updater) {
+            var data;
+            if (this.type !== "mixed" && type !== "mixed" && type !== this.type)
+              throw new UsageGraphError("Graph.".concat(method, ": cannot find this type of edges in your ").concat(this.type, " graph."));
+            if (arguments.length > 2) {
+              if (this.multi)
+                throw new UsageGraphError("Graph.".concat(method, ": cannot use a {source,target} combo when asking about an edge's attributes in a MultiGraph since we cannot infer the one you want information about."));
+              var source = "" + element, target = "" + updater;
+              updater = arguments[2];
+              data = getMatchingEdge(this, source, target, type);
+              if (!data)
+                throw new NotFoundGraphError("Graph.".concat(method, ': could not find an edge for the given path ("').concat(source, '" - "').concat(target, '").'));
+            } else {
+              if (type !== "mixed")
+                throw new UsageGraphError("Graph.".concat(method, ": calling this method with only a key (vs. a source and target) does not make sense since an edge with this key could have the other type."));
+              element = "" + element;
+              data = this._edges.get(element);
+              if (!data)
+                throw new NotFoundGraphError("Graph.".concat(method, ': could not find the "').concat(element, '" edge in the graph.'));
+            }
+            if (typeof updater !== "function")
+              throw new InvalidArgumentsGraphError("Graph.".concat(method, ": provided updater is not a function."));
+            data.attributes = updater(data.attributes);
+            this.emit("edgeAttributesUpdated", {
+              key: data.key,
+              type: "update",
+              attributes: data.attributes
+            });
+            return this;
+          };
+        }
+        var EDGE_ATTRIBUTES_METHODS = [{
+          name: function name(element) {
+            return "get".concat(element, "Attribute");
+          },
+          attacher: attachEdgeAttributeGetter
+        }, {
+          name: function name(element) {
+            return "get".concat(element, "Attributes");
+          },
+          attacher: attachEdgeAttributesGetter
+        }, {
+          name: function name(element) {
+            return "has".concat(element, "Attribute");
+          },
+          attacher: attachEdgeAttributeChecker
+        }, {
+          name: function name(element) {
+            return "set".concat(element, "Attribute");
+          },
+          attacher: attachEdgeAttributeSetter
+        }, {
+          name: function name(element) {
+            return "update".concat(element, "Attribute");
+          },
+          attacher: attachEdgeAttributeUpdater
+        }, {
+          name: function name(element) {
+            return "remove".concat(element, "Attribute");
+          },
+          attacher: attachEdgeAttributeRemover
+        }, {
+          name: function name(element) {
+            return "replace".concat(element, "Attributes");
+          },
+          attacher: attachEdgeAttributesReplacer
+        }, {
+          name: function name(element) {
+            return "merge".concat(element, "Attributes");
+          },
+          attacher: attachEdgeAttributesMerger
+        }, {
+          name: function name(element) {
+            return "update".concat(element, "Attributes");
+          },
+          attacher: attachEdgeAttributesUpdater
+        }];
+        function attachEdgeAttributesMethods(Graph3) {
+          EDGE_ATTRIBUTES_METHODS.forEach(function(_ref) {
+            var name = _ref.name, attacher = _ref.attacher;
+            attacher(Graph3, name("Edge"), "mixed");
+            attacher(Graph3, name("DirectedEdge"), "directed");
+            attacher(Graph3, name("UndirectedEdge"), "undirected");
+          });
+        }
+        var Iterator = iterator;
+        var iter = iter$2;
+        var chain = function chain2() {
+          var iterables = arguments;
+          var current = null;
+          var i2 = -1;
+          return new Iterator(function next() {
+            var step = null;
+            do {
+              if (current === null) {
+                i2++;
+                if (i2 >= iterables.length)
+                  return {
+                    done: true
+                  };
+                current = iter(iterables[i2]);
+              }
+              step = current.next();
+              if (step.done === true) {
+                current = null;
+                continue;
+              }
+              break;
+            } while (true);
+            return step;
+          });
+        };
+        var EDGES_ITERATION = [{
+          name: "edges",
+          type: "mixed"
+        }, {
+          name: "inEdges",
+          type: "directed",
+          direction: "in"
+        }, {
+          name: "outEdges",
+          type: "directed",
+          direction: "out"
+        }, {
+          name: "inboundEdges",
+          type: "mixed",
+          direction: "in"
+        }, {
+          name: "outboundEdges",
+          type: "mixed",
+          direction: "out"
+        }, {
+          name: "directedEdges",
+          type: "directed"
+        }, {
+          name: "undirectedEdges",
+          type: "undirected"
+        }];
+        function forEachSimple(breakable, object, callback, avoid) {
+          var shouldBreak = false;
+          for (var k in object) {
+            if (k === avoid)
+              continue;
+            var edgeData = object[k];
+            shouldBreak = callback(edgeData.key, edgeData.attributes, edgeData.source.key, edgeData.target.key, edgeData.source.attributes, edgeData.target.attributes, edgeData.undirected);
+            if (breakable && shouldBreak)
+              return edgeData.key;
+          }
+          return;
+        }
+        function forEachMulti(breakable, object, callback, avoid) {
+          var edgeData, source, target;
+          var shouldBreak = false;
+          for (var k in object) {
+            if (k === avoid)
+              continue;
+            edgeData = object[k];
+            do {
+              source = edgeData.source;
+              target = edgeData.target;
+              shouldBreak = callback(edgeData.key, edgeData.attributes, source.key, target.key, source.attributes, target.attributes, edgeData.undirected);
+              if (breakable && shouldBreak)
+                return edgeData.key;
+              edgeData = edgeData.next;
+            } while (edgeData !== void 0);
+          }
+          return;
+        }
+        function createIterator(object, avoid) {
+          var keys = Object.keys(object);
+          var l = keys.length;
+          var edgeData;
+          var i2 = 0;
+          return new iterator(function next() {
+            do {
+              if (!edgeData) {
+                if (i2 >= l)
+                  return {
+                    done: true
+                  };
+                var k = keys[i2++];
+                if (k === avoid) {
+                  edgeData = void 0;
+                  continue;
+                }
+                edgeData = object[k];
+              } else {
+                edgeData = edgeData.next;
+              }
+            } while (!edgeData);
+            return {
+              done: false,
+              value: {
+                edge: edgeData.key,
+                attributes: edgeData.attributes,
+                source: edgeData.source.key,
+                target: edgeData.target.key,
+                sourceAttributes: edgeData.source.attributes,
+                targetAttributes: edgeData.target.attributes,
+                undirected: edgeData.undirected
+              }
+            };
+          });
+        }
+        function forEachForKeySimple(breakable, object, k, callback) {
+          var edgeData = object[k];
+          if (!edgeData)
+            return;
+          var sourceData = edgeData.source;
+          var targetData = edgeData.target;
+          if (callback(edgeData.key, edgeData.attributes, sourceData.key, targetData.key, sourceData.attributes, targetData.attributes, edgeData.undirected) && breakable)
+            return edgeData.key;
+        }
+        function forEachForKeyMulti(breakable, object, k, callback) {
+          var edgeData = object[k];
+          if (!edgeData)
+            return;
+          var shouldBreak = false;
+          do {
+            shouldBreak = callback(edgeData.key, edgeData.attributes, edgeData.source.key, edgeData.target.key, edgeData.source.attributes, edgeData.target.attributes, edgeData.undirected);
+            if (breakable && shouldBreak)
+              return edgeData.key;
+            edgeData = edgeData.next;
+          } while (edgeData !== void 0);
+          return;
+        }
+        function createIteratorForKey(object, k) {
+          var edgeData = object[k];
+          if (edgeData.next !== void 0) {
+            return new iterator(function() {
+              if (!edgeData)
+                return {
+                  done: true
+                };
+              var value = {
+                edge: edgeData.key,
+                attributes: edgeData.attributes,
+                source: edgeData.source.key,
+                target: edgeData.target.key,
+                sourceAttributes: edgeData.source.attributes,
+                targetAttributes: edgeData.target.attributes,
+                undirected: edgeData.undirected
+              };
+              edgeData = edgeData.next;
+              return {
+                done: false,
+                value
+              };
+            });
+          }
+          return iterator.of({
+            edge: edgeData.key,
+            attributes: edgeData.attributes,
+            source: edgeData.source.key,
+            target: edgeData.target.key,
+            sourceAttributes: edgeData.source.attributes,
+            targetAttributes: edgeData.target.attributes,
+            undirected: edgeData.undirected
+          });
+        }
+        function createEdgeArray(graph2, type) {
+          if (graph2.size === 0)
+            return [];
+          if (type === "mixed" || type === graph2.type) {
+            if (typeof Array.from === "function")
+              return Array.from(graph2._edges.keys());
+            return take(graph2._edges.keys(), graph2._edges.size);
+          }
+          var size = type === "undirected" ? graph2.undirectedSize : graph2.directedSize;
+          var list = new Array(size), mask = type === "undirected";
+          var iterator2 = graph2._edges.values();
+          var i2 = 0;
+          var step, data;
+          while (step = iterator2.next(), step.done !== true) {
+            data = step.value;
+            if (data.undirected === mask)
+              list[i2++] = data.key;
+          }
+          return list;
+        }
+        function forEachEdge(breakable, graph2, type, callback) {
+          if (graph2.size === 0)
+            return;
+          var shouldFilter = type !== "mixed" && type !== graph2.type;
+          var mask = type === "undirected";
+          var step, data;
+          var shouldBreak = false;
+          var iterator2 = graph2._edges.values();
+          while (step = iterator2.next(), step.done !== true) {
+            data = step.value;
+            if (shouldFilter && data.undirected !== mask)
+              continue;
+            var _data = data, key = _data.key, attributes = _data.attributes, source = _data.source, target = _data.target;
+            shouldBreak = callback(key, attributes, source.key, target.key, source.attributes, target.attributes, data.undirected);
+            if (breakable && shouldBreak)
+              return key;
+          }
+          return;
+        }
+        function createEdgeIterator(graph2, type) {
+          if (graph2.size === 0)
+            return iterator.empty();
+          var shouldFilter = type !== "mixed" && type !== graph2.type;
+          var mask = type === "undirected";
+          var iterator$1 = graph2._edges.values();
+          return new iterator(function next() {
+            var step, data;
+            while (true) {
+              step = iterator$1.next();
+              if (step.done)
+                return step;
+              data = step.value;
+              if (shouldFilter && data.undirected !== mask)
+                continue;
+              break;
+            }
+            var value = {
+              edge: data.key,
+              attributes: data.attributes,
+              source: data.source.key,
+              target: data.target.key,
+              sourceAttributes: data.source.attributes,
+              targetAttributes: data.target.attributes,
+              undirected: data.undirected
+            };
+            return {
+              value,
+              done: false
+            };
+          });
+        }
+        function forEachEdgeForNode(breakable, multi, type, direction, nodeData, callback) {
+          var fn = multi ? forEachMulti : forEachSimple;
+          var found;
+          if (type !== "undirected") {
+            if (direction !== "out") {
+              found = fn(breakable, nodeData["in"], callback);
+              if (breakable && found)
+                return found;
+            }
+            if (direction !== "in") {
+              found = fn(breakable, nodeData.out, callback, !direction ? nodeData.key : void 0);
+              if (breakable && found)
+                return found;
+            }
+          }
+          if (type !== "directed") {
+            found = fn(breakable, nodeData.undirected, callback);
+            if (breakable && found)
+              return found;
+          }
+          return;
+        }
+        function createEdgeArrayForNode(multi, type, direction, nodeData) {
+          var edges = [];
+          forEachEdgeForNode(false, multi, type, direction, nodeData, function(key) {
+            edges.push(key);
+          });
+          return edges;
+        }
+        function createEdgeIteratorForNode(type, direction, nodeData) {
+          var iterator$1 = iterator.empty();
+          if (type !== "undirected") {
+            if (direction !== "out" && typeof nodeData["in"] !== "undefined")
+              iterator$1 = chain(iterator$1, createIterator(nodeData["in"]));
+            if (direction !== "in" && typeof nodeData.out !== "undefined")
+              iterator$1 = chain(iterator$1, createIterator(nodeData.out, !direction ? nodeData.key : void 0));
+          }
+          if (type !== "directed" && typeof nodeData.undirected !== "undefined") {
+            iterator$1 = chain(iterator$1, createIterator(nodeData.undirected));
+          }
+          return iterator$1;
+        }
+        function forEachEdgeForPath(breakable, type, multi, direction, sourceData, target, callback) {
+          var fn = multi ? forEachForKeyMulti : forEachForKeySimple;
+          var found;
+          if (type !== "undirected") {
+            if (typeof sourceData["in"] !== "undefined" && direction !== "out") {
+              found = fn(breakable, sourceData["in"], target, callback);
+              if (breakable && found)
+                return found;
+            }
+            if (typeof sourceData.out !== "undefined" && direction !== "in" && (direction || sourceData.key !== target)) {
+              found = fn(breakable, sourceData.out, target, callback);
+              if (breakable && found)
+                return found;
+            }
+          }
+          if (type !== "directed") {
+            if (typeof sourceData.undirected !== "undefined") {
+              found = fn(breakable, sourceData.undirected, target, callback);
+              if (breakable && found)
+                return found;
+            }
+          }
+          return;
+        }
+        function createEdgeArrayForPath(type, multi, direction, sourceData, target) {
+          var edges = [];
+          forEachEdgeForPath(false, type, multi, direction, sourceData, target, function(key) {
+            edges.push(key);
+          });
+          return edges;
+        }
+        function createEdgeIteratorForPath(type, direction, sourceData, target) {
+          var iterator$1 = iterator.empty();
+          if (type !== "undirected") {
+            if (typeof sourceData["in"] !== "undefined" && direction !== "out" && target in sourceData["in"])
+              iterator$1 = chain(iterator$1, createIteratorForKey(sourceData["in"], target));
+            if (typeof sourceData.out !== "undefined" && direction !== "in" && target in sourceData.out && (direction || sourceData.key !== target))
+              iterator$1 = chain(iterator$1, createIteratorForKey(sourceData.out, target));
+          }
+          if (type !== "directed") {
+            if (typeof sourceData.undirected !== "undefined" && target in sourceData.undirected)
+              iterator$1 = chain(iterator$1, createIteratorForKey(sourceData.undirected, target));
+          }
+          return iterator$1;
+        }
+        function attachEdgeArrayCreator(Class, description) {
+          var name = description.name, type = description.type, direction = description.direction;
+          Class.prototype[name] = function(source, target) {
+            if (type !== "mixed" && this.type !== "mixed" && type !== this.type)
+              return [];
+            if (!arguments.length)
+              return createEdgeArray(this, type);
+            if (arguments.length === 1) {
+              source = "" + source;
+              var nodeData = this._nodes.get(source);
+              if (typeof nodeData === "undefined")
+                throw new NotFoundGraphError("Graph.".concat(name, ': could not find the "').concat(source, '" node in the graph.'));
+              return createEdgeArrayForNode(this.multi, type === "mixed" ? this.type : type, direction, nodeData);
+            }
+            if (arguments.length === 2) {
+              source = "" + source;
+              target = "" + target;
+              var sourceData = this._nodes.get(source);
+              if (!sourceData)
+                throw new NotFoundGraphError("Graph.".concat(name, ':  could not find the "').concat(source, '" source node in the graph.'));
+              if (!this._nodes.has(target))
+                throw new NotFoundGraphError("Graph.".concat(name, ':  could not find the "').concat(target, '" target node in the graph.'));
+              return createEdgeArrayForPath(type, this.multi, direction, sourceData, target);
+            }
+            throw new InvalidArgumentsGraphError("Graph.".concat(name, ": too many arguments (expecting 0, 1 or 2 and got ").concat(arguments.length, ")."));
+          };
+        }
+        function attachForEachEdge(Class, description) {
+          var name = description.name, type = description.type, direction = description.direction;
+          var forEachName = "forEach" + name[0].toUpperCase() + name.slice(1, -1);
+          Class.prototype[forEachName] = function(source, target, callback) {
+            if (type !== "mixed" && this.type !== "mixed" && type !== this.type)
+              return;
+            if (arguments.length === 1) {
+              callback = source;
+              return forEachEdge(false, this, type, callback);
+            }
+            if (arguments.length === 2) {
+              source = "" + source;
+              callback = target;
+              var nodeData = this._nodes.get(source);
+              if (typeof nodeData === "undefined")
+                throw new NotFoundGraphError("Graph.".concat(forEachName, ': could not find the "').concat(source, '" node in the graph.'));
+              return forEachEdgeForNode(false, this.multi, type === "mixed" ? this.type : type, direction, nodeData, callback);
+            }
+            if (arguments.length === 3) {
+              source = "" + source;
+              target = "" + target;
+              var sourceData = this._nodes.get(source);
+              if (!sourceData)
+                throw new NotFoundGraphError("Graph.".concat(forEachName, ':  could not find the "').concat(source, '" source node in the graph.'));
+              if (!this._nodes.has(target))
+                throw new NotFoundGraphError("Graph.".concat(forEachName, ':  could not find the "').concat(target, '" target node in the graph.'));
+              return forEachEdgeForPath(false, type, this.multi, direction, sourceData, target, callback);
+            }
+            throw new InvalidArgumentsGraphError("Graph.".concat(forEachName, ": too many arguments (expecting 1, 2 or 3 and got ").concat(arguments.length, ")."));
+          };
+          var mapName = "map" + name[0].toUpperCase() + name.slice(1);
+          Class.prototype[mapName] = function() {
+            var args = Array.prototype.slice.call(arguments);
+            var callback = args.pop();
+            var result;
+            if (args.length === 0) {
+              var length = 0;
+              if (type !== "directed")
+                length += this.undirectedSize;
+              if (type !== "undirected")
+                length += this.directedSize;
+              result = new Array(length);
+              var i2 = 0;
+              args.push(function(e, ea, s, t, sa, ta, u) {
+                result[i2++] = callback(e, ea, s, t, sa, ta, u);
+              });
+            } else {
+              result = [];
+              args.push(function(e, ea, s, t, sa, ta, u) {
+                result.push(callback(e, ea, s, t, sa, ta, u));
+              });
+            }
+            this[forEachName].apply(this, args);
+            return result;
+          };
+          var filterName = "filter" + name[0].toUpperCase() + name.slice(1);
+          Class.prototype[filterName] = function() {
+            var args = Array.prototype.slice.call(arguments);
+            var callback = args.pop();
+            var result = [];
+            args.push(function(e, ea, s, t, sa, ta, u) {
+              if (callback(e, ea, s, t, sa, ta, u))
+                result.push(e);
+            });
+            this[forEachName].apply(this, args);
+            return result;
+          };
+          var reduceName = "reduce" + name[0].toUpperCase() + name.slice(1);
+          Class.prototype[reduceName] = function() {
+            var args = Array.prototype.slice.call(arguments);
+            if (args.length < 2 || args.length > 4) {
+              throw new InvalidArgumentsGraphError("Graph.".concat(reduceName, ": invalid number of arguments (expecting 2, 3 or 4 and got ").concat(args.length, ")."));
+            }
+            if (typeof args[args.length - 1] === "function" && typeof args[args.length - 2] !== "function") {
+              throw new InvalidArgumentsGraphError("Graph.".concat(reduceName, ": missing initial value. You must provide it because the callback takes more than one argument and we cannot infer the initial value from the first iteration, as you could with a simple array."));
+            }
+            var callback;
+            var initialValue;
+            if (args.length === 2) {
+              callback = args[0];
+              initialValue = args[1];
+              args = [];
+            } else if (args.length === 3) {
+              callback = args[1];
+              initialValue = args[2];
+              args = [args[0]];
+            } else if (args.length === 4) {
+              callback = args[2];
+              initialValue = args[3];
+              args = [args[0], args[1]];
+            }
+            var accumulator = initialValue;
+            args.push(function(e, ea, s, t, sa, ta, u) {
+              accumulator = callback(accumulator, e, ea, s, t, sa, ta, u);
+            });
+            this[forEachName].apply(this, args);
+            return accumulator;
+          };
+        }
+        function attachFindEdge(Class, description) {
+          var name = description.name, type = description.type, direction = description.direction;
+          var findEdgeName = "find" + name[0].toUpperCase() + name.slice(1, -1);
+          Class.prototype[findEdgeName] = function(source, target, callback) {
+            if (type !== "mixed" && this.type !== "mixed" && type !== this.type)
+              return false;
+            if (arguments.length === 1) {
+              callback = source;
+              return forEachEdge(true, this, type, callback);
+            }
+            if (arguments.length === 2) {
+              source = "" + source;
+              callback = target;
+              var nodeData = this._nodes.get(source);
+              if (typeof nodeData === "undefined")
+                throw new NotFoundGraphError("Graph.".concat(findEdgeName, ': could not find the "').concat(source, '" node in the graph.'));
+              return forEachEdgeForNode(true, this.multi, type === "mixed" ? this.type : type, direction, nodeData, callback);
+            }
+            if (arguments.length === 3) {
+              source = "" + source;
+              target = "" + target;
+              var sourceData = this._nodes.get(source);
+              if (!sourceData)
+                throw new NotFoundGraphError("Graph.".concat(findEdgeName, ':  could not find the "').concat(source, '" source node in the graph.'));
+              if (!this._nodes.has(target))
+                throw new NotFoundGraphError("Graph.".concat(findEdgeName, ':  could not find the "').concat(target, '" target node in the graph.'));
+              return forEachEdgeForPath(true, type, this.multi, direction, sourceData, target, callback);
+            }
+            throw new InvalidArgumentsGraphError("Graph.".concat(findEdgeName, ": too many arguments (expecting 1, 2 or 3 and got ").concat(arguments.length, ")."));
+          };
+          var someName = "some" + name[0].toUpperCase() + name.slice(1, -1);
+          Class.prototype[someName] = function() {
+            var args = Array.prototype.slice.call(arguments);
+            var callback = args.pop();
+            args.push(function(e, ea, s, t, sa, ta, u) {
+              return callback(e, ea, s, t, sa, ta, u);
+            });
+            var found = this[findEdgeName].apply(this, args);
+            if (found)
+              return true;
+            return false;
+          };
+          var everyName = "every" + name[0].toUpperCase() + name.slice(1, -1);
+          Class.prototype[everyName] = function() {
+            var args = Array.prototype.slice.call(arguments);
+            var callback = args.pop();
+            args.push(function(e, ea, s, t, sa, ta, u) {
+              return !callback(e, ea, s, t, sa, ta, u);
+            });
+            var found = this[findEdgeName].apply(this, args);
+            if (found)
+              return false;
+            return true;
+          };
+        }
+        function attachEdgeIteratorCreator(Class, description) {
+          var originalName = description.name, type = description.type, direction = description.direction;
+          var name = originalName.slice(0, -1) + "Entries";
+          Class.prototype[name] = function(source, target) {
+            if (type !== "mixed" && this.type !== "mixed" && type !== this.type)
+              return iterator.empty();
+            if (!arguments.length)
+              return createEdgeIterator(this, type);
+            if (arguments.length === 1) {
+              source = "" + source;
+              var sourceData = this._nodes.get(source);
+              if (!sourceData)
+                throw new NotFoundGraphError("Graph.".concat(name, ': could not find the "').concat(source, '" node in the graph.'));
+              return createEdgeIteratorForNode(type, direction, sourceData);
+            }
+            if (arguments.length === 2) {
+              source = "" + source;
+              target = "" + target;
+              var _sourceData = this._nodes.get(source);
+              if (!_sourceData)
+                throw new NotFoundGraphError("Graph.".concat(name, ':  could not find the "').concat(source, '" source node in the graph.'));
+              if (!this._nodes.has(target))
+                throw new NotFoundGraphError("Graph.".concat(name, ':  could not find the "').concat(target, '" target node in the graph.'));
+              return createEdgeIteratorForPath(type, direction, _sourceData, target);
+            }
+            throw new InvalidArgumentsGraphError("Graph.".concat(name, ": too many arguments (expecting 0, 1 or 2 and got ").concat(arguments.length, ")."));
+          };
+        }
+        function attachEdgeIterationMethods(Graph3) {
+          EDGES_ITERATION.forEach(function(description) {
+            attachEdgeArrayCreator(Graph3, description);
+            attachForEachEdge(Graph3, description);
+            attachFindEdge(Graph3, description);
+            attachEdgeIteratorCreator(Graph3, description);
+          });
+        }
+        var NEIGHBORS_ITERATION = [{
+          name: "neighbors",
+          type: "mixed"
+        }, {
+          name: "inNeighbors",
+          type: "directed",
+          direction: "in"
+        }, {
+          name: "outNeighbors",
+          type: "directed",
+          direction: "out"
+        }, {
+          name: "inboundNeighbors",
+          type: "mixed",
+          direction: "in"
+        }, {
+          name: "outboundNeighbors",
+          type: "mixed",
+          direction: "out"
+        }, {
+          name: "directedNeighbors",
+          type: "directed"
+        }, {
+          name: "undirectedNeighbors",
+          type: "undirected"
+        }];
+        function CompositeSetWrapper() {
+          this.A = null;
+          this.B = null;
+        }
+        CompositeSetWrapper.prototype.wrap = function(set) {
+          if (this.A === null)
+            this.A = set;
+          else if (this.B === null)
+            this.B = set;
+        };
+        CompositeSetWrapper.prototype.has = function(key) {
+          if (this.A !== null && key in this.A)
+            return true;
+          if (this.B !== null && key in this.B)
+            return true;
+          return false;
+        };
+        function forEachInObjectOnce(breakable, visited, nodeData, object, callback) {
+          for (var k in object) {
+            var edgeData = object[k];
+            var sourceData = edgeData.source;
+            var targetData = edgeData.target;
+            var neighborData = sourceData === nodeData ? targetData : sourceData;
+            if (visited && visited.has(neighborData.key))
+              continue;
+            var shouldBreak = callback(neighborData.key, neighborData.attributes);
+            if (breakable && shouldBreak)
+              return neighborData.key;
+          }
+          return;
+        }
+        function forEachNeighbor(breakable, type, direction, nodeData, callback) {
+          if (type !== "mixed") {
+            if (type === "undirected")
+              return forEachInObjectOnce(breakable, null, nodeData, nodeData.undirected, callback);
+            if (typeof direction === "string")
+              return forEachInObjectOnce(breakable, null, nodeData, nodeData[direction], callback);
+          }
+          var visited = new CompositeSetWrapper();
+          var found;
+          if (type !== "undirected") {
+            if (direction !== "out") {
+              found = forEachInObjectOnce(breakable, null, nodeData, nodeData["in"], callback);
+              if (breakable && found)
+                return found;
+              visited.wrap(nodeData["in"]);
+            }
+            if (direction !== "in") {
+              found = forEachInObjectOnce(breakable, visited, nodeData, nodeData.out, callback);
+              if (breakable && found)
+                return found;
+              visited.wrap(nodeData.out);
+            }
+          }
+          if (type !== "directed") {
+            found = forEachInObjectOnce(breakable, visited, nodeData, nodeData.undirected, callback);
+            if (breakable && found)
+              return found;
+          }
+          return;
+        }
+        function createNeighborArrayForNode(type, direction, nodeData) {
+          if (type !== "mixed") {
+            if (type === "undirected")
+              return Object.keys(nodeData.undirected);
+            if (typeof direction === "string")
+              return Object.keys(nodeData[direction]);
+          }
+          var neighbors = [];
+          forEachNeighbor(false, type, direction, nodeData, function(key) {
+            neighbors.push(key);
+          });
+          return neighbors;
+        }
+        function createDedupedObjectIterator(visited, nodeData, object) {
+          var keys = Object.keys(object);
+          var l = keys.length;
+          var i2 = 0;
+          return new iterator(function next() {
+            var neighborData = null;
+            do {
+              if (i2 >= l) {
+                if (visited)
+                  visited.wrap(object);
+                return {
+                  done: true
+                };
+              }
+              var edgeData = object[keys[i2++]];
+              var sourceData = edgeData.source;
+              var targetData = edgeData.target;
+              neighborData = sourceData === nodeData ? targetData : sourceData;
+              if (visited && visited.has(neighborData.key)) {
+                neighborData = null;
+                continue;
+              }
+            } while (neighborData === null);
+            return {
+              done: false,
+              value: {
+                neighbor: neighborData.key,
+                attributes: neighborData.attributes
+              }
+            };
+          });
+        }
+        function createNeighborIterator(type, direction, nodeData) {
+          if (type !== "mixed") {
+            if (type === "undirected")
+              return createDedupedObjectIterator(null, nodeData, nodeData.undirected);
+            if (typeof direction === "string")
+              return createDedupedObjectIterator(null, nodeData, nodeData[direction]);
+          }
+          var iterator$1 = iterator.empty();
+          var visited = new CompositeSetWrapper();
+          if (type !== "undirected") {
+            if (direction !== "out") {
+              iterator$1 = chain(iterator$1, createDedupedObjectIterator(visited, nodeData, nodeData["in"]));
+            }
+            if (direction !== "in") {
+              iterator$1 = chain(iterator$1, createDedupedObjectIterator(visited, nodeData, nodeData.out));
+            }
+          }
+          if (type !== "directed") {
+            iterator$1 = chain(iterator$1, createDedupedObjectIterator(visited, nodeData, nodeData.undirected));
+          }
+          return iterator$1;
+        }
+        function attachNeighborArrayCreator(Class, description) {
+          var name = description.name, type = description.type, direction = description.direction;
+          Class.prototype[name] = function(node) {
+            if (type !== "mixed" && this.type !== "mixed" && type !== this.type)
+              return [];
+            node = "" + node;
+            var nodeData = this._nodes.get(node);
+            if (typeof nodeData === "undefined")
+              throw new NotFoundGraphError("Graph.".concat(name, ': could not find the "').concat(node, '" node in the graph.'));
+            return createNeighborArrayForNode(type === "mixed" ? this.type : type, direction, nodeData);
+          };
+        }
+        function attachForEachNeighbor(Class, description) {
+          var name = description.name, type = description.type, direction = description.direction;
+          var forEachName = "forEach" + name[0].toUpperCase() + name.slice(1, -1);
+          Class.prototype[forEachName] = function(node, callback) {
+            if (type !== "mixed" && this.type !== "mixed" && type !== this.type)
+              return;
+            node = "" + node;
+            var nodeData = this._nodes.get(node);
+            if (typeof nodeData === "undefined")
+              throw new NotFoundGraphError("Graph.".concat(forEachName, ': could not find the "').concat(node, '" node in the graph.'));
+            forEachNeighbor(false, type === "mixed" ? this.type : type, direction, nodeData, callback);
+          };
+          var mapName = "map" + name[0].toUpperCase() + name.slice(1);
+          Class.prototype[mapName] = function(node, callback) {
+            var result = [];
+            this[forEachName](node, function(n, a) {
+              result.push(callback(n, a));
+            });
+            return result;
+          };
+          var filterName = "filter" + name[0].toUpperCase() + name.slice(1);
+          Class.prototype[filterName] = function(node, callback) {
+            var result = [];
+            this[forEachName](node, function(n, a) {
+              if (callback(n, a))
+                result.push(n);
+            });
+            return result;
+          };
+          var reduceName = "reduce" + name[0].toUpperCase() + name.slice(1);
+          Class.prototype[reduceName] = function(node, callback, initialValue) {
+            if (arguments.length < 3)
+              throw new InvalidArgumentsGraphError("Graph.".concat(reduceName, ": missing initial value. You must provide it because the callback takes more than one argument and we cannot infer the initial value from the first iteration, as you could with a simple array."));
+            var accumulator = initialValue;
+            this[forEachName](node, function(n, a) {
+              accumulator = callback(accumulator, n, a);
+            });
+            return accumulator;
+          };
+        }
+        function attachFindNeighbor(Class, description) {
+          var name = description.name, type = description.type, direction = description.direction;
+          var capitalizedSingular = name[0].toUpperCase() + name.slice(1, -1);
+          var findName = "find" + capitalizedSingular;
+          Class.prototype[findName] = function(node, callback) {
+            if (type !== "mixed" && this.type !== "mixed" && type !== this.type)
+              return;
+            node = "" + node;
+            var nodeData = this._nodes.get(node);
+            if (typeof nodeData === "undefined")
+              throw new NotFoundGraphError("Graph.".concat(findName, ': could not find the "').concat(node, '" node in the graph.'));
+            return forEachNeighbor(true, type === "mixed" ? this.type : type, direction, nodeData, callback);
+          };
+          var someName = "some" + capitalizedSingular;
+          Class.prototype[someName] = function(node, callback) {
+            var found = this[findName](node, callback);
+            if (found)
+              return true;
+            return false;
+          };
+          var everyName = "every" + capitalizedSingular;
+          Class.prototype[everyName] = function(node, callback) {
+            var found = this[findName](node, function(n, a) {
+              return !callback(n, a);
+            });
+            if (found)
+              return false;
+            return true;
+          };
+        }
+        function attachNeighborIteratorCreator(Class, description) {
+          var name = description.name, type = description.type, direction = description.direction;
+          var iteratorName = name.slice(0, -1) + "Entries";
+          Class.prototype[iteratorName] = function(node) {
+            if (type !== "mixed" && this.type !== "mixed" && type !== this.type)
+              return iterator.empty();
+            node = "" + node;
+            var nodeData = this._nodes.get(node);
+            if (typeof nodeData === "undefined")
+              throw new NotFoundGraphError("Graph.".concat(iteratorName, ': could not find the "').concat(node, '" node in the graph.'));
+            return createNeighborIterator(type === "mixed" ? this.type : type, direction, nodeData);
+          };
+        }
+        function attachNeighborIterationMethods(Graph3) {
+          NEIGHBORS_ITERATION.forEach(function(description) {
+            attachNeighborArrayCreator(Graph3, description);
+            attachForEachNeighbor(Graph3, description);
+            attachFindNeighbor(Graph3, description);
+            attachNeighborIteratorCreator(Graph3, description);
+          });
+        }
+        function forEachAdjacency(breakable, assymetric, disconnectedNodes, graph2, callback) {
+          var iterator2 = graph2._nodes.values();
+          var type = graph2.type;
+          var step, sourceData, neighbor, adj, edgeData, targetData, shouldBreak;
+          while (step = iterator2.next(), step.done !== true) {
+            var hasEdges = false;
+            sourceData = step.value;
+            if (type !== "undirected") {
+              adj = sourceData.out;
+              for (neighbor in adj) {
+                edgeData = adj[neighbor];
+                do {
+                  targetData = edgeData.target;
+                  hasEdges = true;
+                  shouldBreak = callback(sourceData.key, targetData.key, sourceData.attributes, targetData.attributes, edgeData.key, edgeData.attributes, edgeData.undirected);
+                  if (breakable && shouldBreak)
+                    return edgeData;
+                  edgeData = edgeData.next;
+                } while (edgeData);
+              }
+            }
+            if (type !== "directed") {
+              adj = sourceData.undirected;
+              for (neighbor in adj) {
+                if (assymetric && sourceData.key > neighbor)
+                  continue;
+                edgeData = adj[neighbor];
+                do {
+                  targetData = edgeData.target;
+                  if (targetData.key !== neighbor)
+                    targetData = edgeData.source;
+                  hasEdges = true;
+                  shouldBreak = callback(sourceData.key, targetData.key, sourceData.attributes, targetData.attributes, edgeData.key, edgeData.attributes, edgeData.undirected);
+                  if (breakable && shouldBreak)
+                    return edgeData;
+                  edgeData = edgeData.next;
+                } while (edgeData);
+              }
+            }
+            if (disconnectedNodes && !hasEdges) {
+              shouldBreak = callback(sourceData.key, null, sourceData.attributes, null, null, null, null);
+              if (breakable && shouldBreak)
+                return null;
+            }
+          }
+          return;
+        }
+        function serializeNode(key, data) {
+          var serialized = {
+            key
+          };
+          if (!isEmpty(data.attributes))
+            serialized.attributes = assign({}, data.attributes);
+          return serialized;
+        }
+        function serializeEdge(type, key, data) {
+          var serialized = {
+            key,
+            source: data.source.key,
+            target: data.target.key
+          };
+          if (!isEmpty(data.attributes))
+            serialized.attributes = assign({}, data.attributes);
+          if (type === "mixed" && data.undirected)
+            serialized.undirected = true;
+          return serialized;
+        }
+        function validateSerializedNode(value) {
+          if (!isPlainObject(value))
+            throw new InvalidArgumentsGraphError('Graph.import: invalid serialized node. A serialized node should be a plain object with at least a "key" property.');
+          if (!("key" in value))
+            throw new InvalidArgumentsGraphError("Graph.import: serialized node is missing its key.");
+          if ("attributes" in value && (!isPlainObject(value.attributes) || value.attributes === null))
+            throw new InvalidArgumentsGraphError("Graph.import: invalid attributes. Attributes should be a plain object, null or omitted.");
+        }
+        function validateSerializedEdge(value) {
+          if (!isPlainObject(value))
+            throw new InvalidArgumentsGraphError('Graph.import: invalid serialized edge. A serialized edge should be a plain object with at least a "source" & "target" property.');
+          if (!("source" in value))
+            throw new InvalidArgumentsGraphError("Graph.import: serialized edge is missing its source.");
+          if (!("target" in value))
+            throw new InvalidArgumentsGraphError("Graph.import: serialized edge is missing its target.");
+          if ("attributes" in value && (!isPlainObject(value.attributes) || value.attributes === null))
+            throw new InvalidArgumentsGraphError("Graph.import: invalid attributes. Attributes should be a plain object, null or omitted.");
+          if ("undirected" in value && typeof value.undirected !== "boolean")
+            throw new InvalidArgumentsGraphError("Graph.import: invalid undirectedness information. Undirected should be boolean or omitted.");
+        }
+        var INSTANCE_ID = incrementalIdStartingFromRandomByte();
+        var TYPES = /* @__PURE__ */ new Set(["directed", "undirected", "mixed"]);
+        var EMITTER_PROPS = /* @__PURE__ */ new Set(["domain", "_events", "_eventsCount", "_maxListeners"]);
+        var EDGE_ADD_METHODS = [{
+          name: function name(verb) {
+            return "".concat(verb, "Edge");
+          },
+          generateKey: true
+        }, {
+          name: function name(verb) {
+            return "".concat(verb, "DirectedEdge");
+          },
+          generateKey: true,
+          type: "directed"
+        }, {
+          name: function name(verb) {
+            return "".concat(verb, "UndirectedEdge");
+          },
+          generateKey: true,
+          type: "undirected"
+        }, {
+          name: function name(verb) {
+            return "".concat(verb, "EdgeWithKey");
+          }
+        }, {
+          name: function name(verb) {
+            return "".concat(verb, "DirectedEdgeWithKey");
+          },
+          type: "directed"
+        }, {
+          name: function name(verb) {
+            return "".concat(verb, "UndirectedEdgeWithKey");
+          },
+          type: "undirected"
+        }];
+        var DEFAULTS = {
+          allowSelfLoops: true,
+          multi: false,
+          type: "mixed"
+        };
+        function _addNode(graph2, node, attributes) {
+          if (attributes && !isPlainObject(attributes))
+            throw new InvalidArgumentsGraphError('Graph.addNode: invalid attributes. Expecting an object but got "'.concat(attributes, '"'));
+          node = "" + node;
+          attributes = attributes || {};
+          if (graph2._nodes.has(node))
+            throw new UsageGraphError('Graph.addNode: the "'.concat(node, '" node already exist in the graph.'));
+          var data = new graph2.NodeDataClass(node, attributes);
+          graph2._nodes.set(node, data);
+          graph2.emit("nodeAdded", {
+            key: node,
+            attributes
+          });
+          return data;
+        }
+        function unsafeAddNode(graph2, node, attributes) {
+          var data = new graph2.NodeDataClass(node, attributes);
+          graph2._nodes.set(node, data);
+          graph2.emit("nodeAdded", {
+            key: node,
+            attributes
+          });
+          return data;
+        }
+        function addEdge(graph2, name, mustGenerateKey, undirected, edge, source, target, attributes) {
+          if (!undirected && graph2.type === "undirected")
+            throw new UsageGraphError("Graph.".concat(name, ": you cannot add a directed edge to an undirected graph. Use the #.addEdge or #.addUndirectedEdge instead."));
+          if (undirected && graph2.type === "directed")
+            throw new UsageGraphError("Graph.".concat(name, ": you cannot add an undirected edge to a directed graph. Use the #.addEdge or #.addDirectedEdge instead."));
+          if (attributes && !isPlainObject(attributes))
+            throw new InvalidArgumentsGraphError("Graph.".concat(name, ': invalid attributes. Expecting an object but got "').concat(attributes, '"'));
+          source = "" + source;
+          target = "" + target;
+          attributes = attributes || {};
+          if (!graph2.allowSelfLoops && source === target)
+            throw new UsageGraphError("Graph.".concat(name, ': source & target are the same ("').concat(source, `"), thus creating a loop explicitly forbidden by this graph 'allowSelfLoops' option set to false.`));
+          var sourceData = graph2._nodes.get(source), targetData = graph2._nodes.get(target);
+          if (!sourceData)
+            throw new NotFoundGraphError("Graph.".concat(name, ': source node "').concat(source, '" not found.'));
+          if (!targetData)
+            throw new NotFoundGraphError("Graph.".concat(name, ': target node "').concat(target, '" not found.'));
+          var eventData = {
+            key: null,
+            undirected,
+            source,
+            target,
+            attributes
+          };
+          if (mustGenerateKey) {
+            edge = graph2._edgeKeyGenerator();
+          } else {
+            edge = "" + edge;
+            if (graph2._edges.has(edge))
+              throw new UsageGraphError("Graph.".concat(name, ': the "').concat(edge, '" edge already exists in the graph.'));
+          }
+          if (!graph2.multi && (undirected ? typeof sourceData.undirected[target] !== "undefined" : typeof sourceData.out[target] !== "undefined")) {
+            throw new UsageGraphError("Graph.".concat(name, ': an edge linking "').concat(source, '" to "').concat(target, `" already exists. If you really want to add multiple edges linking those nodes, you should create a multi graph by using the 'multi' option.`));
+          }
+          var edgeData = new EdgeData(undirected, edge, sourceData, targetData, attributes);
+          graph2._edges.set(edge, edgeData);
+          var isSelfLoop = source === target;
+          if (undirected) {
+            sourceData.undirectedDegree++;
+            targetData.undirectedDegree++;
+            if (isSelfLoop) {
+              sourceData.undirectedLoops++;
+              graph2._undirectedSelfLoopCount++;
+            }
+          } else {
+            sourceData.outDegree++;
+            targetData.inDegree++;
+            if (isSelfLoop) {
+              sourceData.directedLoops++;
+              graph2._directedSelfLoopCount++;
+            }
+          }
+          if (graph2.multi)
+            edgeData.attachMulti();
+          else
+            edgeData.attach();
+          if (undirected)
+            graph2._undirectedSize++;
+          else
+            graph2._directedSize++;
+          eventData.key = edge;
+          graph2.emit("edgeAdded", eventData);
+          return edge;
+        }
+        function mergeEdge(graph2, name, mustGenerateKey, undirected, edge, source, target, attributes, asUpdater) {
+          if (!undirected && graph2.type === "undirected")
+            throw new UsageGraphError("Graph.".concat(name, ": you cannot merge/update a directed edge to an undirected graph. Use the #.mergeEdge/#.updateEdge or #.addUndirectedEdge instead."));
+          if (undirected && graph2.type === "directed")
+            throw new UsageGraphError("Graph.".concat(name, ": you cannot merge/update an undirected edge to a directed graph. Use the #.mergeEdge/#.updateEdge or #.addDirectedEdge instead."));
+          if (attributes) {
+            if (asUpdater) {
+              if (typeof attributes !== "function")
+                throw new InvalidArgumentsGraphError("Graph.".concat(name, ': invalid updater function. Expecting a function but got "').concat(attributes, '"'));
+            } else {
+              if (!isPlainObject(attributes))
+                throw new InvalidArgumentsGraphError("Graph.".concat(name, ': invalid attributes. Expecting an object but got "').concat(attributes, '"'));
+            }
+          }
+          source = "" + source;
+          target = "" + target;
+          var updater;
+          if (asUpdater) {
+            updater = attributes;
+            attributes = void 0;
+          }
+          if (!graph2.allowSelfLoops && source === target)
+            throw new UsageGraphError("Graph.".concat(name, ': source & target are the same ("').concat(source, `"), thus creating a loop explicitly forbidden by this graph 'allowSelfLoops' option set to false.`));
+          var sourceData = graph2._nodes.get(source);
+          var targetData = graph2._nodes.get(target);
+          var edgeData;
+          var alreadyExistingEdgeData;
+          if (!mustGenerateKey) {
+            edgeData = graph2._edges.get(edge);
+            if (edgeData) {
+              if (edgeData.source.key !== source || edgeData.target.key !== target) {
+                if (!undirected || edgeData.source.key !== target || edgeData.target.key !== source) {
+                  throw new UsageGraphError("Graph.".concat(name, ': inconsistency detected when attempting to merge the "').concat(edge, '" edge with "').concat(source, '" source & "').concat(target, '" target vs. ("').concat(edgeData.source.key, '", "').concat(edgeData.target.key, '").'));
+                }
+              }
+              alreadyExistingEdgeData = edgeData;
+            }
+          }
+          if (!alreadyExistingEdgeData && !graph2.multi && sourceData) {
+            alreadyExistingEdgeData = undirected ? sourceData.undirected[target] : sourceData.out[target];
+          }
+          if (alreadyExistingEdgeData) {
+            var info = [alreadyExistingEdgeData.key, false, false, false];
+            if (asUpdater ? !updater : !attributes)
+              return info;
+            if (asUpdater) {
+              var oldAttributes = alreadyExistingEdgeData.attributes;
+              alreadyExistingEdgeData.attributes = updater(oldAttributes);
+              graph2.emit("edgeAttributesUpdated", {
+                type: "replace",
+                key: alreadyExistingEdgeData.key,
+                attributes: alreadyExistingEdgeData.attributes
+              });
+            } else {
+              assign(alreadyExistingEdgeData.attributes, attributes);
+              graph2.emit("edgeAttributesUpdated", {
+                type: "merge",
+                key: alreadyExistingEdgeData.key,
+                attributes: alreadyExistingEdgeData.attributes,
+                data: attributes
+              });
+            }
+            return info;
+          }
+          attributes = attributes || {};
+          if (asUpdater && updater)
+            attributes = updater(attributes);
+          var eventData = {
+            key: null,
+            undirected,
+            source,
+            target,
+            attributes
+          };
+          if (mustGenerateKey) {
+            edge = graph2._edgeKeyGenerator();
+          } else {
+            edge = "" + edge;
+            if (graph2._edges.has(edge))
+              throw new UsageGraphError("Graph.".concat(name, ': the "').concat(edge, '" edge already exists in the graph.'));
+          }
+          var sourceWasAdded = false;
+          var targetWasAdded = false;
+          if (!sourceData) {
+            sourceData = unsafeAddNode(graph2, source, {});
+            sourceWasAdded = true;
+            if (source === target) {
+              targetData = sourceData;
+              targetWasAdded = true;
+            }
+          }
+          if (!targetData) {
+            targetData = unsafeAddNode(graph2, target, {});
+            targetWasAdded = true;
+          }
+          edgeData = new EdgeData(undirected, edge, sourceData, targetData, attributes);
+          graph2._edges.set(edge, edgeData);
+          var isSelfLoop = source === target;
+          if (undirected) {
+            sourceData.undirectedDegree++;
+            targetData.undirectedDegree++;
+            if (isSelfLoop) {
+              sourceData.undirectedLoops++;
+              graph2._undirectedSelfLoopCount++;
+            }
+          } else {
+            sourceData.outDegree++;
+            targetData.inDegree++;
+            if (isSelfLoop) {
+              sourceData.directedLoops++;
+              graph2._directedSelfLoopCount++;
+            }
+          }
+          if (graph2.multi)
+            edgeData.attachMulti();
+          else
+            edgeData.attach();
+          if (undirected)
+            graph2._undirectedSize++;
+          else
+            graph2._directedSize++;
+          eventData.key = edge;
+          graph2.emit("edgeAdded", eventData);
+          return [edge, true, sourceWasAdded, targetWasAdded];
+        }
+        function dropEdgeFromData(graph2, edgeData) {
+          graph2._edges["delete"](edgeData.key);
+          var sourceData = edgeData.source, targetData = edgeData.target, attributes = edgeData.attributes;
+          var undirected = edgeData.undirected;
+          var isSelfLoop = sourceData === targetData;
+          if (undirected) {
+            sourceData.undirectedDegree--;
+            targetData.undirectedDegree--;
+            if (isSelfLoop) {
+              sourceData.undirectedLoops--;
+              graph2._undirectedSelfLoopCount--;
+            }
+          } else {
+            sourceData.outDegree--;
+            targetData.inDegree--;
+            if (isSelfLoop) {
+              sourceData.directedLoops--;
+              graph2._directedSelfLoopCount--;
+            }
+          }
+          if (graph2.multi)
+            edgeData.detachMulti();
+          else
+            edgeData.detach();
+          if (undirected)
+            graph2._undirectedSize--;
+          else
+            graph2._directedSize--;
+          graph2.emit("edgeDropped", {
+            key: edgeData.key,
+            attributes,
+            source: sourceData.key,
+            target: targetData.key,
+            undirected
+          });
+        }
+        var Graph2 = /* @__PURE__ */ function(_EventEmitter) {
+          _inheritsLoose2(Graph3, _EventEmitter);
+          function Graph3(options2) {
+            var _this2;
+            _this2 = _EventEmitter.call(this) || this;
+            options2 = assign({}, DEFAULTS, options2);
+            if (typeof options2.multi !== "boolean")
+              throw new InvalidArgumentsGraphError(`Graph.constructor: invalid 'multi' option. Expecting a boolean but got "`.concat(options2.multi, '".'));
+            if (!TYPES.has(options2.type))
+              throw new InvalidArgumentsGraphError(`Graph.constructor: invalid 'type' option. Should be one of "mixed", "directed" or "undirected" but got "`.concat(options2.type, '".'));
+            if (typeof options2.allowSelfLoops !== "boolean")
+              throw new InvalidArgumentsGraphError(`Graph.constructor: invalid 'allowSelfLoops' option. Expecting a boolean but got "`.concat(options2.allowSelfLoops, '".'));
+            var NodeDataClass = options2.type === "mixed" ? MixedNodeData : options2.type === "directed" ? DirectedNodeData : UndirectedNodeData;
+            privateProperty(_assertThisInitialized13(_this2), "NodeDataClass", NodeDataClass);
+            var instancePrefix = "geid_" + INSTANCE_ID() + "_";
+            var edgeId = 0;
+            var edgeKeyGenerator = function edgeKeyGenerator2() {
+              var availableEdgeKey;
+              do {
+                availableEdgeKey = instancePrefix + edgeId++;
+              } while (_this2._edges.has(availableEdgeKey));
+              return availableEdgeKey;
+            };
+            privateProperty(_assertThisInitialized13(_this2), "_attributes", {});
+            privateProperty(_assertThisInitialized13(_this2), "_nodes", /* @__PURE__ */ new Map());
+            privateProperty(_assertThisInitialized13(_this2), "_edges", /* @__PURE__ */ new Map());
+            privateProperty(_assertThisInitialized13(_this2), "_directedSize", 0);
+            privateProperty(_assertThisInitialized13(_this2), "_undirectedSize", 0);
+            privateProperty(_assertThisInitialized13(_this2), "_directedSelfLoopCount", 0);
+            privateProperty(_assertThisInitialized13(_this2), "_undirectedSelfLoopCount", 0);
+            privateProperty(_assertThisInitialized13(_this2), "_edgeKeyGenerator", edgeKeyGenerator);
+            privateProperty(_assertThisInitialized13(_this2), "_options", options2);
+            EMITTER_PROPS.forEach(function(prop) {
+              return privateProperty(_assertThisInitialized13(_this2), prop, _this2[prop]);
+            });
+            readOnlyProperty(_assertThisInitialized13(_this2), "order", function() {
+              return _this2._nodes.size;
+            });
+            readOnlyProperty(_assertThisInitialized13(_this2), "size", function() {
+              return _this2._edges.size;
+            });
+            readOnlyProperty(_assertThisInitialized13(_this2), "directedSize", function() {
+              return _this2._directedSize;
+            });
+            readOnlyProperty(_assertThisInitialized13(_this2), "undirectedSize", function() {
+              return _this2._undirectedSize;
+            });
+            readOnlyProperty(_assertThisInitialized13(_this2), "selfLoopCount", function() {
+              return _this2._directedSelfLoopCount + _this2._undirectedSelfLoopCount;
+            });
+            readOnlyProperty(_assertThisInitialized13(_this2), "directedSelfLoopCount", function() {
+              return _this2._directedSelfLoopCount;
+            });
+            readOnlyProperty(_assertThisInitialized13(_this2), "undirectedSelfLoopCount", function() {
+              return _this2._undirectedSelfLoopCount;
+            });
+            readOnlyProperty(_assertThisInitialized13(_this2), "multi", _this2._options.multi);
+            readOnlyProperty(_assertThisInitialized13(_this2), "type", _this2._options.type);
+            readOnlyProperty(_assertThisInitialized13(_this2), "allowSelfLoops", _this2._options.allowSelfLoops);
+            readOnlyProperty(_assertThisInitialized13(_this2), "implementation", function() {
+              return "graphology";
+            });
+            return _this2;
+          }
+          var _proto = Graph3.prototype;
+          _proto._resetInstanceCounters = function _resetInstanceCounters() {
+            this._directedSize = 0;
+            this._undirectedSize = 0;
+            this._directedSelfLoopCount = 0;
+            this._undirectedSelfLoopCount = 0;
+          };
+          _proto.hasNode = function hasNode(node) {
+            return this._nodes.has("" + node);
+          };
+          _proto.hasDirectedEdge = function hasDirectedEdge(source, target) {
+            if (this.type === "undirected")
+              return false;
+            if (arguments.length === 1) {
+              var edge = "" + source;
+              var edgeData = this._edges.get(edge);
+              return !!edgeData && !edgeData.undirected;
+            } else if (arguments.length === 2) {
+              source = "" + source;
+              target = "" + target;
+              var nodeData = this._nodes.get(source);
+              if (!nodeData)
+                return false;
+              return nodeData.out.hasOwnProperty(target);
+            }
+            throw new InvalidArgumentsGraphError("Graph.hasDirectedEdge: invalid arity (".concat(arguments.length, ", instead of 1 or 2). You can either ask for an edge id or for the existence of an edge between a source & a target."));
+          };
+          _proto.hasUndirectedEdge = function hasUndirectedEdge(source, target) {
+            if (this.type === "directed")
+              return false;
+            if (arguments.length === 1) {
+              var edge = "" + source;
+              var edgeData = this._edges.get(edge);
+              return !!edgeData && edgeData.undirected;
+            } else if (arguments.length === 2) {
+              source = "" + source;
+              target = "" + target;
+              var nodeData = this._nodes.get(source);
+              if (!nodeData)
+                return false;
+              return nodeData.undirected.hasOwnProperty(target);
+            }
+            throw new InvalidArgumentsGraphError("Graph.hasDirectedEdge: invalid arity (".concat(arguments.length, ", instead of 1 or 2). You can either ask for an edge id or for the existence of an edge between a source & a target."));
+          };
+          _proto.hasEdge = function hasEdge(source, target) {
+            if (arguments.length === 1) {
+              var edge = "" + source;
+              return this._edges.has(edge);
+            } else if (arguments.length === 2) {
+              source = "" + source;
+              target = "" + target;
+              var nodeData = this._nodes.get(source);
+              if (!nodeData)
+                return false;
+              return typeof nodeData.out !== "undefined" && nodeData.out.hasOwnProperty(target) || typeof nodeData.undirected !== "undefined" && nodeData.undirected.hasOwnProperty(target);
+            }
+            throw new InvalidArgumentsGraphError("Graph.hasEdge: invalid arity (".concat(arguments.length, ", instead of 1 or 2). You can either ask for an edge id or for the existence of an edge between a source & a target."));
+          };
+          _proto.directedEdge = function directedEdge(source, target) {
+            if (this.type === "undirected")
+              return;
+            source = "" + source;
+            target = "" + target;
+            if (this.multi)
+              throw new UsageGraphError("Graph.directedEdge: this method is irrelevant with multigraphs since there might be multiple edges between source & target. See #.directedEdges instead.");
+            var sourceData = this._nodes.get(source);
+            if (!sourceData)
+              throw new NotFoundGraphError('Graph.directedEdge: could not find the "'.concat(source, '" source node in the graph.'));
+            if (!this._nodes.has(target))
+              throw new NotFoundGraphError('Graph.directedEdge: could not find the "'.concat(target, '" target node in the graph.'));
+            var edgeData = sourceData.out && sourceData.out[target] || void 0;
+            if (edgeData)
+              return edgeData.key;
+          };
+          _proto.undirectedEdge = function undirectedEdge(source, target) {
+            if (this.type === "directed")
+              return;
+            source = "" + source;
+            target = "" + target;
+            if (this.multi)
+              throw new UsageGraphError("Graph.undirectedEdge: this method is irrelevant with multigraphs since there might be multiple edges between source & target. See #.undirectedEdges instead.");
+            var sourceData = this._nodes.get(source);
+            if (!sourceData)
+              throw new NotFoundGraphError('Graph.undirectedEdge: could not find the "'.concat(source, '" source node in the graph.'));
+            if (!this._nodes.has(target))
+              throw new NotFoundGraphError('Graph.undirectedEdge: could not find the "'.concat(target, '" target node in the graph.'));
+            var edgeData = sourceData.undirected && sourceData.undirected[target] || void 0;
+            if (edgeData)
+              return edgeData.key;
+          };
+          _proto.edge = function edge(source, target) {
+            if (this.multi)
+              throw new UsageGraphError("Graph.edge: this method is irrelevant with multigraphs since there might be multiple edges between source & target. See #.edges instead.");
+            source = "" + source;
+            target = "" + target;
+            var sourceData = this._nodes.get(source);
+            if (!sourceData)
+              throw new NotFoundGraphError('Graph.edge: could not find the "'.concat(source, '" source node in the graph.'));
+            if (!this._nodes.has(target))
+              throw new NotFoundGraphError('Graph.edge: could not find the "'.concat(target, '" target node in the graph.'));
+            var edgeData = sourceData.out && sourceData.out[target] || sourceData.undirected && sourceData.undirected[target] || void 0;
+            if (edgeData)
+              return edgeData.key;
+          };
+          _proto.areDirectedNeighbors = function areDirectedNeighbors(node, neighbor) {
+            node = "" + node;
+            neighbor = "" + neighbor;
+            var nodeData = this._nodes.get(node);
+            if (!nodeData)
+              throw new NotFoundGraphError('Graph.areDirectedNeighbors: could not find the "'.concat(node, '" node in the graph.'));
+            if (this.type === "undirected")
+              return false;
+            return neighbor in nodeData["in"] || neighbor in nodeData.out;
+          };
+          _proto.areOutNeighbors = function areOutNeighbors(node, neighbor) {
+            node = "" + node;
+            neighbor = "" + neighbor;
+            var nodeData = this._nodes.get(node);
+            if (!nodeData)
+              throw new NotFoundGraphError('Graph.areOutNeighbors: could not find the "'.concat(node, '" node in the graph.'));
+            if (this.type === "undirected")
+              return false;
+            return neighbor in nodeData.out;
+          };
+          _proto.areInNeighbors = function areInNeighbors(node, neighbor) {
+            node = "" + node;
+            neighbor = "" + neighbor;
+            var nodeData = this._nodes.get(node);
+            if (!nodeData)
+              throw new NotFoundGraphError('Graph.areInNeighbors: could not find the "'.concat(node, '" node in the graph.'));
+            if (this.type === "undirected")
+              return false;
+            return neighbor in nodeData["in"];
+          };
+          _proto.areUndirectedNeighbors = function areUndirectedNeighbors(node, neighbor) {
+            node = "" + node;
+            neighbor = "" + neighbor;
+            var nodeData = this._nodes.get(node);
+            if (!nodeData)
+              throw new NotFoundGraphError('Graph.areUndirectedNeighbors: could not find the "'.concat(node, '" node in the graph.'));
+            if (this.type === "directed")
+              return false;
+            return neighbor in nodeData.undirected;
+          };
+          _proto.areNeighbors = function areNeighbors(node, neighbor) {
+            node = "" + node;
+            neighbor = "" + neighbor;
+            var nodeData = this._nodes.get(node);
+            if (!nodeData)
+              throw new NotFoundGraphError('Graph.areNeighbors: could not find the "'.concat(node, '" node in the graph.'));
+            if (this.type !== "undirected") {
+              if (neighbor in nodeData["in"] || neighbor in nodeData.out)
+                return true;
+            }
+            if (this.type !== "directed") {
+              if (neighbor in nodeData.undirected)
+                return true;
+            }
+            return false;
+          };
+          _proto.areInboundNeighbors = function areInboundNeighbors(node, neighbor) {
+            node = "" + node;
+            neighbor = "" + neighbor;
+            var nodeData = this._nodes.get(node);
+            if (!nodeData)
+              throw new NotFoundGraphError('Graph.areInboundNeighbors: could not find the "'.concat(node, '" node in the graph.'));
+            if (this.type !== "undirected") {
+              if (neighbor in nodeData["in"])
+                return true;
+            }
+            if (this.type !== "directed") {
+              if (neighbor in nodeData.undirected)
+                return true;
+            }
+            return false;
+          };
+          _proto.areOutboundNeighbors = function areOutboundNeighbors(node, neighbor) {
+            node = "" + node;
+            neighbor = "" + neighbor;
+            var nodeData = this._nodes.get(node);
+            if (!nodeData)
+              throw new NotFoundGraphError('Graph.areOutboundNeighbors: could not find the "'.concat(node, '" node in the graph.'));
+            if (this.type !== "undirected") {
+              if (neighbor in nodeData.out)
+                return true;
+            }
+            if (this.type !== "directed") {
+              if (neighbor in nodeData.undirected)
+                return true;
+            }
+            return false;
+          };
+          _proto.inDegree = function inDegree(node) {
+            node = "" + node;
+            var nodeData = this._nodes.get(node);
+            if (!nodeData)
+              throw new NotFoundGraphError('Graph.inDegree: could not find the "'.concat(node, '" node in the graph.'));
+            if (this.type === "undirected")
+              return 0;
+            return nodeData.inDegree;
+          };
+          _proto.outDegree = function outDegree(node) {
+            node = "" + node;
+            var nodeData = this._nodes.get(node);
+            if (!nodeData)
+              throw new NotFoundGraphError('Graph.outDegree: could not find the "'.concat(node, '" node in the graph.'));
+            if (this.type === "undirected")
+              return 0;
+            return nodeData.outDegree;
+          };
+          _proto.directedDegree = function directedDegree(node) {
+            node = "" + node;
+            var nodeData = this._nodes.get(node);
+            if (!nodeData)
+              throw new NotFoundGraphError('Graph.directedDegree: could not find the "'.concat(node, '" node in the graph.'));
+            if (this.type === "undirected")
+              return 0;
+            return nodeData.inDegree + nodeData.outDegree;
+          };
+          _proto.undirectedDegree = function undirectedDegree(node) {
+            node = "" + node;
+            var nodeData = this._nodes.get(node);
+            if (!nodeData)
+              throw new NotFoundGraphError('Graph.undirectedDegree: could not find the "'.concat(node, '" node in the graph.'));
+            if (this.type === "directed")
+              return 0;
+            return nodeData.undirectedDegree;
+          };
+          _proto.inboundDegree = function inboundDegree(node) {
+            node = "" + node;
+            var nodeData = this._nodes.get(node);
+            if (!nodeData)
+              throw new NotFoundGraphError('Graph.inboundDegree: could not find the "'.concat(node, '" node in the graph.'));
+            var degree = 0;
+            if (this.type !== "directed") {
+              degree += nodeData.undirectedDegree;
+            }
+            if (this.type !== "undirected") {
+              degree += nodeData.inDegree;
+            }
+            return degree;
+          };
+          _proto.outboundDegree = function outboundDegree(node) {
+            node = "" + node;
+            var nodeData = this._nodes.get(node);
+            if (!nodeData)
+              throw new NotFoundGraphError('Graph.outboundDegree: could not find the "'.concat(node, '" node in the graph.'));
+            var degree = 0;
+            if (this.type !== "directed") {
+              degree += nodeData.undirectedDegree;
+            }
+            if (this.type !== "undirected") {
+              degree += nodeData.outDegree;
+            }
+            return degree;
+          };
+          _proto.degree = function degree(node) {
+            node = "" + node;
+            var nodeData = this._nodes.get(node);
+            if (!nodeData)
+              throw new NotFoundGraphError('Graph.degree: could not find the "'.concat(node, '" node in the graph.'));
+            var degree2 = 0;
+            if (this.type !== "directed") {
+              degree2 += nodeData.undirectedDegree;
+            }
+            if (this.type !== "undirected") {
+              degree2 += nodeData.inDegree + nodeData.outDegree;
+            }
+            return degree2;
+          };
+          _proto.inDegreeWithoutSelfLoops = function inDegreeWithoutSelfLoops(node) {
+            node = "" + node;
+            var nodeData = this._nodes.get(node);
+            if (!nodeData)
+              throw new NotFoundGraphError('Graph.inDegreeWithoutSelfLoops: could not find the "'.concat(node, '" node in the graph.'));
+            if (this.type === "undirected")
+              return 0;
+            return nodeData.inDegree - nodeData.directedLoops;
+          };
+          _proto.outDegreeWithoutSelfLoops = function outDegreeWithoutSelfLoops(node) {
+            node = "" + node;
+            var nodeData = this._nodes.get(node);
+            if (!nodeData)
+              throw new NotFoundGraphError('Graph.outDegreeWithoutSelfLoops: could not find the "'.concat(node, '" node in the graph.'));
+            if (this.type === "undirected")
+              return 0;
+            return nodeData.outDegree - nodeData.directedLoops;
+          };
+          _proto.directedDegreeWithoutSelfLoops = function directedDegreeWithoutSelfLoops(node) {
+            node = "" + node;
+            var nodeData = this._nodes.get(node);
+            if (!nodeData)
+              throw new NotFoundGraphError('Graph.directedDegreeWithoutSelfLoops: could not find the "'.concat(node, '" node in the graph.'));
+            if (this.type === "undirected")
+              return 0;
+            return nodeData.inDegree + nodeData.outDegree - nodeData.directedLoops * 2;
+          };
+          _proto.undirectedDegreeWithoutSelfLoops = function undirectedDegreeWithoutSelfLoops(node) {
+            node = "" + node;
+            var nodeData = this._nodes.get(node);
+            if (!nodeData)
+              throw new NotFoundGraphError('Graph.undirectedDegreeWithoutSelfLoops: could not find the "'.concat(node, '" node in the graph.'));
+            if (this.type === "directed")
+              return 0;
+            return nodeData.undirectedDegree - nodeData.undirectedLoops * 2;
+          };
+          _proto.inboundDegreeWithoutSelfLoops = function inboundDegreeWithoutSelfLoops(node) {
+            node = "" + node;
+            var nodeData = this._nodes.get(node);
+            if (!nodeData)
+              throw new NotFoundGraphError('Graph.inboundDegreeWithoutSelfLoops: could not find the "'.concat(node, '" node in the graph.'));
+            var degree = 0;
+            var loops = 0;
+            if (this.type !== "directed") {
+              degree += nodeData.undirectedDegree;
+              loops += nodeData.undirectedLoops * 2;
+            }
+            if (this.type !== "undirected") {
+              degree += nodeData.inDegree;
+              loops += nodeData.directedLoops;
+            }
+            return degree - loops;
+          };
+          _proto.outboundDegreeWithoutSelfLoops = function outboundDegreeWithoutSelfLoops(node) {
+            node = "" + node;
+            var nodeData = this._nodes.get(node);
+            if (!nodeData)
+              throw new NotFoundGraphError('Graph.outboundDegreeWithoutSelfLoops: could not find the "'.concat(node, '" node in the graph.'));
+            var degree = 0;
+            var loops = 0;
+            if (this.type !== "directed") {
+              degree += nodeData.undirectedDegree;
+              loops += nodeData.undirectedLoops * 2;
+            }
+            if (this.type !== "undirected") {
+              degree += nodeData.outDegree;
+              loops += nodeData.directedLoops;
+            }
+            return degree - loops;
+          };
+          _proto.degreeWithoutSelfLoops = function degreeWithoutSelfLoops(node) {
+            node = "" + node;
+            var nodeData = this._nodes.get(node);
+            if (!nodeData)
+              throw new NotFoundGraphError('Graph.degreeWithoutSelfLoops: could not find the "'.concat(node, '" node in the graph.'));
+            var degree = 0;
+            var loops = 0;
+            if (this.type !== "directed") {
+              degree += nodeData.undirectedDegree;
+              loops += nodeData.undirectedLoops * 2;
+            }
+            if (this.type !== "undirected") {
+              degree += nodeData.inDegree + nodeData.outDegree;
+              loops += nodeData.directedLoops * 2;
+            }
+            return degree - loops;
+          };
+          _proto.source = function source(edge) {
+            edge = "" + edge;
+            var data = this._edges.get(edge);
+            if (!data)
+              throw new NotFoundGraphError('Graph.source: could not find the "'.concat(edge, '" edge in the graph.'));
+            return data.source.key;
+          };
+          _proto.target = function target(edge) {
+            edge = "" + edge;
+            var data = this._edges.get(edge);
+            if (!data)
+              throw new NotFoundGraphError('Graph.target: could not find the "'.concat(edge, '" edge in the graph.'));
+            return data.target.key;
+          };
+          _proto.extremities = function extremities(edge) {
+            edge = "" + edge;
+            var edgeData = this._edges.get(edge);
+            if (!edgeData)
+              throw new NotFoundGraphError('Graph.extremities: could not find the "'.concat(edge, '" edge in the graph.'));
+            return [edgeData.source.key, edgeData.target.key];
+          };
+          _proto.opposite = function opposite(node, edge) {
+            node = "" + node;
+            edge = "" + edge;
+            var data = this._edges.get(edge);
+            if (!data)
+              throw new NotFoundGraphError('Graph.opposite: could not find the "'.concat(edge, '" edge in the graph.'));
+            var source = data.source.key;
+            var target = data.target.key;
+            if (node === source)
+              return target;
+            if (node === target)
+              return source;
+            throw new NotFoundGraphError('Graph.opposite: the "'.concat(node, '" node is not attached to the "').concat(edge, '" edge (').concat(source, ", ").concat(target, ")."));
+          };
+          _proto.hasExtremity = function hasExtremity(edge, node) {
+            edge = "" + edge;
+            node = "" + node;
+            var data = this._edges.get(edge);
+            if (!data)
+              throw new NotFoundGraphError('Graph.hasExtremity: could not find the "'.concat(edge, '" edge in the graph.'));
+            return data.source.key === node || data.target.key === node;
+          };
+          _proto.isUndirected = function isUndirected(edge) {
+            edge = "" + edge;
+            var data = this._edges.get(edge);
+            if (!data)
+              throw new NotFoundGraphError('Graph.isUndirected: could not find the "'.concat(edge, '" edge in the graph.'));
+            return data.undirected;
+          };
+          _proto.isDirected = function isDirected(edge) {
+            edge = "" + edge;
+            var data = this._edges.get(edge);
+            if (!data)
+              throw new NotFoundGraphError('Graph.isDirected: could not find the "'.concat(edge, '" edge in the graph.'));
+            return !data.undirected;
+          };
+          _proto.isSelfLoop = function isSelfLoop(edge) {
+            edge = "" + edge;
+            var data = this._edges.get(edge);
+            if (!data)
+              throw new NotFoundGraphError('Graph.isSelfLoop: could not find the "'.concat(edge, '" edge in the graph.'));
+            return data.source === data.target;
+          };
+          _proto.addNode = function addNode(node, attributes) {
+            var nodeData = _addNode(this, node, attributes);
+            return nodeData.key;
+          };
+          _proto.mergeNode = function mergeNode(node, attributes) {
+            if (attributes && !isPlainObject(attributes))
+              throw new InvalidArgumentsGraphError('Graph.mergeNode: invalid attributes. Expecting an object but got "'.concat(attributes, '"'));
+            node = "" + node;
+            attributes = attributes || {};
+            var data = this._nodes.get(node);
+            if (data) {
+              if (attributes) {
+                assign(data.attributes, attributes);
+                this.emit("nodeAttributesUpdated", {
+                  type: "merge",
+                  key: node,
+                  attributes: data.attributes,
+                  data: attributes
+                });
+              }
+              return [node, false];
+            }
+            data = new this.NodeDataClass(node, attributes);
+            this._nodes.set(node, data);
+            this.emit("nodeAdded", {
+              key: node,
+              attributes
+            });
+            return [node, true];
+          };
+          _proto.updateNode = function updateNode(node, updater) {
+            if (updater && typeof updater !== "function")
+              throw new InvalidArgumentsGraphError('Graph.updateNode: invalid updater function. Expecting a function but got "'.concat(updater, '"'));
+            node = "" + node;
+            var data = this._nodes.get(node);
+            if (data) {
+              if (updater) {
+                var oldAttributes = data.attributes;
+                data.attributes = updater(oldAttributes);
+                this.emit("nodeAttributesUpdated", {
+                  type: "replace",
+                  key: node,
+                  attributes: data.attributes
+                });
+              }
+              return [node, false];
+            }
+            var attributes = updater ? updater({}) : {};
+            data = new this.NodeDataClass(node, attributes);
+            this._nodes.set(node, data);
+            this.emit("nodeAdded", {
+              key: node,
+              attributes
+            });
+            return [node, true];
+          };
+          _proto.dropNode = function dropNode(node) {
+            node = "" + node;
+            var nodeData = this._nodes.get(node);
+            if (!nodeData)
+              throw new NotFoundGraphError('Graph.dropNode: could not find the "'.concat(node, '" node in the graph.'));
+            var edgeData;
+            if (this.type !== "undirected") {
+              for (var neighbor in nodeData.out) {
+                edgeData = nodeData.out[neighbor];
+                do {
+                  dropEdgeFromData(this, edgeData);
+                  edgeData = edgeData.next;
+                } while (edgeData);
+              }
+              for (var _neighbor in nodeData["in"]) {
+                edgeData = nodeData["in"][_neighbor];
+                do {
+                  dropEdgeFromData(this, edgeData);
+                  edgeData = edgeData.next;
+                } while (edgeData);
+              }
+            }
+            if (this.type !== "directed") {
+              for (var _neighbor2 in nodeData.undirected) {
+                edgeData = nodeData.undirected[_neighbor2];
+                do {
+                  dropEdgeFromData(this, edgeData);
+                  edgeData = edgeData.next;
+                } while (edgeData);
+              }
+            }
+            this._nodes["delete"](node);
+            this.emit("nodeDropped", {
+              key: node,
+              attributes: nodeData.attributes
+            });
+          };
+          _proto.dropEdge = function dropEdge(edge) {
+            var edgeData;
+            if (arguments.length > 1) {
+              var source = "" + arguments[0];
+              var target = "" + arguments[1];
+              edgeData = getMatchingEdge(this, source, target, this.type);
+              if (!edgeData)
+                throw new NotFoundGraphError('Graph.dropEdge: could not find the "'.concat(source, '" -> "').concat(target, '" edge in the graph.'));
+            } else {
+              edge = "" + edge;
+              edgeData = this._edges.get(edge);
+              if (!edgeData)
+                throw new NotFoundGraphError('Graph.dropEdge: could not find the "'.concat(edge, '" edge in the graph.'));
+            }
+            dropEdgeFromData(this, edgeData);
+            return this;
+          };
+          _proto.dropDirectedEdge = function dropDirectedEdge(source, target) {
+            if (arguments.length < 2)
+              throw new UsageGraphError("Graph.dropDirectedEdge: it does not make sense to try and drop a directed edge by key. What if the edge with this key is undirected? Use #.dropEdge for this purpose instead.");
+            if (this.multi)
+              throw new UsageGraphError("Graph.dropDirectedEdge: cannot use a {source,target} combo when dropping an edge in a MultiGraph since we cannot infer the one you want to delete as there could be multiple ones.");
+            source = "" + source;
+            target = "" + target;
+            var edgeData = getMatchingEdge(this, source, target, "directed");
+            if (!edgeData)
+              throw new NotFoundGraphError('Graph.dropDirectedEdge: could not find a "'.concat(source, '" -> "').concat(target, '" edge in the graph.'));
+            dropEdgeFromData(this, edgeData);
+            return this;
+          };
+          _proto.dropUndirectedEdge = function dropUndirectedEdge(source, target) {
+            if (arguments.length < 2)
+              throw new UsageGraphError("Graph.dropUndirectedEdge: it does not make sense to drop a directed edge by key. What if the edge with this key is undirected? Use #.dropEdge for this purpose instead.");
+            if (this.multi)
+              throw new UsageGraphError("Graph.dropUndirectedEdge: cannot use a {source,target} combo when dropping an edge in a MultiGraph since we cannot infer the one you want to delete as there could be multiple ones.");
+            var edgeData = getMatchingEdge(this, source, target, "undirected");
+            if (!edgeData)
+              throw new NotFoundGraphError('Graph.dropUndirectedEdge: could not find a "'.concat(source, '" -> "').concat(target, '" edge in the graph.'));
+            dropEdgeFromData(this, edgeData);
+            return this;
+          };
+          _proto.clear = function clear() {
+            this._edges.clear();
+            this._nodes.clear();
+            this._resetInstanceCounters();
+            this.emit("cleared");
+          };
+          _proto.clearEdges = function clearEdges() {
+            var iterator2 = this._nodes.values();
+            var step;
+            while (step = iterator2.next(), step.done !== true) {
+              step.value.clear();
+            }
+            this._edges.clear();
+            this._resetInstanceCounters();
+            this.emit("edgesCleared");
+          };
+          _proto.getAttribute = function getAttribute(name) {
+            return this._attributes[name];
+          };
+          _proto.getAttributes = function getAttributes() {
+            return this._attributes;
+          };
+          _proto.hasAttribute = function hasAttribute(name) {
+            return this._attributes.hasOwnProperty(name);
+          };
+          _proto.setAttribute = function setAttribute(name, value) {
+            this._attributes[name] = value;
+            this.emit("attributesUpdated", {
+              type: "set",
+              attributes: this._attributes,
+              name
+            });
+            return this;
+          };
+          _proto.updateAttribute = function updateAttribute(name, updater) {
+            if (typeof updater !== "function")
+              throw new InvalidArgumentsGraphError("Graph.updateAttribute: updater should be a function.");
+            var value = this._attributes[name];
+            this._attributes[name] = updater(value);
+            this.emit("attributesUpdated", {
+              type: "set",
+              attributes: this._attributes,
+              name
+            });
+            return this;
+          };
+          _proto.removeAttribute = function removeAttribute(name) {
+            delete this._attributes[name];
+            this.emit("attributesUpdated", {
+              type: "remove",
+              attributes: this._attributes,
+              name
+            });
+            return this;
+          };
+          _proto.replaceAttributes = function replaceAttributes(attributes) {
+            if (!isPlainObject(attributes))
+              throw new InvalidArgumentsGraphError("Graph.replaceAttributes: provided attributes are not a plain object.");
+            this._attributes = attributes;
+            this.emit("attributesUpdated", {
+              type: "replace",
+              attributes: this._attributes
+            });
+            return this;
+          };
+          _proto.mergeAttributes = function mergeAttributes(attributes) {
+            if (!isPlainObject(attributes))
+              throw new InvalidArgumentsGraphError("Graph.mergeAttributes: provided attributes are not a plain object.");
+            assign(this._attributes, attributes);
+            this.emit("attributesUpdated", {
+              type: "merge",
+              attributes: this._attributes,
+              data: attributes
+            });
+            return this;
+          };
+          _proto.updateAttributes = function updateAttributes(updater) {
+            if (typeof updater !== "function")
+              throw new InvalidArgumentsGraphError("Graph.updateAttributes: provided updater is not a function.");
+            this._attributes = updater(this._attributes);
+            this.emit("attributesUpdated", {
+              type: "update",
+              attributes: this._attributes
+            });
+            return this;
+          };
+          _proto.updateEachNodeAttributes = function updateEachNodeAttributes(updater, hints) {
+            if (typeof updater !== "function")
+              throw new InvalidArgumentsGraphError("Graph.updateEachNodeAttributes: expecting an updater function.");
+            if (hints && !validateHints(hints))
+              throw new InvalidArgumentsGraphError("Graph.updateEachNodeAttributes: invalid hints. Expecting an object having the following shape: {attributes?: [string]}");
+            var iterator2 = this._nodes.values();
+            var step, nodeData;
+            while (step = iterator2.next(), step.done !== true) {
+              nodeData = step.value;
+              nodeData.attributes = updater(nodeData.key, nodeData.attributes);
+            }
+            this.emit("eachNodeAttributesUpdated", {
+              hints: hints ? hints : null
+            });
+          };
+          _proto.updateEachEdgeAttributes = function updateEachEdgeAttributes(updater, hints) {
+            if (typeof updater !== "function")
+              throw new InvalidArgumentsGraphError("Graph.updateEachEdgeAttributes: expecting an updater function.");
+            if (hints && !validateHints(hints))
+              throw new InvalidArgumentsGraphError("Graph.updateEachEdgeAttributes: invalid hints. Expecting an object having the following shape: {attributes?: [string]}");
+            var iterator2 = this._edges.values();
+            var step, edgeData, sourceData, targetData;
+            while (step = iterator2.next(), step.done !== true) {
+              edgeData = step.value;
+              sourceData = edgeData.source;
+              targetData = edgeData.target;
+              edgeData.attributes = updater(edgeData.key, edgeData.attributes, sourceData.key, targetData.key, sourceData.attributes, targetData.attributes, edgeData.undirected);
+            }
+            this.emit("eachEdgeAttributesUpdated", {
+              hints: hints ? hints : null
+            });
+          };
+          _proto.forEachAdjacencyEntry = function forEachAdjacencyEntry(callback) {
+            if (typeof callback !== "function")
+              throw new InvalidArgumentsGraphError("Graph.forEachAdjacencyEntry: expecting a callback.");
+            forEachAdjacency(false, false, false, this, callback);
+          };
+          _proto.forEachAdjacencyEntryWithOrphans = function forEachAdjacencyEntryWithOrphans(callback) {
+            if (typeof callback !== "function")
+              throw new InvalidArgumentsGraphError("Graph.forEachAdjacencyEntryWithOrphans: expecting a callback.");
+            forEachAdjacency(false, false, true, this, callback);
+          };
+          _proto.forEachAssymetricAdjacencyEntry = function forEachAssymetricAdjacencyEntry(callback) {
+            if (typeof callback !== "function")
+              throw new InvalidArgumentsGraphError("Graph.forEachAssymetricAdjacencyEntry: expecting a callback.");
+            forEachAdjacency(false, true, false, this, callback);
+          };
+          _proto.forEachAssymetricAdjacencyEntryWithOrphans = function forEachAssymetricAdjacencyEntryWithOrphans(callback) {
+            if (typeof callback !== "function")
+              throw new InvalidArgumentsGraphError("Graph.forEachAssymetricAdjacencyEntryWithOrphans: expecting a callback.");
+            forEachAdjacency(false, true, true, this, callback);
+          };
+          _proto.nodes = function nodes() {
+            if (typeof Array.from === "function")
+              return Array.from(this._nodes.keys());
+            return take(this._nodes.keys(), this._nodes.size);
+          };
+          _proto.forEachNode = function forEachNode(callback) {
+            if (typeof callback !== "function")
+              throw new InvalidArgumentsGraphError("Graph.forEachNode: expecting a callback.");
+            var iterator2 = this._nodes.values();
+            var step, nodeData;
+            while (step = iterator2.next(), step.done !== true) {
+              nodeData = step.value;
+              callback(nodeData.key, nodeData.attributes);
+            }
+          };
+          _proto.findNode = function findNode(callback) {
+            if (typeof callback !== "function")
+              throw new InvalidArgumentsGraphError("Graph.findNode: expecting a callback.");
+            var iterator2 = this._nodes.values();
+            var step, nodeData;
+            while (step = iterator2.next(), step.done !== true) {
+              nodeData = step.value;
+              if (callback(nodeData.key, nodeData.attributes))
+                return nodeData.key;
+            }
+            return;
+          };
+          _proto.mapNodes = function mapNodes(callback) {
+            if (typeof callback !== "function")
+              throw new InvalidArgumentsGraphError("Graph.mapNode: expecting a callback.");
+            var iterator2 = this._nodes.values();
+            var step, nodeData;
+            var result = new Array(this.order);
+            var i2 = 0;
+            while (step = iterator2.next(), step.done !== true) {
+              nodeData = step.value;
+              result[i2++] = callback(nodeData.key, nodeData.attributes);
+            }
+            return result;
+          };
+          _proto.someNode = function someNode(callback) {
+            if (typeof callback !== "function")
+              throw new InvalidArgumentsGraphError("Graph.someNode: expecting a callback.");
+            var iterator2 = this._nodes.values();
+            var step, nodeData;
+            while (step = iterator2.next(), step.done !== true) {
+              nodeData = step.value;
+              if (callback(nodeData.key, nodeData.attributes))
+                return true;
+            }
+            return false;
+          };
+          _proto.everyNode = function everyNode(callback) {
+            if (typeof callback !== "function")
+              throw new InvalidArgumentsGraphError("Graph.everyNode: expecting a callback.");
+            var iterator2 = this._nodes.values();
+            var step, nodeData;
+            while (step = iterator2.next(), step.done !== true) {
+              nodeData = step.value;
+              if (!callback(nodeData.key, nodeData.attributes))
+                return false;
+            }
+            return true;
+          };
+          _proto.filterNodes = function filterNodes(callback) {
+            if (typeof callback !== "function")
+              throw new InvalidArgumentsGraphError("Graph.filterNodes: expecting a callback.");
+            var iterator2 = this._nodes.values();
+            var step, nodeData;
+            var result = [];
+            while (step = iterator2.next(), step.done !== true) {
+              nodeData = step.value;
+              if (callback(nodeData.key, nodeData.attributes))
+                result.push(nodeData.key);
+            }
+            return result;
+          };
+          _proto.reduceNodes = function reduceNodes(callback, initialValue) {
+            if (typeof callback !== "function")
+              throw new InvalidArgumentsGraphError("Graph.reduceNodes: expecting a callback.");
+            if (arguments.length < 2)
+              throw new InvalidArgumentsGraphError("Graph.reduceNodes: missing initial value. You must provide it because the callback takes more than one argument and we cannot infer the initial value from the first iteration, as you could with a simple array.");
+            var accumulator = initialValue;
+            var iterator2 = this._nodes.values();
+            var step, nodeData;
+            while (step = iterator2.next(), step.done !== true) {
+              nodeData = step.value;
+              accumulator = callback(accumulator, nodeData.key, nodeData.attributes);
+            }
+            return accumulator;
+          };
+          _proto.nodeEntries = function nodeEntries() {
+            var iterator$1 = this._nodes.values();
+            return new iterator(function() {
+              var step = iterator$1.next();
+              if (step.done)
+                return step;
+              var data = step.value;
+              return {
+                value: {
+                  node: data.key,
+                  attributes: data.attributes
+                },
+                done: false
+              };
+            });
+          };
+          _proto["export"] = function _export() {
+            var _this2 = this;
+            var nodes = new Array(this._nodes.size);
+            var i2 = 0;
+            this._nodes.forEach(function(data, key) {
+              nodes[i2++] = serializeNode(key, data);
+            });
+            var edges = new Array(this._edges.size);
+            i2 = 0;
+            this._edges.forEach(function(data, key) {
+              edges[i2++] = serializeEdge(_this2.type, key, data);
+            });
+            return {
+              options: {
+                type: this.type,
+                multi: this.multi,
+                allowSelfLoops: this.allowSelfLoops
+              },
+              attributes: this.getAttributes(),
+              nodes,
+              edges
+            };
+          };
+          _proto["import"] = function _import(data) {
+            var _this3 = this;
+            var merge = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : false;
+            if (data instanceof Graph3) {
+              data.forEachNode(function(n, a) {
+                if (merge)
+                  _this3.mergeNode(n, a);
+                else
+                  _this3.addNode(n, a);
+              });
+              data.forEachEdge(function(e, a, s, t, _sa, _ta, u) {
+                if (merge) {
+                  if (u)
+                    _this3.mergeUndirectedEdgeWithKey(e, s, t, a);
+                  else
+                    _this3.mergeDirectedEdgeWithKey(e, s, t, a);
+                } else {
+                  if (u)
+                    _this3.addUndirectedEdgeWithKey(e, s, t, a);
+                  else
+                    _this3.addDirectedEdgeWithKey(e, s, t, a);
+                }
+              });
+              return this;
+            }
+            if (!isPlainObject(data))
+              throw new InvalidArgumentsGraphError("Graph.import: invalid argument. Expecting a serialized graph or, alternatively, a Graph instance.");
+            if (data.attributes) {
+              if (!isPlainObject(data.attributes))
+                throw new InvalidArgumentsGraphError("Graph.import: invalid attributes. Expecting a plain object.");
+              if (merge)
+                this.mergeAttributes(data.attributes);
+              else
+                this.replaceAttributes(data.attributes);
+            }
+            var i2, l, list, node, edge;
+            if (data.nodes) {
+              list = data.nodes;
+              if (!Array.isArray(list))
+                throw new InvalidArgumentsGraphError("Graph.import: invalid nodes. Expecting an array.");
+              for (i2 = 0, l = list.length; i2 < l; i2++) {
+                node = list[i2];
+                validateSerializedNode(node);
+                var _node = node, key = _node.key, attributes = _node.attributes;
+                if (merge)
+                  this.mergeNode(key, attributes);
+                else
+                  this.addNode(key, attributes);
+              }
+            }
+            if (data.edges) {
+              var undirectedByDefault = false;
+              if (this.type === "undirected") {
+                undirectedByDefault = true;
+              }
+              list = data.edges;
+              if (!Array.isArray(list))
+                throw new InvalidArgumentsGraphError("Graph.import: invalid edges. Expecting an array.");
+              for (i2 = 0, l = list.length; i2 < l; i2++) {
+                edge = list[i2];
+                validateSerializedEdge(edge);
+                var _edge = edge, source = _edge.source, target = _edge.target, _attributes = _edge.attributes, _edge$undirected = _edge.undirected, undirected = _edge$undirected === void 0 ? undirectedByDefault : _edge$undirected;
+                var method = void 0;
+                if ("key" in edge) {
+                  method = merge ? undirected ? this.mergeUndirectedEdgeWithKey : this.mergeDirectedEdgeWithKey : undirected ? this.addUndirectedEdgeWithKey : this.addDirectedEdgeWithKey;
+                  method.call(this, edge.key, source, target, _attributes);
+                } else {
+                  method = merge ? undirected ? this.mergeUndirectedEdge : this.mergeDirectedEdge : undirected ? this.addUndirectedEdge : this.addDirectedEdge;
+                  method.call(this, source, target, _attributes);
+                }
+              }
+            }
+            return this;
+          };
+          _proto.nullCopy = function nullCopy(options2) {
+            var graph2 = new Graph3(assign({}, this._options, options2));
+            graph2.replaceAttributes(assign({}, this.getAttributes()));
+            return graph2;
+          };
+          _proto.emptyCopy = function emptyCopy(options2) {
+            var graph2 = this.nullCopy(options2);
+            this._nodes.forEach(function(nodeData, key) {
+              var attributes = assign({}, nodeData.attributes);
+              nodeData = new graph2.NodeDataClass(key, attributes);
+              graph2._nodes.set(key, nodeData);
+            });
+            return graph2;
+          };
+          _proto.copy = function copy2(options2) {
+            options2 = options2 || {};
+            if (typeof options2.type === "string" && options2.type !== this.type && options2.type !== "mixed")
+              throw new UsageGraphError('Graph.copy: cannot create an incompatible copy from "'.concat(this.type, '" type to "').concat(options2.type, '" because this would mean losing information about the current graph.'));
+            if (typeof options2.multi === "boolean" && options2.multi !== this.multi && options2.multi !== true)
+              throw new UsageGraphError("Graph.copy: cannot create an incompatible copy by downgrading a multi graph to a simple one because this would mean losing information about the current graph.");
+            if (typeof options2.allowSelfLoops === "boolean" && options2.allowSelfLoops !== this.allowSelfLoops && options2.allowSelfLoops !== true)
+              throw new UsageGraphError("Graph.copy: cannot create an incompatible copy from a graph allowing self loops to one that does not because this would mean losing information about the current graph.");
+            var graph2 = this.emptyCopy(options2);
+            var iterator2 = this._edges.values();
+            var step, edgeData;
+            while (step = iterator2.next(), step.done !== true) {
+              edgeData = step.value;
+              addEdge(graph2, "copy", false, edgeData.undirected, edgeData.key, edgeData.source.key, edgeData.target.key, assign({}, edgeData.attributes));
+            }
+            return graph2;
+          };
+          _proto.toJSON = function toJSON() {
+            return this["export"]();
+          };
+          _proto.toString = function toString() {
+            return "[object Graph]";
+          };
+          _proto.inspect = function inspect() {
+            var _this4 = this;
+            var nodes = {};
+            this._nodes.forEach(function(data, key) {
+              nodes[key] = data.attributes;
+            });
+            var edges = {}, multiIndex = {};
+            this._edges.forEach(function(data, key) {
+              var direction = data.undirected ? "--" : "->";
+              var label = "";
+              var source = data.source.key;
+              var target = data.target.key;
+              var tmp;
+              if (data.undirected && source > target) {
+                tmp = source;
+                source = target;
+                target = tmp;
+              }
+              var desc = "(".concat(source, ")").concat(direction, "(").concat(target, ")");
+              if (!key.startsWith("geid_")) {
+                label += "[".concat(key, "]: ");
+              } else if (_this4.multi) {
+                if (typeof multiIndex[desc] === "undefined") {
+                  multiIndex[desc] = 0;
+                } else {
+                  multiIndex[desc]++;
+                }
+                label += "".concat(multiIndex[desc], ". ");
+              }
+              label += desc;
+              edges[label] = data.attributes;
+            });
+            var dummy = {};
+            for (var k in this) {
+              if (this.hasOwnProperty(k) && !EMITTER_PROPS.has(k) && typeof this[k] !== "function" && _typeof13(k) !== "symbol")
+                dummy[k] = this[k];
+            }
+            dummy.attributes = this._attributes;
+            dummy.nodes = nodes;
+            dummy.edges = edges;
+            privateProperty(dummy, "constructor", this.constructor);
+            return dummy;
+          };
+          return Graph3;
+        }(events.exports.EventEmitter);
+        if (typeof Symbol !== "undefined")
+          Graph2.prototype[Symbol["for"]("nodejs.util.inspect.custom")] = Graph2.prototype.inspect;
+        EDGE_ADD_METHODS.forEach(function(method) {
+          ["add", "merge", "update"].forEach(function(verb) {
+            var name = method.name(verb);
+            var fn = verb === "add" ? addEdge : mergeEdge;
+            if (method.generateKey) {
+              Graph2.prototype[name] = function(source, target, attributes) {
+                return fn(this, name, true, (method.type || this.type) === "undirected", null, source, target, attributes, verb === "update");
+              };
+            } else {
+              Graph2.prototype[name] = function(edge, source, target, attributes) {
+                return fn(this, name, false, (method.type || this.type) === "undirected", edge, source, target, attributes, verb === "update");
+              };
+            }
+          });
+        });
+        attachNodeAttributesMethods(Graph2);
+        attachEdgeAttributesMethods(Graph2);
+        attachEdgeIterationMethods(Graph2);
+        attachNeighborIterationMethods(Graph2);
+        var DirectedGraph2 = /* @__PURE__ */ function(_Graph) {
+          _inheritsLoose2(DirectedGraph3, _Graph);
+          function DirectedGraph3(options2) {
+            var finalOptions = assign({
+              type: "directed"
+            }, options2);
+            if ("multi" in finalOptions && finalOptions.multi !== false)
+              throw new InvalidArgumentsGraphError("DirectedGraph.from: inconsistent indication that the graph should be multi in given options!");
+            if (finalOptions.type !== "directed")
+              throw new InvalidArgumentsGraphError('DirectedGraph.from: inconsistent "' + finalOptions.type + '" type in given options!');
+            return _Graph.call(this, finalOptions) || this;
+          }
+          return DirectedGraph3;
+        }(Graph2);
+        var UndirectedGraph2 = /* @__PURE__ */ function(_Graph2) {
+          _inheritsLoose2(UndirectedGraph3, _Graph2);
+          function UndirectedGraph3(options2) {
+            var finalOptions = assign({
+              type: "undirected"
+            }, options2);
+            if ("multi" in finalOptions && finalOptions.multi !== false)
+              throw new InvalidArgumentsGraphError("UndirectedGraph.from: inconsistent indication that the graph should be multi in given options!");
+            if (finalOptions.type !== "undirected")
+              throw new InvalidArgumentsGraphError('UndirectedGraph.from: inconsistent "' + finalOptions.type + '" type in given options!');
+            return _Graph2.call(this, finalOptions) || this;
+          }
+          return UndirectedGraph3;
+        }(Graph2);
+        var MultiGraph = /* @__PURE__ */ function(_Graph3) {
+          _inheritsLoose2(MultiGraph2, _Graph3);
+          function MultiGraph2(options2) {
+            var finalOptions = assign({
+              multi: true
+            }, options2);
+            if ("multi" in finalOptions && finalOptions.multi !== true)
+              throw new InvalidArgumentsGraphError("MultiGraph.from: inconsistent indication that the graph should be simple in given options!");
+            return _Graph3.call(this, finalOptions) || this;
+          }
+          return MultiGraph2;
+        }(Graph2);
+        var MultiDirectedGraph = /* @__PURE__ */ function(_Graph4) {
+          _inheritsLoose2(MultiDirectedGraph2, _Graph4);
+          function MultiDirectedGraph2(options2) {
+            var finalOptions = assign({
+              type: "directed",
+              multi: true
+            }, options2);
+            if ("multi" in finalOptions && finalOptions.multi !== true)
+              throw new InvalidArgumentsGraphError("MultiDirectedGraph.from: inconsistent indication that the graph should be simple in given options!");
+            if (finalOptions.type !== "directed")
+              throw new InvalidArgumentsGraphError('MultiDirectedGraph.from: inconsistent "' + finalOptions.type + '" type in given options!');
+            return _Graph4.call(this, finalOptions) || this;
+          }
+          return MultiDirectedGraph2;
+        }(Graph2);
+        var MultiUndirectedGraph = /* @__PURE__ */ function(_Graph5) {
+          _inheritsLoose2(MultiUndirectedGraph2, _Graph5);
+          function MultiUndirectedGraph2(options2) {
+            var finalOptions = assign({
+              type: "undirected",
+              multi: true
+            }, options2);
+            if ("multi" in finalOptions && finalOptions.multi !== true)
+              throw new InvalidArgumentsGraphError("MultiUndirectedGraph.from: inconsistent indication that the graph should be simple in given options!");
+            if (finalOptions.type !== "undirected")
+              throw new InvalidArgumentsGraphError('MultiUndirectedGraph.from: inconsistent "' + finalOptions.type + '" type in given options!');
+            return _Graph5.call(this, finalOptions) || this;
+          }
+          return MultiUndirectedGraph2;
+        }(Graph2);
+        function attachStaticFromMethod(Class) {
+          Class.from = function(data, options2) {
+            var finalOptions = assign({}, data.options, options2);
+            var instance = new Class(finalOptions);
+            instance["import"](data);
+            return instance;
+          };
+        }
+        attachStaticFromMethod(Graph2);
+        attachStaticFromMethod(DirectedGraph2);
+        attachStaticFromMethod(UndirectedGraph2);
+        attachStaticFromMethod(MultiGraph);
+        attachStaticFromMethod(MultiDirectedGraph);
+        attachStaticFromMethod(MultiUndirectedGraph);
+        Graph2.Graph = Graph2;
+        Graph2.DirectedGraph = DirectedGraph2;
+        Graph2.UndirectedGraph = UndirectedGraph2;
+        Graph2.MultiGraph = MultiGraph;
+        Graph2.MultiDirectedGraph = MultiDirectedGraph;
+        Graph2.MultiUndirectedGraph = MultiUndirectedGraph;
+        Graph2.InvalidArgumentsGraphError = InvalidArgumentsGraphError;
+        Graph2.NotFoundGraphError = NotFoundGraphError;
+        Graph2.UsageGraphError = UsageGraphError;
+        return Graph2;
       });
     }
   });
@@ -29683,7 +29478,6 @@
   var React = __toESM(require_react());
   var import_react = __toESM(require_react());
   var import_jsx_runtime = __toESM(require_jsx_runtime());
-  "use client";
   var DEFAULT_BREAKPOINTS = ["xxl", "xl", "lg", "md", "sm", "xs"];
   var DEFAULT_MIN_BREAKPOINT = "xs";
   var ThemeContext = /* @__PURE__ */ React.createContext({
@@ -29716,7 +29510,6 @@
 
   // node_modules/testeranto/node_modules/react-bootstrap/esm/Col.js
   var import_jsx_runtime2 = __toESM(require_jsx_runtime());
-  "use client";
   function useCol({
     as,
     bsPrefix,
@@ -29789,28 +29582,34 @@
 
   // node_modules/testeranto/node_modules/@babel/runtime/helpers/esm/extends.js
   function _extends() {
-    return _extends = Object.assign ? Object.assign.bind() : function(n) {
-      for (var e = 1; e < arguments.length; e++) {
-        var t = arguments[e];
-        for (var r in t)
-          ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]);
+    _extends = Object.assign ? Object.assign.bind() : function(target) {
+      for (var i2 = 1; i2 < arguments.length; i2++) {
+        var source = arguments[i2];
+        for (var key in source) {
+          if (Object.prototype.hasOwnProperty.call(source, key)) {
+            target[key] = source[key];
+          }
+        }
       }
-      return n;
-    }, _extends.apply(null, arguments);
+      return target;
+    };
+    return _extends.apply(this, arguments);
   }
 
   // node_modules/testeranto/node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
-  function _objectWithoutPropertiesLoose(r, e) {
-    if (null == r)
+  function _objectWithoutPropertiesLoose(source, excluded) {
+    if (source == null)
       return {};
-    var t = {};
-    for (var n in r)
-      if ({}.hasOwnProperty.call(r, n)) {
-        if (e.includes(n))
-          continue;
-        t[n] = r[n];
-      }
-    return t;
+    var target = {};
+    var sourceKeys = Object.keys(source);
+    var key, i2;
+    for (i2 = 0; i2 < sourceKeys.length; i2++) {
+      key = sourceKeys[i2];
+      if (excluded.indexOf(key) >= 0)
+        continue;
+      target[key] = source[key];
+    }
+    return target;
   }
 
   // node_modules/testeranto/node_modules/uncontrollable/lib/esm/hook.js
@@ -29868,15 +29667,19 @@
   }
 
   // node_modules/testeranto/node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js
-  function _setPrototypeOf(t, e) {
-    return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function(t2, e2) {
-      return t2.__proto__ = e2, t2;
-    }, _setPrototypeOf(t, e);
+  function _setPrototypeOf(o2, p) {
+    _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf14(o3, p2) {
+      o3.__proto__ = p2;
+      return o3;
+    };
+    return _setPrototypeOf(o2, p);
   }
 
   // node_modules/testeranto/node_modules/@babel/runtime/helpers/esm/inheritsLoose.js
-  function _inheritsLoose(t, o2) {
-    t.prototype = Object.create(o2.prototype), t.prototype.constructor = t, _setPrototypeOf(t, o2);
+  function _inheritsLoose(subClass, superClass) {
+    subClass.prototype = Object.create(superClass.prototype);
+    subClass.prototype.constructor = subClass;
+    _setPrototypeOf(subClass, superClass);
   }
 
   // node_modules/testeranto/node_modules/uncontrollable/lib/esm/uncontrollable.js
@@ -30330,38 +30133,56 @@
 
   // node_modules/testeranto/node_modules/react-bootstrap/esm/NavbarContext.js
   var React10 = __toESM(require_react());
-  "use client";
   var context = /* @__PURE__ */ React10.createContext(null);
   context.displayName = "NavbarContext";
   var NavbarContext_default = context;
 
   // node_modules/testeranto/node_modules/react-bootstrap/esm/CardHeaderContext.js
   var React11 = __toESM(require_react());
-  "use client";
   var context2 = /* @__PURE__ */ React11.createContext(null);
   context2.displayName = "CardHeaderContext";
   var CardHeaderContext_default = context2;
 
-  // node_modules/testeranto/node_modules/react-bootstrap/esm/NavItem.js
-  var React12 = __toESM(require_react());
+  // node_modules/testeranto/node_modules/react-bootstrap/esm/createWithBsPrefix.js
   var import_classnames2 = __toESM(require_classnames());
-  var import_jsx_runtime6 = __toESM(require_jsx_runtime());
-  "use client";
-  var NavItem2 = /* @__PURE__ */ React12.forwardRef(({
-    className,
-    bsPrefix,
-    as: Component = "div",
-    ...props
-  }, ref) => {
-    bsPrefix = useBootstrapPrefix(bsPrefix, "nav-item");
-    return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(Component, {
-      ref,
-      className: (0, import_classnames2.default)(className, bsPrefix),
-      ...props
+
+  // node_modules/testeranto/node_modules/dom-helpers/esm/camelize.js
+  var rHyphen = /-(.)/g;
+  function camelize(string) {
+    return string.replace(rHyphen, function(_, chr) {
+      return chr.toUpperCase();
     });
-  });
-  NavItem2.displayName = "NavItem";
-  var NavItem_default2 = NavItem2;
+  }
+
+  // node_modules/testeranto/node_modules/react-bootstrap/esm/createWithBsPrefix.js
+  var React12 = __toESM(require_react());
+  var import_jsx_runtime6 = __toESM(require_jsx_runtime());
+  var pascalCase = (str) => str[0].toUpperCase() + camelize(str).slice(1);
+  function createWithBsPrefix(prefix, {
+    displayName = pascalCase(prefix),
+    Component,
+    defaultProps: defaultProps5
+  } = {}) {
+    const BsComponent = /* @__PURE__ */ React12.forwardRef(({
+      className,
+      bsPrefix,
+      as: Tag = Component || "div",
+      ...props
+    }, ref) => {
+      const resolvedPrefix = useBootstrapPrefix(bsPrefix, prefix);
+      return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(Tag, {
+        ref,
+        className: (0, import_classnames2.default)(className, resolvedPrefix),
+        ...props
+      });
+    });
+    BsComponent.defaultProps = defaultProps5;
+    BsComponent.displayName = displayName;
+    return BsComponent;
+  }
+
+  // node_modules/testeranto/node_modules/react-bootstrap/esm/NavItem.js
+  var NavItem_default2 = createWithBsPrefix("nav-item");
 
   // node_modules/testeranto/node_modules/react-bootstrap/esm/NavLink.js
   var import_classnames3 = __toESM(require_classnames());
@@ -30455,44 +30276,47 @@
 
   // node_modules/testeranto/node_modules/react-bootstrap/esm/NavLink.js
   var import_jsx_runtime8 = __toESM(require_jsx_runtime());
-  "use client";
+  var defaultProps = {
+    disabled: false
+  };
   var NavLink = /* @__PURE__ */ React14.forwardRef(({
     bsPrefix,
     className,
     as: Component = Anchor_default,
     active,
     eventKey,
-    disabled = false,
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "nav-link");
     const [navItemProps, meta] = useNavItem({
       key: makeEventKey(eventKey, props.href),
       active,
-      disabled,
       ...props
     });
     return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(Component, {
       ...props,
       ...navItemProps,
       ref,
-      disabled,
-      className: (0, import_classnames3.default)(className, bsPrefix, disabled && "disabled", meta.isActive && "active")
+      className: (0, import_classnames3.default)(className, bsPrefix, props.disabled && "disabled", meta.isActive && "active")
     });
   });
   NavLink.displayName = "NavLink";
+  NavLink.defaultProps = defaultProps;
   var NavLink_default = NavLink;
 
   // node_modules/testeranto/node_modules/react-bootstrap/esm/Nav.js
   var import_jsx_runtime9 = __toESM(require_jsx_runtime());
-  "use client";
+  var defaultProps2 = {
+    justify: false,
+    fill: false
+  };
   var Nav2 = /* @__PURE__ */ React15.forwardRef((uncontrolledProps, ref) => {
     const {
       as = "div",
       bsPrefix: initialBsPrefix,
       variant,
-      fill = false,
-      justify = false,
+      fill,
+      justify,
       navbar,
       navbarScroll,
       className,
@@ -30532,6 +30356,7 @@
     });
   });
   Nav2.displayName = "Nav";
+  Nav2.defaultProps = defaultProps2;
   var Nav_default2 = Object.assign(Nav2, {
     Item: NavItem_default2,
     Link: NavLink_default
@@ -30541,7 +30366,6 @@
   var import_classnames5 = __toESM(require_classnames());
   var React16 = __toESM(require_react());
   var import_jsx_runtime10 = __toESM(require_jsx_runtime());
-  "use client";
   var Row = /* @__PURE__ */ React16.forwardRef(({
     bsPrefix,
     className,
@@ -30580,9 +30404,10 @@
 
   // node_modules/testeranto/node_modules/react-bootstrap/esm/Tab.js
   var import_prop_types3 = __toESM(require_prop_types());
+  var React25 = __toESM(require_react());
 
   // node_modules/testeranto/node_modules/react-bootstrap/esm/TabContainer.js
-  var React24 = __toESM(require_react());
+  var React23 = __toESM(require_react());
 
   // node_modules/testeranto/node_modules/@restart/ui/esm/Tabs.js
   var React18 = __toESM(require_react());
@@ -30793,7 +30618,7 @@
 
   // node_modules/testeranto/node_modules/react-bootstrap/esm/Fade.js
   var import_classnames6 = __toESM(require_classnames());
-  var React23 = __toESM(require_react());
+  var React22 = __toESM(require_react());
   var import_react29 = __toESM(require_react());
 
   // node_modules/testeranto/node_modules/react-transition-group/esm/Transition.js
@@ -31246,17 +31071,6 @@
   Transition.EXITING = EXITING;
   var Transition_default = Transition;
 
-  // node_modules/@restart/ui/esm/utils.js
-  var React21 = __toESM(require_react2());
-  function getReactVersion() {
-    const parts = React21.version.split(".");
-    return {
-      major: +parts[0],
-      minor: +parts[1],
-      patch: +parts[2]
-    };
-  }
-
   // node_modules/testeranto/node_modules/dom-helpers/esm/ownerDocument.js
   function ownerDocument(node) {
     return node && node.ownerDocument || document;
@@ -31460,7 +31274,6 @@
 
   // node_modules/testeranto/node_modules/react-bootstrap/esm/TransitionWrapper.js
   var import_jsx_runtime13 = __toESM(require_jsx_runtime());
-  "use client";
   var TransitionWrapper = /* @__PURE__ */ import_react28.default.forwardRef(({
     onEnter,
     onEntering,
@@ -31501,13 +31314,10 @@
       onExiting: handleExiting,
       addEndListener: handleAddEndListener,
       nodeRef,
-      children: typeof children === "function" ? (status, innerProps) => (
-        // TODO: Types for RTG missing innerProps, so need to cast.
-        children(status, {
-          ...innerProps,
-          ref: attachRef
-        })
-      ) : /* @__PURE__ */ import_react28.default.cloneElement(children, {
+      children: typeof children === "function" ? (status, innerProps) => children(status, {
+        ...innerProps,
+        ref: attachRef
+      }) : /* @__PURE__ */ import_react28.default.cloneElement(children, {
         ref: attachRef
       })
     });
@@ -31516,45 +31326,40 @@
 
   // node_modules/testeranto/node_modules/react-bootstrap/esm/Fade.js
   var import_jsx_runtime14 = __toESM(require_jsx_runtime());
+  var defaultProps3 = {
+    in: false,
+    timeout: 300,
+    mountOnEnter: false,
+    unmountOnExit: false,
+    appear: false
+  };
   var fadeStyles = {
     [ENTERING]: "show",
     [ENTERED]: "show"
   };
-  var Fade = /* @__PURE__ */ React23.forwardRef(({
+  var Fade = /* @__PURE__ */ React22.forwardRef(({
     className,
     children,
     transitionClasses = {},
-    onEnter,
-    ...rest
+    ...props
   }, ref) => {
-    const props = {
-      in: false,
-      timeout: 300,
-      mountOnEnter: false,
-      unmountOnExit: false,
-      appear: false,
-      ...rest
-    };
     const handleEnter = (0, import_react29.useCallback)((node, isAppearing) => {
       triggerBrowserReflow(node);
-      onEnter == null || onEnter(node, isAppearing);
-    }, [onEnter]);
-    const {
-      major
-    } = getReactVersion();
-    const childRef = major >= 19 ? children.props.ref : children.ref;
+      props.onEnter == null ? void 0 : props.onEnter(node, isAppearing);
+    }, [props]);
     return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(TransitionWrapper_default, {
       ref,
       addEndListener: transitionEndListener,
       ...props,
       onEnter: handleEnter,
-      childRef,
-      children: (status, innerProps) => /* @__PURE__ */ React23.cloneElement(children, {
+      childRef: children.ref,
+      children: (status, innerProps) => /* @__PURE__ */ React22.cloneElement(children, {
         ...innerProps,
         className: (0, import_classnames6.default)("fade", className, children.props.className, fadeStyles[status], transitionClasses[status])
       })
     });
   });
+  Fade.defaultProps = defaultProps3;
   Fade.displayName = "Fade";
   var Fade_default = Fade;
 
@@ -31579,32 +31384,13 @@
   var TabContainer_default = TabContainer;
 
   // node_modules/testeranto/node_modules/react-bootstrap/esm/TabContent.js
-  var React25 = __toESM(require_react());
-  var import_classnames7 = __toESM(require_classnames());
-  var import_jsx_runtime16 = __toESM(require_jsx_runtime());
-  "use client";
-  var TabContent = /* @__PURE__ */ React25.forwardRef(({
-    className,
-    bsPrefix,
-    as: Component = "div",
-    ...props
-  }, ref) => {
-    bsPrefix = useBootstrapPrefix(bsPrefix, "tab-content");
-    return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(Component, {
-      ref,
-      className: (0, import_classnames7.default)(className, bsPrefix),
-      ...props
-    });
-  });
-  TabContent.displayName = "TabContent";
-  var TabContent_default = TabContent;
+  var TabContent_default = createWithBsPrefix("tab-content");
 
   // node_modules/testeranto/node_modules/react-bootstrap/esm/TabPane.js
-  var import_classnames8 = __toESM(require_classnames());
-  var React26 = __toESM(require_react());
-  var import_jsx_runtime17 = __toESM(require_jsx_runtime());
-  "use client";
-  var TabPane = /* @__PURE__ */ React26.forwardRef(({
+  var import_classnames7 = __toESM(require_classnames());
+  var React24 = __toESM(require_react());
+  var import_jsx_runtime16 = __toESM(require_jsx_runtime());
+  var TabPane = /* @__PURE__ */ React24.forwardRef(({
     bsPrefix,
     transition,
     ...props
@@ -31630,11 +31416,11 @@
       transition: getTabTransitionComponent(transition)
     });
     const prefix = useBootstrapPrefix(bsPrefix, "tab-pane");
-    return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(TabContext_default.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(TabContext_default.Provider, {
       value: null,
-      children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(SelectableContext_default.Provider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(SelectableContext_default.Provider, {
         value: null,
-        children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Transition2, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(Transition2, {
           in: isActive,
           onEnter,
           onEntering,
@@ -31644,10 +31430,10 @@
           onExited,
           mountOnEnter,
           unmountOnExit,
-          children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Component, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(Component, {
             ...rest,
             ref,
-            className: (0, import_classnames8.default)(className, prefix, isActive && "active")
+            className: (0, import_classnames7.default)(className, prefix, isActive && "active")
           })
         })
       })
@@ -31657,6 +31443,8 @@
   var TabPane_default = TabPane;
 
   // node_modules/testeranto/node_modules/react-bootstrap/esm/Tab.js
+  var import_jsx_runtime17 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime18 = __toESM(require_jsx_runtime());
   var propTypes = {
     eventKey: import_prop_types3.default.oneOfType([import_prop_types3.default.string, import_prop_types3.default.number]),
     /**
@@ -31678,6 +31466,7 @@
   };
   var Tab = () => {
     throw new Error("ReactBootstrap: The `Tab` component is not meant to be rendered! It's an abstract component that is only valid as a direct Child of the `Tabs` Component. For custom tabs components use TabPane and TabsContainer directly");
+    return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_jsx_runtime17.Fragment, {});
   };
   Tab.propTypes = propTypes;
   var Tab_default = Object.assign(Tab, {
@@ -31687,25 +31476,30 @@
   });
 
   // node_modules/testeranto/node_modules/react-bootstrap/esm/Tabs.js
-  var React28 = __toESM(require_react());
+  var React27 = __toESM(require_react());
 
   // node_modules/testeranto/node_modules/react-bootstrap/esm/ElementChildren.js
-  var React27 = __toESM(require_react());
+  var React26 = __toESM(require_react());
   function map(children, func) {
     let index = 0;
-    return React27.Children.map(children, (child) => /* @__PURE__ */ React27.isValidElement(child) ? func(child, index++) : child);
+    return React26.Children.map(children, (child) => /* @__PURE__ */ React26.isValidElement(child) ? func(child, index++) : child);
   }
   function forEach(children, func) {
     let index = 0;
-    React27.Children.forEach(children, (child) => {
-      if (/* @__PURE__ */ React27.isValidElement(child))
+    React26.Children.forEach(children, (child) => {
+      if (/* @__PURE__ */ React26.isValidElement(child))
         func(child, index++);
     });
   }
 
   // node_modules/testeranto/node_modules/react-bootstrap/esm/Tabs.js
-  var import_jsx_runtime18 = __toESM(require_jsx_runtime());
   var import_jsx_runtime19 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime20 = __toESM(require_jsx_runtime());
+  var defaultProps4 = {
+    variant: "tabs",
+    mountOnEnter: false,
+    unmountOnExit: false
+  };
   function getDefaultActiveKey(children) {
     let defaultActiveKey;
     forEach(children, (child) => {
@@ -31727,10 +31521,10 @@
     if (title == null) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(NavItem_default2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(NavItem_default2, {
       as: "li",
       role: "presentation",
-      children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(NavLink_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(NavLink_default, {
         as: "button",
         type: "button",
         eventKey,
@@ -31747,30 +31541,27 @@
       id,
       onSelect,
       transition,
-      mountOnEnter = false,
-      unmountOnExit = false,
-      variant = "tabs",
+      mountOnEnter,
+      unmountOnExit,
       children,
       activeKey = getDefaultActiveKey(children),
       ...controlledProps
     } = useUncontrolled(props, {
       activeKey: "onSelect"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(Tabs_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(Tabs_default, {
       id,
       activeKey,
       onSelect,
       transition: getTabTransitionComponent(transition),
       mountOnEnter,
       unmountOnExit,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime18.jsx)(Nav_default2, {
-        id,
+      children: [/* @__PURE__ */ (0, import_jsx_runtime19.jsx)(Nav_default2, {
         ...controlledProps,
         role: "tablist",
         as: "ul",
-        variant,
         children: map(children, renderTab)
-      }), /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(TabContent_default, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(TabContent_default, {
         children: map(children, (child) => {
           const childProps = {
             ...child.props
@@ -31779,13 +31570,14 @@
           delete childProps.disabled;
           delete childProps.tabClassName;
           delete childProps.tabAttrs;
-          return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(TabPane_default, {
+          return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(TabPane_default, {
             ...childProps
           });
         })
       })]
     });
   };
+  Tabs2.defaultProps = defaultProps4;
   Tabs2.displayName = "Tabs";
   var Tabs_default2 = Tabs2;
 
@@ -37461,8 +37253,8 @@
   } });
 
   // node_modules/testeranto/dist/module/Features.js
-  var import_graphology = __toESM(require_graphology_umd_min(), 1);
-  var { DirectedGraph, UndirectedGraph } = import_graphology.default;
+  var import_graphology_umd = __toESM(require_graphology_umd(), 1);
+  var { DirectedGraph, UndirectedGraph } = import_graphology_umd.default;
   var TesterantoFeatures = class {
     constructor(features, graphs) {
       this.features = features;
@@ -37988,15 +37780,4 @@ object-assign/index.js:
   (c) Sindre Sorhus
   @license MIT
   *)
-
-react/cjs/react.development.js:
-  (**
-   * @license React
-   * react.development.js
-   *
-   * Copyright (c) Facebook, Inc. and its affiliates.
-   *
-   * This source code is licensed under the MIT license found in the
-   * LICENSE file in the root directory of this source tree.
-   *)
 */

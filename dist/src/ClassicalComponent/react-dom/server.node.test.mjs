@@ -1,21 +1,22 @@
-import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
   ClassicalComponent
-} from "../../../chunk-LSA22GKC.mjs";
+} from "../../../chunk-44RV3NTB.mjs";
 import {
   assert
-} from "../../../chunk-NLCBXMNY.mjs";
+} from "../../../chunk-TM6NCEZK.mjs";
 import {
   Node_default,
   __commonJS,
   __require,
-  __toESM
-} from "../../../chunk-WJAA5JYT.mjs";
+  __toESM,
+  init_cjs_shim
+} from "../../../chunk-ZUOHA3DK.mjs";
 
 // node_modules/testeranto/node_modules/react-dom/cjs/react-dom-server-legacy.node.production.min.js
 var require_react_dom_server_legacy_node_production_min = __commonJS({
   "node_modules/testeranto/node_modules/react-dom/cjs/react-dom-server-legacy.node.production.min.js"(exports) {
     "use strict";
+    init_cjs_shim();
     var ea = __require("react");
     var fa = __require("stream");
     var n = Object.prototype.hasOwnProperty;
@@ -1676,6 +1677,7 @@ var require_react_dom_server_legacy_node_production_min = __commonJS({
 var require_react_dom_server_node_production_min = __commonJS({
   "node_modules/testeranto/node_modules/react-dom/cjs/react-dom-server.node.production.min.js"(exports) {
     "use strict";
+    init_cjs_shim();
     var aa = __require("util");
     var ba = __require("react");
     var k = null;
@@ -3468,6 +3470,7 @@ var require_react_dom_server_node_production_min = __commonJS({
 var require_react_dom_server_legacy_node_development = __commonJS({
   "node_modules/testeranto/node_modules/react-dom/cjs/react-dom-server-legacy.node.development.js"(exports) {
     "use strict";
+    init_cjs_shim();
     if (process.env.NODE_ENV !== "production") {
       (function() {
         "use strict";
@@ -8865,6 +8868,7 @@ var require_react_dom_server_legacy_node_development = __commonJS({
 var require_react_dom_server_node_development = __commonJS({
   "node_modules/testeranto/node_modules/react-dom/cjs/react-dom-server.node.development.js"(exports) {
     "use strict";
+    init_cjs_shim();
     if (process.env.NODE_ENV !== "production") {
       (function() {
         "use strict";
@@ -14249,6 +14253,7 @@ var require_react_dom_server_node_development = __commonJS({
 var require_server_node = __commonJS({
   "node_modules/testeranto/node_modules/react-dom/server.node.js"(exports) {
     "use strict";
+    init_cjs_shim();
     var l;
     var s;
     if (process.env.NODE_ENV === "production") {
@@ -14267,7 +14272,11 @@ var require_server_node = __commonJS({
   }
 });
 
+// src/ClassicalComponent/react-dom/server.node.test.tsx
+init_cjs_shim();
+
 // node_modules/testeranto/dist/module/SubPackages/react-dom/component/node.js
+init_cjs_shim();
 var import_server = __toESM(require_server_node(), 1);
 import { createElement } from "react";
 var node_default = (testImplementations, testSpecifications, testInput) => {

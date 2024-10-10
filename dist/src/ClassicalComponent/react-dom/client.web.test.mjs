@@ -1,7 +1,7 @@
 import {
   ClassicalComponent,
   ClassicalComponentSpec
-} from "../../../chunk-GB5HRKV7.mjs";
+} from "../../../chunk-RCXHALEU.mjs";
 import {
   require_scheduler
 } from "../../../chunk-7AHWTSRZ.mjs";
@@ -11,7 +11,7 @@ import {
 import {
   Web_default,
   assert
-} from "../../../chunk-I5OLLSFW.mjs";
+} from "../../../chunk-OERKCY6Y.mjs";
 import {
   __commonJS,
   __toESM

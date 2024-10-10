@@ -1,14 +1,17 @@
-import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
   node_default
-} from "../chunk-57PASGDD.mjs";
-import "../chunk-MUMSTHS5.mjs";
-import "../chunk-WJAA5JYT.mjs";
+} from "../chunk-VZHBZ4OD.mjs";
+import "../chunk-SZTMN6AQ.mjs";
+import {
+  init_cjs_shim
+} from "../chunk-ZUOHA3DK.mjs";
 
 // src/ReactStateAndHook.test.tsx
+init_cjs_shim();
 import assert from "assert";
 
 // src/ReactStateAndHook.tsx
+init_cjs_shim();
 import React from "react";
 import { useState, useEffect } from "react";
 function ReactStateAndHook() {

@@ -57,19 +57,5 @@ export const commonGivens = (Given, When, Then, features) => {
       "my first contract"
     ),
 
-    // "test3": Given.Default(
-    //   [`hello`],
-    //   [
-    //     When.Decrement(1),
-    //     When.Decrement(1),
-    //     When.Decrement(1),
-    //     When.Increment(1),
-    //     When.Increment(1),
-    //   ],
-    //   [
-    //     Then.Get({ asTestUser: 1, expectation: 1.157920892373162e+77 })
-    //   ],
-    //   "this test should fail"
-    // )
   };
 }

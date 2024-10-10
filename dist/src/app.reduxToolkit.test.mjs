@@ -1,22 +1,27 @@
-import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
   AppSpecification
-} from "../chunk-P37RQIVG.mjs";
+} from "../chunk-ARZS2VHP.mjs";
 import {
   app_default,
   loginApp,
   require_redux
-} from "../chunk-NXTG6YV5.mjs";
+} from "../chunk-Y2IYZMNU.mjs";
+import "../chunk-P32AR2RA.mjs";
 import {
   assert
-} from "../chunk-NLCBXMNY.mjs";
+} from "../chunk-TM6NCEZK.mjs";
 import {
   Node_default,
-  __toESM
-} from "../chunk-WJAA5JYT.mjs";
+  __toESM,
+  init_cjs_shim
+} from "../chunk-ZUOHA3DK.mjs";
+
+// src/app.reduxToolkit.test.ts
+init_cjs_shim();
 
 // myTests/reduxToolkit.testeranto.test.ts
-var import_redux = __toESM(require_redux());
+init_cjs_shim();
+var import_redux = __toESM(require_redux(), 1);
 var ReduxToolkitTesteranto = (testImplementations, testSpecifications, testInput) => Node_default(
   testInput,
   testSpecifications,

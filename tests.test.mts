@@ -14,6 +14,8 @@ export default [
   ["./src/app.reduxToolkit.test.ts", "node", []],
   ["./src/Rectangle/Rectangle.test.electron.ts", "web", []],
   ["./src/Rectangle/Rectangle.test.node.ts", "node", []],
+  ["./src/MyFirstContract.solidity.test.ts", "node", []],
+  ["./src/MyFirstContract.solidity-precompiled.test.ts", "node", []],
 
   // broken or dead?
   // ["./src/google.puppeteer.testeranto.test.ts", "node", []],
@@ -26,8 +28,8 @@ export default [
   //   "node",
   //   [["src/ClassicalComponent.tsx", "web", []]]
   // ],
-  // ["./src/MyFirstContract.solidity.test.ts", "node", []],
-  // ["./src/MyFirstContract.solidity-precompiled.test.ts", "node", []],
+
+
   // ["./src/MyFirstContract.solidity-rpc.test.ts", "node", []],
   // ["./src/server.http.test.ts", "node", [["src/ClassicalComponent.tsx", "web", []], ["src/LoginPage.tsx", "web", []]]],
   // ["./src/Rectangle.test.puppeteer.ts", "puppeteer", []], // maybe works?

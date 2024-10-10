@@ -2,7 +2,7 @@ import {
   LoginPageSpecs,
   LoginPage_default,
   require_scheduler
-} from "../../../chunk-HBI2QHKW.mjs";
+} from "../../../chunk-6JXA32GL.mjs";
 import {
   require_react_test_renderer
 } from "../../../chunk-SDPG7AIW.mjs";
@@ -13,7 +13,7 @@ import {
 import {
   Web_default,
   assert
-} from "../../../chunk-I5OLLSFW.mjs";
+} from "../../../chunk-OERKCY6Y.mjs";
 import {
   __commonJS,
   __toESM
@@ -13618,8 +13618,8 @@ var web_default = (testImplementations, testSpecifications, testInput, testInter
 };
 
 // src/LoginPage/react-test-renderer/test.tsx
-var import_react2 = __toESM(require_react());
-var import_react_test_renderer2 = __toESM(require_react_test_renderer2());
+var import_react2 = __toESM(require_react(), 1);
+var import_react_test_renderer2 = __toESM(require_react_test_renderer2(), 1);
 var loginPageImpl = {
   Suites: {
     Default: "a default suite"

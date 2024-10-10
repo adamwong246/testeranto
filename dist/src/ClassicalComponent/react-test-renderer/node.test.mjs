@@ -1,19 +1,26 @@
-import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
   ClassicalComponent
-} from "../../../chunk-LSA22GKC.mjs";
+} from "../../../chunk-44RV3NTB.mjs";
 import {
   require_react_test_renderer
-} from "../../../chunk-MUMSTHS5.mjs";
+} from "../../../chunk-SZTMN6AQ.mjs";
 import {
   assert
-} from "../../../chunk-NLCBXMNY.mjs";
+} from "../../../chunk-TM6NCEZK.mjs";
 import {
   Node_default,
-  __toESM
-} from "../../../chunk-WJAA5JYT.mjs";
+  __toESM,
+  init_cjs_shim
+} from "../../../chunk-ZUOHA3DK.mjs";
+
+// src/ClassicalComponent/react-test-renderer/node.test.tsx
+init_cjs_shim();
+
+// node_modules/testeranto/dist/module/SubPackages/react-test-renderer/component/node.js
+init_cjs_shim();
 
 // node_modules/testeranto/dist/module/SubPackages/react-test-renderer/component/index.js
+init_cjs_shim();
 var import_react_test_renderer = __toESM(require_react_test_renderer(), 1);
 import React from "react";
 var testInterface = {
@@ -55,6 +62,7 @@ var testInterface = {
 var node_default = (testImplementations, testSpecifications, testInput) => Node_default(testInput, testSpecifications, testImplementations, testInterface);
 
 // src/ClassicalComponent/test.ts
+init_cjs_shim();
 var ClassicalComponentSpec = (Suite, Given, When, Then, Check) => {
   return [
     Suite.Default(
@@ -100,6 +108,7 @@ var ClassicalComponentSpec = (Suite, Given, When, Then, Check) => {
 };
 
 // src/ClassicalComponent/react-test-renderer/test.tsx
+init_cjs_shim();
 var testImplementation = {
   Suites: {
     Default: "default"

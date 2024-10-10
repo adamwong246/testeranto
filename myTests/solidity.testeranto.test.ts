@@ -35,16 +35,7 @@ export const SolidityTesteranto = async <
 ) => {
   const compilation = (await solCompile(testInput[0])).contracts.find((c) => c.contractName === testInput[0]);
 
-  return Testeranto<
-    ITestShape,
-    Input,
-    Ibis,
-    Selection,
-    Selection,
-    WhenShape,
-    ThenShape,
-    string
-  >(
+  return Testeranto(
     testInput,
     testSpecifications,
     testImplementations,
@@ -54,7 +45,6 @@ export const SolidityTesteranto = async <
 
       beforeEach: async (contract: Ibis) => {
 
-        // https://github.com/trufflesuite/ganache#programmatic-use
         const provider = Ganache.provider({
           // seed: "drizzle-utils",
           // gasPrice: 7000000,
@@ -80,7 +70,7 @@ export const SolidityTesteranto = async <
         };
       },
       andWhen: async ({ provider, contract, accounts }, callback: any) =>
-        (callback())({ contract, accounts }),
+        (callback)({ contract, accounts }),
     },
 
     { ports: 0 },

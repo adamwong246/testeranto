@@ -37,16 +37,7 @@ export const SolidityPrecompiledTesteranto = async <
     (c) => c.contractName === testInput[0]
   );
 
-  return Testeranto<
-    ITestShape,
-    Input,
-    Ibis,
-    Selection,
-    Selection,
-    WhenShape,
-    ThenShape,
-    string
-  >(
+  return Testeranto(
     testInput,
     testSpecifications,
     testImplementations,
@@ -79,7 +70,7 @@ export const SolidityPrecompiledTesteranto = async <
         };
       },
       andWhen: async ({ provider, contract, accounts }, callback: any) =>
-        (callback())({ contract, accounts }),
+        callback({ contract, accounts }),
     },
 
     { ports: 0 },
