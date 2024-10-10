@@ -7,9 +7,9 @@ import readline from 'readline';
 import WebSocket, { WebSocketServer } from 'ws';
 import { glob } from "glob";
 
-import { TesterantoFeatures } from "./Features";
+import { TesterantoFeatures } from "./Features.js";
 import { IBaseConfig, IRunTime, ITestTypes } from "./Types";
-import { ITTestResourceRequirement } from "./lib";
+import { ITTestResourceRequirement } from "./lib.js";
 
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
@@ -151,21 +151,35 @@ export class ITProject {
         const [nodeEntryPoints, webEntryPoints] = getRunnables(this.tests);
 
         const esbuildConfigNode: BuildOptions = {
+
+          inject: ['./node_modules/testeranto/dist/cjs-shim.js'],
+
+          supported: {
+            "dynamic-import": true
+          },
+
           define: {
             "process.env.FLUENTFFMPEG_COV": "0"
           },
           absWorkingDir: process.cwd(),
           banner: {
-            js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`
+            // js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`
           },
           target: "esnext",
           format: "esm",
           splitting: true,
           outExtension: { '.js': '.mjs' },
           platform: "node",
+
+          // packages: "external",
+
           external: [
             "tests.test.js",
-            "features.test.js", "react"],
+            "features.test.js",
+            "react",
+            "events",
+            "ganache"
+          ],
 
           outbase: config.outbase,
           outdir: config.outdir,
@@ -194,6 +208,9 @@ export class ITProject {
           ],
         };
         const esbuildConfigWeb: BuildOptions = {
+
+          // inject: ['cjs-shim.ts'],
+
           target: "esnext",
           format: "esm",
           splitting: true,
@@ -203,6 +220,7 @@ export class ITProject {
             react: path.resolve("./node_modules/react")
           },
 
+          // packages: "external",
           external: [
             "tests.test.js",
             "features.test.js",
@@ -213,6 +231,7 @@ export class ITProject {
             "fs",
             "stream",
           ],
+
           platform: "browser",
 
           outbase: config.outbase,
@@ -465,9 +484,9 @@ export class ITProject {
 
                         console.log("watching", resolvedPath);
                         pm2.start({
-
+                          // interpreter: 'node@20.4.0',
                           name: inputFilePath,
-                          script: `node ${resolvedPath} '${JSON.stringify(
+                          script: `node --experimental-loader tsc-module-loader ${resolvedPath} '${JSON.stringify(
                             {
                               scheduled: true,
                               name: inputFilePath,

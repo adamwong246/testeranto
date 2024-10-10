@@ -1,10 +1,10 @@
 import {
   IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen, BaseGiven
-} from "./base";
+} from "./base.js";
 import {
   ITTestResourceConfiguration,
   ITTestShape, ITestArtificer, ITestCheckCallback
-} from "./lib";
+} from "./lib.js";
 
 export type IBaseConfig = {
   clearScreen: boolean;

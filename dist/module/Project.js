@@ -148,21 +148,29 @@ export class ITProject {
                 })));
                 const [nodeEntryPoints, webEntryPoints] = getRunnables(this.tests);
                 const esbuildConfigNode = {
+                    inject: ['./node_modules/testeranto/dist/cjs-shim.js'],
+                    supported: {
+                        "dynamic-import": true
+                    },
                     define: {
                         "process.env.FLUENTFFMPEG_COV": "0"
                     },
                     absWorkingDir: process.cwd(),
                     banner: {
-                        js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`
+                    // js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`
                     },
                     target: "esnext",
                     format: "esm",
                     splitting: true,
                     outExtension: { '.js': '.mjs' },
                     platform: "node",
+                    // packages: "external",
                     external: [
-                        "tests.test.js",
-                        "features.test.js", "react"
+                        // "tests.test.js",
+                        // "features.test.js",
+                        "react",
+                        "events",
+                        "ganache"
                     ],
                     outbase: config.outbase,
                     outdir: config.outdir,
@@ -191,6 +199,7 @@ export class ITProject {
                     ],
                 };
                 const esbuildConfigWeb = {
+                    // inject: ['cjs-shim.ts'],
                     target: "esnext",
                     format: "esm",
                     splitting: true,
@@ -198,9 +207,10 @@ export class ITProject {
                     alias: {
                         react: path.resolve("./node_modules/react")
                     },
+                    // packages: "external",
                     external: [
-                        "tests.test.js",
-                        "features.test.js",
+                        // "tests.test.js",
+                        // "features.test.js",
                         // "url", 
                         // "react",
                         "electron",
@@ -410,8 +420,9 @@ export class ITProject {
                                             const resolvedPath = path.resolve(script);
                                             console.log("watching", resolvedPath);
                                             pm2.start({
+                                                // interpreter: 'node@20.4.0',
                                                 name: inputFilePath,
-                                                script: `node ${resolvedPath} '${JSON.stringify({
+                                                script: `node --experimental-loader tsc-module-loader ${resolvedPath} '${JSON.stringify({
                                                     scheduled: true,
                                                     name: inputFilePath,
                                                     ports: [],

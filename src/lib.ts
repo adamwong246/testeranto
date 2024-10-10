@@ -1,6 +1,6 @@
 import {
   IGivens, BaseCheck, BaseSuite, BaseThen, BaseWhen
-} from "./base";
+} from "./base.js";
 
 export type ITTestResourceConfiguration = {
   name: string;

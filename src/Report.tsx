@@ -11,7 +11,7 @@ import { Sigma, RandomizeNodePositions, RelativeSize } from 'react-sigma';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { ITestTypes } from "./Types";
-import { TesterantoFeatures } from "./Features";
+import { TesterantoFeatures } from "./Features.js";
 
 type IGraphData = {
   nodes: { id: string, label: string }[],

@@ -1,5 +1,5 @@
-import { BaseWhen, BaseThen, BaseCheck, BaseSuite, BaseGiven, ClassBuilder } from "./base";
-import { defaultTestResourceRequirement } from "./lib";
+import { BaseWhen, BaseThen, BaseCheck, BaseSuite, BaseGiven, ClassBuilder } from "./base.js";
+import { defaultTestResourceRequirement } from "./lib.js";
 export default class Testeranto extends ClassBuilder {
     constructor(input, testSpecification, testImplementation, testResourceRequirement = defaultTestResourceRequirement, logWriter, beforeAll, beforeEach, afterEach, afterAll, butThen, andWhen) {
         super(testImplementation, testSpecification, input, class extends BaseSuite {

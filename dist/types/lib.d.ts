@@ -1,4 +1,4 @@
-import { IGivens, BaseCheck, BaseSuite, BaseThen, BaseWhen } from "./base";
+import { IGivens, BaseCheck, BaseSuite, BaseThen, BaseWhen } from "./base.js";
 export declare type ITTestResourceConfiguration = {
     name: string;
     fs: string;

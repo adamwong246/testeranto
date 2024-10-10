@@ -4,7 +4,7 @@ import {
   ILogWriter,
   ITestCheckCallback,
   ITTestResourceRequest
-} from "./lib";
+} from "./lib.js";
 import { ITestImplementation } from "./Types";
 
 export type IGivens<

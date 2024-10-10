@@ -1,5 +1,5 @@
-import { IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen, BaseGiven } from "./base";
-import { ITTestResourceConfiguration, ITTestShape, ITestArtificer, ITestCheckCallback } from "./lib";
+import { IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen, BaseGiven } from "./base.js";
+import { ITTestResourceConfiguration, ITTestShape, ITestArtificer, ITestCheckCallback } from "./lib.js";
 export declare type IBaseConfig = {
     clearScreen: boolean;
     devMode: boolean;

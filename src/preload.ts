@@ -1,5 +1,6 @@
-import { NodeWriter } from "./nodeWriter";
 import { ipcRenderer } from "electron";
+
+import { NodeWriter } from "./nodeWriter.js";
 
 (window as any).NodeWriter = NodeWriter;
 (window as any).exit = (x) => {

@@ -1,5 +1,5 @@
-import { NodeWriter } from "./nodeWriter";
 import { ipcRenderer } from "electron";
+import { NodeWriter } from "./nodeWriter.js";
 window.NodeWriter = NodeWriter;
 window.exit = (x) => {
     ipcRenderer.invoke('quit-app', x);

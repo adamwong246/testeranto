@@ -1,11 +1,15 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.52.1",
+  "version": "0.52.2",
   "type": "module",
   "types": "./dist/index.d.mts",
   "module": "dist/module/index.js",
   "exports": {
+    "./src/cjs-shim.ts": {
+      "import": "./dist/cjs-shim.js",
+      "require": "./dist/cjs-shim.js"
+    },
     "./src/SubPackages/react/jsx/index": {
       "import": "./dist/module/SubPackages/react/jsx/index.js",
       "require": "./dist/common/SubPackages/react/jsx/index.js"
@@ -134,6 +138,10 @@
       "import": "./dist/module/core.js",
       "require": "./dist/common/core.js"
     },
+    "./dist/module/base": {
+      "import": "./dist/module/base.js",
+      "require": "./dist/common/base.js"
+    },
     "./dist/module/NodeWriter": {
       "import": "./dist/module/NodeWriter.js",
       "require": "./dist/common/NodeWriter.js"
@@ -151,7 +159,10 @@
   ],
   "scripts": {
     "build": "sh prebuild.sh; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; sh postBuild.sh",
-    "dev": "tsc -p tsconfig.module.json --watch & tsc -p tsconfig.common.json --watch & tsc -p tsconfig.types.json --watch"
+    "dev": "tsc -p tsconfig.module.json --watch & tsc -p tsconfig.common.json --watch & tsc -p tsconfig.types.json --watch",
+    "build-module": "tsc -p tsconfig.module.json",
+    "build-common": "tsc -p tsconfig.common.json",
+    "build-types": "tsc -p tsconfig.types.json"
   },
   "peerDependencies": {
     "@types/react": "^18.2.66",

@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { PassThrough } from "stream";
 
-import { ILogWriter, ITLog } from "./lib";
+import { ILogWriter, ITLog } from "./lib.js";
 
 type IFPaths = string[];
 const fPaths: IFPaths = [];

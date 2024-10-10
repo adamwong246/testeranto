@@ -1,8 +1,6 @@
-import Graph from "graphology";
-import pkg from "graphology";
+import Graph from "graphology/dist/graphology.umd.js";
 
-/* @ts-ignore:next-line */
-const { DirectedGraph, UndirectedGraph } = pkg;
+const { DirectedGraph, UndirectedGraph } = Graph;
 
 abstract class TesterantoGraph {
   name: string;

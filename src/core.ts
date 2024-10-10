@@ -6,7 +6,7 @@ import {
   BaseSuite,
   BaseGiven,
   ClassBuilder
-} from "./base";
+} from "./base.js";
 import {
   ILogWriter,
   ITTestResourceConfiguration,
@@ -15,7 +15,7 @@ import {
   ITestArtificer,
   ITestJob,
   defaultTestResourceRequirement
-} from "./lib";
+} from "./lib.js";
 
 export default abstract class Testeranto<
   TestShape extends ITTestShape,
