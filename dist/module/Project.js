@@ -166,8 +166,8 @@ export class ITProject {
                     platform: "node",
                     // packages: "external",
                     external: [
-                        // "tests.test.js",
-                        // "features.test.js",
+                        "tests.test.js",
+                        "features.test.js",
                         "react",
                         "events",
                         "ganache"
@@ -209,8 +209,8 @@ export class ITProject {
                     },
                     // packages: "external",
                     external: [
-                        // "tests.test.js",
-                        // "features.test.js",
+                        "tests.test.js",
+                        "features.test.js",
                         // "url", 
                         // "react",
                         "electron",

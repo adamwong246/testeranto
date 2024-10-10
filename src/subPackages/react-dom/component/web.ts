@@ -77,6 +77,7 @@ export default <ITestShape extends ITTestShape>(
             initialProps,
             artificer
           ): Promise<ISubject> => {
+            console.log("mark5", initialProps);
             return await new Promise((resolve, rej) => {
               const elem = document.getElementById("root");
               if (elem) {

@@ -68,7 +68,10 @@ export abstract class BaseSuite<
     };
   }
 
-  setup(s: IInput, artifactory: ITestArtifactory): Promise<ISubject> {
+  setup(
+    s: IInput,
+    artifactory: ITestArtifactory
+  ): Promise<ISubject> {
     return new Promise((res) => res(s as unknown as ISubject));
   }
 
@@ -77,7 +80,7 @@ export abstract class BaseSuite<
   }
 
   async run(
-    input,
+    input: IInput,
     testResourceConfiguration: ITTestResourceConfiguration,
     artifactory: (
       fPath: string,
@@ -432,7 +435,6 @@ export abstract class BaseBuilder<
   artifacts: Promise<unknown>[] = [];
   testJobs: ITestJob[];
 
-  constructorator: IStore;
 
   suitesOverrides: Record<
     keyof SuiteExtensions,
@@ -486,7 +488,7 @@ export abstract class BaseBuilder<
   >;
 
   constructor(
-    public readonly cc: IStore,
+    public readonly input: IInput,
     suitesOverrides: Record<
       keyof SuiteExtensions,
       (
@@ -548,7 +550,6 @@ export abstract class BaseBuilder<
     testSpecification,
   ) {
     this.testResourceRequirement = testResourceRequirement;
-    this.constructorator = cc;
     this.suitesOverrides = suitesOverrides;
     this.givenOverides = givenOverides;
     this.whenOverides = whenOverides;
@@ -581,7 +582,7 @@ export abstract class BaseBuilder<
           IInput, ISubject, IStore, ISelection, IThenShape, ITestShape, IGivenShape
         >> => {
           return await suite.run(
-            cc,
+            input,
             testResourceConfiguration,
             (
               fPath: string,

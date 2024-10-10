@@ -17,6 +17,7 @@ export default (testInput, testSpecifications, testImplementations) => {
             }
             return Testeranto(testInput, testSpecifications, testImplementations, {
                 beforeAll: async (initialProps, artificer) => {
+                    console.log("mark5", initialProps);
                     return await new Promise((resolve, rej) => {
                         const elem = document.getElementById("root");
                         if (elem) {

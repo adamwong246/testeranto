@@ -22,6 +22,7 @@ exports.default = (testInput, testSpecifications, testImplementations) => {
             }
             return (0, Web_1.default)(testInput, testSpecifications, testImplementations, {
                 beforeAll: async (initialProps, artificer) => {
+                    console.log("mark5", initialProps);
                     return await new Promise((resolve, rej) => {
                         const elem = document.getElementById("root");
                         if (elem) {

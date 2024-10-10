@@ -182,11 +182,10 @@ export class BaseCheck {
     }
 }
 export class BaseBuilder {
-    constructor(cc, suitesOverrides, givenOverides, whenOverides, thenOverides, checkOverides, logWriter, testResourceRequirement, testSpecification) {
-        this.cc = cc;
+    constructor(input, suitesOverrides, givenOverides, whenOverides, thenOverides, checkOverides, logWriter, testResourceRequirement, testSpecification) {
+        this.input = input;
         this.artifacts = [];
         this.testResourceRequirement = testResourceRequirement;
-        this.constructorator = cc;
         this.suitesOverrides = suitesOverrides;
         this.givenOverides = givenOverides;
         this.whenOverides = whenOverides;
@@ -194,7 +193,7 @@ export class BaseBuilder {
         this.checkOverides = checkOverides;
         const suites = testSpecification(this.Suites(), this.Given(), this.When(), this.Then(), this.Check(), logWriter);
         const suiteRunner = (suite) => async (testResourceConfiguration, tLog) => {
-            return await suite.run(cc, testResourceConfiguration, (fPath, value) => logWriter.testArtiFactoryfileWriter(tLog, (p) => {
+            return await suite.run(input, testResourceConfiguration, (fPath, value) => logWriter.testArtiFactoryfileWriter(tLog, (p) => {
                 artifacts.push(p);
             })(testResourceConfiguration.fs + "/" + fPath, value), tLog);
         };
