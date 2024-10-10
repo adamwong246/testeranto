@@ -42,6 +42,7 @@ class NodeTesteranto<
     afterAll,
     butThen,
     andWhen,
+    assertioner,
   ) {
     super(
       input,
@@ -55,6 +56,7 @@ class NodeTesteranto<
       afterAll,
       butThen,
       andWhen,
+      assertioner
     );
 
     const t: ITestJob = this.testJobs[0];
@@ -187,6 +189,7 @@ export default async <
     testInterface.afterAll || ((store: IStore) => undefined),
     testInterface.butThen || (async (a) => a as any),
     testInterface.andWhen || ((a) => a),
+    testInterface.assertThis || (() => null),
   )
 
 };

@@ -83,6 +83,9 @@ export default abstract class Testeranto<
       whenCB,
       testResource: ITTestResourceConfiguration
     ) => Promise<ISelection>,
+    assertThis: (
+      a: any
+    ) => any,
   ) {
     super(
       testImplementation,
@@ -98,6 +101,10 @@ export default abstract class Testeranto<
         TestShape,
         IGivenShape
       > {
+
+        assertThat(t) {
+          assertThis(t);
+        }
 
         async setup(s: IInput, artifactory): Promise<ISubject> {
           return (beforeAll || (async (

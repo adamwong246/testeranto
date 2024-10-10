@@ -142,6 +142,7 @@ export type ITestImplementation<
 export type ITestInterface<
   IStore, ISelection, ISubject, IThenShape, IInput
 > = {
+  assertThis?: (x: any) => void,
   andWhen: (
     store: IStore,
     whenCB,

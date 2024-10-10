@@ -44,7 +44,12 @@ export abstract class BaseSuite<
   constructor(
     name: string,
     index: number,
-    givens: IGivens<ISubject, IStore, ISelection, IThenShape, IGivenShape> = {},
+    givens: IGivens<
+      ISubject,
+      IStore,
+      ISelection,
+      IThenShape,
+      IGivenShape> = {},
     checks: BaseCheck<
       ISubject,
       IStore,
@@ -75,7 +80,8 @@ export abstract class BaseSuite<
     return new Promise((res) => res(s as unknown as ISubject));
   }
 
-  test(t: IThenShape): unknown {
+  assertThat(t: IThenShape): unknown {
+    console.log("base assertThat")
     return t;
   }
 
@@ -88,7 +94,16 @@ export abstract class BaseSuite<
     ) => void,
     tLog: (...string) => void
   ): Promise<
-    BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape, IGivenShape>
+    BaseSuite<
+      IInput,
+      ISubject,
+      IStore,
+      ISelection,
+      IThenShape,
+      ITestShape,
+      IGivenShape
+
+    >
   > {
     this.testResourceConfiguration = testResourceConfiguration;
 
@@ -104,7 +119,7 @@ export abstract class BaseSuite<
           subject,
           k,
           testResourceConfiguration,
-          this.test,
+          this.assertThat,
           suiteArtifactory,
           tLog
         );
@@ -119,7 +134,7 @@ export abstract class BaseSuite<
         subject,
         thater.name,
         testResourceConfiguration,
-        this.test,
+        this.assertThat,
         suiteArtifactory,
         tLog
       );
@@ -768,7 +783,13 @@ export abstract class ClassBuilder<
       Suite: {
         [K in keyof ITestShape["suites"]]: (
           feature: string,
-          givens: IGivens<ISubject, IStore, ISelection, IThenShape, IGivenShape>,
+          givens: IGivens<
+            ISubject,
+            IStore,
+            ISelection,
+            IThenShape,
+            IGivenShape
+          >,
           checks: BaseCheck<
             ISubject,
             IStore,

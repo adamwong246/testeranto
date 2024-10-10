@@ -28,7 +28,7 @@ export declare abstract class BaseSuite<IInput, ISubject, IStore, ISelection, IT
         fails: BaseGiven<ISubject, IStore, ISelection, IThenShape, IGivenShape>[];
     };
     setup(s: IInput, artifactory: ITestArtifactory): Promise<ISubject>;
-    test(t: IThenShape): unknown;
+    assertThat(t: IThenShape): unknown;
     run(input: IInput, testResourceConfiguration: ITTestResourceConfiguration, artifactory: (fPath: string, value: unknown) => void, tLog: (...string: any[]) => void): Promise<BaseSuite<IInput, ISubject, IStore, ISelection, IThenShape, ITestShape, IGivenShape>>;
 }
 export declare abstract class BaseGiven<ISubject, IStore, ISelection, IThenShape, IGivenShape> {

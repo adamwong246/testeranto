@@ -1,8 +1,11 @@
 import { BaseWhen, BaseThen, BaseCheck, BaseSuite, BaseGiven, ClassBuilder } from "./base.js";
 import { defaultTestResourceRequirement } from "./lib.js";
 export default class Testeranto extends ClassBuilder {
-    constructor(input, testSpecification, testImplementation, testResourceRequirement = defaultTestResourceRequirement, logWriter, beforeAll, beforeEach, afterEach, afterAll, butThen, andWhen) {
+    constructor(input, testSpecification, testImplementation, testResourceRequirement = defaultTestResourceRequirement, logWriter, beforeAll, beforeEach, afterEach, afterAll, butThen, andWhen, assertThis) {
         super(testImplementation, testSpecification, input, class extends BaseSuite {
+            assertThat(t) {
+                assertThis(t);
+            }
             async setup(s, artifactory) {
                 return (beforeAll || (async (input, artificer) => input))(s, artifactory, this.testResourceConfiguration);
             }

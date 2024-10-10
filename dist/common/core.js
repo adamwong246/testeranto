@@ -3,8 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const base_js_1 = require("./base.js");
 const lib_js_1 = require("./lib.js");
 class Testeranto extends base_js_1.ClassBuilder {
-    constructor(input, testSpecification, testImplementation, testResourceRequirement = lib_js_1.defaultTestResourceRequirement, logWriter, beforeAll, beforeEach, afterEach, afterAll, butThen, andWhen) {
+    constructor(input, testSpecification, testImplementation, testResourceRequirement = lib_js_1.defaultTestResourceRequirement, logWriter, beforeAll, beforeEach, afterEach, afterAll, butThen, andWhen, assertThis) {
         super(testImplementation, testSpecification, input, class extends base_js_1.BaseSuite {
+            assertThat(t) {
+                assertThis(t);
+            }
             async setup(s, artifactory) {
                 return (beforeAll || (async (input, artificer) => input))(s, artifactory, this.testResourceConfiguration);
             }

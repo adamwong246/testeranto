@@ -45,6 +45,7 @@ export declare type ITestImplementation<IState, ISelection, IWhenShape, IThenSha
     };
 };
 export declare type ITestInterface<IStore, ISelection, ISubject, IThenShape, IInput> = {
+    assertThis?: (x: any) => void;
     andWhen: (store: IStore, whenCB: any, testResource: ITTestResourceConfiguration) => Promise<ISelection>;
     butThen?: (store: IStore, thenCB: any, testResource: ITTestResourceConfiguration) => Promise<ISelection>;
     afterAll?: (store: IStore, artificer: ITestArtificer) => any;

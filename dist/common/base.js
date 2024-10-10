@@ -19,7 +19,8 @@ class BaseSuite {
     setup(s, artifactory) {
         return new Promise((res) => res(s));
     }
-    test(t) {
+    assertThat(t) {
+        console.log("base assertThat");
         return t;
     }
     async run(input, testResourceConfiguration, artifactory, tLog) {
@@ -30,7 +31,11 @@ class BaseSuite {
         for (const k of Object.keys(this.givens)) {
             const giver = this.givens[k];
             try {
-                this.store = await giver.give(subject, k, testResourceConfiguration, this.test, suiteArtifactory, tLog);
+                this.store = await giver.give(subject, k, testResourceConfiguration, 
+                // todo
+                this.assertThat, 
+                // (x) => x,
+                suiteArtifactory, tLog);
             }
             catch (e) {
                 console.error(e);
@@ -39,7 +44,11 @@ class BaseSuite {
             }
         }
         for (const [ndx, thater] of this.checks.entries()) {
-            await thater.check(subject, thater.name, testResourceConfiguration, this.test, suiteArtifactory, tLog);
+            await thater.check(subject, thater.name, testResourceConfiguration, 
+            // todo
+            this.assertThat, 
+            // (x) => x,
+            suiteArtifactory, tLog);
         }
         // @TODO fix me
         for (const k of Object.keys(this.givens)) {
