@@ -75,7 +75,6 @@ export default abstract class Testeranto<
     ) => any,
     butThen: (
       s: IStore,
-      thenCB: (storeState: ISelection) => IThenShape,
       testResource: ITTestResourceConfiguration,
     ) => any,
     andWhen: (
@@ -161,8 +160,7 @@ export default abstract class Testeranto<
           store: any,
           testResourceConfiguration?: any
         ): Promise<ISelection> {
-          const newState = await butThen(store, this.thenCB, testResourceConfiguration);
-          return newState;
+          return await butThen(store, testResourceConfiguration);
         }
       } as any,
 

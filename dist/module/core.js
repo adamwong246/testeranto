@@ -29,8 +29,7 @@ export default class Testeranto extends ClassBuilder {
             }
         }, class Then extends BaseThen {
             async butThen(store, testResourceConfiguration) {
-                const newState = await butThen(store, this.thenCB, testResourceConfiguration);
-                return newState;
+                return await butThen(store, testResourceConfiguration);
             }
         }, class Check extends BaseCheck {
             constructor(name, features, checkCallback, whens, thens, initialValues) {

@@ -31,11 +31,7 @@ class BaseSuite {
         for (const k of Object.keys(this.givens)) {
             const giver = this.givens[k];
             try {
-                this.store = await giver.give(subject, k, testResourceConfiguration, 
-                // todo
-                this.assertThat, 
-                // (x) => x,
-                suiteArtifactory, tLog);
+                this.store = await giver.give(subject, k, testResourceConfiguration, this.assertThat, suiteArtifactory, tLog);
             }
             catch (e) {
                 console.error(e);
@@ -44,11 +40,7 @@ class BaseSuite {
             }
         }
         for (const [ndx, thater] of this.checks.entries()) {
-            await thater.check(subject, thater.name, testResourceConfiguration, 
-            // todo
-            this.assertThat, 
-            // (x) => x,
-            suiteArtifactory, tLog);
+            await thater.check(subject, thater.name, testResourceConfiguration, this.assertThat, suiteArtifactory, tLog);
         }
         // @TODO fix me
         for (const k of Object.keys(this.givens)) {

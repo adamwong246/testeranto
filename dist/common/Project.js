@@ -451,7 +451,7 @@ class ITProject {
                                             pm2_1.default.start({
                                                 // interpreter: 'node@20.4.0',
                                                 name: inputFilePath,
-                                                script: `node --experimental-loader tsc-module-loader ${resolvedPath} '${JSON.stringify({
+                                                script: `node --inspect-brk --experimental-loader tsc-module-loader ${resolvedPath} '${JSON.stringify({
                                                     scheduled: true,
                                                     name: inputFilePath,
                                                     ports: [],

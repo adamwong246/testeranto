@@ -322,7 +322,10 @@ export abstract class BaseThen<ISelection, IStore, IThenShape> {
     };
   }
 
-  abstract butThen(store: any, testResourceConfiguration?): Promise<ISelection>;
+  abstract butThen(
+    store: any,
+    testResourceConfiguration?
+  ): Promise<ISelection>;
 
   async test(
     store: IStore,
@@ -331,7 +334,10 @@ export abstract class BaseThen<ISelection, IStore, IThenShape> {
   ): Promise<IThenShape | undefined> {
     tLog(" Then:", this.name);
     try {
-      const x = this.thenCB(await this.butThen(store, testResourceConfiguration));
+      const x = this.thenCB(await this.butThen(
+        store,
+        testResourceConfiguration
+      ));
       return x;
     } catch (e) {
       console.log("test failed", e);
