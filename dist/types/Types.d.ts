@@ -51,5 +51,5 @@ export declare type ITestInterface<IStore, ISelection, ISubject, IThenShape, IIn
     afterAll?: (store: IStore, artificer: ITestArtificer) => any;
     afterEach?: (store: IStore, key: string, artificer: ITestArtificer) => Promise<unknown>;
     beforeAll?: (input: IInput, artificer: ITestArtificer) => Promise<ISubject>;
-    beforeEach?: (subject: ISubject, initialValues: any, testResource: ITTestResourceConfiguration, artificer: ITestArtificer) => Promise<IStore>;
+    beforeEach?: (subject: ISubject, initializer: any, artificer: ITestArtificer, testResource: ITTestResourceConfiguration, initialValues: any) => Promise<IStore>;
 };

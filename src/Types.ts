@@ -162,8 +162,9 @@ export type ITestInterface<
   beforeAll?: (input: IInput, artificer: ITestArtificer) => Promise<ISubject>;
   beforeEach?: (
     subject: ISubject,
-    initialValues,
+    initializer,
+    artificer: ITestArtificer,
     testResource: ITTestResourceConfiguration,
-    artificer: ITestArtificer
+    initialValues
   ) => Promise<IStore>;
 };
