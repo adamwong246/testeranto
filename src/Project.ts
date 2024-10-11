@@ -84,6 +84,7 @@ export class ITProject {
 
   private spinCycle = 0;
   private spinAnimation = "←↖↑↗→↘↓↙";
+  private esWebServerDetails: any;
 
   constructor(config: IBaseConfig) {
     this.clearScreen = config.clearScreen;
@@ -319,24 +320,32 @@ export class ITProject {
 </html>
         `)
 
+        // const nodeContext = 
         Promise.all([
           esbuild.context(esbuildConfigNode)
             .then(async (nodeContext) => {
               await nodeContext.watch();
+              return nodeContext;
             }),
 
           esbuild.context(esbuildConfigWeb)
             .then(async (esbuildWeb) => {
               await esbuildWeb.watch();
+              return esbuildWeb;
             })
 
-        ]).then(() => {
+        ]).then(async ([eNode, eWeb]) => {
 
           if (config.devMode === false) {
             console.log("Your tests were built but not run because devMode was false. Exiting gracefully");
             process.exit(0);
 
           } else {
+
+            this.esWebServerDetails = await eWeb.serve({
+              servedir: 'dist',
+            });
+
 
             pm2.connect(async (err) => {
 
@@ -818,7 +827,11 @@ export class ITProject {
         }
       }
 
-      const upMessage = "Running tests while watching for changes. Use 'q' to initiate shutdown and `x` to kill.";
+      const upMessage = `
+  Running tests while watching for changes.
+  Use 'q' to initiate shutdown and 'x' to kill.
+  esbuild web server - ${JSON.stringify(this.esWebServerDetails)}
+`;
       const downMessage = "Shutdown is in progress. Please wait.";
       if (this.devMode) {
         if (this.mode === "up") {

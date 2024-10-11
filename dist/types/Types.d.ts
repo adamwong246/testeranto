@@ -63,11 +63,11 @@ export declare type IBaseTest = {
     given: any;
     when: any;
     then: any;
-    suites: Record<string, unknown>;
-    givens: Record<string, unknown>;
-    whens: Record<string, unknown>;
-    thens: Record<string, unknown>;
-    checks: Record<string, unknown>;
+    suites: Record<string, any[]>;
+    givens: Record<string, any[]>;
+    whens: Record<string, any[]>;
+    thens: Record<string, any[]>;
+    checks: Record<string, any[]>;
 };
 export declare type ITestShaper<T extends IBaseTest, modifier> = {
     given: any;

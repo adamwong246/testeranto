@@ -8,6 +8,7 @@ function createWindow() {
   win = new BrowserWindow({
 
     webPreferences: {
+      offscreen: true,
       devTools: true,
       nodeIntegration: true,
       nodeIntegrationInWorker: true,

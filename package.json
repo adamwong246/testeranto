@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.54.0",
+  "version": "0.55.0",
   "type": "module",
   "types": "./dist/index.d.mts",
   "module": "dist/module/index.js",
@@ -158,7 +158,9 @@
     "ATDD"
   ],
   "scripts": {
+    "doit": "rm -rf node_modules && yarn install && yarn build",
     "build": "sh prebuild.sh; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; sh postBuild.sh",
+    "commit": "yarn build; git add --all && git commit -m 'stash'",
     "dev": "tsc -p tsconfig.module.json --watch & tsc -p tsconfig.common.json --watch & tsc -p tsconfig.types.json --watch",
     "build-module": "tsc -p tsconfig.module.json",
     "build-common": "tsc -p tsconfig.common.json",
@@ -175,7 +177,7 @@
   },
   "devDependencies": {
     "@swc/core": "^1.3.26",
-    "@types/node": "^18.14.0",
+    "@types/node": "^22.7.5",
     "@types/react": "18.2.55",
     "@types/react-bootstrap": "^0.32.32",
     "@types/react-dom": "18.2.23",

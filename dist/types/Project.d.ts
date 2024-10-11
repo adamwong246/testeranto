@@ -18,6 +18,7 @@ export declare class ITProject {
     }[];
     private spinCycle;
     private spinAnimation;
+    private esWebServerDetails;
     constructor(config: IBaseConfig);
     requestResource(requirement: ITTestResourceRequirement, protocol: ISchedulerProtocols): void;
     getSecondaryEndpointsPoints(runtime?: IRunTime): string[];
