@@ -226,7 +226,7 @@ export default async <
     testInterface.beforeEach || async function (subject: any, initialValues: any, testResource: any) { return subject as any; },
     testInterface.afterEach || (async (s) => s),
     testInterface.afterAll || ((store: ITestShape['istore']) => undefined),
-    testInterface.butThen || (async (a) => a as any),
+    testInterface.butThen || (async (store: ITestShape['istore'], thenCb) => thenCb(store)),
     testInterface.andWhen || ((a) => a),
     testInterface.assertThis || (() => null),
   )

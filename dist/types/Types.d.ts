@@ -11,6 +11,7 @@ export declare type IBaseConfig = {
     outdir: string;
     ports: string[];
     tests: string;
+    debugger: boolean;
 };
 export declare type IRunTime = `node` | `web`;
 export declare type ITestTypes = [

@@ -23,6 +23,7 @@ export type IBaseConfig = {
   outdir: string;
   ports: string[];
   tests: string;
+  debugger: boolean;
 };
 
 export type IRunTime = `node` | `web`;

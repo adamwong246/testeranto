@@ -53,6 +53,7 @@ export default abstract class Testeranto<
     ) => any,
     butThen: (
       s: ITestShape['istore'],
+      thenCB,
       testResource: ITTestResourceConfiguration,
     ) => any,
     andWhen: (
@@ -138,9 +139,13 @@ export default abstract class Testeranto<
 
         async butThen(
           store: any,
+          thenCB,
           testResourceConfiguration?: any
         ): Promise<ITestShape['iselection']> {
-          return await butThen(store, testResourceConfiguration);
+          return await butThen(
+            store,
+            thenCB,
+            testResourceConfiguration);
         }
       } as any,
 

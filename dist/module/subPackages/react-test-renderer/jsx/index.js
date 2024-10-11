@@ -1,7 +1,13 @@
 import React from "react";
 import renderer, { act } from "react-test-renderer";
 export const testInterface = {
+    butThen: async function (s, thenCB, tr) {
+        console.log("butThen", thenCB.toString());
+        // debugger
+        return thenCB(s);
+    },
     beforeEach: function (CComponent, props) {
+        console.log("ASDASDx");
         let component;
         act(() => {
             component = renderer.create(React.createElement(CComponent, props, []));

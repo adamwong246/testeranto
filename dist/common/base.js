@@ -148,7 +148,7 @@ class BaseThen {
     async test(store, testResourceConfiguration, tLog) {
         tLog(" Then:", this.name);
         try {
-            const x = this.thenCB(await this.butThen(store, testResourceConfiguration));
+            const x = (await this.butThen(store, this.thenCB, testResourceConfiguration));
             return x;
         }
         catch (e) {

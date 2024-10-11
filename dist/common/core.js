@@ -30,8 +30,8 @@ class Testeranto extends base_js_1.ClassBuilder {
                 return await andWhen(store, whenCB, testResource);
             }
         }, class Then extends base_js_1.BaseThen {
-            async butThen(store, testResourceConfiguration) {
-                return await butThen(store, testResourceConfiguration);
+            async butThen(store, thenCB, testResourceConfiguration) {
+                return await butThen(store, thenCB, testResourceConfiguration);
             }
         }, class Check extends base_js_1.BaseCheck {
             constructor(name, features, checkCallback, whens, thens, initialValues) {

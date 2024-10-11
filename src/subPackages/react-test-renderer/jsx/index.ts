@@ -28,7 +28,14 @@ export type ITestSpec<
 >
 
 export const testInterface = {
+  butThen: async function (s: IStore, thenCB, tr): Promise<ISelection> {
+
+    console.log("butThen", thenCB.toString())
+    // debugger
+    return thenCB(s);
+  },
   beforeEach: function (CComponent, props): Promise<renderer.ReactTestRenderer> {
+    console.log("ASDASDx")
     let component;
     act(() => {
       component = renderer.create(

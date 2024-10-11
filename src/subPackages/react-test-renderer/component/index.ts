@@ -2,7 +2,7 @@ import React from "react";
 import renderer, { act } from "react-test-renderer";
 
 
-import { IBaseTest, ITestImplementation, ITestSpecification } from "../../../Types";
+import { IBaseTest, ITestImplementation, ITestInterface, ITestSpecification } from "../../../Types";
 
 export type ISuper<T> = T extends infer U ? U : object;
 
@@ -57,16 +57,11 @@ export const testInterface = {
       const c = props.children;
       return React.createElement(CComponent, p, c);
     }
-
-
     return new Promise((res, rej) => {
       act(async () => {
         const p = propsAndChildren;
-        // console.log("beforeEach1", CComponent, p)
         const y = new CComponent(p.props);
-        // console.log("beforeEach2", y)
         const testRenderer = await renderer.create(Link(propsAndChildren));
-        // console.log("beforeEach3", testRenderer.getInstance())
         res(testRenderer);
       });
     });
@@ -75,7 +70,7 @@ export const testInterface = {
     renderer: renderer.ReactTestRenderer,
     whenCB: any
   ): Promise<renderer.ReactTestRenderer> {
-    console.log("andWhen", whenCB)
+    // console.log("andWhen", whenCB)
     await act(() => whenCB(renderer));
     return renderer
   },
@@ -83,10 +78,11 @@ export const testInterface = {
   // andWhen: function (s: Store, whenCB): Promise<Selection> {
   //   return whenCB()(s);
   // },
-  butThen: async function (s: IStore): Promise<ISelection> {
+  butThen: async function (s: IStore, thenCB, tr): Promise<ISelection> {
 
-    // console.log("butThen", s)
-    return s;
+    console.log("butThen", thenCB.toString())
+    // debugger
+    return thenCB(s);
   },
   afterEach: async function (
     store: IStore,

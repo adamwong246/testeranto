@@ -30,7 +30,13 @@ exports.testInterface = void 0;
 const react_1 = __importDefault(require("react"));
 const react_test_renderer_1 = __importStar(require("react-test-renderer"));
 exports.testInterface = {
+    butThen: async function (s, thenCB, tr) {
+        console.log("butThen", thenCB.toString());
+        // debugger
+        return thenCB(s);
+    },
     beforeEach: function (CComponent, props) {
+        console.log("ASDASDx");
         let component;
         (0, react_test_renderer_1.act)(() => {
             component = react_test_renderer_1.default.create(react_1.default.createElement(CComponent, props, []));

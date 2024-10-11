@@ -486,7 +486,7 @@ export class ITProject {
                         pm2.start({
                           // interpreter: 'node@20.4.0',
                           name: inputFilePath,
-                          script: `node --experimental-loader tsc-module-loader ${resolvedPath} '${JSON.stringify(
+                          script: `node ${config.debugger ? "--inspect-brk" : ""} ${resolvedPath} '${JSON.stringify(
                             {
                               scheduled: true,
                               name: inputFilePath,

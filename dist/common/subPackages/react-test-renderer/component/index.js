@@ -59,26 +59,24 @@ exports.testInterface = {
         return new Promise((res, rej) => {
             (0, react_test_renderer_1.act)(async () => {
                 const p = propsAndChildren;
-                // console.log("beforeEach1", CComponent, p)
                 const y = new CComponent(p.props);
-                // console.log("beforeEach2", y)
                 const testRenderer = await react_test_renderer_1.default.create(Link(propsAndChildren));
-                // console.log("beforeEach3", testRenderer.getInstance())
                 res(testRenderer);
             });
         });
     },
     andWhen: async function (renderer, whenCB) {
-        console.log("andWhen", whenCB);
+        // console.log("andWhen", whenCB)
         await (0, react_test_renderer_1.act)(() => whenCB(renderer));
         return renderer;
     },
     // andWhen: function (s: Store, whenCB): Promise<Selection> {
     //   return whenCB()(s);
     // },
-    butThen: async function (s) {
-        // console.log("butThen", s)
-        return s;
+    butThen: async function (s, thenCB, tr) {
+        console.log("butThen", thenCB.toString());
+        // debugger
+        return thenCB(s);
     },
     afterEach: async function (store, ndx, artificer) {
         // console.log("afterEach", store);

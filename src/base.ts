@@ -315,7 +315,8 @@ export abstract class BaseThen<
   }
 
   abstract butThen(
-    store: any,
+    store: ITestShape['istore'],
+    thenCB,
     testResourceConfiguration?
   ): Promise<ITestShape['iselection']>;
 
@@ -326,8 +327,9 @@ export abstract class BaseThen<
   ): Promise<ITestShape['then'] | undefined> {
     tLog(" Then:", this.name);
     try {
-      const x = this.thenCB(await this.butThen(
+      const x = (await this.butThen(
         store,
+        this.thenCB,
         testResourceConfiguration
       ));
       return x;

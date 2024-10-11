@@ -82,10 +82,11 @@ export default <
             initialValues
           ): Promise<IStore> => {
             return new Promise((resolve, rej) => {
+              // console.log("beforeEach" + JSON.stringify(initializer) + JSON.stringify(initialValues));
               // Ignore these type errors
               ReactDom.createRoot(htmlElement).render(createElement(
                 TesterantoComponent, {
-                ...initializer(initialValues),
+                ...initializer.props,
                 done: (reactElement) => {
                   resolve(
                     {
