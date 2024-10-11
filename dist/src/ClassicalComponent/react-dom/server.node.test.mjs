@@ -1,16 +1,16 @@
 import {
   ClassicalComponent
-} from "../../../chunk-KTQGPXVF.mjs";
+} from "../../../chunk-ROURU72E.mjs";
 import {
   assert
-} from "../../../chunk-JBK64OIJ.mjs";
+} from "../../../chunk-ZIFLG7BR.mjs";
 import {
   Node_default,
   __commonJS,
   __require,
   __toESM,
   init_cjs_shim
-} from "../../../chunk-37RU6URC.mjs";
+} from "../../../chunk-4YYJXUVQ.mjs";
 
 // node_modules/testeranto/node_modules/react-dom/cjs/react-dom-server-legacy.node.production.min.js
 var require_react_dom_server_legacy_node_production_min = __commonJS({
@@ -14343,16 +14343,16 @@ var ClassicalComponentSpec = (Suite, Given, When, Then, Check) => {
 };
 var server_node_test_default = node_default(
   {
-    Suites: {
+    suites: {
       Default: "some default Suite"
     },
-    Givens: {
+    givens: {
       AnEmptyState: () => () => {
         return { props: { foo: "bar" } };
       }
     },
-    Whens: {},
-    Thens: {
+    whens: {},
+    thens: {
       renderToStaticMarkup: (expectation) => async (reactNodes) => {
         assert.deepEqual(
           (0, import_server.renderToStaticMarkup)(reactNodes),
@@ -14362,7 +14362,7 @@ var server_node_test_default = node_default(
       renderToStaticNodeStream: (expectation) => async (reactNodes) => {
       }
     },
-    Checks: {
+    checks: {
       AnEmptyState: () => () => {
         return {};
       }

@@ -2,11 +2,12 @@ import {
   LoginPageSpecs,
   LoginPage_default,
   actions
-} from "../../../chunk-PXRN4HF2.mjs";
+} from "../../../chunk-6JXA32GL.mjs";
+import "../../../chunk-FH7RWEQP.mjs";
 import {
   Web_default,
   assert
-} from "../../../chunk-2LOR6N5V.mjs";
+} from "../../../chunk-ZFPTK2OM.mjs";
 import "../../../chunk-XALKSG2U.mjs";
 
 // node_modules/testeranto/dist/module/SubPackages/react/jsx/index.js
@@ -44,15 +45,15 @@ var LoginPageReactTestInterface = (testInput) => {
   };
 };
 var implementations = {
-  Suites: {
+  suites: {
     Default: "a default suite"
   },
-  Givens: {
+  givens: {
     default: () => (i) => {
       return i;
     }
   },
-  Whens: {
+  whens: {
     TheLoginIsSubmitted: () => (reactElem) => {
       reactElem.props.store.dispatch(actions.signIn());
     },
@@ -63,7 +64,7 @@ var implementations = {
       reactElem.props.store.dispatch(actions.setPassword(password));
     }
   },
-  Thens: {
+  thens: {
     TheEmailIs: (email) => (reactElem) => {
       assert.equal(reactElem.props.store.getState().email, email);
     },
@@ -83,7 +84,7 @@ var implementations = {
       assert.equal(reactElem.props.store.getState().error, "no_error");
     }
   },
-  Checks: {
+  checks: {
     default: () => (i) => {
       return i;
     }

@@ -1,14 +1,24 @@
-import renderer from "react-test-renderer";
 import assert from "assert";
 
-import { ITTestShape, ITestImplementation, ITestSpecification } from "testeranto/src/core";
+import type {
+  ITestSpecification,
+  ITestImplementation,
+} from "testeranto/src/Types";
 
 import Testeranto from "testeranto/src/SubPackages/react-test-renderer/jsx/node";
 
-import ReactStateAndHook, { IProps } from "./ReactStateAndHook";
-import { WhenShape, ThenShape } from "./Rectangle.test";
+import ReactStateAndHook from "./ReactStateAndHook";
 
 type ISpec = {
+  iinput: any,
+  isubject: any,
+  istore: any,
+  iselection: any,
+
+  when: (rectangle: any) => unknown,
+  then: unknown,
+  given: (x) => unknown,
+
   suites: {
     Default: string;
   },
@@ -24,7 +34,7 @@ type ISpec = {
   checks: {
     Default;
   }
-} & ITTestShape;
+};
 
 const Specification: ITestSpecification<ISpec> =
   (Suite, Given, When, Then, Check) => {
@@ -58,21 +68,29 @@ const Specification: ITestSpecification<ISpec> =
     ];
   };
 
-const Implementation = {
-  Suites: {
+const Implementation: ITestImplementation<
+  ISpec, {
+    givens: {
+      [K in keyof ISpec["givens"]]: (
+        ...Iw: ISpec["givens"][K]
+      ) => void;
+    }
+  }
+> = {
+  suites: {
     Default: "a default suite",
   },
 
-  Givens: {
+  givens: {
     Default: () => { return },
   },
 
-  Whens: {
+  whens: {
     IClick: () => (rtr) =>
       rtr.root.findByType("button").props.onClick(),
   },
 
-  Thens: {
+  thens: {
     TheCounterIs: (counter) => (rtr) => {
       return assert.deepEqual(
         (rtr.toJSON() as { children: object[] }).children[0],
@@ -87,19 +105,13 @@ const Implementation = {
     },
   },
 
-  Checks: {
+  checks: {
     /* @ts-ignore:next-line */
     AnEmptyState: () => {
       return {};
     },
   },
-} as ITestImplementation<
-  IProps,
-  renderer.ReactTestRenderer,
-  WhenShape,
-  ThenShape,
-  ISpec
->;
+};
 
 export const ClassicalComponentReactTestRendererTesteranto = Testeranto(
   Implementation,

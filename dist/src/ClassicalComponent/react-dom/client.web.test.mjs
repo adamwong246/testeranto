@@ -1,15 +1,17 @@
 import {
   ClassicalComponent,
   ClassicalComponentSpec
-} from "../../../chunk-N2QNK5KN.mjs";
+} from "../../../chunk-RCXHALEU.mjs";
 import {
   require_scheduler
 } from "../../../chunk-7AHWTSRZ.mjs";
 import {
-  Web_default,
-  assert,
   require_react
-} from "../../../chunk-2LOR6N5V.mjs";
+} from "../../../chunk-FH7RWEQP.mjs";
+import {
+  Web_default,
+  assert
+} from "../../../chunk-ZFPTK2OM.mjs";
 import {
   __commonJS,
   __toESM
@@ -21177,9 +21179,9 @@ var web_default = (testInput, testSpecifications, testImplementations) => {
             }
           });
         },
-        beforeEach: async ({ htmlElement }, initialValues, testResource, artificer) => {
+        beforeEach: async ({ htmlElement }, initializer, testResource, artificer, initialValues) => {
           return new Promise((resolve, rej) => {
-            import_client.default.createRoot(htmlElement).render((0, import_react.createElement)(TesterantoComponent, Object.assign(Object.assign({}, initialValues.props), { done: (reactElement) => {
+            import_client.default.createRoot(htmlElement).render((0, import_react.createElement)(TesterantoComponent, Object.assign(Object.assign({}, initializer(initialValues)), { done: (reactElement) => {
               resolve({
                 htmlElement,
                 reactElement
@@ -21206,16 +21208,16 @@ var web_default = (testInput, testSpecifications, testImplementations) => {
 
 // src/ClassicalComponent/react-dom/client.web.test.tsx
 var ClassicalComponentReactDomImplementation = {
-  Suites: {
+  suites: {
     Default: "Classical Component, react-dom, client.web"
   },
-  Givens: {
+  givens: {
     AnEmptyState: { props: { foo: "bar" } }
   },
-  Whens: {
+  whens: {
     IClickTheButton: () => async ({ htmlElement }) => htmlElement.querySelector("#theButton").click()
   },
-  Thens: {
+  thens: {
     ThePropsIs: (expectation) => async ({ htmlElement, reactElement }) => {
       const btxpctn = JSON.parse(expectation[0]);
       btxpctn.children = [];
@@ -21235,7 +21237,7 @@ var ClassicalComponentReactDomImplementation = {
       );
     }
   },
-  Checks: {
+  checks: {
     AnEmptyState: () => () => {
       return {};
     }

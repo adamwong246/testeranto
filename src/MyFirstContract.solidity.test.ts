@@ -10,15 +10,15 @@ export const MyFirstContractTesteranto = SolidityTesteranto<
   IMyFirstContractTestSpecification
 >(
   {
-    Suites: {
+    suites: {
       Default: "Testing a very simple smart contract"
     },
-    Givens: {
+    givens: {
       Default: () => {
         return 'MyFirstContract.sol';
       }
     },
-    Whens: {
+    whens: {
       Increment: (asTestUser) => ({ contract, accounts }) => {
         return contract.methods.inc().send({ from: accounts[asTestUser] })
           .on('receipt', function (x) {
@@ -34,11 +34,11 @@ export const MyFirstContractTesteranto = SolidityTesteranto<
         });
       },
     },
-    Thens: {
+    thens: {
       Get: ({ asTestUser, expectation }) => async ({ contract, accounts }) =>
         assert.equal((expectation), parseInt((await contract.methods.get().call())))
     },
-    Checks: {
+    checks: {
       AnEmptyState: () => 'MyFirstContract.sol',
     },
   },

@@ -16,10 +16,10 @@ export const AppReduxToolkitTesteranto = ReduxToolkitTesteranto<
   IAppSpecification
 >(
   {
-    Suites: {
+    suites: {
       Default: "some default Suite",
     },
-    Givens: {
+    givens: {
       AnEmptyState: () => () => {
         return loginApp.getInitialState();
       },
@@ -27,12 +27,12 @@ export const AppReduxToolkitTesteranto = ReduxToolkitTesteranto<
         return { ...loginApp.getInitialState(), email };
       },
     },
-    Whens: {
+    whens: {
       TheLoginIsSubmitted: () => [loginApp.actions.signIn],
       TheEmailIsSetTo: (email) => [loginApp.actions.setEmail, email],
       ThePasswordIsSetTo: (password) => [loginApp.actions.setPassword, password],
     },
-    Thens: {
+    thens: {
       TheEmailIs: (email) => (selection) =>
         [assert.equal, selection.email, email, "a nice message"],
       TheEmailIsNot: (email) => (selection) =>
@@ -42,7 +42,7 @@ export const AppReduxToolkitTesteranto = ReduxToolkitTesteranto<
       ThePasswordIsNot: (password) => (selection) =>
         [assert.notEqual, selection.password, password],
     },
-    Checks: {
+    checks: {
       AnEmptyState: () => loginApp.getInitialState(),
     },
   },

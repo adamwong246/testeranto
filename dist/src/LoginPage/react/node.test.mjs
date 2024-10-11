@@ -2,15 +2,17 @@ import {
   LoginPageSpecs,
   LoginPage_default,
   actions
-} from "../../../chunk-HITIKDM3.mjs";
-import "../../../chunk-44S2XTSJ.mjs";
+} from "../../../chunk-GXPZTTDK.mjs";
+import "../../../chunk-6EQF54EJ.mjs";
+import "../../../chunk-GHI2MTJQ.mjs";
+import "../../../chunk-UANIJ4EA.mjs";
 import {
   assert
-} from "../../../chunk-JBK64OIJ.mjs";
+} from "../../../chunk-ZIFLG7BR.mjs";
 import {
   Node_default,
   init_cjs_shim
-} from "../../../chunk-37RU6URC.mjs";
+} from "../../../chunk-4YYJXUVQ.mjs";
 
 // src/LoginPage/react/node.test.tsx
 init_cjs_shim();
@@ -55,15 +57,15 @@ var LoginPageReactTestInterface = (testInput) => {
   };
 };
 var implementations = {
-  Suites: {
+  suites: {
     Default: "a default suite"
   },
-  Givens: {
+  givens: {
     default: () => (i) => {
       return i;
     }
   },
-  Whens: {
+  whens: {
     TheLoginIsSubmitted: () => (reactElem) => {
       reactElem.props.store.dispatch(actions.signIn());
     },
@@ -74,7 +76,7 @@ var implementations = {
       reactElem.props.store.dispatch(actions.setPassword(password));
     }
   },
-  Thens: {
+  thens: {
     TheEmailIs: (email) => (reactElem) => {
       assert.equal(reactElem.props.store.getState().email, email);
     },
@@ -94,7 +96,7 @@ var implementations = {
       assert.equal(reactElem.props.store.getState().error, "no_error");
     }
   },
-  Checks: {
+  checks: {
     default: () => (i) => {
       return i;
     }

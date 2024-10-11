@@ -1,10 +1,10 @@
 import {
   node_default
-} from "../chunk-WJPO3I6B.mjs";
-import "../chunk-TKIKOOI7.mjs";
+} from "../chunk-BUEWGO3J.mjs";
+import "../chunk-7SV3FQXP.mjs";
 import {
   init_cjs_shim
-} from "../chunk-37RU6URC.mjs";
+} from "../chunk-4YYJXUVQ.mjs";
 
 // src/ReactStateAndHook.test.tsx
 init_cjs_shim();
@@ -55,18 +55,18 @@ var Specification = (Suite, Given, When, Then, Check) => {
   ];
 };
 var Implementation = {
-  Suites: {
+  suites: {
     Default: "a default suite"
   },
-  Givens: {
+  givens: {
     Default: () => {
       return;
     }
   },
-  Whens: {
+  whens: {
     IClick: () => (rtr) => rtr.root.findByType("button").props.onClick()
   },
-  Thens: {
+  thens: {
     TheCounterIs: (counter) => (rtr) => {
       return assert.deepEqual(
         rtr.toJSON().children[0],
@@ -80,7 +80,7 @@ var Implementation = {
       );
     }
   },
-  Checks: {
+  checks: {
     /* @ts-ignore:next-line */
     AnEmptyState: () => {
       return {};

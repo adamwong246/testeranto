@@ -10,15 +10,15 @@ export const MyFirstContractPlusRpcTesteranto = SolidityRpcTesteranto<
   IMyFirstContractTestSpecification
 >(
   {
-    Suites: {
+    suites: {
       Default: "Testing a very simple smart contract"
     },
-    Givens: {
+    givens: {
       Default: () => {
         return 'MyFirstContract.sol';
       }
     },
-    Whens: {
+    whens: {
       Increment: (asTestUser) => async ({ contractFarSide, accounts }) => {
         return await contractFarSide.inc({ gasLimit: 150000 })
       },
@@ -26,11 +26,11 @@ export const MyFirstContractPlusRpcTesteranto = SolidityRpcTesteranto<
         return await contractFarSide.dec({ gasLimit: 150000 });
       },
     },
-    Thens: {
+    thens: {
       Get: ({ asTestUser, expectation }) => async ({ contractFarSide, accounts }) =>
         assert.equal((expectation), parseInt((await contractFarSide.get({ gasLimit: 150000 }))))
     },
-    Checks: {
+    checks: {
       AnEmptyState: () => 'MyFirstContract.sol',
     },
   },

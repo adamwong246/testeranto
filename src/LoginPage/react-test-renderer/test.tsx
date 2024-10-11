@@ -64,15 +64,15 @@ export const LoginPageReactTestRendererTestInterface = (testInput) => {
 // }
 
 export const loginPageImpl: ITestImpl<ILoginPageSpecs> = {
-  Suites: {
+  suites: {
     Default: "a default suite",
   },
-  Givens: {
+  givens: {
     default: () => (i) => {
       return i;
     },
   },
-  Whens: {
+  whens: {
     TheLoginIsSubmitted: () => (component) =>
       component.root.findByType("button").props.onClick(),
 
@@ -90,7 +90,7 @@ export const loginPageImpl: ITestImpl<ILoginPageSpecs> = {
         .props.onChange({ target: { value: password } }),
   },
 
-  Thens: {
+  thens: {
     TheEmailIs: (email) => (component) => {
       assert.equal(
         component.root.findByProps({ type: "email" }).props.value,
@@ -125,7 +125,7 @@ export const loginPageImpl: ITestImpl<ILoginPageSpecs> = {
 
   },
 
-  Checks: {
+  checks: {
     default: () => () => {
       return {};
     },

@@ -7,16 +7,15 @@ import { ReduxTesteranto } from "../myTests/redux.testeranto.test";
 
 export const AppReduxTesteranto = ReduxTesteranto<
   IStoreState,
-  IAppSpecification,
-  typeof loginApp
+  IAppSpecification
 >(
   loginApp.reducer,
   AppSpecification,
   {
-    Suites: {
+    suites: {
       Default: "some default Suite",
     },
-    Givens: {
+    givens: {
       AnEmptyState: () => () => {
         return loginApp.getInitialState();
       },
@@ -25,12 +24,12 @@ export const AppReduxTesteranto = ReduxTesteranto<
         return { ...loginApp.getInitialState(), email };
       },
     },
-    Whens: {
+    whens: {
       TheLoginIsSubmitted: () => [loginApp.actions.signIn],
       TheEmailIsSetTo: (email) => [loginApp.actions.setEmail, email],
       ThePasswordIsSetTo: (password) => [loginApp.actions.setPassword, password],
     },
-    Thens: {
+    thens: {
       TheEmailIs: (email) => (storeState) => {
         console.log("mark40", email, storeState);
         assert.equal(storeState.email, email)
@@ -43,7 +42,7 @@ export const AppReduxTesteranto = ReduxTesteranto<
       ThePasswordIsNot: (password) => (selection) =>
         assert.notEqual(selection.password, password),
     },
-    Checks: {
+    checks: {
       AnEmptyState: () => loginApp.getInitialState(),
     },
   },

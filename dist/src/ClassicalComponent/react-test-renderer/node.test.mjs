@@ -1,17 +1,17 @@
 import {
   ClassicalComponent
-} from "../../../chunk-KTQGPXVF.mjs";
+} from "../../../chunk-ROURU72E.mjs";
 import {
   require_react_test_renderer
-} from "../../../chunk-TKIKOOI7.mjs";
+} from "../../../chunk-7SV3FQXP.mjs";
 import {
   assert
-} from "../../../chunk-JBK64OIJ.mjs";
+} from "../../../chunk-ZIFLG7BR.mjs";
 import {
   Node_default,
   __toESM,
   init_cjs_shim
-} from "../../../chunk-37RU6URC.mjs";
+} from "../../../chunk-4YYJXUVQ.mjs";
 
 // src/ClassicalComponent/react-test-renderer/node.test.tsx
 init_cjs_shim();
@@ -110,18 +110,18 @@ var ClassicalComponentSpec = (Suite, Given, When, Then, Check) => {
 // src/ClassicalComponent/react-test-renderer/test.tsx
 init_cjs_shim();
 var testImplementation = {
-  Suites: {
+  suites: {
     Default: "default"
   },
-  Givens: {
+  givens: {
     AnEmptyState: { props: { foo: "bar" } }
   },
-  Whens: {
+  whens: {
     IClickTheButton: (x) => (component) => {
       component.root.findByType("button").props.onClick();
     }
   },
-  Thens: {
+  thens: {
     ThePropsIs: (expectation) => (component) => {
       console.log("ThePropsIs", component.toJSON().children[1]);
       return assert.deepEqual(component.toJSON().children[1], {
@@ -133,7 +133,7 @@ var testImplementation = {
     TheStatusIs: (expectation) => (component) => {
     }
   },
-  Checks: {
+  checks: {
     AnEmptyState: () => (CComponent) => {
       return { children: [], foo: "bar" };
     }

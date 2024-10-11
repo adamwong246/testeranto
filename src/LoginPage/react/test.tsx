@@ -32,16 +32,16 @@ export const LoginPageReactTestInterface = (testInput) => {
 const implementations: ITestImpl<
   ILoginPageSpecs
 > = {
-  Suites: {
+  suites: {
     Default: "a default suite",
   },
-  Givens: {
+  givens: {
     default: () => (i) => {
       return i;
     },
   },
 
-  Whens: {
+  whens: {
     TheLoginIsSubmitted: () => (reactElem: CElement<any, any>) => {
       reactElem.props.store.dispatch(actions.signIn());
     },
@@ -54,7 +54,7 @@ const implementations: ITestImpl<
     }
   },
 
-  Thens: {
+  thens: {
     TheEmailIs: (email) => (reactElem) => {
       assert.equal(reactElem.props.store.getState().email, email);
     },
@@ -75,7 +75,7 @@ const implementations: ITestImpl<
     },
   },
 
-  Checks: {
+  checks: {
     default: () => (i) => {
       return i;
     },

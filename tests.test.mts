@@ -12,10 +12,10 @@ export default [
   ["./src/ReactStateAndHook.test.tsx", "node", []],
   ["./src/app.redux.test.ts", "node", []],
   ["./src/app.reduxToolkit.test.ts", "node", []],
-  // ["./src/Rectangle/Rectangle.test.electron.ts", "web", []],
-  // ["./src/Rectangle/Rectangle.test.node.ts", "node", []],
-  // ["./src/MyFirstContract.solidity.test.ts", "node", []],
-  // ["./src/MyFirstContract.solidity-precompiled.test.ts", "node", []],
+  ["./src/Rectangle/Rectangle.test.electron.ts", "web", []],
+  ["./src/Rectangle/Rectangle.test.node.ts", "node", []],
+  ["./src/MyFirstContract.solidity.test.ts", "node", []],
+  ["./src/MyFirstContract.solidity-precompiled.test.ts", "node", []],
 
   // ["./src/ClassicalComponent/react-dom/electron.web.test.tsx", "web", []],
 

@@ -1,18 +1,19 @@
 import {
   AppSpecification
-} from "../chunk-FQ5MI744.mjs";
+} from "../chunk-QABUTIBG.mjs";
 import {
   loginApp,
   require_redux
-} from "../chunk-44S2XTSJ.mjs";
+} from "../chunk-GHI2MTJQ.mjs";
+import "../chunk-UANIJ4EA.mjs";
 import {
   assert
-} from "../chunk-JBK64OIJ.mjs";
+} from "../chunk-ZIFLG7BR.mjs";
 import {
   Node_default,
   __toESM,
   init_cjs_shim
-} from "../chunk-37RU6URC.mjs";
+} from "../chunk-4YYJXUVQ.mjs";
 
 // src/app.redux.test.ts
 init_cjs_shim();
@@ -20,34 +21,37 @@ init_cjs_shim();
 // myTests/redux.testeranto.test.ts
 init_cjs_shim();
 var import_redux = __toESM(require_redux(), 1);
-var ReduxTesteranto = (testInput, testSpecifications, testImplementations) => Node_default(
-  testInput,
-  testSpecifications,
-  testImplementations,
-  {
+var ReduxTesteranto = (testInput, testSpecifications, testImplementations) => {
+  const testInterface = {
     beforeEach: function(subject, initializer, art, tr, initialValues) {
       return (0, import_redux.createStore)(subject, initializer()(initialValues));
     },
-    andWhen: async function(store, actioner) {
-      const a = actioner;
+    andWhen: async function(store, whenCB) {
+      const a = whenCB;
       store.dispatch(a[0](a[1]));
-      return await store;
+      return store;
     },
-    butThen: function(store) {
+    butThen: async function(store) {
       return store.getState();
     }
-  }
-);
+  };
+  return Node_default(
+    testInput,
+    testSpecifications,
+    testImplementations,
+    testInterface
+  );
+};
 
 // src/app.redux.test.ts
 var AppReduxTesteranto = ReduxTesteranto(
   loginApp.reducer,
   AppSpecification,
   {
-    Suites: {
+    suites: {
       Default: "some default Suite"
     },
-    Givens: {
+    givens: {
       AnEmptyState: () => () => {
         return loginApp.getInitialState();
       },
@@ -56,12 +60,12 @@ var AppReduxTesteranto = ReduxTesteranto(
         return { ...loginApp.getInitialState(), email };
       }
     },
-    Whens: {
+    whens: {
       TheLoginIsSubmitted: () => [loginApp.actions.signIn],
       TheEmailIsSetTo: (email) => [loginApp.actions.setEmail, email],
       ThePasswordIsSetTo: (password) => [loginApp.actions.setPassword, password]
     },
-    Thens: {
+    thens: {
       TheEmailIs: (email) => (storeState) => {
         console.log("mark40", email, storeState);
         assert.equal(storeState.email, email);
@@ -70,7 +74,7 @@ var AppReduxTesteranto = ReduxTesteranto(
       ThePasswordIs: (password) => (selection) => assert.equal(selection.password, password),
       ThePasswordIsNot: (password) => (selection) => assert.notEqual(selection.password, password)
     },
-    Checks: {
+    checks: {
       AnEmptyState: () => loginApp.getInitialState()
     }
   }

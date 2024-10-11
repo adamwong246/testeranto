@@ -24,24 +24,24 @@ export type IServerTestSpecifications = {
 };
 
 export const ServerTestImplementation: IHttpTesterantoTestImplementation<IServerTestSpecifications> = {
-  Suites: {
+  suites: {
     Default: "some default Suite"
   },
-  Givens: {
+  givens: {
     /* @ts-ignore:next-line */
     AnEmptyState: () => {
       return {};
     },
   },
-  Whens: {
+  whens: {
     PostToStatus: (status: string): [any, any] => ["put_status", status],
     PostToAdd: (n: number): [any, any] => ["put_number", n.toString()],
   },
-  Thens: {
+  thens: {
     TheStatusIs: (status: string) => (): [any, any] => ["get_status", status],
     TheNumberIs: (number: number) => (): [any, any] => ["get_number", number],
   },
-  Checks: {
+  checks: {
     /* @ts-ignore:next-line */
     AnEmptyState: () => {
       return {};

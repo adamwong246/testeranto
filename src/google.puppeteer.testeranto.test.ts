@@ -24,20 +24,20 @@ export default PuppeteerTesteranto<{
     slowMo: 1,
   },
   {
-    Suites: {
+    suites: {
       Default: "some default Suite.",
     },
-    Givens: {
+    givens: {
       AnEmptyState: async () => {
         // await driver.manage().deleteAllCookies();
       },
     },
-    Whens: {
+    whens: {
       IGoto: (url) => async (store) => {
         await store.page.goto(url);
       },
     },
-    Thens: {
+    thens: {
       WaitForXPath:
         (someString) =>
           async ({ page }) => {
@@ -49,7 +49,7 @@ export default PuppeteerTesteranto<{
             }
           }
     },
-    Checks: {
+    checks: {
       AnEmptyState: () => {
         return;
       },

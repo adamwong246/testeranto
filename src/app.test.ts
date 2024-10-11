@@ -32,6 +32,7 @@ export const AppSpecification: ITestSpecification<
   any,
   any,
   any,
+  any,
   any
 > = (Suite, Given, When, Then, Check) => {
   return [
@@ -89,10 +90,10 @@ export const AppSpecification: ITestSpecification<
 };
 
 // export const AppImplementation = {
-//   Suites: {
+//   suites: {
 //     Default: "some default Suite",
 //   },
-//   Givens: {
+//   givens: {
 //     AnEmptyState: () => {
 //       return loginApp.getInitialState();
 //     },
@@ -100,12 +101,12 @@ export const AppSpecification: ITestSpecification<
 //       return { ...loginApp.getInitialState(), email };
 //     },
 //   },
-//   Whens: {
+//   whens: {
 //     TheLoginIsSubmitted: () => [loginApp.actions.signIn],
 //     TheEmailIsSetTo: (email) => [loginApp.actions.setEmail, email],
 //     ThePasswordIsSetTo: (password) => [loginApp.actions.setPassword, password],
 //   },
-//   Thens: {
+//   thens: {
 //     TheEmailIs: (email) => (storeState) =>
 //       assert.equal(storeState.email, email),
 //     TheEmailIsNot: (email) => (storeState) =>
@@ -115,7 +116,7 @@ export const AppSpecification: ITestSpecification<
 //     ThePasswordIsNot: (password) => (selection) =>
 //       assert.notEqual(selection.password, password),
 //   },
-//   Checks: {
+//   checks: {
 //     AnEmptyState: () => loginApp.getInitialState(),
 //   },
 // } as Modify<ITestImplementation<
@@ -125,7 +126,7 @@ export const AppSpecification: ITestSpecification<
 //   ThenShape,
 //   IAppSpecification
 // >, {
-//   Whens: {
+//   whens: {
 //     [K in keyof IAppSpecification["whens"]]: (
 //       ...Iw: IAppSpecification["whens"][K]
 //     ) => WhenShape;
@@ -159,10 +160,10 @@ export const AppSpecification: ITestSpecification<
 //   typeof loginApp
 // >(
 //   {
-//     Suites: {
+//     suites: {
 //       Default: "some default Suite",
 //     },
-//     Givens: {
+//     givens: {
 //       AnEmptyState: () => {
 //         return loginApp.getInitialState();
 //       },
@@ -170,12 +171,12 @@ export const AppSpecification: ITestSpecification<
 //         return { ...loginApp.getInitialState(), email };
 //       },
 //     },
-//     Whens: {
+//     whens: {
 //       TheLoginIsSubmitted: () => [loginApp.actions.signIn],
 //       TheEmailIsSetTo: (email) => [loginApp.actions.setEmail, email],
 //       ThePasswordIsSetTo: (password) => [loginApp.actions.setPassword, password],
 //     },
-//     Thens: {
+//     thens: {
 //       TheEmailIs: (email) => (storeState) =>
 //         assert.equal(storeState.email, email),
 //       TheEmailIsNot: (email) => (storeState) =>
@@ -185,7 +186,7 @@ export const AppSpecification: ITestSpecification<
 //       ThePasswordIsNot: (password) => (selection) =>
 //         assert.notEqual(selection.password, password),
 //     },
-//     Checks: {
+//     checks: {
 //       AnEmptyState: () => loginApp.getInitialState(),
 //     },
 //   },

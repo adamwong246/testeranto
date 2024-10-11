@@ -35,9 +35,21 @@ export const commonGivens = (Given, When, Then, features) => {
         When.Increment(1),
         When.Increment(1),
         When.Increment(1),
+        When.Increment(1),
+        When.Increment(1),
+        When.Increment(1),
+        When.Increment(1),
+        When.Increment(1),
+        When.Increment(1),
+        When.Increment(1),
+        When.Increment(1),
+        When.Increment(1),
+        When.Increment(1),
+        When.Increment(1),
+        When.Increment(1),
       ],
       [
-        Then.Get({ asTestUser: 1, expectation: 4 })
+        Then.Get({ asTestUser: 1, expectation: 16 })
       ],
       "my first contract"
     ),
@@ -49,10 +61,14 @@ export const commonGivens = (Given, When, Then, features) => {
         When.Increment(1),
         When.Increment(1),
         When.Increment(1),
+
+        When.Decrement(1),
+        When.Decrement(1),
+        When.Decrement(1),
         When.Decrement(1),
       ],
       [
-        Then.Get({ asTestUser: 1, expectation: 3 })
+        Then.Get({ asTestUser: 1, expectation: 4 })
       ],
       "my first contract"
     ),

@@ -12,7 +12,10 @@
           "name": "TheStatusIs: [object Object]"
         }
       ],
-      "error": null,
+      "error": [
+        {},
+        "TypeError: initializer is not a function\n    at file:///Users/adam/Code/kokomoBay/dist/src/ClassicalComponent/react-dom/client.web.test.mjs:21184:151\n    at new Promise (<anonymous>)\n    at beforeEach (file:///Users/adam/Code/kokomoBay/dist/src/ClassicalComponent/react-dom/client.web.test.mjs:21183:18)\n    at Given.givenThat (file:///Users/adam/Code/kokomoBay/dist/chunk-ZFPTK2OM.mjs:4394:16)\n    at Given.give (file:///Users/adam/Code/kokomoBay/dist/chunk-ZFPTK2OM.mjs:4165:31)\n    at Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/chunk-ZFPTK2OM.mjs:4116:34)\n    at async file:///Users/adam/Code/kokomoBay/dist/chunk-ZFPTK2OM.mjs:4274:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/chunk-ZFPTK2OM.mjs:4303:29)\n    at async WebTesteranto.receiveTestResourceConfigScheduled (file:///Users/adam/Code/kokomoBay/dist/chunk-ZFPTK2OM.mjs:4487:47)"
+      ],
       "features": [
         "test"
       ]
@@ -32,7 +35,10 @@
           "name": "TheStatusIs: [object Object]"
         }
       ],
-      "error": null,
+      "error": [
+        {},
+        "TypeError: initializer is not a function\n    at file:///Users/adam/Code/kokomoBay/dist/src/ClassicalComponent/react-dom/client.web.test.mjs:21184:151\n    at new Promise (<anonymous>)\n    at beforeEach (file:///Users/adam/Code/kokomoBay/dist/src/ClassicalComponent/react-dom/client.web.test.mjs:21183:18)\n    at Given.givenThat (file:///Users/adam/Code/kokomoBay/dist/chunk-ZFPTK2OM.mjs:4394:16)\n    at Given.give (file:///Users/adam/Code/kokomoBay/dist/chunk-ZFPTK2OM.mjs:4165:31)\n    at Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/chunk-ZFPTK2OM.mjs:4116:34)\n    at async file:///Users/adam/Code/kokomoBay/dist/chunk-ZFPTK2OM.mjs:4274:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/chunk-ZFPTK2OM.mjs:4303:29)\n    at async WebTesteranto.receiveTestResourceConfigScheduled (file:///Users/adam/Code/kokomoBay/dist/chunk-ZFPTK2OM.mjs:4487:47)"
+      ],
       "features": [
         "test"
       ]
@@ -64,7 +70,10 @@
           "name": "TheStatusIs: [object Object]"
         }
       ],
-      "error": null,
+      "error": [
+        {},
+        "TypeError: initializer is not a function\n    at file:///Users/adam/Code/kokomoBay/dist/src/ClassicalComponent/react-dom/client.web.test.mjs:21184:151\n    at new Promise (<anonymous>)\n    at beforeEach (file:///Users/adam/Code/kokomoBay/dist/src/ClassicalComponent/react-dom/client.web.test.mjs:21183:18)\n    at Given.givenThat (file:///Users/adam/Code/kokomoBay/dist/chunk-ZFPTK2OM.mjs:4394:16)\n    at Given.give (file:///Users/adam/Code/kokomoBay/dist/chunk-ZFPTK2OM.mjs:4165:31)\n    at Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/chunk-ZFPTK2OM.mjs:4116:34)\n    at async file:///Users/adam/Code/kokomoBay/dist/chunk-ZFPTK2OM.mjs:4274:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/chunk-ZFPTK2OM.mjs:4303:29)\n    at async WebTesteranto.receiveTestResourceConfigScheduled (file:///Users/adam/Code/kokomoBay/dist/chunk-ZFPTK2OM.mjs:4487:47)"
+      ],
       "features": [
         "test"
       ]
@@ -84,7 +93,10 @@
           "name": "TheStatusIs: [object Object]"
         }
       ],
-      "error": null,
+      "error": [
+        {},
+        "TypeError: initializer is not a function\n    at file:///Users/adam/Code/kokomoBay/dist/src/ClassicalComponent/react-dom/client.web.test.mjs:21184:151\n    at new Promise (<anonymous>)\n    at beforeEach (file:///Users/adam/Code/kokomoBay/dist/src/ClassicalComponent/react-dom/client.web.test.mjs:21183:18)\n    at Given.givenThat (file:///Users/adam/Code/kokomoBay/dist/chunk-ZFPTK2OM.mjs:4394:16)\n    at Given.give (file:///Users/adam/Code/kokomoBay/dist/chunk-ZFPTK2OM.mjs:4165:31)\n    at Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/chunk-ZFPTK2OM.mjs:4116:34)\n    at async file:///Users/adam/Code/kokomoBay/dist/chunk-ZFPTK2OM.mjs:4274:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/chunk-ZFPTK2OM.mjs:4303:29)\n    at async WebTesteranto.receiveTestResourceConfigScheduled (file:///Users/adam/Code/kokomoBay/dist/chunk-ZFPTK2OM.mjs:4487:47)"
+      ],
       "features": [
         "test"
       ]

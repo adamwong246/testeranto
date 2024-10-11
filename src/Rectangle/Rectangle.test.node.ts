@@ -26,6 +26,8 @@ export const RectangleTesteranto = Testeranto<
   RectangleTesterantoBaseTestSpecification,
   RectangleTesterantoBaseTestImplementation,
   {
+    asd: 1,
+
     afterAll: async function (renderer, actioner) {
       // console.log("goodbye");
       // whyIsNodeStillRunning();

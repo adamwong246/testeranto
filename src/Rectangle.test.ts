@@ -1,12 +1,24 @@
 import { assert } from "chai";
 
-import type { ITestInterface, ITestSpecification } from "testeranto/src/Types";
-import type { ITTestShape, ITTTestShape } from "testeranto/src/lib";
+import type {
+  ITestInterface,
+  ITestSpecification,
+  ITestImplementation,
+} from "testeranto/src/Types";
 
 import Rectangle from "./Rectangle";
 
-export type IRectangleTestShape = ITTTestShape<{
-  asD: boolean,
+export interface testShape {
+
+  iinput: Rectangle,
+  isubject: Rectangle,
+  istore: Rectangle,
+  iselection: Rectangle,
+
+  when: (rectangle: Rectangle) => unknown,
+  then: unknown,
+  given: (x) => (y) => unknown,
+
   suites: {
     Default: string;
   },
@@ -34,39 +46,67 @@ export type IRectangleTestShape = ITTTestShape<{
     WidthOfOneAndHeightOfOne;
     WidthAndHeightOf: [number, number];
   }
-}>;
+}
+
+export const RectangleTesterantoBaseTestImplementation: ITestImplementation<
+  testShape,
+  {
+    givens: {
+      [K in keyof testShape["givens"]]: (
+        ...Iw: testShape["givens"][K]
+      ) => Rectangle;
+    }
+    whens: {
+      [K in keyof testShape["whens"]]: (
+        ...Iw: testShape["whens"][K]
+      ) => testShape['when'];
+    }
+  }
+> = {
+  suites: {
+    Default: "a default suite",
+  },
+
+  givens: {
+    Default: () => new Rectangle(),
+    WidthOfOneAndHeightOfOne: () => new Rectangle(1, 1),
+    WidthAndHeightOf: (width, height) => new Rectangle(width, height),
+  },
+
+  whens: {
+    HeightIsPubliclySetTo: (height) => (rectangle) => (rectangle.height = height),
+    WidthIsPubliclySetTo: (width) => (rectangle) => (rectangle.width = width),
+    setWidth: (width) => (rectangle) => rectangle.setWidth(width),
+    setHeight: (height) => (rectangle) => rectangle.setHeight(height),
+  },
+
+  thens: {
+    AreaPlusCircumference: (combined) => (rectangle) => {
+      assert.equal(rectangle.area() + rectangle.circumference(), combined);
+    },
+    getWidth: (width) => (rectangle) => assert.equal(rectangle.width, width),
+
+    getHeight: (height) => (rectangle) =>
+      assert.equal(rectangle.height, height),
+
+    area: (area) => (rectangle) => assert.equal(rectangle.area(), area),
+
+    prototype: (name) => (rectangle) => assert.equal(1, 1),
+
+    circumference: (circumference) => (rectangle) =>
+      assert.equal(rectangle.circumference(), circumference),
+  },
+
+  checks: {
+    /* @ts-ignore:next-line */
+    AnEmptyState: () => {
+      return {};
+    },
+  },
+};
 
 export const RectangleTesterantoBaseTestSpecification: ITestSpecification<
-  {
-    asd: true,
-    suites: {
-      Default: string;
-    },
-    givens: {
-      Default: any;
-      WidthOfOneAndHeightOfOne;
-      WidthAndHeightOf: [number, number];
-    },
-    whens: {
-      HeightIsPubliclySetTo: [number];
-      WidthIsPubliclySetTo: [number];
-      setWidth: [number];
-      setHeight: [number];
-    },
-    thens: {
-      AreaPlusCircumference: [number];
-      circumference: [number];
-      getWidth: [number];
-      getHeight: [number];
-      area: [number];
-      prototype: [string];
-    },
-    checks: {
-      Default;
-      WidthOfOneAndHeightOfOne;
-      WidthAndHeightOf: [number, number];
-    }
-  }, any, any, any, any, any
+  testShape
 > =
   (Suite, Given, When, Then, Check) => {
     return [
@@ -119,78 +159,26 @@ export const RectangleTesterantoBaseTestSpecification: ITestSpecification<
     ];
   };
 
-export const RectangleTesterantoBaseTestImplementation = {
-  Suites: {
-    Default: "a default suite",
-  },
-
-  Givens: {
-    Default: () => new Rectangle(),
-    WidthOfOneAndHeightOfOne: () => new Rectangle(1, 1),
-    WidthAndHeightOf: (width, height) => new Rectangle(width, height),
-  },
-
-  Whens: {
-    HeightIsPubliclySetTo: (height) => (rectangle) =>
-      (rectangle.height = height),
-    WidthIsPubliclySetTo: (width) => (rectangle) => (rectangle.width = width),
-    setWidth: (width) => (rectangle) => rectangle.setWidth(width),
-    setHeight: (height) => (rectangle) => {
-      console.log("SET HEIGHT", rectangle, height);
-      rectangle.setHeight(height);
-    },
-  },
-
-  Thens: {
-    AreaPlusCircumference: (combined) => (rectangle) => {
-      assert.equal(rectangle.area() + rectangle.circumference(), combined);
-    },
-    getWidth: (width) => (rectangle) => assert.equal(rectangle.width, width),
-
-    getHeight: (height) => (rectangle) =>
-      assert.equal(rectangle.height, height),
-
-    area: (area) => (rectangle) => assert.equal(rectangle.area(), area),
-
-    prototype: (name) => (rectangle) => assert.equal(1, 1),
-    // throw new Error("Function not implemented.")
-
-    circumference: (circumference) => (rectangle) =>
-      assert.equal(rectangle.circumference(), circumference),
-  },
-
-  Checks: {
-    /* @ts-ignore:next-line */
-    AnEmptyState: () => {
-      return {};
-    },
-  },
-};
 
 export const RectangleTesterantoBaseInterface: ITestInterface<
-  any,
-  any,
-  any,
-  ThenShape,
-  Rectangle
+  testShape
 > = {
-  beforeEach: (
-    subject: any, //Reducer<any, AnyAction>,
-    initializer: any,
-    art: any,
-    tr: any,
+  beforeEach: async (
+    subject,
+    initializer,
+    art,
+    tr,
     initialValues
-  ): Rectangle => {
-    return new Rectangle();
+  ) => {
+    return subject;
   },
-  andWhen: async function (renderer, actioner) {
+  andWhen: async function (
+    renderer,
+    actioner
+  ) {
     actioner(renderer);
     return renderer;
   },
 };
 
-export type WhenShape = any;
-export type ThenShape = any;
-export type Input = Rectangle;
-export type IRuntime = { runtime: "just node", entrypoint: "./Rect" };
 export const RectangleTesterantoBasePrototype = Rectangle.prototype;

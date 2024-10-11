@@ -10,14 +10,14 @@ export const testImplementation: BaseIImple<
   IProps,
   IState
 > = {
-  Suites: {
+  suites: {
     Default: "default",
   },
-  Givens: {
+  givens: {
     AnEmptyState: { props: { foo: "bar" } },
 
   },
-  Whens: {
+  whens: {
     IClickTheButton: (x) => (component) => {
       // console.log("IClickTheButton", component, x);
       // throw new Error('not yet implemented');
@@ -26,7 +26,7 @@ export const testImplementation: BaseIImple<
     }
 
   },
-  Thens: {
+  thens: {
     ThePropsIs: (expectation) => (component) => {
       // throw new Error('not yet implemented');
       console.log("ThePropsIs", (component.toJSON() as { children: object[] }).children[1]);
@@ -49,7 +49,7 @@ export const testImplementation: BaseIImple<
       // })
     },
   },
-  Checks: {
+  checks: {
     AnEmptyState: () => (CComponent) => {
       return { children: [], foo: "bar" }
     },

@@ -1,19 +1,20 @@
 import {
   AppSpecification
-} from "../chunk-FQ5MI744.mjs";
+} from "../chunk-QABUTIBG.mjs";
 import {
   app_default,
   loginApp,
   require_redux
-} from "../chunk-44S2XTSJ.mjs";
+} from "../chunk-GHI2MTJQ.mjs";
+import "../chunk-UANIJ4EA.mjs";
 import {
   assert
-} from "../chunk-JBK64OIJ.mjs";
+} from "../chunk-ZIFLG7BR.mjs";
 import {
   Node_default,
   __toESM,
   init_cjs_shim
-} from "../chunk-37RU6URC.mjs";
+} from "../chunk-4YYJXUVQ.mjs";
 
 // src/app.reduxToolkit.test.ts
 init_cjs_shim();
@@ -32,9 +33,9 @@ var ReduxToolkitTesteranto = (testImplementations, testSpecifications, testInput
     andWhen: async function(store, actioner) {
       const a = actioner;
       store.dispatch(a[0](a[1]));
-      return await store;
+      return store;
     },
-    butThen: function(store, tr) {
+    butThen: async function(store, tr) {
       return store.getState();
     }
   };
@@ -52,10 +53,10 @@ var selector = core.select.loginPageSelection;
 var reducer = core.app.reducer;
 var AppReduxToolkitTesteranto = ReduxToolkitTesteranto(
   {
-    Suites: {
+    suites: {
       Default: "some default Suite"
     },
-    Givens: {
+    givens: {
       AnEmptyState: () => () => {
         return loginApp.getInitialState();
       },
@@ -63,18 +64,18 @@ var AppReduxToolkitTesteranto = ReduxToolkitTesteranto(
         return { ...loginApp.getInitialState(), email };
       }
     },
-    Whens: {
+    whens: {
       TheLoginIsSubmitted: () => [loginApp.actions.signIn],
       TheEmailIsSetTo: (email) => [loginApp.actions.setEmail, email],
       ThePasswordIsSetTo: (password) => [loginApp.actions.setPassword, password]
     },
-    Thens: {
+    thens: {
       TheEmailIs: (email) => (selection) => [assert.equal, selection.email, email, "a nice message"],
       TheEmailIsNot: (email) => (selection) => [assert.notEqual, selection.email, email],
       ThePasswordIs: (password) => (selection) => [assert.equal, selection.password, password],
       ThePasswordIsNot: (password) => (selection) => [assert.notEqual, selection.password, password]
     },
-    Checks: {
+    checks: {
       AnEmptyState: () => loginApp.getInitialState()
     }
   },

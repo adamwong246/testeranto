@@ -97,16 +97,16 @@ const ClassicalComponentSpec: ITestSpecification<
 
 export default test(
   {
-    Suites: {
+    suites: {
       Default: "some default Suite",
     },
-    Givens: {
+    givens: {
       AnEmptyState: () => () => {
         return { props: { foo: "bar" } };
       },
     },
-    Whens: {},
-    Thens: {
+    whens: {},
+    thens: {
       renderToStaticMarkup:
         (expectation) =>
           async (reactNodes) => {
@@ -127,7 +127,7 @@ export default test(
 
           }
     },
-    Checks: {
+    checks: {
       AnEmptyState: () => () => {
         return {};
       },

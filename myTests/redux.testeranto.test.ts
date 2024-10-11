@@ -1,29 +1,36 @@
 import {
   ActionCreatorWithNonInferrablePayload,
   ActionCreatorWithoutPayload,
+  PreloadedState,
   Reducer,
 } from "@reduxjs/toolkit";
 import { createStore, Store, AnyAction } from "redux";
 
 import Testeranto from "testeranto/src/Node";
+import { ITestInterface } from "testeranto/src/Types";
 import { ITestImplementation, ITestSpecification, ITTestShape, Modify } from "testeranto/src/core";
 
+type t = (
+  | ActionCreatorWithNonInferrablePayload<string>
+  | ActionCreatorWithoutPayload<string>
+)
+
+type tt = (t: (
+  | ActionCreatorWithNonInferrablePayload<string>
+  | ActionCreatorWithoutPayload<string>
+)) => any;
+
 export type WhenShape = [
-  (
-    | ActionCreatorWithNonInferrablePayload<string>
-    | ActionCreatorWithoutPayload<string>
-  ),
-  (object | string)?
+  tt,
+  t
 ];
-export type ThenShape = any;
-export type Input = Reducer<any, AnyAction>;
+export type ThenShape = number;
 
 export const ReduxTesteranto = <
   IStoreShape,
   ITestShape extends ITTestShape,
-  IFeatureShape,
 >(
-  testInput: Input,
+  testInput: Reducer<IStoreShape, AnyAction>,
   testSpecifications: ITestSpecification<ITestShape>,
   testImplementations: Modify<ITestImplementation<
     IStoreShape,
@@ -38,29 +45,43 @@ export const ReduxTesteranto = <
       ) => WhenShape;
     }
   }>,
-) =>
-  Testeranto(
+) => {
+  const testInterface: ITestInterface<
+    Store<IStoreShape, AnyAction>,
+    IStoreShape,
+    Reducer<IStoreShape, AnyAction>,
+    ThenShape,
+    Reducer<IStoreShape, AnyAction>,
+    (x) => PreloadedState<IStoreShape>,
+    WhenShape
+  > = {
+    beforeEach: function (
+      subject,
+      initializer,
+      art,
+      tr,
+      initialValues
+
+    ) {
+      return createStore<IStoreShape, any, any, any>(subject, initializer()(initialValues))
+    },
+    andWhen: async function (
+      store,
+      whenCB,
+    ) {
+      const a = whenCB;
+      store.dispatch(a[0](a[1]));
+      return store;
+    },
+    butThen: async function (store) {
+      return store.getState();
+    },
+  };
+
+  return Testeranto(
     testInput,
     testSpecifications,
     testImplementations,
-    {
-      beforeEach: function (
-        subject: Reducer<any, AnyAction>,
-        initializer: any,
-        art: any,
-        tr: any,
-        initialValues
-
-      ): Promise<Store<any, AnyAction>> {
-        return createStore<IStoreShape, any, any, any>(subject, initializer()(initialValues))
-      },
-      andWhen: async function (store: Store<any, AnyAction>, actioner: any): Promise<Store<any, AnyAction>> {
-        const a = actioner;
-        store.dispatch(a[0](a[1]));
-        return await store;
-      },
-      butThen: function (store: Store<any, AnyAction>): Promise<IStoreShape> {
-        return store.getState();
-      },
-    }
+    testInterface,
   )
+}

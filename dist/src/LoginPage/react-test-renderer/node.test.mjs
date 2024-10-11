@@ -3,21 +3,23 @@ import {
   LoginPage_default,
   actions,
   require_scheduler
-} from "../../../chunk-HITIKDM3.mjs";
+} from "../../../chunk-GXPZTTDK.mjs";
+import "../../../chunk-6EQF54EJ.mjs";
 import {
   node_default
-} from "../../../chunk-WJPO3I6B.mjs";
-import "../../../chunk-TKIKOOI7.mjs";
-import "../../../chunk-44S2XTSJ.mjs";
+} from "../../../chunk-BUEWGO3J.mjs";
+import "../../../chunk-7SV3FQXP.mjs";
+import "../../../chunk-GHI2MTJQ.mjs";
+import "../../../chunk-UANIJ4EA.mjs";
 import {
   assert
-} from "../../../chunk-JBK64OIJ.mjs";
+} from "../../../chunk-ZIFLG7BR.mjs";
 import {
   __commonJS,
   __require,
   __toESM,
   init_cjs_shim
-} from "../../../chunk-37RU6URC.mjs";
+} from "../../../chunk-4YYJXUVQ.mjs";
 
 // node_modules/scheduler/cjs/scheduler-unstable_mock.production.min.js
 var require_scheduler_unstable_mock_production_min = __commonJS({
@@ -18543,22 +18545,22 @@ var LoginPageReactTestRendererTestInterface = (testInput) => {
   };
 };
 var loginPageImpl = {
-  Suites: {
+  suites: {
     Default: "a default suite"
   },
-  Givens: {
+  givens: {
     default: () => (i) => {
       return i;
     }
   },
-  Whens: {
+  whens: {
     TheLoginIsSubmitted: () => (component) => component.root.findByType("button").props.onClick(),
     TheEmailIsSetTo: (email) => (component) => {
       component.root.findByProps({ type: "email" }).props.onChange({ target: { value: email } });
     },
     ThePasswordIsSetTo: (password) => (component) => component.root.findByProps({ type: "password" }).props.onChange({ target: { value: password } })
   },
-  Thens: {
+  thens: {
     TheEmailIs: (email) => (component) => {
       assert.equal(
         component.root.findByProps({ type: "email" }).props.value,
@@ -18588,7 +18590,7 @@ var loginPageImpl = {
       assert.isEmpty(errorField.children);
     }
   },
-  Checks: {
+  checks: {
     default: () => () => {
       return {};
     }

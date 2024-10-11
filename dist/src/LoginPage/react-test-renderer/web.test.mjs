@@ -2,16 +2,18 @@ import {
   LoginPageSpecs,
   LoginPage_default,
   require_scheduler
-} from "../../../chunk-PXRN4HF2.mjs";
+} from "../../../chunk-6JXA32GL.mjs";
 import {
   require_react_test_renderer
-} from "../../../chunk-7DN5AMAG.mjs";
+} from "../../../chunk-SDPG7AIW.mjs";
 import "../../../chunk-7AHWTSRZ.mjs";
 import {
-  Web_default,
-  assert,
   require_react
-} from "../../../chunk-2LOR6N5V.mjs";
+} from "../../../chunk-FH7RWEQP.mjs";
+import {
+  Web_default,
+  assert
+} from "../../../chunk-ZFPTK2OM.mjs";
 import {
   __commonJS,
   __toESM
@@ -13619,22 +13621,22 @@ var web_default = (testImplementations, testSpecifications, testInput, testInter
 var import_react2 = __toESM(require_react(), 1);
 var import_react_test_renderer2 = __toESM(require_react_test_renderer2(), 1);
 var loginPageImpl = {
-  Suites: {
+  suites: {
     Default: "a default suite"
   },
-  Givens: {
+  givens: {
     default: () => (i) => {
       return i;
     }
   },
-  Whens: {
+  whens: {
     TheLoginIsSubmitted: () => (component) => component.root.findByType("button").props.onClick(),
     TheEmailIsSetTo: (email) => (component) => {
       component.root.findByProps({ type: "email" }).props.onChange({ target: { value: email } });
     },
     ThePasswordIsSetTo: (password) => (component) => component.root.findByProps({ type: "password" }).props.onChange({ target: { value: password } })
   },
-  Thens: {
+  thens: {
     TheEmailIs: (email) => (component) => {
       assert.equal(
         component.root.findByProps({ type: "email" }).props.value,
@@ -13664,7 +13666,7 @@ var loginPageImpl = {
       assert.isEmpty(errorField.children);
     }
   },
-  Checks: {
+  checks: {
     default: () => () => {
       return {};
     }

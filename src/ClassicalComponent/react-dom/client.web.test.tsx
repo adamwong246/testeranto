@@ -6,19 +6,19 @@ import { IClassicalComponentSpec, ClassicalComponentSpec } from "../test";
 import test from "testeranto/src/SubPackages/react-dom/component/web";
 
 const ClassicalComponentReactDomImplementation = {
-  Suites: {
+  suites: {
     Default: "Classical Component, react-dom, client.web",
   },
-  Givens: {
+  givens: {
     AnEmptyState: { props: { foo: "bar" } },
   },
-  Whens: {
+  whens: {
     IClickTheButton:
       () =>
         async ({ htmlElement }) =>
           htmlElement.querySelector("#theButton").click()
   },
-  Thens: {
+  thens: {
     ThePropsIs:
       (expectation) =>
         async ({ htmlElement, reactElement }) => {
@@ -55,7 +55,7 @@ const ClassicalComponentReactDomImplementation = {
 
         }
   },
-  Checks: {
+  checks: {
     AnEmptyState: () => () => {
       return {};
     },
