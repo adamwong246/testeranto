@@ -1,13 +1,7 @@
 import React from "react";
-import { ITTestShape } from "../../../lib";
-import { ITestImplementation, ITestSpecification } from "../../../Types";
-declare type IWhenShape = any;
-declare type IThenShape = any;
+import { IBaseTest, ITestImplementation, ITestSpecification } from "../../../Types";
 declare type IInput = typeof React.Component;
-declare type ISelection = React.CElement<any, any>;
-declare type IStore = React.CElement<any, any>;
-declare type ISubject = React.CElement<any, any>;
-export declare type IImpl<ISpec extends ITTestShape, IState> = ITestImplementation<IState, ISelection, IWhenShape, IThenShape, ISpec, any>;
-export declare type ISpec<T extends ITTestShape> = ITestSpecification<T, ISubject, IStore, ISelection, IThenShape, any>;
-declare const _default: <ITestShape extends ITTestShape, IState>(testImplementations: ITestImplementation<IState, ISelection, any, any, ITestShape, any>, testSpecifications: ISpec<ITestShape>, testInput: IInput) => Promise<void>;
+export declare type IImpl<ISpec extends IBaseTest, IState> = ITestImplementation<ISpec, object>;
+export declare type ISpec<T extends IBaseTest> = ITestSpecification<T>;
+declare const _default: <ITestShape extends IBaseTest, IState>(testImplementations: ITestImplementation<ITestShape, object>, testSpecifications: ISpec<ITestShape>, testInput: IInput) => Promise<void>;
 export default _default;

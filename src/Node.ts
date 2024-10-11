@@ -5,31 +5,18 @@ import {
   ITestJob,
   ITTestResourceConfiguration,
   ITTestResourceRequest,
-  ITTestShape
 } from "./lib.js";
 import { NodeWriter } from "./nodeWriter.js";
-import { ITestInterface, ITestSpecification } from "./Types.js";
+import {
+  IBaseTest,
+  ITestInterface,
+  ITestSpecification
+} from "./Types.js";
 
 class NodeTesteranto<
-  TestShape extends ITTestShape,
-  IState,
-  ISelection,
-  IStore,
-  ISubject,
-  IWhenShape,
-  IThenShape,
-  IInput,
-  IGivenShape
+  TestShape extends IBaseTest
 > extends Testeranto<
-  TestShape,
-  IState,
-  ISelection,
-  IStore,
-  ISubject,
-  IWhenShape,
-  IThenShape,
-  IInput,
-  IGivenShape
+  TestShape
 > {
   constructor(
     input,
@@ -155,27 +142,16 @@ class NodeTesteranto<
 };
 
 export default async <
-  TestShape extends ITTestShape,
-  IInput,
-  ISubject,
-  IStore,
-  ISelection,
-  IWhenShape,
-  IThenShape,
-  IState,
-  IGivenShape
+  ITestShape extends IBaseTest,
 >(
-  input: IInput,
+  input: ITestShape['iinput'],
   testSpecification: ITestSpecification<
-    TestShape,
-    ISubject,
-    IStore,
-    ISelection,
-    IThenShape,
-    IGivenShape
+    ITestShape
   >,
   testImplementation,
-  testInterface: ITestInterface<IStore, ISelection, ISubject, IThenShape, IInput>,
+  testInterface: ITestInterface<
+    ITestShape
+  >,
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
 ) => {
   new NodeTesteranto(
@@ -186,7 +162,7 @@ export default async <
     testInterface.beforeAll || (async (s) => s),
     testInterface.beforeEach || async function (subject: any, initialValues: any, testResource: any) { return subject as any; },
     testInterface.afterEach || (async (s) => s),
-    testInterface.afterAll || ((store: IStore) => undefined),
+    testInterface.afterAll || ((store: ITestShape['istore']) => undefined),
     testInterface.butThen || (async (a) => a as any),
     testInterface.andWhen || ((a) => a),
     testInterface.assertThis || (() => null),

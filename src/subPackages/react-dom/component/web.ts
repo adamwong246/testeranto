@@ -2,13 +2,14 @@ import React, { CElement, createElement } from "react";
 import ReactDom from "react-dom/client";
 
 import Testeranto from "../../../Web";
-import { ITTestShape } from "../../../lib";
-import { ITestImplementation, ITestSpecification } from "../../../Types";
+import {
+  IBaseTest,
+  ITestImplementation,
+  ITestSpecification
+} from "../../../Types";
 
 type IInput = typeof React.Component;
 type InitialState = unknown;
-type IWhenShape = any;
-type IThenShape = any;
 type ISelection = {
   htmlElement: HTMLElement,
   reactElement: CElement<any, any>,
@@ -23,21 +24,16 @@ type ISubject = {
   htmlElement: HTMLElement
 };
 
-export default <ITestShape extends ITTestShape>(
+export default <
+  ITestShape extends IBaseTest,
+  IWhen,
+  IGiven
+>(
   testInput: IInput,
   testSpecifications: ITestSpecification<
-    ITestShape,
-    ISubject,
-    IStore,
-    ISelection,
-    IThenShape,
-    any
+    ITestShape
   >,
   testImplementations: ITestImplementation<
-    InitialState,
-    ISelection,
-    IWhenShape,
-    IThenShape,
     ITestShape,
     any
   >,
@@ -59,15 +55,7 @@ export default <ITestShape extends ITTestShape>(
       }
 
       return Testeranto<
-        ITestShape,
-        IInput,
-        ISubject,
-        IStore,
-        ISelection,
-        IThenShape,
-        IWhenShape,
-        InitialState,
-        any
+        ITestShape
       >(
         testInput,
         testSpecifications,
@@ -88,15 +76,16 @@ export default <ITestShape extends ITTestShape>(
           },
           beforeEach: async (
             { htmlElement },
-            initialValues,
+            initializer,
             testResource,
             artificer,
+            initialValues
           ): Promise<IStore> => {
             return new Promise((resolve, rej) => {
               // Ignore these type errors
               ReactDom.createRoot(htmlElement).render(createElement(
                 TesterantoComponent, {
-                ...initialValues.props,
+                ...initializer(initialValues),
                 done: (reactElement) => {
                   resolve(
                     {

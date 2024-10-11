@@ -270,32 +270,32 @@ class BaseBuilder {
 exports.BaseBuilder = BaseBuilder;
 class ClassBuilder extends BaseBuilder {
     constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResourceRequirement, logWriter) {
-        const classySuites = Object.entries(testImplementation.Suites).reduce((a, [key], index) => {
+        const classySuites = Object.entries(testImplementation.suites).reduce((a, [key], index) => {
             a[key] = (somestring, givens, checks) => {
                 return new suiteKlasser.prototype.constructor(somestring, index, givens, checks);
             };
             return a;
         }, {});
-        const classyGivens = Object.entries(testImplementation.Givens)
+        const classyGivens = Object.entries(testImplementation.givens)
             .reduce((a, [key, givEn]) => {
             a[key] = (features, whens, thens, givEn) => {
-                return new (givenKlasser.prototype).constructor(key, features, whens, thens, testImplementation.Givens[key], givEn);
+                return new (givenKlasser.prototype).constructor(key, features, whens, thens, testImplementation.givens[key], givEn);
             };
             return a;
         }, {});
-        const classyWhens = Object.entries(testImplementation.Whens).reduce((a, [key, whEn]) => {
+        const classyWhens = Object.entries(testImplementation.whens).reduce((a, [key, whEn]) => {
             a[key] = (payload) => {
                 return new whenKlasser.prototype.constructor(`${whEn.name}: ${payload && payload.toString()}`, whEn(payload));
             };
             return a;
         }, {});
-        const classyThens = Object.entries(testImplementation.Thens).reduce((a, [key, thEn]) => {
+        const classyThens = Object.entries(testImplementation.thens).reduce((a, [key, thEn]) => {
             a[key] = (expected, x) => {
                 return new thenKlasser.prototype.constructor(`${thEn.name}: ${expected && expected.toString()}`, thEn(expected));
             };
             return a;
         }, {});
-        const classyChecks = Object.entries(testImplementation.Checks).reduce((a, [key, z]) => {
+        const classyChecks = Object.entries(testImplementation.checks).reduce((a, [key, z]) => {
             a[key] = (somestring, features, callback) => {
                 return new checkKlasser.prototype.constructor(somestring, features, callback, classyWhens, classyThens);
             };

@@ -1,7 +1,6 @@
 import renderer, { act } from "react-test-renderer";
 
-import { ITTestShape } from "../../../lib";
-import { ITestImplementation, ITestSpecification } from "../../../Types";
+import { IBaseTest, ITestImplementation, ITestSpecification } from "../../../Types";
 
 export type IWhenShape = any;
 export type IThenShape = any;
@@ -12,25 +11,15 @@ export type IStore = renderer.ReactTestRenderer;
 export type ISubject = renderer.ReactTestRenderer;
 
 export type ITestImpl<
-  ITestShape extends ITTestShape
+  ITestShape extends IBaseTest
 > = ITestImplementation<
-  InitialState,
-  ISelection,
-  IWhenShape,
-  IThenShape,
-  ITestShape,
-  any
+  ITestShape, object
 >
 
 export type ITestSpec<
-  ITestShape extends ITTestShape
+  ITestShape extends IBaseTest
 > = ITestSpecification<
-  ITestShape,
-  ISubject,
-  IStore,
-  ISelection,
-  IThenShape,
-  any
+  ITestShape
 >
 
 export const testInterface = {

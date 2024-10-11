@@ -1,8 +1,6 @@
 import { CElement } from "react";
 
-import { ITTestShape } from "../../../lib";
-import { ITestImplementation, ITestSpecification } from "../../../Types";
-
+import { IBaseTest, ITestImplementation, ITestSpecification } from "../../../Types";
 
 export type IWhenShape = any;
 export type IThenShape = any;
@@ -13,25 +11,15 @@ export type IStore = CElement<any, any>
 export type ISubject = CElement<any, any>
 
 export type ITestImpl<
-  ITestShape extends ITTestShape
+  ITestShape extends IBaseTest
 > = ITestImplementation<
-  InitialState,
-  ISelection,
-  IWhenShape,
-  IThenShape,
-  ITestShape,
-  any
+  ITestShape, object
 >
 
 export type ITestSpec<
-  ITestShape extends ITTestShape
+  ITestShape extends IBaseTest
 > = ITestSpecification<
-  ITestShape,
-  ISubject,
-  IStore,
-  ISelection,
-  IThenShape,
-  any
+  ITestShape
 >
 
 export const testInterface = (z) => {

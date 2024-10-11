@@ -3,43 +3,24 @@ import test from "../../../Node";
 import React from "react";
 import renderer, { act } from "react-test-renderer";
 
-import { ITTestShape } from "../../../lib";
-import { ITestImplementation, ITestSpecification } from "../../../Types";
+import { IBaseTest, ITestImplementation, ITestSpecification } from "../../../Types";
 
 
 type Input = React.MemoExoticComponent<() => JSX.Element>;
 type WhenShape = unknown;
 type ThenShape = unknown;
 
-export default <ITestShape extends ITTestShape, PropShape>(
+export default <ITestShape extends IBaseTest, PropShape>(
   testImplementations: ITestImplementation<
-    PropShape,
-    renderer.ReactTestRenderer,
-    WhenShape,
-    ThenShape,
-    ITestShape,
-    any
+    ITestShape, object
   >,
   testSpecifications: ITestSpecification<
-    ITestShape,
-    any,
-    any,
-    any,
-    any,
-    any
+    ITestShape
   >,
   testInput: Input
 ) =>
   test<
-    ITestShape,
-    Input,
-    any,
-    any,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    any
+    ITestShape
   >(
     testInput,
     testSpecifications,

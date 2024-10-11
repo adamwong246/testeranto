@@ -1,4 +1,5 @@
 import { IGivens, BaseCheck, BaseSuite, BaseThen, BaseWhen } from "./base.js";
+import { IBaseTest } from "./Types.js";
 export declare type ITTestResourceConfiguration = {
     name: string;
     fs: string;
@@ -13,20 +14,6 @@ export declare type ITTestResourceRequirement = {
 export declare type ITTestResourceRequest = {
     ports: number;
 };
-export declare type ITTestShape = {
-    suites: any;
-    givens: any;
-    whens: any;
-    thens: any;
-    checks: any;
-};
-export declare type ITTTestShape<T extends ITTestShape> = {
-    suites: any;
-    givens: any;
-    whens: any;
-    thens: any;
-    checks: any;
-};
 export declare type ITLog = (...string: any[]) => void;
 export declare type ILogWriter = {
     createWriteStream: (line: string) => any | any;
@@ -38,14 +25,14 @@ export declare type ITestArtificer = (key: string, data: any) => void;
 declare type ITest = {
     toObj(): object;
     name: string;
-    givens: IGivens<unknown, unknown, unknown, unknown, unknown>;
-    checks: BaseCheck<unknown, unknown, unknown, unknown, ITTestShape>[];
+    givens: IGivens<IBaseTest>;
+    checks: BaseCheck<IBaseTest>[];
     testResourceConfiguration: ITTestResourceConfiguration;
 };
 export declare type ITestJob = {
     toObj(): object;
     test: ITest;
-    runner: (x: ITTestResourceConfiguration, t: ITLog) => Promise<BaseSuite<any, any, any, any, any, any, any>>;
+    runner: (x: ITTestResourceConfiguration, t: ITLog) => Promise<BaseSuite<IBaseTest>>;
     testResourceRequirement: ITTestResourceRequirement;
     receiveTestResourceConfig: (testResource?: any) => Promise<{
         failed: number;
@@ -58,11 +45,11 @@ export declare type ITestResults = Promise<{
 }>[];
 export declare const defaultTestResourceRequirement: ITTestResourceRequest;
 export declare type ITestArtifactory = (key: string, value: unknown) => unknown;
-export declare type ITestCheckCallback<ITestShape extends ITTestShape> = {
+export declare type ITestCheckCallback<ITestShape extends IBaseTest> = {
     [K in keyof ITestShape["checks"]]: (name: string, features: string[], callbackA: (whens: {
-        [K in keyof ITestShape["whens"]]: (...unknown: any[]) => BaseWhen<unknown, unknown, unknown>;
+        [K in keyof ITestShape["whens"]]: (...unknown: any[]) => BaseWhen<ITestShape>;
     }, thens: {
-        [K in keyof ITestShape["thens"]]: (...unknown: any[]) => BaseThen<unknown, unknown, unknown>;
-    }) => Promise<any>, ...xtrasA: ITestShape["checks"][K]) => BaseCheck<unknown, unknown, unknown, unknown, ITestShape>;
+        [K in keyof ITestShape["thens"]]: (...unknown: any[]) => BaseThen<ITestShape>;
+    }) => Promise<any>, ...xtrasA: ITestShape["checks"][K]) => BaseCheck<ITestShape>;
 };
 export {};

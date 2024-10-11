@@ -25,10 +25,10 @@ export default (testInput, testSpecifications, testImplementations) => {
                         }
                     });
                 },
-                beforeEach: async ({ htmlElement }, initialValues, testResource, artificer) => {
+                beforeEach: async ({ htmlElement }, initializer, testResource, artificer, initialValues) => {
                     return new Promise((resolve, rej) => {
                         // Ignore these type errors
-                        ReactDom.createRoot(htmlElement).render(createElement(TesterantoComponent, Object.assign(Object.assign({}, initialValues.props), { done: (reactElement) => {
+                        ReactDom.createRoot(htmlElement).render(createElement(TesterantoComponent, Object.assign(Object.assign({}, initializer(initialValues)), { done: (reactElement) => {
                                 resolve({
                                     htmlElement,
                                     reactElement,

@@ -1,4 +1,4 @@
-import { ITestSpecification } from "./Types";
+import { IBaseTest, ITestSpecification } from "./Types";
 import {
   BaseWhen,
   BaseThen,
@@ -11,77 +11,55 @@ import {
   ILogWriter,
   ITTestResourceConfiguration,
   ITTestResourceRequest,
-  ITTestShape,
   ITestArtificer,
   ITestJob,
   defaultTestResourceRequirement
 } from "./lib.js";
 
 export default abstract class Testeranto<
-  TestShape extends ITTestShape,
-  IState,
-  ISelection,
-  IStore,
-  ISubject,
-  IWhenShape,
-  IThenShape,
-  IInput,
-  IGivenShape
+  ITestShape extends IBaseTest,
 > extends ClassBuilder<
-  TestShape,
-  IState,
-  ISelection,
-  IStore,
-  ISubject,
-  IWhenShape,
-  IThenShape,
-  IInput,
-  IGivenShape
+  ITestShape
 > {
   constructor(
-    input: IInput,
+    input: ITestShape['iinput'],
     testSpecification: ITestSpecification<
-      TestShape,
-      ISubject,
-      IStore,
-      ISelection,
-      IThenShape,
-      IGivenShape
+      ITestShape
     >,
     testImplementation,
     testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
     logWriter: ILogWriter,
 
     beforeAll: (
-      input: IInput,
+      input: ITestShape['iinput'],
       artificer: ITestArtificer,
       testResource: ITTestResourceConfiguration
-    ) => Promise<ISubject>,
+    ) => Promise<ITestShape['isubject']>,
     beforeEach: (
-      subject: ISubject,
+      subject: ITestShape['isubject'],
       initializer,
       testResource: ITTestResourceConfiguration,
       artificer: ITestArtificer,
       initialValues
-    ) => Promise<IStore>,
+    ) => Promise<ITestShape['istore']>,
     afterEach: (
-      store: IStore,
+      store: ITestShape['istore'],
       key: string,
       artificer: ITestArtificer
     ) => Promise<unknown>,
     afterAll: (
-      store: IStore,
+      store: ITestShape['istore'],
       artificer: ITestArtificer
     ) => any,
     butThen: (
-      s: IStore,
+      s: ITestShape['istore'],
       testResource: ITTestResourceConfiguration,
     ) => any,
     andWhen: (
-      store: IStore,
+      store: ITestShape['istore'],
       whenCB,
       testResource: ITTestResourceConfiguration
-    ) => Promise<ISelection>,
+    ) => Promise<ITestShape['iselection']>,
     assertThis: (
       a: any
     ) => any,
@@ -92,22 +70,18 @@ export default abstract class Testeranto<
       input,
 
       class extends BaseSuite<
-        IInput,
-        ISubject,
-        IStore,
-        ISelection,
-        IThenShape,
-        TestShape,
-        IGivenShape
+        ITestShape
       > {
 
         assertThat(t) {
           assertThis(t);
         }
 
-        async setup(s: IInput, artifactory): Promise<ISubject> {
+        async setup(s: ITestShape['iinput'], artifactory): Promise<
+          ITestShape['isubject']
+        > {
           return (beforeAll || (async (
-            input: IInput,
+            input: ITestShape['iinput'],
             artificer: ITestArtificer,
           ) => input as any))(
             s,
@@ -117,7 +91,9 @@ export default abstract class Testeranto<
         }
       } as any,
 
-      class Given extends BaseGiven<ISubject, IStore, ISelection, IThenShape, IGivenShape> {
+      class Given extends BaseGiven<
+        ITestShape
+      > {
 
         async givenThat(subject, testResource, artifactory, initializer) {
           return beforeEach(
@@ -132,7 +108,7 @@ export default abstract class Testeranto<
         }
 
         afterEach(
-          store: IStore,
+          store: ITestShape['istore'],
           key: string,
           artifactory
         ): Promise<unknown> {
@@ -148,28 +124,28 @@ export default abstract class Testeranto<
         }
       } as any,
 
-      class When extends BaseWhen<IStore, ISelection, IWhenShape> {
+      class When extends BaseWhen<
+        ITestShape
+      > {
         async andWhen(store, whenCB, testResource) {
           return await andWhen(store, whenCB, testResource);
         }
       } as any,
 
-      class Then extends BaseThen<ISelection, IStore, IThenShape> {
+      class Then extends BaseThen<
+        ITestShape
+      > {
 
         async butThen(
           store: any,
           testResourceConfiguration?: any
-        ): Promise<ISelection> {
+        ): Promise<ITestShape['iselection']> {
           return await butThen(store, testResourceConfiguration);
         }
       } as any,
 
       class Check extends BaseCheck<
-        ISubject,
-        IStore,
-        ISelection,
-        IThenShape,
-        TestShape
+        ITestShape
       > {
         initialValues: any;
 
@@ -196,7 +172,7 @@ export default abstract class Testeranto<
         }
 
         afterEach(
-          store: IStore,
+          store: ITestShape['istore'],
           key: string,
           artifactory
         ): Promise<unknown> {

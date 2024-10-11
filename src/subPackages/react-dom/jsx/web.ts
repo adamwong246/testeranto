@@ -5,8 +5,8 @@ import React, {
 } from "react";
 import { createPortal } from 'react-dom';
 
-import { ITTestShape } from "../../../lib";
-import { ITestImplementation, ITestSpecification } from "../../../Types";
+
+import { IBaseTest, ITestImplementation, ITestSpecification } from "../../../Types";
 
 import {
   IInput, ISelection, IStore,
@@ -16,25 +16,14 @@ import {
 export type ISubject = HTMLElement;
 
 export default <
-  ITestShape extends ITTestShape,
-// IProps
+  ITestShape extends IBaseTest,
 >(
   testImplementations: ITestImplementation<
-    IState,
-    ISelection,
-    IWhenShape,
-    IThenShape,
     ITestShape,
-    any
+    object
   >,
   testSpecifications: ITestSpecification<
-    ITestShape,
-    // [HTMLElement, IProps], // ISubject,
-    ISubject,
-    IStore,
-    ISelection,
-    IThenShape,
-    any
+    ITestShape
   >,
   testInput: IInput
 ) => {
@@ -68,16 +57,7 @@ export default <
       };
 
       Testeranto<
-        ITestShape,
-        IInput,
-        // [HTMLElement, IProps], // ISubject,
-        ISubject,
-        IStore,
-        ISelection,
-        IThenShape,
-        IWhenShape,
-        IState,
-        any
+        ITestShape
       >(
         testInput,
         testSpecifications,

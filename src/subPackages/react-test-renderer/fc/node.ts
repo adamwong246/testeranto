@@ -3,46 +3,26 @@ import test from "../../../Node";
 import React from "react";
 import renderer, { act } from "react-test-renderer";
 
-import { ITTestShape } from "../../../lib";
-import { ITestSpecification, ITestImplementation } from "../../../Types";
+import { ITestSpecification, ITestImplementation, IBaseTest } from "../../../Types";
 
 export type IInput = React.FC;
 export type IWhenShape = unknown;
 export type IThenShape = unknown;
 
-export type ISpec<ITestShape extends ITTestShape> = ITestSpecification<
-  ITestShape,
-  any,
-  any,
-  any,
-  IThenShape,
-  any
+export type ISpec<ITestShape extends IBaseTest> = ITestSpecification<
+  ITestShape
 >
 export default <
-  ITestShape extends ITTestShape,
-  IPropShape
+  ITestShape extends IBaseTest
 >(
   testImplementations: ITestImplementation<
-    IPropShape,
-    renderer.ReactTestRenderer,
-    IWhenShape,
-    IThenShape,
-    ITestShape,
-    any
+    ITestShape, object
   >,
   testSpecifications: ISpec<ITestShape>,
   testInput: IInput
 ) =>
   test<
-    ITestShape,
-    IInput,
-    any,
-    renderer.ReactTestRenderer,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    any
+    ITestShape
   >(
     testInput,
     testSpecifications,

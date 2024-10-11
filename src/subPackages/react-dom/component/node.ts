@@ -3,8 +3,8 @@ import { renderToStaticMarkup, renderToStaticNodeStream } from "react-dom/server
 import Stream from 'stream'
 
 import Testeranto from "../../../Node";
-import { ITTestShape } from "../../../lib";
-import { ITestImplementation, ITestSpecification } from "../../../Types";
+
+import { IBaseTest, ITestImplementation, ITestSpecification } from "../../../Types";
 
 type IInput = typeof React.Component;
 type InitialState = unknown;
@@ -18,35 +18,17 @@ export {
   renderToStaticMarkup, renderToStaticNodeStream, Stream
 }
 
-export default <ITestShape extends ITTestShape>(
+export default <ITestShape extends IBaseTest>(
   testImplementations: ITestImplementation<
-    InitialState,
-    ISelection,
-    IWhenShape,
-    IThenShape,
-    ITestShape,
-    any
+    ITestShape, object
   >,
   testSpecifications: ITestSpecification<
-    ITestShape,
-    ISubject,
-    IStore,
-    ISelection,
-    IThenShape,
-    any
+    ITestShape
   >,
   testInput: IInput
 ) => {
   return Testeranto<
-    ITestShape,
-    IInput,
-    ISubject,
-    IStore,
-    ISelection,
-    IThenShape,
-    IWhenShape,
-    InitialState,
-    any
+    ITestShape
   >(
     testInput,
     testSpecifications,

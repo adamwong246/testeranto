@@ -1,11 +1,10 @@
+import { IBaseTest } from "../../../Types";
 import Testeranto from "../../../Web";
-
-import { ITTestShape } from "../../../lib";
 
 import { IImpl, ISpec, IInput, testInterface } from "./index";
 
 export default <
-  ITestShape extends ITTestShape,
+  ITestShape extends IBaseTest,
   IProps,
   IState
 >(
@@ -14,15 +13,7 @@ export default <
   testInput: IInput<IProps, IState>,
 ) =>
   Testeranto<
-    ITestShape,
-    IInput<IProps, IState>,
-    any,
-    any,
-    any,
-    any,
-    any,
-    any,
-    any
+    ITestShape
   >(
     testInput,
     testSpecifications,

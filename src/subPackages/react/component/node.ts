@@ -1,11 +1,8 @@
 import React from "react";
 
 import Testeranto from "../../../Node";
-import { ITTestShape } from "../../../lib";
-import { ITestImplementation, ITestSpecification } from "../../../Types";
 
-type IWhenShape = any;
-type IThenShape = any;
+import { IBaseTest, ITestImplementation, ITestSpecification } from "../../../Types";
 
 type IInput = typeof React.Component;
 type ISelection = React.CElement<any, any>
@@ -13,53 +10,31 @@ type IStore = React.CElement<any, any>
 type ISubject = React.CElement<any, any>
 
 export type IImpl<
-  ISpec extends ITTestShape,
+  ISpec extends IBaseTest,
   IState
 > = ITestImplementation<
-  IState,
-  ISelection,
-  IWhenShape,
-  IThenShape,
-  ISpec,
-  any
+  ISpec, object
 >
 
 export type ISpec<
-  T extends ITTestShape
+  T extends IBaseTest
 > = ITestSpecification<
-  T,
-  ISubject,
-  IStore,
-  ISelection,
-  IThenShape,
-  any
+  T
 >;
 
 export default <
-  ITestShape extends ITTestShape,
+  ITestShape extends IBaseTest,
   IState
 >(
   testImplementations: ITestImplementation<
-    IState,
-    ISelection,
-    IWhenShape,
-    IThenShape,
     ITestShape,
-    any
+    object
   >,
   testSpecifications: ISpec<ITestShape>,
   testInput: IInput
 ) => {
   return Testeranto<
-    ITestShape,
-    IInput,
-    ISubject,
-    IStore,
-    ISelection,
-    IThenShape,
-    IWhenShape,
-    IState,
-    any
+    ITestShape
   >(
     testInput,
     testSpecifications,

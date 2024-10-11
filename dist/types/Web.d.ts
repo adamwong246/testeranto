@@ -1,4 +1,4 @@
-import { ITestInterface, ITestSpecification } from "./Types";
-import { ITTestResourceRequest, ITTestShape } from "./lib";
-declare const _default: <TestShape extends ITTestShape, IInput, ISubject, IStore, ISelection, IWhenShape, IThenShape, IState, IGivenShape>(input: IInput, testSpecification: ITestSpecification<TestShape, ISubject, IStore, ISelection, IThenShape, IGivenShape>, testImplementation: any, testInterface: ITestInterface<IStore, ISelection, ISubject, IThenShape, IInput>, testResourceRequirement?: ITTestResourceRequest) => Promise<void>;
+import { IBaseTest, ITestInterface, ITestSpecification } from "./Types";
+import { ITTestResourceRequest } from "./lib";
+declare const _default: <ITestShape extends IBaseTest>(input: ITestShape["iinput"], testSpecification: ITestSpecification<ITestShape>, testImplementation: any, testInterface: ITestInterface<ITestShape>, testResourceRequirement?: ITTestResourceRequest) => Promise<void>;
 export default _default;

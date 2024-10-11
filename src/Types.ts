@@ -1,9 +1,15 @@
 import {
-  IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen, BaseGiven
+  IGivens,
+  BaseCheck,
+  BaseSuite,
+  BaseWhen,
+  BaseThen,
+  BaseGiven
 } from "./base.js";
 import {
   ITTestResourceConfiguration,
-  ITTestShape, ITestArtificer, ITestCheckCallback
+  ITestArtificer,
+  ITestCheckCallback
 } from "./lib.js";
 
 export type IBaseConfig = {
@@ -28,143 +34,149 @@ export type ITestTypes = [
 ];
 
 export type ITestSpecification<
-  ITestShape extends ITTestShape,
-  ISubject,
-  IStore,
-  ISelection,
-  IThenShape,
-  IGivenShape
+  ITestShape extends IBaseTest
 > = (
   Suite: {
     [K in keyof ITestShape["suites"]]: (
       name: string,
       givens: IGivens<
-        ISubject,
-        IStore,
-        ISelection,
-        IThenShape,
-        IGivenShape
+        ITestShape
       >,
       checks: BaseCheck<
-        ISubject,
-        IStore,
-        ISelection,
-        IThenShape,
         ITestShape
       >[]
     ) => BaseSuite<
-      unknown,
-      ISubject,
-      IStore,
-      ISelection,
-      IThenShape,
-      ITestShape,
-      IGivenShape
+      ITestShape
     >;
   },
   Given: {
     [K in keyof ITestShape["givens"]]: (
       features: string[],
       whens: BaseWhen<
-        IStore,
-        ISelection,
-        IThenShape
+        ITestShape
       >[],
       thens: BaseThen<
-        ISelection,
-        IStore,
-        IThenShape
+        ITestShape
       >[],
       ...xtrasB: ITestShape["givens"][K]
     ) => BaseGiven<
-      ISubject,
-      IStore,
-      ISelection,
-      IThenShape,
-      IGivenShape
+      ITestShape
     >;
   },
   When: {
     [K in keyof ITestShape["whens"]]: (
       ...xtrasC: ITestShape["whens"][K]
     ) => BaseWhen<
-      IStore,
-      ISelection,
-      IThenShape
+      ITestShape
     >;
   },
   Then: {
     [K in keyof ITestShape["thens"]]: (
       ...xtrasD: ITestShape["thens"][K]
     ) => BaseThen<
-      ISelection,
-      IStore,
-      IThenShape>;
+      ITestShape
+    >;
   },
   Check: ITestCheckCallback<ITestShape>
 ) => any[];
 
 export type ITestImplementation<
-  IState,
-  ISelection,
-  IWhenShape,
-  IThenShape,
-  ITestShape extends ITTestShape,
-  IGivenShape
-> = {
-  Suites: {
+  ITestShape extends IBaseTest,
+  IMod
+> = Modify<{
+  suites: {
     [K in keyof ITestShape["suites"]]: string;
   };
-  Givens: {
+  givens: {
     [K in keyof ITestShape["givens"]]: (
       ...Ig: ITestShape["givens"][K]
-    ) => (s: IState) => IGivenShape;
+    ) => ITestShape['given'];
   };
-  Whens: {
+  whens: {
     [K in keyof ITestShape["whens"]]: (
       ...Iw: ITestShape["whens"][K]
     ) =>
-      (zel: ISelection) =>
-        IWhenShape;
+      (zel: ITestShape['iselection']) =>
+        ITestShape['when'];
   };
-  Thens: {
+  thens: {
     [K in keyof ITestShape["thens"]]: (
       ...It: ITestShape["thens"][K]
-    ) => (ssel: ISelection) => IThenShape;
+    ) => (ssel: ITestShape['iselection']) =>
+        ITestShape['then'];
   };
-  Checks: {
+  checks: {
     [K in keyof ITestShape["checks"]]: (
       ...Ic: ITestShape["checks"][K]
-    ) => IState;
+    ) => ITestShape['given'];
   };
-};
+}, IMod>;
 
 export type ITestInterface<
-  IStore, ISelection, ISubject, IThenShape, IInput
+  ITestShape extends IBaseTest
 > = {
-  assertThis?: (x: any) => void,
+  assertThis?: (x: ITestShape['then']) => void,
   andWhen: (
-    store: IStore,
-    whenCB,
+    store: ITestShape['istore'],
+    whenCB: ITestShape['when'],
     testResource: ITTestResourceConfiguration
-  ) => Promise<ISelection>;
+  ) => Promise<ITestShape['istore']>;
   butThen?: (
-    store: IStore,
+    store: ITestShape['istore'],
     thenCB,
     testResource: ITTestResourceConfiguration
-  ) => Promise<ISelection>;
-  afterAll?: (store: IStore, artificer: ITestArtificer) => any;
+  ) => Promise<ITestShape['iselection']>;
+  afterAll?: (
+    store: ITestShape['istore'],
+    artificer: ITestArtificer
+  ) => any;
   afterEach?: (
-    store: IStore,
+    store: ITestShape['istore'],
     key: string,
     artificer: ITestArtificer
   ) => Promise<unknown>;
-  beforeAll?: (input: IInput, artificer: ITestArtificer) => Promise<ISubject>;
+  beforeAll?: (
+    input: ITestShape['iinput'],
+    artificer: ITestArtificer
+  ) => Promise<ITestShape['isubject']>;
   beforeEach?: (
-    subject: ISubject,
-    initializer,
+    subject: ITestShape['isubject'],
+    initializer: (c?) => ITestShape['given'],
     artificer: ITestArtificer,
     testResource: ITTestResourceConfiguration,
     initialValues
-  ) => Promise<IStore>;
+  ) => Promise<ITestShape['istore']>;
+};
+
+type Modify<T, R> = Omit<T, keyof R> & R;
+
+export type IBaseTest = {
+  iinput; // input
+  isubject;  // subject
+  istore; // store
+  iselection;
+  // iinitial;
+
+  given;
+  when;
+  then;
+  suites: Record<string, unknown>;
+  givens: Record<string, unknown>;
+  whens: Record<string, unknown>;
+  thens: Record<string, unknown>;
+  checks: Record<string, unknown>;
+};
+
+export type ITestShaper<
+  T extends IBaseTest,
+  modifier
+> = {
+  given;
+  when;
+  then;
+  suites;
+  givens;
+  whens;
+  thens;
+  checks;
 };
