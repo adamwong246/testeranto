@@ -1,17 +1,17 @@
 import {
   ClassicalComponent
-} from "../../../chunk-ROURU72E.mjs";
+} from "../../../chunk-DJWRCSUA.mjs";
 import {
   require_react_test_renderer
-} from "../../../chunk-7SV3FQXP.mjs";
+} from "../../../chunk-PBSEALKD.mjs";
 import {
   assert
-} from "../../../chunk-ZIFLG7BR.mjs";
+} from "../../../chunk-7RGW2JO4.mjs";
 import {
   Node_default,
   __toESM,
   init_cjs_shim
-} from "../../../chunk-4YYJXUVQ.mjs";
+} from "../../../chunk-GZ644S2N.mjs";
 
 // src/ClassicalComponent/react-test-renderer/node.test.tsx
 init_cjs_shim();
@@ -40,15 +40,15 @@ var testInterface = {
     });
   },
   andWhen: async function(renderer2, whenCB) {
-    console.log("andWhen", whenCB);
     await (0, import_react_test_renderer.act)(() => whenCB(renderer2));
     return renderer2;
   },
   // andWhen: function (s: Store, whenCB): Promise<Selection> {
   //   return whenCB()(s);
   // },
-  butThen: async function(s) {
-    return s;
+  butThen: async function(s, thenCB, tr) {
+    console.log("butThen", thenCB.toString());
+    return thenCB(s);
   },
   afterEach: async function(store, ndx, artificer) {
     return {};
@@ -99,7 +99,7 @@ var ClassicalComponentSpec = (Suite, Given, When, Then, Check) => {
             When.IClickTheButton(),
             When.IClickTheButton()
           ],
-          [Then.TheStatusIs({ count: 2 })]
+          [Then.TheStatusIs({ count: 22 })]
         )
       },
       []
@@ -131,6 +131,7 @@ var testImplementation = {
       });
     },
     TheStatusIs: (expectation) => (component) => {
+      throw new Error("not yet implemented");
     }
   },
   checks: {

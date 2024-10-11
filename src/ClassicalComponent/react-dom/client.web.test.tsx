@@ -24,14 +24,8 @@ const ClassicalComponentReactDomImplementation = {
         async ({ htmlElement, reactElement }) => {
           const btxpctn = JSON.parse(expectation[0]);
           btxpctn.children = [];
-
           const elem = htmlElement.querySelector("#theProps")
-          // console.log("elem")
-          // console.log(elem)
           const found = elem.innerHTML;
-          // console.log("found")
-          // console.log(found)
-
           assert.deepEqual(
             JSON.parse(found),
             btxpctn
@@ -42,12 +36,7 @@ const ClassicalComponentReactDomImplementation = {
       (expectation) =>
         async ({ htmlElement }) => {
           const elem = htmlElement.querySelector("#theState")
-          // console.log("elem")
-          // console.log(elem)
           const found = elem.innerHTML;
-          // console.log("found")
-          // console.log(found)
-
           assert.deepEqual(
             found,
             JSON.stringify(expectation)

@@ -6,6 +6,16 @@ import type {
 } from ".";
 
 export type IClassicalComponentSpec = {
+
+  iinput: void,
+  isubject: void,
+  istore: void,
+  iselection: any,
+
+  when: void,
+  then: void,
+  given: (x) => (y) => void,
+
   suites: {
     Default: string;
   };
@@ -25,12 +35,7 @@ export type IClassicalComponentSpec = {
 };
 
 export const ClassicalComponentSpec: ITestSpecification<
-  IClassicalComponentSpec,
-  any,
-  any,
-  any,
-  any,
-  any
+  IClassicalComponentSpec
 > =
   (Suite, Given, When, Then, Check) => {
     return [
@@ -68,7 +73,7 @@ export const ClassicalComponentSpec: ITestSpecification<
               When.IClickTheButton(),
               When.IClickTheButton(),
             ],
-            [Then.TheStatusIs({ count: 2 })]
+            [Then.TheStatusIs({ count: 22 })]
           )
         },
         []

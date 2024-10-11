@@ -109,18 +109,7 @@
           "name": "Get: [object Object]"
         }
       ],
-      "error": [
-        {
-          "name": "AssertionError",
-          "message": "expected 4 to equal +0",
-          "showDiff": true,
-          "actual": 4,
-          "expected": 0,
-          "operator": "strictEqual",
-          "stack": "AssertionError: expected 4 to equal +0\n    at Then.thenCB (file:///Users/adam/Code/kokomoBay/dist/src/MyFirstContract.solidity.test.mjs:137531:86)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Given.give (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:146:19)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:92:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:250:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:279:29)\n    at async NodeTesteranto.receiveTestResourceConfigScheduled (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:501:47)"
-        },
-        "AssertionError: expected 4 to equal +0\n    at Then.thenCB (file:///Users/adam/Code/kokomoBay/dist/src/MyFirstContract.solidity.test.mjs:137531:86)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Given.give (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:146:19)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:92:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:250:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:279:29)\n    at async NodeTesteranto.receiveTestResourceConfigScheduled (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:501:47)"
-      ],
+      "error": null,
       "features": [
         "hello"
       ]

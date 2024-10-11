@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 // import ReactDOM from "react-dom";
 // import ReactDom from "react-dom/client";
 
-export type IProps = { foo?: string };
+export type IProps = [string];
 export type IState = { count: number };
 
 export class ClassicalComponent extends React.Component<IProps, IState> {

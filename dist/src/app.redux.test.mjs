@@ -1,19 +1,19 @@
 import {
   AppSpecification
-} from "../chunk-QABUTIBG.mjs";
+} from "../chunk-D5WEAOKK.mjs";
 import {
   loginApp,
   require_redux
-} from "../chunk-GHI2MTJQ.mjs";
-import "../chunk-UANIJ4EA.mjs";
+} from "../chunk-3LLG4FU5.mjs";
+import "../chunk-5YXDQYSZ.mjs";
 import {
   assert
-} from "../chunk-ZIFLG7BR.mjs";
+} from "../chunk-7RGW2JO4.mjs";
 import {
   Node_default,
   __toESM,
   init_cjs_shim
-} from "../chunk-4YYJXUVQ.mjs";
+} from "../chunk-GZ644S2N.mjs";
 
 // src/app.redux.test.ts
 init_cjs_shim();
@@ -44,40 +44,39 @@ var ReduxTesteranto = (testInput, testSpecifications, testImplementations) => {
 };
 
 // src/app.redux.test.ts
+var implementations = {
+  suites: {
+    Default: "some default Suite"
+  },
+  givens: {
+    AnEmptyState: () => () => {
+      return loginApp.getInitialState();
+    },
+    AStateWithEmail: () => (email) => {
+      return { ...loginApp.getInitialState(), email };
+    }
+  },
+  whens: {
+    TheLoginIsSubmitted: () => [loginApp.actions.signIn],
+    TheEmailIsSetTo: (email) => [loginApp.actions.setEmail, email],
+    ThePasswordIsSetTo: (password) => [loginApp.actions.setPassword, password]
+  },
+  thens: {
+    TheEmailIs: (email) => (storeState) => {
+      assert.equal(storeState.email, email);
+    },
+    TheEmailIsNot: (email) => (storeState) => assert.notEqual(storeState.email, email),
+    ThePasswordIs: (password) => (selection) => assert.equal(selection.password, password),
+    ThePasswordIsNot: (password) => (selection) => assert.notEqual(selection.password, password)
+  },
+  checks: {
+    AnEmptyState: () => () => loginApp.getInitialState()
+  }
+};
 var AppReduxTesteranto = ReduxTesteranto(
   loginApp.reducer,
   AppSpecification,
-  {
-    suites: {
-      Default: "some default Suite"
-    },
-    givens: {
-      AnEmptyState: () => () => {
-        return loginApp.getInitialState();
-      },
-      AStateWithEmail: (x) => (email) => {
-        console.log("mark106", email, x);
-        return { ...loginApp.getInitialState(), email };
-      }
-    },
-    whens: {
-      TheLoginIsSubmitted: () => [loginApp.actions.signIn],
-      TheEmailIsSetTo: (email) => [loginApp.actions.setEmail, email],
-      ThePasswordIsSetTo: (password) => [loginApp.actions.setPassword, password]
-    },
-    thens: {
-      TheEmailIs: (email) => (storeState) => {
-        console.log("mark40", email, storeState);
-        assert.equal(storeState.email, email);
-      },
-      TheEmailIsNot: (email) => (storeState) => assert.notEqual(storeState.email, email),
-      ThePasswordIs: (password) => (selection) => assert.equal(selection.password, password),
-      ThePasswordIsNot: (password) => (selection) => assert.notEqual(selection.password, password)
-    },
-    checks: {
-      AnEmptyState: () => loginApp.getInitialState()
-    }
-  }
+  implementations
 );
 export {
   AppReduxTesteranto

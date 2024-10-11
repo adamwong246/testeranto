@@ -1,6 +1,16 @@
 import { ITestSpecification } from "testeranto/src/Types";
 
 export type ILoginPageSpecs = {
+
+  iinput: any,
+  isubject: any,
+  istore: any,
+  iselection: any,
+
+  when: void,
+  then: unknown,
+  given: (x) => unknown,
+
   suites: {
     Default: string;
   },
@@ -26,12 +36,7 @@ export type ILoginPageSpecs = {
 };
 
 export const LoginPageSpecs: ITestSpecification<
-  ILoginPageSpecs,
-  any,
-  any,
-  any,
-  any,
-  any
+  ILoginPageSpecs
 > = (
   Suite,
   Given,
@@ -82,7 +87,7 @@ export const LoginPageSpecs: ITestSpecification<
             [],
             [
               When.TheEmailIsSetTo("adam@mail.com"),
-              When.ThePasswordIsSetTo("foo")],
+              When.ThePasswordIsSetTo("foso")],
             [
               Then.ThereIsNotAnEmailError()
             ]

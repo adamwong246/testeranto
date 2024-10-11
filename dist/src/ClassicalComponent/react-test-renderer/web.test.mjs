@@ -4,7 +4,7 @@ import {
 import {
   ClassicalComponent,
   ClassicalComponentSpec
-} from "../../../chunk-RCXHALEU.mjs";
+} from "../../../chunk-6BDE2DTQ.mjs";
 import "../../../chunk-7AHWTSRZ.mjs";
 import {
   require_react
@@ -12,7 +12,7 @@ import {
 import {
   Web_default,
   assert
-} from "../../../chunk-ZFPTK2OM.mjs";
+} from "../../../chunk-OLTCVEI6.mjs";
 import {
   __toESM
 } from "../../../chunk-XALKSG2U.mjs";
@@ -37,15 +37,15 @@ var testInterface = {
     });
   },
   andWhen: async function(renderer2, whenCB) {
-    console.log("andWhen", whenCB);
     await (0, import_react_test_renderer.act)(() => whenCB(renderer2));
     return renderer2;
   },
   // andWhen: function (s: Store, whenCB): Promise<Selection> {
   //   return whenCB()(s);
   // },
-  butThen: async function(s) {
-    return s;
+  butThen: async function(s, thenCB, tr) {
+    console.log("butThen", thenCB.toString());
+    return thenCB(s);
   },
   afterEach: async function(store, ndx, artificer) {
     return {};
@@ -81,6 +81,7 @@ var testImplementation = {
       });
     },
     TheStatusIs: (expectation) => (component) => {
+      throw new Error("not yet implemented");
     }
   },
   checks: {

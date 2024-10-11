@@ -9,9 +9,7 @@ import LoginPage from "..";
 
 import { loginPageImpl, LoginPageReactTestRendererTestInterface } from "./test";
 
-export default test<
-  ILoginPageSpecs
->(
+export default test(
   loginPageImpl,
   LoginPageSpecs,
   LoginPage,

@@ -68,7 +68,7 @@ export const commonGivens = (Given, When, Then, features) => {
         When.Decrement(1),
       ],
       [
-        Then.Get({ asTestUser: 1, expectation: 4 })
+        Then.Get({ asTestUser: 1, expectation: 0 })
       ],
       "my first contract"
     ),

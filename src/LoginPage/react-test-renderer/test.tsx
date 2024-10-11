@@ -1,69 +1,37 @@
-import React from "react";
 import renderer, { act } from "react-test-renderer";
 import { assert } from "chai";
 
-import { ITestImpl } from "testeranto/src/SubPackages/react-test-renderer/jsx/index";
-
 import { ILoginPageSpecs } from "../test";
-import { actions } from "..";
+import { actions, emailwarning } from "..";
+import { ITestImplementation } from "testeranto/src/Types";
 
+export const LoginPageReactTestRendererTestInterface = {
 
-export const LoginPageReactTestRendererTestInterface = (testInput) => {
+  butThen: async function (s: any, thenCB, tr) {
+    return thenCB(s);
+  },
+  beforeEach: async function (CComponent, props) {
+    let component;
+    let elem;
+    await act(async () => {
+      elem = CComponent()
+      component = renderer.create(elem);
+    });
+    await component.root.props.store.dispatch(actions.reset());
+    return component;
+  },
+  andWhen: async function (
+    renderer: renderer.ReactTestRenderer,
+    whenCB: (any) => any
+  ): Promise<renderer.ReactTestRenderer> {
+    await act(() => whenCB(renderer));
 
-  return {
-    beforeEach: function (CComponent, props): Promise<renderer.ReactTestRenderer> {
-      let component;
-      act(() => {
-
-        const t = testInput(props);
-        t.props.store.dispatch(actions.reset())
-        // resolve(t)
-
-        component = renderer.create(
-          React.createElement(testInput, props, [])
-        );
-      });
-      return component;
-    },
-    andWhen: async function (
-      renderer: renderer.ReactTestRenderer,
-      whenCB: (any) => any
-    ): Promise<renderer.ReactTestRenderer> {
-      await act(() => whenCB(renderer));
-
-      renderer.update(React.createElement(testInput, {}, []));
-      // const rtrI = renderer.getInstance();
-      // if (rtrI) {
-      //   renderer.update(rtrI);  
-      // }
-
-      return renderer
-    }
+    return renderer
   }
-}
-// {
-//   return {
-//     beforeEach: async (
-//       x,
-//       ndx,
-//       testRsource,
-//       artificer
-//     ): Promise<IStore> => {
-//       return new Promise((resolve, rej) => {
-//         const t = testInput();
-//         t.props.store.dispatch(actions.reset())
-//         resolve(t)
-//       });
-//     },
-//     andWhen: function (s: IStore, whenCB): Promise<ISelection> {
-//       // console.log("mark18")
-//       // debugger
-//       return whenCB(s);
-//     },
-//   }
-// }
 
-export const loginPageImpl: ITestImpl<ILoginPageSpecs> = {
+}
+
+export const loginPageImpl: ITestImplementation<ILoginPageSpecs, object> = {
   suites: {
     Default: "a default suite",
   },
@@ -76,13 +44,11 @@ export const loginPageImpl: ITestImpl<ILoginPageSpecs> = {
     TheLoginIsSubmitted: () => (component) =>
       component.root.findByType("button").props.onClick(),
 
-    TheEmailIsSetTo: (email) => (component: renderer.ReactTestRenderer) => {
-      // debugger
+    TheEmailIsSetTo: (email) => (component) => {
       component.root
         .findByProps({ type: "email" })
         .props.onChange({ target: { value: email } })
-    }
-    ,
+    },
 
     ThePasswordIsSetTo: (password) => (component) =>
       component.root
@@ -115,11 +81,12 @@ export const loginPageImpl: ITestImpl<ILoginPageSpecs> = {
     ThereIsAnEmailError: () => (component) => {
       assert.equal(
         component.root.findByProps({ id: "invalid-email-warning" }).children[0],
-        "Something isn’t right. Please double check your email format"
+        emailwarning
       )
     },
     ThereIsNotAnEmailError: () => (component: renderer.ReactTestRenderer) => {
       const errorField = component.root.findByProps({ id: "invalid-email-warning" })
+      console.log(errorField.children)
       assert.isEmpty(errorField.children)
     }
 

@@ -9,10 +9,14 @@
           "name": "ThePropsIs: {\"foo\":\"bar\"}"
         },
         {
-          "name": "TheStatusIs: [object Object]"
+          "name": "TheStatusIs: [object Object]",
+          "error": true
         }
       ],
-      "error": null,
+      "error": [
+        {},
+        "Error: not yet implemented\n    at file:///Users/adam/Code/kokomoBay/dist/src/ClassicalComponent/react-test-renderer/web.test.mjs:84:13\n    at butThen (file:///Users/adam/Code/kokomoBay/dist/src/ClassicalComponent/react-test-renderer/web.test.mjs:48:12)\n    at Then.butThen (file:///Users/adam/Code/kokomoBay/dist/chunk-OLTCVEI6.mjs:4414:22)\n    at Then.test (file:///Users/adam/Code/kokomoBay/dist/chunk-OLTCVEI6.mjs:4222:28)\n    at Given.give (file:///Users/adam/Code/kokomoBay/dist/chunk-OLTCVEI6.mjs:4170:34)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/chunk-OLTCVEI6.mjs:4116:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/chunk-OLTCVEI6.mjs:4274:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/chunk-OLTCVEI6.mjs:4303:29)\n    at async WebTesteranto.receiveTestResourceConfigScheduled (file:///Users/adam/Code/kokomoBay/dist/chunk-OLTCVEI6.mjs:4487:47)"
+      ],
       "features": [
         "test"
       ]
@@ -29,10 +33,14 @@
           "name": "ThePropsIs: {\"foo\":\"bar\"}"
         },
         {
-          "name": "TheStatusIs: [object Object]"
+          "name": "TheStatusIs: [object Object]",
+          "error": true
         }
       ],
-      "error": null,
+      "error": [
+        {},
+        "Error: not yet implemented\n    at file:///Users/adam/Code/kokomoBay/dist/src/ClassicalComponent/react-test-renderer/web.test.mjs:84:13\n    at butThen (file:///Users/adam/Code/kokomoBay/dist/src/ClassicalComponent/react-test-renderer/web.test.mjs:48:12)\n    at Then.butThen (file:///Users/adam/Code/kokomoBay/dist/chunk-OLTCVEI6.mjs:4414:22)\n    at Then.test (file:///Users/adam/Code/kokomoBay/dist/chunk-OLTCVEI6.mjs:4222:28)\n    at Given.give (file:///Users/adam/Code/kokomoBay/dist/chunk-OLTCVEI6.mjs:4170:34)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/chunk-OLTCVEI6.mjs:4116:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/chunk-OLTCVEI6.mjs:4274:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/chunk-OLTCVEI6.mjs:4303:29)\n    at async WebTesteranto.receiveTestResourceConfigScheduled (file:///Users/adam/Code/kokomoBay/dist/chunk-OLTCVEI6.mjs:4487:47)"
+      ],
       "features": [
         "test"
       ]
@@ -61,10 +69,14 @@
       ],
       "thens": [
         {
-          "name": "TheStatusIs: [object Object]"
+          "name": "TheStatusIs: [object Object]",
+          "error": true
         }
       ],
-      "error": null,
+      "error": [
+        {},
+        "Error: not yet implemented\n    at file:///Users/adam/Code/kokomoBay/dist/src/ClassicalComponent/react-test-renderer/web.test.mjs:84:13\n    at butThen (file:///Users/adam/Code/kokomoBay/dist/src/ClassicalComponent/react-test-renderer/web.test.mjs:48:12)\n    at Then.butThen (file:///Users/adam/Code/kokomoBay/dist/chunk-OLTCVEI6.mjs:4414:22)\n    at Then.test (file:///Users/adam/Code/kokomoBay/dist/chunk-OLTCVEI6.mjs:4222:28)\n    at Given.give (file:///Users/adam/Code/kokomoBay/dist/chunk-OLTCVEI6.mjs:4170:34)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/chunk-OLTCVEI6.mjs:4116:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/chunk-OLTCVEI6.mjs:4274:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/chunk-OLTCVEI6.mjs:4303:29)\n    at async WebTesteranto.receiveTestResourceConfigScheduled (file:///Users/adam/Code/kokomoBay/dist/chunk-OLTCVEI6.mjs:4487:47)"
+      ],
       "features": [
         "test"
       ]
@@ -81,10 +93,14 @@
       ],
       "thens": [
         {
-          "name": "TheStatusIs: [object Object]"
+          "name": "TheStatusIs: [object Object]",
+          "error": true
         }
       ],
-      "error": null,
+      "error": [
+        {},
+        "Error: not yet implemented\n    at file:///Users/adam/Code/kokomoBay/dist/src/ClassicalComponent/react-test-renderer/web.test.mjs:84:13\n    at butThen (file:///Users/adam/Code/kokomoBay/dist/src/ClassicalComponent/react-test-renderer/web.test.mjs:48:12)\n    at Then.butThen (file:///Users/adam/Code/kokomoBay/dist/chunk-OLTCVEI6.mjs:4414:22)\n    at Then.test (file:///Users/adam/Code/kokomoBay/dist/chunk-OLTCVEI6.mjs:4222:28)\n    at Given.give (file:///Users/adam/Code/kokomoBay/dist/chunk-OLTCVEI6.mjs:4170:34)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/chunk-OLTCVEI6.mjs:4116:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/chunk-OLTCVEI6.mjs:4274:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/chunk-OLTCVEI6.mjs:4303:29)\n    at async WebTesteranto.receiveTestResourceConfigScheduled (file:///Users/adam/Code/kokomoBay/dist/chunk-OLTCVEI6.mjs:4487:47)"
+      ],
       "features": [
         "test"
       ]

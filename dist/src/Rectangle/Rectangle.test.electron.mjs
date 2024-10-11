@@ -1,7 +1,7 @@
 import {
   Web_default,
   assert
-} from "../../chunk-ZFPTK2OM.mjs";
+} from "../../chunk-OLTCVEI6.mjs";
 import "../../chunk-XALKSG2U.mjs";
 
 // src/Rectangle.ts

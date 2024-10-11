@@ -2,15 +2,15 @@ import {
   commonGivens,
   features,
   require_lib4 as require_lib
-} from "../chunk-F6TA354F.mjs";
+} from "../chunk-4QFXY3T6.mjs";
 import {
   assert
-} from "../chunk-ZIFLG7BR.mjs";
+} from "../chunk-7RGW2JO4.mjs";
 import {
   Node_default,
   __toESM,
   init_cjs_shim
-} from "../chunk-4YYJXUVQ.mjs";
+} from "../chunk-GZ644S2N.mjs";
 
 // src/MyFirstContract.solidity-precompiled.test.ts
 init_cjs_shim();
@@ -97,11 +97,7 @@ var implementation = {
       });
     },
     Decrement: (asTestUser) => ({ contract, accounts }) => {
-      new Promise((res) => {
-        contract.methods.dec().send({ from: accounts[asTestUser] }).then(function(x) {
-          res(x);
-        });
-      }).then((x) => {
+      return contract.methods.dec().send({ from: accounts[asTestUser] }).on("receipt", function(x) {
         return x;
       });
     }

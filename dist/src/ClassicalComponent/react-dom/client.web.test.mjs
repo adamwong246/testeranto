@@ -1,7 +1,7 @@
 import {
   ClassicalComponent,
   ClassicalComponentSpec
-} from "../../../chunk-RCXHALEU.mjs";
+} from "../../../chunk-6BDE2DTQ.mjs";
 import {
   require_scheduler
 } from "../../../chunk-7AHWTSRZ.mjs";
@@ -11,7 +11,7 @@ import {
 import {
   Web_default,
   assert
-} from "../../../chunk-ZFPTK2OM.mjs";
+} from "../../../chunk-OLTCVEI6.mjs";
 import {
   __commonJS,
   __toESM
@@ -21181,7 +21181,7 @@ var web_default = (testInput, testSpecifications, testImplementations) => {
         },
         beforeEach: async ({ htmlElement }, initializer, testResource, artificer, initialValues) => {
           return new Promise((resolve, rej) => {
-            import_client.default.createRoot(htmlElement).render((0, import_react.createElement)(TesterantoComponent, Object.assign(Object.assign({}, initializer(initialValues)), { done: (reactElement) => {
+            import_client.default.createRoot(htmlElement).render((0, import_react.createElement)(TesterantoComponent, Object.assign(Object.assign({}, initializer.props), { done: (reactElement) => {
               resolve({
                 htmlElement,
                 reactElement

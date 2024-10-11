@@ -1,8 +1,10 @@
 import {
   LoginPageSpecs,
   LoginPage_default,
+  actions,
+  emailwarning,
   require_scheduler
-} from "../../../chunk-6JXA32GL.mjs";
+} from "../../../chunk-ICSFHNLC.mjs";
 import {
   require_react_test_renderer
 } from "../../../chunk-SDPG7AIW.mjs";
@@ -13,7 +15,7 @@ import {
 import {
   Web_default,
   assert
-} from "../../../chunk-ZFPTK2OM.mjs";
+} from "../../../chunk-OLTCVEI6.mjs";
 import {
   __commonJS,
   __toESM
@@ -574,10 +576,10 @@ var require_react_test_renderer_development = __commonJS({
     if (true) {
       (function() {
         "use strict";
-        var React3 = require_react();
+        var React2 = require_react();
         var Scheduler = require_unstable_mock();
         var Scheduler$1 = require_scheduler();
-        var ReactSharedInternals = React3.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+        var ReactSharedInternals = React2.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
         function warn(format) {
           {
             {
@@ -3614,7 +3616,7 @@ var require_react_test_renderer_development = __commonJS({
           }
         }
         var fakeInternalInstance = {};
-        var emptyRefsObject = new React3.Component().refs;
+        var emptyRefsObject = new React2.Component().refs;
         var didWarnAboutStateAssignmentForComponent;
         var didWarnAboutUninitializedState;
         var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -13136,7 +13138,7 @@ var require_react_test_renderer_development = __commonJS({
             reconcilerVersion: ReactVersion
           });
         }
-        var act3 = React3.unstable_act;
+        var act3 = React2.unstable_act;
         var defaultTestOptions = {
           createNodeMock: function() {
             return null;
@@ -13599,7 +13601,12 @@ var require_react_test_renderer2 = __commonJS({
 var import_react = __toESM(require_react(), 1);
 var import_react_test_renderer = __toESM(require_react_test_renderer(), 1);
 var testInterface = {
+  butThen: async function(s, thenCB, tr) {
+    console.log("butThen", thenCB.toString());
+    return thenCB(s);
+  },
   beforeEach: function(CComponent, props) {
+    console.log("ASDASDx");
     let component;
     (0, import_react_test_renderer.act)(() => {
       component = import_react_test_renderer.default.create(import_react.default.createElement(CComponent, props, []));
@@ -13618,8 +13625,26 @@ var web_default = (testImplementations, testSpecifications, testInput, testInter
 };
 
 // src/LoginPage/react-test-renderer/test.tsx
-var import_react2 = __toESM(require_react(), 1);
 var import_react_test_renderer2 = __toESM(require_react_test_renderer2(), 1);
+var LoginPageReactTestRendererTestInterface = {
+  butThen: async function(s, thenCB, tr) {
+    return thenCB(s);
+  },
+  beforeEach: async function(CComponent, props) {
+    let component;
+    let elem;
+    await (0, import_react_test_renderer2.act)(async () => {
+      elem = CComponent();
+      component = import_react_test_renderer2.default.create(elem);
+    });
+    await component.root.props.store.dispatch(actions.reset());
+    return component;
+  },
+  andWhen: async function(renderer3, whenCB) {
+    await (0, import_react_test_renderer2.act)(() => whenCB(renderer3));
+    return renderer3;
+  }
+};
 var loginPageImpl = {
   suites: {
     Default: "a default suite"
@@ -13658,11 +13683,12 @@ var loginPageImpl = {
     ThereIsAnEmailError: () => (component) => {
       assert.equal(
         component.root.findByProps({ id: "invalid-email-warning" }).children[0],
-        "Something isn\u2019t right. Please double check your email format"
+        emailwarning
       );
     },
     ThereIsNotAnEmailError: () => (component) => {
       const errorField = component.root.findByProps({ id: "invalid-email-warning" });
+      console.log(errorField.children);
       assert.isEmpty(errorField.children);
     }
   },
@@ -13677,8 +13703,8 @@ var loginPageImpl = {
 var web_test_default = web_default(
   loginPageImpl,
   LoginPageSpecs,
-  LoginPage_default
-  // LoginPageReactTestRendererTestInterface
+  LoginPage_default,
+  LoginPageReactTestRendererTestInterface
 );
 export {
   web_test_default as default

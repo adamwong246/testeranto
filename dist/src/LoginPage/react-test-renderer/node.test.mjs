@@ -2,24 +2,25 @@ import {
   LoginPageSpecs,
   LoginPage_default,
   actions,
+  emailwarning,
   require_scheduler
-} from "../../../chunk-GXPZTTDK.mjs";
-import "../../../chunk-6EQF54EJ.mjs";
+} from "../../../chunk-DFJLMAZO.mjs";
+import "../../../chunk-NQSVWZEQ.mjs";
 import {
   node_default
-} from "../../../chunk-BUEWGO3J.mjs";
-import "../../../chunk-7SV3FQXP.mjs";
-import "../../../chunk-GHI2MTJQ.mjs";
-import "../../../chunk-UANIJ4EA.mjs";
+} from "../../../chunk-BQQMFFK7.mjs";
+import "../../../chunk-PBSEALKD.mjs";
+import "../../../chunk-3LLG4FU5.mjs";
+import "../../../chunk-5YXDQYSZ.mjs";
 import {
   assert
-} from "../../../chunk-ZIFLG7BR.mjs";
+} from "../../../chunk-7RGW2JO4.mjs";
 import {
   __commonJS,
   __require,
   __toESM,
   init_cjs_shim
-} from "../../../chunk-4YYJXUVQ.mjs";
+} from "../../../chunk-GZ644S2N.mjs";
 
 // node_modules/scheduler/cjs/scheduler-unstable_mock.production.min.js
 var require_scheduler_unstable_mock_production_min = __commonJS({
@@ -5495,10 +5496,10 @@ var require_react_test_renderer_development = __commonJS({
     if (process.env.NODE_ENV !== "production") {
       (function() {
         "use strict";
-        var React2 = __require("react");
+        var React = __require("react");
         var Scheduler = require_unstable_mock();
         var Scheduler$1 = require_scheduler();
-        var ReactSharedInternals = React2.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+        var ReactSharedInternals = React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
         function warn(format) {
           {
             {
@@ -8535,7 +8536,7 @@ var require_react_test_renderer_development = __commonJS({
           }
         }
         var fakeInternalInstance = {};
-        var emptyRefsObject = new React2.Component().refs;
+        var emptyRefsObject = new React.Component().refs;
         var didWarnAboutStateAssignmentForComponent;
         var didWarnAboutUninitializedState;
         var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -18057,7 +18058,7 @@ var require_react_test_renderer_development = __commonJS({
             reconcilerVersion: ReactVersion
           });
         }
-        var act2 = React2.unstable_act;
+        var act2 = React.unstable_act;
         var defaultTestOptions = {
           createNodeMock: function() {
             return null;
@@ -18523,26 +18524,24 @@ init_cjs_shim();
 // src/LoginPage/react-test-renderer/test.tsx
 init_cjs_shim();
 var import_react_test_renderer = __toESM(require_react_test_renderer(), 1);
-import React from "react";
-var LoginPageReactTestRendererTestInterface = (testInput) => {
-  return {
-    beforeEach: function(CComponent, props) {
-      let component;
-      (0, import_react_test_renderer.act)(() => {
-        const t = testInput(props);
-        t.props.store.dispatch(actions.reset());
-        component = import_react_test_renderer.default.create(
-          React.createElement(testInput, props, [])
-        );
-      });
-      return component;
-    },
-    andWhen: async function(renderer2, whenCB) {
-      await (0, import_react_test_renderer.act)(() => whenCB(renderer2));
-      renderer2.update(React.createElement(testInput, {}, []));
-      return renderer2;
-    }
-  };
+var LoginPageReactTestRendererTestInterface = {
+  butThen: async function(s, thenCB, tr) {
+    return thenCB(s);
+  },
+  beforeEach: async function(CComponent, props) {
+    let component;
+    let elem;
+    await (0, import_react_test_renderer.act)(async () => {
+      elem = CComponent();
+      component = import_react_test_renderer.default.create(elem);
+    });
+    await component.root.props.store.dispatch(actions.reset());
+    return component;
+  },
+  andWhen: async function(renderer2, whenCB) {
+    await (0, import_react_test_renderer.act)(() => whenCB(renderer2));
+    return renderer2;
+  }
 };
 var loginPageImpl = {
   suites: {
@@ -18582,11 +18581,12 @@ var loginPageImpl = {
     ThereIsAnEmailError: () => (component) => {
       assert.equal(
         component.root.findByProps({ id: "invalid-email-warning" }).children[0],
-        "Something isn\u2019t right. Please double check your email format"
+        emailwarning
       );
     },
     ThereIsNotAnEmailError: () => (component) => {
       const errorField = component.root.findByProps({ id: "invalid-email-warning" });
+      console.log(errorField.children);
       assert.isEmpty(errorField.children);
     }
   },

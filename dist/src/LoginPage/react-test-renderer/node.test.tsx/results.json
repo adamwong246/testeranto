@@ -10,14 +10,10 @@
       ],
       "thens": [
         {
-          "name": "TheEmailIs: adam@email.com",
-          "error": true
+          "name": "TheEmailIs: adam@email.com"
         }
       ],
-      "error": [
-        {},
-        "TypeError: Cannot read properties of undefined (reading 'findByProps')\n    at Then.thenCB (file:///Users/adam/Code/kokomoBay/dist/src/LoginPage/react-test-renderer/node.test.mjs:18566:24)\n    at Then.test (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:198:22)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Given.give (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:146:19)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:92:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:250:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:279:29)\n    at async NodeTesteranto.receiveTestResourceConfigScheduled (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:501:47)"
-      ],
+      "error": null,
       "features": []
     },
     {
@@ -32,8 +28,7 @@
       ],
       "thens": [
         {
-          "name": "TheEmailIsNot: wade@rpc",
-          "error": true
+          "name": "TheEmailIsNot: wade@rpc"
         },
         {
           "name": "TheEmailIs: adam@email.com"
@@ -45,10 +40,7 @@
           "name": "ThePasswordIsNot: idk"
         }
       ],
-      "error": [
-        {},
-        "TypeError: Cannot read properties of undefined (reading 'findByProps')\n    at Then.thenCB (file:///Users/adam/Code/kokomoBay/dist/src/LoginPage/react-test-renderer/node.test.mjs:18571:22)\n    at Then.test (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:198:22)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Given.give (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:146:19)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:92:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:250:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:279:29)\n    at async NodeTesteranto.receiveTestResourceConfigScheduled (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:501:47)"
-      ],
+      "error": null,
       "features": []
     },
     {
@@ -60,14 +52,10 @@
       ],
       "thens": [
         {
-          "name": "ThereIsNotAnEmailError: undefined",
-          "error": true
+          "name": "ThereIsNotAnEmailError: undefined"
         }
       ],
-      "error": [
-        {},
-        "TypeError: Cannot read properties of undefined (reading 'findByProps')\n    at Then.thenCB (file:///Users/adam/Code/kokomoBay/dist/src/LoginPage/react-test-renderer/node.test.mjs:18589:41)\n    at Then.test (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:198:22)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Given.give (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:146:19)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:92:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:250:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:279:29)\n    at async NodeTesteranto.receiveTestResourceConfigScheduled (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:501:47)"
-      ],
+      "error": null,
       "features": []
     },
     {
@@ -82,14 +70,10 @@
       ],
       "thens": [
         {
-          "name": "ThereIsAnEmailError: undefined",
-          "error": true
+          "name": "ThereIsAnEmailError: undefined"
         }
       ],
-      "error": [
-        {},
-        "TypeError: Cannot read properties of undefined (reading 'findByProps')\n    at Then.thenCB (file:///Users/adam/Code/kokomoBay/dist/src/LoginPage/react-test-renderer/node.test.mjs:18584:24)\n    at Then.test (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:198:22)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Given.give (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:146:19)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:92:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:250:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:279:29)\n    at async NodeTesteranto.receiveTestResourceConfigScheduled (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:501:47)"
-      ],
+      "error": null,
       "features": []
     },
     {
@@ -99,19 +83,15 @@
           "name": "TheEmailIsSetTo: adam@mail.com"
         },
         {
-          "name": "ThePasswordIsSetTo: foo"
+          "name": "ThePasswordIsSetTo: foso"
         }
       ],
       "thens": [
         {
-          "name": "ThereIsNotAnEmailError: undefined",
-          "error": true
+          "name": "ThereIsNotAnEmailError: undefined"
         }
       ],
-      "error": [
-        {},
-        "TypeError: Cannot read properties of undefined (reading 'findByProps')\n    at Then.thenCB (file:///Users/adam/Code/kokomoBay/dist/src/LoginPage/react-test-renderer/node.test.mjs:18589:41)\n    at Then.test (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:198:22)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Given.give (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:146:19)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:92:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:250:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:279:29)\n    at async NodeTesteranto.receiveTestResourceConfigScheduled (file:///Users/adam/Code/kokomoBay/dist/chunk-4YYJXUVQ.mjs:501:47)"
-      ],
+      "error": null,
       "features": []
     }
   ],

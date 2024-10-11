@@ -48,13 +48,7 @@ export const ReduxToolkitTesteranto = <
 ) => {
 
   const testInterface: ITestInterface<
-    Store<IStoreShape, AnyAction>,
-    IStoreShape,
-    Input<IStoreShape, ISelectionShape>,
-    ThenShape,
-    Input<IStoreShape, ISelectionShape>,
-    (x) => PreloadedState<IStoreShape>,
-    () => (x) => IStoreState
+    ITestShape
   > = {
     assertThis: (t) => {
       t[0](t[1], t[2], t[3]);

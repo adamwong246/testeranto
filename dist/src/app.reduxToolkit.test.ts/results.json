@@ -13,7 +13,10 @@
           "name": "TheEmailIs: adam@email.com"
         }
       ],
-      "error": null,
+      "error": [
+        {},
+        "TypeError: t[0] is not a function\n    at assertThis (file:///Users/adam/Code/kokomoBay/dist/src/app.reduxToolkit.test.mjs:28:11)\n    at assertThat (file:///Users/adam/Code/kokomoBay/dist/chunk-GZ644S2N.mjs:364:9)\n    at Given.give (file:///Users/adam/Code/kokomoBay/dist/chunk-GZ644S2N.mjs:147:9)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/chunk-GZ644S2N.mjs:92:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/chunk-GZ644S2N.mjs:250:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/chunk-GZ644S2N.mjs:279:29)\n    at async NodeTesteranto.receiveTestResourceConfigScheduled (file:///Users/adam/Code/kokomoBay/dist/chunk-GZ644S2N.mjs:501:47)"
+      ],
       "features": [
         "hello"
       ]
@@ -29,7 +32,10 @@
           "name": "TheEmailIs: bob@mail.com"
         }
       ],
-      "error": null,
+      "error": [
+        {},
+        "TypeError: t[0] is not a function\n    at assertThis (file:///Users/adam/Code/kokomoBay/dist/src/app.reduxToolkit.test.mjs:28:11)\n    at assertThat (file:///Users/adam/Code/kokomoBay/dist/chunk-GZ644S2N.mjs:364:9)\n    at Given.give (file:///Users/adam/Code/kokomoBay/dist/chunk-GZ644S2N.mjs:147:9)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/chunk-GZ644S2N.mjs:92:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/chunk-GZ644S2N.mjs:250:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/chunk-GZ644S2N.mjs:279:29)\n    at async NodeTesteranto.receiveTestResourceConfigScheduled (file:///Users/adam/Code/kokomoBay/dist/chunk-GZ644S2N.mjs:501:47)"
+      ],
       "features": [
         "hello"
       ]
@@ -49,7 +55,10 @@
           "name": "TheEmailIs: aloha"
         }
       ],
-      "error": null,
+      "error": [
+        {},
+        "TypeError: t[0] is not a function\n    at assertThis (file:///Users/adam/Code/kokomoBay/dist/src/app.reduxToolkit.test.mjs:28:11)\n    at assertThat (file:///Users/adam/Code/kokomoBay/dist/chunk-GZ644S2N.mjs:364:9)\n    at Given.give (file:///Users/adam/Code/kokomoBay/dist/chunk-GZ644S2N.mjs:147:9)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/chunk-GZ644S2N.mjs:92:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/chunk-GZ644S2N.mjs:250:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/chunk-GZ644S2N.mjs:279:29)\n    at async NodeTesteranto.receiveTestResourceConfigScheduled (file:///Users/adam/Code/kokomoBay/dist/chunk-GZ644S2N.mjs:501:47)"
+      ],
       "features": [
         "hello"
       ]
@@ -62,7 +71,10 @@
           "name": "TheEmailIs: "
         }
       ],
-      "error": null,
+      "error": [
+        {},
+        "TypeError: t[0] is not a function\n    at assertThis (file:///Users/adam/Code/kokomoBay/dist/src/app.reduxToolkit.test.mjs:28:11)\n    at assertThat (file:///Users/adam/Code/kokomoBay/dist/chunk-GZ644S2N.mjs:364:9)\n    at Given.give (file:///Users/adam/Code/kokomoBay/dist/chunk-GZ644S2N.mjs:147:9)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/chunk-GZ644S2N.mjs:92:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/chunk-GZ644S2N.mjs:250:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/chunk-GZ644S2N.mjs:279:29)\n    at async NodeTesteranto.receiveTestResourceConfigScheduled (file:///Users/adam/Code/kokomoBay/dist/chunk-GZ644S2N.mjs:501:47)"
+      ],
       "features": [
         "aloha",
         "hello"
@@ -80,7 +92,10 @@
           "name": "TheEmailIs: hey there"
         }
       ],
-      "error": null,
+      "error": [
+        {},
+        "TypeError: t[0] is not a function\n    at assertThis (file:///Users/adam/Code/kokomoBay/dist/src/app.reduxToolkit.test.mjs:28:11)\n    at assertThat (file:///Users/adam/Code/kokomoBay/dist/chunk-GZ644S2N.mjs:364:9)\n    at Given.give (file:///Users/adam/Code/kokomoBay/dist/chunk-GZ644S2N.mjs:147:9)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/chunk-GZ644S2N.mjs:92:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/chunk-GZ644S2N.mjs:250:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/chunk-GZ644S2N.mjs:279:29)\n    at async NodeTesteranto.receiveTestResourceConfigScheduled (file:///Users/adam/Code/kokomoBay/dist/chunk-GZ644S2N.mjs:501:47)"
+      ],
       "features": [
         "aloha",
         "hello"

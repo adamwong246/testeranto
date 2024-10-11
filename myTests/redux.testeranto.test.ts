@@ -46,15 +46,7 @@ export const ReduxTesteranto = <
     }
   }>,
 ) => {
-  const testInterface: ITestInterface<
-    Store<IStoreShape, AnyAction>,
-    IStoreShape,
-    Reducer<IStoreShape, AnyAction>,
-    ThenShape,
-    Reducer<IStoreShape, AnyAction>,
-    (x) => PreloadedState<IStoreShape>,
-    WhenShape
-  > = {
+  const testInterface: ITestInterface<ITestShape> = {
     beforeEach: function (
       subject,
       initializer,

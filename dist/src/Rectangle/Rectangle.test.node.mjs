@@ -1,10 +1,10 @@
 import {
   assert
-} from "../../chunk-ZIFLG7BR.mjs";
+} from "../../chunk-7RGW2JO4.mjs";
 import {
   Node_default,
   init_cjs_shim
-} from "../../chunk-4YYJXUVQ.mjs";
+} from "../../chunk-GZ644S2N.mjs";
 
 // src/Rectangle/Rectangle.test.node.ts
 init_cjs_shim();

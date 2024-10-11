@@ -7,9 +7,7 @@ import {
 } from "../test";
 import implementations, { LoginPageReactTestInterface } from "./test";
 
-export default test<
-  ILoginPageSpecs
->(
+export default test(
   implementations,
   LoginPageSpecs,
   LoginPage,

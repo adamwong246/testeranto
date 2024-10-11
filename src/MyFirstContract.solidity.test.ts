@@ -26,12 +26,10 @@ export const MyFirstContractTesteranto = SolidityTesteranto<
           })
       },
       Decrement: (asTestUser) => ({ contract, accounts }) => {
-        return new Promise((res) => {
-          contract.methods.dec().send({ from: accounts[asTestUser] })
-            .then(function (x) {
-              res(x)
-            })
-        });
+        return contract.methods.dec().send({ from: accounts[asTestUser] })
+          .on('receipt', function (x) {
+            return (x)
+          })
       },
     },
     thens: {

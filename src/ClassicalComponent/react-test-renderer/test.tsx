@@ -19,16 +19,12 @@ export const testImplementation: BaseIImple<
   },
   whens: {
     IClickTheButton: (x) => (component) => {
-      // console.log("IClickTheButton", component, x);
-      // throw new Error('not yet implemented');
-
       component.root.findByType("button").props.onClick();
     }
 
   },
   thens: {
     ThePropsIs: (expectation) => (component) => {
-      // throw new Error('not yet implemented');
       console.log("ThePropsIs", (component.toJSON() as { children: object[] }).children[1]);
       return assert.deepEqual((component.toJSON() as { children: object[] }).children[1], {
         type: 'pre',
@@ -38,7 +34,7 @@ export const testImplementation: BaseIImple<
     },
 
     TheStatusIs: (expectation) => (component) => {
-      // throw new Error('not yet implemented');
+      throw new Error('not yet implemented');
       // console.log(component.toJSON());
       // return assert.deepEqual((component.toJSON() as { children: object[] }).children[3], {
       //   type: 'pre',

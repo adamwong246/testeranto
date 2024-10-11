@@ -33,5 +33,3 @@ Suite:,0,Testing a very simple smart contract ephemerally
  When:,Decrement: 1
  When:,Decrement: 1
  Then:,Get: [object Object]
-AssertionError: expected 4 to equal +0
-

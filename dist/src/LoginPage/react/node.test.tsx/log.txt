@@ -24,5 +24,5 @@ Suite:,0,Testing the LoginPage as react
 
  Given: default
  When:,TheEmailIsSetTo: adam@mail.com
- When:,ThePasswordIsSetTo: foo
+ When:,ThePasswordIsSetTo: foso
  Then:,ThereIsNotAnEmailError: undefined

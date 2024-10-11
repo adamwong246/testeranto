@@ -20,6 +20,8 @@ export type ILoginPageSelection = {
   disableSubmit: boolean;
 };
 
+export const emailwarning = "Something isn’t right. Please double check your email format";
+
 export function LoginPage(): React.JSX.Element {
   const selection = useSelector(selector);
 
@@ -31,7 +33,7 @@ export function LoginPage(): React.JSX.Element {
       <input type="email" value={selection.email} onChange={(e) => store.dispatch(actions.setEmail(e.target.value))} />
 
       <p id="invalid-email-warning" className="warning">
-        {selection.error === 'invalidEmail' && "Something isn’t right. Please double check your email format"}
+        {selection.error === 'invalidEmail' && emailwarning}
       </p>
 
       <br />
@@ -45,7 +47,6 @@ export function LoginPage(): React.JSX.Element {
       <br />
 
       <button disabled={selection.disableSubmit} onClick={(event) => {
-        console.log("mark30")
         store.dispatch(actions.signIn());
 
       }} >Sign In</button>

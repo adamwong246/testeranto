@@ -1,11 +1,12 @@
 import { CElement } from "react";
 
-import { ITestImpl } from "testeranto/src/SubPackages/react/jsx/index";
+
 
 import { ILoginPageSpecs } from "../test";
 import { actions } from "../index";
 import { assert } from "chai";
-import { IStore, ISelection } from "testeranto/src/SubPackages/react/jsx/index";
+import { IStore, ISelection } from "testeranto/dist/types/SubPackages/react/jsx/index";
+import { ITestImplementation } from "testeranto/src/Types";
 
 export const LoginPageReactTestInterface = (testInput) => {
   return {
@@ -22,16 +23,16 @@ export const LoginPageReactTestInterface = (testInput) => {
       });
     },
     andWhen: function (s: IStore, whenCB): Promise<ISelection> {
-      // console.log("mark18")
-      // debugger
       return whenCB(s);
     },
   }
 }
 
-const implementations: ITestImpl<
-  ILoginPageSpecs
-> = {
+type IImpl = ITestImplementation<
+  ILoginPageSpecs, object
+>
+
+const implementations: IImpl = {
   suites: {
     Default: "a default suite",
   },
@@ -42,15 +43,15 @@ const implementations: ITestImpl<
   },
 
   whens: {
-    TheLoginIsSubmitted: () => (reactElem: CElement<any, any>) => {
+    TheLoginIsSubmitted: () => (reactElem) => {
       reactElem.props.store.dispatch(actions.signIn());
     },
-    TheEmailIsSetTo: (email) => (reactElem: CElement<any, any>) => {
-      reactElem.props.store.dispatch(actions.setEmail(email));
+    TheEmailIsSetTo: (email) => (reactElem) => {
+      reactElem.props.store.dispatch(actions.setEmail(email as never));
     },
 
-    ThePasswordIsSetTo: (password) => (reactElem: CElement<any, any>) => {
-      reactElem.props.store.dispatch(actions.setPassword(password));
+    ThePasswordIsSetTo: (password) => (reactElem) => {
+      reactElem.props.store.dispatch(actions.setPassword(password as never));
     }
   },
 

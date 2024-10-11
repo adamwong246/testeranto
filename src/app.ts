@@ -16,7 +16,7 @@ const initialState: IStoreState = {
 export const loginApp = createSlice<
   IStoreState,
   {
-    reset: (s: IStoreState) => void;
+    reset: (s: IStoreState) => void | IStoreState; //| WritableDraft<IStoreState>,
     setPassword: (s: IStoreState, b) => void;
     setEmail: (s: IStoreState, b) => void;
     signIn: (s: IStoreState) => void;
@@ -26,7 +26,6 @@ export const loginApp = createSlice<
   initialState,
   reducers: {
     reset: (state) => {
-
       state.password = initialState.password;
       state.email = initialState.email;
       state.error = initialState.error;
@@ -56,7 +55,6 @@ const validateEmail = (email) => {
 };
 
 const checkForErrors = (storeState: IStoreState): ILoginPageError => {
-  console.log("mark32")
   if (!validateEmail(storeState.email)) {
     return "invalidEmail";
   }

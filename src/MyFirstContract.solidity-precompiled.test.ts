@@ -92,14 +92,10 @@ const implementation: ITestImplementation<ISpec, {
         })
     },
     Decrement: (asTestUser) => ({ contract, accounts }) => {
-      new Promise((res) => {
-        contract.methods.dec().send({ from: accounts[asTestUser] })
-          .then(function (x) {
-            res(x)
-          })
-      }).then((x) => {
-        return (x)
-      })
+      return contract.methods.dec().send({ from: accounts[asTestUser] })
+        .on('receipt', function (x) {
+          return (x)
+        })
     },
   },
   thens: {
