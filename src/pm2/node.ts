@@ -6,8 +6,8 @@ import { IBaseConfig } from "../Types";
 export default (
   args: string,
   inputFilePath: string,
-  watch: string,
-  config: IBaseConfig
+  config: IBaseConfig,
+  watch: string
 ): pm2.StartOptions => {
 
   return {

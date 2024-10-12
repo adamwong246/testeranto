@@ -13,59 +13,17 @@ class NodeTesteranto extends core_js_1.default {
         const testResourceArg = process.argv[2] || `{}`;
         try {
             const partialTestResource = JSON.parse(testResourceArg);
-            if (partialTestResource.scheduled) {
-                console.log("test is scheduled", partialTestResource);
-                console.log("requesting test resources via IPC ...", this.testResourceRequirement);
-                /* @ts-ignore:next-line */
-                process.send({
-                    type: "testeranto:hola",
-                    data: {
-                        requirement: Object.assign(Object.assign({}, this.testResourceRequirement), { name: partialTestResource.name })
-                    },
-                });
-                console.log("awaiting test resources via IPC...");
-                process.on("message", async (packet) => {
-                    const resourcesFromPm2 = packet.data.testResourceConfiguration;
-                    const secondTestResource = Object.assign(Object.assign({ fs: "." }, JSON.parse(JSON.stringify(partialTestResource))), JSON.parse(JSON.stringify(resourcesFromPm2)));
-                    this.receiveTestResourceConfigScheduled(t, secondTestResource);
-                });
-            }
-            else {
-                console.log("receiveTestResourceConfigUnscheduled", this.receiveTestResourceConfigUnscheduled);
-                this.receiveTestResourceConfigUnscheduled(t, partialTestResource);
-            }
+            this.receiveTestResourceConfig(t, partialTestResource);
         }
         catch (e) {
             console.error(e);
             process.exit(-1);
         }
     }
-    async receiveTestResourceConfigUnscheduled(t, partialTestResource) {
+    async receiveTestResourceConfig(t, partialTestResource) {
         const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(partialTestResource);
         Promise.all([...artifacts, logPromise]).then(async () => {
             process.exit(await failed ? 1 : 0);
-        });
-    }
-    async receiveTestResourceConfigScheduled(t, partialTestResource) {
-        const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(partialTestResource);
-        /* @ts-ignore:next-line */
-        process.send({
-            type: "testeranto:adios",
-            data: {
-                failed,
-                testResourceConfiguration: t.test.testResourceConfiguration,
-                results: t.toObj(),
-            },
-        }, async (err) => {
-            if (!err) {
-                Promise.all([...artifacts, logPromise]).then(async () => {
-                    process.exit(await failed ? 1 : 0);
-                });
-            }
-            else {
-                console.error(err);
-                process.exit(1);
-            }
         });
     }
 }

@@ -159,9 +159,9 @@
   ],
   "scripts": {
     "doit": "rm -rf node_modules && yarn install && yarn build",
-    "build": "sh prebuild.sh; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; sh postBuild.sh",
+    "build": "sh prebuild.sh; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; sh postBuild.sh; cp -r src/chromeExtension dist",
     "commit": "yarn build; git add --all && git commit -m 'stash'",
-    "dev": "tsc -p tsconfig.module.json --watch & tsc -p tsconfig.common.json --watch & tsc -p tsconfig.types.json --watch",
+    "dev": "tsc -p tsconfig.module.json --watch & tsc -p tsconfig.common.json --watch & tsc -p tsconfig.types.json --watch; cp -r src/chromeExtension dist",
     "build-module": "tsc -p tsconfig.module.json",
     "build-common": "tsc -p tsconfig.common.json",
     "build-types": "tsc -p tsconfig.types.json"
@@ -213,6 +213,7 @@
     "react-bootstrap": "^2.7.0",
     "react-sigma": "^1.2.35",
     "react-test-renderer": "18.2.0",
+    "selenium-webdriver": "^4.25.0",
     "ws": "^8.16.0"
   }
 }

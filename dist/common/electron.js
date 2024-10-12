@@ -9,8 +9,9 @@ const url_1 = __importDefault(require("url"));
 let win;
 function createWindow() {
     win = new electron_1.BrowserWindow({
+        show: false,
         webPreferences: {
-            offscreen: true,
+            // offscreen: true,
             devTools: true,
             nodeIntegration: true,
             nodeIntegrationInWorker: true,
@@ -20,7 +21,6 @@ function createWindow() {
         },
         width: 800,
         height: 600,
-        show: true,
     });
     const u = url_1.default.format({
         pathname: path_1.default.join(process.cwd(), process.argv[2]),

@@ -4,8 +4,9 @@ import url from "url";
 let win;
 function createWindow() {
     win = new BrowserWindow({
+        show: false,
         webPreferences: {
-            offscreen: true,
+            // offscreen: true,
             devTools: true,
             nodeIntegration: true,
             nodeIntegrationInWorker: true,
@@ -15,7 +16,6 @@ function createWindow() {
         },
         width: 800,
         height: 600,
-        show: true,
     });
     const u = url.format({
         pathname: path.join(process.cwd(), process.argv[2]),

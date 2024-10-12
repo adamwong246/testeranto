@@ -325,35 +325,11 @@ export class ITProject {
                       )}'`;
 
                       if (runtime === "electron") {
-                        const fileAsList = inputFilePath.split("/");
-                        const fileListHead = fileAsList.slice(0, -1);
-                        const fname = fileAsList[fileAsList.length - 1];
-                        const fnameOnly = fname.split(".").slice(0, -1).join(".");
-                        const htmlFile = [config.outdir, ...fileListHead, `${fnameOnly}.html`].join("/");
-                        const jsFile = path.resolve(htmlFile.split(".html")[0] + ".mjs")
-                        console.log("watching", jsFile);
-
-                        pm2.start(
-                          {
-
-                            script: `yarn electron node_modules/testeranto/dist/common/electron.js ${htmlFile} '${JSON.stringify(
-                              {
-                                scheduled: true,
-                                name: inputFilePath,
-                                ports: [],
-                                fs:
-                                  path.resolve(
-                                    process.cwd(),
-                                    config.outdir,
-                                    inputFilePath
-                                  ),
-                              }
-                            )}'`,
-                            name: inputFilePath,
-                            autorestart: false,
-                            args: partialTestResourceByCommandLineArg,
-                            watch: [jsFile],
-                          },
+                        pm2.start(electron_pm2_StartOptions(
+                          partialTestResourceByCommandLineArg,
+                          inputFilePath,
+                          config
+                        ),
                           (err, proc) => {
                             if (err) {
                               console.error(err);
@@ -363,39 +339,12 @@ export class ITProject {
                         );
 
                       } else if (runtime === "chromium") {
-                        const fileAsList = inputFilePath.split("/");
-                        const fileListHead = fileAsList.slice(0, -1);
-                        const fname = fileAsList[fileAsList.length - 1];
-                        const fnameOnly = fname.split(".").slice(0, -1).join(".");
-                        const htmlFile = [config.outdir, ...fileListHead, `${fnameOnly}.html`].join("/");
-                        const jsFile = path.resolve(htmlFile.split(".html")[0] + ".mjs")
-                        console.log("watching", jsFile);
-
-                        const htmlFileAndQueryParams = `file://${path.resolve(watch)}\?requesting='${encodeURIComponent(JSON.stringify(
-                          {
-                            scheduled: true,
-                            name: inputFilePath,
-                            ports: [],
-                            fs:
-                              path.resolve(
-                                process.cwd(),
-                                config.outdir,
-                                "web",
-                                inputFilePath,
-                              ),
-                          }
-                        ))}`;
-
-                        const x = {
-                          script: `chromium --allow-file-access-from-files --allow-file-access --allow-cross-origin-auth-prompt ${htmlFileAndQueryParams}' --load-extension=./node_modules/testeranto/dist/chromeExtension`,
-                          name: inputFilePath,
-                          autorestart: false,
-                          args: partialTestResourceByCommandLineArg,
-                          watch: [jsFile],
-                        }
-
                         pm2.start(
-                          x,
+                          chromium_pm2_StartOptions(
+                            partialTestResourceByCommandLineArg,
+                            inputFilePath,
+                            config,
+                          ),
                           (err, proc) => {
                             if (err) {
                               console.error(err);
@@ -408,27 +357,11 @@ export class ITProject {
                         const resolvedPath = path.resolve(script);
 
                         console.log("watching", resolvedPath);
-                        pm2.start({
-                          // interpreter: 'node@20.4.0',
-                          name: inputFilePath,
-                          script: `node ${config.debugger ? "--inspect-brk" : ""} ${resolvedPath} '${JSON.stringify(
-                            {
-                              scheduled: true,
-                              name: inputFilePath,
-                              ports: [],
-                              fs:
-                                path.resolve(
-                                  process.cwd(),
-                                  config.outdir,
-                                  inputFilePath
-                                ),
-                            }
-                          )}'`,
-                          autorestart: false,
-                          watch: [resolvedPath],
-                          args: partialTestResourceByCommandLineArg
-
-                        }, (err, proc) => {
+                        pm2.start(electron_pm2_StartOptions(
+                          partialTestResourceByCommandLineArg,
+                          inputFilePath,
+                          config,
+                        ), (err, proc) => {
                           if (err) {
                             console.error(err);
                             return pm2.disconnect();

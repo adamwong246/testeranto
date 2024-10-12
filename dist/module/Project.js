@@ -6,6 +6,11 @@ import pm2 from "pm2";
 import readline from 'readline';
 import { WebSocketServer } from 'ws';
 import { glob } from "glob";
+import esbuildNodeConfiger from "./esbuildConfigs/node.js";
+import esbuildWebConfiger from "./esbuildConfigs/web.js";
+import webHtmlFrame from "./web.html.js";
+import electron_pm2_StartOptions from "./pm2/electron.js";
+import chromium_pm2_StartOptions from "./pm2/chromium.js";
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
     process.stdin.setRawMode(true);
@@ -17,7 +22,7 @@ const getRunnables = (tests, payload = [new Set(), new Set()]) => {
         if (cv[1] === "node") {
             pt[0].add(cv[0]);
         }
-        else if (cv[1] === "web") {
+        else if (cv[1] === "chromium" || cv[1] === "electron") {
             pt[1].add(cv[0]);
         }
         if (cv[2].length) {
@@ -100,10 +105,7 @@ export class ITProject {
         };
         this.clearScreen = config.clearScreen;
         this.devMode = config.devMode;
-        // mark each port as open
-        Object.values(config.ports).forEach((port) => {
-            this.ports[port] = OPEN_PORT;
-        });
+        Object.values(config.ports).forEach((port) => { this.ports[port] = OPEN_PORT; });
         const testPath = `${process.cwd()}/${config.tests}`;
         const featurePath = `${process.cwd()}/${config.features}`;
         process.stdin.on('keypress', (str, key) => {
@@ -122,137 +124,19 @@ export class ITProject {
             import(featurePath).then(async (features) => {
                 this.features = features.default;
                 await Promise.resolve(Promise.all([
-                    ...this.getSecondaryEndpointsPoints("web")
+                    ...this.getSecondaryEndpointsPoints("chromium"),
+                    ...this.getSecondaryEndpointsPoints("electron"),
                 ]
                     .map(async (sourceFilePath) => {
                     const sourceFileSplit = sourceFilePath.split("/");
                     const sourceDir = sourceFileSplit.slice(0, -1);
                     const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
                     const sourceFileNameMinusJs = sourceFileName.split(".").slice(0, -1).join(".");
-                    const htmlFilePath = path.normalize(`${process.cwd()}/${config.outdir}/${sourceDir.join("/")}/${sourceFileNameMinusJs}.html`);
+                    const htmlFilePath = path.normalize(`${process.cwd()}/${config.outdir}/web/${sourceDir.join("/")}/${sourceFileNameMinusJs}.html`);
                     const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
-                    return fs.promises.mkdir(path.dirname(htmlFilePath), { recursive: true }).then(x => fs.writeFileSync(htmlFilePath, `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <script type="module" src="${jsfilePath}"></script>
-</head>
-
-<body>
-  <h1>${htmlFilePath}</h1>
-  <div id="root">
-    
-  </div>
-</body>
-
-<footer></footer>
-
-</html>
-`));
+                    return fs.promises.mkdir(path.dirname(htmlFilePath), { recursive: true }).then(x => fs.writeFileSync(htmlFilePath, webHtmlFrame(jsfilePath, htmlFilePath)));
                 })));
                 const [nodeEntryPoints, webEntryPoints] = getRunnables(this.tests);
-                const esbuildConfigNode = {
-                    inject: ['./node_modules/testeranto/dist/cjs-shim.js'],
-                    supported: {
-                        "dynamic-import": true
-                    },
-                    define: {
-                        "process.env.FLUENTFFMPEG_COV": "0"
-                    },
-                    absWorkingDir: process.cwd(),
-                    banner: {
-                    // js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`
-                    },
-                    target: "esnext",
-                    format: "esm",
-                    splitting: true,
-                    outExtension: { '.js': '.mjs' },
-                    platform: "node",
-                    // packages: "external",
-                    external: [
-                        "tests.test.js",
-                        "features.test.js",
-                        "react",
-                        "events",
-                        "ganache"
-                    ],
-                    outbase: config.outbase,
-                    outdir: config.outdir,
-                    jsx: 'transform',
-                    entryPoints: [...nodeEntryPoints],
-                    bundle: true,
-                    minify: config.minify === true,
-                    write: true,
-                    loader: {
-                        '.js': 'jsx',
-                        '.png': 'binary',
-                        '.jpg': 'binary',
-                    },
-                    plugins: [
-                        ...(config.nodePlugins || []),
-                        {
-                            name: 'rebuild-notify',
-                            setup(build) {
-                                build.onEnd(result => {
-                                    console.log(`node build ended with ${result.errors.length} errors`);
-                                    console.log(result);
-                                    result.errors.length !== 0 && process.exit(-1);
-                                });
-                            }
-                        },
-                    ],
-                };
-                const esbuildConfigWeb = {
-                    // inject: ['cjs-shim.ts'],
-                    target: "esnext",
-                    format: "esm",
-                    splitting: true,
-                    outExtension: { '.js': '.mjs' },
-                    alias: {
-                        react: path.resolve("./node_modules/react")
-                    },
-                    // packages: "external",
-                    external: [
-                        "tests.test.js",
-                        "features.test.js",
-                        // "url", 
-                        // "react",
-                        "electron",
-                        "path",
-                        "fs",
-                        "stream",
-                    ],
-                    platform: "browser",
-                    outbase: config.outbase,
-                    outdir: config.outdir,
-                    jsx: 'transform',
-                    entryPoints: [
-                        ...webEntryPoints,
-                        testPath,
-                        featurePath,
-                    ],
-                    bundle: true,
-                    minify: config.minify === true,
-                    write: true,
-                    loader: {
-                        '.js': 'jsx',
-                        '.png': 'binary',
-                        '.jpg': 'binary',
-                    },
-                    plugins: [
-                        ...(config.webPlugins || []),
-                        {
-                            name: 'rebuild-notify',
-                            setup(build) {
-                                build.onEnd(result => {
-                                    console.log(`web build ended with ${result.errors.length} errors`);
-                                    console.log(result);
-                                    result.errors.length !== 0 && process.exit(-1);
-                                });
-                            }
-                        },
-                    ],
-                };
                 glob('./dist/chunk-*.mjs', { ignore: 'node_modules/**' }).then((chunks) => {
                     console.log("deleting chunks", chunks);
                     chunks.forEach((chunk) => {
@@ -302,14 +186,13 @@ export class ITProject {
 
 </html>
         `);
-                // const nodeContext = 
                 Promise.all([
-                    esbuild.context(esbuildConfigNode)
+                    esbuild.context(esbuildNodeConfiger(config, nodeEntryPoints))
                         .then(async (nodeContext) => {
                         await nodeContext.watch();
                         return nodeContext;
                     }),
-                    esbuild.context(esbuildConfigWeb)
+                    esbuild.context(esbuildWebConfiger(config, [...webEntryPoints, testPath, featurePath]))
                         .then(async (esbuildWeb) => {
                         await esbuildWeb.watch();
                         return esbuildWeb;
@@ -320,9 +203,10 @@ export class ITProject {
                         process.exit(0);
                     }
                     else {
-                        this.esWebServerDetails = await eWeb.serve({
-                            servedir: 'dist',
-                        });
+                        // not necessary
+                        // this.esWebServerDetails = await eWeb.serve({
+                        //   servedir: 'dist',
+                        // });
                         pm2.connect(async (err) => {
                             if (err) {
                                 console.error(err);
@@ -363,7 +247,7 @@ export class ITProject {
                                 });
                             });
                             const makePath = (fPath, rt) => {
-                                return path.resolve("./" + config.outdir + "/" + fPath.replace(path.extname(fPath), "") + ".mjs");
+                                return path.resolve("./" + config.outdir + "/" + rt + "/" + fPath.replace(path.extname(fPath), "") + ".mjs");
                             };
                             const bootInterval = setInterval(async () => {
                                 const filesToLookup = this.tests
@@ -400,26 +284,16 @@ export class ITProject {
                                             ports: [],
                                             fs: path.resolve(process.cwd(), config.outdir, inputFilePath),
                                         })}'`;
-                                        if (runtime === "web") {
-                                            const fileAsList = inputFilePath.split("/");
-                                            const fileListHead = fileAsList.slice(0, -1);
-                                            const fname = fileAsList[fileAsList.length - 1];
-                                            const fnameOnly = fname.split(".").slice(0, -1).join(".");
-                                            const htmlFile = [config.outdir, ...fileListHead, `${fnameOnly}.html`].join("/");
-                                            const jsFile = path.resolve(htmlFile.split(".html")[0] + ".mjs");
-                                            console.log("watching", jsFile);
-                                            pm2.start({
-                                                script: `yarn electron node_modules/testeranto/dist/common/electron.js ${htmlFile} '${JSON.stringify({
-                                                    scheduled: true,
-                                                    name: inputFilePath,
-                                                    ports: [],
-                                                    fs: path.resolve(process.cwd(), config.outdir, inputFilePath),
-                                                })}'`,
-                                                name: inputFilePath,
-                                                autorestart: false,
-                                                args: partialTestResourceByCommandLineArg,
-                                                watch: [jsFile],
-                                            }, (err, proc) => {
+                                        if (runtime === "electron") {
+                                            pm2.start(electron_pm2_StartOptions(partialTestResourceByCommandLineArg, inputFilePath, config), (err, proc) => {
+                                                if (err) {
+                                                    console.error(err);
+                                                    return pm2.disconnect();
+                                                }
+                                            });
+                                        }
+                                        else if (runtime === "chromium") {
+                                            pm2.start(chromium_pm2_StartOptions(partialTestResourceByCommandLineArg, inputFilePath, config), (err, proc) => {
                                                 if (err) {
                                                     console.error(err);
                                                     return pm2.disconnect();
@@ -429,19 +303,7 @@ export class ITProject {
                                         else if (runtime === "node") {
                                             const resolvedPath = path.resolve(script);
                                             console.log("watching", resolvedPath);
-                                            pm2.start({
-                                                // interpreter: 'node@20.4.0',
-                                                name: inputFilePath,
-                                                script: `node ${config.debugger ? "--inspect-brk" : ""} ${resolvedPath} '${JSON.stringify({
-                                                    scheduled: true,
-                                                    name: inputFilePath,
-                                                    ports: [],
-                                                    fs: path.resolve(process.cwd(), config.outdir, inputFilePath),
-                                                })}'`,
-                                                autorestart: false,
-                                                watch: [resolvedPath],
-                                                args: partialTestResourceByCommandLineArg
-                                            }, (err, proc) => {
+                                            pm2.start(electron_pm2_StartOptions(partialTestResourceByCommandLineArg, inputFilePath, config), (err, proc) => {
                                                 if (err) {
                                                     console.error(err);
                                                     return pm2.disconnect();

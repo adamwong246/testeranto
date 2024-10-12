@@ -1,6 +1,7 @@
 import { IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen, BaseGiven } from "./base.js";
 import { ITTestResourceConfiguration, ITestArtificer, ITestCheckCallback } from "./lib.js";
 export declare type IBaseConfig = {
+    externals: string[];
     clearScreen: boolean;
     devMode: boolean;
     features: string;
@@ -13,7 +14,7 @@ export declare type IBaseConfig = {
     tests: string;
     debugger: boolean;
 };
-export declare type IRunTime = `node` | `web`;
+export declare type IRunTime = `node` | `electron` | `chromium`;
 export declare type ITestTypes = [
     string,
     IRunTime,

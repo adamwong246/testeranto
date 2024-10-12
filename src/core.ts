@@ -194,7 +194,7 @@ export default abstract class Testeranto<
     );
   }
 
-  abstract receiveTestResourceConfigUnscheduled(t: ITestJob, partialTestResource: ITTestResourceConfiguration);
-  abstract receiveTestResourceConfigScheduled(t: ITestJob, partialTestResource: ITTestResourceConfiguration);
+  // abstract receiveTestResourceConfigUnscheduled(t: ITestJob, partialTestResource: ITTestResourceConfiguration);
+  abstract receiveTestResourceConfig(t: ITestJob, partialTestResource: ITTestResourceConfiguration);
 
 }
