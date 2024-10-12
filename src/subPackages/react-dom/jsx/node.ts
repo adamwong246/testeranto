@@ -1,9 +1,8 @@
-import Testeranto from "../../../Node";
-
 import { createElement } from "react";
 import { renderToStaticMarkup, renderToStaticNodeStream } from "react-dom/server";
 import Stream from 'stream'
 
+import Testeranto from "../../../Node";
 import {
   IBaseTest,
   ITestImplementation,
@@ -15,14 +14,11 @@ export {
 }
 
 export default <ITestShape extends IBaseTest>(
-  testImplementations: ITestImplementation<
-    ITestShape,
-    any
-  >,
-  testSpecifications: ITestSpecification<
-    ITestShape
-  >,
+
+  testImplementations: ITestImplementation<ITestShape, any>,
+  testSpecifications: ITestSpecification<ITestShape>,
   testInput: ITestShape['iinput']
+
 ) => {
   return Testeranto<
     ITestShape
@@ -46,7 +42,6 @@ export default <ITestShape extends IBaseTest>(
         artificer
       ): Promise<ITestShape['istore']> => {
         return new Promise((resolve, rej) => {
-          // Ignore these type errors
           resolve(createElement(testInput));
         });
       },

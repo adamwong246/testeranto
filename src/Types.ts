@@ -13,6 +13,7 @@ import {
 } from "./lib.js";
 
 export type IBaseConfig = {
+  externals: string[],
   clearScreen: boolean;
   devMode: boolean;
   features: string;
@@ -26,7 +27,7 @@ export type IBaseConfig = {
   debugger: boolean;
 };
 
-export type IRunTime = `node` | `web`;
+export type IRunTime = `node` | `electron` | `chromium`;
 
 export type ITestTypes = [
   string,

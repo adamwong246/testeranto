@@ -1,23 +1,18 @@
-import Testeranto from "../../../Web";
-
-import React, {
-  useEffect, useRef,
-} from "react";
+import React, { useEffect, useRef, } from "react";
 import { createPortal } from 'react-dom';
 
-
+import Testeranto from "../../../Web";
 import { IBaseTest, ITestImplementation, ITestSpecification } from "../../../Types";
 
 import {
-  IInput, ISelection, IStore,
-  IThenShape, IWhenShape, IState
+  IInput,
+  ISelection,
+  IStore,
 } from "./index";
 
 export type ISubject = HTMLElement;
 
-export default <
-  ITestShape extends IBaseTest,
->(
+export default <ITestShape extends IBaseTest>(
   testImplementations: ITestImplementation<
     ITestShape,
     object
@@ -28,24 +23,14 @@ export default <
   testInput: IInput
 ) => {
   document.addEventListener("DOMContentLoaded", function () {
-    console.log("DOMContentLoaded");
     const rootElement = document.getElementById("root");
     if (rootElement) {
-
       const TesterantoComponent = function ({ done, innerComp }: { done: (ref: React.MutableRefObject<any>) => any, innerComp: IInput }) {
         const myContainer = useRef<any>(null);
         useEffect(() => {
           console.log(
             "useEffect called", myContainer.current
           );
-
-          // if (!myContainer.current) {
-          //   // do componentDidMount logic
-          //   myContainer.current = true;
-          // } else {
-          //   // do componentDidUpdate logic
-          // }
-
           done(myContainer.current);
         }, []);
 
@@ -67,7 +52,6 @@ export default <
             input,
             artificer
           ): Promise<HTMLElement> => {
-            console.log("beforeAll", input);
             return await new Promise((resolve, rej) => {
               resolve(rootElement);
             })
@@ -80,19 +64,15 @@ export default <
             artificer
           ): Promise<IStore> => {
             return new Promise((resolve, rej) => {
-
-              console.log("beforeEach", subject);
-
               createPortal(
                 TesterantoComponent({
                   innerComp: testInput,
                   done: (reactElement: any) => {
                     process.nextTick(() => {
-                      resolve(reactElement)// do something
+                      resolve(reactElement)
                     })
                   }
-                }
-                  ,
+                },
                 ),
                 rootElement
               );
