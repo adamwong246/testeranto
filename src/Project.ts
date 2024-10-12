@@ -270,7 +270,10 @@ export class ITProject {
               });
 
               const makePath = (fPath: string, rt: IRunTime): string => {
-                return path.resolve("./" + config.outdir + "/" + rt + "/" + fPath.replace(path.extname(fPath), "") + ".mjs");
+                return path.resolve("./" + config.outdir + "/" +
+                  // rt +
+                  (rt === "electron" || rt === "chromium" ? "web" : "node") +
+                  "/" + fPath.replace(path.extname(fPath), "") + ".mjs");
               };
 
               const bootInterval = setInterval(async () => {
@@ -357,10 +360,11 @@ export class ITProject {
                         const resolvedPath = path.resolve(script);
 
                         console.log("watching", resolvedPath);
-                        pm2.start(electron_pm2_StartOptions(
+                        pm2.start(node_pm2_StartOptions(
                           partialTestResourceByCommandLineArg,
                           inputFilePath,
                           config,
+                          resolvedPath
                         ), (err, proc) => {
                           if (err) {
                             console.error(err);

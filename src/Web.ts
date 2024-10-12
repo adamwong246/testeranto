@@ -79,7 +79,7 @@ class WebTesteranto<
 
     Promise.all([...artifacts, logPromise]).then(async () => {
       // ipcRenderer.invoke('quit-app', failed);
-      (window as any).exit(failed)
+      // (window as any).exit(failed)
     })
   }
 
