@@ -25,6 +25,7 @@ class BaseSuite {
     }
     async run(input, testResourceConfiguration, artifactory, tLog) {
         this.testResourceConfiguration = testResourceConfiguration;
+        tLog("test resources: ", testResourceConfiguration);
         const suiteArtifactory = (fPath, value) => artifactory(`suite-${this.index}-${this.name}/${fPath}`, value);
         const subject = await this.setup(input, suiteArtifactory, testResourceConfiguration);
         tLog("\nSuite:", this.index, this.name);

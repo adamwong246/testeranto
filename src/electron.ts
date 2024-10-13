@@ -102,7 +102,7 @@ const main = (tests: ITestTypes[]) => {
 
             const subWin = new BrowserWindow(
               {
-                show: false,
+                show: true,
 
                 webPreferences: {
                   nodeIntegration: true,

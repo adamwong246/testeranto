@@ -5,10 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_js_1 = __importDefault(require("./lib/core.js"));
 const index_js_1 = require("./lib/index.js");
-const nodeWriter_js_1 = require("./nodeWriter.js");
+const NodeWriter_js_1 = require("./NodeWriter.js");
 class NodeTesteranto extends core_js_1.default {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
-        super(input, testSpecification, testImplementation, testResourceRequirement, nodeWriter_js_1.NodeWriter, testInterface);
+        super(input, testSpecification, testImplementation, testResourceRequirement, NodeWriter_js_1.NodeWriter, testInterface);
         const t = this.testJobs[0];
         const testResourceArg = process.argv[2] || `{}`;
         try {

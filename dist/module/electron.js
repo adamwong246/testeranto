@@ -72,7 +72,7 @@ const main = (tests) => {
                     fs.watch(watch, function (event, filename) {
                         console.log('event is: ' + event);
                         const subWin = new BrowserWindow({
-                            show: false,
+                            show: true,
                             webPreferences: {
                                 nodeIntegration: true,
                                 nodeIntegrationInWorker: true,

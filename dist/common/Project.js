@@ -38,11 +38,10 @@ const node_js_1 = __importDefault(require("./esbuildConfigs/node.js"));
 const web_js_1 = __importDefault(require("./esbuildConfigs/web.js"));
 const web_html_js_1 = __importDefault(require("./web.html.js"));
 const child_process_1 = __importDefault(require("child_process"));
-console.log("hello project");
 const childElectron = child_process_1.default.spawn("yarn", ["electron", "node_modules/testeranto/dist/common/electron.js"]);
-// childElectron.stdout.on('data', function (msg) {
-//   console.log(msg.toString())
-// });
+childElectron.stdout.on('data', function (msg) {
+    console.log(msg.toString());
+});
 readline_1.default.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
     process.stdin.setRawMode(true);

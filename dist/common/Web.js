@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __importDefault(require("./lib/core"));
 const lib_1 = require("./lib");
+// import { NodeWriterElectron } from "./nodeWriterElectron";
 console.log("(window as any).NodeWriter", window.NodeWriter);
 class WebTesteranto extends core_1.default {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {

@@ -1,6 +1,6 @@
 import Testeranto from "./lib/core.js";
 import { defaultTestResourceRequirement, } from "./lib/index.js";
-import { NodeWriter } from "./nodeWriter.js";
+import { NodeWriter } from "./NodeWriter.js";
 class NodeTesteranto extends Testeranto {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
         super(input, testSpecification, testImplementation, testResourceRequirement, NodeWriter, testInterface);

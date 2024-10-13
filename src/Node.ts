@@ -7,7 +7,7 @@ import {
   ITTestResourceConfiguration,
   ITTestResourceRequest,
 } from "./lib/index.js";
-import { NodeWriter } from "./nodeWriter.js";
+import { NodeWriter } from "./NodeWriter.js";
 import {
   IBaseTest,
   ITestImplementation,

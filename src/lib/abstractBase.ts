@@ -81,6 +81,7 @@ export abstract class BaseSuite<
     >
   > {
     this.testResourceConfiguration = testResourceConfiguration;
+    tLog("test resources: ", testResourceConfiguration);
 
     const suiteArtifactory = (fPath: string, value: unknown) =>
       artifactory(`suite-${this.index}-${this.name}/${fPath}`, value)

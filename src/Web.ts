@@ -13,8 +13,8 @@ import {
   ITestJob,
   defaultTestResourceRequirement
 } from "./lib";
-import { NodeWriter } from "./nodeWriter";
-import { NodeWriterElectron } from "./nodeWriterElectron";
+import { NodeWriter } from "./NodeWriter";
+// import { NodeWriterElectron } from "./nodeWriterElectron";
 
 console.log("(window as any).NodeWriter", (window as any).NodeWriter);
 

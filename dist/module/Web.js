@@ -1,5 +1,6 @@
 import Testeranto from "./lib/core";
 import { defaultTestResourceRequirement } from "./lib";
+// import { NodeWriterElectron } from "./nodeWriterElectron";
 console.log("(window as any).NodeWriter", window.NodeWriter);
 class WebTesteranto extends Testeranto {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {

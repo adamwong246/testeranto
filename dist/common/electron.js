@@ -77,7 +77,7 @@ const main = (tests) => {
                     fs_1.default.watch(watch, function (event, filename) {
                         console.log('event is: ' + event);
                         const subWin = new electron_1.BrowserWindow({
-                            show: false,
+                            show: true,
                             webPreferences: {
                                 nodeIntegration: true,
                                 nodeIntegrationInWorker: true,

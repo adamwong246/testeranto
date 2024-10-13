@@ -24,21 +24,16 @@ import node_pm2_StartOptions from "./pm2/node.js";
 
 import childProcess from 'child_process';
 
-
-console.log("hello project");
-
 const childElectron = childProcess.spawn("yarn", ["electron", "node_modules/testeranto/dist/common/electron.js"]);
-// childElectron.stdout.on('data', function (msg) {
-//   console.log(msg.toString())
-// });
+childElectron.stdout.on('data', function (msg) {
+  console.log(msg.toString())
+});
 
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
 
 const TIMEOUT = 500;
 const OPEN_PORT = "";
-
-// let webSocketServer: WebSocketServer;
 
 type ISchedulerProtocols = `ipc` | `ws`;
 

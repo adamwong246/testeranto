@@ -2,7 +2,7 @@ import { ipcRenderer } from "electron";
 
 console.log("hello preloader");
 
-import { NodeWriter } from "./nodeWriter.js";
+import { NodeWriter } from "./NodeWriter";
 
 (window as any).NodeWriter = NodeWriter;
 (window as any).exit = (x) => {

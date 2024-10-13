@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const electron_1 = require("electron");
 console.log("hello preloader");
-const nodeWriter_js_1 = require("./nodeWriter.js");
-window.NodeWriter = nodeWriter_js_1.NodeWriter;
+const NodeWriter_1 = require("./NodeWriter");
+window.NodeWriter = NodeWriter_1.NodeWriter;
 window.exit = (x) => {
     electron_1.ipcRenderer.invoke('quit-app', x);
 };

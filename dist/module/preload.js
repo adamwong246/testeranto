@@ -1,6 +1,6 @@
 import { ipcRenderer } from "electron";
 console.log("hello preloader");
-import { NodeWriter } from "./nodeWriter.js";
+import { NodeWriter } from "./NodeWriter";
 window.NodeWriter = NodeWriter;
 window.exit = (x) => {
     ipcRenderer.invoke('quit-app', x);
