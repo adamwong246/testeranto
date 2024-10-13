@@ -1,8 +1,9 @@
-import fs from "fs";
-// const fs = require("fs");
-import path from "path";
+// import fs from "fs";
+const fs = require("fs");
+// import path from "path";
+const path = require("path");
 const fPaths = [];
-export const NodeWriter = {
+export const NodeWriterElectron = {
     createWriteStream: (filepath) => {
         return fs.createWriteStream(filepath);
     },

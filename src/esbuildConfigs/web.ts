@@ -13,6 +13,11 @@ export default (
 
     ...baseEsBuildConfig(config),
 
+    // inject: ['./node_modules/testeranto/dist/cjs-shim.js'],
+    // banner: {
+    //   js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`
+    // },
+
     outdir: config.outdir + "/web",
 
     alias: {

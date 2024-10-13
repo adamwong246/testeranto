@@ -6,7 +6,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = __importDefault(require("path"));
 const index_js_1 = __importDefault(require("./index.js"));
 exports.default = (config, entryPoints) => {
-    return Object.assign(Object.assign({}, (0, index_js_1.default)(config)), { outdir: config.outdir + "/web", alias: {
+    return Object.assign(Object.assign({}, (0, index_js_1.default)(config)), { 
+        // inject: ['./node_modules/testeranto/dist/cjs-shim.js'],
+        // banner: {
+        //   js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`
+        // },
+        outdir: config.outdir + "/web", alias: {
             react: path_1.default.resolve("./node_modules/react")
         }, external: [
             "tests.test.js",

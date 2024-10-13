@@ -1,8 +1,12 @@
-import fs from "fs";
-// const fs = require("fs");
-import path from "path";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.NodeWriterElectron = void 0;
+// import fs from "fs";
+const fs = require("fs");
+// import path from "path";
+const path = require("path");
 const fPaths = [];
-export const NodeWriter = {
+exports.NodeWriterElectron = {
     createWriteStream: (filepath) => {
         return fs.createWriteStream(filepath);
     },

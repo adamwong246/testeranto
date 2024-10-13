@@ -14,7 +14,7 @@ export declare type IBaseConfig = {
     tests: string;
     debugger: boolean;
 };
-export declare type IRunTime = `node` | `electron` | `chromium`;
+export declare type IRunTime = `node` | `web`;
 export declare type ITestTypes = [
     string,
     IRunTime,

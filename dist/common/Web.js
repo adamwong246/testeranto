@@ -5,16 +5,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __importDefault(require("./core"));
 const lib_1 = require("./lib");
-let webSocket;
-try {
-    webSocket = new WebSocket("ws://localhost:8080");
-}
-catch (e) {
-    console.error(e);
-}
+console.log("(window as any).NodeWriter", window.NodeWriter);
 class WebTesteranto extends core_1.default {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, beforeAll, beforeEach, afterEach, afterAll, butThen, andWhen, assertThis) {
-        super(input, testSpecification, testImplementation, testResourceRequirement, window.NodeWriter, beforeAll, beforeEach, afterEach, afterAll, butThen, andWhen, assertThis);
+        super(input, testSpecification, testImplementation, testResourceRequirement, window.NodeWriter, 
+        // NodeWriter,
+        // NodeWriterElectron,
+        beforeAll, beforeEach, afterEach, afterAll, butThen, andWhen, assertThis);
         const t = this.testJobs[0];
         const testResourceArg = decodeURIComponent(new URLSearchParams(location.search).get('requesting') || '');
         try {
@@ -31,7 +28,7 @@ class WebTesteranto extends core_1.default {
         const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(partialTestResource);
         Promise.all([...artifacts, logPromise]).then(async () => {
             // ipcRenderer.invoke('quit-app', failed);
-            window.exit(failed);
+            // (window as any).exit(failed)
         });
     }
 }

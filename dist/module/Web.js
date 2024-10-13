@@ -1,15 +1,12 @@
 import Testeranto from "./core";
 import { defaultTestResourceRequirement } from "./lib";
-let webSocket;
-try {
-    webSocket = new WebSocket("ws://localhost:8080");
-}
-catch (e) {
-    console.error(e);
-}
+console.log("(window as any).NodeWriter", window.NodeWriter);
 class WebTesteranto extends Testeranto {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, beforeAll, beforeEach, afterEach, afterAll, butThen, andWhen, assertThis) {
-        super(input, testSpecification, testImplementation, testResourceRequirement, window.NodeWriter, beforeAll, beforeEach, afterEach, afterAll, butThen, andWhen, assertThis);
+        super(input, testSpecification, testImplementation, testResourceRequirement, window.NodeWriter, 
+        // NodeWriter,
+        // NodeWriterElectron,
+        beforeAll, beforeEach, afterEach, afterAll, butThen, andWhen, assertThis);
         const t = this.testJobs[0];
         const testResourceArg = decodeURIComponent(new URLSearchParams(location.search).get('requesting') || '');
         try {
@@ -26,7 +23,7 @@ class WebTesteranto extends Testeranto {
         const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(partialTestResource);
         Promise.all([...artifacts, logPromise]).then(async () => {
             // ipcRenderer.invoke('quit-app', failed);
-            window.exit(failed);
+            // (window as any).exit(failed)
         });
     }
 }

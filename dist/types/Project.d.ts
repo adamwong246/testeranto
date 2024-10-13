@@ -1,4 +1,3 @@
-import WebSocket from 'ws';
 import { TesterantoFeatures } from "./Features.js";
 import { IBaseConfig, IRunTime, ITestTypes } from "./Types";
 import { ITTestResourceRequirement } from "./lib.js";

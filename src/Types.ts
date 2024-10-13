@@ -27,7 +27,7 @@ export type IBaseConfig = {
   debugger: boolean;
 };
 
-export type IRunTime = `node` | `electron` | `chromium`;
+export type IRunTime = `node` | `web`;
 
 export type ITestTypes = [
   string,

@@ -10,13 +10,10 @@ import {
   ITestJob,
   defaultTestResourceRequirement
 } from "./lib";
+import { NodeWriter } from "./nodeWriter";
+import { NodeWriterElectron } from "./nodeWriterElectron";
 
-let webSocket: WebSocket;
-try {
-  webSocket = new WebSocket("ws://localhost:8080");
-} catch (e) {
-  console.error(e)
-}
+console.log("(window as any).NodeWriter", (window as any).NodeWriter);
 
 class WebTesteranto<
   TestShape extends IBaseTest,
@@ -42,6 +39,8 @@ class WebTesteranto<
       testImplementation,
       testResourceRequirement,
       (window as any).NodeWriter,
+      // NodeWriter,
+      // NodeWriterElectron,
       beforeAll,
       beforeEach,
       afterEach,
