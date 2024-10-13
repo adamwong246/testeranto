@@ -1,7 +1,0 @@
-import { IBaseTest, ITestSpecification } from "./Types";
-import { ClassBuilder } from "./base.js";
-import { ILogWriter, ITTestResourceConfiguration, ITTestResourceRequest, ITestArtificer, ITestJob } from "./lib.js";
-export default abstract class Testeranto<ITestShape extends IBaseTest> extends ClassBuilder<ITestShape> {
-    constructor(input: ITestShape['iinput'], testSpecification: ITestSpecification<ITestShape>, testImplementation: any, testResourceRequirement: ITTestResourceRequest | undefined, logWriter: ILogWriter, beforeAll: (input: ITestShape['iinput'], artificer: ITestArtificer, testResource: ITTestResourceConfiguration) => Promise<ITestShape['isubject']>, beforeEach: (subject: ITestShape['isubject'], initializer: any, testResource: ITTestResourceConfiguration, artificer: ITestArtificer, initialValues: any) => Promise<ITestShape['istore']>, afterEach: (store: ITestShape['istore'], key: string, artificer: ITestArtificer) => Promise<unknown>, afterAll: (store: ITestShape['istore'], artificer: ITestArtificer) => any, butThen: (s: ITestShape['istore'], thenCB: any, testResource: ITTestResourceConfiguration) => any, andWhen: (store: ITestShape['istore'], whenCB: any, testResource: ITTestResourceConfiguration) => Promise<ITestShape['iselection']>, assertThis: (a: any) => any);
-    abstract receiveTestResourceConfig(t: ITestJob, partialTestResource: ITTestResourceConfiguration): any;
-}

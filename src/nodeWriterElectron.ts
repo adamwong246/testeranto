@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require("path");
 import { PassThrough } from "stream";
 
-import { ILogWriter, ITLog } from "./lib.js";
+import { ILogWriter, ITLog } from "./lib/index.js";
 
 type IFPaths = string[];
 const fPaths: IFPaths = [];

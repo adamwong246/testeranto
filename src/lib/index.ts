@@ -1,7 +1,23 @@
-import {
-  IGivens, BaseCheck, BaseSuite, BaseThen, BaseWhen
-} from "./base.js";
-import { IBaseTest } from "./Types.js";
+
+import { IBaseTest, ITestInterface } from "../Types.js";
+import { IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen } from "./abstractBase.js";
+
+export const BaseTestInterface: ITestInterface<IBaseTest> = {
+  beforeAll: (async (s) => s),
+  beforeEach: async function (subject: any, initialValues: any, testResource: any) { return subject as any; },
+  afterEach: (async (s) => s),
+  afterAll: ((store: IBaseTest['istore']) => undefined),
+  butThen: (async (store: IBaseTest['istore'], thenCb) => thenCb(store)),
+  andWhen: ((a) => a),
+  assertThis: (() => null),
+};
+
+export const DefaultTestInterface = (p: Partial<ITestInterface<any>>): ITestInterface<any> => {
+  return {
+    ...BaseTestInterface,
+    ...p
+  }
+}
 
 export type ITTestResourceConfiguration = {
   name: string;

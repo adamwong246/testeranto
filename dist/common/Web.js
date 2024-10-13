@@ -3,15 +3,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const core_1 = __importDefault(require("./core"));
+const core_1 = __importDefault(require("./lib/core"));
 const lib_1 = require("./lib");
 console.log("(window as any).NodeWriter", window.NodeWriter);
 class WebTesteranto extends core_1.default {
-    constructor(input, testSpecification, testImplementation, testResourceRequirement, beforeAll, beforeEach, afterEach, afterAll, butThen, andWhen, assertThis) {
-        super(input, testSpecification, testImplementation, testResourceRequirement, window.NodeWriter, 
-        // NodeWriter,
-        // NodeWriterElectron,
-        beforeAll, beforeEach, afterEach, afterAll, butThen, andWhen, assertThis);
+    constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
+        super(input, testSpecification, testImplementation, testResourceRequirement, window.NodeWriter, testInterface);
         const t = this.testJobs[0];
         const testResourceArg = decodeURIComponent(new URLSearchParams(location.search).get('requesting') || '');
         try {
@@ -34,5 +31,5 @@ class WebTesteranto extends core_1.default {
 }
 ;
 exports.default = async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = lib_1.defaultTestResourceRequirement) => {
-    new WebTesteranto(input, testSpecification, testImplementation, testResourceRequirement, testInterface.beforeAll || (async (s) => s), testInterface.beforeEach || async function (subject, initialValues, testResource) { return subject; }, testInterface.afterEach || (async (s) => s), testInterface.afterAll || ((store) => undefined), testInterface.butThen || (async (store, thenCb) => thenCb(store)), testInterface.andWhen || ((a) => a), testInterface.assertThis || (() => null));
+    new WebTesteranto(input, testSpecification, testImplementation, testResourceRequirement, testInterface);
 };

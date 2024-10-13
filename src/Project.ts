@@ -11,7 +11,7 @@ import { glob } from "glob";
 
 import { TesterantoFeatures } from "./Features.js";
 import { IBaseConfig, IRunTime, ITestTypes } from "./Types";
-import { ITTestResourceRequirement } from "./lib.js";
+import { ITTestResourceRequirement } from "./lib/index.js";
 
 import esbuildNodeConfiger from "./esbuildConfigs/node.js";
 import esbuildWebConfiger from "./esbuildConfigs/web.js";

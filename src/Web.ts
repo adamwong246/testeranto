@@ -1,12 +1,15 @@
 import {
   IBaseTest,
+  ITestImplementation,
   ITestInterface,
   ITestSpecification
 } from "./Types";
-import Testeranto from "./core";
+import Testeranto from "./lib/core";
 import {
+  DefaultTestInterface,
   ITTestResourceConfiguration,
   ITTestResourceRequest,
+  ITTestResourceRequirement,
   ITestJob,
   defaultTestResourceRequirement
 } from "./lib";
@@ -21,17 +24,11 @@ class WebTesteranto<
   TestShape
 > {
   constructor(
-    input,
-    testSpecification,
-    testImplementation,
-    testResourceRequirement,
-    beforeAll,
-    beforeEach,
-    afterEach,
-    afterAll,
-    butThen,
-    andWhen,
-    assertThis,
+    input: TestShape["iinput"],
+    testSpecification: ITestSpecification<TestShape>,
+    testImplementation: ITestImplementation<TestShape, object>,
+    testResourceRequirement: ITTestResourceRequest,
+    testInterface: Partial<ITestInterface<TestShape>>,
   ) {
     super(
       input,
@@ -39,15 +36,7 @@ class WebTesteranto<
       testImplementation,
       testResourceRequirement,
       (window as any).NodeWriter,
-      // NodeWriter,
-      // NodeWriterElectron,
-      beforeAll,
-      beforeEach,
-      afterEach,
-      afterAll,
-      butThen,
-      andWhen,
-      assertThis,
+      testInterface,
     );
 
     const t: ITestJob = this.testJobs[0];
@@ -88,27 +77,17 @@ export default async <
   ITestShape extends IBaseTest,
 >(
   input: ITestShape['iinput'],
-  testSpecification: ITestSpecification<
-    ITestShape
-  >,
-  testImplementation,
-  testInterface: ITestInterface<
-    ITestShape
-  >,
+  testSpecification: ITestSpecification<ITestShape>,
+  testImplementation: ITestImplementation<ITestShape, object>,
+  testInterface: Partial<ITestInterface<ITestShape>>,
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
 ) => {
-  new WebTesteranto(
+  new WebTesteranto<ITestShape>(
     input,
     testSpecification,
     testImplementation,
     testResourceRequirement,
-    testInterface.beforeAll || (async (s) => s),
-    testInterface.beforeEach || async function (subject: any, initialValues: any, testResource: any) { return subject as any; },
-    testInterface.afterEach || (async (s) => s),
-    testInterface.afterAll || ((store: ITestShape['istore']) => undefined),
-    testInterface.butThen || (async (store: ITestShape['istore'], thenCb) => thenCb(store)),
-    testInterface.andWhen || ((a) => a),
-    testInterface.assertThis || (() => null),
+    testInterface,
   )
 
 };

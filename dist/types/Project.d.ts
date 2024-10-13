@@ -1,6 +1,6 @@
 import { TesterantoFeatures } from "./Features.js";
 import { IBaseConfig, IRunTime, ITestTypes } from "./Types";
-import { ITTestResourceRequirement } from "./lib.js";
+import { ITTestResourceRequirement } from "./lib/index.js";
 declare type ISchedulerProtocols = `ipc` | `ws`;
 export declare class ITProject {
     clearScreen: boolean;

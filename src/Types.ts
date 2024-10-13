@@ -1,16 +1,12 @@
-import {
-  IGivens,
-  BaseCheck,
-  BaseSuite,
-  BaseWhen,
-  BaseThen,
-  BaseGiven
-} from "./base.js";
+// import childProcess from "child_process";
+// import { Puppeteer } from "puppeteer-core";
+
 import {
   ITTestResourceConfiguration,
   ITestArtificer,
   ITestCheckCallback
-} from "./lib.js";
+} from "./lib/index.js";
+import { IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen, BaseGiven } from "./lib/abstractBase.js";
 
 export type IBaseConfig = {
   externals: string[],
@@ -26,6 +22,13 @@ export type IBaseConfig = {
   tests: string;
   debugger: boolean;
 };
+
+// type If = {
+//   (modulePath: string | URL, options?: childProcess.ForkOptions): childProcess.ChildProcess;
+//   (modulePath: string | URL, args?: readonly string[], options?: childProcess.ForkOptions): childProcess.ChildProcess
+// };
+
+// const f: If = childProcess.fork;
 
 export type IRunTime = `node` | `web`;
 
@@ -114,39 +117,51 @@ export type ITestImplementation<
   };
 }, IMod>;
 
+// export type IUtils = {
+//   puppeteer: Puppeteer,
+//   childProcess: If
+// }
+
 export type ITestInterface<
   ITestShape extends IBaseTest
 > = {
-  assertThis?: (x: ITestShape['then']) => void,
+  assertThis: (x: ITestShape['then']) => void,
+
   andWhen: (
     store: ITestShape['istore'],
     whenCB: ITestShape['when'],
     testResource: ITTestResourceConfiguration
   ) => Promise<ITestShape['istore']>;
-  butThen?: (
+  butThen: (
     store: ITestShape['istore'],
     thenCB,
     testResource: ITTestResourceConfiguration
   ) => Promise<ITestShape['iselection']>;
-  afterAll?: (
+
+  afterAll: (
     store: ITestShape['istore'],
-    artificer: ITestArtificer
+    artificer: ITestArtificer,
+    // utils: IUtils
   ) => any;
-  afterEach?: (
+  afterEach: (
     store: ITestShape['istore'],
     key: string,
-    artificer: ITestArtificer
+    artificer: ITestArtificer,
+    // utils: IUtils
   ) => Promise<unknown>;
-  beforeAll?: (
+  beforeAll: (
     input: ITestShape['iinput'],
-    artificer: ITestArtificer
+    testResource: ITTestResourceConfiguration,
+    artificer: ITestArtificer,
+    // utils: IUtils
   ) => Promise<ITestShape['isubject']>;
-  beforeEach?: (
+  beforeEach: (
     subject: ITestShape['isubject'],
     initializer: (c?) => ITestShape['given'],
     artificer: ITestArtificer,
     testResource: ITTestResourceConfiguration,
-    initialValues
+    initialValues,
+    // utils: IUtils
   ) => Promise<ITestShape['istore']>;
 };
 

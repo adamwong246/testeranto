@@ -1,5 +1,7 @@
-import { IGivens, BaseCheck, BaseSuite, BaseThen, BaseWhen } from "./base.js";
-import { IBaseTest } from "./Types.js";
+import { IBaseTest, ITestInterface } from "../Types.js";
+import { IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen } from "./abstractBase.js";
+export declare const BaseTestInterface: ITestInterface<IBaseTest>;
+export declare const DefaultTestInterface: (p: Partial<ITestInterface<any>>) => ITestInterface<any>;
 export declare type ITTestResourceConfiguration = {
     name: string;
     fs: string;

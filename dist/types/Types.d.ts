@@ -1,5 +1,5 @@
-import { IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen, BaseGiven } from "./base.js";
-import { ITTestResourceConfiguration, ITestArtificer, ITestCheckCallback } from "./lib.js";
+import { ITTestResourceConfiguration, ITestArtificer, ITestCheckCallback } from "./lib/index.js";
+import { IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen, BaseGiven } from "./lib/abstractBase.js";
 export declare type IBaseConfig = {
     externals: string[];
     clearScreen: boolean;
@@ -47,13 +47,13 @@ export declare type ITestImplementation<ITestShape extends IBaseTest, IMod> = Mo
     };
 }, IMod>;
 export declare type ITestInterface<ITestShape extends IBaseTest> = {
-    assertThis?: (x: ITestShape['then']) => void;
+    assertThis: (x: ITestShape['then']) => void;
     andWhen: (store: ITestShape['istore'], whenCB: ITestShape['when'], testResource: ITTestResourceConfiguration) => Promise<ITestShape['istore']>;
-    butThen?: (store: ITestShape['istore'], thenCB: any, testResource: ITTestResourceConfiguration) => Promise<ITestShape['iselection']>;
-    afterAll?: (store: ITestShape['istore'], artificer: ITestArtificer) => any;
-    afterEach?: (store: ITestShape['istore'], key: string, artificer: ITestArtificer) => Promise<unknown>;
-    beforeAll?: (input: ITestShape['iinput'], artificer: ITestArtificer) => Promise<ITestShape['isubject']>;
-    beforeEach?: (subject: ITestShape['isubject'], initializer: (c?: any) => ITestShape['given'], artificer: ITestArtificer, testResource: ITTestResourceConfiguration, initialValues: any) => Promise<ITestShape['istore']>;
+    butThen: (store: ITestShape['istore'], thenCB: any, testResource: ITTestResourceConfiguration) => Promise<ITestShape['iselection']>;
+    afterAll: (store: ITestShape['istore'], artificer: ITestArtificer) => any;
+    afterEach: (store: ITestShape['istore'], key: string, artificer: ITestArtificer) => Promise<unknown>;
+    beforeAll: (input: ITestShape['iinput'], testResource: ITTestResourceConfiguration, artificer: ITestArtificer) => Promise<ITestShape['isubject']>;
+    beforeEach: (subject: ITestShape['isubject'], initializer: (c?: any) => ITestShape['given'], artificer: ITestArtificer, testResource: ITTestResourceConfiguration, initialValues: any) => Promise<ITestShape['istore']>;
 };
 declare type Modify<T, R> = Omit<T, keyof R> & R;
 export declare type IBaseTest = {

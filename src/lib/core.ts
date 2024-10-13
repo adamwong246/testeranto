@@ -1,20 +1,19 @@
-import { IBaseTest, ITestSpecification } from "./Types";
+import { IBaseTest, ITestInterface, ITestSpecification } from "../Types";
+
 import {
-  BaseWhen,
-  BaseThen,
-  BaseCheck,
-  BaseSuite,
-  BaseGiven,
-  ClassBuilder
-} from "./base.js";
-import {
+  DefaultTestInterface,
   ILogWriter,
   ITTestResourceConfiguration,
   ITTestResourceRequest,
+  ITestArtifactory,
   ITestArtificer,
   ITestJob,
   defaultTestResourceRequirement
-} from "./lib.js";
+} from "./index.js";
+import { BaseSuite, BaseGiven, BaseWhen, BaseThen, BaseCheck } from "./abstractBase";
+import { ClassBuilder } from "./classBuilder";
+
+const utils = {} as any;
 
 export default abstract class Testeranto<
   ITestShape extends IBaseTest,
@@ -29,42 +28,11 @@ export default abstract class Testeranto<
     testImplementation,
     testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
     logWriter: ILogWriter,
-
-    beforeAll: (
-      input: ITestShape['iinput'],
-      artificer: ITestArtificer,
-      testResource: ITTestResourceConfiguration
-    ) => Promise<ITestShape['isubject']>,
-    beforeEach: (
-      subject: ITestShape['isubject'],
-      initializer,
-      testResource: ITTestResourceConfiguration,
-      artificer: ITestArtificer,
-      initialValues
-    ) => Promise<ITestShape['istore']>,
-    afterEach: (
-      store: ITestShape['istore'],
-      key: string,
-      artificer: ITestArtificer
-    ) => Promise<unknown>,
-    afterAll: (
-      store: ITestShape['istore'],
-      artificer: ITestArtificer
-    ) => any,
-    butThen: (
-      s: ITestShape['istore'],
-      thenCB,
-      testResource: ITTestResourceConfiguration,
-    ) => any,
-    andWhen: (
-      store: ITestShape['istore'],
-      whenCB,
-      testResource: ITTestResourceConfiguration
-    ) => Promise<ITestShape['iselection']>,
-    assertThis: (
-      a: any
-    ) => any,
+    testInterface: Partial<ITestInterface<ITestShape>>
   ) {
+
+    const fullTestInterface = DefaultTestInterface(testInterface);
+
     super(
       testImplementation,
       testSpecification,
@@ -75,19 +43,26 @@ export default abstract class Testeranto<
       > {
 
         assertThat(t) {
-          assertThis(t);
+          fullTestInterface.assertThis(t);
         }
 
-        async setup(s: ITestShape['iinput'], artifactory): Promise<
+        async setup(
+          s: ITestShape['iinput'],
+          artifactory: ITestArtifactory,
+          tr,
+          // utils: ITestInterface<ITestShape>
+        ): Promise<
           ITestShape['isubject']
         > {
-          return (beforeAll || (async (
+          return (fullTestInterface.beforeAll || (async (
             input: ITestShape['iinput'],
-            artificer: ITestArtificer,
+            artifactory: ITestArtifactory,
+            tr,
+            // utils: ITestInterface<ITestShape>
           ) => input as any))(
             s,
-            artifactory,
-            this.testResourceConfiguration
+            this.testResourceConfiguration,
+            artifactory
           );
         }
       } as any,
@@ -97,14 +72,15 @@ export default abstract class Testeranto<
       > {
 
         async givenThat(subject, testResource, artifactory, initializer) {
-          return beforeEach(
+          return fullTestInterface.beforeEach(
             subject,
             initializer,
-            testResource,
             (fPath: string, value: unknown) =>
               // TODO does not work?
               artifactory(`beforeEach/${fPath}`, value),
-            this.initialValues
+            testResource,
+            this.initialValues,
+            // utils,
           );
         }
 
@@ -114,12 +90,12 @@ export default abstract class Testeranto<
           artifactory
         ): Promise<unknown> {
           return new Promise((res) =>
-            res(afterEach(store, key, (fPath: string, value: unknown) =>
+            res(fullTestInterface.afterEach(store, key, (fPath: string, value: unknown) =>
               artifactory(`after/${fPath}`, value)))
           );
         }
         afterAll(store, artifactory) {
-          return afterAll(store, (fPath: string, value: unknown) =>
+          return fullTestInterface.afterAll(store, (fPath: string, value: unknown) =>
             // TODO does not work?
             artifactory(`afterAll4-${this.name}/${fPath}`, value));
         }
@@ -129,7 +105,7 @@ export default abstract class Testeranto<
         ITestShape
       > {
         async andWhen(store, whenCB, testResource) {
-          return await andWhen(store, whenCB, testResource);
+          return await fullTestInterface.andWhen(store, whenCB, testResource);
         }
       } as any,
 
@@ -142,7 +118,7 @@ export default abstract class Testeranto<
           thenCB,
           testResourceConfiguration?: any
         ): Promise<ITestShape['iselection']> {
-          return await butThen(
+          return await fullTestInterface.butThen(
             store,
             thenCB,
             testResourceConfiguration);
@@ -167,11 +143,11 @@ export default abstract class Testeranto<
         }
 
         async checkThat(subject, testResourceConfiguration, artifactory) {
-          return beforeEach(
+          return fullTestInterface.beforeEach(
             subject,
             this.initialValues,
-            testResourceConfiguration,
             (fPath: string, value: unknown) => artifactory(`before/${fPath}`, value),
+            testResourceConfiguration,
             this.initialValues
           );
         }
@@ -182,7 +158,7 @@ export default abstract class Testeranto<
           artifactory
         ): Promise<unknown> {
           return new Promise((res) =>
-            res(afterEach(store, key, (fPath: string, value: unknown) =>
+            res(fullTestInterface.afterEach(store, key, (fPath: string, value: unknown) =>
               // TODO does not work?
               artifactory(`afterEach2-${this.name}/${fPath}`, value)))
           );
@@ -194,7 +170,6 @@ export default abstract class Testeranto<
     );
   }
 
-  // abstract receiveTestResourceConfigUnscheduled(t: ITestJob, partialTestResource: ITTestResourceConfiguration);
   abstract receiveTestResourceConfig(t: ITestJob, partialTestResource: ITTestResourceConfiguration);
 
 }
