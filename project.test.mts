@@ -11,7 +11,7 @@ export default new ITProject({
   outbase: ".",
   outdir: "dist",
   tests: 'tests.test.mts',
-
+  externals: ["ganache"],
   ports: ["3001", "3002", "3003", "3004", "3005", "3006", "3007"],
 
   webPlugins: [],

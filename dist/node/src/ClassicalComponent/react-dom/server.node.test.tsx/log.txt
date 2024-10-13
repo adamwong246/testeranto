@@ -1,0 +1,7 @@
+test resources: ,[object Object]
+
+Suite:,0,Classical Component, react-dom, server.node
+
+ Given: AnEmptyState
+ Then:,renderToStaticMarkup: <div style="border:3px solid green"><h1>Hello Marcus</h1><pre id="theProps">{}</pre><p>foo: </p><pre id="theState">{&quot;count&quot;:0}</pre><p>count: 0 times</p><button id="theButton">Click</button></div>
+ Then:,renderToStaticNodeStream: [object ReadableStream]

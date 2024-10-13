@@ -22,7 +22,7 @@
     ]
   },
   "scripts": {
-    "nuke": "pm2 stop all; pm2 delete all; pm2 save; rm -rf dist/**",
+    "dev": "rm -rf dist/** && yarn upgrade -f testeranto && yarn test",
     "test": "ts-node-esm project.test.mts",
     "test2": "node --loader ts-node/esm project.test.mts"
   },
