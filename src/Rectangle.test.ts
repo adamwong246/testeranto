@@ -4,6 +4,7 @@ import type {
   ITestInterface,
   ITestSpecification,
   ITestImplementation,
+  IPartialInterface,
 } from "testeranto/src/Types";
 
 import Rectangle from "./Rectangle";
@@ -20,7 +21,7 @@ export interface testShape {
   given: (x) => (y) => unknown,
 
   suites: {
-    Default: string;
+    Default: [string];
   },
   givens: {
     Default;
@@ -160,9 +161,7 @@ export const RectangleTesterantoBaseTestSpecification: ITestSpecification<
   };
 
 
-export const RectangleTesterantoBaseInterface: ITestInterface<
-  testShape
-> = {
+export const RectangleTesterantoBaseInterface: IPartialInterface<testShape> = {
   beforeEach: async (
     subject,
     initializer,

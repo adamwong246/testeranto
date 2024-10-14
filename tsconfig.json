@@ -1,6 +1,6 @@
 {
   "files": [
-    "project.test.mts",
+    "testeranto.mts",
   ],
   "include": [
     "index.d.ts",
@@ -15,6 +15,8 @@
         "./node_modules/@types/react"
       ]
     },
+    "resolveJsonModule": true,
+    "noImplicitUseStrict": true,
     /* Visit https://aka.ms/tsconfig to read more about this file */
     // "jsx": "react-jsx",
     /* Projects */

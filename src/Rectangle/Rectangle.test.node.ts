@@ -16,7 +16,7 @@ export const RectangleTesteranto = Testeranto(
     asd: 1,
 
     afterAll: async function (renderer, actioner) {
-      // console.log("goodbye");
+      // console.log("aloha");
       // whyIsNodeStillRunning();
     },
     ...RectangleTesterantoBaseInterface

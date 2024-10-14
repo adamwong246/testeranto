@@ -32,7 +32,7 @@ export function LoginPage(): React.JSX.Element {
     <form>
       <input type="email" value={selection.email} onChange={(e) => store.dispatch(actions.setEmail(e.target.value))} />
 
-      <p id="invalid-email-warning" className="warning">
+      <p id="invalid-email-warning" className="warnin">
         {selection.error === 'invalidEmail' && emailwarning}
       </p>
 

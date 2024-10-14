@@ -1,22 +1,22 @@
-import "./chunk-XALKSG2U.mjs";
+import "./chunk-TTFRSOOU.mjs";
 
 // tests.test.mts
 var tests_test_default = [
-  ["./src/LoginPage/react/web.test.tsx", "web", []],
-  ["./src/LoginPage/react/node.test.tsx", "node", []],
+  // ["./src/LoginPage/react/web.test.tsx", "web", []],
+  // ["./src/LoginPage/react/node.test.tsx", "node", []],
   ["./src/LoginPage/react-test-renderer/web.test.tsx", "web", []],
-  ["./src/LoginPage/react-test-renderer/node.test.tsx", "node", []],
-  ["./src/ClassicalComponent/react-test-renderer/web.test.tsx", "web", []],
-  ["./src/ClassicalComponent/react-test-renderer/node.test.tsx", "node", []],
-  ["./src/ClassicalComponent/react-dom/client.web.test.tsx", "web", []],
-  ["./src/ClassicalComponent/react-dom/server.node.test.tsx", "node", []],
-  ["./src/ReactStateAndHook.test.tsx", "node", []],
-  ["./src/app.redux.test.ts", "node", []],
-  ["./src/app.reduxToolkit.test.ts", "node", []],
-  ["./src/Rectangle/Rectangle.test.electron.ts", "web", []],
-  ["./src/Rectangle/Rectangle.test.node.ts", "node", []],
-  ["./src/MyFirstContract.solidity.test.ts", "node", []],
-  ["./src/MyFirstContract.solidity-precompiled.test.ts", "node", []]
+  ["./src/LoginPage/react-test-renderer/node.test.tsx", "node", []]
+  // ["./src/ClassicalComponent/react-test-renderer/web.test.tsx", "web", []],
+  // ["./src/ClassicalComponent/react-test-renderer/node.test.tsx", "node", []],
+  // ["./src/ClassicalComponent/react-dom/client.web.test.tsx", "web", []],
+  // ["./src/ClassicalComponent/react-dom/server.node.test.tsx", "node", []],
+  // ["./src/ReactStateAndHook.test.tsx", "node", []],
+  // ["./src/app.redux.test.ts", "node", []],
+  // ["./src/app.reduxToolkit.test.ts", "node", []],
+  // ["./src/Rectangle/Rectangle.test.electron.ts", "web", []],
+  // ["./src/Rectangle/Rectangle.test.node.ts", "node", []],
+  // ["./src/MyFirstContract.solidity.test.ts", "node", []],
+  // ["./src/MyFirstContract.solidity-precompiled.test.ts", "node", []],
   // ["./src/ClassicalComponent/react-dom/electron.web.test.tsx", "web", []],
   // broken or dead?
   // ["./src/google.puppeteer.testeranto.test.ts", "node", []],

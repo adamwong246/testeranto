@@ -135,7 +135,7 @@ export const EsbuildPuppeteerTesteranto = <ITestShape extends ITTestShape>(
 
         page
           .on("console", (message) => {
-            console.log(message)
+            // console.log(message)
             consoleLogs.push(
               `${message
                 .type()

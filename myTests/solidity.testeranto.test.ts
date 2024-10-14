@@ -56,7 +56,7 @@ export const SolidityTesteranto = async <
         const argz = await testInput[1](web3);
 
         const size = Buffer.byteLength(contract.deployedBytecode.bytes, 'utf8') / 2;
-        console.log('contract size is', size);
+        // console.log('contract size is', size);
 
         return {
           contract: await (new web3.eth.Contract(contract.abi))
