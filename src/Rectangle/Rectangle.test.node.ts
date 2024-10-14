@@ -1,26 +1,19 @@
 import Testeranto from "testeranto/src/Node";
+import { IEntry } from "testeranto/src/Types";
 
-import Rectangle from "../../src/Rectangle";
 import {
+  IRectangleTestShape,
   RectangleTesterantoBaseInterface,
   RectangleTesterantoBasePrototype,
   RectangleTesterantoBaseTestImplementation,
   RectangleTesterantoBaseTestSpecification,
 } from "../../src/Rectangle.test";
 
-export const RectangleTesteranto = Testeranto(
+export const RectangleTesteranto: IEntry<IRectangleTestShape> = Testeranto(
   RectangleTesterantoBasePrototype,
   RectangleTesterantoBaseTestSpecification,
   RectangleTesterantoBaseTestImplementation,
-  {
-    asd: 1,
-
-    afterAll: async function (renderer, actioner) {
-      // console.log("aloha");
-      // whyIsNodeStillRunning();
-    },
-    ...RectangleTesterantoBaseInterface
-  },
+  RectangleTesterantoBaseInterface
 );
 
 export { };

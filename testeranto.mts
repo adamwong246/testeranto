@@ -1,8 +1,11 @@
 import { ITProject } from "testeranto/src/Project";
-
+import fs from "fs";
 import { solCompile } from "./myTests/truffle.mjs";
+import { IJsonConfig } from "testeranto/src/Types";
+import { jsonc } from 'jsonc';
+// import configs from "./testeranto.json"  assert { type: "jsonc" };
 
-import configs from "./testeranto.json"  assert { type: "json" };
+const configs = jsonc.parse((await fs.readFileSync("./testeranto.json")).toString()) as IJsonConfig;
 
 
 export default new ITProject({
@@ -14,8 +17,6 @@ export default new ITProject({
   features: 'features.test.mts',
   minify: false,
   outbase: ".",
-
-  tests: 'tests.test.mts',
   externals: ["ganache"],
   ports: ["3001", "3002", "3003", "3004", "3005", "3006", "3007"],
 

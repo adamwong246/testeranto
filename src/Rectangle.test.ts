@@ -9,7 +9,7 @@ import type {
 
 import Rectangle from "./Rectangle";
 
-export interface testShape {
+export interface IRectangleTestShape {
 
   iinput: Rectangle,
   isubject: Rectangle,
@@ -50,17 +50,17 @@ export interface testShape {
 }
 
 export const RectangleTesterantoBaseTestImplementation: ITestImplementation<
-  testShape,
+  IRectangleTestShape,
   {
     givens: {
-      [K in keyof testShape["givens"]]: (
-        ...Iw: testShape["givens"][K]
+      [K in keyof IRectangleTestShape["givens"]]: (
+        ...Iw: IRectangleTestShape["givens"][K]
       ) => Rectangle;
     }
     whens: {
-      [K in keyof testShape["whens"]]: (
-        ...Iw: testShape["whens"][K]
-      ) => testShape['when'];
+      [K in keyof IRectangleTestShape["whens"]]: (
+        ...Iw: IRectangleTestShape["whens"][K]
+      ) => IRectangleTestShape['when'];
     }
   }
 > = {
@@ -83,6 +83,7 @@ export const RectangleTesterantoBaseTestImplementation: ITestImplementation<
 
   thens: {
     AreaPlusCircumference: (combined) => (rectangle) => {
+      console.log("MARK")
       assert.equal(rectangle.area() + rectangle.circumference(), combined);
     },
     getWidth: (width) => (rectangle) => assert.equal(rectangle.width, width),
@@ -106,9 +107,7 @@ export const RectangleTesterantoBaseTestImplementation: ITestImplementation<
   },
 };
 
-export const RectangleTesterantoBaseTestSpecification: ITestSpecification<
-  testShape
-> =
+export const RectangleTesterantoBaseTestSpecification: ITestSpecification<IRectangleTestShape> =
   (Suite, Given, When, Then, Check) => {
     return [
       Suite.Default(
@@ -136,7 +135,7 @@ export const RectangleTesterantoBaseTestSpecification: ITestSpecification<
           ),
           "test3": Given.Default(
             [`hello`],
-            [When.setHeight(5), When.setWidth(5)],
+            [When.setHeight(5), When.setWidth(55)],
             [Then.area(25)]
           )
         },
@@ -161,7 +160,7 @@ export const RectangleTesterantoBaseTestSpecification: ITestSpecification<
   };
 
 
-export const RectangleTesterantoBaseInterface: IPartialInterface<testShape> = {
+export const RectangleTesterantoBaseInterface: IPartialInterface<IRectangleTestShape> = {
   beforeEach: async (
     subject,
     initializer,
@@ -175,6 +174,7 @@ export const RectangleTesterantoBaseInterface: IPartialInterface<testShape> = {
     renderer,
     actioner
   ) {
+    console.log("MARK")
     actioner(renderer);
     return renderer;
   },
