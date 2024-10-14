@@ -1,5 +1,6 @@
 import {
   IBaseTest,
+  IEntry,
   ITestImplementation,
   ITestInterface,
   ITestSpecification
@@ -16,7 +17,13 @@ import {
 import { NodeWriter } from "./NodeWriter";
 // import { NodeWriterElectron } from "./nodeWriterElectron";
 
-console.log("(window as any).NodeWriter", (window as any).NodeWriter);
+const remote = require('@electron/remote')
+// import electron from '@electron/remote';
+// const electron = require('electron')
+// const remote = electron.remote;
+// const path = require('path')
+// const BrowserWindow = electron.remote.BrowserWindow
+
 
 class WebTesteranto<
   TestShape extends IBaseTest,
@@ -66,23 +73,26 @@ class WebTesteranto<
     } = await t.receiveTestResourceConfig(partialTestResource);
 
     Promise.all([...artifacts, logPromise]).then(async () => {
-      // ipcRenderer.invoke('quit-app', failed);
-      // (window as any).exit(failed)
+      var window = remote.getCurrentWindow();
+      window.close();
+      // debugger
+      // // ipcRenderer.invoke('quit-app', failed);
+      // // (window as any).exit(failed)
+      // let win = new BrowserWindow({ width: 800, height: 600 })
+      // win.loadURL('https://github.com')
     })
   }
 
 };
 
-export default async <
-  ITestShape extends IBaseTest,
->(
+export default async <ITestShape extends IBaseTest>(
   input: ITestShape['iinput'],
   testSpecification: ITestSpecification<ITestShape>,
   testImplementation: ITestImplementation<ITestShape, object>,
   testInterface: Partial<ITestInterface<ITestShape>>,
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
-) => {
-  new WebTesteranto<ITestShape>(
+): Promise<Testeranto<ITestShape>> => {
+  return new WebTesteranto<ITestShape>(
     input,
     testSpecification,
     testImplementation,

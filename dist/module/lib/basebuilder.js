@@ -35,7 +35,7 @@ export class BaseBuilder {
                     const logFilePath = (`${testResourceConfiguration.fs}/log.txt`);
                     const access = await logWriter.createWriteStream(logFilePath);
                     const tLog = (...l) => {
-                        console.log(...l);
+                        // console.log(...l);
                         access.write(`${l.toString()}\n`);
                     };
                     const suiteDone = await runner(testResourceConfiguration, tLog);

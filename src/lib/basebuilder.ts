@@ -230,7 +230,7 @@ export abstract class BaseBuilder<
           const access = await logWriter.createWriteStream(logFilePath);
 
           const tLog = (...l: string[]) => {
-            console.log(...l);
+            // console.log(...l);
             access.write(`${l.toString()}\n`);
           };
           const suiteDone: BaseSuite<

@@ -5,6 +5,7 @@ import { IBaseConfig } from "../Types";
 
 import baseEsBuildConfig from "./index.js";
 
+
 export default (
   config: IBaseConfig,
   entryPoints: Set<string> | string[]

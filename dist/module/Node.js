@@ -24,5 +24,22 @@ class NodeTesteranto extends Testeranto {
 }
 ;
 export default async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = defaultTestResourceRequirement) => {
-    new NodeTesteranto(input, testSpecification, testImplementation, testResourceRequirement, testInterface);
+    return new NodeTesteranto(input, testSpecification, testImplementation, testResourceRequirement, testInterface);
 };
+// export default async <
+//   ITestShape extends IBaseTest,
+// >(
+//   input: ITestShape['iinput'],
+//   testSpecification: ITestSpecification<ITestShape>,
+//   testImplementation: ITestImplementation<ITestShape, object>,
+//   testInterface: Partial<ITestInterface<ITestShape>>,
+//   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
+// ) => {
+//   new NodeTesteranto<ITestShape>(
+//     input,
+//     testSpecification,
+//     testImplementation,
+//     testResourceRequirement,
+//     testInterface,
+//   )
+// };

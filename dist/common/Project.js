@@ -30,9 +30,7 @@ exports.ITProject = void 0;
 const esbuild_1 = __importDefault(require("esbuild"));
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
-// import pm2 from "pm2";
 const readline_1 = __importDefault(require("readline"));
-// import WebSocket, { WebSocketServer } from 'ws';
 const glob_1 = require("glob");
 const node_js_1 = __importDefault(require("./esbuildConfigs/node.js"));
 const web_js_1 = __importDefault(require("./esbuildConfigs/web.js"));
@@ -226,15 +224,15 @@ class ITProject {
                         .then(async (esbuildWeb) => {
                         await esbuildWeb.watch();
                         return esbuildWeb;
-                    })
+                    }),
                 ]).then(async ([eNode, eWeb]) => {
                     if (config.devMode === false) {
                         console.log("Your tests were built but not run because devMode was false. Exiting gracefully");
                         process.exit(0);
                     }
                     else {
-                        console.log("sending", JSON.stringify(this.tests));
-                        childElectron.stdin.write(JSON.stringify(this.tests));
+                        // console.log("sending", JSON.stringify(this.tests));
+                        // childElectron.stdin.write(JSON.stringify(this.tests));
                         // not necessary
                         // this.esWebServerDetails = await eWeb.serve({
                         //   servedir: 'dist',

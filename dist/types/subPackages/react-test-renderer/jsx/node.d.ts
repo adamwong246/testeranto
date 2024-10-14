@@ -5,5 +5,5 @@ declare const _default: <ITestShape extends IBaseTest>(testImplementations: ITes
     butThen: (s: import("react-test-renderer").ReactTestRenderer, thenCB: any, tr: any) => Promise<import("react-test-renderer").ReactTestRenderer>;
     beforeEach: (CComponent: any, props: any) => Promise<import("react-test-renderer").ReactTestRenderer>;
     andWhen: (renderer: import("react-test-renderer").ReactTestRenderer, whenCB: (any: any) => any) => Promise<import("react-test-renderer").ReactTestRenderer>;
-}) => Promise<void>;
+}) => Promise<import("../../../lib/core").default<ITestShape>>;
 export default _default;

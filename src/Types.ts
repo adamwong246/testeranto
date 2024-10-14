@@ -3,10 +3,12 @@
 
 import {
   ITTestResourceConfiguration,
+  ITTestResourceRequest,
   ITestArtificer,
   ITestCheckCallback
 } from "./lib/index.js";
 import { IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen, BaseGiven } from "./lib/abstractBase.js";
+import Testeranto from "./lib/core.js";
 
 export type IBaseConfig = {
   externals: string[],
@@ -22,6 +24,16 @@ export type IBaseConfig = {
   tests: string;
   debugger: boolean;
 };
+
+export type IPartialInterface<I extends IBaseTest> = Partial<ITestInterface<I>>;
+
+export type IEntry<ITestShape extends IBaseTest> = (
+  input: ITestShape['iinput'],
+  testSpecification: ITestSpecification<ITestShape>,
+  testImplementation: ITestImplementation<ITestShape, object>,
+  testInterface: IPartialInterface<ITestShape>,
+  testResourceRequirement: ITTestResourceRequest,
+) => Promise<Testeranto<ITestShape>>;
 
 // type If = {
 //   (modulePath: string | URL, options?: childProcess.ForkOptions): childProcess.ChildProcess;

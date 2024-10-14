@@ -6,7 +6,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __importDefault(require("./lib/core"));
 const lib_1 = require("./lib");
 // import { NodeWriterElectron } from "./nodeWriterElectron";
-console.log("(window as any).NodeWriter", window.NodeWriter);
+const remote = require('@electron/remote');
+// import electron from '@electron/remote';
+// const electron = require('electron')
+// const remote = electron.remote;
+// const path = require('path')
+// const BrowserWindow = electron.remote.BrowserWindow
 class WebTesteranto extends core_1.default {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
         super(input, testSpecification, testImplementation, testResourceRequirement, window.NodeWriter, testInterface);
@@ -25,12 +30,17 @@ class WebTesteranto extends core_1.default {
     async receiveTestResourceConfig(t, partialTestResource) {
         const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(partialTestResource);
         Promise.all([...artifacts, logPromise]).then(async () => {
-            // ipcRenderer.invoke('quit-app', failed);
-            // (window as any).exit(failed)
+            var window = remote.getCurrentWindow();
+            window.close();
+            // debugger
+            // // ipcRenderer.invoke('quit-app', failed);
+            // // (window as any).exit(failed)
+            // let win = new BrowserWindow({ width: 800, height: 600 })
+            // win.loadURL('https://github.com')
         });
     }
 }
 ;
 exports.default = async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = lib_1.defaultTestResourceRequirement) => {
-    new WebTesteranto(input, testSpecification, testImplementation, testResourceRequirement, testInterface);
+    return new WebTesteranto(input, testSpecification, testImplementation, testResourceRequirement, testInterface);
 };

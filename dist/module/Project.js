@@ -1,9 +1,7 @@
 import esbuild from "esbuild";
 import fs from "fs";
 import path from "path";
-// import pm2 from "pm2";
 import readline from 'readline';
-// import WebSocket, { WebSocketServer } from 'ws';
 import { glob } from "glob";
 import esbuildNodeConfiger from "./esbuildConfigs/node.js";
 import esbuildWebConfiger from "./esbuildConfigs/web.js";
@@ -197,15 +195,15 @@ export class ITProject {
                         .then(async (esbuildWeb) => {
                         await esbuildWeb.watch();
                         return esbuildWeb;
-                    })
+                    }),
                 ]).then(async ([eNode, eWeb]) => {
                     if (config.devMode === false) {
                         console.log("Your tests were built but not run because devMode was false. Exiting gracefully");
                         process.exit(0);
                     }
                     else {
-                        console.log("sending", JSON.stringify(this.tests));
-                        childElectron.stdin.write(JSON.stringify(this.tests));
+                        // console.log("sending", JSON.stringify(this.tests));
+                        // childElectron.stdin.write(JSON.stringify(this.tests));
                         // not necessary
                         // this.esWebServerDetails = await eWeb.serve({
                         //   servedir: 'dist',

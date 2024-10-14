@@ -63,7 +63,7 @@ export abstract class BaseSuite<
   }
 
   assertThat(t: ITestShape['then']): unknown {
-    console.log("base assertThat")
+    // console.log("base assertThat")
     return t;
   }
 

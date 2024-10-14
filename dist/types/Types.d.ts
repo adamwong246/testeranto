@@ -1,5 +1,6 @@
-import { ITTestResourceConfiguration, ITestArtificer, ITestCheckCallback } from "./lib/index.js";
+import { ITTestResourceConfiguration, ITTestResourceRequest, ITestArtificer, ITestCheckCallback } from "./lib/index.js";
 import { IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen, BaseGiven } from "./lib/abstractBase.js";
+import Testeranto from "./lib/core.js";
 export declare type IBaseConfig = {
     externals: string[];
     clearScreen: boolean;
@@ -14,6 +15,8 @@ export declare type IBaseConfig = {
     tests: string;
     debugger: boolean;
 };
+export declare type IPartialInterface<I extends IBaseTest> = Partial<ITestInterface<I>>;
+export declare type IEntry<ITestShape extends IBaseTest> = (input: ITestShape['iinput'], testSpecification: ITestSpecification<ITestShape>, testImplementation: ITestImplementation<ITestShape, object>, testInterface: IPartialInterface<ITestShape>, testResourceRequirement: ITTestResourceRequest) => Promise<Testeranto<ITestShape>>;
 export declare type IRunTime = `node` | `web`;
 export declare type ITestTypes = [
     string,

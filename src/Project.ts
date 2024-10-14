@@ -3,10 +3,8 @@ import fs from "fs";
 import fsExists from "fs.promises.exists";
 import path from "path";
 
-// import pm2 from "pm2";
 
 import readline from 'readline';
-// import WebSocket, { WebSocketServer } from 'ws';
 import { glob } from "glob";
 
 import { TesterantoFeatures } from "./Features.js";
@@ -215,7 +213,7 @@ export class ITProject {
             .then(async (esbuildWeb) => {
               await esbuildWeb.watch();
               return esbuildWeb;
-            })
+            }),
 
         ]).then(async ([eNode, eWeb]) => {
 
@@ -224,8 +222,8 @@ export class ITProject {
             process.exit(0);
 
           } else {
-            console.log("sending", JSON.stringify(this.tests));
-            childElectron.stdin.write(JSON.stringify(this.tests));
+            // console.log("sending", JSON.stringify(this.tests));
+            // childElectron.stdin.write(JSON.stringify(this.tests));
             // not necessary
             // this.esWebServerDetails = await eWeb.serve({
             //   servedir: 'dist',

@@ -1,23 +1,108 @@
-import { app, BrowserWindow, ipcMain, utilityProcess } from "electron";
+import {
+  app, BrowserWindow, ipcMain, utilityProcess,
+
+} from "electron";
+
+// const electron = require('electron')
+// const path = require('path')
+// const BrowserWindow = electron.remote.BrowserWindow
 
 import pie from "puppeteer-in-electron";
 import puppeteer from "puppeteer-core";
 import { ITestTypes } from "./Types";
 import fs from "fs";
 import path from "path";
+const remoteMain = require("@electron/remote/main");
 
-process.stdin.on("data", (configTests) => {
-  main(JSON.parse(configTests.toString()) as ITestTypes[]);
-});
+/* add this before the enable function */
+remoteMain.initialize();
 
-// const watchables = (tests: ITestTypes[]) => {
-//   return tests.map((t) => {
-//     return [t[1], `dist/${t[1]}/${t[0].replace(".mts", ".mjs")}`]
-//   })
-// }
+const watcher = (t: ITestTypes) => {
+  // return `/${t[1]}/${t[0].split('.').slice(0, -1).concat('mjs').join('.')}`;
+  return path.normalize(process.cwd() + `/dist/${t[1]}/${t[0].split('.').slice(0, -1).concat('mjs').join('.')}`);
+};
 
-const main = (tests: ITestTypes[]) => {
-  console.log("tests", tests);
+const changer = (f: string) => {
+  // return `/${t[1]}/${t[0].split('.').slice(0, -1).concat('mjs').join('.')}`;
+  return path.normalize(process.cwd() + `/dist/${f}`);
+};
+
+
+const launchNode = (t: ITestTypes, changedFile: string) => {
+  console.log("launchNode", changedFile)
+  const child = utilityProcess.fork(changedFile, [
+    JSON.stringify(
+      {
+        scheduled: true,
+        name: changedFile,
+        ports: [],
+        fs:
+          path.resolve(
+            process.cwd(),
+
+            "dist",
+            // config.outdir,
+
+            "node",
+            t[0],
+          ),
+      }
+    )
+  ]);
+  console.log("child", child);
+  child.stdout?.on("data", (x) => {
+    console.log("x", x)
+  })
+}
+const launchWeb = (t: ITestTypes, changedFile: string) => {
+  console.log("launchWeb", changedFile)
+  const subWin = new BrowserWindow(
+    {
+      show: false,
+
+      webPreferences: {
+        nodeIntegration: true,
+        nodeIntegrationInWorker: true,
+        contextIsolation: false,
+        preload: path.join(app.getAppPath(), 'preload.js'),
+        offscreen: false,
+        devTools: true,
+      }
+    }
+
+  )
+  remoteMain.enable(subWin.webContents);
+  subWin.webContents.openDevTools()
+  // subWin.on("close")
+  const htmlFile = changedFile.replace(".mjs", ".html");
+
+  subWin.loadFile(htmlFile, {
+    query: {
+      requesting: encodeURIComponent(JSON.stringify({
+        name: changedFile,
+        ports: [].toString(),
+        fs:
+          path.resolve(
+            process.cwd(),
+
+            "dist",
+            // config.outdir,
+
+            "web",
+            t[0],
+          ),
+      }
+      ))
+    }
+  })
+
+}
+
+const main = async () => {
+  const configs = JSON.parse((await fs.readFileSync("./testeranto.json")).toString()) as {
+    outdir: string,
+    tests: ITestTypes[]
+  };
   pie.initialize(app, 2999).then(async () => {
 
     app.on("ready", () => {
@@ -35,7 +120,7 @@ const main = (tests: ITestTypes[]) => {
       win.loadFile(process.cwd() + "/dist/report.html").then(async (x) => {
         pie.connect(app, puppeteer).then(async (browser) => {
           console.log("pages", await browser.pages())
-          console.log("tests", tests);
+          console.log("configs", configs);
 
           pie.getPage(browser, win).then(async (page) => {
             console.log("page", page);
@@ -48,119 +133,76 @@ const main = (tests: ITestTypes[]) => {
 
       })
 
-      const watcher = (t: ITestTypes) => {
-        return `/${t[1]}/${t[0].split('.').slice(0, -1).concat('mjs').join('.')}`;
-      };
+      fs.watch(configs.outdir, {
+        recursive: true,
+      }, (eventType, changedFile) => {
 
-      tests.forEach((t) => {
-
-        const watch = process.cwd() + `/dist/${t[1]}/${t[0].split('.').slice(0, -1).concat('mjs').join('.')}`;
-
-        console.log("watching", watch);
-        if (t[1] === "node") {
-          // const watch = process.cwd() + `${t[1]}/${t[0].replace(".mts", ".mjs")}`;
-          fs.watch(watch, function (event, filename) {
-            console.log('event is: ' + event, filename);
-
-
-            const child = utilityProcess.fork(watch, [
-              JSON.stringify(
-                {
-                  scheduled: true,
-                  name: watch,
-                  ports: [],
-                  fs:
-                    path.resolve(
-                      process.cwd(),
-
-                      "dist",
-                      // config.outdir,
-
-                      "node",
-                      t[0],
-                    ),
-                }
-              )
-            ]);
-            console.log("child", child);
-            child.stdout?.on("data", (x) => {
-              console.log("x", x)
-            })
-
-
-
-            if (filename) {
-              console.log('filename provided: ' + filename);
-            } else {
-              console.log('filename not provided');
-            }
-          });
-        } else if (t[1] === "web") {
-          // const watch = process.cwd() + `${t[1]}/${t[0].replace(".mts", ".mjs")}`;
-          fs.watch(watch, function (event, filename) {
-            console.log('event is: ' + event);
-
-            const subWin = new BrowserWindow(
-              {
-                show: true,
-
-                webPreferences: {
-                  nodeIntegration: true,
-                  nodeIntegrationInWorker: true,
-                  contextIsolation: false,
-                  preload: path.join(app.getAppPath(), 'preload.js'),
-                  offscreen: false,
-                  devTools: true,
-                }
+        if (changedFile) {
+          configs.tests.forEach((t) => {
+            if (watcher(t) === changer(changedFile)) {
+              if (t[1] === "node") {
+                launchNode(t, changer(changedFile))
+              } else {
+                launchWeb(t, changer(changedFile))
               }
-
-            );
-            const htmlFile = watch.replace(".mjs", ".html");
-
-            subWin.loadFile(htmlFile, {
-              query: {
-                requesting: encodeURIComponent(JSON.stringify({
-                  name: watch,
-                  ports: [].toString(),
-                  fs:
-                    path.resolve(
-                      process.cwd(),
-
-                      "dist",
-                      // config.outdir,
-
-                      "web",
-                      t[0],
-                    ),
-                }
-                ))
-              }
-            })
-
-              .then(async (x) => {
-                // pie.connect(app, puppeteer).then(async (browser) => {
-                //   console.log("pages", await browser.pages())
-                //   console.log("tests", tests);
-
-                //   // pie.getPage(browser, subWin).then(async (page) => {
-                //   //   console.log("page", page);
-                //   //   await page.screenshot({
-                //   //     path: 'electron-puppeteer-screenshot.jpg'
-                //   //   });
-                //   // })
-
-                // })
-
-              })
-
-            if (filename) {
-              console.log('filename provided: ' + filename);
-            } else {
-              console.log('filename not provided');
             }
-          });
+          })
         }
+
       })
+
+
+      // configs.tests.forEach((t) => {
+
+      //   const watch = process.cwd() + `/dist/${t[1]}/${t[0].split('.').slice(0, -1).concat('mjs').join('.')}`;
+
+      //   console.log("watching", watch);
+      //   if (t[1] === "node") {
+      //     // const watch = process.cwd() + `${t[1]}/${t[0].replace(".mts", ".mjs")}`;
+      //     fs.watch(watch, { persistent: true }, function (event, filename) {
+      //       console.log('event is: ' + event, filename);
+
+
+
+
+
+
+      //       if (filename) {
+      //         console.log('filename provided: ' + filename);
+      //       } else {
+      //         console.log('filename not provided');
+      //       }
+      //     });
+      //   } else if (t[1] === "web") {
+      //     // const watch = process.cwd() + `${t[1]}/${t[0].replace(".mts", ".mjs")}`;
+      //     fs.watch(watch, { persistent: true }, function (event, filename) {
+      //       console.log('event is: ' + event);
+
+
+      //         .then(async (x) => {
+      //           // pie.connect(app, puppeteer).then(async (browser) => {
+      //           //   console.log("pages", await browser.pages())
+      //           //   console.log("tests", tests);
+
+      //           //   // pie.getPage(browser, subWin).then(async (page) => {
+      //           //   //   console.log("page", page);
+      //           //   //   await page.screenshot({
+      //           //   //     path: 'electron-puppeteer-screenshot.jpg'
+      //           //   //   });
+      //           //   // })
+
+      //           // })
+
+      //         })
+
+      //       if (filename) {
+      //         console.log('filename provided: ' + filename);
+      //       } else {
+      //         console.log('filename not provided');
+      //       }
+      //     });
+      //   }
+      // })
     });
 
 
@@ -192,8 +234,8 @@ const main = (tests: ITestTypes[]) => {
   // window.destroy();
 };
 
-// console.log("mark3")
-// main();
+
+main();
 // export { };
 
 // process.stdin.re
@@ -277,3 +319,13 @@ const main = (tests: ITestTypes[]) => {
 //   console.log("quit-app", failed);
 //   app.exit(failed);
 // });
+
+// process.stdin.on("data", (configTests) => {
+//   main(JSON.parse(configTests.toString()) as ITestTypes[]);
+// });
+
+// const watchables = (tests: ITestTypes[]) => {
+//   return tests.map((t) => {
+//     return [t[1], `dist/${t[1]}/${t[0].replace(".mts", ".mjs")}`]
+//   })
+// }

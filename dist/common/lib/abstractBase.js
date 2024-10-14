@@ -20,7 +20,7 @@ class BaseSuite {
         return new Promise((res) => res(s));
     }
     assertThat(t) {
-        console.log("base assertThat");
+        // console.log("base assertThat")
         return t;
     }
     async run(input, testResourceConfiguration, artifactory, tLog) {
