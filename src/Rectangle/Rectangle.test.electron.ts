@@ -1,27 +1,31 @@
 import Testeranto from "testeranto/src/Web";
 
-import Rectangle from "../../src/Rectangle";
+// const { BrowserWindow, app } = require("electron");
+// console.log("mark3", BrowserWindow, app);
+// debugger
+
+const remote = require('@electron/remote')
+// remote.BrowserWindow()
+
+const win = new remote.BrowserWindow();
+const url = "https://www.news.com/";
+win.loadURL(url);
+
+// console.log(await browser.pages());
+// const page = await pie.getPage(browser, win);
+// await page.screenshot({
+//   path: 'google.jpg'
+// });
+
 import {
-  Input,
   IRectangleTestShape,
   RectangleTesterantoBaseInterface,
   RectangleTesterantoBasePrototype,
   RectangleTesterantoBaseTestImplementation,
   RectangleTesterantoBaseTestSpecification,
-  ThenShape,
-  WhenShape
 } from "../../src/Rectangle.test";
 
-export const RectangleTesteranto = Testeranto<
-  IRectangleTestShape,
-  Input,
-  Input,
-  Rectangle,
-  Rectangle,
-  WhenShape,
-  ThenShape,
-  unknown
->(
+export const RectangleTesteranto = Testeranto(
   RectangleTesterantoBasePrototype,
   RectangleTesterantoBaseTestSpecification,
   RectangleTesterantoBaseTestImplementation,

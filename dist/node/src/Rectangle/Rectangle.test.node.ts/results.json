@@ -5,7 +5,8 @@
       "name": "Default",
       "whens": [
         {
-          "name": "setWidth: 4"
+          "name": "setWidth: 4",
+          "error": true
         },
         {
           "name": "setHeight: 9"
@@ -19,7 +20,10 @@
           "name": "getHeight: 9"
         }
       ],
-      "error": null,
+      "error": [
+        {},
+        "TypeError: Cannot read properties of undefined (reading 'setWidth')\n    at file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:30696:51\n    at Object.andWhen (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:30632:12)\n    at When.andWhen (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:14801:40)\n    at When.test (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:14590:25)\n    at Given.give (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:14556:24)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:14505:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:14669:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:14697:29)\n    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:30613:47)"
+      ],
       "features": [
         "hello"
       ]
@@ -28,7 +32,8 @@
       "name": "Default",
       "whens": [
         {
-          "name": "setWidth: 4"
+          "name": "setWidth: 4",
+          "error": true
         },
         {
           "name": "setHeight: 5"
@@ -48,7 +53,10 @@
           "name": "AreaPlusCircumference: 38"
         }
       ],
-      "error": null,
+      "error": [
+        {},
+        "TypeError: Cannot read properties of undefined (reading 'setWidth')\n    at file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:30696:51\n    at Object.andWhen (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:30632:12)\n    at When.andWhen (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:14801:40)\n    at When.test (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:14590:25)\n    at Given.give (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:14556:24)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:14505:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:14669:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:14697:29)\n    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:30613:47)"
+      ],
       "features": [
         "hello"
       ]
@@ -57,7 +65,8 @@
       "name": "Default",
       "whens": [
         {
-          "name": "setHeight: 4"
+          "name": "setHeight: 4",
+          "error": true
         },
         {
           "name": "setWidth: 3"
@@ -68,7 +77,10 @@
           "name": "area: 12"
         }
       ],
-      "error": null,
+      "error": [
+        {},
+        "TypeError: Cannot read properties of undefined (reading 'setHeight')\n    at file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:30697:53\n    at Object.andWhen (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:30632:12)\n    at When.andWhen (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:14801:40)\n    at When.test (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:14590:25)\n    at Given.give (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:14556:24)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:14505:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:14669:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:14697:29)\n    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:30613:47)"
+      ],
       "features": [
         "hello"
       ]
@@ -77,7 +89,8 @@
       "name": "Default",
       "whens": [
         {
-          "name": "setHeight: 5"
+          "name": "setHeight: 5",
+          "error": true
         },
         {
           "name": "setWidth: 55"
@@ -85,21 +98,12 @@
       ],
       "thens": [
         {
-          "name": "area: 25",
-          "error": true
+          "name": "area: 55"
         }
       ],
       "error": [
-        {
-          "name": "AssertionError",
-          "message": "expected 275 to equal 25",
-          "showDiff": true,
-          "actual": 275,
-          "expected": 25,
-          "operator": "strictEqual",
-          "stack": "AssertionError: expected 275 to equal 25\n    at file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:4915:43\n    at Object.butThen (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:4179:37)\n    at Then.butThen (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:4706:42)\n    at Then.test (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:4384:28)\n    at Given.give (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:4318:34)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:4236:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:4472:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:4514:29)\n    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:4829:9)"
-        },
-        "AssertionError: expected 275 to equal 25\n    at file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:4915:43\n    at Object.butThen (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:4179:37)\n    at Then.butThen (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:4706:42)\n    at Then.test (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:4384:28)\n    at Given.give (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:4318:34)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:4236:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:4472:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:4514:29)\n    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:4829:9)"
+        {},
+        "TypeError: Cannot read properties of undefined (reading 'setHeight')\n    at file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:30697:53\n    at Object.andWhen (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:30632:12)\n    at When.andWhen (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:14801:40)\n    at When.test (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:14590:25)\n    at Given.give (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:14556:24)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:14505:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:14669:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:14697:29)\n    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs:30613:47)"
       ],
       "features": [
         "hello"

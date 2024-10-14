@@ -45,10 +45,22 @@
           "name": "area: 20"
         },
         {
-          "name": "AreaPlusCircumference: 38"
+          "name": "AreaPlusCircumference: 38",
+          "error": true
         }
       ],
-      "error": null,
+      "error": [
+        {
+          "name": "AssertionError",
+          "message": "expected 43 to equal 38",
+          "showDiff": true,
+          "actual": 43,
+          "expected": 38,
+          "operator": "strictEqual",
+          "stack": "AssertionError: expected 43 to equal 38\n    at file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5824:14\n    at Object.butThen (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5378:37)\n    at Then.butThen (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5716:40)\n    at Then.test (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5526:28)\n    at Given.give (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5474:34)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5420:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5580:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5608:29)\n    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5753:47)"
+        },
+        "AssertionError: expected 43 to equal 38\n    at file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5824:14\n    at Object.butThen (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5378:37)\n    at Then.butThen (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5716:40)\n    at Then.test (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5526:28)\n    at Given.give (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5474:34)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5420:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5580:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5608:29)\n    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5753:47)"
+      ],
       "features": [
         "hello"
       ]
@@ -85,21 +97,21 @@
       ],
       "thens": [
         {
-          "name": "area: 25",
+          "name": "area: 55",
           "error": true
         }
       ],
       "error": [
         {
           "name": "AssertionError",
-          "message": "expected 275 to equal 25",
+          "message": "expected 275 to equal 55",
           "showDiff": true,
           "actual": 275,
-          "expected": 25,
+          "expected": 55,
           "operator": "strictEqual",
-          "stack": "AssertionError: expected 275 to equal 25\n    at file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5187:43\n    at Object.butThen (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:4736:37)\n    at Then.butThen (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5075:40)\n    at Then.test (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:4884:28)\n    at Given.give (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:4832:34)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:4778:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:4938:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:4966:29)\n    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5111:47)"
+          "stack": "AssertionError: expected 275 to equal 55\n    at file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5828:43\n    at Object.butThen (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5378:37)\n    at Then.butThen (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5716:40)\n    at Then.test (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5526:28)\n    at Given.give (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5474:34)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5420:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5580:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5608:29)\n    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5753:47)"
         },
-        "AssertionError: expected 275 to equal 25\n    at file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5187:43\n    at Object.butThen (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:4736:37)\n    at Then.butThen (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5075:40)\n    at Then.test (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:4884:28)\n    at Given.give (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:4832:34)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:4778:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:4938:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:4966:29)\n    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5111:47)"
+        "AssertionError: expected 275 to equal 55\n    at file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5828:43\n    at Object.butThen (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5378:37)\n    at Then.butThen (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5716:40)\n    at Then.test (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5526:28)\n    at Given.give (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5474:34)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5420:22)\n    at async file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5580:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5608:29)\n    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs:5753:47)"
       ],
       "features": [
         "hello"

@@ -15,6 +15,8 @@ Suite:,0,Testing the Rectangle class
  Then:,getHeight: 5
  Then:,area: 20
  Then:,AreaPlusCircumference: 38
+AssertionError: expected 43 to equal 38
+
 
  Given: Default
  When:,setHeight: 4
@@ -24,6 +26,6 @@ Suite:,0,Testing the Rectangle class
  Given: Default
  When:,setHeight: 5
  When:,setWidth: 55
- Then:,area: 25
-AssertionError: expected 275 to equal 25
+ Then:,area: 55
+AssertionError: expected 275 to equal 55
 

@@ -4,26 +4,20 @@ Suite:,0,Testing the Rectangle class
 
  Given: Default
  When:,setWidth: 4
- When:,setHeight: 9
- Then:,getWidth: 4
- Then:,getHeight: 9
+TypeError: Cannot read properties of undefined (reading 'setWidth')
+
 
  Given: Default
  When:,setWidth: 4
- When:,setHeight: 5
- Then:,getWidth: 4
- Then:,getHeight: 5
- Then:,area: 20
- Then:,AreaPlusCircumference: 38
+TypeError: Cannot read properties of undefined (reading 'setWidth')
+
 
  Given: Default
  When:,setHeight: 4
- When:,setWidth: 3
- Then:,area: 12
+TypeError: Cannot read properties of undefined (reading 'setHeight')
+
 
  Given: Default
  When:,setHeight: 5
- When:,setWidth: 55
- Then:,area: 25
-AssertionError: expected 275 to equal 25
+TypeError: Cannot read properties of undefined (reading 'setHeight')
 

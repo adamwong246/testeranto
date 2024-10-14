@@ -4725,6 +4725,648 @@ var require_chai2 = __commonJS({
   }
 });
 
+// node_modules/@electron/remote/dist/src/renderer/callbacks-registry.js
+var require_callbacks_registry2 = __commonJS({
+  "node_modules/@electron/remote/dist/src/renderer/callbacks-registry.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.CallbacksRegistry = void 0;
+    var CallbacksRegistry = class {
+      constructor() {
+        this.nextId = 0;
+        this.callbacks = {};
+        this.callbackIds = /* @__PURE__ */ new WeakMap();
+        this.locationInfo = /* @__PURE__ */ new WeakMap();
+      }
+      add(callback) {
+        let id = this.callbackIds.get(callback);
+        if (id != null)
+          return id;
+        id = this.nextId += 1;
+        this.callbacks[id] = callback;
+        this.callbackIds.set(callback, id);
+        const regexp = /at (.*)/gi;
+        const stackString = new Error().stack;
+        if (!stackString)
+          return id;
+        let filenameAndLine;
+        let match;
+        while ((match = regexp.exec(stackString)) !== null) {
+          const location2 = match[1];
+          if (location2.includes("(native)"))
+            continue;
+          if (location2.includes("(<anonymous>)"))
+            continue;
+          if (location2.includes("callbacks-registry.js"))
+            continue;
+          if (location2.includes("remote.js"))
+            continue;
+          if (location2.includes("@electron/remote/dist"))
+            continue;
+          const ref = /([^/^)]*)\)?$/gi.exec(location2);
+          if (ref)
+            filenameAndLine = ref[1];
+          break;
+        }
+        this.locationInfo.set(callback, filenameAndLine);
+        return id;
+      }
+      get(id) {
+        return this.callbacks[id] || function() {
+        };
+      }
+      getLocation(callback) {
+        return this.locationInfo.get(callback);
+      }
+      apply(id, ...args) {
+        return this.get(id).apply(global, ...args);
+      }
+      remove(id) {
+        const callback = this.callbacks[id];
+        if (callback) {
+          this.callbackIds.delete(callback);
+          delete this.callbacks[id];
+        }
+      }
+    };
+    exports.CallbacksRegistry = CallbacksRegistry;
+  }
+});
+
+// node_modules/@electron/remote/dist/src/common/type-utils.js
+var require_type_utils2 = __commonJS({
+  "node_modules/@electron/remote/dist/src/common/type-utils.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.deserialize = exports.serialize = exports.isSerializableObject = exports.isPromise = void 0;
+    var electron_1 = __require("electron");
+    function isPromise(val) {
+      return val && val.then && val.then instanceof Function && val.constructor && val.constructor.reject && val.constructor.reject instanceof Function && val.constructor.resolve && val.constructor.resolve instanceof Function;
+    }
+    exports.isPromise = isPromise;
+    var serializableTypes = [
+      Boolean,
+      Number,
+      String,
+      Date,
+      Error,
+      RegExp,
+      ArrayBuffer
+    ];
+    function isSerializableObject(value) {
+      return value === null || ArrayBuffer.isView(value) || serializableTypes.some((type) => value instanceof type);
+    }
+    exports.isSerializableObject = isSerializableObject;
+    var objectMap = function(source, mapper) {
+      const sourceEntries = Object.entries(source);
+      const targetEntries = sourceEntries.map(([key, val]) => [key, mapper(val)]);
+      return Object.fromEntries(targetEntries);
+    };
+    function serializeNativeImage(image) {
+      const representations = [];
+      const scaleFactors = image.getScaleFactors();
+      if (scaleFactors.length === 1) {
+        const scaleFactor = scaleFactors[0];
+        const size = image.getSize(scaleFactor);
+        const buffer = image.toBitmap({ scaleFactor });
+        representations.push({ scaleFactor, size, buffer });
+      } else {
+        for (const scaleFactor of scaleFactors) {
+          const size = image.getSize(scaleFactor);
+          const dataURL = image.toDataURL({ scaleFactor });
+          representations.push({ scaleFactor, size, dataURL });
+        }
+      }
+      return { __ELECTRON_SERIALIZED_NativeImage__: true, representations };
+    }
+    function deserializeNativeImage(value) {
+      const image = electron_1.nativeImage.createEmpty();
+      if (value.representations.length === 1) {
+        const { buffer, size, scaleFactor } = value.representations[0];
+        const { width, height } = size;
+        image.addRepresentation({ buffer, scaleFactor, width, height });
+      } else {
+        for (const rep of value.representations) {
+          const { dataURL, size, scaleFactor } = rep;
+          const { width, height } = size;
+          image.addRepresentation({ dataURL, scaleFactor, width, height });
+        }
+      }
+      return image;
+    }
+    function serialize(value) {
+      if (value && value.constructor && value.constructor.name === "NativeImage") {
+        return serializeNativeImage(value);
+      }
+      if (Array.isArray(value)) {
+        return value.map(serialize);
+      } else if (isSerializableObject(value)) {
+        return value;
+      } else if (value instanceof Object) {
+        return objectMap(value, serialize);
+      } else {
+        return value;
+      }
+    }
+    exports.serialize = serialize;
+    function deserialize(value) {
+      if (value && value.__ELECTRON_SERIALIZED_NativeImage__) {
+        return deserializeNativeImage(value);
+      } else if (Array.isArray(value)) {
+        return value.map(deserialize);
+      } else if (isSerializableObject(value)) {
+        return value;
+      } else if (value instanceof Object) {
+        return objectMap(value, deserialize);
+      } else {
+        return value;
+      }
+    }
+    exports.deserialize = deserialize;
+  }
+});
+
+// node_modules/@electron/remote/dist/src/common/get-electron-binding.js
+var require_get_electron_binding2 = __commonJS({
+  "node_modules/@electron/remote/dist/src/common/get-electron-binding.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.getElectronBinding = void 0;
+    var getElectronBinding = (name) => {
+      if (process._linkedBinding) {
+        return process._linkedBinding("electron_common_" + name);
+      } else if (process.electronBinding) {
+        return process.electronBinding(name);
+      } else {
+        return null;
+      }
+    };
+    exports.getElectronBinding = getElectronBinding;
+  }
+});
+
+// node_modules/@electron/remote/dist/src/common/module-names.js
+var require_module_names2 = __commonJS({
+  "node_modules/@electron/remote/dist/src/common/module-names.js"(exports) {
+    "use strict";
+    var _a;
+    var _b;
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.browserModuleNames = exports.commonModuleNames = void 0;
+    var get_electron_binding_1 = require_get_electron_binding2();
+    exports.commonModuleNames = [
+      "clipboard",
+      "nativeImage",
+      "shell"
+    ];
+    exports.browserModuleNames = [
+      "app",
+      "autoUpdater",
+      "BaseWindow",
+      "BrowserView",
+      "BrowserWindow",
+      "contentTracing",
+      "crashReporter",
+      "dialog",
+      "globalShortcut",
+      "ipcMain",
+      "inAppPurchase",
+      "Menu",
+      "MenuItem",
+      "nativeTheme",
+      "net",
+      "netLog",
+      "MessageChannelMain",
+      "Notification",
+      "powerMonitor",
+      "powerSaveBlocker",
+      "protocol",
+      "pushNotifications",
+      "safeStorage",
+      "screen",
+      "session",
+      "ShareMenu",
+      "systemPreferences",
+      "TopLevelWindow",
+      "TouchBar",
+      "Tray",
+      "utilityProcess",
+      "View",
+      "webContents",
+      "WebContentsView",
+      "webFrameMain"
+    ].concat(exports.commonModuleNames);
+    var features = get_electron_binding_1.getElectronBinding("features");
+    if (((_a = features === null || features === void 0 ? void 0 : features.isDesktopCapturerEnabled) === null || _a === void 0 ? void 0 : _a.call(features)) !== false) {
+      exports.browserModuleNames.push("desktopCapturer");
+    }
+    if (((_b = features === null || features === void 0 ? void 0 : features.isViewApiEnabled) === null || _b === void 0 ? void 0 : _b.call(features)) !== false) {
+      exports.browserModuleNames.push("ImageView");
+    }
+  }
+});
+
+// node_modules/@electron/remote/dist/src/renderer/remote.js
+var require_remote2 = __commonJS({
+  "node_modules/@electron/remote/dist/src/renderer/remote.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.createFunctionWithReturnValue = exports.getGlobal = exports.getCurrentWebContents = exports.getCurrentWindow = exports.getBuiltin = void 0;
+    var callbacks_registry_1 = require_callbacks_registry2();
+    var type_utils_1 = require_type_utils2();
+    var electron_1 = __require("electron");
+    var module_names_1 = require_module_names2();
+    var get_electron_binding_1 = require_get_electron_binding2();
+    var { Promise: Promise2 } = global;
+    var callbacksRegistry = new callbacks_registry_1.CallbacksRegistry();
+    var remoteObjectCache = /* @__PURE__ */ new Map();
+    var finalizationRegistry = new FinalizationRegistry((id) => {
+      const ref = remoteObjectCache.get(id);
+      if (ref !== void 0 && ref.deref() === void 0) {
+        remoteObjectCache.delete(id);
+        electron_1.ipcRenderer.send("REMOTE_BROWSER_DEREFERENCE", contextId, id, 0);
+      }
+    });
+    var electronIds = /* @__PURE__ */ new WeakMap();
+    var isReturnValue = /* @__PURE__ */ new WeakSet();
+    function getCachedRemoteObject(id) {
+      const ref = remoteObjectCache.get(id);
+      if (ref !== void 0) {
+        const deref = ref.deref();
+        if (deref !== void 0)
+          return deref;
+      }
+    }
+    function setCachedRemoteObject(id, value) {
+      const wr = new WeakRef(value);
+      remoteObjectCache.set(id, wr);
+      finalizationRegistry.register(value, id);
+      return value;
+    }
+    function getContextId() {
+      const v8Util = get_electron_binding_1.getElectronBinding("v8_util");
+      if (v8Util) {
+        return v8Util.getHiddenValue(global, "contextId");
+      } else {
+        throw new Error("Electron >=v13.0.0-beta.6 required to support sandboxed renderers");
+      }
+    }
+    var contextId = process.contextId || getContextId();
+    process.on("exit", () => {
+      const command = "REMOTE_BROWSER_CONTEXT_RELEASE";
+      electron_1.ipcRenderer.send(command, contextId);
+    });
+    var IS_REMOTE_PROXY = Symbol("is-remote-proxy");
+    function wrapArgs(args, visited = /* @__PURE__ */ new Set()) {
+      const valueToMeta = (value) => {
+        if (visited.has(value)) {
+          return {
+            type: "value",
+            value: null
+          };
+        }
+        if (value && value.constructor && value.constructor.name === "NativeImage") {
+          return { type: "nativeimage", value: type_utils_1.serialize(value) };
+        } else if (Array.isArray(value)) {
+          visited.add(value);
+          const meta = {
+            type: "array",
+            value: wrapArgs(value, visited)
+          };
+          visited.delete(value);
+          return meta;
+        } else if (value instanceof Buffer) {
+          return {
+            type: "buffer",
+            value
+          };
+        } else if (type_utils_1.isSerializableObject(value)) {
+          return {
+            type: "value",
+            value
+          };
+        } else if (typeof value === "object") {
+          if (type_utils_1.isPromise(value)) {
+            return {
+              type: "promise",
+              then: valueToMeta(function(onFulfilled, onRejected) {
+                value.then(onFulfilled, onRejected);
+              })
+            };
+          } else if (electronIds.has(value)) {
+            return {
+              type: "remote-object",
+              id: electronIds.get(value)
+            };
+          }
+          const meta = {
+            type: "object",
+            name: value.constructor ? value.constructor.name : "",
+            members: []
+          };
+          visited.add(value);
+          for (const prop in value) {
+            meta.members.push({
+              name: prop,
+              value: valueToMeta(value[prop])
+            });
+          }
+          visited.delete(value);
+          return meta;
+        } else if (typeof value === "function" && isReturnValue.has(value)) {
+          return {
+            type: "function-with-return-value",
+            value: valueToMeta(value())
+          };
+        } else if (typeof value === "function") {
+          return {
+            type: "function",
+            id: callbacksRegistry.add(value),
+            location: callbacksRegistry.getLocation(value),
+            length: value.length
+          };
+        } else {
+          return {
+            type: "value",
+            value
+          };
+        }
+      };
+      return args.map(valueToMeta);
+    }
+    function setObjectMembers(ref, object, metaId, members) {
+      if (!Array.isArray(members))
+        return;
+      for (const member of members) {
+        if (Object.prototype.hasOwnProperty.call(object, member.name))
+          continue;
+        const descriptor = { enumerable: member.enumerable };
+        if (member.type === "method") {
+          const remoteMemberFunction = function(...args) {
+            let command;
+            if (this && this.constructor === remoteMemberFunction) {
+              command = "REMOTE_BROWSER_MEMBER_CONSTRUCTOR";
+            } else {
+              command = "REMOTE_BROWSER_MEMBER_CALL";
+            }
+            const ret = electron_1.ipcRenderer.sendSync(command, contextId, metaId, member.name, wrapArgs(args));
+            return metaToValue(ret);
+          };
+          let descriptorFunction = proxyFunctionProperties(remoteMemberFunction, metaId, member.name);
+          descriptor.get = () => {
+            descriptorFunction.ref = ref;
+            return descriptorFunction;
+          };
+          descriptor.set = (value) => {
+            descriptorFunction = value;
+            return value;
+          };
+          descriptor.configurable = true;
+        } else if (member.type === "get") {
+          descriptor.get = () => {
+            const command = "REMOTE_BROWSER_MEMBER_GET";
+            const meta = electron_1.ipcRenderer.sendSync(command, contextId, metaId, member.name);
+            return metaToValue(meta);
+          };
+          if (member.writable) {
+            descriptor.set = (value) => {
+              const args = wrapArgs([value]);
+              const command = "REMOTE_BROWSER_MEMBER_SET";
+              const meta = electron_1.ipcRenderer.sendSync(command, contextId, metaId, member.name, args);
+              if (meta != null)
+                metaToValue(meta);
+              return value;
+            };
+          }
+        }
+        Object.defineProperty(object, member.name, descriptor);
+      }
+    }
+    function setObjectPrototype(ref, object, metaId, descriptor) {
+      if (descriptor === null)
+        return;
+      const proto = {};
+      setObjectMembers(ref, proto, metaId, descriptor.members);
+      setObjectPrototype(ref, proto, metaId, descriptor.proto);
+      Object.setPrototypeOf(object, proto);
+    }
+    function proxyFunctionProperties(remoteMemberFunction, metaId, name) {
+      let loaded = false;
+      const loadRemoteProperties = () => {
+        if (loaded)
+          return;
+        loaded = true;
+        const command = "REMOTE_BROWSER_MEMBER_GET";
+        const meta = electron_1.ipcRenderer.sendSync(command, contextId, metaId, name);
+        setObjectMembers(remoteMemberFunction, remoteMemberFunction, meta.id, meta.members);
+      };
+      return new Proxy(remoteMemberFunction, {
+        set: (target, property, value) => {
+          if (property !== "ref")
+            loadRemoteProperties();
+          target[property] = value;
+          return true;
+        },
+        get: (target, property) => {
+          if (property === IS_REMOTE_PROXY)
+            return true;
+          if (!Object.prototype.hasOwnProperty.call(target, property))
+            loadRemoteProperties();
+          const value = target[property];
+          if (property === "toString" && typeof value === "function") {
+            return value.bind(target);
+          }
+          return value;
+        },
+        ownKeys: (target) => {
+          loadRemoteProperties();
+          return Object.getOwnPropertyNames(target);
+        },
+        getOwnPropertyDescriptor: (target, property) => {
+          const descriptor = Object.getOwnPropertyDescriptor(target, property);
+          if (descriptor)
+            return descriptor;
+          loadRemoteProperties();
+          return Object.getOwnPropertyDescriptor(target, property);
+        }
+      });
+    }
+    function metaToValue(meta) {
+      if (!meta)
+        return {};
+      if (meta.type === "value") {
+        return meta.value;
+      } else if (meta.type === "array") {
+        return meta.members.map((member) => metaToValue(member));
+      } else if (meta.type === "nativeimage") {
+        return type_utils_1.deserialize(meta.value);
+      } else if (meta.type === "buffer") {
+        return Buffer.from(meta.value.buffer, meta.value.byteOffset, meta.value.byteLength);
+      } else if (meta.type === "promise") {
+        return Promise2.resolve({ then: metaToValue(meta.then) });
+      } else if (meta.type === "error") {
+        return metaToError(meta);
+      } else if (meta.type === "exception") {
+        if (meta.value.type === "error") {
+          throw metaToError(meta.value);
+        } else {
+          throw new Error(`Unexpected value type in exception: ${meta.value.type}`);
+        }
+      } else {
+        let ret;
+        if ("id" in meta) {
+          const cached = getCachedRemoteObject(meta.id);
+          if (cached !== void 0) {
+            return cached;
+          }
+        }
+        if (meta.type === "function") {
+          const remoteFunction = function(...args) {
+            let command;
+            if (this && this.constructor === remoteFunction) {
+              command = "REMOTE_BROWSER_CONSTRUCTOR";
+            } else {
+              command = "REMOTE_BROWSER_FUNCTION_CALL";
+            }
+            const obj = electron_1.ipcRenderer.sendSync(command, contextId, meta.id, wrapArgs(args));
+            return metaToValue(obj);
+          };
+          ret = remoteFunction;
+        } else {
+          ret = {};
+        }
+        setObjectMembers(ret, ret, meta.id, meta.members);
+        setObjectPrototype(ret, ret, meta.id, meta.proto);
+        if (ret.constructor && ret.constructor[IS_REMOTE_PROXY]) {
+          Object.defineProperty(ret.constructor, "name", { value: meta.name });
+        }
+        electronIds.set(ret, meta.id);
+        setCachedRemoteObject(meta.id, ret);
+        return ret;
+      }
+    }
+    function metaToError(meta) {
+      const obj = meta.value;
+      for (const { name, value } of meta.members) {
+        obj[name] = metaToValue(value);
+      }
+      return obj;
+    }
+    function hasSenderId(input) {
+      return typeof input.senderId === "number";
+    }
+    function handleMessage(channel, handler) {
+      electron_1.ipcRenderer.on(channel, (event, passedContextId, id, ...args) => {
+        if (hasSenderId(event)) {
+          if (event.senderId !== 0 && event.senderId !== void 0) {
+            console.error(`Message ${channel} sent by unexpected WebContents (${event.senderId})`);
+            return;
+          }
+        }
+        if (passedContextId === contextId) {
+          handler(id, ...args);
+        } else {
+          electron_1.ipcRenderer.send("REMOTE_BROWSER_WRONG_CONTEXT_ERROR", contextId, passedContextId, id);
+        }
+      });
+    }
+    var enableStacks = process.argv.includes("--enable-api-filtering-logging");
+    function getCurrentStack() {
+      const target = { stack: void 0 };
+      if (enableStacks) {
+        Error.captureStackTrace(target, getCurrentStack);
+      }
+      return target.stack;
+    }
+    handleMessage("REMOTE_RENDERER_CALLBACK", (id, args) => {
+      callbacksRegistry.apply(id, metaToValue(args));
+    });
+    handleMessage("REMOTE_RENDERER_RELEASE_CALLBACK", (id) => {
+      callbacksRegistry.remove(id);
+    });
+    exports.require = (module2) => {
+      const command = "REMOTE_BROWSER_REQUIRE";
+      const meta = electron_1.ipcRenderer.sendSync(command, contextId, module2, getCurrentStack());
+      return metaToValue(meta);
+    };
+    function getBuiltin(module2) {
+      const command = "REMOTE_BROWSER_GET_BUILTIN";
+      const meta = electron_1.ipcRenderer.sendSync(command, contextId, module2, getCurrentStack());
+      return metaToValue(meta);
+    }
+    exports.getBuiltin = getBuiltin;
+    function getCurrentWindow() {
+      const command = "REMOTE_BROWSER_GET_CURRENT_WINDOW";
+      const meta = electron_1.ipcRenderer.sendSync(command, contextId, getCurrentStack());
+      return metaToValue(meta);
+    }
+    exports.getCurrentWindow = getCurrentWindow;
+    function getCurrentWebContents() {
+      const command = "REMOTE_BROWSER_GET_CURRENT_WEB_CONTENTS";
+      const meta = electron_1.ipcRenderer.sendSync(command, contextId, getCurrentStack());
+      return metaToValue(meta);
+    }
+    exports.getCurrentWebContents = getCurrentWebContents;
+    function getGlobal(name) {
+      const command = "REMOTE_BROWSER_GET_GLOBAL";
+      const meta = electron_1.ipcRenderer.sendSync(command, contextId, name, getCurrentStack());
+      return metaToValue(meta);
+    }
+    exports.getGlobal = getGlobal;
+    Object.defineProperty(exports, "process", {
+      enumerable: true,
+      get: () => exports.getGlobal("process")
+    });
+    function createFunctionWithReturnValue(returnValue) {
+      const func = () => returnValue;
+      isReturnValue.add(func);
+      return func;
+    }
+    exports.createFunctionWithReturnValue = createFunctionWithReturnValue;
+    var addBuiltinProperty = (name) => {
+      Object.defineProperty(exports, name, {
+        enumerable: true,
+        get: () => exports.getBuiltin(name)
+      });
+    };
+    module_names_1.browserModuleNames.forEach(addBuiltinProperty);
+  }
+});
+
+// node_modules/@electron/remote/dist/src/renderer/index.js
+var require_renderer3 = __commonJS({
+  "node_modules/@electron/remote/dist/src/renderer/index.js"(exports) {
+    "use strict";
+    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      Object.defineProperty(o, k2, { enumerable: true, get: function() {
+        return m[k];
+      } });
+    } : function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      o[k2] = m[k];
+    });
+    var __exportStar = exports && exports.__exportStar || function(m, exports2) {
+      for (var p in m)
+        if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports2, p))
+          __createBinding(exports2, m, p);
+    };
+    Object.defineProperty(exports, "__esModule", { value: true });
+    if (process.type === "browser")
+      throw new Error(`"@electron/remote" cannot be required in the browser process. Instead require("@electron/remote/main").`);
+    __exportStar(require_remote2(), exports);
+  }
+});
+
+// node_modules/@electron/remote/renderer/index.js
+var require_renderer4 = __commonJS({
+  "node_modules/@electron/remote/renderer/index.js"(exports, module) {
+    module.exports = require_renderer3();
+  }
+});
+
 // node_modules/testeranto/dist/module/lib/index.js
 var BaseTestInterface = {
   beforeAll: async (s) => s,
@@ -4760,22 +5402,22 @@ var BaseSuite = class {
       fails: this.fails
     };
   }
-  setup(s, artifactory, tr) {
+  setup(s, artifactory, tr, utils) {
     return new Promise((res) => res(s));
   }
   assertThat(t) {
     return t;
   }
-  async run(input, testResourceConfiguration, artifactory, tLog) {
+  async run(input, testResourceConfiguration, artifactory, tLog, utils) {
     this.testResourceConfiguration = testResourceConfiguration;
     tLog("test resources: ", testResourceConfiguration);
     const suiteArtifactory = (fPath, value) => artifactory(`suite-${this.index}-${this.name}/${fPath}`, value);
-    const subject = await this.setup(input, suiteArtifactory, testResourceConfiguration);
+    const subject = await this.setup(input, suiteArtifactory, testResourceConfiguration, utils);
     tLog("\nSuite:", this.index, this.name);
     for (const k of Object.keys(this.givens)) {
       const giver = this.givens[k];
       try {
-        this.store = await giver.give(subject, k, testResourceConfiguration, this.assertThat, suiteArtifactory, tLog);
+        this.store = await giver.give(subject, k, testResourceConfiguration, this.assertThat, suiteArtifactory, tLog, utils);
       } catch (e) {
         console.error(e);
         this.fails.push(giver);
@@ -4783,7 +5425,7 @@ var BaseSuite = class {
       }
     }
     for (const [ndx, thater] of this.checks.entries()) {
-      await thater.check(subject, thater.name, testResourceConfiguration, this.assertThat, suiteArtifactory, tLog);
+      await thater.check(subject, thater.name, testResourceConfiguration, this.assertThat, suiteArtifactory, tLog, utils);
     }
     for (const k of Object.keys(this.givens)) {
       const giver = this.givens[k];
@@ -4819,17 +5461,17 @@ var BaseGiven = class {
   async afterEach(store, key, artifactory) {
     return store;
   }
-  async give(subject, key, testResourceConfiguration, tester, artifactory, tLog) {
+  async give(subject, key, testResourceConfiguration, tester, artifactory, tLog, utils) {
     tLog(`
  Given: ${this.name}`);
     const givenArtifactory = (fPath, value) => artifactory(`given-${key}/${fPath}`, value);
     try {
       this.store = await this.givenThat(subject, testResourceConfiguration, givenArtifactory, this.givenCB);
       for (const whenStep of this.whens) {
-        await whenStep.test(this.store, testResourceConfiguration, tLog);
+        await whenStep.test(this.store, testResourceConfiguration, tLog, utils);
       }
       for (const thenStep of this.thens) {
-        const t = await thenStep.test(this.store, testResourceConfiguration, tLog);
+        const t = await thenStep.test(this.store, testResourceConfiguration, tLog, utils);
         tester(t);
       }
     } catch (e) {
@@ -4857,7 +5499,7 @@ var BaseWhen = class {
       error: this.error
     };
   }
-  async test(store, testResourceConfiguration, tLog) {
+  async test(store, testResourceConfiguration, tLog, utils) {
     tLog(" When:", this.name);
     try {
       return await this.andWhen(store, this.whenCB, testResourceConfiguration);
@@ -4878,7 +5520,7 @@ var BaseThen = class {
       error: this.error
     };
   }
-  async test(store, testResourceConfiguration, tLog) {
+  async test(store, testResourceConfiguration, tLog, utils) {
     tLog(" Then:", this.name);
     try {
       const x = await this.butThen(store, this.thenCB, testResourceConfiguration);
@@ -4901,18 +5543,18 @@ var BaseCheck = class {
   async afterEach(store, key, cb) {
     return;
   }
-  async check(subject, key, testResourceConfiguration, tester, artifactory, tLog) {
+  async check(subject, key, testResourceConfiguration, tester, artifactory, tLog, utils) {
     tLog(`
  Check: ${this.name}`);
     const store = await this.checkThat(subject, testResourceConfiguration, artifactory);
     await this.checkCB(Object.entries(this.whens).reduce((a, [key2, when]) => {
       a[key2] = async (payload) => {
-        return await when(payload, testResourceConfiguration).test(store, testResourceConfiguration, tLog);
+        return await when(payload, testResourceConfiguration).test(store, testResourceConfiguration, tLog, utils);
       };
       return a;
     }, {}), Object.entries(this.thens).reduce((a, [key2, then]) => {
       a[key2] = async (payload) => {
-        const t = await then(payload, testResourceConfiguration).test(store, testResourceConfiguration, tLog);
+        const t = await then(payload, testResourceConfiguration).test(store, testResourceConfiguration, tLog, utils);
         tester(t);
       };
       return a;
@@ -4924,7 +5566,7 @@ var BaseCheck = class {
 
 // node_modules/testeranto/dist/module/lib/basebuilder.js
 var BaseBuilder = class {
-  constructor(input, suitesOverrides, givenOverides, whenOverides, thenOverides, checkOverides, logWriter, testResourceRequirement, testSpecification) {
+  constructor(input, suitesOverrides, givenOverides, whenOverides, thenOverides, checkOverides, logWriter, testResourceRequirement, testSpecification, utils) {
     this.input = input;
     this.artifacts = [];
     this.testResourceRequirement = testResourceRequirement;
@@ -4937,7 +5579,7 @@ var BaseBuilder = class {
     const suiteRunner = (suite) => async (testResourceConfiguration, tLog) => {
       return await suite.run(input, testResourceConfiguration, (fPath, value) => logWriter.testArtiFactoryfileWriter(tLog, (p) => {
         artifacts.push(p);
-      })(testResourceConfiguration.fs + "/" + fPath, value), tLog);
+      })(testResourceConfiguration.fs + "/" + fPath, value), tLog, utils);
     };
     const artifacts = this.artifacts;
     this.testJobs = suites.map((suite) => {
@@ -5004,7 +5646,7 @@ var BaseBuilder = class {
 
 // node_modules/testeranto/dist/module/lib/classBuilder.js
 var ClassBuilder = class extends BaseBuilder {
-  constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResourceRequirement, logWriter) {
+  constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResourceRequirement, logWriter, utils) {
     const classySuites = Object.entries(testImplementation.suites).reduce((a, [key], index) => {
       a[key] = (somestring, givens, checks) => {
         return new suiteKlasser.prototype.constructor(somestring, index, givens, checks);
@@ -5035,13 +5677,13 @@ var ClassBuilder = class extends BaseBuilder {
       };
       return a;
     }, {});
-    super(input, classySuites, classyGivens, classyWhens, classyThens, classyChecks, logWriter, testResourceRequirement, testSpecification);
+    super(input, classySuites, classyGivens, classyWhens, classyThens, classyChecks, logWriter, testResourceRequirement, testSpecification, utils);
   }
 };
 
 // node_modules/testeranto/dist/module/lib/core.js
 var Testeranto = class extends ClassBuilder {
-  constructor(input, testSpecification, testImplementation, testResourceRequirement = defaultTestResourceRequirement, logWriter, testInterface) {
+  constructor(input, testSpecification, testImplementation, testResourceRequirement = defaultTestResourceRequirement, logWriter, testInterface, utils) {
     const fullTestInterface = DefaultTestInterface(testInterface);
     super(testImplementation, testSpecification, input, class extends BaseSuite {
       assertThat(t) {
@@ -5061,10 +5703,9 @@ var Testeranto = class extends ClassBuilder {
         return new Promise((res) => res(fullTestInterface.afterEach(store, key, (fPath, value) => artifactory(`after/${fPath}`, value))));
       }
       afterAll(store, artifactory) {
-        return fullTestInterface.afterAll(store, (fPath, value) => (
-          // TODO does not work?
-          artifactory(`afterAll4-${this.name}/${fPath}`, value)
-        ));
+        return fullTestInterface.afterAll(store, (fPath, value) => {
+          artifactory(`afterAll4-${this.name}/${fPath}`, value);
+        }, utils);
       }
     }, class When extends BaseWhen {
       async andWhen(store, whenCB, testResource) {
@@ -5088,15 +5729,16 @@ var Testeranto = class extends ClassBuilder {
           artifactory(`afterEach2-${this.name}/${fPath}`, value)
         ))));
       }
-    }, testResourceRequirement, logWriter);
+    }, testResourceRequirement, logWriter, utils);
   }
 };
 
 // node_modules/testeranto/dist/module/Web.js
 var remote = require_renderer2();
+var BrowserWindow = remote.BrowserWindow;
 var WebTesteranto = class extends Testeranto {
   constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
-    super(input, testSpecification, testImplementation, testResourceRequirement, window.NodeWriter, testInterface);
+    super(input, testSpecification, testImplementation, testResourceRequirement, window.NodeWriter, testInterface, BrowserWindow);
     const t = this.testJobs[0];
     const testResourceArg = decodeURIComponent(new URLSearchParams(location.search).get("requesting") || "");
     try {
@@ -5111,7 +5753,6 @@ var WebTesteranto = class extends Testeranto {
     const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(partialTestResource);
     Promise.all([...artifacts, logPromise]).then(async () => {
       var window2 = remote.getCurrentWindow();
-      window2.close();
     });
   }
 };
@@ -5156,7 +5797,7 @@ var Rectangle = class {
     return this.width * this.height;
   }
   circumference() {
-    return this.width * 2 + this.height * 2;
+    return this.width * 2 + this.height * 3;
   }
 };
 var Rectangle_default = Rectangle;
@@ -5223,7 +5864,7 @@ var RectangleTesterantoBaseTestSpecification = (Suite, Given, When, Then, Check)
         "test3": Given.Default(
           [`hello`],
           [When.setHeight(5), When.setWidth(55)],
-          [Then.area(25)]
+          [Then.area(55)]
         )
       },
       []
@@ -5258,6 +5899,10 @@ var RectangleTesterantoBaseInterface = {
 var RectangleTesterantoBasePrototype = Rectangle_default.prototype;
 
 // src/Rectangle/Rectangle.test.electron.ts
+var remote2 = require_renderer4();
+var win = new remote2.BrowserWindow();
+var url = "https://www.news.com/";
+win.loadURL(url);
 var RectangleTesteranto = Web_default(
   RectangleTesterantoBasePrototype,
   RectangleTesterantoBaseTestSpecification,

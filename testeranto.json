@@ -64,7 +64,13 @@
     [
       "./src/Rectangle/Rectangle.test.node.ts",
       "node",
-      []
+      [
+        [
+          "./src/ClassicalComponent/test.ts",
+          "web",
+          []
+        ]
+      ]
     ]
     // [
     //   "./src/MyFirstContract.solidity.test.ts",

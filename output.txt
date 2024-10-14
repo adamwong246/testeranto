@@ -1,0 +1,47 @@
+$ /Users/adam/Code/kokomoBay/node_modules/.bin/electron node_modules/testeranto/dist/common/electron.js
+launchWeb /Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs
+pages [
+  CDPPage {
+    eventsMap: Map(0) {},
+    emitter: {
+      all: Map(0) {},
+      on: [Function: on],
+      off: [Function: off],
+      emit: [Function: emit]
+    }
+  },
+  CDPPage {
+    eventsMap: Map(0) {},
+    emitter: {
+      all: Map(0) {},
+      on: [Function: on],
+      off: [Function: off],
+      emit: [Function: emit]
+    }
+  },
+  CDPPage {
+    eventsMap: Map(0) {},
+    emitter: {
+      all: Map(0) {},
+      on: [Function: on],
+      off: [Function: off],
+      emit: [Function: emit]
+    }
+  }
+]
+configs {
+  outdir: 'dist',
+  tests: [
+    [ './src/Rectangle/Rectangle.test.electron.ts', 'web', [] ],
+    [ './src/Rectangle/Rectangle.test.node.ts', 'node', [Array] ]
+  ]
+}
+page CDPPage {
+  eventsMap: Map(0) {},
+  emitter: {
+    all: Map(0) {},
+    on: [Function: on],
+    off: [Function: off],
+    emit: [Function: emit]
+  }
+}

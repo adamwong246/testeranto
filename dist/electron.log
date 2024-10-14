@@ -1,0 +1,264 @@
+$ /Users/adam/Code/kokomoBay/node_modules/.bin/electron node_modules/testeranto/dist/common/electron.js
+launchNode /Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs
+mark5
+end
+connected! true
+testResourceConfiguration {
+  "scheduled": true,
+  "name": "/Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs",
+  "ports": [],
+  "fs": "/Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.ts"
+}
+from child /dist/web/src/ClassicalComponent/test.html
+launchWebSecondary /Users/adam/Code/kokomoBay/dist/web/src/ClassicalComponent/test.html
+afterall
+afterall
+afterall
+afterall
+exiting gracefully with 4 failures.
+page CDPPage {
+  eventsMap: Map(0) {},
+  emitter: {
+    all: Map(0) {},
+    on: [Function: on],
+    off: [Function: off],
+    emit: [Function: emit]
+  }
+}
+afterall
+goodbye
+page CDPPage {
+  eventsMap: Map(0) {},
+  emitter: {
+    all: Map(0) {},
+    on: [Function: on],
+    off: [Function: off],
+    emit: [Function: emit]
+  }
+}
+afterall
+goodbye
+page CDPPage {
+  eventsMap: Map(0) {},
+  emitter: {
+    all: Map(0) {},
+    on: [Function: on],
+    off: [Function: off],
+    emit: [Function: emit]
+  }
+}
+afterall
+goodbye
+page CDPPage {
+  eventsMap: Map(0) {},
+  emitter: {
+    all: Map(0) {},
+    on: [Function: on],
+    off: [Function: off],
+    emit: [Function: emit]
+  }
+}
+afterall
+goodbye
+launchNode /Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs
+mark5
+end
+connected! true
+testResourceConfiguration {
+  "scheduled": true,
+  "name": "/Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs",
+  "ports": [],
+  "fs": "/Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.ts"
+}
+from child /dist/web/src/ClassicalComponent/test.html
+launchWebSecondary /Users/adam/Code/kokomoBay/dist/web/src/ClassicalComponent/test.html
+exiting gracefully with 4 failures.
+page CDPPage {
+  eventsMap: Map(0) {},
+  emitter: {
+    all: Map(0) {},
+    on: [Function: on],
+    off: [Function: off],
+    emit: [Function: emit]
+  }
+}
+afterall
+goodbye
+page CDPPage {
+  eventsMap: Map(0) {},
+  emitter: {
+    all: Map(0) {},
+    on: [Function: on],
+    off: [Function: off],
+    emit: [Function: emit]
+  }
+}
+afterall
+goodbye
+page CDPPage {
+  eventsMap: Map(0) {},
+  emitter: {
+    all: Map(0) {},
+    on: [Function: on],
+    off: [Function: off],
+    emit: [Function: emit]
+  }
+}
+afterall
+goodbye
+page CDPPage {
+  eventsMap: Map(0) {},
+  emitter: {
+    all: Map(0) {},
+    on: [Function: on],
+    off: [Function: off],
+    emit: [Function: emit]
+  }
+}
+afterall
+goodbye
+launchWeb /Users/adam/Code/kokomoBay/dist/web/src/Rectangle/Rectangle.test.electron.mjs
+launchNode /Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs
+mark5
+end
+connected! true
+testResourceConfiguration {
+  "scheduled": true,
+  "name": "/Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs",
+  "ports": [],
+  "fs": "/Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.ts"
+}
+from child /dist/web/src/ClassicalComponent/test.html
+launchWebSecondary /Users/adam/Code/kokomoBay/dist/web/src/ClassicalComponent/test.html
+exiting gracefully with 4 failures.
+page CDPPage {
+  eventsMap: Map(0) {},
+  emitter: {
+    all: Map(0) {},
+    on: [Function: on],
+    off: [Function: off],
+    emit: [Function: emit]
+  }
+}
+afterall
+goodbye
+page CDPPage {
+  eventsMap: Map(0) {},
+  emitter: {
+    all: Map(0) {},
+    on: [Function: on],
+    off: [Function: off],
+    emit: [Function: emit]
+  }
+}
+afterall
+goodbye
+page CDPPage {
+  eventsMap: Map(0) {},
+  emitter: {
+    all: Map(0) {},
+    on: [Function: on],
+    off: [Function: off],
+    emit: [Function: emit]
+  }
+}
+afterall
+goodbye
+page CDPPage {
+  eventsMap: Map(0) {},
+  emitter: {
+    all: Map(0) {},
+    on: [Function: on],
+    off: [Function: off],
+    emit: [Function: emit]
+  }
+}
+afterall
+goodbye
+launchNode /Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs
+mark5
+end
+connected! true
+testResourceConfiguration {
+  "scheduled": true,
+  "name": "/Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs",
+  "ports": [],
+  "fs": "/Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.ts"
+}
+from child /dist/web/src/ClassicalComponent/test.html
+launchWebSecondary /Users/adam/Code/kokomoBay/dist/web/src/ClassicalComponent/test.html
+exiting gracefully with 4 failures.
+page CDPPage {
+  eventsMap: Map(0) {},
+  emitter: {
+    all: Map(0) {},
+    on: [Function: on],
+    off: [Function: off],
+    emit: [Function: emit]
+  }
+}
+afterall
+goodbye
+page CDPPage {
+  eventsMap: Map(0) {},
+  emitter: {
+    all: Map(0) {},
+    on: [Function: on],
+    off: [Function: off],
+    emit: [Function: emit]
+  }
+}
+afterall
+goodbye
+page CDPPage {
+  eventsMap: Map(0) {},
+  emitter: {
+    all: Map(0) {},
+    on: [Function: on],
+    off: [Function: off],
+    emit: [Function: emit]
+  }
+}
+afterall
+goodbye
+page CDPPage {
+  eventsMap: Map(0) {},
+  emitter: {
+    all: Map(0) {},
+    on: [Function: on],
+    off: [Function: off],
+    emit: [Function: emit]
+  }
+}
+afterall
+goodbye
+launchNode /Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs
+mark5
+end
+connected! true
+testResourceConfiguration {
+  "scheduled": true,
+  "name": "/Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs",
+  "ports": [],
+  "fs": "/Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.ts"
+}
+from child /dist/web/src/ClassicalComponent/test.html
+launchWebSecondary /Users/adam/Code/kokomoBay/dist/web/src/ClassicalComponent/test.html
+exiting gracefully with 4 failures.
+goodbye
+goodbye
+goodbye
+goodbye
+launchNode /Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs
+mark5
+end
+connected! true
+testResourceConfiguration {
+  "scheduled": true,
+  "name": "/Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.mjs",
+  "ports": [],
+  "fs": "/Users/adam/Code/kokomoBay/dist/node/src/Rectangle/Rectangle.test.node.ts"
+}
+from child /dist/web/src/ClassicalComponent/test.html
+launchWebSecondary /Users/adam/Code/kokomoBay/dist/web/src/ClassicalComponent/test.html
+exiting gracefully with 4 failures.

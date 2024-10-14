@@ -11,7 +11,7 @@ const configs = jsonc.parse((await fs.readFileSync("./testeranto.json")).toStrin
 export default new ITProject({
   ...configs,
 
-  debugger: false,
+  debugger: true,
   clearScreen: false,
   devMode: true,
   features: 'features.test.mts',
