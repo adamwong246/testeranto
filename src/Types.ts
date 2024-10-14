@@ -10,6 +10,12 @@ import {
 import { IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen, BaseGiven } from "./lib/abstractBase.js";
 import Testeranto from "./lib/core.js";
 
+export type IJsonConfig = {
+  outdir: string,
+  tests: ITestTypes[]
+};
+
+
 export type IBaseConfig = {
   externals: string[],
   clearScreen: boolean;
@@ -21,7 +27,7 @@ export type IBaseConfig = {
   outbase: string;
   outdir: string;
   ports: string[];
-  tests: string;
+  // tests: string;
   debugger: boolean;
 };
 

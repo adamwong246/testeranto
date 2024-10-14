@@ -1,3 +1,4 @@
+// const remote = require('@electron/remote')
 
 import Testeranto from "./lib/core.js";
 import {
@@ -53,6 +54,9 @@ class NodeTesteranto<
   }
 
   async receiveTestResourceConfig(t: ITestJob, partialTestResource: ITTestResourceConfiguration) {
+
+    // var window = remote.getCurrentWindow();
+
     const {
       failed,
       artifacts,

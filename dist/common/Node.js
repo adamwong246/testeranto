@@ -1,4 +1,5 @@
 "use strict";
+// const remote = require('@electron/remote')
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -21,6 +22,7 @@ class NodeTesteranto extends core_js_1.default {
         }
     }
     async receiveTestResourceConfig(t, partialTestResource) {
+        // var window = remote.getCurrentWindow();
         const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(partialTestResource);
         Promise.all([...artifacts, logPromise]).then(async () => {
             process.exit(await failed ? 1 : 0);

@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.57.0",
+  "version": "0.58.0",
   "type": "module",
   "types": "./dist/index.d.mts",
   "module": "dist/module/index.js",
@@ -123,8 +123,8 @@
       "require": "./dist/common/Web.js"
     },
     "./src/Node": {
-      "import": "./dist/module/Node.js",
-      "require": "./dist/common/Node.js"
+      "import": "./src/Node.ts",
+      "require": "./src/Node.ts"
     },
     "./src/electron": {
       "import": "./dist/module/electron.js",
@@ -208,6 +208,7 @@
     "graphology-types": "^0.24.5",
     "html": "^1.0.0",
     "ipc": "^0.0.1",
+    "jsonc": "^2.0.0",
     "npm-watch": "^0.11.0",
     "pm2": "^5.2.2",
     "puppeteer": "19.2.2",

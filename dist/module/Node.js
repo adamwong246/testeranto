@@ -1,3 +1,4 @@
+// const remote = require('@electron/remote')
 import Testeranto from "./lib/core.js";
 import { defaultTestResourceRequirement, } from "./lib/index.js";
 import { NodeWriter } from "./NodeWriter.js";
@@ -16,6 +17,7 @@ class NodeTesteranto extends Testeranto {
         }
     }
     async receiveTestResourceConfig(t, partialTestResource) {
+        // var window = remote.getCurrentWindow();
         const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(partialTestResource);
         Promise.all([...artifacts, logPromise]).then(async () => {
             process.exit(await failed ? 1 : 0);

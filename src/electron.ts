@@ -3,15 +3,12 @@ import {
 
 } from "electron";
 
-// const electron = require('electron')
-// const path = require('path')
-// const BrowserWindow = electron.remote.BrowserWindow
-
 import pie from "puppeteer-in-electron";
 import puppeteer from "puppeteer-core";
-import { ITestTypes } from "./Types";
+import { IBaseConfig, IJsonConfig, ITestTypes } from "./Types";
 import fs from "fs";
 import path from "path";
+import { jsonc } from 'jsonc';
 const remoteMain = require("@electron/remote/main");
 
 /* add this before the enable function */
@@ -27,6 +24,35 @@ const changer = (f: string) => {
   return path.normalize(process.cwd() + `/dist/${f}`);
 };
 
+const loadReport = (configs: IJsonConfig) => {
+  const win = new BrowserWindow(
+    {
+      show: true,
+
+      webPreferences: {
+        offscreen: false,
+        devTools: true,
+      }
+    }
+
+  );
+
+  win.loadFile(process.cwd() + "/dist/report.html").then(async (x) => {
+    pie.connect(app, puppeteer).then(async (browser) => {
+      console.log("pages", await browser.pages())
+      console.log("configs", configs);
+
+      pie.getPage(browser, win).then(async (page) => {
+        console.log("page", page);
+        await page.screenshot({
+          path: 'electron-puppeteer-screenshot.jpg'
+        });
+      })
+
+    })
+
+  })
+}
 
 const launchNode = (t: ITestTypes, changedFile: string) => {
   console.log("launchNode", changedFile)
@@ -98,40 +124,13 @@ const launchWeb = (t: ITestTypes, changedFile: string) => {
 
 }
 
+
 const main = async () => {
-  const configs = JSON.parse((await fs.readFileSync("./testeranto.json")).toString()) as {
-    outdir: string,
-    tests: ITestTypes[]
-  };
+  const configs = jsonc.parse((await fs.readFileSync("./testeranto.json")).toString()) as IJsonConfig;
   pie.initialize(app, 2999).then(async () => {
 
     app.on("ready", () => {
-      const win = new BrowserWindow(
-        {
-          show: true,
-
-          webPreferences: {
-            offscreen: false,
-            devTools: true,
-          }
-        }
-
-      );
-      win.loadFile(process.cwd() + "/dist/report.html").then(async (x) => {
-        pie.connect(app, puppeteer).then(async (browser) => {
-          console.log("pages", await browser.pages())
-          console.log("configs", configs);
-
-          pie.getPage(browser, win).then(async (page) => {
-            console.log("page", page);
-            await page.screenshot({
-              path: 'electron-puppeteer-screenshot.jpg'
-            });
-          })
-
-        })
-
-      })
+      loadReport(configs);
 
       fs.watch(configs.outdir, {
         recursive: true,
@@ -150,153 +149,24 @@ const main = async () => {
         }
 
       })
-
-
-      // configs.tests.forEach((t) => {
-
-      //   const watch = process.cwd() + `/dist/${t[1]}/${t[0].split('.').slice(0, -1).concat('mjs').join('.')}`;
-
-      //   console.log("watching", watch);
-      //   if (t[1] === "node") {
-      //     // const watch = process.cwd() + `${t[1]}/${t[0].replace(".mts", ".mjs")}`;
-      //     fs.watch(watch, { persistent: true }, function (event, filename) {
-      //       console.log('event is: ' + event, filename);
-
-
-
-
-
-
-      //       if (filename) {
-      //         console.log('filename provided: ' + filename);
-      //       } else {
-      //         console.log('filename not provided');
-      //       }
-      //     });
-      //   } else if (t[1] === "web") {
-      //     // const watch = process.cwd() + `${t[1]}/${t[0].replace(".mts", ".mjs")}`;
-      //     fs.watch(watch, { persistent: true }, function (event, filename) {
-      //       console.log('event is: ' + event);
-
-
-      //         .then(async (x) => {
-      //           // pie.connect(app, puppeteer).then(async (browser) => {
-      //           //   console.log("pages", await browser.pages())
-      //           //   console.log("tests", tests);
-
-      //           //   // pie.getPage(browser, subWin).then(async (page) => {
-      //           //   //   console.log("page", page);
-      //           //   //   await page.screenshot({
-      //           //   //     path: 'electron-puppeteer-screenshot.jpg'
-      //           //   //   });
-      //           //   // })
-
-      //           // })
-
-      //         })
-
-      //       if (filename) {
-      //         console.log('filename provided: ' + filename);
-      //       } else {
-      //         console.log('filename not provided');
-      //       }
-      //     });
-      //   }
-      // })
     });
+  });
 
-
-
-
-
-
-
-
-  })
-  // const browser = await pie.connect(app, puppeteer);
-
-
-  // win.webContents.openDevTools()
+  const browser = await pie.connect(app, puppeteer);
+  // const win = new BrowserWindow();
   // const url = "https://www.google.com/";
   // await win.loadURL(url);
 
-  // console.log("pie", pie);
-  // console.log("win", win);
-
-  // const browser = await pie.connect(app, puppeteer);
-
   // console.log(await browser.pages());
   // const page = await pie.getPage(browser, win);
-  // console.log(page.url());
+  // await page.screenshot({
+  //   path: 'google.jpg'
+  // });
 
-
-
-  // window.destroy();
 };
 
 
 main();
-// export { };
-
-// process.stdin.re
-// const window = new BrowserWindow();
-// const url = "https://example.com/";
-// await window.loadURL(url);
-
-// const page = await pie.getPage(browser, window);
-// console.log(page.url());
-// window.destroy();
-
-// let win: BrowserWindow;
-
-// pie.initialize(app).then(async () => {
-//   const browser = await pie.connect(app, puppeteer)
-//   console.log("pie", pie);
-//   pie.getPage(browser, win).then(async (page) => {
-//     console.log("page", page);
-//     await page.screenshot({
-//       path: 'electron-puppeteer-screenshot.jpg'
-//     });
-//   })
-// })
-
-// function createWindow() {
-
-//   // const browser = await pie.connect(app, puppeteer);
-
-//   win = new BrowserWindow({
-//     show: true,
-//     webPreferences: {
-
-//       // offscreen: true,
-//       devTools: true,
-//       nodeIntegration: true,
-//       nodeIntegrationInWorker: true,
-//       contextIsolation: false,
-//       preload: path.join(app.getAppPath(), 'preload.js'),
-//       sandbox: false
-
-//     },
-//     width: 800,
-//     height: 600,
-//   });
-//   const u = url.format({
-//     pathname: path.join(process.cwd(), process.argv[2]),
-//     protocol: "file:",
-//     slashes: true,
-//     query: {
-//       requesting: encodeURIComponent(process.argv[3]),
-//     }
-//   });
-//   console.log("loading", u);
-//   win.loadURL(u);
-//   // debugger
-//   win.webContents.openDevTools()
-//   // const page = await pie.getPage(browser, window);
-//   // console.log(page.url());
-//   // window.destroy();
-// }
-
 
 
 // ipcMain.handle('web-log', (x, message: string) => {

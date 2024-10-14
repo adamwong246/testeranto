@@ -1,3 +1,4 @@
+import { jsonc } from 'jsonc';
 import esbuild from "esbuild";
 import fs from "fs";
 import path from "path";
@@ -105,7 +106,6 @@ export class ITProject {
         this.clearScreen = config.clearScreen;
         this.devMode = config.devMode;
         Object.values(config.ports).forEach((port) => { this.ports[port] = OPEN_PORT; });
-        const testPath = `${process.cwd()}/${config.tests}`;
         const featurePath = `${process.cwd()}/${config.features}`;
         process.stdin.on('keypress', (str, key) => {
             if (key.name === 'q') {
@@ -118,9 +118,8 @@ export class ITProject {
                 process.exit(-1);
             }
         });
-        // const watchPoints = [];
-        import(testPath).then((tests) => {
-            this.tests = tests.default;
+        fs.readFile('testeranto.json', (e, d) => {
+            this.tests = jsonc.parse(d.toString()).tests;
             import(featurePath).then(async (features) => {
                 this.features = features.default;
                 await Promise.resolve(Promise.all([
@@ -191,7 +190,7 @@ export class ITProject {
                         await nodeContext.watch();
                         return nodeContext;
                     }),
-                    esbuild.context(esbuildWebConfiger(config, [...webEntryPoints, testPath, featurePath]))
+                    esbuild.context(esbuildWebConfiger(config, [...webEntryPoints, featurePath]))
                         .then(async (esbuildWeb) => {
                         await esbuildWeb.watch();
                         return esbuildWeb;

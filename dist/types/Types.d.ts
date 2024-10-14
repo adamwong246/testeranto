@@ -1,6 +1,10 @@
 import { ITTestResourceConfiguration, ITTestResourceRequest, ITestArtificer, ITestCheckCallback } from "./lib/index.js";
 import { IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen, BaseGiven } from "./lib/abstractBase.js";
 import Testeranto from "./lib/core.js";
+export declare type IJsonConfig = {
+    outdir: string;
+    tests: ITestTypes[];
+};
 export declare type IBaseConfig = {
     externals: string[];
     clearScreen: boolean;
@@ -12,7 +16,6 @@ export declare type IBaseConfig = {
     outbase: string;
     outdir: string;
     ports: string[];
-    tests: string;
     debugger: boolean;
 };
 export declare type IPartialInterface<I extends IBaseTest> = Partial<ITestInterface<I>>;

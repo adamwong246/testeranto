@@ -27,6 +27,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ITProject = void 0;
+const jsonc_1 = require("jsonc");
 const esbuild_1 = __importDefault(require("esbuild"));
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
@@ -134,7 +135,6 @@ class ITProject {
         this.clearScreen = config.clearScreen;
         this.devMode = config.devMode;
         Object.values(config.ports).forEach((port) => { this.ports[port] = OPEN_PORT; });
-        const testPath = `${process.cwd()}/${config.tests}`;
         const featurePath = `${process.cwd()}/${config.features}`;
         process.stdin.on('keypress', (str, key) => {
             if (key.name === 'q') {
@@ -147,9 +147,8 @@ class ITProject {
                 process.exit(-1);
             }
         });
-        // const watchPoints = [];
-        Promise.resolve().then(() => __importStar(require(testPath))).then((tests) => {
-            this.tests = tests.default;
+        fs_1.default.readFile('testeranto.json', (e, d) => {
+            this.tests = jsonc_1.jsonc.parse(d.toString()).tests;
             Promise.resolve().then(() => __importStar(require(featurePath))).then(async (features) => {
                 this.features = features.default;
                 await Promise.resolve(Promise.all([
@@ -220,7 +219,7 @@ class ITProject {
                         await nodeContext.watch();
                         return nodeContext;
                     }),
-                    esbuild_1.default.context((0, web_js_1.default)(config, [...webEntryPoints, testPath, featurePath]))
+                    esbuild_1.default.context((0, web_js_1.default)(config, [...webEntryPoints, featurePath]))
                         .then(async (esbuildWeb) => {
                         await esbuildWeb.watch();
                         return esbuildWeb;

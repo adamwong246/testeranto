@@ -32,11 +32,6 @@ class WebTesteranto extends core_1.default {
         Promise.all([...artifacts, logPromise]).then(async () => {
             var window = remote.getCurrentWindow();
             window.close();
-            // debugger
-            // // ipcRenderer.invoke('quit-app', failed);
-            // // (window as any).exit(failed)
-            // let win = new BrowserWindow({ width: 800, height: 600 })
-            // win.loadURL('https://github.com')
         });
     }
 }

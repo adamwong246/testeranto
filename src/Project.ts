@@ -1,24 +1,18 @@
+import { jsonc } from 'jsonc';
 import esbuild, { BuildOptions } from "esbuild";
 import fs from "fs";
-import fsExists from "fs.promises.exists";
 import path from "path";
-
-
 import readline from 'readline';
 import { glob } from "glob";
 
 import { TesterantoFeatures } from "./Features.js";
-import { IBaseConfig, IRunTime, ITestTypes } from "./Types";
+import { IBaseConfig, IJsonConfig, IRunTime, ITestTypes } from "./Types";
 import { ITTestResourceRequirement } from "./lib/index.js";
 
 import esbuildNodeConfiger from "./esbuildConfigs/node.js";
 import esbuildWebConfiger from "./esbuildConfigs/web.js";
 
 import webHtmlFrame from "./web.html.js";
-
-import electron_pm2_StartOptions from "./pm2/electron.js";
-import chromium_pm2_StartOptions from "./pm2/chromium.js";
-import node_pm2_StartOptions from "./pm2/node.js";
 
 import childProcess from 'child_process';
 
@@ -106,7 +100,6 @@ export class ITProject {
 
     Object.values(config.ports).forEach((port) => { this.ports[port] = OPEN_PORT });
 
-    const testPath = `${process.cwd()}/${config.tests}`;
     const featurePath = `${process.cwd()}/${config.features}`;
 
     process.stdin.on('keypress', (str, key) => {
@@ -121,11 +114,8 @@ export class ITProject {
       }
     });
 
-    // const watchPoints = [];
-
-    import(testPath).then((tests) => {
-      this.tests = tests.default;
-
+    fs.readFile('testeranto.json', (e, d) => {
+      this.tests = (jsonc.parse(d.toString()) as IJsonConfig).tests;
       import(featurePath).then(async (features) => {
         this.features = features.default;
 
@@ -209,7 +199,7 @@ export class ITProject {
               return nodeContext;
             }),
 
-          esbuild.context(esbuildWebConfiger(config, [...webEntryPoints, testPath, featurePath]))
+          esbuild.context(esbuildWebConfiger(config, [...webEntryPoints, featurePath]))
             .then(async (esbuildWeb) => {
               await esbuildWeb.watch();
               return esbuildWeb;
