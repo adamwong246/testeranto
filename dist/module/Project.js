@@ -204,9 +204,9 @@ export class ITProject {
                         // console.log("sending", JSON.stringify(this.tests));
                         // childElectron.stdin.write(JSON.stringify(this.tests));
                         // not necessary
-                        // this.esWebServerDetails = await eWeb.serve({
-                        //   servedir: 'dist',
-                        // });
+                        this.esWebServerDetails = await eWeb.serve({
+                            servedir: 'dist',
+                        });
                         // pm2.connect(async (err) => {
                         //   if (err) {
                         //     console.error(err);
@@ -353,15 +353,18 @@ export class ITProject {
         this.resourceQueue.push({ requirement, protocol });
     }
     getSecondaryEndpointsPoints(runtime) {
-        if (runtime) {
-            return this.tests
-                .filter((t) => {
-                return (t[1] === runtime);
-            })
-                .map((tc) => tc[0]);
-        }
-        return this.tests
-            .map((tc) => tc[0]);
+        const meta = (ts, st) => {
+            ts.forEach((t) => {
+                if (t[1] === runtime) {
+                    st.add(t[0]);
+                }
+                if (Array.isArray(t[2])) {
+                    meta(t[2], st);
+                }
+            });
+            return st;
+        };
+        return Array.from(meta(this.tests, new Set()));
     }
     initiateShutdown(reason) {
         console.log("Shutdown initiated because", reason);

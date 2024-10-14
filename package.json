@@ -10,6 +10,10 @@
       "import": "./dist/cjs-shim.js",
       "require": "./dist/cjs-shim.js"
     },
+    "./src/SubPackages/puppeteer": {
+      "import": "./dist/module/SubPackages/puppeteer.js",
+      "require": "./dist/common/SubPackages/puppeteer.js"
+    },
     "./src/SubPackages/react/jsx/index": {
       "import": "./dist/module/SubPackages/react/jsx/index.js",
       "require": "./dist/common/SubPackages/react/jsx/index.js"

@@ -75,16 +75,22 @@ const launchNode = (t: ITestTypes, changedFile: string) => {
       }
     )
   ]);
-  console.log("child", child);
-  child.stdout?.on("data", (x) => {
-    console.log("x", x)
+  child.postMessage({ message: 'hello' })
+  child.on('message', (data) => {
+    console.log("from child", data) // hello world!
+    launchWebSecondary(process.cwd() + data);
   })
+  // console.log("child", child);
+  // child.stdout?.on("data", (x) => {
+  //   console.log("x", x)
+  // })
 }
-const launchWeb = (t: ITestTypes, changedFile: string) => {
-  console.log("launchWeb", changedFile)
+
+const launchWebSecondary = (htmlFile: string) => {
+  console.log("launchWebSecondary", htmlFile)
   const subWin = new BrowserWindow(
     {
-      show: false,
+      show: true,
 
       webPreferences: {
         nodeIntegration: true,
@@ -99,7 +105,30 @@ const launchWeb = (t: ITestTypes, changedFile: string) => {
   )
   remoteMain.enable(subWin.webContents);
   subWin.webContents.openDevTools()
-  // subWin.on("close")
+  subWin.loadFile(htmlFile);
+
+}
+
+const launchWeb = (t: ITestTypes, changedFile: string) => {
+  console.log("launchWeb", changedFile)
+  const subWin = new BrowserWindow(
+    {
+      show: true,
+
+      webPreferences: {
+        nodeIntegration: true,
+        nodeIntegrationInWorker: true,
+        contextIsolation: false,
+        preload: path.join(app.getAppPath(), 'preload.js'),
+        offscreen: false,
+        devTools: true,
+      }
+    }
+
+  )
+  remoteMain.enable(subWin.webContents);
+  subWin.webContents.openDevTools()
+
   const htmlFile = changedFile.replace(".mjs", ".html");
 
   subWin.loadFile(htmlFile, {
