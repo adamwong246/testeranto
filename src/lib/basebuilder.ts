@@ -1,5 +1,7 @@
-import { ITTestResourceRequest, ITestJob, ITTestResourceConfiguration, ITLog } from ".";
-import { IBaseTest } from "../Types";
+import puppeteer from "puppeteer-core";
+import { BrowserWindow } from "electron";
+import { ITTestResourceRequest, ITestJob, ITTestResourceConfiguration, ITLog, ILogWriter } from ".";
+import { IBaseTest, ITestSpecification } from "../Types";
 import { IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen, BaseGiven } from "./abstractBase";
 
 export abstract class BaseBuilder<
@@ -143,9 +145,10 @@ export abstract class BaseBuilder<
         ITestShape
       >
     >,
-    logWriter,
-    testResourceRequirement,
-    testSpecification,
+    logWriter: ILogWriter,
+    testResourceRequirement: ITTestResourceRequest,
+    testSpecification: any,
+    utils: puppeteer.Browser | BrowserWindow
   ) {
     this.testResourceRequirement = testResourceRequirement;
     this.suitesOverrides = suitesOverrides;
@@ -186,7 +189,8 @@ export abstract class BaseBuilder<
                 testResourceConfiguration.fs + "/" + fPath,
                 value
               ),
-            tLog
+            tLog,
+            utils
           );
         };
 

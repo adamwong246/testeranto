@@ -39,13 +39,13 @@ const loadReport = (configs: IJsonConfig) => {
 
   win.loadFile(process.cwd() + "/dist/report.html").then(async (x) => {
     pie.connect(app, puppeteer).then(async (browser) => {
-      console.log("pages", await browser.pages())
-      console.log("configs", configs);
+      // console.log("pages", await browser.pages())
+      // console.log("configs", configs);
 
       pie.getPage(browser, win).then(async (page) => {
-        console.log("page", page);
+        // console.log("page", page);
         await page.screenshot({
-          path: 'electron-puppeteer-screenshot.jpg'
+          path: 'electron-puppeteer-screenshot1.jpg'
         });
       })
 
@@ -80,6 +80,34 @@ const launchNode = (t: ITestTypes, changedFile: string) => {
     console.log("from child", data) // hello world!
     launchWebSecondary(process.cwd() + data);
   })
+  child.on('exit', (data) => {
+    console.log("exit from child", data);
+    fileStream.close()
+  })
+  // child.stdout
+  // child..on("", (data) => {
+  //   console.log("from child", data) // hello world!
+  //   launchWebSecondary(process.cwd() + data);
+  // })
+  // Create a write stream for the file
+  const fileStream = fs.createWriteStream('errors.txt');
+
+  // Pipe the child process's stdout to the file
+  child.stdout?.pipe(fileStream);
+
+  // // Handle errors
+  // child.on('error', (err) => {
+  //   console.error('Error spawning child process:', err);
+  // });
+
+  // fileStream.on('error', (err) => {
+  //   console.error('Error writing to file:', err);
+  // });
+
+  // // Log a message when the child process exits
+  // child.on('close', (code) => {
+  //   console.log(`Child process exited with code ${code}`);
+  // });
   // console.log("child", child);
   // child.stdout?.on("data", (x) => {
   //   console.log("x", x)
@@ -98,7 +126,7 @@ const launchWebSecondary = (htmlFile: string) => {
         contextIsolation: false,
         preload: path.join(app.getAppPath(), 'preload.js'),
         offscreen: false,
-        devTools: true,
+        devTools: false,
       }
     }
 
@@ -121,13 +149,13 @@ const launchWeb = (t: ITestTypes, changedFile: string) => {
         contextIsolation: false,
         preload: path.join(app.getAppPath(), 'preload.js'),
         offscreen: false,
-        devTools: true,
+        devTools: false,
       }
     }
 
   )
   remoteMain.enable(subWin.webContents);
-  subWin.webContents.openDevTools()
+  // subWin.webContents.openDevTools()
 
   const htmlFile = changedFile.replace(".mjs", ".html");
 
@@ -152,7 +180,6 @@ const launchWeb = (t: ITestTypes, changedFile: string) => {
   })
 
 }
-
 
 const main = async () => {
   const configs = jsonc.parse((await fs.readFileSync("./testeranto.json")).toString()) as IJsonConfig;
@@ -182,15 +209,6 @@ const main = async () => {
   });
 
   const browser = await pie.connect(app, puppeteer);
-  // const win = new BrowserWindow();
-  // const url = "https://www.google.com/";
-  // await win.loadURL(url);
-
-  // console.log(await browser.pages());
-  // const page = await pie.getPage(browser, win);
-  // await page.screenshot({
-  //   path: 'google.jpg'
-  // });
 
 };
 

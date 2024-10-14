@@ -22,6 +22,17 @@ exports.default = (config, entryPoints) => {
             "path",
             "fs",
             "stream",
+            "http",
+            "constants",
+            "net",
+            "assert",
+            "tls",
+            "os",
+            "child_process",
+            "readline",
+            "zlib",
+            "crypto",
+            "https"
         ], platform: "browser", entryPoints: [...entryPoints], plugins: [
             ...(config.webPlugins || []),
             {

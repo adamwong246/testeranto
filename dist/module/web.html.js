@@ -4,6 +4,7 @@ export default (jsfilePath, htmlFilePath) => `
 
 <head>
   <script type="module" src="${jsfilePath}"></script>
+
 </head>
 
 <body>

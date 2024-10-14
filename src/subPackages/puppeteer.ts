@@ -1,8 +1,10 @@
 import React from "react";
 
+// const { BrowserWindow, app } = require("electron");
+
 import Testeranto from "../Node";
 
-import { IBaseTest, ITestImplementation, ITestSpecification } from "../Types";
+import { IBaseTest, IPartialInterface, ITestImplementation, ITestSpecification } from "../Types";
 
 type IInput = string;
 type ISelection = any;
@@ -17,6 +19,7 @@ export default <ITestShape extends IBaseTest>(
   testInput: IInput,
   testSpecifications: ISpec<ITestShape>,
   testImplementations: ITestImplementation<ITestShape, object>,
+  testInterface?: IPartialInterface<ITestShape>
 ) => {
   return Testeranto<ITestShape>(
     testInput,
@@ -25,6 +28,7 @@ export default <ITestShape extends IBaseTest>(
     {
       beforeAll(x) {
         process.parentPort.postMessage(`/dist/web/src/ClassicalComponent/test.html`)
+
         return x;
       },
       beforeEach: async (
@@ -37,6 +41,8 @@ export default <ITestShape extends IBaseTest>(
       andWhen: function (s: IStore, whenCB): Promise<ISelection> {
         return whenCB()(s);
       },
+
+      ...testInterface
     },
   )
 };

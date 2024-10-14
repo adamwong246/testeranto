@@ -1,3 +1,4 @@
+var _a;
 import { jsonc } from 'jsonc';
 import esbuild from "esbuild";
 import fs from "fs";
@@ -9,9 +10,11 @@ import esbuildWebConfiger from "./esbuildConfigs/web.js";
 import webHtmlFrame from "./web.html.js";
 import childProcess from 'child_process';
 const childElectron = childProcess.spawn("yarn", ["electron", "node_modules/testeranto/dist/common/electron.js"]);
-childElectron.stdout.on('data', function (msg) {
-    console.log(msg.toString());
-});
+// childElectron.stdout.on('data', function (msg) {
+//   console.log(msg.toString())
+// });
+const fileStream = fs.createWriteStream('./dist/electron.log');
+(_a = childElectron.stdout) === null || _a === void 0 ? void 0 : _a.pipe(fileStream);
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
     process.stdin.setRawMode(true);
@@ -207,6 +210,7 @@ export class ITProject {
                         this.esWebServerDetails = await eWeb.serve({
                             servedir: 'dist',
                         });
+                        // fs.copyFileSync("node_modules/testeranto/dist/index.css", "index.css")
                         // pm2.connect(async (err) => {
                         //   if (err) {
                         //     console.error(err);

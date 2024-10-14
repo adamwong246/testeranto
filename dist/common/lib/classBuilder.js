@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ClassBuilder = void 0;
 const basebuilder_1 = require("./basebuilder");
 class ClassBuilder extends basebuilder_1.BaseBuilder {
-    constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResourceRequirement, logWriter) {
+    constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResourceRequirement, logWriter, utils) {
         const classySuites = Object.entries(testImplementation.suites).reduce((a, [key], index) => {
             a[key] = (somestring, givens, checks) => {
                 return new suiteKlasser.prototype.constructor(somestring, index, givens, checks);
@@ -35,7 +35,7 @@ class ClassBuilder extends basebuilder_1.BaseBuilder {
             };
             return a;
         }, {});
-        super(input, classySuites, classyGivens, classyWhens, classyThens, classyChecks, logWriter, testResourceRequirement, testSpecification);
+        super(input, classySuites, classyGivens, classyWhens, classyThens, classyChecks, logWriter, testResourceRequirement, testSpecification, utils);
     }
 }
 exports.ClassBuilder = ClassBuilder;

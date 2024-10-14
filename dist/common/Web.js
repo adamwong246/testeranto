@@ -11,10 +11,10 @@ const remote = require('@electron/remote');
 // const electron = require('electron')
 // const remote = electron.remote;
 // const path = require('path')
-// const BrowserWindow = electron.remote.BrowserWindow
+const BrowserWindow = remote.BrowserWindow;
 class WebTesteranto extends core_1.default {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
-        super(input, testSpecification, testImplementation, testResourceRequirement, window.NodeWriter, testInterface);
+        super(input, testSpecification, testImplementation, testResourceRequirement, window.NodeWriter, testInterface, BrowserWindow);
         const t = this.testJobs[0];
         const testResourceArg = decodeURIComponent(new URLSearchParams(location.search).get('requesting') || '');
         try {
@@ -31,7 +31,7 @@ class WebTesteranto extends core_1.default {
         const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(partialTestResource);
         Promise.all([...artifacts, logPromise]).then(async () => {
             var window = remote.getCurrentWindow();
-            window.close();
+            // window.close();
         });
     }
 }

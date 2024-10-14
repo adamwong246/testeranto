@@ -17,9 +17,11 @@ import webHtmlFrame from "./web.html.js";
 import childProcess from 'child_process';
 
 const childElectron = childProcess.spawn("yarn", ["electron", "node_modules/testeranto/dist/common/electron.js"]);
-childElectron.stdout.on('data', function (msg) {
-  console.log(msg.toString())
-});
+// childElectron.stdout.on('data', function (msg) {
+//   console.log(msg.toString())
+// });
+const fileStream = fs.createWriteStream('./dist/electron.log');
+childElectron.stdout?.pipe(fileStream);
 
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
@@ -219,6 +221,7 @@ export class ITProject {
               servedir: 'dist',
             });
 
+            // fs.copyFileSync("node_modules/testeranto/dist/index.css", "index.css")
             // pm2.connect(async (err) => {
 
             //   if (err) {

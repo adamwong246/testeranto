@@ -1,5 +1,5 @@
 export class BaseBuilder {
-    constructor(input, suitesOverrides, givenOverides, whenOverides, thenOverides, checkOverides, logWriter, testResourceRequirement, testSpecification) {
+    constructor(input, suitesOverrides, givenOverides, whenOverides, thenOverides, checkOverides, logWriter, testResourceRequirement, testSpecification, utils) {
         this.input = input;
         this.artifacts = [];
         this.testResourceRequirement = testResourceRequirement;
@@ -12,7 +12,7 @@ export class BaseBuilder {
         const suiteRunner = (suite) => async (testResourceConfiguration, tLog) => {
             return await suite.run(input, testResourceConfiguration, (fPath, value) => logWriter.testArtiFactoryfileWriter(tLog, (p) => {
                 artifacts.push(p);
-            })(testResourceConfiguration.fs + "/" + fPath, value), tLog);
+            })(testResourceConfiguration.fs + "/" + fPath, value), tLog, utils);
         };
         const artifacts = this.artifacts;
         this.testJobs = suites.map((suite) => {

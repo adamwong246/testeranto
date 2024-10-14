@@ -3,7 +3,7 @@ import { BaseSuite, BaseGiven, BaseWhen, BaseThen, BaseCheck } from "./abstractB
 import { ClassBuilder } from "./classBuilder";
 const utils = {};
 export default class Testeranto extends ClassBuilder {
-    constructor(input, testSpecification, testImplementation, testResourceRequirement = defaultTestResourceRequirement, logWriter, testInterface) {
+    constructor(input, testSpecification, testImplementation, testResourceRequirement = defaultTestResourceRequirement, logWriter, testInterface, utils) {
         const fullTestInterface = DefaultTestInterface(testInterface);
         super(testImplementation, testSpecification, input, class extends BaseSuite {
             assertThat(t) {
@@ -22,9 +22,7 @@ export default class Testeranto extends ClassBuilder {
                 return new Promise((res) => res(fullTestInterface.afterEach(store, key, (fPath, value) => artifactory(`after/${fPath}`, value))));
             }
             afterAll(store, artifactory) {
-                return fullTestInterface.afterAll(store, (fPath, value) => 
-                // TODO does not work?
-                artifactory(`afterAll4-${this.name}/${fPath}`, value));
+                return fullTestInterface.afterAll(store, (fPath, value) => { artifactory(`afterAll4-${this.name}/${fPath}`, value); }, utils);
             }
         }, class When extends BaseWhen {
             async andWhen(store, whenCB, testResource) {
@@ -47,6 +45,6 @@ export default class Testeranto extends ClassBuilder {
                 // TODO does not work?
                 artifactory(`afterEach2-${this.name}/${fPath}`, value))));
             }
-        }, testResourceRequirement, logWriter);
+        }, testResourceRequirement, logWriter, utils);
     }
 }

@@ -25,18 +25,19 @@ const loadReport = (configs) => {
     });
     win.loadFile(process.cwd() + "/dist/report.html").then(async (x) => {
         pie.connect(app, puppeteer).then(async (browser) => {
-            console.log("pages", await browser.pages());
-            console.log("configs", configs);
+            // console.log("pages", await browser.pages())
+            // console.log("configs", configs);
             pie.getPage(browser, win).then(async (page) => {
-                console.log("page", page);
+                // console.log("page", page);
                 await page.screenshot({
-                    path: 'electron-puppeteer-screenshot.jpg'
+                    path: 'electron-puppeteer-screenshot1.jpg'
                 });
             });
         });
     });
 };
 const launchNode = (t, changedFile) => {
+    var _a;
     console.log("launchNode", changedFile);
     const child = utilityProcess.fork(changedFile, [
         JSON.stringify({
@@ -53,6 +54,30 @@ const launchNode = (t, changedFile) => {
         console.log("from child", data); // hello world!
         launchWebSecondary(process.cwd() + data);
     });
+    child.on('exit', (data) => {
+        console.log("exit from child", data);
+        fileStream.close();
+    });
+    // child.stdout
+    // child..on("", (data) => {
+    //   console.log("from child", data) // hello world!
+    //   launchWebSecondary(process.cwd() + data);
+    // })
+    // Create a write stream for the file
+    const fileStream = fs.createWriteStream('errors.txt');
+    // Pipe the child process's stdout to the file
+    (_a = child.stdout) === null || _a === void 0 ? void 0 : _a.pipe(fileStream);
+    // // Handle errors
+    // child.on('error', (err) => {
+    //   console.error('Error spawning child process:', err);
+    // });
+    // fileStream.on('error', (err) => {
+    //   console.error('Error writing to file:', err);
+    // });
+    // // Log a message when the child process exits
+    // child.on('close', (code) => {
+    //   console.log(`Child process exited with code ${code}`);
+    // });
     // console.log("child", child);
     // child.stdout?.on("data", (x) => {
     //   console.log("x", x)
@@ -68,7 +93,7 @@ const launchWebSecondary = (htmlFile) => {
             contextIsolation: false,
             preload: path.join(app.getAppPath(), 'preload.js'),
             offscreen: false,
-            devTools: true,
+            devTools: false,
         }
     });
     remoteMain.enable(subWin.webContents);
@@ -85,11 +110,11 @@ const launchWeb = (t, changedFile) => {
             contextIsolation: false,
             preload: path.join(app.getAppPath(), 'preload.js'),
             offscreen: false,
-            devTools: true,
+            devTools: false,
         }
     });
     remoteMain.enable(subWin.webContents);
-    subWin.webContents.openDevTools();
+    // subWin.webContents.openDevTools()
     const htmlFile = changedFile.replace(".mjs", ".html");
     subWin.loadFile(htmlFile, {
         query: {
@@ -127,14 +152,6 @@ const main = async () => {
         });
     });
     const browser = await pie.connect(app, puppeteer);
-    // const win = new BrowserWindow();
-    // const url = "https://www.google.com/";
-    // await win.loadURL(url);
-    // console.log(await browser.pages());
-    // const page = await pie.getPage(browser, win);
-    // await page.screenshot({
-    //   path: 'google.jpg'
-    // });
 };
 main();
 // ipcMain.handle('web-log', (x, message: string) => {

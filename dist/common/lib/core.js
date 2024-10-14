@@ -5,7 +5,7 @@ const abstractBase_1 = require("./abstractBase");
 const classBuilder_1 = require("./classBuilder");
 const utils = {};
 class Testeranto extends classBuilder_1.ClassBuilder {
-    constructor(input, testSpecification, testImplementation, testResourceRequirement = index_js_1.defaultTestResourceRequirement, logWriter, testInterface) {
+    constructor(input, testSpecification, testImplementation, testResourceRequirement = index_js_1.defaultTestResourceRequirement, logWriter, testInterface, utils) {
         const fullTestInterface = (0, index_js_1.DefaultTestInterface)(testInterface);
         super(testImplementation, testSpecification, input, class extends abstractBase_1.BaseSuite {
             assertThat(t) {
@@ -24,9 +24,7 @@ class Testeranto extends classBuilder_1.ClassBuilder {
                 return new Promise((res) => res(fullTestInterface.afterEach(store, key, (fPath, value) => artifactory(`after/${fPath}`, value))));
             }
             afterAll(store, artifactory) {
-                return fullTestInterface.afterAll(store, (fPath, value) => 
-                // TODO does not work?
-                artifactory(`afterAll4-${this.name}/${fPath}`, value));
+                return fullTestInterface.afterAll(store, (fPath, value) => { artifactory(`afterAll4-${this.name}/${fPath}`, value); }, utils);
             }
         }, class When extends abstractBase_1.BaseWhen {
             async andWhen(store, whenCB, testResource) {
@@ -49,7 +47,7 @@ class Testeranto extends classBuilder_1.ClassBuilder {
                 // TODO does not work?
                 artifactory(`afterEach2-${this.name}/${fPath}`, value))));
             }
-        }, testResourceRequirement, logWriter);
+        }, testResourceRequirement, logWriter, utils);
     }
 }
 exports.default = Testeranto;

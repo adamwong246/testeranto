@@ -1,6 +1,4 @@
-// import childProcess from "child_process";
-// import { Puppeteer } from "puppeteer-core";
-
+import puppeteer from "puppeteer-core";
 import {
   ITTestResourceConfiguration,
   ITTestResourceRequest,
@@ -9,12 +7,13 @@ import {
 } from "./lib/index.js";
 import { IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen, BaseGiven } from "./lib/abstractBase.js";
 import Testeranto from "./lib/core.js";
+import { Puppeteer } from "puppeteer-core";
+import { BrowserWindow } from "electron";
 
 export type IJsonConfig = {
   outdir: string,
   tests: ITestTypes[]
 };
-
 
 export type IBaseConfig = {
   externals: string[],
@@ -32,6 +31,7 @@ export type IBaseConfig = {
 };
 
 export type IPartialInterface<I extends IBaseTest> = Partial<ITestInterface<I>>;
+export type IPartialNodeInterface<I extends IBaseTest> = Partial<INodeTestInterface<I>>;
 
 export type IEntry<ITestShape extends IBaseTest> = (
   input: ITestShape['iinput'],
@@ -159,7 +159,7 @@ export type ITestInterface<
   afterAll: (
     store: ITestShape['istore'],
     artificer: ITestArtificer,
-    // utils: IUtils
+    utils: puppeteer.Browser | BrowserWindow
   ) => any;
   afterEach: (
     store: ITestShape['istore'],
@@ -182,6 +182,49 @@ export type ITestInterface<
     // utils: IUtils
   ) => Promise<ITestShape['istore']>;
 };
+
+export type INodeTestInterface<
+  ITestShape extends IBaseTest
+> = {
+  assertThis: (x: ITestShape['then']) => void,
+
+  andWhen: (
+    store: ITestShape['istore'],
+    whenCB: ITestShape['when'],
+    testResource: ITTestResourceConfiguration
+  ) => Promise<ITestShape['istore']>;
+  butThen: (
+    store: ITestShape['istore'],
+    thenCB,
+    testResource: ITTestResourceConfiguration
+  ) => Promise<ITestShape['iselection']>;
+
+  afterAll: (
+    store: ITestShape['istore'],
+    artificer: ITestArtificer,
+    browser: puppeteer.Browser
+  ) => any;
+  afterEach: (
+    store: ITestShape['istore'],
+    key: string,
+    artificer: ITestArtificer,
+    // utils: IUtils
+  ) => Promise<unknown>;
+  beforeAll: (
+    input: ITestShape['iinput'],
+    testResource: ITTestResourceConfiguration,
+    artificer: ITestArtificer,
+    // utils: IUtils
+  ) => Promise<ITestShape['isubject']>;
+  beforeEach: (
+    subject: ITestShape['isubject'],
+    initializer: (c?) => ITestShape['given'],
+    artificer: ITestArtificer,
+    testResource: ITTestResourceConfiguration,
+    initialValues,
+    // utils: IUtils
+  ) => Promise<ITestShape['istore']>;
+} & ITestInterface<ITestShape>;
 
 type Modify<T, R> = Omit<T, keyof R> & R;
 

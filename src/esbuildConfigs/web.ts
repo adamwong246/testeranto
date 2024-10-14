@@ -34,6 +34,18 @@ export default (
       "path",
       "fs",
       "stream",
+
+      "http",
+      "constants",
+      "net",
+      "assert",
+      "tls",
+      "os",
+      "child_process",
+      "readline",
+      "zlib",
+      "crypto",
+      "https"
     ],
 
     platform: "browser",

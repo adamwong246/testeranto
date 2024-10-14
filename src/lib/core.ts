@@ -1,4 +1,5 @@
 import { IBaseTest, ITestInterface, ITestSpecification } from "../Types";
+import puppeteer from "puppeteer-core";
 
 import {
   DefaultTestInterface,
@@ -12,6 +13,7 @@ import {
 } from "./index.js";
 import { BaseSuite, BaseGiven, BaseWhen, BaseThen, BaseCheck } from "./abstractBase";
 import { ClassBuilder } from "./classBuilder";
+import { BrowserWindow } from "electron";
 
 const utils = {} as any;
 
@@ -28,7 +30,8 @@ export default abstract class Testeranto<
     testImplementation,
     testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
     logWriter: ILogWriter,
-    testInterface: Partial<ITestInterface<ITestShape>>
+    testInterface: Partial<ITestInterface<ITestShape>>,
+    utils: puppeteer.Browser | BrowserWindow
   ) {
 
     const fullTestInterface = DefaultTestInterface(testInterface);
@@ -96,8 +99,10 @@ export default abstract class Testeranto<
         }
         afterAll(store, artifactory) {
           return fullTestInterface.afterAll(store, (fPath: string, value: unknown) =>
-            // TODO does not work?
-            artifactory(`afterAll4-${this.name}/${fPath}`, value));
+          // TODO does not work?
+          { artifactory(`afterAll4-${this.name}/${fPath}`, value) },
+            utils
+          );
         }
       } as any,
 
@@ -166,7 +171,8 @@ export default abstract class Testeranto<
       } as any,
 
       testResourceRequirement,
-      logWriter
+      logWriter,
+      utils
     );
   }
 

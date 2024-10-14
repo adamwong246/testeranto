@@ -22,8 +22,7 @@ const remote = require('@electron/remote')
 // const electron = require('electron')
 // const remote = electron.remote;
 // const path = require('path')
-// const BrowserWindow = electron.remote.BrowserWindow
-
+const BrowserWindow = remote.BrowserWindow
 
 class WebTesteranto<
   TestShape extends IBaseTest,
@@ -44,6 +43,7 @@ class WebTesteranto<
       testResourceRequirement,
       (window as any).NodeWriter,
       testInterface,
+      BrowserWindow
     );
 
     const t: ITestJob = this.testJobs[0];
@@ -74,7 +74,7 @@ class WebTesteranto<
 
     Promise.all([...artifacts, logPromise]).then(async () => {
       var window = remote.getCurrentWindow();
-      window.close();
+      // window.close();
     })
   }
 

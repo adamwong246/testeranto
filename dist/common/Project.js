@@ -25,6 +25,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ITProject = void 0;
 const jsonc_1 = require("jsonc");
@@ -38,9 +39,11 @@ const web_js_1 = __importDefault(require("./esbuildConfigs/web.js"));
 const web_html_js_1 = __importDefault(require("./web.html.js"));
 const child_process_1 = __importDefault(require("child_process"));
 const childElectron = child_process_1.default.spawn("yarn", ["electron", "node_modules/testeranto/dist/common/electron.js"]);
-childElectron.stdout.on('data', function (msg) {
-    console.log(msg.toString());
-});
+// childElectron.stdout.on('data', function (msg) {
+//   console.log(msg.toString())
+// });
+const fileStream = fs_1.default.createWriteStream('./dist/electron.log');
+(_a = childElectron.stdout) === null || _a === void 0 ? void 0 : _a.pipe(fileStream);
 readline_1.default.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
     process.stdin.setRawMode(true);
@@ -236,6 +239,7 @@ class ITProject {
                         this.esWebServerDetails = await eWeb.serve({
                             servedir: 'dist',
                         });
+                        // fs.copyFileSync("node_modules/testeranto/dist/index.css", "index.css")
                         // pm2.connect(async (err) => {
                         //   if (err) {
                         //     console.error(err);

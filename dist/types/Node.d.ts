@@ -1,5 +1,5 @@
 import Testeranto from "./lib/core.js";
 import { ITTestResourceRequest } from "./lib/index.js";
-import { IBaseTest, ITestImplementation, ITestInterface, ITestSpecification } from "./Types.js";
-declare const _default: <ITestShape extends IBaseTest>(input: ITestShape["iinput"], testSpecification: ITestSpecification<ITestShape>, testImplementation: ITestImplementation<ITestShape, object>, testInterface: Partial<ITestInterface<ITestShape>>, testResourceRequirement?: ITTestResourceRequest) => Promise<Testeranto<ITestShape>>;
+import { IBaseTest, INodeTestInterface, ITestImplementation, ITestSpecification } from "./Types.js";
+declare const _default: <ITestShape extends IBaseTest>(input: ITestShape["iinput"], testSpecification: ITestSpecification<ITestShape>, testImplementation: ITestImplementation<ITestShape, object>, testInterface: Partial<INodeTestInterface<ITestShape>>, testResourceRequirement?: ITTestResourceRequest) => Promise<Testeranto<ITestShape>>;
 export default _default;
