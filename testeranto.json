@@ -1,5 +1,5 @@
 {
-  "outdir": "dist",
+  "outdir": "docs",
   "tests": [
     // [
     //   "./src/LoginPage/react/web.test.tsx",

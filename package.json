@@ -22,7 +22,7 @@
     ]
   },
   "scripts": {
-    "dev": "rm -rf dist/web && rm -rf dist/node && yarn upgrade -f testeranto && yarn test",
+    "dev": "rm -rf docs/web && rm -rf docs/node && yarn upgrade -f testeranto && yarn test",
     "test": "ts-node-esm testeranto.mts",
     "test2": "node --loader ts-node/esm project.test.mts"
   },

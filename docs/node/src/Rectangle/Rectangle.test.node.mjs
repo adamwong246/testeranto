@@ -7048,9 +7048,9 @@ var require_stream_duplex = __commonJS({
   }
 });
 
-// node_modules/testeranto/node_modules/safe-buffer/index.js
+// node_modules/testeranto/node_modules/string_decoder/node_modules/safe-buffer/index.js
 var require_safe_buffer = __commonJS({
-  "node_modules/testeranto/node_modules/safe-buffer/index.js"(exports, module) {
+  "node_modules/testeranto/node_modules/string_decoder/node_modules/safe-buffer/index.js"(exports, module) {
     init_cjs_shim();
     var buffer = __require("buffer");
     var Buffer2 = buffer.Buffer;
