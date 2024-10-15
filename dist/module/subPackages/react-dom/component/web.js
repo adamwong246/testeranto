@@ -1,9 +1,8 @@
 import { createElement } from "react";
 import ReactDom from "react-dom/client";
 import Testeranto from "../../../Web";
-export default (testImplementations, testSpecifications, testInput) => {
+export default (testInput, testSpecifications, testImplementations) => {
     document.addEventListener("DOMContentLoaded", function () {
-        console.log("DOMContentLoaded");
         const elem = document.getElementById("root");
         if (elem) {
             class TesterantoComponent extends testInput {
@@ -17,7 +16,8 @@ export default (testImplementations, testSpecifications, testInput) => {
                 }
             }
             return Testeranto(testInput, testSpecifications, testImplementations, {
-                beforeAll: async (prototype, artificer) => {
+                beforeAll: async (initialProps, artificer) => {
+                    console.log("mark5", initialProps);
                     return await new Promise((resolve, rej) => {
                         const elem = document.getElementById("root");
                         if (elem) {
@@ -25,21 +25,20 @@ export default (testImplementations, testSpecifications, testInput) => {
                         }
                     });
                 },
-                beforeEach: async ({ htmlElement }, ndx, testRsource, artificer) => {
+                beforeEach: async ({ htmlElement }, initializer, testResource, artificer, initialValues) => {
                     return new Promise((resolve, rej) => {
+                        // console.log("beforeEach" + JSON.stringify(initializer) + JSON.stringify(initialValues));
                         // Ignore these type errors
-                        ReactDom.createRoot(htmlElement).render(createElement(TesterantoComponent, {
-                            done: (reactElement) => {
+                        ReactDom.createRoot(htmlElement).render(createElement(TesterantoComponent, Object.assign(Object.assign({}, initializer.props), { done: (reactElement) => {
                                 resolve({
                                     htmlElement,
                                     reactElement,
                                 });
-                            }
-                        }, []));
+                            } }), []));
                     });
                 },
-                andWhen: function (s, actioner) {
-                    return actioner()(s);
+                andWhen: function (s, whenCB) {
+                    return whenCB(s);
                 },
                 butThen: async function (s) {
                     return s;

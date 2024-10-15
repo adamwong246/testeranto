@@ -9,3 +9,5 @@ cat >dist/module/package.json <<!EOF
     "type": "module"
 }
 !EOF
+
+cp ./src/cjs-shim.js ./dist/cjs-shim.js

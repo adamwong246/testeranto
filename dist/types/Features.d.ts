@@ -1,4 +1,4 @@
-import Graph from "graphology";
+import Graph from "graphology/dist/graphology.umd.js";
 declare const DirectedGraph: any;
 declare abstract class TesterantoGraph {
     name: string;
@@ -44,19 +44,19 @@ export declare class TesterantoFeatures {
         features: {
             inNetworks: {
                 network: string;
-                neighbors: string[];
+                neighbors: any;
             }[];
             name: string;
         }[];
         networks: ({
             name: string;
-            graph: Graph<import("graphology-types").Attributes, import("graphology-types").Attributes, import("graphology-types").Attributes>;
+            graph: Graph;
         } | {
             name: string;
-            graph: Graph<import("graphology-types").Attributes, import("graphology-types").Attributes, import("graphology-types").Attributes>;
+            graph: Graph;
         } | {
             name: string;
-            graph: Graph<import("graphology-types").Attributes, import("graphology-types").Attributes, import("graphology-types").Attributes>;
+            graph: Graph;
         })[];
     };
 }

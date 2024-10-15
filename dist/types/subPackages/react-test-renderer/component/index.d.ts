@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../Types";
+import { IBaseTest, ITestImplementation, ITestSpecification } from "../../../Types";
 export declare type ISuper<T> = T extends infer U ? U : object;
 export declare type IInput<P, S> = typeof React.Component<P, S>;
 export declare type InitialState = unknown;
@@ -9,12 +9,12 @@ export declare type IThenShape = any;
 export declare type ISelection = renderer.ReactTestRenderer;
 export declare type IStore = renderer.ReactTestRenderer;
 export declare type ISubject = renderer.ReactTestRenderer;
-export declare type IImpl<ITestShape extends ITTestShape, IReactProps, IReactState> = ITestImplementation<IInput<IReactProps, IReactState>, IReactProps, renderer.ReactTestRenderer, IWhenShape, IThenShape, ITestShape>;
-export declare type ISpec<ITestShape extends ITTestShape> = ITestSpecification<ITestShape, ISubject, IStore, ISelection, IThenShape>;
+export declare type IImpl<ITestShape extends IBaseTest, IProps> = ITestImplementation<ITestShape, object>;
+export declare type ISpec<ITestShape extends IBaseTest> = ITestSpecification<ITestShape>;
 export declare const testInterface: {
-    beforeEach: (CComponent: any, props: any) => Promise<renderer.ReactTestRenderer>;
-    andWhen: (renderer: renderer.ReactTestRenderer, actioner: any) => Promise<renderer.ReactTestRenderer>;
-    butThen: (s: IStore) => Promise<ISelection>;
+    beforeEach: (CComponent: any, propsAndChildren: any) => Promise<renderer.ReactTestRenderer>;
+    andWhen: (renderer: renderer.ReactTestRenderer, whenCB: any) => Promise<renderer.ReactTestRenderer>;
+    butThen: (s: IStore, thenCB: any, tr: any) => Promise<ISelection>;
     afterEach: (store: IStore, ndx: any, artificer: any) => Promise<{}>;
     afterAll: (store: IStore, artificer: any) => void;
 };

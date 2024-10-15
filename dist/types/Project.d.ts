@@ -1,7 +1,6 @@
-import WebSocket from 'ws';
-import { TesterantoFeatures } from "./Features";
+import { TesterantoFeatures } from "./Features.js";
 import { IBaseConfig, IRunTime, ITestTypes } from "./Types";
-import { ITTestResourceRequirement } from "./lib";
+import { ITTestResourceRequirement } from "./lib/index.js";
 declare type ISchedulerProtocols = `ipc` | `ws`;
 export declare class ITProject {
     clearScreen: boolean;
@@ -18,6 +17,7 @@ export declare class ITProject {
     }[];
     private spinCycle;
     private spinAnimation;
+    private esWebServerDetails;
     constructor(config: IBaseConfig);
     requestResource(requirement: ITTestResourceRequirement, protocol: ISchedulerProtocols): void;
     getSecondaryEndpointsPoints(runtime?: IRunTime): string[];

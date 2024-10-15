@@ -7,7 +7,7 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import { Sigma, RandomizeNodePositions, RelativeSize } from 'react-sigma';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { TesterantoFeatures } from "./Features";
+import { TesterantoFeatures } from "./Features.js";
 const graphToIGraphData = (g) => {
     return {
         nodes: g.nodes().map((n) => {

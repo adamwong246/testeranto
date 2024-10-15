@@ -3,40 +3,26 @@ import test from "../../../Node";
 import React from "react";
 import renderer, { act } from "react-test-renderer";
 
-import { ITestSpecification, ITestImplementation, ITTestShape } from "../../../Types";
+import { ITestSpecification, ITestImplementation, IBaseTest } from "../../../Types";
 
 export type IInput = React.FC;
 export type IWhenShape = unknown;
 export type IThenShape = unknown;
 
-export type ISpec<ITestShape extends ITTestShape> = ITestSpecification<
-  ITestShape,
-  any,
-  any,
-  any,
-  IThenShape
+export type ISpec<ITestShape extends IBaseTest> = ITestSpecification<
+  ITestShape
 >
 export default <
-  ITestShape extends ITTestShape,
-  IPropShape
+  ITestShape extends IBaseTest
 >(
   testImplementations: ITestImplementation<
-    IInput,
-    IPropShape,
-    renderer.ReactTestRenderer,
-    IWhenShape,
-    IThenShape,
-    ITestShape
+    ITestShape, object
   >,
   testSpecifications: ISpec<ITestShape>,
   testInput: IInput
 ) =>
   test<
-    ITestShape,
-    IInput,
-    any,
-    renderer.ReactTestRenderer,
-    unknown, unknown, unknown, unknown
+    ITestShape
   >(
     testInput,
     testSpecifications,
@@ -51,7 +37,10 @@ export default <
           let component: renderer.ReactTestRenderer;
           act(() => {
             component = renderer.create(
-              React.createElement(CComponent, props, [])
+              React.createElement(
+                CComponent,
+                props,
+                [])
             );
             res(component);
           });
@@ -61,9 +50,9 @@ export default <
       },
       andWhen: async function (
         renderer: renderer.ReactTestRenderer,
-        actioner: () => (a: any) => any
+        whenCB: () => (a: any) => any
       ): Promise<renderer.ReactTestRenderer> {
-        await act(() => actioner()(renderer));
+        await act(() => whenCB()(renderer));
         return renderer;
       },
       afterEach: async (store, key, artificer) => {

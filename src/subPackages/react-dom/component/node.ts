@@ -3,7 +3,8 @@ import { renderToStaticMarkup, renderToStaticNodeStream } from "react-dom/server
 import Stream from 'stream'
 
 import Testeranto from "../../../Node";
-import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../Types";
+
+import { IBaseTest, ITestImplementation, ITestSpecification } from "../../../Types";
 
 type IInput = typeof React.Component;
 type InitialState = unknown;
@@ -17,33 +18,17 @@ export {
   renderToStaticMarkup, renderToStaticNodeStream, Stream
 }
 
-export default <ITestShape extends ITTestShape>(
+export default <ITestShape extends IBaseTest>(
   testImplementations: ITestImplementation<
-    IInput,
-    InitialState,
-    ISelection,
-    IWhenShape,
-    IThenShape,
-    ITestShape
+    ITestShape, object
   >,
   testSpecifications: ITestSpecification<
-    ITestShape,
-    ISubject,
-    IStore,
-    ISelection,
-    IThenShape
+    ITestShape
   >,
   testInput: IInput
 ) => {
   return Testeranto<
-    ITestShape,
-    IInput,
-    ISubject,
-    IStore,
-    ISelection,
-    IThenShape,
-    IWhenShape,
-    InitialState
+    ITestShape
   >(
     testInput,
     testSpecifications,
@@ -72,9 +57,9 @@ export default <ITestShape extends ITTestShape>(
           resolve(createElement(testInput));
         });
       },
-      andWhen: async function (s: IStore, actioner): Promise<ISelection> {
-        // return actioner()(s);
-        return s
+      andWhen: async function (s: IStore, whenCB): Promise<ISelection> {
+        return whenCB(s);
+        // return s
       },
       butThen: async function (s: IStore): Promise<ISelection> {
         return s;
@@ -92,3 +77,60 @@ export default <ITestShape extends ITTestShape>(
     },
   )
 };
+
+
+// type IInput = typeof React.Component;
+// type InitialState = unknown;
+// type IWhenShape = any;
+// type IThenShape = any;
+// type ISelection = string;
+// type IStore = string;
+// type ISubject = string
+
+// export default <ITestShape extends ITTestShape>(
+//   testImplementations: ITestImplementation<
+//     InitialState,
+//     ISelection,
+//     IWhenShape,
+//     IThenShape,
+//     ITestShape
+//   >,
+//   testSpecifications: ITestSpecification<
+//     ITestShape,
+//     ISubject,
+//     IStore,
+//     ISelection,
+//     IThenShape
+//   >,
+//   testInput: IInput
+// ) => {
+//   return Testeranto<
+//     ITestShape,
+//     IInput,
+//     ISubject,
+//     IStore,
+//     ISelection,
+//     IThenShape,
+//     IWhenShape,
+//     InitialState
+//   >(
+//     testInput,
+//     testSpecifications,
+//     testImplementations,
+//     {
+//       beforeEach: async (
+//         element,
+//         ndx,
+//         testResource,
+//         artificer
+//       ): Promise<IStore> => {
+//         return new Promise((resolve, rej) => {
+//           resolve(ReactDOMServer.renderToStaticMarkup(element));
+//         });
+//       },
+//       andWhen: function (s: IStore, whenCB): Promise<ISelection> {
+//         throw new Error(`"andWhens" are not permitted`);
+//       }
+//     },
+//   )
+// };

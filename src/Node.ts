@@ -1,170 +1,167 @@
-
-import Testeranto from "./core.js";
+// const remote = require('@electron/remote')
+import http from "http";
+import Testeranto from "./lib/core.js";
 import {
-  defaultTestResourceRequirement, ITestArtificer, ITestJob, ITTestResourceConfiguration, ITTestResourceRequest
-} from "./lib.js";
-import { NodeWriter } from "./nodeWriter.js";
-import { ITestSpecification, ITTestShape } from "./Types.js";
+  DefaultTestInterface,
+  defaultTestResourceRequirement,
+  ITestJob,
+  ITTestResourceConfiguration,
+  ITTestResourceRequest,
+} from "./lib/index.js";
+import { NodeWriter } from "./NodeWriter.js";
+import {
+  IBaseTest,
+  INodeTestInterface,
+  ITestImplementation,
+  ITestInterface,
+  ITestSpecification,
+  TBrowser,
+  // TPage
+} from "./Types.js";
+import puppeteer from "puppeteer-core";
 
-const receiveTestResourceConfigUnscheduled = async (t, testresource) => {
-  const {
-    failed,
-    artifacts,
-    logPromise
-  } = await t.receiveTestResourceConfig(testresource);
-
-  Promise.all([...artifacts, logPromise]).then(async () => {
-    process.exit(await failed ? 1 : 0);
-  })
-}
-
-const receiveTestResourceConfigScheduled = async (t, testresource) => {
-  const {
-    failed,
-    artifacts,
-    logPromise
-  } = await t.receiveTestResourceConfig(testresource);
-
-  /* @ts-ignore:next-line */
-  process.send(
+const readJson = async (port: string): Promise<any> => new Promise((resolve, reject) => {
+  let json = "";
+  const request = http.request(
     {
-      type: "testeranto:adios",
-      data: {
-        failed,
-        testResourceConfiguration:
-          t.test.testResourceConfiguration,
-        results: t.toObj(),
-      },
+      host: "127.0.0.1",
+      path: "/json/version",
+      port,
+
+
     },
-    async (err) => {
-      if (!err) {
-        Promise.all([...artifacts, logPromise]).then(async () => {
-          process.exit(await failed ? 1 : 0);
-        })
-      } else {
-        console.error(err);
-        process.exit(1);
-      }
-    });
-}
+    (response) => {
+      console.log("mark5");
+      response.on("error", reject);
+      response.on("data", (chunk: Buffer) => {
+        json += chunk.toString();
+      });
+      response.on("end", () => {
+        console.log("end");
+        resolve(JSON.parse(json))
+        // resolve(json)
+      });
+    }
+  );
+  // console.log("mark2", request);
 
-export default async <
-  TestShape extends ITTestShape,
-  IInput,
-  ISubject,
-  IStore,
-  ISelection,
-  IWhenShape,
-  IThenShape,
-  IState
->(
-  input: IInput,
-  testSpecification: ITestSpecification<
-    TestShape,
-    ISubject,
-    IStore,
-    ISelection,
-    IThenShape
-  >,
-  testImplementation,
-  testInterface: {
-    actionHandler?: (b: (...any) => any) => any;
-    andWhen: (
-      store: IStore,
-      actioner,
-      testResource: ITTestResourceConfiguration
-    ) => Promise<ISelection>;
-    butThen?: (
-      store: IStore,
-      callback,
-      testResource: ITTestResourceConfiguration
-    ) => Promise<ISelection>;
-    assertioner?: (t: IThenShape) => any;
+  request.on("error", reject);
 
-    afterAll?: (store: IStore, artificer: ITestArtificer) => any;
-    afterEach?: (
-      store: IStore,
-      key: string,
-      artificer: ITestArtificer
-    ) => Promise<unknown>;
-    beforeAll?: (input: IInput, artificer: ITestArtificer) => Promise<ISubject>;
-    beforeEach?: (
-      subject: ISubject,
-      initialValues,
-      testResource: ITTestResourceConfiguration,
-      artificer: ITestArtificer
-    ) => Promise<IStore>;
-  },
+  request.end();
+  // console.log("mark4");
+});
+
+
+const browser = await readJson("2999").then(async (json) => {
+  // console.log("mark", json);
+
+  // const browser = await puppeteer.launch({ headless: true });
+  const b = await puppeteer.connect({
+    browserWSEndpoint: json.webSocketDebuggerUrl,
+    defaultViewport: null,
+  });
+  console.log("connected!", b.isConnected());
+
+  return b
+
+
+})
+
+// TBrowser.prototype = Object.create(puppeteer.Browser.prototype);
+// TPage.prototype = Object.create(puppeteer.Page.prototype);
+// puppeteer.Browser.prototype = TBrowser.prototype
+// puppeteer.Page.prototype = TPage.prototype
+
+// Set constructor back to Robot
+// Robot.prototype.constructor = Robot;
+
+// const tBrowser: TBrowser = Object.setPrototypeOf(browser, TBrowser.prototype);
+// tBrowser.pages 
+
+class NodeTesteranto<TestShape extends IBaseTest> extends Testeranto<TestShape> {
+  constructor(
+    input: TestShape["iinput"],
+    testSpecification: ITestSpecification<TestShape>,
+    testImplementation: ITestImplementation<TestShape, object>,
+    testResourceRequirement: ITTestResourceRequest,
+    testInterface: Partial<ITestInterface<TestShape>>,
+  ) {
+    super(
+      input,
+      testSpecification,
+      testImplementation,
+      testResourceRequirement,
+      NodeWriter,
+      testInterface,
+      new TBrowser(browser)
+    );
+
+    const t: ITestJob = this.testJobs[0];
+    const testResourceArg = process.argv[2] || `{}`;
+
+    try {
+      const partialTestResource = JSON.parse(
+        testResourceArg
+      ) as ITTestResourceConfiguration;
+
+      this.receiveTestResourceConfig(t, partialTestResource);
+
+    } catch (e) {
+      console.error(e);
+      // process.exit(-1);
+    }
+  }
+
+  async receiveTestResourceConfig(t: ITestJob, partialTestResource: ITTestResourceConfiguration) {
+
+    // var window = remote.getCurrentWindow();
+
+    const {
+      failed,
+      artifacts,
+      logPromise
+    } = await t.receiveTestResourceConfig(partialTestResource);
+
+    Promise.all([...artifacts, logPromise]).then(async () => {
+      // process.exit(await failed ? 1 : 0);
+    })
+  }
+
+};
+
+export default async <ITestShape extends IBaseTest>(
+  input: ITestShape['iinput'],
+  testSpecification: ITestSpecification<ITestShape>,
+  testImplementation: ITestImplementation<ITestShape, object>,
+  testInterface: Partial<INodeTestInterface<ITestShape>>,
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
-) => {
-
-  const mrt = new Testeranto(
+): Promise<Testeranto<ITestShape>> => {
+  return new NodeTesteranto<ITestShape>(
     input,
     testSpecification,
     testImplementation,
-    testInterface,
     testResourceRequirement,
-    testInterface.assertioner || (async (t) => t as any),
-    testInterface.beforeEach || async function (subject: ISubject, initialValues: any, testResource: any) {
-      return subject as any;
-    },
-    testInterface.afterEach || (async (s) => s),
-    testInterface.afterAll || ((store: IStore) => undefined),
-    testInterface.butThen || (async (a) => a as any),
-    testInterface.andWhen,
-    testInterface.actionHandler ||
-    function (b: (...any: any[]) => any) {
-      return b;
-    },
-    NodeWriter
-  );
+    testInterface,
+  )
 
-  const tl2: Testeranto<any, any, any, any, any, any, any, any> = mrt;
-  const t: ITestJob = tl2.testJobs[0];
-  const testResourceArg = process.argv[2] || `{}`;
-
-  try {
-    const partialTestResource = JSON.parse(
-      testResourceArg
-    ) as ITTestResourceConfiguration;
-
-    if (partialTestResource.scheduled) {
-      console.log("test is scheduled", partialTestResource);
-
-      console.log(
-        "requesting test resources via IPC ...",
-        testResourceRequirement
-      );
-      /* @ts-ignore:next-line */
-      process.send({
-        type: "testeranto:hola",
-        data: {
-          requirement: {
-            ...testResourceRequirement,
-            name: partialTestResource.name
-          }
-        },
-      });
-
-      console.log("awaiting test resources via IPC...");
-      process.on(
-        "message",
-        async function (packet: { data: { testResourceConfiguration } }) {
-          const resourcesFromPm2 = packet.data.testResourceConfiguration;
-          const secondTestResource = {
-            fs: ".",
-            ...JSON.parse(JSON.stringify(partialTestResource)),
-            ...JSON.parse(JSON.stringify(resourcesFromPm2)),
-          } as ITTestResourceConfiguration;
-          receiveTestResourceConfigScheduled(t, secondTestResource);
-
-        }
-      );
-    } else {
-      receiveTestResourceConfigUnscheduled(t, partialTestResource);
-    }
-  } catch (e) {
-    console.error(e);
-    process.exit(-1);
-  }
 };
+
+
+// export default async <
+//   ITestShape extends IBaseTest,
+// >(
+//   input: ITestShape['iinput'],
+//   testSpecification: ITestSpecification<ITestShape>,
+//   testImplementation: ITestImplementation<ITestShape, object>,
+//   testInterface: Partial<ITestInterface<ITestShape>>,
+//   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
+// ) => {
+//   new NodeTesteranto<ITestShape>(
+//     input,
+//     testSpecification,
+//     testImplementation,
+//     testResourceRequirement,
+//     testInterface,
+//   )
+
+// };

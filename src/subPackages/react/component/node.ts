@@ -1,10 +1,8 @@
 import React from "react";
 
 import Testeranto from "../../../Node";
-import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../Types";
 
-type IWhenShape = any;
-type IThenShape = any;
+import { IBaseTest, ITestImplementation, ITestSpecification } from "../../../Types";
 
 type IInput = typeof React.Component;
 type ISelection = React.CElement<any, any>
@@ -12,51 +10,31 @@ type IStore = React.CElement<any, any>
 type ISubject = React.CElement<any, any>
 
 export type IImpl<
-  ISpec extends ITTestShape,
+  ISpec extends IBaseTest,
   IState
 > = ITestImplementation<
-  IInput,
-  IState,
-  ISelection,
-  IWhenShape,
-  IThenShape,
-  ISpec
+  ISpec, object
 >
 
 export type ISpec<
-  T extends ITTestShape
+  T extends IBaseTest
 > = ITestSpecification<
-  T,
-  ISubject,
-  IStore,
-  ISelection,
-  IThenShape
+  T
 >;
 
 export default <
-  ITestShape extends ITTestShape,
+  ITestShape extends IBaseTest,
   IState
 >(
   testImplementations: ITestImplementation<
-    IInput,
-    IState,
-    ISelection,
-    IWhenShape,
-    IThenShape,
-    ITestShape
+    ITestShape,
+    object
   >,
   testSpecifications: ISpec<ITestShape>,
   testInput: IInput
 ) => {
   return Testeranto<
-    ITestShape,
-    IInput,
-    ISubject,
-    IStore,
-    ISelection,
-    IThenShape,
-    IWhenShape,
-    IState
+    ITestShape
   >(
     testInput,
     testSpecifications,
@@ -69,8 +47,8 @@ export default <
           }, []));
         });
       },
-      andWhen: function (s: IStore, actioner): Promise<ISelection> {
-        return actioner()(s);
+      andWhen: function (s: IStore, whenCB): Promise<ISelection> {
+        return whenCB()(s);
       },
     },
   )

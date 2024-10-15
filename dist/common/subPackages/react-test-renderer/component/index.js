@@ -22,8 +22,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.testInterface = void 0;
+const react_1 = __importDefault(require("react"));
 const react_test_renderer_1 = __importStar(require("react-test-renderer"));
 // export const testInterface = {
 //   beforeEach: function (CComponent, props): Promise<renderer.ReactTestRenderer> {
@@ -39,33 +43,40 @@ const react_test_renderer_1 = __importStar(require("react-test-renderer"));
 //   },
 //   andWhen: async function (
 //     renderer: renderer.ReactTestRenderer,
-//     actioner: () => (any) => any
+//     whenCB: () => (any) => any
 //   ): Promise<renderer.ReactTestRenderer> {
-//     await act(() => actioner()(renderer));
+//     await act(() => whenCB()(renderer));
 //     return renderer
 //   }
 // }
 exports.testInterface = {
-    beforeEach: function (CComponent, props) {
+    beforeEach: function (CComponent, propsAndChildren) {
+        function Link(props) {
+            const p = props.props;
+            const c = props.children;
+            return react_1.default.createElement(CComponent, p, c);
+        }
         return new Promise((res, rej) => {
-            (0, react_test_renderer_1.act)(() => {
-                const x = react_test_renderer_1.default.create(new CComponent(props));
-                console.log("beforeEach", x.getInstance());
-                res(x);
+            (0, react_test_renderer_1.act)(async () => {
+                const p = propsAndChildren;
+                const y = new CComponent(p.props);
+                const testRenderer = await react_test_renderer_1.default.create(Link(propsAndChildren));
+                res(testRenderer);
             });
         });
     },
-    andWhen: async function (renderer, actioner) {
-        // console.log("andWhen", renderer)
-        await (0, react_test_renderer_1.act)(() => actioner()(renderer));
+    andWhen: async function (renderer, whenCB) {
+        // console.log("andWhen", whenCB)
+        await (0, react_test_renderer_1.act)(() => whenCB(renderer));
         return renderer;
     },
-    // andWhen: function (s: Store, actioner): Promise<Selection> {
-    //   return actioner()(s);
+    // andWhen: function (s: Store, whenCB): Promise<Selection> {
+    //   return whenCB()(s);
     // },
-    butThen: async function (s) {
-        // console.log("butThen", s)
-        return s;
+    butThen: async function (s, thenCB, tr) {
+        console.log("butThen", thenCB.toString());
+        // debugger
+        return thenCB(s);
     },
     afterEach: async function (store, ndx, artificer) {
         // console.log("afterEach", store);

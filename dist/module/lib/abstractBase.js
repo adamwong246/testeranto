@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.BaseCheck = exports.BaseThen = exports.BaseWhen = exports.BaseGiven = exports.BaseSuite = void 0;
-class BaseSuite {
+export class BaseSuite {
     constructor(name, index, givens = {}, checks = []) {
         this.name = name;
         this.index = index;
@@ -16,21 +13,23 @@ class BaseSuite {
             fails: this.fails,
         };
     }
-    setup(s, artifactory) {
+    setup(s, artifactory, tr, utils) {
         return new Promise((res) => res(s));
     }
-    test(t) {
+    assertThat(t) {
+        // console.log("base assertThat")
         return t;
     }
-    async run(input, testResourceConfiguration, artifactory, tLog) {
+    async run(input, testResourceConfiguration, artifactory, tLog, utils) {
         this.testResourceConfiguration = testResourceConfiguration;
+        tLog("test resources: ", testResourceConfiguration);
         const suiteArtifactory = (fPath, value) => artifactory(`suite-${this.index}-${this.name}/${fPath}`, value);
-        const subject = await this.setup(input, suiteArtifactory);
+        const subject = await this.setup(input, suiteArtifactory, testResourceConfiguration, utils);
         tLog("\nSuite:", this.index, this.name);
         for (const k of Object.keys(this.givens)) {
             const giver = this.givens[k];
             try {
-                this.store = await giver.give(subject, k, testResourceConfiguration, this.test, suiteArtifactory, tLog);
+                this.store = await giver.give(subject, k, testResourceConfiguration, this.assertThat, suiteArtifactory, tLog, utils);
             }
             catch (e) {
                 console.error(e);
@@ -39,7 +38,7 @@ class BaseSuite {
             }
         }
         for (const [ndx, thater] of this.checks.entries()) {
-            await thater.check(subject, thater.name, testResourceConfiguration, this.test, suiteArtifactory, tLog);
+            await thater.check(subject, thater.name, testResourceConfiguration, this.assertThat, suiteArtifactory, tLog, utils);
         }
         // @TODO fix me
         for (const k of Object.keys(this.givens)) {
@@ -50,13 +49,14 @@ class BaseSuite {
         return this;
     }
 }
-exports.BaseSuite = BaseSuite;
-class BaseGiven {
-    constructor(name, features, whens, thens) {
+export class BaseGiven {
+    constructor(name, features, whens, thens, givenCB, initialValues) {
         this.name = name;
         this.features = features;
         this.whens = whens;
         this.thens = thens;
+        this.givenCB = givenCB;
+        this.initialValues = initialValues;
     }
     beforeAll(store, artifactory) {
         return store;
@@ -76,17 +76,17 @@ class BaseGiven {
     async afterEach(store, key, artifactory) {
         return store;
     }
-    async give(subject, key, testResourceConfiguration, tester, artifactory, tLog) {
+    async give(subject, key, testResourceConfiguration, tester, artifactory, tLog, utils) {
         tLog(`\n Given: ${this.name}`);
         const givenArtifactory = (fPath, value) => artifactory(`given-${key}/${fPath}`, value);
         try {
-            this.store = await this.givenThat(subject, testResourceConfiguration, givenArtifactory);
+            this.store = await this.givenThat(subject, testResourceConfiguration, givenArtifactory, this.givenCB);
             // tLog(`\n Given this.store`, this.store);
             for (const whenStep of this.whens) {
-                await whenStep.test(this.store, testResourceConfiguration, tLog);
+                await whenStep.test(this.store, testResourceConfiguration, tLog, utils);
             }
             for (const thenStep of this.thens) {
-                const t = await thenStep.test(this.store, testResourceConfiguration, tLog);
+                const t = await thenStep.test(this.store, testResourceConfiguration, tLog, utils);
                 tester(t);
             }
         }
@@ -107,11 +107,10 @@ class BaseGiven {
         return this.store;
     }
 }
-exports.BaseGiven = BaseGiven;
-class BaseWhen {
-    constructor(name, actioner) {
+export class BaseWhen {
+    constructor(name, whenCB) {
         this.name = name;
-        this.actioner = actioner;
+        this.whenCB = whenCB;
     }
     toObj() {
         return {
@@ -119,10 +118,10 @@ class BaseWhen {
             error: this.error,
         };
     }
-    async test(store, testResourceConfiguration, tLog) {
+    async test(store, testResourceConfiguration, tLog, utils) {
         tLog(" When:", this.name);
         try {
-            return await this.andWhen(store, this.actioner, testResourceConfiguration);
+            return await this.andWhen(store, this.whenCB, testResourceConfiguration);
         }
         catch (e) {
             this.error = true;
@@ -130,8 +129,7 @@ class BaseWhen {
         }
     }
 }
-exports.BaseWhen = BaseWhen;
-class BaseThen {
+export class BaseThen {
     constructor(name, thenCB) {
         this.name = name;
         this.thenCB = thenCB;
@@ -142,44 +140,20 @@ class BaseThen {
             error: this.error,
         };
     }
-    async test(store, testResourceConfiguration, tLog) {
+    async test(store, testResourceConfiguration, tLog, utils) {
         tLog(" Then:", this.name);
         try {
-            return this.thenCB(await this.butThen(store, testResourceConfiguration));
+            const x = (await this.butThen(store, this.thenCB, testResourceConfiguration));
+            return x;
         }
         catch (e) {
             console.log("test failed", e);
             this.error = true;
             throw e;
         }
-        // try {
-        //   return await (this.thenCB(
-        //     await (async () => {
-        //       try {
-        //         return await (
-        //           (() => {
-        //             try {
-        //               return this.butThen(store, testResourceConfiguration)
-        //             } catch (e) {
-        //               this.error = true;
-        //               throw e
-        //             }
-        //           })()
-        //         );
-        //       } catch (e) {
-        //         this.error = true;
-        //         throw e
-        //       }
-        //     })()
-        //   ));
-        // } catch (e) {
-        //   this.error = true;
-        //   throw e
-        // }
     }
 }
-exports.BaseThen = BaseThen;
-class BaseCheck {
+export class BaseCheck {
     constructor(name, features, checkCB, whens, thens) {
         this.name = name;
         this.features = features;
@@ -190,17 +164,17 @@ class BaseCheck {
     async afterEach(store, key, cb) {
         return;
     }
-    async check(subject, key, testResourceConfiguration, tester, artifactory, tLog) {
+    async check(subject, key, testResourceConfiguration, tester, artifactory, tLog, utils) {
         tLog(`\n Check: ${this.name}`);
         const store = await this.checkThat(subject, testResourceConfiguration, artifactory);
         await this.checkCB(Object.entries(this.whens).reduce((a, [key, when]) => {
             a[key] = async (payload) => {
-                return await when(payload, testResourceConfiguration).test(store, testResourceConfiguration, tLog);
+                return await when(payload, testResourceConfiguration).test(store, testResourceConfiguration, tLog, utils);
             };
             return a;
         }, {}), Object.entries(this.thens).reduce((a, [key, then]) => {
             a[key] = async (payload) => {
-                const t = await then(payload, testResourceConfiguration).test(store, testResourceConfiguration, tLog);
+                const t = await then(payload, testResourceConfiguration).test(store, testResourceConfiguration, tLog, utils);
                 tester(t);
             };
             return a;
@@ -209,4 +183,3 @@ class BaseCheck {
         return;
     }
 }
-exports.BaseCheck = BaseCheck;

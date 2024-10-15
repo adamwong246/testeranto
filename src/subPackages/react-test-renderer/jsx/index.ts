@@ -1,7 +1,11 @@
 import React from "react";
 import renderer, { act } from "react-test-renderer";
 
-import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../Types";
+import {
+  IBaseTest,
+  ITestImplementation,
+  ITestSpecification
+} from "../../../Types";
 
 export type IWhenShape = any;
 export type IThenShape = any;
@@ -12,28 +16,26 @@ export type IStore = renderer.ReactTestRenderer;
 export type ISubject = renderer.ReactTestRenderer;
 
 export type ITestImpl<
-  ITestShape extends ITTestShape
+  ITestShape extends IBaseTest
 > = ITestImplementation<
-  IInput,
-  InitialState,
-  ISelection,
-  IWhenShape,
-  IThenShape,
-  ITestShape
+  ITestShape, object
 >
 
 export type ITestSpec<
-  ITestShape extends ITTestShape
+  ITestShape extends IBaseTest
 > = ITestSpecification<
-  ITestShape,
-  ISubject,
-  IStore,
-  ISelection,
-  IThenShape
+  ITestShape
 >
 
 export const testInterface = {
+  butThen: async function (s: IStore, thenCB, tr): Promise<ISelection> {
+
+    console.log("butThen", thenCB.toString())
+    // debugger
+    return thenCB(s);
+  },
   beforeEach: function (CComponent, props): Promise<renderer.ReactTestRenderer> {
+    console.log("ASDASDx")
     let component;
     act(() => {
       component = renderer.create(
@@ -44,9 +46,9 @@ export const testInterface = {
   },
   andWhen: async function (
     renderer: renderer.ReactTestRenderer,
-    actioner: () => (any) => any
+    whenCB: (any) => any
   ): Promise<renderer.ReactTestRenderer> {
-    await act(() => actioner()(renderer));
+    await act(() => whenCB(renderer));
     return renderer
   }
-}
+};

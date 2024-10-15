@@ -1,24 +1,15 @@
+import { IInput, testInterface } from ".";
 import test from "../../../Node";
-import { ITTestShape } from "../../../Types";
+import { IBaseTest } from "../../../Types";
+import { ITestImpl, ITestSpec } from "../../react/jsx";
 
-import {
-  ITestImpl, ITestSpec, IInput, ISubject, IStore, ISelection, IThenShape, IWhenShape, InitialState, testInterface
-} from "./index";
-
-export default <ITestShape extends ITTestShape>(
+export default <ITestShape extends IBaseTest>(
   testImplementations: ITestImpl<ITestShape>,
   testSpecifications: ITestSpec<ITestShape>,
   testInput: IInput
 ) => {
   return test<
-    ITestShape,
-    IInput,
-    ISubject,
-    IStore,
-    ISelection,
-    IThenShape,
-    IWhenShape,
-    InitialState
+    ITestShape
   >(
     testInput,
     testSpecifications,

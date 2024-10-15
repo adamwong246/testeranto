@@ -1,6 +1,6 @@
 import { CElement } from "react";
 
-import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../Types";
+import { IBaseTest, ITestImplementation, ITestSpecification } from "../../../Types";
 
 export type IWhenShape = any;
 export type IThenShape = any;
@@ -11,27 +11,18 @@ export type IStore = CElement<any, any>
 export type ISubject = CElement<any, any>
 
 export type ITestImpl<
-  ITestShape extends ITTestShape
+  ITestShape extends IBaseTest
 > = ITestImplementation<
-  IInput,
-  InitialState,
-  ISelection,
-  IWhenShape,
-  IThenShape,
-  ITestShape
+  ITestShape, object
 >
 
 export type ITestSpec<
-  ITestShape extends ITTestShape
+  ITestShape extends IBaseTest
 > = ITestSpecification<
-  ITestShape,
-  ISubject,
-  IStore,
-  ISelection,
-  IThenShape
+  ITestShape
 >
 
-export const testInterface = (testInput) => {
+export const testInterface = (z) => {
   return {
     beforeEach: async (
       x,
@@ -40,11 +31,11 @@ export const testInterface = (testInput) => {
       artificer
     ): Promise<IStore> => {
       return new Promise((resolve, rej) => {
-        resolve(testInput())
+        resolve(x())
       });
     },
-    andWhen: function (s: IStore, actioner): Promise<ISelection> {
-      return actioner()(s);
+    andWhen: function (s: IStore, whenCB): Promise<ISelection> {
+      return whenCB(s);
     },
   }
 }

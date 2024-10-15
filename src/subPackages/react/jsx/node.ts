@@ -1,28 +1,27 @@
 import Testeranto from "../../../Node";
-import { ITTestShape } from "../../../Types";
+import { IBaseTest } from "../../../Types";
 
 import {
-  ITestImpl, ITestSpec, IInput, ISubject, IStore, ISelection, IThenShape, IWhenShape, InitialState, testInterface
+  ITestImpl,
+  ITestSpec,
+  IInput,
+  IStore,
+  ISelection,
+  testInterface
 } from "./index";
 
-export default <ITestShape extends ITTestShape>(
+export default <ITestShape extends IBaseTest>(
   testImplementations: ITestImpl<ITestShape>,
   testSpecifications: ITestSpec<ITestShape>,
-  testInput: IInput
+  testInput: IInput,
+  testInterface2 = testInterface,
 ) => {
   return Testeranto<
-    ITestShape,
-    IInput,
-    ISubject,
-    IStore,
-    ISelection,
-    IThenShape,
-    IWhenShape,
-    InitialState
+    ITestShape
   >(
     testInput,
     testSpecifications,
     testImplementations,
-    testInterface(testInput),
+    testInterface2(testInput),
   )
 };

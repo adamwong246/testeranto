@@ -1,3 +1,4 @@
+import React from "react";
 import renderer, { act } from "react-test-renderer";
 // export const testInterface = {
 //   beforeEach: function (CComponent, props): Promise<renderer.ReactTestRenderer> {
@@ -13,33 +14,40 @@ import renderer, { act } from "react-test-renderer";
 //   },
 //   andWhen: async function (
 //     renderer: renderer.ReactTestRenderer,
-//     actioner: () => (any) => any
+//     whenCB: () => (any) => any
 //   ): Promise<renderer.ReactTestRenderer> {
-//     await act(() => actioner()(renderer));
+//     await act(() => whenCB()(renderer));
 //     return renderer
 //   }
 // }
 export const testInterface = {
-    beforeEach: function (CComponent, props) {
+    beforeEach: function (CComponent, propsAndChildren) {
+        function Link(props) {
+            const p = props.props;
+            const c = props.children;
+            return React.createElement(CComponent, p, c);
+        }
         return new Promise((res, rej) => {
-            act(() => {
-                const x = renderer.create(new CComponent(props));
-                console.log("beforeEach", x.getInstance());
-                res(x);
+            act(async () => {
+                const p = propsAndChildren;
+                const y = new CComponent(p.props);
+                const testRenderer = await renderer.create(Link(propsAndChildren));
+                res(testRenderer);
             });
         });
     },
-    andWhen: async function (renderer, actioner) {
-        // console.log("andWhen", renderer)
-        await act(() => actioner()(renderer));
+    andWhen: async function (renderer, whenCB) {
+        // console.log("andWhen", whenCB)
+        await act(() => whenCB(renderer));
         return renderer;
     },
-    // andWhen: function (s: Store, actioner): Promise<Selection> {
-    //   return actioner()(s);
+    // andWhen: function (s: Store, whenCB): Promise<Selection> {
+    //   return whenCB()(s);
     // },
-    butThen: async function (s) {
-        // console.log("butThen", s)
-        return s;
+    butThen: async function (s, thenCB, tr) {
+        console.log("butThen", thenCB.toString());
+        // debugger
+        return thenCB(s);
     },
     afterEach: async function (store, ndx, artificer) {
         // console.log("afterEach", store);

@@ -3,39 +3,23 @@ import test from "../../../Node";
 import React from "react";
 import renderer, { act } from "react-test-renderer";
 
-import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../Types";
+import { IBaseTest, ITestImplementation, ITestSpecification } from "../../../Types";
 
 type IInput = React.MemoExoticComponent<() => JSX.Element>;
 type WhenShape = unknown;
 type ThenShape = unknown;
 
-export default <ITestShape extends ITTestShape, PropShape>(
+export default <ITestShape extends IBaseTest, PropShape>(
   testImplementations: ITestImplementation<
-    IInput,
-    PropShape,
-    renderer.ReactTestRenderer,
-    WhenShape,
-    ThenShape,
-    ITestShape
+    ITestShape, object
   >,
   testSpecifications: ITestSpecification<
-    ITestShape,
-    any,
-    any,
-    any,
-    any
+    ITestShape
   >,
   testInput: IInput
 ) =>
   test<
-    ITestShape,
-    IInput,
-    any,
-    any,
-    unknown,
-    unknown,
-    unknown,
-    unknown
+    ITestShape
   >(
     testInput,
     testSpecifications,
@@ -55,9 +39,9 @@ export default <ITestShape extends ITTestShape, PropShape>(
       },
       andWhen: async function (
         renderer: renderer.ReactTestRenderer,
-        actioner: () => (a: any) => any
+        whenCB: () => (a: any) => any
       ): Promise<renderer.ReactTestRenderer> {
-        await act(() => actioner()(renderer));
+        await act(() => whenCB()(renderer));
         return renderer;
       },
     }

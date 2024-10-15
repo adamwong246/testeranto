@@ -2,12 +2,14 @@ import React, { CElement, createElement } from "react";
 import ReactDom from "react-dom/client";
 
 import Testeranto from "../../../Web";
-import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../Types";
+import {
+  IBaseTest,
+  ITestImplementation,
+  ITestSpecification
+} from "../../../Types";
 
 type IInput = typeof React.Component;
 type InitialState = unknown;
-type IWhenShape = any;
-type IThenShape = any;
 type ISelection = {
   htmlElement: HTMLElement,
   reactElement: CElement<any, any>,
@@ -22,27 +24,22 @@ type ISubject = {
   htmlElement: HTMLElement
 };
 
-export default <ITestShape extends ITTestShape>(
-  testImplementations: ITestImplementation<
-    IInput,
-    InitialState,
-    ISelection,
-    IWhenShape,
-    IThenShape,
+export default <
+  ITestShape extends IBaseTest,
+  IWhen,
+  IGiven
+>(
+  testInput: IInput,
+  testSpecifications: ITestSpecification<
     ITestShape
   >,
-  testSpecifications: ITestSpecification<
+  testImplementations: ITestImplementation<
     ITestShape,
-    ISubject,
-    IStore,
-    ISelection,
-    IThenShape
+    any
   >,
-  testInput: IInput
-) => {
 
+) => {
   document.addEventListener("DOMContentLoaded", function () {
-    console.log("DOMContentLoaded")
     const elem = document.getElementById("root");
     if (elem) {
       class TesterantoComponent extends testInput {
@@ -58,23 +55,17 @@ export default <ITestShape extends ITTestShape>(
       }
 
       return Testeranto<
-        ITestShape,
-        IInput,
-        ISubject,
-        IStore,
-        ISelection,
-        IThenShape,
-        IWhenShape,
-        InitialState
+        ITestShape
       >(
         testInput,
         testSpecifications,
         testImplementations,
         {
           beforeAll: async (
-            prototype,
+            initialProps,
             artificer
           ): Promise<ISubject> => {
+            console.log("mark5", initialProps);
             return await new Promise((resolve, rej) => {
               const elem = document.getElementById("root");
               if (elem) {
@@ -85,14 +76,17 @@ export default <ITestShape extends ITTestShape>(
           },
           beforeEach: async (
             { htmlElement },
-            ndx,
-            testRsource,
-            artificer
+            initializer,
+            testResource,
+            artificer,
+            initialValues
           ): Promise<IStore> => {
             return new Promise((resolve, rej) => {
+              // console.log("beforeEach" + JSON.stringify(initializer) + JSON.stringify(initialValues));
               // Ignore these type errors
               ReactDom.createRoot(htmlElement).render(createElement(
                 TesterantoComponent, {
+                ...initializer.props,
                 done: (reactElement) => {
                   resolve(
                     {
@@ -105,8 +99,8 @@ export default <ITestShape extends ITTestShape>(
               ));
             });
           },
-          andWhen: function (s: IStore, actioner): Promise<ISelection> {
-            return actioner()(s);
+          andWhen: function (s: IStore, whenCB): Promise<ISelection> {
+            return whenCB(s);
           },
           butThen: async function (s: IStore): Promise<ISelection> {
             return s;

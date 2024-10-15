@@ -1,13 +1,5 @@
-import { ITestArtificer, ITTestResourceConfiguration, ITTestResourceRequest } from "./lib.js";
-import { ITestSpecification, ITTestShape } from "./Types.js";
-declare const _default: <TestShape extends ITTestShape, IInput, ISubject, IStore, ISelection, IWhenShape, IThenShape, IState>(input: IInput, testSpecification: ITestSpecification<TestShape, ISubject, IStore, ISelection, IThenShape>, testImplementation: any, testInterface: {
-    actionHandler?: ((b: (...any: any[]) => any) => any) | undefined;
-    andWhen: (store: IStore, actioner: any, testResource: ITTestResourceConfiguration) => Promise<ISelection>;
-    butThen?: ((store: IStore, callback: any, testResource: ITTestResourceConfiguration) => Promise<ISelection>) | undefined;
-    assertioner?: ((t: IThenShape) => any) | undefined;
-    afterAll?: ((store: IStore, artificer: ITestArtificer) => any) | undefined;
-    afterEach?: ((store: IStore, key: string, artificer: ITestArtificer) => Promise<unknown>) | undefined;
-    beforeAll?: ((input: IInput, artificer: ITestArtificer) => Promise<ISubject>) | undefined;
-    beforeEach?: ((subject: ISubject, initialValues: any, testResource: ITTestResourceConfiguration, artificer: ITestArtificer) => Promise<IStore>) | undefined;
-}, testResourceRequirement?: ITTestResourceRequest) => Promise<void>;
+import Testeranto from "./lib/core.js";
+import { ITTestResourceRequest } from "./lib/index.js";
+import { IBaseTest, INodeTestInterface, ITestImplementation, ITestSpecification } from "./Types.js";
+declare const _default: <ITestShape extends IBaseTest>(input: ITestShape["iinput"], testSpecification: ITestSpecification<ITestShape>, testImplementation: ITestImplementation<ITestShape, object>, testInterface: Partial<INodeTestInterface<ITestShape>>, testResourceRequirement?: ITTestResourceRequest) => Promise<Testeranto<ITestShape>>;
 export default _default;

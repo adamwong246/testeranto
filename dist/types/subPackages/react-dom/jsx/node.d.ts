@@ -1,8 +1,6 @@
 import { renderToStaticMarkup, renderToStaticNodeStream } from "react-dom/server";
 import Stream from 'stream';
-import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../Types";
-import { IInput, ISelection, IStore, IThenShape, IWhenShape, IState } from "./index";
-declare type ISubject = void;
+import { IBaseTest, ITestImplementation, ITestSpecification } from "../../../Types";
 export { renderToStaticMarkup, renderToStaticNodeStream, Stream };
-declare const _default: <ITestShape extends ITTestShape>(testImplementations: ITestImplementation<IInput, unknown, HTMLElement, any, any, ITestShape>, testSpecifications: ITestSpecification<ITestShape, void, HTMLElement, HTMLElement, any>, testInput: IInput) => Promise<void>;
+declare const _default: <ITestShape extends IBaseTest>(testImplementations: any, testSpecifications: ITestSpecification<ITestShape>, testInput: ITestShape["iinput"]) => Promise<import("../../../lib/core").default<ITestShape>>;
 export default _default;

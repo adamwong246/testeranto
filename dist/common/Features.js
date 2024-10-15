@@ -4,9 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DirectedGraph = exports.TesterantoFeatures = exports.TesterantoGraphDirectedAcyclic = exports.TesterantoGraphDirected = exports.TesterantoGraphUndirected = exports.BaseFeature = void 0;
-const graphology_1 = __importDefault(require("graphology"));
-/* @ts-ignore:next-line */
-const { DirectedGraph, UndirectedGraph } = graphology_1.default;
+const graphology_umd_js_1 = __importDefault(require("graphology/dist/graphology.umd.js"));
+const { DirectedGraph, UndirectedGraph } = graphology_umd_js_1.default;
 exports.DirectedGraph = DirectedGraph;
 class TesterantoGraph {
     constructor(name) {

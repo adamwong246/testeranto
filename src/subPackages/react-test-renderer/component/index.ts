@@ -1,7 +1,8 @@
 import React from "react";
 import renderer, { act } from "react-test-renderer";
 
-import { ITTestShape, ITestImplementation, ITestSpecification } from "../../../Types";
+
+import { IBaseTest, ITestImplementation, ITestInterface, ITestSpecification } from "../../../Types";
 
 export type ISuper<T> = T extends infer U ? U : object;
 
@@ -14,25 +15,15 @@ export type IStore = renderer.ReactTestRenderer;
 export type ISubject = renderer.ReactTestRenderer;
 
 export type IImpl<
-  ITestShape extends ITTestShape,
-  IReactProps,
-  IReactState,
+  ITestShape extends IBaseTest,
+  IProps
 > = ITestImplementation<
-  IInput<IReactProps, IReactState>,
-  IReactProps,
-  renderer.ReactTestRenderer,
-  IWhenShape,
-  IThenShape,
-  ITestShape
+  ITestShape, object
 >
 export type ISpec<
-  ITestShape extends ITTestShape
+  ITestShape extends IBaseTest
 > = ITestSpecification<
-  ITestShape,
-  ISubject,
-  IStore,
-  ISelection,
-  IThenShape
+  ITestShape
 >
 
 // export const testInterface = {
@@ -49,40 +40,49 @@ export type ISpec<
 //   },
 //   andWhen: async function (
 //     renderer: renderer.ReactTestRenderer,
-//     actioner: () => (any) => any
+//     whenCB: () => (any) => any
 //   ): Promise<renderer.ReactTestRenderer> {
-//     await act(() => actioner()(renderer));
+//     await act(() => whenCB()(renderer));
 //     return renderer
 //   }
 // }
 
-export const testInterface = {
-  beforeEach: function (CComponent, props): Promise<renderer.ReactTestRenderer> {
 
+
+export const testInterface = {
+  beforeEach: function (CComponent, propsAndChildren): Promise<renderer.ReactTestRenderer> {
+
+    function Link(props) {
+      const p = props.props;
+      const c = props.children;
+      return React.createElement(CComponent, p, c);
+    }
     return new Promise((res, rej) => {
-      act(() => {
-        const x = renderer.create(new CComponent(props));
-        console.log("beforeEach", x.getInstance())
-        res(x);
+      act(async () => {
+        const p = propsAndChildren;
+        const y = new CComponent(p.props);
+        const testRenderer = await renderer.create(Link(propsAndChildren));
+        res(testRenderer);
       });
     });
   },
   andWhen: async function (
     renderer: renderer.ReactTestRenderer,
-    actioner: any
+    whenCB: any
   ): Promise<renderer.ReactTestRenderer> {
-    // console.log("andWhen", renderer)
-    await act(() => actioner()(renderer));
+    // console.log("andWhen", whenCB)
+    await act(() => whenCB(renderer));
     return renderer
   },
 
-  // andWhen: function (s: Store, actioner): Promise<Selection> {
-  //   return actioner()(s);
+  // andWhen: function (s: Store, whenCB): Promise<Selection> {
+  //   return whenCB()(s);
   // },
-  butThen: async function (s: IStore): Promise<ISelection> {
+  butThen: async function (s: IStore, thenCB, tr): Promise<ISelection> {
 
-    // console.log("butThen", s)
-    return s;
+    console.log("butThen", thenCB.toString())
+    // debugger
+    return thenCB(s);
   },
   afterEach: async function (
     store: IStore,
