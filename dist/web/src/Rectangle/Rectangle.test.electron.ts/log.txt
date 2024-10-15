@@ -26,6 +26,6 @@ AssertionError: expected 43 to equal 38
  Given: Default
  When:,setHeight: 5
  When:,setWidth: 55
- Then:,area: 55
-AssertionError: expected 275 to equal 55
+ Then:,area: 5
+AssertionError: expected 275 to equal 5
 

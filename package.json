@@ -34,8 +34,6 @@
     "html": "^1.0.0",
     "http-shutdown": "^1.2.2",
     "node-fetch": "^3.3.2",
-    "puppeteer": "^19.3.0",
-    "puppeteer-screen-recorder": "^2.1.2",
     "react": "18.2.0",
     "react-bootstrap": "^2.10.2",
     "react-dom": "18.2.0",

@@ -5864,7 +5864,7 @@ var RectangleTesterantoBaseTestSpecification = (Suite, Given, When, Then, Check)
         "test3": Given.Default(
           [`hello`],
           [When.setHeight(5), When.setWidth(55)],
-          [Then.area(55)]
+          [Then.area(5)]
         )
       },
       []
