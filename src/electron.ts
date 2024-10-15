@@ -5,7 +5,7 @@ import {
 
 import pie from "puppeteer-in-electron";
 import puppeteer from "puppeteer-core";
-import { IBaseConfig, IJsonConfig, ITestTypes } from "./Types";
+import { IJsonConfig, ITestTypes } from "./Types";
 import fs from "fs";
 import path from "path";
 import { jsonc } from 'jsonc';
@@ -55,26 +55,26 @@ const loadReport = (configs: IJsonConfig) => {
 }
 
 const launchNode = (t: ITestTypes, changedFile: string) => {
-  console.log("launchNode", changedFile)
-  const child = utilityProcess.fork(changedFile, [
-    JSON.stringify(
-      {
-        scheduled: true,
-        name: changedFile,
-        ports: [],
-        fs:
-          path.resolve(
-            process.cwd(),
 
-            "dist",
-            // config.outdir,
+  const a = JSON.stringify(
+    {
+      scheduled: true,
+      name: changedFile,
+      ports: [],
+      fs:
+        path.resolve(
+          process.cwd(),
 
-            "node",
-            t[0],
-          ),
-      }
-    )
-  ]);
+          "dist",
+          // config.outdir,
+
+          "node",
+          t[0],
+        ),
+    }
+  )
+  console.log("launchNode", changedFile, a);
+  const child = utilityProcess.fork(changedFile, [a], {});
   child.postMessage({ message: 'hello' })
   child.on('message', (data) => {
     console.log("from child", data) // hello world!

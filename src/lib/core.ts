@@ -1,4 +1,4 @@
-import { IBaseTest, ITestInterface, ITestSpecification } from "../Types";
+import { IBaseTest, ITestImplementation, ITestInterface, ITestSpecification, IUtils } from "../Types";
 import puppeteer from "puppeteer-core";
 
 import {
@@ -13,9 +13,6 @@ import {
 } from "./index.js";
 import { BaseSuite, BaseGiven, BaseWhen, BaseThen, BaseCheck } from "./abstractBase";
 import { ClassBuilder } from "./classBuilder";
-import { BrowserWindow } from "electron";
-
-const utils = {} as any;
 
 export default abstract class Testeranto<
   ITestShape extends IBaseTest,
@@ -24,14 +21,12 @@ export default abstract class Testeranto<
 > {
   constructor(
     input: ITestShape['iinput'],
-    testSpecification: ITestSpecification<
-      ITestShape
-    >,
-    testImplementation,
+    testSpecification: ITestSpecification<ITestShape>,
+    testImplementation: ITestImplementation<ITestShape, object>,
     testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
     logWriter: ILogWriter,
     testInterface: Partial<ITestInterface<ITestShape>>,
-    utils: puppeteer.Browser | BrowserWindow
+    utils: IUtils
   ) {
 
     const fullTestInterface = DefaultTestInterface(testInterface);

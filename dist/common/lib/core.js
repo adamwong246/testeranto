@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const index_js_1 = require("./index.js");
 const abstractBase_1 = require("./abstractBase");
 const classBuilder_1 = require("./classBuilder");
-const utils = {};
 class Testeranto extends classBuilder_1.ClassBuilder {
     constructor(input, testSpecification, testImplementation, testResourceRequirement = index_js_1.defaultTestResourceRequirement, logWriter, testInterface, utils) {
         const fullTestInterface = (0, index_js_1.DefaultTestInterface)(testInterface);

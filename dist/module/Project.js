@@ -164,7 +164,7 @@ export class ITProject {
   <title>kokomoBay - testeranto</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="author" content="" />
-  <link rel="stylesheet" href="./Report.css" />
+  <link rel="stylesheet" href="/Report.css" />
 
   <script type="importmap">
     {

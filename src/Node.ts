@@ -14,7 +14,9 @@ import {
   INodeTestInterface,
   ITestImplementation,
   ITestInterface,
-  ITestSpecification
+  ITestSpecification,
+  TBrowser,
+  // TPage
 } from "./Types.js";
 import puppeteer from "puppeteer-core";
 
@@ -60,54 +62,23 @@ const browser = await readJson("2999").then(async (json) => {
   });
   console.log("connected!", b.isConnected());
 
-  // try {
-  //   // hack
-  //   await b.pages()
-  //   // console.log("pages?", (await b.pages()));
-  // } catch {
-  //   console.log("pages");
-  // }
-
-  // const page = ((await b.pages()))[0];//.filter((x) => x.url() === 'file:///Users/adam/Code/kokomoBay/dist/web/src/ClassicalComponent/test.html'))[0]
-  // console.log("page", page);
-  // const p = page.screenshot({
-  //   path: 'aa.jpg'
-  // })
-  // try {
-  //   await p
-  //   // hack
-  //   // await b.pages()
-  //   // console.log("pages?", (await b.pages()));
-  // } catch {
-  //   console.log("pages");
-  // }
-
-
   return b
 
 
-  // // browser.newPage().then((p) => {
-  // //   console.log("p", p);
-  // // }).finally(() => {
-  // //   console.log("idk");
-  // // })
-
-  // // const page = (await browser.pages())[0];
-
-  // console.log("page", page.url());
-
-  // console.log("p", p);
-  // await p
-  // console.log("pp", pp);
-
 })
 
+// TBrowser.prototype = Object.create(puppeteer.Browser.prototype);
+// TPage.prototype = Object.create(puppeteer.Page.prototype);
+// puppeteer.Browser.prototype = TBrowser.prototype
+// puppeteer.Page.prototype = TPage.prototype
 
-class NodeTesteranto<
-  TestShape extends IBaseTest
-> extends Testeranto<
-  TestShape
-> {
+// Set constructor back to Robot
+// Robot.prototype.constructor = Robot;
+
+// const tBrowser: TBrowser = Object.setPrototypeOf(browser, TBrowser.prototype);
+// tBrowser.pages 
+
+class NodeTesteranto<TestShape extends IBaseTest> extends Testeranto<TestShape> {
   constructor(
     input: TestShape["iinput"],
     testSpecification: ITestSpecification<TestShape>,
@@ -122,7 +93,7 @@ class NodeTesteranto<
       testResourceRequirement,
       NodeWriter,
       testInterface,
-      browser
+      new TBrowser(browser)
     );
 
     const t: ITestJob = this.testJobs[0];

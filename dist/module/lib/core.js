@@ -1,7 +1,6 @@
 import { DefaultTestInterface, defaultTestResourceRequirement } from "./index.js";
 import { BaseSuite, BaseGiven, BaseWhen, BaseThen, BaseCheck } from "./abstractBase";
 import { ClassBuilder } from "./classBuilder";
-const utils = {};
 export default class Testeranto extends ClassBuilder {
     constructor(input, testSpecification, testImplementation, testResourceRequirement = defaultTestResourceRequirement, logWriter, testInterface, utils) {
         const fullTestInterface = DefaultTestInterface(testInterface);

@@ -3,6 +3,9 @@ import http from "http";
 import Testeranto from "./lib/core.js";
 import { defaultTestResourceRequirement, } from "./lib/index.js";
 import { NodeWriter } from "./NodeWriter.js";
+import { TBrowser,
+// TPage
+ } from "./Types.js";
 import puppeteer from "puppeteer-core";
 const readJson = async (port) => new Promise((resolve, reject) => {
     let json = "";
@@ -35,41 +38,19 @@ const browser = await readJson("2999").then(async (json) => {
         defaultViewport: null,
     });
     console.log("connected!", b.isConnected());
-    // try {
-    //   // hack
-    //   await b.pages()
-    //   // console.log("pages?", (await b.pages()));
-    // } catch {
-    //   console.log("pages");
-    // }
-    // const page = ((await b.pages()))[0];//.filter((x) => x.url() === 'file:///Users/adam/Code/kokomoBay/dist/web/src/ClassicalComponent/test.html'))[0]
-    // console.log("page", page);
-    // const p = page.screenshot({
-    //   path: 'aa.jpg'
-    // })
-    // try {
-    //   await p
-    //   // hack
-    //   // await b.pages()
-    //   // console.log("pages?", (await b.pages()));
-    // } catch {
-    //   console.log("pages");
-    // }
     return b;
-    // // browser.newPage().then((p) => {
-    // //   console.log("p", p);
-    // // }).finally(() => {
-    // //   console.log("idk");
-    // // })
-    // // const page = (await browser.pages())[0];
-    // console.log("page", page.url());
-    // console.log("p", p);
-    // await p
-    // console.log("pp", pp);
 });
+// TBrowser.prototype = Object.create(puppeteer.Browser.prototype);
+// TPage.prototype = Object.create(puppeteer.Page.prototype);
+// puppeteer.Browser.prototype = TBrowser.prototype
+// puppeteer.Page.prototype = TPage.prototype
+// Set constructor back to Robot
+// Robot.prototype.constructor = Robot;
+// const tBrowser: TBrowser = Object.setPrototypeOf(browser, TBrowser.prototype);
+// tBrowser.pages 
 class NodeTesteranto extends Testeranto {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
-        super(input, testSpecification, testImplementation, testResourceRequirement, NodeWriter, testInterface, browser);
+        super(input, testSpecification, testImplementation, testResourceRequirement, NodeWriter, testInterface, new TBrowser(browser));
         const t = this.testJobs[0];
         const testResourceArg = process.argv[2] || `{}`;
         try {

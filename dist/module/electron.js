@@ -38,17 +38,16 @@ const loadReport = (configs) => {
 };
 const launchNode = (t, changedFile) => {
     var _a;
-    console.log("launchNode", changedFile);
-    const child = utilityProcess.fork(changedFile, [
-        JSON.stringify({
-            scheduled: true,
-            name: changedFile,
-            ports: [],
-            fs: path.resolve(process.cwd(), "dist", 
-            // config.outdir,
-            "node", t[0]),
-        })
-    ]);
+    const a = JSON.stringify({
+        scheduled: true,
+        name: changedFile,
+        ports: [],
+        fs: path.resolve(process.cwd(), "dist", 
+        // config.outdir,
+        "node", t[0]),
+    });
+    console.log("launchNode", changedFile, a);
+    const child = utilityProcess.fork(changedFile, [a], {});
     child.postMessage({ message: 'hello' });
     child.on('message', (data) => {
         console.log("from child", data); // hello world!

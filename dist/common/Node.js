@@ -8,6 +8,7 @@ const http_1 = __importDefault(require("http"));
 const core_js_1 = __importDefault(require("./lib/core.js"));
 const index_js_1 = require("./lib/index.js");
 const NodeWriter_js_1 = require("./NodeWriter.js");
+const Types_js_1 = require("./Types.js");
 const puppeteer_core_1 = __importDefault(require("puppeteer-core"));
 const readJson = async (port) => new Promise((resolve, reject) => {
     let json = "";
@@ -40,41 +41,19 @@ const browser = await readJson("2999").then(async (json) => {
         defaultViewport: null,
     });
     console.log("connected!", b.isConnected());
-    // try {
-    //   // hack
-    //   await b.pages()
-    //   // console.log("pages?", (await b.pages()));
-    // } catch {
-    //   console.log("pages");
-    // }
-    // const page = ((await b.pages()))[0];//.filter((x) => x.url() === 'file:///Users/adam/Code/kokomoBay/dist/web/src/ClassicalComponent/test.html'))[0]
-    // console.log("page", page);
-    // const p = page.screenshot({
-    //   path: 'aa.jpg'
-    // })
-    // try {
-    //   await p
-    //   // hack
-    //   // await b.pages()
-    //   // console.log("pages?", (await b.pages()));
-    // } catch {
-    //   console.log("pages");
-    // }
     return b;
-    // // browser.newPage().then((p) => {
-    // //   console.log("p", p);
-    // // }).finally(() => {
-    // //   console.log("idk");
-    // // })
-    // // const page = (await browser.pages())[0];
-    // console.log("page", page.url());
-    // console.log("p", p);
-    // await p
-    // console.log("pp", pp);
 });
+// TBrowser.prototype = Object.create(puppeteer.Browser.prototype);
+// TPage.prototype = Object.create(puppeteer.Page.prototype);
+// puppeteer.Browser.prototype = TBrowser.prototype
+// puppeteer.Page.prototype = TPage.prototype
+// Set constructor back to Robot
+// Robot.prototype.constructor = Robot;
+// const tBrowser: TBrowser = Object.setPrototypeOf(browser, TBrowser.prototype);
+// tBrowser.pages 
 class NodeTesteranto extends core_js_1.default {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
-        super(input, testSpecification, testImplementation, testResourceRequirement, NodeWriter_js_1.NodeWriter, testInterface, browser);
+        super(input, testSpecification, testImplementation, testResourceRequirement, NodeWriter_js_1.NodeWriter, testInterface, new Types_js_1.TBrowser(browser));
         const t = this.testJobs[0];
         const testResourceArg = process.argv[2] || `{}`;
         try {
