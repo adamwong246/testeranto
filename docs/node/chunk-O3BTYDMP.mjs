@@ -4,7 +4,6 @@ var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x, {
   get: (a, b) => (typeof require !== "undefined" ? require : a)[b]
 }) : x)(function(x) {
@@ -34,32 +33,6 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
   mod
 ));
-var __publicField = (obj, key, value) => {
-  __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-  return value;
-};
-var __accessCheck = (obj, member, msg) => {
-  if (!member.has(obj))
-    throw TypeError("Cannot " + msg);
-};
-var __privateGet = (obj, member, getter) => {
-  __accessCheck(obj, member, "read from private field");
-  return getter ? getter.call(obj) : member.get(obj);
-};
-var __privateAdd = (obj, member, value) => {
-  if (member.has(obj))
-    throw TypeError("Cannot add the same private member more than once");
-  member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
-};
-var __privateSet = (obj, member, value, setter) => {
-  __accessCheck(obj, member, "write to private field");
-  setter ? setter.call(obj, value) : member.set(obj, value);
-  return value;
-};
-var __privateMethod = (obj, member, method) => {
-  __accessCheck(obj, member, "access private method");
-  return method;
-};
 
 // node_modules/testeranto/dist/cjs-shim.js
 import { createRequire } from "node:module";
@@ -77,10 +50,5 @@ export {
   __require,
   __commonJS,
   __toESM,
-  __publicField,
-  __privateGet,
-  __privateAdd,
-  __privateSet,
-  __privateMethod,
   init_cjs_shim
 };
