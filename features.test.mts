@@ -67,7 +67,7 @@ semantic.connect(`gutentag`, `hola`, "negates");
 const undirected = new TesterantoGraphUndirected(
   "an undirected semantic graph"
 );
-undirected.connect(`gutentag`, `aloha`, "related");
+undirected.connect(`gutenta`, `aloha`, "related");
 undirected.connect(`buildRocket`, `buildSatellite`, "overlap");
 undirected.connect(`buildRocket`, `buildSilo`, "overlap");
 

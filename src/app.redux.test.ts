@@ -1,11 +1,12 @@
 import { assert } from "chai";
 
-import { IStoreState, loginApp } from "./app";
-import { AppSpecification, IAppSpecification, IImplementation } from "./app.test";
+import { IStoreState, loginApp } from "./app.js";
+import { AppSpecification, IAppSpecification, IImplementation } from "./app.test.js";
 
-import { ReduxTesteranto } from "../myTests/redux.testeranto.test";
+import { ReduxTesteranto } from "../myTests/redux.testeranto.test.js";
 
-const implementations: IImplementation = {
+// const implementations: IImplementation = {
+const implementations: any = {
   suites: {
     Default: "some default Suite",
   },
@@ -39,7 +40,7 @@ const implementations: IImplementation = {
   },
 };
 
-export const AppReduxTesteranto = ReduxTesteranto<
+export default ReduxTesteranto<
   IStoreState,
   IAppSpecification
 >(

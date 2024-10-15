@@ -1,24 +1,22 @@
 import { assert } from "chai";
 import { IImpl as BaseIImple } from "testeranto/src/SubPackages/react-test-renderer/component/index";
 
-import { IClassicalComponentSpec } from "../test";
-import { IProps, IState } from "..";
-
+import type { IClassicalComponentSpec } from "../testeranto";
+import type { IProps } from "../index";
 
 export const testImplementation: BaseIImple<
   IClassicalComponentSpec,
-  IProps,
-  IState
+  IProps
 > = {
   suites: {
     Default: "default",
   },
   givens: {
-    AnEmptyState: { props: { foo: "bar" } },
+    AnEmptyState: () => { return { foo: "bar" } },
 
   },
   whens: {
-    IClickTheButton: (x) => (component) => {
+    IClickTheButton: () => (component) => {
       component.root.findByType("button").props.onClick();
     }
 
@@ -46,8 +44,6 @@ export const testImplementation: BaseIImple<
     },
   },
   checks: {
-    AnEmptyState: () => (CComponent) => {
-      return { children: [], foo: "bar" }
-    },
+    AnEmptyState: () => { return { foo: "bar" } },
   },
 }

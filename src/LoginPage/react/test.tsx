@@ -1,11 +1,7 @@
-import { CElement } from "react";
-
-
-
-import { ILoginPageSpecs } from "../test";
-import { actions } from "../index";
+import { ILoginPageSpecs } from "../test.js";
+import { actions } from "../index.js";
 import { assert } from "chai";
-import { IStore, ISelection } from "testeranto/dist/types/SubPackages/react/jsx/index";
+import type { IStore, ISelection } from "testeranto/dist/types/SubPackages/react/jsx/index";
 import { ITestImplementation } from "testeranto/src/Types";
 
 export const LoginPageReactTestInterface = (testInput) => {

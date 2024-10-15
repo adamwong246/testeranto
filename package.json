@@ -22,9 +22,10 @@
     ]
   },
   "scripts": {
-    "dev": "rm -rf docs/web && rm -rf docs/node && yarn upgrade -f testeranto && yarn test",
+    "dev": "rm -f docs/features.test.js rm -f docs/electron.log; rm -f docs/report.html; rm -f docs/report.js; rm -f docs/report.css; rm -rf docs/web && rm -rf docs/node && yarn upgrade -f testeranto && yarn test",
     "test": "ts-node-esm testeranto.mts",
-    "test2": "node --loader ts-node/esm project.test.mts"
+    "test2": "node --loader ts-node/esm testeranto.mts",
+    "test3": "yarn tsx testeranto.mts"
   },
   "types": "index.d.ts",
   "dependencies": {
@@ -40,6 +41,7 @@
     "react-redux": "^8.0.4",
     "ts-node": "^10.9.2",
     "tsc-module-loader": "^0.0.1",
+    "tsx": "^4.19.1",
     "url": "^0.11.3"
   },
   "devDependencies": {

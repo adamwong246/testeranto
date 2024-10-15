@@ -1,8 +1,8 @@
 import renderer, { act } from "react-test-renderer";
 import { assert } from "chai";
 
-import { ILoginPageSpecs } from "../test";
-import { actions, emailwarning } from "..";
+import { ILoginPageSpecs } from "../test.js";
+import { actions, emailwarning } from "../index.js";
 import { ITestImplementation } from "testeranto/src/Types";
 
 export const LoginPageReactTestRendererTestInterface = {

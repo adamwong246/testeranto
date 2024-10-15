@@ -14,7 +14,8 @@ export default new ITProject({
   debugger: true,
   clearScreen: false,
   devMode: true,
-  features: 'features.test.mts',
+  // 
+  // tests: 'tests.test.mts',
   minify: false,
   outbase: ".",
   externals: ["ganache"],

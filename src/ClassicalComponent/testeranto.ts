@@ -14,7 +14,7 @@ export type IClassicalComponentSpec = {
 
   when: void,
   then: void,
-  given: (x) => (y) => void,
+  given: IProps,
 
   suites: {
     Default: [string];
@@ -44,14 +44,14 @@ export const ClassicalComponentSpec: ITestSpecification<IClassicalComponentSpec>
             ["test"],
             [],
             [
-              Then.ThePropsIs(['{"foo":"bar"}']),
+              Then.ThePropsIs({ "foo": "bar" }),
               Then.TheStatusIs({ count: 0 })
             ]
           ),
           "test1": Given.AnEmptyState(
             ["test"],
             [When.IClickTheButton()],
-            [Then.ThePropsIs(['{"foo":"bar"}']), Then.TheStatusIs({ count: 1 })]
+            [Then.ThePropsIs({ "foo": "bar" }), Then.TheStatusIs({ count: 1 })]
           ),
           "test2": Given.AnEmptyState(
             ["test"],

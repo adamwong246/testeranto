@@ -14,10 +14,11 @@ export type IAppSpecification = {
 
   when: void,
   then: void,
-  given: (x) => (y) => void,
+  given: (x) => (zy) => void,
+  // given: (x) => IStoreState,
 
   suites: {
-    Default: string;
+    Default: [string];
   };
   givens: {
     AnEmptyState: [];
@@ -37,7 +38,8 @@ export type IAppSpecification = {
   checks: {
     AnEmptyState: [];
   };
-}
+};
+
 export type IImplementation = ITestImplementation<
   IAppSpecification,
 
@@ -66,9 +68,7 @@ export type IImplementation = ITestImplementation<
 
 >;
 
-export const AppSpecification: ITestSpecification<
-  IAppSpecification
-> = (Suite, Given, When, Then, Check) => {
+export const AppSpecification: ITestSpecification<IAppSpecification> = (Suite, Given, When, Then, Check) => {
   return [
     Suite.Default(
       "Testing the Redux store",

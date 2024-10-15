@@ -135,7 +135,7 @@ export const RectangleTesterantoBaseTestSpecification: ITestSpecification<IRecta
           ),
           "test3": Given.Default(
             [`hello`],
-            [When.setHeight(5), When.setWidth(55)],
+            [When.setHeight(5), When.setWidth(5)],
             [Then.area(5)]
           )
         },

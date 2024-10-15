@@ -8,8 +8,12 @@ import { createStore, Store, AnyAction } from "redux";
 
 import Testeranto from "testeranto/src/Node";
 import { ITestInterface } from "testeranto/src/Types";
-import { ITestImplementation, ITestSpecification, ITTestShape, Modify } from "testeranto/src/core";
+
 import { IStoreState } from "../src/app";
+import {
+  ITestImplementation, ITestSpecification, IBaseTest,
+  IPartialInterface
+} from "testeranto/src/Types";
 
 type WhenShape = [
   (
@@ -27,27 +31,20 @@ type Input<S, T> = {
 export const ReduxToolkitTesteranto = <
   IStoreShape,
   ISelectionShape,
-  ITestShape extends ITTestShape
+  ITestShape extends IBaseTest
 >(
-  testImplementations: Modify<ITestImplementation<
-    IStoreShape,
-    IStoreShape,
-    WhenShape,
-    ThenShape,
-    ITestShape
-  >, {
+  testImplementations: ITestImplementation<ITestShape, {
     Whens: {
       [K in keyof ITestShape["whens"]]: (
         ...Iw: ITestShape["whens"][K]
       ) => WhenShape;
     }
-
   }>,
   testSpecifications: ITestSpecification<ITestShape>,
   testInput: Input<IStoreShape, ISelectionShape>
 ) => {
 
-  const testInterface: ITestInterface<
+  const testInterface: IPartialInterface<
     ITestShape
   > = {
     assertThis: (t) => {

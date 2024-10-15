@@ -1,5 +1,10 @@
-import { createSelector, createSlice, createStore } from "@reduxjs/toolkit";
-import { ILoginPageError, ILoginPageSelection } from "./LoginPage";
+// import { createSelector, createSlice, createStore } from "@reduxjs/toolkit";
+import pkg from '@reduxjs/toolkit';
+const { createSelector, createSlice, createStore } = pkg;
+
+import {
+  ILoginPageError, ILoginPageSelection
+} from "./LoginPage";
 
 export type IStoreState = {
   password: string;

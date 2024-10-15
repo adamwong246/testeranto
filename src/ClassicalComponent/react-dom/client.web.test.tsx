@@ -1,9 +1,10 @@
 import { assert } from "chai";
 
 import { ClassicalComponent } from "..";
-import { IClassicalComponentSpec, ClassicalComponentSpec } from "../test";
+
 
 import test from "testeranto/src/SubPackages/react-dom/component/web";
+import { ClassicalComponentSpec } from "../testeranto";
 
 const ClassicalComponentReactDomImplementation = {
   suites: {

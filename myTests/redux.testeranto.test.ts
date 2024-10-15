@@ -6,9 +6,11 @@ import {
 } from "@reduxjs/toolkit";
 import { createStore, Store, AnyAction } from "redux";
 
-import Testeranto from "testeranto/src/Node";
-import { ITestInterface } from "testeranto/src/Types";
-import { ITestImplementation, ITestSpecification, ITTestShape, Modify } from "testeranto/src/core";
+import Testeranto from "testeranto/dist/module/lib/core";
+import { IPartialInterface, ITestInterface } from "testeranto/src/Types";
+import {
+  ITestImplementation, ITestSpecification, IBaseTest,
+} from "testeranto/src/Types";
 
 type t = (
   | ActionCreatorWithNonInferrablePayload<string>
@@ -28,25 +30,32 @@ export type ThenShape = number;
 
 export const ReduxTesteranto = <
   IStoreShape,
-  ITestShape extends ITTestShape,
+  ITestShape extends IBaseTest,
 >(
   testInput: Reducer<IStoreShape, AnyAction>,
   testSpecifications: ITestSpecification<ITestShape>,
-  testImplementations: Modify<ITestImplementation<
-    IStoreShape,
-    IStoreShape,
-    WhenShape,
-    ThenShape,
-    ITestShape
-  >, {
+  testImplementations: ITestImplementation<ITestShape, {
     Whens: {
       [K in keyof ITestShape["whens"]]: (
         ...Iw: ITestShape["whens"][K]
       ) => WhenShape;
     }
-  }>,
+  }>
+  // testImplementations: Modify<ITestImplementation<
+  //   IStoreShape,
+  //   IStoreShape,
+  //   WhenShape,
+  //   ThenShape,
+  //   ITestShape
+  // >, {
+  //   Whens: {
+  //     [K in keyof ITestShape["whens"]]: (
+  //       ...Iw: ITestShape["whens"][K]
+  //     ) => WhenShape;
+  //   }
+  // }>,
 ) => {
-  const testInterface: ITestInterface<ITestShape> = {
+  const testInterface: IPartialInterface<ITestShape> = {
     beforeEach: function (
       subject,
       initializer,
@@ -70,10 +79,13 @@ export const ReduxTesteranto = <
     },
   };
 
-  return Testeranto(
+  return new Testeranto(
     testInput,
     testSpecifications,
     testImplementations,
+    {
+      ports: 0
+    },
     testInterface,
-  )
+  );
 }

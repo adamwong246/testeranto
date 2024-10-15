@@ -1,13 +1,10 @@
 
-import test from "testeranto/src/SubPackages/react-test-renderer/jsx/node";
+import test from "testeranto/src/SubPackages/react-test-renderer/jsx/node.js";
 
-import {
-  ILoginPageSpecs,
-  LoginPageSpecs,
-} from "../test";
-import LoginPage from "..";
+import { LoginPageSpecs } from "../test.js";
+import LoginPage from "../index.js";
 
-import { loginPageImpl, LoginPageReactTestRendererTestInterface } from "./test";
+import { loginPageImpl, LoginPageReactTestRendererTestInterface } from "./test.js";
 
 export default test(
   loginPageImpl,

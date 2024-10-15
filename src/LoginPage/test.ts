@@ -12,7 +12,7 @@ export type ILoginPageSpecs = {
   given: (x) => unknown,
 
   suites: {
-    Default: string;
+    Default: [string];
   },
   givens: {
     default: []

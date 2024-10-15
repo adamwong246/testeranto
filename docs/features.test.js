@@ -1,7 +1,28 @@
-import {
-  __commonJS,
-  __toESM
-} from "./chunk-TTFRSOOU.mjs";
+var __create = Object.create;
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getProtoOf = Object.getPrototypeOf;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __commonJS = (cb, mod) => function __require() {
+  return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  // If the importer is in node compatibility mode or this is not an ESM
+  // file that has been converted to a CommonJS file using a Babel-
+  // compatible transform (i.e. "__esModule" has not been set), then set
+  // "default" to the CommonJS "module.exports" for node compatibility.
+  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+  mod
+));
 
 // node_modules/testeranto/node_modules/graphology/dist/graphology.umd.js
 var require_graphology_umd = __commonJS({
@@ -3732,7 +3753,6 @@ var TesterantoFeatures = class {
 
 // features.test.mts
 var MyFeature = class extends BaseFeature {
-  due;
   constructor(name, due) {
     super(name);
     this.due = due;
@@ -3787,7 +3807,7 @@ semantic.connect(`gutentag`, `hola`, "negates");
 var undirected = new TesterantoGraphUndirected(
   "an undirected semantic graph"
 );
-undirected.connect(`gutentag`, `aloha`, "related");
+undirected.connect(`gutenta`, `aloha`, "related");
 undirected.connect(`buildRocket`, `buildSatellite`, "overlap");
 undirected.connect(`buildRocket`, `buildSilo`, "overlap");
 var features_test_default = new TesterantoFeatures(features, {

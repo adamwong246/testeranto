@@ -1,7 +1,7 @@
 import React from "react";
 import { Provider, useSelector } from "react-redux";
 
-import app from "../app";
+import app from "../app.js";
 
 const core = app();
 
@@ -30,7 +30,7 @@ export function LoginPage(): React.JSX.Element {
     <p>Sign in and get to it.</p>
 
     <form>
-      <input type="email" value={selection.email} onChange={(e) => store.dispatch(actions.setEmail(e.target.value))} />
+      <input type="email" value={selection.email} onChange={(e) => store.dispatch(actions.setEmail(e.target.value as any))} />
 
       <p id="invalid-email-warning" className="warnin">
         {selection.error === 'invalidEmail' && emailwarning}
@@ -38,7 +38,7 @@ export function LoginPage(): React.JSX.Element {
 
       <br />
 
-      <input type="password" value={selection.password} onChange={(e) => store.dispatch(actions.setPassword(e.target.value))} />
+      <input type="password" value={selection.password} onChange={(e) => store.dispatch(actions.setPassword(e.target.value as any))} />
 
       <p id="error">
         {selection.error === 'credentialFail' && "You entered an incorrect email, password, or both."}

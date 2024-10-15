@@ -1,0 +1,113 @@
+[
+  {
+    "module": [
+      {
+        "name": "Testing the Redux store",
+        "index": 0,
+        "givens": {
+          "test0": {
+            "name": "AnEmptyState",
+            "features": [
+              "hello"
+            ],
+            "whens": [
+              {
+                "name": "TheEmailIsSetTo: adam@email.com",
+                "whenCB": [
+                  null,
+                  "adam@email.com"
+                ]
+              }
+            ],
+            "thens": [
+              {
+                "name": "TheEmailIs: adam@email.com"
+              }
+            ]
+          },
+          "test1": {
+            "name": "AStateWithEmail",
+            "features": [
+              "hello"
+            ],
+            "whens": [],
+            "thens": [
+              {
+                "name": "TheEmailIsNot: adam@email.com"
+              },
+              {
+                "name": "TheEmailIs: bob@mail.com"
+              }
+            ],
+            "initialValues": "bob@mail.com"
+          },
+          "test2": {
+            "name": "AnEmptyState",
+            "features": [
+              "hello"
+            ],
+            "whens": [
+              {
+                "name": "TheEmailIsSetTo: hello",
+                "whenCB": [
+                  null,
+                  "hello"
+                ]
+              },
+              {
+                "name": "TheEmailIsSetTo: aloha",
+                "whenCB": [
+                  null,
+                  "aloha"
+                ]
+              }
+            ],
+            "thens": [
+              {
+                "name": "TheEmailIs: aloha"
+              }
+            ]
+          },
+          "test3": {
+            "name": "AnEmptyState",
+            "features": [
+              "aloha",
+              "hello"
+            ],
+            "whens": [],
+            "thens": [
+              {
+                "name": "TheEmailIs: "
+              }
+            ]
+          },
+          "test4": {
+            "name": "AnEmptyState",
+            "features": [
+              "aloha",
+              "hello"
+            ],
+            "whens": [
+              {
+                "name": "TheEmailIsSetTo: hey there",
+                "whenCB": [
+                  null,
+                  "hey there"
+                ]
+              }
+            ],
+            "thens": [
+              {
+                "name": "TheEmailIs: hey there"
+              }
+            ]
+          }
+        },
+        "checks": [],
+        "fails": []
+      }
+    ],
+    "test": "./src/app.redux.test.ts",
+    "runtime": "node"
+  }
+]
