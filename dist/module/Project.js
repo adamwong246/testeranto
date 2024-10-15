@@ -1,4 +1,3 @@
-var _a;
 import { jsonc } from 'jsonc';
 import esbuild from "esbuild";
 import fs from "fs";
@@ -7,18 +6,14 @@ import readline from 'readline';
 import { glob } from "glob";
 import esbuildNodeConfiger from "./esbuildConfigs/node.js";
 import esbuildWebConfiger from "./esbuildConfigs/web.js";
+import esbuildReportConfiger from "./esbuildConfigs/report.js";
 import webHtmlFrame from "./web.html.js";
+import reportHtmlFrame from "./report.html.js";
 import childProcess from 'child_process';
-const childElectron = childProcess.spawn("yarn", ["electron", "node_modules/testeranto/dist/common/electron.js"]);
-// childElectron.stdout.on('data', function (msg) {
-//   console.log(msg.toString())
-// });
-const fileStream = fs.createWriteStream('./dist/electron.log');
-(_a = childElectron.stdout) === null || _a === void 0 ? void 0 : _a.pipe(fileStream);
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
     process.stdin.setRawMode(true);
-const TIMEOUT = 500;
+// const TIMEOUT = 500;
 const OPEN_PORT = "";
 const getRunnables = (tests, payload = [new Set(), new Set()]) => {
     return tests.reduce((pt, cv, cndx, cry) => {
@@ -109,7 +104,6 @@ export class ITProject {
         this.clearScreen = config.clearScreen;
         this.devMode = config.devMode;
         Object.values(config.ports).forEach((port) => { this.ports[port] = OPEN_PORT; });
-        const featurePath = `${process.cwd()}/${config.features}`;
         process.stdin.on('keypress', (str, key) => {
             if (key.name === 'q') {
                 this.initiateShutdown("'q' command");
@@ -121,8 +115,17 @@ export class ITProject {
                 process.exit(-1);
             }
         });
-        fs.readFile('testeranto.json', (e, d) => {
-            this.tests = jsonc.parse(d.toString()).tests;
+        fs.readFile('testeranto.json', (e, jc) => {
+            var _a;
+            const jsonConfig = jsonc.parse(jc.toString());
+            const featurePath = `${process.cwd()}/${jsonConfig.features}`;
+            this.tests = jsonConfig.tests;
+            const childElectron = childProcess.spawn("yarn", ["electron", "node_modules/testeranto/dist/common/electron.js"]);
+            // childElectron.stdout.on('data', function (msg) {
+            //   console.log(msg.toString())
+            // });
+            const fileStream = fs.createWriteStream(`./${jsonConfig.outdir}/electron.log`);
+            (_a = childElectron.stdout) === null || _a === void 0 ? void 0 : _a.pipe(fileStream);
             import(featurePath).then(async (features) => {
                 this.features = features.default;
                 await Promise.resolve(Promise.all([
@@ -133,60 +136,20 @@ export class ITProject {
                     const sourceDir = sourceFileSplit.slice(0, -1);
                     const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
                     const sourceFileNameMinusJs = sourceFileName.split(".").slice(0, -1).join(".");
-                    const htmlFilePath = path.normalize(`${process.cwd()}/${config.outdir}/web/${sourceDir.join("/")}/${sourceFileNameMinusJs}.html`);
+                    const htmlFilePath = path.normalize(`${process.cwd()}/${jsonConfig.outdir}/web/${sourceDir.join("/")}/${sourceFileNameMinusJs}.html`);
                     const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
                     return fs.promises.mkdir(path.dirname(htmlFilePath), { recursive: true }).then(x => fs.writeFileSync(htmlFilePath, webHtmlFrame(jsfilePath, htmlFilePath)));
                 })));
                 const [nodeEntryPoints, webEntryPoints] = getRunnables(this.tests);
-                glob('./dist/chunk-*.mjs', { ignore: 'node_modules/**' }).then((chunks) => {
+                glob(`./${jsonConfig.outdir}/chunk-*.mjs`, { ignore: 'node_modules/**' }).then((chunks) => {
                     console.log("deleting chunks", chunks);
                     chunks.forEach((chunk) => {
                         console.log("deleting chunk", chunk);
                         fs.unlinkSync(chunk);
                     });
                 });
-                esbuild.build({
-                    bundle: true,
-                    entryPoints: ["./node_modules/testeranto/dist/module/Report.js"],
-                    minify: config.minify === true,
-                    outbase: config.outbase,
-                    write: true,
-                    outfile: `${config.outdir}/Report.js`,
-                    external: ["tests.test.js", "features.test.js"]
-                });
-                fs.writeFileSync(`${config.outdir}/report.html`, `
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta name="description" content="Webpage description goes here" />
-  <meta charset="utf-8" />
-  <title>kokomoBay - testeranto</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="author" content="" />
-  <link rel="stylesheet" href="/Report.css" />
-
-  <script type="importmap">
-    {
-    "imports": {
-      "tests.test.js": "./tests.test.js",
-      "features.test.js": "./features.test.js"
-    }
-  }
-  </script>
-
-
-  <script src="./Report.js"></script>
-</head>
-
-<body>
-  <div id="root">
-    react is loading
-  </div>
-</body>
-
-</html>
-        `);
+                esbuild.build(esbuildReportConfiger(config));
+                fs.writeFileSync(`${jsonConfig.outdir}/report.html`, reportHtmlFrame());
                 Promise.all([
                     esbuild.context(esbuildNodeConfiger(config, nodeEntryPoints))
                         .then(async (nodeContext) => {
@@ -207,9 +170,9 @@ export class ITProject {
                         // console.log("sending", JSON.stringify(this.tests));
                         // childElectron.stdin.write(JSON.stringify(this.tests));
                         // not necessary
-                        this.esWebServerDetails = await eWeb.serve({
-                            servedir: 'dist',
-                        });
+                        // this.esWebServerDetails = await eWeb.serve({
+                        //   servedir: jsonConfig.outdir,
+                        // });
                         // fs.copyFileSync("node_modules/testeranto/dist/index.css", "index.css")
                         // pm2.connect(async (err) => {
                         //   if (err) {

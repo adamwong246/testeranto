@@ -1,13 +1,16 @@
 import baseEsBuildConfig from "./index.js";
+import { jsonc } from "jsonc";
+import fs from "fs";
+const jsonConfig = jsonc.parse((await fs.readFileSync("./testeranto.json")).toString());
 export default (config, entryPoints) => {
-    return Object.assign(Object.assign({}, baseEsBuildConfig(config)), { outdir: config.outdir + "/node", inject: ['./node_modules/testeranto/dist/cjs-shim.js'], supported: {
+    return Object.assign(Object.assign({}, baseEsBuildConfig(config)), { outdir: jsonConfig.outdir + "/node", inject: [`./node_modules/testeranto/dist/cjs-shim.js`], supported: {
             "dynamic-import": true
         }, define: {
             "process.env.FLUENTFFMPEG_COV": "0"
         }, absWorkingDir: process.cwd(), banner: {
         // js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`
         }, platform: "node", external: [
-            "tests.test.js",
+            "testeranto.json",
             "features.test.js",
             "react",
             "events",

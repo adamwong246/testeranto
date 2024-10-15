@@ -25,7 +25,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ITProject = void 0;
 const jsonc_1 = require("jsonc");
@@ -36,18 +35,14 @@ const readline_1 = __importDefault(require("readline"));
 const glob_1 = require("glob");
 const node_js_1 = __importDefault(require("./esbuildConfigs/node.js"));
 const web_js_1 = __importDefault(require("./esbuildConfigs/web.js"));
+const report_js_1 = __importDefault(require("./esbuildConfigs/report.js"));
 const web_html_js_1 = __importDefault(require("./web.html.js"));
+const report_html_js_1 = __importDefault(require("./report.html.js"));
 const child_process_1 = __importDefault(require("child_process"));
-const childElectron = child_process_1.default.spawn("yarn", ["electron", "node_modules/testeranto/dist/common/electron.js"]);
-// childElectron.stdout.on('data', function (msg) {
-//   console.log(msg.toString())
-// });
-const fileStream = fs_1.default.createWriteStream('./dist/electron.log');
-(_a = childElectron.stdout) === null || _a === void 0 ? void 0 : _a.pipe(fileStream);
 readline_1.default.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
     process.stdin.setRawMode(true);
-const TIMEOUT = 500;
+// const TIMEOUT = 500;
 const OPEN_PORT = "";
 const getRunnables = (tests, payload = [new Set(), new Set()]) => {
     return tests.reduce((pt, cv, cndx, cry) => {
@@ -138,7 +133,6 @@ class ITProject {
         this.clearScreen = config.clearScreen;
         this.devMode = config.devMode;
         Object.values(config.ports).forEach((port) => { this.ports[port] = OPEN_PORT; });
-        const featurePath = `${process.cwd()}/${config.features}`;
         process.stdin.on('keypress', (str, key) => {
             if (key.name === 'q') {
                 this.initiateShutdown("'q' command");
@@ -150,8 +144,17 @@ class ITProject {
                 process.exit(-1);
             }
         });
-        fs_1.default.readFile('testeranto.json', (e, d) => {
-            this.tests = jsonc_1.jsonc.parse(d.toString()).tests;
+        fs_1.default.readFile('testeranto.json', (e, jc) => {
+            var _a;
+            const jsonConfig = jsonc_1.jsonc.parse(jc.toString());
+            const featurePath = `${process.cwd()}/${jsonConfig.features}`;
+            this.tests = jsonConfig.tests;
+            const childElectron = child_process_1.default.spawn("yarn", ["electron", "node_modules/testeranto/dist/common/electron.js"]);
+            // childElectron.stdout.on('data', function (msg) {
+            //   console.log(msg.toString())
+            // });
+            const fileStream = fs_1.default.createWriteStream(`./${jsonConfig.outdir}/electron.log`);
+            (_a = childElectron.stdout) === null || _a === void 0 ? void 0 : _a.pipe(fileStream);
             Promise.resolve().then(() => __importStar(require(featurePath))).then(async (features) => {
                 this.features = features.default;
                 await Promise.resolve(Promise.all([
@@ -162,60 +165,20 @@ class ITProject {
                     const sourceDir = sourceFileSplit.slice(0, -1);
                     const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
                     const sourceFileNameMinusJs = sourceFileName.split(".").slice(0, -1).join(".");
-                    const htmlFilePath = path_1.default.normalize(`${process.cwd()}/${config.outdir}/web/${sourceDir.join("/")}/${sourceFileNameMinusJs}.html`);
+                    const htmlFilePath = path_1.default.normalize(`${process.cwd()}/${jsonConfig.outdir}/web/${sourceDir.join("/")}/${sourceFileNameMinusJs}.html`);
                     const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
                     return fs_1.default.promises.mkdir(path_1.default.dirname(htmlFilePath), { recursive: true }).then(x => fs_1.default.writeFileSync(htmlFilePath, (0, web_html_js_1.default)(jsfilePath, htmlFilePath)));
                 })));
                 const [nodeEntryPoints, webEntryPoints] = getRunnables(this.tests);
-                (0, glob_1.glob)('./dist/chunk-*.mjs', { ignore: 'node_modules/**' }).then((chunks) => {
+                (0, glob_1.glob)(`./${jsonConfig.outdir}/chunk-*.mjs`, { ignore: 'node_modules/**' }).then((chunks) => {
                     console.log("deleting chunks", chunks);
                     chunks.forEach((chunk) => {
                         console.log("deleting chunk", chunk);
                         fs_1.default.unlinkSync(chunk);
                     });
                 });
-                esbuild_1.default.build({
-                    bundle: true,
-                    entryPoints: ["./node_modules/testeranto/dist/module/Report.js"],
-                    minify: config.minify === true,
-                    outbase: config.outbase,
-                    write: true,
-                    outfile: `${config.outdir}/Report.js`,
-                    external: ["tests.test.js", "features.test.js"]
-                });
-                fs_1.default.writeFileSync(`${config.outdir}/report.html`, `
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta name="description" content="Webpage description goes here" />
-  <meta charset="utf-8" />
-  <title>kokomoBay - testeranto</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="author" content="" />
-  <link rel="stylesheet" href="/Report.css" />
-
-  <script type="importmap">
-    {
-    "imports": {
-      "tests.test.js": "./tests.test.js",
-      "features.test.js": "./features.test.js"
-    }
-  }
-  </script>
-
-
-  <script src="./Report.js"></script>
-</head>
-
-<body>
-  <div id="root">
-    react is loading
-  </div>
-</body>
-
-</html>
-        `);
+                esbuild_1.default.build((0, report_js_1.default)(config));
+                fs_1.default.writeFileSync(`${jsonConfig.outdir}/report.html`, (0, report_html_js_1.default)());
                 Promise.all([
                     esbuild_1.default.context((0, node_js_1.default)(config, nodeEntryPoints))
                         .then(async (nodeContext) => {
@@ -236,9 +199,9 @@ class ITProject {
                         // console.log("sending", JSON.stringify(this.tests));
                         // childElectron.stdin.write(JSON.stringify(this.tests));
                         // not necessary
-                        this.esWebServerDetails = await eWeb.serve({
-                            servedir: 'dist',
-                        });
+                        // this.esWebServerDetails = await eWeb.serve({
+                        //   servedir: jsonConfig.outdir,
+                        // });
                         // fs.copyFileSync("node_modules/testeranto/dist/index.css", "index.css")
                         // pm2.connect(async (err) => {
                         //   if (err) {

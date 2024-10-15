@@ -1,7 +1,7 @@
 import puppeteer from "puppeteer-core";
 import { BrowserWindow } from "electron";
 import { ITTestResourceConfiguration, ITestArtifactory, ITLog } from ".";
-import { IBaseTest } from "../Types";
+import { IBaseTest, IUtils } from "../Types";
 
 export type IGivens<
   ITestShape extends IBaseTest
@@ -58,7 +58,7 @@ export abstract class BaseSuite<
     s: ITestShape['iinput'],
     artifactory: ITestArtifactory,
     tr: ITTestResourceConfiguration,
-    utils: puppeteer.Browser | BrowserWindow
+    utils: IUtils
   ): Promise<ITestShape['isubject']> {
     return new Promise((res) => res(s as unknown as ITestShape['isubject']));
   }
@@ -76,7 +76,7 @@ export abstract class BaseSuite<
       value: unknown
     ) => void,
     tLog: (...string) => void,
-    utils: puppeteer.Browser | BrowserWindow
+    utils: IUtils
   ): Promise<
     BaseSuite<
       ITestShape
@@ -217,7 +217,7 @@ export abstract class BaseGiven<
     tester,
     artifactory: ITestArtifactory,
     tLog: ITLog,
-    utils: puppeteer.Browser | BrowserWindow
+    utils: IUtils
   ) {
     tLog(`\n Given: ${this.name}`);
 
@@ -296,7 +296,7 @@ export abstract class BaseWhen<
     store: ITestShape['istore'],
     testResourceConfiguration,
     tLog: ITLog,
-    utils: puppeteer.Browser | BrowserWindow
+    utils: IUtils
   ) {
     tLog(" When:", this.name);
     try {
@@ -341,7 +341,7 @@ export abstract class BaseThen<
     store: ITestShape['istore'],
     testResourceConfiguration,
     tLog: ITLog,
-    utils: puppeteer.Browser | BrowserWindow
+    utils: IUtils
   ): Promise<ITestShape['then'] | undefined> {
     tLog(" Then:", this.name);
     try {
@@ -417,7 +417,7 @@ export abstract class BaseCheck<
     tester,
     artifactory: ITestArtifactory,
     tLog: ITLog,
-    utils: puppeteer.Browser | BrowserWindow
+    utils: IUtils
   ) {
     tLog(`\n Check: ${this.name}`);
     const store = await this.checkThat(

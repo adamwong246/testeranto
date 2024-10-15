@@ -1,15 +1,18 @@
 import path from "path";
 import baseEsBuildConfig from "./index.js";
+import { jsonc } from "jsonc";
+import fs from "fs";
+const jsonConfig = jsonc.parse((await fs.readFileSync("./testeranto.json")).toString());
 export default (config, entryPoints) => {
     return Object.assign(Object.assign({}, baseEsBuildConfig(config)), { 
         // inject: ['./node_modules/testeranto/dist/cjs-shim.js'],
         // banner: {
         //   js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`
         // },
-        outdir: config.outdir + "/web", alias: {
+        outdir: jsonConfig.outdir + "/web", alias: {
             react: path.resolve("./node_modules/react")
         }, external: [
-            "tests.test.js",
+            "testeranto.json",
             "features.test.js",
             // "url", 
             // "react",

@@ -1,8 +1,12 @@
 import { BuildOptions } from "esbuild";
 
-import { IBaseConfig } from "../Types";
+import { IBaseConfig, IJsonConfig } from "../Types";
 
 import baseEsBuildConfig from "./index.js";
+import { jsonc } from "jsonc";
+import fs from "fs"
+
+const jsonConfig = jsonc.parse((await fs.readFileSync("./testeranto.json")).toString()) as IJsonConfig;
 
 export default (
   config: IBaseConfig,
@@ -11,9 +15,9 @@ export default (
   return {
     ...baseEsBuildConfig(config),
 
-    outdir: config.outdir + "/node",
+    outdir: jsonConfig.outdir + "/node",
 
-    inject: ['./node_modules/testeranto/dist/cjs-shim.js'],
+    inject: [`./node_modules/testeranto/dist/cjs-shim.js`],
 
     supported: {
       "dynamic-import": true
@@ -29,7 +33,7 @@ export default (
     platform: "node",
 
     external: [
-      "tests.test.js",
+      "testeranto.json",
       "features.test.js",
       "react",
       "events",

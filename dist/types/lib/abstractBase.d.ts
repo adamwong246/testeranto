@@ -1,7 +1,5 @@
-import puppeteer from "puppeteer-core";
-import { BrowserWindow } from "electron";
 import { ITTestResourceConfiguration, ITestArtifactory, ITLog } from ".";
-import { IBaseTest } from "../Types";
+import { IBaseTest, IUtils } from "../Types";
 export declare type IGivens<ITestShape extends IBaseTest> = Record<string, BaseGiven<ITestShape>>;
 export declare abstract class BaseSuite<ITestShape extends IBaseTest> {
     name: string;
@@ -29,9 +27,9 @@ export declare abstract class BaseSuite<ITestShape extends IBaseTest> {
         }[];
         fails: BaseGiven<ITestShape>[];
     };
-    setup(s: ITestShape['iinput'], artifactory: ITestArtifactory, tr: ITTestResourceConfiguration, utils: puppeteer.Browser | BrowserWindow): Promise<ITestShape['isubject']>;
+    setup(s: ITestShape['iinput'], artifactory: ITestArtifactory, tr: ITTestResourceConfiguration, utils: IUtils): Promise<ITestShape['isubject']>;
     assertThat(t: ITestShape['then']): unknown;
-    run(input: ITestShape['iinput'], testResourceConfiguration: ITTestResourceConfiguration, artifactory: (fPath: string, value: unknown) => void, tLog: (...string: any[]) => void, utils: puppeteer.Browser | BrowserWindow): Promise<BaseSuite<ITestShape>>;
+    run(input: ITestShape['iinput'], testResourceConfiguration: ITTestResourceConfiguration, artifactory: (fPath: string, value: unknown) => void, tLog: (...string: any[]) => void, utils: IUtils): Promise<BaseSuite<ITestShape>>;
 }
 export declare abstract class BaseGiven<ITestShape extends IBaseTest> {
     name: string;
@@ -61,7 +59,7 @@ export declare abstract class BaseGiven<ITestShape extends IBaseTest> {
     };
     abstract givenThat(subject: ITestShape['isubject'], testResourceConfiguration: any, artifactory: ITestArtifactory, givenCB: ITestShape['given']): Promise<ITestShape['istore']>;
     afterEach(store: ITestShape['istore'], key: string, artifactory: ITestArtifactory): Promise<unknown>;
-    give(subject: ITestShape['isubject'], key: string, testResourceConfiguration: any, tester: any, artifactory: ITestArtifactory, tLog: ITLog, utils: puppeteer.Browser | BrowserWindow): Promise<ITestShape["istore"]>;
+    give(subject: ITestShape['isubject'], key: string, testResourceConfiguration: any, tester: any, artifactory: ITestArtifactory, tLog: ITLog, utils: IUtils): Promise<ITestShape["istore"]>;
 }
 export declare abstract class BaseWhen<ITestShape extends IBaseTest> {
     name: string;
@@ -73,7 +71,7 @@ export declare abstract class BaseWhen<ITestShape extends IBaseTest> {
         name: string;
         error: boolean;
     };
-    test(store: ITestShape['istore'], testResourceConfiguration: any, tLog: ITLog, utils: puppeteer.Browser | BrowserWindow): Promise<any>;
+    test(store: ITestShape['istore'], testResourceConfiguration: any, tLog: ITLog, utils: IUtils): Promise<any>;
 }
 export declare abstract class BaseThen<ITestShape extends IBaseTest> {
     name: string;
@@ -85,7 +83,7 @@ export declare abstract class BaseThen<ITestShape extends IBaseTest> {
         error: boolean;
     };
     abstract butThen(store: ITestShape['istore'], thenCB: any, testResourceConfiguration?: any): Promise<ITestShape['iselection']>;
-    test(store: ITestShape['istore'], testResourceConfiguration: any, tLog: ITLog, utils: puppeteer.Browser | BrowserWindow): Promise<ITestShape['then'] | undefined>;
+    test(store: ITestShape['istore'], testResourceConfiguration: any, tLog: ITLog, utils: IUtils): Promise<ITestShape['then'] | undefined>;
 }
 export declare abstract class BaseCheck<ITestShape extends IBaseTest> {
     name: string;
@@ -100,5 +98,5 @@ export declare abstract class BaseCheck<ITestShape extends IBaseTest> {
     constructor(name: string, features: string[], checkCB: (whens: any, thens: any) => any, whens: any, thens: any);
     abstract checkThat(subject: ITestShape['isubject'], testResourceConfiguration: any, artifactory: ITestArtifactory): Promise<ITestShape['istore']>;
     afterEach(store: ITestShape['istore'], key: string, cb?: any): Promise<unknown>;
-    check(subject: ITestShape['isubject'], key: string, testResourceConfiguration: any, tester: any, artifactory: ITestArtifactory, tLog: ITLog, utils: puppeteer.Browser | BrowserWindow): Promise<void>;
+    check(subject: ITestShape['isubject'], key: string, testResourceConfiguration: any, tester: any, artifactory: ITestArtifactory, tLog: ITLog, utils: IUtils): Promise<void>;
 }

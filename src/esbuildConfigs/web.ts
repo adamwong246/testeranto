@@ -1,10 +1,13 @@
 import { BuildOptions } from "esbuild";
 import path from "path";
 
-import { IBaseConfig } from "../Types";
+import { IBaseConfig, IJsonConfig } from "../Types";
 
 import baseEsBuildConfig from "./index.js";
+import { jsonc } from "jsonc";
+import fs from "fs"
 
+const jsonConfig = jsonc.parse((await fs.readFileSync("./testeranto.json")).toString()) as IJsonConfig;
 
 export default (
   config: IBaseConfig,
@@ -19,14 +22,14 @@ export default (
     //   js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`
     // },
 
-    outdir: config.outdir + "/web",
+    outdir: jsonConfig.outdir + "/web",
 
     alias: {
       react: path.resolve("./node_modules/react")
     },
 
     external: [
-      "tests.test.js",
+      "testeranto.json",
       "features.test.js",
       // "url", 
       // "react",

@@ -1,7 +1,7 @@
 import puppeteer from "puppeteer-core";
 import { BrowserWindow } from "electron";
 import { ITTestResourceRequest, ITestJob, ITTestResourceConfiguration, ITLog, ILogWriter } from ".";
-import { IBaseTest, ITestSpecification } from "../Types";
+import { IBaseTest, ITestSpecification, IUtils } from "../Types";
 import { IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen, BaseGiven } from "./abstractBase";
 
 export abstract class BaseBuilder<
@@ -148,7 +148,7 @@ export abstract class BaseBuilder<
     logWriter: ILogWriter,
     testResourceRequirement: ITTestResourceRequest,
     testSpecification: any,
-    utils: puppeteer.Browser | BrowserWindow
+    utils: IUtils
   ) {
     this.testResourceRequirement = testResourceRequirement;
     this.suitesOverrides = suitesOverrides;

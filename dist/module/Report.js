@@ -41,7 +41,7 @@ const Report = () => {
     }));
     useEffect(() => {
         const importTests = async () => {
-            const module = await import('tests.test.js');
+            const module = await import('testeranto.json');
             setTests(module.default);
         };
         importTests();

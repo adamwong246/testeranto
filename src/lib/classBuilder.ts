@@ -1,7 +1,7 @@
 import puppeteer from "puppeteer-core";
 import { BrowserWindow } from "electron";
 import { ITestCheckCallback, ILogWriter, ITTestResourceRequirement, ITTestResourceRequest } from ".";
-import { IBaseTest, ITestImplementation } from "../Types";
+import { IBaseTest, ITestImplementation, TBrowser } from "../Types";
 import { IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen, BaseGiven } from "./abstractBase";
 import { BaseBuilder } from "./basebuilder";
 
@@ -112,7 +112,7 @@ export abstract class ClassBuilder<
 
     testResourceRequirement: ITTestResourceRequest,
     logWriter: ILogWriter,
-    utils: puppeteer.Browser | BrowserWindow
+    utils: TBrowser | BrowserWindow
   ) {
     const classySuites = Object.entries(testImplementation.suites).reduce(
       (a, [key], index) => {

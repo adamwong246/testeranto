@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.59.0",
+  "version": "0.60.0",
   "type": "module",
   "types": "./dist/index.d.mts",
   "module": "dist/module/index.js",
@@ -214,7 +214,6 @@
     "ipc": "^0.0.1",
     "jsonc": "^2.0.0",
     "npm-watch": "^0.11.0",
-    "pm2": "^5.2.2",
     "puppeteer": "19.2.2",
     "puppeteer-core": "19.2.2",
     "puppeteer-in-electron": "^3.0.5",
@@ -223,7 +222,6 @@
     "react-test-renderer": "18.2.0",
     "selenium-webdriver": "^4.25.0",
     "url": "^0.11.4",
-    "ws": "^8.16.0",
-    "xvfb-maybe": "^0.2.1"
+    "ws": "^8.16.0"
   }
 }

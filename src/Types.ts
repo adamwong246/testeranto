@@ -56,11 +56,6 @@ export class TBrowser {
   // }
 }
 
-export type IJsonConfig = {
-  outdir: string,
-  tests: ITestTypes[]
-};
-
 export type ITTestShape = {
   suites;
   givens;
@@ -69,16 +64,20 @@ export type ITTestShape = {
   checks;
 };
 
+export type IJsonConfig = {
+  outdir: string,
+  tests: ITestTypes[]
+  features: string;
+};
+
 export type IBaseConfig = {
   externals: string[],
   clearScreen: boolean;
   devMode: boolean;
-  features: string;
   webPlugins: any[];
   nodePlugins: any[];
   minify: boolean;
   outbase: string;
-  outdir: string;
   ports: string[];
   debugger: boolean;
 };

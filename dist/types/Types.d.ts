@@ -11,10 +11,6 @@ export declare class TBrowser {
     constructor(browser: Browser);
     pages(): Promise<Page[]>;
 }
-export declare type IJsonConfig = {
-    outdir: string;
-    tests: ITestTypes[];
-};
 export declare type ITTestShape = {
     suites: any;
     givens: any;
@@ -22,16 +18,19 @@ export declare type ITTestShape = {
     thens: any;
     checks: any;
 };
+export declare type IJsonConfig = {
+    outdir: string;
+    tests: ITestTypes[];
+    features: string;
+};
 export declare type IBaseConfig = {
     externals: string[];
     clearScreen: boolean;
     devMode: boolean;
-    features: string;
     webPlugins: any[];
     nodePlugins: any[];
     minify: boolean;
     outbase: string;
-    outdir: string;
     ports: string[];
     debugger: boolean;
 };
