@@ -80,7 +80,6 @@ class WebTesteranto<
   }
 
   async receiveTestResourceConfig(t: ITestJob, partialTestResource: ITTestResourceConfiguration) {
-    debugger
     const {
       failed,
       artifacts,
