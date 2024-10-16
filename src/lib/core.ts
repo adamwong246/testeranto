@@ -1,5 +1,6 @@
-import { IBaseTest, ITestImplementation, ITestInterface, ITestSpecification, IUtils } from "../Types";
-import puppeteer from "puppeteer-core";
+import type {
+  IBaseTest, ITestImplementation, ITestInterface, ITestSpecification, IUtils
+} from "../Types";
 
 import {
   DefaultTestInterface,
@@ -7,18 +8,18 @@ import {
   ITTestResourceConfiguration,
   ITTestResourceRequest,
   ITestArtifactory,
-  ITestArtificer,
   ITestJob,
   defaultTestResourceRequirement
 } from "./index.js";
-import { BaseSuite, BaseGiven, BaseWhen, BaseThen, BaseCheck } from "./abstractBase";
-import { ClassBuilder } from "./classBuilder";
+import {
+  BaseSuite, BaseGiven, BaseWhen, BaseThen, BaseCheck
+} from "./abstractBase.js";
+import {
+  ClassBuilder
+} from "./classBuilder.js";
+import { IStore } from "../SubPackages/react/jsx";
 
-export default abstract class Testeranto<
-  ITestShape extends IBaseTest,
-> extends ClassBuilder<
-  ITestShape
-> {
+export default abstract class Testeranto<ITestShape extends IBaseTest> extends ClassBuilder<ITestShape> {
   constructor(
     input: ITestShape['iinput'],
     testSpecification: ITestSpecification<ITestShape>,
@@ -26,9 +27,7 @@ export default abstract class Testeranto<
     testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
     logWriter: ILogWriter,
     testInterface: Partial<ITestInterface<ITestShape>>,
-    utils: IUtils
   ) {
-
     const fullTestInterface = DefaultTestInterface(testInterface);
 
     super(
@@ -92,7 +91,11 @@ export default abstract class Testeranto<
               artifactory(`after/${fPath}`, value)))
           );
         }
-        afterAll(store, artifactory) {
+        afterAll(
+          store: IStore,
+          artifactory: ITestArtifactory,
+          utils: IUtils,
+        ) {
           return fullTestInterface.afterAll(store, (fPath: string, value: unknown) =>
           // TODO does not work?
           { artifactory(`afterAll4-${this.name}/${fPath}`, value) },
@@ -167,10 +170,13 @@ export default abstract class Testeranto<
 
       testResourceRequirement,
       logWriter,
-      utils
     );
   }
 
-  abstract receiveTestResourceConfig(t: ITestJob, partialTestResource: ITTestResourceConfiguration);
+  abstract receiveTestResourceConfig(
+    t: ITestJob,
+    partialTestResource: ITTestResourceConfiguration,
+    utils: IUtils
+  );
 
 }

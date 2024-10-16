@@ -6,7 +6,7 @@ import baseEsBuildConfig from "./index.js";
 import { jsonc } from "jsonc";
 import fs from "fs"
 
-const jsonConfig = jsonc.parse((await fs.readFileSync("./testeranto.json")).toString()) as IJsonConfig;
+// const jsonConfig = jsonc.parse((await fs.readFileSync("./testeranto.json")).toString()) as IJsonConfig;
 
 export default (
   config: IBaseConfig,
@@ -15,7 +15,7 @@ export default (
   return {
     ...baseEsBuildConfig(config),
 
-    outdir: jsonConfig.outdir + "/node",
+    outdir: config.outdir + "/node",
 
     inject: [`./node_modules/testeranto/dist/cjs-shim.js`],
 
@@ -28,7 +28,7 @@ export default (
     },
     absWorkingDir: process.cwd(),
     banner: {
-      // js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`
+      js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`
     },
     platform: "node",
 

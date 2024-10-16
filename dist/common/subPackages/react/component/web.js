@@ -4,9 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importDefault(require("react"));
-const Web_1 = __importDefault(require("../../../Web"));
+const Web_js_1 = __importDefault(require("../../../Web.js"));
 exports.default = (testImplementations, testSpecifications, testInput) => {
-    return (0, Web_1.default)(testInput, testSpecifications, testImplementations, {
+    return (0, Web_js_1.default)(testInput, testSpecifications, testImplementations, {
         beforeEach: async () => {
             return new Promise((resolve, rej) => {
                 resolve(react_1.default.createElement(testInput, {}, []));

@@ -2,8 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BaseBuilder = void 0;
 class BaseBuilder {
-    constructor(input, suitesOverrides, givenOverides, whenOverides, thenOverides, checkOverides, logWriter, testResourceRequirement, testSpecification, utils) {
+    constructor(input, suitesOverrides, givenOverides, whenOverides, thenOverides, checkOverides, logWriter, testResourceRequirement, testSpecification) {
         this.input = input;
+        this.artifacts = [];
         this.artifacts = [];
         this.testResourceRequirement = testResourceRequirement;
         this.suitesOverrides = suitesOverrides;
@@ -11,15 +12,15 @@ class BaseBuilder {
         this.whenOverides = whenOverides;
         this.thenOverides = thenOverides;
         this.checkOverides = checkOverides;
-        const suites = testSpecification(this.Suites(), this.Given(), this.When(), this.Then(), this.Check(), logWriter);
-        const suiteRunner = (suite) => async (testResourceConfiguration, tLog) => {
+        this.testSpecification = testSpecification;
+        this.specs = testSpecification(this.Suites(), this.Given(), this.When(), this.Then(), this.Check());
+        const suiteRunner = (suite, utils) => async (testResourceConfiguration, tLog, utils) => {
             return await suite.run(input, testResourceConfiguration, (fPath, value) => logWriter.testArtiFactoryfileWriter(tLog, (p) => {
-                artifacts.push(p);
+                this.artifacts.push(p);
             })(testResourceConfiguration.fs + "/" + fPath, value), tLog, utils);
         };
-        const artifacts = this.artifacts;
-        this.testJobs = suites.map((suite) => {
-            const runner = suiteRunner(suite);
+        this.testJobs = this.specs.map((suite, utils) => {
+            const runner = suiteRunner(suite, utils);
             return {
                 test: suite,
                 testResourceRequirement,
@@ -32,16 +33,17 @@ class BaseBuilder {
                     fs: ".",
                     ports: [],
                     scheduled: false
-                }) {
+                }, y) {
                     console.log(`testResourceConfiguration ${JSON.stringify(testResourceConfiguration, null, 2)}`);
                     await logWriter.mkdirSync(testResourceConfiguration.fs);
-                    const logFilePath = (`${testResourceConfiguration.fs}/log.txt`);
+                    logWriter.writeFileSync(`${testResourceConfiguration.fs}/tests.json`, JSON.stringify(this.toObj(), null, 2));
+                    const logFilePath = `${testResourceConfiguration.fs}/log.txt`;
                     const access = await logWriter.createWriteStream(logFilePath);
                     const tLog = (...l) => {
                         // console.log(...l);
                         access.write(`${l.toString()}\n`);
                     };
-                    const suiteDone = await runner(testResourceConfiguration, tLog);
+                    const suiteDone = await runner(testResourceConfiguration, tLog, y);
                     const resultsFilePath = (`${testResourceConfiguration.fs}/results.json`);
                     logWriter.writeFileSync(resultsFilePath, JSON.stringify(suiteDone.toObj(), null, 2));
                     const logPromise = new Promise((res, rej) => {
@@ -55,12 +57,15 @@ class BaseBuilder {
                     console.log(`exiting gracefully with ${numberOfFailures} failures.`);
                     return {
                         failed: numberOfFailures,
-                        artifacts,
+                        artifacts: this.artifacts || [],
                         logPromise
                     };
                 },
             };
         });
+    }
+    Specs() {
+        return this.specs;
     }
     Suites() {
         return this.suitesOverrides;

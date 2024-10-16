@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = require("react");
 const client_1 = __importDefault(require("react-dom/client"));
-const Web_1 = __importDefault(require("../../../Web"));
+const Web_js_1 = __importDefault(require("../../../Web.js"));
 exports.default = (testInput, testSpecifications, testImplementations) => {
     document.addEventListener("DOMContentLoaded", function () {
         const elem = document.getElementById("root");
@@ -20,7 +20,7 @@ exports.default = (testInput, testSpecifications, testImplementations) => {
                     return this.done(this);
                 }
             }
-            return (0, Web_1.default)(testInput, testSpecifications, testImplementations, {
+            return (0, Web_js_1.default)(testInput, testSpecifications, testImplementations, {
                 beforeAll: async (initialProps, artificer) => {
                     console.log("mark5", initialProps);
                     return await new Promise((resolve, rej) => {

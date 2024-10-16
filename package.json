@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.60.0",
+  "version": "0.61.0",
   "type": "module",
   "types": "./dist/index.d.mts",
   "module": "dist/module/index.js",
@@ -19,8 +19,8 @@
       "require": "./dist/common/SubPackages/react/jsx/index.js"
     },
     "./src/SubPackages/react/jsx/web": {
-      "import": "./dist/module/SubPackages/react/jsx/web.js",
-      "require": "./dist/common/SubPackages/react/jsx/web.js"
+      "import": "./src/SubPackages/react/jsx/web.ts",
+      "require": "./src/SubPackages/react/jsx/web.ts"
     },
     "./src/SubPackages/react/jsx/node": {
       "import": "./dist/module/SubPackages/react/jsx/node.js",
@@ -38,9 +38,13 @@
       "import": "./dist/module/SubPackages/react/component/node.js",
       "require": "./dist/common/SubPackages/react/component/node.js"
     },
+    "./src/SubPackages/react-test-renderer/component/index.ts": {
+      "import": "./src/SubPackages/react-test-renderer/component/index.ts",
+      "require": "./src/SubPackages/react-test-renderer/component/index.ts"
+    },
     "./src/SubPackages/react-test-renderer/component/index": {
-      "import": "./dist/module/SubPackages/react-test-renderer/component/index.ts",
-      "require": "./dist/common/SubPackages/react-test-renderer/component/index.ts"
+      "import": "./src/SubPackages/react-test-renderer/component/index.ts",
+      "require": "./src/SubPackages/react-test-renderer/component/index.ts"
     },
     "./src/SubPackages/react-test-renderer/component/web": {
       "import": "./dist/module/SubPackages/react-test-renderer/component/web.js",
@@ -50,15 +54,15 @@
       "import": "./dist/module/SubPackages/react-test-renderer/component/node.js",
       "require": "./dist/common/SubPackages/react-test-renderer/component/node.js"
     },
-    "./src/SubPackages/react-test-renderer/jsx/index": {
-      "import": "./dist/module/SubPackages/react-test-renderer/jsx/index.js",
+    "./src/SubPackages/react-test-renderer/jsx/index.js": {
+      "import": "./dist/module/src/SubPackages/react-test-renderer/jsx/index.js",
       "require": "./dist/common/SubPackages/react-test-renderer/jsx/index.js"
     },
-    "./src/SubPackages/react-test-renderer/jsx/web": {
+    "./src/SubPackages/react-test-renderer/jsx/web.js": {
       "import": "./dist/module/SubPackages/react-test-renderer/jsx/web.js",
       "require": "./dist/common/SubPackages/react-test-renderer/jsx/web.js"
     },
-    "./src/SubPackages/react-test-renderer/jsx/node": {
+    "./src/SubPackages/react-test-renderer/jsx/node.js": {
       "import": "./dist/module/SubPackages/react-test-renderer/jsx/node.js",
       "require": "./dist/common/SubPackages/react-test-renderer/jsx/node.js"
     },
@@ -138,13 +142,21 @@
       "import": "./dist/module/preload.js",
       "require": "./dist/common/preload.js"
     },
-    "./dist/module/core": {
-      "import": "./dist/module/core.js",
-      "require": "./dist/common/core.js"
+    "./dist/module/lib/core": {
+      "import": "./dist/module/lib/core.js",
+      "require": "./dist/common/lib/core.js"
     },
-    "./dist/module/base": {
-      "import": "./dist/module/base.js",
-      "require": "./dist/common/base.js"
+    "./dist/module/lib/abstractBase": {
+      "import": "./dist/module/lib/abstractBase.js",
+      "require": "./dist/common/lib/abstractBase.js"
+    },
+    "./dist/module/lib/baseBuilder": {
+      "import": "./dist/module/lib/baseBuilder.js",
+      "require": "./dist/common/lib/baseBuilder.js"
+    },
+    "./dist/module/lib/classBuilder": {
+      "import": "./dist/module/lib/classBuilder.js",
+      "require": "./dist/common/lib/classBuilder.js"
     },
     "./dist/module/NodeWriter": {
       "import": "./dist/module/NodeWriter.js",
@@ -163,12 +175,13 @@
   ],
   "scripts": {
     "doit": "rm -rf node_modules && yarn install && yarn build",
-    "build": "sh prebuild.sh; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; sh postBuild.sh; cp -r src/chromeExtension dist",
+    "build": "sh prebuild.sh; cp ./src/cjs-shim.js ./dist/cjs-shim.js; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; yarn esbuild src/Report.tsx --outfile=dist/prebuild/Report.js --bundle --external:testeranto.json --external:features.test.js --external:tests.json; sh postBuild.sh; ",
     "commit": "yarn build; git add --all && git commit -m 'stash'",
-    "dev": "tsc -p tsconfig.module.json --watch & tsc -p tsconfig.common.json --watch & tsc -p tsconfig.types.json --watch; cp -r src/chromeExtension dist",
+    "dev": "cp ./src/cjs-shim.js ./dist/cjs-shim.js && tsc -p tsconfig.module.json --watch & tsc -p tsconfig.common.json --watch & tsc -p tsconfig.types.json --watch & yarn esbuild src/Report.tsx --outfile=dist/prebuild/Report.js --bundle --external:testeranto.json --external:features.test.js --external:tests.json --watch",
     "build-module": "tsc -p tsconfig.module.json",
     "build-common": "tsc -p tsconfig.common.json",
-    "build-types": "tsc -p tsconfig.types.json"
+    "build-types": "tsc -p tsconfig.types.json",
+    "build-electron": "ts-node-esm electronBuild.ts"
   },
   "peerDependencies": {
     "@types/react": "^18.2.66",

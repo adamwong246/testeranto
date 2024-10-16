@@ -1,7 +1,6 @@
 import { ipcRenderer } from "electron";
 
 console.log("hello preloader");
-
 import { NodeWriter } from "./NodeWriter";
 
 (window as any).NodeWriter = NodeWriter;

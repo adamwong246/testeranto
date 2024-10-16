@@ -1,16 +1,16 @@
 import { IBaseTest } from "../../../Types";
-import Testeranto from "../../../Web";
+import Testeranto from "../../../Web.js";
 
-import { IImpl, ISpec, IInput, testInterface } from "./index";
+import { IImpl, ISpec, IInput, testInterface } from "./index.js";
 
 export default <
   ITestShape extends IBaseTest,
   IProps,
   IState
 >(
-  testImplementations: IImpl<ITestShape, IReactProps, IReactState>,
+  testImplementations: IImpl<ITestShape, object>,
   testSpecifications: ISpec<ITestShape>,
-  testInput: IInput<IReactProps, IReactState>,
+  testInput: IInput<any, any>,
 ) =>
   Testeranto<
     ITestShape

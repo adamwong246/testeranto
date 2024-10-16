@@ -7,7 +7,7 @@ import baseEsBuildConfig from "./index.js";
 import { jsonc } from "jsonc";
 import fs from "fs"
 
-const jsonConfig = jsonc.parse((await fs.readFileSync("./testeranto.json")).toString()) as IJsonConfig;
+// const jsonConfig = jsonc.parse((await fs.readFileSync("./testeranto.json")).toString()) as IJsonConfig;
 
 export default (
   config: IBaseConfig,
@@ -22,7 +22,7 @@ export default (
     //   js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`
     // },
 
-    outdir: jsonConfig.outdir + "/web",
+    outdir: config.outdir + "/web",
 
     alias: {
       react: path.resolve("./node_modules/react")
@@ -30,14 +30,15 @@ export default (
 
     external: [
       "testeranto.json",
-      "features.test.js",
+      "features.test.ts",
       // "url", 
-      // "react",
+
+      "react",
       "electron",
+
       "path",
       "fs",
       "stream",
-
       "http",
       "constants",
       "net",

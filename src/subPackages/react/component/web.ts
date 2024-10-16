@@ -1,6 +1,6 @@
 import React from "react";
 
-import Testeranto from "../../../Web";
+import Testeranto from "../../../Web.js";
 
 import { IBaseTest, ITestImplementation, ITestSpecification } from "../../../Types";
 

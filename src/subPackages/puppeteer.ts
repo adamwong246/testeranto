@@ -1,8 +1,6 @@
 import React from "react";
 
-// const { BrowserWindow, app } = require("electron");
-
-import Testeranto from "../Node";
+import Testeranto from "../Node.js";
 
 import { IBaseTest, IPartialInterface, ITestImplementation, ITestSpecification } from "../Types";
 

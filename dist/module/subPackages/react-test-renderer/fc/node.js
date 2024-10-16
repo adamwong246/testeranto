@@ -1,6 +1,6 @@
-import test from "../../../Node";
 import React from "react";
 import renderer, { act } from "react-test-renderer";
+import test from "../../../Node.js";
 export default (testImplementations, testSpecifications, testInput) => test(testInput, testSpecifications, testImplementations, {
     beforeEach: function (CComponent, props) {
         return new Promise((res, rej) => {

@@ -1,7 +1,8 @@
 {
   "ts-node": {
     "compilerOptions": {
-      "module": "esnext"
+      "module": "esnext",
+      "allowSyntheticDefaultImports": true,
     }
   },
   "declaration": true,
@@ -13,12 +14,16 @@
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": false,
     "module": "esnext",
-    "target": "es2017",
+    "target": "ES2022",
     "allowJs": true,
     "jsx": "react",
     "resolveJsonModule": true,
     "strictNullChecks": true,
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "skipLibCheck": true,
     "strict": false,
     "forceConsistentCasingInFileNames": true,
@@ -30,6 +35,14 @@
     "outDir": "dist",
     "alwaysStrict": true
   },
-  "include": ["src/**/*.*ts", "src/**/*.*tsx", "index.d.ts"],
-  "exclude": ["node_modules", "trash"]
+  "include": [
+    "src/**/*.*ts",
+    "src/**/*.*tsx",
+    "index.d.ts",
+    "electronBuild.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "trash"
+  ]
 }

@@ -1,3 +1,3 @@
-import Testeranto from "../../../Node";
-import { testInterface } from "./index";
+import Testeranto from "../../../Node.js";
+import { testInterface } from "./index.js";
 export default (testImplementations, testSpecifications, testInput) => Testeranto(testInput, testSpecifications, testImplementations, testInterface);

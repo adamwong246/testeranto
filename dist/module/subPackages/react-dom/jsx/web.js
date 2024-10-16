@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, } from "react";
 import { createPortal } from 'react-dom';
-import Testeranto from "../../../Web";
+import Testeranto from "../../../Web.js";
 export default (testImplementations, testSpecifications, testInput) => {
     document.addEventListener("DOMContentLoaded", function () {
         const rootElement = document.getElementById("root");

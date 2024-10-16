@@ -1,8 +1,8 @@
 import { DefaultTestInterface, defaultTestResourceRequirement } from "./index.js";
-import { BaseSuite, BaseGiven, BaseWhen, BaseThen, BaseCheck } from "./abstractBase";
-import { ClassBuilder } from "./classBuilder";
+import { BaseSuite, BaseGiven, BaseWhen, BaseThen, BaseCheck } from "./abstractBase.js";
+import { ClassBuilder } from "./classBuilder.js";
 export default class Testeranto extends ClassBuilder {
-    constructor(input, testSpecification, testImplementation, testResourceRequirement = defaultTestResourceRequirement, logWriter, testInterface, utils) {
+    constructor(input, testSpecification, testImplementation, testResourceRequirement = defaultTestResourceRequirement, logWriter, testInterface) {
         const fullTestInterface = DefaultTestInterface(testInterface);
         super(testImplementation, testSpecification, input, class extends BaseSuite {
             assertThat(t) {
@@ -20,7 +20,7 @@ export default class Testeranto extends ClassBuilder {
             afterEach(store, key, artifactory) {
                 return new Promise((res) => res(fullTestInterface.afterEach(store, key, (fPath, value) => artifactory(`after/${fPath}`, value))));
             }
-            afterAll(store, artifactory) {
+            afterAll(store, artifactory, utils) {
                 return fullTestInterface.afterAll(store, (fPath, value) => { artifactory(`afterAll4-${this.name}/${fPath}`, value); }, utils);
             }
         }, class When extends BaseWhen {
@@ -44,6 +44,6 @@ export default class Testeranto extends ClassBuilder {
                 // TODO does not work?
                 artifactory(`afterEach2-${this.name}/${fPath}`, value))));
             }
-        }, testResourceRequirement, logWriter, utils);
+        }, testResourceRequirement, logWriter);
     }
 }

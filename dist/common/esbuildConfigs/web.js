@@ -5,22 +5,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = __importDefault(require("path"));
 const index_js_1 = __importDefault(require("./index.js"));
-const jsonc_1 = require("jsonc");
-const fs_1 = __importDefault(require("fs"));
-const jsonConfig = jsonc_1.jsonc.parse((await fs_1.default.readFileSync("./testeranto.json")).toString());
+// const jsonConfig = jsonc.parse((await fs.readFileSync("./testeranto.json")).toString()) as IJsonConfig;
 exports.default = (config, entryPoints) => {
     return Object.assign(Object.assign({}, (0, index_js_1.default)(config)), { 
         // inject: ['./node_modules/testeranto/dist/cjs-shim.js'],
         // banner: {
         //   js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`
         // },
-        outdir: jsonConfig.outdir + "/web", alias: {
+        outdir: config.outdir + "/web", alias: {
             react: path_1.default.resolve("./node_modules/react")
         }, external: [
             "testeranto.json",
-            "features.test.js",
+            "features.test.ts",
             // "url", 
-            // "react",
+            "react",
             "electron",
             "path",
             "fs",

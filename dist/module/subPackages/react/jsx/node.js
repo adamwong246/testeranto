@@ -1,5 +1,5 @@
-import Testeranto from "../../../Node";
-import { testInterface } from "./index";
-export default (testImplementations, testSpecifications, testInput, testInterface2 = testInterface) => {
-    return Testeranto(testInput, testSpecifications, testImplementations, testInterface2(testInput));
+import Testeranto from "../../../Node.js";
+import { testInterface as baseInterface } from "./index.js";
+export default (testImplementations, testSpecifications, testInput, testInterface) => {
+    return Testeranto(testInput, testSpecifications, testImplementations, Object.assign(Object.assign({}, baseInterface), testInterface));
 };

@@ -1,4 +1,4 @@
-import test from "../../../Web";
+import test from "../../../Web.js";
 
 import React from "react";
 import renderer, { act } from "react-test-renderer";

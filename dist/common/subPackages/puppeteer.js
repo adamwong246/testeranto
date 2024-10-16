@@ -4,10 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importDefault(require("react"));
-// const { BrowserWindow, app } = require("electron");
-const Node_1 = __importDefault(require("../Node"));
+const Node_js_1 = __importDefault(require("../Node.js"));
 exports.default = (testInput, testSpecifications, testImplementations, testInterface) => {
-    return (0, Node_1.default)(testInput, testSpecifications, testImplementations, Object.assign({ beforeAll(x) {
+    return (0, Node_js_1.default)(testInput, testSpecifications, testImplementations, Object.assign({ beforeAll(x) {
             process.parentPort.postMessage(`/dist/web/src/ClassicalComponent/test.html`);
             return x;
         }, beforeEach: async () => {

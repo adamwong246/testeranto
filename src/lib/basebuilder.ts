@@ -1,9 +1,31 @@
-import puppeteer from "puppeteer-core";
-import { BrowserWindow } from "electron";
-import { ITTestResourceRequest, ITestJob, ITTestResourceConfiguration, ITLog, ILogWriter } from ".";
-import { IBaseTest, ITestSpecification, IUtils } from "../Types";
-import { IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen, BaseGiven } from "./abstractBase";
 
+import {
+  IBaseTest,
+  ICheckKlasser,
+  IGivenKlasser,
+  ISuiteKlasser,
+  ITestSpecification,
+  IThenKlasser,
+  IUtils,
+  IWhenKlasser
+} from "../Types";
+
+import {
+
+  BaseCheck,
+  BaseSuite,
+  BaseWhen,
+  BaseThen,
+  BaseGiven
+} from "./abstractBase.js";
+
+import {
+  ITTestResourceRequest,
+  ITestJob,
+  ITLog,
+  ILogWriter,
+  ITTestResourceConfiguration,
+} from ".";
 export abstract class BaseBuilder<
   ITestShape extends IBaseTest,
   SuiteExtensions,
@@ -11,8 +33,9 @@ export abstract class BaseBuilder<
   WhenExtensions,
   ThenExtensions,
   CheckExtensions,
-
 > {
+
+  specs: any;
 
   assertThis: (t: any) => {
 
@@ -21,183 +44,75 @@ export abstract class BaseBuilder<
   testResourceRequirement: ITTestResourceRequest;
   artifacts: Promise<unknown>[] = [];
   testJobs: ITestJob[];
-
-  suitesOverrides: Record<
-    keyof SuiteExtensions,
-    (
-      name: string,
-      index: number,
-      givens: IGivens<
-        ITestShape
-      >,
-      checks: BaseCheck<
-        ITestShape
-      >[]
-    ) => BaseSuite<
-      ITestShape
-    >
-  >;
-
-  givenOverides: Record<
-    keyof GivenExtensions,
-    (
-      name: string,
-      features: string[],
-      whens: BaseWhen<
-        ITestShape
-      >[],
-      thens: BaseThen<
-        ITestShape
-      >[],
-      gcb,
-    ) => BaseGiven<
-      ITestShape
-    >
-  >;
-
-  whenOverides: Record<
-    keyof WhenExtensions,
-    (any) => BaseWhen<
-      ITestShape
-    >
-  >;
-
-  thenOverides: Record<
-    keyof ThenExtensions,
-    (
-      selection: ITestShape['iselection'],
-      expectation: any
-    ) => BaseThen<
-      ITestShape
-    >
-  >;
-
-  checkOverides: Record<
-    keyof CheckExtensions,
-    (
-      feature: string,
-      callback: (whens, thens) => any,
-      ...xtraArgs
-    ) => BaseCheck<
-      ITestShape
-    >
-  >;
+  testSpecification: ITestSpecification<ITestShape>;
+  suitesOverrides: Record<keyof SuiteExtensions, ISuiteKlasser<ITestShape>>;
+  givenOverides: Record<keyof GivenExtensions, IGivenKlasser<ITestShape>>;
+  whenOverides: Record<keyof WhenExtensions, IWhenKlasser<ITestShape>>;
+  thenOverides: Record<keyof ThenExtensions, IThenKlasser<ITestShape>>;
+  checkOverides: Record<keyof CheckExtensions, ICheckKlasser<ITestShape>>;
 
   constructor(
     public readonly input: ITestShape['iinput'],
-    suitesOverrides: Record<
-      keyof SuiteExtensions,
-      (
-        name: string,
-        index: number,
-        givens: IGivens<
-          ITestShape
-        >,
-        checks: BaseCheck<
-          ITestShape
-        >[]
-      ) => BaseSuite<
-        ITestShape
-      >
-    >,
-
-    givenOverides: Record<
-      keyof GivenExtensions,
-      (
-        name: string,
-        features: string[],
-        whens: BaseWhen<
-          ITestShape
-        >[],
-        thens: BaseThen<
-          ITestShape
-        >[],
-        gcb,
-      ) => BaseGiven<
-        ITestShape
-      >
-    >,
-
-    whenOverides: Record<
-      keyof WhenExtensions,
-      (c: any) => BaseWhen<
-        ITestShape
-      >
-    >,
-
-    thenOverides: Record<
-      keyof ThenExtensions,
-      (
-        selection: ITestShape['iselection'],
-        expectation: any
-      ) => BaseThen<
-        ITestShape
-      >
-    >,
-
-    checkOverides: Record<
-      keyof CheckExtensions,
-      (
-        feature: string,
-        callback: (whens, thens) => any,
-        ...xtraArgs
-      ) => BaseCheck<
-        ITestShape
-      >
-    >,
+    suitesOverrides: Record<keyof SuiteExtensions, ISuiteKlasser<ITestShape>>,
+    givenOverides: Record<keyof GivenExtensions, IGivenKlasser<ITestShape>>,
+    whenOverides: Record<keyof WhenExtensions, IWhenKlasser<ITestShape>>,
+    thenOverides: Record<keyof ThenExtensions, IThenKlasser<ITestShape>>,
+    checkOverides: Record<keyof CheckExtensions, ICheckKlasser<ITestShape>>,
     logWriter: ILogWriter,
     testResourceRequirement: ITTestResourceRequest,
     testSpecification: any,
-    utils: IUtils
   ) {
+    this.artifacts = [];
     this.testResourceRequirement = testResourceRequirement;
     this.suitesOverrides = suitesOverrides;
     this.givenOverides = givenOverides;
     this.whenOverides = whenOverides;
     this.thenOverides = thenOverides;
     this.checkOverides = checkOverides;
+    this.testSpecification = testSpecification;
 
-    const suites = testSpecification(
+    this.specs = testSpecification(
       this.Suites(),
       this.Given(),
       this.When(),
       this.Then(),
       this.Check(),
-      logWriter
     );
 
-    const suiteRunner =
-      (suite: BaseSuite<
+    const suiteRunner = (
+      suite: BaseSuite<ITestShape>,
+      utils: IUtils
+    ) =>
+      async (
+        testResourceConfiguration: ITTestResourceConfiguration,
+        tLog: ITLog,
+        utils: IUtils
+      ): Promise<BaseSuite<
         ITestShape
-      >) =>
-        async (
-          testResourceConfiguration: ITTestResourceConfiguration,
-          tLog: ITLog
-        ): Promise<BaseSuite<
-          ITestShape
-        >> => {
-          return await suite.run(
-            input,
-            testResourceConfiguration,
-            (
-              fPath: string,
-              value: unknown
-            ) =>
-              logWriter.testArtiFactoryfileWriter(tLog, (p: Promise<void>) => {
-                artifacts.push(p);
-              })(
-                testResourceConfiguration.fs + "/" + fPath,
-                value
-              ),
-            tLog,
-            utils
-          );
-        };
+      >> => {
+        return await suite.run(
+          input,
+          testResourceConfiguration,
+          (
+            fPath: string,
+            value: unknown
+          ) =>
+            logWriter.testArtiFactoryfileWriter(tLog, (p: Promise<void>) => {
+              this.artifacts.push(p);
+            })(
+              testResourceConfiguration.fs + "/" + fPath,
+              value
+            ),
+          tLog,
+          utils
+        );
+      };
 
-    const artifacts = this.artifacts;
-
-    this.testJobs = suites.map((suite) => {
-      const runner = suiteRunner(suite);
+    this.testJobs = this.specs.map((
+      suite: BaseSuite<ITestShape>,
+      utils: IUtils
+    ) => {
+      const runner = suiteRunner(suite, utils);
 
       return {
         test: suite,
@@ -215,7 +130,8 @@ export abstract class BaseBuilder<
             fs: ".",
             ports: [],
             scheduled: false
-          }
+          },
+          y: IUtils
         ) {
           console.log(
             `testResourceConfiguration ${JSON.stringify(
@@ -224,12 +140,13 @@ export abstract class BaseBuilder<
               2
             )}`
           );
-
           await logWriter.mkdirSync(testResourceConfiguration.fs);
-
-          const logFilePath = (
-            `${testResourceConfiguration.fs}/log.txt`
+          logWriter.writeFileSync(
+            `${testResourceConfiguration.fs}/tests.json`,
+            JSON.stringify(this.toObj(), null, 2)
           );
+
+          const logFilePath = `${testResourceConfiguration.fs}/log.txt`;
 
           const access = await logWriter.createWriteStream(logFilePath);
 
@@ -239,7 +156,7 @@ export abstract class BaseBuilder<
           };
           const suiteDone: BaseSuite<
             ITestShape
-          > = await runner(testResourceConfiguration, tLog);
+          > = await runner(testResourceConfiguration, tLog, y);
           const resultsFilePath = (
             `${testResourceConfiguration.fs}/results.json`
           );
@@ -263,7 +180,7 @@ export abstract class BaseBuilder<
           console.log(`exiting gracefully with ${numberOfFailures} failures.`);
           return {
             failed: numberOfFailures,
-            artifacts,
+            artifacts: this.artifacts || [],
             logPromise
           };
         },
@@ -271,6 +188,9 @@ export abstract class BaseBuilder<
     });
   }
 
+  Specs() {
+    return this.specs;
+  }
   Suites() {
     return this.suitesOverrides;
   }
@@ -322,7 +242,8 @@ export abstract class BaseBuilder<
       feature: string,
       callback: (whens, thens) => any,
       whens,
-      thens
+      thens,
+      x
     ) => BaseCheck<
       ITestShape
     >

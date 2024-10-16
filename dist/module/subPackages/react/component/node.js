@@ -1,5 +1,5 @@
 import React from "react";
-import Testeranto from "../../../Node";
+import Testeranto from "../../../Node.js";
 export default (testImplementations, testSpecifications, testInput) => {
     return Testeranto(testInput, testSpecifications, testImplementations, {
         beforeEach: async () => {

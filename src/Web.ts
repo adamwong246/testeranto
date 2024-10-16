@@ -1,28 +1,18 @@
-import {
+import type {
   IBaseTest,
-  IEntry,
   ITestImplementation,
   ITestInterface,
   ITestSpecification
 } from "./Types";
-import Testeranto from "./lib/core";
+import Testeranto from "./lib/core.js";
 import {
-  DefaultTestInterface,
   ITTestResourceConfiguration,
   ITTestResourceRequest,
-  ITTestResourceRequirement,
   ITestJob,
   defaultTestResourceRequirement
-} from "./lib";
-import { NodeWriter } from "./NodeWriter";
-// import { NodeWriterElectron } from "./nodeWriterElectron";
+} from "./lib/index.js";
 
 const remote = require('@electron/remote')
-// import electron from '@electron/remote';
-// const electron = require('electron')
-// const remote = electron.remote;
-// const path = require('path')
-const BrowserWindow = remote.BrowserWindow
 
 class WebTesteranto<
   TestShape extends IBaseTest,
@@ -43,34 +33,62 @@ class WebTesteranto<
       testResourceRequirement,
       (window as any).NodeWriter,
       testInterface,
-      BrowserWindow
+      // BrowserWindow
     );
 
-    const t: ITestJob = this.testJobs[0];
-    const testResourceArg = decodeURIComponent(
-      new URLSearchParams(location.search).get('requesting') || ''
-    );
+    if (process.argv[2]) {
+      const testResourceArg = decodeURIComponent(
+        new URLSearchParams(location.search).get('requesting') || ''
+      );
 
-    try {
-      const partialTestResource = JSON.parse(
-        testResourceArg
-      ) as ITTestResourceConfiguration;
+      try {
+        const partialTestResource = JSON.parse(
+          testResourceArg
+        ) as ITTestResourceConfiguration;
 
-      console.log("initial test resource", partialTestResource);
-      this.receiveTestResourceConfig(t, partialTestResource);
+        this.receiveTestResourceConfig(this.testJobs[0], partialTestResource);
 
-    } catch (e) {
-      console.error(e);
-      // process.exit(-1);
+      } catch (e) {
+        console.error(e);
+        // process.exit(-1);
+      }
+    } else {
+      // no-op
     }
+
+    const requesting = new URLSearchParams(location.search).get('requesting');
+    if (requesting) {
+      const testResourceArg = decodeURIComponent(requesting);
+
+      try {
+        const partialTestResource = JSON.parse(
+          testResourceArg
+        ) as ITTestResourceConfiguration;
+
+        console.log("initial test resource", partialTestResource);
+        this.receiveTestResourceConfig(this.testJobs[0], partialTestResource);
+
+      } catch (e) {
+        console.error(e);
+        // process.exit(-1);
+      }
+    }
+    // const t: ITestJob = this.testJobs[0];
+
+
+
   }
 
   async receiveTestResourceConfig(t: ITestJob, partialTestResource: ITTestResourceConfiguration) {
+    debugger
     const {
       failed,
       artifacts,
       logPromise
-    } = await t.receiveTestResourceConfig(partialTestResource);
+    } = await t.receiveTestResourceConfig(
+      partialTestResource,
+      remote
+    );
 
     Promise.all([...artifacts, logPromise]).then(async () => {
       var window = remote.getCurrentWindow();

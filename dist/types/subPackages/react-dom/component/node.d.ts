@@ -8,5 +8,5 @@ export declare type ISelection = ReactNode;
 export declare type IStore = ReactNode;
 export declare type ISubject = ReactNode;
 export { renderToStaticMarkup, renderToStaticNodeStream, Stream };
-declare const _default: <ITestShape extends IBaseTest>(testImplementations: ITestImplementation<ITestShape, object>, testSpecifications: ITestSpecification<ITestShape>, testInput: IInput) => Promise<import("../../../lib/core").default<ITestShape>>;
+declare const _default: <ITestShape extends IBaseTest>(testImplementations: ITestImplementation<ITestShape, object>, testSpecifications: ITestSpecification<ITestShape>, testInput: IInput) => Promise<import("../../../lib/core.js").default<ITestShape>>;
 export default _default;

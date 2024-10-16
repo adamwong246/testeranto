@@ -1,7 +1,7 @@
 import { createElement } from "react";
 import { renderToStaticMarkup, renderToStaticNodeStream } from "react-dom/server";
 import Stream from 'stream';
-import Testeranto from "../../../Node";
+import Testeranto from "../../../Node.js";
 export { renderToStaticMarkup, renderToStaticNodeStream, Stream };
 export default (testImplementations, testSpecifications, testInput) => {
     return Testeranto(testInput, testSpecifications, testImplementations, {

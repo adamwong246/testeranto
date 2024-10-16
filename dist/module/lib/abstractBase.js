@@ -43,7 +43,7 @@ export class BaseSuite {
         // @TODO fix me
         for (const k of Object.keys(this.givens)) {
             const giver = this.givens[k];
-            giver.afterAll(this.store, artifactory);
+            giver.afterAll(this.store, artifactory, utils);
         }
         ////////////////
         return this;
@@ -61,7 +61,7 @@ export class BaseGiven {
     beforeAll(store, artifactory) {
         return store;
     }
-    afterAll(store, artifactory) {
+    afterAll(store, artifactory, utils) {
         return store;
     }
     toObj() {

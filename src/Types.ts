@@ -1,4 +1,6 @@
+import { BrowserWindow } from "electron";
 import { Page, Browser, ScreenshotOptions } from "puppeteer-core";
+
 import {
   ITTestResourceConfiguration,
   ITTestResourceRequest,
@@ -7,11 +9,48 @@ import {
 } from "./lib/index.js";
 import { IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen, BaseGiven } from "./lib/abstractBase.js";
 import Testeranto from "./lib/core.js";
-import { BrowserWindow } from "electron";
+
+export type IBuiltConfig = {
+  buildDir: string,
+  modules: {
+    module: unknown,
+    test: string,
+    runtime: IRunTime
+  }[]
+};
 
 export type INodeUtils = TBrowser;
 export type IWebUtils = BrowserWindow;
 export type IUtils = INodeUtils | IWebUtils;
+
+export type ISuiteKlasser<ITestShape extends IBaseTest> = (
+  name: string,
+  index: number,
+  givens: IGivens<ITestShape>,
+  checks: BaseCheck<ITestShape>[]
+) => BaseSuite<ITestShape>;
+
+export type IGivenKlasser<ITestShape extends IBaseTest> = (
+  name,
+  features,
+  whens,
+  thens,
+  givenCB
+) => BaseGiven<ITestShape>;
+
+export type IWhenKlasser<ITestShape extends IBaseTest> = (s, o) =>
+  BaseWhen<ITestShape>
+
+export type IThenKlasser<ITestShape extends IBaseTest> = (s, o) =>
+  BaseThen<ITestShape>;
+
+export type ICheckKlasser<ITestShape extends IBaseTest> = (
+  n,
+  f,
+  cb,
+  w,
+  t
+) => BaseCheck<ITestShape>;
 
 // export class TPage extends Page {
 //   // screenshot(options?: puppeteer.ScreenshotOptions) {
@@ -71,6 +110,9 @@ export type IJsonConfig = {
 };
 
 export type IBaseConfig = {
+  outdir: string,
+  tests: ITestTypes[]
+  features: string
   externals: string[],
   clearScreen: boolean;
   devMode: boolean;

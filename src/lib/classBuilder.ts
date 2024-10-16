@@ -1,9 +1,23 @@
-import puppeteer from "puppeteer-core";
-import { BrowserWindow } from "electron";
-import { ITestCheckCallback, ILogWriter, ITTestResourceRequirement, ITTestResourceRequest } from ".";
-import { IBaseTest, ITestImplementation, TBrowser } from "../Types";
-import { IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen, BaseGiven } from "./abstractBase";
-import { BaseBuilder } from "./basebuilder";
+import type {
+  IBaseTest,
+  ICheckKlasser,
+  IGivenKlasser,
+  ISuiteKlasser,
+  ITestImplementation,
+  ITestSpecification,
+  IThenKlasser,
+  IWhenKlasser,
+} from "../Types";
+
+
+import {
+  BaseBuilder
+} from "./basebuilder.js";
+
+import {
+  ILogWriter,
+  ITTestResourceRequest
+} from ".";
 
 export abstract class ClassBuilder<
   ITestShape extends IBaseTest
@@ -14,105 +28,19 @@ export abstract class ClassBuilder<
   any,
   any,
   any
-
 > {
 
   constructor(
-    testImplementation: ITestImplementation<
-      ITestShape,
-      any
-    >,
-
-    testSpecification: (
-      Suite: {
-        [K in keyof ITestShape["suites"]]: (
-          feature: string,
-          givens: IGivens<
-            ITestShape
-          >,
-          checks: BaseCheck<
-            ITestShape
-          >[]
-        ) => BaseSuite<
-          ITestShape
-        >;
-      },
-      Given: {
-        [K in keyof ITestShape["givens"]]: (
-          features: string[],
-          whens: BaseWhen<
-            ITestShape
-          >[],
-          thens: BaseThen<
-            ITestShape
-          >[],
-          ...a: ITestShape["givens"][K]
-        ) => BaseGiven<
-          ITestShape
-        >;
-      },
-      When: {
-        [K in keyof ITestShape["whens"]]: (
-          ...a: ITestShape["whens"][K]
-        ) => BaseWhen<
-          ITestShape
-        >;
-      },
-      Then: {
-        [K in keyof ITestShape["thens"]]: (
-          ...a: ITestShape["thens"][K]
-        ) => BaseThen<
-          ITestShape
-        >;
-      },
-      Check: ITestCheckCallback<ITestShape>,
-      logWriter: ILogWriter
-    ) => BaseSuite<
-      ITestShape
-    >[],
-
+    testImplementation: ITestImplementation<ITestShape, any>,
+    testSpecification: ITestSpecification<ITestShape>,
     input: ITestShape['iinput'],
-
-    suiteKlasser: (
-      name: string,
-      index: number,
-      givens: IGivens<
-        ITestShape
-      >,
-      checks: BaseCheck<
-        ITestShape
-      >[]
-    ) => BaseSuite<
-      ITestShape
-    >,
-    givenKlasser: (
-      name,
-      features,
-      whens,
-      thens,
-      givenCB
-    ) => BaseGiven<
-      ITestShape
-    >,
-    whenKlasser: (s, o) => BaseWhen<
-      ITestShape
-    >,
-    thenKlasser: (s, o) => BaseThen<
-      ITestShape
-    >,
-    checkKlasser: (
-      n,
-      f,
-      cb,
-      w,
-      t
-    ) => BaseCheck<
-      ITestShape
-    >,
-
+    suiteKlasser: ISuiteKlasser<ITestShape>,
+    givenKlasser: IGivenKlasser<ITestShape>,
+    whenKlasser: IWhenKlasser<ITestShape>,
+    thenKlasser: IThenKlasser<ITestShape>,
+    checkKlasser: ICheckKlasser<ITestShape>,
     testResourceRequirement: ITTestResourceRequest,
-    logWriter: ILogWriter,
-    utils: TBrowser | BrowserWindow
+    logWriter: ILogWriter
   ) {
     const classySuites = Object.entries(testImplementation.suites).reduce(
       (a, [key], index) => {
@@ -192,6 +120,7 @@ export abstract class ClassBuilder<
       },
       {}
     );
+
     super(
       input,
       classySuites,
@@ -201,8 +130,7 @@ export abstract class ClassBuilder<
       classyChecks,
       logWriter,
       testResourceRequirement,
-      testSpecification,
-      utils
+      testSpecification
     );
   }
 

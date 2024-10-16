@@ -1,6 +1,5 @@
 import React from "react";
-// const { BrowserWindow, app } = require("electron");
-import Testeranto from "../Node";
+import Testeranto from "../Node.js";
 export default (testInput, testSpecifications, testImplementations, testInterface) => {
     return Testeranto(testInput, testSpecifications, testImplementations, Object.assign({ beforeAll(x) {
             process.parentPort.postMessage(`/dist/web/src/ClassicalComponent/test.html`);

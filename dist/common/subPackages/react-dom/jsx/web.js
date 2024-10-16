@@ -28,7 +28,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importStar(require("react"));
 const react_dom_1 = require("react-dom");
-const Web_1 = __importDefault(require("../../../Web"));
+const Web_js_1 = __importDefault(require("../../../Web.js"));
 exports.default = (testImplementations, testSpecifications, testInput) => {
     document.addEventListener("DOMContentLoaded", function () {
         const rootElement = document.getElementById("root");
@@ -41,7 +41,7 @@ exports.default = (testImplementations, testSpecifications, testInput) => {
                 }, []);
                 return react_1.default.createElement('div', { ref: myContainer }, innerComp());
             };
-            (0, Web_1.default)(testInput, testSpecifications, testImplementations, {
+            (0, Web_js_1.default)(testInput, testSpecifications, testImplementations, {
                 beforeAll: async (input, artificer) => {
                     return await new Promise((resolve, rej) => {
                         resolve(rootElement);

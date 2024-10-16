@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import { IBaseTest, ITestImplementation, ITestSpecification } from "../../../Types";
+import type { IBaseTest, ITestImplementation, ITestSpecification } from "../../../Types";
 export declare type ISuper<T> = T extends infer U ? U : object;
 export declare type IInput<P, S> = typeof React.Component<P, S>;
 export declare type InitialState = unknown;

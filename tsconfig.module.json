@@ -18,7 +18,11 @@
     "jsx": "react",
     "resolveJsonModule": true,
     "strictNullChecks": true,
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "skipLibCheck": true,
     "strict": false,
     "forceConsistentCasingInFileNames": true,
@@ -30,6 +34,13 @@
     "outDir": "dist/module/",
     "alwaysStrict": true
   },
-  "include": ["src/**/*.*ts", "src/**/*.*tsx", "index.d.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src/**/*.*ts",
+    "src/**/*.*tsx",
+    "index.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "src/Report.tsx"
+  ]
 }

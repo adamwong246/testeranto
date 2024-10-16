@@ -1,7 +1,7 @@
-import test from "../../../Node";
-
 import React from "react";
 import renderer, { act } from "react-test-renderer";
+
+import test from "../../../Node.js";
 
 import { ITestSpecification, ITestImplementation, IBaseTest } from "../../../Types";
 

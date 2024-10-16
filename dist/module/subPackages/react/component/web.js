@@ -1,5 +1,5 @@
 import React from "react";
-import Testeranto from "../../../Web";
+import Testeranto from "../../../Web.js";
 export default (testImplementations, testSpecifications, testInput) => {
     return Testeranto(testInput, testSpecifications, testImplementations, {
         beforeEach: async () => {

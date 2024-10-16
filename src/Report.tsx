@@ -10,7 +10,7 @@ import { Sigma, RandomizeNodePositions, RelativeSize } from 'react-sigma';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { ITestTypes } from "./Types";
+import type { ITestTypes } from "./Types";
 import { TesterantoFeatures } from "./Features.js";
 
 type IGraphData = {
@@ -46,8 +46,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const Report = () => {
   const [tests, setTests] = useState<
-    ITestTypes[]
-  >([]);
+    {
+      tests: ITestTypes[]
+    }
+
+  >({
+    tests: []
+  });
   const [features, setFeatures] = useState<TesterantoFeatures>(
     new TesterantoFeatures({}, {
       undirected: [],
@@ -57,21 +62,31 @@ const Report = () => {
   );
 
   useEffect(() => {
+    const importFeatures = async () => {
+      const module = await import('features.test.js');
+      console.log("imported features", module.default);
+      setFeatures(module.default);
+    };
+    importFeatures();
+  }, []);
+
+
+  useEffect(() => {
     const importTests = async () => {
-      const module = await import('testeranto.json');
-      setTests(module.default);
+      const x = await fetch("./testeranto.json")
+      const y = await x.json();
+      console.log("imported tests", y);
+      setTests(y as any);
+      // const module = await import('tests.json', {
+      //   with: {
+      //     type: 'json'
+      //   }
+      // });
+      // console.log("imported tests", module.default);
+      // setTests(module.default);
     };
 
     importTests();
-  }, []);
-
-  useEffect(() => {
-    const importFeatures = async () => {
-      const module = await import('features.test.js');
-      setFeatures(module.default);
-    };
-
-    importFeatures();
   }, []);
 
 
@@ -336,14 +351,14 @@ footer {
               </Col>
               <Col sm={6}>
                 <Tab.Content>
-                  {tests.map((t, ndx) => {
+                  {/* {tests.tests.map((t, ndx) => {
                     return (
                       <Tab.Pane eventKey={`feature-${ndx}`} key={ndx}>
                         <pre>{JSON.stringify(t, null, 2)}</pre>
                       </Tab.Pane>
                     )
                   }
-                  )}
+                  )} */}
                 </Tab.Content>
               </Col>
 

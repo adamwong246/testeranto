@@ -43,7 +43,7 @@ export declare abstract class BaseGiven<ITestShape extends IBaseTest> {
     initialValues: any;
     constructor(name: string, features: string[], whens: BaseWhen<ITestShape>[], thens: BaseThen<ITestShape>[], givenCB: ITestShape['given'], initialValues: any);
     beforeAll(store: ITestShape['istore'], artifactory: ITestArtifactory): ITestShape["istore"];
-    afterAll(store: ITestShape['istore'], artifactory: ITestArtifactory): ITestShape["istore"];
+    afterAll(store: ITestShape['istore'], artifactory: ITestArtifactory, utils: IUtils): ITestShape["istore"];
     toObj(): {
         name: string;
         whens: {

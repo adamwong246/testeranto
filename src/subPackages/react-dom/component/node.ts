@@ -2,7 +2,7 @@ import React, { ReactNode, createElement } from "react";
 import { renderToStaticMarkup, renderToStaticNodeStream } from "react-dom/server";
 import Stream from 'stream'
 
-import Testeranto from "../../../Node";
+import Testeranto from "../../../Node.js";
 
 import { IBaseTest, ITestImplementation, ITestSpecification } from "../../../Types";
 

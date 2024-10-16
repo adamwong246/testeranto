@@ -1,11 +1,11 @@
-import test from "../../../Node";
+import test from "../../../Node.js";
 import { IBaseTest } from "../../../Types";
-import { ITestImpl, ITestSpec } from "../jsx-promised";
+import type { ITestImpl, ITestSpec } from "../jsx-promised";
 
 import {
   IInput,
   testInterface
-} from "./index";
+} from "./index.js";
 
 export default <ITestShape extends IBaseTest>(
   testImplementations: ITestImpl<ITestShape>,

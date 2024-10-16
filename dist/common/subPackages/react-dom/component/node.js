@@ -10,9 +10,9 @@ Object.defineProperty(exports, "renderToStaticMarkup", { enumerable: true, get: 
 Object.defineProperty(exports, "renderToStaticNodeStream", { enumerable: true, get: function () { return server_1.renderToStaticNodeStream; } });
 const stream_1 = __importDefault(require("stream"));
 exports.Stream = stream_1.default;
-const Node_1 = __importDefault(require("../../../Node"));
+const Node_js_1 = __importDefault(require("../../../Node.js"));
 exports.default = (testImplementations, testSpecifications, testInput) => {
-    return (0, Node_1.default)(testInput, testSpecifications, testImplementations, {
+    return (0, Node_js_1.default)(testInput, testSpecifications, testImplementations, {
         // beforeAll: async (
         //   prototype,
         //   artificer

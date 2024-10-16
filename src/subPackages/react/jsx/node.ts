@@ -1,20 +1,19 @@
-import Testeranto from "../../../Node";
-import { IBaseTest } from "../../../Types";
+import Testeranto from "../../../Node.js";
+import { IBaseTest, IPartialInterface } from "../../../Types";
 
 import {
   ITestImpl,
   ITestSpec,
   IInput,
-  IStore,
-  ISelection,
-  testInterface
-} from "./index";
+
+  testInterface as baseInterface
+} from "./index.js";
 
 export default <ITestShape extends IBaseTest>(
   testImplementations: ITestImpl<ITestShape>,
   testSpecifications: ITestSpec<ITestShape>,
   testInput: IInput,
-  testInterface2 = testInterface,
+  testInterface: IPartialInterface<ITestShape>,
 ) => {
   return Testeranto<
     ITestShape
@@ -22,6 +21,9 @@ export default <ITestShape extends IBaseTest>(
     testInput,
     testSpecifications,
     testImplementations,
-    testInterface2(testInput),
+    {
+      ...baseInterface,
+      ...testInterface
+    }
   )
 };

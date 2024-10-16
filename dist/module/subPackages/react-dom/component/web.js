@@ -1,6 +1,6 @@
 import { createElement } from "react";
 import ReactDom from "react-dom/client";
-import Testeranto from "../../../Web";
+import Testeranto from "../../../Web.js";
 export default (testInput, testSpecifications, testImplementations) => {
     document.addEventListener("DOMContentLoaded", function () {
         const elem = document.getElementById("root");

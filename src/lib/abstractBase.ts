@@ -1,5 +1,3 @@
-import puppeteer from "puppeteer-core";
-import { BrowserWindow } from "electron";
 import { ITTestResourceConfiguration, ITestArtifactory, ITLog } from ".";
 import { IBaseTest, IUtils } from "../Types";
 
@@ -128,7 +126,7 @@ export abstract class BaseSuite<
     // @TODO fix me
     for (const k of Object.keys(this.givens)) {
       const giver = this.givens[k];
-      giver.afterAll(this.store, artifactory);
+      giver.afterAll(this.store, artifactory, utils);
     }
     ////////////////
 
@@ -176,12 +174,16 @@ export abstract class BaseGiven<
   beforeAll(
     store: ITestShape['istore'],
     artifactory: ITestArtifactory,
-    // utils: ITestInterface<ITestShape>
+
   ) {
     return store;
   }
 
-  afterAll(store: ITestShape['istore'], artifactory: ITestArtifactory) {
+  afterAll(
+    store: ITestShape['istore'],
+    artifactory: ITestArtifactory,
+    utils: IUtils
+  ) {
     return store;
   }
 

@@ -1,7 +1,7 @@
 import React, { CElement, createElement } from "react";
 import ReactDom from "react-dom/client";
 
-import Testeranto from "../../../Web";
+import Testeranto from "../../../Web.js";
 import {
   IBaseTest,
   ITestImplementation,

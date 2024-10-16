@@ -1,11 +1,24 @@
+import { BrowserWindow } from "electron";
 import { Page, Browser } from "puppeteer-core";
 import { ITTestResourceConfiguration, ITTestResourceRequest, ITestArtificer, ITestCheckCallback } from "./lib/index.js";
 import { IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen, BaseGiven } from "./lib/abstractBase.js";
 import Testeranto from "./lib/core.js";
-import { BrowserWindow } from "electron";
+export declare type IBuiltConfig = {
+    buildDir: string;
+    modules: {
+        module: unknown;
+        test: string;
+        runtime: IRunTime;
+    }[];
+};
 export declare type INodeUtils = TBrowser;
 export declare type IWebUtils = BrowserWindow;
 export declare type IUtils = INodeUtils | IWebUtils;
+export declare type ISuiteKlasser<ITestShape extends IBaseTest> = (name: string, index: number, givens: IGivens<ITestShape>, checks: BaseCheck<ITestShape>[]) => BaseSuite<ITestShape>;
+export declare type IGivenKlasser<ITestShape extends IBaseTest> = (name: any, features: any, whens: any, thens: any, givenCB: any) => BaseGiven<ITestShape>;
+export declare type IWhenKlasser<ITestShape extends IBaseTest> = (s: any, o: any) => BaseWhen<ITestShape>;
+export declare type IThenKlasser<ITestShape extends IBaseTest> = (s: any, o: any) => BaseThen<ITestShape>;
+export declare type ICheckKlasser<ITestShape extends IBaseTest> = (n: any, f: any, cb: any, w: any, t: any) => BaseCheck<ITestShape>;
 export declare class TBrowser {
     browser: Browser;
     constructor(browser: Browser);
@@ -24,6 +37,9 @@ export declare type IJsonConfig = {
     features: string;
 };
 export declare type IBaseConfig = {
+    outdir: string;
+    tests: ITestTypes[];
+    features: string;
     externals: string[];
     clearScreen: boolean;
     devMode: boolean;

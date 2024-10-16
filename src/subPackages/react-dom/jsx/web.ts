@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, } from "react";
 import { createPortal } from 'react-dom';
 
-import Testeranto from "../../../Web";
+import Testeranto from "../../../Web.js";
 import { IBaseTest, ITestImplementation, ITestSpecification } from "../../../Types";
 
-import {
+import type {
   IInput,
   ISelection,
   IStore,

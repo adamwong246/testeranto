@@ -1,7 +1,5 @@
 import fs from "fs";
-// const fs = require("fs");
 import path from "path";
-// const path = require("path");
 import { PassThrough } from "stream";
 
 import { ILogWriter, ITLog } from "./lib/index.js";

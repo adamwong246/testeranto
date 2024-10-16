@@ -1,8 +1,9 @@
 import React from "react";
 import renderer, { act } from "react-test-renderer";
 
-
-import { IBaseTest, ITestImplementation, ITestInterface, ITestSpecification } from "../../../Types";
+import type {
+  IBaseTest, ITestImplementation, ITestSpecification
+} from "../../../Types";
 
 export type ISuper<T> = T extends infer U ? U : object;
 

@@ -1,5 +1,4 @@
 import fs from "fs";
-// const fs = require("fs");
 import path from "path";
 const fPaths = [];
 export const NodeWriter = {

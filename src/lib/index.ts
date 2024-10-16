@@ -1,5 +1,5 @@
 
-import { IBaseTest, ITestInterface } from "../Types.js";
+import { IBaseTest, ITestInterface, IUtils } from "../Types.js";
 import { IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen } from "./abstractBase.js";
 
 export const BaseTestInterface: ITestInterface<IBaseTest> = {
@@ -70,7 +70,10 @@ export type ITestJob = {
     >
   >;
   testResourceRequirement: ITTestResourceRequirement;
-  receiveTestResourceConfig: (testResource?) => Promise<{
+  receiveTestResourceConfig: (
+    testResource,
+    utils: IUtils
+  ) => Promise<{
     failed: number,
     artifacts: Promise<unknown>[],
     logPromise: Promise<unknown>

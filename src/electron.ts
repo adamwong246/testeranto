@@ -1,7 +1,7 @@
 import { app, BrowserWindow, utilityProcess } from "electron";
 import pie from "puppeteer-in-electron";
 import puppeteer from "puppeteer-core";
-import { IJsonConfig, ITestTypes } from "./Types";
+import { IBuiltConfig, IJsonConfig, IRunTime, ITestTypes } from "./Types";
 import fs from "fs";
 import path from "path";
 import { jsonc } from 'jsonc';
@@ -13,10 +13,10 @@ remoteMain.initialize();
 const main = async () => {
 
   const configs = jsonc.parse(
-    (await fs.readFileSync("./testeranto.json")).toString()
-  ) as IJsonConfig;
+    (await fs.readFileSync("./docs/testeranto.json")).toString()
+  ) as IBuiltConfig;
 
-  const loadReport = (configs: IJsonConfig) => {
+  const loadReport = (configs: IBuiltConfig) => {
     const win = new BrowserWindow(
       {
         show: true,
@@ -27,7 +27,7 @@ const main = async () => {
       }
     );
 
-    win.loadFile(process.cwd() + `/${configs.outdir}/report.html`).then(async (x) => {
+    win.loadFile(`/${configs.buildDir}/report.html`).then(async (x) => {
       // pie.connect(app, puppeteer).then(async (browser) => {
       //   pie.getPage(browser, win).then(async (page) => {
       //     await page.screenshot({
@@ -38,31 +38,32 @@ const main = async () => {
     })
   }
 
-  const launchNode = (t: ITestTypes, changedFile: string) => {
+  const launchNode = (t: string, x: string) => {
+    const f = x.replace(".ts", ".mjs");
 
     const a = JSON.stringify(
       {
         scheduled: true,
-        name: changedFile,
+        name: x,
         ports: [],
         fs:
           path.resolve(
-            process.cwd(),
-            configs.outdir,
+            configs.buildDir,
             "node",
-            t[0],
+            t,
           ),
       }
     )
-    console.log("launchNode", changedFile, a);
-    const child = utilityProcess.fork(changedFile, [a], {});
+    console.log("launchNode", f, a);
+
+    const child = utilityProcess.fork(f, [a], {});
     child.postMessage({ message: 'hello' })
     child.on('message', (data) => {
-      console.log("from child", data) // hello world!
+      console.log("from child", data);
       launchWebSecondary(process.cwd() + data);
     })
     child.on('exit', (data) => {
-      console.log("exit from child", data);
+      console.log("node process ended with: ", data);
       fileStream.close()
     })
     // child.stdout
@@ -118,7 +119,7 @@ const main = async () => {
 
   }
 
-  const launchWeb = (t: ITestTypes, changedFile: string) => {
+  const launchWeb = (t: string, changedFile: string) => {
     console.log("launchWeb", changedFile)
     const subWin = new BrowserWindow(
       {
@@ -130,7 +131,7 @@ const main = async () => {
           contextIsolation: false,
           preload: path.join(app.getAppPath(), 'preload.js'),
           offscreen: false,
-          devTools: false,
+          devTools: true,
         }
       }
 
@@ -138,7 +139,7 @@ const main = async () => {
     remoteMain.enable(subWin.webContents);
     // subWin.webContents.openDevTools()
 
-    const htmlFile = changedFile.replace(".mjs", ".html");
+    const htmlFile = changedFile.split(".").slice(0, -1).concat("html").join(".")
 
     subWin.loadFile(htmlFile, {
       query: {
@@ -147,10 +148,9 @@ const main = async () => {
           ports: [].toString(),
           fs:
             path.resolve(
-              process.cwd(),
-              configs.outdir,
+              configs.buildDir,
               "web",
-              t[0],
+              t,
             ),
         }
         ))
@@ -159,15 +159,17 @@ const main = async () => {
 
   }
 
-  const watcher = (t: ITestTypes) => {
+  const watcher = (test: string, runtime: IRunTime) => {
     return path.normalize(
-      process.cwd() +
-      `/${configs.outdir}/${t[1]}/${t[0].split('.').slice(0, -1).concat('mjs').join('.')}`
+      `${configs.buildDir}/${runtime}/${test.split('.').slice(0, -1).concat('mjs').join('.')}`
     );
   };
 
   const changer = (f: string) => {
-    return path.normalize(process.cwd() + `/${configs.outdir}/${f}`);
+    return path.normalize(`${configs.buildDir}/${f}`);
+  };
+  const changer2 = (f: string, r: IRunTime) => {
+    return path.normalize(`${configs.buildDir}/${r}/${f}`);
   };
 
   pie.initialize(app, 2999).then(async () => {
@@ -175,17 +177,32 @@ const main = async () => {
     app.on("ready", () => {
       loadReport(configs);
 
-      fs.watch(configs.outdir, {
+      console.log("running all the tests once initially");;
+      configs.modules.forEach((t) => {
+        if (t.runtime === "node") {
+          launchNode(t.test, changer2(t.test, "node"));
+        } else if (t.runtime === "web") {
+          launchWeb(t.test, changer2(t.test, "web"));
+        } else {
+          console.error("runtime makes no sense", t.runtime);
+        }
+      })
+
+
+      console.log("ready and watching for changes...", configs.buildDir);
+      fs.watch(configs.buildDir, {
         recursive: true,
       }, (eventType, changedFile) => {
-
+        console.log(eventType, changedFile);
         if (changedFile) {
-          configs.tests.forEach((t) => {
-            if (watcher(t) === changer(changedFile)) {
-              if (t[1] === "node") {
-                launchNode(t, changer(changedFile))
+          configs.modules.forEach((t) => {
+            if (watcher(t.test, t.runtime) === changer(changedFile)) {
+              if (t.runtime === "node") {
+                launchNode(t.test, changer(changedFile))
+              } else if (t.runtime === "web") {
+                launchWeb(t.test, changer(changedFile))
               } else {
-                launchWeb(t, changer(changedFile))
+                console.error("runtime makes no sense", t.runtime);
               }
             }
           })
@@ -195,7 +212,7 @@ const main = async () => {
     });
   });
 
-  const browser = await pie.connect(app, puppeteer);
+  await pie.connect(app, puppeteer);
 
 };
 

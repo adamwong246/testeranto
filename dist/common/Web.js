@@ -3,32 +3,44 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const core_1 = __importDefault(require("./lib/core"));
-const lib_1 = require("./lib");
-// import { NodeWriterElectron } from "./nodeWriterElectron";
+const core_js_1 = __importDefault(require("./lib/core.js"));
+const index_js_1 = require("./lib/index.js");
 const remote = require('@electron/remote');
-// import electron from '@electron/remote';
-// const electron = require('electron')
-// const remote = electron.remote;
-// const path = require('path')
-const BrowserWindow = remote.BrowserWindow;
-class WebTesteranto extends core_1.default {
+class WebTesteranto extends core_js_1.default {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
-        super(input, testSpecification, testImplementation, testResourceRequirement, window.NodeWriter, testInterface, BrowserWindow);
-        const t = this.testJobs[0];
-        const testResourceArg = decodeURIComponent(new URLSearchParams(location.search).get('requesting') || '');
-        try {
-            const partialTestResource = JSON.parse(testResourceArg);
-            console.log("initial test resource", partialTestResource);
-            this.receiveTestResourceConfig(t, partialTestResource);
+        super(input, testSpecification, testImplementation, testResourceRequirement, window.NodeWriter, testInterface);
+        if (process.argv[2]) {
+            const testResourceArg = decodeURIComponent(new URLSearchParams(location.search).get('requesting') || '');
+            try {
+                const partialTestResource = JSON.parse(testResourceArg);
+                this.receiveTestResourceConfig(this.testJobs[0], partialTestResource);
+            }
+            catch (e) {
+                console.error(e);
+                // process.exit(-1);
+            }
         }
-        catch (e) {
-            console.error(e);
-            // process.exit(-1);
+        else {
+            // no-op
         }
+        const requesting = new URLSearchParams(location.search).get('requesting');
+        if (requesting) {
+            const testResourceArg = decodeURIComponent(requesting);
+            try {
+                const partialTestResource = JSON.parse(testResourceArg);
+                console.log("initial test resource", partialTestResource);
+                this.receiveTestResourceConfig(this.testJobs[0], partialTestResource);
+            }
+            catch (e) {
+                console.error(e);
+                // process.exit(-1);
+            }
+        }
+        // const t: ITestJob = this.testJobs[0];
     }
     async receiveTestResourceConfig(t, partialTestResource) {
-        const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(partialTestResource);
+        debugger;
+        const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(partialTestResource, remote);
         Promise.all([...artifacts, logPromise]).then(async () => {
             var window = remote.getCurrentWindow();
             // window.close();
@@ -36,6 +48,6 @@ class WebTesteranto extends core_1.default {
     }
 }
 ;
-exports.default = async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = lib_1.defaultTestResourceRequirement) => {
+exports.default = async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = index_js_1.defaultTestResourceRequirement) => {
     return new WebTesteranto(input, testSpecification, testImplementation, testResourceRequirement, testInterface);
 };

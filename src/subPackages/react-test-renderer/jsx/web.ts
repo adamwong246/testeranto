@@ -1,6 +1,6 @@
-import { IInput, testInterface } from ".";
+import { IInput, testInterface } from "./index.js";
 import { IBaseTest } from "../../../Types";
-import test from "../../../Web";
+import test from "../../../Web.js";
 import { ITestImpl, ITestSpec } from "../jsx-promised";
 
 export default <ITestShape extends IBaseTest>(

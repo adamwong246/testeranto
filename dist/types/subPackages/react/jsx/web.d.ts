@@ -1,7 +1,4 @@
-import { IBaseTest } from "../../../Types";
-import { ITestImpl, ITestSpec, IInput, IStore, ISelection } from "./index";
-declare const _default: <ITestShape extends IBaseTest>(testImplementations: ITestImpl<ITestShape>, testSpecifications: ITestSpec<ITestShape>, testInput: IInput, testInterface2?: (z: any) => {
-    beforeEach: (x: any, ndx: any, testRsource: any, artificer: any) => Promise<IStore>;
-    andWhen: (s: IStore, whenCB: any) => Promise<ISelection>;
-}) => Promise<import("../../../lib/core").default<ITestShape>>;
+import { IBaseTest, IPartialInterface } from "../../../Types";
+import { ITestImpl, ITestSpec, IInput } from "./index.js";
+declare const _default: <ITestShape extends IBaseTest>(testImplementations: ITestImpl<ITestShape>, testSpecifications: ITestSpec<ITestShape>, testInput: IInput, testInterface: Partial<import("../../../Types").ITestInterface<ITestShape>>) => Promise<import("../../../lib/core").default<ITestShape>>;
 export default _default;
