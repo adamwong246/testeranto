@@ -37338,9 +37338,10 @@
     }, []);
     (0, import_react44.useEffect)(() => {
       const importTests = async () => {
-        const module2 = await import("tests.json", { assert: { type: "json" } });
-        console.log("imported tests", module2.default);
-        setTests(module2.default);
+        const x = await fetch("./tests.json");
+        const y = await x.json();
+        console.log("imported tests", y);
+        setTests(y);
       };
       importTests();
     }, []);

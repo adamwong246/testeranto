@@ -18,7 +18,10 @@ export default new ITProject({
   // tests: 'tests.test.mts',
   minify: false,
   outbase: ".",
-  externals: ["ganache"],
+  externals: [
+    "ganache",
+    "stream"
+  ],
   ports: ["3001", "3002", "3003", "3004", "3005", "3006", "3007"],
 
   webPlugins: [],

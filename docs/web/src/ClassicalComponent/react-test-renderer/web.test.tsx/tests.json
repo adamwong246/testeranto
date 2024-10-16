@@ -1,0 +1,94 @@
+{
+  "name": "a classical react component",
+  "givens": [
+    {
+      "name": "AnEmptyState",
+      "whens": [],
+      "thens": [
+        {
+          "name": "ThePropsIs: [object Object]"
+        },
+        {
+          "name": "TheStatusIs: [object Object]"
+        }
+      ],
+      "error": null,
+      "features": [
+        "test"
+      ]
+    },
+    {
+      "name": "AnEmptyState",
+      "whens": [
+        {
+          "name": "IClickTheButton: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "ThePropsIs: [object Object]"
+        },
+        {
+          "name": "TheStatusIs: [object Object]"
+        }
+      ],
+      "error": null,
+      "features": [
+        "test"
+      ]
+    },
+    {
+      "name": "AnEmptyState",
+      "whens": [
+        {
+          "name": "IClickTheButton: undefined"
+        },
+        {
+          "name": "IClickTheButton: undefined"
+        },
+        {
+          "name": "IClickTheButton: undefined"
+        },
+        {
+          "name": "IClickTheButton: undefined"
+        },
+        {
+          "name": "IClickTheButton: undefined"
+        },
+        {
+          "name": "IClickTheButton: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheStatusIs: [object Object]"
+        }
+      ],
+      "error": null,
+      "features": [
+        "test"
+      ]
+    },
+    {
+      "name": "AnEmptyState",
+      "whens": [
+        {
+          "name": "IClickTheButton: undefined"
+        },
+        {
+          "name": "IClickTheButton: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheStatusIs: [object Object]"
+        }
+      ],
+      "error": null,
+      "features": [
+        "test"
+      ]
+    }
+  ],
+  "fails": []
+}

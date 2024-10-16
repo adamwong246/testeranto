@@ -1,0 +1,32 @@
+test resources: ,[object Object]
+
+Suite:,0,a classical react component
+
+ Given: AnEmptyState
+ Then:,ThePropsIs: [object Object]
+AssertionError: expected { type: 'pre', …(3) } to deeply equal { type: 'pre', …(2) }
+
+
+ Given: AnEmptyState
+ When:,IClickTheButton: undefined
+ Then:,ThePropsIs: [object Object]
+AssertionError: expected { type: 'pre', …(3) } to deeply equal { type: 'pre', …(2) }
+
+
+ Given: AnEmptyState
+ When:,IClickTheButton: undefined
+ When:,IClickTheButton: undefined
+ When:,IClickTheButton: undefined
+ When:,IClickTheButton: undefined
+ When:,IClickTheButton: undefined
+ When:,IClickTheButton: undefined
+ Then:,TheStatusIs: [object Object]
+Error: not yet implemented
+
+
+ Given: AnEmptyState
+ When:,IClickTheButton: undefined
+ When:,IClickTheButton: undefined
+ Then:,TheStatusIs: [object Object]
+Error: not yet implemented
+
