@@ -5,7 +5,7 @@ import type {
   ITestImplementation,
 } from "testeranto/src/Types";
 
-import Testeranto from "testeranto/src/SubPackages/react-test-renderer/jsx/node";
+import Testeranto from "testeranto/src/SubPackages/react-test-renderer/jsx/node.js";
 
 import ReactStateAndHook from "./ReactStateAndHook";
 

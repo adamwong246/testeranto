@@ -1,0 +1,112 @@
+$ /Users/adam/Code/kokomoBay/node_modules/.bin/electron node_modules/testeranto/dist/common/electron.js
+running all the tests once initially
+launchWeb /Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.tsx
+launchNode /Users/adam/Code/kokomoBay/docs/node/src/LoginPage/react/node.test.mjsx {"scheduled":true,"name":"/Users/adam/Code/kokomoBay/docs/node/src/LoginPage/react/node.test.tsx","ports":[],"fs":"/Users/adam/Code/kokomoBay/docs/node/src/LoginPage/react/node.test.tsx"}
+launchWeb /Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test.tsx
+launchNode /Users/adam/Code/kokomoBay/docs/node/src/LoginPage/react-test-renderer/node.test.mjsx {"scheduled":true,"name":"/Users/adam/Code/kokomoBay/docs/node/src/LoginPage/react-test-renderer/node.test.tsx","ports":[],"fs":"/Users/adam/Code/kokomoBay/docs/node/src/LoginPage/react-test-renderer/node.test.tsx"}
+launchNode /Users/adam/Code/kokomoBay/docs/node/src/ReactStateAndHook.test.mjsx {"scheduled":true,"name":"/Users/adam/Code/kokomoBay/docs/node/src/ReactStateAndHook.test.tsx","ports":[],"fs":"/Users/adam/Code/kokomoBay/docs/node/src/ReactStateAndHook.test.tsx"}
+launchNode /Users/adam/Code/kokomoBay/docs/node/src/app.reduxToolkit.test.mjs {"scheduled":true,"name":"/Users/adam/Code/kokomoBay/docs/node/src/app.reduxToolkit.test.ts","ports":[],"fs":"/Users/adam/Code/kokomoBay/docs/node/src/app.reduxToolkit.test.ts"}
+launchNode /Users/adam/Code/kokomoBay/docs/node/src/app.redux.test.mjs {"scheduled":true,"name":"/Users/adam/Code/kokomoBay/docs/node/src/app.redux.test.ts","ports":[],"fs":"/Users/adam/Code/kokomoBay/docs/node/src/app.redux.test.ts"}
+launchWeb /Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.ts
+launchNode /Users/adam/Code/kokomoBay/docs/node/src/Rectangle/Rectangle.test.node.mjs {"scheduled":true,"name":"/Users/adam/Code/kokomoBay/docs/node/src/Rectangle/Rectangle.test.node.ts","ports":[],"fs":"/Users/adam/Code/kokomoBay/docs/node/src/Rectangle/Rectangle.test.node.ts"}
+ready and watching for changes... /Users/adam/Code/kokomoBay/docs
+node process ended with:  1
+node process ended with:  1
+node process ended with:  1
+rename web/src/Rectangle/Rectangle.test.electron.ts
+rename web/src/Rectangle/Rectangle.test.electron.ts/tests.json
+connected! true
+testResourceConfiguration {
+  "scheduled": true,
+  "name": "/Users/adam/Code/kokomoBay/docs/node/src/app.reduxToolkit.test.ts",
+  "ports": [],
+  "fs": "/Users/adam/Code/kokomoBay/docs/node/src/app.reduxToolkit.test.ts"
+}
+exiting gracefully with 5 failures.
+connected! true
+testResourceConfiguration {
+  "scheduled": true,
+  "name": "/Users/adam/Code/kokomoBay/docs/node/src/Rectangle/Rectangle.test.node.ts",
+  "ports": [],
+  "fs": "/Users/adam/Code/kokomoBay/docs/node/src/Rectangle/Rectangle.test.node.ts"
+}
+from child /dist/web/src/ClassicalComponent/test.html
+launchWebSecondary /Users/adam/Code/kokomoBay/dist/web/src/ClassicalComponent/test.html
+exiting gracefully with 4 failures.
+rename node/src/app.reduxToolkit.test.ts
+rename node/src/app.reduxToolkit.test.ts/tests.json
+rename node/src/app.reduxToolkit.test.ts/results.json
+rename node/src/app.reduxToolkit.test.ts/log.txt
+rename web/src/Rectangle/Rectangle.test.electron.ts/results.json
+rename web/src/LoginPage/react/web.test.tsx
+rename web/src/Rectangle/Rectangle.test.electron.ts/log.txt
+rename web/src/LoginPage/react/web.test.tsx/tests.json
+rename web/src/LoginPage/react/web.test.tsx/afterAll4-default
+rename web/src/Rectangle/Rectangle.test.electron.ts/afterAll4-Default
+rename web/src/Rectangle/Rectangle.test.electron.ts/manifest
+rename web/src/Rectangle/Rectangle.test.electron.ts/afterAll4-Default/afterAll.png
+rename node/src/Rectangle/Rectangle.test.node.ts
+rename node/src/Rectangle/Rectangle.test.node.ts/tests.json
+rename node/src/Rectangle/Rectangle.test.node.ts/results.json
+rename node/src/Rectangle/Rectangle.test.node.ts/log.txt
+connected! true
+testResourceConfiguration {
+  "scheduled": true,
+  "name": "/Users/adam/Code/kokomoBay/docs/node/src/app.redux.test.ts",
+  "ports": [],
+  "fs": "/Users/adam/Code/kokomoBay/docs/node/src/app.redux.test.ts"
+}
+rename web/src/Rectangle/Rectangle.test.electron.ts/manifest
+rename web/src/Rectangle/Rectangle.test.electron.ts/afterAll4-Default/afterAll.png
+rename web/src/LoginPage/react-test-renderer/web.test.tsx
+rename web/src/LoginPage/react-test-renderer/web.test.tsx/tests.json
+rename web/src/LoginPage/react-test-renderer/web.test.tsx/results.json
+rename web/src/LoginPage/react-test-renderer/web.test.tsx/log.txt
+rename web/src/LoginPage/react/web.test.tsx/results.json
+rename web/src/LoginPage/react/web.test.tsx/log.txt
+rename web/src/LoginPage/react/web.test.tsx/manifest
+rename web/src/LoginPage/react/web.test.tsx/afterAll4-default/utils
+rename node/src/app.redux.test.ts
+rename node/src/app.redux.test.ts/tests.json
+exiting gracefully with 0 failures.
+rename node/src/app.redux.test.ts/results.json
+rename web/src/LoginPage/react/web.test.tsx/manifest
+rename web/src/LoginPage/react/web.test.tsx/afterAll4-default/utils
+rename node/src/app.redux.test.ts/log.txt
+rename web/src/LoginPage/react/web.test.tsx/log.txt
+page CDPPage {
+  eventsMap: Map(0) {},
+  emitter: {
+    all: Map(0) {},
+    on: [Function: on],
+    off: [Function: off],
+    emit: [Function: emit]
+  }
+}
+page CDPPage {
+  eventsMap: Map(0) {},
+  emitter: {
+    all: Map(0) {},
+    on: [Function: on],
+    off: [Function: off],
+    emit: [Function: emit]
+  }
+}
+page CDPPage {
+  eventsMap: Map(0) {},
+  emitter: {
+    all: Map(0) {},
+    on: [Function: on],
+    off: [Function: off],
+    emit: [Function: emit]
+  }
+}
+page CDPPage {
+  eventsMap: Map(0) {},
+  emitter: {
+    all: Map(0) {},
+    on: [Function: on],
+    off: [Function: off],
+    emit: [Function: emit]
+  }
+}

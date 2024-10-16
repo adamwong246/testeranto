@@ -20,7 +20,7 @@ export type ILoginPageSelection = {
   disableSubmit: boolean;
 };
 
-export const emailwarning = "Something isn’t right. Please double check your email format";
+export const emailwarning = "Something isn’t right. Please double check your email";
 
 export function LoginPage(): React.JSX.Element {
   const selection = useSelector(selector);

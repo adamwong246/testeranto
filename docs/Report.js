@@ -37338,7 +37338,7 @@
     }, []);
     (0, import_react44.useEffect)(() => {
       const importTests = async () => {
-        const x = await fetch("./tests.json");
+        const x = await fetch("./testeranto.json");
         const y = await x.json();
         console.log("imported tests", y);
         setTests(y);

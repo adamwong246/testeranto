@@ -1,0 +1,41 @@
+{
+  "modules": [
+    {
+      "test": "./src/LoginPage/react/web.test.tsx",
+      "runtime": "web"
+    },
+    {
+      "test": "./src/LoginPage/react/node.test.tsx",
+      "runtime": "node"
+    },
+    {
+      "test": "./src/LoginPage/react-test-renderer/web.test.tsx",
+      "runtime": "web"
+    },
+    {
+      "test": "./src/LoginPage/react-test-renderer/node.test.tsx",
+      "runtime": "node"
+    },
+    {
+      "test": "./src/ReactStateAndHook.test.tsx",
+      "runtime": "node"
+    },
+    {
+      "test": "./src/app.reduxToolkit.test.ts",
+      "runtime": "node"
+    },
+    {
+      "test": "./src/app.redux.test.ts",
+      "runtime": "node"
+    },
+    {
+      "test": "./src/Rectangle/Rectangle.test.electron.ts",
+      "runtime": "web"
+    },
+    {
+      "test": "./src/Rectangle/Rectangle.test.node.ts",
+      "runtime": "node"
+    }
+  ],
+  "buildDir": "/Users/adam/Code/kokomoBay/docs"
+}

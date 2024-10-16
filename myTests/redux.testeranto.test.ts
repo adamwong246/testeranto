@@ -6,7 +6,7 @@ import {
 } from "@reduxjs/toolkit";
 import { createStore, Store, AnyAction } from "redux";
 
-import Testeranto from "testeranto/dist/module/lib/core";
+import Testeranto from "testeranto/src/Node";
 import { IPartialInterface, ITestInterface } from "testeranto/src/Types";
 import {
   ITestImplementation, ITestSpecification, IBaseTest,
@@ -79,13 +79,10 @@ export const ReduxTesteranto = <
     },
   };
 
-  return new Testeranto(
+  return Testeranto(
     testInput,
     testSpecifications,
     testImplementations,
-    {
-      ports: 0
-    },
     testInterface,
   );
 }

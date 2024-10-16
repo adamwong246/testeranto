@@ -8,7 +8,7 @@ import { ReduxTesteranto } from "../myTests/redux.testeranto.test.js";
 // const implementations: IImplementation = {
 const implementations: any = {
   suites: {
-    Default: "some default Suite",
+    Default: "some default Suite!",
   },
   givens: {
     AnEmptyState: () => () => {

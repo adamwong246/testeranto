@@ -1,15 +1,63 @@
 import { ITProject } from "testeranto/src/Project";
-import fs from "fs";
+
 import { solCompile } from "./myTests/truffle.mjs";
-import { IJsonConfig } from "testeranto/src/Types";
-import { jsonc } from 'jsonc';
-// import configs from "./testeranto.json"  assert { type: "jsonc" };
-
-const configs = jsonc.parse((await fs.readFileSync("./testeranto.json")).toString()) as IJsonConfig;
-
 
 export default new ITProject({
-  ...configs,
+  outdir: "docs",
+  features: "/Users/adam/Code/kokomoBay/features.test.mts",
+  tests: [
+    [
+      "./src/LoginPage/react/web.test.tsx",
+      "web",
+      []
+    ],
+    [
+      "./src/LoginPage/react/node.test.tsx",
+      "node",
+      []
+    ],
+    [
+      "./src/LoginPage/react-test-renderer/web.test.tsx",
+      "web",
+      []
+    ],
+    [
+      "./src/LoginPage/react-test-renderer/node.test.tsx",
+      "node",
+      []
+    ],
+    [
+      "./src/ReactStateAndHook.test.tsx",
+      "node",
+      []
+    ],
+    [
+      "./src/app.reduxToolkit.test.ts",
+      "node",
+      []
+    ],
+    [
+      "./src/app.redux.test.ts",
+      "node",
+      []
+    ],
+    [
+      "./src/Rectangle/Rectangle.test.electron.ts",
+      "web",
+      []
+    ],
+    [
+      "./src/Rectangle/Rectangle.test.node.ts",
+      "node",
+      [
+        [
+          "./src/ClassicalComponent/test.ts",
+          "web",
+          []
+        ]
+      ]
+    ]
+  ],
 
   debugger: true,
   clearScreen: false,

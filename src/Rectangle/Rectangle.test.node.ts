@@ -15,9 +15,9 @@ const testInterface: IPartialNodeInterface<IRectangleTestShape> = {
   assertThis: (x) => {
 
   },
-  afterAll: async (store, artificer, browser: TBrowser) => {
-    const page = ((await browser.pages()).filter((x) => x.url() === 'file:///Users/adam/Code/kokomoBay/dist/web/src/ClassicalComponent/test.html'))[0]
-    console.log(browser)
+  afterAll: async (store, artificer, browser) => {
+    const page = (await browser.pages())[0];//.map((x) => x.url())); // === 'file:///Users/adam/Code/kokomoBay/dist/web/src/ClassicalComponent/test.html'))[0]
+    console.log("page", page);
     await page.screenshot({
       path: 'hello98.jpg'
     })

@@ -32,43 +32,11 @@
 
 echo '{"fs": "./foobar", "ports": ["3333"]}' | node js-bazel/myTests/ClassicalReact/ClassicalComponent.esbuild-puppeteer.test.mjs
 
-[
-      "./src/app.reduxToolkit.test.ts",
-      "node",
-      []
-    ],
 
-    [
-      "./src/app.redux.test.ts",
-      "node",
-      []
-    ],
 
-    [
-      "./src/ClassicalComponent/react-test-renderer/web.test.tsx",
-      "web",
-      []
-    ],
-    [
-      "./src/ClassicalComponent/react-test-renderer/node.test.tsx",
-      "node",
-      []
-    ],
-    [
-      "./src/ClassicalComponent/react-dom/client.web.test.tsx",
-      "web",
-      []
-    ],
-    [
-      "./src/ClassicalComponent/react-dom/server.node.test.tsx",
-      "node",
-      []
-    ],
-    [
-      "./src/ReactStateAndHook.test.tsx",
-      "node",
-      []
-    ],
+    
+    
+
     [
       "./src/Rectangle/Rectangle.test.electron.ts",
       "web",

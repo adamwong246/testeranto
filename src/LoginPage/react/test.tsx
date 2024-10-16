@@ -4,25 +4,25 @@ import { assert } from "chai";
 import type { IStore, ISelection } from "testeranto/dist/types/SubPackages/react/jsx/index";
 import { ITestImplementation } from "testeranto/src/Types";
 
-export const LoginPageReactTestInterface = (testInput) => {
-  return {
-    beforeEach: async (
-      x,
-      ndx,
-      testRsource,
-      artificer
-    ): Promise<IStore> => {
-      return new Promise((resolve, rej) => {
-        const t = testInput();
-        t.props.store.dispatch(actions.reset())
-        resolve(t)
-      });
-    },
-    andWhen: function (s: IStore, whenCB): Promise<ISelection> {
-      return whenCB(s);
-    },
-  }
-}
+// export const LoginPageReactTestInterface = (testInput) => {
+//   return {
+//     beforeEach: async (
+//       x,
+//       ndx,
+//       testRsource,
+//       artificer
+//     ): Promise<IStore> => {
+//       return new Promise((resolve, rej) => {
+//         const t = testInput();
+//         t.props.store.dispatch(actions.reset())
+//         resolve(t)
+//       });
+//     },
+//     andWhen: function (s: IStore, whenCB): Promise<ISelection> {
+//       return whenCB(s);
+//     },
+//   }
+// }
 
 type IImpl = ITestImplementation<
   ILoginPageSpecs, object

@@ -23,7 +23,7 @@
   },
   "scripts": {
     "dev": "rm -f docs/features.test.js rm -f docs/electron.log; rm -f docs/report.html; rm -f docs/report.js; rm -f docs/report.css; rm -rf docs/web && rm -rf docs/node && yarn upgrade -f testeranto && yarn test",
-    "test": "ts-node-esm testeranto.mts",
+    "test": "rm -f docs/features.test.js rm -f docs/electron.log; rm -f docs/report.html; rm -f docs/report.js; rm -f docs/report.css; rm -rf docs/web && rm -rf docs/node  && ts-node-esm testeranto.mts",
     "test2": "node --loader ts-node/esm testeranto.mts",
     "test3": "yarn tsx testeranto.mts"
   },
