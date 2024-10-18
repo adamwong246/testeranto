@@ -1,0 +1,24 @@
+connected! true
+testResourceConfiguration {
+  "scheduled": true,
+  "name": "./src/Rectangle/Rectangle.test.node.ts",
+  "ports": [],
+  "fs": "."
+}
+file:///Users/adam/Code/kokomoBay/docs/report.html
+file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.html
+file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test.html
+file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.html
+gutentag CDPPage {
+  eventsMap: Map(0) {},
+  emitter: {
+    all: Map(0) {},
+    on: [Function: on],
+    off: [Function: off],
+    emit: [Function: emit]
+  }
+}
+beta
+gamma
+delta
+exiting gracefully with 1 failures.

@@ -2,99 +2,99 @@
   "event": {},
   "level": 1,
   "message": "\"hello preloader\"",
-  "line": 4,
+  "line": 12,
   "sourceId": "/Users/adam/Code/testeranto/dist/common/preload.js"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools\\nYou might need to use a local HTTP server (instead of file://): https://reactjs.org/link/react-devtools-faq font-weight:bold\"",
-  "line": 23655,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-QOTLVXVD.mjs"
+  "line": 23418,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-NBTTKMUG.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"hello world\"",
-  "line": 26130,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-QOTLVXVD.mjs"
+  "line": 2683,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-AUQMQZHB.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"testResourceConfiguration {\\n  \\\"name\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test\\\",\\n  \\\"ports\\\": \\\"\\\",\\n  \\\"fs\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test\\\"\\n}\"",
-  "line": 310,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
+  "line": 301,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-GUDS7OWX.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"initial test resource [object Object]\"",
-  "line": 600,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
+  "line": 589,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-GUDS7OWX.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"testResourceConfiguration {\\n  \\\"name\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test\\\",\\n  \\\"ports\\\": \\\"\\\",\\n  \\\"fs\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test\\\"\\n}\"",
-  "line": 310,
+  "line": 301,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-GUDS7OWX.mjs"
+}
+{
+  "event": {},
+  "level": 1,
+  "message": "\"hello\"",
+  "line": 78,
   "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"hello\"",
-  "line": 691,
+  "line": 78,
   "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"hello\"",
-  "line": 691,
+  "line": 78,
   "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"hello\"",
-  "line": 691,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"hello\"",
-  "line": 691,
+  "line": 78,
   "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"test failed [object Object]\"",
-  "line": 208,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
+  "line": 198,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-GUDS7OWX.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"test failed [object Object]\"",
-  "line": 208,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
+  "line": 198,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-GUDS7OWX.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"exiting gracefully with 1 failures.\"",
-  "line": 347,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
+  "line": 338,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-GUDS7OWX.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"exiting gracefully with 1 failures.\"",
-  "line": 347,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
+  "line": 338,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-GUDS7OWX.mjs"
 }
 {
   "event": {},

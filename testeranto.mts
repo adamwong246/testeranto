@@ -18,22 +18,12 @@ export default new ITProject({
     ["./src/MyFirstContract.solidity-precompiled.test.ts", "node", []],
 
     // broken
-    // [
-    //   "./src/MyFirstContract.solidity.test.ts",
-    //   "node",
-    //   []
-    // ],
-    // [
-    //   "./src/Rectangle/Rectangle.test.node.ts",
-    //   "node",
-    //   [
-    //     [
-    //       "./src/ClassicalComponent/test.ts",
-    //       "web",
-    //       []
-    //     ]
-    //   ]
-    // ],
+    ["./src/MyFirstContract.solidity.test.ts", "node", []],
+    [
+      "./src/Rectangle/Rectangle.test.node.ts",
+      "node",
+      [["./src/ClassicalComponent/test.ts", "web", []]],
+    ],
   ],
 
   debugger: true,

@@ -4,7 +4,7 @@ testResourceConfiguration {
   "scheduled": true,
   "name": "./src/LoginPage/react-test-renderer/node.test.tsx",
   "ports": [],
-  "fs": "/Users/adam/Code/kokomoBay/docs/node/src/LoginPage/react-test-renderer/node.test"
+  "fs": "."
 }
 []
 []

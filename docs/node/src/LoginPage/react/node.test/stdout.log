@@ -4,21 +4,21 @@ testResourceConfiguration {
   "scheduled": true,
   "name": "./src/LoginPage/react/node.test.tsx",
   "ports": [],
-  "fs": "/Users/adam/Code/kokomoBay/docs/node/src/LoginPage/react/node.test"
+  "fs": "."
 }
 hello
 hello
 test failed AssertionError2: expected 'invalidEmail' to equal 'no_error'
-    at file:///Users/adam/Code/kokomoBay/docs/node/src/LoginPage/react/node.test.mjs:85:14
-    at Object.butThen (file:///Users/adam/Code/kokomoBay/docs/node/chunk-SQS533HJ.mjs:25:37)
-    at Then.butThen (file:///Users/adam/Code/kokomoBay/docs/node/chunk-SQS533HJ.mjs:378:40)
-    at Then.test (file:///Users/adam/Code/kokomoBay/docs/node/chunk-SQS533HJ.mjs:174:28)
-    at Given.give (file:///Users/adam/Code/kokomoBay/docs/node/chunk-SQS533HJ.mjs:122:34)
+    at file:///Users/adam/Code/kokomoBay/docs/node/src/LoginPage/react/node.test.mjs:87:14
+    at Object.butThen (file:///Users/adam/Code/kokomoBay/docs/node/chunk-HDXFLKHP.mjs:25:37)
+    at Then.butThen (file:///Users/adam/Code/kokomoBay/docs/node/chunk-HDXFLKHP.mjs:379:40)
+    at Then.test (file:///Users/adam/Code/kokomoBay/docs/node/chunk-HDXFLKHP.mjs:174:28)
+    at Given.give (file:///Users/adam/Code/kokomoBay/docs/node/chunk-HDXFLKHP.mjs:122:34)
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/docs/node/chunk-SQS533HJ.mjs:68:22)
-    at async file:///Users/adam/Code/kokomoBay/docs/node/chunk-SQS533HJ.mjs:234:14
-    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-SQS533HJ.mjs:261:29)
-    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-SQS533HJ.mjs:493:47) {
+    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/docs/node/chunk-HDXFLKHP.mjs:68:22)
+    at async file:///Users/adam/Code/kokomoBay/docs/node/chunk-HDXFLKHP.mjs:235:14
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-HDXFLKHP.mjs:262:29)
+    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-HDXFLKHP.mjs:494:47) {
   showDiff: true,
   actual: 'invalidEmail',
   expected: 'no_error',

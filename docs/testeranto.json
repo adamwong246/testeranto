@@ -46,6 +46,22 @@
       "./src/MyFirstContract.solidity-precompiled.test.ts",
       "node",
       []
+    ],
+    [
+      "./src/MyFirstContract.solidity.test.ts",
+      "node",
+      []
+    ],
+    [
+      "./src/Rectangle/Rectangle.test.node.ts",
+      "node",
+      [
+        [
+          "./src/ClassicalComponent/test.ts",
+          "web",
+          []
+        ]
+      ]
     ]
   ],
   "debugger": true,

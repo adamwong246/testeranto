@@ -1,0 +1,24 @@
+bigint: Failed to load bindings, pure JS will be used (try npm run rebuild?)
+This version of µWS is not compatible with your Node.js build:
+
+Error: Cannot find module '../binaries/uws_darwin_arm64_119.node'
+Require stack:
+- /Users/adam/Code/kokomoBay/node_modules/@trufflesuite/uws-js-unofficial/src/uws.js
+- /Users/adam/Code/kokomoBay/node_modules/ganache/dist/node/core.js
+Falling back to a NodeJS implementation; performance may be degraded.
+
+
+(node:18149) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+(Use `Electron Helper --trace-deprecation ...` to show where the warning was created)
+node:internal/process/promises:288
+            triggerUncaughtException(err, true /* fromPromise */);
+            ^
+
+[Error: ENOENT: no such file or directory, open '/Users/adam/Code/kokomoBay/docs/node/src/MyFirstContract.solidity.test/contracts/MyFirstContract.sol'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/adam/Code/kokomoBay/docs/node/src/MyFirstContract.solidity.test/contracts/MyFirstContract.sol'
+}
+
+Node.js v18.18.2
