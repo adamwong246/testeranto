@@ -3,7 +3,6 @@ import puppeteer from "puppeteer-core";
 import Testeranto from "./lib/core.js";
 import { defaultTestResourceRequirement, } from "./lib/index.js";
 import { NodeWriter } from "./NodeWriter.js";
-import { TBrowser } from "./lib/types.js";
 const readJson = async (port) => new Promise((resolve, reject) => {
     let json = "";
     const request = http.request({
@@ -49,7 +48,7 @@ class NodeTesteranto extends Testeranto {
             console.log("connected!", b.isConnected());
             return b;
         });
-        const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(partialTestResource, new TBrowser(browser));
+        const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(partialTestResource, browser);
         Promise.all([...artifacts, logPromise]).then(async () => {
             // process.exit(await failed ? 1 : 0);
         });

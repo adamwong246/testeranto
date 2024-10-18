@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Puppeteer = void 0;
-class Puppeteer {
+export class TBrowser {
     constructor(browser) {
         this.browser = browser;
     }
@@ -29,4 +26,3 @@ class Puppeteer {
         });
     }
 }
-exports.Puppeteer = Puppeteer;

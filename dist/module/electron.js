@@ -41,7 +41,10 @@ const main = async () => {
             fs: path.resolve(configs.buildDir, "node", destFolder),
         });
         console.log("launchNode", src, dest, " -> ", destFolder, argz);
-        const child = utilityProcess.fork(dest, [argz], { stdio: 'pipe' });
+        const child = utilityProcess.fork(dest, [argz], {
+            cwd: destFolder,
+            stdio: 'pipe'
+        });
         if (!fs.existsSync(destFolder)) {
             fs.mkdirSync(destFolder, { recursive: true });
         }
@@ -170,7 +173,6 @@ const main = async () => {
             fs.watch(configs.buildDir, {
                 recursive: true,
             }, (eventType, changedFile) => {
-                console.log(eventType, changedFile);
                 if (changedFile) {
                     configs.tests.forEach(([test, runtime, secondaryArtifacts]) => {
                         if (watcher(test, runtime) === changer(changedFile)) {

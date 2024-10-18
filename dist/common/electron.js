@@ -46,7 +46,10 @@ const main = async () => {
             fs: path_1.default.resolve(configs.buildDir, "node", destFolder),
         });
         console.log("launchNode", src, dest, " -> ", destFolder, argz);
-        const child = electron_1.utilityProcess.fork(dest, [argz], { stdio: 'pipe' });
+        const child = electron_1.utilityProcess.fork(dest, [argz], {
+            cwd: destFolder,
+            stdio: 'pipe'
+        });
         if (!fs_1.default.existsSync(destFolder)) {
             fs_1.default.mkdirSync(destFolder, { recursive: true });
         }
@@ -175,7 +178,6 @@ const main = async () => {
             fs_1.default.watch(configs.buildDir, {
                 recursive: true,
             }, (eventType, changedFile) => {
-                console.log(eventType, changedFile);
                 if (changedFile) {
                     configs.tests.forEach(([test, runtime, secondaryArtifacts]) => {
                         if (watcher(test, runtime) === changer(changedFile)) {

@@ -1,7 +1,13 @@
-export class TBrowser {
+export class Puppeteer {
     constructor(browser) {
         this.browser = browser;
     }
+    screenshot(page, path) {
+        page.screenshot({
+            path: 'hello98.jpg'
+        });
+    }
+    ;
     pages() {
         return new Promise(async (res, rej) => {
             res((await this.browser.pages()).map((p) => {

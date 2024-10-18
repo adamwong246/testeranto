@@ -1,8 +1,8 @@
 import { BrowserWindow } from "electron";
-import { Browser, Page } from "puppeteer-core";
-import { ITTestResourceConfiguration, ITestArtificer } from ".";
 import { IBaseTest } from "../Types";
+import { Puppeteer } from "./Puppeteer";
 import { IGivens, BaseCheck, BaseSuite, BaseGiven, BaseWhen, BaseThen } from "./abstractBase";
+import { ITTestResourceConfiguration, ITestArtificer } from ".";
 export declare type IRunTime = `node` | `web`;
 export declare type ITestTypes = [
     string,
@@ -31,14 +31,9 @@ export declare type IBaseConfig = {
 export declare type IBuiltConfig = {
     buildDir: string;
 } & IBaseConfig;
-export declare type INodeUtils = TBrowser;
+export declare type INodeUtils = Puppeteer;
 export declare type IWebUtils = BrowserWindow;
 export declare type IUtils = INodeUtils | IWebUtils;
-export declare class TBrowser {
-    browser: Browser;
-    constructor(browser: Browser);
-    pages(): Promise<Page[]>;
-}
 export declare type IWebTestInterface<ITestShape extends IBaseTest> = {
     assertThis: (x: ITestShape['then']) => void;
     andWhen: (store: ITestShape['istore'], whenCB: ITestShape['when'], testResource: ITTestResourceConfiguration) => Promise<ITestShape['istore']>;
@@ -47,7 +42,7 @@ export declare type IWebTestInterface<ITestShape extends IBaseTest> = {
     afterEach: (store: ITestShape['istore'], key: string, artificer: ITestArtificer) => Promise<unknown>;
     beforeAll: (input: ITestShape['iinput'], testResource: ITTestResourceConfiguration, artificer: ITestArtificer) => Promise<ITestShape['isubject']>;
     beforeEach: (subject: ITestShape['isubject'], initializer: (c?: any) => ITestShape['given'], artificer: ITestArtificer, testResource: ITTestResourceConfiguration, initialValues: any) => Promise<ITestShape['istore']>;
-} & ITestInterface<ITestShape>;
+};
 export declare type INodeTestInterface<ITestShape extends IBaseTest> = {
     assertThis: (x: ITestShape['then']) => void;
     andWhen: (store: ITestShape['istore'], whenCB: ITestShape['when'], testResource: ITTestResourceConfiguration) => Promise<ITestShape['istore']>;
@@ -56,7 +51,7 @@ export declare type INodeTestInterface<ITestShape extends IBaseTest> = {
     afterEach: (store: ITestShape['istore'], key: string, artificer: ITestArtificer) => Promise<unknown>;
     beforeAll: (input: ITestShape['iinput'], testResource: ITTestResourceConfiguration, artificer: ITestArtificer) => Promise<ITestShape['isubject']>;
     beforeEach: (subject: ITestShape['isubject'], initializer: (c?: any) => ITestShape['given'], artificer: ITestArtificer, testResource: ITTestResourceConfiguration, initialValues: any) => Promise<ITestShape['istore']>;
-} & ITestInterface<ITestShape>;
+};
 export declare type ITestInterface<ITestShape extends IBaseTest> = {
     assertThis: (x: ITestShape['then']) => void;
     andWhen: (store: ITestShape['istore'], whenCB: ITestShape['when'], testResource: ITTestResourceConfiguration) => Promise<ITestShape['istore']>;

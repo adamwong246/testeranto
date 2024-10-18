@@ -1,11 +1,10 @@
-// for internal types only
-
 import { BrowserWindow } from "electron";
-import { Browser, Page } from "puppeteer-core";
-import { ITTestResourceConfiguration, ITestArtificer } from ".";
+
 import { IBaseTest } from "../Types";
 
+import { Puppeteer } from "./Puppeteer";
 import { IGivens, BaseCheck, BaseSuite, BaseGiven, BaseWhen, BaseThen } from "./abstractBase";
+import { ITTestResourceConfiguration, ITestArtificer } from ".";
 
 export type IRunTime = `node` | `web`;
 
@@ -14,7 +13,6 @@ export type ITestTypes = [
   IRunTime,
   ITestTypes[]
 ];
-
 
 export type IJsonConfig = {
   outdir: string,
@@ -39,44 +37,9 @@ export type IBaseConfig = {
 
 export type IBuiltConfig = { buildDir: string } & IBaseConfig;
 
-export type INodeUtils = TBrowser;
+export type INodeUtils = Puppeteer;
 export type IWebUtils = BrowserWindow;
 export type IUtils = INodeUtils | IWebUtils;
-
-export class TBrowser {
-  browser: Browser;
-  constructor(browser: Browser) {
-    this.browser = browser;
-  }
-  pages(): Promise<Page[]> {
-
-    return new Promise(async (res, rej) => {
-
-
-      res(
-        (await this.browser.pages()).map((p) => {
-          // const handler = {
-          //   apply: function (target, thisArg, argumentsList) {
-          //     console.log('screenshot was called with ' + JSON.stringify(argumentsList));
-          //     const x: ScreenshotOptions = argumentsList[0]
-          //     x.path = "./dist/" + x.path;
-          //     console.log('x.path' + x.path, target, thisArg);
-          //     return target(...argumentsList);
-          //   }
-          // };
-          // p.screenshot = new Proxy(p.screenshot, handler);
-          return p;
-        })
-      );
-    });
-
-  }
-  // pages(): Promise<TPage[]> {
-  //   return super.pages();
-  // }
-}
-
-
 
 export type IWebTestInterface<
   ITestShape extends IBaseTest
@@ -119,13 +82,13 @@ export type IWebTestInterface<
     initialValues,
     // utils: IUtils
   ) => Promise<ITestShape['istore']>;
-} & ITestInterface<ITestShape>;
+};
+// & ITestInterface<ITestShape>;
 
 export type INodeTestInterface<
   ITestShape extends IBaseTest
 > = {
   assertThis: (x: ITestShape['then']) => void,
-
   andWhen: (
     store: ITestShape['istore'],
     whenCB: ITestShape['when'],
@@ -136,7 +99,6 @@ export type INodeTestInterface<
     thenCB,
     testResource: ITTestResourceConfiguration
   ) => Promise<ITestShape['iselection']>;
-
   afterAll: (
     store: ITestShape['istore'],
     artificer: ITestArtificer,
@@ -162,7 +124,8 @@ export type INodeTestInterface<
     initialValues,
     // utils: IUtils
   ) => Promise<ITestShape['istore']>;
-} & ITestInterface<ITestShape>;
+};
+// & ITestInterface<ITestShape>;
 
 
 export type ITestInterface<
@@ -236,33 +199,3 @@ export type ICheckKlasser<ITestShape extends IBaseTest> = (
   w,
   t
 ) => BaseCheck<ITestShape>;
-
-// export type ITestShaper<
-//   T extends IBaseTest,
-//   modifier
-// > = {
-//   given;
-//   when;
-//   then;
-//   suites;
-//   givens;
-//   whens;
-//   thens;
-//   checks;
-// };
-
-// export class TPage extends Page {
-//   // screenshot(options?: puppeteer.ScreenshotOptions) {
-//   //   return super.screenshot({
-//   //     ...options,
-//   //     path: "dist/" + (options ? options : { path: "" }).path,
-
-//   //   });
-//   // }
-// }
-// type If = {
-//   (modulePath: string | URL, options?: childProcess.ForkOptions): childProcess.ChildProcess;
-//   (modulePath: string | URL, args?: readonly string[], options?: childProcess.ForkOptions): childProcess.ChildProcess
-// };
-
-// const f: If = childProcess.fork;

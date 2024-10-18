@@ -14,7 +14,7 @@ import type {
   ITestImplementation,
   ITestSpecification,
 } from "./Types.js";
-import { ITestInterface, TBrowser, INodeTestInterface } from "./lib/types.js";
+import { ITestInterface, INodeTestInterface } from "./lib/types.js";
 
 const readJson = async (port: string): Promise<any> => new Promise((resolve, reject) => {
   let json = "";
@@ -95,7 +95,7 @@ class NodeTesteranto<TestShape extends IBaseTest> extends Testeranto<TestShape> 
       logPromise
     } = await t.receiveTestResourceConfig(
       partialTestResource,
-      new TBrowser(browser)
+      browser
     );
 
     Promise.all([...artifacts, logPromise]).then(async () => {

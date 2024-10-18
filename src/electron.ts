@@ -64,7 +64,10 @@ const main = async () => {
 
     console.log("launchNode", src, dest, " -> ", destFolder, argz);
 
-    const child = utilityProcess.fork(dest, [argz], { stdio: 'pipe' });
+    const child = utilityProcess.fork(dest, [argz], {
+      cwd: destFolder,
+      stdio: 'pipe'
+    });
 
     if (!fs.existsSync(destFolder)) { fs.mkdirSync(destFolder, { recursive: true }); }
     const stdout = fs.createWriteStream(`${destFolder}/stdout.log`);
@@ -218,15 +221,12 @@ const main = async () => {
         } else {
           console.error("runtime makes no sense", runtime);
         }
-      })
-
+      });
 
       console.log("ready and watching for changes...", configs.buildDir);
       fs.watch(configs.buildDir, {
         recursive: true,
       }, (eventType, changedFile) => {
-
-        console.log(eventType, changedFile);
 
         if (changedFile) {
           configs.tests.forEach(([test, runtime, secondaryArtifacts]) => {
@@ -241,13 +241,10 @@ const main = async () => {
             }
           })
         }
-
       })
     });
   });
-
   await pie.connect(app, puppeteer);
-
 };
 
 main();
