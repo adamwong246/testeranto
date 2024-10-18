@@ -71,7 +71,6 @@ const main = async () => {
         launchWebSecondary(process.cwd() + data);
       })
       .on("exit", (data) => {
-        fs.writeFileSync(`${destFolder}/stdout.log`, data.toString());
         stdout.close();
         stderr.close();
       });
@@ -92,7 +91,7 @@ const main = async () => {
   const launchWebSecondary = (htmlFile: string) => {
     console.log("launchWebSecondary", htmlFile);
     const subWin = new BrowserWindow({
-      show: true,
+      show: false,
 
       webPreferences: {
         nodeIntegration: true,
@@ -222,27 +221,27 @@ const main = async () => {
       });
 
       console.log("ready and watching for changes...", configs.buildDir);
-      fs.watch(
-        configs.buildDir,
-        {
-          recursive: true,
-        },
-        (eventType, changedFile) => {
-          if (changedFile) {
-            configs.tests.forEach(([test, runtime, secondaryArtifacts]) => {
-              if (watcher(test, runtime) === changer(changedFile)) {
-                if (runtime === "node") {
-                  launchNode(test, changer(changedFile));
-                } else if (runtime === "web") {
-                  launchWeb(test, changer(changedFile));
-                } else {
-                  console.error("runtime makes no sense", runtime);
-                }
-              }
-            });
-          }
-        }
-      );
+      // fs.watch(
+      //   configs.buildDir,
+      //   {
+      //     recursive: true,
+      //   },
+      //   (eventType, changedFile) => {
+      //     if (changedFile) {
+      //       configs.tests.forEach(([test, runtime, secondaryArtifacts]) => {
+      //         if (watcher(test, runtime) === changer(changedFile)) {
+      //           if (runtime === "node") {
+      //             launchNode(test, changer(changedFile));
+      //           } else if (runtime === "web") {
+      //             launchWeb(test, changer(changedFile));
+      //           } else {
+      //             console.error("runtime makes no sense", runtime);
+      //           }
+      //         }
+      //       });
+      //     }
+      //   }
+      // );
     });
   });
   await pie.connect(app, puppeteer);

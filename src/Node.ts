@@ -95,7 +95,7 @@ class NodeTesteranto<
     );
 
     Promise.all([...artifacts, logPromise]).then(async () => {
-      // process.exit(await failed ? 1 : 0);
+      process.exit((await failed) ? 1 : 0);
     });
   }
 }

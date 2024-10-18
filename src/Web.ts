@@ -81,7 +81,7 @@ class WebTesteranto<TestShape extends IBaseTest> extends Testeranto<TestShape> {
 
     Promise.all([...artifacts, logPromise]).then(async () => {
       var window = remote.getCurrentWindow();
-      // window.close();
+      window.close();
     });
   }
 }

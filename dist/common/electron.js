@@ -61,7 +61,6 @@ const main = async () => {
             launchWebSecondary(process.cwd() + data);
         })
             .on("exit", (data) => {
-            fs_1.default.writeFileSync(`${destFolder}/stdout.log`, data.toString());
             stdout.close();
             stderr.close();
         });
@@ -79,7 +78,7 @@ const main = async () => {
     const launchWebSecondary = (htmlFile) => {
         console.log("launchWebSecondary", htmlFile);
         const subWin = new electron_1.BrowserWindow({
-            show: true,
+            show: false,
             webPreferences: {
                 nodeIntegration: true,
                 nodeIntegrationInWorker: true,
@@ -182,25 +181,27 @@ const main = async () => {
                 }
             });
             console.log("ready and watching for changes...", configs.buildDir);
-            fs_1.default.watch(configs.buildDir, {
-                recursive: true,
-            }, (eventType, changedFile) => {
-                if (changedFile) {
-                    configs.tests.forEach(([test, runtime, secondaryArtifacts]) => {
-                        if (watcher(test, runtime) === changer(changedFile)) {
-                            if (runtime === "node") {
-                                launchNode(test, changer(changedFile));
-                            }
-                            else if (runtime === "web") {
-                                launchWeb(test, changer(changedFile));
-                            }
-                            else {
-                                console.error("runtime makes no sense", runtime);
-                            }
-                        }
-                    });
-                }
-            });
+            // fs.watch(
+            //   configs.buildDir,
+            //   {
+            //     recursive: true,
+            //   },
+            //   (eventType, changedFile) => {
+            //     if (changedFile) {
+            //       configs.tests.forEach(([test, runtime, secondaryArtifacts]) => {
+            //         if (watcher(test, runtime) === changer(changedFile)) {
+            //           if (runtime === "node") {
+            //             launchNode(test, changer(changedFile));
+            //           } else if (runtime === "web") {
+            //             launchWeb(test, changer(changedFile));
+            //           } else {
+            //             console.error("runtime makes no sense", runtime);
+            //           }
+            //         }
+            //       });
+            //     }
+            //   }
+            // );
         });
     });
     await puppeteer_in_electron_1.default.connect(electron_1.app, puppeteer_core_1.default);

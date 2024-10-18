@@ -62,8 +62,9 @@ class ITProject {
                 fs_1.default.unlinkSync(chunk);
             });
         });
-        fs_1.default.copyFileSync("node_modules/testeranto/dist/prebuild/report.js", "./docs/Report.js");
-        fs_1.default.copyFileSync("node_modules/testeranto/dist/prebuild/report.css", "./docs/Report.css");
+        console.log("mark", process.cwd());
+        fs_1.default.copyFileSync("./node_modules/testeranto/dist/prebuild/Report.js", "./docs/Report.js");
+        fs_1.default.copyFileSync("./node_modules/testeranto/dist/prebuild/Report.css", "./docs/Report.css");
         fs_1.default.writeFileSync(`${config.outdir}/report.html`, (0, report_html_js_1.default)());
         Promise.all([
             fs_1.default.promises.writeFile(`${config.outdir}/testeranto.json`, JSON.stringify(Object.assign(Object.assign({}, config), { buildDir: process.cwd() + "/" + config.outdir }), null, 2)),

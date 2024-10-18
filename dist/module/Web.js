@@ -39,7 +39,7 @@ class WebTesteranto extends Testeranto {
         const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(partialTestResource, remote);
         Promise.all([...artifacts, logPromise]).then(async () => {
             var window = remote.getCurrentWindow();
-            // window.close();
+            window.close();
         });
     }
 }

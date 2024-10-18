@@ -55,7 +55,7 @@ class NodeTesteranto extends core_js_1.default {
         });
         const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(partialTestResource, browser);
         Promise.all([...artifacts, logPromise]).then(async () => {
-            // process.exit(await failed ? 1 : 0);
+            process.exit((await failed) ? 1 : 0);
         });
     }
 }

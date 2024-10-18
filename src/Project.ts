@@ -92,12 +92,13 @@ export class ITProject {
       }
     );
 
+    console.log("mark", process.cwd());
     fs.copyFileSync(
-      "node_modules/testeranto/dist/prebuild/report.js",
+      "./node_modules/testeranto/dist/prebuild/Report.js",
       "./docs/Report.js"
     );
     fs.copyFileSync(
-      "node_modules/testeranto/dist/prebuild/report.css",
+      "./node_modules/testeranto/dist/prebuild/Report.css",
       "./docs/Report.css"
     );
 
