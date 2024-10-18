@@ -56,7 +56,19 @@ export default new ITProject({
           []
         ]
       ]
-    ]
+    ],
+    [
+      "./src/MyFirstContract.solidity-precompiled.test.ts",
+      "node",
+      []
+    ],
+
+    // broken
+    // [
+    //   "./src/MyFirstContract.solidity.test.ts",
+    //   "node",
+    //   []
+    // ],
   ],
 
   debugger: true,

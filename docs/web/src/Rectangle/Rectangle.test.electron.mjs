@@ -1,9 +1,9 @@
 import {
   Web_default
-} from "../../chunk-PS5UXWOB.mjs";
+} from "../../chunk-HJQFDMFU.mjs";
 import {
   assert
-} from "../../chunk-TCOIN77H.mjs";
+} from "../../chunk-3HEJ35MW.mjs";
 import "../../chunk-TTFRSOOU.mjs";
 
 // src/Rectangle.ts
@@ -98,6 +98,11 @@ var RectangleTesterantoBaseTestSpecification = (Suite, Given, When, Then, Check)
           [`hello`],
           [When.setHeight(5), When.setWidth(5)],
           [Then.area(5)]
+        ),
+        "test4": Given.Default(
+          [`hello`],
+          [When.setHeight(6), When.setWidth(6)],
+          [Then.area(37)]
         )
       },
       []

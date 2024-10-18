@@ -1,21 +1,21 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
   Node_default
-} from "../../chunk-MXBI2QHH.mjs";
+} from "../../chunk-JLEL7NCS.mjs";
 import {
   assert
-} from "../../chunk-Q4NYQHGO.mjs";
-import "../../chunk-DIETH6TS.mjs";
-import "../../chunk-HLUKRQNO.mjs";
-import "../../chunk-676TEQ6V.mjs";
+} from "../../chunk-GHFYKOO4.mjs";
+import "../../chunk-RD6NELNE.mjs";
+import "../../chunk-HRTB753X.mjs";
+import "../../chunk-J74XOMIJ.mjs";
 import {
   init_cjs_shim
-} from "../../chunk-BJRHXCMP.mjs";
+} from "../../chunk-LD4XAW36.mjs";
 
 // src/Rectangle/Rectangle.test.node.ts
 init_cjs_shim();
 
-// node_modules/testeranto/dist/module/SubPackages/puppeteer.js
+// ../testeranto/dist/module/SubPackages/puppeteer.js
 init_cjs_shim();
 import React from "react";
 var puppeteer_default = (testInput, testSpecifications, testImplementations, testInterface2) => {
@@ -127,6 +127,11 @@ var RectangleTesterantoBaseTestSpecification = (Suite, Given, When, Then, Check)
           [`hello`],
           [When.setHeight(5), When.setWidth(5)],
           [Then.area(5)]
+        ),
+        "test4": Given.Default(
+          [`hello`],
+          [When.setHeight(6), When.setWidth(6)],
+          [Then.area(37)]
         )
       },
       []

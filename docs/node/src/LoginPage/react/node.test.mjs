@@ -3,28 +3,28 @@ import {
   LoginPageSpecs,
   LoginPage_default,
   actions
-} from "../../../chunk-AE5HW5IP.mjs";
-import "../../../chunk-562JFTRV.mjs";
+} from "../../../chunk-USNGQTZA.mjs";
+import "../../../chunk-ZYSDJLN5.mjs";
 import {
   Node_default
-} from "../../../chunk-MXBI2QHH.mjs";
+} from "../../../chunk-JLEL7NCS.mjs";
 import {
   assert
-} from "../../../chunk-Q4NYQHGO.mjs";
-import "../../../chunk-DIETH6TS.mjs";
-import "../../../chunk-HLUKRQNO.mjs";
-import "../../../chunk-676TEQ6V.mjs";
+} from "../../../chunk-GHFYKOO4.mjs";
+import "../../../chunk-RD6NELNE.mjs";
+import "../../../chunk-HRTB753X.mjs";
+import "../../../chunk-J74XOMIJ.mjs";
 import {
   init_cjs_shim
-} from "../../../chunk-BJRHXCMP.mjs";
+} from "../../../chunk-LD4XAW36.mjs";
 
 // src/LoginPage/react/node.test.tsx
 init_cjs_shim();
 
-// node_modules/testeranto/dist/module/SubPackages/react/jsx/node.js
+// ../testeranto/dist/module/SubPackages/react/jsx/node.js
 init_cjs_shim();
 
-// node_modules/testeranto/dist/module/SubPackages/react/jsx/index.js
+// ../testeranto/dist/module/SubPackages/react/jsx/index.js
 init_cjs_shim();
 var testInterface = {
   beforeEach: async (x, ndx, testRsource, artificer) => {
@@ -37,7 +37,7 @@ var testInterface = {
   }
 };
 
-// node_modules/testeranto/dist/module/SubPackages/react/jsx/node.js
+// ../testeranto/dist/module/SubPackages/react/jsx/node.js
 var node_default = (testImplementations, testSpecifications, testInput, testInterface2) => {
   return Node_default(testInput, testSpecifications, testImplementations, Object.assign(Object.assign({}, testInterface), testInterface2));
 };

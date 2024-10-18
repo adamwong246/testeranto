@@ -1,0 +1,9 @@
+hello world
+connected! true
+testResourceConfiguration {
+  "scheduled": true,
+  "name": "./src/app.reduxToolkit.test.ts",
+  "ports": [],
+  "fs": "/Users/adam/Code/kokomoBay/docs/node/src/app.reduxToolkit.test"
+}
+exiting gracefully with 1 failures.

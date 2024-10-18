@@ -25,6 +25,7 @@ const implementations: any = {
   },
   thens: {
     TheEmailIs: (email) => (storeState) => {
+      console.log("foobar")
       assert.equal(storeState.email, email)
     }
     ,

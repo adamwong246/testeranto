@@ -1,22 +1,24 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
-  AppSpecification,
-  Node_default
-} from "../chunk-MRU4BZ2U.mjs";
+  AppSpecification
+} from "../chunk-2X2TLOYS.mjs";
 import {
   loginApp,
   require_redux
-} from "../chunk-562JFTRV.mjs";
+} from "../chunk-ZYSDJLN5.mjs";
+import {
+  Node_default
+} from "../chunk-NS6IKN45.mjs";
 import {
   assert
-} from "../chunk-Q4NYQHGO.mjs";
-import "../chunk-DIETH6TS.mjs";
-import "../chunk-HLUKRQNO.mjs";
-import "../chunk-676TEQ6V.mjs";
+} from "../chunk-GHFYKOO4.mjs";
+import "../chunk-RD6NELNE.mjs";
+import "../chunk-HRTB753X.mjs";
+import "../chunk-J74XOMIJ.mjs";
 import {
   __toESM,
   init_cjs_shim
-} from "../chunk-BJRHXCMP.mjs";
+} from "../chunk-LD4XAW36.mjs";
 
 // src/app.redux.test.ts
 init_cjs_shim();
@@ -66,6 +68,7 @@ var implementations = {
   },
   thens: {
     TheEmailIs: (email) => (storeState) => {
+      console.log("foobar");
       assert.equal(storeState.email, email);
     },
     TheEmailIsNot: (email) => (storeState) => assert.notEqual(storeState.email, email),

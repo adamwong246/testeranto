@@ -35,6 +35,10 @@
     {
       "test": "./src/Rectangle/Rectangle.test.node.ts",
       "runtime": "node"
+    },
+    {
+      "test": "./src/MyFirstContract.solidity-precompiled.test.ts",
+      "runtime": "node"
     }
   ],
   "buildDir": "/Users/adam/Code/kokomoBay/docs"

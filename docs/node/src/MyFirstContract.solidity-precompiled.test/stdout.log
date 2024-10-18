@@ -1,0 +1,290 @@
+connected! true
+testResourceConfiguration {
+  "scheduled": true,
+  "name": "./src/MyFirstContract.solidity-precompiled.test.ts",
+  "ports": [],
+  "fs": "/Users/adam/Code/kokomoBay/docs/node/src/MyFirstContract.solidity-precompiled.test"
+}
+eth_accounts
+eth_getBlockByNumber
+eth_gasPrice
+eth_sendTransaction
+
+  Transaction: 0xf94cb8b3d17e84881ed4eb6d3dedc91f2e4ae9e3b8a761b10753d26eae08d504
+  Contract created: 0x03c9498a1a3decb7482d2b0e2a1d21529c946654
+  Gas usage: 113457
+  Block number: 1
+  Block time: Thu Oct 17 2024 19:31:42 GMT-0700 (Pacific Daylight Time)
+
+eth_getTransactionReceipt
+eth_getCode
+eth_call
+eth_accounts
+eth_getBlockByNumber
+eth_gasPrice
+eth_sendTransaction
+
+  Transaction: 0x1faccf22f99c93a8c88cff1300279118090a803982072db2f904eea82a47ebab
+  Contract created: 0x4cf1895ec1c8e32a2ce061d4e5058b6371951565
+  Gas usage: 113457
+  Block number: 1
+  Block time: Thu Oct 17 2024 19:31:42 GMT-0700 (Pacific Daylight Time)
+
+eth_getTransactionReceipt
+eth_getCode
+eth_getBlockByNumber
+eth_gasPrice
+eth_sendTransaction
+
+  Transaction: 0x9e1fe865f61140db7f4079ea468254edc5501c54b7d4a9a1a19a8bbb9b61f9d2
+  Gas usage: 43403
+  Block number: 2
+  Block time: Thu Oct 17 2024 19:31:42 GMT-0700 (Pacific Daylight Time)
+
+eth_getTransactionReceipt
+eth_getBlockByNumber
+eth_gasPrice
+eth_sendTransaction
+
+  Transaction: 0x4d36c62bb97fbeb213f700d423f4d9da4579372188cff3b908b39f85d9990c51
+  Gas usage: 26303
+  Block number: 3
+  Block time: Thu Oct 17 2024 19:31:42 GMT-0700 (Pacific Daylight Time)
+
+eth_getTransactionReceipt
+eth_getBlockByNumber
+eth_gasPrice
+eth_sendTransaction
+
+  Transaction: 0xc3792ca16e3bbe3b66ed5118726613199a0cbc8c1c4931fe8a9a0cb54f81d7c2
+  Gas usage: 26303
+  Block number: 4
+  Block time: Thu Oct 17 2024 19:31:42 GMT-0700 (Pacific Daylight Time)
+
+eth_getTransactionReceipt
+eth_getBlockByNumber
+eth_gasPrice
+eth_sendTransaction
+
+  Transaction: 0x95184e2727a16033af7905e307355805665ac23bb565204b39981811e5cebf89
+  Gas usage: 26303
+  Block number: 5
+  Block time: Thu Oct 17 2024 19:31:42 GMT-0700 (Pacific Daylight Time)
+
+eth_getTransactionReceipt
+eth_getBlockByNumber
+eth_gasPrice
+eth_sendTransaction
+
+  Transaction: 0x792163aeb6f58c3630256664df4e34c29d05f3f71685caf7dbf355eb03ce51e1
+  Gas usage: 26303
+  Block number: 6
+  Block time: Thu Oct 17 2024 19:31:42 GMT-0700 (Pacific Daylight Time)
+
+eth_getTransactionReceipt
+eth_getBlockByNumber
+eth_gasPrice
+eth_sendTransaction
+
+  Transaction: 0xe8ae158c7b3e5b3e9d1a762432fdf72bd4d9c1a1e2162d883f4127a41ed532c7
+  Gas usage: 26303
+  Block number: 7
+  Block time: Thu Oct 17 2024 19:31:42 GMT-0700 (Pacific Daylight Time)
+
+eth_getTransactionReceipt
+eth_getBlockByNumber
+eth_gasPrice
+eth_sendTransaction
+
+  Transaction: 0x30fef65f5a37186934c64404f2d43f258af6ae90e85f0190081a9cd93a3b986c
+  Gas usage: 26303
+  Block number: 8
+  Block time: Thu Oct 17 2024 19:31:42 GMT-0700 (Pacific Daylight Time)
+
+eth_getTransactionReceipt
+eth_getBlockByNumber
+eth_gasPrice
+eth_sendTransaction
+
+  Transaction: 0x2a23a3038c0f8eaea99f265fef5e8a61295f46e3abb8dcc0562cce1064c894f8
+  Gas usage: 26303
+  Block number: 9
+  Block time: Thu Oct 17 2024 19:31:42 GMT-0700 (Pacific Daylight Time)
+
+eth_getTransactionReceipt
+eth_getBlockByNumber
+eth_gasPrice
+eth_sendTransaction
+
+  Transaction: 0x0941da795028333d435e2636e1ce3f45e4dc87cfed79fad8c95f1a8c401a8006
+  Gas usage: 26303
+  Block number: 10
+  Block time: Thu Oct 17 2024 19:31:42 GMT-0700 (Pacific Daylight Time)
+
+eth_getTransactionReceipt
+eth_getBlockByNumber
+eth_gasPrice
+eth_sendTransaction
+
+  Transaction: 0x6f4aeef91fa61bdd2e2e72df312bddf9c822190660dc7e7d3956b01b79ab3702
+  Gas usage: 26303
+  Block number: 11
+  Block time: Thu Oct 17 2024 19:31:42 GMT-0700 (Pacific Daylight Time)
+
+eth_getTransactionReceipt
+eth_getBlockByNumber
+eth_gasPrice
+eth_sendTransaction
+
+  Transaction: 0x4e638bdc07d28c289dba45d6c2f9d63e446fedec9c7f91b6b969d66d4309d64d
+  Gas usage: 26303
+  Block number: 12
+  Block time: Thu Oct 17 2024 19:31:42 GMT-0700 (Pacific Daylight Time)
+
+eth_getTransactionReceipt
+eth_getBlockByNumber
+eth_gasPrice
+eth_sendTransaction
+
+  Transaction: 0xc7ce93b9d1ab82fcc4c6218cefb39e7de429ff8dfddf5cf826cb573574138b78
+  Gas usage: 26303
+  Block number: 13
+  Block time: Thu Oct 17 2024 19:31:42 GMT-0700 (Pacific Daylight Time)
+
+eth_getTransactionReceipt
+eth_getBlockByNumber
+eth_gasPrice
+eth_sendTransaction
+
+  Transaction: 0xca1b8fce5111201e0c3d1e100c8dadbab721db167bd03cd04d537bc407c126d1
+  Gas usage: 26303
+  Block number: 14
+  Block time: Thu Oct 17 2024 19:31:42 GMT-0700 (Pacific Daylight Time)
+
+eth_getTransactionReceipt
+eth_getBlockByNumber
+eth_gasPrice
+eth_sendTransaction
+
+  Transaction: 0x2bffb54bcd74bbd3576380732bc38a023e4f3a8d517ad2a7653d0860d517fd45
+  Gas usage: 26303
+  Block number: 15
+  Block time: Thu Oct 17 2024 19:31:42 GMT-0700 (Pacific Daylight Time)
+
+eth_getTransactionReceipt
+eth_getBlockByNumber
+eth_gasPrice
+eth_sendTransaction
+
+  Transaction: 0xb6b2c2b58fe5c23e771cd4c5d5dd992da7eba7aebd96a7f541b8d48e9ae704b3
+  Gas usage: 26303
+  Block number: 16
+  Block time: Thu Oct 17 2024 19:31:42 GMT-0700 (Pacific Daylight Time)
+
+eth_getTransactionReceipt
+eth_getBlockByNumber
+eth_gasPrice
+eth_sendTransaction
+
+  Transaction: 0xb724715e78d5710dc72e85a4575be7a23542bba5ed2b48e3b0cc212367508f75
+  Gas usage: 26303
+  Block number: 17
+  Block time: Thu Oct 17 2024 19:31:42 GMT-0700 (Pacific Daylight Time)
+
+eth_getTransactionReceipt
+eth_call
+eth_accounts
+eth_getBlockByNumber
+eth_gasPrice
+eth_sendTransaction
+
+  Transaction: 0x6218db01861936930f607c4d072345463b3012cd2b58dcf826ad24972fa2e312
+  Contract created: 0x41b510e563b20532e516626b17b1449415e3957b
+  Gas usage: 113457
+  Block number: 1
+  Block time: Thu Oct 17 2024 19:31:42 GMT-0700 (Pacific Daylight Time)
+
+eth_getTransactionReceipt
+eth_getCode
+eth_getBlockByNumber
+eth_gasPrice
+eth_sendTransaction
+
+  Transaction: 0x04310525a658f9b7d1ef443394aa66558725716d42a8bd89d770f475b912a869
+  Gas usage: 43403
+  Block number: 2
+  Block time: Thu Oct 17 2024 19:31:42 GMT-0700 (Pacific Daylight Time)
+
+eth_getTransactionReceipt
+eth_getBlockByNumber
+eth_gasPrice
+eth_sendTransaction
+
+  Transaction: 0xef0a80e1fb61a7b8901b59ac08f8823f02b33c45bcc301b7b842bff66457cb12
+  Gas usage: 26303
+  Block number: 3
+  Block time: Thu Oct 17 2024 19:31:42 GMT-0700 (Pacific Daylight Time)
+
+eth_getTransactionReceipt
+eth_getBlockByNumber
+eth_gasPrice
+eth_sendTransaction
+
+  Transaction: 0xddf4747dc79dfbcc63856ab1a9b56148d6adaff361b643eb8b485a2b42e0097e
+  Gas usage: 26303
+  Block number: 4
+  Block time: Thu Oct 17 2024 19:31:42 GMT-0700 (Pacific Daylight Time)
+
+eth_getTransactionReceipt
+eth_getBlockByNumber
+eth_gasPrice
+eth_sendTransaction
+
+  Transaction: 0xb61b5a7280046122c81c841ea7d5e12c8f4ef760d2c80ba5ca919d812ac3469b
+  Gas usage: 26303
+  Block number: 5
+  Block time: Thu Oct 17 2024 19:31:42 GMT-0700 (Pacific Daylight Time)
+
+eth_getTransactionReceipt
+eth_getBlockByNumber
+eth_gasPrice
+eth_sendTransaction
+
+  Transaction: 0x2c2d49d14b549bc732d5d0c26df3187c5e16f49c88202048ae223c468138d309
+  Gas usage: 26344
+  Block number: 6
+  Block time: Thu Oct 17 2024 19:31:42 GMT-0700 (Pacific Daylight Time)
+
+eth_getTransactionReceipt
+eth_getBlockByNumber
+eth_gasPrice
+eth_sendTransaction
+
+  Transaction: 0x7b9053c118b3ae51d7b2192ed86c4999d15574fb6cc0a738d1a7023df917145c
+  Gas usage: 26344
+  Block number: 7
+  Block time: Thu Oct 17 2024 19:31:42 GMT-0700 (Pacific Daylight Time)
+
+eth_getTransactionReceipt
+eth_getBlockByNumber
+eth_gasPrice
+eth_sendTransaction
+
+  Transaction: 0x09f40b1a0eb9cae29df498a0ea697d8e2a42e01eae12268aa596094a86cda94c
+  Gas usage: 26344
+  Block number: 8
+  Block time: Thu Oct 17 2024 19:31:42 GMT-0700 (Pacific Daylight Time)
+
+eth_getTransactionReceipt
+eth_getBlockByNumber
+eth_gasPrice
+eth_sendTransaction
+
+  Transaction: 0x15300b0caa643ccc11da91cc9d7b0d50854c9810ad77424086bdd8f8dad6ea6e
+  Gas usage: 21544
+  Block number: 9
+  Block time: Thu Oct 17 2024 19:31:42 GMT-0700 (Pacific Daylight Time)
+
+eth_getTransactionReceipt
+eth_call
+exiting gracefully with 0 failures.

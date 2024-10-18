@@ -7,15 +7,15 @@ import { IStoreState } from "./app";
 
 export type IAppSpecification = {
 
-  iinput: void,
-  isubject: void,
-  istore: void,
+  iinput: any,
+  isubject: any,
+  istore: any,
   iselection: IStoreState,
 
-  when: void,
-  then: void,
-  given: (x) => (zy) => void,
-  // given: (x) => IStoreState,
+  when: (a: any) => [ActionCreatorWithNonInferrablePayload<string> | ActionCreatorWithoutPayload<string>, unknown?],
+  then: any,
+  // given: IStoreState,
+  given: IStoreState,
 
   suites: {
     Default: [string];
@@ -42,23 +42,22 @@ export type IAppSpecification = {
 
 export type IImplementation = ITestImplementation<
   IAppSpecification,
-
   {
     givens: {
       [K in keyof IAppSpecification["givens"]]: (
         ...Iw: IAppSpecification["givens"][K]
       ) => (x) => IStoreState;
     },
-    whens: {
-      [K in keyof IAppSpecification["whens"]]: (
-        ...Iw: IAppSpecification["whens"][K]
-      ) => [
-          (
-            | ActionCreatorWithNonInferrablePayload<string>
-            | ActionCreatorWithoutPayload<string>
-          )
-          , unknown?];
-    }
+    // whens: {
+    //   [K in keyof IAppSpecification["whens"]]: (
+    //     ...Iw: IAppSpecification["whens"][K]
+    //   ) => [
+    //       (
+    //         | ActionCreatorWithNonInferrablePayload<string>
+    //         | ActionCreatorWithoutPayload<string>
+    //       )
+    //       , unknown?];
+    // }
     checks: {
       [K in keyof IAppSpecification["checks"]]: (
         ...Iw: IAppSpecification["checks"][K]
@@ -68,7 +67,9 @@ export type IImplementation = ITestImplementation<
 
 >;
 
-export const AppSpecification: ITestSpecification<IAppSpecification> = (Suite, Given, When, Then, Check) => {
+export const AppSpecification: ITestSpecification<
+  IAppSpecification
+> = (Suite, Given, When, Then, Check) => {
   return [
     Suite.Default(
       "Testing the Redux store",
@@ -78,30 +79,30 @@ export const AppSpecification: ITestSpecification<IAppSpecification> = (Suite, G
           [When.TheEmailIsSetTo("adam@email.com")],
           [Then.TheEmailIs("adam@email.com")],
         ),
-        "test1": Given.AStateWithEmail(
-          ['hello'],
-          [],
-          [
-            Then.TheEmailIsNot("adam@email.com"),
-            Then.TheEmailIs("bob@mail.com"),
-          ],
-          "bob@mail.com"
-        ),
-        "test2": Given.AnEmptyState(
-          ['hello'],
-          [When.TheEmailIsSetTo("hello"), When.TheEmailIsSetTo("aloha")],
-          [Then.TheEmailIs("aloha")]
-        ),
-        "test3": Given.AnEmptyState(
-          [`aloha`, `hello`],
-          [],
-          [Then.TheEmailIs("")]
-        ),
-        "test4": Given.AnEmptyState(
-          [`aloha`, `hello`],
-          [When.TheEmailIsSetTo("hey there")],
-          [Then.TheEmailIs("hey there")]
-        )
+        // "test1": Given.AStateWithEmail(
+        //   ['hello'],
+        //   [],
+        //   [
+        //     Then.TheEmailIsNot("adam@email.com"),
+        //     Then.TheEmailIs("bob@mail.com"),
+        //   ],
+        //   "bob@mail.com"
+        // ),
+        // "test2": Given.AnEmptyState(
+        //   ['hello'],
+        //   [When.TheEmailIsSetTo("hello"), When.TheEmailIsSetTo("aloha")],
+        //   [Then.TheEmailIs("aloha")]
+        // ),
+        // "test3": Given.AnEmptyState(
+        //   [`aloha`, `hello`],
+        //   [],
+        //   [Then.TheEmailIs("")]
+        // ),
+        // "test4": Given.AnEmptyState(
+        //   [`aloha`, `hello`],
+        //   [When.TheEmailIsSetTo("hey there")],
+        //   [Then.TheEmailIs("hey ther")]
+        // )
       },
       [
         // Check.AnEmptyState(

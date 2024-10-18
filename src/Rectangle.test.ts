@@ -1,7 +1,6 @@
 import { assert } from "chai";
 
 import type {
-  ITestInterface,
   ITestSpecification,
   ITestImplementation,
   IPartialInterface,
@@ -137,6 +136,12 @@ export const RectangleTesterantoBaseTestSpecification: ITestSpecification<IRecta
             [`hello`],
             [When.setHeight(5), When.setWidth(5)],
             [Then.area(5)]
+          ),
+
+          "test4": Given.Default(
+            [`hello`],
+            [When.setHeight(6), When.setWidth(6)],
+            [Then.area(37)]
           )
         },
         []
@@ -178,6 +183,9 @@ export const RectangleTesterantoBaseInterface: IPartialInterface<IRectangleTestS
     actioner(renderer);
     return renderer;
   },
+  butThen: (s, t, tr) => {
+    return t(s);
+  }
 };
 
 export const RectangleTesterantoBasePrototype = Rectangle.prototype;

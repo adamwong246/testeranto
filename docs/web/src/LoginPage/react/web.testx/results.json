@@ -1,0 +1,111 @@
+{
+  "name": "Testing the LoginPage as react",
+  "givens": [
+    {
+      "name": "default",
+      "whens": [
+        {
+          "name": "TheEmailIsSetTo: adam@email.com"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheEmailIs: adam@email.com"
+        }
+      ],
+      "error": null,
+      "features": []
+    },
+    {
+      "name": "default",
+      "whens": [
+        {
+          "name": "TheEmailIsSetTo: adam@email.com"
+        },
+        {
+          "name": "ThePasswordIsSetTo: secret"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheEmailIsNot: wade@rpc"
+        },
+        {
+          "name": "TheEmailIs: adam@email.com"
+        },
+        {
+          "name": "ThePasswordIs: secret"
+        },
+        {
+          "name": "ThePasswordIsNot: idk"
+        }
+      ],
+      "error": null,
+      "features": []
+    },
+    {
+      "name": "default",
+      "whens": [
+        {
+          "name": "TheEmailIsSetTo: adam"
+        }
+      ],
+      "thens": [
+        {
+          "name": "ThereIsNotAnEmailError: undefined"
+        }
+      ],
+      "error": null,
+      "features": []
+    },
+    {
+      "name": "default",
+      "whens": [
+        {
+          "name": "TheEmailIsSetTo: bob"
+        },
+        {
+          "name": "TheLoginIsSubmitted: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "ThereIsAnEmailError: undefined"
+        }
+      ],
+      "error": null,
+      "features": []
+    },
+    {
+      "name": "default",
+      "whens": [
+        {
+          "name": "TheEmailIsSetTo: adam@mail.com"
+        },
+        {
+          "name": "ThePasswordIsSetTo: foso"
+        }
+      ],
+      "thens": [
+        {
+          "name": "ThereIsNotAnEmailError: undefined",
+          "error": true
+        }
+      ],
+      "error": [
+        {
+          "name": "AssertionError",
+          "message": "expected 'invalidEmail' to equal 'no_error'",
+          "showDiff": true,
+          "actual": "invalidEmail",
+          "expected": "no_error",
+          "operator": "strictEqual",
+          "stack": "AssertionError: expected 'invalidEmail' to equal 'no_error'\n    at file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs:698:14\n    at Object.butThen (file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs:21:37)\n    at Then.butThen (file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs:534:42)\n    at Then.test (file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs:212:28)\n    at Given.give (file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs:151:34)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs:71:22)\n    at async file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs:295:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs:341:29)\n    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs:616:9)"
+        },
+        "AssertionError: expected 'invalidEmail' to equal 'no_error'\n    at file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs:698:14\n    at Object.butThen (file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs:21:37)\n    at Then.butThen (file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs:534:42)\n    at Then.test (file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs:212:28)\n    at Given.give (file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs:151:34)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs:71:22)\n    at async file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs:295:14\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs:341:29)\n    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs:616:9)"
+      ],
+      "features": []
+    }
+  ],
+  "fails": []
+}

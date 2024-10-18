@@ -1,0 +1,36 @@
+test resources: ,[object Object]
+
+Suite:,0,Testing the LoginPage as react
+
+ Given: default
+ When:,TheEmailIsSetTo: adam@email.com
+ Then:,TheEmailIs: adam@email.com
+
+ Given: default
+ When:,TheEmailIsSetTo: adam@email.com
+ When:,ThePasswordIsSetTo: secret
+ Then:,TheEmailIsNot: wade@rpc
+ Then:,TheEmailIs: adam@email.com
+ Then:,ThePasswordIs: secret
+ Then:,ThePasswordIsNot: idk
+
+ Given: default
+ When:,TheEmailIsSetTo: adam
+ Then:,ThereIsNotAnEmailError: undefined
+
+ Given: default
+ When:,TheEmailIsSetTo: bob
+ When:,TheLoginIsSubmitted: undefined
+ Then:,ThereIsAnEmailError: undefined
+
+ Given: default
+ When:,TheEmailIsSetTo: adam@mail.com
+ When:,ThePasswordIsSetTo: foso
+ Then:,ThereIsNotAnEmailError: undefined
+AssertionError: expected 'invalidEmail' to equal 'no_error'
+
+testArtiFactory =>,/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.testx/afterAll4-default/utils
+testArtiFactory =>,/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.testx/afterAll4-default/utils
+testArtiFactory =>,/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.testx/afterAll4-default/utils
+testArtiFactory =>,/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.testx/afterAll4-default/utils
+testArtiFactory =>,/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.testx/afterAll4-default/utils

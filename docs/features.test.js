@@ -24,9 +24,9 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 
-// node_modules/testeranto/node_modules/graphology/dist/graphology.umd.js
+// ../testeranto/node_modules/graphology/dist/graphology.umd.js
 var require_graphology_umd = __commonJS({
-  "node_modules/testeranto/node_modules/graphology/dist/graphology.umd.js"(exports, module) {
+  "../testeranto/node_modules/graphology/dist/graphology.umd.js"(exports, module) {
     (function(global, factory) {
       typeof exports === "object" && typeof module !== "undefined" ? module.exports = factory() : typeof define === "function" && define.amd ? define(factory) : (global = typeof globalThis !== "undefined" ? globalThis : global || self, global.graphology = factory());
     })(exports, function() {
@@ -3685,7 +3685,7 @@ var require_graphology_umd = __commonJS({
   }
 });
 
-// node_modules/testeranto/dist/module/Features.js
+// ../testeranto/dist/module/Features.js
 var import_graphology_umd = __toESM(require_graphology_umd(), 1);
 var { DirectedGraph, UndirectedGraph } = import_graphology_umd.default;
 var BaseFeature = class {

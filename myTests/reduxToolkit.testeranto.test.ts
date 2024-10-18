@@ -34,7 +34,7 @@ export const ReduxToolkitTesteranto = <
   ITestShape extends IBaseTest
 >(
   testImplementations: ITestImplementation<ITestShape, {
-    Whens: {
+    whens: {
       [K in keyof ITestShape["whens"]]: (
         ...Iw: ITestShape["whens"][K]
       ) => WhenShape;

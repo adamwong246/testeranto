@@ -1,0 +1,23 @@
+{
+  "name": "Testing the Redux store",
+  "givens": [
+    {
+      "name": "AnEmptyState",
+      "whens": [
+        {
+          "name": "TheEmailIsSetTo: adam@email.com"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheEmailIs: adam@email.com"
+        }
+      ],
+      "error": null,
+      "features": [
+        "hello"
+      ]
+    }
+  ],
+  "fails": []
+}

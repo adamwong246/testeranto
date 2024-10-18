@@ -2,15 +2,15 @@ import {
   LoginPageSpecs,
   LoginPage_default,
   actions
-} from "../../../chunk-643CTVD4.mjs";
+} from "../../../chunk-LD7PK274.mjs";
 import {
   assert,
   require_renderer
-} from "../../../chunk-TCOIN77H.mjs";
+} from "../../../chunk-3HEJ35MW.mjs";
 import "../../../chunk-X4RTFM5S.mjs";
 import "../../../chunk-TTFRSOOU.mjs";
 
-// node_modules/testeranto/src/lib/index.ts
+// ../testeranto/src/lib/index.ts
 var BaseTestInterface = {
   beforeAll: async (s) => s,
   beforeEach: async function(subject, initialValues, testResource) {
@@ -32,15 +32,8 @@ var defaultTestResourceRequirement = {
   ports: 0
 };
 
-// node_modules/testeranto/src/lib/abstractBase.ts
+// ../testeranto/src/lib/abstractBase.ts
 var BaseSuite = class {
-  name;
-  givens;
-  checks;
-  store;
-  fails;
-  testResourceConfiguration;
-  index;
   constructor(name, index, givens = {}, checks = []) {
     this.name = name;
     this.index = index;
@@ -109,15 +102,6 @@ var BaseSuite = class {
   }
 };
 var BaseGiven = class {
-  name;
-  features;
-  whens;
-  thens;
-  error;
-  store;
-  recommendedFsPath;
-  givenCB;
-  initialValues;
   constructor(name, features, whens, thens, givenCB, initialValues) {
     this.name = name;
     this.features = features;
@@ -187,9 +171,6 @@ var BaseGiven = class {
   }
 };
 var BaseWhen = class {
-  name;
-  whenCB;
-  error;
   constructor(name, whenCB) {
     this.name = name;
     this.whenCB = whenCB;
@@ -215,9 +196,6 @@ var BaseWhen = class {
   }
 };
 var BaseThen = class {
-  name;
-  thenCB;
-  error;
   constructor(name, thenCB) {
     this.name = name;
     this.thenCB = thenCB;
@@ -245,11 +223,6 @@ var BaseThen = class {
   }
 };
 var BaseCheck = class {
-  name;
-  features;
-  checkCB;
-  whens;
-  thens;
   constructor(name, features, checkCB, whens, thens) {
     this.name = name;
     this.features = features;
@@ -298,10 +271,11 @@ var BaseCheck = class {
   }
 };
 
-// node_modules/testeranto/src/lib/basebuilder.ts
+// ../testeranto/src/lib/basebuilder.ts
 var BaseBuilder = class {
   constructor(input, suitesOverrides, givenOverides, whenOverides, thenOverides, checkOverides, logWriter, testResourceRequirement, testSpecification) {
     this.input = input;
+    this.artifacts = [];
     this.artifacts = [];
     this.testResourceRequirement = testResourceRequirement;
     this.suitesOverrides = suitesOverrides;
@@ -381,6 +355,10 @@ var BaseBuilder = class {
               return suiteDone.givens[k].error;
             }
           ).length;
+          logWriter.writeFileSync(
+            `${testResourceConfiguration.fs}/exitcode`,
+            numberOfFailures.toString()
+          );
           console.log(`exiting gracefully with ${numberOfFailures} failures.`);
           return {
             failed: numberOfFailures,
@@ -391,17 +369,6 @@ var BaseBuilder = class {
       };
     });
   }
-  specs;
-  assertThis;
-  testResourceRequirement;
-  artifacts = [];
-  testJobs;
-  testSpecification;
-  suitesOverrides;
-  givenOverides;
-  whenOverides;
-  thenOverides;
-  checkOverides;
   Specs() {
     return this.specs;
   }
@@ -422,7 +389,7 @@ var BaseBuilder = class {
   }
 };
 
-// node_modules/testeranto/src/lib/classBuilder.ts
+// ../testeranto/src/lib/classBuilder.ts
 var ClassBuilder = class extends BaseBuilder {
   constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResourceRequirement, logWriter) {
     const classySuites = Object.entries(testImplementation.suites).reduce(
@@ -508,7 +475,7 @@ var ClassBuilder = class extends BaseBuilder {
   }
 };
 
-// node_modules/testeranto/src/lib/core.ts
+// ../testeranto/src/lib/core.ts
 var Testeranto = class extends ClassBuilder {
   constructor(input, testSpecification, testImplementation, testResourceRequirement = defaultTestResourceRequirement, logWriter, testInterface2) {
     const fullTestInterface = DefaultTestInterface(testInterface2);
@@ -572,7 +539,6 @@ var Testeranto = class extends ClassBuilder {
         }
       },
       class Check extends BaseCheck {
-        initialValues;
         constructor(name, features, checkCallback, whens, thens, initialValues) {
           super(name, features, checkCallback, whens, thens);
           this.initialValues = initialValues;
@@ -601,7 +567,7 @@ var Testeranto = class extends ClassBuilder {
   }
 };
 
-// node_modules/testeranto/src/Web.ts
+// ../testeranto/src/Web.ts
 var remote = require_renderer();
 var WebTesteranto = class extends Testeranto {
   constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface2) {
@@ -643,7 +609,6 @@ var WebTesteranto = class extends Testeranto {
     }
   }
   async receiveTestResourceConfig(t, partialTestResource) {
-    debugger;
     const {
       failed,
       artifacts,
@@ -667,7 +632,7 @@ var Web_default = async (input, testSpecification, testImplementation, testInter
   );
 };
 
-// node_modules/testeranto/src/SubPackages/react/jsx/index.ts
+// ../testeranto/src/SubPackages/react/jsx/index.ts
 var testInterface = {
   beforeEach: async (x, ndx, testRsource, artificer) => {
     return new Promise((resolve, rej) => {
@@ -679,7 +644,7 @@ var testInterface = {
   }
 };
 
-// node_modules/testeranto/src/SubPackages/react/jsx/web.ts
+// ../testeranto/src/SubPackages/react/jsx/web.ts
 var web_default = (testImplementations, testSpecifications, testInput, testInterface2) => {
   return Web_default(
     testInput,
