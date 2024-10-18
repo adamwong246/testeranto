@@ -11,19 +11,20 @@ export default test(
   LoginPageSpecs,
   LoginPage,
   {
-    afterAll: (store, artificer, utils: any) => {
-      const webContents = utils.getCurrentWebContents();
+    afterAll: (store, artificer, utils) => {
+      const webContents = utils.webContents;
 
-      webContents.capturePage({
-        x: 0,
-        y: 0,
-        width: 100,
-        height: 200
-      }, (img) => {
-        artificer("hello.png", img.toPng());
-      }).then((x) => {
-        console.log("done", x);
-      });
+      // webContents.capturePage({
+      //   x: 0,
+      //   y: 0,
+      //   width: 100,
+      //   height: 200
+      // }, (img: { toPng: () => any; }) => {
+      //   console.log("testing123")
+      //   artificer("hello.png", img.toPng());
+      // }).then((x) => {
+      //   console.log("done", x);
+      // });
       artificer("utils", "hellow orld");
       // console.log("HELLO WORLD");
       // console.log(store);

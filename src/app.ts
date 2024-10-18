@@ -4,9 +4,7 @@ import { createSelector, createSlice, createStore } from "@reduxjs/toolkit";
 
 console.log("hello world");
 
-import {
-  ILoginPageError, ILoginPageSelection
-} from "./LoginPage";
+import { ILoginPageError, ILoginPageSelection } from "./LoginPage";
 
 export type IStoreState = {
   password: string;
@@ -29,7 +27,7 @@ export const loginApp = createSlice<
     signIn: (s: IStoreState) => void;
   }
 >({
-  name: "my login app",
+  name: "my login app!",
   initialState,
   reducers: {
     reset: (state) => {

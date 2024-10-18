@@ -68,6 +68,7 @@ const implementations: IImpl = {
       assert.notEqual(reactElem.props.store.getState().error, "no_error");
     },
     ThereIsNotAnEmailError: () => (reactElem) => {
+      console.log("hello")
       assert.equal(reactElem.props.store.getState().error, "no_error");
     },
   },

@@ -1,10 +1,9 @@
 import {
   Web_default
-} from "../../chunk-HJQFDMFU.mjs";
+} from "../../chunk-T6BHAUR2.mjs";
 import {
   assert
-} from "../../chunk-3HEJ35MW.mjs";
-import "../../chunk-TTFRSOOU.mjs";
+} from "../../chunk-SNPBLUOM.mjs";
 
 // src/Rectangle.ts
 var Rectangle = class {
@@ -30,7 +29,7 @@ var Rectangle = class {
     return this.width * this.height;
   }
   circumference() {
-    return this.width * 2 + this.height * 2;
+    return this.width * 2 + this.height * 22;
   }
 };
 var Rectangle_default = Rectangle;

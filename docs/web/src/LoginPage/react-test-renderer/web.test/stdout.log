@@ -1,0 +1,70 @@
+{
+  "event": {},
+  "level": 1,
+  "message": "\"hello preloader\"",
+  "line": 4,
+  "sourceId": "/Users/adam/Code/testeranto/dist/common/preload.js"
+}
+{
+  "event": {},
+  "level": 1,
+  "message": "\"%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools\\nYou might need to use a local HTTP server (instead of file://): https://reactjs.org/link/react-devtools-faq font-weight:bold\"",
+  "line": 23655,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-QOTLVXVD.mjs"
+}
+{
+  "event": {},
+  "level": 1,
+  "message": "\"hello world\"",
+  "line": 26130,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-QOTLVXVD.mjs"
+}
+{
+  "event": {},
+  "level": 1,
+  "message": "\"testResourceConfiguration {\\n  \\\"name\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test\\\",\\n  \\\"ports\\\": \\\"\\\",\\n  \\\"fs\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test\\\"\\n}\"",
+  "line": 236,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-T6BHAUR2.mjs"
+}
+{
+  "event": {},
+  "level": 1,
+  "message": "\"initial test resource [object Object]\"",
+  "line": 409,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-T6BHAUR2.mjs"
+}
+{
+  "event": {},
+  "level": 1,
+  "message": "\"testResourceConfiguration {\\n  \\\"name\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test\\\",\\n  \\\"ports\\\": \\\"\\\",\\n  \\\"fs\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test\\\"\\n}\"",
+  "line": 236,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-T6BHAUR2.mjs"
+}
+{
+  "event": {},
+  "level": 3,
+  "message": "\"Warning: You seem to have overlapping act() calls, this is not supported. Be sure to await previous act() calls before making a new one. \"",
+  "line": 137,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-QOTLVXVD.mjs"
+}
+{
+  "event": {},
+  "level": 3,
+  "message": "\"Warning: You seem to have overlapping act() calls, this is not supported. Be sure to await previous act() calls before making a new one. \"",
+  "line": 137,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-QOTLVXVD.mjs"
+}
+{
+  "event": {},
+  "level": 1,
+  "message": "\"exiting gracefully with 0 failures.\"",
+  "line": 255,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-T6BHAUR2.mjs"
+}
+{
+  "event": {},
+  "level": 1,
+  "message": "\"exiting gracefully with 0 failures.\"",
+  "line": 255,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-T6BHAUR2.mjs"
+}

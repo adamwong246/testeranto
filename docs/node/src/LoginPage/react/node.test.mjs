@@ -3,15 +3,15 @@ import {
   LoginPageSpecs,
   LoginPage_default,
   actions
-} from "../../../chunk-USNGQTZA.mjs";
-import "../../../chunk-ZYSDJLN5.mjs";
+} from "../../../chunk-SUGEA42X.mjs";
 import {
   Node_default
-} from "../../../chunk-JLEL7NCS.mjs";
+} from "../../../chunk-SQS533HJ.mjs";
+import "../../../chunk-Q7IN32QK.mjs";
 import {
   assert
 } from "../../../chunk-GHFYKOO4.mjs";
-import "../../../chunk-RD6NELNE.mjs";
+import "../../../chunk-TILBILWP.mjs";
 import "../../../chunk-HRTB753X.mjs";
 import "../../../chunk-J74XOMIJ.mjs";
 import {
@@ -81,6 +81,7 @@ var implementations = {
       assert.notEqual(reactElem.props.store.getState().error, "no_error");
     },
     ThereIsNotAnEmailError: () => (reactElem) => {
+      console.log("hello");
       assert.equal(reactElem.props.store.getState().error, "no_error");
     }
   },

@@ -8,107 +8,107 @@
 {
   "event": {},
   "level": 1,
-  "message": "\"testResourceConfiguration {\\n  \\\"name\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.mjs\\\",\\n  \\\"ports\\\": \\\"\\\",\\n  \\\"fs\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron\\\"\\n}\"",
+  "message": "\"testResourceConfiguration {\\n  \\\"name\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron\\\",\\n  \\\"ports\\\": \\\"\\\",\\n  \\\"fs\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron\\\"\\n}\"",
   "line": 236,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-HJQFDMFU.mjs"
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-T6BHAUR2.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"initial test resource [object Object]\"",
-  "line": 397,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-HJQFDMFU.mjs"
+  "line": 409,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-T6BHAUR2.mjs"
 }
 {
   "event": {},
   "level": 1,
-  "message": "\"testResourceConfiguration {\\n  \\\"name\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.mjs\\\",\\n  \\\"ports\\\": \\\"\\\",\\n  \\\"fs\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron\\\"\\n}\"",
+  "message": "\"testResourceConfiguration {\\n  \\\"name\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron\\\",\\n  \\\"ports\\\": \\\"\\\",\\n  \\\"fs\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron\\\"\\n}\"",
   "line": 236,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-HJQFDMFU.mjs"
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-T6BHAUR2.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"test failed [object Object]\"",
   "line": 164,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-HJQFDMFU.mjs"
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-T6BHAUR2.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"test failed [object Object]\"",
   "line": 164,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-HJQFDMFU.mjs"
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-T6BHAUR2.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"test failed [object Object]\"",
   "line": 164,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-HJQFDMFU.mjs"
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-T6BHAUR2.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"test failed [object Object]\"",
   "line": 164,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-HJQFDMFU.mjs"
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-T6BHAUR2.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"test failed [object Object]\"",
   "line": 164,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-HJQFDMFU.mjs"
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-T6BHAUR2.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"test failed [object Object]\"",
   "line": 164,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-HJQFDMFU.mjs"
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-T6BHAUR2.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"test failed [object Object]\"",
   "line": 164,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-HJQFDMFU.mjs"
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-T6BHAUR2.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"test failed [object Object]\"",
   "line": 164,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-HJQFDMFU.mjs"
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-T6BHAUR2.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"test failed [object Object]\"",
   "line": 164,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-HJQFDMFU.mjs"
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-T6BHAUR2.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"test failed [object Object]\"",
   "line": 164,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-HJQFDMFU.mjs"
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-T6BHAUR2.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"exiting gracefully with 5 failures.\"",
-  "line": 258,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-HJQFDMFU.mjs"
+  "line": 255,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-T6BHAUR2.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"exiting gracefully with 5 failures.\"",
-  "line": 258,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-HJQFDMFU.mjs"
+  "line": 255,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-T6BHAUR2.mjs"
 }
 {
   "event": {},
@@ -121,69 +121,6 @@
   "event": {},
   "level": 1,
   "message": "\"[object Object]\"",
-  "line": 142,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"[object Object]\"",
-  "line": 142,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"[object Object]\"",
-  "line": 142,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"[object Object]\"",
-  "line": 142,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"[object Object]\"",
-  "line": 142,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"[object Object]\"",
-  "line": 142,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"[object Object]\"",
-  "line": 142,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"[object Object]\"",
-  "line": 142,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"[object Object]\"",
-  "line": 142,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"[object Object]\"",
-  "line": 142,
+  "line": 141,
   "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.mjs"
 }

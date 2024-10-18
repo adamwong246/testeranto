@@ -92,6 +92,7 @@ const Implementation: ITestImplementation<
 
   thens: {
     TheCounterIs: (counter) => (rtr) => {
+      console.log("hello state and hook")
       return assert.deepEqual(
         (rtr.toJSON() as { children: object[] }).children[0],
         {

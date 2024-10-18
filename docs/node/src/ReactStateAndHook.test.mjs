@@ -1,9 +1,9 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
   node_default
-} from "../chunk-WHD4D75V.mjs";
-import "../chunk-JLEL7NCS.mjs";
-import "../chunk-RD6NELNE.mjs";
+} from "../chunk-Z76HE3NH.mjs";
+import "../chunk-SQS533HJ.mjs";
+import "../chunk-TILBILWP.mjs";
 import "../chunk-HRTB753X.mjs";
 import "../chunk-J74XOMIJ.mjs";
 import {
@@ -72,6 +72,7 @@ var Implementation = {
   },
   thens: {
     TheCounterIs: (counter) => (rtr) => {
+      console.log("hello state and hook");
       return assert.deepEqual(
         rtr.toJSON().children[0],
         {

@@ -2,13 +2,11 @@ import {
   LoginPageSpecs,
   LoginPage_default,
   actions
-} from "../../../chunk-LD7PK274.mjs";
+} from "../../../chunk-QOTLVXVD.mjs";
 import {
   assert,
   require_renderer
-} from "../../../chunk-3HEJ35MW.mjs";
-import "../../../chunk-X4RTFM5S.mjs";
-import "../../../chunk-TTFRSOOU.mjs";
+} from "../../../chunk-SNPBLUOM.mjs";
 
 // ../testeranto/src/lib/index.ts
 var BaseTestInterface = {
@@ -140,12 +138,7 @@ var BaseGiven = class {
         this.givenCB
       );
       for (const whenStep of this.whens) {
-        await whenStep.test(
-          this.store,
-          testResourceConfiguration,
-          tLog,
-          utils
-        );
+        await whenStep.test(this.store, testResourceConfiguration, tLog, utils);
       }
       for (const thenStep of this.thens) {
         const t = await thenStep.test(
@@ -184,11 +177,7 @@ var BaseWhen = class {
   async test(store, testResourceConfiguration, tLog, utils) {
     tLog(" When:", this.name);
     try {
-      return await this.andWhen(
-        store,
-        this.whenCB,
-        testResourceConfiguration
-      );
+      return await this.andWhen(store, this.whenCB, testResourceConfiguration);
     } catch (e) {
       this.error = true;
       throw e;
@@ -297,77 +286,76 @@ var BaseBuilder = class {
         testResourceConfiguration,
         (fPath, value) => logWriter.testArtiFactoryfileWriter(tLog, (p) => {
           this.artifacts.push(p);
-        })(
-          testResourceConfiguration.fs + "/" + fPath,
-          value
-        ),
+        })(testResourceConfiguration.fs + "/" + fPath, value),
         tLog,
         utils2
       );
     };
-    this.testJobs = this.specs.map((suite, utils) => {
-      const runner = suiteRunner(suite, utils);
-      return {
-        test: suite,
-        testResourceRequirement,
-        toObj: () => {
-          return suite.toObj();
-        },
-        runner,
-        receiveTestResourceConfig: async function(testResourceConfiguration = {
-          name: "",
-          fs: ".",
-          ports: [],
-          scheduled: false
-        }, y) {
-          console.log(
-            `testResourceConfiguration ${JSON.stringify(
-              testResourceConfiguration,
-              null,
-              2
-            )}`
-          );
-          await logWriter.mkdirSync(testResourceConfiguration.fs);
-          logWriter.writeFileSync(
-            `${testResourceConfiguration.fs}/tests.json`,
-            JSON.stringify(this.toObj(), null, 2)
-          );
-          const logFilePath = `${testResourceConfiguration.fs}/log.txt`;
-          const access = await logWriter.createWriteStream(logFilePath);
-          const tLog = (...l) => {
-            access.write(`${l.toString()}
+    this.testJobs = this.specs.map(
+      (suite, utils) => {
+        const runner = suiteRunner(suite, utils);
+        return {
+          test: suite,
+          testResourceRequirement,
+          toObj: () => {
+            return suite.toObj();
+          },
+          runner,
+          receiveTestResourceConfig: async function(testResourceConfiguration = {
+            name: "",
+            fs: ".",
+            ports: [],
+            scheduled: false
+          }, y) {
+            console.log(
+              `testResourceConfiguration ${JSON.stringify(
+                testResourceConfiguration,
+                null,
+                2
+              )}`
+            );
+            logWriter.writeFileSync(
+              `${testResourceConfiguration.fs}/tests.json`,
+              JSON.stringify(this.toObj(), null, 2)
+            );
+            const logFilePath = `${testResourceConfiguration.fs}/log.txt`;
+            const access = await logWriter.createWriteStream(logFilePath);
+            const tLog = (...l) => {
+              access.write(`${l.toString()}
 `);
-          };
-          const suiteDone = await runner(testResourceConfiguration, tLog, y);
-          const resultsFilePath = `${testResourceConfiguration.fs}/results.json`;
-          logWriter.writeFileSync(
-            resultsFilePath,
-            JSON.stringify(suiteDone.toObj(), null, 2)
-          );
-          const logPromise = new Promise((res, rej) => {
-            access.on("finish", () => {
-              res(true);
+            };
+            const suiteDone = await runner(
+              testResourceConfiguration,
+              tLog,
+              y
+            );
+            const logPromise = new Promise((res, rej) => {
+              access.on("finish", () => {
+                res(true);
+              });
             });
-          });
-          access.end();
-          const numberOfFailures = Object.keys(suiteDone.givens).filter(
-            (k) => {
-              return suiteDone.givens[k].error;
-            }
-          ).length;
-          logWriter.writeFileSync(
-            `${testResourceConfiguration.fs}/exitcode`,
-            numberOfFailures.toString()
-          );
-          console.log(`exiting gracefully with ${numberOfFailures} failures.`);
-          return {
-            failed: numberOfFailures,
-            artifacts: this.artifacts || [],
-            logPromise
-          };
-        }
-      };
-    });
+            access.end();
+            const numberOfFailures = Object.keys(suiteDone.givens).filter(
+              (k) => {
+                return suiteDone.givens[k].error;
+              }
+            ).length;
+            logWriter.writeFileSync(
+              `${testResourceConfiguration.fs}/exitcode`,
+              numberOfFailures.toString()
+            );
+            console.log(
+              `exiting gracefully with ${numberOfFailures} failures.`
+            );
+            return {
+              failed: numberOfFailures,
+              artifacts: this.artifacts || [],
+              logPromise
+            };
+          }
+        };
+      }
+    );
   }
   Specs() {
     return this.specs;
@@ -488,11 +476,7 @@ var Testeranto = class extends ClassBuilder {
           fullTestInterface.assertThis(t);
         }
         async setup(s, artifactory, tr) {
-          return (fullTestInterface.beforeAll || (async (input2, artifactory2, tr2) => input2))(
-            s,
-            this.testResourceConfiguration,
-            artifactory
-          );
+          return (fullTestInterface.beforeAll || (async (input2, artifactory2, tr2) => input2))(s, this.testResourceConfiguration, artifactory);
         }
       },
       class Given extends BaseGiven {
@@ -511,7 +495,13 @@ var Testeranto = class extends ClassBuilder {
         }
         afterEach(store, key, artifactory) {
           return new Promise(
-            (res) => res(fullTestInterface.afterEach(store, key, (fPath, value) => artifactory(`after/${fPath}`, value)))
+            (res) => res(
+              fullTestInterface.afterEach(
+                store,
+                key,
+                (fPath, value) => artifactory(`after/${fPath}`, value)
+              )
+            )
           );
         }
         afterAll(store, artifactory, utils) {
@@ -554,10 +544,16 @@ var Testeranto = class extends ClassBuilder {
         }
         afterEach(store, key, artifactory) {
           return new Promise(
-            (res) => res(fullTestInterface.afterEach(store, key, (fPath, value) => (
-              // TODO does not work?
-              artifactory(`afterEach2-${this.name}/${fPath}`, value)
-            )))
+            (res) => res(
+              fullTestInterface.afterEach(
+                store,
+                key,
+                (fPath, value) => (
+                  // TODO does not work?
+                  artifactory(`afterEach2-${this.name}/${fPath}`, value)
+                )
+              )
+            )
           );
         }
       },
@@ -609,16 +605,13 @@ var WebTesteranto = class extends Testeranto {
     }
   }
   async receiveTestResourceConfig(t, partialTestResource) {
-    const {
-      failed,
-      artifacts,
-      logPromise
-    } = await t.receiveTestResourceConfig(
+    const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(
       partialTestResource,
       remote
     );
     Promise.all([...artifacts, logPromise]).then(async () => {
       var window2 = remote.getCurrentWindow();
+      window2.close();
     });
   }
 };
@@ -695,6 +688,7 @@ var implementations = {
       assert.notEqual(reactElem.props.store.getState().error, "no_error");
     },
     ThereIsNotAnEmailError: () => (reactElem) => {
+      console.log("hello");
       assert.equal(reactElem.props.store.getState().error, "no_error");
     }
   },
@@ -713,17 +707,7 @@ var web_test_default = web_default(
   LoginPage_default,
   {
     afterAll: (store, artificer, utils) => {
-      const webContents = utils.getCurrentWebContents();
-      webContents.capturePage({
-        x: 0,
-        y: 0,
-        width: 100,
-        height: 200
-      }, (img) => {
-        artificer("hello.png", img.toPng());
-      }).then((x) => {
-        console.log("done", x);
-      });
+      const webContents = utils.webContents;
       artificer("utils", "hellow orld");
     }
   }
