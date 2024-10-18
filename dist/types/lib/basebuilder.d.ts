@@ -1,6 +1,7 @@
-import { IBaseTest, ICheckKlasser, IGivenKlasser, ISuiteKlasser, ITestSpecification, IThenKlasser, IWhenKlasser } from "../Types";
-import { BaseCheck, BaseWhen, BaseThen, BaseGiven } from "./abstractBase.js";
 import { ITTestResourceRequest, ITestJob, ILogWriter } from ".";
+import { IBaseTest, ITestSpecification } from "../Types.js";
+import { ISuiteKlasser, IGivenKlasser, IWhenKlasser, IThenKlasser, ICheckKlasser } from "./types.js";
+import { BaseCheck, BaseWhen, BaseThen, BaseGiven } from "./abstractBase.js";
 export declare abstract class BaseBuilder<ITestShape extends IBaseTest, SuiteExtensions, GivenExtensions, WhenExtensions, ThenExtensions, CheckExtensions> {
     readonly input: ITestShape['iinput'];
     specs: any;

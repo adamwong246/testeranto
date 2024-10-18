@@ -1,10 +1,16 @@
 import { app, BrowserWindow, utilityProcess } from "electron";
 import pie from "puppeteer-in-electron";
 import puppeteer from "puppeteer-core";
-import { IBuiltConfig, IJsonConfig, IRunTime, ITestTypes } from "./Types";
 import fs from "fs";
 import path from "path";
 import { jsonc } from 'jsonc';
+
+import { IBuiltConfig, IRunTime } from "./lib/types";
+
+process.on("message", function (message) {
+  console.log('message: ' + message);
+  process.exit();
+});
 
 const remoteMain = require("@electron/remote/main");
 
@@ -38,53 +44,43 @@ const main = async () => {
     })
   }
 
-  const launchNode = (t: string, x: string) => {
-    const f = x.replace(".ts", ".mjs");
+  // const launchNode = (t: string, x: string) => {
+  const launchNode = (src: string, dest: string) => {
+    const destFolder = dest.replace(".mjs", "");
 
-    const a = JSON.stringify(
+    const argz = JSON.stringify(
       {
         scheduled: true,
-        name: x,
+        name: src,
         ports: [],
         fs:
           path.resolve(
             configs.buildDir,
             "node",
-            t,
+            destFolder,
           ),
       }
-    )
-    console.log("launchNode", f, a);
+    );
 
-    const child = utilityProcess.fork(f, [a], {});
-    child.postMessage({ message: 'hello' })
+    console.log("launchNode", src, dest, " -> ", destFolder, argz);
+
+    const child = utilityProcess.fork(dest, [argz], { stdio: 'pipe' });
+
+    if (!fs.existsSync(destFolder)) { fs.mkdirSync(destFolder, { recursive: true }); }
+    const stdout = fs.createWriteStream(`${destFolder}/stdout.log`);
+    const stderr = fs.createWriteStream(`${destFolder}/stderr.log`);
+
     child.on('message', (data) => {
       console.log("from child", data);
       launchWebSecondary(process.cwd() + data);
+    }).on('exit', (data) => {
+      fs.writeFileSync(`${destFolder}/stdout.log`, data.toString());
+      stdout.close();
+      stderr.close();
     })
-    child.on('exit', (data) => {
-      console.log("node process ended with: ", data);
-      fileStream.close()
-    })
-    // child.stdout
-    // child..on("", (data) => {
-    //   console.log("from child", data) // hello world!
-    //   launchWebSecondary(process.cwd() + data);
-    // })
-    // Create a write stream for the file
-    const fileStream = fs.createWriteStream('errors.txt');
 
-    // Pipe the child process's stdout to the file
-    child.stdout?.pipe(fileStream);
-
-    // // Handle errors
-    // child.on('error', (err) => {
-    //   console.error('Error spawning child process:', err);
-    // });
-
-    // fileStream.on('error', (err) => {
-    //   console.error('Error writing to file:', err);
-    // });
+    child.stdout?.pipe(stdout);
+    child.stderr?.pipe(stderr);
 
     // // Log a message when the child process exits
     // child.on('close', (code) => {
@@ -119,8 +115,9 @@ const main = async () => {
 
   }
 
-  const launchWeb = (t: string, changedFile: string) => {
-    console.log("launchWeb", changedFile)
+  const launchWeb = (t: string, dest: string) => {
+    console.log("launchWeb", t, dest)
+    const destFolder = dest.replace(".mjs", "");
     const subWin = new BrowserWindow(
       {
         show: true,
@@ -139,23 +136,58 @@ const main = async () => {
     remoteMain.enable(subWin.webContents);
     // subWin.webContents.openDevTools()
 
-    const htmlFile = changedFile.split(".").slice(0, -1).concat("html").join(".")
+    const htmlFile = dest.split(".").slice(0, -1).concat("html").join(".")
 
     subWin.loadFile(htmlFile, {
       query: {
         requesting: encodeURIComponent(JSON.stringify({
-          name: changedFile,
+          name: dest,
           ports: [].toString(),
           fs:
             path.resolve(
               configs.buildDir,
               "web",
-              t,
+              destFolder,
             ),
         }
         ))
       }
+    });
+
+    // subWin.webContents.
+
+    // const child = utilityProcess.fork(dest, [argz], { stdio: 'pipe' });
+
+    if (!fs.existsSync(destFolder)) { fs.mkdirSync(destFolder, { recursive: true }); }
+    const stdout = fs.createWriteStream(`${destFolder}/stdout.log`);
+    // const stderr = fs.createWriteStream(`${destFolder}/stderr.log`);
+
+    subWin.webContents.on('console-message', (event, level, message, line, sourceId) => {
+      stdout.write(JSON.stringify({
+        event,
+        level,
+        message: JSON.stringify(message),
+        line,
+        sourceId
+      }, null, 2));
+      stdout.write('\n');
+    });
+    subWin.on('closed', () => {
+      console.log(' ---- Bye Bye Electron ---- ');
+      stdout.close();
     })
+
+    // child.on('message', (data) => {
+    //   console.log("from child", data);
+    //   launchWebSecondary(process.cwd() + data);
+    // }).on('exit', (data) => {
+    //   fs.writeFileSync(`${destFolder}/stdout.log`, data.toString());
+    //   stdout.close();
+    //   stderr.close();
+    // })
+
+    // child.stdout?.pipe(stdout);
+    // child.stderr?.pipe(stderr);
 
   }
 
@@ -169,7 +201,7 @@ const main = async () => {
     return path.normalize(`${configs.buildDir}/${f}`);
   };
   const changer2 = (f: string, r: IRunTime) => {
-    return path.normalize(`${configs.buildDir}/${r}/${f}`);
+    return path.normalize(`${configs.buildDir}/${r}/${f}`).replace(".ts", ".mjs")
   };
 
   pie.initialize(app, 2999).then(async () => {
@@ -193,7 +225,9 @@ const main = async () => {
       fs.watch(configs.buildDir, {
         recursive: true,
       }, (eventType, changedFile) => {
+
         console.log(eventType, changedFile);
+
         if (changedFile) {
           configs.modules.forEach((t) => {
             if (watcher(t.test, t.runtime) === changer(changedFile)) {
@@ -217,34 +251,3 @@ const main = async () => {
 };
 
 main();
-
-// ipcMain.handle('web-log', (x, message: string) => {
-//   console.log("web-log)", message);
-// });
-
-// ipcMain.handle('web-error', (x, message: string) => {
-//   console.log("web-error)", message);
-// });
-
-// ipcMain.handle('web-warn', (x, message: string) => {
-//   console.log("web-warn)", message);
-// });
-
-// ipcMain.handle('web-info', (x, message: string) => {
-//   console.log("web-info)", message);
-// });
-
-// ipcMain.handle('quit-app', (x, failed: number) => {
-//   console.log("quit-app", failed);
-//   app.exit(failed);
-// });
-
-// process.stdin.on("data", (configTests) => {
-//   main(JSON.parse(configTests.toString()) as ITestTypes[]);
-// });
-
-// const watchables = (tests: ITestTypes[]) => {
-//   return tests.map((t) => {
-//     return [t[1], `dist/${t[1]}/${t[0].replace(".mts", ".mjs")}`]
-//   })
-// }

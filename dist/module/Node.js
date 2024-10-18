@@ -3,7 +3,7 @@ import puppeteer from "puppeteer-core";
 import Testeranto from "./lib/core.js";
 import { defaultTestResourceRequirement, } from "./lib/index.js";
 import { NodeWriter } from "./NodeWriter.js";
-import { TBrowser, } from "./Types.js";
+import { TBrowser } from "./lib/types.js";
 const readJson = async (port) => new Promise((resolve, reject) => {
     let json = "";
     const request = http.request({

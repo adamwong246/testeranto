@@ -1,24 +1,3 @@
-
-import {
-  IBaseTest,
-  ICheckKlasser,
-  IGivenKlasser,
-  ISuiteKlasser,
-  ITestSpecification,
-  IThenKlasser,
-  IUtils,
-  IWhenKlasser
-} from "../Types";
-
-import {
-
-  BaseCheck,
-  BaseSuite,
-  BaseWhen,
-  BaseThen,
-  BaseGiven
-} from "./abstractBase.js";
-
 import {
   ITTestResourceRequest,
   ITestJob,
@@ -26,6 +5,18 @@ import {
   ILogWriter,
   ITTestResourceConfiguration,
 } from ".";
+import { IBaseTest, ITestSpecification } from "../Types.js";
+
+import { ISuiteKlasser, IGivenKlasser, IWhenKlasser, IThenKlasser, ICheckKlasser, IUtils } from "./types.js";
+
+import {
+  BaseCheck,
+  BaseSuite,
+  BaseWhen,
+  BaseThen,
+  BaseGiven
+} from "./abstractBase.js";
+
 export abstract class BaseBuilder<
   ITestShape extends IBaseTest,
   SuiteExtensions,
@@ -140,6 +131,7 @@ export abstract class BaseBuilder<
               2
             )}`
           );
+
           await logWriter.mkdirSync(testResourceConfiguration.fs);
           logWriter.writeFileSync(
             `${testResourceConfiguration.fs}/tests.json`,
@@ -177,6 +169,10 @@ export abstract class BaseBuilder<
               return suiteDone.givens[k].error
             }
           ).length;
+          logWriter.writeFileSync(
+            `${testResourceConfiguration.fs}/exitcode`,
+            numberOfFailures.toString()
+          );
           console.log(`exiting gracefully with ${numberOfFailures} failures.`);
           return {
             failed: numberOfFailures,

@@ -1,7 +1,6 @@
 import type {
   IBaseTest,
   ITestImplementation,
-  ITestInterface,
   ITestSpecification
 } from "./Types";
 import Testeranto from "./lib/core.js";
@@ -11,6 +10,7 @@ import {
   ITestJob,
   defaultTestResourceRequirement
 } from "./lib/index.js";
+import { ITestInterface } from "./lib/types";
 
 const remote = require('@electron/remote')
 

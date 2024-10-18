@@ -17,8 +17,9 @@ export const NodeWriter: ILogWriter = {
       contents
     );
   },
-  mkdirSync: async (fp: string) => {
-    await fs.mkdirSync(fp, { recursive: true });
+  mkdirSync: async (destFolder: string) => {
+    // await fs.mkdirSync(fp, { recursive: true });
+    if (!fs.existsSync(destFolder)) { fs.mkdirSync(destFolder, { recursive: true }); }
   },
   testArtiFactoryfileWriter:
     (tLog: ITLog, callback: (Promise) => void) =>

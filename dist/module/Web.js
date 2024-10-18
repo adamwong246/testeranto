@@ -34,7 +34,6 @@ class WebTesteranto extends Testeranto {
         // const t: ITestJob = this.testJobs[0];
     }
     async receiveTestResourceConfig(t, partialTestResource) {
-        debugger;
         const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(partialTestResource, remote);
         Promise.all([...artifacts, logPromise]).then(async () => {
             var window = remote.getCurrentWindow();

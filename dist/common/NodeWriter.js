@@ -14,8 +14,11 @@ exports.NodeWriter = {
     writeFileSync: (fp, contents) => {
         fs_1.default.writeFileSync(fp, contents);
     },
-    mkdirSync: async (fp) => {
-        await fs_1.default.mkdirSync(fp, { recursive: true });
+    mkdirSync: async (destFolder) => {
+        // await fs.mkdirSync(fp, { recursive: true });
+        if (!fs_1.default.existsSync(destFolder)) {
+            fs_1.default.mkdirSync(destFolder, { recursive: true });
+        }
     },
     testArtiFactoryfileWriter: (tLog, callback) => (fPath, value) => {
         callback(new Promise((res, rej) => {

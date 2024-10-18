@@ -1,6 +1,6 @@
 # testeranto
 
-🚧 WARNING: Testeeranto is still under development and is not ready for production yet. 🚧
+🚧 WARNING: Testeranto is still under development and is not ready for production yet. 🚧
 
 home: [adamwong246.github.io/testeranto](https://adamwong246.github.io/testeranto/)
 
@@ -55,9 +55,9 @@ Testeranto.ts an Acceptance Test Driven Development ([ATDD](https://en.wikipedia
 
 ## the good parts
 
-Your tests can be run in node, chromium, or both! For example, for a single react component, you could create 3 tests- 1 that runs with react-test-renderer on node, another on chromium which renders the component to the dom, and a 3rd node style test which invokes the component in the browser before interacting with it via puppeteer.
+Your tests can be run in node, chromium, or both.
 
-Testeranto includes a test runner which bundles and executes your tests, taking care to only run the tests which have changed. It is designed to run most tests in parallel, though it has support for tests which require a shared resource, like a port.
+Testeranto includes a test runner which bundles and executes your tests, taking care to only run the tests which have changed. 
 
 Testeranto includes a test reporter which displays the state of your code in a web app. ([see example](https://chromapdx.github.io/kokomoBay/report.html)) This reporter can also be run locally for the developer's convenience.
 
@@ -77,9 +77,10 @@ Because Testeranto is so un-opinionated that it does not provide test infrastruc
 
 Testeranto is comprised of 3 parts
 1) The build process reads a config and builds the docs folder, then launches 3 esbuild build processes. 
-  a) Build the features for the html report
-  b) Build the node-style tests
-  c) Build the web-style tests
+  - Build the features for the html report
+  - Build the node-style tests
+  - Build the web-style tests
+
 2) The test runner is an electron app which watches the output of those build processes and launches the tests as those files change. 
 3) A Report which links your features, your tests and the results of those tests into a handy website.
 

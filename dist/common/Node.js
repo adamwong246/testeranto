@@ -8,7 +8,7 @@ const puppeteer_core_1 = __importDefault(require("puppeteer-core"));
 const core_js_1 = __importDefault(require("./lib/core.js"));
 const index_js_1 = require("./lib/index.js");
 const NodeWriter_js_1 = require("./NodeWriter.js");
-const Types_js_1 = require("./Types.js");
+const types_js_1 = require("./lib/types.js");
 const readJson = async (port) => new Promise((resolve, reject) => {
     let json = "";
     const request = http_1.default.request({
@@ -54,7 +54,7 @@ class NodeTesteranto extends core_js_1.default {
             console.log("connected!", b.isConnected());
             return b;
         });
-        const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(partialTestResource, new Types_js_1.TBrowser(browser));
+        const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(partialTestResource, new types_js_1.TBrowser(browser));
         Promise.all([...artifacts, logPromise]).then(async () => {
             // process.exit(await failed ? 1 : 0);
         });

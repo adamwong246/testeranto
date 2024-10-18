@@ -54,6 +54,7 @@ class BaseBuilder {
                         // console.log(`suiteDone.givens[k].error`, suiteDone.givens[k].error);
                         return suiteDone.givens[k].error;
                     }).length;
+                    logWriter.writeFileSync(`${testResourceConfiguration.fs}/exitcode`, numberOfFailures.toString());
                     console.log(`exiting gracefully with ${numberOfFailures} failures.`);
                     return {
                         failed: numberOfFailures,

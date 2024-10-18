@@ -11,16 +11,10 @@ import {
 import { NodeWriter } from "./NodeWriter.js";
 import type {
   IBaseTest,
-  INodeTestInterface,
   ITestImplementation,
-  ITestInterface,
   ITestSpecification,
 } from "./Types.js";
-
-import {
-  TBrowser,
-} from "./Types.js";
-
+import { ITestInterface, TBrowser, INodeTestInterface } from "./lib/types.js";
 
 const readJson = async (port: string): Promise<any> => new Promise((resolve, reject) => {
   let json = "";
