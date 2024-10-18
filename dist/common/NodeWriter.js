@@ -55,5 +55,5 @@ exports.NodeWriter = {
                 }
             });
         }));
-    }
+    },
 };

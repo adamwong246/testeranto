@@ -1,5 +1,5 @@
-import { DefaultTestInterface, defaultTestResourceRequirement } from "./index.js";
-import { BaseSuite, BaseGiven, BaseWhen, BaseThen, BaseCheck } from "./abstractBase.js";
+import { DefaultTestInterface, defaultTestResourceRequirement, } from "./index.js";
+import { BaseSuite, BaseGiven, BaseWhen, BaseThen, BaseCheck, } from "./abstractBase.js";
 import { ClassBuilder } from "./classBuilder.js";
 export default class Testeranto extends ClassBuilder {
     constructor(input, testSpecification, testImplementation, testResourceRequirement = defaultTestResourceRequirement, logWriter, testInterface) {
@@ -8,20 +8,29 @@ export default class Testeranto extends ClassBuilder {
             assertThat(t) {
                 fullTestInterface.assertThis(t);
             }
-            async setup(s, artifactory, tr) {
-                return (fullTestInterface.beforeAll || (async (input, artifactory, tr) => input))(s, this.testResourceConfiguration, artifactory);
+            async setup(s, artifactory, tr
+            // utils: ITestInterface<ITestShape>
+            ) {
+                return (fullTestInterface.beforeAll ||
+                    (async (input, artifactory, tr
+                    // utils: ITestInterface<ITestShape>
+                    ) => input))(s, this.testResourceConfiguration, artifactory);
             }
         }, class Given extends BaseGiven {
             async givenThat(subject, testResource, artifactory, initializer) {
                 return fullTestInterface.beforeEach(subject, initializer, (fPath, value) => 
                 // TODO does not work?
-                artifactory(`beforeEach/${fPath}`, value), testResource, this.initialValues);
+                artifactory(`beforeEach/${fPath}`, value), testResource, this.initialValues
+                // utils,
+                );
             }
             afterEach(store, key, artifactory) {
                 return new Promise((res) => res(fullTestInterface.afterEach(store, key, (fPath, value) => artifactory(`after/${fPath}`, value))));
             }
             afterAll(store, artifactory, utils) {
-                return fullTestInterface.afterAll(store, (fPath, value) => { artifactory(`afterAll4-${this.name}/${fPath}`, value); }, utils);
+                return fullTestInterface.afterAll(store, (fPath, value) => {
+                    artifactory(`afterAll4-${this.name}/${fPath}`, value);
+                }, utils);
             }
         }, class When extends BaseWhen {
             async andWhen(store, whenCB, testResource) {

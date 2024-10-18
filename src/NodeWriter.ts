@@ -12,19 +12,19 @@ export const NodeWriter: ILogWriter = {
     return fs.createWriteStream(filepath);
   },
   writeFileSync: (fp: string, contents: string) => {
-    fs.writeFileSync(
-      fp,
-      contents
-    );
+    fs.writeFileSync(fp, contents);
   },
   mkdirSync: async (destFolder: string) => {
     // await fs.mkdirSync(fp, { recursive: true });
-    if (!fs.existsSync(destFolder)) { fs.mkdirSync(destFolder, { recursive: true }); }
+    if (!fs.existsSync(destFolder)) {
+      fs.mkdirSync(destFolder, { recursive: true });
+    }
   },
   testArtiFactoryfileWriter:
     (tLog: ITLog, callback: (Promise) => void) =>
-      (fPath, value: string | Buffer | PassThrough) => {
-        callback(new Promise<void>((res, rej) => {
+    (fPath, value: string | Buffer | PassThrough) => {
+      callback(
+        new Promise<void>((res, rej) => {
           tLog("testArtiFactory =>", fPath);
 
           const cleanPath = path.resolve(fPath);
@@ -38,7 +38,10 @@ export const NodeWriter: ILogWriter = {
             }
 
             fs.writeFileSync(
-              path.resolve(targetDir.split("/").slice(0, -1).join("/"), "manifest"),
+              path.resolve(
+                targetDir.split("/").slice(0, -1).join("/"),
+                "manifest"
+              ),
               fPaths.join(`\n`),
               {
                 encoding: "utf-8",
@@ -64,7 +67,7 @@ export const NodeWriter: ILogWriter = {
               });
             }
           });
-        }))
-
-      }
-}
+        })
+      );
+    },
+};

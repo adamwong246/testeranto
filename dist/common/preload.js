@@ -5,7 +5,7 @@ console.log("hello preloader");
 const NodeWriter_1 = require("./NodeWriter");
 window.NodeWriter = NodeWriter_1.NodeWriter;
 window.exit = (x) => {
-    electron_1.ipcRenderer.invoke('quit-app', x);
+    electron_1.ipcRenderer.invoke("quit-app", x);
 };
 // var oldLog = console.log;
 // console.log = function (message) {

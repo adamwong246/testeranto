@@ -14,18 +14,16 @@ export const NodeWriterElectron: ILogWriter = {
     return fs.createWriteStream(filepath);
   },
   writeFileSync: (fp: string, contents: string) => {
-    fs.writeFileSync(
-      fp,
-      contents
-    );
+    fs.writeFileSync(fp, contents);
   },
   mkdirSync: async (fp: string) => {
     await fs.mkdirSync(fp, { recursive: true });
   },
   testArtiFactoryfileWriter:
     (tLog: ITLog, callback: (Promise) => void) =>
-      (fPath, value: string | Buffer | PassThrough) => {
-        callback(new Promise<void>((res, rej) => {
+    (fPath, value: string | Buffer | PassThrough) => {
+      callback(
+        new Promise<void>((res, rej) => {
           tLog("testArtiFactory =>", fPath);
 
           const cleanPath = path.resolve(fPath);
@@ -39,7 +37,10 @@ export const NodeWriterElectron: ILogWriter = {
             }
 
             fs.writeFileSync(
-              path.resolve(targetDir.split("/").slice(0, -1).join("/"), "manifest"),
+              path.resolve(
+                targetDir.split("/").slice(0, -1).join("/"),
+                "manifest"
+              ),
               fPaths.join(`\n`),
               {
                 encoding: "utf-8",
@@ -65,7 +66,7 @@ export const NodeWriterElectron: ILogWriter = {
               });
             }
           });
-        }))
-
-      }
-}
+        })
+      );
+    },
+};

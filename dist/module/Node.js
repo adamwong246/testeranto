@@ -54,7 +54,6 @@ class NodeTesteranto extends Testeranto {
         });
     }
 }
-;
 export default async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = defaultTestResourceRequirement) => {
     return new NodeTesteranto(input, testSpecification, testImplementation, testResourceRequirement, testInterface);
 };

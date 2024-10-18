@@ -3,9 +3,9 @@ import pie from "puppeteer-in-electron";
 import puppeteer from "puppeteer-core";
 import fs from "fs";
 import path from "path";
-import { jsonc } from 'jsonc';
+import { jsonc } from "jsonc";
 process.on("message", function (message) {
-    console.log('message: ' + message);
+    console.log("message: " + message);
     process.exit();
 });
 const remoteMain = require("@electron/remote/main");
@@ -18,7 +18,7 @@ const main = async () => {
             webPreferences: {
                 offscreen: false,
                 devTools: true,
-            }
+            },
         });
         win.loadFile(`/${configs.buildDir}/report.html`).then(async (x) => {
             // pie.connect(app, puppeteer).then(async (browser) => {
@@ -43,17 +43,19 @@ const main = async () => {
         console.log("launchNode", src, dest, " -> ", destFolder, argz);
         const child = utilityProcess.fork(dest, [argz], {
             cwd: destFolder,
-            stdio: 'pipe'
+            stdio: "pipe",
         });
         if (!fs.existsSync(destFolder)) {
             fs.mkdirSync(destFolder, { recursive: true });
         }
         const stdout = fs.createWriteStream(`${destFolder}/stdout.log`);
         const stderr = fs.createWriteStream(`${destFolder}/stderr.log`);
-        child.on('message', (data) => {
+        child
+            .on("message", (data) => {
             console.log("from child", data);
             launchWebSecondary(process.cwd() + data);
-        }).on('exit', (data) => {
+        })
+            .on("exit", (data) => {
             fs.writeFileSync(`${destFolder}/stdout.log`, data.toString());
             stdout.close();
             stderr.close();
@@ -77,10 +79,10 @@ const main = async () => {
                 nodeIntegration: true,
                 nodeIntegrationInWorker: true,
                 contextIsolation: false,
-                preload: path.join(app.getAppPath(), 'preload.js'),
+                preload: path.join(app.getAppPath(), "preload.js"),
                 offscreen: false,
                 devTools: false,
-            }
+            },
         });
         remoteMain.enable(subWin.webContents);
         subWin.webContents.openDevTools();
@@ -95,10 +97,10 @@ const main = async () => {
                 nodeIntegration: true,
                 nodeIntegrationInWorker: true,
                 contextIsolation: false,
-                preload: path.join(app.getAppPath(), 'preload.js'),
+                preload: path.join(app.getAppPath(), "preload.js"),
                 offscreen: false,
                 devTools: true,
-            }
+            },
         });
         remoteMain.enable(subWin.webContents);
         // subWin.webContents.openDevTools()
@@ -109,8 +111,8 @@ const main = async () => {
                     name: dest,
                     ports: [].toString(),
                     fs: path.resolve(configs.buildDir, "web", destFolder),
-                }))
-            }
+                })),
+            },
         });
         // subWin.webContents.
         // const child = utilityProcess.fork(dest, [argz], { stdio: 'pipe' });
@@ -119,18 +121,18 @@ const main = async () => {
         }
         const stdout = fs.createWriteStream(`${destFolder}/stdout.log`);
         // const stderr = fs.createWriteStream(`${destFolder}/stderr.log`);
-        subWin.webContents.on('console-message', (event, level, message, line, sourceId) => {
+        subWin.webContents.on("console-message", (event, level, message, line, sourceId) => {
             stdout.write(JSON.stringify({
                 event,
                 level,
                 message: JSON.stringify(message),
                 line,
-                sourceId
+                sourceId,
             }, null, 2));
-            stdout.write('\n');
+            stdout.write("\n");
         });
-        subWin.on('closed', () => {
-            console.log(' ---- Bye Bye Electron ---- ');
+        subWin.on("closed", () => {
+            console.log(" ---- Bye Bye Electron ---- ");
             stdout.close();
         });
         // child.on('message', (data) => {
@@ -145,19 +147,24 @@ const main = async () => {
         // child.stderr?.pipe(stderr);
     };
     const watcher = (test, runtime) => {
-        return path.normalize(`${configs.buildDir}/${runtime}/${test.split('.').slice(0, -1).concat('mjs').join('.')}`);
+        return path.normalize(`${configs.buildDir}/${runtime}/${test
+            .split(".")
+            .slice(0, -1)
+            .concat("mjs")
+            .join(".")}`);
     };
     const changer = (f) => {
         return path.normalize(`${configs.buildDir}/${f}`);
     };
     const changer2 = (f, r) => {
-        return path.normalize(`${configs.buildDir}/${r}/${f}`).replace(".ts", ".mjs");
+        return path
+            .normalize(`${configs.buildDir}/${r}/${f}`)
+            .replace(".ts", ".mjs");
     };
     pie.initialize(app, 2999).then(async () => {
         app.on("ready", () => {
             loadReport(configs);
             console.log("running all the tests once initially");
-            ;
             configs.tests.forEach(([test, runtime, secondaryArtifacts]) => {
                 if (runtime === "node") {
                     launchNode(test, changer2(test, "node"));

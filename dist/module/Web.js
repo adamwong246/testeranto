@@ -1,11 +1,13 @@
 import Testeranto from "./lib/core.js";
-import { defaultTestResourceRequirement } from "./lib/index.js";
-const remote = require('@electron/remote');
+import { defaultTestResourceRequirement, } from "./lib/index.js";
+const remote = require("@electron/remote");
 class WebTesteranto extends Testeranto {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
-        super(input, testSpecification, testImplementation, testResourceRequirement, window.NodeWriter, testInterface);
+        super(input, testSpecification, testImplementation, testResourceRequirement, window.NodeWriter, testInterface
+        // BrowserWindow
+        );
         if (process.argv[2]) {
-            const testResourceArg = decodeURIComponent(new URLSearchParams(location.search).get('requesting') || '');
+            const testResourceArg = decodeURIComponent(new URLSearchParams(location.search).get("requesting") || "");
             try {
                 const partialTestResource = JSON.parse(testResourceArg);
                 this.receiveTestResourceConfig(this.testJobs[0], partialTestResource);
@@ -18,7 +20,7 @@ class WebTesteranto extends Testeranto {
         else {
             // no-op
         }
-        const requesting = new URLSearchParams(location.search).get('requesting');
+        const requesting = new URLSearchParams(location.search).get("requesting");
         if (requesting) {
             const testResourceArg = decodeURIComponent(requesting);
             try {
@@ -41,7 +43,6 @@ class WebTesteranto extends Testeranto {
         });
     }
 }
-;
 export default async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = defaultTestResourceRequirement) => {
     return new WebTesteranto(input, testSpecification, testImplementation, testResourceRequirement, testInterface);
 };

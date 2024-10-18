@@ -29,7 +29,7 @@ export class BaseBuilder {
                     name: "",
                     fs: ".",
                     ports: [],
-                    scheduled: false
+                    scheduled: false,
                 }, y) {
                     console.log(`testResourceConfiguration ${JSON.stringify(testResourceConfiguration, null, 2)}`);
                     await logWriter.mkdirSync(testResourceConfiguration.fs);
@@ -41,10 +41,12 @@ export class BaseBuilder {
                         access.write(`${l.toString()}\n`);
                     };
                     const suiteDone = await runner(testResourceConfiguration, tLog, y);
-                    const resultsFilePath = (`${testResourceConfiguration.fs}/results.json`);
+                    const resultsFilePath = `${testResourceConfiguration.fs}/results.json`;
                     logWriter.writeFileSync(resultsFilePath, JSON.stringify(suiteDone.toObj(), null, 2));
                     const logPromise = new Promise((res, rej) => {
-                        access.on("finish", () => { res(true); });
+                        access.on("finish", () => {
+                            res(true);
+                        });
                     });
                     access.end();
                     const numberOfFailures = Object.keys(suiteDone.givens).filter((k) => {
@@ -56,7 +58,7 @@ export class BaseBuilder {
                     return {
                         failed: numberOfFailures,
                         artifacts: this.artifacts || [],
-                        logPromise
+                        logPromise,
                     };
                 },
             };

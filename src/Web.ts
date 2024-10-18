@@ -1,30 +1,26 @@
 import type {
   IBaseTest,
   ITestImplementation,
-  ITestSpecification
+  ITestSpecification,
 } from "./Types";
 import Testeranto from "./lib/core.js";
 import {
   ITTestResourceConfiguration,
   ITTestResourceRequest,
   ITestJob,
-  defaultTestResourceRequirement
+  defaultTestResourceRequirement,
 } from "./lib/index.js";
 import { ITestInterface } from "./lib/types";
 
-const remote = require('@electron/remote')
+const remote = require("@electron/remote");
 
-class WebTesteranto<
-  TestShape extends IBaseTest,
-> extends Testeranto<
-  TestShape
-> {
+class WebTesteranto<TestShape extends IBaseTest> extends Testeranto<TestShape> {
   constructor(
     input: TestShape["iinput"],
     testSpecification: ITestSpecification<TestShape>,
     testImplementation: ITestImplementation<TestShape, object>,
     testResourceRequirement: ITTestResourceRequest,
-    testInterface: Partial<ITestInterface<TestShape>>,
+    testInterface: Partial<ITestInterface<TestShape>>
   ) {
     super(
       input,
@@ -32,13 +28,13 @@ class WebTesteranto<
       testImplementation,
       testResourceRequirement,
       (window as any).NodeWriter,
-      testInterface,
+      testInterface
       // BrowserWindow
     );
 
     if (process.argv[2]) {
       const testResourceArg = decodeURIComponent(
-        new URLSearchParams(location.search).get('requesting') || ''
+        new URLSearchParams(location.search).get("requesting") || ""
       );
 
       try {
@@ -47,7 +43,6 @@ class WebTesteranto<
         ) as ITTestResourceConfiguration;
 
         this.receiveTestResourceConfig(this.testJobs[0], partialTestResource);
-
       } catch (e) {
         console.error(e);
         // process.exit(-1);
@@ -56,7 +51,7 @@ class WebTesteranto<
       // no-op
     }
 
-    const requesting = new URLSearchParams(location.search).get('requesting');
+    const requesting = new URLSearchParams(location.search).get("requesting");
     if (requesting) {
       const testResourceArg = decodeURIComponent(requesting);
 
@@ -67,24 +62,19 @@ class WebTesteranto<
 
         console.log("initial test resource", partialTestResource);
         this.receiveTestResourceConfig(this.testJobs[0], partialTestResource);
-
       } catch (e) {
         console.error(e);
         // process.exit(-1);
       }
     }
     // const t: ITestJob = this.testJobs[0];
-
-
-
   }
 
-  async receiveTestResourceConfig(t: ITestJob, partialTestResource: ITTestResourceConfiguration) {
-    const {
-      failed,
-      artifacts,
-      logPromise
-    } = await t.receiveTestResourceConfig(
+  async receiveTestResourceConfig(
+    t: ITestJob,
+    partialTestResource: ITTestResourceConfiguration
+  ) {
+    const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(
       partialTestResource,
       remote
     );
@@ -92,24 +82,22 @@ class WebTesteranto<
     Promise.all([...artifacts, logPromise]).then(async () => {
       var window = remote.getCurrentWindow();
       // window.close();
-    })
+    });
   }
-
-};
+}
 
 export default async <ITestShape extends IBaseTest>(
-  input: ITestShape['iinput'],
+  input: ITestShape["iinput"],
   testSpecification: ITestSpecification<ITestShape>,
   testImplementation: ITestImplementation<ITestShape, object>,
   testInterface: Partial<ITestInterface<ITestShape>>,
-  testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
+  testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
 ): Promise<Testeranto<ITestShape>> => {
   return new WebTesteranto<ITestShape>(
     input,
     testSpecification,
     testImplementation,
     testResourceRequirement,
-    testInterface,
-  )
-
+    testInterface
+  );
 };

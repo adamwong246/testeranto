@@ -1,41 +1,27 @@
-import { ITTestResourceConfiguration, ITestArtifactory, ITLog } from ".";
-import { IBaseTest, IUtils } from "../Types";
+import { IBaseTest } from "../Types";
 
-export type IGivens<
-  ITestShape extends IBaseTest
-> = Record<
+import { ITTestResourceConfiguration, ITestArtifactory, ITLog } from ".";
+import { IUtils } from "./types";
+
+export type IGivens<ITestShape extends IBaseTest> = Record<
   string,
-  BaseGiven<
-    ITestShape
-  >
+  BaseGiven<ITestShape>
 >;
 
-export abstract class BaseSuite<
-  ITestShape extends IBaseTest
-> {
+export abstract class BaseSuite<ITestShape extends IBaseTest> {
   name: string;
-  givens: IGivens<
-    ITestShape
-  >;
-  checks: BaseCheck<
-    ITestShape
-  >[];
-  store: ITestShape['istore'];
-  fails: BaseGiven<
-    ITestShape
-  >[];
+  givens: IGivens<ITestShape>;
+  checks: BaseCheck<ITestShape>[];
+  store: ITestShape["istore"];
+  fails: BaseGiven<ITestShape>[];
   testResourceConfiguration: ITTestResourceConfiguration;
   index: number;
 
   constructor(
     name: string,
     index: number,
-    givens: IGivens<
-      ITestShape
-    > = {},
-    checks: BaseCheck<
-      ITestShape
-    >[] = []
+    givens: IGivens<ITestShape> = {},
+    checks: BaseCheck<ITestShape>[] = []
   ) {
     this.name = name;
     this.index = index;
@@ -53,38 +39,31 @@ export abstract class BaseSuite<
   }
 
   setup(
-    s: ITestShape['iinput'],
+    s: ITestShape["iinput"],
     artifactory: ITestArtifactory,
     tr: ITTestResourceConfiguration,
     utils: IUtils
-  ): Promise<ITestShape['isubject']> {
-    return new Promise((res) => res(s as unknown as ITestShape['isubject']));
+  ): Promise<ITestShape["isubject"]> {
+    return new Promise((res) => res(s as unknown as ITestShape["isubject"]));
   }
 
-  assertThat(t: ITestShape['then']): unknown {
+  assertThat(t: ITestShape["then"]): unknown {
     // console.log("base assertThat")
     return t;
   }
 
   async run(
-    input: ITestShape['iinput'],
+    input: ITestShape["iinput"],
     testResourceConfiguration: ITTestResourceConfiguration,
-    artifactory: (
-      fPath: string,
-      value: unknown
-    ) => void,
+    artifactory: (fPath: string, value: unknown) => void,
     tLog: (...string) => void,
     utils: IUtils
-  ): Promise<
-    BaseSuite<
-      ITestShape
-    >
-  > {
+  ): Promise<BaseSuite<ITestShape>> {
     this.testResourceConfiguration = testResourceConfiguration;
     tLog("test resources: ", testResourceConfiguration);
 
     const suiteArtifactory = (fPath: string, value: unknown) =>
-      artifactory(`suite-${this.index}-${this.name}/${fPath}`, value)
+      artifactory(`suite-${this.index}-${this.name}/${fPath}`, value);
     const subject = await this.setup(
       input,
       suiteArtifactory,
@@ -134,33 +113,23 @@ export abstract class BaseSuite<
   }
 }
 
-export abstract class BaseGiven<
-  ITestShape extends IBaseTest
-> {
+export abstract class BaseGiven<ITestShape extends IBaseTest> {
   name: string;
   features: string[];
-  whens: BaseWhen<
-    ITestShape
-  >[];
-  thens: BaseThen<
-    ITestShape
-  >[];
+  whens: BaseWhen<ITestShape>[];
+  thens: BaseThen<ITestShape>[];
   error: Error;
-  store: ITestShape['istore'];
+  store: ITestShape["istore"];
   recommendedFsPath: string;
-  givenCB: ITestShape['given'];
+  givenCB: ITestShape["given"];
   initialValues: any;
 
   constructor(
     name: string,
     features: string[],
-    whens: BaseWhen<
-      ITestShape
-    >[],
-    thens: BaseThen<
-      ITestShape
-    >[],
-    givenCB: ITestShape['given'],
+    whens: BaseWhen<ITestShape>[],
+    thens: BaseThen<ITestShape>[],
+    givenCB: ITestShape["given"],
     initialValues: any
   ) {
     this.name = name;
@@ -171,16 +140,12 @@ export abstract class BaseGiven<
     this.initialValues = initialValues;
   }
 
-  beforeAll(
-    store: ITestShape['istore'],
-    artifactory: ITestArtifactory,
-
-  ) {
+  beforeAll(store: ITestShape["istore"], artifactory: ITestArtifactory) {
     return store;
   }
 
   afterAll(
-    store: ITestShape['istore'],
+    store: ITestShape["istore"],
     artifactory: ITestArtifactory,
     utils: IUtils
   ) {
@@ -198,14 +163,14 @@ export abstract class BaseGiven<
   }
 
   abstract givenThat(
-    subject: ITestShape['isubject'],
+    subject: ITestShape["isubject"],
     testResourceConfiguration,
     artifactory: ITestArtifactory,
-    givenCB: ITestShape['given']
-  ): Promise<ITestShape['istore']>;
+    givenCB: ITestShape["given"]
+  ): Promise<ITestShape["istore"]>;
 
   async afterEach(
-    store: ITestShape['istore'],
+    store: ITestShape["istore"],
     key: string,
     artifactory: ITestArtifactory
   ): Promise<unknown> {
@@ -213,7 +178,7 @@ export abstract class BaseGiven<
   }
 
   async give(
-    subject: ITestShape['isubject'],
+    subject: ITestShape["isubject"],
     key: string,
     testResourceConfiguration,
     tester,
@@ -224,7 +189,7 @@ export abstract class BaseGiven<
     tLog(`\n Given: ${this.name}`);
 
     const givenArtifactory = (fPath: string, value: unknown) =>
-      artifactory(`given-${key}/${fPath}`, value)
+      artifactory(`given-${key}/${fPath}`, value);
     try {
       this.store = await this.givenThat(
         subject,
@@ -235,12 +200,7 @@ export abstract class BaseGiven<
 
       // tLog(`\n Given this.store`, this.store);
       for (const whenStep of this.whens) {
-        await whenStep.test(
-          this.store,
-          testResourceConfiguration,
-          tLog,
-          utils
-        );
+        await whenStep.test(this.store, testResourceConfiguration, tLog, utils);
       }
       for (const thenStep of this.thens) {
         const t = await thenStep.test(
@@ -267,23 +227,22 @@ export abstract class BaseGiven<
   }
 }
 
-export abstract class BaseWhen<
-  ITestShape extends IBaseTest
-> {
+export abstract class BaseWhen<ITestShape extends IBaseTest> {
   public name: string;
-  whenCB: (x: ITestShape['iselection']) => ITestShape['then'];
+  whenCB: (x: ITestShape["iselection"]) => ITestShape["then"];
   error: boolean;
 
   constructor(
     name: string,
-    whenCB: (xyz: ITestShape['iselection']) => ITestShape['then']) {
+    whenCB: (xyz: ITestShape["iselection"]) => ITestShape["then"]
+  ) {
     this.name = name;
     this.whenCB = whenCB;
   }
 
   abstract andWhen(
-    store: ITestShape['istore'],
-    whenCB: (x: ITestShape['iselection']) => ITestShape['then'],
+    store: ITestShape["istore"],
+    whenCB: (x: ITestShape["iselection"]) => ITestShape["then"],
     testResource
   );
 
@@ -295,18 +254,14 @@ export abstract class BaseWhen<
   }
 
   async test(
-    store: ITestShape['istore'],
+    store: ITestShape["istore"],
     testResourceConfiguration,
     tLog: ITLog,
     utils: IUtils
   ) {
     tLog(" When:", this.name);
     try {
-      return await this.andWhen(
-        store,
-        this.whenCB,
-        testResourceConfiguration
-      );
+      return await this.andWhen(store, this.whenCB, testResourceConfiguration);
     } catch (e) {
       this.error = true;
       throw e;
@@ -314,14 +269,15 @@ export abstract class BaseWhen<
   }
 }
 
-export abstract class BaseThen<
-  ITestShape extends IBaseTest
-> {
+export abstract class BaseThen<ITestShape extends IBaseTest> {
   public name: string;
-  thenCB: (storeState: ITestShape['iselection']) => ITestShape['then'];
+  thenCB: (storeState: ITestShape["iselection"]) => ITestShape["then"];
   error: boolean;
 
-  constructor(name: string, thenCB: (val: ITestShape['iselection']) => ITestShape['then']) {
+  constructor(
+    name: string,
+    thenCB: (val: ITestShape["iselection"]) => ITestShape["then"]
+  ) {
     this.name = name;
     this.thenCB = thenCB;
   }
@@ -334,24 +290,24 @@ export abstract class BaseThen<
   }
 
   abstract butThen(
-    store: ITestShape['istore'],
+    store: ITestShape["istore"],
     thenCB,
     testResourceConfiguration?
-  ): Promise<ITestShape['iselection']>;
+  ): Promise<ITestShape["iselection"]>;
 
   async test(
-    store: ITestShape['istore'],
+    store: ITestShape["istore"],
     testResourceConfiguration,
     tLog: ITLog,
     utils: IUtils
-  ): Promise<ITestShape['then'] | undefined> {
+  ): Promise<ITestShape["then"] | undefined> {
     tLog(" Then:", this.name);
     try {
-      const x = (await this.butThen(
+      const x = await this.butThen(
         store,
         this.thenCB,
         testResourceConfiguration
-      ));
+      );
       return x;
     } catch (e) {
       console.log("test failed", e);
@@ -361,27 +317,15 @@ export abstract class BaseThen<
   }
 }
 
-export abstract class BaseCheck<
-  ITestShape extends IBaseTest
-> {
+export abstract class BaseCheck<ITestShape extends IBaseTest> {
   name: string;
   features: string[];
   checkCB: (whens, thens) => any;
   whens: {
-    [K in keyof ITestShape["whens"]]: (
-      p,
-      tc
-    ) => BaseWhen<
-      ITestShape
-    >;
+    [K in keyof ITestShape["whens"]]: (p, tc) => BaseWhen<ITestShape>;
   };
   thens: {
-    [K in keyof ITestShape["thens"]]: (
-      p,
-      tc
-    ) => BaseThen<
-      ITestShape
-    >;
+    [K in keyof ITestShape["thens"]]: (p, tc) => BaseThen<ITestShape>;
   };
 
   constructor(
@@ -399,13 +343,13 @@ export abstract class BaseCheck<
   }
 
   abstract checkThat(
-    subject: ITestShape['isubject'],
+    subject: ITestShape["isubject"],
     testResourceConfiguration,
     artifactory: ITestArtifactory
-  ): Promise<ITestShape['istore']>;
+  ): Promise<ITestShape["istore"]>;
 
   async afterEach(
-    store: ITestShape['istore'],
+    store: ITestShape["istore"],
     key: string,
     cb?
   ): Promise<unknown> {
@@ -413,7 +357,7 @@ export abstract class BaseCheck<
   }
 
   async check(
-    subject: ITestShape['isubject'],
+    subject: ITestShape["isubject"],
     key: string,
     testResourceConfiguration,
     tester,

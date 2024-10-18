@@ -59,7 +59,6 @@ class NodeTesteranto extends core_js_1.default {
         });
     }
 }
-;
 exports.default = async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = index_js_1.defaultTestResourceRequirement) => {
     return new NodeTesteranto(input, testSpecification, testImplementation, testResourceRequirement, testInterface);
 };

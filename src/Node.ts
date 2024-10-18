@@ -16,35 +16,38 @@ import type {
 } from "./Types.js";
 import { ITestInterface, INodeTestInterface } from "./lib/types.js";
 
-const readJson = async (port: string): Promise<any> => new Promise((resolve, reject) => {
-  let json = "";
-  const request = http.request(
-    {
-      host: "127.0.0.1",
-      path: "/json/version",
-      port,
-    },
-    (response) => {
-      response.on("error", reject);
-      response.on("data", (chunk: Buffer) => {
-        json += chunk.toString();
-      });
-      response.on("end", () => {
-        resolve(JSON.parse(json))
-      });
-    }
-  );
-  request.on("error", reject);
-  request.end();
-});
+const readJson = async (port: string): Promise<any> =>
+  new Promise((resolve, reject) => {
+    let json = "";
+    const request = http.request(
+      {
+        host: "127.0.0.1",
+        path: "/json/version",
+        port,
+      },
+      (response) => {
+        response.on("error", reject);
+        response.on("data", (chunk: Buffer) => {
+          json += chunk.toString();
+        });
+        response.on("end", () => {
+          resolve(JSON.parse(json));
+        });
+      }
+    );
+    request.on("error", reject);
+    request.end();
+  });
 
-class NodeTesteranto<TestShape extends IBaseTest> extends Testeranto<TestShape> {
+class NodeTesteranto<
+  TestShape extends IBaseTest
+> extends Testeranto<TestShape> {
   constructor(
     input: TestShape["iinput"],
     testSpecification: ITestSpecification<TestShape>,
     testImplementation: ITestImplementation<TestShape, object>,
     testResourceRequirement: ITTestResourceRequest,
-    testInterface: Partial<ITestInterface<TestShape>>,
+    testInterface: Partial<ITestInterface<TestShape>>
   ) {
     super(
       input,
@@ -52,8 +55,7 @@ class NodeTesteranto<TestShape extends IBaseTest> extends Testeranto<TestShape> 
       testImplementation,
       testResourceRequirement,
       NodeWriter,
-      testInterface,
-
+      testInterface
     );
 
     if (process.argv[2]) {
@@ -65,7 +67,6 @@ class NodeTesteranto<TestShape extends IBaseTest> extends Testeranto<TestShape> 
         ) as ITTestResourceConfiguration;
 
         this.receiveTestResourceConfig(this.testJobs[0], partialTestResource);
-
       } catch (e) {
         console.error(e);
         // process.exit(-1);
@@ -79,44 +80,38 @@ class NodeTesteranto<TestShape extends IBaseTest> extends Testeranto<TestShape> 
     t: ITestJob,
     partialTestResource: ITTestResourceConfiguration
   ) {
-
     const browser = await readJson("2999").then(async (json) => {
       const b = await puppeteer.connect({
         browserWSEndpoint: json.webSocketDebuggerUrl,
         defaultViewport: null,
       });
       console.log("connected!", b.isConnected());
-      return b
-    })
+      return b;
+    });
 
-    const {
-      failed,
-      artifacts,
-      logPromise
-    } = await t.receiveTestResourceConfig(
+    const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(
       partialTestResource,
       browser
     );
 
     Promise.all([...artifacts, logPromise]).then(async () => {
       // process.exit(await failed ? 1 : 0);
-    })
+    });
   }
-
-};
+}
 
 export default async <ITestShape extends IBaseTest>(
-  input: ITestShape['iinput'],
+  input: ITestShape["iinput"],
   testSpecification: ITestSpecification<ITestShape>,
   testImplementation: ITestImplementation<ITestShape, object>,
   testInterface: Partial<INodeTestInterface<ITestShape>>,
-  testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
+  testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
 ): Promise<Testeranto<ITestShape>> => {
   return new NodeTesteranto<ITestShape>(
     input,
     testSpecification,
     testImplementation,
     testResourceRequirement,
-    testInterface,
-  )
+    testInterface
+  );
 };

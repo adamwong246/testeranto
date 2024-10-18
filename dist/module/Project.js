@@ -1,7 +1,7 @@
 import esbuild from "esbuild";
 import fs from "fs";
 import path from "path";
-import readline from 'readline';
+import readline from "readline";
 import { glob } from "glob";
 import esbuildNodeConfiger from "./esbuildConfigs/node.js";
 import esbuildWebConfiger from "./esbuildConfigs/web.js";
@@ -11,8 +11,8 @@ import reportHtmlFrame from "./report.html.js";
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
     process.stdin.setRawMode(true);
-process.stdin.on('keypress', (str, key) => {
-    if (key.name === 'q') {
+process.stdin.on("keypress", (str, key) => {
+    if (key.name === "q") {
         process.exit();
     }
 });
@@ -34,20 +34,22 @@ export class ITProject {
     constructor(config) {
         this.mode = `up`;
         this.config = config;
-        Promise.resolve(Promise.all([
-            ...this.getSecondaryEndpointsPoints("web"),
-        ]
-            .map(async (sourceFilePath) => {
+        Promise.resolve(Promise.all([...this.getSecondaryEndpointsPoints("web")].map(async (sourceFilePath) => {
             const sourceFileSplit = sourceFilePath.split("/");
             const sourceDir = sourceFileSplit.slice(0, -1);
             const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
-            const sourceFileNameMinusJs = sourceFileName.split(".").slice(0, -1).join(".");
+            const sourceFileNameMinusJs = sourceFileName
+                .split(".")
+                .slice(0, -1)
+                .join(".");
             const htmlFilePath = path.normalize(`${process.cwd()}/${config.outdir}/web/${sourceDir.join("/")}/${sourceFileNameMinusJs}.html`);
             const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
-            return fs.promises.mkdir(path.dirname(htmlFilePath), { recursive: true }).then(x => fs.writeFileSync(htmlFilePath, webHtmlFrame(jsfilePath, htmlFilePath)));
+            return fs.promises
+                .mkdir(path.dirname(htmlFilePath), { recursive: true })
+                .then((x) => fs.writeFileSync(htmlFilePath, webHtmlFrame(jsfilePath, htmlFilePath)));
         })));
         const [nodeEntryPoints, webEntryPoints] = getRunnables(this.config.tests);
-        glob(`./${config.outdir}/chunk-*.mjs`, { ignore: 'node_modules/**' }).then((chunks) => {
+        glob(`./${config.outdir}/chunk-*.mjs`, { ignore: "node_modules/**" }).then((chunks) => {
             console.log("deleting chunks", chunks);
             chunks.forEach((chunk) => {
                 console.log("deleting chunk", chunk);
@@ -59,17 +61,20 @@ export class ITProject {
         fs.writeFileSync(`${config.outdir}/report.html`, reportHtmlFrame());
         Promise.all([
             fs.promises.writeFile(`${config.outdir}/testeranto.json`, JSON.stringify(Object.assign(Object.assign({}, config), { buildDir: process.cwd() + "/" + config.outdir }), null, 2)),
-            esbuild.context(esbuildFeaturesConfiger(config))
+            esbuild
+                .context(esbuildFeaturesConfiger(config))
                 .then(async (featuresContext) => {
                 await featuresContext.watch();
                 return featuresContext;
             }),
-            esbuild.context(esbuildNodeConfiger(config, nodeEntryPoints))
+            esbuild
+                .context(esbuildNodeConfiger(config, nodeEntryPoints))
                 .then(async (nodeContext) => {
                 await nodeContext.watch();
                 return nodeContext;
             }),
-            esbuild.context(esbuildWebConfiger(config, webEntryPoints))
+            esbuild
+                .context(esbuildWebConfiger(config, webEntryPoints))
                 .then(async (esbuildWeb) => {
                 await esbuildWeb.watch();
                 return esbuildWeb;
@@ -93,4 +98,3 @@ export class ITProject {
         return Array.from(meta(this.config.tests, new Set()));
     }
 }
-;

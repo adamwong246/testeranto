@@ -5,8 +5,8 @@ import { NodeWriter } from "./NodeWriter";
 
 (window as any).NodeWriter = NodeWriter;
 (window as any).exit = (x) => {
-  ipcRenderer.invoke('quit-app', x);
-}
+  ipcRenderer.invoke("quit-app", x);
+};
 
 // var oldLog = console.log;
 // console.log = function (message) {

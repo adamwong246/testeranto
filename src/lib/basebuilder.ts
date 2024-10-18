@@ -7,14 +7,21 @@ import {
 } from ".";
 import { IBaseTest, ITestSpecification } from "../Types.js";
 
-import { ISuiteKlasser, IGivenKlasser, IWhenKlasser, IThenKlasser, ICheckKlasser, IUtils } from "./types.js";
+import {
+  ISuiteKlasser,
+  IGivenKlasser,
+  IWhenKlasser,
+  IThenKlasser,
+  ICheckKlasser,
+  IUtils,
+} from "./types.js";
 
 import {
   BaseCheck,
   BaseSuite,
   BaseWhen,
   BaseThen,
-  BaseGiven
+  BaseGiven,
 } from "./abstractBase.js";
 
 export abstract class BaseBuilder<
@@ -23,14 +30,11 @@ export abstract class BaseBuilder<
   GivenExtensions,
   WhenExtensions,
   ThenExtensions,
-  CheckExtensions,
+  CheckExtensions
 > {
-
   specs: any;
 
-  assertThis: (t: any) => {
-
-  }
+  assertThis: (t: any) => {};
 
   testResourceRequirement: ITTestResourceRequest;
   artifacts: Promise<unknown>[] = [];
@@ -43,7 +47,7 @@ export abstract class BaseBuilder<
   checkOverides: Record<keyof CheckExtensions, ICheckKlasser<ITestShape>>;
 
   constructor(
-    public readonly input: ITestShape['iinput'],
+    public readonly input: ITestShape["iinput"],
     suitesOverrides: Record<keyof SuiteExtensions, ISuiteKlasser<ITestShape>>,
     givenOverides: Record<keyof GivenExtensions, IGivenKlasser<ITestShape>>,
     whenOverides: Record<keyof WhenExtensions, IWhenKlasser<ITestShape>>,
@@ -51,7 +55,7 @@ export abstract class BaseBuilder<
     checkOverides: Record<keyof CheckExtensions, ICheckKlasser<ITestShape>>,
     logWriter: ILogWriter,
     testResourceRequirement: ITTestResourceRequest,
-    testSpecification: any,
+    testSpecification: any
   ) {
     this.artifacts = [];
     this.testResourceRequirement = testResourceRequirement;
@@ -67,121 +71,114 @@ export abstract class BaseBuilder<
       this.Given(),
       this.When(),
       this.Then(),
-      this.Check(),
+      this.Check()
     );
 
-    const suiteRunner = (
-      suite: BaseSuite<ITestShape>,
-      utils: IUtils
-    ) =>
+    const suiteRunner =
+      (suite: BaseSuite<ITestShape>, utils: IUtils) =>
       async (
         testResourceConfiguration: ITTestResourceConfiguration,
         tLog: ITLog,
         utils: IUtils
-      ): Promise<BaseSuite<
-        ITestShape
-      >> => {
+      ): Promise<BaseSuite<ITestShape>> => {
         return await suite.run(
           input,
           testResourceConfiguration,
-          (
-            fPath: string,
-            value: unknown
-          ) =>
+          (fPath: string, value: unknown) =>
             logWriter.testArtiFactoryfileWriter(tLog, (p: Promise<void>) => {
               this.artifacts.push(p);
-            })(
-              testResourceConfiguration.fs + "/" + fPath,
-              value
-            ),
+            })(testResourceConfiguration.fs + "/" + fPath, value),
           tLog,
           utils
         );
       };
 
-    this.testJobs = this.specs.map((
-      suite: BaseSuite<ITestShape>,
-      utils: IUtils
-    ) => {
-      const runner = suiteRunner(suite, utils);
+    this.testJobs = this.specs.map(
+      (suite: BaseSuite<ITestShape>, utils: IUtils) => {
+        const runner = suiteRunner(suite, utils);
 
-      return {
-        test: suite,
-        testResourceRequirement,
+        return {
+          test: suite,
+          testResourceRequirement,
 
-        toObj: () => {
-          return suite.toObj();
-        },
-
-        runner,
-
-        receiveTestResourceConfig: async function (
-          testResourceConfiguration = {
-            name: "",
-            fs: ".",
-            ports: [],
-            scheduled: false
+          toObj: () => {
+            return suite.toObj();
           },
-          y: IUtils
-        ) {
-          console.log(
-            `testResourceConfiguration ${JSON.stringify(
+
+          runner,
+
+          receiveTestResourceConfig: async function (
+            testResourceConfiguration = {
+              name: "",
+              fs: ".",
+              ports: [],
+              scheduled: false,
+            },
+            y: IUtils
+          ) {
+            console.log(
+              `testResourceConfiguration ${JSON.stringify(
+                testResourceConfiguration,
+                null,
+                2
+              )}`
+            );
+
+            await logWriter.mkdirSync(testResourceConfiguration.fs);
+            logWriter.writeFileSync(
+              `${testResourceConfiguration.fs}/tests.json`,
+              JSON.stringify(this.toObj(), null, 2)
+            );
+
+            const logFilePath = `${testResourceConfiguration.fs}/log.txt`;
+
+            const access = await logWriter.createWriteStream(logFilePath);
+
+            const tLog = (...l: string[]) => {
+              // console.log(...l);
+              access.write(`${l.toString()}\n`);
+            };
+            const suiteDone: BaseSuite<ITestShape> = await runner(
               testResourceConfiguration,
-              null,
-              2
-            )}`
-          );
+              tLog,
+              y
+            );
+            const resultsFilePath = `${testResourceConfiguration.fs}/results.json`;
 
-          await logWriter.mkdirSync(testResourceConfiguration.fs);
-          logWriter.writeFileSync(
-            `${testResourceConfiguration.fs}/tests.json`,
-            JSON.stringify(this.toObj(), null, 2)
-          );
+            logWriter.writeFileSync(
+              resultsFilePath,
+              JSON.stringify(suiteDone.toObj(), null, 2)
+            );
 
-          const logFilePath = `${testResourceConfiguration.fs}/log.txt`;
+            const logPromise = new Promise((res, rej) => {
+              access.on("finish", () => {
+                res(true);
+              });
+            });
+            access.end();
 
-          const access = await logWriter.createWriteStream(logFilePath);
-
-          const tLog = (...l: string[]) => {
-            // console.log(...l);
-            access.write(`${l.toString()}\n`);
-          };
-          const suiteDone: BaseSuite<
-            ITestShape
-          > = await runner(testResourceConfiguration, tLog, y);
-          const resultsFilePath = (
-            `${testResourceConfiguration.fs}/results.json`
-          );
-
-          logWriter.writeFileSync(
-            resultsFilePath,
-            JSON.stringify(suiteDone.toObj(), null, 2)
-          );
-
-          const logPromise = new Promise((res, rej) => {
-            access.on("finish", () => { res(true); });
-          })
-          access.end();
-
-          const numberOfFailures = Object.keys(suiteDone.givens).filter(
-            (k) => {
-              // console.log(`suiteDone.givens[k].error`, suiteDone.givens[k].error);
-              return suiteDone.givens[k].error
-            }
-          ).length;
-          logWriter.writeFileSync(
-            `${testResourceConfiguration.fs}/exitcode`,
-            numberOfFailures.toString()
-          );
-          console.log(`exiting gracefully with ${numberOfFailures} failures.`);
-          return {
-            failed: numberOfFailures,
-            artifacts: this.artifacts || [],
-            logPromise
-          };
-        },
-      };
-    });
+            const numberOfFailures = Object.keys(suiteDone.givens).filter(
+              (k) => {
+                // console.log(`suiteDone.givens[k].error`, suiteDone.givens[k].error);
+                return suiteDone.givens[k].error;
+              }
+            ).length;
+            logWriter.writeFileSync(
+              `${testResourceConfiguration.fs}/exitcode`,
+              numberOfFailures.toString()
+            );
+            console.log(
+              `exiting gracefully with ${numberOfFailures} failures.`
+            );
+            return {
+              failed: numberOfFailures,
+              artifacts: this.artifacts || [],
+              logPromise,
+            };
+          },
+        };
+      }
+    );
   }
 
   Specs() {
@@ -196,26 +193,17 @@ export abstract class BaseBuilder<
     (
       name: string,
       features: string[],
-      whens: BaseWhen<
-        ITestShape
-      >[],
-      thens: BaseThen<
-        ITestShape
-      >[],
-      gcb,
-    ) => BaseGiven<
-      ITestShape
-    >
+      whens: BaseWhen<ITestShape>[],
+      thens: BaseThen<ITestShape>[],
+      gcb
+    ) => BaseGiven<ITestShape>
   > {
     return this.givenOverides;
   }
 
   When(): Record<
     keyof WhenExtensions,
-    (arg0: ITestShape['istore'], ...arg1: any) =>
-      BaseWhen<
-        ITestShape
-      >
+    (arg0: ITestShape["istore"], ...arg1: any) => BaseWhen<ITestShape>
   > {
     return this.whenOverides;
   }
@@ -223,11 +211,9 @@ export abstract class BaseBuilder<
   Then(): Record<
     keyof ThenExtensions,
     (
-      selection: ITestShape['iselection'],
+      selection: ITestShape["iselection"],
       expectation: any
-    ) => BaseThen<
-      ITestShape
-    >
+    ) => BaseThen<ITestShape>
   > {
     return this.thenOverides;
   }
@@ -240,9 +226,7 @@ export abstract class BaseBuilder<
       whens,
       thens,
       x
-    ) => BaseCheck<
-      ITestShape
-    >
+    ) => BaseCheck<ITestShape>
   > {
     return this.checkOverides;
   }

@@ -10,7 +10,7 @@ const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const jsonc_1 = require("jsonc");
 process.on("message", function (message) {
-    console.log('message: ' + message);
+    console.log("message: " + message);
     process.exit();
 });
 const remoteMain = require("@electron/remote/main");
@@ -23,7 +23,7 @@ const main = async () => {
             webPreferences: {
                 offscreen: false,
                 devTools: true,
-            }
+            },
         });
         win.loadFile(`/${configs.buildDir}/report.html`).then(async (x) => {
             // pie.connect(app, puppeteer).then(async (browser) => {
@@ -48,17 +48,19 @@ const main = async () => {
         console.log("launchNode", src, dest, " -> ", destFolder, argz);
         const child = electron_1.utilityProcess.fork(dest, [argz], {
             cwd: destFolder,
-            stdio: 'pipe'
+            stdio: "pipe",
         });
         if (!fs_1.default.existsSync(destFolder)) {
             fs_1.default.mkdirSync(destFolder, { recursive: true });
         }
         const stdout = fs_1.default.createWriteStream(`${destFolder}/stdout.log`);
         const stderr = fs_1.default.createWriteStream(`${destFolder}/stderr.log`);
-        child.on('message', (data) => {
+        child
+            .on("message", (data) => {
             console.log("from child", data);
             launchWebSecondary(process.cwd() + data);
-        }).on('exit', (data) => {
+        })
+            .on("exit", (data) => {
             fs_1.default.writeFileSync(`${destFolder}/stdout.log`, data.toString());
             stdout.close();
             stderr.close();
@@ -82,10 +84,10 @@ const main = async () => {
                 nodeIntegration: true,
                 nodeIntegrationInWorker: true,
                 contextIsolation: false,
-                preload: path_1.default.join(electron_1.app.getAppPath(), 'preload.js'),
+                preload: path_1.default.join(electron_1.app.getAppPath(), "preload.js"),
                 offscreen: false,
                 devTools: false,
-            }
+            },
         });
         remoteMain.enable(subWin.webContents);
         subWin.webContents.openDevTools();
@@ -100,10 +102,10 @@ const main = async () => {
                 nodeIntegration: true,
                 nodeIntegrationInWorker: true,
                 contextIsolation: false,
-                preload: path_1.default.join(electron_1.app.getAppPath(), 'preload.js'),
+                preload: path_1.default.join(electron_1.app.getAppPath(), "preload.js"),
                 offscreen: false,
                 devTools: true,
-            }
+            },
         });
         remoteMain.enable(subWin.webContents);
         // subWin.webContents.openDevTools()
@@ -114,8 +116,8 @@ const main = async () => {
                     name: dest,
                     ports: [].toString(),
                     fs: path_1.default.resolve(configs.buildDir, "web", destFolder),
-                }))
-            }
+                })),
+            },
         });
         // subWin.webContents.
         // const child = utilityProcess.fork(dest, [argz], { stdio: 'pipe' });
@@ -124,18 +126,18 @@ const main = async () => {
         }
         const stdout = fs_1.default.createWriteStream(`${destFolder}/stdout.log`);
         // const stderr = fs.createWriteStream(`${destFolder}/stderr.log`);
-        subWin.webContents.on('console-message', (event, level, message, line, sourceId) => {
+        subWin.webContents.on("console-message", (event, level, message, line, sourceId) => {
             stdout.write(JSON.stringify({
                 event,
                 level,
                 message: JSON.stringify(message),
                 line,
-                sourceId
+                sourceId,
             }, null, 2));
-            stdout.write('\n');
+            stdout.write("\n");
         });
-        subWin.on('closed', () => {
-            console.log(' ---- Bye Bye Electron ---- ');
+        subWin.on("closed", () => {
+            console.log(" ---- Bye Bye Electron ---- ");
             stdout.close();
         });
         // child.on('message', (data) => {
@@ -150,19 +152,24 @@ const main = async () => {
         // child.stderr?.pipe(stderr);
     };
     const watcher = (test, runtime) => {
-        return path_1.default.normalize(`${configs.buildDir}/${runtime}/${test.split('.').slice(0, -1).concat('mjs').join('.')}`);
+        return path_1.default.normalize(`${configs.buildDir}/${runtime}/${test
+            .split(".")
+            .slice(0, -1)
+            .concat("mjs")
+            .join(".")}`);
     };
     const changer = (f) => {
         return path_1.default.normalize(`${configs.buildDir}/${f}`);
     };
     const changer2 = (f, r) => {
-        return path_1.default.normalize(`${configs.buildDir}/${r}/${f}`).replace(".ts", ".mjs");
+        return path_1.default
+            .normalize(`${configs.buildDir}/${r}/${f}`)
+            .replace(".ts", ".mjs");
     };
     puppeteer_in_electron_1.default.initialize(electron_1.app, 2999).then(async () => {
         electron_1.app.on("ready", () => {
             loadReport(configs);
             console.log("running all the tests once initially");
-            ;
             configs.tests.forEach(([test, runtime, secondaryArtifacts]) => {
                 if (runtime === "node") {
                     launchNode(test, changer2(test, "node"));

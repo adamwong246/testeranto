@@ -3,7 +3,7 @@ console.log("hello preloader");
 import { NodeWriter } from "./NodeWriter";
 window.NodeWriter = NodeWriter;
 window.exit = (x) => {
-    ipcRenderer.invoke('quit-app', x);
+    ipcRenderer.invoke("quit-app", x);
 };
 // var oldLog = console.log;
 // console.log = function (message) {

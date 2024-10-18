@@ -12,7 +12,7 @@ export declare type ITTestShape = {
 };
 export declare type IPartialNodeInterface<I extends IBaseTest> = Partial<INodeTestInterface<I>>;
 export declare type IPartialWebInterface<I extends IBaseTest> = Partial<IWebTestInterface<I>>;
-export declare type IEntry<ITestShape extends IBaseTest> = (input: ITestShape['iinput'], testSpecification: ITestSpecification<ITestShape>, testImplementation: ITestImplementation<ITestShape, object>, testInterface: IPartialInterface<ITestShape>, testResourceRequirement: ITTestResourceRequest) => Promise<Testeranto<ITestShape>>;
+export declare type IEntry<ITestShape extends IBaseTest> = (input: ITestShape["iinput"], testSpecification: ITestSpecification<ITestShape>, testImplementation: ITestImplementation<ITestShape, object>, testInterface: IPartialInterface<ITestShape>, testResourceRequirement: ITTestResourceRequest) => Promise<Testeranto<ITestShape>>;
 export declare type ITestSpecification<ITestShape extends IBaseTest> = (Suite: {
     [K in keyof ITestShape["suites"]]: (name: string, givens: IGivens<ITestShape>, checks: BaseCheck<ITestShape>[]) => BaseSuite<ITestShape>;
 }, Given: {
@@ -27,16 +27,16 @@ export declare type ITestImplementation<ITestShape extends IBaseTest, IMod> = Mo
         [K in keyof ITestShape["suites"]]: string;
     };
     givens: {
-        [K in keyof ITestShape["givens"]]: (...Ig: ITestShape["givens"][K]) => ITestShape['given'];
+        [K in keyof ITestShape["givens"]]: (...Ig: ITestShape["givens"][K]) => ITestShape["given"];
     };
     whens: {
-        [K in keyof ITestShape["whens"]]: (...Iw: ITestShape["whens"][K]) => (zel: ITestShape['iselection']) => ITestShape['when'];
+        [K in keyof ITestShape["whens"]]: (...Iw: ITestShape["whens"][K]) => (zel: ITestShape["iselection"]) => ITestShape["when"];
     };
     thens: {
-        [K in keyof ITestShape["thens"]]: (...It: ITestShape["thens"][K]) => (ssel: ITestShape['iselection']) => ITestShape['then'];
+        [K in keyof ITestShape["thens"]]: (...It: ITestShape["thens"][K]) => (ssel: ITestShape["iselection"]) => ITestShape["then"];
     };
     checks: {
-        [K in keyof ITestShape["checks"]]: (...Ic: ITestShape["checks"][K]) => ITestShape['given'];
+        [K in keyof ITestShape["checks"]]: (...Ic: ITestShape["checks"][K]) => ITestShape["given"];
     };
 }, IMod>;
 declare type Modify<T, R> = Omit<T, keyof R> & R;

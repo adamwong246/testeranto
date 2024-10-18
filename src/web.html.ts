@@ -17,4 +17,4 @@ export default (jsfilePath: string, htmlFilePath: string) => `
 <footer></footer>
 
 </html>
-`
+`;

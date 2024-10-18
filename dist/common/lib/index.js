@@ -2,18 +2,20 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.defaultTestResourceRequirement = exports.DefaultTestInterface = exports.BaseTestInterface = void 0;
 exports.BaseTestInterface = {
-    beforeAll: (async (s) => s),
-    beforeEach: async function (subject, initialValues, testResource) { return subject; },
-    afterEach: (async (s) => s),
-    afterAll: ((store) => undefined),
-    butThen: (async (store, thenCb) => thenCb(store)),
-    andWhen: ((a) => a),
-    assertThis: (() => null),
+    beforeAll: async (s) => s,
+    beforeEach: async function (subject, initialValues, testResource) {
+        return subject;
+    },
+    afterEach: async (s) => s,
+    afterAll: (store) => undefined,
+    butThen: async (store, thenCb) => thenCb(store),
+    andWhen: (a) => a,
+    assertThis: () => null,
 };
 const DefaultTestInterface = (p) => {
     return Object.assign(Object.assign({}, exports.BaseTestInterface), p);
 };
 exports.DefaultTestInterface = DefaultTestInterface;
 exports.defaultTestResourceRequirement = {
-    ports: 0
+    ports: 0,
 };

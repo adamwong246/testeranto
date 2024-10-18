@@ -1,39 +1,27 @@
-import type {
+import {
   IBaseTest,
-  ICheckKlasser,
-  IGivenKlasser,
-  ISuiteKlasser,
   ITestImplementation,
   ITestSpecification,
-  IThenKlasser,
+} from "../Types.js";
+
+import { BaseBuilder } from "./basebuilder.js";
+
+import { ILogWriter, ITTestResourceRequest } from ".";
+import {
+  ISuiteKlasser,
+  IGivenKlasser,
   IWhenKlasser,
-} from "../Types";
-
-
-import {
-  BaseBuilder
-} from "./basebuilder.js";
-
-import {
-  ILogWriter,
-  ITTestResourceRequest
-} from ".";
+  IThenKlasser,
+  ICheckKlasser,
+} from "./types.js";
 
 export abstract class ClassBuilder<
   ITestShape extends IBaseTest
-> extends BaseBuilder<
-  ITestShape,
-  any,
-  any,
-  any,
-  any,
-  any
-> {
-
+> extends BaseBuilder<ITestShape, any, any, any, any, any> {
   constructor(
     testImplementation: ITestImplementation<ITestShape, any>,
     testSpecification: ITestSpecification<ITestShape>,
-    input: ITestShape['iinput'],
+    input: ITestShape["iinput"],
     suiteKlasser: ISuiteKlasser<ITestShape>,
     givenKlasser: IGivenKlasser<ITestShape>,
     whenKlasser: IWhenKlasser<ITestShape>,
@@ -56,28 +44,22 @@ export abstract class ClassBuilder<
       },
       {}
     );
-    const classyGivens = Object.entries(testImplementation.givens)
-      .reduce(
-        (a, [key, givEn]) => {
-          a[key] = (
+    const classyGivens = Object.entries(testImplementation.givens).reduce(
+      (a, [key, givEn]) => {
+        a[key] = (features, whens, thens, givEn) => {
+          return new givenKlasser.prototype.constructor(
+            key,
             features,
             whens,
             thens,
-            givEn,
-          ) => {
-            return new (givenKlasser.prototype).constructor(
-              key,
-              features,
-              whens,
-              thens,
-              testImplementation.givens[key],
-              givEn
-            );
-          };
-          return a;
-        },
-        {}
-      );
+            testImplementation.givens[key],
+            givEn
+          );
+        };
+        return a;
+      },
+      {}
+    );
 
     const classyWhens = Object.entries(testImplementation.whens).reduce(
       (a, [key, whEn]: [string, (x) => any]) => {
@@ -133,5 +115,4 @@ export abstract class ClassBuilder<
       testSpecification
     );
   }
-
 }

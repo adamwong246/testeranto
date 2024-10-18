@@ -51,5 +51,5 @@ exports.NodeWriterElectron = {
                 }
             });
         }));
-    }
+    },
 };

@@ -5,12 +5,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_js_1 = __importDefault(require("./lib/core.js"));
 const index_js_1 = require("./lib/index.js");
-const remote = require('@electron/remote');
+const remote = require("@electron/remote");
 class WebTesteranto extends core_js_1.default {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
-        super(input, testSpecification, testImplementation, testResourceRequirement, window.NodeWriter, testInterface);
+        super(input, testSpecification, testImplementation, testResourceRequirement, window.NodeWriter, testInterface
+        // BrowserWindow
+        );
         if (process.argv[2]) {
-            const testResourceArg = decodeURIComponent(new URLSearchParams(location.search).get('requesting') || '');
+            const testResourceArg = decodeURIComponent(new URLSearchParams(location.search).get("requesting") || "");
             try {
                 const partialTestResource = JSON.parse(testResourceArg);
                 this.receiveTestResourceConfig(this.testJobs[0], partialTestResource);
@@ -23,7 +25,7 @@ class WebTesteranto extends core_js_1.default {
         else {
             // no-op
         }
-        const requesting = new URLSearchParams(location.search).get('requesting');
+        const requesting = new URLSearchParams(location.search).get("requesting");
         if (requesting) {
             const testResourceArg = decodeURIComponent(requesting);
             try {
@@ -46,7 +48,6 @@ class WebTesteranto extends core_js_1.default {
         });
     }
 }
-;
 exports.default = async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = index_js_1.defaultTestResourceRequirement) => {
     return new WebTesteranto(input, testSpecification, testImplementation, testResourceRequirement, testInterface);
 };

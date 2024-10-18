@@ -17,8 +17,8 @@ const report_html_js_1 = __importDefault(require("./report.html.js"));
 readline_1.default.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
     process.stdin.setRawMode(true);
-process.stdin.on('keypress', (str, key) => {
-    if (key.name === 'q') {
+process.stdin.on("keypress", (str, key) => {
+    if (key.name === "q") {
         process.exit();
     }
 });
@@ -40,20 +40,22 @@ class ITProject {
     constructor(config) {
         this.mode = `up`;
         this.config = config;
-        Promise.resolve(Promise.all([
-            ...this.getSecondaryEndpointsPoints("web"),
-        ]
-            .map(async (sourceFilePath) => {
+        Promise.resolve(Promise.all([...this.getSecondaryEndpointsPoints("web")].map(async (sourceFilePath) => {
             const sourceFileSplit = sourceFilePath.split("/");
             const sourceDir = sourceFileSplit.slice(0, -1);
             const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
-            const sourceFileNameMinusJs = sourceFileName.split(".").slice(0, -1).join(".");
+            const sourceFileNameMinusJs = sourceFileName
+                .split(".")
+                .slice(0, -1)
+                .join(".");
             const htmlFilePath = path_1.default.normalize(`${process.cwd()}/${config.outdir}/web/${sourceDir.join("/")}/${sourceFileNameMinusJs}.html`);
             const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
-            return fs_1.default.promises.mkdir(path_1.default.dirname(htmlFilePath), { recursive: true }).then(x => fs_1.default.writeFileSync(htmlFilePath, (0, web_html_js_1.default)(jsfilePath, htmlFilePath)));
+            return fs_1.default.promises
+                .mkdir(path_1.default.dirname(htmlFilePath), { recursive: true })
+                .then((x) => fs_1.default.writeFileSync(htmlFilePath, (0, web_html_js_1.default)(jsfilePath, htmlFilePath)));
         })));
         const [nodeEntryPoints, webEntryPoints] = getRunnables(this.config.tests);
-        (0, glob_1.glob)(`./${config.outdir}/chunk-*.mjs`, { ignore: 'node_modules/**' }).then((chunks) => {
+        (0, glob_1.glob)(`./${config.outdir}/chunk-*.mjs`, { ignore: "node_modules/**" }).then((chunks) => {
             console.log("deleting chunks", chunks);
             chunks.forEach((chunk) => {
                 console.log("deleting chunk", chunk);
@@ -65,17 +67,20 @@ class ITProject {
         fs_1.default.writeFileSync(`${config.outdir}/report.html`, (0, report_html_js_1.default)());
         Promise.all([
             fs_1.default.promises.writeFile(`${config.outdir}/testeranto.json`, JSON.stringify(Object.assign(Object.assign({}, config), { buildDir: process.cwd() + "/" + config.outdir }), null, 2)),
-            esbuild_1.default.context((0, features_js_1.default)(config))
+            esbuild_1.default
+                .context((0, features_js_1.default)(config))
                 .then(async (featuresContext) => {
                 await featuresContext.watch();
                 return featuresContext;
             }),
-            esbuild_1.default.context((0, node_js_1.default)(config, nodeEntryPoints))
+            esbuild_1.default
+                .context((0, node_js_1.default)(config, nodeEntryPoints))
                 .then(async (nodeContext) => {
                 await nodeContext.watch();
                 return nodeContext;
             }),
-            esbuild_1.default.context((0, web_js_1.default)(config, webEntryPoints))
+            esbuild_1.default
+                .context((0, web_js_1.default)(config, webEntryPoints))
                 .then(async (esbuildWeb) => {
                 await esbuildWeb.watch();
                 return esbuildWeb;
@@ -100,4 +105,3 @@ class ITProject {
     }
 }
 exports.ITProject = ITProject;
-;
