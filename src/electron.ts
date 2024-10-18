@@ -49,19 +49,22 @@ const main = async () => {
       scheduled: true,
       name: src,
       ports: [],
-      fs: path.resolve(configs.buildDir, "node", destFolder),
+      // fs: path.resolve(configs.buildDir, "web", destFolder + "/"),
+      fs: destFolder,
+      // fs: ".",
     });
 
     console.log("launchNode", src, dest, " -> ", destFolder, argz);
 
-    const child = utilityProcess.fork(dest, [argz], {
-      cwd: destFolder,
+    const child = utilityProcess.fork(dest + ".mjs", [argz], {
+      // cwd: destFolder,
       stdio: "pipe",
     });
 
     if (!fs.existsSync(destFolder)) {
       fs.mkdirSync(destFolder, { recursive: true });
     }
+
     const stdout = fs.createWriteStream(`${destFolder}/stdout.log`);
     const stderr = fs.createWriteStream(`${destFolder}/stderr.log`);
 
@@ -77,15 +80,6 @@ const main = async () => {
 
     child.stdout?.pipe(stdout);
     child.stderr?.pipe(stderr);
-
-    // // Log a message when the child process exits
-    // child.on('close', (code) => {
-    //   console.log(`Child process exited with code ${code}`);
-    // });
-    // console.log("child", child);
-    // child.stdout?.on("data", (x) => {
-    //   console.log("x", x)
-    // })
   };
 
   const launchWebSecondary = (htmlFile: string) => {
@@ -110,9 +104,9 @@ const main = async () => {
   const launchWeb = (t: string, dest: string) => {
     console.log("launchWeb", t, dest);
     const destFolder = dest.replace(".mjs", "");
+
     const subWin = new BrowserWindow({
       show: true,
-
       webPreferences: {
         nodeIntegration: true,
         nodeIntegrationInWorker: true,
@@ -122,32 +116,28 @@ const main = async () => {
         devTools: true,
       },
     });
+
     remoteMain.enable(subWin.webContents);
-    // subWin.webContents.openDevTools()
 
-    const htmlFile = dest.split(".").slice(0, -1).concat("html").join(".");
-
-    subWin.loadFile(htmlFile, {
-      query: {
-        requesting: encodeURIComponent(
-          JSON.stringify({
-            name: dest,
-            ports: [].toString(),
-            fs: path.resolve(configs.buildDir, "web", destFolder),
-          })
-        ),
-      },
+    const webArgz = JSON.stringify({
+      name: dest,
+      ports: [].toString(),
+      // fs: path.resolve(configs.buildDir, "web", destFolder + "/"),
+      // fs: destFolder,
+      fs: destFolder,
     });
 
-    // subWin.webContents.
-
-    // const child = utilityProcess.fork(dest, [argz], { stdio: 'pipe' });
+    console.log("webArgz", webArgz);
+    subWin.loadFile(`${dest}.html`, {
+      query: {
+        requesting: encodeURIComponent(webArgz),
+      },
+    });
 
     if (!fs.existsSync(destFolder)) {
       fs.mkdirSync(destFolder, { recursive: true });
     }
     const stdout = fs.createWriteStream(`${destFolder}/stdout.log`);
-    // const stderr = fs.createWriteStream(`${destFolder}/stderr.log`);
 
     subWin.webContents.on(
       "console-message",
@@ -202,7 +192,9 @@ const main = async () => {
   const changer2 = (f: string, r: IRunTime) => {
     return path
       .normalize(`${configs.buildDir}/${r}/${f}`)
-      .replace(".ts", ".mjs");
+      .split(".")
+      .slice(0, -1)
+      .join(".");
   };
 
   pie.initialize(app, 2999).then(async () => {

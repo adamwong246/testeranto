@@ -124,7 +124,11 @@ export abstract class BaseBuilder<
               )}`
             );
 
-            await logWriter.mkdirSync(testResourceConfiguration.fs);
+            // await logWriter.mkdirSync(testResourceConfiguration.fs);
+            //  if (!fs.existsSync(destFolder)) {
+            //    fs.mkdirSync(destFolder, { recursive: true });
+            //  }
+
             logWriter.writeFileSync(
               `${testResourceConfiguration.fs}/tests.json`,
               JSON.stringify(this.toObj(), null, 2)
@@ -143,12 +147,6 @@ export abstract class BaseBuilder<
               tLog,
               y
             );
-            const resultsFilePath = `${testResourceConfiguration.fs}/results.json`;
-
-            logWriter.writeFileSync(
-              resultsFilePath,
-              JSON.stringify(suiteDone.toObj(), null, 2)
-            );
 
             const logPromise = new Promise((res, rej) => {
               access.on("finish", () => {
@@ -159,7 +157,6 @@ export abstract class BaseBuilder<
 
             const numberOfFailures = Object.keys(suiteDone.givens).filter(
               (k) => {
-                // console.log(`suiteDone.givens[k].error`, suiteDone.givens[k].error);
                 return suiteDone.givens[k].error;
               }
             ).length;

@@ -32,7 +32,10 @@ export class BaseBuilder {
                     scheduled: false,
                 }, y) {
                     console.log(`testResourceConfiguration ${JSON.stringify(testResourceConfiguration, null, 2)}`);
-                    await logWriter.mkdirSync(testResourceConfiguration.fs);
+                    // await logWriter.mkdirSync(testResourceConfiguration.fs);
+                    //  if (!fs.existsSync(destFolder)) {
+                    //    fs.mkdirSync(destFolder, { recursive: true });
+                    //  }
                     logWriter.writeFileSync(`${testResourceConfiguration.fs}/tests.json`, JSON.stringify(this.toObj(), null, 2));
                     const logFilePath = `${testResourceConfiguration.fs}/log.txt`;
                     const access = await logWriter.createWriteStream(logFilePath);
@@ -41,8 +44,6 @@ export class BaseBuilder {
                         access.write(`${l.toString()}\n`);
                     };
                     const suiteDone = await runner(testResourceConfiguration, tLog, y);
-                    const resultsFilePath = `${testResourceConfiguration.fs}/results.json`;
-                    logWriter.writeFileSync(resultsFilePath, JSON.stringify(suiteDone.toObj(), null, 2));
                     const logPromise = new Promise((res, rej) => {
                         access.on("finish", () => {
                             res(true);
@@ -50,7 +51,6 @@ export class BaseBuilder {
                     });
                     access.end();
                     const numberOfFailures = Object.keys(suiteDone.givens).filter((k) => {
-                        // console.log(`suiteDone.givens[k].error`, suiteDone.givens[k].error);
                         return suiteDone.givens[k].error;
                     }).length;
                     logWriter.writeFileSync(`${testResourceConfiguration.fs}/exitcode`, numberOfFailures.toString());
