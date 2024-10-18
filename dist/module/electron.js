@@ -155,15 +155,15 @@ const main = async () => {
             loadReport(configs);
             console.log("running all the tests once initially");
             ;
-            configs.modules.forEach((t) => {
-                if (t.runtime === "node") {
-                    launchNode(t.test, changer2(t.test, "node"));
+            configs.tests.forEach(([test, runtime, secondaryArtifacts]) => {
+                if (runtime === "node") {
+                    launchNode(test, changer2(test, "node"));
                 }
-                else if (t.runtime === "web") {
-                    launchWeb(t.test, changer2(t.test, "web"));
+                else if (runtime === "web") {
+                    launchWeb(test, changer2(test, "web"));
                 }
                 else {
-                    console.error("runtime makes no sense", t.runtime);
+                    console.error("runtime makes no sense", runtime);
                 }
             });
             console.log("ready and watching for changes...", configs.buildDir);
@@ -172,16 +172,16 @@ const main = async () => {
             }, (eventType, changedFile) => {
                 console.log(eventType, changedFile);
                 if (changedFile) {
-                    configs.modules.forEach((t) => {
-                        if (watcher(t.test, t.runtime) === changer(changedFile)) {
-                            if (t.runtime === "node") {
-                                launchNode(t.test, changer(changedFile));
+                    configs.tests.forEach(([test, runtime, secondaryArtifacts]) => {
+                        if (watcher(test, runtime) === changer(changedFile)) {
+                            if (runtime === "node") {
+                                launchNode(test, changer(changedFile));
                             }
-                            else if (t.runtime === "web") {
-                                launchWeb(t.test, changer(changedFile));
+                            else if (runtime === "web") {
+                                launchWeb(test, changer(changedFile));
                             }
                             else {
-                                console.error("runtime makes no sense", t.runtime);
+                                console.error("runtime makes no sense", runtime);
                             }
                         }
                     });

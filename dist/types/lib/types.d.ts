@@ -15,27 +15,22 @@ export declare type IJsonConfig = {
     features: string;
 };
 export declare type IBaseConfig = {
-    outdir: string;
-    tests: ITestTypes[];
-    features: string;
-    externals: string[];
     clearScreen: boolean;
-    devMode: boolean;
-    webPlugins: any[];
-    nodePlugins: any[];
-    minify: boolean;
-    outbase: string;
-    ports: string[];
     debugger: boolean;
+    devMode: boolean;
+    externals: string[];
+    features: string;
+    minify: boolean;
+    nodePlugins: any[];
+    outbase: string;
+    outdir: string;
+    ports: string[];
+    tests: ITestTypes[];
+    webPlugins: any[];
 };
 export declare type IBuiltConfig = {
     buildDir: string;
-    modules: {
-        module: unknown;
-        test: string;
-        runtime: IRunTime;
-    }[];
-};
+} & IBaseConfig;
 export declare type INodeUtils = TBrowser;
 export declare type IWebUtils = BrowserWindow;
 export declare type IUtils = INodeUtils | IWebUtils;

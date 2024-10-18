@@ -58,6 +58,7 @@ export class ITProject {
         fs.copyFileSync("node_modules/testeranto/dist/prebuild/report.css", "./docs/Report.css");
         fs.writeFileSync(`${config.outdir}/report.html`, reportHtmlFrame());
         Promise.all([
+            fs.promises.writeFile(`${config.outdir}/testeranto.json`, JSON.stringify(Object.assign(Object.assign({}, config), { buildDir: process.cwd() + "/" + config.outdir }), null, 2)),
             esbuild.context(esbuildFeaturesConfiger(config))
                 .then(async (featuresContext) => {
                 await featuresContext.watch();
@@ -73,26 +74,8 @@ export class ITProject {
                 await esbuildWeb.watch();
                 return esbuildWeb;
             }),
-        ]).then(async (contexts) => {
-            Promise.all(config.tests.map(async ([test, runtime]) => {
-                return {
-                    test,
-                    runtime
-                };
-            })).then(async (modules) => {
-                fs.writeFileSync(`${config.outdir}/testeranto.json`, JSON.stringify({
-                    modules,
-                    buildDir: process.cwd() + "/" + config.outdir
-                }, null, 2));
-            });
+        ]).then(() => {
             console.log("\n Build is running. Press 'q' to quit\n");
-            if (config.devMode === false) {
-                console.log("Your tests were built but not run because devMode was false. Exiting gracefully");
-                process.exit(0);
-            }
-            else {
-                // no-op
-            }
         });
     }
     getSecondaryEndpointsPoints(runtime) {
