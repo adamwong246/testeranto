@@ -1,44 +1,89 @@
 {
-  "modules": [
+  "outdir": "docs",
+  "features": "/Users/adam/Code/kokomoBay/features.test.mts",
+  "tests": [
+    [
+      "./src/LoginPage/react/web.test.tsx",
+      "web",
+      []
+    ],
+    [
+      "./src/LoginPage/react/node.test.tsx",
+      "node",
+      []
+    ],
+    [
+      "./src/LoginPage/react-test-renderer/web.test.tsx",
+      "web",
+      []
+    ],
+    [
+      "./src/LoginPage/react-test-renderer/node.test.tsx",
+      "node",
+      []
+    ],
+    [
+      "./src/ReactStateAndHook.test.tsx",
+      "node",
+      []
+    ],
+    [
+      "./src/app.reduxToolkit.test.ts",
+      "node",
+      []
+    ],
+    [
+      "./src/app.redux.test.ts",
+      "node",
+      []
+    ],
+    [
+      "./src/Rectangle/Rectangle.test.electron.ts",
+      "web",
+      []
+    ],
+    [
+      "./src/Rectangle/Rectangle.test.node.ts",
+      "node",
+      [
+        [
+          "./src/ClassicalComponent/test.ts",
+          "web",
+          []
+        ]
+      ]
+    ],
+    [
+      "./src/MyFirstContract.solidity-precompiled.test.ts",
+      "node",
+      []
+    ]
+  ],
+  "debugger": true,
+  "clearScreen": false,
+  "devMode": true,
+  "minify": false,
+  "outbase": ".",
+  "externals": [
+    "ganache",
+    "stream"
+  ],
+  "ports": [
+    "3001",
+    "3002",
+    "3003",
+    "3004",
+    "3005",
+    "3006",
+    "3007"
+  ],
+  "webPlugins": [],
+  "nodePlugins": [
     {
-      "test": "./src/LoginPage/react/web.test.tsx",
-      "runtime": "web"
+      "name": "ganache-shim"
     },
     {
-      "test": "./src/LoginPage/react/node.test.tsx",
-      "runtime": "node"
-    },
-    {
-      "test": "./src/LoginPage/react-test-renderer/web.test.tsx",
-      "runtime": "web"
-    },
-    {
-      "test": "./src/LoginPage/react-test-renderer/node.test.tsx",
-      "runtime": "node"
-    },
-    {
-      "test": "./src/ReactStateAndHook.test.tsx",
-      "runtime": "node"
-    },
-    {
-      "test": "./src/app.reduxToolkit.test.ts",
-      "runtime": "node"
-    },
-    {
-      "test": "./src/app.redux.test.ts",
-      "runtime": "node"
-    },
-    {
-      "test": "./src/Rectangle/Rectangle.test.electron.ts",
-      "runtime": "web"
-    },
-    {
-      "test": "./src/Rectangle/Rectangle.test.node.ts",
-      "runtime": "node"
-    },
-    {
-      "test": "./src/MyFirstContract.solidity-precompiled.test.ts",
-      "runtime": "node"
+      "name": "solidity"
     }
   ],
   "buildDir": "/Users/adam/Code/kokomoBay/docs"
