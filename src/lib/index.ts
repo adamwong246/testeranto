@@ -8,7 +8,7 @@ import {
   BaseThen,
 } from "./abstractBase.js";
 
-import { ITestInterface, IUtils } from "./types.js";
+import { INodeUtils, ITestInterface, IUtils, IWebUtils } from "./types.js";
 
 export const BaseTestInterface: ITestInterface<IBaseTest> = {
   beforeAll: async (s) => s,
@@ -74,7 +74,7 @@ type ITest = {
   testResourceConfiguration: ITTestResourceConfiguration;
 };
 
-export type ITestJob = {
+export type ITestJob<T = INodeUtils | IWebUtils> = {
   toObj(): object;
   test: ITest;
   runner: (
@@ -84,7 +84,7 @@ export type ITestJob = {
   testResourceRequirement: ITTestResourceRequirement;
   receiveTestResourceConfig: (
     testResource,
-    utils: IUtils
+    utils: T
   ) => Promise<{
     failed: number;
     artifacts: Promise<unknown>[];

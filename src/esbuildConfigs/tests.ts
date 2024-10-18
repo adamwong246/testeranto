@@ -1,11 +1,5 @@
-import { jsonc } from "jsonc";
-
-import { IBaseConfig, IJsonConfig } from "../Types";
-
-import fs from "fs"
 import { BuildOptions } from "esbuild";
-
-// const jsonConfig = jsonc.parse((await fs.readFileSync("./testeranto.json")).toString()) as IJsonConfig;
+import { IBaseConfig } from "../lib/types";
 
 export default (config: IBaseConfig): BuildOptions => {
   return {
@@ -16,5 +10,5 @@ export default (config: IBaseConfig): BuildOptions => {
     write: true,
     outfile: `${config.outdir}/tests.test.js`,
     // external: ["graphology"]
-  }
-}
+  };
+};

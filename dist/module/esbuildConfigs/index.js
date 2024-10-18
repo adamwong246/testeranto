@@ -3,16 +3,16 @@ export default (config) => {
         target: "esnext",
         format: "esm",
         splitting: true,
-        outExtension: { '.js': '.mjs' },
+        outExtension: { ".js": ".mjs" },
         outbase: config.outbase,
-        jsx: 'transform',
+        jsx: "transform",
         bundle: true,
         minify: config.minify === true,
         write: true,
         loader: {
-            '.js': 'jsx',
-            '.png': 'binary',
-            '.jpg': 'binary',
+            ".js": "jsx",
+            ".png": "binary",
+            ".jpg": "binary",
         },
     };
 };

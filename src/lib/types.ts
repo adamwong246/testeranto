@@ -1,5 +1,3 @@
-import { BrowserWindow } from "electron";
-
 import { IBaseTest } from "../Types";
 
 import puppeteer from "puppeteer-core";
@@ -40,8 +38,15 @@ export type IBaseConfig = {
 
 export type IBuiltConfig = { buildDir: string } & IBaseConfig;
 
-export type INodeUtils = puppeteer.Browser;
-export type IWebUtils = BrowserWindow;
+export type INodeUtils = {
+  browser: puppeteer.Browser;
+  ipc: Electron.ParentPort;
+};
+
+export type IWebUtils = {
+  browser: Electron.BrowserWindow;
+  ipc: Electron.IpcRenderer;
+};
 export type IUtils = INodeUtils | IWebUtils;
 
 export type IWebTestInterface<ITestShape extends IBaseTest> = {
@@ -66,14 +71,14 @@ export type IWebTestInterface<ITestShape extends IBaseTest> = {
   afterEach: (
     store: ITestShape["istore"],
     key: string,
-    artificer: ITestArtificer
-    // utils: IUtils
+    artificer: ITestArtificer,
+    utils: IWebUtils
   ) => Promise<unknown>;
   beforeAll: (
     input: ITestShape["iinput"],
     testResource: ITTestResourceConfiguration,
-    artificer: ITestArtificer
-    // utils: IUtils
+    artificer: ITestArtificer,
+    utils: IWebUtils
   ) => Promise<ITestShape["isubject"]>;
   beforeEach: (
     subject: ITestShape["isubject"],
@@ -101,19 +106,19 @@ export type INodeTestInterface<ITestShape extends IBaseTest> = {
   afterAll: (
     store: ITestShape["istore"],
     artificer: ITestArtificer,
-    browser: INodeUtils
+    utils: INodeUtils
   ) => any;
   afterEach: (
     store: ITestShape["istore"],
     key: string,
-    artificer: ITestArtificer
-    // utils: IUtils
+    artificer: ITestArtificer,
+    utils: INodeUtils
   ) => Promise<unknown>;
   beforeAll: (
     input: ITestShape["iinput"],
     testResource: ITTestResourceConfiguration,
-    artificer: ITestArtificer
-    // utils: IUtils
+    artificer: ITestArtificer,
+    utils: INodeUtils
   ) => Promise<ITestShape["isubject"]>;
   beforeEach: (
     subject: ITestShape["isubject"],
@@ -148,14 +153,14 @@ export type ITestInterface<ITestShape extends IBaseTest> = {
   afterEach: (
     store: ITestShape["istore"],
     key: string,
-    artificer: ITestArtificer
-    // utils: IUtils
+    artificer: ITestArtificer,
+    utils: IUtils
   ) => Promise<unknown>;
   beforeAll: (
     input: ITestShape["iinput"],
     testResource: ITTestResourceConfiguration,
-    artificer: ITestArtificer
-    // utils: IUtils
+    artificer: ITestArtificer,
+    utils: IUtils
   ) => Promise<ITestShape["isubject"]>;
   beforeEach: (
     subject: ITestShape["isubject"],

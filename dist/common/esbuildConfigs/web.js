@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = __importDefault(require("path"));
 const index_js_1 = __importDefault(require("./index.js"));
-// const jsonConfig = jsonc.parse((await fs.readFileSync("./testeranto.json")).toString()) as IJsonConfig;
 exports.default = (config, entryPoints) => {
     return Object.assign(Object.assign({}, (0, index_js_1.default)(config)), { 
         // inject: ['./node_modules/testeranto/dist/cjs-shim.js'],
@@ -13,11 +12,11 @@ exports.default = (config, entryPoints) => {
         //   js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`
         // },
         outdir: config.outdir + "/web", alias: {
-            react: path_1.default.resolve("./node_modules/react")
+            react: path_1.default.resolve("./node_modules/react"),
         }, external: [
             "testeranto.json",
             "features.test.ts",
-            // "url", 
+            // "url",
             "react",
             "electron",
             "path",
@@ -33,18 +32,18 @@ exports.default = (config, entryPoints) => {
             "readline",
             "zlib",
             "crypto",
-            "https"
+            "https",
         ], platform: "browser", entryPoints: [...entryPoints], plugins: [
             ...(config.webPlugins || []),
             {
-                name: 'rebuild-notify',
+                name: "rebuild-notify",
                 setup(build) {
-                    build.onEnd(result => {
+                    build.onEnd((result) => {
                         console.log(`web build ended with ${result.errors.length} errors`);
                         console.log(result);
                         result.errors.length !== 0 && process.exit(-1);
                     });
-                }
+                },
             },
         ] });
 };

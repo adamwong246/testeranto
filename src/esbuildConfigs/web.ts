@@ -1,20 +1,15 @@
 import { BuildOptions } from "esbuild";
 import path from "path";
 
-import { IBaseConfig, IJsonConfig } from "../Types";
+import { IBaseConfig } from "../lib/types.js";
 
 import baseEsBuildConfig from "./index.js";
-import { jsonc } from "jsonc";
-import fs from "fs"
-
-// const jsonConfig = jsonc.parse((await fs.readFileSync("./testeranto.json")).toString()) as IJsonConfig;
 
 export default (
   config: IBaseConfig,
   entryPoints: Set<string> | string[]
 ): BuildOptions => {
   return {
-
     ...baseEsBuildConfig(config),
 
     // inject: ['./node_modules/testeranto/dist/cjs-shim.js'],
@@ -25,13 +20,13 @@ export default (
     outdir: config.outdir + "/web",
 
     alias: {
-      react: path.resolve("./node_modules/react")
+      react: path.resolve("./node_modules/react"),
     },
 
     external: [
       "testeranto.json",
       "features.test.ts",
-      // "url", 
+      // "url",
 
       "react",
       "electron",
@@ -49,7 +44,7 @@ export default (
       "readline",
       "zlib",
       "crypto",
-      "https"
+      "https",
     ],
 
     platform: "browser",
@@ -59,15 +54,15 @@ export default (
     plugins: [
       ...(config.webPlugins || []),
       {
-        name: 'rebuild-notify',
+        name: "rebuild-notify",
         setup(build) {
-          build.onEnd(result => {
+          build.onEnd((result) => {
             console.log(`web build ended with ${result.errors.length} errors`);
-            console.log(result)
+            console.log(result);
             result.errors.length !== 0 && process.exit(-1);
-          })
-        }
+          });
+        },
       },
     ],
   };
-}
+};

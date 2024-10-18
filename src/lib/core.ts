@@ -50,18 +50,18 @@ export default abstract class Testeranto<
         async setup(
           s: ITestShape["iinput"],
           artifactory: ITestArtifactory,
-          tr
-          // utils: ITestInterface<ITestShape>
+          tr,
+          utils
         ): Promise<ITestShape["isubject"]> {
           return (
             fullTestInterface.beforeAll ||
             (async (
               input: ITestShape["iinput"],
               artifactory: ITestArtifactory,
-              tr
-              // utils: ITestInterface<ITestShape>
+              tr,
+              utils: ITestInterface<ITestShape>
             ) => input as any)
-          )(s, this.testResourceConfiguration, artifactory);
+          )(s, this.testResourceConfiguration, artifactory, utils);
         }
       } as any,
 
@@ -82,7 +82,8 @@ export default abstract class Testeranto<
         afterEach(
           store: ITestShape["istore"],
           key: string,
-          artifactory
+          artifactory,
+          utils
         ): Promise<unknown> {
           return new Promise((res) =>
             res(
@@ -90,7 +91,8 @@ export default abstract class Testeranto<
                 store,
                 key,
                 (fPath: string, value: unknown) =>
-                  artifactory(`after/${fPath}`, value)
+                  artifactory(`after/${fPath}`, value),
+                utils
               )
             )
           );
@@ -157,7 +159,8 @@ export default abstract class Testeranto<
         afterEach(
           store: ITestShape["istore"],
           key: string,
-          artifactory
+          artifactory,
+          utils
         ): Promise<unknown> {
           return new Promise((res) =>
             res(
@@ -166,7 +169,8 @@ export default abstract class Testeranto<
                 key,
                 (fPath: string, value: unknown) =>
                   // TODO does not work?
-                  artifactory(`afterEach2-${this.name}/${fPath}`, value)
+                  artifactory(`afterEach2-${this.name}/${fPath}`, value),
+                utils
               )
             )
           );

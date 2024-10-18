@@ -53,9 +53,12 @@ class NodeTesteranto extends core_js_1.default {
             console.log("connected!", b.isConnected());
             return b;
         });
-        const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(partialTestResource, browser);
+        const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(partialTestResource, {
+            browser,
+            ipc: process.parentPort,
+        });
         Promise.all([...artifacts, logPromise]).then(async () => {
-            process.exit((await failed) ? 1 : 0);
+            // process.exit((await failed) ? 1 : 0);
         });
     }
 }

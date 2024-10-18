@@ -10,9 +10,15 @@ import {
   ITestJob,
   defaultTestResourceRequirement,
 } from "./lib/index.js";
-import { ITestInterface } from "./lib/types";
+import {
+  INodeUtils,
+  ITestInterface,
+  IWebTestInterface,
+  IWebUtils,
+} from "./lib/types";
 
-const remote = require("@electron/remote");
+// const remote = require("@electron/remote");
+// const remote = require("@electron/remote/main");
 
 class WebTesteranto<TestShape extends IBaseTest> extends Testeranto<TestShape> {
   constructor(
@@ -32,23 +38,19 @@ class WebTesteranto<TestShape extends IBaseTest> extends Testeranto<TestShape> {
       // BrowserWindow
     );
 
-    if (process.argv[2]) {
-      const testResourceArg = decodeURIComponent(
-        new URLSearchParams(location.search).get("requesting") || ""
-      );
+    const testResourceArg = decodeURIComponent(
+      new URLSearchParams(location.search).get("requesting") || ""
+    );
 
-      try {
-        const partialTestResource = JSON.parse(
-          testResourceArg
-        ) as ITTestResourceConfiguration;
+    try {
+      const partialTestResource = JSON.parse(
+        testResourceArg
+      ) as ITTestResourceConfiguration;
 
-        this.receiveTestResourceConfig(this.testJobs[0], partialTestResource);
-      } catch (e) {
-        console.error(e);
-        // process.exit(-1);
-      }
-    } else {
-      // no-op
+      this.receiveTestResourceConfig(this.testJobs[0], partialTestResource);
+    } catch (e) {
+      console.error(e);
+      // process.exit(-1);
     }
 
     const requesting = new URLSearchParams(location.search).get("requesting");
@@ -71,17 +73,20 @@ class WebTesteranto<TestShape extends IBaseTest> extends Testeranto<TestShape> {
   }
 
   async receiveTestResourceConfig(
-    t: ITestJob,
+    t: ITestJob<IWebUtils>,
     partialTestResource: ITTestResourceConfiguration
   ) {
     const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(
       partialTestResource,
-      remote
+      {
+        browser: (window as any).remote, //remote.getCurrentWindow(),
+        ipc: (window as any).ipcRenderer,
+      }
     );
 
     Promise.all([...artifacts, logPromise]).then(async () => {
-      var window = remote.getCurrentWindow();
-      window.close();
+      // var window = remote.getCurrentWindow();
+      // window.close();
     });
   }
 }
@@ -90,7 +95,7 @@ export default async <ITestShape extends IBaseTest>(
   input: ITestShape["iinput"],
   testSpecification: ITestSpecification<ITestShape>,
   testImplementation: ITestImplementation<ITestShape, object>,
-  testInterface: Partial<ITestInterface<ITestShape>>,
+  testInterface: Partial<IWebTestInterface<ITestShape>>,
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
 ): Promise<Testeranto<ITestShape>> => {
   return new WebTesteranto<ITestShape>(

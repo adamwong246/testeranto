@@ -1,6 +1,6 @@
 import { IBaseTest } from "../Types.js";
 import { IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen } from "./abstractBase.js";
-import { ITestInterface, IUtils } from "./types.js";
+import { INodeUtils, ITestInterface, IWebUtils } from "./types.js";
 export declare const BaseTestInterface: ITestInterface<IBaseTest>;
 export declare const DefaultTestInterface: (p: Partial<ITestInterface<any>>) => ITestInterface<any>;
 export declare type ITTestResourceConfiguration = {
@@ -32,12 +32,12 @@ declare type ITest = {
     checks: BaseCheck<IBaseTest>[];
     testResourceConfiguration: ITTestResourceConfiguration;
 };
-export declare type ITestJob = {
+export declare type ITestJob<T = INodeUtils | IWebUtils> = {
     toObj(): object;
     test: ITest;
     runner: (x: ITTestResourceConfiguration, t: ITLog) => Promise<BaseSuite<IBaseTest>>;
     testResourceRequirement: ITTestResourceRequirement;
-    receiveTestResourceConfig: (testResource: any, utils: IUtils) => Promise<{
+    receiveTestResourceConfig: (testResource: any, utils: T) => Promise<{
         failed: number;
         artifacts: Promise<unknown>[];
         logPromise: Promise<unknown>;

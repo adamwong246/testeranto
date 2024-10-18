@@ -34,7 +34,7 @@ exports.default = (testInput, testSpecifications, testImplementations) => {
                     return new Promise((resolve, rej) => {
                         // console.log("beforeEach" + JSON.stringify(initializer) + JSON.stringify(initialValues));
                         // Ignore these type errors
-                        client_1.default.createRoot(htmlElement).render((0, react_1.createElement)(TesterantoComponent, Object.assign(Object.assign({}, initializer.props), { done: (reactElement) => {
+                        client_1.default.createRoot(htmlElement).render((0, react_1.createElement)(TesterantoComponent, Object.assign(Object.assign({}, initializer), { done: (reactElement) => {
                                 resolve({
                                     htmlElement,
                                     reactElement,

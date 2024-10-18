@@ -59,7 +59,7 @@ export declare abstract class BaseGiven<ITestShape extends IBaseTest> {
         features: string[];
     };
     abstract givenThat(subject: ITestShape["isubject"], testResourceConfiguration: any, artifactory: ITestArtifactory, givenCB: ITestShape["given"]): Promise<ITestShape["istore"]>;
-    afterEach(store: ITestShape["istore"], key: string, artifactory: ITestArtifactory): Promise<unknown>;
+    afterEach(store: ITestShape["istore"], key: string, artifactory: ITestArtifactory, utils: IUtils): Promise<unknown>;
     give(subject: ITestShape["isubject"], key: string, testResourceConfiguration: any, tester: any, artifactory: ITestArtifactory, tLog: ITLog, utils: IUtils): Promise<ITestShape["istore"]>;
 }
 export declare abstract class BaseWhen<ITestShape extends IBaseTest> {
@@ -98,6 +98,6 @@ export declare abstract class BaseCheck<ITestShape extends IBaseTest> {
     };
     constructor(name: string, features: string[], checkCB: (whens: any, thens: any) => any, whens: any, thens: any);
     abstract checkThat(subject: ITestShape["isubject"], testResourceConfiguration: any, artifactory: ITestArtifactory): Promise<ITestShape["istore"]>;
-    afterEach(store: ITestShape["istore"], key: string, cb?: any): Promise<unknown>;
+    afterEach(store: ITestShape["istore"], key: string, cb: any, utils: IUtils): Promise<unknown>;
     check(subject: ITestShape["isubject"], key: string, testResourceConfiguration: any, tester: any, artifactory: ITestArtifactory, tLog: ITLog, utils: IUtils): Promise<void>;
 }

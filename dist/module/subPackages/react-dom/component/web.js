@@ -29,7 +29,7 @@ export default (testInput, testSpecifications, testImplementations) => {
                     return new Promise((resolve, rej) => {
                         // console.log("beforeEach" + JSON.stringify(initializer) + JSON.stringify(initialValues));
                         // Ignore these type errors
-                        ReactDom.createRoot(htmlElement).render(createElement(TesterantoComponent, Object.assign(Object.assign({}, initializer.props), { done: (reactElement) => {
+                        ReactDom.createRoot(htmlElement).render(createElement(TesterantoComponent, Object.assign(Object.assign({}, initializer), { done: (reactElement) => {
                                 resolve({
                                     htmlElement,
                                     reactElement,

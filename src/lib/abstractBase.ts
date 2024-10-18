@@ -172,7 +172,8 @@ export abstract class BaseGiven<ITestShape extends IBaseTest> {
   async afterEach(
     store: ITestShape["istore"],
     key: string,
-    artifactory: ITestArtifactory
+    artifactory: ITestArtifactory,
+    utils: IUtils
   ): Promise<unknown> {
     return store;
   }
@@ -218,7 +219,7 @@ export abstract class BaseGiven<ITestShape extends IBaseTest> {
       // throw e;
     } finally {
       try {
-        await this.afterEach(this.store, key, givenArtifactory);
+        await this.afterEach(this.store, key, givenArtifactory, utils);
       } catch (e) {
         console.error("afterEach failed! no error will be recorded!", e);
       }
@@ -351,7 +352,8 @@ export abstract class BaseCheck<ITestShape extends IBaseTest> {
   async afterEach(
     store: ITestShape["istore"],
     key: string,
-    cb?
+    cb,
+    utils: IUtils
   ): Promise<unknown> {
     return;
   }
@@ -397,7 +399,7 @@ export abstract class BaseCheck<ITestShape extends IBaseTest> {
       }, {})
     );
 
-    await this.afterEach(store, key);
+    await this.afterEach(store, key, () => {}, utils);
     return;
   }
 }

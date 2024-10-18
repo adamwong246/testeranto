@@ -8,13 +8,9 @@ export default class Testeranto extends ClassBuilder {
             assertThat(t) {
                 fullTestInterface.assertThis(t);
             }
-            async setup(s, artifactory, tr
-            // utils: ITestInterface<ITestShape>
-            ) {
+            async setup(s, artifactory, tr, utils) {
                 return (fullTestInterface.beforeAll ||
-                    (async (input, artifactory, tr
-                    // utils: ITestInterface<ITestShape>
-                    ) => input))(s, this.testResourceConfiguration, artifactory);
+                    (async (input, artifactory, tr, utils) => input))(s, this.testResourceConfiguration, artifactory, utils);
             }
         }, class Given extends BaseGiven {
             async givenThat(subject, testResource, artifactory, initializer) {
@@ -24,8 +20,8 @@ export default class Testeranto extends ClassBuilder {
                 // utils,
                 );
             }
-            afterEach(store, key, artifactory) {
-                return new Promise((res) => res(fullTestInterface.afterEach(store, key, (fPath, value) => artifactory(`after/${fPath}`, value))));
+            afterEach(store, key, artifactory, utils) {
+                return new Promise((res) => res(fullTestInterface.afterEach(store, key, (fPath, value) => artifactory(`after/${fPath}`, value), utils)));
             }
             afterAll(store, artifactory, utils) {
                 return fullTestInterface.afterAll(store, (fPath, value) => {
@@ -48,10 +44,10 @@ export default class Testeranto extends ClassBuilder {
             async checkThat(subject, testResourceConfiguration, artifactory) {
                 return fullTestInterface.beforeEach(subject, this.initialValues, (fPath, value) => artifactory(`before/${fPath}`, value), testResourceConfiguration, this.initialValues);
             }
-            afterEach(store, key, artifactory) {
+            afterEach(store, key, artifactory, utils) {
                 return new Promise((res) => res(fullTestInterface.afterEach(store, key, (fPath, value) => 
                 // TODO does not work?
-                artifactory(`afterEach2-${this.name}/${fPath}`, value))));
+                artifactory(`afterEach2-${this.name}/${fPath}`, value), utils)));
             }
         }, testResourceRequirement, logWriter);
     }

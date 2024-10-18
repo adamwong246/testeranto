@@ -1,12 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const electron_1 = require("electron");
-console.log("hello preloader");
 const NodeWriter_1 = require("./NodeWriter");
+const electron_1 = require("electron");
+const remote = require("@electron/remote");
+// contextBridge.exposeInMainWorld("ipcRenderer", ipcRenderer);
+// contextBridge.exposeInMainWorld("remote", remote);
+// contextBridge.exposeInMainWorld("NodeWriter", NodeWriter);
+window.ipcRenderer = electron_1.ipcRenderer;
+window.remote = remote;
 window.NodeWriter = NodeWriter_1.NodeWriter;
-window.exit = (x) => {
-    electron_1.ipcRenderer.invoke("quit-app", x);
-};
+console.log("hello preloader");
+// (window as any).exit = (x) => {
+//   ipcRenderer.invoke("quit-app", x);
+// };
+// const { contextBridge, ipcRenderer } = require("electron");
+// contextBridge.exposeInMainWorld("electronAPI", {
+//   openFile: () => ipcRenderer.invoke("dialog:openFile"),
+// });
 // var oldLog = console.log;
 // console.log = function (message) {
 //   ipcRenderer.invoke('web-log', message.toString());

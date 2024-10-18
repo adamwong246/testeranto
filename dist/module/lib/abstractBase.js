@@ -73,7 +73,7 @@ export class BaseGiven {
             features: this.features,
         };
     }
-    async afterEach(store, key, artifactory) {
+    async afterEach(store, key, artifactory, utils) {
         return store;
     }
     async give(subject, key, testResourceConfiguration, tester, artifactory, tLog, utils) {
@@ -98,7 +98,7 @@ export class BaseGiven {
         }
         finally {
             try {
-                await this.afterEach(this.store, key, givenArtifactory);
+                await this.afterEach(this.store, key, givenArtifactory, utils);
             }
             catch (e) {
                 console.error("afterEach failed! no error will be recorded!", e);
@@ -161,7 +161,7 @@ export class BaseCheck {
         this.whens = whens;
         this.thens = thens;
     }
-    async afterEach(store, key, cb) {
+    async afterEach(store, key, cb, utils) {
         return;
     }
     async check(subject, key, testResourceConfiguration, tester, artifactory, tLog, utils) {
@@ -179,7 +179,7 @@ export class BaseCheck {
             };
             return a;
         }, {}));
-        await this.afterEach(store, key);
+        await this.afterEach(store, key, () => { }, utils);
         return;
     }
 }

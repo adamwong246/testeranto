@@ -1,6 +1,5 @@
-import { IBaseConfig } from "../Types";
-
 import { BuildOptions } from "esbuild";
+import { IBaseConfig } from "../lib/types";
 
 export default (config: IBaseConfig): BuildOptions => {
   return {
@@ -14,5 +13,5 @@ export default (config: IBaseConfig): BuildOptions => {
     // external: ["graphology"],
 
     format: "esm",
-  }
-}
+  };
+};

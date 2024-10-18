@@ -1,4 +1,3 @@
-// const jsonConfig = jsonc.parse((await fs.readFileSync("./testeranto.json")).toString()) as IJsonConfig;
 export default (config) => {
     return {
         bundle: true,

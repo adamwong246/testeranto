@@ -39,12 +39,12 @@ const main = async () => {
             name: src,
             ports: [],
             // fs: path.resolve(configs.buildDir, "web", destFolder + "/"),
-            fs: destFolder,
-            // fs: ".",
+            // fs: destFolder,
+            fs: ".",
         });
         console.log("launchNode", src, dest, " -> ", destFolder, argz);
         const child = utilityProcess.fork(dest + ".mjs", [argz], {
-            // cwd: destFolder,
+            cwd: destFolder,
             stdio: "pipe",
         });
         if (!fs.existsSync(destFolder)) {
@@ -67,7 +67,7 @@ const main = async () => {
     const launchWebSecondary = (htmlFile) => {
         console.log("launchWebSecondary", htmlFile);
         const subWin = new BrowserWindow({
-            show: false,
+            show: true,
             webPreferences: {
                 nodeIntegration: true,
                 nodeIntegrationInWorker: true,
@@ -171,27 +171,55 @@ const main = async () => {
                 }
             });
             console.log("ready and watching for changes...", configs.buildDir);
-            // fs.watch(
-            //   configs.buildDir,
-            //   {
-            //     recursive: true,
-            //   },
-            //   (eventType, changedFile) => {
-            //     if (changedFile) {
-            //       configs.tests.forEach(([test, runtime, secondaryArtifacts]) => {
-            //         if (watcher(test, runtime) === changer(changedFile)) {
-            //           if (runtime === "node") {
-            //             launchNode(test, changer(changedFile));
-            //           } else if (runtime === "web") {
-            //             launchWeb(test, changer(changedFile));
-            //           } else {
-            //             console.error("runtime makes no sense", runtime);
-            //           }
-            //         }
-            //       });
-            //     }
-            //   }
-            // );
+            fs.watch(configs.buildDir, {
+                recursive: true,
+            }, (eventType, changedFile) => {
+                if (changedFile) {
+                    configs.tests.forEach(([test, runtime, secondaryArtifacts]) => {
+                        // console.log(eventType, changedFile, test);
+                        if (eventType === "change") {
+                            // console.log(
+                            //   eventType,
+                            //   changedFile,
+                            //   test
+                            //     .replace("./", "node/")
+                            //     .split(".")
+                            //     .slice(0, -1)
+                            //     .concat("mjs")
+                            //     .join(".")
+                            // );
+                            if (changedFile ===
+                                test
+                                    .replace("./", "node/")
+                                    .split(".")
+                                    .slice(0, -1)
+                                    .concat("mjs")
+                                    .join(".")) {
+                                launchNode(test, changer2(test, "node"));
+                            }
+                            if (changedFile ===
+                                test
+                                    .replace("./", "web/")
+                                    .split(".")
+                                    .slice(0, -1)
+                                    .concat("mjs")
+                                    .join(".")) {
+                                launchNode(test, changer2(test, "web"));
+                            }
+                        }
+                        //   if(changedFile ===)
+                        //   // if (watcher(test, runtime) === changer(test)) {
+                        //   //   if (runtime === "node") {
+                        //   //     launchNode(test, changer2(test, "node"));
+                        //   //   } else if (runtime === "web") {
+                        //   //     launchWeb(test, changer2(test, "web"));
+                        //   //   } else {
+                        //   //     console.error("runtime makes no sense", runtime);
+                        //   //   }
+                        //   // }
+                    });
+                }
+            });
         });
     });
     await pie.connect(app, puppeteer);
