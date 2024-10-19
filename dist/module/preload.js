@@ -1,38 +1,32 @@
+import http from "http";
+import puppeteer from "puppeteer-core";
 import { NodeWriter } from "./NodeWriter";
-import { ipcRenderer } from "electron";
-const remote = require("@electron/remote");
-// contextBridge.exposeInMainWorld("ipcRenderer", ipcRenderer);
-// contextBridge.exposeInMainWorld("remote", remote);
-// contextBridge.exposeInMainWorld("NodeWriter", NodeWriter);
-// contextBridge.exposeInMainWorld("fs", fs);
-window.ipcRenderer = ipcRenderer;
-// (window as any).remote = remote;
 window.NodeWriter = NodeWriter;
-console.log("hello preloader");
-// (window as any).exit = (x) => {
-//   ipcRenderer.invoke("quit-app", x);
-// };
-// const { contextBridge, ipcRenderer } = require("electron");
-// contextBridge.exposeInMainWorld("electronAPI", {
-//   openFile: () => ipcRenderer.invoke("dialog:openFile"),
-// });
-// var oldLog = console.log;
-// console.log = function (message) {
-//   ipcRenderer.invoke('web-log', message.toString());
-//   oldLog.apply(console, arguments);
-// };
-// var oldLog = console.error;
-// console.error = function (message) {
-//   ipcRenderer.invoke('web-error', message.toString());
-//   oldLog.apply(console, arguments);
-// };
-// var oldLog = console.warn;
-// console.warn = function (message) {
-//   ipcRenderer.invoke('web-warn', message.toString());
-//   oldLog.apply(console, arguments);
-// };
-// var oldLog = console.info;
-// console.info = function (message) {
-//   ipcRenderer.invoke('web-info', message.toString());
-//   oldLog.apply(console, arguments);
-// };
+const readJson = async (port) => new Promise((resolve, reject) => {
+    let json = "";
+    const request = http.request({
+        host: "127.0.0.1",
+        path: "/json/version",
+        port,
+    }, (response) => {
+        response.on("error", reject);
+        response.on("data", (chunk) => {
+            json += chunk.toString();
+        });
+        response.on("end", () => {
+            resolve(JSON.parse(json));
+        });
+    });
+    request.on("error", reject);
+    request.end();
+});
+window.browser = new Promise(async (res, rej) => {
+    const browser = await readJson("2999").then(async (json) => {
+        const b = await puppeteer.connect({
+            browserWSEndpoint: json.webSocketDebuggerUrl,
+            defaultViewport: null,
+        });
+        console.log("connected!", b.isConnected());
+        return res(b);
+    });
+});

@@ -44,7 +44,7 @@ export type INodeUtils = {
 };
 
 export type IWebUtils = {
-  browser: Electron.BrowserWindow;
+  browser: puppeteer.Browser;
   ipc: Electron.IpcRenderer;
 };
 export type IUtils = INodeUtils | IWebUtils;

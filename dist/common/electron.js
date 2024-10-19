@@ -9,6 +9,11 @@ const puppeteer_core_1 = __importDefault(require("puppeteer-core"));
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const jsonc_1 = require("jsonc");
+const uuid_1 = require("uuid");
+const nodeChildren = {};
+const webChildren = {};
+const node2web = {};
+const web2node = {};
 process.on("message", function (message) {
     console.log("message: " + message);
     process.exit();
@@ -35,9 +40,9 @@ const main = async () => {
             // })
         });
     };
-    // const launchNode = (t: string, x: string) => {
     const launchNode = (src, dest) => {
         var _a, _b;
+        console.log("launchNode", src);
         const destFolder = dest.replace(".mjs", "");
         const argz = JSON.stringify({
             scheduled: true,
@@ -47,11 +52,13 @@ const main = async () => {
             // fs: destFolder,
             fs: ".",
         });
-        console.log("launchNode", src, dest, " -> ", destFolder, argz);
+        // console.log("launchNode", src, dest, " -> ", destFolder, argz);
         const child = electron_1.utilityProcess.fork(dest + ".mjs", [argz], {
             cwd: destFolder,
             stdio: "pipe",
         });
+        const nodeGuid = (0, uuid_1.v4)();
+        nodeChildren[nodeGuid] = child;
         if (!fs_1.default.existsSync(destFolder)) {
             fs_1.default.mkdirSync(destFolder, { recursive: true });
         }
@@ -59,8 +66,23 @@ const main = async () => {
         const stderr = fs_1.default.createWriteStream(`${destFolder}/stderr.log`);
         child
             .on("message", (data) => {
-            console.log("from child", data);
-            launchWebSecondary(process.cwd() + data);
+            console.log("from child", JSON.stringify(data));
+            if (data.launchWeb) {
+                const guid = (0, uuid_1.v4)();
+                const webChild = launchWebSecondary(process.cwd() + data.launchWeb);
+                // child.postMessage({ webLaunched: guid });
+                webChild.webContents.on("did-finish-load", () => {
+                    // webChild.webContents.send("message", "hello world");
+                    child.postMessage({ webLaunched: guid });
+                    webChildren[guid] = webChild;
+                    node2web[nodeGuid] = [...(node2web[nodeGuid] || []), guid];
+                });
+            }
+            if (data.teardown) {
+                webChildren[data.teardown].close();
+                delete webChildren[data.teardown];
+                node2web[nodeGuid] = node2web[nodeGuid].filter((x) => x !== data.teardown);
+            }
         })
             .on("exit", (data) => {
             stdout.close();
@@ -85,9 +107,13 @@ const main = async () => {
         remoteMain.enable(subWin.webContents);
         subWin.webContents.openDevTools();
         subWin.loadFile(htmlFile);
+        return subWin;
+        // const uuid = uuidv4();
+        // windows[uuid] = subWin;
+        // return uuid;
     };
     const launchWeb = (t, dest) => {
-        console.log("launchWeb", t, dest);
+        console.log("launchWeb", t);
         const destFolder = dest.replace(".mjs", "");
         const subWin = new electron_1.BrowserWindow({
             show: true,
@@ -100,6 +126,7 @@ const main = async () => {
                 devTools: true,
             },
         });
+        webChildren[(0, uuid_1.v4)()] = subWin;
         remoteMain.enable(subWin.webContents);
         const webArgz = JSON.stringify({
             name: dest,
@@ -108,7 +135,7 @@ const main = async () => {
             // fs: destFolder,
             fs: destFolder,
         });
-        console.log("webArgz", webArgz);
+        // console.log("webArgz", webArgz);
         subWin.loadFile(`${dest}.html`, {
             query: {
                 requesting: encodeURIComponent(webArgz),
@@ -131,6 +158,10 @@ const main = async () => {
         subWin.on("closed", () => {
             console.log(" ---- Bye Bye Electron ---- ");
             stdout.close();
+        });
+        electron_1.ipcMain.on("message", (message, data) => {
+            console.log("ipcMain message: " + JSON.stringify(data));
+            // process.exit();
         });
         // child.on('message', (data) => {
         //   console.log("from child", data);

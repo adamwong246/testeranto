@@ -1,11 +1,17 @@
-import { app, BrowserWindow, utilityProcess } from "electron";
+import { app, BrowserWindow, utilityProcess, ipcMain } from "electron";
 import pie from "puppeteer-in-electron";
 import puppeteer from "puppeteer-core";
 import fs from "fs";
 import path from "path";
 import { jsonc } from "jsonc";
+import { v4 as uuidv4 } from "uuid";
 
 import { IBuiltConfig, IRunTime } from "./lib/types";
+
+const nodeChildren: Record<string, Electron.UtilityProcess> = {};
+const webChildren: Record<string, BrowserWindow> = {};
+const node2web: Record<string, string[]> = {};
+const web2node: Record<string, string[]> = {};
 
 process.on("message", function (message) {
   console.log("message: " + message);
@@ -41,8 +47,8 @@ const main = async () => {
     });
   };
 
-  // const launchNode = (t: string, x: string) => {
   const launchNode = (src: string, dest: string) => {
+    console.log("launchNode", src);
     const destFolder = dest.replace(".mjs", "");
 
     const argz = JSON.stringify({
@@ -54,12 +60,14 @@ const main = async () => {
       fs: ".",
     });
 
-    console.log("launchNode", src, dest, " -> ", destFolder, argz);
+    // console.log("launchNode", src, dest, " -> ", destFolder, argz);
 
     const child = utilityProcess.fork(dest + ".mjs", [argz], {
       cwd: destFolder,
       stdio: "pipe",
     });
+    const nodeGuid = uuidv4();
+    nodeChildren[nodeGuid] = child;
 
     if (!fs.existsSync(destFolder)) {
       fs.mkdirSync(destFolder, { recursive: true });
@@ -70,8 +78,26 @@ const main = async () => {
 
     child
       .on("message", (data) => {
-        console.log("from child", data);
-        launchWebSecondary(process.cwd() + data);
+        console.log("from child", JSON.stringify(data));
+        if (data.launchWeb) {
+          const guid = uuidv4();
+          const webChild = launchWebSecondary(process.cwd() + data.launchWeb);
+          // child.postMessage({ webLaunched: guid });
+
+          webChild.webContents.on("did-finish-load", () => {
+            // webChild.webContents.send("message", "hello world");
+            child.postMessage({ webLaunched: guid });
+            webChildren[guid] = webChild;
+            node2web[nodeGuid] = [...(node2web[nodeGuid] || []), guid];
+          });
+        }
+        if (data.teardown) {
+          webChildren[data.teardown].close();
+          delete webChildren[data.teardown];
+          node2web[nodeGuid] = node2web[nodeGuid].filter(
+            (x) => x !== data.teardown
+          );
+        }
       })
       .on("exit", (data) => {
         stdout.close();
@@ -82,7 +108,7 @@ const main = async () => {
     child.stderr?.pipe(stderr);
   };
 
-  const launchWebSecondary = (htmlFile: string) => {
+  const launchWebSecondary = (htmlFile: string): BrowserWindow => {
     console.log("launchWebSecondary", htmlFile);
     const subWin = new BrowserWindow({
       show: true,
@@ -99,10 +125,15 @@ const main = async () => {
     remoteMain.enable(subWin.webContents);
     subWin.webContents.openDevTools();
     subWin.loadFile(htmlFile);
+    return subWin;
+
+    // const uuid = uuidv4();
+    // windows[uuid] = subWin;
+    // return uuid;
   };
 
   const launchWeb = (t: string, dest: string) => {
-    console.log("launchWeb", t, dest);
+    console.log("launchWeb", t);
     const destFolder = dest.replace(".mjs", "");
 
     const subWin = new BrowserWindow({
@@ -117,6 +148,8 @@ const main = async () => {
       },
     });
 
+    webChildren[uuidv4()] = subWin;
+
     remoteMain.enable(subWin.webContents);
 
     const webArgz = JSON.stringify({
@@ -127,7 +160,7 @@ const main = async () => {
       fs: destFolder,
     });
 
-    console.log("webArgz", webArgz);
+    // console.log("webArgz", webArgz);
     subWin.loadFile(`${dest}.html`, {
       query: {
         requesting: encodeURIComponent(webArgz),
@@ -161,6 +194,10 @@ const main = async () => {
     subWin.on("closed", () => {
       console.log(" ---- Bye Bye Electron ---- ");
       stdout.close();
+    });
+    ipcMain.on("message", (message, data) => {
+      console.log("ipcMain message: " + JSON.stringify(data));
+      // process.exit();
     });
 
     // child.on('message', (data) => {

@@ -17,9 +17,6 @@ import {
   IWebUtils,
 } from "./lib/types";
 
-const remote = require("@electron/remote");
-// const remote = require("@electron/remote/main");
-
 class WebTesteranto<TestShape extends IBaseTest> extends Testeranto<TestShape> {
   constructor(
     input: TestShape["iinput"],
@@ -35,7 +32,6 @@ class WebTesteranto<TestShape extends IBaseTest> extends Testeranto<TestShape> {
       testResourceRequirement,
       (window as any).NodeWriter,
       testInterface
-      // BrowserWindow
     );
 
     const testResourceArg = decodeURIComponent(
@@ -69,7 +65,6 @@ class WebTesteranto<TestShape extends IBaseTest> extends Testeranto<TestShape> {
         // process.exit(-1);
       }
     }
-    // const t: ITestJob = this.testJobs[0];
   }
 
   async receiveTestResourceConfig(
@@ -79,7 +74,7 @@ class WebTesteranto<TestShape extends IBaseTest> extends Testeranto<TestShape> {
     const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(
       partialTestResource,
       {
-        browser: remote.getCurrentWindow(),
+        browser: await (window as any).browser,
         ipc: (window as any).ipcRenderer,
       }
     );

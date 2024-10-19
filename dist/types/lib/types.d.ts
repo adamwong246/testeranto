@@ -32,7 +32,7 @@ export declare type INodeUtils = {
     ipc: Electron.ParentPort;
 };
 export declare type IWebUtils = {
-    browser: Electron.BrowserWindow;
+    browser: puppeteer.Browser;
     ipc: Electron.IpcRenderer;
 };
 export declare type IUtils = INodeUtils | IWebUtils;

@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.68.0",
+  "version": "0.69.0",
   "type": "module",
   "types": "./dist/index.d.mts",
   "module": "dist/module/index.js",
@@ -235,6 +235,7 @@
     "react-test-renderer": "18.2.0",
     "selenium-webdriver": "^4.25.0",
     "url": "^0.11.4",
+    "uuid": "^10.0.0",
     "ws": "^8.16.0"
   }
 }
