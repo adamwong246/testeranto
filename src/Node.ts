@@ -16,28 +16,7 @@ import type {
 } from "./Types.js";
 import { ITestInterface, INodeTestInterface } from "./lib/types.js";
 
-const readJson = async (port: string): Promise<any> =>
-  new Promise((resolve, reject) => {
-    let json = "";
-    const request = http.request(
-      {
-        host: "127.0.0.1",
-        path: "/json/version",
-        port,
-      },
-      (response) => {
-        response.on("error", reject);
-        response.on("data", (chunk: Buffer) => {
-          json += chunk.toString();
-        });
-        response.on("end", () => {
-          resolve(JSON.parse(json));
-        });
-      }
-    );
-    request.on("error", reject);
-    request.end();
-  });
+import puppeteerConfiger from "./puppeteerConfiger";
 
 class NodeTesteranto<
   TestShape extends IBaseTest
@@ -80,7 +59,7 @@ class NodeTesteranto<
     t: ITestJob,
     partialTestResource: ITTestResourceConfiguration
   ) {
-    const browser = await readJson("2999").then(async (json) => {
+    const browser = await puppeteerConfiger("2999").then(async (json) => {
       const b = await puppeteer.connect({
         browserWSEndpoint: json.webSocketDebuggerUrl,
         defaultViewport: null,

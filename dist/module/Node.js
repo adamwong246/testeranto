@@ -1,26 +1,8 @@
-import http from "http";
 import puppeteer from "puppeteer-core";
 import Testeranto from "./lib/core.js";
 import { defaultTestResourceRequirement, } from "./lib/index.js";
 import { NodeWriter } from "./NodeWriter.js";
-const readJson = async (port) => new Promise((resolve, reject) => {
-    let json = "";
-    const request = http.request({
-        host: "127.0.0.1",
-        path: "/json/version",
-        port,
-    }, (response) => {
-        response.on("error", reject);
-        response.on("data", (chunk) => {
-            json += chunk.toString();
-        });
-        response.on("end", () => {
-            resolve(JSON.parse(json));
-        });
-    });
-    request.on("error", reject);
-    request.end();
-});
+import puppeteerConfiger from "./puppeteerConfiger";
 class NodeTesteranto extends Testeranto {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
         super(input, testSpecification, testImplementation, testResourceRequirement, NodeWriter, testInterface);
@@ -40,7 +22,7 @@ class NodeTesteranto extends Testeranto {
         }
     }
     async receiveTestResourceConfig(t, partialTestResource) {
-        const browser = await readJson("2999").then(async (json) => {
+        const browser = await puppeteerConfiger("2999").then(async (json) => {
             const b = await puppeteer.connect({
                 browserWSEndpoint: json.webSocketDebuggerUrl,
                 defaultViewport: null,
