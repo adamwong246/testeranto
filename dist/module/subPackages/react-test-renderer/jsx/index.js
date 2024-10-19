@@ -3,7 +3,6 @@ import renderer, { act } from "react-test-renderer";
 export const testInterface = {
     butThen: async function (s, thenCB, tr) {
         console.log("butThen", thenCB.toString());
-        // debugger
         return thenCB(s);
     },
     beforeEach: function (CComponent, props) {
@@ -17,5 +16,5 @@ export const testInterface = {
     andWhen: async function (renderer, whenCB) {
         await act(() => whenCB(renderer));
         return renderer;
-    }
+    },
 };

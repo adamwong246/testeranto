@@ -17,7 +17,7 @@ import {
   IWebUtils,
 } from "./lib/types";
 
-// const remote = require("@electron/remote");
+const remote = require("@electron/remote");
 // const remote = require("@electron/remote/main");
 
 class WebTesteranto<TestShape extends IBaseTest> extends Testeranto<TestShape> {
@@ -79,7 +79,7 @@ class WebTesteranto<TestShape extends IBaseTest> extends Testeranto<TestShape> {
     const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(
       partialTestResource,
       {
-        browser: (window as any).remote, //remote.getCurrentWindow(),
+        browser: remote.getCurrentWindow(),
         ipc: (window as any).ipcRenderer,
       }
     );

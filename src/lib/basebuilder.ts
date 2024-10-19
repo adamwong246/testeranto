@@ -138,10 +138,8 @@ export abstract class BaseBuilder<
 
             const access = await logWriter.createWriteStream(logFilePath);
 
-            const tLog = (...l: string[]) => {
-              // console.log(...l);
-              access.write(`${l.toString()}\n`);
-            };
+            const tLog = (...l: string[]) => access.write(`${l.toString()}\n`);
+
             const suiteDone: BaseSuite<ITestShape> = await runner(
               testResourceConfiguration,
               tLog,

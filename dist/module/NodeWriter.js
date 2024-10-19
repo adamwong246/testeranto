@@ -2,14 +2,9 @@ import fs from "fs";
 import path from "path";
 const fPaths = [];
 export const NodeWriter = {
-    createWriteStream: (filepath) => {
-        return fs.createWriteStream(filepath);
-    },
-    writeFileSync: (fp, contents) => {
-        fs.writeFileSync(fp, contents);
-    },
+    createWriteStream: (filepath) => fs.createWriteStream(filepath),
+    writeFileSync: (fp, contents) => fs.writeFileSync(fp, contents),
     mkdirSync: async (destFolder) => {
-        // await fs.mkdirSync(fp, { recursive: true });
         if (!fs.existsSync(destFolder)) {
             fs.mkdirSync(destFolder, { recursive: true });
         }

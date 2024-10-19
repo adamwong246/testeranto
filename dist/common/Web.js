@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_js_1 = __importDefault(require("./lib/core.js"));
 const index_js_1 = require("./lib/index.js");
-// const remote = require("@electron/remote");
+const remote = require("@electron/remote");
 // const remote = require("@electron/remote/main");
 class WebTesteranto extends core_js_1.default {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
@@ -38,7 +38,7 @@ class WebTesteranto extends core_js_1.default {
     }
     async receiveTestResourceConfig(t, partialTestResource) {
         const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(partialTestResource, {
-            browser: window.remote,
+            browser: remote.getCurrentWindow(),
             ipc: window.ipcRenderer,
         });
         Promise.all([...artifacts, logPromise]).then(async () => {

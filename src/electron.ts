@@ -93,7 +93,7 @@ const main = async () => {
         contextIsolation: false,
         preload: path.join(app.getAppPath(), "preload.js"),
         offscreen: false,
-        devTools: false,
+        devTools: true,
       },
     });
     remoteMain.enable(subWin.webContents);

@@ -8,14 +8,9 @@ const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const fPaths = [];
 exports.NodeWriter = {
-    createWriteStream: (filepath) => {
-        return fs_1.default.createWriteStream(filepath);
-    },
-    writeFileSync: (fp, contents) => {
-        fs_1.default.writeFileSync(fp, contents);
-    },
+    createWriteStream: (filepath) => fs_1.default.createWriteStream(filepath),
+    writeFileSync: (fp, contents) => fs_1.default.writeFileSync(fp, contents),
     mkdirSync: async (destFolder) => {
-        // await fs.mkdirSync(fp, { recursive: true });
         if (!fs_1.default.existsSync(destFolder)) {
             fs_1.default.mkdirSync(destFolder, { recursive: true });
         }

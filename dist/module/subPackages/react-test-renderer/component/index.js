@@ -46,7 +46,6 @@ export const testInterface = {
     // },
     butThen: async function (s, thenCB, tr) {
         console.log("butThen", thenCB.toString());
-        // debugger
         return thenCB(s);
     },
     afterEach: async function (store, ndx, artificer) {

@@ -42,10 +42,7 @@ class BaseBuilder {
                     logWriter.writeFileSync(`${testResourceConfiguration.fs}/tests.json`, JSON.stringify(this.toObj(), null, 2));
                     const logFilePath = `${testResourceConfiguration.fs}/log.txt`;
                     const access = await logWriter.createWriteStream(logFilePath);
-                    const tLog = (...l) => {
-                        // console.log(...l);
-                        access.write(`${l.toString()}\n`);
-                    };
+                    const tLog = (...l) => access.write(`${l.toString()}\n`);
                     const suiteDone = await runner(testResourceConfiguration, tLog, y);
                     const logPromise = new Promise((res, rej) => {
                         access.on("finish", () => {

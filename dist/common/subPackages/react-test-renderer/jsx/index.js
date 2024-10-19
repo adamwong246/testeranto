@@ -32,7 +32,6 @@ const react_test_renderer_1 = __importStar(require("react-test-renderer"));
 exports.testInterface = {
     butThen: async function (s, thenCB, tr) {
         console.log("butThen", thenCB.toString());
-        // debugger
         return thenCB(s);
     },
     beforeEach: function (CComponent, props) {
@@ -46,5 +45,5 @@ exports.testInterface = {
     andWhen: async function (renderer, whenCB) {
         await (0, react_test_renderer_1.act)(() => whenCB(renderer));
         return renderer;
-    }
+    },
 };

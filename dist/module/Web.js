@@ -1,6 +1,6 @@
 import Testeranto from "./lib/core.js";
 import { defaultTestResourceRequirement, } from "./lib/index.js";
-// const remote = require("@electron/remote");
+const remote = require("@electron/remote");
 // const remote = require("@electron/remote/main");
 class WebTesteranto extends Testeranto {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
@@ -33,7 +33,7 @@ class WebTesteranto extends Testeranto {
     }
     async receiveTestResourceConfig(t, partialTestResource) {
         const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(partialTestResource, {
-            browser: window.remote,
+            browser: remote.getCurrentWindow(),
             ipc: window.ipcRenderer,
         });
         Promise.all([...artifacts, logPromise]).then(async () => {

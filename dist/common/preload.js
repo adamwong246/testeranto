@@ -6,8 +6,9 @@ const remote = require("@electron/remote");
 // contextBridge.exposeInMainWorld("ipcRenderer", ipcRenderer);
 // contextBridge.exposeInMainWorld("remote", remote);
 // contextBridge.exposeInMainWorld("NodeWriter", NodeWriter);
+// contextBridge.exposeInMainWorld("fs", fs);
 window.ipcRenderer = electron_1.ipcRenderer;
-window.remote = remote;
+// (window as any).remote = remote;
 window.NodeWriter = NodeWriter_1.NodeWriter;
 console.log("hello preloader");
 // (window as any).exit = (x) => {

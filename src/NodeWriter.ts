@@ -8,14 +8,13 @@ type IFPaths = string[];
 const fPaths: IFPaths = [];
 
 export const NodeWriter: ILogWriter = {
-  createWriteStream: (filepath: string): fs.WriteStream => {
-    return fs.createWriteStream(filepath);
-  },
-  writeFileSync: (fp: string, contents: string) => {
-    fs.writeFileSync(fp, contents);
-  },
+  createWriteStream: (filepath: string): fs.WriteStream =>
+    fs.createWriteStream(filepath),
+
+  writeFileSync: (fp: string, contents: string) =>
+    fs.writeFileSync(fp, contents),
+
   mkdirSync: async (destFolder: string) => {
-    // await fs.mkdirSync(fp, { recursive: true });
     if (!fs.existsSync(destFolder)) {
       fs.mkdirSync(destFolder, { recursive: true });
     }
