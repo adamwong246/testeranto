@@ -5,11 +5,8 @@ testResourceConfiguration {
   "ports": [],
   "fs": "."
 }
-file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.html
-file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test.html
-file:///Users/adam/Code/kokomoBay/docs/report.html
-file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.html
-gutentag CDPPage {
+mark1
+mark2 CDPBrowser {
   eventsMap: Map(0) {},
   emitter: {
     all: Map(0) {},
@@ -18,7 +15,13 @@ gutentag CDPPage {
     emit: [Function: emit]
   }
 }
+mark3 file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test.html
+mark3 file:///Users/adam/Code/kokomoBay/docs/report.html
+mark3 file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.html
+mark3 file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.html
+mark3 file:///Users/adam/Code/kokomoBay/docs/web/src/ClassicalComponent/test.html
+mark3 devtools://devtools/bundled/devtools_app.html
 beta
 gamma
-delta
+delta! 21678ee2-4191-48d8-95c5-9acd23d5b794
 exiting gracefully with 1 failures.

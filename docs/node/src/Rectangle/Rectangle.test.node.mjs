@@ -164,23 +164,31 @@ var RectangleTesterantoBaseTestSpecification = (Suite, Given, When, Then, Check)
 var RectangleTesterantoBasePrototype = Rectangle_default.prototype;
 
 // src/Rectangle/Rectangle.test.node.ts
+var guid;
 var testInterface = {
   beforeAll(input, testResource, artificer, utils) {
     return new Promise(async (res, rej) => {
-      utils.ipc.postMessage(`/docs/web/src/ClassicalComponent/test.html`);
-      const page = (await utils.browser.pages()).filter((x) => {
-        const parsedUrl = new URL(x.url());
-        parsedUrl.search = "";
-        const strippedUrl = parsedUrl.toString();
-        console.log(strippedUrl);
-        return strippedUrl === "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.html";
-      })[0];
-      console.log("gutentag", page);
-      await page.screenshot({
-        // cwd: "./node/src/Rectangle/Rectangle.test.node/",
-        path: "rectangle-beforeAll.jpg"
+      utils.ipc.on("message", async (e) => {
+        if (e.data.webLaunched) {
+          guid = e.data.webLaunched;
+          console.log("mark2", utils.browser);
+          const page = (await utils.browser.pages()).filter((x) => {
+            const parsedUrl = new URL(x.url());
+            parsedUrl.search = "";
+            const strippedUrl = parsedUrl.toString();
+            console.log("mark3", strippedUrl);
+            return strippedUrl === "file:///Users/adam/Code/kokomoBay/docs/web/src/ClassicalComponent/test.html";
+          })[0];
+          await page.screenshot({
+            path: "rectangle-beforeAll.jpg"
+          });
+          res(input);
+        }
       });
-      res(input);
+      console.log("mark1");
+      utils.ipc.postMessage({
+        launchWeb: `/docs/web/src/ClassicalComponent/test.html`
+      });
     });
   },
   beforeEach: async () => {
@@ -192,8 +200,11 @@ var testInterface = {
   },
   assertThis: (x) => {
   },
-  afterAll: async (store, artificer, browser) => {
-    console.log("delta");
+  afterAll: async (store, artificer, utils) => {
+    utils.ipc.postMessage({
+      teardown: guid
+    });
+    console.log("delta!", guid);
   }
 };
 var RectangleTesteranto = puppeteer_default(

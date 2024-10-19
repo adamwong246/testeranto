@@ -1,7 +1,3 @@
-import {
-  require_renderer
-} from "./chunk-3HEJ35MW.mjs";
-
 // ../testeranto/src/lib/index.ts
 var BaseTestInterface = {
   beforeAll: async (s) => s,
@@ -559,7 +555,6 @@ var Testeranto = class extends ClassBuilder {
 };
 
 // ../testeranto/src/Web.ts
-var remote = require_renderer();
 var WebTesteranto = class extends Testeranto {
   constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
     super(
@@ -569,7 +564,6 @@ var WebTesteranto = class extends Testeranto {
       testResourceRequirement,
       window.NodeWriter,
       testInterface
-      // BrowserWindow
     );
     const testResourceArg = decodeURIComponent(
       new URLSearchParams(location.search).get("requesting") || ""
@@ -600,7 +594,7 @@ var WebTesteranto = class extends Testeranto {
     const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(
       partialTestResource,
       {
-        browser: remote.getCurrentWindow(),
+        browser: await window.browser,
         ipc: window.ipcRenderer
       }
     );

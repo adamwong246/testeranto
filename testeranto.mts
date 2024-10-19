@@ -17,7 +17,7 @@ export default new ITProject({
 
     ["./src/MyFirstContract.solidity-precompiled.test.ts", "node", []],
 
-    // broken
+    // broken? does not reload
     ["./src/MyFirstContract.solidity.test.ts", "node", []],
     [
       "./src/Rectangle/Rectangle.test.node.ts",

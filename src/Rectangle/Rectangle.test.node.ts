@@ -14,37 +14,38 @@ import { INodeTestInterface } from "../../../testeranto/src/lib/types";
 import { IPartialNodeInterface } from "testeranto/src/Types";
 import Rectangle from "../Rectangle";
 
+let guid;
+
 const testInterface: IPartialNodeInterface<IRectangleTestShape> = {
   beforeAll(input, testResource, artificer, utils) {
     return new Promise(async (res, rej) => {
-      utils.ipc.postMessage(`/docs/web/src/ClassicalComponent/test.html`);
+      utils.ipc.on("message", async (e) => {
+        if (e.data.webLaunched) {
+          guid = e.data.webLaunched;
 
-      const page = (await utils.browser.pages()).filter((x) => {
-        const parsedUrl = new URL(x.url());
-        parsedUrl.search = "";
-        const strippedUrl = parsedUrl.toString();
+          console.log("mark2", utils.browser);
+          const page = (await utils.browser.pages()).filter((x) => {
+            const parsedUrl = new URL(x.url());
+            parsedUrl.search = "";
+            const strippedUrl = parsedUrl.toString();
+            console.log("mark3", strippedUrl);
+            return (
+              strippedUrl ===
+              "file:///Users/adam/Code/kokomoBay/docs/web/src/ClassicalComponent/test.html"
+            );
+          })[0];
 
-        console.log(strippedUrl);
-
-        return (
-          strippedUrl ===
-          "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.html"
-        );
-      })[0];
-      console.log("gutentag", page);
-
-      // const client = await page.target().createCDPSession();
-      // await client.send("Page.setDownloadBehavior", {
-      //   behavior: "allow",
-      //   downloadPath: ".~/Code/kokomoBay/docs/",
-      // });
-
-      await page.screenshot({
-        // cwd: "./node/src/Rectangle/Rectangle.test.node/",
-        path: "rectangle-beforeAll.jpg",
+          await page.screenshot({
+            path: "rectangle-beforeAll.jpg",
+          });
+          res(input);
+        }
       });
-      // return input;
-      res(input);
+
+      console.log("mark1");
+      utils.ipc.postMessage({
+        launchWeb: `/docs/web/src/ClassicalComponent/test.html`,
+      });
     });
   },
   beforeEach: async (): Promise<any> => {
@@ -59,9 +60,12 @@ const testInterface: IPartialNodeInterface<IRectangleTestShape> = {
   },
 
   assertThis: (x) => {},
-  afterAll: async (store, artificer, browser) => {
+  afterAll: async (store, artificer, utils) => {
     // const page = (await browser.pages())[0]; //.map((x) => x.url())); // === 'file:///Users/adam/Code/kokomoBay/dist/web/src/ClassicalComponent/test.html'))[0]
-    console.log("delta");
+    utils.ipc.postMessage({
+      teardown: guid,
+    });
+    console.log("delta!", guid);
   },
 };
 

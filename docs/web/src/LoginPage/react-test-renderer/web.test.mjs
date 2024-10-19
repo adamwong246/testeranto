@@ -3,19 +3,18 @@ import {
   LoginPage_default,
   actions,
   emailwarning
-} from "../../../chunk-EJ237YM2.mjs";
+} from "../../../chunk-AUQMQZHB.mjs";
 import {
-  assert,
-  require_renderer
-} from "../../../chunk-3HEJ35MW.mjs";
+  assert
+} from "../../../chunk-WK3ZH2ZI.mjs";
 import {
   require_react,
   require_scheduler
-} from "../../../chunk-X4RTFM5S.mjs";
+} from "../../../chunk-NBTTKMUG.mjs";
 import {
   __commonJS,
   __toESM
-} from "../../../chunk-TTFRSOOU.mjs";
+} from "../../../chunk-XALKSG2U.mjs";
 
 // ../testeranto/node_modules/scheduler/cjs/scheduler-unstable_mock.development.js
 var require_scheduler_unstable_mock_development = __commonJS({
@@ -28029,18 +28028,9 @@ var Testeranto = class extends ClassBuilder {
 };
 
 // ../testeranto/dist/module/Web.js
-var remote = require_renderer();
 var WebTesteranto = class extends Testeranto {
   constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface2) {
-    super(
-      input,
-      testSpecification,
-      testImplementation,
-      testResourceRequirement,
-      window.NodeWriter,
-      testInterface2
-      // BrowserWindow
-    );
+    super(input, testSpecification, testImplementation, testResourceRequirement, window.NodeWriter, testInterface2);
     const testResourceArg = decodeURIComponent(new URLSearchParams(location.search).get("requesting") || "");
     try {
       const partialTestResource = JSON.parse(testResourceArg);
@@ -28062,7 +28052,7 @@ var WebTesteranto = class extends Testeranto {
   }
   async receiveTestResourceConfig(t, partialTestResource) {
     const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(partialTestResource, {
-      browser: remote.getCurrentWindow(),
+      browser: await window.browser,
       ipc: window.ipcRenderer
     });
     Promise.all([...artifacts, logPromise]).then(async () => {

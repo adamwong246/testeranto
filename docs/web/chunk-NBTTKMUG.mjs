@@ -1,6 +1,6 @@
 import {
   __commonJS
-} from "./chunk-TTFRSOOU.mjs";
+} from "./chunk-XALKSG2U.mjs";
 
 // node_modules/react/cjs/react.development.js
 var require_react_development = __commonJS({

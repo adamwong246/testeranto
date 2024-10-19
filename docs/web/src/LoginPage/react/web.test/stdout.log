@@ -1,170 +1,23 @@
 {
   "event": {},
   "level": 1,
-  "message": "\"hello preloader\"",
-  "line": 13,
-  "sourceId": "/Users/adam/Code/testeranto/dist/common/preload.js"
-}
-{
-  "event": {},
-  "level": 1,
   "message": "\"%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools\\nYou might need to use a local HTTP server (instead of file://): https://reactjs.org/link/react-devtools-faq font-weight:bold\"",
   "line": 23418,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-X4RTFM5S.mjs"
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-NBTTKMUG.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"hello world\"",
   "line": 2683,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-EJ237YM2.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"testResourceConfiguration {\\n  \\\"name\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test\\\",\\n  \\\"ports\\\": \\\"\\\",\\n  \\\"fs\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test\\\"\\n}\"",
-  "line": 305,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-33GBFJ4G.mjs"
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-AUQMQZHB.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"initial test resource [object Object]\"",
-  "line": 592,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-33GBFJ4G.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"testResourceConfiguration {\\n  \\\"name\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test\\\",\\n  \\\"ports\\\": \\\"\\\",\\n  \\\"fs\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test\\\"\\n}\"",
-  "line": 305,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-33GBFJ4G.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"hello\"",
-  "line": 78,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"hello\"",
-  "line": 78,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"hello\"",
-  "line": 78,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"hello\"",
-  "line": 78,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"test failed [object Object]\"",
-  "line": 202,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-33GBFJ4G.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"test failed [object Object]\"",
-  "line": 202,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-33GBFJ4G.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"domoarigato\"",
-  "line": 97,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"domoarigato\"",
-  "line": 97,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"domoarigato\"",
-  "line": 97,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"domoarigato\"",
-  "line": 97,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"domoarigato\"",
-  "line": 97,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"domoarigato\"",
-  "line": 97,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"domoarigato\"",
-  "line": 97,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"domoarigato\"",
-  "line": 97,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"domoarigato\"",
-  "line": 97,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"domoarigato\"",
-  "line": 97,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"exiting gracefully with 1 failures.\"",
-  "line": 340,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-33GBFJ4G.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"exiting gracefully with 1 failures.\"",
-  "line": 340,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-33GBFJ4G.mjs"
+  "line": 586,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-SSNVFQ2Q.mjs"
 }
 {
   "event": {},
@@ -176,70 +29,91 @@
 {
   "event": {},
   "level": 1,
-  "message": "\"done [object Object]\"",
-  "line": 107,
+  "message": "\"connected! true\"",
+  "line": 34,
+  "sourceId": "/Users/adam/Code/testeranto/dist/common/preload.js"
+}
+{
+  "event": {},
+  "level": 1,
+  "message": "\"testResourceConfiguration {\\n  \\\"name\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test\\\",\\n  \\\"ports\\\": \\\"\\\",\\n  \\\"fs\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test\\\"\\n}\"",
+  "line": 301,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-SSNVFQ2Q.mjs"
+}
+{
+  "event": {},
+  "level": 1,
+  "message": "\"testResourceConfiguration {\\n  \\\"name\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test\\\",\\n  \\\"ports\\\": \\\"\\\",\\n  \\\"fs\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test\\\"\\n}\"",
+  "line": 301,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-SSNVFQ2Q.mjs"
+}
+{
+  "event": {},
+  "level": 1,
+  "message": "\"hello\"",
+  "line": 78,
   "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
 }
 {
   "event": {},
   "level": 1,
-  "message": "\"done [object Object]\"",
-  "line": 107,
+  "message": "\"hello\"",
+  "line": 78,
   "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
 }
 {
   "event": {},
   "level": 1,
-  "message": "\"done [object Object]\"",
-  "line": 107,
+  "message": "\"hello\"",
+  "line": 78,
   "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
 }
 {
   "event": {},
   "level": 1,
-  "message": "\"done [object Object]\"",
-  "line": 107,
+  "message": "\"hello\"",
+  "line": 78,
   "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
 }
 {
   "event": {},
   "level": 1,
-  "message": "\"done [object Object]\"",
-  "line": 107,
+  "message": "\"test failed [object Object]\"",
+  "line": 198,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-SSNVFQ2Q.mjs"
+}
+{
+  "event": {},
+  "level": 1,
+  "message": "\"test failed [object Object]\"",
+  "line": 198,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-SSNVFQ2Q.mjs"
+}
+{
+  "event": {},
+  "level": 1,
+  "message": "\"domoarigato\"",
+  "line": 97,
   "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
 }
 {
   "event": {},
   "level": 1,
-  "message": "\"done [object Object]\"",
-  "line": 107,
+  "message": "\"domoarigato\"",
+  "line": 97,
   "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
 }
 {
   "event": {},
-  "level": 1,
-  "message": "\"done [object Object]\"",
-  "line": 107,
+  "level": 3,
+  "message": "\"Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'capturePage')\"",
+  "line": 98,
   "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
 }
 {
   "event": {},
-  "level": 1,
-  "message": "\"done [object Object]\"",
-  "line": 107,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"done [object Object]\"",
-  "line": 107,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"done [object Object]\"",
-  "line": 107,
+  "level": 3,
+  "message": "\"Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'capturePage')\"",
+  "line": 98,
   "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
 }

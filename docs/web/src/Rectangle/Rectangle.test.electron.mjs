@@ -1,10 +1,10 @@
 import {
   Web_default
-} from "../../chunk-33GBFJ4G.mjs";
+} from "../../chunk-SSNVFQ2Q.mjs";
 import {
   assert
-} from "../../chunk-3HEJ35MW.mjs";
-import "../../chunk-TTFRSOOU.mjs";
+} from "../../chunk-WK3ZH2ZI.mjs";
+import "../../chunk-XALKSG2U.mjs";
 
 // src/Rectangle.ts
 var Rectangle = class {
@@ -141,15 +141,21 @@ var RectangleTesteranto = Web_default(
   RectangleTesterantoBaseTestImplementation,
   {
     afterAll: async (store, artificer, utils) => {
-      utils.browser.webContents.capturePage({
-        x: 0,
-        y: 0,
-        width: 80,
-        height: 600
-      }).then((z) => {
-        console.log(z);
-        artificer("afterAll.png", z.toPNG());
+      return new Promise(async (res, rej) => {
+        console.log("mark00", (await utils.browser).pages);
+        const page = (await utils.browser.pages()).filter((x) => {
+          const parsedUrl = new URL(x.url());
+          parsedUrl.search = "";
+          const strippedUrl = parsedUrl.toString();
+          console.log("mark3", strippedUrl);
+          return strippedUrl === "file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.html";
+        })[0];
+        await page.screenshot({
+          path: "bannana2.jpg"
+        });
+        res(store);
       });
+      console.log("do it");
     }
   }
 );
