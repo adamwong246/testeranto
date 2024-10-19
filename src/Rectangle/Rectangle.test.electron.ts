@@ -31,8 +31,7 @@ export const RectangleTesteranto = Testeranto(
   RectangleTesterantoBaseTestImplementation,
   {
     afterAll: async (store, artificer, utils) => {
-      utils.browser
-        .getCurrentWebContents()
+      utils.browser.webContents
         .capturePage({
           x: 0,
           y: 0,

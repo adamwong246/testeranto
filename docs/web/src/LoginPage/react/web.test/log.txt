@@ -29,8 +29,3 @@ Suite:,0,Testing the LoginPage as react
  Then:,ThereIsNotAnEmailError: undefined
 AssertionError: expected 'invalidEmail' to equal 'no_error'
 
-testArtiFactory =>,/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test/afterAll4-default/utils
-testArtiFactory =>,/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test/afterAll4-default/utils
-testArtiFactory =>,/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test/afterAll4-default/utils
-testArtiFactory =>,/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test/afterAll4-default/utils
-testArtiFactory =>,/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test/afterAll4-default/utils

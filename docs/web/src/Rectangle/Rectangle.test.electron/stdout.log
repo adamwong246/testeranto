@@ -2,43 +2,43 @@
   "event": {},
   "level": 1,
   "message": "\"hello preloader\"",
-  "line": 12,
+  "line": 13,
   "sourceId": "/Users/adam/Code/testeranto/dist/common/preload.js"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"testResourceConfiguration {\\n  \\\"name\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron\\\",\\n  \\\"ports\\\": \\\"\\\",\\n  \\\"fs\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron\\\"\\n}\"",
-  "line": 301,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-GUDS7OWX.mjs"
+  "line": 305,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-33GBFJ4G.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"initial test resource [object Object]\"",
-  "line": 589,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-GUDS7OWX.mjs"
+  "line": 592,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-33GBFJ4G.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"testResourceConfiguration {\\n  \\\"name\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron\\\",\\n  \\\"ports\\\": \\\"\\\",\\n  \\\"fs\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron\\\"\\n}\"",
-  "line": 301,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-GUDS7OWX.mjs"
+  "line": 305,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-33GBFJ4G.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"exiting gracefully with 0 failures.\"",
-  "line": 338,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-GUDS7OWX.mjs"
+  "line": 340,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-33GBFJ4G.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"exiting gracefully with 0 failures.\"",
-  "line": 338,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-GUDS7OWX.mjs"
+  "line": 340,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-33GBFJ4G.mjs"
 }
 {
   "event": {},

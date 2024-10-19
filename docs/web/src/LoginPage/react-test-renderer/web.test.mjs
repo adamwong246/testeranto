@@ -3,18 +3,19 @@ import {
   LoginPage_default,
   actions,
   emailwarning
-} from "../../../chunk-AUQMQZHB.mjs";
+} from "../../../chunk-EJ237YM2.mjs";
 import {
-  assert
-} from "../../../chunk-WK3ZH2ZI.mjs";
+  assert,
+  require_renderer
+} from "../../../chunk-3HEJ35MW.mjs";
 import {
   require_react,
   require_scheduler
-} from "../../../chunk-NBTTKMUG.mjs";
+} from "../../../chunk-X4RTFM5S.mjs";
 import {
   __commonJS,
   __toESM
-} from "../../../chunk-XALKSG2U.mjs";
+} from "../../../chunk-TTFRSOOU.mjs";
 
 // ../testeranto/node_modules/scheduler/cjs/scheduler-unstable_mock.development.js
 var require_scheduler_unstable_mock_development = __commonJS({
@@ -27888,10 +27889,8 @@ var BaseBuilder = class {
           logWriter.writeFileSync(`${testResourceConfiguration.fs}/tests.json`, JSON.stringify(this.toObj(), null, 2));
           const logFilePath = `${testResourceConfiguration.fs}/log.txt`;
           const access = await logWriter.createWriteStream(logFilePath);
-          const tLog = (...l) => {
-            access.write(`${l.toString()}
+          const tLog = (...l) => access.write(`${l.toString()}
 `);
-          };
           const suiteDone = await runner(testResourceConfiguration, tLog, y);
           const logPromise = new Promise((res, rej) => {
             access.on("finish", () => {
@@ -28030,6 +28029,7 @@ var Testeranto = class extends ClassBuilder {
 };
 
 // ../testeranto/dist/module/Web.js
+var remote = require_renderer();
 var WebTesteranto = class extends Testeranto {
   constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface2) {
     super(
@@ -28062,7 +28062,7 @@ var WebTesteranto = class extends Testeranto {
   }
   async receiveTestResourceConfig(t, partialTestResource) {
     const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(partialTestResource, {
-      browser: window.remote,
+      browser: remote.getCurrentWindow(),
       ipc: window.ipcRenderer
     });
     Promise.all([...artifacts, logPromise]).then(async () => {

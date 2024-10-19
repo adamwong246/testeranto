@@ -332,10 +332,8 @@ var BaseBuilder = class {
             );
             const logFilePath = `${testResourceConfiguration.fs}/log.txt`;
             const access = await logWriter.createWriteStream(logFilePath);
-            const tLog = (...l) => {
-              access.write(`${l.toString()}
+            const tLog = (...l) => access.write(`${l.toString()}
 `);
-            };
             const suiteDone = await runner(
               testResourceConfiguration,
               tLog,
@@ -583,12 +581,8 @@ import fs from "fs";
 import path from "path";
 var fPaths = [];
 var NodeWriter = {
-  createWriteStream: (filepath) => {
-    return fs.createWriteStream(filepath);
-  },
-  writeFileSync: (fp, contents) => {
-    fs.writeFileSync(fp, contents);
-  },
+  createWriteStream: (filepath) => fs.createWriteStream(filepath),
+  writeFileSync: (fp, contents) => fs.writeFileSync(fp, contents),
   mkdirSync: async (destFolder) => {
     if (!fs.existsSync(destFolder)) {
       fs.mkdirSync(destFolder, { recursive: true });

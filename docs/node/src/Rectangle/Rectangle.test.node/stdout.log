@@ -5,9 +5,9 @@ testResourceConfiguration {
   "ports": [],
   "fs": "."
 }
-file:///Users/adam/Code/kokomoBay/docs/report.html
 file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.html
 file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test.html
+file:///Users/adam/Code/kokomoBay/docs/report.html
 file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.html
 gutentag CDPPage {
   eventsMap: Map(0) {},

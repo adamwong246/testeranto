@@ -2,7 +2,7 @@
   "event": {},
   "level": 1,
   "message": "\"hello preloader\"",
-  "line": 12,
+  "line": 13,
   "sourceId": "/Users/adam/Code/testeranto/dist/common/preload.js"
 }
 {
@@ -10,20 +10,20 @@
   "level": 1,
   "message": "\"%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools\\nYou might need to use a local HTTP server (instead of file://): https://reactjs.org/link/react-devtools-faq font-weight:bold\"",
   "line": 23418,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-NBTTKMUG.mjs"
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-X4RTFM5S.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"hello world\"",
   "line": 2683,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-AUQMQZHB.mjs"
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-EJ237YM2.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"testResourceConfiguration {\\n  \\\"name\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test\\\",\\n  \\\"ports\\\": \\\"\\\",\\n  \\\"fs\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test\\\"\\n}\"",
-  "line": 27887,
+  "line": 27888,
   "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test.mjs"
 }
 {
@@ -37,7 +37,7 @@
   "event": {},
   "level": 1,
   "message": "\"testResourceConfiguration {\\n  \\\"name\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test\\\",\\n  \\\"ports\\\": \\\"\\\",\\n  \\\"fs\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test\\\"\\n}\"",
-  "line": 27887,
+  "line": 27888,
   "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test.mjs"
 }
 {
@@ -45,27 +45,27 @@
   "level": 3,
   "message": "\"Warning: You seem to have overlapping act() calls, this is not supported. Be sure to await previous act() calls before making a new one. \"",
   "line": 136,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-NBTTKMUG.mjs"
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-X4RTFM5S.mjs"
 }
 {
   "event": {},
   "level": 3,
   "message": "\"Warning: You seem to have overlapping act() calls, this is not supported. Be sure to await previous act() calls before making a new one. \"",
   "line": 136,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-NBTTKMUG.mjs"
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-X4RTFM5S.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"exiting gracefully with 0 failures.\"",
-  "line": 27906,
+  "line": 27905,
   "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"exiting gracefully with 0 failures.\"",
-  "line": 27906,
+  "line": 27905,
   "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test.mjs"
 }
 {

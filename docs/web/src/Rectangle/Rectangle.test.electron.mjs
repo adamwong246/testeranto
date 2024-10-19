@@ -1,10 +1,10 @@
 import {
   Web_default
-} from "../../chunk-GUDS7OWX.mjs";
+} from "../../chunk-33GBFJ4G.mjs";
 import {
   assert
-} from "../../chunk-WK3ZH2ZI.mjs";
-import "../../chunk-XALKSG2U.mjs";
+} from "../../chunk-3HEJ35MW.mjs";
+import "../../chunk-TTFRSOOU.mjs";
 
 // src/Rectangle.ts
 var Rectangle = class {
@@ -141,7 +141,7 @@ var RectangleTesteranto = Web_default(
   RectangleTesterantoBaseTestImplementation,
   {
     afterAll: async (store, artificer, utils) => {
-      utils.browser.getCurrentWebContents().capturePage({
+      utils.browser.webContents.capturePage({
         x: 0,
         y: 0,
         width: 80,

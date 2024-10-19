@@ -2,15 +2,15 @@ import {
   LoginPageSpecs,
   LoginPage_default,
   actions
-} from "../../../chunk-AUQMQZHB.mjs";
+} from "../../../chunk-EJ237YM2.mjs";
 import {
   Web_default
-} from "../../../chunk-GUDS7OWX.mjs";
+} from "../../../chunk-33GBFJ4G.mjs";
 import {
   assert
-} from "../../../chunk-WK3ZH2ZI.mjs";
-import "../../../chunk-NBTTKMUG.mjs";
-import "../../../chunk-XALKSG2U.mjs";
+} from "../../../chunk-3HEJ35MW.mjs";
+import "../../../chunk-X4RTFM5S.mjs";
+import "../../../chunk-TTFRSOOU.mjs";
 
 // ../testeranto/src/SubPackages/react/jsx/index.ts
 var testInterface = {
@@ -94,8 +94,18 @@ var web_test_default = web_default(
   LoginPage_default,
   {
     afterAll: (store, artificer, utils) => {
-      const webContents = utils.webContents;
-      artificer("utils", "hellow orld");
+      console.log("domoarigato");
+      utils.browser.webContents.capturePage({
+        x: 0,
+        y: 0,
+        width: 100,
+        height: 200
+      }, (img) => {
+        console.log("testing123");
+        artificer("hello.png", img.toPng());
+      }).then((x) => {
+        console.log("done", x);
+      });
     }
   }
 );

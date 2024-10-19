@@ -12,20 +12,21 @@ export default test(
   LoginPage,
   {
     afterAll: (store, artificer, utils) => {
-      const webContents = utils.webContents;
+      // const webContents = utils.browser.webContents;
+      console.log("domoarigato")
 
-      // webContents.capturePage({
-      //   x: 0,
-      //   y: 0,
-      //   width: 100,
-      //   height: 200
-      // }, (img: { toPng: () => any; }) => {
-      //   console.log("testing123")
-      //   artificer("hello.png", img.toPng());
-      // }).then((x) => {
-      //   console.log("done", x);
-      // });
-      artificer("utils", "hellow orld");
+      utils.browser.webContents.capturePage({
+        x: 0,
+        y: 0,
+        width: 100,
+        height: 200
+      }, (img: { toPng: () => any; }) => {
+        console.log("testing123")
+        artificer("hello.png", img.toPng());
+      }).then((x) => {
+        console.log("done", x);
+      });
+      // artificer("utils", `utils.browser.webContents: ${utils.browser.webContents}`);
       // console.log("HELLO WORLD");
       // console.log(store);
       // console.log(artificer);

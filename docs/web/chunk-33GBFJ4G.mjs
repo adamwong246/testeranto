@@ -1,3 +1,7 @@
+import {
+  require_renderer
+} from "./chunk-3HEJ35MW.mjs";
+
 // ../testeranto/src/lib/index.ts
 var BaseTestInterface = {
   beforeAll: async (s) => s,
@@ -311,10 +315,8 @@ var BaseBuilder = class {
             );
             const logFilePath = `${testResourceConfiguration.fs}/log.txt`;
             const access = await logWriter.createWriteStream(logFilePath);
-            const tLog = (...l) => {
-              access.write(`${l.toString()}
+            const tLog = (...l) => access.write(`${l.toString()}
 `);
-            };
             const suiteDone = await runner(
               testResourceConfiguration,
               tLog,
@@ -557,6 +559,7 @@ var Testeranto = class extends ClassBuilder {
 };
 
 // ../testeranto/src/Web.ts
+var remote = require_renderer();
 var WebTesteranto = class extends Testeranto {
   constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
     super(
@@ -597,8 +600,7 @@ var WebTesteranto = class extends Testeranto {
     const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(
       partialTestResource,
       {
-        browser: window.remote,
-        //remote.getCurrentWindow(),
+        browser: remote.getCurrentWindow(),
         ipc: window.ipcRenderer
       }
     );
