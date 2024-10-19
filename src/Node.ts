@@ -16,7 +16,7 @@ import type {
 } from "./Types.js";
 import { ITestInterface, INodeTestInterface } from "./lib/types.js";
 
-import puppeteerConfiger from "./puppeteerConfiger";
+import puppeteerConfiger from "./puppeteerConfiger.js";
 
 class NodeTesteranto<
   TestShape extends IBaseTest
