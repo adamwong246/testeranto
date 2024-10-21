@@ -1,9 +1,13 @@
 import { assert } from "chai";
 
 import { IStoreState, loginApp } from "./app.js";
-import { AppSpecification, IAppSpecification, IImplementation } from "./app.test.js";
+import {
+  AppSpecification,
+  IAppSpecification,
+  IImplementation,
+} from "./app.test.js";
 
-import { ReduxTesteranto } from "../myTests/redux.testeranto.test.js";
+import { ReduxTesteranto } from "../subPackages/redux.testeranto.test.js";
 
 // const implementations: IImplementation = {
 const implementations: any = {
@@ -25,10 +29,9 @@ const implementations: any = {
   },
   thens: {
     TheEmailIs: (email) => (storeState) => {
-      console.log("foobar")
-      assert.equal(storeState.email, email)
-    }
-    ,
+      console.log("foobar");
+      assert.equal(storeState.email, email);
+    },
     TheEmailIsNot: (email) => (storeState) =>
       assert.notEqual(storeState.email, email),
     ThePasswordIs: (password) => (selection) =>
@@ -41,11 +44,8 @@ const implementations: any = {
   },
 };
 
-export default ReduxTesteranto<
-  IStoreState,
-  IAppSpecification
->(
+export default ReduxTesteranto<IStoreState, IAppSpecification>(
   loginApp.reducer,
   AppSpecification,
-  implementations,
+  implementations
 );

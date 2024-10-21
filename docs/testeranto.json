@@ -43,16 +43,6 @@
       []
     ],
     [
-      "./src/MyFirstContract.solidity-precompiled.test.ts",
-      "node",
-      []
-    ],
-    [
-      "./src/MyFirstContract.solidity.test.ts",
-      "node",
-      []
-    ],
-    [
       "./src/Rectangle/Rectangle.test.node.ts",
       "node",
       [
@@ -62,6 +52,16 @@
           []
         ]
       ]
+    ],
+    [
+      "./src/MyFirstContract.basic.test.ts",
+      "node",
+      []
+    ],
+    [
+      "./src/MyFirstContract.rpc.test.ts",
+      "node",
+      []
     ]
   ],
   "debugger": true,

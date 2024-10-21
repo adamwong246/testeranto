@@ -16,7 +16,7 @@
   "event": {},
   "level": 1,
   "message": "\"connected! true\"",
-  "line": 34,
+  "line": 16,
   "sourceId": "/Users/adam/Code/testeranto/dist/common/preload.js"
 }
 {
@@ -64,28 +64,7 @@
 {
   "event": {},
   "level": 1,
-  "message": "\"mark3 file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test.html\"",
-  "line": 150,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.mjs"
-}
-{
-  "event": {},
-  "level": 1,
   "message": "\"mark3 file:///Users/adam/Code/kokomoBay/docs/web/src/ClassicalComponent/test.html\"",
-  "line": 150,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"mark3 file:///Users/adam/Code/kokomoBay/docs/report.html\"",
-  "line": 150,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"mark3 file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.html\"",
   "line": 150,
   "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.mjs"
 }
@@ -113,13 +92,6 @@
 {
   "event": {},
   "level": 1,
-  "message": "\"mark3 file:///Users/adam/Code/kokomoBay/docs/web/src/ClassicalComponent/test.html\"",
-  "line": 150,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.mjs"
-}
-{
-  "event": {},
-  "level": 1,
   "message": "\"mark3 file:///Users/adam/Code/kokomoBay/docs/report.html\"",
   "line": 150,
   "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.mjs"
@@ -134,6 +106,13 @@
 {
   "event": {},
   "level": 1,
+  "message": "\"mark3 file:///Users/adam/Code/kokomoBay/docs/web/src/ClassicalComponent/test.html\"",
+  "line": 150,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.mjs"
+}
+{
+  "event": {},
+  "level": 1,
   "message": "\"mark3 devtools://devtools/bundled/devtools_app.html\"",
   "line": 150,
   "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.mjs"
@@ -142,6 +121,27 @@
   "event": {},
   "level": 1,
   "message": "\"mark3 file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.html\"",
+  "line": 150,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.mjs"
+}
+{
+  "event": {},
+  "level": 1,
+  "message": "\"mark3 file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test.html\"",
+  "line": 150,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.mjs"
+}
+{
+  "event": {},
+  "level": 1,
+  "message": "\"mark3 file:///Users/adam/Code/kokomoBay/docs/report.html\"",
+  "line": 150,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.mjs"
+}
+{
+  "event": {},
+  "level": 1,
+  "message": "\"mark3 file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.html\"",
   "line": 150,
   "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.mjs"
 }

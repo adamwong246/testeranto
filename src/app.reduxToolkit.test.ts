@@ -1,16 +1,50 @@
+import { ITestImplementation } from "testeranto/src/Types";
+
 import { assert } from "chai";
 
-import { AppSpecification, IAppSpecification, IImplementation } from "./app.test";
+import {
+  ActionCreatorWithNonInferrablePayload,
+  ActionCreatorWithoutPayload,
+} from "@reduxjs/toolkit";
+
+import { ReduxToolkitTesteranto } from "../subPackages/reduxToolkit.testeranto.test";
+
+import { AppSpecification, IAppSpecification } from "./app.test";
 import app, { IStoreState, loginApp } from "./app";
 import { ILoginPageSelection } from "./LoginPage";
-
-import { ReduxToolkitTesteranto } from "../myTests/reduxToolkit.testeranto.test";
 
 const core = app();
 const selector = core.select.loginPageSelection;
 const reducer = core.app.reducer;
 
-const implementations: IImplementation = {
+const implementations: ITestImplementation<
+  IAppSpecification,
+  {
+    givens: {
+      [K in keyof IAppSpecification["givens"]]: () => (
+        ...Iw: IAppSpecification["givens"][K]
+      ) => IStoreState;
+    };
+
+    whens: {
+      [K in keyof IAppSpecification["whens"]]: (
+        ...Iw: IAppSpecification["whens"][K]
+      ) => [
+        (
+          | ActionCreatorWithNonInferrablePayload<string>
+          | ActionCreatorWithoutPayload<string>
+        ),
+        string?
+      ];
+    };
+
+    checks: {
+      [K in keyof IAppSpecification["checks"]]: () => (
+        ...Iw: IAppSpecification["checks"][K]
+      ) => IStoreState;
+    };
+  }
+> = {
   suites: {
     Default: "some default Suite",
   },
@@ -46,8 +80,4 @@ export const AppReduxToolkitTesteranto = ReduxToolkitTesteranto<
   IStoreState,
   ILoginPageSelection,
   IAppSpecification
->(
-  implementations,
-  AppSpecification,
-  { reducer, selector },
-);
+>(implementations, AppSpecification, { reducer, selector });

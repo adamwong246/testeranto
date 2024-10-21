@@ -3,7 +3,7 @@
     "testeranto.mts",
   ],
   "include": [
-    "index.d.ts",
+    "subPackages/solidity/index.d.ts",
     "project.test.ts"
   ],
   "ts-node": {

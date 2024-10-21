@@ -3,7 +3,9 @@ connected! true
 testResourceConfiguration {
   "scheduled": true,
   "name": "./src/LoginPage/react-test-renderer/node.test.tsx",
-  "ports": [],
+  "ports": [
+    3333
+  ],
   "fs": "."
 }
 []

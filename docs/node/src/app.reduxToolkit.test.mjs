@@ -1,16 +1,15 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
   AppSpecification
-} from "../chunk-2X2TLOYS.mjs";
+} from "../chunk-S6ZSHMIP.mjs";
 import {
   app_default,
   loginApp,
   require_redux
-} from "../chunk-CSGRHIRJ.mjs";
-import "../chunk-QDDCF6MK.mjs";
+} from "../chunk-Q7IN32QK.mjs";
 import {
   Node_default
-} from "../chunk-YKFBLOXF.mjs";
+} from "../chunk-ATCKVWWQ.mjs";
 import {
   assert
 } from "../chunk-GHFYKOO4.mjs";
@@ -25,7 +24,7 @@ import {
 // src/app.reduxToolkit.test.ts
 init_cjs_shim();
 
-// myTests/reduxToolkit.testeranto.test.ts
+// subPackages/reduxToolkit.testeranto.test.ts
 init_cjs_shim();
 var import_redux = __toESM(require_redux(), 1);
 var ReduxToolkitTesteranto = (testImplementations, testSpecifications, testInput) => {
@@ -34,15 +33,19 @@ var ReduxToolkitTesteranto = (testImplementations, testSpecifications, testInput
       t[0](t[1], t[2], t[3]);
     },
     beforeEach: (subject, initializer, art, tr, initialValues) => {
-      return (0, import_redux.createStore)(subject.reducer, initializer()(initialValues));
+      return (0, import_redux.createStore)(
+        subject.reducer,
+        initializer()(initialValues)
+      );
     },
-    andWhen: async function(store, actioner) {
+    andWhen: async function(store, actioner, tr) {
       const a = actioner;
       store.dispatch(a[0](a[1]));
       return store;
     },
-    butThen: async function(store, tr) {
-      return store.getState();
+    butThen: async function(store, actioner, tr) {
+      console.log("args", arguments);
+      return actioner(store.getState());
     }
   };
   return Node_default(
@@ -84,11 +87,7 @@ var implementations = {
     AnEmptyState: () => () => loginApp.getInitialState()
   }
 };
-var AppReduxToolkitTesteranto = ReduxToolkitTesteranto(
-  implementations,
-  AppSpecification,
-  { reducer, selector }
-);
+var AppReduxToolkitTesteranto = ReduxToolkitTesteranto(implementations, AppSpecification, { reducer, selector });
 export {
   AppReduxToolkitTesteranto
 };

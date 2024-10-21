@@ -1,0 +1,8 @@
+test resources: ,[object Object]
+
+Suite:,0,Testing a very simple smart contract over RPC
+
+ Given: Default
+ Then:,Get: [object Object]
+
+ Given: Default

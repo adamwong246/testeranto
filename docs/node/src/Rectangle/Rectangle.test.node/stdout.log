@@ -2,7 +2,9 @@ connected! true
 testResourceConfiguration {
   "scheduled": true,
   "name": "./src/Rectangle/Rectangle.test.node.ts",
-  "ports": [],
+  "ports": [
+    3333
+  ],
   "fs": "."
 }
 mark1
@@ -15,13 +17,13 @@ mark2 CDPBrowser {
     emit: [Function: emit]
   }
 }
+mark3 file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.html
 mark3 file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test.html
 mark3 file:///Users/adam/Code/kokomoBay/docs/report.html
 mark3 file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.html
-mark3 file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.html
 mark3 file:///Users/adam/Code/kokomoBay/docs/web/src/ClassicalComponent/test.html
 mark3 devtools://devtools/bundled/devtools_app.html
 beta
 gamma
-delta! 21678ee2-4191-48d8-95c5-9acd23d5b794
+delta! 2ee2a8b6-ed30-4b1b-bce7-c17029193c4b
 exiting gracefully with 1 failures.

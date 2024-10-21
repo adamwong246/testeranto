@@ -27630,28 +27630,6 @@ var require_react_test_renderer2 = __commonJS({
   }
 });
 
-// ../testeranto/dist/module/SubPackages/react-test-renderer/jsx/index.js
-var import_react = __toESM(require_react(), 1);
-var import_react_test_renderer = __toESM(require_react_test_renderer(), 1);
-var testInterface = {
-  butThen: async function(s, thenCB, tr) {
-    console.log("butThen", thenCB.toString());
-    return thenCB(s);
-  },
-  beforeEach: function(CComponent, props) {
-    console.log("ASDASDx");
-    let component;
-    (0, import_react_test_renderer.act)(() => {
-      component = import_react_test_renderer.default.create(import_react.default.createElement(CComponent, props, []));
-    });
-    return component;
-  },
-  andWhen: async function(renderer3, whenCB) {
-    await (0, import_react_test_renderer.act)(() => whenCB(renderer3));
-    return renderer3;
-  }
-};
-
 // ../testeranto/dist/module/lib/index.js
 var BaseTestInterface = {
   beforeAll: async (s) => s,
@@ -28061,6 +28039,28 @@ var WebTesteranto = class extends Testeranto {
 };
 var Web_default = async (input, testSpecification, testImplementation, testInterface2, testResourceRequirement = defaultTestResourceRequirement) => {
   return new WebTesteranto(input, testSpecification, testImplementation, testResourceRequirement, testInterface2);
+};
+
+// ../testeranto/dist/module/SubPackages/react-test-renderer/jsx/index.js
+var import_react = __toESM(require_react(), 1);
+var import_react_test_renderer = __toESM(require_react_test_renderer(), 1);
+var testInterface = {
+  butThen: async function(s, thenCB, tr) {
+    console.log("butThen", thenCB.toString());
+    return thenCB(s);
+  },
+  beforeEach: function(CComponent, props) {
+    console.log("ASDASDx");
+    let component;
+    (0, import_react_test_renderer.act)(() => {
+      component = import_react_test_renderer.default.create(import_react.default.createElement(CComponent, props, []));
+    });
+    return component;
+  },
+  andWhen: async function(renderer3, whenCB) {
+    await (0, import_react_test_renderer.act)(() => whenCB(renderer3));
+    return renderer3;
+  }
 };
 
 // ../testeranto/dist/module/SubPackages/react-test-renderer/jsx/web.js

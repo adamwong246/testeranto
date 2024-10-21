@@ -151,7 +151,7 @@ var RectangleTesteranto = Web_default(
           return strippedUrl === "file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.html";
         })[0];
         await page.screenshot({
-          path: "bannana2.jpg"
+          path: "bannana5.jpg"
         });
         res(store);
       });

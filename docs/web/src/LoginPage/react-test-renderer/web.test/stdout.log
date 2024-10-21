@@ -16,28 +16,28 @@
   "event": {},
   "level": 1,
   "message": "\"initial test resource [object Object]\"",
-  "line": 28046,
+  "line": 28024,
   "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"connected! true\"",
-  "line": 34,
+  "line": 16,
   "sourceId": "/Users/adam/Code/testeranto/dist/common/preload.js"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"testResourceConfiguration {\\n  \\\"name\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test\\\",\\n  \\\"ports\\\": \\\"\\\",\\n  \\\"fs\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test\\\"\\n}\"",
-  "line": 27887,
+  "line": 27865,
   "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"testResourceConfiguration {\\n  \\\"name\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test\\\",\\n  \\\"ports\\\": \\\"\\\",\\n  \\\"fs\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test\\\"\\n}\"",
-  "line": 27887,
+  "line": 27865,
   "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test.mjs"
 }
 {
@@ -58,7 +58,7 @@
   "event": {},
   "level": 1,
   "message": "\"exiting gracefully with 0 failures.\"",
-  "line": 27904,
+  "line": 27882,
   "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test.mjs"
 }
 {
@@ -72,6 +72,6 @@
   "event": {},
   "level": 1,
   "message": "\"exiting gracefully with 0 failures.\"",
-  "line": 27904,
+  "line": 27882,
   "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test.mjs"
 }

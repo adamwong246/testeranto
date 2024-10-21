@@ -1,0 +1,38 @@
+test resources: ,[object Object]
+
+Suite:,0,Testing a very simple smart contract ephemerally
+
+ Given: Default
+ Then:,Get: [object Object]
+
+ Given: Default
+ When:,Increment: 1
+ When:,Increment: 1
+ When:,Increment: 1
+ When:,Increment: 1
+ When:,Increment: 1
+ When:,Increment: 1
+ When:,Increment: 1
+ When:,Increment: 1
+ When:,Increment: 1
+ When:,Increment: 1
+ When:,Increment: 1
+ When:,Increment: 1
+ When:,Increment: 1
+ When:,Increment: 1
+ When:,Increment: 1
+ When:,Increment: 1
+ Then:,Get: [object Object]
+
+ Given: Default
+ When:,Increment: 1
+ When:,Increment: 1
+ When:,Increment: 1
+ When:,Increment: 1
+ When:,Decrement: 1
+ When:,Decrement: 1
+ When:,Decrement: 1
+ When:,Decrement: 1
+ Then:,Get: [object Object]
+AssertionError: expected 10 to equal +0
+

@@ -1,15 +1,14 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
   AppSpecification
-} from "../chunk-2X2TLOYS.mjs";
+} from "../chunk-S6ZSHMIP.mjs";
 import {
   loginApp,
   require_redux
-} from "../chunk-CSGRHIRJ.mjs";
-import "../chunk-QDDCF6MK.mjs";
+} from "../chunk-Q7IN32QK.mjs";
 import {
   Node_default
-} from "../chunk-YKFBLOXF.mjs";
+} from "../chunk-ATCKVWWQ.mjs";
 import {
   assert
 } from "../chunk-GHFYKOO4.mjs";
@@ -24,21 +23,24 @@ import {
 // src/app.redux.test.ts
 init_cjs_shim();
 
-// myTests/redux.testeranto.test.ts
+// subPackages/redux.testeranto.test.ts
 init_cjs_shim();
 var import_redux = __toESM(require_redux(), 1);
 var ReduxTesteranto = (testInput, testSpecifications, testImplementations) => {
   const testInterface = {
     beforeEach: function(subject, initializer, art, tr, initialValues) {
-      return (0, import_redux.createStore)(subject, initializer()(initialValues));
+      return (0, import_redux.createStore)(
+        subject,
+        initializer()(initialValues)
+      );
     },
     andWhen: async function(store, whenCB) {
       const a = whenCB;
       store.dispatch(a[0](a[1]));
       return store;
     },
-    butThen: async function(store) {
-      return store.getState();
+    butThen: async function(store, actioner, tr) {
+      return actioner(store.getState());
     }
   };
   return Node_default(

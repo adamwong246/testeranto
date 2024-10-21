@@ -46,7 +46,7 @@ export const RectangleTesteranto = Testeranto(
         })[0];
 
         await page.screenshot({
-          path: "bannana2.jpg",
+          path: "bannana5.jpg",
         });
 
         res(store);

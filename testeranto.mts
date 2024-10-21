@@ -1,6 +1,7 @@
 import { ITProject } from "testeranto/src/Project";
 
-import { solCompile } from "./myTests/truffle.mjs";
+// import { solCompile } from "./src/truffle.mjs";
+import { solidityEsBuildConfig } from "./subPackages/solidity/index.js";
 
 export default new ITProject({
   outdir: "docs",
@@ -14,16 +15,13 @@ export default new ITProject({
     ["./src/app.reduxToolkit.test.ts", "node", []],
     ["./src/app.redux.test.ts", "node", []],
     ["./src/Rectangle/Rectangle.test.electron.ts", "web", []],
-
-    ["./src/MyFirstContract.solidity-precompiled.test.ts", "node", []],
-
-    // broken? does not reload
-    ["./src/MyFirstContract.solidity.test.ts", "node", []],
     [
       "./src/Rectangle/Rectangle.test.node.ts",
       "node",
       [["./src/ClassicalComponent/test.ts", "web", []]],
     ],
+    ["./src/MyFirstContract.basic.test.ts", "node", []],
+    ["./src/MyFirstContract.rpc.test.ts", "node", []],
   ],
 
   debugger: true,
@@ -58,24 +56,24 @@ export default new ITProject({
         // })
       },
     },
-
-    {
-      name: "solidity",
-      setup(build) {
-        build.onResolve({ filter: /^.*\.sol$/ }, (args) => {
-          return {
-            path: "MyFirstContract",
-            namespace: "solidity",
-          };
-        });
-        build.onLoad({ filter: /.*/, namespace: "solidity" }, async (argz) => {
-          return {
-            contents: JSON.stringify(await solCompile(argz.path)),
-            loader: "json",
-            watchDirs: [process.cwd() + "/contracts"],
-          };
-        });
-      },
-    },
+    solidityEsBuildConfig,
+    // {
+    //   name: "solidity",
+    //   setup(build) {
+    //     build.onResolve({ filter: /^.*\.sol$/ }, (args) => {
+    //       return {
+    //         path: "MyFirstContract",
+    //         namespace: "solidity",
+    //       };
+    //     });
+    //     build.onLoad({ filter: /.*/, namespace: "solidity" }, async (argz) => {
+    //       return {
+    //         contents: JSON.stringify(await solCompile(argz.path)),
+    //         loader: "json",
+    //         watchDirs: [process.cwd() + "/contracts"],
+    //       };
+    //     });
+    //   },
+    // },
   ],
 });

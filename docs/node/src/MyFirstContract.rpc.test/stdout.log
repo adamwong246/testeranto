@@ -1,0 +1,41 @@
+connected! true
+testResourceConfiguration {
+  "scheduled": true,
+  "name": "./src/MyFirstContract.rpc.test.ts",
+  "ports": [
+    3333
+  ],
+  "fs": "."
+}
+mark0 {
+  scheduled: true,
+  name: './src/MyFirstContract.rpc.test.ts',
+  ports: [ 3333 ],
+  fs: '.'
+}
+ganache listening on port 3333...
+eth_accounts
+eth_getBlockByNumber
+eth_gasPrice
+eth_sendTransaction
+
+  Transaction: 0x92d86f2b8845e0117747af099a18712c3aef118a87cd8e401bfb1175078bb9a2
+  Contract created: 0x3fbf70c4f836fa9ff6b3de24d00e32ce472febe0
+  Gas usage: 113457
+  Block number: 1
+  Block time: Mon Oct 21 2024 00:01:29 GMT-0700 (Pacific Daylight Time)
+
+eth_getTransactionReceipt
+eth_getCode
+server Server { debug: { enabled: false, logger: [Function (anonymous)] } }
+eth_chainId
+eth_chainId
+eth_call
+serve!r Server { debug: { enabled: false, logger: [Function (anonymous)] } }
+mark0 {
+  scheduled: true,
+  name: './src/MyFirstContract.rpc.test.ts',
+  ports: [ 3333 ],
+  fs: '.'
+}
+ganache listening on port 3333...

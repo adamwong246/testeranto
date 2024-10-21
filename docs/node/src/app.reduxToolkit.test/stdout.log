@@ -3,7 +3,105 @@ connected! true
 testResourceConfiguration {
   "scheduled": true,
   "name": "./src/app.reduxToolkit.test.ts",
-  "ports": [],
+  "ports": [
+    3333
+  ],
   "fs": "."
+}
+args [Arguments] {
+  '0': {
+    dispatch: [Function: dispatch],
+    subscribe: [Function: subscribe],
+    getState: [Function: getState],
+    replaceReducer: [Function: replaceReducer],
+    '@@observable': [Function: observable]
+  },
+  '1': [Function (anonymous)],
+  '2': {
+    scheduled: true,
+    name: './src/app.reduxToolkit.test.ts',
+    ports: [ 3333 ],
+    fs: '.'
+  }
+}
+args [Arguments] {
+  '0': {
+    dispatch: [Function: dispatch],
+    subscribe: [Function: subscribe],
+    getState: [Function: getState],
+    replaceReducer: [Function: replaceReducer],
+    '@@observable': [Function: observable]
+  },
+  '1': [Function (anonymous)],
+  '2': {
+    scheduled: true,
+    name: './src/app.reduxToolkit.test.ts',
+    ports: [ 3333 ],
+    fs: '.'
+  }
+}
+args [Arguments] {
+  '0': {
+    dispatch: [Function: dispatch],
+    subscribe: [Function: subscribe],
+    getState: [Function: getState],
+    replaceReducer: [Function: replaceReducer],
+    '@@observable': [Function: observable]
+  },
+  '1': [Function (anonymous)],
+  '2': {
+    scheduled: true,
+    name: './src/app.reduxToolkit.test.ts',
+    ports: [ 3333 ],
+    fs: '.'
+  }
+}
+args [Arguments] {
+  '0': {
+    dispatch: [Function: dispatch],
+    subscribe: [Function: subscribe],
+    getState: [Function: getState],
+    replaceReducer: [Function: replaceReducer],
+    '@@observable': [Function: observable]
+  },
+  '1': [Function (anonymous)],
+  '2': {
+    scheduled: true,
+    name: './src/app.reduxToolkit.test.ts',
+    ports: [ 3333 ],
+    fs: '.'
+  }
+}
+args [Arguments] {
+  '0': {
+    dispatch: [Function: dispatch],
+    subscribe: [Function: subscribe],
+    getState: [Function: getState],
+    replaceReducer: [Function: replaceReducer],
+    '@@observable': [Function: observable]
+  },
+  '1': [Function (anonymous)],
+  '2': {
+    scheduled: true,
+    name: './src/app.reduxToolkit.test.ts',
+    ports: [ 3333 ],
+    fs: '.'
+  }
+}
+args [Arguments] {
+  '0': {
+    dispatch: [Function: dispatch],
+    subscribe: [Function: subscribe],
+    getState: [Function: getState],
+    replaceReducer: [Function: replaceReducer],
+    '@@observable': [Function: observable]
+  },
+  '1': [Function (anonymous)],
+  '2': {
+    scheduled: true,
+    name: './src/app.reduxToolkit.test.ts',
+    ports: [ 3333 ],
+    fs: '.'
+  }
 }
 exiting gracefully with 1 failures.

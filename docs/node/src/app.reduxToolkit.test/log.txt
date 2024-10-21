@@ -5,5 +5,21 @@ Suite:,0,Testing the Redux store
  Given: AnEmptyState
  When:,TheEmailIsSetTo: adam@email.com
  Then:,TheEmailIs: adam@email.com
-TypeError: t[0] is not a function
+
+ Given: AStateWithEmail
+ Then:,TheEmailIsNot: adam@email.com
+ Then:,TheEmailIs: bob@mail.com
+
+ Given: AnEmptyState
+ When:,TheEmailIsSetTo: hello
+ When:,TheEmailIsSetTo: aloha
+ Then:,TheEmailIs: aloha
+
+ Given: AnEmptyState
+ Then:,TheEmailIs: 
+
+ Given: AnEmptyState
+ When:,TheEmailIsSetTo: hey there
+ Then:,TheEmailIs: hey there!
+AssertionError: a nice message: expected 'hey there' to equal 'hey there!'
 
