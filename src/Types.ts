@@ -16,14 +16,6 @@ import {
 
 export type IPartialInterface<I extends IBaseTest> = Partial<ITestInterface<I>>;
 
-export type ITTestShape = {
-  suites;
-  givens;
-  whens;
-  thens;
-  checks;
-};
-
 export type IPartialNodeInterface<I extends IBaseTest> = Partial<
   INodeTestInterface<I>
 >;
@@ -68,7 +60,10 @@ export type ITestSpecification<ITestShape extends IBaseTest> = (
   Check: ITestCheckCallback<ITestShape>
 ) => any[];
 
-export type ITestImplementation<ITestShape extends IBaseTest, IMod> = Modify<
+export type ITestImplementation<
+  ITestShape extends IBaseTest,
+  IMod = object
+> = Modify<
   {
     suites: {
       [K in keyof ITestShape["suites"]]: string;
@@ -99,19 +94,24 @@ export type ITestImplementation<ITestShape extends IBaseTest, IMod> = Modify<
 
 type Modify<T, R> = Omit<T, keyof R> & R;
 
-export type IBaseTest = {
-  iinput; // input
-  isubject; // subject
-  istore; // store
-  iselection;
+export type IBaseTest<Shape = any, II = Shape> = {
+  iinput: II;
+  isubject: Shape;
+  istore: Shape;
+  iselection: Shape;
   // iinitial;
 
   given;
   when;
   then;
-  suites: Record<string, any[]>;
-  givens: Record<string, any[]>;
-  whens: Record<string, any[]>;
-  thens: Record<string, any[]>;
-  checks: Record<string, any[]>;
+
+  suites: Record<string, any>;
+  givens: Record<string, any>;
+  whens: Record<string, any>;
+  thens: Record<string, any>;
+  checks: Record<string, any>;
 };
+
+// export type ITTestShape = {
+
+// };

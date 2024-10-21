@@ -38,5 +38,5 @@ exports.testInterface = {
     andWhen: async function (renderer, whenCB) {
         await (0, react_test_renderer_1.act)(() => whenCB()(renderer));
         return renderer;
-    }
+    },
 };

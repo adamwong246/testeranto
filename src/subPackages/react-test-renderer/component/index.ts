@@ -17,10 +17,8 @@ export type ISelection = renderer.ReactTestRenderer;
 export type IStore = renderer.ReactTestRenderer;
 export type ISubject = renderer.ReactTestRenderer;
 
-export type IImpl<ITestShape extends IBaseTest, IProps> = ITestImplementation<
-  ITestShape,
-  object
->;
+export type IImpl<ITestShape extends IBaseTest> =
+  ITestImplementation<ITestShape>;
 export type ISpec<ITestShape extends IBaseTest> =
   ITestSpecification<ITestShape>;
 

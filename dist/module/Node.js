@@ -2,7 +2,7 @@ import puppeteer from "puppeteer-core";
 import Testeranto from "./lib/core.js";
 import { defaultTestResourceRequirement, } from "./lib/index.js";
 import { NodeWriter } from "./NodeWriter.js";
-import puppeteerConfiger from "./puppeteerConfiger";
+import puppeteerConfiger from "./puppeteerConfiger.js";
 class NodeTesteranto extends Testeranto {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
         super(input, testSpecification, testImplementation, testResourceRequirement, NodeWriter, testInterface);

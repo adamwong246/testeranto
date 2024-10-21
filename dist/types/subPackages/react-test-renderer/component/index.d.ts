@@ -9,7 +9,7 @@ export declare type IThenShape = any;
 export declare type ISelection = renderer.ReactTestRenderer;
 export declare type IStore = renderer.ReactTestRenderer;
 export declare type ISubject = renderer.ReactTestRenderer;
-export declare type IImpl<ITestShape extends IBaseTest, IProps> = ITestImplementation<ITestShape, object>;
+export declare type IImpl<ITestShape extends IBaseTest> = ITestImplementation<ITestShape>;
 export declare type ISpec<ITestShape extends IBaseTest> = ITestSpecification<ITestShape>;
 export declare const testInterface: {
     beforeEach: (CComponent: any, propsAndChildren: any) => Promise<renderer.ReactTestRenderer>;

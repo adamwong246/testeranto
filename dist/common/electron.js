@@ -47,7 +47,7 @@ const main = async () => {
         const argz = JSON.stringify({
             scheduled: true,
             name: src,
-            ports: [],
+            ports: [3333],
             // fs: path.resolve(configs.buildDir, "web", destFolder + "/"),
             // fs: destFolder,
             fs: ".",

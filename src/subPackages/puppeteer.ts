@@ -4,7 +4,6 @@ import Testeranto from "../Node.js";
 
 import {
   IBaseTest,
-  IPartialInterface,
   IPartialNodeInterface,
   ITestImplementation,
   ITestSpecification,
@@ -15,14 +14,14 @@ type ISelection = any;
 type IStore = any;
 type ISubject = any;
 
-export type IImpl<ISpec extends IBaseTest> = ITestImplementation<ISpec, object>;
+export type IImpl<ISpec extends IBaseTest> = ITestImplementation<ISpec>;
 
 export type ISpec<T extends IBaseTest> = ITestSpecification<T>;
 
 export default <ITestShape extends IBaseTest>(
   testInput: IInput,
   testSpecifications: ISpec<ITestShape>,
-  testImplementations: ITestImplementation<ITestShape, object>,
+  testImplementations: ITestImplementation<ITestShape>,
   testInterface?: IPartialNodeInterface<ITestShape>
 ) => {
   return Testeranto<ITestShape>(

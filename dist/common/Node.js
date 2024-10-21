@@ -7,7 +7,7 @@ const puppeteer_core_1 = __importDefault(require("puppeteer-core"));
 const core_js_1 = __importDefault(require("./lib/core.js"));
 const index_js_1 = require("./lib/index.js");
 const NodeWriter_js_1 = require("./NodeWriter.js");
-const puppeteerConfiger_1 = __importDefault(require("./puppeteerConfiger"));
+const puppeteerConfiger_js_1 = __importDefault(require("./puppeteerConfiger.js"));
 class NodeTesteranto extends core_js_1.default {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
         super(input, testSpecification, testImplementation, testResourceRequirement, NodeWriter_js_1.NodeWriter, testInterface);
@@ -27,7 +27,7 @@ class NodeTesteranto extends core_js_1.default {
         }
     }
     async receiveTestResourceConfig(t, partialTestResource) {
-        const browser = await (0, puppeteerConfiger_1.default)("2999").then(async (json) => {
+        const browser = await (0, puppeteerConfiger_js_1.default)("2999").then(async (json) => {
             const b = await puppeteer_core_1.default.connect({
                 browserWSEndpoint: json.webSocketDebuggerUrl,
                 defaultViewport: null,

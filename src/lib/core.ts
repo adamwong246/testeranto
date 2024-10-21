@@ -30,7 +30,7 @@ export default abstract class Testeranto<
   constructor(
     input: ITestShape["iinput"],
     testSpecification: ITestSpecification<ITestShape>,
-    testImplementation: ITestImplementation<ITestShape, object>,
+    testImplementation: ITestImplementation<ITestShape>,
     testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
     logWriter: ILogWriter,
     testInterface: Partial<ITestInterface<ITestShape>>

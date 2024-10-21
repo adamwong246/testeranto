@@ -24,7 +24,7 @@ class NodeTesteranto<
   constructor(
     input: TestShape["iinput"],
     testSpecification: ITestSpecification<TestShape>,
-    testImplementation: ITestImplementation<TestShape, object>,
+    testImplementation: ITestImplementation<TestShape>,
     testResourceRequirement: ITTestResourceRequest,
     testInterface: Partial<ITestInterface<TestShape>>
   ) {
@@ -85,7 +85,7 @@ class NodeTesteranto<
 export default async <ITestShape extends IBaseTest>(
   input: ITestShape["iinput"],
   testSpecification: ITestSpecification<ITestShape>,
-  testImplementation: ITestImplementation<ITestShape, object>,
+  testImplementation: ITestImplementation<ITestShape>,
   testInterface: Partial<INodeTestInterface<ITestShape>>,
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
 ): Promise<Testeranto<ITestShape>> => {

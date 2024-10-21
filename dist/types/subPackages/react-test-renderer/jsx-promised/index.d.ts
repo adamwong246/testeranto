@@ -7,7 +7,7 @@ export declare type IInput = Promise<JSX.Element>;
 export declare type ISelection = renderer.ReactTestRenderer;
 export declare type IStore = renderer.ReactTestRenderer;
 export declare type ISubject = renderer.ReactTestRenderer;
-export declare type ITestImpl<ITestShape extends IBaseTest> = ITestImplementation<ITestShape, object>;
+export declare type ITestImpl<ITestShape extends IBaseTest> = ITestImplementation<ITestShape>;
 export declare type ITestSpec<ITestShape extends IBaseTest> = ITestSpecification<ITestShape>;
 export declare const testInterface: {
     beforeEach: (CComponent: any) => Promise<renderer.ReactTestRenderer>;

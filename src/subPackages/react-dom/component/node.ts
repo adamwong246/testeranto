@@ -1,10 +1,17 @@
 import React, { ReactNode, createElement } from "react";
-import { renderToStaticMarkup, renderToStaticNodeStream } from "react-dom/server";
-import Stream from 'stream'
+import {
+  renderToStaticMarkup,
+  renderToStaticNodeStream,
+} from "react-dom/server";
+import Stream from "stream";
 
 import Testeranto from "../../../Node.js";
 
-import { IBaseTest, ITestImplementation, ITestSpecification } from "../../../Types";
+import {
+  IBaseTest,
+  ITestImplementation,
+  ITestSpecification,
+} from "../../../Types";
 
 type IInput = typeof React.Component;
 type InitialState = unknown;
@@ -14,22 +21,14 @@ export type ISelection = ReactNode;
 export type IStore = ReactNode;
 export type ISubject = ReactNode;
 
-export {
-  renderToStaticMarkup, renderToStaticNodeStream, Stream
-}
+export { renderToStaticMarkup, renderToStaticNodeStream, Stream };
 
 export default <ITestShape extends IBaseTest>(
-  testImplementations: ITestImplementation<
-    ITestShape, object
-  >,
-  testSpecifications: ITestSpecification<
-    ITestShape
-  >,
+  testImplementations: ITestImplementation<ITestShape>,
+  testSpecifications: ITestSpecification<ITestShape>,
   testInput: IInput
 ) => {
-  return Testeranto<
-    ITestShape
-  >(
+  return Testeranto<ITestShape>(
     testInput,
     testSpecifications,
     testImplementations,
@@ -64,20 +63,15 @@ export default <ITestShape extends IBaseTest>(
       butThen: async function (s: IStore): Promise<ISelection> {
         return s;
       },
-      afterEach: async function (
-        store: IStore,
-        ndx,
-        artificer
-      ) {
+      afterEach: async function (store: IStore, ndx, artificer) {
         return {};
       },
       afterAll: (store: IStore, artificer) => {
         return;
       },
-    },
-  )
+    }
+  );
 };
-
 
 // type IInput = typeof React.Component;
 // type InitialState = unknown;

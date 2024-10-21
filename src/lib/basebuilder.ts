@@ -34,7 +34,7 @@ export abstract class BaseBuilder<
 > {
   specs: any;
 
-  assertThis: (t: any) => {};
+  assertThis: (t: ITestShape["then"]) => {};
 
   testResourceRequirement: ITTestResourceRequest;
   artifacts: Promise<unknown>[] = [];

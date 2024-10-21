@@ -12,5 +12,5 @@ export const testInterface = {
     andWhen: async function (renderer, whenCB) {
         await act(() => whenCB()(renderer));
         return renderer;
-    }
+    },
 };

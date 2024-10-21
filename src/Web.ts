@@ -21,7 +21,7 @@ class WebTesteranto<TestShape extends IBaseTest> extends Testeranto<TestShape> {
   constructor(
     input: TestShape["iinput"],
     testSpecification: ITestSpecification<TestShape>,
-    testImplementation: ITestImplementation<TestShape, object>,
+    testImplementation: ITestImplementation<TestShape>,
     testResourceRequirement: ITTestResourceRequest,
     testInterface: Partial<ITestInterface<TestShape>>
   ) {
@@ -89,7 +89,7 @@ class WebTesteranto<TestShape extends IBaseTest> extends Testeranto<TestShape> {
 export default async <ITestShape extends IBaseTest>(
   input: ITestShape["iinput"],
   testSpecification: ITestSpecification<ITestShape>,
-  testImplementation: ITestImplementation<ITestShape, object>,
+  testImplementation: ITestImplementation<ITestShape>,
   testInterface: Partial<IWebTestInterface<ITestShape>>,
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
 ): Promise<Testeranto<ITestShape>> => {

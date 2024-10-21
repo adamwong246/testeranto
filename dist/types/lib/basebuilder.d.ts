@@ -5,7 +5,7 @@ import { BaseCheck, BaseWhen, BaseThen, BaseGiven } from "./abstractBase.js";
 export declare abstract class BaseBuilder<ITestShape extends IBaseTest, SuiteExtensions, GivenExtensions, WhenExtensions, ThenExtensions, CheckExtensions> {
     readonly input: ITestShape["iinput"];
     specs: any;
-    assertThis: (t: any) => {};
+    assertThis: (t: ITestShape["then"]) => {};
     testResourceRequirement: ITTestResourceRequest;
     artifacts: Promise<unknown>[];
     testJobs: ITestJob[];

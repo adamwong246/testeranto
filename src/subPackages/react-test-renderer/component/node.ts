@@ -3,20 +3,14 @@ import type { IBaseTest } from "../../../Types";
 
 import { IImpl, ISpec, IInput, testInterface } from "./index.js";
 
-export default <
-  ITestShape extends IBaseTest,
-  IProps,
-  IState
->(
-  testImplementations: IImpl<ITestShape, object>,
+export default <ITestShape extends IBaseTest, IProps, IState>(
+  testImplementations: IImpl<ITestShape>,
   testSpecifications: ISpec<ITestShape>,
-  testInput: IInput<IProps, IState>,
+  testInput: IInput<IProps, IState>
 ) =>
-  Testeranto<
-    ITestShape
-  >(
+  Testeranto<ITestShape>(
     testInput,
     testSpecifications,
     testImplementations,
     testInterface
-  )
+  );

@@ -3,13 +3,6 @@ import { IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen, BaseGiven } from "./
 import Testeranto from "./lib/core.js";
 import { INodeTestInterface, ITestInterface, IWebTestInterface } from "./lib/types.js";
 export declare type IPartialInterface<I extends IBaseTest> = Partial<ITestInterface<I>>;
-export declare type ITTestShape = {
-    suites: any;
-    givens: any;
-    whens: any;
-    thens: any;
-    checks: any;
-};
 export declare type IPartialNodeInterface<I extends IBaseTest> = Partial<INodeTestInterface<I>>;
 export declare type IPartialWebInterface<I extends IBaseTest> = Partial<IWebTestInterface<I>>;
 export declare type IEntry<ITestShape extends IBaseTest> = (input: ITestShape["iinput"], testSpecification: ITestSpecification<ITestShape>, testImplementation: ITestImplementation<ITestShape, object>, testInterface: IPartialInterface<ITestShape>, testResourceRequirement: ITTestResourceRequest) => Promise<Testeranto<ITestShape>>;
@@ -22,7 +15,7 @@ export declare type ITestSpecification<ITestShape extends IBaseTest> = (Suite: {
 }, Then: {
     [K in keyof ITestShape["thens"]]: (...xtrasD: ITestShape["thens"][K]) => BaseThen<ITestShape>;
 }, Check: ITestCheckCallback<ITestShape>) => any[];
-export declare type ITestImplementation<ITestShape extends IBaseTest, IMod> = Modify<{
+export declare type ITestImplementation<ITestShape extends IBaseTest, IMod = object> = Modify<{
     suites: {
         [K in keyof ITestShape["suites"]]: string;
     };
@@ -40,18 +33,18 @@ export declare type ITestImplementation<ITestShape extends IBaseTest, IMod> = Mo
     };
 }, IMod>;
 declare type Modify<T, R> = Omit<T, keyof R> & R;
-export declare type IBaseTest = {
-    iinput: any;
-    isubject: any;
-    istore: any;
-    iselection: any;
+export declare type IBaseTest<Shape = any, II = Shape> = {
+    iinput: II;
+    isubject: Shape;
+    istore: Shape;
+    iselection: Shape;
     given: any;
     when: any;
     then: any;
-    suites: Record<string, any[]>;
-    givens: Record<string, any[]>;
-    whens: Record<string, any[]>;
-    thens: Record<string, any[]>;
-    checks: Record<string, any[]>;
+    suites: Record<string, any>;
+    givens: Record<string, any>;
+    whens: Record<string, any>;
+    thens: Record<string, any>;
+    checks: Record<string, any>;
 };
 export {};
