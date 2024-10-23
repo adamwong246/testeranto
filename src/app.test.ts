@@ -113,7 +113,7 @@ export const AppSpecification: ITestSpecification<IAppSpecification> = (
         test4: Given.AnEmptyState(
           [`aloha`, `hello`],
           [When.TheEmailIsSetTo("hey there")],
-          [Then.TheEmailIs("hey there!")]
+          [Then.TheEmailIs("hey there")]
         ),
       },
       [

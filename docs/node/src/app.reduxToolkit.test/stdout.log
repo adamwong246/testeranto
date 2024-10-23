@@ -104,4 +104,4 @@ args [Arguments] {
     fs: '.'
   }
 }
-exiting gracefully with 1 failures.
+exiting gracefully with 0 failures.

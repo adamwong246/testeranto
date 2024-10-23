@@ -1,14 +1,19 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
   node_default
-} from "../chunk-L5QXHMAC.mjs";
-import "../chunk-6WZF5PJ5.mjs";
-import "../chunk-2MUW23AQ.mjs";
-import "../chunk-J74XOMIJ.mjs";
-import "../chunk-HRTB753X.mjs";
+} from "../chunk-YMZ5D2GR.mjs";
 import {
+  require_react
+} from "../chunk-YSBX7L3R.mjs";
+import "../chunk-HC6XUHVX.mjs";
+import "../chunk-KHU6MVJS.mjs";
+import "../chunk-SF4FRI4W.mjs";
+import "../chunk-ECNFXUXQ.mjs";
+import "../chunk-4CEWYGDD.mjs";
+import {
+  __toESM,
   init_cjs_shim
-} from "../chunk-LD4XAW36.mjs";
+} from "../chunk-4UNHOY6E.mjs";
 
 // src/ReactStateAndHook.test.tsx
 init_cjs_shim();
@@ -16,14 +21,14 @@ import assert from "assert";
 
 // src/ReactStateAndHook.tsx
 init_cjs_shim();
-import React from "react";
-import { useState, useEffect } from "react";
+var import_react = __toESM(require_react(), 1);
+var import_react2 = __toESM(require_react(), 1);
 function ReactStateAndHook() {
-  const [count, setCount] = useState(0);
-  useEffect(() => {
+  const [count, setCount] = (0, import_react2.useState)(0);
+  (0, import_react2.useEffect)(() => {
     console.log(`You have clicked the first button ${count} times`);
   }, [count]);
-  return /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("pre", null, count), /* @__PURE__ */ React.createElement("button", { onClick: () => setCount(count + 1) }, "Click me"));
+  return /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("pre", null, count), /* @__PURE__ */ import_react.default.createElement("button", { onClick: () => setCount(count + 1) }, "Click me"));
 }
 var ReactStateAndHook_default = ReactStateAndHook;
 

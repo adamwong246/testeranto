@@ -3,18 +3,19 @@ import {
   LoginPage_default,
   actions,
   emailwarning
-} from "../../../chunk-AUQMQZHB.mjs";
+} from "../../../chunk-K7SJ64TU.mjs";
 import {
-  assert
-} from "../../../chunk-WK3ZH2ZI.mjs";
+  assert,
+  require_renderer
+} from "../../../chunk-3HEJ35MW.mjs";
 import {
   require_react,
   require_scheduler
-} from "../../../chunk-NBTTKMUG.mjs";
+} from "../../../chunk-X4RTFM5S.mjs";
 import {
   __commonJS,
   __toESM
-} from "../../../chunk-XALKSG2U.mjs";
+} from "../../../chunk-TTFRSOOU.mjs";
 
 // ../testeranto/node_modules/scheduler/cjs/scheduler-unstable_mock.development.js
 var require_scheduler_unstable_mock_development = __commonJS({
@@ -27692,7 +27693,13 @@ var BaseSuite = class {
     }
     for (const k of Object.keys(this.givens)) {
       const giver = this.givens[k];
-      giver.afterAll(this.store, artifactory, utils);
+      try {
+        giver.afterAll(this.store, artifactory, utils);
+      } catch (e) {
+        console.error(e);
+        this.fails.push(giver);
+        return this;
+      }
     }
     return this;
   }
@@ -28006,6 +28013,7 @@ var Testeranto = class extends ClassBuilder {
 };
 
 // ../testeranto/dist/module/Web.js
+var remote = require_renderer();
 var WebTesteranto = class extends Testeranto {
   constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface2) {
     super(input, testSpecification, testImplementation, testResourceRequirement, window.NodeWriter, testInterface2);
@@ -28033,7 +28041,10 @@ var WebTesteranto = class extends Testeranto {
       browser: await window.browser,
       ipc: window.ipcRenderer
     });
+    console.log("test is done, awaiting test result write to fs");
     Promise.all([...artifacts, logPromise]).then(async () => {
+      var window2 = remote.getCurrentWindow();
+      window2.close();
     });
   }
 };

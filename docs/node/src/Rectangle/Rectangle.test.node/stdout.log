@@ -17,13 +17,10 @@ mark2 CDPBrowser {
     emit: [Function: emit]
   }
 }
-mark3 file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.html
-mark3 file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test.html
 mark3 file:///Users/adam/Code/kokomoBay/docs/report.html
-mark3 file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.html
 mark3 file:///Users/adam/Code/kokomoBay/docs/web/src/ClassicalComponent/test.html
 mark3 devtools://devtools/bundled/devtools_app.html
 beta
 gamma
-delta! 2ee2a8b6-ed30-4b1b-bce7-c17029193c4b
+delta! 5825a22b-ec4a-494b-b176-d687e8cdb2be
 exiting gracefully with 1 failures.

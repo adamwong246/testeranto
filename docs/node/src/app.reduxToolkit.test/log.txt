@@ -20,6 +20,4 @@ Suite:,0,Testing the Redux store
 
  Given: AnEmptyState
  When:,TheEmailIsSetTo: hey there
- Then:,TheEmailIs: hey there!
-AssertionError: a nice message: expected 'hey there' to equal 'hey there!'
-
+ Then:,TheEmailIs: hey there

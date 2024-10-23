@@ -1,5 +1,5 @@
 import { createSelector, createSlice, createStore } from "@reduxjs/toolkit";
-// import pkg from '@reduxjs/toolkit';
+// import pkg from "@reduxjs/toolkit";
 // const { createSelector, createSlice, createStore } = pkg;
 
 console.log("hello world");

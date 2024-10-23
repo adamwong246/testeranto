@@ -5,24 +5,27 @@ import {
   actions,
   emailwarning,
   require_scheduler
-} from "../../../chunk-SUGEA42X.mjs";
+} from "../../../chunk-CXQUVXKU.mjs";
 import {
   node_default
-} from "../../../chunk-L5QXHMAC.mjs";
-import "../../../chunk-Q7IN32QK.mjs";
-import "../../../chunk-6WZF5PJ5.mjs";
+} from "../../../chunk-YMZ5D2GR.mjs";
+import {
+  require_react
+} from "../../../chunk-YSBX7L3R.mjs";
+import "../../../chunk-M3LZWPQ4.mjs";
+import "../../../chunk-HC6XUHVX.mjs";
+import "../../../chunk-KHU6MVJS.mjs";
 import {
   assert
-} from "../../../chunk-GHFYKOO4.mjs";
-import "../../../chunk-2MUW23AQ.mjs";
-import "../../../chunk-J74XOMIJ.mjs";
-import "../../../chunk-HRTB753X.mjs";
+} from "../../../chunk-D2G2LC5R.mjs";
+import "../../../chunk-SF4FRI4W.mjs";
+import "../../../chunk-ECNFXUXQ.mjs";
+import "../../../chunk-4CEWYGDD.mjs";
 import {
   __commonJS,
-  __require,
   __toESM,
   init_cjs_shim
-} from "../../../chunk-LD4XAW36.mjs";
+} from "../../../chunk-4UNHOY6E.mjs";
 
 // node_modules/scheduler/cjs/scheduler-unstable_mock.production.min.js
 var require_scheduler_unstable_mock_production_min = __commonJS({
@@ -909,7 +912,7 @@ var require_react_test_renderer_production_min = __commonJS({
   "node_modules/react-test-renderer/cjs/react-test-renderer.production.min.js"(exports) {
     "use strict";
     init_cjs_shim();
-    var aa = __require("react");
+    var aa = require_react();
     var ba = require_unstable_mock();
     var ca = require_scheduler();
     function da(a, b) {
@@ -5498,7 +5501,7 @@ var require_react_test_renderer_development = __commonJS({
     if (process.env.NODE_ENV !== "production") {
       (function() {
         "use strict";
-        var React = __require("react");
+        var React = require_react();
         var Scheduler = require_unstable_mock();
         var Scheduler$1 = require_scheduler();
         var ReactSharedInternals = React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;

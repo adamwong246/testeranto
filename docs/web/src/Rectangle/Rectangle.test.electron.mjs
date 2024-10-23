@@ -1,10 +1,10 @@
 import {
   Web_default
-} from "../../chunk-SSNVFQ2Q.mjs";
+} from "../../chunk-DP2TIZBZ.mjs";
 import {
   assert
-} from "../../chunk-WK3ZH2ZI.mjs";
-import "../../chunk-XALKSG2U.mjs";
+} from "../../chunk-3HEJ35MW.mjs";
+import "../../chunk-TTFRSOOU.mjs";
 
 // src/Rectangle.ts
 var Rectangle = class {

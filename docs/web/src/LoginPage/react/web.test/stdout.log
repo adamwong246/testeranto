@@ -3,21 +3,21 @@
   "level": 1,
   "message": "\"%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools\\nYou might need to use a local HTTP server (instead of file://): https://reactjs.org/link/react-devtools-faq font-weight:bold\"",
   "line": 23418,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-NBTTKMUG.mjs"
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-X4RTFM5S.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"hello world\"",
   "line": 2683,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-AUQMQZHB.mjs"
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-K7SJ64TU.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"initial test resource [object Object]\"",
-  "line": 586,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-SSNVFQ2Q.mjs"
+  "line": 597,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-DP2TIZBZ.mjs"
 }
 {
   "event": {},
@@ -37,15 +37,15 @@
   "event": {},
   "level": 1,
   "message": "\"testResourceConfiguration {\\n  \\\"name\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test\\\",\\n  \\\"ports\\\": \\\"\\\",\\n  \\\"fs\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test\\\"\\n}\"",
-  "line": 301,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-SSNVFQ2Q.mjs"
+  "line": 311,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-DP2TIZBZ.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"testResourceConfiguration {\\n  \\\"name\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test\\\",\\n  \\\"ports\\\": \\\"\\\",\\n  \\\"fs\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test\\\"\\n}\"",
-  "line": 301,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-SSNVFQ2Q.mjs"
+  "line": 311,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-DP2TIZBZ.mjs"
 }
 {
   "event": {},
@@ -79,22 +79,15 @@
   "event": {},
   "level": 1,
   "message": "\"test failed [object Object]\"",
-  "line": 198,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-SSNVFQ2Q.mjs"
+  "line": 208,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-DP2TIZBZ.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"test failed [object Object]\"",
-  "line": 198,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-SSNVFQ2Q.mjs"
-}
-{
-  "event": {},
-  "level": 1,
-  "message": "\"domoarigato\"",
-  "line": 97,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
+  "line": 208,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-DP2TIZBZ.mjs"
 }
 {
   "event": {},
@@ -106,14 +99,49 @@
 {
   "event": {},
   "level": 3,
-  "message": "\"Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'capturePage')\"",
-  "line": 98,
+  "message": "\"TypeError: Cannot read properties of undefined (reading 'capturePage')\"",
+  "line": 94,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-DP2TIZBZ.mjs"
+}
+{
+  "event": {},
+  "level": 1,
+  "message": "\"domoarigato\"",
+  "line": 97,
   "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
 }
 {
   "event": {},
   "level": 3,
-  "message": "\"Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'capturePage')\"",
-  "line": 98,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.mjs"
+  "message": "\"TypeError: Cannot read properties of undefined (reading 'capturePage')\"",
+  "line": 94,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-DP2TIZBZ.mjs"
+}
+{
+  "event": {},
+  "level": 1,
+  "message": "\"exiting gracefully with 1 failures.\"",
+  "line": 346,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-DP2TIZBZ.mjs"
+}
+{
+  "event": {},
+  "level": 1,
+  "message": "\"exiting gracefully with 1 failures.\"",
+  "line": 346,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-DP2TIZBZ.mjs"
+}
+{
+  "event": {},
+  "level": 1,
+  "message": "\"test is done, awaiting test result write to fs\"",
+  "line": 612,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-DP2TIZBZ.mjs"
+}
+{
+  "event": {},
+  "level": 1,
+  "message": "\"test is done, awaiting test result write to fs\"",
+  "line": 612,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-DP2TIZBZ.mjs"
 }

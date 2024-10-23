@@ -13,20 +13,4 @@ foobar
 foobar
 foobar
 foobar
-test failed AssertionError2: expected 'hey there' to equal 'hey there!'
-    at file:///Users/adam/Code/kokomoBay/docs/node/src/app.redux.test.mjs:75:14
-    at Object.butThen (file:///Users/adam/Code/kokomoBay/docs/node/src/app.redux.test.mjs:43:14)
-    at Then.butThen (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ATCKVWWQ.mjs:534:42)
-    at Then.test (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ATCKVWWQ.mjs:207:28)
-    at Given.give (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ATCKVWWQ.mjs:150:34)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ATCKVWWQ.mjs:75:22)
-    at async file:///Users/adam/Code/kokomoBay/docs/node/chunk-ATCKVWWQ.mjs:295:14
-    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ATCKVWWQ.mjs:336:31)
-    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ATCKVWWQ.mjs:693:47) {
-  showDiff: true,
-  actual: 'hey there',
-  expected: 'hey there!',
-  operator: 'strictEqual'
-}
-exiting gracefully with 1 failures.
+exiting gracefully with 0 failures.

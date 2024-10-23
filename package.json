@@ -22,13 +22,13 @@
     ]
   },
   "scripts": {
-    "dev": "rm -f docs/features.test.js rm -f docs/electron.log; rm -f docs/report.html; rm -f docs/report.js; rm -f docs/report.css; rm -rf docs/web && rm -rf docs/node && yarn upgrade -f testeranto && yarn test",
-    "test": "rm -f docs/features.test.js rm -f docs/electron.log; rm -f docs/report.html; rm -f docs/report.js; rm -f docs/report.css; rm -rf docs/web && rm -rf docs/node  && ts-node-esm testeranto.mts",
-    "test2": "node --loader ts-node/esm testeranto.mts",
-    "test3": "yarn tsx testeranto.mts",
-    "clean": "rm -f docs/features.test.js rm -f docs/electron.log; rm -f docs/report.html; rm -f docs/report.js; rm -f docs/report.css; rm -rf docs/web && rm -rf docs/node",
-    "build": "ts-node-esm testeranto.mts",
-    "electron": "electron node_modules/testeranto/dist/common/electron.js"
+    "testeranto-clean": "rm -rf docs && mkdir docs",
+    "testeranto-esbuild": "ts-node-esm testeranto.mts",
+    "testeranto-esbuild-dev": "ts-node-esm testeranto.mts -dev",
+    "testeranto-electron": "electron node_modules/testeranto/dist/common/electron.js",
+    "testeranto-electron-dev": "electron node_modules/testeranto/dist/common/electron.js -dev",
+    "testeranto-dev": "yarn testeranto-clean ; yarn testeranto-esbuild-dev & yarn testeranto-electron-dev",
+    "testeranto": "yarn testeranto-clean ; yarn testeranto-esbuild && yarn testeranto-electron"
   },
   "types": "index.d.ts",
   "dependencies": {

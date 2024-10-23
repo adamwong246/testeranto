@@ -1,30 +1,34 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
+  require_react
+} from "../../chunk-HC6XUHVX.mjs";
+import {
   Node_default
-} from "../../chunk-6WZF5PJ5.mjs";
+} from "../../chunk-KHU6MVJS.mjs";
 import {
   assert
-} from "../../chunk-GHFYKOO4.mjs";
-import "../../chunk-2MUW23AQ.mjs";
-import "../../chunk-J74XOMIJ.mjs";
-import "../../chunk-HRTB753X.mjs";
+} from "../../chunk-D2G2LC5R.mjs";
+import "../../chunk-SF4FRI4W.mjs";
+import "../../chunk-ECNFXUXQ.mjs";
+import "../../chunk-4CEWYGDD.mjs";
 import {
+  __toESM,
   init_cjs_shim
-} from "../../chunk-LD4XAW36.mjs";
+} from "../../chunk-4UNHOY6E.mjs";
 
 // src/Rectangle/Rectangle.test.node.ts
 init_cjs_shim();
 
 // ../testeranto/dist/module/SubPackages/puppeteer.js
 init_cjs_shim();
-import React from "react";
+var import_react = __toESM(require_react(), 1);
 var puppeteer_default = (testInput, testSpecifications, testImplementations, testInterface2) => {
   return Node_default(testInput, testSpecifications, testImplementations, Object.assign({ beforeAll(x) {
     process.parentPort.postMessage(`/docs/web/src/ClassicalComponent/test.html`);
     return x;
   }, beforeEach: async () => {
     return new Promise((resolve, rej) => {
-      resolve(React.createElement(testInput, {}, []));
+      resolve(import_react.default.createElement(testInput, {}, []));
     });
   }, andWhen: function(s, whenCB) {
     return whenCB()(s);

@@ -77,7 +77,7 @@
       ],
       "thens": [
         {
-          "name": "TheEmailIs: hey there!"
+          "name": "TheEmailIs: hey there"
         }
       ],
       "error": null,

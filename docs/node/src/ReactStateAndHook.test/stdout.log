@@ -8,72 +8,7 @@ testResourceConfiguration {
   "fs": "."
 }
 ASDASDx
-You have clicked the first button 0 times
-butThen (rtr) => {
-      console.log("hello state and hook");
-      return assert.deepEqual(
-        rtr.toJSON().children[0],
-        {
-          type: "pre",
-          props: {},
-          children: [
-            JSON.stringify(counter)
-          ]
-        }
-      );
-    }
-hello state and hook
 ASDASDx
-You have clicked the first button 0 times
-You have clicked the first button 1 times
-butThen (rtr) => {
-      console.log("hello state and hook");
-      return assert.deepEqual(
-        rtr.toJSON().children[0],
-        {
-          type: "pre",
-          props: {},
-          children: [
-            JSON.stringify(counter)
-          ]
-        }
-      );
-    }
-hello state and hook
 ASDASDx
-You have clicked the first button 0 times
-You have clicked the first button 1 times
-You have clicked the first button 2 times
-You have clicked the first button 3 times
-butThen (rtr) => {
-      console.log("hello state and hook");
-      return assert.deepEqual(
-        rtr.toJSON().children[0],
-        {
-          type: "pre",
-          props: {},
-          children: [
-            JSON.stringify(counter)
-          ]
-        }
-      );
-    }
-hello state and hook
 ASDASDx
-You have clicked the first button 0 times
-You have clicked the first button 1 times
-butThen (rtr) => {
-      console.log("hello state and hook");
-      return assert.deepEqual(
-        rtr.toJSON().children[0],
-        {
-          type: "pre",
-          props: {},
-          children: [
-            JSON.stringify(counter)
-          ]
-        }
-      );
-    }
-hello state and hook
-exiting gracefully with 0 failures.
+exiting gracefully with 4 failures.

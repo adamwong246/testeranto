@@ -3,20 +3,20 @@
   "level": 1,
   "message": "\"%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools\\nYou might need to use a local HTTP server (instead of file://): https://reactjs.org/link/react-devtools-faq font-weight:bold\"",
   "line": 23418,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-NBTTKMUG.mjs"
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-X4RTFM5S.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"hello world\"",
   "line": 2683,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-AUQMQZHB.mjs"
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-K7SJ64TU.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"initial test resource [object Object]\"",
-  "line": 28024,
+  "line": 28032,
   "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test.mjs"
 }
 {
@@ -30,14 +30,14 @@
   "event": {},
   "level": 1,
   "message": "\"testResourceConfiguration {\\n  \\\"name\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test\\\",\\n  \\\"ports\\\": \\\"\\\",\\n  \\\"fs\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test\\\"\\n}\"",
-  "line": 27865,
+  "line": 27872,
   "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"testResourceConfiguration {\\n  \\\"name\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test\\\",\\n  \\\"ports\\\": \\\"\\\",\\n  \\\"fs\\\": \\\"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test\\\"\\n}\"",
-  "line": 27865,
+  "line": 27872,
   "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test.mjs"
 }
 {
@@ -45,20 +45,27 @@
   "level": 3,
   "message": "\"Warning: You seem to have overlapping act() calls, this is not supported. Be sure to await previous act() calls before making a new one. \"",
   "line": 136,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-NBTTKMUG.mjs"
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-X4RTFM5S.mjs"
 }
 {
   "event": {},
   "level": 3,
   "message": "\"Warning: You seem to have overlapping act() calls, this is not supported. Be sure to await previous act() calls before making a new one. \"",
   "line": 136,
-  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-NBTTKMUG.mjs"
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/chunk-X4RTFM5S.mjs"
 }
 {
   "event": {},
   "level": 1,
   "message": "\"exiting gracefully with 0 failures.\"",
-  "line": 27882,
+  "line": 27889,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test.mjs"
+}
+{
+  "event": {},
+  "level": 1,
+  "message": "\"test is done, awaiting test result write to fs\"",
+  "line": 28044,
   "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test.mjs"
 }
 {
@@ -72,6 +79,13 @@
   "event": {},
   "level": 1,
   "message": "\"exiting gracefully with 0 failures.\"",
-  "line": 27882,
+  "line": 27889,
+  "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test.mjs"
+}
+{
+  "event": {},
+  "level": 1,
+  "message": "\"test is done, awaiting test result write to fs\"",
+  "line": 28044,
   "sourceId": "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test.mjs"
 }

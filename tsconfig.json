@@ -7,7 +7,8 @@
     "project.test.ts"
   ],
   "ts-node": {
-    "esm": true
+    "esm": true,
+    "experimentalSpecifierResolution": "node",
   },
   "compilerOptions": {
     "paths": {
