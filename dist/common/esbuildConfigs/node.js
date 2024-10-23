@@ -5,17 +5,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const index_js_1 = __importDefault(require("./index.js"));
 exports.default = (config, entryPoints) => {
-    return Object.assign(Object.assign({}, (0, index_js_1.default)(config)), { outdir: config.outdir + "/node", inject: [`./node_modules/testeranto/dist/cjs-shim.js`], supported: {
+    return Object.assign(Object.assign({}, (0, index_js_1.default)(config)), { splitting: true, outdir: config.outdir + "/node", inject: [`./node_modules/testeranto/dist/cjs-shim.js`], supported: {
             "dynamic-import": true,
         }, define: {
             "process.env.FLUENTFFMPEG_COV": "0",
         }, absWorkingDir: process.cwd(), banner: {
             js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`,
         }, platform: "node", external: [
-            "testeranto.json",
-            "features.test.js",
-            "react",
-            "events",
+            // "testeranto.json",
+            // "features.test.js",
+            // "react",
+            // "events",
             // "ganache"
             ...config.externals,
         ], entryPoints: [...entryPoints], plugins: [
@@ -25,8 +25,11 @@ exports.default = (config, entryPoints) => {
                 setup(build) {
                     build.onEnd((result) => {
                         console.log(`node build ended with ${result.errors.length} errors`);
-                        console.log(result);
-                        result.errors.length !== 0 && process.exit(-1);
+                        if (result.errors.length > 0) {
+                            console.log(result);
+                        }
+                        // console.log(result);
+                        // result.errors.length !== 0 && process.exit(-1);
                     });
                 },
             },

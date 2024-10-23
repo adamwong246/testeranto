@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_js_1 = __importDefault(require("./lib/core.js"));
 const index_js_1 = require("./lib/index.js");
+const remote = require("@electron/remote");
 class WebTesteranto extends core_js_1.default {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
         super(input, testSpecification, testImplementation, testResourceRequirement, window.NodeWriter, testInterface);
@@ -36,9 +37,10 @@ class WebTesteranto extends core_js_1.default {
             browser: await window.browser,
             ipc: window.ipcRenderer,
         });
+        console.log("test is done, awaiting test result write to fs");
         Promise.all([...artifacts, logPromise]).then(async () => {
-            // var window = remote.getCurrentWindow();
-            // window.close();
+            var window = remote.getCurrentWindow();
+            window.close();
         });
     }
 }

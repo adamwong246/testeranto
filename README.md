@@ -27,14 +27,14 @@ Testeranto.ts an Acceptance Test Driven Development ([ATDD](https://en.wikipedia
 
 ## Getting started
 
-1) Write some code.
-2) Write some tests of that code.
-3) Write some features of that code.
-1) Write a `testeranto.mts`, which acts as a config file. 
-3) Launch testeranto. The test runner is now rebuilding the docs folder.
-4) Commit the results of those tests.
-5) Your github pages now shows your report, showing your features, linked with your test results. 
-6) Optionally add testeranto to your CI.
+1. Write some code.
+2. Write some tests of that code.
+3. Write some features of that code.
+4. Write a `testeranto.mts`, which acts as a config file.
+5. Launch testeranto. The test runner is now rebuilding the docs folder.
+6. Commit the results of those tests.
+7. Your github pages now shows your report, showing your features, linked with your test results.
+8. Optionally add testeranto to your CI.
 
 ## tech of note
 
@@ -57,7 +57,7 @@ Testeranto.ts an Acceptance Test Driven Development ([ATDD](https://en.wikipedia
 
 Your tests can be run in node, chromium, or both.
 
-Testeranto includes a test runner which bundles and executes your tests, taking care to only run the tests which have changed. 
+Testeranto includes a test runner which bundles and executes your tests, taking care to only run the tests which have changed.
 
 Testeranto includes a test reporter which displays the state of your code in a web app. ([see example](https://chromapdx.github.io/kokomoBay/report.html)) This reporter can also be run locally for the developer's convenience.
 
@@ -67,22 +67,24 @@ Rather than the traditional method of specifying tests in plain text, Testeranto
 
 ## the bad parts
 
-Testeranto is not designed to maximize performance. In dev mode, it runs multiple esbuild processes, electron, 1 node process for each node test and 1 chromium processes for each web test. 
+Testeranto is not designed to maximize performance. In dev mode, it runs multiple esbuild processes, electron, 1 node process for each node test and 1 chromium processes for each web test.
 
-Testeranto does not (yet!) of a means of allowing non-coders to affect changes so, as they say, "get good 💪!" 
+Testeranto does not (yet!) of a means of allowing non-coders to affect changes so, as they say, "get good 💪!"
 
 Because Testeranto is so un-opinionated that it does not provide test infrastructure. You will need to find an existing recipe or implement it yourself, though a public repo of test interfaces exists.
 
 ## How it works
 
 Testeranto is comprised of 3 parts
-1) The build process reads a config and builds the docs folder, then launches 3 esbuild build processes. 
-  - Build the features for the html report
-  - Build the node-style tests
-  - Build the web-style tests
 
-2) The test runner is an electron app which watches the output of those build processes and launches the tests as those files change. 
-3) A Report which links your features, your tests and the results of those tests into a handy website.
+1. The build process reads a config and builds the docs folder, then launches 3 esbuild build processes.
+
+- Build the features for the html report
+- Build the node-style tests
+- Build the web-style tests
+
+2. The test runner is an electron app which watches the output of those build processes and launches the tests as those files change.
+3. A Report which links your features, your tests and the results of those tests into a handy website.
 
 ## Electron aka Node vs Chromium
 
@@ -107,8 +109,8 @@ Testeranto's main API interface is 2 functions, 1 for each run time. You must pa
 - The "shape" - a TS type signature to which the other arguments must conform.
 - The "input" - the test subject. The "thing that is to be tested"
 - the "specification" - This is the Cucumber-style Given/When/Then steps.
-- the "implementation" - This is the code which implements the "test specification" in code. 
-- the "interface" - The code which sets up the test. 
+- the "implementation" - This is the code which implements the "test specification" in code.
+- the "interface" - The code which sets up the test.
 
 This is designed so that each piece can be worked upon separately. You can think of each argument as the responsibility of a different member of your team.
 
@@ -116,3 +118,21 @@ This is designed so that each piece can be worked upon separately. You can think
 - "Product Manager" handles the "specification"
 - "Middle Engineer" handles the "interface"
 - "Junior Engineer" handles the "implementation"
+
+## CLI
+
+There are 4 commands you should add to your `package.json`
+
+```
+// build the tests
+"testeranto-esbuild": "ts-node-esm testeranto.mts",
+
+// run the tests
+"testeranto-electron": "electron node_modules/testeranto/dist/common/electron.js",
+
+// build and run the tests as src files change
+"testeranto-dev": "yarn testeranto-esbuild -devmode ; yarn testeranto-electron -devmode"
+
+// build the tests, then run the tests
+"testeranto": "yarn testeranto-esbuild && yarn testeranto-electron"
+```

@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const readline_1 = __importDefault(require("readline"));
 const electron_1 = require("electron");
 const puppeteer_in_electron_1 = __importDefault(require("puppeteer-in-electron"));
 const puppeteer_core_1 = __importDefault(require("puppeteer-core"));
@@ -10,10 +11,45 @@ const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const jsonc_1 = require("jsonc");
 const uuid_1 = require("uuid");
+var mode = process.argv[2] === "-dev" ? "DEV" : "PROD";
+console.log("hello electron", mode);
 const nodeChildren = {};
 const webChildren = {};
 const node2web = {};
 const web2node = {};
+const childProcesses = {};
+readline_1.default.emitKeypressEvents(process.stdin);
+if (process.stdin.isTTY)
+    process.stdin.setRawMode(true);
+console.log("\n Electron is running. Press 'q' to quit\n");
+process.stdin.on("keypress", (str, key) => {
+    if (key.name === "q") {
+        mode = "PROD";
+        // process.exit();
+        console.log("Switching to prod mode. Begin shutdown sequence...");
+        // process.exit(-1);
+        const allDone = Object.values(childProcesses).every((v) => v === "done");
+        if (allDone && mode === "PROD") {
+            console.log("Goodbye Testeranto by manual shutdown");
+            process.exit();
+        }
+        else {
+            console.log(childProcesses);
+        }
+    }
+});
+const onDone = (test) => {
+    console.log("onDone", test);
+    childProcesses[test] = "done";
+    const allDone = Object.values(childProcesses).every((v) => v === "done");
+    if (allDone && mode === "PROD") {
+        console.log("Goodbye Testeranto by auto shutdown");
+        process.exit();
+    }
+    else {
+        console.log(childProcesses);
+    }
+};
 process.on("message", function (message) {
     console.log("message: " + message);
     process.exit();
@@ -43,6 +79,7 @@ const main = async () => {
     const launchNode = (src, dest) => {
         var _a, _b;
         console.log("launchNode", src);
+        childProcesses[src] = "running";
         const destFolder = dest.replace(".mjs", "");
         const argz = JSON.stringify({
             scheduled: true,
@@ -87,6 +124,8 @@ const main = async () => {
             .on("exit", (data) => {
             stdout.close();
             stderr.close();
+            console.log(`ending node ${src}`);
+            onDone(src);
         });
         (_a = child.stdout) === null || _a === void 0 ? void 0 : _a.pipe(stdout);
         (_b = child.stderr) === null || _b === void 0 ? void 0 : _b.pipe(stderr);
@@ -94,7 +133,7 @@ const main = async () => {
     const launchWebSecondary = (htmlFile) => {
         console.log("launchWebSecondary", htmlFile);
         const subWin = new electron_1.BrowserWindow({
-            show: true,
+            show: false,
             webPreferences: {
                 nodeIntegration: true,
                 nodeIntegrationInWorker: true,
@@ -114,9 +153,10 @@ const main = async () => {
     };
     const launchWeb = (t, dest) => {
         console.log("launchWeb", t);
+        childProcesses[t] = "running";
         const destFolder = dest.replace(".mjs", "");
         const subWin = new electron_1.BrowserWindow({
-            show: true,
+            show: false,
             webPreferences: {
                 nodeIntegration: true,
                 nodeIntegrationInWorker: true,
@@ -156,8 +196,10 @@ const main = async () => {
             stdout.write("\n");
         });
         subWin.on("closed", () => {
-            console.log(" ---- Bye Bye Electron ---- ");
             stdout.close();
+            console.log(`ending web ${t}`);
+            // childProcesses[t] = "done";
+            onDone(t);
         });
         electron_1.ipcMain.on("message", (message, data) => {
             console.log("ipcMain message: " + JSON.stringify(data));
@@ -196,6 +238,7 @@ const main = async () => {
             loadReport(configs);
             console.log("running all the tests once initially");
             configs.tests.forEach(([test, runtime, secondaryArtifacts]) => {
+                childProcesses[test] = "loaded";
                 if (runtime === "node") {
                     launchNode(test, changer2(test, "node"));
                 }

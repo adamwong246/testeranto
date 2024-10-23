@@ -46,7 +46,14 @@ class BaseSuite {
         // @TODO fix me
         for (const k of Object.keys(this.givens)) {
             const giver = this.givens[k];
-            giver.afterAll(this.store, artifactory, utils);
+            try {
+                giver.afterAll(this.store, artifactory, utils);
+            }
+            catch (e) {
+                console.error(e);
+                this.fails.push(giver);
+                return this;
+            }
         }
         ////////////////
         return this;

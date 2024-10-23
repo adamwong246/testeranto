@@ -1,5 +1,6 @@
 import Testeranto from "./lib/core.js";
 import { defaultTestResourceRequirement, } from "./lib/index.js";
+const remote = require("@electron/remote");
 class WebTesteranto extends Testeranto {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
         super(input, testSpecification, testImplementation, testResourceRequirement, window.NodeWriter, testInterface);
@@ -31,9 +32,10 @@ class WebTesteranto extends Testeranto {
             browser: await window.browser,
             ipc: window.ipcRenderer,
         });
+        console.log("test is done, awaiting test result write to fs");
         Promise.all([...artifacts, logPromise]).then(async () => {
-            // var window = remote.getCurrentWindow();
-            // window.close();
+            var window = remote.getCurrentWindow();
+            window.close();
         });
     }
 }

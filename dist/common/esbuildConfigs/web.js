@@ -11,7 +11,7 @@ exports.default = (config, entryPoints) => {
         // banner: {
         //   js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`
         // },
-        outdir: config.outdir + "/web", alias: {
+        splitting: true, outdir: config.outdir + "/web", alias: {
             react: path_1.default.resolve("./node_modules/react"),
         }, external: [
             "testeranto.json",
@@ -40,8 +40,11 @@ exports.default = (config, entryPoints) => {
                 setup(build) {
                     build.onEnd((result) => {
                         console.log(`web build ended with ${result.errors.length} errors`);
-                        console.log(result);
-                        result.errors.length !== 0 && process.exit(-1);
+                        if (result.errors.length > 0) {
+                            console.log(result);
+                        }
+                        // console.log(result);
+                        // result.errors.length !== 0 && process.exit(-1);
                     });
                 },
             },

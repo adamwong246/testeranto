@@ -1,3 +1,4 @@
+import readline from "readline";
 import { app, BrowserWindow, utilityProcess, ipcMain } from "electron";
 import pie from "puppeteer-in-electron";
 import puppeteer from "puppeteer-core";
@@ -8,10 +9,48 @@ import { v4 as uuidv4 } from "uuid";
 
 import { IBuiltConfig, IRunTime } from "./lib/types";
 
+var mode: "DEV" | "PROD" = process.argv[2] === "-dev" ? "DEV" : "PROD";
+
+console.log("hello electron", mode);
+
 const nodeChildren: Record<string, Electron.UtilityProcess> = {};
 const webChildren: Record<string, BrowserWindow> = {};
 const node2web: Record<string, string[]> = {};
 const web2node: Record<string, string[]> = {};
+const childProcesses: Record<string, "loaded" | "running" | "done"> = {};
+
+readline.emitKeypressEvents(process.stdin);
+if (process.stdin.isTTY) process.stdin.setRawMode(true);
+
+console.log("\n Electron is running. Press 'q' to quit\n");
+process.stdin.on("keypress", (str, key) => {
+  if (key.name === "q") {
+    mode = "PROD";
+    // process.exit();
+    console.log("Switching to prod mode. Begin shutdown sequence...");
+    // process.exit(-1);
+    const allDone = Object.values(childProcesses).every((v) => v === "done");
+    if (allDone && mode === "PROD") {
+      console.log("Goodbye Testeranto by manual shutdown");
+      process.exit();
+    } else {
+      console.log(childProcesses);
+    }
+  }
+});
+
+const onDone = (test: string) => {
+  console.log("onDone", test);
+  childProcesses[test] = "done";
+
+  const allDone = Object.values(childProcesses).every((v) => v === "done");
+  if (allDone && mode === "PROD") {
+    console.log("Goodbye Testeranto by auto shutdown");
+    process.exit();
+  } else {
+    console.log(childProcesses);
+  }
+};
 
 process.on("message", function (message) {
   console.log("message: " + message);
@@ -49,6 +88,7 @@ const main = async () => {
 
   const launchNode = (src: string, dest: string) => {
     console.log("launchNode", src);
+    childProcesses[src] = "running";
     const destFolder = dest.replace(".mjs", "");
 
     const argz = JSON.stringify({
@@ -102,6 +142,8 @@ const main = async () => {
       .on("exit", (data) => {
         stdout.close();
         stderr.close();
+        console.log(`ending node ${src}`);
+        onDone(src);
       });
 
     child.stdout?.pipe(stdout);
@@ -111,7 +153,7 @@ const main = async () => {
   const launchWebSecondary = (htmlFile: string): BrowserWindow => {
     console.log("launchWebSecondary", htmlFile);
     const subWin = new BrowserWindow({
-      show: true,
+      show: false,
 
       webPreferences: {
         nodeIntegration: true,
@@ -134,10 +176,11 @@ const main = async () => {
 
   const launchWeb = (t: string, dest: string) => {
     console.log("launchWeb", t);
+    childProcesses[t] = "running";
     const destFolder = dest.replace(".mjs", "");
 
     const subWin = new BrowserWindow({
-      show: true,
+      show: false,
       webPreferences: {
         nodeIntegration: true,
         nodeIntegrationInWorker: true,
@@ -192,8 +235,10 @@ const main = async () => {
       }
     );
     subWin.on("closed", () => {
-      console.log(" ---- Bye Bye Electron ---- ");
       stdout.close();
+      console.log(`ending web ${t}`);
+      // childProcesses[t] = "done";
+      onDone(t);
     });
     ipcMain.on("message", (message, data) => {
       console.log("ipcMain message: " + JSON.stringify(data));
@@ -241,6 +286,7 @@ const main = async () => {
 
       console.log("running all the tests once initially");
       configs.tests.forEach(([test, runtime, secondaryArtifacts]) => {
+        childProcesses[test] = "loaded";
         if (runtime === "node") {
           launchNode(test, changer2(test, "node"));
         } else if (runtime === "web") {

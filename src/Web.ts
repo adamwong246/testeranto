@@ -17,6 +17,8 @@ import {
   IWebUtils,
 } from "./lib/types";
 
+const remote = require("@electron/remote");
+
 class WebTesteranto<TestShape extends IBaseTest> extends Testeranto<TestShape> {
   constructor(
     input: TestShape["iinput"],
@@ -79,9 +81,10 @@ class WebTesteranto<TestShape extends IBaseTest> extends Testeranto<TestShape> {
       }
     );
 
+    console.log("test is done, awaiting test result write to fs");
     Promise.all([...artifacts, logPromise]).then(async () => {
-      // var window = remote.getCurrentWindow();
-      // window.close();
+      var window = remote.getCurrentWindow();
+      window.close();
     });
   }
 }

@@ -13,32 +13,59 @@ import reportHtmlFrame from "./report.html.js";
 
 import { ITestTypes, IBaseConfig, IRunTime } from "./lib/types.js";
 
+var mode: "DEV" | "PROD" = process.argv[2] === "-dev" ? "DEV" : "PROD";
+
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
 
 process.stdin.on("keypress", (str, key) => {
   if (key.name === "q") {
-    process.exit();
+    console.log("Testeranto-EsBuild is shutting down...");
+    mode = "PROD";
+    onDone();
   }
 });
 
-const getRunnables = (
-  tests: ITestTypes[],
-  payload = [new Set<string>(), new Set<string>()]
-): [Set<string>, Set<string>] => {
-  return tests.reduce((pt, cv, cndx, cry) => {
-    if (cv[1] === "node") {
-      pt[0].add(cv[0]);
-    } else if (cv[1] === "web") {
-      pt[1].add(cv[0]);
-    }
+// setInterval(() => {
+//   const memoryUsage = process.memoryUsage();
+//   console.log("Memory usage:", memoryUsage);
+// }, 10000); // Check every 10 seconds
 
-    if (cv[2].length) {
-      getRunnables(cv[2], payload);
-    }
+let featuresDone,
+  nodeDone,
+  webDone = false;
+const onFeaturesDone = () => {
+  featuresDone = true;
+  onDone();
+};
+const onNodeDone = () => {
+  nodeDone = true;
+  onDone();
+};
+const onWebDone = () => {
+  webDone = true;
+  onDone();
+};
 
-    return pt;
-  }, payload as [Set<string>, Set<string>]);
+const onDone = () => {
+  console.log(
+    JSON.stringify(
+      {
+        featuresDone,
+        nodeDone,
+        webDone,
+        mode,
+      },
+      null,
+      2
+    )
+  );
+  if (featuresDone && nodeDone && webDone && mode === "PROD") {
+    console.log("Testeranto-EsBuild is all done. Goodbye!");
+    process.exit();
+  } else {
+    console.log("Testeranto-EsBuild is still working...");
+  }
 };
 
 export class ITProject {
@@ -84,15 +111,12 @@ export class ITProject {
 
     glob(`./${config.outdir}/chunk-*.mjs`, { ignore: "node_modules/**" }).then(
       (chunks) => {
-        console.log("deleting chunks", chunks);
         chunks.forEach((chunk) => {
-          console.log("deleting chunk", chunk);
           fs.unlinkSync(chunk);
         });
       }
     );
 
-    console.log("mark", process.cwd());
     fs.copyFileSync(
       "./node_modules/testeranto/dist/prebuild/Report.js",
       "./docs/Report.js"
@@ -119,24 +143,47 @@ export class ITProject {
       esbuild
         .context(esbuildFeaturesConfiger(config))
         .then(async (featuresContext) => {
-          await featuresContext.watch();
+          if (mode == "DEV") {
+            await featuresContext.watch();
+            onFeaturesDone();
+          } else {
+            featuresContext.rebuild().then((v) => {
+              onFeaturesDone();
+            });
+          }
+
           return featuresContext;
         }),
       esbuild
         .context(esbuildNodeConfiger(config, nodeEntryPoints))
         .then(async (nodeContext) => {
-          await nodeContext.watch();
+          if (mode == "DEV") {
+            await nodeContext.watch().then((v) => {
+              onNodeDone();
+            });
+          } else {
+            nodeContext.rebuild().then((v) => {
+              onNodeDone();
+            });
+          }
+
           return nodeContext;
         }),
       esbuild
         .context(esbuildWebConfiger(config, webEntryPoints))
-        .then(async (esbuildWeb) => {
-          await esbuildWeb.watch();
-          return esbuildWeb;
+        .then(async (webContext) => {
+          if (mode == "DEV") {
+            await webContext.watch().then((v) => {
+              onWebDone();
+            });
+          } else {
+            webContext.rebuild().then((v) => {
+              onWebDone();
+            });
+          }
+          return webContext;
         }),
-    ]).then(() => {
-      console.log("\n Build is running. Press 'q' to quit\n");
-    });
+    ]);
   }
 
   public getSecondaryEndpointsPoints(runtime?: IRunTime): string[] {
@@ -154,3 +201,22 @@ export class ITProject {
     return Array.from(meta(this.config.tests, new Set()));
   }
 }
+
+const getRunnables = (
+  tests: ITestTypes[],
+  payload = [new Set<string>(), new Set<string>()]
+): [Set<string>, Set<string>] => {
+  return tests.reduce((pt, cv, cndx, cry) => {
+    if (cv[1] === "node") {
+      pt[0].add(cv[0]);
+    } else if (cv[1] === "web") {
+      pt[1].add(cv[0]);
+    }
+
+    if (cv[2].length) {
+      getRunnables(cv[2], payload);
+    }
+
+    return pt;
+  }, payload as [Set<string>, Set<string>]);
+};
