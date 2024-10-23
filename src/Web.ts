@@ -17,7 +17,11 @@ import {
   IWebUtils,
 } from "./lib/types";
 
-const remote = require("@electron/remote");
+// const remote = require("@electron/remote");
+// import remote from "@electron/remote";
+// const electron = require("electron");
+// const remote =
+//   process.type === "browser" ? electron : require("@electron/remote");
 
 class WebTesteranto<TestShape extends IBaseTest> extends Testeranto<TestShape> {
   constructor(
@@ -83,8 +87,14 @@ class WebTesteranto<TestShape extends IBaseTest> extends Testeranto<TestShape> {
 
     console.log("test is done, awaiting test result write to fs");
     Promise.all([...artifacts, logPromise]).then(async () => {
-      var window = remote.getCurrentWindow();
-      window.close();
+      // we can't close the window becuase we might be taking a screenshot
+      // window.close();
+      // console.log(
+      //   "(window as any).browser",
+      //   JSON.stringify(await (window as any).browser)
+      // );
+      // var currentWindow = (await (window as any).browser).getCurrentWindow();
+      // currentWindow.close();
     });
   }
 }

@@ -24,9 +24,33 @@ export default class Testeranto extends ClassBuilder {
                 return new Promise((res) => res(fullTestInterface.afterEach(store, key, (fPath, value) => artifactory(`after/${fPath}`, value), utils)));
             }
             afterAll(store, artifactory, utils) {
+                const pagesHandler = {
+                    get(target, prop) {
+                        console.log(`Getting pages property ${prop}`);
+                        return target[prop];
+                    },
+                };
+                const browserHandler = {
+                    get(target, prop) {
+                        console.log(`Getting browser property ${prop}`);
+                        if (prop === "pages") {
+                            // return target[prop];
+                            return new Proxy(target[prop], pagesHandler);
+                        }
+                        else {
+                            return target[prop];
+                        }
+                    },
+                };
+                const proxy = new Proxy(utils.browser, browserHandler);
                 return fullTestInterface.afterAll(store, (fPath, value) => {
                     artifactory(`afterAll4-${this.name}/${fPath}`, value);
-                }, utils);
+                }, utils
+                // {
+                //   ...utils,
+                //   browser: proxy,
+                // }
+                );
             }
         }, class When extends BaseWhen {
             async andWhen(store, whenCB, testResource) {

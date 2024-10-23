@@ -7,11 +7,12 @@ const path_1 = __importDefault(require("path"));
 const index_js_1 = __importDefault(require("./index.js"));
 exports.default = (config, entryPoints) => {
     return Object.assign(Object.assign({}, (0, index_js_1.default)(config)), { 
-        // inject: ['./node_modules/testeranto/dist/cjs-shim.js'],
+        // inject: ["./node_modules/testeranto/dist/cjs-shim.js"],
         // banner: {
-        //   js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`
+        //   js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`,
         // },
-        splitting: true, outdir: config.outdir + "/web", alias: {
+        // splitting: true,
+        outdir: config.outdir + "/web", alias: {
             react: path_1.default.resolve("./node_modules/react"),
         }, external: [
             "testeranto.json",

@@ -94,6 +94,8 @@ const main = async () => {
         if (!fs.existsSync(destFolder)) {
             fs.mkdirSync(destFolder, { recursive: true });
         }
+        fs.rmSync(`${destFolder}/stdout.log`, { force: true });
+        fs.rmSync(`${destFolder}/stderr.log`, { force: true });
         const stdout = fs.createWriteStream(`${destFolder}/stdout.log`);
         const stderr = fs.createWriteStream(`${destFolder}/stderr.log`);
         child
@@ -151,7 +153,7 @@ const main = async () => {
         childProcesses[t] = "running";
         const destFolder = dest.replace(".mjs", "");
         const subWin = new BrowserWindow({
-            show: false,
+            show: true,
             webPreferences: {
                 nodeIntegration: true,
                 nodeIntegrationInWorker: true,
@@ -166,8 +168,6 @@ const main = async () => {
         const webArgz = JSON.stringify({
             name: dest,
             ports: [].toString(),
-            // fs: path.resolve(configs.buildDir, "web", destFolder + "/"),
-            // fs: destFolder,
             fs: destFolder,
         });
         // console.log("webArgz", webArgz);
@@ -200,28 +200,8 @@ const main = async () => {
             console.log("ipcMain message: " + JSON.stringify(data));
             // process.exit();
         });
-        // child.on('message', (data) => {
-        //   console.log("from child", data);
-        //   launchWebSecondary(process.cwd() + data);
-        // }).on('exit', (data) => {
-        //   fs.writeFileSync(`${destFolder}/stdout.log`, data.toString());
-        //   stdout.close();
-        //   stderr.close();
-        // })
-        // child.stdout?.pipe(stdout);
-        // child.stderr?.pipe(stderr);
     };
-    const watcher = (test, runtime) => {
-        return path.normalize(`${configs.buildDir}/${runtime}/${test
-            .split(".")
-            .slice(0, -1)
-            .concat("mjs")
-            .join(".")}`);
-    };
-    const changer = (f) => {
-        return path.normalize(`${configs.buildDir}/${f}`);
-    };
-    const changer2 = (f, r) => {
+    const destinationOfRuntime = (f, r) => {
         return path
             .normalize(`${configs.buildDir}/${r}/${f}`)
             .split(".")
@@ -235,10 +215,10 @@ const main = async () => {
             configs.tests.forEach(([test, runtime, secondaryArtifacts]) => {
                 childProcesses[test] = "loaded";
                 if (runtime === "node") {
-                    launchNode(test, changer2(test, "node"));
+                    launchNode(test, destinationOfRuntime(test, "node"));
                 }
                 else if (runtime === "web") {
-                    launchWeb(test, changer2(test, "web"));
+                    launchWeb(test, destinationOfRuntime(test, "web"));
                 }
                 else {
                     console.error("runtime makes no sense", runtime);
@@ -248,20 +228,10 @@ const main = async () => {
             fs.watch(configs.buildDir, {
                 recursive: true,
             }, (eventType, changedFile) => {
+                // console.log(eventType);
                 if (changedFile) {
                     configs.tests.forEach(([test, runtime, secondaryArtifacts]) => {
-                        // console.log(eventType, changedFile, test);
-                        if (eventType === "change") {
-                            // console.log(
-                            //   eventType,
-                            //   changedFile,
-                            //   test
-                            //     .replace("./", "node/")
-                            //     .split(".")
-                            //     .slice(0, -1)
-                            //     .concat("mjs")
-                            //     .join(".")
-                            // );
+                        if (eventType === "change" || eventType === "rename") {
                             if (changedFile ===
                                 test
                                     .replace("./", "node/")
@@ -269,7 +239,7 @@ const main = async () => {
                                     .slice(0, -1)
                                     .concat("mjs")
                                     .join(".")) {
-                                launchNode(test, changer2(test, "node"));
+                                launchNode(test, destinationOfRuntime(test, "node"));
                             }
                             if (changedFile ===
                                 test
@@ -278,19 +248,9 @@ const main = async () => {
                                     .slice(0, -1)
                                     .concat("mjs")
                                     .join(".")) {
-                                launchNode(test, changer2(test, "web"));
+                                launchWeb(test, destinationOfRuntime(test, "web"));
                             }
                         }
-                        //   if(changedFile ===)
-                        //   // if (watcher(test, runtime) === changer(test)) {
-                        //   //   if (runtime === "node") {
-                        //   //     launchNode(test, changer2(test, "node"));
-                        //   //   } else if (runtime === "web") {
-                        //   //     launchWeb(test, changer2(test, "web"));
-                        //   //   } else {
-                        //   //     console.error("runtime makes no sense", runtime);
-                        //   //   }
-                        //   // }
                     });
                 }
             });

@@ -98,6 +98,26 @@ export default abstract class Testeranto<
           );
         }
         afterAll(store: IStore, artifactory: ITestArtifactory, utils: IUtils) {
+          const pagesHandler = {
+            get(target, prop) {
+              console.log(`Getting pages property ${prop}`);
+              return target[prop];
+            },
+          };
+
+          const browserHandler = {
+            get(target, prop) {
+              console.log(`Getting browser property ${prop}`);
+              if (prop === "pages") {
+                // return target[prop];
+                return new Proxy(target[prop], pagesHandler);
+              } else {
+                return target[prop];
+              }
+            },
+          };
+          const proxy = new Proxy(utils.browser, browserHandler);
+
           return fullTestInterface.afterAll(
             store,
             (fPath: string, value: unknown) =>
@@ -106,6 +126,10 @@ export default abstract class Testeranto<
                 artifactory(`afterAll4-${this.name}/${fPath}`, value);
               },
             utils
+            // {
+            //   ...utils,
+            //   browser: proxy,
+            // }
           );
         }
       } as any,

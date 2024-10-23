@@ -12,12 +12,12 @@ export default (
   return {
     ...baseEsBuildConfig(config),
 
-    // inject: ['./node_modules/testeranto/dist/cjs-shim.js'],
+    // inject: ["./node_modules/testeranto/dist/cjs-shim.js"],
     // banner: {
-    //   js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`
+    //   js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`,
     // },
 
-    splitting: true,
+    // splitting: true,
 
     outdir: config.outdir + "/web",
 

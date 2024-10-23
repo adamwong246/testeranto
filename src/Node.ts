@@ -1,4 +1,3 @@
-import http from "http";
 import puppeteer from "puppeteer-core";
 
 import Testeranto from "./lib/core.js";

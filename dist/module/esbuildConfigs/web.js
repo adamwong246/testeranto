@@ -2,11 +2,12 @@ import path from "path";
 import baseEsBuildConfig from "./index.js";
 export default (config, entryPoints) => {
     return Object.assign(Object.assign({}, baseEsBuildConfig(config)), { 
-        // inject: ['./node_modules/testeranto/dist/cjs-shim.js'],
+        // inject: ["./node_modules/testeranto/dist/cjs-shim.js"],
         // banner: {
-        //   js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`
+        //   js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`,
         // },
-        splitting: true, outdir: config.outdir + "/web", alias: {
+        // splitting: true,
+        outdir: config.outdir + "/web", alias: {
             react: path.resolve("./node_modules/react"),
         }, external: [
             "testeranto.json",

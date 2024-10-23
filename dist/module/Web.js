@@ -1,6 +1,10 @@
 import Testeranto from "./lib/core.js";
 import { defaultTestResourceRequirement, } from "./lib/index.js";
-const remote = require("@electron/remote");
+// const remote = require("@electron/remote");
+// import remote from "@electron/remote";
+// const electron = require("electron");
+// const remote =
+//   process.type === "browser" ? electron : require("@electron/remote");
 class WebTesteranto extends Testeranto {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
         super(input, testSpecification, testImplementation, testResourceRequirement, window.NodeWriter, testInterface);
@@ -34,8 +38,14 @@ class WebTesteranto extends Testeranto {
         });
         console.log("test is done, awaiting test result write to fs");
         Promise.all([...artifacts, logPromise]).then(async () => {
-            var window = remote.getCurrentWindow();
-            window.close();
+            // we can't close the window becuase we might be taking a screenshot
+            // window.close();
+            // console.log(
+            //   "(window as any).browser",
+            //   JSON.stringify(await (window as any).browser)
+            // );
+            // var currentWindow = (await (window as any).browser).getCurrentWindow();
+            // currentWindow.close();
         });
     }
 }
