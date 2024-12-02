@@ -1,7 +1,8 @@
 import { IBaseTest } from "../Types";
 
 import { ITTestResourceConfiguration, ITestArtifactory, ITLog } from ".";
-import { IUtils } from "./types";
+import { PM } from "../PM/index.js";
+// import { IUtils } from "./types";
 
 export type IGivens<ITestShape extends IBaseTest> = Record<
   string,
@@ -42,8 +43,9 @@ export abstract class BaseSuite<ITestShape extends IBaseTest> {
     s: ITestShape["iinput"],
     artifactory: ITestArtifactory,
     tr: ITTestResourceConfiguration,
-    utils: IUtils
+    pm: PM
   ): Promise<ITestShape["isubject"]> {
+    // console.log("marl11");
     return new Promise((res) => res(s as unknown as ITestShape["isubject"]));
   }
 
@@ -57,10 +59,10 @@ export abstract class BaseSuite<ITestShape extends IBaseTest> {
     testResourceConfiguration: ITTestResourceConfiguration,
     artifactory: (fPath: string, value: unknown) => void,
     tLog: (...string) => void,
-    utils: IUtils
+    pm: PM
   ): Promise<BaseSuite<ITestShape>> {
     this.testResourceConfiguration = testResourceConfiguration;
-    tLog("test resources: ", testResourceConfiguration);
+    tLog("test resources: ", JSON.stringify(testResourceConfiguration));
 
     const suiteArtifactory = (fPath: string, value: unknown) =>
       artifactory(`suite-${this.index}-${this.name}/${fPath}`, value);
@@ -68,9 +70,10 @@ export abstract class BaseSuite<ITestShape extends IBaseTest> {
       input,
       suiteArtifactory,
       testResourceConfiguration,
-      utils
+      pm
     );
 
+    console.log("\nSuite:", this.index, this.name);
     tLog("\nSuite:", this.index, this.name);
     for (const k of Object.keys(this.givens)) {
       const giver = this.givens[k];
@@ -82,7 +85,7 @@ export abstract class BaseSuite<ITestShape extends IBaseTest> {
           this.assertThat,
           suiteArtifactory,
           tLog,
-          utils
+          pm
         );
       } catch (e) {
         console.error(e);
@@ -90,6 +93,7 @@ export abstract class BaseSuite<ITestShape extends IBaseTest> {
         return this;
       }
     }
+
     for (const [ndx, thater] of this.checks.entries()) {
       await thater.check(
         subject,
@@ -98,7 +102,7 @@ export abstract class BaseSuite<ITestShape extends IBaseTest> {
         this.assertThat,
         suiteArtifactory,
         tLog,
-        utils
+        pm
       );
     }
 
@@ -106,8 +110,11 @@ export abstract class BaseSuite<ITestShape extends IBaseTest> {
     for (const k of Object.keys(this.givens)) {
       const giver = this.givens[k];
 
+      // const pm2 = 1;
+      // console.log("mark4", pm2);
+
       try {
-        giver.afterAll(this.store, artifactory, utils);
+        giver.afterAll(this.store, artifactory, pm);
       } catch (e) {
         console.error(e);
         this.fails.push(giver);
@@ -151,11 +158,7 @@ export abstract class BaseGiven<ITestShape extends IBaseTest> {
     return store;
   }
 
-  afterAll(
-    store: ITestShape["istore"],
-    artifactory: ITestArtifactory,
-    utils: IUtils
-  ) {
+  afterAll(store: ITestShape["istore"], artifactory: ITestArtifactory, pm: PM) {
     return store;
   }
 
@@ -173,14 +176,15 @@ export abstract class BaseGiven<ITestShape extends IBaseTest> {
     subject: ITestShape["isubject"],
     testResourceConfiguration,
     artifactory: ITestArtifactory,
-    givenCB: ITestShape["given"]
+    givenCB: ITestShape["given"],
+    pm: PM
   ): Promise<ITestShape["istore"]>;
 
   async afterEach(
     store: ITestShape["istore"],
     key: string,
     artifactory: ITestArtifactory,
-    utils: IUtils
+    pm: PM
   ): Promise<unknown> {
     return store;
   }
@@ -192,7 +196,7 @@ export abstract class BaseGiven<ITestShape extends IBaseTest> {
     tester,
     artifactory: ITestArtifactory,
     tLog: ITLog,
-    utils: IUtils
+    pm: PM
   ) {
     tLog(`\n Given: ${this.name}`);
 
@@ -203,19 +207,20 @@ export abstract class BaseGiven<ITestShape extends IBaseTest> {
         subject,
         testResourceConfiguration,
         givenArtifactory,
-        this.givenCB
+        this.givenCB,
+        pm
       );
 
       // tLog(`\n Given this.store`, this.store);
       for (const whenStep of this.whens) {
-        await whenStep.test(this.store, testResourceConfiguration, tLog, utils);
+        await whenStep.test(this.store, testResourceConfiguration, tLog, pm);
       }
       for (const thenStep of this.thens) {
         const t = await thenStep.test(
           this.store,
           testResourceConfiguration,
           tLog,
-          utils
+          pm
         );
         tester(t);
       }
@@ -226,7 +231,7 @@ export abstract class BaseGiven<ITestShape extends IBaseTest> {
       // throw e;
     } finally {
       try {
-        await this.afterEach(this.store, key, givenArtifactory, utils);
+        await this.afterEach(this.store, key, givenArtifactory, pm);
       } catch (e) {
         console.error("afterEach failed! no error will be recorded!", e);
       }
@@ -265,7 +270,7 @@ export abstract class BaseWhen<ITestShape extends IBaseTest> {
     store: ITestShape["istore"],
     testResourceConfiguration,
     tLog: ITLog,
-    utils: IUtils
+    pm: PM
   ) {
     tLog(" When:", this.name);
     try {
@@ -307,7 +312,7 @@ export abstract class BaseThen<ITestShape extends IBaseTest> {
     store: ITestShape["istore"],
     testResourceConfiguration,
     tLog: ITLog,
-    utils: IUtils
+    pm: PM
   ): Promise<ITestShape["then"] | undefined> {
     tLog(" Then:", this.name);
     try {
@@ -360,7 +365,7 @@ export abstract class BaseCheck<ITestShape extends IBaseTest> {
     store: ITestShape["istore"],
     key: string,
     cb,
-    utils: IUtils
+    pm: PM
   ): Promise<unknown> {
     return;
   }
@@ -372,7 +377,7 @@ export abstract class BaseCheck<ITestShape extends IBaseTest> {
     tester,
     artifactory: ITestArtifactory,
     tLog: ITLog,
-    utils: IUtils
+    pm: PM
   ) {
     tLog(`\n Check: ${this.name}`);
     const store = await this.checkThat(
@@ -387,7 +392,7 @@ export abstract class BaseCheck<ITestShape extends IBaseTest> {
             store,
             testResourceConfiguration,
             tLog,
-            utils
+            pm
           );
         };
         return a;
@@ -398,7 +403,7 @@ export abstract class BaseCheck<ITestShape extends IBaseTest> {
             store,
             testResourceConfiguration,
             tLog,
-            utils
+            pm
           );
           tester(t);
         };
@@ -406,7 +411,7 @@ export abstract class BaseCheck<ITestShape extends IBaseTest> {
       }, {})
     );
 
-    await this.afterEach(store, key, () => {}, utils);
+    await this.afterEach(store, key, () => {}, pm);
     return;
   }
 }

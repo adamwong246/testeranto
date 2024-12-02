@@ -5,7 +5,7 @@ import {
   ITestImplementation,
 } from "../Types.js";
 
-import { ITestInterface, IUtils } from "./types.js";
+import { ITestInterface } from "./types.js";
 import {
   DefaultTestInterface,
   ILogWriter,
@@ -23,6 +23,7 @@ import {
   BaseCheck,
 } from "./abstractBase.js";
 import { ClassBuilder } from "./classBuilder.js";
+import { PM } from "../PM/index";
 
 export default abstract class Testeranto<
   ITestShape extends IBaseTest
@@ -32,11 +33,10 @@ export default abstract class Testeranto<
     testSpecification: ITestSpecification<ITestShape>,
     testImplementation: ITestImplementation<ITestShape>,
     testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
-    logWriter: ILogWriter,
     testInterface: Partial<ITestInterface<ITestShape>>
+    // puppetMaster: PM
   ) {
     const fullTestInterface = DefaultTestInterface(testInterface);
-
     super(
       testImplementation,
       testSpecification,
@@ -51,22 +51,23 @@ export default abstract class Testeranto<
           s: ITestShape["iinput"],
           artifactory: ITestArtifactory,
           tr,
-          utils
+          pm
         ): Promise<ITestShape["isubject"]> {
+          console.log("mark12");
           return (
             fullTestInterface.beforeAll ||
             (async (
               input: ITestShape["iinput"],
               artifactory: ITestArtifactory,
               tr,
-              utils: ITestInterface<ITestShape>
+              pm: PM
             ) => input as any)
-          )(s, this.testResourceConfiguration, artifactory, utils);
+          )(s, this.testResourceConfiguration, artifactory, pm);
         }
       } as any,
 
       class Given extends BaseGiven<ITestShape> {
-        async givenThat(subject, testResource, artifactory, initializer) {
+        async givenThat(subject, testResource, artifactory, initializer, pm) {
           return fullTestInterface.beforeEach(
             subject,
             initializer,
@@ -74,8 +75,8 @@ export default abstract class Testeranto<
               // TODO does not work?
               artifactory(`beforeEach/${fPath}`, value),
             testResource,
-            this.initialValues
-            // utils,
+            this.initialValues,
+            pm
           );
         }
 
@@ -83,7 +84,7 @@ export default abstract class Testeranto<
           store: ITestShape["istore"],
           key: string,
           artifactory,
-          utils
+          pm
         ): Promise<unknown> {
           return new Promise((res) =>
             res(
@@ -92,31 +93,31 @@ export default abstract class Testeranto<
                 key,
                 (fPath: string, value: unknown) =>
                   artifactory(`after/${fPath}`, value),
-                utils
+                pm
               )
             )
           );
         }
-        afterAll(store: IStore, artifactory: ITestArtifactory, utils: IUtils) {
-          const pagesHandler = {
-            get(target, prop) {
-              console.log(`Getting pages property ${prop}`);
-              return target[prop];
-            },
-          };
+        afterAll(store: IStore, artifactory: ITestArtifactory, pm: PM) {
+          // const pagesHandler = {
+          //   get(target, prop) {
+          //     console.log(`Getting pages property ${prop}`);
+          //     return target[prop];
+          //   },
+          // };
 
-          const browserHandler = {
-            get(target, prop) {
-              console.log(`Getting browser property ${prop}`);
-              if (prop === "pages") {
-                // return target[prop];
-                return new Proxy(target[prop], pagesHandler);
-              } else {
-                return target[prop];
-              }
-            },
-          };
-          const proxy = new Proxy(utils.browser, browserHandler);
+          // const browserHandler = {
+          //   get(target, prop) {
+          //     console.log(`Getting browser property ${prop}`);
+          //     if (prop === "pages") {
+          //       // return target[prop];
+          //       return new Proxy(target[prop], pagesHandler);
+          //     } else {
+          //       return target[prop];
+          //     }
+          //   },
+          // };
+          // const proxy = new Proxy(utils.browser, browserHandler);
 
           return fullTestInterface.afterAll(
             store,
@@ -125,7 +126,7 @@ export default abstract class Testeranto<
               {
                 artifactory(`afterAll4-${this.name}/${fPath}`, value);
               },
-            utils
+            pm
             // {
             //   ...utils,
             //   browser: proxy,
@@ -169,14 +170,15 @@ export default abstract class Testeranto<
           this.initialValues = initialValues;
         }
 
-        async checkThat(subject, testResourceConfiguration, artifactory) {
+        async checkThat(subject, testResourceConfiguration, artifactory, pm) {
           return fullTestInterface.beforeEach(
             subject,
             this.initialValues,
             (fPath: string, value: unknown) =>
               artifactory(`before/${fPath}`, value),
             testResourceConfiguration,
-            this.initialValues
+            this.initialValues,
+            pm
           );
         }
 
@@ -184,7 +186,7 @@ export default abstract class Testeranto<
           store: ITestShape["istore"],
           key: string,
           artifactory,
-          utils
+          pm
         ): Promise<unknown> {
           return new Promise((res) =>
             res(
@@ -194,21 +196,17 @@ export default abstract class Testeranto<
                 (fPath: string, value: unknown) =>
                   // TODO does not work?
                   artifactory(`afterEach2-${this.name}/${fPath}`, value),
-                utils
+                pm
               )
             )
           );
         }
       } as any,
 
-      testResourceRequirement,
-      logWriter
+      testResourceRequirement
+      // puppetMaster
     );
   }
 
-  abstract receiveTestResourceConfig(
-    t: ITestJob,
-    partialTestResource: ITTestResourceConfiguration,
-    utils: IUtils
-  );
+  abstract receiveTestResourceConfig(partialTestResource: string);
 }

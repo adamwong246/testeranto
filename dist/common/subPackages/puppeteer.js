@@ -7,7 +7,9 @@ const react_1 = __importDefault(require("react"));
 const Node_js_1 = __importDefault(require("../Node.js"));
 exports.default = (testInput, testSpecifications, testImplementations, testInterface) => {
     return (0, Node_js_1.default)(testInput, testSpecifications, testImplementations, Object.assign({ beforeAll(x) {
-            process.parentPort.postMessage(`/docs/web/src/ClassicalComponent/test.html`);
+            // process.parentPort.postMessage(
+            //   `/docs/web/src/ClassicalComponent/test.html`
+            // );
             return x;
         }, beforeEach: async () => {
             return new Promise((resolve, rej) => {

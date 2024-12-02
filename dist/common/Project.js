@@ -76,6 +76,24 @@ class ITProject {
                 .then((x) => fs_1.default.writeFileSync(htmlFilePath, (0, web_html_js_1.default)(jsfilePath, htmlFilePath)));
         })));
         const [nodeEntryPoints, webEntryPoints] = getRunnables(this.config.tests);
+        // nodeEntryPoints.forEach((nep) => {
+        //   const f = `${process.cwd()}/${nep}`;
+        //   console.log("nep", f);
+        //   import(f).then((module) => {
+        //     return module.default.then((defaultModule) => {
+        //       console.log("defaultModule", defaultModule);
+        //       // defaultModule
+        //       //   .receiveTestResourceConfig(argz)
+        //       //   .then((x) => {
+        //       //     console.log("then", x);
+        //       //     return x;
+        //       //   })
+        //       //   .catch((e) => {
+        //       //     console.log("catch", e);
+        //       //   });
+        //     });
+        //   });
+        // });
         (0, glob_1.glob)(`./${config.outdir}/chunk-*.mjs`, { ignore: "node_modules/**" }).then((chunks) => {
             chunks.forEach((chunk) => {
                 fs_1.default.unlinkSync(chunk);
@@ -156,8 +174,8 @@ const getRunnables = (tests, payload = [new Set(), new Set()]) => {
         else if (cv[1] === "web") {
             pt[1].add(cv[0]);
         }
-        if (cv[2].length) {
-            getRunnables(cv[2], payload);
+        if (cv[3].length) {
+            getRunnables(cv[3], payload);
         }
         return pt;
     }, payload);

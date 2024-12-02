@@ -29,9 +29,7 @@ export default (
       "testeranto.json",
       "features.test.ts",
       // "url",
-
       "react",
-      "electron",
 
       "path",
       "fs",
@@ -47,6 +45,10 @@ export default (
       "zlib",
       "crypto",
       "https",
+
+      "util",
+      "process",
+      "dns",
     ],
 
     platform: "browser",

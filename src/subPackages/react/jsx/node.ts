@@ -5,25 +5,22 @@ import {
   ITestImpl,
   ITestSpec,
   IInput,
-
-  testInterface as baseInterface
+  testInterface as baseInterface,
 } from "./index.js";
 
 export default <ITestShape extends IBaseTest>(
   testImplementations: ITestImpl<ITestShape>,
   testSpecifications: ITestSpec<ITestShape>,
   testInput: IInput,
-  testInterface: IPartialInterface<ITestShape>,
+  testInterface: IPartialInterface<ITestShape>
 ) => {
-  return Testeranto<
-    ITestShape
-  >(
+  return Testeranto<ITestShape>(
     testInput,
     testSpecifications,
     testImplementations,
     {
       ...baseInterface,
-      ...testInterface
+      ...testInterface,
     }
-  )
+  );
 };

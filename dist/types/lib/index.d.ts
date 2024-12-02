@@ -1,13 +1,14 @@
+import { PM } from "../PM/index.js";
 import { IBaseTest } from "../Types.js";
 import { IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen } from "./abstractBase.js";
-import { INodeUtils, ITestInterface, IWebUtils } from "./types.js";
+import { ITestInterface } from "./types.js";
 export declare const BaseTestInterface: ITestInterface<IBaseTest>;
 export declare const DefaultTestInterface: (p: Partial<ITestInterface<any>>) => ITestInterface<any>;
 export declare type ITTestResourceConfiguration = {
     name: string;
     fs: string;
     ports: number[];
-    scheduled: boolean;
+    browserWSEndpoint: string;
 };
 export declare type ITTestResourceRequirement = {
     name: string;
@@ -21,7 +22,7 @@ export declare type ITLog = (...string: any[]) => void;
 export declare type ILogWriter = {
     createWriteStream: (line: string) => any | any;
     writeFileSync: (fp: string, contents: string) => any;
-    mkdirSync: (fp: string) => any;
+    mkdirSync: () => any;
     testArtiFactoryfileWriter: (tLog: ITLog, n: (Promise: any) => void) => (fPath: string, value: unknown) => void;
 };
 export declare type ITestArtificer = (key: string, data: any) => void;
@@ -32,12 +33,12 @@ declare type ITest = {
     checks: BaseCheck<IBaseTest>[];
     testResourceConfiguration: ITTestResourceConfiguration;
 };
-export declare type ITestJob<T = INodeUtils | IWebUtils> = {
+export declare type ITestJob<T = PM> = {
     toObj(): object;
     test: ITest;
     runner: (x: ITTestResourceConfiguration, t: ITLog) => Promise<BaseSuite<IBaseTest>>;
     testResourceRequirement: ITTestResourceRequirement;
-    receiveTestResourceConfig: (testResource: any, utils: T) => Promise<{
+    receiveTestResourceConfig: (pm: PM) => Promise<{
         failed: number;
         artifacts: Promise<unknown>[];
         logPromise: Promise<unknown>;

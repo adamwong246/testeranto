@@ -1,7 +1,8 @@
-import { ITTestResourceRequest, ITestJob, ILogWriter } from ".";
+import { ITTestResourceRequest, ITestJob } from ".";
 import { IBaseTest, ITestSpecification } from "../Types.js";
 import { ISuiteKlasser, IGivenKlasser, IWhenKlasser, IThenKlasser, ICheckKlasser } from "./types.js";
 import { BaseCheck, BaseWhen, BaseThen, BaseGiven } from "./abstractBase.js";
+import { PM } from "../PM/index.js";
 export declare abstract class BaseBuilder<ITestShape extends IBaseTest, SuiteExtensions, GivenExtensions, WhenExtensions, ThenExtensions, CheckExtensions> {
     readonly input: ITestShape["iinput"];
     specs: any;
@@ -15,7 +16,8 @@ export declare abstract class BaseBuilder<ITestShape extends IBaseTest, SuiteExt
     whenOverides: Record<keyof WhenExtensions, IWhenKlasser<ITestShape>>;
     thenOverides: Record<keyof ThenExtensions, IThenKlasser<ITestShape>>;
     checkOverides: Record<keyof CheckExtensions, ICheckKlasser<ITestShape>>;
-    constructor(input: ITestShape["iinput"], suitesOverrides: Record<keyof SuiteExtensions, ISuiteKlasser<ITestShape>>, givenOverides: Record<keyof GivenExtensions, IGivenKlasser<ITestShape>>, whenOverides: Record<keyof WhenExtensions, IWhenKlasser<ITestShape>>, thenOverides: Record<keyof ThenExtensions, IThenKlasser<ITestShape>>, checkOverides: Record<keyof CheckExtensions, ICheckKlasser<ITestShape>>, logWriter: ILogWriter, testResourceRequirement: ITTestResourceRequest, testSpecification: any);
+    puppetMaster: PM;
+    constructor(input: ITestShape["iinput"], suitesOverrides: Record<keyof SuiteExtensions, ISuiteKlasser<ITestShape>>, givenOverides: Record<keyof GivenExtensions, IGivenKlasser<ITestShape>>, whenOverides: Record<keyof WhenExtensions, IWhenKlasser<ITestShape>>, thenOverides: Record<keyof ThenExtensions, IThenKlasser<ITestShape>>, checkOverides: Record<keyof CheckExtensions, ICheckKlasser<ITestShape>>, testResourceRequirement: ITTestResourceRequest, testSpecification: any);
     Specs(): any;
     Suites(): Record<keyof SuiteExtensions, ISuiteKlasser<ITestShape>>;
     Given(): Record<keyof GivenExtensions, (name: string, features: string[], whens: BaseWhen<ITestShape>[], thens: BaseThen<ITestShape>[], gcb: any) => BaseGiven<ITestShape>>;

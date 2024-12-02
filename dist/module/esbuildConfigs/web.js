@@ -14,7 +14,6 @@ export default (config, entryPoints) => {
             "features.test.ts",
             // "url",
             "react",
-            "electron",
             "path",
             "fs",
             "stream",
@@ -29,6 +28,9 @@ export default (config, entryPoints) => {
             "zlib",
             "crypto",
             "https",
+            "util",
+            "process",
+            "dns",
         ], platform: "browser", entryPoints: [...entryPoints], plugins: [
             ...(config.webPlugins || []),
             {

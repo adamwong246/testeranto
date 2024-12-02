@@ -1,3 +1,4 @@
+import { PM_Web } from "./PM/web";
 import type {
   IBaseTest,
   ITestImplementation,
@@ -7,21 +8,9 @@ import Testeranto from "./lib/core.js";
 import {
   ITTestResourceConfiguration,
   ITTestResourceRequest,
-  ITestJob,
   defaultTestResourceRequirement,
 } from "./lib/index.js";
-import {
-  INodeUtils,
-  ITestInterface,
-  IWebTestInterface,
-  IWebUtils,
-} from "./lib/types";
-
-// const remote = require("@electron/remote");
-// import remote from "@electron/remote";
-// const electron = require("electron");
-// const remote =
-//   process.type === "browser" ? electron : require("@electron/remote");
+import { ITestInterface, IWebTestInterface } from "./lib/types";
 
 class WebTesteranto<TestShape extends IBaseTest> extends Testeranto<TestShape> {
   constructor(
@@ -36,54 +25,15 @@ class WebTesteranto<TestShape extends IBaseTest> extends Testeranto<TestShape> {
       testSpecification,
       testImplementation,
       testResourceRequirement,
-      (window as any).NodeWriter,
       testInterface
     );
-
-    const testResourceArg = decodeURIComponent(
-      new URLSearchParams(location.search).get("requesting") || ""
-    );
-
-    try {
-      const partialTestResource = JSON.parse(
-        testResourceArg
-      ) as ITTestResourceConfiguration;
-
-      this.receiveTestResourceConfig(this.testJobs[0], partialTestResource);
-    } catch (e) {
-      console.error(e);
-      // process.exit(-1);
-    }
-
-    const requesting = new URLSearchParams(location.search).get("requesting");
-    if (requesting) {
-      const testResourceArg = decodeURIComponent(requesting);
-
-      try {
-        const partialTestResource = JSON.parse(
-          testResourceArg
-        ) as ITTestResourceConfiguration;
-
-        console.log("initial test resource", partialTestResource);
-        this.receiveTestResourceConfig(this.testJobs[0], partialTestResource);
-      } catch (e) {
-        console.error(e);
-        // process.exit(-1);
-      }
-    }
   }
 
-  async receiveTestResourceConfig(
-    t: ITestJob<IWebUtils>,
-    partialTestResource: ITTestResourceConfiguration
-  ) {
-    const { failed, artifacts, logPromise } = await t.receiveTestResourceConfig(
-      partialTestResource,
-      {
-        browser: await (window as any).browser,
-        ipc: (window as any).ipcRenderer,
-      }
-    );
+  async receiveTestResourceConfig(partialTestResource: any) {
+    const t: ITTestResourceConfiguration = partialTestResource; //JSON.parse(partialTestResource);
+    const pm = new PM_Web(t);
+    const { failed, artifacts, logPromise } =
+      await this.testJobs[0].receiveTestResourceConfig(pm);
 
     console.log("test is done, awaiting test result write to fs");
     Promise.all([...artifacts, logPromise]).then(async () => {
@@ -94,7 +44,12 @@ class WebTesteranto<TestShape extends IBaseTest> extends Testeranto<TestShape> {
       //   JSON.stringify(await (window as any).browser)
       // );
       // var currentWindow = (await (window as any).browser).getCurrentWindow();
-      // currentWindow.close();
+      // window.close();
+      // var customWindow = window.open("", "_blank", "");
+      // customWindow.close();
+      // this.puppetMaster.browser.page
+      // window["customclose"]();
+      // console.log("goodbye", window["customclose"]());
     });
   }
 }

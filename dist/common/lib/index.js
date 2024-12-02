@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.defaultTestResourceRequirement = exports.DefaultTestInterface = exports.BaseTestInterface = void 0;
+// import { INodeUtils, ITestInterface, IUtils, IWebUtils } from "./types.js";
 exports.BaseTestInterface = {
     beforeAll: async (s) => s,
-    beforeEach: async function (subject, initialValues, testResource) {
+    beforeEach: async function (subject, initialValues, testResource, pm) {
         return subject;
     },
     afterEach: async (s) => s,

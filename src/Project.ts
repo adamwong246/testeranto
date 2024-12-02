@@ -109,6 +109,25 @@ export class ITProject {
 
     const [nodeEntryPoints, webEntryPoints] = getRunnables(this.config.tests);
 
+    // nodeEntryPoints.forEach((nep) => {
+    //   const f = `${process.cwd()}/${nep}`;
+    //   console.log("nep", f);
+    //   import(f).then((module) => {
+    //     return module.default.then((defaultModule) => {
+    //       console.log("defaultModule", defaultModule);
+    //       // defaultModule
+    //       //   .receiveTestResourceConfig(argz)
+    //       //   .then((x) => {
+    //       //     console.log("then", x);
+    //       //     return x;
+    //       //   })
+    //       //   .catch((e) => {
+    //       //     console.log("catch", e);
+    //       //   });
+    //     });
+    //   });
+    // });
+
     glob(`./${config.outdir}/chunk-*.mjs`, { ignore: "node_modules/**" }).then(
       (chunks) => {
         chunks.forEach((chunk) => {
@@ -213,8 +232,8 @@ const getRunnables = (
       pt[1].add(cv[0]);
     }
 
-    if (cv[2].length) {
-      getRunnables(cv[2], payload);
+    if (cv[3].length) {
+      getRunnables(cv[3], payload);
     }
 
     return pt;

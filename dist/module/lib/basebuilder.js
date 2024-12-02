@@ -1,5 +1,7 @@
 export class BaseBuilder {
-    constructor(input, suitesOverrides, givenOverides, whenOverides, thenOverides, checkOverides, logWriter, testResourceRequirement, testSpecification) {
+    constructor(input, suitesOverrides, givenOverides, whenOverides, thenOverides, checkOverides, testResourceRequirement, testSpecification
+    // puppetMaster: PM
+    ) {
         this.input = input;
         this.artifacts = [];
         this.artifacts = [];
@@ -10,47 +12,78 @@ export class BaseBuilder {
         this.thenOverides = thenOverides;
         this.checkOverides = checkOverides;
         this.testSpecification = testSpecification;
+        // this.puppetMaster = puppetMaster;
         this.specs = testSpecification(this.Suites(), this.Given(), this.When(), this.Then(), this.Check());
-        const suiteRunner = (suite, utils) => async (testResourceConfiguration, tLog, utils) => {
-            return await suite.run(input, testResourceConfiguration, (fPath, value) => logWriter.testArtiFactoryfileWriter(tLog, (p) => {
-                this.artifacts.push(p);
-            })(testResourceConfiguration.fs + "/" + fPath, value), tLog, utils);
-        };
-        this.testJobs = this.specs.map((suite, utils) => {
-            const runner = suiteRunner(suite, utils);
+        this.testJobs = this.specs.map((suite) => {
+            const suiteRunner = (suite) => async (
+            // testResourceConfiguration: ITTestResourceConfiguration,
+            puppetMaster, tLog) => {
+                await puppetMaster.startPuppeteer({
+                    browserWSEndpoint: puppetMaster.testResourceConfiguration.browserWSEndpoint,
+                }, puppetMaster.testResourceConfiguration.fs);
+                return await suite.run(input, puppetMaster.testResourceConfiguration, (fPath, value) => puppetMaster.testArtiFactoryfileWriter(tLog, (p) => {
+                    this.artifacts.push(p);
+                })(puppetMaster.testResourceConfiguration.fs + "/" + fPath, value), tLog, puppetMaster);
+            };
+            const runner = suiteRunner(suite);
             return {
                 test: suite,
-                testResourceRequirement,
+                // testResourceRequirement,
                 toObj: () => {
                     return suite.toObj();
                 },
                 runner,
-                receiveTestResourceConfig: async function (testResourceConfiguration = {
-                    name: "",
-                    fs: ".",
-                    ports: [],
-                    scheduled: false,
-                }, y) {
-                    console.log(`testResourceConfiguration ${JSON.stringify(testResourceConfiguration, null, 2)}`);
-                    // await logWriter.mkdirSync(testResourceConfiguration.fs);
-                    //  if (!fs.existsSync(destFolder)) {
-                    //    fs.mkdirSync(destFolder, { recursive: true });
+                receiveTestResourceConfig: async function (
+                // testResourceConfiguration = {
+                //   name: "",
+                //   fs: ".",
+                //   ports: [],
+                //   browserWSEndpoint: "",
+                // },
+                puppetMaster) {
+                    // console.log(
+                    //   `testResourceConfiguration! ${JSON.stringify(
+                    //     testResourceConfiguration,
+                    //     null,
+                    //     2
+                    //   )}`
+                    // );
+                    // console.log("puppetMaster", puppetMaster);
+                    await puppetMaster
+                        .mkdirSync();
+                    //  if (!puppetMaster.existsSync(destFolder)) {
+                    //    puppetMaster.mkdirSync(destFolder, { recursive: true });
                     //  }
-                    logWriter.writeFileSync(`${testResourceConfiguration.fs}/tests.json`, JSON.stringify(this.toObj(), null, 2));
-                    const logFilePath = `${testResourceConfiguration.fs}/log.txt`;
-                    const access = await logWriter.createWriteStream(logFilePath);
-                    const tLog = (...l) => access.write(`${l.toString()}\n`);
-                    const suiteDone = await runner(testResourceConfiguration, tLog, y);
+                    puppetMaster.writeFileSync(
+                    // puppetMaster.testResourceConfiguration.fs + `/tests.json`,
+                    `tests.json`, JSON.stringify(this.toObj(), null, 2));
+                    const logFilePath = "log.txt";
+                    // puppetMaster.testResourceConfiguration.fs + `/log.txt`;
+                    const access = await puppetMaster.createWriteStream(logFilePath);
+                    // console.log("access", access);
+                    const tLog = (...l) => {
+                        // access.write(`${l.toString()}\n`);
+                        // console.log("tLog", l);
+                        puppetMaster.write(access, `${l.toString()}\n`);
+                    };
+                    // console.log("runner", runner);
+                    const suiteDone = await runner(puppetMaster, tLog);
+                    // console.log("suiteDone", suiteDone);
                     const logPromise = new Promise((res, rej) => {
-                        access.on("finish", () => {
-                            res(true);
-                        });
+                        // res(true);
+                        // access.on("finish", () => {
+                        //   res(true);
+                        // });
+                        puppetMaster.end(access);
+                        res(true);
                     });
-                    access.end();
+                    // access.end();
                     const numberOfFailures = Object.keys(suiteDone.givens).filter((k) => {
                         return suiteDone.givens[k].error;
                     }).length;
-                    logWriter.writeFileSync(`${testResourceConfiguration.fs}/exitcode`, numberOfFailures.toString());
+                    puppetMaster.writeFileSync(
+                    // puppetMaster.testResourceConfiguration.fs + `/exitcode`,
+                    `exitcode`, numberOfFailures.toString());
                     console.log(`exiting gracefully with ${numberOfFailures} failures.`);
                     return {
                         failed: numberOfFailures,

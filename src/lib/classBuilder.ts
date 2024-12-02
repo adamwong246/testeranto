@@ -6,7 +6,6 @@ import {
 
 import { BaseBuilder } from "./basebuilder.js";
 
-import { ILogWriter, ITTestResourceRequest } from ".";
 import {
   ISuiteKlasser,
   IGivenKlasser,
@@ -14,6 +13,8 @@ import {
   IThenKlasser,
   ICheckKlasser,
 } from "./types.js";
+import { PM } from "../PM/index.js";
+import { ITTestResourceRequest } from "./index.js";
 
 export abstract class ClassBuilder<
   ITestShape extends IBaseTest
@@ -27,8 +28,8 @@ export abstract class ClassBuilder<
     whenKlasser: IWhenKlasser<ITestShape>,
     thenKlasser: IThenKlasser<ITestShape>,
     checkKlasser: ICheckKlasser<ITestShape>,
-    testResourceRequirement: ITTestResourceRequest,
-    logWriter: ILogWriter
+    testResourceRequirement: ITTestResourceRequest
+    // puppetMaster: PM
   ) {
     const classySuites = Object.entries(testImplementation.suites).reduce(
       (a, [key], index) => {
@@ -110,9 +111,9 @@ export abstract class ClassBuilder<
       classyWhens,
       classyThens,
       classyChecks,
-      logWriter,
       testResourceRequirement,
       testSpecification
+      // puppetMaster
     );
   }
 }

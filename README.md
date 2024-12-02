@@ -17,7 +17,6 @@ example repo: [kokomo bay](https://github.com/ChromaPDX/kokomoBay)
 - Do you like TDD/BDD?
 - Do you love Typescript?
 - Do you hate Jira?
-- Do you tolerate electron?
 
 If so, then testeranto might be the testing tool you have been looking for!
 
@@ -40,8 +39,7 @@ Testeranto.ts an Acceptance Test Driven Development ([ATDD](https://en.wikipedia
 
 - esm - Testeranto uses modern js.
 - typescript - tests are functions with type parameters
-- electron - provides both a node and chrome runtime
-- puppeteer - provides node-style tests with a handle to the browser
+- puppeteer - provides access to both node and chrome runtimes
 - esbuild - used to quickly generate test bundles
 - graphology - used to store features within a semantic network
 
@@ -67,7 +65,7 @@ Rather than the traditional method of specifying tests in plain text, Testeranto
 
 ## the bad parts
 
-Testeranto is not designed to maximize performance. In dev mode, it runs multiple esbuild processes, electron, 1 node process for each node test and 1 chromium processes for each web test.
+Testeranto is not designed to maximize performance.
 
 Testeranto does not (yet!) of a means of allowing non-coders to affect changes so, as they say, "get good 💪!"
 
@@ -83,12 +81,8 @@ Testeranto is comprised of 3 parts
 - Build the node-style tests
 - Build the web-style tests
 
-2. The test runner is an electron app which watches the output of those build processes and launches the tests as those files change.
+2. The test runner watches the output of those build processes and launches the tests as those files change.
 3. A Report which links your features, your tests and the results of those tests into a handy website.
-
-## Electron aka Node vs Chromium
-
-At the heart of testeranto is the dual runtime provided by electron. The electron test runner creates an UtilityProcess for each node test and a BrowserWindow for each web test. Each of these processes can communicate to other artifacts over IPC. That is, a node test can invoke a web artifact and send it messages over the IPC channel, and vice-versa. Furthermore, node tests are provided with a puppeteer, providing it access to the web environment, while web tests are provided the electron BrowserWindow, which allows it to similarly bridge the gap between the web runtime and the node runtime.
 
 ## Hybrid tests
 
@@ -121,18 +115,15 @@ This is designed so that each piece can be worked upon separately. You can think
 
 ## CLI
 
-There are 4 commands you should add to your `package.json`
+There are 3 commands you should add to your `package.json`
 
 ```
-// build the tests
+// build the tests once
 "testeranto-esbuild": "ts-node-esm testeranto.mts",
 
+// build the tests, watching for changes
+"testeranto-esbuild-dev": "ts-node-esm testeranto.mts",
+
 // run the tests
-"testeranto-electron": "electron node_modules/testeranto/dist/common/electron.js",
-
-// build and run the tests as src files change
-"testeranto-dev": "yarn testeranto-esbuild -devmode ; yarn testeranto-electron -devmode"
-
-// build the tests, then run the tests
-"testeranto": "yarn testeranto-esbuild && yarn testeranto-electron"
+"testeranto-puppeteer":"ts-node-esm node_modules/testeranto/dist/module/Puppeteer.js",
 ```
