@@ -1,0 +1,26 @@
+test resources: ,{"scheduled":true,"name":"./src/app.redux.test.ts","ports":[],"fs":"/Users/adam/Code/kokomoBay/docs/node/src/app.redux.test","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/c1397e3e-dc7e-4ac6-8400-d82669a10752"}
+
+Suite:,0,Testing the Redux store
+
+ Given: AnEmptyState
+ When:,TheEmailIsSetTo: adam@email.com
+ Then:,TheEmailIs: adam@email.com
+
+ Given: AStateWithEmail
+ Then:,TheEmailIsNot: adam@email.com
+TypeError: Cannot read properties of undefined (reading 'getState')
+
+
+ Given: AnEmptyState
+ When:,TheEmailIsSetTo: hello
+ When:,TheEmailIsSetTo: aloha
+ Then:,TheEmailIs: aloha
+
+ Given: AnEmptyState
+ Then:,TheEmailIs: 
+TypeError: Cannot read properties of undefined (reading 'getState')
+
+
+ Given: AnEmptyState
+ When:,TheEmailIsSetTo: hey there
+ Then:,TheEmailIs: hey there

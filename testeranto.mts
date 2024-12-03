@@ -15,10 +15,15 @@ export default new ITProject({
       { ports: 0 },
       [],
     ],
-    // ["./src/LoginPage/react-test-renderer/node.test.tsx", "node", []],
-    // ["./src/ReactStateAndHook.test.tsx", "node", []],
-    // ["./src/app.reduxToolkit.test.ts", "node", []],
-    // ["./src/app.redux.test.ts", "node", []],
+    [
+      "./src/LoginPage/react-test-renderer/node.test.tsx",
+      "node",
+      { ports: 0 },
+      [],
+    ],
+    ["./src/ReactStateAndHook.test.tsx", "node", { ports: 0 }, []],
+    ["./src/app.reduxToolkit.test.ts", "node", { ports: 0 }, []],
+    ["./src/app.redux.test.ts", "node", { ports: 0 }, []],
 
     ["./src/Rectangle/Rectangle.test.electron.ts", "web", { ports: 0 }, []],
     [

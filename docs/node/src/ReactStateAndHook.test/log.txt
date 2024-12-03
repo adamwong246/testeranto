@@ -1,0 +1,20 @@
+test resources: ,{"scheduled":true,"name":"./src/ReactStateAndHook.test.tsx","ports":[],"fs":"/Users/adam/Code/kokomoBay/docs/node/src/ReactStateAndHook.test","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/c1397e3e-dc7e-4ac6-8400-d82669a10752"}
+
+Suite:,0,Testing the ReactStateAndHook element
+
+ Given: Default
+ Then:,TheCounterIs: 0
+TypeError: Cannot read properties of undefined (reading 'toJSON')
+
+
+ Given: Default
+TypeError: Cannot read properties of null (reading 'useState')
+
+
+ Given: Default
+TypeError: Cannot read properties of null (reading 'useState')
+
+
+ Given: Default
+TypeError: Cannot read properties of null (reading 'useState')
+

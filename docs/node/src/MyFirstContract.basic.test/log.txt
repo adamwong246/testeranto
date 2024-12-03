@@ -1,4 +1,4 @@
-test resources: ,{"scheduled":true,"name":"./src/MyFirstContract.basic.test.ts","ports":[],"fs":"/Users/adam/Code/kokomoBay/docs/node/src/MyFirstContract.basic.test","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/39be595b-c4ee-4089-874a-fafd95111670"}
+test resources: ,{"scheduled":true,"name":"./src/MyFirstContract.basic.test.ts","ports":[],"fs":"/Users/adam/Code/kokomoBay/docs/node/src/MyFirstContract.basic.test","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/c1397e3e-dc7e-4ac6-8400-d82669a10752"}
 
 Suite:,0,Testing a very simple smart contract ephemerally
 
@@ -36,12 +36,12 @@ AssertionError: expected 16 to equal 1
  When:,Decrement: 1
 Error: Transaction has been reverted by the EVM:
 {
-  "transactionHash": "0x65edc82ccc0baf39e981b85b0863c29b1a3515bb88a2136cb9c3bb31ad9617d2",
+  "transactionHash": "0xe54ee76be559b58ce72da2d51ec703355bdf47b776c37de79d1d2e2e2a28aa8d",
   "transactionIndex": 0,
   "blockNumber": 2,
-  "blockHash": "0x10e9179d0885b5e848a615f8bd704f3e14cc2e841554a60e67bd69e380e349fd",
-  "from": "0x41903ab13702f1d67847d3cd15244c7c21af4255",
-  "to": "0xd1c30f8aba2bd427d5e4c6ea89a630976f5f04f8",
+  "blockHash": "0xb1e240a5e062041ffe0b0b163820181c21a4eb4782bd66c777c13e6c1fc63911",
+  "from": "0x19894ab66843e465d165df9cfdda370444debfb6",
+  "to": "0x5884b618cc5cace0dec202cc2dbc8faca9e16f69",
   "cumulativeGasUsed": 23452,
   "gasUsed": 23452,
   "contractAddress": null,

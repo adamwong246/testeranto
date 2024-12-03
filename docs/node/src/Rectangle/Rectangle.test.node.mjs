@@ -1,15 +1,16 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
   Node_default
-} from "../../chunk-ZO23UGIH.mjs";
+} from "../../chunk-R2PNGDRN.mjs";
 import {
   assert
-} from "../../chunk-L7PQJBZK.mjs";
-import "../../chunk-FLSG3ZVV.mjs";
+} from "../../chunk-MSVTAS6Q.mjs";
+import "../../chunk-Z577W6FW.mjs";
 import "../../chunk-CTKBT5JH.mjs";
 import "../../chunk-RBWPBMY4.mjs";
 import "../../chunk-PJC2V65J.mjs";
 import "../../chunk-VDOS7AVZ.mjs";
+import "../../chunk-FLSG3ZVV.mjs";
 import {
   init_cjs_shim
 } from "../../chunk-THMF2HPO.mjs";
@@ -91,7 +92,7 @@ var RectangleTesterantoBaseTestSpecification = (Suite, Given, When, Then, Check)
         test0: Given.Default(
           [`hello`],
           [When.setWidth(4), When.setHeight(9)],
-          [Then.getWidth(4), Then.getHeight(99)]
+          [Then.getWidth(4), Then.getHeight(9)]
         ),
         test1: Given.Default(
           [`hello`],

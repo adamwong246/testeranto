@@ -17,22 +17,11 @@
           "error": false
         },
         {
-          "name": "getHeight: 99",
-          "error": "expected 9 to equal 99"
+          "name": "getHeight: 9",
+          "error": false
         }
       ],
-      "error": [
-        {
-          "name": "AssertionError",
-          "message": "expected 9 to equal 99",
-          "showDiff": true,
-          "actual": 9,
-          "expected": 99,
-          "operator": "strictEqual",
-          "stack": "AssertionError: expected 9 to equal 99\n    at file:///Users/adam/Code/kokomoBay/docs/node/src/Rectangle/Rectangle.test.node.mjs:74:50\n    at Object.butThen (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:24:37)\n    at Then.butThen (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:654:42)\n    at Then.test (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:328:28)\n    at Given.give (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:209:34)\n    at runNextTicks (node:internal/process/task_queues:60:5)\n    at processImmediate (node:internal/timers:449:9)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:81:22)\n    at async file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:424:16\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:453:29)\n    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:1086:47)"
-        },
-        "AssertionError: expected 9 to equal 99\n    at file:///Users/adam/Code/kokomoBay/docs/node/src/Rectangle/Rectangle.test.node.mjs:74:50\n    at Object.butThen (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:24:37)\n    at Then.butThen (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:654:42)\n    at Then.test (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:328:28)\n    at Given.give (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:209:34)\n    at runNextTicks (node:internal/process/task_queues:60:5)\n    at processImmediate (node:internal/timers:449:9)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:81:22)\n    at async file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:424:16\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:453:29)\n    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:1086:47)"
-      ],
+      "error": null,
       "features": [
         "hello"
       ]

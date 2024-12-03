@@ -115,7 +115,7 @@ export const RectangleTesterantoBaseTestSpecification: ITestSpecification<
         test0: Given.Default(
           [`hello`],
           [When.setWidth(4), When.setHeight(9)],
-          [Then.getWidth(4), Then.getHeight(99)]
+          [Then.getWidth(4), Then.getHeight(9)]
         ),
         test1: Given.Default(
           [`hello`],

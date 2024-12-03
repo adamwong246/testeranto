@@ -1,0 +1,80 @@
+{
+  "name": "Testing the LoginPage as react",
+  "givens": [
+    {
+      "name": "default",
+      "whens": [
+        {
+          "name": "TheEmailIsSetTo: adam@email.com"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheEmailIs: adam@email.com",
+          "error": false
+        }
+      ],
+      "error": null,
+      "features": []
+    },
+    {
+      "name": "default",
+      "whens": [
+        {
+          "name": "TheEmailIsSetTo: adam@email.com"
+        },
+        {
+          "name": "ThePasswordIsSetTo: secret"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheEmailIsNot: wade@rpc",
+          "error": false
+        },
+        {
+          "name": "TheEmailIs: adam@email.com",
+          "error": "expected '' to equal 'adam@email.com'"
+        },
+        {
+          "name": "ThePasswordIs: secret",
+          "error": false
+        },
+        {
+          "name": "ThePasswordIsNot: idk",
+          "error": false
+        }
+      ],
+      "error": [
+        {
+          "name": "AssertionError",
+          "message": "expected '' to equal 'adam@email.com'",
+          "showDiff": true,
+          "actual": "",
+          "expected": "adam@email.com",
+          "operator": "strictEqual",
+          "stack": "AssertionError: expected '' to equal 'adam@email.com'\n    at file:///Users/adam/Code/kokomoBay/docs/node/src/LoginPage/react-test-renderer/node.test.mjs?cacheBust=1733254711400:18570:14\n    at Object.butThen (file:///Users/adam/Code/kokomoBay/docs/node/src/LoginPage/react-test-renderer/node.test.mjs?cacheBust=1733254711400:18535:12)\n    at Then.butThen (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MHG2GESM.mjs:2692:42)\n    at Then.test (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MHG2GESM.mjs:2472:28)\n    at Given.give (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MHG2GESM.mjs:2372:34)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MHG2GESM.mjs:2259:22)\n    at async file:///Users/adam/Code/kokomoBay/docs/node/chunk-MHG2GESM.mjs:2537:16\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MHG2GESM.mjs:2557:29)\n    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MHG2GESM.mjs:2824:47)"
+        },
+        "AssertionError: expected '' to equal 'adam@email.com'\n    at file:///Users/adam/Code/kokomoBay/docs/node/src/LoginPage/react-test-renderer/node.test.mjs?cacheBust=1733254711400:18570:14\n    at Object.butThen (file:///Users/adam/Code/kokomoBay/docs/node/src/LoginPage/react-test-renderer/node.test.mjs?cacheBust=1733254711400:18535:12)\n    at Then.butThen (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MHG2GESM.mjs:2692:42)\n    at Then.test (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MHG2GESM.mjs:2472:28)\n    at Given.give (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MHG2GESM.mjs:2372:34)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MHG2GESM.mjs:2259:22)\n    at async file:///Users/adam/Code/kokomoBay/docs/node/chunk-MHG2GESM.mjs:2537:16\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MHG2GESM.mjs:2557:29)\n    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MHG2GESM.mjs:2824:47)"
+      ],
+      "features": []
+    },
+    {
+      "name": "default",
+      "whens": [
+        {
+          "name": "TheEmailIsSetTo: adam"
+        }
+      ],
+      "thens": [
+        {
+          "name": "ThereIsNotAnEmailError: undefined",
+          "error": false
+        }
+      ],
+      "error": null,
+      "features": []
+    }
+  ],
+  "fails": []
+}
