@@ -1,0 +1,27 @@
+test resources: ,{"scheduled":true,"name":"./src/Rectangle/Rectangle.test.node.ts","ports":[],"fs":"/Users/adam/Code/kokomoBay/docs/node/src/Rectangle/Rectangle.test.node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/39be595b-c4ee-4089-874a-fafd95111670"}
+
+Suite:,0,Testing the Rectangle class
+
+ Given: Default
+ When:,setWidth: 4
+ When:,setHeight: 9
+ Then:,getWidth: 4
+ Then:,getHeight: 99
+AssertionError: expected 9 to equal 99
+
+
+ Given: Default
+ When:,setWidth: 4
+ When:,setHeight: 5
+
+ Given: Default
+ When:,setHeight: 4
+ When:,setWidth: 3
+
+ Given: Default
+ When:,setHeight: 5
+ When:,setWidth: 5
+
+ Given: Default
+ When:,setHeight: 6
+ When:,setWidth: 6

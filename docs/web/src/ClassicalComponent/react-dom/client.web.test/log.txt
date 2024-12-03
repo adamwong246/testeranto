@@ -1,4 +1,4 @@
-test resources: ,{"name":"/Users/adam/Code/kokomoBay/docs/web/src/ClassicalComponent/react-dom/client.web.test","ports":"","fs":"/Users/adam/Code/kokomoBay/docs/web/src/ClassicalComponent/react-dom/client.web.test","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/5ebf4cb6-419a-4b38-8052-f1141438f4ee"}
+test resources: ,{"name":"/Users/adam/Code/kokomoBay/docs/web/src/ClassicalComponent/react-dom/client.web.test","ports":"","fs":"/Users/adam/Code/kokomoBay/docs/web/src/ClassicalComponent/react-dom/client.web.test","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/39be595b-c4ee-4089-874a-fafd95111670"}
 
 Suite:,0,a classical react component
 
@@ -6,7 +6,6 @@ Suite:,0,a classical react component
  When:,IClickTheButton: undefined
  When:,IClickTheButton: undefined
  When:,IClickTheButton: undefined
- When:,IClickTheButton: undefined
  Then:,ThePropsIs: [object Object]
  Then:,TheStatusIs: [object Object]
 
@@ -16,6 +15,8 @@ Suite:,0,a classical react component
  Then:,TheStatusIs: [object Object]
 
  Given: AnEmptyState
+ When:,IClickTheButton: undefined
+ When:,IClickTheButton: undefined
  When:,IClickTheButton: undefined
  When:,IClickTheButton: undefined
  When:,IClickTheButton: undefined

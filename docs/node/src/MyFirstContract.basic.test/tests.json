@@ -1,0 +1,155 @@
+{
+  "name": "Testing a very simple smart contract ephemerally",
+  "givens": [
+    {
+      "name": "Default",
+      "whens": [],
+      "thens": [
+        {
+          "name": "Get: [object Object]",
+          "error": "Cannot destructure property 'contract' of 'undefined' as it is undefined."
+        }
+      ],
+      "error": [
+        {},
+        "TypeError: Cannot destructure property 'contract' of 'undefined' as it is undefined.\n    at file:///Users/adam/Code/kokomoBay/docs/node/src/MyFirstContract.basic.test.mjs:130805:52\n    at Object.butThen (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:24:37)\n    at Then.butThen (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:654:42)\n    at Then.test (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:328:28)\n    at Given.give (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:209:34)\n    at Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:81:34)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:424:16\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:453:29)\n    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:1086:47)"
+      ],
+      "features": "my first contract"
+    },
+    {
+      "name": "Default",
+      "whens": [
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        }
+      ],
+      "thens": [
+        {
+          "name": "Get: [object Object]",
+          "error": "expected 16 to equal 1"
+        }
+      ],
+      "error": [
+        {
+          "name": "AssertionError",
+          "message": "expected 16 to equal 1",
+          "showDiff": true,
+          "actual": 16,
+          "expected": 1,
+          "operator": "strictEqual",
+          "stack": "AssertionError: expected 16 to equal 1\n    at file:///Users/adam/Code/kokomoBay/docs/node/src/MyFirstContract.basic.test.mjs:130805:84\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Then.butThen (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:654:18)\n    at async Then.test (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:328:17)\n    at async Given.give (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:209:19)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:81:22)\n    at async file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:424:16\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:453:29)\n    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:1086:47)"
+        },
+        "AssertionError: expected 16 to equal 1\n    at file:///Users/adam/Code/kokomoBay/docs/node/src/MyFirstContract.basic.test.mjs:130805:84\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Then.butThen (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:654:18)\n    at async Then.test (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:328:17)\n    at async Given.give (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:209:19)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:81:22)\n    at async file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:424:16\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:453:29)\n    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-ZO23UGIH.mjs:1086:47)"
+      ],
+      "features": [
+        "hello"
+      ]
+    },
+    {
+      "name": "Default",
+      "whens": [
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Decrement: 1",
+          "error": true
+        },
+        {
+          "name": "Decrement: 1"
+        },
+        {
+          "name": "Decrement: 1"
+        },
+        {
+          "name": "Decrement: 1"
+        }
+      ],
+      "thens": [
+        {
+          "name": "Get: [object Object]",
+          "error": false
+        }
+      ],
+      "error": [
+        {
+          "receipt": {
+            "transactionHash": "0x65edc82ccc0baf39e981b85b0863c29b1a3515bb88a2136cb9c3bb31ad9617d2",
+            "transactionIndex": 0,
+            "blockNumber": 2,
+            "blockHash": "0x10e9179d0885b5e848a615f8bd704f3e14cc2e841554a60e67bd69e380e349fd",
+            "from": "0x41903ab13702f1d67847d3cd15244c7c21af4255",
+            "to": "0xd1c30f8aba2bd427d5e4c6ea89a630976f5f04f8",
+            "cumulativeGasUsed": 23452,
+            "gasUsed": 23452,
+            "contractAddress": null,
+            "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+            "status": false,
+            "effectiveGasPrice": 3266452291,
+            "type": "0x2",
+            "events": {}
+          }
+        },
+        "Error: Transaction has been reverted by the EVM:\n{\n  \"transactionHash\": \"0x65edc82ccc0baf39e981b85b0863c29b1a3515bb88a2136cb9c3bb31ad9617d2\",\n  \"transactionIndex\": 0,\n  \"blockNumber\": 2,\n  \"blockHash\": \"0x10e9179d0885b5e848a615f8bd704f3e14cc2e841554a60e67bd69e380e349fd\",\n  \"from\": \"0x41903ab13702f1d67847d3cd15244c7c21af4255\",\n  \"to\": \"0xd1c30f8aba2bd427d5e4c6ea89a630976f5f04f8\",\n  \"cumulativeGasUsed\": 23452,\n  \"gasUsed\": 23452,\n  \"contractAddress\": null,\n  \"logsBloom\": \"0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000\",\n  \"status\": false,\n  \"effectiveGasPrice\": 3266452291,\n  \"type\": \"0x2\",\n  \"events\": {}\n}\n    at Object.TransactionError (file:///Users/adam/Code/kokomoBay/docs/node/src/MyFirstContract.basic.test.mjs:44277:21)\n    at Object.TransactionRevertedWithoutReasonError (file:///Users/adam/Code/kokomoBay/docs/node/src/MyFirstContract.basic.test.mjs:44288:21)\n    at file:///Users/adam/Code/kokomoBay/docs/node/src/MyFirstContract.basic.test.mjs:48228:45\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"
+      ],
+      "features": [
+        "hello"
+      ]
+    }
+  ],
+  "fails": []
+}

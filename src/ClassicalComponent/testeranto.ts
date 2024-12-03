@@ -43,9 +43,9 @@ export const ClassicalComponentSpec: ITestSpecification<
             When.IClickTheButton(),
             When.IClickTheButton(),
             When.IClickTheButton(),
-            When.IClickTheButton(),
+            // When.IClickTheButton(),
           ],
-          [Then.ThePropsIs({ children: [] }), Then.TheStatusIs({ count: 4 })]
+          [Then.ThePropsIs({ children: [] }), Then.TheStatusIs({ count: 3 })]
         ),
         test1: Given.AnEmptyState(
           ["test"],
@@ -61,8 +61,10 @@ export const ClassicalComponentSpec: ITestSpecification<
             When.IClickTheButton(),
             When.IClickTheButton(),
             When.IClickTheButton(),
+            When.IClickTheButton(),
+            When.IClickTheButton(),
           ],
-          [Then.TheStatusIs({ count: 6 })]
+          [Then.TheStatusIs({ count: 8 })]
         ),
         test3: Given.AnEmptyState(
           ["test"],

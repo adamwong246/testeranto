@@ -1,9 +1,8 @@
+import test from "testeranto/src/SubPackages/react-dom/component/web";
+
 import { assert } from "chai";
 
 import { ClassicalComponent } from "..";
-
-
-import test from "testeranto/src/SubPackages/react-dom/component/web";
 import { ClassicalComponentSpec } from "../testeranto";
 
 const ClassicalComponentReactDomImplementation = {
@@ -27,8 +26,6 @@ const ClassicalComponentReactDomImplementation = {
       (expectation) =>
         async ({ htmlElement, reactElement }) => {
           console.log("ThePropsIs", htmlElement, expectation)
-          // const btxpctn = JSON.parse(expectation);
-          // btxpctn.children = [];
           const elem = htmlElement.querySelector("#theProps")
           const found = elem.innerHTML;
           assert.deepEqual(

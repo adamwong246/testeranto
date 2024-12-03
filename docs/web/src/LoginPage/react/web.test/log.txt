@@ -1,0 +1,18 @@
+test resources: ,{"name":"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test","ports":"","fs":"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/39be595b-c4ee-4089-874a-fafd95111670"}
+
+Suite:,0,Testing the LoginPage as react
+
+ Given: default
+ When:,TheEmailIsSetTo: adam@email.com
+TypeError: Cannot read properties of undefined (reading 'store')
+
+
+ Given: default
+ When:,TheEmailIsSetTo: adam@email.com
+TypeError: Cannot read properties of undefined (reading 'store')
+
+
+ Given: default
+ When:,TheEmailIsSetTo: adam
+TypeError: Cannot read properties of undefined (reading 'store')
+

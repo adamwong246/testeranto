@@ -1,0 +1,11 @@
+test resources: ,{"scheduled":true,"name":"./src/MyFirstContract.rpc.test.ts","ports":["3001"],"fs":".","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/9fc55295-3dda-4cc6-8911-3d330680d87e"}
+
+Suite:,0,Testing a very simple smart contract over RPC
+
+ Given: Default
+ Then:,Get: [object Object]
+TypeError: Cannot destructure property 'contractFarSide' of 'undefined' as it is undefined.
+
+
+ Given: Default
+ When:,Increment: 1

@@ -6,27 +6,27 @@ export default new ITProject({
   outdir: "docs",
   features: "/Users/adam/Code/kokomoBay/features.test.mts",
   tests: [
-    // ["./src/LoginPage/react/web.test.tsx", "web", { ports: 0 }, []],
-    // ["./src/LoginPage/react/node.test.tsx", "node", { ports: 0 }, []],
+    ["./src/LoginPage/react/web.test.tsx", "web", { ports: 0 }, []],
+    ["./src/LoginPage/react/node.test.tsx", "node", { ports: 0 }, []],
 
-    // [
-    //   "./src/LoginPage/react-test-renderer/web.test.tsx",
-    //   "web",
-    //   { ports: 0 },
-    //   [],
-    // ],
+    [
+      "./src/LoginPage/react-test-renderer/web.test.tsx",
+      "web",
+      { ports: 0 },
+      [],
+    ],
     // ["./src/LoginPage/react-test-renderer/node.test.tsx", "node", []],
     // ["./src/ReactStateAndHook.test.tsx", "node", []],
     // ["./src/app.reduxToolkit.test.ts", "node", []],
     // ["./src/app.redux.test.ts", "node", []],
 
-    // ["./src/Rectangle/Rectangle.test.electron.ts", "web", { ports: 0 }, []],
-    // [
-    //   "./src/Rectangle/Rectangle.test.node.ts",
-    //   "node",
-    //   { ports: 0 },
-    //   [["./src/ClassicalComponent/test.ts", "web", { ports: 0 }, []]],
-    // ],
+    ["./src/Rectangle/Rectangle.test.electron.ts", "web", { ports: 0 }, []],
+    [
+      "./src/Rectangle/Rectangle.test.node.ts",
+      "node",
+      { ports: 0 },
+      [["./src/ClassicalComponent/test.ts", "web", { ports: 0 }, []]],
+    ],
     [
       "./src/ClassicalComponent/react-dom/client.web.test.tsx",
       "web",
@@ -34,7 +34,7 @@ export default new ITProject({
       [],
     ],
 
-    // ["./src/MyFirstContract.basic.test.ts", "node", { ports: 0 }, []],
+    ["./src/MyFirstContract.basic.test.ts", "node", { ports: 0 }, []],
     // ["./src/MyFirstContract.rpc.test.ts", "node", { ports: 1 }, []],
   ],
 
