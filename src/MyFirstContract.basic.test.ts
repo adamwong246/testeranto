@@ -57,9 +57,7 @@ const testImplementation: ITestImplementation<IMyFirstContractTest<IInput>> = {
   },
 };
 
-export const MyFirstContractTesteranto = Testeranto<
-  IMyFirstContractTest<IInput>
->(
+export default Testeranto<IMyFirstContractTest<IInput>>(
   testImplementation,
 
   (Suite, Given, When, Then, Check) => {

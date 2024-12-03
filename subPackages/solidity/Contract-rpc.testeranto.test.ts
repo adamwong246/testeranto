@@ -45,7 +45,7 @@ export default <IT extends IBaseTest>(
           const options = {};
           const port = testResource.ports[0];
 
-          console.log("mark0", testResource);
+          // console.log("mark0", testResource);
 
           // https://github.com/trufflesuite/ganache#programmatic-use
           const server = Ganache.server(options);
@@ -90,8 +90,8 @@ export default <IT extends IBaseTest>(
               web3FarSideSigner
             );
 
-            console.log("server", server);
-
+            // console.log("server", server);
+            // server.
             res({
               contractNearSide,
               contractFarSide,
@@ -102,18 +102,19 @@ export default <IT extends IBaseTest>(
         });
       },
 
-      afterEach: async ({ server }) => {
-        console.log("serve!r", server);
-        // await server.close()
+      afterEach: async (x) => {
+        console.log("afterEach1", await x.server.close());
+        // await x.server.close();
+        return x;
       },
 
       andWhen: async ({ contractFarSide, accounts }, callback: any) =>
-        callback()({ contractFarSide, accounts }),
+        callback({ contractFarSide, accounts }),
 
       afterAll: ({ server }) => {
-        console.log("serve!r", server);
+        // console.log("serve!r", server);
         // server.close();
       },
-    },
-    { ports: 1 }
+    }
+    // { ports: 1 }
   );

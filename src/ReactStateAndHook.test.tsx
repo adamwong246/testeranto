@@ -114,7 +114,7 @@ const Implementation: ITestImplementation<
   },
 };
 
-export const ClassicalComponentReactTestRendererTesteranto = Testeranto(
+export default Testeranto(
   Implementation,
   Specification,
   ReactStateAndHook

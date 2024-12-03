@@ -49,9 +49,7 @@ const testImplementation: ITestImplementation<
   },
 };
 
-export const MyFirstContractPlusRpcTesteranto = Testeranto<
-  IMyFirstContractTest<IMyFirstContractTest<IInput>>
->(
+export default Testeranto<IMyFirstContractTest<IMyFirstContractTest<IInput>>>(
   testImplementation,
 
   (Suite, Given, When, Then, Check) => {

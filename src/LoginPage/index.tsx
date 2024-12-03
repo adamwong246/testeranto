@@ -20,14 +20,14 @@ export type ILoginPageSelection = {
   disableSubmit: boolean;
 };
 
-export const emailwarning = "Something isn’t right. Please double check your email.";
+export const emailwarning = "Something isn’t right. Please double check your email";
 
 export function LoginPage(): React.JSX.Element {
   const selection = useSelector(selector);
 
   return (<div>
     <h2>Welcome back!</h2>
-    <p>Sign in and get to it.</p>
+    <p>Sign in and get to it</p>
 
     <form>
       <input type="email" value={selection.email} onChange={(e) => store.dispatch(actions.setEmail(e.target.value as any))} />

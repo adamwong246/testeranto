@@ -16,26 +16,32 @@ const ClassicalComponentReactDomImplementation = {
   whens: {
     IClickTheButton:
       () =>
-        async ({ htmlElement }) =>
+        async ({ htmlElement }) => {
+          console.log("IClickTheButton", htmlElement)
           htmlElement.querySelector("#theButton").click()
+        }
+
   },
   thens: {
     ThePropsIs:
       (expectation) =>
         async ({ htmlElement, reactElement }) => {
-          const btxpctn = JSON.parse(expectation[0]);
-          btxpctn.children = [];
+          console.log("ThePropsIs", htmlElement, expectation)
+          // const btxpctn = JSON.parse(expectation);
+          // btxpctn.children = [];
           const elem = htmlElement.querySelector("#theProps")
           const found = elem.innerHTML;
           assert.deepEqual(
             JSON.parse(found),
-            btxpctn
+            expectation
           );
         },
 
     TheStatusIs:
       (expectation) =>
         async ({ htmlElement }) => {
+          console.log("TheStatusIs", htmlElement)
+
           const elem = htmlElement.querySelector("#theStat")
           const found = elem.innerHTML;
           assert.deepEqual(
@@ -56,6 +62,4 @@ export default test(
   ClassicalComponent,
   ClassicalComponentSpec,
   ClassicalComponentReactDomImplementation,
-
-
 );

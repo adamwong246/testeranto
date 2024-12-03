@@ -34,12 +34,12 @@ export default <IT extends IBaseTest>(
   testSpecifications: ITestSpecification<IT>,
   testInput: IInput
 ) => {
-  console.log("testInput", testInput);
+  // console.log("testInput", testInput);
   // const compilation = compilations.contracts.find(
   //   (c) => c.contractName === testInput[0]
   // );
   const compilation = testInput[0];
-  console.log("compilation", compilation);
+  // console.log("compilation", compilation);
 
   return Testeranto<IT>(
     testInput,
@@ -50,7 +50,7 @@ export default <IT extends IBaseTest>(
       beforeAll: async () => testInput[0],
 
       beforeEach: async (contract) => {
-        console.log("contract", contract);
+        // console.log("contract", contract);
         // https://github.com/trufflesuite/ganache#programmatic-use
         const provider = Ganache.provider();
 
@@ -76,8 +76,8 @@ export default <IT extends IBaseTest>(
       },
       andWhen: async ({ provider, contract, accounts }, callback: any) =>
         callback({ contract, accounts }),
-    },
+    }
 
-    { ports: 0 }
+    // { ports: 0 }
   );
 };

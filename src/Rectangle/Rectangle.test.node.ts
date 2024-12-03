@@ -1,4 +1,4 @@
-import Testeranto from "testeranto/src/SubPackages/puppeteer";
+import Testeranto from "testeranto/src/Node";
 // import {
 //   IPartialNodeInterface,
 //   INodeTestInterface,
@@ -7,6 +7,7 @@ import Testeranto from "testeranto/src/SubPackages/puppeteer";
 
 import {
   IRectangleTestShape,
+  RectangleTesterantoBasePrototype,
   RectangleTesterantoBaseTestImplementation,
   RectangleTesterantoBaseTestSpecification,
 } from "../../src/Rectangle.test";
@@ -19,61 +20,69 @@ let guid;
 const testInterface: IPartialNodeInterface<IRectangleTestShape> = {
   beforeAll(input, testResource, artificer, utils) {
     return new Promise(async (res, rej) => {
-      utils.ipc.on("message", async (e) => {
-        if (e.data.webLaunched) {
-          guid = e.data.webLaunched;
+      // console.log("brower: ", utils.browser);
+      const page = await utils.browser.newPage();
+      await page.setViewport({ width: 1920, height: 1080 });
+      await page.goto("https://scrapingbee.com");
+      await page.screenshot({ path: `./scrapingbee_homepage.jpg` });
+      await page.close();
+      // // await this.browser.close();
+      const x = Object.create(input);
+      console.log("beforeAll", x);
+      res(x);
+      // utils.ipc.on("message", async (e) => {
+      //   if (e.data.webLaunched) {
+      //     guid = e.data.webLaunched;
 
-          console.log("mark2", utils.browser);
-          const page = (await utils.browser.pages()).filter((x) => {
-            const parsedUrl = new URL(x.url());
-            parsedUrl.search = "";
-            const strippedUrl = parsedUrl.toString();
-            console.log("mark3", strippedUrl);
-            return (
-              strippedUrl ===
-              "file:///Users/adam/Code/kokomoBay/docs/web/src/ClassicalComponent/test.html"
-            );
-          })[0];
+      //     console.log("mark2", utils.browser);
+      //     const page = (await utils.browser.pages()).filter((x) => {
+      //       const parsedUrl = new URL(x.url());
+      //       parsedUrl.search = "";
+      //       const strippedUrl = parsedUrl.toString();
+      //       console.log("mark3", strippedUrl);
+      //       return (
+      //         strippedUrl ===
+      //         "file:///Users/adam/Code/kokomoBay/docs/web/src/ClassicalComponent/test.html"
+      //       );
+      //     })[0];
 
-          await page.screenshot({
-            path: "rectangle-beforeAll.jpg",
-          });
-          res(input);
-        }
-      });
+      //     await page.screenshot({
+      //       path: "rectangle-beforeAll.jpg",
+      //     });
+      //     res(input);
+      //   }
+      // });
 
-      console.log("mark1");
-      utils.ipc.postMessage({
-        launchWeb: `/docs/web/src/ClassicalComponent/test.html`,
-      });
+      // console.log("mark1");
+      // utils.ipc.postMessage({
+      //   launchWeb: `/docs/web/src/ClassicalComponent/test.html`,
+      // });
     });
   },
-  beforeEach: async (): Promise<any> => {
-    console.log("beta");
-    // return new Promise((resolve, rej) => {
-    //   resolve(React.createElement(testInput, {}, []));
-    // });
-  },
+  // beforeEach: async (): Promise<any> => {
+  //   // console.log("beta");
+  //   return new Promise((resolve, rej) => {
+  //     resolve(React.createElement(testInput, {}, []));
+  //   });
+  // },
   andWhen: async function (s: Rectangle, whenCB): Promise<Rectangle> {
-    console.log("gamma");
+    // console.log("gamma", s, whenCB.toString());
     return whenCB(s);
   },
 
   assertThis: (x) => {},
   afterAll: async (store, artificer, utils) => {
     // const page = (await browser.pages())[0]; //.map((x) => x.url())); // === 'file:///Users/adam/Code/kokomoBay/dist/web/src/ClassicalComponent/test.html'))[0]
-    utils.ipc.postMessage({
-      teardown: guid,
-    });
-    console.log("delta!", guid);
+    // utils.ipc.postMessage({
+    //   teardown: guid,
+    // });
+    // console.log("delta!", guid);
   },
 };
 
-export const RectangleTesteranto = Testeranto(
-  "RectangleTesterantoBasePrototype",
+export default Testeranto(
+  RectangleTesterantoBasePrototype,
   RectangleTesterantoBaseTestSpecification,
   RectangleTesterantoBaseTestImplementation,
   testInterface
 );
-
-export {};

@@ -154,7 +154,7 @@ var require_graphology_umd = __commonJS({
         return edge;
       }
       function isPlainObject(value) {
-        return _typeof(value) === "object" && value !== null && value.constructor === Object;
+        return _typeof(value) === "object" && value !== null;
       }
       function isEmpty(o) {
         var k;

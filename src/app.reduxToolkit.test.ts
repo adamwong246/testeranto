@@ -76,7 +76,7 @@ const implementations: ITestImplementation<
   },
 };
 
-export const AppReduxToolkitTesteranto = ReduxToolkitTesteranto<
+export default ReduxToolkitTesteranto<
   IStoreState,
   ILoginPageSelection,
   IAppSpecification

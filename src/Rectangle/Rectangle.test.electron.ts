@@ -1,22 +1,5 @@
 import Testeranto from "testeranto/src/Web";
 
-// const { BrowserWindow, app } = require("electron");
-// console.log("mark3", BrowserWindow, app);
-// debugger
-
-// const remote = require('@electron/remote')
-// remote.BrowserWindow()
-
-// const win = new remote.BrowserWindow();
-// const url = "https://www.news.com/";
-// win.loadURL(url);
-
-// console.log(await browser.pages());
-// const page = await pie.getPage(browser, win);
-// await page.screenshot({
-//   path: 'google.jpg'
-// });
-
 import {
   IRectangleTestShape,
   RectangleTesterantoBaseInterface,
@@ -24,20 +7,26 @@ import {
   RectangleTesterantoBaseTestImplementation,
   RectangleTesterantoBaseTestSpecification,
 } from "../../src/Rectangle.test";
+import Rectangle from "../Rectangle";
 
-export const RectangleTesteranto = Testeranto(
+export default Testeranto(
   RectangleTesterantoBasePrototype,
   RectangleTesterantoBaseTestSpecification,
   RectangleTesterantoBaseTestImplementation,
   {
+    beforeEach: async (rectangleProto, init, artificer, tr, x, pm) => {
+      pm.writeFileSync("beforeEachLog", "bar");
+      return rectangleProto;
+    },
     afterAll: async (store, artificer, utils) => {
       return new Promise(async (res, rej) => {
-        console.log("mark00", (await utils.browser).pages);
+        console.log("afterAll", utils);
+        utils.writeFileSync("afterAllLog", "bar");
         const page = (await utils.browser.pages()).filter((x) => {
           const parsedUrl = new URL(x.url());
           parsedUrl.search = "";
           const strippedUrl = parsedUrl.toString();
-          console.log("mark3", strippedUrl);
+
           return (
             strippedUrl ===
             "file:///Users/adam/Code/kokomoBay/docs/web/src/Rectangle/Rectangle.test.electron.html"
@@ -45,9 +34,17 @@ export const RectangleTesteranto = Testeranto(
           // return true;
         })[0];
 
-        await page.screenshot({
-          path: "bannana5.jpg",
+        page.screenshot({
+          path: "afterAllLog.jpg",
         });
+
+        // const x = await utils.writeFileSync("aloha", "world");
+        // console.log("x", x);
+
+        // utils.writeFileSync("maude", "pants");
+        // await window["custom-screenshot"]("bannana227.jpg");
+        // const { uid } = utils.createWriteStream("hello");
+        // utils.write(uid, "world");
 
         res(store);
       });
@@ -64,7 +61,7 @@ export const RectangleTesteranto = Testeranto(
       //     artificer("afterAll.png", z.toPNG());
       //   });
 
-      console.log("do it");
+      // console.log("do it");
       // debugger;
       // utils.ipc.postMessage("kill yourself");
       // utils.ipc.sendSync("message", "kill yourself");
@@ -77,6 +74,15 @@ export const RectangleTesteranto = Testeranto(
       // await page.screenshot({
       //   path: 'hello99.jpg'
       // })
+    },
+    andWhen: async function (
+      s: Rectangle,
+      whenCB,
+      tr,
+      utils
+    ): Promise<Rectangle> {
+      utils.writeFileSync("andWhenLog", "icecream");
+      return whenCB(s);
     },
   }
 );

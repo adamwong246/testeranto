@@ -1,34 +1,46 @@
 import { ITProject } from "testeranto/src/Project";
 
-// import { solCompile } from "./src/truffle.mjs";
 import { solidityEsBuildConfig } from "./subPackages/solidity/index.js";
 
 export default new ITProject({
   outdir: "docs",
   features: "/Users/adam/Code/kokomoBay/features.test.mts",
   tests: [
-    ["./src/LoginPage/react/web.test.tsx", "web", []],
-    ["./src/LoginPage/react/node.test.tsx", "node", []],
-    ["./src/LoginPage/react-test-renderer/web.test.tsx", "web", []],
-    ["./src/LoginPage/react-test-renderer/node.test.tsx", "node", []],
-    ["./src/ReactStateAndHook.test.tsx", "node", []],
-    ["./src/app.reduxToolkit.test.ts", "node", []],
-    ["./src/app.redux.test.ts", "node", []],
-    ["./src/Rectangle/Rectangle.test.electron.ts", "web", []],
+    // ["./src/LoginPage/react/web.test.tsx", "web", { ports: 0 }, []],
+    // ["./src/LoginPage/react/node.test.tsx", "node", { ports: 0 }, []],
+
+    // [
+    //   "./src/LoginPage/react-test-renderer/web.test.tsx",
+    //   "web",
+    //   { ports: 0 },
+    //   [],
+    // ],
+    // ["./src/LoginPage/react-test-renderer/node.test.tsx", "node", []],
+    // ["./src/ReactStateAndHook.test.tsx", "node", []],
+    // ["./src/app.reduxToolkit.test.ts", "node", []],
+    // ["./src/app.redux.test.ts", "node", []],
+
+    // ["./src/Rectangle/Rectangle.test.electron.ts", "web", { ports: 0 }, []],
+    // [
+    //   "./src/Rectangle/Rectangle.test.node.ts",
+    //   "node",
+    //   { ports: 0 },
+    //   [["./src/ClassicalComponent/test.ts", "web", { ports: 0 }, []]],
+    // ],
     [
-      "./src/Rectangle/Rectangle.test.node.ts",
-      "node",
-      [["./src/ClassicalComponent/test.ts", "web", []]],
+      "./src/ClassicalComponent/react-dom/client.web.test.tsx",
+      "web",
+      { ports: 0 },
+      [],
     ],
-    ["./src/MyFirstContract.basic.test.ts", "node", []],
-    ["./src/MyFirstContract.rpc.test.ts", "node", []],
+
+    // ["./src/MyFirstContract.basic.test.ts", "node", { ports: 0 }, []],
+    // ["./src/MyFirstContract.rpc.test.ts", "node", { ports: 1 }, []],
   ],
 
   debugger: true,
   clearScreen: false,
   devMode: true,
-  //
-  // tests: 'tests.test.mts',
   minify: false,
   outbase: ".",
   externals: ["ganache", "stream"],

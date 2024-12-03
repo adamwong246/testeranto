@@ -25,10 +25,8 @@
     "testeranto-clean": "rm -rf docs && mkdir docs",
     "testeranto-esbuild": "ts-node-esm testeranto.mts",
     "testeranto-esbuild-dev": "ts-node-esm testeranto.mts -dev",
-    "testeranto-electron": "electron node_modules/testeranto/dist/common/electron.js",
-    "testeranto-electron-dev": "electron node_modules/testeranto/dist/common/electron.js -dev",
-    "testeranto-dev": "yarn testeranto-clean ; yarn testeranto-esbuild-dev & yarn testeranto-electron-dev",
-    "testeranto": "yarn testeranto-clean ; yarn testeranto-esbuild && yarn testeranto-electron"
+    "testeranto-puppeteer": "ts-node-esm node_modules/testeranto/dist/module/Puppeteer.js",
+    "testeranto-reporter": "cp ./node_modules/testeranto/dist/prebuild/Report.js docs/Report.js && node ./node_modules/testeranto/dist/module/Reporter.js"
   },
   "types": "index.d.ts",
   "dependencies": {

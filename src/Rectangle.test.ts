@@ -82,7 +82,6 @@ export const RectangleTesterantoBaseTestImplementation: ITestImplementation<
 
   thens: {
     AreaPlusCircumference: (combined) => (rectangle) => {
-      console.log("MARK");
       assert.equal(rectangle.area() + rectangle.circumference(), combined);
     },
     getWidth: (width) => (rectangle) => assert.equal(rectangle.width, width),
@@ -116,42 +115,40 @@ export const RectangleTesterantoBaseTestSpecification: ITestSpecification<
         test0: Given.Default(
           [`hello`],
           [When.setWidth(4), When.setHeight(9)],
+          [Then.getWidth(4), Then.getHeight(99)]
+        ),
+        test1: Given.Default(
+          [`hello`],
+          [When.setWidth(4), When.setHeight(5)],
           [
-            // Then.getWidth(4), Then.getHeight(9)
+            // Then.getWidth(4),
+            // Then.getHeight(5),
+            // Then.area(20),
+            // Then.AreaPlusCircumference(38),
           ]
         ),
-        // "test1": Given.Default(
-        //   [`hello`],
-        //   [When.setWidth(4), When.setHeight(5)],
-        //   [
-        //     // Then.getWidth(4),
-        //     // Then.getHeight(5),
-        //     // Then.area(20),
-        //     // Then.AreaPlusCircumference(38),
-        //   ]
-        // ),
-        // "test2": Given.Default(
-        //   [`hello`],
-        //   [When.setHeight(4), When.setWidth(3)],
-        //   [
-        //     // Then.area(12)
-        //   ]
-        // ),
-        // "test3": Given.Default(
-        //   [`hello`],
-        //   [When.setHeight(5), When.setWidth(5)],
-        //   [
-        //     // Then.area(5)
-        //   ]
-        // ),
+        test2: Given.Default(
+          [`hello`],
+          [When.setHeight(4), When.setWidth(3)],
+          [
+            // Then.area(12)
+          ]
+        ),
+        test3: Given.Default(
+          [`hello`],
+          [When.setHeight(5), When.setWidth(5)],
+          [
+            // Then.area(5)
+          ]
+        ),
 
-        // "test4": Given.Default(
-        //   [`hello`],
-        //   [When.setHeight(6), When.setWidth(6)],
-        //   [
-        //     // Then.area(37)
-        //   ]
-        // )
+        test4: Given.Default(
+          [`hello`],
+          [When.setHeight(6), When.setWidth(6)],
+          [
+            // Then.area(37)
+          ]
+        ),
       },
       []
       // Check.Default(
