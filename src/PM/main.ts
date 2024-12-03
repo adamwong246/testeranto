@@ -10,7 +10,10 @@ import { PM } from "./index.js";
 
 type IFPaths = string[];
 const fPaths: IFPaths = [];
-const fileStreams: fs.WriteStream[] = [];
+
+const fileStreams3: fs.WriteStream[] = [];
+const screenshots3: Promise<any>[] = [];
+const doneFileStream3: Promise<any>[] = [];
 
 export class PM_Main extends PM {
   configs: IBuiltConfig;
@@ -44,26 +47,33 @@ export class PM_Main extends PM {
     };
 
     globalThis["writeFileSync"] = (fp: string, contents: string) => {
+      // Create directories if they don't exist
+      const dir = path.dirname(fp.split("/").slice(0, -1).join("/"));
+      console.log("dir", dir);
+      fs.mkdirSync(dir, {
+        recursive: true,
+      });
       return fs.writeFileSync(fp, contents);
     };
 
     globalThis["createWriteStream"] = (filepath: string) => {
       const f = fs.createWriteStream(filepath);
-      fileStreams.push(f);
+      fileStreams3.push(f);
+
       return {
         ...JSON.parse(JSON.stringify(f)),
-        uid: fileStreams.length - 1,
+        uid: fileStreams3.length - 1,
       };
     };
 
     globalThis["write"] = (uid: number, contents: string) => {
       console.log("write", uid, contents);
       // process.exit();
-      fileStreams[uid].write(contents);
+      fileStreams3[uid].write(contents);
     };
 
     globalThis["end"] = (uid: number) => {
-      fileStreams[uid].end();
+      fileStreams3[uid].end();
     };
   }
 
@@ -150,7 +160,7 @@ export class PM_Main extends PM {
   launchWeb = (t: string, dest: string) => {
     console.log("launchWeb", t, dest);
     const testResourceConfiguration = this.testResourceConfiguration;
-    console.log("mkdirsync3", testResourceConfiguration);
+
     // childProcesses[t] = "running";
     const destFolder = dest.replace(".mjs", "");
 
@@ -162,6 +172,7 @@ export class PM_Main extends PM {
     });
 
     const evaluation = `import('${dest}.mjs').then(async (x) => {
+      console.log("imported", x, (x.default));
       try {
         await (await x.default).receiveTestResourceConfig(${webArgz})
       } catch (e) {
@@ -169,22 +180,58 @@ export class PM_Main extends PM {
       }
     })`;
 
+    const fileStreams2: fs.WriteStream[] = [];
+
+    const screenshots2: Promise<any>[] = [];
+    const doneFileStream2: Promise<any>[] = [];
+
     this.browser
       .newPage()
       .then((page) => {
         page.exposeFunction(
           "custom-screenshot",
           async (ssOpts: ScreenshotOptions) => {
+            const p = ssOpts.path as string;
             console.log("custom-screenshot", ssOpts);
-            await page.screenshot({
+            const dir = path.dirname(p);
+            console.log("dir", dir);
+            fs.mkdirSync(dir, {
+              recursive: true,
+            });
+            // page.screenshot({
+            //   ...ssOpts,
+            //   path: ssOpts.path,
+            // });
+
+            // screenshots.push(
+            //   page.screenshot({
+            //     ...ssOpts,
+            //     path: ssOpts.path,
+            //   })
+            // );
+            return await page.screenshot({
               ...ssOpts,
-              path: ssOpts.path,
+              path: p,
             });
           }
         );
 
         page.exposeFunction("writeFileSync", (fp: string, contents: string) => {
-          fs.writeFileSync(fp, contents);
+          console.log("writeFileSync", fp);
+          // Create directories if they don't exist
+          const dir = path.dirname(fp);
+          console.log("dir", dir);
+          fs.mkdirSync(dir, {
+            recursive: true,
+          });
+          // return fs.writeFileSync(fp, contents);
+
+          const p = new Promise<string>(async (res, rej) => {
+            fs.writeFileSync(fp, contents);
+            res(fp);
+          });
+          doneFileStream2.push(p);
+          return p;
         });
 
         page.exposeFunction("existsSync", (fp: string, contents: string) => {
@@ -203,35 +250,65 @@ export class PM_Main extends PM {
 
         page.exposeFunction("createWriteStream", (fp: string) => {
           const f = fs.createWriteStream(fp);
-          fileStreams.push(f);
+
+          const p = new Promise<string>((res, rej) => {
+            res(fp);
+          });
+          doneFileStream2.push(p);
+          f.on("close", async () => {
+            await p;
+          });
+          fileStreams2.push(f);
           return {
             ...JSON.parse(JSON.stringify(f)),
-            uid: fileStreams.length - 1,
+            uid: fileStreams2.length - 1,
           };
         });
 
         page.exposeFunction("write", async (uid: number, contents: string) => {
-          return fileStreams[uid].write(contents);
+          return fileStreams2[uid].write(contents);
         });
 
         page.exposeFunction("end", async (uid: number) => {
-          return fileStreams[uid].end();
+          return fileStreams2[uid].end();
         });
 
         page.exposeFunction("customclose", () => {
-          return page.close();
+          console.log("closing doneFileStream2", doneFileStream2);
+          // console.log("closing doneFileStream2", doneFileStream2);
+          Promise.all([...doneFileStream2, ...screenshots2]).then(() => {
+            // page.close();
+          });
+
+          // page.close();
+          // Promise.all(screenshots).then(() => {
+          //   page.close();
+          // });
+          // setTimeout(() => {
+          //   console.log("Delayed for 1 second.");
+          //   page.close();
+          // }, 5000);
+
+          // return page.close();
         });
 
         return page;
       })
       .then(async (page) => {
-        await page.goto(`file://${`${dest}.html`}`);
+        await page.goto(`file://${`${dest}.html`}`, {
+          // waitUntil: "load",
+          // timeout: 0,
+        });
+
         page.evaluate(evaluation).finally(() => {
           console.log("evaluation failed.", dest);
         });
+
+        return page;
       })
-      .then((x) => {
-        console.log("mark1", x);
+      .then((page) => {
+        // console.log("qwe", page);
+        // page.close();
       });
   };
 

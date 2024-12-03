@@ -32,7 +32,9 @@ const path_1 = __importDefault(require("path"));
 const puppeteer_core_1 = __importDefault(require("puppeteer-core"));
 const index_js_1 = require("./index.js");
 const fPaths = [];
-const fileStreams = [];
+const fileStreams3 = [];
+const screenshots3 = [];
+const doneFileStream3 = [];
 class PM_Main extends index_js_1.PM {
     // testResourceConfiguration: ITTestResourceConfiguration;
     constructor(configs
@@ -109,7 +111,6 @@ class PM_Main extends index_js_1.PM {
         this.launchWeb = (t, dest) => {
             console.log("launchWeb", t, dest);
             const testResourceConfiguration = this.testResourceConfiguration;
-            console.log("mkdirsync3", testResourceConfiguration);
             // childProcesses[t] = "running";
             const destFolder = dest.replace(".mjs", "");
             const webArgz = JSON.stringify({
@@ -119,21 +120,54 @@ class PM_Main extends index_js_1.PM {
                 browserWSEndpoint: this.browser.wsEndpoint(),
             });
             const evaluation = `import('${dest}.mjs').then(async (x) => {
+      console.log("imported", x, (x.default));
       try {
         await (await x.default).receiveTestResourceConfig(${webArgz})
       } catch (e) {
         console.log("fail", e)
       }
     })`;
+            const fileStreams2 = [];
+            const screenshots2 = [];
+            const doneFileStream2 = [];
             this.browser
                 .newPage()
                 .then((page) => {
                 page.exposeFunction("custom-screenshot", async (ssOpts) => {
+                    const p = ssOpts.path;
                     console.log("custom-screenshot", ssOpts);
-                    await page.screenshot(Object.assign(Object.assign({}, ssOpts), { path: ssOpts.path }));
+                    const dir = path_1.default.dirname(p);
+                    console.log("dir", dir);
+                    fs_1.default.mkdirSync(dir, {
+                        recursive: true,
+                    });
+                    // page.screenshot({
+                    //   ...ssOpts,
+                    //   path: ssOpts.path,
+                    // });
+                    // screenshots.push(
+                    //   page.screenshot({
+                    //     ...ssOpts,
+                    //     path: ssOpts.path,
+                    //   })
+                    // );
+                    return await page.screenshot(Object.assign(Object.assign({}, ssOpts), { path: p }));
                 });
                 page.exposeFunction("writeFileSync", (fp, contents) => {
-                    fs_1.default.writeFileSync(fp, contents);
+                    console.log("writeFileSync", fp);
+                    // Create directories if they don't exist
+                    const dir = path_1.default.dirname(fp);
+                    console.log("dir", dir);
+                    fs_1.default.mkdirSync(dir, {
+                        recursive: true,
+                    });
+                    // return fs.writeFileSync(fp, contents);
+                    const p = new Promise(async (res, rej) => {
+                        fs_1.default.writeFileSync(fp, contents);
+                        res(fp);
+                    });
+                    doneFileStream2.push(p);
+                    return p;
                 });
                 page.exposeFunction("existsSync", (fp, contents) => {
                     return fs_1.default.existsSync(fp);
@@ -149,28 +183,53 @@ class PM_Main extends index_js_1.PM {
                 });
                 page.exposeFunction("createWriteStream", (fp) => {
                     const f = fs_1.default.createWriteStream(fp);
-                    fileStreams.push(f);
-                    return Object.assign(Object.assign({}, JSON.parse(JSON.stringify(f))), { uid: fileStreams.length - 1 });
+                    const p = new Promise((res, rej) => {
+                        res(fp);
+                    });
+                    doneFileStream2.push(p);
+                    f.on("close", async () => {
+                        await p;
+                    });
+                    fileStreams2.push(f);
+                    return Object.assign(Object.assign({}, JSON.parse(JSON.stringify(f))), { uid: fileStreams2.length - 1 });
                 });
                 page.exposeFunction("write", async (uid, contents) => {
-                    return fileStreams[uid].write(contents);
+                    return fileStreams2[uid].write(contents);
                 });
                 page.exposeFunction("end", async (uid) => {
-                    return fileStreams[uid].end();
+                    return fileStreams2[uid].end();
                 });
                 page.exposeFunction("customclose", () => {
-                    return page.close();
+                    console.log("closing doneFileStream2", doneFileStream2);
+                    // console.log("closing doneFileStream2", doneFileStream2);
+                    Promise.all([...doneFileStream2, ...screenshots2]).then(() => {
+                        // page.close();
+                    });
+                    // page.close();
+                    // Promise.all(screenshots).then(() => {
+                    //   page.close();
+                    // });
+                    // setTimeout(() => {
+                    //   console.log("Delayed for 1 second.");
+                    //   page.close();
+                    // }, 5000);
+                    // return page.close();
                 });
                 return page;
             })
                 .then(async (page) => {
-                await page.goto(`file://${`${dest}.html`}`);
+                await page.goto(`file://${`${dest}.html`}`, {
+                // waitUntil: "load",
+                // timeout: 0,
+                });
                 page.evaluate(evaluation).finally(() => {
                     console.log("evaluation failed.", dest);
                 });
+                return page;
             })
-                .then((x) => {
-                console.log("mark1", x);
+                .then((page) => {
+                // console.log("qwe", page);
+                // page.close();
             });
         };
         // this.testResourceConfiguration = testResourceConfig;
@@ -190,20 +249,26 @@ class PM_Main extends index_js_1.PM {
             return false;
         };
         globalThis["writeFileSync"] = (fp, contents) => {
+            // Create directories if they don't exist
+            const dir = path_1.default.dirname(fp.split("/").slice(0, -1).join("/"));
+            console.log("dir", dir);
+            fs_1.default.mkdirSync(dir, {
+                recursive: true,
+            });
             return fs_1.default.writeFileSync(fp, contents);
         };
         globalThis["createWriteStream"] = (filepath) => {
             const f = fs_1.default.createWriteStream(filepath);
-            fileStreams.push(f);
-            return Object.assign(Object.assign({}, JSON.parse(JSON.stringify(f))), { uid: fileStreams.length - 1 });
+            fileStreams3.push(f);
+            return Object.assign(Object.assign({}, JSON.parse(JSON.stringify(f))), { uid: fileStreams3.length - 1 });
         };
         globalThis["write"] = (uid, contents) => {
             console.log("write", uid, contents);
             // process.exit();
-            fileStreams[uid].write(contents);
+            fileStreams3[uid].write(contents);
         };
         globalThis["end"] = (uid) => {
-            fileStreams[uid].end();
+            fileStreams3[uid].end();
         };
     }
     async startPuppeteer(options, destfolder) {

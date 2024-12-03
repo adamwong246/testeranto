@@ -7,23 +7,6 @@ export default class Testeranto extends ClassBuilder {
     ) {
         const fullTestInterface = DefaultTestInterface(testInterface);
         super(testImplementation, testSpecification, input, class extends BaseSuite {
-            assertThat(t) {
-                fullTestInterface.assertThis(t);
-            }
-            async setup(s, artifactory, tr, pm) {
-                console.log("mark12");
-                return (fullTestInterface.beforeAll ||
-                    (async (input, artifactory, tr, pm) => input))(s, this.testResourceConfiguration, artifactory, pm);
-            }
-        }, class Given extends BaseGiven {
-            async givenThat(subject, testResource, artifactory, initializer, pm) {
-                return fullTestInterface.beforeEach(subject, initializer, (fPath, value) => 
-                // TODO does not work?
-                artifactory(`beforeEach/${fPath}`, value), testResource, this.initialValues, pm);
-            }
-            afterEach(store, key, artifactory, pm) {
-                return new Promise((res) => res(fullTestInterface.afterEach(store, key, (fPath, value) => artifactory(`after/${fPath}`, value), pm)));
-            }
             afterAll(store, artifactory, pm) {
                 // const pagesHandler = {
                 //   get(target, prop) {
@@ -52,9 +35,26 @@ export default class Testeranto extends ClassBuilder {
                 // }
                 );
             }
+            assertThat(t) {
+                fullTestInterface.assertThis(t);
+            }
+            async setup(s, artifactory, tr, pm) {
+                console.log("mark12");
+                return (fullTestInterface.beforeAll ||
+                    (async (input, artifactory, tr, pm) => input))(s, this.testResourceConfiguration, artifactory, pm);
+            }
+        }, class Given extends BaseGiven {
+            async givenThat(subject, testResource, artifactory, initializer, pm) {
+                return fullTestInterface.beforeEach(subject, initializer, (fPath, value) => 
+                // TODO does not work?
+                artifactory(`beforeEach/${fPath}`, value), testResource, this.initialValues, pm);
+            }
+            afterEach(store, key, artifactory, pm) {
+                return new Promise((res) => res(fullTestInterface.afterEach(store, key, (fPath, value) => artifactory(`after/${fPath}`, value), pm)));
+            }
         }, class When extends BaseWhen {
-            async andWhen(store, whenCB, testResource) {
-                return await fullTestInterface.andWhen(store, whenCB, testResource);
+            async andWhen(store, whenCB, testResource, pm) {
+                return await fullTestInterface.andWhen(store, whenCB, testResource, pm);
             }
         }, class Then extends BaseThen {
             async butThen(store, thenCB, testResourceConfiguration) {

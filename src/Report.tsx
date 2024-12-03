@@ -11,7 +11,7 @@ import { Sigma, RandomizeNodePositions, RelativeSize } from 'react-sigma';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { TesterantoFeatures } from "./Features.js";
-import { ITestTypes } from "./lib/types.js";
+import { IRunTime, ITestTypes } from "./lib/types.js";
 
 type IGraphData = {
   nodes: { id: string, label: string }[],
@@ -45,14 +45,34 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 const Report = () => {
+
+  const [state, setState] = useState<{
+    tests: ITestTypes[],
+    buildDir: string,
+    features: TesterantoFeatures
+    results: any
+  }>({
+    tests: [],
+    buildDir: "",
+    features: new TesterantoFeatures({}, {
+      undirected: [],
+      directed: [],
+      dags: []
+    }),
+    results: {}
+  });
+
   const [tests, setTests] = useState<
     {
-      tests: ITestTypes[]
+      tests: ITestTypes[],
+      buildDir: string,
     }
 
   >({
-    tests: []
+    tests: [],
+    buildDir: ""
   });
+
   const [features, setFeatures] = useState<TesterantoFeatures>(
     new TesterantoFeatures({}, {
       undirected: [],
@@ -61,34 +81,99 @@ const Report = () => {
     })
   );
 
-  useEffect(() => {
-    const importFeatures = async () => {
-      const module = await import('features.test.js');
-      console.log("imported features", module.default);
-      setFeatures(module.default);
-    };
-    importFeatures();
-  }, []);
+  const [results, setResults] = useState<Record<string, { exitcode, log, testresults }>>(
+    {}
+  );
+
+  const importState = async () => {
+    const features = await import('features.test.js');
+    const config = await (await fetch("./testeranto.json")).json();
+    const results = await Promise.all(config.tests.map((test) => {
+      return new Promise(async (res, rej) => {
+        const src: string = test[0];
+        const runtime: IRunTime = test[1];
+        const s: string = [tests.buildDir, runtime as string].concat(src.split(".").slice(0, - 1).join(".")).join("/");
+        const exitcode = await (await fetch(config.buildDir + "/" + s + "/exitcode")).text()
+        const log = await (await fetch(config.buildDir + "/" + s + "/log.txt")).text()
+        const testresults = await (await fetch(config.buildDir + "/" + s + "/tests.json")).json()
+
+        res({ src, exitcode, log, testresults })
+      })
+    }))
+    // const results = await config.tests.reduce(async (p, test) => {
+    //   const src: string = test[0];
+    //   const runtime: IRunTime = test[1];
+    //   console.log(runtime)
+    //   const s: string = [tests.buildDir, runtime as string].concat(src.split(".").slice(0, - 1).join(".")).join("/");
+    //   // const srr
+    //   console.log("s", s)
+
+    //   const exitcode = await (await fetch(config.buildDir + "/" + s + "/exitcode")).text()
+    //   const log = await (await fetch(config.buildDir + "/" + s + "/log.txt")).text()
+    //   const testresults = await (await fetch(config.buildDir + "/" + s + "/tests.json")).text()
+
+    //   // setResults({ src, exitcode, log, testresults })
+    //   // console.log("a", await a.text())
+    //   p[src] = { exitcode, log, testresults }
+    //   return p
+    // }, {});
+
+    console.log("results", results)
 
 
+    setState({ tests: config.tests as any, results, features: features as any, buildDir: config.buildDir })
+  };
+
+  const importFeatures = async () => {
+    const module = await import('features.test.js');
+    setFeatures(module.default);
+  };
+
+  const importTests = async () => {
+    const x = await fetch("./testeranto.json")
+    const y = await x.json();
+    setTests(y as any);
+  };
+
+  useEffect(() => { importState(); }, []);
+
+  useEffect(() => { importFeatures(); }, []);
+  useEffect(() => { importTests(); }, []);
+
   useEffect(() => {
-    const importTests = async () => {
-      const x = await fetch("./testeranto.json")
-      const y = await x.json();
-      console.log("imported tests", y);
-      setTests(y as any);
+    const collateResults = async () => {
+      console.log("collating", tests, features);
+      const r = tests.tests.reduce(async (p, test) => {
+        const src: string = test[0];
+        const runtime: IRunTime = test[1];
+        console.log(runtime)
+        const s: string = [tests.buildDir, runtime as string].concat(src.split(".").slice(0, - 1).join(".")).join("/");
+        // const srr
+        // console.log(s)
+
+        const exitcode = await (await fetch(s + "/exitcode")).text()
+        const log = await (await fetch(s + "/log.txt")).text()
+        const testresults = await (await fetch(s + "/tests.json")).text()
+
+        // setResults({ src, exitcode, log, testresults })
+        // console.log("a", await a.text())
+        p[src] = { exitcode, log, testresults }
+      }, {});
+
+      setResults(r);
+      // const x = await fetch("./testeranto.json")
+      // const y = await x.json();
+      // setTests(y as any);
       // const module = await import('tests.json', {
       //   with: {
       //     type: 'json'
       //   }
       // });
       // console.log("imported tests", module.default);
-      // setTests(module.default);
+      // setResults("foo");
     };
-
-    importTests();
+    collateResults();
   }, []);
-
 
   return (
     <div>
@@ -96,6 +181,7 @@ const Report = () => {
         {`
 pre, code, p {
   max-width: 30rem;
+  text-wrap: auto;
 }
 footer {
   background-color: lightgray;
@@ -108,11 +194,16 @@ footer {
           `}
       </style>
 
-      {features && tests && < Tabs defaultActiveKey="home" >
+      {features && tests && < Tabs defaultActiveKey="config" >
 
-        <Tab eventKey="home" title="config">
-          <pre>{JSON.stringify(features, null, 2)}</pre>
-          <pre>{JSON.stringify(tests, null, 2)}</pre>
+
+
+        <Tab eventKey="config" title="config">
+          <pre>{JSON.stringify(state, null, 2)}</pre>
+        </Tab>
+
+        <Tab eventKey="results" title="results">
+          <pre>{JSON.stringify(state.results, null, 2)}</pre>
         </Tab>
 
         <Tab eventKey="features" title="features">
@@ -168,7 +259,7 @@ footer {
                   </Tab>
 
                   <Tab eventKey="feature.tests" title="tests">
-                    <pre id="theProps">{JSON.stringify(tests, null, 2)}</pre>
+                    <pre id="theProps">{JSON.stringify(tests.tests, null, 2)}</pre>
                   </Tab>
                 </Tabs>
               </Col>
@@ -221,7 +312,7 @@ footer {
                           </Tab>
 
                           <Tab eventKey="feature.tests" title="tests">
-                            <pre id="theProps">{JSON.stringify(tests, null, 2)}</pre>
+                            <pre id="theProps">{JSON.stringify(tests.tests, null, 2)}</pre>
                           </Tab>
                         </Tabs>
                       </Col>
@@ -270,7 +361,7 @@ footer {
                           </Tab>
 
                           <Tab eventKey="feature.tests" title="tests">
-                            <pre id="theProps">{JSON.stringify(tests, null, 2)}</pre>
+                            <pre id="theProps">{JSON.stringify(tests.tests, null, 2)}</pre>
                           </Tab>
                         </Tabs>
                       </Col>
@@ -317,7 +408,7 @@ footer {
                           </Tab>
 
                           <Tab eventKey="feature.tests" title="tests">
-                            <pre id="theProps">{JSON.stringify(tests, null, 2)}</pre>
+                            <pre id="theProps">{JSON.stringify(tests.tests, null, 2)}</pre>
                           </Tab>
                         </Tabs>
                       </Col>
@@ -332,25 +423,26 @@ footer {
           </Tab.Container>
         </Tab>
 
-        <Tab eventKey="results" title="tests">
+        <Tab eventKey="tests" title="tests">
           <Tab.Container id="left-tabs-example5" defaultActiveKey="feature-0">
             <Row>
               <Col sm={2}>
                 {/* <Tree tests={features.tests} /> */}
-                {/* <Nav variant="pills" className="flex-column">
-                    {
-                      features.tests.map((t, ndx) =>
-                        <Nav.Item key={ndx}>
-                          <Nav.Link eventKey={`test-${ndx}`}>
-                            {t[0]} - {t[1]}
-                          </Nav.Link>
-                        </Nav.Item>
-                      )
-                    }
-                  </Nav> */}
+                <Nav variant="pills" className="flex-column">
+                  {
+                    tests.tests.map((t, ndx) =>
+                      <Nav.Item key={ndx}>
+                        <Nav.Link eventKey={`test-${ndx}`}>
+                          {t[0]} - {t[1]}
+                        </Nav.Link>
+                      </Nav.Item>
+                    )
+                  }
+                </Nav>
               </Col>
               <Col sm={6}>
                 <Tab.Content>
+                  <pre>{JSON.stringify(tests.tests, null, 2)}</pre>
                   {/* {tests.tests.map((t, ndx) => {
                     return (
                       <Tab.Pane eventKey={`feature-${ndx}`} key={ndx}>

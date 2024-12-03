@@ -149,11 +149,11 @@ export abstract class BaseBuilder<
           //    puppetMaster.mkdirSync(destFolder, { recursive: true });
           //  }
 
-          puppetMaster.writeFileSync(
-            // puppetMaster.testResourceConfiguration.fs + `/tests.json`,
-            `tests.json`,
-            JSON.stringify(this.toObj(), null, 2)
-          );
+          // puppetMaster.writeFileSync(
+          //   // puppetMaster.testResourceConfiguration.fs + `/tests.json`,
+          //   `tests.json`,
+          //   JSON.stringify(this.toObj(), null, 2)
+          // );
 
           const logFilePath = "log.txt";
           // puppetMaster.testResourceConfiguration.fs + `/log.txt`;
@@ -167,32 +167,24 @@ export abstract class BaseBuilder<
             puppetMaster.write(access, `${l.toString()}\n`);
           };
 
-          // console.log("runner", runner);
-
           const suiteDone: BaseSuite<ITestShape> = await runner(
             puppetMaster,
             tLog
           );
 
-          // console.log("suiteDone", suiteDone);
-
           const logPromise = new Promise((res, rej) => {
-            // res(true);
-            // access.on("finish", () => {
-            //   res(true);
-            // });
             puppetMaster.end(access);
             res(true);
           });
-          // access.end();
 
           const numberOfFailures = Object.keys(suiteDone.givens).filter((k) => {
             return suiteDone.givens[k].error;
           }).length;
+          puppetMaster.writeFileSync(`exitcode`, numberOfFailures.toString());
+
           puppetMaster.writeFileSync(
-            // puppetMaster.testResourceConfiguration.fs + `/exitcode`,
-            `exitcode`,
-            numberOfFailures.toString()
+            `tests.json`,
+            JSON.stringify(this.toObj(), null, 2)
           );
           console.log(`exiting gracefully with ${numberOfFailures} failures.`);
           return {

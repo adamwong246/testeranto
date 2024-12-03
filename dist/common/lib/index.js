@@ -4,7 +4,7 @@ exports.defaultTestResourceRequirement = exports.DefaultTestInterface = exports.
 // import { INodeUtils, ITestInterface, IUtils, IWebUtils } from "./types.js";
 exports.BaseTestInterface = {
     beforeAll: async (s) => s,
-    beforeEach: async function (subject, initialValues, testResource, pm) {
+    beforeEach: async function (subject, initialValues, x, testResource, pm) {
         return subject;
     },
     afterEach: async (s) => s,

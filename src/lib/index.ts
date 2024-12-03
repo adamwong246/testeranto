@@ -17,6 +17,7 @@ export const BaseTestInterface: ITestInterface<IBaseTest> = {
   beforeEach: async function (
     subject: any,
     initialValues: any,
+    x: any,
     testResource: any,
     pm: PM
   ) {

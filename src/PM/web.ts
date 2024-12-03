@@ -31,7 +31,7 @@ export class PM_Web extends PM {
   }
 
   writeFileSync(fp: string, contents: string) {
-    console.log("WEB writeFileSync", this.testResourceConfiguration);
+    console.log("WEB writeFileSync", fp);
     return window["writeFileSync"](
       this.testResourceConfiguration.fs + "/" + fp,
       contents
@@ -123,13 +123,10 @@ export class PM_Web extends PM {
             this.browser = b;
             const handler2 = {
               get(target, prop, receiver) {
-                // console.log("handler2 target", target); //, prop, receiver);
-                // console.log("handler2 prop", prop);
-                // console.log("handler2 receiver", receiver);
-                // return target[prop](...arguments);
                 if (prop === "screenshot") {
+                  console.log("foobar1");
                   return (x) => {
-                    // console.log("custom-screenshot", arguments, x);
+                    console.log("WEB custom-screenshot", x);
                     window["custom-screenshot"]({
                       ...x,
                       path: destFolder + "/" + x.path,
@@ -140,24 +137,13 @@ export class PM_Web extends PM {
                 } else {
                   return Reflect.get(...arguments);
                 }
-                // if (prop === "mainFrame") {
-                //   return (target[prop] = target.mainFrame);
-                // } else {
-                //   return Reflect.get(...arguments);
-                // }
-                // return target.pages().map((page) => {
-                //   return new Proxy(page, handler1);
-                // });
               },
             };
-
+            console.log("foobar2");
             const handler1 = {
               get(target, prop, receiver) {
-                // console.log("handler1 target", target); //, prop, receiver);
-                // console.log("handler1 prop", prop);
-                // console.log("handler1 receiver", receiver);
-
                 if (prop === "pages") {
+                  console.log("foobar1");
                   return async () => {
                     return target.pages().then((pages) => {
                       return pages.map((p) => {
@@ -174,7 +160,7 @@ export class PM_Web extends PM {
               },
             };
 
-            // console.log("this.browser", this.browser);
+            console.log("this.browser", this.browser);
             // console.log("this.browser.pages", this.browser.pages);
             const proxy3 = new Proxy(this.browser, handler1);
             this.browser = proxy3;

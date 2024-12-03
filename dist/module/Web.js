@@ -10,21 +10,24 @@ class WebTesteranto extends Testeranto {
         const pm = new PM_Web(t);
         const { failed, artifacts, logPromise } = await this.testJobs[0].receiveTestResourceConfig(pm);
         console.log("test is done, awaiting test result write to fs");
-        Promise.all([...artifacts, logPromise]).then(async () => {
-            // we can't close the window becuase we might be taking a screenshot
-            // window.close();
-            // console.log(
-            //   "(window as any).browser",
-            //   JSON.stringify(await (window as any).browser)
-            // );
-            // var currentWindow = (await (window as any).browser).getCurrentWindow();
-            // window.close();
-            // var customWindow = window.open("", "_blank", "");
-            // customWindow.close();
-            // this.puppetMaster.browser.page
-            // window["customclose"]();
-            // console.log("goodbye", window["customclose"]());
-        });
+        pm.customclose();
+        // Promise.all([...artifacts, logPromise]).then(async () => {
+        //   console.log("hello world");
+        //   pm.customclose();
+        //   // we can't close the window becuase we might be taking a screenshot
+        //   // window.close();
+        //   // console.log(
+        //   //   "(window as any).browser",
+        //   //   JSON.stringify(await (window as any).browser)
+        //   // );
+        //   // var currentWindow = (await (window as any).browser).getCurrentWindow();
+        //   // window.close();
+        //   // var customWindow = window.open("", "_blank", "");
+        //   // customWindow.close();
+        //   // this.puppetMaster.browser.page
+        //   // window["customclose"]();
+        //   // console.log("goodbye", window["customclose"]());
+        // });
     }
 }
 export default async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = defaultTestResourceRequirement) => {

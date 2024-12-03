@@ -45,13 +45,15 @@ export abstract class BaseSuite<ITestShape extends IBaseTest> {
     tr: ITTestResourceConfiguration,
     pm: PM
   ): Promise<ITestShape["isubject"]> {
-    // console.log("marl11");
     return new Promise((res) => res(s as unknown as ITestShape["isubject"]));
   }
 
   assertThat(t: ITestShape["then"]): unknown {
-    // console.log("base assertThat")
     return t;
+  }
+
+  afterAll(store: ITestShape["istore"], artifactory: ITestArtifactory, pm: PM) {
+    return store;
   }
 
   async run(
@@ -66,61 +68,127 @@ export abstract class BaseSuite<ITestShape extends IBaseTest> {
 
     const suiteArtifactory = (fPath: string, value: unknown) =>
       artifactory(`suite-${this.index}-${this.name}/${fPath}`, value);
-    const subject = await this.setup(
-      input,
-      suiteArtifactory,
-      testResourceConfiguration,
-      pm
-    );
 
     console.log("\nSuite:", this.index, this.name);
     tLog("\nSuite:", this.index, this.name);
-    for (const k of Object.keys(this.givens)) {
-      const giver = this.givens[k];
+    const sNdx = this.index;
+    const sName = this.name;
+
+    for (const [gNdx, g] of Object.entries(this.givens)) {
+      const subject = await this.setup(
+        input,
+        suiteArtifactory,
+        testResourceConfiguration,
+        pm
+      );
+
+      const giver = this.givens[gNdx];
       try {
         this.store = await giver.give(
           subject,
-          k,
+          gNdx,
           testResourceConfiguration,
           this.assertThat,
           suiteArtifactory,
           tLog,
-          pm
+          pm,
+          sNdx
         );
       } catch (e) {
         console.error(e);
         this.fails.push(giver);
-        return this;
+        // return this;
       }
     }
 
-    for (const [ndx, thater] of this.checks.entries()) {
-      await thater.check(
-        subject,
-        thater.name,
-        testResourceConfiguration,
-        this.assertThat,
-        suiteArtifactory,
-        tLog,
-        pm
-      );
+    const afterAllProxy = new Proxy(pm, {
+      get(target, prop, receiver) {
+        if (prop === "writeFileSync") {
+          return (fp, contents) =>
+            target[prop](`suite-${sNdx}/afterAll/${fp}`, contents);
+        }
+
+        if (prop === "browser") {
+          return new Proxy(target[prop], {
+            get(bTarget, bProp, bReceiver) {
+              if (bProp === "pages") {
+                return async () => {
+                  return bTarget.pages().then((pages) => {
+                    return pages.map((page) => {
+                      return new Proxy(page, {
+                        get(pTarget, pProp, pReciever) {
+                          if (pProp === "screenshot") {
+                            return (x) => {
+                              console.log(
+                                "custom-screenshot-MARK",
+                                arguments,
+                                x
+                              );
+                              window["custom-screenshot"]({
+                                ...x,
+                                path:
+                                  `${testResourceConfiguration.fs}/suite-${sNdx}/afterAll` +
+                                  "/" +
+                                  x.path,
+                              });
+                            };
+                          }
+                          // else if (pProp === "mainFrame") {
+                          //   return () => target[pProp](...arguments);
+                          // }
+                          else {
+                            return Reflect.get(...arguments);
+                          }
+                        },
+                      });
+                    });
+                  });
+                  // return (await target.pages()).map((page) => {
+                  //   return new Proxy(page, handler2);
+                  // });
+                };
+              }
+            },
+          });
+        }
+
+        return Reflect.get(...arguments);
+      },
+    });
+
+    // pm.browser
+    try {
+      this.afterAll(this.store, artifactory, afterAllProxy);
+    } catch (e) {
+      console.error(e);
+      // this.fails.push(this);
+      // return this;
     }
+
+    // for (const [ndx, thater] of this.checks.entries()) {
+    //   await thater.check(
+    //     subject,
+    //     thater.name,
+    //     testResourceConfiguration,
+    //     this.assertThat,
+    //     suiteArtifactory,
+    //     tLog,
+    //     pm
+    //   );
+    // }
 
     // @TODO fix me
-    for (const k of Object.keys(this.givens)) {
-      const giver = this.givens[k];
+    // for (const k of Object.keys(this.givens)) {
+    //   const giver = this.givens[k];
 
-      // const pm2 = 1;
-      // console.log("mark4", pm2);
-
-      try {
-        giver.afterAll(this.store, artifactory, pm);
-      } catch (e) {
-        console.error(e);
-        this.fails.push(giver);
-        return this;
-      }
-    }
+    //   try {
+    //     giver.afterAll(this.store, artifactory, pm);
+    //   } catch (e) {
+    //     console.error(e);
+    //     this.fails.push(giver);
+    //     return this;
+    //   }
+    // }
     ////////////////
 
     return this;
@@ -133,6 +201,7 @@ export abstract class BaseGiven<ITestShape extends IBaseTest> {
   whens: BaseWhen<ITestShape>[];
   thens: BaseThen<ITestShape>[];
   error: Error;
+  fail: any;
   store: ITestShape["istore"];
   recommendedFsPath: string;
   givenCB: ITestShape["given"];
@@ -158,16 +227,13 @@ export abstract class BaseGiven<ITestShape extends IBaseTest> {
     return store;
   }
 
-  afterAll(store: ITestShape["istore"], artifactory: ITestArtifactory, pm: PM) {
-    return store;
-  }
-
   toObj() {
     return {
       name: this.name,
       whens: this.whens.map((w) => w.toObj()),
       thens: this.thens.map((t) => t.toObj()),
       error: this.error ? [this.error, this.error.stack] : null,
+      // fail: this.fail ? [this.fail] : false,
       features: this.features,
     };
   }
@@ -193,29 +259,55 @@ export abstract class BaseGiven<ITestShape extends IBaseTest> {
     subject: ITestShape["isubject"],
     key: string,
     testResourceConfiguration,
-    tester,
+    tester: (t: Awaited<ITestShape["then"]> | undefined) => boolean,
     artifactory: ITestArtifactory,
     tLog: ITLog,
-    pm: PM
+    pm: PM,
+    suiteNdx: number
   ) {
     tLog(`\n Given: ${this.name}`);
 
     const givenArtifactory = (fPath: string, value: unknown) =>
       artifactory(`given-${key}/${fPath}`, value);
     try {
-      this.store = await this.givenThat(
-        subject,
-        testResourceConfiguration,
-        givenArtifactory,
-        this.givenCB,
-        pm
-      );
-
       // tLog(`\n Given this.store`, this.store);
-      for (const whenStep of this.whens) {
-        await whenStep.test(this.store, testResourceConfiguration, tLog, pm);
+      for (const [whenNdx, whenStep] of this.whens.entries()) {
+        const beforeEachProxy = new Proxy(pm, {
+          get(target, prop, receiver) {
+            if (prop === "writeFileSync") {
+              console.log("beforeEachProx", arguments, target[prop]);
+              return (fp, contents) =>
+                target[prop](
+                  `suite-${suiteNdx}/given-${key}/when/${whenNdx}/beforeEach/${fp}`,
+                  contents
+                );
+            }
+
+            return Reflect.get(...arguments);
+          },
+        });
+
+        this.store = await this.givenThat(
+          subject,
+          testResourceConfiguration,
+          givenArtifactory,
+          this.givenCB,
+          beforeEachProxy
+          // pm
+        );
+
+        await whenStep.test(
+          this.store,
+          testResourceConfiguration,
+          tLog,
+          pm,
+          // `${this.name}/${whenNdx}`
+          `suite-${suiteNdx}/given-${key}/when/${whenNdx}`
+        );
       }
+      console.log("mark-then1");
       for (const thenStep of this.thens) {
+        console.log("mark-then", thenStep);
         const t = await thenStep.test(
           this.store,
           testResourceConfiguration,
@@ -223,6 +315,12 @@ export abstract class BaseGiven<ITestShape extends IBaseTest> {
           pm
         );
         tester(t);
+        // this.fail = "foobar";
+        // if (tested) {
+        //   this.fail = false;
+        // } else {
+        //   this.fail = true;
+        // }
       }
     } catch (e) {
       this.error = e;
@@ -231,7 +329,82 @@ export abstract class BaseGiven<ITestShape extends IBaseTest> {
       // throw e;
     } finally {
       try {
-        await this.afterEach(this.store, key, givenArtifactory, pm);
+        // const afterEachProxy = new Proxy(pm, {
+        //   get(target, prop, receiver) {
+        //     if (prop === "writeFileSync") {
+        //       console.log("afterEachProxy", arguments, target[prop]);
+        //       return (fp, contents) =>
+        //         // target[prop](`${key}/andWhen/${fp}`, contents);
+        //         target[prop](`${key}/afterEach/${fp}`, contents);
+        //     }
+
+        //     return Reflect.get(...arguments);
+        //   },
+        // });
+
+        // await this.afterEach(this.store, key, givenArtifactory, afterEachProxy);
+
+        // await this.afterEach(this.store, key, givenArtifactory, pm);
+
+        const afterEachProxy = new Proxy(pm, {
+          get(target, prop, receiver) {
+            if (prop === "writeFileSync") {
+              return (fp, contents) =>
+                target[prop](
+                  `suite-${suiteNdx}/given-${key}/afterAll/${fp}`,
+                  contents
+                );
+            }
+
+            if (prop === "browser") {
+              return new Proxy(target[prop], {
+                get(bTarget, bProp, bReceiver) {
+                  if (bProp === "pages") {
+                    return async () => {
+                      return bTarget.pages().then((pages) => {
+                        return pages.map((page) => {
+                          return new Proxy(page, {
+                            get(pTarget, pProp, pReciever) {
+                              if (pProp === "screenshot") {
+                                return (x) => {
+                                  console.log(
+                                    "custom-screenshot-MARK",
+                                    arguments,
+                                    x
+                                  );
+                                  window["custom-screenshot"]({
+                                    ...x,
+                                    path:
+                                      `${testResourceConfiguration.fs}/suite-${suiteNdx}/given-${key}/afterEach` +
+                                      "/" +
+                                      x.path,
+                                  });
+                                };
+                              }
+                              // else if (pProp === "mainFrame") {
+                              //   return () => target[pProp](...arguments);
+                              // }
+                              else {
+                                return Reflect.get(...arguments);
+                              }
+                            },
+                          });
+                        });
+                      });
+                      // return (await target.pages()).map((page) => {
+                      //   return new Proxy(page, handler2);
+                      // });
+                    };
+                  }
+                },
+              });
+            }
+
+            return Reflect.get(...arguments);
+          },
+        });
+
+        await this.afterEach(this.store, key, givenArtifactory, afterEachProxy);
       } catch (e) {
         console.error("afterEach failed! no error will be recorded!", e);
       }
@@ -256,7 +429,8 @@ export abstract class BaseWhen<ITestShape extends IBaseTest> {
   abstract andWhen(
     store: ITestShape["istore"],
     whenCB: (x: ITestShape["iselection"]) => ITestShape["then"],
-    testResource
+    testResource,
+    pm: PM
   );
 
   toObj() {
@@ -270,11 +444,32 @@ export abstract class BaseWhen<ITestShape extends IBaseTest> {
     store: ITestShape["istore"],
     testResourceConfiguration,
     tLog: ITLog,
-    pm: PM
+    pm: PM,
+    key: string
   ) {
     tLog(" When:", this.name);
+
+    const name = this.name;
+    const andWhenProxy = new Proxy(pm, {
+      get(target, prop, receiver) {
+        if (prop === "writeFileSync") {
+          console.log("andWhenProxy", arguments, target[prop]);
+          return (fp, contents) =>
+            // target[prop](`${key}/andWhen/${fp}`, contents);
+            target[prop](`${key}/andWhen/${fp}`, contents);
+        }
+
+        return Reflect.get(...arguments);
+      },
+    });
+
     try {
-      return await this.andWhen(store, this.whenCB, testResourceConfiguration);
+      return await this.andWhen(
+        store,
+        this.whenCB,
+        testResourceConfiguration,
+        andWhenProxy
+      );
     } catch (e) {
       this.error = true;
       throw e;
@@ -293,6 +488,7 @@ export abstract class BaseThen<ITestShape extends IBaseTest> {
   ) {
     this.name = name;
     this.thenCB = thenCB;
+    this.error = false;
   }
 
   toObj() {
@@ -324,7 +520,7 @@ export abstract class BaseThen<ITestShape extends IBaseTest> {
       return x;
     } catch (e) {
       console.log("test failed", e);
-      this.error = true;
+      this.error = e.message;
       throw e;
     }
   }
@@ -392,7 +588,8 @@ export abstract class BaseCheck<ITestShape extends IBaseTest> {
             store,
             testResourceConfiguration,
             tLog,
-            pm
+            pm,
+            "x"
           );
         };
         return a;

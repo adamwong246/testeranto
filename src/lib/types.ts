@@ -75,8 +75,8 @@ export type IWebTestInterface<ITestShape extends IBaseTest> = {
     initializer: (c?) => ITestShape["given"],
     artificer: ITestArtificer,
     testResource: ITTestResourceConfiguration,
-    initialValues
-    // utils: IUtils
+    initialValues,
+    utils: PM
   ) => Promise<ITestShape["istore"]>;
 };
 // & ITestInterface<ITestShape>;
@@ -127,7 +127,8 @@ export type ITestInterface<ITestShape extends IBaseTest> = {
   andWhen: (
     store: ITestShape["istore"],
     whenCB: ITestShape["when"],
-    testResource: ITTestResourceConfiguration
+    testResource: ITTestResourceConfiguration,
+    pm: PM
   ) => Promise<ITestShape["istore"]>;
   butThen: (
     store: ITestShape["istore"],

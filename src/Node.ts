@@ -49,10 +49,6 @@ class NodeTesteranto<
 
     console.log("test is done, awaiting test result write to fs");
 
-    console.log(failed);
-    console.log(artifacts);
-    console.log(logPromise);
-
     Promise.all([...artifacts, logPromise]).then(async () => {
       // process.exit((await failed) ? 1 : 0);
     });

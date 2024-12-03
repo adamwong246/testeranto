@@ -18,9 +18,6 @@ class NodeTesteranto extends core_js_1.default {
         const pm = new node_js_1.PM_Node(t);
         const { failed, artifacts, logPromise } = await this.testJobs[0].receiveTestResourceConfig(pm);
         console.log("test is done, awaiting test result write to fs");
-        console.log(failed);
-        console.log(artifacts);
-        console.log(logPromise);
         Promise.all([...artifacts, logPromise]).then(async () => {
             // process.exit((await failed) ? 1 : 0);
         });

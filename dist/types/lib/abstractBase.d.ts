@@ -30,6 +30,7 @@ export declare abstract class BaseSuite<ITestShape extends IBaseTest> {
     };
     setup(s: ITestShape["iinput"], artifactory: ITestArtifactory, tr: ITTestResourceConfiguration, pm: PM): Promise<ITestShape["isubject"]>;
     assertThat(t: ITestShape["then"]): unknown;
+    afterAll(store: ITestShape["istore"], artifactory: ITestArtifactory, pm: PM): ITestShape["istore"];
     run(input: ITestShape["iinput"], testResourceConfiguration: ITTestResourceConfiguration, artifactory: (fPath: string, value: unknown) => void, tLog: (...string: any[]) => void, pm: PM): Promise<BaseSuite<ITestShape>>;
 }
 export declare abstract class BaseGiven<ITestShape extends IBaseTest> {
@@ -38,13 +39,13 @@ export declare abstract class BaseGiven<ITestShape extends IBaseTest> {
     whens: BaseWhen<ITestShape>[];
     thens: BaseThen<ITestShape>[];
     error: Error;
+    fail: any;
     store: ITestShape["istore"];
     recommendedFsPath: string;
     givenCB: ITestShape["given"];
     initialValues: any;
     constructor(name: string, features: string[], whens: BaseWhen<ITestShape>[], thens: BaseThen<ITestShape>[], givenCB: ITestShape["given"], initialValues: any);
     beforeAll(store: ITestShape["istore"], artifactory: ITestArtifactory): ITestShape["istore"];
-    afterAll(store: ITestShape["istore"], artifactory: ITestArtifactory, pm: PM): ITestShape["istore"];
     toObj(): {
         name: string;
         whens: {
@@ -60,19 +61,19 @@ export declare abstract class BaseGiven<ITestShape extends IBaseTest> {
     };
     abstract givenThat(subject: ITestShape["isubject"], testResourceConfiguration: any, artifactory: ITestArtifactory, givenCB: ITestShape["given"], pm: PM): Promise<ITestShape["istore"]>;
     afterEach(store: ITestShape["istore"], key: string, artifactory: ITestArtifactory, pm: PM): Promise<unknown>;
-    give(subject: ITestShape["isubject"], key: string, testResourceConfiguration: any, tester: any, artifactory: ITestArtifactory, tLog: ITLog, pm: PM): Promise<ITestShape["istore"]>;
+    give(subject: ITestShape["isubject"], key: string, testResourceConfiguration: any, tester: (t: Awaited<ITestShape["then"]> | undefined) => boolean, artifactory: ITestArtifactory, tLog: ITLog, pm: PM, suiteNdx: number): Promise<ITestShape["istore"]>;
 }
 export declare abstract class BaseWhen<ITestShape extends IBaseTest> {
     name: string;
     whenCB: (x: ITestShape["iselection"]) => ITestShape["then"];
     error: boolean;
     constructor(name: string, whenCB: (xyz: ITestShape["iselection"]) => ITestShape["then"]);
-    abstract andWhen(store: ITestShape["istore"], whenCB: (x: ITestShape["iselection"]) => ITestShape["then"], testResource: any): any;
+    abstract andWhen(store: ITestShape["istore"], whenCB: (x: ITestShape["iselection"]) => ITestShape["then"], testResource: any, pm: PM): any;
     toObj(): {
         name: string;
         error: boolean;
     };
-    test(store: ITestShape["istore"], testResourceConfiguration: any, tLog: ITLog, pm: PM): Promise<any>;
+    test(store: ITestShape["istore"], testResourceConfiguration: any, tLog: ITLog, pm: PM, key: string): Promise<any>;
 }
 export declare abstract class BaseThen<ITestShape extends IBaseTest> {
     name: string;
