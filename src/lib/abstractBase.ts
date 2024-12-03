@@ -118,13 +118,14 @@ export abstract class BaseSuite<ITestShape extends IBaseTest> {
                       return new Proxy(page, {
                         get(pTarget, pProp, pReciever) {
                           if (pProp === "screenshot") {
-                            return (x) => {
+                            return async (x) => {
                               console.log(
-                                "custom-screenshot-MARK",
-                                arguments,
-                                x
+                                "custom-screenshot-MARK-afterAllProxy",
+                                // arguments,
+                                // x,
+                                window["custom-screenshot"].toString()
                               );
-                              window["custom-screenshot"]({
+                              return await window["custom-screenshot"]({
                                 ...x,
                                 path:
                                   `${testResourceConfiguration.fs}/suite-${sNdx}/afterAll` +
@@ -366,13 +367,12 @@ export abstract class BaseGiven<ITestShape extends IBaseTest> {
                           return new Proxy(page, {
                             get(pTarget, pProp, pReciever) {
                               if (pProp === "screenshot") {
-                                return (x) => {
+                                return async (x) => {
                                   console.log(
-                                    "custom-screenshot-MARK",
-                                    arguments,
-                                    x
+                                    "custom-screenshot-MARK-afterEachProxy",
+                                    window["custom-screenshot"].toString()
                                   );
-                                  window["custom-screenshot"]({
+                                  return await window["custom-screenshot"]({
                                     ...x,
                                     path:
                                       `${testResourceConfiguration.fs}/suite-${suiteNdx}/given-${key}/afterEach` +

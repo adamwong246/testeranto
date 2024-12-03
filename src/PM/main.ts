@@ -198,10 +198,10 @@ export class PM_Main extends PM {
             fs.mkdirSync(dir, {
               recursive: true,
             });
-            // page.screenshot({
-            //   ...ssOpts,
-            //   path: ssOpts.path,
-            // });
+            return page.screenshot({
+              ...ssOpts,
+              path: p,
+            });
 
             // screenshots.push(
             //   page.screenshot({
@@ -209,10 +209,12 @@ export class PM_Main extends PM {
             //     path: ssOpts.path,
             //   })
             // );
-            return await page.screenshot({
-              ...ssOpts,
-              path: p,
-            });
+            // const sPromise = page.screenshot({
+            //   ...ssOpts,
+            //   path: p,
+            // });
+            // await sPromise;
+            // page.evaluate(`window["screenshot done"]`);
           }
         );
 
@@ -277,7 +279,7 @@ export class PM_Main extends PM {
           console.log("closing doneFileStream2", doneFileStream2);
           // console.log("closing doneFileStream2", doneFileStream2);
           Promise.all([...doneFileStream2, ...screenshots2]).then(() => {
-            // page.close();
+            page.close();
           });
 
           // page.close();

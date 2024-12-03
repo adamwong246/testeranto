@@ -82,9 +82,10 @@ exports.default = (testInput, testSpecifications, testImplementations) => {
                     "file:///Users/adam/Code/kokomoBay/docs/web/src/ClassicalComponent/react-dom/client.web.test.html");
                 // return true;
             })[0];
-            await page.screenshot({
+            const x = await page.screenshot({
                 path: "afterEachLog.jpg",
             });
+            console.log("x", x);
             // debugger;
             // const div_root = document.getElementById("root");
             // store.domRoot && store.domRoot.unmount(); //React 18

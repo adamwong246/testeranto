@@ -60,9 +60,12 @@ class BaseSuite {
                                             return new Proxy(page, {
                                                 get(pTarget, pProp, pReciever) {
                                                     if (pProp === "screenshot") {
-                                                        return (x) => {
-                                                            console.log("custom-screenshot-MARK", arguments, x);
-                                                            window["custom-screenshot"](Object.assign(Object.assign({}, x), { path: `${testResourceConfiguration.fs}/suite-${sNdx}/afterAll` +
+                                                        return async (x) => {
+                                                            console.log("custom-screenshot-MARK-afterAllProxy", 
+                                                            // arguments,
+                                                            // x,
+                                                            window["custom-screenshot"].toString());
+                                                            return await window["custom-screenshot"](Object.assign(Object.assign({}, x), { path: `${testResourceConfiguration.fs}/suite-${sNdx}/afterAll` +
                                                                     "/" +
                                                                     x.path }));
                                                         };
@@ -220,9 +223,9 @@ class BaseGiven {
                                                     return new Proxy(page, {
                                                         get(pTarget, pProp, pReciever) {
                                                             if (pProp === "screenshot") {
-                                                                return (x) => {
-                                                                    console.log("custom-screenshot-MARK", arguments, x);
-                                                                    window["custom-screenshot"](Object.assign(Object.assign({}, x), { path: `${testResourceConfiguration.fs}/suite-${suiteNdx}/given-${key}/afterEach` +
+                                                                return async (x) => {
+                                                                    console.log("custom-screenshot-MARK-afterEachProxy", window["custom-screenshot"].toString());
+                                                                    return await window["custom-screenshot"](Object.assign(Object.assign({}, x), { path: `${testResourceConfiguration.fs}/suite-${suiteNdx}/given-${key}/afterEach` +
                                                                             "/" +
                                                                             x.path }));
                                                                 };

@@ -129,9 +129,10 @@ export default <ITestShape extends IBaseTest, IWhen, IGiven>(
           // return true;
         })[0];
 
-        await page.screenshot({
+        const x = await page.screenshot({
           path: "afterEachLog.jpg",
         });
+        console.log("x", x);
         // debugger;
         // const div_root = document.getElementById("root");
         // store.domRoot && store.domRoot.unmount(); //React 18

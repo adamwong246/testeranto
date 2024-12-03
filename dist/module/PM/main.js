@@ -112,17 +112,19 @@ export class PM_Main extends PM {
                     fs.mkdirSync(dir, {
                         recursive: true,
                     });
-                    // page.screenshot({
-                    //   ...ssOpts,
-                    //   path: ssOpts.path,
-                    // });
+                    return page.screenshot(Object.assign(Object.assign({}, ssOpts), { path: p }));
                     // screenshots.push(
                     //   page.screenshot({
                     //     ...ssOpts,
                     //     path: ssOpts.path,
                     //   })
                     // );
-                    return await page.screenshot(Object.assign(Object.assign({}, ssOpts), { path: p }));
+                    // const sPromise = page.screenshot({
+                    //   ...ssOpts,
+                    //   path: p,
+                    // });
+                    // await sPromise;
+                    // page.evaluate(`window["screenshot done"]`);
                 });
                 page.exposeFunction("writeFileSync", (fp, contents) => {
                     console.log("writeFileSync", fp);
@@ -174,7 +176,7 @@ export class PM_Main extends PM {
                     console.log("closing doneFileStream2", doneFileStream2);
                     // console.log("closing doneFileStream2", doneFileStream2);
                     Promise.all([...doneFileStream2, ...screenshots2]).then(() => {
-                        // page.close();
+                        page.close();
                     });
                     // page.close();
                     // Promise.all(screenshots).then(() => {

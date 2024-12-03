@@ -1,5 +1,14 @@
 import { PM } from "./index.js";
 import puppeteer from "puppeteer-core/lib/esm/puppeteer/puppeteer-core-browser.js";
+function waitForFunctionCall() {
+    return new Promise((resolve) => {
+        window["myFunction"] = () => {
+            // Do something when myFunction is called
+            console.log("myFunction was called!");
+            resolve(); // Resolve the promise
+        };
+    });
+}
 export class PM_Web extends PM {
     // testResourceConfiguration: ITTestResourceConfiguration;
     constructor(t) {
@@ -72,7 +81,6 @@ export class PM_Web extends PM {
             }));
         };
     }
-    // launch(options?: PuppeteerLaunchOptions): Promise<Browser>;
     startPuppeteer(options, destFolder) {
         return fetch(`http://localhost:3234/json/version`)
             .then((v) => {
@@ -83,19 +91,15 @@ export class PM_Web extends PM {
             return puppeteer
                 .connect({
                 browserWSEndpoint: json.webSocketDebuggerUrl,
-            }
-            // options
-            // { browserWSEndpoint: "ws://localhost:3234/devtools/browser/RANDOM" }
-            )
+            })
                 .then((b) => {
                 this.browser = b;
                 const handler2 = {
                     get(target, prop, receiver) {
                         if (prop === "screenshot") {
-                            console.log("foobar1");
-                            return (x) => {
-                                console.log("WEB custom-screenshot", x);
-                                window["custom-screenshot"](Object.assign(Object.assign({}, x), { path: destFolder + "/" + x.path }));
+                            return async (x) => {
+                                debugger;
+                                return await window["custom-screenshot"](Object.assign(Object.assign({}, x), { path: destFolder + "/" + x.path }));
                             };
                         }
                         else if (prop === "mainFrame") {
@@ -106,30 +110,22 @@ export class PM_Web extends PM {
                         }
                     },
                 };
-                console.log("foobar2");
                 const handler1 = {
                     get(target, prop, receiver) {
                         if (prop === "pages") {
-                            console.log("foobar1");
                             return async () => {
                                 return target.pages().then((pages) => {
                                     return pages.map((p) => {
                                         return new Proxy(p, handler2);
                                     });
                                 });
-                                // return (await target.pages()).map((page) => {
-                                //   return new Proxy(page, handler2);
-                                // });
                             };
                         }
                         return Reflect.get(...arguments);
                     },
                 };
-                console.log("this.browser", this.browser);
-                // console.log("this.browser.pages", this.browser.pages);
                 const proxy3 = new Proxy(this.browser, handler1);
                 this.browser = proxy3;
-                // console.log("this.browser.pages2", this.browser.pages);
             });
         });
         // console.log("connecting to ws://localhost:3234/devtools/browser/RANDOM");

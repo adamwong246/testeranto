@@ -27,7 +27,7 @@ const main = async () => {
     await pm.startPuppeteer({
         waitForInitialPage: false,
         executablePath: "/opt/homebrew/bin/chromium",
-        headless: false,
+        headless: true,
         dumpio: true,
         args: [
             "--allow-file-access-from-files",

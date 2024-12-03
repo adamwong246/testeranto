@@ -35,7 +35,7 @@ const main = async () => {
     {
       waitForInitialPage: false,
       executablePath: "/opt/homebrew/bin/chromium",
-      headless: false,
+      headless: true,
       dumpio: true,
       args: [
         "--allow-file-access-from-files",
