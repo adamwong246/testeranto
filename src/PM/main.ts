@@ -138,7 +138,9 @@ export class PM_Main extends PM {
 
     const builtfile = dest + ".mjs";
 
-    this.server[builtfile] = await import(builtfile).then((module) => {
+    this.server[builtfile] = await import(
+      `${builtfile}?cacheBust=${Date.now()}`
+    ).then((module) => {
       return module.default.then((defaultModule) => {
         defaultModule
           .receiveTestResourceConfig(argz)

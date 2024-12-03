@@ -91,7 +91,7 @@ class PM_Main extends index_js_1.PM {
                 process.exit(-1);
             }
             const builtfile = dest + ".mjs";
-            this.server[builtfile] = await Promise.resolve().then(() => __importStar(require(builtfile))).then((module) => {
+            this.server[builtfile] = await Promise.resolve().then(() => __importStar(require(`${builtfile}?cacheBust=${Date.now()}`))).then((module) => {
                 return module.default.then((defaultModule) => {
                     defaultModule
                         .receiveTestResourceConfig(argz)
