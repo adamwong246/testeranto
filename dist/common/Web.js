@@ -14,7 +14,6 @@ class WebTesteranto extends core_js_1.default {
         const t = partialTestResource; //JSON.parse(partialTestResource);
         const pm = new web_1.PM_Web(t);
         const { failed, artifacts, logPromise } = await this.testJobs[0].receiveTestResourceConfig(pm);
-        console.log("test is done, awaiting test result write to fs");
         pm.customclose();
         // Promise.all([...artifacts, logPromise]).then(async () => {
         //   console.log("hello world");

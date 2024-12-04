@@ -429,7 +429,7 @@ footer {
         <Tab eventKey="tests" title="tests">
           <Tab.Container id="left-tabs-example5" defaultActiveKey="feature-0">
             <Row>
-              <Col sm={2}>
+              <Col sm={4}>
                 {/* <Tree tests={features.tests} /> */}
                 <Nav variant="pills" className="flex-column">
                   {
@@ -443,7 +443,7 @@ footer {
                   }
                 </Nav>
               </Col>
-              <Col sm={6}>
+              <Col sm={4}>
                 <Tab.Content>
 
                   {

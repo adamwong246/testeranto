@@ -1,3 +1,5 @@
+/// <reference types="node" />
+/// <reference types="node" />
 import { PassThrough } from "stream";
 import { ITLog, ITTestResourceConfiguration } from "../lib";
 import { PM } from "./index.js";

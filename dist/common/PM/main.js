@@ -196,7 +196,6 @@ class PM_Main extends index_js_1.PM {
                 page.exposeFunction("customclose", (p, testName) => {
                     fs_1.default.writeFileSync(p + "/manifest.json", JSON.stringify(Array.from(files[testName])));
                     delete files[testName];
-                    console.log("screenshots", testName, screenshots);
                     Promise.all(screenshots[testName] || []).then(() => {
                         delete screenshots[testName];
                         page.close();

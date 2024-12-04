@@ -1,7 +1,16 @@
+import React from "react";
 export const testInterface = {
-    beforeEach: async (x, ndx, testRsource, artificer) => {
+    // beforeAll: async (proto, testResource, artificer, pm): Promise<IStore> => {
+    //   return React.createElement(proto);
+    //   // return new Promise((resolve, rej) => {
+    //   //   resolve(x());
+    //   // });
+    // },
+    beforeEach: async (subject, initializer, artificer) => {
         return new Promise((resolve, rej) => {
-            resolve(x());
+            const x = React.createElement(subject);
+            console.log("react-element", x);
+            resolve(x);
         });
     },
     andWhen: function (s, whenCB) {

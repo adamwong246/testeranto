@@ -329,7 +329,6 @@ export class PM_Main extends PM {
           );
           delete files[testName];
 
-          console.log("screenshots", testName, screenshots);
           Promise.all(screenshots[testName] || []).then(() => {
             delete screenshots[testName];
             page.close();

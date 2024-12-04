@@ -10,18 +10,11 @@ class NodeTesteranto extends core_js_1.default {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
         super(input, testSpecification, testImplementation, testResourceRequirement, testInterface);
     }
-    async receiveTestResourceConfig(
-    // t: ITestJob,
-    partialTestResource) {
-        console.log("receiveTestResourceConfig!!", this.testJobs[0].receiveTestResourceConfig);
+    async receiveTestResourceConfig(partialTestResource) {
         const t = JSON.parse(partialTestResource);
         const pm = new node_js_1.PM_Node(t);
         const { failed, artifacts, logPromise } = await this.testJobs[0].receiveTestResourceConfig(pm);
-        console.log("test is done, awaiting test result write to fs");
         pm.customclose();
-        // Promise.all([...artifacts, logPromise]).then(async () => {
-        //   // process.exit((await failed) ? 1 : 0);
-        // });
     }
 }
 exports.default = async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = index_js_1.defaultTestResourceRequirement) => {

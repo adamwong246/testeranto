@@ -2,9 +2,11 @@ import { CElement } from "react";
 
 import {
   IBaseTest,
+  IPartialInterface,
   ITestImplementation,
   ITestSpecification,
 } from "../../../Types";
+import React from "react";
 
 export type IWhenShape = any;
 export type IThenShape = any;
@@ -20,10 +22,18 @@ export type ITestImpl<ITestShape extends IBaseTest> =
 export type ITestSpec<ITestShape extends IBaseTest> =
   ITestSpecification<ITestShape>;
 
-export const testInterface = {
-  beforeEach: async (x, ndx, testRsource, artificer): Promise<IStore> => {
+export const testInterface: IPartialInterface<any> = {
+  // beforeAll: async (proto, testResource, artificer, pm): Promise<IStore> => {
+  //   return React.createElement(proto);
+  //   // return new Promise((resolve, rej) => {
+  //   //   resolve(x());
+  //   // });
+  // },
+  beforeEach: async (subject, initializer, artificer): Promise<IStore> => {
     return new Promise((resolve, rej) => {
-      resolve(x());
+      const x = React.createElement(subject);
+      console.log("react-element", x);
+      resolve(x);
     });
   },
   andWhen: function (s: IStore, whenCB): Promise<ISelection> {

@@ -33,26 +33,12 @@ class NodeTesteranto<
     );
   }
 
-  async receiveTestResourceConfig(
-    // t: ITestJob,
-    partialTestResource: string
-  ) {
-    console.log(
-      "receiveTestResourceConfig!!",
-      this.testJobs[0].receiveTestResourceConfig
-    );
-
+  async receiveTestResourceConfig(partialTestResource: string) {
     const t: ITTestResourceConfiguration = JSON.parse(partialTestResource);
     const pm = new PM_Node(t);
     const { failed, artifacts, logPromise } =
       await this.testJobs[0].receiveTestResourceConfig(pm);
-
-    console.log("test is done, awaiting test result write to fs");
     pm.customclose();
-
-    // Promise.all([...artifacts, logPromise]).then(async () => {
-    //   // process.exit((await failed) ? 1 : 0);
-    // });
   }
 }
 
