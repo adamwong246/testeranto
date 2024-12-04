@@ -4,20 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PM_Web = void 0;
-const index_js_1 = require("./index.js");
 const puppeteer_core_browser_js_1 = __importDefault(require("puppeteer-core/lib/esm/puppeteer/puppeteer-core-browser.js"));
-function waitForFunctionCall() {
-    return new Promise((resolve) => {
-        window["myFunction"] = () => {
-            // Do something when myFunction is called
-            console.log("myFunction was called!");
-            resolve(); // Resolve the promise
-        };
-    });
-}
-const files = new Set();
+const index_js_1 = require("./index.js");
 class PM_Web extends index_js_1.PM {
-    // testResourceConfiguration: ITTestResourceConfiguration;
     constructor(t) {
         super();
         this.server = {};
@@ -33,23 +22,16 @@ class PM_Web extends index_js_1.PM {
         return window["write"](writeObject.uid, contents);
     }
     writeFileSync(filepath, contents) {
-        console.log("WEB writeFileSync", filepath);
-        files.add(filepath);
-        return window["writeFileSync"](this.testResourceConfiguration.fs + "/" + filepath, contents);
+        return window["writeFileSync"](this.testResourceConfiguration.fs + "/" + filepath, contents, this.testResourceConfiguration.name);
     }
     createWriteStream(filepath) {
-        files.add(filepath);
-        return window["createWriteStream"](this.testResourceConfiguration.fs + "/" + filepath);
+        return window["createWriteStream"](this.testResourceConfiguration.fs + "/" + filepath, this.testResourceConfiguration.name);
     }
     end(writeObject) {
         return window["end"](writeObject.uid);
     }
     customclose() {
-        window["writeFileSync"](this.testResourceConfiguration.fs + "/manifest.json", 
-        // files.entries()
-        JSON.stringify(Array.from(files))).then(() => {
-            window["customclose"]();
-        });
+        window["customclose"](this.testResourceConfiguration.fs, this.testResourceConfiguration.name);
     }
     testArtiFactoryfileWriter(tLog, callback) {
         return (fPath, value) => {
@@ -95,12 +77,12 @@ class PM_Web extends index_js_1.PM {
         };
     }
     startPuppeteer(options, destFolder) {
+        const name = this.testResourceConfiguration.name;
         return fetch(`http://localhost:3234/json/version`)
             .then((v) => {
             return v.json();
         })
             .then((json) => {
-            console.log("found endpoint", json.webSocketDebuggerUrl);
             return puppeteer_core_browser_js_1.default
                 .connect({
                 browserWSEndpoint: json.webSocketDebuggerUrl,
@@ -111,10 +93,9 @@ class PM_Web extends index_js_1.PM {
                     get(target, prop, receiver) {
                         if (prop === "screenshot") {
                             return async (x) => {
-                                // debugger;
-                                files.add(x.path);
-                                console.log("aloha", files);
-                                return await window["custom-screenshot"](Object.assign(Object.assign({}, x), { path: destFolder + "/" + x.path }));
+                                return await window["custom-screenshot"](Object.assign(Object.assign({}, x), { 
+                                    // path: destFolder + "/" + x.path,
+                                    path: x.path }), name);
                             };
                         }
                         else if (prop === "mainFrame") {
@@ -143,32 +124,6 @@ class PM_Web extends index_js_1.PM {
                 this.browser = proxy3;
             });
         });
-        // console.log("connecting to ws://localhost:3234/devtools/browser/RANDOM");
-        // return puppeteer
-        //   .connect({
-        //     ...options,
-        //   })
-        //   .finally(() => {
-        //     console.log("idk");
-        //   });
-        // return new Promise<Browser>(async (res, rej) => {
-        //   console.log("connecting with options", options);
-        //   this.browser = await puppeteer.connect({
-        //     ...options,
-        //   });
-        //   res(this.browser);
-        // });
     }
 }
 exports.PM_Web = PM_Web;
-// class PuppetMasterServer extends AbstractPuppetMaster {
-//   // constructor(...z: []) {
-//   //   super(...z);
-//   // }
-//   // // pages(): Promise<Page[]>;
-//   // pages(): Promise<Page[]> {
-//   //   return new Promise<Page[]>((res, rej) => {
-//   //     res(super.pages());
-//   //   });
-//   // }
-// }

@@ -1,10 +1,7 @@
-/// <reference types="node" />
-/// <reference types="node" />
 import { PassThrough } from "stream";
 import { ITLog, ITTestResourceConfiguration } from "../lib";
 import { PM } from "./index.js";
 declare type PuppetMasterServer = Record<string, Promise<any>>;
-export declare function addPageBinding(type: string, name: string, prefix: string): void;
 export declare class PM_Node extends PM {
     server: PuppetMasterServer;
     testResourceConfiguration: ITTestResourceConfiguration;

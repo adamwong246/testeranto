@@ -33,17 +33,13 @@ const puppeteer_core_1 = __importDefault(require("puppeteer-core"));
 const index_js_1 = require("./index.js");
 const fPaths = [];
 const fileStreams3 = [];
-const screenshots3 = [];
-const doneFileStream3 = [];
+const files = {}; // = new Set<string>();
+const screenshots = {};
 class PM_Main extends index_js_1.PM {
-    // testResourceConfiguration: ITTestResourceConfiguration;
-    constructor(configs
-    // testResourceConfig: ITTestResourceConfiguration
-    ) {
+    constructor(configs) {
         super();
         this.launchNode = async (src, dest) => {
             console.log("launchNode", src);
-            // childProcesses[src] = "running";
             const destFolder = dest.replace(".mjs", "");
             let argz = "";
             const testConfig = this.configs.tests.find((t) => {
@@ -54,7 +50,6 @@ class PM_Main extends index_js_1.PM {
                 process.exit(-1);
             }
             const testConfigResource = testConfig[2];
-            console.log("mark22 testConfigResource", testConfigResource);
             let portsToUse = [];
             if (testConfigResource.ports === 0) {
                 argz = JSON.stringify({
@@ -110,8 +105,6 @@ class PM_Main extends index_js_1.PM {
         };
         this.launchWeb = (t, dest) => {
             console.log("launchWeb", t, dest);
-            const testResourceConfiguration = this.testResourceConfiguration;
-            // childProcesses[t] = "running";
             const destFolder = dest.replace(".mjs", "");
             const webArgz = JSON.stringify({
                 name: dest,
@@ -128,54 +121,49 @@ class PM_Main extends index_js_1.PM {
       }
     })`;
             const fileStreams2 = [];
-            const screenshots2 = [];
+            // const screenshots2: Promise<any>[] = [];
             const doneFileStream2 = [];
             this.browser
                 .newPage()
                 .then((page) => {
-                page.exposeFunction("custom-screenshot", async (ssOpts) => {
+                page.exposeFunction("custom-screenshot", async (ssOpts, testName) => {
+                    console.log("main.ts browser custom-screenshot", testName);
                     const p = ssOpts.path;
-                    console.log("custom-screenshot", ssOpts);
                     const dir = path_1.default.dirname(p);
-                    console.log("dir", dir);
                     fs_1.default.mkdirSync(dir, {
                         recursive: true,
                     });
-                    return page.screenshot(Object.assign(Object.assign({}, ssOpts), { path: p }));
-                    // screenshots.push(
-                    //   page.screenshot({
-                    //     ...ssOpts,
-                    //     path: ssOpts.path,
-                    //   })
-                    // );
-                    // const sPromise = page.screenshot({
-                    //   ...ssOpts,
-                    //   path: p,
-                    // });
-                    // await sPromise;
+                    files[testName].add(ssOpts.path);
+                    const sPromise = page.screenshot(Object.assign(Object.assign({}, ssOpts), { path: p }));
+                    if (!screenshots[testName]) {
+                        screenshots[testName] = [];
+                    }
+                    screenshots[testName].push(sPromise);
+                    // sPromise.then(())
+                    await sPromise;
+                    return sPromise;
                     // page.evaluate(`window["screenshot done"]`);
                 });
-                page.exposeFunction("writeFileSync", (fp, contents) => {
-                    console.log("writeFileSync", fp);
-                    // Create directories if they don't exist
+                page.exposeFunction("writeFileSync", (fp, contents, testName) => {
                     const dir = path_1.default.dirname(fp);
-                    console.log("dir", dir);
                     fs_1.default.mkdirSync(dir, {
                         recursive: true,
                     });
-                    // return fs.writeFileSync(fp, contents);
                     const p = new Promise(async (res, rej) => {
                         fs_1.default.writeFileSync(fp, contents);
                         res(fp);
                     });
                     doneFileStream2.push(p);
+                    if (!files[testName]) {
+                        files[testName] = new Set();
+                    }
+                    files[testName].add(fp);
                     return p;
                 });
                 page.exposeFunction("existsSync", (fp, contents) => {
                     return fs_1.default.existsSync(fp);
                 });
                 page.exposeFunction("mkdirSync", (fp) => {
-                    console.log("mkdirsync", fp);
                     if (!fs_1.default.existsSync(fp)) {
                         return fs_1.default.mkdirSync(fp, {
                             recursive: true,
@@ -183,8 +171,12 @@ class PM_Main extends index_js_1.PM {
                     }
                     return false;
                 });
-                page.exposeFunction("createWriteStream", (fp) => {
+                page.exposeFunction("createWriteStream", (fp, testName) => {
                     const f = fs_1.default.createWriteStream(fp);
+                    if (!files[testName]) {
+                        files[testName] = new Set();
+                    }
+                    files[testName].add(fp);
                     const p = new Promise((res, rej) => {
                         res(fp);
                     });
@@ -201,13 +193,24 @@ class PM_Main extends index_js_1.PM {
                 page.exposeFunction("end", async (uid) => {
                     return fileStreams2[uid].end();
                 });
-                page.exposeFunction("customclose", () => {
-                    console.log("closing doneFileStream2", doneFileStream2);
-                    // console.log("closing doneFileStream2", doneFileStream2);
-                    Promise.all([...doneFileStream2, ...screenshots2]).then(() => {
+                page.exposeFunction("customclose", (p, testName) => {
+                    fs_1.default.writeFileSync(p + "/manifest.json", JSON.stringify(Array.from(files[testName])));
+                    delete files[testName];
+                    console.log("screenshots", testName, screenshots);
+                    Promise.all(screenshots[testName] || []).then(() => {
+                        delete screenshots[testName];
                         page.close();
                     });
-                    // page.close();
+                    // globalThis["writeFileSync"](
+                    //   p + "/manifest.json",
+                    //   // files.entries()
+                    //   JSON.stringify(Array.from(files[testName]))
+                    // );
+                    // console.log("closing doneFileStream2", doneFileStream2);
+                    // console.log("closing doneFileStream2", doneFileStream2);
+                    // Promise.all([...doneFileStream2, ...screenshots2]).then(() => {
+                    //   page.close();
+                    // });
                     // Promise.all(screenshots).then(() => {
                     //   page.close();
                     // });
@@ -220,22 +223,13 @@ class PM_Main extends index_js_1.PM {
                 return page;
             })
                 .then(async (page) => {
-                await page.goto(`file://${`${dest}.html`}`, {
-                // waitUntil: "load",
-                // timeout: 0,
-                });
+                await page.goto(`file://${`${dest}.html`}`, {});
                 page.evaluate(evaluation).finally(() => {
                     console.log("evaluation failed.", dest);
                 });
                 return page;
-            })
-                .then((page) => {
-                // console.log("qwe", page);
-                // page.close();
             });
         };
-        // this.testResourceConfiguration = testResourceConfig;
-        // console.log("mkdirsync4", testResourceConfig);
         this.server = {};
         this.configs = configs;
         this.ports = {};
@@ -250,29 +244,45 @@ class PM_Main extends index_js_1.PM {
             }
             return false;
         };
-        globalThis["writeFileSync"] = (fp, contents) => {
+        globalThis["writeFileSync"] = (filepath, contents, testName) => {
             // Create directories if they don't exist
-            const dir = path_1.default.dirname(fp.split("/").slice(0, -1).join("/"));
-            console.log("dir", dir);
+            const dir = path_1.default.dirname(filepath.split("/").slice(0, -1).join("/"));
             fs_1.default.mkdirSync(dir, {
                 recursive: true,
             });
-            return fs_1.default.writeFileSync(fp, contents);
+            if (!files[testName]) {
+                files[testName] = new Set();
+            }
+            files[testName].add(filepath);
+            return fs_1.default.writeFileSync(filepath, contents);
         };
-        globalThis["createWriteStream"] = (filepath) => {
+        globalThis["createWriteStream"] = (filepath, testName) => {
             const f = fs_1.default.createWriteStream(filepath);
             fileStreams3.push(f);
+            // files.add(filepath);
+            if (!files[testName]) {
+                files[testName] = new Set();
+            }
+            files[testName].add(filepath);
             return Object.assign(Object.assign({}, JSON.parse(JSON.stringify(f))), { uid: fileStreams3.length - 1 });
         };
         globalThis["write"] = (uid, contents) => {
-            console.log("write", uid, contents);
-            // process.exit();
             fileStreams3[uid].write(contents);
         };
         globalThis["end"] = (uid) => {
             fileStreams3[uid].end();
         };
-        globalThis["customclose"] = () => {
+        globalThis["customclose"] = (p, testName) => {
+            if (!files[testName]) {
+                files[testName] = new Set();
+            }
+            fs_1.default.writeFileSync(p + "/manifest.json", JSON.stringify(Array.from(files[testName])));
+            delete files[testName];
+            // globalThis["writeFileSync"](
+            //   p + "/manifest.json",
+            //   // files.entries()
+            //   JSON.stringify(Array.from(files[testName]))
+            // );
             // fileStreams3[uid].end();
         };
         // page.exposeFunction("customclose", () => {

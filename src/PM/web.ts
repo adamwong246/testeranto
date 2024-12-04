@@ -1,28 +1,13 @@
 import { PassThrough } from "stream";
-import { ITLog, ITTestResourceConfiguration } from "../lib";
-import { PM } from "./index.js";
 import puppeteer from "puppeteer-core/lib/esm/puppeteer/puppeteer-core-browser.js";
 
-// type IFPaths = string[];
-// const fPaths: IFPaths = [];
+import { ITLog, ITTestResourceConfiguration } from "../lib";
+import { PM } from "./index.js";
 
 type PuppetMasterServer = Record<string, Promise<any>>;
 
-function waitForFunctionCall() {
-  return new Promise<void>((resolve) => {
-    window["myFunction"] = () => {
-      // Do something when myFunction is called
-      console.log("myFunction was called!");
-      resolve(); // Resolve the promise
-    };
-  });
-}
-
-const files = new Set<string>();
-
 export class PM_Web extends PM {
   server: PuppetMasterServer;
-  // testResourceConfiguration: ITTestResourceConfiguration;
 
   constructor(t: ITTestResourceConfiguration) {
     super();
@@ -43,18 +28,17 @@ export class PM_Web extends PM {
   }
 
   writeFileSync(filepath: string, contents: string) {
-    console.log("WEB writeFileSync", filepath);
-    files.add(filepath);
     return window["writeFileSync"](
       this.testResourceConfiguration.fs + "/" + filepath,
-      contents
+      contents,
+      this.testResourceConfiguration.name
     );
   }
 
   createWriteStream(filepath: string): any {
-    files.add(filepath);
     return window["createWriteStream"](
-      this.testResourceConfiguration.fs + "/" + filepath
+      this.testResourceConfiguration.fs + "/" + filepath,
+      this.testResourceConfiguration.name
     );
   }
 
@@ -63,13 +47,10 @@ export class PM_Web extends PM {
   }
 
   customclose() {
-    window["writeFileSync"](
-      this.testResourceConfiguration.fs + "/manifest.json",
-      // files.entries()
-      JSON.stringify(Array.from(files))
-    ).then(() => {
-      window["customclose"]();
-    });
+    window["customclose"](
+      this.testResourceConfiguration.fs,
+      this.testResourceConfiguration.name
+    );
   }
 
   testArtiFactoryfileWriter(tLog: ITLog, callback: (Promise) => void) {
@@ -124,12 +105,13 @@ export class PM_Web extends PM {
   }
 
   startPuppeteer(options, destFolder: string): Promise<any> {
+    const name = this.testResourceConfiguration.name;
+
     return fetch(`http://localhost:3234/json/version`)
       .then((v) => {
         return v.json();
       })
       .then((json) => {
-        console.log("found endpoint", json.webSocketDebuggerUrl);
         return puppeteer
           .connect({
             browserWSEndpoint: json.webSocketDebuggerUrl,
@@ -140,13 +122,14 @@ export class PM_Web extends PM {
               get(target, prop, receiver) {
                 if (prop === "screenshot") {
                   return async (x) => {
-                    // debugger;
-                    files.add(x.path);
-                    console.log("aloha", files);
-                    return await window["custom-screenshot"]({
-                      ...x,
-                      path: destFolder + "/" + x.path,
-                    });
+                    return await window["custom-screenshot"](
+                      {
+                        ...x,
+                        // path: destFolder + "/" + x.path,
+                        path: x.path,
+                      },
+                      name
+                    );
                   };
                 } else if (prop === "mainFrame") {
                   return () => target[prop](...arguments);
@@ -175,323 +158,5 @@ export class PM_Web extends PM {
             this.browser = proxy3;
           });
       });
-    // console.log("connecting to ws://localhost:3234/devtools/browser/RANDOM");
-
-    // return puppeteer
-    //   .connect({
-    //     ...options,
-    //   })
-    //   .finally(() => {
-    //     console.log("idk");
-    //   });
-    // return new Promise<Browser>(async (res, rej) => {
-    //   console.log("connecting with options", options);
-    //   this.browser = await puppeteer.connect({
-    //     ...options,
-    //   });
-    //   res(this.browser);
-    // });
   }
-
-  // launchNode = (src: string, dest: string) => {
-  //   console.log("launchNode", src);
-  //   // childProcesses[src] = "running";
-  //   const destFolder = dest.replace(".mjs", "");
-
-  //   const argz = JSON.stringify({
-  //     scheduled: true,
-  //     name: src,
-  //     ports: [3333],
-  //     // fs: path.resolve(configs.buildDir, "web", destFolder + "/"),
-  //     // fs: destFolder,
-  //     fs: ".",
-  //   });
-
-  //   const builtfile = dest + ".mjs";
-  //   console.log("importing and running ", builtfile);
-  //   // import(builtfile).then(async (v) => {
-  //   //   console.log("v", (await v.default).receiveTestResourceConfig(argz));
-  //   // });
-
-  //   // console.log("launchNode", src, dest, " -> ", destFolder, argz);
-
-  //   // const child = utilityProcess.fork(dest + ".mjs", [argz], {
-  //   //   cwd: destFolder,
-  //   //   stdio: "pipe",
-  //   // });
-  //   // const nodeGuid = uuidv4();
-  //   // nodeChildren[nodeGuid] = child;
-
-  //   // if (!fs.existsSync(destFolder)) {
-  //   //   fs.mkdirSync(destFolder, { recursive: true });
-  //   // }
-
-  //   // fs.rmSync(`${destFolder}/stdout.log`, { force: true });
-  //   // fs.rmSync(`${destFolder}/stderr.log`, { force: true });
-  //   // const stdout = fs.createWriteStream(`${destFolder}/stdout.log`);
-  //   // const stderr = fs.createWriteStream(`${destFolder}/stderr.log`);
-
-  //   // child
-  //   //   .on("message", (data) => {
-  //   //     console.log("from child", JSON.stringify(data));
-  //   //     if (data.launchWeb) {
-  //   //       const guid = uuidv4();
-  //   //       const webChild = launchWebSecondary(process.cwd() + data.launchWeb);
-  //   //       // child.postMessage({ webLaunched: guid });
-
-  //   //       webChild.webContents.on("did-finish-load", () => {
-  //   //         // webChild.webContents.send("message", "hello world");
-  //   //         child.postMessage({ webLaunched: guid });
-  //   //         webChildren[guid] = webChild;
-  //   //         node2web[nodeGuid] = [...(node2web[nodeGuid] || []), guid];
-  //   //       });
-  //   //     }
-  //   //     if (data.teardown) {
-  //   //       webChildren[data.teardown].close();
-  //   //       delete webChildren[data.teardown];
-  //   //       node2web[nodeGuid] = node2web[nodeGuid].filter(
-  //   //         (x) => x !== data.teardown
-  //   //       );
-  //   //     }
-  //   //   })
-  //   //   .on("exit", (data) => {
-  //   //     stdout.close();
-  //   //     stderr.close();
-  //   //     console.log(`ending node ${src}`);
-  //   //     onDone(src);
-  //   //   });
-
-  //   // child.stdout?.pipe(stdout);
-  //   // child.stderr?.pipe(stderr);
-  // };
-
-  // const launchWebSecondary = (htmlFile: string): BrowserWindow => {
-  //   console.log("launchWebSecondary", htmlFile);
-  //   const subWin = new BrowserWindow({
-  //     show: false,
-
-  //     webPreferences: {
-  //       nodeIntegration: true,
-  //       nodeIntegrationInWorker: true,
-  //       contextIsolation: false,
-  //       preload: path.join(app.getAppPath(), "preload.js"),
-  //       offscreen: false,
-  //       devTools: true,
-  //     },
-  //   });
-  //   remoteMain.enable(subWin.webContents);
-  //   subWin.webContents.openDevTools();
-  //   subWin.loadFile(htmlFile);
-  //   return subWin;
-
-  //   // const uuid = uuidv4();
-  //   // windows[uuid] = subWin;
-  //   // return uuid;
-  // };
-
-  // const launchWeb = (t: string, dest: string) => {
-  //   console.log("launchWeb", t);
-  //   childProcesses[t] = "running";
-  //   const destFolder = dest.replace(".mjs", "");
-
-  //   const subWin = new BrowserWindow({
-  //     show: true,
-  //     webPreferences: {
-  //       nodeIntegration: true,
-  //       nodeIntegrationInWorker: true,
-  //       contextIsolation: false,
-  //       preload: path.join(app.getAppPath(), "preload.js"),
-  //       offscreen: false,
-  //       devTools: true,
-  //     },
-  //   });
-
-  //   webChildren[uuidv4()] = subWin;
-
-  //   remoteMain.enable(subWin.webContents);
-
-  //   const webArgz = JSON.stringify({
-  //     name: dest,
-  //     ports: [].toString(),
-  //     fs: destFolder,
-  //   });
-
-  //   // console.log("webArgz", webArgz);
-  //   subWin.loadFile(`${dest}.html`, {
-  //     query: {
-  //       requesting: encodeURIComponent(webArgz),
-  //     },
-  //   });
-
-  //   if (!fs.existsSync(destFolder)) {
-  //     fs.mkdirSync(destFolder, { recursive: true });
-  //   }
-  //   const stdout = fs.createWriteStream(`${destFolder}/stdout.log`);
-
-  //   subWin.webContents.on(
-  //     "console-message",
-  //     (event, level, message, line, sourceId) => {
-  //       stdout.write(
-  //         JSON.stringify(
-  //           {
-  //             event,
-  //             level,
-  //             message: JSON.stringify(message),
-  //             line,
-  //             sourceId,
-  //           },
-  //           null,
-  //           2
-  //         )
-  //       );
-  //       stdout.write("\n");
-  //     }
-  //   );
-  //   subWin.on("closed", () => {
-  //     stdout.close();
-  //     console.log(`ending web ${t}`);
-  //     // childProcesses[t] = "done";
-  //     onDone(t);
-  //   });
-  //   ipcMain.on("message", (message, data) => {
-  //     console.log("ipcMain message: " + JSON.stringify(data));
-  //     // process.exit();
-  //   });
-  // };
-
-  // return await import("${dest}.mjs");
-
-  // launchWeb = (t: string, dest: string) => {
-  //   console.log("launchWeb", t, dest);
-  //   // childProcesses[t] = "running";
-  //   const destFolder = dest.replace(".mjs", "");
-
-  //   const webArgz = JSON.stringify({
-  //     name: dest,
-  //     ports: [].toString(),
-  //     fs: destFolder,
-  //   });
-
-  //   const evaluation = `import('${dest}.mjs').then(async (x) => {
-  //     console.log(x);
-  //   })`;
-
-  //   // console.log("evaluation", evaluation);
-
-  //   // const y = browser
-  //   //   .newPage()
-  //   //   .then(async (page) => {
-  //   //     // const codeString = "1 + 1";
-  //   //     await page.goto(
-  //   //       // "file:///Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.html"
-  //   //       `file://${`${dest}.html`}`
-  //   //     );
-  //   //     //         page.url
-  //   //     //         page.setContent(`
-
-  //   //     // <!DOCTYPE html>
-  //   //     // <html lang="en">
-
-  //   //     // <head>
-
-  //   //     // </head>
-
-  //   //     // <body>
-  //   //     //   <h1>/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react/web.test.html</h1>
-  //   //     //   <div id="root">
-
-  //   //     //   </div>
-  //   //     // </body>
-
-  //   //     // <footer></footer>
-
-  //   //     // </html>
-  //   //     // `);
-  //   //     // return await page.evaluate((code) => eval(code), evaluation);
-
-  //   //     return await page.evaluate(evaluation);
-  //   //     // return await page.evaluate(async () => {
-  //   //     //   return await import(dest);
-  //   //     // });
-  //   //   })
-  //   //   .then((x) => {
-  //   //     console.log("mark1", x);
-  //   //   });
-  //   // .then((x) => {
-  //   //   console.log("mark0", x);
-  //   // })
-  //   // .catch((z) => {
-  //   //   console.log("mark2", z);
-  //   // });
-
-  //   //   const subWin = new BrowserWindow({
-  //   //     show: true,
-  //   //     webPreferences: {
-  //   //       nodeIntegration: true,
-  //   //       nodeIntegrationInWorker: true,
-  //   //       contextIsolation: false,
-  //   //       preload: path.join(app.getAppPath(), "preload.js"),
-  //   //       offscreen: false,
-  //   //       devTools: true,
-  //   //     },
-  //   //   });
-
-  //   //   webChildren[uuidv4()] = subWin;
-
-  //   //   remoteMain.enable(subWin.webContents);
-
-  //   //   // console.log("webArgz", webArgz);
-  //   //   subWin.loadFile(`${dest}.html`, {
-  //   //     query: {
-  //   //       requesting: encodeURIComponent(webArgz),
-  //   //     },
-  //   //   });
-
-  //   //   if (!fs.existsSync(destFolder)) {
-  //   //     fs.mkdirSync(destFolder, { recursive: true });
-  //   //   }
-  //   //   const stdout = fs.createWriteStream(`${destFolder}/stdout.log`);
-
-  //   //   subWin.webContents.on(
-  //   //     "console-message",
-  //   //     (event, level, message, line, sourceId) => {
-  //   //       stdout.write(
-  //   //         JSON.stringify(
-  //   //           {
-  //   //             event,
-  //   //             level,
-  //   //             message: JSON.stringify(message),
-  //   //             line,
-  //   //             sourceId,
-  //   //           },
-  //   //           null,
-  //   //           2
-  //   //         )
-  //   //       );
-  //   //       stdout.write("\n");
-  //   //     }
-  //   //   );
-  //   //   subWin.on("closed", () => {
-  //   //     stdout.close();
-  //   //     console.log(`ending web ${t}`);
-  //   //     // childProcesses[t] = "done";
-  //   //     onDone(t);
-  //   //   });
-  //   //   ipcMain.on("message", (message, data) => {
-  //   //     console.log("ipcMain message: " + JSON.stringify(data));
-  //   //     // process.exit();
-  //   //   });
-  // };
 }
-
-// class PuppetMasterServer extends AbstractPuppetMaster {
-//   // constructor(...z: []) {
-//   //   super(...z);
-//   // }
-//   // // pages(): Promise<Page[]>;
-//   // pages(): Promise<Page[]> {
-//   //   return new Promise<Page[]>((res, rej) => {
-//   //     res(super.pages());
-//   //   });
-//   // }
-// }

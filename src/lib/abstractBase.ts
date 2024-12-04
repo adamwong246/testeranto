@@ -365,7 +365,7 @@ export abstract class BaseGiven<ITestShape extends IBaseTest> {
                                   //   window["custom-screenshot"].toString()
                                   // );
 
-                                  return await window["custom-screenshot"]({
+                                  return await pTarget[pProp]({
                                     ...x,
                                     path:
                                       `${testResourceConfiguration.fs}/suite-${suiteNdx}/given-${key}/afterEach` +

@@ -214,7 +214,7 @@ export class BaseGiven {
                                                                     //   "custom-screenshot-MARK-afterEachProxy",
                                                                     //   window["custom-screenshot"].toString()
                                                                     // );
-                                                                    return await window["custom-screenshot"](Object.assign(Object.assign({}, x), { path: `${testResourceConfiguration.fs}/suite-${suiteNdx}/given-${key}/afterEach` +
+                                                                    return await pTarget[pProp](Object.assign(Object.assign({}, x), { path: `${testResourceConfiguration.fs}/suite-${suiteNdx}/given-${key}/afterEach` +
                                                                             "/" +
                                                                             x.path }));
                                                                 };
