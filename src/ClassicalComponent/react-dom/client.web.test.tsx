@@ -1,9 +1,17 @@
 import test from "testeranto/src/SubPackages/react-dom/component/web";
+import { IPartialWebInterface } from "testeranto/src/Types";
+import ReactDom from "react-dom/client";
 
 import { assert } from "chai";
 
 import { ClassicalComponent } from "..";
 import { ClassicalComponentSpec } from "../testeranto";
+
+type IStore = {
+  htmlElement: HTMLElement;
+  reactElement: any; //CElement<any, any>,
+  domRoot: ReactDom.Root;
+};
 
 const ClassicalComponentReactDomImplementation = {
   suites: {
@@ -60,8 +68,33 @@ const ClassicalComponentReactDomImplementation = {
   },
 };
 
+const testInterface: IPartialWebInterface<any> = {
+  afterEach: async function (store: IStore, ndx, artificer, utils) {
+    utils.writeFileSync("aftereachlog", store.toString());
+
+    const page = (await utils.browser.pages()).filter((x) => {
+      const parsedUrl = new URL(x.url());
+      parsedUrl.search = "";
+      const strippedUrl = parsedUrl.toString();
+
+      return (
+        strippedUrl ===
+        "file:///Users/adam/Code/kokomoBay/docs/web/src/ClassicalComponent/react-dom/client.web.test.html"
+      );
+      // return true;
+    })[0];
+
+    await page.screenshot({
+      path: "screenshot.jpg",
+    });
+
+    return store;
+  },
+};
+
 export default test(
   ClassicalComponent,
   ClassicalComponentSpec,
   ClassicalComponentReactDomImplementation,
+  testInterface
 );

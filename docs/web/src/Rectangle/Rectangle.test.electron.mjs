@@ -1,28 +1,18 @@
 import {
   assert,
   puppeteer_core_browser_default
-} from "../../chunk-GEWWKFQY.mjs";
-import "../../chunk-2MX732QA.mjs";
-import "../../chunk-KKQOQNY2.mjs";
-import "../../chunk-EXETZ625.mjs";
+} from "../../chunk-T3XNPSCC.mjs";
+import "../../chunk-43DSNPFJ.mjs";
+import "../../chunk-WZWH5UFM.mjs";
+import "../../chunk-2CNFTRH6.mjs";
 import "../../chunk-3KGMXYRN.mjs";
 
-// node_modules/testeranto/src/PM/index.ts
+// ../testeranto/src/PM/index.ts
 var PM = class {
-  server;
-  browser;
-  testResourceConfiguration;
-  // pages(): Promise<Page[]>;
-  // pages(): Promise<Page[]> {
-  //   return new Promise<Page[]>((res, rej) => {
-  //     res(super.pages());
-  //   });
-  // }
 };
 
-// node_modules/testeranto/src/PM/web.ts
+// ../testeranto/src/PM/web.ts
 var PM_Web = class extends PM {
-  server;
   constructor(t) {
     super();
     this.server = {};
@@ -118,7 +108,7 @@ var PM_Web = class extends PM {
   }
 };
 
-// node_modules/testeranto/src/lib/index.ts
+// ../testeranto/src/lib/index.ts
 var BaseTestInterface = {
   beforeAll: async (s) => s,
   beforeEach: async function(subject, initialValues, x, testResource, pm) {
@@ -140,15 +130,8 @@ var defaultTestResourceRequirement = {
   ports: 0
 };
 
-// node_modules/testeranto/src/lib/abstractBase.ts
+// ../testeranto/src/lib/abstractBase.ts
 var BaseSuite = class {
-  name;
-  givens;
-  checks;
-  store;
-  fails;
-  testResourceConfiguration;
-  index;
   constructor(name, index, givens = {}, checks = []) {
     this.name = name;
     this.index = index;
@@ -249,16 +232,6 @@ var BaseSuite = class {
   }
 };
 var BaseGiven = class {
-  name;
-  features;
-  whens;
-  thens;
-  error;
-  fail;
-  store;
-  recommendedFsPath;
-  givenCB;
-  initialValues;
   constructor(name, features, whens, thens, givenCB, initialValues) {
     this.name = name;
     this.features = features;
@@ -379,9 +352,6 @@ var BaseGiven = class {
   }
 };
 var BaseWhen = class {
-  name;
-  whenCB;
-  error;
   constructor(name, whenCB) {
     this.name = name;
     this.whenCB = whenCB;
@@ -421,9 +391,6 @@ var BaseWhen = class {
   }
 };
 var BaseThen = class {
-  name;
-  thenCB;
-  error;
   constructor(name, thenCB) {
     this.name = name;
     this.thenCB = thenCB;
@@ -452,11 +419,6 @@ var BaseThen = class {
   }
 };
 var BaseCheck = class {
-  name;
-  features;
-  checkCB;
-  whens;
-  thens;
   constructor(name, features, checkCB, whens, thens) {
     this.name = name;
     this.features = features;
@@ -507,10 +469,11 @@ var BaseCheck = class {
   }
 };
 
-// node_modules/testeranto/src/lib/basebuilder.ts
+// ../testeranto/src/lib/basebuilder.ts
 var BaseBuilder = class {
   constructor(input, suitesOverrides, givenOverides, whenOverides, thenOverides, checkOverides, testResourceRequirement, testSpecification) {
     this.input = input;
+    this.artifacts = [];
     this.artifacts = [];
     this.testResourceRequirement = testResourceRequirement;
     this.suitesOverrides = suitesOverrides;
@@ -550,7 +513,6 @@ var BaseBuilder = class {
       const runner = suiteRunner(suite);
       return {
         test: suite,
-        // testResourceRequirement,
         toObj: () => {
           return suite.toObj();
         },
@@ -589,18 +551,6 @@ var BaseBuilder = class {
       };
     });
   }
-  specs;
-  assertThis;
-  testResourceRequirement;
-  artifacts = [];
-  testJobs;
-  testSpecification;
-  suitesOverrides;
-  givenOverides;
-  whenOverides;
-  thenOverides;
-  checkOverides;
-  puppetMaster;
   Specs() {
     return this.specs;
   }
@@ -621,7 +571,7 @@ var BaseBuilder = class {
   }
 };
 
-// node_modules/testeranto/src/lib/classBuilder.ts
+// ../testeranto/src/lib/classBuilder.ts
 var ClassBuilder = class extends BaseBuilder {
   constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResourceRequirement) {
     const classySuites = Object.entries(testImplementation.suites).reduce(
@@ -707,7 +657,7 @@ var ClassBuilder = class extends BaseBuilder {
   }
 };
 
-// node_modules/testeranto/src/lib/core.ts
+// ../testeranto/src/lib/core.ts
 var Testeranto = class extends ClassBuilder {
   constructor(input, testSpecification, testImplementation, testResourceRequirement = defaultTestResourceRequirement, testInterface) {
     const fullTestInterface = DefaultTestInterface(testInterface);
@@ -779,7 +729,6 @@ var Testeranto = class extends ClassBuilder {
         }
       },
       class Check extends BaseCheck {
-        initialValues;
         constructor(name, features, checkCallback, whens, thens, initialValues) {
           super(name, features, checkCallback, whens, thens);
           this.initialValues = initialValues;
@@ -816,7 +765,7 @@ var Testeranto = class extends ClassBuilder {
   }
 };
 
-// node_modules/testeranto/src/Web.ts
+// ../testeranto/src/Web.ts
 var WebTesteranto = class extends Testeranto {
   constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
     super(

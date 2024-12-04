@@ -14,7 +14,7 @@ export class ClassicalComponent extends React.Component<IProps, IState> {
 
   render() {
     return (
-      <div style={{ border: '3px solid red' }}>
+      <div style={{ border: '3px solid black' }}>
         <h1 id="theHeader">Hello Marcus</h1>
         <pre id="theProps">{JSON.stringify(this.props)}</pre>
         <p>foo: {this.props.foo}</p>
