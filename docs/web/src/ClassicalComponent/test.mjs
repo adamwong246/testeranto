@@ -1,7 +1,7 @@
 import {
   ClassicalComponent,
   require_client
-} from "../../chunk-2ZES6QAY.mjs";
+} from "../../chunk-2FNPKSAA.mjs";
 import {
   require_react
 } from "../../chunk-JE6WFJZI.mjs";
