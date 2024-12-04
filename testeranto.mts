@@ -6,7 +6,12 @@ export default new ITProject({
   outdir: "docs",
   features: "/Users/adam/Code/kokomoBay/features.test.mts",
   tests: [
-    ["./src/LoginPage/react/web.test.tsx", "web", { ports: 0 }, []],
+    // Don't use these tests.
+    // Testing react components with the react package is not useful
+    // Use react-dom or react-test-renderer instead
+    // ["./src/LoginPage/react/web.test.tsx", "web", { ports: 0 }, []],
+    // ["./src/LoginPage/react/node.test.tsx", "node", { ports: 0 }, []],
+
     [
       "./src/LoginPage/react-test-renderer/web.test.tsx",
       "web",
@@ -21,7 +26,6 @@ export default new ITProject({
       [],
     ],
 
-    ["./src/LoginPage/react/node.test.tsx", "node", { ports: 0 }, []],
     [
       "./src/LoginPage/react-test-renderer/node.test.tsx",
       "node",

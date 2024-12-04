@@ -9426,10 +9426,10 @@ tar@^4.0.2:
     safe-buffer "^5.2.1"
     yallist "^3.1.1"
 
-testeranto@0.73.0:
-  version "0.73.0"
-  resolved "https://registry.yarnpkg.com/testeranto/-/testeranto-0.73.0.tgz#248af2c923c8d255f7dfd74926fec068f0cb064d"
-  integrity sha512-llsj1f74MYGXv6nTUDWKuG0Y7zrHLEJei11HVlIt41sEfOcxjqglwYL4iG9m7aUJcsd1IHD5dALRJml2sgiqUg==
+testeranto@0.75.0:
+  version "0.75.0"
+  resolved "https://registry.yarnpkg.com/testeranto/-/testeranto-0.75.0.tgz#027389086c62cb985595f7dd3b0aea482b311cd0"
+  integrity sha512-c01PzNc2AM5HiiCOS4MZWDSdV2efIz5xufWDYRoLIJrxeWhoYlL0VqLqVOYYI5cNpYUj2aKbc4tR/dF5IBqTEg==
   dependencies:
     "@electron/remote" "^2.1.2"
     babel-loader "^8.2.5"

@@ -3,14 +3,6 @@
   "features": "/Users/adam/Code/kokomoBay/features.test.mts",
   "tests": [
     [
-      "./src/LoginPage/react/web.test.tsx",
-      "web",
-      {
-        "ports": 0
-      },
-      []
-    ],
-    [
       "./src/LoginPage/react-test-renderer/web.test.tsx",
       "web",
       {
@@ -29,14 +21,6 @@
     [
       "./src/ClassicalComponent/react-dom/client.web.test.tsx",
       "web",
-      {
-        "ports": 0
-      },
-      []
-    ],
-    [
-      "./src/LoginPage/react/node.test.tsx",
-      "node",
       {
         "ports": 0
       },

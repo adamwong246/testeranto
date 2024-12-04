@@ -65,30 +65,30 @@ export const LoginPageSpecs: ITestSpecification<ILoginPageSpecs> = (
         ),
         test2: Given.default(
           [],
-          [When.TheEmailIsSetTo("adam")],
+          [When.TheEmailIsSetTo("adam@email.com")],
           [Then.ThereIsNotAnEmailError()]
         ),
-        // test3: Given.default(
-        //   [],
-        //   [When.TheEmailIsSetTo("bob"), When.TheLoginIsSubmitted()],
-        //   [Then.ThereIsAnEmailError()]
-        // ),
-        // test4: Given.default(
-        //   [],
-        //   [
-        //     When.TheEmailIsSetTo("adam@mail.com"),
-        //     When.ThePasswordIsSetTo("foso"),
-        //   ],
-        //   [Then.ThereIsNotAnEmailError()]
-        // ),
-        // test5: Given.default(
-        //   [],
-        //   [
-        //     When.TheEmailIsSetTo("adam@mail.com"),
-        //     When.ThePasswordIsSetTo("foso"),
-        //   ],
-        //   [Then.ThereIsNotAnEmailError()]
-        // ),
+        test3: Given.default(
+          [],
+          [When.TheEmailIsSetTo("bob"), When.TheLoginIsSubmitted()],
+          [Then.ThereIsAnEmailError()]
+        ),
+        test4: Given.default(
+          [],
+          [
+            When.TheEmailIsSetTo("adam@mail.com"),
+            When.ThePasswordIsSetTo("foso"),
+          ],
+          [Then.ThereIsNotAnEmailError()]
+        ),
+        test5: Given.default(
+          [],
+          [
+            When.TheEmailIsSetTo("adam@mail.com"),
+            When.ThePasswordIsSetTo("foso"),
+          ],
+          [Then.ThereIsNotAnEmailError()]
+        ),
       },
       []
     ),

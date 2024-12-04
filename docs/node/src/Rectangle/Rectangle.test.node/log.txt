@@ -1,4 +1,4 @@
-test resources: ,{"scheduled":true,"name":"./src/Rectangle/Rectangle.test.node.ts","ports":[],"fs":"/Users/adam/Code/kokomoBay/docs/node/src/Rectangle/Rectangle.test.node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/9f51f351-c9b2-4540-93b1-9a5437c274a1"}
+test resources: ,{"scheduled":true,"name":"./src/Rectangle/Rectangle.test.node.ts","ports":[],"fs":"/Users/adam/Code/kokomoBay/docs/node/src/Rectangle/Rectangle.test.node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/9445b2dc-0e0a-4006-8af6-915c8c915da3"}
 
 Suite:,0,Testing the Rectangle class
 

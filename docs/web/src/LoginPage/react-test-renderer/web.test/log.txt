@@ -1,4 +1,4 @@
-test resources: ,{"name":"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test","ports":"","fs":"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/9f51f351-c9b2-4540-93b1-9a5437c274a1"}
+test resources: ,{"name":"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test","ports":"","fs":"/Users/adam/Code/kokomoBay/docs/web/src/LoginPage/react-test-renderer/web.test","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/9445b2dc-0e0a-4006-8af6-915c8c915da3"}
 
 Suite:,0,Testing the LoginPage as react
 
@@ -15,5 +15,20 @@ Suite:,0,Testing the LoginPage as react
  Then:,ThePasswordIsNot: idk
 
  Given: default
- When:,TheEmailIsSetTo: adam
+ When:,TheEmailIsSetTo: adam@email.com
+ Then:,ThereIsNotAnEmailError: undefined
+
+ Given: default
+ When:,TheEmailIsSetTo: bob
+ When:,TheLoginIsSubmitted: undefined
+ Then:,ThereIsAnEmailError: undefined
+
+ Given: default
+ When:,TheEmailIsSetTo: adam@mail.com
+ When:,ThePasswordIsSetTo: foso
+ Then:,ThereIsNotAnEmailError: undefined
+
+ Given: default
+ When:,TheEmailIsSetTo: adam@mail.com
+ When:,ThePasswordIsSetTo: foso
  Then:,ThereIsNotAnEmailError: undefined

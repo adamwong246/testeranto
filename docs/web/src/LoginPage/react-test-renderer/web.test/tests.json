@@ -52,7 +52,64 @@
       "name": "default",
       "whens": [
         {
-          "name": "TheEmailIsSetTo: adam"
+          "name": "TheEmailIsSetTo: adam@email.com"
+        }
+      ],
+      "thens": [
+        {
+          "name": "ThereIsNotAnEmailError: undefined",
+          "error": false
+        }
+      ],
+      "error": null,
+      "features": []
+    },
+    {
+      "name": "default",
+      "whens": [
+        {
+          "name": "TheEmailIsSetTo: bob"
+        },
+        {
+          "name": "TheLoginIsSubmitted: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "ThereIsAnEmailError: undefined",
+          "error": false
+        }
+      ],
+      "error": null,
+      "features": []
+    },
+    {
+      "name": "default",
+      "whens": [
+        {
+          "name": "TheEmailIsSetTo: adam@mail.com"
+        },
+        {
+          "name": "ThePasswordIsSetTo: foso"
+        }
+      ],
+      "thens": [
+        {
+          "name": "ThereIsNotAnEmailError: undefined",
+          "error": false
+        }
+      ],
+      "error": null,
+      "features": []
+    },
+    {
+      "name": "default",
+      "whens": [
+        {
+          "name": "TheEmailIsSetTo: adam@mail.com"
+        },
+        {
+          "name": "ThePasswordIsSetTo: foso"
         }
       ],
       "thens": [

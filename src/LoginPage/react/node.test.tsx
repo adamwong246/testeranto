@@ -8,9 +8,14 @@ export default test(
   implementations,
   LoginPageSpecs,
   LoginPage,
-  // {
-  //   afterAll: () => {
-
-  //   }
-  // }
+  {
+    // beforeEach: async (proto, init, artificer, tr, x, pm) => {
+    //   // pm.writeFileSync("beforeEachLog", "bar");
+    //   return proto;
+    // },
+    // afterAll: (store, artificer, utils) => {
+    //   // utils.writeFileSync("afterAllLog", "bar");
+    //   return store;
+    // }
+  }
 );

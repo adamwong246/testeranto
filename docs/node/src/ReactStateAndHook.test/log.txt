@@ -1,35 +1,20 @@
-test resources: ,{"scheduled":true,"name":"./src/ReactStateAndHook.test.tsx","ports":[],"fs":"/Users/adam/Code/kokomoBay/docs/node/src/ReactStateAndHook.test","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/9f51f351-c9b2-4540-93b1-9a5437c274a1"}
+test resources: ,{"scheduled":true,"name":"./src/ReactStateAndHook.test.tsx","ports":[],"fs":"/Users/adam/Code/kokomoBay/docs/node/src/ReactStateAndHook.test","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/9445b2dc-0e0a-4006-8af6-915c8c915da3"}
 
 Suite:,0,Testing the ReactStateAndHook element
 
  Given: Default
-Error: Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:
-1. You might have mismatching versions of React and the renderer (such as React DOM)
-2. You might be breaking the Rules of Hooks
-3. You might have more than one copy of React in the same app
-See https://reactjs.org/link/invalid-hook-call for tips about how to debug and fix this problem.
-
+ Then:,TheCounterIs: 0
 
  Given: Default
-Error: Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:
-1. You might have mismatching versions of React and the renderer (such as React DOM)
-2. You might be breaking the Rules of Hooks
-3. You might have more than one copy of React in the same app
-See https://reactjs.org/link/invalid-hook-call for tips about how to debug and fix this problem.
-
+ When:,IClick: undefined
+ Then:,TheCounterIs: 1
 
  Given: Default
-Error: Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:
-1. You might have mismatching versions of React and the renderer (such as React DOM)
-2. You might be breaking the Rules of Hooks
-3. You might have more than one copy of React in the same app
-See https://reactjs.org/link/invalid-hook-call for tips about how to debug and fix this problem.
-
+ When:,IClick: undefined
+ When:,IClick: undefined
+ When:,IClick: undefined
+ Then:,TheCounterIs: 3
 
  Given: Default
-Error: Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:
-1. You might have mismatching versions of React and the renderer (such as React DOM)
-2. You might be breaking the Rules of Hooks
-3. You might have more than one copy of React in the same app
-See https://reactjs.org/link/invalid-hook-call for tips about how to debug and fix this problem.
-
+ When:,IClick: undefined
+ Then:,TheCounterIs: 1

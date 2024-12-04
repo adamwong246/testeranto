@@ -34,7 +34,7 @@
         },
         {
           "name": "TheEmailIs: adam@email.com",
-          "error": "expected 'adam' to equal 'adam@email.com'"
+          "error": false
         },
         {
           "name": "ThePasswordIs: secret",
@@ -45,25 +45,71 @@
           "error": false
         }
       ],
-      "error": [
-        {
-          "name": "AssertionError",
-          "message": "expected 'adam' to equal 'adam@email.com'",
-          "showDiff": true,
-          "actual": "adam",
-          "expected": "adam@email.com",
-          "operator": "strictEqual",
-          "stack": "AssertionError: expected 'adam' to equal 'adam@email.com'\n    at file:///Users/adam/Code/kokomoBay/docs/node/src/LoginPage/react-test-renderer/node.test.mjs?cacheBust=1733282861394:18570:14\n    at Object.butThen (file:///Users/adam/Code/kokomoBay/docs/node/src/LoginPage/react-test-renderer/node.test.mjs?cacheBust=1733282861394:18535:12)\n    at Then.butThen (file:///Users/adam/Code/kokomoBay/docs/node/chunk-2UPDHKQX.mjs:2660:42)\n    at Then.test (file:///Users/adam/Code/kokomoBay/docs/node/chunk-2UPDHKQX.mjs:2449:28)\n    at Given.give (file:///Users/adam/Code/kokomoBay/docs/node/chunk-2UPDHKQX.mjs:2350:34)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/docs/node/chunk-2UPDHKQX.mjs:2259:22)\n    at async file:///Users/adam/Code/kokomoBay/docs/node/chunk-2UPDHKQX.mjs:2514:16\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-2UPDHKQX.mjs:2534:29)\n    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-2UPDHKQX.mjs:2776:47)"
-        },
-        "AssertionError: expected 'adam' to equal 'adam@email.com'\n    at file:///Users/adam/Code/kokomoBay/docs/node/src/LoginPage/react-test-renderer/node.test.mjs?cacheBust=1733282861394:18570:14\n    at Object.butThen (file:///Users/adam/Code/kokomoBay/docs/node/src/LoginPage/react-test-renderer/node.test.mjs?cacheBust=1733282861394:18535:12)\n    at Then.butThen (file:///Users/adam/Code/kokomoBay/docs/node/chunk-2UPDHKQX.mjs:2660:42)\n    at Then.test (file:///Users/adam/Code/kokomoBay/docs/node/chunk-2UPDHKQX.mjs:2449:28)\n    at Given.give (file:///Users/adam/Code/kokomoBay/docs/node/chunk-2UPDHKQX.mjs:2350:34)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/docs/node/chunk-2UPDHKQX.mjs:2259:22)\n    at async file:///Users/adam/Code/kokomoBay/docs/node/chunk-2UPDHKQX.mjs:2514:16\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-2UPDHKQX.mjs:2534:29)\n    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-2UPDHKQX.mjs:2776:47)"
-      ],
+      "error": null,
       "features": []
     },
     {
       "name": "default",
       "whens": [
         {
-          "name": "TheEmailIsSetTo: adam"
+          "name": "TheEmailIsSetTo: adam@email.com"
+        }
+      ],
+      "thens": [
+        {
+          "name": "ThereIsNotAnEmailError: undefined",
+          "error": false
+        }
+      ],
+      "error": null,
+      "features": []
+    },
+    {
+      "name": "default",
+      "whens": [
+        {
+          "name": "TheEmailIsSetTo: bob"
+        },
+        {
+          "name": "TheLoginIsSubmitted: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "ThereIsAnEmailError: undefined",
+          "error": false
+        }
+      ],
+      "error": null,
+      "features": []
+    },
+    {
+      "name": "default",
+      "whens": [
+        {
+          "name": "TheEmailIsSetTo: adam@mail.com"
+        },
+        {
+          "name": "ThePasswordIsSetTo: foso"
+        }
+      ],
+      "thens": [
+        {
+          "name": "ThereIsNotAnEmailError: undefined",
+          "error": false
+        }
+      ],
+      "error": null,
+      "features": []
+    },
+    {
+      "name": "default",
+      "whens": [
+        {
+          "name": "TheEmailIsSetTo: adam@mail.com"
+        },
+        {
+          "name": "ThePasswordIsSetTo: foso"
         }
       ],
       "thens": [

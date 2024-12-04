@@ -43,6 +43,7 @@ const implementations: IImpl = {
       reactElem.props.store.dispatch(actions.signIn());
     },
     TheEmailIsSetTo: (email) => (reactElem) => {
+      console.log("TheEmailIsSetTo", email, reactElem);
       reactElem.props.store.dispatch(actions.setEmail(email as never));
     },
 
