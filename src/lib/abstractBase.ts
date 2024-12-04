@@ -119,12 +119,12 @@ export abstract class BaseSuite<ITestShape extends IBaseTest> {
                         get(pTarget, pProp, pReciever) {
                           if (pProp === "screenshot") {
                             return async (x) => {
-                              console.log(
-                                "custom-screenshot-MARK-afterAllProxy",
-                                // arguments,
-                                // x,
-                                window["custom-screenshot"].toString()
-                              );
+                              // console.log(
+                              //   "custom-screenshot-MARK-afterAllProxy",
+                              //   // arguments,
+                              //   // x,
+                              //   window["custom-screenshot"].toString()
+                              // );
                               return await window["custom-screenshot"]({
                                 ...x,
                                 path:
@@ -272,43 +272,41 @@ export abstract class BaseGiven<ITestShape extends IBaseTest> {
       artifactory(`given-${key}/${fPath}`, value);
     try {
       // tLog(`\n Given this.store`, this.store);
+
+      const beforeEachProxy = new Proxy(pm, {
+        get(target, prop, receiver) {
+          if (prop === "writeFileSync") {
+            console.log("beforeEachProx", arguments, target[prop]);
+            return (fp, contents) =>
+              target[prop](
+                `suite-${suiteNdx}/given-${key}/when/beforeEach/${fp}`,
+                contents
+              );
+          }
+
+          return Reflect.get(...arguments);
+        },
+      });
+
+      this.store = await this.givenThat(
+        subject,
+        testResourceConfiguration,
+        givenArtifactory,
+        this.givenCB,
+        beforeEachProxy
+      );
+
       for (const [whenNdx, whenStep] of this.whens.entries()) {
-        const beforeEachProxy = new Proxy(pm, {
-          get(target, prop, receiver) {
-            if (prop === "writeFileSync") {
-              console.log("beforeEachProx", arguments, target[prop]);
-              return (fp, contents) =>
-                target[prop](
-                  `suite-${suiteNdx}/given-${key}/when/${whenNdx}/beforeEach/${fp}`,
-                  contents
-                );
-            }
-
-            return Reflect.get(...arguments);
-          },
-        });
-
-        this.store = await this.givenThat(
-          subject,
-          testResourceConfiguration,
-          givenArtifactory,
-          this.givenCB,
-          beforeEachProxy
-          // pm
-        );
-
         await whenStep.test(
           this.store,
           testResourceConfiguration,
           tLog,
           pm,
-          // `${this.name}/${whenNdx}`
           `suite-${suiteNdx}/given-${key}/when/${whenNdx}`
         );
       }
-      console.log("mark-then1");
+
       for (const thenStep of this.thens) {
-        console.log("mark-then", thenStep);
         const t = await thenStep.test(
           this.store,
           testResourceConfiguration,
@@ -316,12 +314,6 @@ export abstract class BaseGiven<ITestShape extends IBaseTest> {
           pm
         );
         tester(t);
-        // this.fail = "foobar";
-        // if (tested) {
-        //   this.fail = false;
-        // } else {
-        //   this.fail = true;
-        // }
       }
     } catch (e) {
       this.error = e;
@@ -368,10 +360,11 @@ export abstract class BaseGiven<ITestShape extends IBaseTest> {
                             get(pTarget, pProp, pReciever) {
                               if (pProp === "screenshot") {
                                 return async (x) => {
-                                  console.log(
-                                    "custom-screenshot-MARK-afterEachProxy",
-                                    window["custom-screenshot"].toString()
-                                  );
+                                  // console.log(
+                                  //   "custom-screenshot-MARK-afterEachProxy",
+                                  //   window["custom-screenshot"].toString()
+                                  // );
+
                                   return await window["custom-screenshot"]({
                                     ...x,
                                     path:

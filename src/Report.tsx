@@ -81,7 +81,7 @@ const Report = () => {
     })
   );
 
-  const [results, setResults] = useState<Record<string, { exitcode, log, testresults }>>(
+  const [results, setResults] = useState<Record<string, { exitcode, log, testresults, manifest }>>(
     {}
   );
 
@@ -96,8 +96,9 @@ const Report = () => {
         const exitcode = await (await fetch(config.buildDir + "/" + s + "/exitcode")).text()
         const log = await (await fetch(config.buildDir + "/" + s + "/log.txt")).text()
         const testresults = await (await fetch(config.buildDir + "/" + s + "/tests.json")).json()
+        const manifest = await (await fetch(config.buildDir + "/" + s + "/manifest.json")).json()
 
-        res({ src, exitcode, log, testresults })
+        res({ src, exitcode, log, testresults, manifest })
       })
     }))
     // const results = await config.tests.reduce(async (p, test) => {
@@ -174,6 +175,8 @@ const Report = () => {
     };
     collateResults();
   }, []);
+
+  console.log("state.results", state.results);
 
   return (
     <div>
@@ -442,15 +445,34 @@ footer {
               </Col>
               <Col sm={6}>
                 <Tab.Content>
-                  <pre>{JSON.stringify(tests.tests, null, 2)}</pre>
-                  {/* {tests.tests.map((t, ndx) => {
-                    return (
-                      <Tab.Pane eventKey={`feature-${ndx}`} key={ndx}>
-                        <pre>{JSON.stringify(t, null, 2)}</pre>
+
+                  {
+                    tests.tests.map((t, ndx) =>
+                      <Tab.Pane eventKey={`test-${ndx}`}>
+                        {/* <pre>{JSON.stringify(t, null, 2)}</pre> */}
+                        {/* <pre>{JSON.stringify(state.results, null, 2)}</pre> */}
+                        <pre>{JSON.stringify(Object.entries(state.results).filter(([k, v]: [string, { src: string }]) => {
+                          console.log(v.src, tests.tests[ndx][0])
+                          return v.src === tests.tests[ndx][0]
+                        }), null, 2)}</pre>
+
+                        {/* {tests.tests.map((t, ndx) => {
+                          return (
+                            <Tab.Pane eventKey={`feature-${ndx}`} key={ndx}>
+                              <pre>{JSON.stringify(t, null, 2)}</pre>
+                            </Tab.Pane>
+                          )
+                        }
+                        )} */}
+
                       </Tab.Pane>
+
                     )
                   }
-                  )} */}
+
+
+
+
                 </Tab.Content>
               </Col>
 

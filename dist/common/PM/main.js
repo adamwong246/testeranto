@@ -272,6 +272,25 @@ class PM_Main extends index_js_1.PM {
         globalThis["end"] = (uid) => {
             fileStreams3[uid].end();
         };
+        globalThis["customclose"] = () => {
+            // fileStreams3[uid].end();
+        };
+        // page.exposeFunction("customclose", () => {
+        //   console.log("closing doneFileStream2", doneFileStream2);
+        //   // console.log("closing doneFileStream2", doneFileStream2);
+        //   Promise.all([...doneFileStream2, ...screenshots2]).then(() => {
+        //     page.close();
+        //   });
+        //   // page.close();
+        //   // Promise.all(screenshots).then(() => {
+        //   //   page.close();
+        //   // });
+        //   // setTimeout(() => {
+        //   //   console.log("Delayed for 1 second.");
+        //   //   page.close();
+        //   // }, 5000);
+        //   // return page.close();
+        // });
     }
     async startPuppeteer(options, destfolder) {
         this.browser = await puppeteer_core_1.default.launch(options);

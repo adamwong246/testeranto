@@ -48,10 +48,11 @@ class NodeTesteranto<
       await this.testJobs[0].receiveTestResourceConfig(pm);
 
     console.log("test is done, awaiting test result write to fs");
+    pm.customclose();
 
-    Promise.all([...artifacts, logPromise]).then(async () => {
-      // process.exit((await failed) ? 1 : 0);
-    });
+    // Promise.all([...artifacts, logPromise]).then(async () => {
+    //   // process.exit((await failed) ? 1 : 0);
+    // });
   }
 }
 

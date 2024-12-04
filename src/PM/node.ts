@@ -69,6 +69,8 @@ export function addPageBinding(
   });
 }
 
+const files = new Set<string>();
+
 export class PM_Node extends PM {
   server: PuppetMasterServer;
   testResourceConfiguration: ITTestResourceConfiguration;
@@ -93,14 +95,16 @@ export class PM_Node extends PM {
     return globalThis["write"](writeObject.uid, contents);
   }
 
-  writeFileSync(fp: string, contents: string) {
+  writeFileSync(filepath: string, contents: string) {
+    files.add(filepath);
     return globalThis["writeFileSync"](
-      this.testResourceConfiguration.fs + "/" + fp,
+      this.testResourceConfiguration.fs + "/" + filepath,
       contents
     );
   }
 
   createWriteStream(filepath: string): any {
+    files.add(filepath);
     return globalThis["createWriteStream"](
       this.testResourceConfiguration.fs + "/" + filepath
     );
@@ -108,6 +112,17 @@ export class PM_Node extends PM {
 
   end(writeObject: { uid: number }) {
     return globalThis["end"](writeObject.uid);
+  }
+
+  customclose() {
+    console.log("node-customclose");
+    // globalThis["writeFileSync"](
+    //   this.testResourceConfiguration.fs + "/manifest.json",
+    //   // files.entries()
+    //   JSON.stringify(Array.from(files))
+    // ).then(() => {
+    //   globalThis["customclose"]();
+    // });
   }
   // write(accessObject: { uid: number; }, contents: string): boolean {
   //   throw new Error("Method not implemented.");

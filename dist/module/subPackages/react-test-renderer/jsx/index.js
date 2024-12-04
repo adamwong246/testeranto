@@ -6,7 +6,6 @@ export const testInterface = {
         return thenCB(s);
     },
     beforeEach: function (CComponent, props) {
-        console.log("ASDASDx");
         let component;
         act(() => {
             component = renderer.create(React.createElement(CComponent, props, []));

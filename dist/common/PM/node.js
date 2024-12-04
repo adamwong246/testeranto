@@ -55,6 +55,7 @@ function addPageBinding(type, name, prefix) {
     });
 }
 exports.addPageBinding = addPageBinding;
+const files = new Set();
 class PM_Node extends index_js_1.PM {
     constructor(t) {
         super();
@@ -70,14 +71,26 @@ class PM_Node extends index_js_1.PM {
     write(writeObject, contents) {
         return globalThis["write"](writeObject.uid, contents);
     }
-    writeFileSync(fp, contents) {
-        return globalThis["writeFileSync"](this.testResourceConfiguration.fs + "/" + fp, contents);
+    writeFileSync(filepath, contents) {
+        files.add(filepath);
+        return globalThis["writeFileSync"](this.testResourceConfiguration.fs + "/" + filepath, contents);
     }
     createWriteStream(filepath) {
+        files.add(filepath);
         return globalThis["createWriteStream"](this.testResourceConfiguration.fs + "/" + filepath);
     }
     end(writeObject) {
         return globalThis["end"](writeObject.uid);
+    }
+    customclose() {
+        console.log("node-customclose");
+        // globalThis["writeFileSync"](
+        //   this.testResourceConfiguration.fs + "/manifest.json",
+        //   // files.entries()
+        //   JSON.stringify(Array.from(files))
+        // ).then(() => {
+        //   globalThis["customclose"]();
+        // });
     }
     // write(accessObject: { uid: number; }, contents: string): boolean {
     //   throw new Error("Method not implemented.");

@@ -72,10 +72,6 @@ export default abstract class Testeranto<
                 artifactory(`afterAll4-${this.name}/${fPath}`, value);
               },
             pm
-            // {
-            //   ...utils,
-            //   browser: proxy,
-            // }
           );
         }
 
@@ -89,7 +85,6 @@ export default abstract class Testeranto<
           tr,
           pm
         ): Promise<ITestShape["isubject"]> {
-          console.log("mark12");
           return (
             fullTestInterface.beforeAll ||
             (async (

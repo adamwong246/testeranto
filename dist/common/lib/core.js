@@ -30,18 +30,12 @@ class Testeranto extends classBuilder_js_1.ClassBuilder {
                 // const proxy = new Proxy(utils.browser, browserHandler);
                 return fullTestInterface.afterAll(store, (fPath, value) => {
                     artifactory(`afterAll4-${this.name}/${fPath}`, value);
-                }, pm
-                // {
-                //   ...utils,
-                //   browser: proxy,
-                // }
-                );
+                }, pm);
             }
             assertThat(t) {
                 fullTestInterface.assertThis(t);
             }
             async setup(s, artifactory, tr, pm) {
-                console.log("mark12");
                 return (fullTestInterface.beforeAll ||
                     (async (input, artifactory, tr, pm) => input))(s, this.testResourceConfiguration, artifactory, pm);
             }

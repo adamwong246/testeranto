@@ -18,6 +18,8 @@ function waitForFunctionCall() {
   });
 }
 
+const files = new Set<string>();
+
 export class PM_Web extends PM {
   server: PuppetMasterServer;
   // testResourceConfiguration: ITTestResourceConfiguration;
@@ -40,15 +42,17 @@ export class PM_Web extends PM {
     return window["write"](writeObject.uid, contents);
   }
 
-  writeFileSync(fp: string, contents: string) {
-    console.log("WEB writeFileSync", fp);
+  writeFileSync(filepath: string, contents: string) {
+    console.log("WEB writeFileSync", filepath);
+    files.add(filepath);
     return window["writeFileSync"](
-      this.testResourceConfiguration.fs + "/" + fp,
+      this.testResourceConfiguration.fs + "/" + filepath,
       contents
     );
   }
 
   createWriteStream(filepath: string): any {
+    files.add(filepath);
     return window["createWriteStream"](
       this.testResourceConfiguration.fs + "/" + filepath
     );
@@ -59,7 +63,13 @@ export class PM_Web extends PM {
   }
 
   customclose() {
-    return window["customclose"]();
+    window["writeFileSync"](
+      this.testResourceConfiguration.fs + "/manifest.json",
+      // files.entries()
+      JSON.stringify(Array.from(files))
+    ).then(() => {
+      window["customclose"]();
+    });
   }
 
   testArtiFactoryfileWriter(tLog: ITLog, callback: (Promise) => void) {
@@ -130,7 +140,9 @@ export class PM_Web extends PM {
               get(target, prop, receiver) {
                 if (prop === "screenshot") {
                   return async (x) => {
-                    debugger;
+                    // debugger;
+                    files.add(x.path);
+                    console.log("aloha", files);
                     return await window["custom-screenshot"]({
                       ...x,
                       path: destFolder + "/" + x.path,

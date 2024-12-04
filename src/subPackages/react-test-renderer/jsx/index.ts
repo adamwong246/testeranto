@@ -32,7 +32,6 @@ export const testInterface = {
     CComponent,
     props
   ): Promise<renderer.ReactTestRenderer> {
-    console.log("ASDASDx");
     let component;
     act(() => {
       component = renderer.create(React.createElement(CComponent, props, []));

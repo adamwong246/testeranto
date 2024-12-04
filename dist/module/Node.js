@@ -13,9 +13,10 @@ class NodeTesteranto extends Testeranto {
         const pm = new PM_Node(t);
         const { failed, artifacts, logPromise } = await this.testJobs[0].receiveTestResourceConfig(pm);
         console.log("test is done, awaiting test result write to fs");
-        Promise.all([...artifacts, logPromise]).then(async () => {
-            // process.exit((await failed) ? 1 : 0);
-        });
+        pm.customclose();
+        // Promise.all([...artifacts, logPromise]).then(async () => {
+        //   // process.exit((await failed) ? 1 : 0);
+        // });
     }
 }
 export default async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = defaultTestResourceRequirement) => {

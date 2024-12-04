@@ -15,6 +15,7 @@ function waitForFunctionCall() {
         };
     });
 }
+const files = new Set();
 class PM_Web extends index_js_1.PM {
     // testResourceConfiguration: ITTestResourceConfiguration;
     constructor(t) {
@@ -31,18 +32,24 @@ class PM_Web extends index_js_1.PM {
     write(writeObject, contents) {
         return window["write"](writeObject.uid, contents);
     }
-    writeFileSync(fp, contents) {
-        console.log("WEB writeFileSync", fp);
-        return window["writeFileSync"](this.testResourceConfiguration.fs + "/" + fp, contents);
+    writeFileSync(filepath, contents) {
+        console.log("WEB writeFileSync", filepath);
+        files.add(filepath);
+        return window["writeFileSync"](this.testResourceConfiguration.fs + "/" + filepath, contents);
     }
     createWriteStream(filepath) {
+        files.add(filepath);
         return window["createWriteStream"](this.testResourceConfiguration.fs + "/" + filepath);
     }
     end(writeObject) {
         return window["end"](writeObject.uid);
     }
     customclose() {
-        return window["customclose"]();
+        window["writeFileSync"](this.testResourceConfiguration.fs + "/manifest.json", 
+        // files.entries()
+        JSON.stringify(Array.from(files))).then(() => {
+            window["customclose"]();
+        });
     }
     testArtiFactoryfileWriter(tLog, callback) {
         return (fPath, value) => {
@@ -104,7 +111,9 @@ class PM_Web extends index_js_1.PM {
                     get(target, prop, receiver) {
                         if (prop === "screenshot") {
                             return async (x) => {
-                                debugger;
+                                // debugger;
+                                files.add(x.path);
+                                console.log("aloha", files);
                                 return await window["custom-screenshot"](Object.assign(Object.assign({}, x), { path: destFolder + "/" + x.path }));
                             };
                         }
