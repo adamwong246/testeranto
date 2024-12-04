@@ -2,14 +2,14 @@ import {
   LoginPageSpecs,
   LoginPage_default,
   actions
-} from "../../../chunk-XITJKJW3.mjs";
+} from "../../../chunk-SN7AGXRL.mjs";
 import {
   Web_default
-} from "../../../chunk-SF4Q3WCB.mjs";
-import "../../../chunk-D54U7RBP.mjs";
+} from "../../../chunk-DT6QM7RO.mjs";
 import {
   assert
 } from "../../../chunk-FWI6RUOP.mjs";
+import "../../../chunk-D54U7RBP.mjs";
 import "../../../chunk-T4W5FV25.mjs";
 import "../../../chunk-43DSNPFJ.mjs";
 import "../../../chunk-WZWH5UFM.mjs";
@@ -103,6 +103,7 @@ var web_test_default = web_default(
     },
     afterAll: (store, artificer, utils) => {
       utils.writeFileSync("afterAllLog", "bar");
+      return store;
     }
   }
 );

@@ -60,6 +60,7 @@ export const ReduxTesteranto = <IStoreShape, ITestShape extends IBaseTest>(
       return store;
     },
     butThen: async function (store, actioner, tr) {
+      console.log("store", store);
       return actioner(store.getState());
     },
   };

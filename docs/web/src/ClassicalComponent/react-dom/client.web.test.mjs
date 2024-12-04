@@ -1,13 +1,13 @@
 import {
   Web_default,
   require_scheduler
-} from "../../../chunk-IJKIDNV2.mjs";
+} from "../../../chunk-GMZQMU6E.mjs";
 import {
   assert
 } from "../../../chunk-FWI6RUOP.mjs";
 import {
   ClassicalComponent
-} from "../../../chunk-XSZNNJY6.mjs";
+} from "../../../chunk-RAOLTNHP.mjs";
 import {
   require_react
 } from "../../../chunk-T4W5FV25.mjs";
@@ -21303,7 +21303,8 @@ var ClassicalComponentSpec = (Suite, Given, When, Then, Check) => {
           [
             When.IClickTheButton(),
             When.IClickTheButton(),
-            When.IClickTheButton()
+            When.IClickTheButton(),
+            When.IClickTheHeader()
             // When.IClickTheButton(),
           ],
           [Then.ThePropsIs({ children: [] }), Then.TheStatusIs({ count: 3 })]
@@ -21323,9 +21324,10 @@ var ClassicalComponentSpec = (Suite, Given, When, Then, Check) => {
             When.IClickTheButton(),
             When.IClickTheButton(),
             When.IClickTheButton(),
+            When.IClickTheButton(),
             When.IClickTheButton()
           ],
-          [Then.TheStatusIs({ count: 8 })]
+          [Then.TheStatusIs({ count: 9 })]
         ),
         test3: Given.AnEmptyState(
           ["test"],
@@ -21347,6 +21349,10 @@ var ClassicalComponentReactDomImplementation = {
     AnEmptyState: { props: { foo: "bar" } }
   },
   whens: {
+    IClickTheHeader: () => async ({ htmlElement }) => {
+      console.log("IClickTheHeader", htmlElement);
+      htmlElement.querySelector("#theHeader").click();
+    },
     IClickTheButton: () => async ({ htmlElement }) => {
       console.log("IClickTheButton", htmlElement);
       htmlElement.querySelector("#theButton").click();

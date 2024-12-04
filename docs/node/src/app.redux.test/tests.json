@@ -25,17 +25,14 @@
       "thens": [
         {
           "name": "TheEmailIsNot: adam@email.com",
-          "error": "Cannot read properties of undefined (reading 'getState')"
+          "error": false
         },
         {
           "name": "TheEmailIs: bob@mail.com",
           "error": false
         }
       ],
-      "error": [
-        {},
-        "TypeError: Cannot read properties of undefined (reading 'getState')\n    at Object.butThen (file:///Users/adam/Code/kokomoBay/docs/node/src/app.redux.test.mjs?cacheBust=1733254711401:46:29)\n    at Then.butThen (file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:654:42)\n    at Then.test (file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:328:28)\n    at Given.give (file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:209:34)\n    at Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:81:34)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at runNextTicks (node:internal/process/task_queues:64:3)\n    at processImmediate (node:internal/timers:449:9)\n    at async file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:424:16\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:453:29)\n    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:1086:47)"
-      ],
+      "error": null,
       "features": [
         "hello"
       ]
@@ -67,13 +64,10 @@
       "thens": [
         {
           "name": "TheEmailIs: ",
-          "error": "Cannot read properties of undefined (reading 'getState')"
+          "error": false
         }
       ],
-      "error": [
-        {},
-        "TypeError: Cannot read properties of undefined (reading 'getState')\n    at Object.butThen (file:///Users/adam/Code/kokomoBay/docs/node/src/app.redux.test.mjs?cacheBust=1733254711401:46:29)\n    at Then.butThen (file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:654:42)\n    at Then.test (file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:328:28)\n    at Given.give (file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:209:34)\n    at Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:81:34)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at runNextTicks (node:internal/process/task_queues:64:3)\n    at processImmediate (node:internal/timers:449:9)\n    at async file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:424:16\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:453:29)\n    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:1086:47)"
-      ],
+      "error": null,
       "features": [
         "aloha",
         "hello"

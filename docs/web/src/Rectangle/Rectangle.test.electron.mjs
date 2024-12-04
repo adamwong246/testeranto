@@ -1,6 +1,6 @@
 import {
   Web_default
-} from "../../chunk-SF4Q3WCB.mjs";
+} from "../../chunk-DT6QM7RO.mjs";
 import {
   assert
 } from "../../chunk-FWI6RUOP.mjs";
@@ -85,15 +85,15 @@ var RectangleTesterantoBaseTestSpecification = (Suite, Given, When, Then, Check)
           [`hello`],
           [When.setWidth(4), When.setHeight(5)],
           [
-            // Then.getWidth(4),
-            // Then.getHeight(5),
-            // Then.area(20),
-            // Then.AreaPlusCircumference(38),
+            Then.getWidth(4),
+            Then.getHeight(5),
+            Then.area(20),
+            Then.AreaPlusCircumference(38)
           ]
         ),
         test2: Given.Default(
           [`hello`],
-          [When.setHeight(4), When.setWidth(3)],
+          [When.setHeight(4), When.setWidth(33)],
           [
             // Then.area(12)
           ]

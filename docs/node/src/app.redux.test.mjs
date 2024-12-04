@@ -8,7 +8,7 @@ import {
 } from "../chunk-EP6GCRJ6.mjs";
 import {
   Node_default
-} from "../chunk-R2PNGDRN.mjs";
+} from "../chunk-RBY5JW3M.mjs";
 import {
   assert
 } from "../chunk-MSVTAS6Q.mjs";
@@ -43,6 +43,7 @@ var ReduxTesteranto = (testInput, testSpecifications, testImplementations) => {
       return store;
     },
     butThen: async function(store, actioner, tr) {
+      console.log("store", store);
       return actioner(store.getState());
     }
   };
@@ -74,7 +75,6 @@ var implementations = {
   },
   thens: {
     TheEmailIs: (email) => (storeState) => {
-      console.log("foobar");
       assert.equal(storeState.email, email);
     },
     TheEmailIsNot: (email) => (storeState) => assert.notEqual(storeState.email, email),

@@ -20,6 +20,7 @@ export type IClassicalComponentSpec = {
   };
   whens: {
     IClickTheButton: [];
+    IClickTheHeader: [];
   };
   thens: {
     ThePropsIs: [IProps];
@@ -43,6 +44,7 @@ export const ClassicalComponentSpec: ITestSpecification<
             When.IClickTheButton(),
             When.IClickTheButton(),
             When.IClickTheButton(),
+            When.IClickTheHeader(),
             // When.IClickTheButton(),
           ],
           [Then.ThePropsIs({ children: [] }), Then.TheStatusIs({ count: 3 })]
@@ -63,8 +65,9 @@ export const ClassicalComponentSpec: ITestSpecification<
             When.IClickTheButton(),
             When.IClickTheButton(),
             When.IClickTheButton(),
+            When.IClickTheButton(),
           ],
-          [Then.TheStatusIs({ count: 8 })]
+          [Then.TheStatusIs({ count: 9 })]
         ),
         test3: Given.AnEmptyState(
           ["test"],

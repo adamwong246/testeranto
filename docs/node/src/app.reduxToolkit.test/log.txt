@@ -1,4 +1,4 @@
-test resources: ,{"scheduled":true,"name":"./src/app.reduxToolkit.test.ts","ports":[],"fs":"/Users/adam/Code/kokomoBay/docs/node/src/app.reduxToolkit.test","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/c1397e3e-dc7e-4ac6-8400-d82669a10752"}
+test resources: ,{"scheduled":true,"name":"./src/app.reduxToolkit.test.ts","ports":[],"fs":"/Users/adam/Code/kokomoBay/docs/node/src/app.reduxToolkit.test","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/9f51f351-c9b2-4540-93b1-9a5437c274a1"}
 
 Suite:,0,Testing the Redux store
 
@@ -8,8 +8,7 @@ Suite:,0,Testing the Redux store
 
  Given: AStateWithEmail
  Then:,TheEmailIsNot: adam@email.com
-TypeError: Cannot read properties of undefined (reading 'getState')
-
+ Then:,TheEmailIs: bob@mail.com
 
  Given: AnEmptyState
  When:,TheEmailIsSetTo: hello
@@ -18,8 +17,6 @@ TypeError: Cannot read properties of undefined (reading 'getState')
 
  Given: AnEmptyState
  Then:,TheEmailIs: 
-TypeError: Cannot read properties of undefined (reading 'getState')
-
 
  Given: AnEmptyState
  When:,TheEmailIsSetTo: hey there

@@ -12,6 +12,9 @@
         },
         {
           "name": "IClickTheButton: undefined"
+        },
+        {
+          "name": "IClickTheHeader: undefined"
         }
       ],
       "thens": [
@@ -54,6 +57,9 @@
     {
       "name": "AnEmptyState",
       "whens": [
+        {
+          "name": "IClickTheButton: undefined"
+        },
         {
           "name": "IClickTheButton: undefined"
         },

@@ -11,16 +11,32 @@
       []
     ],
     [
-      "./src/LoginPage/react/node.test.tsx",
-      "node",
+      "./src/LoginPage/react-test-renderer/web.test.tsx",
+      "web",
       {
         "ports": 0
       },
       []
     ],
     [
-      "./src/LoginPage/react-test-renderer/web.test.tsx",
+      "./src/Rectangle/Rectangle.test.electron.ts",
       "web",
+      {
+        "ports": 0
+      },
+      []
+    ],
+    [
+      "./src/ClassicalComponent/react-dom/client.web.test.tsx",
+      "web",
+      {
+        "ports": 0
+      },
+      []
+    ],
+    [
+      "./src/LoginPage/react/node.test.tsx",
+      "node",
       {
         "ports": 0
       },
@@ -59,14 +75,6 @@
       []
     ],
     [
-      "./src/Rectangle/Rectangle.test.electron.ts",
-      "web",
-      {
-        "ports": 0
-      },
-      []
-    ],
-    [
       "./src/Rectangle/Rectangle.test.node.ts",
       "node",
       {
@@ -82,14 +90,6 @@
           []
         ]
       ]
-    ],
-    [
-      "./src/ClassicalComponent/react-dom/client.web.test.tsx",
-      "web",
-      {
-        "ports": 0
-      },
-      []
     ],
     [
       "./src/MyFirstContract.basic.test.ts",

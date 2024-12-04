@@ -13,6 +13,11 @@ const ClassicalComponentReactDomImplementation = {
     AnEmptyState: { props: { foo: "bar" } },
   },
   whens: {
+    IClickTheHeader: () =>
+      async ({ htmlElement }) => {
+        console.log("IClickTheHeader", htmlElement)
+        htmlElement.querySelector("#theHeader").click()
+      },
     IClickTheButton:
       () =>
         async ({ htmlElement }) => {

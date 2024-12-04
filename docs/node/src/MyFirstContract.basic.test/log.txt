@@ -1,11 +1,9 @@
-test resources: ,{"scheduled":true,"name":"./src/MyFirstContract.basic.test.ts","ports":[],"fs":"/Users/adam/Code/kokomoBay/docs/node/src/MyFirstContract.basic.test","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/c1397e3e-dc7e-4ac6-8400-d82669a10752"}
+test resources: ,{"scheduled":true,"name":"./src/MyFirstContract.basic.test.ts","ports":[],"fs":"/Users/adam/Code/kokomoBay/docs/node/src/MyFirstContract.basic.test","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/9f51f351-c9b2-4540-93b1-9a5437c274a1"}
 
 Suite:,0,Testing a very simple smart contract ephemerally
 
  Given: Default
  Then:,Get: [object Object]
-TypeError: Cannot destructure property 'contract' of 'undefined' as it is undefined.
-
 
  Given: Default
  When:,Increment: 1
@@ -25,8 +23,6 @@ TypeError: Cannot destructure property 'contract' of 'undefined' as it is undefi
  When:,Increment: 1
  When:,Increment: 1
  Then:,Get: [object Object]
-AssertionError: expected 16 to equal 1
-
 
  Given: Default
  When:,Increment: 1
@@ -34,21 +30,7 @@ AssertionError: expected 16 to equal 1
  When:,Increment: 1
  When:,Increment: 1
  When:,Decrement: 1
-Error: Transaction has been reverted by the EVM:
-{
-  "transactionHash": "0xe54ee76be559b58ce72da2d51ec703355bdf47b776c37de79d1d2e2e2a28aa8d",
-  "transactionIndex": 0,
-  "blockNumber": 2,
-  "blockHash": "0xb1e240a5e062041ffe0b0b163820181c21a4eb4782bd66c777c13e6c1fc63911",
-  "from": "0x19894ab66843e465d165df9cfdda370444debfb6",
-  "to": "0x5884b618cc5cace0dec202cc2dbc8faca9e16f69",
-  "cumulativeGasUsed": 23452,
-  "gasUsed": 23452,
-  "contractAddress": null,
-  "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-  "status": false,
-  "effectiveGasPrice": 3266452291,
-  "type": "0x2",
-  "events": {}
-}
-
+ When:,Decrement: 1
+ When:,Decrement: 1
+ When:,Decrement: 1
+ Then:,Get: [object Object]

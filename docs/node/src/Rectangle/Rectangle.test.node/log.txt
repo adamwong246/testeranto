@@ -1,4 +1,4 @@
-test resources: ,{"scheduled":true,"name":"./src/Rectangle/Rectangle.test.node.ts","ports":[],"fs":"/Users/adam/Code/kokomoBay/docs/node/src/Rectangle/Rectangle.test.node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/c1397e3e-dc7e-4ac6-8400-d82669a10752"}
+test resources: ,{"scheduled":true,"name":"./src/Rectangle/Rectangle.test.node.ts","ports":[],"fs":"/Users/adam/Code/kokomoBay/docs/node/src/Rectangle/Rectangle.test.node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/9f51f351-c9b2-4540-93b1-9a5437c274a1"}
 
 Suite:,0,Testing the Rectangle class
 
@@ -11,10 +11,14 @@ Suite:,0,Testing the Rectangle class
  Given: Default
  When:,setWidth: 4
  When:,setHeight: 5
+ Then:,getWidth: 4
+ Then:,getHeight: 5
+ Then:,area: 20
+ Then:,AreaPlusCircumference: 38
 
  Given: Default
  When:,setHeight: 4
- When:,setWidth: 3
+ When:,setWidth: 33
 
  Given: Default
  When:,setHeight: 5

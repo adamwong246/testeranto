@@ -1,7 +1,7 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
   Node_default
-} from "../../chunk-R2PNGDRN.mjs";
+} from "../../chunk-RBY5JW3M.mjs";
 import {
   assert
 } from "../../chunk-MSVTAS6Q.mjs";
@@ -98,15 +98,15 @@ var RectangleTesterantoBaseTestSpecification = (Suite, Given, When, Then, Check)
           [`hello`],
           [When.setWidth(4), When.setHeight(5)],
           [
-            // Then.getWidth(4),
-            // Then.getHeight(5),
-            // Then.area(20),
-            // Then.AreaPlusCircumference(38),
+            Then.getWidth(4),
+            Then.getHeight(5),
+            Then.area(20),
+            Then.AreaPlusCircumference(38)
           ]
         ),
         test2: Given.Default(
           [`hello`],
-          [When.setHeight(4), When.setWidth(3)],
+          [When.setHeight(4), When.setWidth(33)],
           [
             // Then.area(12)
           ]
@@ -151,11 +151,6 @@ var RectangleTesterantoBasePrototype = Rectangle_default.prototype;
 var testInterface = {
   beforeAll(input, testResource, artificer, utils) {
     return new Promise(async (res, rej) => {
-      const page = await utils.browser.newPage();
-      await page.setViewport({ width: 1920, height: 1080 });
-      await page.goto("https://scrapingbee.com");
-      await page.screenshot({ path: `./scrapingbee_homepage.jpg` });
-      await page.close();
       const x = Object.create(input);
       console.log("beforeAll", x);
       res(x);

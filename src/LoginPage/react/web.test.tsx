@@ -41,6 +41,7 @@ export default test(
       // console.log(store);
       // console.log(artificer);
       // console.log(utils);
+      return store;
     }
   }
 );

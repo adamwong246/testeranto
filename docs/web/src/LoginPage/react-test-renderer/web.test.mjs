@@ -3,17 +3,17 @@ import {
   LoginPage_default,
   actions,
   emailwarning
-} from "../../../chunk-XITJKJW3.mjs";
-import {
-  require_scheduler
-} from "../../../chunk-D54U7RBP.mjs";
+} from "../../../chunk-SN7AGXRL.mjs";
 import {
   Web_default,
   require_scheduler as require_scheduler2
-} from "../../../chunk-IJKIDNV2.mjs";
+} from "../../../chunk-GMZQMU6E.mjs";
 import {
   assert
 } from "../../../chunk-FWI6RUOP.mjs";
+import {
+  require_scheduler
+} from "../../../chunk-D54U7RBP.mjs";
 import {
   require_react
 } from "../../../chunk-T4W5FV25.mjs";
@@ -27186,7 +27186,6 @@ var testInterface = {
     return thenCB(s);
   },
   beforeEach: function(CComponent, props) {
-    console.log("ASDASDx");
     let component;
     (0, import_react_test_renderer.act)(() => {
       component = import_react_test_renderer.default.create(import_react.default.createElement(CComponent, props, []));

@@ -7,13 +7,10 @@
       "thens": [
         {
           "name": "Get: [object Object]",
-          "error": "Cannot destructure property 'contract' of 'undefined' as it is undefined."
+          "error": false
         }
       ],
-      "error": [
-        {},
-        "TypeError: Cannot destructure property 'contract' of 'undefined' as it is undefined.\n    at file:///Users/adam/Code/kokomoBay/docs/node/src/MyFirstContract.basic.test.mjs?cacheBust=1733254711402:130806:52\n    at Object.butThen (file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:24:37)\n    at Then.butThen (file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:654:42)\n    at Then.test (file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:328:28)\n    at Given.give (file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:209:34)\n    at Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:81:34)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at runNextTicks (node:internal/process/task_queues:64:3)\n    at processImmediate (node:internal/timers:449:9)\n    at async file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:424:16\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:453:29)\n    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:1086:47)"
-      ],
+      "error": null,
       "features": "my first contract"
     },
     {
@@ -71,21 +68,10 @@
       "thens": [
         {
           "name": "Get: [object Object]",
-          "error": "expected 16 to equal 1"
+          "error": false
         }
       ],
-      "error": [
-        {
-          "name": "AssertionError",
-          "message": "expected 16 to equal 1",
-          "showDiff": true,
-          "actual": 16,
-          "expected": 1,
-          "operator": "strictEqual",
-          "stack": "AssertionError: expected 16 to equal 1\n    at file:///Users/adam/Code/kokomoBay/docs/node/src/MyFirstContract.basic.test.mjs?cacheBust=1733254711402:130806:84\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Then.butThen (file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:654:18)\n    at async Then.test (file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:328:17)\n    at async Given.give (file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:209:19)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:81:22)\n    at async file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:424:16\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:453:29)\n    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:1086:47)"
-        },
-        "AssertionError: expected 16 to equal 1\n    at file:///Users/adam/Code/kokomoBay/docs/node/src/MyFirstContract.basic.test.mjs?cacheBust=1733254711402:130806:84\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Then.butThen (file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:654:18)\n    at async Then.test (file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:328:17)\n    at async Given.give (file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:209:19)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:81:22)\n    at async file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:424:16\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:453:29)\n    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/chunk-R2PNGDRN.mjs:1086:47)"
-      ],
+      "error": null,
       "features": [
         "hello"
       ]
@@ -106,8 +92,7 @@
           "name": "Increment: 1"
         },
         {
-          "name": "Decrement: 1",
-          "error": true
+          "name": "Decrement: 1"
         },
         {
           "name": "Decrement: 1"
@@ -125,27 +110,7 @@
           "error": false
         }
       ],
-      "error": [
-        {
-          "receipt": {
-            "transactionHash": "0xe54ee76be559b58ce72da2d51ec703355bdf47b776c37de79d1d2e2e2a28aa8d",
-            "transactionIndex": 0,
-            "blockNumber": 2,
-            "blockHash": "0xb1e240a5e062041ffe0b0b163820181c21a4eb4782bd66c777c13e6c1fc63911",
-            "from": "0x19894ab66843e465d165df9cfdda370444debfb6",
-            "to": "0x5884b618cc5cace0dec202cc2dbc8faca9e16f69",
-            "cumulativeGasUsed": 23452,
-            "gasUsed": 23452,
-            "contractAddress": null,
-            "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-            "status": false,
-            "effectiveGasPrice": 3266452291,
-            "type": "0x2",
-            "events": {}
-          }
-        },
-        "Error: Transaction has been reverted by the EVM:\n{\n  \"transactionHash\": \"0xe54ee76be559b58ce72da2d51ec703355bdf47b776c37de79d1d2e2e2a28aa8d\",\n  \"transactionIndex\": 0,\n  \"blockNumber\": 2,\n  \"blockHash\": \"0xb1e240a5e062041ffe0b0b163820181c21a4eb4782bd66c777c13e6c1fc63911\",\n  \"from\": \"0x19894ab66843e465d165df9cfdda370444debfb6\",\n  \"to\": \"0x5884b618cc5cace0dec202cc2dbc8faca9e16f69\",\n  \"cumulativeGasUsed\": 23452,\n  \"gasUsed\": 23452,\n  \"contractAddress\": null,\n  \"logsBloom\": \"0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000\",\n  \"status\": false,\n  \"effectiveGasPrice\": 3266452291,\n  \"type\": \"0x2\",\n  \"events\": {}\n}\n    at Object.TransactionError (file:///Users/adam/Code/kokomoBay/docs/node/src/MyFirstContract.basic.test.mjs?cacheBust=1733254711402:44278:21)\n    at Object.TransactionRevertedWithoutReasonError (file:///Users/adam/Code/kokomoBay/docs/node/src/MyFirstContract.basic.test.mjs?cacheBust=1733254711402:44289:21)\n    at file:///Users/adam/Code/kokomoBay/docs/node/src/MyFirstContract.basic.test.mjs?cacheBust=1733254711402:48229:45\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"
-      ],
+      "error": null,
       "features": [
         "hello"
       ]

@@ -36,7 +36,24 @@
           "name": "setHeight: 5"
         }
       ],
-      "thens": [],
+      "thens": [
+        {
+          "name": "getWidth: 4",
+          "error": false
+        },
+        {
+          "name": "getHeight: 5",
+          "error": false
+        },
+        {
+          "name": "area: 20",
+          "error": false
+        },
+        {
+          "name": "AreaPlusCircumference: 38",
+          "error": false
+        }
+      ],
       "error": null,
       "features": [
         "hello"
@@ -49,7 +66,7 @@
           "name": "setHeight: 4"
         },
         {
-          "name": "setWidth: 3"
+          "name": "setWidth: 33"
         }
       ],
       "thens": [],

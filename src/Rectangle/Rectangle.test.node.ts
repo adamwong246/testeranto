@@ -21,11 +21,11 @@ const testInterface: IPartialNodeInterface<IRectangleTestShape> = {
   beforeAll(input, testResource, artificer, utils) {
     return new Promise(async (res, rej) => {
       // console.log("brower: ", utils.browser);
-      const page = await utils.browser.newPage();
-      await page.setViewport({ width: 1920, height: 1080 });
-      await page.goto("https://scrapingbee.com");
-      await page.screenshot({ path: `./scrapingbee_homepage.jpg` });
-      await page.close();
+      // const page = await utils.browser.newPage();
+      // await page.setViewport({ width: 1920, height: 1080 });
+      // await page.goto("https://scrapingbee.com");
+      // await page.screenshot({ path: `./scrapingbee_homepage.jpg` });
+      // await page.close();
       // // await this.browser.close();
       const x = Object.create(input);
       console.log("beforeAll", x);

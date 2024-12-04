@@ -3,7 +3,7 @@ import {
 } from "../../chunk-D54U7RBP.mjs";
 import {
   ClassicalComponent
-} from "../../chunk-XSZNNJY6.mjs";
+} from "../../chunk-RAOLTNHP.mjs";
 import {
   require_react
 } from "../../chunk-T4W5FV25.mjs";

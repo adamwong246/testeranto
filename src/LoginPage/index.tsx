@@ -27,7 +27,7 @@ export function LoginPage(): React.JSX.Element {
 
   return (<div>
     <h2>Welcome back!</h2>
-    <p>Sign in and get to it</p>
+
 
     <form>
       <input type="email" value={selection.email} onChange={(e) => store.dispatch(actions.setEmail(e.target.value as any))} />
