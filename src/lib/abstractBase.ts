@@ -1,8 +1,7 @@
 import { IBaseTest } from "../Types";
+import { PM } from "../PM/index.js";
 
 import { ITTestResourceConfiguration, ITestArtifactory, ITLog } from ".";
-import { PM } from "../PM/index.js";
-// import { IUtils } from "./types";
 
 export type IGivens<ITestShape extends IBaseTest> = Record<
   string,

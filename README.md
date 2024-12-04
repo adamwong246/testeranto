@@ -22,7 +22,7 @@ If so, then testeranto might be the testing tool you have been looking for!
 
 ## about
 
-Testeranto.ts an Acceptance Test Driven Development ([ATDD](https://en.wikipedia.org/wiki/Acceptance_test-driven_development)) framework. It focuses on strongly-typed tests, specified in a gherkin-like syntax. Testeranto includes a framework to help write your tests, a test runner to schedule the tests and a reporter to display the results.
+Testeranto.ts an typescript Acceptance Test Driven Development ([ATDD](https://en.wikipedia.org/wiki/Acceptance_test-driven_development)) framework. It includes a library of common patterns to help write your tests, a test runner to schedule the tests and a reporter to display the results. The tests are specified in a strongly-typed gherkin-like syntax. Features are tracked _as code_, rather than living in a separate app. Tests can be run in the browser frontend or the node backend, or both! Testeranto can be used to test _anything_ that can be bundled with esbuild.
 
 ## Getting started
 
@@ -45,11 +45,11 @@ Testeranto.ts an Acceptance Test Driven Development ([ATDD](https://en.wikipedia
 
 ## 3 distinguishing features of testeranto
 
-1. Rather than testing your code directly, Testeranto requires you wrap your code with a semantic interface which is based on TS type signatures. These interfaces can be shared and your code is now tested through the gherkin-ish directives provided by that interface.
+1. Rather than testing your code directly, Testeranto requires you wrap your code with a semantic interface which is based on TS type signatures. These interfaces can be shared and your code is tested through the gherkin-ish directives provided by that interface.
 
-2. Testeranto tracks features and test results directly in the source code. You may be accustomed to using tools like Jira and Trello to define user stories and assign story points- Under Testeranto, this data lives within the code base _as_ typescript code. Features are defined as nodes within a directed graph, allowing the reporter to summarize these features and their test results.
+2. Testeranto tracks features and tests results directly in the source code. You may be accustomed to using tools like Jira and Trello to define user stories and assign story points. Using Testeranto, this data lives within the code base _as_ typescript code. Features are defined as nodes within a directed graph, allowing the reporter to summarize these features and their test results.
 
-3. Testeranto is designed for both the backend and the frontend. It leverages electron to provide both of these runtimes. Each of your tests can be executed in the backend node runtime, within the frontend chromium browser runtime, or both.
+3. Testeranto is designed for both the backend and the frontend. It leverages puppeteer to provide both of these runtimes. Each of your tests can be executed in the backend node runtime, within the frontend chromium browser runtime, or both.
 
 ## the good parts
 
@@ -65,11 +65,11 @@ Rather than the traditional method of specifying tests in plain text, Testeranto
 
 ## the bad parts
 
-Testeranto is not designed to maximize performance.
+Testeranto is very flexible and unopinionated, but not designed to maximize performance.
 
-Testeranto does not (yet!) of a means of allowing non-coders to affect changes so, as they say, "get good 💪!"
+Testeranto does not (yet!) allow a means of allowing non-coders to affect changes so, as they say, "git good 💪!"
 
-Because Testeranto is so un-opinionated that it does not provide test infrastructure. You will need to find an existing recipe or implement it yourself, though a public repo of test interfaces exists.
+Testeranto uses ONLY node v8 and chromium. It does not support bun or deno, nor firefox nor safari.
 
 ## How it works
 
@@ -81,14 +81,30 @@ Testeranto is comprised of 3 parts
 - Build the node-style tests
 - Build the web-style tests
 
-2. The test runner watches the output of those build processes and launches the tests as those files change.
+2. The test runner watches the output of those build processes and launches the tests as those files change. It uses puppeteer to run web tests in chromium. It uses dynamic loading to import the node tests directly into the node v8 process.
+
 3. A Report which links your features, your tests and the results of those tests into a handy website.
+
+## CLI
+
+There are 3 commands you should add to your `package.json`
+
+```
+// build the tests once
+"testeranto-esbuild": "ts-node-esm testeranto.mts",
+
+// build the tests, watching for changes
+"testeranto-esbuild-dev": "ts-node-esm testeranto.mts",
+
+// run the tests
+"testeranto-puppeteer":"ts-node-esm node_modules/testeranto/dist/module/Puppeteer.js",
+```
 
 ## Hybrid tests
 
 Consider the a scenario: You have an http server which serves a frontend react component. You have multiple ways you can test this.
 
-- A node test of the logic of the http server
+- A node test of the logic of the http server.
 - A node test of the full http server, tested over http request.
 - A node test of the react component with react-test-render
 - A web test of the react component rendering it to the dom.
@@ -112,18 +128,3 @@ This is designed so that each piece can be worked upon separately. You can think
 - "Product Manager" handles the "specification"
 - "Middle Engineer" handles the "interface"
 - "Junior Engineer" handles the "implementation"
-
-## CLI
-
-There are 3 commands you should add to your `package.json`
-
-```
-// build the tests once
-"testeranto-esbuild": "ts-node-esm testeranto.mts",
-
-// build the tests, watching for changes
-"testeranto-esbuild-dev": "ts-node-esm testeranto.mts",
-
-// run the tests
-"testeranto-puppeteer":"ts-node-esm node_modules/testeranto/dist/module/Puppeteer.js",
-```

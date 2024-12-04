@@ -1,12 +1,6 @@
 import { PassThrough } from "stream";
 
-import {
-  ITTestResourceRequest,
-  ITestJob,
-  ITLog,
-  ILogWriter,
-  ITTestResourceConfiguration,
-} from ".";
+import { ITTestResourceRequest, ITestJob, ITLog } from ".";
 import { IBaseTest, ITestSpecification } from "../Types.js";
 
 import {
@@ -15,9 +9,7 @@ import {
   IWhenKlasser,
   IThenKlasser,
   ICheckKlasser,
-  // IUtils,
 } from "./types.js";
-
 import {
   BaseCheck,
   BaseSuite,
@@ -59,7 +51,6 @@ export abstract class BaseBuilder<
     checkOverides: Record<keyof CheckExtensions, ICheckKlasser<ITestShape>>,
     testResourceRequirement: ITTestResourceRequest,
     testSpecification: any
-    // puppetMaster: PM
   ) {
     this.artifacts = [];
     this.testResourceRequirement = testResourceRequirement;
@@ -69,7 +60,6 @@ export abstract class BaseBuilder<
     this.thenOverides = thenOverides;
     this.checkOverides = checkOverides;
     this.testSpecification = testSpecification;
-    // this.puppetMaster = puppetMaster;
 
     this.specs = testSpecification(
       this.Suites(),
@@ -83,7 +73,6 @@ export abstract class BaseBuilder<
       const suiteRunner =
         (suite: BaseSuite<ITestShape>) =>
         async (
-          // testResourceConfiguration: ITTestResourceConfiguration,
           puppetMaster: PM,
           tLog: ITLog
         ): Promise<BaseSuite<ITestShape>> => {
@@ -114,7 +103,6 @@ export abstract class BaseBuilder<
 
       return {
         test: suite,
-        // testResourceRequirement,
 
         toObj: () => {
           return suite.toObj();
@@ -122,48 +110,12 @@ export abstract class BaseBuilder<
 
         runner,
 
-        receiveTestResourceConfig: async function (
-          // testResourceConfiguration = {
-          //   name: "",
-          //   fs: ".",
-          //   ports: [],
-          //   browserWSEndpoint: "",
-          // },
-          puppetMaster: PM
-        ) {
-          // console.log(
-          //   `testResourceConfiguration! ${JSON.stringify(
-          //     testResourceConfiguration,
-          //     null,
-          //     2
-          //   )}`
-          // );
-          // console.log("puppetMaster", puppetMaster);
-
-          await puppetMaster
-            .mkdirSync
-            // ""
-            // puppetMaster.testResourceConfiguration.fs + "/"
-            ();
-          //  if (!puppetMaster.existsSync(destFolder)) {
-          //    puppetMaster.mkdirSync(destFolder, { recursive: true });
-          //  }
-
-          // puppetMaster.writeFileSync(
-          //   // puppetMaster.testResourceConfiguration.fs + `/tests.json`,
-          //   `tests.json`,
-          //   JSON.stringify(this.toObj(), null, 2)
-          // );
+        receiveTestResourceConfig: async function (puppetMaster: PM) {
+          await puppetMaster.mkdirSync();
 
           const logFilePath = "log.txt";
-          // puppetMaster.testResourceConfiguration.fs + `/log.txt`;
-
           const access = await puppetMaster.createWriteStream(logFilePath);
-
-          // console.log("access", access);
           const tLog = (...l: string[]) => {
-            // access.write(`${l.toString()}\n`);
-            // console.log("tLog", l);
             puppetMaster.write(access, `${l.toString()}\n`);
           };
 
