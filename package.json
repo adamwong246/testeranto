@@ -110,9 +110,9 @@
       "import": "./src/Types.ts",
       "require": "./src/Types.ts"
     },
-    "./src/lib": {
-      "import": "./src/lib.ts",
-      "require": "./src/lib.ts"
+    "./src/utils": {
+      "import": "./src/utils.ts",
+      "require": "./src/utils.ts"
     },
     "./src/Features": {
       "import": "./dist/module/Features.js",

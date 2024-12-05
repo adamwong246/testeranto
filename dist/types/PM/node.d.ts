@@ -3,11 +3,13 @@
 import { PassThrough } from "stream";
 import { ITLog, ITTestResourceConfiguration } from "../lib";
 import { PM } from "./index.js";
+import { Page } from "puppeteer-core/lib/esm/puppeteer";
 declare type PuppetMasterServer = Record<string, Promise<any>>;
 export declare class PM_Node extends PM {
     server: PuppetMasterServer;
     testResourceConfiguration: ITTestResourceConfiguration;
     constructor(t: ITTestResourceConfiguration);
+    customScreenShot(opts: object, page: Page): any;
     existsSync(destFolder: string): boolean;
     mkdirSync(): any;
     write(writeObject: {

@@ -6,6 +6,7 @@ import { PassThrough } from "stream";
 import { ITLog, ITTestResourceConfiguration } from "../lib";
 
 import { PM } from "./index.js";
+import { Page } from "puppeteer-core/lib/esm/puppeteer";
 
 type IFPaths = string[];
 const fPaths: IFPaths = [];
@@ -20,6 +21,10 @@ export class PM_Node extends PM {
     super();
     this.server = {};
     this.testResourceConfiguration = t;
+  }
+
+  customScreenShot(opts: object, page: Page) {
+    return globalThis["customScreenShot"](opts, page);
   }
 
   existsSync(destFolder: string): boolean {
@@ -37,6 +42,7 @@ export class PM_Node extends PM {
   }
 
   writeFileSync(filepath: string, contents: string) {
+    console.log("pm_node-writeFileSync", this.testResourceConfiguration);
     return globalThis["writeFileSync"](
       this.testResourceConfiguration.fs + "/" + filepath,
       contents,

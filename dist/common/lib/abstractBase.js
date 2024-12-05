@@ -61,16 +61,23 @@ class BaseSuite {
                                                 get(pTarget, pProp, pReciever) {
                                                     if (pProp === "screenshot") {
                                                         return async (x) => {
-                                                            // console.log(
-                                                            //   "custom-screenshot-MARK-afterAllProxy",
-                                                            //   // arguments,
-                                                            //   // x,
-                                                            //   window["custom-screenshot"].toString()
-                                                            // );
-                                                            return await window["custom-screenshot"](Object.assign(Object.assign({}, x), { path: `${testResourceConfiguration.fs}/suite-${sNdx}/afterAll` +
+                                                            return pm.customScreenShot(Object.assign(Object.assign({}, x), { path: `${testResourceConfiguration.fs}/suite-${sNdx}/afterAll` +
                                                                     "/" +
                                                                     x.path }));
+                                                            // return await window["custom-screenshot"]({
+                                                            //   ...x,
+                                                            //   path:
+                                                            //     `${testResourceConfiguration.fs}/suite-${sNdx}/afterAll` +
+                                                            //     "/" +
+                                                            //     x.path,
+                                                            // });
                                                         };
+                                                    }
+                                                    else if (pProp === "mainFrame") {
+                                                        return () => pTarget[pProp]();
+                                                    }
+                                                    else if (pProp === "close") {
+                                                        return () => pTarget[pProp]();
                                                     }
                                                     // else if (pProp === "mainFrame") {
                                                     //   return () => target[pProp](...arguments);
@@ -162,7 +169,6 @@ class BaseGiven {
             const beforeEachProxy = new Proxy(pm, {
                 get(target, prop, receiver) {
                     if (prop === "writeFileSync") {
-                        console.log("beforeEachProx", arguments, target[prop]);
                         return (fp, contents) => target[prop](`suite-${suiteNdx}/given-${key}/when/beforeEach/${fp}`, contents);
                     }
                     return Reflect.get(...arguments);
@@ -172,8 +178,8 @@ class BaseGiven {
             for (const [whenNdx, whenStep] of this.whens.entries()) {
                 await whenStep.test(this.store, testResourceConfiguration, tLog, pm, `suite-${suiteNdx}/given-${key}/when/${whenNdx}`);
             }
-            for (const thenStep of this.thens) {
-                const t = await thenStep.test(this.store, testResourceConfiguration, tLog, pm);
+            for (const [thenNdx, thenStep] of this.thens.entries()) {
+                const t = await thenStep.test(this.store, testResourceConfiguration, tLog, pm, `suite-${suiteNdx}/given-${key}/then-${thenNdx}`);
                 tester(t);
             }
         }
@@ -218,12 +224,34 @@ class BaseGiven {
                                                                     //   "custom-screenshot-MARK-afterEachProxy",
                                                                     //   window["custom-screenshot"].toString()
                                                                     // );
-                                                                    return await pTarget[pProp](Object.assign(Object.assign({}, x), { path: `${testResourceConfiguration.fs}/suite-${suiteNdx}/given-${key}/afterEach` +
+                                                                    return pm.customScreenShot(Object.assign(Object.assign({}, x), { path: `${testResourceConfiguration.fs}/suite-${suiteNdx}/given-${key}/afterEach` +
                                                                             "/" +
-                                                                            x.path }));
+                                                                            x.path }), page);
+                                                                    // return await pTarget[pProp]({
+                                                                    //   ...x,
+                                                                    //   path:
+                                                                    //     `${testResourceConfiguration.fs}/suite-${suiteNdx}/given-${key}/afterEach` +
+                                                                    //     "/" +
+                                                                    //     x.path,
+                                                                    // });
                                                                 };
                                                             }
-                                                            // else if (pProp === "mainFrame") {
+                                                            else if (pProp === "mainFrame") {
+                                                                return () => pTarget[pProp]();
+                                                                // return target[pProp];
+                                                                // return Reflect.get(...arguments);
+                                                            }
+                                                            else if (pProp === "exposeFunction") {
+                                                                // return Reflect.get(target, prop, receiver);
+                                                                return (...a) => pTarget[pProp](...a);
+                                                                // return target[pProp];
+                                                            }
+                                                            else if (pProp === "removeExposedFunction") {
+                                                                // return Reflect.get(target, prop, receiver);
+                                                                return pTarget[pProp].bind(pTarget);
+                                                                // return target[pProp];
+                                                            }
+                                                            // else if (pProp === "#frameManager") {
                                                             //   return () => target[pProp](...arguments);
                                                             // }
                                                             else {
@@ -271,11 +299,69 @@ class BaseWhen {
         const andWhenProxy = new Proxy(pm, {
             get(target, prop, receiver) {
                 if (prop === "writeFileSync") {
-                    console.log("andWhenProxy", arguments, target[prop]);
                     return (fp, contents) => 
                     // target[prop](`${key}/andWhen/${fp}`, contents);
                     target[prop](`${key}/andWhen/${fp}`, contents);
                 }
+                /////////////////////
+                if (prop === "browser") {
+                    return new Proxy(target[prop], {
+                        get(bTarget, bProp, bReceiver) {
+                            if (bProp === "pages") {
+                                return async () => {
+                                    return bTarget.pages().then((pages) => {
+                                        return pages.map((page) => {
+                                            return new Proxy(page, {
+                                                get(pTarget, pProp, pReciever) {
+                                                    if (pProp === "screenshot") {
+                                                        return async (x) => {
+                                                            // console.log(
+                                                            //   "custom-screenshot-MARK-afterEachProxy",
+                                                            //   window["custom-screenshot"].toString()
+                                                            // );
+                                                            return pm.customScreenShot(Object.assign(Object.assign({}, x), { path: `${testResourceConfiguration.fs}/${key}/afterEach` +
+                                                                    "/" +
+                                                                    x.path }), page);
+                                                            // return await pTarget[pProp]({
+                                                            //   ...x,
+                                                            //   path:
+                                                            //     `${testResourceConfiguration.fs}/suite-${suiteNdx}/given-${key}/afterEach` +
+                                                            //     "/" +
+                                                            //     x.path,
+                                                            // });
+                                                        };
+                                                    }
+                                                    else if (pProp === "mainFrame") {
+                                                        return () => pTarget[pProp]();
+                                                        // return target[pProp];
+                                                        // return Reflect.get(...arguments);
+                                                    }
+                                                    else if (pProp === "exposeFunction") {
+                                                        // return Reflect.get(target, prop, receiver);
+                                                        return pTarget[pProp].bind(pTarget);
+                                                        // return target[pProp];
+                                                    }
+                                                    else if (pProp === "removeExposedFunction") {
+                                                        // return Reflect.get(target, prop, receiver);
+                                                        return pTarget[pProp].bind(pTarget);
+                                                        // return target[pProp];
+                                                    }
+                                                    else {
+                                                        return Reflect.get(...arguments);
+                                                    }
+                                                },
+                                            });
+                                        });
+                                    });
+                                    // return (await target.pages()).map((page) => {
+                                    //   return new Proxy(page, handler2);
+                                    // });
+                                };
+                            }
+                        },
+                    });
+                }
+                ///////////////////////
                 return Reflect.get(...arguments);
             },
         });
@@ -301,10 +387,74 @@ class BaseThen {
             error: this.error,
         };
     }
-    async test(store, testResourceConfiguration, tLog, pm) {
+    async test(store, testResourceConfiguration, tLog, pm, filepath) {
         tLog(" Then:", this.name);
         try {
-            const x = await this.butThen(store, this.thenCB, testResourceConfiguration);
+            const butThenProxy = new Proxy(pm, {
+                get(target, prop, receiver) {
+                    if (prop === "writeFileSync") {
+                        return (fp, contents) => target[prop](`${filepath}/${fp}`, contents);
+                    }
+                    if (prop === "browser") {
+                        return new Proxy(target[prop], {
+                            get(bTarget, bProp, bReceiver) {
+                                if (bProp === "pages") {
+                                    return async () => {
+                                        return bTarget.pages().then((pages) => {
+                                            return pages.map((page) => {
+                                                return new Proxy(page, {
+                                                    get(pTarget, pProp, pReciever) {
+                                                        if (pProp === "screenshot") {
+                                                            return async (x) => {
+                                                                return pm.customScreenShot(Object.assign(Object.assign({}, x), { path: `${testResourceConfiguration.fs}/${filepath}/butThen` +
+                                                                        "/" +
+                                                                        x.path }), page);
+                                                                // return await window["custom-screenshot"]({
+                                                                //   ...x,
+                                                                //   path:
+                                                                //     `${testResourceConfiguration.fs}/suite-${sNdx}/afterAll` +
+                                                                //     "/" +
+                                                                //     x.path,
+                                                                // });
+                                                            };
+                                                        }
+                                                        else if (pProp === "close") {
+                                                            return () => pTarget[pProp]();
+                                                        }
+                                                        else if (pProp === "mainFrame") {
+                                                            return () => pTarget[pProp]();
+                                                        }
+                                                        else if (pProp === "exposeFunction") {
+                                                            // return Reflect.get(target, prop, receiver);
+                                                            return (...a) => pTarget[pProp](...a);
+                                                            // return target[pProp];
+                                                        }
+                                                        else if (pProp === "removeExposedFunction") {
+                                                            // return Reflect.get(target, prop, receiver);
+                                                            return pTarget[pProp].bind(pTarget);
+                                                            // return target[pProp];
+                                                        }
+                                                        else {
+                                                            return Reflect.get(...arguments);
+                                                        }
+                                                    },
+                                                });
+                                            });
+                                        });
+                                        // return (await target.pages()).map((page) => {
+                                        //   return new Proxy(page, handler2);
+                                        // });
+                                    };
+                                }
+                            },
+                        });
+                    }
+                    return Reflect.get(...arguments);
+                },
+            });
+            const x = await this.butThen(store, this.thenCB, testResourceConfiguration, butThenProxy
+            // pm
+            );
             return x;
         }
         catch (e) {

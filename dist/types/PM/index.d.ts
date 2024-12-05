@@ -1,4 +1,4 @@
-import { Browser } from "puppeteer-core/lib/esm/puppeteer/puppeteer-core-browser";
+import { Browser, Page } from "puppeteer-core/lib/esm/puppeteer/puppeteer-core-browser";
 import { ITLog, ITTestResourceConfiguration } from "../lib";
 export declare abstract class PM {
     server: any;
@@ -16,4 +16,5 @@ export declare abstract class PM {
     abstract end(accessObject: {
         uid: number;
     }): boolean;
+    abstract customScreenShot(opts: object, page: Page): any;
 }

@@ -30,7 +30,7 @@ export declare type IBuiltConfig = {
 } & IBaseConfig;
 export declare type IWebTestInterface<ITestShape extends IBaseTest> = {
     assertThis: (x: ITestShape["then"]) => void;
-    andWhen: (store: ITestShape["istore"], whenCB: ITestShape["when"], testResource: ITTestResourceConfiguration) => Promise<ITestShape["istore"]>;
+    andWhen: (store: ITestShape["istore"], whenCB: ITestShape["when"], testResource: ITTestResourceConfiguration, utils: PM) => Promise<ITestShape["istore"]>;
     butThen: (store: ITestShape["istore"], thenCB: any, testResource: ITTestResourceConfiguration) => Promise<ITestShape["iselection"]>;
     afterAll: (store: ITestShape["istore"], artificer: ITestArtificer, utils: PM) => any;
     afterEach: (store: ITestShape["istore"], key: string, artificer: ITestArtificer, utils: PM) => Promise<unknown>;
@@ -39,17 +39,17 @@ export declare type IWebTestInterface<ITestShape extends IBaseTest> = {
 };
 export declare type INodeTestInterface<ITestShape extends IBaseTest> = {
     assertThis: (x: ITestShape["then"]) => void;
-    andWhen: (store: ITestShape["istore"], whenCB: ITestShape["when"], testResource: ITTestResourceConfiguration) => Promise<ITestShape["istore"]>;
-    butThen: (store: ITestShape["istore"], thenCB: any, testResource: ITTestResourceConfiguration) => Promise<ITestShape["iselection"]>;
+    andWhen: (store: ITestShape["istore"], whenCB: ITestShape["when"], testResource: ITTestResourceConfiguration, utils: PM) => Promise<ITestShape["istore"]>;
+    butThen: (store: ITestShape["istore"], thenCB: any, testResource: ITTestResourceConfiguration, utils: PM) => Promise<ITestShape["iselection"]>;
     afterAll: (store: ITestShape["istore"], artificer: ITestArtificer, pm: PM) => any;
     afterEach: (store: ITestShape["istore"], key: string, artificer: ITestArtificer, pm: PM) => Promise<unknown>;
     beforeAll: (input: ITestShape["iinput"], testResource: ITTestResourceConfiguration, artificer: ITestArtificer, pm: PM) => Promise<ITestShape["isubject"]>;
-    beforeEach: (subject: ITestShape["isubject"], initializer: (c?: any) => ITestShape["given"], artificer: ITestArtificer, testResource: ITTestResourceConfiguration, initialValues: any) => Promise<ITestShape["istore"]>;
+    beforeEach: (subject: ITestShape["isubject"], initializer: (c?: any) => ITestShape["given"], artificer: ITestArtificer, testResource: ITTestResourceConfiguration, initialValues: any, pm: PM) => Promise<ITestShape["istore"]>;
 };
 export declare type ITestInterface<ITestShape extends IBaseTest> = {
     assertThis: (x: ITestShape["then"]) => void;
     andWhen: (store: ITestShape["istore"], whenCB: ITestShape["when"], testResource: ITTestResourceConfiguration, pm: PM) => Promise<ITestShape["istore"]>;
-    butThen: (store: ITestShape["istore"], thenCB: any, testResource: ITTestResourceConfiguration) => Promise<ITestShape["iselection"]>;
+    butThen: (store: ITestShape["istore"], thenCB: any, testResource: ITTestResourceConfiguration, pm: PM) => Promise<ITestShape["iselection"]>;
     afterAll: (store: ITestShape["istore"], artificer: ITestArtificer, pm: PM) => any;
     afterEach: (store: ITestShape["istore"], key: string, artificer: ITestArtificer, pm: PM) => Promise<unknown>;
     beforeAll: (input: ITestShape["iinput"], testResource: ITTestResourceConfiguration, artificer: ITestArtificer, pm: PM) => Promise<ITestShape["isubject"]>;

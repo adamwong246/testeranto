@@ -27,67 +27,92 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importStar(require("react"));
+const react_2 = require("react");
+const client_1 = __importDefault(require("react-dom/client"));
 const react_dom_1 = require("react-dom");
 const Web_js_1 = __importDefault(require("../../../Web.js"));
 exports.default = (testImplementations, testSpecifications, testInput) => {
+    console.log("testInput", testInput);
+    const TesterantoComponent = function ({ done, innerComp, }) {
+        const myContainer = (0, react_1.useRef)(null);
+        (0, react_1.useEffect)(() => {
+            console.log("useEffect called!", myContainer.current);
+            done(myContainer.current);
+        }, []);
+        // debugger;
+        return react_1.default.createElement("div", { ref: myContainer }, innerComp());
+    };
+    const t = (0, Web_js_1.default)(testInput, testSpecifications, testImplementations, {
+        beforeAll: async (reactElement, itr) => {
+            return await new Promise((resolve, rej) => {
+                const htmlElement = document.getElementById("root");
+                if (htmlElement) {
+                    const domRoot = client_1.default.createRoot(htmlElement);
+                    domRoot.render((0, react_2.createElement)(TesterantoComponent, {
+                        // ...initialProps,
+                        innerComp: reactElement,
+                        done: (reactElement) => {
+                            resolve({
+                                htmlElement,
+                                reactElement,
+                                domRoot,
+                            });
+                        },
+                    }, []));
+                    // resolve({ htmlElement });
+                }
+            });
+        },
+        beforeEach: async (subject, initializer, artificer, testResource, pm) => {
+            return new Promise((resolve, rej) => {
+                (0, react_dom_1.createPortal)(TesterantoComponent({
+                    innerComp: () => testInput({
+                        port: 3003,
+                        address: "some-address",
+                        secretKey: "someSecretKey",
+                        abi: "foo",
+                    }),
+                    done: (reactElement) => {
+                        process.nextTick(() => {
+                            resolve(reactElement);
+                        });
+                    },
+                }), subject.domRoot);
+            });
+        },
+        andWhen: function (s, whenCB) {
+            return new Promise((resolve, rej) => {
+                process.nextTick(() => {
+                    resolve(whenCB()(s));
+                });
+            });
+        },
+        butThen: async function (s) {
+            return new Promise((resolve, rej) => {
+                process.nextTick(() => {
+                    resolve(s);
+                });
+            });
+        },
+        afterEach: async function (store, ndx, artificer) {
+            return new Promise((resolve, rej) => {
+                process.nextTick(() => {
+                    resolve({});
+                });
+            });
+        },
+        afterAll: (store, artificer) => {
+            return new Promise((resolve, rej) => {
+                process.nextTick(() => {
+                    resolve({});
+                });
+            });
+        },
+    });
     document.addEventListener("DOMContentLoaded", function () {
         const rootElement = document.getElementById("root");
         if (rootElement) {
-            const TesterantoComponent = function ({ done, innerComp, }) {
-                const myContainer = (0, react_1.useRef)(null);
-                (0, react_1.useEffect)(() => {
-                    console.log("useEffect called", myContainer.current);
-                    done(myContainer.current);
-                }, []);
-                return react_1.default.createElement("div", { ref: myContainer }, innerComp());
-            };
-            (0, Web_js_1.default)(testInput, testSpecifications, testImplementations, {
-                beforeAll: async (input, artificer) => {
-                    return await new Promise((resolve, rej) => {
-                        resolve(rootElement);
-                    });
-                },
-                beforeEach: async (subject, ndx, testRsource, artificer) => {
-                    return new Promise((resolve, rej) => {
-                        (0, react_dom_1.createPortal)(TesterantoComponent({
-                            innerComp: testInput,
-                            done: (reactElement) => {
-                                process.nextTick(() => {
-                                    resolve(reactElement);
-                                });
-                            },
-                        }), rootElement);
-                    });
-                },
-                andWhen: function (s, whenCB) {
-                    return new Promise((resolve, rej) => {
-                        process.nextTick(() => {
-                            resolve(whenCB()(s));
-                        });
-                    });
-                },
-                butThen: async function (s) {
-                    return new Promise((resolve, rej) => {
-                        process.nextTick(() => {
-                            resolve(s);
-                        });
-                    });
-                },
-                afterEach: async function (store, ndx, artificer) {
-                    return new Promise((resolve, rej) => {
-                        process.nextTick(() => {
-                            resolve({});
-                        });
-                    });
-                },
-                afterAll: (store, artificer) => {
-                    return new Promise((resolve, rej) => {
-                        process.nextTick(() => {
-                            resolve({});
-                        });
-                    });
-                },
-            });
         }
     });
+    return t;
 };

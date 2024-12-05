@@ -6,6 +6,9 @@ export class PM_Web extends PM {
         this.server = {};
         this.testResourceConfiguration = t;
     }
+    customScreenShot(opts) {
+        window["customScreenShot"](opts);
+    }
     existsSync(destFolder) {
         return window["existsSync"](destFolder);
     }

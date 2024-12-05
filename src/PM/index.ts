@@ -1,5 +1,9 @@
-import { Browser } from "puppeteer-core/lib/esm/puppeteer/puppeteer-core-browser";
+import {
+  Browser,
+  Page,
+} from "puppeteer-core/lib/esm/puppeteer/puppeteer-core-browser";
 import { ITLog, ITTestResourceConfiguration } from "../lib";
+// import { Page } from "puppeteer-core";
 
 type IFPaths = string[];
 const fPaths: IFPaths = [];
@@ -17,4 +21,5 @@ export abstract class PM {
   abstract existsSync(fp: string): boolean;
   abstract write(accessObject: { uid: number }, contents: string): boolean;
   abstract end(accessObject: { uid: number }): boolean;
+  abstract customScreenShot(opts: object, page: Page): any;
 }

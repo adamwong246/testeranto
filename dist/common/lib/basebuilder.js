@@ -2,9 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BaseBuilder = void 0;
 class BaseBuilder {
-    constructor(input, suitesOverrides, givenOverides, whenOverides, thenOverides, checkOverides, testResourceRequirement, testSpecification
-    // puppetMaster: PM
-    ) {
+    constructor(input, suitesOverrides, givenOverides, whenOverides, thenOverides, checkOverides, testResourceRequirement, testSpecification) {
         this.input = input;
         this.artifacts = [];
         this.artifacts = [];
@@ -15,12 +13,9 @@ class BaseBuilder {
         this.thenOverides = thenOverides;
         this.checkOverides = checkOverides;
         this.testSpecification = testSpecification;
-        // this.puppetMaster = puppetMaster;
         this.specs = testSpecification(this.Suites(), this.Given(), this.When(), this.Then(), this.Check());
         this.testJobs = this.specs.map((suite) => {
-            const suiteRunner = (suite) => async (
-            // testResourceConfiguration: ITTestResourceConfiguration,
-            puppetMaster, tLog) => {
+            const suiteRunner = (suite) => async (puppetMaster, tLog) => {
                 await puppetMaster.startPuppeteer({
                     browserWSEndpoint: puppetMaster.testResourceConfiguration.browserWSEndpoint,
                 }, puppetMaster.testResourceConfiguration.fs);
@@ -31,44 +26,15 @@ class BaseBuilder {
             const runner = suiteRunner(suite);
             return {
                 test: suite,
-                // testResourceRequirement,
                 toObj: () => {
                     return suite.toObj();
                 },
                 runner,
-                receiveTestResourceConfig: async function (
-                // testResourceConfiguration = {
-                //   name: "",
-                //   fs: ".",
-                //   ports: [],
-                //   browserWSEndpoint: "",
-                // },
-                puppetMaster) {
-                    // console.log(
-                    //   `testResourceConfiguration! ${JSON.stringify(
-                    //     testResourceConfiguration,
-                    //     null,
-                    //     2
-                    //   )}`
-                    // );
-                    // console.log("puppetMaster", puppetMaster);
-                    await puppetMaster
-                        .mkdirSync();
-                    //  if (!puppetMaster.existsSync(destFolder)) {
-                    //    puppetMaster.mkdirSync(destFolder, { recursive: true });
-                    //  }
-                    // puppetMaster.writeFileSync(
-                    //   // puppetMaster.testResourceConfiguration.fs + `/tests.json`,
-                    //   `tests.json`,
-                    //   JSON.stringify(this.toObj(), null, 2)
-                    // );
+                receiveTestResourceConfig: async function (puppetMaster) {
+                    await puppetMaster.mkdirSync();
                     const logFilePath = "log.txt";
-                    // puppetMaster.testResourceConfiguration.fs + `/log.txt`;
                     const access = await puppetMaster.createWriteStream(logFilePath);
-                    // console.log("access", access);
                     const tLog = (...l) => {
-                        // access.write(`${l.toString()}\n`);
-                        // console.log("tLog", l);
                         puppetMaster.write(access, `${l.toString()}\n`);
                     };
                     const suiteDone = await runner(puppetMaster, tLog);

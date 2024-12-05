@@ -76,6 +76,9 @@ class ITProject {
                 .then((x) => fs_1.default.writeFileSync(htmlFilePath, (0, web_html_js_1.default)(jsfilePath, htmlFilePath)));
         })));
         const [nodeEntryPoints, webEntryPoints] = getRunnables(this.config.tests);
+        console.log(`this.getSecondaryEndpointsPoints("web")`, this.getSecondaryEndpointsPoints("web"));
+        // console.log("nodeEntryPoints", nodeEntryPoints);
+        // console.log("webEntryPoints", webEntryPoints);
         // nodeEntryPoints.forEach((nep) => {
         //   const f = `${process.cwd()}/${nep}`;
         //   console.log("nep", f);
@@ -153,11 +156,12 @@ class ITProject {
     getSecondaryEndpointsPoints(runtime) {
         const meta = (ts, st) => {
             ts.forEach((t) => {
+                console.log("getSecondaryEndpointsPoints", t);
                 if (t[1] === runtime) {
                     st.add(t[0]);
                 }
-                if (Array.isArray(t[2])) {
-                    meta(t[2], st);
+                if (Array.isArray(t[3])) {
+                    meta(t[3], st);
                 }
             });
             return st;

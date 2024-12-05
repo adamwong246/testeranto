@@ -109,6 +109,13 @@ export class ITProject {
 
     const [nodeEntryPoints, webEntryPoints] = getRunnables(this.config.tests);
 
+    console.log(
+      `this.getSecondaryEndpointsPoints("web")`,
+      this.getSecondaryEndpointsPoints("web")
+    );
+    // console.log("nodeEntryPoints", nodeEntryPoints);
+    // console.log("webEntryPoints", webEntryPoints);
+
     // nodeEntryPoints.forEach((nep) => {
     //   const f = `${process.cwd()}/${nep}`;
     //   console.log("nep", f);
@@ -208,11 +215,12 @@ export class ITProject {
   public getSecondaryEndpointsPoints(runtime?: IRunTime): string[] {
     const meta = (ts: ITestTypes[], st: Set<string>): Set<string> => {
       ts.forEach((t) => {
+        console.log("getSecondaryEndpointsPoints", t);
         if (t[1] === runtime) {
           st.add(t[0]);
         }
-        if (Array.isArray(t[2])) {
-          meta(t[2], st);
+        if (Array.isArray(t[3])) {
+          meta(t[3], st);
         }
       });
       return st;

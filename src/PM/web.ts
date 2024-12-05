@@ -15,6 +15,10 @@ export class PM_Web extends PM {
     this.testResourceConfiguration = t;
   }
 
+  customScreenShot(opts: object) {
+    window["customScreenShot"](opts);
+  }
+
   existsSync(destFolder: string): boolean {
     return window["existsSync"](destFolder);
   }

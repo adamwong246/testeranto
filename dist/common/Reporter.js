@@ -62,13 +62,6 @@ const main = async () => {
     await page.setViewport({ width: 0, height: 0 });
     console.log("Requesting url...");
     await page.goto(`file://${process.cwd()}/docs/report.html`);
-    // const destinationOfRuntime = (f: string, r: IRunTime) => {
-    //   return path
-    //     .normalize(`${configs.buildDir}/${r}/${f}`)
-    //     .split(".")
-    //     .slice(0, -1)
-    //     .join(".");
-    // };
     // configs.tests.forEach(([test, runtime, secondaryArtifacts]) => {
     //   if (runtime === "node") {
     //     pm.launchNode(test, destinationOfRuntime(test, "node"));

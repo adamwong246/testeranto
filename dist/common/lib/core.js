@@ -53,8 +53,8 @@ class Testeranto extends classBuilder_js_1.ClassBuilder {
                 return await fullTestInterface.andWhen(store, whenCB, testResource, pm);
             }
         }, class Then extends abstractBase_js_1.BaseThen {
-            async butThen(store, thenCB, testResourceConfiguration) {
-                return await fullTestInterface.butThen(store, thenCB, testResourceConfiguration);
+            async butThen(store, thenCB, testResourceConfiguration, pm) {
+                return await fullTestInterface.butThen(store, thenCB, testResourceConfiguration, pm);
             }
         }, class Check extends abstractBase_js_1.BaseCheck {
             constructor(name, features, checkCallback, whens, thens, initialValues) {

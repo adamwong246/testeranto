@@ -146,12 +146,14 @@ export default abstract class Testeranto<
         async butThen(
           store: any,
           thenCB,
-          testResourceConfiguration?: any
+          testResourceConfiguration: any,
+          pm: PM
         ): Promise<ITestShape["iselection"]> {
           return await fullTestInterface.butThen(
             store,
             thenCB,
-            testResourceConfiguration
+            testResourceConfiguration,
+            pm
           );
         }
       } as any,

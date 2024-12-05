@@ -1,6 +1,6 @@
 import { IBaseTest } from "../Types";
-import { ITTestResourceConfiguration, ITestArtifactory, ITLog } from ".";
 import { PM } from "../PM/index.js";
+import { ITTestResourceConfiguration, ITestArtifactory, ITLog } from ".";
 export declare type IGivens<ITestShape extends IBaseTest> = Record<string, BaseGiven<ITestShape>>;
 export declare abstract class BaseSuite<ITestShape extends IBaseTest> {
     name: string;
@@ -84,8 +84,8 @@ export declare abstract class BaseThen<ITestShape extends IBaseTest> {
         name: string;
         error: boolean;
     };
-    abstract butThen(store: ITestShape["istore"], thenCB: any, testResourceConfiguration?: any): Promise<ITestShape["iselection"]>;
-    test(store: ITestShape["istore"], testResourceConfiguration: any, tLog: ITLog, pm: PM): Promise<ITestShape["then"] | undefined>;
+    abstract butThen(store: ITestShape["istore"], thenCB: any, testResourceConfiguration: ITTestResourceConfiguration, pm: PM): Promise<ITestShape["iselection"]>;
+    test(store: ITestShape["istore"], testResourceConfiguration: any, tLog: ITLog, pm: PM, filepath: string): Promise<ITestShape["then"] | undefined>;
 }
 export declare abstract class BaseCheck<ITestShape extends IBaseTest> {
     name: string;

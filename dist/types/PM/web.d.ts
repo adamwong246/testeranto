@@ -7,6 +7,7 @@ declare type PuppetMasterServer = Record<string, Promise<any>>;
 export declare class PM_Web extends PM {
     server: PuppetMasterServer;
     constructor(t: ITTestResourceConfiguration);
+    customScreenShot(opts: object): void;
     existsSync(destFolder: string): boolean;
     mkdirSync(): any;
     write(writeObject: {

@@ -51,8 +51,8 @@ export default class Testeranto extends ClassBuilder {
                 return await fullTestInterface.andWhen(store, whenCB, testResource, pm);
             }
         }, class Then extends BaseThen {
-            async butThen(store, thenCB, testResourceConfiguration) {
-                return await fullTestInterface.butThen(store, thenCB, testResourceConfiguration);
+            async butThen(store, thenCB, testResourceConfiguration, pm) {
+                return await fullTestInterface.butThen(store, thenCB, testResourceConfiguration, pm);
             }
         }, class Check extends BaseCheck {
             constructor(name, features, checkCallback, whens, thens, initialValues) {

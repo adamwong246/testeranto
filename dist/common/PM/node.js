@@ -15,6 +15,9 @@ class PM_Node extends index_js_1.PM {
         this.server = {};
         this.testResourceConfiguration = t;
     }
+    customScreenShot(opts, page) {
+        return globalThis["customScreenShot"](opts, page);
+    }
     existsSync(destFolder) {
         return globalThis["existsSync"](this.testResourceConfiguration.fs + "/" + destFolder);
     }
@@ -25,6 +28,7 @@ class PM_Node extends index_js_1.PM {
         return globalThis["write"](writeObject.uid, contents);
     }
     writeFileSync(filepath, contents) {
+        console.log("pm_node-writeFileSync", this.testResourceConfiguration);
         return globalThis["writeFileSync"](this.testResourceConfiguration.fs + "/" + filepath, contents, this.testResourceConfiguration.name);
     }
     createWriteStream(filepath) {
