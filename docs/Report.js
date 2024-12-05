@@ -37364,6 +37364,19 @@
 
   // src/ExampleTab.tsx
   var import_react46 = __toESM(require_react(), 1);
+  var queryString = window.location.search;
+  var urlParams = new URLSearchParams(queryString);
+  console.log("urlParams", urlParams.has(
+    "local"
+  ));
+  var isLocal = urlParams.get("local");
+  var urlFixer = (url) => {
+    if (isLocal) {
+      return `file:///Users/adam/Code/kokomoBay/${url}`;
+    } else {
+      return `https://chromapdx.github.io/kokomoBay/${url}`;
+    }
+  };
   var TextTab = (props) => {
     const [text, setText] = (0, import_react46.useState)("");
     (0, import_react46.useEffect)(() => {
@@ -37428,7 +37441,7 @@
       /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "src/MyFirstContract.solidity-react.interface.test.ts", title: "MyFirstContract.solidity-react.interface.test.ts" }, /* @__PURE__ */ import_react46.default.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/src/MyFirstContract.solidity-react.interface.test.ts" })),
       /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "src/MyFirstContract.solidity-react.implementation.test.ts", title: "MyFirstContract.solidity-react.implementation.test.ts" }, /* @__PURE__ */ import_react46.default.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/src/MyFirstContract.solidity-react.implementation.test.ts" })),
       /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "src/MyFirstContract.solidity-react.shape.test.ts", title: "MyFirstContract.solidity-react.shape.test.ts" }, /* @__PURE__ */ import_react46.default.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/src/MyFirstContract.solidity-react.shape.test.ts" })),
-      /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "MyFirstContract.solidity-react-example-jpg", title: "screenshot" }, /* @__PURE__ */ import_react46.default.createElement("img", { src: "file:///Users/adam/Code/kokomoBay/docs/node/src/MyFirstContract.solidity-react.testeranto/suite-0/given-test1/when/0/afterEach/andWhen.jpg", alt: "Italian Trulli" }))
+      /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "MyFirstContract.solidity-react-example-jpg", title: "screenshot" }, /* @__PURE__ */ import_react46.default.createElement("img", { src: urlFixer("docs/node/src/MyFirstContract.solidity-react.testeranto/suite-0/given-test1/when/0/afterEach/andWhen.jpg") }))
     ))))));
   };
 
