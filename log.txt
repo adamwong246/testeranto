@@ -1,11 +1,28 @@
-test resources: ,{"scheduled":true,"name":"./src/MyFirstContract.rpc.test.ts","ports":["3001"],"fs":".","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/9fc55295-3dda-4cc6-8911-3d330680d87e"}
+test resources: ,{"scheduled":true,"name":"./src/MyFirstContract.solidity-react.testeranto.ts","ports":["3001"],"fs":".","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/e3a20102-83bb-4df1-a52c-ab968e5dee14"}
 
 Suite:,0,Testing a very simple smart contract over RPC
 
  Given: Default
+ When:,Increment: 1
+ When:,Increment: 1
+ When:,Increment: 1
  Then:,Get: [object Object]
-TypeError: Cannot destructure property 'contractFarSide' of 'undefined' as it is undefined.
-
 
  Given: Default
  When:,Increment: 1
+ When:,Increment: 1
+ When:,Increment: 1
+ When:,Increment: 1
+ When:,Increment: 1
+ When:,Increment: 1
+ When:,Increment: 1
+ When:,Increment: 1
+ When:,Increment: 1
+ When:,Increment: 1
+ When:,Increment: 1
+ When:,Increment: 1
+ When:,Increment: 1
+ When:,Increment: 1
+ When:,Increment: 1
+ When:,Increment: 1
+ Then:,Get: [object Object]

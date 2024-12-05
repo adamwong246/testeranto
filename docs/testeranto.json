@@ -3,70 +3,14 @@
   "features": "/Users/adam/Code/kokomoBay/features.test.mts",
   "tests": [
     [
-      "./src/LoginPage/react-test-renderer/web.test.tsx",
-      "web",
-      {
-        "ports": 0
-      },
-      []
-    ],
-    [
-      "./src/Rectangle/Rectangle.test.electron.ts",
-      "web",
-      {
-        "ports": 0
-      },
-      []
-    ],
-    [
-      "./src/ClassicalComponent/react-dom/client.web.test.tsx",
-      "web",
-      {
-        "ports": 0
-      },
-      []
-    ],
-    [
-      "./src/LoginPage/react-test-renderer/node.test.tsx",
+      "./src/MyFirstContract.solidity-react.testeranto.ts",
       "node",
       {
-        "ports": 0
-      },
-      []
-    ],
-    [
-      "./src/ReactStateAndHook.test.tsx",
-      "node",
-      {
-        "ports": 0
-      },
-      []
-    ],
-    [
-      "./src/app.reduxToolkit.test.ts",
-      "node",
-      {
-        "ports": 0
-      },
-      []
-    ],
-    [
-      "./src/app.redux.test.ts",
-      "node",
-      {
-        "ports": 0
-      },
-      []
-    ],
-    [
-      "./src/Rectangle/Rectangle.test.node.ts",
-      "node",
-      {
-        "ports": 0
+        "ports": 1
       },
       [
         [
-          "./src/ClassicalComponent/test.ts",
+          "./src/MyFirstContractUI.tsx",
           "web",
           {
             "ports": 0
@@ -74,14 +18,6 @@
           []
         ]
       ]
-    ],
-    [
-      "./src/MyFirstContract.basic.test.ts",
-      "node",
-      {
-        "ports": 0
-      },
-      []
     ]
   ],
   "debugger": true,
@@ -102,7 +38,11 @@
     "3006",
     "3007"
   ],
-  "webPlugins": [],
+  "webPlugins": [
+    {
+      "name": "solidity"
+    }
+  ],
   "nodePlugins": [
     {
       "name": "ganache-shim"

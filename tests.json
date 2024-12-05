@@ -1,100 +1,86 @@
 {
-  "name": "Testing the Rectangle class",
+  "name": "Testing a very simple smart contract over RPC",
   "givens": [
     {
       "name": "Default",
       "whens": [
         {
-          "name": "setWidth: 4"
+          "name": "Increment: 1"
         },
         {
-          "name": "setHeight: 9"
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
         }
       ],
       "thens": [
         {
-          "name": "getWidth: 4"
-        },
-        {
-          "name": "getHeight: 99",
-          "error": true
+          "name": "Get: [object Object]",
+          "error": false
         }
       ],
-      "error": [
-        {
-          "name": "AssertionError",
-          "message": "expected 9 to equal 99",
-          "showDiff": true,
-          "actual": 9,
-          "expected": 99,
-          "operator": "strictEqual",
-          "stack": "AssertionError: expected 9 to equal 99\n    at file:///Users/adam/Code/kokomoBay/docs/node/src/Rectangle/Rectangle.test.node.mjs:62398:51\n    at Object.butThen (file:///Users/adam/Code/kokomoBay/docs/node/src/Rectangle/Rectangle.test.node.mjs:49068:37)\n    at Then.butThen (file:///Users/adam/Code/kokomoBay/docs/node/src/Rectangle/Rectangle.test.node.mjs:49587:42)\n    at Then.test (file:///Users/adam/Code/kokomoBay/docs/node/src/Rectangle/Rectangle.test.node.mjs:49260:28)\n    at Given.give (file:///Users/adam/Code/kokomoBay/docs/node/src/Rectangle/Rectangle.test.node.mjs:49203:34)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/docs/node/src/Rectangle/Rectangle.test.node.mjs:49120:22)\n    at async file:///Users/adam/Code/kokomoBay/docs/node/src/Rectangle/Rectangle.test.node.mjs:49355:16\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/src/Rectangle/Rectangle.test.node.mjs:49391:29)\n    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/src/Rectangle/Rectangle.test.node.mjs:62311:47)"
-        },
-        "AssertionError: expected 9 to equal 99\n    at file:///Users/adam/Code/kokomoBay/docs/node/src/Rectangle/Rectangle.test.node.mjs:62398:51\n    at Object.butThen (file:///Users/adam/Code/kokomoBay/docs/node/src/Rectangle/Rectangle.test.node.mjs:49068:37)\n    at Then.butThen (file:///Users/adam/Code/kokomoBay/docs/node/src/Rectangle/Rectangle.test.node.mjs:49587:42)\n    at Then.test (file:///Users/adam/Code/kokomoBay/docs/node/src/Rectangle/Rectangle.test.node.mjs:49260:28)\n    at Given.give (file:///Users/adam/Code/kokomoBay/docs/node/src/Rectangle/Rectangle.test.node.mjs:49203:34)\n    at async Testeranto.givenThat.run (file:///Users/adam/Code/kokomoBay/docs/node/src/Rectangle/Rectangle.test.node.mjs:49120:22)\n    at async file:///Users/adam/Code/kokomoBay/docs/node/src/Rectangle/Rectangle.test.node.mjs:49355:16\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/src/Rectangle/Rectangle.test.node.mjs:49391:29)\n    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/kokomoBay/docs/node/src/Rectangle/Rectangle.test.node.mjs:62311:47)"
-      ],
-      "features": [
-        "hello"
-      ]
-    },
-    {
-      "name": "Default",
-      "whens": [
-        {
-          "name": "setWidth: 4"
-        },
-        {
-          "name": "setHeight: 5"
-        }
-      ],
-      "thens": [],
       "error": null,
-      "features": [
-        "hello"
-      ]
+      "features": "my first contract"
     },
     {
       "name": "Default",
       "whens": [
         {
-          "name": "setHeight: 4"
+          "name": "Increment: 1"
         },
         {
-          "name": "setWidth: 3"
-        }
-      ],
-      "thens": [],
-      "error": null,
-      "features": [
-        "hello"
-      ]
-    },
-    {
-      "name": "Default",
-      "whens": [
-        {
-          "name": "setHeight: 5"
+          "name": "Increment: 1"
         },
         {
-          "name": "setWidth: 5"
-        }
-      ],
-      "thens": [],
-      "error": null,
-      "features": [
-        "hello"
-      ]
-    },
-    {
-      "name": "Default",
-      "whens": [
-        {
-          "name": "setHeight: 6"
+          "name": "Increment: 1"
         },
         {
-          "name": "setWidth: 6"
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
         }
       ],
-      "thens": [],
+      "thens": [
+        {
+          "name": "Get: [object Object]",
+          "error": false
+        }
+      ],
       "error": null,
       "features": [
         "hello"

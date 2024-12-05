@@ -1,0 +1,28 @@
+{
+  "name": "Testing a very simple smart contract over RPC",
+  "givens": [
+    {
+      "name": "Default",
+      "whens": [
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        },
+        {
+          "name": "Increment: 1"
+        }
+      ],
+      "thens": [
+        {
+          "name": "Get: [object Object]",
+          "error": false
+        }
+      ],
+      "error": null,
+      "features": "my first contract"
+    }
+  ],
+  "fails": []
+}

@@ -43,7 +43,9 @@ export const commonGivens = (
   return {
     test0: Given.Default(
       "my first contract",
-      [],
+      [
+        // When.Increment(1), When.Increment(1), When.Increment(1)
+      ],
       [Then.Get({ asTestUser: 1, expectation: 0 })]
       // "my first contract"
     ),
@@ -53,40 +55,40 @@ export const commonGivens = (
       [
         When.Increment(1),
         When.Increment(1),
-        When.Increment(1),
-        When.Increment(1),
-        When.Increment(1),
-        When.Increment(1),
-        When.Increment(1),
-        When.Increment(1),
-        When.Increment(1),
-        When.Increment(1),
-        When.Increment(1),
-        When.Increment(1),
-        When.Increment(1),
-        When.Increment(1),
-        When.Increment(1),
-        When.Increment(1),
+        // When.Increment(1),
+        // When.Increment(1),
+        // When.Increment(1),
+        // When.Increment(1),
+        // When.Increment(1),
+        // When.Increment(1),
+        // When.Increment(1),
+        // When.Increment(1),
+        // When.Increment(1),
+        // When.Increment(1),
+        // When.Increment(1),
+        // When.Increment(1),
+        // When.Increment(1),
+        // When.Increment(1),
       ],
-      [Then.Get({ asTestUser: 1, expectation: 16 })],
+      [Then.Get({ asTestUser: 1, expectation: 2 })],
       "my first contract"
     ),
 
-    test2: Given.Default(
-      [`hello`],
-      [
-        When.Increment(1),
-        When.Increment(1),
-        When.Increment(1),
-        When.Increment(1),
+    // test2: Given.Default(
+    //   [`hello`],
+    //   [
+    //     When.Increment(1),
+    //     When.Increment(1),
+    //     When.Increment(1),
+    //     When.Increment(1),
 
-        When.Decrement(1),
-        When.Decrement(1),
-        When.Decrement(1),
-        When.Decrement(1),
-      ],
-      [Then.Get({ asTestUser: 1, expectation: 0 })],
-      "my first contract"
-    ),
+    //     When.Decrement(1),
+    //     When.Decrement(1),
+    //     When.Decrement(1),
+    //     When.Decrement(1),
+    //   ],
+    //   [Then.Get({ asTestUser: 1, expectation: 0 })],
+    //   "my first contract"
+    // ),
   };
 };

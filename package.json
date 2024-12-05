@@ -30,6 +30,7 @@
   },
   "types": "index.d.ts",
   "dependencies": {
+    "@ethersproject/shims": "^5.7.0",
     "@types/node": "^20.12.2",
     "esbuild": "0.17.11",
     "fluent-ffmpeg": "^2.1.2",

@@ -30,91 +30,84 @@ export default <IT extends IBaseTest>(
   testSpecifications: ITestSpecification<IT>,
   testInput: IInput
 ) =>
-  Testeranto<IT>(
-    testInput,
-    testSpecifications,
-    testImplementations,
-    {
-      // beforeAll: async () =>
-      //   (await solCompile(contractName)).contracts.find(
-      //     (c) => c.contractName === contractName
-      //   ),
+  Testeranto<IT>(testInput, testSpecifications, testImplementations, {
+    // beforeAll: async () =>
+    //   (await solCompile(contractName)).contracts.find(
+    //     (c) => c.contractName === contractName
+    //   ),
 
-      beforeEach: (contract, i, artificer, testResource) => {
-        return new Promise((res) => {
-          const options = {};
-          const port = testResource.ports[0];
+    beforeEach: (contract, i, artificer, testResource) => {
+      return new Promise((res) => {
+        const options = {};
+        const port = testResource.ports[0];
 
-          // console.log("mark0", testResource);
+        // console.log("mark0", testResource);
 
-          // https://github.com/trufflesuite/ganache#programmatic-use
-          const server = Ganache.server(options);
+        // https://github.com/trufflesuite/ganache#programmatic-use
+        const server = Ganache.server(options);
 
-          // start the ganache chain
-          server.listen(port, async (err) => {
-            console.log(`ganache listening on port ${port}...`);
-            if (err) throw err;
+        // start the ganache chain
+        server.listen(port, async (err) => {
+          console.log(`ganache listening on port ${port}...`);
+          if (err) throw err;
 
-            const providerFarSide = server.provider;
-            const accounts = await providerFarSide.request({
-              method: "eth_accounts",
-              params: [],
-            });
+          const providerFarSide = server.provider;
+          const accounts = await providerFarSide.request({
+            method: "eth_accounts",
+            params: [],
+          });
 
-            /* @ts-ignore:next-line */
-            const web3NearSide = new Web3(providerFarSide);
+          /* @ts-ignore:next-line */
+          const web3NearSide = new Web3(providerFarSide);
 
-            // deploy the contract under accounts[0]
-            const contractNearSide = await new web3NearSide.eth.Contract(
-              contract.abi
-            )
-              .deploy({ data: contract.bytecode.bytes })
-              .send({ from: accounts[0], gas: 7000000 });
+          // deploy the contract under accounts[0]
+          const contractNearSide = await new web3NearSide.eth.Contract(
+            contract.abi
+          )
+            .deploy({ data: contract.bytecode.bytes })
+            .send({ from: accounts[0], gas: 7000000 });
 
-            /////////////////////////////////////////////
+          /////////////////////////////////////////////
 
-            const web3FarSideProvider = new ethers.providers.JsonRpcProvider(
-              `http://localhost:${port}`
-            );
-            // web3FarSideProvider.
-            // create a test wallet from a ganache account
-            const web3FarSideSigner = new ethers.Wallet(
-              providerFarSide.getInitialAccounts()[accounts[1]].secretKey,
-              web3FarSideProvider
-            );
+          const web3FarSideProvider = new ethers.providers.JsonRpcProvider(
+            `http://localhost:${port}`
+          );
+          // web3FarSideProvider.
+          // create a test wallet from a ganache account
+          const web3FarSideSigner = new ethers.Wallet(
+            providerFarSide.getInitialAccounts()[accounts[1]].secretKey,
+            web3FarSideProvider
+          );
 
-            // create a contract that our test user can access
-            const contractFarSide = new ethers.Contract(
-              contractNearSide.options.address,
-              contract.abi,
-              web3FarSideSigner
-            );
+          // create a contract that our test user can access
+          const contractFarSide = new ethers.Contract(
+            contractNearSide.options.address,
+            contract.abi,
+            web3FarSideSigner
+          );
 
-            // console.log("server", server);
-            // server.
-            res({
-              contractNearSide,
-              contractFarSide,
-              accounts,
-              server,
-            });
+          // console.log("server", server);
+          // server.
+          res({
+            contractNearSide,
+            contractFarSide,
+            accounts,
+            server,
           });
         });
-      },
+      });
+    },
 
-      afterEach: async (x) => {
-        console.log("afterEach1", await x.server.close());
-        // await x.server.close();
-        return x;
-      },
+    afterEach: async (x) => {
+      await x.server.close();
+      return x;
+    },
 
-      andWhen: async ({ contractFarSide, accounts }, callback: any) =>
-        callback({ contractFarSide, accounts }),
+    andWhen: async ({ contractFarSide, accounts }, callback: any) =>
+      callback({ contractFarSide, accounts }),
 
-      afterAll: ({ server }) => {
-        // console.log("serve!r", server);
-        // server.close();
-      },
-    }
-    // { ports: 1 }
-  );
+    afterAll: ({ server }) => {
+      // console.log("serve!r", server);
+      // server.close();
+    },
+  });

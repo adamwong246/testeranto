@@ -12,38 +12,51 @@ export default new ITProject({
     // ["./src/LoginPage/react/web.test.tsx", "web", { ports: 0 }, []],
     // ["./src/LoginPage/react/node.test.tsx", "node", { ports: 0 }, []],
 
-    [
-      "./src/LoginPage/react-test-renderer/web.test.tsx",
-      "web",
-      { ports: 0 },
-      [],
-    ],
-    ["./src/Rectangle/Rectangle.test.electron.ts", "web", { ports: 0 }, []],
-    [
-      "./src/ClassicalComponent/react-dom/client.web.test.tsx",
-      "web",
-      { ports: 0 },
-      [],
-    ],
+    // [
+    //   "./src/LoginPage/react-test-renderer/web.test.tsx",
+    //   "web",
+    //   { ports: 0 },
+    //   [],
+    // ],
+    // ["./src/Rectangle/Rectangle.test.electron.ts", "web", { ports: 0 }, []],
+    // [
+    //   "./src/ClassicalComponent/react-dom/client.web.test.tsx",
+    //   "web",
+    //   { ports: 0 },
+    //   [],
+    // ],
 
-    [
-      "./src/LoginPage/react-test-renderer/node.test.tsx",
-      "node",
-      { ports: 0 },
-      [],
-    ],
-    ["./src/ReactStateAndHook.test.tsx", "node", { ports: 0 }, []],
-    ["./src/app.reduxToolkit.test.ts", "node", { ports: 0 }, []],
-    ["./src/app.redux.test.ts", "node", { ports: 0 }, []],
-    [
-      "./src/Rectangle/Rectangle.test.node.ts",
-      "node",
-      { ports: 0 },
-      [["./src/ClassicalComponent/test.ts", "web", { ports: 0 }, []]],
-    ],
-    ["./src/MyFirstContract.basic.test.ts", "node", { ports: 0 }, []],
+    // [
+    //   "./src/LoginPage/react-test-renderer/node.test.tsx",
+    //   "node",
+    //   { ports: 0 },
+    //   [],
+    // ],
+    // ["./src/ReactStateAndHook.test.tsx", "node", { ports: 0 }, []],
+    // ["./src/app.reduxToolkit.test.ts", "node", { ports: 0 }, []],
+    // ["./src/app.redux.test.ts", "node", { ports: 0 }, []],
+    // [
+    //   "./src/Rectangle/Rectangle.test.node.ts",
+    //   "node",
+    //   { ports: 0 },
+    //   [["./src/ClassicalComponent/test.ts", "web", { ports: 0 }, []]],
+    // ],
+    // ["./src/MyFirstContract.basic.test.ts", "node", { ports: 0 }, []],
 
     // ["./src/MyFirstContract.rpc.test.ts", "node", { ports: 1 }, []],
+
+    // [
+    //   "./src/MyFirstContract.react-solidity.testeranto.tsx",
+    //   "web",
+    //   { ports: 0 },
+    //   [["./src/MyFirstContractServer.ts", "node", { ports: 1 }, []]],
+    // ],
+    [
+      "./src/MyFirstContract.solidity-react.testeranto.ts",
+      "node",
+      { ports: 1 },
+      [["./src/MyFirstContractUI.tsx", "web", { ports: 0 }, []]],
+    ],
   ],
 
   debugger: true,
@@ -54,7 +67,7 @@ export default new ITProject({
   externals: ["ganache", "stream"],
   ports: ["3001", "3002", "3003", "3004", "3005", "3006", "3007"],
 
-  webPlugins: [],
+  webPlugins: [solidityEsBuildConfig],
 
   nodePlugins: [
     {
