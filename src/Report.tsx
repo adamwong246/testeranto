@@ -12,6 +12,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { TesterantoFeatures } from "./Features.js";
 import { IRunTime, ITestTypes } from "./lib/types.js";
+import ManualExamples from "./ManualExamples.js";
+import ExampleTab from "./ExampleTab.js";
 
 type IGraphData = {
   nodes: { id: string, label: string }[],
@@ -101,26 +103,6 @@ const Report = () => {
         res({ src, exitcode, log, testresults, manifest })
       })
     }))
-    // const results = await config.tests.reduce(async (p, test) => {
-    //   const src: string = test[0];
-    //   const runtime: IRunTime = test[1];
-    //   console.log(runtime)
-    //   const s: string = [tests.buildDir, runtime as string].concat(src.split(".").slice(0, - 1).join(".")).join("/");
-    //   // const srr
-    //   console.log("s", s)
-
-    //   const exitcode = await (await fetch(config.buildDir + "/" + s + "/exitcode")).text()
-    //   const log = await (await fetch(config.buildDir + "/" + s + "/log.txt")).text()
-    //   const testresults = await (await fetch(config.buildDir + "/" + s + "/tests.json")).text()
-
-    //   // setResults({ src, exitcode, log, testresults })
-    //   // console.log("a", await a.text())
-    //   p[src] = { exitcode, log, testresults }
-    //   return p
-    // }, {});
-
-    console.log("results", results)
-
 
     setState({ tests: config.tests as any, results, features: features as any, buildDir: config.buildDir })
   };
@@ -149,41 +131,25 @@ const Report = () => {
         const runtime: IRunTime = test[1];
         console.log(runtime)
         const s: string = [tests.buildDir, runtime as string].concat(src.split(".").slice(0, - 1).join(".")).join("/");
-        // const srr
-        // console.log(s)
-
         const exitcode = await (await fetch(s + "/exitcode")).text()
         const log = await (await fetch(s + "/log.txt")).text()
         const testresults = await (await fetch(s + "/tests.json")).text()
 
-        // setResults({ src, exitcode, log, testresults })
-        // console.log("a", await a.text())
         p[src] = { exitcode, log, testresults }
       }, {});
 
       setResults(r);
-      // const x = await fetch("./testeranto.json")
-      // const y = await x.json();
-      // setTests(y as any);
-      // const module = await import('tests.json', {
-      //   with: {
-      //     type: 'json'
-      //   }
-      // });
-      // console.log("imported tests", module.default);
-      // setResults("foo");
+
     };
     collateResults();
   }, []);
-
-  console.log("state.results", state.results);
 
   return (
     <div>
       <style>
         {`
 pre, code, p {
-  max-width: 30rem;
+  max-width: 40rem;
   text-wrap: auto;
 }
 footer {
@@ -197,9 +163,17 @@ footer {
           `}
       </style>
 
-      {features && tests && < Tabs defaultActiveKey="config" >
+      {features && tests && < Tabs defaultActiveKey="manual" >
 
-
+        <Tab eventKey="manual" title="manual">
+          <article>
+            <h1>Testeranto</h1>
+            <h2>What is testeranto?</h2>
+            <p>
+              Testeranto is a novel testing framework for typescript project. Inspired by Behavior Driven Development, testeranto allows you to wrap you typescript with gherkin-like semantics, producing a report in the form of a static website. Testeranto runs it's tests both in node and chromium.
+            </p>
+          </article>
+        </Tab>
 
         <Tab eventKey="config" title="config">
           <pre>{JSON.stringify(state, null, 2)}</pre>
@@ -510,6 +484,10 @@ footer {
 
             </Row>
           </Tab.Container>
+        </Tab>
+
+        <Tab eventKey="examples" title="examples">
+          <ExampleTab />
         </Tab>
 
       </Tabs >}

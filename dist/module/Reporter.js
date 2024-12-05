@@ -56,7 +56,7 @@ const main = async () => {
     const page = await browser.newPage();
     await page.setViewport({ width: 0, height: 0 });
     console.log("Requesting url...");
-    await page.goto(`file://${process.cwd()}/docs/report.html`);
+    await page.goto(`file://${process.cwd()}/docs/report.html?local=true`);
     // configs.tests.forEach(([test, runtime, secondaryArtifacts]) => {
     //   if (runtime === "node") {
     //     pm.launchNode(test, destinationOfRuntime(test, "node"));
