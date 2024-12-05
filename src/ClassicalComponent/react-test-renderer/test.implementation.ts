@@ -1,8 +1,8 @@
 import { assert } from "chai";
 import { IImpl as BaseIImple } from "testeranto/src/SubPackages/react-test-renderer/component/index";
 
-import type { IClassicalComponentSpec } from "../testeranto";
 import type { IProps } from "../index";
+import { IClassicalComponentSpec } from "../test.shape";
 
 export const testImplementation: BaseIImple<
   IClassicalComponentSpec,

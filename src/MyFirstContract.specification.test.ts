@@ -3,36 +3,11 @@ import { IBaseTest } from "testeranto/src/Types";
 import { BaseGiven } from "../../testeranto/src/lib/abstractBase";
 
 import MyFirstContract from "../contracts/MyFirstContract.sol";
+import { IMyFirstContractTest } from "./MyFirstContract.solidity-react.shape.test";
 
 export const MyFirstContractTestInput = MyFirstContract.contracts.find(
   (c) => c.contractName === "MyFirstContract"
 ) as { contractName: string; abi: any };
-
-export type IMyFirstContractTest<Input> = {
-  iinput: Input;
-  isubject: string;
-  istore: string;
-  iselection: string;
-  given: string;
-  when: string;
-  then: string;
-  suites: {
-    Default: string;
-  };
-  givens: {
-    Default: [string];
-  };
-  whens: {
-    Increment: [number];
-    Decrement: [number];
-  };
-  thens: {
-    Get: [{ asTestUser: number; expectation: number }];
-  };
-  checks: {
-    AnEmptyState: [];
-  };
-} & IBaseTest;
 
 export const commonGivens = (
   Given,

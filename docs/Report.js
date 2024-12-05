@@ -1092,7 +1092,7 @@
             }
             return dispatcher.useContext(Context);
           }
-          function useState8(initialState) {
+          function useState9(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1104,7 +1104,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect12(create, deps) {
+          function useEffect13(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create, deps);
           }
@@ -1886,7 +1886,7 @@
           exports2.useContext = useContext6;
           exports2.useDebugValue = useDebugValue;
           exports2.useDeferredValue = useDeferredValue;
-          exports2.useEffect = useEffect12;
+          exports2.useEffect = useEffect13;
           exports2.useId = useId;
           exports2.useImperativeHandle = useImperativeHandle;
           exports2.useInsertionEffect = useInsertionEffect;
@@ -1894,7 +1894,7 @@
           exports2.useMemo = useMemo5;
           exports2.useReducer = useReducer2;
           exports2.useRef = useRef9;
-          exports2.useState = useState8;
+          exports2.useState = useState9;
           exports2.useSyncExternalStore = useSyncExternalStore;
           exports2.useTransition = useTransition;
           exports2.version = ReactVersion;
@@ -2390,9 +2390,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React44 = require_react();
+          var React45 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React44.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React45.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -3997,7 +3997,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React44.Children.forEach(props.children, function(child) {
+                  React45.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -23626,7 +23626,7 @@
       if (true) {
         (function() {
           "use strict";
-          var React44 = require_react();
+          var React45 = require_react();
           var REACT_ELEMENT_TYPE = Symbol.for("react.element");
           var REACT_PORTAL_TYPE = Symbol.for("react.portal");
           var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
@@ -23652,7 +23652,7 @@
             }
             return null;
           }
-          var ReactSharedInternals = React44.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React45.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function error(format) {
             {
               {
@@ -29451,7 +29451,7 @@
   });
 
   // src/Report.tsx
-  var import_react46 = __toESM(require_react(), 1);
+  var import_react47 = __toESM(require_react(), 1);
   var import_client = __toESM(require_client(), 1);
 
   // node_modules/react-bootstrap/esm/Col.js
@@ -37362,6 +37362,76 @@
     }
   };
 
+  // src/ExampleTab.tsx
+  var import_react46 = __toESM(require_react(), 1);
+  var TextTab = (props) => {
+    const [text, setText] = (0, import_react46.useState)("");
+    (0, import_react46.useEffect)(() => {
+      fetch(props.url).then((response) => response.text()).then((data) => setText(data)).catch((error) => console.error("Error fetching text:", error));
+    }, []);
+    return /* @__PURE__ */ import_react46.default.createElement("code", null, /* @__PURE__ */ import_react46.default.createElement("pre", null, text));
+  };
+  var ExampleTab_default = () => {
+    return /* @__PURE__ */ import_react46.default.createElement(Tab_default.Container, { id: "left-tabs-example5", defaultActiveKey: "examples-0" }, /* @__PURE__ */ import_react46.default.createElement(Row_default, null, /* @__PURE__ */ import_react46.default.createElement(Col_default, { sm: 3, lg: 2 }, /* @__PURE__ */ import_react46.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, /* @__PURE__ */ import_react46.default.createElement(Nav_default2.Link, { eventKey: `manual-example-rectangle` }, "RECTANGLE"), /* @__PURE__ */ import_react46.default.createElement(Nav_default2.Link, { eventKey: `manual-example-ClassicalComponent` }, "ClassicalComponent"), /* @__PURE__ */ import_react46.default.createElement(Nav_default2.Link, { eventKey: `manual-example-react+sol` }, "React and solidity"))), /* @__PURE__ */ import_react46.default.createElement(Col_default, { sm: 3, lg: 2 }, /* @__PURE__ */ import_react46.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react46.default.createElement(Tab_default.Pane, { eventKey: `manual-example-rectangle`, key: `manual-example-rectangle` }, /* @__PURE__ */ import_react46.default.createElement("pre", null, "In this contrived example, we are testing the Rectangle class. Node that because it uses no web-specific, nor node-specific language features, it can be run in either runtime, thought it more efficient and reasonable to test in node.")), /* @__PURE__ */ import_react46.default.createElement(Tab_default.Pane, { eventKey: `manual-example-ClassicalComponent`, key: `manual-example-ClassicalComponent` }, /* @__PURE__ */ import_react46.default.createElement("pre", null, "Testing a react component with the react-test-renderer package.")), /* @__PURE__ */ import_react46.default.createElement(Tab_default.Pane, { eventKey: `manual-example-react+sol`, key: `manual-example-react+sol` }, /* @__PURE__ */ import_react46.default.createElement("pre", null, "Testing a react component which is backed by a solidity contract. This test is performed _on_ the server but but _through_ the browser. The react element is renderer into an chromium window and accessed by puppeteer.")))), /* @__PURE__ */ import_react46.default.createElement(Col_default, null, /* @__PURE__ */ import_react46.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react46.default.createElement(Tab_default.Pane, { eventKey: `manual-example-rectangle`, key: `manual-example-rectangle` }, /* @__PURE__ */ import_react46.default.createElement(
+      Tabs_default2,
+      {
+        defaultActiveKey: "profile",
+        id: "uncontrolled-tab-example",
+        className: "mb-3"
+      },
+      /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "Rectangle.ts", title: "Rectangle.ts" }, /* @__PURE__ */ import_react46.default.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/src/Rectangle.ts" })),
+      /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "Rectangle.test.specification.ts", title: "Rectangle.test.specification.ts" }, /* @__PURE__ */ import_react46.default.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/src/Rectangle.test.specification.ts" })),
+      /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "Rectangle.test.shape.ts", title: "Rectangle.test.shape.ts" }, /* @__PURE__ */ import_react46.default.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/src/Rectangle.test.shape.ts" })),
+      /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "Rectangle.test.implementation.ts", title: "Rectangle.test.implementation.ts" }, /* @__PURE__ */ import_react46.default.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/src/Rectangle.test.implementation.ts" })),
+      /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "Rectangle.test.interface.ts", title: "Rectangle.test.interface.ts" }, /* @__PURE__ */ import_react46.default.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/src/Rectangle.test.interface.ts" })),
+      /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "Rectangle.config", title: "Rectangle.config" }, /* @__PURE__ */ import_react46.default.createElement("code", null, /* @__PURE__ */ import_react46.default.createElement("pre", null, `
+...
+
+// Run the test in node
+"./src/Rectangle/Rectangle.test.node.ts",
+"node",
+{ ports: 0 },
+[],
+],
+
+// Run the same test in chromium too!
+"./src/Rectangle/Rectangle.test.web.ts",
+"web",
+{ ports: 0 },
+[],
+],
+
+...
+              `)))
+    )), /* @__PURE__ */ import_react46.default.createElement(Tab_default.Pane, { eventKey: `manual-example-ClassicalComponent`, key: `manual-example-ClassicalComponent` }, /* @__PURE__ */ import_react46.default.createElement(
+      Tabs_default2,
+      {
+        defaultActiveKey: "profile",
+        id: "uncontrolled-tab-example",
+        className: "mb-3"
+      },
+      /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "ClassicalComponent/index.tsx", title: "ClassicalComponent/index.tsx" }, /* @__PURE__ */ import_react46.default.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/src/ClassicalComponent/index.tsx" })),
+      /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "ClassicalComponent/test.specification.ts", title: "ClassicalComponent/test.specification.ts" }, /* @__PURE__ */ import_react46.default.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/src/ClassicalComponent/test.specification.ts" })),
+      /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "ClassicalComponent/test.shape.ts", title: "ClassicalComponent/test.shape.ts" }, /* @__PURE__ */ import_react46.default.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/src/ClassicalComponent/test.shape.ts" })),
+      /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "ClassicalComponent/react-test-renderer/test.implementation.ts", title: "ClassicalComponent/react-test-renderer/test.implementation.ts" }, /* @__PURE__ */ import_react46.default.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/src/ClassicalComponent/react-test-renderer/test.implementation.ts" })),
+      /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "react-test-renderer/test.interface.ts", title: "react-test-renderer/test.interface.ts" }, /* @__PURE__ */ import_react46.default.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/node_modules/testeranto/src/SubPackages/react-test-renderer/component/interface.ts" }))
+    )), /* @__PURE__ */ import_react46.default.createElement(Tab_default.Pane, { eventKey: `manual-example-react+sol`, key: `manual-example-react+sol` }, /* @__PURE__ */ import_react46.default.createElement(
+      Tabs_default2,
+      {
+        defaultActiveKey: "profile",
+        id: "uncontrolled-tab-example",
+        className: "mb-3"
+      },
+      /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "contracts/MyBaseContract.sol", title: "MyBaseContract.sol" }, /* @__PURE__ */ import_react46.default.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/contracts/MyBaseContract.sol" })),
+      /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "src/MyFirstContractUI.tsx", title: "MyFirstContractUI.tsx" }, /* @__PURE__ */ import_react46.default.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/src/MyFirstContractUI.tsx" })),
+      /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "src/MyFirstContract.specification.test.ts", title: "MyFirstContract.specification.test.ts" }, /* @__PURE__ */ import_react46.default.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/src/MyFirstContract.specification.test.ts" })),
+      /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "src/MyFirstContract.solidity-react.interface.test.ts", title: "MyFirstContract.solidity-react.interface.test.ts" }, /* @__PURE__ */ import_react46.default.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/src/MyFirstContract.solidity-react.interface.test.ts" })),
+      /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "src/MyFirstContract.solidity-react.implementation.test.ts", title: "MyFirstContract.solidity-react.implementation.test.ts" }, /* @__PURE__ */ import_react46.default.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/src/MyFirstContract.solidity-react.implementation.test.ts" })),
+      /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "src/MyFirstContract.solidity-react.shape.test.ts", title: "MyFirstContract.solidity-react.shape.test.ts" }, /* @__PURE__ */ import_react46.default.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/src/MyFirstContract.solidity-react.shape.test.ts" })),
+      /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "MyFirstContract.solidity-react-example-jpg", title: "screenshot" }, /* @__PURE__ */ import_react46.default.createElement("img", { src: "file:///Users/adam/Code/kokomoBay/docs/node/src/MyFirstContract.solidity-react.testeranto/suite-0/given-test1/when/0/afterEach/andWhen.jpg", alt: "Italian Trulli" }))
+    ))))));
+  };
+
   // src/Report.tsx
   var graphToIGraphData = (g) => {
     return {
@@ -37384,11 +37454,11 @@
   document.addEventListener("DOMContentLoaded", function() {
     const elem = document.getElementById("root");
     if (elem) {
-      import_client.default.createRoot(elem).render(import_react46.default.createElement(Report, {}));
+      import_client.default.createRoot(elem).render(import_react47.default.createElement(Report, {}));
     }
   });
   var Report = () => {
-    const [state, setState] = (0, import_react46.useState)({
+    const [state, setState] = (0, import_react47.useState)({
       tests: [],
       buildDir: "",
       features: new TesterantoFeatures({}, {
@@ -37398,18 +37468,18 @@
       }),
       results: {}
     });
-    const [tests, setTests] = (0, import_react46.useState)({
+    const [tests, setTests] = (0, import_react47.useState)({
       tests: [],
       buildDir: ""
     });
-    const [features, setFeatures] = (0, import_react46.useState)(
+    const [features, setFeatures] = (0, import_react47.useState)(
       new TesterantoFeatures({}, {
         undirected: [],
         directed: [],
         dags: []
       })
     );
-    const [results, setResults] = (0, import_react46.useState)(
+    const [results, setResults] = (0, import_react47.useState)(
       {}
     );
     const importState = async () => {
@@ -37427,7 +37497,6 @@
           res({ src, exitcode, log, testresults, manifest });
         });
       }));
-      console.log("results", results2);
       setState({ tests: config.tests, results: results2, features: features2, buildDir: config.buildDir });
     };
     const importFeatures = async () => {
@@ -37439,16 +37508,16 @@
       const y = await x.json();
       setTests(y);
     };
-    (0, import_react46.useEffect)(() => {
+    (0, import_react47.useEffect)(() => {
       importState();
     }, []);
-    (0, import_react46.useEffect)(() => {
+    (0, import_react47.useEffect)(() => {
       importFeatures();
     }, []);
-    (0, import_react46.useEffect)(() => {
+    (0, import_react47.useEffect)(() => {
       importTests();
     }, []);
-    (0, import_react46.useEffect)(() => {
+    (0, import_react47.useEffect)(() => {
       const collateResults = async () => {
         console.log("collating", tests, features);
         const r = tests.tests.reduce(async (p, test) => {
@@ -37465,10 +37534,9 @@
       };
       collateResults();
     }, []);
-    console.log("state.results", state.results);
-    return /* @__PURE__ */ import_react46.default.createElement("div", null, /* @__PURE__ */ import_react46.default.createElement("style", null, `
+    return /* @__PURE__ */ import_react47.default.createElement("div", null, /* @__PURE__ */ import_react47.default.createElement("style", null, `
 pre, code, p {
-  max-width: 30rem;
+  max-width: 40rem;
   text-wrap: auto;
 }
 footer {
@@ -37479,25 +37547,25 @@ footer {
   bottom: 0;
   right: 0;
 }
-          `), features && tests && /* @__PURE__ */ import_react46.default.createElement(Tabs_default2, { defaultActiveKey: "config" }, /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "config", title: "config" }, /* @__PURE__ */ import_react46.default.createElement("pre", null, JSON.stringify(state, null, 2))), /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "results", title: "results" }, /* @__PURE__ */ import_react46.default.createElement("pre", null, JSON.stringify(state.results, null, 2))), /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "features", title: "features" }, /* @__PURE__ */ import_react46.default.createElement(Tab_default.Container, { id: "left-tabs-example5", defaultActiveKey: "feature-0" }, /* @__PURE__ */ import_react46.default.createElement(Row_default, null, /* @__PURE__ */ import_react46.default.createElement(Col_default, { sm: 2 }, /* @__PURE__ */ import_react46.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, Object.keys(features.features).map((featureKey, ndx) => /* @__PURE__ */ import_react46.default.createElement(Nav_default2.Item, { key: ndx }, /* @__PURE__ */ import_react46.default.createElement(Nav_default2.Link, { eventKey: `feature-${ndx}` }, featureKey))))), /* @__PURE__ */ import_react46.default.createElement(Col_default, { sm: 6 }, /* @__PURE__ */ import_react46.default.createElement(Tab_default.Content, null, Object.keys(features.features).map(
+          `), features && tests && /* @__PURE__ */ import_react47.default.createElement(Tabs_default2, { defaultActiveKey: "manual" }, /* @__PURE__ */ import_react47.default.createElement(Tab_default, { eventKey: "manual", title: "manual" }, /* @__PURE__ */ import_react47.default.createElement("article", null, /* @__PURE__ */ import_react47.default.createElement("h1", null, "Testeranto"), /* @__PURE__ */ import_react47.default.createElement("h2", null, "What is testeranto?"), /* @__PURE__ */ import_react47.default.createElement("p", null, "Testeranto is a novel testing framework for typescript project. Inspired by Behavior Driven Development, testeranto allows you to wrap you typescript with gherkin-like semantics, producing a report in the form of a static website. Testeranto runs it's tests both in node and chromium."))), /* @__PURE__ */ import_react47.default.createElement(Tab_default, { eventKey: "config", title: "config" }, /* @__PURE__ */ import_react47.default.createElement("pre", null, JSON.stringify(state, null, 2))), /* @__PURE__ */ import_react47.default.createElement(Tab_default, { eventKey: "results", title: "results" }, /* @__PURE__ */ import_react47.default.createElement("pre", null, JSON.stringify(state.results, null, 2))), /* @__PURE__ */ import_react47.default.createElement(Tab_default, { eventKey: "features", title: "features" }, /* @__PURE__ */ import_react47.default.createElement(Tab_default.Container, { id: "left-tabs-example5", defaultActiveKey: "feature-0" }, /* @__PURE__ */ import_react47.default.createElement(Row_default, null, /* @__PURE__ */ import_react47.default.createElement(Col_default, { sm: 2 }, /* @__PURE__ */ import_react47.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, Object.keys(features.features).map((featureKey, ndx) => /* @__PURE__ */ import_react47.default.createElement(Nav_default2.Item, { key: ndx }, /* @__PURE__ */ import_react47.default.createElement(Nav_default2.Link, { eventKey: `feature-${ndx}` }, featureKey))))), /* @__PURE__ */ import_react47.default.createElement(Col_default, { sm: 6 }, /* @__PURE__ */ import_react47.default.createElement(Tab_default.Content, null, Object.keys(features.features).map(
       (featureKey, ndx) => {
         const feature = features[featureKey];
-        return /* @__PURE__ */ import_react46.default.createElement(Tab_default.Pane, { eventKey: `feature-${ndx}`, key: ndx }, /* @__PURE__ */ import_react46.default.createElement("pre", null, JSON.stringify(feature, null, 2)));
+        return /* @__PURE__ */ import_react47.default.createElement(Tab_default.Pane, { eventKey: `feature-${ndx}`, key: ndx }, /* @__PURE__ */ import_react47.default.createElement("pre", null, JSON.stringify(feature, null, 2)));
       }
-    ))), /* @__PURE__ */ import_react46.default.createElement(Col_default, { sm: 4 }, /* @__PURE__ */ import_react46.default.createElement(Tabs_default2, { defaultActiveKey: "feature.networks" }, /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "feature.networks", title: "networks" }, /* @__PURE__ */ import_react46.default.createElement(Tabs_default2, { defaultActiveKey: "dag" }, /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "dag", title: "DAG" }, /* @__PURE__ */ import_react46.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react46.default.createElement("pre", null, JSON.stringify(features.graphs.dags, null, 2)))), /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "directed", title: "Directed" }, /* @__PURE__ */ import_react46.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react46.default.createElement("pre", null, JSON.stringify(features.graphs.directed, null, 2)))), /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "undirected", title: "Undirected" }, /* @__PURE__ */ import_react46.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react46.default.createElement("pre", null, JSON.stringify(features.graphs.undirected, null, 2)))))), /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "feature.tests", title: "tests" }, /* @__PURE__ */ import_react46.default.createElement("pre", { id: "theProps" }, JSON.stringify(tests.tests, null, 2)))))))), /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "networks", title: "networks" }, /* @__PURE__ */ import_react46.default.createElement(Tab_default.Container, { id: "left-tabs-example88", defaultActiveKey: `dag` }, /* @__PURE__ */ import_react46.default.createElement(Row_default, null, /* @__PURE__ */ import_react46.default.createElement(Tabs_default2, { defaultActiveKey: "dag" }, /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "dag", title: "DAG" }, /* @__PURE__ */ import_react46.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react46.default.createElement(Row_default, null, /* @__PURE__ */ import_react46.default.createElement(Col_default, { sm: 2 }, /* @__PURE__ */ import_react46.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, features.graphs.dags.map(
-      (g, ndx2) => /* @__PURE__ */ import_react46.default.createElement(Nav_default2.Item, { key: ndx2 }, /* @__PURE__ */ import_react46.default.createElement(Nav_default2.Link, { eventKey: `networks-dags-${ndx2}` }, g.name))
-    ))), /* @__PURE__ */ import_react46.default.createElement(Col_default, { sm: 6 }, /* @__PURE__ */ import_react46.default.createElement(Tab_default.Content, null, features.graphs.dags[0] && /* @__PURE__ */ import_react46.default.createElement(import_react46.default.Fragment, null, /* @__PURE__ */ import_react46.default.createElement(Sigma_default, { graph: graphToIGraphData(features.graphs.dags[0].graph), settings: { drawEdges: true, clone: false } }, /* @__PURE__ */ import_react46.default.createElement(RelativeSize_default, { initialSize: 25 }), /* @__PURE__ */ import_react46.default.createElement(RandomizeNodePositions_default, null)), /* @__PURE__ */ import_react46.default.createElement("pre", null, JSON.stringify(features.graphs.dags[0].graph, null, 2))))), /* @__PURE__ */ import_react46.default.createElement(Col_default, { sm: 4 }, /* @__PURE__ */ import_react46.default.createElement(Tabs_default2, { defaultActiveKey: "networks.features" }, /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "networks.features", title: "features" }, /* @__PURE__ */ import_react46.default.createElement("pre", { id: "theProps" }, JSON.stringify(features, null, 2))), /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "feature.tests", title: "tests" }, /* @__PURE__ */ import_react46.default.createElement("pre", { id: "theProps" }, JSON.stringify(tests.tests, null, 2)))))))), /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "directed", title: "Directed" }, /* @__PURE__ */ import_react46.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react46.default.createElement(Row_default, null, /* @__PURE__ */ import_react46.default.createElement(Col_default, { sm: 2 }, /* @__PURE__ */ import_react46.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, features.graphs.directed.map(
-      (g, ndx2) => /* @__PURE__ */ import_react46.default.createElement(Nav_default2.Item, { key: ndx2 }, /* @__PURE__ */ import_react46.default.createElement(Nav_default2.Link, { eventKey: `networks-directed-${ndx2}` }, g.name))
-    ))), /* @__PURE__ */ import_react46.default.createElement(Col_default, { sm: 6 }, /* @__PURE__ */ import_react46.default.createElement(Tab_default.Content, null, features.graphs.directed[0] && /* @__PURE__ */ import_react46.default.createElement(import_react46.default.Fragment, null, /* @__PURE__ */ import_react46.default.createElement(Sigma_default, { graph: graphToIGraphData(features.graphs.directed[0].graph), settings: { drawEdges: true, clone: false } }, /* @__PURE__ */ import_react46.default.createElement(RelativeSize_default, { initialSize: 25 }), /* @__PURE__ */ import_react46.default.createElement(RandomizeNodePositions_default, null)), /* @__PURE__ */ import_react46.default.createElement("pre", null, JSON.stringify(features.graphs.directed[0].graph, null, 2))))), /* @__PURE__ */ import_react46.default.createElement(Col_default, { sm: 4 }, /* @__PURE__ */ import_react46.default.createElement(Tabs_default2, { defaultActiveKey: "networks.features" }, /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "networks.features", title: "features" }, /* @__PURE__ */ import_react46.default.createElement("pre", { id: "theProps" }, JSON.stringify(features, null, 2))), /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "feature.tests", title: "tests" }, /* @__PURE__ */ import_react46.default.createElement("pre", { id: "theProps" }, JSON.stringify(tests.tests, null, 2)))))))), /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "undirected", title: "Undirected" }, /* @__PURE__ */ import_react46.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react46.default.createElement(Row_default, null, /* @__PURE__ */ import_react46.default.createElement(Col_default, { sm: 2 }, /* @__PURE__ */ import_react46.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, features.graphs.undirected.map(
-      (g, ndx2) => /* @__PURE__ */ import_react46.default.createElement(Nav_default2.Item, { key: ndx2 }, /* @__PURE__ */ import_react46.default.createElement(Nav_default2.Link, { eventKey: `networks-undirected-${ndx2}` }, g.name))
-    ))), /* @__PURE__ */ import_react46.default.createElement(Col_default, { sm: 6 }, /* @__PURE__ */ import_react46.default.createElement(Tab_default.Content, null, features.graphs.undirected[0] && /* @__PURE__ */ import_react46.default.createElement(import_react46.default.Fragment, null, /* @__PURE__ */ import_react46.default.createElement(Sigma_default, { graph: graphToIGraphData(features.graphs.undirected[0].graph), settings: { drawEdges: true, clone: false } }, /* @__PURE__ */ import_react46.default.createElement(RelativeSize_default, { initialSize: 25 }), /* @__PURE__ */ import_react46.default.createElement(RandomizeNodePositions_default, null)), /* @__PURE__ */ import_react46.default.createElement("pre", null, JSON.stringify(features.graphs.undirected[0].graph, null, 2))))), /* @__PURE__ */ import_react46.default.createElement(Col_default, { sm: 4 }, /* @__PURE__ */ import_react46.default.createElement(Tabs_default2, { defaultActiveKey: "networks.features" }, /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "networks.features", title: "features" }, /* @__PURE__ */ import_react46.default.createElement("pre", { id: "theProps" }, JSON.stringify(features, null, 2))), /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "feature.tests", title: "tests" }, /* @__PURE__ */ import_react46.default.createElement("pre", { id: "theProps" }, JSON.stringify(tests.tests, null, 2)))))))))))), /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "tests", title: "tests" }, /* @__PURE__ */ import_react46.default.createElement(Tab_default.Container, { id: "left-tabs-example5", defaultActiveKey: "feature-0" }, /* @__PURE__ */ import_react46.default.createElement(Row_default, null, /* @__PURE__ */ import_react46.default.createElement(Col_default, { sm: 4 }, /* @__PURE__ */ import_react46.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, tests.tests.map(
-      (t, ndx) => /* @__PURE__ */ import_react46.default.createElement(Nav_default2.Item, { key: ndx }, /* @__PURE__ */ import_react46.default.createElement(Nav_default2.Link, { eventKey: `test-${ndx}` }, t[0], " - ", t[1]))
-    ))), /* @__PURE__ */ import_react46.default.createElement(Col_default, { sm: 4 }, /* @__PURE__ */ import_react46.default.createElement(Tab_default.Content, null, tests.tests.map(
-      (t, ndx) => /* @__PURE__ */ import_react46.default.createElement(Tab_default.Pane, { eventKey: `test-${ndx}` }, /* @__PURE__ */ import_react46.default.createElement("pre", null, JSON.stringify(Object.entries(state.results).filter(([k, v]) => {
+    ))), /* @__PURE__ */ import_react47.default.createElement(Col_default, { sm: 4 }, /* @__PURE__ */ import_react47.default.createElement(Tabs_default2, { defaultActiveKey: "feature.networks" }, /* @__PURE__ */ import_react47.default.createElement(Tab_default, { eventKey: "feature.networks", title: "networks" }, /* @__PURE__ */ import_react47.default.createElement(Tabs_default2, { defaultActiveKey: "dag" }, /* @__PURE__ */ import_react47.default.createElement(Tab_default, { eventKey: "dag", title: "DAG" }, /* @__PURE__ */ import_react47.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react47.default.createElement("pre", null, JSON.stringify(features.graphs.dags, null, 2)))), /* @__PURE__ */ import_react47.default.createElement(Tab_default, { eventKey: "directed", title: "Directed" }, /* @__PURE__ */ import_react47.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react47.default.createElement("pre", null, JSON.stringify(features.graphs.directed, null, 2)))), /* @__PURE__ */ import_react47.default.createElement(Tab_default, { eventKey: "undirected", title: "Undirected" }, /* @__PURE__ */ import_react47.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react47.default.createElement("pre", null, JSON.stringify(features.graphs.undirected, null, 2)))))), /* @__PURE__ */ import_react47.default.createElement(Tab_default, { eventKey: "feature.tests", title: "tests" }, /* @__PURE__ */ import_react47.default.createElement("pre", { id: "theProps" }, JSON.stringify(tests.tests, null, 2)))))))), /* @__PURE__ */ import_react47.default.createElement(Tab_default, { eventKey: "networks", title: "networks" }, /* @__PURE__ */ import_react47.default.createElement(Tab_default.Container, { id: "left-tabs-example88", defaultActiveKey: `dag` }, /* @__PURE__ */ import_react47.default.createElement(Row_default, null, /* @__PURE__ */ import_react47.default.createElement(Tabs_default2, { defaultActiveKey: "dag" }, /* @__PURE__ */ import_react47.default.createElement(Tab_default, { eventKey: "dag", title: "DAG" }, /* @__PURE__ */ import_react47.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react47.default.createElement(Row_default, null, /* @__PURE__ */ import_react47.default.createElement(Col_default, { sm: 2 }, /* @__PURE__ */ import_react47.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, features.graphs.dags.map(
+      (g, ndx2) => /* @__PURE__ */ import_react47.default.createElement(Nav_default2.Item, { key: ndx2 }, /* @__PURE__ */ import_react47.default.createElement(Nav_default2.Link, { eventKey: `networks-dags-${ndx2}` }, g.name))
+    ))), /* @__PURE__ */ import_react47.default.createElement(Col_default, { sm: 6 }, /* @__PURE__ */ import_react47.default.createElement(Tab_default.Content, null, features.graphs.dags[0] && /* @__PURE__ */ import_react47.default.createElement(import_react47.default.Fragment, null, /* @__PURE__ */ import_react47.default.createElement(Sigma_default, { graph: graphToIGraphData(features.graphs.dags[0].graph), settings: { drawEdges: true, clone: false } }, /* @__PURE__ */ import_react47.default.createElement(RelativeSize_default, { initialSize: 25 }), /* @__PURE__ */ import_react47.default.createElement(RandomizeNodePositions_default, null)), /* @__PURE__ */ import_react47.default.createElement("pre", null, JSON.stringify(features.graphs.dags[0].graph, null, 2))))), /* @__PURE__ */ import_react47.default.createElement(Col_default, { sm: 4 }, /* @__PURE__ */ import_react47.default.createElement(Tabs_default2, { defaultActiveKey: "networks.features" }, /* @__PURE__ */ import_react47.default.createElement(Tab_default, { eventKey: "networks.features", title: "features" }, /* @__PURE__ */ import_react47.default.createElement("pre", { id: "theProps" }, JSON.stringify(features, null, 2))), /* @__PURE__ */ import_react47.default.createElement(Tab_default, { eventKey: "feature.tests", title: "tests" }, /* @__PURE__ */ import_react47.default.createElement("pre", { id: "theProps" }, JSON.stringify(tests.tests, null, 2)))))))), /* @__PURE__ */ import_react47.default.createElement(Tab_default, { eventKey: "directed", title: "Directed" }, /* @__PURE__ */ import_react47.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react47.default.createElement(Row_default, null, /* @__PURE__ */ import_react47.default.createElement(Col_default, { sm: 2 }, /* @__PURE__ */ import_react47.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, features.graphs.directed.map(
+      (g, ndx2) => /* @__PURE__ */ import_react47.default.createElement(Nav_default2.Item, { key: ndx2 }, /* @__PURE__ */ import_react47.default.createElement(Nav_default2.Link, { eventKey: `networks-directed-${ndx2}` }, g.name))
+    ))), /* @__PURE__ */ import_react47.default.createElement(Col_default, { sm: 6 }, /* @__PURE__ */ import_react47.default.createElement(Tab_default.Content, null, features.graphs.directed[0] && /* @__PURE__ */ import_react47.default.createElement(import_react47.default.Fragment, null, /* @__PURE__ */ import_react47.default.createElement(Sigma_default, { graph: graphToIGraphData(features.graphs.directed[0].graph), settings: { drawEdges: true, clone: false } }, /* @__PURE__ */ import_react47.default.createElement(RelativeSize_default, { initialSize: 25 }), /* @__PURE__ */ import_react47.default.createElement(RandomizeNodePositions_default, null)), /* @__PURE__ */ import_react47.default.createElement("pre", null, JSON.stringify(features.graphs.directed[0].graph, null, 2))))), /* @__PURE__ */ import_react47.default.createElement(Col_default, { sm: 4 }, /* @__PURE__ */ import_react47.default.createElement(Tabs_default2, { defaultActiveKey: "networks.features" }, /* @__PURE__ */ import_react47.default.createElement(Tab_default, { eventKey: "networks.features", title: "features" }, /* @__PURE__ */ import_react47.default.createElement("pre", { id: "theProps" }, JSON.stringify(features, null, 2))), /* @__PURE__ */ import_react47.default.createElement(Tab_default, { eventKey: "feature.tests", title: "tests" }, /* @__PURE__ */ import_react47.default.createElement("pre", { id: "theProps" }, JSON.stringify(tests.tests, null, 2)))))))), /* @__PURE__ */ import_react47.default.createElement(Tab_default, { eventKey: "undirected", title: "Undirected" }, /* @__PURE__ */ import_react47.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react47.default.createElement(Row_default, null, /* @__PURE__ */ import_react47.default.createElement(Col_default, { sm: 2 }, /* @__PURE__ */ import_react47.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, features.graphs.undirected.map(
+      (g, ndx2) => /* @__PURE__ */ import_react47.default.createElement(Nav_default2.Item, { key: ndx2 }, /* @__PURE__ */ import_react47.default.createElement(Nav_default2.Link, { eventKey: `networks-undirected-${ndx2}` }, g.name))
+    ))), /* @__PURE__ */ import_react47.default.createElement(Col_default, { sm: 6 }, /* @__PURE__ */ import_react47.default.createElement(Tab_default.Content, null, features.graphs.undirected[0] && /* @__PURE__ */ import_react47.default.createElement(import_react47.default.Fragment, null, /* @__PURE__ */ import_react47.default.createElement(Sigma_default, { graph: graphToIGraphData(features.graphs.undirected[0].graph), settings: { drawEdges: true, clone: false } }, /* @__PURE__ */ import_react47.default.createElement(RelativeSize_default, { initialSize: 25 }), /* @__PURE__ */ import_react47.default.createElement(RandomizeNodePositions_default, null)), /* @__PURE__ */ import_react47.default.createElement("pre", null, JSON.stringify(features.graphs.undirected[0].graph, null, 2))))), /* @__PURE__ */ import_react47.default.createElement(Col_default, { sm: 4 }, /* @__PURE__ */ import_react47.default.createElement(Tabs_default2, { defaultActiveKey: "networks.features" }, /* @__PURE__ */ import_react47.default.createElement(Tab_default, { eventKey: "networks.features", title: "features" }, /* @__PURE__ */ import_react47.default.createElement("pre", { id: "theProps" }, JSON.stringify(features, null, 2))), /* @__PURE__ */ import_react47.default.createElement(Tab_default, { eventKey: "feature.tests", title: "tests" }, /* @__PURE__ */ import_react47.default.createElement("pre", { id: "theProps" }, JSON.stringify(tests.tests, null, 2)))))))))))), /* @__PURE__ */ import_react47.default.createElement(Tab_default, { eventKey: "tests", title: "tests" }, /* @__PURE__ */ import_react47.default.createElement(Tab_default.Container, { id: "left-tabs-example5", defaultActiveKey: "feature-0" }, /* @__PURE__ */ import_react47.default.createElement(Row_default, null, /* @__PURE__ */ import_react47.default.createElement(Col_default, { sm: 4 }, /* @__PURE__ */ import_react47.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, tests.tests.map(
+      (t, ndx) => /* @__PURE__ */ import_react47.default.createElement(Nav_default2.Item, { key: ndx }, /* @__PURE__ */ import_react47.default.createElement(Nav_default2.Link, { eventKey: `test-${ndx}` }, t[0], " - ", t[1]))
+    ))), /* @__PURE__ */ import_react47.default.createElement(Col_default, { sm: 4 }, /* @__PURE__ */ import_react47.default.createElement(Tab_default.Content, null, tests.tests.map(
+      (t, ndx) => /* @__PURE__ */ import_react47.default.createElement(Tab_default.Pane, { eventKey: `test-${ndx}` }, /* @__PURE__ */ import_react47.default.createElement("pre", null, JSON.stringify(Object.entries(state.results).filter(([k, v]) => {
         console.log(v.src, tests.tests[ndx][0]);
         return v.src === tests.tests[ndx][0];
       }), null, 2)))
-    ))), /* @__PURE__ */ import_react46.default.createElement(Col_default, { sm: 4 }, /* @__PURE__ */ import_react46.default.createElement(Tabs_default2, { defaultActiveKey: "feature.networks" }, /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "feature.networks", title: "networks" }, /* @__PURE__ */ import_react46.default.createElement(Tabs_default2, { defaultActiveKey: "dag" }, /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "dag", title: "DAG" }, /* @__PURE__ */ import_react46.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react46.default.createElement("pre", null, JSON.stringify(features.graphs.dags, null, 2)))), /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "directed", title: "Directed" }, /* @__PURE__ */ import_react46.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react46.default.createElement("pre", null, JSON.stringify(features.graphs.directed, null, 2)))), /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "undirected", title: "Undirected" }, /* @__PURE__ */ import_react46.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react46.default.createElement("pre", null, JSON.stringify(features.graphs.undirected, null, 2)))))), /* @__PURE__ */ import_react46.default.createElement(Tab_default, { eventKey: "tests.features", title: "features" }, /* @__PURE__ */ import_react46.default.createElement("pre", { id: "theProps" }, JSON.stringify(features, null, 2))))))))), /* @__PURE__ */ import_react46.default.createElement("footer", null, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react46.default.createElement("a", { href: "https://adamwong246.github.io/testeranto/" }, "testeranto ")));
+    ))), /* @__PURE__ */ import_react47.default.createElement(Col_default, { sm: 4 }, /* @__PURE__ */ import_react47.default.createElement(Tabs_default2, { defaultActiveKey: "feature.networks" }, /* @__PURE__ */ import_react47.default.createElement(Tab_default, { eventKey: "feature.networks", title: "networks" }, /* @__PURE__ */ import_react47.default.createElement(Tabs_default2, { defaultActiveKey: "dag" }, /* @__PURE__ */ import_react47.default.createElement(Tab_default, { eventKey: "dag", title: "DAG" }, /* @__PURE__ */ import_react47.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react47.default.createElement("pre", null, JSON.stringify(features.graphs.dags, null, 2)))), /* @__PURE__ */ import_react47.default.createElement(Tab_default, { eventKey: "directed", title: "Directed" }, /* @__PURE__ */ import_react47.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react47.default.createElement("pre", null, JSON.stringify(features.graphs.directed, null, 2)))), /* @__PURE__ */ import_react47.default.createElement(Tab_default, { eventKey: "undirected", title: "Undirected" }, /* @__PURE__ */ import_react47.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react47.default.createElement("pre", null, JSON.stringify(features.graphs.undirected, null, 2)))))), /* @__PURE__ */ import_react47.default.createElement(Tab_default, { eventKey: "tests.features", title: "features" }, /* @__PURE__ */ import_react47.default.createElement("pre", { id: "theProps" }, JSON.stringify(features, null, 2)))))))), /* @__PURE__ */ import_react47.default.createElement(Tab_default, { eventKey: "examples", title: "examples" }, /* @__PURE__ */ import_react47.default.createElement(ExampleTab_default, null))), /* @__PURE__ */ import_react47.default.createElement("footer", null, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react47.default.createElement("a", { href: "https://adamwong246.github.io/testeranto/" }, "testeranto ")));
   };
 })();
 /*! Bundled license information:

@@ -1,11 +1,4 @@
-import { assert } from "chai";
-
-import type {
-  ITestSpecification,
-  ITestImplementation,
-  IPartialInterface,
-} from "testeranto/src/Types";
-import Rectangle from "./Rectangle";
+import { IPartialInterface } from "testeranto/src/Types";
 import { IRectangleTestShape } from "./Rectangle.test.shape";
 
 export const RectangleTesterantoBaseInterface: IPartialInterface<IRectangleTestShape> =
@@ -21,5 +14,3 @@ export const RectangleTesterantoBaseInterface: IPartialInterface<IRectangleTestS
       return t(s);
     },
   };
-
-export const RectangleTesterantoBasePrototype = Rectangle.prototype;
