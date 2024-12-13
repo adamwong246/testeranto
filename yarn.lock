@@ -9431,10 +9431,8 @@ tar@^4.0.2:
     safe-buffer "^5.2.1"
     yallist "^3.1.1"
 
-testeranto@0.75.0:
-  version "0.75.0"
-  resolved "https://registry.yarnpkg.com/testeranto/-/testeranto-0.75.0.tgz#027389086c62cb985595f7dd3b0aea482b311cd0"
-  integrity sha512-c01PzNc2AM5HiiCOS4MZWDSdV2efIz5xufWDYRoLIJrxeWhoYlL0VqLqVOYYI5cNpYUj2aKbc4tR/dF5IBqTEg==
+testeranto@../testeranto:
+  version "0.77.0"
   dependencies:
     "@electron/remote" "^2.1.2"
     babel-loader "^8.2.5"

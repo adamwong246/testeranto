@@ -1,27 +1,16 @@
+import { ITestImplementation } from "testeranto/src/Types";
+
 import { assert } from "chai";
 
 import { features } from "../features.test.mjs";
 import Testeranto, {
-  // IInput,
 } from "../subPackages/solidity/react.testeranto";
 
-// import MyFirstContractSol from "../contracts/MyFirstContract.sol";
+import { MyFirstContractUI } from "./MyFirstContractUI";
+import { IMyFirstContractTest } from "./MyFirstContract.solidity-react.shape.test";
+import { commonGivens } from "./MyFirstContract.specification.test";
 
 type IInput = { contractName: string; abi: any };
-
-import {
-  IMyFirstContractTest,
-  commonGivens,
-  // MyFirstContractTestInput,
-} from "./MyFirstContract.test";
-import { ITestImplementation } from "testeranto/src/Types";
-import { MyFirstContractUI } from "./MyFirstContractUI";
-// import { MyFirstContract } from "./MyFirstContractUI";
-
-// export const MyFirstContractTestInput = MyFirstContractSol.contracts.find(
-//   (c) => c.contractName === "MyFirstContract"
-// ) as { contractName: string; abi: any };
-
 const testImplementation: ITestImplementation<
   IMyFirstContractTest<IMyFirstContractTest<IInput>>
 > = {

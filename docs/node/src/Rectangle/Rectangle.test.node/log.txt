@@ -1,0 +1,29 @@
+test resources: ,{"scheduled":true,"name":"./src/Rectangle/Rectangle.test.node.ts","ports":[],"fs":"/Users/adam/Code/kokomoBay/docs/node/src/Rectangle/Rectangle.test.node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/68f07682-0a62-44da-84b4-cb33fc29aa4a"}
+
+Suite:,0,Testing the Rectangle class
+
+ Given: Default
+ When:,setWidth: 4
+ When:,setHeight: 9
+ Then:,getWidth: 4
+ Then:,getHeight: 9
+
+ Given: Default
+ When:,setWidth: 4
+ When:,setHeight: 5
+ Then:,getWidth: 4
+ Then:,getHeight: 5
+ Then:,area: 20
+ Then:,AreaPlusCircumference: 38
+
+ Given: Default
+ When:,setHeight: 4
+ When:,setWidth: 33
+
+ Given: Default
+ When:,setHeight: 5
+ When:,setWidth: 5
+
+ Given: Default
+ When:,setHeight: 6
+ When:,setWidth: 6

@@ -1,0 +1,23 @@
+test resources: ,{"scheduled":true,"name":"./src/app.redux.test.ts","ports":[],"fs":"/Users/adam/Code/kokomoBay/docs/node/src/app.redux.test","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/68f07682-0a62-44da-84b4-cb33fc29aa4a"}
+
+Suite:,0,Testing the Redux store
+
+ Given: AnEmptyState
+ When:,TheEmailIsSetTo: adam@email.com
+ Then:,TheEmailIs: adam@email.com
+
+ Given: AStateWithEmail
+ Then:,TheEmailIsNot: adam@email.com
+ Then:,TheEmailIs: bob@mail.com
+
+ Given: AnEmptyState
+ When:,TheEmailIsSetTo: hello
+ When:,TheEmailIsSetTo: aloha
+ Then:,TheEmailIs: aloha
+
+ Given: AnEmptyState
+ Then:,TheEmailIs: 
+
+ Given: AnEmptyState
+ When:,TheEmailIsSetTo: hey there
+ Then:,TheEmailIs: hey there

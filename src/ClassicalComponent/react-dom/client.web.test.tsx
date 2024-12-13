@@ -1,11 +1,11 @@
 import test from "testeranto/src/SubPackages/react-dom/component/web";
 import { IPartialWebInterface } from "testeranto/src/Types";
-import ReactDom from "react-dom/client";
 
+import ReactDom from "react-dom/client";
 import { assert } from "chai";
 
 import { ClassicalComponent } from "..";
-import { ClassicalComponentSpec } from "../testeranto";
+import { ClassicalComponentSpec } from "../test.specification";
 
 type IStore = {
   htmlElement: HTMLElement;

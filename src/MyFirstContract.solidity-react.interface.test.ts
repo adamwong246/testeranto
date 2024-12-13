@@ -2,7 +2,7 @@ import Ganache from "ganache";
 import { IPartialNodeInterface } from "testeranto/src/Types";
 import { ITTestResourceConfiguration } from "../../testeranto/src/lib";
 import { PM } from "../../testeranto/src/PM";
-
+import Web3 from "web3";
 const tInterface: IPartialNodeInterface<any> = {
   // beforeAll: async () =>
   //   (await solCompile(contractName)).contracts.find(

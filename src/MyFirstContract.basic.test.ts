@@ -8,11 +8,11 @@ import Testeranto, {
 } from "../subPackages/solidity/Contract.testeranto.test";
 import MyFirstContract from "../contracts/MyFirstContract.sol";
 
+import { IMyFirstContractTest } from "./MyFirstContract.solidity-react.shape.test";
 import {
-  IMyFirstContractTest,
-  MyFirstContractTestInput,
   commonGivens,
-} from "./MyFirstContract.test";
+  MyFirstContractTestInput,
+} from "./MyFirstContract.specification.test";
 
 const testImplementation: ITestImplementation<IMyFirstContractTest<IInput>> = {
   suites: {

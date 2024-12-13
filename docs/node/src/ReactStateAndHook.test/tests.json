@@ -1,0 +1,92 @@
+{
+  "name": "Testing the ReactStateAndHook element",
+  "givens": [
+    {
+      "name": "Default",
+      "whens": [],
+      "thens": [
+        {
+          "name": "TheCounterIs: 0",
+          "error": false
+        }
+      ],
+      "error": [
+        {},
+        "Error: Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:\n1. You might have mismatching versions of React and the renderer (such as React DOM)\n2. You might be breaking the Rules of Hooks\n3. You might have more than one copy of React in the same app\nSee https://reactjs.org/link/invalid-hook-call for tips about how to debug and fix this problem.\n    at Object.throwInvalidHookError (file:///Users/adam/Code/kokomoBay/docs/node/src/LoginPage/react-test-renderer/node.test.mjs?cacheBust=1734120458271:41571:17)\n    at useState (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:22788:29)\n    at ReactStateAndHook (file:///Users/adam/Code/kokomoBay/docs/node/src/ReactStateAndHook.test.mjs?cacheBust=1734120458271:26:56)\n    at renderWithHooks (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:12990:26)\n    at mountIndeterminateComponent (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:15555:21)\n    at beginWork (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:16504:22)\n    at performUnitOfWork (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:19396:20)\n    at workLoopSync (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:19351:13)\n    at renderRootSync (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:19333:15)\n    at performSyncWorkOnRoot (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:19132:28)\n    at flushSyncCallbacks (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:10367:30)\n    at flushActQueue (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:2117:32)\n    at act2 (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:2006:19)\n    at Object.beforeEach (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:24342:40)\n    at Given.givenThat (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:24187:36)\n    at Given.give (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:23806:31)"
+      ],
+      "features": [
+        "hello"
+      ]
+    },
+    {
+      "name": "Default",
+      "whens": [
+        {
+          "name": "IClick: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheCounterIs: 1",
+          "error": false
+        }
+      ],
+      "error": [
+        {},
+        "Error: Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:\n1. You might have mismatching versions of React and the renderer (such as React DOM)\n2. You might be breaking the Rules of Hooks\n3. You might have more than one copy of React in the same app\nSee https://reactjs.org/link/invalid-hook-call for tips about how to debug and fix this problem.\n    at Object.throwInvalidHookError (file:///Users/adam/Code/kokomoBay/docs/node/src/LoginPage/react-test-renderer/node.test.mjs?cacheBust=1734120458271:41571:17)\n    at useState (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:22788:29)\n    at ReactStateAndHook (file:///Users/adam/Code/kokomoBay/docs/node/src/ReactStateAndHook.test.mjs?cacheBust=1734120458271:26:56)\n    at renderWithHooks (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:12990:26)\n    at mountIndeterminateComponent (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:15555:21)\n    at beginWork (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:16504:22)\n    at performUnitOfWork (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:19396:20)\n    at workLoopSync (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:19351:13)\n    at renderRootSync (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:19333:15)\n    at performSyncWorkOnRoot (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:19132:28)\n    at flushSyncCallbacks (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:10367:30)\n    at flushActQueue (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:2117:32)\n    at act2 (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:2006:19)\n    at Object.beforeEach (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:24342:40)\n    at Given.givenThat (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:24187:36)\n    at Given.give (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:23806:31)"
+      ],
+      "features": [
+        "hello"
+      ]
+    },
+    {
+      "name": "Default",
+      "whens": [
+        {
+          "name": "IClick: undefined"
+        },
+        {
+          "name": "IClick: undefined"
+        },
+        {
+          "name": "IClick: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheCounterIs: 3",
+          "error": false
+        }
+      ],
+      "error": [
+        {},
+        "Error: Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:\n1. You might have mismatching versions of React and the renderer (such as React DOM)\n2. You might be breaking the Rules of Hooks\n3. You might have more than one copy of React in the same app\nSee https://reactjs.org/link/invalid-hook-call for tips about how to debug and fix this problem.\n    at Object.throwInvalidHookError (file:///Users/adam/Code/kokomoBay/docs/node/src/LoginPage/react-test-renderer/node.test.mjs?cacheBust=1734120458271:41571:17)\n    at useState (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:22788:29)\n    at ReactStateAndHook (file:///Users/adam/Code/kokomoBay/docs/node/src/ReactStateAndHook.test.mjs?cacheBust=1734120458271:26:56)\n    at renderWithHooks (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:12990:26)\n    at mountIndeterminateComponent (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:15555:21)\n    at beginWork (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:16504:22)\n    at performUnitOfWork (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:19396:20)\n    at workLoopSync (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:19351:13)\n    at renderRootSync (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:19333:15)\n    at performSyncWorkOnRoot (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:19132:28)\n    at flushSyncCallbacks (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:10367:30)\n    at flushActQueue (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:2117:32)\n    at act2 (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:2006:19)\n    at Object.beforeEach (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:24342:40)\n    at Given.givenThat (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:24187:36)\n    at Given.give (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:23806:31)"
+      ],
+      "features": [
+        "hello"
+      ]
+    },
+    {
+      "name": "Default",
+      "whens": [
+        {
+          "name": "IClick: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheCounterIs: 1",
+          "error": false
+        }
+      ],
+      "error": [
+        {},
+        "Error: Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:\n1. You might have mismatching versions of React and the renderer (such as React DOM)\n2. You might be breaking the Rules of Hooks\n3. You might have more than one copy of React in the same app\nSee https://reactjs.org/link/invalid-hook-call for tips about how to debug and fix this problem.\n    at Object.throwInvalidHookError (file:///Users/adam/Code/kokomoBay/docs/node/src/LoginPage/react-test-renderer/node.test.mjs?cacheBust=1734120458271:41571:17)\n    at useState (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:22788:29)\n    at ReactStateAndHook (file:///Users/adam/Code/kokomoBay/docs/node/src/ReactStateAndHook.test.mjs?cacheBust=1734120458271:26:56)\n    at renderWithHooks (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:12990:26)\n    at mountIndeterminateComponent (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:15555:21)\n    at beginWork (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:16504:22)\n    at performUnitOfWork (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:19396:20)\n    at workLoopSync (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:19351:13)\n    at renderRootSync (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:19333:15)\n    at performSyncWorkOnRoot (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:19132:28)\n    at flushSyncCallbacks (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:10367:30)\n    at flushActQueue (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:2117:32)\n    at act2 (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:2006:19)\n    at Object.beforeEach (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:24342:40)\n    at Given.givenThat (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:24187:36)\n    at Given.give (file:///Users/adam/Code/kokomoBay/docs/node/chunk-MCELA7BP.mjs:23806:31)"
+      ],
+      "features": [
+        "hello"
+      ]
+    }
+  ],
+  "fails": []
+}

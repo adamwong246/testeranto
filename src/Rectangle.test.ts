@@ -1,10 +1,5 @@
-import { assert } from "chai";
+import type { IPartialInterface } from "testeranto/src/Types";
 
-import type {
-  ITestSpecification,
-  ITestImplementation,
-  IPartialInterface,
-} from "testeranto/src/Types";
 import Rectangle from "./Rectangle";
 import { IRectangleTestShape } from "./Rectangle.test.shape";
 

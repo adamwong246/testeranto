@@ -1,13 +1,18 @@
 import Testeranto from "testeranto/src/Web";
 
-import {
-  IRectangleTestShape,
-  RectangleTesterantoBaseInterface,
-  RectangleTesterantoBasePrototype,
-  RectangleTesterantoBaseTestImplementation,
-  RectangleTesterantoBaseTestSpecification,
-} from "../../src/Rectangle.test";
+// import {
+//   IRectangleTestShape,
+//   RectangleTesterantoBaseInterface,
+//   RectangleTesterantoBasePrototype,
+//   RectangleTesterantoBaseTestImplementation,
+//   RectangleTesterantoBaseTestSpecification,
+// } from "../../src/Rectangle.test";
 import Rectangle from "../Rectangle";
+import { RectangleTesterantoBaseTestSpecification } from "../Rectangle.test.specification";
+import { RectangleTesterantoBaseTestImplementation } from "../Rectangle.test.implementation";
+import { RectangleTesterantoBasePrototype } from "../Rectangle.test";
+
+// RectangleTesterantoBaseTestSpecification;
 
 export default Testeranto(
   RectangleTesterantoBasePrototype,

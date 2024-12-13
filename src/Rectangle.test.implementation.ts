@@ -1,5 +1,7 @@
 import { assert } from "chai";
+
 import { ITestImplementation } from "testeranto/src/Types";
+
 import Rectangle from "./Rectangle";
 import { IRectangleTestShape } from "./Rectangle.test.shape";
 

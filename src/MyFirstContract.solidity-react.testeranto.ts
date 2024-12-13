@@ -1,7 +1,7 @@
 // import { assert } from "chai";
 // import fs from "fs";
 import { features } from "../features.test.mjs";
-// import Web3 from "web3";
+import Web3 from "web3";
 import Testeranto from "testeranto/src/Node";
 
 import {

@@ -1,3 +1,5 @@
+import { ITestImplementation } from "testeranto/src/Types";
+
 import { assert } from "chai";
 
 import { features } from "../features.test.mjs";
@@ -5,12 +7,11 @@ import Testeranto, {
   IInput,
 } from "../subPackages/solidity/Contract-rpc.testeranto.test";
 
+import { IMyFirstContractTest } from "./MyFirstContract.solidity-react.shape.test";
 import {
-  IMyFirstContractTest,
   commonGivens,
   MyFirstContractTestInput,
-} from "./MyFirstContract.test";
-import { ITestImplementation } from "testeranto/src/Types";
+} from "./MyFirstContract.specification.test";
 
 const testImplementation: ITestImplementation<
   IMyFirstContractTest<IMyFirstContractTest<IInput>>

@@ -1,0 +1,34 @@
+test resources: ,{"scheduled":true,"name":"./src/LoginPage/react-test-renderer/node.test.tsx","ports":[],"fs":"/Users/adam/Code/kokomoBay/docs/node/src/LoginPage/react-test-renderer/node.test","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/68f07682-0a62-44da-84b4-cb33fc29aa4a"}
+
+Suite:,0,Testing the LoginPage as react
+
+ Given: default
+ When:,TheEmailIsSetTo: adam@email.com
+ Then:,TheEmailIs: adam@email.com
+
+ Given: default
+ When:,TheEmailIsSetTo: adam@email.com
+ When:,ThePasswordIsSetTo: secret
+ Then:,TheEmailIsNot: wade@rpc
+ Then:,TheEmailIs: adam@email.com
+ Then:,ThePasswordIs: secret
+ Then:,ThePasswordIsNot: idk
+
+ Given: default
+ When:,TheEmailIsSetTo: adam@email.com
+ Then:,ThereIsNotAnEmailError: undefined
+
+ Given: default
+ When:,TheEmailIsSetTo: bob
+ When:,TheLoginIsSubmitted: undefined
+ Then:,ThereIsAnEmailError: undefined
+
+ Given: default
+ When:,TheEmailIsSetTo: adam@mail.com
+ When:,ThePasswordIsSetTo: foso
+ Then:,ThereIsNotAnEmailError: undefined
+
+ Given: default
+ When:,TheEmailIsSetTo: adam@mail.com
+ When:,ThePasswordIsSetTo: foso
+ Then:,ThereIsNotAnEmailError: undefined
