@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = (config) => {
     return {
+        // packages: "external",
         target: "esnext",
         format: "esm",
         splitting: true,

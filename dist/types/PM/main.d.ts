@@ -1,6 +1,4 @@
 /// <reference types="node" />
-/// <reference types="node" />
-/// <reference types="node" />
 import fs from "fs";
 import { PassThrough } from "stream";
 import { IBuiltConfig, ITestTypes } from "../lib/types";
@@ -14,7 +12,7 @@ export declare class PM_Main extends PM {
     constructor(configs: IBuiltConfig);
     startPuppeteer(options: any, destfolder: string): Promise<any>;
     launchNode: (src: string, dest: string) => Promise<void>;
-    launchWebSideCar: (src: string, dest: string, testConfig: ITestTypes) => Promise<void>;
+    launchWebSideCar: (src: string, dest: string, testConfig: ITestTypes) => Promise<unknown>;
     launchNodeSideCar: (src: string, dest: string, testConfig: ITestTypes) => Promise<void>;
     launchWeb: (t: string, dest: string, sidecars: ITestTypes[]) => void;
     end(accessObject: {

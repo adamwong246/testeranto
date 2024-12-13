@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import type { IBaseTest } from "../../../Types";
 import { IImpl, ISpec, IInput } from "./index.js";
 declare const _default: <ITestShape extends IBaseTest<any, any>, IProps, IState>(testImplementations: IImpl<ITestShape>, testSpecifications: ISpec<ITestShape>, testInput: {

@@ -12,7 +12,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { TesterantoFeatures } from "./Features.js";
 import { IRunTime, ITestTypes } from "./lib/types.js";
-import ManualExamples from "./ManualExamples.js";
 import ExampleTab from "./ExampleTab.js";
 
 type IGraphData = {

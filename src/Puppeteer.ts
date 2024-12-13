@@ -44,7 +44,7 @@ const main = async () => {
         "--allow-insecure-localhost",
         "--allow-file-access-from-files",
         "--allow-running-insecure-content",
-        "--auto-open-devtools-for-tabs",
+        // "--auto-open-devtools-for-tabs",
         "--disable-dev-shm-usage",
         "--disable-extensions",
         "--disable-gpu",

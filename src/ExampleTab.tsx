@@ -42,102 +42,6 @@ const TextTab = (props: { url: string }) => {
 
 export default () => {
 
-  // const [state, setState] = useState<{
-  //   tests: ITestTypes[],
-  //   buildDir: string,
-  //   features: TesterantoFeatures
-  //   results: any
-  // }>({
-  //   tests: [],
-  //   buildDir: "",
-  //   features: new TesterantoFeatures({}, {
-  //     undirected: [],
-  //     directed: [],
-  //     dags: []
-  //   }),
-  //   results: {}
-  // });
-
-  // const [tests, setTests] = useState<
-  //   {
-  //     tests: ITestTypes[],
-  //     buildDir: string,
-  //   }
-
-  // >({
-  //   tests: [],
-  //   buildDir: ""
-  // });
-
-  // const [features, setFeatures] = useState<TesterantoFeatures>(
-  //   new TesterantoFeatures({}, {
-  //     undirected: [],
-  //     directed: [],
-  //     dags: []
-  //   })
-  // );
-
-  // const [results, setResults] = useState<Record<string, { exitcode, log, testresults, manifest }>>(
-  //   {}
-  // );
-
-  // const importState = async () => {
-  //   const features = await import('features.test.js');
-  //   const config = await (await fetch("./testeranto.json")).json();
-  //   const results = await Promise.all(config.tests.map((test) => {
-  //     return new Promise(async (res, rej) => {
-  //       const src: string = test[0];
-  //       const runtime: IRunTime = test[1];
-  //       const s: string = [tests.buildDir, runtime as string].concat(src.split(".").slice(0, - 1).join(".")).join("/");
-  //       const exitcode = await (await fetch(config.buildDir + "/" + s + "/exitcode")).text()
-  //       const log = await (await fetch(config.buildDir + "/" + s + "/log.txt")).text()
-  //       const testresults = await (await fetch(config.buildDir + "/" + s + "/tests.json")).json()
-  //       const manifest = await (await fetch(config.buildDir + "/" + s + "/manifest.json")).json()
-
-  //       res({ src, exitcode, log, testresults, manifest })
-  //     })
-  //   }))
-
-  //   setState({ tests: config.tests as any, results, features: features as any, buildDir: config.buildDir })
-  // };
-
-  // const importFeatures = async () => {
-  //   const module = await import('features.test.js');
-  //   setFeatures(module.default);
-  // };
-
-  // const importTests = async () => {
-  //   const x = await fetch("./testeranto.json")
-  //   const y = await x.json();
-  //   setTests(y as any);
-  // };
-
-  // useEffect(() => { importState(); }, []);
-
-  // useEffect(() => { importFeatures(); }, []);
-  // useEffect(() => { importTests(); }, []);
-
-  // useEffect(() => {
-  //   const collateResults = async () => {
-  //     console.log("collating", tests, features);
-  //     const r = tests.tests.reduce(async (p, test) => {
-  //       const src: string = test[0];
-  //       const runtime: IRunTime = test[1];
-  //       console.log(runtime)
-  //       const s: string = [tests.buildDir, runtime as string].concat(src.split(".").slice(0, - 1).join(".")).join("/");
-  //       const exitcode = await (await fetch(s + "/exitcode")).text()
-  //       const log = await (await fetch(s + "/log.txt")).text()
-  //       const testresults = await (await fetch(s + "/tests.json")).text()
-
-  //       p[src] = { exitcode, log, testresults }
-  //     }, {});
-
-  //     setResults(r);
-
-  //   };
-  //   collateResults();
-  // }, []);
-
   return (
     <Tab.Container id="left-tabs-example5" defaultActiveKey="examples-0">
       <Row>
@@ -156,11 +60,6 @@ export default () => {
               React and solidity
             </Nav.Link>
 
-            {/* {Object.keys(features.features).map((featureKey, ndx) => <Nav.Item key={ndx}>
-              <Nav.Link eventKey={`feature-${ndx}`}>
-                {featureKey}
-              </Nav.Link>
-            </Nav.Item>)} */}
           </Nav>
         </Col>
 
@@ -198,20 +97,25 @@ export default () => {
                 className="mb-3"
               >
                 <Tab eventKey="Rectangle.ts" title="Rectangle.ts">
-                  <TextTab url="file:///Users/adam/Code/kokomoBay/src/Rectangle.ts" />
+                  {/* <TextTab url="file:///Users/adam/Code/kokomoBay/src/Rectangle.ts" /> */}
+                  <TextTab url={urlFixer("src/Rectangle.ts")} />
                 </Tab>
                 <Tab eventKey="Rectangle.test.specification.ts" title="Rectangle.test.specification.ts">
-                  <TextTab url="file:///Users/adam/Code/kokomoBay/src/Rectangle.test.specification.ts" />
+                  {/* <TextTab url="file:///Users/adam/Code/kokomoBay/src/Rectangle.test.specification.ts" /> */}
+                  <TextTab url={urlFixer("src/Rectangle.test.specification.ts")} />
                 </Tab>
                 <Tab eventKey="Rectangle.test.shape.ts" title="Rectangle.test.shape.ts">
-                  <TextTab url="file:///Users/adam/Code/kokomoBay/src/Rectangle.test.shape.ts" />
+                  {/* <TextTab url="file:///Users/adam/Code/kokomoBay/src/Rectangle.test.shape.ts" /> */}
+                  <TextTab url={urlFixer("src/Rectangle.test.shape.ts")} />
                 </Tab>
                 <Tab eventKey="Rectangle.test.implementation.ts" title="Rectangle.test.implementation.ts">
-                  <TextTab url="file:///Users/adam/Code/kokomoBay/src/Rectangle.test.implementation.ts" />
+                  {/* <TextTab url="file:///Users/adam/Code/kokomoBay/src/Rectangle.test.implementation.ts" /> */}
+                  <TextTab url={urlFixer("src/Rectangle.test.implementation.ts")} />
                 </Tab>
 
                 <Tab eventKey="Rectangle.test.interface.ts" title="Rectangle.test.interface.ts">
-                  <TextTab url="file:///Users/adam/Code/kokomoBay/src/Rectangle.test.interface.ts" />
+                  {/* <TextTab url="file:///Users/adam/Code/kokomoBay/src/Rectangle.test.interface.ts" /> */}
+                  <TextTab url={urlFixer("src/Rectangle.test.interface.ts")} />
                 </Tab>
                 <Tab eventKey="Rectangle.config" title="Rectangle.config">
                   <code><pre>{`
@@ -235,67 +139,35 @@ export default () => {
               `}</pre></code>
                 </Tab>
               </Tabs>
-
-
             </Tab.Pane>
+
             <Tab.Pane eventKey={`manual-example-ClassicalComponent`} key={`manual-example-ClassicalComponent`}>
-
-
               <Tabs
                 defaultActiveKey="profile"
                 id="uncontrolled-tab-example"
                 className="mb-3"
               >
                 <Tab eventKey="ClassicalComponent/index.tsx" title="ClassicalComponent/index.tsx">
-                  <TextTab url="file:///Users/adam/Code/kokomoBay/src/ClassicalComponent/index.tsx" />
+                  <TextTab url={urlFixer("src/ClassicalComponent/index.tsx")} />
+                  {/* <TextTab url="file:///Users/adam/Code/kokomoBay/src/ClassicalComponent/index.tsx" /> */}
                 </Tab>
                 <Tab eventKey="ClassicalComponent/test.specification.ts" title="ClassicalComponent/test.specification.ts">
-                  <TextTab url="file:///Users/adam/Code/kokomoBay/src/ClassicalComponent/test.specification.ts" />
+                  {/* <TextTab url="file:///Users/adam/Code/kokomoBay/src/ClassicalComponent/test.specification.ts" /> */}
+                  <TextTab url={urlFixer("src/ClassicalComponent/test.specification.ts")} />
                 </Tab>
                 <Tab eventKey="ClassicalComponent/test.shape.ts" title="ClassicalComponent/test.shape.ts">
-                  <TextTab url="file:///Users/adam/Code/kokomoBay/src/ClassicalComponent/test.shape.ts" />
+                  {/* <TextTab url="file:///Users/adam/Code/kokomoBay/src/ClassicalComponent/test.shape.ts" /> */}
+                  <TextTab url={urlFixer("src/ClassicalComponent/test.shape.ts")} />
                 </Tab>
                 <Tab eventKey="ClassicalComponent/react-test-renderer/test.implementation.ts" title="ClassicalComponent/react-test-renderer/test.implementation.ts">
-                  <TextTab url="file:///Users/adam/Code/kokomoBay/src/ClassicalComponent/react-test-renderer/test.implementation.ts" />
+                  {/* <TextTab url="file:///Users/adam/Code/kokomoBay/src/ClassicalComponent/react-test-renderer/test.implementation.ts" /> */}
+                  <TextTab url={urlFixer("src/ClassicalComponent/react-test-renderer/test.implementation.ts")} />
                 </Tab>
 
                 <Tab eventKey="react-test-renderer/test.interface.ts" title="react-test-renderer/test.interface.ts">
-                  <TextTab url="file:///Users/adam/Code/kokomoBay/node_modules/testeranto/src/SubPackages/react-test-renderer/component/interface.ts" />
+                  <TextTab url="https://raw.githubusercontent.com/adamwong246/testeranto/master/src/subPackages/react-test-renderer/component/interface.ts" />
                 </Tab>
 
-                {/* <Tab eventKey="Rectangle.test.shape.ts" title="Rectangle.test.shape.ts">
-                  <TextTab url="file:///Users/adam/Code/kokomoBay/src/Rectangle.test.shape.ts" />
-                </Tab>
-                <Tab eventKey="Rectangle.test.implementation.ts" title="Rectangle.test.implementation.ts">
-                  <TextTab url="file:///Users/adam/Code/kokomoBay/src/Rectangle.test.implementation.ts" />
-                </Tab>
-                <Tab eventKey="Rectangle.test.specification.ts" title="Rectangle.test.specification.ts">
-                  <TextTab url="file:///Users/adam/Code/kokomoBay/src/Rectangle.test.specification.ts" />
-                </Tab>
-                <Tab eventKey="Rectangle.test.interface.ts" title="Rectangle.test.interface.ts">
-                  <TextTab url="file:///Users/adam/Code/kokomoBay/src/Rectangle.test.interface.ts" />
-                </Tab>
-                <Tab eventKey="Rectangle.config" title="Rectangle.config">
-                  <code><pre>{`
-...
-
-// Run the test in node
-"./src/Rectangle/Rectangle.test.node.ts",
-"node",
-{ ports: 0 },
-[],
-],
-
-// Run the same test in chromium too!
-"./src/Rectangle/Rectangle.test.web.ts",
-"web",
-{ ports: 0 },
-[],
-],
-
-...
-              `}</pre></code>
-                </Tab> */}
               </Tabs>
 
             </Tab.Pane>
@@ -308,67 +180,32 @@ export default () => {
                 className="mb-3"
               >
                 <Tab eventKey="contracts/MyBaseContract.sol" title="MyBaseContract.sol">
-                  <TextTab url="file:///Users/adam/Code/kokomoBay/contracts/MyBaseContract.sol" />
+                  <TextTab url={urlFixer("contracts/MyBaseContract.sol")} />
                 </Tab>
                 <Tab eventKey="src/MyFirstContractUI.tsx" title="MyFirstContractUI.tsx">
-                  <TextTab url="file:///Users/adam/Code/kokomoBay/src/MyFirstContractUI.tsx" />
+                  <TextTab url={urlFixer("src/MyFirstContractUI.tsx")} />
                 </Tab>
 
                 <Tab eventKey="src/MyFirstContract.specification.test.ts" title="MyFirstContract.specification.test.ts">
-                  <TextTab url="file:///Users/adam/Code/kokomoBay/src/MyFirstContract.specification.test.ts" />
+                  <TextTab url={urlFixer("src/MyFirstContract.specification.test.ts")} />
                 </Tab>
                 <Tab eventKey="src/MyFirstContract.solidity-react.interface.test.ts" title="MyFirstContract.solidity-react.interface.test.ts">
-                  <TextTab url="file:///Users/adam/Code/kokomoBay/src/MyFirstContract.solidity-react.interface.test.ts" />
+                  <TextTab url={urlFixer("src/MyFirstContract.solidity-react.interface.test.ts")} />
+
                 </Tab>
                 <Tab eventKey="src/MyFirstContract.solidity-react.implementation.test.ts" title="MyFirstContract.solidity-react.implementation.test.ts">
-                  <TextTab url="file:///Users/adam/Code/kokomoBay/src/MyFirstContract.solidity-react.implementation.test.ts" />
+                  <TextTab url={urlFixer("src/MyFirstContract.solidity-react.implementation.test.ts")} />
                 </Tab>
                 <Tab eventKey="src/MyFirstContract.solidity-react.shape.test.ts" title="MyFirstContract.solidity-react.shape.test.ts">
                   <TextTab url={urlFixer("src/MyFirstContract.solidity-react.shape.test.ts")} />
                 </Tab>
 
                 <Tab eventKey="MyFirstContract.solidity-react-example-jpg" title="screenshot">
-                  {/* <img src="file:///Users/adam/Code/kokomoBay/docs/node/src/MyFirstContract.solidity-react.testeranto/suite-0/given-test1/when/0/afterEach/andWhen.jpg" alt="Italian Trulli" /> */}
+
                   <img src={urlFixer("docs/node/src/MyFirstContract.solidity-react.testeranto/suite-0/given-test1/when/0/afterEach/andWhen.jpg")} />
                 </Tab>
 
 
-
-
-
-                {/* <Tab eventKey="Rectangle.test.shape.ts" title="Rectangle.test.shape.ts">
-                  <TextTab url="file:///Users/adam/Code/kokomoBay/src/Rectangle.test.shape.ts" />
-                </Tab>
-                <Tab eventKey="Rectangle.test.implementation.ts" title="Rectangle.test.implementation.ts">
-                  <TextTab url="file:///Users/adam/Code/kokomoBay/src/Rectangle.test.implementation.ts" />
-                </Tab>
-                <Tab eventKey="Rectangle.test.specification.ts" title="Rectangle.test.specification.ts">
-                  <TextTab url="file:///Users/adam/Code/kokomoBay/src/Rectangle.test.specification.ts" />
-                </Tab>
-                <Tab eventKey="Rectangle.test.interface.ts" title="Rectangle.test.interface.ts">
-                  <TextTab url="file:///Users/adam/Code/kokomoBay/src/Rectangle.test.interface.ts" />
-                </Tab>
-                <Tab eventKey="Rectangle.config" title="Rectangle.config">
-                  <code><pre>{`
-...
-
-// Run the test in node
-"./src/Rectangle/Rectangle.test.node.ts",
-"node",
-{ ports: 0 },
-[],
-],
-
-// Run the same test in chromium too!
-"./src/Rectangle/Rectangle.test.web.ts",
-"web",
-{ ports: 0 },
-[],
-],
-
-...
-              `}</pre></code>
-                </Tab> */}
               </Tabs>
 
             </Tab.Pane>

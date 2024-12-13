@@ -1,5 +1,6 @@
 export default (config) => {
     return {
+        // packages: "external",
         target: "esnext",
         format: "esm",
         splitting: true,

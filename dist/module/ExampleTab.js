@@ -31,86 +31,6 @@ const TextTab = (props) => {
         React.createElement("pre", null, text));
 };
 export default () => {
-    // const [state, setState] = useState<{
-    //   tests: ITestTypes[],
-    //   buildDir: string,
-    //   features: TesterantoFeatures
-    //   results: any
-    // }>({
-    //   tests: [],
-    //   buildDir: "",
-    //   features: new TesterantoFeatures({}, {
-    //     undirected: [],
-    //     directed: [],
-    //     dags: []
-    //   }),
-    //   results: {}
-    // });
-    // const [tests, setTests] = useState<
-    //   {
-    //     tests: ITestTypes[],
-    //     buildDir: string,
-    //   }
-    // >({
-    //   tests: [],
-    //   buildDir: ""
-    // });
-    // const [features, setFeatures] = useState<TesterantoFeatures>(
-    //   new TesterantoFeatures({}, {
-    //     undirected: [],
-    //     directed: [],
-    //     dags: []
-    //   })
-    // );
-    // const [results, setResults] = useState<Record<string, { exitcode, log, testresults, manifest }>>(
-    //   {}
-    // );
-    // const importState = async () => {
-    //   const features = await import('features.test.js');
-    //   const config = await (await fetch("./testeranto.json")).json();
-    //   const results = await Promise.all(config.tests.map((test) => {
-    //     return new Promise(async (res, rej) => {
-    //       const src: string = test[0];
-    //       const runtime: IRunTime = test[1];
-    //       const s: string = [tests.buildDir, runtime as string].concat(src.split(".").slice(0, - 1).join(".")).join("/");
-    //       const exitcode = await (await fetch(config.buildDir + "/" + s + "/exitcode")).text()
-    //       const log = await (await fetch(config.buildDir + "/" + s + "/log.txt")).text()
-    //       const testresults = await (await fetch(config.buildDir + "/" + s + "/tests.json")).json()
-    //       const manifest = await (await fetch(config.buildDir + "/" + s + "/manifest.json")).json()
-    //       res({ src, exitcode, log, testresults, manifest })
-    //     })
-    //   }))
-    //   setState({ tests: config.tests as any, results, features: features as any, buildDir: config.buildDir })
-    // };
-    // const importFeatures = async () => {
-    //   const module = await import('features.test.js');
-    //   setFeatures(module.default);
-    // };
-    // const importTests = async () => {
-    //   const x = await fetch("./testeranto.json")
-    //   const y = await x.json();
-    //   setTests(y as any);
-    // };
-    // useEffect(() => { importState(); }, []);
-    // useEffect(() => { importFeatures(); }, []);
-    // useEffect(() => { importTests(); }, []);
-    // useEffect(() => {
-    //   const collateResults = async () => {
-    //     console.log("collating", tests, features);
-    //     const r = tests.tests.reduce(async (p, test) => {
-    //       const src: string = test[0];
-    //       const runtime: IRunTime = test[1];
-    //       console.log(runtime)
-    //       const s: string = [tests.buildDir, runtime as string].concat(src.split(".").slice(0, - 1).join(".")).join("/");
-    //       const exitcode = await (await fetch(s + "/exitcode")).text()
-    //       const log = await (await fetch(s + "/log.txt")).text()
-    //       const testresults = await (await fetch(s + "/tests.json")).text()
-    //       p[src] = { exitcode, log, testresults }
-    //     }, {});
-    //     setResults(r);
-    //   };
-    //   collateResults();
-    // }, []);
     return (React.createElement(Tab.Container, { id: "left-tabs-example5", defaultActiveKey: "examples-0" },
         React.createElement(Row, null,
             React.createElement(Col, { sm: 3, lg: 2 },
@@ -131,15 +51,15 @@ export default () => {
                     React.createElement(Tab.Pane, { eventKey: `manual-example-rectangle`, key: `manual-example-rectangle` },
                         React.createElement(Tabs, { defaultActiveKey: "profile", id: "uncontrolled-tab-example", className: "mb-3" },
                             React.createElement(Tab, { eventKey: "Rectangle.ts", title: "Rectangle.ts" },
-                                React.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/src/Rectangle.ts" })),
+                                React.createElement(TextTab, { url: urlFixer("src/Rectangle.ts") })),
                             React.createElement(Tab, { eventKey: "Rectangle.test.specification.ts", title: "Rectangle.test.specification.ts" },
-                                React.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/src/Rectangle.test.specification.ts" })),
+                                React.createElement(TextTab, { url: urlFixer("src/Rectangle.test.specification.ts") })),
                             React.createElement(Tab, { eventKey: "Rectangle.test.shape.ts", title: "Rectangle.test.shape.ts" },
-                                React.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/src/Rectangle.test.shape.ts" })),
+                                React.createElement(TextTab, { url: urlFixer("src/Rectangle.test.shape.ts") })),
                             React.createElement(Tab, { eventKey: "Rectangle.test.implementation.ts", title: "Rectangle.test.implementation.ts" },
-                                React.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/src/Rectangle.test.implementation.ts" })),
+                                React.createElement(TextTab, { url: urlFixer("src/Rectangle.test.implementation.ts") })),
                             React.createElement(Tab, { eventKey: "Rectangle.test.interface.ts", title: "Rectangle.test.interface.ts" },
-                                React.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/src/Rectangle.test.interface.ts" })),
+                                React.createElement(TextTab, { url: urlFixer("src/Rectangle.test.interface.ts") })),
                             React.createElement(Tab, { eventKey: "Rectangle.config", title: "Rectangle.config" },
                                 React.createElement("code", null,
                                     React.createElement("pre", null, `
@@ -164,27 +84,27 @@ export default () => {
                     React.createElement(Tab.Pane, { eventKey: `manual-example-ClassicalComponent`, key: `manual-example-ClassicalComponent` },
                         React.createElement(Tabs, { defaultActiveKey: "profile", id: "uncontrolled-tab-example", className: "mb-3" },
                             React.createElement(Tab, { eventKey: "ClassicalComponent/index.tsx", title: "ClassicalComponent/index.tsx" },
-                                React.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/src/ClassicalComponent/index.tsx" })),
+                                React.createElement(TextTab, { url: urlFixer("src/ClassicalComponent/index.tsx") })),
                             React.createElement(Tab, { eventKey: "ClassicalComponent/test.specification.ts", title: "ClassicalComponent/test.specification.ts" },
-                                React.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/src/ClassicalComponent/test.specification.ts" })),
+                                React.createElement(TextTab, { url: urlFixer("src/ClassicalComponent/test.specification.ts") })),
                             React.createElement(Tab, { eventKey: "ClassicalComponent/test.shape.ts", title: "ClassicalComponent/test.shape.ts" },
-                                React.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/src/ClassicalComponent/test.shape.ts" })),
+                                React.createElement(TextTab, { url: urlFixer("src/ClassicalComponent/test.shape.ts") })),
                             React.createElement(Tab, { eventKey: "ClassicalComponent/react-test-renderer/test.implementation.ts", title: "ClassicalComponent/react-test-renderer/test.implementation.ts" },
-                                React.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/src/ClassicalComponent/react-test-renderer/test.implementation.ts" })),
+                                React.createElement(TextTab, { url: urlFixer("src/ClassicalComponent/react-test-renderer/test.implementation.ts") })),
                             React.createElement(Tab, { eventKey: "react-test-renderer/test.interface.ts", title: "react-test-renderer/test.interface.ts" },
-                                React.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/node_modules/testeranto/src/SubPackages/react-test-renderer/component/interface.ts" })))),
+                                React.createElement(TextTab, { url: "https://raw.githubusercontent.com/adamwong246/testeranto/master/src/subPackages/react-test-renderer/component/interface.ts" })))),
                     React.createElement(Tab.Pane, { eventKey: `manual-example-react+sol`, key: `manual-example-react+sol` },
                         React.createElement(Tabs, { defaultActiveKey: "profile", id: "uncontrolled-tab-example", className: "mb-3" },
                             React.createElement(Tab, { eventKey: "contracts/MyBaseContract.sol", title: "MyBaseContract.sol" },
-                                React.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/contracts/MyBaseContract.sol" })),
+                                React.createElement(TextTab, { url: urlFixer("contracts/MyBaseContract.sol") })),
                             React.createElement(Tab, { eventKey: "src/MyFirstContractUI.tsx", title: "MyFirstContractUI.tsx" },
-                                React.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/src/MyFirstContractUI.tsx" })),
+                                React.createElement(TextTab, { url: urlFixer("src/MyFirstContractUI.tsx") })),
                             React.createElement(Tab, { eventKey: "src/MyFirstContract.specification.test.ts", title: "MyFirstContract.specification.test.ts" },
-                                React.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/src/MyFirstContract.specification.test.ts" })),
+                                React.createElement(TextTab, { url: urlFixer("src/MyFirstContract.specification.test.ts") })),
                             React.createElement(Tab, { eventKey: "src/MyFirstContract.solidity-react.interface.test.ts", title: "MyFirstContract.solidity-react.interface.test.ts" },
-                                React.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/src/MyFirstContract.solidity-react.interface.test.ts" })),
+                                React.createElement(TextTab, { url: urlFixer("src/MyFirstContract.solidity-react.interface.test.ts") })),
                             React.createElement(Tab, { eventKey: "src/MyFirstContract.solidity-react.implementation.test.ts", title: "MyFirstContract.solidity-react.implementation.test.ts" },
-                                React.createElement(TextTab, { url: "file:///Users/adam/Code/kokomoBay/src/MyFirstContract.solidity-react.implementation.test.ts" })),
+                                React.createElement(TextTab, { url: urlFixer("src/MyFirstContract.solidity-react.implementation.test.ts") })),
                             React.createElement(Tab, { eventKey: "src/MyFirstContract.solidity-react.shape.test.ts", title: "MyFirstContract.solidity-react.shape.test.ts" },
                                 React.createElement(TextTab, { url: urlFixer("src/MyFirstContract.solidity-react.shape.test.ts") })),
                             React.createElement(Tab, { eventKey: "MyFirstContract.solidity-react-example-jpg", title: "screenshot" },

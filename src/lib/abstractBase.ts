@@ -74,11 +74,76 @@ export abstract class BaseSuite<ITestShape extends IBaseTest> {
     const sName = this.name;
 
     for (const [gNdx, g] of Object.entries(this.givens)) {
+      const beforeAllProxy = new Proxy(pm, {
+        get(target, prop, receiver) {
+          if (prop === "writeFileSync") {
+            return (fp, contents) =>
+              target[prop](`suite-${sNdx}/beforeAll/${fp}`, contents);
+          }
+
+          if (prop === "browser") {
+            return new Proxy(target[prop], {
+              get(bTarget, bProp, bReceiver) {
+                if (bProp === "pages") {
+                  return async () => {
+                    return bTarget.pages().then((pages) => {
+                      return pages.map((page) => {
+                        return new Proxy(page, {
+                          get(pTarget, pProp, pReciever) {
+                            if (pProp === "screenshot") {
+                              return async (x) => {
+                                return pm.customScreenShot(
+                                  {
+                                    ...x,
+                                    path:
+                                      `${testResourceConfiguration.fs}/suite-${sNdx}/beforeAll` +
+                                      "/" +
+                                      x.path,
+                                  },
+                                  page
+                                );
+                                // return await window["custom-screenshot"]({
+                                //   ...x,
+                                //   path:
+                                //     `${testResourceConfiguration.fs}/suite-${sNdx}/afterAll` +
+                                //     "/" +
+                                //     x.path,
+                                // });
+                              };
+                            } else if (pProp === "mainFrame") {
+                              return () => pTarget[pProp]();
+                            } else if (pProp === "close") {
+                              return () => pTarget[pProp]();
+                            }
+
+                            // else if (pProp === "mainFrame") {
+                            //   return () => target[pProp](...arguments);
+                            // }
+                            else {
+                              return Reflect.get(...arguments);
+                            }
+                          },
+                        });
+                      });
+                    });
+                    // return (await target.pages()).map((page) => {
+                    //   return new Proxy(page, handler2);
+                    // });
+                  };
+                }
+              },
+            });
+          }
+
+          return Reflect.get(...arguments);
+        },
+      });
+
       const subject = await this.setup(
         input,
         suiteArtifactory,
         testResourceConfiguration,
-        pm
+        beforeAllProxy
       );
 
       const giver = this.givens[gNdx];

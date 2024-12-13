@@ -4,6 +4,7 @@ import { IBaseConfig } from "../lib/types";
 
 export default (config: IBaseConfig): BuildOptions => {
   return {
+    // packages: "external",
     target: "esnext",
     format: "esm",
     splitting: true,
