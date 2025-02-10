@@ -1,8 +1,6 @@
 import { BaseBuilder } from "./basebuilder.js";
 export class ClassBuilder extends BaseBuilder {
-    constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResourceRequirement
-    // puppetMaster: PM
-    ) {
+    constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResourceRequirement) {
         const classySuites = Object.entries(testImplementation.suites).reduce((a, [key], index) => {
             a[key] = (somestring, givens, checks) => {
                 return new suiteKlasser.prototype.constructor(somestring, index, givens, checks);

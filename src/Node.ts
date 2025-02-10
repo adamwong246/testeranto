@@ -15,7 +15,20 @@ import { ITestInterface, INodeTestInterface } from "./lib/types.js";
 import { PM_Node } from "./PM/node.js";
 
 class NodeTesteranto<
-  TestShape extends IBaseTest
+  TestShape extends IBaseTest<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
 > extends Testeranto<TestShape> {
   constructor(
     input: TestShape["iinput"],
@@ -43,7 +56,22 @@ class NodeTesteranto<
   }
 }
 
-export default async <ITestShape extends IBaseTest>(
+export default async <
+  ITestShape extends IBaseTest<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+>(
   input: ITestShape["iinput"],
   testSpecification: ITestSpecification<ITestShape>,
   testImplementation: ITestImplementation<ITestShape>,

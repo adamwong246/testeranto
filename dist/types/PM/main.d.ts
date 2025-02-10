@@ -1,4 +1,6 @@
 /// <reference types="node" />
+/// <reference types="node" />
+/// <reference types="node" />
 import fs from "fs";
 import { PassThrough } from "stream";
 import { IBuiltConfig, ITestTypes } from "../lib/types";

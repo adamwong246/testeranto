@@ -8,11 +8,8 @@ import {
 import { ITestInterface } from "./types.js";
 import {
   DefaultTestInterface,
-  ILogWriter,
-  ITTestResourceConfiguration,
   ITTestResourceRequest,
   ITestArtifactory,
-  ITestJob,
   defaultTestResourceRequirement,
 } from "./index.js";
 import {
@@ -26,7 +23,20 @@ import { ClassBuilder } from "./classBuilder.js";
 import { PM } from "../PM/index";
 
 export default abstract class Testeranto<
-  ITestShape extends IBaseTest
+  ITestShape extends IBaseTest<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
 > extends ClassBuilder<ITestShape> {
   constructor(
     input: ITestShape["iinput"],
@@ -34,7 +44,6 @@ export default abstract class Testeranto<
     testImplementation: ITestImplementation<ITestShape>,
     testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
     testInterface: Partial<ITestInterface<ITestShape>>
-    // puppetMaster: PM
   ) {
     const fullTestInterface = DefaultTestInterface(testInterface);
     super(

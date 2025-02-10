@@ -12,7 +12,22 @@ import { ITestInterface } from "./types.js";
 
 // import { INodeUtils, ITestInterface, IUtils, IWebUtils } from "./types.js";
 
-export const BaseTestInterface: ITestInterface<IBaseTest> = {
+export const BaseTestInterface: ITestInterface<
+  IBaseTest<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+> = {
   beforeAll: async (s) => s,
   beforeEach: async function (
     subject: any,
@@ -24,8 +39,39 @@ export const BaseTestInterface: ITestInterface<IBaseTest> = {
     return subject as any;
   },
   afterEach: async (s) => s,
-  afterAll: (store: IBaseTest["istore"]) => undefined,
-  butThen: async (store: IBaseTest["istore"], thenCb) => thenCb(store),
+  afterAll: (
+    store: IBaseTest<
+      unknown,
+      unknown,
+      unknown,
+      unknown,
+      unknown,
+      unknown,
+      unknown,
+      Record<string, any>,
+      Record<string, any>,
+      Record<string, any>,
+      Record<string, any>,
+      Record<string, any>
+    >["istore"]
+  ) => undefined,
+  butThen: async (
+    store: IBaseTest<
+      unknown,
+      unknown,
+      unknown,
+      unknown,
+      unknown,
+      unknown,
+      unknown,
+      Record<string, any>,
+      Record<string, any>,
+      Record<string, any>,
+      Record<string, any>,
+      Record<string, any>
+    >["istore"],
+    thenCb
+  ) => thenCb(store),
   andWhen: (a) => a,
   assertThis: () => null,
 };
@@ -73,8 +119,38 @@ export type ITestArtificer = (key: string, data: any) => void;
 type ITest = {
   toObj(): object;
   name: string;
-  givens: IGivens<IBaseTest>;
-  checks: BaseCheck<IBaseTest>[];
+  givens: IGivens<
+    IBaseTest<
+      unknown,
+      unknown,
+      unknown,
+      unknown,
+      unknown,
+      unknown,
+      unknown,
+      Record<string, any>,
+      Record<string, any>,
+      Record<string, any>,
+      Record<string, any>,
+      Record<string, any>
+    >
+  >;
+  checks: BaseCheck<
+    IBaseTest<
+      unknown,
+      unknown,
+      unknown,
+      unknown,
+      unknown,
+      unknown,
+      unknown,
+      Record<string, any>,
+      Record<string, any>,
+      Record<string, any>,
+      Record<string, any>,
+      Record<string, any>
+    >
+  >[];
   testResourceConfiguration: ITTestResourceConfiguration;
 };
 
@@ -84,7 +160,24 @@ export type ITestJob<T = PM> = {
   runner: (
     x: ITTestResourceConfiguration,
     t: ITLog
-  ) => Promise<BaseSuite<IBaseTest>>;
+  ) => Promise<
+    BaseSuite<
+      IBaseTest<
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        Record<string, any>,
+        Record<string, any>,
+        Record<string, any>,
+        Record<string, any>,
+        Record<string, any>
+      >
+    >
+  >;
   testResourceRequirement: ITTestResourceRequirement;
   receiveTestResourceConfig: (pm: PM) => Promise<{
     failed: number;
@@ -101,7 +194,22 @@ export const defaultTestResourceRequirement: ITTestResourceRequest = {
 
 export type ITestArtifactory = (key: string, value: unknown) => unknown;
 
-export type ITestCheckCallback<ITestShape extends IBaseTest> = {
+export type ITestCheckCallback<
+  ITestShape extends IBaseTest<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+> = {
   [K in keyof ITestShape["checks"]]: (
     name: string,
     features: string[],

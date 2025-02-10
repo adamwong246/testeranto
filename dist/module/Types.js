@@ -1,3 +1,1 @@
 export {};
-// export type ITTestShape = {
-// };

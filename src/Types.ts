@@ -14,16 +14,72 @@ import {
   IWebTestInterface,
 } from "./lib/types.js";
 
-export type IPartialInterface<I extends IBaseTest> = Partial<ITestInterface<I>>;
+export type IPartialInterface<
+  I extends IBaseTest<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+> = Partial<ITestInterface<I>>;
 
-export type IPartialNodeInterface<I extends IBaseTest> = Partial<
-  INodeTestInterface<I>
->;
-export type IPartialWebInterface<I extends IBaseTest> = Partial<
-  IWebTestInterface<I>
->;
+export type IPartialNodeInterface<
+  I extends IBaseTest<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+> = Partial<INodeTestInterface<I>>;
+export type IPartialWebInterface<
+  I extends IBaseTest<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+> = Partial<IWebTestInterface<I>>;
 
-export type IEntry<ITestShape extends IBaseTest> = (
+export type IEntry<
+  ITestShape extends IBaseTest<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+> = (
   input: ITestShape["iinput"],
   testSpecification: ITestSpecification<ITestShape>,
   testImplementation: ITestImplementation<ITestShape, object>,
@@ -31,7 +87,22 @@ export type IEntry<ITestShape extends IBaseTest> = (
   testResourceRequirement: ITTestResourceRequest
 ) => Promise<Testeranto<ITestShape>>;
 
-export type ITestSpecification<ITestShape extends IBaseTest> = (
+export type ITestSpecification<
+  ITestShape extends IBaseTest<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+> = (
   Suite: {
     [K in keyof ITestShape["suites"]]: (
       name: string,
@@ -61,7 +132,20 @@ export type ITestSpecification<ITestShape extends IBaseTest> = (
 ) => any[];
 
 export type ITestImplementation<
-  ITestShape extends IBaseTest,
+  ITestShape extends IBaseTest<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >,
   IMod = object
 > = Modify<
   {
@@ -94,24 +178,48 @@ export type ITestImplementation<
 
 type Modify<T, R> = Omit<T, keyof R> & R;
 
-export type IBaseTest<Shape = any, II = Shape> = {
-  iinput: II;
-  isubject: Shape;
-  istore: Shape;
-  iselection: Shape;
-  // iinitial;
+// export type IBaseTest<Shape = any, II = Shape> = {
+//   iinput: II;
+//   isubject: Shape;
+//   istore: Shape;
+//   iselection: Shape;
+//   // iinitial;
 
-  given;
-  when;
-  then;
+//   given;
+//   when;
+//   then;
 
-  suites: Record<string, any>;
-  givens: Record<string, any>;
-  whens: Record<string, any>;
-  thens: Record<string, any>;
-  checks: Record<string, any>;
-};
-
-// export type ITTestShape = {
-
+//   suites: Record<string, any>;
+//   givens: Record<string, any>;
+//   whens: Record<string, any>;
+//   thens: Record<string, any>;
+//   checks: Record<string, any>;
 // };
+
+export type IBaseTest<
+  IInput,
+  ISubject,
+  IStore,
+  ISelection,
+  IGiven,
+  IWhen,
+  IThen,
+  ISuites extends Record<string, any>,
+  IGivens extends Record<string, any>,
+  IWhens extends Record<string, any>,
+  IThens extends Record<string, any>,
+  IChecks extends Record<string, any>
+> = {
+  iinput: IInput;
+  isubject: ISubject;
+  istore: IStore;
+  iselection: ISelection;
+  given: IGiven;
+  when: IWhen;
+  then: IThen;
+  suites: ISuites;
+  givens: IGivens;
+  whens: IWhens;
+  thens: IThens;
+  checks: IChecks;
+};

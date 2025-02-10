@@ -3,12 +3,39 @@ import { PM } from "../PM/index.js";
 
 import { ITTestResourceConfiguration, ITestArtifactory, ITLog } from ".";
 
-export type IGivens<ITestShape extends IBaseTest> = Record<
-  string,
-  BaseGiven<ITestShape>
->;
+export type IGivens<
+  ITestShape extends IBaseTest<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+> = Record<string, BaseGiven<ITestShape>>;
 
-export abstract class BaseSuite<ITestShape extends IBaseTest> {
+export abstract class BaseSuite<
+  ITestShape extends IBaseTest<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+> {
   name: string;
   givens: IGivens<ITestShape>;
   checks: BaseCheck<ITestShape>[];
@@ -266,7 +293,22 @@ export abstract class BaseSuite<ITestShape extends IBaseTest> {
   }
 }
 
-export abstract class BaseGiven<ITestShape extends IBaseTest> {
+export abstract class BaseGiven<
+  ITestShape extends IBaseTest<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+> {
   name: string;
   features: string[];
   whens: BaseWhen<ITestShape>[];
@@ -629,7 +671,22 @@ export abstract class BaseWhen<ITestShape extends IBaseTest> {
   }
 }
 
-export abstract class BaseThen<ITestShape extends IBaseTest> {
+export abstract class BaseThen<
+  ITestShape extends IBaseTest<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+> {
   public name: string;
   thenCB: (storeState: ITestShape["iselection"]) => ITestShape["then"];
   error: boolean;
@@ -750,7 +807,22 @@ export abstract class BaseThen<ITestShape extends IBaseTest> {
   }
 }
 
-export abstract class BaseCheck<ITestShape extends IBaseTest> {
+export abstract class BaseCheck<
+  ITestShape extends IBaseTest<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+> {
   name: string;
   features: string[];
   checkCB: (whens, thens) => any;

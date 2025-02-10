@@ -39,7 +39,22 @@ export type IBaseConfig = {
 
 export type IBuiltConfig = { buildDir: string } & IBaseConfig;
 
-export type IWebTestInterface<ITestShape extends IBaseTest> = {
+export type IWebTestInterface<
+  ITestShape extends IBaseTest<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+> = {
   assertThis: (x: ITestShape["then"]) => void;
 
   andWhen: (
@@ -82,7 +97,22 @@ export type IWebTestInterface<ITestShape extends IBaseTest> = {
 };
 // & ITestInterface<ITestShape>;
 
-export type INodeTestInterface<ITestShape extends IBaseTest> = {
+export type INodeTestInterface<
+  ITestShape extends IBaseTest<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+> = {
   assertThis: (x: ITestShape["then"]) => void;
   andWhen: (
     store: ITestShape["istore"],
@@ -124,7 +154,22 @@ export type INodeTestInterface<ITestShape extends IBaseTest> = {
 };
 // & ITestInterface<ITestShape>;
 
-export type ITestInterface<ITestShape extends IBaseTest> = {
+export type ITestInterface<
+  ITestShape extends IBaseTest<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+> = {
   assertThis: (x: ITestShape["then"]) => void;
 
   andWhen: (
@@ -167,35 +212,92 @@ export type ITestInterface<ITestShape extends IBaseTest> = {
   ) => Promise<ITestShape["istore"]>;
 };
 
-export type ISuiteKlasser<ITestShape extends IBaseTest> = (
+export type ISuiteKlasser<
+  ITestShape extends IBaseTest<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+> = (
   name: string,
   index: number,
   givens: IGivens<ITestShape>,
   checks: BaseCheck<ITestShape>[]
 ) => BaseSuite<ITestShape>;
 
-export type IGivenKlasser<ITestShape extends IBaseTest> = (
-  name,
-  features,
-  whens,
-  thens,
-  givenCB
-) => BaseGiven<ITestShape>;
+export type IGivenKlasser<
+  ITestShape extends IBaseTest<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+> = (name, features, whens, thens, givenCB) => BaseGiven<ITestShape>;
 
-export type IWhenKlasser<ITestShape extends IBaseTest> = (
-  s,
-  o
-) => BaseWhen<ITestShape>;
+export type IWhenKlasser<
+  ITestShape extends IBaseTest<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+> = (s, o) => BaseWhen<ITestShape>;
 
-export type IThenKlasser<ITestShape extends IBaseTest> = (
-  s,
-  o
-) => BaseThen<ITestShape>;
+export type IThenKlasser<
+  ITestShape extends IBaseTest<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+> = (s, o) => BaseThen<ITestShape>;
 
-export type ICheckKlasser<ITestShape extends IBaseTest> = (
-  n,
-  f,
-  cb,
-  w,
-  t
-) => BaseCheck<ITestShape>;
+export type ICheckKlasser<
+  ITestShape extends IBaseTest<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+> = (n, f, cb, w, t) => BaseCheck<ITestShape>;

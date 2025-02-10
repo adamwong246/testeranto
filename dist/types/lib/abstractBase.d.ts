@@ -1,8 +1,8 @@
 import { IBaseTest } from "../Types";
 import { PM } from "../PM/index.js";
 import { ITTestResourceConfiguration, ITestArtifactory, ITLog } from ".";
-export declare type IGivens<ITestShape extends IBaseTest> = Record<string, BaseGiven<ITestShape>>;
-export declare abstract class BaseSuite<ITestShape extends IBaseTest> {
+export declare type IGivens<ITestShape extends IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>> = Record<string, BaseGiven<ITestShape>>;
+export declare abstract class BaseSuite<ITestShape extends IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>> {
     name: string;
     givens: IGivens<ITestShape>;
     checks: BaseCheck<ITestShape>[];
@@ -33,7 +33,7 @@ export declare abstract class BaseSuite<ITestShape extends IBaseTest> {
     afterAll(store: ITestShape["istore"], artifactory: ITestArtifactory, pm: PM): ITestShape["istore"];
     run(input: ITestShape["iinput"], testResourceConfiguration: ITTestResourceConfiguration, artifactory: (fPath: string, value: unknown) => void, tLog: (...string: any[]) => void, pm: PM): Promise<BaseSuite<ITestShape>>;
 }
-export declare abstract class BaseGiven<ITestShape extends IBaseTest> {
+export declare abstract class BaseGiven<ITestShape extends IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>> {
     name: string;
     features: string[];
     whens: BaseWhen<ITestShape>[];
@@ -75,7 +75,7 @@ export declare abstract class BaseWhen<ITestShape extends IBaseTest> {
     };
     test(store: ITestShape["istore"], testResourceConfiguration: any, tLog: ITLog, pm: PM, key: string): Promise<any>;
 }
-export declare abstract class BaseThen<ITestShape extends IBaseTest> {
+export declare abstract class BaseThen<ITestShape extends IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>> {
     name: string;
     thenCB: (storeState: ITestShape["iselection"]) => ITestShape["then"];
     error: boolean;
@@ -87,7 +87,7 @@ export declare abstract class BaseThen<ITestShape extends IBaseTest> {
     abstract butThen(store: ITestShape["istore"], thenCB: any, testResourceConfiguration: ITTestResourceConfiguration, pm: PM): Promise<ITestShape["iselection"]>;
     test(store: ITestShape["istore"], testResourceConfiguration: any, tLog: ITLog, pm: PM, filepath: string): Promise<ITestShape["then"] | undefined>;
 }
-export declare abstract class BaseCheck<ITestShape extends IBaseTest> {
+export declare abstract class BaseCheck<ITestShape extends IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>> {
     name: string;
     features: string[];
     checkCB: (whens: any, thens: any) => any;

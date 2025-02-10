@@ -17,7 +17,20 @@ import { PM } from "../PM/index.js";
 import { ITTestResourceRequest } from "./index.js";
 
 export abstract class ClassBuilder<
-  ITestShape extends IBaseTest
+  ITestShape extends IBaseTest<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
 > extends BaseBuilder<ITestShape, any, any, any, any, any> {
   constructor(
     testImplementation: ITestImplementation<ITestShape, any>,
@@ -29,7 +42,6 @@ export abstract class ClassBuilder<
     thenKlasser: IThenKlasser<ITestShape>,
     checkKlasser: ICheckKlasser<ITestShape>,
     testResourceRequirement: ITTestResourceRequest
-    // puppetMaster: PM
   ) {
     const classySuites = Object.entries(testImplementation.suites).reduce(
       (a, [key], index) => {

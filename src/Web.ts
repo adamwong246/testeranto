@@ -12,7 +12,22 @@ import {
 } from "./lib/index.js";
 import { ITestInterface, IWebTestInterface } from "./lib/types";
 
-class WebTesteranto<TestShape extends IBaseTest> extends Testeranto<TestShape> {
+class WebTesteranto<
+  TestShape extends IBaseTest<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+> extends Testeranto<TestShape> {
   constructor(
     input: TestShape["iinput"],
     testSpecification: ITestSpecification<TestShape>,
@@ -55,7 +70,22 @@ class WebTesteranto<TestShape extends IBaseTest> extends Testeranto<TestShape> {
   }
 }
 
-export default async <ITestShape extends IBaseTest>(
+export default async <
+  ITestShape extends IBaseTest<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+>(
   input: ITestShape["iinput"],
   testSpecification: ITestSpecification<ITestShape>,
   testImplementation: ITestImplementation<ITestShape>,

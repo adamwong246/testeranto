@@ -4,9 +4,7 @@ const index_js_1 = require("./index.js");
 const abstractBase_js_1 = require("./abstractBase.js");
 const classBuilder_js_1 = require("./classBuilder.js");
 class Testeranto extends classBuilder_js_1.ClassBuilder {
-    constructor(input, testSpecification, testImplementation, testResourceRequirement = index_js_1.defaultTestResourceRequirement, testInterface
-    // puppetMaster: PM
-    ) {
+    constructor(input, testSpecification, testImplementation, testResourceRequirement = index_js_1.defaultTestResourceRequirement, testInterface) {
         const fullTestInterface = (0, index_js_1.DefaultTestInterface)(testInterface);
         super(testImplementation, testSpecification, input, class extends abstractBase_js_1.BaseSuite {
             afterAll(store, artifactory, pm) {

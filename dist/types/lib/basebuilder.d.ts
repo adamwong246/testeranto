@@ -3,7 +3,7 @@ import { IBaseTest, ITestSpecification } from "../Types.js";
 import { ISuiteKlasser, IGivenKlasser, IWhenKlasser, IThenKlasser, ICheckKlasser } from "./types.js";
 import { BaseCheck, BaseWhen, BaseThen, BaseGiven } from "./abstractBase.js";
 import { PM } from "../PM/index.js";
-export declare abstract class BaseBuilder<ITestShape extends IBaseTest, SuiteExtensions, GivenExtensions, WhenExtensions, ThenExtensions, CheckExtensions> {
+export declare abstract class BaseBuilder<ITestShape extends IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>, SuiteExtensions, GivenExtensions, WhenExtensions, ThenExtensions, CheckExtensions> {
     readonly input: ITestShape["iinput"];
     specs: any;
     assertThis: (t: ITestShape["then"]) => {};

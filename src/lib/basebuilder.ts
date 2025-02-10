@@ -20,7 +20,20 @@ import {
 import { PM } from "../PM/index.js";
 
 export abstract class BaseBuilder<
-  ITestShape extends IBaseTest,
+  ITestShape extends IBaseTest<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >,
   SuiteExtensions,
   GivenExtensions,
   WhenExtensions,

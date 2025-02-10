@@ -2,9 +2,7 @@ import { DefaultTestInterface, defaultTestResourceRequirement, } from "./index.j
 import { BaseSuite, BaseGiven, BaseWhen, BaseThen, BaseCheck, } from "./abstractBase.js";
 import { ClassBuilder } from "./classBuilder.js";
 export default class Testeranto extends ClassBuilder {
-    constructor(input, testSpecification, testImplementation, testResourceRequirement = defaultTestResourceRequirement, testInterface
-    // puppetMaster: PM
-    ) {
+    constructor(input, testSpecification, testImplementation, testResourceRequirement = defaultTestResourceRequirement, testInterface) {
         const fullTestInterface = DefaultTestInterface(testInterface);
         super(testImplementation, testSpecification, input, class extends BaseSuite {
             afterAll(store, artifactory, pm) {
