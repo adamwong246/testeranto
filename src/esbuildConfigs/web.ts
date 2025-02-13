@@ -26,6 +26,8 @@ export default (
       react: path.resolve("./node_modules/react"),
     },
 
+    metafile: true,
+
     external: [
       "testeranto.json",
       "features.test.ts",

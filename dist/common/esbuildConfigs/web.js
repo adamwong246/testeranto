@@ -15,7 +15,7 @@ exports.default = (config, entryPoints) => {
         // splitting: true,
         outdir: config.outdir + "/web", alias: {
             react: path_1.default.resolve("./node_modules/react"),
-        }, external: [
+        }, metafile: true, external: [
             "testeranto.json",
             "features.test.ts",
             // "url",

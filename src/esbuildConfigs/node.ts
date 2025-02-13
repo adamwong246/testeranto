@@ -17,7 +17,7 @@ export default (
     outdir: config.outdir + "/node",
 
     inject: [`./node_modules/testeranto/dist/cjs-shim.js`],
-
+    metafile: true,
     supported: {
       "dynamic-import": true,
     },

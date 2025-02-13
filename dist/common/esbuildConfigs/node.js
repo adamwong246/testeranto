@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const index_js_1 = __importDefault(require("./index.js"));
 const inputFilesPlugin_1 = __importDefault(require("./inputFilesPlugin"));
 exports.default = (config, entryPoints) => {
-    return Object.assign(Object.assign({}, (0, index_js_1.default)(config)), { splitting: true, outdir: config.outdir + "/node", inject: [`./node_modules/testeranto/dist/cjs-shim.js`], supported: {
+    return Object.assign(Object.assign({}, (0, index_js_1.default)(config)), { splitting: true, outdir: config.outdir + "/node", inject: [`./node_modules/testeranto/dist/cjs-shim.js`], metafile: true, supported: {
             "dynamic-import": true,
         }, define: {
             "process.env.FLUENTFFMPEG_COV": "0",

@@ -1,7 +1,7 @@
 import baseEsBuildConfig from "./index.js";
 import inputFilesPlugin from "./inputFilesPlugin";
 export default (config, entryPoints) => {
-    return Object.assign(Object.assign({}, baseEsBuildConfig(config)), { splitting: true, outdir: config.outdir + "/node", inject: [`./node_modules/testeranto/dist/cjs-shim.js`], supported: {
+    return Object.assign(Object.assign({}, baseEsBuildConfig(config)), { splitting: true, outdir: config.outdir + "/node", inject: [`./node_modules/testeranto/dist/cjs-shim.js`], metafile: true, supported: {
             "dynamic-import": true,
         }, define: {
             "process.env.FLUENTFFMPEG_COV": "0",
