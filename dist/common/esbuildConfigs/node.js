@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const index_js_1 = __importDefault(require("./index.js"));
+const inputFilesPlugin_1 = __importDefault(require("./inputFilesPlugin"));
 exports.default = (config, entryPoints) => {
     return Object.assign(Object.assign({}, (0, index_js_1.default)(config)), { splitting: true, outdir: config.outdir + "/node", inject: [`./node_modules/testeranto/dist/cjs-shim.js`], supported: {
             "dynamic-import": true,
@@ -20,6 +21,7 @@ exports.default = (config, entryPoints) => {
             ...config.externals,
         ], entryPoints: [...entryPoints], plugins: [
             ...(config.nodePlugins || []),
+            (0, inputFilesPlugin_1.default)("node", entryPoints),
             {
                 name: "rebuild-notify",
                 setup(build) {

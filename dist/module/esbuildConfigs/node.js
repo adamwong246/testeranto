@@ -1,4 +1,5 @@
 import baseEsBuildConfig from "./index.js";
+import inputFilesPlugin from "./inputFilesPlugin";
 export default (config, entryPoints) => {
     return Object.assign(Object.assign({}, baseEsBuildConfig(config)), { splitting: true, outdir: config.outdir + "/node", inject: [`./node_modules/testeranto/dist/cjs-shim.js`], supported: {
             "dynamic-import": true,
@@ -15,6 +16,7 @@ export default (config, entryPoints) => {
             ...config.externals,
         ], entryPoints: [...entryPoints], plugins: [
             ...(config.nodePlugins || []),
+            inputFilesPlugin("node", entryPoints),
             {
                 name: "rebuild-notify",
                 setup(build) {

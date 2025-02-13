@@ -4,6 +4,7 @@ import path from "path";
 import { IBaseConfig } from "../lib/types.js";
 
 import baseEsBuildConfig from "./index.js";
+import inputFilesPlugin from "./inputFilesPlugin.js";
 
 export default (
   config: IBaseConfig,
@@ -57,6 +58,7 @@ export default (
 
     plugins: [
       ...(config.webPlugins || []),
+      inputFilesPlugin("node", entryPoints),
       {
         name: "rebuild-notify",
         setup(build) {

@@ -1,5 +1,6 @@
 import path from "path";
 import baseEsBuildConfig from "./index.js";
+import inputFilesPlugin from "./inputFilesPlugin.js";
 export default (config, entryPoints) => {
     return Object.assign(Object.assign({}, baseEsBuildConfig(config)), { 
         // inject: ["./node_modules/testeranto/dist/cjs-shim.js"],
@@ -33,6 +34,7 @@ export default (config, entryPoints) => {
             "dns",
         ], platform: "browser", entryPoints: [...entryPoints], plugins: [
             ...(config.webPlugins || []),
+            inputFilesPlugin("node", entryPoints),
             {
                 name: "rebuild-notify",
                 setup(build) {

@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = __importDefault(require("path"));
 const index_js_1 = __importDefault(require("./index.js"));
+const inputFilesPlugin_js_1 = __importDefault(require("./inputFilesPlugin.js"));
 exports.default = (config, entryPoints) => {
     return Object.assign(Object.assign({}, (0, index_js_1.default)(config)), { 
         // inject: ["./node_modules/testeranto/dist/cjs-shim.js"],
@@ -38,6 +39,7 @@ exports.default = (config, entryPoints) => {
             "dns",
         ], platform: "browser", entryPoints: [...entryPoints], plugins: [
             ...(config.webPlugins || []),
+            (0, inputFilesPlugin_js_1.default)("node", entryPoints),
             {
                 name: "rebuild-notify",
                 setup(build) {

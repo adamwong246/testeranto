@@ -3,6 +3,7 @@ import { BuildOptions } from "esbuild";
 import { IBaseConfig } from "../lib/types";
 
 import baseEsBuildConfig from "./index.js";
+import inputFilesPlugin from "./inputFilesPlugin";
 
 export default (
   config: IBaseConfig,
@@ -42,6 +43,7 @@ export default (
     entryPoints: [...entryPoints],
     plugins: [
       ...(config.nodePlugins || []),
+      inputFilesPlugin("node", entryPoints),
       {
         name: "rebuild-notify",
         setup(build) {
