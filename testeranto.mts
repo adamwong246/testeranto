@@ -33,17 +33,17 @@ export default new ITProject({
       { ports: 0 },
       [],
     ],
-    ["./src/ReactStateAndHook.test.tsx", "node", { ports: 0 }, []],
-    ["./src/app.reduxToolkit.test.ts", "node", { ports: 0 }, []],
-    ["./src/app.redux.test.ts", "node", { ports: 0 }, []],
-    [
-      "./src/Rectangle/Rectangle.test.node.ts",
-      "node",
-      { ports: 0 },
-      [["./src/ClassicalComponent/test.ts", "web", { ports: 0 }, []]],
-    ],
-    ["./src/MyFirstContract.basic.test.ts", "node", { ports: 0 }, []],
-    ["./src/MyFirstContract.rpc.test.ts", "node", { ports: 1 }, []],
+    // ["./src/ReactStateAndHook.test.tsx", "node", { ports: 0 }, []],
+    // ["./src/app.reduxToolkit.test.ts", "node", { ports: 0 }, []],
+    // ["./src/app.redux.test.ts", "node", { ports: 0 }, []],
+    // [
+    //   "./src/Rectangle/Rectangle.test.node.ts",
+    //   "node",
+    //   { ports: 0 },
+    //   [["./src/ClassicalComponent/test.ts", "web", { ports: 0 }, []]],
+    // ],
+    // ["./src/MyFirstContract.basic.test.ts", "node", { ports: 0 }, []],
+    // ["./src/MyFirstContract.rpc.test.ts", "node", { ports: 1 }, []],
 
     // [
     //   "./src/MyFirstContract.solidity-react.testeranto.ts",

@@ -1,47 +1,16 @@
 import {
-  require_react_dom
-} from "../../chunk-D54U7RBP.mjs";
-import {
   ClassicalComponent
 } from "../../chunk-ZAFYTSTM.mjs";
+import {
+  require_client
+} from "../../chunk-5I33OV73.mjs";
+import "../../chunk-D54U7RBP.mjs";
 import {
   require_react
 } from "../../chunk-T4W5FV25.mjs";
 import {
-  __commonJS,
   __toESM
 } from "../../chunk-3KGMXYRN.mjs";
-
-// node_modules/react-dom/client.js
-var require_client = __commonJS({
-  "node_modules/react-dom/client.js"(exports) {
-    "use strict";
-    var m = require_react_dom();
-    if (false) {
-      exports.createRoot = m.createRoot;
-      exports.hydrateRoot = m.hydrateRoot;
-    } else {
-      i = m.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
-      exports.createRoot = function(c, o) {
-        i.usingClientEntryPoint = true;
-        try {
-          return m.createRoot(c, o);
-        } finally {
-          i.usingClientEntryPoint = false;
-        }
-      };
-      exports.hydrateRoot = function(c, h, o) {
-        i.usingClientEntryPoint = true;
-        try {
-          return m.hydrateRoot(c, h, o);
-        } finally {
-          i.usingClientEntryPoint = false;
-        }
-      };
-    }
-    var i;
-  }
-});
 
 // src/ClassicalComponent/test.ts
 var import_client = __toESM(require_client(), 1);

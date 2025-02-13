@@ -1,16 +1,16 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
   Node_default
-} from "../../chunk-OLFHG55Q.mjs";
+} from "../../chunk-PYUZ2MPT.mjs";
 import {
   assert
 } from "../../chunk-MSVTAS6Q.mjs";
-import "../../chunk-Z577W6FW.mjs";
+import "../../chunk-K5DK65GD.mjs";
+import "../../chunk-FLSG3ZVV.mjs";
 import "../../chunk-CTKBT5JH.mjs";
 import "../../chunk-RBWPBMY4.mjs";
 import "../../chunk-PJC2V65J.mjs";
 import "../../chunk-VDOS7AVZ.mjs";
-import "../../chunk-FLSG3ZVV.mjs";
 import {
   init_cjs_shim
 } from "../../chunk-THMF2HPO.mjs";
@@ -102,7 +102,7 @@ var RectangleTesterantoBaseTestSpecification = (Suite, Given, When, Then, Check)
           [Then.getWidth(4), Then.getHeight(9)]
         ),
         test1: Given.Default(
-          ["hello"],
+          ["root"],
           [When.setWidth(4), When.setHeight(5)],
           [
             Then.getWidth(4),
@@ -112,21 +112,21 @@ var RectangleTesterantoBaseTestSpecification = (Suite, Given, When, Then, Check)
           ]
         ),
         test2: Given.Default(
-          ["hello"],
+          ["root"],
           [When.setHeight(4), When.setWidth(33)],
           [
             // Then.area(12)
           ]
         ),
         test3: Given.Default(
-          ["hello"],
+          ["root"],
           [When.setHeight(5), When.setWidth(5)],
           [
             // Then.area(5)
           ]
         ),
         test4: Given.Default(
-          ["hello"],
+          ["aloha"],
           [When.setHeight(6), When.setWidth(6)],
           [
             // Then.area(37)

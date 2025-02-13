@@ -1,17 +1,26 @@
-import test, {
-  Stream,
-  renderToStaticMarkup,
-  renderToStaticNodeStream,
-  ISubject,
-  IStore,
-  ISelection,
-  IThenShape
-} from "testeranto/src/SubPackages/react-dom/component/node";
-import { ITestSpecification } from "testeranto/src/core";
+// import test, {
+//   Stream,
+//   renderToStaticMarkup,
+//   renderToStaticNodeStream,
+//   ISubject,
+//   IStore,
+//   ISelection,
+//   IThenShape
+// } from "testeranto/src/SubPackages/react-dom/component/node";
+// import { ITestSpecification } from "testeranto/src/core";
 
 import { assert } from "chai";
 
 import { ClassicalComponent } from "..";
+import { features } from "../../../features.test.mts";
+import test from "node:test";
+import { renderToStaticMarkup } from "react-dom/server";
+// import { ITestSpecification } from "testeranto/src/lib/core";
+import { ISubject, IStore, ISelection, IThenShape } from "../../../../testeranto/src/SubPackages/react-dom/component/node";
+
+// import { ClassicalComponentSpec } from "../test.specification";
+
+import { ITestSpecification } from "testeranto/src/Types";
 
 const snapshot = `<div style="border:3px solid green"><h1>Hello Marcus</h1><pre id="theProps">{}</pre><p>foo: </p><pre id="theState">{&quot;count&quot;:0}</pre><p>count: 0 times</p><button id="theButton">Click</button></div>`;
 const readableStream = new ReadableStream({

@@ -21,19 +21,19 @@ import {
   require_lib9,
   require_node_gyp_build,
   require_scrypt
-} from "../chunk-JNJ2P3OP.mjs";
+} from "../chunk-HEF7ZV7R.mjs";
 import {
   Node_default
-} from "../chunk-OLFHG55Q.mjs";
+} from "../chunk-PYUZ2MPT.mjs";
 import {
   assert
 } from "../chunk-MSVTAS6Q.mjs";
-import "../chunk-Z577W6FW.mjs";
+import "../chunk-K5DK65GD.mjs";
+import "../chunk-FLSG3ZVV.mjs";
 import "../chunk-CTKBT5JH.mjs";
 import "../chunk-RBWPBMY4.mjs";
 import "../chunk-PJC2V65J.mjs";
 import "../chunk-VDOS7AVZ.mjs";
-import "../chunk-FLSG3ZVV.mjs";
 import {
   __commonJS,
   __require,
@@ -17533,58 +17533,66 @@ init_cjs_shim();
 var import_web3 = __toESM(require_lib15(), 1);
 var import_ethers = __toESM(require_lib32(), 1);
 import Ganache from "ganache";
-var Contract_rpc_testeranto_test_default = (testImplementations, testSpecifications, testInput) => Node_default(testInput, testSpecifications, testImplementations, {
-  // beforeAll: async () =>
-  //   (await solCompile(contractName)).contracts.find(
-  //     (c) => c.contractName === contractName
-  //   ),
-  beforeEach: (contract, i, artificer, testResource) => {
-    return new Promise((res) => {
-      const options = {};
-      const port = testResource.ports[0];
-      const server = Ganache.server(options);
-      server.listen(port, async (err) => {
-        console.log(`ganache listening on port ${port}...`);
-        if (err)
-          throw err;
-        const providerFarSide = server.provider;
-        const accounts = await providerFarSide.request({
-          method: "eth_accounts",
-          params: []
-        });
-        const web3NearSide = new import_web3.default(providerFarSide);
-        const contractNearSide = await new web3NearSide.eth.Contract(
-          contract.abi
-        ).deploy({ data: contract.bytecode.bytes }).send({ from: accounts[0], gas: 7e6 });
-        const web3FarSideProvider = new import_ethers.ethers.providers.JsonRpcProvider(
-          `http://localhost:${port}`
-        );
-        const web3FarSideSigner = new import_ethers.ethers.Wallet(
-          providerFarSide.getInitialAccounts()[accounts[1]].secretKey,
-          web3FarSideProvider
-        );
-        const contractFarSide = new import_ethers.ethers.Contract(
-          contractNearSide.options.address,
-          contract.abi,
-          web3FarSideSigner
-        );
-        res({
-          contractNearSide,
-          contractFarSide,
-          accounts,
-          server
+var Contract_rpc_testeranto_test_default = (testImplementations, testSpecifications, testInput) => {
+  const testInterface = {
+    // beforeAll: async () =>
+    //   (await solCompile(contractName)).contracts.find(
+    //     (c) => c.contractName === contractName
+    //   ),
+    beforeEach: (contract, i, artificer, testResource) => {
+      return new Promise((res) => {
+        const options = {};
+        const port = testResource.ports[0];
+        const server = Ganache.server(options);
+        server.listen(port, async (err) => {
+          console.log(`ganache listening on port ${port}...`);
+          if (err)
+            throw err;
+          const providerFarSide = server.provider;
+          const accounts = await providerFarSide.request({
+            method: "eth_accounts",
+            params: []
+          });
+          const web3NearSide = new import_web3.default(providerFarSide);
+          const contractNearSide = await new web3NearSide.eth.Contract(
+            contract.abi
+          ).deploy({ data: contract.bytecode.bytes }).send({ from: accounts[0], gas: 7e6 });
+          const web3FarSideProvider = new import_ethers.ethers.providers.JsonRpcProvider(
+            `http://localhost:${port}`
+          );
+          const web3FarSideSigner = new import_ethers.ethers.Wallet(
+            providerFarSide.getInitialAccounts()[accounts[1]].secretKey,
+            web3FarSideProvider
+          );
+          const contractFarSide = new import_ethers.ethers.Contract(
+            contractNearSide.options.address,
+            contract.abi,
+            web3FarSideSigner
+          );
+          res({
+            contractNearSide,
+            contractFarSide,
+            accounts,
+            server
+          });
         });
       });
-    });
-  },
-  afterEach: async (x) => {
-    await x.server.close();
-    return x;
-  },
-  andWhen: async ({ contractFarSide, accounts }, callback) => callback({ contractFarSide, accounts }),
-  afterAll: ({ server }) => {
-  }
-});
+    },
+    afterEach: async (x) => {
+      await x.server.close();
+      return x;
+    },
+    andWhen: async ({ contractFarSide, accounts }, callback) => callback({ contractFarSide, accounts }),
+    afterAll: ({ server }) => {
+    }
+  };
+  return Node_default(
+    testInput,
+    testSpecifications,
+    testImplementations,
+    testInterface
+  );
+};
 
 // src/MyFirstContract.rpc.test.ts
 var testImplementation = {

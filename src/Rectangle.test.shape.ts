@@ -1,6 +1,10 @@
+import { IFeatures } from "../features.test.mts";
+
 import Rectangle from "./Rectangle";
 
-export interface IRectangleTestShape {
+export type IRectangleTestShape = {
+  features: IFeatures;
+
   iinput: Rectangle;
   isubject: Rectangle;
   istore: Rectangle;
@@ -37,4 +41,4 @@ export interface IRectangleTestShape {
     WidthOfOneAndHeightOfOne;
     WidthAndHeightOf: [number, number];
   };
-}
+};

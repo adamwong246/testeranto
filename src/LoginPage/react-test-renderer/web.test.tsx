@@ -10,5 +10,5 @@ export default test(
   loginPageImpl,
   LoginPageSpecs,
   LoginPage,
-  LoginPageReactTestRendererTestInterface
+  LoginPageReactTestRendererTestInterface,
 );

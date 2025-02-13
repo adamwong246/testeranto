@@ -1,16 +1,11 @@
 import {
   Web_default,
+  require_react,
   require_scheduler
-} from "../../../chunk-VBWJAMYA.mjs";
+} from "../../../chunk-B5CS5ONY.mjs";
 import {
   assert
 } from "../../../chunk-T3XNPSCC.mjs";
-import {
-  ClassicalComponent
-} from "../../../chunk-ZAFYTSTM.mjs";
-import {
-  require_react
-} from "../../../chunk-T4W5FV25.mjs";
 import "../../../chunk-43DSNPFJ.mjs";
 import "../../../chunk-WZWH5UFM.mjs";
 import "../../../chunk-2CNFTRH6.mjs";
@@ -29,9 +24,9 @@ var require_react_dom_development = __commonJS({
         if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
           __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
         }
-        var React = require_react();
+        var React2 = require_react();
         var Scheduler = require_scheduler();
-        var ReactSharedInternals = React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+        var ReactSharedInternals = React2.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
         var suppressWarning = false;
         function setSuppressWarning(newSuppressWarning) {
           {
@@ -1636,7 +1631,7 @@ var require_react_dom_development = __commonJS({
           {
             if (props.value == null) {
               if (typeof props.children === "object" && props.children !== null) {
-                React.Children.forEach(props.children, function(child) {
+                React2.Children.forEach(props.children, function(child) {
                   if (child == null) {
                     return;
                   }
@@ -21279,6 +21274,22 @@ var web_default = (testInput, testSpecifications, testImplementations, testInter
   return t;
 };
 
+// src/ClassicalComponent/index.tsx
+var import_react2 = __toESM(require_react(), 1);
+var ClassicalComponent = class extends import_react2.default.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      count: 0
+    };
+  }
+  render() {
+    return /* @__PURE__ */ import_react2.default.createElement("div", { style: { border: "3px solid black" } }, /* @__PURE__ */ import_react2.default.createElement("h1", { id: "theHeader" }, "Hello Marcus"), /* @__PURE__ */ import_react2.default.createElement("pre", { id: "theProps" }, JSON.stringify(this.props)), /* @__PURE__ */ import_react2.default.createElement("p", null, "foo: ", this.props.foo), /* @__PURE__ */ import_react2.default.createElement("pre", { id: "theStat" }, JSON.stringify(this.state)), /* @__PURE__ */ import_react2.default.createElement("p", null, "count: ", this.state.count, " times"), /* @__PURE__ */ import_react2.default.createElement("button", { id: "theButton", onClick: async () => {
+      this.setState({ count: this.state.count + 1 });
+    } }, "Click"));
+  }
+};
+
 // src/ClassicalComponent/test.specification.ts
 var ClassicalComponentSpec = (Suite, Given, When, Then, Check) => {
   return [
@@ -21286,7 +21297,7 @@ var ClassicalComponentSpec = (Suite, Given, When, Then, Check) => {
       "a classical react component",
       {
         test0: Given.AnEmptyState(
-          ["test"],
+          ["root"],
           [
             When.IClickTheButton(),
             When.IClickTheButton(),
@@ -21297,12 +21308,12 @@ var ClassicalComponentSpec = (Suite, Given, When, Then, Check) => {
           [Then.ThePropsIs({ children: [] }), Then.TheStatusIs({ count: 3 })]
         ),
         test1: Given.AnEmptyState(
-          ["test"],
+          ["aloha"],
           [When.IClickTheButton()],
           [Then.ThePropsIs({ children: [] }), Then.TheStatusIs({ count: 1 })]
         ),
         test2: Given.AnEmptyState(
-          ["test"],
+          ["root"],
           [
             When.IClickTheButton(),
             When.IClickTheButton(),
@@ -21317,7 +21328,7 @@ var ClassicalComponentSpec = (Suite, Given, When, Then, Check) => {
           [Then.TheStatusIs({ count: 9 })]
         ),
         test3: Given.AnEmptyState(
-          ["test"],
+          ["root"],
           [When.IClickTheButton(), When.IClickTheButton()],
           [Then.TheStatusIs({ count: 2 })]
         )

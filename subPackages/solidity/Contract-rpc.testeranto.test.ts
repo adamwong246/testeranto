@@ -29,8 +29,8 @@ export default <IT extends IBaseTest>(
   testImplementations: ITestImplementation<IT>,
   testSpecifications: ITestSpecification<IT>,
   testInput: IInput
-) =>
-  Testeranto<IT>(testInput, testSpecifications, testImplementations, {
+) => {
+  const testInterface: IPartialInterface<IT> = {
     // beforeAll: async () =>
     //   (await solCompile(contractName)).contracts.find(
     //     (c) => c.contractName === contractName
@@ -110,4 +110,12 @@ export default <IT extends IBaseTest>(
       // console.log("serve!r", server);
       // server.close();
     },
-  });
+  };
+
+  return Testeranto<IT>(
+    testInput,
+    testSpecifications,
+    testImplementations,
+    testInterface
+  );
+};

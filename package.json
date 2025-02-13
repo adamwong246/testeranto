@@ -25,8 +25,8 @@
     "testeranto-clean": "rm -rf docs && mkdir docs",
     "testeranto-esbuild": "ts-node-esm testeranto.mts",
     "testeranto-esbuild-dev": "ts-node-esm testeranto.mts -dev",
-    "testeranto-puppeteer": "ts-node-esm node_modules/testeranto/dist/module/Puppeteer.js",
-    "testeranto-reporter": "cp ./node_modules/testeranto/dist/prebuild/Report.js docs/Report.js && node ./node_modules/testeranto/dist/module/Reporter.js"
+    "testeranto-testrun": "ts-node-esm node_modules/testeranto/dist/module/Puppeteer.js",
+    "testeranto-taskman": "mongod --dbpath data/db & ts-node-esm node_modules/testeranto/dist/module/TaskManBackEnd.js"
   },
   "types": "index.d.ts",
   "dependencies": {

@@ -3,7 +3,7 @@ import {
   TesterantoGraphDirectedAcyclic,
   TesterantoGraphDirected,
   TesterantoGraphUndirected,
-  TesterantoFeatures
+  TesterantoFeatures,
 } from "testeranto/src/Features";
 
 export class MyFeature extends BaseFeature {
@@ -14,41 +14,46 @@ export class MyFeature extends BaseFeature {
   }
 }
 
-export const features = {
+export type IFeatures = Record<
+  "root" | "mint" | "redemption" | "hello" | "aloha",
+  MyFeature
+>;
+
+export const features: IFeatures = {
   root: new MyFeature("kokomo bay!"),
   mint: new MyFeature("An ERC721 which is redeemable?!!!"),
   redemption: new MyFeature(
     "Redeems an ERC-721, marking its state as redeemed"
   ),
-  federatedSplitContract: new MyFeature(
-    "A website which can acts as a storefront"
-  ),
-  markRedeemed: new MyFeature(
-    "Registers contract status as redeemed, and changes image"
-  ),
-  encryptShipping: new MyFeature(
-    "Buyer encrypts plaintext message and stores value on contract"
-  ),
-  decryptShipping: new MyFeature("Vendor Decrypts plaintext message"),
-  buildSilo: new MyFeature(
-    "build the rocket silo",
-    new Date("2023-05-02T02:36:34+0000")
-  ),
-  buildRocket: new MyFeature(
-    "build the rocket",
-    new Date("2023-06-06T02:36:34+0000")
-  ),
-  buildSatellite: new MyFeature(
-    "build the rocket payload",
-    new Date("2023-06-06T02:36:34+0000")
-  ),
-  hello: new MyFeature("hello"),
-  aloha: new MyFeature("aloha"),
-  gutentag: new MyFeature("gutentag"),
-  buenosDias: new MyFeature("buenos dias"),
-  hola: new MyFeature("hola"),
-  bienVenidos: new MyFeature("bien venidos"),
-  walkingTheDog: new MyFeature("my favorite chore"),
+  // federatedSplitContract: new MyFeature(
+  //   "A website which can acts as a storefront"
+  // ),
+  // markRedeemed: new MyFeature(
+  //   "Registers contract status as redeemed, and changes image"
+  // ),
+  // encryptShipping: new MyFeature(
+  //   "Buyer encrypts plaintext message and stores value on contract"
+  // ),
+  // decryptShipping: new MyFeature("Vendor Decrypts plaintext message"),
+  // buildSilo: new MyFeature(
+  //   "build the rocket silo",
+  //   new Date("2023-05-02T02:36:34+0000")
+  // ),
+  // buildRocket: new MyFeature(
+  //   "build the rocket",
+  //   new Date("2023-06-06T02:36:34+0000")
+  // ),
+  // buildSatellite: new MyFeature(
+  //   "build the rocket payload",
+  //   new Date("2023-06-06T02:36:34+0000")
+  // ),
+  hello: new MyFeature("an english greeting"),
+  aloha: new MyFeature("hello in hawaiian"),
+  // gutentag: new MyFeature("gutentag"),
+  // buenosDias: new MyFeature("buenos dias"),
+  // hola: new MyFeature("hola"),
+  // bienVenidos: new MyFeature("bien venidos"),
+  // walkingTheDog: new MyFeature("my favorite chore"),
 };
 
 const priorityGraph = new TesterantoGraphDirectedAcyclic("Priority");

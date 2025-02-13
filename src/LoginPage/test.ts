@@ -1,6 +1,9 @@
 import { ITestSpecification } from "testeranto/src/Types";
 
+import { IFeatures } from "../../features.test.mjs";
+
 export type ILoginPageSpecs = {
+  features: IFeatures;
   iinput: any;
   isubject: any;
   istore: any;
@@ -46,7 +49,7 @@ export const LoginPageSpecs: ITestSpecification<ILoginPageSpecs> = (
       "Testing the LoginPage as react",
       {
         test0: Given.default(
-          [],
+          ["root"],
           [When.TheEmailIsSetTo("adam@email.com")],
           [Then.TheEmailIs("adam@email.com")]
         ),
@@ -64,7 +67,7 @@ export const LoginPageSpecs: ITestSpecification<ILoginPageSpecs> = (
           ]
         ),
         test2: Given.default(
-          [],
+          [`aloha`],
           [When.TheEmailIsSetTo("adam@email.com")],
           [Then.ThereIsNotAnEmailError()]
         ),

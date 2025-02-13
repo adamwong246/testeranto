@@ -10,7 +10,7 @@ export const ClassicalComponentSpec: ITestSpecification<
       "a classical react component",
       {
         test0: Given.AnEmptyState(
-          ["test"],
+          ["root"],
           [
             When.IClickTheButton(),
             When.IClickTheButton(),
@@ -21,12 +21,12 @@ export const ClassicalComponentSpec: ITestSpecification<
           [Then.ThePropsIs({ children: [] }), Then.TheStatusIs({ count: 3 })]
         ),
         test1: Given.AnEmptyState(
-          ["test"],
+          ["aloha"],
           [When.IClickTheButton()],
           [Then.ThePropsIs({ children: [] }), Then.TheStatusIs({ count: 1 })]
         ),
         test2: Given.AnEmptyState(
-          ["test"],
+          ["root"],
           [
             When.IClickTheButton(),
             When.IClickTheButton(),
@@ -41,7 +41,7 @@ export const ClassicalComponentSpec: ITestSpecification<
           [Then.TheStatusIs({ count: 9 })]
         ),
         test3: Given.AnEmptyState(
-          ["test"],
+          ["root"],
           [When.IClickTheButton(), When.IClickTheButton()],
           [Then.TheStatusIs({ count: 2 })]
         ),

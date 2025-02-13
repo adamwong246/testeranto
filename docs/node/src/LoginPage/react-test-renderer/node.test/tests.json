@@ -15,7 +15,9 @@
         }
       ],
       "error": null,
-      "features": []
+      "features": [
+        "root"
+      ]
     },
     {
       "name": "default",
@@ -62,7 +64,9 @@
         }
       ],
       "error": null,
-      "features": []
+      "features": [
+        "aloha"
+      ]
     },
     {
       "name": "default",

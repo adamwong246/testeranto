@@ -6,6 +6,7 @@ import { assert } from "chai";
 
 import { ClassicalComponent } from "..";
 import { ClassicalComponentSpec } from "../test.specification";
+import { features } from "../../../features.test.mts";
 
 type IStore = {
   htmlElement: HTMLElement;
@@ -96,5 +97,5 @@ export default test(
   ClassicalComponent,
   ClassicalComponentSpec,
   ClassicalComponentReactDomImplementation,
-  testInterface
+  testInterface,
 );
