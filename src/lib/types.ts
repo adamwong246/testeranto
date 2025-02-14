@@ -20,6 +20,7 @@ export type IJsonConfig = {
   outdir: string;
   tests: ITestTypes[];
   features: string;
+  botEmail: string;
 };
 
 export type IBaseConfig = {
@@ -35,6 +36,7 @@ export type IBaseConfig = {
   ports: string[];
   tests: ITestTypes[];
   webPlugins: any[];
+  botEmail: string;
 };
 
 export type IBuiltConfig = { buildDir: string } & IBaseConfig;

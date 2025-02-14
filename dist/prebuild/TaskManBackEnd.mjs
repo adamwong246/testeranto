@@ -108,6 +108,9 @@ new MongoClient(`mongodb://localhost:27017`).connect().then(async (conn) => {
   const ChatChannel = mongoose2.model("ChatChannel", channelsFeature);
   const huddleModdle = ChatChannel.discriminator("Huddle", HuddleSchema);
   const roomsModel = ChatChannel.discriminator("Room", RoomSchema);
+  app.get(`/preMergeCheck`, async (req, res) => {
+    const commit = req.params["commit"];
+  });
   app.get("/TaskManFrontend.js", (req, res) => {
     res.sendFile(
       `${process.cwd()}/node_modules/testeranto/dist/prebuild/TaskManFrontEnd.js`
