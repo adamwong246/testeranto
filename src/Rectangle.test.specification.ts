@@ -1,7 +1,6 @@
 import { ITestSpecification } from "testeranto/src/Types";
-import { IRectangleTestShape } from "./Rectangle.test.shape";
 
-import { features } from "../features.test.mjs";
+import { IRectangleTestShape } from "./Rectangle.test.shape";
 
 export const RectangleTesterantoBaseTestSpecification: ITestSpecification<
   IRectangleTestShape
@@ -16,7 +15,7 @@ export const RectangleTesterantoBaseTestSpecification: ITestSpecification<
           [Then.getWidth(4), Then.getHeight(9)]
         ),
         test1: Given.Default(
-          ["root"],
+          [`67ae06bac3c5fa5a98a08e32`],
           [When.setWidth(4), When.setHeight(5)],
           [
             Then.getWidth(4),
@@ -26,14 +25,14 @@ export const RectangleTesterantoBaseTestSpecification: ITestSpecification<
           ]
         ),
         test2: Given.Default(
-          ["root"],
+          [`67ae06bac3c5fa5a98a08e32`],
           [When.setHeight(4), When.setWidth(33)],
           [
             // Then.area(12)
           ]
         ),
         test3: Given.Default(
-          ["root"],
+          [`67ae06bac3c5fa5a98a08e32`],
           [When.setHeight(5), When.setWidth(5)],
           [
             // Then.area(5)
@@ -41,7 +40,7 @@ export const RectangleTesterantoBaseTestSpecification: ITestSpecification<
         ),
 
         test4: Given.Default(
-          ["aloha"],
+          [`67ae06bac3c5fa5a98a08e32`],
           [When.setHeight(6), When.setWidth(6)],
           [
             // Then.area(37)

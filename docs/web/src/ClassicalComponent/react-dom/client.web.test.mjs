@@ -21297,7 +21297,7 @@ var ClassicalComponentSpec = (Suite, Given, When, Then, Check) => {
       "a classical react component",
       {
         test0: Given.AnEmptyState(
-          ["root"],
+          [`67ae06bac3c5fa5a98a08e32`],
           [
             When.IClickTheButton(),
             When.IClickTheButton(),
@@ -21308,12 +21308,12 @@ var ClassicalComponentSpec = (Suite, Given, When, Then, Check) => {
           [Then.ThePropsIs({ children: [] }), Then.TheStatusIs({ count: 3 })]
         ),
         test1: Given.AnEmptyState(
-          ["aloha"],
+          [`67ae06bac3c5fa5a98a08e32`],
           [When.IClickTheButton()],
           [Then.ThePropsIs({ children: [] }), Then.TheStatusIs({ count: 1 })]
         ),
         test2: Given.AnEmptyState(
-          ["root"],
+          [`67ae06bac3c5fa5a98a08e32`],
           [
             When.IClickTheButton(),
             When.IClickTheButton(),
@@ -21328,7 +21328,7 @@ var ClassicalComponentSpec = (Suite, Given, When, Then, Check) => {
           [Then.TheStatusIs({ count: 9 })]
         ),
         test3: Given.AnEmptyState(
-          ["root"],
+          [`67ae06bac3c5fa5a98a08e32`],
           [When.IClickTheButton(), When.IClickTheButton()],
           [Then.TheStatusIs({ count: 2 })]
         )
