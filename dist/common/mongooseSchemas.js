@@ -3,10 +3,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RoomSchema = exports.HuddleSchema = exports.chatCatMessageSchema = exports.featuresSchema = exports.ganttSchema = exports.kanbanSchema = exports.userSchema = void 0;
+exports.RoomSchema = exports.HuddleSchema = exports.chatCatMessageSchema = exports.channelsFeature = exports.featuresSchema = exports.ganttSchema = exports.kanbanSchema = exports.userSchema = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 exports.userSchema = new mongoose_1.default.Schema({
     email: String,
+    channels: [{ type: mongoose_1.default.Schema.Types.ObjectId, ref: "Channel" }],
+    dmgroups: [{ type: mongoose_1.default.Schema.Types.ObjectId, ref: "Dmgroup" }],
 });
 exports.userSchema.virtual("features", {
     ref: "Feature",
@@ -26,6 +28,7 @@ exports.featuresSchema = new mongoose_1.default.Schema({
     title: String,
     state: String,
 });
+exports.channelsFeature = new mongoose_1.default.Schema({});
 exports.chatCatMessageSchema = new mongoose_1.default.Schema({
     user: {
         type: mongoose_1.default.Schema.Types.ObjectId,

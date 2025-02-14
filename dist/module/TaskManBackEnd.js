@@ -3,17 +3,17 @@ import { MongoClient } from "mongodb";
 import mongoose from "mongoose";
 import path from "path";
 import fs from "fs";
-import { ganttSchema, kanbanSchema, userSchema, featuresSchema, RoomSchema, HuddleSchema, } from "./mongooseSchemas";
-export const chatChannel = new mongoose.Schema({
-    // name: { type: String, required: true },
-    users: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User",
-            required: true,
-        },
-    ],
-});
+import { ganttSchema, kanbanSchema, userSchema, featuresSchema, RoomSchema, HuddleSchema, channelsFeature, chatCatMessageSchema, } from "./mongooseSchemas";
+// export const chatChannel = new mongoose.Schema<IChatChannel>({
+//   // name: { type: String, required: true },
+//   users: [
+//     {
+//       type: mongoose.Schema.Types.ObjectId,
+//       ref: "User",
+//       required: true,
+//     },
+//   ],
+// });
 const app = express();
 const port = 3000;
 function findTextFiles(dir, fileList = []) {
@@ -64,9 +64,14 @@ new MongoClient(`mongodb://localhost:27017`).connect().then(async (conn) => {
     const featuresModel = mongoose.model("Features", featuresSchema);
     // const roomsModel = mongoose.model<any>("Rooms", RoomSchema);
     // const huddleModdle = mongoose.model<any>("Huddles", HuddleSchema);
-    const ChatChannel = mongoose.model("ChatChannel", chatChannel);
+    const MessagesModel = mongoose.model("Messages", chatCatMessageSchema);
+    const ChatChannel = mongoose.model("ChatChannel", channelsFeature);
     const huddleModdle = ChatChannel.discriminator("Huddle", HuddleSchema);
     const roomsModel = ChatChannel.discriminator("Room", RoomSchema);
+    app.get(`/preMergeCheck`, async (req, res) => {
+        const commit = req.params["commit"];
+        // res.json(await keyedModels[key].find({}));
+    });
     app.get("/TaskManFrontend.js", (req, res) => {
         res.sendFile(`${process.cwd()}/node_modules/testeranto/dist/prebuild/TaskManFrontEnd.js`);
     });
@@ -107,6 +112,7 @@ new MongoClient(`mongodb://localhost:27017`).connect().then(async (conn) => {
         gantts: ganttModel,
         rooms: roomsModel,
         huddles: huddleModdle,
+        messages: MessagesModel,
     };
     Object.keys(keyedModels).forEach((key) => {
         app.get(`/${key}.json`, async (req, res) => {

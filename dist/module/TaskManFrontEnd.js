@@ -1,3 +1,4 @@
+import { ReactFlow } from '@xyflow/react';
 import { Button, ButtonGroup, Container, Form, Navbar, NavDropdown, Table, ToggleButton } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import ReactDom from "react-dom/client";
@@ -12,6 +13,7 @@ import '@caldwell619/react-kanban/dist/styles.css';
 import { Gantt } from 'gantt-task-react';
 import "gantt-task-react/dist/index.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '@xyflow/react/dist/style.css';
 import { featuresSchema, ganttSchema, kanbanSchema, userSchema } from "./mongooseSchemas";
 const InputElementString = ({ tree, name }) => {
     console.log("mark string", tree);
@@ -141,8 +143,7 @@ const TaskMan = ({ setAdminMode, users, adminMode, children }) => {
                             React.createElement(Tabs, { defaultActiveKey: "/tests" },
                                 React.createElement(Tab, { eventKey: "features", title: React.createElement(NavLink, { to: "/taskMan/features", className: "nav-link" }, "Features") }),
                                 React.createElement(Tab, { eventKey: "kanban", title: React.createElement(NavLink, { to: "/taskMan/kanban", className: "nav-link" }, "Kanban") }),
-                                React.createElement(Tab, { eventKey: "gantt", title: React.createElement(NavLink, { to: "/taskMan/gantt", className: "nav-link" }, "Gantt") }),
-                                React.createElement(Tab, { eventKey: "users", title: React.createElement(NavLink, { to: "/taskMan/users", className: "nav-link" }, "Users") }))),
+                                React.createElement(Tab, { eventKey: "gantt", title: React.createElement(NavLink, { to: "/taskMan/gantt", className: "nav-link" }, "Gantt") }))),
                         React.createElement(NavDropdown, { align: "end", title: "User", id: "basic-nav-dropdown" },
                             users.map((user) => {
                                 return React.createElement(NavDropdown.Item, { href: "#action/3.1" }, user.email);
@@ -174,10 +175,63 @@ const ChatCat = ({ children }) => {
                     React.createElement(Navbar.Toggle, { "aria-controls": "basic-navbar-nav" }),
                     React.createElement(Navbar.Collapse, { id: "basic-navbar-nav" },
                         React.createElement(Nav, { className: "me-auto" },
-                            React.createElement(Tabs, { defaultActiveKey: "/chatCat/users" },
-                                React.createElement(Tab, { eventKey: "/chatCat/people", title: React.createElement(NavLink, { to: "/chatCat/people", className: "nav-link" }, "People") }),
-                                React.createElement(Tab, { eventKey: "/chatCat/conversations", title: React.createElement(NavLink, { to: "/chatCat/conversations", className: "nav-link" }, "Conversations") }),
-                                React.createElement(Tab, { eventKey: "/chatCat/rooms", title: React.createElement(NavLink, { to: "/chatCat/rooms", className: "nav-link" }, "Rooms") }))))))),
+                            React.createElement(Tabs, { defaultActiveKey: "/chatCat/mostRecent" },
+                                React.createElement(Tab, { eventKey: "/chatCat/mostRecent", title: React.createElement(NavLink, { to: "/chatCat/mostRecent", className: "nav-link" }, "Most Recent") }),
+                                React.createElement(Tab, { eventKey: "/chatCat/bySubject", title: React.createElement(NavLink, { to: "/chatCat/bySubject", className: "nav-link" }, "by Subject") }))))))),
+        children);
+    // return <div>
+    //   <Row>
+    //     <Col sm={2}>
+    //       <Nav variant="pills" className="flex-column">
+    //         <h4>Rooms</h4>
+    //         {(chatCatRooms).map((room, ndx) => <Nav.Item key={ndx}>
+    //           <Nav.Link eventKey={`chatCat/room/${room._id}`}>
+    //             {room.name}
+    //           </Nav.Link>
+    //         </Nav.Item>)}
+    //         <h4>Huddles</h4>
+    //         {(chatCatHuddles).map((huddle, ndx) => <Nav.Item key={ndx}>
+    //           <Nav.Link eventKey={`chatCat/user${huddle._id}`}>
+    //             {huddle.name}
+    //           </Nav.Link>
+    //         </Nav.Item>)}
+    //         <h4>Users</h4>
+    //         {(users).map((user, ndx) => <Nav.Item key={ndx}>
+    //           <Nav.Link eventKey={`chatCat/user/${user._id}`}>
+    //             {user.email}
+    //           </Nav.Link>
+    //         </Nav.Item>)}
+    //       </Nav>
+    //     </Col>
+    //     <Col sm={10}>
+    //       <Tab.Content>
+    //         {(chatCatRooms).map((channel, ndx) => {
+    //           return (
+    //             <Tab.Pane eventKey={`chatCat/${channel}`} key={ndx}>
+    //               <pre>{JSON.stringify(channel, null, 2)}</pre>
+    //             </Tab.Pane>
+    //           )
+    //         }
+    //         )}
+    //       </Tab.Content>
+    //     </Col>
+    //   </Row>
+    // </div>
+};
+const WhoThat = ({ children }) => {
+    return React.createElement("div", null,
+        React.createElement("div", { className: "row" },
+            React.createElement(Navbar, { expand: "md", className: "bg-body-tertiary" },
+                React.createElement(Container, { fluid: true },
+                    React.createElement(Navbar.Toggle, { "aria-controls": "basic-navbar-nav" }),
+                    React.createElement(Navbar.Collapse, { id: "basic-navbar-nav" },
+                        React.createElement(Nav, { className: "me-auto" },
+                            React.createElement(Tabs, { defaultActiveKey: "/whoThat/people" },
+                                React.createElement(Tab, { eventKey: "/whoThat/people", title: React.createElement(NavLink, { to: "/whoThat/people", className: "nav-link" }, "People") }),
+                                React.createElement(Tab, { eventKey: "/whoThat/groups", title: React.createElement(NavLink, { to: "/whoThat/groups", className: "nav-link" }, "Groups") }),
+                                React.createElement(Tab, { eventKey: "/whoThat/org", title: React.createElement(NavLink, { to: "/whoThat/org", className: "nav-link" }, "Org") }))),
+                        React.createElement(ButtonGroup, { className: "mb-2" },
+                            React.createElement(ToggleButton, { id: "toggle-check", type: "checkbox", variant: "outline-primary", checked: false, value: "1" }, "\u2699\uFE0F")))))),
         children);
     // return <div>
     //   <Row>
@@ -298,6 +352,25 @@ const Users = ({ users, adminMode }) => {
                     })))));
     return React.createElement(Crud2, { schema: userSchema, collectionName: "users", collection: users });
 };
+const OrgChart = ({ users, adminMode }) => {
+    const initialNodes = [
+        { id: '1', position: { x: 0, y: 0 }, data: { label: '1' } },
+        { id: '2', position: { x: 0, y: 100 }, data: { label: '2' } },
+    ];
+    const initialEdges = [{ id: 'e1-2', source: '1', target: '2' }];
+    if (!adminMode)
+        return React.createElement(Tab.Container, { id: "left-tabs-example9", defaultActiveKey: "feature-0" },
+            React.createElement(Row, null,
+                React.createElement(Col, { sm: 12 },
+                    React.createElement("div", { style: { width: '100vw', height: '100vh' } },
+                        React.createElement(ReactFlow, { nodes: [
+                                ...initialNodes,
+                                ...users.map((user) => {
+                                    return ({ id: user._id, position: { x: 0, y: 0 }, data: { label: user.email } });
+                                })
+                            ], edges: initialEdges })))));
+    return React.createElement(Crud2, { schema: userSchema, collectionName: "users", collection: users });
+};
 const DocGalFsNav = ({ docGalFs, filepath }) => {
     return React.createElement("div", null,
         React.createElement("ul", null, ...docGalFs.map((lm) => {
@@ -333,12 +406,36 @@ const ChatCatPeople = ({ users }) => {
                 })))));
 };
 const ChatCatConversations = ({ users, conversations }) => {
-    return React.createElement(Tab.Container, { id: "left-tabs-example9", defaultActiveKey: "feature-0" },
-        React.createElement(Row, null,
-            React.createElement(Col, { sm: 12 },
-                React.createElement("ul", null, users.map((user) => {
-                    return React.createElement("li", null, user.email);
-                })))));
+    // return <Tab.Container id="left-tabs-example9" defaultActiveKey="feature-0">
+    //   <Row>
+    //     <Col sm={12}>
+    //       <ul>
+    //         {
+    //           users.map((user) => {
+    //             return <li>
+    //               {user.email}
+    //             </li>
+    //           })
+    //         }
+    //       </ul>
+    //     </Col>
+    //   </Row>
+    // </Tab.Container>
+    return React.createElement(Row, null,
+        React.createElement(Navbar, { expand: "md", className: "bg-body-tertiary" },
+            React.createElement(Container, { fluid: true },
+                React.createElement(Navbar.Toggle, { "aria-controls": "basic-navbar-nav" }),
+                React.createElement(Navbar.Collapse, { id: "basic-navbar-nav" },
+                    React.createElement(Nav, { className: "me-auto" },
+                        React.createElement(Tabs, { defaultActiveKey: "/chatCat/mostRecent" },
+                            React.createElement(Tab, { eventKey: "/chatCat/mostRecent", title: React.createElement(NavLink, { to: "/chatCat/mostRecent", className: "nav-link" }, "Feature") }),
+                            React.createElement(Tab, { eventKey: "/chatCat/bySubject", title: React.createElement(NavLink, { to: "/chatCat/bySubject", className: "nav-link" }, "Kanban") }),
+                            React.createElement(Tab, { eventKey: "/chatCat/bySubject", title: React.createElement(NavLink, { to: "/chatCat/bySubject", className: "nav-link" }, "Gantt") }),
+                            React.createElement(Tab, { eventKey: "/chatCat/bySubject", title: React.createElement(NavLink, { to: "/chatCat/bySubject", className: "nav-link" }, "FS docs") }),
+                            React.createElement(Tab, { eventKey: "/chatCat/bySubject", title: React.createElement(NavLink, { to: "/chatCat/bySubject", className: "nav-link" }, "DB docs") }),
+                            React.createElement(Tab, { eventKey: "/chatCat/bySubject", title: React.createElement(NavLink, { to: "/chatCat/bySubject", className: "nav-link" }, "Groups") }))),
+                    React.createElement(ButtonGroup, { className: "mb-2" },
+                        React.createElement(ToggleButton, { id: "toggle-check", type: "checkbox", variant: "outline-primary", checked: false, value: "1" }, "\u2699\uFE0F"))))));
 };
 const ChatCatRooms = ({ users, rooms }) => {
     return React.createElement(Tab.Container, { id: "left-tabs-example9", defaultActiveKey: "feature-0" },
@@ -464,17 +561,16 @@ footer {
                                 React.createElement(Tab, { eventKey: "tests", title: React.createElement(NavLink, { to: "/tests", className: "nav-link" }, "TestPup") }),
                                 React.createElement(Tab, { eventKey: "taskMan", title: React.createElement(NavLink, { to: "/taskMan/features", className: "nav-link" }, "TaskMan") }),
                                 React.createElement(Tab, { eventKey: "docGal", title: React.createElement(NavLink, { to: "/docGal/fs", className: "nav-link" }, "DocGal") }),
-                                React.createElement(Tab, { eventKey: "chatCat", title: React.createElement(NavLink, { to: "/chatCat/people", className: "nav-link" }, "ChatCat") })))),
+                                React.createElement(Tab, { eventKey: "chatCat", title: React.createElement(NavLink, { to: "/chatCat/mostRecent", className: "nav-link" }, "ChatCat") }),
+                                React.createElement(Tab, { eventKey: "whoThat", title: React.createElement(NavLink, { to: "/whoThat/people", className: "nav-link" }, "WhoThat") })))),
                     React.createElement(ButtonGroup, { className: "mb-2" },
                         React.createElement(Button, { id: "login", value: "1", onChange: (e) => setAdminMode(!adminMode) }, "Login")))),
             React.createElement(Routes, null,
                 React.createElement(Route, { path: "/tests", element: React.createElement(Tests, { adminMode: adminMode, features: features, results: state.results, tests: tests }) }),
-                React.createElement(Route, { path: "/chatCat/people", element: React.createElement(ChatCat, { chatCatRooms: chatCatRooms, chatCatHuddles: [], users: users },
+                React.createElement(Route, { path: "/chatCat/mostRecent", element: React.createElement(ChatCat, { chatCatRooms: chatCatRooms, chatCatHuddles: [], users: users },
                         React.createElement(ChatCatPeople, { users: users })) }),
-                React.createElement(Route, { path: "/chatCat/conversations", element: React.createElement(ChatCat, { chatCatRooms: chatCatRooms, chatCatHuddles: [], users: users },
+                React.createElement(Route, { path: "/chatCat/bySubject", element: React.createElement(ChatCat, { chatCatRooms: chatCatRooms, chatCatHuddles: [], users: users },
                         React.createElement(ChatCatConversations, { users: users, conversations: [] })) }),
-                React.createElement(Route, { path: "/chatCat/rooms", element: React.createElement(ChatCat, { chatCatRooms: chatCatRooms, chatCatHuddles: [], users: users },
-                        React.createElement(ChatCatRooms, { users: users, rooms: [] })) }),
                 React.createElement(Route, { path: "/docGal/fs", element: React.createElement(DocGal, { adminMode: adminMode, setAdminMode: setAdminMode, users: users },
                         React.createElement(DocGalFs, { docGalFs: docGalFs })) }),
                 React.createElement(Route, { path: "/docGal/db", element: React.createElement(DocGal, { adminMode: adminMode, setAdminMode: setAdminMode, users: users },
@@ -486,8 +582,12 @@ footer {
                             } })) }),
                 React.createElement(Route, { path: "/taskMan/gantt", element: React.createElement(TaskMan, { adminMode: adminMode, setAdminMode: setAdminMode, users: users },
                         React.createElement(GanttChart, { adminMode: adminMode, gantt: gantt, features: features, results: state.results, tests: tests })) }),
-                React.createElement(Route, { path: "/taskMan/users", element: React.createElement(TaskMan, { adminMode: adminMode, setAdminMode: setAdminMode, users: users },
-                        React.createElement(Users, { adminMode: adminMode, users: users })) }))),
+                React.createElement(Route, { path: "/whoThat/people", element: React.createElement(WhoThat, { users: users },
+                        React.createElement(Users, { adminMode: adminMode, users: users })) }),
+                React.createElement(Route, { path: "/whoThat/groups", element: React.createElement(WhoThat, { users: users },
+                        React.createElement(Users, { adminMode: adminMode, users: users })) }),
+                React.createElement(Route, { path: "/whoThat/org", element: React.createElement(WhoThat, { users: users },
+                        React.createElement(OrgChart, { adminMode: adminMode, users: users })) }))),
         React.createElement("footer", null,
             "made with \u2764\uFE0F and ",
             React.createElement("a", { href: "https://adamwong246.github.io/testeranto/" }, "testeranto "))));

@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 export interface IUser {
     email: string;
+    channels: string[];
+    dmgroups: string[];
 }
 export declare const userSchema: mongoose.Schema<IUser, mongoose.Model<IUser, any, any, any, mongoose.Document<unknown, any, IUser> & IUser & {
     _id: mongoose.Types.ObjectId;
@@ -56,6 +58,15 @@ export declare const featuresSchema: mongoose.Schema<IFeature, mongoose.Model<IF
 } & {
     __v: number;
 }>;
+export declare const channelsFeature: mongoose.Schema<IChatChannel, mongoose.Model<IChatChannel, any, any, any, mongoose.Document<unknown, any, IChatChannel> & IChatChannel & {
+    _id: mongoose.Types.ObjectId;
+} & {
+    __v: number;
+}, any>, {}, {}, {}, {}, mongoose.DefaultSchemaOptions, IChatChannel, mongoose.Document<unknown, {}, mongoose.FlatRecord<IChatChannel>> & mongoose.FlatRecord<IChatChannel> & {
+    _id: mongoose.Types.ObjectId;
+} & {
+    __v: number;
+}>;
 export declare const chatCatMessageSchema: mongoose.Schema<any, mongoose.Model<any, any, any, any, any, any>, {}, {}, {}, {}, mongoose.DefaultSchemaOptions, {
     user: mongoose.Types.ObjectId;
     room: mongoose.Types.ObjectId;
@@ -78,6 +89,10 @@ export declare const chatCatMessageSchema: mongoose.Schema<any, mongoose.Model<a
 }>;
 export interface IChatChannel {
     users: string[];
+    messages: [{
+        type: mongoose.Schema.Types.ObjectId;
+        ref: "Message";
+    }];
 }
 export interface IChatCatHuddle {
     users: {

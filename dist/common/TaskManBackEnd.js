@@ -3,23 +3,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.chatChannel = void 0;
 const express_1 = __importDefault(require("express"));
 const mongodb_1 = require("mongodb");
 const mongoose_1 = __importDefault(require("mongoose"));
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const mongooseSchemas_1 = require("./mongooseSchemas");
-exports.chatChannel = new mongoose_1.default.Schema({
-    // name: { type: String, required: true },
-    users: [
-        {
-            type: mongoose_1.default.Schema.Types.ObjectId,
-            ref: "User",
-            required: true,
-        },
-    ],
-});
+// export const chatChannel = new mongoose.Schema<IChatChannel>({
+//   // name: { type: String, required: true },
+//   users: [
+//     {
+//       type: mongoose.Schema.Types.ObjectId,
+//       ref: "User",
+//       required: true,
+//     },
+//   ],
+// });
 const app = (0, express_1.default)();
 const port = 3000;
 function findTextFiles(dir, fileList = []) {
@@ -70,9 +69,14 @@ new mongodb_1.MongoClient(`mongodb://localhost:27017`).connect().then(async (con
     const featuresModel = mongoose_1.default.model("Features", mongooseSchemas_1.featuresSchema);
     // const roomsModel = mongoose.model<any>("Rooms", RoomSchema);
     // const huddleModdle = mongoose.model<any>("Huddles", HuddleSchema);
-    const ChatChannel = mongoose_1.default.model("ChatChannel", exports.chatChannel);
+    const MessagesModel = mongoose_1.default.model("Messages", mongooseSchemas_1.chatCatMessageSchema);
+    const ChatChannel = mongoose_1.default.model("ChatChannel", mongooseSchemas_1.channelsFeature);
     const huddleModdle = ChatChannel.discriminator("Huddle", mongooseSchemas_1.HuddleSchema);
     const roomsModel = ChatChannel.discriminator("Room", mongooseSchemas_1.RoomSchema);
+    app.get(`/preMergeCheck`, async (req, res) => {
+        const commit = req.params["commit"];
+        // res.json(await keyedModels[key].find({}));
+    });
     app.get("/TaskManFrontend.js", (req, res) => {
         res.sendFile(`${process.cwd()}/node_modules/testeranto/dist/prebuild/TaskManFrontEnd.js`);
     });
@@ -113,6 +117,7 @@ new mongodb_1.MongoClient(`mongodb://localhost:27017`).connect().then(async (con
         gantts: ganttModel,
         rooms: roomsModel,
         huddles: huddleModdle,
+        messages: MessagesModel,
     };
     Object.keys(keyedModels).forEach((key) => {
         app.get(`/${key}.json`, async (req, res) => {

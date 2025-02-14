@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 export const userSchema = new mongoose.Schema({
     email: String,
+    channels: [{ type: mongoose.Schema.Types.ObjectId, ref: "Channel" }],
+    dmgroups: [{ type: mongoose.Schema.Types.ObjectId, ref: "Dmgroup" }],
 });
 userSchema.virtual("features", {
     ref: "Feature",
@@ -20,6 +22,7 @@ export const featuresSchema = new mongoose.Schema({
     title: String,
     state: String,
 });
+export const channelsFeature = new mongoose.Schema({});
 export const chatCatMessageSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,

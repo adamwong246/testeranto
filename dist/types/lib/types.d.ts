@@ -10,6 +10,7 @@ export declare type IJsonConfig = {
     outdir: string;
     tests: ITestTypes[];
     features: string;
+    botEmail: string;
 };
 export declare type IBaseConfig = {
     clearScreen: boolean;
@@ -24,6 +25,7 @@ export declare type IBaseConfig = {
     ports: string[];
     tests: ITestTypes[];
     webPlugins: any[];
+    botEmail: string;
 };
 export declare type IBuiltConfig = {
     buildDir: string;
