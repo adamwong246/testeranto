@@ -1,0 +1,7 @@
+# [START app_yaml]
+
+runtime: nodejs20
+
+service: node-express-api
+
+# [END app_yaml]
