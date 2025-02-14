@@ -3,10 +3,10 @@ name: Deploy to Goggle App Engine (GAE)
 on:
   push:
     branches:
-      - main
-  pull_request:
-    branches:
-      - main
+      - master
+  # pull_request:
+  #   branches:
+  #     - master
 
 jobs:
   build-and-deploy:
