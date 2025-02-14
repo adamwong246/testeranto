@@ -1,107 +1,83 @@
 import express from "express";
 import { MongoClient } from "mongodb";
+import mongoose from "mongoose";
 import path from "path";
-const conn = await new MongoClient(`mongodb://localhost:27017`).connect();
-const db = conn.db("taskman");
-const featuresCollection = db.collection("features");
-await featuresCollection.insertOne({
-    title: "chores",
-    element: "task",
+import fs from "fs";
+import { ganttSchema, kanbanSchema, userSchema, featuresSchema, RoomSchema, HuddleSchema, } from "./mongooseSchemas";
+export const chatChannel = new mongoose.Schema({
+    // name: { type: String, required: true },
+    users: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: true,
+        },
+    ],
 });
-await featuresCollection.insertOne({
-    title: "Walk dog",
-});
-await featuresCollection.insertOne({
-    title: "Take out trash",
-});
-// const collection = db.collection("nodes");
-// await collection.insertOne({
-//   title: "chores",
-//   element: "task",
-// });
-// await collection.insertOne({
-//   title: "Walk dog",
-//   element: "task",
-// });
-// await collection.insertOne({
-//   title: "Take out trash",
-//   element: "task",
-// });
-// await collection.insertOne({
-//   title: "todo",
-//   element: "progress_state",
-// });
-// await collection.insertOne({
-//   title: "in progress",
-//   element: "progress_state",
-// });
-// await collection.insertOne({
-//   title: "done",
-//   element: "progress_state",
-// });
-// await collection.insertOne({
-//   title: "some major release",
-//   element: "milestone",
-// });
-// await collection.insertOne({
-//   title: "some minor release",
-//   element: "milestone",
-// });
-// /////////////////////////////////////////////////////////////////
-// const collectionOfEdges = db.collection("Edges");
-// await collectionOfEdges.insertOne({
-//   title: "is part of",
-//   elementA: "task",
-//   elementB: "task",
-// });
-// await collectionOfEdges.insertOne({
-//   title: "duplicates",
-//   elementA: "task",
-//   elementB: "task",
-// });
-// await collectionOfEdges.insertOne({
-//   title: "in conflict with",
-//   elementA: "task",
-//   elementB: "task",
-// });
-// await collectionOfEdges.insertOne({
-//   title: "moves to",
-//   elementA: "progress_state",
-//   elementB: "progress_state",
-// });
-// await collectionOfEdges.insertOne({
-//   title: "comes before",
-//   elementA: "milestone",
-//   elementB: "milestone",
-// });
-// await collectionOfEdges.insertOne({
-//   title: "is in the progress state of",
-//   elementA: "task",
-//   elementB: "progress_state",
-// });
-// await collectionOfEdges.insertOne({
-//   title: "is in the milestone",
-//   elementA: "task",
-//   elementB: "milestone",
-// });
-// await collection.insertOne({
-//   title: "Walk dog",
-//   element: "task",
-// });
 const app = express();
 const port = 3000;
-app.get("/TaskManFrontend.js", (req, res) => {
-    res.sendFile(`${process.cwd()}/node_modules/testeranto/dist/prebuild/TaskManFrontEnd.js`);
-});
-app.get("/TaskManFrontEnd.css", (req, res) => {
-    res.sendFile(`${process.cwd()}/node_modules/testeranto/dist/prebuild/TaskManFrontEnd.css`);
-});
-app.get("/testeranto.json", (req, res) => {
-    res.sendFile(`${process.cwd()}/docs/testeranto.json`);
-});
-// app.get("TaskManFrontEnd.js", (req));
-app.get("/", (req, res) => {
-    res.send(`<!DOCTYPE html>
+function findTextFiles(dir, fileList = []) {
+    const files = fs.readdirSync(dir);
+    for (const file of files) {
+        const filePath = path.join(dir, file);
+        const fileStat = fs.statSync(filePath);
+        if (fileStat.isDirectory() && file !== "node_modules") {
+            findTextFiles(filePath, fileList); // Recursive call for subdirectories
+        }
+        else if (path.extname(file) === ".txt") {
+            fileList.push(filePath);
+        }
+        else if (path.extname(file) === ".md") {
+            fileList.push(filePath);
+        }
+    }
+    return fileList;
+}
+function listToTree(fileList) {
+    const root = {
+        name: "root",
+        children: [],
+    };
+    for (const path of fileList) {
+        const parts = path.split("/");
+        let current = root;
+        for (let i = 0; i < parts.length; i++) {
+            const part = parts[i];
+            if (!part)
+                continue; // Skip empty parts (e.g., from leading '/')
+            let child = current.children.find((c) => c.name === part);
+            if (!child) {
+                child = { name: part, children: [] };
+                current.children.push(child);
+            }
+            current = child;
+        }
+    }
+    return root.children;
+}
+new MongoClient(`mongodb://localhost:27017`).connect().then(async (conn) => {
+    const db = conn.db("taskman");
+    await mongoose.connect("mongodb://127.0.0.1:27017/taskman");
+    const usersModel = mongoose.model("User", userSchema);
+    const kanbanModel = mongoose.model("Kanban", kanbanSchema);
+    const ganttModel = mongoose.model("Gantt", ganttSchema);
+    const featuresModel = mongoose.model("Features", featuresSchema);
+    // const roomsModel = mongoose.model<any>("Rooms", RoomSchema);
+    // const huddleModdle = mongoose.model<any>("Huddles", HuddleSchema);
+    const ChatChannel = mongoose.model("ChatChannel", chatChannel);
+    const huddleModdle = ChatChannel.discriminator("Huddle", HuddleSchema);
+    const roomsModel = ChatChannel.discriminator("Room", RoomSchema);
+    app.get("/TaskManFrontend.js", (req, res) => {
+        res.sendFile(`${process.cwd()}/node_modules/testeranto/dist/prebuild/TaskManFrontEnd.js`);
+    });
+    app.get("/TaskManFrontEnd.css", (req, res) => {
+        res.sendFile(`${process.cwd()}/node_modules/testeranto/dist/prebuild/TaskManFrontEnd.css`);
+    });
+    app.get("/testeranto.json", (req, res) => {
+        res.sendFile(`${process.cwd()}/docs/testeranto.json`);
+    });
+    app.get("/", (req, res) => {
+        res.send(`<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -119,21 +95,51 @@ app.get("/", (req, res) => {
 <body><div id="root">react is loading</div></body>
 
 </html>`);
+    });
+    app.listen(port, () => {
+        console.log(`Example app listening on port ${port}`);
+    });
+    ///////////////////////////////////////////////
+    const keyedModels = {
+        users: usersModel,
+        kanbans: kanbanModel,
+        features: featuresModel,
+        gantts: ganttModel,
+        rooms: roomsModel,
+        huddles: huddleModdle,
+    };
+    Object.keys(keyedModels).forEach((key) => {
+        app.get(`/${key}.json`, async (req, res) => {
+            console.log("GET", key, keyedModels[key]);
+            res.json(await keyedModels[key].find({}));
+        });
+        app.get(`/${key}/:id.json`, async (req, res) => {
+            res.json(await keyedModels[key].find({ id: { $eq: req.params["id"] } }).toArray());
+        });
+        app.post(`/${key}/:id.json`, async (req, res) => {
+            res.json(await keyedModels[key].find({ id: { $eq: req.params["id"] } }).toArray());
+        });
+        app.post(`/${key}.json`, async (req, res) => {
+            res.json(await keyedModels[key].find({ id: { $eq: req.params["id"] } }).toArray());
+        });
+    });
+    app.use("/docs", express.static(path.join(process.cwd(), "docs")));
+    app.get("/docGal/fs.json", (req, res) => {
+        const directoryPath = "./"; // Replace with the desired directory path
+        // const textFiles = findTextFiles(directoryPath);
+        res.json(listToTree(findTextFiles(directoryPath)));
+        //     res.send(`<!DOCTYPE html>
+        // <html lang="en">
+        // <head>
+        //   <meta name="description" content="Webpage description goes here" />
+        //   <meta charset="utf-8" />
+        //   <meta name="viewport" content="width=device-width, initial-scale=1" />
+        //   <meta name="author" content="" />
+        //   <title>TaskMan</title>
+        //   <link rel="stylesheet" href="/TaskManFrontEnd.css" />
+        //   <script type="module" src="/TaskManFrontEnd.js"></script>
+        // </head>
+        // <body><div id="root">react is loading</div></body>
+        // </html>`);
+    });
 });
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
-});
-///////////////////////////////////////////////
-app.get("/features", async (req, res) => {
-    // featuresCollection.find({}).toArray(function (err, result) {
-    //   if (err) throw err;
-    //   console.log(result);
-    //   db.close();
-    // });
-    res.json(await featuresCollection.find({}).toArray());
-    // res.sendFile(
-    //   `${process.cwd()}/node_modules/testeranto/dist/prebuild/TaskManFrontEnd.js`
-    // );
-});
-// const path = require("path");
-app.use("/docs", express.static(path.join(process.cwd(), "docs")));
