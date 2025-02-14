@@ -3,6 +3,7 @@ import { ITProject } from "testeranto/src/Project";
 import { solidityEsBuildConfig } from "./subPackages/solidity/index.js";
 
 export default new ITProject({
+  botEmail: "testeranto.kokomobay@gmail.com",
   outdir: "docs",
   features: "/Users/adam/Code/kokomoBay/features.test.mts",
   tests: [
