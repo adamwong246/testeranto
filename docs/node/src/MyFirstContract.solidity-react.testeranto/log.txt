@@ -1,6 +1,0 @@
-test resources: ,{"scheduled":true,"name":"./src/MyFirstContract.solidity-react.testeranto.ts","ports":["3002"],"fs":"/Users/adam/Code/kokomoBay/docs/node/src/MyFirstContract.solidity-react.testeranto","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/2b90d410-8b7e-4229-b8ad-244632ef2d00"}
-
-Suite:,0,Testing a very simple smart contract over RPC
-
- Given: Default
- Then:,Get: [object Object]

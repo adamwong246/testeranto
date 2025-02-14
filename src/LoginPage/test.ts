@@ -49,12 +49,12 @@ export const LoginPageSpecs: ITestSpecification<ILoginPageSpecs> = (
       "Testing the LoginPage as react",
       {
         test0: Given.default(
-          ["root"],
+          ["67ae06bac3c5fa5a98a08e32"],
           [When.TheEmailIsSetTo("adam@email.com")],
           [Then.TheEmailIs("adam@email.com")]
         ),
         test1: Given.default(
-          [],
+          [`67ae06bac3c5fa5a98a08e32`],
           [
             When.TheEmailIsSetTo("adam@email.com"),
             When.ThePasswordIsSetTo("secret"),
@@ -67,17 +67,17 @@ export const LoginPageSpecs: ITestSpecification<ILoginPageSpecs> = (
           ]
         ),
         test2: Given.default(
-          [`aloha`],
+          [`67ae06bac3c5fa5a98a08e32`],
           [When.TheEmailIsSetTo("adam@email.com")],
           [Then.ThereIsNotAnEmailError()]
         ),
         test3: Given.default(
-          [],
+          [`67ae06bac3c5fa5a98a08e32`],
           [When.TheEmailIsSetTo("bob"), When.TheLoginIsSubmitted()],
           [Then.ThereIsAnEmailError()]
         ),
         test4: Given.default(
-          [],
+          [`67ae06bac3c5fa5a98a08e32`],
           [
             When.TheEmailIsSetTo("adam@mail.com"),
             When.ThePasswordIsSetTo("foso"),
@@ -85,7 +85,7 @@ export const LoginPageSpecs: ITestSpecification<ILoginPageSpecs> = (
           [Then.ThereIsNotAnEmailError()]
         ),
         test5: Given.default(
-          [],
+          [`67ae44eceef213d8f11c40bb`],
           [
             When.TheEmailIsSetTo("adam@mail.com"),
             When.ThePasswordIsSetTo("foso"),
