@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.79.38",
+  "version": "0.79.41",
   "engines": {
     "node": "18.18.0"
   },
@@ -140,6 +140,10 @@
     "./src/TaskManBackEnd": {
       "import": "./dist/module/TaskManBackEnd.js",
       "require": "./dist/common/TaskManBackEnd.js"
+    },
+    "./src/Init": {
+      "import": "./dist/module/Init.js",
+      "require": "./dist/common/Init.js"
     },
     "./src/preload": {
       "import": "./dist/module/preload.js",
