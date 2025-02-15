@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.79.32",
+  "version": "0.79.35",
   "engines": {
     "node": "18.18.0"
   },
@@ -133,9 +133,9 @@
       "import": "./src/Node.ts",
       "require": "./src/Node.ts"
     },
-    "./src/electron": {
-      "import": "./dist/module/electron.js",
-      "require": "./dist/common/electron.js"
+    "./src/TaskManBackEnd": {
+      "import": "./dist/module/TaskManBackEnd.js",
+      "require": "./dist/common/TaskManBackEnd.js"
     },
     "./src/preload": {
       "import": "./dist/module/preload.js",
@@ -179,8 +179,7 @@
     "dev": "cp ./src/cjs-shim.js ./dist/cjs-shim.js && tsc -p tsconfig.module.json --watch & tsc -p tsconfig.common.json --watch & tsc -p tsconfig.types.json --watch & yarn esbuild src/TaskManFrontEnd.tsx --outfile=dist/prebuild/TaskManFrontEnd.js --bundle --watch & yarn esbuild src/TaskManBackEnd.ts --platform=node  --outfile=dist/prebuild/TaskManBackEnd.mjs --bundle --watch --format=esm --packages=external",
     "build-module": "tsc -p tsconfig.module.json",
     "build-common": "tsc -p tsconfig.common.json",
-    "build-types": "tsc -p tsconfig.types.json",
-    "build-electron": "ts-node-esm electronBuild.ts"
+    "build-types": "tsc -p tsconfig.types.json"
   },
   "peerDependencies": {
     "@hello-pangea/dnd": ">=16",
