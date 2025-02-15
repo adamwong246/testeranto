@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.79.22",
+  "version": "0.79.23",
   "engines": {
     "node": "18.18.0"
   },
@@ -121,10 +121,6 @@
       "import": "./dist/module/Features.js",
       "require": "./dist/common/Features.js"
     },
-    "./src/Report": {
-      "import": "./dist/module/Report.js",
-      "require": "./dist/common/Report.js"
-    },
     "./src/Project": {
       "import": "./dist/module/Project.js",
       "require": "./dist/common/Project.js"
@@ -179,8 +175,8 @@
   "scripts": {
     "commit": "yarn build; git add --all && git commit -m 'stash'",
     "doit": "rm -rf node_modules && yarn install && yarn build",
-    "build": "sh prebuild.sh; cp ./src/cjs-shim.js ./dist/cjs-shim.js; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; yarn esbuild src/Report.tsx --outfile=dist/prebuild/Report.js --bundle --external:testeranto.json --external:features.test.js --external:tests.json; yarn esbuild src/TaskManFrontEnd.tsx --outfile=dist/prebuild/TaskManFrontEnd.js --bundle; yarn esbuild src/TaskManBackEnd.ts --outfile=dist/prebuild/TaskManBackEnd.mjs --bundle --platform=node --format=esm --packages=external; sh postBuild.sh; ",
-    "dev": "cp ./src/cjs-shim.js ./dist/cjs-shim.js && tsc -p tsconfig.module.json --watch & tsc -p tsconfig.common.json --watch & tsc -p tsconfig.types.json --watch & yarn esbuild src/Report.tsx --outfile=dist/prebuild/Report.js --bundle --external:testeranto.json --external:features.test.js --external:tests.json --watch & yarn esbuild src/TaskManFrontEnd.tsx --outfile=dist/prebuild/TaskManFrontEnd.js --bundle --watch & yarn esbuild src/TaskManBackEnd.ts --platform=node  --outfile=dist/prebuild/TaskManBackEnd.mjs --bundle --watch --format=esm --packages=external",
+    "build": "sh prebuild.sh; cp ./src/cjs-shim.js ./dist/cjs-shim.js; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; yarn esbuild src/TaskManFrontEnd.tsx --outfile=dist/prebuild/TaskManFrontEnd.js --bundle; yarn esbuild src/TaskManBackEnd.ts --outfile=dist/prebuild/TaskManBackEnd.mjs --bundle --platform=node --format=esm --packages=external; sh postBuild.sh; ",
+    "dev": "cp ./src/cjs-shim.js ./dist/cjs-shim.js && tsc -p tsconfig.module.json --watch & tsc -p tsconfig.common.json --watch & tsc -p tsconfig.types.json --watch & yarn esbuild src/TaskManFrontEnd.tsx --outfile=dist/prebuild/TaskManFrontEnd.js --bundle --watch & yarn esbuild src/TaskManBackEnd.ts --platform=node  --outfile=dist/prebuild/TaskManBackEnd.mjs --bundle --watch --format=esm --packages=external",
     "build-module": "tsc -p tsconfig.module.json",
     "build-common": "tsc -p tsconfig.common.json",
     "build-types": "tsc -p tsconfig.types.json",
