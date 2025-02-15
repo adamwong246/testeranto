@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.79.23",
+  "version": "0.79.24",
   "engines": {
     "node": "18.18.0"
   },
