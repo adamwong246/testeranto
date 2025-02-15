@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.79.35",
+  "version": "0.79.36",
   "engines": {
     "node": "18.18.0"
   },
@@ -132,6 +132,10 @@
     "./src/Node": {
       "import": "./src/Node.ts",
       "require": "./src/Node.ts"
+    },
+    "./src/Puppeteer": {
+      "import": "./dist/module/Puppeteer.js",
+      "require": "./dist/common/Puppeteer.js"
     },
     "./src/TaskManBackEnd": {
       "import": "./dist/module/TaskManBackEnd.js",
