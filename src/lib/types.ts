@@ -19,7 +19,6 @@ export type ITestTypes = [string, IRunTime, { ports: number }, ITestTypes[]];
 export type IJsonConfig = {
   outdir: string;
   tests: ITestTypes[];
-  features: string;
   botEmail: string;
 };
 
@@ -28,7 +27,6 @@ export type IBaseConfig = {
   debugger: boolean;
   devMode: boolean;
   externals: string[];
-  features: string;
   minify: boolean;
   nodePlugins: any[];
   outbase: string;

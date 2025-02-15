@@ -6,11 +6,7 @@ import { glob } from "glob";
 
 import esbuildNodeConfiger from "./esbuildConfigs/node.js";
 import esbuildWebConfiger from "./esbuildConfigs/web.js";
-import esbuildFeaturesConfiger from "./esbuildConfigs/features.js";
-
 import webHtmlFrame from "./web.html.js";
-import reportHtmlFrame from "./report.html.js";
-
 import { ITestTypes, IBaseConfig, IRunTime } from "./lib/types.js";
 
 var mode: "DEV" | "PROD" = process.argv[2] === "-dev" ? "DEV" : "PROD";
@@ -26,18 +22,9 @@ process.stdin.on("keypress", (str, key) => {
   }
 });
 
-// setInterval(() => {
-//   const memoryUsage = process.memoryUsage();
-//   console.log("Memory usage:", memoryUsage);
-// }, 10000); // Check every 10 seconds
-
-let featuresDone,
-  nodeDone,
+let nodeDone,
   webDone = false;
-const onFeaturesDone = () => {
-  featuresDone = true;
-  onDone();
-};
+
 const onNodeDone = () => {
   nodeDone = true;
   onDone();
@@ -51,7 +38,6 @@ const onDone = () => {
   console.log(
     JSON.stringify(
       {
-        featuresDone,
         nodeDone,
         webDone,
         mode,
@@ -60,7 +46,7 @@ const onDone = () => {
       2
     )
   );
-  if (featuresDone && nodeDone && webDone && mode === "PROD") {
+  if (nodeDone && webDone && mode === "PROD") {
     console.log("Testeranto-EsBuild is all done. Goodbye!");
     process.exit();
   } else {
@@ -72,8 +58,20 @@ export class ITProject {
   config: IBaseConfig;
   mode: `up` | `down` = `up`;
 
-  constructor(config: IBaseConfig) {
-    this.config = config;
+  constructor(configs: IBaseConfig) {
+    this.config = configs;
+
+    fs.writeFileSync(
+      `${this.config.outdir}/testeranto.json`,
+      JSON.stringify(
+        {
+          ...this.config,
+          buildDir: process.cwd() + "/" + this.config.outdir,
+        },
+        null,
+        2
+      )
+    );
 
     Promise.resolve(
       Promise.all(
@@ -88,7 +86,7 @@ export class ITProject {
               .join(".");
 
             const htmlFilePath = path.normalize(
-              `${process.cwd()}/${config.outdir}/web/${sourceDir.join(
+              `${process.cwd()}/${this.config.outdir}/web/${sourceDir.join(
                 "/"
               )}/${sourceFileNameMinusJs}.html`
             );
@@ -113,75 +111,18 @@ export class ITProject {
       `this.getSecondaryEndpointsPoints("web")`,
       this.getSecondaryEndpointsPoints("web")
     );
-    // console.log("nodeEntryPoints", nodeEntryPoints);
-    // console.log("webEntryPoints", webEntryPoints);
 
-    // nodeEntryPoints.forEach((nep) => {
-    //   const f = `${process.cwd()}/${nep}`;
-    //   console.log("nep", f);
-    //   import(f).then((module) => {
-    //     return module.default.then((defaultModule) => {
-    //       console.log("defaultModule", defaultModule);
-    //       // defaultModule
-    //       //   .receiveTestResourceConfig(argz)
-    //       //   .then((x) => {
-    //       //     console.log("then", x);
-    //       //     return x;
-    //       //   })
-    //       //   .catch((e) => {
-    //       //     console.log("catch", e);
-    //       //   });
-    //     });
-    //   });
-    // });
-
-    glob(`./${config.outdir}/chunk-*.mjs`, { ignore: "node_modules/**" }).then(
-      (chunks) => {
-        chunks.forEach((chunk) => {
-          fs.unlinkSync(chunk);
-        });
-      }
-    );
-
-    fs.copyFileSync(
-      "./node_modules/testeranto/dist/prebuild/Report.js",
-      "./docs/Report.js"
-    );
-    fs.copyFileSync(
-      "./node_modules/testeranto/dist/prebuild/Report.css",
-      "./docs/Report.css"
-    );
-
-    fs.writeFileSync(`${config.outdir}/report.html`, reportHtmlFrame());
+    glob(`./${this.config.outdir}/chunk-*.mjs`, {
+      ignore: "node_modules/**",
+    }).then((chunks) => {
+      chunks.forEach((chunk) => {
+        fs.unlinkSync(chunk);
+      });
+    });
 
     Promise.all([
-      fs.promises.writeFile(
-        `${config.outdir}/testeranto.json`,
-        JSON.stringify(
-          {
-            ...config,
-            buildDir: process.cwd() + "/" + config.outdir,
-          },
-          null,
-          2
-        )
-      ),
       esbuild
-        .context(esbuildFeaturesConfiger(config))
-        .then(async (featuresContext) => {
-          if (mode == "DEV") {
-            await featuresContext.watch();
-            onFeaturesDone();
-          } else {
-            featuresContext.rebuild().then((v) => {
-              onFeaturesDone();
-            });
-          }
-
-          return featuresContext;
-        }),
-      esbuild
-        .context(esbuildNodeConfiger(config, nodeEntryPoints))
+        .context(esbuildNodeConfiger(this.config, nodeEntryPoints))
         .then(async (nodeContext) => {
           if (mode == "DEV") {
             await nodeContext.watch().then((v) => {
@@ -196,7 +137,7 @@ export class ITProject {
           return nodeContext;
         }),
       esbuild
-        .context(esbuildWebConfiger(config, webEntryPoints))
+        .context(esbuildWebConfiger(this.config, webEntryPoints))
         .then(async (webContext) => {
           if (mode == "DEV") {
             await webContext.watch().then((v) => {

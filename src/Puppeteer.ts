@@ -1,10 +1,6 @@
 import readline from "readline";
 import fs from "fs";
-import path from "path";
-import { jsonc } from "jsonc";
-import { v4 as uuidv4 } from "uuid";
-
-import { IBuiltConfig, IRunTime } from "./lib/types";
+import watch from "recursive-watch";
 
 import { PM_Main } from "./PM/main.js";
 import { destinationOfRuntime } from "./utils.js";
@@ -18,6 +14,8 @@ const childProcesses: Record<string, "loaded" | "running" | "done"> = {};
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
 
+console.log("hello Puppeteer", process.env);
+
 console.log("\n Puppeteer is running. Press 'q' to quit\n");
 process.stdin.on("keypress", (str, key) => {
   if (key.name === "q") {
@@ -25,17 +23,30 @@ process.stdin.on("keypress", (str, key) => {
   }
 });
 
-const main = async () => {
-  const configs = jsonc.parse(
-    (await fs.readFileSync("./docs/testeranto.json")).toString()
-  ) as IBuiltConfig;
+export default async (partialConfig) => {
+  const config = {
+    ...partialConfig,
+    buildDir: process.cwd() + "/" + partialConfig.outdir,
+  };
 
-  const pm = new PM_Main(configs);
+  fs.writeFileSync(
+    `${config.outdir}/testeranto.json`,
+    JSON.stringify(
+      {
+        ...config,
+        buildDir: process.cwd() + "/" + config.outdir,
+      },
+      null,
+      2
+    )
+  );
+
+  const pm = new PM_Main(config);
 
   await pm.startPuppeteer(
     {
       waitForInitialPage: false,
-      executablePath: "/opt/homebrew/bin/chromium",
+      executablePath: process.env.CHROMIUM_PATH || "/opt/homebrew/bin/chromium", //"/opt/homebrew/bin/chromium",
       headless: true,
       // dumpio: true,
       args: [
@@ -73,58 +84,94 @@ const main = async () => {
     "."
   );
 
-  configs.tests.forEach(([test, runtime, tr, sidecars]) => {
+  config.tests.forEach(([test, runtime, tr, sidecars]) => {
     if (runtime === "node") {
-      pm.launchNode(test, destinationOfRuntime(test, "node", configs));
+      pm.launchNode(test, destinationOfRuntime(test, "node", config));
     } else if (runtime === "web") {
-      pm.launchWeb(test, destinationOfRuntime(test, "web", configs), sidecars);
+      pm.launchWeb(test, destinationOfRuntime(test, "web", config), sidecars);
     } else {
       console.error("runtime makes no sense", runtime);
     }
   });
 
-  console.log("ready and watching for changes...", configs.buildDir);
-  fs.watch(
-    configs.buildDir,
-    {
-      recursive: true,
-    },
-    (eventType, changedFile) => {
-      if (changedFile) {
-        configs.tests.forEach(([test, runtime, tr, sidecars]) => {
-          if (eventType === "change" || eventType === "rename") {
-            if (
-              changedFile ===
-              test
-                .replace("./", "node/")
-                .split(".")
-                .slice(0, -1)
-                .concat("mjs")
-                .join(".")
-            ) {
-              pm.launchNode(test, destinationOfRuntime(test, "node", configs));
-            }
+  console.log("ready and watching for changes...", config.buildDir);
 
-            if (
-              changedFile ===
-              test
-                .replace("./", "web/")
-                .split(".")
-                .slice(0, -1)
-                .concat("mjs")
-                .join(".")
-            ) {
-              pm.launchWeb(
-                test,
-                destinationOfRuntime(test, "web", configs),
-                sidecars
-              );
-            }
+  watch(config.buildDir, (eventType, changedFile) => {
+    if (changedFile) {
+      config.tests.forEach(([test, runtime, tr, sidecars]) => {
+        if (eventType === "change" || eventType === "rename") {
+          if (
+            changedFile ===
+            test
+              .replace("./", "node/")
+              .split(".")
+              .slice(0, -1)
+              .concat("mjs")
+              .join(".")
+          ) {
+            pm.launchNode(test, destinationOfRuntime(test, "node", config));
           }
-        });
-      }
-    }
-  );
-};
 
-main();
+          if (
+            changedFile ===
+            test
+              .replace("./", "web/")
+              .split(".")
+              .slice(0, -1)
+              .concat("mjs")
+              .join(".")
+          ) {
+            pm.launchWeb(
+              test,
+              destinationOfRuntime(test, "web", config),
+              sidecars
+            );
+          }
+        }
+      });
+    }
+  });
+
+  // does not work on linux
+  // fs.watch(
+  //   config.buildDir,
+  //   {
+  //     recursive: true,
+  //   },
+  //   (eventType, changedFile) => {
+  //     if (changedFile) {
+  //       config.tests.forEach(([test, runtime, tr, sidecars]) => {
+  //         if (eventType === "change" || eventType === "rename") {
+  //           if (
+  //             changedFile ===
+  //             test
+  //               .replace("./", "node/")
+  //               .split(".")
+  //               .slice(0, -1)
+  //               .concat("mjs")
+  //               .join(".")
+  //           ) {
+  //             pm.launchNode(test, destinationOfRuntime(test, "node", config));
+  //           }
+
+  //           if (
+  //             changedFile ===
+  //             test
+  //               .replace("./", "web/")
+  //               .split(".")
+  //               .slice(0, -1)
+  //               .concat("mjs")
+  //               .join(".")
+  //           ) {
+  //             pm.launchWeb(
+  //               test,
+  //               destinationOfRuntime(test, "web", config),
+  //               sidecars
+  //             );
+  //           }
+  //         }
+  //       });
+  //     }
+  //   }
+  // );
+};

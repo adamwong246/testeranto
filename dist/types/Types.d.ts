@@ -9,7 +9,7 @@ export declare type IEntry<ITestShape extends IBaseTest<unknown, unknown, unknow
 export declare type ITestSpecification<ITestShape extends IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>> = (Suite: {
     [K in keyof ITestShape["suites"]]: (name: string, givens: IGivens<ITestShape>, checks: BaseCheck<ITestShape>[]) => BaseSuite<ITestShape>;
 }, Given: {
-    [K in keyof ITestShape["givens"]]: (features: string[], whens: BaseWhen<ITestShape>[], thens: BaseThen<ITestShape>[], ...xtrasB: ITestShape["givens"][K]) => BaseGiven<ITestShape>;
+    [K in keyof ITestShape["givens"]]: (whens: BaseWhen<ITestShape>[], thens: BaseThen<ITestShape>[], ...xtrasB: ITestShape["givens"][K]) => BaseGiven<ITestShape>;
 }, When: {
     [K in keyof ITestShape["whens"]]: (...xtrasC: ITestShape["whens"][K]) => BaseWhen<ITestShape>;
 }, Then: {

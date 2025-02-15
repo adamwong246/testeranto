@@ -18,19 +18,11 @@ import {
   chatCatMessageSchema,
 } from "./mongooseSchemas";
 
-// export const chatChannel = new mongoose.Schema<IChatChannel>({
-//   // name: { type: String, required: true },
-//   users: [
-//     {
-//       type: mongoose.Schema.Types.ObjectId,
-//       ref: "User",
-//       required: true,
-//     },
-//   ],
-// });
+import { IBaseConfig } from "./lib/types";
 
-const app = express();
-const port = 3000;
+console.log("hello TaskMan Backend", process.env);
+
+const port = process.env.PORT || "8080";
 
 function findTextFiles(dir: string, fileList: string[] = []) {
   const files = fs.readdirSync(dir);
@@ -72,129 +64,165 @@ function listToTree(fileList) {
   return root.children;
 }
 
-new MongoClient(`mongodb://localhost:27017`).connect().then(async (conn) => {
-  const db = conn.db("taskman");
-  await mongoose.connect("mongodb://127.0.0.1:27017/taskman");
-
-  const usersModel = mongoose.model<IUser>("User", userSchema);
-  const kanbanModel = mongoose.model<IKanban>("Kanban", kanbanSchema);
-  const ganttModel = mongoose.model<IGantt>("Gantt", ganttSchema);
-  const featuresModel = mongoose.model<any>("Features", featuresSchema);
-  // const roomsModel = mongoose.model<any>("Rooms", RoomSchema);
-  // const huddleModdle = mongoose.model<any>("Huddles", HuddleSchema);
-
-  const MessagesModel = mongoose.model<any>("Messages", chatCatMessageSchema);
-
-  const ChatChannel = mongoose.model("ChatChannel", channelsFeature);
-  const huddleModdle = ChatChannel.discriminator("Huddle", HuddleSchema);
-  const roomsModel = ChatChannel.discriminator("Room", RoomSchema);
-
-  app.get(`/preMergeCheck`, async (req, res) => {
-    const commit = req.params["commit"];
-    // res.json(await keyedModels[key].find({}));
-  });
-
-  app.get("/TaskManFrontend.js", (req, res) => {
-    res.sendFile(
-      `${process.cwd()}/node_modules/testeranto/dist/prebuild/TaskManFrontEnd.js`
-    );
-  });
-
-  app.get("/TaskManFrontEnd.css", (req, res) => {
-    res.sendFile(
-      `${process.cwd()}/node_modules/testeranto/dist/prebuild/TaskManFrontEnd.css`
-    );
-  });
-
-  app.get("/testeranto.json", (req, res) => {
-    res.sendFile(`${process.cwd()}/docs/testeranto.json`);
-  });
-
-  app.get("/", (req, res) => {
-    res.send(`<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta name="description" content="Webpage description goes here" />
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="author" content="" />
-
-  <title>TaskMan</title>
-
-  <link rel="stylesheet" href="/TaskManFrontEnd.css" />
-  <script type="module" src="/TaskManFrontEnd.js"></script>
-</head>
-
-<body><div id="root">react is loading</div></body>
-
-</html>`);
-  });
-
-  app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
-  });
-
-  ///////////////////////////////////////////////
-
-  const keyedModels = {
-    users: usersModel,
-    kanbans: kanbanModel,
-    features: featuresModel,
-    gantts: ganttModel,
-    rooms: roomsModel,
-    huddles: huddleModdle,
-    messages: MessagesModel,
+export default (partialConfig: IBaseConfig) => {
+  const config = {
+    ...partialConfig,
+    buildDir: process.cwd() + "/" + partialConfig.outdir,
   };
 
-  Object.keys(keyedModels).forEach((key) => {
-    app.get(`/${key}.json`, async (req, res) => {
-      console.log("GET", key, keyedModels[key]);
-      res.json(await keyedModels[key].find({}));
-    });
+  fs.writeFileSync(
+    `${config.outdir}/testeranto.json`,
+    JSON.stringify(config, null, 2)
+  );
 
-    app.get(`/${key}/:id.json`, async (req, res) => {
-      res.json(
-        await keyedModels[key].find({ id: { $eq: req.params["id"] } }).toArray()
+  const app = express();
+
+  new MongoClient(`mongodb://${process.env.MONGO_HOST || "127.0.0.1"}:27017`)
+    .connect()
+    .then(async (conn) => {
+      const db = conn.db("taskman");
+      await mongoose.connect(
+        `mongodb://${process.env.MONGO_HOST || "127.0.0.1"}:27017/taskman`
       );
-    });
 
-    app.post(`/${key}/:id.json`, async (req, res) => {
-      res.json(
-        await keyedModels[key].find({ id: { $eq: req.params["id"] } }).toArray()
+      const usersModel = mongoose.model<IUser>("User", userSchema);
+      const kanbanModel = mongoose.model<IKanban>("Kanban", kanbanSchema);
+      const ganttModel = mongoose.model<IGantt>("Gantt", ganttSchema);
+      const featuresModel = mongoose.model<any>("Features", featuresSchema);
+      // const roomsModel = mongoose.model<any>("Rooms", RoomSchema);
+      // const huddleModdle = mongoose.model<any>("Huddles", HuddleSchema);
+
+      const MessagesModel = mongoose.model<any>(
+        "Messages",
+        chatCatMessageSchema
       );
+
+      const ChatChannel = mongoose.model("ChatChannel", channelsFeature);
+      const huddleModdle = ChatChannel.discriminator("Huddle", HuddleSchema);
+      const roomsModel = ChatChannel.discriminator("Room", RoomSchema);
+
+      app.get("/TaskManFrontend.js", (req, res) => {
+        res.sendFile(`${process.cwd()}/docs/TaskManFrontEnd.js`);
+      });
+
+      app.get("/TaskManFrontEnd.css", (req, res) => {
+        res.sendFile(`${process.cwd()}/docs/TaskManFrontEnd.css`);
+      });
+
+      // app.get(`/preMergeCheck`, async (req, res) => {
+      //   const commit = req.params["commit"];
+      //   // res.json(await keyedModels[key].find({}));
+      // });
+
+      // app.get("/TaskManFrontend.js", (req, res) => {
+      //   res.sendFile(
+      //     `${process.cwd()}/node_modules/testeranto/dist/prebuild/TaskManFrontEnd.js`
+      //   );
+      // });
+
+      // app.get("/TaskManFrontEnd.css", (req, res) => {
+      //   res.sendFile(
+      //     `${process.cwd()}/node_modules/testeranto/dist/prebuild/TaskManFrontEnd.css`
+      //   );
+      // });
+
+      // app.get("/testeranto.json", (req, res) => {
+      //   // res.sendFile(`${process.cwd()}/docs/testeranto.json`);
+      //   res.json(config);
+      // });
+
+      //       app.get("/", (req, res) => {
+      //         res.send(`<!DOCTYPE html>
+      // <html lang="en">
+
+      // <head>
+      //   <meta name="description" content="Webpage description goes here" />
+      //   <meta charset="utf-8" />
+      //   <meta name="viewport" content="width=device-width, initial-scale=1" />
+      //   <meta name="author" content="" />
+
+      //   <title>TaskMan</title>
+
+      //   <link rel="stylesheet" href="/TaskManFrontEnd.css" />
+      //   <script type="module" src="/TaskManFrontEnd.js"></script>
+      // </head>
+
+      // <body><div id="root">react is loading</div></body>
+
+      // </html>`);
+      //       });
+
+      app.listen(port, () => {
+        console.log(`Example app listening on port ${port}`);
+      });
+
+      ///////////////////////////////////////////////
+
+      const keyedModels = {
+        users: usersModel,
+        kanbans: kanbanModel,
+        features: featuresModel,
+        gantts: ganttModel,
+        rooms: roomsModel,
+        huddles: huddleModdle,
+        messages: MessagesModel,
+      };
+
+      Object.keys(keyedModels).forEach((key) => {
+        app.get(`/${key}.json`, async (req, res) => {
+          console.log("GET", key, keyedModels[key]);
+          res.json(await keyedModels[key].find({}));
+        });
+
+        app.get(`/${key}/:id.json`, async (req, res) => {
+          res.json(
+            await keyedModels[key]
+              .find({ id: { $eq: req.params["id"] } })
+              .toArray()
+          );
+        });
+
+        app.post(`/${key}/:id.json`, async (req, res) => {
+          res.json(
+            await keyedModels[key]
+              .find({ id: { $eq: req.params["id"] } })
+              .toArray()
+          );
+        });
+
+        app.post(`/${key}.json`, async (req, res) => {
+          res.json(
+            await keyedModels[key]
+              .find({ id: { $eq: req.params["id"] } })
+              .toArray()
+          );
+        });
+      });
+
+      app.use("/", express.static(path.join(process.cwd())));
+
+      app.get("/docGal/fs.json", (req, res) => {
+        const directoryPath = "./"; // Replace with the desired directory path
+        // const textFiles = findTextFiles(directoryPath);
+        res.json(listToTree(findTextFiles(directoryPath)));
+        //     res.send(`<!DOCTYPE html>
+        // <html lang="en">
+
+        // <head>
+        //   <meta name="description" content="Webpage description goes here" />
+        //   <meta charset="utf-8" />
+        //   <meta name="viewport" content="width=device-width, initial-scale=1" />
+        //   <meta name="author" content="" />
+
+        //   <title>TaskMan</title>
+
+        //   <link rel="stylesheet" href="/TaskManFrontEnd.css" />
+        //   <script type="module" src="/TaskManFrontEnd.js"></script>
+        // </head>
+
+        // <body><div id="root">react is loading</div></body>
+
+        // </html>`);
+      });
     });
-
-    app.post(`/${key}.json`, async (req, res) => {
-      res.json(
-        await keyedModels[key].find({ id: { $eq: req.params["id"] } }).toArray()
-      );
-    });
-  });
-
-  app.use("/docs", express.static(path.join(process.cwd(), "docs")));
-
-  app.get("/docGal/fs.json", (req, res) => {
-    const directoryPath = "./"; // Replace with the desired directory path
-    // const textFiles = findTextFiles(directoryPath);
-    res.json(listToTree(findTextFiles(directoryPath)));
-    //     res.send(`<!DOCTYPE html>
-    // <html lang="en">
-
-    // <head>
-    //   <meta name="description" content="Webpage description goes here" />
-    //   <meta charset="utf-8" />
-    //   <meta name="viewport" content="width=device-width, initial-scale=1" />
-    //   <meta name="author" content="" />
-
-    //   <title>TaskMan</title>
-
-    //   <link rel="stylesheet" href="/TaskManFrontEnd.css" />
-    //   <script type="module" src="/TaskManFrontEnd.js"></script>
-    // </head>
-
-    // <body><div id="root">react is loading</div></body>
-
-    // </html>`);
-  });
-});
+};

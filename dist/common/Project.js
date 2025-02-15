@@ -11,9 +11,7 @@ const readline_1 = __importDefault(require("readline"));
 const glob_1 = require("glob");
 const node_js_1 = __importDefault(require("./esbuildConfigs/node.js"));
 const web_js_1 = __importDefault(require("./esbuildConfigs/web.js"));
-const features_js_1 = __importDefault(require("./esbuildConfigs/features.js"));
 const web_html_js_1 = __importDefault(require("./web.html.js"));
-const report_html_js_1 = __importDefault(require("./report.html.js"));
 var mode = process.argv[2] === "-dev" ? "DEV" : "PROD";
 readline_1.default.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
@@ -25,15 +23,7 @@ process.stdin.on("keypress", (str, key) => {
         onDone();
     }
 });
-// setInterval(() => {
-//   const memoryUsage = process.memoryUsage();
-//   console.log("Memory usage:", memoryUsage);
-// }, 10000); // Check every 10 seconds
-let featuresDone, nodeDone, webDone = false;
-const onFeaturesDone = () => {
-    featuresDone = true;
-    onDone();
-};
+let nodeDone, webDone = false;
 const onNodeDone = () => {
     nodeDone = true;
     onDone();
@@ -44,12 +34,11 @@ const onWebDone = () => {
 };
 const onDone = () => {
     console.log(JSON.stringify({
-        featuresDone,
         nodeDone,
         webDone,
         mode,
     }, null, 2));
-    if (featuresDone && nodeDone && webDone && mode === "PROD") {
+    if (nodeDone && webDone && mode === "PROD") {
         console.log("Testeranto-EsBuild is all done. Goodbye!");
         process.exit();
     }
@@ -58,9 +47,10 @@ const onDone = () => {
     }
 };
 class ITProject {
-    constructor(config) {
+    constructor(configs) {
         this.mode = `up`;
-        this.config = config;
+        this.config = configs;
+        fs_1.default.writeFileSync(`${this.config.outdir}/testeranto.json`, JSON.stringify(Object.assign(Object.assign({}, this.config), { buildDir: process.cwd() + "/" + this.config.outdir }), null, 2));
         Promise.resolve(Promise.all([...this.getSecondaryEndpointsPoints("web")].map(async (sourceFilePath) => {
             const sourceFileSplit = sourceFilePath.split("/");
             const sourceDir = sourceFileSplit.slice(0, -1);
@@ -69,7 +59,7 @@ class ITProject {
                 .split(".")
                 .slice(0, -1)
                 .join(".");
-            const htmlFilePath = path_1.default.normalize(`${process.cwd()}/${config.outdir}/web/${sourceDir.join("/")}/${sourceFileNameMinusJs}.html`);
+            const htmlFilePath = path_1.default.normalize(`${process.cwd()}/${this.config.outdir}/web/${sourceDir.join("/")}/${sourceFileNameMinusJs}.html`);
             const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
             return fs_1.default.promises
                 .mkdir(path_1.default.dirname(htmlFilePath), { recursive: true })
@@ -77,52 +67,16 @@ class ITProject {
         })));
         const [nodeEntryPoints, webEntryPoints] = getRunnables(this.config.tests);
         console.log(`this.getSecondaryEndpointsPoints("web")`, this.getSecondaryEndpointsPoints("web"));
-        // console.log("nodeEntryPoints", nodeEntryPoints);
-        // console.log("webEntryPoints", webEntryPoints);
-        // nodeEntryPoints.forEach((nep) => {
-        //   const f = `${process.cwd()}/${nep}`;
-        //   console.log("nep", f);
-        //   import(f).then((module) => {
-        //     return module.default.then((defaultModule) => {
-        //       console.log("defaultModule", defaultModule);
-        //       // defaultModule
-        //       //   .receiveTestResourceConfig(argz)
-        //       //   .then((x) => {
-        //       //     console.log("then", x);
-        //       //     return x;
-        //       //   })
-        //       //   .catch((e) => {
-        //       //     console.log("catch", e);
-        //       //   });
-        //     });
-        //   });
-        // });
-        (0, glob_1.glob)(`./${config.outdir}/chunk-*.mjs`, { ignore: "node_modules/**" }).then((chunks) => {
+        (0, glob_1.glob)(`./${this.config.outdir}/chunk-*.mjs`, {
+            ignore: "node_modules/**",
+        }).then((chunks) => {
             chunks.forEach((chunk) => {
                 fs_1.default.unlinkSync(chunk);
             });
         });
-        fs_1.default.copyFileSync("./node_modules/testeranto/dist/prebuild/Report.js", "./docs/Report.js");
-        fs_1.default.copyFileSync("./node_modules/testeranto/dist/prebuild/Report.css", "./docs/Report.css");
-        fs_1.default.writeFileSync(`${config.outdir}/report.html`, (0, report_html_js_1.default)());
         Promise.all([
-            fs_1.default.promises.writeFile(`${config.outdir}/testeranto.json`, JSON.stringify(Object.assign(Object.assign({}, config), { buildDir: process.cwd() + "/" + config.outdir }), null, 2)),
             esbuild_1.default
-                .context((0, features_js_1.default)(config))
-                .then(async (featuresContext) => {
-                if (mode == "DEV") {
-                    await featuresContext.watch();
-                    onFeaturesDone();
-                }
-                else {
-                    featuresContext.rebuild().then((v) => {
-                        onFeaturesDone();
-                    });
-                }
-                return featuresContext;
-            }),
-            esbuild_1.default
-                .context((0, node_js_1.default)(config, nodeEntryPoints))
+                .context((0, node_js_1.default)(this.config, nodeEntryPoints))
                 .then(async (nodeContext) => {
                 if (mode == "DEV") {
                     await nodeContext.watch().then((v) => {
@@ -137,7 +91,7 @@ class ITProject {
                 return nodeContext;
             }),
             esbuild_1.default
-                .context((0, web_js_1.default)(config, webEntryPoints))
+                .context((0, web_js_1.default)(this.config, webEntryPoints))
                 .then(async (webContext) => {
                 if (mode == "DEV") {
                     await webContext.watch().then((v) => {

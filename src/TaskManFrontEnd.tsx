@@ -959,10 +959,10 @@ const Report = () => {
         const src: string = test[0];
         const runtime: IRunTime = test[1];
         const s: string = [tests.buildDir, runtime as string].concat(src.split(".").slice(0, - 1).join(".")).join("/");
-        const exitcode = await (await fetch(config.outdir + "/" + s + "/exitcode")).text()
-        const log = await (await fetch(config.outdir + "/" + s + "/log.txt")).text()
-        const testresults = await (await fetch(config.outdir + "/" + s + "/tests.json")).json()
-        const manifest = await (await fetch(config.outdir + "/" + s + "/manifest.json")).json()
+        const exitcode = await (await fetch("/docs" + "/" + s + "/exitcode")).text()
+        const log = await (await fetch("/docs" + "/" + s + "/log.txt")).text()
+        const testresults = await (await fetch("/docs" + "/" + s + "/tests.json")).json()
+        const manifest = await (await fetch("/docs" + "/" + s + "/manifest.json")).json()
 
         res({ src, exitcode, log, testresults, manifest })
       })

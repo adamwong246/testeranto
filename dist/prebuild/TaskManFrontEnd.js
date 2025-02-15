@@ -239,20 +239,20 @@
           {
             Object.freeze(emptyObject);
           }
-          function Component4(props, context4, updater) {
+          function Component2(props, context4, updater) {
             this.props = props;
             this.context = context4;
             this.refs = emptyObject;
             this.updater = updater || ReactNoopUpdateQueue;
           }
-          Component4.prototype.isReactComponent = {};
-          Component4.prototype.setState = function(partialState, callback) {
+          Component2.prototype.isReactComponent = {};
+          Component2.prototype.setState = function(partialState, callback) {
             if (typeof partialState !== "object" && typeof partialState !== "function" && partialState != null) {
               throw new Error("setState(...): takes an object of state variables to update or a function which returns an object of state variables.");
             }
             this.updater.enqueueSetState(this, partialState, callback, "setState");
           };
-          Component4.prototype.forceUpdate = function(callback) {
+          Component2.prototype.forceUpdate = function(callback) {
             this.updater.enqueueForceUpdate(this, callback, "forceUpdate");
           };
           {
@@ -261,7 +261,7 @@
               replaceState: ["replaceState", "Refactor your code to use setState instead (see https://github.com/facebook/react/issues/3236)."]
             };
             var defineDeprecationWarning = function(methodName, info) {
-              Object.defineProperty(Component4.prototype, methodName, {
+              Object.defineProperty(Component2.prototype, methodName, {
                 get: function() {
                   warn("%s(...) is deprecated in plain JavaScript React classes. %s", info[0], info[1]);
                   return void 0;
@@ -276,7 +276,7 @@
           }
           function ComponentDummy() {
           }
-          ComponentDummy.prototype = Component4.prototype;
+          ComponentDummy.prototype = Component2.prototype;
           function PureComponent(props, context4, updater) {
             this.props = props;
             this.context = context4;
@@ -285,7 +285,7 @@
           }
           var pureComponentPrototype = PureComponent.prototype = new ComponentDummy();
           pureComponentPrototype.constructor = PureComponent;
-          assign(pureComponentPrototype, Component4.prototype);
+          assign(pureComponentPrototype, Component2.prototype);
           pureComponentPrototype.isPureReactComponent = true;
           function createRef2() {
             var refObject = {
@@ -511,7 +511,7 @@
             }
             return element;
           };
-          function createElement13(type, config, children2) {
+          function createElement4(type, config, children2) {
             var propName;
             var props = {};
             var key = null;
@@ -785,7 +785,7 @@
             }
             return children2;
           }
-          function createContext18(defaultValue) {
+          function createContext17(defaultValue) {
             var context4 = {
               $$typeof: REACT_CONTEXT_TYPE2,
               // As a workaround to support multiple concurrent renderers, we categorize
@@ -1071,7 +1071,7 @@
             }
             return dispatcher;
           }
-          function useContext32(Context2) {
+          function useContext30(Context2) {
             var dispatcher = resolveDispatcher();
             {
               if (Context2._context !== void 0) {
@@ -1085,7 +1085,7 @@
             }
             return dispatcher.useContext(Context2);
           }
-          function useState25(initialState) {
+          function useState23(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1093,11 +1093,11 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useReducer(reducer2, initialArg, init2);
           }
-          function useRef29(initialValue) {
+          function useRef26(initialValue) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect30(create3, deps) {
+          function useEffect27(create3, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create3, deps);
           }
@@ -1105,15 +1105,15 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useInsertionEffect(create3, deps);
           }
-          function useLayoutEffect9(create3, deps) {
+          function useLayoutEffect8(create3, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useLayoutEffect(create3, deps);
           }
-          function useCallback25(callback, deps) {
+          function useCallback24(callback, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useCallback(callback, deps);
           }
-          function useMemo22(create3, deps) {
+          function useMemo20(create3, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useMemo(create3, deps);
           }
@@ -1135,7 +1135,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useDeferredValue(value);
           }
-          function useId2() {
+          function useId() {
             var dispatcher = resolveDispatcher();
             return dispatcher.useId();
           }
@@ -1350,8 +1350,8 @@
               return describeNativeComponentFrame(fn2, false);
             }
           }
-          function shouldConstruct(Component5) {
-            var prototype = Component5.prototype;
+          function shouldConstruct(Component3) {
+            var prototype = Component3.prototype;
             return !!(prototype && prototype.isReactComponent);
           }
           function describeUnknownElementTypeFrameInDEV(type, source, ownerFn) {
@@ -1610,7 +1610,7 @@
                 error2("React.createElement: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", typeString, info);
               }
             }
-            var element = createElement13.apply(this, arguments);
+            var element = createElement4.apply(this, arguments);
             if (element == null) {
               return element;
             }
@@ -1656,7 +1656,7 @@
             validatePropTypes(newElement);
             return newElement;
           }
-          function startTransition3(scope, options) {
+          function startTransition(scope, options) {
             var prevTransition = ReactCurrentBatchConfig.transition;
             ReactCurrentBatchConfig.transition = {};
             var currentTransition = ReactCurrentBatchConfig.transition;
@@ -1857,7 +1857,7 @@
             only: onlyChild
           };
           exports.Children = Children3;
-          exports.Component = Component4;
+          exports.Component = Component2;
           exports.Fragment = REACT_FRAGMENT_TYPE2;
           exports.Profiler = REACT_PROFILER_TYPE2;
           exports.PureComponent = PureComponent;
@@ -1865,7 +1865,7 @@
           exports.Suspense = REACT_SUSPENSE_TYPE2;
           exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactSharedInternals;
           exports.cloneElement = cloneElement$1;
-          exports.createContext = createContext18;
+          exports.createContext = createContext17;
           exports.createElement = createElement$1;
           exports.createFactory = createFactory;
           exports.createRef = createRef2;
@@ -1873,21 +1873,21 @@
           exports.isValidElement = isValidElement3;
           exports.lazy = lazy;
           exports.memo = memo4;
-          exports.startTransition = startTransition3;
+          exports.startTransition = startTransition;
           exports.unstable_act = act;
-          exports.useCallback = useCallback25;
-          exports.useContext = useContext32;
+          exports.useCallback = useCallback24;
+          exports.useContext = useContext30;
           exports.useDebugValue = useDebugValue3;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect30;
-          exports.useId = useId2;
+          exports.useEffect = useEffect27;
+          exports.useId = useId;
           exports.useImperativeHandle = useImperativeHandle2;
           exports.useInsertionEffect = useInsertionEffect;
-          exports.useLayoutEffect = useLayoutEffect9;
-          exports.useMemo = useMemo22;
+          exports.useLayoutEffect = useLayoutEffect8;
+          exports.useMemo = useMemo20;
           exports.useReducer = useReducer2;
-          exports.useRef = useRef29;
-          exports.useState = useState25;
+          exports.useRef = useRef26;
+          exports.useState = useState23;
           exports.useSyncExternalStore = useSyncExternalStore2;
           exports.useTransition = useTransition2;
           exports.version = ReactVersion;
@@ -2275,8 +2275,8 @@
               return describeNativeComponentFrame(fn2, false);
             }
           }
-          function shouldConstruct(Component4) {
-            var prototype = Component4.prototype;
+          function shouldConstruct(Component2) {
+            var prototype = Component2.prototype;
             return !!(prototype && prototype.isReactComponent);
           }
           function describeUnknownElementTypeFrameInDEV(type, source, ownerFn) {
@@ -2820,11 +2820,11 @@
               "The result of getSnapshot should be cached to avoid an infinite loop"
             ), didWarnUncachedGetSnapshot = true);
           }
-          cachedValue = useState25({
+          cachedValue = useState23({
             inst: { value, getSnapshot }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
-          useLayoutEffect9(
+          useLayoutEffect8(
             function() {
               inst.value = value;
               inst.getSnapshot = getSnapshot;
@@ -2832,7 +2832,7 @@
             },
             [subscribe, value, getSnapshot]
           );
-          useEffect30(
+          useEffect27(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe(function() {
@@ -2858,7 +2858,7 @@
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React89 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState25 = React89.useState, useEffect30 = React89.useEffect, useLayoutEffect9 = React89.useLayoutEffect, useDebugValue3 = React89.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React89 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState23 = React89.useState, useEffect27 = React89.useEffect, useLayoutEffect8 = React89.useLayoutEffect, useDebugValue3 = React89.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React89.useSyncExternalStore ? React89.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -2886,15 +2886,15 @@
           return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React89 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore2 = shim.useSyncExternalStore, useRef29 = React89.useRef, useEffect30 = React89.useEffect, useMemo22 = React89.useMemo, useDebugValue3 = React89.useDebugValue;
+        var React89 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore2 = shim.useSyncExternalStore, useRef26 = React89.useRef, useEffect27 = React89.useEffect, useMemo20 = React89.useMemo, useDebugValue3 = React89.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual2) {
-          var instRef = useRef29(null);
+          var instRef = useRef26(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
           } else
             inst = instRef.current;
-          instRef = useMemo22(
+          instRef = useMemo20(
             function() {
               function memoizedSelector(nextSnapshot) {
                 if (!hasMemo) {
@@ -2930,7 +2930,7 @@
             [getSnapshot, getServerSnapshot, selector, isEqual2]
           );
           var value = useSyncExternalStore2(subscribe, instRef[0], instRef[1]);
-          useEffect30(
+          useEffect27(
             function() {
               inst.hasValue = true;
               inst.value = value;
@@ -3480,7 +3480,7 @@
           var HostPortal = 4;
           var HostComponent = 5;
           var HostText = 6;
-          var Fragment9 = 7;
+          var Fragment4 = 7;
           var Mode = 8;
           var ContextConsumer = 9;
           var ContextProvider = 10;
@@ -4466,8 +4466,8 @@
               return describeNativeComponentFrame(fn2, false);
             }
           }
-          function shouldConstruct(Component4) {
-            var prototype = Component4.prototype;
+          function shouldConstruct(Component2) {
+            var prototype = Component2.prototype;
             return !!(prototype && prototype.isReactComponent);
           }
           function describeUnknownElementTypeFrameInDEV(type, source, ownerFn) {
@@ -4636,7 +4636,7 @@
                 return "DehydratedFragment";
               case ForwardRef2:
                 return getWrappedName$1(type, type.render, "ForwardRef");
-              case Fragment9:
+              case Fragment4:
                 return "Fragment";
               case HostComponent:
                 return type;
@@ -6512,13 +6512,13 @@
           var batchedUpdatesImpl = function(fn2, bookkeeping) {
             return fn2(bookkeeping);
           };
-          var flushSyncImpl = function() {
+          var flushSyncImpl2 = function() {
           };
           var isInsideEventHandler = false;
           function finishEventHandler() {
             var controlledComponentsHavePendingUpdates = needsStateRestore();
             if (controlledComponentsHavePendingUpdates) {
-              flushSyncImpl();
+              flushSyncImpl2();
               restoreStateIfNeeded();
             }
           }
@@ -6536,7 +6536,7 @@
           }
           function setBatchingImplementation(_batchedUpdatesImpl, _discreteUpdatesImpl, _flushSyncImpl) {
             batchedUpdatesImpl = _batchedUpdatesImpl;
-            flushSyncImpl = _flushSyncImpl;
+            flushSyncImpl2 = _flushSyncImpl;
           }
           function isInteractive(tag) {
             return tag === "button" || tag === "input" || tag === "select" || tag === "textarea";
@@ -10435,7 +10435,7 @@
               }
             }
           }
-          function createElement13(type, props, rootContainerElement, parentNamespace) {
+          function createElement4(type, props, rootContainerElement, parentNamespace) {
             var isCustomComponentTag;
             var ownerDocument2 = getOwnerDocumentFromRootContainer(rootContainerElement);
             var domElement;
@@ -11296,7 +11296,7 @@
               }
               parentNamespace = hostContextDev.namespace;
             }
-            var domElement = createElement13(type, props, rootContainerInstance, parentNamespace);
+            var domElement = createElement4(type, props, rootContainerInstance, parentNamespace);
             precacheFiberNode(internalInstanceHandle, domElement);
             updateFiberProps(domElement, props);
             return domElement;
@@ -11432,8 +11432,8 @@
               var nextNode = node.nextSibling;
               parentInstance.removeChild(node);
               if (nextNode && nextNode.nodeType === COMMENT_NODE) {
-                var data2 = nextNode.data;
-                if (data2 === SUSPENSE_END_DATA) {
+                var data = nextNode.data;
+                if (data === SUSPENSE_END_DATA) {
                   if (depth === 0) {
                     parentInstance.removeChild(nextNode);
                     retryIfBlockedOn(suspenseInstance);
@@ -11441,7 +11441,7 @@
                   } else {
                     depth--;
                   }
-                } else if (data2 === SUSPENSE_START_DATA || data2 === SUSPENSE_PENDING_START_DATA || data2 === SUSPENSE_FALLBACK_START_DATA) {
+                } else if (data === SUSPENSE_START_DATA || data === SUSPENSE_PENDING_START_DATA || data === SUSPENSE_FALLBACK_START_DATA) {
                   depth++;
                 }
               }
@@ -11586,14 +11586,14 @@
             var depth = 0;
             while (node) {
               if (node.nodeType === COMMENT_NODE) {
-                var data2 = node.data;
-                if (data2 === SUSPENSE_END_DATA) {
+                var data = node.data;
+                if (data === SUSPENSE_END_DATA) {
                   if (depth === 0) {
                     return getNextHydratableSibling(node);
                   } else {
                     depth--;
                   }
-                } else if (data2 === SUSPENSE_START_DATA || data2 === SUSPENSE_FALLBACK_START_DATA || data2 === SUSPENSE_PENDING_START_DATA) {
+                } else if (data === SUSPENSE_START_DATA || data === SUSPENSE_FALLBACK_START_DATA || data === SUSPENSE_PENDING_START_DATA) {
                   depth++;
                 }
               }
@@ -11606,14 +11606,14 @@
             var depth = 0;
             while (node) {
               if (node.nodeType === COMMENT_NODE) {
-                var data2 = node.data;
-                if (data2 === SUSPENSE_START_DATA || data2 === SUSPENSE_FALLBACK_START_DATA || data2 === SUSPENSE_PENDING_START_DATA) {
+                var data = node.data;
+                if (data === SUSPENSE_START_DATA || data === SUSPENSE_FALLBACK_START_DATA || data === SUSPENSE_PENDING_START_DATA) {
                   if (depth === 0) {
                     return node;
                   } else {
                     depth--;
                   }
-                } else if (data2 === SUSPENSE_END_DATA) {
+                } else if (data === SUSPENSE_END_DATA) {
                   depth++;
                 }
               }
@@ -11900,9 +11900,9 @@
           var contextStackCursor = createCursor(emptyContextObject);
           var didPerformWorkStackCursor = createCursor(false);
           var previousContext = emptyContextObject;
-          function getUnmaskedContext(workInProgress2, Component4, didPushOwnContextIfProvider) {
+          function getUnmaskedContext(workInProgress2, Component2, didPushOwnContextIfProvider) {
             {
-              if (didPushOwnContextIfProvider && isContextProvider(Component4)) {
+              if (didPushOwnContextIfProvider && isContextProvider(Component2)) {
                 return previousContext;
               }
               return contextStackCursor.current;
@@ -12039,8 +12039,8 @@
                   case HostRoot:
                     return node.stateNode.context;
                   case ClassComponent: {
-                    var Component4 = node.type;
-                    if (isContextProvider(Component4)) {
+                    var Component2 = node.type;
+                    if (isContextProvider(Component2)) {
                       return node.stateNode.__reactInternalMemoizedMergedChildContext;
                     }
                     break;
@@ -13037,7 +13037,7 @@
               }
             }
             function updateFragment2(returnFiber, current2, fragment, lanes, key) {
-              if (current2 === null || current2.tag !== Fragment9) {
+              if (current2 === null || current2.tag !== Fragment4) {
                 var created = createFiberFromFragment(fragment, returnFiber.mode, lanes, key);
                 created.return = returnFiber;
                 return created;
@@ -13440,7 +13440,7 @@
                 if (child.key === key) {
                   var elementType = element.type;
                   if (elementType === REACT_FRAGMENT_TYPE2) {
-                    if (child.tag === Fragment9) {
+                    if (child.tag === Fragment4) {
                       deleteRemainingChildren(returnFiber, child.sibling);
                       var existing = useFiber(child, element.props.children);
                       existing.return = returnFiber;
@@ -14497,7 +14497,7 @@
             }
             return true;
           }
-          function renderWithHooks(current2, workInProgress2, Component4, props, secondArg, nextRenderLanes) {
+          function renderWithHooks(current2, workInProgress2, Component2, props, secondArg, nextRenderLanes) {
             renderLanes = nextRenderLanes;
             currentlyRenderingFiber$1 = workInProgress2;
             {
@@ -14517,7 +14517,7 @@
                 ReactCurrentDispatcher$1.current = HooksDispatcherOnMountInDEV;
               }
             }
-            var children2 = Component4(props, secondArg);
+            var children2 = Component2(props, secondArg);
             if (didScheduleRenderPhaseUpdateDuringThisPass) {
               var numberOfReRenders = 0;
               do {
@@ -14537,7 +14537,7 @@
                   hookTypesUpdateIndexDev = -1;
                 }
                 ReactCurrentDispatcher$1.current = HooksDispatcherOnRerenderInDEV;
-                children2 = Component4(props, secondArg);
+                children2 = Component2(props, secondArg);
               } while (didScheduleRenderPhaseUpdateDuringThisPass);
             }
             ReactCurrentDispatcher$1.current = ContextOnlyDispatcher;
@@ -15223,7 +15223,7 @@
               return value;
             }
           }
-          function startTransition3(setPending, callback, options2) {
+          function startTransition(setPending, callback, options2) {
             var previousPriority = getCurrentUpdatePriority();
             setCurrentUpdatePriority(higherEventPriority(previousPriority, ContinuousEventPriority));
             setPending(true);
@@ -15252,7 +15252,7 @@
           }
           function mountTransition() {
             var _mountState = mountState(false), isPending = _mountState[0], setPending = _mountState[1];
-            var start4 = startTransition3.bind(null, setPending);
+            var start4 = startTransition.bind(null, setPending);
             var hook = mountWorkInProgressHook();
             hook.memoizedState = start4;
             return [isPending, start4];
@@ -16336,10 +16336,10 @@
               child = child.sibling;
             }
           }
-          function resolveDefaultProps(Component4, baseProps) {
-            if (Component4 && Component4.defaultProps) {
+          function resolveDefaultProps(Component2, baseProps) {
+            if (Component2 && Component2.defaultProps) {
               var props = assign({}, baseProps);
-              var defaultProps2 = Component4.defaultProps;
+              var defaultProps2 = Component2.defaultProps;
               for (var propName in defaultProps2) {
                 if (props[propName] === void 0) {
                   props[propName] = defaultProps2[propName];
@@ -17268,22 +17268,22 @@
             workInProgress2.child = reconcileChildFibers(workInProgress2, current2.child, null, renderLanes2);
             workInProgress2.child = reconcileChildFibers(workInProgress2, null, nextChildren, renderLanes2);
           }
-          function updateForwardRef(current2, workInProgress2, Component4, nextProps, renderLanes2) {
+          function updateForwardRef(current2, workInProgress2, Component2, nextProps, renderLanes2) {
             {
               if (workInProgress2.type !== workInProgress2.elementType) {
-                var innerPropTypes = Component4.propTypes;
+                var innerPropTypes = Component2.propTypes;
                 if (innerPropTypes) {
                   checkPropTypes(
                     innerPropTypes,
                     nextProps,
                     // Resolved props
                     "prop",
-                    getComponentNameFromType(Component4)
+                    getComponentNameFromType(Component2)
                   );
                 }
               }
             }
-            var render2 = Component4.render;
+            var render2 = Component2.render;
             var ref2 = workInProgress2.ref;
             var nextChildren;
             var hasId;
@@ -17321,11 +17321,11 @@
             reconcileChildren(current2, workInProgress2, nextChildren, renderLanes2);
             return workInProgress2.child;
           }
-          function updateMemoComponent(current2, workInProgress2, Component4, nextProps, renderLanes2) {
+          function updateMemoComponent(current2, workInProgress2, Component2, nextProps, renderLanes2) {
             if (current2 === null) {
-              var type = Component4.type;
-              if (isSimpleFunctionComponent(type) && Component4.compare === null && // SimpleMemoComponent codepath doesn't resolve outer props either.
-              Component4.defaultProps === void 0) {
+              var type = Component2.type;
+              if (isSimpleFunctionComponent(type) && Component2.compare === null && // SimpleMemoComponent codepath doesn't resolve outer props either.
+              Component2.defaultProps === void 0) {
                 var resolvedType = type;
                 {
                   resolvedType = resolveFunctionForHotReloading(type);
@@ -17348,7 +17348,7 @@
                     getComponentNameFromType(type)
                   );
                 }
-                if (Component4.defaultProps !== void 0) {
+                if (Component2.defaultProps !== void 0) {
                   var componentName = getComponentNameFromType(type) || "Unknown";
                   if (!didWarnAboutDefaultPropsOnFunctionComponent[componentName]) {
                     error2("%s: Support for defaultProps will be removed from memo components in a future major release. Use JavaScript default parameters instead.", componentName);
@@ -17356,14 +17356,14 @@
                   }
                 }
               }
-              var child = createFiberFromTypeAndProps(Component4.type, null, nextProps, workInProgress2, workInProgress2.mode, renderLanes2);
+              var child = createFiberFromTypeAndProps(Component2.type, null, nextProps, workInProgress2, workInProgress2.mode, renderLanes2);
               child.ref = workInProgress2.ref;
               child.return = workInProgress2;
               workInProgress2.child = child;
               return child;
             }
             {
-              var _type = Component4.type;
+              var _type = Component2.type;
               var _innerPropTypes = _type.propTypes;
               if (_innerPropTypes) {
                 checkPropTypes(
@@ -17379,7 +17379,7 @@
             var hasScheduledUpdateOrContext = checkScheduledUpdateOrContext(current2, renderLanes2);
             if (!hasScheduledUpdateOrContext) {
               var prevProps = currentChild.memoizedProps;
-              var compare = Component4.compare;
+              var compare = Component2.compare;
               compare = compare !== null ? compare : shallowEqual2;
               if (compare(prevProps, nextProps) && current2.ref === workInProgress2.ref) {
                 return bailoutOnAlreadyFinishedWork(current2, workInProgress2, renderLanes2);
@@ -17392,7 +17392,7 @@
             workInProgress2.child = newChild;
             return newChild;
           }
-          function updateSimpleMemoComponent(current2, workInProgress2, Component4, nextProps, renderLanes2) {
+          function updateSimpleMemoComponent(current2, workInProgress2, Component2, nextProps, renderLanes2) {
             {
               if (workInProgress2.type !== workInProgress2.elementType) {
                 var outerMemoType = workInProgress2.elementType;
@@ -17432,7 +17432,7 @@
                 }
               }
             }
-            return updateFunctionComponent(current2, workInProgress2, Component4, nextProps, renderLanes2);
+            return updateFunctionComponent(current2, workInProgress2, Component2, nextProps, renderLanes2);
           }
           function updateOffscreenComponent(current2, workInProgress2, renderLanes2) {
             var nextProps = workInProgress2.pendingProps;
@@ -17522,24 +17522,24 @@
               }
             }
           }
-          function updateFunctionComponent(current2, workInProgress2, Component4, nextProps, renderLanes2) {
+          function updateFunctionComponent(current2, workInProgress2, Component2, nextProps, renderLanes2) {
             {
               if (workInProgress2.type !== workInProgress2.elementType) {
-                var innerPropTypes = Component4.propTypes;
+                var innerPropTypes = Component2.propTypes;
                 if (innerPropTypes) {
                   checkPropTypes(
                     innerPropTypes,
                     nextProps,
                     // Resolved props
                     "prop",
-                    getComponentNameFromType(Component4)
+                    getComponentNameFromType(Component2)
                   );
                 }
               }
             }
             var context4;
             {
-              var unmaskedContext = getUnmaskedContext(workInProgress2, Component4, true);
+              var unmaskedContext = getUnmaskedContext(workInProgress2, Component2, true);
               context4 = getMaskedContext(workInProgress2, unmaskedContext);
             }
             var nextChildren;
@@ -17551,12 +17551,12 @@
             {
               ReactCurrentOwner$1.current = workInProgress2;
               setIsRendering(true);
-              nextChildren = renderWithHooks(current2, workInProgress2, Component4, nextProps, context4, renderLanes2);
+              nextChildren = renderWithHooks(current2, workInProgress2, Component2, nextProps, context4, renderLanes2);
               hasId = checkDidRenderIdHook();
               if (workInProgress2.mode & StrictLegacyMode) {
                 setIsStrictModeForDevtools(true);
                 try {
-                  nextChildren = renderWithHooks(current2, workInProgress2, Component4, nextProps, context4, renderLanes2);
+                  nextChildren = renderWithHooks(current2, workInProgress2, Component2, nextProps, context4, renderLanes2);
                   hasId = checkDidRenderIdHook();
                 } finally {
                   setIsStrictModeForDevtools(false);
@@ -17578,7 +17578,7 @@
             reconcileChildren(current2, workInProgress2, nextChildren, renderLanes2);
             return workInProgress2.child;
           }
-          function updateClassComponent(current2, workInProgress2, Component4, nextProps, renderLanes2) {
+          function updateClassComponent(current2, workInProgress2, Component2, nextProps, renderLanes2) {
             {
               switch (shouldError(workInProgress2)) {
                 case false: {
@@ -17601,20 +17601,20 @@
                 }
               }
               if (workInProgress2.type !== workInProgress2.elementType) {
-                var innerPropTypes = Component4.propTypes;
+                var innerPropTypes = Component2.propTypes;
                 if (innerPropTypes) {
                   checkPropTypes(
                     innerPropTypes,
                     nextProps,
                     // Resolved props
                     "prop",
-                    getComponentNameFromType(Component4)
+                    getComponentNameFromType(Component2)
                   );
                 }
               }
             }
             var hasContext;
-            if (isContextProvider(Component4)) {
+            if (isContextProvider(Component2)) {
               hasContext = true;
               pushContextProvider(workInProgress2);
             } else {
@@ -17625,15 +17625,15 @@
             var shouldUpdate;
             if (instance === null) {
               resetSuspendedCurrentOnMountInLegacyMode(current2, workInProgress2);
-              constructClassInstance(workInProgress2, Component4, nextProps);
-              mountClassInstance(workInProgress2, Component4, nextProps, renderLanes2);
+              constructClassInstance(workInProgress2, Component2, nextProps);
+              mountClassInstance(workInProgress2, Component2, nextProps, renderLanes2);
               shouldUpdate = true;
             } else if (current2 === null) {
-              shouldUpdate = resumeMountClassInstance(workInProgress2, Component4, nextProps, renderLanes2);
+              shouldUpdate = resumeMountClassInstance(workInProgress2, Component2, nextProps, renderLanes2);
             } else {
-              shouldUpdate = updateClassInstance(current2, workInProgress2, Component4, nextProps, renderLanes2);
+              shouldUpdate = updateClassInstance(current2, workInProgress2, Component2, nextProps, renderLanes2);
             }
-            var nextUnitOfWork = finishClassComponent(current2, workInProgress2, Component4, shouldUpdate, hasContext, renderLanes2);
+            var nextUnitOfWork = finishClassComponent(current2, workInProgress2, Component2, shouldUpdate, hasContext, renderLanes2);
             {
               var inst = workInProgress2.stateNode;
               if (shouldUpdate && inst.props !== nextProps) {
@@ -17645,19 +17645,19 @@
             }
             return nextUnitOfWork;
           }
-          function finishClassComponent(current2, workInProgress2, Component4, shouldUpdate, hasContext, renderLanes2) {
+          function finishClassComponent(current2, workInProgress2, Component2, shouldUpdate, hasContext, renderLanes2) {
             markRef(current2, workInProgress2);
             var didCaptureError = (workInProgress2.flags & DidCapture) !== NoFlags;
             if (!shouldUpdate && !didCaptureError) {
               if (hasContext) {
-                invalidateContextProvider(workInProgress2, Component4, false);
+                invalidateContextProvider(workInProgress2, Component2, false);
               }
               return bailoutOnAlreadyFinishedWork(current2, workInProgress2, renderLanes2);
             }
             var instance = workInProgress2.stateNode;
             ReactCurrentOwner$1.current = workInProgress2;
             var nextChildren;
-            if (didCaptureError && typeof Component4.getDerivedStateFromError !== "function") {
+            if (didCaptureError && typeof Component2.getDerivedStateFromError !== "function") {
               nextChildren = null;
               {
                 stopProfilerTimerIfRunning();
@@ -17691,7 +17691,7 @@
             }
             workInProgress2.memoizedState = instance.state;
             if (hasContext) {
-              invalidateContextProvider(workInProgress2, Component4, true);
+              invalidateContextProvider(workInProgress2, Component2, true);
             }
             return workInProgress2.child;
           }
@@ -17791,45 +17791,45 @@
             var lazyComponent = elementType;
             var payload = lazyComponent._payload;
             var init2 = lazyComponent._init;
-            var Component4 = init2(payload);
-            workInProgress2.type = Component4;
-            var resolvedTag = workInProgress2.tag = resolveLazyComponentTag(Component4);
-            var resolvedProps = resolveDefaultProps(Component4, props);
+            var Component2 = init2(payload);
+            workInProgress2.type = Component2;
+            var resolvedTag = workInProgress2.tag = resolveLazyComponentTag(Component2);
+            var resolvedProps = resolveDefaultProps(Component2, props);
             var child;
             switch (resolvedTag) {
               case FunctionComponent: {
                 {
-                  validateFunctionComponentInDev(workInProgress2, Component4);
-                  workInProgress2.type = Component4 = resolveFunctionForHotReloading(Component4);
+                  validateFunctionComponentInDev(workInProgress2, Component2);
+                  workInProgress2.type = Component2 = resolveFunctionForHotReloading(Component2);
                 }
-                child = updateFunctionComponent(null, workInProgress2, Component4, resolvedProps, renderLanes2);
+                child = updateFunctionComponent(null, workInProgress2, Component2, resolvedProps, renderLanes2);
                 return child;
               }
               case ClassComponent: {
                 {
-                  workInProgress2.type = Component4 = resolveClassForHotReloading(Component4);
+                  workInProgress2.type = Component2 = resolveClassForHotReloading(Component2);
                 }
-                child = updateClassComponent(null, workInProgress2, Component4, resolvedProps, renderLanes2);
+                child = updateClassComponent(null, workInProgress2, Component2, resolvedProps, renderLanes2);
                 return child;
               }
               case ForwardRef2: {
                 {
-                  workInProgress2.type = Component4 = resolveForwardRefForHotReloading(Component4);
+                  workInProgress2.type = Component2 = resolveForwardRefForHotReloading(Component2);
                 }
-                child = updateForwardRef(null, workInProgress2, Component4, resolvedProps, renderLanes2);
+                child = updateForwardRef(null, workInProgress2, Component2, resolvedProps, renderLanes2);
                 return child;
               }
               case MemoComponent: {
                 {
                   if (workInProgress2.type !== workInProgress2.elementType) {
-                    var outerPropTypes = Component4.propTypes;
+                    var outerPropTypes = Component2.propTypes;
                     if (outerPropTypes) {
                       checkPropTypes(
                         outerPropTypes,
                         resolvedProps,
                         // Resolved for outer only
                         "prop",
-                        getComponentNameFromType(Component4)
+                        getComponentNameFromType(Component2)
                       );
                     }
                   }
@@ -17837,8 +17837,8 @@
                 child = updateMemoComponent(
                   null,
                   workInProgress2,
-                  Component4,
-                  resolveDefaultProps(Component4.type, resolvedProps),
+                  Component2,
+                  resolveDefaultProps(Component2.type, resolvedProps),
                   // The inner type can have defaults too
                   renderLanes2
                 );
@@ -17847,33 +17847,33 @@
             }
             var hint = "";
             {
-              if (Component4 !== null && typeof Component4 === "object" && Component4.$$typeof === REACT_LAZY_TYPE2) {
+              if (Component2 !== null && typeof Component2 === "object" && Component2.$$typeof === REACT_LAZY_TYPE2) {
                 hint = " Did you wrap a component in React.lazy() more than once?";
               }
             }
-            throw new Error("Element type is invalid. Received a promise that resolves to: " + Component4 + ". " + ("Lazy element type must resolve to a class or function." + hint));
+            throw new Error("Element type is invalid. Received a promise that resolves to: " + Component2 + ". " + ("Lazy element type must resolve to a class or function." + hint));
           }
-          function mountIncompleteClassComponent(_current, workInProgress2, Component4, nextProps, renderLanes2) {
+          function mountIncompleteClassComponent(_current, workInProgress2, Component2, nextProps, renderLanes2) {
             resetSuspendedCurrentOnMountInLegacyMode(_current, workInProgress2);
             workInProgress2.tag = ClassComponent;
             var hasContext;
-            if (isContextProvider(Component4)) {
+            if (isContextProvider(Component2)) {
               hasContext = true;
               pushContextProvider(workInProgress2);
             } else {
               hasContext = false;
             }
             prepareToReadContext(workInProgress2, renderLanes2);
-            constructClassInstance(workInProgress2, Component4, nextProps);
-            mountClassInstance(workInProgress2, Component4, nextProps, renderLanes2);
-            return finishClassComponent(null, workInProgress2, Component4, true, hasContext, renderLanes2);
+            constructClassInstance(workInProgress2, Component2, nextProps);
+            mountClassInstance(workInProgress2, Component2, nextProps, renderLanes2);
+            return finishClassComponent(null, workInProgress2, Component2, true, hasContext, renderLanes2);
           }
-          function mountIndeterminateComponent(_current, workInProgress2, Component4, renderLanes2) {
+          function mountIndeterminateComponent(_current, workInProgress2, Component2, renderLanes2) {
             resetSuspendedCurrentOnMountInLegacyMode(_current, workInProgress2);
             var props = workInProgress2.pendingProps;
             var context4;
             {
-              var unmaskedContext = getUnmaskedContext(workInProgress2, Component4, false);
+              var unmaskedContext = getUnmaskedContext(workInProgress2, Component2, false);
               context4 = getMaskedContext(workInProgress2, unmaskedContext);
             }
             prepareToReadContext(workInProgress2, renderLanes2);
@@ -17883,8 +17883,8 @@
               markComponentRenderStarted(workInProgress2);
             }
             {
-              if (Component4.prototype && typeof Component4.prototype.render === "function") {
-                var componentName = getComponentNameFromType(Component4) || "Unknown";
+              if (Component2.prototype && typeof Component2.prototype.render === "function") {
+                var componentName = getComponentNameFromType(Component2) || "Unknown";
                 if (!didWarnAboutBadClass[componentName]) {
                   error2("The <%s /> component appears to have a render method, but doesn't extend React.Component. This is likely to cause errors. Change %s to extend React.Component instead.", componentName, componentName);
                   didWarnAboutBadClass[componentName] = true;
@@ -17895,7 +17895,7 @@
               }
               setIsRendering(true);
               ReactCurrentOwner$1.current = workInProgress2;
-              value = renderWithHooks(null, workInProgress2, Component4, props, context4, renderLanes2);
+              value = renderWithHooks(null, workInProgress2, Component2, props, context4, renderLanes2);
               hasId = checkDidRenderIdHook();
               setIsRendering(false);
             }
@@ -17905,7 +17905,7 @@
             workInProgress2.flags |= PerformedWork;
             {
               if (typeof value === "object" && value !== null && typeof value.render === "function" && value.$$typeof === void 0) {
-                var _componentName = getComponentNameFromType(Component4) || "Unknown";
+                var _componentName = getComponentNameFromType(Component2) || "Unknown";
                 if (!didWarnAboutModulePatternComponent[_componentName]) {
                   error2("The <%s /> component appears to be a function component that returns a class instance. Change %s to a class that extends React.Component instead. If you can't use a class try assigning the prototype on the function as a workaround. `%s.prototype = React.Component.prototype`. Don't use an arrow function since it cannot be called with `new` by React.", _componentName, _componentName, _componentName);
                   didWarnAboutModulePatternComponent[_componentName] = true;
@@ -17918,7 +17918,7 @@
               typeof value === "object" && value !== null && typeof value.render === "function" && value.$$typeof === void 0
             ) {
               {
-                var _componentName2 = getComponentNameFromType(Component4) || "Unknown";
+                var _componentName2 = getComponentNameFromType(Component2) || "Unknown";
                 if (!didWarnAboutModulePatternComponent[_componentName2]) {
                   error2("The <%s /> component appears to be a function component that returns a class instance. Change %s to a class that extends React.Component instead. If you can't use a class try assigning the prototype on the function as a workaround. `%s.prototype = React.Component.prototype`. Don't use an arrow function since it cannot be called with `new` by React.", _componentName2, _componentName2, _componentName2);
                   didWarnAboutModulePatternComponent[_componentName2] = true;
@@ -17928,7 +17928,7 @@
               workInProgress2.memoizedState = null;
               workInProgress2.updateQueue = null;
               var hasContext = false;
-              if (isContextProvider(Component4)) {
+              if (isContextProvider(Component2)) {
                 hasContext = true;
                 pushContextProvider(workInProgress2);
               } else {
@@ -17937,15 +17937,15 @@
               workInProgress2.memoizedState = value.state !== null && value.state !== void 0 ? value.state : null;
               initializeUpdateQueue(workInProgress2);
               adoptClassInstance(workInProgress2, value);
-              mountClassInstance(workInProgress2, Component4, props, renderLanes2);
-              return finishClassComponent(null, workInProgress2, Component4, true, hasContext, renderLanes2);
+              mountClassInstance(workInProgress2, Component2, props, renderLanes2);
+              return finishClassComponent(null, workInProgress2, Component2, true, hasContext, renderLanes2);
             } else {
               workInProgress2.tag = FunctionComponent;
               {
                 if (workInProgress2.mode & StrictLegacyMode) {
                   setIsStrictModeForDevtools(true);
                   try {
-                    value = renderWithHooks(null, workInProgress2, Component4, props, context4, renderLanes2);
+                    value = renderWithHooks(null, workInProgress2, Component2, props, context4, renderLanes2);
                     hasId = checkDidRenderIdHook();
                   } finally {
                     setIsStrictModeForDevtools(false);
@@ -17957,16 +17957,16 @@
               }
               reconcileChildren(null, workInProgress2, value, renderLanes2);
               {
-                validateFunctionComponentInDev(workInProgress2, Component4);
+                validateFunctionComponentInDev(workInProgress2, Component2);
               }
               return workInProgress2.child;
             }
           }
-          function validateFunctionComponentInDev(workInProgress2, Component4) {
+          function validateFunctionComponentInDev(workInProgress2, Component2) {
             {
-              if (Component4) {
-                if (Component4.childContextTypes) {
-                  error2("%s(...): childContextTypes cannot be defined on a function component.", Component4.displayName || Component4.name || "Component");
+              if (Component2) {
+                if (Component2.childContextTypes) {
+                  error2("%s(...): childContextTypes cannot be defined on a function component.", Component2.displayName || Component2.name || "Component");
                 }
               }
               if (workInProgress2.ref !== null) {
@@ -17985,22 +17985,22 @@
                   error2("Function components cannot be given refs. Attempts to access this ref will fail. Did you mean to use React.forwardRef()?%s", info);
                 }
               }
-              if (Component4.defaultProps !== void 0) {
-                var componentName = getComponentNameFromType(Component4) || "Unknown";
+              if (Component2.defaultProps !== void 0) {
+                var componentName = getComponentNameFromType(Component2) || "Unknown";
                 if (!didWarnAboutDefaultPropsOnFunctionComponent[componentName]) {
                   error2("%s: Support for defaultProps will be removed from function components in a future major release. Use JavaScript default parameters instead.", componentName);
                   didWarnAboutDefaultPropsOnFunctionComponent[componentName] = true;
                 }
               }
-              if (typeof Component4.getDerivedStateFromProps === "function") {
-                var _componentName3 = getComponentNameFromType(Component4) || "Unknown";
+              if (typeof Component2.getDerivedStateFromProps === "function") {
+                var _componentName3 = getComponentNameFromType(Component2) || "Unknown";
                 if (!didWarnAboutGetDerivedStateOnFunctionComponent[_componentName3]) {
                   error2("%s: Function components do not support getDerivedStateFromProps.", _componentName3);
                   didWarnAboutGetDerivedStateOnFunctionComponent[_componentName3] = true;
                 }
               }
-              if (typeof Component4.contextType === "object" && Component4.contextType !== null) {
-                var _componentName4 = getComponentNameFromType(Component4) || "Unknown";
+              if (typeof Component2.contextType === "object" && Component2.contextType !== null) {
+                var _componentName4 = getComponentNameFromType(Component2) || "Unknown";
                 if (!didWarnAboutContextTypeOnFunctionComponent[_componentName4]) {
                   error2("%s: Function components do not support contextType.", _componentName4);
                   didWarnAboutContextTypeOnFunctionComponent[_componentName4] = true;
@@ -18762,8 +18762,8 @@
                 pushHostContext(workInProgress2);
                 break;
               case ClassComponent: {
-                var Component4 = workInProgress2.type;
-                if (isContextProvider(Component4)) {
+                var Component2 = workInProgress2.type;
+                if (isContextProvider(Component2)) {
                   pushContextProvider(workInProgress2);
                 }
                 break;
@@ -18890,10 +18890,10 @@
                 return mountLazyComponent(current2, workInProgress2, elementType, renderLanes2);
               }
               case FunctionComponent: {
-                var Component4 = workInProgress2.type;
+                var Component2 = workInProgress2.type;
                 var unresolvedProps = workInProgress2.pendingProps;
-                var resolvedProps = workInProgress2.elementType === Component4 ? unresolvedProps : resolveDefaultProps(Component4, unresolvedProps);
-                return updateFunctionComponent(current2, workInProgress2, Component4, resolvedProps, renderLanes2);
+                var resolvedProps = workInProgress2.elementType === Component2 ? unresolvedProps : resolveDefaultProps(Component2, unresolvedProps);
+                return updateFunctionComponent(current2, workInProgress2, Component2, resolvedProps, renderLanes2);
               }
               case ClassComponent: {
                 var _Component = workInProgress2.type;
@@ -18917,7 +18917,7 @@
                 var _resolvedProps2 = workInProgress2.elementType === type ? _unresolvedProps2 : resolveDefaultProps(type, _unresolvedProps2);
                 return updateForwardRef(current2, workInProgress2, type, _resolvedProps2, renderLanes2);
               }
-              case Fragment9:
+              case Fragment4:
                 return updateFragment(current2, workInProgress2, renderLanes2);
               case Mode:
                 return updateMode(current2, workInProgress2, renderLanes2);
@@ -19190,7 +19190,7 @@
               case SimpleMemoComponent:
               case FunctionComponent:
               case ForwardRef2:
-              case Fragment9:
+              case Fragment4:
               case Mode:
               case Profiler:
               case ContextConsumer:
@@ -19198,8 +19198,8 @@
                 bubbleProperties(workInProgress2);
                 return null;
               case ClassComponent: {
-                var Component4 = workInProgress2.type;
-                if (isContextProvider(Component4)) {
+                var Component2 = workInProgress2.type;
+                if (isContextProvider(Component2)) {
                   popContext(workInProgress2);
                 }
                 bubbleProperties(workInProgress2);
@@ -19517,8 +19517,8 @@
             popTreeContext(workInProgress2);
             switch (workInProgress2.tag) {
               case ClassComponent: {
-                var Component4 = workInProgress2.type;
-                if (isContextProvider(Component4)) {
+                var Component2 = workInProgress2.type;
+                if (isContextProvider(Component2)) {
                   popContext(workInProgress2);
                 }
                 var flags = workInProgress2.flags;
@@ -23205,18 +23205,18 @@
           var createFiber = function(tag, pendingProps, key, mode) {
             return new FiberNode(tag, pendingProps, key, mode);
           };
-          function shouldConstruct$1(Component4) {
-            var prototype = Component4.prototype;
+          function shouldConstruct$1(Component2) {
+            var prototype = Component2.prototype;
             return !!(prototype && prototype.isReactComponent);
           }
           function isSimpleFunctionComponent(type) {
             return typeof type === "function" && !shouldConstruct$1(type) && type.defaultProps === void 0;
           }
-          function resolveLazyComponentTag(Component4) {
-            if (typeof Component4 === "function") {
-              return shouldConstruct$1(Component4) ? ClassComponent : FunctionComponent;
-            } else if (Component4 !== void 0 && Component4 !== null) {
-              var $$typeof = Component4.$$typeof;
+          function resolveLazyComponentTag(Component2) {
+            if (typeof Component2 === "function") {
+              return shouldConstruct$1(Component2) ? ClassComponent : FunctionComponent;
+            } else if (Component2 !== void 0 && Component2 !== null) {
+              var $$typeof = Component2.$$typeof;
               if ($$typeof === REACT_FORWARD_REF_TYPE2) {
                 return ForwardRef2;
               }
@@ -23449,7 +23449,7 @@
             return fiber;
           }
           function createFiberFromFragment(elements, mode, lanes, key) {
-            var fiber = createFiber(Fragment9, elements, key, mode);
+            var fiber = createFiber(Fragment4, elements, key, mode);
             fiber.lanes = lanes;
             return fiber;
           }
@@ -23653,9 +23653,9 @@
             var fiber = get3(parentComponent);
             var parentContext = findCurrentUnmaskedContext(fiber);
             if (fiber.tag === ClassComponent) {
-              var Component4 = fiber.type;
-              if (isContextProvider(Component4)) {
-                return processChildContext(fiber, Component4, parentContext);
+              var Component2 = fiber.type;
+              if (isContextProvider(Component2)) {
+                return processChildContext(fiber, Component2, parentContext);
               }
             }
             return parentContext;
@@ -24730,13 +24730,13 @@
           var ContextProvider = REACT_PROVIDER_TYPE;
           var Element2 = REACT_ELEMENT_TYPE2;
           var ForwardRef2 = REACT_FORWARD_REF_TYPE2;
-          var Fragment9 = REACT_FRAGMENT_TYPE2;
+          var Fragment4 = REACT_FRAGMENT_TYPE2;
           var Lazy = REACT_LAZY_TYPE2;
           var Memo2 = REACT_MEMO_TYPE2;
           var Portal = REACT_PORTAL_TYPE2;
           var Profiler = REACT_PROFILER_TYPE2;
           var StrictMode = REACT_STRICT_MODE_TYPE2;
-          var Suspense3 = REACT_SUSPENSE_TYPE2;
+          var Suspense = REACT_SUSPENSE_TYPE2;
           var hasWarnedAboutDeprecatedIsAsyncMode = false;
           function isAsyncMode(object) {
             {
@@ -24789,13 +24789,13 @@
           exports.ContextProvider = ContextProvider;
           exports.Element = Element2;
           exports.ForwardRef = ForwardRef2;
-          exports.Fragment = Fragment9;
+          exports.Fragment = Fragment4;
           exports.Lazy = Lazy;
           exports.Memo = Memo2;
           exports.Portal = Portal;
           exports.Profiler = Profiler;
           exports.StrictMode = StrictMode;
-          exports.Suspense = Suspense3;
+          exports.Suspense = Suspense;
           exports.isAsyncMode = isAsyncMode;
           exports.isConcurrentMode = isConcurrentMode;
           exports.isContextConsumer = isContextConsumer2;
@@ -25044,9 +25044,9 @@
             return x !== x && y !== y;
           }
         }
-        function PropTypeError(message, data2) {
+        function PropTypeError(message, data) {
           this.message = message;
-          this.data = data2 && typeof data2 === "object" ? data2 : {};
+          this.data = data && typeof data === "object" ? data : {};
           this.stack = "";
         }
         PropTypeError.prototype = Error.prototype;
@@ -25516,165 +25516,6 @@
     }
   });
 
-  // node_modules/react-router/node_modules/cookie/dist/index.js
-  var require_dist = __commonJS({
-    "node_modules/react-router/node_modules/cookie/dist/index.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", { value: true });
-      exports.parse = parse4;
-      exports.serialize = serialize2;
-      var cookieNameRegExp = /^[\u0021-\u003A\u003C\u003E-\u007E]+$/;
-      var cookieValueRegExp = /^[\u0021-\u003A\u003C-\u007E]*$/;
-      var domainValueRegExp = /^([.]?[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?)([.][a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?)*$/i;
-      var pathValueRegExp = /^[\u0020-\u003A\u003D-\u007E]*$/;
-      var __toString = Object.prototype.toString;
-      var NullObject = /* @__PURE__ */ (() => {
-        const C = function() {
-        };
-        C.prototype = /* @__PURE__ */ Object.create(null);
-        return C;
-      })();
-      function parse4(str, options) {
-        const obj = new NullObject();
-        const len = str.length;
-        if (len < 2)
-          return obj;
-        const dec = options?.decode || decode;
-        let index2 = 0;
-        do {
-          const eqIdx = str.indexOf("=", index2);
-          if (eqIdx === -1)
-            break;
-          const colonIdx = str.indexOf(";", index2);
-          const endIdx = colonIdx === -1 ? len : colonIdx;
-          if (eqIdx > endIdx) {
-            index2 = str.lastIndexOf(";", eqIdx - 1) + 1;
-            continue;
-          }
-          const keyStartIdx = startIndex(str, index2, eqIdx);
-          const keyEndIdx = endIndex(str, eqIdx, keyStartIdx);
-          const key = str.slice(keyStartIdx, keyEndIdx);
-          if (obj[key] === void 0) {
-            let valStartIdx = startIndex(str, eqIdx + 1, endIdx);
-            let valEndIdx = endIndex(str, endIdx, valStartIdx);
-            const value = dec(str.slice(valStartIdx, valEndIdx));
-            obj[key] = value;
-          }
-          index2 = endIdx + 1;
-        } while (index2 < len);
-        return obj;
-      }
-      function startIndex(str, index2, max2) {
-        do {
-          const code = str.charCodeAt(index2);
-          if (code !== 32 && code !== 9)
-            return index2;
-        } while (++index2 < max2);
-        return max2;
-      }
-      function endIndex(str, index2, min2) {
-        while (index2 > min2) {
-          const code = str.charCodeAt(--index2);
-          if (code !== 32 && code !== 9)
-            return index2 + 1;
-        }
-        return min2;
-      }
-      function serialize2(name, val, options) {
-        const enc = options?.encode || encodeURIComponent;
-        if (!cookieNameRegExp.test(name)) {
-          throw new TypeError(`argument name is invalid: ${name}`);
-        }
-        const value = enc(val);
-        if (!cookieValueRegExp.test(value)) {
-          throw new TypeError(`argument val is invalid: ${val}`);
-        }
-        let str = name + "=" + value;
-        if (!options)
-          return str;
-        if (options.maxAge !== void 0) {
-          if (!Number.isInteger(options.maxAge)) {
-            throw new TypeError(`option maxAge is invalid: ${options.maxAge}`);
-          }
-          str += "; Max-Age=" + options.maxAge;
-        }
-        if (options.domain) {
-          if (!domainValueRegExp.test(options.domain)) {
-            throw new TypeError(`option domain is invalid: ${options.domain}`);
-          }
-          str += "; Domain=" + options.domain;
-        }
-        if (options.path) {
-          if (!pathValueRegExp.test(options.path)) {
-            throw new TypeError(`option path is invalid: ${options.path}`);
-          }
-          str += "; Path=" + options.path;
-        }
-        if (options.expires) {
-          if (!isDate2(options.expires) || !Number.isFinite(options.expires.valueOf())) {
-            throw new TypeError(`option expires is invalid: ${options.expires}`);
-          }
-          str += "; Expires=" + options.expires.toUTCString();
-        }
-        if (options.httpOnly) {
-          str += "; HttpOnly";
-        }
-        if (options.secure) {
-          str += "; Secure";
-        }
-        if (options.partitioned) {
-          str += "; Partitioned";
-        }
-        if (options.priority) {
-          const priority = typeof options.priority === "string" ? options.priority.toLowerCase() : void 0;
-          switch (priority) {
-            case "low":
-              str += "; Priority=Low";
-              break;
-            case "medium":
-              str += "; Priority=Medium";
-              break;
-            case "high":
-              str += "; Priority=High";
-              break;
-            default:
-              throw new TypeError(`option priority is invalid: ${options.priority}`);
-          }
-        }
-        if (options.sameSite) {
-          const sameSite = typeof options.sameSite === "string" ? options.sameSite.toLowerCase() : options.sameSite;
-          switch (sameSite) {
-            case true:
-            case "strict":
-              str += "; SameSite=Strict";
-              break;
-            case "lax":
-              str += "; SameSite=Lax";
-              break;
-            case "none":
-              str += "; SameSite=None";
-              break;
-            default:
-              throw new TypeError(`option sameSite is invalid: ${options.sameSite}`);
-          }
-        }
-        return str;
-      }
-      function decode(str) {
-        if (str.indexOf("%") === -1)
-          return str;
-        try {
-          return decodeURIComponent(str);
-        } catch (e) {
-          return str;
-        }
-      }
-      function isDate2(val) {
-        return __toString.call(val) === "[object Date]";
-      }
-    }
-  });
-
   // node_modules/use-sync-external-store/cjs/use-sync-external-store-with-selector.development.js
   var require_use_sync_external_store_with_selector_development = __commonJS({
     "node_modules/use-sync-external-store/cjs/use-sync-external-store-with-selector.development.js"(exports) {
@@ -25684,15 +25525,15 @@
           return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React89 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore2 = React89.useSyncExternalStore, useRef29 = React89.useRef, useEffect30 = React89.useEffect, useMemo22 = React89.useMemo, useDebugValue3 = React89.useDebugValue;
+        var React89 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore2 = React89.useSyncExternalStore, useRef26 = React89.useRef, useEffect27 = React89.useEffect, useMemo20 = React89.useMemo, useDebugValue3 = React89.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual2) {
-          var instRef = useRef29(null);
+          var instRef = useRef26(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
           } else
             inst = instRef.current;
-          instRef = useMemo22(
+          instRef = useMemo20(
             function() {
               function memoizedSelector(nextSnapshot) {
                 if (!hasMemo) {
@@ -25728,7 +25569,7 @@
             [getSnapshot, getServerSnapshot, selector, isEqual2]
           );
           var value = useSyncExternalStore2(subscribe, instRef[0], instRef[1]);
-          useEffect30(
+          useEffect27(
             function() {
               inst.hasValue = true;
               inst.value = value;
@@ -52452,14 +52293,14 @@
   }
 
   // node_modules/d3-selection/src/selection/data.js
-  function bindIndex(parent, group, enter2, update2, exit, data2) {
-    var i = 0, node, groupLength = group.length, dataLength = data2.length;
+  function bindIndex(parent, group, enter2, update2, exit, data) {
+    var i = 0, node, groupLength = group.length, dataLength = data.length;
     for (; i < dataLength; ++i) {
       if (node = group[i]) {
-        node.__data__ = data2[i];
+        node.__data__ = data[i];
         update2[i] = node;
       } else {
-        enter2[i] = new EnterNode(parent, data2[i]);
+        enter2[i] = new EnterNode(parent, data[i]);
       }
     }
     for (; i < groupLength; ++i) {
@@ -52468,8 +52309,8 @@
       }
     }
   }
-  function bindKey(parent, group, enter2, update2, exit, data2, key) {
-    var i, node, nodeByKeyValue = /* @__PURE__ */ new Map(), groupLength = group.length, dataLength = data2.length, keyValues = new Array(groupLength), keyValue;
+  function bindKey(parent, group, enter2, update2, exit, data, key) {
+    var i, node, nodeByKeyValue = /* @__PURE__ */ new Map(), groupLength = group.length, dataLength = data.length, keyValues = new Array(groupLength), keyValue;
     for (i = 0; i < groupLength; ++i) {
       if (node = group[i]) {
         keyValues[i] = keyValue = key.call(node, node.__data__, i, group) + "";
@@ -52481,13 +52322,13 @@
       }
     }
     for (i = 0; i < dataLength; ++i) {
-      keyValue = key.call(parent, data2[i], i, data2) + "";
+      keyValue = key.call(parent, data[i], i, data) + "";
       if (node = nodeByKeyValue.get(keyValue)) {
         update2[i] = node;
-        node.__data__ = data2[i];
+        node.__data__ = data[i];
         nodeByKeyValue.delete(keyValue);
       } else {
-        enter2[i] = new EnterNode(parent, data2[i]);
+        enter2[i] = new EnterNode(parent, data[i]);
       }
     }
     for (i = 0; i < groupLength; ++i) {
@@ -52506,8 +52347,8 @@
     if (typeof value !== "function")
       value = constant_default(value);
     for (var m = groups.length, update2 = new Array(m), enter2 = new Array(m), exit = new Array(m), j = 0; j < m; ++j) {
-      var parent = parents[j], group = groups[j], groupLength = group.length, data2 = arraylike(value.call(parent, parent && parent.__data__, j, parents)), dataLength = data2.length, enterGroup = enter2[j] = new Array(dataLength), updateGroup = update2[j] = new Array(dataLength), exitGroup = exit[j] = new Array(groupLength);
-      bind(parent, group, enterGroup, updateGroup, exitGroup, data2, key);
+      var parent = parents[j], group = groups[j], groupLength = group.length, data = arraylike(value.call(parent, parent && parent.__data__, j, parents)), dataLength = data.length, enterGroup = enter2[j] = new Array(dataLength), updateGroup = update2[j] = new Array(dataLength), exitGroup = exit[j] = new Array(groupLength);
+      bind(parent, group, enterGroup, updateGroup, exitGroup, data, key);
       for (var i0 = 0, i1 = 0, previous, next; i0 < dataLength; ++i0) {
         if (previous = enterGroup[i0]) {
           if (i0 >= i1)
@@ -52523,8 +52364,8 @@
     update2._exit = exit;
     return update2;
   }
-  function arraylike(data2) {
-    return typeof data2 === "object" && "length" in data2 ? data2 : Array.from(data2);
+  function arraylike(data) {
+    return typeof data === "object" && "length" in data ? data : Array.from(data);
   }
 
   // node_modules/d3-selection/src/selection/exit.js
@@ -53898,7 +53739,7 @@
   }
 
   // node_modules/d3-interpolate/src/transform/index.js
-  function interpolateTransform(parse4, pxComma, pxParen, degParen) {
+  function interpolateTransform(parse3, pxComma, pxParen, degParen) {
     function pop(s) {
       return s.length ? s.pop() + " " : "";
     }
@@ -53938,7 +53779,7 @@
     }
     return function(a, b) {
       var s = [], q = [];
-      a = parse4(a), b = parse4(b);
+      a = parse3(a), b = parse3(b);
       translate(a.translateX, a.translateY, b.translateX, b.translateY, s, q);
       rotate(a.rotate, b.rotate, s, q);
       skewX(a.skewX, b.skewX, s, q);
@@ -59069,17 +58910,17 @@
     ]), onMouseDown: onPointerDown2, onTouchStart: onPointerDown2, onClick: connectOnClick ? onClick : void 0, ref: ref2, ...rest, children: children2 });
   }
   var Handle = (0, import_react2.memo)(fixedForwardRef(HandleComponent));
-  function InputNode({ data: data2, isConnectable, sourcePosition = Position.Bottom }) {
-    return (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [data2?.label, (0, import_jsx_runtime.jsx)(Handle, { type: "source", position: sourcePosition, isConnectable })] });
+  function InputNode({ data, isConnectable, sourcePosition = Position.Bottom }) {
+    return (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [data?.label, (0, import_jsx_runtime.jsx)(Handle, { type: "source", position: sourcePosition, isConnectable })] });
   }
-  function DefaultNode({ data: data2, isConnectable, targetPosition = Position.Top, sourcePosition = Position.Bottom }) {
-    return (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [(0, import_jsx_runtime.jsx)(Handle, { type: "target", position: targetPosition, isConnectable }), data2?.label, (0, import_jsx_runtime.jsx)(Handle, { type: "source", position: sourcePosition, isConnectable })] });
+  function DefaultNode({ data, isConnectable, targetPosition = Position.Top, sourcePosition = Position.Bottom }) {
+    return (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [(0, import_jsx_runtime.jsx)(Handle, { type: "target", position: targetPosition, isConnectable }), data?.label, (0, import_jsx_runtime.jsx)(Handle, { type: "source", position: sourcePosition, isConnectable })] });
   }
   function GroupNode() {
     return null;
   }
-  function OutputNode({ data: data2, isConnectable, targetPosition = Position.Top }) {
-    return (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [(0, import_jsx_runtime.jsx)(Handle, { type: "target", position: targetPosition, isConnectable }), data2?.label] });
+  function OutputNode({ data, isConnectable, targetPosition = Position.Top }) {
+    return (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [(0, import_jsx_runtime.jsx)(Handle, { type: "target", position: targetPosition, isConnectable }), data?.label] });
   }
   var arrowKeyDiffs = {
     ArrowUp: { x: 0, y: -1 },
@@ -61967,12 +61808,12 @@
       disabled
     } = _ref, props = _objectWithoutPropertiesLoose2(_ref, _excluded);
     const [buttonProps, {
-      tagName: Component4
+      tagName: Component2
     }] = useButtonProps(Object.assign({
       tagName: asProp,
       disabled
     }, props));
-    return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(Component4, Object.assign({}, props, buttonProps, {
+    return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(Component2, Object.assign({}, props, buttonProps, {
       ref: ref2
     }));
   });
@@ -62123,8 +61964,8 @@
       disabled,
       ...props
     });
-    const Component4 = tagName;
-    return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(Component4, {
+    const Component2 = tagName;
+    return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(Component2, {
       ...buttonProps,
       ...props,
       ref: ref2,
@@ -62147,14 +61988,14 @@
     className,
     role = "group",
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-    as: Component4 = "div",
+    as: Component2 = "div",
     ...rest
   }, ref2) => {
     const prefix3 = useBootstrapPrefix(bsPrefix, "btn-group");
     let baseClass = prefix3;
     if (vertical2)
       baseClass = `${prefix3}-vertical`;
-    return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Component2, {
       ...rest,
       ref: ref2,
       role,
@@ -62243,11 +62084,11 @@
         className,
         ...colProps
       }, {
-        as: Component4 = "div",
+        as: Component2 = "div",
         bsPrefix,
         spans
       }] = useCol(props);
-      return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Component4, {
+      return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Component2, {
         ...colProps,
         ref: ref2,
         className: (0, import_classnames7.default)(className, !spans.length && bsPrefix)
@@ -62266,13 +62107,13 @@
     bsPrefix,
     fluid = false,
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-    as: Component4 = "div",
+    as: Component2 = "div",
     className,
     ...props
   }, ref2) => {
     const prefix3 = useBootstrapPrefix(bsPrefix, "container");
     const suffix2 = typeof fluid === "string" ? `-${fluid}` : "-fluid";
-    return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Component2, {
       ref: ref2,
       ...props,
       className: (0, import_classnames8.default)(className, fluid ? `${prefix3}${suffix2}` : prefix3)
@@ -63414,16 +63255,16 @@
   function offset(_ref2) {
     var state = _ref2.state, options = _ref2.options, name = _ref2.name;
     var _options$offset = options.offset, offset4 = _options$offset === void 0 ? [0, 0] : _options$offset;
-    var data2 = placements.reduce(function(acc, placement) {
+    var data = placements.reduce(function(acc, placement) {
       acc[placement] = distanceAndSkiddingToXY(placement, state.rects, offset4);
       return acc;
     }, {});
-    var _data$state$placement = data2[state.placement], x = _data$state$placement.x, y = _data$state$placement.y;
+    var _data$state$placement = data[state.placement], x = _data$state$placement.x, y = _data$state$placement.y;
     if (state.modifiersData.popperOffsets != null) {
       state.modifiersData.popperOffsets.x += x;
       state.modifiersData.popperOffsets.y += y;
     }
-    state.modifiersData[name] = data2;
+    state.modifiersData[name] = data;
   }
   var offset_default = {
     name: "offset",
@@ -63485,7 +63326,7 @@
       altAxis: 0
     }, tetherOffsetValue);
     var offsetModifierState = state.modifiersData.offset ? state.modifiersData.offset[state.placement] : null;
-    var data2 = {
+    var data = {
       x: 0,
       y: 0
     };
@@ -63521,7 +63362,7 @@
       var tetherMax = offset4 + maxOffset - offsetModifierValue;
       var preventedOffset = within(tether ? min(min2, tetherMin) : min2, offset4, tether ? max(max2, tetherMax) : max2);
       popperOffsets2[mainAxis] = preventedOffset;
-      data2[mainAxis] = preventedOffset - offset4;
+      data[mainAxis] = preventedOffset - offset4;
     }
     if (checkAltAxis) {
       var _offsetModifierState$2;
@@ -63537,9 +63378,9 @@
       var _tetherMax = isOriginSide ? _offset + referenceRect[_len] + popperRect[_len] - _offsetModifierValue - normalizedTetherOffsetValue.altAxis : _max;
       var _preventedOffset = tether && isOriginSide ? withinMaxClamp(_tetherMin, _offset, _tetherMax) : within(tether ? _tetherMin : _min, _offset, tether ? _tetherMax : _max);
       popperOffsets2[altAxis] = _preventedOffset;
-      data2[altAxis] = _preventedOffset - _offset;
+      data[altAxis] = _preventedOffset - _offset;
     }
-    state.modifiersData[name] = data2;
+    state.modifiersData[name] = data;
   }
   var preventOverflow_default = {
     name: "preventOverflow",
@@ -64406,7 +64247,7 @@
       disabled,
       onClick,
       active,
-      as: Component4 = Button_default
+      as: Component2 = Button_default
     } = _ref, props = _objectWithoutPropertiesLoose6(_ref, _excluded5);
     const [dropdownItemProps] = useDropdownItem({
       key: eventKey,
@@ -64415,7 +64256,7 @@
       onClick,
       active
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(Component4, Object.assign({}, props, {
+    return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(Component2, Object.assign({}, props, {
       ref: ref2
     }, dropdownItemProps));
   });
@@ -64613,12 +64454,12 @@
   var DropdownDivider = /* @__PURE__ */ React27.forwardRef(({
     className,
     bsPrefix,
-    as: Component4 = "hr",
+    as: Component2 = "hr",
     role = "separator",
     ...props
   }, ref2) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "dropdown-divider");
-    return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(Component2, {
       ref: ref2,
       className: (0, import_classnames9.default)(className, bsPrefix),
       role,
@@ -64636,12 +64477,12 @@
   var DropdownHeader = /* @__PURE__ */ React28.forwardRef(({
     className,
     bsPrefix,
-    as: Component4 = "div",
+    as: Component2 = "div",
     role = "heading",
     ...props
   }, ref2) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "dropdown-header");
-    return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(Component2, {
       ref: ref2,
       className: (0, import_classnames10.default)(className, bsPrefix),
       role,
@@ -64663,7 +64504,7 @@
     disabled = false,
     onClick,
     active,
-    as: Component4 = Anchor_default,
+    as: Component2 = Anchor_default,
     ...props
   }, ref2) => {
     const prefix3 = useBootstrapPrefix(bsPrefix, "dropdown-item");
@@ -64674,7 +64515,7 @@
       onClick,
       active
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(Component2, {
       ...props,
       ...dropdownItemProps,
       ref: ref2,
@@ -64692,11 +64533,11 @@
   var DropdownItemText = /* @__PURE__ */ React30.forwardRef(({
     className,
     bsPrefix,
-    as: Component4 = "span",
+    as: Component2 = "span",
     ...props
   }, ref2) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "dropdown-item-text");
-    return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(Component2, {
       ref: ref2,
       className: (0, import_classnames12.default)(className, bsPrefix),
       ...props
@@ -64781,7 +64622,7 @@
     show: showProps,
     renderOnMount,
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-    as: Component4 = "div",
+    as: Component2 = "div",
     popperConfig,
     variant,
     ...props
@@ -64833,7 +64674,7 @@
     }, [show]);
     if (!hasShown && !renderOnMount && !isInputGroup)
       return null;
-    if (typeof Component4 !== "string") {
+    if (typeof Component2 !== "string") {
       menuProps.show = show;
       menuProps.close = () => toggle == null ? void 0 : toggle(false);
       menuProps.align = align;
@@ -64846,7 +64687,7 @@
       };
       props["x-placement"] = popper2.placement;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Component2, {
       ...props,
       ...menuProps,
       style: style5,
@@ -64871,7 +64712,7 @@
     className,
     childBsPrefix,
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-    as: Component4 = Button_default2,
+    as: Component2 = Button_default2,
     ...props
   }, ref2) => {
     const prefix3 = useBootstrapPrefix(bsPrefix, "dropdown-toggle");
@@ -64881,7 +64722,7 @@
     }
     const [toggleProps] = useDropdownToggle();
     toggleProps.ref = useMergedRefs_default(toggleProps.ref, useWrappedRefWithWarning(ref2, "DropdownToggle"));
-    return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(Component2, {
       className: (0, import_classnames14.default)(className, prefix3, split && `${prefix3}-split`, (dropdownContext == null ? void 0 : dropdownContext.show) && "show"),
       ...toggleProps,
       ...props
@@ -64904,7 +64745,7 @@
       onToggle,
       focusFirstItemOnShow,
       // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-      as: Component4 = "div",
+      as: Component2 = "div",
       navbar: _4,
       autoClose = true,
       ...props
@@ -64958,7 +64799,7 @@
         onToggle: handleToggle,
         focusFirstItemOnShow,
         itemSelector: `.${prefix3}-item:not(.disabled):not(:disabled)`,
-        children: isInputGroup ? props.children : /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(Component4, {
+        children: isInputGroup ? props.children : /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(Component2, {
           ...props,
           ref: ref2,
           className: (0, import_classnames15.default)(className, show && "show", directionClasses[drop2])
@@ -65005,12 +64846,12 @@
   var Feedback = /* @__PURE__ */ React36.forwardRef(
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
     ({
-      as: Component4 = "div",
+      as: Component2 = "div",
       className,
       type = "valid",
       tooltip = false,
       ...props
-    }, ref2) => /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(Component4, {
+    }, ref2) => /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(Component2, {
       ...props,
       ref: ref2,
       className: (0, import_classnames16.default)(className, `${type}-${tooltip ? "tooltip" : "feedback"}`)
@@ -65042,14 +64883,14 @@
     isValid = false,
     isInvalid = false,
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-    as: Component4 = "input",
+    as: Component2 = "input",
     ...props
   }, ref2) => {
     const {
       controlId
     } = (0, import_react43.useContext)(FormContext_default);
     bsPrefix = useBootstrapPrefix(bsPrefix, "form-check-input");
-    return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Component2, {
       ...props,
       ref: ref2,
       type,
@@ -65174,7 +65015,7 @@
     plaintext,
     readOnly,
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-    as: Component4 = "input",
+    as: Component2 = "input",
     ...props
   }, ref2) => {
     const {
@@ -65182,7 +65023,7 @@
     } = (0, import_react46.useContext)(FormContext_default);
     bsPrefix = useBootstrapPrefix(bsPrefix, "form-control");
     true ? (0, import_warning3.default)(controlId == null || !id2, "`controlId` is ignored on `<FormControl>` when `id` is specified.") : void 0;
-    return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(Component2, {
       ...props,
       type,
       size: htmlSize,
@@ -65205,11 +65046,11 @@
   var FormFloating = /* @__PURE__ */ React42.forwardRef(({
     className,
     bsPrefix,
-    as: Component4 = "div",
+    as: Component2 = "div",
     ...props
   }, ref2) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "form-floating");
-    return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(Component2, {
       ref: ref2,
       className: (0, import_classnames21.default)(className, bsPrefix),
       ...props
@@ -65225,7 +65066,7 @@
   var FormGroup = /* @__PURE__ */ React43.forwardRef(({
     controlId,
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-    as: Component4 = "div",
+    as: Component2 = "div",
     ...props
   }, ref2) => {
     const context4 = (0, import_react47.useMemo)(() => ({
@@ -65233,7 +65074,7 @@
     }), [controlId]);
     return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(FormContext_default.Provider, {
       value: context4,
-      children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(Component4, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(Component2, {
         ...props,
         ref: ref2
       })
@@ -65251,7 +65092,7 @@
   "use client";
   var FormLabel = /* @__PURE__ */ React44.forwardRef(({
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-    as: Component4 = "label",
+    as: Component2 = "label",
     bsPrefix,
     column = false,
     visuallyHidden: visuallyHidden2 = false,
@@ -65279,7 +65120,7 @@
       });
     return (
       // eslint-disable-next-line jsx-a11y/label-has-for, jsx-a11y/label-has-associated-control
-      /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(Component4, {
+      /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(Component2, {
         ref: ref2,
         className: classes,
         htmlFor,
@@ -65358,12 +65199,12 @@
     ({
       bsPrefix,
       className,
-      as: Component4 = "small",
+      as: Component2 = "small",
       muted,
       ...props
     }, ref2) => {
       bsPrefix = useBootstrapPrefix(bsPrefix, "form-text");
-      return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(Component4, {
+      return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(Component2, {
         ...props,
         ref: ref2,
         className: (0, import_classnames25.default)(className, bsPrefix, muted && "text-muted")
@@ -65439,9 +65280,9 @@
     className,
     validated,
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-    as: Component4 = "form",
+    as: Component2 = "form",
     ...props
-  }, ref2) => /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Component4, {
+  }, ref2) => /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Component2, {
     ...props,
     ref: ref2,
     className: (0, import_classnames27.default)(className, validated && "was-validated")
@@ -65560,7 +65401,7 @@
   }
   var NavItem = /* @__PURE__ */ React52.forwardRef((_ref, ref2) => {
     let {
-      as: Component4 = Button_default,
+      as: Component2 = Button_default,
       active,
       eventKey
     } = _ref, options = _objectWithoutPropertiesLoose7(_ref, _excluded6);
@@ -65569,7 +65410,7 @@
       active
     }, options));
     props[dataAttr("active")] = meta.isActive;
-    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(Component4, Object.assign({}, options, props, {
+    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(Component2, Object.assign({}, options, props, {
       ref: ref2
     }));
   });
@@ -65597,7 +65438,7 @@
   var Nav = /* @__PURE__ */ React53.forwardRef((_ref, ref2) => {
     let {
       // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-      as: Component4 = "div",
+      as: Component2 = "div",
       onSelect,
       activeKey,
       role,
@@ -65682,7 +65523,7 @@
           getControlledId: getControlledId || noop6,
           getControllerId: getControllerId || noop6
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(Component4, Object.assign({}, props, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(Component2, Object.assign({}, props, {
           onKeyDown: handleKeyDown,
           ref: mergedRef,
           role
@@ -65983,10 +65824,10 @@
   }
   var RTGTransition = /* @__PURE__ */ React54.forwardRef((_ref, ref2) => {
     let {
-      component: Component4
+      component: Component2
     } = _ref, props = _objectWithoutPropertiesLoose10(_ref, _excluded9);
     const transitionProps = useRTGTransitionProps(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(Component4, Object.assign({
+    return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(Component2, Object.assign({
       ref: ref2
     }, transitionProps));
   });
@@ -66442,11 +66283,11 @@
   var NavItem2 = /* @__PURE__ */ React59.forwardRef(({
     className,
     bsPrefix,
-    as: Component4 = "div",
+    as: Component2 = "div",
     ...props
   }, ref2) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "nav-item");
-    return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(Component2, {
       ref: ref2,
       className: (0, import_classnames28.default)(className, bsPrefix),
       ...props
@@ -66463,7 +66304,7 @@
   var NavLink = /* @__PURE__ */ React60.forwardRef(({
     bsPrefix,
     className,
-    as: Component4 = Anchor_default,
+    as: Component2 = Anchor_default,
     active,
     eventKey,
     disabled = false,
@@ -66476,7 +66317,7 @@
       disabled,
       ...props
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(Component2, {
       ...props,
       ...navItemProps,
       ref: ref2,
@@ -66558,8 +66399,8 @@
     ...props
   }, ref2) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "navbar-brand");
-    const Component4 = as || (props.href ? "a" : "span");
-    return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(Component4, {
+    const Component2 = as || (props.href ? "a" : "span");
+    return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(Component2, {
       ...props,
       ref: ref2,
       className: (0, import_classnames31.default)(className, bsPrefix)
@@ -66605,7 +66446,7 @@
     children: children2,
     label = "Toggle navigation",
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-    as: Component4 = "button",
+    as: Component2 = "button",
     onClick,
     ...props
   }, ref2) => {
@@ -66620,10 +66461,10 @@
       if (onToggle)
         onToggle();
     });
-    if (Component4 === "button") {
+    if (Component2 === "button") {
       props.type = "button";
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(Component2, {
       ...props,
       ref: ref2,
       onClick: handleClick,
@@ -66763,11 +66604,11 @@
   var OffcanvasBody = /* @__PURE__ */ React65.forwardRef(({
     className,
     bsPrefix,
-    as: Component4 = "div",
+    as: Component2 = "div",
     ...props
   }, ref2) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "offcanvas-body");
-    return /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(Component2, {
       ref: ref2,
       className: (0, import_classnames33.default)(className, bsPrefix),
       ...props
@@ -66847,11 +66688,11 @@
   var OffcanvasTitle = /* @__PURE__ */ React68.forwardRef(({
     className,
     bsPrefix,
-    as: Component4 = DivStyledAsH5,
+    as: Component2 = DivStyledAsH5,
     ...props
   }, ref2) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "offcanvas-title");
-    return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(Component2, {
       ref: ref2,
       className: (0, import_classnames36.default)(className, bsPrefix),
       ...props
@@ -67019,11 +66860,11 @@
   var NavbarText = /* @__PURE__ */ React71.forwardRef(({
     className,
     bsPrefix,
-    as: Component4 = "span",
+    as: Component2 = "span",
     ...props
   }, ref2) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "navbar-text");
-    return /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(Component2, {
       ref: ref2,
       className: (0, import_classnames38.default)(className, bsPrefix),
       ...props
@@ -67045,7 +66886,7 @@
       sticky,
       className,
       // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-      as: Component4 = "nav",
+      as: Component2 = "nav",
       expanded,
       onToggle,
       onSelect,
@@ -67061,7 +66902,7 @@
         onToggle == null || onToggle(false);
       }
     }, [onSelect, collapseOnSelect, expanded, onToggle]);
-    if (controlledProps.role === void 0 && Component4 !== "nav") {
+    if (controlledProps.role === void 0 && Component2 !== "nav") {
       controlledProps.role = "navigation";
     }
     let expandClass = `${bsPrefix}-expand`;
@@ -67077,7 +66918,7 @@
       value: navbarContext,
       children: /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(SelectableContext_default.Provider, {
         value: handleCollapse,
-        children: /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(Component4, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(Component2, {
           ref: ref2,
           ...controlledProps,
           className: (0, import_classnames39.default)(className, bsPrefix, expand3 && expandClass, variant && `${bsPrefix}-${variant}`, bg && `bg-${bg}`, sticky && `sticky-${sticky}`, fixed && `fixed-${fixed}`)
@@ -67153,7 +66994,7 @@
     bsPrefix,
     className,
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-    as: Component4 = "div",
+    as: Component2 = "div",
     ...props
   }, ref2) => {
     const decoratedBsPrefix = useBootstrapPrefix(bsPrefix, "row");
@@ -67176,7 +67017,7 @@
       if (cols != null)
         classes.push(`${sizePrefix}${infix}-${cols}`);
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(Component2, {
       ref: ref2,
       ...props,
       className: (0, import_classnames41.default)(className, decoratedBsPrefix, ...classes)
@@ -67274,7 +67115,7 @@
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
     (_ref2, ref2) => {
       let {
-        as: Component4 = "div"
+        as: Component2 = "div"
       } = _ref2, props = _objectWithoutPropertiesLoose12(_ref2, _excluded32);
       const [tabPanelProps, {
         isActive: isActive2,
@@ -67302,7 +67143,7 @@
             onExited,
             mountOnEnter,
             unmountOnExit,
-            children: /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(Component4, Object.assign({}, tabPanelProps, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(Component2, Object.assign({}, tabPanelProps, {
               ref: ref2,
               hidden: !isActive2,
               "aria-hidden": !isActive2
@@ -67380,11 +67221,11 @@
   var TabContent = /* @__PURE__ */ React78.forwardRef(({
     className,
     bsPrefix,
-    as: Component4 = "div",
+    as: Component2 = "div",
     ...props
   }, ref2) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "tab-content");
-    return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(Component2, {
       ref: ref2,
       className: (0, import_classnames42.default)(className, bsPrefix),
       ...props
@@ -67406,7 +67247,7 @@
     const [{
       className,
       // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-      as: Component4 = "div",
+      as: Component2 = "div",
       ...rest
     }, {
       isActive: isActive2,
@@ -67438,7 +67279,7 @@
           onExited,
           mountOnEnter,
           unmountOnExit,
-          children: /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(Component4, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(Component2, {
             ...rest,
             ref: ref2,
             className: (0, import_classnames43.default)(className, prefix3, isActive2 && "active")
@@ -67657,29 +67498,52 @@
   var import_react83 = __toESM(require_react(), 1);
   var import_client = __toESM(require_client(), 1);
 
-  // node_modules/react-router/dist/development/chunk-IR6S3I6Y.mjs
-  var React310 = __toESM(require_react(), 1);
-  var React83 = __toESM(require_react(), 1);
-  var React210 = __toESM(require_react(), 1);
-  var React102 = __toESM(require_react(), 1);
-  var React92 = __toESM(require_react(), 1);
-  var React410 = __toESM(require_react(), 1);
-  var React84 = __toESM(require_react(), 1);
-  var React710 = __toESM(require_react(), 1);
-  var React510 = __toESM(require_react(), 1);
-  var React610 = __toESM(require_react(), 1);
-  var React112 = __toESM(require_react(), 1);
-  var React122 = __toESM(require_react(), 1);
-  var React132 = __toESM(require_react(), 1);
-  var import_cookie = __toESM(require_dist(), 1);
-  var import_meta2 = {};
+  // node_modules/react-router-dom/dist/index.js
+  var React84 = __toESM(require_react());
+  var ReactDOM4 = __toESM(require_react_dom());
+
+  // node_modules/react-router/dist/index.js
+  var React83 = __toESM(require_react());
+
+  // node_modules/@remix-run/router/dist/router.js
+  function _extends2() {
+    _extends2 = Object.assign ? Object.assign.bind() : function(target) {
+      for (var i = 1; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (Object.prototype.hasOwnProperty.call(source, key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    };
+    return _extends2.apply(this, arguments);
+  }
+  var Action;
+  (function(Action2) {
+    Action2["Pop"] = "POP";
+    Action2["Push"] = "PUSH";
+    Action2["Replace"] = "REPLACE";
+  })(Action || (Action = {}));
   var PopStateEventType = "popstate";
-  function createBrowserHistory(options = {}) {
+  function createBrowserHistory(options) {
+    if (options === void 0) {
+      options = {};
+    }
     function createBrowserLocation(window2, globalHistory) {
-      let { pathname, search, hash: hash3 } = window2.location;
+      let {
+        pathname,
+        search,
+        hash: hash3
+      } = window2.location;
       return createLocation(
         "",
-        { pathname, search, hash: hash3 },
+        {
+          pathname,
+          search,
+          hash: hash3
+        },
         // state defaults to `null` because `window.history.state` does
         globalHistory.state && globalHistory.state.usr || null,
         globalHistory.state && globalHistory.state.key || "default"
@@ -67688,12 +67552,7 @@
     function createBrowserHref(window2, to) {
       return typeof to === "string" ? to : createPath(to);
     }
-    return getUrlBasedHistory(
-      createBrowserLocation,
-      createBrowserHref,
-      null,
-      options
-    );
+    return getUrlBasedHistory(createBrowserLocation, createBrowserHref, null, options);
   }
   function invariant4(value, message) {
     if (value === false || value === null || typeof value === "undefined") {
@@ -67711,7 +67570,7 @@
     }
   }
   function createKey() {
-    return Math.random().toString(36).substring(2, 10);
+    return Math.random().toString(36).substr(2, 8);
   }
   function getHistoryState(location, index2) {
     return {
@@ -67720,26 +67579,30 @@
       idx: index2
     };
   }
-  function createLocation(current, to, state = null, key) {
-    let location = {
+  function createLocation(current, to, state, key) {
+    if (state === void 0) {
+      state = null;
+    }
+    let location = _extends2({
       pathname: typeof current === "string" ? current : current.pathname,
       search: "",
-      hash: "",
-      ...typeof to === "string" ? parsePath(to) : to,
+      hash: ""
+    }, typeof to === "string" ? parsePath(to) : to, {
       state,
       // TODO: This could be cleaned up.  push/replace should probably just take
       // full Locations now and avoid the need to run through this flow at all
       // But that's a pretty big refactor to the current test suite so going to
       // keep as is for the time being and just let any incoming keys take precedence
       key: to && to.key || key || createKey()
-    };
+    });
     return location;
   }
-  function createPath({
-    pathname = "/",
-    search = "",
-    hash: hash3 = ""
-  }) {
+  function createPath(_ref) {
+    let {
+      pathname = "/",
+      search = "",
+      hash: hash3 = ""
+    } = _ref;
     if (search && search !== "?")
       pathname += search.charAt(0) === "?" ? search : "?" + search;
     if (hash3 && hash3 !== "#")
@@ -67751,13 +67614,13 @@
     if (path) {
       let hashIndex = path.indexOf("#");
       if (hashIndex >= 0) {
-        parsedPath.hash = path.substring(hashIndex);
-        path = path.substring(0, hashIndex);
+        parsedPath.hash = path.substr(hashIndex);
+        path = path.substr(0, hashIndex);
       }
       let searchIndex = path.indexOf("?");
       if (searchIndex >= 0) {
-        parsedPath.search = path.substring(searchIndex);
-        path = path.substring(0, searchIndex);
+        parsedPath.search = path.substr(searchIndex);
+        path = path.substr(0, searchIndex);
       }
       if (path) {
         parsedPath.pathname = path;
@@ -67765,31 +67628,45 @@
     }
     return parsedPath;
   }
-  function getUrlBasedHistory(getLocation, createHref2, validateLocation, options = {}) {
-    let { window: window2 = document.defaultView, v5Compat = false } = options;
+  function getUrlBasedHistory(getLocation, createHref, validateLocation, options) {
+    if (options === void 0) {
+      options = {};
+    }
+    let {
+      window: window2 = document.defaultView,
+      v5Compat = false
+    } = options;
     let globalHistory = window2.history;
-    let action = "POP";
+    let action = Action.Pop;
     let listener = null;
     let index2 = getIndex();
     if (index2 == null) {
       index2 = 0;
-      globalHistory.replaceState({ ...globalHistory.state, idx: index2 }, "");
+      globalHistory.replaceState(_extends2({}, globalHistory.state, {
+        idx: index2
+      }), "");
     }
     function getIndex() {
-      let state = globalHistory.state || { idx: null };
+      let state = globalHistory.state || {
+        idx: null
+      };
       return state.idx;
     }
     function handlePop() {
-      action = "POP";
+      action = Action.Pop;
       let nextIndex = getIndex();
       let delta = nextIndex == null ? null : nextIndex - index2;
       index2 = nextIndex;
       if (listener) {
-        listener({ action, location: history.location, delta });
+        listener({
+          action,
+          location: history.location,
+          delta
+        });
       }
     }
     function push(to, state) {
-      action = "PUSH";
+      action = Action.Push;
       let location = createLocation(history.location, to, state);
       if (validateLocation)
         validateLocation(location, to);
@@ -67805,11 +67682,15 @@
         window2.location.assign(url);
       }
       if (v5Compat && listener) {
-        listener({ action, location: history.location, delta: 1 });
+        listener({
+          action,
+          location: history.location,
+          delta: 1
+        });
       }
     }
     function replace2(to, state) {
-      action = "REPLACE";
+      action = Action.Replace;
       let location = createLocation(history.location, to, state);
       if (validateLocation)
         validateLocation(location, to);
@@ -67818,17 +67699,18 @@
       let url = history.createHref(location);
       globalHistory.replaceState(historyState, "", url);
       if (v5Compat && listener) {
-        listener({ action, location: history.location, delta: 0 });
+        listener({
+          action,
+          location: history.location,
+          delta: 0
+        });
       }
     }
     function createURL(to) {
       let base = window2.location.origin !== "null" ? window2.location.origin : window2.location.href;
       let href = typeof to === "string" ? to : createPath(to);
       href = href.replace(/ $/, "%20");
-      invariant4(
-        base,
-        `No window.location.(origin|href) available to create URL for href: ${href}`
-      );
+      invariant4(base, "No window.location.(origin|href) available to create URL for href: " + href);
       return new URL(href, base);
     }
     let history = {
@@ -67850,7 +67732,7 @@
         };
       },
       createHref(to) {
-        return createHref2(window2, to);
+        return createHref(window2, to);
       },
       createURL,
       encodeLocation(to) {
@@ -67869,7 +67751,17 @@
     };
     return history;
   }
-  function matchRoutes(routes, locationArg, basename = "/") {
+  var ResultType;
+  (function(ResultType2) {
+    ResultType2["data"] = "data";
+    ResultType2["deferred"] = "deferred";
+    ResultType2["redirect"] = "redirect";
+    ResultType2["error"] = "error";
+  })(ResultType || (ResultType = {}));
+  function matchRoutes(routes, locationArg, basename) {
+    if (basename === void 0) {
+      basename = "/";
+    }
     return matchRoutesImpl(routes, locationArg, basename, false);
   }
   function matchRoutesImpl(routes, locationArg, basename, allowPartial) {
@@ -67883,16 +67775,16 @@
     let matches = null;
     for (let i = 0; matches == null && i < branches.length; ++i) {
       let decoded = decodePath(pathname);
-      matches = matchRouteBranch(
-        branches[i],
-        decoded,
-        allowPartial
-      );
+      matches = matchRouteBranch(branches[i], decoded, allowPartial);
     }
     return matches;
   }
   function convertRouteMatchToUiMatch(match, loaderData) {
-    let { route, pathname, params } = match;
+    let {
+      route,
+      pathname,
+      params
+    } = match;
     return {
       id: route.id,
       pathname,
@@ -67901,7 +67793,16 @@
       handle: route.handle
     };
   }
-  function flattenRoutes(routes, branches = [], parentsMeta = [], parentPath = "") {
+  function flattenRoutes(routes, branches, parentsMeta, parentPath) {
+    if (branches === void 0) {
+      branches = [];
+    }
+    if (parentsMeta === void 0) {
+      parentsMeta = [];
+    }
+    if (parentPath === void 0) {
+      parentPath = "";
+    }
     let flattenRoute = (route, index2, relativePath) => {
       let meta = {
         relativePath: relativePath === void 0 ? route.path || "" : relativePath,
@@ -67910,10 +67811,7 @@
         route
       };
       if (meta.relativePath.startsWith("/")) {
-        invariant4(
-          meta.relativePath.startsWith(parentPath),
-          `Absolute route path "${meta.relativePath}" nested under path "${parentPath}" is not valid. An absolute child route path must start with the combined path of all its parent routes.`
-        );
+        invariant4(meta.relativePath.startsWith(parentPath), 'Absolute route path "' + meta.relativePath + '" nested under path ' + ('"' + parentPath + '" is not valid. An absolute child route path ') + "must start with the combined path of all its parent routes.");
         meta.relativePath = meta.relativePath.slice(parentPath.length);
       }
       let path = joinPaths([parentPath, meta.relativePath]);
@@ -67923,7 +67821,7 @@
           // Our types know better, but runtime JS may not!
           // @ts-expect-error
           route.index !== true,
-          `Index routes must not have child routes. Please remove all child routes from route path "${path}".`
+          "Index routes must not have child routes. Please remove " + ('all child routes from route path "' + path + '".')
         );
         flattenRoutes(route.children, branches, routesMeta, path);
       }
@@ -67937,7 +67835,8 @@
       });
     };
     routes.forEach((route, index2) => {
-      if (route.path === "" || !route.path?.includes("?")) {
+      var _route$path;
+      if (route.path === "" || !((_route$path = route.path) != null && _route$path.includes("?"))) {
         flattenRoute(route, index2);
       } else {
         for (let exploded of explodeOptionalSegments(route.path)) {
@@ -67959,25 +67858,14 @@
     }
     let restExploded = explodeOptionalSegments(rest.join("/"));
     let result = [];
-    result.push(
-      ...restExploded.map(
-        (subpath) => subpath === "" ? required2 : [required2, subpath].join("/")
-      )
-    );
+    result.push(...restExploded.map((subpath) => subpath === "" ? required2 : [required2, subpath].join("/")));
     if (isOptional) {
       result.push(...restExploded);
     }
-    return result.map(
-      (exploded) => path.startsWith("/") && exploded === "" ? "/" : exploded
-    );
+    return result.map((exploded) => path.startsWith("/") && exploded === "" ? "/" : exploded);
   }
   function rankRouteBranches(branches) {
-    branches.sort(
-      (a, b) => a.score !== b.score ? b.score - a.score : compareIndexes(
-        a.routesMeta.map((meta) => meta.childrenIndex),
-        b.routesMeta.map((meta) => meta.childrenIndex)
-      )
-    );
+    branches.sort((a, b) => a.score !== b.score ? b.score - a.score : compareIndexes(a.routesMeta.map((meta) => meta.childrenIndex), b.routesMeta.map((meta) => meta.childrenIndex)));
   }
   var paramRe = /^:[\w-]+$/;
   var dynamicSegmentValue = 3;
@@ -67995,10 +67883,7 @@
     if (index2) {
       initialScore += indexRouteValue;
     }
-    return segments.filter((s) => !isSplat(s)).reduce(
-      (score, segment) => score + (paramRe.test(segment) ? dynamicSegmentValue : segment === "" ? emptySegmentValue : staticSegmentValue),
-      initialScore
-    );
+    return segments.filter((s) => !isSplat(s)).reduce((score, segment) => score + (paramRe.test(segment) ? dynamicSegmentValue : segment === "" ? emptySegmentValue : staticSegmentValue), initialScore);
   }
   function compareIndexes(a, b) {
     let siblings = a.length === b.length && a.slice(0, -1).every((n, i) => n === b[i]);
@@ -68014,8 +67899,13 @@
       0
     );
   }
-  function matchRouteBranch(branch, pathname, allowPartial = false) {
-    let { routesMeta } = branch;
+  function matchRouteBranch(branch, pathname, allowPartial) {
+    if (allowPartial === void 0) {
+      allowPartial = false;
+    }
+    let {
+      routesMeta
+    } = branch;
     let matchedParams = {};
     let matchedPathname = "/";
     let matches = [];
@@ -68023,20 +67913,18 @@
       let meta = routesMeta[i];
       let end3 = i === routesMeta.length - 1;
       let remainingPathname = matchedPathname === "/" ? pathname : pathname.slice(matchedPathname.length) || "/";
-      let match = matchPath(
-        { path: meta.relativePath, caseSensitive: meta.caseSensitive, end: end3 },
-        remainingPathname
-      );
+      let match = matchPath({
+        path: meta.relativePath,
+        caseSensitive: meta.caseSensitive,
+        end: end3
+      }, remainingPathname);
       let route = meta.route;
       if (!match && end3 && allowPartial && !routesMeta[routesMeta.length - 1].route.index) {
-        match = matchPath(
-          {
-            path: meta.relativePath,
-            caseSensitive: meta.caseSensitive,
-            end: false
-          },
-          remainingPathname
-        );
+        match = matchPath({
+          path: meta.relativePath,
+          caseSensitive: meta.caseSensitive,
+          end: false
+        }, remainingPathname);
       }
       if (!match) {
         return null;
@@ -68046,9 +67934,7 @@
         // TODO: Can this as be avoided?
         params: matchedParams,
         pathname: joinPaths([matchedPathname, match.pathname]),
-        pathnameBase: normalizePathname(
-          joinPaths([matchedPathname, match.pathnameBase])
-        ),
+        pathnameBase: normalizePathname(joinPaths([matchedPathname, match.pathnameBase])),
         route
       });
       if (match.pathnameBase !== "/") {
@@ -68059,35 +67945,36 @@
   }
   function matchPath(pattern, pathname) {
     if (typeof pattern === "string") {
-      pattern = { path: pattern, caseSensitive: false, end: true };
+      pattern = {
+        path: pattern,
+        caseSensitive: false,
+        end: true
+      };
     }
-    let [matcher, compiledParams] = compilePath(
-      pattern.path,
-      pattern.caseSensitive,
-      pattern.end
-    );
+    let [matcher, compiledParams] = compilePath(pattern.path, pattern.caseSensitive, pattern.end);
     let match = pathname.match(matcher);
     if (!match)
       return null;
     let matchedPathname = match[0];
     let pathnameBase = matchedPathname.replace(/(.)\/+$/, "$1");
     let captureGroups = match.slice(1);
-    let params = compiledParams.reduce(
-      (memo22, { paramName, isOptional }, index2) => {
-        if (paramName === "*") {
-          let splatValue = captureGroups[index2] || "";
-          pathnameBase = matchedPathname.slice(0, matchedPathname.length - splatValue.length).replace(/(.)\/+$/, "$1");
-        }
-        const value = captureGroups[index2];
-        if (isOptional && !value) {
-          memo22[paramName] = void 0;
-        } else {
-          memo22[paramName] = (value || "").replace(/%2F/g, "/");
-        }
-        return memo22;
-      },
-      {}
-    );
+    let params = compiledParams.reduce((memo4, _ref, index2) => {
+      let {
+        paramName,
+        isOptional
+      } = _ref;
+      if (paramName === "*") {
+        let splatValue = captureGroups[index2] || "";
+        pathnameBase = matchedPathname.slice(0, matchedPathname.length - splatValue.length).replace(/(.)\/+$/, "$1");
+      }
+      const value = captureGroups[index2];
+      if (isOptional && !value) {
+        memo4[paramName] = void 0;
+      } else {
+        memo4[paramName] = (value || "").replace(/%2F/g, "/");
+      }
+      return memo4;
+    }, {});
     return {
       params,
       pathname: matchedPathname,
@@ -68095,28 +67982,33 @@
       pattern
     };
   }
-  function compilePath(path, caseSensitive = false, end3 = true) {
-    warning5(
-      path === "*" || !path.endsWith("*") || path.endsWith("/*"),
-      `Route path "${path}" will be treated as if it were "${path.replace(/\*$/, "/*")}" because the \`*\` character must always follow a \`/\` in the pattern. To get rid of this warning, please change the route path to "${path.replace(/\*$/, "/*")}".`
-    );
+  function compilePath(path, caseSensitive, end3) {
+    if (caseSensitive === void 0) {
+      caseSensitive = false;
+    }
+    if (end3 === void 0) {
+      end3 = true;
+    }
+    warning5(path === "*" || !path.endsWith("*") || path.endsWith("/*"), 'Route path "' + path + '" will be treated as if it were ' + ('"' + path.replace(/\*$/, "/*") + '" because the `*` character must ') + "always follow a `/` in the pattern. To get rid of this warning, " + ('please change the route path to "' + path.replace(/\*$/, "/*") + '".'));
     let params = [];
-    let regexpSource = "^" + path.replace(/\/*\*?$/, "").replace(/^\/*/, "/").replace(/[\\.*+^${}|()[\]]/g, "\\$&").replace(
-      /\/:([\w-]+)(\?)?/g,
-      (_, paramName, isOptional) => {
-        params.push({ paramName, isOptional: isOptional != null });
-        return isOptional ? "/?([^\\/]+)?" : "/([^\\/]+)";
-      }
-    );
+    let regexpSource = "^" + path.replace(/\/*\*?$/, "").replace(/^\/*/, "/").replace(/[\\.*+^${}|()[\]]/g, "\\$&").replace(/\/:([\w-]+)(\?)?/g, (_, paramName, isOptional) => {
+      params.push({
+        paramName,
+        isOptional: isOptional != null
+      });
+      return isOptional ? "/?([^\\/]+)?" : "/([^\\/]+)";
+    });
     if (path.endsWith("*")) {
-      params.push({ paramName: "*" });
+      params.push({
+        paramName: "*"
+      });
       regexpSource += path === "*" || path === "/*" ? "(.*)$" : "(?:\\/(.+)|\\/*)$";
     } else if (end3) {
       regexpSource += "\\/*$";
     } else if (path !== "" && path !== "/") {
       regexpSource += "(?:(?=\\/|$))";
-    } else {
-    }
+    } else
+      ;
     let matcher = new RegExp(regexpSource, caseSensitive ? void 0 : "i");
     return [matcher, params];
   }
@@ -68124,10 +68016,7 @@
     try {
       return value.split("/").map((v) => decodeURIComponent(v).replace(/\//g, "%2F")).join("/");
     } catch (error2) {
-      warning5(
-        false,
-        `The URL path "${value}" could not be decoded because it is a malformed URL segment. This is probably due to a bad percent encoding (${error2}).`
-      );
+      warning5(false, 'The URL path "' + value + '" could not be decoded because it is is a malformed URL segment. This is probably due to a bad percent ' + ("encoding (" + error2 + ")."));
       return value;
     }
   }
@@ -68144,7 +68033,10 @@
     }
     return pathname.slice(startIndex) || "/";
   }
-  function resolvePath(to, fromPathname = "/") {
+  function resolvePath(to, fromPathname) {
+    if (fromPathname === void 0) {
+      fromPathname = "/";
+    }
     let {
       pathname: toPathname,
       search = "",
@@ -68171,39 +68063,30 @@
     return segments.length > 1 ? segments.join("/") : "/";
   }
   function getInvalidPathError(char, field, dest, path) {
-    return `Cannot include a '${char}' character in a manually specified \`to.${field}\` field [${JSON.stringify(
-      path
-    )}].  Please separate it out to the \`to.${dest}\` field. Alternatively you may provide the full path as a string in <Link to="..."> and the router will parse it for you.`;
+    return "Cannot include a '" + char + "' character in a manually specified " + ("`to." + field + "` field [" + JSON.stringify(path) + "].  Please separate it out to the ") + ("`to." + dest + "` field. Alternatively you may provide the full path as ") + 'a string in <Link to="..."> and the router will parse it for you.';
   }
   function getPathContributingMatches(matches) {
-    return matches.filter(
-      (match, index2) => index2 === 0 || match.route.path && match.route.path.length > 0
-    );
+    return matches.filter((match, index2) => index2 === 0 || match.route.path && match.route.path.length > 0);
   }
-  function getResolveToMatches(matches) {
+  function getResolveToMatches(matches, v7_relativeSplatPath) {
     let pathMatches = getPathContributingMatches(matches);
-    return pathMatches.map(
-      (match, idx) => idx === pathMatches.length - 1 ? match.pathname : match.pathnameBase
-    );
+    if (v7_relativeSplatPath) {
+      return pathMatches.map((match, idx) => idx === pathMatches.length - 1 ? match.pathname : match.pathnameBase);
+    }
+    return pathMatches.map((match) => match.pathnameBase);
   }
-  function resolveTo(toArg, routePathnames, locationPathname, isPathRelative = false) {
+  function resolveTo(toArg, routePathnames, locationPathname, isPathRelative) {
+    if (isPathRelative === void 0) {
+      isPathRelative = false;
+    }
     let to;
     if (typeof toArg === "string") {
       to = parsePath(toArg);
     } else {
-      to = { ...toArg };
-      invariant4(
-        !to.pathname || !to.pathname.includes("?"),
-        getInvalidPathError("?", "pathname", "search", to)
-      );
-      invariant4(
-        !to.pathname || !to.pathname.includes("#"),
-        getInvalidPathError("#", "pathname", "hash", to)
-      );
-      invariant4(
-        !to.search || !to.search.includes("#"),
-        getInvalidPathError("#", "search", "hash", to)
-      );
+      to = _extends2({}, toArg);
+      invariant4(!to.pathname || !to.pathname.includes("?"), getInvalidPathError("?", "pathname", "search", to));
+      invariant4(!to.pathname || !to.pathname.includes("#"), getInvalidPathError("#", "pathname", "hash", to));
+      invariant4(!to.search || !to.search.includes("#"), getInvalidPathError("#", "search", "hash", to));
     }
     let isEmptyPath = toArg === "" || to.pathname === "";
     let toPathname = isEmptyPath ? "/" : to.pathname;
@@ -68237,190 +68120,208 @@
   function isRouteErrorResponse(error2) {
     return error2 != null && typeof error2.status === "number" && typeof error2.statusText === "string" && typeof error2.internal === "boolean" && "data" in error2;
   }
-  var validMutationMethodsArr = [
-    "POST",
-    "PUT",
-    "PATCH",
-    "DELETE"
-  ];
-  var validMutationMethods = new Set(
-    validMutationMethodsArr
-  );
-  var validRequestMethodsArr = [
-    "GET",
-    ...validMutationMethodsArr
-  ];
+  var validMutationMethodsArr = ["post", "put", "patch", "delete"];
+  var validMutationMethods = new Set(validMutationMethodsArr);
+  var validRequestMethodsArr = ["get", ...validMutationMethodsArr];
   var validRequestMethods = new Set(validRequestMethodsArr);
-  var ResetLoaderDataSymbol = Symbol("ResetLoaderData");
-  var DataRouterContext = React83.createContext(null);
-  DataRouterContext.displayName = "DataRouter";
-  var DataRouterStateContext = React83.createContext(null);
-  DataRouterStateContext.displayName = "DataRouterState";
-  var ViewTransitionContext = React83.createContext({
-    isTransitioning: false
-  });
-  ViewTransitionContext.displayName = "ViewTransition";
-  var FetchersContext = React83.createContext(
-    /* @__PURE__ */ new Map()
-  );
-  FetchersContext.displayName = "Fetchers";
-  var AwaitContext = React83.createContext(null);
-  AwaitContext.displayName = "Await";
-  var NavigationContext = React83.createContext(
-    null
-  );
-  NavigationContext.displayName = "Navigation";
-  var LocationContext = React83.createContext(
-    null
-  );
-  LocationContext.displayName = "Location";
-  var RouteContext = React83.createContext({
+  var UNSAFE_DEFERRED_SYMBOL = Symbol("deferred");
+
+  // node_modules/react-router/dist/index.js
+  function _extends3() {
+    _extends3 = Object.assign ? Object.assign.bind() : function(target) {
+      for (var i = 1; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (Object.prototype.hasOwnProperty.call(source, key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    };
+    return _extends3.apply(this, arguments);
+  }
+  var DataRouterContext = /* @__PURE__ */ React83.createContext(null);
+  if (true) {
+    DataRouterContext.displayName = "DataRouter";
+  }
+  var DataRouterStateContext = /* @__PURE__ */ React83.createContext(null);
+  if (true) {
+    DataRouterStateContext.displayName = "DataRouterState";
+  }
+  var AwaitContext = /* @__PURE__ */ React83.createContext(null);
+  if (true) {
+    AwaitContext.displayName = "Await";
+  }
+  var NavigationContext = /* @__PURE__ */ React83.createContext(null);
+  if (true) {
+    NavigationContext.displayName = "Navigation";
+  }
+  var LocationContext = /* @__PURE__ */ React83.createContext(null);
+  if (true) {
+    LocationContext.displayName = "Location";
+  }
+  var RouteContext = /* @__PURE__ */ React83.createContext({
     outlet: null,
     matches: [],
     isDataRoute: false
   });
-  RouteContext.displayName = "Route";
-  var RouteErrorContext = React83.createContext(null);
-  RouteErrorContext.displayName = "RouteError";
-  var ENABLE_DEV_WARNINGS = true;
-  function useHref(to, { relative } = {}) {
-    invariant4(
-      useInRouterContext(),
+  if (true) {
+    RouteContext.displayName = "Route";
+  }
+  var RouteErrorContext = /* @__PURE__ */ React83.createContext(null);
+  if (true) {
+    RouteErrorContext.displayName = "RouteError";
+  }
+  function useHref(to, _temp) {
+    let {
+      relative
+    } = _temp === void 0 ? {} : _temp;
+    !useInRouterContext() ? true ? invariant4(
+      false,
       // TODO: This error is probably because they somehow have 2 versions of the
       // router loaded. We can help them understand how to avoid that.
-      `useHref() may be used only in the context of a <Router> component.`
-    );
-    let { basename, navigator: navigator2 } = React210.useContext(NavigationContext);
-    let { hash: hash3, pathname, search } = useResolvedPath(to, { relative });
+      "useHref() may be used only in the context of a <Router> component."
+    ) : invariant4(false) : void 0;
+    let {
+      basename,
+      navigator: navigator2
+    } = React83.useContext(NavigationContext);
+    let {
+      hash: hash3,
+      pathname,
+      search
+    } = useResolvedPath(to, {
+      relative
+    });
     let joinedPathname = pathname;
     if (basename !== "/") {
       joinedPathname = pathname === "/" ? basename : joinPaths([basename, pathname]);
     }
-    return navigator2.createHref({ pathname: joinedPathname, search, hash: hash3 });
+    return navigator2.createHref({
+      pathname: joinedPathname,
+      search,
+      hash: hash3
+    });
   }
   function useInRouterContext() {
-    return React210.useContext(LocationContext) != null;
+    return React83.useContext(LocationContext) != null;
   }
   function useLocation() {
-    invariant4(
-      useInRouterContext(),
+    !useInRouterContext() ? true ? invariant4(
+      false,
       // TODO: This error is probably because they somehow have 2 versions of the
       // router loaded. We can help them understand how to avoid that.
-      `useLocation() may be used only in the context of a <Router> component.`
-    );
-    return React210.useContext(LocationContext).location;
+      "useLocation() may be used only in the context of a <Router> component."
+    ) : invariant4(false) : void 0;
+    return React83.useContext(LocationContext).location;
   }
-  var navigateEffectWarning = `You should call navigate() in a React.useEffect(), not when your component is first rendered.`;
+  var navigateEffectWarning = "You should call navigate() in a React.useEffect(), not when your component is first rendered.";
   function useIsomorphicLayoutEffect2(cb) {
-    let isStatic = React210.useContext(NavigationContext).static;
+    let isStatic = React83.useContext(NavigationContext).static;
     if (!isStatic) {
-      React210.useLayoutEffect(cb);
+      React83.useLayoutEffect(cb);
     }
   }
   function useNavigate() {
-    let { isDataRoute } = React210.useContext(RouteContext);
+    let {
+      isDataRoute
+    } = React83.useContext(RouteContext);
     return isDataRoute ? useNavigateStable() : useNavigateUnstable();
   }
   function useNavigateUnstable() {
-    invariant4(
-      useInRouterContext(),
+    !useInRouterContext() ? true ? invariant4(
+      false,
       // TODO: This error is probably because they somehow have 2 versions of the
       // router loaded. We can help them understand how to avoid that.
-      `useNavigate() may be used only in the context of a <Router> component.`
-    );
-    let dataRouterContext = React210.useContext(DataRouterContext);
-    let { basename, navigator: navigator2 } = React210.useContext(NavigationContext);
-    let { matches } = React210.useContext(RouteContext);
-    let { pathname: locationPathname } = useLocation();
-    let routePathnamesJson = JSON.stringify(getResolveToMatches(matches));
-    let activeRef = React210.useRef(false);
+      "useNavigate() may be used only in the context of a <Router> component."
+    ) : invariant4(false) : void 0;
+    let dataRouterContext = React83.useContext(DataRouterContext);
+    let {
+      basename,
+      future,
+      navigator: navigator2
+    } = React83.useContext(NavigationContext);
+    let {
+      matches
+    } = React83.useContext(RouteContext);
+    let {
+      pathname: locationPathname
+    } = useLocation();
+    let routePathnamesJson = JSON.stringify(getResolveToMatches(matches, future.v7_relativeSplatPath));
+    let activeRef = React83.useRef(false);
     useIsomorphicLayoutEffect2(() => {
       activeRef.current = true;
     });
-    let navigate = React210.useCallback(
-      (to, options = {}) => {
-        warning5(activeRef.current, navigateEffectWarning);
-        if (!activeRef.current)
-          return;
-        if (typeof to === "number") {
-          navigator2.go(to);
-          return;
-        }
-        let path = resolveTo(
-          to,
-          JSON.parse(routePathnamesJson),
-          locationPathname,
-          options.relative === "path"
-        );
-        if (dataRouterContext == null && basename !== "/") {
-          path.pathname = path.pathname === "/" ? basename : joinPaths([basename, path.pathname]);
-        }
-        (!!options.replace ? navigator2.replace : navigator2.push)(
-          path,
-          options.state,
-          options
-        );
-      },
-      [
-        basename,
-        navigator2,
-        routePathnamesJson,
-        locationPathname,
-        dataRouterContext
-      ]
-    );
+    let navigate = React83.useCallback(function(to, options) {
+      if (options === void 0) {
+        options = {};
+      }
+      true ? warning5(activeRef.current, navigateEffectWarning) : void 0;
+      if (!activeRef.current)
+        return;
+      if (typeof to === "number") {
+        navigator2.go(to);
+        return;
+      }
+      let path = resolveTo(to, JSON.parse(routePathnamesJson), locationPathname, options.relative === "path");
+      if (dataRouterContext == null && basename !== "/") {
+        path.pathname = path.pathname === "/" ? basename : joinPaths([basename, path.pathname]);
+      }
+      (!!options.replace ? navigator2.replace : navigator2.push)(path, options.state, options);
+    }, [basename, navigator2, routePathnamesJson, locationPathname, dataRouterContext]);
     return navigate;
   }
-  var OutletContext = React210.createContext(null);
-  function useResolvedPath(to, { relative } = {}) {
-    let { matches } = React210.useContext(RouteContext);
-    let { pathname: locationPathname } = useLocation();
-    let routePathnamesJson = JSON.stringify(getResolveToMatches(matches));
-    return React210.useMemo(
-      () => resolveTo(
-        to,
-        JSON.parse(routePathnamesJson),
-        locationPathname,
-        relative === "path"
-      ),
-      [to, routePathnamesJson, locationPathname, relative]
-    );
+  function useResolvedPath(to, _temp2) {
+    let {
+      relative
+    } = _temp2 === void 0 ? {} : _temp2;
+    let {
+      future
+    } = React83.useContext(NavigationContext);
+    let {
+      matches
+    } = React83.useContext(RouteContext);
+    let {
+      pathname: locationPathname
+    } = useLocation();
+    let routePathnamesJson = JSON.stringify(getResolveToMatches(matches, future.v7_relativeSplatPath));
+    return React83.useMemo(() => resolveTo(to, JSON.parse(routePathnamesJson), locationPathname, relative === "path"), [to, routePathnamesJson, locationPathname, relative]);
   }
   function useRoutes(routes, locationArg) {
     return useRoutesImpl(routes, locationArg);
   }
   function useRoutesImpl(routes, locationArg, dataRouterState, future) {
-    invariant4(
-      useInRouterContext(),
+    !useInRouterContext() ? true ? invariant4(
+      false,
       // TODO: This error is probably because they somehow have 2 versions of the
       // router loaded. We can help them understand how to avoid that.
-      `useRoutes() may be used only in the context of a <Router> component.`
-    );
-    let { navigator: navigator2, static: isStatic } = React210.useContext(NavigationContext);
-    let { matches: parentMatches } = React210.useContext(RouteContext);
+      "useRoutes() may be used only in the context of a <Router> component."
+    ) : invariant4(false) : void 0;
+    let {
+      navigator: navigator2,
+      static: isStatic
+    } = React83.useContext(NavigationContext);
+    let {
+      matches: parentMatches
+    } = React83.useContext(RouteContext);
     let routeMatch = parentMatches[parentMatches.length - 1];
     let parentParams = routeMatch ? routeMatch.params : {};
     let parentPathname = routeMatch ? routeMatch.pathname : "/";
     let parentPathnameBase = routeMatch ? routeMatch.pathnameBase : "/";
     let parentRoute = routeMatch && routeMatch.route;
-    if (ENABLE_DEV_WARNINGS) {
+    if (true) {
       let parentPath = parentRoute && parentRoute.path || "";
-      warningOnce(
-        parentPathname,
-        !parentRoute || parentPath.endsWith("*") || parentPath.endsWith("*?"),
-        `You rendered descendant <Routes> (or called \`useRoutes()\`) at "${parentPathname}" (under <Route path="${parentPath}">) but the parent route path has no trailing "*". This means if you navigate deeper, the parent won't match anymore and therefore the child routes will never render.
+      warningOnce(parentPathname, !parentRoute || parentPath.endsWith("*"), "You rendered descendant <Routes> (or called `useRoutes()`) at " + ('"' + parentPathname + '" (under <Route path="' + parentPath + '">) but the ') + `parent route path has no trailing "*". This means if you navigate deeper, the parent won't match anymore and therefore the child routes will never render.
 
-Please change the parent <Route path="${parentPath}"> to <Route path="${parentPath === "/" ? "*" : `${parentPath}/*`}">.`
-      );
+` + ('Please change the parent <Route path="' + parentPath + '"> to <Route ') + ('path="' + (parentPath === "/" ? "*" : parentPath + "/*") + '">.'));
     }
     let locationFromContext = useLocation();
     let location;
     if (locationArg) {
+      var _parsedLocationArg$pa;
       let parsedLocationArg = typeof locationArg === "string" ? parsePath(locationArg) : locationArg;
-      invariant4(
-        parentPathnameBase === "/" || parsedLocationArg.pathname?.startsWith(parentPathnameBase),
-        `When overriding the location using \`<Routes location>\` or \`useRoutes(routes, location)\`, the location pathname must begin with the portion of the URL pathname that was matched by all parent routes. The current pathname base is "${parentPathnameBase}" but pathname "${parsedLocationArg.pathname}" was given in the \`location\` prop.`
-      );
+      !(parentPathnameBase === "/" || ((_parsedLocationArg$pa = parsedLocationArg.pathname) == null ? void 0 : _parsedLocationArg$pa.startsWith(parentPathnameBase))) ? true ? invariant4(false, "When overriding the location using `<Routes location>` or `useRoutes(routes, location)`, the location pathname must begin with the portion of the URL pathname that was " + ('matched by all parent routes. The current pathname base is "' + parentPathnameBase + '" ') + ('but pathname "' + parsedLocationArg.pathname + '" was given in the `location` prop.')) : invariant4(false) : void 0;
       location = parsedLocationArg;
     } else {
       location = locationFromContext;
@@ -68432,78 +68333,74 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       let segments = pathname.replace(/^\//, "").split("/");
       remainingPathname = "/" + segments.slice(parentSegments.length).join("/");
     }
-    let matches = !isStatic && dataRouterState && dataRouterState.matches && dataRouterState.matches.length > 0 ? dataRouterState.matches : matchRoutes(routes, { pathname: remainingPathname });
-    if (ENABLE_DEV_WARNINGS) {
-      warning5(
-        parentRoute || matches != null,
-        `No routes matched location "${location.pathname}${location.search}${location.hash}" `
-      );
-      warning5(
-        matches == null || matches[matches.length - 1].route.element !== void 0 || matches[matches.length - 1].route.Component !== void 0 || matches[matches.length - 1].route.lazy !== void 0,
-        `Matched leaf route at location "${location.pathname}${location.search}${location.hash}" does not have an element or Component. This means it will render an <Outlet /> with a null value by default resulting in an "empty" page.`
-      );
+    let matches = !isStatic && dataRouterState && dataRouterState.matches && dataRouterState.matches.length > 0 ? dataRouterState.matches : matchRoutes(routes, {
+      pathname: remainingPathname
+    });
+    if (true) {
+      true ? warning5(parentRoute || matches != null, 'No routes matched location "' + location.pathname + location.search + location.hash + '" ') : void 0;
+      true ? warning5(matches == null || matches[matches.length - 1].route.element !== void 0 || matches[matches.length - 1].route.Component !== void 0 || matches[matches.length - 1].route.lazy !== void 0, 'Matched leaf route at location "' + location.pathname + location.search + location.hash + '" does not have an element or Component. This means it will render an <Outlet /> with a null value by default resulting in an "empty" page.') : void 0;
     }
-    let renderedMatches = _renderMatches(
-      matches && matches.map(
-        (match) => Object.assign({}, match, {
-          params: Object.assign({}, parentParams, match.params),
-          pathname: joinPaths([
-            parentPathnameBase,
-            // Re-encode pathnames that were decoded inside matchRoutes
-            navigator2.encodeLocation ? navigator2.encodeLocation(match.pathname).pathname : match.pathname
-          ]),
-          pathnameBase: match.pathnameBase === "/" ? parentPathnameBase : joinPaths([
-            parentPathnameBase,
-            // Re-encode pathnames that were decoded inside matchRoutes
-            navigator2.encodeLocation ? navigator2.encodeLocation(match.pathnameBase).pathname : match.pathnameBase
-          ])
-        })
-      ),
-      parentMatches,
-      dataRouterState,
-      future
-    );
+    let renderedMatches = _renderMatches(matches && matches.map((match) => Object.assign({}, match, {
+      params: Object.assign({}, parentParams, match.params),
+      pathname: joinPaths([
+        parentPathnameBase,
+        // Re-encode pathnames that were decoded inside matchRoutes
+        navigator2.encodeLocation ? navigator2.encodeLocation(match.pathname).pathname : match.pathname
+      ]),
+      pathnameBase: match.pathnameBase === "/" ? parentPathnameBase : joinPaths([
+        parentPathnameBase,
+        // Re-encode pathnames that were decoded inside matchRoutes
+        navigator2.encodeLocation ? navigator2.encodeLocation(match.pathnameBase).pathname : match.pathnameBase
+      ])
+    })), parentMatches, dataRouterState, future);
     if (locationArg && renderedMatches) {
-      return /* @__PURE__ */ React210.createElement(
-        LocationContext.Provider,
-        {
-          value: {
-            location: {
-              pathname: "/",
-              search: "",
-              hash: "",
-              state: null,
-              key: "default",
-              ...location
-            },
-            navigationType: "POP"
-            /* Pop */
-          }
-        },
-        renderedMatches
-      );
+      return /* @__PURE__ */ React83.createElement(LocationContext.Provider, {
+        value: {
+          location: _extends3({
+            pathname: "/",
+            search: "",
+            hash: "",
+            state: null,
+            key: "default"
+          }, location),
+          navigationType: Action.Pop
+        }
+      }, renderedMatches);
     }
     return renderedMatches;
   }
   function DefaultErrorComponent() {
     let error2 = useRouteError();
-    let message = isRouteErrorResponse(error2) ? `${error2.status} ${error2.statusText}` : error2 instanceof Error ? error2.message : JSON.stringify(error2);
+    let message = isRouteErrorResponse(error2) ? error2.status + " " + error2.statusText : error2 instanceof Error ? error2.message : JSON.stringify(error2);
     let stack = error2 instanceof Error ? error2.stack : null;
     let lightgrey = "rgba(200,200,200, 0.5)";
-    let preStyles = { padding: "0.5rem", backgroundColor: lightgrey };
-    let codeStyles = { padding: "2px 4px", backgroundColor: lightgrey };
+    let preStyles = {
+      padding: "0.5rem",
+      backgroundColor: lightgrey
+    };
+    let codeStyles = {
+      padding: "2px 4px",
+      backgroundColor: lightgrey
+    };
     let devInfo = null;
-    if (ENABLE_DEV_WARNINGS) {
-      console.error(
-        "Error handled by React Router default ErrorBoundary:",
-        error2
-      );
-      devInfo = /* @__PURE__ */ React210.createElement(React210.Fragment, null, /* @__PURE__ */ React210.createElement("p", null, "\u{1F4BF} Hey developer \u{1F44B}"), /* @__PURE__ */ React210.createElement("p", null, "You can provide a way better UX than this when your app throws errors by providing your own ", /* @__PURE__ */ React210.createElement("code", { style: codeStyles }, "ErrorBoundary"), " or", " ", /* @__PURE__ */ React210.createElement("code", { style: codeStyles }, "errorElement"), " prop on your route."));
+    if (true) {
+      console.error("Error handled by React Router default ErrorBoundary:", error2);
+      devInfo = /* @__PURE__ */ React83.createElement(React83.Fragment, null, /* @__PURE__ */ React83.createElement("p", null, "\u{1F4BF} Hey developer \u{1F44B}"), /* @__PURE__ */ React83.createElement("p", null, "You can provide a way better UX than this when your app throws errors by providing your own ", /* @__PURE__ */ React83.createElement("code", {
+        style: codeStyles
+      }, "ErrorBoundary"), " or", " ", /* @__PURE__ */ React83.createElement("code", {
+        style: codeStyles
+      }, "errorElement"), " prop on your route."));
     }
-    return /* @__PURE__ */ React210.createElement(React210.Fragment, null, /* @__PURE__ */ React210.createElement("h2", null, "Unexpected Application Error!"), /* @__PURE__ */ React210.createElement("h3", { style: { fontStyle: "italic" } }, message), stack ? /* @__PURE__ */ React210.createElement("pre", { style: preStyles }, stack) : null, devInfo);
+    return /* @__PURE__ */ React83.createElement(React83.Fragment, null, /* @__PURE__ */ React83.createElement("h2", null, "Unexpected Application Error!"), /* @__PURE__ */ React83.createElement("h3", {
+      style: {
+        fontStyle: "italic"
+      }
+    }, message), stack ? /* @__PURE__ */ React83.createElement("pre", {
+      style: preStyles
+    }, stack) : null, devInfo);
   }
-  var defaultErrorElement = /* @__PURE__ */ React210.createElement(DefaultErrorComponent, null);
-  var RenderErrorBoundary = class extends React210.Component {
+  var defaultErrorElement = /* @__PURE__ */ React83.createElement(DefaultErrorComponent, null);
+  var RenderErrorBoundary = class extends React83.Component {
     constructor(props) {
       super(props);
       this.state = {
@@ -68513,7 +68410,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       };
     }
     static getDerivedStateFromError(error2) {
-      return { error: error2 };
+      return {
+        error: error2
+      };
     }
     static getDerivedStateFromProps(props, state) {
       if (state.location !== props.location || state.revalidation !== "idle" && props.revalidation === "idle") {
@@ -68530,70 +68429,76 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       };
     }
     componentDidCatch(error2, errorInfo) {
-      console.error(
-        "React Router caught the following error during render",
-        error2,
-        errorInfo
-      );
+      console.error("React Router caught the following error during render", error2, errorInfo);
     }
     render() {
-      return this.state.error !== void 0 ? /* @__PURE__ */ React210.createElement(RouteContext.Provider, { value: this.props.routeContext }, /* @__PURE__ */ React210.createElement(
-        RouteErrorContext.Provider,
-        {
-          value: this.state.error,
-          children: this.props.component
-        }
-      )) : this.props.children;
+      return this.state.error !== void 0 ? /* @__PURE__ */ React83.createElement(RouteContext.Provider, {
+        value: this.props.routeContext
+      }, /* @__PURE__ */ React83.createElement(RouteErrorContext.Provider, {
+        value: this.state.error,
+        children: this.props.component
+      })) : this.props.children;
     }
   };
-  function RenderedRoute({ routeContext, match, children: children2 }) {
-    let dataRouterContext = React210.useContext(DataRouterContext);
+  function RenderedRoute(_ref) {
+    let {
+      routeContext,
+      match,
+      children: children2
+    } = _ref;
+    let dataRouterContext = React83.useContext(DataRouterContext);
     if (dataRouterContext && dataRouterContext.static && dataRouterContext.staticContext && (match.route.errorElement || match.route.ErrorBoundary)) {
       dataRouterContext.staticContext._deepestRenderedBoundaryId = match.route.id;
     }
-    return /* @__PURE__ */ React210.createElement(RouteContext.Provider, { value: routeContext }, children2);
+    return /* @__PURE__ */ React83.createElement(RouteContext.Provider, {
+      value: routeContext
+    }, children2);
   }
-  function _renderMatches(matches, parentMatches = [], dataRouterState = null, future = null) {
+  function _renderMatches(matches, parentMatches, dataRouterState, future) {
+    var _dataRouterState;
+    if (parentMatches === void 0) {
+      parentMatches = [];
+    }
+    if (dataRouterState === void 0) {
+      dataRouterState = null;
+    }
+    if (future === void 0) {
+      future = null;
+    }
     if (matches == null) {
+      var _future;
       if (!dataRouterState) {
         return null;
       }
       if (dataRouterState.errors) {
         matches = dataRouterState.matches;
-      } else if (parentMatches.length === 0 && !dataRouterState.initialized && dataRouterState.matches.length > 0) {
+      } else if ((_future = future) != null && _future.v7_partialHydration && parentMatches.length === 0 && !dataRouterState.initialized && dataRouterState.matches.length > 0) {
         matches = dataRouterState.matches;
       } else {
         return null;
       }
     }
     let renderedMatches = matches;
-    let errors = dataRouterState?.errors;
+    let errors = (_dataRouterState = dataRouterState) == null ? void 0 : _dataRouterState.errors;
     if (errors != null) {
-      let errorIndex = renderedMatches.findIndex(
-        (m) => m.route.id && errors?.[m.route.id] !== void 0
-      );
-      invariant4(
-        errorIndex >= 0,
-        `Could not find a matching route for errors on route IDs: ${Object.keys(
-          errors
-        ).join(",")}`
-      );
-      renderedMatches = renderedMatches.slice(
-        0,
-        Math.min(renderedMatches.length, errorIndex + 1)
-      );
+      let errorIndex = renderedMatches.findIndex((m) => m.route.id && (errors == null ? void 0 : errors[m.route.id]) !== void 0);
+      !(errorIndex >= 0) ? true ? invariant4(false, "Could not find a matching route for errors on route IDs: " + Object.keys(errors).join(",")) : invariant4(false) : void 0;
+      renderedMatches = renderedMatches.slice(0, Math.min(renderedMatches.length, errorIndex + 1));
     }
     let renderFallback = false;
     let fallbackIndex = -1;
-    if (dataRouterState) {
+    if (dataRouterState && future && future.v7_partialHydration) {
       for (let i = 0; i < renderedMatches.length; i++) {
         let match = renderedMatches[i];
         if (match.route.HydrateFallback || match.route.hydrateFallbackElement) {
           fallbackIndex = i;
         }
         if (match.route.id) {
-          let { loaderData, errors: errors2 } = dataRouterState;
-          let needsToRunLoader = match.route.loader && !loaderData.hasOwnProperty(match.route.id) && (!errors2 || errors2[match.route.id] === void 0);
+          let {
+            loaderData,
+            errors: errors2
+          } = dataRouterState;
+          let needsToRunLoader = match.route.loader && loaderData[match.route.id] === void 0 && (!errors2 || errors2[match.route.id] === void 0);
           if (match.route.lazy || needsToRunLoader) {
             renderFallback = true;
             if (fallbackIndex >= 0) {
@@ -68616,11 +68521,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         errorElement = match.route.errorElement || defaultErrorElement;
         if (renderFallback) {
           if (fallbackIndex < 0 && index2 === 0) {
-            warningOnce(
-              "route-fallback",
-              false,
-              "No `HydrateFallback` element provided to render during initial hydration"
-            );
+            warningOnce("route-fallback", false, "No `HydrateFallback` element provided to render during initial hydration");
             shouldRenderHydrateFallback = true;
             hydrateFallbackElement = null;
           } else if (fallbackIndex === index2) {
@@ -68637,174 +68538,191 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         } else if (shouldRenderHydrateFallback) {
           children2 = hydrateFallbackElement;
         } else if (match.route.Component) {
-          children2 = /* @__PURE__ */ React210.createElement(match.route.Component, null);
+          children2 = /* @__PURE__ */ React83.createElement(match.route.Component, null);
         } else if (match.route.element) {
           children2 = match.route.element;
         } else {
           children2 = outlet;
         }
-        return /* @__PURE__ */ React210.createElement(
-          RenderedRoute,
-          {
-            match,
-            routeContext: {
-              outlet,
-              matches: matches2,
-              isDataRoute: dataRouterState != null
-            },
-            children: children2
-          }
-        );
+        return /* @__PURE__ */ React83.createElement(RenderedRoute, {
+          match,
+          routeContext: {
+            outlet,
+            matches: matches2,
+            isDataRoute: dataRouterState != null
+          },
+          children: children2
+        });
       };
-      return dataRouterState && (match.route.ErrorBoundary || match.route.errorElement || index2 === 0) ? /* @__PURE__ */ React210.createElement(
-        RenderErrorBoundary,
-        {
-          location: dataRouterState.location,
-          revalidation: dataRouterState.revalidation,
-          component: errorElement,
-          error: error2,
-          children: getChildren2(),
-          routeContext: { outlet: null, matches: matches2, isDataRoute: true }
+      return dataRouterState && (match.route.ErrorBoundary || match.route.errorElement || index2 === 0) ? /* @__PURE__ */ React83.createElement(RenderErrorBoundary, {
+        location: dataRouterState.location,
+        revalidation: dataRouterState.revalidation,
+        component: errorElement,
+        error: error2,
+        children: getChildren2(),
+        routeContext: {
+          outlet: null,
+          matches: matches2,
+          isDataRoute: true
         }
-      ) : getChildren2();
+      }) : getChildren2();
     }, null);
   }
+  var DataRouterHook = /* @__PURE__ */ function(DataRouterHook3) {
+    DataRouterHook3["UseBlocker"] = "useBlocker";
+    DataRouterHook3["UseRevalidator"] = "useRevalidator";
+    DataRouterHook3["UseNavigateStable"] = "useNavigate";
+    return DataRouterHook3;
+  }(DataRouterHook || {});
+  var DataRouterStateHook = /* @__PURE__ */ function(DataRouterStateHook3) {
+    DataRouterStateHook3["UseBlocker"] = "useBlocker";
+    DataRouterStateHook3["UseLoaderData"] = "useLoaderData";
+    DataRouterStateHook3["UseActionData"] = "useActionData";
+    DataRouterStateHook3["UseRouteError"] = "useRouteError";
+    DataRouterStateHook3["UseNavigation"] = "useNavigation";
+    DataRouterStateHook3["UseRouteLoaderData"] = "useRouteLoaderData";
+    DataRouterStateHook3["UseMatches"] = "useMatches";
+    DataRouterStateHook3["UseRevalidator"] = "useRevalidator";
+    DataRouterStateHook3["UseNavigateStable"] = "useNavigate";
+    DataRouterStateHook3["UseRouteId"] = "useRouteId";
+    return DataRouterStateHook3;
+  }(DataRouterStateHook || {});
   function getDataRouterConsoleError(hookName) {
-    return `${hookName} must be used within a data router.  See https://reactrouter.com/en/main/routers/picking-a-router.`;
+    return hookName + " must be used within a data router.  See https://reactrouter.com/v6/routers/picking-a-router.";
   }
   function useDataRouterContext(hookName) {
-    let ctx = React210.useContext(DataRouterContext);
-    invariant4(ctx, getDataRouterConsoleError(hookName));
+    let ctx = React83.useContext(DataRouterContext);
+    !ctx ? true ? invariant4(false, getDataRouterConsoleError(hookName)) : invariant4(false) : void 0;
     return ctx;
   }
   function useDataRouterState(hookName) {
-    let state = React210.useContext(DataRouterStateContext);
-    invariant4(state, getDataRouterConsoleError(hookName));
+    let state = React83.useContext(DataRouterStateContext);
+    !state ? true ? invariant4(false, getDataRouterConsoleError(hookName)) : invariant4(false) : void 0;
     return state;
   }
   function useRouteContext(hookName) {
-    let route = React210.useContext(RouteContext);
-    invariant4(route, getDataRouterConsoleError(hookName));
+    let route = React83.useContext(RouteContext);
+    !route ? true ? invariant4(false, getDataRouterConsoleError(hookName)) : invariant4(false) : void 0;
     return route;
   }
   function useCurrentRouteId(hookName) {
     let route = useRouteContext(hookName);
     let thisRoute = route.matches[route.matches.length - 1];
-    invariant4(
-      thisRoute.route.id,
-      `${hookName} can only be used on routes that contain a unique "id"`
-    );
+    !thisRoute.route.id ? true ? invariant4(false, hookName + ' can only be used on routes that contain a unique "id"') : invariant4(false) : void 0;
     return thisRoute.route.id;
   }
   function useRouteId() {
-    return useCurrentRouteId(
-      "useRouteId"
-      /* UseRouteId */
-    );
+    return useCurrentRouteId(DataRouterStateHook.UseRouteId);
   }
   function useNavigation() {
-    let state = useDataRouterState(
-      "useNavigation"
-      /* UseNavigation */
-    );
+    let state = useDataRouterState(DataRouterStateHook.UseNavigation);
     return state.navigation;
   }
   function useMatches() {
-    let { matches, loaderData } = useDataRouterState(
-      "useMatches"
-      /* UseMatches */
-    );
-    return React210.useMemo(
-      () => matches.map((m) => convertRouteMatchToUiMatch(m, loaderData)),
-      [matches, loaderData]
-    );
+    let {
+      matches,
+      loaderData
+    } = useDataRouterState(DataRouterStateHook.UseMatches);
+    return React83.useMemo(() => matches.map((m) => convertRouteMatchToUiMatch(m, loaderData)), [matches, loaderData]);
   }
   function useRouteError() {
-    let error2 = React210.useContext(RouteErrorContext);
-    let state = useDataRouterState(
-      "useRouteError"
-      /* UseRouteError */
-    );
-    let routeId = useCurrentRouteId(
-      "useRouteError"
-      /* UseRouteError */
-    );
+    var _state$errors;
+    let error2 = React83.useContext(RouteErrorContext);
+    let state = useDataRouterState(DataRouterStateHook.UseRouteError);
+    let routeId = useCurrentRouteId(DataRouterStateHook.UseRouteError);
     if (error2 !== void 0) {
       return error2;
     }
-    return state.errors?.[routeId];
+    return (_state$errors = state.errors) == null ? void 0 : _state$errors[routeId];
   }
   function useNavigateStable() {
-    let { router } = useDataRouterContext(
-      "useNavigate"
-      /* UseNavigateStable */
-    );
-    let id2 = useCurrentRouteId(
-      "useNavigate"
-      /* UseNavigateStable */
-    );
-    let activeRef = React210.useRef(false);
+    let {
+      router
+    } = useDataRouterContext(DataRouterHook.UseNavigateStable);
+    let id2 = useCurrentRouteId(DataRouterStateHook.UseNavigateStable);
+    let activeRef = React83.useRef(false);
     useIsomorphicLayoutEffect2(() => {
       activeRef.current = true;
     });
-    let navigate = React210.useCallback(
-      async (to, options = {}) => {
-        warning5(activeRef.current, navigateEffectWarning);
-        if (!activeRef.current)
-          return;
-        if (typeof to === "number") {
-          router.navigate(to);
-        } else {
-          await router.navigate(to, { fromRouteId: id2, ...options });
-        }
-      },
-      [router, id2]
-    );
+    let navigate = React83.useCallback(function(to, options) {
+      if (options === void 0) {
+        options = {};
+      }
+      true ? warning5(activeRef.current, navigateEffectWarning) : void 0;
+      if (!activeRef.current)
+        return;
+      if (typeof to === "number") {
+        router.navigate(to);
+      } else {
+        router.navigate(to, _extends3({
+          fromRouteId: id2
+        }, options));
+      }
+    }, [router, id2]);
     return navigate;
   }
-  var alreadyWarned = {};
+  var alreadyWarned$1 = {};
   function warningOnce(key, cond, message) {
-    if (!cond && !alreadyWarned[key]) {
-      alreadyWarned[key] = true;
-      warning5(false, message);
+    if (!cond && !alreadyWarned$1[key]) {
+      alreadyWarned$1[key] = true;
+      true ? warning5(false, message) : void 0;
     }
   }
-  var MemoizedDataRoutes = React310.memo(DataRoutes);
-  function DataRoutes({
-    routes,
-    future,
-    state
-  }) {
-    return useRoutesImpl(routes, void 0, state, future);
+  var alreadyWarned = {};
+  function warnOnce(key, message) {
+    if (!alreadyWarned[message]) {
+      alreadyWarned[message] = true;
+      console.warn(message);
+    }
   }
+  var logDeprecation = (flag, msg, link) => warnOnce(flag, "\u26A0\uFE0F React Router Future Flag Warning: " + msg + ". " + ("You can use the `" + flag + "` future flag to opt-in early. ") + ("For more information, see " + link + "."));
+  function logV6DeprecationWarnings(renderFuture, routerFuture) {
+    if ((renderFuture == null ? void 0 : renderFuture.v7_startTransition) === void 0) {
+      logDeprecation("v7_startTransition", "React Router will begin wrapping state updates in `React.startTransition` in v7", "https://reactrouter.com/v6/upgrading/future#v7_starttransition");
+    }
+    if ((renderFuture == null ? void 0 : renderFuture.v7_relativeSplatPath) === void 0 && (!routerFuture || !routerFuture.v7_relativeSplatPath)) {
+      logDeprecation("v7_relativeSplatPath", "Relative route resolution within Splat routes is changing in v7", "https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath");
+    }
+    if (routerFuture) {
+      if (routerFuture.v7_fetcherPersist === void 0) {
+        logDeprecation("v7_fetcherPersist", "The persistence behavior of fetchers is changing in v7", "https://reactrouter.com/v6/upgrading/future#v7_fetcherpersist");
+      }
+      if (routerFuture.v7_normalizeFormMethod === void 0) {
+        logDeprecation("v7_normalizeFormMethod", "Casing of `formMethod` fields is being normalized to uppercase in v7", "https://reactrouter.com/v6/upgrading/future#v7_normalizeformmethod");
+      }
+      if (routerFuture.v7_partialHydration === void 0) {
+        logDeprecation("v7_partialHydration", "`RouterProvider` hydration behavior is changing in v7", "https://reactrouter.com/v6/upgrading/future#v7_partialhydration");
+      }
+      if (routerFuture.v7_skipActionErrorRevalidation === void 0) {
+        logDeprecation("v7_skipActionErrorRevalidation", "The revalidation behavior after 4xx/5xx `action` responses is changing in v7", "https://reactrouter.com/v6/upgrading/future#v7_skipactionerrorrevalidation");
+      }
+    }
+  }
+  var START_TRANSITION = "startTransition";
+  var startTransitionImpl = React83[START_TRANSITION];
   function Route(_props) {
-    invariant4(
-      false,
-      `A <Route> is only ever to be used as the child of <Routes> element, never rendered directly. Please wrap your <Route> in a <Routes>.`
-    );
+    true ? invariant4(false, "A <Route> is only ever to be used as the child of <Routes> element, never rendered directly. Please wrap your <Route> in a <Routes>.") : invariant4(false);
   }
-  function Router({
-    basename: basenameProp = "/",
-    children: children2 = null,
-    location: locationProp,
-    navigationType = "POP",
-    navigator: navigator2,
-    static: staticProp = false
-  }) {
-    invariant4(
-      !useInRouterContext(),
-      `You cannot render a <Router> inside another <Router>. You should never have more than one in your app.`
-    );
+  function Router(_ref5) {
+    let {
+      basename: basenameProp = "/",
+      children: children2 = null,
+      location: locationProp,
+      navigationType = Action.Pop,
+      navigator: navigator2,
+      static: staticProp = false,
+      future
+    } = _ref5;
+    !!useInRouterContext() ? true ? invariant4(false, "You cannot render a <Router> inside another <Router>. You should never have more than one in your app.") : invariant4(false) : void 0;
     let basename = basenameProp.replace(/^\/*/, "/");
-    let navigationContext = React310.useMemo(
-      () => ({
-        basename,
-        navigator: navigator2,
-        static: staticProp,
-        future: {}
-      }),
-      [basename, navigator2, staticProp]
-    );
+    let navigationContext = React83.useMemo(() => ({
+      basename,
+      navigator: navigator2,
+      static: staticProp,
+      future: _extends3({
+        v7_relativeSplatPath: false
+      }, future)
+    }), [basename, future, navigator2, staticProp]);
     if (typeof locationProp === "string") {
       locationProp = parsePath(locationProp);
     }
@@ -68815,7 +68733,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       state = null,
       key = "default"
     } = locationProp;
-    let locationContext = React310.useMemo(() => {
+    let locationContext = React83.useMemo(() => {
       let trailingPathname = stripBasename(pathname, basename);
       if (trailingPathname == null) {
         return null;
@@ -68831,43 +68749,42 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         navigationType
       };
     }, [basename, pathname, search, hash3, state, key, navigationType]);
-    warning5(
-      locationContext != null,
-      `<Router basename="${basename}"> is not able to match the URL "${pathname}${search}${hash3}" because it does not start with the basename, so the <Router> won't render anything.`
-    );
+    true ? warning5(locationContext != null, '<Router basename="' + basename + '"> is not able to match the URL ' + ('"' + pathname + search + hash3 + '" because it does not start with the ') + "basename, so the <Router> won't render anything.") : void 0;
     if (locationContext == null) {
       return null;
     }
-    return /* @__PURE__ */ React310.createElement(NavigationContext.Provider, { value: navigationContext }, /* @__PURE__ */ React310.createElement(LocationContext.Provider, { children: children2, value: locationContext }));
+    return /* @__PURE__ */ React83.createElement(NavigationContext.Provider, {
+      value: navigationContext
+    }, /* @__PURE__ */ React83.createElement(LocationContext.Provider, {
+      children: children2,
+      value: locationContext
+    }));
   }
-  function Routes({
-    children: children2,
-    location
-  }) {
+  function Routes(_ref6) {
+    let {
+      children: children2,
+      location
+    } = _ref6;
     return useRoutes(createRoutesFromChildren(children2), location);
   }
-  function createRoutesFromChildren(children2, parentPath = []) {
+  var neverSettledPromise = new Promise(() => {
+  });
+  function createRoutesFromChildren(children2, parentPath) {
+    if (parentPath === void 0) {
+      parentPath = [];
+    }
     let routes = [];
-    React310.Children.forEach(children2, (element, index2) => {
-      if (!React310.isValidElement(element)) {
+    React83.Children.forEach(children2, (element, index2) => {
+      if (!/* @__PURE__ */ React83.isValidElement(element)) {
         return;
       }
       let treePath = [...parentPath, index2];
-      if (element.type === React310.Fragment) {
-        routes.push.apply(
-          routes,
-          createRoutesFromChildren(element.props.children, treePath)
-        );
+      if (element.type === React83.Fragment) {
+        routes.push.apply(routes, createRoutesFromChildren(element.props.children, treePath));
         return;
       }
-      invariant4(
-        element.type === Route,
-        `[${typeof element.type === "string" ? element.type : element.type.name}] is not a <Route> component. All component children of <Routes> must be a <Route> or <React.Fragment>`
-      );
-      invariant4(
-        !element.props.index || !element.props.children,
-        "An index route cannot have child routes."
-      );
+      !(element.type === Route) ? true ? invariant4(false, "[" + (typeof element.type === "string" ? element.type : element.type.name) + "] is not a <Route> component. All component children of <Routes> must be a <Route> or <React.Fragment>") : invariant4(false) : void 0;
+      !(!element.props.index || !element.props.children) ? true ? invariant4(false, "An index route cannot have child routes.") : invariant4(false) : void 0;
       let route = {
         id: element.props.id || treePath.join("-"),
         caseSensitive: element.props.caseSensitive,
@@ -68877,24 +68794,49 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         path: element.props.path,
         loader: element.props.loader,
         action: element.props.action,
-        hydrateFallbackElement: element.props.hydrateFallbackElement,
-        HydrateFallback: element.props.HydrateFallback,
         errorElement: element.props.errorElement,
         ErrorBoundary: element.props.ErrorBoundary,
-        hasErrorBoundary: element.props.hasErrorBoundary === true || element.props.ErrorBoundary != null || element.props.errorElement != null,
+        hasErrorBoundary: element.props.ErrorBoundary != null || element.props.errorElement != null,
         shouldRevalidate: element.props.shouldRevalidate,
         handle: element.props.handle,
         lazy: element.props.lazy
       };
       if (element.props.children) {
-        route.children = createRoutesFromChildren(
-          element.props.children,
-          treePath
-        );
+        route.children = createRoutesFromChildren(element.props.children, treePath);
       }
       routes.push(route);
     });
     return routes;
+  }
+
+  // node_modules/react-router-dom/dist/index.js
+  function _extends4() {
+    _extends4 = Object.assign ? Object.assign.bind() : function(target) {
+      for (var i = 1; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (Object.prototype.hasOwnProperty.call(source, key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    };
+    return _extends4.apply(this, arguments);
+  }
+  function _objectWithoutPropertiesLoose13(source, excluded) {
+    if (source == null)
+      return {};
+    var target = {};
+    var sourceKeys = Object.keys(source);
+    var key, i;
+    for (i = 0; i < sourceKeys.length; i++) {
+      key = sourceKeys[i];
+      if (excluded.indexOf(key) >= 0)
+        continue;
+      target[key] = source[key];
+    }
+    return target;
   }
   var defaultMethod = "get";
   var defaultEncType = "application/x-www-form-urlencoded";
@@ -68934,17 +68876,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     return _formDataSupportsSubmitter;
   }
-  var supportedFormEncTypes = /* @__PURE__ */ new Set([
-    "application/x-www-form-urlencoded",
-    "multipart/form-data",
-    "text/plain"
-  ]);
+  var supportedFormEncTypes = /* @__PURE__ */ new Set(["application/x-www-form-urlencoded", "multipart/form-data", "text/plain"]);
   function getFormEncType(encType) {
     if (encType != null && !supportedFormEncTypes.has(encType)) {
-      warning5(
-        false,
-        `"${encType}" is not a valid \`encType\` for \`<Form>\`/\`<fetcher.Form>\` and will default to "${defaultEncType}"`
-      );
+      true ? warning5(false, '"' + encType + '" is not a valid `encType` for `<Form>`/`<fetcher.Form>` ' + ('and will default to "' + defaultEncType + '"')) : void 0;
       return null;
     }
     return encType;
@@ -68964,9 +68899,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     } else if (isButtonElement(target) || isInputElement(target) && (target.type === "submit" || target.type === "image")) {
       let form = target.form;
       if (form == null) {
-        throw new Error(
-          `Cannot submit a <button> or <input type="submit"> without a <form>`
-        );
+        throw new Error('Cannot submit a <button> or <input type="submit"> without a <form>');
       }
       let attr = target.getAttribute("formaction") || form.getAttribute("action");
       action = attr ? stripBasename(attr, basename) : null;
@@ -68974,19 +68907,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       encType = getFormEncType(target.getAttribute("formenctype")) || getFormEncType(form.getAttribute("enctype")) || defaultEncType;
       formData = new FormData(form, target);
       if (!isFormDataSubmitterSupported()) {
-        let { name, type, value } = target;
+        let {
+          name,
+          type,
+          value
+        } = target;
         if (type === "image") {
-          let prefix3 = name ? `${name}.` : "";
-          formData.append(`${prefix3}x`, "0");
-          formData.append(`${prefix3}y`, "0");
+          let prefix3 = name ? name + "." : "";
+          formData.append(prefix3 + "x", "0");
+          formData.append(prefix3 + "y", "0");
         } else if (name) {
           formData.append(name, value);
         }
       }
     } else if (isHtmlElement(target)) {
-      throw new Error(
-        `Cannot submit element that is not <form>, <button>, or <input type="submit|image">`
-      );
+      throw new Error('Cannot submit element that is not <form>, <button>, or <input type="submit|image">');
     } else {
       method = defaultMethod;
       action = null;
@@ -68997,461 +68932,110 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       body = formData;
       formData = void 0;
     }
-    return { action, method: method.toLowerCase(), encType, formData, body };
-  }
-  function invariant22(value, message) {
-    if (value === false || value === null || typeof value === "undefined") {
-      throw new Error(message);
-    }
-  }
-  async function loadRouteModule(route, routeModulesCache) {
-    if (route.id in routeModulesCache) {
-      return routeModulesCache[route.id];
-    }
-    try {
-      let routeModule = await import(
-        /* @vite-ignore */
-        /* webpackIgnore: true */
-        route.module
-      );
-      routeModulesCache[route.id] = routeModule;
-      return routeModule;
-    } catch (error2) {
-      console.error(
-        `Error loading route module \`${route.module}\`, reloading page...`
-      );
-      console.error(error2);
-      if (window.__reactRouterContext && window.__reactRouterContext.isSpaMode && // @ts-expect-error
-      import_meta2.hot) {
-        throw error2;
-      }
-      window.location.reload();
-      return new Promise(() => {
-      });
-    }
-  }
-  function isPageLinkDescriptor(object) {
-    return object != null && typeof object.page === "string";
-  }
-  function isHtmlLinkDescriptor(object) {
-    if (object == null) {
-      return false;
-    }
-    if (object.href == null) {
-      return object.rel === "preload" && typeof object.imageSrcSet === "string" && typeof object.imageSizes === "string";
-    }
-    return typeof object.rel === "string" && typeof object.href === "string";
-  }
-  async function getKeyedPrefetchLinks(matches, manifest, routeModules) {
-    let links = await Promise.all(
-      matches.map(async (match) => {
-        let route = manifest.routes[match.route.id];
-        if (route) {
-          let mod = await loadRouteModule(route, routeModules);
-          return mod.links ? mod.links() : [];
-        }
-        return [];
-      })
-    );
-    return dedupeLinkDescriptors(
-      links.flat(1).filter(isHtmlLinkDescriptor).filter((link) => link.rel === "stylesheet" || link.rel === "preload").map(
-        (link) => link.rel === "stylesheet" ? { ...link, rel: "prefetch", as: "style" } : { ...link, rel: "prefetch" }
-      )
-    );
-  }
-  function getNewMatchesForLinks(page, nextMatches, currentMatches, manifest, location, mode) {
-    let isNew = (match, index2) => {
-      if (!currentMatches[index2])
-        return true;
-      return match.route.id !== currentMatches[index2].route.id;
-    };
-    let matchPathChanged = (match, index2) => {
-      return (
-        // param change, /users/123 -> /users/456
-        currentMatches[index2].pathname !== match.pathname || // splat param changed, which is not present in match.path
-        // e.g. /files/images/avatar.jpg -> files/finances.xls
-        currentMatches[index2].route.path?.endsWith("*") && currentMatches[index2].params["*"] !== match.params["*"]
-      );
-    };
-    if (mode === "assets") {
-      return nextMatches.filter(
-        (match, index2) => isNew(match, index2) || matchPathChanged(match, index2)
-      );
-    }
-    if (mode === "data") {
-      return nextMatches.filter((match, index2) => {
-        let manifestRoute = manifest.routes[match.route.id];
-        if (!manifestRoute || !manifestRoute.hasLoader) {
-          return false;
-        }
-        if (isNew(match, index2) || matchPathChanged(match, index2)) {
-          return true;
-        }
-        if (match.route.shouldRevalidate) {
-          let routeChoice = match.route.shouldRevalidate({
-            currentUrl: new URL(
-              location.pathname + location.search + location.hash,
-              window.origin
-            ),
-            currentParams: currentMatches[0]?.params || {},
-            nextUrl: new URL(page, window.origin),
-            nextParams: match.params,
-            defaultShouldRevalidate: true
-          });
-          if (typeof routeChoice === "boolean") {
-            return routeChoice;
-          }
-        }
-        return true;
-      });
-    }
-    return [];
-  }
-  function getModuleLinkHrefs(matches, manifestPatch) {
-    return dedupeHrefs(
-      matches.map((match) => {
-        let route = manifestPatch.routes[match.route.id];
-        if (!route)
-          return [];
-        let hrefs = [route.module];
-        if (route.imports) {
-          hrefs = hrefs.concat(route.imports);
-        }
-        return hrefs;
-      }).flat(1)
-    );
-  }
-  function dedupeHrefs(hrefs) {
-    return [...new Set(hrefs)];
-  }
-  function sortKeys(obj) {
-    let sorted = {};
-    let keys = Object.keys(obj).sort();
-    for (let key of keys) {
-      sorted[key] = obj[key];
-    }
-    return sorted;
-  }
-  function dedupeLinkDescriptors(descriptors, preloads) {
-    let set3 = /* @__PURE__ */ new Set();
-    let preloadsSet = new Set(preloads);
-    return descriptors.reduce((deduped, descriptor) => {
-      let alreadyModulePreload = preloads && !isPageLinkDescriptor(descriptor) && descriptor.as === "script" && descriptor.href && preloadsSet.has(descriptor.href);
-      if (alreadyModulePreload) {
-        return deduped;
-      }
-      let key = JSON.stringify(sortKeys(descriptor));
-      if (!set3.has(key)) {
-        set3.add(key);
-        deduped.push({ key, link: descriptor });
-      }
-      return deduped;
-    }, []);
-  }
-  var SingleFetchRedirectSymbol = Symbol("SingleFetchRedirect");
-  function singleFetchUrl(reqUrl) {
-    let url = typeof reqUrl === "string" ? new URL(
-      reqUrl,
-      // This can be called during the SSR flow via PrefetchPageLinksImpl so
-      // don't assume window is available
-      typeof window === "undefined" ? "server://singlefetch/" : window.location.origin
-    ) : reqUrl;
-    if (url.pathname === "/") {
-      url.pathname = "_root.data";
-    } else {
-      url.pathname = `${url.pathname.replace(/\/$/, "")}.data`;
-    }
-    return url;
-  }
-  function useDataRouterContext2() {
-    let context4 = React92.useContext(DataRouterContext);
-    invariant22(
-      context4,
-      "You must render this element inside a <DataRouterContext.Provider> element"
-    );
-    return context4;
-  }
-  function useDataRouterStateContext() {
-    let context4 = React92.useContext(DataRouterStateContext);
-    invariant22(
-      context4,
-      "You must render this element inside a <DataRouterStateContext.Provider> element"
-    );
-    return context4;
-  }
-  var FrameworkContext = React92.createContext(void 0);
-  FrameworkContext.displayName = "FrameworkContext";
-  function useFrameworkContext() {
-    let context4 = React92.useContext(FrameworkContext);
-    invariant22(
-      context4,
-      "You must render this element inside a <HydratedRouter> element"
-    );
-    return context4;
-  }
-  function usePrefetchBehavior(prefetch, theirElementProps) {
-    let frameworkContext = React92.useContext(FrameworkContext);
-    let [maybePrefetch, setMaybePrefetch] = React92.useState(false);
-    let [shouldPrefetch, setShouldPrefetch] = React92.useState(false);
-    let { onFocus, onBlur, onMouseEnter, onMouseLeave, onTouchStart } = theirElementProps;
-    let ref2 = React92.useRef(null);
-    React92.useEffect(() => {
-      if (prefetch === "render") {
-        setShouldPrefetch(true);
-      }
-      if (prefetch === "viewport") {
-        let callback = (entries) => {
-          entries.forEach((entry) => {
-            setShouldPrefetch(entry.isIntersecting);
-          });
-        };
-        let observer = new IntersectionObserver(callback, { threshold: 0.5 });
-        if (ref2.current)
-          observer.observe(ref2.current);
-        return () => {
-          observer.disconnect();
-        };
-      }
-    }, [prefetch]);
-    React92.useEffect(() => {
-      if (maybePrefetch) {
-        let id2 = setTimeout(() => {
-          setShouldPrefetch(true);
-        }, 100);
-        return () => {
-          clearTimeout(id2);
-        };
-      }
-    }, [maybePrefetch]);
-    let setIntent = () => {
-      setMaybePrefetch(true);
-    };
-    let cancelIntent = () => {
-      setMaybePrefetch(false);
-      setShouldPrefetch(false);
-    };
-    if (!frameworkContext) {
-      return [false, ref2, {}];
-    }
-    if (prefetch !== "intent") {
-      return [shouldPrefetch, ref2, {}];
-    }
-    return [
-      shouldPrefetch,
-      ref2,
-      {
-        onFocus: composeEventHandlers(onFocus, setIntent),
-        onBlur: composeEventHandlers(onBlur, cancelIntent),
-        onMouseEnter: composeEventHandlers(onMouseEnter, setIntent),
-        onMouseLeave: composeEventHandlers(onMouseLeave, cancelIntent),
-        onTouchStart: composeEventHandlers(onTouchStart, setIntent)
-      }
-    ];
-  }
-  function composeEventHandlers(theirHandler, ourHandler) {
-    return (event) => {
-      theirHandler && theirHandler(event);
-      if (!event.defaultPrevented) {
-        ourHandler(event);
-      }
+    return {
+      action,
+      method: method.toLowerCase(),
+      encType,
+      formData,
+      body
     };
   }
-  function PrefetchPageLinks({
-    page,
-    ...dataLinkProps
-  }) {
-    let { router } = useDataRouterContext2();
-    let matches = React92.useMemo(
-      () => matchRoutes(router.routes, page, router.basename),
-      [router.routes, page, router.basename]
-    );
-    if (!matches) {
-      return null;
-    }
-    return /* @__PURE__ */ React92.createElement(PrefetchPageLinksImpl, { page, matches, ...dataLinkProps });
-  }
-  function useKeyedPrefetchLinks(matches) {
-    let { manifest, routeModules } = useFrameworkContext();
-    let [keyedPrefetchLinks, setKeyedPrefetchLinks] = React92.useState([]);
-    React92.useEffect(() => {
-      let interrupted = false;
-      void getKeyedPrefetchLinks(matches, manifest, routeModules).then(
-        (links) => {
-          if (!interrupted) {
-            setKeyedPrefetchLinks(links);
-          }
-        }
-      );
-      return () => {
-        interrupted = true;
-      };
-    }, [matches, manifest, routeModules]);
-    return keyedPrefetchLinks;
-  }
-  function PrefetchPageLinksImpl({
-    page,
-    matches: nextMatches,
-    ...linkProps
-  }) {
-    let location = useLocation();
-    let { manifest, routeModules } = useFrameworkContext();
-    let { loaderData, matches } = useDataRouterStateContext();
-    let newMatchesForData = React92.useMemo(
-      () => getNewMatchesForLinks(
-        page,
-        nextMatches,
-        matches,
-        manifest,
-        location,
-        "data"
-      ),
-      [page, nextMatches, matches, manifest, location]
-    );
-    let newMatchesForAssets = React92.useMemo(
-      () => getNewMatchesForLinks(
-        page,
-        nextMatches,
-        matches,
-        manifest,
-        location,
-        "assets"
-      ),
-      [page, nextMatches, matches, manifest, location]
-    );
-    let dataHrefs = React92.useMemo(() => {
-      if (page === location.pathname + location.search + location.hash) {
-        return [];
-      }
-      let routesParams = /* @__PURE__ */ new Set();
-      let foundOptOutRoute = false;
-      nextMatches.forEach((m) => {
-        let manifestRoute = manifest.routes[m.route.id];
-        if (!manifestRoute || !manifestRoute.hasLoader) {
-          return;
-        }
-        if (!newMatchesForData.some((m2) => m2.route.id === m.route.id) && m.route.id in loaderData && routeModules[m.route.id]?.shouldRevalidate) {
-          foundOptOutRoute = true;
-        } else if (manifestRoute.hasClientLoader) {
-          foundOptOutRoute = true;
-        } else {
-          routesParams.add(m.route.id);
-        }
-      });
-      if (routesParams.size === 0) {
-        return [];
-      }
-      let url = singleFetchUrl(page);
-      if (foundOptOutRoute && routesParams.size > 0) {
-        url.searchParams.set(
-          "_routes",
-          nextMatches.filter((m) => routesParams.has(m.route.id)).map((m) => m.route.id).join(",")
-        );
-      }
-      return [url.pathname + url.search];
-    }, [
-      loaderData,
-      location,
-      manifest,
-      newMatchesForData,
-      nextMatches,
-      page,
-      routeModules
-    ]);
-    let moduleHrefs = React92.useMemo(
-      () => getModuleLinkHrefs(newMatchesForAssets, manifest),
-      [newMatchesForAssets, manifest]
-    );
-    let keyedPrefetchLinks = useKeyedPrefetchLinks(newMatchesForAssets);
-    return /* @__PURE__ */ React92.createElement(React92.Fragment, null, dataHrefs.map((href) => /* @__PURE__ */ React92.createElement("link", { key: href, rel: "prefetch", as: "fetch", href, ...linkProps })), moduleHrefs.map((href) => /* @__PURE__ */ React92.createElement("link", { key: href, rel: "modulepreload", href, ...linkProps })), keyedPrefetchLinks.map(({ key, link }) => (
-      // these don't spread `linkProps` because they are full link descriptors
-      // already with their own props
-      /* @__PURE__ */ React92.createElement("link", { key, ...link })
-    )));
-  }
-  function mergeRefs3(...refs) {
-    return (value) => {
-      refs.forEach((ref2) => {
-        if (typeof ref2 === "function") {
-          ref2(value);
-        } else if (ref2 != null) {
-          ref2.current = value;
-        }
-      });
-    };
-  }
-  var isBrowser = typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined";
+  var _excluded12 = ["onClick", "relative", "reloadDocument", "replace", "state", "target", "to", "preventScrollReset", "viewTransition"];
+  var _excluded23 = ["aria-current", "caseSensitive", "className", "end", "style", "to", "viewTransition", "children"];
+  var _excluded33 = ["fetcherKey", "navigate", "reloadDocument", "replace", "state", "method", "action", "onSubmit", "relative", "preventScrollReset", "viewTransition"];
+  var REACT_ROUTER_VERSION = "6";
   try {
-    if (isBrowser) {
-      window.__reactRouterVersion = "7.1.5";
-    }
+    window.__reactRouterVersion = REACT_ROUTER_VERSION;
   } catch (e) {
   }
-  function BrowserRouter({
-    basename,
-    children: children2,
-    window: window2
-  }) {
-    let historyRef = React102.useRef();
+  var ViewTransitionContext = /* @__PURE__ */ React84.createContext({
+    isTransitioning: false
+  });
+  if (true) {
+    ViewTransitionContext.displayName = "ViewTransition";
+  }
+  var FetchersContext = /* @__PURE__ */ React84.createContext(/* @__PURE__ */ new Map());
+  if (true) {
+    FetchersContext.displayName = "Fetchers";
+  }
+  var START_TRANSITION2 = "startTransition";
+  var startTransitionImpl2 = React84[START_TRANSITION2];
+  var FLUSH_SYNC = "flushSync";
+  var flushSyncImpl = ReactDOM4[FLUSH_SYNC];
+  var USE_ID = "useId";
+  var useIdImpl = React84[USE_ID];
+  function BrowserRouter(_ref4) {
+    let {
+      basename,
+      children: children2,
+      future,
+      window: window2
+    } = _ref4;
+    let historyRef = React84.useRef();
     if (historyRef.current == null) {
-      historyRef.current = createBrowserHistory({ window: window2, v5Compat: true });
+      historyRef.current = createBrowserHistory({
+        window: window2,
+        v5Compat: true
+      });
     }
     let history = historyRef.current;
-    let [state, setStateImpl] = React102.useState({
+    let [state, setStateImpl] = React84.useState({
       action: history.action,
       location: history.location
     });
-    let setState = React102.useCallback(
-      (newState) => {
-        React102.startTransition(() => setStateImpl(newState));
-      },
-      [setStateImpl]
-    );
-    React102.useLayoutEffect(() => history.listen(setState), [history, setState]);
-    return /* @__PURE__ */ React102.createElement(
-      Router,
-      {
-        basename,
-        children: children2,
-        location: state.location,
-        navigationType: state.action,
-        navigator: history
-      }
-    );
+    let {
+      v7_startTransition
+    } = future || {};
+    let setState = React84.useCallback((newState) => {
+      v7_startTransition && startTransitionImpl2 ? startTransitionImpl2(() => setStateImpl(newState)) : setStateImpl(newState);
+    }, [setStateImpl, v7_startTransition]);
+    React84.useLayoutEffect(() => history.listen(setState), [history, setState]);
+    React84.useEffect(() => logV6DeprecationWarnings(future), [future]);
+    return /* @__PURE__ */ React84.createElement(Router, {
+      basename,
+      children: children2,
+      location: state.location,
+      navigationType: state.action,
+      navigator: history,
+      future
+    });
   }
-  function HistoryRouter({
-    basename,
-    children: children2,
-    history
-  }) {
-    let [state, setStateImpl] = React102.useState({
+  function HistoryRouter(_ref6) {
+    let {
+      basename,
+      children: children2,
+      future,
+      history
+    } = _ref6;
+    let [state, setStateImpl] = React84.useState({
       action: history.action,
       location: history.location
     });
-    let setState = React102.useCallback(
-      (newState) => {
-        React102.startTransition(() => setStateImpl(newState));
-      },
-      [setStateImpl]
-    );
-    React102.useLayoutEffect(() => history.listen(setState), [history, setState]);
-    return /* @__PURE__ */ React102.createElement(
-      Router,
-      {
-        basename,
-        children: children2,
-        location: state.location,
-        navigationType: state.action,
-        navigator: history
-      }
-    );
+    let {
+      v7_startTransition
+    } = future || {};
+    let setState = React84.useCallback((newState) => {
+      v7_startTransition && startTransitionImpl2 ? startTransitionImpl2(() => setStateImpl(newState)) : setStateImpl(newState);
+    }, [setStateImpl, v7_startTransition]);
+    React84.useLayoutEffect(() => history.listen(setState), [history, setState]);
+    React84.useEffect(() => logV6DeprecationWarnings(future), [future]);
+    return /* @__PURE__ */ React84.createElement(Router, {
+      basename,
+      children: children2,
+      location: state.location,
+      navigationType: state.action,
+      navigator: history,
+      future
+    });
   }
-  HistoryRouter.displayName = "unstable_HistoryRouter";
-  var ABSOLUTE_URL_REGEX2 = /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i;
-  var Link = React102.forwardRef(
-    function LinkWithRef({
+  if (true) {
+    HistoryRouter.displayName = "unstable_HistoryRouter";
+  }
+  var isBrowser = typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined";
+  var ABSOLUTE_URL_REGEX = /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i;
+  var Link = /* @__PURE__ */ React84.forwardRef(function LinkWithRef(_ref7, ref2) {
+    let {
       onClick,
-      discover = "render",
-      prefetch = "none",
       relative,
       reloadDocument,
       replace: replace2,
@@ -69459,74 +69043,63 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       target,
       to,
       preventScrollReset,
-      viewTransition,
-      ...rest
-    }, forwardedRef) {
-      let { basename } = React102.useContext(NavigationContext);
-      let isAbsolute = typeof to === "string" && ABSOLUTE_URL_REGEX2.test(to);
-      let absoluteHref;
-      let isExternal = false;
-      if (typeof to === "string" && isAbsolute) {
-        absoluteHref = to;
-        if (isBrowser) {
-          try {
-            let currentUrl = new URL(window.location.href);
-            let targetUrl = to.startsWith("//") ? new URL(currentUrl.protocol + to) : new URL(to);
-            let path = stripBasename(targetUrl.pathname, basename);
-            if (targetUrl.origin === currentUrl.origin && path != null) {
-              to = path + targetUrl.search + targetUrl.hash;
-            } else {
-              isExternal = true;
-            }
-          } catch (e) {
-            warning5(
-              false,
-              `<Link to="${to}"> contains an invalid URL which will probably break when clicked - please update to a valid URL path.`
-            );
+      viewTransition
+    } = _ref7, rest = _objectWithoutPropertiesLoose13(_ref7, _excluded12);
+    let {
+      basename
+    } = React84.useContext(NavigationContext);
+    let absoluteHref;
+    let isExternal = false;
+    if (typeof to === "string" && ABSOLUTE_URL_REGEX.test(to)) {
+      absoluteHref = to;
+      if (isBrowser) {
+        try {
+          let currentUrl = new URL(window.location.href);
+          let targetUrl = to.startsWith("//") ? new URL(currentUrl.protocol + to) : new URL(to);
+          let path = stripBasename(targetUrl.pathname, basename);
+          if (targetUrl.origin === currentUrl.origin && path != null) {
+            to = path + targetUrl.search + targetUrl.hash;
+          } else {
+            isExternal = true;
           }
+        } catch (e) {
+          true ? warning5(false, '<Link to="' + to + '"> contains an invalid URL which will probably break when clicked - please update to a valid URL path.') : void 0;
         }
       }
-      let href = useHref(to, { relative });
-      let [shouldPrefetch, prefetchRef, prefetchHandlers] = usePrefetchBehavior(
-        prefetch,
-        rest
-      );
-      let internalOnClick = useLinkClickHandler(to, {
-        replace: replace2,
-        state,
-        target,
-        preventScrollReset,
-        relative,
-        viewTransition
-      });
-      function handleClick(event) {
-        if (onClick)
-          onClick(event);
-        if (!event.defaultPrevented) {
-          internalOnClick(event);
-        }
-      }
-      let link = (
-        // eslint-disable-next-line jsx-a11y/anchor-has-content
-        /* @__PURE__ */ React102.createElement(
-          "a",
-          {
-            ...rest,
-            ...prefetchHandlers,
-            href: absoluteHref || href,
-            onClick: isExternal || reloadDocument ? onClick : handleClick,
-            ref: mergeRefs3(forwardedRef, prefetchRef),
-            target,
-            "data-discover": !isAbsolute && discover === "render" ? "true" : void 0
-          }
-        )
-      );
-      return shouldPrefetch && !isAbsolute ? /* @__PURE__ */ React102.createElement(React102.Fragment, null, link, /* @__PURE__ */ React102.createElement(PrefetchPageLinks, { page: href })) : link;
     }
-  );
-  Link.displayName = "Link";
-  var NavLink2 = React102.forwardRef(
-    function NavLinkWithRef({
+    let href = useHref(to, {
+      relative
+    });
+    let internalOnClick = useLinkClickHandler(to, {
+      replace: replace2,
+      state,
+      target,
+      preventScrollReset,
+      relative,
+      viewTransition
+    });
+    function handleClick(event) {
+      if (onClick)
+        onClick(event);
+      if (!event.defaultPrevented) {
+        internalOnClick(event);
+      }
+    }
+    return (
+      // eslint-disable-next-line jsx-a11y/anchor-has-content
+      /* @__PURE__ */ React84.createElement("a", _extends4({}, rest, {
+        href: absoluteHref || href,
+        onClick: isExternal || reloadDocument ? onClick : handleClick,
+        ref: ref2,
+        target
+      }))
+    );
+  });
+  if (true) {
+    Link.displayName = "Link";
+  }
+  var NavLink2 = /* @__PURE__ */ React84.forwardRef(function NavLinkWithRef(_ref8, ref2) {
+    let {
       "aria-current": ariaCurrentProp = "page",
       caseSensitive = false,
       className: classNameProp = "",
@@ -69534,67 +69107,61 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       style: styleProp,
       to,
       viewTransition,
-      children: children2,
-      ...rest
-    }, ref2) {
-      let path = useResolvedPath(to, { relative: rest.relative });
-      let location = useLocation();
-      let routerState = React102.useContext(DataRouterStateContext);
-      let { navigator: navigator2, basename } = React102.useContext(NavigationContext);
-      let isTransitioning = routerState != null && // Conditional usage is OK here because the usage of a data router is static
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      useViewTransitionState(path) && viewTransition === true;
-      let toPathname = navigator2.encodeLocation ? navigator2.encodeLocation(path).pathname : path.pathname;
-      let locationPathname = location.pathname;
-      let nextLocationPathname = routerState && routerState.navigation && routerState.navigation.location ? routerState.navigation.location.pathname : null;
-      if (!caseSensitive) {
-        locationPathname = locationPathname.toLowerCase();
-        nextLocationPathname = nextLocationPathname ? nextLocationPathname.toLowerCase() : null;
-        toPathname = toPathname.toLowerCase();
-      }
-      if (nextLocationPathname && basename) {
-        nextLocationPathname = stripBasename(nextLocationPathname, basename) || nextLocationPathname;
-      }
-      const endSlashPosition = toPathname !== "/" && toPathname.endsWith("/") ? toPathname.length - 1 : toPathname.length;
-      let isActive2 = locationPathname === toPathname || !end3 && locationPathname.startsWith(toPathname) && locationPathname.charAt(endSlashPosition) === "/";
-      let isPending = nextLocationPathname != null && (nextLocationPathname === toPathname || !end3 && nextLocationPathname.startsWith(toPathname) && nextLocationPathname.charAt(toPathname.length) === "/");
-      let renderProps = {
-        isActive: isActive2,
-        isPending,
-        isTransitioning
-      };
-      let ariaCurrent = isActive2 ? ariaCurrentProp : void 0;
-      let className;
-      if (typeof classNameProp === "function") {
-        className = classNameProp(renderProps);
-      } else {
-        className = [
-          classNameProp,
-          isActive2 ? "active" : null,
-          isPending ? "pending" : null,
-          isTransitioning ? "transitioning" : null
-        ].filter(Boolean).join(" ");
-      }
-      let style5 = typeof styleProp === "function" ? styleProp(renderProps) : styleProp;
-      return /* @__PURE__ */ React102.createElement(
-        Link,
-        {
-          ...rest,
-          "aria-current": ariaCurrent,
-          className,
-          ref: ref2,
-          style: style5,
-          to,
-          viewTransition
-        },
-        typeof children2 === "function" ? children2(renderProps) : children2
-      );
+      children: children2
+    } = _ref8, rest = _objectWithoutPropertiesLoose13(_ref8, _excluded23);
+    let path = useResolvedPath(to, {
+      relative: rest.relative
+    });
+    let location = useLocation();
+    let routerState = React84.useContext(DataRouterStateContext);
+    let {
+      navigator: navigator2,
+      basename
+    } = React84.useContext(NavigationContext);
+    let isTransitioning = routerState != null && // Conditional usage is OK here because the usage of a data router is static
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useViewTransitionState(path) && viewTransition === true;
+    let toPathname = navigator2.encodeLocation ? navigator2.encodeLocation(path).pathname : path.pathname;
+    let locationPathname = location.pathname;
+    let nextLocationPathname = routerState && routerState.navigation && routerState.navigation.location ? routerState.navigation.location.pathname : null;
+    if (!caseSensitive) {
+      locationPathname = locationPathname.toLowerCase();
+      nextLocationPathname = nextLocationPathname ? nextLocationPathname.toLowerCase() : null;
+      toPathname = toPathname.toLowerCase();
     }
-  );
-  NavLink2.displayName = "NavLink";
-  var Form2 = React102.forwardRef(
-    ({
-      discover = "render",
+    if (nextLocationPathname && basename) {
+      nextLocationPathname = stripBasename(nextLocationPathname, basename) || nextLocationPathname;
+    }
+    const endSlashPosition = toPathname !== "/" && toPathname.endsWith("/") ? toPathname.length - 1 : toPathname.length;
+    let isActive2 = locationPathname === toPathname || !end3 && locationPathname.startsWith(toPathname) && locationPathname.charAt(endSlashPosition) === "/";
+    let isPending = nextLocationPathname != null && (nextLocationPathname === toPathname || !end3 && nextLocationPathname.startsWith(toPathname) && nextLocationPathname.charAt(toPathname.length) === "/");
+    let renderProps = {
+      isActive: isActive2,
+      isPending,
+      isTransitioning
+    };
+    let ariaCurrent = isActive2 ? ariaCurrentProp : void 0;
+    let className;
+    if (typeof classNameProp === "function") {
+      className = classNameProp(renderProps);
+    } else {
+      className = [classNameProp, isActive2 ? "active" : null, isPending ? "pending" : null, isTransitioning ? "transitioning" : null].filter(Boolean).join(" ");
+    }
+    let style5 = typeof styleProp === "function" ? styleProp(renderProps) : styleProp;
+    return /* @__PURE__ */ React84.createElement(Link, _extends4({}, rest, {
+      "aria-current": ariaCurrent,
+      className,
+      ref: ref2,
+      style: style5,
+      to,
+      viewTransition
+    }), typeof children2 === "function" ? children2(renderProps) : children2);
+  });
+  if (true) {
+    NavLink2.displayName = "NavLink";
+  }
+  var Form2 = /* @__PURE__ */ React84.forwardRef((_ref9, forwardedRef) => {
+    let {
       fetcherKey,
       navigate,
       reloadDocument,
@@ -69605,205 +69172,176 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       onSubmit,
       relative,
       preventScrollReset,
-      viewTransition,
-      ...props
-    }, forwardedRef) => {
-      let submit = useSubmit();
-      let formAction = useFormAction(action, { relative });
-      let formMethod = method.toLowerCase() === "get" ? "get" : "post";
-      let isAbsolute = typeof action === "string" && ABSOLUTE_URL_REGEX2.test(action);
-      let submitHandler = (event) => {
-        onSubmit && onSubmit(event);
-        if (event.defaultPrevented)
-          return;
-        event.preventDefault();
-        let submitter = event.nativeEvent.submitter;
-        let submitMethod = submitter?.getAttribute("formmethod") || method;
-        submit(submitter || event.currentTarget, {
-          fetcherKey,
-          method: submitMethod,
-          navigate,
-          replace: replace2,
-          state,
-          relative,
-          preventScrollReset,
-          viewTransition
-        });
-      };
-      return /* @__PURE__ */ React102.createElement(
-        "form",
-        {
-          ref: forwardedRef,
-          method: formMethod,
-          action: formAction,
-          onSubmit: reloadDocument ? onSubmit : submitHandler,
-          ...props,
-          "data-discover": !isAbsolute && discover === "render" ? "true" : void 0
-        }
-      );
-    }
-  );
-  Form2.displayName = "Form";
-  function ScrollRestoration({
-    getKey,
-    storageKey,
-    ...props
-  }) {
-    let remixContext = React102.useContext(FrameworkContext);
-    let { basename } = React102.useContext(NavigationContext);
-    let location = useLocation();
-    let matches = useMatches();
-    useScrollRestoration({ getKey, storageKey });
-    let ssrKey = React102.useMemo(
-      () => {
-        if (!remixContext || !getKey)
-          return null;
-        let userKey = getScrollRestorationKey(
-          location,
-          matches,
-          basename,
-          getKey
-        );
-        return userKey !== location.key ? userKey : null;
-      },
-      // Nah, we only need this the first time for the SSR render
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      []
-    );
-    if (!remixContext || remixContext.isSpaMode) {
-      return null;
-    }
-    let restoreScroll = ((storageKey2, restoreKey) => {
-      if (!window.history.state || !window.history.state.key) {
-        let key = Math.random().toString(32).slice(2);
-        window.history.replaceState({ key }, "");
-      }
-      try {
-        let positions = JSON.parse(sessionStorage.getItem(storageKey2) || "{}");
-        let storedY = positions[restoreKey || window.history.state.key];
-        if (typeof storedY === "number") {
-          window.scrollTo(0, storedY);
-        }
-      } catch (error2) {
-        console.error(error2);
-        sessionStorage.removeItem(storageKey2);
-      }
-    }).toString();
-    return /* @__PURE__ */ React102.createElement(
-      "script",
-      {
-        ...props,
-        suppressHydrationWarning: true,
-        dangerouslySetInnerHTML: {
-          __html: `(${restoreScroll})(${JSON.stringify(
-            storageKey || SCROLL_RESTORATION_STORAGE_KEY
-          )}, ${JSON.stringify(ssrKey)})`
-        }
-      }
-    );
+      viewTransition
+    } = _ref9, props = _objectWithoutPropertiesLoose13(_ref9, _excluded33);
+    let submit = useSubmit();
+    let formAction = useFormAction(action, {
+      relative
+    });
+    let formMethod = method.toLowerCase() === "get" ? "get" : "post";
+    let submitHandler = (event) => {
+      onSubmit && onSubmit(event);
+      if (event.defaultPrevented)
+        return;
+      event.preventDefault();
+      let submitter = event.nativeEvent.submitter;
+      let submitMethod = (submitter == null ? void 0 : submitter.getAttribute("formmethod")) || method;
+      submit(submitter || event.currentTarget, {
+        fetcherKey,
+        method: submitMethod,
+        navigate,
+        replace: replace2,
+        state,
+        relative,
+        preventScrollReset,
+        viewTransition
+      });
+    };
+    return /* @__PURE__ */ React84.createElement("form", _extends4({
+      ref: forwardedRef,
+      method: formMethod,
+      action: formAction,
+      onSubmit: reloadDocument ? onSubmit : submitHandler
+    }, props));
+  });
+  if (true) {
+    Form2.displayName = "Form";
   }
-  ScrollRestoration.displayName = "ScrollRestoration";
+  function ScrollRestoration(_ref10) {
+    let {
+      getKey,
+      storageKey
+    } = _ref10;
+    useScrollRestoration({
+      getKey,
+      storageKey
+    });
+    return null;
+  }
+  if (true) {
+    ScrollRestoration.displayName = "ScrollRestoration";
+  }
+  var DataRouterHook2;
+  (function(DataRouterHook3) {
+    DataRouterHook3["UseScrollRestoration"] = "useScrollRestoration";
+    DataRouterHook3["UseSubmit"] = "useSubmit";
+    DataRouterHook3["UseSubmitFetcher"] = "useSubmitFetcher";
+    DataRouterHook3["UseFetcher"] = "useFetcher";
+    DataRouterHook3["useViewTransitionState"] = "useViewTransitionState";
+  })(DataRouterHook2 || (DataRouterHook2 = {}));
+  var DataRouterStateHook2;
+  (function(DataRouterStateHook3) {
+    DataRouterStateHook3["UseFetcher"] = "useFetcher";
+    DataRouterStateHook3["UseFetchers"] = "useFetchers";
+    DataRouterStateHook3["UseScrollRestoration"] = "useScrollRestoration";
+  })(DataRouterStateHook2 || (DataRouterStateHook2 = {}));
   function getDataRouterConsoleError2(hookName) {
-    return `${hookName} must be used within a data router.  See https://reactrouter.com/en/main/routers/picking-a-router.`;
+    return hookName + " must be used within a data router.  See https://reactrouter.com/v6/routers/picking-a-router.";
   }
-  function useDataRouterContext3(hookName) {
-    let ctx = React102.useContext(DataRouterContext);
-    invariant4(ctx, getDataRouterConsoleError2(hookName));
+  function useDataRouterContext2(hookName) {
+    let ctx = React84.useContext(DataRouterContext);
+    !ctx ? true ? invariant4(false, getDataRouterConsoleError2(hookName)) : invariant4(false) : void 0;
     return ctx;
   }
   function useDataRouterState2(hookName) {
-    let state = React102.useContext(DataRouterStateContext);
-    invariant4(state, getDataRouterConsoleError2(hookName));
+    let state = React84.useContext(DataRouterStateContext);
+    !state ? true ? invariant4(false, getDataRouterConsoleError2(hookName)) : invariant4(false) : void 0;
     return state;
   }
-  function useLinkClickHandler(to, {
-    target,
-    replace: replaceProp,
-    state,
-    preventScrollReset,
-    relative,
-    viewTransition
-  } = {}) {
+  function useLinkClickHandler(to, _temp) {
+    let {
+      target,
+      replace: replaceProp,
+      state,
+      preventScrollReset,
+      relative,
+      viewTransition
+    } = _temp === void 0 ? {} : _temp;
     let navigate = useNavigate();
     let location = useLocation();
-    let path = useResolvedPath(to, { relative });
-    return React102.useCallback(
-      (event) => {
-        if (shouldProcessLinkClick(event, target)) {
-          event.preventDefault();
-          let replace2 = replaceProp !== void 0 ? replaceProp : createPath(location) === createPath(path);
-          navigate(to, {
-            replace: replace2,
-            state,
-            preventScrollReset,
-            relative,
-            viewTransition
-          });
-        }
-      },
-      [
-        location,
-        navigate,
-        path,
-        replaceProp,
-        state,
-        target,
-        to,
-        preventScrollReset,
-        relative,
-        viewTransition
-      ]
-    );
+    let path = useResolvedPath(to, {
+      relative
+    });
+    return React84.useCallback((event) => {
+      if (shouldProcessLinkClick(event, target)) {
+        event.preventDefault();
+        let replace2 = replaceProp !== void 0 ? replaceProp : createPath(location) === createPath(path);
+        navigate(to, {
+          replace: replace2,
+          state,
+          preventScrollReset,
+          relative,
+          viewTransition
+        });
+      }
+    }, [location, navigate, path, replaceProp, state, target, to, preventScrollReset, relative, viewTransition]);
+  }
+  function validateClientSideSubmission() {
+    if (typeof document === "undefined") {
+      throw new Error("You are calling submit during the server render. Try calling submit within a `useEffect` or callback instead.");
+    }
   }
   var fetcherId = 0;
-  var getUniqueFetcherId = () => `__${String(++fetcherId)}__`;
+  var getUniqueFetcherId = () => "__" + String(++fetcherId) + "__";
   function useSubmit() {
-    let { router } = useDataRouterContext3(
-      "useSubmit"
-      /* UseSubmit */
-    );
-    let { basename } = React102.useContext(NavigationContext);
+    let {
+      router
+    } = useDataRouterContext2(DataRouterHook2.UseSubmit);
+    let {
+      basename
+    } = React84.useContext(NavigationContext);
     let currentRouteId = useRouteId();
-    return React102.useCallback(
-      async (target, options = {}) => {
-        let { action, method, encType, formData, body } = getFormSubmissionInfo(
-          target,
-          basename
-        );
-        if (options.navigate === false) {
-          let key = options.fetcherKey || getUniqueFetcherId();
-          await router.fetch(key, currentRouteId, options.action || action, {
-            preventScrollReset: options.preventScrollReset,
-            formData,
-            body,
-            formMethod: options.method || method,
-            formEncType: options.encType || encType,
-            flushSync: options.flushSync
-          });
-        } else {
-          await router.navigate(options.action || action, {
-            preventScrollReset: options.preventScrollReset,
-            formData,
-            body,
-            formMethod: options.method || method,
-            formEncType: options.encType || encType,
-            replace: options.replace,
-            state: options.state,
-            fromRouteId: currentRouteId,
-            flushSync: options.flushSync,
-            viewTransition: options.viewTransition
-          });
-        }
-      },
-      [router, basename, currentRouteId]
-    );
+    return React84.useCallback(function(target, options) {
+      if (options === void 0) {
+        options = {};
+      }
+      validateClientSideSubmission();
+      let {
+        action,
+        method,
+        encType,
+        formData,
+        body
+      } = getFormSubmissionInfo(target, basename);
+      if (options.navigate === false) {
+        let key = options.fetcherKey || getUniqueFetcherId();
+        router.fetch(key, currentRouteId, options.action || action, {
+          preventScrollReset: options.preventScrollReset,
+          formData,
+          body,
+          formMethod: options.method || method,
+          formEncType: options.encType || encType,
+          flushSync: options.flushSync
+        });
+      } else {
+        router.navigate(options.action || action, {
+          preventScrollReset: options.preventScrollReset,
+          formData,
+          body,
+          formMethod: options.method || method,
+          formEncType: options.encType || encType,
+          replace: options.replace,
+          state: options.state,
+          fromRouteId: currentRouteId,
+          flushSync: options.flushSync,
+          viewTransition: options.viewTransition
+        });
+      }
+    }, [router, basename, currentRouteId]);
   }
-  function useFormAction(action, { relative } = {}) {
-    let { basename } = React102.useContext(NavigationContext);
-    let routeContext = React102.useContext(RouteContext);
-    invariant4(routeContext, "useFormAction must be used inside a RouteContext");
+  function useFormAction(action, _temp2) {
+    let {
+      relative
+    } = _temp2 === void 0 ? {} : _temp2;
+    let {
+      basename
+    } = React84.useContext(NavigationContext);
+    let routeContext = React84.useContext(RouteContext);
+    !routeContext ? true ? invariant4(false, "useFormAction must be used inside a RouteContext") : invariant4(false) : void 0;
     let [match] = routeContext.matches.slice(-1);
-    let path = { ...useResolvedPath(action ? action : ".", { relative }) };
+    let path = _extends4({}, useResolvedPath(action ? action : ".", {
+      relative
+    }));
     let location = useLocation();
     if (action == null) {
       path.search = location.search;
@@ -69814,7 +69352,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         params.delete("index");
         indexValues.filter((v) => v).forEach((v) => params.append("index", v));
         let qs = params.toString();
-        path.search = qs ? `?${qs}` : "";
+        path.search = qs ? "?" + qs : "";
       }
     }
     if ((!action || action === ".") && match.route.index) {
@@ -69827,89 +69365,64 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
   var SCROLL_RESTORATION_STORAGE_KEY = "react-router-scroll-positions";
   var savedScrollPositions = {};
-  function getScrollRestorationKey(location, matches, basename, getKey) {
-    let key = null;
-    if (getKey) {
-      if (basename !== "/") {
-        key = getKey(
-          {
-            ...location,
-            pathname: stripBasename(location.pathname, basename) || location.pathname
-          },
-          matches
-        );
-      } else {
-        key = getKey(location, matches);
-      }
-    }
-    if (key == null) {
-      key = location.key;
-    }
-    return key;
-  }
-  function useScrollRestoration({
-    getKey,
-    storageKey
-  } = {}) {
-    let { router } = useDataRouterContext3(
-      "useScrollRestoration"
-      /* UseScrollRestoration */
-    );
-    let { restoreScrollPosition, preventScrollReset } = useDataRouterState2(
-      "useScrollRestoration"
-      /* UseScrollRestoration */
-    );
-    let { basename } = React102.useContext(NavigationContext);
+  function useScrollRestoration(_temp4) {
+    let {
+      getKey,
+      storageKey
+    } = _temp4 === void 0 ? {} : _temp4;
+    let {
+      router
+    } = useDataRouterContext2(DataRouterHook2.UseScrollRestoration);
+    let {
+      restoreScrollPosition,
+      preventScrollReset
+    } = useDataRouterState2(DataRouterStateHook2.UseScrollRestoration);
+    let {
+      basename
+    } = React84.useContext(NavigationContext);
     let location = useLocation();
     let matches = useMatches();
     let navigation = useNavigation();
-    React102.useEffect(() => {
+    React84.useEffect(() => {
       window.history.scrollRestoration = "manual";
       return () => {
         window.history.scrollRestoration = "auto";
       };
     }, []);
-    usePageHide(
-      React102.useCallback(() => {
-        if (navigation.state === "idle") {
-          let key = getScrollRestorationKey(location, matches, basename, getKey);
-          savedScrollPositions[key] = window.scrollY;
-        }
-        try {
-          sessionStorage.setItem(
-            storageKey || SCROLL_RESTORATION_STORAGE_KEY,
-            JSON.stringify(savedScrollPositions)
-          );
-        } catch (error2) {
-          warning5(
-            false,
-            `Failed to save scroll positions in sessionStorage, <ScrollRestoration /> will not work properly (${error2}).`
-          );
-        }
-        window.history.scrollRestoration = "auto";
-      }, [navigation.state, getKey, basename, location, matches, storageKey])
-    );
+    usePageHide(React84.useCallback(() => {
+      if (navigation.state === "idle") {
+        let key = (getKey ? getKey(location, matches) : null) || location.key;
+        savedScrollPositions[key] = window.scrollY;
+      }
+      try {
+        sessionStorage.setItem(storageKey || SCROLL_RESTORATION_STORAGE_KEY, JSON.stringify(savedScrollPositions));
+      } catch (error2) {
+        true ? warning5(false, "Failed to save scroll positions in sessionStorage, <ScrollRestoration /> will not work properly (" + error2 + ").") : void 0;
+      }
+      window.history.scrollRestoration = "auto";
+    }, [storageKey, getKey, navigation.state, location, matches]));
     if (typeof document !== "undefined") {
-      React102.useLayoutEffect(() => {
+      React84.useLayoutEffect(() => {
         try {
-          let sessionPositions = sessionStorage.getItem(
-            storageKey || SCROLL_RESTORATION_STORAGE_KEY
-          );
+          let sessionPositions = sessionStorage.getItem(storageKey || SCROLL_RESTORATION_STORAGE_KEY);
           if (sessionPositions) {
             savedScrollPositions = JSON.parse(sessionPositions);
           }
         } catch (e) {
         }
       }, [storageKey]);
-      React102.useLayoutEffect(() => {
-        let disableScrollRestoration = router?.enableScrollRestoration(
-          savedScrollPositions,
-          () => window.scrollY,
-          getKey ? (location2, matches2) => getScrollRestorationKey(location2, matches2, basename, getKey) : void 0
-        );
+      React84.useLayoutEffect(() => {
+        let getKeyWithoutBasename = getKey && basename !== "/" ? (location2, matches2) => getKey(
+          // Strip the basename to match useLocation()
+          _extends4({}, location2, {
+            pathname: stripBasename(location2.pathname, basename) || location2.pathname
+          }),
+          matches2
+        ) : getKey;
+        let disableScrollRestoration = router == null ? void 0 : router.enableScrollRestoration(savedScrollPositions, () => window.scrollY, getKeyWithoutBasename);
         return () => disableScrollRestoration && disableScrollRestoration();
       }, [router, basename, getKey]);
-      React102.useLayoutEffect(() => {
+      React84.useLayoutEffect(() => {
         if (restoreScrollPosition === false) {
           return;
         }
@@ -69918,9 +69431,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           return;
         }
         if (location.hash) {
-          let el = document.getElementById(
-            decodeURIComponent(location.hash.slice(1))
-          );
+          let el = document.getElementById(decodeURIComponent(location.hash.slice(1)));
           if (el) {
             el.scrollIntoView();
             return;
@@ -69934,26 +69445,31 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
   }
   function usePageHide(callback, options) {
-    let { capture } = options || {};
-    React102.useEffect(() => {
-      let opts = capture != null ? { capture } : void 0;
+    let {
+      capture
+    } = options || {};
+    React84.useEffect(() => {
+      let opts = capture != null ? {
+        capture
+      } : void 0;
       window.addEventListener("pagehide", callback, opts);
       return () => {
         window.removeEventListener("pagehide", callback, opts);
       };
     }, [callback, capture]);
   }
-  function useViewTransitionState(to, opts = {}) {
-    let vtContext = React102.useContext(ViewTransitionContext);
-    invariant4(
-      vtContext != null,
-      "`useViewTransitionState` must be used within `react-router-dom`'s `RouterProvider`.  Did you accidentally import `RouterProvider` from `react-router`?"
-    );
-    let { basename } = useDataRouterContext3(
-      "useViewTransitionState"
-      /* useViewTransitionState */
-    );
-    let path = useResolvedPath(to, { relative: opts.relative });
+  function useViewTransitionState(to, opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+    let vtContext = React84.useContext(ViewTransitionContext);
+    !(vtContext != null) ? true ? invariant4(false, "`useViewTransitionState` must be used within `react-router-dom`'s `RouterProvider`.  Did you accidentally import `RouterProvider` from `react-router`?") : invariant4(false) : void 0;
+    let {
+      basename
+    } = useDataRouterContext2(DataRouterHook2.useViewTransitionState);
+    let path = useResolvedPath(to, {
+      relative: opts.relative
+    });
     if (!vtContext.isTransitioning) {
       return false;
     }
@@ -69961,7 +69477,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     let nextPath = stripBasename(vtContext.nextLocation.pathname, basename) || vtContext.nextLocation.pathname;
     return matchPath(path.pathname, nextPath) != null || matchPath(path.pathname, currentPath) != null;
   }
-  var encoder = new TextEncoder();
 
   // node_modules/@caldwell619/react-kanban/dist/features/board/index.js
   var import_jsx_runtime92 = __toESM(require_jsx_runtime());
@@ -71195,7 +70710,7 @@ ${latestSubscriptionCallbackError.current.stack}
       padding
     };
   };
-  var parse2 = function parse3(raw) {
+  var parse = function parse2(raw) {
     var value = raw.slice(0, -2);
     var suffix2 = raw.slice(-2);
     if (suffix2 !== "px") {
@@ -71229,22 +70744,22 @@ ${latestSubscriptionCallbackError.current.stack}
   };
   var calculateBox = function calculateBox2(borderBox, styles2) {
     var margin = {
-      top: parse2(styles2.marginTop),
-      right: parse2(styles2.marginRight),
-      bottom: parse2(styles2.marginBottom),
-      left: parse2(styles2.marginLeft)
+      top: parse(styles2.marginTop),
+      right: parse(styles2.marginRight),
+      bottom: parse(styles2.marginBottom),
+      left: parse(styles2.marginLeft)
     };
     var padding = {
-      top: parse2(styles2.paddingTop),
-      right: parse2(styles2.paddingRight),
-      bottom: parse2(styles2.paddingBottom),
-      left: parse2(styles2.paddingLeft)
+      top: parse(styles2.paddingTop),
+      right: parse(styles2.paddingRight),
+      bottom: parse(styles2.paddingBottom),
+      left: parse(styles2.paddingLeft)
     };
     var border = {
-      top: parse2(styles2.borderTopWidth),
-      right: parse2(styles2.borderRightWidth),
-      bottom: parse2(styles2.borderBottomWidth),
-      left: parse2(styles2.borderLeftWidth)
+      top: parse(styles2.borderTopWidth),
+      right: parse(styles2.borderRightWidth),
+      bottom: parse(styles2.borderBottomWidth),
+      left: parse(styles2.borderLeftWidth)
     };
     return createBox({
       borderBox,
@@ -71288,15 +70803,15 @@ ${latestSubscriptionCallbackError.current.stack}
   var raf_schd_esm_default = rafSchd;
 
   // node_modules/@hello-pangea/dnd/node_modules/@babel/runtime/helpers/esm/extends.js
-  function _extends2() {
-    return _extends2 = Object.assign ? Object.assign.bind() : function(n) {
+  function _extends5() {
+    return _extends5 = Object.assign ? Object.assign.bind() : function(n) {
       for (var e = 1; e < arguments.length; e++) {
         var t = arguments[e];
         for (var r in t)
           ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]);
       }
       return n;
-    }, _extends2.apply(null, arguments);
+    }, _extends5.apply(null, arguments);
   }
 
   // node_modules/@hello-pangea/dnd/dist/dnd.esm.js
@@ -71522,7 +71037,7 @@ ${latestSubscriptionCallbackError.current.stack}
     }
     return true;
   }
-  function useMemo20(getResult, inputs) {
+  function useMemo18(getResult, inputs) {
     const initial = (0, import_react72.useState)(() => ({
       inputs,
       result: getResult()
@@ -71540,8 +71055,8 @@ ${latestSubscriptionCallbackError.current.stack}
     }, [cache]);
     return cache.result;
   }
-  function useCallback24(callback, inputs) {
-    return useMemo20(() => callback, inputs);
+  function useCallback23(callback, inputs) {
+    return useMemo18(() => callback, inputs);
   }
   var origin = {
     x: 0,
@@ -74297,18 +73812,18 @@ ${latestSubscriptionCallbackError.current.stack}
     },
     mode
   });
-  function execute(responder, data2, announce, getDefaultMessage) {
+  function execute(responder, data, announce, getDefaultMessage) {
     if (!responder) {
-      announce(getDefaultMessage(data2));
+      announce(getDefaultMessage(data));
       return;
     }
     const willExpire = getExpiringAnnounce(announce);
     const provided = {
       announce: willExpire
     };
-    responder(data2, provided);
+    responder(data, provided);
     if (!willExpire.wasCalled()) {
-      announce(getDefaultMessage(data2));
+      announce(getDefaultMessage(data));
     }
   }
   var getPublisher = (getResponders, announce) => {
@@ -74338,15 +73853,15 @@ ${latestSubscriptionCallbackError.current.stack}
     };
     const start4 = (critical, mode) => {
       !!dragging ? true ? invariant6(false, "Cannot fire onBeforeDragStart as a drag start has already been published") : invariant6() : void 0;
-      const data2 = getDragStart(critical, mode);
+      const data = getDragStart(critical, mode);
       dragging = {
         mode,
         lastCritical: critical,
-        lastLocation: data2.source,
+        lastLocation: data.source,
         lastCombine: null
       };
       asyncMarshal.add(() => {
-        withTimings("onDragStart", () => execute(getResponders().onDragStart, data2, announce, preset.onDragStart));
+        withTimings("onDragStart", () => execute(getResponders().onDragStart, data, announce, preset.onDragStart));
       });
     };
     const update2 = (critical, impact) => {
@@ -74368,13 +73883,13 @@ ${latestSubscriptionCallbackError.current.stack}
       if (!hasCriticalChanged && !hasLocationChanged && !hasGroupingChanged) {
         return;
       }
-      const data2 = {
+      const data = {
         ...getDragStart(critical, dragging.mode),
         combine: combine2,
         destination: location
       };
       asyncMarshal.add(() => {
-        withTimings("onDragUpdate", () => execute(getResponders().onDragUpdate, data2, announce, preset.onDragUpdate));
+        withTimings("onDragUpdate", () => execute(getResponders().onDragUpdate, data, announce, preset.onDragUpdate));
       });
     };
     const flush2 = () => {
@@ -75549,15 +75064,15 @@ ${latestSubscriptionCallbackError.current.stack}
     return el;
   };
   function useStyleMarshal(contextId, nonce) {
-    const styles2 = useMemo20(() => getStyles$1(contextId), [contextId]);
+    const styles2 = useMemo18(() => getStyles$1(contextId), [contextId]);
     const alwaysRef = (0, import_react72.useRef)(null);
     const dynamicRef = (0, import_react72.useRef)(null);
-    const setDynamicStyle = useCallback24(memoizeOne((proposed) => {
+    const setDynamicStyle = useCallback23(memoizeOne((proposed) => {
       const el = dynamicRef.current;
       !el ? true ? invariant6(false, "Cannot set dynamic style element if it is not set") : invariant6() : void 0;
       el.textContent = proposed;
     }), []);
-    const setAlwaysStyle = useCallback24((proposed) => {
+    const setAlwaysStyle = useCallback23((proposed) => {
       const el = alwaysRef.current;
       !el ? true ? invariant6(false, "Cannot set dynamic style element if it is not set") : invariant6() : void 0;
       el.textContent = proposed;
@@ -75585,21 +75100,21 @@ ${latestSubscriptionCallbackError.current.stack}
         remove2(dynamicRef);
       };
     }, [nonce, setAlwaysStyle, setDynamicStyle, styles2.always, styles2.resting, contextId]);
-    const dragging = useCallback24(() => setDynamicStyle(styles2.dragging), [setDynamicStyle, styles2.dragging]);
-    const dropping = useCallback24((reason) => {
+    const dragging = useCallback23(() => setDynamicStyle(styles2.dragging), [setDynamicStyle, styles2.dragging]);
+    const dropping = useCallback23((reason) => {
       if (reason === "DROP") {
         setDynamicStyle(styles2.dropAnimating);
         return;
       }
       setDynamicStyle(styles2.userCancel);
     }, [setDynamicStyle, styles2.dropAnimating, styles2.userCancel]);
-    const resting = useCallback24(() => {
+    const resting = useCallback23(() => {
       if (!dynamicRef.current) {
         return;
       }
       setDynamicStyle(styles2.resting);
     }, [setDynamicStyle, styles2.resting]);
-    const marshal = useMemo20(() => ({
+    const marshal = useMemo18(() => ({
       dragging,
       dropping,
       resting
@@ -75643,7 +75158,7 @@ ${latestSubscriptionCallbackError.current.stack}
     const recordRef = (0, import_react72.useRef)(null);
     const restoreFocusFrameRef = (0, import_react72.useRef)(null);
     const isMountedRef = (0, import_react72.useRef)(false);
-    const register = useCallback24(function register2(id2, focus2) {
+    const register = useCallback23(function register2(id2, focus2) {
       const entry = {
         id: id2,
         focus: focus2
@@ -75657,18 +75172,18 @@ ${latestSubscriptionCallbackError.current.stack}
         }
       };
     }, []);
-    const tryGiveFocus = useCallback24(function tryGiveFocus2(tryGiveFocusTo) {
+    const tryGiveFocus = useCallback23(function tryGiveFocus2(tryGiveFocusTo) {
       const handle = findDragHandle(contextId, tryGiveFocusTo);
       if (handle && handle !== document.activeElement) {
         handle.focus();
       }
     }, [contextId]);
-    const tryShiftRecord = useCallback24(function tryShiftRecord2(previous, redirectTo) {
+    const tryShiftRecord = useCallback23(function tryShiftRecord2(previous, redirectTo) {
       if (recordRef.current === previous) {
         recordRef.current = redirectTo;
       }
     }, []);
-    const tryRestoreFocusRecorded = useCallback24(function tryRestoreFocusRecorded2() {
+    const tryRestoreFocusRecorded = useCallback23(function tryRestoreFocusRecorded2() {
       if (restoreFocusFrameRef.current) {
         return;
       }
@@ -75683,7 +75198,7 @@ ${latestSubscriptionCallbackError.current.stack}
         }
       });
     }, [tryGiveFocus]);
-    const tryRecordFocus = useCallback24(function tryRecordFocus2(id2) {
+    const tryRecordFocus = useCallback23(function tryRecordFocus2(id2) {
       recordRef.current = null;
       const focused = document.activeElement;
       if (!focused) {
@@ -75704,7 +75219,7 @@ ${latestSubscriptionCallbackError.current.stack}
         }
       };
     }, []);
-    const marshal = useMemo20(() => ({
+    const marshal = useMemo18(() => ({
       register,
       tryRecordFocus,
       tryRestoreFocusRecorded,
@@ -75822,7 +75337,7 @@ ${latestSubscriptionCallbackError.current.stack}
     };
   }
   function useRegistry() {
-    const registry = useMemo20(createRegistry, []);
+    const registry = useMemo18(createRegistry, []);
     (0, import_react72.useEffect)(() => {
       return function unmount() {
         registry.clean();
@@ -75849,7 +75364,7 @@ ${latestSubscriptionCallbackError.current.stack}
   };
   var getId = (contextId) => `rfd-announcement-${contextId}`;
   function useAnnouncer(contextId) {
-    const id2 = useMemo20(() => getId(contextId), [contextId]);
+    const id2 = useMemo18(() => getId(contextId), [contextId]);
     const ref2 = (0, import_react72.useRef)(null);
     (0, import_react72.useEffect)(function setup() {
       const el = document.createElement("div");
@@ -75857,7 +75372,7 @@ ${latestSubscriptionCallbackError.current.stack}
       el.id = id2;
       el.setAttribute("aria-live", "assertive");
       el.setAttribute("aria-atomic", "true");
-      _extends2(el.style, visuallyHidden);
+      _extends5(el.style, visuallyHidden);
       getBodyElement().appendChild(el);
       return function cleanup() {
         setTimeout(function remove2() {
@@ -75871,7 +75386,7 @@ ${latestSubscriptionCallbackError.current.stack}
         });
       };
     }, [id2]);
-    const announce = useCallback24((message) => {
+    const announce = useCallback23((message) => {
       const el = ref2.current;
       if (el) {
         el.textContent = message;
@@ -75895,7 +75410,7 @@ ${latestSubscriptionCallbackError.current.stack}
   };
   function useUniqueId(prefix3, options = defaults) {
     const id2 = import_react72.default.useId();
-    return useMemo20(() => `${prefix3}${options.separator}${id2}`, [options.separator, prefix3, id2]);
+    return useMemo18(() => `${prefix3}${options.separator}${id2}`, [options.separator, prefix3, id2]);
   }
   function getElementId({
     contextId,
@@ -75910,7 +75425,7 @@ ${latestSubscriptionCallbackError.current.stack}
     const uniqueId = useUniqueId("hidden-text", {
       separator: "-"
     });
-    const id2 = useMemo20(() => getElementId({
+    const id2 = useMemo18(() => getElementId({
       contextId,
       uniqueId
     }), [uniqueId, contextId]);
@@ -76227,7 +75742,7 @@ ${latestSubscriptionCallbackError.current.stack}
   function useMouseSensor(api) {
     const phaseRef = (0, import_react72.useRef)(idle$1);
     const unbindEventsRef = (0, import_react72.useRef)(noop$2);
-    const startCaptureBinding = useMemo20(() => ({
+    const startCaptureBinding = useMemo18(() => ({
       eventName: "mousedown",
       fn: function onMouseDown(event) {
         if (event.defaultPrevented) {
@@ -76258,7 +75773,7 @@ ${latestSubscriptionCallbackError.current.stack}
         startPendingDrag(actions, point);
       }
     }), [api]);
-    const preventForcePressBinding = useMemo20(() => ({
+    const preventForcePressBinding = useMemo18(() => ({
       eventName: "webkitmouseforcewillbegin",
       fn: (event) => {
         if (event.defaultPrevented) {
@@ -76281,14 +75796,14 @@ ${latestSubscriptionCallbackError.current.stack}
         event.preventDefault();
       }
     }), [api]);
-    const listenForCapture = useCallback24(function listenForCapture2() {
+    const listenForCapture = useCallback23(function listenForCapture2() {
       const options = {
         passive: false,
         capture: true
       };
       unbindEventsRef.current = bindEvents(window, [preventForcePressBinding, startCaptureBinding], options);
     }, [preventForcePressBinding, startCaptureBinding]);
-    const stop = useCallback24(() => {
+    const stop = useCallback23(() => {
       const current = phaseRef.current;
       if (current.type === "IDLE") {
         return;
@@ -76297,7 +75812,7 @@ ${latestSubscriptionCallbackError.current.stack}
       unbindEventsRef.current();
       listenForCapture();
     }, [listenForCapture]);
-    const cancel = useCallback24(() => {
+    const cancel = useCallback23(() => {
       const phase = phaseRef.current;
       stop();
       if (phase.type === "DRAGGING") {
@@ -76309,7 +75824,7 @@ ${latestSubscriptionCallbackError.current.stack}
         phase.actions.abort();
       }
     }, [stop]);
-    const bindCapturingEvents = useCallback24(function bindCapturingEvents2() {
+    const bindCapturingEvents = useCallback23(function bindCapturingEvents2() {
       const options = {
         capture: true,
         passive: false
@@ -76324,7 +75839,7 @@ ${latestSubscriptionCallbackError.current.stack}
       });
       unbindEventsRef.current = bindEvents(window, bindings, options);
     }, [cancel, stop]);
-    const startPendingDrag = useCallback24(function startPendingDrag2(actions, point) {
+    const startPendingDrag = useCallback23(function startPendingDrag2(actions, point) {
       !(phaseRef.current.type === "IDLE") ? true ? invariant6(false, "Expected to move from IDLE to PENDING drag") : invariant6() : void 0;
       phaseRef.current = {
         type: "PENDING",
@@ -76424,7 +75939,7 @@ ${latestSubscriptionCallbackError.current.stack}
   }
   function useKeyboardSensor(api) {
     const unbindEventsRef = (0, import_react72.useRef)(noop$1);
-    const startCaptureBinding = useMemo20(() => ({
+    const startCaptureBinding = useMemo18(() => ({
       eventName: "keydown",
       fn: function onKeyDown(event) {
         if (event.defaultPrevented) {
@@ -76459,7 +75974,7 @@ ${latestSubscriptionCallbackError.current.stack}
         });
       }
     }), [api]);
-    const listenForCapture = useCallback24(function tryStartCapture() {
+    const listenForCapture = useCallback23(function tryStartCapture() {
       const options = {
         passive: false,
         capture: true
@@ -76600,13 +76115,13 @@ ${latestSubscriptionCallbackError.current.stack}
   function useTouchSensor(api) {
     const phaseRef = (0, import_react72.useRef)(idle);
     const unbindEventsRef = (0, import_react72.useRef)(noop$2);
-    const getPhase = useCallback24(function getPhase2() {
+    const getPhase = useCallback23(function getPhase2() {
       return phaseRef.current;
     }, []);
-    const setPhase = useCallback24(function setPhase2(phase) {
+    const setPhase = useCallback23(function setPhase2(phase) {
       phaseRef.current = phase;
     }, []);
-    const startCaptureBinding = useMemo20(() => ({
+    const startCaptureBinding = useMemo18(() => ({
       eventName: "touchstart",
       fn: function onTouchStart(event) {
         if (event.defaultPrevented) {
@@ -76635,14 +76150,14 @@ ${latestSubscriptionCallbackError.current.stack}
         startPendingDrag(actions, point);
       }
     }), [api]);
-    const listenForCapture = useCallback24(function listenForCapture2() {
+    const listenForCapture = useCallback23(function listenForCapture2() {
       const options = {
         capture: true,
         passive: false
       };
       unbindEventsRef.current = bindEvents(window, [startCaptureBinding], options);
     }, [startCaptureBinding]);
-    const stop = useCallback24(() => {
+    const stop = useCallback23(() => {
       const current = phaseRef.current;
       if (current.type === "IDLE") {
         return;
@@ -76654,7 +76169,7 @@ ${latestSubscriptionCallbackError.current.stack}
       unbindEventsRef.current();
       listenForCapture();
     }, [listenForCapture, setPhase]);
-    const cancel = useCallback24(() => {
+    const cancel = useCallback23(() => {
       const phase = phaseRef.current;
       stop();
       if (phase.type === "DRAGGING") {
@@ -76666,7 +76181,7 @@ ${latestSubscriptionCallbackError.current.stack}
         phase.actions.abort();
       }
     }, [stop]);
-    const bindCapturingEvents = useCallback24(function bindCapturingEvents2() {
+    const bindCapturingEvents = useCallback23(function bindCapturingEvents2() {
       const options = {
         capture: true,
         passive: false
@@ -76683,7 +76198,7 @@ ${latestSubscriptionCallbackError.current.stack}
         unbindWindow();
       };
     }, [cancel, getPhase, stop]);
-    const startDragging = useCallback24(function startDragging2() {
+    const startDragging = useCallback23(function startDragging2() {
       const phase = getPhase();
       !(phase.type === "PENDING") ? true ? invariant6(false, `Cannot start dragging from phase ${phase.type}`) : invariant6() : void 0;
       const actions = phase.actions.fluidLift(phase.point);
@@ -76693,7 +76208,7 @@ ${latestSubscriptionCallbackError.current.stack}
         hasMoved: false
       });
     }, [getPhase, setPhase]);
-    const startPendingDrag = useCallback24(function startPendingDrag2(actions, point) {
+    const startPendingDrag = useCallback23(function startPendingDrag2(actions, point) {
       !(getPhase().type === "IDLE") ? true ? invariant6(false, "Expected to move from IDLE to PENDING drag") : invariant6() : void 0;
       const longPressTimerId = setTimeout(startDragging, timeForLongPress);
       setPhase({
@@ -77059,7 +76574,7 @@ ${latestSubscriptionCallbackError.current.stack}
   }) {
     const useSensors = [...enableDefaultSensors ? defaultSensors : [], ...customSensors || []];
     const lockAPI = (0, import_react72.useState)(() => create2())[0];
-    const tryAbandonLock = useCallback24(function tryAbandonLock2(previous, current) {
+    const tryAbandonLock = useCallback23(function tryAbandonLock2(previous, current) {
       if (isDragging(previous) && !isDragging(current)) {
         lockAPI.tryAbandon();
       }
@@ -77076,7 +76591,7 @@ ${latestSubscriptionCallbackError.current.stack}
     useIsomorphicLayoutEffect4(() => {
       return lockAPI.tryAbandon;
     }, [lockAPI.tryAbandon]);
-    const canGetLock = useCallback24((draggableId) => {
+    const canGetLock = useCallback23((draggableId) => {
       return canStart({
         lockAPI,
         registry,
@@ -77084,7 +76599,7 @@ ${latestSubscriptionCallbackError.current.stack}
         draggableId
       });
     }, [lockAPI, registry, store]);
-    const tryGetLock = useCallback24((draggableId, forceStop, options) => tryStart({
+    const tryGetLock = useCallback23((draggableId, forceStop, options) => tryStart({
       lockAPI,
       registry,
       contextId,
@@ -77093,12 +76608,12 @@ ${latestSubscriptionCallbackError.current.stack}
       forceSensorStop: forceStop || null,
       sourceEvent: options && options.sourceEvent ? options.sourceEvent : null
     }), [contextId, lockAPI, registry, store]);
-    const findClosestDraggableId = useCallback24((event) => tryGetClosestDraggableIdFromEvent(contextId, event), [contextId]);
-    const findOptionsForDraggable = useCallback24((id2) => {
+    const findClosestDraggableId = useCallback23((event) => tryGetClosestDraggableIdFromEvent(contextId, event), [contextId]);
+    const findOptionsForDraggable = useCallback23((id2) => {
       const entry = registry.draggable.findById(id2);
       return entry ? entry.options : null;
     }, [registry.draggable]);
-    const tryReleaseLock = useCallback24(function tryReleaseLock2() {
+    const tryReleaseLock = useCallback23(function tryReleaseLock2() {
       if (!lockAPI.isClaimed()) {
         return;
       }
@@ -77107,8 +76622,8 @@ ${latestSubscriptionCallbackError.current.stack}
         store.dispatch(flush());
       }
     }, [lockAPI, store]);
-    const isLockClaimed = useCallback24(() => lockAPI.isClaimed(), [lockAPI]);
-    const api = useMemo20(() => ({
+    const isLockClaimed = useCallback23(() => lockAPI.isClaimed(), [lockAPI]);
+    const api = useMemo18(() => ({
       canGetLock,
       tryGetLock,
       findClosestDraggableId,
@@ -77158,10 +76673,10 @@ ${latestSubscriptionCallbackError.current.stack}
     const lazyStoreRef = (0, import_react72.useRef)(null);
     useStartupValidation();
     const lastPropsRef = usePrevious2(props);
-    const getResponders = useCallback24(() => {
+    const getResponders = useCallback23(() => {
       return createResponders(lastPropsRef.current);
     }, [lastPropsRef]);
-    const getAutoScrollerOptions = useCallback24(() => {
+    const getAutoScrollerOptions = useCallback23(() => {
       return createAutoScrollerOptions(lastPropsRef.current);
     }, [lastPropsRef]);
     const announce = useAnnouncer(contextId);
@@ -77170,10 +76685,10 @@ ${latestSubscriptionCallbackError.current.stack}
       text: dragHandleUsageInstructions2
     });
     const styleMarshal = useStyleMarshal(contextId, nonce);
-    const lazyDispatch = useCallback24((action) => {
+    const lazyDispatch = useCallback23((action) => {
       getStore(lazyStoreRef).dispatch(action);
     }, []);
-    const marshalCallbacks = useMemo20(() => bindActionCreators({
+    const marshalCallbacks = useMemo18(() => bindActionCreators({
       publishWhileDragging,
       updateDroppableScroll,
       updateDroppableIsEnabled,
@@ -77181,10 +76696,10 @@ ${latestSubscriptionCallbackError.current.stack}
       collectionStarting
     }, lazyDispatch), [lazyDispatch]);
     const registry = useRegistry();
-    const dimensionMarshal = useMemo20(() => {
+    const dimensionMarshal = useMemo18(() => {
       return createDimensionMarshal(registry, marshalCallbacks);
     }, [registry, marshalCallbacks]);
-    const autoScroller = useMemo20(() => createAutoScroller({
+    const autoScroller = useMemo18(() => createAutoScroller({
       scrollWindow,
       scrollDroppable: dimensionMarshal.scrollDroppable,
       getAutoScrollerOptions,
@@ -77193,7 +76708,7 @@ ${latestSubscriptionCallbackError.current.stack}
       }, lazyDispatch)
     }), [dimensionMarshal.scrollDroppable, lazyDispatch, getAutoScrollerOptions]);
     const focusMarshal = useFocusMarshal(contextId);
-    const store = useMemo20(() => createStore4({
+    const store = useMemo18(() => createStore4({
       announce,
       autoScroller,
       dimensionMarshal,
@@ -77207,14 +76722,14 @@ ${latestSubscriptionCallbackError.current.stack}
       }
     }
     lazyStoreRef.current = store;
-    const tryResetStore = useCallback24(() => {
+    const tryResetStore = useCallback23(() => {
       const current = getStore(lazyStoreRef);
       const state = current.getState();
       if (state.phase !== "IDLE") {
         current.dispatch(flush());
       }
     }, []);
-    const isDragging2 = useCallback24(() => {
+    const isDragging2 = useCallback23(() => {
       const state = getStore(lazyStoreRef).getState();
       if (state.phase === "DROP_ANIMATING") {
         return true;
@@ -77224,14 +76739,14 @@ ${latestSubscriptionCallbackError.current.stack}
       }
       return state.isDragging;
     }, []);
-    const appCallbacks = useMemo20(() => ({
+    const appCallbacks = useMemo18(() => ({
       isDragging: isDragging2,
       tryAbort: tryResetStore
     }), [isDragging2, tryResetStore]);
     setCallbacks(appCallbacks);
-    const getCanLift = useCallback24((id2) => canStartDrag(getStore(lazyStoreRef).getState(), id2), []);
-    const getIsMovementAllowed = useCallback24(() => isMovementAllowed(getStore(lazyStoreRef).getState()), []);
-    const appContext = useMemo20(() => ({
+    const getCanLift = useCallback23((id2) => canStartDrag(getStore(lazyStoreRef).getState(), id2), []);
+    const getIsMovementAllowed = useCallback23(() => isMovementAllowed(getStore(lazyStoreRef).getState()), []);
+    const appContext = useMemo18(() => ({
       marshal: dimensionMarshal,
       focus: focusMarshal,
       contextId,
@@ -77372,17 +76887,17 @@ ${latestSubscriptionCallbackError.current.stack}
       shouldRespectForcePress,
       isEnabled
     } = args;
-    const options = useMemo20(() => ({
+    const options = useMemo18(() => ({
       canDragInteractiveElements,
       shouldRespectForcePress,
       isEnabled
     }), [canDragInteractiveElements, isEnabled, shouldRespectForcePress]);
-    const getDimension2 = useCallback24((windowScroll) => {
+    const getDimension2 = useCallback23((windowScroll) => {
       const el = getDraggableRef();
       !el ? true ? invariant6(false, "Cannot get dimension when no ref is set") : invariant6() : void 0;
       return getDimension$1(descriptor, el, windowScroll);
     }, [descriptor, getDraggableRef]);
-    const entry = useMemo20(() => ({
+    const entry = useMemo18(() => ({
       uniqueId,
       descriptor,
       options,
@@ -77450,10 +76965,10 @@ ${latestSubscriptionCallbackError.current.stack}
   }
   var Draggable = (props) => {
     const ref2 = (0, import_react72.useRef)(null);
-    const setRef = useCallback24((el = null) => {
+    const setRef = useCallback23((el = null) => {
       ref2.current = el;
     }, []);
-    const getRef = useCallback24(() => ref2.current, []);
+    const getRef = useCallback23(() => ref2.current, []);
     const {
       contextId,
       dragHandleUsageInstructionsId,
@@ -77463,7 +76978,7 @@ ${latestSubscriptionCallbackError.current.stack}
       type,
       droppableId
     } = useRequiredContext(DroppableContext);
-    const descriptor = useMemo20(() => ({
+    const descriptor = useMemo18(() => ({
       id: props.draggableId,
       index: props.index,
       type,
@@ -77482,7 +76997,7 @@ ${latestSubscriptionCallbackError.current.stack}
     useValidation$1(props, contextId, getRef);
     useClonePropValidation(isClone);
     if (!isClone) {
-      const forPublisher = useMemo20(() => ({
+      const forPublisher = useMemo18(() => ({
         descriptor,
         registry,
         getDraggableRef: getRef,
@@ -77492,7 +77007,7 @@ ${latestSubscriptionCallbackError.current.stack}
       }), [descriptor, registry, getRef, canDragInteractiveElements, shouldRespectForcePress, isEnabled]);
       useDraggablePublisher(forPublisher);
     }
-    const dragHandleProps = useMemo20(() => isEnabled ? {
+    const dragHandleProps = useMemo18(() => isEnabled ? {
       tabIndex: 0,
       role: "button",
       "aria-describedby": dragHandleUsageInstructionsId,
@@ -77501,7 +77016,7 @@ ${latestSubscriptionCallbackError.current.stack}
       draggable: false,
       onDragStart: preventHtml5Dnd
     } : null, [contextId, dragHandleUsageInstructionsId, draggableId, isEnabled]);
-    const onMoveEnd = useCallback24((event) => {
+    const onMoveEnd = useCallback23((event) => {
       if (mapped.type !== "DRAGGING") {
         return;
       }
@@ -77513,7 +77028,7 @@ ${latestSubscriptionCallbackError.current.stack}
       }
       (0, import_react_dom5.flushSync)(dropAnimationFinishedAction);
     }, [dropAnimationFinishedAction, mapped]);
-    const provided = useMemo20(() => {
+    const provided = useMemo18(() => {
       const style5 = getStyle$1(mapped);
       const onTransitionEnd = mapped.type === "DRAGGING" && mapped.dropping ? onMoveEnd : void 0;
       const result = {
@@ -77528,7 +77043,7 @@ ${latestSubscriptionCallbackError.current.stack}
       };
       return result;
     }, [contextId, dragHandleProps, draggableId, mapped, onMoveEnd, setRef]);
-    const rubric = useMemo20(() => ({
+    const rubric = useMemo18(() => ({
       draggableId: descriptor.id,
       type: descriptor.type,
       source: {
@@ -77740,7 +77255,7 @@ ${latestSubscriptionCallbackError.current.stack}
     const isEnabled = typeof props.isDragDisabled === "boolean" ? !props.isDragDisabled : true;
     const canDragInteractiveElements = Boolean(props.disableInteractiveElementBlocking);
     const shouldRespectForcePress = Boolean(props.shouldRespectForcePress);
-    return import_react72.default.createElement(PrivateDraggable, _extends2({}, props, {
+    return import_react72.default.createElement(PrivateDraggable, _extends5({}, props, {
       isClone: false,
       isEnabled,
       canDragInteractiveElements,
@@ -77990,13 +77505,13 @@ ${latestSubscriptionCallbackError.current.stack}
       marshal
     } = appContext;
     const previousRef = usePrevious2(args);
-    const descriptor = useMemo20(() => ({
+    const descriptor = useMemo18(() => ({
       id: args.droppableId,
       type: args.type,
       mode: args.mode
     }), [args.droppableId, args.mode, args.type]);
     const publishedDescriptorRef = (0, import_react72.useRef)(descriptor);
-    const memoizedUpdateScroll = useMemo20(() => memoizeOne((x, y) => {
+    const memoizedUpdateScroll = useMemo18(() => memoizeOne((x, y) => {
       !whileDraggingRef.current ? true ? invariant6(false, "Can only update scroll when dragging") : invariant6() : void 0;
       const scroll3 = {
         x,
@@ -78004,19 +77519,19 @@ ${latestSubscriptionCallbackError.current.stack}
       };
       marshal.updateDroppableScroll(descriptor.id, scroll3);
     }), [descriptor.id, marshal]);
-    const getClosestScroll = useCallback24(() => {
+    const getClosestScroll = useCallback23(() => {
       const dragging = whileDraggingRef.current;
       if (!dragging || !dragging.env.closestScrollable) {
         return origin;
       }
       return getScroll(dragging.env.closestScrollable);
     }, []);
-    const updateScroll = useCallback24(() => {
+    const updateScroll = useCallback23(() => {
       const scroll3 = getClosestScroll();
       memoizedUpdateScroll(scroll3.x, scroll3.y);
     }, [getClosestScroll, memoizedUpdateScroll]);
-    const scheduleScrollUpdate = useMemo20(() => raf_schd_esm_default(updateScroll), [updateScroll]);
-    const onClosestScroll = useCallback24(() => {
+    const scheduleScrollUpdate = useMemo18(() => raf_schd_esm_default(updateScroll), [updateScroll]);
+    const onClosestScroll = useCallback23(() => {
       const dragging = whileDraggingRef.current;
       const closest2 = getClosestScrollableFromDrag(dragging);
       !(dragging && closest2) ? true ? invariant6(false, "Could not find scroll options while scrolling") : invariant6() : void 0;
@@ -78027,7 +77542,7 @@ ${latestSubscriptionCallbackError.current.stack}
       }
       scheduleScrollUpdate();
     }, [scheduleScrollUpdate, updateScroll]);
-    const getDimensionAndWatchScroll = useCallback24((windowScroll, options) => {
+    const getDimensionAndWatchScroll = useCallback23((windowScroll, options) => {
       !!whileDraggingRef.current ? true ? invariant6(false, "Cannot collect a droppable while a drag is occurring") : invariant6() : void 0;
       const previous = previousRef.current;
       const ref2 = previous.getDroppableRef();
@@ -78060,13 +77575,13 @@ ${latestSubscriptionCallbackError.current.stack}
       }
       return dimension;
     }, [appContext.contextId, descriptor, onClosestScroll, previousRef]);
-    const getScrollWhileDragging = useCallback24(() => {
+    const getScrollWhileDragging = useCallback23(() => {
       const dragging = whileDraggingRef.current;
       const closest2 = getClosestScrollableFromDrag(dragging);
       !(dragging && closest2) ? true ? invariant6(false, "Can only recollect Droppable client for Droppables that have a scroll container") : invariant6() : void 0;
       return getScroll(closest2);
     }, []);
-    const dragStopped = useCallback24(() => {
+    const dragStopped = useCallback23(() => {
       const dragging = whileDraggingRef.current;
       !dragging ? true ? invariant6(false, "Cannot stop drag when no active drag") : invariant6() : void 0;
       const closest2 = getClosestScrollableFromDrag(dragging);
@@ -78078,7 +77593,7 @@ ${latestSubscriptionCallbackError.current.stack}
       closest2.removeAttribute(scrollContainer.contextId);
       closest2.removeEventListener("scroll", onClosestScroll, getListenerOptions(dragging.scrollOptions));
     }, [onClosestScroll, scheduleScrollUpdate]);
-    const scroll2 = useCallback24((change) => {
+    const scroll2 = useCallback23((change) => {
       const dragging = whileDraggingRef.current;
       !dragging ? true ? invariant6(false, "Cannot scroll when there is no drag") : invariant6() : void 0;
       const closest2 = getClosestScrollableFromDrag(dragging);
@@ -78086,7 +77601,7 @@ ${latestSubscriptionCallbackError.current.stack}
       closest2.scrollTop += change.y;
       closest2.scrollLeft += change.x;
     }, []);
-    const callbacks = useMemo20(() => {
+    const callbacks = useMemo18(() => {
       return {
         getDimensionAndWatchScroll,
         getScrollWhileDragging,
@@ -78094,7 +77609,7 @@ ${latestSubscriptionCallbackError.current.stack}
         scroll: scroll2
       };
     }, [dragStopped, getDimensionAndWatchScroll, getScrollWhileDragging, scroll2]);
-    const entry = useMemo20(() => ({
+    const entry = useMemo18(() => ({
       uniqueId,
       descriptor,
       callbacks
@@ -78174,7 +77689,7 @@ ${latestSubscriptionCallbackError.current.stack}
   };
   var Placeholder = (props) => {
     const animateOpenTimerRef = (0, import_react72.useRef)(null);
-    const tryClearAnimateOpenTimer = useCallback24(() => {
+    const tryClearAnimateOpenTimer = useCallback23(() => {
       if (!animateOpenTimerRef.current) {
         return;
       }
@@ -78206,7 +77721,7 @@ ${latestSubscriptionCallbackError.current.stack}
       });
       return tryClearAnimateOpenTimer;
     }, [animate, isAnimatingOpenOnMount, tryClearAnimateOpenTimer]);
-    const onSizeChangeEnd = useCallback24((event) => {
+    const onSizeChangeEnd = useCallback23((event) => {
       if (event.propertyName !== "height") {
         return;
       }
@@ -78369,12 +77884,12 @@ ${latestSubscriptionCallbackError.current.stack}
       updateViewportMaxScroll: updateViewportMaxScroll2,
       getContainerForClone
     } = props;
-    const getDroppableRef = useCallback24(() => droppableRef.current, []);
-    const setDroppableRef = useCallback24((value = null) => {
+    const getDroppableRef = useCallback23(() => droppableRef.current, []);
+    const setDroppableRef = useCallback23((value = null) => {
       droppableRef.current = value;
     }, []);
-    const getPlaceholderRef = useCallback24(() => placeholderRef.current, []);
-    const setPlaceholderRef = useCallback24((value = null) => {
+    const getPlaceholderRef = useCallback23(() => placeholderRef.current, []);
+    const setPlaceholderRef = useCallback23((value = null) => {
       placeholderRef.current = value;
     }, []);
     useValidation({
@@ -78382,7 +77897,7 @@ ${latestSubscriptionCallbackError.current.stack}
       getDroppableRef,
       getPlaceholderRef
     });
-    const onPlaceholderTransitionEnd = useCallback24(() => {
+    const onPlaceholderTransitionEnd = useCallback23(() => {
       if (isMovementAllowed2()) {
         updateViewportMaxScroll2({
           maxScroll: getMaxWindowScroll()
@@ -78399,22 +77914,22 @@ ${latestSubscriptionCallbackError.current.stack}
       ignoreContainerClipping,
       getDroppableRef
     });
-    const placeholder2 = useMemo20(() => import_react72.default.createElement(AnimateInOut, {
+    const placeholder2 = useMemo18(() => import_react72.default.createElement(AnimateInOut, {
       on: props.placeholder,
       shouldAnimate: props.shouldAnimatePlaceholder
     }, ({
       onClose,
-      data: data2,
+      data,
       animate
     }) => import_react72.default.createElement(Placeholder$1, {
-      placeholder: data2,
+      placeholder: data,
       onClose,
       innerRef: setPlaceholderRef,
       animate,
       contextId,
       onTransitionEnd: onPlaceholderTransitionEnd
     })), [contextId, onPlaceholderTransitionEnd, props.placeholder, props.shouldAnimatePlaceholder, setPlaceholderRef]);
-    const provided = useMemo20(() => ({
+    const provided = useMemo18(() => ({
       innerRef: setDroppableRef,
       placeholder: placeholder2,
       droppableProps: {
@@ -78423,7 +77938,7 @@ ${latestSubscriptionCallbackError.current.stack}
       }
     }), [contextId, droppableId, placeholder2, setDroppableRef]);
     const isUsingCloneFor = useClone ? useClone.dragging.draggableId : null;
-    const droppableContext = useMemo20(() => ({
+    const droppableContext = useMemo18(() => ({
       droppableId,
       type,
       isUsingCloneFor
@@ -78624,9 +78139,9 @@ ${latestSubscriptionCallbackError.current.stack}
 
   // node_modules/@caldwell619/react-kanban/dist/features/with-droppable/index.js
   var import_jsx_runtime81 = __toESM(require_jsx_runtime());
-  var withDroppable = function(Component4) {
+  var withDroppable = function(Component2) {
     return function WrapperComponent({ children: children2, ...droppableProps }) {
-      return (0, import_jsx_runtime81.jsx)(ConnectedDroppable, Object.assign({}, droppableProps, { children: (provided) => (0, import_jsx_runtime81.jsxs)(Component4, Object.assign({ ref: provided.innerRef }, provided.droppableProps, { children: [children2, provided.placeholder] }), void 0) }), void 0);
+      return (0, import_jsx_runtime81.jsx)(ConnectedDroppable, Object.assign({}, droppableProps, { children: (provided) => (0, import_jsx_runtime81.jsxs)(Component2, Object.assign({ ref: provided.innerRef }, provided.droppableProps, { children: [children2, provided.placeholder] }), void 0) }), void 0);
     };
   };
 
@@ -79031,8 +78546,8 @@ ${latestSubscriptionCallbackError.current.stack}
 
   // node_modules/gantt-task-react/dist/index.modern.js
   var import_react81 = __toESM(require_react());
-  function _extends3() {
-    _extends3 = Object.assign || function(target) {
+  function _extends6() {
+    _extends6 = Object.assign || function(target) {
       for (var i = 1; i < arguments.length; i++) {
         var source = arguments[i];
         for (var key in source) {
@@ -79043,7 +78558,7 @@ ${latestSubscriptionCallbackError.current.stack}
       }
       return target;
     };
-    return _extends3.apply(this, arguments);
+    return _extends6.apply(this, arguments);
   }
   function _unsupportedIterableToArray(o, minLen) {
     if (!o)
@@ -79960,13 +79475,13 @@ ${latestSubscriptionCallbackError.current.stack}
     var _progressWithByParams = progressWithByParams(x1, x2, task.progress, rtl), progressWidth = _progressWithByParams[0], progressX = _progressWithByParams[1];
     var y = taskYCoordinate(index2, rowHeight, taskHeight);
     var hideChildren = task.type === "project" ? task.hideChildren : void 0;
-    var styles2 = _extends3({
+    var styles2 = _extends6({
       backgroundColor: barBackgroundColor,
       backgroundSelectedColor: barBackgroundSelectedColor,
       progressColor: barProgressColor,
       progressSelectedColor: barProgressSelectedColor
     }, task.styles);
-    return _extends3({}, task, {
+    return _extends6({}, task, {
       typeInternal,
       x1,
       x2,
@@ -79988,13 +79503,13 @@ ${latestSubscriptionCallbackError.current.stack}
     var x1 = x - taskHeight * 0.5;
     var x2 = x + taskHeight * 0.5;
     var rotatedHeight = taskHeight / 1.414;
-    var styles2 = _extends3({
+    var styles2 = _extends6({
       backgroundColor: milestoneBackgroundColor,
       backgroundSelectedColor: milestoneBackgroundSelectedColor,
       progressColor: "",
       progressSelectedColor: ""
     }, task.styles);
-    return _extends3({}, task, {
+    return _extends6({}, task, {
       end: task.start,
       x1,
       x2,
@@ -80109,7 +79624,7 @@ ${latestSubscriptionCallbackError.current.stack}
     return result;
   };
   var handleTaskBySVGMouseEventForBar = function handleTaskBySVGMouseEventForBar2(svgX, action, selectedTask, xStep, timeStep, initEventX1Delta, rtl) {
-    var changedTask = _extends3({}, selectedTask);
+    var changedTask = _extends6({}, selectedTask);
     var isChanged = false;
     switch (action) {
       case "progress":
@@ -80178,7 +79693,7 @@ ${latestSubscriptionCallbackError.current.stack}
     };
   };
   var handleTaskBySVGMouseEventForMilestone = function handleTaskBySVGMouseEventForMilestone2(svgX, action, selectedTask, xStep, timeStep, initEventX1Delta) {
-    var changedTask = _extends3({}, selectedTask);
+    var changedTask = _extends6({}, selectedTask);
     var isChanged = false;
     switch (action) {
       case "move": {
@@ -80448,7 +79963,7 @@ ${latestSubscriptionCallbackError.current.stack}
   };
   var style4 = { "barLabel": "_3zRJQ", "barLabelOutside": "_3KcaM" };
   var TaskItem = function TaskItem2(props) {
-    var _props = _extends3({}, props), task = _props.task, arrowIndent = _props.arrowIndent, isDelete = _props.isDelete, taskHeight = _props.taskHeight, isSelected = _props.isSelected, rtl = _props.rtl, onEventStart = _props.onEventStart;
+    var _props = _extends6({}, props), task = _props.task, arrowIndent = _props.arrowIndent, isDelete = _props.isDelete, taskHeight = _props.taskHeight, isSelected = _props.isSelected, rtl = _props.rtl, onEventStart = _props.onEventStart;
     var textRef = (0, import_react81.useRef)(null);
     var _useState = (0, import_react81.useState)(import_react81.default.createElement("div", null)), taskItem = _useState[0], setTaskItem = _useState[1];
     var _useState2 = (0, import_react81.useState)(true), isTextInside = _useState2[0], setIsTextInside = _useState2[1];
@@ -80746,7 +80261,7 @@ ${latestSubscriptionCallbackError.current.stack}
     var ganttSVGRef = (0, import_react81.useRef)(null);
     var horizontalContainerRef = (0, import_react81.useRef)(null);
     var verticalGanttContainerRef = (0, import_react81.useRef)(null);
-    var newBarProps = _extends3({}, barProps, {
+    var newBarProps = _extends6({}, barProps, {
       svg: ganttSVGRef
     });
     (0, import_react81.useEffect)(function() {
@@ -81036,7 +80551,7 @@ ${latestSubscriptionCallbackError.current.stack}
     };
     var handleExpanderClick = function handleExpanderClick2(task) {
       if (onExpanderClick && task.hideChildren !== void 0) {
-        onExpanderClick(_extends3({}, task, {
+        onExpanderClick(_extends6({}, task, {
           hideChildren: !task.hideChildren
         }));
       }
@@ -81448,23 +80963,23 @@ ${latestSubscriptionCallbackError.current.stack}
           const src = test[0];
           const runtime = test[1];
           const s = [tests.buildDir, runtime].concat(src.split(".").slice(0, -1).join(".")).join("/");
-          const exitcode = await (await fetch(config.outdir + "/" + s + "/exitcode")).text();
-          const log2 = await (await fetch(config.outdir + "/" + s + "/log.txt")).text();
-          const testresults = await (await fetch(config.outdir + "/" + s + "/tests.json")).json();
-          const manifest = await (await fetch(config.outdir + "/" + s + "/manifest.json")).json();
+          const exitcode = await (await fetch("/docs/" + s + "/exitcode")).text();
+          const log2 = await (await fetch("/docs/" + s + "/log.txt")).text();
+          const testresults = await (await fetch("/docs/" + s + "/tests.json")).json();
+          const manifest = await (await fetch("/docs/" + s + "/manifest.json")).json();
           res({ src, exitcode, log: log2, testresults, manifest });
         });
       }));
       setState({ tests: config.tests, results, buildDir: config.buildDir });
     };
     const importFeatures = async () => {
-      fetch("http://localhost:3000/features.json").then((response) => response.json()).then((json) => setFeatures(json)).catch((error2) => console.error(error2));
+      fetch("http://localhost:3000/features.json").then((response) => response.json()).then((json2) => setFeatures(json2)).catch((error2) => console.error(error2));
     };
     (0, import_react83.useEffect)(() => {
       importFeatures();
     }, []);
     const importKanban = async () => {
-      fetch("http://localhost:3000/kanbans.json").then((response) => response.json()).then((json) => setKanban(json)).catch((error2) => console.error(error2));
+      fetch("http://localhost:3000/kanbans.json").then((response) => response.json()).then((json2) => setKanban(json2)).catch((error2) => console.error(error2));
     };
     (0, import_react83.useEffect)(() => {
       importKanban();
@@ -81473,7 +80988,7 @@ ${latestSubscriptionCallbackError.current.stack}
       []
     );
     const importUsers = async () => {
-      fetch("http://localhost:3000/users.json").then((response) => response.json()).then((json) => setUsers(json)).catch((error2) => console.error(error2));
+      fetch("http://localhost:3000/users.json").then((response) => response.json()).then((json2) => setUsers(json2)).catch((error2) => console.error(error2));
     };
     (0, import_react83.useEffect)(() => {
       importUsers();
@@ -81482,7 +80997,7 @@ ${latestSubscriptionCallbackError.current.stack}
       []
     );
     const importGantt = async () => {
-      fetch("http://localhost:3000/gantts.json").then((response) => response.json()).then((json) => setGantt(json)).catch((error2) => console.error(error2));
+      fetch("http://localhost:3000/gantts.json").then((response) => response.json()).then((json2) => setGantt(json2)).catch((error2) => console.error(error2));
     };
     (0, import_react83.useEffect)(() => {
       importGantt();
@@ -81507,7 +81022,7 @@ ${latestSubscriptionCallbackError.current.stack}
       []
     );
     const importFs = async () => {
-      fetch("http://localhost:3000/docGal/fs.json").then((response) => response.json()).then((json) => setDocGalFs(json)).catch((error2) => console.error(error2));
+      fetch("http://localhost:3000/docGal/fs.json").then((response) => response.json()).then((json2) => setDocGalFs(json2)).catch((error2) => console.error(error2));
     };
     (0, import_react83.useEffect)(() => {
       importFs();
@@ -81516,7 +81031,7 @@ ${latestSubscriptionCallbackError.current.stack}
       []
     );
     const importChatCatRooms = async () => {
-      fetch("http://localhost:3000/rooms.json").then((response) => response.json()).then((json) => setChatCatRooms(json)).catch((error2) => console.error(error2));
+      fetch("http://localhost:3000/rooms.json").then((response) => response.json()).then((json2) => setChatCatRooms(json2)).catch((error2) => console.error(error2));
     };
     (0, import_react83.useEffect)(() => {
       importChatCatRooms();
@@ -81711,9 +81226,9 @@ use-sync-external-store/cjs/use-sync-external-store-with-selector.development.js
 mongoose/dist/browser.umd.js:
   (*! For license information please see browser.umd.js.LICENSE.txt *)
 
-react-router/dist/development/chunk-IR6S3I6Y.mjs:
+@remix-run/router/dist/router.js:
   (**
-   * react-router v7.1.5
+   * @remix-run/router v1.22.0
    *
    * Copyright (c) Remix Software Inc.
    *
@@ -81723,9 +81238,21 @@ react-router/dist/development/chunk-IR6S3I6Y.mjs:
    * @license MIT
    *)
 
-react-router/dist/development/index.mjs:
+react-router/dist/index.js:
   (**
-   * react-router v7.1.5
+   * React Router v6.29.0
+   *
+   * Copyright (c) Remix Software Inc.
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE.md file in the root directory of this source tree.
+   *
+   * @license MIT
+   *)
+
+react-router-dom/dist/index.js:
+  (**
+   * React Router DOM v6.29.0
    *
    * Copyright (c) Remix Software Inc.
    *

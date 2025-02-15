@@ -39,7 +39,6 @@
     "src/**/*.*ts",
     "src/**/*.*tsx",
     "index.d.ts",
-    "electronBuild.ts"
   ],
   "exclude": [
     "node_modules",

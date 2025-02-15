@@ -9,7 +9,6 @@ export declare type ITestTypes = [string, IRunTime, {
 export declare type IJsonConfig = {
     outdir: string;
     tests: ITestTypes[];
-    features: string;
     botEmail: string;
 };
 export declare type IBaseConfig = {
@@ -17,7 +16,6 @@ export declare type IBaseConfig = {
     debugger: boolean;
     devMode: boolean;
     externals: string[];
-    features: string;
     minify: boolean;
     nodePlugins: any[];
     outbase: string;
