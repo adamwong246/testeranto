@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.79.19",
+  "version": "0.79.20",
   "engines": {
     "node": "18.18.0"
   },
@@ -214,13 +214,11 @@
   "dependencies": {
     "@asseinfo/react-kanban": "^2.2.0",
     "@caldwell619/react-kanban": "^0.0.12",
-    "@electron/remote": "^2.1.2",
     "@hello-pangea/dnd": "^18.0.1",
     "@xyflow/react": "^12.4.3",
     "babel-loader": "^8.2.5",
     "bootstrap": "^5.2.3",
     "dot-prop": "^9.0.0",
-    "electron": "28.0.0",
     "esbuild": "0.17.5",
     "esbuild-plugin-external-package": "^1.0.0",
     "esbuild-plugin-import-map": "^2.1.0",
