@@ -114,8 +114,15 @@ const Features = ({ features, tests, results, adminMode }) => {
     return React.createElement(Crud2, { schema: featuresSchema, collectionName: "features", collection: features });
 };
 const Tests = ({ tests, results, features, adminMode }) => {
-    if (!adminMode)
-        return React.createElement(Tab.Container, { id: "left-tabs-example5", defaultActiveKey: "feature-0" },
+    return React.createElement("div", null,
+        React.createElement(Navbar, { expand: "md", className: "bg-body-tertiary" },
+            React.createElement(Container, { fluid: true },
+                React.createElement(NavDropdown, { align: "end", title: "User", id: "basic-nav-dropdown" },
+                    React.createElement(NavDropdown.Item, { href: "#action/3.4" }, "localhost:8080"),
+                    React.createElement(NavDropdown.Divider, null),
+                    React.createElement(NavDropdown.Item, { href: "#action/3.4" }, "origin/master"),
+                    React.createElement(NavDropdown.Item, { href: "#action/3.4" }, "origin/feature")))),
+        React.createElement(Tab.Container, { id: "left-tabs-example5", defaultActiveKey: "feature-0" },
             React.createElement(Row, null,
                 React.createElement(Col, { sm: 4 },
                     React.createElement(Nav, { variant: "pills", className: "flex-column" }, tests.tests.map((t, ndx) => React.createElement(Nav.Item, { key: ndx },
@@ -128,9 +135,7 @@ const Tests = ({ tests, results, features, adminMode }) => {
                         React.createElement("pre", null, JSON.stringify(Object.entries(results).filter(([k, v]) => {
                             console.log(v.src, tests.tests[ndx][0]);
                             return v.src === tests.tests[ndx][0];
-                        }), null, 2))))))));
-    // return <Crud collectionName="features" collection={features}></Crud>
-    return React.createElement("div", null);
+                        }), null, 2)))))))));
 };
 const TaskMan = ({ setAdminMode, users, adminMode, children }) => {
     return React.createElement("div", null,

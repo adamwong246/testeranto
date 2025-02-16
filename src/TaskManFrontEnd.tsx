@@ -231,36 +231,68 @@ const Features = ({ features, tests, results, adminMode }) => {
 };
 
 const Tests = ({ tests, results, features, adminMode }) => {
-  if (!adminMode) return <Tab.Container id="left-tabs-example5" defaultActiveKey="feature-0">
-    <Row>
-      <Col sm={4}>
-        <Nav variant="pills" className="flex-column">
-          {
-            tests.tests.map((t, ndx) =>
-              <Nav.Item key={ndx}>
-                <Nav.Link eventKey={`test-${ndx}`}>
-                  {t[0]} - {t[1]}
-                </Nav.Link>
-              </Nav.Item>
-            )
-          }
-        </Nav>
-      </Col>
+  return <div>
+    <Navbar expand="md" className="bg-body-tertiary">
+      <Container fluid>
+        <NavDropdown align="end" title="User" id="basic-nav-dropdown">
+          {/* {
+            users.map((user) => {
+              return <NavDropdown.Item href="#action/3.1">
+                {user.email}
+              </NavDropdown.Item>
+            })
+          } */}
+          {/* <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.2">
+                    Another action
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item> */}
 
-      <Col sm={4}>
-        <Tab.Content>
+          <NavDropdown.Item href="#action/3.4">
+            localhost:8080
+          </NavDropdown.Item>
+          <NavDropdown.Divider />
+          <NavDropdown.Item href="#action/3.4">
+            origin/master
+          </NavDropdown.Item>
+          <NavDropdown.Item href="#action/3.4">
+            origin/feature
+          </NavDropdown.Item>
+        </NavDropdown>
 
-          {
-            tests.tests.map((t, ndx) =>
-              <Tab.Pane eventKey={`test-${ndx}`}>
-                {/* <pre>{JSON.stringify(t, null, 2)}</pre> */}
-                {/* <pre>{JSON.stringify(state.results, null, 2)}</pre> */}
-                <pre>{JSON.stringify(Object.entries(results).filter(([k, v]: [string, { src: string }]) => {
-                  console.log(v.src, tests.tests[ndx][0])
-                  return v.src === tests.tests[ndx][0]
-                }), null, 2)}</pre>
+      </Container>
+    </Navbar>
 
-                {/* {tests.tests.map((t, ndx) => {
+    <Tab.Container id="left-tabs-example5" defaultActiveKey="feature-0">
+      <Row>
+        <Col sm={4}>
+          <Nav variant="pills" className="flex-column">
+            {
+              tests.tests.map((t, ndx) =>
+                <Nav.Item key={ndx}>
+                  <Nav.Link eventKey={`test-${ndx}`}>
+                    {t[0]} - {t[1]}
+                  </Nav.Link>
+                </Nav.Item>
+              )
+            }
+          </Nav>
+        </Col>
+
+        <Col sm={4}>
+          <Tab.Content>
+
+            {
+              tests.tests.map((t, ndx) =>
+                <Tab.Pane eventKey={`test-${ndx}`}>
+                  {/* <pre>{JSON.stringify(t, null, 2)}</pre> */}
+                  {/* <pre>{JSON.stringify(state.results, null, 2)}</pre> */}
+                  <pre>{JSON.stringify(Object.entries(results).filter(([k, v]: [string, { src: string }]) => {
+                    console.log(v.src, tests.tests[ndx][0])
+                    return v.src === tests.tests[ndx][0]
+                  }), null, 2)}</pre>
+
+                  {/* {tests.tests.map((t, ndx) => {
                           return (
                             <Tab.Pane eventKey={`feature-${ndx}`} key={ndx}>
                               <pre>{JSON.stringify(t, null, 2)}</pre>
@@ -269,23 +301,23 @@ const Tests = ({ tests, results, features, adminMode }) => {
                         }
                         )} */}
 
-              </Tab.Pane>
+                </Tab.Pane>
 
-            )
-          }
-
-
+              )
+            }
 
 
-        </Tab.Content>
-      </Col>
 
 
-    </Row>
-  </Tab.Container>
+          </Tab.Content>
+        </Col>
 
-  // return <Crud collectionName="features" collection={features}></Crud>
-  return <div></div>
+
+      </Row>
+    </Tab.Container>
+
+  </div>
+
 
 };
 

@@ -80762,16 +80762,14 @@ ${latestSubscriptionCallbackError.current.stack}
     return /* @__PURE__ */ import_react83.default.createElement(Crud2, { schema: featuresSchema, collectionName: "features", collection: features });
   };
   var Tests = ({ tests, results, features, adminMode }) => {
-    if (!adminMode)
-      return /* @__PURE__ */ import_react83.default.createElement(Tab_default.Container, { id: "left-tabs-example5", defaultActiveKey: "feature-0" }, /* @__PURE__ */ import_react83.default.createElement(Row_default, null, /* @__PURE__ */ import_react83.default.createElement(Col_default, { sm: 4 }, /* @__PURE__ */ import_react83.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, tests.tests.map(
-        (t, ndx) => /* @__PURE__ */ import_react83.default.createElement(Nav_default2.Item, { key: ndx }, /* @__PURE__ */ import_react83.default.createElement(Nav_default2.Link, { eventKey: `test-${ndx}` }, t[0], " - ", t[1]))
-      ))), /* @__PURE__ */ import_react83.default.createElement(Col_default, { sm: 4 }, /* @__PURE__ */ import_react83.default.createElement(Tab_default.Content, null, tests.tests.map(
-        (t, ndx) => /* @__PURE__ */ import_react83.default.createElement(Tab_default.Pane, { eventKey: `test-${ndx}` }, /* @__PURE__ */ import_react83.default.createElement("pre", null, JSON.stringify(Object.entries(results).filter(([k, v]) => {
-          console.log(v.src, tests.tests[ndx][0]);
-          return v.src === tests.tests[ndx][0];
-        }), null, 2)))
-      )))));
-    return /* @__PURE__ */ import_react83.default.createElement("div", null);
+    return /* @__PURE__ */ import_react83.default.createElement("div", null, /* @__PURE__ */ import_react83.default.createElement(Navbar_default, { expand: "md", className: "bg-body-tertiary" }, /* @__PURE__ */ import_react83.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react83.default.createElement(NavDropdown_default, { align: "end", title: "User", id: "basic-nav-dropdown" }, /* @__PURE__ */ import_react83.default.createElement(NavDropdown_default.Item, { href: "#action/3.4" }, "localhost:8080"), /* @__PURE__ */ import_react83.default.createElement(NavDropdown_default.Divider, null), /* @__PURE__ */ import_react83.default.createElement(NavDropdown_default.Item, { href: "#action/3.4" }, "origin/master"), /* @__PURE__ */ import_react83.default.createElement(NavDropdown_default.Item, { href: "#action/3.4" }, "origin/feature")))), /* @__PURE__ */ import_react83.default.createElement(Tab_default.Container, { id: "left-tabs-example5", defaultActiveKey: "feature-0" }, /* @__PURE__ */ import_react83.default.createElement(Row_default, null, /* @__PURE__ */ import_react83.default.createElement(Col_default, { sm: 4 }, /* @__PURE__ */ import_react83.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, tests.tests.map(
+      (t, ndx) => /* @__PURE__ */ import_react83.default.createElement(Nav_default2.Item, { key: ndx }, /* @__PURE__ */ import_react83.default.createElement(Nav_default2.Link, { eventKey: `test-${ndx}` }, t[0], " - ", t[1]))
+    ))), /* @__PURE__ */ import_react83.default.createElement(Col_default, { sm: 4 }, /* @__PURE__ */ import_react83.default.createElement(Tab_default.Content, null, tests.tests.map(
+      (t, ndx) => /* @__PURE__ */ import_react83.default.createElement(Tab_default.Pane, { eventKey: `test-${ndx}` }, /* @__PURE__ */ import_react83.default.createElement("pre", null, JSON.stringify(Object.entries(results).filter(([k, v]) => {
+        console.log(v.src, tests.tests[ndx][0]);
+        return v.src === tests.tests[ndx][0];
+      }), null, 2)))
+    ))))));
   };
   var TaskMan = ({ setAdminMode, users, adminMode, children: children2 }) => {
     return /* @__PURE__ */ import_react83.default.createElement("div", null, /* @__PURE__ */ import_react83.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react83.default.createElement(Navbar_default, { expand: "md", className: "bg-body-tertiary" }, /* @__PURE__ */ import_react83.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react83.default.createElement(Navbar_default.Toggle, { "aria-controls": "basic-navbar-nav" }), /* @__PURE__ */ import_react83.default.createElement(Navbar_default.Collapse, { id: "basic-navbar-nav" }, /* @__PURE__ */ import_react83.default.createElement(Nav_default2, { className: "me-auto" }, /* @__PURE__ */ import_react83.default.createElement(Tabs_default2, { defaultActiveKey: "/tests" }, /* @__PURE__ */ import_react83.default.createElement(

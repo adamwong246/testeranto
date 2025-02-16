@@ -38,7 +38,7 @@ RUN yarn run init
 
 EXPOSE 8080
 EXPOSE 27017
-ENV MONGO_HOST=host.docker.internal
+# ENV MONGO_CONNECTION=mongodb+srv://testerantokokomobay:<db_password>@report.7rred.mongodb.net/?retryWrites=true&w=majority&appName=report
 # ENV PORT=8080
 # # CMD ['yarn', 'testeranto-testrun', '&', 'yarn', 'testeranto-taskman']
 CMD ["yarn", "report"]

@@ -10,7 +10,8 @@ const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const mongooseSchemas_1 = require("./mongooseSchemas");
 console.log("hello TaskMan Backend", process.env);
-const port = process.env.HTTPS_PORT || "3000";
+const port = process.env.PORT || "8080";
+const mongoConnect = process.env.MONGO_CONNECTION || "mongodb://127.0.0.1:27017";
 function findTextFiles(dir, fileList = []) {
     const files = fs_1.default.readdirSync(dir);
     for (const file of files) {
@@ -54,11 +55,12 @@ exports.default = (partialConfig) => {
     const config = Object.assign(Object.assign({}, partialConfig), { buildDir: process.cwd() + "/" + partialConfig.outdir });
     fs_1.default.writeFileSync(`${config.outdir}/testeranto.json`, JSON.stringify(config, null, 2));
     const app = (0, express_1.default)();
-    new mongodb_1.MongoClient(`mongodb://${process.env.MONGO_HOST || "127.0.0.1"}:27017`)
-        .connect()
-        .then(async (conn) => {
+    new mongodb_1.MongoClient(mongoConnect).connect().then(async (conn) => {
         const db = conn.db("taskman");
-        await mongoose_1.default.connect(`mongodb://${process.env.MONGO_HOST || "127.0.0.1"}:27017/taskman`);
+        await mongoose_1.default.connect(`${mongoConnect}/taskman`);
+        // await mongoose.connect(
+        //   `mongodb://${process.env.MONGO_HOST || "127.0.0.1"}:27017/taskman`
+        // );
         const usersModel = mongoose_1.default.model("User", mongooseSchemas_1.userSchema);
         const kanbanModel = mongoose_1.default.model("Kanban", mongooseSchemas_1.kanbanSchema);
         const ganttModel = mongoose_1.default.model("Gantt", mongooseSchemas_1.ganttSchema);

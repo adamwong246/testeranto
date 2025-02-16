@@ -60,6 +60,7 @@ var RoomSchema = new mongoose.Schema({
 // src/TaskManBackEnd.ts
 console.log("hello TaskMan Backend", process.env);
 var port = process.env.PORT || "8080";
+var mongoConnect = process.env.MONGO_CONNECTION || "mongodb://127.0.0.1:27017";
 function findTextFiles(dir, fileList = []) {
   const files = fs.readdirSync(dir);
   for (const file of files) {
@@ -107,19 +108,14 @@ var TaskManBackEnd_default = (partialConfig) => {
     JSON.stringify(config, null, 2)
   );
   const app = express();
-  new MongoClient(`mongodb://${process.env.MONGO_HOST || "127.0.0.1"}:27017`).connect().then(async (conn) => {
+  new MongoClient(mongoConnect).connect().then(async (conn) => {
     const db = conn.db("taskman");
-    await mongoose2.connect(
-      `mongodb://${process.env.MONGO_HOST || "127.0.0.1"}:27017/taskman`
-    );
+    await mongoose2.connect(`${mongoConnect}/taskman`);
     const usersModel = mongoose2.model("User", userSchema);
     const kanbanModel = mongoose2.model("Kanban", kanbanSchema);
     const ganttModel = mongoose2.model("Gantt", ganttSchema);
     const featuresModel = mongoose2.model("Features", featuresSchema);
-    const MessagesModel = mongoose2.model(
-      "Messages",
-      chatCatMessageSchema
-    );
+    const MessagesModel = mongoose2.model("Messages", chatCatMessageSchema);
     const ChatChannel = mongoose2.model("ChatChannel", channelsFeature);
     const huddleModdle = ChatChannel.discriminator("Huddle", HuddleSchema);
     const roomsModel = ChatChannel.discriminator("Room", RoomSchema);
