@@ -47,15 +47,17 @@ export default async (partialConfig) => {
     {
       waitForInitialPage: false,
       executablePath: process.env.CHROMIUM_PATH || "/opt/homebrew/bin/chromium", //"/opt/homebrew/bin/chromium",
-      headless: true,
+      headless: false,
       // dumpio: true,
       args: [
+        "--auto-open-devtools-for-tabs",
+
         "--disable-features=IsolateOrigins,site-per-process",
         "--disable-site-isolation-trials",
         "--allow-insecure-localhost",
         "--allow-file-access-from-files",
         "--allow-running-insecure-content",
-        // "--auto-open-devtools-for-tabs",
+
         "--disable-dev-shm-usage",
         "--disable-extensions",
         "--disable-gpu",

@@ -187,7 +187,11 @@
     "dev": "cp ./src/cjs-shim.js ./dist/cjs-shim.js && tsc -p tsconfig.module.json --watch & tsc -p tsconfig.common.json --watch & tsc -p tsconfig.types.json --watch & yarn esbuild src/TaskManFrontEnd.tsx --outfile=dist/prebuild/TaskManFrontEnd.js --bundle --watch & yarn esbuild src/TaskManBackEnd.ts --platform=node  --outfile=dist/prebuild/TaskManBackEnd.mjs --bundle --watch --format=esm --packages=external",
     "build-module": "tsc -p tsconfig.module.json",
     "build-common": "tsc -p tsconfig.common.json",
-    "build-types": "tsc -p tsconfig.types.json"
+    "build-types": "tsc -p tsconfig.types.json",
+    "build-tests": "ts-node-esm ./project.ts",
+    "run-tests": "ts-node-esm ./run-tests.ts",
+    "init-docs": "ts-node-esm init-docs.ts",
+    "task-man": "ts-node-esm task-man.ts"
   },
   "peerDependencies": {
     "@hello-pangea/dnd": ">=16",
@@ -221,12 +225,14 @@
     "@xyflow/react": "^12.4.3",
     "babel-loader": "^8.2.5",
     "bootstrap": "^5.2.3",
+    "chai": "^5.2.0",
     "dot-prop": "^9.0.0",
     "esbuild": "0.17.5",
     "esbuild-plugin-external-package": "^1.0.0",
     "esbuild-plugin-import-map": "^2.1.0",
     "eslint": "^8.29.0",
     "eslint-plugin-react": "^7.31.11",
+    "eslint-plugin-react-hooks": "^5.1.0",
     "express": "^4.21.2",
     "fs-extra": "^11.2.0",
     "fs.promises.exists": "^1.1.4",

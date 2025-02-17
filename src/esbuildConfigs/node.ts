@@ -3,7 +3,7 @@ import { BuildOptions } from "esbuild";
 import { IBaseConfig } from "../lib/types";
 
 import baseEsBuildConfig from "./index.js";
-import inputFilesPlugin from "./inputFilesPlugin";
+import inputFilesPlugin from "./inputFilesPlugin.js";
 
 export default (
   config: IBaseConfig,
@@ -16,7 +16,7 @@ export default (
 
     outdir: config.outdir + "/node",
 
-    inject: [`./node_modules/testeranto/dist/cjs-shim.js`],
+    // inject: [`./node_modules/testeranto/dist/cjs-shim.js`],
     metafile: true,
     supported: {
       "dynamic-import": true,

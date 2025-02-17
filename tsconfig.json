@@ -36,9 +36,12 @@
     "alwaysStrict": true
   },
   "include": [
-    "src/**/*.*ts",
-    "src/**/*.*tsx",
+    "./**/*.*ts",
+    "./**/*.*tsx",
     "index.d.ts",
+    "project.ts",
+    "run-tests.ts",
+    "testeranto.ts",
   ],
   "exclude": [
     "node_modules",

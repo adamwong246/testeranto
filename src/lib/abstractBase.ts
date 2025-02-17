@@ -406,6 +406,7 @@ export abstract class BaseGiven<
         this.givenCB,
         beforeEachProxy
       );
+      console.log("mark6", this.store);
 
       for (const [whenNdx, whenStep] of this.whens.entries()) {
         await whenStep.test(
@@ -428,9 +429,11 @@ export abstract class BaseGiven<
         tester(t);
       }
     } catch (e) {
+      console.error(e);
       this.error = e;
-      tLog(e);
-      tLog("\u0007"); // bell
+      tLog(e.stack);
+      // tLog("\u0007"); // bell
+
       // throw e;
     } finally {
       try {
@@ -532,6 +535,7 @@ export abstract class BaseGiven<
           },
         });
 
+        console.log("mark5", this.store, key);
         await this.afterEach(this.store, key, givenArtifactory, afterEachProxy);
       } catch (e) {
         console.error("afterEach failed! no error will be recorded!", e);

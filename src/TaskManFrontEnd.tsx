@@ -24,6 +24,8 @@ import {
   IChatCatRoom
 } from "./mongooseSchemas";
 
+import LoginButton from './LoginButton';
+
 const InputElementString = ({ tree, name }: { tree: any, name: string }) => {
   console.log("mark string", tree)
 
@@ -36,8 +38,6 @@ const InputElementString = ({ tree, name }: { tree: any, name: string }) => {
 };
 
 const InputElementArray = ({ tree, name }: { tree: any, name: string }) => {
-  console.log("mark5", tree)
-
   return <Form.Control type="email" placeholder="Enter email" />
 };
 
@@ -232,38 +232,39 @@ const Features = ({ features, tests, results, adminMode }) => {
 
 const Tests = ({ tests, results, features, adminMode }) => {
   return <div>
-    <Navbar expand="md" className="bg-body-tertiary">
-      <Container fluid>
-        <NavDropdown align="end" title="User" id="basic-nav-dropdown">
-          {/* {
+
+
+    <Tab.Container id="left-tabs-example5" defaultActiveKey="feature-0">
+      <Row><Navbar expand="md" className="bg-body-tertiary">
+        <Container fluid>
+          <NavDropdown align="end" title="Branch" id="basic-nav-dropdown">
+            {/* {
             users.map((user) => {
               return <NavDropdown.Item href="#action/3.1">
                 {user.email}
               </NavDropdown.Item>
             })
           } */}
-          {/* <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+            {/* <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                   <NavDropdown.Item href="#action/3.2">
                     Another action
                   </NavDropdown.Item>
                   <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item> */}
 
-          <NavDropdown.Item href="#action/3.4">
-            localhost:8080
-          </NavDropdown.Item>
-          <NavDropdown.Divider />
-          <NavDropdown.Item href="#action/3.4">
-            origin/master
-          </NavDropdown.Item>
-          <NavDropdown.Item href="#action/3.4">
-            origin/feature
-          </NavDropdown.Item>
-        </NavDropdown>
+            <NavDropdown.Item href="#action/3.4">
+              localhost:8080
+            </NavDropdown.Item>
+            <NavDropdown.Divider />
+            <NavDropdown.Item href="#action/3.4">
+              origin/master
+            </NavDropdown.Item>
+            <NavDropdown.Item href="#action/3.4">
+              origin/feature
+            </NavDropdown.Item>
+          </NavDropdown>
 
-      </Container>
-    </Navbar>
-
-    <Tab.Container id="left-tabs-example5" defaultActiveKey="feature-0">
+        </Container>
+      </Navbar></Row>
       <Row>
         <Col sm={4}>
           <Nav variant="pills" className="flex-column">
@@ -1148,18 +1149,16 @@ footer {
 
             </Navbar.Collapse>
 
-            <ButtonGroup className="mb-2">
+            <LoginButton />
+            {/* <ButtonGroup className="mb-2">
               <Button
                 id="login"
-
-
-
                 value="1"
                 onChange={(e) => setAdminMode(!adminMode)}
               >
                 Login
               </Button>
-            </ButtonGroup>
+            </ButtonGroup> */}
 
           </Container>
         </Navbar>

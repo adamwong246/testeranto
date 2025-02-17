@@ -16,7 +16,7 @@ import {
   IChatChannel,
   channelsFeature,
   chatCatMessageSchema,
-} from "./mongooseSchemas";
+} from "./mongooseSchemas.js";
 
 import { IBaseConfig } from "./lib/types";
 

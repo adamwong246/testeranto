@@ -112,6 +112,7 @@ export type ITestSpecification<
   },
   Given: {
     [K in keyof ITestShape["givens"]]: (
+      features: string[],
       whens: BaseWhen<ITestShape>[],
       thens: BaseThen<ITestShape>[],
       ...xtrasB: ITestShape["givens"][K]

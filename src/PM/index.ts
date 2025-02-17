@@ -17,7 +17,7 @@ export abstract class PM {
   abstract testArtiFactoryfileWriter(tLog: ITLog, callback: (Promise) => void);
   abstract createWriteStream(filepath: string): any;
   abstract writeFileSync(fp: string, contents: string);
-  abstract mkdirSync();
+  abstract mkdirSync(a: string);
   abstract existsSync(fp: string): boolean;
   abstract write(accessObject: { uid: number }, contents: string): boolean;
   abstract end(accessObject: { uid: number }): boolean;

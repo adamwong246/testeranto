@@ -35,8 +35,8 @@
     "alwaysStrict": true
   },
   "include": [
-    "src/**/*.*ts",
-    "src/**/*.*tsx",
+    "./**/*.*ts",
+    "./**/*.*tsx",
     "index.d.ts"
   ],
   "exclude": [

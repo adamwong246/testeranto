@@ -163,7 +163,7 @@ export class PM_Main extends PM {
   }
 
   async startPuppeteer(options: any, destfolder: string): Promise<any> {
-    this.browser = await puppeteer.launch(options);
+    this.browser = (await puppeteer.launch(options)) as any;
     return this.browser;
   }
 
@@ -706,7 +706,7 @@ export class PM_Main extends PM {
 
           Promise.all(screenshots[testName] || []).then(() => {
             delete screenshots[testName];
-            page.close();
+            // page.close();
           });
 
           // globalThis["writeFileSync"](
@@ -740,9 +740,15 @@ export class PM_Main extends PM {
         );
         await page.goto(`file://${`${dest}.html`}`, {});
 
-        page.evaluate(evaluation).finally(() => {
-          console.log("evaluation failed.", dest);
-        });
+        page
+          .evaluate(evaluation)
+          .catch((e) => {
+            console.log("evaluation failed.", dest);
+            console.log(e);
+          })
+          .finally(() => {
+            console.log("evaluation complete.", dest);
+          });
 
         return page;
       });

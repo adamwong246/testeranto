@@ -1085,7 +1085,7 @@
             }
             return dispatcher.useContext(Context2);
           }
-          function useState24(initialState) {
+          function useState23(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1887,7 +1887,7 @@
           exports.useMemo = useMemo20;
           exports.useReducer = useReducer2;
           exports.useRef = useRef26;
-          exports.useState = useState24;
+          exports.useState = useState23;
           exports.useSyncExternalStore = useSyncExternalStore2;
           exports.useTransition = useTransition2;
           exports.version = ReactVersion;
@@ -1918,7 +1918,7 @@
       if (true) {
         (function() {
           "use strict";
-          var React90 = require_react();
+          var React89 = require_react();
           var REACT_ELEMENT_TYPE2 = Symbol.for("react.element");
           var REACT_PORTAL_TYPE2 = Symbol.for("react.portal");
           var REACT_FRAGMENT_TYPE2 = Symbol.for("react.fragment");
@@ -1944,7 +1944,7 @@
             }
             return null;
           }
-          var ReactSharedInternals = React90.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React89.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function error2(format) {
             {
               {
@@ -2810,7 +2810,7 @@
           return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
         }
         function useSyncExternalStore$2(subscribe, getSnapshot) {
-          didWarnOld18Alpha || void 0 === React90.startTransition || (didWarnOld18Alpha = true, console.error(
+          didWarnOld18Alpha || void 0 === React89.startTransition || (didWarnOld18Alpha = true, console.error(
             "You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release."
           ));
           var value = getSnapshot();
@@ -2820,7 +2820,7 @@
               "The result of getSnapshot should be cached to avoid an infinite loop"
             ), didWarnUncachedGetSnapshot = true);
           }
-          cachedValue = useState24({
+          cachedValue = useState23({
             inst: { value, getSnapshot }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -2858,8 +2858,8 @@
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React90 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState24 = React90.useState, useEffect27 = React90.useEffect, useLayoutEffect8 = React90.useLayoutEffect, useDebugValue3 = React90.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
-        exports.useSyncExternalStore = void 0 !== React90.useSyncExternalStore ? React90.useSyncExternalStore : shim;
+        var React89 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState23 = React89.useState, useEffect27 = React89.useEffect, useLayoutEffect8 = React89.useLayoutEffect, useDebugValue3 = React89.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        exports.useSyncExternalStore = void 0 !== React89.useSyncExternalStore ? React89.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
     }
@@ -2886,7 +2886,7 @@
           return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React90 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore2 = shim.useSyncExternalStore, useRef26 = React90.useRef, useEffect27 = React90.useEffect, useMemo20 = React90.useMemo, useDebugValue3 = React90.useDebugValue;
+        var React89 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore2 = shim.useSyncExternalStore, useRef26 = React89.useRef, useEffect27 = React89.useEffect, useMemo20 = React89.useMemo, useDebugValue3 = React89.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual2) {
           var instRef = useRef26(null);
           if (null === instRef.current) {
@@ -3429,9 +3429,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React90 = require_react();
+          var React89 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React90.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React89.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -5036,7 +5036,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React90.Children.forEach(props.children, function(child) {
+                  React89.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -25525,7 +25525,7 @@
           return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React90 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore2 = React90.useSyncExternalStore, useRef26 = React90.useRef, useEffect27 = React90.useEffect, useMemo20 = React90.useMemo, useDebugValue3 = React90.useDebugValue;
+        var React89 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore2 = React89.useSyncExternalStore, useRef26 = React89.useRef, useEffect27 = React89.useEffect, useMemo20 = React89.useMemo, useDebugValue3 = React89.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual2) {
           var instRef = useRef26(null);
           if (null === instRef.current) {
@@ -67495,7 +67495,7 @@
   var ToggleButton_default = ToggleButton;
 
   // src/TaskManFrontEnd.tsx
-  var import_react84 = __toESM(require_react(), 1);
+  var import_react83 = __toESM(require_react(), 1);
   var import_client = __toESM(require_client(), 1);
 
   // node_modules/react-router-dom/dist/index.js
@@ -80712,91 +80712,75 @@ ${latestSubscriptionCallbackError.current.stack}
     name: { type: String, required: true }
   });
 
-  // src/LoginButton.tsx
-  var import_react82 = __toESM(require_react(), 1);
-  var LoginButton_default = () => {
-    const [state, setState] = (0, import_react82.useState)(false);
-    return /* @__PURE__ */ import_react82.default.createElement(
-      "button",
-      {
-        onClick: () => {
-          console.log("clicked");
-          setState(!state);
-        }
-      },
-      " ",
-      state ? "Sign out" : "Log in"
-    );
-  };
-
   // src/TaskManFrontEnd.tsx
   var InputElementString = ({ tree, name }) => {
     console.log("mark string", tree);
-    return /* @__PURE__ */ import_react84.default.createElement(Form_default.Group, { className: "mb-3", controlId: name }, /* @__PURE__ */ import_react84.default.createElement(Form_default.Label, null, name), /* @__PURE__ */ import_react84.default.createElement(Form_default.Control, { placeholder: name }));
+    return /* @__PURE__ */ import_react83.default.createElement(Form_default.Group, { className: "mb-3", controlId: name }, /* @__PURE__ */ import_react83.default.createElement(Form_default.Label, null, name), /* @__PURE__ */ import_react83.default.createElement(Form_default.Control, { placeholder: name }));
   };
   var InputElementArray = ({ tree, name }) => {
-    return /* @__PURE__ */ import_react84.default.createElement(Form_default.Control, { type: "email", placeholder: "Enter email" });
+    console.log("mark5", tree);
+    return /* @__PURE__ */ import_react83.default.createElement(Form_default.Control, { type: "email", placeholder: "Enter email" });
   };
   var InputElementObject = ({ tree, name }) => {
     console.log("mark4", tree, tree.properties);
-    return /* @__PURE__ */ import_react84.default.createElement("div", null, ...Object.keys(tree.properties).map((name2) => {
+    return /* @__PURE__ */ import_react83.default.createElement("div", null, ...Object.keys(tree.properties).map((name2) => {
       console.log("mark6", name2, tree.properties[name2].type);
       if (tree.properties[name2].type === "object") {
-        return /* @__PURE__ */ import_react84.default.createElement(InputElementObject, { tree: tree.properties[name2], name: name2 });
+        return /* @__PURE__ */ import_react83.default.createElement(InputElementObject, { tree: tree.properties[name2], name: name2 });
       }
       if (tree.properties[name2].type === "string") {
-        return /* @__PURE__ */ import_react84.default.createElement(InputElementString, { tree: tree.properties[name2], name: name2 });
+        return /* @__PURE__ */ import_react83.default.createElement(InputElementString, { tree: tree.properties[name2], name: name2 });
       }
       if (Array.isArray(tree.properties[name2].type)) {
-        return /* @__PURE__ */ import_react84.default.createElement(InputElementArray, { tree: tree.properties[name2], name: name2 });
+        return /* @__PURE__ */ import_react83.default.createElement(InputElementArray, { tree: tree.properties[name2], name: name2 });
       }
     }));
   };
   var InputForm = ({ schema, path }) => {
-    return /* @__PURE__ */ import_react84.default.createElement(Form_default.Group, null, /* @__PURE__ */ import_react84.default.createElement(InputElementObject, { tree: schema.toJSONSchema() }));
+    return /* @__PURE__ */ import_react83.default.createElement(Form_default.Group, null, /* @__PURE__ */ import_react83.default.createElement(InputElementObject, { tree: schema.toJSONSchema() }));
   };
   var Crud2 = ({ collection, collectionName, schema }) => {
-    return /* @__PURE__ */ import_react84.default.createElement("div", null, /* @__PURE__ */ import_react84.default.createElement(Table_default, { striped: true, bordered: true, hover: true }, /* @__PURE__ */ import_react84.default.createElement("thead", null, /* @__PURE__ */ import_react84.default.createElement("tr", null, /* @__PURE__ */ import_react84.default.createElement("th", null, "id"), /* @__PURE__ */ import_react84.default.createElement("th", null))), /* @__PURE__ */ import_react84.default.createElement("tbody", null, /* @__PURE__ */ import_react84.default.createElement("tr", null, /* @__PURE__ */ import_react84.default.createElement("td", null, "add new record"), /* @__PURE__ */ import_react84.default.createElement("td", null, /* @__PURE__ */ import_react84.default.createElement(Form_default, null, /* @__PURE__ */ import_react84.default.createElement(InputForm, { schema }), /* @__PURE__ */ import_react84.default.createElement(Button_default2, { variant: "primary", type: "submit" }, "Submit")))), collection.map((doc) => {
-      return /* @__PURE__ */ import_react84.default.createElement("tr", null, /* @__PURE__ */ import_react84.default.createElement("td", null, doc._id), /* @__PURE__ */ import_react84.default.createElement("td", null, JSON.stringify(doc, null, 2)));
+    return /* @__PURE__ */ import_react83.default.createElement("div", null, /* @__PURE__ */ import_react83.default.createElement(Table_default, { striped: true, bordered: true, hover: true }, /* @__PURE__ */ import_react83.default.createElement("thead", null, /* @__PURE__ */ import_react83.default.createElement("tr", null, /* @__PURE__ */ import_react83.default.createElement("th", null, "id"), /* @__PURE__ */ import_react83.default.createElement("th", null))), /* @__PURE__ */ import_react83.default.createElement("tbody", null, /* @__PURE__ */ import_react83.default.createElement("tr", null, /* @__PURE__ */ import_react83.default.createElement("td", null, "add new record"), /* @__PURE__ */ import_react83.default.createElement("td", null, /* @__PURE__ */ import_react83.default.createElement(Form_default, null, /* @__PURE__ */ import_react83.default.createElement(InputForm, { schema }), /* @__PURE__ */ import_react83.default.createElement(Button_default2, { variant: "primary", type: "submit" }, "Submit")))), collection.map((doc) => {
+      return /* @__PURE__ */ import_react83.default.createElement("tr", null, /* @__PURE__ */ import_react83.default.createElement("td", null, doc._id), /* @__PURE__ */ import_react83.default.createElement("td", null, JSON.stringify(doc, null, 2)));
     }))));
   };
   var Features = ({ features, tests, results, adminMode }) => {
     if (!adminMode)
-      return /* @__PURE__ */ import_react84.default.createElement(Tab_default.Container, { id: "left-tabs-example5", defaultActiveKey: "feature-0" }, /* @__PURE__ */ import_react84.default.createElement(Row_default, null, /* @__PURE__ */ import_react84.default.createElement(Col_default, { sm: 4 }, /* @__PURE__ */ import_react84.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, features.map((feature, ndx) => /* @__PURE__ */ import_react84.default.createElement(Nav_default2.Item, { key: ndx }, /* @__PURE__ */ import_react84.default.createElement(Nav_default2.Link, { eventKey: `feature/${feature._id}` }, feature.title))))), /* @__PURE__ */ import_react84.default.createElement(Col_default, { sm: 8 }, /* @__PURE__ */ import_react84.default.createElement(Tab_default.Content, null, features.map(
+      return /* @__PURE__ */ import_react83.default.createElement(Tab_default.Container, { id: "left-tabs-example5", defaultActiveKey: "feature-0" }, /* @__PURE__ */ import_react83.default.createElement(Row_default, null, /* @__PURE__ */ import_react83.default.createElement(Col_default, { sm: 4 }, /* @__PURE__ */ import_react83.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, features.map((feature, ndx) => /* @__PURE__ */ import_react83.default.createElement(Nav_default2.Item, { key: ndx }, /* @__PURE__ */ import_react83.default.createElement(Nav_default2.Link, { eventKey: `feature/${feature._id}` }, feature.title))))), /* @__PURE__ */ import_react83.default.createElement(Col_default, { sm: 8 }, /* @__PURE__ */ import_react83.default.createElement(Tab_default.Content, null, features.map(
         (feature, ndx) => {
-          return /* @__PURE__ */ import_react84.default.createElement(Tab_default.Pane, { eventKey: `feature/${feature._id}`, key: ndx }, /* @__PURE__ */ import_react84.default.createElement("pre", null, JSON.stringify(feature, null, 2)), /* @__PURE__ */ import_react84.default.createElement("ol", null, results.filter((result) => {
+          return /* @__PURE__ */ import_react83.default.createElement(Tab_default.Pane, { eventKey: `feature/${feature._id}`, key: ndx }, /* @__PURE__ */ import_react83.default.createElement("pre", null, JSON.stringify(feature, null, 2)), /* @__PURE__ */ import_react83.default.createElement("ol", null, results.filter((result) => {
             console.log("mark1", result.testresults.src);
             return new Set(result.testresults.givens.reduce((mm, el) => {
               mm = mm.concat(el.features);
               return mm;
             }, [])).has(feature._id);
           }).map((result) => {
-            return /* @__PURE__ */ import_react84.default.createElement("li", null, result.src);
+            return /* @__PURE__ */ import_react83.default.createElement("li", null, result.src);
           })));
         }
       )))));
-    return /* @__PURE__ */ import_react84.default.createElement(Crud2, { schema: featuresSchema, collectionName: "features", collection: features });
+    return /* @__PURE__ */ import_react83.default.createElement(Crud2, { schema: featuresSchema, collectionName: "features", collection: features });
   };
   var Tests = ({ tests, results, features, adminMode }) => {
-    return /* @__PURE__ */ import_react84.default.createElement("div", null, /* @__PURE__ */ import_react84.default.createElement(Tab_default.Container, { id: "left-tabs-example5", defaultActiveKey: "feature-0" }, /* @__PURE__ */ import_react84.default.createElement(Row_default, null, /* @__PURE__ */ import_react84.default.createElement(Navbar_default, { expand: "md", className: "bg-body-tertiary" }, /* @__PURE__ */ import_react84.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react84.default.createElement(NavDropdown_default, { align: "end", title: "Branch", id: "basic-nav-dropdown" }, /* @__PURE__ */ import_react84.default.createElement(NavDropdown_default.Item, { href: "#action/3.4" }, "localhost:8080"), /* @__PURE__ */ import_react84.default.createElement(NavDropdown_default.Divider, null), /* @__PURE__ */ import_react84.default.createElement(NavDropdown_default.Item, { href: "#action/3.4" }, "origin/master"), /* @__PURE__ */ import_react84.default.createElement(NavDropdown_default.Item, { href: "#action/3.4" }, "origin/feature"))))), /* @__PURE__ */ import_react84.default.createElement(Row_default, null, /* @__PURE__ */ import_react84.default.createElement(Col_default, { sm: 4 }, /* @__PURE__ */ import_react84.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, tests.tests.map(
-      (t, ndx) => /* @__PURE__ */ import_react84.default.createElement(Nav_default2.Item, { key: ndx }, /* @__PURE__ */ import_react84.default.createElement(Nav_default2.Link, { eventKey: `test-${ndx}` }, t[0], " - ", t[1]))
-    ))), /* @__PURE__ */ import_react84.default.createElement(Col_default, { sm: 4 }, /* @__PURE__ */ import_react84.default.createElement(Tab_default.Content, null, tests.tests.map(
-      (t, ndx) => /* @__PURE__ */ import_react84.default.createElement(Tab_default.Pane, { eventKey: `test-${ndx}` }, /* @__PURE__ */ import_react84.default.createElement("pre", null, JSON.stringify(Object.entries(results).filter(([k, v]) => {
+    return /* @__PURE__ */ import_react83.default.createElement("div", null, /* @__PURE__ */ import_react83.default.createElement(Tab_default.Container, { id: "left-tabs-example5", defaultActiveKey: "feature-0" }, /* @__PURE__ */ import_react83.default.createElement(Row_default, null, /* @__PURE__ */ import_react83.default.createElement(Navbar_default, { expand: "md", className: "bg-body-tertiary" }, /* @__PURE__ */ import_react83.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react83.default.createElement(NavDropdown_default, { align: "end", title: "Branch", id: "basic-nav-dropdown" }, /* @__PURE__ */ import_react83.default.createElement(NavDropdown_default.Item, { href: "#action/3.4" }, "localhost:8080"), /* @__PURE__ */ import_react83.default.createElement(NavDropdown_default.Divider, null), /* @__PURE__ */ import_react83.default.createElement(NavDropdown_default.Item, { href: "#action/3.4" }, "origin/master"), /* @__PURE__ */ import_react83.default.createElement(NavDropdown_default.Item, { href: "#action/3.4" }, "origin/feature"))))), /* @__PURE__ */ import_react83.default.createElement(Row_default, null, /* @__PURE__ */ import_react83.default.createElement(Col_default, { sm: 4 }, /* @__PURE__ */ import_react83.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, tests.tests.map(
+      (t, ndx) => /* @__PURE__ */ import_react83.default.createElement(Nav_default2.Item, { key: ndx }, /* @__PURE__ */ import_react83.default.createElement(Nav_default2.Link, { eventKey: `test-${ndx}` }, t[0], " - ", t[1]))
+    ))), /* @__PURE__ */ import_react83.default.createElement(Col_default, { sm: 4 }, /* @__PURE__ */ import_react83.default.createElement(Tab_default.Content, null, tests.tests.map(
+      (t, ndx) => /* @__PURE__ */ import_react83.default.createElement(Tab_default.Pane, { eventKey: `test-${ndx}` }, /* @__PURE__ */ import_react83.default.createElement("pre", null, JSON.stringify(Object.entries(results).filter(([k, v]) => {
         console.log(v.src, tests.tests[ndx][0]);
         return v.src === tests.tests[ndx][0];
       }), null, 2)))
     ))))));
   };
   var TaskMan = ({ setAdminMode, users, adminMode, children: children2 }) => {
-    return /* @__PURE__ */ import_react84.default.createElement("div", null, /* @__PURE__ */ import_react84.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react84.default.createElement(Navbar_default, { expand: "md", className: "bg-body-tertiary" }, /* @__PURE__ */ import_react84.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react84.default.createElement(Navbar_default.Toggle, { "aria-controls": "basic-navbar-nav" }), /* @__PURE__ */ import_react84.default.createElement(Navbar_default.Collapse, { id: "basic-navbar-nav" }, /* @__PURE__ */ import_react84.default.createElement(Nav_default2, { className: "me-auto" }, /* @__PURE__ */ import_react84.default.createElement(Tabs_default2, { defaultActiveKey: "/tests" }, /* @__PURE__ */ import_react84.default.createElement(
+    return /* @__PURE__ */ import_react83.default.createElement("div", null, /* @__PURE__ */ import_react83.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react83.default.createElement(Navbar_default, { expand: "md", className: "bg-body-tertiary" }, /* @__PURE__ */ import_react83.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react83.default.createElement(Navbar_default.Toggle, { "aria-controls": "basic-navbar-nav" }), /* @__PURE__ */ import_react83.default.createElement(Navbar_default.Collapse, { id: "basic-navbar-nav" }, /* @__PURE__ */ import_react83.default.createElement(Nav_default2, { className: "me-auto" }, /* @__PURE__ */ import_react83.default.createElement(Tabs_default2, { defaultActiveKey: "/tests" }, /* @__PURE__ */ import_react83.default.createElement(
       Tab_default,
       {
         eventKey: "features",
-        title: /* @__PURE__ */ import_react84.default.createElement(NavLink2, { to: "/taskMan/features", className: "nav-link" }, "Features")
+        title: /* @__PURE__ */ import_react83.default.createElement(NavLink2, { to: "/taskMan/features", className: "nav-link" }, "Features")
       }
-    ), /* @__PURE__ */ import_react84.default.createElement(Tab_default, { eventKey: "kanban", title: /* @__PURE__ */ import_react84.default.createElement(NavLink2, { to: "/taskMan/kanban", className: "nav-link" }, "Kanban") }), /* @__PURE__ */ import_react84.default.createElement(Tab_default, { eventKey: "gantt", title: /* @__PURE__ */ import_react84.default.createElement(NavLink2, { to: "/taskMan/gantt", className: "nav-link" }, "Gantt") }))), /* @__PURE__ */ import_react84.default.createElement(NavDropdown_default, { align: "end", title: "User", id: "basic-nav-dropdown" }, users.map((user) => {
-      return /* @__PURE__ */ import_react84.default.createElement(NavDropdown_default.Item, { href: "#action/3.1" }, user.email);
-    }), /* @__PURE__ */ import_react84.default.createElement(NavDropdown_default.Divider, null), /* @__PURE__ */ import_react84.default.createElement(NavDropdown_default.Item, { href: "#action/3.4" }, "all")), /* @__PURE__ */ import_react84.default.createElement(ButtonGroup_default, { className: "mb-2" }, /* @__PURE__ */ import_react84.default.createElement(
+    ), /* @__PURE__ */ import_react83.default.createElement(Tab_default, { eventKey: "kanban", title: /* @__PURE__ */ import_react83.default.createElement(NavLink2, { to: "/taskMan/kanban", className: "nav-link" }, "Kanban") }), /* @__PURE__ */ import_react83.default.createElement(Tab_default, { eventKey: "gantt", title: /* @__PURE__ */ import_react83.default.createElement(NavLink2, { to: "/taskMan/gantt", className: "nav-link" }, "Gantt") }))), /* @__PURE__ */ import_react83.default.createElement(NavDropdown_default, { align: "end", title: "User", id: "basic-nav-dropdown" }, users.map((user) => {
+      return /* @__PURE__ */ import_react83.default.createElement(NavDropdown_default.Item, { href: "#action/3.1" }, user.email);
+    }), /* @__PURE__ */ import_react83.default.createElement(NavDropdown_default.Divider, null), /* @__PURE__ */ import_react83.default.createElement(NavDropdown_default.Item, { href: "#action/3.4" }, "all")), /* @__PURE__ */ import_react83.default.createElement(ButtonGroup_default, { className: "mb-2" }, /* @__PURE__ */ import_react83.default.createElement(
       ToggleButton_default,
       {
         id: "toggle-check",
@@ -80810,13 +80794,13 @@ ${latestSubscriptionCallbackError.current.stack}
     )))))), children2);
   };
   var DocGal = ({ setAdminMode, users, adminMode, children: children2 }) => {
-    return /* @__PURE__ */ import_react84.default.createElement("div", null, /* @__PURE__ */ import_react84.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react84.default.createElement(Navbar_default, { expand: "md", className: "bg-body-tertiary" }, /* @__PURE__ */ import_react84.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react84.default.createElement(Navbar_default.Toggle, { "aria-controls": "basic-navbar-nav" }), /* @__PURE__ */ import_react84.default.createElement(Navbar_default.Collapse, { id: "docGal-navbar-nav" }, /* @__PURE__ */ import_react84.default.createElement(Nav_default2, { className: "me-auto" }, /* @__PURE__ */ import_react84.default.createElement(Tabs_default2, { defaultActiveKey: "/fs" }, /* @__PURE__ */ import_react84.default.createElement(Tab_default, { eventKey: "fs", title: /* @__PURE__ */ import_react84.default.createElement(NavLink2, { to: "/docGal/fs", className: "nav-link" }, "FS") }), /* @__PURE__ */ import_react84.default.createElement(Tab_default, { eventKey: "db", title: /* @__PURE__ */ import_react84.default.createElement(NavLink2, { to: "/docGal/db", className: "nav-link" }, "DB") }))))))), children2);
+    return /* @__PURE__ */ import_react83.default.createElement("div", null, /* @__PURE__ */ import_react83.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react83.default.createElement(Navbar_default, { expand: "md", className: "bg-body-tertiary" }, /* @__PURE__ */ import_react83.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react83.default.createElement(Navbar_default.Toggle, { "aria-controls": "basic-navbar-nav" }), /* @__PURE__ */ import_react83.default.createElement(Navbar_default.Collapse, { id: "docGal-navbar-nav" }, /* @__PURE__ */ import_react83.default.createElement(Nav_default2, { className: "me-auto" }, /* @__PURE__ */ import_react83.default.createElement(Tabs_default2, { defaultActiveKey: "/fs" }, /* @__PURE__ */ import_react83.default.createElement(Tab_default, { eventKey: "fs", title: /* @__PURE__ */ import_react83.default.createElement(NavLink2, { to: "/docGal/fs", className: "nav-link" }, "FS") }), /* @__PURE__ */ import_react83.default.createElement(Tab_default, { eventKey: "db", title: /* @__PURE__ */ import_react83.default.createElement(NavLink2, { to: "/docGal/db", className: "nav-link" }, "DB") }))))))), children2);
   };
   var ChatCat = ({ children: children2 }) => {
-    return /* @__PURE__ */ import_react84.default.createElement("div", null, /* @__PURE__ */ import_react84.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react84.default.createElement(Navbar_default, { expand: "md", className: "bg-body-tertiary" }, /* @__PURE__ */ import_react84.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react84.default.createElement(Navbar_default.Toggle, { "aria-controls": "basic-navbar-nav" }), /* @__PURE__ */ import_react84.default.createElement(Navbar_default.Collapse, { id: "basic-navbar-nav" }, /* @__PURE__ */ import_react84.default.createElement(Nav_default2, { className: "me-auto" }, /* @__PURE__ */ import_react84.default.createElement(Tabs_default2, { defaultActiveKey: "/chatCat/mostRecent" }, /* @__PURE__ */ import_react84.default.createElement(Tab_default, { eventKey: "/chatCat/mostRecent", title: /* @__PURE__ */ import_react84.default.createElement(NavLink2, { to: "/chatCat/mostRecent", className: "nav-link" }, "Most Recent") }), /* @__PURE__ */ import_react84.default.createElement(Tab_default, { eventKey: "/chatCat/bySubject", title: /* @__PURE__ */ import_react84.default.createElement(NavLink2, { to: "/chatCat/bySubject", className: "nav-link" }, "by Subject") }))))))), children2);
+    return /* @__PURE__ */ import_react83.default.createElement("div", null, /* @__PURE__ */ import_react83.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react83.default.createElement(Navbar_default, { expand: "md", className: "bg-body-tertiary" }, /* @__PURE__ */ import_react83.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react83.default.createElement(Navbar_default.Toggle, { "aria-controls": "basic-navbar-nav" }), /* @__PURE__ */ import_react83.default.createElement(Navbar_default.Collapse, { id: "basic-navbar-nav" }, /* @__PURE__ */ import_react83.default.createElement(Nav_default2, { className: "me-auto" }, /* @__PURE__ */ import_react83.default.createElement(Tabs_default2, { defaultActiveKey: "/chatCat/mostRecent" }, /* @__PURE__ */ import_react83.default.createElement(Tab_default, { eventKey: "/chatCat/mostRecent", title: /* @__PURE__ */ import_react83.default.createElement(NavLink2, { to: "/chatCat/mostRecent", className: "nav-link" }, "Most Recent") }), /* @__PURE__ */ import_react83.default.createElement(Tab_default, { eventKey: "/chatCat/bySubject", title: /* @__PURE__ */ import_react83.default.createElement(NavLink2, { to: "/chatCat/bySubject", className: "nav-link" }, "by Subject") }))))))), children2);
   };
   var WhoThat = ({ children: children2 }) => {
-    return /* @__PURE__ */ import_react84.default.createElement("div", null, /* @__PURE__ */ import_react84.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react84.default.createElement(Navbar_default, { expand: "md", className: "bg-body-tertiary" }, /* @__PURE__ */ import_react84.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react84.default.createElement(Navbar_default.Toggle, { "aria-controls": "basic-navbar-nav" }), /* @__PURE__ */ import_react84.default.createElement(Navbar_default.Collapse, { id: "basic-navbar-nav" }, /* @__PURE__ */ import_react84.default.createElement(Nav_default2, { className: "me-auto" }, /* @__PURE__ */ import_react84.default.createElement(Tabs_default2, { defaultActiveKey: "/whoThat/people" }, /* @__PURE__ */ import_react84.default.createElement(Tab_default, { eventKey: "/whoThat/people", title: /* @__PURE__ */ import_react84.default.createElement(NavLink2, { to: "/whoThat/people", className: "nav-link" }, "People") }), /* @__PURE__ */ import_react84.default.createElement(Tab_default, { eventKey: "/whoThat/groups", title: /* @__PURE__ */ import_react84.default.createElement(NavLink2, { to: "/whoThat/groups", className: "nav-link" }, "Groups") }), /* @__PURE__ */ import_react84.default.createElement(Tab_default, { eventKey: "/whoThat/org", title: /* @__PURE__ */ import_react84.default.createElement(NavLink2, { to: "/whoThat/org", className: "nav-link" }, "Org") }))), /* @__PURE__ */ import_react84.default.createElement(ButtonGroup_default, { className: "mb-2" }, /* @__PURE__ */ import_react84.default.createElement(
+    return /* @__PURE__ */ import_react83.default.createElement("div", null, /* @__PURE__ */ import_react83.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react83.default.createElement(Navbar_default, { expand: "md", className: "bg-body-tertiary" }, /* @__PURE__ */ import_react83.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react83.default.createElement(Navbar_default.Toggle, { "aria-controls": "basic-navbar-nav" }), /* @__PURE__ */ import_react83.default.createElement(Navbar_default.Collapse, { id: "basic-navbar-nav" }, /* @__PURE__ */ import_react83.default.createElement(Nav_default2, { className: "me-auto" }, /* @__PURE__ */ import_react83.default.createElement(Tabs_default2, { defaultActiveKey: "/whoThat/people" }, /* @__PURE__ */ import_react83.default.createElement(Tab_default, { eventKey: "/whoThat/people", title: /* @__PURE__ */ import_react83.default.createElement(NavLink2, { to: "/whoThat/people", className: "nav-link" }, "People") }), /* @__PURE__ */ import_react83.default.createElement(Tab_default, { eventKey: "/whoThat/groups", title: /* @__PURE__ */ import_react83.default.createElement(NavLink2, { to: "/whoThat/groups", className: "nav-link" }, "Groups") }), /* @__PURE__ */ import_react83.default.createElement(Tab_default, { eventKey: "/whoThat/org", title: /* @__PURE__ */ import_react83.default.createElement(NavLink2, { to: "/whoThat/org", className: "nav-link" }, "Org") }))), /* @__PURE__ */ import_react83.default.createElement(ButtonGroup_default, { className: "mb-2" }, /* @__PURE__ */ import_react83.default.createElement(
       ToggleButton_default,
       {
         id: "toggle-check",
@@ -80869,15 +80853,15 @@ ${latestSubscriptionCallbackError.current.stack}
       ]
     };
     if (!adminMode)
-      return /* @__PURE__ */ import_react84.default.createElement(Tab_default.Container, { id: "left-tabs-example8", defaultActiveKey: "feature-0" }, /* @__PURE__ */ import_react84.default.createElement(Row_default, null, /* @__PURE__ */ import_react84.default.createElement(Col_default, { sm: 12 }, /* @__PURE__ */ import_react84.default.createElement("button", { onClick: () => {
+      return /* @__PURE__ */ import_react83.default.createElement(Tab_default.Container, { id: "left-tabs-example8", defaultActiveKey: "feature-0" }, /* @__PURE__ */ import_react83.default.createElement(Row_default, null, /* @__PURE__ */ import_react83.default.createElement(Col_default, { sm: 12 }, /* @__PURE__ */ import_react83.default.createElement("button", { onClick: () => {
         openNewColumnModal();
-      } }, "new column"), /* @__PURE__ */ import_react84.default.createElement(UncontrolledBoard, { initialBoard: board }))));
-    return /* @__PURE__ */ import_react84.default.createElement(Crud2, { schema: kanbanSchema, collectionName: "kanban", collection: kanban });
+      } }, "new column"), /* @__PURE__ */ import_react83.default.createElement(UncontrolledBoard, { initialBoard: board }))));
+    return /* @__PURE__ */ import_react83.default.createElement(Crud2, { schema: kanbanSchema, collectionName: "kanban", collection: kanban });
   };
   var GanttChart = ({ gantt, tests, results, features, adminMode }) => {
     if (!adminMode) {
       if (gantt.length > 1) {
-        return /* @__PURE__ */ import_react84.default.createElement(Row_default, null, /* @__PURE__ */ import_react84.default.createElement(Col_default, { sm: 12 }, /* @__PURE__ */ import_react84.default.createElement(Gantt, { tasks: (gantt || []).map((g) => {
+        return /* @__PURE__ */ import_react83.default.createElement(Row_default, null, /* @__PURE__ */ import_react83.default.createElement(Col_default, { sm: 12 }, /* @__PURE__ */ import_react83.default.createElement(Gantt, { tasks: (gantt || []).map((g) => {
           console.log(g);
           let task = {
             start: new Date(2020, 1, 1),
@@ -80893,17 +80877,17 @@ ${latestSubscriptionCallbackError.current.stack}
           return task;
         }) })));
       } else {
-        return /* @__PURE__ */ import_react84.default.createElement("p", null, "you need to add some gantt items");
+        return /* @__PURE__ */ import_react83.default.createElement("p", null, "you need to add some gantt items");
       }
     }
-    return /* @__PURE__ */ import_react84.default.createElement(Crud2, { schema: ganttSchema, collectionName: "gantt", collection: gantt });
+    return /* @__PURE__ */ import_react83.default.createElement(Crud2, { schema: ganttSchema, collectionName: "gantt", collection: gantt });
   };
   var Users = ({ users, adminMode }) => {
     if (!adminMode)
-      return /* @__PURE__ */ import_react84.default.createElement(Tab_default.Container, { id: "left-tabs-example9", defaultActiveKey: "feature-0" }, /* @__PURE__ */ import_react84.default.createElement(Row_default, null, /* @__PURE__ */ import_react84.default.createElement(Col_default, { sm: 12 }, /* @__PURE__ */ import_react84.default.createElement("ul", null, users.map((user) => {
-        return /* @__PURE__ */ import_react84.default.createElement("li", null, user.email);
+      return /* @__PURE__ */ import_react83.default.createElement(Tab_default.Container, { id: "left-tabs-example9", defaultActiveKey: "feature-0" }, /* @__PURE__ */ import_react83.default.createElement(Row_default, null, /* @__PURE__ */ import_react83.default.createElement(Col_default, { sm: 12 }, /* @__PURE__ */ import_react83.default.createElement("ul", null, users.map((user) => {
+        return /* @__PURE__ */ import_react83.default.createElement("li", null, user.email);
       })))));
-    return /* @__PURE__ */ import_react84.default.createElement(Crud2, { schema: userSchema, collectionName: "users", collection: users });
+    return /* @__PURE__ */ import_react83.default.createElement(Crud2, { schema: userSchema, collectionName: "users", collection: users });
   };
   var OrgChart = ({ users, adminMode }) => {
     const initialNodes = [
@@ -80912,37 +80896,37 @@ ${latestSubscriptionCallbackError.current.stack}
     ];
     const initialEdges = [{ id: "e1-2", source: "1", target: "2" }];
     if (!adminMode)
-      return /* @__PURE__ */ import_react84.default.createElement(Tab_default.Container, { id: "left-tabs-example9", defaultActiveKey: "feature-0" }, /* @__PURE__ */ import_react84.default.createElement(Row_default, null, /* @__PURE__ */ import_react84.default.createElement(Col_default, { sm: 12 }, /* @__PURE__ */ import_react84.default.createElement("div", { style: { width: "100vw", height: "100vh" } }, /* @__PURE__ */ import_react84.default.createElement(index, { nodes: [
+      return /* @__PURE__ */ import_react83.default.createElement(Tab_default.Container, { id: "left-tabs-example9", defaultActiveKey: "feature-0" }, /* @__PURE__ */ import_react83.default.createElement(Row_default, null, /* @__PURE__ */ import_react83.default.createElement(Col_default, { sm: 12 }, /* @__PURE__ */ import_react83.default.createElement("div", { style: { width: "100vw", height: "100vh" } }, /* @__PURE__ */ import_react83.default.createElement(index, { nodes: [
         ...initialNodes,
         ...users.map((user) => {
           return { id: user._id, position: { x: 0, y: 0 }, data: { label: user.email } };
         })
       ], edges: initialEdges })))));
-    return /* @__PURE__ */ import_react84.default.createElement(Crud2, { schema: userSchema, collectionName: "users", collection: users });
+    return /* @__PURE__ */ import_react83.default.createElement(Crud2, { schema: userSchema, collectionName: "users", collection: users });
   };
   var DocGalFsNav = ({ docGalFs, filepath }) => {
-    return /* @__PURE__ */ import_react84.default.createElement("div", null, /* @__PURE__ */ import_react84.default.createElement("ul", null, ...docGalFs.map((lm) => {
-      return /* @__PURE__ */ import_react84.default.createElement("li", null, /* @__PURE__ */ import_react84.default.createElement("a", { href: `${filepath}/${lm.name}` }, lm.name), lm.children.length > 0 && /* @__PURE__ */ import_react84.default.createElement(DocGalFsNav, { docGalFs: lm.children, filepath: `${filepath}/${lm.name}` }));
+    return /* @__PURE__ */ import_react83.default.createElement("div", null, /* @__PURE__ */ import_react83.default.createElement("ul", null, ...docGalFs.map((lm) => {
+      return /* @__PURE__ */ import_react83.default.createElement("li", null, /* @__PURE__ */ import_react83.default.createElement("a", { href: `${filepath}/${lm.name}` }, lm.name), lm.children.length > 0 && /* @__PURE__ */ import_react83.default.createElement(DocGalFsNav, { docGalFs: lm.children, filepath: `${filepath}/${lm.name}` }));
     })));
   };
   var DocGalFs = ({
     docGalFs
     // tests, results, features, adminMode
   }) => {
-    return /* @__PURE__ */ import_react84.default.createElement(Row_default, null, /* @__PURE__ */ import_react84.default.createElement(Col_default, { sm: 4 }, /* @__PURE__ */ import_react84.default.createElement(DocGalFsNav, { docGalFs, filepath: "" })), /* @__PURE__ */ import_react84.default.createElement(Col_default, { sm: 4 }, /* @__PURE__ */ import_react84.default.createElement(Tab_default.Content, null)));
+    return /* @__PURE__ */ import_react83.default.createElement(Row_default, null, /* @__PURE__ */ import_react83.default.createElement(Col_default, { sm: 4 }, /* @__PURE__ */ import_react83.default.createElement(DocGalFsNav, { docGalFs, filepath: "" })), /* @__PURE__ */ import_react83.default.createElement(Col_default, { sm: 4 }, /* @__PURE__ */ import_react83.default.createElement(Tab_default.Content, null)));
   };
   var DocGalDb = ({
     // gantt, tests, results, features, adminMode
   }) => {
-    return /* @__PURE__ */ import_react84.default.createElement(Row_default, null, /* @__PURE__ */ import_react84.default.createElement(Col_default, { sm: 12 }, "DocGalDb"));
+    return /* @__PURE__ */ import_react83.default.createElement(Row_default, null, /* @__PURE__ */ import_react83.default.createElement(Col_default, { sm: 12 }, "DocGalDb"));
   };
   var ChatCatPeople = ({ users }) => {
-    return /* @__PURE__ */ import_react84.default.createElement(Tab_default.Container, { id: "left-tabs-example9", defaultActiveKey: "feature-0" }, /* @__PURE__ */ import_react84.default.createElement(Row_default, null, /* @__PURE__ */ import_react84.default.createElement(Col_default, { sm: 12 }, /* @__PURE__ */ import_react84.default.createElement("ul", null, users.map((user) => {
-      return /* @__PURE__ */ import_react84.default.createElement("li", null, user.email);
+    return /* @__PURE__ */ import_react83.default.createElement(Tab_default.Container, { id: "left-tabs-example9", defaultActiveKey: "feature-0" }, /* @__PURE__ */ import_react83.default.createElement(Row_default, null, /* @__PURE__ */ import_react83.default.createElement(Col_default, { sm: 12 }, /* @__PURE__ */ import_react83.default.createElement("ul", null, users.map((user) => {
+      return /* @__PURE__ */ import_react83.default.createElement("li", null, user.email);
     })))));
   };
   var ChatCatConversations = ({ users, conversations }) => {
-    return /* @__PURE__ */ import_react84.default.createElement(Row_default, null, /* @__PURE__ */ import_react84.default.createElement(Navbar_default, { expand: "md", className: "bg-body-tertiary" }, /* @__PURE__ */ import_react84.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react84.default.createElement(Navbar_default.Toggle, { "aria-controls": "basic-navbar-nav" }), /* @__PURE__ */ import_react84.default.createElement(Navbar_default.Collapse, { id: "basic-navbar-nav" }, /* @__PURE__ */ import_react84.default.createElement(Nav_default2, { className: "me-auto" }, /* @__PURE__ */ import_react84.default.createElement(Tabs_default2, { defaultActiveKey: "/chatCat/mostRecent" }, /* @__PURE__ */ import_react84.default.createElement(Tab_default, { eventKey: "/chatCat/mostRecent", title: /* @__PURE__ */ import_react84.default.createElement(NavLink2, { to: "/chatCat/mostRecent", className: "nav-link" }, "Feature") }), /* @__PURE__ */ import_react84.default.createElement(Tab_default, { eventKey: "/chatCat/bySubject", title: /* @__PURE__ */ import_react84.default.createElement(NavLink2, { to: "/chatCat/bySubject", className: "nav-link" }, "Kanban") }), /* @__PURE__ */ import_react84.default.createElement(Tab_default, { eventKey: "/chatCat/bySubject", title: /* @__PURE__ */ import_react84.default.createElement(NavLink2, { to: "/chatCat/bySubject", className: "nav-link" }, "Gantt") }), /* @__PURE__ */ import_react84.default.createElement(Tab_default, { eventKey: "/chatCat/bySubject", title: /* @__PURE__ */ import_react84.default.createElement(NavLink2, { to: "/chatCat/bySubject", className: "nav-link" }, "FS docs") }), /* @__PURE__ */ import_react84.default.createElement(Tab_default, { eventKey: "/chatCat/bySubject", title: /* @__PURE__ */ import_react84.default.createElement(NavLink2, { to: "/chatCat/bySubject", className: "nav-link" }, "DB docs") }), /* @__PURE__ */ import_react84.default.createElement(Tab_default, { eventKey: "/chatCat/bySubject", title: /* @__PURE__ */ import_react84.default.createElement(NavLink2, { to: "/chatCat/bySubject", className: "nav-link" }, "Groups") }))), /* @__PURE__ */ import_react84.default.createElement(ButtonGroup_default, { className: "mb-2" }, /* @__PURE__ */ import_react84.default.createElement(
+    return /* @__PURE__ */ import_react83.default.createElement(Row_default, null, /* @__PURE__ */ import_react83.default.createElement(Navbar_default, { expand: "md", className: "bg-body-tertiary" }, /* @__PURE__ */ import_react83.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react83.default.createElement(Navbar_default.Toggle, { "aria-controls": "basic-navbar-nav" }), /* @__PURE__ */ import_react83.default.createElement(Navbar_default.Collapse, { id: "basic-navbar-nav" }, /* @__PURE__ */ import_react83.default.createElement(Nav_default2, { className: "me-auto" }, /* @__PURE__ */ import_react83.default.createElement(Tabs_default2, { defaultActiveKey: "/chatCat/mostRecent" }, /* @__PURE__ */ import_react83.default.createElement(Tab_default, { eventKey: "/chatCat/mostRecent", title: /* @__PURE__ */ import_react83.default.createElement(NavLink2, { to: "/chatCat/mostRecent", className: "nav-link" }, "Feature") }), /* @__PURE__ */ import_react83.default.createElement(Tab_default, { eventKey: "/chatCat/bySubject", title: /* @__PURE__ */ import_react83.default.createElement(NavLink2, { to: "/chatCat/bySubject", className: "nav-link" }, "Kanban") }), /* @__PURE__ */ import_react83.default.createElement(Tab_default, { eventKey: "/chatCat/bySubject", title: /* @__PURE__ */ import_react83.default.createElement(NavLink2, { to: "/chatCat/bySubject", className: "nav-link" }, "Gantt") }), /* @__PURE__ */ import_react83.default.createElement(Tab_default, { eventKey: "/chatCat/bySubject", title: /* @__PURE__ */ import_react83.default.createElement(NavLink2, { to: "/chatCat/bySubject", className: "nav-link" }, "FS docs") }), /* @__PURE__ */ import_react83.default.createElement(Tab_default, { eventKey: "/chatCat/bySubject", title: /* @__PURE__ */ import_react83.default.createElement(NavLink2, { to: "/chatCat/bySubject", className: "nav-link" }, "DB docs") }), /* @__PURE__ */ import_react83.default.createElement(Tab_default, { eventKey: "/chatCat/bySubject", title: /* @__PURE__ */ import_react83.default.createElement(NavLink2, { to: "/chatCat/bySubject", className: "nav-link" }, "Groups") }))), /* @__PURE__ */ import_react83.default.createElement(ButtonGroup_default, { className: "mb-2" }, /* @__PURE__ */ import_react83.default.createElement(
       ToggleButton_default,
       {
         id: "toggle-check",
@@ -80955,19 +80939,19 @@ ${latestSubscriptionCallbackError.current.stack}
     ))))));
   };
   var Report = () => {
-    const [state, setState] = (0, import_react84.useState)({
+    const [state, setState] = (0, import_react83.useState)({
       tests: [],
       buildDir: "",
       results: {}
     });
-    const [tests, setTests] = (0, import_react84.useState)({
+    const [tests, setTests] = (0, import_react83.useState)({
       tests: [],
       buildDir: ""
     });
-    const [features, setFeatures] = (0, import_react84.useState)(
+    const [features, setFeatures] = (0, import_react83.useState)(
       []
     );
-    const [kanban, setKanban] = (0, import_react84.useState)(
+    const [kanban, setKanban] = (0, import_react83.useState)(
       []
     );
     const importResults = async () => {
@@ -80989,31 +80973,31 @@ ${latestSubscriptionCallbackError.current.stack}
     const importFeatures = async () => {
       fetch("http://localhost:3000/features.json").then((response) => response.json()).then((json2) => setFeatures(json2)).catch((error2) => console.error(error2));
     };
-    (0, import_react84.useEffect)(() => {
+    (0, import_react83.useEffect)(() => {
       importFeatures();
     }, []);
     const importKanban = async () => {
       fetch("http://localhost:3000/kanbans.json").then((response) => response.json()).then((json2) => setKanban(json2)).catch((error2) => console.error(error2));
     };
-    (0, import_react84.useEffect)(() => {
+    (0, import_react83.useEffect)(() => {
       importKanban();
     }, []);
-    const [users, setUsers] = (0, import_react84.useState)(
+    const [users, setUsers] = (0, import_react83.useState)(
       []
     );
     const importUsers = async () => {
       fetch("http://localhost:3000/users.json").then((response) => response.json()).then((json2) => setUsers(json2)).catch((error2) => console.error(error2));
     };
-    (0, import_react84.useEffect)(() => {
+    (0, import_react83.useEffect)(() => {
       importUsers();
     }, []);
-    const [gantt, setGantt] = (0, import_react84.useState)(
+    const [gantt, setGantt] = (0, import_react83.useState)(
       []
     );
     const importGantt = async () => {
       fetch("http://localhost:3000/gantts.json").then((response) => response.json()).then((json2) => setGantt(json2)).catch((error2) => console.error(error2));
     };
-    (0, import_react84.useEffect)(() => {
+    (0, import_react83.useEffect)(() => {
       importGantt();
     }, []);
     const importTests = async () => {
@@ -81021,36 +81005,36 @@ ${latestSubscriptionCallbackError.current.stack}
       const y = await x.json();
       setTests(y);
     };
-    (0, import_react84.useEffect)(() => {
+    (0, import_react83.useEffect)(() => {
       importResults();
     }, []);
-    (0, import_react84.useEffect)(() => {
+    (0, import_react83.useEffect)(() => {
       importTests();
     }, []);
-    const [activeKey, setActiveKey] = (0, import_react84.useState)("home");
+    const [activeKey, setActiveKey] = (0, import_react83.useState)("home");
     const handleSelect = (selectedKey) => {
       setActiveKey(selectedKey);
     };
-    const [adminMode, setAdminMode] = (0, import_react84.useState)(false);
-    const [docGalFs, setDocGalFs] = (0, import_react84.useState)(
+    const [adminMode, setAdminMode] = (0, import_react83.useState)(false);
+    const [docGalFs, setDocGalFs] = (0, import_react83.useState)(
       []
     );
     const importFs = async () => {
       fetch("http://localhost:3000/docGal/fs.json").then((response) => response.json()).then((json2) => setDocGalFs(json2)).catch((error2) => console.error(error2));
     };
-    (0, import_react84.useEffect)(() => {
+    (0, import_react83.useEffect)(() => {
       importFs();
     }, []);
-    const [chatCatRooms, setChatCatRooms] = (0, import_react84.useState)(
+    const [chatCatRooms, setChatCatRooms] = (0, import_react83.useState)(
       []
     );
     const importChatCatRooms = async () => {
       fetch("http://localhost:3000/rooms.json").then((response) => response.json()).then((json2) => setChatCatRooms(json2)).catch((error2) => console.error(error2));
     };
-    (0, import_react84.useEffect)(() => {
+    (0, import_react83.useEffect)(() => {
       importChatCatRooms();
     }, []);
-    return /* @__PURE__ */ import_react84.default.createElement("div", null, /* @__PURE__ */ import_react84.default.createElement("style", null, `
+    return /* @__PURE__ */ import_react83.default.createElement("div", null, /* @__PURE__ */ import_react83.default.createElement("style", null, `
 pre, code, p {
   max-width: 40rem;
   text-wrap: auto;
@@ -81068,23 +81052,31 @@ footer {
 
   top: 0;
 }
-          `), /* @__PURE__ */ import_react84.default.createElement(BrowserRouter, null, /* @__PURE__ */ import_react84.default.createElement(Navbar_default, { expand: "md", className: "bg-body-tertiary" }, /* @__PURE__ */ import_react84.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react84.default.createElement(Navbar_default.Toggle, { "aria-controls": "basic-navbar-nav" }), /* @__PURE__ */ import_react84.default.createElement(Navbar_default.Collapse, { id: "basic-navbar-nav" }, /* @__PURE__ */ import_react84.default.createElement(Nav_default2, { className: "me-auto" }, /* @__PURE__ */ import_react84.default.createElement(Tabs_default2, { defaultActiveKey: "/tests" }, /* @__PURE__ */ import_react84.default.createElement(Tab_default, { eventKey: "tests", title: /* @__PURE__ */ import_react84.default.createElement(NavLink2, { to: "/tests", className: "nav-link" }, "TestPup") }), /* @__PURE__ */ import_react84.default.createElement(Tab_default, { eventKey: "taskMan", title: /* @__PURE__ */ import_react84.default.createElement(NavLink2, { to: "/taskMan/features", className: "nav-link" }, "TaskMan") }), /* @__PURE__ */ import_react84.default.createElement(Tab_default, { eventKey: "docGal", title: /* @__PURE__ */ import_react84.default.createElement(NavLink2, { to: "/docGal/fs", className: "nav-link" }, "DocGal") }), /* @__PURE__ */ import_react84.default.createElement(Tab_default, { eventKey: "chatCat", title: /* @__PURE__ */ import_react84.default.createElement(NavLink2, { to: "/chatCat/mostRecent", className: "nav-link" }, "ChatCat") }), /* @__PURE__ */ import_react84.default.createElement(Tab_default, { eventKey: "whoThat", title: /* @__PURE__ */ import_react84.default.createElement(NavLink2, { to: "/whoThat/people", className: "nav-link" }, "WhoThat") })))), /* @__PURE__ */ import_react84.default.createElement(LoginButton_default, null))), /* @__PURE__ */ import_react84.default.createElement(Routes, null, /* @__PURE__ */ import_react84.default.createElement(Route, { path: "/tests", element: /* @__PURE__ */ import_react84.default.createElement(Tests, { adminMode, features, results: state.results, tests }) }), /* @__PURE__ */ import_react84.default.createElement(Route, { path: "/chatCat/mostRecent", element: /* @__PURE__ */ import_react84.default.createElement(
+          `), /* @__PURE__ */ import_react83.default.createElement(BrowserRouter, null, /* @__PURE__ */ import_react83.default.createElement(Navbar_default, { expand: "md", className: "bg-body-tertiary" }, /* @__PURE__ */ import_react83.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react83.default.createElement(Navbar_default.Toggle, { "aria-controls": "basic-navbar-nav" }), /* @__PURE__ */ import_react83.default.createElement(Navbar_default.Collapse, { id: "basic-navbar-nav" }, /* @__PURE__ */ import_react83.default.createElement(Nav_default2, { className: "me-auto" }, /* @__PURE__ */ import_react83.default.createElement(Tabs_default2, { defaultActiveKey: "/tests" }, /* @__PURE__ */ import_react83.default.createElement(Tab_default, { eventKey: "tests", title: /* @__PURE__ */ import_react83.default.createElement(NavLink2, { to: "/tests", className: "nav-link" }, "TestPup") }), /* @__PURE__ */ import_react83.default.createElement(Tab_default, { eventKey: "taskMan", title: /* @__PURE__ */ import_react83.default.createElement(NavLink2, { to: "/taskMan/features", className: "nav-link" }, "TaskMan") }), /* @__PURE__ */ import_react83.default.createElement(Tab_default, { eventKey: "docGal", title: /* @__PURE__ */ import_react83.default.createElement(NavLink2, { to: "/docGal/fs", className: "nav-link" }, "DocGal") }), /* @__PURE__ */ import_react83.default.createElement(Tab_default, { eventKey: "chatCat", title: /* @__PURE__ */ import_react83.default.createElement(NavLink2, { to: "/chatCat/mostRecent", className: "nav-link" }, "ChatCat") }), /* @__PURE__ */ import_react83.default.createElement(Tab_default, { eventKey: "whoThat", title: /* @__PURE__ */ import_react83.default.createElement(NavLink2, { to: "/whoThat/people", className: "nav-link" }, "WhoThat") })))), /* @__PURE__ */ import_react83.default.createElement(ButtonGroup_default, { className: "mb-2" }, /* @__PURE__ */ import_react83.default.createElement(
+      Button_default2,
+      {
+        id: "login",
+        value: "1",
+        onChange: (e) => setAdminMode(!adminMode)
+      },
+      "Login"
+    )))), /* @__PURE__ */ import_react83.default.createElement(Routes, null, /* @__PURE__ */ import_react83.default.createElement(Route, { path: "/tests", element: /* @__PURE__ */ import_react83.default.createElement(Tests, { adminMode, features, results: state.results, tests }) }), /* @__PURE__ */ import_react83.default.createElement(Route, { path: "/chatCat/mostRecent", element: /* @__PURE__ */ import_react83.default.createElement(
       ChatCat,
       {
         chatCatRooms,
         chatCatHuddles: [],
         users
       },
-      /* @__PURE__ */ import_react84.default.createElement(ChatCatPeople, { users })
-    ) }), /* @__PURE__ */ import_react84.default.createElement(Route, { path: "/chatCat/bySubject", element: /* @__PURE__ */ import_react84.default.createElement(
+      /* @__PURE__ */ import_react83.default.createElement(ChatCatPeople, { users })
+    ) }), /* @__PURE__ */ import_react83.default.createElement(Route, { path: "/chatCat/bySubject", element: /* @__PURE__ */ import_react83.default.createElement(
       ChatCat,
       {
         chatCatRooms,
         chatCatHuddles: [],
         users
       },
-      /* @__PURE__ */ import_react84.default.createElement(ChatCatConversations, { users, conversations: [] })
-    ) }), /* @__PURE__ */ import_react84.default.createElement(Route, { path: "/docGal/fs", element: /* @__PURE__ */ import_react84.default.createElement(DocGal, { adminMode, setAdminMode, users }, /* @__PURE__ */ import_react84.default.createElement(DocGalFs, { docGalFs })) }), /* @__PURE__ */ import_react84.default.createElement(Route, { path: "/docGal/db", element: /* @__PURE__ */ import_react84.default.createElement(DocGal, { adminMode, setAdminMode, users }, /* @__PURE__ */ import_react84.default.createElement(DocGalDb, null)) }), /* @__PURE__ */ import_react84.default.createElement(Route, { path: "/taskMan/features", element: /* @__PURE__ */ import_react84.default.createElement(TaskMan, { adminMode, setAdminMode, users }, /* @__PURE__ */ import_react84.default.createElement(Features, { adminMode, features, results: state.results, tests })) }), /* @__PURE__ */ import_react84.default.createElement(Route, { path: "/taskMan/kanban", element: /* @__PURE__ */ import_react84.default.createElement(TaskMan, { adminMode, setAdminMode, users }, /* @__PURE__ */ import_react84.default.createElement(
+      /* @__PURE__ */ import_react83.default.createElement(ChatCatConversations, { users, conversations: [] })
+    ) }), /* @__PURE__ */ import_react83.default.createElement(Route, { path: "/docGal/fs", element: /* @__PURE__ */ import_react83.default.createElement(DocGal, { adminMode, setAdminMode, users }, /* @__PURE__ */ import_react83.default.createElement(DocGalFs, { docGalFs })) }), /* @__PURE__ */ import_react83.default.createElement(Route, { path: "/docGal/db", element: /* @__PURE__ */ import_react83.default.createElement(DocGal, { adminMode, setAdminMode, users }, /* @__PURE__ */ import_react83.default.createElement(DocGalDb, null)) }), /* @__PURE__ */ import_react83.default.createElement(Route, { path: "/taskMan/features", element: /* @__PURE__ */ import_react83.default.createElement(TaskMan, { adminMode, setAdminMode, users }, /* @__PURE__ */ import_react83.default.createElement(Features, { adminMode, features, results: state.results, tests })) }), /* @__PURE__ */ import_react83.default.createElement(Route, { path: "/taskMan/kanban", element: /* @__PURE__ */ import_react83.default.createElement(TaskMan, { adminMode, setAdminMode, users }, /* @__PURE__ */ import_react83.default.createElement(
       Kanban,
       {
         adminMode,
@@ -81095,7 +81087,7 @@ footer {
         openNewColumnModal: () => {
         }
       }
-    )) }), /* @__PURE__ */ import_react84.default.createElement(Route, { path: "/taskMan/gantt", element: /* @__PURE__ */ import_react84.default.createElement(TaskMan, { adminMode, setAdminMode, users }, /* @__PURE__ */ import_react84.default.createElement(
+    )) }), /* @__PURE__ */ import_react83.default.createElement(Route, { path: "/taskMan/gantt", element: /* @__PURE__ */ import_react83.default.createElement(TaskMan, { adminMode, setAdminMode, users }, /* @__PURE__ */ import_react83.default.createElement(
       GanttChart,
       {
         adminMode,
@@ -81104,12 +81096,12 @@ footer {
         results: state.results,
         tests
       }
-    )) }), /* @__PURE__ */ import_react84.default.createElement(Route, { path: "/whoThat/people", element: /* @__PURE__ */ import_react84.default.createElement(WhoThat, { users }, /* @__PURE__ */ import_react84.default.createElement(Users, { adminMode, users })) }), /* @__PURE__ */ import_react84.default.createElement(Route, { path: "/whoThat/groups", element: /* @__PURE__ */ import_react84.default.createElement(WhoThat, { users }, /* @__PURE__ */ import_react84.default.createElement(Users, { adminMode, users })) }), /* @__PURE__ */ import_react84.default.createElement(Route, { path: "/whoThat/org", element: /* @__PURE__ */ import_react84.default.createElement(WhoThat, { users }, /* @__PURE__ */ import_react84.default.createElement(OrgChart, { adminMode, users })) }))), /* @__PURE__ */ import_react84.default.createElement("footer", null, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react84.default.createElement("a", { href: "https://adamwong246.github.io/testeranto/" }, "testeranto ")));
+    )) }), /* @__PURE__ */ import_react83.default.createElement(Route, { path: "/whoThat/people", element: /* @__PURE__ */ import_react83.default.createElement(WhoThat, { users }, /* @__PURE__ */ import_react83.default.createElement(Users, { adminMode, users })) }), /* @__PURE__ */ import_react83.default.createElement(Route, { path: "/whoThat/groups", element: /* @__PURE__ */ import_react83.default.createElement(WhoThat, { users }, /* @__PURE__ */ import_react83.default.createElement(Users, { adminMode, users })) }), /* @__PURE__ */ import_react83.default.createElement(Route, { path: "/whoThat/org", element: /* @__PURE__ */ import_react83.default.createElement(WhoThat, { users }, /* @__PURE__ */ import_react83.default.createElement(OrgChart, { adminMode, users })) }))), /* @__PURE__ */ import_react83.default.createElement("footer", null, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react83.default.createElement("a", { href: "https://adamwong246.github.io/testeranto/" }, "testeranto ")));
   };
   document.addEventListener("DOMContentLoaded", function() {
     const elem = document.getElementById("root");
     if (elem) {
-      import_client.default.createRoot(elem).render(import_react84.default.createElement(Report, {}));
+      import_client.default.createRoot(elem).render(import_react83.default.createElement(Report, {}));
     }
   });
 })();
