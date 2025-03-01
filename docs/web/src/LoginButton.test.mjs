@@ -36101,6 +36101,14 @@ var BaseWhen = class {
     tLog(" When:", this.name);
     const name = this.name;
     const andWhenProxy = new Proxy(pm, {
+      // set(obj, prop, value) {
+      //   return Reflect.set(...arguments);
+      //   // if (prop === "eyeCount" && value % 2 !== 0) {
+      //   //   console.log("Monsters must have an even number of eyes");
+      //   // } else {
+      //   //   return Reflect.set(...arguments);
+      //   // }
+      // },
       get(target, prop, receiver) {
         if (prop === "writeFileSync") {
           return (fp, contents) => (
@@ -36133,6 +36141,12 @@ var BaseWhen = class {
                             return pTarget[pProp].bind(pTarget);
                           } else if (pProp === "removeExposedFunction") {
                             return pTarget[pProp].bind(pTarget);
+                          } else if (pProp === "click") {
+                            return (selector, options) => {
+                              pTarget[pProp](selector, options);
+                            };
+                          } else if (pProp === "$") {
+                            return Reflect.get(...arguments);
                           } else {
                             return Reflect.get(...arguments);
                           }
@@ -36662,10 +36676,10 @@ var web_default = (testImplementations, testSpecifications, testInput) => {
           resolve(subject);
         });
       },
-      andWhen: function(s, whenCB) {
+      andWhen: function(s, whenCB, tr, utils) {
         return new Promise((resolve, rej) => {
           console.log("mark9", s, whenCB);
-          resolve(whenCB(s));
+          resolve(whenCB(s, utils));
         });
       },
       butThen: async function(s, thenCB) {
@@ -36700,6 +36714,7 @@ var LoginButton_default = () => {
   return /* @__PURE__ */ import_react3.default.createElement(
     "button",
     {
+      id: "signin",
       onClick: () => {
         console.log("clicked");
         setState(!state);
@@ -36722,11 +36737,15 @@ var implementations = {
     }
   },
   whens: {
-    Clicked: () => (x) => {
-      console.log("click 10");
-      var testEvent = new PointerEvent("click");
-      testEvent.nativeEvent = { detail: 1 };
-      x.reactElement.children[0].onClick(testEvent);
+    Clicked: () => async (x, utils) => {
+      const pages = await utils.browser.pages();
+      const page = pages.find((p) => {
+        return p.url() === "file:///Users/adam/Code/testeranto/docs/web/src/LoginButton.test.html";
+      });
+      await page.evaluate(() => {
+        document.getElementById("signin")?.click();
+      });
+      return;
     }
   },
   thens: {
@@ -36753,60 +36772,21 @@ var LoginPageSpecs = (Suite, Given, When, Then, Check) => {
         //   [],
         //   [Then.ItSaysLogIn()]
         // ),
-        test1: Given.default(
-          ["67ae06bac3c5fa5a98a08e32"],
-          [When.Clicked()],
-          [Then.ItSaysSignOut()]
-        )
+        // test1: Given.default(
+        //   ["67ae06bac3c5fa5a98a08e32"],
+        //   [When.Clicked()],
+        //   [Then.ItSaysSignOut()]
+        // ),
         // test2: Given.default(
         //   ["67ae06bac3c5fa5a98a08e32"],
         //   [When.Clicked(), When.Clicked()],
         //   [Then.ItSaysLogIn()]
         // ),
-        // test3: Given.default(
-        //   ["67ae06bac3c5fa5a98a08e32"],
-        //   [When.Clicked(), When.Clicked(), When.Clicked()],
-        //   [Then.ItSaysSignOut()]
-        // ),
-        // test1: Given.default(
-        //   [`67ae06bac3c5fa5a98a08e32`],
-        //   [
-        //     When.TheEmailIsSetTo("adam@email.com"),
-        //     When.ThePasswordIsSetTo("secret"),
-        //   ],
-        //   [
-        //     Then.TheEmailIsNot("wade@rpc"),
-        //     Then.TheEmailIs("adam@email.com"),
-        //     Then.ThePasswordIs("secret"),
-        //     Then.ThePasswordIsNot("idk"),
-        //   ]
-        // ),
-        // test2: Given.default(
-        //   [`67ae06bac3c5fa5a98a08e32`],
-        //   [When.TheEmailIsSetTo("adam@email.com")],
-        //   [Then.ThereIsNotAnEmailError()]
-        // ),
-        // test3: Given.default(
-        //   [`67ae06bac3c5fa5a98a08e32`],
-        //   [When.TheEmailIsSetTo("bob"), When.TheLoginIsSubmitted()],
-        //   [Then.ThereIsAnEmailError()]
-        // ),
-        // test4: Given.default(
-        //   [`67ae06bac3c5fa5a98a08e32`],
-        //   [
-        //     When.TheEmailIsSetTo("adam@mail.com"),
-        //     When.ThePasswordIsSetTo("foso"),
-        //   ],
-        //   [Then.ThereIsNotAnEmailError()]
-        // ),
-        // test5: Given.default(
-        //   [`67ae44eceef213d8f11c40bb`],
-        //   [
-        //     When.TheEmailIsSetTo("adam@mail.com"),
-        //     When.ThePasswordIsSetTo("foso"),
-        //   ],
-        //   [Then.ThereIsNotAnEmailError()]
-        // ),
+        test3: Given.default(
+          ["67ae06bac3c5fa5a98a08e32"],
+          [When.Clicked(), When.Clicked(), When.Clicked()],
+          [Then.ItSaysSignOut()]
+        )
       },
       []
     )

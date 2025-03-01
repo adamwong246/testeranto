@@ -141,6 +141,10 @@
       "import": "./dist/module/TaskManBackEnd.js",
       "require": "./dist/common/TaskManBackEnd.js"
     },
+    "./src/TaskMan": {
+      "import": "./dist/module/TaskMan.js",
+      "require": "./dist/common/TaskMan.js"
+    },
     "./src/Init": {
       "import": "./dist/module/Init.js",
       "require": "./dist/common/Init.js"
@@ -183,8 +187,8 @@
   "scripts": {
     "commit": "yarn build; git add --all && git commit -m 'stash'",
     "doit": "rm -rf node_modules && yarn install && yarn build",
-    "build": "sh prebuild.sh; cp ./src/cjs-shim.js ./dist/cjs-shim.js; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; yarn esbuild src/TaskManFrontEnd.tsx --outfile=dist/prebuild/TaskManFrontEnd.js --bundle; yarn esbuild src/TaskManBackEnd.ts --outfile=dist/prebuild/TaskManBackEnd.mjs --bundle --platform=node --format=esm --packages=external; sh postBuild.sh; ",
-    "dev": "cp ./src/cjs-shim.js ./dist/cjs-shim.js && tsc -p tsconfig.module.json --watch & tsc -p tsconfig.common.json --watch & tsc -p tsconfig.types.json --watch & yarn esbuild src/TaskManFrontEnd.tsx --outfile=dist/prebuild/TaskManFrontEnd.js --bundle --watch & yarn esbuild src/TaskManBackEnd.ts --platform=node  --outfile=dist/prebuild/TaskManBackEnd.mjs --bundle --watch --format=esm --packages=external",
+    "build": "sh prebuild.sh; cp ./src/cjs-shim.js ./dist/cjs-shim.js; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; yarn esbuild src/TaskManFrontEnd.tsx --outfile=dist/prebuild/TaskManFrontEnd.js --bundle; yarn esbuild src/TaskMan.ts --outfile=dist/prebuild/TaskMan.mjs --bundle --platform=node --format=esm --packages=external; sh postBuild.sh; cp ./src/TaskMan.html ./dist/prebuild/TaskMan.html",
+    "dev": "cp ./src/cjs-shim.js ./dist/cjs-shim.js && tsc -p tsconfig.module.json --watch & tsc -p tsconfig.common.json --watch & tsc -p tsconfig.types.json --watch & yarn esbuild src/TaskManFrontEnd.tsx --outfile=dist/prebuild/TaskManFrontEnd.js --bundle --watch & yarn esbuild src/TaskMan.ts --platform=node  --outfile=dist/prebuild/TaskMan.mjs --bundle --watch --format=esm --packages=external & cp ./src/TaskMan.html ./dist/prebuild/TaskMan.html",
     "build-module": "tsc -p tsconfig.module.json",
     "build-common": "tsc -p tsconfig.common.json",
     "build-types": "tsc -p tsconfig.types.json",
@@ -222,7 +226,11 @@
     "@asseinfo/react-kanban": "^2.2.0",
     "@caldwell619/react-kanban": "^0.0.12",
     "@hello-pangea/dnd": "^18.0.1",
+    "@octokit/types": "^13.8.0",
+    "@types/express": "^5.0.0",
+    "@types/uuid": "^10.0.0",
     "@xyflow/react": "^12.4.3",
+    "@zodform/core": "^0.2.0",
     "babel-loader": "^8.2.5",
     "bootstrap": "^5.2.3",
     "chai": "^5.2.0",
@@ -249,6 +257,7 @@
     "mongoose-auto-number": "2.0.0",
     "mongoose-rest-query": "^0.1.29",
     "npm-watch": "^0.11.0",
+    "octokit": "^4.1.2",
     "puppeteer-core": "^23.6.0",
     "react-bootstrap": "2.10.6",
     "react-router-dom": "6.29.0",
@@ -258,6 +267,7 @@
     "selenium-webdriver": "4.27.0",
     "url": "^0.11.4",
     "uuid": "^10.0.0",
-    "ws": "^8.16.0"
+    "ws": "^8.16.0",
+    "zod": "^3.24.2"
   }
 }

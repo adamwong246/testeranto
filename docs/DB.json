@@ -1,0 +1,7 @@
+{
+  "ordering": [
+    "todo",
+    "inProgress",
+    "done"
+  ]
+}

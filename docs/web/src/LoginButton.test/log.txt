@@ -1,17 +1,9 @@
-test resources: ,{"name":"/Users/adam/Code/testeranto/docs/web/src/LoginButton.test","ports":"","fs":"/Users/adam/Code/testeranto/docs/web/src/LoginButton.test","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/ed8a896d-f407-4aeb-9409-9b5f313ccf6c"}
+test resources: ,{"name":"/Users/adam/Code/testeranto/docs/web/src/LoginButton.test","ports":"","fs":"/Users/adam/Code/testeranto/docs/web/src/LoginButton.test","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/cb3641bb-22bc-45e3-81bb-828bb6c1072e"}
 
 Suite:,0,Testing the LoginButton
 
  Given: default
  When:,Clicked: undefined
-TypeError: x.reactElement.children[0].onClick is not a function
-    at file:///Users/adam/Code/testeranto/docs/web/src/LoginButton.test.mjs:36729:34
-    at file:///Users/adam/Code/testeranto/docs/web/src/LoginButton.test.mjs:36668:19
-    at new Promise (<anonymous>)
-    at Object.andWhen (file:///Users/adam/Code/testeranto/docs/web/src/LoginButton.test.mjs:36666:16)
-    at When.andWhen (file:///Users/adam/Code/testeranto/docs/web/src/LoginButton.test.mjs:36534:42)
-    at When.test (file:///Users/adam/Code/testeranto/docs/web/src/LoginButton.test.mjs:36152:25)
-    at Given.give (file:///Users/adam/Code/testeranto/docs/web/src/LoginButton.test.mjs:36008:24)
-    at async Testeranto.givenThat.run (file:///Users/adam/Code/testeranto/docs/web/src/LoginButton.test.mjs:35895:22)
-    at async file:///Users/adam/Code/testeranto/docs/web/src/LoginButton.test.mjs:36320:16
-    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/docs/web/src/LoginButton.test.mjs:36348:29)
+ When:,Clicked: undefined
+ When:,Clicked: undefined
+ Then:,ItSaysSignOut: undefined

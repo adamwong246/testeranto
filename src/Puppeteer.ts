@@ -4,6 +4,7 @@ import watch from "recursive-watch";
 
 import { PM_Main } from "./PM/main.js";
 import { destinationOfRuntime } from "./utils.js";
+import { timeout } from "puppeteer-core/lib/esm/puppeteer/index.js";
 
 var mode: "DEV" | "PROD" = process.argv[2] === "-dev" ? "DEV" : "PROD";
 
@@ -14,7 +15,7 @@ const childProcesses: Record<string, "loaded" | "running" | "done"> = {};
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
 
-console.log("hello Puppeteer", process.env);
+// console.log("hello Puppeteer", process.env);
 
 console.log("\n Puppeteer is running. Press 'q' to quit\n");
 process.stdin.on("keypress", (str, key) => {
@@ -45,10 +46,14 @@ export default async (partialConfig) => {
 
   await pm.startPuppeteer(
     {
+      // timeout: 1,
       waitForInitialPage: false,
-      executablePath: process.env.CHROMIUM_PATH || "/opt/homebrew/bin/chromium", //"/opt/homebrew/bin/chromium",
+      executablePath:
+        // process.env.CHROMIUM_PATH || "/opt/homebrew/bin/chromium",
+        "/opt/homebrew/bin/chromium",
       headless: false,
-      // dumpio: true,
+      dumpio: true,
+      // timeout: 0,
       args: [
         "--auto-open-devtools-for-tabs",
 

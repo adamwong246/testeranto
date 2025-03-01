@@ -99,10 +99,10 @@ export default <ITestShape extends IBaseTest>(
           // createPortal(tc, subject.domRoot);
         });
       },
-      andWhen: function (s: IStore, whenCB): Promise<ISelection> {
+      andWhen: function (s: IStore, whenCB, tr, utils): Promise<ISelection> {
         return new Promise((resolve, rej) => {
           console.log("mark9", s, whenCB);
-          resolve(whenCB(s));
+          resolve(whenCB(s, utils));
           // process.nextTick(() => {
           //   resolve(whenCB()(s));
           // });

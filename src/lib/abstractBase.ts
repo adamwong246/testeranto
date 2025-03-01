@@ -583,6 +583,15 @@ export abstract class BaseWhen<ITestShape extends IBaseTest> {
 
     const name = this.name;
     const andWhenProxy = new Proxy(pm, {
+      // set(obj, prop, value) {
+      //   return Reflect.set(...arguments);
+      //   // if (prop === "eyeCount" && value % 2 !== 0) {
+      //   //   console.log("Monsters must have an even number of eyes");
+      //   // } else {
+      //   //   return Reflect.set(...arguments);
+      //   // }
+      // },
+
       get(target, prop, receiver) {
         if (prop === "writeFileSync") {
           return (fp, contents) =>
@@ -601,13 +610,9 @@ export abstract class BaseWhen<ITestShape extends IBaseTest> {
                     return pages.map((page) => {
                       return new Proxy(page, {
                         get(pTarget, pProp, pReciever) {
+                          // console.log("mark get", pTarget, pProp, pReciever);
                           if (pProp === "screenshot") {
                             return async (x) => {
-                              // console.log(
-                              //   "custom-screenshot-MARK-afterEachProxy",
-                              //   window["custom-screenshot"].toString()
-                              // );
-
                               return pm.customScreenShot(
                                 {
                                   ...x,
@@ -618,14 +623,6 @@ export abstract class BaseWhen<ITestShape extends IBaseTest> {
                                 },
                                 page
                               );
-
-                              // return await pTarget[pProp]({
-                              //   ...x,
-                              //   path:
-                              //     `${testResourceConfiguration.fs}/suite-${suiteNdx}/given-${key}/afterEach` +
-                              //     "/" +
-                              //     x.path,
-                              // });
                             };
                           } else if (pProp === "mainFrame") {
                             return () => pTarget[pProp]();
@@ -639,6 +636,32 @@ export abstract class BaseWhen<ITestShape extends IBaseTest> {
                             // return Reflect.get(target, prop, receiver);
                             return pTarget[pProp].bind(pTarget);
                             // return target[pProp];
+                          } else if (pProp === "click") {
+                            // console.log("mark12", arguments);
+                            // return Reflect.get(target, prop, receiver);
+                            // return pTarget[pProp].bind(pTarget);
+                            // return target[pProp];
+                            return (selector, options) => {
+                              // console.log("mark13", selector, options);
+                              // debugger;
+                              pTarget[pProp](selector, options);
+                            };
+                          } else if (pProp === "$") {
+                            return Reflect.get(...arguments);
+                            // return Reflect.get(target, prop, receiver);
+                            // return pTarget[pProp].bind(pTarget);
+                            // return target[pProp];
+                            // return pTarget[pProp].bind(pTarget);
+
+                            // return async (s) => {
+                            //   console.log("mark17", s);
+                            //   console.log("pTarget", pTarget);
+                            //   console.log("pProp", pProp);
+                            //   console.log("pReciever", pReciever);
+                            //   // return "XXX";
+                            //   // debugger;
+                            //   return await pTarget[pProp](s);
+                            // };
                           } else {
                             return Reflect.get(...arguments);
                           }

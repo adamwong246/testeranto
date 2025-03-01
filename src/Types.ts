@@ -13,6 +13,7 @@ import {
   ITestInterface,
   IWebTestInterface,
 } from "./lib/types.js";
+import { PM } from "./PM/index.js";
 
 export type IPartialInterface<
   I extends IBaseTest<
@@ -160,7 +161,7 @@ export type ITestImplementation<
     whens: {
       [K in keyof ITestShape["whens"]]: (
         ...Iw: ITestShape["whens"][K]
-      ) => (zel: ITestShape["iselection"]) => ITestShape["when"];
+      ) => (zel: ITestShape["iselection"], utils: PM) => ITestShape["when"];
     };
     thens: {
       [K in keyof ITestShape["thens"]]: (

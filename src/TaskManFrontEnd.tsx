@@ -1,6 +1,4 @@
-import { ReactFlow } from '@xyflow/react';
 import { Button, ButtonGroup, Container, Dropdown, DropdownButton, Form, Navbar, NavDropdown, Table, ToggleButton } from "react-bootstrap";
-import mongoose from "mongoose";
 import React, { useEffect, useState } from "react";
 import ReactDom from "react-dom/client";
 import Col from 'react-bootstrap/Col';
@@ -9,948 +7,49 @@ import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import { BrowserRouter as Router, Route, NavLink, Routes } from 'react-router-dom';
-import { UncontrolledBoard, KanbanBoard } from '@caldwell619/react-kanban'
 import '@caldwell619/react-kanban/dist/styles.css'
-import { Gantt, Task, EventOption, StylingOption, ViewMode, DisplayOption } from 'gantt-task-react';
 import "gantt-task-react/dist/index.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@xyflow/react/dist/style.css';
+
+
 import { IRunTime } from "./lib/types";
-
-import {
-  IFeature, featuresSchema, ganttSchema, IKanban, IUser, kanbanSchema, userSchema,
-  IGantt,
-  IChatCatHuddle,
-  IChatCatRoom
-} from "./mongooseSchemas";
-
 import LoginButton from './LoginButton';
-
-const InputElementString = ({ tree, name }: { tree: any, name: string }) => {
-  console.log("mark string", tree)
-
-  // return <Form.Control type="email" placeholder={name} />
-  return <Form.Group className="mb-3" controlId={name}>
-    <Form.Label>{name}</Form.Label>
-    <Form.Control placeholder={name} />
-
-  </Form.Group>
-};
-
-const InputElementArray = ({ tree, name }: { tree: any, name: string }) => {
-  return <Form.Control type="email" placeholder="Enter email" />
-};
-
-const InputElementObject = ({ tree, name }: { tree: any, name?: string }) => {
-  // const x = schema.path(path);
-
-  console.log("mark4", tree, tree.properties)
-
-  return <div>
-    {
-      ...Object.keys(tree.properties).map((name) => {
-
-        console.log("mark6", name, tree.properties[name].type)
-
-        if (tree.properties[name].type === "object") {
-          return <InputElementObject tree={tree.properties[name]} name={name}  ></InputElementObject >
-        }
-
-        if (tree.properties[name].type === "string") {
-          return <InputElementString tree={tree.properties[name]} name={name} ></InputElementString >
-        }
-
-        if (Array.isArray(tree.properties[name].type)) {
-          return <InputElementArray tree={tree.properties[name]} name={name} ></InputElementArray >
-        }
-
-      })
-    }
-  </div >
-
-
-  // // if (tree.type === "string") {
-  // //   return <InputElementString tree={tree.properties[path]} path={path}></InputElementString >
-  // // }
-
-
-  // return <div>IDK</div>
-  // return <Form.Group>
-  //   {/* {
-  //       schema.get(path)
-  //     } */}
-  // </Form.Group>
-
-};
-
-
-const InputForm = ({ schema, path }: { schema: mongoose.Schema, path?: string }) => {
-
-  return <Form.Group>
-
-    <InputElementObject tree={schema.toJSONSchema()}  ></InputElementObject>
-
-
-  </Form.Group>
-
-};
-
-const Crud2 = ({ collection, collectionName, schema }: { collection: any, collectionName: string, schema: mongoose.Schema }) => {
-  return <div>
-    {/* <h3>{collectionName}</h3> */}
-    <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>id</th>
-          <th></th>
-
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-
-          <td>add new record</td>
-          <td>
-            <Form>
-              {/* <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" />
-                <Form.Text className="text-muted">
-                  We'll never share your email with anyone else.
-                </Form.Text>
-              </Form.Group>
-
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                <Form.Check type="checkbox" label="Check me out" />
-              </Form.Group> */}
-
-
-              <InputForm schema={schema}></InputForm>
-
-
-              <Button variant="primary" type="submit">
-                Submit
-              </Button>
-
-
-            </Form>
-          </td>
-
-        </tr>
-        {
-          collection.map((doc) => {
-            return <tr>
-              <td>{doc._id}</td>
-              <td>{JSON.stringify(doc, null, 2)}</td>
-            </tr>
-          })
-        }
-
-
-      </tbody>
-    </Table>
-  </div>
-}
-
-const Features = ({ features, tests, results, adminMode }) => {
-  if (!adminMode) return <Tab.Container id="left-tabs-example5" defaultActiveKey="feature-0">
-    <Row>
-      <Col sm={4}>
-        <Nav variant="pills" className="flex-column">
-          {(features).map((feature, ndx) => <Nav.Item key={ndx}>
-            <Nav.Link eventKey={`feature/${feature._id}`}>
-              {feature.title}
-            </Nav.Link>
-          </Nav.Item>)}
-        </Nav>
-      </Col>
-      <Col sm={8}>
-        <Tab.Content>
-          {(features).map((feature, ndx) => {
-            // const feature = features[featureKey];
-            return (
-              <Tab.Pane eventKey={`feature/${feature._id}`} key={ndx}>
-                <pre>{JSON.stringify(feature, null, 2)}</pre>
-
-                {/* <pre>{JSON.stringify(results, null, 2)}</pre> */}
-
-                <ol>
-                  {
-                    results.filter((result) => {
-                      console.log("mark1", (result.testresults.src));
-                      // return test._id === feature._id
-                      // (result.testresults.givens.features || []).includes(feature._id)
-
-                      // console.log("ark3", new Set(result.testresults.givens.reduce((mm: string[], el) => {
-                      //   mm = mm.concat(el.features)
-
-                      //   // console.log("mark2", el);
-
-                      //   // el.features.forEach((feature) => {
-                      //   //   mm.add(feature)
-                      //   // });
-                      //   return mm;
-                      // }, [])));
-
-
-                      return new Set(result.testresults.givens.reduce((mm: string[], el) => {
-                        mm = mm.concat(el.features)
-
-                        // console.log("mark2", el);
-
-                        // el.features.forEach((feature) => {
-                        //   mm.add(feature)
-                        // });
-                        return mm;
-                      }, [])).has(feature._id)
-
-                    }).map((result) => {
-                      return <li>
-                        {/* <pre>{JSON.stringify(test.src, null, 2)}</pre> */}
-                        {result.src}
-                      </li>
-                    })
-                  }
-                </ol>
-
-              </Tab.Pane>
-            )
-          }
-          )}
-        </Tab.Content>
-      </Col>
-    </Row>
-  </Tab.Container>;
-
-
-  return <Crud2 schema={featuresSchema} collectionName="features" collection={features}></Crud2>
-};
-
-const Tests = ({ tests, results, features, adminMode }) => {
-  return <div>
-
-
-    <Tab.Container id="left-tabs-example5" defaultActiveKey="feature-0">
-      <Row><Navbar expand="md" className="bg-body-tertiary">
-        <Container fluid>
-          <NavDropdown align="end" title="Branch" id="basic-nav-dropdown">
-            {/* {
-            users.map((user) => {
-              return <NavDropdown.Item href="#action/3.1">
-                {user.email}
-              </NavDropdown.Item>
-            })
-          } */}
-            {/* <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.2">
-                    Another action
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item> */}
-
-            <NavDropdown.Item href="#action/3.4">
-              localhost:8080
-            </NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item href="#action/3.4">
-              origin/master
-            </NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.4">
-              origin/feature
-            </NavDropdown.Item>
-          </NavDropdown>
-
-        </Container>
-      </Navbar></Row>
-      <Row>
-        <Col sm={4}>
-          <Nav variant="pills" className="flex-column">
-            {
-              tests.tests.map((t, ndx) =>
-                <Nav.Item key={ndx}>
-                  <Nav.Link eventKey={`test-${ndx}`}>
-                    {t[0]} - {t[1]}
-                  </Nav.Link>
-                </Nav.Item>
-              )
-            }
-          </Nav>
-        </Col>
-
-        <Col sm={4}>
-          <Tab.Content>
-
-            {
-              tests.tests.map((t, ndx) =>
-                <Tab.Pane eventKey={`test-${ndx}`}>
-                  {/* <pre>{JSON.stringify(t, null, 2)}</pre> */}
-                  {/* <pre>{JSON.stringify(state.results, null, 2)}</pre> */}
-                  <pre>{JSON.stringify(Object.entries(results).filter(([k, v]: [string, { src: string }]) => {
-                    console.log(v.src, tests.tests[ndx][0])
-                    return v.src === tests.tests[ndx][0]
-                  }), null, 2)}</pre>
-
-                  {/* {tests.tests.map((t, ndx) => {
-                          return (
-                            <Tab.Pane eventKey={`feature-${ndx}`} key={ndx}>
-                              <pre>{JSON.stringify(t, null, 2)}</pre>
-                            </Tab.Pane>
-                          )
-                        }
-                        )} */}
-
-                </Tab.Pane>
-
-              )
-            }
-
-
-
-
-          </Tab.Content>
-        </Col>
-
-
-      </Row>
-    </Tab.Container>
-
-  </div>
-
-
-};
-
-const TaskMan = ({ setAdminMode, users, adminMode, children }) => {
-  return <div>
-    <div className="row">
-      <Navbar expand="md" className="bg-body-tertiary">
-        <Container fluid>
-          {/* <Navbar.Brand href="#home">testeranto</Navbar.Brand> */}
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              < Tabs defaultActiveKey="/tests" >
-                {/* <Tab eventKey="tests" title={<NavLink to="/tests" className="nav-link">Tests</NavLink>}></Tab> */}
-                <Tab eventKey="features"
-
-                  title={<NavLink to="/taskMan/features" className="nav-link">Features</NavLink>
-
-
-                  }></Tab>
-
-                <Tab eventKey="kanban" title={<NavLink to="/taskMan/kanban" className="nav-link">Kanban</NavLink>}></Tab>
-                <Tab eventKey="gantt" title={<NavLink to="/taskMan/gantt" className="nav-link">Gantt</NavLink>}></Tab>
-                {/* <Tab eventKey="users" title={<NavLink to="/taskMan/users" className="nav-link">Users</NavLink>}></Tab> */}
-              </Tabs>
-
-
-
-            </Nav>
-
-            <NavDropdown align="end" title="User" id="basic-nav-dropdown">
-              {
-                users.map((user) => {
-                  return <NavDropdown.Item href="#action/3.1">
-                    {user.email}
-                  </NavDropdown.Item>
-                })
-              }
-              {/* <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.2">
-                    Another action
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item> */}
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                all
-              </NavDropdown.Item>
-            </NavDropdown>
-
-            <ButtonGroup className="mb-2">
-              <ToggleButton
-                id="toggle-check"
-                type="checkbox"
-                variant="outline-primary"
-                checked={adminMode}
-                value="1"
-                onChange={(e) => setAdminMode(!adminMode)}
-              >
-                ⚙️
-              </ToggleButton>
-            </ButtonGroup>
-
-          </Navbar.Collapse>
-        </Container>
-
-
-      </Navbar>
-    </div>
-    {children}
-  </div>
-
-};
-
-const DocGal = ({ setAdminMode, users, adminMode, children }) => {
-  return <div>
-    <div className="row">
-      <Navbar expand="md" className="bg-body-tertiary">
-        <Container fluid>
-
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="docGal-navbar-nav">
-            <Nav className="me-auto">
-              < Tabs defaultActiveKey="/fs" >
-
-                <Tab eventKey="fs" title={<NavLink to="/docGal/fs" className="nav-link">FS</NavLink>}></Tab>
-                <Tab eventKey="db" title={<NavLink to="/docGal/db" className="nav-link">DB</NavLink>}></Tab>
-
-              </Tabs>
-
-
-
-            </Nav>
-
-
-
-          </Navbar.Collapse>
-        </Container>
-
-
-      </Navbar>
-    </div>
-    {children}
-  </div>
-
-};
-
-const ChatCat = ({ children }: {
-  children: any,
-  chatCatRooms: ({ _id: string } & IChatCatRoom)[],
-  chatCatHuddles: ({ _id: string } & any)[],
-  users: ({ _id: string } & IUser)[],
-
-}) => {
-  return <div>
-    <div className="row">
-      <Navbar expand="md" className="bg-body-tertiary">
-        <Container fluid>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              < Tabs defaultActiveKey="/chatCat/mostRecent" >
-                <Tab eventKey="/chatCat/mostRecent" title={<NavLink to="/chatCat/mostRecent" className="nav-link">Most Recent</NavLink>}></Tab>
-                <Tab eventKey="/chatCat/bySubject" title={<NavLink to="/chatCat/bySubject" className="nav-link">by Subject</NavLink>}></Tab>
-              </Tabs>
-
-
-
-            </Nav>
-
-
-
-
-          </Navbar.Collapse>
-        </Container>
-
-
-      </Navbar>
-    </div>
-    {children}
-  </div>
-  // return <div>
-  //   <Row>
-  //     <Col sm={2}>
-
-  //       <Nav variant="pills" className="flex-column">
-
-  //         <h4>Rooms</h4>
-
-  //         {(chatCatRooms).map((room, ndx) => <Nav.Item key={ndx}>
-  //           <Nav.Link eventKey={`chatCat/room/${room._id}`}>
-  //             {room.name}
-  //           </Nav.Link>
-  //         </Nav.Item>)}
-
-  //         <h4>Huddles</h4>
-
-  //         {(chatCatHuddles).map((huddle, ndx) => <Nav.Item key={ndx}>
-  //           <Nav.Link eventKey={`chatCat/user${huddle._id}`}>
-  //             {huddle.name}
-  //           </Nav.Link>
-  //         </Nav.Item>)}
-
-  //         <h4>Users</h4>
-
-  //         {(users).map((user, ndx) => <Nav.Item key={ndx}>
-  //           <Nav.Link eventKey={`chatCat/user/${user._id}`}>
-  //             {user.email}
-  //           </Nav.Link>
-  //         </Nav.Item>)}
-  //       </Nav>
-  //     </Col>
-
-
-  //     <Col sm={10}>
-  //       <Tab.Content>
-  //         {(chatCatRooms).map((channel, ndx) => {
-  //           return (
-  //             <Tab.Pane eventKey={`chatCat/${channel}`} key={ndx}>
-  //               <pre>{JSON.stringify(channel, null, 2)}</pre>
-
-
-  //             </Tab.Pane>
-  //           )
-  //         }
-  //         )}
-  //       </Tab.Content>
-  //     </Col>
-  //   </Row>
-  // </div>
-
-};
-
-const WhoThat = ({ children }: {
-  children: any,
-  // chatCatRooms: ({ _id: string } & IChatCatRoom)[],
-  // chatCatHuddles: ({ _id: string } & any)[],
-  users: ({ _id: string } & IUser)[],
-
-}) => {
-  return <div>
-    <div className="row">
-      <Navbar expand="md" className="bg-body-tertiary">
-        <Container fluid>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              < Tabs defaultActiveKey="/whoThat/people" >
-                <Tab eventKey="/whoThat/people" title={<NavLink to="/whoThat/people" className="nav-link">People</NavLink>}></Tab>
-                <Tab eventKey="/whoThat/groups" title={<NavLink to="/whoThat/groups" className="nav-link">Groups</NavLink>}></Tab>
-                <Tab eventKey="/whoThat/org" title={<NavLink to="/whoThat/org" className="nav-link">Org</NavLink>}></Tab>
-              </Tabs>
-
-
-
-            </Nav>
-
-
-            <ButtonGroup className="mb-2">
-              <ToggleButton
-                id="toggle-check"
-                type="checkbox"
-                variant="outline-primary"
-                checked={false}
-                value="1"
-              // onChange={(e) => setAdminMode(!adminMode)}
-              >
-                ⚙️
-              </ToggleButton>
-            </ButtonGroup>
-          </Navbar.Collapse>
-
-
-
-        </Container>
-
-
-      </Navbar>
-    </div>
-    {children}
-  </div>
-  // return <div>
-  //   <Row>
-  //     <Col sm={2}>
-
-  //       <Nav variant="pills" className="flex-column">
-
-  //         <h4>Rooms</h4>
-
-  //         {(chatCatRooms).map((room, ndx) => <Nav.Item key={ndx}>
-  //           <Nav.Link eventKey={`chatCat/room/${room._id}`}>
-  //             {room.name}
-  //           </Nav.Link>
-  //         </Nav.Item>)}
-
-  //         <h4>Huddles</h4>
-
-  //         {(chatCatHuddles).map((huddle, ndx) => <Nav.Item key={ndx}>
-  //           <Nav.Link eventKey={`chatCat/user${huddle._id}`}>
-  //             {huddle.name}
-  //           </Nav.Link>
-  //         </Nav.Item>)}
-
-  //         <h4>Users</h4>
-
-  //         {(users).map((user, ndx) => <Nav.Item key={ndx}>
-  //           <Nav.Link eventKey={`chatCat/user/${user._id}`}>
-  //             {user.email}
-  //           </Nav.Link>
-  //         </Nav.Item>)}
-  //       </Nav>
-  //     </Col>
-
-
-  //     <Col sm={10}>
-  //       <Tab.Content>
-  //         {(chatCatRooms).map((channel, ndx) => {
-  //           return (
-  //             <Tab.Pane eventKey={`chatCat/${channel}`} key={ndx}>
-  //               <pre>{JSON.stringify(channel, null, 2)}</pre>
-
-
-  //             </Tab.Pane>
-  //           )
-  //         }
-  //         )}
-  //       </Tab.Content>
-  //     </Col>
-  //   </Row>
-  // </div>
-
-};
-
-const Kanban = ({
-  features, tests, results, kanban, openNewColumnModal, adminMode
-}: {
-  features: IFeature[],
-  tests: any,
-  kanban: (IKanban & { _id: string })[],
-  results: any,
-  openNewColumnModal: any,
-  adminMode: boolean,
-}) => {
-
-  const board: KanbanBoard<any> = {
-    columns: [
-      {
-        id: -1,
-        title: 'BACKLOG',
-        cards: features.filter((f) => f.state === undefined)
-      },
-      {
-        id: 0,
-        title: 'ARCHIVE',
-        cards: features.filter((f) => f.state === "ARCHIVED")
-      },
-      ...kanban.map((kb) => {
-        return {
-          id: kb._id,
-          title: kb.title,
-          cards: features.filter((f) => f.state === kb._id)
-        }
-      }),
-      // {
-      //   id: 1,
-      //   title: 'Backlog',
-      //   cards: [
-      //     {
-      //       id: 1,
-      //       title: 'Add card',
-      //       description: 'Add capability to add a card in a column'
-      //     },
-      //   ]
-      // },
-
-    ]
-  }
-
-  if (!adminMode) return <Tab.Container id="left-tabs-example8" defaultActiveKey="feature-0">
-
-
-    <Row>
-      <Col sm={12}>
-        <button onClick={() => {
-          openNewColumnModal()
-        }}>new column</button>
-        <UncontrolledBoard initialBoard={board} />
-      </Col>
-    </Row>
-  </Tab.Container>
-
-  return <Crud2 schema={kanbanSchema} collectionName="kanban" collection={kanban}></Crud2>
-
-};
-
-const GanttChart = ({ gantt, tests, results, features, adminMode }: {
-  gantt: IGantt[],
-  tests: any,
-  results: any,
-  features: any,
-  adminMode: boolean
-
-}) => {
-  if (!adminMode) {
-    if (gantt.length > 1) {
-      return <Row>
-        <Col sm={12}>
-          <Gantt tasks={(gantt || []).map((g: IGantt & { _id: string }) => {
-            console.log(g)
-            let task: Task =
-            {
-              start: new Date(2020, 1, 1),
-              end: new Date(2020, 1, 2),
-              name: g.name,
-              id: g._id,
-              type: g.type,
-              progress: 45,
-              isDisabled: false,
-              styles: { progressColor: '#ffbb54', progressSelectedColor: '#ff9e0d' },
+import {
+  DocGal, ChatCat, ChatCatConversations, ChatCatPeople, DocGalDb, DocGalFs,
+  OrgChart, Users, WhoThat, TaskMan
+} from './react';
+import { TestTab } from './TestTab';
+import { Kanban } from './TaskManKanBan';
+import { IKanban, IMilestone, IProject, ITask, IUser } from './TaskManTypes';
+import { Features } from './TaskManFeatures';
+import { GanttChart } from './TaskManGantt';
+
+const collectionEffect = (
+  collection: string,
+  setter: (any) => any,
+  coercer: (any) => any = (x) => x
+) => {
+  useEffect(() => {
+    (async () => {
+      fetch(`http://localhost:8080/${collection}.json`)
+        .then(response => response.json())
+        .then(json => {
+          Promise.all(json.ids.map(async (_id) => {
+            return {
+              _id,
+              ...coercer(await (await fetch(`http://localhost:8080/${collection}/${_id}.json`)).json())
             };
-
-            console.log(task)
-            return task;
-          })} />
-        </Col>
-      </Row>
-    } else {
-      return <p>you need to add some gantt items</p>
-    }
-  }
-
-  return <Crud2 schema={ganttSchema} collectionName="gantt" collection={gantt}></Crud2>
-
-};
-
-const Users = ({ users, adminMode }) => {
-  if (!adminMode) return <Tab.Container id="left-tabs-example9" defaultActiveKey="feature-0">
-    <Row>
-      <Col sm={12}>
-        <ul>
-          {
-            users.map((user) => {
-              return <li>
-                {user.email}
-              </li>
-            })
-          }
-        </ul>
-      </Col>
-    </Row>
-  </Tab.Container>
-
-  return <Crud2 schema={userSchema} collectionName="users" collection={users} ></Crud2>
-
-};
-
-const OrgChart = ({ users, adminMode }) => {
-
-  const initialNodes = [
-    { id: '1', position: { x: 0, y: 0 }, data: { label: '1' } },
-    { id: '2', position: { x: 0, y: 100 }, data: { label: '2' } },
-  ];
-  const initialEdges = [{ id: 'e1-2', source: '1', target: '2' }];
-
-
-  if (!adminMode) return <Tab.Container id="left-tabs-example9" defaultActiveKey="feature-0">
-    <Row>
-      <Col sm={12}>
-        <div style={{ width: '100vw', height: '100vh' }}>
-          <ReactFlow nodes={[
-            ...initialNodes,
-            ...users.map((user) => {
-              return ({ id: user._id, position: { x: 0, y: 0 }, data: { label: user.email } })
-            })
-          ]} edges={initialEdges} />
-        </div>
-      </Col>
-    </Row>
-  </Tab.Container>
-
-  return <Crud2 schema={userSchema} collectionName="users" collection={users} ></Crud2>
-
-};
-
-const DocGalFsNav = ({ docGalFs, filepath }: {
-  filepath: string
-  docGalFs: {
-    name: string,
-    children: any[]
-  }[]
-}) => {
-
-  return <div>
-    <ul>
-      {
-        ...docGalFs.map((lm) => {
-          return <li>
-            <a href={`${filepath}/${lm.name}`}>{lm.name}</a>
-            {/* <p>{lm.name}</p>
-            <p>{lm.name}</p> */}
-            {
-              lm.children.length > 0 && <DocGalFsNav docGalFs={lm.children} filepath={`${filepath}/${lm.name}`} />
-            }
-          </li>
+          })).then((items: any[]) => {
+            console.log("setting", collection, items)
+            setter(items)
+          })
         })
-      }
-    </ul>
-  </div>
+        .catch(error => console.error(error));
+
+    })();
+  }, []);
 }
-
-const DocGalFs = ({
-  docGalFs,
-  // tests, results, features, adminMode
-}: {
-  docGalFs: any[],
-  // tests: any,
-  // results: any,
-  // features: any,
-  // adminMode: boolean
-
-}) => {
-  // return <Row>
-  //   <Col sm={12}>
-  //     {JSON.stringify(docGalFs, null, 2)}
-  //   </Col>
-  // </Row>
-
-  return <Row>
-    <Col sm={4}>
-      <DocGalFsNav docGalFs={docGalFs} filepath="" />
-      {/* {JSON.stringify(docGalFs, null, 2)} */}
-      {/* <Nav variant="pills" className="flex-column">
-        {
-          docGalFs.map((t, ndx) =>
-            <Nav.Item key={ndx}>
-              <Nav.Link eventKey={`docGalFs-${ndx}`}>
-                {t}
-              </Nav.Link>
-            </Nav.Item>
-          )
-        }
-      </Nav> */}
-    </Col>
-
-    <Col sm={4}>
-      <Tab.Content>
-
-
-
-
-
-
-      </Tab.Content>
-    </Col>
-
-
-  </Row>
-
-};
-
-const DocGalDb = ({
-  // gantt, tests, results, features, adminMode
-}: {
-    // gantt: IGantt[],
-    // tests: any,
-    // results: any,
-    // features: any,
-    // adminMode: boolean
-
-  }) => {
-  return <Row>
-    <Col sm={12}>
-      DocGalDb
-    </Col>
-  </Row>
-
-};
-
-const ChatCatPeople = ({ users }) => {
-  return <Tab.Container id="left-tabs-example9" defaultActiveKey="feature-0">
-    <Row>
-      <Col sm={12}>
-        <ul>
-          {
-            users.map((user) => {
-              return <li>
-                {user.email}
-              </li>
-            })
-          }
-        </ul>
-      </Col>
-    </Row>
-  </Tab.Container>
-};
-
-const ChatCatConversations = ({ users, conversations }: {
-  users: any,
-  conversations: any;
-}) => {
-  // return <Tab.Container id="left-tabs-example9" defaultActiveKey="feature-0">
-  //   <Row>
-  //     <Col sm={12}>
-  //       <ul>
-  //         {
-  //           users.map((user) => {
-  //             return <li>
-  //               {user.email}
-  //             </li>
-  //           })
-  //         }
-  //       </ul>
-  //     </Col>
-  //   </Row>
-  // </Tab.Container>
-  return <Row>
-    <Navbar expand="md" className="bg-body-tertiary">
-      <Container fluid>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            < Tabs defaultActiveKey="/chatCat/mostRecent" >
-              <Tab eventKey="/chatCat/mostRecent" title={<NavLink to="/chatCat/mostRecent" className="nav-link">Feature</NavLink>}></Tab>
-              <Tab eventKey="/chatCat/bySubject" title={<NavLink to="/chatCat/bySubject" className="nav-link">Kanban</NavLink>}></Tab>
-              <Tab eventKey="/chatCat/bySubject" title={<NavLink to="/chatCat/bySubject" className="nav-link">Gantt</NavLink>}></Tab>
-              <Tab eventKey="/chatCat/bySubject" title={<NavLink to="/chatCat/bySubject" className="nav-link">FS docs</NavLink>}></Tab>
-              <Tab eventKey="/chatCat/bySubject" title={<NavLink to="/chatCat/bySubject" className="nav-link">DB docs</NavLink>}></Tab>
-              <Tab eventKey="/chatCat/bySubject" title={<NavLink to="/chatCat/bySubject" className="nav-link">Groups</NavLink>}></Tab>
-            </Tabs>
-
-
-
-          </Nav>
-
-          <ButtonGroup className="mb-2">
-            <ToggleButton
-              id="toggle-check"
-              type="checkbox"
-              variant="outline-primary"
-              checked={false}
-              value="1"
-            // onChange={(e) => setAdminMode(!adminMode)}
-            >
-              ⚙️
-            </ToggleButton>
-          </ButtonGroup>
-
-
-        </Navbar.Collapse>
-      </Container>
-
-
-    </Navbar>
-  </Row>
-};
-
-const ChatCatRooms = ({ users, rooms }) => {
-  return <Tab.Container id="left-tabs-example9" defaultActiveKey="feature-0">
-    <Row>
-      <Col sm={12}>
-        <ul>
-          {
-            users.map((user) => {
-              return <li>
-                {user.email}
-              </li>
-            })
-          }
-        </ul>
-      </Col>
-    </Row>
-  </Tab.Container>
-};
 
 const Report = () => {
 
@@ -969,17 +68,11 @@ const Report = () => {
       tests: any[],
       buildDir: string,
     }
-
   >
     ({
       tests: [],
       buildDir: ""
     });
-
-  const [features, setFeatures] = useState<IFeature[]>(
-    []
-  );
-
 
   const [kanban, setKanban] = useState<any[]>(
     []
@@ -1004,19 +97,73 @@ const Report = () => {
     setState({ tests: config.tests as any, results, buildDir: config.buildDir })
   };
 
-  const importFeatures = async () => {
-    fetch('http://localhost:3000/features.json')
-      .then(response => response.json())
-      .then(json => setFeatures(json))
-      .catch(error => console.error(error));
+  ///////////////////////////////////////////
 
-  };
-  useEffect(() => { importFeatures(); }, []);
+  const [tasks, setTasks] = useState<ITask[]>(
+    []
+  );
+  collectionEffect(`Task`, setTasks, (t) => {
+    return {
+      ...t,
+      start: new Date(t.start),
+      end: new Date(t.end),
+    }
+  });
+
+  const [milestones, setMilestones] = useState<IMilestone[]>(
+    []
+  );
+  collectionEffect(`Milestone`, setMilestones, (m) => {
+    return {
+      ...m,
+      start: new Date(m.date),
+      end: new Date(m.date),
+    }
+  });
+
+  const [projects, setProjects] = useState<IProject[]>(
+    []
+  );
+  collectionEffect(`Project`, setProjects);
+
+  // const importFeatures = ;
+  // useEffect(() => {
+  //   (async () => {
+  //     fetch('http://localhost:8080/Task.json')
+  //       .then(response => response.json())
+  //       .then(json => {
+
+
+  //         Promise.all(json.ids.map(async (_id) => {
+  //           return {
+  //             _id,
+  //             ...await (await fetch(`http://localhost:8080/Task/${_id}.json`)).json()
+  //           };
+  //         })).then((allFeatures: ITask[]) => {
+  //           setTasks(allFeatures)
+  //         })
+  //       })
+  //       .catch(error => console.error(error));
+
+  //   })(); }, []);
+
+  ///////////////////////////////////////////
 
   const importKanban = async () => {
-    fetch('http://localhost:3000/kanbans.json')
+    fetch('http://localhost:8080/Kanban.json')
       .then(response => response.json())
-      .then(json => setKanban(json))
+      .then(json => {
+        // setKanban(json)
+        Promise.all(json.ids.map(async (_id) => {
+          return {
+            _id,
+            ...await (await fetch(`http://localhost:8080/Kanban/${_id}.json`)).json()
+          };
+        })).then((allKanbans: IKanban[]) => {
+          console.log("allKanbans", allKanbans)
+          setKanban(allKanbans)
+        })
+      })
       .catch(error => console.error(error));
 
   };
@@ -1028,27 +175,41 @@ const Report = () => {
 
 
   const importUsers = async () => {
-    fetch('http://localhost:3000/users.json')
+    fetch('http://localhost:8080/User.json')
       .then(response => response.json())
-      .then(json => setUsers(json))
+      .then(json => {
+        Promise.all(json.ids.map(async (_id) => {
+          return await (await fetch(`http://localhost:8080/User/${_id}.json`)).json();
+        })).then((allUsers: IUser[]) => {
+          console.log("allUsers", allUsers)
+          setUsers(allUsers)
+        })
+      })
       .catch(error => console.error(error));
 
   };
   useEffect(() => { importUsers(); }, []);
 
 
-  const [gantt, setGantt] = useState<IGantt[]>(
-    []
-  );
+  // const [gantt, setGantt] = useState<IGantt[]>(
+  //   []
+  // );
 
-  const importGantt = async () => {
-    fetch('http://localhost:3000/gantts.json')
-      .then(response => response.json())
-      .then(json => setGantt(json))
-      .catch(error => console.error(error));
+  // const importGantt = async () => {
+  //   fetch('http://localhost:8080/Gantt.json')
+  //     .then(response => response.json())
+  //     .then(json => {
+  //       Promise.all(json.ids.map(async (_id) => {
+  //         return await (await fetch(`http://localhost:8080/Gantt/${_id}.json`)).json();
+  //       })).then((allGantts: IGantt[]) => {
+  //         console.log("allGantts", allGantts)
+  //         setGantt(allGantts)
+  //       })
+  //     })
+  //     .catch(error => console.error(error));
 
-  };
-  useEffect(() => { importGantt(); }, []);
+  // };
+  // useEffect(() => { importGantt(); }, []);
 
   const importTests = async () => {
     const x = await fetch("./testeranto.json")
@@ -1074,7 +235,7 @@ const Report = () => {
   );
 
   const importFs = async () => {
-    fetch('http://localhost:3000/docGal/fs.json')
+    fetch('http://localhost:8080/docGal/fs.json')
       .then(response => response.json())
       .then(json => setDocGalFs(json))
       .catch(error => console.error(error));
@@ -1083,18 +244,33 @@ const Report = () => {
   useEffect(() => { importFs(); }, []);
 
 
-  const [chatCatRooms, setChatCatRooms] = useState<({ _id: string } & IChatCatRoom)[]>(
+  const [chatCatRooms, setChatCatRooms] = useState<(
+    { _id: string }// & IChatCatRoom
+  )[]>(
     []
   );
 
   const importChatCatRooms = async () => {
-    fetch('http://localhost:3000/rooms.json')
+    fetch('http://localhost:8080/rooms.json')
       .then(response => response.json())
       .then(json => setChatCatRooms(json))
       .catch(error => console.error(error));
   };
   useEffect(() => { importChatCatRooms(); }, []);
 
+  const reposAndBranches = {
+    "ChromaPDX/kokomoBay": [
+      "master"
+    ]
+  };
+
+  const [currentRepo, setRepo] = useState<string>(
+    "ChromaPDX/kokomoBay"
+  );
+
+  const [currentBranch, setBranch] = useState<string>(
+    "master"
+  );
 
   return (
     <div>
@@ -1164,7 +340,33 @@ footer {
         </Navbar>
 
         <Routes>
-          <Route path="/tests" element={<Tests adminMode={adminMode} features={features} results={state.results} tests={tests} />} />
+          <Route path="/tests" element={<
+            TestTab
+            adminMode={adminMode}
+            tasks={tasks}
+            results={state.results}
+            tests={tests}
+            reposAndBranches={reposAndBranches}
+            setRepo={setRepo}
+            currentRepo={currentRepo}
+            currentBranch={currentBranch} />}
+          />
+
+          <Route path="/tests/:id/log.txt" element={<
+            TestTab
+            adminMode={adminMode}
+            tasks={tasks}
+            results={state.results}
+            tests={tests}
+            reposAndBranches={reposAndBranches}
+            setRepo={setRepo}
+            currentRepo={currentRepo}
+            currentBranch={currentBranch}
+          // currentTest={currentTest}
+          // currentTestResultFile={currentTestResultFile}
+          />}
+          />
+
 
           <Route path="/chatCat/mostRecent" element={
             <ChatCat
@@ -1198,13 +400,19 @@ footer {
 
           <Route path="/taskMan/features" element={
             <TaskMan adminMode={adminMode} setAdminMode={setAdminMode} users={users} >
-              <Features adminMode={adminMode} features={features} results={state.results} tests={tests} />
+              <Features
+                adminMode={adminMode}
+                tests={tests}
+              />
             </TaskMan>} />
 
           <Route path="/taskMan/kanban" element={
             <TaskMan adminMode={adminMode} setAdminMode={setAdminMode} users={users} >
               <Kanban
-                adminMode={adminMode} kanban={kanban} results={state.results} tests={tests} features={features}
+                adminMode={adminMode}
+                kanban={kanban}
+                tests={tests}
+                tasks={tasks}
                 openNewColumnModal={() => {
                 }}
               />
@@ -1213,7 +421,12 @@ footer {
           <Route path="/taskMan/gantt" element={
             <TaskMan adminMode={adminMode} setAdminMode={setAdminMode} users={users} >
               <GanttChart
-                adminMode={adminMode} gantt={gantt} features={features} results={state.results} tests={tests} />
+                adminMode={adminMode}
+                tasks={tasks}
+                milestones={milestones}
+                projects={projects}
+
+                tests={tests} />
             </TaskMan>
           } />
           <Route path="/whoThat/people" element={

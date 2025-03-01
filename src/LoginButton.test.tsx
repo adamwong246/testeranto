@@ -5,22 +5,7 @@ import { ITestImplementation } from "./Types";
 import { ITestSpecification } from "./Types.js";
 import Testeranto from "./SubPackages/react-dom/jsx/web";
 import LoginButton from "./LoginButton";
-import { JSHandle } from "puppeteer-core";
-
-const mouseClickEvents = ['mousedown', 'click', 'mouseup'];
-function simulateMouseClick(element) {
-  mouseClickEvents.forEach(mouseEventType =>
-    element.dispatchEvent(
-      new MouseEvent(mouseEventType, {
-        view: window,
-        bubbles: true,
-        cancelable: true,
-        buttons: 1
-      })
-    )
-  );
-}
-
+import { Page } from "puppeteer-core/lib/esm/puppeteer/api/Page";
 
 type IImpl = ITestImplementation<
   ILoginPageSpecs, object
@@ -38,17 +23,20 @@ const implementations: IImpl = {
   },
 
   whens: {
-    Clicked: () => (x) => {
-      console.log("click 10");
-      var testEvent = new PointerEvent("click") as any;
-      testEvent.nativeEvent = { detail: 1 }
-      x.reactElement.children[0].onClick(testEvent);
-      // console.log(x.reactElement.children[0].click());
-      // simulateMouseClick(x.htmlElement);
-      // reactElem.htmlElement.click()
-      // debugger
-      // console.log("helllo!", reactElem.click());
-      // reactElem.props.store.dispatch(actions.signIn());
+    Clicked: () => async (x, utils) => {
+      const pages = await utils.browser.pages();
+
+      const page = pages.find((p) => {
+        return p.url() === "file:///Users/adam/Code/testeranto/docs/web/src/LoginButton.test.html"
+      }) as Page;
+
+      await page.evaluate(() => {
+        document.getElementById("signin")?.click();
+
+      });
+
+      return
+
     },
 
   },
@@ -108,65 +96,26 @@ export const LoginPageSpecs: ITestSpecification<ILoginPageSpecs> = (
     Suite.Default(
       "Testing the LoginButton",
       {
-        // test0: Given.default(
-        //   ["67ae06bac3c5fa5a98a08e32"],
-        //   [],
-        //   [Then.ItSaysLogIn()]
-        // ),
+        test0: Given.default(
+          ["67ae06bac3c5fa5a98a08e32"],
+          [],
+          [Then.ItSaysLogIn()]
+        ),
         test1: Given.default(
           ["67ae06bac3c5fa5a98a08e32"],
           [When.Clicked()],
           [Then.ItSaysSignOut()]
         ),
-        // test2: Given.default(
-        //   ["67ae06bac3c5fa5a98a08e32"],
-        //   [When.Clicked(), When.Clicked()],
-        //   [Then.ItSaysLogIn()]
-        // ),
-        // test3: Given.default(
-        //   ["67ae06bac3c5fa5a98a08e32"],
-        //   [When.Clicked(), When.Clicked(), When.Clicked()],
-        //   [Then.ItSaysSignOut()]
-        // ),
-        // test1: Given.default(
-        //   [`67ae06bac3c5fa5a98a08e32`],
-        //   [
-        //     When.TheEmailIsSetTo("adam@email.com"),
-        //     When.ThePasswordIsSetTo("secret"),
-        //   ],
-        //   [
-        //     Then.TheEmailIsNot("wade@rpc"),
-        //     Then.TheEmailIs("adam@email.com"),
-        //     Then.ThePasswordIs("secret"),
-        //     Then.ThePasswordIsNot("idk"),
-        //   ]
-        // ),
-        // test2: Given.default(
-        //   [`67ae06bac3c5fa5a98a08e32`],
-        //   [When.TheEmailIsSetTo("adam@email.com")],
-        //   [Then.ThereIsNotAnEmailError()]
-        // ),
-        // test3: Given.default(
-        //   [`67ae06bac3c5fa5a98a08e32`],
-        //   [When.TheEmailIsSetTo("bob"), When.TheLoginIsSubmitted()],
-        //   [Then.ThereIsAnEmailError()]
-        // ),
-        // test4: Given.default(
-        //   [`67ae06bac3c5fa5a98a08e32`],
-        //   [
-        //     When.TheEmailIsSetTo("adam@mail.com"),
-        //     When.ThePasswordIsSetTo("foso"),
-        //   ],
-        //   [Then.ThereIsNotAnEmailError()]
-        // ),
-        // test5: Given.default(
-        //   [`67ae44eceef213d8f11c40bb`],
-        //   [
-        //     When.TheEmailIsSetTo("adam@mail.com"),
-        //     When.ThePasswordIsSetTo("foso"),
-        //   ],
-        //   [Then.ThereIsNotAnEmailError()]
-        // ),
+        test2: Given.default(
+          ["67ae06bac3c5fa5a98a08e32"],
+          [When.Clicked(), When.Clicked()],
+          [Then.ItSaysLogIn()]
+        ),
+        test3: Given.default(
+          ["67ae06bac3c5fa5a98a08e32"],
+          [When.Clicked(), When.Clicked(), When.Clicked()],
+          [Then.ItSaysSignOut()]
+        ),
       },
       []
     ),
