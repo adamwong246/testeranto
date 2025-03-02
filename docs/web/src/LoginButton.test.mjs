@@ -36721,7 +36721,7 @@ var LoginButton_default = () => {
       }
     },
     " ",
-    state ? "Sign out" : "Log in"
+    state ? "Sign out" : "Sign up"
   );
 };
 
@@ -36767,23 +36767,23 @@ var LoginPageSpecs = (Suite, Given, When, Then, Check) => {
     Suite.Default(
       "Testing the LoginButton",
       {
-        // test0: Given.default(
-        //   ["67ae06bac3c5fa5a98a08e32"],
-        //   [],
-        //   [Then.ItSaysLogIn()]
-        // ),
-        // test1: Given.default(
-        //   ["67ae06bac3c5fa5a98a08e32"],
-        //   [When.Clicked()],
-        //   [Then.ItSaysSignOut()]
-        // ),
-        // test2: Given.default(
-        //   ["67ae06bac3c5fa5a98a08e32"],
-        //   [When.Clicked(), When.Clicked()],
-        //   [Then.ItSaysLogIn()]
-        // ),
-        test3: Given.default(
+        test0: Given.default(
           ["67ae06bac3c5fa5a98a08e32"],
+          [],
+          [Then.ItSaysLogIn()]
+        ),
+        test1: Given.default(
+          ["67ae06bac3c5fa5a98a08e32"],
+          [When.Clicked()],
+          [Then.ItSaysSignOut()]
+        ),
+        test2: Given.default(
+          ["67ae06bac3c5fa5a98a08e32"],
+          [When.Clicked(), When.Clicked()],
+          [Then.ItSaysLogIn()]
+        ),
+        test3: Given.default(
+          ["67ae06bac3c5fa5a98a08e32  1"],
           [When.Clicked(), When.Clicked(), When.Clicked()],
           [Then.ItSaysSignOut()]
         )

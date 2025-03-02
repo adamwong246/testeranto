@@ -10,7 +10,7 @@ export default () => {
 
   }}
   > {
-      state ? "Sign out" : "Log in"
+      state ? "Sign out" : "Sign up"
     }</button >
 }
 

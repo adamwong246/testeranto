@@ -112,7 +112,7 @@ export const LoginPageSpecs: ITestSpecification<ILoginPageSpecs> = (
           [Then.ItSaysLogIn()]
         ),
         test3: Given.default(
-          ["67ae06bac3c5fa5a98a08e32"],
+          ["67ae06bac3c5fa5a98a08e32  1"],
           [When.Clicked(), When.Clicked(), When.Clicked()],
           [Then.ItSaysSignOut()]
         ),
