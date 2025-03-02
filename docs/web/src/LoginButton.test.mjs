@@ -36709,21 +36709,23 @@ var web_default = (testImplementations, testSpecifications, testInput) => {
 
 // src/LoginButton.tsx
 var import_react3 = __toESM(require_react(), 1);
-var LoginButton_default = () => {
-  const [state, setState] = (0, import_react3.useState)(false);
+var LoginButton = ({ initialLoggedIn } = { initialLoggedIn: false }) => {
+  const [isLoggedIn, setIsLoggedIn] = (0, import_react3.useState)(initialLoggedIn);
+  const handleClick = () => {
+    console.log("Login button clicked");
+    setIsLoggedIn((prev) => !prev);
+  };
   return /* @__PURE__ */ import_react3.default.createElement(
     "button",
     {
       id: "signin",
-      onClick: () => {
-        console.log("clicked");
-        setState(!state);
-      }
+      onClick: handleClick,
+      className: "btn btn-primary"
     },
-    " ",
-    state ? "Sign out" : "Sign up"
+    isLoggedIn ? "Sign out" : "Log in"
   );
 };
+var LoginButton_default = LoginButton;
 
 // src/LoginButton.test.tsx
 var implementations = {

@@ -11,6 +11,7 @@ export default (
       build.onEnd((result) => {
         if (result.errors.length === 0) {
           entryPoints.forEach((entryPoint) => {
+            console.log("mark1", entryPoint);
             const filePath = path.join(
               "./docs/",
               platform,
@@ -24,39 +25,38 @@ export default (
               fs.mkdirSync(dirName, { recursive: true });
             }
 
-            fs.writeFileSync(
-              filePath,
-              JSON.stringify(
-                Object.keys(
-                  Object.keys(result.metafile.outputs)
-                    .filter((s: string) => {
-                      if (!result.metafile.outputs[s].entryPoint) {
-                        return false;
-                      }
-                      return (
-                        path.resolve(result.metafile.outputs[s].entryPoint) ===
-                        path.resolve(entryPoint)
-                      );
-                    })
-                    .reduce((mm: string[], el) => {
-                      mm.push(result.metafile.outputs[el].inputs);
-                      return mm;
-                    }, [])[0]
-                )
-                  .filter((f: string) => {
-                    const regex = /^src\/.*/g;
-                    const matches = f.match(regex);
-                    const passes = matches?.length === 1;
-                    return passes;
+            const jsonContent = JSON.stringify(
+              Object.keys(
+                Object.keys(result.metafile.outputs)
+                  .filter((s: string) => {
+                    if (!result.metafile.outputs[s].entryPoint) {
+                      return false;
+                    }
+                    return (
+                      path.resolve(result.metafile.outputs[s].entryPoint) ===
+                      path.resolve(entryPoint)
+                    );
                   })
-                  .filter((f: string) => {
-                    const regex = /.*\.test\..*/g;
-                    const matches = f.match(regex);
-                    const passes = matches?.length === 1;
-                    return !passes;
-                  })
+                  .reduce((mm: string[], el) => {
+                    mm.push(result.metafile.outputs[el].inputs);
+                    return mm;
+                  }, [])[0]
               )
+                .filter((f: string) => {
+                  const regex = /^src\/.*/g;
+                  const matches = f.match(regex);
+                  const passes = matches?.length === 1;
+                  return passes;
+                })
+                .filter((f: string) => {
+                  const regex = /.*\.test\..*/g;
+                  const matches = f.match(regex);
+                  const passes = matches?.length === 1;
+                  return !passes;
+                })
             );
+            console.log("mark2", jsonContent);
+            fs.writeFileSync(filePath, jsonContent);
           });
         }
       });

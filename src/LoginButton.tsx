@@ -4,7 +4,7 @@ interface LoginButtonProps {
   initialLoggedIn?: boolean;
 }
 
-const LoginButton: React.FC<LoginButtonProps> = ({ initialLoggedIn = false }) => {
+const LoginButton: React.FC<LoginButtonProps> = ({ initialLoggedIn } = { initialLoggedIn: false }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(initialLoggedIn);
 
   const handleClick = () => {
@@ -13,8 +13,8 @@ const LoginButton: React.FC<LoginButtonProps> = ({ initialLoggedIn = false }) =>
   };
 
   return (
-    <button 
-      id="signin" 
+    <button
+      id="signin"
       onClick={handleClick}
       className="btn btn-primary"
     >
