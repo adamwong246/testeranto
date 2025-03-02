@@ -1,5 +1,5 @@
 import { Express } from "express";
-import { IKanban, IUser, IMessage, IMessageable, IProject, ITask, IMilestone } from "./TaskManTypes";
+import { IKanban, IUser, IMessage, IMessageable, IProject, ITask, IMilestone, ISprint } from "./TaskManTypes";
 declare abstract class Model<T extends {
     _id: string;
     toString: () => string;
@@ -91,9 +91,12 @@ declare class MilestoneModel extends MessagableModel<IMilestone> {
         _id: string;
     }>;
 }
+declare class SprintModel extends Model<ISprint> {
+}
 declare const _default: (filepath: string, app: Express) => Promise<{
     users: UserModel;
     kanbans: KanbanModel;
+    sprints: SprintModel;
     milestones: MilestoneModel;
     tasks: TaskModel;
     projects: ProjectModel;

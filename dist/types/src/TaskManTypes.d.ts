@@ -1,7 +1,7 @@
 import { z } from "zod";
 export declare type IUser = {
-    uid: string;
-    name: string;
+    email: string;
+    profile: string;
 } & {
     _id: string;
 };
@@ -16,9 +16,18 @@ export declare type IMessage = {
 export declare type IMessageable = {} & {
     _id: string;
 };
+export declare type IGitGraph = object;
+export declare type ISprint = {
+    start: string;
+    end: string;
+    notes: string;
+} & {
+    _id: string;
+};
 export declare type IProject = {
     owner: string;
     name: string;
+    body: string;
 } & {
     _id: string;
 } & IMessageable;
@@ -37,6 +46,7 @@ export declare type IMilestone = {
     date: Date;
     owner: string;
     name: string;
+    body: string;
 } & {
     _id: string;
 } & IMessageable;

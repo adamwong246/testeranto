@@ -234,11 +234,14 @@ class MilestoneModel extends MessagableModel {
         };
     }
 }
+class SprintModel extends Model {
+}
 exports.default = async (filepath, app) => {
     const mm = new MessageModel("Message", app);
     return {
         users: new UserModel("User", app),
         kanbans: new KanbanModel("Kanban", app),
+        sprints: new SprintModel("Sprint", app),
         milestones: new MilestoneModel("Milestone", app, mm),
         tasks: new TaskModel("Task", app, mm),
         projects: new ProjectModel("Project", app, mm),

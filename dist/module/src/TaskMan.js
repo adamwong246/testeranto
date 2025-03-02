@@ -29,42 +29,17 @@ app.get("/features.json", async (req, res) => {
     });
     res.json([...allTasks, ...allMilestones, ...allProjects].sort((a, b) => a.lastUpdated - b.lastUpdated));
 });
-["/tests", "/features", "/kanban", "/gantt", "/org"].forEach((r) => {
+[
+    "/tests/**",
+    "/features/**",
+    "/kanban/**",
+    "/gantt/**",
+    "/org/**",
+    "/owners/**",
+    "/sprint/**",
+    "/git/**",
+].forEach((r) => {
     app.get(r, (req, res) => {
         res.sendFile(`${process.cwd()}/node_modules/testeranto/dist/prebuild/TaskMan.html`);
     });
 });
-// app.get("/features", (req, res) => {
-//   res.sendFile(
-//     `${process.cwd()}/node_modules/testeranto/dist/prebuild/TaskMan.html`
-//   );
-// });
-// app.get("/Project/:id.html", async (req, res) => {
-//   // const allTasks = (await tasks.gather((await tasks.list()).ids)).items.map(
-//   //   (t) => {
-//   //     return {
-//   //       ...t,
-//   //       filename: `Task/${t._id}.json`,
-//   //     };
-//   //   }
-//   // );
-//   // const allProjects = (
-//   //   await projects.gather((await projects.list()).ids)
-//   // ).items.map((t) => {
-//   //   return {
-//   //     ...t,
-//   //     filename: `Project/${t._id}.json`,
-//   //   };
-//   // });
-//   // const allMilestones = (
-//   //   await milestones.gather((await milestones.list()).ids)
-//   // ).items.map((t) => {
-//   //   return {
-//   //     ...t,
-//   //     filename: `Milestone/${t._id}.json`,
-//   //   };
-//   // });
-//   res.send({
-//     hello: "world",
-//   });
-// });

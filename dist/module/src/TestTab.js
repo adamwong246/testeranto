@@ -1,4 +1,3 @@
-import { Octokit } from 'octokit';
 import { Container, Navbar, NavDropdown } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import Col from 'react-bootstrap/Col';
@@ -8,10 +7,12 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import { NavLink, useParams } from 'react-router-dom';
 import '@caldwell619/react-kanban/dist/styles.css';
+import { octokit } from './DELETEME';
+// import {
+//   GetResponseTypeFromEndpointMethod,
+//   GetResponseDataTypeFromEndpointMethod,
+// } from "@octokit/types";
 // import { Octokit } from "@octokit/rest";
-const octokit = new Octokit({
-    auth: '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'
-});
 export const TestTab = ({ tests, tasks, results, adminMode, setRepo, reposAndBranches, currentRepo }) => {
     const { id } = useParams();
     const [testResults, setTestResults] = useState([]);
@@ -41,28 +42,8 @@ export const TestTab = ({ tests, tasks, results, adminMode, setRepo, reposAndBra
             };
         });
         const tss = await Promise.all(ts);
-        // const ts = await octokit.request('GET /repos/ChromaPDX/kokomoBay/git/trees/master', {
-        //   owner: 'ChromaPDX',
-        //   repo: 'kokomoBay',
-        //   tree_sha: 'master',
-        //   headers: {
-        //     'X-GitHub-Api-Version': '2022-11-28'
-        //   }
-        // })
-        // const ts = await octokit.request('GET /repos/ChromaPDX/kokomoBay/git/trees/e9999b64b8dcf2e589e5953fbb20e51521d97083?recursive=true', {
-        //   owner: 'ChromaPDX',
-        //   repo: 'kokomoBay',
-        //   tree_sha: "e9999b64b8dcf2e589e5953fbb20e51521d97083",
-        //   headers: {
-        //     'X-GitHub-Api-Version': '2022-11-28'
-        //   }
-        // })
         console.log("tss", tss);
         setTestResults(tss);
-        // fetch('http://localhost:8080/rooms.json')
-        //   .then(response => response.json())
-        //   .then(json => setChatCatRooms(json))
-        //   .catch(error => console.error(error));
     };
     useEffect(() => { importTests(); }, []);
     return React.createElement("div", null,
