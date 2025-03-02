@@ -18,7 +18,7 @@ const LoginButton: React.FC<LoginButtonProps> = ({ initialLoggedIn = false }) =>
       onClick={handleClick}
       className="btn btn-primary"
     >
-      {isLoggedIn ? "Sign out" : "Sign in"}
+      {isLoggedIn ? "Sign out" : "Log in"}
     </button>
   );
 };
