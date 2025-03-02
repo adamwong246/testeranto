@@ -6,50 +6,48 @@ import { IBaseConfig } from "./lib/types";
 import GitFsDb from "./GitFsDb.js";
 
 // console.log("hello TaskMan Backend", process.env);
-
-const port = process.env.PORT || "8080";
 // const mongoConnect =
 //   process.env.MONGO_CONNECTION || "mongodb://127.0.0.1:27017";
+// function findTextFiles(dir: string, fileList: string[] = []) {
+//   const files = fs.readdirSync(dir);
 
-function findTextFiles(dir: string, fileList: string[] = []) {
-  const files = fs.readdirSync(dir);
+//   for (const file of files) {
+//     const filePath = path.join(dir, file);
+//     const fileStat = fs.statSync(filePath);
 
-  for (const file of files) {
-    const filePath = path.join(dir, file);
-    const fileStat = fs.statSync(filePath);
+//     if (fileStat.isDirectory() && file !== "node_modules") {
+//       findTextFiles(filePath, fileList); // Recursive call for subdirectories
+//     } else if (path.extname(file) === ".txt") {
+//       fileList.push(filePath);
+//     } else if (path.extname(file) === ".md") {
+//       fileList.push(filePath);
+//     }
+//   }
+//   return fileList;
+// }
+// function listToTree(fileList) {
+//   const root: { name: string; children: any[] } = {
+//     name: "root",
+//     children: [],
+//   };
+//   for (const path of fileList) {
+//     const parts = path.split("/");
+//     let current = root;
+//     for (let i = 0; i < parts.length; i++) {
+//       const part = parts[i];
+//       if (!part) continue; // Skip empty parts (e.g., from leading '/')
+//       let child = current.children.find((c) => c.name === part);
+//       if (!child) {
+//         child = { name: part, children: [] };
+//         current.children.push(child);
+//       }
+//       current = child;
+//     }
+//   }
+//   return root.children;
+// }
 
-    if (fileStat.isDirectory() && file !== "node_modules") {
-      findTextFiles(filePath, fileList); // Recursive call for subdirectories
-    } else if (path.extname(file) === ".txt") {
-      fileList.push(filePath);
-    } else if (path.extname(file) === ".md") {
-      fileList.push(filePath);
-    }
-  }
-  return fileList;
-}
-
-function listToTree(fileList) {
-  const root: { name: string; children: any[] } = {
-    name: "root",
-    children: [],
-  };
-  for (const path of fileList) {
-    const parts = path.split("/");
-    let current = root;
-    for (let i = 0; i < parts.length; i++) {
-      const part = parts[i];
-      if (!part) continue; // Skip empty parts (e.g., from leading '/')
-      let child = current.children.find((c) => c.name === part);
-      if (!child) {
-        child = { name: part, children: [] };
-        current.children.push(child);
-      }
-      current = child;
-    }
-  }
-  return root.children;
-}
+const port = process.env.PORT || "8080";
 
 export default (partialConfig: IBaseConfig) => {
   const config = {
@@ -78,29 +76,29 @@ export default (partialConfig: IBaseConfig) => {
 
   app.use("/", express.static(path.join(process.cwd())));
 
-  app.get("/docGal/fs.json", (req, res) => {
-    const directoryPath = "./"; // Replace with the desired directory path
-    // const textFiles = findTextFiles(directoryPath);
-    res.json(listToTree(findTextFiles(directoryPath)));
-    //     res.send(`<!DOCTYPE html>
-    // <html lang="en">
+  // app.get("/docGal/fs.json", (req, res) => {
+  //   const directoryPath = "./"; // Replace with the desired directory path
+  //   // const textFiles = findTextFiles(directoryPath);
+  //   res.json(listToTree(findTextFiles(directoryPath)));
+  //   //     res.send(`<!DOCTYPE html>
+  //   // <html lang="en">
 
-    // <head>
-    //   <meta name="description" content="Webpage description goes here" />
-    //   <meta charset="utf-8" />
-    //   <meta name="viewport" content="width=device-width, initial-scale=1" />
-    //   <meta name="author" content="" />
+  //   // <head>
+  //   //   <meta name="description" content="Webpage description goes here" />
+  //   //   <meta charset="utf-8" />
+  //   //   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  //   //   <meta name="author" content="" />
 
-    //   <title>TaskMan</title>
+  //   //   <title>TaskMan</title>
 
-    //   <link rel="stylesheet" href="/TaskManFrontEnd.css" />
-    //   <script type="module" src="/TaskManFrontEnd.js"></script>
-    // </head>
+  //   //   <link rel="stylesheet" href="/TaskManFrontEnd.css" />
+  //   //   <script type="module" src="/TaskManFrontEnd.js"></script>
+  //   // </head>
 
-    // <body><div id="root">react is loading</div></body>
+  //   // <body><div id="root">react is loading</div></body>
 
-    // </html>`);
-  });
+  //   // </html>`);
+  // });
 
   GitFsDb("docs", app);
 };

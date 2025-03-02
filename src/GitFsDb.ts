@@ -5,15 +5,12 @@ import { v4 as uuidv4 } from "uuid";
 import {
   IKanban,
   IUser,
-  // IFeature,
   IMessage,
   IMessageable,
   IProject,
   ITask,
   IMilestone,
-  // IGantt,
 } from "./TaskManTypes";
-import { IGantt } from "../dist/types/src/mongooseSchemas";
 
 async function getfile(f: string): Promise<{ T }> {
   return new Promise((res, rej) => {
@@ -28,10 +25,6 @@ async function getfile(f: string): Promise<{ T }> {
           console.error("Error getting file stats:", err);
           return;
         }
-
-        // console.log("File size:", stats.size, "bytes");
-        // console.log("Is file:", stats.isFile());
-        // console.log("Is directory:", stats.isDirectory());
 
         fs.close(fd, (err) => {
           if (err) {

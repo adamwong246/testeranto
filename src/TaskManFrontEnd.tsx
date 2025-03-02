@@ -1,4 +1,7 @@
-import { Button, ButtonGroup, Container, Dropdown, DropdownButton, Form, Navbar, NavDropdown, Table, ToggleButton } from "react-bootstrap";
+import { ReactFlow } from "@xyflow/react";
+// import {
+//   Button, ButtonGroup, Container, Dropdown, DropdownButton, Form, Navbar, NavDropdown, Table, ToggleButton
+// } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import ReactDom from "react-dom/client";
 import Col from 'react-bootstrap/Col';
@@ -14,16 +17,18 @@ import '@xyflow/react/dist/style.css';
 
 
 import { IRunTime } from "./lib/types";
-import LoginButton from './LoginButton';
-import {
-  DocGal, ChatCat, ChatCatConversations, ChatCatPeople, DocGalDb, DocGalFs,
-  OrgChart, Users, WhoThat, TaskMan
-} from './react';
+// import LoginButton from './LoginButton';
+// import {
+//   DocGal, ChatCat, ChatCatConversations, ChatCatPeople, DocGalDb, DocGalFs,
+//   OrgChart, Users, WhoThat
+// } from './react';
 import { TestTab } from './TestTab';
 import { Kanban } from './TaskManKanBan';
 import { IKanban, IMilestone, IProject, ITask, IUser } from './TaskManTypes';
 import { Features } from './TaskManFeatures';
 import { GanttChart } from './TaskManGantt';
+import { TaskManOwners } from "./TaskManOwners";
+
 
 const collectionEffect = (
   collection: string,
@@ -49,6 +54,18 @@ const collectionEffect = (
 
     })();
   }, []);
+}
+
+const UserModal = ({ _id, users }: { _id: string, users: IUser[] }) => {
+  const u = users.find((u) => u._id === _id);
+
+  if (!u) { return <pre>user not found</pre> }
+  return <>
+    <h1>{u._id}</h1>
+    <h2>{u.email}</h2>
+    <p>{u.profile}</p>
+  </>
+  // return <pre>{JSON.stringify(u)}</pre>
 }
 
 const Report = () => {
@@ -126,6 +143,11 @@ const Report = () => {
   );
   collectionEffect(`Project`, setProjects);
 
+  const [users, setUsers] = useState<({ _id: string } & IUser)[]>(
+    []
+  );
+  collectionEffect(`User`, setUsers);
+
   // const importFeatures = ;
   // useEffect(() => {
   //   (async () => {
@@ -169,48 +191,6 @@ const Report = () => {
   };
   useEffect(() => { importKanban(); }, []);
 
-  const [users, setUsers] = useState<({ _id: string } & IUser)[]>(
-    []
-  );
-
-
-  const importUsers = async () => {
-    fetch('http://localhost:8080/User.json')
-      .then(response => response.json())
-      .then(json => {
-        Promise.all(json.ids.map(async (_id) => {
-          return await (await fetch(`http://localhost:8080/User/${_id}.json`)).json();
-        })).then((allUsers: IUser[]) => {
-          console.log("allUsers", allUsers)
-          setUsers(allUsers)
-        })
-      })
-      .catch(error => console.error(error));
-
-  };
-  useEffect(() => { importUsers(); }, []);
-
-
-  // const [gantt, setGantt] = useState<IGantt[]>(
-  //   []
-  // );
-
-  // const importGantt = async () => {
-  //   fetch('http://localhost:8080/Gantt.json')
-  //     .then(response => response.json())
-  //     .then(json => {
-  //       Promise.all(json.ids.map(async (_id) => {
-  //         return await (await fetch(`http://localhost:8080/Gantt/${_id}.json`)).json();
-  //       })).then((allGantts: IGantt[]) => {
-  //         console.log("allGantts", allGantts)
-  //         setGantt(allGantts)
-  //       })
-  //     })
-  //     .catch(error => console.error(error));
-
-  // };
-  // useEffect(() => { importGantt(); }, []);
-
   const importTests = async () => {
     const x = await fetch("./testeranto.json")
     const y = await x.json();
@@ -230,33 +210,29 @@ const Report = () => {
 
   const [adminMode, setAdminMode] = useState(false);
 
-  const [docGalFs, setDocGalFs] = useState<IUser[]>(
-    []
-  );
+  // const [docGalFs, setDocGalFs] = useState<IUser[]>(
+  //   []
+  // );
 
-  const importFs = async () => {
-    fetch('http://localhost:8080/docGal/fs.json')
-      .then(response => response.json())
-      .then(json => setDocGalFs(json))
-      .catch(error => console.error(error));
+  // const importFs = async () => {
+  //   fetch('http://localhost:8080/docGal/fs.json')
+  //     .then(response => response.json())
+  //     .then(json => setDocGalFs(json))
+  //     .catch(error => console.error(error));
 
-  };
-  useEffect(() => { importFs(); }, []);
+  // };
+  // useEffect(() => { importFs(); }, []);
 
 
-  const [chatCatRooms, setChatCatRooms] = useState<(
-    { _id: string }// & IChatCatRoom
-  )[]>(
-    []
-  );
+  const [modal, setModal] = useState<[string, string] | undefined>();
 
-  const importChatCatRooms = async () => {
-    fetch('http://localhost:8080/rooms.json')
-      .then(response => response.json())
-      .then(json => setChatCatRooms(json))
-      .catch(error => console.error(error));
-  };
-  useEffect(() => { importChatCatRooms(); }, []);
+  // const importChatCatRooms = async () => {
+  //   fetch('http://localhost:8080/rooms.json')
+  //     .then(response => response.json())
+  //     .then(json => setChatCatRooms(json))
+  //     .catch(error => console.error(error));
+  // };
+  // useEffect(() => { importChatCatRooms(); }, []);
 
   const reposAndBranches = {
     "ChromaPDX/kokomoBay": [
@@ -271,6 +247,24 @@ const Report = () => {
   const [currentBranch, setBranch] = useState<string>(
     "master"
   );
+
+
+  const initialEdges = [
+    { id: 'e1-2', source: 'adam', target: 'marcus' }
+  ];
+
+  const orgNodes = [
+    // ...initialNodes,
+    ...users.map((user) => {
+      return ({
+        id: user._id, position: {
+          x: (Math.random() * 600) + 300,
+          y: (Math.random() * 600) + 301
+        }, data: { label: user._id }
+      })
+    })];
+
+  console.log("orgNodes", orgNodes);
 
   return (
     <div>
@@ -296,159 +290,157 @@ footer {
           `}
       </style>
 
+      {
+        modal && <div style={{
+          "position": "fixed", /* Stay in place */
+          "zIndex": 1, /* Sit on top */
+          left: 0,
+          top: 0,
+          width: "100%", /* Full width */
+          height: "100%", /* Full height */
+          overflow: "auto", /* Enable scroll if needed */
+          "backgroundColor": "rgba(0,0,0,0.4)" /* Black w/ opacity */
+        }}>
+          <div style={{
+            backgroundColor: "#fefefe",
+            margin: "15% auto", /* 15% from the top and centered */
+            padding: "20px",
+            border: "1px solid #888",
+            width: "80%" /* Could be more or less, depending on screen size */
+          }}>
+            {
+              modal && modal[0] === "User" && <UserModal users={users} _id={modal[1]} />
+            }
+            <button onClick={() => setModal(undefined)}>OK</button>
+          </div>
+        </div>
+      }
+
+
       <Router>
-
-        <Navbar expand="md" className="bg-body-tertiary">
-          <Container fluid>
-            {/* <Navbar.Brand href="#home">testeranto</Navbar.Brand> */}
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="me-auto">
-                {/* <Nav.Link href="#home">Tests</Nav.Link>
-                <Nav.Link href="#link">TaskMan</Nav.Link> */}
-
-                < Tabs defaultActiveKey="/tests" >
-
-
-                  <Tab eventKey="tests" title={<NavLink to="/tests" className="nav-link">TestPup</NavLink>}></Tab>
-                  <Tab eventKey="taskMan" title={<NavLink to="/taskMan/features" className="nav-link">TaskMan</NavLink>}></Tab>
-                  <Tab eventKey="docGal" title={<NavLink to="/docGal/fs" className="nav-link">DocGal</NavLink>}></Tab>
-                  <Tab eventKey="chatCat" title={<NavLink to="/chatCat/mostRecent" className="nav-link">ChatCat</NavLink>}></Tab>
-                  <Tab eventKey="whoThat" title={<NavLink to="/whoThat/people" className="nav-link">WhoThat</NavLink>}></Tab>
-                </Tabs>
-
-
-
+        <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+          <Row>
+            <Col sm={1}>
+              <Nav variant="pills" className="flex-column">
+                <Nav.Item >
+                  <NavLink to="/tests" className="nav-link">tests</NavLink>
+                </Nav.Item>
+                <Nav.Item>
+                  <NavLink to="/features" className="nav-link">features</NavLink>
+                </Nav.Item>
+                <Nav.Item>
+                  <NavLink to="/kanban" className="nav-link">kanban</NavLink>
+                </Nav.Item>
+                <Nav.Item>
+                  <NavLink to="/gantt" className="nav-link">gantt</NavLink>
+                </Nav.Item>
+                <Nav.Item>
+                  <NavLink to="/owners" className="nav-link">owners</NavLink>
+                </Nav.Item>
+                <Nav.Item>
+                  <NavLink to="/org" className="nav-link">org</NavLink>
+                </Nav.Item>
               </Nav>
+            </Col>
+            <Col sm={11}>
+              <Tab.Content>
+
+                <Routes>
+                  <Route path="/tests" element={<
+                    TestTab
+                    adminMode={adminMode}
+                    tasks={tasks}
+                    results={state.results}
+                    tests={tests}
+                    reposAndBranches={reposAndBranches}
+                    setRepo={setRepo}
+                    currentRepo={currentRepo}
+                    currentBranch={currentBranch} />}
+                  />
+
+                  <Route path="/tests/:id/log.txt" element={<
+                    TestTab
+                    adminMode={adminMode}
+                    tasks={tasks}
+                    results={state.results}
+                    tests={tests}
+                    reposAndBranches={reposAndBranches}
+                    setRepo={setRepo}
+                    currentRepo={currentRepo}
+                    currentBranch={currentBranch}
+                  // currentTest={currentTest}
+                  // currentTestResultFile={currentTestResultFile}
+                  />}
+                  />
+
+                  <Route path="/features" element={
+                    <Features
+                      adminMode={adminMode}
+                      tests={tests}
+                    />} />
+
+                  <Route path="/features/:collection/:id" element={
+                    <Features
+                      adminMode={adminMode}
+                      tests={tests}
+                    />} />
+
+                  <Route path="/kanban" element={
+                    <Kanban
+                      adminMode={adminMode}
+                      kanban={kanban}
+                      tests={tests}
+                      tasks={tasks}
+                      openNewColumnModal={() => {
+                      }}
+                    />} />
+
+                  <Route path="/gantt" element={
+                    <GanttChart
+                      adminMode={adminMode}
+                      tasks={tasks}
+                      milestones={milestones}
+                      projects={projects}
+                      tests={tests} />
+                  } />
+
+                  <Route path="/owners" element={
+                    <TaskManOwners
+                      tasks={tasks}
+                      milestones={milestones}
+                      projects={projects}
+                      users={users}
+                      setModal={setModal}
+                    />
+                  } />
+
+                  <Route path="/owners/:id" element={
+                    <TaskManOwners
+                      tasks={tasks}
+                      milestones={milestones}
+                      projects={projects}
+                      users={users}
+                      setModal={setModal}
+                    />
+                  } />
+
+                  <Route path="/org" element={
+                    <div style={{ width: '100vw', height: '100vh' }}>
+                      <ReactFlow nodes={
+                        orgNodes
+                      } edges={initialEdges} />
+                    </div>
+                  } />
+
+                </Routes>
+
+              </Tab.Content>
+            </Col>
+          </Row>
+        </Tab.Container>
 
 
 
-            </Navbar.Collapse>
-
-            <LoginButton />
-            {/* <ButtonGroup className="mb-2">
-              <Button
-                id="login"
-                value="1"
-                onChange={(e) => setAdminMode(!adminMode)}
-              >
-                Login
-              </Button>
-            </ButtonGroup> */}
-
-          </Container>
-        </Navbar>
-
-        <Routes>
-          <Route path="/tests" element={<
-            TestTab
-            adminMode={adminMode}
-            tasks={tasks}
-            results={state.results}
-            tests={tests}
-            reposAndBranches={reposAndBranches}
-            setRepo={setRepo}
-            currentRepo={currentRepo}
-            currentBranch={currentBranch} />}
-          />
-
-          <Route path="/tests/:id/log.txt" element={<
-            TestTab
-            adminMode={adminMode}
-            tasks={tasks}
-            results={state.results}
-            tests={tests}
-            reposAndBranches={reposAndBranches}
-            setRepo={setRepo}
-            currentRepo={currentRepo}
-            currentBranch={currentBranch}
-          // currentTest={currentTest}
-          // currentTestResultFile={currentTestResultFile}
-          />}
-          />
-
-
-          <Route path="/chatCat/mostRecent" element={
-            <ChatCat
-              chatCatRooms={chatCatRooms}
-              chatCatHuddles={[]}
-              users={users}
-            >
-              <ChatCatPeople users={users} />
-
-            </ChatCat>} />
-
-          <Route path="/chatCat/bySubject" element={
-            <ChatCat
-              chatCatRooms={chatCatRooms}
-              chatCatHuddles={[]}
-              users={users}
-            >
-              <ChatCatConversations users={users} conversations={[]} />
-
-            </ChatCat>} />
-
-          <Route path="/docGal/fs" element={
-            <DocGal adminMode={adminMode} setAdminMode={setAdminMode} users={users} >
-              <DocGalFs docGalFs={docGalFs} />
-            </DocGal>} />
-
-          <Route path="/docGal/db" element={
-            <DocGal adminMode={adminMode} setAdminMode={setAdminMode} users={users} >
-              <DocGalDb />
-            </DocGal>} />
-
-          <Route path="/taskMan/features" element={
-            <TaskMan adminMode={adminMode} setAdminMode={setAdminMode} users={users} >
-              <Features
-                adminMode={adminMode}
-                tests={tests}
-              />
-            </TaskMan>} />
-
-          <Route path="/taskMan/kanban" element={
-            <TaskMan adminMode={adminMode} setAdminMode={setAdminMode} users={users} >
-              <Kanban
-                adminMode={adminMode}
-                kanban={kanban}
-                tests={tests}
-                tasks={tasks}
-                openNewColumnModal={() => {
-                }}
-              />
-            </TaskMan>} />
-
-          <Route path="/taskMan/gantt" element={
-            <TaskMan adminMode={adminMode} setAdminMode={setAdminMode} users={users} >
-              <GanttChart
-                adminMode={adminMode}
-                tasks={tasks}
-                milestones={milestones}
-                projects={projects}
-
-                tests={tests} />
-            </TaskMan>
-          } />
-          <Route path="/whoThat/people" element={
-            <WhoThat users={users} >
-              <Users adminMode={adminMode} users={users} />
-            </WhoThat>
-          } />
-
-          <Route path="/whoThat/groups" element={
-            <WhoThat users={users} >
-              <Users adminMode={adminMode} users={users} />
-            </WhoThat>
-          } />
-
-          <Route path="/whoThat/org" element={
-            <WhoThat users={users} >
-              <OrgChart adminMode={adminMode} users={users} />
-            </WhoThat>
-          } />
-
-
-        </Routes>
       </Router>
 
 

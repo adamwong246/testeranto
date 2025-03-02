@@ -12,9 +12,6 @@ async function getfile(f) {
                     console.error("Error getting file stats:", err);
                     return;
                 }
-                // console.log("File size:", stats.size, "bytes");
-                // console.log("Is file:", stats.isFile());
-                // console.log("Is directory:", stats.isDirectory());
                 fs.close(fd, (err) => {
                     if (err) {
                         console.error("Error closing file:", err);

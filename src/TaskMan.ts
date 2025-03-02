@@ -68,6 +68,27 @@ app.get("/features.json", async (req, res) => {
   );
 });
 
+[
+  "/tests/**",
+  "/features/**",
+  "/kanban/**",
+  "/gantt/**",
+  "/org/**",
+  "/owners/**",
+].forEach((r) => {
+  app.get(r, (req, res) => {
+    res.sendFile(
+      `${process.cwd()}/node_modules/testeranto/dist/prebuild/TaskMan.html`
+    );
+  });
+});
+
+// app.get("/features", (req, res) => {
+//   res.sendFile(
+//     `${process.cwd()}/node_modules/testeranto/dist/prebuild/TaskMan.html`
+//   );
+// });
+
 // app.get("/Project/:id.html", async (req, res) => {
 //   // const allTasks = (await tasks.gather((await tasks.list()).ids)).items.map(
 //   //   (t) => {

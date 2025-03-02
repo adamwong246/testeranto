@@ -1,8 +1,8 @@
 import { z } from "zod";
 
 export type IUser = {
-  uid: string;
-  name: string;
+  email: string;
+  profile: string;
 } & { _id: string };
 
 // export type IKanban = {
@@ -39,6 +39,7 @@ export type IMessageable = {
 export type IProject = {
   owner: string;
   name: string;
+  body: string;
 } & { _id: string } & IMessageable;
 
 export type ITask = {
@@ -55,6 +56,7 @@ export type IMilestone = {
   date: Date;
   owner: string;
   name: string;
+  body: string;
 } & { _id: string } & IMessageable;
 
 export const kanbanZodSchema = z.object({

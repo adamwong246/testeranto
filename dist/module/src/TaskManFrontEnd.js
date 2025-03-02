@@ -1,20 +1,20 @@
-import { Container, Navbar } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import ReactDom from "react-dom/client";
+import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
+import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
 import { BrowserRouter as Router, Route, NavLink, Routes } from 'react-router-dom';
 import '@caldwell619/react-kanban/dist/styles.css';
 import "gantt-task-react/dist/index.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@xyflow/react/dist/style.css';
-import LoginButton from './LoginButton';
-import { DocGal, ChatCat, ChatCatConversations, ChatCatPeople, DocGalDb, DocGalFs, OrgChart, Users, WhoThat, TaskMan } from './react';
+import { OrgChart } from './react';
 import { TestTab } from './TestTab';
 import { Kanban } from './TaskManKanBan';
 import { Features } from './TaskManFeatures';
 import { GanttChart } from './TaskManGantt';
+import { ReactFlow } from "@xyflow/react";
 const collectionEffect = (collection, setter, coercer = (x) => x) => {
     useEffect(() => {
         (async () => {
@@ -70,6 +70,8 @@ const Report = () => {
     });
     const [projects, setProjects] = useState([]);
     collectionEffect(`Project`, setProjects);
+    const [users, setUsers] = useState([]);
+    collectionEffect(`User`, setUsers);
     // const importFeatures = ;
     // useEffect(() => {
     //   (async () => {
@@ -103,21 +105,20 @@ const Report = () => {
             .catch(error => console.error(error));
     };
     useEffect(() => { importKanban(); }, []);
-    const [users, setUsers] = useState([]);
-    const importUsers = async () => {
-        fetch('http://localhost:8080/User.json')
-            .then(response => response.json())
-            .then(json => {
-            Promise.all(json.ids.map(async (_id) => {
-                return await (await fetch(`http://localhost:8080/User/${_id}.json`)).json();
-            })).then((allUsers) => {
-                console.log("allUsers", allUsers);
-                setUsers(allUsers);
-            });
-        })
-            .catch(error => console.error(error));
-    };
-    useEffect(() => { importUsers(); }, []);
+    // const importUsers = async () => {
+    //   fetch('http://localhost:8080/User.json')
+    //     .then(response => response.json())
+    //     .then(json => {
+    //       Promise.all(json.ids.map(async (_id) => {
+    //         return await (await fetch(`http://localhost:8080/User/${_id}.json`)).json();
+    //       })).then((allUsers: IUser[]) => {
+    //         console.log("allUsers", allUsers)
+    //         setUsers(allUsers)
+    //       })
+    //     })
+    //     .catch(error => console.error(error));
+    // };
+    // useEffect(() => { importUsers(); }, []);
     // const [gantt, setGantt] = useState<IGantt[]>(
     //   []
     // );
@@ -170,6 +171,25 @@ const Report = () => {
     };
     const [currentRepo, setRepo] = useState("ChromaPDX/kokomoBay");
     const [currentBranch, setBranch] = useState("master");
+    const initialNodes = [
+        { id: '1', position: { x: 0, y: 0 }, data: { label: '1' } },
+        { id: '2', position: { x: 0, y: 100 }, data: { label: '2' } },
+    ];
+    const initialEdges = [
+        { id: 'e1-2', source: 'adam', target: 'marcus' }
+    ];
+    const orgNodes = [
+        // ...initialNodes,
+        ...users.map((user) => {
+            return ({
+                id: user._id, position: {
+                    x: (Math.random() * 600) - 300,
+                    y: (Math.random() * 600) - 300
+                }, data: { label: user._id }
+            });
+        })
+    ];
+    console.log("orgNodes", orgNodes);
     return (React.createElement("div", null,
         React.createElement("style", null, `
 pre, code, p {
@@ -191,42 +211,36 @@ footer {
 }
           `),
         React.createElement(Router, null,
-            React.createElement(Navbar, { expand: "md", className: "bg-body-tertiary" },
-                React.createElement(Container, { fluid: true },
-                    React.createElement(Navbar.Toggle, { "aria-controls": "basic-navbar-nav" }),
-                    React.createElement(Navbar.Collapse, { id: "basic-navbar-nav" },
-                        React.createElement(Nav, { className: "me-auto" },
-                            React.createElement(Tabs, { defaultActiveKey: "/tests" },
-                                React.createElement(Tab, { eventKey: "tests", title: React.createElement(NavLink, { to: "/tests", className: "nav-link" }, "TestPup") }),
-                                React.createElement(Tab, { eventKey: "taskMan", title: React.createElement(NavLink, { to: "/taskMan/features", className: "nav-link" }, "TaskMan") }),
-                                React.createElement(Tab, { eventKey: "docGal", title: React.createElement(NavLink, { to: "/docGal/fs", className: "nav-link" }, "DocGal") }),
-                                React.createElement(Tab, { eventKey: "chatCat", title: React.createElement(NavLink, { to: "/chatCat/mostRecent", className: "nav-link" }, "ChatCat") }),
-                                React.createElement(Tab, { eventKey: "whoThat", title: React.createElement(NavLink, { to: "/whoThat/people", className: "nav-link" }, "WhoThat") })))),
-                    React.createElement(LoginButton, null))),
-            React.createElement(Routes, null,
-                React.createElement(Route, { path: "/tests", element: React.createElement(TestTab, { adminMode: adminMode, tasks: tasks, results: state.results, tests: tests, reposAndBranches: reposAndBranches, setRepo: setRepo, currentRepo: currentRepo, currentBranch: currentBranch }) }),
-                React.createElement(Route, { path: "/tests/:id/log.txt", element: React.createElement(TestTab, { adminMode: adminMode, tasks: tasks, results: state.results, tests: tests, reposAndBranches: reposAndBranches, setRepo: setRepo, currentRepo: currentRepo, currentBranch: currentBranch }) }),
-                React.createElement(Route, { path: "/chatCat/mostRecent", element: React.createElement(ChatCat, { chatCatRooms: chatCatRooms, chatCatHuddles: [], users: users },
-                        React.createElement(ChatCatPeople, { users: users })) }),
-                React.createElement(Route, { path: "/chatCat/bySubject", element: React.createElement(ChatCat, { chatCatRooms: chatCatRooms, chatCatHuddles: [], users: users },
-                        React.createElement(ChatCatConversations, { users: users, conversations: [] })) }),
-                React.createElement(Route, { path: "/docGal/fs", element: React.createElement(DocGal, { adminMode: adminMode, setAdminMode: setAdminMode, users: users },
-                        React.createElement(DocGalFs, { docGalFs: docGalFs })) }),
-                React.createElement(Route, { path: "/docGal/db", element: React.createElement(DocGal, { adminMode: adminMode, setAdminMode: setAdminMode, users: users },
-                        React.createElement(DocGalDb, null)) }),
-                React.createElement(Route, { path: "/taskMan/features", element: React.createElement(TaskMan, { adminMode: adminMode, setAdminMode: setAdminMode, users: users },
-                        React.createElement(Features, { adminMode: adminMode, tests: tests })) }),
-                React.createElement(Route, { path: "/taskMan/kanban", element: React.createElement(TaskMan, { adminMode: adminMode, setAdminMode: setAdminMode, users: users },
-                        React.createElement(Kanban, { adminMode: adminMode, kanban: kanban, tests: tests, tasks: tasks, openNewColumnModal: () => {
-                            } })) }),
-                React.createElement(Route, { path: "/taskMan/gantt", element: React.createElement(TaskMan, { adminMode: adminMode, setAdminMode: setAdminMode, users: users },
-                        React.createElement(GanttChart, { adminMode: adminMode, tasks: tasks, milestones: milestones, projects: projects, tests: tests })) }),
-                React.createElement(Route, { path: "/whoThat/people", element: React.createElement(WhoThat, { users: users },
-                        React.createElement(Users, { adminMode: adminMode, users: users })) }),
-                React.createElement(Route, { path: "/whoThat/groups", element: React.createElement(WhoThat, { users: users },
-                        React.createElement(Users, { adminMode: adminMode, users: users })) }),
-                React.createElement(Route, { path: "/whoThat/org", element: React.createElement(WhoThat, { users: users },
-                        React.createElement(OrgChart, { adminMode: adminMode, users: users })) }))),
+            React.createElement(Tab.Container, { id: "left-tabs-example", defaultActiveKey: "first" },
+                React.createElement(Row, null,
+                    React.createElement(Col, { sm: 1 },
+                        React.createElement(Nav, { variant: "pills", className: "flex-column" },
+                            React.createElement(Nav.Item, null,
+                                React.createElement(NavLink, { to: "/tests", className: "nav-link" }, "tests")),
+                            React.createElement(Nav.Item, null,
+                                React.createElement(NavLink, { to: "/features", className: "nav-link" }, "features")),
+                            React.createElement(Nav.Item, null,
+                                React.createElement(NavLink, { to: "/kanban", className: "nav-link" }, "kanban")),
+                            React.createElement(Nav.Item, null,
+                                React.createElement(NavLink, { to: "/gantt", className: "nav-link" }, "gantt")),
+                            React.createElement(Nav.Item, null,
+                                React.createElement(NavLink, { to: "/owners", className: "nav-link" }, "owners")),
+                            React.createElement(Nav.Item, null,
+                                React.createElement(NavLink, { to: "/org", className: "nav-link" }, "org")))),
+                    React.createElement(Col, { sm: 11 },
+                        React.createElement(Tab.Content, null,
+                            React.createElement(Routes, null,
+                                React.createElement(Route, { path: "/tests", element: React.createElement(TestTab, { adminMode: adminMode, tasks: tasks, results: state.results, tests: tests, reposAndBranches: reposAndBranches, setRepo: setRepo, currentRepo: currentRepo, currentBranch: currentBranch }) }),
+                                React.createElement(Route, { path: "/tests/:id/log.txt", element: React.createElement(TestTab, { adminMode: adminMode, tasks: tasks, results: state.results, tests: tests, reposAndBranches: reposAndBranches, setRepo: setRepo, currentRepo: currentRepo, currentBranch: currentBranch }) }),
+                                React.createElement(Route, { path: "/features", element: React.createElement(Features, { adminMode: adminMode, tests: tests }) }),
+                                React.createElement(Route, { path: "/kanban", element: React.createElement(Kanban, { adminMode: adminMode, kanban: kanban, tests: tests, tasks: tasks, openNewColumnModal: () => {
+                                        } }) }),
+                                React.createElement(Route, { path: "/gantt", element: React.createElement(GanttChart, { adminMode: adminMode, tasks: tasks, milestones: milestones, projects: projects, tests: tests }) }),
+                                React.createElement(Route, { path: "/owners", element: 
+                                    // <OrgChart adminMode={adminMode} users={users} />
+                                    React.createElement("div", { style: { width: '100vw', height: '100vh' } },
+                                        React.createElement(ReactFlow, { nodes: orgNodes, edges: initialEdges })) }),
+                                React.createElement(Route, { path: "/org", element: React.createElement(OrgChart, { adminMode: adminMode, users: users }) }))))))),
         React.createElement("footer", null,
             "made with \u2764\uFE0F and ",
             React.createElement("a", { href: "https://adamwong246.github.io/testeranto/" }, "testeranto "))));

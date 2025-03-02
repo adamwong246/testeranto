@@ -143,75 +143,75 @@ const Crud2 = ({ collection, collectionName, schema }: { collection: any, collec
 
 
 
-export const TaskMan = ({ setAdminMode, users, adminMode, children }) => {
-  return <div>
-    <div className="row">
-      <Navbar expand="md" className="bg-body-tertiary">
-        <Container fluid>
-          {/* <Navbar.Brand href="#home">testeranto</Navbar.Brand> */}
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              < Tabs defaultActiveKey="/tests" >
-                {/* <Tab eventKey="tests" title={<NavLink to="/tests" className="nav-link">Tests</NavLink>}></Tab> */}
-                <Tab eventKey="features"
+// export const TaskMan = ({ setAdminMode, users, adminMode, children }) => {
+//   return <div>
+//     <div className="row">
+//       <Navbar expand="md" className="bg-body-tertiary">
+//         <Container fluid>
+//           {/* <Navbar.Brand href="#home">testeranto</Navbar.Brand> */}
+//           <Navbar.Toggle aria-controls="basic-navbar-nav" />
+//           <Navbar.Collapse id="basic-navbar-nav">
+//             <Nav className="me-auto">
+//               < Tabs defaultActiveKey="/tests" >
+//                 {/* <Tab eventKey="tests" title={<NavLink to="/tests" className="nav-link">Tests</NavLink>}></Tab> */}
+//                 <Tab eventKey="features"
 
-                  title={<NavLink to="/taskMan/features" className="nav-link">Features</NavLink>
-
-
-                  }></Tab>
-
-                <Tab eventKey="kanban" title={<NavLink to="/taskMan/kanban" className="nav-link">Kanban</NavLink>}></Tab>
-                <Tab eventKey="gantt" title={<NavLink to="/taskMan/gantt" className="nav-link">Gantt</NavLink>}></Tab>
-                {/* <Tab eventKey="users" title={<NavLink to="/taskMan/users" className="nav-link">Users</NavLink>}></Tab> */}
-              </Tabs>
+//                   title={<NavLink to="/taskMan/features" className="nav-link">Features</NavLink>
 
 
+//                   }></Tab>
 
-            </Nav>
-
-            <NavDropdown align="end" title="User" id="basic-nav-dropdown">
-              {
-                users.map((user) => {
-                  return <NavDropdown.Item href="#action/3.1">
-                    {user.email}
-                  </NavDropdown.Item>
-                })
-              }
-              {/* <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.2">
-                    Another action
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item> */}
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                all
-              </NavDropdown.Item>
-            </NavDropdown>
-
-            <ButtonGroup className="mb-2">
-              <ToggleButton
-                id="toggle-check"
-                type="checkbox"
-                variant="outline-primary"
-                checked={adminMode}
-                value="1"
-                onChange={(e) => setAdminMode(!adminMode)}
-              >
-                ⚙️
-              </ToggleButton>
-            </ButtonGroup>
-
-          </Navbar.Collapse>
-        </Container>
+//                 <Tab eventKey="kanban" title={<NavLink to="/taskMan/kanban" className="nav-link">Kanban</NavLink>}></Tab>
+//                 <Tab eventKey="gantt" title={<NavLink to="/taskMan/gantt" className="nav-link">Gantt</NavLink>}></Tab>
+//                 {/* <Tab eventKey="users" title={<NavLink to="/taskMan/users" className="nav-link">Users</NavLink>}></Tab> */}
+//               </Tabs>
 
 
-      </Navbar>
-    </div>
-    {children}
-  </div>
 
-};
+//             </Nav>
+
+//             <NavDropdown align="end" title="User" id="basic-nav-dropdown">
+//               {
+//                 users.map((user) => {
+//                   return <NavDropdown.Item href="#action/3.1">
+//                     {user.email}
+//                   </NavDropdown.Item>
+//                 })
+//               }
+//               {/* <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+//                   <NavDropdown.Item href="#action/3.2">
+//                     Another action
+//                   </NavDropdown.Item>
+//                   <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item> */}
+//               <NavDropdown.Divider />
+//               <NavDropdown.Item href="#action/3.4">
+//                 all
+//               </NavDropdown.Item>
+//             </NavDropdown>
+
+//             <ButtonGroup className="mb-2">
+//               <ToggleButton
+//                 id="toggle-check"
+//                 type="checkbox"
+//                 variant="outline-primary"
+//                 checked={adminMode}
+//                 value="1"
+//                 onChange={(e) => setAdminMode(!adminMode)}
+//               >
+//                 ⚙️
+//               </ToggleButton>
+//             </ButtonGroup>
+
+//           </Navbar.Collapse>
+//         </Container>
+
+
+//       </Navbar>
+//     </div>
+//     {children}
+//   </div>
+
+// };
 
 export const DocGal = ({ setAdminMode, users, adminMode, children }) => {
   return <div>
