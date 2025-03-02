@@ -244,20 +244,20 @@
           {
             Object.freeze(emptyObject);
           }
-          function Component2(props, context4, updater) {
+          function Component6(props, context4, updater) {
             this.props = props;
             this.context = context4;
             this.refs = emptyObject;
             this.updater = updater || ReactNoopUpdateQueue;
           }
-          Component2.prototype.isReactComponent = {};
-          Component2.prototype.setState = function(partialState, callback) {
+          Component6.prototype.isReactComponent = {};
+          Component6.prototype.setState = function(partialState, callback) {
             if (typeof partialState !== "object" && typeof partialState !== "function" && partialState != null) {
               throw new Error("setState(...): takes an object of state variables to update or a function which returns an object of state variables.");
             }
             this.updater.enqueueSetState(this, partialState, callback, "setState");
           };
-          Component2.prototype.forceUpdate = function(callback) {
+          Component6.prototype.forceUpdate = function(callback) {
             this.updater.enqueueForceUpdate(this, callback, "forceUpdate");
           };
           {
@@ -266,7 +266,7 @@
               replaceState: ["replaceState", "Refactor your code to use setState instead (see https://github.com/facebook/react/issues/3236)."]
             };
             var defineDeprecationWarning = function(methodName, info) {
-              Object.defineProperty(Component2.prototype, methodName, {
+              Object.defineProperty(Component6.prototype, methodName, {
                 get: function() {
                   warn("%s(...) is deprecated in plain JavaScript React classes. %s", info[0], info[1]);
                   return void 0;
@@ -281,7 +281,7 @@
           }
           function ComponentDummy() {
           }
-          ComponentDummy.prototype = Component2.prototype;
+          ComponentDummy.prototype = Component6.prototype;
           function PureComponent(props, context4, updater) {
             this.props = props;
             this.context = context4;
@@ -290,9 +290,9 @@
           }
           var pureComponentPrototype = PureComponent.prototype = new ComponentDummy();
           pureComponentPrototype.constructor = PureComponent;
-          assign(pureComponentPrototype, Component2.prototype);
+          assign(pureComponentPrototype, Component6.prototype);
           pureComponentPrototype.isPureReactComponent = true;
-          function createRef2() {
+          function createRef4() {
             var refObject = {
               current: null
             };
@@ -516,7 +516,7 @@
             }
             return element;
           };
-          function createElement4(type, config, children2) {
+          function createElement13(type, config, children2) {
             var propName;
             var props = {};
             var key = null;
@@ -977,7 +977,7 @@
             }
             return lazyType2;
           }
-          function forwardRef48(render) {
+          function forwardRef51(render) {
             {
               if (render != null && render.$$typeof === REACT_MEMO_TYPE2) {
                 error2("forwardRef requires a render function but received a `memo` component. Instead of forwardRef(memo(...)), use memo(forwardRef(...)).");
@@ -1090,7 +1090,7 @@
             }
             return dispatcher.useContext(Context2);
           }
-          function useState27(initialState) {
+          function useState32(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1098,11 +1098,11 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useReducer(reducer2, initialArg, init2);
           }
-          function useRef26(initialValue) {
+          function useRef29(initialValue) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect31(create3, deps) {
+          function useEffect35(create3, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create3, deps);
           }
@@ -1110,15 +1110,15 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useInsertionEffect(create3, deps);
           }
-          function useLayoutEffect8(create3, deps) {
+          function useLayoutEffect9(create3, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useLayoutEffect(create3, deps);
           }
-          function useCallback24(callback, deps) {
+          function useCallback25(callback, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useCallback(callback, deps);
           }
-          function useMemo18(create3, deps) {
+          function useMemo19(create3, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useMemo(create3, deps);
           }
@@ -1355,8 +1355,8 @@
               return describeNativeComponentFrame(fn2, false);
             }
           }
-          function shouldConstruct(Component3) {
-            var prototype = Component3.prototype;
+          function shouldConstruct(Component7) {
+            var prototype = Component7.prototype;
             return !!(prototype && prototype.isReactComponent);
           }
           function describeUnknownElementTypeFrameInDEV(type, source, ownerFn) {
@@ -1615,7 +1615,7 @@
                 error2("React.createElement: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", typeString, info);
               }
             }
-            var element = createElement4.apply(this, arguments);
+            var element = createElement13.apply(this, arguments);
             if (element == null) {
               return element;
             }
@@ -1862,7 +1862,7 @@
             only: onlyChild
           };
           exports.Children = Children3;
-          exports.Component = Component2;
+          exports.Component = Component6;
           exports.Fragment = REACT_FRAGMENT_TYPE2;
           exports.Profiler = REACT_PROFILER_TYPE2;
           exports.PureComponent = PureComponent;
@@ -1873,26 +1873,26 @@
           exports.createContext = createContext16;
           exports.createElement = createElement$1;
           exports.createFactory = createFactory;
-          exports.createRef = createRef2;
-          exports.forwardRef = forwardRef48;
+          exports.createRef = createRef4;
+          exports.forwardRef = forwardRef51;
           exports.isValidElement = isValidElement3;
           exports.lazy = lazy;
           exports.memo = memo4;
           exports.startTransition = startTransition;
           exports.unstable_act = act;
-          exports.useCallback = useCallback24;
+          exports.useCallback = useCallback25;
           exports.useContext = useContext23;
           exports.useDebugValue = useDebugValue3;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect31;
+          exports.useEffect = useEffect35;
           exports.useId = useId;
           exports.useImperativeHandle = useImperativeHandle2;
           exports.useInsertionEffect = useInsertionEffect;
-          exports.useLayoutEffect = useLayoutEffect8;
-          exports.useMemo = useMemo18;
+          exports.useLayoutEffect = useLayoutEffect9;
+          exports.useMemo = useMemo19;
           exports.useReducer = useReducer2;
-          exports.useRef = useRef26;
-          exports.useState = useState27;
+          exports.useRef = useRef29;
+          exports.useState = useState32;
           exports.useSyncExternalStore = useSyncExternalStore2;
           exports.useTransition = useTransition2;
           exports.version = ReactVersion;
@@ -1923,7 +1923,7 @@
       if (true) {
         (function() {
           "use strict";
-          var React78 = require_react();
+          var React89 = require_react();
           var REACT_ELEMENT_TYPE2 = Symbol.for("react.element");
           var REACT_PORTAL_TYPE2 = Symbol.for("react.portal");
           var REACT_FRAGMENT_TYPE2 = Symbol.for("react.fragment");
@@ -1949,7 +1949,7 @@
             }
             return null;
           }
-          var ReactSharedInternals = React78.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React89.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function error2(format) {
             {
               {
@@ -2280,8 +2280,8 @@
               return describeNativeComponentFrame(fn2, false);
             }
           }
-          function shouldConstruct(Component2) {
-            var prototype = Component2.prototype;
+          function shouldConstruct(Component6) {
+            var prototype = Component6.prototype;
             return !!(prototype && prototype.isReactComponent);
           }
           function describeUnknownElementTypeFrameInDEV(type, source, ownerFn) {
@@ -2815,7 +2815,7 @@
           return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
         }
         function useSyncExternalStore$2(subscribe, getSnapshot) {
-          didWarnOld18Alpha || void 0 === React78.startTransition || (didWarnOld18Alpha = true, console.error(
+          didWarnOld18Alpha || void 0 === React89.startTransition || (didWarnOld18Alpha = true, console.error(
             "You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release."
           ));
           var value = getSnapshot();
@@ -2825,11 +2825,11 @@
               "The result of getSnapshot should be cached to avoid an infinite loop"
             ), didWarnUncachedGetSnapshot = true);
           }
-          cachedValue = useState27({
+          cachedValue = useState32({
             inst: { value, getSnapshot }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
-          useLayoutEffect8(
+          useLayoutEffect9(
             function() {
               inst.value = value;
               inst.getSnapshot = getSnapshot;
@@ -2837,7 +2837,7 @@
             },
             [subscribe, value, getSnapshot]
           );
-          useEffect31(
+          useEffect35(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe(function() {
@@ -2863,8 +2863,8 @@
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React78 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState27 = React78.useState, useEffect31 = React78.useEffect, useLayoutEffect8 = React78.useLayoutEffect, useDebugValue3 = React78.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
-        exports.useSyncExternalStore = void 0 !== React78.useSyncExternalStore ? React78.useSyncExternalStore : shim;
+        var React89 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState32 = React89.useState, useEffect35 = React89.useEffect, useLayoutEffect9 = React89.useLayoutEffect, useDebugValue3 = React89.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        exports.useSyncExternalStore = void 0 !== React89.useSyncExternalStore ? React89.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
     }
@@ -2891,15 +2891,15 @@
           return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React78 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore2 = shim.useSyncExternalStore, useRef26 = React78.useRef, useEffect31 = React78.useEffect, useMemo18 = React78.useMemo, useDebugValue3 = React78.useDebugValue;
+        var React89 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore2 = shim.useSyncExternalStore, useRef29 = React89.useRef, useEffect35 = React89.useEffect, useMemo19 = React89.useMemo, useDebugValue3 = React89.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual2) {
-          var instRef = useRef26(null);
+          var instRef = useRef29(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
           } else
             inst = instRef.current;
-          instRef = useMemo18(
+          instRef = useMemo19(
             function() {
               function memoizedSelector(nextSnapshot) {
                 if (!hasMemo) {
@@ -2935,7 +2935,7 @@
             [getSnapshot, getServerSnapshot, selector, isEqual2]
           );
           var value = useSyncExternalStore2(subscribe, instRef[0], instRef[1]);
-          useEffect31(
+          useEffect35(
             function() {
               inst.hasValue = true;
               inst.value = value;
@@ -3434,9 +3434,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React78 = require_react();
+          var React89 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React78.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React89.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -3485,8 +3485,8 @@
           var HostPortal = 4;
           var HostComponent = 5;
           var HostText = 6;
-          var Fragment4 = 7;
-          var Mode = 8;
+          var Fragment5 = 7;
+          var Mode3 = 8;
           var ContextConsumer = 9;
           var ContextProvider = 10;
           var ForwardRef2 = 11;
@@ -4471,8 +4471,8 @@
               return describeNativeComponentFrame(fn2, false);
             }
           }
-          function shouldConstruct(Component2) {
-            var prototype = Component2.prototype;
+          function shouldConstruct(Component6) {
+            var prototype = Component6.prototype;
             return !!(prototype && prototype.isReactComponent);
           }
           function describeUnknownElementTypeFrameInDEV(type, source, ownerFn) {
@@ -4641,7 +4641,7 @@
                 return "DehydratedFragment";
               case ForwardRef2:
                 return getWrappedName$1(type, type.render, "ForwardRef");
-              case Fragment4:
+              case Fragment5:
                 return "Fragment";
               case HostComponent:
                 return type;
@@ -4653,7 +4653,7 @@
                 return "Text";
               case LazyComponent:
                 return getComponentNameFromType(type);
-              case Mode:
+              case Mode3:
                 if (type === REACT_STRICT_MODE_TYPE2) {
                   return "StrictMode";
                 }
@@ -5041,7 +5041,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React78.Children.forEach(props.children, function(child) {
+                  React89.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -10440,7 +10440,7 @@
               }
             }
           }
-          function createElement4(type, props, rootContainerElement, parentNamespace) {
+          function createElement13(type, props, rootContainerElement, parentNamespace) {
             var isCustomComponentTag;
             var ownerDocument2 = getOwnerDocumentFromRootContainer(rootContainerElement);
             var domElement;
@@ -11301,7 +11301,7 @@
               }
               parentNamespace = hostContextDev.namespace;
             }
-            var domElement = createElement4(type, props, rootContainerInstance, parentNamespace);
+            var domElement = createElement13(type, props, rootContainerInstance, parentNamespace);
             precacheFiberNode(internalInstanceHandle, domElement);
             updateFiberProps(domElement, props);
             return domElement;
@@ -11905,9 +11905,9 @@
           var contextStackCursor = createCursor(emptyContextObject);
           var didPerformWorkStackCursor = createCursor(false);
           var previousContext = emptyContextObject;
-          function getUnmaskedContext(workInProgress2, Component2, didPushOwnContextIfProvider) {
+          function getUnmaskedContext(workInProgress2, Component6, didPushOwnContextIfProvider) {
             {
-              if (didPushOwnContextIfProvider && isContextProvider(Component2)) {
+              if (didPushOwnContextIfProvider && isContextProvider(Component6)) {
                 return previousContext;
               }
               return contextStackCursor.current;
@@ -12044,8 +12044,8 @@
                   case HostRoot:
                     return node.stateNode.context;
                   case ClassComponent: {
-                    var Component2 = node.type;
-                    if (isContextProvider(Component2)) {
+                    var Component6 = node.type;
+                    if (isContextProvider(Component6)) {
                       return node.stateNode.__reactInternalMemoizedMergedChildContext;
                     }
                     break;
@@ -13042,7 +13042,7 @@
               }
             }
             function updateFragment2(returnFiber, current2, fragment, lanes, key) {
-              if (current2 === null || current2.tag !== Fragment4) {
+              if (current2 === null || current2.tag !== Fragment5) {
                 var created = createFiberFromFragment(fragment, returnFiber.mode, lanes, key);
                 created.return = returnFiber;
                 return created;
@@ -13445,7 +13445,7 @@
                 if (child.key === key) {
                   var elementType = element.type;
                   if (elementType === REACT_FRAGMENT_TYPE2) {
-                    if (child.tag === Fragment4) {
+                    if (child.tag === Fragment5) {
                       deleteRemainingChildren(returnFiber, child.sibling);
                       var existing = useFiber(child, element.props.children);
                       existing.return = returnFiber;
@@ -14502,7 +14502,7 @@
             }
             return true;
           }
-          function renderWithHooks(current2, workInProgress2, Component2, props, secondArg, nextRenderLanes) {
+          function renderWithHooks(current2, workInProgress2, Component6, props, secondArg, nextRenderLanes) {
             renderLanes = nextRenderLanes;
             currentlyRenderingFiber$1 = workInProgress2;
             {
@@ -14522,7 +14522,7 @@
                 ReactCurrentDispatcher$1.current = HooksDispatcherOnMountInDEV;
               }
             }
-            var children2 = Component2(props, secondArg);
+            var children2 = Component6(props, secondArg);
             if (didScheduleRenderPhaseUpdateDuringThisPass) {
               var numberOfReRenders = 0;
               do {
@@ -14542,7 +14542,7 @@
                   hookTypesUpdateIndexDev = -1;
                 }
                 ReactCurrentDispatcher$1.current = HooksDispatcherOnRerenderInDEV;
-                children2 = Component2(props, secondArg);
+                children2 = Component6(props, secondArg);
               } while (didScheduleRenderPhaseUpdateDuringThisPass);
             }
             ReactCurrentDispatcher$1.current = ContextOnlyDispatcher;
@@ -16341,10 +16341,10 @@
               child = child.sibling;
             }
           }
-          function resolveDefaultProps(Component2, baseProps) {
-            if (Component2 && Component2.defaultProps) {
+          function resolveDefaultProps(Component6, baseProps) {
+            if (Component6 && Component6.defaultProps) {
               var props = assign({}, baseProps);
-              var defaultProps2 = Component2.defaultProps;
+              var defaultProps2 = Component6.defaultProps;
               for (var propName in defaultProps2) {
                 if (props[propName] === void 0) {
                   props[propName] = defaultProps2[propName];
@@ -17273,22 +17273,22 @@
             workInProgress2.child = reconcileChildFibers(workInProgress2, current2.child, null, renderLanes2);
             workInProgress2.child = reconcileChildFibers(workInProgress2, null, nextChildren, renderLanes2);
           }
-          function updateForwardRef(current2, workInProgress2, Component2, nextProps, renderLanes2) {
+          function updateForwardRef(current2, workInProgress2, Component6, nextProps, renderLanes2) {
             {
               if (workInProgress2.type !== workInProgress2.elementType) {
-                var innerPropTypes = Component2.propTypes;
+                var innerPropTypes = Component6.propTypes;
                 if (innerPropTypes) {
                   checkPropTypes(
                     innerPropTypes,
                     nextProps,
                     // Resolved props
                     "prop",
-                    getComponentNameFromType(Component2)
+                    getComponentNameFromType(Component6)
                   );
                 }
               }
             }
-            var render2 = Component2.render;
+            var render2 = Component6.render;
             var ref2 = workInProgress2.ref;
             var nextChildren;
             var hasId;
@@ -17326,11 +17326,11 @@
             reconcileChildren(current2, workInProgress2, nextChildren, renderLanes2);
             return workInProgress2.child;
           }
-          function updateMemoComponent(current2, workInProgress2, Component2, nextProps, renderLanes2) {
+          function updateMemoComponent(current2, workInProgress2, Component6, nextProps, renderLanes2) {
             if (current2 === null) {
-              var type = Component2.type;
-              if (isSimpleFunctionComponent(type) && Component2.compare === null && // SimpleMemoComponent codepath doesn't resolve outer props either.
-              Component2.defaultProps === void 0) {
+              var type = Component6.type;
+              if (isSimpleFunctionComponent(type) && Component6.compare === null && // SimpleMemoComponent codepath doesn't resolve outer props either.
+              Component6.defaultProps === void 0) {
                 var resolvedType = type;
                 {
                   resolvedType = resolveFunctionForHotReloading(type);
@@ -17353,7 +17353,7 @@
                     getComponentNameFromType(type)
                   );
                 }
-                if (Component2.defaultProps !== void 0) {
+                if (Component6.defaultProps !== void 0) {
                   var componentName = getComponentNameFromType(type) || "Unknown";
                   if (!didWarnAboutDefaultPropsOnFunctionComponent[componentName]) {
                     error2("%s: Support for defaultProps will be removed from memo components in a future major release. Use JavaScript default parameters instead.", componentName);
@@ -17361,14 +17361,14 @@
                   }
                 }
               }
-              var child = createFiberFromTypeAndProps(Component2.type, null, nextProps, workInProgress2, workInProgress2.mode, renderLanes2);
+              var child = createFiberFromTypeAndProps(Component6.type, null, nextProps, workInProgress2, workInProgress2.mode, renderLanes2);
               child.ref = workInProgress2.ref;
               child.return = workInProgress2;
               workInProgress2.child = child;
               return child;
             }
             {
-              var _type = Component2.type;
+              var _type = Component6.type;
               var _innerPropTypes = _type.propTypes;
               if (_innerPropTypes) {
                 checkPropTypes(
@@ -17384,7 +17384,7 @@
             var hasScheduledUpdateOrContext = checkScheduledUpdateOrContext(current2, renderLanes2);
             if (!hasScheduledUpdateOrContext) {
               var prevProps = currentChild.memoizedProps;
-              var compare = Component2.compare;
+              var compare = Component6.compare;
               compare = compare !== null ? compare : shallowEqual2;
               if (compare(prevProps, nextProps) && current2.ref === workInProgress2.ref) {
                 return bailoutOnAlreadyFinishedWork(current2, workInProgress2, renderLanes2);
@@ -17397,7 +17397,7 @@
             workInProgress2.child = newChild;
             return newChild;
           }
-          function updateSimpleMemoComponent(current2, workInProgress2, Component2, nextProps, renderLanes2) {
+          function updateSimpleMemoComponent(current2, workInProgress2, Component6, nextProps, renderLanes2) {
             {
               if (workInProgress2.type !== workInProgress2.elementType) {
                 var outerMemoType = workInProgress2.elementType;
@@ -17437,7 +17437,7 @@
                 }
               }
             }
-            return updateFunctionComponent(current2, workInProgress2, Component2, nextProps, renderLanes2);
+            return updateFunctionComponent(current2, workInProgress2, Component6, nextProps, renderLanes2);
           }
           function updateOffscreenComponent(current2, workInProgress2, renderLanes2) {
             var nextProps = workInProgress2.pendingProps;
@@ -17527,24 +17527,24 @@
               }
             }
           }
-          function updateFunctionComponent(current2, workInProgress2, Component2, nextProps, renderLanes2) {
+          function updateFunctionComponent(current2, workInProgress2, Component6, nextProps, renderLanes2) {
             {
               if (workInProgress2.type !== workInProgress2.elementType) {
-                var innerPropTypes = Component2.propTypes;
+                var innerPropTypes = Component6.propTypes;
                 if (innerPropTypes) {
                   checkPropTypes(
                     innerPropTypes,
                     nextProps,
                     // Resolved props
                     "prop",
-                    getComponentNameFromType(Component2)
+                    getComponentNameFromType(Component6)
                   );
                 }
               }
             }
             var context4;
             {
-              var unmaskedContext = getUnmaskedContext(workInProgress2, Component2, true);
+              var unmaskedContext = getUnmaskedContext(workInProgress2, Component6, true);
               context4 = getMaskedContext(workInProgress2, unmaskedContext);
             }
             var nextChildren;
@@ -17556,12 +17556,12 @@
             {
               ReactCurrentOwner$1.current = workInProgress2;
               setIsRendering(true);
-              nextChildren = renderWithHooks(current2, workInProgress2, Component2, nextProps, context4, renderLanes2);
+              nextChildren = renderWithHooks(current2, workInProgress2, Component6, nextProps, context4, renderLanes2);
               hasId = checkDidRenderIdHook();
               if (workInProgress2.mode & StrictLegacyMode) {
                 setIsStrictModeForDevtools(true);
                 try {
-                  nextChildren = renderWithHooks(current2, workInProgress2, Component2, nextProps, context4, renderLanes2);
+                  nextChildren = renderWithHooks(current2, workInProgress2, Component6, nextProps, context4, renderLanes2);
                   hasId = checkDidRenderIdHook();
                 } finally {
                   setIsStrictModeForDevtools(false);
@@ -17583,7 +17583,7 @@
             reconcileChildren(current2, workInProgress2, nextChildren, renderLanes2);
             return workInProgress2.child;
           }
-          function updateClassComponent(current2, workInProgress2, Component2, nextProps, renderLanes2) {
+          function updateClassComponent(current2, workInProgress2, Component6, nextProps, renderLanes2) {
             {
               switch (shouldError(workInProgress2)) {
                 case false: {
@@ -17606,20 +17606,20 @@
                 }
               }
               if (workInProgress2.type !== workInProgress2.elementType) {
-                var innerPropTypes = Component2.propTypes;
+                var innerPropTypes = Component6.propTypes;
                 if (innerPropTypes) {
                   checkPropTypes(
                     innerPropTypes,
                     nextProps,
                     // Resolved props
                     "prop",
-                    getComponentNameFromType(Component2)
+                    getComponentNameFromType(Component6)
                   );
                 }
               }
             }
             var hasContext;
-            if (isContextProvider(Component2)) {
+            if (isContextProvider(Component6)) {
               hasContext = true;
               pushContextProvider(workInProgress2);
             } else {
@@ -17630,15 +17630,15 @@
             var shouldUpdate;
             if (instance === null) {
               resetSuspendedCurrentOnMountInLegacyMode(current2, workInProgress2);
-              constructClassInstance(workInProgress2, Component2, nextProps);
-              mountClassInstance(workInProgress2, Component2, nextProps, renderLanes2);
+              constructClassInstance(workInProgress2, Component6, nextProps);
+              mountClassInstance(workInProgress2, Component6, nextProps, renderLanes2);
               shouldUpdate = true;
             } else if (current2 === null) {
-              shouldUpdate = resumeMountClassInstance(workInProgress2, Component2, nextProps, renderLanes2);
+              shouldUpdate = resumeMountClassInstance(workInProgress2, Component6, nextProps, renderLanes2);
             } else {
-              shouldUpdate = updateClassInstance(current2, workInProgress2, Component2, nextProps, renderLanes2);
+              shouldUpdate = updateClassInstance(current2, workInProgress2, Component6, nextProps, renderLanes2);
             }
-            var nextUnitOfWork = finishClassComponent(current2, workInProgress2, Component2, shouldUpdate, hasContext, renderLanes2);
+            var nextUnitOfWork = finishClassComponent(current2, workInProgress2, Component6, shouldUpdate, hasContext, renderLanes2);
             {
               var inst = workInProgress2.stateNode;
               if (shouldUpdate && inst.props !== nextProps) {
@@ -17650,19 +17650,19 @@
             }
             return nextUnitOfWork;
           }
-          function finishClassComponent(current2, workInProgress2, Component2, shouldUpdate, hasContext, renderLanes2) {
+          function finishClassComponent(current2, workInProgress2, Component6, shouldUpdate, hasContext, renderLanes2) {
             markRef(current2, workInProgress2);
             var didCaptureError = (workInProgress2.flags & DidCapture) !== NoFlags;
             if (!shouldUpdate && !didCaptureError) {
               if (hasContext) {
-                invalidateContextProvider(workInProgress2, Component2, false);
+                invalidateContextProvider(workInProgress2, Component6, false);
               }
               return bailoutOnAlreadyFinishedWork(current2, workInProgress2, renderLanes2);
             }
             var instance = workInProgress2.stateNode;
             ReactCurrentOwner$1.current = workInProgress2;
             var nextChildren;
-            if (didCaptureError && typeof Component2.getDerivedStateFromError !== "function") {
+            if (didCaptureError && typeof Component6.getDerivedStateFromError !== "function") {
               nextChildren = null;
               {
                 stopProfilerTimerIfRunning();
@@ -17696,7 +17696,7 @@
             }
             workInProgress2.memoizedState = instance.state;
             if (hasContext) {
-              invalidateContextProvider(workInProgress2, Component2, true);
+              invalidateContextProvider(workInProgress2, Component6, true);
             }
             return workInProgress2.child;
           }
@@ -17796,45 +17796,45 @@
             var lazyComponent = elementType;
             var payload = lazyComponent._payload;
             var init2 = lazyComponent._init;
-            var Component2 = init2(payload);
-            workInProgress2.type = Component2;
-            var resolvedTag = workInProgress2.tag = resolveLazyComponentTag(Component2);
-            var resolvedProps = resolveDefaultProps(Component2, props);
+            var Component6 = init2(payload);
+            workInProgress2.type = Component6;
+            var resolvedTag = workInProgress2.tag = resolveLazyComponentTag(Component6);
+            var resolvedProps = resolveDefaultProps(Component6, props);
             var child;
             switch (resolvedTag) {
               case FunctionComponent: {
                 {
-                  validateFunctionComponentInDev(workInProgress2, Component2);
-                  workInProgress2.type = Component2 = resolveFunctionForHotReloading(Component2);
+                  validateFunctionComponentInDev(workInProgress2, Component6);
+                  workInProgress2.type = Component6 = resolveFunctionForHotReloading(Component6);
                 }
-                child = updateFunctionComponent(null, workInProgress2, Component2, resolvedProps, renderLanes2);
+                child = updateFunctionComponent(null, workInProgress2, Component6, resolvedProps, renderLanes2);
                 return child;
               }
               case ClassComponent: {
                 {
-                  workInProgress2.type = Component2 = resolveClassForHotReloading(Component2);
+                  workInProgress2.type = Component6 = resolveClassForHotReloading(Component6);
                 }
-                child = updateClassComponent(null, workInProgress2, Component2, resolvedProps, renderLanes2);
+                child = updateClassComponent(null, workInProgress2, Component6, resolvedProps, renderLanes2);
                 return child;
               }
               case ForwardRef2: {
                 {
-                  workInProgress2.type = Component2 = resolveForwardRefForHotReloading(Component2);
+                  workInProgress2.type = Component6 = resolveForwardRefForHotReloading(Component6);
                 }
-                child = updateForwardRef(null, workInProgress2, Component2, resolvedProps, renderLanes2);
+                child = updateForwardRef(null, workInProgress2, Component6, resolvedProps, renderLanes2);
                 return child;
               }
               case MemoComponent: {
                 {
                   if (workInProgress2.type !== workInProgress2.elementType) {
-                    var outerPropTypes = Component2.propTypes;
+                    var outerPropTypes = Component6.propTypes;
                     if (outerPropTypes) {
                       checkPropTypes(
                         outerPropTypes,
                         resolvedProps,
                         // Resolved for outer only
                         "prop",
-                        getComponentNameFromType(Component2)
+                        getComponentNameFromType(Component6)
                       );
                     }
                   }
@@ -17842,8 +17842,8 @@
                 child = updateMemoComponent(
                   null,
                   workInProgress2,
-                  Component2,
-                  resolveDefaultProps(Component2.type, resolvedProps),
+                  Component6,
+                  resolveDefaultProps(Component6.type, resolvedProps),
                   // The inner type can have defaults too
                   renderLanes2
                 );
@@ -17852,33 +17852,33 @@
             }
             var hint = "";
             {
-              if (Component2 !== null && typeof Component2 === "object" && Component2.$$typeof === REACT_LAZY_TYPE2) {
+              if (Component6 !== null && typeof Component6 === "object" && Component6.$$typeof === REACT_LAZY_TYPE2) {
                 hint = " Did you wrap a component in React.lazy() more than once?";
               }
             }
-            throw new Error("Element type is invalid. Received a promise that resolves to: " + Component2 + ". " + ("Lazy element type must resolve to a class or function." + hint));
+            throw new Error("Element type is invalid. Received a promise that resolves to: " + Component6 + ". " + ("Lazy element type must resolve to a class or function." + hint));
           }
-          function mountIncompleteClassComponent(_current, workInProgress2, Component2, nextProps, renderLanes2) {
+          function mountIncompleteClassComponent(_current, workInProgress2, Component6, nextProps, renderLanes2) {
             resetSuspendedCurrentOnMountInLegacyMode(_current, workInProgress2);
             workInProgress2.tag = ClassComponent;
             var hasContext;
-            if (isContextProvider(Component2)) {
+            if (isContextProvider(Component6)) {
               hasContext = true;
               pushContextProvider(workInProgress2);
             } else {
               hasContext = false;
             }
             prepareToReadContext(workInProgress2, renderLanes2);
-            constructClassInstance(workInProgress2, Component2, nextProps);
-            mountClassInstance(workInProgress2, Component2, nextProps, renderLanes2);
-            return finishClassComponent(null, workInProgress2, Component2, true, hasContext, renderLanes2);
+            constructClassInstance(workInProgress2, Component6, nextProps);
+            mountClassInstance(workInProgress2, Component6, nextProps, renderLanes2);
+            return finishClassComponent(null, workInProgress2, Component6, true, hasContext, renderLanes2);
           }
-          function mountIndeterminateComponent(_current, workInProgress2, Component2, renderLanes2) {
+          function mountIndeterminateComponent(_current, workInProgress2, Component6, renderLanes2) {
             resetSuspendedCurrentOnMountInLegacyMode(_current, workInProgress2);
             var props = workInProgress2.pendingProps;
             var context4;
             {
-              var unmaskedContext = getUnmaskedContext(workInProgress2, Component2, false);
+              var unmaskedContext = getUnmaskedContext(workInProgress2, Component6, false);
               context4 = getMaskedContext(workInProgress2, unmaskedContext);
             }
             prepareToReadContext(workInProgress2, renderLanes2);
@@ -17888,8 +17888,8 @@
               markComponentRenderStarted(workInProgress2);
             }
             {
-              if (Component2.prototype && typeof Component2.prototype.render === "function") {
-                var componentName = getComponentNameFromType(Component2) || "Unknown";
+              if (Component6.prototype && typeof Component6.prototype.render === "function") {
+                var componentName = getComponentNameFromType(Component6) || "Unknown";
                 if (!didWarnAboutBadClass[componentName]) {
                   error2("The <%s /> component appears to have a render method, but doesn't extend React.Component. This is likely to cause errors. Change %s to extend React.Component instead.", componentName, componentName);
                   didWarnAboutBadClass[componentName] = true;
@@ -17900,7 +17900,7 @@
               }
               setIsRendering(true);
               ReactCurrentOwner$1.current = workInProgress2;
-              value = renderWithHooks(null, workInProgress2, Component2, props, context4, renderLanes2);
+              value = renderWithHooks(null, workInProgress2, Component6, props, context4, renderLanes2);
               hasId = checkDidRenderIdHook();
               setIsRendering(false);
             }
@@ -17910,7 +17910,7 @@
             workInProgress2.flags |= PerformedWork;
             {
               if (typeof value === "object" && value !== null && typeof value.render === "function" && value.$$typeof === void 0) {
-                var _componentName = getComponentNameFromType(Component2) || "Unknown";
+                var _componentName = getComponentNameFromType(Component6) || "Unknown";
                 if (!didWarnAboutModulePatternComponent[_componentName]) {
                   error2("The <%s /> component appears to be a function component that returns a class instance. Change %s to a class that extends React.Component instead. If you can't use a class try assigning the prototype on the function as a workaround. `%s.prototype = React.Component.prototype`. Don't use an arrow function since it cannot be called with `new` by React.", _componentName, _componentName, _componentName);
                   didWarnAboutModulePatternComponent[_componentName] = true;
@@ -17923,7 +17923,7 @@
               typeof value === "object" && value !== null && typeof value.render === "function" && value.$$typeof === void 0
             ) {
               {
-                var _componentName2 = getComponentNameFromType(Component2) || "Unknown";
+                var _componentName2 = getComponentNameFromType(Component6) || "Unknown";
                 if (!didWarnAboutModulePatternComponent[_componentName2]) {
                   error2("The <%s /> component appears to be a function component that returns a class instance. Change %s to a class that extends React.Component instead. If you can't use a class try assigning the prototype on the function as a workaround. `%s.prototype = React.Component.prototype`. Don't use an arrow function since it cannot be called with `new` by React.", _componentName2, _componentName2, _componentName2);
                   didWarnAboutModulePatternComponent[_componentName2] = true;
@@ -17933,7 +17933,7 @@
               workInProgress2.memoizedState = null;
               workInProgress2.updateQueue = null;
               var hasContext = false;
-              if (isContextProvider(Component2)) {
+              if (isContextProvider(Component6)) {
                 hasContext = true;
                 pushContextProvider(workInProgress2);
               } else {
@@ -17942,15 +17942,15 @@
               workInProgress2.memoizedState = value.state !== null && value.state !== void 0 ? value.state : null;
               initializeUpdateQueue(workInProgress2);
               adoptClassInstance(workInProgress2, value);
-              mountClassInstance(workInProgress2, Component2, props, renderLanes2);
-              return finishClassComponent(null, workInProgress2, Component2, true, hasContext, renderLanes2);
+              mountClassInstance(workInProgress2, Component6, props, renderLanes2);
+              return finishClassComponent(null, workInProgress2, Component6, true, hasContext, renderLanes2);
             } else {
               workInProgress2.tag = FunctionComponent;
               {
                 if (workInProgress2.mode & StrictLegacyMode) {
                   setIsStrictModeForDevtools(true);
                   try {
-                    value = renderWithHooks(null, workInProgress2, Component2, props, context4, renderLanes2);
+                    value = renderWithHooks(null, workInProgress2, Component6, props, context4, renderLanes2);
                     hasId = checkDidRenderIdHook();
                   } finally {
                     setIsStrictModeForDevtools(false);
@@ -17962,16 +17962,16 @@
               }
               reconcileChildren(null, workInProgress2, value, renderLanes2);
               {
-                validateFunctionComponentInDev(workInProgress2, Component2);
+                validateFunctionComponentInDev(workInProgress2, Component6);
               }
               return workInProgress2.child;
             }
           }
-          function validateFunctionComponentInDev(workInProgress2, Component2) {
+          function validateFunctionComponentInDev(workInProgress2, Component6) {
             {
-              if (Component2) {
-                if (Component2.childContextTypes) {
-                  error2("%s(...): childContextTypes cannot be defined on a function component.", Component2.displayName || Component2.name || "Component");
+              if (Component6) {
+                if (Component6.childContextTypes) {
+                  error2("%s(...): childContextTypes cannot be defined on a function component.", Component6.displayName || Component6.name || "Component");
                 }
               }
               if (workInProgress2.ref !== null) {
@@ -17990,22 +17990,22 @@
                   error2("Function components cannot be given refs. Attempts to access this ref will fail. Did you mean to use React.forwardRef()?%s", info);
                 }
               }
-              if (Component2.defaultProps !== void 0) {
-                var componentName = getComponentNameFromType(Component2) || "Unknown";
+              if (Component6.defaultProps !== void 0) {
+                var componentName = getComponentNameFromType(Component6) || "Unknown";
                 if (!didWarnAboutDefaultPropsOnFunctionComponent[componentName]) {
                   error2("%s: Support for defaultProps will be removed from function components in a future major release. Use JavaScript default parameters instead.", componentName);
                   didWarnAboutDefaultPropsOnFunctionComponent[componentName] = true;
                 }
               }
-              if (typeof Component2.getDerivedStateFromProps === "function") {
-                var _componentName3 = getComponentNameFromType(Component2) || "Unknown";
+              if (typeof Component6.getDerivedStateFromProps === "function") {
+                var _componentName3 = getComponentNameFromType(Component6) || "Unknown";
                 if (!didWarnAboutGetDerivedStateOnFunctionComponent[_componentName3]) {
                   error2("%s: Function components do not support getDerivedStateFromProps.", _componentName3);
                   didWarnAboutGetDerivedStateOnFunctionComponent[_componentName3] = true;
                 }
               }
-              if (typeof Component2.contextType === "object" && Component2.contextType !== null) {
-                var _componentName4 = getComponentNameFromType(Component2) || "Unknown";
+              if (typeof Component6.contextType === "object" && Component6.contextType !== null) {
+                var _componentName4 = getComponentNameFromType(Component6) || "Unknown";
                 if (!didWarnAboutContextTypeOnFunctionComponent[_componentName4]) {
                   error2("%s: Function components do not support contextType.", _componentName4);
                   didWarnAboutContextTypeOnFunctionComponent[_componentName4] = true;
@@ -18767,8 +18767,8 @@
                 pushHostContext(workInProgress2);
                 break;
               case ClassComponent: {
-                var Component2 = workInProgress2.type;
-                if (isContextProvider(Component2)) {
+                var Component6 = workInProgress2.type;
+                if (isContextProvider(Component6)) {
                   pushContextProvider(workInProgress2);
                 }
                 break;
@@ -18895,10 +18895,10 @@
                 return mountLazyComponent(current2, workInProgress2, elementType, renderLanes2);
               }
               case FunctionComponent: {
-                var Component2 = workInProgress2.type;
+                var Component6 = workInProgress2.type;
                 var unresolvedProps = workInProgress2.pendingProps;
-                var resolvedProps = workInProgress2.elementType === Component2 ? unresolvedProps : resolveDefaultProps(Component2, unresolvedProps);
-                return updateFunctionComponent(current2, workInProgress2, Component2, resolvedProps, renderLanes2);
+                var resolvedProps = workInProgress2.elementType === Component6 ? unresolvedProps : resolveDefaultProps(Component6, unresolvedProps);
+                return updateFunctionComponent(current2, workInProgress2, Component6, resolvedProps, renderLanes2);
               }
               case ClassComponent: {
                 var _Component = workInProgress2.type;
@@ -18922,9 +18922,9 @@
                 var _resolvedProps2 = workInProgress2.elementType === type ? _unresolvedProps2 : resolveDefaultProps(type, _unresolvedProps2);
                 return updateForwardRef(current2, workInProgress2, type, _resolvedProps2, renderLanes2);
               }
-              case Fragment4:
+              case Fragment5:
                 return updateFragment(current2, workInProgress2, renderLanes2);
-              case Mode:
+              case Mode3:
                 return updateMode(current2, workInProgress2, renderLanes2);
               case Profiler:
                 return updateProfiler(current2, workInProgress2, renderLanes2);
@@ -19195,16 +19195,16 @@
               case SimpleMemoComponent:
               case FunctionComponent:
               case ForwardRef2:
-              case Fragment4:
-              case Mode:
+              case Fragment5:
+              case Mode3:
               case Profiler:
               case ContextConsumer:
               case MemoComponent:
                 bubbleProperties(workInProgress2);
                 return null;
               case ClassComponent: {
-                var Component2 = workInProgress2.type;
-                if (isContextProvider(Component2)) {
+                var Component6 = workInProgress2.type;
+                if (isContextProvider(Component6)) {
                   popContext(workInProgress2);
                 }
                 bubbleProperties(workInProgress2);
@@ -19522,8 +19522,8 @@
             popTreeContext(workInProgress2);
             switch (workInProgress2.tag) {
               case ClassComponent: {
-                var Component2 = workInProgress2.type;
-                if (isContextProvider(Component2)) {
+                var Component6 = workInProgress2.type;
+                if (isContextProvider(Component6)) {
                   popContext(workInProgress2);
                 }
                 var flags = workInProgress2.flags;
@@ -23210,18 +23210,18 @@
           var createFiber = function(tag, pendingProps, key, mode) {
             return new FiberNode(tag, pendingProps, key, mode);
           };
-          function shouldConstruct$1(Component2) {
-            var prototype = Component2.prototype;
+          function shouldConstruct$1(Component6) {
+            var prototype = Component6.prototype;
             return !!(prototype && prototype.isReactComponent);
           }
           function isSimpleFunctionComponent(type) {
             return typeof type === "function" && !shouldConstruct$1(type) && type.defaultProps === void 0;
           }
-          function resolveLazyComponentTag(Component2) {
-            if (typeof Component2 === "function") {
-              return shouldConstruct$1(Component2) ? ClassComponent : FunctionComponent;
-            } else if (Component2 !== void 0 && Component2 !== null) {
-              var $$typeof = Component2.$$typeof;
+          function resolveLazyComponentTag(Component6) {
+            if (typeof Component6 === "function") {
+              return shouldConstruct$1(Component6) ? ClassComponent : FunctionComponent;
+            } else if (Component6 !== void 0 && Component6 !== null) {
+              var $$typeof = Component6.$$typeof;
               if ($$typeof === REACT_FORWARD_REF_TYPE2) {
                 return ForwardRef2;
               }
@@ -23372,7 +23372,7 @@
                   case REACT_FRAGMENT_TYPE2:
                     return createFiberFromFragment(pendingProps.children, mode, lanes, key);
                   case REACT_STRICT_MODE_TYPE2:
-                    fiberTag = Mode;
+                    fiberTag = Mode3;
                     mode |= StrictLegacyMode;
                     if ((mode & ConcurrentMode) !== NoMode) {
                       mode |= StrictEffectsMode;
@@ -23454,7 +23454,7 @@
             return fiber;
           }
           function createFiberFromFragment(elements, mode, lanes, key) {
-            var fiber = createFiber(Fragment4, elements, key, mode);
+            var fiber = createFiber(Fragment5, elements, key, mode);
             fiber.lanes = lanes;
             return fiber;
           }
@@ -23658,9 +23658,9 @@
             var fiber = get5(parentComponent);
             var parentContext = findCurrentUnmaskedContext(fiber);
             if (fiber.tag === ClassComponent) {
-              var Component2 = fiber.type;
-              if (isContextProvider(Component2)) {
-                return processChildContext(fiber, Component2, parentContext);
+              var Component6 = fiber.type;
+              if (isContextProvider(Component6)) {
+                return processChildContext(fiber, Component6, parentContext);
               }
             }
             return parentContext;
@@ -24766,7 +24766,7 @@
           var ContextProvider = REACT_PROVIDER_TYPE;
           var Element2 = REACT_ELEMENT_TYPE2;
           var ForwardRef2 = REACT_FORWARD_REF_TYPE2;
-          var Fragment4 = REACT_FRAGMENT_TYPE2;
+          var Fragment5 = REACT_FRAGMENT_TYPE2;
           var Lazy = REACT_LAZY_TYPE2;
           var Memo2 = REACT_MEMO_TYPE2;
           var Portal = REACT_PORTAL_TYPE2;
@@ -24825,7 +24825,7 @@
           exports.ContextProvider = ContextProvider;
           exports.Element = Element2;
           exports.ForwardRef = ForwardRef2;
-          exports.Fragment = Fragment4;
+          exports.Fragment = Fragment5;
           exports.Lazy = Lazy;
           exports.Memo = Memo2;
           exports.Portal = Portal;
@@ -25471,6 +25471,53 @@
       }
       var ReactIs;
       var throwOnDirectAccess;
+    }
+  });
+
+  // node_modules/warning/warning.js
+  var require_warning = __commonJS({
+    "node_modules/warning/warning.js"(exports, module) {
+      "use strict";
+      var __DEV__ = true;
+      var warning6 = function() {
+      };
+      if (__DEV__) {
+        printWarning = function printWarning2(format, args) {
+          var len = arguments.length;
+          args = new Array(len > 1 ? len - 1 : 0);
+          for (var key = 1; key < len; key++) {
+            args[key - 1] = arguments[key];
+          }
+          var argIndex = 0;
+          var message = "Warning: " + format.replace(/%s/g, function() {
+            return args[argIndex++];
+          });
+          if (typeof console !== "undefined") {
+            console.error(message);
+          }
+          try {
+            throw new Error(message);
+          } catch (x) {
+          }
+        };
+        warning6 = function(condition, format, args) {
+          var len = arguments.length;
+          args = new Array(len > 2 ? len - 2 : 0);
+          for (var key = 2; key < len; key++) {
+            args[key - 2] = arguments[key];
+          }
+          if (format === void 0) {
+            throw new Error(
+              "`warning(condition, format, ...args)` requires a warning message argument"
+            );
+          }
+          if (!condition) {
+            printWarning.apply(null, [format].concat(args));
+          }
+        };
+      }
+      var printWarning;
+      module.exports = warning6;
     }
   });
 
@@ -26889,53 +26936,6 @@
     }
   });
 
-  // node_modules/warning/warning.js
-  var require_warning = __commonJS({
-    "node_modules/warning/warning.js"(exports, module) {
-      "use strict";
-      var __DEV__ = true;
-      var warning6 = function() {
-      };
-      if (__DEV__) {
-        printWarning = function printWarning2(format, args) {
-          var len = arguments.length;
-          args = new Array(len > 1 ? len - 1 : 0);
-          for (var key = 1; key < len; key++) {
-            args[key - 1] = arguments[key];
-          }
-          var argIndex = 0;
-          var message = "Warning: " + format.replace(/%s/g, function() {
-            return args[argIndex++];
-          });
-          if (typeof console !== "undefined") {
-            console.error(message);
-          }
-          try {
-            throw new Error(message);
-          } catch (x) {
-          }
-        };
-        warning6 = function(condition, format, args) {
-          var len = arguments.length;
-          args = new Array(len > 2 ? len - 2 : 0);
-          for (var key = 2; key < len; key++) {
-            args[key - 2] = arguments[key];
-          }
-          if (format === void 0) {
-            throw new Error(
-              "`warning(condition, format, ...args)` requires a warning message argument"
-            );
-          }
-          if (!condition) {
-            printWarning.apply(null, [format].concat(args));
-          }
-        };
-      }
-      var printWarning;
-      module.exports = warning6;
-    }
-  });
-
   // node_modules/use-sync-external-store/cjs/use-sync-external-store-with-selector.development.js
   var require_use_sync_external_store_with_selector_development = __commonJS({
     "node_modules/use-sync-external-store/cjs/use-sync-external-store-with-selector.development.js"(exports) {
@@ -26945,15 +26945,15 @@
           return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React78 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore2 = React78.useSyncExternalStore, useRef26 = React78.useRef, useEffect31 = React78.useEffect, useMemo18 = React78.useMemo, useDebugValue3 = React78.useDebugValue;
+        var React89 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore2 = React89.useSyncExternalStore, useRef29 = React89.useRef, useEffect35 = React89.useEffect, useMemo19 = React89.useMemo, useDebugValue3 = React89.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual2) {
-          var instRef = useRef26(null);
+          var instRef = useRef29(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
           } else
             inst = instRef.current;
-          instRef = useMemo18(
+          instRef = useMemo19(
             function() {
               function memoizedSelector(nextSnapshot) {
                 if (!hasMemo) {
@@ -26989,7 +26989,7 @@
             [getSnapshot, getServerSnapshot, selector, isEqual2]
           );
           var value = useSyncExternalStore2(subscribe, instRef[0], instRef[1]);
-          useEffect31(
+          useEffect35(
             function() {
               inst.hasValue = true;
               inst.value = value;
@@ -27013,6 +27013,1489 @@
       } else {
         module.exports = require_use_sync_external_store_with_selector_development();
       }
+    }
+  });
+
+  // node_modules/@gitgraph/core/lib/orientation.js
+  var require_orientation = __commonJS({
+    "node_modules/@gitgraph/core/lib/orientation.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      var Orientation2;
+      (function(Orientation3) {
+        Orientation3["VerticalReverse"] = "vertical-reverse";
+        Orientation3["Horizontal"] = "horizontal";
+        Orientation3["HorizontalReverse"] = "horizontal-reverse";
+      })(Orientation2 = exports.Orientation || (exports.Orientation = {}));
+    }
+  });
+
+  // node_modules/@gitgraph/core/lib/utils.js
+  var require_utils = __commonJS({
+    "node_modules/@gitgraph/core/lib/utils.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      var orientation_1 = require_orientation();
+      function booleanOptionOr(value, defaultValue) {
+        return typeof value === "boolean" ? value : defaultValue;
+      }
+      exports.booleanOptionOr = booleanOptionOr;
+      function numberOptionOr(value, defaultValue) {
+        return typeof value === "number" ? value : defaultValue;
+      }
+      exports.numberOptionOr = numberOptionOr;
+      function pick(obj, paths) {
+        return Object.assign({}, paths.reduce((mem, key) => Object.assign({}, mem, { [key]: obj[key] }), {}));
+      }
+      exports.pick = pick;
+      function debug(commits, paths) {
+        console.log(JSON.stringify(commits.map((commit) => pick(commit, paths)), null, 2));
+      }
+      exports.debug = debug;
+      function isUndefined(obj) {
+        return obj === void 0;
+      }
+      exports.isUndefined = isUndefined;
+      function withoutUndefinedKeys(obj = {}) {
+        return Object.keys(obj).reduce((mem, key) => isUndefined(obj[key]) ? mem : Object.assign({}, mem, { [key]: obj[key] }), {});
+      }
+      exports.withoutUndefinedKeys = withoutUndefinedKeys;
+      function arrowSvgPath2(graph, parent, commit) {
+        const commitRadius = commit.style.dot.size;
+        const size = graph.template.arrow.size;
+        const h = commitRadius + graph.template.arrow.offset;
+        const delta = Math.PI / 7;
+        const alpha = getAlpha(graph, parent, commit);
+        const x1 = h * Math.cos(alpha);
+        const y1 = h * Math.sin(alpha);
+        const x2 = (h + size) * Math.cos(alpha - delta);
+        const y2 = (h + size) * Math.sin(alpha - delta);
+        const x3 = (h + size / 2) * Math.cos(alpha);
+        const y3 = (h + size / 2) * Math.sin(alpha);
+        const x4 = (h + size) * Math.cos(alpha + delta);
+        const y4 = (h + size) * Math.sin(alpha + delta);
+        return `M${x1},${y1} L${x2},${y2} Q${x3},${y3} ${x4},${y4} L${x4},${y4}`;
+      }
+      exports.arrowSvgPath = arrowSvgPath2;
+      function getAlpha(graph, parent, commit) {
+        const deltaX = parent.x - commit.x;
+        const deltaY = parent.y - commit.y;
+        const commitSpacing = graph.template.commit.spacing;
+        let alphaY;
+        let alphaX;
+        switch (graph.orientation) {
+          case orientation_1.Orientation.Horizontal:
+            alphaY = deltaY;
+            alphaX = -commitSpacing;
+            break;
+          case orientation_1.Orientation.HorizontalReverse:
+            alphaY = deltaY;
+            alphaX = commitSpacing;
+            break;
+          case orientation_1.Orientation.VerticalReverse:
+            alphaY = -commitSpacing;
+            alphaX = deltaX;
+            break;
+          default:
+            alphaY = commitSpacing;
+            alphaX = deltaX;
+            break;
+        }
+        if (graph.isVertical) {
+          if (Math.abs(deltaY) > commitSpacing)
+            alphaX = 0;
+        } else {
+          if (Math.abs(deltaX) > commitSpacing)
+            alphaY = 0;
+        }
+        if (graph.reverseArrow) {
+          alphaY *= -1;
+          alphaX *= -1;
+        }
+        return Math.atan2(alphaY, alphaX);
+      }
+    }
+  });
+
+  // node_modules/@gitgraph/core/lib/template.js
+  var require_template = __commonJS({
+    "node_modules/@gitgraph/core/lib/template.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      var utils_1 = require_utils();
+      var MergeStyle2;
+      (function(MergeStyle3) {
+        MergeStyle3["Bezier"] = "bezier";
+        MergeStyle3["Straight"] = "straight";
+      })(MergeStyle2 || (MergeStyle2 = {}));
+      exports.MergeStyle = MergeStyle2;
+      exports.DEFAULT_FONT = "normal 12pt Calibri";
+      var Template = class {
+        constructor(options) {
+          options.branch = options.branch || {};
+          options.branch.label = options.branch.label || {};
+          options.arrow = options.arrow || {};
+          options.commit = options.commit || {};
+          options.commit.dot = options.commit.dot || {};
+          options.commit.message = options.commit.message || {};
+          this.colors = options.colors || ["#000000"];
+          this.branch = {
+            color: options.branch.color,
+            lineWidth: options.branch.lineWidth || 2,
+            mergeStyle: options.branch.mergeStyle || MergeStyle2.Bezier,
+            spacing: utils_1.numberOptionOr(options.branch.spacing, 20),
+            label: {
+              display: utils_1.booleanOptionOr(options.branch.label.display, true),
+              color: options.branch.label.color || options.commit.color,
+              strokeColor: options.branch.label.strokeColor || options.commit.color,
+              bgColor: options.branch.label.bgColor || "white",
+              font: options.branch.label.font || options.commit.message.font || exports.DEFAULT_FONT,
+              borderRadius: utils_1.numberOptionOr(options.branch.label.borderRadius, 10)
+            }
+          };
+          this.arrow = {
+            size: options.arrow.size || null,
+            color: options.arrow.color || null,
+            offset: options.arrow.offset || 2
+          };
+          this.commit = {
+            color: options.commit.color,
+            spacing: utils_1.numberOptionOr(options.commit.spacing, 25),
+            hasTooltipInCompactMode: utils_1.booleanOptionOr(options.commit.hasTooltipInCompactMode, true),
+            dot: {
+              color: options.commit.dot.color || options.commit.color,
+              size: options.commit.dot.size || 3,
+              strokeWidth: utils_1.numberOptionOr(options.commit.dot.strokeWidth, 0),
+              strokeColor: options.commit.dot.strokeColor,
+              font: options.commit.dot.font || options.commit.message.font || "normal 10pt Calibri"
+            },
+            message: {
+              display: utils_1.booleanOptionOr(options.commit.message.display, true),
+              displayAuthor: utils_1.booleanOptionOr(options.commit.message.displayAuthor, true),
+              displayHash: utils_1.booleanOptionOr(options.commit.message.displayHash, true),
+              color: options.commit.message.color || options.commit.color,
+              font: options.commit.message.font || exports.DEFAULT_FONT
+            }
+          };
+          this.tag = options.tag || {};
+        }
+      };
+      exports.Template = Template;
+      var blackArrowTemplate = new Template({
+        colors: ["#6963FF", "#47E8D4", "#6BDB52", "#E84BA5", "#FFA657"],
+        branch: {
+          color: "#000000",
+          lineWidth: 4,
+          spacing: 50,
+          mergeStyle: MergeStyle2.Straight
+        },
+        commit: {
+          spacing: 60,
+          dot: {
+            size: 16,
+            strokeColor: "#000000",
+            strokeWidth: 4
+          },
+          message: {
+            color: "black"
+          }
+        },
+        arrow: {
+          size: 16,
+          offset: -1.5
+        }
+      });
+      exports.blackArrowTemplate = blackArrowTemplate;
+      var metroTemplate = new Template({
+        colors: ["#979797", "#008fb5", "#f1c109"],
+        branch: {
+          lineWidth: 10,
+          spacing: 50
+        },
+        commit: {
+          spacing: 80,
+          dot: {
+            size: 14
+          },
+          message: {
+            font: "normal 14pt Arial"
+          }
+        }
+      });
+      exports.metroTemplate = metroTemplate;
+      var TemplateName2;
+      (function(TemplateName3) {
+        TemplateName3["Metro"] = "metro";
+        TemplateName3["BlackArrow"] = "blackarrow";
+      })(TemplateName2 || (TemplateName2 = {}));
+      exports.TemplateName = TemplateName2;
+      function templateExtend2(selectedTemplate, options) {
+        const template = getTemplate(selectedTemplate);
+        if (!options.branch)
+          options.branch = {};
+        if (!options.commit)
+          options.commit = {};
+        return {
+          colors: options.colors || template.colors,
+          arrow: Object.assign({}, template.arrow, options.arrow),
+          branch: Object.assign({}, template.branch, options.branch, { label: Object.assign({}, template.branch.label, options.branch.label) }),
+          commit: Object.assign({}, template.commit, options.commit, { dot: Object.assign({}, template.commit.dot, options.commit.dot), message: Object.assign({}, template.commit.message, options.commit.message) }),
+          tag: Object.assign({}, template.tag, options.tag)
+        };
+      }
+      exports.templateExtend = templateExtend2;
+      function getTemplate(template) {
+        if (!template)
+          return metroTemplate;
+        if (typeof template === "string") {
+          return {
+            [TemplateName2.BlackArrow]: blackArrowTemplate,
+            [TemplateName2.Metro]: metroTemplate
+          }[template];
+        }
+        return template;
+      }
+      exports.getTemplate = getTemplate;
+    }
+  });
+
+  // node_modules/@gitgraph/core/lib/tag.js
+  var require_tag = __commonJS({
+    "node_modules/@gitgraph/core/lib/tag.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      var template_1 = require_template();
+      var utils_1 = require_utils();
+      var Tag2 = class {
+        constructor(name, style5, render, commitStyle) {
+          this.name = name;
+          this.tagStyle = style5;
+          this.commitStyle = commitStyle;
+          this.render = render;
+        }
+        /**
+         * Style
+         */
+        get style() {
+          return {
+            strokeColor: this.tagStyle.strokeColor || this.commitStyle.color,
+            bgColor: this.tagStyle.bgColor || this.commitStyle.color,
+            color: this.tagStyle.color || "white",
+            font: this.tagStyle.font || this.commitStyle.message.font || template_1.DEFAULT_FONT,
+            borderRadius: utils_1.numberOptionOr(this.tagStyle.borderRadius, 10),
+            pointerWidth: utils_1.numberOptionOr(this.tagStyle.pointerWidth, 12)
+          };
+        }
+      };
+      exports.Tag = Tag2;
+    }
+  });
+
+  // node_modules/@gitgraph/core/lib/commit.js
+  var require_commit = __commonJS({
+    "node_modules/@gitgraph/core/lib/commit.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      var tag_1 = require_tag();
+      var getRandomHash = () => (Math.random().toString(16).substring(3) + Math.random().toString(16).substring(3) + Math.random().toString(16).substring(3) + Math.random().toString(16).substring(3)).substring(0, 40);
+      var Commit2 = class {
+        constructor(options) {
+          this.refs = [];
+          this.x = 0;
+          this.y = 0;
+          let name, email;
+          try {
+            [, name, email] = options.author.match(/(.*) <(.*)>/);
+          } catch (e2) {
+            [name, email] = [options.author, ""];
+          }
+          this.author = { name, email, timestamp: Date.now() };
+          this.committer = { name, email, timestamp: Date.now() };
+          this.subject = options.subject;
+          this.body = options.body || "";
+          this.hash = options.hash || getRandomHash();
+          this.hashAbbrev = this.hash.substring(0, 7);
+          this.parents = options.parents ? options.parents : [];
+          this.parentsAbbrev = this.parents.map((commit) => commit.substring(0, 7));
+          this.style = Object.assign({}, options.style, { message: Object.assign({}, options.style.message), dot: Object.assign({}, options.style.dot) });
+          this.dotText = options.dotText;
+          this.onClick = () => options.onClick ? options.onClick(this) : void 0;
+          this.onMessageClick = () => options.onMessageClick ? options.onMessageClick(this) : void 0;
+          this.onMouseOver = () => options.onMouseOver ? options.onMouseOver(this) : void 0;
+          this.onMouseOut = () => options.onMouseOut ? options.onMouseOut(this) : void 0;
+          this.renderDot = options.renderDot;
+          this.renderMessage = options.renderMessage;
+          this.renderTooltip = options.renderTooltip;
+        }
+        /**
+         * Message
+         */
+        get message() {
+          let message = "";
+          if (this.style.message.displayHash) {
+            message += `${this.hashAbbrev} `;
+          }
+          message += this.subject;
+          if (this.style.message.displayAuthor) {
+            message += ` - ${this.author.name} <${this.author.email}>`;
+          }
+          return message;
+        }
+        /**
+         * Branch that should be rendered
+         */
+        get branchToDisplay() {
+          return this.branches ? this.branches[0] : "";
+        }
+        setRefs(refs) {
+          this.refs = refs.getNames(this.hash);
+          return this;
+        }
+        setTags(tags, getTagStyle, getTagRender) {
+          this.tags = tags.getNames(this.hash).map((name) => new tag_1.Tag(name, getTagStyle(name), getTagRender(name), this.style));
+          return this;
+        }
+        setBranches(branches) {
+          this.branches = branches;
+          return this;
+        }
+        setPosition({ x, y }) {
+          this.x = x;
+          this.y = y;
+          return this;
+        }
+        withDefaultColor(color2) {
+          const newStyle = Object.assign({}, this.style, { dot: Object.assign({}, this.style.dot), message: Object.assign({}, this.style.message) });
+          if (!newStyle.color)
+            newStyle.color = color2;
+          if (!newStyle.dot.color)
+            newStyle.dot.color = color2;
+          if (!newStyle.message.color)
+            newStyle.message.color = color2;
+          const commit = this.cloneCommit();
+          commit.style = newStyle;
+          return commit;
+        }
+        /**
+         * Ideally, we want Commit to be a [Value Object](https://martinfowler.com/bliki/ValueObject.html).
+         * We started with a mutable class. So we'll refactor that little by little.
+         * This private function is a helper to create a new Commit from existing one.
+         */
+        cloneCommit() {
+          const commit = new Commit2({
+            author: `${this.author.name} <${this.author.email}>`,
+            subject: this.subject,
+            style: this.style,
+            body: this.body,
+            hash: this.hash,
+            parents: this.parents,
+            dotText: this.dotText,
+            onClick: this.onClick,
+            onMessageClick: this.onMessageClick,
+            onMouseOver: this.onMouseOver,
+            onMouseOut: this.onMouseOut,
+            renderDot: this.renderDot,
+            renderMessage: this.renderMessage,
+            renderTooltip: this.renderTooltip
+          });
+          commit.refs = this.refs;
+          commit.branches = this.branches;
+          commit.tags = this.tags;
+          commit.x = this.x;
+          commit.y = this.y;
+          return commit;
+        }
+      };
+      exports.Commit = Commit2;
+    }
+  });
+
+  // node_modules/@gitgraph/core/lib/user-api/branch-user-api.js
+  var require_branch_user_api = __commonJS({
+    "node_modules/@gitgraph/core/lib/user-api/branch-user-api.js"(exports) {
+      "use strict";
+      var __rest = exports && exports.__rest || function(s, e2) {
+        var t = {};
+        for (var p in s)
+          if (Object.prototype.hasOwnProperty.call(s, p) && e2.indexOf(p) < 0)
+            t[p] = s[p];
+        if (s != null && typeof Object.getOwnPropertySymbols === "function")
+          for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e2.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+              t[p[i]] = s[p[i]];
+          }
+        return t;
+      };
+      Object.defineProperty(exports, "__esModule", { value: true });
+      var commit_1 = require_commit();
+      var branch_1 = require_branch();
+      var utils_1 = require_utils();
+      var BranchUserApi = class {
+        // tslint:enable:variable-name
+        constructor(branch, graph, onGraphUpdate) {
+          this._branch = branch;
+          this.name = branch.name;
+          this._graph = graph;
+          this._onGraphUpdate = onGraphUpdate;
+        }
+        branch(args) {
+          if (this._branch.isDeleted() && !this._isReferenced()) {
+            throw new Error(`Cannot branch from the deleted branch "${this.name}"`);
+          }
+          const options = typeof args === "string" ? { name: args } : args;
+          options.from = this;
+          return this._graph.createBranch(options).getUserApi();
+        }
+        commit(options) {
+          if (this._branch.isDeleted() && !this._isReferenced()) {
+            throw new Error(`Cannot commit on the deleted branch "${this.name}"`);
+          }
+          if (typeof options === "string")
+            options = { subject: options };
+          if (!options)
+            options = {};
+          this._commitWithParents(options, []);
+          this._onGraphUpdate();
+          return this;
+        }
+        /**
+         * Delete the branch (as `git branch -d`)
+         */
+        delete() {
+          if (this._graph.refs.getCommit("HEAD") === this._graph.refs.getCommit(this.name)) {
+            throw new Error(`Cannot delete the checked out branch "${this.name}"`);
+          }
+          const branchCommits = function* (graph, branch) {
+            const lookupCommit = (graph2, commitHash) => {
+              return graph2.commits.find(({ hash: hash3 }) => hash3 === commitHash);
+            };
+            let currentCommit = lookupCommit(graph, graph.refs.getCommit(branch.name));
+            while (currentCommit && currentCommit.hash !== branch.parentCommitHash) {
+              yield currentCommit;
+              currentCommit = lookupCommit(graph, currentCommit.parents[0]);
+            }
+            return;
+          }(this._graph, this._branch);
+          [...branchCommits].forEach((commit) => {
+            commit.refs = commit.refs.filter((branchName) => branchName !== this.name);
+          });
+          this._graph.refs.delete(this.name);
+          this._graph.branches.delete(this.name);
+          this._branch = branch_1.createDeletedBranch(this._graph, this._branch.style, () => {
+          });
+          this._onGraphUpdate();
+          return this;
+        }
+        merge(...args) {
+          if (this._branch.isDeleted() && !this._isReferenced()) {
+            throw new Error(`Cannot merge to the deleted branch "${this.name}"`);
+          }
+          let options = args[0];
+          if (!isBranchMergeOptions(options)) {
+            options = {
+              branch: args[0],
+              fastForward: false,
+              commitOptions: { subject: args[1] }
+            };
+          }
+          const { branch, fastForward, commitOptions } = options;
+          const branchName = typeof branch === "string" ? branch : branch.name;
+          const branchLastCommitHash = this._graph.refs.getCommit(branchName);
+          if (!branchLastCommitHash) {
+            throw new Error(`The branch called "${branchName}" is unknown`);
+          }
+          let canFastForward = false;
+          if (fastForward) {
+            const lastCommitHash = this._graph.refs.getCommit(this._branch.name);
+            if (lastCommitHash) {
+              canFastForward = this._areCommitsConnected(lastCommitHash, branchLastCommitHash);
+            }
+          }
+          if (fastForward && canFastForward) {
+            this._fastForwardTo(branchLastCommitHash);
+          } else {
+            this._commitWithParents(Object.assign({}, commitOptions, { subject: commitOptions && commitOptions.subject || `Merge branch ${branchName}` }), [branchLastCommitHash]);
+          }
+          this._onGraphUpdate();
+          return this;
+        }
+        tag(options) {
+          if (this._branch.isDeleted() && !this._isReferenced()) {
+            throw new Error(`Cannot tag on the deleted branch "${this.name}"`);
+          }
+          if (typeof options === "string") {
+            this._graph.getUserApi().tag({ name: options, ref: this._branch.name });
+          } else {
+            this._graph.getUserApi().tag(Object.assign({}, options, { ref: this._branch.name }));
+          }
+          return this;
+        }
+        /**
+         * Checkout onto this branch and update "HEAD" in refs
+         */
+        checkout() {
+          if (this._branch.isDeleted() && !this._isReferenced()) {
+            throw new Error(`Cannot checkout the deleted branch "${this.name}"`);
+          }
+          const target = this._branch;
+          const headCommit = this._graph.refs.getCommit(target.name);
+          this._graph.currentBranch = target;
+          if (headCommit) {
+            this._graph.refs.set("HEAD", headCommit);
+          }
+          return this;
+        }
+        // tslint:disable:variable-name - Prefix `_` = explicitly private for JS users
+        _commitWithParents(options, parents) {
+          const parentOnSameBranch = this._graph.refs.getCommit(this._branch.name);
+          if (parentOnSameBranch) {
+            parents.unshift(parentOnSameBranch);
+          } else if (this._branch.parentCommitHash) {
+            parents.unshift(this._branch.parentCommitHash);
+          }
+          const { tag } = options, commitOptions = __rest(options, ["tag"]);
+          const commit = new commit_1.Commit(Object.assign({ hash: this._graph.generateCommitHash(), author: this._branch.commitDefaultOptions.author || this._graph.author, subject: this._branch.commitDefaultOptions.subject || this._graph.commitMessage }, commitOptions, { parents, style: this._getCommitStyle(options.style) }));
+          if (parentOnSameBranch) {
+            const parentRefs = this._graph.refs.getNames(parentOnSameBranch);
+            parentRefs.forEach((ref2) => this._graph.refs.set(ref2, commit.hash));
+          } else {
+            this._graph.refs.set(this._branch.name, commit.hash);
+          }
+          this._graph.commits.push(commit);
+          this.checkout();
+          if (tag)
+            this.tag(tag);
+        }
+        _areCommitsConnected(parentCommitHash, childCommitHash) {
+          const childCommit = this._graph.commits.find(({ hash: hash3 }) => childCommitHash === hash3);
+          if (!childCommit)
+            return false;
+          const isFirstCommitOfGraph = childCommit.parents.length === 0;
+          if (isFirstCommitOfGraph)
+            return false;
+          if (childCommit.parents.includes(parentCommitHash)) {
+            return true;
+          }
+          return childCommit.parents.some((directParentHash) => this._areCommitsConnected(parentCommitHash, directParentHash));
+        }
+        _fastForwardTo(commitHash) {
+          this._graph.refs.set(this._branch.name, commitHash);
+        }
+        _getCommitStyle(style5 = {}) {
+          return Object.assign({}, utils_1.withoutUndefinedKeys(this._graph.template.commit), utils_1.withoutUndefinedKeys(this._branch.commitDefaultOptions.style), style5, { message: Object.assign({}, utils_1.withoutUndefinedKeys(this._graph.template.commit.message), utils_1.withoutUndefinedKeys(this._branch.commitDefaultOptions.style.message), style5.message, utils_1.withoutUndefinedKeys({
+            display: this._graph.shouldDisplayCommitMessage && void 0
+          })), dot: Object.assign({}, utils_1.withoutUndefinedKeys(this._graph.template.commit.dot), utils_1.withoutUndefinedKeys(this._branch.commitDefaultOptions.style.dot), style5.dot) });
+        }
+        _isReferenced() {
+          return this._graph.branches.has(this.name) || this._graph.refs.hasName(this.name) || this._graph.commits.reduce((allNames, { refs }) => [...allNames, ...refs], []).includes(this.name);
+        }
+      };
+      exports.BranchUserApi = BranchUserApi;
+      function isBranchMergeOptions(options) {
+        return typeof options === "object" && !(options instanceof BranchUserApi);
+      }
+    }
+  });
+
+  // node_modules/@gitgraph/core/lib/branch.js
+  var require_branch = __commonJS({
+    "node_modules/@gitgraph/core/lib/branch.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      var branch_user_api_1 = require_branch_user_api();
+      var DELETED_BRANCH_NAME = "";
+      exports.DELETED_BRANCH_NAME = DELETED_BRANCH_NAME;
+      var Branch = class {
+        constructor(options) {
+          this.gitgraph = options.gitgraph;
+          this.name = options.name;
+          this.style = options.style;
+          this.parentCommitHash = options.parentCommitHash;
+          this.commitDefaultOptions = options.commitDefaultOptions || { style: {} };
+          this.onGraphUpdate = options.onGraphUpdate;
+          this.renderLabel = options.renderLabel;
+        }
+        /**
+         * Return the API to manipulate Gitgraph branch as a user.
+         */
+        getUserApi() {
+          return new branch_user_api_1.BranchUserApi(this, this.gitgraph, this.onGraphUpdate);
+        }
+        /**
+         * Return true if branch was deleted.
+         */
+        isDeleted() {
+          return this.name === DELETED_BRANCH_NAME;
+        }
+      };
+      exports.Branch = Branch;
+      function createDeletedBranch(gitgraph, style5, onGraphUpdate) {
+        return new Branch({
+          name: DELETED_BRANCH_NAME,
+          gitgraph,
+          style: style5,
+          onGraphUpdate
+        });
+      }
+      exports.createDeletedBranch = createDeletedBranch;
+    }
+  });
+
+  // node_modules/@gitgraph/core/lib/mode.js
+  var require_mode = __commonJS({
+    "node_modules/@gitgraph/core/lib/mode.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      var Mode3;
+      (function(Mode4) {
+        Mode4["Compact"] = "compact";
+      })(Mode3 || (Mode3 = {}));
+      exports.Mode = Mode3;
+    }
+  });
+
+  // node_modules/@gitgraph/core/lib/graph-rows/regular.js
+  var require_regular = __commonJS({
+    "node_modules/@gitgraph/core/lib/graph-rows/regular.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      var RegularGraphRows = class {
+        constructor(commits) {
+          this.rows = /* @__PURE__ */ new Map();
+          this.maxRowCache = void 0;
+          this.computeRowsFromCommits(commits);
+        }
+        getRowOf(commitHash) {
+          return this.rows.get(commitHash) || 0;
+        }
+        getMaxRow() {
+          if (this.maxRowCache === void 0) {
+            this.maxRowCache = uniq(Array.from(this.rows.values())).length - 1;
+          }
+          return this.maxRowCache;
+        }
+        computeRowsFromCommits(commits) {
+          commits.forEach((commit, i) => {
+            this.rows.set(commit.hash, i);
+          });
+          this.maxRowCache = void 0;
+        }
+      };
+      exports.RegularGraphRows = RegularGraphRows;
+      function uniq(array2) {
+        const set5 = /* @__PURE__ */ new Set();
+        array2.forEach((value) => set5.add(value));
+        return Array.from(set5);
+      }
+    }
+  });
+
+  // node_modules/@gitgraph/core/lib/graph-rows/compact.js
+  var require_compact = __commonJS({
+    "node_modules/@gitgraph/core/lib/graph-rows/compact.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      var regular_1 = require_regular();
+      var CompactGraphRows = class extends regular_1.RegularGraphRows {
+        computeRowsFromCommits(commits) {
+          commits.forEach((commit, i) => {
+            let newRow = i;
+            const isFirstCommit = i === 0;
+            if (!isFirstCommit) {
+              const parentRow = this.getRowOf(commit.parents[0]);
+              const historyParent = commits[i - 1];
+              newRow = Math.max(parentRow + 1, this.getRowOf(historyParent.hash));
+              const isMergeCommit = commit.parents.length > 1;
+              if (isMergeCommit) {
+                const mergeTargetParentRow = this.getRowOf(commit.parents[1]);
+                if (parentRow < mergeTargetParentRow)
+                  newRow++;
+              }
+            }
+            this.rows.set(commit.hash, newRow);
+          });
+        }
+      };
+      exports.CompactGraphRows = CompactGraphRows;
+    }
+  });
+
+  // node_modules/@gitgraph/core/lib/graph-rows/index.js
+  var require_graph_rows = __commonJS({
+    "node_modules/@gitgraph/core/lib/graph-rows/index.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      var mode_1 = require_mode();
+      var compact_1 = require_compact();
+      var regular_1 = require_regular();
+      exports.GraphRows = regular_1.RegularGraphRows;
+      function createGraphRows(mode, commits) {
+        return mode === mode_1.Mode.Compact ? new compact_1.CompactGraphRows(commits) : new regular_1.RegularGraphRows(commits);
+      }
+      exports.createGraphRows = createGraphRows;
+    }
+  });
+
+  // node_modules/@gitgraph/core/lib/branches-order.js
+  var require_branches_order = __commonJS({
+    "node_modules/@gitgraph/core/lib/branches-order.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      var BranchesOrder = class {
+        constructor(commits, colors, compareFunction) {
+          this.branches = /* @__PURE__ */ new Set();
+          this.colors = colors;
+          commits.forEach((commit) => this.branches.add(commit.branchToDisplay));
+          if (compareFunction) {
+            this.branches = new Set(Array.from(this.branches).sort(compareFunction));
+          }
+        }
+        /**
+         * Return the order of the given branch name.
+         *
+         * @param branchName Name of the branch
+         */
+        get(branchName) {
+          return Array.from(this.branches).findIndex((branch) => branch === branchName);
+        }
+        /**
+         * Return the color of the given branch.
+         *
+         * @param branchName Name of the branch
+         */
+        getColorOf(branchName) {
+          return this.colors[this.get(branchName) % this.colors.length];
+        }
+      };
+      exports.BranchesOrder = BranchesOrder;
+    }
+  });
+
+  // node_modules/@gitgraph/core/lib/refs.js
+  var require_refs = __commonJS({
+    "node_modules/@gitgraph/core/lib/refs.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      var Refs = class {
+        constructor() {
+          this.commitPerName = /* @__PURE__ */ new Map();
+          this.namesPerCommit = /* @__PURE__ */ new Map();
+        }
+        /**
+         * Set a new reference to a commit hash.
+         *
+         * @param name Name of the ref (ex: "master", "v1.0")
+         * @param commitHash Commit hash
+         */
+        set(name, commitHash) {
+          const prevCommitHash = this.commitPerName.get(name);
+          if (prevCommitHash) {
+            this.removeNameFrom(prevCommitHash, name);
+          }
+          this.addNameTo(commitHash, name);
+          this.addCommitTo(name, commitHash);
+          return this;
+        }
+        /**
+         * Delete a reference
+         *
+         * @param name Name of the reference
+         */
+        delete(name) {
+          if (this.hasName(name)) {
+            this.removeNameFrom(this.getCommit(name), name);
+            this.commitPerName.delete(name);
+          }
+          return this;
+        }
+        /**
+         * Get the commit hash associated with the given reference name.
+         *
+         * @param name Name of the ref
+         */
+        getCommit(name) {
+          return this.commitPerName.get(name);
+        }
+        /**
+         * Get the list of reference names associated with given commit hash.
+         *
+         * @param commitHash Commit hash
+         */
+        getNames(commitHash) {
+          return this.namesPerCommit.get(commitHash) || [];
+        }
+        /**
+         * Get all reference names known.
+         */
+        getAllNames() {
+          return Array.from(this.commitPerName.keys());
+        }
+        /**
+         * Returns true if given commit hash is referenced.
+         *
+         * @param commitHash Commit hash
+         */
+        hasCommit(commitHash) {
+          return this.namesPerCommit.has(commitHash);
+        }
+        /**
+         * Returns true if given reference name exists.
+         *
+         * @param name Name of the ref
+         */
+        hasName(name) {
+          return this.commitPerName.has(name);
+        }
+        removeNameFrom(commitHash, nameToRemove) {
+          const names = this.namesPerCommit.get(commitHash) || [];
+          this.namesPerCommit.set(commitHash, names.filter((name) => name !== nameToRemove));
+        }
+        addNameTo(commitHash, nameToAdd) {
+          const prevNames = this.namesPerCommit.get(commitHash) || [];
+          this.namesPerCommit.set(commitHash, [...prevNames, nameToAdd]);
+        }
+        addCommitTo(name, commitHashToAdd) {
+          this.commitPerName.set(name, commitHashToAdd);
+        }
+      };
+      exports.Refs = Refs;
+    }
+  });
+
+  // node_modules/@gitgraph/core/lib/branches-paths.js
+  var require_branches_paths = __commonJS({
+    "node_modules/@gitgraph/core/lib/branches-paths.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      var utils_1 = require_utils();
+      var BranchesPathsCalculator = class {
+        constructor(commits, branches, commitSpacing, isGraphVertical, isGraphReverse, createDeletedBranch) {
+          this.branchesPaths = /* @__PURE__ */ new Map();
+          this.commits = commits;
+          this.branches = branches;
+          this.commitSpacing = commitSpacing;
+          this.isGraphVertical = isGraphVertical;
+          this.isGraphReverse = isGraphReverse;
+          this.createDeletedBranch = createDeletedBranch;
+        }
+        /**
+         * Compute branches paths for graph.
+         */
+        execute() {
+          this.fromCommits();
+          this.withMergeCommits();
+          return this.smoothBranchesPaths();
+        }
+        /**
+         * Initialize branches paths from calculator's commits.
+         */
+        fromCommits() {
+          this.commits.forEach((commit) => {
+            let branch = this.branches.get(commit.branchToDisplay);
+            if (!branch) {
+              branch = this.getDeletedBranchInPath() || this.createDeletedBranch();
+            }
+            const path = [];
+            const existingBranchPath = this.branchesPaths.get(branch);
+            const firstParentCommit = this.commits.find(({ hash: hash3 }) => hash3 === commit.parents[0]);
+            if (existingBranchPath) {
+              path.push(...existingBranchPath);
+            } else if (firstParentCommit) {
+              path.push({ x: firstParentCommit.x, y: firstParentCommit.y });
+            }
+            path.push({ x: commit.x, y: commit.y });
+            this.branchesPaths.set(branch, path);
+          });
+        }
+        /**
+         * Insert merge commits points into `branchesPaths`.
+         *
+         * @example
+         *     // Before
+         *     [
+         *       { x: 0, y: 640 },
+         *       { x: 50, y: 560 }
+         *     ]
+         *
+         *     // After
+         *     [
+         *       { x: 0, y: 640 },
+         *       { x: 50, y: 560 },
+         *       { x: 50, y: 560, mergeCommit: true }
+         *     ]
+         */
+        withMergeCommits() {
+          const mergeCommits = this.commits.filter(({ parents }) => parents.length > 1);
+          mergeCommits.forEach((mergeCommit) => {
+            const parentOnOriginBranch = this.commits.find(({ hash: hash3 }) => {
+              return hash3 === mergeCommit.parents[1];
+            });
+            if (!parentOnOriginBranch)
+              return;
+            const originBranchName = parentOnOriginBranch.branches ? parentOnOriginBranch.branches[0] : "";
+            let branch = this.branches.get(originBranchName);
+            if (!branch) {
+              branch = this.getDeletedBranchInPath();
+              if (!branch) {
+                return;
+              }
+            }
+            const lastPoints = [...this.branchesPaths.get(branch) || []];
+            this.branchesPaths.set(branch, [
+              ...lastPoints,
+              { x: mergeCommit.x, y: mergeCommit.y, mergeCommit: true }
+            ]);
+          });
+        }
+        /**
+         * Retrieve deleted branch from calculator's branches paths.
+         */
+        getDeletedBranchInPath() {
+          return Array.from(this.branchesPaths.keys()).find((branch) => branch.isDeleted());
+        }
+        /**
+         * Smooth all paths by putting points on each row.
+         */
+        smoothBranchesPaths() {
+          const branchesPaths = /* @__PURE__ */ new Map();
+          this.branchesPaths.forEach((points, branch) => {
+            if (points.length <= 1) {
+              branchesPaths.set(branch, [points]);
+              return;
+            }
+            if (this.isGraphVertical) {
+              points = points.sort((a, b) => a.y > b.y ? -1 : 1);
+            } else {
+              points = points.sort((a, b) => a.x > b.x ? 1 : -1);
+            }
+            if (this.isGraphReverse) {
+              points = points.reverse();
+            }
+            const paths = points.reduce((mem, point, i) => {
+              if (point.mergeCommit) {
+                mem[mem.length - 1].push(utils_1.pick(point, ["x", "y"]));
+                let j = i - 1;
+                let previousPoint = points[j];
+                while (j >= 0 && previousPoint.mergeCommit) {
+                  j--;
+                  previousPoint = points[j];
+                }
+                if (j >= 0) {
+                  mem.push([previousPoint]);
+                }
+              } else {
+                mem[mem.length - 1].push(point);
+              }
+              return mem;
+            }, [[]]);
+            if (this.isGraphReverse) {
+              paths.forEach((path) => path.reverse());
+            }
+            if (this.isGraphVertical) {
+              paths.forEach((subPath) => {
+                if (subPath.length <= 1)
+                  return;
+                const firstPoint = subPath[0];
+                const lastPoint = subPath[subPath.length - 1];
+                const column = subPath[1].x;
+                const branchSize = Math.round(Math.abs(firstPoint.y - lastPoint.y) / this.commitSpacing) - 1;
+                const branchPoints = branchSize > 0 ? new Array(branchSize).fill(0).map((_, i) => ({
+                  x: column,
+                  y: subPath[0].y - this.commitSpacing * (i + 1)
+                })) : [];
+                const lastSubPaths = branchesPaths.get(branch) || [];
+                branchesPaths.set(branch, [
+                  ...lastSubPaths,
+                  [firstPoint, ...branchPoints, lastPoint]
+                ]);
+              });
+            } else {
+              paths.forEach((subPath) => {
+                if (subPath.length <= 1)
+                  return;
+                const firstPoint = subPath[0];
+                const lastPoint = subPath[subPath.length - 1];
+                const column = subPath[1].y;
+                const branchSize = Math.round(Math.abs(firstPoint.x - lastPoint.x) / this.commitSpacing) - 1;
+                const branchPoints = branchSize > 0 ? new Array(branchSize).fill(0).map((_, i) => ({
+                  y: column,
+                  x: subPath[0].x + this.commitSpacing * (i + 1)
+                })) : [];
+                const lastSubPaths = branchesPaths.get(branch) || [];
+                branchesPaths.set(branch, [
+                  ...lastSubPaths,
+                  [firstPoint, ...branchPoints, lastPoint]
+                ]);
+              });
+            }
+          });
+          return branchesPaths;
+        }
+      };
+      exports.BranchesPathsCalculator = BranchesPathsCalculator;
+      function toSvgPath2(coordinates, isBezier, isVertical) {
+        return coordinates.map((path) => "M" + path.map(({ x, y }, i, points) => {
+          if (isBezier && points.length > 1 && (i === 1 || i === points.length - 1)) {
+            const previous = points[i - 1];
+            if (isVertical) {
+              const middleY = (previous.y + y) / 2;
+              return `C ${previous.x} ${middleY} ${x} ${middleY} ${x} ${y}`;
+            } else {
+              const middleX = (previous.x + x) / 2;
+              return `C ${middleX} ${previous.y} ${middleX} ${y} ${x} ${y}`;
+            }
+          }
+          return `L ${x} ${y}`;
+        }).join(" ").slice(1)).join(" ");
+      }
+      exports.toSvgPath = toSvgPath2;
+    }
+  });
+
+  // node_modules/@gitgraph/core/lib/user-api/gitgraph-user-api.js
+  var require_gitgraph_user_api = __commonJS({
+    "node_modules/@gitgraph/core/lib/user-api/gitgraph-user-api.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      var commit_1 = require_commit();
+      var branch_1 = require_branch();
+      var refs_1 = require_refs();
+      var GitgraphUserApi = class {
+        // tslint:enable:variable-name
+        constructor(graph, onGraphUpdate) {
+          this._graph = graph;
+          this._onGraphUpdate = onGraphUpdate;
+        }
+        /**
+         * Clear everything (as `rm -rf .git && git init`).
+         */
+        clear() {
+          this._graph.refs = new refs_1.Refs();
+          this._graph.tags = new refs_1.Refs();
+          this._graph.commits = [];
+          this._graph.branches = /* @__PURE__ */ new Map();
+          this._graph.currentBranch = this._graph.createBranch("master");
+          this._onGraphUpdate();
+          return this;
+        }
+        commit(options) {
+          this._graph.currentBranch.getUserApi().commit(options);
+          return this;
+        }
+        branch(args) {
+          return this._graph.createBranch(args).getUserApi();
+        }
+        tag(...args) {
+          let name;
+          let ref2;
+          let style5;
+          let render;
+          if (typeof args[0] === "string") {
+            name = args[0];
+            ref2 = args[1];
+          } else {
+            name = args[0].name;
+            ref2 = args[0].ref;
+            style5 = args[0].style;
+            render = args[0].render;
+          }
+          if (!ref2) {
+            const head = this._graph.refs.getCommit("HEAD");
+            if (!head)
+              return this;
+            ref2 = head;
+          }
+          let commitHash;
+          if (this._graph.refs.hasCommit(ref2)) {
+            commitHash = ref2;
+          }
+          if (this._graph.refs.hasName(ref2)) {
+            commitHash = this._graph.refs.getCommit(ref2);
+          }
+          if (!commitHash) {
+            throw new Error(`The ref "${ref2}" does not exist`);
+          }
+          this._graph.tags.set(name, commitHash);
+          this._graph.tagStyles[name] = style5;
+          this._graph.tagRenders[name] = render;
+          this._onGraphUpdate();
+          return this;
+        }
+        /**
+         * Import a JSON.
+         *
+         * Data can't be typed since it comes from a JSON.
+         * We validate input format and throw early if something is invalid.
+         *
+         * @experimental
+         * @param data JSON from `git2json` output
+         */
+        import(data) {
+          const invalidData = new Error("Only `git2json` format is supported for imported data.");
+          if (!Array.isArray(data)) {
+            throw invalidData;
+          }
+          const areDataValid = data.every((options) => {
+            return typeof options === "object" && typeof options.author === "object" && Array.isArray(options.refs);
+          });
+          if (!areDataValid) {
+            throw invalidData;
+          }
+          const commitOptionsList = data.map((options) => Object.assign({}, options, { style: Object.assign({}, this._graph.template.commit, { message: Object.assign({}, this._graph.template.commit.message, { display: this._graph.shouldDisplayCommitMessage }) }), author: `${options.author.name} <${options.author.email}>` })).reverse();
+          this.clear();
+          this._graph.commits = commitOptionsList.map((options) => new commit_1.Commit(options));
+          commitOptionsList.forEach(({ refs, hash: hash3 }) => {
+            if (!refs)
+              return;
+            if (!hash3)
+              return;
+            const TAG_PREFIX = "tag: ";
+            const tags = refs.map((ref2) => ref2.split(TAG_PREFIX)).map(([_, tag]) => tag).filter((tag) => typeof tag === "string");
+            tags.forEach((tag) => this._graph.tags.set(tag, hash3));
+            refs.filter((ref2) => !ref2.startsWith(TAG_PREFIX)).forEach((ref2) => this._graph.refs.set(ref2, hash3));
+          });
+          const branches = this._getBranches();
+          this._graph.commits.map((commit) => this._withBranches(branches, commit)).reduce((mem, commit) => {
+            if (!commit.branches)
+              return mem;
+            commit.branches.forEach((branch) => mem.add(branch));
+            return mem;
+          }, /* @__PURE__ */ new Set()).forEach((branch) => this.branch(branch));
+          this._onGraphUpdate();
+          return this;
+        }
+        // tslint:disable:variable-name - Prefix `_` = explicitly private for JS users
+        // TODO: get rid of these duplicated private methods.
+        //
+        // These belong to Gitgraph. It is duplicated because of `import()`.
+        // `import()` should use regular user API instead.
+        _withBranches(branches, commit) {
+          let commitBranches = Array.from((branches.get(commit.hash) || /* @__PURE__ */ new Set()).values());
+          if (commitBranches.length === 0) {
+            commitBranches = [branch_1.DELETED_BRANCH_NAME];
+          }
+          return commit.setBranches(commitBranches);
+        }
+        _getBranches() {
+          const result = /* @__PURE__ */ new Map();
+          const queue = [];
+          const branches = this._graph.refs.getAllNames().filter((name) => name !== "HEAD");
+          branches.forEach((branch) => {
+            const commitHash = this._graph.refs.getCommit(branch);
+            if (commitHash) {
+              queue.push(commitHash);
+            }
+            while (queue.length > 0) {
+              const currentHash = queue.pop();
+              const current = this._graph.commits.find(({ hash: hash3 }) => hash3 === currentHash);
+              const prevBranches = result.get(currentHash) || /* @__PURE__ */ new Set();
+              prevBranches.add(branch);
+              result.set(currentHash, prevBranches);
+              if (current && current.parents && current.parents.length > 0) {
+                queue.push(current.parents[0]);
+              }
+            }
+          });
+          return result;
+        }
+      };
+      exports.GitgraphUserApi = GitgraphUserApi;
+    }
+  });
+
+  // node_modules/@gitgraph/core/lib/gitgraph.js
+  var require_gitgraph = __commonJS({
+    "node_modules/@gitgraph/core/lib/gitgraph.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      var branch_1 = require_branch();
+      var graph_rows_1 = require_graph_rows();
+      var mode_1 = require_mode();
+      var branches_order_1 = require_branches_order();
+      var template_1 = require_template();
+      var refs_1 = require_refs();
+      var branches_paths_1 = require_branches_paths();
+      var utils_1 = require_utils();
+      var orientation_1 = require_orientation();
+      var gitgraph_user_api_1 = require_gitgraph_user_api();
+      var GitgraphCore2 = class {
+        constructor(options = {}) {
+          this.refs = new refs_1.Refs();
+          this.tags = new refs_1.Refs();
+          this.tagStyles = {};
+          this.tagRenders = {};
+          this.commits = [];
+          this.branches = /* @__PURE__ */ new Map();
+          this.listeners = [];
+          this.nextTimeoutId = null;
+          this.template = template_1.getTemplate(options.template);
+          this.currentBranch = this.createBranch("master");
+          this.orientation = options.orientation;
+          this.reverseArrow = utils_1.booleanOptionOr(options.reverseArrow, false);
+          this.initCommitOffsetX = utils_1.numberOptionOr(options.initCommitOffsetX, 0);
+          this.initCommitOffsetY = utils_1.numberOptionOr(options.initCommitOffsetY, 0);
+          this.mode = options.mode;
+          this.author = options.author || "Sergio Flores <saxo-guy@epic.com>";
+          this.commitMessage = options.commitMessage || "He doesn't like George Michael! Boooo!";
+          this.generateCommitHash = typeof options.generateCommitHash === "function" ? options.generateCommitHash : () => void 0;
+          this.branchesOrderFunction = typeof options.compareBranchesOrder === "function" ? options.compareBranchesOrder : void 0;
+          this.branchLabelOnEveryCommit = utils_1.booleanOptionOr(options.branchLabelOnEveryCommit, false);
+        }
+        get isHorizontal() {
+          return this.orientation === orientation_1.Orientation.Horizontal || this.orientation === orientation_1.Orientation.HorizontalReverse;
+        }
+        get isVertical() {
+          return !this.isHorizontal;
+        }
+        get isReverse() {
+          return this.orientation === orientation_1.Orientation.HorizontalReverse || this.orientation === orientation_1.Orientation.VerticalReverse;
+        }
+        get shouldDisplayCommitMessage() {
+          return !this.isHorizontal && this.mode !== mode_1.Mode.Compact;
+        }
+        /**
+         * Return the API to manipulate Gitgraph as a user.
+         * Rendering library should give that API to their consumer.
+         */
+        getUserApi() {
+          return new gitgraph_user_api_1.GitgraphUserApi(this, () => this.next());
+        }
+        /**
+         * Add a change listener.
+         * It will be called any time the graph have changed (commit, merge…).
+         *
+         * @param listener A callback to be invoked on every change.
+         * @returns A function to remove this change listener.
+         */
+        subscribe(listener) {
+          this.listeners.push(listener);
+          let isSubscribed = true;
+          return () => {
+            if (!isSubscribed)
+              return;
+            isSubscribed = false;
+            const index2 = this.listeners.indexOf(listener);
+            this.listeners.splice(index2, 1);
+          };
+        }
+        /**
+         * Return all data required for rendering.
+         * Rendering libraries will use this to implement their rendering strategy.
+         */
+        getRenderedData() {
+          const commits = this.computeRenderedCommits();
+          const branchesPaths = this.computeRenderedBranchesPaths(commits);
+          const commitMessagesX = this.computeCommitMessagesX(branchesPaths);
+          this.computeBranchesColor(commits, branchesPaths);
+          return { commits, branchesPaths, commitMessagesX };
+        }
+        createBranch(args) {
+          const defaultParentBranchName = "HEAD";
+          let options = {
+            gitgraph: this,
+            name: "",
+            parentCommitHash: this.refs.getCommit(defaultParentBranchName),
+            style: this.template.branch,
+            onGraphUpdate: () => this.next()
+          };
+          if (typeof args === "string") {
+            options.name = args;
+            options.parentCommitHash = this.refs.getCommit(defaultParentBranchName);
+          } else {
+            const parentBranchName = args.from ? args.from.name : defaultParentBranchName;
+            const parentCommitHash = this.refs.getCommit(parentBranchName) || (this.refs.hasCommit(args.from) ? args.from : void 0);
+            args.style = args.style || {};
+            options = Object.assign({}, options, args, { parentCommitHash, style: Object.assign({}, options.style, args.style, { label: Object.assign({}, options.style.label, args.style.label) }) });
+          }
+          const branch = new branch_1.Branch(options);
+          this.branches.set(branch.name, branch);
+          return branch;
+        }
+        /**
+         * Return commits with data for rendering.
+         */
+        computeRenderedCommits() {
+          const branches = this.getBranches();
+          const reachableUnassociatedCommits = (() => {
+            const unassociatedCommits = new Set(this.commits.reduce((commits, { hash: hash3 }) => !branches.has(hash3) ? [...commits, hash3] : commits, []));
+            const tipsOfMergedBranches = this.commits.reduce((tipsOfMergedBranches2, commit) => commit.parents.length > 1 ? [
+              ...tipsOfMergedBranches2,
+              ...commit.parents.slice(1).map((parentHash) => this.commits.find(({ hash: hash3 }) => parentHash === hash3))
+            ] : tipsOfMergedBranches2, []);
+            const reachableCommits = /* @__PURE__ */ new Set();
+            tipsOfMergedBranches.forEach((tip) => {
+              let currentCommit = tip;
+              while (currentCommit && unassociatedCommits.has(currentCommit.hash)) {
+                reachableCommits.add(currentCommit.hash);
+                currentCommit = currentCommit.parents.length > 0 ? this.commits.find(({ hash: hash3 }) => currentCommit.parents[0] === hash3) : void 0;
+              }
+            });
+            return reachableCommits;
+          })();
+          const commitsToRender = this.commits.filter(({ hash: hash3 }) => branches.has(hash3) || reachableUnassociatedCommits.has(hash3));
+          const commitsWithBranches = commitsToRender.map((commit) => this.withBranches(branches, commit));
+          const rows = graph_rows_1.createGraphRows(this.mode, commitsToRender);
+          const branchesOrder = new branches_order_1.BranchesOrder(commitsWithBranches, this.template.colors, this.branchesOrderFunction);
+          return commitsWithBranches.map((commit) => commit.setRefs(this.refs)).map((commit) => this.withPosition(rows, branchesOrder, commit)).map((commit) => commit.withDefaultColor(this.getBranchDefaultColor(branchesOrder, commit.branchToDisplay))).map((commit) => commit.setTags(this.tags, (name) => Object.assign({}, this.tagStyles[name], this.template.tag), (name) => this.tagRenders[name]));
+        }
+        /**
+         * Return branches paths with all data required for rendering.
+         *
+         * @param commits List of commits with rendering data computed
+         */
+        computeRenderedBranchesPaths(commits) {
+          return new branches_paths_1.BranchesPathsCalculator(commits, this.branches, this.template.commit.spacing, this.isVertical, this.isReverse, () => branch_1.createDeletedBranch(this, this.template.branch, () => this.next())).execute();
+        }
+        /**
+         * Set branches colors based on branches paths.
+         *
+         * @param commits List of graph commits
+         * @param branchesPaths Branches paths to be rendered
+         */
+        computeBranchesColor(commits, branchesPaths) {
+          const branchesOrder = new branches_order_1.BranchesOrder(commits, this.template.colors, this.branchesOrderFunction);
+          Array.from(branchesPaths).forEach(([branch]) => {
+            branch.computedColor = branch.style.color || this.getBranchDefaultColor(branchesOrder, branch.name);
+          });
+        }
+        /**
+         * Return commit messages X position for rendering.
+         *
+         * @param branchesPaths Branches paths to be rendered
+         */
+        computeCommitMessagesX(branchesPaths) {
+          const numberOfColumns = Array.from(branchesPaths).length;
+          return numberOfColumns * this.template.branch.spacing;
+        }
+        /**
+         * Add `branches` property to commit.
+         *
+         * @param branches All branches mapped by commit hash
+         * @param commit Commit
+         */
+        withBranches(branches, commit) {
+          let commitBranches = Array.from((branches.get(commit.hash) || /* @__PURE__ */ new Set()).values());
+          if (commitBranches.length === 0) {
+            commitBranches = [branch_1.DELETED_BRANCH_NAME];
+          }
+          return commit.setBranches(commitBranches);
+        }
+        /**
+         * Get all branches from current commits.
+         */
+        getBranches() {
+          const result = /* @__PURE__ */ new Map();
+          const queue = [];
+          const branches = this.refs.getAllNames().filter((name) => name !== "HEAD");
+          branches.forEach((branch) => {
+            const commitHash = this.refs.getCommit(branch);
+            if (commitHash) {
+              queue.push(commitHash);
+            }
+            while (queue.length > 0) {
+              const currentHash = queue.pop();
+              const current = this.commits.find(({ hash: hash3 }) => hash3 === currentHash);
+              const prevBranches = result.get(currentHash) || /* @__PURE__ */ new Set();
+              prevBranches.add(branch);
+              result.set(currentHash, prevBranches);
+              if (current && current.parents && current.parents.length > 0) {
+                queue.push(current.parents[0]);
+              }
+            }
+          });
+          return result;
+        }
+        /**
+         * Add position to given commit.
+         *
+         * @param rows Graph rows
+         * @param branchesOrder Computed order of branches
+         * @param commit Commit to position
+         */
+        withPosition(rows, branchesOrder, commit) {
+          const row = rows.getRowOf(commit.hash);
+          const maxRow = rows.getMaxRow();
+          const order2 = branchesOrder.get(commit.branchToDisplay);
+          switch (this.orientation) {
+            default:
+              return commit.setPosition({
+                x: this.initCommitOffsetX + this.template.branch.spacing * order2,
+                y: this.initCommitOffsetY + this.template.commit.spacing * (maxRow - row)
+              });
+            case orientation_1.Orientation.VerticalReverse:
+              return commit.setPosition({
+                x: this.initCommitOffsetX + this.template.branch.spacing * order2,
+                y: this.initCommitOffsetY + this.template.commit.spacing * row
+              });
+            case orientation_1.Orientation.Horizontal:
+              return commit.setPosition({
+                x: this.initCommitOffsetX + this.template.commit.spacing * row,
+                y: this.initCommitOffsetY + this.template.branch.spacing * order2
+              });
+            case orientation_1.Orientation.HorizontalReverse:
+              return commit.setPosition({
+                x: this.initCommitOffsetX + this.template.commit.spacing * (maxRow - row),
+                y: this.initCommitOffsetY + this.template.branch.spacing * order2
+              });
+          }
+        }
+        /**
+         * Return the default color for given branch.
+         *
+         * @param branchesOrder Computed order of branches
+         * @param branchName Name of the branch
+         */
+        getBranchDefaultColor(branchesOrder, branchName) {
+          return branchesOrder.getColorOf(branchName);
+        }
+        /**
+         * Tell each listener something new happened.
+         * E.g. a rendering library will know it needs to re-render the graph.
+         */
+        next() {
+          if (this.nextTimeoutId) {
+            window.clearTimeout(this.nextTimeoutId);
+          }
+          this.nextTimeoutId = window.setTimeout(() => {
+            this.listeners.forEach((listener) => listener(this.getRenderedData()));
+          }, 0);
+        }
+      };
+      exports.GitgraphCore = GitgraphCore2;
+    }
+  });
+
+  // node_modules/@gitgraph/core/lib/index.js
+  var require_lib = __commonJS({
+    "node_modules/@gitgraph/core/lib/index.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      var gitgraph_1 = require_gitgraph();
+      exports.GitgraphCore = gitgraph_1.GitgraphCore;
+      var mode_1 = require_mode();
+      exports.Mode = mode_1.Mode;
+      var gitgraph_user_api_1 = require_gitgraph_user_api();
+      exports.GitgraphUserApi = gitgraph_user_api_1.GitgraphUserApi;
+      var branch_user_api_1 = require_branch_user_api();
+      exports.BranchUserApi = branch_user_api_1.BranchUserApi;
+      var branch_1 = require_branch();
+      exports.Branch = branch_1.Branch;
+      var commit_1 = require_commit();
+      exports.Commit = commit_1.Commit;
+      var tag_1 = require_tag();
+      exports.Tag = tag_1.Tag;
+      var refs_1 = require_refs();
+      exports.Refs = refs_1.Refs;
+      var template_1 = require_template();
+      exports.MergeStyle = template_1.MergeStyle;
+      exports.TemplateName = template_1.TemplateName;
+      exports.templateExtend = template_1.templateExtend;
+      var orientation_1 = require_orientation();
+      exports.Orientation = orientation_1.Orientation;
+      var branches_paths_1 = require_branches_paths();
+      exports.toSvgPath = branches_paths_1.toSvgPath;
+      var utils_1 = require_utils();
+      exports.arrowSvgPath = utils_1.arrowSvgPath;
     }
   });
 
@@ -35599,7 +37082,7 @@
   var NodeResizeControl = (0, import_react2.memo)(ResizeControl);
 
   // src/TaskManFrontEnd.tsx
-  var import_react82 = __toESM(require_react(), 1);
+  var import_react86 = __toESM(require_react(), 1);
   var import_client = __toESM(require_client(), 1);
 
   // node_modules/react-bootstrap/esm/Col.js
@@ -35700,11 +37183,11 @@
         className,
         ...colProps
       }, {
-        as: Component2 = "div",
+        as: Component6 = "div",
         bsPrefix,
         spans
       }] = useCol(props);
-      return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(Component2, {
+      return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(Component6, {
         ...colProps,
         ref: ref2,
         className: (0, import_classnames.default)(className, !spans.length && bsPrefix)
@@ -36033,12 +37516,12 @@
       disabled
     } = _ref, props = _objectWithoutPropertiesLoose2(_ref, _excluded);
     const [buttonProps, {
-      tagName: Component2
+      tagName: Component6
     }] = useButtonProps(Object.assign({
       tagName: asProp,
       disabled
     }, props));
-    return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Component2, Object.assign({}, props, buttonProps, {
+    return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Component6, Object.assign({}, props, buttonProps, {
       ref: ref2
     }));
   });
@@ -36113,7 +37596,7 @@
   }
   var NavItem = /* @__PURE__ */ React8.forwardRef((_ref, ref2) => {
     let {
-      as: Component2 = Button_default,
+      as: Component6 = Button_default,
       active,
       eventKey
     } = _ref, options = _objectWithoutPropertiesLoose3(_ref, _excluded2);
@@ -36122,7 +37605,7 @@
       active
     }, options));
     props[dataAttr("active")] = meta.isActive;
-    return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(Component2, Object.assign({}, options, props, {
+    return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(Component6, Object.assign({}, options, props, {
       ref: ref2
     }));
   });
@@ -36150,7 +37633,7 @@
   var Nav = /* @__PURE__ */ React9.forwardRef((_ref, ref2) => {
     let {
       // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-      as: Component2 = "div",
+      as: Component6 = "div",
       onSelect,
       activeKey,
       role,
@@ -36235,7 +37718,7 @@
           getControlledId: getControlledId || noop2,
           getControllerId: getControllerId || noop2
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(Component2, Object.assign({}, props, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(Component6, Object.assign({}, props, {
           onKeyDown: handleKeyDown,
           ref: mergedRef,
           role
@@ -36270,11 +37753,11 @@
   var NavItem2 = /* @__PURE__ */ React12.forwardRef(({
     className,
     bsPrefix,
-    as: Component2 = "div",
+    as: Component6 = "div",
     ...props
   }, ref2) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "nav-item");
-    return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Component2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Component6, {
       ref: ref2,
       className: (0, import_classnames2.default)(className, bsPrefix),
       ...props
@@ -36408,7 +37891,7 @@
   var NavLink = /* @__PURE__ */ React14.forwardRef(({
     bsPrefix,
     className,
-    as: Component2 = Anchor_default,
+    as: Component6 = Anchor_default,
     active,
     eventKey,
     disabled = false,
@@ -36421,7 +37904,7 @@
       disabled,
       ...props
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(Component2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(Component6, {
       ...props,
       ...navItemProps,
       ref: ref2,
@@ -36495,7 +37978,7 @@
     bsPrefix,
     className,
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-    as: Component2 = "div",
+    as: Component6 = "div",
     ...props
   }, ref2) => {
     const decoratedBsPrefix = useBootstrapPrefix(bsPrefix, "row");
@@ -36518,7 +38001,7 @@
       if (cols != null)
         classes.push(`${sizePrefix}${infix}-${cols}`);
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Component2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Component6, {
       ref: ref2,
       ...props,
       className: (0, import_classnames5.default)(className, decoratedBsPrefix, ...classes)
@@ -36735,7 +38218,7 @@
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
     (_ref2, ref2) => {
       let {
-        as: Component2 = "div"
+        as: Component6 = "div"
       } = _ref2, props = _objectWithoutPropertiesLoose6(_ref2, _excluded32);
       const [tabPanelProps, {
         isActive: isActive2,
@@ -36763,7 +38246,7 @@
             onExited,
             mountOnEnter,
             unmountOnExit,
-            children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Component2, Object.assign({}, tabPanelProps, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Component6, Object.assign({}, tabPanelProps, {
               ref: ref2,
               hidden: !isActive2,
               "aria-hidden": !isActive2
@@ -37637,11 +39120,11 @@
   var TabContent = /* @__PURE__ */ React25.forwardRef(({
     className,
     bsPrefix,
-    as: Component2 = "div",
+    as: Component6 = "div",
     ...props
   }, ref2) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "tab-content");
-    return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Component2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Component6, {
       ref: ref2,
       className: (0, import_classnames7.default)(className, bsPrefix),
       ...props
@@ -37663,7 +39146,7 @@
     const [{
       className,
       // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-      as: Component2 = "div",
+      as: Component6 = "div",
       ...rest
     }, {
       isActive: isActive2,
@@ -37695,7 +39178,7 @@
           onExited,
           mountOnEnter,
           unmountOnExit,
-          children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(Component2, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(Component6, {
             ...rest,
             ref: ref2,
             className: (0, import_classnames8.default)(className, prefix3, isActive2 && "active")
@@ -39724,6 +41207,4236 @@
     return matchPath(path.pathname, nextPath) != null || matchPath(path.pathname, currentPath) != null;
   }
 
+  // node_modules/react-bootstrap/esm/Collapse.js
+  var import_classnames9 = __toESM(require_classnames());
+  var import_react34 = __toESM(require_react());
+
+  // node_modules/react-bootstrap/esm/createChainedFunction.js
+  function createChainedFunction(...funcs) {
+    return funcs.filter((f) => f != null).reduce((acc, f) => {
+      if (typeof f !== "function") {
+        throw new Error("Invalid Argument Type, must only provide functions, undefined, or null.");
+      }
+      if (acc === null)
+        return f;
+      return function chainedFunction(...args) {
+        acc.apply(this, args);
+        f.apply(this, args);
+      };
+    }, null);
+  }
+  var createChainedFunction_default = createChainedFunction;
+
+  // node_modules/react-bootstrap/esm/Collapse.js
+  var import_jsx_runtime19 = __toESM(require_jsx_runtime());
+  var MARGINS = {
+    height: ["marginTop", "marginBottom"],
+    width: ["marginLeft", "marginRight"]
+  };
+  function getDefaultDimensionValue(dimension, elem) {
+    const offset4 = `offset${dimension[0].toUpperCase()}${dimension.slice(1)}`;
+    const value = elem[offset4];
+    const margins = MARGINS[dimension];
+    return value + // @ts-ignore
+    parseInt(css_default(elem, margins[0]), 10) + // @ts-ignore
+    parseInt(css_default(elem, margins[1]), 10);
+  }
+  var collapseStyles = {
+    [EXITED]: "collapse",
+    [EXITING]: "collapsing",
+    [ENTERING]: "collapsing",
+    [ENTERED]: "collapse show"
+  };
+  var Collapse = /* @__PURE__ */ import_react34.default.forwardRef(({
+    onEnter,
+    onEntering,
+    onEntered,
+    onExit,
+    onExiting,
+    className,
+    children: children2,
+    dimension = "height",
+    in: inProp = false,
+    timeout: timeout3 = 300,
+    mountOnEnter = false,
+    unmountOnExit = false,
+    appear = false,
+    getDimensionValue = getDefaultDimensionValue,
+    ...props
+  }, ref2) => {
+    const computedDimension = typeof dimension === "function" ? dimension() : dimension;
+    const handleEnter = (0, import_react34.useMemo)(() => createChainedFunction_default((elem) => {
+      elem.style[computedDimension] = "0";
+    }, onEnter), [computedDimension, onEnter]);
+    const handleEntering = (0, import_react34.useMemo)(() => createChainedFunction_default((elem) => {
+      const scroll2 = `scroll${computedDimension[0].toUpperCase()}${computedDimension.slice(1)}`;
+      elem.style[computedDimension] = `${elem[scroll2]}px`;
+    }, onEntering), [computedDimension, onEntering]);
+    const handleEntered = (0, import_react34.useMemo)(() => createChainedFunction_default((elem) => {
+      elem.style[computedDimension] = null;
+    }, onEntered), [computedDimension, onEntered]);
+    const handleExit = (0, import_react34.useMemo)(() => createChainedFunction_default((elem) => {
+      elem.style[computedDimension] = `${getDimensionValue(computedDimension, elem)}px`;
+      triggerBrowserReflow(elem);
+    }, onExit), [onExit, getDimensionValue, computedDimension]);
+    const handleExiting = (0, import_react34.useMemo)(() => createChainedFunction_default((elem) => {
+      elem.style[computedDimension] = null;
+    }, onExiting), [computedDimension, onExiting]);
+    return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(TransitionWrapper_default, {
+      ref: ref2,
+      addEndListener: transitionEndListener,
+      ...props,
+      "aria-expanded": props.role ? inProp : null,
+      onEnter: handleEnter,
+      onEntering: handleEntering,
+      onEntered: handleEntered,
+      onExit: handleExit,
+      onExiting: handleExiting,
+      childRef: getChildRef(children2),
+      in: inProp,
+      timeout: timeout3,
+      mountOnEnter,
+      unmountOnExit,
+      appear,
+      children: (state, innerProps) => /* @__PURE__ */ import_react34.default.cloneElement(children2, {
+        ...innerProps,
+        className: (0, import_classnames9.default)(className, children2.props.className, collapseStyles[state], computedDimension === "width" && "collapse-horizontal")
+      })
+    });
+  });
+  var Collapse_default = Collapse;
+
+  // node_modules/@restart/hooks/esm/useEventCallback.js
+  var import_react36 = __toESM(require_react());
+
+  // node_modules/@restart/hooks/esm/useCommittedRef.js
+  var import_react35 = __toESM(require_react());
+  function useCommittedRef2(value) {
+    const ref2 = (0, import_react35.useRef)(value);
+    (0, import_react35.useEffect)(() => {
+      ref2.current = value;
+    }, [value]);
+    return ref2;
+  }
+  var useCommittedRef_default2 = useCommittedRef2;
+
+  // node_modules/@restart/hooks/esm/useEventCallback.js
+  function useEventCallback2(fn2) {
+    const ref2 = useCommittedRef_default2(fn2);
+    return (0, import_react36.useCallback)(function(...args) {
+      return ref2.current && ref2.current(...args);
+    }, [ref2]);
+  }
+
+  // node_modules/react-bootstrap/esm/divWithClassName.js
+  var React30 = __toESM(require_react());
+  var import_classnames10 = __toESM(require_classnames());
+  var import_jsx_runtime20 = __toESM(require_jsx_runtime());
+  var divWithClassName_default = (className) => /* @__PURE__ */ React30.forwardRef((p, ref2) => /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", {
+    ...p,
+    ref: ref2,
+    className: (0, import_classnames10.default)(p.className, className)
+  }));
+
+  // node_modules/react-bootstrap/esm/CloseButton.js
+  var import_prop_types4 = __toESM(require_prop_types());
+  var React31 = __toESM(require_react());
+  var import_classnames11 = __toESM(require_classnames());
+  var import_jsx_runtime21 = __toESM(require_jsx_runtime());
+  var propTypes2 = {
+    /** An accessible label indicating the relevant information about the Close Button. */
+    "aria-label": import_prop_types4.default.string,
+    /** A callback fired after the Close Button is clicked. */
+    onClick: import_prop_types4.default.func,
+    /**
+     * Render different color variant for the button.
+     *
+     * Omitting this will render the default dark color.
+     */
+    variant: import_prop_types4.default.oneOf(["white"])
+  };
+  var CloseButton = /* @__PURE__ */ React31.forwardRef(({
+    className,
+    variant,
+    "aria-label": ariaLabel = "Close",
+    ...props
+  }, ref2) => /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", {
+    ref: ref2,
+    type: "button",
+    className: (0, import_classnames11.default)("btn-close", variant && `btn-close-${variant}`, className),
+    "aria-label": ariaLabel,
+    ...props
+  }));
+  CloseButton.displayName = "CloseButton";
+  CloseButton.propTypes = propTypes2;
+  var CloseButton_default = CloseButton;
+
+  // node_modules/react-bootstrap/esm/Button.js
+  var import_classnames12 = __toESM(require_classnames());
+  var React32 = __toESM(require_react());
+  var import_jsx_runtime22 = __toESM(require_jsx_runtime());
+  "use client";
+  var Button2 = /* @__PURE__ */ React32.forwardRef(({
+    as,
+    bsPrefix,
+    variant = "primary",
+    size,
+    active = false,
+    disabled = false,
+    className,
+    ...props
+  }, ref2) => {
+    const prefix3 = useBootstrapPrefix(bsPrefix, "btn");
+    const [buttonProps, {
+      tagName
+    }] = useButtonProps({
+      tagName: as,
+      disabled,
+      ...props
+    });
+    const Component6 = tagName;
+    return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Component6, {
+      ...buttonProps,
+      ...props,
+      ref: ref2,
+      disabled,
+      className: (0, import_classnames12.default)(className, prefix3, active && "active", variant && `${prefix3}-${variant}`, size && `${prefix3}-${size}`, props.href && disabled && "disabled")
+    });
+  });
+  Button2.displayName = "Button";
+  var Button_default2 = Button2;
+
+  // node_modules/react-bootstrap/esm/ElementChildren.js
+  var React33 = __toESM(require_react());
+  function map(children2, func) {
+    let index2 = 0;
+    return React33.Children.map(children2, (child) => /* @__PURE__ */ React33.isValidElement(child) ? func(child, index2++) : child);
+  }
+  function forEach(children2, func) {
+    let index2 = 0;
+    React33.Children.forEach(children2, (child) => {
+      if (/* @__PURE__ */ React33.isValidElement(child))
+        func(child, index2++);
+    });
+  }
+
+  // node_modules/react-bootstrap/esm/Container.js
+  var import_classnames13 = __toESM(require_classnames());
+  var React34 = __toESM(require_react());
+  var import_jsx_runtime23 = __toESM(require_jsx_runtime());
+  "use client";
+  var Container = /* @__PURE__ */ React34.forwardRef(({
+    bsPrefix,
+    fluid = false,
+    // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+    as: Component6 = "div",
+    className,
+    ...props
+  }, ref2) => {
+    const prefix3 = useBootstrapPrefix(bsPrefix, "container");
+    const suffix2 = typeof fluid === "string" ? `-${fluid}` : "-fluid";
+    return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(Component6, {
+      ref: ref2,
+      ...props,
+      className: (0, import_classnames13.default)(className, fluid ? `${prefix3}${suffix2}` : prefix3)
+    });
+  });
+  Container.displayName = "Container";
+  var Container_default = Container;
+
+  // node_modules/react-bootstrap/esm/Dropdown.js
+  var import_classnames20 = __toESM(require_classnames());
+  var React48 = __toESM(require_react());
+  var import_react49 = __toESM(require_react());
+
+  // node_modules/@restart/ui/esm/Dropdown.js
+  var import_react44 = __toESM(require_react());
+  var React39 = __toESM(require_react());
+
+  // node_modules/@restart/ui/esm/DropdownContext.js
+  var React35 = __toESM(require_react());
+  var DropdownContext = /* @__PURE__ */ React35.createContext(null);
+  var DropdownContext_default = DropdownContext;
+
+  // node_modules/@restart/ui/esm/DropdownMenu.js
+  var import_react40 = __toESM(require_react());
+  var React36 = __toESM(require_react());
+
+  // node_modules/@restart/ui/esm/usePopper.js
+  var import_react38 = __toESM(require_react());
+
+  // node_modules/dequal/dist/index.mjs
+  var has = Object.prototype.hasOwnProperty;
+  function find2(iter, tar, key) {
+    for (key of iter.keys()) {
+      if (dequal(key, tar))
+        return key;
+    }
+  }
+  function dequal(foo, bar) {
+    var ctor, len, tmp;
+    if (foo === bar)
+      return true;
+    if (foo && bar && (ctor = foo.constructor) === bar.constructor) {
+      if (ctor === Date)
+        return foo.getTime() === bar.getTime();
+      if (ctor === RegExp)
+        return foo.toString() === bar.toString();
+      if (ctor === Array) {
+        if ((len = foo.length) === bar.length) {
+          while (len-- && dequal(foo[len], bar[len]))
+            ;
+        }
+        return len === -1;
+      }
+      if (ctor === Set) {
+        if (foo.size !== bar.size) {
+          return false;
+        }
+        for (len of foo) {
+          tmp = len;
+          if (tmp && typeof tmp === "object") {
+            tmp = find2(bar, tmp);
+            if (!tmp)
+              return false;
+          }
+          if (!bar.has(tmp))
+            return false;
+        }
+        return true;
+      }
+      if (ctor === Map) {
+        if (foo.size !== bar.size) {
+          return false;
+        }
+        for (len of foo) {
+          tmp = len[0];
+          if (tmp && typeof tmp === "object") {
+            tmp = find2(bar, tmp);
+            if (!tmp)
+              return false;
+          }
+          if (!dequal(len[1], bar.get(tmp))) {
+            return false;
+          }
+        }
+        return true;
+      }
+      if (ctor === ArrayBuffer) {
+        foo = new Uint8Array(foo);
+        bar = new Uint8Array(bar);
+      } else if (ctor === DataView) {
+        if ((len = foo.byteLength) === bar.byteLength) {
+          while (len-- && foo.getInt8(len) === bar.getInt8(len))
+            ;
+        }
+        return len === -1;
+      }
+      if (ArrayBuffer.isView(foo)) {
+        if ((len = foo.byteLength) === bar.byteLength) {
+          while (len-- && foo[len] === bar[len])
+            ;
+        }
+        return len === -1;
+      }
+      if (!ctor || typeof foo === "object") {
+        len = 0;
+        for (ctor in foo) {
+          if (has.call(foo, ctor) && ++len && !has.call(bar, ctor))
+            return false;
+          if (!(ctor in bar) || !dequal(foo[ctor], bar[ctor]))
+            return false;
+        }
+        return Object.keys(bar).length === len;
+      }
+    }
+    return foo !== foo && bar !== bar;
+  }
+
+  // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useSafeState.js
+  var import_react37 = __toESM(require_react());
+  function useSafeState(state) {
+    const isMounted = useMounted();
+    return [state[0], (0, import_react37.useCallback)((nextState) => {
+      if (!isMounted())
+        return;
+      return state[1](nextState);
+    }, [isMounted, state[1]])];
+  }
+  var useSafeState_default = useSafeState;
+
+  // node_modules/@popperjs/core/lib/enums.js
+  var top = "top";
+  var bottom = "bottom";
+  var right = "right";
+  var left = "left";
+  var auto = "auto";
+  var basePlacements = [top, bottom, right, left];
+  var start2 = "start";
+  var end = "end";
+  var clippingParents = "clippingParents";
+  var viewport = "viewport";
+  var popper = "popper";
+  var reference = "reference";
+  var variationPlacements = /* @__PURE__ */ basePlacements.reduce(function(acc, placement) {
+    return acc.concat([placement + "-" + start2, placement + "-" + end]);
+  }, []);
+  var placements = /* @__PURE__ */ [].concat(basePlacements, [auto]).reduce(function(acc, placement) {
+    return acc.concat([placement, placement + "-" + start2, placement + "-" + end]);
+  }, []);
+  var beforeRead = "beforeRead";
+  var read = "read";
+  var afterRead = "afterRead";
+  var beforeMain = "beforeMain";
+  var main = "main";
+  var afterMain = "afterMain";
+  var beforeWrite = "beforeWrite";
+  var write = "write";
+  var afterWrite = "afterWrite";
+  var modifierPhases = [beforeRead, read, afterRead, beforeMain, main, afterMain, beforeWrite, write, afterWrite];
+
+  // node_modules/@popperjs/core/lib/utils/getBasePlacement.js
+  function getBasePlacement(placement) {
+    return placement.split("-")[0];
+  }
+
+  // node_modules/@popperjs/core/lib/dom-utils/getWindow.js
+  function getWindow(node) {
+    if (node == null) {
+      return window;
+    }
+    if (node.toString() !== "[object Window]") {
+      var ownerDocument2 = node.ownerDocument;
+      return ownerDocument2 ? ownerDocument2.defaultView || window : window;
+    }
+    return node;
+  }
+
+  // node_modules/@popperjs/core/lib/dom-utils/instanceOf.js
+  function isElement(node) {
+    var OwnElement = getWindow(node).Element;
+    return node instanceof OwnElement || node instanceof Element;
+  }
+  function isHTMLElement(node) {
+    var OwnElement = getWindow(node).HTMLElement;
+    return node instanceof OwnElement || node instanceof HTMLElement;
+  }
+  function isShadowRoot(node) {
+    if (typeof ShadowRoot === "undefined") {
+      return false;
+    }
+    var OwnElement = getWindow(node).ShadowRoot;
+    return node instanceof OwnElement || node instanceof ShadowRoot;
+  }
+
+  // node_modules/@popperjs/core/lib/utils/math.js
+  var max = Math.max;
+  var min = Math.min;
+  var round = Math.round;
+
+  // node_modules/@popperjs/core/lib/utils/userAgent.js
+  function getUAString() {
+    var uaData = navigator.userAgentData;
+    if (uaData != null && uaData.brands && Array.isArray(uaData.brands)) {
+      return uaData.brands.map(function(item) {
+        return item.brand + "/" + item.version;
+      }).join(" ");
+    }
+    return navigator.userAgent;
+  }
+
+  // node_modules/@popperjs/core/lib/dom-utils/isLayoutViewport.js
+  function isLayoutViewport() {
+    return !/^((?!chrome|android).)*safari/i.test(getUAString());
+  }
+
+  // node_modules/@popperjs/core/lib/dom-utils/getBoundingClientRect.js
+  function getBoundingClientRect(element, includeScale, isFixedStrategy) {
+    if (includeScale === void 0) {
+      includeScale = false;
+    }
+    if (isFixedStrategy === void 0) {
+      isFixedStrategy = false;
+    }
+    var clientRect = element.getBoundingClientRect();
+    var scaleX = 1;
+    var scaleY = 1;
+    if (includeScale && isHTMLElement(element)) {
+      scaleX = element.offsetWidth > 0 ? round(clientRect.width) / element.offsetWidth || 1 : 1;
+      scaleY = element.offsetHeight > 0 ? round(clientRect.height) / element.offsetHeight || 1 : 1;
+    }
+    var _ref = isElement(element) ? getWindow(element) : window, visualViewport = _ref.visualViewport;
+    var addVisualOffsets = !isLayoutViewport() && isFixedStrategy;
+    var x = (clientRect.left + (addVisualOffsets && visualViewport ? visualViewport.offsetLeft : 0)) / scaleX;
+    var y = (clientRect.top + (addVisualOffsets && visualViewport ? visualViewport.offsetTop : 0)) / scaleY;
+    var width = clientRect.width / scaleX;
+    var height = clientRect.height / scaleY;
+    return {
+      width,
+      height,
+      top: y,
+      right: x + width,
+      bottom: y + height,
+      left: x,
+      x,
+      y
+    };
+  }
+
+  // node_modules/@popperjs/core/lib/dom-utils/getLayoutRect.js
+  function getLayoutRect(element) {
+    var clientRect = getBoundingClientRect(element);
+    var width = element.offsetWidth;
+    var height = element.offsetHeight;
+    if (Math.abs(clientRect.width - width) <= 1) {
+      width = clientRect.width;
+    }
+    if (Math.abs(clientRect.height - height) <= 1) {
+      height = clientRect.height;
+    }
+    return {
+      x: element.offsetLeft,
+      y: element.offsetTop,
+      width,
+      height
+    };
+  }
+
+  // node_modules/@popperjs/core/lib/dom-utils/contains.js
+  function contains(parent, child) {
+    var rootNode = child.getRootNode && child.getRootNode();
+    if (parent.contains(child)) {
+      return true;
+    } else if (rootNode && isShadowRoot(rootNode)) {
+      var next = child;
+      do {
+        if (next && parent.isSameNode(next)) {
+          return true;
+        }
+        next = next.parentNode || next.host;
+      } while (next);
+    }
+    return false;
+  }
+
+  // node_modules/@popperjs/core/lib/dom-utils/getNodeName.js
+  function getNodeName(element) {
+    return element ? (element.nodeName || "").toLowerCase() : null;
+  }
+
+  // node_modules/@popperjs/core/lib/dom-utils/getComputedStyle.js
+  function getComputedStyle2(element) {
+    return getWindow(element).getComputedStyle(element);
+  }
+
+  // node_modules/@popperjs/core/lib/dom-utils/isTableElement.js
+  function isTableElement(element) {
+    return ["table", "td", "th"].indexOf(getNodeName(element)) >= 0;
+  }
+
+  // node_modules/@popperjs/core/lib/dom-utils/getDocumentElement.js
+  function getDocumentElement(element) {
+    return ((isElement(element) ? element.ownerDocument : (
+      // $FlowFixMe[prop-missing]
+      element.document
+    )) || window.document).documentElement;
+  }
+
+  // node_modules/@popperjs/core/lib/dom-utils/getParentNode.js
+  function getParentNode(element) {
+    if (getNodeName(element) === "html") {
+      return element;
+    }
+    return (
+      // this is a quicker (but less type safe) way to save quite some bytes from the bundle
+      // $FlowFixMe[incompatible-return]
+      // $FlowFixMe[prop-missing]
+      element.assignedSlot || // step into the shadow DOM of the parent of a slotted node
+      element.parentNode || // DOM Element detected
+      (isShadowRoot(element) ? element.host : null) || // ShadowRoot detected
+      // $FlowFixMe[incompatible-call]: HTMLElement is a Node
+      getDocumentElement(element)
+    );
+  }
+
+  // node_modules/@popperjs/core/lib/dom-utils/getOffsetParent.js
+  function getTrueOffsetParent(element) {
+    if (!isHTMLElement(element) || // https://github.com/popperjs/popper-core/issues/837
+    getComputedStyle2(element).position === "fixed") {
+      return null;
+    }
+    return element.offsetParent;
+  }
+  function getContainingBlock(element) {
+    var isFirefox = /firefox/i.test(getUAString());
+    var isIE = /Trident/i.test(getUAString());
+    if (isIE && isHTMLElement(element)) {
+      var elementCss = getComputedStyle2(element);
+      if (elementCss.position === "fixed") {
+        return null;
+      }
+    }
+    var currentNode = getParentNode(element);
+    if (isShadowRoot(currentNode)) {
+      currentNode = currentNode.host;
+    }
+    while (isHTMLElement(currentNode) && ["html", "body"].indexOf(getNodeName(currentNode)) < 0) {
+      var css = getComputedStyle2(currentNode);
+      if (css.transform !== "none" || css.perspective !== "none" || css.contain === "paint" || ["transform", "perspective"].indexOf(css.willChange) !== -1 || isFirefox && css.willChange === "filter" || isFirefox && css.filter && css.filter !== "none") {
+        return currentNode;
+      } else {
+        currentNode = currentNode.parentNode;
+      }
+    }
+    return null;
+  }
+  function getOffsetParent(element) {
+    var window2 = getWindow(element);
+    var offsetParent = getTrueOffsetParent(element);
+    while (offsetParent && isTableElement(offsetParent) && getComputedStyle2(offsetParent).position === "static") {
+      offsetParent = getTrueOffsetParent(offsetParent);
+    }
+    if (offsetParent && (getNodeName(offsetParent) === "html" || getNodeName(offsetParent) === "body" && getComputedStyle2(offsetParent).position === "static")) {
+      return window2;
+    }
+    return offsetParent || getContainingBlock(element) || window2;
+  }
+
+  // node_modules/@popperjs/core/lib/utils/getMainAxisFromPlacement.js
+  function getMainAxisFromPlacement(placement) {
+    return ["top", "bottom"].indexOf(placement) >= 0 ? "x" : "y";
+  }
+
+  // node_modules/@popperjs/core/lib/utils/within.js
+  function within(min2, value, max2) {
+    return max(min2, min(value, max2));
+  }
+  function withinMaxClamp(min2, value, max2) {
+    var v2 = within(min2, value, max2);
+    return v2 > max2 ? max2 : v2;
+  }
+
+  // node_modules/@popperjs/core/lib/utils/getFreshSideObject.js
+  function getFreshSideObject() {
+    return {
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0
+    };
+  }
+
+  // node_modules/@popperjs/core/lib/utils/mergePaddingObject.js
+  function mergePaddingObject(paddingObject) {
+    return Object.assign({}, getFreshSideObject(), paddingObject);
+  }
+
+  // node_modules/@popperjs/core/lib/utils/expandToHashMap.js
+  function expandToHashMap(value, keys) {
+    return keys.reduce(function(hashMap, key) {
+      hashMap[key] = value;
+      return hashMap;
+    }, {});
+  }
+
+  // node_modules/@popperjs/core/lib/modifiers/arrow.js
+  var toPaddingObject = function toPaddingObject2(padding, state) {
+    padding = typeof padding === "function" ? padding(Object.assign({}, state.rects, {
+      placement: state.placement
+    })) : padding;
+    return mergePaddingObject(typeof padding !== "number" ? padding : expandToHashMap(padding, basePlacements));
+  };
+  function arrow(_ref) {
+    var _state$modifiersData$;
+    var state = _ref.state, name = _ref.name, options = _ref.options;
+    var arrowElement = state.elements.arrow;
+    var popperOffsets2 = state.modifiersData.popperOffsets;
+    var basePlacement = getBasePlacement(state.placement);
+    var axis = getMainAxisFromPlacement(basePlacement);
+    var isVertical = [left, right].indexOf(basePlacement) >= 0;
+    var len = isVertical ? "height" : "width";
+    if (!arrowElement || !popperOffsets2) {
+      return;
+    }
+    var paddingObject = toPaddingObject(options.padding, state);
+    var arrowRect = getLayoutRect(arrowElement);
+    var minProp = axis === "y" ? top : left;
+    var maxProp = axis === "y" ? bottom : right;
+    var endDiff = state.rects.reference[len] + state.rects.reference[axis] - popperOffsets2[axis] - state.rects.popper[len];
+    var startDiff = popperOffsets2[axis] - state.rects.reference[axis];
+    var arrowOffsetParent = getOffsetParent(arrowElement);
+    var clientSize = arrowOffsetParent ? axis === "y" ? arrowOffsetParent.clientHeight || 0 : arrowOffsetParent.clientWidth || 0 : 0;
+    var centerToReference = endDiff / 2 - startDiff / 2;
+    var min2 = paddingObject[minProp];
+    var max2 = clientSize - arrowRect[len] - paddingObject[maxProp];
+    var center = clientSize / 2 - arrowRect[len] / 2 + centerToReference;
+    var offset4 = within(min2, center, max2);
+    var axisProp = axis;
+    state.modifiersData[name] = (_state$modifiersData$ = {}, _state$modifiersData$[axisProp] = offset4, _state$modifiersData$.centerOffset = offset4 - center, _state$modifiersData$);
+  }
+  function effect(_ref2) {
+    var state = _ref2.state, options = _ref2.options;
+    var _options$element = options.element, arrowElement = _options$element === void 0 ? "[data-popper-arrow]" : _options$element;
+    if (arrowElement == null) {
+      return;
+    }
+    if (typeof arrowElement === "string") {
+      arrowElement = state.elements.popper.querySelector(arrowElement);
+      if (!arrowElement) {
+        return;
+      }
+    }
+    if (!contains(state.elements.popper, arrowElement)) {
+      return;
+    }
+    state.elements.arrow = arrowElement;
+  }
+  var arrow_default = {
+    name: "arrow",
+    enabled: true,
+    phase: "main",
+    fn: arrow,
+    effect,
+    requires: ["popperOffsets"],
+    requiresIfExists: ["preventOverflow"]
+  };
+
+  // node_modules/@popperjs/core/lib/utils/getVariation.js
+  function getVariation(placement) {
+    return placement.split("-")[1];
+  }
+
+  // node_modules/@popperjs/core/lib/modifiers/computeStyles.js
+  var unsetSides = {
+    top: "auto",
+    right: "auto",
+    bottom: "auto",
+    left: "auto"
+  };
+  function roundOffsetsByDPR(_ref, win2) {
+    var x = _ref.x, y = _ref.y;
+    var dpr = win2.devicePixelRatio || 1;
+    return {
+      x: round(x * dpr) / dpr || 0,
+      y: round(y * dpr) / dpr || 0
+    };
+  }
+  function mapToStyles(_ref2) {
+    var _Object$assign2;
+    var popper2 = _ref2.popper, popperRect = _ref2.popperRect, placement = _ref2.placement, variation = _ref2.variation, offsets = _ref2.offsets, position2 = _ref2.position, gpuAcceleration = _ref2.gpuAcceleration, adaptive = _ref2.adaptive, roundOffsets = _ref2.roundOffsets, isFixed = _ref2.isFixed;
+    var _offsets$x = offsets.x, x = _offsets$x === void 0 ? 0 : _offsets$x, _offsets$y = offsets.y, y = _offsets$y === void 0 ? 0 : _offsets$y;
+    var _ref3 = typeof roundOffsets === "function" ? roundOffsets({
+      x,
+      y
+    }) : {
+      x,
+      y
+    };
+    x = _ref3.x;
+    y = _ref3.y;
+    var hasX = offsets.hasOwnProperty("x");
+    var hasY = offsets.hasOwnProperty("y");
+    var sideX = left;
+    var sideY = top;
+    var win2 = window;
+    if (adaptive) {
+      var offsetParent = getOffsetParent(popper2);
+      var heightProp = "clientHeight";
+      var widthProp = "clientWidth";
+      if (offsetParent === getWindow(popper2)) {
+        offsetParent = getDocumentElement(popper2);
+        if (getComputedStyle2(offsetParent).position !== "static" && position2 === "absolute") {
+          heightProp = "scrollHeight";
+          widthProp = "scrollWidth";
+        }
+      }
+      offsetParent = offsetParent;
+      if (placement === top || (placement === left || placement === right) && variation === end) {
+        sideY = bottom;
+        var offsetY = isFixed && offsetParent === win2 && win2.visualViewport ? win2.visualViewport.height : (
+          // $FlowFixMe[prop-missing]
+          offsetParent[heightProp]
+        );
+        y -= offsetY - popperRect.height;
+        y *= gpuAcceleration ? 1 : -1;
+      }
+      if (placement === left || (placement === top || placement === bottom) && variation === end) {
+        sideX = right;
+        var offsetX = isFixed && offsetParent === win2 && win2.visualViewport ? win2.visualViewport.width : (
+          // $FlowFixMe[prop-missing]
+          offsetParent[widthProp]
+        );
+        x -= offsetX - popperRect.width;
+        x *= gpuAcceleration ? 1 : -1;
+      }
+    }
+    var commonStyles = Object.assign({
+      position: position2
+    }, adaptive && unsetSides);
+    var _ref4 = roundOffsets === true ? roundOffsetsByDPR({
+      x,
+      y
+    }, getWindow(popper2)) : {
+      x,
+      y
+    };
+    x = _ref4.x;
+    y = _ref4.y;
+    if (gpuAcceleration) {
+      var _Object$assign;
+      return Object.assign({}, commonStyles, (_Object$assign = {}, _Object$assign[sideY] = hasY ? "0" : "", _Object$assign[sideX] = hasX ? "0" : "", _Object$assign.transform = (win2.devicePixelRatio || 1) <= 1 ? "translate(" + x + "px, " + y + "px)" : "translate3d(" + x + "px, " + y + "px, 0)", _Object$assign));
+    }
+    return Object.assign({}, commonStyles, (_Object$assign2 = {}, _Object$assign2[sideY] = hasY ? y + "px" : "", _Object$assign2[sideX] = hasX ? x + "px" : "", _Object$assign2.transform = "", _Object$assign2));
+  }
+  function computeStyles(_ref5) {
+    var state = _ref5.state, options = _ref5.options;
+    var _options$gpuAccelerat = options.gpuAcceleration, gpuAcceleration = _options$gpuAccelerat === void 0 ? true : _options$gpuAccelerat, _options$adaptive = options.adaptive, adaptive = _options$adaptive === void 0 ? true : _options$adaptive, _options$roundOffsets = options.roundOffsets, roundOffsets = _options$roundOffsets === void 0 ? true : _options$roundOffsets;
+    var commonStyles = {
+      placement: getBasePlacement(state.placement),
+      variation: getVariation(state.placement),
+      popper: state.elements.popper,
+      popperRect: state.rects.popper,
+      gpuAcceleration,
+      isFixed: state.options.strategy === "fixed"
+    };
+    if (state.modifiersData.popperOffsets != null) {
+      state.styles.popper = Object.assign({}, state.styles.popper, mapToStyles(Object.assign({}, commonStyles, {
+        offsets: state.modifiersData.popperOffsets,
+        position: state.options.strategy,
+        adaptive,
+        roundOffsets
+      })));
+    }
+    if (state.modifiersData.arrow != null) {
+      state.styles.arrow = Object.assign({}, state.styles.arrow, mapToStyles(Object.assign({}, commonStyles, {
+        offsets: state.modifiersData.arrow,
+        position: "absolute",
+        adaptive: false,
+        roundOffsets
+      })));
+    }
+    state.attributes.popper = Object.assign({}, state.attributes.popper, {
+      "data-popper-placement": state.placement
+    });
+  }
+  var computeStyles_default = {
+    name: "computeStyles",
+    enabled: true,
+    phase: "beforeWrite",
+    fn: computeStyles,
+    data: {}
+  };
+
+  // node_modules/@popperjs/core/lib/modifiers/eventListeners.js
+  var passive = {
+    passive: true
+  };
+  function effect2(_ref) {
+    var state = _ref.state, instance = _ref.instance, options = _ref.options;
+    var _options$scroll = options.scroll, scroll2 = _options$scroll === void 0 ? true : _options$scroll, _options$resize = options.resize, resize = _options$resize === void 0 ? true : _options$resize;
+    var window2 = getWindow(state.elements.popper);
+    var scrollParents = [].concat(state.scrollParents.reference, state.scrollParents.popper);
+    if (scroll2) {
+      scrollParents.forEach(function(scrollParent) {
+        scrollParent.addEventListener("scroll", instance.update, passive);
+      });
+    }
+    if (resize) {
+      window2.addEventListener("resize", instance.update, passive);
+    }
+    return function() {
+      if (scroll2) {
+        scrollParents.forEach(function(scrollParent) {
+          scrollParent.removeEventListener("scroll", instance.update, passive);
+        });
+      }
+      if (resize) {
+        window2.removeEventListener("resize", instance.update, passive);
+      }
+    };
+  }
+  var eventListeners_default = {
+    name: "eventListeners",
+    enabled: true,
+    phase: "write",
+    fn: function fn() {
+    },
+    effect: effect2,
+    data: {}
+  };
+
+  // node_modules/@popperjs/core/lib/utils/getOppositePlacement.js
+  var hash = {
+    left: "right",
+    right: "left",
+    bottom: "top",
+    top: "bottom"
+  };
+  function getOppositePlacement(placement) {
+    return placement.replace(/left|right|bottom|top/g, function(matched) {
+      return hash[matched];
+    });
+  }
+
+  // node_modules/@popperjs/core/lib/utils/getOppositeVariationPlacement.js
+  var hash2 = {
+    start: "end",
+    end: "start"
+  };
+  function getOppositeVariationPlacement(placement) {
+    return placement.replace(/start|end/g, function(matched) {
+      return hash2[matched];
+    });
+  }
+
+  // node_modules/@popperjs/core/lib/dom-utils/getWindowScroll.js
+  function getWindowScroll(node) {
+    var win2 = getWindow(node);
+    var scrollLeft = win2.pageXOffset;
+    var scrollTop = win2.pageYOffset;
+    return {
+      scrollLeft,
+      scrollTop
+    };
+  }
+
+  // node_modules/@popperjs/core/lib/dom-utils/getWindowScrollBarX.js
+  function getWindowScrollBarX(element) {
+    return getBoundingClientRect(getDocumentElement(element)).left + getWindowScroll(element).scrollLeft;
+  }
+
+  // node_modules/@popperjs/core/lib/dom-utils/getViewportRect.js
+  function getViewportRect(element, strategy) {
+    var win2 = getWindow(element);
+    var html = getDocumentElement(element);
+    var visualViewport = win2.visualViewport;
+    var width = html.clientWidth;
+    var height = html.clientHeight;
+    var x = 0;
+    var y = 0;
+    if (visualViewport) {
+      width = visualViewport.width;
+      height = visualViewport.height;
+      var layoutViewport = isLayoutViewport();
+      if (layoutViewport || !layoutViewport && strategy === "fixed") {
+        x = visualViewport.offsetLeft;
+        y = visualViewport.offsetTop;
+      }
+    }
+    return {
+      width,
+      height,
+      x: x + getWindowScrollBarX(element),
+      y
+    };
+  }
+
+  // node_modules/@popperjs/core/lib/dom-utils/getDocumentRect.js
+  function getDocumentRect(element) {
+    var _element$ownerDocumen;
+    var html = getDocumentElement(element);
+    var winScroll = getWindowScroll(element);
+    var body = (_element$ownerDocumen = element.ownerDocument) == null ? void 0 : _element$ownerDocumen.body;
+    var width = max(html.scrollWidth, html.clientWidth, body ? body.scrollWidth : 0, body ? body.clientWidth : 0);
+    var height = max(html.scrollHeight, html.clientHeight, body ? body.scrollHeight : 0, body ? body.clientHeight : 0);
+    var x = -winScroll.scrollLeft + getWindowScrollBarX(element);
+    var y = -winScroll.scrollTop;
+    if (getComputedStyle2(body || html).direction === "rtl") {
+      x += max(html.clientWidth, body ? body.clientWidth : 0) - width;
+    }
+    return {
+      width,
+      height,
+      x,
+      y
+    };
+  }
+
+  // node_modules/@popperjs/core/lib/dom-utils/isScrollParent.js
+  function isScrollParent(element) {
+    var _getComputedStyle = getComputedStyle2(element), overflow = _getComputedStyle.overflow, overflowX = _getComputedStyle.overflowX, overflowY = _getComputedStyle.overflowY;
+    return /auto|scroll|overlay|hidden/.test(overflow + overflowY + overflowX);
+  }
+
+  // node_modules/@popperjs/core/lib/dom-utils/getScrollParent.js
+  function getScrollParent(node) {
+    if (["html", "body", "#document"].indexOf(getNodeName(node)) >= 0) {
+      return node.ownerDocument.body;
+    }
+    if (isHTMLElement(node) && isScrollParent(node)) {
+      return node;
+    }
+    return getScrollParent(getParentNode(node));
+  }
+
+  // node_modules/@popperjs/core/lib/dom-utils/listScrollParents.js
+  function listScrollParents(element, list) {
+    var _element$ownerDocumen;
+    if (list === void 0) {
+      list = [];
+    }
+    var scrollParent = getScrollParent(element);
+    var isBody = scrollParent === ((_element$ownerDocumen = element.ownerDocument) == null ? void 0 : _element$ownerDocumen.body);
+    var win2 = getWindow(scrollParent);
+    var target = isBody ? [win2].concat(win2.visualViewport || [], isScrollParent(scrollParent) ? scrollParent : []) : scrollParent;
+    var updatedList = list.concat(target);
+    return isBody ? updatedList : (
+      // $FlowFixMe[incompatible-call]: isBody tells us target will be an HTMLElement here
+      updatedList.concat(listScrollParents(getParentNode(target)))
+    );
+  }
+
+  // node_modules/@popperjs/core/lib/utils/rectToClientRect.js
+  function rectToClientRect(rect) {
+    return Object.assign({}, rect, {
+      left: rect.x,
+      top: rect.y,
+      right: rect.x + rect.width,
+      bottom: rect.y + rect.height
+    });
+  }
+
+  // node_modules/@popperjs/core/lib/dom-utils/getClippingRect.js
+  function getInnerBoundingClientRect(element, strategy) {
+    var rect = getBoundingClientRect(element, false, strategy === "fixed");
+    rect.top = rect.top + element.clientTop;
+    rect.left = rect.left + element.clientLeft;
+    rect.bottom = rect.top + element.clientHeight;
+    rect.right = rect.left + element.clientWidth;
+    rect.width = element.clientWidth;
+    rect.height = element.clientHeight;
+    rect.x = rect.left;
+    rect.y = rect.top;
+    return rect;
+  }
+  function getClientRectFromMixedType(element, clippingParent, strategy) {
+    return clippingParent === viewport ? rectToClientRect(getViewportRect(element, strategy)) : isElement(clippingParent) ? getInnerBoundingClientRect(clippingParent, strategy) : rectToClientRect(getDocumentRect(getDocumentElement(element)));
+  }
+  function getClippingParents(element) {
+    var clippingParents2 = listScrollParents(getParentNode(element));
+    var canEscapeClipping = ["absolute", "fixed"].indexOf(getComputedStyle2(element).position) >= 0;
+    var clipperElement = canEscapeClipping && isHTMLElement(element) ? getOffsetParent(element) : element;
+    if (!isElement(clipperElement)) {
+      return [];
+    }
+    return clippingParents2.filter(function(clippingParent) {
+      return isElement(clippingParent) && contains(clippingParent, clipperElement) && getNodeName(clippingParent) !== "body";
+    });
+  }
+  function getClippingRect(element, boundary, rootBoundary, strategy) {
+    var mainClippingParents = boundary === "clippingParents" ? getClippingParents(element) : [].concat(boundary);
+    var clippingParents2 = [].concat(mainClippingParents, [rootBoundary]);
+    var firstClippingParent = clippingParents2[0];
+    var clippingRect = clippingParents2.reduce(function(accRect, clippingParent) {
+      var rect = getClientRectFromMixedType(element, clippingParent, strategy);
+      accRect.top = max(rect.top, accRect.top);
+      accRect.right = min(rect.right, accRect.right);
+      accRect.bottom = min(rect.bottom, accRect.bottom);
+      accRect.left = max(rect.left, accRect.left);
+      return accRect;
+    }, getClientRectFromMixedType(element, firstClippingParent, strategy));
+    clippingRect.width = clippingRect.right - clippingRect.left;
+    clippingRect.height = clippingRect.bottom - clippingRect.top;
+    clippingRect.x = clippingRect.left;
+    clippingRect.y = clippingRect.top;
+    return clippingRect;
+  }
+
+  // node_modules/@popperjs/core/lib/utils/computeOffsets.js
+  function computeOffsets(_ref) {
+    var reference2 = _ref.reference, element = _ref.element, placement = _ref.placement;
+    var basePlacement = placement ? getBasePlacement(placement) : null;
+    var variation = placement ? getVariation(placement) : null;
+    var commonX = reference2.x + reference2.width / 2 - element.width / 2;
+    var commonY = reference2.y + reference2.height / 2 - element.height / 2;
+    var offsets;
+    switch (basePlacement) {
+      case top:
+        offsets = {
+          x: commonX,
+          y: reference2.y - element.height
+        };
+        break;
+      case bottom:
+        offsets = {
+          x: commonX,
+          y: reference2.y + reference2.height
+        };
+        break;
+      case right:
+        offsets = {
+          x: reference2.x + reference2.width,
+          y: commonY
+        };
+        break;
+      case left:
+        offsets = {
+          x: reference2.x - element.width,
+          y: commonY
+        };
+        break;
+      default:
+        offsets = {
+          x: reference2.x,
+          y: reference2.y
+        };
+    }
+    var mainAxis = basePlacement ? getMainAxisFromPlacement(basePlacement) : null;
+    if (mainAxis != null) {
+      var len = mainAxis === "y" ? "height" : "width";
+      switch (variation) {
+        case start2:
+          offsets[mainAxis] = offsets[mainAxis] - (reference2[len] / 2 - element[len] / 2);
+          break;
+        case end:
+          offsets[mainAxis] = offsets[mainAxis] + (reference2[len] / 2 - element[len] / 2);
+          break;
+        default:
+      }
+    }
+    return offsets;
+  }
+
+  // node_modules/@popperjs/core/lib/utils/detectOverflow.js
+  function detectOverflow(state, options) {
+    if (options === void 0) {
+      options = {};
+    }
+    var _options = options, _options$placement = _options.placement, placement = _options$placement === void 0 ? state.placement : _options$placement, _options$strategy = _options.strategy, strategy = _options$strategy === void 0 ? state.strategy : _options$strategy, _options$boundary = _options.boundary, boundary = _options$boundary === void 0 ? clippingParents : _options$boundary, _options$rootBoundary = _options.rootBoundary, rootBoundary = _options$rootBoundary === void 0 ? viewport : _options$rootBoundary, _options$elementConte = _options.elementContext, elementContext = _options$elementConte === void 0 ? popper : _options$elementConte, _options$altBoundary = _options.altBoundary, altBoundary = _options$altBoundary === void 0 ? false : _options$altBoundary, _options$padding = _options.padding, padding = _options$padding === void 0 ? 0 : _options$padding;
+    var paddingObject = mergePaddingObject(typeof padding !== "number" ? padding : expandToHashMap(padding, basePlacements));
+    var altContext = elementContext === popper ? reference : popper;
+    var popperRect = state.rects.popper;
+    var element = state.elements[altBoundary ? altContext : elementContext];
+    var clippingClientRect = getClippingRect(isElement(element) ? element : element.contextElement || getDocumentElement(state.elements.popper), boundary, rootBoundary, strategy);
+    var referenceClientRect = getBoundingClientRect(state.elements.reference);
+    var popperOffsets2 = computeOffsets({
+      reference: referenceClientRect,
+      element: popperRect,
+      strategy: "absolute",
+      placement
+    });
+    var popperClientRect = rectToClientRect(Object.assign({}, popperRect, popperOffsets2));
+    var elementClientRect = elementContext === popper ? popperClientRect : referenceClientRect;
+    var overflowOffsets = {
+      top: clippingClientRect.top - elementClientRect.top + paddingObject.top,
+      bottom: elementClientRect.bottom - clippingClientRect.bottom + paddingObject.bottom,
+      left: clippingClientRect.left - elementClientRect.left + paddingObject.left,
+      right: elementClientRect.right - clippingClientRect.right + paddingObject.right
+    };
+    var offsetData = state.modifiersData.offset;
+    if (elementContext === popper && offsetData) {
+      var offset4 = offsetData[placement];
+      Object.keys(overflowOffsets).forEach(function(key) {
+        var multiply = [right, bottom].indexOf(key) >= 0 ? 1 : -1;
+        var axis = [top, bottom].indexOf(key) >= 0 ? "y" : "x";
+        overflowOffsets[key] += offset4[axis] * multiply;
+      });
+    }
+    return overflowOffsets;
+  }
+
+  // node_modules/@popperjs/core/lib/utils/computeAutoPlacement.js
+  function computeAutoPlacement(state, options) {
+    if (options === void 0) {
+      options = {};
+    }
+    var _options = options, placement = _options.placement, boundary = _options.boundary, rootBoundary = _options.rootBoundary, padding = _options.padding, flipVariations = _options.flipVariations, _options$allowedAutoP = _options.allowedAutoPlacements, allowedAutoPlacements = _options$allowedAutoP === void 0 ? placements : _options$allowedAutoP;
+    var variation = getVariation(placement);
+    var placements2 = variation ? flipVariations ? variationPlacements : variationPlacements.filter(function(placement2) {
+      return getVariation(placement2) === variation;
+    }) : basePlacements;
+    var allowedPlacements = placements2.filter(function(placement2) {
+      return allowedAutoPlacements.indexOf(placement2) >= 0;
+    });
+    if (allowedPlacements.length === 0) {
+      allowedPlacements = placements2;
+    }
+    var overflows = allowedPlacements.reduce(function(acc, placement2) {
+      acc[placement2] = detectOverflow(state, {
+        placement: placement2,
+        boundary,
+        rootBoundary,
+        padding
+      })[getBasePlacement(placement2)];
+      return acc;
+    }, {});
+    return Object.keys(overflows).sort(function(a, b) {
+      return overflows[a] - overflows[b];
+    });
+  }
+
+  // node_modules/@popperjs/core/lib/modifiers/flip.js
+  function getExpandedFallbackPlacements(placement) {
+    if (getBasePlacement(placement) === auto) {
+      return [];
+    }
+    var oppositePlacement = getOppositePlacement(placement);
+    return [getOppositeVariationPlacement(placement), oppositePlacement, getOppositeVariationPlacement(oppositePlacement)];
+  }
+  function flip(_ref) {
+    var state = _ref.state, options = _ref.options, name = _ref.name;
+    if (state.modifiersData[name]._skip) {
+      return;
+    }
+    var _options$mainAxis = options.mainAxis, checkMainAxis = _options$mainAxis === void 0 ? true : _options$mainAxis, _options$altAxis = options.altAxis, checkAltAxis = _options$altAxis === void 0 ? true : _options$altAxis, specifiedFallbackPlacements = options.fallbackPlacements, padding = options.padding, boundary = options.boundary, rootBoundary = options.rootBoundary, altBoundary = options.altBoundary, _options$flipVariatio = options.flipVariations, flipVariations = _options$flipVariatio === void 0 ? true : _options$flipVariatio, allowedAutoPlacements = options.allowedAutoPlacements;
+    var preferredPlacement = state.options.placement;
+    var basePlacement = getBasePlacement(preferredPlacement);
+    var isBasePlacement = basePlacement === preferredPlacement;
+    var fallbackPlacements = specifiedFallbackPlacements || (isBasePlacement || !flipVariations ? [getOppositePlacement(preferredPlacement)] : getExpandedFallbackPlacements(preferredPlacement));
+    var placements2 = [preferredPlacement].concat(fallbackPlacements).reduce(function(acc, placement2) {
+      return acc.concat(getBasePlacement(placement2) === auto ? computeAutoPlacement(state, {
+        placement: placement2,
+        boundary,
+        rootBoundary,
+        padding,
+        flipVariations,
+        allowedAutoPlacements
+      }) : placement2);
+    }, []);
+    var referenceRect = state.rects.reference;
+    var popperRect = state.rects.popper;
+    var checksMap = /* @__PURE__ */ new Map();
+    var makeFallbackChecks = true;
+    var firstFittingPlacement = placements2[0];
+    for (var i = 0; i < placements2.length; i++) {
+      var placement = placements2[i];
+      var _basePlacement = getBasePlacement(placement);
+      var isStartVariation = getVariation(placement) === start2;
+      var isVertical = [top, bottom].indexOf(_basePlacement) >= 0;
+      var len = isVertical ? "width" : "height";
+      var overflow = detectOverflow(state, {
+        placement,
+        boundary,
+        rootBoundary,
+        altBoundary,
+        padding
+      });
+      var mainVariationSide = isVertical ? isStartVariation ? right : left : isStartVariation ? bottom : top;
+      if (referenceRect[len] > popperRect[len]) {
+        mainVariationSide = getOppositePlacement(mainVariationSide);
+      }
+      var altVariationSide = getOppositePlacement(mainVariationSide);
+      var checks = [];
+      if (checkMainAxis) {
+        checks.push(overflow[_basePlacement] <= 0);
+      }
+      if (checkAltAxis) {
+        checks.push(overflow[mainVariationSide] <= 0, overflow[altVariationSide] <= 0);
+      }
+      if (checks.every(function(check) {
+        return check;
+      })) {
+        firstFittingPlacement = placement;
+        makeFallbackChecks = false;
+        break;
+      }
+      checksMap.set(placement, checks);
+    }
+    if (makeFallbackChecks) {
+      var numberOfChecks = flipVariations ? 3 : 1;
+      var _loop = function _loop2(_i3) {
+        var fittingPlacement = placements2.find(function(placement2) {
+          var checks2 = checksMap.get(placement2);
+          if (checks2) {
+            return checks2.slice(0, _i3).every(function(check) {
+              return check;
+            });
+          }
+        });
+        if (fittingPlacement) {
+          firstFittingPlacement = fittingPlacement;
+          return "break";
+        }
+      };
+      for (var _i2 = numberOfChecks; _i2 > 0; _i2--) {
+        var _ret = _loop(_i2);
+        if (_ret === "break")
+          break;
+      }
+    }
+    if (state.placement !== firstFittingPlacement) {
+      state.modifiersData[name]._skip = true;
+      state.placement = firstFittingPlacement;
+      state.reset = true;
+    }
+  }
+  var flip_default = {
+    name: "flip",
+    enabled: true,
+    phase: "main",
+    fn: flip,
+    requiresIfExists: ["offset"],
+    data: {
+      _skip: false
+    }
+  };
+
+  // node_modules/@popperjs/core/lib/modifiers/hide.js
+  function getSideOffsets(overflow, rect, preventedOffsets) {
+    if (preventedOffsets === void 0) {
+      preventedOffsets = {
+        x: 0,
+        y: 0
+      };
+    }
+    return {
+      top: overflow.top - rect.height - preventedOffsets.y,
+      right: overflow.right - rect.width + preventedOffsets.x,
+      bottom: overflow.bottom - rect.height + preventedOffsets.y,
+      left: overflow.left - rect.width - preventedOffsets.x
+    };
+  }
+  function isAnySideFullyClipped(overflow) {
+    return [top, right, bottom, left].some(function(side) {
+      return overflow[side] >= 0;
+    });
+  }
+  function hide(_ref) {
+    var state = _ref.state, name = _ref.name;
+    var referenceRect = state.rects.reference;
+    var popperRect = state.rects.popper;
+    var preventedOffsets = state.modifiersData.preventOverflow;
+    var referenceOverflow = detectOverflow(state, {
+      elementContext: "reference"
+    });
+    var popperAltOverflow = detectOverflow(state, {
+      altBoundary: true
+    });
+    var referenceClippingOffsets = getSideOffsets(referenceOverflow, referenceRect);
+    var popperEscapeOffsets = getSideOffsets(popperAltOverflow, popperRect, preventedOffsets);
+    var isReferenceHidden = isAnySideFullyClipped(referenceClippingOffsets);
+    var hasPopperEscaped = isAnySideFullyClipped(popperEscapeOffsets);
+    state.modifiersData[name] = {
+      referenceClippingOffsets,
+      popperEscapeOffsets,
+      isReferenceHidden,
+      hasPopperEscaped
+    };
+    state.attributes.popper = Object.assign({}, state.attributes.popper, {
+      "data-popper-reference-hidden": isReferenceHidden,
+      "data-popper-escaped": hasPopperEscaped
+    });
+  }
+  var hide_default = {
+    name: "hide",
+    enabled: true,
+    phase: "main",
+    requiresIfExists: ["preventOverflow"],
+    fn: hide
+  };
+
+  // node_modules/@popperjs/core/lib/modifiers/offset.js
+  function distanceAndSkiddingToXY(placement, rects, offset4) {
+    var basePlacement = getBasePlacement(placement);
+    var invertDistance = [left, top].indexOf(basePlacement) >= 0 ? -1 : 1;
+    var _ref = typeof offset4 === "function" ? offset4(Object.assign({}, rects, {
+      placement
+    })) : offset4, skidding = _ref[0], distance3 = _ref[1];
+    skidding = skidding || 0;
+    distance3 = (distance3 || 0) * invertDistance;
+    return [left, right].indexOf(basePlacement) >= 0 ? {
+      x: distance3,
+      y: skidding
+    } : {
+      x: skidding,
+      y: distance3
+    };
+  }
+  function offset(_ref2) {
+    var state = _ref2.state, options = _ref2.options, name = _ref2.name;
+    var _options$offset = options.offset, offset4 = _options$offset === void 0 ? [0, 0] : _options$offset;
+    var data = placements.reduce(function(acc, placement) {
+      acc[placement] = distanceAndSkiddingToXY(placement, state.rects, offset4);
+      return acc;
+    }, {});
+    var _data$state$placement = data[state.placement], x = _data$state$placement.x, y = _data$state$placement.y;
+    if (state.modifiersData.popperOffsets != null) {
+      state.modifiersData.popperOffsets.x += x;
+      state.modifiersData.popperOffsets.y += y;
+    }
+    state.modifiersData[name] = data;
+  }
+  var offset_default = {
+    name: "offset",
+    enabled: true,
+    phase: "main",
+    requires: ["popperOffsets"],
+    fn: offset
+  };
+
+  // node_modules/@popperjs/core/lib/modifiers/popperOffsets.js
+  function popperOffsets(_ref) {
+    var state = _ref.state, name = _ref.name;
+    state.modifiersData[name] = computeOffsets({
+      reference: state.rects.reference,
+      element: state.rects.popper,
+      strategy: "absolute",
+      placement: state.placement
+    });
+  }
+  var popperOffsets_default = {
+    name: "popperOffsets",
+    enabled: true,
+    phase: "read",
+    fn: popperOffsets,
+    data: {}
+  };
+
+  // node_modules/@popperjs/core/lib/utils/getAltAxis.js
+  function getAltAxis(axis) {
+    return axis === "x" ? "y" : "x";
+  }
+
+  // node_modules/@popperjs/core/lib/modifiers/preventOverflow.js
+  function preventOverflow(_ref) {
+    var state = _ref.state, options = _ref.options, name = _ref.name;
+    var _options$mainAxis = options.mainAxis, checkMainAxis = _options$mainAxis === void 0 ? true : _options$mainAxis, _options$altAxis = options.altAxis, checkAltAxis = _options$altAxis === void 0 ? false : _options$altAxis, boundary = options.boundary, rootBoundary = options.rootBoundary, altBoundary = options.altBoundary, padding = options.padding, _options$tether = options.tether, tether = _options$tether === void 0 ? true : _options$tether, _options$tetherOffset = options.tetherOffset, tetherOffset = _options$tetherOffset === void 0 ? 0 : _options$tetherOffset;
+    var overflow = detectOverflow(state, {
+      boundary,
+      rootBoundary,
+      padding,
+      altBoundary
+    });
+    var basePlacement = getBasePlacement(state.placement);
+    var variation = getVariation(state.placement);
+    var isBasePlacement = !variation;
+    var mainAxis = getMainAxisFromPlacement(basePlacement);
+    var altAxis = getAltAxis(mainAxis);
+    var popperOffsets2 = state.modifiersData.popperOffsets;
+    var referenceRect = state.rects.reference;
+    var popperRect = state.rects.popper;
+    var tetherOffsetValue = typeof tetherOffset === "function" ? tetherOffset(Object.assign({}, state.rects, {
+      placement: state.placement
+    })) : tetherOffset;
+    var normalizedTetherOffsetValue = typeof tetherOffsetValue === "number" ? {
+      mainAxis: tetherOffsetValue,
+      altAxis: tetherOffsetValue
+    } : Object.assign({
+      mainAxis: 0,
+      altAxis: 0
+    }, tetherOffsetValue);
+    var offsetModifierState = state.modifiersData.offset ? state.modifiersData.offset[state.placement] : null;
+    var data = {
+      x: 0,
+      y: 0
+    };
+    if (!popperOffsets2) {
+      return;
+    }
+    if (checkMainAxis) {
+      var _offsetModifierState$;
+      var mainSide = mainAxis === "y" ? top : left;
+      var altSide = mainAxis === "y" ? bottom : right;
+      var len = mainAxis === "y" ? "height" : "width";
+      var offset4 = popperOffsets2[mainAxis];
+      var min2 = offset4 + overflow[mainSide];
+      var max2 = offset4 - overflow[altSide];
+      var additive = tether ? -popperRect[len] / 2 : 0;
+      var minLen = variation === start2 ? referenceRect[len] : popperRect[len];
+      var maxLen = variation === start2 ? -popperRect[len] : -referenceRect[len];
+      var arrowElement = state.elements.arrow;
+      var arrowRect = tether && arrowElement ? getLayoutRect(arrowElement) : {
+        width: 0,
+        height: 0
+      };
+      var arrowPaddingObject = state.modifiersData["arrow#persistent"] ? state.modifiersData["arrow#persistent"].padding : getFreshSideObject();
+      var arrowPaddingMin = arrowPaddingObject[mainSide];
+      var arrowPaddingMax = arrowPaddingObject[altSide];
+      var arrowLen = within(0, referenceRect[len], arrowRect[len]);
+      var minOffset = isBasePlacement ? referenceRect[len] / 2 - additive - arrowLen - arrowPaddingMin - normalizedTetherOffsetValue.mainAxis : minLen - arrowLen - arrowPaddingMin - normalizedTetherOffsetValue.mainAxis;
+      var maxOffset = isBasePlacement ? -referenceRect[len] / 2 + additive + arrowLen + arrowPaddingMax + normalizedTetherOffsetValue.mainAxis : maxLen + arrowLen + arrowPaddingMax + normalizedTetherOffsetValue.mainAxis;
+      var arrowOffsetParent = state.elements.arrow && getOffsetParent(state.elements.arrow);
+      var clientOffset = arrowOffsetParent ? mainAxis === "y" ? arrowOffsetParent.clientTop || 0 : arrowOffsetParent.clientLeft || 0 : 0;
+      var offsetModifierValue = (_offsetModifierState$ = offsetModifierState == null ? void 0 : offsetModifierState[mainAxis]) != null ? _offsetModifierState$ : 0;
+      var tetherMin = offset4 + minOffset - offsetModifierValue - clientOffset;
+      var tetherMax = offset4 + maxOffset - offsetModifierValue;
+      var preventedOffset = within(tether ? min(min2, tetherMin) : min2, offset4, tether ? max(max2, tetherMax) : max2);
+      popperOffsets2[mainAxis] = preventedOffset;
+      data[mainAxis] = preventedOffset - offset4;
+    }
+    if (checkAltAxis) {
+      var _offsetModifierState$2;
+      var _mainSide = mainAxis === "x" ? top : left;
+      var _altSide = mainAxis === "x" ? bottom : right;
+      var _offset = popperOffsets2[altAxis];
+      var _len = altAxis === "y" ? "height" : "width";
+      var _min = _offset + overflow[_mainSide];
+      var _max = _offset - overflow[_altSide];
+      var isOriginSide = [top, left].indexOf(basePlacement) !== -1;
+      var _offsetModifierValue = (_offsetModifierState$2 = offsetModifierState == null ? void 0 : offsetModifierState[altAxis]) != null ? _offsetModifierState$2 : 0;
+      var _tetherMin = isOriginSide ? _min : _offset - referenceRect[_len] - popperRect[_len] - _offsetModifierValue + normalizedTetherOffsetValue.altAxis;
+      var _tetherMax = isOriginSide ? _offset + referenceRect[_len] + popperRect[_len] - _offsetModifierValue - normalizedTetherOffsetValue.altAxis : _max;
+      var _preventedOffset = tether && isOriginSide ? withinMaxClamp(_tetherMin, _offset, _tetherMax) : within(tether ? _tetherMin : _min, _offset, tether ? _tetherMax : _max);
+      popperOffsets2[altAxis] = _preventedOffset;
+      data[altAxis] = _preventedOffset - _offset;
+    }
+    state.modifiersData[name] = data;
+  }
+  var preventOverflow_default = {
+    name: "preventOverflow",
+    enabled: true,
+    phase: "main",
+    fn: preventOverflow,
+    requiresIfExists: ["offset"]
+  };
+
+  // node_modules/@popperjs/core/lib/dom-utils/getHTMLElementScroll.js
+  function getHTMLElementScroll(element) {
+    return {
+      scrollLeft: element.scrollLeft,
+      scrollTop: element.scrollTop
+    };
+  }
+
+  // node_modules/@popperjs/core/lib/dom-utils/getNodeScroll.js
+  function getNodeScroll(node) {
+    if (node === getWindow(node) || !isHTMLElement(node)) {
+      return getWindowScroll(node);
+    } else {
+      return getHTMLElementScroll(node);
+    }
+  }
+
+  // node_modules/@popperjs/core/lib/dom-utils/getCompositeRect.js
+  function isElementScaled(element) {
+    var rect = element.getBoundingClientRect();
+    var scaleX = round(rect.width) / element.offsetWidth || 1;
+    var scaleY = round(rect.height) / element.offsetHeight || 1;
+    return scaleX !== 1 || scaleY !== 1;
+  }
+  function getCompositeRect(elementOrVirtualElement, offsetParent, isFixed) {
+    if (isFixed === void 0) {
+      isFixed = false;
+    }
+    var isOffsetParentAnElement = isHTMLElement(offsetParent);
+    var offsetParentIsScaled = isHTMLElement(offsetParent) && isElementScaled(offsetParent);
+    var documentElement = getDocumentElement(offsetParent);
+    var rect = getBoundingClientRect(elementOrVirtualElement, offsetParentIsScaled, isFixed);
+    var scroll2 = {
+      scrollLeft: 0,
+      scrollTop: 0
+    };
+    var offsets = {
+      x: 0,
+      y: 0
+    };
+    if (isOffsetParentAnElement || !isOffsetParentAnElement && !isFixed) {
+      if (getNodeName(offsetParent) !== "body" || // https://github.com/popperjs/popper-core/issues/1078
+      isScrollParent(documentElement)) {
+        scroll2 = getNodeScroll(offsetParent);
+      }
+      if (isHTMLElement(offsetParent)) {
+        offsets = getBoundingClientRect(offsetParent, true);
+        offsets.x += offsetParent.clientLeft;
+        offsets.y += offsetParent.clientTop;
+      } else if (documentElement) {
+        offsets.x = getWindowScrollBarX(documentElement);
+      }
+    }
+    return {
+      x: rect.left + scroll2.scrollLeft - offsets.x,
+      y: rect.top + scroll2.scrollTop - offsets.y,
+      width: rect.width,
+      height: rect.height
+    };
+  }
+
+  // node_modules/@popperjs/core/lib/utils/orderModifiers.js
+  function order(modifiers) {
+    var map2 = /* @__PURE__ */ new Map();
+    var visited = /* @__PURE__ */ new Set();
+    var result = [];
+    modifiers.forEach(function(modifier) {
+      map2.set(modifier.name, modifier);
+    });
+    function sort(modifier) {
+      visited.add(modifier.name);
+      var requires = [].concat(modifier.requires || [], modifier.requiresIfExists || []);
+      requires.forEach(function(dep) {
+        if (!visited.has(dep)) {
+          var depModifier = map2.get(dep);
+          if (depModifier) {
+            sort(depModifier);
+          }
+        }
+      });
+      result.push(modifier);
+    }
+    modifiers.forEach(function(modifier) {
+      if (!visited.has(modifier.name)) {
+        sort(modifier);
+      }
+    });
+    return result;
+  }
+  function orderModifiers(modifiers) {
+    var orderedModifiers = order(modifiers);
+    return modifierPhases.reduce(function(acc, phase) {
+      return acc.concat(orderedModifiers.filter(function(modifier) {
+        return modifier.phase === phase;
+      }));
+    }, []);
+  }
+
+  // node_modules/@popperjs/core/lib/utils/debounce.js
+  function debounce(fn2) {
+    var pending;
+    return function() {
+      if (!pending) {
+        pending = new Promise(function(resolve) {
+          Promise.resolve().then(function() {
+            pending = void 0;
+            resolve(fn2());
+          });
+        });
+      }
+      return pending;
+    };
+  }
+
+  // node_modules/@popperjs/core/lib/utils/mergeByName.js
+  function mergeByName(modifiers) {
+    var merged = modifiers.reduce(function(merged2, current) {
+      var existing = merged2[current.name];
+      merged2[current.name] = existing ? Object.assign({}, existing, current, {
+        options: Object.assign({}, existing.options, current.options),
+        data: Object.assign({}, existing.data, current.data)
+      }) : current;
+      return merged2;
+    }, {});
+    return Object.keys(merged).map(function(key) {
+      return merged[key];
+    });
+  }
+
+  // node_modules/@popperjs/core/lib/createPopper.js
+  var DEFAULT_OPTIONS = {
+    placement: "bottom",
+    modifiers: [],
+    strategy: "absolute"
+  };
+  function areValidElements() {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    return !args.some(function(element) {
+      return !(element && typeof element.getBoundingClientRect === "function");
+    });
+  }
+  function popperGenerator(generatorOptions) {
+    if (generatorOptions === void 0) {
+      generatorOptions = {};
+    }
+    var _generatorOptions = generatorOptions, _generatorOptions$def = _generatorOptions.defaultModifiers, defaultModifiers = _generatorOptions$def === void 0 ? [] : _generatorOptions$def, _generatorOptions$def2 = _generatorOptions.defaultOptions, defaultOptions2 = _generatorOptions$def2 === void 0 ? DEFAULT_OPTIONS : _generatorOptions$def2;
+    return function createPopper3(reference2, popper2, options) {
+      if (options === void 0) {
+        options = defaultOptions2;
+      }
+      var state = {
+        placement: "bottom",
+        orderedModifiers: [],
+        options: Object.assign({}, DEFAULT_OPTIONS, defaultOptions2),
+        modifiersData: {},
+        elements: {
+          reference: reference2,
+          popper: popper2
+        },
+        attributes: {},
+        styles: {}
+      };
+      var effectCleanupFns = [];
+      var isDestroyed = false;
+      var instance = {
+        state,
+        setOptions: function setOptions(setOptionsAction) {
+          var options2 = typeof setOptionsAction === "function" ? setOptionsAction(state.options) : setOptionsAction;
+          cleanupModifierEffects();
+          state.options = Object.assign({}, defaultOptions2, state.options, options2);
+          state.scrollParents = {
+            reference: isElement(reference2) ? listScrollParents(reference2) : reference2.contextElement ? listScrollParents(reference2.contextElement) : [],
+            popper: listScrollParents(popper2)
+          };
+          var orderedModifiers = orderModifiers(mergeByName([].concat(defaultModifiers, state.options.modifiers)));
+          state.orderedModifiers = orderedModifiers.filter(function(m) {
+            return m.enabled;
+          });
+          runModifierEffects();
+          return instance.update();
+        },
+        // Sync update – it will always be executed, even if not necessary. This
+        // is useful for low frequency updates where sync behavior simplifies the
+        // logic.
+        // For high frequency updates (e.g. `resize` and `scroll` events), always
+        // prefer the async Popper#update method
+        forceUpdate: function forceUpdate() {
+          if (isDestroyed) {
+            return;
+          }
+          var _state$elements = state.elements, reference3 = _state$elements.reference, popper3 = _state$elements.popper;
+          if (!areValidElements(reference3, popper3)) {
+            return;
+          }
+          state.rects = {
+            reference: getCompositeRect(reference3, getOffsetParent(popper3), state.options.strategy === "fixed"),
+            popper: getLayoutRect(popper3)
+          };
+          state.reset = false;
+          state.placement = state.options.placement;
+          state.orderedModifiers.forEach(function(modifier) {
+            return state.modifiersData[modifier.name] = Object.assign({}, modifier.data);
+          });
+          for (var index2 = 0; index2 < state.orderedModifiers.length; index2++) {
+            if (state.reset === true) {
+              state.reset = false;
+              index2 = -1;
+              continue;
+            }
+            var _state$orderedModifie = state.orderedModifiers[index2], fn2 = _state$orderedModifie.fn, _state$orderedModifie2 = _state$orderedModifie.options, _options = _state$orderedModifie2 === void 0 ? {} : _state$orderedModifie2, name = _state$orderedModifie.name;
+            if (typeof fn2 === "function") {
+              state = fn2({
+                state,
+                options: _options,
+                name,
+                instance
+              }) || state;
+            }
+          }
+        },
+        // Async and optimistically optimized update – it will not be executed if
+        // not necessary (debounced to run at most once-per-tick)
+        update: debounce(function() {
+          return new Promise(function(resolve) {
+            instance.forceUpdate();
+            resolve(state);
+          });
+        }),
+        destroy: function destroy() {
+          cleanupModifierEffects();
+          isDestroyed = true;
+        }
+      };
+      if (!areValidElements(reference2, popper2)) {
+        return instance;
+      }
+      instance.setOptions(options).then(function(state2) {
+        if (!isDestroyed && options.onFirstUpdate) {
+          options.onFirstUpdate(state2);
+        }
+      });
+      function runModifierEffects() {
+        state.orderedModifiers.forEach(function(_ref) {
+          var name = _ref.name, _ref$options = _ref.options, options2 = _ref$options === void 0 ? {} : _ref$options, effect3 = _ref.effect;
+          if (typeof effect3 === "function") {
+            var cleanupFn = effect3({
+              state,
+              name,
+              instance,
+              options: options2
+            });
+            var noopFn = function noopFn2() {
+            };
+            effectCleanupFns.push(cleanupFn || noopFn);
+          }
+        });
+      }
+      function cleanupModifierEffects() {
+        effectCleanupFns.forEach(function(fn2) {
+          return fn2();
+        });
+        effectCleanupFns = [];
+      }
+      return instance;
+    };
+  }
+
+  // node_modules/@restart/ui/esm/popper.js
+  var createPopper2 = popperGenerator({
+    defaultModifiers: [hide_default, popperOffsets_default, computeStyles_default, eventListeners_default, offset_default, flip_default, preventOverflow_default, arrow_default]
+  });
+
+  // node_modules/@restart/ui/esm/usePopper.js
+  var _excluded7 = ["enabled", "placement", "strategy", "modifiers"];
+  function _objectWithoutPropertiesLoose8(r, e2) {
+    if (null == r)
+      return {};
+    var t = {};
+    for (var n in r)
+      if ({}.hasOwnProperty.call(r, n)) {
+        if (e2.indexOf(n) >= 0)
+          continue;
+        t[n] = r[n];
+      }
+    return t;
+  }
+  var disabledApplyStylesModifier = {
+    name: "applyStyles",
+    enabled: false,
+    phase: "afterWrite",
+    fn: () => void 0
+  };
+  var ariaDescribedByModifier = {
+    name: "ariaDescribedBy",
+    enabled: true,
+    phase: "afterWrite",
+    effect: ({
+      state
+    }) => () => {
+      const {
+        reference: reference2,
+        popper: popper2
+      } = state.elements;
+      if ("removeAttribute" in reference2) {
+        const ids = (reference2.getAttribute("aria-describedby") || "").split(",").filter((id2) => id2.trim() !== popper2.id);
+        if (!ids.length)
+          reference2.removeAttribute("aria-describedby");
+        else
+          reference2.setAttribute("aria-describedby", ids.join(","));
+      }
+    },
+    fn: ({
+      state
+    }) => {
+      var _popper$getAttribute;
+      const {
+        popper: popper2,
+        reference: reference2
+      } = state.elements;
+      const role = (_popper$getAttribute = popper2.getAttribute("role")) == null ? void 0 : _popper$getAttribute.toLowerCase();
+      if (popper2.id && role === "tooltip" && "setAttribute" in reference2) {
+        const ids = reference2.getAttribute("aria-describedby");
+        if (ids && ids.split(",").indexOf(popper2.id) !== -1) {
+          return;
+        }
+        reference2.setAttribute("aria-describedby", ids ? `${ids},${popper2.id}` : popper2.id);
+      }
+    }
+  };
+  var EMPTY_MODIFIERS = [];
+  function usePopper(referenceElement, popperElement, _ref = {}) {
+    let {
+      enabled = true,
+      placement = "bottom",
+      strategy = "absolute",
+      modifiers = EMPTY_MODIFIERS
+    } = _ref, config = _objectWithoutPropertiesLoose8(_ref, _excluded7);
+    const prevModifiers = (0, import_react38.useRef)(modifiers);
+    const popperInstanceRef = (0, import_react38.useRef)();
+    const update2 = (0, import_react38.useCallback)(() => {
+      var _popperInstanceRef$cu;
+      (_popperInstanceRef$cu = popperInstanceRef.current) == null ? void 0 : _popperInstanceRef$cu.update();
+    }, []);
+    const forceUpdate = (0, import_react38.useCallback)(() => {
+      var _popperInstanceRef$cu2;
+      (_popperInstanceRef$cu2 = popperInstanceRef.current) == null ? void 0 : _popperInstanceRef$cu2.forceUpdate();
+    }, []);
+    const [popperState, setState] = useSafeState_default((0, import_react38.useState)({
+      placement,
+      update: update2,
+      forceUpdate,
+      attributes: {},
+      styles: {
+        popper: {},
+        arrow: {}
+      }
+    }));
+    const updateModifier = (0, import_react38.useMemo)(() => ({
+      name: "updateStateModifier",
+      enabled: true,
+      phase: "write",
+      requires: ["computeStyles"],
+      fn: ({
+        state
+      }) => {
+        const styles2 = {};
+        const attributes = {};
+        Object.keys(state.elements).forEach((element) => {
+          styles2[element] = state.styles[element];
+          attributes[element] = state.attributes[element];
+        });
+        setState({
+          state,
+          styles: styles2,
+          attributes,
+          update: update2,
+          forceUpdate,
+          placement: state.placement
+        });
+      }
+    }), [update2, forceUpdate, setState]);
+    const nextModifiers = (0, import_react38.useMemo)(() => {
+      if (!dequal(prevModifiers.current, modifiers)) {
+        prevModifiers.current = modifiers;
+      }
+      return prevModifiers.current;
+    }, [modifiers]);
+    (0, import_react38.useEffect)(() => {
+      if (!popperInstanceRef.current || !enabled)
+        return;
+      popperInstanceRef.current.setOptions({
+        placement,
+        strategy,
+        modifiers: [...nextModifiers, updateModifier, disabledApplyStylesModifier]
+      });
+    }, [strategy, placement, updateModifier, enabled, nextModifiers]);
+    (0, import_react38.useEffect)(() => {
+      if (!enabled || referenceElement == null || popperElement == null) {
+        return void 0;
+      }
+      popperInstanceRef.current = createPopper2(referenceElement, popperElement, Object.assign({}, config, {
+        placement,
+        strategy,
+        modifiers: [...nextModifiers, ariaDescribedByModifier, updateModifier]
+      }));
+      return () => {
+        if (popperInstanceRef.current != null) {
+          popperInstanceRef.current.destroy();
+          popperInstanceRef.current = void 0;
+          setState((s) => Object.assign({}, s, {
+            attributes: {},
+            styles: {
+              popper: {}
+            }
+          }));
+        }
+      };
+    }, [enabled, referenceElement, popperElement]);
+    return popperState;
+  }
+  var usePopper_default = usePopper;
+
+  // node_modules/dom-helpers/esm/contains.js
+  function contains2(context4, node) {
+    if (context4.contains)
+      return context4.contains(node);
+    if (context4.compareDocumentPosition)
+      return context4 === node || !!(context4.compareDocumentPosition(node) & 16);
+  }
+
+  // node_modules/@restart/ui/esm/useClickOutside.js
+  var import_react39 = __toESM(require_react());
+  var import_warning = __toESM(require_warning());
+  var noop4 = () => {
+  };
+  function isLeftClickEvent(event) {
+    return event.button === 0;
+  }
+  function isModifiedEvent2(event) {
+    return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
+  }
+  var getRefTarget = (ref2) => ref2 && ("current" in ref2 ? ref2.current : ref2);
+  var InitialTriggerEvents = {
+    click: "mousedown",
+    mouseup: "mousedown",
+    pointerup: "pointerdown"
+  };
+  function useClickOutside(ref2, onClickOutside = noop4, {
+    disabled,
+    clickTrigger = "click"
+  } = {}) {
+    const preventMouseClickOutsideRef = (0, import_react39.useRef)(false);
+    const waitingForTrigger = (0, import_react39.useRef)(false);
+    const handleMouseCapture = (0, import_react39.useCallback)((e2) => {
+      const currentTarget = getRefTarget(ref2);
+      (0, import_warning.default)(!!currentTarget, "ClickOutside captured a close event but does not have a ref to compare it to. useClickOutside(), should be passed a ref that resolves to a DOM node");
+      preventMouseClickOutsideRef.current = !currentTarget || isModifiedEvent2(e2) || !isLeftClickEvent(e2) || !!contains2(currentTarget, e2.target) || waitingForTrigger.current;
+      waitingForTrigger.current = false;
+    }, [ref2]);
+    const handleInitialMouse = useEventCallback((e2) => {
+      const currentTarget = getRefTarget(ref2);
+      if (currentTarget && contains2(currentTarget, e2.target)) {
+        waitingForTrigger.current = true;
+      } else {
+        waitingForTrigger.current = false;
+      }
+    });
+    const handleMouse = useEventCallback((e2) => {
+      if (!preventMouseClickOutsideRef.current) {
+        onClickOutside(e2);
+      }
+    });
+    (0, import_react39.useEffect)(() => {
+      var _ownerWindow$event, _ownerWindow$parent;
+      if (disabled || ref2 == null)
+        return void 0;
+      const doc = ownerDocument(getRefTarget(ref2));
+      const ownerWindow2 = doc.defaultView || window;
+      let currentEvent = (_ownerWindow$event = ownerWindow2.event) != null ? _ownerWindow$event : (_ownerWindow$parent = ownerWindow2.parent) == null ? void 0 : _ownerWindow$parent.event;
+      let removeInitialTriggerListener = null;
+      if (InitialTriggerEvents[clickTrigger]) {
+        removeInitialTriggerListener = listen_default(doc, InitialTriggerEvents[clickTrigger], handleInitialMouse, true);
+      }
+      const removeMouseCaptureListener = listen_default(doc, clickTrigger, handleMouseCapture, true);
+      const removeMouseListener = listen_default(doc, clickTrigger, (e2) => {
+        if (e2 === currentEvent) {
+          currentEvent = void 0;
+          return;
+        }
+        handleMouse(e2);
+      });
+      let mobileSafariHackListeners = [];
+      if ("ontouchstart" in doc.documentElement) {
+        mobileSafariHackListeners = [].slice.call(doc.body.children).map((el) => listen_default(el, "mousemove", noop4));
+      }
+      return () => {
+        removeInitialTriggerListener == null ? void 0 : removeInitialTriggerListener();
+        removeMouseCaptureListener();
+        removeMouseListener();
+        mobileSafariHackListeners.forEach((remove2) => remove2());
+      };
+    }, [ref2, disabled, clickTrigger, handleMouseCapture, handleInitialMouse, handleMouse]);
+  }
+  var useClickOutside_default = useClickOutside;
+
+  // node_modules/@restart/ui/esm/mergeOptionsWithPopperConfig.js
+  function toModifierMap(modifiers) {
+    const result = {};
+    if (!Array.isArray(modifiers)) {
+      return modifiers || result;
+    }
+    modifiers == null ? void 0 : modifiers.forEach((m) => {
+      result[m.name] = m;
+    });
+    return result;
+  }
+  function toModifierArray(map2 = {}) {
+    if (Array.isArray(map2))
+      return map2;
+    return Object.keys(map2).map((k) => {
+      map2[k].name = k;
+      return map2[k];
+    });
+  }
+  function mergeOptionsWithPopperConfig({
+    enabled,
+    enableEvents,
+    placement,
+    flip: flip2,
+    offset: offset4,
+    fixed,
+    containerPadding,
+    arrowElement,
+    popperConfig = {}
+  }) {
+    var _modifiers$eventListe, _modifiers$preventOve, _modifiers$preventOve2, _modifiers$offset, _modifiers$arrow;
+    const modifiers = toModifierMap(popperConfig.modifiers);
+    return Object.assign({}, popperConfig, {
+      placement,
+      enabled,
+      strategy: fixed ? "fixed" : popperConfig.strategy,
+      modifiers: toModifierArray(Object.assign({}, modifiers, {
+        eventListeners: {
+          enabled: enableEvents,
+          options: (_modifiers$eventListe = modifiers.eventListeners) == null ? void 0 : _modifiers$eventListe.options
+        },
+        preventOverflow: Object.assign({}, modifiers.preventOverflow, {
+          options: containerPadding ? Object.assign({
+            padding: containerPadding
+          }, (_modifiers$preventOve = modifiers.preventOverflow) == null ? void 0 : _modifiers$preventOve.options) : (_modifiers$preventOve2 = modifiers.preventOverflow) == null ? void 0 : _modifiers$preventOve2.options
+        }),
+        offset: {
+          options: Object.assign({
+            offset: offset4
+          }, (_modifiers$offset = modifiers.offset) == null ? void 0 : _modifiers$offset.options)
+        },
+        arrow: Object.assign({}, modifiers.arrow, {
+          enabled: !!arrowElement,
+          options: Object.assign({}, (_modifiers$arrow = modifiers.arrow) == null ? void 0 : _modifiers$arrow.options, {
+            element: arrowElement
+          })
+        }),
+        flip: Object.assign({
+          enabled: !!flip2
+        }, modifiers.flip)
+      }))
+    });
+  }
+
+  // node_modules/@restart/ui/esm/DropdownMenu.js
+  var import_jsx_runtime24 = __toESM(require_jsx_runtime());
+  var _excluded8 = ["children", "usePopper"];
+  function _objectWithoutPropertiesLoose9(r, e2) {
+    if (null == r)
+      return {};
+    var t = {};
+    for (var n in r)
+      if ({}.hasOwnProperty.call(r, n)) {
+        if (e2.indexOf(n) >= 0)
+          continue;
+        t[n] = r[n];
+      }
+    return t;
+  }
+  var noop5 = () => {
+  };
+  function useDropdownMenu(options = {}) {
+    const context4 = (0, import_react40.useContext)(DropdownContext_default);
+    const [arrowElement, attachArrowRef] = useCallbackRef();
+    const hasShownRef = (0, import_react40.useRef)(false);
+    const {
+      flip: flip2,
+      offset: offset4,
+      rootCloseEvent,
+      fixed = false,
+      placement: placementOverride,
+      popperConfig = {},
+      enableEventListeners = true,
+      usePopper: shouldUsePopper = !!context4
+    } = options;
+    const show = (context4 == null ? void 0 : context4.show) == null ? !!options.show : context4.show;
+    if (show && !hasShownRef.current) {
+      hasShownRef.current = true;
+    }
+    const handleClose = (e2) => {
+      context4 == null ? void 0 : context4.toggle(false, e2);
+    };
+    const {
+      placement,
+      setMenu,
+      menuElement,
+      toggleElement
+    } = context4 || {};
+    const popper2 = usePopper_default(toggleElement, menuElement, mergeOptionsWithPopperConfig({
+      placement: placementOverride || placement || "bottom-start",
+      enabled: shouldUsePopper,
+      enableEvents: enableEventListeners == null ? show : enableEventListeners,
+      offset: offset4,
+      flip: flip2,
+      fixed,
+      arrowElement,
+      popperConfig
+    }));
+    const menuProps = Object.assign({
+      ref: setMenu || noop5,
+      "aria-labelledby": toggleElement == null ? void 0 : toggleElement.id
+    }, popper2.attributes.popper, {
+      style: popper2.styles.popper
+    });
+    const metadata = {
+      show,
+      placement,
+      hasShown: hasShownRef.current,
+      toggle: context4 == null ? void 0 : context4.toggle,
+      popper: shouldUsePopper ? popper2 : null,
+      arrowProps: shouldUsePopper ? Object.assign({
+        ref: attachArrowRef
+      }, popper2.attributes.arrow, {
+        style: popper2.styles.arrow
+      }) : {}
+    };
+    useClickOutside_default(menuElement, handleClose, {
+      clickTrigger: rootCloseEvent,
+      disabled: !show
+    });
+    return [menuProps, metadata];
+  }
+  function DropdownMenu(_ref) {
+    let {
+      children: children2,
+      usePopper: usePopperProp = true
+    } = _ref, options = _objectWithoutPropertiesLoose9(_ref, _excluded8);
+    const [props, meta] = useDropdownMenu(Object.assign({}, options, {
+      usePopper: usePopperProp
+    }));
+    return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(import_jsx_runtime24.Fragment, {
+      children: children2(props, meta)
+    });
+  }
+  DropdownMenu.displayName = "DropdownMenu";
+  var DropdownMenu_default = DropdownMenu;
+
+  // node_modules/@restart/ui/esm/DropdownToggle.js
+  var import_react41 = __toESM(require_react());
+  var React37 = __toESM(require_react());
+  var import_jsx_runtime25 = __toESM(require_jsx_runtime());
+  var isRoleMenu = (el) => {
+    var _el$getAttribute;
+    return ((_el$getAttribute = el.getAttribute("role")) == null ? void 0 : _el$getAttribute.toLowerCase()) === "menu";
+  };
+  var noop6 = () => {
+  };
+  function useDropdownToggle() {
+    const id2 = $b5e257d569688ac6$export$619500959fc48b26();
+    const {
+      show = false,
+      toggle = noop6,
+      setToggle,
+      menuElement
+    } = (0, import_react41.useContext)(DropdownContext_default) || {};
+    const handleClick = (0, import_react41.useCallback)((e2) => {
+      toggle(!show, e2);
+    }, [show, toggle]);
+    const props = {
+      id: id2,
+      ref: setToggle || noop6,
+      onClick: handleClick,
+      "aria-expanded": !!show
+    };
+    if (menuElement && isRoleMenu(menuElement)) {
+      props["aria-haspopup"] = true;
+    }
+    return [props, {
+      show,
+      toggle
+    }];
+  }
+  function DropdownToggle({
+    children: children2
+  }) {
+    const [props, meta] = useDropdownToggle();
+    return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_jsx_runtime25.Fragment, {
+      children: children2(props, meta)
+    });
+  }
+  DropdownToggle.displayName = "DropdownToggle";
+  var DropdownToggle_default = DropdownToggle;
+
+  // node_modules/@restart/ui/esm/DropdownItem.js
+  var React38 = __toESM(require_react());
+  var import_react42 = __toESM(require_react());
+  var import_jsx_runtime26 = __toESM(require_jsx_runtime());
+  var _excluded9 = ["eventKey", "disabled", "onClick", "active", "as"];
+  function _objectWithoutPropertiesLoose10(r, e2) {
+    if (null == r)
+      return {};
+    var t = {};
+    for (var n in r)
+      if ({}.hasOwnProperty.call(r, n)) {
+        if (e2.indexOf(n) >= 0)
+          continue;
+        t[n] = r[n];
+      }
+    return t;
+  }
+  function useDropdownItem({
+    key,
+    href,
+    active,
+    disabled,
+    onClick
+  }) {
+    const onSelectCtx = (0, import_react42.useContext)(SelectableContext_default);
+    const navContext = (0, import_react42.useContext)(NavContext_default);
+    const {
+      activeKey
+    } = navContext || {};
+    const eventKey = makeEventKey(key, href);
+    const isActive2 = active == null && key != null ? makeEventKey(activeKey) === eventKey : active;
+    const handleClick = useEventCallback((event) => {
+      if (disabled)
+        return;
+      onClick == null ? void 0 : onClick(event);
+      if (onSelectCtx && !event.isPropagationStopped()) {
+        onSelectCtx(eventKey, event);
+      }
+    });
+    return [{
+      onClick: handleClick,
+      "aria-disabled": disabled || void 0,
+      "aria-selected": isActive2,
+      [dataAttr("dropdown-item")]: ""
+    }, {
+      isActive: isActive2
+    }];
+  }
+  var DropdownItem = /* @__PURE__ */ React38.forwardRef((_ref, ref2) => {
+    let {
+      eventKey,
+      disabled,
+      onClick,
+      active,
+      as: Component6 = Button_default
+    } = _ref, props = _objectWithoutPropertiesLoose10(_ref, _excluded9);
+    const [dropdownItemProps] = useDropdownItem({
+      key: eventKey,
+      href: props.href,
+      disabled,
+      onClick,
+      active
+    });
+    return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Component6, Object.assign({}, props, {
+      ref: ref2
+    }, dropdownItemProps));
+  });
+  DropdownItem.displayName = "DropdownItem";
+  var DropdownItem_default = DropdownItem;
+
+  // node_modules/@restart/ui/esm/useWindow.js
+  var import_react43 = __toESM(require_react());
+  var Context = /* @__PURE__ */ (0, import_react43.createContext)(canUseDOM_default ? window : void 0);
+  var WindowProvider = Context.Provider;
+  function useWindow() {
+    return (0, import_react43.useContext)(Context);
+  }
+
+  // node_modules/@restart/ui/esm/Dropdown.js
+  var import_jsx_runtime27 = __toESM(require_jsx_runtime());
+  function useRefWithUpdate() {
+    const forceUpdate = useForceUpdate();
+    const ref2 = (0, import_react44.useRef)(null);
+    const attachRef = (0, import_react44.useCallback)((element) => {
+      ref2.current = element;
+      forceUpdate();
+    }, [forceUpdate]);
+    return [ref2, attachRef];
+  }
+  function Dropdown({
+    defaultShow,
+    show: rawShow,
+    onSelect,
+    onToggle: rawOnToggle,
+    itemSelector = `* [${dataAttr("dropdown-item")}]`,
+    focusFirstItemOnShow,
+    placement = "bottom-start",
+    children: children2
+  }) {
+    const window2 = useWindow();
+    const [show, onToggle] = useUncontrolledProp2(rawShow, defaultShow, rawOnToggle);
+    const [menuRef, setMenu] = useRefWithUpdate();
+    const menuElement = menuRef.current;
+    const [toggleRef, setToggle] = useRefWithUpdate();
+    const toggleElement = toggleRef.current;
+    const lastShow = usePrevious(show);
+    const lastSourceEvent = (0, import_react44.useRef)(null);
+    const focusInDropdown = (0, import_react44.useRef)(false);
+    const onSelectCtx = (0, import_react44.useContext)(SelectableContext_default);
+    const toggle = (0, import_react44.useCallback)((nextShow, event, source = event == null ? void 0 : event.type) => {
+      onToggle(nextShow, {
+        originalEvent: event,
+        source
+      });
+    }, [onToggle]);
+    const handleSelect = useEventCallback((key, event) => {
+      onSelect == null ? void 0 : onSelect(key, event);
+      toggle(false, event, "select");
+      if (!event.isPropagationStopped()) {
+        onSelectCtx == null ? void 0 : onSelectCtx(key, event);
+      }
+    });
+    const context4 = (0, import_react44.useMemo)(() => ({
+      toggle,
+      placement,
+      show,
+      menuElement,
+      toggleElement,
+      setMenu,
+      setToggle
+    }), [toggle, placement, show, menuElement, toggleElement, setMenu, setToggle]);
+    if (menuElement && lastShow && !show) {
+      focusInDropdown.current = menuElement.contains(menuElement.ownerDocument.activeElement);
+    }
+    const focusToggle = useEventCallback(() => {
+      if (toggleElement && toggleElement.focus) {
+        toggleElement.focus();
+      }
+    });
+    const maybeFocusFirst = useEventCallback(() => {
+      const type = lastSourceEvent.current;
+      let focusType = focusFirstItemOnShow;
+      if (focusType == null) {
+        focusType = menuRef.current && isRoleMenu(menuRef.current) ? "keyboard" : false;
+      }
+      if (focusType === false || focusType === "keyboard" && !/^key.+$/.test(type)) {
+        return;
+      }
+      const first = qsa(menuRef.current, itemSelector)[0];
+      if (first && first.focus)
+        first.focus();
+    });
+    (0, import_react44.useEffect)(() => {
+      if (show)
+        maybeFocusFirst();
+      else if (focusInDropdown.current) {
+        focusInDropdown.current = false;
+        focusToggle();
+      }
+    }, [show, focusInDropdown, focusToggle, maybeFocusFirst]);
+    (0, import_react44.useEffect)(() => {
+      lastSourceEvent.current = null;
+    });
+    const getNextFocusedChild = (current, offset4) => {
+      if (!menuRef.current)
+        return null;
+      const items = qsa(menuRef.current, itemSelector);
+      let index2 = items.indexOf(current) + offset4;
+      index2 = Math.max(0, Math.min(index2, items.length));
+      return items[index2];
+    };
+    useEventListener((0, import_react44.useCallback)(() => window2.document, [window2]), "keydown", (event) => {
+      var _menuRef$current, _toggleRef$current;
+      const {
+        key
+      } = event;
+      const target = event.target;
+      const fromMenu = (_menuRef$current = menuRef.current) == null ? void 0 : _menuRef$current.contains(target);
+      const fromToggle = (_toggleRef$current = toggleRef.current) == null ? void 0 : _toggleRef$current.contains(target);
+      const isInput = /input|textarea/i.test(target.tagName);
+      if (isInput && (key === " " || key !== "Escape" && fromMenu || key === "Escape" && target.type === "search")) {
+        return;
+      }
+      if (!fromMenu && !fromToggle) {
+        return;
+      }
+      if (key === "Tab" && (!menuRef.current || !show)) {
+        return;
+      }
+      lastSourceEvent.current = event.type;
+      const meta = {
+        originalEvent: event,
+        source: event.type
+      };
+      switch (key) {
+        case "ArrowUp": {
+          const next = getNextFocusedChild(target, -1);
+          if (next && next.focus)
+            next.focus();
+          event.preventDefault();
+          return;
+        }
+        case "ArrowDown":
+          event.preventDefault();
+          if (!show) {
+            onToggle(true, meta);
+          } else {
+            const next = getNextFocusedChild(target, 1);
+            if (next && next.focus)
+              next.focus();
+          }
+          return;
+        case "Tab":
+          addEventListener_default(target.ownerDocument, "keyup", (e2) => {
+            var _menuRef$current2;
+            if (e2.key === "Tab" && !e2.target || !((_menuRef$current2 = menuRef.current) != null && _menuRef$current2.contains(e2.target))) {
+              onToggle(false, meta);
+            }
+          }, {
+            once: true
+          });
+          break;
+        case "Escape":
+          if (key === "Escape") {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          onToggle(false, meta);
+          break;
+        default:
+      }
+    });
+    return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(SelectableContext_default.Provider, {
+      value: handleSelect,
+      children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(DropdownContext_default.Provider, {
+        value: context4,
+        children: children2
+      })
+    });
+  }
+  Dropdown.displayName = "Dropdown";
+  Dropdown.Menu = DropdownMenu_default;
+  Dropdown.Toggle = DropdownToggle_default;
+  Dropdown.Item = DropdownItem_default;
+  var Dropdown_default = Dropdown;
+
+  // node_modules/react-bootstrap/esm/DropdownContext.js
+  var React40 = __toESM(require_react());
+  "use client";
+  var DropdownContext2 = /* @__PURE__ */ React40.createContext({});
+  DropdownContext2.displayName = "DropdownContext";
+  var DropdownContext_default2 = DropdownContext2;
+
+  // node_modules/react-bootstrap/esm/DropdownDivider.js
+  var React41 = __toESM(require_react());
+  var import_classnames14 = __toESM(require_classnames());
+  var import_jsx_runtime28 = __toESM(require_jsx_runtime());
+  "use client";
+  var DropdownDivider = /* @__PURE__ */ React41.forwardRef(({
+    className,
+    bsPrefix,
+    as: Component6 = "hr",
+    role = "separator",
+    ...props
+  }, ref2) => {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "dropdown-divider");
+    return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(Component6, {
+      ref: ref2,
+      className: (0, import_classnames14.default)(className, bsPrefix),
+      role,
+      ...props
+    });
+  });
+  DropdownDivider.displayName = "DropdownDivider";
+  var DropdownDivider_default = DropdownDivider;
+
+  // node_modules/react-bootstrap/esm/DropdownHeader.js
+  var React42 = __toESM(require_react());
+  var import_classnames15 = __toESM(require_classnames());
+  var import_jsx_runtime29 = __toESM(require_jsx_runtime());
+  "use client";
+  var DropdownHeader = /* @__PURE__ */ React42.forwardRef(({
+    className,
+    bsPrefix,
+    as: Component6 = "div",
+    role = "heading",
+    ...props
+  }, ref2) => {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "dropdown-header");
+    return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(Component6, {
+      ref: ref2,
+      className: (0, import_classnames15.default)(className, bsPrefix),
+      role,
+      ...props
+    });
+  });
+  DropdownHeader.displayName = "DropdownHeader";
+  var DropdownHeader_default = DropdownHeader;
+
+  // node_modules/react-bootstrap/esm/DropdownItem.js
+  var import_classnames16 = __toESM(require_classnames());
+  var React43 = __toESM(require_react());
+  var import_jsx_runtime30 = __toESM(require_jsx_runtime());
+  "use client";
+  var DropdownItem2 = /* @__PURE__ */ React43.forwardRef(({
+    bsPrefix,
+    className,
+    eventKey,
+    disabled = false,
+    onClick,
+    active,
+    as: Component6 = Anchor_default,
+    ...props
+  }, ref2) => {
+    const prefix3 = useBootstrapPrefix(bsPrefix, "dropdown-item");
+    const [dropdownItemProps, meta] = useDropdownItem({
+      key: eventKey,
+      href: props.href,
+      disabled,
+      onClick,
+      active
+    });
+    return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(Component6, {
+      ...props,
+      ...dropdownItemProps,
+      ref: ref2,
+      className: (0, import_classnames16.default)(className, prefix3, meta.isActive && "active", disabled && "disabled")
+    });
+  });
+  DropdownItem2.displayName = "DropdownItem";
+  var DropdownItem_default2 = DropdownItem2;
+
+  // node_modules/react-bootstrap/esm/DropdownItemText.js
+  var React44 = __toESM(require_react());
+  var import_classnames17 = __toESM(require_classnames());
+  var import_jsx_runtime31 = __toESM(require_jsx_runtime());
+  "use client";
+  var DropdownItemText = /* @__PURE__ */ React44.forwardRef(({
+    className,
+    bsPrefix,
+    as: Component6 = "span",
+    ...props
+  }, ref2) => {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "dropdown-item-text");
+    return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(Component6, {
+      ref: ref2,
+      className: (0, import_classnames17.default)(className, bsPrefix),
+      ...props
+    });
+  });
+  DropdownItemText.displayName = "DropdownItemText";
+  var DropdownItemText_default = DropdownItemText;
+
+  // node_modules/react-bootstrap/esm/DropdownMenu.js
+  var import_classnames18 = __toESM(require_classnames());
+  var React46 = __toESM(require_react());
+  var import_react47 = __toESM(require_react());
+
+  // node_modules/@restart/hooks/esm/useIsomorphicEffect.js
+  var import_react45 = __toESM(require_react());
+  var isReactNative2 = typeof global !== "undefined" && // @ts-ignore
+  global.navigator && // @ts-ignore
+  global.navigator.product === "ReactNative";
+  var isDOM2 = typeof document !== "undefined";
+  var useIsomorphicEffect_default2 = isDOM2 || isReactNative2 ? import_react45.useLayoutEffect : import_react45.useEffect;
+
+  // node_modules/react-bootstrap/esm/DropdownMenu.js
+  var import_warning2 = __toESM(require_warning());
+
+  // node_modules/react-bootstrap/esm/InputGroupContext.js
+  var React45 = __toESM(require_react());
+  "use client";
+  var context3 = /* @__PURE__ */ React45.createContext(null);
+  context3.displayName = "InputGroupContext";
+  var InputGroupContext_default = context3;
+
+  // node_modules/react-bootstrap/esm/useWrappedRefWithWarning.js
+  var import_invariant3 = __toESM(require_browser());
+  var import_react46 = __toESM(require_react());
+  function useWrappedRefWithWarning(ref2, componentName) {
+    if (false)
+      return ref2;
+    const warningRef = (0, import_react46.useCallback)((refValue) => {
+      !(refValue == null || !refValue.isReactComponent) ? true ? (0, import_invariant3.default)(false, `${componentName} injected a ref to a provided \`as\` component that resolved to a component instance instead of a DOM element. Use \`React.forwardRef\` to provide the injected ref to the class component as a prop in order to pass it directly to a DOM element`) : (0, import_invariant3.default)(false) : void 0;
+    }, [componentName]);
+    return useMergedRefs_default2(warningRef, ref2);
+  }
+
+  // node_modules/react-bootstrap/esm/DropdownMenu.js
+  var import_jsx_runtime32 = __toESM(require_jsx_runtime());
+  "use client";
+  function getDropdownMenuPlacement(alignEnd, dropDirection, isRTL) {
+    const topStart = isRTL ? "top-end" : "top-start";
+    const topEnd = isRTL ? "top-start" : "top-end";
+    const bottomStart = isRTL ? "bottom-end" : "bottom-start";
+    const bottomEnd = isRTL ? "bottom-start" : "bottom-end";
+    const leftStart = isRTL ? "right-start" : "left-start";
+    const leftEnd = isRTL ? "right-end" : "left-end";
+    const rightStart = isRTL ? "left-start" : "right-start";
+    const rightEnd = isRTL ? "left-end" : "right-end";
+    let placement = alignEnd ? bottomEnd : bottomStart;
+    if (dropDirection === "up")
+      placement = alignEnd ? topEnd : topStart;
+    else if (dropDirection === "end")
+      placement = alignEnd ? rightEnd : rightStart;
+    else if (dropDirection === "start")
+      placement = alignEnd ? leftEnd : leftStart;
+    else if (dropDirection === "down-centered")
+      placement = "bottom";
+    else if (dropDirection === "up-centered")
+      placement = "top";
+    return placement;
+  }
+  var DropdownMenu2 = /* @__PURE__ */ React46.forwardRef(({
+    bsPrefix,
+    className,
+    align,
+    rootCloseEvent,
+    flip: flip2 = true,
+    show: showProps,
+    renderOnMount,
+    // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+    as: Component6 = "div",
+    popperConfig,
+    variant,
+    ...props
+  }, ref2) => {
+    let alignEnd = false;
+    const isNavbar = (0, import_react47.useContext)(NavbarContext_default);
+    const prefix3 = useBootstrapPrefix(bsPrefix, "dropdown-menu");
+    const {
+      align: contextAlign,
+      drop: drop2,
+      isRTL
+    } = (0, import_react47.useContext)(DropdownContext_default2);
+    align = align || contextAlign;
+    const isInputGroup = (0, import_react47.useContext)(InputGroupContext_default);
+    const alignClasses = [];
+    if (align) {
+      if (typeof align === "object") {
+        const keys = Object.keys(align);
+        true ? (0, import_warning2.default)(keys.length === 1, "There should only be 1 breakpoint when passing an object to `align`") : void 0;
+        if (keys.length) {
+          const brkPoint = keys[0];
+          const direction = align[brkPoint];
+          alignEnd = direction === "start";
+          alignClasses.push(`${prefix3}-${brkPoint}-${direction}`);
+        }
+      } else if (align === "end") {
+        alignEnd = true;
+      }
+    }
+    const placement = getDropdownMenuPlacement(alignEnd, drop2, isRTL);
+    const [menuProps, {
+      hasShown,
+      popper: popper2,
+      show,
+      toggle
+    }] = useDropdownMenu({
+      flip: flip2,
+      rootCloseEvent,
+      show: showProps,
+      usePopper: !isNavbar && alignClasses.length === 0,
+      offset: [0, 2],
+      popperConfig,
+      placement
+    });
+    menuProps.ref = useMergedRefs_default2(useWrappedRefWithWarning(ref2, "DropdownMenu"), menuProps.ref);
+    useIsomorphicEffect_default2(() => {
+      if (show)
+        popper2 == null || popper2.update();
+    }, [show]);
+    if (!hasShown && !renderOnMount && !isInputGroup)
+      return null;
+    if (typeof Component6 !== "string") {
+      menuProps.show = show;
+      menuProps.close = () => toggle == null ? void 0 : toggle(false);
+      menuProps.align = align;
+    }
+    let style5 = props.style;
+    if (popper2 != null && popper2.placement) {
+      style5 = {
+        ...props.style,
+        ...menuProps.style
+      };
+      props["x-placement"] = popper2.placement;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(Component6, {
+      ...props,
+      ...menuProps,
+      style: style5,
+      ...(alignClasses.length || isNavbar) && {
+        "data-bs-popper": "static"
+      },
+      className: (0, import_classnames18.default)(className, prefix3, show && "show", alignEnd && `${prefix3}-end`, variant && `${prefix3}-${variant}`, ...alignClasses)
+    });
+  });
+  DropdownMenu2.displayName = "DropdownMenu";
+  var DropdownMenu_default2 = DropdownMenu2;
+
+  // node_modules/react-bootstrap/esm/DropdownToggle.js
+  var import_classnames19 = __toESM(require_classnames());
+  var React47 = __toESM(require_react());
+  var import_react48 = __toESM(require_react());
+  var import_jsx_runtime33 = __toESM(require_jsx_runtime());
+  "use client";
+  var DropdownToggle2 = /* @__PURE__ */ React47.forwardRef(({
+    bsPrefix,
+    split,
+    className,
+    childBsPrefix,
+    // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+    as: Component6 = Button_default2,
+    ...props
+  }, ref2) => {
+    const prefix3 = useBootstrapPrefix(bsPrefix, "dropdown-toggle");
+    const dropdownContext = (0, import_react48.useContext)(DropdownContext_default);
+    if (childBsPrefix !== void 0) {
+      props.bsPrefix = childBsPrefix;
+    }
+    const [toggleProps] = useDropdownToggle();
+    toggleProps.ref = useMergedRefs_default2(toggleProps.ref, useWrappedRefWithWarning(ref2, "DropdownToggle"));
+    return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(Component6, {
+      className: (0, import_classnames19.default)(className, prefix3, split && `${prefix3}-split`, (dropdownContext == null ? void 0 : dropdownContext.show) && "show"),
+      ...toggleProps,
+      ...props
+    });
+  });
+  DropdownToggle2.displayName = "DropdownToggle";
+  var DropdownToggle_default2 = DropdownToggle2;
+
+  // node_modules/react-bootstrap/esm/Dropdown.js
+  var import_jsx_runtime34 = __toESM(require_jsx_runtime());
+  "use client";
+  var Dropdown2 = /* @__PURE__ */ React48.forwardRef((pProps, ref2) => {
+    const {
+      bsPrefix,
+      drop: drop2 = "down",
+      show,
+      className,
+      align = "start",
+      onSelect,
+      onToggle,
+      focusFirstItemOnShow,
+      // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+      as: Component6 = "div",
+      navbar: _4,
+      autoClose = true,
+      ...props
+    } = useUncontrolled(pProps, {
+      show: "onToggle"
+    });
+    const isInputGroup = (0, import_react49.useContext)(InputGroupContext_default);
+    const prefix3 = useBootstrapPrefix(bsPrefix, "dropdown");
+    const isRTL = useIsRTL();
+    const isClosingPermitted = (source) => {
+      if (autoClose === false)
+        return source === "click";
+      if (autoClose === "inside")
+        return source !== "rootClose";
+      if (autoClose === "outside")
+        return source !== "select";
+      return true;
+    };
+    const handleToggle = useEventCallback2((nextShow, meta) => {
+      var _meta$originalEvent;
+      const isToggleButton = (_meta$originalEvent = meta.originalEvent) == null || (_meta$originalEvent = _meta$originalEvent.target) == null ? void 0 : _meta$originalEvent.classList.contains("dropdown-toggle");
+      if (isToggleButton && meta.source === "mousedown") {
+        return;
+      }
+      if (meta.originalEvent.currentTarget === document && (meta.source !== "keydown" || meta.originalEvent.key === "Escape"))
+        meta.source = "rootClose";
+      if (isClosingPermitted(meta.source))
+        onToggle == null || onToggle(nextShow, meta);
+    });
+    const alignEnd = align === "end";
+    const placement = getDropdownMenuPlacement(alignEnd, drop2, isRTL);
+    const contextValue = (0, import_react49.useMemo)(() => ({
+      align,
+      drop: drop2,
+      isRTL
+    }), [align, drop2, isRTL]);
+    const directionClasses = {
+      down: prefix3,
+      "down-centered": `${prefix3}-center`,
+      up: "dropup",
+      "up-centered": "dropup-center dropup",
+      end: "dropend",
+      start: "dropstart"
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(DropdownContext_default2.Provider, {
+      value: contextValue,
+      children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(Dropdown_default, {
+        placement,
+        show,
+        onSelect,
+        onToggle: handleToggle,
+        focusFirstItemOnShow,
+        itemSelector: `.${prefix3}-item:not(.disabled):not(:disabled)`,
+        children: isInputGroup ? props.children : /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(Component6, {
+          ...props,
+          ref: ref2,
+          className: (0, import_classnames20.default)(className, show && "show", directionClasses[drop2])
+        })
+      })
+    });
+  });
+  Dropdown2.displayName = "Dropdown";
+  var Dropdown_default2 = Object.assign(Dropdown2, {
+    Toggle: DropdownToggle_default2,
+    Menu: DropdownMenu_default2,
+    Item: DropdownItem_default2,
+    ItemText: DropdownItemText_default,
+    Divider: DropdownDivider_default,
+    Header: DropdownHeader_default
+  });
+
+  // node_modules/dom-helpers/esm/activeElement.js
+  function activeElement(doc) {
+    if (doc === void 0) {
+      doc = ownerDocument();
+    }
+    try {
+      var active = doc.activeElement;
+      if (!active || !active.nodeName)
+        return null;
+      return active;
+    } catch (e2) {
+      return doc.body;
+    }
+  }
+
+  // node_modules/@restart/ui/esm/Modal.js
+  var import_react55 = __toESM(require_react());
+  var React51 = __toESM(require_react());
+  var import_react_dom4 = __toESM(require_react_dom());
+
+  // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useUpdatedRef.js
+  var import_react50 = __toESM(require_react());
+  function useUpdatedRef(value) {
+    const valueRef = (0, import_react50.useRef)(value);
+    valueRef.current = value;
+    return valueRef;
+  }
+
+  // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useWillUnmount.js
+  var import_react51 = __toESM(require_react());
+  function useWillUnmount(fn2) {
+    const onUnmount = useUpdatedRef(fn2);
+    (0, import_react51.useEffect)(() => () => onUnmount.current(), []);
+  }
+
+  // node_modules/@restart/ui/esm/getScrollbarWidth.js
+  function getBodyScrollbarWidth(ownerDocument2 = document) {
+    const window2 = ownerDocument2.defaultView;
+    return Math.abs(window2.innerWidth - ownerDocument2.documentElement.clientWidth);
+  }
+
+  // node_modules/@restart/ui/esm/ModalManager.js
+  var OPEN_DATA_ATTRIBUTE = dataAttr("modal-open");
+  var ModalManager = class {
+    constructor({
+      ownerDocument: ownerDocument2,
+      handleContainerOverflow = true,
+      isRTL = false
+    } = {}) {
+      this.handleContainerOverflow = handleContainerOverflow;
+      this.isRTL = isRTL;
+      this.modals = [];
+      this.ownerDocument = ownerDocument2;
+    }
+    getScrollbarWidth() {
+      return getBodyScrollbarWidth(this.ownerDocument);
+    }
+    getElement() {
+      return (this.ownerDocument || document).body;
+    }
+    setModalAttributes(_modal) {
+    }
+    removeModalAttributes(_modal) {
+    }
+    setContainerStyle(containerState) {
+      const style5 = {
+        overflow: "hidden"
+      };
+      const paddingProp = this.isRTL ? "paddingLeft" : "paddingRight";
+      const container = this.getElement();
+      containerState.style = {
+        overflow: container.style.overflow,
+        [paddingProp]: container.style[paddingProp]
+      };
+      if (containerState.scrollBarWidth) {
+        style5[paddingProp] = `${parseInt(css_default(container, paddingProp) || "0", 10) + containerState.scrollBarWidth}px`;
+      }
+      container.setAttribute(OPEN_DATA_ATTRIBUTE, "");
+      css_default(container, style5);
+    }
+    reset() {
+      [...this.modals].forEach((m) => this.remove(m));
+    }
+    removeContainerStyle(containerState) {
+      const container = this.getElement();
+      container.removeAttribute(OPEN_DATA_ATTRIBUTE);
+      Object.assign(container.style, containerState.style);
+    }
+    add(modal) {
+      let modalIdx = this.modals.indexOf(modal);
+      if (modalIdx !== -1) {
+        return modalIdx;
+      }
+      modalIdx = this.modals.length;
+      this.modals.push(modal);
+      this.setModalAttributes(modal);
+      if (modalIdx !== 0) {
+        return modalIdx;
+      }
+      this.state = {
+        scrollBarWidth: this.getScrollbarWidth(),
+        style: {}
+      };
+      if (this.handleContainerOverflow) {
+        this.setContainerStyle(this.state);
+      }
+      return modalIdx;
+    }
+    remove(modal) {
+      const modalIdx = this.modals.indexOf(modal);
+      if (modalIdx === -1) {
+        return;
+      }
+      this.modals.splice(modalIdx, 1);
+      if (!this.modals.length && this.handleContainerOverflow) {
+        this.removeContainerStyle(this.state);
+      }
+      this.removeModalAttributes(modal);
+    }
+    isTopModal(modal) {
+      return !!this.modals.length && this.modals[this.modals.length - 1] === modal;
+    }
+  };
+  var ModalManager_default = ModalManager;
+
+  // node_modules/@restart/ui/esm/useWaitForDOMRef.js
+  var import_react52 = __toESM(require_react());
+  var resolveContainerRef = (ref2, document2) => {
+    if (!canUseDOM_default)
+      return null;
+    if (ref2 == null)
+      return (document2 || ownerDocument()).body;
+    if (typeof ref2 === "function")
+      ref2 = ref2();
+    if (ref2 && "current" in ref2)
+      ref2 = ref2.current;
+    if (ref2 && ("nodeType" in ref2 || ref2.getBoundingClientRect))
+      return ref2;
+    return null;
+  };
+  function useWaitForDOMRef(ref2, onResolved) {
+    const window2 = useWindow();
+    const [resolvedRef, setRef] = (0, import_react52.useState)(() => resolveContainerRef(ref2, window2 == null ? void 0 : window2.document));
+    if (!resolvedRef) {
+      const earlyRef = resolveContainerRef(ref2);
+      if (earlyRef)
+        setRef(earlyRef);
+    }
+    (0, import_react52.useEffect)(() => {
+      if (onResolved && resolvedRef) {
+        onResolved(resolvedRef);
+      }
+    }, [onResolved, resolvedRef]);
+    (0, import_react52.useEffect)(() => {
+      const nextRef = resolveContainerRef(ref2);
+      if (nextRef !== resolvedRef) {
+        setRef(nextRef);
+      }
+    }, [ref2, resolvedRef]);
+    return resolvedRef;
+  }
+
+  // node_modules/@restart/ui/esm/ImperativeTransition.js
+  var import_react54 = __toESM(require_react());
+
+  // node_modules/@restart/ui/esm/RTGTransition.js
+  var React49 = __toESM(require_react());
+
+  // node_modules/@restart/ui/esm/useRTGTransitionProps.js
+  var import_react53 = __toESM(require_react());
+  var _excluded10 = ["onEnter", "onEntering", "onEntered", "onExit", "onExiting", "onExited", "addEndListener", "children"];
+  function _objectWithoutPropertiesLoose11(r, e2) {
+    if (null == r)
+      return {};
+    var t = {};
+    for (var n in r)
+      if ({}.hasOwnProperty.call(r, n)) {
+        if (e2.indexOf(n) >= 0)
+          continue;
+        t[n] = r[n];
+      }
+    return t;
+  }
+  function useRTGTransitionProps(_ref) {
+    let {
+      onEnter,
+      onEntering,
+      onEntered,
+      onExit,
+      onExiting,
+      onExited,
+      addEndListener,
+      children: children2
+    } = _ref, props = _objectWithoutPropertiesLoose11(_ref, _excluded10);
+    const nodeRef = (0, import_react53.useRef)(null);
+    const mergedRef = useMergedRefs_default(nodeRef, getChildRef(children2));
+    const normalize = (callback) => (param) => {
+      if (callback && nodeRef.current) {
+        callback(nodeRef.current, param);
+      }
+    };
+    const handleEnter = (0, import_react53.useCallback)(normalize(onEnter), [onEnter]);
+    const handleEntering = (0, import_react53.useCallback)(normalize(onEntering), [onEntering]);
+    const handleEntered = (0, import_react53.useCallback)(normalize(onEntered), [onEntered]);
+    const handleExit = (0, import_react53.useCallback)(normalize(onExit), [onExit]);
+    const handleExiting = (0, import_react53.useCallback)(normalize(onExiting), [onExiting]);
+    const handleExited = (0, import_react53.useCallback)(normalize(onExited), [onExited]);
+    const handleAddEndListener = (0, import_react53.useCallback)(normalize(addEndListener), [addEndListener]);
+    return Object.assign({}, props, {
+      nodeRef
+    }, onEnter && {
+      onEnter: handleEnter
+    }, onEntering && {
+      onEntering: handleEntering
+    }, onEntered && {
+      onEntered: handleEntered
+    }, onExit && {
+      onExit: handleExit
+    }, onExiting && {
+      onExiting: handleExiting
+    }, onExited && {
+      onExited: handleExited
+    }, addEndListener && {
+      addEndListener: handleAddEndListener
+    }, {
+      children: typeof children2 === "function" ? (status, innerProps) => (
+        // TODO: Types for RTG missing innerProps, so need to cast.
+        children2(status, Object.assign({}, innerProps, {
+          ref: mergedRef
+        }))
+      ) : /* @__PURE__ */ (0, import_react53.cloneElement)(children2, {
+        ref: mergedRef
+      })
+    });
+  }
+
+  // node_modules/@restart/ui/esm/RTGTransition.js
+  var import_jsx_runtime35 = __toESM(require_jsx_runtime());
+  var _excluded11 = ["component"];
+  function _objectWithoutPropertiesLoose12(r, e2) {
+    if (null == r)
+      return {};
+    var t = {};
+    for (var n in r)
+      if ({}.hasOwnProperty.call(r, n)) {
+        if (e2.indexOf(n) >= 0)
+          continue;
+        t[n] = r[n];
+      }
+    return t;
+  }
+  var RTGTransition = /* @__PURE__ */ React49.forwardRef((_ref, ref2) => {
+    let {
+      component: Component6
+    } = _ref, props = _objectWithoutPropertiesLoose12(_ref, _excluded11);
+    const transitionProps = useRTGTransitionProps(props);
+    return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(Component6, Object.assign({
+      ref: ref2
+    }, transitionProps));
+  });
+  var RTGTransition_default = RTGTransition;
+
+  // node_modules/@restart/ui/esm/ImperativeTransition.js
+  var import_jsx_runtime36 = __toESM(require_jsx_runtime());
+  function useTransition({
+    in: inProp,
+    onTransition
+  }) {
+    const ref2 = (0, import_react54.useRef)(null);
+    const isInitialRef = (0, import_react54.useRef)(true);
+    const handleTransition = useEventCallback(onTransition);
+    useIsomorphicEffect_default(() => {
+      if (!ref2.current) {
+        return void 0;
+      }
+      let stale = false;
+      handleTransition({
+        in: inProp,
+        element: ref2.current,
+        initial: isInitialRef.current,
+        isStale: () => stale
+      });
+      return () => {
+        stale = true;
+      };
+    }, [inProp, handleTransition]);
+    useIsomorphicEffect_default(() => {
+      isInitialRef.current = false;
+      return () => {
+        isInitialRef.current = true;
+      };
+    }, []);
+    return ref2;
+  }
+  function ImperativeTransition({
+    children: children2,
+    in: inProp,
+    onExited,
+    onEntered,
+    transition: transition2
+  }) {
+    const [exited, setExited] = (0, import_react54.useState)(!inProp);
+    if (inProp && exited) {
+      setExited(false);
+    }
+    const ref2 = useTransition({
+      in: !!inProp,
+      onTransition: (options) => {
+        const onFinish = () => {
+          if (options.isStale())
+            return;
+          if (options.in) {
+            onEntered == null ? void 0 : onEntered(options.element, options.initial);
+          } else {
+            setExited(true);
+            onExited == null ? void 0 : onExited(options.element);
+          }
+        };
+        Promise.resolve(transition2(options)).then(onFinish, (error2) => {
+          if (!options.in)
+            setExited(true);
+          throw error2;
+        });
+      }
+    });
+    const combinedRef = useMergedRefs_default(ref2, children2.ref);
+    return exited && !inProp ? null : /* @__PURE__ */ (0, import_react54.cloneElement)(children2, {
+      ref: combinedRef
+    });
+  }
+  function renderTransition(component, runTransition, props) {
+    if (component) {
+      return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(RTGTransition_default, Object.assign({}, props, {
+        component
+      }));
+    }
+    if (runTransition) {
+      return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(ImperativeTransition, Object.assign({}, props, {
+        transition: runTransition
+      }));
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(NoopTransition_default, Object.assign({}, props));
+  }
+
+  // node_modules/@restart/ui/esm/Modal.js
+  var import_jsx_runtime37 = __toESM(require_jsx_runtime());
+  var _excluded12 = ["show", "role", "className", "style", "children", "backdrop", "keyboard", "onBackdropClick", "onEscapeKeyDown", "transition", "runTransition", "backdropTransition", "runBackdropTransition", "autoFocus", "enforceFocus", "restoreFocus", "restoreFocusOptions", "renderDialog", "renderBackdrop", "manager", "container", "onShow", "onHide", "onExit", "onExited", "onExiting", "onEnter", "onEntering", "onEntered"];
+  function _objectWithoutPropertiesLoose13(r, e2) {
+    if (null == r)
+      return {};
+    var t = {};
+    for (var n in r)
+      if ({}.hasOwnProperty.call(r, n)) {
+        if (e2.indexOf(n) >= 0)
+          continue;
+        t[n] = r[n];
+      }
+    return t;
+  }
+  var manager;
+  function getManager(window2) {
+    if (!manager)
+      manager = new ModalManager_default({
+        ownerDocument: window2 == null ? void 0 : window2.document
+      });
+    return manager;
+  }
+  function useModalManager(provided) {
+    const window2 = useWindow();
+    const modalManager = provided || getManager(window2);
+    const modal = (0, import_react55.useRef)({
+      dialog: null,
+      backdrop: null
+    });
+    return Object.assign(modal.current, {
+      add: () => modalManager.add(modal.current),
+      remove: () => modalManager.remove(modal.current),
+      isTopModal: () => modalManager.isTopModal(modal.current),
+      setDialogRef: (0, import_react55.useCallback)((ref2) => {
+        modal.current.dialog = ref2;
+      }, []),
+      setBackdropRef: (0, import_react55.useCallback)((ref2) => {
+        modal.current.backdrop = ref2;
+      }, [])
+    });
+  }
+  var Modal = /* @__PURE__ */ (0, import_react55.forwardRef)((_ref, ref2) => {
+    let {
+      show = false,
+      role = "dialog",
+      className,
+      style: style5,
+      children: children2,
+      backdrop = true,
+      keyboard = true,
+      onBackdropClick,
+      onEscapeKeyDown,
+      transition: transition2,
+      runTransition,
+      backdropTransition,
+      runBackdropTransition,
+      autoFocus = true,
+      enforceFocus = true,
+      restoreFocus = true,
+      restoreFocusOptions,
+      renderDialog,
+      renderBackdrop = (props) => /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("div", Object.assign({}, props)),
+      manager: providedManager,
+      container: containerRef,
+      onShow,
+      onHide = () => {
+      },
+      onExit,
+      onExited,
+      onExiting,
+      onEnter,
+      onEntering,
+      onEntered
+    } = _ref, rest = _objectWithoutPropertiesLoose13(_ref, _excluded12);
+    const ownerWindow2 = useWindow();
+    const container = useWaitForDOMRef(containerRef);
+    const modal = useModalManager(providedManager);
+    const isMounted = useMounted();
+    const prevShow = usePrevious(show);
+    const [exited, setExited] = (0, import_react55.useState)(!show);
+    const lastFocusRef = (0, import_react55.useRef)(null);
+    (0, import_react55.useImperativeHandle)(ref2, () => modal, [modal]);
+    if (canUseDOM_default && !prevShow && show) {
+      lastFocusRef.current = activeElement(ownerWindow2 == null ? void 0 : ownerWindow2.document);
+    }
+    if (show && exited) {
+      setExited(false);
+    }
+    const handleShow = useEventCallback(() => {
+      modal.add();
+      removeKeydownListenerRef.current = listen_default(document, "keydown", handleDocumentKeyDown);
+      removeFocusListenerRef.current = listen_default(
+        document,
+        "focus",
+        // the timeout is necessary b/c this will run before the new modal is mounted
+        // and so steals focus from it
+        () => setTimeout(handleEnforceFocus),
+        true
+      );
+      if (onShow) {
+        onShow();
+      }
+      if (autoFocus) {
+        var _modal$dialog$ownerDo, _modal$dialog;
+        const currentActiveElement = activeElement((_modal$dialog$ownerDo = (_modal$dialog = modal.dialog) == null ? void 0 : _modal$dialog.ownerDocument) != null ? _modal$dialog$ownerDo : ownerWindow2 == null ? void 0 : ownerWindow2.document);
+        if (modal.dialog && currentActiveElement && !contains2(modal.dialog, currentActiveElement)) {
+          lastFocusRef.current = currentActiveElement;
+          modal.dialog.focus();
+        }
+      }
+    });
+    const handleHide = useEventCallback(() => {
+      modal.remove();
+      removeKeydownListenerRef.current == null ? void 0 : removeKeydownListenerRef.current();
+      removeFocusListenerRef.current == null ? void 0 : removeFocusListenerRef.current();
+      if (restoreFocus) {
+        var _lastFocusRef$current;
+        (_lastFocusRef$current = lastFocusRef.current) == null ? void 0 : _lastFocusRef$current.focus == null ? void 0 : _lastFocusRef$current.focus(restoreFocusOptions);
+        lastFocusRef.current = null;
+      }
+    });
+    (0, import_react55.useEffect)(() => {
+      if (!show || !container)
+        return;
+      handleShow();
+    }, [
+      show,
+      container,
+      /* should never change: */
+      handleShow
+    ]);
+    (0, import_react55.useEffect)(() => {
+      if (!exited)
+        return;
+      handleHide();
+    }, [exited, handleHide]);
+    useWillUnmount(() => {
+      handleHide();
+    });
+    const handleEnforceFocus = useEventCallback(() => {
+      if (!enforceFocus || !isMounted() || !modal.isTopModal()) {
+        return;
+      }
+      const currentActiveElement = activeElement(ownerWindow2 == null ? void 0 : ownerWindow2.document);
+      if (modal.dialog && currentActiveElement && !contains2(modal.dialog, currentActiveElement)) {
+        modal.dialog.focus();
+      }
+    });
+    const handleBackdropClick = useEventCallback((e2) => {
+      if (e2.target !== e2.currentTarget) {
+        return;
+      }
+      onBackdropClick == null ? void 0 : onBackdropClick(e2);
+      if (backdrop === true) {
+        onHide();
+      }
+    });
+    const handleDocumentKeyDown = useEventCallback((e2) => {
+      if (keyboard && isEscKey(e2) && modal.isTopModal()) {
+        onEscapeKeyDown == null ? void 0 : onEscapeKeyDown(e2);
+        if (!e2.defaultPrevented) {
+          onHide();
+        }
+      }
+    });
+    const removeFocusListenerRef = (0, import_react55.useRef)();
+    const removeKeydownListenerRef = (0, import_react55.useRef)();
+    const handleHidden = (...args) => {
+      setExited(true);
+      onExited == null ? void 0 : onExited(...args);
+    };
+    if (!container) {
+      return null;
+    }
+    const dialogProps = Object.assign({
+      role,
+      ref: modal.setDialogRef,
+      // apparently only works on the dialog role element
+      "aria-modal": role === "dialog" ? true : void 0
+    }, rest, {
+      style: style5,
+      className,
+      tabIndex: -1
+    });
+    let dialog = renderDialog ? renderDialog(dialogProps) : /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("div", Object.assign({}, dialogProps, {
+      children: /* @__PURE__ */ React51.cloneElement(children2, {
+        role: "document"
+      })
+    }));
+    dialog = renderTransition(transition2, runTransition, {
+      unmountOnExit: true,
+      mountOnEnter: true,
+      appear: true,
+      in: !!show,
+      onExit,
+      onExiting,
+      onExited: handleHidden,
+      onEnter,
+      onEntering,
+      onEntered,
+      children: dialog
+    });
+    let backdropElement = null;
+    if (backdrop) {
+      backdropElement = renderBackdrop({
+        ref: modal.setBackdropRef,
+        onClick: handleBackdropClick
+      });
+      backdropElement = renderTransition(backdropTransition, runBackdropTransition, {
+        in: !!show,
+        appear: true,
+        mountOnEnter: true,
+        unmountOnExit: true,
+        children: backdropElement
+      });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_jsx_runtime37.Fragment, {
+      children: /* @__PURE__ */ import_react_dom4.default.createPortal(/* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(import_jsx_runtime37.Fragment, {
+        children: [backdropElement, dialog]
+      }), container)
+    });
+  });
+  Modal.displayName = "Modal";
+  var Modal_default = Object.assign(Modal, {
+    Manager: ModalManager_default
+  });
+
+  // node_modules/dom-helpers/esm/hasClass.js
+  function hasClass(element, className) {
+    if (element.classList)
+      return !!className && element.classList.contains(className);
+    return (" " + (element.className.baseVal || element.className) + " ").indexOf(" " + className + " ") !== -1;
+  }
+
+  // node_modules/dom-helpers/esm/addClass.js
+  function addClass(element, className) {
+    if (element.classList)
+      element.classList.add(className);
+    else if (!hasClass(element, className))
+      if (typeof element.className === "string")
+        element.className = element.className + " " + className;
+      else
+        element.setAttribute("class", (element.className && element.className.baseVal || "") + " " + className);
+  }
+
+  // node_modules/dom-helpers/esm/removeClass.js
+  function replaceClassName(origClass, classToRemove) {
+    return origClass.replace(new RegExp("(^|\\s)" + classToRemove + "(?:\\s|$)", "g"), "$1").replace(/\s+/g, " ").replace(/^\s*|\s*$/g, "");
+  }
+  function removeClass(element, className) {
+    if (element.classList) {
+      element.classList.remove(className);
+    } else if (typeof element.className === "string") {
+      element.className = replaceClassName(element.className, className);
+    } else {
+      element.setAttribute("class", replaceClassName(element.className && element.className.baseVal || "", className));
+    }
+  }
+
+  // node_modules/react-bootstrap/esm/BootstrapModalManager.js
+  var Selector = {
+    FIXED_CONTENT: ".fixed-top, .fixed-bottom, .is-fixed, .sticky-top",
+    STICKY_CONTENT: ".sticky-top",
+    NAVBAR_TOGGLER: ".navbar-toggler"
+  };
+  var BootstrapModalManager = class extends ModalManager_default {
+    adjustAndStore(prop, element, adjust) {
+      const actual = element.style[prop];
+      element.dataset[prop] = actual;
+      css_default(element, {
+        [prop]: `${parseFloat(css_default(element, prop)) + adjust}px`
+      });
+    }
+    restore(prop, element) {
+      const value = element.dataset[prop];
+      if (value !== void 0) {
+        delete element.dataset[prop];
+        css_default(element, {
+          [prop]: value
+        });
+      }
+    }
+    setContainerStyle(containerState) {
+      super.setContainerStyle(containerState);
+      const container = this.getElement();
+      addClass(container, "modal-open");
+      if (!containerState.scrollBarWidth)
+        return;
+      const paddingProp = this.isRTL ? "paddingLeft" : "paddingRight";
+      const marginProp = this.isRTL ? "marginLeft" : "marginRight";
+      qsa(container, Selector.FIXED_CONTENT).forEach((el) => this.adjustAndStore(paddingProp, el, containerState.scrollBarWidth));
+      qsa(container, Selector.STICKY_CONTENT).forEach((el) => this.adjustAndStore(marginProp, el, -containerState.scrollBarWidth));
+      qsa(container, Selector.NAVBAR_TOGGLER).forEach((el) => this.adjustAndStore(marginProp, el, containerState.scrollBarWidth));
+    }
+    removeContainerStyle(containerState) {
+      super.removeContainerStyle(containerState);
+      const container = this.getElement();
+      removeClass(container, "modal-open");
+      const paddingProp = this.isRTL ? "paddingLeft" : "paddingRight";
+      const marginProp = this.isRTL ? "marginLeft" : "marginRight";
+      qsa(container, Selector.FIXED_CONTENT).forEach((el) => this.restore(paddingProp, el));
+      qsa(container, Selector.STICKY_CONTENT).forEach((el) => this.restore(marginProp, el));
+      qsa(container, Selector.NAVBAR_TOGGLER).forEach((el) => this.restore(marginProp, el));
+    }
+  };
+  var sharedManager;
+  function getSharedManager(options) {
+    if (!sharedManager)
+      sharedManager = new BootstrapModalManager(options);
+    return sharedManager;
+  }
+  var BootstrapModalManager_default = BootstrapModalManager;
+
+  // node_modules/react-bootstrap/esm/ModalContext.js
+  var React52 = __toESM(require_react());
+  "use client";
+  var ModalContext = /* @__PURE__ */ React52.createContext({
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    onHide() {
+    }
+  });
+  var ModalContext_default = ModalContext;
+
+  // node_modules/react-bootstrap/esm/AbstractModalHeader.js
+  var React53 = __toESM(require_react());
+  var import_react56 = __toESM(require_react());
+  var import_jsx_runtime38 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime39 = __toESM(require_jsx_runtime());
+  "use client";
+  var AbstractModalHeader = /* @__PURE__ */ React53.forwardRef(({
+    closeLabel = "Close",
+    closeVariant,
+    closeButton = false,
+    onHide,
+    children: children2,
+    ...props
+  }, ref2) => {
+    const context4 = (0, import_react56.useContext)(ModalContext_default);
+    const handleClick = useEventCallback2(() => {
+      context4 == null || context4.onHide();
+      onHide == null || onHide();
+    });
+    return /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("div", {
+      ref: ref2,
+      ...props,
+      children: [children2, closeButton && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(CloseButton_default, {
+        "aria-label": closeLabel,
+        variant: closeVariant,
+        onClick: handleClick
+      })]
+    });
+  });
+  var AbstractModalHeader_default = AbstractModalHeader;
+
+  // node_modules/react-bootstrap/esm/Navbar.js
+  var import_classnames29 = __toESM(require_classnames());
+  var React64 = __toESM(require_react());
+  var import_react63 = __toESM(require_react());
+
+  // node_modules/react-bootstrap/esm/NavbarBrand.js
+  var import_classnames21 = __toESM(require_classnames());
+  var React54 = __toESM(require_react());
+  var import_jsx_runtime40 = __toESM(require_jsx_runtime());
+  "use client";
+  var NavbarBrand = /* @__PURE__ */ React54.forwardRef(({
+    bsPrefix,
+    className,
+    as,
+    ...props
+  }, ref2) => {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "navbar-brand");
+    const Component6 = as || (props.href ? "a" : "span");
+    return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Component6, {
+      ...props,
+      ref: ref2,
+      className: (0, import_classnames21.default)(className, bsPrefix)
+    });
+  });
+  NavbarBrand.displayName = "NavbarBrand";
+  var NavbarBrand_default = NavbarBrand;
+
+  // node_modules/react-bootstrap/esm/NavbarCollapse.js
+  var React55 = __toESM(require_react());
+  var import_react57 = __toESM(require_react());
+  var import_jsx_runtime41 = __toESM(require_jsx_runtime());
+  "use client";
+  var NavbarCollapse = /* @__PURE__ */ React55.forwardRef(({
+    children: children2,
+    bsPrefix,
+    ...props
+  }, ref2) => {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "navbar-collapse");
+    const context4 = (0, import_react57.useContext)(NavbarContext_default);
+    return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Collapse_default, {
+      in: !!(context4 && context4.expanded),
+      ...props,
+      children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", {
+        ref: ref2,
+        className: bsPrefix,
+        children: children2
+      })
+    });
+  });
+  NavbarCollapse.displayName = "NavbarCollapse";
+  var NavbarCollapse_default = NavbarCollapse;
+
+  // node_modules/react-bootstrap/esm/NavbarToggle.js
+  var import_classnames22 = __toESM(require_classnames());
+  var React56 = __toESM(require_react());
+  var import_react58 = __toESM(require_react());
+  var import_jsx_runtime42 = __toESM(require_jsx_runtime());
+  "use client";
+  var NavbarToggle = /* @__PURE__ */ React56.forwardRef(({
+    bsPrefix,
+    className,
+    children: children2,
+    label = "Toggle navigation",
+    // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+    as: Component6 = "button",
+    onClick,
+    ...props
+  }, ref2) => {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "navbar-toggler");
+    const {
+      onToggle,
+      expanded
+    } = (0, import_react58.useContext)(NavbarContext_default) || {};
+    const handleClick = useEventCallback2((e2) => {
+      if (onClick)
+        onClick(e2);
+      if (onToggle)
+        onToggle();
+    });
+    if (Component6 === "button") {
+      props.type = "button";
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(Component6, {
+      ...props,
+      ref: ref2,
+      onClick: handleClick,
+      "aria-label": label,
+      className: (0, import_classnames22.default)(className, bsPrefix, !expanded && "collapsed"),
+      children: children2 || /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("span", {
+        className: `${bsPrefix}-icon`
+      })
+    });
+  });
+  NavbarToggle.displayName = "NavbarToggle";
+  var NavbarToggle_default = NavbarToggle;
+
+  // node_modules/react-bootstrap/esm/NavbarOffcanvas.js
+  var React62 = __toESM(require_react());
+  var import_react62 = __toESM(require_react());
+
+  // node_modules/react-bootstrap/esm/Offcanvas.js
+  var import_classnames27 = __toESM(require_classnames());
+
+  // node_modules/@restart/hooks/esm/useMediaQuery.js
+  var import_react59 = __toESM(require_react());
+  var matchersByWindow = /* @__PURE__ */ new WeakMap();
+  var getMatcher = (query, targetWindow) => {
+    if (!query || !targetWindow)
+      return void 0;
+    const matchers = matchersByWindow.get(targetWindow) || /* @__PURE__ */ new Map();
+    matchersByWindow.set(targetWindow, matchers);
+    let mql = matchers.get(query);
+    if (!mql) {
+      mql = targetWindow.matchMedia(query);
+      mql.refCount = 0;
+      matchers.set(mql.media, mql);
+    }
+    return mql;
+  };
+  function useMediaQuery(query, targetWindow = typeof window === "undefined" ? void 0 : window) {
+    const mql = getMatcher(query, targetWindow);
+    const [matches, setMatches] = (0, import_react59.useState)(() => mql ? mql.matches : false);
+    useIsomorphicEffect_default2(() => {
+      let mql2 = getMatcher(query, targetWindow);
+      if (!mql2) {
+        return setMatches(false);
+      }
+      let matchers = matchersByWindow.get(targetWindow);
+      const handleChange = () => {
+        setMatches(mql2.matches);
+      };
+      mql2.refCount++;
+      mql2.addListener(handleChange);
+      handleChange();
+      return () => {
+        mql2.removeListener(handleChange);
+        mql2.refCount--;
+        if (mql2.refCount <= 0) {
+          matchers == null ? void 0 : matchers.delete(mql2.media);
+        }
+        mql2 = void 0;
+      };
+    }, [query]);
+    return matches;
+  }
+
+  // node_modules/@restart/hooks/esm/useBreakpoint.js
+  var import_react60 = __toESM(require_react());
+  function createBreakpointHook(breakpointValues) {
+    const names = Object.keys(breakpointValues);
+    function and(query, next) {
+      if (query === next) {
+        return next;
+      }
+      return query ? `${query} and ${next}` : next;
+    }
+    function getNext(breakpoint) {
+      return names[Math.min(names.indexOf(breakpoint) + 1, names.length - 1)];
+    }
+    function getMaxQuery(breakpoint) {
+      const next = getNext(breakpoint);
+      let value = breakpointValues[next];
+      if (typeof value === "number")
+        value = `${value - 0.2}px`;
+      else
+        value = `calc(${value} - 0.2px)`;
+      return `(max-width: ${value})`;
+    }
+    function getMinQuery(breakpoint) {
+      let value = breakpointValues[breakpoint];
+      if (typeof value === "number") {
+        value = `${value}px`;
+      }
+      return `(min-width: ${value})`;
+    }
+    function useBreakpoint2(breakpointOrMap, direction, window2) {
+      let breakpointMap;
+      if (typeof breakpointOrMap === "object") {
+        breakpointMap = breakpointOrMap;
+        window2 = direction;
+        direction = true;
+      } else {
+        direction = direction || true;
+        breakpointMap = {
+          [breakpointOrMap]: direction
+        };
+      }
+      let query = (0, import_react60.useMemo)(() => Object.entries(breakpointMap).reduce((query2, [key, direction2]) => {
+        if (direction2 === "up" || direction2 === true) {
+          query2 = and(query2, getMinQuery(key));
+        }
+        if (direction2 === "down" || direction2 === true) {
+          query2 = and(query2, getMaxQuery(key));
+        }
+        return query2;
+      }, ""), [JSON.stringify(breakpointMap)]);
+      return useMediaQuery(query, window2);
+    }
+    return useBreakpoint2;
+  }
+  var useBreakpoint = createBreakpointHook({
+    xs: 0,
+    sm: 576,
+    md: 768,
+    lg: 992,
+    xl: 1200,
+    xxl: 1400
+  });
+  var useBreakpoint_default = useBreakpoint;
+
+  // node_modules/react-bootstrap/esm/Offcanvas.js
+  var React61 = __toESM(require_react());
+  var import_react61 = __toESM(require_react());
+
+  // node_modules/react-bootstrap/esm/OffcanvasBody.js
+  var React57 = __toESM(require_react());
+  var import_classnames23 = __toESM(require_classnames());
+  var import_jsx_runtime43 = __toESM(require_jsx_runtime());
+  "use client";
+  var OffcanvasBody = /* @__PURE__ */ React57.forwardRef(({
+    className,
+    bsPrefix,
+    as: Component6 = "div",
+    ...props
+  }, ref2) => {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "offcanvas-body");
+    return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(Component6, {
+      ref: ref2,
+      className: (0, import_classnames23.default)(className, bsPrefix),
+      ...props
+    });
+  });
+  OffcanvasBody.displayName = "OffcanvasBody";
+  var OffcanvasBody_default = OffcanvasBody;
+
+  // node_modules/react-bootstrap/esm/OffcanvasToggling.js
+  var import_classnames24 = __toESM(require_classnames());
+  var React58 = __toESM(require_react());
+  var import_jsx_runtime44 = __toESM(require_jsx_runtime());
+  "use client";
+  var transitionStyles = {
+    [ENTERING]: "show",
+    [ENTERED]: "show"
+  };
+  var OffcanvasToggling = /* @__PURE__ */ React58.forwardRef(({
+    bsPrefix,
+    className,
+    children: children2,
+    in: inProp = false,
+    mountOnEnter = false,
+    unmountOnExit = false,
+    appear = false,
+    ...props
+  }, ref2) => {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "offcanvas");
+    return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(TransitionWrapper_default, {
+      ref: ref2,
+      addEndListener: transitionEndListener,
+      in: inProp,
+      mountOnEnter,
+      unmountOnExit,
+      appear,
+      ...props,
+      childRef: getChildRef(children2),
+      children: (status, innerProps) => /* @__PURE__ */ React58.cloneElement(children2, {
+        ...innerProps,
+        className: (0, import_classnames24.default)(className, children2.props.className, (status === ENTERING || status === EXITING) && `${bsPrefix}-toggling`, transitionStyles[status])
+      })
+    });
+  });
+  OffcanvasToggling.displayName = "OffcanvasToggling";
+  var OffcanvasToggling_default = OffcanvasToggling;
+
+  // node_modules/react-bootstrap/esm/OffcanvasHeader.js
+  var import_classnames25 = __toESM(require_classnames());
+  var React59 = __toESM(require_react());
+  var import_jsx_runtime45 = __toESM(require_jsx_runtime());
+  "use client";
+  var OffcanvasHeader = /* @__PURE__ */ React59.forwardRef(({
+    bsPrefix,
+    className,
+    closeLabel = "Close",
+    closeButton = false,
+    ...props
+  }, ref2) => {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "offcanvas-header");
+    return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(AbstractModalHeader_default, {
+      ref: ref2,
+      ...props,
+      className: (0, import_classnames25.default)(className, bsPrefix),
+      closeLabel,
+      closeButton
+    });
+  });
+  OffcanvasHeader.displayName = "OffcanvasHeader";
+  var OffcanvasHeader_default = OffcanvasHeader;
+
+  // node_modules/react-bootstrap/esm/OffcanvasTitle.js
+  var React60 = __toESM(require_react());
+  var import_classnames26 = __toESM(require_classnames());
+  var import_jsx_runtime46 = __toESM(require_jsx_runtime());
+  "use client";
+  var DivStyledAsH5 = divWithClassName_default("h5");
+  var OffcanvasTitle = /* @__PURE__ */ React60.forwardRef(({
+    className,
+    bsPrefix,
+    as: Component6 = DivStyledAsH5,
+    ...props
+  }, ref2) => {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "offcanvas-title");
+    return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(Component6, {
+      ref: ref2,
+      className: (0, import_classnames26.default)(className, bsPrefix),
+      ...props
+    });
+  });
+  OffcanvasTitle.displayName = "OffcanvasTitle";
+  var OffcanvasTitle_default = OffcanvasTitle;
+
+  // node_modules/react-bootstrap/esm/Offcanvas.js
+  var import_jsx_runtime47 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime48 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime49 = __toESM(require_jsx_runtime());
+  "use client";
+  function DialogTransition(props) {
+    return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(OffcanvasToggling_default, {
+      ...props
+    });
+  }
+  function BackdropTransition(props) {
+    return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(Fade_default, {
+      ...props
+    });
+  }
+  var Offcanvas = /* @__PURE__ */ React61.forwardRef(({
+    bsPrefix,
+    className,
+    children: children2,
+    "aria-labelledby": ariaLabelledby,
+    placement = "start",
+    responsive,
+    /* BaseModal props */
+    show = false,
+    backdrop = true,
+    keyboard = true,
+    scroll: scroll2 = false,
+    onEscapeKeyDown,
+    onShow,
+    onHide,
+    container,
+    autoFocus = true,
+    enforceFocus = true,
+    restoreFocus = true,
+    restoreFocusOptions,
+    onEntered,
+    onExit,
+    onExiting,
+    onEnter,
+    onEntering,
+    onExited,
+    backdropClassName,
+    manager: propsManager,
+    renderStaticNode = false,
+    ...props
+  }, ref2) => {
+    const modalManager = (0, import_react61.useRef)();
+    bsPrefix = useBootstrapPrefix(bsPrefix, "offcanvas");
+    const [showOffcanvas, setShowOffcanvas] = (0, import_react61.useState)(false);
+    const handleHide = useEventCallback2(onHide);
+    const hideResponsiveOffcanvas = useBreakpoint_default(responsive || "xs", "up");
+    (0, import_react61.useEffect)(() => {
+      setShowOffcanvas(responsive ? show && !hideResponsiveOffcanvas : show);
+    }, [show, responsive, hideResponsiveOffcanvas]);
+    const modalContext = (0, import_react61.useMemo)(() => ({
+      onHide: handleHide
+    }), [handleHide]);
+    function getModalManager() {
+      if (propsManager)
+        return propsManager;
+      if (scroll2) {
+        if (!modalManager.current)
+          modalManager.current = new BootstrapModalManager_default({
+            handleContainerOverflow: false
+          });
+        return modalManager.current;
+      }
+      return getSharedManager();
+    }
+    const handleEnter = (node, ...args) => {
+      if (node)
+        node.style.visibility = "visible";
+      onEnter == null || onEnter(node, ...args);
+    };
+    const handleExited = (node, ...args) => {
+      if (node)
+        node.style.visibility = "";
+      onExited == null || onExited(...args);
+    };
+    const renderBackdrop = (0, import_react61.useCallback)((backdropProps) => /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("div", {
+      ...backdropProps,
+      className: (0, import_classnames27.default)(`${bsPrefix}-backdrop`, backdropClassName)
+    }), [backdropClassName, bsPrefix]);
+    const renderDialog = (dialogProps) => /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("div", {
+      ...dialogProps,
+      ...props,
+      className: (0, import_classnames27.default)(className, responsive ? `${bsPrefix}-${responsive}` : bsPrefix, `${bsPrefix}-${placement}`),
+      "aria-labelledby": ariaLabelledby,
+      children: children2
+    });
+    return /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)(import_jsx_runtime48.Fragment, {
+      children: [!showOffcanvas && (responsive || renderStaticNode) && renderDialog({}), /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(ModalContext_default.Provider, {
+        value: modalContext,
+        children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(Modal_default, {
+          show: showOffcanvas,
+          ref: ref2,
+          backdrop,
+          container,
+          keyboard,
+          autoFocus,
+          enforceFocus: enforceFocus && !scroll2,
+          restoreFocus,
+          restoreFocusOptions,
+          onEscapeKeyDown,
+          onShow,
+          onHide: handleHide,
+          onEnter: handleEnter,
+          onEntering,
+          onEntered,
+          onExit,
+          onExiting,
+          onExited: handleExited,
+          manager: getModalManager(),
+          transition: DialogTransition,
+          backdropTransition: BackdropTransition,
+          renderBackdrop,
+          renderDialog
+        })
+      })]
+    });
+  });
+  Offcanvas.displayName = "Offcanvas";
+  var Offcanvas_default = Object.assign(Offcanvas, {
+    Body: OffcanvasBody_default,
+    Header: OffcanvasHeader_default,
+    Title: OffcanvasTitle_default
+  });
+
+  // node_modules/react-bootstrap/esm/NavbarOffcanvas.js
+  var import_jsx_runtime50 = __toESM(require_jsx_runtime());
+  "use client";
+  var NavbarOffcanvas = /* @__PURE__ */ React62.forwardRef(({
+    onHide,
+    ...props
+  }, ref2) => {
+    const context4 = (0, import_react62.useContext)(NavbarContext_default);
+    const handleHide = useEventCallback2(() => {
+      context4 == null || context4.onToggle == null || context4.onToggle();
+      onHide == null || onHide();
+    });
+    return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(Offcanvas_default, {
+      ref: ref2,
+      show: !!(context4 != null && context4.expanded),
+      ...props,
+      renderStaticNode: true,
+      onHide: handleHide
+    });
+  });
+  NavbarOffcanvas.displayName = "NavbarOffcanvas";
+  var NavbarOffcanvas_default = NavbarOffcanvas;
+
+  // node_modules/react-bootstrap/esm/NavbarText.js
+  var React63 = __toESM(require_react());
+  var import_classnames28 = __toESM(require_classnames());
+  var import_jsx_runtime51 = __toESM(require_jsx_runtime());
+  "use client";
+  var NavbarText = /* @__PURE__ */ React63.forwardRef(({
+    className,
+    bsPrefix,
+    as: Component6 = "span",
+    ...props
+  }, ref2) => {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "navbar-text");
+    return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(Component6, {
+      ref: ref2,
+      className: (0, import_classnames28.default)(className, bsPrefix),
+      ...props
+    });
+  });
+  NavbarText.displayName = "NavbarText";
+  var NavbarText_default = NavbarText;
+
+  // node_modules/react-bootstrap/esm/Navbar.js
+  var import_jsx_runtime52 = __toESM(require_jsx_runtime());
+  "use client";
+  var Navbar = /* @__PURE__ */ React64.forwardRef((props, ref2) => {
+    const {
+      bsPrefix: initialBsPrefix,
+      expand: expand4 = true,
+      variant = "light",
+      bg,
+      fixed,
+      sticky,
+      className,
+      // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+      as: Component6 = "nav",
+      expanded,
+      onToggle,
+      onSelect,
+      collapseOnSelect = false,
+      ...controlledProps
+    } = useUncontrolled(props, {
+      expanded: "onToggle"
+    });
+    const bsPrefix = useBootstrapPrefix(initialBsPrefix, "navbar");
+    const handleCollapse = (0, import_react63.useCallback)((...args) => {
+      onSelect == null || onSelect(...args);
+      if (collapseOnSelect && expanded) {
+        onToggle == null || onToggle(false);
+      }
+    }, [onSelect, collapseOnSelect, expanded, onToggle]);
+    if (controlledProps.role === void 0 && Component6 !== "nav") {
+      controlledProps.role = "navigation";
+    }
+    let expandClass = `${bsPrefix}-expand`;
+    if (typeof expand4 === "string")
+      expandClass = `${expandClass}-${expand4}`;
+    const navbarContext = (0, import_react63.useMemo)(() => ({
+      onToggle: () => onToggle == null ? void 0 : onToggle(!expanded),
+      bsPrefix,
+      expanded: !!expanded,
+      expand: expand4
+    }), [bsPrefix, expanded, expand4, onToggle]);
+    return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(NavbarContext_default.Provider, {
+      value: navbarContext,
+      children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(SelectableContext_default.Provider, {
+        value: handleCollapse,
+        children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(Component6, {
+          ref: ref2,
+          ...controlledProps,
+          className: (0, import_classnames29.default)(className, bsPrefix, expand4 && expandClass, variant && `${bsPrefix}-${variant}`, bg && `bg-${bg}`, sticky && `sticky-${sticky}`, fixed && `fixed-${fixed}`)
+        })
+      })
+    });
+  });
+  Navbar.displayName = "Navbar";
+  var Navbar_default = Object.assign(Navbar, {
+    Brand: NavbarBrand_default,
+    Collapse: NavbarCollapse_default,
+    Offcanvas: NavbarOffcanvas_default,
+    Text: NavbarText_default,
+    Toggle: NavbarToggle_default
+  });
+
+  // node_modules/react-bootstrap/esm/NavDropdown.js
+  var import_classnames30 = __toESM(require_classnames());
+  var React65 = __toESM(require_react());
+  var import_jsx_runtime53 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime54 = __toESM(require_jsx_runtime());
+  "use client";
+  var NavDropdown = /* @__PURE__ */ React65.forwardRef(({
+    id: id2,
+    title,
+    children: children2,
+    bsPrefix,
+    className,
+    rootCloseEvent,
+    menuRole,
+    disabled,
+    active,
+    renderMenuOnMount,
+    menuVariant,
+    ...props
+  }, ref2) => {
+    const navItemPrefix = useBootstrapPrefix(void 0, "nav-item");
+    return /* @__PURE__ */ (0, import_jsx_runtime54.jsxs)(Dropdown_default2, {
+      ref: ref2,
+      ...props,
+      className: (0, import_classnames30.default)(className, navItemPrefix),
+      children: [/* @__PURE__ */ (0, import_jsx_runtime53.jsx)(Dropdown_default2.Toggle, {
+        id: id2,
+        eventKey: null,
+        active,
+        disabled,
+        childBsPrefix: bsPrefix,
+        as: NavLink_default,
+        children: title
+      }), /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(Dropdown_default2.Menu, {
+        role: menuRole,
+        renderOnMount: renderMenuOnMount,
+        rootCloseEvent,
+        variant: menuVariant,
+        children: children2
+      })]
+    });
+  });
+  NavDropdown.displayName = "NavDropdown";
+  var NavDropdown_default = Object.assign(NavDropdown, {
+    Item: Dropdown_default2.Item,
+    ItemText: Dropdown_default2.ItemText,
+    Divider: Dropdown_default2.Divider,
+    Header: Dropdown_default2.Header
+  });
+
+  // node_modules/react-bootstrap/esm/Table.js
+  var import_classnames31 = __toESM(require_classnames());
+  var React66 = __toESM(require_react());
+  var import_jsx_runtime55 = __toESM(require_jsx_runtime());
+  "use client";
+  var Table = /* @__PURE__ */ React66.forwardRef(({
+    bsPrefix,
+    className,
+    striped,
+    bordered,
+    borderless,
+    hover,
+    size,
+    variant,
+    responsive,
+    ...props
+  }, ref2) => {
+    const decoratedBsPrefix = useBootstrapPrefix(bsPrefix, "table");
+    const classes = (0, import_classnames31.default)(className, decoratedBsPrefix, variant && `${decoratedBsPrefix}-${variant}`, size && `${decoratedBsPrefix}-${size}`, striped && `${decoratedBsPrefix}-${typeof striped === "string" ? `striped-${striped}` : "striped"}`, bordered && `${decoratedBsPrefix}-bordered`, borderless && `${decoratedBsPrefix}-borderless`, hover && `${decoratedBsPrefix}-hover`);
+    const table = /* @__PURE__ */ (0, import_jsx_runtime55.jsx)("table", {
+      ...props,
+      className: classes,
+      ref: ref2
+    });
+    if (responsive) {
+      let responsiveClass = `${decoratedBsPrefix}-responsive`;
+      if (typeof responsive === "string") {
+        responsiveClass = `${responsiveClass}-${responsive}`;
+      }
+      return /* @__PURE__ */ (0, import_jsx_runtime55.jsx)("div", {
+        className: responsiveClass,
+        children: table
+      });
+    }
+    return table;
+  });
+  var Table_default = Table;
+
+  // node_modules/react-bootstrap/esm/Tabs.js
+  var React67 = __toESM(require_react());
+  var import_jsx_runtime56 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime57 = __toESM(require_jsx_runtime());
+  function getDefaultActiveKey(children2) {
+    let defaultActiveKey;
+    forEach(children2, (child) => {
+      if (defaultActiveKey == null) {
+        defaultActiveKey = child.props.eventKey;
+      }
+    });
+    return defaultActiveKey;
+  }
+  function renderTab(child) {
+    const {
+      title,
+      eventKey,
+      disabled,
+      tabClassName,
+      tabAttrs,
+      id: id2
+    } = child.props;
+    if (title == null) {
+      return null;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(NavItem_default2, {
+      as: "li",
+      role: "presentation",
+      children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(NavLink_default, {
+        as: "button",
+        type: "button",
+        eventKey,
+        disabled,
+        id: id2,
+        className: tabClassName,
+        ...tabAttrs,
+        children: title
+      })
+    });
+  }
+  var Tabs2 = (props) => {
+    const {
+      id: id2,
+      onSelect,
+      transition: transition2,
+      mountOnEnter = false,
+      unmountOnExit = false,
+      variant = "tabs",
+      children: children2,
+      activeKey = getDefaultActiveKey(children2),
+      ...controlledProps
+    } = useUncontrolled(props, {
+      activeKey: "onSelect"
+    });
+    return /* @__PURE__ */ (0, import_jsx_runtime57.jsxs)(Tabs_default, {
+      id: id2,
+      activeKey,
+      onSelect,
+      transition: getTabTransitionComponent(transition2),
+      mountOnEnter,
+      unmountOnExit,
+      children: [/* @__PURE__ */ (0, import_jsx_runtime56.jsx)(Nav_default2, {
+        id: id2,
+        ...controlledProps,
+        role: "tablist",
+        as: "ul",
+        variant,
+        children: map(children2, renderTab)
+      }), /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(TabContent_default, {
+        children: map(children2, (child) => {
+          const childProps = {
+            ...child.props
+          };
+          delete childProps.title;
+          delete childProps.disabled;
+          delete childProps.tabClassName;
+          delete childProps.tabAttrs;
+          return /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(TabPane_default, {
+            ...childProps
+          });
+        })
+      })]
+    });
+  };
+  Tabs2.displayName = "Tabs";
+  var Tabs_default2 = Tabs2;
+
+  // src/TestTab.tsx
+  var import_react64 = __toESM(require_react(), 1);
+
   // node_modules/universal-user-agent/index.js
   function getUserAgent() {
     if (typeof navigator === "object" && "userAgent" in navigator) {
@@ -40535,7 +46248,7 @@
   var VERSION4 = "6.1.4";
 
   // node_modules/@octokit/core/dist-src/index.js
-  var noop4 = () => {
+  var noop7 = () => {
   };
   var consoleWarn = console.warn.bind(console);
   var consoleError = console.error.bind(console);
@@ -40606,8 +46319,8 @@
       this.graphql = withCustomRequest(this.request).defaults(requestDefaults);
       this.log = Object.assign(
         {
-          debug: noop4,
-          info: noop4,
+          debug: noop7,
+          info: noop7,
           warn: consoleWarn,
           error: consoleError
         },
@@ -43213,7 +48926,7 @@
   // node_modules/@octokit/plugin-throttling/dist-bundle/index.js
   var import_light2 = __toESM(require_light(), 1);
   var VERSION8 = "0.0.0-development";
-  var noop5 = () => Promise.resolve();
+  var noop8 = () => Promise.resolve();
   function wrapRequest2(state, request2, options) {
     return state.retryLimiter.schedule(doRequest, state, request2, options);
   }
@@ -43228,13 +48941,13 @@
       jobOptions.expiration = 1e3 * 60;
     }
     if (isWrite || isGraphQL) {
-      await state.write.key(state.id).schedule(jobOptions, noop5);
+      await state.write.key(state.id).schedule(jobOptions, noop8);
     }
     if (isWrite && state.triggersNotification(pathname)) {
-      await state.notifications.key(state.id).schedule(jobOptions, noop5);
+      await state.notifications.key(state.id).schedule(jobOptions, noop8);
     }
     if (isSearch) {
-      await state.search.key(state.id).schedule(jobOptions, noop5);
+      await state.search.key(state.id).schedule(jobOptions, noop8);
     }
     const req = state.global.key(state.id).schedule(jobOptions, request2, options);
     if (isGraphQL) {
@@ -46136,4238 +51849,12 @@
   var App2 = App.defaults({ Octokit: Octokit2 });
   var OAuthApp2 = OAuthApp.defaults({ Octokit: Octokit2 });
 
-  // node_modules/react-bootstrap/esm/Collapse.js
-  var import_classnames9 = __toESM(require_classnames());
-  var import_react34 = __toESM(require_react());
-
-  // node_modules/react-bootstrap/esm/createChainedFunction.js
-  function createChainedFunction(...funcs) {
-    return funcs.filter((f) => f != null).reduce((acc, f) => {
-      if (typeof f !== "function") {
-        throw new Error("Invalid Argument Type, must only provide functions, undefined, or null.");
-      }
-      if (acc === null)
-        return f;
-      return function chainedFunction(...args) {
-        acc.apply(this, args);
-        f.apply(this, args);
-      };
-    }, null);
-  }
-  var createChainedFunction_default = createChainedFunction;
-
-  // node_modules/react-bootstrap/esm/Collapse.js
-  var import_jsx_runtime19 = __toESM(require_jsx_runtime());
-  var MARGINS = {
-    height: ["marginTop", "marginBottom"],
-    width: ["marginLeft", "marginRight"]
-  };
-  function getDefaultDimensionValue(dimension, elem) {
-    const offset4 = `offset${dimension[0].toUpperCase()}${dimension.slice(1)}`;
-    const value = elem[offset4];
-    const margins = MARGINS[dimension];
-    return value + // @ts-ignore
-    parseInt(css_default(elem, margins[0]), 10) + // @ts-ignore
-    parseInt(css_default(elem, margins[1]), 10);
-  }
-  var collapseStyles = {
-    [EXITED]: "collapse",
-    [EXITING]: "collapsing",
-    [ENTERING]: "collapsing",
-    [ENTERED]: "collapse show"
-  };
-  var Collapse = /* @__PURE__ */ import_react34.default.forwardRef(({
-    onEnter,
-    onEntering,
-    onEntered,
-    onExit,
-    onExiting,
-    className,
-    children: children2,
-    dimension = "height",
-    in: inProp = false,
-    timeout: timeout3 = 300,
-    mountOnEnter = false,
-    unmountOnExit = false,
-    appear = false,
-    getDimensionValue = getDefaultDimensionValue,
-    ...props
-  }, ref2) => {
-    const computedDimension = typeof dimension === "function" ? dimension() : dimension;
-    const handleEnter = (0, import_react34.useMemo)(() => createChainedFunction_default((elem) => {
-      elem.style[computedDimension] = "0";
-    }, onEnter), [computedDimension, onEnter]);
-    const handleEntering = (0, import_react34.useMemo)(() => createChainedFunction_default((elem) => {
-      const scroll2 = `scroll${computedDimension[0].toUpperCase()}${computedDimension.slice(1)}`;
-      elem.style[computedDimension] = `${elem[scroll2]}px`;
-    }, onEntering), [computedDimension, onEntering]);
-    const handleEntered = (0, import_react34.useMemo)(() => createChainedFunction_default((elem) => {
-      elem.style[computedDimension] = null;
-    }, onEntered), [computedDimension, onEntered]);
-    const handleExit = (0, import_react34.useMemo)(() => createChainedFunction_default((elem) => {
-      elem.style[computedDimension] = `${getDimensionValue(computedDimension, elem)}px`;
-      triggerBrowserReflow(elem);
-    }, onExit), [onExit, getDimensionValue, computedDimension]);
-    const handleExiting = (0, import_react34.useMemo)(() => createChainedFunction_default((elem) => {
-      elem.style[computedDimension] = null;
-    }, onExiting), [computedDimension, onExiting]);
-    return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(TransitionWrapper_default, {
-      ref: ref2,
-      addEndListener: transitionEndListener,
-      ...props,
-      "aria-expanded": props.role ? inProp : null,
-      onEnter: handleEnter,
-      onEntering: handleEntering,
-      onEntered: handleEntered,
-      onExit: handleExit,
-      onExiting: handleExiting,
-      childRef: getChildRef(children2),
-      in: inProp,
-      timeout: timeout3,
-      mountOnEnter,
-      unmountOnExit,
-      appear,
-      children: (state, innerProps) => /* @__PURE__ */ import_react34.default.cloneElement(children2, {
-        ...innerProps,
-        className: (0, import_classnames9.default)(className, children2.props.className, collapseStyles[state], computedDimension === "width" && "collapse-horizontal")
-      })
-    });
-  });
-  var Collapse_default = Collapse;
-
-  // node_modules/@restart/hooks/esm/useEventCallback.js
-  var import_react36 = __toESM(require_react());
-
-  // node_modules/@restart/hooks/esm/useCommittedRef.js
-  var import_react35 = __toESM(require_react());
-  function useCommittedRef2(value) {
-    const ref2 = (0, import_react35.useRef)(value);
-    (0, import_react35.useEffect)(() => {
-      ref2.current = value;
-    }, [value]);
-    return ref2;
-  }
-  var useCommittedRef_default2 = useCommittedRef2;
-
-  // node_modules/@restart/hooks/esm/useEventCallback.js
-  function useEventCallback2(fn2) {
-    const ref2 = useCommittedRef_default2(fn2);
-    return (0, import_react36.useCallback)(function(...args) {
-      return ref2.current && ref2.current(...args);
-    }, [ref2]);
-  }
-
-  // node_modules/react-bootstrap/esm/divWithClassName.js
-  var React30 = __toESM(require_react());
-  var import_classnames10 = __toESM(require_classnames());
-  var import_jsx_runtime20 = __toESM(require_jsx_runtime());
-  var divWithClassName_default = (className) => /* @__PURE__ */ React30.forwardRef((p, ref2) => /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", {
-    ...p,
-    ref: ref2,
-    className: (0, import_classnames10.default)(p.className, className)
-  }));
-
-  // node_modules/react-bootstrap/esm/CloseButton.js
-  var import_prop_types4 = __toESM(require_prop_types());
-  var React31 = __toESM(require_react());
-  var import_classnames11 = __toESM(require_classnames());
-  var import_jsx_runtime21 = __toESM(require_jsx_runtime());
-  var propTypes2 = {
-    /** An accessible label indicating the relevant information about the Close Button. */
-    "aria-label": import_prop_types4.default.string,
-    /** A callback fired after the Close Button is clicked. */
-    onClick: import_prop_types4.default.func,
-    /**
-     * Render different color variant for the button.
-     *
-     * Omitting this will render the default dark color.
-     */
-    variant: import_prop_types4.default.oneOf(["white"])
-  };
-  var CloseButton = /* @__PURE__ */ React31.forwardRef(({
-    className,
-    variant,
-    "aria-label": ariaLabel = "Close",
-    ...props
-  }, ref2) => /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", {
-    ref: ref2,
-    type: "button",
-    className: (0, import_classnames11.default)("btn-close", variant && `btn-close-${variant}`, className),
-    "aria-label": ariaLabel,
-    ...props
-  }));
-  CloseButton.displayName = "CloseButton";
-  CloseButton.propTypes = propTypes2;
-  var CloseButton_default = CloseButton;
-
-  // node_modules/react-bootstrap/esm/Button.js
-  var import_classnames12 = __toESM(require_classnames());
-  var React32 = __toESM(require_react());
-  var import_jsx_runtime22 = __toESM(require_jsx_runtime());
-  "use client";
-  var Button2 = /* @__PURE__ */ React32.forwardRef(({
-    as,
-    bsPrefix,
-    variant = "primary",
-    size,
-    active = false,
-    disabled = false,
-    className,
-    ...props
-  }, ref2) => {
-    const prefix3 = useBootstrapPrefix(bsPrefix, "btn");
-    const [buttonProps, {
-      tagName
-    }] = useButtonProps({
-      tagName: as,
-      disabled,
-      ...props
-    });
-    const Component2 = tagName;
-    return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Component2, {
-      ...buttonProps,
-      ...props,
-      ref: ref2,
-      disabled,
-      className: (0, import_classnames12.default)(className, prefix3, active && "active", variant && `${prefix3}-${variant}`, size && `${prefix3}-${size}`, props.href && disabled && "disabled")
-    });
-  });
-  Button2.displayName = "Button";
-  var Button_default2 = Button2;
-
-  // node_modules/react-bootstrap/esm/ElementChildren.js
-  var React33 = __toESM(require_react());
-  function map(children2, func) {
-    let index2 = 0;
-    return React33.Children.map(children2, (child) => /* @__PURE__ */ React33.isValidElement(child) ? func(child, index2++) : child);
-  }
-  function forEach(children2, func) {
-    let index2 = 0;
-    React33.Children.forEach(children2, (child) => {
-      if (/* @__PURE__ */ React33.isValidElement(child))
-        func(child, index2++);
-    });
-  }
-
-  // node_modules/react-bootstrap/esm/Container.js
-  var import_classnames13 = __toESM(require_classnames());
-  var React34 = __toESM(require_react());
-  var import_jsx_runtime23 = __toESM(require_jsx_runtime());
-  "use client";
-  var Container = /* @__PURE__ */ React34.forwardRef(({
-    bsPrefix,
-    fluid = false,
-    // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-    as: Component2 = "div",
-    className,
-    ...props
-  }, ref2) => {
-    const prefix3 = useBootstrapPrefix(bsPrefix, "container");
-    const suffix2 = typeof fluid === "string" ? `-${fluid}` : "-fluid";
-    return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(Component2, {
-      ref: ref2,
-      ...props,
-      className: (0, import_classnames13.default)(className, fluid ? `${prefix3}${suffix2}` : prefix3)
-    });
-  });
-  Container.displayName = "Container";
-  var Container_default = Container;
-
-  // node_modules/react-bootstrap/esm/Dropdown.js
-  var import_classnames20 = __toESM(require_classnames());
-  var React48 = __toESM(require_react());
-  var import_react49 = __toESM(require_react());
-
-  // node_modules/@restart/ui/esm/Dropdown.js
-  var import_react44 = __toESM(require_react());
-  var React39 = __toESM(require_react());
-
-  // node_modules/@restart/ui/esm/DropdownContext.js
-  var React35 = __toESM(require_react());
-  var DropdownContext = /* @__PURE__ */ React35.createContext(null);
-  var DropdownContext_default = DropdownContext;
-
-  // node_modules/@restart/ui/esm/DropdownMenu.js
-  var import_react40 = __toESM(require_react());
-  var React36 = __toESM(require_react());
-
-  // node_modules/@restart/ui/esm/usePopper.js
-  var import_react38 = __toESM(require_react());
-
-  // node_modules/dequal/dist/index.mjs
-  var has = Object.prototype.hasOwnProperty;
-  function find2(iter, tar, key) {
-    for (key of iter.keys()) {
-      if (dequal(key, tar))
-        return key;
-    }
-  }
-  function dequal(foo, bar) {
-    var ctor, len, tmp;
-    if (foo === bar)
-      return true;
-    if (foo && bar && (ctor = foo.constructor) === bar.constructor) {
-      if (ctor === Date)
-        return foo.getTime() === bar.getTime();
-      if (ctor === RegExp)
-        return foo.toString() === bar.toString();
-      if (ctor === Array) {
-        if ((len = foo.length) === bar.length) {
-          while (len-- && dequal(foo[len], bar[len]))
-            ;
-        }
-        return len === -1;
-      }
-      if (ctor === Set) {
-        if (foo.size !== bar.size) {
-          return false;
-        }
-        for (len of foo) {
-          tmp = len;
-          if (tmp && typeof tmp === "object") {
-            tmp = find2(bar, tmp);
-            if (!tmp)
-              return false;
-          }
-          if (!bar.has(tmp))
-            return false;
-        }
-        return true;
-      }
-      if (ctor === Map) {
-        if (foo.size !== bar.size) {
-          return false;
-        }
-        for (len of foo) {
-          tmp = len[0];
-          if (tmp && typeof tmp === "object") {
-            tmp = find2(bar, tmp);
-            if (!tmp)
-              return false;
-          }
-          if (!dequal(len[1], bar.get(tmp))) {
-            return false;
-          }
-        }
-        return true;
-      }
-      if (ctor === ArrayBuffer) {
-        foo = new Uint8Array(foo);
-        bar = new Uint8Array(bar);
-      } else if (ctor === DataView) {
-        if ((len = foo.byteLength) === bar.byteLength) {
-          while (len-- && foo.getInt8(len) === bar.getInt8(len))
-            ;
-        }
-        return len === -1;
-      }
-      if (ArrayBuffer.isView(foo)) {
-        if ((len = foo.byteLength) === bar.byteLength) {
-          while (len-- && foo[len] === bar[len])
-            ;
-        }
-        return len === -1;
-      }
-      if (!ctor || typeof foo === "object") {
-        len = 0;
-        for (ctor in foo) {
-          if (has.call(foo, ctor) && ++len && !has.call(bar, ctor))
-            return false;
-          if (!(ctor in bar) || !dequal(foo[ctor], bar[ctor]))
-            return false;
-        }
-        return Object.keys(bar).length === len;
-      }
-    }
-    return foo !== foo && bar !== bar;
-  }
-
-  // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useSafeState.js
-  var import_react37 = __toESM(require_react());
-  function useSafeState(state) {
-    const isMounted = useMounted();
-    return [state[0], (0, import_react37.useCallback)((nextState) => {
-      if (!isMounted())
-        return;
-      return state[1](nextState);
-    }, [isMounted, state[1]])];
-  }
-  var useSafeState_default = useSafeState;
-
-  // node_modules/@popperjs/core/lib/enums.js
-  var top = "top";
-  var bottom = "bottom";
-  var right = "right";
-  var left = "left";
-  var auto = "auto";
-  var basePlacements = [top, bottom, right, left];
-  var start2 = "start";
-  var end = "end";
-  var clippingParents = "clippingParents";
-  var viewport = "viewport";
-  var popper = "popper";
-  var reference = "reference";
-  var variationPlacements = /* @__PURE__ */ basePlacements.reduce(function(acc, placement) {
-    return acc.concat([placement + "-" + start2, placement + "-" + end]);
-  }, []);
-  var placements = /* @__PURE__ */ [].concat(basePlacements, [auto]).reduce(function(acc, placement) {
-    return acc.concat([placement, placement + "-" + start2, placement + "-" + end]);
-  }, []);
-  var beforeRead = "beforeRead";
-  var read = "read";
-  var afterRead = "afterRead";
-  var beforeMain = "beforeMain";
-  var main = "main";
-  var afterMain = "afterMain";
-  var beforeWrite = "beforeWrite";
-  var write = "write";
-  var afterWrite = "afterWrite";
-  var modifierPhases = [beforeRead, read, afterRead, beforeMain, main, afterMain, beforeWrite, write, afterWrite];
-
-  // node_modules/@popperjs/core/lib/utils/getBasePlacement.js
-  function getBasePlacement(placement) {
-    return placement.split("-")[0];
-  }
-
-  // node_modules/@popperjs/core/lib/dom-utils/getWindow.js
-  function getWindow(node) {
-    if (node == null) {
-      return window;
-    }
-    if (node.toString() !== "[object Window]") {
-      var ownerDocument2 = node.ownerDocument;
-      return ownerDocument2 ? ownerDocument2.defaultView || window : window;
-    }
-    return node;
-  }
-
-  // node_modules/@popperjs/core/lib/dom-utils/instanceOf.js
-  function isElement(node) {
-    var OwnElement = getWindow(node).Element;
-    return node instanceof OwnElement || node instanceof Element;
-  }
-  function isHTMLElement(node) {
-    var OwnElement = getWindow(node).HTMLElement;
-    return node instanceof OwnElement || node instanceof HTMLElement;
-  }
-  function isShadowRoot(node) {
-    if (typeof ShadowRoot === "undefined") {
-      return false;
-    }
-    var OwnElement = getWindow(node).ShadowRoot;
-    return node instanceof OwnElement || node instanceof ShadowRoot;
-  }
-
-  // node_modules/@popperjs/core/lib/utils/math.js
-  var max = Math.max;
-  var min = Math.min;
-  var round = Math.round;
-
-  // node_modules/@popperjs/core/lib/utils/userAgent.js
-  function getUAString() {
-    var uaData = navigator.userAgentData;
-    if (uaData != null && uaData.brands && Array.isArray(uaData.brands)) {
-      return uaData.brands.map(function(item) {
-        return item.brand + "/" + item.version;
-      }).join(" ");
-    }
-    return navigator.userAgent;
-  }
-
-  // node_modules/@popperjs/core/lib/dom-utils/isLayoutViewport.js
-  function isLayoutViewport() {
-    return !/^((?!chrome|android).)*safari/i.test(getUAString());
-  }
-
-  // node_modules/@popperjs/core/lib/dom-utils/getBoundingClientRect.js
-  function getBoundingClientRect(element, includeScale, isFixedStrategy) {
-    if (includeScale === void 0) {
-      includeScale = false;
-    }
-    if (isFixedStrategy === void 0) {
-      isFixedStrategy = false;
-    }
-    var clientRect = element.getBoundingClientRect();
-    var scaleX = 1;
-    var scaleY = 1;
-    if (includeScale && isHTMLElement(element)) {
-      scaleX = element.offsetWidth > 0 ? round(clientRect.width) / element.offsetWidth || 1 : 1;
-      scaleY = element.offsetHeight > 0 ? round(clientRect.height) / element.offsetHeight || 1 : 1;
-    }
-    var _ref = isElement(element) ? getWindow(element) : window, visualViewport = _ref.visualViewport;
-    var addVisualOffsets = !isLayoutViewport() && isFixedStrategy;
-    var x = (clientRect.left + (addVisualOffsets && visualViewport ? visualViewport.offsetLeft : 0)) / scaleX;
-    var y = (clientRect.top + (addVisualOffsets && visualViewport ? visualViewport.offsetTop : 0)) / scaleY;
-    var width = clientRect.width / scaleX;
-    var height = clientRect.height / scaleY;
-    return {
-      width,
-      height,
-      top: y,
-      right: x + width,
-      bottom: y + height,
-      left: x,
-      x,
-      y
-    };
-  }
-
-  // node_modules/@popperjs/core/lib/dom-utils/getLayoutRect.js
-  function getLayoutRect(element) {
-    var clientRect = getBoundingClientRect(element);
-    var width = element.offsetWidth;
-    var height = element.offsetHeight;
-    if (Math.abs(clientRect.width - width) <= 1) {
-      width = clientRect.width;
-    }
-    if (Math.abs(clientRect.height - height) <= 1) {
-      height = clientRect.height;
-    }
-    return {
-      x: element.offsetLeft,
-      y: element.offsetTop,
-      width,
-      height
-    };
-  }
-
-  // node_modules/@popperjs/core/lib/dom-utils/contains.js
-  function contains(parent, child) {
-    var rootNode = child.getRootNode && child.getRootNode();
-    if (parent.contains(child)) {
-      return true;
-    } else if (rootNode && isShadowRoot(rootNode)) {
-      var next = child;
-      do {
-        if (next && parent.isSameNode(next)) {
-          return true;
-        }
-        next = next.parentNode || next.host;
-      } while (next);
-    }
-    return false;
-  }
-
-  // node_modules/@popperjs/core/lib/dom-utils/getNodeName.js
-  function getNodeName(element) {
-    return element ? (element.nodeName || "").toLowerCase() : null;
-  }
-
-  // node_modules/@popperjs/core/lib/dom-utils/getComputedStyle.js
-  function getComputedStyle2(element) {
-    return getWindow(element).getComputedStyle(element);
-  }
-
-  // node_modules/@popperjs/core/lib/dom-utils/isTableElement.js
-  function isTableElement(element) {
-    return ["table", "td", "th"].indexOf(getNodeName(element)) >= 0;
-  }
-
-  // node_modules/@popperjs/core/lib/dom-utils/getDocumentElement.js
-  function getDocumentElement(element) {
-    return ((isElement(element) ? element.ownerDocument : (
-      // $FlowFixMe[prop-missing]
-      element.document
-    )) || window.document).documentElement;
-  }
-
-  // node_modules/@popperjs/core/lib/dom-utils/getParentNode.js
-  function getParentNode(element) {
-    if (getNodeName(element) === "html") {
-      return element;
-    }
-    return (
-      // this is a quicker (but less type safe) way to save quite some bytes from the bundle
-      // $FlowFixMe[incompatible-return]
-      // $FlowFixMe[prop-missing]
-      element.assignedSlot || // step into the shadow DOM of the parent of a slotted node
-      element.parentNode || // DOM Element detected
-      (isShadowRoot(element) ? element.host : null) || // ShadowRoot detected
-      // $FlowFixMe[incompatible-call]: HTMLElement is a Node
-      getDocumentElement(element)
-    );
-  }
-
-  // node_modules/@popperjs/core/lib/dom-utils/getOffsetParent.js
-  function getTrueOffsetParent(element) {
-    if (!isHTMLElement(element) || // https://github.com/popperjs/popper-core/issues/837
-    getComputedStyle2(element).position === "fixed") {
-      return null;
-    }
-    return element.offsetParent;
-  }
-  function getContainingBlock(element) {
-    var isFirefox = /firefox/i.test(getUAString());
-    var isIE = /Trident/i.test(getUAString());
-    if (isIE && isHTMLElement(element)) {
-      var elementCss = getComputedStyle2(element);
-      if (elementCss.position === "fixed") {
-        return null;
-      }
-    }
-    var currentNode = getParentNode(element);
-    if (isShadowRoot(currentNode)) {
-      currentNode = currentNode.host;
-    }
-    while (isHTMLElement(currentNode) && ["html", "body"].indexOf(getNodeName(currentNode)) < 0) {
-      var css = getComputedStyle2(currentNode);
-      if (css.transform !== "none" || css.perspective !== "none" || css.contain === "paint" || ["transform", "perspective"].indexOf(css.willChange) !== -1 || isFirefox && css.willChange === "filter" || isFirefox && css.filter && css.filter !== "none") {
-        return currentNode;
-      } else {
-        currentNode = currentNode.parentNode;
-      }
-    }
-    return null;
-  }
-  function getOffsetParent(element) {
-    var window2 = getWindow(element);
-    var offsetParent = getTrueOffsetParent(element);
-    while (offsetParent && isTableElement(offsetParent) && getComputedStyle2(offsetParent).position === "static") {
-      offsetParent = getTrueOffsetParent(offsetParent);
-    }
-    if (offsetParent && (getNodeName(offsetParent) === "html" || getNodeName(offsetParent) === "body" && getComputedStyle2(offsetParent).position === "static")) {
-      return window2;
-    }
-    return offsetParent || getContainingBlock(element) || window2;
-  }
-
-  // node_modules/@popperjs/core/lib/utils/getMainAxisFromPlacement.js
-  function getMainAxisFromPlacement(placement) {
-    return ["top", "bottom"].indexOf(placement) >= 0 ? "x" : "y";
-  }
-
-  // node_modules/@popperjs/core/lib/utils/within.js
-  function within(min2, value, max2) {
-    return max(min2, min(value, max2));
-  }
-  function withinMaxClamp(min2, value, max2) {
-    var v2 = within(min2, value, max2);
-    return v2 > max2 ? max2 : v2;
-  }
-
-  // node_modules/@popperjs/core/lib/utils/getFreshSideObject.js
-  function getFreshSideObject() {
-    return {
-      top: 0,
-      right: 0,
-      bottom: 0,
-      left: 0
-    };
-  }
-
-  // node_modules/@popperjs/core/lib/utils/mergePaddingObject.js
-  function mergePaddingObject(paddingObject) {
-    return Object.assign({}, getFreshSideObject(), paddingObject);
-  }
-
-  // node_modules/@popperjs/core/lib/utils/expandToHashMap.js
-  function expandToHashMap(value, keys) {
-    return keys.reduce(function(hashMap, key) {
-      hashMap[key] = value;
-      return hashMap;
-    }, {});
-  }
-
-  // node_modules/@popperjs/core/lib/modifiers/arrow.js
-  var toPaddingObject = function toPaddingObject2(padding, state) {
-    padding = typeof padding === "function" ? padding(Object.assign({}, state.rects, {
-      placement: state.placement
-    })) : padding;
-    return mergePaddingObject(typeof padding !== "number" ? padding : expandToHashMap(padding, basePlacements));
-  };
-  function arrow(_ref) {
-    var _state$modifiersData$;
-    var state = _ref.state, name = _ref.name, options = _ref.options;
-    var arrowElement = state.elements.arrow;
-    var popperOffsets2 = state.modifiersData.popperOffsets;
-    var basePlacement = getBasePlacement(state.placement);
-    var axis = getMainAxisFromPlacement(basePlacement);
-    var isVertical = [left, right].indexOf(basePlacement) >= 0;
-    var len = isVertical ? "height" : "width";
-    if (!arrowElement || !popperOffsets2) {
-      return;
-    }
-    var paddingObject = toPaddingObject(options.padding, state);
-    var arrowRect = getLayoutRect(arrowElement);
-    var minProp = axis === "y" ? top : left;
-    var maxProp = axis === "y" ? bottom : right;
-    var endDiff = state.rects.reference[len] + state.rects.reference[axis] - popperOffsets2[axis] - state.rects.popper[len];
-    var startDiff = popperOffsets2[axis] - state.rects.reference[axis];
-    var arrowOffsetParent = getOffsetParent(arrowElement);
-    var clientSize = arrowOffsetParent ? axis === "y" ? arrowOffsetParent.clientHeight || 0 : arrowOffsetParent.clientWidth || 0 : 0;
-    var centerToReference = endDiff / 2 - startDiff / 2;
-    var min2 = paddingObject[minProp];
-    var max2 = clientSize - arrowRect[len] - paddingObject[maxProp];
-    var center = clientSize / 2 - arrowRect[len] / 2 + centerToReference;
-    var offset4 = within(min2, center, max2);
-    var axisProp = axis;
-    state.modifiersData[name] = (_state$modifiersData$ = {}, _state$modifiersData$[axisProp] = offset4, _state$modifiersData$.centerOffset = offset4 - center, _state$modifiersData$);
-  }
-  function effect(_ref2) {
-    var state = _ref2.state, options = _ref2.options;
-    var _options$element = options.element, arrowElement = _options$element === void 0 ? "[data-popper-arrow]" : _options$element;
-    if (arrowElement == null) {
-      return;
-    }
-    if (typeof arrowElement === "string") {
-      arrowElement = state.elements.popper.querySelector(arrowElement);
-      if (!arrowElement) {
-        return;
-      }
-    }
-    if (!contains(state.elements.popper, arrowElement)) {
-      return;
-    }
-    state.elements.arrow = arrowElement;
-  }
-  var arrow_default = {
-    name: "arrow",
-    enabled: true,
-    phase: "main",
-    fn: arrow,
-    effect,
-    requires: ["popperOffsets"],
-    requiresIfExists: ["preventOverflow"]
-  };
-
-  // node_modules/@popperjs/core/lib/utils/getVariation.js
-  function getVariation(placement) {
-    return placement.split("-")[1];
-  }
-
-  // node_modules/@popperjs/core/lib/modifiers/computeStyles.js
-  var unsetSides = {
-    top: "auto",
-    right: "auto",
-    bottom: "auto",
-    left: "auto"
-  };
-  function roundOffsetsByDPR(_ref, win2) {
-    var x = _ref.x, y = _ref.y;
-    var dpr = win2.devicePixelRatio || 1;
-    return {
-      x: round(x * dpr) / dpr || 0,
-      y: round(y * dpr) / dpr || 0
-    };
-  }
-  function mapToStyles(_ref2) {
-    var _Object$assign2;
-    var popper2 = _ref2.popper, popperRect = _ref2.popperRect, placement = _ref2.placement, variation = _ref2.variation, offsets = _ref2.offsets, position2 = _ref2.position, gpuAcceleration = _ref2.gpuAcceleration, adaptive = _ref2.adaptive, roundOffsets = _ref2.roundOffsets, isFixed = _ref2.isFixed;
-    var _offsets$x = offsets.x, x = _offsets$x === void 0 ? 0 : _offsets$x, _offsets$y = offsets.y, y = _offsets$y === void 0 ? 0 : _offsets$y;
-    var _ref3 = typeof roundOffsets === "function" ? roundOffsets({
-      x,
-      y
-    }) : {
-      x,
-      y
-    };
-    x = _ref3.x;
-    y = _ref3.y;
-    var hasX = offsets.hasOwnProperty("x");
-    var hasY = offsets.hasOwnProperty("y");
-    var sideX = left;
-    var sideY = top;
-    var win2 = window;
-    if (adaptive) {
-      var offsetParent = getOffsetParent(popper2);
-      var heightProp = "clientHeight";
-      var widthProp = "clientWidth";
-      if (offsetParent === getWindow(popper2)) {
-        offsetParent = getDocumentElement(popper2);
-        if (getComputedStyle2(offsetParent).position !== "static" && position2 === "absolute") {
-          heightProp = "scrollHeight";
-          widthProp = "scrollWidth";
-        }
-      }
-      offsetParent = offsetParent;
-      if (placement === top || (placement === left || placement === right) && variation === end) {
-        sideY = bottom;
-        var offsetY = isFixed && offsetParent === win2 && win2.visualViewport ? win2.visualViewport.height : (
-          // $FlowFixMe[prop-missing]
-          offsetParent[heightProp]
-        );
-        y -= offsetY - popperRect.height;
-        y *= gpuAcceleration ? 1 : -1;
-      }
-      if (placement === left || (placement === top || placement === bottom) && variation === end) {
-        sideX = right;
-        var offsetX = isFixed && offsetParent === win2 && win2.visualViewport ? win2.visualViewport.width : (
-          // $FlowFixMe[prop-missing]
-          offsetParent[widthProp]
-        );
-        x -= offsetX - popperRect.width;
-        x *= gpuAcceleration ? 1 : -1;
-      }
-    }
-    var commonStyles = Object.assign({
-      position: position2
-    }, adaptive && unsetSides);
-    var _ref4 = roundOffsets === true ? roundOffsetsByDPR({
-      x,
-      y
-    }, getWindow(popper2)) : {
-      x,
-      y
-    };
-    x = _ref4.x;
-    y = _ref4.y;
-    if (gpuAcceleration) {
-      var _Object$assign;
-      return Object.assign({}, commonStyles, (_Object$assign = {}, _Object$assign[sideY] = hasY ? "0" : "", _Object$assign[sideX] = hasX ? "0" : "", _Object$assign.transform = (win2.devicePixelRatio || 1) <= 1 ? "translate(" + x + "px, " + y + "px)" : "translate3d(" + x + "px, " + y + "px, 0)", _Object$assign));
-    }
-    return Object.assign({}, commonStyles, (_Object$assign2 = {}, _Object$assign2[sideY] = hasY ? y + "px" : "", _Object$assign2[sideX] = hasX ? x + "px" : "", _Object$assign2.transform = "", _Object$assign2));
-  }
-  function computeStyles(_ref5) {
-    var state = _ref5.state, options = _ref5.options;
-    var _options$gpuAccelerat = options.gpuAcceleration, gpuAcceleration = _options$gpuAccelerat === void 0 ? true : _options$gpuAccelerat, _options$adaptive = options.adaptive, adaptive = _options$adaptive === void 0 ? true : _options$adaptive, _options$roundOffsets = options.roundOffsets, roundOffsets = _options$roundOffsets === void 0 ? true : _options$roundOffsets;
-    var commonStyles = {
-      placement: getBasePlacement(state.placement),
-      variation: getVariation(state.placement),
-      popper: state.elements.popper,
-      popperRect: state.rects.popper,
-      gpuAcceleration,
-      isFixed: state.options.strategy === "fixed"
-    };
-    if (state.modifiersData.popperOffsets != null) {
-      state.styles.popper = Object.assign({}, state.styles.popper, mapToStyles(Object.assign({}, commonStyles, {
-        offsets: state.modifiersData.popperOffsets,
-        position: state.options.strategy,
-        adaptive,
-        roundOffsets
-      })));
-    }
-    if (state.modifiersData.arrow != null) {
-      state.styles.arrow = Object.assign({}, state.styles.arrow, mapToStyles(Object.assign({}, commonStyles, {
-        offsets: state.modifiersData.arrow,
-        position: "absolute",
-        adaptive: false,
-        roundOffsets
-      })));
-    }
-    state.attributes.popper = Object.assign({}, state.attributes.popper, {
-      "data-popper-placement": state.placement
-    });
-  }
-  var computeStyles_default = {
-    name: "computeStyles",
-    enabled: true,
-    phase: "beforeWrite",
-    fn: computeStyles,
-    data: {}
-  };
-
-  // node_modules/@popperjs/core/lib/modifiers/eventListeners.js
-  var passive = {
-    passive: true
-  };
-  function effect2(_ref) {
-    var state = _ref.state, instance = _ref.instance, options = _ref.options;
-    var _options$scroll = options.scroll, scroll2 = _options$scroll === void 0 ? true : _options$scroll, _options$resize = options.resize, resize = _options$resize === void 0 ? true : _options$resize;
-    var window2 = getWindow(state.elements.popper);
-    var scrollParents = [].concat(state.scrollParents.reference, state.scrollParents.popper);
-    if (scroll2) {
-      scrollParents.forEach(function(scrollParent) {
-        scrollParent.addEventListener("scroll", instance.update, passive);
-      });
-    }
-    if (resize) {
-      window2.addEventListener("resize", instance.update, passive);
-    }
-    return function() {
-      if (scroll2) {
-        scrollParents.forEach(function(scrollParent) {
-          scrollParent.removeEventListener("scroll", instance.update, passive);
-        });
-      }
-      if (resize) {
-        window2.removeEventListener("resize", instance.update, passive);
-      }
-    };
-  }
-  var eventListeners_default = {
-    name: "eventListeners",
-    enabled: true,
-    phase: "write",
-    fn: function fn() {
-    },
-    effect: effect2,
-    data: {}
-  };
-
-  // node_modules/@popperjs/core/lib/utils/getOppositePlacement.js
-  var hash = {
-    left: "right",
-    right: "left",
-    bottom: "top",
-    top: "bottom"
-  };
-  function getOppositePlacement(placement) {
-    return placement.replace(/left|right|bottom|top/g, function(matched) {
-      return hash[matched];
-    });
-  }
-
-  // node_modules/@popperjs/core/lib/utils/getOppositeVariationPlacement.js
-  var hash2 = {
-    start: "end",
-    end: "start"
-  };
-  function getOppositeVariationPlacement(placement) {
-    return placement.replace(/start|end/g, function(matched) {
-      return hash2[matched];
-    });
-  }
-
-  // node_modules/@popperjs/core/lib/dom-utils/getWindowScroll.js
-  function getWindowScroll(node) {
-    var win2 = getWindow(node);
-    var scrollLeft = win2.pageXOffset;
-    var scrollTop = win2.pageYOffset;
-    return {
-      scrollLeft,
-      scrollTop
-    };
-  }
-
-  // node_modules/@popperjs/core/lib/dom-utils/getWindowScrollBarX.js
-  function getWindowScrollBarX(element) {
-    return getBoundingClientRect(getDocumentElement(element)).left + getWindowScroll(element).scrollLeft;
-  }
-
-  // node_modules/@popperjs/core/lib/dom-utils/getViewportRect.js
-  function getViewportRect(element, strategy) {
-    var win2 = getWindow(element);
-    var html = getDocumentElement(element);
-    var visualViewport = win2.visualViewport;
-    var width = html.clientWidth;
-    var height = html.clientHeight;
-    var x = 0;
-    var y = 0;
-    if (visualViewport) {
-      width = visualViewport.width;
-      height = visualViewport.height;
-      var layoutViewport = isLayoutViewport();
-      if (layoutViewport || !layoutViewport && strategy === "fixed") {
-        x = visualViewport.offsetLeft;
-        y = visualViewport.offsetTop;
-      }
-    }
-    return {
-      width,
-      height,
-      x: x + getWindowScrollBarX(element),
-      y
-    };
-  }
-
-  // node_modules/@popperjs/core/lib/dom-utils/getDocumentRect.js
-  function getDocumentRect(element) {
-    var _element$ownerDocumen;
-    var html = getDocumentElement(element);
-    var winScroll = getWindowScroll(element);
-    var body = (_element$ownerDocumen = element.ownerDocument) == null ? void 0 : _element$ownerDocumen.body;
-    var width = max(html.scrollWidth, html.clientWidth, body ? body.scrollWidth : 0, body ? body.clientWidth : 0);
-    var height = max(html.scrollHeight, html.clientHeight, body ? body.scrollHeight : 0, body ? body.clientHeight : 0);
-    var x = -winScroll.scrollLeft + getWindowScrollBarX(element);
-    var y = -winScroll.scrollTop;
-    if (getComputedStyle2(body || html).direction === "rtl") {
-      x += max(html.clientWidth, body ? body.clientWidth : 0) - width;
-    }
-    return {
-      width,
-      height,
-      x,
-      y
-    };
-  }
-
-  // node_modules/@popperjs/core/lib/dom-utils/isScrollParent.js
-  function isScrollParent(element) {
-    var _getComputedStyle = getComputedStyle2(element), overflow = _getComputedStyle.overflow, overflowX = _getComputedStyle.overflowX, overflowY = _getComputedStyle.overflowY;
-    return /auto|scroll|overlay|hidden/.test(overflow + overflowY + overflowX);
-  }
-
-  // node_modules/@popperjs/core/lib/dom-utils/getScrollParent.js
-  function getScrollParent(node) {
-    if (["html", "body", "#document"].indexOf(getNodeName(node)) >= 0) {
-      return node.ownerDocument.body;
-    }
-    if (isHTMLElement(node) && isScrollParent(node)) {
-      return node;
-    }
-    return getScrollParent(getParentNode(node));
-  }
-
-  // node_modules/@popperjs/core/lib/dom-utils/listScrollParents.js
-  function listScrollParents(element, list) {
-    var _element$ownerDocumen;
-    if (list === void 0) {
-      list = [];
-    }
-    var scrollParent = getScrollParent(element);
-    var isBody = scrollParent === ((_element$ownerDocumen = element.ownerDocument) == null ? void 0 : _element$ownerDocumen.body);
-    var win2 = getWindow(scrollParent);
-    var target = isBody ? [win2].concat(win2.visualViewport || [], isScrollParent(scrollParent) ? scrollParent : []) : scrollParent;
-    var updatedList = list.concat(target);
-    return isBody ? updatedList : (
-      // $FlowFixMe[incompatible-call]: isBody tells us target will be an HTMLElement here
-      updatedList.concat(listScrollParents(getParentNode(target)))
-    );
-  }
-
-  // node_modules/@popperjs/core/lib/utils/rectToClientRect.js
-  function rectToClientRect(rect) {
-    return Object.assign({}, rect, {
-      left: rect.x,
-      top: rect.y,
-      right: rect.x + rect.width,
-      bottom: rect.y + rect.height
-    });
-  }
-
-  // node_modules/@popperjs/core/lib/dom-utils/getClippingRect.js
-  function getInnerBoundingClientRect(element, strategy) {
-    var rect = getBoundingClientRect(element, false, strategy === "fixed");
-    rect.top = rect.top + element.clientTop;
-    rect.left = rect.left + element.clientLeft;
-    rect.bottom = rect.top + element.clientHeight;
-    rect.right = rect.left + element.clientWidth;
-    rect.width = element.clientWidth;
-    rect.height = element.clientHeight;
-    rect.x = rect.left;
-    rect.y = rect.top;
-    return rect;
-  }
-  function getClientRectFromMixedType(element, clippingParent, strategy) {
-    return clippingParent === viewport ? rectToClientRect(getViewportRect(element, strategy)) : isElement(clippingParent) ? getInnerBoundingClientRect(clippingParent, strategy) : rectToClientRect(getDocumentRect(getDocumentElement(element)));
-  }
-  function getClippingParents(element) {
-    var clippingParents2 = listScrollParents(getParentNode(element));
-    var canEscapeClipping = ["absolute", "fixed"].indexOf(getComputedStyle2(element).position) >= 0;
-    var clipperElement = canEscapeClipping && isHTMLElement(element) ? getOffsetParent(element) : element;
-    if (!isElement(clipperElement)) {
-      return [];
-    }
-    return clippingParents2.filter(function(clippingParent) {
-      return isElement(clippingParent) && contains(clippingParent, clipperElement) && getNodeName(clippingParent) !== "body";
-    });
-  }
-  function getClippingRect(element, boundary, rootBoundary, strategy) {
-    var mainClippingParents = boundary === "clippingParents" ? getClippingParents(element) : [].concat(boundary);
-    var clippingParents2 = [].concat(mainClippingParents, [rootBoundary]);
-    var firstClippingParent = clippingParents2[0];
-    var clippingRect = clippingParents2.reduce(function(accRect, clippingParent) {
-      var rect = getClientRectFromMixedType(element, clippingParent, strategy);
-      accRect.top = max(rect.top, accRect.top);
-      accRect.right = min(rect.right, accRect.right);
-      accRect.bottom = min(rect.bottom, accRect.bottom);
-      accRect.left = max(rect.left, accRect.left);
-      return accRect;
-    }, getClientRectFromMixedType(element, firstClippingParent, strategy));
-    clippingRect.width = clippingRect.right - clippingRect.left;
-    clippingRect.height = clippingRect.bottom - clippingRect.top;
-    clippingRect.x = clippingRect.left;
-    clippingRect.y = clippingRect.top;
-    return clippingRect;
-  }
-
-  // node_modules/@popperjs/core/lib/utils/computeOffsets.js
-  function computeOffsets(_ref) {
-    var reference2 = _ref.reference, element = _ref.element, placement = _ref.placement;
-    var basePlacement = placement ? getBasePlacement(placement) : null;
-    var variation = placement ? getVariation(placement) : null;
-    var commonX = reference2.x + reference2.width / 2 - element.width / 2;
-    var commonY = reference2.y + reference2.height / 2 - element.height / 2;
-    var offsets;
-    switch (basePlacement) {
-      case top:
-        offsets = {
-          x: commonX,
-          y: reference2.y - element.height
-        };
-        break;
-      case bottom:
-        offsets = {
-          x: commonX,
-          y: reference2.y + reference2.height
-        };
-        break;
-      case right:
-        offsets = {
-          x: reference2.x + reference2.width,
-          y: commonY
-        };
-        break;
-      case left:
-        offsets = {
-          x: reference2.x - element.width,
-          y: commonY
-        };
-        break;
-      default:
-        offsets = {
-          x: reference2.x,
-          y: reference2.y
-        };
-    }
-    var mainAxis = basePlacement ? getMainAxisFromPlacement(basePlacement) : null;
-    if (mainAxis != null) {
-      var len = mainAxis === "y" ? "height" : "width";
-      switch (variation) {
-        case start2:
-          offsets[mainAxis] = offsets[mainAxis] - (reference2[len] / 2 - element[len] / 2);
-          break;
-        case end:
-          offsets[mainAxis] = offsets[mainAxis] + (reference2[len] / 2 - element[len] / 2);
-          break;
-        default:
-      }
-    }
-    return offsets;
-  }
-
-  // node_modules/@popperjs/core/lib/utils/detectOverflow.js
-  function detectOverflow(state, options) {
-    if (options === void 0) {
-      options = {};
-    }
-    var _options = options, _options$placement = _options.placement, placement = _options$placement === void 0 ? state.placement : _options$placement, _options$strategy = _options.strategy, strategy = _options$strategy === void 0 ? state.strategy : _options$strategy, _options$boundary = _options.boundary, boundary = _options$boundary === void 0 ? clippingParents : _options$boundary, _options$rootBoundary = _options.rootBoundary, rootBoundary = _options$rootBoundary === void 0 ? viewport : _options$rootBoundary, _options$elementConte = _options.elementContext, elementContext = _options$elementConte === void 0 ? popper : _options$elementConte, _options$altBoundary = _options.altBoundary, altBoundary = _options$altBoundary === void 0 ? false : _options$altBoundary, _options$padding = _options.padding, padding = _options$padding === void 0 ? 0 : _options$padding;
-    var paddingObject = mergePaddingObject(typeof padding !== "number" ? padding : expandToHashMap(padding, basePlacements));
-    var altContext = elementContext === popper ? reference : popper;
-    var popperRect = state.rects.popper;
-    var element = state.elements[altBoundary ? altContext : elementContext];
-    var clippingClientRect = getClippingRect(isElement(element) ? element : element.contextElement || getDocumentElement(state.elements.popper), boundary, rootBoundary, strategy);
-    var referenceClientRect = getBoundingClientRect(state.elements.reference);
-    var popperOffsets2 = computeOffsets({
-      reference: referenceClientRect,
-      element: popperRect,
-      strategy: "absolute",
-      placement
-    });
-    var popperClientRect = rectToClientRect(Object.assign({}, popperRect, popperOffsets2));
-    var elementClientRect = elementContext === popper ? popperClientRect : referenceClientRect;
-    var overflowOffsets = {
-      top: clippingClientRect.top - elementClientRect.top + paddingObject.top,
-      bottom: elementClientRect.bottom - clippingClientRect.bottom + paddingObject.bottom,
-      left: clippingClientRect.left - elementClientRect.left + paddingObject.left,
-      right: elementClientRect.right - clippingClientRect.right + paddingObject.right
-    };
-    var offsetData = state.modifiersData.offset;
-    if (elementContext === popper && offsetData) {
-      var offset4 = offsetData[placement];
-      Object.keys(overflowOffsets).forEach(function(key) {
-        var multiply = [right, bottom].indexOf(key) >= 0 ? 1 : -1;
-        var axis = [top, bottom].indexOf(key) >= 0 ? "y" : "x";
-        overflowOffsets[key] += offset4[axis] * multiply;
-      });
-    }
-    return overflowOffsets;
-  }
-
-  // node_modules/@popperjs/core/lib/utils/computeAutoPlacement.js
-  function computeAutoPlacement(state, options) {
-    if (options === void 0) {
-      options = {};
-    }
-    var _options = options, placement = _options.placement, boundary = _options.boundary, rootBoundary = _options.rootBoundary, padding = _options.padding, flipVariations = _options.flipVariations, _options$allowedAutoP = _options.allowedAutoPlacements, allowedAutoPlacements = _options$allowedAutoP === void 0 ? placements : _options$allowedAutoP;
-    var variation = getVariation(placement);
-    var placements2 = variation ? flipVariations ? variationPlacements : variationPlacements.filter(function(placement2) {
-      return getVariation(placement2) === variation;
-    }) : basePlacements;
-    var allowedPlacements = placements2.filter(function(placement2) {
-      return allowedAutoPlacements.indexOf(placement2) >= 0;
-    });
-    if (allowedPlacements.length === 0) {
-      allowedPlacements = placements2;
-    }
-    var overflows = allowedPlacements.reduce(function(acc, placement2) {
-      acc[placement2] = detectOverflow(state, {
-        placement: placement2,
-        boundary,
-        rootBoundary,
-        padding
-      })[getBasePlacement(placement2)];
-      return acc;
-    }, {});
-    return Object.keys(overflows).sort(function(a, b) {
-      return overflows[a] - overflows[b];
-    });
-  }
-
-  // node_modules/@popperjs/core/lib/modifiers/flip.js
-  function getExpandedFallbackPlacements(placement) {
-    if (getBasePlacement(placement) === auto) {
-      return [];
-    }
-    var oppositePlacement = getOppositePlacement(placement);
-    return [getOppositeVariationPlacement(placement), oppositePlacement, getOppositeVariationPlacement(oppositePlacement)];
-  }
-  function flip(_ref) {
-    var state = _ref.state, options = _ref.options, name = _ref.name;
-    if (state.modifiersData[name]._skip) {
-      return;
-    }
-    var _options$mainAxis = options.mainAxis, checkMainAxis = _options$mainAxis === void 0 ? true : _options$mainAxis, _options$altAxis = options.altAxis, checkAltAxis = _options$altAxis === void 0 ? true : _options$altAxis, specifiedFallbackPlacements = options.fallbackPlacements, padding = options.padding, boundary = options.boundary, rootBoundary = options.rootBoundary, altBoundary = options.altBoundary, _options$flipVariatio = options.flipVariations, flipVariations = _options$flipVariatio === void 0 ? true : _options$flipVariatio, allowedAutoPlacements = options.allowedAutoPlacements;
-    var preferredPlacement = state.options.placement;
-    var basePlacement = getBasePlacement(preferredPlacement);
-    var isBasePlacement = basePlacement === preferredPlacement;
-    var fallbackPlacements = specifiedFallbackPlacements || (isBasePlacement || !flipVariations ? [getOppositePlacement(preferredPlacement)] : getExpandedFallbackPlacements(preferredPlacement));
-    var placements2 = [preferredPlacement].concat(fallbackPlacements).reduce(function(acc, placement2) {
-      return acc.concat(getBasePlacement(placement2) === auto ? computeAutoPlacement(state, {
-        placement: placement2,
-        boundary,
-        rootBoundary,
-        padding,
-        flipVariations,
-        allowedAutoPlacements
-      }) : placement2);
-    }, []);
-    var referenceRect = state.rects.reference;
-    var popperRect = state.rects.popper;
-    var checksMap = /* @__PURE__ */ new Map();
-    var makeFallbackChecks = true;
-    var firstFittingPlacement = placements2[0];
-    for (var i = 0; i < placements2.length; i++) {
-      var placement = placements2[i];
-      var _basePlacement = getBasePlacement(placement);
-      var isStartVariation = getVariation(placement) === start2;
-      var isVertical = [top, bottom].indexOf(_basePlacement) >= 0;
-      var len = isVertical ? "width" : "height";
-      var overflow = detectOverflow(state, {
-        placement,
-        boundary,
-        rootBoundary,
-        altBoundary,
-        padding
-      });
-      var mainVariationSide = isVertical ? isStartVariation ? right : left : isStartVariation ? bottom : top;
-      if (referenceRect[len] > popperRect[len]) {
-        mainVariationSide = getOppositePlacement(mainVariationSide);
-      }
-      var altVariationSide = getOppositePlacement(mainVariationSide);
-      var checks = [];
-      if (checkMainAxis) {
-        checks.push(overflow[_basePlacement] <= 0);
-      }
-      if (checkAltAxis) {
-        checks.push(overflow[mainVariationSide] <= 0, overflow[altVariationSide] <= 0);
-      }
-      if (checks.every(function(check) {
-        return check;
-      })) {
-        firstFittingPlacement = placement;
-        makeFallbackChecks = false;
-        break;
-      }
-      checksMap.set(placement, checks);
-    }
-    if (makeFallbackChecks) {
-      var numberOfChecks = flipVariations ? 3 : 1;
-      var _loop = function _loop2(_i3) {
-        var fittingPlacement = placements2.find(function(placement2) {
-          var checks2 = checksMap.get(placement2);
-          if (checks2) {
-            return checks2.slice(0, _i3).every(function(check) {
-              return check;
-            });
-          }
-        });
-        if (fittingPlacement) {
-          firstFittingPlacement = fittingPlacement;
-          return "break";
-        }
-      };
-      for (var _i2 = numberOfChecks; _i2 > 0; _i2--) {
-        var _ret = _loop(_i2);
-        if (_ret === "break")
-          break;
-      }
-    }
-    if (state.placement !== firstFittingPlacement) {
-      state.modifiersData[name]._skip = true;
-      state.placement = firstFittingPlacement;
-      state.reset = true;
-    }
-  }
-  var flip_default = {
-    name: "flip",
-    enabled: true,
-    phase: "main",
-    fn: flip,
-    requiresIfExists: ["offset"],
-    data: {
-      _skip: false
-    }
-  };
-
-  // node_modules/@popperjs/core/lib/modifiers/hide.js
-  function getSideOffsets(overflow, rect, preventedOffsets) {
-    if (preventedOffsets === void 0) {
-      preventedOffsets = {
-        x: 0,
-        y: 0
-      };
-    }
-    return {
-      top: overflow.top - rect.height - preventedOffsets.y,
-      right: overflow.right - rect.width + preventedOffsets.x,
-      bottom: overflow.bottom - rect.height + preventedOffsets.y,
-      left: overflow.left - rect.width - preventedOffsets.x
-    };
-  }
-  function isAnySideFullyClipped(overflow) {
-    return [top, right, bottom, left].some(function(side) {
-      return overflow[side] >= 0;
-    });
-  }
-  function hide(_ref) {
-    var state = _ref.state, name = _ref.name;
-    var referenceRect = state.rects.reference;
-    var popperRect = state.rects.popper;
-    var preventedOffsets = state.modifiersData.preventOverflow;
-    var referenceOverflow = detectOverflow(state, {
-      elementContext: "reference"
-    });
-    var popperAltOverflow = detectOverflow(state, {
-      altBoundary: true
-    });
-    var referenceClippingOffsets = getSideOffsets(referenceOverflow, referenceRect);
-    var popperEscapeOffsets = getSideOffsets(popperAltOverflow, popperRect, preventedOffsets);
-    var isReferenceHidden = isAnySideFullyClipped(referenceClippingOffsets);
-    var hasPopperEscaped = isAnySideFullyClipped(popperEscapeOffsets);
-    state.modifiersData[name] = {
-      referenceClippingOffsets,
-      popperEscapeOffsets,
-      isReferenceHidden,
-      hasPopperEscaped
-    };
-    state.attributes.popper = Object.assign({}, state.attributes.popper, {
-      "data-popper-reference-hidden": isReferenceHidden,
-      "data-popper-escaped": hasPopperEscaped
-    });
-  }
-  var hide_default = {
-    name: "hide",
-    enabled: true,
-    phase: "main",
-    requiresIfExists: ["preventOverflow"],
-    fn: hide
-  };
-
-  // node_modules/@popperjs/core/lib/modifiers/offset.js
-  function distanceAndSkiddingToXY(placement, rects, offset4) {
-    var basePlacement = getBasePlacement(placement);
-    var invertDistance = [left, top].indexOf(basePlacement) >= 0 ? -1 : 1;
-    var _ref = typeof offset4 === "function" ? offset4(Object.assign({}, rects, {
-      placement
-    })) : offset4, skidding = _ref[0], distance3 = _ref[1];
-    skidding = skidding || 0;
-    distance3 = (distance3 || 0) * invertDistance;
-    return [left, right].indexOf(basePlacement) >= 0 ? {
-      x: distance3,
-      y: skidding
-    } : {
-      x: skidding,
-      y: distance3
-    };
-  }
-  function offset(_ref2) {
-    var state = _ref2.state, options = _ref2.options, name = _ref2.name;
-    var _options$offset = options.offset, offset4 = _options$offset === void 0 ? [0, 0] : _options$offset;
-    var data = placements.reduce(function(acc, placement) {
-      acc[placement] = distanceAndSkiddingToXY(placement, state.rects, offset4);
-      return acc;
-    }, {});
-    var _data$state$placement = data[state.placement], x = _data$state$placement.x, y = _data$state$placement.y;
-    if (state.modifiersData.popperOffsets != null) {
-      state.modifiersData.popperOffsets.x += x;
-      state.modifiersData.popperOffsets.y += y;
-    }
-    state.modifiersData[name] = data;
-  }
-  var offset_default = {
-    name: "offset",
-    enabled: true,
-    phase: "main",
-    requires: ["popperOffsets"],
-    fn: offset
-  };
-
-  // node_modules/@popperjs/core/lib/modifiers/popperOffsets.js
-  function popperOffsets(_ref) {
-    var state = _ref.state, name = _ref.name;
-    state.modifiersData[name] = computeOffsets({
-      reference: state.rects.reference,
-      element: state.rects.popper,
-      strategy: "absolute",
-      placement: state.placement
-    });
-  }
-  var popperOffsets_default = {
-    name: "popperOffsets",
-    enabled: true,
-    phase: "read",
-    fn: popperOffsets,
-    data: {}
-  };
-
-  // node_modules/@popperjs/core/lib/utils/getAltAxis.js
-  function getAltAxis(axis) {
-    return axis === "x" ? "y" : "x";
-  }
-
-  // node_modules/@popperjs/core/lib/modifiers/preventOverflow.js
-  function preventOverflow(_ref) {
-    var state = _ref.state, options = _ref.options, name = _ref.name;
-    var _options$mainAxis = options.mainAxis, checkMainAxis = _options$mainAxis === void 0 ? true : _options$mainAxis, _options$altAxis = options.altAxis, checkAltAxis = _options$altAxis === void 0 ? false : _options$altAxis, boundary = options.boundary, rootBoundary = options.rootBoundary, altBoundary = options.altBoundary, padding = options.padding, _options$tether = options.tether, tether = _options$tether === void 0 ? true : _options$tether, _options$tetherOffset = options.tetherOffset, tetherOffset = _options$tetherOffset === void 0 ? 0 : _options$tetherOffset;
-    var overflow = detectOverflow(state, {
-      boundary,
-      rootBoundary,
-      padding,
-      altBoundary
-    });
-    var basePlacement = getBasePlacement(state.placement);
-    var variation = getVariation(state.placement);
-    var isBasePlacement = !variation;
-    var mainAxis = getMainAxisFromPlacement(basePlacement);
-    var altAxis = getAltAxis(mainAxis);
-    var popperOffsets2 = state.modifiersData.popperOffsets;
-    var referenceRect = state.rects.reference;
-    var popperRect = state.rects.popper;
-    var tetherOffsetValue = typeof tetherOffset === "function" ? tetherOffset(Object.assign({}, state.rects, {
-      placement: state.placement
-    })) : tetherOffset;
-    var normalizedTetherOffsetValue = typeof tetherOffsetValue === "number" ? {
-      mainAxis: tetherOffsetValue,
-      altAxis: tetherOffsetValue
-    } : Object.assign({
-      mainAxis: 0,
-      altAxis: 0
-    }, tetherOffsetValue);
-    var offsetModifierState = state.modifiersData.offset ? state.modifiersData.offset[state.placement] : null;
-    var data = {
-      x: 0,
-      y: 0
-    };
-    if (!popperOffsets2) {
-      return;
-    }
-    if (checkMainAxis) {
-      var _offsetModifierState$;
-      var mainSide = mainAxis === "y" ? top : left;
-      var altSide = mainAxis === "y" ? bottom : right;
-      var len = mainAxis === "y" ? "height" : "width";
-      var offset4 = popperOffsets2[mainAxis];
-      var min2 = offset4 + overflow[mainSide];
-      var max2 = offset4 - overflow[altSide];
-      var additive = tether ? -popperRect[len] / 2 : 0;
-      var minLen = variation === start2 ? referenceRect[len] : popperRect[len];
-      var maxLen = variation === start2 ? -popperRect[len] : -referenceRect[len];
-      var arrowElement = state.elements.arrow;
-      var arrowRect = tether && arrowElement ? getLayoutRect(arrowElement) : {
-        width: 0,
-        height: 0
-      };
-      var arrowPaddingObject = state.modifiersData["arrow#persistent"] ? state.modifiersData["arrow#persistent"].padding : getFreshSideObject();
-      var arrowPaddingMin = arrowPaddingObject[mainSide];
-      var arrowPaddingMax = arrowPaddingObject[altSide];
-      var arrowLen = within(0, referenceRect[len], arrowRect[len]);
-      var minOffset = isBasePlacement ? referenceRect[len] / 2 - additive - arrowLen - arrowPaddingMin - normalizedTetherOffsetValue.mainAxis : minLen - arrowLen - arrowPaddingMin - normalizedTetherOffsetValue.mainAxis;
-      var maxOffset = isBasePlacement ? -referenceRect[len] / 2 + additive + arrowLen + arrowPaddingMax + normalizedTetherOffsetValue.mainAxis : maxLen + arrowLen + arrowPaddingMax + normalizedTetherOffsetValue.mainAxis;
-      var arrowOffsetParent = state.elements.arrow && getOffsetParent(state.elements.arrow);
-      var clientOffset = arrowOffsetParent ? mainAxis === "y" ? arrowOffsetParent.clientTop || 0 : arrowOffsetParent.clientLeft || 0 : 0;
-      var offsetModifierValue = (_offsetModifierState$ = offsetModifierState == null ? void 0 : offsetModifierState[mainAxis]) != null ? _offsetModifierState$ : 0;
-      var tetherMin = offset4 + minOffset - offsetModifierValue - clientOffset;
-      var tetherMax = offset4 + maxOffset - offsetModifierValue;
-      var preventedOffset = within(tether ? min(min2, tetherMin) : min2, offset4, tether ? max(max2, tetherMax) : max2);
-      popperOffsets2[mainAxis] = preventedOffset;
-      data[mainAxis] = preventedOffset - offset4;
-    }
-    if (checkAltAxis) {
-      var _offsetModifierState$2;
-      var _mainSide = mainAxis === "x" ? top : left;
-      var _altSide = mainAxis === "x" ? bottom : right;
-      var _offset = popperOffsets2[altAxis];
-      var _len = altAxis === "y" ? "height" : "width";
-      var _min = _offset + overflow[_mainSide];
-      var _max = _offset - overflow[_altSide];
-      var isOriginSide = [top, left].indexOf(basePlacement) !== -1;
-      var _offsetModifierValue = (_offsetModifierState$2 = offsetModifierState == null ? void 0 : offsetModifierState[altAxis]) != null ? _offsetModifierState$2 : 0;
-      var _tetherMin = isOriginSide ? _min : _offset - referenceRect[_len] - popperRect[_len] - _offsetModifierValue + normalizedTetherOffsetValue.altAxis;
-      var _tetherMax = isOriginSide ? _offset + referenceRect[_len] + popperRect[_len] - _offsetModifierValue - normalizedTetherOffsetValue.altAxis : _max;
-      var _preventedOffset = tether && isOriginSide ? withinMaxClamp(_tetherMin, _offset, _tetherMax) : within(tether ? _tetherMin : _min, _offset, tether ? _tetherMax : _max);
-      popperOffsets2[altAxis] = _preventedOffset;
-      data[altAxis] = _preventedOffset - _offset;
-    }
-    state.modifiersData[name] = data;
-  }
-  var preventOverflow_default = {
-    name: "preventOverflow",
-    enabled: true,
-    phase: "main",
-    fn: preventOverflow,
-    requiresIfExists: ["offset"]
-  };
-
-  // node_modules/@popperjs/core/lib/dom-utils/getHTMLElementScroll.js
-  function getHTMLElementScroll(element) {
-    return {
-      scrollLeft: element.scrollLeft,
-      scrollTop: element.scrollTop
-    };
-  }
-
-  // node_modules/@popperjs/core/lib/dom-utils/getNodeScroll.js
-  function getNodeScroll(node) {
-    if (node === getWindow(node) || !isHTMLElement(node)) {
-      return getWindowScroll(node);
-    } else {
-      return getHTMLElementScroll(node);
-    }
-  }
-
-  // node_modules/@popperjs/core/lib/dom-utils/getCompositeRect.js
-  function isElementScaled(element) {
-    var rect = element.getBoundingClientRect();
-    var scaleX = round(rect.width) / element.offsetWidth || 1;
-    var scaleY = round(rect.height) / element.offsetHeight || 1;
-    return scaleX !== 1 || scaleY !== 1;
-  }
-  function getCompositeRect(elementOrVirtualElement, offsetParent, isFixed) {
-    if (isFixed === void 0) {
-      isFixed = false;
-    }
-    var isOffsetParentAnElement = isHTMLElement(offsetParent);
-    var offsetParentIsScaled = isHTMLElement(offsetParent) && isElementScaled(offsetParent);
-    var documentElement = getDocumentElement(offsetParent);
-    var rect = getBoundingClientRect(elementOrVirtualElement, offsetParentIsScaled, isFixed);
-    var scroll2 = {
-      scrollLeft: 0,
-      scrollTop: 0
-    };
-    var offsets = {
-      x: 0,
-      y: 0
-    };
-    if (isOffsetParentAnElement || !isOffsetParentAnElement && !isFixed) {
-      if (getNodeName(offsetParent) !== "body" || // https://github.com/popperjs/popper-core/issues/1078
-      isScrollParent(documentElement)) {
-        scroll2 = getNodeScroll(offsetParent);
-      }
-      if (isHTMLElement(offsetParent)) {
-        offsets = getBoundingClientRect(offsetParent, true);
-        offsets.x += offsetParent.clientLeft;
-        offsets.y += offsetParent.clientTop;
-      } else if (documentElement) {
-        offsets.x = getWindowScrollBarX(documentElement);
-      }
-    }
-    return {
-      x: rect.left + scroll2.scrollLeft - offsets.x,
-      y: rect.top + scroll2.scrollTop - offsets.y,
-      width: rect.width,
-      height: rect.height
-    };
-  }
-
-  // node_modules/@popperjs/core/lib/utils/orderModifiers.js
-  function order(modifiers) {
-    var map2 = /* @__PURE__ */ new Map();
-    var visited = /* @__PURE__ */ new Set();
-    var result = [];
-    modifiers.forEach(function(modifier) {
-      map2.set(modifier.name, modifier);
-    });
-    function sort(modifier) {
-      visited.add(modifier.name);
-      var requires = [].concat(modifier.requires || [], modifier.requiresIfExists || []);
-      requires.forEach(function(dep) {
-        if (!visited.has(dep)) {
-          var depModifier = map2.get(dep);
-          if (depModifier) {
-            sort(depModifier);
-          }
-        }
-      });
-      result.push(modifier);
-    }
-    modifiers.forEach(function(modifier) {
-      if (!visited.has(modifier.name)) {
-        sort(modifier);
-      }
-    });
-    return result;
-  }
-  function orderModifiers(modifiers) {
-    var orderedModifiers = order(modifiers);
-    return modifierPhases.reduce(function(acc, phase) {
-      return acc.concat(orderedModifiers.filter(function(modifier) {
-        return modifier.phase === phase;
-      }));
-    }, []);
-  }
-
-  // node_modules/@popperjs/core/lib/utils/debounce.js
-  function debounce(fn2) {
-    var pending;
-    return function() {
-      if (!pending) {
-        pending = new Promise(function(resolve) {
-          Promise.resolve().then(function() {
-            pending = void 0;
-            resolve(fn2());
-          });
-        });
-      }
-      return pending;
-    };
-  }
-
-  // node_modules/@popperjs/core/lib/utils/mergeByName.js
-  function mergeByName(modifiers) {
-    var merged = modifiers.reduce(function(merged2, current) {
-      var existing = merged2[current.name];
-      merged2[current.name] = existing ? Object.assign({}, existing, current, {
-        options: Object.assign({}, existing.options, current.options),
-        data: Object.assign({}, existing.data, current.data)
-      }) : current;
-      return merged2;
-    }, {});
-    return Object.keys(merged).map(function(key) {
-      return merged[key];
-    });
-  }
-
-  // node_modules/@popperjs/core/lib/createPopper.js
-  var DEFAULT_OPTIONS = {
-    placement: "bottom",
-    modifiers: [],
-    strategy: "absolute"
-  };
-  function areValidElements() {
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    return !args.some(function(element) {
-      return !(element && typeof element.getBoundingClientRect === "function");
-    });
-  }
-  function popperGenerator(generatorOptions) {
-    if (generatorOptions === void 0) {
-      generatorOptions = {};
-    }
-    var _generatorOptions = generatorOptions, _generatorOptions$def = _generatorOptions.defaultModifiers, defaultModifiers = _generatorOptions$def === void 0 ? [] : _generatorOptions$def, _generatorOptions$def2 = _generatorOptions.defaultOptions, defaultOptions2 = _generatorOptions$def2 === void 0 ? DEFAULT_OPTIONS : _generatorOptions$def2;
-    return function createPopper3(reference2, popper2, options) {
-      if (options === void 0) {
-        options = defaultOptions2;
-      }
-      var state = {
-        placement: "bottom",
-        orderedModifiers: [],
-        options: Object.assign({}, DEFAULT_OPTIONS, defaultOptions2),
-        modifiersData: {},
-        elements: {
-          reference: reference2,
-          popper: popper2
-        },
-        attributes: {},
-        styles: {}
-      };
-      var effectCleanupFns = [];
-      var isDestroyed = false;
-      var instance = {
-        state,
-        setOptions: function setOptions(setOptionsAction) {
-          var options2 = typeof setOptionsAction === "function" ? setOptionsAction(state.options) : setOptionsAction;
-          cleanupModifierEffects();
-          state.options = Object.assign({}, defaultOptions2, state.options, options2);
-          state.scrollParents = {
-            reference: isElement(reference2) ? listScrollParents(reference2) : reference2.contextElement ? listScrollParents(reference2.contextElement) : [],
-            popper: listScrollParents(popper2)
-          };
-          var orderedModifiers = orderModifiers(mergeByName([].concat(defaultModifiers, state.options.modifiers)));
-          state.orderedModifiers = orderedModifiers.filter(function(m) {
-            return m.enabled;
-          });
-          runModifierEffects();
-          return instance.update();
-        },
-        // Sync update – it will always be executed, even if not necessary. This
-        // is useful for low frequency updates where sync behavior simplifies the
-        // logic.
-        // For high frequency updates (e.g. `resize` and `scroll` events), always
-        // prefer the async Popper#update method
-        forceUpdate: function forceUpdate() {
-          if (isDestroyed) {
-            return;
-          }
-          var _state$elements = state.elements, reference3 = _state$elements.reference, popper3 = _state$elements.popper;
-          if (!areValidElements(reference3, popper3)) {
-            return;
-          }
-          state.rects = {
-            reference: getCompositeRect(reference3, getOffsetParent(popper3), state.options.strategy === "fixed"),
-            popper: getLayoutRect(popper3)
-          };
-          state.reset = false;
-          state.placement = state.options.placement;
-          state.orderedModifiers.forEach(function(modifier) {
-            return state.modifiersData[modifier.name] = Object.assign({}, modifier.data);
-          });
-          for (var index2 = 0; index2 < state.orderedModifiers.length; index2++) {
-            if (state.reset === true) {
-              state.reset = false;
-              index2 = -1;
-              continue;
-            }
-            var _state$orderedModifie = state.orderedModifiers[index2], fn2 = _state$orderedModifie.fn, _state$orderedModifie2 = _state$orderedModifie.options, _options = _state$orderedModifie2 === void 0 ? {} : _state$orderedModifie2, name = _state$orderedModifie.name;
-            if (typeof fn2 === "function") {
-              state = fn2({
-                state,
-                options: _options,
-                name,
-                instance
-              }) || state;
-            }
-          }
-        },
-        // Async and optimistically optimized update – it will not be executed if
-        // not necessary (debounced to run at most once-per-tick)
-        update: debounce(function() {
-          return new Promise(function(resolve) {
-            instance.forceUpdate();
-            resolve(state);
-          });
-        }),
-        destroy: function destroy() {
-          cleanupModifierEffects();
-          isDestroyed = true;
-        }
-      };
-      if (!areValidElements(reference2, popper2)) {
-        return instance;
-      }
-      instance.setOptions(options).then(function(state2) {
-        if (!isDestroyed && options.onFirstUpdate) {
-          options.onFirstUpdate(state2);
-        }
-      });
-      function runModifierEffects() {
-        state.orderedModifiers.forEach(function(_ref) {
-          var name = _ref.name, _ref$options = _ref.options, options2 = _ref$options === void 0 ? {} : _ref$options, effect3 = _ref.effect;
-          if (typeof effect3 === "function") {
-            var cleanupFn = effect3({
-              state,
-              name,
-              instance,
-              options: options2
-            });
-            var noopFn = function noopFn2() {
-            };
-            effectCleanupFns.push(cleanupFn || noopFn);
-          }
-        });
-      }
-      function cleanupModifierEffects() {
-        effectCleanupFns.forEach(function(fn2) {
-          return fn2();
-        });
-        effectCleanupFns = [];
-      }
-      return instance;
-    };
-  }
-
-  // node_modules/@restart/ui/esm/popper.js
-  var createPopper2 = popperGenerator({
-    defaultModifiers: [hide_default, popperOffsets_default, computeStyles_default, eventListeners_default, offset_default, flip_default, preventOverflow_default, arrow_default]
-  });
-
-  // node_modules/@restart/ui/esm/usePopper.js
-  var _excluded7 = ["enabled", "placement", "strategy", "modifiers"];
-  function _objectWithoutPropertiesLoose8(r, e2) {
-    if (null == r)
-      return {};
-    var t = {};
-    for (var n in r)
-      if ({}.hasOwnProperty.call(r, n)) {
-        if (e2.indexOf(n) >= 0)
-          continue;
-        t[n] = r[n];
-      }
-    return t;
-  }
-  var disabledApplyStylesModifier = {
-    name: "applyStyles",
-    enabled: false,
-    phase: "afterWrite",
-    fn: () => void 0
-  };
-  var ariaDescribedByModifier = {
-    name: "ariaDescribedBy",
-    enabled: true,
-    phase: "afterWrite",
-    effect: ({
-      state
-    }) => () => {
-      const {
-        reference: reference2,
-        popper: popper2
-      } = state.elements;
-      if ("removeAttribute" in reference2) {
-        const ids = (reference2.getAttribute("aria-describedby") || "").split(",").filter((id2) => id2.trim() !== popper2.id);
-        if (!ids.length)
-          reference2.removeAttribute("aria-describedby");
-        else
-          reference2.setAttribute("aria-describedby", ids.join(","));
-      }
-    },
-    fn: ({
-      state
-    }) => {
-      var _popper$getAttribute;
-      const {
-        popper: popper2,
-        reference: reference2
-      } = state.elements;
-      const role = (_popper$getAttribute = popper2.getAttribute("role")) == null ? void 0 : _popper$getAttribute.toLowerCase();
-      if (popper2.id && role === "tooltip" && "setAttribute" in reference2) {
-        const ids = reference2.getAttribute("aria-describedby");
-        if (ids && ids.split(",").indexOf(popper2.id) !== -1) {
-          return;
-        }
-        reference2.setAttribute("aria-describedby", ids ? `${ids},${popper2.id}` : popper2.id);
-      }
-    }
-  };
-  var EMPTY_MODIFIERS = [];
-  function usePopper(referenceElement, popperElement, _ref = {}) {
-    let {
-      enabled = true,
-      placement = "bottom",
-      strategy = "absolute",
-      modifiers = EMPTY_MODIFIERS
-    } = _ref, config = _objectWithoutPropertiesLoose8(_ref, _excluded7);
-    const prevModifiers = (0, import_react38.useRef)(modifiers);
-    const popperInstanceRef = (0, import_react38.useRef)();
-    const update2 = (0, import_react38.useCallback)(() => {
-      var _popperInstanceRef$cu;
-      (_popperInstanceRef$cu = popperInstanceRef.current) == null ? void 0 : _popperInstanceRef$cu.update();
-    }, []);
-    const forceUpdate = (0, import_react38.useCallback)(() => {
-      var _popperInstanceRef$cu2;
-      (_popperInstanceRef$cu2 = popperInstanceRef.current) == null ? void 0 : _popperInstanceRef$cu2.forceUpdate();
-    }, []);
-    const [popperState, setState] = useSafeState_default((0, import_react38.useState)({
-      placement,
-      update: update2,
-      forceUpdate,
-      attributes: {},
-      styles: {
-        popper: {},
-        arrow: {}
-      }
-    }));
-    const updateModifier = (0, import_react38.useMemo)(() => ({
-      name: "updateStateModifier",
-      enabled: true,
-      phase: "write",
-      requires: ["computeStyles"],
-      fn: ({
-        state
-      }) => {
-        const styles2 = {};
-        const attributes = {};
-        Object.keys(state.elements).forEach((element) => {
-          styles2[element] = state.styles[element];
-          attributes[element] = state.attributes[element];
-        });
-        setState({
-          state,
-          styles: styles2,
-          attributes,
-          update: update2,
-          forceUpdate,
-          placement: state.placement
-        });
-      }
-    }), [update2, forceUpdate, setState]);
-    const nextModifiers = (0, import_react38.useMemo)(() => {
-      if (!dequal(prevModifiers.current, modifiers)) {
-        prevModifiers.current = modifiers;
-      }
-      return prevModifiers.current;
-    }, [modifiers]);
-    (0, import_react38.useEffect)(() => {
-      if (!popperInstanceRef.current || !enabled)
-        return;
-      popperInstanceRef.current.setOptions({
-        placement,
-        strategy,
-        modifiers: [...nextModifiers, updateModifier, disabledApplyStylesModifier]
-      });
-    }, [strategy, placement, updateModifier, enabled, nextModifiers]);
-    (0, import_react38.useEffect)(() => {
-      if (!enabled || referenceElement == null || popperElement == null) {
-        return void 0;
-      }
-      popperInstanceRef.current = createPopper2(referenceElement, popperElement, Object.assign({}, config, {
-        placement,
-        strategy,
-        modifiers: [...nextModifiers, ariaDescribedByModifier, updateModifier]
-      }));
-      return () => {
-        if (popperInstanceRef.current != null) {
-          popperInstanceRef.current.destroy();
-          popperInstanceRef.current = void 0;
-          setState((s) => Object.assign({}, s, {
-            attributes: {},
-            styles: {
-              popper: {}
-            }
-          }));
-        }
-      };
-    }, [enabled, referenceElement, popperElement]);
-    return popperState;
-  }
-  var usePopper_default = usePopper;
-
-  // node_modules/dom-helpers/esm/contains.js
-  function contains2(context4, node) {
-    if (context4.contains)
-      return context4.contains(node);
-    if (context4.compareDocumentPosition)
-      return context4 === node || !!(context4.compareDocumentPosition(node) & 16);
-  }
-
-  // node_modules/@restart/ui/esm/useClickOutside.js
-  var import_react39 = __toESM(require_react());
-  var import_warning = __toESM(require_warning());
-  var noop6 = () => {
-  };
-  function isLeftClickEvent(event) {
-    return event.button === 0;
-  }
-  function isModifiedEvent2(event) {
-    return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
-  }
-  var getRefTarget = (ref2) => ref2 && ("current" in ref2 ? ref2.current : ref2);
-  var InitialTriggerEvents = {
-    click: "mousedown",
-    mouseup: "mousedown",
-    pointerup: "pointerdown"
-  };
-  function useClickOutside(ref2, onClickOutside = noop6, {
-    disabled,
-    clickTrigger = "click"
-  } = {}) {
-    const preventMouseClickOutsideRef = (0, import_react39.useRef)(false);
-    const waitingForTrigger = (0, import_react39.useRef)(false);
-    const handleMouseCapture = (0, import_react39.useCallback)((e2) => {
-      const currentTarget = getRefTarget(ref2);
-      (0, import_warning.default)(!!currentTarget, "ClickOutside captured a close event but does not have a ref to compare it to. useClickOutside(), should be passed a ref that resolves to a DOM node");
-      preventMouseClickOutsideRef.current = !currentTarget || isModifiedEvent2(e2) || !isLeftClickEvent(e2) || !!contains2(currentTarget, e2.target) || waitingForTrigger.current;
-      waitingForTrigger.current = false;
-    }, [ref2]);
-    const handleInitialMouse = useEventCallback((e2) => {
-      const currentTarget = getRefTarget(ref2);
-      if (currentTarget && contains2(currentTarget, e2.target)) {
-        waitingForTrigger.current = true;
-      } else {
-        waitingForTrigger.current = false;
-      }
-    });
-    const handleMouse = useEventCallback((e2) => {
-      if (!preventMouseClickOutsideRef.current) {
-        onClickOutside(e2);
-      }
-    });
-    (0, import_react39.useEffect)(() => {
-      var _ownerWindow$event, _ownerWindow$parent;
-      if (disabled || ref2 == null)
-        return void 0;
-      const doc = ownerDocument(getRefTarget(ref2));
-      const ownerWindow2 = doc.defaultView || window;
-      let currentEvent = (_ownerWindow$event = ownerWindow2.event) != null ? _ownerWindow$event : (_ownerWindow$parent = ownerWindow2.parent) == null ? void 0 : _ownerWindow$parent.event;
-      let removeInitialTriggerListener = null;
-      if (InitialTriggerEvents[clickTrigger]) {
-        removeInitialTriggerListener = listen_default(doc, InitialTriggerEvents[clickTrigger], handleInitialMouse, true);
-      }
-      const removeMouseCaptureListener = listen_default(doc, clickTrigger, handleMouseCapture, true);
-      const removeMouseListener = listen_default(doc, clickTrigger, (e2) => {
-        if (e2 === currentEvent) {
-          currentEvent = void 0;
-          return;
-        }
-        handleMouse(e2);
-      });
-      let mobileSafariHackListeners = [];
-      if ("ontouchstart" in doc.documentElement) {
-        mobileSafariHackListeners = [].slice.call(doc.body.children).map((el) => listen_default(el, "mousemove", noop6));
-      }
-      return () => {
-        removeInitialTriggerListener == null ? void 0 : removeInitialTriggerListener();
-        removeMouseCaptureListener();
-        removeMouseListener();
-        mobileSafariHackListeners.forEach((remove2) => remove2());
-      };
-    }, [ref2, disabled, clickTrigger, handleMouseCapture, handleInitialMouse, handleMouse]);
-  }
-  var useClickOutside_default = useClickOutside;
-
-  // node_modules/@restart/ui/esm/mergeOptionsWithPopperConfig.js
-  function toModifierMap(modifiers) {
-    const result = {};
-    if (!Array.isArray(modifiers)) {
-      return modifiers || result;
-    }
-    modifiers == null ? void 0 : modifiers.forEach((m) => {
-      result[m.name] = m;
-    });
-    return result;
-  }
-  function toModifierArray(map2 = {}) {
-    if (Array.isArray(map2))
-      return map2;
-    return Object.keys(map2).map((k) => {
-      map2[k].name = k;
-      return map2[k];
-    });
-  }
-  function mergeOptionsWithPopperConfig({
-    enabled,
-    enableEvents,
-    placement,
-    flip: flip2,
-    offset: offset4,
-    fixed,
-    containerPadding,
-    arrowElement,
-    popperConfig = {}
-  }) {
-    var _modifiers$eventListe, _modifiers$preventOve, _modifiers$preventOve2, _modifiers$offset, _modifiers$arrow;
-    const modifiers = toModifierMap(popperConfig.modifiers);
-    return Object.assign({}, popperConfig, {
-      placement,
-      enabled,
-      strategy: fixed ? "fixed" : popperConfig.strategy,
-      modifiers: toModifierArray(Object.assign({}, modifiers, {
-        eventListeners: {
-          enabled: enableEvents,
-          options: (_modifiers$eventListe = modifiers.eventListeners) == null ? void 0 : _modifiers$eventListe.options
-        },
-        preventOverflow: Object.assign({}, modifiers.preventOverflow, {
-          options: containerPadding ? Object.assign({
-            padding: containerPadding
-          }, (_modifiers$preventOve = modifiers.preventOverflow) == null ? void 0 : _modifiers$preventOve.options) : (_modifiers$preventOve2 = modifiers.preventOverflow) == null ? void 0 : _modifiers$preventOve2.options
-        }),
-        offset: {
-          options: Object.assign({
-            offset: offset4
-          }, (_modifiers$offset = modifiers.offset) == null ? void 0 : _modifiers$offset.options)
-        },
-        arrow: Object.assign({}, modifiers.arrow, {
-          enabled: !!arrowElement,
-          options: Object.assign({}, (_modifiers$arrow = modifiers.arrow) == null ? void 0 : _modifiers$arrow.options, {
-            element: arrowElement
-          })
-        }),
-        flip: Object.assign({
-          enabled: !!flip2
-        }, modifiers.flip)
-      }))
-    });
-  }
-
-  // node_modules/@restart/ui/esm/DropdownMenu.js
-  var import_jsx_runtime24 = __toESM(require_jsx_runtime());
-  var _excluded8 = ["children", "usePopper"];
-  function _objectWithoutPropertiesLoose9(r, e2) {
-    if (null == r)
-      return {};
-    var t = {};
-    for (var n in r)
-      if ({}.hasOwnProperty.call(r, n)) {
-        if (e2.indexOf(n) >= 0)
-          continue;
-        t[n] = r[n];
-      }
-    return t;
-  }
-  var noop7 = () => {
-  };
-  function useDropdownMenu(options = {}) {
-    const context4 = (0, import_react40.useContext)(DropdownContext_default);
-    const [arrowElement, attachArrowRef] = useCallbackRef();
-    const hasShownRef = (0, import_react40.useRef)(false);
-    const {
-      flip: flip2,
-      offset: offset4,
-      rootCloseEvent,
-      fixed = false,
-      placement: placementOverride,
-      popperConfig = {},
-      enableEventListeners = true,
-      usePopper: shouldUsePopper = !!context4
-    } = options;
-    const show = (context4 == null ? void 0 : context4.show) == null ? !!options.show : context4.show;
-    if (show && !hasShownRef.current) {
-      hasShownRef.current = true;
-    }
-    const handleClose = (e2) => {
-      context4 == null ? void 0 : context4.toggle(false, e2);
-    };
-    const {
-      placement,
-      setMenu,
-      menuElement,
-      toggleElement
-    } = context4 || {};
-    const popper2 = usePopper_default(toggleElement, menuElement, mergeOptionsWithPopperConfig({
-      placement: placementOverride || placement || "bottom-start",
-      enabled: shouldUsePopper,
-      enableEvents: enableEventListeners == null ? show : enableEventListeners,
-      offset: offset4,
-      flip: flip2,
-      fixed,
-      arrowElement,
-      popperConfig
-    }));
-    const menuProps = Object.assign({
-      ref: setMenu || noop7,
-      "aria-labelledby": toggleElement == null ? void 0 : toggleElement.id
-    }, popper2.attributes.popper, {
-      style: popper2.styles.popper
-    });
-    const metadata = {
-      show,
-      placement,
-      hasShown: hasShownRef.current,
-      toggle: context4 == null ? void 0 : context4.toggle,
-      popper: shouldUsePopper ? popper2 : null,
-      arrowProps: shouldUsePopper ? Object.assign({
-        ref: attachArrowRef
-      }, popper2.attributes.arrow, {
-        style: popper2.styles.arrow
-      }) : {}
-    };
-    useClickOutside_default(menuElement, handleClose, {
-      clickTrigger: rootCloseEvent,
-      disabled: !show
-    });
-    return [menuProps, metadata];
-  }
-  function DropdownMenu(_ref) {
-    let {
-      children: children2,
-      usePopper: usePopperProp = true
-    } = _ref, options = _objectWithoutPropertiesLoose9(_ref, _excluded8);
-    const [props, meta] = useDropdownMenu(Object.assign({}, options, {
-      usePopper: usePopperProp
-    }));
-    return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(import_jsx_runtime24.Fragment, {
-      children: children2(props, meta)
-    });
-  }
-  DropdownMenu.displayName = "DropdownMenu";
-  var DropdownMenu_default = DropdownMenu;
-
-  // node_modules/@restart/ui/esm/DropdownToggle.js
-  var import_react41 = __toESM(require_react());
-  var React37 = __toESM(require_react());
-  var import_jsx_runtime25 = __toESM(require_jsx_runtime());
-  var isRoleMenu = (el) => {
-    var _el$getAttribute;
-    return ((_el$getAttribute = el.getAttribute("role")) == null ? void 0 : _el$getAttribute.toLowerCase()) === "menu";
-  };
-  var noop8 = () => {
-  };
-  function useDropdownToggle() {
-    const id2 = $b5e257d569688ac6$export$619500959fc48b26();
-    const {
-      show = false,
-      toggle = noop8,
-      setToggle,
-      menuElement
-    } = (0, import_react41.useContext)(DropdownContext_default) || {};
-    const handleClick = (0, import_react41.useCallback)((e2) => {
-      toggle(!show, e2);
-    }, [show, toggle]);
-    const props = {
-      id: id2,
-      ref: setToggle || noop8,
-      onClick: handleClick,
-      "aria-expanded": !!show
-    };
-    if (menuElement && isRoleMenu(menuElement)) {
-      props["aria-haspopup"] = true;
-    }
-    return [props, {
-      show,
-      toggle
-    }];
-  }
-  function DropdownToggle({
-    children: children2
-  }) {
-    const [props, meta] = useDropdownToggle();
-    return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_jsx_runtime25.Fragment, {
-      children: children2(props, meta)
-    });
-  }
-  DropdownToggle.displayName = "DropdownToggle";
-  var DropdownToggle_default = DropdownToggle;
-
-  // node_modules/@restart/ui/esm/DropdownItem.js
-  var React38 = __toESM(require_react());
-  var import_react42 = __toESM(require_react());
-  var import_jsx_runtime26 = __toESM(require_jsx_runtime());
-  var _excluded9 = ["eventKey", "disabled", "onClick", "active", "as"];
-  function _objectWithoutPropertiesLoose10(r, e2) {
-    if (null == r)
-      return {};
-    var t = {};
-    for (var n in r)
-      if ({}.hasOwnProperty.call(r, n)) {
-        if (e2.indexOf(n) >= 0)
-          continue;
-        t[n] = r[n];
-      }
-    return t;
-  }
-  function useDropdownItem({
-    key,
-    href,
-    active,
-    disabled,
-    onClick
-  }) {
-    const onSelectCtx = (0, import_react42.useContext)(SelectableContext_default);
-    const navContext = (0, import_react42.useContext)(NavContext_default);
-    const {
-      activeKey
-    } = navContext || {};
-    const eventKey = makeEventKey(key, href);
-    const isActive2 = active == null && key != null ? makeEventKey(activeKey) === eventKey : active;
-    const handleClick = useEventCallback((event) => {
-      if (disabled)
-        return;
-      onClick == null ? void 0 : onClick(event);
-      if (onSelectCtx && !event.isPropagationStopped()) {
-        onSelectCtx(eventKey, event);
-      }
-    });
-    return [{
-      onClick: handleClick,
-      "aria-disabled": disabled || void 0,
-      "aria-selected": isActive2,
-      [dataAttr("dropdown-item")]: ""
-    }, {
-      isActive: isActive2
-    }];
-  }
-  var DropdownItem = /* @__PURE__ */ React38.forwardRef((_ref, ref2) => {
-    let {
-      eventKey,
-      disabled,
-      onClick,
-      active,
-      as: Component2 = Button_default
-    } = _ref, props = _objectWithoutPropertiesLoose10(_ref, _excluded9);
-    const [dropdownItemProps] = useDropdownItem({
-      key: eventKey,
-      href: props.href,
-      disabled,
-      onClick,
-      active
-    });
-    return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Component2, Object.assign({}, props, {
-      ref: ref2
-    }, dropdownItemProps));
-  });
-  DropdownItem.displayName = "DropdownItem";
-  var DropdownItem_default = DropdownItem;
-
-  // node_modules/@restart/ui/esm/useWindow.js
-  var import_react43 = __toESM(require_react());
-  var Context = /* @__PURE__ */ (0, import_react43.createContext)(canUseDOM_default ? window : void 0);
-  var WindowProvider = Context.Provider;
-  function useWindow() {
-    return (0, import_react43.useContext)(Context);
-  }
-
-  // node_modules/@restart/ui/esm/Dropdown.js
-  var import_jsx_runtime27 = __toESM(require_jsx_runtime());
-  function useRefWithUpdate() {
-    const forceUpdate = useForceUpdate();
-    const ref2 = (0, import_react44.useRef)(null);
-    const attachRef = (0, import_react44.useCallback)((element) => {
-      ref2.current = element;
-      forceUpdate();
-    }, [forceUpdate]);
-    return [ref2, attachRef];
-  }
-  function Dropdown({
-    defaultShow,
-    show: rawShow,
-    onSelect,
-    onToggle: rawOnToggle,
-    itemSelector = `* [${dataAttr("dropdown-item")}]`,
-    focusFirstItemOnShow,
-    placement = "bottom-start",
-    children: children2
-  }) {
-    const window2 = useWindow();
-    const [show, onToggle] = useUncontrolledProp2(rawShow, defaultShow, rawOnToggle);
-    const [menuRef, setMenu] = useRefWithUpdate();
-    const menuElement = menuRef.current;
-    const [toggleRef, setToggle] = useRefWithUpdate();
-    const toggleElement = toggleRef.current;
-    const lastShow = usePrevious(show);
-    const lastSourceEvent = (0, import_react44.useRef)(null);
-    const focusInDropdown = (0, import_react44.useRef)(false);
-    const onSelectCtx = (0, import_react44.useContext)(SelectableContext_default);
-    const toggle = (0, import_react44.useCallback)((nextShow, event, source = event == null ? void 0 : event.type) => {
-      onToggle(nextShow, {
-        originalEvent: event,
-        source
-      });
-    }, [onToggle]);
-    const handleSelect = useEventCallback((key, event) => {
-      onSelect == null ? void 0 : onSelect(key, event);
-      toggle(false, event, "select");
-      if (!event.isPropagationStopped()) {
-        onSelectCtx == null ? void 0 : onSelectCtx(key, event);
-      }
-    });
-    const context4 = (0, import_react44.useMemo)(() => ({
-      toggle,
-      placement,
-      show,
-      menuElement,
-      toggleElement,
-      setMenu,
-      setToggle
-    }), [toggle, placement, show, menuElement, toggleElement, setMenu, setToggle]);
-    if (menuElement && lastShow && !show) {
-      focusInDropdown.current = menuElement.contains(menuElement.ownerDocument.activeElement);
-    }
-    const focusToggle = useEventCallback(() => {
-      if (toggleElement && toggleElement.focus) {
-        toggleElement.focus();
-      }
-    });
-    const maybeFocusFirst = useEventCallback(() => {
-      const type = lastSourceEvent.current;
-      let focusType = focusFirstItemOnShow;
-      if (focusType == null) {
-        focusType = menuRef.current && isRoleMenu(menuRef.current) ? "keyboard" : false;
-      }
-      if (focusType === false || focusType === "keyboard" && !/^key.+$/.test(type)) {
-        return;
-      }
-      const first = qsa(menuRef.current, itemSelector)[0];
-      if (first && first.focus)
-        first.focus();
-    });
-    (0, import_react44.useEffect)(() => {
-      if (show)
-        maybeFocusFirst();
-      else if (focusInDropdown.current) {
-        focusInDropdown.current = false;
-        focusToggle();
-      }
-    }, [show, focusInDropdown, focusToggle, maybeFocusFirst]);
-    (0, import_react44.useEffect)(() => {
-      lastSourceEvent.current = null;
-    });
-    const getNextFocusedChild = (current, offset4) => {
-      if (!menuRef.current)
-        return null;
-      const items = qsa(menuRef.current, itemSelector);
-      let index2 = items.indexOf(current) + offset4;
-      index2 = Math.max(0, Math.min(index2, items.length));
-      return items[index2];
-    };
-    useEventListener((0, import_react44.useCallback)(() => window2.document, [window2]), "keydown", (event) => {
-      var _menuRef$current, _toggleRef$current;
-      const {
-        key
-      } = event;
-      const target = event.target;
-      const fromMenu = (_menuRef$current = menuRef.current) == null ? void 0 : _menuRef$current.contains(target);
-      const fromToggle = (_toggleRef$current = toggleRef.current) == null ? void 0 : _toggleRef$current.contains(target);
-      const isInput = /input|textarea/i.test(target.tagName);
-      if (isInput && (key === " " || key !== "Escape" && fromMenu || key === "Escape" && target.type === "search")) {
-        return;
-      }
-      if (!fromMenu && !fromToggle) {
-        return;
-      }
-      if (key === "Tab" && (!menuRef.current || !show)) {
-        return;
-      }
-      lastSourceEvent.current = event.type;
-      const meta = {
-        originalEvent: event,
-        source: event.type
-      };
-      switch (key) {
-        case "ArrowUp": {
-          const next = getNextFocusedChild(target, -1);
-          if (next && next.focus)
-            next.focus();
-          event.preventDefault();
-          return;
-        }
-        case "ArrowDown":
-          event.preventDefault();
-          if (!show) {
-            onToggle(true, meta);
-          } else {
-            const next = getNextFocusedChild(target, 1);
-            if (next && next.focus)
-              next.focus();
-          }
-          return;
-        case "Tab":
-          addEventListener_default(target.ownerDocument, "keyup", (e2) => {
-            var _menuRef$current2;
-            if (e2.key === "Tab" && !e2.target || !((_menuRef$current2 = menuRef.current) != null && _menuRef$current2.contains(e2.target))) {
-              onToggle(false, meta);
-            }
-          }, {
-            once: true
-          });
-          break;
-        case "Escape":
-          if (key === "Escape") {
-            event.preventDefault();
-            event.stopPropagation();
-          }
-          onToggle(false, meta);
-          break;
-        default:
-      }
-    });
-    return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(SelectableContext_default.Provider, {
-      value: handleSelect,
-      children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(DropdownContext_default.Provider, {
-        value: context4,
-        children: children2
-      })
-    });
-  }
-  Dropdown.displayName = "Dropdown";
-  Dropdown.Menu = DropdownMenu_default;
-  Dropdown.Toggle = DropdownToggle_default;
-  Dropdown.Item = DropdownItem_default;
-  var Dropdown_default = Dropdown;
-
-  // node_modules/react-bootstrap/esm/DropdownContext.js
-  var React40 = __toESM(require_react());
-  "use client";
-  var DropdownContext2 = /* @__PURE__ */ React40.createContext({});
-  DropdownContext2.displayName = "DropdownContext";
-  var DropdownContext_default2 = DropdownContext2;
-
-  // node_modules/react-bootstrap/esm/DropdownDivider.js
-  var React41 = __toESM(require_react());
-  var import_classnames14 = __toESM(require_classnames());
-  var import_jsx_runtime28 = __toESM(require_jsx_runtime());
-  "use client";
-  var DropdownDivider = /* @__PURE__ */ React41.forwardRef(({
-    className,
-    bsPrefix,
-    as: Component2 = "hr",
-    role = "separator",
-    ...props
-  }, ref2) => {
-    bsPrefix = useBootstrapPrefix(bsPrefix, "dropdown-divider");
-    return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(Component2, {
-      ref: ref2,
-      className: (0, import_classnames14.default)(className, bsPrefix),
-      role,
-      ...props
-    });
-  });
-  DropdownDivider.displayName = "DropdownDivider";
-  var DropdownDivider_default = DropdownDivider;
-
-  // node_modules/react-bootstrap/esm/DropdownHeader.js
-  var React42 = __toESM(require_react());
-  var import_classnames15 = __toESM(require_classnames());
-  var import_jsx_runtime29 = __toESM(require_jsx_runtime());
-  "use client";
-  var DropdownHeader = /* @__PURE__ */ React42.forwardRef(({
-    className,
-    bsPrefix,
-    as: Component2 = "div",
-    role = "heading",
-    ...props
-  }, ref2) => {
-    bsPrefix = useBootstrapPrefix(bsPrefix, "dropdown-header");
-    return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(Component2, {
-      ref: ref2,
-      className: (0, import_classnames15.default)(className, bsPrefix),
-      role,
-      ...props
-    });
-  });
-  DropdownHeader.displayName = "DropdownHeader";
-  var DropdownHeader_default = DropdownHeader;
-
-  // node_modules/react-bootstrap/esm/DropdownItem.js
-  var import_classnames16 = __toESM(require_classnames());
-  var React43 = __toESM(require_react());
-  var import_jsx_runtime30 = __toESM(require_jsx_runtime());
-  "use client";
-  var DropdownItem2 = /* @__PURE__ */ React43.forwardRef(({
-    bsPrefix,
-    className,
-    eventKey,
-    disabled = false,
-    onClick,
-    active,
-    as: Component2 = Anchor_default,
-    ...props
-  }, ref2) => {
-    const prefix3 = useBootstrapPrefix(bsPrefix, "dropdown-item");
-    const [dropdownItemProps, meta] = useDropdownItem({
-      key: eventKey,
-      href: props.href,
-      disabled,
-      onClick,
-      active
-    });
-    return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(Component2, {
-      ...props,
-      ...dropdownItemProps,
-      ref: ref2,
-      className: (0, import_classnames16.default)(className, prefix3, meta.isActive && "active", disabled && "disabled")
-    });
-  });
-  DropdownItem2.displayName = "DropdownItem";
-  var DropdownItem_default2 = DropdownItem2;
-
-  // node_modules/react-bootstrap/esm/DropdownItemText.js
-  var React44 = __toESM(require_react());
-  var import_classnames17 = __toESM(require_classnames());
-  var import_jsx_runtime31 = __toESM(require_jsx_runtime());
-  "use client";
-  var DropdownItemText = /* @__PURE__ */ React44.forwardRef(({
-    className,
-    bsPrefix,
-    as: Component2 = "span",
-    ...props
-  }, ref2) => {
-    bsPrefix = useBootstrapPrefix(bsPrefix, "dropdown-item-text");
-    return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(Component2, {
-      ref: ref2,
-      className: (0, import_classnames17.default)(className, bsPrefix),
-      ...props
-    });
-  });
-  DropdownItemText.displayName = "DropdownItemText";
-  var DropdownItemText_default = DropdownItemText;
-
-  // node_modules/react-bootstrap/esm/DropdownMenu.js
-  var import_classnames18 = __toESM(require_classnames());
-  var React46 = __toESM(require_react());
-  var import_react47 = __toESM(require_react());
-
-  // node_modules/@restart/hooks/esm/useIsomorphicEffect.js
-  var import_react45 = __toESM(require_react());
-  var isReactNative2 = typeof global !== "undefined" && // @ts-ignore
-  global.navigator && // @ts-ignore
-  global.navigator.product === "ReactNative";
-  var isDOM2 = typeof document !== "undefined";
-  var useIsomorphicEffect_default2 = isDOM2 || isReactNative2 ? import_react45.useLayoutEffect : import_react45.useEffect;
-
-  // node_modules/react-bootstrap/esm/DropdownMenu.js
-  var import_warning2 = __toESM(require_warning());
-
-  // node_modules/react-bootstrap/esm/InputGroupContext.js
-  var React45 = __toESM(require_react());
-  "use client";
-  var context3 = /* @__PURE__ */ React45.createContext(null);
-  context3.displayName = "InputGroupContext";
-  var InputGroupContext_default = context3;
-
-  // node_modules/react-bootstrap/esm/useWrappedRefWithWarning.js
-  var import_invariant3 = __toESM(require_browser());
-  var import_react46 = __toESM(require_react());
-  function useWrappedRefWithWarning(ref2, componentName) {
-    if (false)
-      return ref2;
-    const warningRef = (0, import_react46.useCallback)((refValue) => {
-      !(refValue == null || !refValue.isReactComponent) ? true ? (0, import_invariant3.default)(false, `${componentName} injected a ref to a provided \`as\` component that resolved to a component instance instead of a DOM element. Use \`React.forwardRef\` to provide the injected ref to the class component as a prop in order to pass it directly to a DOM element`) : (0, import_invariant3.default)(false) : void 0;
-    }, [componentName]);
-    return useMergedRefs_default2(warningRef, ref2);
-  }
-
-  // node_modules/react-bootstrap/esm/DropdownMenu.js
-  var import_jsx_runtime32 = __toESM(require_jsx_runtime());
-  "use client";
-  function getDropdownMenuPlacement(alignEnd, dropDirection, isRTL) {
-    const topStart = isRTL ? "top-end" : "top-start";
-    const topEnd = isRTL ? "top-start" : "top-end";
-    const bottomStart = isRTL ? "bottom-end" : "bottom-start";
-    const bottomEnd = isRTL ? "bottom-start" : "bottom-end";
-    const leftStart = isRTL ? "right-start" : "left-start";
-    const leftEnd = isRTL ? "right-end" : "left-end";
-    const rightStart = isRTL ? "left-start" : "right-start";
-    const rightEnd = isRTL ? "left-end" : "right-end";
-    let placement = alignEnd ? bottomEnd : bottomStart;
-    if (dropDirection === "up")
-      placement = alignEnd ? topEnd : topStart;
-    else if (dropDirection === "end")
-      placement = alignEnd ? rightEnd : rightStart;
-    else if (dropDirection === "start")
-      placement = alignEnd ? leftEnd : leftStart;
-    else if (dropDirection === "down-centered")
-      placement = "bottom";
-    else if (dropDirection === "up-centered")
-      placement = "top";
-    return placement;
-  }
-  var DropdownMenu2 = /* @__PURE__ */ React46.forwardRef(({
-    bsPrefix,
-    className,
-    align,
-    rootCloseEvent,
-    flip: flip2 = true,
-    show: showProps,
-    renderOnMount,
-    // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-    as: Component2 = "div",
-    popperConfig,
-    variant,
-    ...props
-  }, ref2) => {
-    let alignEnd = false;
-    const isNavbar = (0, import_react47.useContext)(NavbarContext_default);
-    const prefix3 = useBootstrapPrefix(bsPrefix, "dropdown-menu");
-    const {
-      align: contextAlign,
-      drop: drop2,
-      isRTL
-    } = (0, import_react47.useContext)(DropdownContext_default2);
-    align = align || contextAlign;
-    const isInputGroup = (0, import_react47.useContext)(InputGroupContext_default);
-    const alignClasses = [];
-    if (align) {
-      if (typeof align === "object") {
-        const keys = Object.keys(align);
-        true ? (0, import_warning2.default)(keys.length === 1, "There should only be 1 breakpoint when passing an object to `align`") : void 0;
-        if (keys.length) {
-          const brkPoint = keys[0];
-          const direction = align[brkPoint];
-          alignEnd = direction === "start";
-          alignClasses.push(`${prefix3}-${brkPoint}-${direction}`);
-        }
-      } else if (align === "end") {
-        alignEnd = true;
-      }
-    }
-    const placement = getDropdownMenuPlacement(alignEnd, drop2, isRTL);
-    const [menuProps, {
-      hasShown,
-      popper: popper2,
-      show,
-      toggle
-    }] = useDropdownMenu({
-      flip: flip2,
-      rootCloseEvent,
-      show: showProps,
-      usePopper: !isNavbar && alignClasses.length === 0,
-      offset: [0, 2],
-      popperConfig,
-      placement
-    });
-    menuProps.ref = useMergedRefs_default2(useWrappedRefWithWarning(ref2, "DropdownMenu"), menuProps.ref);
-    useIsomorphicEffect_default2(() => {
-      if (show)
-        popper2 == null || popper2.update();
-    }, [show]);
-    if (!hasShown && !renderOnMount && !isInputGroup)
-      return null;
-    if (typeof Component2 !== "string") {
-      menuProps.show = show;
-      menuProps.close = () => toggle == null ? void 0 : toggle(false);
-      menuProps.align = align;
-    }
-    let style5 = props.style;
-    if (popper2 != null && popper2.placement) {
-      style5 = {
-        ...props.style,
-        ...menuProps.style
-      };
-      props["x-placement"] = popper2.placement;
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(Component2, {
-      ...props,
-      ...menuProps,
-      style: style5,
-      ...(alignClasses.length || isNavbar) && {
-        "data-bs-popper": "static"
-      },
-      className: (0, import_classnames18.default)(className, prefix3, show && "show", alignEnd && `${prefix3}-end`, variant && `${prefix3}-${variant}`, ...alignClasses)
-    });
-  });
-  DropdownMenu2.displayName = "DropdownMenu";
-  var DropdownMenu_default2 = DropdownMenu2;
-
-  // node_modules/react-bootstrap/esm/DropdownToggle.js
-  var import_classnames19 = __toESM(require_classnames());
-  var React47 = __toESM(require_react());
-  var import_react48 = __toESM(require_react());
-  var import_jsx_runtime33 = __toESM(require_jsx_runtime());
-  "use client";
-  var DropdownToggle2 = /* @__PURE__ */ React47.forwardRef(({
-    bsPrefix,
-    split,
-    className,
-    childBsPrefix,
-    // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-    as: Component2 = Button_default2,
-    ...props
-  }, ref2) => {
-    const prefix3 = useBootstrapPrefix(bsPrefix, "dropdown-toggle");
-    const dropdownContext = (0, import_react48.useContext)(DropdownContext_default);
-    if (childBsPrefix !== void 0) {
-      props.bsPrefix = childBsPrefix;
-    }
-    const [toggleProps] = useDropdownToggle();
-    toggleProps.ref = useMergedRefs_default2(toggleProps.ref, useWrappedRefWithWarning(ref2, "DropdownToggle"));
-    return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(Component2, {
-      className: (0, import_classnames19.default)(className, prefix3, split && `${prefix3}-split`, (dropdownContext == null ? void 0 : dropdownContext.show) && "show"),
-      ...toggleProps,
-      ...props
-    });
-  });
-  DropdownToggle2.displayName = "DropdownToggle";
-  var DropdownToggle_default2 = DropdownToggle2;
-
-  // node_modules/react-bootstrap/esm/Dropdown.js
-  var import_jsx_runtime34 = __toESM(require_jsx_runtime());
-  "use client";
-  var Dropdown2 = /* @__PURE__ */ React48.forwardRef((pProps, ref2) => {
-    const {
-      bsPrefix,
-      drop: drop2 = "down",
-      show,
-      className,
-      align = "start",
-      onSelect,
-      onToggle,
-      focusFirstItemOnShow,
-      // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-      as: Component2 = "div",
-      navbar: _4,
-      autoClose = true,
-      ...props
-    } = useUncontrolled(pProps, {
-      show: "onToggle"
-    });
-    const isInputGroup = (0, import_react49.useContext)(InputGroupContext_default);
-    const prefix3 = useBootstrapPrefix(bsPrefix, "dropdown");
-    const isRTL = useIsRTL();
-    const isClosingPermitted = (source) => {
-      if (autoClose === false)
-        return source === "click";
-      if (autoClose === "inside")
-        return source !== "rootClose";
-      if (autoClose === "outside")
-        return source !== "select";
-      return true;
-    };
-    const handleToggle = useEventCallback2((nextShow, meta) => {
-      var _meta$originalEvent;
-      const isToggleButton = (_meta$originalEvent = meta.originalEvent) == null || (_meta$originalEvent = _meta$originalEvent.target) == null ? void 0 : _meta$originalEvent.classList.contains("dropdown-toggle");
-      if (isToggleButton && meta.source === "mousedown") {
-        return;
-      }
-      if (meta.originalEvent.currentTarget === document && (meta.source !== "keydown" || meta.originalEvent.key === "Escape"))
-        meta.source = "rootClose";
-      if (isClosingPermitted(meta.source))
-        onToggle == null || onToggle(nextShow, meta);
-    });
-    const alignEnd = align === "end";
-    const placement = getDropdownMenuPlacement(alignEnd, drop2, isRTL);
-    const contextValue = (0, import_react49.useMemo)(() => ({
-      align,
-      drop: drop2,
-      isRTL
-    }), [align, drop2, isRTL]);
-    const directionClasses = {
-      down: prefix3,
-      "down-centered": `${prefix3}-center`,
-      up: "dropup",
-      "up-centered": "dropup-center dropup",
-      end: "dropend",
-      start: "dropstart"
-    };
-    return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(DropdownContext_default2.Provider, {
-      value: contextValue,
-      children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(Dropdown_default, {
-        placement,
-        show,
-        onSelect,
-        onToggle: handleToggle,
-        focusFirstItemOnShow,
-        itemSelector: `.${prefix3}-item:not(.disabled):not(:disabled)`,
-        children: isInputGroup ? props.children : /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(Component2, {
-          ...props,
-          ref: ref2,
-          className: (0, import_classnames20.default)(className, show && "show", directionClasses[drop2])
-        })
-      })
-    });
-  });
-  Dropdown2.displayName = "Dropdown";
-  var Dropdown_default2 = Object.assign(Dropdown2, {
-    Toggle: DropdownToggle_default2,
-    Menu: DropdownMenu_default2,
-    Item: DropdownItem_default2,
-    ItemText: DropdownItemText_default,
-    Divider: DropdownDivider_default,
-    Header: DropdownHeader_default
-  });
-
-  // node_modules/dom-helpers/esm/activeElement.js
-  function activeElement(doc) {
-    if (doc === void 0) {
-      doc = ownerDocument();
-    }
-    try {
-      var active = doc.activeElement;
-      if (!active || !active.nodeName)
-        return null;
-      return active;
-    } catch (e2) {
-      return doc.body;
-    }
-  }
-
-  // node_modules/@restart/ui/esm/Modal.js
-  var import_react55 = __toESM(require_react());
-  var React51 = __toESM(require_react());
-  var import_react_dom4 = __toESM(require_react_dom());
-
-  // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useUpdatedRef.js
-  var import_react50 = __toESM(require_react());
-  function useUpdatedRef(value) {
-    const valueRef = (0, import_react50.useRef)(value);
-    valueRef.current = value;
-    return valueRef;
-  }
-
-  // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useWillUnmount.js
-  var import_react51 = __toESM(require_react());
-  function useWillUnmount(fn2) {
-    const onUnmount = useUpdatedRef(fn2);
-    (0, import_react51.useEffect)(() => () => onUnmount.current(), []);
-  }
-
-  // node_modules/@restart/ui/esm/getScrollbarWidth.js
-  function getBodyScrollbarWidth(ownerDocument2 = document) {
-    const window2 = ownerDocument2.defaultView;
-    return Math.abs(window2.innerWidth - ownerDocument2.documentElement.clientWidth);
-  }
-
-  // node_modules/@restart/ui/esm/ModalManager.js
-  var OPEN_DATA_ATTRIBUTE = dataAttr("modal-open");
-  var ModalManager = class {
-    constructor({
-      ownerDocument: ownerDocument2,
-      handleContainerOverflow = true,
-      isRTL = false
-    } = {}) {
-      this.handleContainerOverflow = handleContainerOverflow;
-      this.isRTL = isRTL;
-      this.modals = [];
-      this.ownerDocument = ownerDocument2;
-    }
-    getScrollbarWidth() {
-      return getBodyScrollbarWidth(this.ownerDocument);
-    }
-    getElement() {
-      return (this.ownerDocument || document).body;
-    }
-    setModalAttributes(_modal) {
-    }
-    removeModalAttributes(_modal) {
-    }
-    setContainerStyle(containerState) {
-      const style5 = {
-        overflow: "hidden"
-      };
-      const paddingProp = this.isRTL ? "paddingLeft" : "paddingRight";
-      const container = this.getElement();
-      containerState.style = {
-        overflow: container.style.overflow,
-        [paddingProp]: container.style[paddingProp]
-      };
-      if (containerState.scrollBarWidth) {
-        style5[paddingProp] = `${parseInt(css_default(container, paddingProp) || "0", 10) + containerState.scrollBarWidth}px`;
-      }
-      container.setAttribute(OPEN_DATA_ATTRIBUTE, "");
-      css_default(container, style5);
-    }
-    reset() {
-      [...this.modals].forEach((m) => this.remove(m));
-    }
-    removeContainerStyle(containerState) {
-      const container = this.getElement();
-      container.removeAttribute(OPEN_DATA_ATTRIBUTE);
-      Object.assign(container.style, containerState.style);
-    }
-    add(modal) {
-      let modalIdx = this.modals.indexOf(modal);
-      if (modalIdx !== -1) {
-        return modalIdx;
-      }
-      modalIdx = this.modals.length;
-      this.modals.push(modal);
-      this.setModalAttributes(modal);
-      if (modalIdx !== 0) {
-        return modalIdx;
-      }
-      this.state = {
-        scrollBarWidth: this.getScrollbarWidth(),
-        style: {}
-      };
-      if (this.handleContainerOverflow) {
-        this.setContainerStyle(this.state);
-      }
-      return modalIdx;
-    }
-    remove(modal) {
-      const modalIdx = this.modals.indexOf(modal);
-      if (modalIdx === -1) {
-        return;
-      }
-      this.modals.splice(modalIdx, 1);
-      if (!this.modals.length && this.handleContainerOverflow) {
-        this.removeContainerStyle(this.state);
-      }
-      this.removeModalAttributes(modal);
-    }
-    isTopModal(modal) {
-      return !!this.modals.length && this.modals[this.modals.length - 1] === modal;
-    }
-  };
-  var ModalManager_default = ModalManager;
-
-  // node_modules/@restart/ui/esm/useWaitForDOMRef.js
-  var import_react52 = __toESM(require_react());
-  var resolveContainerRef = (ref2, document2) => {
-    if (!canUseDOM_default)
-      return null;
-    if (ref2 == null)
-      return (document2 || ownerDocument()).body;
-    if (typeof ref2 === "function")
-      ref2 = ref2();
-    if (ref2 && "current" in ref2)
-      ref2 = ref2.current;
-    if (ref2 && ("nodeType" in ref2 || ref2.getBoundingClientRect))
-      return ref2;
-    return null;
-  };
-  function useWaitForDOMRef(ref2, onResolved) {
-    const window2 = useWindow();
-    const [resolvedRef, setRef] = (0, import_react52.useState)(() => resolveContainerRef(ref2, window2 == null ? void 0 : window2.document));
-    if (!resolvedRef) {
-      const earlyRef = resolveContainerRef(ref2);
-      if (earlyRef)
-        setRef(earlyRef);
-    }
-    (0, import_react52.useEffect)(() => {
-      if (onResolved && resolvedRef) {
-        onResolved(resolvedRef);
-      }
-    }, [onResolved, resolvedRef]);
-    (0, import_react52.useEffect)(() => {
-      const nextRef = resolveContainerRef(ref2);
-      if (nextRef !== resolvedRef) {
-        setRef(nextRef);
-      }
-    }, [ref2, resolvedRef]);
-    return resolvedRef;
-  }
-
-  // node_modules/@restart/ui/esm/ImperativeTransition.js
-  var import_react54 = __toESM(require_react());
-
-  // node_modules/@restart/ui/esm/RTGTransition.js
-  var React49 = __toESM(require_react());
-
-  // node_modules/@restart/ui/esm/useRTGTransitionProps.js
-  var import_react53 = __toESM(require_react());
-  var _excluded10 = ["onEnter", "onEntering", "onEntered", "onExit", "onExiting", "onExited", "addEndListener", "children"];
-  function _objectWithoutPropertiesLoose11(r, e2) {
-    if (null == r)
-      return {};
-    var t = {};
-    for (var n in r)
-      if ({}.hasOwnProperty.call(r, n)) {
-        if (e2.indexOf(n) >= 0)
-          continue;
-        t[n] = r[n];
-      }
-    return t;
-  }
-  function useRTGTransitionProps(_ref) {
-    let {
-      onEnter,
-      onEntering,
-      onEntered,
-      onExit,
-      onExiting,
-      onExited,
-      addEndListener,
-      children: children2
-    } = _ref, props = _objectWithoutPropertiesLoose11(_ref, _excluded10);
-    const nodeRef = (0, import_react53.useRef)(null);
-    const mergedRef = useMergedRefs_default(nodeRef, getChildRef(children2));
-    const normalize = (callback) => (param) => {
-      if (callback && nodeRef.current) {
-        callback(nodeRef.current, param);
-      }
-    };
-    const handleEnter = (0, import_react53.useCallback)(normalize(onEnter), [onEnter]);
-    const handleEntering = (0, import_react53.useCallback)(normalize(onEntering), [onEntering]);
-    const handleEntered = (0, import_react53.useCallback)(normalize(onEntered), [onEntered]);
-    const handleExit = (0, import_react53.useCallback)(normalize(onExit), [onExit]);
-    const handleExiting = (0, import_react53.useCallback)(normalize(onExiting), [onExiting]);
-    const handleExited = (0, import_react53.useCallback)(normalize(onExited), [onExited]);
-    const handleAddEndListener = (0, import_react53.useCallback)(normalize(addEndListener), [addEndListener]);
-    return Object.assign({}, props, {
-      nodeRef
-    }, onEnter && {
-      onEnter: handleEnter
-    }, onEntering && {
-      onEntering: handleEntering
-    }, onEntered && {
-      onEntered: handleEntered
-    }, onExit && {
-      onExit: handleExit
-    }, onExiting && {
-      onExiting: handleExiting
-    }, onExited && {
-      onExited: handleExited
-    }, addEndListener && {
-      addEndListener: handleAddEndListener
-    }, {
-      children: typeof children2 === "function" ? (status, innerProps) => (
-        // TODO: Types for RTG missing innerProps, so need to cast.
-        children2(status, Object.assign({}, innerProps, {
-          ref: mergedRef
-        }))
-      ) : /* @__PURE__ */ (0, import_react53.cloneElement)(children2, {
-        ref: mergedRef
-      })
-    });
-  }
-
-  // node_modules/@restart/ui/esm/RTGTransition.js
-  var import_jsx_runtime35 = __toESM(require_jsx_runtime());
-  var _excluded11 = ["component"];
-  function _objectWithoutPropertiesLoose12(r, e2) {
-    if (null == r)
-      return {};
-    var t = {};
-    for (var n in r)
-      if ({}.hasOwnProperty.call(r, n)) {
-        if (e2.indexOf(n) >= 0)
-          continue;
-        t[n] = r[n];
-      }
-    return t;
-  }
-  var RTGTransition = /* @__PURE__ */ React49.forwardRef((_ref, ref2) => {
-    let {
-      component: Component2
-    } = _ref, props = _objectWithoutPropertiesLoose12(_ref, _excluded11);
-    const transitionProps = useRTGTransitionProps(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(Component2, Object.assign({
-      ref: ref2
-    }, transitionProps));
-  });
-  var RTGTransition_default = RTGTransition;
-
-  // node_modules/@restart/ui/esm/ImperativeTransition.js
-  var import_jsx_runtime36 = __toESM(require_jsx_runtime());
-  function useTransition({
-    in: inProp,
-    onTransition
-  }) {
-    const ref2 = (0, import_react54.useRef)(null);
-    const isInitialRef = (0, import_react54.useRef)(true);
-    const handleTransition = useEventCallback(onTransition);
-    useIsomorphicEffect_default(() => {
-      if (!ref2.current) {
-        return void 0;
-      }
-      let stale = false;
-      handleTransition({
-        in: inProp,
-        element: ref2.current,
-        initial: isInitialRef.current,
-        isStale: () => stale
-      });
-      return () => {
-        stale = true;
-      };
-    }, [inProp, handleTransition]);
-    useIsomorphicEffect_default(() => {
-      isInitialRef.current = false;
-      return () => {
-        isInitialRef.current = true;
-      };
-    }, []);
-    return ref2;
-  }
-  function ImperativeTransition({
-    children: children2,
-    in: inProp,
-    onExited,
-    onEntered,
-    transition: transition2
-  }) {
-    const [exited, setExited] = (0, import_react54.useState)(!inProp);
-    if (inProp && exited) {
-      setExited(false);
-    }
-    const ref2 = useTransition({
-      in: !!inProp,
-      onTransition: (options) => {
-        const onFinish = () => {
-          if (options.isStale())
-            return;
-          if (options.in) {
-            onEntered == null ? void 0 : onEntered(options.element, options.initial);
-          } else {
-            setExited(true);
-            onExited == null ? void 0 : onExited(options.element);
-          }
-        };
-        Promise.resolve(transition2(options)).then(onFinish, (error2) => {
-          if (!options.in)
-            setExited(true);
-          throw error2;
-        });
-      }
-    });
-    const combinedRef = useMergedRefs_default(ref2, children2.ref);
-    return exited && !inProp ? null : /* @__PURE__ */ (0, import_react54.cloneElement)(children2, {
-      ref: combinedRef
-    });
-  }
-  function renderTransition(component, runTransition, props) {
-    if (component) {
-      return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(RTGTransition_default, Object.assign({}, props, {
-        component
-      }));
-    }
-    if (runTransition) {
-      return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(ImperativeTransition, Object.assign({}, props, {
-        transition: runTransition
-      }));
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(NoopTransition_default, Object.assign({}, props));
-  }
-
-  // node_modules/@restart/ui/esm/Modal.js
-  var import_jsx_runtime37 = __toESM(require_jsx_runtime());
-  var _excluded12 = ["show", "role", "className", "style", "children", "backdrop", "keyboard", "onBackdropClick", "onEscapeKeyDown", "transition", "runTransition", "backdropTransition", "runBackdropTransition", "autoFocus", "enforceFocus", "restoreFocus", "restoreFocusOptions", "renderDialog", "renderBackdrop", "manager", "container", "onShow", "onHide", "onExit", "onExited", "onExiting", "onEnter", "onEntering", "onEntered"];
-  function _objectWithoutPropertiesLoose13(r, e2) {
-    if (null == r)
-      return {};
-    var t = {};
-    for (var n in r)
-      if ({}.hasOwnProperty.call(r, n)) {
-        if (e2.indexOf(n) >= 0)
-          continue;
-        t[n] = r[n];
-      }
-    return t;
-  }
-  var manager;
-  function getManager(window2) {
-    if (!manager)
-      manager = new ModalManager_default({
-        ownerDocument: window2 == null ? void 0 : window2.document
-      });
-    return manager;
-  }
-  function useModalManager(provided) {
-    const window2 = useWindow();
-    const modalManager = provided || getManager(window2);
-    const modal = (0, import_react55.useRef)({
-      dialog: null,
-      backdrop: null
-    });
-    return Object.assign(modal.current, {
-      add: () => modalManager.add(modal.current),
-      remove: () => modalManager.remove(modal.current),
-      isTopModal: () => modalManager.isTopModal(modal.current),
-      setDialogRef: (0, import_react55.useCallback)((ref2) => {
-        modal.current.dialog = ref2;
-      }, []),
-      setBackdropRef: (0, import_react55.useCallback)((ref2) => {
-        modal.current.backdrop = ref2;
-      }, [])
-    });
-  }
-  var Modal = /* @__PURE__ */ (0, import_react55.forwardRef)((_ref, ref2) => {
-    let {
-      show = false,
-      role = "dialog",
-      className,
-      style: style5,
-      children: children2,
-      backdrop = true,
-      keyboard = true,
-      onBackdropClick,
-      onEscapeKeyDown,
-      transition: transition2,
-      runTransition,
-      backdropTransition,
-      runBackdropTransition,
-      autoFocus = true,
-      enforceFocus = true,
-      restoreFocus = true,
-      restoreFocusOptions,
-      renderDialog,
-      renderBackdrop = (props) => /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("div", Object.assign({}, props)),
-      manager: providedManager,
-      container: containerRef,
-      onShow,
-      onHide = () => {
-      },
-      onExit,
-      onExited,
-      onExiting,
-      onEnter,
-      onEntering,
-      onEntered
-    } = _ref, rest = _objectWithoutPropertiesLoose13(_ref, _excluded12);
-    const ownerWindow2 = useWindow();
-    const container = useWaitForDOMRef(containerRef);
-    const modal = useModalManager(providedManager);
-    const isMounted = useMounted();
-    const prevShow = usePrevious(show);
-    const [exited, setExited] = (0, import_react55.useState)(!show);
-    const lastFocusRef = (0, import_react55.useRef)(null);
-    (0, import_react55.useImperativeHandle)(ref2, () => modal, [modal]);
-    if (canUseDOM_default && !prevShow && show) {
-      lastFocusRef.current = activeElement(ownerWindow2 == null ? void 0 : ownerWindow2.document);
-    }
-    if (show && exited) {
-      setExited(false);
-    }
-    const handleShow = useEventCallback(() => {
-      modal.add();
-      removeKeydownListenerRef.current = listen_default(document, "keydown", handleDocumentKeyDown);
-      removeFocusListenerRef.current = listen_default(
-        document,
-        "focus",
-        // the timeout is necessary b/c this will run before the new modal is mounted
-        // and so steals focus from it
-        () => setTimeout(handleEnforceFocus),
-        true
-      );
-      if (onShow) {
-        onShow();
-      }
-      if (autoFocus) {
-        var _modal$dialog$ownerDo, _modal$dialog;
-        const currentActiveElement = activeElement((_modal$dialog$ownerDo = (_modal$dialog = modal.dialog) == null ? void 0 : _modal$dialog.ownerDocument) != null ? _modal$dialog$ownerDo : ownerWindow2 == null ? void 0 : ownerWindow2.document);
-        if (modal.dialog && currentActiveElement && !contains2(modal.dialog, currentActiveElement)) {
-          lastFocusRef.current = currentActiveElement;
-          modal.dialog.focus();
-        }
-      }
-    });
-    const handleHide = useEventCallback(() => {
-      modal.remove();
-      removeKeydownListenerRef.current == null ? void 0 : removeKeydownListenerRef.current();
-      removeFocusListenerRef.current == null ? void 0 : removeFocusListenerRef.current();
-      if (restoreFocus) {
-        var _lastFocusRef$current;
-        (_lastFocusRef$current = lastFocusRef.current) == null ? void 0 : _lastFocusRef$current.focus == null ? void 0 : _lastFocusRef$current.focus(restoreFocusOptions);
-        lastFocusRef.current = null;
-      }
-    });
-    (0, import_react55.useEffect)(() => {
-      if (!show || !container)
-        return;
-      handleShow();
-    }, [
-      show,
-      container,
-      /* should never change: */
-      handleShow
-    ]);
-    (0, import_react55.useEffect)(() => {
-      if (!exited)
-        return;
-      handleHide();
-    }, [exited, handleHide]);
-    useWillUnmount(() => {
-      handleHide();
-    });
-    const handleEnforceFocus = useEventCallback(() => {
-      if (!enforceFocus || !isMounted() || !modal.isTopModal()) {
-        return;
-      }
-      const currentActiveElement = activeElement(ownerWindow2 == null ? void 0 : ownerWindow2.document);
-      if (modal.dialog && currentActiveElement && !contains2(modal.dialog, currentActiveElement)) {
-        modal.dialog.focus();
-      }
-    });
-    const handleBackdropClick = useEventCallback((e2) => {
-      if (e2.target !== e2.currentTarget) {
-        return;
-      }
-      onBackdropClick == null ? void 0 : onBackdropClick(e2);
-      if (backdrop === true) {
-        onHide();
-      }
-    });
-    const handleDocumentKeyDown = useEventCallback((e2) => {
-      if (keyboard && isEscKey(e2) && modal.isTopModal()) {
-        onEscapeKeyDown == null ? void 0 : onEscapeKeyDown(e2);
-        if (!e2.defaultPrevented) {
-          onHide();
-        }
-      }
-    });
-    const removeFocusListenerRef = (0, import_react55.useRef)();
-    const removeKeydownListenerRef = (0, import_react55.useRef)();
-    const handleHidden = (...args) => {
-      setExited(true);
-      onExited == null ? void 0 : onExited(...args);
-    };
-    if (!container) {
-      return null;
-    }
-    const dialogProps = Object.assign({
-      role,
-      ref: modal.setDialogRef,
-      // apparently only works on the dialog role element
-      "aria-modal": role === "dialog" ? true : void 0
-    }, rest, {
-      style: style5,
-      className,
-      tabIndex: -1
-    });
-    let dialog = renderDialog ? renderDialog(dialogProps) : /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("div", Object.assign({}, dialogProps, {
-      children: /* @__PURE__ */ React51.cloneElement(children2, {
-        role: "document"
-      })
-    }));
-    dialog = renderTransition(transition2, runTransition, {
-      unmountOnExit: true,
-      mountOnEnter: true,
-      appear: true,
-      in: !!show,
-      onExit,
-      onExiting,
-      onExited: handleHidden,
-      onEnter,
-      onEntering,
-      onEntered,
-      children: dialog
-    });
-    let backdropElement = null;
-    if (backdrop) {
-      backdropElement = renderBackdrop({
-        ref: modal.setBackdropRef,
-        onClick: handleBackdropClick
-      });
-      backdropElement = renderTransition(backdropTransition, runBackdropTransition, {
-        in: !!show,
-        appear: true,
-        mountOnEnter: true,
-        unmountOnExit: true,
-        children: backdropElement
-      });
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_jsx_runtime37.Fragment, {
-      children: /* @__PURE__ */ import_react_dom4.default.createPortal(/* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(import_jsx_runtime37.Fragment, {
-        children: [backdropElement, dialog]
-      }), container)
-    });
-  });
-  Modal.displayName = "Modal";
-  var Modal_default = Object.assign(Modal, {
-    Manager: ModalManager_default
-  });
-
-  // node_modules/dom-helpers/esm/hasClass.js
-  function hasClass(element, className) {
-    if (element.classList)
-      return !!className && element.classList.contains(className);
-    return (" " + (element.className.baseVal || element.className) + " ").indexOf(" " + className + " ") !== -1;
-  }
-
-  // node_modules/dom-helpers/esm/addClass.js
-  function addClass(element, className) {
-    if (element.classList)
-      element.classList.add(className);
-    else if (!hasClass(element, className))
-      if (typeof element.className === "string")
-        element.className = element.className + " " + className;
-      else
-        element.setAttribute("class", (element.className && element.className.baseVal || "") + " " + className);
-  }
-
-  // node_modules/dom-helpers/esm/removeClass.js
-  function replaceClassName(origClass, classToRemove) {
-    return origClass.replace(new RegExp("(^|\\s)" + classToRemove + "(?:\\s|$)", "g"), "$1").replace(/\s+/g, " ").replace(/^\s*|\s*$/g, "");
-  }
-  function removeClass(element, className) {
-    if (element.classList) {
-      element.classList.remove(className);
-    } else if (typeof element.className === "string") {
-      element.className = replaceClassName(element.className, className);
-    } else {
-      element.setAttribute("class", replaceClassName(element.className && element.className.baseVal || "", className));
-    }
-  }
-
-  // node_modules/react-bootstrap/esm/BootstrapModalManager.js
-  var Selector = {
-    FIXED_CONTENT: ".fixed-top, .fixed-bottom, .is-fixed, .sticky-top",
-    STICKY_CONTENT: ".sticky-top",
-    NAVBAR_TOGGLER: ".navbar-toggler"
-  };
-  var BootstrapModalManager = class extends ModalManager_default {
-    adjustAndStore(prop, element, adjust) {
-      const actual = element.style[prop];
-      element.dataset[prop] = actual;
-      css_default(element, {
-        [prop]: `${parseFloat(css_default(element, prop)) + adjust}px`
-      });
-    }
-    restore(prop, element) {
-      const value = element.dataset[prop];
-      if (value !== void 0) {
-        delete element.dataset[prop];
-        css_default(element, {
-          [prop]: value
-        });
-      }
-    }
-    setContainerStyle(containerState) {
-      super.setContainerStyle(containerState);
-      const container = this.getElement();
-      addClass(container, "modal-open");
-      if (!containerState.scrollBarWidth)
-        return;
-      const paddingProp = this.isRTL ? "paddingLeft" : "paddingRight";
-      const marginProp = this.isRTL ? "marginLeft" : "marginRight";
-      qsa(container, Selector.FIXED_CONTENT).forEach((el) => this.adjustAndStore(paddingProp, el, containerState.scrollBarWidth));
-      qsa(container, Selector.STICKY_CONTENT).forEach((el) => this.adjustAndStore(marginProp, el, -containerState.scrollBarWidth));
-      qsa(container, Selector.NAVBAR_TOGGLER).forEach((el) => this.adjustAndStore(marginProp, el, containerState.scrollBarWidth));
-    }
-    removeContainerStyle(containerState) {
-      super.removeContainerStyle(containerState);
-      const container = this.getElement();
-      removeClass(container, "modal-open");
-      const paddingProp = this.isRTL ? "paddingLeft" : "paddingRight";
-      const marginProp = this.isRTL ? "marginLeft" : "marginRight";
-      qsa(container, Selector.FIXED_CONTENT).forEach((el) => this.restore(paddingProp, el));
-      qsa(container, Selector.STICKY_CONTENT).forEach((el) => this.restore(marginProp, el));
-      qsa(container, Selector.NAVBAR_TOGGLER).forEach((el) => this.restore(marginProp, el));
-    }
-  };
-  var sharedManager;
-  function getSharedManager(options) {
-    if (!sharedManager)
-      sharedManager = new BootstrapModalManager(options);
-    return sharedManager;
-  }
-  var BootstrapModalManager_default = BootstrapModalManager;
-
-  // node_modules/react-bootstrap/esm/ModalContext.js
-  var React52 = __toESM(require_react());
-  "use client";
-  var ModalContext = /* @__PURE__ */ React52.createContext({
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    onHide() {
-    }
-  });
-  var ModalContext_default = ModalContext;
-
-  // node_modules/react-bootstrap/esm/AbstractModalHeader.js
-  var React53 = __toESM(require_react());
-  var import_react56 = __toESM(require_react());
-  var import_jsx_runtime38 = __toESM(require_jsx_runtime());
-  var import_jsx_runtime39 = __toESM(require_jsx_runtime());
-  "use client";
-  var AbstractModalHeader = /* @__PURE__ */ React53.forwardRef(({
-    closeLabel = "Close",
-    closeVariant,
-    closeButton = false,
-    onHide,
-    children: children2,
-    ...props
-  }, ref2) => {
-    const context4 = (0, import_react56.useContext)(ModalContext_default);
-    const handleClick = useEventCallback2(() => {
-      context4 == null || context4.onHide();
-      onHide == null || onHide();
-    });
-    return /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("div", {
-      ref: ref2,
-      ...props,
-      children: [children2, closeButton && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(CloseButton_default, {
-        "aria-label": closeLabel,
-        variant: closeVariant,
-        onClick: handleClick
-      })]
-    });
-  });
-  var AbstractModalHeader_default = AbstractModalHeader;
-
-  // node_modules/react-bootstrap/esm/Navbar.js
-  var import_classnames29 = __toESM(require_classnames());
-  var React64 = __toESM(require_react());
-  var import_react63 = __toESM(require_react());
-
-  // node_modules/react-bootstrap/esm/NavbarBrand.js
-  var import_classnames21 = __toESM(require_classnames());
-  var React54 = __toESM(require_react());
-  var import_jsx_runtime40 = __toESM(require_jsx_runtime());
-  "use client";
-  var NavbarBrand = /* @__PURE__ */ React54.forwardRef(({
-    bsPrefix,
-    className,
-    as,
-    ...props
-  }, ref2) => {
-    bsPrefix = useBootstrapPrefix(bsPrefix, "navbar-brand");
-    const Component2 = as || (props.href ? "a" : "span");
-    return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Component2, {
-      ...props,
-      ref: ref2,
-      className: (0, import_classnames21.default)(className, bsPrefix)
-    });
-  });
-  NavbarBrand.displayName = "NavbarBrand";
-  var NavbarBrand_default = NavbarBrand;
-
-  // node_modules/react-bootstrap/esm/NavbarCollapse.js
-  var React55 = __toESM(require_react());
-  var import_react57 = __toESM(require_react());
-  var import_jsx_runtime41 = __toESM(require_jsx_runtime());
-  "use client";
-  var NavbarCollapse = /* @__PURE__ */ React55.forwardRef(({
-    children: children2,
-    bsPrefix,
-    ...props
-  }, ref2) => {
-    bsPrefix = useBootstrapPrefix(bsPrefix, "navbar-collapse");
-    const context4 = (0, import_react57.useContext)(NavbarContext_default);
-    return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Collapse_default, {
-      in: !!(context4 && context4.expanded),
-      ...props,
-      children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", {
-        ref: ref2,
-        className: bsPrefix,
-        children: children2
-      })
-    });
-  });
-  NavbarCollapse.displayName = "NavbarCollapse";
-  var NavbarCollapse_default = NavbarCollapse;
-
-  // node_modules/react-bootstrap/esm/NavbarToggle.js
-  var import_classnames22 = __toESM(require_classnames());
-  var React56 = __toESM(require_react());
-  var import_react58 = __toESM(require_react());
-  var import_jsx_runtime42 = __toESM(require_jsx_runtime());
-  "use client";
-  var NavbarToggle = /* @__PURE__ */ React56.forwardRef(({
-    bsPrefix,
-    className,
-    children: children2,
-    label = "Toggle navigation",
-    // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-    as: Component2 = "button",
-    onClick,
-    ...props
-  }, ref2) => {
-    bsPrefix = useBootstrapPrefix(bsPrefix, "navbar-toggler");
-    const {
-      onToggle,
-      expanded
-    } = (0, import_react58.useContext)(NavbarContext_default) || {};
-    const handleClick = useEventCallback2((e2) => {
-      if (onClick)
-        onClick(e2);
-      if (onToggle)
-        onToggle();
-    });
-    if (Component2 === "button") {
-      props.type = "button";
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(Component2, {
-      ...props,
-      ref: ref2,
-      onClick: handleClick,
-      "aria-label": label,
-      className: (0, import_classnames22.default)(className, bsPrefix, !expanded && "collapsed"),
-      children: children2 || /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("span", {
-        className: `${bsPrefix}-icon`
-      })
-    });
-  });
-  NavbarToggle.displayName = "NavbarToggle";
-  var NavbarToggle_default = NavbarToggle;
-
-  // node_modules/react-bootstrap/esm/NavbarOffcanvas.js
-  var React62 = __toESM(require_react());
-  var import_react62 = __toESM(require_react());
-
-  // node_modules/react-bootstrap/esm/Offcanvas.js
-  var import_classnames27 = __toESM(require_classnames());
-
-  // node_modules/@restart/hooks/esm/useMediaQuery.js
-  var import_react59 = __toESM(require_react());
-  var matchersByWindow = /* @__PURE__ */ new WeakMap();
-  var getMatcher = (query, targetWindow) => {
-    if (!query || !targetWindow)
-      return void 0;
-    const matchers = matchersByWindow.get(targetWindow) || /* @__PURE__ */ new Map();
-    matchersByWindow.set(targetWindow, matchers);
-    let mql = matchers.get(query);
-    if (!mql) {
-      mql = targetWindow.matchMedia(query);
-      mql.refCount = 0;
-      matchers.set(mql.media, mql);
-    }
-    return mql;
-  };
-  function useMediaQuery(query, targetWindow = typeof window === "undefined" ? void 0 : window) {
-    const mql = getMatcher(query, targetWindow);
-    const [matches, setMatches] = (0, import_react59.useState)(() => mql ? mql.matches : false);
-    useIsomorphicEffect_default2(() => {
-      let mql2 = getMatcher(query, targetWindow);
-      if (!mql2) {
-        return setMatches(false);
-      }
-      let matchers = matchersByWindow.get(targetWindow);
-      const handleChange = () => {
-        setMatches(mql2.matches);
-      };
-      mql2.refCount++;
-      mql2.addListener(handleChange);
-      handleChange();
-      return () => {
-        mql2.removeListener(handleChange);
-        mql2.refCount--;
-        if (mql2.refCount <= 0) {
-          matchers == null ? void 0 : matchers.delete(mql2.media);
-        }
-        mql2 = void 0;
-      };
-    }, [query]);
-    return matches;
-  }
-
-  // node_modules/@restart/hooks/esm/useBreakpoint.js
-  var import_react60 = __toESM(require_react());
-  function createBreakpointHook(breakpointValues) {
-    const names = Object.keys(breakpointValues);
-    function and(query, next) {
-      if (query === next) {
-        return next;
-      }
-      return query ? `${query} and ${next}` : next;
-    }
-    function getNext(breakpoint) {
-      return names[Math.min(names.indexOf(breakpoint) + 1, names.length - 1)];
-    }
-    function getMaxQuery(breakpoint) {
-      const next = getNext(breakpoint);
-      let value = breakpointValues[next];
-      if (typeof value === "number")
-        value = `${value - 0.2}px`;
-      else
-        value = `calc(${value} - 0.2px)`;
-      return `(max-width: ${value})`;
-    }
-    function getMinQuery(breakpoint) {
-      let value = breakpointValues[breakpoint];
-      if (typeof value === "number") {
-        value = `${value}px`;
-      }
-      return `(min-width: ${value})`;
-    }
-    function useBreakpoint2(breakpointOrMap, direction, window2) {
-      let breakpointMap;
-      if (typeof breakpointOrMap === "object") {
-        breakpointMap = breakpointOrMap;
-        window2 = direction;
-        direction = true;
-      } else {
-        direction = direction || true;
-        breakpointMap = {
-          [breakpointOrMap]: direction
-        };
-      }
-      let query = (0, import_react60.useMemo)(() => Object.entries(breakpointMap).reduce((query2, [key, direction2]) => {
-        if (direction2 === "up" || direction2 === true) {
-          query2 = and(query2, getMinQuery(key));
-        }
-        if (direction2 === "down" || direction2 === true) {
-          query2 = and(query2, getMaxQuery(key));
-        }
-        return query2;
-      }, ""), [JSON.stringify(breakpointMap)]);
-      return useMediaQuery(query, window2);
-    }
-    return useBreakpoint2;
-  }
-  var useBreakpoint = createBreakpointHook({
-    xs: 0,
-    sm: 576,
-    md: 768,
-    lg: 992,
-    xl: 1200,
-    xxl: 1400
-  });
-  var useBreakpoint_default = useBreakpoint;
-
-  // node_modules/react-bootstrap/esm/Offcanvas.js
-  var React61 = __toESM(require_react());
-  var import_react61 = __toESM(require_react());
-
-  // node_modules/react-bootstrap/esm/OffcanvasBody.js
-  var React57 = __toESM(require_react());
-  var import_classnames23 = __toESM(require_classnames());
-  var import_jsx_runtime43 = __toESM(require_jsx_runtime());
-  "use client";
-  var OffcanvasBody = /* @__PURE__ */ React57.forwardRef(({
-    className,
-    bsPrefix,
-    as: Component2 = "div",
-    ...props
-  }, ref2) => {
-    bsPrefix = useBootstrapPrefix(bsPrefix, "offcanvas-body");
-    return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(Component2, {
-      ref: ref2,
-      className: (0, import_classnames23.default)(className, bsPrefix),
-      ...props
-    });
-  });
-  OffcanvasBody.displayName = "OffcanvasBody";
-  var OffcanvasBody_default = OffcanvasBody;
-
-  // node_modules/react-bootstrap/esm/OffcanvasToggling.js
-  var import_classnames24 = __toESM(require_classnames());
-  var React58 = __toESM(require_react());
-  var import_jsx_runtime44 = __toESM(require_jsx_runtime());
-  "use client";
-  var transitionStyles = {
-    [ENTERING]: "show",
-    [ENTERED]: "show"
-  };
-  var OffcanvasToggling = /* @__PURE__ */ React58.forwardRef(({
-    bsPrefix,
-    className,
-    children: children2,
-    in: inProp = false,
-    mountOnEnter = false,
-    unmountOnExit = false,
-    appear = false,
-    ...props
-  }, ref2) => {
-    bsPrefix = useBootstrapPrefix(bsPrefix, "offcanvas");
-    return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(TransitionWrapper_default, {
-      ref: ref2,
-      addEndListener: transitionEndListener,
-      in: inProp,
-      mountOnEnter,
-      unmountOnExit,
-      appear,
-      ...props,
-      childRef: getChildRef(children2),
-      children: (status, innerProps) => /* @__PURE__ */ React58.cloneElement(children2, {
-        ...innerProps,
-        className: (0, import_classnames24.default)(className, children2.props.className, (status === ENTERING || status === EXITING) && `${bsPrefix}-toggling`, transitionStyles[status])
-      })
-    });
-  });
-  OffcanvasToggling.displayName = "OffcanvasToggling";
-  var OffcanvasToggling_default = OffcanvasToggling;
-
-  // node_modules/react-bootstrap/esm/OffcanvasHeader.js
-  var import_classnames25 = __toESM(require_classnames());
-  var React59 = __toESM(require_react());
-  var import_jsx_runtime45 = __toESM(require_jsx_runtime());
-  "use client";
-  var OffcanvasHeader = /* @__PURE__ */ React59.forwardRef(({
-    bsPrefix,
-    className,
-    closeLabel = "Close",
-    closeButton = false,
-    ...props
-  }, ref2) => {
-    bsPrefix = useBootstrapPrefix(bsPrefix, "offcanvas-header");
-    return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(AbstractModalHeader_default, {
-      ref: ref2,
-      ...props,
-      className: (0, import_classnames25.default)(className, bsPrefix),
-      closeLabel,
-      closeButton
-    });
-  });
-  OffcanvasHeader.displayName = "OffcanvasHeader";
-  var OffcanvasHeader_default = OffcanvasHeader;
-
-  // node_modules/react-bootstrap/esm/OffcanvasTitle.js
-  var React60 = __toESM(require_react());
-  var import_classnames26 = __toESM(require_classnames());
-  var import_jsx_runtime46 = __toESM(require_jsx_runtime());
-  "use client";
-  var DivStyledAsH5 = divWithClassName_default("h5");
-  var OffcanvasTitle = /* @__PURE__ */ React60.forwardRef(({
-    className,
-    bsPrefix,
-    as: Component2 = DivStyledAsH5,
-    ...props
-  }, ref2) => {
-    bsPrefix = useBootstrapPrefix(bsPrefix, "offcanvas-title");
-    return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(Component2, {
-      ref: ref2,
-      className: (0, import_classnames26.default)(className, bsPrefix),
-      ...props
-    });
-  });
-  OffcanvasTitle.displayName = "OffcanvasTitle";
-  var OffcanvasTitle_default = OffcanvasTitle;
-
-  // node_modules/react-bootstrap/esm/Offcanvas.js
-  var import_jsx_runtime47 = __toESM(require_jsx_runtime());
-  var import_jsx_runtime48 = __toESM(require_jsx_runtime());
-  var import_jsx_runtime49 = __toESM(require_jsx_runtime());
-  "use client";
-  function DialogTransition(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(OffcanvasToggling_default, {
-      ...props
-    });
-  }
-  function BackdropTransition(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(Fade_default, {
-      ...props
-    });
-  }
-  var Offcanvas = /* @__PURE__ */ React61.forwardRef(({
-    bsPrefix,
-    className,
-    children: children2,
-    "aria-labelledby": ariaLabelledby,
-    placement = "start",
-    responsive,
-    /* BaseModal props */
-    show = false,
-    backdrop = true,
-    keyboard = true,
-    scroll: scroll2 = false,
-    onEscapeKeyDown,
-    onShow,
-    onHide,
-    container,
-    autoFocus = true,
-    enforceFocus = true,
-    restoreFocus = true,
-    restoreFocusOptions,
-    onEntered,
-    onExit,
-    onExiting,
-    onEnter,
-    onEntering,
-    onExited,
-    backdropClassName,
-    manager: propsManager,
-    renderStaticNode = false,
-    ...props
-  }, ref2) => {
-    const modalManager = (0, import_react61.useRef)();
-    bsPrefix = useBootstrapPrefix(bsPrefix, "offcanvas");
-    const [showOffcanvas, setShowOffcanvas] = (0, import_react61.useState)(false);
-    const handleHide = useEventCallback2(onHide);
-    const hideResponsiveOffcanvas = useBreakpoint_default(responsive || "xs", "up");
-    (0, import_react61.useEffect)(() => {
-      setShowOffcanvas(responsive ? show && !hideResponsiveOffcanvas : show);
-    }, [show, responsive, hideResponsiveOffcanvas]);
-    const modalContext = (0, import_react61.useMemo)(() => ({
-      onHide: handleHide
-    }), [handleHide]);
-    function getModalManager() {
-      if (propsManager)
-        return propsManager;
-      if (scroll2) {
-        if (!modalManager.current)
-          modalManager.current = new BootstrapModalManager_default({
-            handleContainerOverflow: false
-          });
-        return modalManager.current;
-      }
-      return getSharedManager();
-    }
-    const handleEnter = (node, ...args) => {
-      if (node)
-        node.style.visibility = "visible";
-      onEnter == null || onEnter(node, ...args);
-    };
-    const handleExited = (node, ...args) => {
-      if (node)
-        node.style.visibility = "";
-      onExited == null || onExited(...args);
-    };
-    const renderBackdrop = (0, import_react61.useCallback)((backdropProps) => /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("div", {
-      ...backdropProps,
-      className: (0, import_classnames27.default)(`${bsPrefix}-backdrop`, backdropClassName)
-    }), [backdropClassName, bsPrefix]);
-    const renderDialog = (dialogProps) => /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("div", {
-      ...dialogProps,
-      ...props,
-      className: (0, import_classnames27.default)(className, responsive ? `${bsPrefix}-${responsive}` : bsPrefix, `${bsPrefix}-${placement}`),
-      "aria-labelledby": ariaLabelledby,
-      children: children2
-    });
-    return /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)(import_jsx_runtime48.Fragment, {
-      children: [!showOffcanvas && (responsive || renderStaticNode) && renderDialog({}), /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(ModalContext_default.Provider, {
-        value: modalContext,
-        children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(Modal_default, {
-          show: showOffcanvas,
-          ref: ref2,
-          backdrop,
-          container,
-          keyboard,
-          autoFocus,
-          enforceFocus: enforceFocus && !scroll2,
-          restoreFocus,
-          restoreFocusOptions,
-          onEscapeKeyDown,
-          onShow,
-          onHide: handleHide,
-          onEnter: handleEnter,
-          onEntering,
-          onEntered,
-          onExit,
-          onExiting,
-          onExited: handleExited,
-          manager: getModalManager(),
-          transition: DialogTransition,
-          backdropTransition: BackdropTransition,
-          renderBackdrop,
-          renderDialog
-        })
-      })]
-    });
-  });
-  Offcanvas.displayName = "Offcanvas";
-  var Offcanvas_default = Object.assign(Offcanvas, {
-    Body: OffcanvasBody_default,
-    Header: OffcanvasHeader_default,
-    Title: OffcanvasTitle_default
-  });
-
-  // node_modules/react-bootstrap/esm/NavbarOffcanvas.js
-  var import_jsx_runtime50 = __toESM(require_jsx_runtime());
-  "use client";
-  var NavbarOffcanvas = /* @__PURE__ */ React62.forwardRef(({
-    onHide,
-    ...props
-  }, ref2) => {
-    const context4 = (0, import_react62.useContext)(NavbarContext_default);
-    const handleHide = useEventCallback2(() => {
-      context4 == null || context4.onToggle == null || context4.onToggle();
-      onHide == null || onHide();
-    });
-    return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(Offcanvas_default, {
-      ref: ref2,
-      show: !!(context4 != null && context4.expanded),
-      ...props,
-      renderStaticNode: true,
-      onHide: handleHide
-    });
-  });
-  NavbarOffcanvas.displayName = "NavbarOffcanvas";
-  var NavbarOffcanvas_default = NavbarOffcanvas;
-
-  // node_modules/react-bootstrap/esm/NavbarText.js
-  var React63 = __toESM(require_react());
-  var import_classnames28 = __toESM(require_classnames());
-  var import_jsx_runtime51 = __toESM(require_jsx_runtime());
-  "use client";
-  var NavbarText = /* @__PURE__ */ React63.forwardRef(({
-    className,
-    bsPrefix,
-    as: Component2 = "span",
-    ...props
-  }, ref2) => {
-    bsPrefix = useBootstrapPrefix(bsPrefix, "navbar-text");
-    return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(Component2, {
-      ref: ref2,
-      className: (0, import_classnames28.default)(className, bsPrefix),
-      ...props
-    });
-  });
-  NavbarText.displayName = "NavbarText";
-  var NavbarText_default = NavbarText;
-
-  // node_modules/react-bootstrap/esm/Navbar.js
-  var import_jsx_runtime52 = __toESM(require_jsx_runtime());
-  "use client";
-  var Navbar = /* @__PURE__ */ React64.forwardRef((props, ref2) => {
-    const {
-      bsPrefix: initialBsPrefix,
-      expand: expand4 = true,
-      variant = "light",
-      bg,
-      fixed,
-      sticky,
-      className,
-      // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-      as: Component2 = "nav",
-      expanded,
-      onToggle,
-      onSelect,
-      collapseOnSelect = false,
-      ...controlledProps
-    } = useUncontrolled(props, {
-      expanded: "onToggle"
-    });
-    const bsPrefix = useBootstrapPrefix(initialBsPrefix, "navbar");
-    const handleCollapse = (0, import_react63.useCallback)((...args) => {
-      onSelect == null || onSelect(...args);
-      if (collapseOnSelect && expanded) {
-        onToggle == null || onToggle(false);
-      }
-    }, [onSelect, collapseOnSelect, expanded, onToggle]);
-    if (controlledProps.role === void 0 && Component2 !== "nav") {
-      controlledProps.role = "navigation";
-    }
-    let expandClass = `${bsPrefix}-expand`;
-    if (typeof expand4 === "string")
-      expandClass = `${expandClass}-${expand4}`;
-    const navbarContext = (0, import_react63.useMemo)(() => ({
-      onToggle: () => onToggle == null ? void 0 : onToggle(!expanded),
-      bsPrefix,
-      expanded: !!expanded,
-      expand: expand4
-    }), [bsPrefix, expanded, expand4, onToggle]);
-    return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(NavbarContext_default.Provider, {
-      value: navbarContext,
-      children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(SelectableContext_default.Provider, {
-        value: handleCollapse,
-        children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(Component2, {
-          ref: ref2,
-          ...controlledProps,
-          className: (0, import_classnames29.default)(className, bsPrefix, expand4 && expandClass, variant && `${bsPrefix}-${variant}`, bg && `bg-${bg}`, sticky && `sticky-${sticky}`, fixed && `fixed-${fixed}`)
-        })
-      })
-    });
-  });
-  Navbar.displayName = "Navbar";
-  var Navbar_default = Object.assign(Navbar, {
-    Brand: NavbarBrand_default,
-    Collapse: NavbarCollapse_default,
-    Offcanvas: NavbarOffcanvas_default,
-    Text: NavbarText_default,
-    Toggle: NavbarToggle_default
-  });
-
-  // node_modules/react-bootstrap/esm/NavDropdown.js
-  var import_classnames30 = __toESM(require_classnames());
-  var React65 = __toESM(require_react());
-  var import_jsx_runtime53 = __toESM(require_jsx_runtime());
-  var import_jsx_runtime54 = __toESM(require_jsx_runtime());
-  "use client";
-  var NavDropdown = /* @__PURE__ */ React65.forwardRef(({
-    id: id2,
-    title,
-    children: children2,
-    bsPrefix,
-    className,
-    rootCloseEvent,
-    menuRole,
-    disabled,
-    active,
-    renderMenuOnMount,
-    menuVariant,
-    ...props
-  }, ref2) => {
-    const navItemPrefix = useBootstrapPrefix(void 0, "nav-item");
-    return /* @__PURE__ */ (0, import_jsx_runtime54.jsxs)(Dropdown_default2, {
-      ref: ref2,
-      ...props,
-      className: (0, import_classnames30.default)(className, navItemPrefix),
-      children: [/* @__PURE__ */ (0, import_jsx_runtime53.jsx)(Dropdown_default2.Toggle, {
-        id: id2,
-        eventKey: null,
-        active,
-        disabled,
-        childBsPrefix: bsPrefix,
-        as: NavLink_default,
-        children: title
-      }), /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(Dropdown_default2.Menu, {
-        role: menuRole,
-        renderOnMount: renderMenuOnMount,
-        rootCloseEvent,
-        variant: menuVariant,
-        children: children2
-      })]
-    });
-  });
-  NavDropdown.displayName = "NavDropdown";
-  var NavDropdown_default = Object.assign(NavDropdown, {
-    Item: Dropdown_default2.Item,
-    ItemText: Dropdown_default2.ItemText,
-    Divider: Dropdown_default2.Divider,
-    Header: Dropdown_default2.Header
-  });
-
-  // node_modules/react-bootstrap/esm/Table.js
-  var import_classnames31 = __toESM(require_classnames());
-  var React66 = __toESM(require_react());
-  var import_jsx_runtime55 = __toESM(require_jsx_runtime());
-  "use client";
-  var Table = /* @__PURE__ */ React66.forwardRef(({
-    bsPrefix,
-    className,
-    striped,
-    bordered,
-    borderless,
-    hover,
-    size,
-    variant,
-    responsive,
-    ...props
-  }, ref2) => {
-    const decoratedBsPrefix = useBootstrapPrefix(bsPrefix, "table");
-    const classes = (0, import_classnames31.default)(className, decoratedBsPrefix, variant && `${decoratedBsPrefix}-${variant}`, size && `${decoratedBsPrefix}-${size}`, striped && `${decoratedBsPrefix}-${typeof striped === "string" ? `striped-${striped}` : "striped"}`, bordered && `${decoratedBsPrefix}-bordered`, borderless && `${decoratedBsPrefix}-borderless`, hover && `${decoratedBsPrefix}-hover`);
-    const table = /* @__PURE__ */ (0, import_jsx_runtime55.jsx)("table", {
-      ...props,
-      className: classes,
-      ref: ref2
-    });
-    if (responsive) {
-      let responsiveClass = `${decoratedBsPrefix}-responsive`;
-      if (typeof responsive === "string") {
-        responsiveClass = `${responsiveClass}-${responsive}`;
-      }
-      return /* @__PURE__ */ (0, import_jsx_runtime55.jsx)("div", {
-        className: responsiveClass,
-        children: table
-      });
-    }
-    return table;
-  });
-  var Table_default = Table;
-
-  // node_modules/react-bootstrap/esm/Tabs.js
-  var React67 = __toESM(require_react());
-  var import_jsx_runtime56 = __toESM(require_jsx_runtime());
-  var import_jsx_runtime57 = __toESM(require_jsx_runtime());
-  function getDefaultActiveKey(children2) {
-    let defaultActiveKey;
-    forEach(children2, (child) => {
-      if (defaultActiveKey == null) {
-        defaultActiveKey = child.props.eventKey;
-      }
-    });
-    return defaultActiveKey;
-  }
-  function renderTab(child) {
-    const {
-      title,
-      eventKey,
-      disabled,
-      tabClassName,
-      tabAttrs,
-      id: id2
-    } = child.props;
-    if (title == null) {
-      return null;
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(NavItem_default2, {
-      as: "li",
-      role: "presentation",
-      children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(NavLink_default, {
-        as: "button",
-        type: "button",
-        eventKey,
-        disabled,
-        id: id2,
-        className: tabClassName,
-        ...tabAttrs,
-        children: title
-      })
-    });
-  }
-  var Tabs2 = (props) => {
-    const {
-      id: id2,
-      onSelect,
-      transition: transition2,
-      mountOnEnter = false,
-      unmountOnExit = false,
-      variant = "tabs",
-      children: children2,
-      activeKey = getDefaultActiveKey(children2),
-      ...controlledProps
-    } = useUncontrolled(props, {
-      activeKey: "onSelect"
-    });
-    return /* @__PURE__ */ (0, import_jsx_runtime57.jsxs)(Tabs_default, {
-      id: id2,
-      activeKey,
-      onSelect,
-      transition: getTabTransitionComponent(transition2),
-      mountOnEnter,
-      unmountOnExit,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime56.jsx)(Nav_default2, {
-        id: id2,
-        ...controlledProps,
-        role: "tablist",
-        as: "ul",
-        variant,
-        children: map(children2, renderTab)
-      }), /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(TabContent_default, {
-        children: map(children2, (child) => {
-          const childProps = {
-            ...child.props
-          };
-          delete childProps.title;
-          delete childProps.disabled;
-          delete childProps.tabClassName;
-          delete childProps.tabAttrs;
-          return /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(TabPane_default, {
-            ...childProps
-          });
-        })
-      })]
-    });
-  };
-  Tabs2.displayName = "Tabs";
-  var Tabs_default2 = Tabs2;
-
-  // src/TestTab.tsx
-  var import_react64 = __toESM(require_react(), 1);
+  // src/DELETEME.ts
   var octokit = new Octokit2({
     auth: "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"
   });
+
+  // src/TestTab.tsx
   var TestTab = ({
     tests,
     tasks,
@@ -51322,7 +52809,7 @@
     areStatePropsEqual = shallowEqual,
     areMergedPropsEqual = shallowEqual,
     // use React's forwardRef to expose a ref of the wrapped component
-    forwardRef: forwardRef48 = false,
+    forwardRef: forwardRef51 = false,
     // the context consumer to use
     context: context4 = ReactReduxContext
   } = {}) {
@@ -51524,7 +53011,7 @@ ${latestSubscriptionCallbackError.current.stack}
       const Connect = _Connect;
       Connect.WrappedComponent = WrappedComponent;
       Connect.displayName = ConnectFunction.displayName = displayName;
-      if (forwardRef48) {
+      if (forwardRef51) {
         const _forwarded = React69.forwardRef(
           function forwardConnectRef(props, ref2) {
             return /* @__PURE__ */ React69.createElement(Connect, { ...props, reactReduxForwardedRef: ref2 });
@@ -59087,9 +60574,9 @@ ${latestSubscriptionCallbackError.current.stack}
 
   // node_modules/@caldwell619/react-kanban/dist/features/with-droppable/index.js
   var import_jsx_runtime60 = __toESM(require_jsx_runtime());
-  var withDroppable = function(Component2) {
+  var withDroppable = function(Component6) {
     return function WrapperComponent({ children: children2, ...droppableProps }) {
-      return (0, import_jsx_runtime60.jsx)(ConnectedDroppable, Object.assign({}, droppableProps, { children: (provided) => (0, import_jsx_runtime60.jsxs)(Component2, Object.assign({ ref: provided.innerRef }, provided.droppableProps, { children: [children2, provided.placeholder] }), void 0) }), void 0);
+      return (0, import_jsx_runtime60.jsx)(ConnectedDroppable, Object.assign({}, droppableProps, { children: (provided) => (0, import_jsx_runtime60.jsxs)(Component6, Object.assign({ ref: provided.innerRef }, provided.droppableProps, { children: [children2, provided.placeholder] }), void 0) }), void 0);
     };
   };
 
@@ -68458,17 +69945,27 @@ Check the top-level render call using <` + d + ">.");
     }))))));
   };
 
-  // src/TaskManFrontEnd.tsx
+  // src/TaskManSprint.tsx
+  var import_react82 = __toESM(require_react(), 1);
+
+  // src/collectionEffect.ts
+  var import_react81 = __toESM(require_react(), 1);
   var collectionEffect = (collection, setter, coercer = (x) => x) => {
-    (0, import_react82.useEffect)(() => {
+    (0, import_react81.useEffect)(() => {
       (async () => {
         fetch(`http://localhost:8080/${collection}.json`).then((response) => response.json()).then((json2) => {
-          Promise.all(json2.ids.map(async (_id) => {
-            return {
-              _id,
-              ...coercer(await (await fetch(`http://localhost:8080/${collection}/${_id}.json`)).json())
-            };
-          })).then((items) => {
+          Promise.all(
+            json2.ids.map(async (_id) => {
+              return {
+                _id,
+                ...coercer(
+                  await (await fetch(
+                    `http://localhost:8080/${collection}/${_id}.json`
+                  )).json()
+                )
+              };
+            })
+          ).then((items) => {
             console.log("setting", collection, items);
             setter(items);
           });
@@ -68476,24 +69973,787 @@ Check the top-level render call using <` + d + ">.");
       })();
     }, []);
   };
+
+  // src/TaskManSprint.tsx
+  var Sprint = ({
+    adminMode
+  }) => {
+    const [sprints, setSprints] = (0, import_react82.useState)(
+      []
+    );
+    collectionEffect(`Sprint`, setSprints);
+    const { id: id2 } = useParams();
+    const sprint = sprints.find((f) => f._id === id2);
+    const [gitDiff, setGitDiff] = (0, import_react82.useState)({});
+    (0, import_react82.useEffect)(() => {
+      (async () => {
+        if (!sprint)
+          return;
+        const diff = await octokit.request(`GET /repos/adamwong246/kokomobay-taskman/compare/${sprint?.start}...${sprint?.end}`, {
+          owner: "adamwong246",
+          repo: "kokomobay-taskman",
+          basehead: `${sprint?.start}...${sprint?.end}`,
+          headers: {
+            "X-GitHub-Api-Version": "2022-11-28"
+          }
+        });
+        console.log("diff", diff);
+        setGitDiff(diff);
+      })();
+    }, [sprint]);
+    if (!adminMode)
+      return /* @__PURE__ */ import_react82.default.createElement(Tab_default.Container, { id: "left-tabs-example5", defaultActiveKey: "feature-0" }, /* @__PURE__ */ import_react82.default.createElement(Row_default, null, /* @__PURE__ */ import_react82.default.createElement(Col_default, { sm: 2 }, /* @__PURE__ */ import_react82.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, sprints.map(
+        (sprint2, ndx) => /* @__PURE__ */ import_react82.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react82.default.createElement(
+          NavLink2,
+          {
+            to: `/sprint/${sprint2._id}`,
+            className: "nav-link"
+          },
+          sprint2._id
+        ))
+      ))), /* @__PURE__ */ import_react82.default.createElement(Col_default, { sm: 9 }, /* @__PURE__ */ import_react82.default.createElement(Tab_default.Content, null, sprint && /* @__PURE__ */ import_react82.default.createElement(import_react82.default.Fragment, null, /* @__PURE__ */ import_react82.default.createElement("h1", null, "Sprint/", sprint._id), /* @__PURE__ */ import_react82.default.createElement("pre", null, sprint.notes), /* @__PURE__ */ import_react82.default.createElement("p", null, "start ", sprint.start), /* @__PURE__ */ import_react82.default.createElement("p", null, "end ", sprint.end), /* @__PURE__ */ import_react82.default.createElement("pre", null, JSON.stringify(gitDiff, null, 2)))))));
+    return /* @__PURE__ */ import_react82.default.createElement("div", null);
+  };
+
+  // src/TaskManGit.tsx
+  var import_react83 = __toESM(require_react(), 1);
+
+  // node_modules/@gitgraph/react/lib/Gitgraph.js
+  var React86 = __toESM(require_react());
+  var import_core8 = __toESM(require_lib());
+
+  // node_modules/@gitgraph/react/lib/BranchLabel.js
+  var React78 = __toESM(require_react());
+  function DefaultBranchLabel(_a3) {
+    var branch = _a3.branch, commit = _a3.commit;
+    var _b = React78.useState({
+      textWidth: 0,
+      textHeight: 0
+    }), textSizing = _b[0], setTextSizing = _b[1];
+    var getSizing = React78.useCallback(function(node) {
+      if (!node)
+        return;
+      var box = node.getBBox();
+      setTextSizing({ textWidth: box.width, textHeight: box.height });
+    }, []);
+    var boxWidth = textSizing.textWidth + 2 * BranchLabel.paddingX;
+    var boxHeight = textSizing.textHeight + 2 * BranchLabel.paddingY;
+    return React78.createElement(
+      "g",
+      null,
+      React78.createElement("rect", { stroke: branch.style.label.strokeColor || commit.style.color, fill: branch.style.label.bgColor, rx: branch.style.label.borderRadius, width: boxWidth, height: boxHeight }),
+      React78.createElement("text", { ref: getSizing, fill: branch.style.label.color || commit.style.color, style: { font: branch.style.label.font }, alignmentBaseline: "middle", dominantBaseline: "middle", x: BranchLabel.paddingX, y: boxHeight / 2 }, branch.name)
+    );
+  }
+  var BranchLabel = React78.forwardRef(function(props, ref2) {
+    var branch = props.branch, commit = props.commit, branchLabelX = props.branchLabelX;
+    if (!branch.style.label.display)
+      return null;
+    if (!props.gitgraph.branchLabelOnEveryCommit) {
+      var commitHash = props.gitgraph.refs.getCommit(branch.name);
+      if (commit.hash !== commitHash)
+        return null;
+    }
+    if (commit.branchToDisplay !== branch.name)
+      return null;
+    var branchLabel = branch.renderLabel ? branch.renderLabel(branch) : React78.createElement(DefaultBranchLabel, { branch, commit });
+    if (props.gitgraph.isVertical) {
+      return React78.createElement("g", { ref: ref2, transform: "translate(" + (branchLabelX || 0) + ", 0)" }, branchLabel);
+    } else {
+      var commitDotSize = commit.style.dot.size * 2;
+      var horizontalMarginTop = 10;
+      var y = commitDotSize + horizontalMarginTop;
+      return React78.createElement("g", { ref: ref2, transform: "translate(" + commit.x + ", " + y + ")" }, branchLabel);
+    }
+  });
+  BranchLabel.paddingX = 10;
+  BranchLabel.paddingY = 5;
+
+  // node_modules/@gitgraph/react/lib/Tooltip.js
+  var React79 = __toESM(require_react());
+  var __extends = function() {
+    var extendStatics = function(d, b) {
+      extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d2, b2) {
+        d2.__proto__ = b2;
+      } || function(d2, b2) {
+        for (var p in b2)
+          if (b2.hasOwnProperty(p))
+            d2[p] = b2[p];
+      };
+      return extendStatics(d, b);
+    };
+    return function(d, b) {
+      extendStatics(d, b);
+      function __() {
+        this.constructor = d;
+      }
+      d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+  }();
+  var Tooltip3 = (
+    /** @class */
+    function(_super) {
+      __extends(Tooltip4, _super);
+      function Tooltip4() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.state = { textWidth: 0 };
+        _this.$text = React79.createRef();
+        return _this;
+      }
+      Tooltip4.prototype.componentDidMount = function() {
+        this.setState({ textWidth: this.$text.current.getBBox().width });
+      };
+      Tooltip4.prototype.render = function() {
+        if (this.props.commit.renderTooltip) {
+          return this.props.commit.renderTooltip(this.props.commit);
+        }
+        var commitSize = this.props.commit.style.dot.size * 2;
+        var offset4 = 10;
+        var padding = Tooltip4.padding;
+        var radius = 5;
+        var boxHeight = 50;
+        var boxWidth = offset4 + this.state.textWidth + 2 * padding;
+        var path = [
+          "M 0,0",
+          "L " + offset4 + "," + offset4,
+          "V " + (boxHeight / 2 - radius),
+          "Q " + offset4 + "," + boxHeight / 2 + " " + (offset4 + radius) + "," + boxHeight / 2,
+          "H " + (boxWidth - radius),
+          "Q " + boxWidth + "," + boxHeight / 2 + " " + boxWidth + "," + (boxHeight / 2 - radius),
+          "V -" + (boxHeight / 2 - radius),
+          "Q " + boxWidth + ",-" + boxHeight / 2 + " " + (boxWidth - radius) + ",-" + boxHeight / 2,
+          "H " + (offset4 + radius),
+          "Q " + offset4 + ",-" + boxHeight / 2 + " " + offset4 + ",-" + (boxHeight / 2 - radius),
+          "V -" + offset4,
+          "z"
+        ].join(" ");
+        return React79.createElement(
+          "g",
+          { transform: "translate(" + commitSize + ", " + commitSize / 2 + ")" },
+          React79.createElement("path", { d: path, fill: "#EEE" }),
+          React79.createElement("text", { ref: this.$text, x: offset4 + padding, y: 0, alignmentBaseline: "central", fill: "#333" }, this.props.children)
+        );
+      };
+      Tooltip4.padding = 10;
+      return Tooltip4;
+    }(React79.Component)
+  );
+
+  // node_modules/@gitgraph/react/lib/Commit.js
+  var React84 = __toESM(require_react());
+  var import_core6 = __toESM(require_lib());
+
+  // node_modules/@gitgraph/react/lib/Dot.js
+  var React80 = __toESM(require_react());
+  var Dot = function(_a3) {
+    var commit = _a3.commit, onMouseOver = _a3.onMouseOver, onMouseOut = _a3.onMouseOut;
+    if (commit.renderDot) {
+      return commit.renderDot(commit);
+    }
+    return (
+      /*
+            In order to handle strokes, we need to do some complex stuff here… 😅
+      
+            Problem: strokes are drawn inside & outside the circle.
+            But we want the stroke to be drawn inside only!
+      
+            The outside overlaps with other elements, as we expect the dot to have a fixed size. So we want to crop the outside part.
+      
+            Solution:
+            1. Create the circle in a <defs>
+            2. Define a clip path that references the circle
+            3. Use the clip path, adding the stroke.
+            4. Double stroke width as half of it will be clipped (the outside part).
+      
+            Ref.: https://stackoverflow.com/a/32162431/3911841
+      
+            P.S. there is a proposal for a stroke-alignment property,
+            but it's still a W3C Draft ¯\_(ツ)_/¯
+            https://svgwg.org/specs/strokes/#SpecifyingStrokeAlignment
+          */
+      React80.createElement(
+        React80.Fragment,
+        null,
+        React80.createElement(
+          "defs",
+          null,
+          React80.createElement("circle", { id: commit.hash, cx: commit.style.dot.size, cy: commit.style.dot.size, r: commit.style.dot.size, fill: commit.style.dot.color }),
+          React80.createElement(
+            "clipPath",
+            { id: "clip-" + commit.hash },
+            React80.createElement("use", { xlinkHref: "#" + commit.hash })
+          )
+        ),
+        React80.createElement(
+          "g",
+          { onClick: commit.onClick, onMouseOver, onMouseOut },
+          React80.createElement("use", { xlinkHref: "#" + commit.hash, clipPath: "url(#clip-" + commit.hash + ")", stroke: commit.style.dot.strokeColor, strokeWidth: commit.style.dot.strokeWidth && commit.style.dot.strokeWidth * 2 }),
+          commit.dotText && React80.createElement("text", { alignmentBaseline: "central", textAnchor: "middle", x: commit.style.dot.size, y: commit.style.dot.size, style: { font: commit.style.dot.font } }, commit.dotText)
+        )
+      )
+    );
+  };
+
+  // node_modules/@gitgraph/react/lib/Arrow.js
+  var React81 = __toESM(require_react());
+  var import_core5 = __toESM(require_lib());
+  var __extends2 = function() {
+    var extendStatics = function(d, b) {
+      extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d2, b2) {
+        d2.__proto__ = b2;
+      } || function(d2, b2) {
+        for (var p in b2)
+          if (b2.hasOwnProperty(p))
+            d2[p] = b2[p];
+      };
+      return extendStatics(d, b);
+    };
+    return function(d, b) {
+      extendStatics(d, b);
+      function __() {
+        this.constructor = d;
+      }
+      d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+  }();
+  var Arrow3 = (
+    /** @class */
+    function(_super) {
+      __extends2(Arrow4, _super);
+      function Arrow4() {
+        return _super !== null && _super.apply(this, arguments) || this;
+      }
+      Arrow4.prototype.render = function() {
+        var _this = this;
+        var parent = this.props.commits.find(function(_a3) {
+          var hash3 = _a3.hash;
+          return hash3 === _this.props.parentHash;
+        });
+        if (!parent)
+          return null;
+        var origin2 = this.props.gitgraph.reverseArrow ? {
+          x: this.props.commitRadius + (parent.x - this.props.commit.x),
+          y: this.props.commitRadius + (parent.y - this.props.commit.y)
+        } : { x: this.props.commitRadius, y: this.props.commitRadius };
+        return React81.createElement(
+          "g",
+          { transform: "translate(" + origin2.x + ", " + origin2.y + ")" },
+          React81.createElement("path", { d: (0, import_core5.arrowSvgPath)(this.props.gitgraph, parent, this.props.commit), fill: this.props.gitgraph.template.arrow.color })
+        );
+      };
+      return Arrow4;
+    }(React81.Component)
+  );
+
+  // node_modules/@gitgraph/react/lib/Message.js
+  var React82 = __toESM(require_react());
+  var Message = React82.forwardRef(function(props, ref2) {
+    var commit = props.commit, messageX = props.messageX;
+    if (commit.renderMessage) {
+      return React82.createElement("g", { ref: ref2, transform: "translate(" + messageX + ", 0)" }, commit.renderMessage(commit));
+    }
+    var body = null;
+    if (commit.body) {
+      body = React82.createElement(
+        "foreignObject",
+        { width: "600", x: "10" },
+        React82.createElement("p", null, commit.body)
+      );
+    }
+    var y = commit.style.dot.size;
+    return React82.createElement(
+      "g",
+      { ref: ref2, transform: "translate(" + messageX + ", " + y + ")" },
+      React82.createElement("text", { alignmentBaseline: "central", fill: commit.style.message.color, style: { font: commit.style.message.font }, onClick: commit.onMessageClick }, commit.message),
+      body
+    );
+  });
+
+  // node_modules/@gitgraph/react/lib/Tag.js
+  var React83 = __toESM(require_react());
+  var TAG_PADDING_X = 10;
+  var TAG_PADDING_Y = 5;
+  function DefaultTag(props) {
+    var _a3 = React83.useState({ textWidth: 0, textHeight: 0 }), state = _a3[0], setState = _a3[1];
+    var $text = React83.useRef(null);
+    React83.useEffect(function() {
+      var box = $text.current.getBBox();
+      setState({ textWidth: box.width, textHeight: box.height });
+    }, []);
+    var tag = props.tag;
+    var offset4 = tag.style.pointerWidth;
+    var radius = tag.style.borderRadius;
+    var boxWidth = offset4 + state.textWidth + 2 * TAG_PADDING_X;
+    var boxHeight = state.textHeight + 2 * TAG_PADDING_Y;
+    var path = [
+      "M 0,0",
+      "L " + offset4 + "," + boxHeight / 2,
+      "V " + boxHeight / 2,
+      "Q " + offset4 + "," + boxHeight / 2 + " " + (offset4 + radius) + "," + boxHeight / 2,
+      "H " + (boxWidth - radius),
+      "Q " + boxWidth + "," + boxHeight / 2 + " " + boxWidth + "," + (boxHeight / 2 - radius),
+      "V " + -(boxHeight / 2 - radius),
+      "Q " + boxWidth + ",-" + boxHeight / 2 + " " + (boxWidth - radius) + ",-" + boxHeight / 2,
+      "H " + (offset4 + radius),
+      "Q " + offset4 + ",-" + boxHeight / 2 + " " + offset4 + ",-" + boxHeight / 2,
+      "V -" + boxHeight / 2,
+      "z"
+    ].join(" ");
+    return React83.createElement(
+      "g",
+      null,
+      React83.createElement("path", { d: path, fill: tag.style.bgColor, stroke: tag.style.strokeColor }),
+      React83.createElement("text", { ref: $text, fill: tag.style.color, style: { font: tag.style.font }, alignmentBaseline: "middle", dominantBaseline: "middle", x: offset4 + TAG_PADDING_X, y: 0 }, tag.name)
+    );
+  }
+  var Tag = React83.forwardRef(function(props, ref2) {
+    var tag = props.tag, commit = props.commit, tagX = props.tagX;
+    return React83.createElement("g", { ref: ref2, transform: "translate(" + (tagX || 0) + ", " + commit.style.dot.size + ")" }, tag.render ? tag.render(tag.name, tag.style) : React83.createElement(DefaultTag, { tag }));
+  });
+
+  // node_modules/@gitgraph/react/lib/Commit.js
+  var Commit = function(props) {
+    var commit = props.commit, commits = props.commits, gitgraph = props.gitgraph, commitMessagesX = props.commitMessagesX;
+    var branchLabelRef = React84.useRef();
+    var tagRefs = React84.useRef([]);
+    var messageRef = React84.useRef();
+    var _a3 = React84.useState(0), branchLabelX = _a3[0], setBranchLabelX = _a3[1];
+    var _b = React84.useState([]), tagXs = _b[0], setTagXs = _b[1];
+    var _c = React84.useState(0), messageX = _c[0], setMessageX = _c[1];
+    var arrows = React84.useMemo(function() {
+      if (!gitgraph.template.arrow.size)
+        return null;
+      var commitRadius = commit.style.dot.size;
+      return commit.parents.map(function(parentHash) {
+        return React84.createElement(Arrow3, { key: parentHash, commits, commit, gitgraph, parentHash, commitRadius });
+      });
+    }, [commits, commit, gitgraph]);
+    var branchLabels = React84.useMemo(function() {
+      var branches = Array.from(gitgraph.branches.values());
+      return branches.map(function(branch) {
+        return React84.createElement(BranchLabel, { key: branch.name, gitgraph, branch, commit, ref: branchLabelRef, branchLabelX });
+      });
+    }, [gitgraph, commit, branchLabelX]);
+    var tags = React84.useMemo(function() {
+      tagRefs.current = [];
+      if (!commit.tags)
+        return null;
+      if (gitgraph.isHorizontal)
+        return null;
+      return commit.tags.map(function(tag, i) {
+        return React84.createElement(Tag, { key: commit.hashAbbrev + "-" + tag.name, commit, tag, ref: function(r) {
+          return tagRefs.current[i] = r;
+        }, tagX: tagXs[i] || 0 });
+      });
+    }, [commit, gitgraph, tagXs]);
+    var _d = props.getWithCommitOffset(commit), x = _d.x, y = _d.y;
+    React84.useLayoutEffect(function() {
+      if (gitgraph.isHorizontal) {
+        return;
+      }
+      var padding = 10;
+      var translateX = commitMessagesX;
+      if (branchLabelRef.current) {
+        setBranchLabelX(translateX);
+        var branchLabelWidth = branchLabelRef.current.getBBox().width + BranchLabel.paddingX;
+        translateX += branchLabelWidth + padding;
+      }
+      var allTagXs = tagRefs.current.map(function(tag) {
+        if (!tag)
+          return 0;
+        var tagX = translateX;
+        var tagWidth = tag.getBBox().width + TAG_PADDING_X;
+        translateX += tagWidth + padding;
+        return tagX;
+      });
+      setTagXs(allTagXs);
+      if (messageRef.current) {
+        setMessageX(translateX);
+      }
+    }, [tagRefs, gitgraph, commitMessagesX]);
+    var shouldRenderTooltip = props.currentCommitOver === commit && (props.gitgraph.isHorizontal || props.gitgraph.mode === import_core6.Mode.Compact && commit.style.hasTooltipInCompactMode);
+    if (shouldRenderTooltip) {
+      props.setTooltip(React84.createElement(
+        "g",
+        { transform: "translate(" + x + ", " + y + ")" },
+        React84.createElement(
+          Tooltip3,
+          { commit },
+          commit.hashAbbrev,
+          " - ",
+          commit.subject
+        )
+      ));
+    }
+    return React84.createElement(
+      "g",
+      { transform: "translate(" + x + ", " + y + ")" },
+      React84.createElement(Dot, { commit, onMouseOver: function() {
+        props.setCurrentCommitOver(commit);
+        commit.onMouseOver();
+      }, onMouseOut: function() {
+        props.setCurrentCommitOver(null);
+        props.setTooltip(null);
+        commit.onMouseOut();
+      } }),
+      arrows,
+      React84.createElement(
+        "g",
+        { transform: "translate(" + -x + ", 0)" },
+        commit.style.message.display && React84.createElement(Message, { commit, ref: messageRef, messageX }),
+        branchLabels,
+        tags
+      )
+    );
+  };
+
+  // node_modules/@gitgraph/react/lib/BranchPath.js
+  var React85 = __toESM(require_react());
+  var import_core7 = __toESM(require_lib());
+  var __extends3 = function() {
+    var extendStatics = function(d, b) {
+      extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d2, b2) {
+        d2.__proto__ = b2;
+      } || function(d2, b2) {
+        for (var p in b2)
+          if (b2.hasOwnProperty(p))
+            d2[p] = b2[p];
+      };
+      return extendStatics(d, b);
+    };
+    return function(d, b) {
+      extendStatics(d, b);
+      function __() {
+        this.constructor = d;
+      }
+      d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+  }();
+  var BranchPath = (
+    /** @class */
+    function(_super) {
+      __extends3(BranchPath2, _super);
+      function BranchPath2() {
+        return _super !== null && _super.apply(this, arguments) || this;
+      }
+      BranchPath2.prototype.render = function() {
+        var _this = this;
+        return React85.createElement("path", { d: (0, import_core7.toSvgPath)(this.props.coordinates.map(function(a) {
+          return a.map(function(b) {
+            return _this.props.getWithCommitOffset(b);
+          });
+        }), this.props.isBezier, this.props.gitgraph.isVertical), fill: "none", stroke: this.props.branch.computedColor, strokeWidth: this.props.branch.style.lineWidth, transform: "translate(" + this.props.offset + ", " + this.props.offset + ")" });
+      };
+      return BranchPath2;
+    }(React85.Component)
+  );
+
+  // node_modules/@gitgraph/react/lib/Gitgraph.js
+  var __extends4 = function() {
+    var extendStatics = function(d, b) {
+      extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d2, b2) {
+        d2.__proto__ = b2;
+      } || function(d2, b2) {
+        for (var p in b2)
+          if (b2.hasOwnProperty(p))
+            d2[p] = b2[p];
+      };
+      return extendStatics(d, b);
+    };
+    return function(d, b) {
+      extendStatics(d, b);
+      function __() {
+        this.constructor = d;
+      }
+      d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+  }();
+  function isPropsWithGraph(props) {
+    return "graph" in props;
+  }
+  var Gitgraph = (
+    /** @class */
+    function(_super) {
+      __extends4(Gitgraph2, _super);
+      function Gitgraph2(props) {
+        var _this = _super.call(this, props) || this;
+        _this.$graph = React86.createRef();
+        _this.$commits = React86.createRef();
+        _this.$tooltip = null;
+        _this.state = {
+          commits: [],
+          branchesPaths: /* @__PURE__ */ new Map(),
+          commitMessagesX: 0,
+          commitYWithOffsets: {},
+          shouldRecomputeOffsets: true,
+          currentCommitOver: null
+        };
+        _this.gitgraph = isPropsWithGraph(props) ? props.graph : new import_core8.GitgraphCore(props.options);
+        _this.gitgraph.subscribe(function(data) {
+          var commits = data.commits, branchesPaths = data.branchesPaths, commitMessagesX = data.commitMessagesX;
+          _this.setState({
+            commits,
+            branchesPaths,
+            commitMessagesX,
+            shouldRecomputeOffsets: true
+          });
+        });
+        return _this;
+      }
+      Gitgraph2.prototype.render = function() {
+        var _this = this;
+        return React86.createElement(
+          "svg",
+          { ref: this.$graph },
+          React86.createElement(
+            "g",
+            { transform: "translate(" + BranchLabel.paddingX + ", " + Tooltip3.padding + ")" },
+            this.renderBranchesPaths(),
+            React86.createElement("g", { ref: this.$commits }, this.state.commits.map(function(commit) {
+              return React86.createElement(Commit, { key: commit.hash, commits: _this.state.commits, commit, currentCommitOver: _this.state.currentCommitOver, setCurrentCommitOver: _this.setCurrentCommitOver.bind(_this), gitgraph: _this.gitgraph, getWithCommitOffset: _this.getWithCommitOffset.bind(_this), setTooltip: _this.setTooltip.bind(_this), commitMessagesX: _this.state.commitMessagesX });
+            })),
+            this.$tooltip
+          )
+        );
+      };
+      Gitgraph2.prototype.componentDidMount = function() {
+        if (isPropsWithGraph(this.props))
+          return;
+        this.props.children(this.gitgraph.getUserApi());
+      };
+      Gitgraph2.prototype.componentDidUpdate = function() {
+        if (this.$graph.current) {
+          var _a3 = this.$graph.current.getBBox(), height = _a3.height, width = _a3.width;
+          this.$graph.current.setAttribute(
+            "width",
+            // Add `Tooltip.padding` so we don't crop the tooltip text.
+            // Add `BranchLabel.paddingX` so we don't cut branch label.
+            (width + Tooltip3.padding + BranchLabel.paddingX).toString()
+          );
+          this.$graph.current.setAttribute(
+            "height",
+            // Add `Tooltip.padding` so we don't crop tooltip text
+            // Add `BranchLabel.paddingY` so we don't crop branch label.
+            (height + Tooltip3.padding + BranchLabel.paddingY).toString()
+          );
+        }
+        if (!this.state.shouldRecomputeOffsets)
+          return;
+        if (!this.$commits.current)
+          return;
+        var commits = Array.from(this.$commits.current.children);
+        this.setState({
+          commitYWithOffsets: this.computeOffsets(commits),
+          shouldRecomputeOffsets: false
+        });
+      };
+      Gitgraph2.prototype.setCurrentCommitOver = function(v2) {
+        this.setState({ currentCommitOver: v2 });
+      };
+      Gitgraph2.prototype.setTooltip = function(v2) {
+        this.$tooltip = v2;
+      };
+      Gitgraph2.prototype.renderBranchesPaths = function() {
+        var _this = this;
+        var offset4 = this.gitgraph.template.commit.dot.size;
+        var isBezier = this.gitgraph.template.branch.mergeStyle === import_core8.MergeStyle.Bezier;
+        return Array.from(this.state.branchesPaths).map(function(_a3) {
+          var branch = _a3[0], coordinates = _a3[1];
+          return React86.createElement(BranchPath, { key: branch.name, gitgraph: _this.gitgraph, branch, coordinates, getWithCommitOffset: _this.getWithCommitOffset.bind(_this), isBezier, offset: offset4 });
+        });
+      };
+      Gitgraph2.prototype.computeOffsets = function(commits) {
+        var totalOffsetY = 0;
+        var orientedCommits = this.gitgraph.orientation === import_core8.Orientation.VerticalReverse ? commits : commits.reverse();
+        return orientedCommits.reduce(function(newOffsets, commit) {
+          var commitY = parseInt(commit.getAttribute("transform").split(",")[1].slice(0, -1), 10);
+          var firstForeignObject = commit.getElementsByTagName("foreignObject")[0];
+          var customHtmlMessage = firstForeignObject && firstForeignObject.firstElementChild;
+          var messageHeight = 0;
+          if (customHtmlMessage) {
+            var height = customHtmlMessage.getBoundingClientRect().height;
+            var marginTopInPx = window.getComputedStyle(customHtmlMessage).marginTop || "0px";
+            var marginTop = parseInt(marginTopInPx.replace("px", ""), 10);
+            messageHeight = height + marginTop;
+          }
+          if (firstForeignObject) {
+            firstForeignObject.setAttribute("height", messageHeight + "px");
+          }
+          newOffsets[commitY] = commitY + totalOffsetY;
+          totalOffsetY += messageHeight;
+          return newOffsets;
+        }, {});
+      };
+      Gitgraph2.prototype.getWithCommitOffset = function(_a3) {
+        var x = _a3.x, y = _a3.y;
+        return { x, y: this.state.commitYWithOffsets[y] || y };
+      };
+      Gitgraph2.defaultProps = {
+        options: {}
+      };
+      return Gitgraph2;
+    }(React86.Component)
+  );
+
+  // src/TaskManGit.tsx
+  var simpleGraph = [
+    {
+      refs: ["HEAD", "feat1"],
+      hash: "5d8e7d7f6b4cf520b4ec55a0face7c07b4d642c1",
+      hashAbbrev: "5d8e7d7",
+      tree: "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+      treeAbbrev: "4b825dc",
+      parents: ["0df8d7cce68908571cd7cd9178e498f1519de77e"],
+      parentsAbbrev: ["0df8d7c"],
+      author: {
+        name: "Nicolas Carlo",
+        email: "nicolas.carlo@busbud.com",
+        timestamp: 153202129e4
+      },
+      committer: {
+        name: "Nicolas Carlo",
+        email: "nicolas.carlo@busbud.com",
+        timestamp: 153202129e4
+      },
+      subject: "third",
+      body: "",
+      notes: "",
+      stats: []
+    },
+    {
+      refs: ["master"],
+      hash: "5e5b104afddb719d02b6d685463dd38b4dd82493",
+      hashAbbrev: "5e5b104",
+      tree: "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+      treeAbbrev: "4b825dc",
+      parents: ["0df8d7cce68908571cd7cd9178e498f1519de77e"],
+      parentsAbbrev: ["0df8d7c"],
+      author: {
+        name: "Nicolas Carlo",
+        email: "nicolas.carlo@busbud.com",
+        timestamp: 1532021274e3
+      },
+      committer: {
+        name: "Nicolas Carlo",
+        email: "nicolas.carlo@busbud.com",
+        timestamp: 1532021274e3
+      },
+      subject: "second",
+      body: "",
+      notes: "",
+      stats: []
+    },
+    {
+      refs: [],
+      hash: "0df8d7cce68908571cd7cd9178e498f1519de77e",
+      hashAbbrev: "0df8d7c",
+      tree: "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+      treeAbbrev: "4b825dc",
+      parents: [],
+      parentsAbbrev: [],
+      author: {
+        name: "Nicolas Carlo",
+        email: "nicolas.carlo@busbud.com",
+        timestamp: 153202123e4
+      },
+      committer: {
+        name: "Nicolas Carlo",
+        email: "nicolas.carlo@busbud.com",
+        timestamp: 153202123e4
+      },
+      subject: "first",
+      body: "",
+      notes: "",
+      stats: []
+    }
+  ];
+  var Git = ({
+    adminMode
+  }) => {
+    const { id: id2 } = useParams();
+    const [gitTree, setCommits] = (0, import_react83.useState)({ commits: [], branches: [] });
+    (0, import_react83.useEffect)(() => {
+      (async () => {
+        octokit;
+        const { data: commits } = await octokit.rest.repos.listCommits({
+          owner: "ChromaPDX",
+          repo: "kokomoBay"
+        });
+        const { data: branches } = await octokit.rest.repos.listBranches({
+          owner: "ChromaPDX",
+          repo: "kokomoBay"
+        });
+        console.log("branches", branches);
+        console.log("commits", commits);
+        setCommits({ branches, commits });
+      })();
+    }, []);
+    console.log("gitTree", gitTree);
+    const fancyCommits = !gitTree.commits ? [] : gitTree.commits.map((c) => {
+      return {
+        // refs: c.parents.map((p) => p.sha),
+        refs: gitTree.branches.filter((b) => b.commit.sha === c.sha).map((b) => b.name),
+        hash: c.sha,
+        hashAbbrev: c.sha.slice(0, 7),
+        tree: c.node_id,
+        treeAbbrev: c.node_id.slice(0, 7),
+        parents: c.parents.map((p) => p.sha),
+        parentsAbbrev: c.parents.map((p) => p.sha.slice(0, 7)),
+        author: {
+          name: c.commit.author.name,
+          email: c.commit.author.email,
+          timestamp: new Date(c.commit.author.date).getMilliseconds()
+        },
+        committer: {
+          name: c.commit.committer.name,
+          email: c.commit.committer.email,
+          timestamp: new Date(c.commit.committer.date).getMilliseconds()
+        },
+        subject: c.commit.message,
+        body: "",
+        notes: "",
+        stats: []
+      };
+    });
+    console.log("simpleGraph", simpleGraph);
+    console.log("fancyCommits!", fancyCommits);
+    if (!adminMode)
+      return /* @__PURE__ */ import_react83.default.createElement(Tab_default.Container, { id: "left-tabs-example5", defaultActiveKey: "feature-0" }, /* @__PURE__ */ import_react83.default.createElement(Row_default, null, /* @__PURE__ */ import_react83.default.createElement(Col_default, { sm: 3 }, /* @__PURE__ */ import_react83.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, /* @__PURE__ */ import_react83.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react83.default.createElement(
+        NavLink2,
+        {
+          to: `/commit/idk`,
+          className: "nav-link"
+        },
+        "ChromaPDX/kokomoBay"
+      )))), /* @__PURE__ */ import_react83.default.createElement(Col_default, { sm: 9 }, /* @__PURE__ */ import_react83.default.createElement(Tab_default.Content, null, fancyCommits.length && /* @__PURE__ */ import_react83.default.createElement(
+        Gitgraph,
+        null,
+        (gitgraph) => {
+          gitgraph.import(fancyCommits);
+        }
+      )))));
+    return /* @__PURE__ */ import_react83.default.createElement("div", null);
+  };
+
+  // src/TaskManFrontEnd.tsx
   var UserModal = ({ _id, users }) => {
     const u = users.find((u2) => u2._id === _id);
     if (!u) {
-      return /* @__PURE__ */ import_react82.default.createElement("pre", null, "user not found");
+      return /* @__PURE__ */ import_react86.default.createElement("pre", null, "user not found");
     }
-    return /* @__PURE__ */ import_react82.default.createElement(import_react82.default.Fragment, null, /* @__PURE__ */ import_react82.default.createElement("h1", null, u._id), /* @__PURE__ */ import_react82.default.createElement("h2", null, u.email), /* @__PURE__ */ import_react82.default.createElement("p", null, u.profile));
+    return /* @__PURE__ */ import_react86.default.createElement(import_react86.default.Fragment, null, /* @__PURE__ */ import_react86.default.createElement("h1", null, u._id), /* @__PURE__ */ import_react86.default.createElement("h2", null, u.email), /* @__PURE__ */ import_react86.default.createElement("p", null, u.profile));
   };
   var Report = () => {
-    const [state, setState] = (0, import_react82.useState)({
+    const [state, setState] = (0, import_react86.useState)({
       tests: [],
       buildDir: "",
       results: {}
     });
-    const [tests, setTests] = (0, import_react82.useState)({
+    const [tests, setTests] = (0, import_react86.useState)({
       tests: [],
       buildDir: ""
     });
-    const [kanban, setKanban] = (0, import_react82.useState)(
+    const [kanban, setKanban] = (0, import_react86.useState)(
       []
     );
     const importResults = async () => {
@@ -68512,7 +70772,7 @@ Check the top-level render call using <` + d + ">.");
       }));
       setState({ tests: config.tests, results, buildDir: config.buildDir });
     };
-    const [tasks, setTasks] = (0, import_react82.useState)(
+    const [tasks, setTasks] = (0, import_react86.useState)(
       []
     );
     collectionEffect(`Task`, setTasks, (t) => {
@@ -68522,7 +70782,7 @@ Check the top-level render call using <` + d + ">.");
         end: new Date(t.end)
       };
     });
-    const [milestones, setMilestones] = (0, import_react82.useState)(
+    const [milestones, setMilestones] = (0, import_react86.useState)(
       []
     );
     collectionEffect(`Milestone`, setMilestones, (m) => {
@@ -68532,11 +70792,11 @@ Check the top-level render call using <` + d + ">.");
         end: new Date(m.date)
       };
     });
-    const [projects, setProjects] = (0, import_react82.useState)(
+    const [projects, setProjects] = (0, import_react86.useState)(
       []
     );
     collectionEffect(`Project`, setProjects);
-    const [users, setUsers] = (0, import_react82.useState)(
+    const [users, setUsers] = (0, import_react86.useState)(
       []
     );
     collectionEffect(`User`, setUsers);
@@ -68553,7 +70813,7 @@ Check the top-level render call using <` + d + ">.");
         });
       }).catch((error2) => console.error(error2));
     };
-    (0, import_react82.useEffect)(() => {
+    (0, import_react86.useEffect)(() => {
       importKanban();
     }, []);
     const importTests = async () => {
@@ -68561,27 +70821,27 @@ Check the top-level render call using <` + d + ">.");
       const y = await x.json();
       setTests(y);
     };
-    (0, import_react82.useEffect)(() => {
+    (0, import_react86.useEffect)(() => {
       importResults();
     }, []);
-    (0, import_react82.useEffect)(() => {
+    (0, import_react86.useEffect)(() => {
       importTests();
     }, []);
-    const [activeKey, setActiveKey] = (0, import_react82.useState)("home");
+    const [activeKey, setActiveKey] = (0, import_react86.useState)("home");
     const handleSelect = (selectedKey) => {
       setActiveKey(selectedKey);
     };
-    const [adminMode, setAdminMode] = (0, import_react82.useState)(false);
-    const [modal, setModal] = (0, import_react82.useState)();
+    const [adminMode, setAdminMode] = (0, import_react86.useState)(false);
+    const [modal, setModal] = (0, import_react86.useState)();
     const reposAndBranches = {
       "ChromaPDX/kokomoBay": [
         "master"
       ]
     };
-    const [currentRepo, setRepo] = (0, import_react82.useState)(
+    const [currentRepo, setRepo] = (0, import_react86.useState)(
       "ChromaPDX/kokomoBay"
     );
-    const [currentBranch, setBranch] = (0, import_react82.useState)(
+    const [currentBranch, setBranch] = (0, import_react86.useState)(
       "master"
     );
     const initialEdges = [
@@ -68601,7 +70861,7 @@ Check the top-level render call using <` + d + ">.");
       })
     ];
     console.log("orgNodes", orgNodes);
-    return /* @__PURE__ */ import_react82.default.createElement("div", null, /* @__PURE__ */ import_react82.default.createElement("style", null, `
+    return /* @__PURE__ */ import_react86.default.createElement("div", null, /* @__PURE__ */ import_react86.default.createElement("style", null, `
 pre, code, p {
   max-width: 40rem;
   text-wrap: auto;
@@ -68619,7 +70879,7 @@ footer {
 
   top: 0;
 }
-          `), modal && /* @__PURE__ */ import_react82.default.createElement("div", { style: {
+          `), modal && /* @__PURE__ */ import_react86.default.createElement("div", { style: {
       "position": "fixed",
       /* Stay in place */
       "zIndex": 1,
@@ -68634,7 +70894,7 @@ footer {
       /* Enable scroll if needed */
       "backgroundColor": "rgba(0,0,0,0.4)"
       /* Black w/ opacity */
-    } }, /* @__PURE__ */ import_react82.default.createElement("div", { style: {
+    } }, /* @__PURE__ */ import_react86.default.createElement("div", { style: {
       backgroundColor: "#fefefe",
       margin: "15% auto",
       /* 15% from the top and centered */
@@ -68642,11 +70902,11 @@ footer {
       border: "1px solid #888",
       width: "80%"
       /* Could be more or less, depending on screen size */
-    } }, modal && modal[0] === "User" && /* @__PURE__ */ import_react82.default.createElement(UserModal, { users, _id: modal[1] }), /* @__PURE__ */ import_react82.default.createElement("button", { onClick: () => setModal(void 0) }, "OK"))), /* @__PURE__ */ import_react82.default.createElement(BrowserRouter, null, /* @__PURE__ */ import_react82.default.createElement(Tab_default.Container, { id: "left-tabs-example", defaultActiveKey: "first" }, /* @__PURE__ */ import_react82.default.createElement(Row_default, null, /* @__PURE__ */ import_react82.default.createElement(Col_default, { sm: 1 }, /* @__PURE__ */ import_react82.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, /* @__PURE__ */ import_react82.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react82.default.createElement(NavLink2, { to: "/tests", className: "nav-link" }, "tests")), /* @__PURE__ */ import_react82.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react82.default.createElement(NavLink2, { to: "/features", className: "nav-link" }, "features")), /* @__PURE__ */ import_react82.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react82.default.createElement(NavLink2, { to: "/kanban", className: "nav-link" }, "kanban")), /* @__PURE__ */ import_react82.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react82.default.createElement(NavLink2, { to: "/gantt", className: "nav-link" }, "gantt")), /* @__PURE__ */ import_react82.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react82.default.createElement(NavLink2, { to: "/owners", className: "nav-link" }, "owners")), /* @__PURE__ */ import_react82.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react82.default.createElement(NavLink2, { to: "/org", className: "nav-link" }, "org")))), /* @__PURE__ */ import_react82.default.createElement(Col_default, { sm: 11 }, /* @__PURE__ */ import_react82.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react82.default.createElement(Routes, null, /* @__PURE__ */ import_react82.default.createElement(
+    } }, modal && modal[0] === "User" && /* @__PURE__ */ import_react86.default.createElement(UserModal, { users, _id: modal[1] }), /* @__PURE__ */ import_react86.default.createElement("button", { onClick: () => setModal(void 0) }, "OK"))), /* @__PURE__ */ import_react86.default.createElement(BrowserRouter, null, /* @__PURE__ */ import_react86.default.createElement(Tab_default.Container, { id: "left-tabs-example", defaultActiveKey: "first" }, /* @__PURE__ */ import_react86.default.createElement(Row_default, null, /* @__PURE__ */ import_react86.default.createElement(Col_default, { sm: 1 }, /* @__PURE__ */ import_react86.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, /* @__PURE__ */ import_react86.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react86.default.createElement(NavLink2, { to: "/tests", className: "nav-link" }, "tests")), /* @__PURE__ */ import_react86.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react86.default.createElement(NavLink2, { to: "/features", className: "nav-link" }, "features")), /* @__PURE__ */ import_react86.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react86.default.createElement(NavLink2, { to: "/git", className: "nav-link" }, "git")), /* @__PURE__ */ import_react86.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react86.default.createElement(NavLink2, { to: "/kanban", className: "nav-link" }, "kanban")), /* @__PURE__ */ import_react86.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react86.default.createElement(NavLink2, { to: "/sprint", className: "nav-link" }, "sprint")), /* @__PURE__ */ import_react86.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react86.default.createElement(NavLink2, { to: "/gantt", className: "nav-link" }, "gantt")), /* @__PURE__ */ import_react86.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react86.default.createElement(NavLink2, { to: "/owners", className: "nav-link" }, "owners")), /* @__PURE__ */ import_react86.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react86.default.createElement(NavLink2, { to: "/org", className: "nav-link" }, "org")))), /* @__PURE__ */ import_react86.default.createElement(Col_default, { sm: 11 }, /* @__PURE__ */ import_react86.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react86.default.createElement(Routes, null, /* @__PURE__ */ import_react86.default.createElement(
       Route,
       {
         path: "/tests",
-        element: /* @__PURE__ */ import_react82.default.createElement(
+        element: /* @__PURE__ */ import_react86.default.createElement(
           TestTab,
           {
             adminMode,
@@ -68660,11 +70920,11 @@ footer {
           }
         )
       }
-    ), /* @__PURE__ */ import_react82.default.createElement(
+    ), /* @__PURE__ */ import_react86.default.createElement(
       Route,
       {
         path: "/tests/:id/log.txt",
-        element: /* @__PURE__ */ import_react82.default.createElement(
+        element: /* @__PURE__ */ import_react86.default.createElement(
           TestTab,
           {
             adminMode,
@@ -68678,19 +70938,34 @@ footer {
           }
         )
       }
-    ), /* @__PURE__ */ import_react82.default.createElement(Route, { path: "/features", element: /* @__PURE__ */ import_react82.default.createElement(
+    ), /* @__PURE__ */ import_react86.default.createElement(Route, { path: "/sprint", element: /* @__PURE__ */ import_react86.default.createElement(
+      Sprint,
+      {
+        adminMode
+      }
+    ) }), /* @__PURE__ */ import_react86.default.createElement(Route, { path: "/sprint/:id", element: /* @__PURE__ */ import_react86.default.createElement(
+      Sprint,
+      {
+        adminMode
+      }
+    ) }), /* @__PURE__ */ import_react86.default.createElement(Route, { path: "/features", element: /* @__PURE__ */ import_react86.default.createElement(
       Features,
       {
         adminMode,
         tests
       }
-    ) }), /* @__PURE__ */ import_react82.default.createElement(Route, { path: "/features/:collection/:id", element: /* @__PURE__ */ import_react82.default.createElement(
+    ) }), /* @__PURE__ */ import_react86.default.createElement(Route, { path: "/features/:collection/:id", element: /* @__PURE__ */ import_react86.default.createElement(
       Features,
       {
         adminMode,
         tests
       }
-    ) }), /* @__PURE__ */ import_react82.default.createElement(Route, { path: "/kanban", element: /* @__PURE__ */ import_react82.default.createElement(
+    ) }), /* @__PURE__ */ import_react86.default.createElement(Route, { path: "/git", element: /* @__PURE__ */ import_react86.default.createElement(
+      Git,
+      {
+        adminMode
+      }
+    ) }), /* @__PURE__ */ import_react86.default.createElement(Route, { path: "/kanban", element: /* @__PURE__ */ import_react86.default.createElement(
       Kanban,
       {
         adminMode,
@@ -68700,7 +70975,7 @@ footer {
         openNewColumnModal: () => {
         }
       }
-    ) }), /* @__PURE__ */ import_react82.default.createElement(Route, { path: "/gantt", element: /* @__PURE__ */ import_react82.default.createElement(
+    ) }), /* @__PURE__ */ import_react86.default.createElement(Route, { path: "/gantt", element: /* @__PURE__ */ import_react86.default.createElement(
       GanttChart,
       {
         adminMode,
@@ -68709,7 +70984,7 @@ footer {
         projects,
         tests
       }
-    ) }), /* @__PURE__ */ import_react82.default.createElement(Route, { path: "/owners", element: /* @__PURE__ */ import_react82.default.createElement(
+    ) }), /* @__PURE__ */ import_react86.default.createElement(Route, { path: "/owners", element: /* @__PURE__ */ import_react86.default.createElement(
       TaskManOwners,
       {
         tasks,
@@ -68718,7 +70993,7 @@ footer {
         users,
         setModal
       }
-    ) }), /* @__PURE__ */ import_react82.default.createElement(Route, { path: "/owners/:id", element: /* @__PURE__ */ import_react82.default.createElement(
+    ) }), /* @__PURE__ */ import_react86.default.createElement(Route, { path: "/owners/:id", element: /* @__PURE__ */ import_react86.default.createElement(
       TaskManOwners,
       {
         tasks,
@@ -68727,12 +71002,12 @@ footer {
         users,
         setModal
       }
-    ) }), /* @__PURE__ */ import_react82.default.createElement(Route, { path: "/org", element: /* @__PURE__ */ import_react82.default.createElement("div", { style: { width: "100vw", height: "100vh" } }, /* @__PURE__ */ import_react82.default.createElement(index, { nodes: orgNodes, edges: initialEdges })) }))))))), /* @__PURE__ */ import_react82.default.createElement("footer", null, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react82.default.createElement("a", { href: "https://adamwong246.github.io/testeranto/" }, "testeranto ")));
+    ) }), /* @__PURE__ */ import_react86.default.createElement(Route, { path: "/org", element: /* @__PURE__ */ import_react86.default.createElement("div", { style: { width: "100vw", height: "100vh" } }, /* @__PURE__ */ import_react86.default.createElement(index, { nodes: orgNodes, edges: initialEdges })) }))))))), /* @__PURE__ */ import_react86.default.createElement("footer", null, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react86.default.createElement("a", { href: "https://adamwong246.github.io/testeranto/" }, "testeranto ")));
   };
   document.addEventListener("DOMContentLoaded", function() {
     const elem = document.getElementById("root");
     if (elem) {
-      import_client.default.createRoot(elem).render(import_react82.default.createElement(Report, {}));
+      import_client.default.createRoot(elem).render(import_react86.default.createElement(Report, {}));
     }
   });
 })();

@@ -28,33 +28,12 @@ import { IKanban, IMilestone, IProject, ITask, IUser } from './TaskManTypes';
 import { Features } from './TaskManFeatures';
 import { GanttChart } from './TaskManGantt';
 import { TaskManOwners } from "./TaskManOwners";
+import { Sprint } from "./TaskManSprint";
+import { collectionEffect } from "./collectionEffect";
+import { Git } from "./TaskManGit";
 
 
-const collectionEffect = (
-  collection: string,
-  setter: (any) => any,
-  coercer: (any) => any = (x) => x
-) => {
-  useEffect(() => {
-    (async () => {
-      fetch(`http://localhost:8080/${collection}.json`)
-        .then(response => response.json())
-        .then(json => {
-          Promise.all(json.ids.map(async (_id) => {
-            return {
-              _id,
-              ...coercer(await (await fetch(`http://localhost:8080/${collection}/${_id}.json`)).json())
-            };
-          })).then((items: any[]) => {
-            console.log("setting", collection, items)
-            setter(items)
-          })
-        })
-        .catch(error => console.error(error));
 
-    })();
-  }, []);
-}
 
 const UserModal = ({ _id, users }: { _id: string, users: IUser[] }) => {
   const u = users.find((u) => u._id === _id);
@@ -328,8 +307,14 @@ footer {
                 <Nav.Item>
                   <NavLink to="/features" className="nav-link">features</NavLink>
                 </Nav.Item>
+                <Nav.Item >
+                  <NavLink to="/git" className="nav-link">git</NavLink>
+                </Nav.Item>
                 <Nav.Item>
                   <NavLink to="/kanban" className="nav-link">kanban</NavLink>
+                </Nav.Item>
+                <Nav.Item>
+                  <NavLink to="/sprint" className="nav-link">sprint</NavLink>
                 </Nav.Item>
                 <Nav.Item>
                   <NavLink to="/gantt" className="nav-link">gantt</NavLink>
@@ -373,6 +358,19 @@ footer {
                   />}
                   />
 
+                  <Route path="/sprint" element={
+                    <Sprint
+                      adminMode={adminMode}
+                    // tests={tests}
+                    />} />
+                  <Route path="/sprint/:id" element={
+                    <Sprint
+                      adminMode={adminMode}
+                    // tests={tests}
+                    />} />
+
+
+
                   <Route path="/features" element={
                     <Features
                       adminMode={adminMode}
@@ -383,6 +381,13 @@ footer {
                     <Features
                       adminMode={adminMode}
                       tests={tests}
+                    />} />
+
+
+                  <Route path="/git" element={
+                    <Git
+                      adminMode={adminMode}
+                    // tests={tests}
                     />} />
 
                   <Route path="/kanban" element={

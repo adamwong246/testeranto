@@ -189,7 +189,7 @@
     "doit": "rm -rf node_modules && yarn install && yarn build",
     "build": "sh prebuild.sh; cp ./src/cjs-shim.js ./dist/cjs-shim.js; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; yarn esbuild src/TaskManFrontEnd.tsx --outfile=dist/prebuild/TaskManFrontEnd.js --bundle; yarn esbuild src/TaskMan.ts --outfile=dist/prebuild/TaskMan.mjs --bundle --platform=node --format=esm --packages=external; sh postBuild.sh; cp ./src/TaskMan.html ./dist/prebuild/TaskMan.html",
     "dev": "cp ./src/cjs-shim.js ./dist/cjs-shim.js && tsc -p tsconfig.module.json --watch & tsc -p tsconfig.common.json --watch & tsc -p tsconfig.types.json --watch & yarn build-taskman",
-    "dev-taskman": "yarn esbuild src/TaskManFrontEnd.tsx --outfile=dist/prebuild/TaskManFrontEnd.js --bundle --watch & yarn esbuild src/TaskMan.ts --platform=node  --outfile=dist/prebuild/TaskMan.mjs --bundle --watch --format=esm --packages=external & cp ./src/TaskMan.html ./dist/prebuild/TaskMan.html",
+    "dev-taskman": "cp ./src/TaskMan.html ./dist/prebuild/TaskMan.html; yarn esbuild src/TaskMan.ts --platform=node  --outfile=dist/prebuild/TaskMan.mjs --bundle --watch --format=esm --packages=external & yarn esbuild src/TaskManFrontEnd.tsx --outfile=dist/prebuild/TaskManFrontEnd.js --bundle --watch",
     "build-module": "tsc -p tsconfig.module.json",
     "build-common": "tsc -p tsconfig.common.json",
     "build-types": "tsc -p tsconfig.types.json",
@@ -226,6 +226,9 @@
   "dependencies": {
     "@asseinfo/react-kanban": "^2.2.0",
     "@caldwell619/react-kanban": "^0.0.12",
+    "@gitgraph/core": "^1.5.0",
+    "@gitgraph/js": "^1.4.0",
+    "@gitgraph/react": "^1.6.0",
     "@hello-pangea/dnd": "^18.0.1",
     "@octokit/types": "^13.8.0",
     "@types/express": "^5.0.0",

@@ -220,11 +220,14 @@ var MilestoneModel = class extends MessagableModel {
     };
   }
 };
+var SprintModel = class extends Model {
+};
 var GitFsDb_default = async (filepath, app2) => {
   const mm = new MessageModel("Message", app2);
   return {
     users: new UserModel("User", app2),
     kanbans: new KanbanModel("Kanban", app2),
+    sprints: new SprintModel("Sprint", app2),
     milestones: new MilestoneModel("Milestone", app2, mm),
     tasks: new TaskModel("Task", app2, mm),
     projects: new ProjectModel("Project", app2, mm)
@@ -287,7 +290,9 @@ app.get("/features.json", async (req, res) => {
   "/kanban/**",
   "/gantt/**",
   "/org/**",
-  "/owners/**"
+  "/owners/**",
+  "/sprint/**",
+  "/git/**"
 ].forEach((r) => {
   app.get(r, (req, res) => {
     res.sendFile(

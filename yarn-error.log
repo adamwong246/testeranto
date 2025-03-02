@@ -1,8 +1,8 @@
 Arguments: 
-  /Users/adam/.nvm/versions/node/v18.18.0/bin/node /opt/local/libexec/yarn/bin/yarn.js add @types/octokit
+  /Users/adam/.nvm/versions/node/v18.18.0/bin/node /opt/local/libexec/yarn/bin/yarn.js add react-gitgraph-demo
 
 PATH: 
-  /Users/adam/.nvm/versions/node/v18.18.0/bin:/Users/adam/Code/google-cloud-sdk/bin:/Users/adam/.yarn/bin:/Users/adam/.config/yarn/global/node_modules/.bin:/Users/adam/.nvm/versions/node/v20.4.0/bin:/Users/adam/.nvm/versions/node/v20.4.0/bin:/opt/local/bin:/opt/local/sbin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/opt/X11/bin:/Library/Apple/usr/bin:/Users/adam/.local/bin:/Users/adam/Code/google-cloud-sdk/bin:/Users/adam/.yarn/bin:/Users/adam/.config/yarn/global/node_modules/.bin:/Users/adam/.nvm/versions/node/v20.4.0/bin:/opt/local/bin:/opt/local/sbin:/Users/adam/.cargo/bin:/Applications/iTerm.app/Contents/Resources/utilities:/Users/adam/go/bin:/opt/homebrew/bin/go:/Users/adam/.rvm/bin:/opt/local/bin:/Users/adam/go/bin:/opt/homebrew/bin/go:/Users/adam/.rvm/bin
+  /Users/adam/Code/google-cloud-sdk/bin:/Users/adam/.yarn/bin:/Users/adam/.config/yarn/global/node_modules/.bin:/Users/adam/.nvm/versions/node/v18.18.0/bin:/Users/adam/.nvm/versions/node/v18.18.0/bin:/Users/adam/.local/bin:/Users/adam/Code/google-cloud-sdk/bin:/Users/adam/.yarn/bin:/Users/adam/.config/yarn/global/node_modules/.bin:/Users/adam/.nvm/versions/node/v18.18.0/bin:/Users/adam/.nvm/versions/node/v18.18.0/bin:/Users/adam/.local/bin:/Users/adam/.nvm/versions/node/v18.18.0/bin:/Users/adam/Code/google-cloud-sdk/bin:/Users/adam/.yarn/bin:/Users/adam/.config/yarn/global/node_modules/.bin:/Users/adam/.nvm/versions/node/v20.4.0/bin:/Users/adam/.nvm/versions/node/v20.4.0/bin:/opt/local/bin:/opt/local/sbin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/opt/X11/bin:/Library/Apple/usr/bin:/Users/adam/.local/bin:/Users/adam/Code/google-cloud-sdk/bin:/Users/adam/.yarn/bin:/Users/adam/.config/yarn/global/node_modules/.bin:/Users/adam/.nvm/versions/node/v20.4.0/bin:/opt/local/bin:/opt/local/sbin:/Users/adam/.cargo/bin:/Applications/iTerm.app/Contents/Resources/utilities:/Users/adam/go/bin:/opt/homebrew/bin/go:/Users/adam/.rvm/bin:/opt/local/bin:/Users/adam/go/bin:/opt/homebrew/bin/go:/Users/adam/.rvm/bin:/opt/local/bin:/Users/adam/go/bin:/opt/homebrew/bin/go:/Users/adam/.rvm/bin:/opt/local/bin:/Users/adam/go/bin:/opt/homebrew/bin/go:/Users/adam/.rvm/bin
 
 Yarn version: 
   1.22.19
@@ -14,7 +14,7 @@ Platform:
   darwin arm64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2foctokit: Not found
+  Error: https://registry.yarnpkg.com/react-gitgraph-demo: Not found
       at params.callback [as _callback] (/opt/local/libexec/yarn/lib/cli.js:66145:18)
       at self.callback (/opt/local/libexec/yarn/lib/cli.js:140890:22)
       at Request.emit (node:events:517:28)
@@ -217,7 +217,8 @@ npm manifest:
       "commit": "yarn build; git add --all && git commit -m 'stash'",
       "doit": "rm -rf node_modules && yarn install && yarn build",
       "build": "sh prebuild.sh; cp ./src/cjs-shim.js ./dist/cjs-shim.js; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; yarn esbuild src/TaskManFrontEnd.tsx --outfile=dist/prebuild/TaskManFrontEnd.js --bundle; yarn esbuild src/TaskMan.ts --outfile=dist/prebuild/TaskMan.mjs --bundle --platform=node --format=esm --packages=external; sh postBuild.sh; cp ./src/TaskMan.html ./dist/prebuild/TaskMan.html",
-      "dev": "cp ./src/cjs-shim.js ./dist/cjs-shim.js && tsc -p tsconfig.module.json --watch & tsc -p tsconfig.common.json --watch & tsc -p tsconfig.types.json --watch & yarn esbuild src/TaskManFrontEnd.tsx --outfile=dist/prebuild/TaskManFrontEnd.js --bundle --watch & yarn esbuild src/TaskMan.ts --platform=node  --outfile=dist/prebuild/TaskMan.mjs --bundle --watch --format=esm --packages=external & cp ./src/TaskMan.html ./dist/prebuild/TaskMan.html",
+      "dev": "cp ./src/cjs-shim.js ./dist/cjs-shim.js && tsc -p tsconfig.module.json --watch & tsc -p tsconfig.common.json --watch & tsc -p tsconfig.types.json --watch & yarn build-taskman",
+      "dev-taskman": "cp ./src/TaskMan.html ./dist/prebuild/TaskMan.html; yarn esbuild src/TaskMan.ts --platform=node  --outfile=dist/prebuild/TaskMan.mjs --bundle --watch --format=esm --packages=external & yarn esbuild src/TaskManFrontEnd.tsx --outfile=dist/prebuild/TaskManFrontEnd.js --bundle --watch",
       "build-module": "tsc -p tsconfig.module.json",
       "build-common": "tsc -p tsconfig.common.json",
       "build-types": "tsc -p tsconfig.types.json",
@@ -254,10 +255,15 @@ npm manifest:
     "dependencies": {
       "@asseinfo/react-kanban": "^2.2.0",
       "@caldwell619/react-kanban": "^0.0.12",
+      "@gitgraph/core": "^1.5.0",
+      "@gitgraph/js": "^1.4.0",
+      "@gitgraph/react": "^1.6.0",
       "@hello-pangea/dnd": "^18.0.1",
+      "@octokit/types": "^13.8.0",
       "@types/express": "^5.0.0",
       "@types/uuid": "^10.0.0",
       "@xyflow/react": "^12.4.3",
+      "@zodform/core": "^0.2.0",
       "babel-loader": "^8.2.5",
       "bootstrap": "^5.2.3",
       "chai": "^5.2.0",
@@ -294,7 +300,8 @@ npm manifest:
       "selenium-webdriver": "4.27.0",
       "url": "^0.11.4",
       "uuid": "^10.0.0",
-      "ws": "^8.16.0"
+      "ws": "^8.16.0",
+      "zod": "^3.24.2"
     }
   }
 
@@ -485,6 +492,25 @@ Lockfile:
     version "8.57.1"
     resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.57.1.tgz#de633db3ec2ef6a3c89e2f19038063e8a122e2c2"
     integrity sha512-d9zaMRSTIKDLhctzH12MtXvJKSSUhaHcjV+2Z+GK+EEY7XKpP5yR4x+N3TAcHTcu963nIr+TMcCb4DBCYX1z6Q==
+  
+  "@gitgraph/core@1.5.0", "@gitgraph/core@^1.5.0":
+    version "1.5.0"
+    resolved "https://registry.yarnpkg.com/@gitgraph/core/-/core-1.5.0.tgz#fc27924b82eabc5fa1f90480df5239e0c84dcafa"
+    integrity sha512-8CeeHbkKoFHM1y9vfjYiHyEpzl1mEhVrg5c/eFgDBsntOYswoDKU2yOf6DjtVINcE60wmcuynBSJqjMkQo07Ww==
+  
+  "@gitgraph/js@^1.4.0":
+    version "1.4.0"
+    resolved "https://registry.yarnpkg.com/@gitgraph/js/-/js-1.4.0.tgz#27d92664841af1d886e1b970742d3f0b80df2867"
+    integrity sha512-7wxTTCFnRVjsqj+Zt09+3F79WhH4MK46ZS20AwbcB/MJFshSMeMH4nYmNDPa9McVsiL+cFsvW1pmZoquAOoHMw==
+    dependencies:
+      "@gitgraph/core" "1.5.0"
+  
+  "@gitgraph/react@^1.6.0":
+    version "1.6.0"
+    resolved "https://registry.yarnpkg.com/@gitgraph/react/-/react-1.6.0.tgz#45783da838d975c225849766c337028a92cd3f14"
+    integrity sha512-cLFNZDoEiNbsnMfdT82zeZti5saYghQamfCbTpVvCRr+BrrQ/k94glkZqYPXKKNTEqbQV6L9JeOfAk1hNiFYXA==
+    dependencies:
+      "@gitgraph/core" "1.5.0"
   
   "@hello-pangea/dnd@^18.0.1":
     version "18.0.1"
@@ -1347,6 +1373,16 @@ Lockfile:
       d3-drag "^3.0.0"
       d3-selection "^3.0.0"
       d3-zoom "^3.0.0"
+  
+  "@zodform/core@^0.2.0":
+    version "0.2.0"
+    resolved "https://registry.yarnpkg.com/@zodform/core/-/core-0.2.0.tgz#b7c8a6ec6735cdc4eefabbc9eb315e3c601c2579"
+    integrity sha512-aUCIv4FBvFYg8arG8p/vulkN84cqgWhzF1dBcsSDJZoxq3xXIE0IAZEVsiqWoVR8j6lb3NWiNb4G9sT5mDbCGQ==
+    dependencies:
+      immer "^9.0.19"
+      lodash.set "^4.3.2"
+      remeda "^1.6.1"
+      type-fest "^3.5.4"
   
   accepts@~1.3.8:
     version "1.3.8"
@@ -3023,6 +3059,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/immediate/-/immediate-3.0.6.tgz#9db1dbd0faf8de6fbe0f5dd5e56bb606280de69b"
     integrity sha512-XXOFtyqDjNDAQxVfYxuF7g9Il/IbWmmlQg2MYKOH8ExIT1qg6xc4zyS3HaEEATgs1btfzxq15ciUiY7gjSXRGQ==
   
+  immer@^9.0.19:
+    version "9.0.21"
+    resolved "https://registry.yarnpkg.com/immer/-/immer-9.0.21.tgz#1e025ea31a40f24fb064f1fef23e931496330176"
+    integrity sha512-bc4NBHqOqSfRW7POMkHd51LvClaeMXpm8dx0e8oE2GORbq5aRK7Bxl4FyzVLdGtLmvLKL7BTDBG5ACQm4HWjTA==
+  
   import-fresh@^3.2.1:
     version "3.3.0"
     resolved "https://registry.yarnpkg.com/import-fresh/-/import-fresh-3.3.0.tgz#37162c25fcb9ebaa2e6e53d5b4d88ce17d9e0c2b"
@@ -3457,6 +3498,11 @@ Lockfile:
     version "4.6.2"
     resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
     integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
+  
+  lodash.set@^4.3.2:
+    version "4.3.2"
+    resolved "https://registry.yarnpkg.com/lodash.set/-/lodash.set-4.3.2.tgz#d8757b1da807dde24816b0d6a84bea1a76230b23"
+    integrity sha512-4hNPN5jlm/N/HLMCO43v8BXKq9Z7QdAGc/VGrRD61w8gN9g/6jF9A4L1pbUgBLCffi0w9VsXfTOij5x8iTyFvg==
   
   lodash@^4.12.0, lodash@^4.17.14:
     version "4.17.21"
@@ -4408,6 +4454,11 @@ Lockfile:
       es-errors "^1.3.0"
       set-function-name "^2.0.2"
   
+  remeda@^1.6.1:
+    version "1.61.0"
+    resolved "https://registry.yarnpkg.com/remeda/-/remeda-1.61.0.tgz#dccd31ab75d0f02865f3ef89e4f0ce0076096464"
+    integrity sha512-caKfSz9rDeSKBQQnlJnVW3mbVdFgxgGWQKq1XlFokqjf+hQD5gxutLGTTY2A/x24UxVyJe9gH5fAkFI63ULw4A==
+  
   request@2.9.x:
     version "2.9.203"
     resolved "https://registry.yarnpkg.com/request/-/request-2.9.203.tgz#6c1711a5407fb94a114219563e44145bcbf4723a"
@@ -4987,6 +5038,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.20.2.tgz#1bf207f4b28f91583666cb5fbd327887301cd5f4"
     integrity sha512-Ne+eE4r0/iWnpAxD852z3A+N0Bt5RN//NjJwRd2VFHEmrywxf5vsZlh4R6lixl6B+wz/8d+maTSAkN1FIkI3LQ==
   
+  type-fest@^3.5.4:
+    version "3.13.1"
+    resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-3.13.1.tgz#bb744c1f0678bea7543a2d1ec24e83e68e8c8706"
+    integrity sha512-tLq3bSNx+xSpwvAJnzrK0Ep5CLNWjvFTOp71URMaAEWBfRb9nnJiBoUe0tF8bI4ZFO3omgBR6NvnbzVUT3Ly4g==
+  
   type-fest@^4.18.2:
     version "4.34.1"
     resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-4.34.1.tgz#406a9c573cc51c3fbfee3c85742cf85c52860076"
@@ -5347,6 +5403,11 @@ Lockfile:
     version "3.23.8"
     resolved "https://registry.yarnpkg.com/zod/-/zod-3.23.8.tgz#e37b957b5d52079769fb8097099b592f0ef4067d"
     integrity sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==
+  
+  zod@^3.24.2:
+    version "3.24.2"
+    resolved "https://registry.yarnpkg.com/zod/-/zod-3.24.2.tgz#8efa74126287c675e92f46871cfc8d15c34372b3"
+    integrity sha512-lY7CDW43ECgW9u1TcT3IoXHflywfVqDYze4waEz812jR/bZ8FHDsl7pFQoSZTz5N+2NqRXs8GBwnAwo3ZNxqhQ==
   
   zustand@^4.4.0:
     version "4.5.6"

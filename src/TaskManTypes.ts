@@ -21,20 +21,13 @@ export type IMessageable = {
   // messages: string[];
 } & { _id: string };
 
-// export type IFeature = {
-//   title: string;
-//   body: string;
-//   owner: string;
-//   state: string;
-// } & { _id: string } & IMessageable;
+export type IGitGraph = object;
 
-// export type IGantt = {
-//   start: string;
-//   end: string;
-//   owner: string;
-//   name: string;
-//   type: "task" | "milestone" | "project";
-// } & { _id: string } & IMessageable;
+export type ISprint = {
+  start: string;
+  end: string;
+  notes: string;
+} & { _id: string };
 
 export type IProject = {
   owner: string;

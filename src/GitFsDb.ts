@@ -10,6 +10,7 @@ import {
   IProject,
   ITask,
   IMilestone,
+  ISprint,
 } from "./TaskManTypes";
 
 async function getfile(f: string): Promise<{ T }> {
@@ -335,12 +336,17 @@ class MilestoneModel extends MessagableModel<IMilestone> {
   }
 }
 
+class SprintModel extends Model<ISprint> {}
+
 export default async (filepath: string, app: Express) => {
   const mm = new MessageModel("Message", app);
 
   return {
     users: new UserModel("User", app),
     kanbans: new KanbanModel("Kanban", app),
+
+    sprints: new SprintModel("Sprint", app),
+
     milestones: new MilestoneModel("Milestone", app, mm),
     tasks: new TaskModel("Task", app, mm),
     projects: new ProjectModel("Project", app, mm),
