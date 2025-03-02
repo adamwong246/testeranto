@@ -1,24 +1,26 @@
 import React, { useState } from "react";
-// import { ButtonGroup, Button } from "react-bootstrap";
 
-export default () => {
-  const [state, setState] = useState(false);
-
-  return < button id="signin" onClick={() => {
-    console.log("clicked");
-    setState(!state)
-
-  }}
-  > {
-      state ? "Sign out" : "Sign up"
-    }</button >
+interface LoginButtonProps {
+  initialLoggedIn?: boolean;
 }
 
-//   <ButtonGroup className="mb-2">
-//   <Button
-//     id="login"
-//     value="1"
-//   >
-//     Login
-//   </Button>
-// </ButtonGroup>
+const LoginButton: React.FC<LoginButtonProps> = ({ initialLoggedIn = false }) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(initialLoggedIn);
+
+  const handleClick = () => {
+    console.log("Login button clicked");
+    setIsLoggedIn(prev => !prev);
+  };
+
+  return (
+    <button 
+      id="signin" 
+      onClick={handleClick}
+      className="btn btn-primary"
+    >
+      {isLoggedIn ? "Sign out" : "Sign in"}
+    </button>
+  );
+};
+
+export default LoginButton;
