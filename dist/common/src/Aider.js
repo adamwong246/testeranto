@@ -6,10 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.execCommand = void 0;
 const fs_1 = __importDefault(require("fs"));
 const child_process_1 = require("child_process");
-const octokit_1 = require("octokit");
-const octokit = new octokit_1.Octokit({
-    auth: "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",
-});
 const execCommand = async (command) => {
     return new Promise((resolve, reject) => {
         const [cmd, ...args] = command.split(" ");
@@ -79,7 +75,7 @@ if (exitcode != "0") {
         const as = JSON.stringify(final);
         fs_1.default.writeFile(`./${key}/features.json`, as, () => {
             inputFiles.push(`./${key}/features.json`);
-            const scriptCommand = `aider --model deepseek --api-key deepseek=sk-7d9ea36f0b05487e9ce21cdabb9f650c --message "Fix the failing tests" ${inputFiles.join(" ")}`;
+            const scriptCommand = `aider --model deepseek --api-key deepseek=${process.env.DEEPSEEK_KEY} --message "Fix the failing tests" ${inputFiles.join(" ")}`;
             console.log("scriptCommand", scriptCommand);
             (0, exports.execCommand)(scriptCommand);
             // itermTab(scriptCommand).then(() => console.log("yay"));

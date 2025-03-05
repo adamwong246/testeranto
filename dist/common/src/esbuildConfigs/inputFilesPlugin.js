@@ -43,7 +43,6 @@ exports.default = (platform, entryPoints) => {
                             const passes = (matches === null || matches === void 0 ? void 0 : matches.length) === 1;
                             return !passes;
                         }));
-                        console.log("mark2", jsonContent);
                         fs_1.default.writeFileSync(filePath, jsonContent);
                     });
                 }

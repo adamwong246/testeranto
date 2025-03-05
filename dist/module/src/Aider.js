@@ -1,9 +1,5 @@
 import fs from "fs";
 import { spawn } from "child_process";
-import { Octokit } from "octokit";
-const octokit = new Octokit({
-    auth: "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",
-});
 export const execCommand = async (command) => {
     return new Promise((resolve, reject) => {
         const [cmd, ...args] = command.split(" ");
@@ -72,7 +68,7 @@ if (exitcode != "0") {
         const as = JSON.stringify(final);
         fs.writeFile(`./${key}/features.json`, as, () => {
             inputFiles.push(`./${key}/features.json`);
-            const scriptCommand = `aider --model deepseek --api-key deepseek=sk-7d9ea36f0b05487e9ce21cdabb9f650c --message "Fix the failing tests" ${inputFiles.join(" ")}`;
+            const scriptCommand = `aider --model deepseek --api-key deepseek=${process.env.DEEPSEEK_KEY} --message "Fix the failing tests" ${inputFiles.join(" ")}`;
             console.log("scriptCommand", scriptCommand);
             execCommand(scriptCommand);
             // itermTab(scriptCommand).then(() => console.log("yay"));

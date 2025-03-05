@@ -7,10 +7,6 @@ import itermTab from "iterm-tab";
 
 import { Octokit } from "octokit";
 
-const octokit = new Octokit({
-  auth: "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",
-});
-
 export const execCommand = async (command) => {
   return new Promise<void>((resolve, reject) => {
     const [cmd, ...args] = command.split(" ");
@@ -103,9 +99,9 @@ if (exitcode != "0") {
       fs.writeFile(`./${key}/features.json`, as, () => {
         inputFiles.push(`./${key}/features.json`);
 
-        const scriptCommand = `aider --model deepseek --api-key deepseek=sk-7d9ea36f0b05487e9ce21cdabb9f650c --message "Fix the failing tests" ${inputFiles.join(
-          " "
-        )}`;
+        const scriptCommand = `aider --model deepseek --api-key deepseek=${
+          process.env.DEEPSEEK_KEY
+        } --message "Fix the failing tests" ${inputFiles.join(" ")}`;
 
         console.log("scriptCommand", scriptCommand);
 
