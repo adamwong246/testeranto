@@ -29,38 +29,12 @@ class Model {
         // return an item by id
         this.find = async (_id) => {
             const f = `./${this.name}/${_id}.json`;
-            return { status: true, item: (await getfile(f)) };
-            // return new Promise((res, rej) => {
-            //   fs.open(f, "r", (err, fd) => {
-            //     if (err) {
-            //       console.error("Error opening file:", err);
-            //       return;
-            //     }
-            //     fs.fstat(fd, (err, stats) => {
-            //       if (err) {
-            //         console.error("Error getting file stats:", err);
-            //         return;
-            //       }
-            //       console.log("File size:", stats.size, "bytes");
-            //       console.log("Is file:", stats.isFile());
-            //       console.log("Is directory:", stats.isDirectory());
-            //       fs.close(fd, (err) => {
-            //         if (err) {
-            //           console.error("Error closing file:", err);
-            //           return;
-            //         }
-            //         res({
-            //           status: true,
-            //           item: {
-            //             _id: "idk",
-            //             ...JSON.parse(fs.readFileSync(f).toString()),
-            //             lastUpdated: stats.mtime,
-            //           },
-            //         });
-            //       });
-            //     });
-            //   });
-            // });
+            if (fs.existsSync(f)) {
+                return { status: true, item: (await getfile(f)) };
+            }
+            else {
+                return { status: false, item: null };
+            }
         };
         // return all ids
         this.list = async () => {
@@ -91,9 +65,10 @@ class Model {
         app.get(`/${this.name}.json`, async (req, res) => {
             res.json(await this.list());
         });
-        app.get(`/${this.name}/:id.json`, async (req, res) => {
-            res.json(await this.find(req.params["_id"]));
-        });
+        // app.get(`/${this.name}/:id.json`, async (req, res) => {
+        //   console.log("mark1", req.params);
+        //   res.json(await this.find(req.params["id"]));
+        // });
         app.post(`/${this.name}/:id.json`, async (req, res) => {
             res.json(await this.update(req.params));
         });
@@ -121,6 +96,16 @@ class Model {
 class KanbanModel extends Model {
 }
 class UserModel extends Model {
+    findOrCreate(profileId, cb) {
+        const f = this.find(profileId);
+        if (f) {
+            return { status: true, item: f };
+        }
+        else {
+            return this.create({ _id: profileId });
+            // return { status: false, item: null };
+        }
+    }
 }
 class MessageModel extends Model {
     constructor(modelName, expressApp) {

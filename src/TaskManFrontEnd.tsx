@@ -31,9 +31,16 @@ import { TaskManOwners } from "./TaskManOwners";
 import { Sprint } from "./TaskManSprint";
 import { collectionEffect } from "./collectionEffect";
 import { Git } from "./TaskManGit";
+import RLG from 'react-login-github';
+const GitHubLogin = RLG.default;
+import RGL from 'react-github-login';
+import { TaskManTeams } from "./TaskManTeams";
+// const GitHubLogin = RGL.default;
 
+const onSuccess = response => console.log(response);
+const onFailure = response => console.error(response);
 
-
+console.log("GitHubLogin", GitHubLogin)
 
 const UserModal = ({ _id, users }: { _id: string, users: IUser[] }) => {
   const u = users.find((u) => u._id === _id);
@@ -41,7 +48,7 @@ const UserModal = ({ _id, users }: { _id: string, users: IUser[] }) => {
   if (!u) { return <pre>user not found</pre> }
   return <>
     <h1>{u._id}</h1>
-    <h2>{u.email}</h2>
+    {/* <h2>{u.username}</h2> */}
     <p>{u.profile}</p>
   </>
   // return <pre>{JSON.stringify(u)}</pre>
@@ -49,6 +56,30 @@ const UserModal = ({ _id, users }: { _id: string, users: IUser[] }) => {
 
 const Report = () => {
 
+  const [userSession, setUserSession] = useState<string>();
+  useEffect(() => {
+    (async () => {
+      fetch('http://localhost:8080/session')
+        .then(response => response.json())
+        .then(json => {
+          setUserSession(json.passport.user)
+          // Promise.all(json.ids.map(async (_id) => {
+          //   return {
+          //     _id,
+          //     ...await (await fetch(`http://localhost:8080/Kanban/${_id}.json`)).json()
+          //   };
+          // })).then((allKanbans: IKanban[]) => {
+
+          //   setKanban(allKanbans)
+          // })
+        })
+        .catch(error => console.error(error));
+
+    })();
+  }, []);
+
+
+  ////////////////////////////////////////////////////////////
   const [state, setState] = useState<{
     tests: any[],
     buildDir: string,
@@ -74,24 +105,24 @@ const Report = () => {
     []
   );
 
-  const importResults = async () => {
-    const config = await (await fetch("./testeranto.json")).json();
-    const results = await Promise.all(config.tests.map((test) => {
-      return new Promise(async (res, rej) => {
-        const src: string = test[0];
-        const runtime: IRunTime = test[1];
-        const s: string = [tests.buildDir, runtime as string].concat(src.split(".").slice(0, - 1).join(".")).join("/");
-        const exitcode = await (await fetch("/docs" + "/" + s + "/exitcode")).text()
-        const log = await (await fetch("/docs" + "/" + s + "/log.txt")).text()
-        const testresults = await (await fetch("/docs" + "/" + s + "/tests.json")).json()
-        const manifest = await (await fetch("/docs" + "/" + s + "/manifest.json")).json()
+  // const importResults = async () => {
+  //   const config = await (await fetch("./testeranto.json")).json();
+  //   const results = await Promise.all(config.tests.map((test) => {
+  //     return new Promise(async (res, rej) => {
+  //       const src: string = test[0];
+  //       const runtime: IRunTime = test[1];
+  //       const s: string = [tests.buildDir, runtime as string].concat(src.split(".").slice(0, - 1).join(".")).join("/");
+  //       const exitcode = await (await fetch("/docs" + "/" + s + "/exitcode")).text()
+  //       const log = await (await fetch("/docs" + "/" + s + "/log.txt")).text()
+  //       const testresults = await (await fetch("/docs" + "/" + s + "/tests.json")).json()
+  //       const manifest = await (await fetch("/docs" + "/" + s + "/manifest.json")).json()
 
-        res({ src, exitcode, log, testresults, manifest })
-      })
-    }))
+  //       res({ src, exitcode, log, testresults, manifest })
+  //     })
+  //   }))
 
-    setState({ tests: config.tests as any, results, buildDir: config.buildDir })
-  };
+  //   setState({ tests: config.tests as any, results, buildDir: config.buildDir })
+  // };
 
   ///////////////////////////////////////////
 
@@ -170,15 +201,15 @@ const Report = () => {
   };
   useEffect(() => { importKanban(); }, []);
 
-  const importTests = async () => {
-    const x = await fetch("./testeranto.json")
-    const y = await x.json();
-    setTests(y as any);
-  };
+  // const importTests = async () => {
+  //   const x = await fetch("./testeranto.json")
+  //   const y = await x.json();
+  //   setTests(y as any);
+  // };
 
-  useEffect(() => { importResults(); }, []);
+  // useEffect(() => { importResults(); }, []);
 
-  useEffect(() => { importTests(); }, []);
+  // useEffect(() => { importTests(); }, []);
 
   const [activeKey, setActiveKey] = useState('home');
 
@@ -301,6 +332,23 @@ footer {
           <Row>
             <Col sm={1}>
               <Nav variant="pills" className="flex-column">
+
+                <Nav.Item >
+
+                  <div id="login">
+                    {
+                      !userSession ? <a className="nav-link" href="http://localhost:8080/auth/github" >login</a> : <a className="nav-link" href="http://localhost:8080/logout" >logout {userSession}</a>
+                    }
+                  </div>
+
+                  {/* <button onClick={(e) => {}}>github login</button> */}
+                  {/* <GitHubLogin clientId="Ov23liY2OpcexmP1KRl8"
+                    // redirectUri="http://8080/callback"
+                    onSuccess={onSuccess}
+                    onFailure={onFailure}
+                  /> */}
+                </Nav.Item>
+
                 <Nav.Item >
                   <NavLink to="/tests" className="nav-link">tests</NavLink>
                 </Nav.Item>
@@ -324,6 +372,9 @@ footer {
                 </Nav.Item>
                 <Nav.Item>
                   <NavLink to="/org" className="nav-link">org</NavLink>
+                </Nav.Item>
+                <Nav.Item>
+                  <NavLink to="/teams" className="nav-link">teams</NavLink>
                 </Nav.Item>
               </Nav>
             </Col>
@@ -435,6 +486,26 @@ footer {
                         orgNodes
                       } edges={initialEdges} />
                     </div>
+                  } />
+
+                  <Route path="/teams" element={
+                    <TaskManTeams
+                      tasks={tasks}
+                      milestones={milestones}
+                      projects={projects}
+                      users={users}
+                      setModal={setModal}
+                    />
+                  } />
+
+                  <Route path="/teams/:id" element={
+                    <TaskManTeams
+                      tasks={tasks}
+                      milestones={milestones}
+                      projects={projects}
+                      users={users}
+                      setModal={setModal}
+                    />
                   } />
 
                 </Routes>

@@ -1,5 +1,6 @@
 {
   "botEmail": "adamwong246@gmail.com",
+  "taskman": "adamwong246/kokomobay-taskman",
   "outdir": "docs",
   "tests": [
     [

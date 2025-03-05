@@ -5,6 +5,8 @@ export default (
   platform: "web" | "node",
   entryPoints: Set<string> | string[]
 ) => {
+  console.log("mark3", platform);
+
   return {
     name: "metafileWriter",
     setup(build) {
@@ -55,7 +57,7 @@ export default (
                   return !passes;
                 })
             );
-            console.log("mark2", jsonContent);
+
             fs.writeFileSync(filePath, jsonContent);
           });
         }

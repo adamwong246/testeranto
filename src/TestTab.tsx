@@ -40,12 +40,36 @@ export const TestTab = ({
 
   const { id } = useParams();
 
+  const [repos, setRepos] = useState<Record<string, string[]>>({});
+  useEffect(() => {
+    (async () => {
+      fetch('http://localhost:8080/TaskMan.json')
+        .then(response => response.json())
+        .then(json => {
+          setRepos(json.repos)
+          // Promise.all(json.ids.map(async (_id) => {
+          //   return {
+          //     _id,
+          //     ...await (await fetch(`http://localhost:8080/Kanban/${_id}.json`)).json()
+          //   };
+          // })).then((allKanbans: IKanban[]) => {
+
+          //   setKanban(allKanbans)
+          // })
+        })
+        .catch(error => console.error(error));
+
+    })();
+  }, []);
+
   const [testResults, setTestResults] = useState<{
     baseWithoutFiletype: string,
     content: string;
   }[]>([]);
 
   const importTests = async () => {
+
+
     const testsManifest = JSON.parse(atob((await octokit.request('GET /repos/ChromaPDX/kokomoBay/contents/docs/testeranto.json', {
       owner: 'ChromaPDX',
       repo: 'kokomoBay',
@@ -88,42 +112,42 @@ export const TestTab = ({
     <Tab.Container id="left-tabs-example5" defaultActiveKey="feature-0">
 
       <Row>
-        <Col sm={4}>
-
-          <Navbar expand="md" className="bg-body-tertiary">
-            <Container fluid>
-
-              <NavDropdown align="start" title="Repo" id="basic-nav-dropdown-repo" onSelect={(e) => {
-                console.log(e);
-                setRepo(e)
-              }}>
-
-                {
-                  ...Object.entries(reposAndBranches).map(([r, b]) => {
-                    return (<NavDropdown.Item href="#action/3.4">
-                      {r}
-                    </NavDropdown.Item>)
-                  })
-                }
-
-              </NavDropdown>
-
-              <NavDropdown align="end" title="Branch" id="basic-nav-dropdown-branch">
-
-                {
-                  ...reposAndBranches[currentRepo].map((b) => {
-                    return <NavDropdown.Item href="#action/3.4">
-                      {b}
-                    </NavDropdown.Item>
-                  })
-                }
-
-              </NavDropdown>
-
-            </Container>
-          </Navbar>
-
+        <Col sm={3}>
           <Nav variant="pills" className="flex-column">
+
+            <Nav.Item>
+              {
+                ...Object.keys(repos).map((r) => {
+                  return <NavLink
+                    to={`/repos/${repos[r]}`}
+                    className="nav-link"
+                  >
+                    {r}
+                  </NavLink>
+                })
+              }
+              {/* <NavLink
+                to={`/commit/idk`}
+                className="nav-link"
+              >
+                ChromaPDX/kokomoBay
+              </NavLink> */}
+            </Nav.Item>
+
+            {/* {(gitTree.commits).map((c, ndx) =>
+            <Nav.Item>
+              <NavLink
+                to={`/commit/${c.sha}`}
+                className="nav-link"
+              >
+                {c.sha}
+              </NavLink>
+            </Nav.Item>
+          )} */}
+          </Nav>
+        </Col>
+        <Col sm={9}>
+          <Tab.Content>
             {
               testResults.map((t, ndx) =>
                 <Nav.Item key={ndx} >
@@ -133,44 +157,13 @@ export const TestTab = ({
                 </Nav.Item>
               )
             }
-          </Nav>
+
+          </Tab.Content>
         </Col>
-
-        {/* <Col sm={1}>
-          EXIT CODE HERE
-        </Col> */}
-
-        <Col sm={8}>
-
-
-          <Navbar expand="md" className="bg-body-tertiary">
-            <Container fluid>
-
-              <Navbar.Toggle aria-controls="basic-navbar-nav" />
-
-              <Nav className="me-auto">
-                < Tabs defaultActiveKey="exitcode" >
-
-                  <Tab eventKey={`tests-log.txt`} title={
-                    <NavLink to={`tests-log.txt`} className="nav-link">log.tx</NavLink>}></Tab>
-
-                  {/* <Tab eventKey="exitcode" title={
-                    <NavLink to="/tests" className="nav-link">exitcode</NavLink>}></Tab>
-                  
-                  <Tab eventKey="tests.json" title={
-                    <NavLink to="/tests/fs" className="nav-link">tests.json</NavLink>}></Tab> */}
-                </Tabs>
-
-              </Nav>
-
-            </Container>
-          </Navbar>
-
-
-        </Col>
-
 
       </Row>
+
+
     </Tab.Container>
 
   </div>

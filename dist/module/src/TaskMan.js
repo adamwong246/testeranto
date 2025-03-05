@@ -1,9 +1,13 @@
 import express from "express";
 import path from "path";
+import passport from "passport";
+import GitHubStrategy from "passport-github2";
 import GitFsDb from "./GitFsDb.js";
 const port = process.env.PORT || "8080";
 const app = express();
-app.use("/", express.static(path.join(process.cwd())));
+const staticPath = path.join(process.cwd());
+console.log("staticPath", staticPath);
+app.use("/", express.static(staticPath));
 app.get("/", function (req, res) {
     res.sendFile(`${process.cwd()}/node_modules/testeranto/dist/prebuild/TaskMan.html`);
 });
@@ -16,7 +20,7 @@ app.get("/TaskManFrontEnd.css", (req, res) => {
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
-const { tasks, projects, milestones } = await GitFsDb("./", app);
+const { tasks, projects, milestones, users } = await GitFsDb("./", app);
 app.get("/features.json", async (req, res) => {
     const allTasks = (await tasks.gather((await tasks.list()).ids)).items.map((t) => {
         return Object.assign(Object.assign({}, t), { filename: `Task/${t._id}.json` });
@@ -42,4 +46,18 @@ app.get("/features.json", async (req, res) => {
     app.get(r, (req, res) => {
         res.sendFile(`${process.cwd()}/node_modules/testeranto/dist/prebuild/TaskMan.html`);
     });
+});
+passport.use(new GitHubStrategy({
+    clientID: "Ov23liY2OpcexmP1KRl8",
+    clientSecret: "a5a7daa33c7df57b44ee2dda010787d9d1cc053d",
+    callbackURL: "http://127.0.0.1:8080/auth/github/callback",
+}, function (accessToken, refreshToken, profile, done) {
+    users.findOrCreate(profile.id, function (err, user) {
+        return done(err, user);
+    });
+}));
+app.get("/auth/github", passport.authenticate("github"));
+app.get("/auth/github/callback", passport.authenticate("github", { failureRedirect: "/login" }), function (req, res) {
+    // Successful authentication, redirect home.
+    res.redirect("/");
 });

@@ -3,6 +3,9 @@
     "compilerOptions": {
       "module": "esnext",
       "allowSyntheticDefaultImports": true,
+      "moduleResolution": "node",
+      "target": "es2020",
+      "esModuleInterop": true,
     }
   },
   "declaration": true,
@@ -36,10 +39,11 @@
     "alwaysStrict": true
   },
   "include": [
+    "./node_modules/testeranto/src/**/*.*ts",
     "./**/*.*ts",
     "./**/*.*tsx",
     "index.d.ts",
-    "project.ts",
+    "build-tests.ts",
     "run-tests.ts",
     "testeranto.ts",
   ],

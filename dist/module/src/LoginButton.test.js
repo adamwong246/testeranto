@@ -41,10 +41,10 @@ const implementations = {
 export const LoginPageSpecs = (Suite, Given, When, Then, Check) => {
     return [
         Suite.Default("Testing the LoginButton", {
-            test0: Given.default(["67ae06bac3c5fa5a98a08e32"], [], [Then.ItSaysLogIn()]),
-            test1: Given.default(["67ae06bac3c5fa5a98a08e32"], [When.Clicked()], [Then.ItSaysSignOut()]),
-            test2: Given.default(["67ae06bac3c5fa5a98a08e32"], [When.Clicked(), When.Clicked()], [Then.ItSaysLogIn()]),
-            test3: Given.default(["67ae06bac3c5fa5a98a08e32"], [When.Clicked(), When.Clicked(), When.Clicked()], [Then.ItSaysSignOut()]),
+            test0: Given.default(["0"], [], [Then.ItSaysLogIn()]),
+            test1: Given.default(["0"], [When.Clicked()], [Then.ItSaysSignOut()]),
+            test2: Given.default(["0"], [When.Clicked(), When.Clicked()], [Then.ItSaysLogIn()]),
+            test3: Given.default(["1"], [When.Clicked(), When.Clicked(), When.Clicked()], [Then.ItSaysSignOut()]),
         }, []),
     ];
 };

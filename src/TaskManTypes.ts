@@ -1,8 +1,14 @@
 import { z } from "zod";
 
+export type ITeam = {
+  name: string;
+  members: Record<string, string>;
+} & { _id: string };
+
 export type IUser = {
-  email: string;
-  profile: string;
+  // email?: string;
+  // username: string;
+  profile?: string;
 } & { _id: string };
 
 // export type IKanban = {

@@ -48,22 +48,22 @@ const Report = () => {
         buildDir: ""
     });
     const [kanban, setKanban] = useState([]);
-    const importResults = async () => {
-        const config = await (await fetch("./testeranto.json")).json();
-        const results = await Promise.all(config.tests.map((test) => {
-            return new Promise(async (res, rej) => {
-                const src = test[0];
-                const runtime = test[1];
-                const s = [tests.buildDir, runtime].concat(src.split(".").slice(0, -1).join(".")).join("/");
-                const exitcode = await (await fetch("/docs" + "/" + s + "/exitcode")).text();
-                const log = await (await fetch("/docs" + "/" + s + "/log.txt")).text();
-                const testresults = await (await fetch("/docs" + "/" + s + "/tests.json")).json();
-                const manifest = await (await fetch("/docs" + "/" + s + "/manifest.json")).json();
-                res({ src, exitcode, log, testresults, manifest });
-            });
-        }));
-        setState({ tests: config.tests, results, buildDir: config.buildDir });
-    };
+    // const importResults = async () => {
+    //   const config = await (await fetch("./testeranto.json")).json();
+    //   const results = await Promise.all(config.tests.map((test) => {
+    //     return new Promise(async (res, rej) => {
+    //       const src: string = test[0];
+    //       const runtime: IRunTime = test[1];
+    //       const s: string = [tests.buildDir, runtime as string].concat(src.split(".").slice(0, - 1).join(".")).join("/");
+    //       const exitcode = await (await fetch("/docs" + "/" + s + "/exitcode")).text()
+    //       const log = await (await fetch("/docs" + "/" + s + "/log.txt")).text()
+    //       const testresults = await (await fetch("/docs" + "/" + s + "/tests.json")).json()
+    //       const manifest = await (await fetch("/docs" + "/" + s + "/manifest.json")).json()
+    //       res({ src, exitcode, log, testresults, manifest })
+    //     })
+    //   }))
+    //   setState({ tests: config.tests as any, results, buildDir: config.buildDir })
+    // };
     ///////////////////////////////////////////
     const [tasks, setTasks] = useState([]);
     collectionEffect(`Task`, setTasks, (t) => {
@@ -110,13 +110,13 @@ const Report = () => {
             .catch(error => console.error(error));
     };
     useEffect(() => { importKanban(); }, []);
-    const importTests = async () => {
-        const x = await fetch("./testeranto.json");
-        const y = await x.json();
-        setTests(y);
-    };
-    useEffect(() => { importResults(); }, []);
-    useEffect(() => { importTests(); }, []);
+    // const importTests = async () => {
+    //   const x = await fetch("./testeranto.json")
+    //   const y = await x.json();
+    //   setTests(y as any);
+    // };
+    // useEffect(() => { importResults(); }, []);
+    // useEffect(() => { importTests(); }, []);
     const [activeKey, setActiveKey] = useState('home');
     const handleSelect = (selectedKey) => {
         setActiveKey(selectedKey);
@@ -206,6 +206,8 @@ footer {
                 React.createElement(Row, null,
                     React.createElement(Col, { sm: 1 },
                         React.createElement(Nav, { variant: "pills", className: "flex-column" },
+                            React.createElement(Nav.Item, null,
+                                React.createElement("a", { className: "button google", href: "/auth/github" }, "Sign in with github")),
                             React.createElement(Nav.Item, null,
                                 React.createElement(NavLink, { to: "/tests", className: "nav-link" }, "tests")),
                             React.createElement(Nav.Item, null,

@@ -60,7 +60,7 @@ export default (
 
     plugins: [
       ...(config.webPlugins || []),
-      inputFilesPlugin("node", entryPoints),
+      inputFilesPlugin("web", entryPoints),
       {
         name: "rebuild-notify",
         setup(build) {

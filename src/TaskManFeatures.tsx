@@ -26,8 +26,6 @@ export const Features = ({
         setFeatures(allFeatures)
       })
   }
-  //     .catch (error => console.error(error));
-  // };
 
   useEffect(() => { importFeatures(); }, []);
 

@@ -147,6 +147,15 @@ export abstract class BaseBuilder<
           }).length;
           puppetMaster.writeFileSync(`exitcode`, numberOfFailures.toString());
 
+          // if (numberOfFailures > 0) {
+          //   puppetMaster.writeFileSync(
+          //     `prompt`,
+          //     `
+          //     aider --message "make a script that prints hello" hello.js
+          //     `
+          //   );
+          // }
+
           puppetMaster.writeFileSync(
             `tests.json`,
             JSON.stringify(this.toObj(), null, 2)

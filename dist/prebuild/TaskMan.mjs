@@ -1,10 +1,12 @@
 // src/TaskMan.ts
 import express from "express";
 import path from "path";
+import passport from "passport";
+import GitHubStrategy from "passport-github2";
+import session from "express-session";
 
 // src/GitFsDb.ts
 import fs from "fs";
-import { v4 as uuidv4 } from "uuid";
 async function getfile(f) {
   return new Promise((res, rej) => {
     fs.open(f, "r", (err, fd) => {
@@ -37,7 +39,11 @@ var Model = class {
     // return an item by id
     this.find = async (_id) => {
       const f = `./${this.name}/${_id}.json`;
-      return { status: true, item: await getfile(f) };
+      if (fs.existsSync(f)) {
+        return { status: true, item: await getfile(f) };
+      } else {
+        return { status: false, item: null };
+      }
     };
     // return all ids
     this.list = async () => {
@@ -70,9 +76,6 @@ var Model = class {
     app2.get(`/${this.name}.json`, async (req, res) => {
       res.json(await this.list());
     });
-    app2.get(`/${this.name}/:id.json`, async (req, res) => {
-      res.json(await this.find(req.params["_id"]));
-    });
     app2.post(`/${this.name}/:id.json`, async (req, res) => {
       res.json(await this.update(req.params));
     });
@@ -83,9 +86,11 @@ var Model = class {
   // create an item
   create(item) {
     return new Promise(async (res, rej) => {
-      const _id = uuidv4();
-      await fs.writeFileSync(`./${this.name}/${_id}`, item.toString());
-      res({ status: true, _id });
+      await fs.writeFileSync(
+        `./${this.name}/${item._id}.json`,
+        JSON.stringify(item)
+      );
+      res({ status: true, _id: item._id });
     });
   }
   // update an item
@@ -99,7 +104,20 @@ var Model = class {
 };
 var KanbanModel = class extends Model {
 };
+var TeamModel = class extends Model {
+};
 var UserModel = class extends Model {
+  async findOrCreate(profileId) {
+    const f = await this.find(profileId);
+    if (f.item && f.item !== null) {
+      return new Promise((res, rej) => {
+        res(f);
+      });
+    } else {
+      const x = await this.create({ _id: profileId });
+      return this.find(x._id);
+    }
+  }
 };
 var MessageModel = class extends Model {
   constructor(modelName, expressApp) {
@@ -227,6 +245,7 @@ var GitFsDb_default = async (filepath, app2) => {
   return {
     users: new UserModel("User", app2),
     kanbans: new KanbanModel("Kanban", app2),
+    teams: new TeamModel("Team", app2),
     sprints: new SprintModel("Sprint", app2),
     milestones: new MilestoneModel("Milestone", app2, mm),
     tasks: new TaskModel("Task", app2, mm),
@@ -237,11 +256,23 @@ var GitFsDb_default = async (filepath, app2) => {
 // src/TaskMan.ts
 var port = process.env.PORT || "8080";
 var app = express();
-app.use("/", express.static(path.join(process.cwd())));
+app.use(
+  session({
+    secret: "your-secret-key",
+    resave: false,
+    saveUninitialized: false
+  })
+);
+var staticPath = path.join(process.cwd());
+console.log("staticPath", staticPath);
+app.use("/", express.static(staticPath));
 app.get("/", function(req, res) {
   res.sendFile(
     `${process.cwd()}/node_modules/testeranto/dist/prebuild/TaskMan.html`
   );
+});
+app.get("/TaskMan.json", (req, res) => {
+  res.sendFile(`${process.cwd()}/TaskMan.json`);
 });
 app.get("/TaskManFrontend.js", (req, res) => {
   res.sendFile(
@@ -256,7 +287,7 @@ app.get("/TaskManFrontEnd.css", (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
-var { tasks, projects, milestones } = await GitFsDb_default("./", app);
+var { tasks, projects, milestones, users } = await GitFsDb_default("./", app);
 app.get("/features.json", async (req, res) => {
   const allTasks = (await tasks.gather((await tasks.list()).ids)).items.map(
     (t) => {
@@ -298,5 +329,69 @@ app.get("/features.json", async (req, res) => {
     res.sendFile(
       `${process.cwd()}/node_modules/testeranto/dist/prebuild/TaskMan.html`
     );
+  });
+});
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
+var accessTokens = {};
+passport.use(
+  new GitHubStrategy(
+    {
+      clientID: "Ov23liY2OpcexmP1KRl8",
+      //process.env.GITHUB_CLIENT_ID,
+      clientSecret: "a5a7daa33c7df57b44ee2dda010787d9d1cc053d",
+      //process.env.GITHUB_CLIENT_SECRET,
+      callbackURL: "http://localhost:8080/auth/github/callback"
+    },
+    function(accessToken, refreshToken, profile, done) {
+      console.log("GitHubStrategy", accessToken, refreshToken, profile, done);
+      new Promise(async (res, rej) => {
+        const { item, status } = await users.findOrCreate(profile.id);
+        console.log("Done", status, item);
+        done(null, item._id);
+        accessTokens[item._id] = accessToken;
+        res({});
+      });
+    }
+  )
+);
+app.get("/auth/github", passport.authenticate("github"));
+app.get(
+  "/auth/github/callback",
+  passport.authenticate("github", {
+    // session: false,
+    failureRedirect: "/login"
+  }),
+  function(req, res) {
+    console.log("Successful authentication, redirect home.");
+    res.redirect("/");
+  }
+);
+app.use((req, res, next) => {
+  console.log("Session:", req.session);
+  next();
+});
+app.get("/session", (req, res) => {
+  if (req.session) {
+    res.send(
+      JSON.stringify({
+        ...req.session,
+        accessToken: req.session.passport && accessTokens[req.session.passport.user]
+      })
+    );
+  } else {
+    res.send("No session data found");
+  }
+});
+app.get("/logout", (req, res) => {
+  if (req.session.passport?.user) {
+    delete accessTokens[req.session.passport.user];
+  }
+  req.session.destroy((err) => {
+    res.redirect("/");
   });
 });

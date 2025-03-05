@@ -1,5 +1,6 @@
 declare const _default: {
     botEmail: string;
+    taskman: string;
     outdir: string;
     tests: (string | never[] | {
         ports: number;

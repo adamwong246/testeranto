@@ -1,9 +1,20 @@
-test resources: ,{"name":"/Users/adam/Code/testeranto/docs/web/src/LoginButton.test","ports":"","fs":"/Users/adam/Code/testeranto/docs/web/src/LoginButton.test","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/53fd8f4c-01a9-4244-95a4-60864e01a682"}
+test resources: ,{"name":"/Users/adam/Code/testeranto/docs/web/src/LoginButton.test","ports":"","fs":"/Users/adam/Code/testeranto/docs/web/src/LoginButton.test","browserWSEndpoint":"ws://[::1]:3234/devtools/browser/4dc0a87b-28cb-4c9e-a110-f9ee05fce8ad"}
 
 Suite:,0,Testing the LoginButton
 
  Given: default
  Then:,ItSaysLogIn: undefined
+AssertionError: expected 'explode' to equal 'Log in'
+    at file:///Users/adam/Code/testeranto/docs/web/src/LoginButton.test.mjs:36755:22
+    at file:///Users/adam/Code/testeranto/docs/web/src/LoginButton.test.mjs:36687:19
+    at new Promise (<anonymous>)
+    at Object.butThen (file:///Users/adam/Code/testeranto/docs/web/src/LoginButton.test.mjs:36686:16)
+    at Then.butThen (file:///Users/adam/Code/testeranto/docs/web/src/LoginButton.test.mjs:36558:42)
+    at Then.test (file:///Users/adam/Code/testeranto/docs/web/src/LoginButton.test.mjs:36240:28)
+    at Given.give (file:///Users/adam/Code/testeranto/docs/web/src/LoginButton.test.mjs:36017:34)
+    at async Testeranto.givenThat.run (file:///Users/adam/Code/testeranto/docs/web/src/LoginButton.test.mjs:35895:22)
+    at async file:///Users/adam/Code/testeranto/docs/web/src/LoginButton.test.mjs:36334:16
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/docs/web/src/LoginButton.test.mjs:36362:29)
 
  Given: default
  When:,Clicked: undefined
@@ -13,6 +24,17 @@ Suite:,0,Testing the LoginButton
  When:,Clicked: undefined
  When:,Clicked: undefined
  Then:,ItSaysLogIn: undefined
+AssertionError: expected 'explode' to equal 'Log in'
+    at file:///Users/adam/Code/testeranto/docs/web/src/LoginButton.test.mjs:36755:22
+    at file:///Users/adam/Code/testeranto/docs/web/src/LoginButton.test.mjs:36687:19
+    at new Promise (<anonymous>)
+    at Object.butThen (file:///Users/adam/Code/testeranto/docs/web/src/LoginButton.test.mjs:36686:16)
+    at Then.butThen (file:///Users/adam/Code/testeranto/docs/web/src/LoginButton.test.mjs:36558:42)
+    at Then.test (file:///Users/adam/Code/testeranto/docs/web/src/LoginButton.test.mjs:36240:28)
+    at Given.give (file:///Users/adam/Code/testeranto/docs/web/src/LoginButton.test.mjs:36017:34)
+    at async Testeranto.givenThat.run (file:///Users/adam/Code/testeranto/docs/web/src/LoginButton.test.mjs:35895:22)
+    at async file:///Users/adam/Code/testeranto/docs/web/src/LoginButton.test.mjs:36334:16
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/docs/web/src/LoginButton.test.mjs:36362:29)
 
  Given: default
  When:,Clicked: undefined

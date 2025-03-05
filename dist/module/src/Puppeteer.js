@@ -27,11 +27,11 @@ export default async (partialConfig) => {
         executablePath: 
         // process.env.CHROMIUM_PATH || "/opt/homebrew/bin/chromium",
         "/opt/homebrew/bin/chromium",
-        headless: false,
+        headless: true,
         dumpio: true,
         // timeout: 0,
         args: [
-            "--auto-open-devtools-for-tabs",
+            // "--auto-open-devtools-for-tabs",
             "--disable-features=IsolateOrigins,site-per-process",
             "--disable-site-isolation-trials",
             "--allow-insecure-localhost",

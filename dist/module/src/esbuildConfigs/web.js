@@ -34,7 +34,7 @@ export default (config, entryPoints) => {
             "dns",
         ], platform: "browser", entryPoints: [...entryPoints], plugins: [
             ...(config.webPlugins || []),
-            inputFilesPlugin("node", entryPoints),
+            inputFilesPlugin("web", entryPoints),
             {
                 name: "rebuild-notify",
                 setup(build) {

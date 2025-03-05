@@ -59,15 +59,15 @@
     },
     "./src/SubPackages/react-test-renderer/jsx/index.js": {
       "import": "./dist/module/src/SubPackages/react-test-renderer/jsx/index.js",
-      "require": "./dist/common/SubPackages/react-test-renderer/jsx/index.js"
+      "require": "./dist/common/src/SubPackages/react-test-renderer/jsx/index.js"
     },
     "./src/SubPackages/react-test-renderer/jsx/web.js": {
-      "import": "./dist/module/SubPackages/react-test-renderer/jsx/web.js",
-      "require": "./dist/common/SubPackages/react-test-renderer/jsx/web.js"
+      "import": "./dist/module/src/SubPackages/react-test-renderer/jsx/web.js",
+      "require": "./dist/common/src/SubPackages/react-test-renderer/jsx/web.js"
     },
     "./src/SubPackages/react-test-renderer/jsx/node.js": {
-      "import": "./dist/module/SubPackages/react-test-renderer/jsx/node.js",
-      "require": "./dist/common/SubPackages/react-test-renderer/jsx/node.js"
+      "import": "./dist/module/src/SubPackages/react-test-renderer/jsx/node.js",
+      "require": "./dist/common/src/SubPackages/react-test-renderer/jsx/node.js"
     },
     "./src/SubPackages/react-test-renderer/jsx-promised/index": {
       "import": "./dist/module/SubPackages/react-test-renderer/jsx-promised/index.js",
@@ -121,9 +121,13 @@
       "import": "./dist/module/Features.js",
       "require": "./dist/common/Features.js"
     },
+    "./src/prompt": {
+      "import": "./dist/module/src/prompt.js",
+      "require": "./dist/module/src/prompt.js"
+    },
     "./src/Project": {
-      "import": "./dist/module/Project.js",
-      "require": "./dist/common/Project.js"
+      "import": "./dist/module/src/Project.js",
+      "require": "./dist/module/src/Project.js"
     },
     "./src/Web": {
       "import": "./src/Web.ts",
@@ -133,21 +137,21 @@
       "import": "./src/Node.ts",
       "require": "./src/Node.ts"
     },
-    "./src/Puppeteer": {
-      "import": "./dist/module/Puppeteer.js",
-      "require": "./dist/common/Puppeteer.js"
+    "./src/Aider": {
+      "import": "./dist/module/src/Aider.js",
+      "require": "./dist/common/src/Aider.js"
     },
-    "./src/TaskManBackEnd": {
-      "import": "./dist/module/TaskManBackEnd.js",
-      "require": "./dist/common/TaskManBackEnd.js"
+    "./src/Puppeteer": {
+      "import": "./dist/module/src/Puppeteer.js",
+      "require": "./dist/common/src/Puppeteer.js"
     },
     "./src/TaskMan": {
       "import": "./dist/module/TaskMan.js",
       "require": "./dist/common/TaskMan.js"
     },
     "./src/Init": {
-      "import": "./dist/module/Init.js",
-      "require": "./dist/common/Init.js"
+      "import": "./dist/module/src/Init.js",
+      "require": "./dist/common/src/Init.js"
     },
     "./src/preload": {
       "import": "./dist/module/preload.js",
@@ -232,6 +236,7 @@
     "@hello-pangea/dnd": "^18.0.1",
     "@octokit/types": "^13.8.0",
     "@types/express": "^5.0.0",
+    "@types/express-session": "^1.18.1",
     "@types/uuid": "^10.0.0",
     "@xyflow/react": "^12.4.3",
     "@zodform/core": "^0.2.0",
@@ -246,6 +251,7 @@
     "eslint-plugin-react": "^7.31.11",
     "eslint-plugin-react-hooks": "^5.1.0",
     "express": "^4.21.2",
+    "express-session": "^1.18.1",
     "fs-extra": "^11.2.0",
     "fs.promises.exists": "^1.1.4",
     "gantt-task-react": "^0.3.9",
@@ -255,6 +261,7 @@
     "graphology-types": "^0.24.5",
     "html": "^1.0.0",
     "ipc": "^0.0.1",
+    "iterm-tab": "^0.4.0",
     "jsonc": "^2.0.0",
     "mongodb": "^6.13.0",
     "mongoose": "^8.10.0",
@@ -262,8 +269,12 @@
     "mongoose-rest-query": "^0.1.29",
     "npm-watch": "^0.11.0",
     "octokit": "^4.1.2",
+    "passport": "^0.7.0",
+    "passport-github2": "^0.1.12",
     "puppeteer-core": "^23.6.0",
     "react-bootstrap": "2.10.6",
+    "react-github-login": "^1.0.3",
+    "react-login-github": "^1.0.8",
     "react-router-dom": "6.29.0",
     "react-sigma": "^1.2.35",
     "react-test-renderer": "18.2.0",

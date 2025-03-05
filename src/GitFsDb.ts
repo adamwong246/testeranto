@@ -11,6 +11,7 @@ import {
   ITask,
   IMilestone,
   ISprint,
+  ITeam,
 } from "./TaskManTypes";
 
 async function getfile(f: string): Promise<{ T }> {
@@ -62,9 +63,10 @@ abstract class Model<
       res.json(await this.list());
     });
 
-    app.get(`/${this.name}/:id.json`, async (req, res) => {
-      res.json(await this.find(req.params["_id"]));
-    });
+    // app.get(`/${this.name}/:id.json`, async (req, res) => {
+    //   console.log("mark1", req.params);
+    //   res.json(await this.find(req.params["id"]));
+    // });
 
     app.post(`/${this.name}/:id.json`, async (req, res) => {
       res.json(await this.update(req.params as any));
@@ -78,9 +80,13 @@ abstract class Model<
   // create an item
   create(item: T): Promise<{ status: boolean; _id: string }> {
     return new Promise(async (res, rej) => {
-      const _id = uuidv4();
-      await fs.writeFileSync(`./${this.name}/${_id}`, item.toString());
-      res({ status: true, _id });
+      // const _id = item._id || uuidv4();
+
+      await fs.writeFileSync(
+        `./${this.name}/${item._id}.json`,
+        JSON.stringify(item)
+      );
+      res({ status: true, _id: item._id });
     });
   }
 
@@ -101,43 +107,19 @@ abstract class Model<
   }
 
   // return an item by id
-  find = async (_id: string): Promise<{ status: boolean; item: T }> => {
+  find = async (
+    _id: string
+  ): Promise<{
+    status: boolean;
+    item: T | null;
+  }> => {
     const f = `./${this.name}/${_id}.json`;
-    return { status: true, item: (await getfile(f)) as any };
-    // return new Promise((res, rej) => {
-    //   fs.open(f, "r", (err, fd) => {
-    //     if (err) {
-    //       console.error("Error opening file:", err);
-    //       return;
-    //     }
 
-    //     fs.fstat(fd, (err, stats) => {
-    //       if (err) {
-    //         console.error("Error getting file stats:", err);
-    //         return;
-    //       }
-
-    //       console.log("File size:", stats.size, "bytes");
-    //       console.log("Is file:", stats.isFile());
-    //       console.log("Is directory:", stats.isDirectory());
-
-    //       fs.close(fd, (err) => {
-    //         if (err) {
-    //           console.error("Error closing file:", err);
-    //           return;
-    //         }
-    //         res({
-    //           status: true,
-    //           item: {
-    //             _id: "idk",
-    //             ...JSON.parse(fs.readFileSync(f).toString()),
-    //             lastUpdated: stats.mtime,
-    //           },
-    //         });
-    //       });
-    //     });
-    //   });
-    // });
+    if (fs.existsSync(f)) {
+      return { status: true, item: (await getfile(f)) as any };
+    } else {
+      return { status: false, item: null };
+    }
   };
 
   // return all ids
@@ -175,7 +157,30 @@ abstract class Model<
 
 class KanbanModel extends Model<IKanban> {}
 
-class UserModel extends Model<IUser> {}
+class TeamModel extends Model<ITeam> {}
+
+class UserModel extends Model<IUser> {
+  async findOrCreate(
+    profileId: string
+  ): Promise<{ item: IUser; status: boolean }> {
+    // console.log("findOrCreate", profileId);
+
+    const f = await this.find(profileId);
+
+    // console.log("mark1", f);
+
+    if (f.item && f.item !== null) {
+      return new Promise((res, rej) => {
+        // cb(f);
+        res(f as any);
+      });
+    } else {
+      const x = await this.create({ _id: profileId });
+      return this.find(x._id) as any;
+      // return { status: false, item: null };
+    }
+  }
+}
 
 class MessageModel extends Model<IMessage> {
   namesIndex: Record<string, Set<string>>;
@@ -344,6 +349,7 @@ export default async (filepath: string, app: Express) => {
   return {
     users: new UserModel("User", app),
     kanbans: new KanbanModel("Kanban", app),
+    teams: new TeamModel("Team", app),
 
     sprints: new SprintModel("Sprint", app),
 

@@ -1,19 +1,10 @@
 import React, { useState } from "react";
-// import { ButtonGroup, Button } from "react-bootstrap";
-export default () => {
-    const [state, setState] = useState(false);
-    return React.createElement("button", { id: "signin", onClick: () => {
-            console.log("clicked");
-            setState(!state);
-        } },
-        " ",
-        state ? "Sign out" : "Log in");
+const LoginButton = ({ initialLoggedIn } = { initialLoggedIn: false }) => {
+    const [isLoggedIn, setIsLoggedIn] = useState(initialLoggedIn);
+    const handleClick = () => {
+        console.log("Login button clicked");
+        setIsLoggedIn(prev => !prev);
+    };
+    return (React.createElement("button", { id: "signin", onClick: handleClick, className: "btn btn-primary" }, isLoggedIn ? "Sign out" : "Log in"));
 };
-//   <ButtonGroup className="mb-2">
-//   <Button
-//     id="login"
-//     value="1"
-//   >
-//     Login
-//   </Button>
-// </ButtonGroup>
+export default LoginButton;

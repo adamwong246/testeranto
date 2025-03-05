@@ -1,4 +1,5 @@
 "use strict";
+// import { ITProject } from "./src/Project.js";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -26,9 +27,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+// import Project from "./testeranto.js";
 const process_1 = __importDefault(require("process"));
-process_1.default.chdir(__dirname);
-const Puppeteer_js_1 = __importDefault(require("./src/Puppeteer.js"));
+const Project_1 = require("./src/Project");
+// import { ITProject } from "testeranto/src/Project";
+// process.chdir(__dirname);
+// import Puppeteer from "./src/Puppeteer.js";
 console.log(process_1.default.argv);
 const Project = await Promise.resolve().then(() => __importStar(require(process_1.default.argv[2])));
-exports.default = (0, Puppeteer_js_1.default)(Project);
+exports.default = new Project_1.ITProject(Project);

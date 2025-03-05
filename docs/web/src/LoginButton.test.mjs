@@ -36722,7 +36722,7 @@ var LoginButton = ({ initialLoggedIn } = { initialLoggedIn: false }) => {
       onClick: handleClick,
       className: "btn btn-primary"
     },
-    isLoggedIn ? "Sign out" : "Log in"
+    isLoggedIn ? "Sign out" : "explode"
   );
 };
 var LoginButton_default = LoginButton;
@@ -36770,22 +36770,22 @@ var LoginPageSpecs = (Suite, Given, When, Then, Check) => {
       "Testing the LoginButton",
       {
         test0: Given.default(
-          ["67ae06bac3c5fa5a98a08e32"],
+          ["0"],
           [],
           [Then.ItSaysLogIn()]
         ),
         test1: Given.default(
-          ["67ae06bac3c5fa5a98a08e32"],
+          ["0"],
           [When.Clicked()],
           [Then.ItSaysSignOut()]
         ),
         test2: Given.default(
-          ["67ae06bac3c5fa5a98a08e32"],
+          ["0"],
           [When.Clicked(), When.Clicked()],
           [Then.ItSaysLogIn()]
         ),
         test3: Given.default(
-          ["67ae06bac3c5fa5a98a08e32  1"],
+          ["1"],
           [When.Clicked(), When.Clicked(), When.Clicked()],
           [Then.ItSaysSignOut()]
         )
