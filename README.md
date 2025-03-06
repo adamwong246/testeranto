@@ -14,7 +14,7 @@ example repo: [kokomo bay](https://github.com/ChromaPDX/kokomoBay)
 
 ## Demo
 
-<video src="demo.mov" width="1200" height="600" controls></video>
+<video src="[demo.mov](https://github.com/adamwong246/testeranto/raw/refs/heads/master/demo.mov)" width="1200" height="600" controls></video>
 
 ## What is testeranto?
 
