@@ -23,9 +23,17 @@ export type ITestImpl<ITestShape extends IBaseTest> = ITestImplementation<
 export type ITestSpec<ITestShape extends IBaseTest> =
   ITestSpecification<ITestShape>;
 
+const Context = React.createContext({});
+
+const AppContext = React.createContext({});
+const contextValue = {
+  ingredients: ["flour", "sugar", "eggs"],
+  temperature: "200",
+};
+
 export const testInterface = {
   butThen: async function (s: IStore, thenCB, tr): Promise<ISelection> {
-    console.log("butThen", thenCB.toString());
+    // console.log("butThen", thenCB.toString());
     return thenCB(s);
   },
   beforeEach: function (
@@ -34,7 +42,22 @@ export const testInterface = {
   ): Promise<renderer.ReactTestRenderer> {
     let component;
     act(() => {
-      component = renderer.create(React.createElement(CComponent, props, []));
+      // component = renderer.create(
+      //   React.createElement(
+      //     AppContext.Provider,
+      //     { value: contextValue },
+      //     React.createElement(AppContext.Consumer, null, (context) =>
+      //       React.createElement(CComponent, Object.assign({}, context, {}))
+      //     )
+      //   )
+      // );
+      component = renderer.create(
+        React.createElement(
+          CComponent,
+          props,
+          React.createElement(CComponent, props, [])
+        )
+      );
     });
     return component;
   },

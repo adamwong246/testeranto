@@ -12,13 +12,17 @@ dev: [github.dev/adamwong246/testeranto](https://github.dev/adamwong246/testeran
 
 example repo: [kokomo bay](https://github.com/ChromaPDX/kokomoBay)
 
-## about
+## Demo
 
-1. Testeranto.ts an AI-first, Acceptance Test Driven Development ([ATDD](https://en.wikipedia.org/wiki/Acceptance_test-driven_development)) framework for typescript.
-2. Testeranto includes a library of common patterns to help write your tests and a test runner to schedule the tests.
-3. Testeranto tests are specified in a strongly-typed gherkin-like syntax. Rather than testing your code directly, Testeranto requires you wrap your code with a semantic interface which is based on TS type signatures. These interfaces can be shared and your code is tested through the gherkin-ish directives provided by that interface.
-4. Testeranto can be run in the browser frontend or the node backend, or both, and Testeranto can be used to test _anything_ that can be bundled with esbuild. Testeranto leverages puppeteer to provide both of these runtimes.
-5. Testeranto produces test results which can be fed to Aider.ai to automatically fix failing tests
+<video src="demo.mov" width="1200" height="600" controls></video>
+
+## What is testeranto?
+
+- Testeranto.ts an AI-first, Acceptance Test Driven Development ([ATDD](https://en.wikipedia.org/wiki/Acceptance_test-driven_development)) framework for typescript projects.
+- Testeranto produces test results which can be fed to Aider.ai to automatically fix failing tests.
+- Testeranto tests are specified in a strongly-typed gherkin-like syntax. Rather than testing your code directly, Testeranto requires you wrap your code with a semantic interface which is based on TS type signatures.
+- Testeranto can be run in the frontend or the backend, or both.
+- Testeranto can be used to test anything that can be bundled with esbuild.
 
 ## tech of note
 

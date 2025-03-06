@@ -29,10 +29,10 @@ export default (
     metafile: true,
 
     external: [
-      "testeranto.json",
-      "features.test.ts",
+      // "testeranto.json",
+      // "features.test.ts",
       // "url",
-      "react",
+      // "react",
 
       "path",
       "fs",

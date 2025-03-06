@@ -27,6 +27,7 @@ export declare abstract class BaseSuite<ITestShape extends IBaseTest<unknown, un
             features: string[];
         }[];
         fails: BaseGiven<ITestShape>[];
+        features: {};
     };
     setup(s: ITestShape["iinput"], artifactory: ITestArtifactory, tr: ITTestResourceConfiguration, pm: PM): Promise<ITestShape["isubject"]>;
     assertThat(t: ITestShape["then"]): unknown;

@@ -89,7 +89,7 @@ export abstract class BaseBuilder<
           puppetMaster: PM,
           tLog: ITLog
         ): Promise<BaseSuite<ITestShape>> => {
-          await puppetMaster.startPuppeteer(
+          const puppeteerBrowser = await puppetMaster.startPuppeteer(
             {
               browserWSEndpoint:
                 puppetMaster.testResourceConfiguration.browserWSEndpoint,
@@ -97,7 +97,7 @@ export abstract class BaseBuilder<
             puppetMaster.testResourceConfiguration.fs
           );
 
-          return await suite.run(
+          const x = await suite.run(
             input,
             puppetMaster.testResourceConfiguration,
             (fPath: string, value: string | Buffer | PassThrough) =>
@@ -110,6 +110,10 @@ export abstract class BaseBuilder<
             tLog,
             puppetMaster
           );
+
+          // await puppetMaster.browser.disconnect();
+          // puppeteerBrowser.close();
+          return x;
         };
 
       const runner = suiteRunner(suite);
@@ -124,7 +128,7 @@ export abstract class BaseBuilder<
         runner,
 
         receiveTestResourceConfig: async function (puppetMaster: PM) {
-          await puppetMaster.mkdirSync();
+          // await puppetMaster.mkdirSync();
 
           const logFilePath = "log.txt";
           const access = await puppetMaster.createWriteStream(logFilePath);
@@ -161,6 +165,7 @@ export abstract class BaseBuilder<
             JSON.stringify(this.toObj(), null, 2)
           );
           console.log(`exiting gracefully with ${numberOfFailures} failures.`);
+
           return {
             failed: numberOfFailures,
             artifacts: this.artifacts || [],

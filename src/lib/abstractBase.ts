@@ -58,10 +58,22 @@ export abstract class BaseSuite<
   }
 
   public toObj() {
+    const givens = Object.keys(this.givens).map((k) => this.givens[k].toObj());
+    const features = Object.keys(this.givens)
+      .map((k) => this.givens[k].features)
+      .flat()
+      .filter((value, index, array) => {
+        return array.indexOf(value) === index;
+      })
+      .reduce((mm, lm) => {
+        mm[lm] = lm;
+        return mm;
+      }, {});
     return {
       name: this.name,
-      givens: Object.keys(this.givens).map((k) => this.givens[k].toObj()),
+      givens,
       fails: this.fails,
+      features,
     };
   }
 
@@ -406,7 +418,7 @@ export abstract class BaseGiven<
         this.givenCB,
         beforeEachProxy
       );
-      console.log("mark6", this.store);
+      // console.log("mark6", this.store);
 
       for (const [whenNdx, whenStep] of this.whens.entries()) {
         await whenStep.test(
@@ -535,7 +547,7 @@ export abstract class BaseGiven<
           },
         });
 
-        console.log("mark5", this.store, key);
+        // console.log("mark5", this.store, key);
         await this.afterEach(this.store, key, givenArtifactory, afterEachProxy);
       } catch (e) {
         console.error("afterEach failed! no error will be recorded!", e);
@@ -684,17 +696,26 @@ export abstract class BaseWhen<ITestShape extends IBaseTest> {
       },
     });
 
-    try {
-      return await this.andWhen(
-        store,
-        this.whenCB,
-        testResourceConfiguration,
-        andWhenProxy
-      );
-    } catch (e) {
+    return this.andWhen(
+      store,
+      this.whenCB,
+      testResourceConfiguration,
+      andWhenProxy
+    ).catch((e) => {
       this.error = true;
-      throw e;
-    }
+      // throw e;
+    });
+    // try {
+    //   return await this.andWhen(
+    //     store,
+    //     this.whenCB,
+    //     testResourceConfiguration,
+    //     andWhenProxy
+    //   );
+    // } catch (e) {
+    //   this.error = true;
+    //   throw e;
+    // }
   }
 }
 
@@ -818,14 +839,24 @@ export abstract class BaseThen<
         },
       });
 
-      const x = await this.butThen(
+      // const x = await this.butThen(
+      //   store,
+      //   this.thenCB,
+      //   testResourceConfiguration,
+      //   butThenProxy
+      // );
+      // return x;
+
+      return this.butThen(
         store,
         this.thenCB,
         testResourceConfiguration,
         butThenProxy
-        // pm
-      );
-      return x;
+      ).catch((e) => {
+        console.log("mar123");
+        this.error = true;
+        throw e;
+      });
     } catch (e) {
       console.log("test failed", e);
       this.error = e.message;

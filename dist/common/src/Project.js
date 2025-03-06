@@ -12,44 +12,52 @@ const glob_1 = require("glob");
 const node_js_1 = __importDefault(require("./esbuildConfigs/node.js"));
 const web_js_1 = __importDefault(require("./esbuildConfigs/web.js"));
 const web_html_js_1 = __importDefault(require("./web.html.js"));
-var mode = process.argv[2] === "-dev" ? "DEV" : "PROD";
+// var mode: "DEV" | "PROD" = process.argv[2] === "-dev" ? "DEV" : "PROD";
 readline_1.default.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
     process.stdin.setRawMode(true);
-process.stdin.on("keypress", (str, key) => {
-    if (key.name === "q") {
-        console.log("Testeranto-EsBuild is shutting down...");
-        mode = "PROD";
-        onDone();
-    }
-});
-let nodeDone, webDone = false;
-const onNodeDone = () => {
-    nodeDone = true;
-    onDone();
-};
-const onWebDone = () => {
-    webDone = true;
-    onDone();
-};
-const onDone = () => {
-    console.log(JSON.stringify({
-        nodeDone,
-        webDone,
-        mode,
-    }, null, 2));
-    if (nodeDone && webDone && mode === "PROD") {
-        console.log("Testeranto-EsBuild is all done. Goodbye!");
-        process.exit();
-    }
-    else {
-        console.log("Testeranto-EsBuild is still working...");
-    }
-};
 class ITProject {
     constructor(configs) {
-        this.mode = `up`;
+        this.nodeDone = false;
+        this.webDone = false;
+        this.onNodeDone = () => {
+            this.nodeDone = true;
+            this.onDone();
+        };
+        this.onWebDone = () => {
+            this.webDone = true;
+            this.onDone();
+        };
+        this.onDone = () => {
+            // console.log(this.nodeDone && this.webDone && this.mode === "PROD");
+            if (this.nodeDone && this.webDone && this.mode === "PROD") {
+                console.log("Testeranto-EsBuild is all done. Goodbye!");
+                process.exit();
+            }
+            else {
+                if (this.mode === "PROD") {
+                    console.log("waiting for tests to finish");
+                    console.log(JSON.stringify({
+                        nodeDone: this.nodeDone,
+                        webDone: this.webDone,
+                        mode: this.mode,
+                    }, null, 2));
+                }
+                else {
+                    console.log("waiting for tests to change");
+                }
+                console.log("press 'q' to quit");
+            }
+        };
         this.config = configs;
+        this.mode = this.config.devMode ? "DEV" : "PROD";
+        process.stdin.on("keypress", (str, key) => {
+            if (key.name === "q") {
+                console.log("Testeranto-EsBuild is shutting down...");
+                this.mode = "PROD";
+                this.onDone();
+            }
+        });
         fs_1.default.writeFileSync(`${this.config.outdir}/testeranto.json`, JSON.stringify(Object.assign(Object.assign({}, this.config), { buildDir: process.cwd() + "/" + this.config.outdir }), null, 2));
         Promise.resolve(Promise.all([...this.getSecondaryEndpointsPoints("web")].map(async (sourceFilePath) => {
             const sourceFileSplit = sourceFilePath.split("/");
@@ -78,14 +86,14 @@ class ITProject {
             esbuild_1.default
                 .context((0, node_js_1.default)(this.config, nodeEntryPoints))
                 .then(async (nodeContext) => {
-                if (mode == "DEV") {
+                if (this.config.devMode) {
                     await nodeContext.watch().then((v) => {
-                        onNodeDone();
+                        this.onNodeDone();
                     });
                 }
                 else {
                     nodeContext.rebuild().then((v) => {
-                        onNodeDone();
+                        this.onNodeDone();
                     });
                 }
                 return nodeContext;
@@ -93,14 +101,14 @@ class ITProject {
             esbuild_1.default
                 .context((0, web_js_1.default)(this.config, webEntryPoints))
                 .then(async (webContext) => {
-                if (mode == "DEV") {
+                if (this.config.devMode) {
                     await webContext.watch().then((v) => {
-                        onWebDone();
+                        this.onWebDone();
                     });
                 }
                 else {
                     webContext.rebuild().then((v) => {
-                        onWebDone();
+                        this.onWebDone();
                     });
                 }
                 return webContext;

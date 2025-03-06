@@ -10,10 +10,22 @@ class BaseSuite {
         this.fails = [];
     }
     toObj() {
+        const givens = Object.keys(this.givens).map((k) => this.givens[k].toObj());
+        const features = Object.keys(this.givens)
+            .map((k) => this.givens[k].features)
+            .flat()
+            .filter((value, index, array) => {
+            return array.indexOf(value) === index;
+        })
+            .reduce((mm, lm) => {
+            mm[lm] = lm;
+            return mm;
+        }, {});
         return {
             name: this.name,
-            givens: Object.keys(this.givens).map((k) => this.givens[k].toObj()),
+            givens,
             fails: this.fails,
+            features,
         };
     }
     setup(s, artifactory, tr, pm) {
@@ -230,7 +242,7 @@ class BaseGiven {
                 },
             });
             this.store = await this.givenThat(subject, testResourceConfiguration, givenArtifactory, this.givenCB, beforeEachProxy);
-            console.log("mark6", this.store);
+            // console.log("mark6", this.store);
             for (const [whenNdx, whenStep] of this.whens.entries()) {
                 await whenStep.test(this.store, testResourceConfiguration, tLog, pm, `suite-${suiteNdx}/given-${key}/when/${whenNdx}`);
             }
@@ -329,7 +341,7 @@ class BaseGiven {
                         return Reflect.get(...arguments);
                     },
                 });
-                console.log("mark5", this.store, key);
+                // console.log("mark5", this.store, key);
                 await this.afterEach(this.store, key, givenArtifactory, afterEachProxy);
             }
             catch (e) {
@@ -448,13 +460,21 @@ class BaseWhen {
                 return Reflect.get(...arguments);
             },
         });
-        try {
-            return await this.andWhen(store, this.whenCB, testResourceConfiguration, andWhenProxy);
-        }
-        catch (e) {
+        return this.andWhen(store, this.whenCB, testResourceConfiguration, andWhenProxy).catch((e) => {
             this.error = true;
-            throw e;
-        }
+            // throw e;
+        });
+        // try {
+        //   return await this.andWhen(
+        //     store,
+        //     this.whenCB,
+        //     testResourceConfiguration,
+        //     andWhenProxy
+        //   );
+        // } catch (e) {
+        //   this.error = true;
+        //   throw e;
+        // }
     }
 }
 exports.BaseWhen = BaseWhen;
@@ -535,10 +555,18 @@ class BaseThen {
                     return Reflect.get(...arguments);
                 },
             });
-            const x = await this.butThen(store, this.thenCB, testResourceConfiguration, butThenProxy
-            // pm
-            );
-            return x;
+            // const x = await this.butThen(
+            //   store,
+            //   this.thenCB,
+            //   testResourceConfiguration,
+            //   butThenProxy
+            // );
+            // return x;
+            return this.butThen(store, this.thenCB, testResourceConfiguration, butThenProxy).catch((e) => {
+                console.log("mar123");
+                this.error = true;
+                throw e;
+            });
         }
         catch (e) {
             console.log("test failed", e);

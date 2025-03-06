@@ -17,18 +17,18 @@ const files: Record<string, Set<string>> = {}; // = new Set<string>();
 const screenshots: Record<string, Promise<Uint8Array>[]> = {};
 
 export class PM_Main extends PM {
-  customScreenShot(opts: object) {
-    throw new Error("Method not implemented.");
-  }
+  shutdownMode = false;
   configs: IBuiltConfig;
   ports: Record<number, boolean>;
   queue: any[];
+  registry: Record<string, boolean>;
 
   constructor(configs: IBuiltConfig) {
     super();
     this.server = {};
     this.configs = configs;
     this.ports = {};
+    this.registry = {};
     this.configs.ports.forEach((element) => {
       this.ports[element] = "true"; // set ports as open
     });
@@ -47,7 +47,7 @@ export class PM_Main extends PM {
       contents: string,
       testName: string
     ) => {
-      console.log("globalThis-writeFileSync", filepath);
+      // console.log("globalThis-writeFileSync", filepath);
 
       // Create directories if they don't exist
       const dir = path.dirname(filepath.split("/").slice(0, -1).join("/"));
@@ -88,18 +88,6 @@ export class PM_Main extends PM {
       opts: { path: string },
       page: Page
     ) => {
-      // // fileStreams3[uid].write(contents);
-      // // console.log("asd", opts.path.split("/").slice(0, -1).join("/"));
-
-      // // const dir = path.dirname(opts.path.split("/").slice(0, -1).join("/"));
-      // // console.log("dir", dir);
-      // fs.mkdirSync(opts.path.split("/").slice(0, -1).join("/"), {
-      //   recursive: true,
-      // });
-
-      // return page.screenshot(opts);
-
-      console.log("main.ts node custom-screenshot", page);
       const p = opts.path as string;
       const dir = path.dirname(p);
       fs.mkdirSync(dir, {
@@ -134,32 +122,17 @@ export class PM_Main extends PM {
         JSON.stringify(Array.from(files[testName]))
       );
       delete files[testName];
-      // globalThis["writeFileSync"](
-      //   p + "/manifest.json",
-      //   // files.entries()
-      //   JSON.stringify(Array.from(files[testName]))
-      // );
-
-      // fileStreams3[uid].end();
     };
-    // page.exposeFunction("customclose", () => {
-    //   console.log("closing doneFileStream2", doneFileStream2);
-    //   // console.log("closing doneFileStream2", doneFileStream2);
-    //   Promise.all([...doneFileStream2, ...screenshots2]).then(() => {
-    //     page.close();
-    //   });
+  }
 
-    //   // page.close();
-    //   // Promise.all(screenshots).then(() => {
-    //   //   page.close();
-    //   // });
-    //   // setTimeout(() => {
-    //   //   console.log("Delayed for 1 second.");
-    //   //   page.close();
-    //   // }, 5000);
+  shutDown() {
+    console.log("shutting down...");
+    this.shutdownMode = true;
+    this.checkForShutdown();
+  }
 
-    //   // return page.close();
-    // });
+  customScreenShot(opts: object) {
+    throw new Error("Method not implemented.");
   }
 
   async startPuppeteer(options: any, destfolder: string): Promise<any> {
@@ -167,8 +140,35 @@ export class PM_Main extends PM {
     return this.browser;
   }
 
+  checkForShutdown = () => {
+    const anyRunning: boolean =
+      Object.values(this.registry).filter((x) => x === false).length > 0;
+    if (anyRunning) {
+    } else {
+      this.browser.disconnect().then(() => {
+        console.log("Goodbye");
+        process.exit();
+      });
+    }
+  };
+
+  register = (src: string) => {
+    // console.log("register", src);
+    this.registry[src] = false;
+  };
+
+  deregister = (src: string) => {
+    // console.log("deregister", src, this.shutdownMode);
+    this.registry[src] = true;
+
+    if (this.shutdownMode) {
+      this.checkForShutdown();
+    }
+  };
+
   launchNode = async (src: string, dest: string) => {
     console.log("launchNode", src);
+    this.register(src);
 
     const destFolder = dest.replace(".mjs", "");
 
@@ -197,7 +197,7 @@ export class PM_Main extends PM {
       const openPorts = Object.entries(this.ports).filter(
         ([portnumber, portopen]) => portopen
       );
-      console.log("openPorts", openPorts);
+
       if (openPorts.length >= testConfigResource.ports) {
         for (let i = 0; i < testConfigResource.ports; i++) {
           portsToUse.push(openPorts[i][0]);
@@ -250,18 +250,16 @@ export class PM_Main extends PM {
       return module.default.then((defaultModule) => {
         defaultModule
           .receiveTestResourceConfig(argz)
-          .then((x) => {
-            console.log("then", x);
-
-            return x;
-          })
           .catch((e) => {
             console.log("catch", e);
+          })
+          .finally(() => {
+            this.deregister(src);
           });
       });
     });
 
-    console.log("portsToUse", portsToUse);
+    // console.log("portsToUse", portsToUse);
     for (let i = 0; i <= portsToUse.length; i++) {
       if (portsToUse[i]) {
         this.ports[portsToUse[i]] = "true"; //port is open again
@@ -306,7 +304,7 @@ export class PM_Main extends PM {
           page.exposeFunction(
             "custom-screenshot",
             async (ssOpts: ScreenshotOptions, testName: string) => {
-              console.log("main.ts browser custom-screenshot", testName);
+              // console.log("main.ts browser custom-screenshot", testName);
               const p = ssOpts.path as string;
               const dir = path.dirname(p);
               fs.mkdirSync(dir, {
@@ -411,7 +409,7 @@ export class PM_Main extends PM {
 
             Promise.all(screenshots[testName] || []).then(() => {
               delete screenshots[testName];
-              page.close();
+              // page.close();
             });
 
             // globalThis["writeFileSync"](
@@ -455,7 +453,6 @@ export class PM_Main extends PM {
     });
   };
 
-  // launchNodeSideCar = async (src: string, dest: string) => {};
   launchNodeSideCar = async (
     src: string,
     dest: string,
@@ -491,7 +488,7 @@ export class PM_Main extends PM {
       const openPorts = Object.entries(this.ports).filter(
         ([portnumber, portopen]) => portopen
       );
-      console.log("openPorts", openPorts);
+      // console.log("openPorts", openPorts);
       if (openPorts.length >= testConfigResource.ports) {
         for (let i = 0; i < testConfigResource.ports; i++) {
           portsToUse.push(openPorts[i][0]);
@@ -526,7 +523,7 @@ export class PM_Main extends PM {
       `${builtfile}?cacheBust=${Date.now()}`
     ).then((module) => {
       return module.default.then((defaultModule) => {
-        console.log("defaultModule", defaultModule);
+        // console.log("defaultModule", defaultModule);
         const s = new defaultModule();
         s.receiveTestResourceConfig(argz);
         // Object.create(defaultModule);
@@ -543,7 +540,7 @@ export class PM_Main extends PM {
       });
     });
 
-    console.log("portsToUse", portsToUse);
+    // console.log("portsToUse", portsToUse);
     for (let i = 0; i <= portsToUse.length; i++) {
       if (portsToUse[i]) {
         this.ports[portsToUse[i]] = "true"; //port is open again
@@ -553,6 +550,7 @@ export class PM_Main extends PM {
 
   launchWeb = (t: string, dest: string, sidecars: ITestTypes[]) => {
     console.log("launchWeb", t, dest);
+    this.register(t);
 
     sidecars.map((sidecar) => {
       if (sidecar[1] === "node") {
@@ -599,7 +597,7 @@ export class PM_Main extends PM {
         page.exposeFunction(
           "customScreenShot",
           async (ssOpts: ScreenshotOptions, testName: string) => {
-            console.log("main.ts browser custom-screenshot", testName);
+            // console.log("main.ts browser custom-screenshot", testName);
             const p = ssOpts.path as string;
             const dir = path.dirname(p);
             fs.mkdirSync(dir, {
@@ -696,7 +694,7 @@ export class PM_Main extends PM {
         });
 
         page.exposeFunction("customclose", (p: string, testName: string) => {
-          console.log("\t closing", p);
+          // console.log("closing", p);
 
           fs.writeFileSync(
             p + "/manifest.json",
@@ -704,9 +702,12 @@ export class PM_Main extends PM {
           );
           delete files[testName];
 
+          // console.log("screenshots[testName]", screenshots[testName]);
           Promise.all(screenshots[testName] || []).then(() => {
             delete screenshots[testName];
             // page.close();
+            // console.log("\t GOODBYE");
+            // whyIsNodeRunning();
           });
 
           // globalThis["writeFileSync"](
@@ -748,6 +749,9 @@ export class PM_Main extends PM {
           })
           .finally(() => {
             console.log("evaluation complete.", dest);
+            // page.close();
+            this.deregister(t);
+            // whyIsNodeRunning();
           });
 
         return page;

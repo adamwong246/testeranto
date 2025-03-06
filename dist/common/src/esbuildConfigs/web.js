@@ -16,10 +16,10 @@ exports.default = (config, entryPoints) => {
         outdir: config.outdir + "/web", alias: {
             react: path_1.default.resolve("./node_modules/react"),
         }, metafile: true, external: [
-            "testeranto.json",
-            "features.test.ts",
+            // "testeranto.json",
+            // "features.test.ts",
             // "url",
-            "react",
+            // "react",
             "path",
             "fs",
             "stream",

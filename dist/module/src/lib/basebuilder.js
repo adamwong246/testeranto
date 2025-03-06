@@ -13,12 +13,15 @@ export class BaseBuilder {
         this.specs = testSpecification(this.Suites(), this.Given(), this.When(), this.Then(), this.Check());
         this.testJobs = this.specs.map((suite) => {
             const suiteRunner = (suite) => async (puppetMaster, tLog) => {
-                await puppetMaster.startPuppeteer({
+                const puppeteerBrowser = await puppetMaster.startPuppeteer({
                     browserWSEndpoint: puppetMaster.testResourceConfiguration.browserWSEndpoint,
                 }, puppetMaster.testResourceConfiguration.fs);
-                return await suite.run(input, puppetMaster.testResourceConfiguration, (fPath, value) => puppetMaster.testArtiFactoryfileWriter(tLog, (p) => {
+                const x = await suite.run(input, puppetMaster.testResourceConfiguration, (fPath, value) => puppetMaster.testArtiFactoryfileWriter(tLog, (p) => {
                     this.artifacts.push(p);
                 })(puppetMaster.testResourceConfiguration.fs + "/" + fPath, value), tLog, puppetMaster);
+                // await puppetMaster.browser.disconnect();
+                // puppeteerBrowser.close();
+                return x;
             };
             const runner = suiteRunner(suite);
             return {
@@ -28,7 +31,7 @@ export class BaseBuilder {
                 },
                 runner,
                 receiveTestResourceConfig: async function (puppetMaster) {
-                    await puppetMaster.mkdirSync();
+                    // await puppetMaster.mkdirSync();
                     const logFilePath = "log.txt";
                     const access = await puppetMaster.createWriteStream(logFilePath);
                     const tLog = (...l) => {

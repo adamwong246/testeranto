@@ -22,7 +22,7 @@ export class PM_Node extends PM {
         return globalThis["write"](writeObject.uid, contents);
     }
     writeFileSync(filepath, contents) {
-        console.log("pm_node-writeFileSync", this.testResourceConfiguration);
+        // console.log("pm_node-writeFileSync", this.testResourceConfiguration);
         return globalThis["writeFileSync"](this.testResourceConfiguration.fs + "/" + filepath, contents, this.testResourceConfiguration.name);
     }
     createWriteStream(filepath) {

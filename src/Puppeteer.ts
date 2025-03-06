@@ -5,27 +5,21 @@ import watch from "recursive-watch";
 import { PM_Main } from "./PM/main.js";
 import { destinationOfRuntime } from "./utils.js";
 import { timeout } from "puppeteer-core/lib/esm/puppeteer/index.js";
+import { IBaseConfig, IBuiltConfig } from "./lib/types.js";
 
-var mode: "DEV" | "PROD" = process.argv[2] === "-dev" ? "DEV" : "PROD";
+// var mode: "DEV" | "PROD" = process.argv[2] === "-dev" ? "DEV" : "PROD";
 
-const node2web: Record<string, string[]> = {};
-const web2node: Record<string, string[]> = {};
-const childProcesses: Record<string, "loaded" | "running" | "done"> = {};
+// const node2web: Record<string, string[]> = {};
+// const web2node: Record<string, string[]> = {};
+// const childProcesses: Record<string, "loaded" | "running" | "done"> = {};
 
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
 
-// console.log("hello Puppeteer", process.env);
-
-console.log("\n Puppeteer is running. Press 'q' to quit\n");
-process.stdin.on("keypress", (str, key) => {
-  if (key.name === "q") {
-    process.exit();
-  }
-});
+// let shutDownMode = false;
 
 export default async (partialConfig) => {
-  const config = {
+  const config: IBuiltConfig = {
     ...partialConfig,
     buildDir: process.cwd() + "/" + partialConfig.outdir,
   };
@@ -91,6 +85,14 @@ export default async (partialConfig) => {
     "."
   );
 
+  console.log("\n Puppeteer is running. Press 'q' to quit\n");
+  process.stdin.on("keypress", (str, key) => {
+    if (key.name === "q") {
+      pm.shutDown();
+      // process.exit();
+    }
+  });
+
   config.tests.forEach(([test, runtime, tr, sidecars]) => {
     if (runtime === "node") {
       pm.launchNode(test, destinationOfRuntime(test, "node", config));
@@ -101,43 +103,48 @@ export default async (partialConfig) => {
     }
   });
 
-  console.log("ready and watching for changes...", config.buildDir);
+  if (config.devMode) {
+    console.log("ready and watching for changes...", config.buildDir);
 
-  watch(config.buildDir, (eventType, changedFile) => {
-    if (changedFile) {
-      config.tests.forEach(([test, runtime, tr, sidecars]) => {
-        if (eventType === "change" || eventType === "rename") {
-          if (
-            changedFile ===
-            test
-              .replace("./", "node/")
-              .split(".")
-              .slice(0, -1)
-              .concat("mjs")
-              .join(".")
-          ) {
-            pm.launchNode(test, destinationOfRuntime(test, "node", config));
-          }
+    watch(config.buildDir, (eventType, changedFile) => {
+      if (changedFile) {
+        config.tests.forEach(([test, runtime, tr, sidecars]) => {
+          if (eventType === "change" || eventType === "rename") {
+            if (
+              changedFile ===
+              test
+                .replace("./", "node/")
+                .split(".")
+                .slice(0, -1)
+                .concat("mjs")
+                .join(".")
+            ) {
+              pm.launchNode(test, destinationOfRuntime(test, "node", config));
+            }
 
-          if (
-            changedFile ===
-            test
-              .replace("./", "web/")
-              .split(".")
-              .slice(0, -1)
-              .concat("mjs")
-              .join(".")
-          ) {
-            pm.launchWeb(
-              test,
-              destinationOfRuntime(test, "web", config),
-              sidecars
-            );
+            if (
+              changedFile ===
+              test
+                .replace("./", "web/")
+                .split(".")
+                .slice(0, -1)
+                .concat("mjs")
+                .join(".")
+            ) {
+              pm.launchWeb(
+                test,
+                destinationOfRuntime(test, "web", config),
+                sidecars
+              );
+            }
           }
-        }
-      });
-    }
-  });
+        });
+      }
+    });
+  } else {
+    pm.shutDown();
+  }
+  // pm.browser.close();
 
   // does not work on linux
   // fs.watch(

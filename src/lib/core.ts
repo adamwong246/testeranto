@@ -142,12 +142,30 @@ export default abstract class Testeranto<
 
       class When extends BaseWhen<ITestShape> {
         async andWhen(store, whenCB, testResource, pm) {
-          return await fullTestInterface.andWhen(
-            store,
-            whenCB,
-            testResource,
-            pm
-          );
+          try {
+            return await fullTestInterface.andWhen(
+              store,
+              whenCB,
+              testResource,
+              pm
+            );
+          } catch (e) {
+            throw e;
+          }
+          // return fullTestInterface
+          //   .andWhen(store, whenCB, testResource, pm)
+          //   .catch((e) => {
+          //     throw e;
+          //   });
+          // return new Promise((res, rej) => {
+          //   fullTestInterface.andWhen(store, whenCB, testResource, pm);
+          // });
+          // return await fullTestInterface.andWhen(
+          //   store,
+          //   whenCB,
+          //   testResource,
+          //   pm
+          // );
         }
       } as any,
 
@@ -155,15 +173,39 @@ export default abstract class Testeranto<
         async butThen(
           store: any,
           thenCB,
-          testResourceConfiguration: any,
+          testResource: any,
           pm: PM
         ): Promise<ITestShape["iselection"]> {
-          return await fullTestInterface.butThen(
-            store,
-            thenCB,
-            testResourceConfiguration,
-            pm
-          );
+          return fullTestInterface
+            .butThen(store, thenCB, testResource, pm)
+            .then(
+              (v) => {
+                return v;
+              },
+              (e) => {
+                console.log(" ERROR ", e);
+                throw e;
+              }
+            );
+          // try {
+          //   console.log("mark 4");
+          //   return await fullTestInterface.butThen(
+          //     store,
+          //     thenCB,
+          //     testResource,
+          //     pm
+          //   );
+          // } catch (e) {
+          //   console.log("mar123");
+          //   throw e;
+          // }
+
+          // return await fullTestInterface.butThen(
+          //   store,
+          //   thenCB,
+          //   testResourceConfiguration,
+          //   pm
+          // );
         }
       } as any,
 
