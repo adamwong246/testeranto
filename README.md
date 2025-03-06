@@ -14,7 +14,9 @@ example repo: [kokomo bay](https://github.com/ChromaPDX/kokomoBay)
 
 ## Demo
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/WvU5xMqGi6Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<div align="center">
+  <a href="https://www.youtube.com/watch?v=WvU5xMqGi6Q"><img src="https://img.youtube.com/vi/WvU5xMqGi6Q/0.jpg" alt="IMAGE ALT TEXT"></a>
+</div>
 
 ## What is testeranto?
 
