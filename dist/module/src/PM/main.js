@@ -94,6 +94,18 @@ export class PM_Main extends PM {
                 return module.default.then((defaultModule) => {
                     defaultModule
                         .receiveTestResourceConfig(argz)
+                        .then(async (features) => {
+                        Object.keys(features)
+                            .reduce(async (mm, lm) => {
+                            const accum = await mm;
+                            const x = await this.configs.featureIngestor(features[lm]);
+                            accum[lm] = x;
+                            return accum;
+                        }, Promise.resolve({}))
+                            .then((x) => {
+                            fs.writeFileSync(`${destFolder}/features.json`, JSON.stringify(x, null, 2));
+                        });
+                    })
                         .catch((e) => {
                         console.log("catch", e);
                     })
@@ -339,7 +351,7 @@ export class PM_Main extends PM {
     import('${dest}.mjs').then(async (x) => {
       console.log("imported", x.default);
       try {
-        await (await x.default).receiveTestResourceConfig(${webArgz})
+        return await (await x.default).receiveTestResourceConfig(${webArgz})
       } catch (e) {
         console.log("fail", e)
       }
@@ -459,8 +471,20 @@ export class PM_Main extends PM {
                 .then(async (page) => {
                 page.on("console", (log) => console.debug(`Log from client: [${log.text()}] `));
                 await page.goto(`file://${`${dest}.html`}`, {});
-                page
+                await page
                     .evaluate(evaluation)
+                    .then(async (features) => {
+                    Object.keys(features)
+                        .reduce(async (mm, lm) => {
+                        const accum = await mm;
+                        const x = await this.configs.featureIngestor(features[lm]);
+                        accum[lm] = x;
+                        return accum;
+                    }, Promise.resolve({}))
+                        .then((x) => {
+                        fs.writeFileSync(`${destFolder}/features.json`, JSON.stringify(x, null, 2));
+                    });
+                })
                     .catch((e) => {
                     console.log("evaluation failed.", dest);
                     console.log(e);

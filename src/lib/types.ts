@@ -34,7 +34,7 @@ export type IBaseConfig = {
   ports: string[];
   tests: ITestTypes[];
   webPlugins: any[];
-  botEmail: string;
+  featureIngestor: (s: string) => Promise<string>;
 };
 
 export type IBuiltConfig = { buildDir: string } & IBaseConfig;

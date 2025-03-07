@@ -48,11 +48,11 @@ class NodeTesteranto<
 
   async receiveTestResourceConfig(partialTestResource: string) {
     const t: ITTestResourceConfiguration = JSON.parse(partialTestResource);
-    console.log("receiveTestResourceConfig", t);
     const pm = new PM_Node(t);
-    const { failed, artifacts, logPromise } =
+    const { failed, artifacts, logPromise, features } =
       await this.testJobs[0].receiveTestResourceConfig(pm);
     pm.customclose();
+    return features;
   }
 }
 

@@ -82,6 +82,7 @@ export abstract class BaseBuilder<
       this.Check()
     );
 
+    // const f = this.specs[0].features;
     this.testJobs = this.specs.map((suite: BaseSuite<ITestShape>) => {
       const suiteRunner =
         (suite: BaseSuite<ITestShape>) =>
@@ -128,8 +129,6 @@ export abstract class BaseBuilder<
         runner,
 
         receiveTestResourceConfig: async function (puppetMaster: PM) {
-          // await puppetMaster.mkdirSync();
-
           const logFilePath = "log.txt";
           const access = await puppetMaster.createWriteStream(logFilePath);
           const tLog = (...l: string[]) => {
@@ -170,6 +169,7 @@ export abstract class BaseBuilder<
             failed: numberOfFailures,
             artifacts: this.artifacts || [],
             logPromise,
+            features: suiteDone.features(),
           };
         },
       };

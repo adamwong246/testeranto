@@ -47,9 +47,13 @@ class WebTesteranto<
   async receiveTestResourceConfig(partialTestResource: any) {
     const t: ITTestResourceConfiguration = partialTestResource; //JSON.parse(partialTestResource);
     const pm = new PM_Web(t);
-    const { failed, artifacts, logPromise } =
+    const { failed, artifacts, logPromise, features } =
       await this.testJobs[0].receiveTestResourceConfig(pm);
     pm.customclose();
+    return new Promise<string[]>((res, rej) => {
+      res(features);
+    });
+    // return features;
     // Promise.all([...artifacts, logPromise]).then(async () => {
     //   console.log("hello world");
     //   pm.customclose();

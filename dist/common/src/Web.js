@@ -13,8 +13,12 @@ class WebTesteranto extends core_js_1.default {
     async receiveTestResourceConfig(partialTestResource) {
         const t = partialTestResource; //JSON.parse(partialTestResource);
         const pm = new web_1.PM_Web(t);
-        const { failed, artifacts, logPromise } = await this.testJobs[0].receiveTestResourceConfig(pm);
+        const { failed, artifacts, logPromise, features } = await this.testJobs[0].receiveTestResourceConfig(pm);
         pm.customclose();
+        return new Promise((res, rej) => {
+            res(features);
+        });
+        // return features;
         // Promise.all([...artifacts, logPromise]).then(async () => {
         //   console.log("hello world");
         //   pm.customclose();

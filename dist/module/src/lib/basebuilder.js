@@ -11,6 +11,7 @@ export class BaseBuilder {
         this.checkOverides = checkOverides;
         this.testSpecification = testSpecification;
         this.specs = testSpecification(this.Suites(), this.Given(), this.When(), this.Then(), this.Check());
+        // const f = this.specs[0].features;
         this.testJobs = this.specs.map((suite) => {
             const suiteRunner = (suite) => async (puppetMaster, tLog) => {
                 const puppeteerBrowser = await puppetMaster.startPuppeteer({
@@ -31,7 +32,6 @@ export class BaseBuilder {
                 },
                 runner,
                 receiveTestResourceConfig: async function (puppetMaster) {
-                    // await puppetMaster.mkdirSync();
                     const logFilePath = "log.txt";
                     const access = await puppetMaster.createWriteStream(logFilePath);
                     const tLog = (...l) => {
@@ -60,6 +60,7 @@ export class BaseBuilder {
                         failed: numberOfFailures,
                         artifacts: this.artifacts || [],
                         logPromise,
+                        features: suiteDone.features(),
                     };
                 },
             };

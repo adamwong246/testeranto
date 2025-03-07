@@ -42,7 +42,6 @@ export class PM_Node extends PM {
   }
 
   writeFileSync(filepath: string, contents: string) {
-    // console.log("pm_node-writeFileSync", this.testResourceConfiguration);
     return globalThis["writeFileSync"](
       this.testResourceConfiguration.fs + "/" + filepath,
       contents,

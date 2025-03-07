@@ -6,8 +6,7 @@ export class BaseSuite {
         this.checks = checks;
         this.fails = [];
     }
-    toObj() {
-        const givens = Object.keys(this.givens).map((k) => this.givens[k].toObj());
+    features() {
         const features = Object.keys(this.givens)
             .map((k) => this.givens[k].features)
             .flat()
@@ -18,11 +17,15 @@ export class BaseSuite {
             mm[lm] = lm;
             return mm;
         }, {});
+        return features;
+    }
+    toObj() {
+        const givens = Object.keys(this.givens).map((k) => this.givens[k].toObj());
         return {
             name: this.name,
             givens,
             fails: this.fails,
-            features,
+            features: this.features(),
         };
     }
     setup(s, artifactory, tr, pm) {

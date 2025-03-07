@@ -28,7 +28,6 @@ class PM_Node extends index_js_1.PM {
         return globalThis["write"](writeObject.uid, contents);
     }
     writeFileSync(filepath, contents) {
-        // console.log("pm_node-writeFileSync", this.testResourceConfiguration);
         return globalThis["writeFileSync"](this.testResourceConfiguration.fs + "/" + filepath, contents, this.testResourceConfiguration.name);
     }
     createWriteStream(filepath) {

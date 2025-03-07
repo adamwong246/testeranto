@@ -11,6 +11,7 @@ export declare abstract class BaseSuite<ITestShape extends IBaseTest<unknown, un
     testResourceConfiguration: ITTestResourceConfiguration;
     index: number;
     constructor(name: string, index: number, givens?: IGivens<ITestShape>, checks?: BaseCheck<ITestShape>[]);
+    features(): {};
     toObj(): {
         name: string;
         givens: {

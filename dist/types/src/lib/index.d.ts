@@ -42,6 +42,7 @@ export declare type ITestJob<T = PM> = {
         failed: number;
         artifacts: Promise<unknown>[];
         logPromise: Promise<unknown>;
+        features: string[];
     }>;
 };
 export declare type ITestResults = Promise<{

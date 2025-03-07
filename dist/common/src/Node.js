@@ -12,10 +12,10 @@ class NodeTesteranto extends core_js_1.default {
     }
     async receiveTestResourceConfig(partialTestResource) {
         const t = JSON.parse(partialTestResource);
-        console.log("receiveTestResourceConfig", t);
         const pm = new node_js_1.PM_Node(t);
-        const { failed, artifacts, logPromise } = await this.testJobs[0].receiveTestResourceConfig(pm);
+        const { failed, artifacts, logPromise, features } = await this.testJobs[0].receiveTestResourceConfig(pm);
         pm.customclose();
+        return features;
     }
 }
 exports.default = async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = index_js_1.defaultTestResourceRequirement) => {

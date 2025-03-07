@@ -29,6 +29,12 @@ export default (
               entryPoint.split(".").slice(0, -1).join("."),
               `tests.json`
             );
+            const featuresPath = path.join(
+              "./docs/",
+              platform,
+              entryPoint.split(".").slice(0, -1).join("."),
+              `features.json`
+            );
 
             const dirName = path.dirname(filePath);
 
@@ -57,16 +63,8 @@ export default (
               const passes = matches?.length === 1;
               return passes;
             });
-            // .filter((f: string) => {
-            //   const regex = /.*\.test\..*/g;
-            //   const matches = f.match(regex);
-            //   const passes = matches?.length === 1;
-            //   return !passes;
-            // })
 
-            const jsonContent = JSON.stringify(j);
-
-            fs.writeFileSync(filePath, jsonContent);
+            fs.writeFileSync(filePath, JSON.stringify(j));
 
             fs.writeFileSync(
               promptPath,
@@ -77,33 +75,10 @@ ${j
   })
   .join("\n")}
 /read ${testPaths}
-  
-/code fix the failing tests described in ${filePath}.
+/read ${featuresPath}
+/code fix the failing tests described in ${testPaths}.
 `
             );
-
-            //             fs.writeFileSync(
-            //               promptPath,
-            //               `
-            // from aider.coders import Coder
-            // from aider.models import Model
-            // import os
-
-            // model = Model("deepseek")
-
-            // coder = Coder.create(main_model=model)
-
-            // coder.run("/read-only", "${testPaths}")
-
-            // ${j
-            //   .map((x) => {
-            //     return `coder.run("/add", "${x}")`;
-            //   })
-            //   .join("\n")}
-
-            // coder.run("fix the failing tests described in ${filePath}.")
-            // `
-            //             );
           });
         }
       });

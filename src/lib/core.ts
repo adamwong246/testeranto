@@ -262,5 +262,7 @@ export default abstract class Testeranto<
     );
   }
 
-  abstract receiveTestResourceConfig(partialTestResource: string);
+  abstract receiveTestResourceConfig(
+    partialTestResource: string
+  ): Promise<string[]>;
 }
