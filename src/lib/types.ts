@@ -1,6 +1,6 @@
 import { IBaseTest } from "../Types";
 
-// import puppeteer from "puppeteer-core";
+import type { Plugin } from "esbuild";
 import {
   IGivens,
   BaseCheck,
@@ -22,18 +22,25 @@ export type IJsonConfig = {
   botEmail: string;
 };
 
+export type IPlugin = (
+  register: (entrypoint, sources) => any,
+  entrypoints
+) => Plugin;
+
 export type IBaseConfig = {
   clearScreen: boolean;
   debugger: boolean;
   devMode: boolean;
   externals: string[];
   minify: boolean;
-  nodePlugins: any[];
   outbase: string;
   outdir: string;
   ports: string[];
   tests: ITestTypes[];
-  webPlugins: any[];
+
+  nodePlugins: IPlugin[];
+  webPlugins: IPlugin[];
+
   featureIngestor: (s: string) => Promise<string>;
 };
 

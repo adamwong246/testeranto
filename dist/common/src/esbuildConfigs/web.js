@@ -7,6 +7,7 @@ const path_1 = __importDefault(require("path"));
 const index_js_1 = __importDefault(require("./index.js"));
 const inputFilesPlugin_js_1 = __importDefault(require("./inputFilesPlugin.js"));
 exports.default = (config, entryPoints) => {
+    const { inputFilesPluginFactory, register } = (0, inputFilesPlugin_js_1.default)("web", entryPoints);
     return Object.assign(Object.assign({}, (0, index_js_1.default)(config)), { 
         // inject: ["./node_modules/testeranto/dist/cjs-shim.js"],
         // banner: {
@@ -38,8 +39,8 @@ exports.default = (config, entryPoints) => {
             "process",
             "dns",
         ], platform: "browser", entryPoints: [...entryPoints], plugins: [
-            ...(config.webPlugins || []),
-            (0, inputFilesPlugin_js_1.default)("web", entryPoints),
+            ...(config.nodePlugins.map((p) => p(register, entryPoints)) || []),
+            inputFilesPluginFactory,
             {
                 name: "rebuild-notify",
                 setup(build) {

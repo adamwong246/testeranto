@@ -6,6 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const index_js_1 = __importDefault(require("./index.js"));
 const inputFilesPlugin_js_1 = __importDefault(require("./inputFilesPlugin.js"));
 exports.default = (config, entryPoints) => {
+    const { inputFilesPluginFactory, register } = (0, inputFilesPlugin_js_1.default)("node", entryPoints);
+    // const inputFilesPluginFactory = inputFilesPlugin("node", entryPoints);
+    // const register = (x) => x;
     return Object.assign(Object.assign({}, (0, index_js_1.default)(config)), { splitting: true, outdir: config.outdir + "/node", 
         // inject: [`./node_modules/testeranto/dist/cjs-shim.js`],
         metafile: true, supported: {
@@ -22,8 +25,9 @@ exports.default = (config, entryPoints) => {
             // "ganache"
             ...config.externals,
         ], entryPoints: [...entryPoints], plugins: [
-            ...(config.nodePlugins || []),
-            (0, inputFilesPlugin_js_1.default)("node", entryPoints),
+            ...(config.nodePlugins.map((p) => p(register, entryPoints)) || []),
+            inputFilesPluginFactory,
+            // inputFilesPlugin("node", entryPoints),
             {
                 name: "rebuild-notify",
                 setup(build) {

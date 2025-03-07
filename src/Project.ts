@@ -79,11 +79,6 @@ export class ITProject {
 
     const [nodeEntryPoints, webEntryPoints] = getRunnables(this.config.tests);
 
-    console.log(
-      `this.getSecondaryEndpointsPoints("web")`,
-      this.getSecondaryEndpointsPoints("web")
-    );
-
     glob(`./${this.config.outdir}/chunk-*.mjs`, {
       ignore: "node_modules/**",
     }).then((chunks) => {
@@ -163,7 +158,6 @@ export class ITProject {
   public getSecondaryEndpointsPoints(runtime?: IRunTime): string[] {
     const meta = (ts: ITestTypes[], st: Set<string>): Set<string> => {
       ts.forEach((t) => {
-        console.log("getSecondaryEndpointsPoints", t);
         if (t[1] === runtime) {
           st.add(t[0]);
         }

@@ -1,6 +1,9 @@
 import baseEsBuildConfig from "./index.js";
 import inputFilesPlugin from "./inputFilesPlugin.js";
 export default (config, entryPoints) => {
+    const { inputFilesPluginFactory, register } = inputFilesPlugin("node", entryPoints);
+    // const inputFilesPluginFactory = inputFilesPlugin("node", entryPoints);
+    // const register = (x) => x;
     return Object.assign(Object.assign({}, baseEsBuildConfig(config)), { splitting: true, outdir: config.outdir + "/node", 
         // inject: [`./node_modules/testeranto/dist/cjs-shim.js`],
         metafile: true, supported: {
@@ -17,8 +20,9 @@ export default (config, entryPoints) => {
             // "ganache"
             ...config.externals,
         ], entryPoints: [...entryPoints], plugins: [
-            ...(config.nodePlugins || []),
-            inputFilesPlugin("node", entryPoints),
+            ...(config.nodePlugins.map((p) => p(register, entryPoints)) || []),
+            inputFilesPluginFactory,
+            // inputFilesPlugin("node", entryPoints),
             {
                 name: "rebuild-notify",
                 setup(build) {

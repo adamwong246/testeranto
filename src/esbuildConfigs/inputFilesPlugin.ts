@@ -1,75 +1,86 @@
 import fs from "fs";
 import path from "path";
+import type { ImportKind, Metafile, Plugin } from "esbuild";
+
+const otherInputs: Record<string, Set<string>> = {};
+
+const register = (entrypoint: string, sources: string[]): void => {
+  console.log("register", entrypoint, sources);
+  if (!otherInputs[entrypoint]) {
+    otherInputs[entrypoint] = new Set();
+  }
+  sources.forEach((s) => otherInputs[entrypoint].add(s));
+};
 
 export default (
   platform: "web" | "node",
   entryPoints: Set<string> | string[]
-) => {
+): {
+  register: (entrypoint: string, sources: string[]) => void;
+  inputFilesPluginFactory: Plugin;
+} => {
   return {
-    name: "metafileWriter",
-    setup(build) {
-      build.onEnd((result) => {
-        if (result.errors.length === 0) {
-          entryPoints.forEach((entryPoint) => {
-            const filePath = path.join(
-              "./docs/",
-              platform,
-              entryPoint.split(".").slice(0, -1).join("."),
-              `inputFiles.json`
-            );
-            const promptPath = path.join(
-              "./docs/",
-              platform,
-              entryPoint.split(".").slice(0, -1).join("."),
-              `prompt.txt`
-            );
-            const testPaths = path.join(
-              "./docs/",
-              platform,
-              entryPoint.split(".").slice(0, -1).join("."),
-              `tests.json`
-            );
-            const featuresPath = path.join(
-              "./docs/",
-              platform,
-              entryPoint.split(".").slice(0, -1).join("."),
-              `features.json`
-            );
+    register,
 
-            const dirName = path.dirname(filePath);
+    inputFilesPluginFactory: {
+      name: "metafileWriter",
+      setup(build) {
+        build.onEnd((result) => {
+          fs.writeFileSync(
+            `docs/${platform}/metafile.json`,
+            JSON.stringify(result, null, 2)
+          );
 
-            if (!fs.existsSync(dirName)) {
-              fs.mkdirSync(dirName, { recursive: true });
-            }
+          if (result.errors.length === 0) {
+            entryPoints.forEach((entryPoint) => {
+              const filePath = path.join(
+                "./docs/",
+                platform,
+                entryPoint.split(".").slice(0, -1).join("."),
+                `inputFiles.json`
+              );
+              const dirName = path.dirname(filePath);
 
-            const j = Object.keys(
-              Object.keys(result.metafile.outputs)
-                .filter((s: string) => {
-                  if (!result.metafile.outputs[s].entryPoint) {
-                    return false;
-                  }
-                  return (
-                    path.resolve(result.metafile.outputs[s].entryPoint) ===
-                    path.resolve(entryPoint)
-                  );
-                })
-                .reduce((mm: string[], el) => {
-                  mm.push(result.metafile.outputs[el].inputs);
-                  return mm;
-                }, [])[0]
-            ).filter((f: string) => {
-              const regex = /^src\/.*/g;
-              const matches = f.match(regex);
-              const passes = matches?.length === 1;
-              return passes;
-            });
+              if (!fs.existsSync(dirName)) {
+                fs.mkdirSync(dirName, { recursive: true });
+              }
 
-            fs.writeFileSync(filePath, JSON.stringify(j));
+              const promptPath = path.join(
+                "./docs/",
+                platform,
+                entryPoint.split(".").slice(0, -1).join("."),
+                `prompt.txt`
+              );
+              const testPaths = path.join(
+                "./docs/",
+                platform,
+                entryPoint.split(".").slice(0, -1).join("."),
+                `tests.json`
+              );
+              const featuresPath = path.join(
+                "./docs/",
+                platform,
+                entryPoint.split(".").slice(0, -1).join("."),
+                `features.json`
+              );
 
-            fs.writeFileSync(
-              promptPath,
-              `
-${j
+              if (result.metafile) {
+                const addableFiles = tree(
+                  result.metafile,
+                  entryPoint.split("/").slice(1).join("/")
+                )
+                  .map((y) => {
+                    if (otherInputs[y]) {
+                      return Array.from(otherInputs[y]);
+                    }
+                    return y;
+                  })
+                  .flat();
+
+                fs.writeFileSync(
+                  promptPath,
+                  `
+${[...addableFiles]
   .map((x) => {
     return `/add ${x}`;
   })
@@ -78,10 +89,22 @@ ${j
 /read ${featuresPath}
 /code fix the failing tests described in ${testPaths}.
 `
-            );
-          });
-        }
-      });
+                );
+              }
+            });
+          }
+        });
+      },
     },
   };
 };
+
+function tree(meta: Metafile, key: string) {
+  return [
+    key,
+    ...meta.inputs[key].imports
+      .filter((x) => x.external !== true)
+      .filter((x) => x.path.split("/")[0] !== "node_modules")
+      .map((f) => f.path),
+  ];
+}

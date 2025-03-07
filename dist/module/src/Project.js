@@ -68,7 +68,6 @@ export class ITProject {
                 .then((x) => fs.writeFileSync(htmlFilePath, webHtmlFrame(jsfilePath, htmlFilePath)));
         })));
         const [nodeEntryPoints, webEntryPoints] = getRunnables(this.config.tests);
-        console.log(`this.getSecondaryEndpointsPoints("web")`, this.getSecondaryEndpointsPoints("web"));
         glob(`./${this.config.outdir}/chunk-*.mjs`, {
             ignore: "node_modules/**",
         }).then((chunks) => {
@@ -112,7 +111,6 @@ export class ITProject {
     getSecondaryEndpointsPoints(runtime) {
         const meta = (ts, st) => {
             ts.forEach((t) => {
-                console.log("getSecondaryEndpointsPoints", t);
                 if (t[1] === runtime) {
                     st.add(t[0]);
                 }

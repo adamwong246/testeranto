@@ -10,6 +10,11 @@ export default (
   config: IBaseConfig,
   entryPoints: Set<string> | string[]
 ): BuildOptions => {
+  const { inputFilesPluginFactory, register } = inputFilesPlugin(
+    "web",
+    entryPoints
+  );
+
   return {
     ...baseEsBuildConfig(config),
 
@@ -59,8 +64,8 @@ export default (
     entryPoints: [...entryPoints],
 
     plugins: [
-      ...(config.webPlugins || []),
-      inputFilesPlugin("web", entryPoints),
+      ...(config.nodePlugins.map((p) => p(register, entryPoints)) || []),
+      inputFilesPluginFactory,
       {
         name: "rebuild-notify",
         setup(build) {
