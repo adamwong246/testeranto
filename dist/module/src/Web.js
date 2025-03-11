@@ -1,7 +1,7 @@
 import { PM_Web } from "./PM/web";
 import Testeranto from "./lib/core.js";
 import { defaultTestResourceRequirement, } from "./lib/index.js";
-class WebTesteranto extends Testeranto {
+export class WebTesteranto extends Testeranto {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
         super(input, testSpecification, testImplementation, testResourceRequirement, testInterface);
     }

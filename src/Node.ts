@@ -14,7 +14,7 @@ import { ITestInterface, INodeTestInterface } from "./lib/types.js";
 
 import { PM_Node } from "./PM/node.js";
 
-class NodeTesteranto<
+export class NodeTesteranto<
   TestShape extends IBaseTest<
     unknown,
     unknown,

@@ -1,6 +1,5 @@
 import fs from "fs";
 import path from "path";
-import puppeteer from "puppeteer-core";
 import { PM } from "./index.js";
 const fPaths = [];
 export class PM_Node extends PM {
@@ -73,8 +72,8 @@ export class PM_Node extends PM {
     }
     // launch(options?: PuppeteerLaunchOptions): Promise<Browser>;
     startPuppeteer(options) {
-        return puppeteer.connect(options).then((b) => {
-            this.browser = b;
-        });
+        // return puppeteer.connect(options).then((b) => {
+        //   this.browser = b;
+        // });
     }
 }

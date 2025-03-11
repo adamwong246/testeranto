@@ -176,7 +176,7 @@ export default abstract class Testeranto<
           testResource: any,
           pm: PM
         ): Promise<ITestShape["iselection"]> {
-          return fullTestInterface
+          return await fullTestInterface
             .butThen(store, thenCB, testResource, pm)
             .then(
               (v) => {

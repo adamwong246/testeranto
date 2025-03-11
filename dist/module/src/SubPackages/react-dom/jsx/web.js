@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { createElement } from "react";
-import ReactDom from "react-dom/client";
+import ReactDom from "react-dom";
 import Testeranto from "../../../Web.js";
 const TesterantoComponent = ({ done, innerComp, }) => {
     const myContainer = useRef(null);
@@ -56,17 +56,17 @@ export default (testImplementations, testSpecifications, testInput) => {
             });
         },
         andWhen: function (s, whenCB, tr, utils) {
-            return new Promise((resolve, rej) => {
-                console.log("mark9", s, whenCB);
-                resolve(whenCB(s, utils));
-                // process.nextTick(() => {
-                //   resolve(whenCB()(s));
-                // });
-            });
+            return whenCB(s, utils);
+            // return new Promise(async (resolve, rej) => {
+            //   // resolve(await whenCB(s, utils));
+            //   // process.nextTick(() => {
+            //   //   resolve(whenCB()(s));
+            //   // });
+            // });
         },
-        butThen: async function (s, thenCB) {
+        butThen: async function (s, thenCB, tr, utils) {
             return new Promise((resolve, rej) => {
-                resolve(thenCB(s));
+                resolve(thenCB(s, utils));
             });
         },
         afterEach: async function (store, ndx, artificer) {

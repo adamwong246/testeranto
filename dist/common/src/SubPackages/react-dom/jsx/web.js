@@ -28,7 +28,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importStar(require("react"));
 const react_2 = require("react");
-const client_1 = __importDefault(require("react-dom/client"));
+const react_dom_1 = __importDefault(require("react-dom"));
 const Web_js_1 = __importDefault(require("../../../Web.js"));
 const TesterantoComponent = ({ done, innerComp, }) => {
     const myContainer = (0, react_1.useRef)(null);
@@ -44,7 +44,7 @@ exports.default = (testImplementations, testSpecifications, testInput) => {
             return await new Promise((resolve, rej) => {
                 const htmlElement = document.getElementById("root");
                 if (htmlElement) {
-                    const domRoot = client_1.default.createRoot(htmlElement);
+                    const domRoot = react_dom_1.default.createRoot(htmlElement);
                     domRoot.render((0, react_2.createElement)(TesterantoComponent, {
                         // ...initialProps,
                         innerComp: reactElement,
@@ -84,17 +84,17 @@ exports.default = (testImplementations, testSpecifications, testInput) => {
             });
         },
         andWhen: function (s, whenCB, tr, utils) {
-            return new Promise((resolve, rej) => {
-                console.log("mark9", s, whenCB);
-                resolve(whenCB(s, utils));
-                // process.nextTick(() => {
-                //   resolve(whenCB()(s));
-                // });
-            });
+            return whenCB(s, utils);
+            // return new Promise(async (resolve, rej) => {
+            //   // resolve(await whenCB(s, utils));
+            //   // process.nextTick(() => {
+            //   //   resolve(whenCB()(s));
+            //   // });
+            // });
         },
-        butThen: async function (s, thenCB) {
+        butThen: async function (s, thenCB, tr, utils) {
             return new Promise((resolve, rej) => {
-                resolve(thenCB(s));
+                resolve(thenCB(s, utils));
             });
         },
         afterEach: async function (store, ndx, artificer) {

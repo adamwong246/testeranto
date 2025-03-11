@@ -69,7 +69,7 @@ export default class Testeranto extends ClassBuilder {
             }
         }, class Then extends BaseThen {
             async butThen(store, thenCB, testResource, pm) {
-                return fullTestInterface
+                return await fullTestInterface
                     .butThen(store, thenCB, testResource, pm)
                     .then((v) => {
                     return v;

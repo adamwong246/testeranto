@@ -71,7 +71,7 @@ class Testeranto extends classBuilder_js_1.ClassBuilder {
             }
         }, class Then extends abstractBase_js_1.BaseThen {
             async butThen(store, thenCB, testResource, pm) {
-                return fullTestInterface
+                return await fullTestInterface
                     .butThen(store, thenCB, testResource, pm)
                     .then((v) => {
                     return v;

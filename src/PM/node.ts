@@ -119,9 +119,9 @@ export class PM_Node extends PM {
   }
 
   // launch(options?: PuppeteerLaunchOptions): Promise<Browser>;
-  startPuppeteer(options?: any): Promise<any> {
-    return puppeteer.connect(options).then((b) => {
-      this.browser = b;
-    });
+  startPuppeteer(options?: any): any {
+    // return puppeteer.connect(options).then((b) => {
+    //   this.browser = b;
+    // });
   }
 }

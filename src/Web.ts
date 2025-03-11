@@ -12,7 +12,7 @@ import {
 } from "./lib/index.js";
 import { ITestInterface, IWebTestInterface } from "./lib/types";
 
-class WebTesteranto<
+export class WebTesteranto<
   TestShape extends IBaseTest<
     unknown,
     unknown,

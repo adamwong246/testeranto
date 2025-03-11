@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { CElement, createElement } from "react";
-import ReactDom from "react-dom/client";
+import ReactDom from "react-dom";
 import { createPortal } from "react-dom";
 
 import Testeranto from "../../../Web.js";
@@ -100,17 +100,22 @@ export default <ITestShape extends IBaseTest>(
         });
       },
       andWhen: function (s: IStore, whenCB, tr, utils): Promise<ISelection> {
-        return new Promise((resolve, rej) => {
-          console.log("mark9", s, whenCB);
-          resolve(whenCB(s, utils));
-          // process.nextTick(() => {
-          //   resolve(whenCB()(s));
-          // });
-        });
+        return whenCB(s, utils);
+        // return new Promise(async (resolve, rej) => {
+        //   // resolve(await whenCB(s, utils));
+        //   // process.nextTick(() => {
+        //   //   resolve(whenCB()(s));
+        //   // });
+        // });
       },
-      butThen: async function (s: IStore, thenCB): Promise<ISelection> {
+      butThen: async function (
+        s: IStore,
+        thenCB,
+        tr,
+        utils
+      ): Promise<ISelection> {
         return new Promise((resolve, rej) => {
-          resolve(thenCB(s));
+          resolve(thenCB(s, utils));
         });
       },
       afterEach: async function (store: IStore, ndx, artificer) {

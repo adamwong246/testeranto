@@ -4,7 +4,6 @@ import watch from "recursive-watch";
 
 import { PM_Main } from "./PM/main.js";
 import { destinationOfRuntime } from "./utils.js";
-import { timeout } from "puppeteer-core/lib/esm/puppeteer/index.js";
 import { IBaseConfig, IBuiltConfig } from "./lib/types.js";
 
 // var mode: "DEV" | "PROD" = process.argv[2] === "-dev" ? "DEV" : "PROD";
@@ -45,13 +44,14 @@ export default async (partialConfig) => {
       executablePath:
         // process.env.CHROMIUM_PATH || "/opt/homebrew/bin/chromium",
         "/opt/homebrew/bin/chromium",
-      headless: true,
+      headless: false,
       dumpio: true,
       // timeout: 0,
       args: [
-        // "--auto-open-devtools-for-tabs",
+        "--auto-open-devtools-for-tabs",
+        `--remote-debugging-port=3234`,
 
-        "--disable-features=IsolateOrigins,site-per-process",
+        // "--disable-features=IsolateOrigins,site-per-process",
         "--disable-site-isolation-trials",
         "--allow-insecure-localhost",
         "--allow-file-access-from-files",
@@ -75,7 +75,6 @@ export default async (partialConfig) => {
         // "--single-process",
         // "--unsafely-treat-insecure-origin-as-secure",
         // "--unsafely-treat-insecure-origin-as-secure=ws://192.168.0.101:3234",
-        `--remote-debugging-port=3234`,
 
         // "--disk-cache-dir=/dev/null",
         // "--disk-cache-size=1",
@@ -85,11 +84,17 @@ export default async (partialConfig) => {
     "."
   );
 
-  console.log("\n Puppeteer is running. Press 'q' to quit\n");
+  console.log(
+    "\n Puppeteer is running. Press 'q' to shutdown softly. Press 'x' to hard.\n"
+  );
   process.stdin.on("keypress", (str, key) => {
     if (key.name === "q") {
       pm.shutDown();
       // process.exit();
+    }
+    if (key.name === "x") {
+      // pm.shutDown();
+      process.exit(-1);
     }
   });
 
@@ -119,7 +124,7 @@ export default async (partialConfig) => {
                 .concat("mjs")
                 .join(".")
             ) {
-              pm.launchNode(test, destinationOfRuntime(test, "node", config));
+              // pm.launchNode(test, destinationOfRuntime(test, "node", config));
             }
 
             if (

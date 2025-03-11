@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PM_Node = void 0;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
-const puppeteer_core_1 = __importDefault(require("puppeteer-core"));
 const index_js_1 = require("./index.js");
 const fPaths = [];
 class PM_Node extends index_js_1.PM {
@@ -79,9 +78,9 @@ class PM_Node extends index_js_1.PM {
     }
     // launch(options?: PuppeteerLaunchOptions): Promise<Browser>;
     startPuppeteer(options) {
-        return puppeteer_core_1.default.connect(options).then((b) => {
-            this.browser = b;
-        });
+        // return puppeteer.connect(options).then((b) => {
+        //   this.browser = b;
+        // });
     }
 }
 exports.PM_Node = PM_Node;

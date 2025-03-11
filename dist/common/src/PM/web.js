@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PM_Web = void 0;
+// import puppeteer from "puppeteer-web";
 const puppeteer_core_browser_js_1 = __importDefault(require("puppeteer-core/lib/esm/puppeteer/puppeteer-core-browser.js"));
 const index_js_1 = require("./index.js");
 class PM_Web extends index_js_1.PM {
@@ -86,45 +87,54 @@ class PM_Web extends index_js_1.PM {
             return v.json();
         })
             .then((json) => {
+            console.log(json);
             return puppeteer_core_browser_js_1.default
                 .connect({
+                // "ws://localhost:3234/devtools/browser/01cc60a5-dad6-4b65-a848-09d77764a3fa"
                 browserWSEndpoint: json.webSocketDebuggerUrl,
             })
-                .then((b) => {
+                .then(async (b) => {
                 this.browser = b;
-                const handler2 = {
-                    get(target, prop, receiver) {
-                        if (prop === "screenshot") {
-                            return async (x) => {
-                                return await window["custom-screenshot"](Object.assign(Object.assign({}, x), { 
-                                    // path: destFolder + "/" + x.path,
-                                    path: x.path }), name);
-                            };
-                        }
-                        else if (prop === "mainFrame") {
-                            return () => target[prop](...arguments);
-                        }
-                        else {
-                            return Reflect.get(...arguments);
-                        }
-                    },
-                };
-                const handler1 = {
-                    get(target, prop, receiver) {
-                        if (prop === "pages") {
-                            return async () => {
-                                return target.pages().then((pages) => {
-                                    return pages.map((p) => {
-                                        return new Proxy(p, handler2);
-                                    });
-                                });
-                            };
-                        }
-                        return Reflect.get(...arguments);
-                    },
-                };
-                const proxy3 = new Proxy(this.browser, handler1);
-                this.browser = proxy3;
+                // const t = this.browser.targets()[2];
+                // const s = this.browser.defaultBrowserContext().
+                console.log(this.browser);
+                console.log(this.browser.browserContexts());
+                // const handler2 = {
+                //   get(target, prop, receiver) {
+                //     if (prop === "screenshot") {
+                //       return async (x) => {
+                //         return await window["custom-screenshot"](
+                //           {
+                //             ...x,
+                //             // path: destFolder + "/" + x.path,
+                //             path: x.path,
+                //           },
+                //           name
+                //         );
+                //       };
+                //     } else if (prop === "mainFrame") {
+                //       return () => target[prop](...arguments);
+                //     } else {
+                //       return Reflect.get(...arguments);
+                //     }
+                //   },
+                // };
+                // const handler1 = {
+                //   get(target, prop, receiver) {
+                //     if (prop === "pages") {
+                //       return async () => {
+                //         return target.pages().then((pages) => {
+                //           return pages.map((p) => {
+                //             return new Proxy(p, handler2);
+                //           });
+                //         });
+                //       };
+                //     }
+                //     return Reflect.get(...arguments);
+                //   },
+                // };
+                // const proxy3 = new Proxy(this.browser, handler1);
+                // this.browser = proxy3;
             });
         });
     }

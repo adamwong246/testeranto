@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.NodeTesteranto = void 0;
 const core_js_1 = __importDefault(require("./lib/core.js"));
 const index_js_1 = require("./lib/index.js");
 const node_js_1 = require("./PM/node.js");
@@ -18,6 +19,7 @@ class NodeTesteranto extends core_js_1.default {
         return features;
     }
 }
+exports.NodeTesteranto = NodeTesteranto;
 exports.default = async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = index_js_1.defaultTestResourceRequirement) => {
     return new NodeTesteranto(input, testSpecification, testImplementation, testResourceRequirement, testInterface);
 };

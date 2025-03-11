@@ -73,7 +73,8 @@ export type IWebTestInterface<
   butThen: (
     store: ITestShape["istore"],
     thenCB,
-    testResource: ITTestResourceConfiguration
+    testResource: ITTestResourceConfiguration,
+    utils: PM
   ) => Promise<ITestShape["iselection"]>;
 
   afterAll: (

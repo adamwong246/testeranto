@@ -21,12 +21,13 @@ export default async (partialConfig) => {
         executablePath: 
         // process.env.CHROMIUM_PATH || "/opt/homebrew/bin/chromium",
         "/opt/homebrew/bin/chromium",
-        headless: true,
+        headless: false,
         dumpio: true,
         // timeout: 0,
         args: [
-            // "--auto-open-devtools-for-tabs",
-            "--disable-features=IsolateOrigins,site-per-process",
+            "--auto-open-devtools-for-tabs",
+            `--remote-debugging-port=3234`,
+            // "--disable-features=IsolateOrigins,site-per-process",
             "--disable-site-isolation-trials",
             "--allow-insecure-localhost",
             "--allow-file-access-from-files",
@@ -46,20 +47,23 @@ export default async (partialConfig) => {
             "--unsafely-treat-insecure-origin-as-secure=*",
             // "--disable-features=IsolateOrigins",
             // "--remote-allow-origins=ws://localhost:3234",
-            // "--single-process",
+            "--single-process",
             // "--unsafely-treat-insecure-origin-as-secure",
             // "--unsafely-treat-insecure-origin-as-secure=ws://192.168.0.101:3234",
-            `--remote-debugging-port=3234`,
             // "--disk-cache-dir=/dev/null",
             // "--disk-cache-size=1",
             // "--start-maximized",
         ],
     }, ".");
-    console.log("\n Puppeteer is running. Press 'q' to quit\n");
+    console.log("\n Puppeteer is running. Press 'q' to shutdown softly. Press 'x' to hard.\n");
     process.stdin.on("keypress", (str, key) => {
         if (key.name === "q") {
             pm.shutDown();
             // process.exit();
+        }
+        if (key.name === "x") {
+            // pm.shutDown();
+            process.exit(-1);
         }
     });
     config.tests.forEach(([test, runtime, tr, sidecars]) => {
@@ -86,7 +90,7 @@ export default async (partialConfig) => {
                                 .slice(0, -1)
                                 .concat("mjs")
                                 .join(".")) {
-                            pm.launchNode(test, destinationOfRuntime(test, "node", config));
+                            // pm.launchNode(test, destinationOfRuntime(test, "node", config));
                         }
                         if (changedFile ===
                             test

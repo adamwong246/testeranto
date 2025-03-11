@@ -7,10 +7,38 @@ const fPaths = [];
 const fileStreams3 = [];
 const files = {}; // = new Set<string>();
 const screenshots = {};
+const port = 4000;
 export class PM_Main extends PM {
     constructor(configs) {
         super();
         this.shutdownMode = false;
+        // async startPuppeteer(options: any, destfolder: string): Promise<any> {
+        //   return new Promise(async (res, rej) => {
+        //     this.browser = (await puppeteer.launch(options)) as any;
+        //     res(this.browser);
+        //     // http
+        //     //   .createServer()
+        //     //   .on("upgrade", async (req, socket, head) => {
+        //     //     console.log("upgrade");
+        //     //     // console.log("this.browser", this.browser);
+        //     //     const target = this.browser.wsEndpoint();
+        //     //     proxy.ws(req, socket, head, { target });
+        //     //   })
+        //     //   .on("request", (request, res) => {
+        //     //     console.log("request");
+        //     //     // console.log(err);
+        //     //   })
+        //     //   .on("error", function (err, req, res) {
+        //     //     console.log(err);
+        //     //     rej(err);
+        //     //   })
+        //     //   .listen(port, async () => {
+        //     //     console.log(`proxy server running at ${port}`);
+        //     //     this.browser = (await puppeteer.launch(options)) as any;
+        //     //     res(this.browser);
+        //     //   });
+        //   });
+        // }
         this.checkForShutdown = () => {
             const anyRunning = Object.values(this.registry).filter((x) => x === false).length > 0;
             if (anyRunning) {
@@ -23,11 +51,9 @@ export class PM_Main extends PM {
             }
         };
         this.register = (src) => {
-            // console.log("register", src);
             this.registry[src] = false;
         };
         this.deregister = (src) => {
-            // console.log("deregister", src, this.shutdownMode);
             this.registry[src] = true;
             if (this.shutdownMode) {
                 this.checkForShutdown();
@@ -131,22 +157,22 @@ export class PM_Main extends PM {
                 fs: destFolder,
                 browserWSEndpoint: this.browser.wsEndpoint(),
             });
-            const evaluation = `
-    console.log("importing ${dest}.mjs");
-    import('${dest}.mjs').then(async (x) => {
-      console.log("imported", x.default);
-    })`;
+            // const evaluation = `
+            // console.log("importing ${dest}.mjs");
+            // import('${dest}.mjs').then(async (x) => {
+            //   console.log("imported", x.default);
+            // })`;
             const fileStreams2 = [];
             const doneFileStream2 = [];
             return new Promise((res, rej) => {
                 this.browser
                     .newPage()
                     .then((page) => {
-                    page.on("console", (msg) => {
-                        console.log("web > ", msg.args(), msg.text());
-                        // for (let i = 0; i < msg._args.length; ++i)
-                        //   console.log(`${i}: ${msg._args[i]}`);
-                    });
+                    // page.on("console", (msg) => {
+                    //   console.log("web > ", msg.args(), msg.text());
+                    //   // for (let i = 0; i < msg._args.length; ++i)
+                    //   //   console.log(`${i}: ${msg._args[i]}`);
+                    // });
                     page.exposeFunction("custom-screenshot", async (ssOpts, testName) => {
                         // console.log("main.ts browser custom-screenshot", testName);
                         const p = ssOpts.path;
@@ -221,35 +247,12 @@ export class PM_Main extends PM {
                             delete screenshots[testName];
                             // page.close();
                         });
-                        // globalThis["writeFileSync"](
-                        //   p + "/manifest.json",
-                        //   // files.entries()
-                        //   JSON.stringify(Array.from(files[testName]))
-                        // );
-                        // console.log("closing doneFileStream2", doneFileStream2);
-                        // console.log("closing doneFileStream2", doneFileStream2);
-                        // Promise.all([...doneFileStream2, ...screenshots2]).then(() => {
-                        //   page.close();
-                        // });
-                        // Promise.all(screenshots).then(() => {
-                        //   page.close();
-                        // });
-                        // setTimeout(() => {
-                        //   console.log("Delayed for 1 second.");
-                        //   page.close();
-                        // }, 5000);
-                        // return page.close();
                     });
                     return page;
                 })
                     .then(async (page) => {
-                    page.on("console", (log) => console.debug(`Log from client: [${log.text()}] `));
                     await page.goto(`file://${`${dest}.html`}`, {});
                     res(page);
-                    // page.evaluate(evaluation).finally(() => {
-                    //   console.log("evaluation failed.", dest);
-                    // });
-                    // return page;
                 });
             });
         };
@@ -349,7 +352,7 @@ export class PM_Main extends PM {
             const evaluation = `
     console.log("importing ${dest}.mjs");
     import('${dest}.mjs').then(async (x) => {
-      console.log("imported", x.default);
+      console.log("imported", (await x.default));
       try {
         return await (await x.default).receiveTestResourceConfig(${webArgz})
       } catch (e) {
@@ -361,11 +364,9 @@ export class PM_Main extends PM {
             this.browser
                 .newPage()
                 .then((page) => {
-                page.on("console", (msg) => {
-                    console.log("web > ", msg.args(), msg.text());
-                    // for (let i = 0; i < msg._args.length; ++i)
-                    //   console.log(`${i}: ${msg._args[i]}`);
-                });
+                // page.on("console", (msg) => {
+                //   // console.log("web > ", msg.args(), msg.text());
+                // });
                 page.exposeFunction("customScreenShot", async (ssOpts, testName) => {
                     // console.log("main.ts browser custom-screenshot", testName);
                     const p = ssOpts.path;
@@ -469,12 +470,21 @@ export class PM_Main extends PM {
                 return page;
             })
                 .then(async (page) => {
-                page.on("console", (log) => console.debug(`Log from client: [${log.text()}] `));
+                // page.on("console", (log) =>
+                //   console.debug(`Log from client: [${log.text()}] `)
+                // );
                 await page.goto(`file://${`${dest}.html`}`, {});
+                // await page.waitForNavigation();
+                // await page.exposeFunction("PUPPETEER", () => this.browser);
+                // console.log("window.PUPPETEER", this.browser);
+                // await page.evaluate(() => {
+                //   console.log("window.PUPPETEER", this.browser);
+                //   window.PUPPETEER = this.browser;
+                // });
                 await page
                     .evaluate(evaluation)
                     .then(async (features) => {
-                    Object.keys(features)
+                    Object.keys(features || {})
                         .reduce(async (mm, lm) => {
                         const accum = await mm;
                         const x = await this.configs.featureIngestor(features[lm]);
@@ -578,7 +588,6 @@ export class PM_Main extends PM {
     }
     async startPuppeteer(options, destfolder) {
         this.browser = (await puppeteer.launch(options));
-        return this.browser;
     }
     end(accessObject) {
         throw new Error("Method not implemented.");
