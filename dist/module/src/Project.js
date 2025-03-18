@@ -6,7 +6,6 @@ import { glob } from "glob";
 import esbuildNodeConfiger from "./esbuildConfigs/node.js";
 import esbuildWebConfiger from "./esbuildConfigs/web.js";
 import webHtmlFrame from "./web.html.js";
-// var mode: "DEV" | "PROD" = process.argv[2] === "-dev" ? "DEV" : "PROD";
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
     process.stdin.setRawMode(true);

@@ -14,8 +14,35 @@ class PM_Node extends index_js_1.PM {
         this.server = {};
         this.testResourceConfiguration = t;
     }
-    customScreenShot(opts, page) {
-        return globalThis["customScreenShot"](opts, page);
+    $(selector) {
+        throw new Error("Method not implemented.");
+    }
+    screencast(opts) {
+        throw new Error("Method not implemented.");
+    }
+    isDisabled(selector) {
+        throw new Error("Method not implemented.");
+    }
+    getAttribute(selector, attribute) {
+        throw new Error("Method not implemented.");
+    }
+    getValue(selector) {
+        throw new Error("Method not implemented.");
+    }
+    focusOn(selector) {
+        throw new Error("Method not implemented.");
+    }
+    typeInto(value) {
+        throw new Error("Method not implemented.");
+    }
+    page() {
+        return globalThis["page"]();
+    }
+    click(selector) {
+        return globalThis["click"](selector);
+    }
+    customScreenShot(opts) {
+        return globalThis["customScreenShot"](opts);
     }
     existsSync(destFolder) {
         return globalThis["existsSync"](this.testResourceConfiguration.fs + "/" + destFolder);

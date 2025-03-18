@@ -3,14 +3,9 @@ import fs from "fs";
 import watch from "recursive-watch";
 import { PM_Main } from "./PM/main.js";
 import { destinationOfRuntime } from "./utils.js";
-// var mode: "DEV" | "PROD" = process.argv[2] === "-dev" ? "DEV" : "PROD";
-// const node2web: Record<string, string[]> = {};
-// const web2node: Record<string, string[]> = {};
-// const childProcesses: Record<string, "loaded" | "running" | "done"> = {};
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
     process.stdin.setRawMode(true);
-// let shutDownMode = false;
 export default async (partialConfig) => {
     const config = Object.assign(Object.assign({}, partialConfig), { buildDir: process.cwd() + "/" + partialConfig.outdir });
     fs.writeFileSync(`${config.outdir}/testeranto.json`, JSON.stringify(Object.assign(Object.assign({}, config), { buildDir: process.cwd() + "/" + config.outdir }), null, 2));
@@ -21,9 +16,10 @@ export default async (partialConfig) => {
         executablePath: 
         // process.env.CHROMIUM_PATH || "/opt/homebrew/bin/chromium",
         "/opt/homebrew/bin/chromium",
-        headless: false,
+        headless: true,
         dumpio: true,
         // timeout: 0,
+        devtools: true,
         args: [
             "--auto-open-devtools-for-tabs",
             `--remote-debugging-port=3234`,
@@ -47,7 +43,7 @@ export default async (partialConfig) => {
             "--unsafely-treat-insecure-origin-as-secure=*",
             // "--disable-features=IsolateOrigins",
             // "--remote-allow-origins=ws://localhost:3234",
-            "--single-process",
+            // "--single-process",
             // "--unsafely-treat-insecure-origin-as-secure",
             // "--unsafely-treat-insecure-origin-as-secure=ws://192.168.0.101:3234",
             // "--disk-cache-dir=/dev/null",
@@ -90,7 +86,7 @@ export default async (partialConfig) => {
                                 .slice(0, -1)
                                 .concat("mjs")
                                 .join(".")) {
-                            // pm.launchNode(test, destinationOfRuntime(test, "node", config));
+                            pm.launchNode(test, destinationOfRuntime(test, "node", config));
                         }
                         if (changedFile ===
                             test
@@ -109,46 +105,4 @@ export default async (partialConfig) => {
     else {
         pm.shutDown();
     }
-    // pm.browser.close();
-    // does not work on linux
-    // fs.watch(
-    //   config.buildDir,
-    //   {
-    //     recursive: true,
-    //   },
-    //   (eventType, changedFile) => {
-    //     if (changedFile) {
-    //       config.tests.forEach(([test, runtime, tr, sidecars]) => {
-    //         if (eventType === "change" || eventType === "rename") {
-    //           if (
-    //             changedFile ===
-    //             test
-    //               .replace("./", "node/")
-    //               .split(".")
-    //               .slice(0, -1)
-    //               .concat("mjs")
-    //               .join(".")
-    //           ) {
-    //             pm.launchNode(test, destinationOfRuntime(test, "node", config));
-    //           }
-    //           if (
-    //             changedFile ===
-    //             test
-    //               .replace("./", "web/")
-    //               .split(".")
-    //               .slice(0, -1)
-    //               .concat("mjs")
-    //               .join(".")
-    //           ) {
-    //             pm.launchWeb(
-    //               test,
-    //               destinationOfRuntime(test, "web", config),
-    //               sidecars
-    //             );
-    //           }
-    //         }
-    //       });
-    //     }
-    //   }
-    // );
 };

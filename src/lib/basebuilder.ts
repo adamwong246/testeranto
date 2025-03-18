@@ -90,13 +90,13 @@ export abstract class BaseBuilder<
           puppetMaster: PM,
           tLog: ITLog
         ): Promise<BaseSuite<ITestShape>> => {
-          const puppeteerBrowser = await puppetMaster.startPuppeteer(
-            {
-              browserWSEndpoint:
-                puppetMaster.testResourceConfiguration.browserWSEndpoint,
-            },
-            puppetMaster.testResourceConfiguration.fs
-          );
+          // const puppeteerBrowser = await puppetMaster.startPuppeteer(
+          //   {
+          //     browserWSEndpoint:
+          //       puppetMaster.testResourceConfiguration.browserWSEndpoint,
+          //   },
+          //   puppetMaster.testResourceConfiguration.fs
+          // );
 
           const x = await suite.run(
             input,

@@ -12,6 +12,16 @@ const register = (entrypoint: string, sources: string[]): void => {
   sources.forEach((s) => otherInputs[entrypoint].add(s));
 };
 
+function tree(meta: Metafile, key: string) {
+  return [
+    key,
+    ...meta.inputs[key].imports
+      .filter((x) => x.external !== true)
+      .filter((x) => x.path.split("/")[0] !== "node_modules")
+      .map((f) => f.path),
+  ];
+}
+
 export default (
   platform: "web" | "node",
   entryPoints: Set<string> | string[]
@@ -61,8 +71,8 @@ export default (
                 "./docs/",
                 platform,
                 entryPoint.split(".").slice(0, -1).join("."),
-                `features.json`
-              );
+                `featurePrompt.txt`
+              ); // /read ${featuresPath}
 
               if (result.metafile) {
                 const addableFiles = tree(
@@ -85,9 +95,17 @@ ${[...addableFiles]
     return `/add ${x}`;
   })
   .join("\n")}
-/read ${testPaths}
-/read ${featuresPath}
-/code fix the failing tests described in ${testPaths}.
+${[...addableFiles]
+  .map((x) => {
+    const f = `docs/ts/${x}.type_errors.txt`;
+
+    if (fs.existsSync(f)) {
+      return `/read ${f}`;
+    }
+  })
+  .join("\n")}
+/load ${featuresPath}
+/code Fix the failing tests described in ${testPaths}. Correct any type signature errors. Implement any method which throws "Function not implemented."
 `
                 );
               }
@@ -98,13 +116,3 @@ ${[...addableFiles]
     },
   };
 };
-
-function tree(meta: Metafile, key: string) {
-  return [
-    key,
-    ...meta.inputs[key].imports
-      .filter((x) => x.external !== true)
-      .filter((x) => x.path.split("/")[0] !== "node_modules")
-      .map((f) => f.path),
-  ];
-}

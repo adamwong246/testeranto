@@ -63,19 +63,19 @@ export declare abstract class BaseGiven<ITestShape extends IBaseTest<unknown, un
     };
     abstract givenThat(subject: ITestShape["isubject"], testResourceConfiguration: any, artifactory: ITestArtifactory, givenCB: ITestShape["given"], pm: PM): Promise<ITestShape["istore"]>;
     afterEach(store: ITestShape["istore"], key: string, artifactory: ITestArtifactory, pm: PM): Promise<unknown>;
-    give(subject: ITestShape["isubject"], key: string, testResourceConfiguration: any, tester: (t: Awaited<ITestShape["then"]> | undefined) => boolean, artifactory: ITestArtifactory, tLog: ITLog, pm: PM, suiteNdx: number): Promise<ITestShape["istore"]>;
+    give(subject: ITestShape["isubject"], key: string, testResourceConfiguration: ITTestResourceConfiguration, tester: (t: Awaited<ITestShape["then"]> | undefined) => boolean, artifactory: ITestArtifactory, tLog: ITLog, pm: PM, suiteNdx: number): Promise<ITestShape["istore"]>;
 }
 export declare abstract class BaseWhen<ITestShape extends IBaseTest> {
     name: string;
     whenCB: (x: ITestShape["iselection"]) => ITestShape["then"];
     error: boolean;
     constructor(name: string, whenCB: (xyz: ITestShape["iselection"]) => ITestShape["then"]);
-    abstract andWhen(store: ITestShape["istore"], whenCB: (x: ITestShape["iselection"]) => ITestShape["then"], testResource: any, pm: PM): any;
+    abstract andWhen(store: ITestShape["istore"], whenCB: (x: ITestShape["iselection"]) => ITestShape["then"], testResource: any, pm: PM): Promise<any>;
     toObj(): {
         name: string;
         error: boolean;
     };
-    test(store: ITestShape["istore"], testResourceConfiguration: any, tLog: ITLog, pm: PM, key: string): Promise<any>;
+    test(store: ITestShape["istore"], testResourceConfiguration: any, tLog: ITLog, pm: PM, filepath: string): Promise<any>;
 }
 export declare abstract class BaseThen<ITestShape extends IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>> {
     name: string;

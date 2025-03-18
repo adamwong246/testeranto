@@ -12,7 +12,6 @@ const glob_1 = require("glob");
 const node_js_1 = __importDefault(require("./esbuildConfigs/node.js"));
 const web_js_1 = __importDefault(require("./esbuildConfigs/web.js"));
 const web_html_js_1 = __importDefault(require("./web.html.js"));
-// var mode: "DEV" | "PROD" = process.argv[2] === "-dev" ? "DEV" : "PROD";
 readline_1.default.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
     process.stdin.setRawMode(true);

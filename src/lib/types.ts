@@ -213,7 +213,7 @@ export type ITestInterface<
   beforeEach: (
     subject: ITestShape["isubject"],
     initializer: (c?) => ITestShape["given"],
-    artificer: ITestArtificer,
+    // artificer: ITestArtificer,
     testResource: ITTestResourceConfiguration,
     initialValues,
     pm: PM

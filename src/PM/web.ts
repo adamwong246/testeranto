@@ -1,10 +1,9 @@
 import { PassThrough } from "stream";
 
-import puppeteer from "puppeteer-core/lib/esm/puppeteer/puppeteer-core-browser.js";
-
 import { ITLog, ITTestResourceConfiguration } from "../lib";
+
 import { PM } from "./index.js";
-// import debug from "debug";
+import { ScreenshotOptions } from "puppeteer-core";
 
 type PuppetMasterServer = Record<string, Promise<any>>;
 
@@ -17,8 +16,48 @@ export class PM_Web extends PM {
     this.testResourceConfiguration = t;
   }
 
-  customScreenShot(opts: object) {
-    window["customScreenShot"](opts);
+  $(selector: string): boolean {
+    return window["$"](selector);
+  }
+  screencast(opts: object) {
+    throw new Error("Method not implemented.");
+  }
+
+  isDisabled(selector: string): boolean {
+    return window["isDisabled"](selector);
+  }
+
+  getAttribute(selector: string, attribute: string) {
+    return window["getValue"](selector, attribute);
+  }
+
+  getValue(selector: string) {
+    return window["getValue"](selector);
+  }
+
+  focusOn(selector: string) {
+    return window["focusOn"](selector);
+  }
+  typeInto(value: string) {
+    return window["typeInto"](value);
+  }
+
+  page(): string | undefined {
+    return window["page"]();
+  }
+
+  click(selector: string): any {
+    return window["click"](selector);
+  }
+
+  customScreenShot(opts: ScreenshotOptions) {
+    return window["customScreenShot"](
+      {
+        ...opts,
+        path: this.testResourceConfiguration.fs + "/" + opts.path,
+      },
+      this.testResourceConfiguration.name
+    );
   }
 
   existsSync(destFolder: string): boolean {
@@ -110,68 +149,68 @@ export class PM_Web extends PM {
     };
   }
 
-  startPuppeteer(options, destFolder: string): Promise<any> {
-    const name = this.testResourceConfiguration.name;
+  // startPuppeteer(options, destFolder: string): Promise<any> {
+  //   const name = this.testResourceConfiguration.name;
 
-    return fetch(`http://localhost:3234/json/version`)
-      .then((v) => {
-        return v.json();
-      })
-      .then((json) => {
-        console.log(json);
+  //   return fetch(`http://localhost:3234/json/version`)
+  //     .then((v) => {
+  //       return v.json();
+  //     })
+  //     .then((json) => {
+  //       console.log(json);
 
-        return puppeteer
-          .connect({
-            // "ws://localhost:3234/devtools/browser/01cc60a5-dad6-4b65-a848-09d77764a3fa"
-            // browserWSEndpoint: json.webSocketDebuggerUrl,
-            browserURL: "http://localhost:3234/json/version",
-          })
-          .then(async (b) => {
-            this.browser = b;
+  //       return puppeteer
+  //         .connect({
+  //           // "ws://localhost:3234/devtools/browser/01cc60a5-dad6-4b65-a848-09d77764a3fa"
+  //           // browserWSEndpoint: json.webSocketDebuggerUrl,
+  //           browserURL: "http://localhost:3234/json/version",
+  //         })
+  //         .then(async (b) => {
+  //           this.browser = b;
 
-            // const t = this.browser.targets()[2];
-            // const s = this.browser.defaultBrowserContext().
-            console.log(this.browser);
-            console.log(this.browser.browserContexts());
-            // const handler2 = {
-            //   get(target, prop, receiver) {
-            //     if (prop === "screenshot") {
-            //       return async (x) => {
-            //         return await window["custom-screenshot"](
-            //           {
-            //             ...x,
-            //             // path: destFolder + "/" + x.path,
-            //             path: x.path,
-            //           },
-            //           name
-            //         );
-            //       };
-            //     } else if (prop === "mainFrame") {
-            //       return () => target[prop](...arguments);
-            //     } else {
-            //       return Reflect.get(...arguments);
-            //     }
-            //   },
-            // };
-            // const handler1 = {
-            //   get(target, prop, receiver) {
-            //     if (prop === "pages") {
-            //       return async () => {
-            //         return target.pages().then((pages) => {
-            //           return pages.map((p) => {
-            //             return new Proxy(p, handler2);
-            //           });
-            //         });
-            //       };
-            //     }
+  //           // const t = this.browser.targets()[2];
+  //           // const s = this.browser.defaultBrowserContext().
+  //           console.log(this.browser);
+  //           console.log(this.browser.browserContexts());
+  //           // const handler2 = {
+  //           //   get(target, prop, receiver) {
+  //           //     if (prop === "screenshot") {
+  //           //       return async (x) => {
+  //           //         return await window["custom-screenshot"](
+  //           //           {
+  //           //             ...x,
+  //           //             // path: destFolder + "/" + x.path,
+  //           //             path: x.path,
+  //           //           },
+  //           //           name
+  //           //         );
+  //           //       };
+  //           //     } else if (prop === "mainFrame") {
+  //           //       return () => target[prop](...arguments);
+  //           //     } else {
+  //           //       return Reflect.get(...arguments);
+  //           //     }
+  //           //   },
+  //           // };
+  //           // const handler1 = {
+  //           //   get(target, prop, receiver) {
+  //           //     if (prop === "pages") {
+  //           //       return async () => {
+  //           //         return target.pages().then((pages) => {
+  //           //           return pages.map((p) => {
+  //           //             return new Proxy(p, handler2);
+  //           //           });
+  //           //         });
+  //           //       };
+  //           //     }
 
-            //     return Reflect.get(...arguments);
-            //   },
-            // };
+  //           //     return Reflect.get(...arguments);
+  //           //   },
+  //           // };
 
-            // const proxy3 = new Proxy(this.browser, handler1);
-            // this.browser = proxy3;
-          });
-      });
-  }
+  //           // const proxy3 = new Proxy(this.browser, handler1);
+  //           // this.browser = proxy3;
+  //         });
+  //     });
+  // }
 }

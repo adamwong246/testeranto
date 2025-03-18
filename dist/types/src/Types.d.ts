@@ -24,10 +24,10 @@ export declare type ITestImplementation<ITestShape extends IBaseTest<unknown, un
         [K in keyof ITestShape["givens"]]: (...Ig: ITestShape["givens"][K]) => ITestShape["given"];
     };
     whens: {
-        [K in keyof ITestShape["whens"]]: (...Iw: ITestShape["whens"][K]) => (zel: ITestShape["iselection"], utils: PM) => ITestShape["when"];
+        [K in keyof ITestShape["whens"]]: (...Iw: ITestShape["whens"][K]) => (zel: ITestShape["iselection"], utils: PM) => Promise<ITestShape["when"]>;
     };
     thens: {
-        [K in keyof ITestShape["thens"]]: (...It: ITestShape["thens"][K]) => (ssel: ITestShape["iselection"]) => ITestShape["then"];
+        [K in keyof ITestShape["thens"]]: (...It: ITestShape["thens"][K]) => (ssel: ITestShape["iselection"], utils: PM) => ITestShape["then"];
     };
     checks: {
         [K in keyof ITestShape["checks"]]: (...Ic: ITestShape["checks"][K]) => ITestShape["given"];

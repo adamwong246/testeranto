@@ -3,11 +3,21 @@
 import { PassThrough } from "stream";
 import { ITLog, ITTestResourceConfiguration } from "../lib";
 import { PM } from "./index.js";
+import { ScreenshotOptions } from "puppeteer-core";
 declare type PuppetMasterServer = Record<string, Promise<any>>;
 export declare class PM_Web extends PM {
     server: PuppetMasterServer;
     constructor(t: ITTestResourceConfiguration);
-    customScreenShot(opts: object): void;
+    $(selector: string): boolean;
+    screencast(opts: object): void;
+    isDisabled(selector: string): boolean;
+    getAttribute(selector: string, attribute: string): any;
+    getValue(selector: string): any;
+    focusOn(selector: string): any;
+    typeInto(value: string): any;
+    page(): string | undefined;
+    click(selector: string): any;
+    customScreenShot(opts: ScreenshotOptions): any;
     existsSync(destFolder: string): boolean;
     mkdirSync(): any;
     write(writeObject: {
@@ -20,6 +30,5 @@ export declare class PM_Web extends PM {
     }): any;
     customclose(): void;
     testArtiFactoryfileWriter(tLog: ITLog, callback: (Promise: any) => void): (fPath: any, value: string | Buffer | PassThrough) => void;
-    startPuppeteer(options: any, destFolder: string): Promise<any>;
 }
 export {};

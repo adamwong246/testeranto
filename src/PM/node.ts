@@ -23,8 +23,42 @@ export class PM_Node extends PM {
     this.testResourceConfiguration = t;
   }
 
-  customScreenShot(opts: object, page: Page) {
-    return globalThis["customScreenShot"](opts, page);
+  $(selector: string): boolean {
+    throw new Error("Method not implemented.");
+  }
+  screencast(opts: object) {
+    throw new Error("Method not implemented.");
+  }
+
+  isDisabled(selector: string): boolean {
+    throw new Error("Method not implemented.");
+  }
+
+  getAttribute(selector: string, attribute: string) {
+    throw new Error("Method not implemented.");
+  }
+  getValue(selector: string) {
+    throw new Error("Method not implemented.");
+  }
+
+  focusOn(selector: string) {
+    throw new Error("Method not implemented.");
+  }
+
+  typeInto(value: string) {
+    throw new Error("Method not implemented.");
+  }
+
+  page() {
+    return globalThis["page"]();
+  }
+
+  click(selector: string): string | undefined {
+    return globalThis["click"](selector);
+  }
+
+  customScreenShot(opts: object) {
+    return globalThis["customScreenShot"](opts);
   }
 
   existsSync(destFolder: string): boolean {

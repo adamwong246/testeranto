@@ -30,44 +30,17 @@ exports.PM_Main = void 0;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const puppeteer_core_1 = __importDefault(require("puppeteer-core"));
+const crypto_1 = __importDefault(require("crypto"));
 const index_js_1 = require("./index.js");
 const utils_js_1 = require("../utils.js");
 const fPaths = [];
 const fileStreams3 = [];
-const files = {}; // = new Set<string>();
+const files = {};
 const screenshots = {};
-const port = 4000;
 class PM_Main extends index_js_1.PM {
     constructor(configs) {
         super();
         this.shutdownMode = false;
-        // async startPuppeteer(options: any, destfolder: string): Promise<any> {
-        //   return new Promise(async (res, rej) => {
-        //     this.browser = (await puppeteer.launch(options)) as any;
-        //     res(this.browser);
-        //     // http
-        //     //   .createServer()
-        //     //   .on("upgrade", async (req, socket, head) => {
-        //     //     console.log("upgrade");
-        //     //     // console.log("this.browser", this.browser);
-        //     //     const target = this.browser.wsEndpoint();
-        //     //     proxy.ws(req, socket, head, { target });
-        //     //   })
-        //     //   .on("request", (request, res) => {
-        //     //     console.log("request");
-        //     //     // console.log(err);
-        //     //   })
-        //     //   .on("error", function (err, req, res) {
-        //     //     console.log(err);
-        //     //     rej(err);
-        //     //   })
-        //     //   .listen(port, async () => {
-        //     //     console.log(`proxy server running at ${port}`);
-        //     //     this.browser = (await puppeteer.launch(options)) as any;
-        //     //     res(this.browser);
-        //     //   });
-        //   });
-        // }
         this.checkForShutdown = () => {
             const anyRunning = Object.values(this.registry).filter((x) => x === false).length > 0;
             if (anyRunning) {
@@ -150,16 +123,7 @@ class PM_Main extends index_js_1.PM {
                     defaultModule
                         .receiveTestResourceConfig(argz)
                         .then(async (features) => {
-                        Object.keys(features)
-                            .reduce(async (mm, lm) => {
-                            const accum = await mm;
-                            const x = await this.configs.featureIngestor(features[lm]);
-                            accum[lm] = x;
-                            return accum;
-                        }, Promise.resolve({}))
-                            .then((x) => {
-                            fs_1.default.writeFileSync(`${destFolder}/features.json`, JSON.stringify(x, null, 2));
-                        });
+                        this.receiveFeatures(features, destFolder);
                     })
                         .catch((e) => {
                         console.log("catch", e);
@@ -290,13 +254,6 @@ class PM_Main extends index_js_1.PM {
             console.log("launchNodeSideCar", src, dest, d);
             const destFolder = dest.replace(".mjs", "");
             let argz = "";
-            // const testConfig = this.configs.tests.find((t) => {
-            //   return t[0] === src;
-            // });
-            // if (!testConfig) {
-            //   console.error("missing test config");
-            //   process.exit(-1);
-            // }
             const testConfigResource = testConfig[2];
             let portsToUse = [];
             if (testConfigResource.ports === 0) {
@@ -396,8 +353,27 @@ class PM_Main extends index_js_1.PM {
                 // page.on("console", (msg) => {
                 //   // console.log("web > ", msg.args(), msg.text());
                 // });
+                page.exposeFunction("screencast", async (ssOpts, testName) => {
+                    const p = ssOpts.path;
+                    const dir = path_1.default.dirname(p);
+                    fs_1.default.mkdirSync(dir, {
+                        recursive: true,
+                    });
+                    if (!files[testName]) {
+                        files[testName] = new Set();
+                    }
+                    files[testName].add(ssOpts.path);
+                    const sPromise = page.screenshot(Object.assign(Object.assign({}, ssOpts), { path: p }));
+                    if (!screenshots[testName]) {
+                        screenshots[testName] = [];
+                    }
+                    screenshots[testName].push(sPromise);
+                    // sPromise.then(())
+                    await sPromise;
+                    return sPromise;
+                    // page.evaluate(`window["screenshot done"]`);
+                });
                 page.exposeFunction("customScreenShot", async (ssOpts, testName) => {
-                    // console.log("main.ts browser custom-screenshot", testName);
                     const p = ssOpts.path;
                     const dir = path_1.default.dirname(p);
                     fs_1.default.mkdirSync(dir, {
@@ -496,6 +472,34 @@ class PM_Main extends index_js_1.PM {
                     // }, 5000);
                     // return page.close();
                 });
+                page.exposeFunction("page", () => {
+                    return page.mainFrame()._id;
+                });
+                page.exposeFunction("click", (sel) => {
+                    return page.click(sel);
+                });
+                page.exposeFunction("focusOn", (sel) => {
+                    return page.focus(sel);
+                });
+                page.exposeFunction("typeInto", async (value) => await page.keyboard.type(value));
+                page.exposeFunction("getValue", (selector) => page.$eval(selector, (input) => input.getAttribute("value")));
+                page.exposeFunction("getAttribute", async (selector, attribute) => {
+                    const attributeValue = await page.$eval(selector, (input) => {
+                        return input.getAttribute(attribute);
+                    });
+                    return attributeValue;
+                });
+                page.exposeFunction("isDisabled", async (selector) => {
+                    const attributeValue = await page.$eval(selector, (input) => {
+                        return input.disabled;
+                    });
+                    return attributeValue;
+                });
+                page.exposeFunction("$", async (selector) => {
+                    const x = page.$(selector);
+                    const y = await x;
+                    return y;
+                });
                 return page;
             })
                 .then(async (page) => {
@@ -503,26 +507,10 @@ class PM_Main extends index_js_1.PM {
                 //   console.debug(`Log from client: [${log.text()}] `)
                 // );
                 await page.goto(`file://${`${dest}.html`}`, {});
-                // await page.waitForNavigation();
-                // await page.exposeFunction("PUPPETEER", () => this.browser);
-                // console.log("window.PUPPETEER", this.browser);
-                // await page.evaluate(() => {
-                //   console.log("window.PUPPETEER", this.browser);
-                //   window.PUPPETEER = this.browser;
-                // });
                 await page
                     .evaluate(evaluation)
                     .then(async (features) => {
-                    Object.keys(features || {})
-                        .reduce(async (mm, lm) => {
-                        const accum = await mm;
-                        const x = await this.configs.featureIngestor(features[lm]);
-                        accum[lm] = x;
-                        return accum;
-                    }, Promise.resolve({}))
-                        .then((x) => {
-                        fs_1.default.writeFileSync(`${destFolder}/features.json`, JSON.stringify(x, null, 2));
-                    });
+                    this.receiveFeatures(features, destFolder);
                 })
                     .catch((e) => {
                     console.log("evaluation failed.", dest);
@@ -532,9 +520,51 @@ class PM_Main extends index_js_1.PM {
                     console.log("evaluation complete.", dest);
                     // page.close();
                     this.deregister(t);
-                    // whyIsNodeRunning();
                 });
                 return page;
+            });
+        };
+        this.receiveFeatures = (features, destFolder) => {
+            console.log("this.receiveFeatures", features);
+            Object.keys(features)
+                .reduce(async (mm, featureStringKey) => {
+                const accum = await mm;
+                const isUrl = isValidUrl(featureStringKey);
+                if (isUrl) {
+                    const u = new URL(featureStringKey);
+                    if (u.protocol === "file:") {
+                        const newPath = `docs/features/internal/${u.pathname}`;
+                        fs_1.default.symlink(u.pathname, newPath, (err) => {
+                            if (err) {
+                                console.error("Error creating symlink:", err);
+                            }
+                            else {
+                                console.log("Symlink created successfully");
+                            }
+                        });
+                        accum.push(newPath);
+                    }
+                    else if (u.protocol === "http:" || u.protocol === "https:") {
+                        const newPath = `docs/features/external${u.hostname}${u.pathname}`;
+                        const body = await this.configs.featureIngestor(features[featureStringKey]);
+                        writeFileAndCreateDir(newPath, body);
+                        accum.push(newPath);
+                    }
+                }
+                else {
+                    const newPath = `docs/features/plain/${await sha256(featureStringKey)}`;
+                    writeFileAndCreateDir(newPath, featureStringKey);
+                    accum.push(newPath);
+                    // accum[newPath] = featureStringKey;
+                }
+                return accum;
+            }, Promise.resolve([]))
+                .then((features) => {
+                fs_1.default.writeFileSync(`${destFolder}/featurePrompt.txt`, features
+                    .map((f) => {
+                    return `/read ${f}`;
+                })
+                    .join("\n"));
             });
         };
         this.server = {};
@@ -607,16 +637,14 @@ class PM_Main extends index_js_1.PM {
             delete files[testName];
         };
     }
-    shutDown() {
-        console.log("shutting down...");
-        this.shutdownMode = true;
-        this.checkForShutdown();
+    $(selector) {
+        throw new Error("Method not implemented.");
+    }
+    screencast(opts) {
+        throw new Error("Method not implemented.");
     }
     customScreenShot(opts) {
         throw new Error("Method not implemented.");
-    }
-    async startPuppeteer(options, destfolder) {
-        this.browser = (await puppeteer_core_1.default.launch(options));
     }
     end(accessObject) {
         throw new Error("Method not implemented.");
@@ -679,5 +707,63 @@ class PM_Main extends index_js_1.PM {
     write(accessObject, contents) {
         throw new Error("Method not implemented.");
     }
+    page() {
+        throw new Error("Method not implemented.");
+    }
+    click(selector) {
+        throw new Error("Method not implemented.");
+    }
+    focusOn(selector) {
+        throw new Error("Method not implemented.");
+    }
+    typeInto(value) {
+        throw new Error("Method not implemented.");
+    }
+    getValue(value) {
+        throw new Error("Method not implemented.");
+    }
+    getAttribute(selector, attribute) {
+        throw new Error("Method not implemented.");
+    }
+    isDisabled(selector) {
+        throw new Error("Method not implemented.");
+    }
+    ////////////////////////////////////////////////////////////////////////////////
+    async startPuppeteer(options, destfolder) {
+        this.browser = (await puppeteer_core_1.default.launch(options));
+    }
+    ////////////////////////////////////////////////////////////////////////////////
+    shutDown() {
+        console.log("shutting down...");
+        this.shutdownMode = true;
+        this.checkForShutdown();
+    }
 }
 exports.PM_Main = PM_Main;
+async function writeFileAndCreateDir(filePath, data) {
+    const dirPath = path_1.default.dirname(filePath);
+    try {
+        await fs_1.default.promises.mkdir(dirPath, { recursive: true });
+        await fs_1.default.promises.writeFile(filePath, data);
+        console.log(`File written successfully to ${filePath}`);
+    }
+    catch (error) {
+        console.error(`Error writing file: ${error}`);
+    }
+}
+async function sha256(rawData) {
+    const data = typeof rawData === "object" ? JSON.stringify(rawData) : String(rawData);
+    const msgBuffer = new TextEncoder().encode(data);
+    const hashBuffer = await crypto_1.default.subtle.digest("SHA-256", msgBuffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+function isValidUrl(string) {
+    try {
+        new URL(string);
+        return true;
+    }
+    catch (err) {
+        return false;
+    }
+}

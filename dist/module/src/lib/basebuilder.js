@@ -14,9 +14,13 @@ export class BaseBuilder {
         // const f = this.specs[0].features;
         this.testJobs = this.specs.map((suite) => {
             const suiteRunner = (suite) => async (puppetMaster, tLog) => {
-                const puppeteerBrowser = await puppetMaster.startPuppeteer({
-                    browserWSEndpoint: puppetMaster.testResourceConfiguration.browserWSEndpoint,
-                }, puppetMaster.testResourceConfiguration.fs);
+                // const puppeteerBrowser = await puppetMaster.startPuppeteer(
+                //   {
+                //     browserWSEndpoint:
+                //       puppetMaster.testResourceConfiguration.browserWSEndpoint,
+                //   },
+                //   puppetMaster.testResourceConfiguration.fs
+                // );
                 const x = await suite.run(input, puppetMaster.testResourceConfiguration, (fPath, value) => puppetMaster.testArtiFactoryfileWriter(tLog, (p) => {
                     this.artifacts.push(p);
                 })(puppetMaster.testResourceConfiguration.fs + "/" + fPath, value), tLog, puppetMaster);

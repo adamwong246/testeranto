@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import renderer from "react-test-renderer";
 import { IBaseTest, ITestImplementation, ITestSpecification } from "../../../Types";
 export declare type IWhenShape = any;

@@ -6,16 +6,8 @@ import { PM_Main } from "./PM/main.js";
 import { destinationOfRuntime } from "./utils.js";
 import { IBaseConfig, IBuiltConfig } from "./lib/types.js";
 
-// var mode: "DEV" | "PROD" = process.argv[2] === "-dev" ? "DEV" : "PROD";
-
-// const node2web: Record<string, string[]> = {};
-// const web2node: Record<string, string[]> = {};
-// const childProcesses: Record<string, "loaded" | "running" | "done"> = {};
-
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
-
-// let shutDownMode = false;
 
 export default async (partialConfig) => {
   const config: IBuiltConfig = {
@@ -44,9 +36,10 @@ export default async (partialConfig) => {
       executablePath:
         // process.env.CHROMIUM_PATH || "/opt/homebrew/bin/chromium",
         "/opt/homebrew/bin/chromium",
-      headless: false,
+      headless: true,
       dumpio: true,
       // timeout: 0,
+      devtools: true,
       args: [
         "--auto-open-devtools-for-tabs",
         `--remote-debugging-port=3234`,
@@ -124,7 +117,7 @@ export default async (partialConfig) => {
                 .concat("mjs")
                 .join(".")
             ) {
-              // pm.launchNode(test, destinationOfRuntime(test, "node", config));
+              pm.launchNode(test, destinationOfRuntime(test, "node", config));
             }
 
             if (
@@ -149,48 +142,4 @@ export default async (partialConfig) => {
   } else {
     pm.shutDown();
   }
-  // pm.browser.close();
-
-  // does not work on linux
-  // fs.watch(
-  //   config.buildDir,
-  //   {
-  //     recursive: true,
-  //   },
-  //   (eventType, changedFile) => {
-  //     if (changedFile) {
-  //       config.tests.forEach(([test, runtime, tr, sidecars]) => {
-  //         if (eventType === "change" || eventType === "rename") {
-  //           if (
-  //             changedFile ===
-  //             test
-  //               .replace("./", "node/")
-  //               .split(".")
-  //               .slice(0, -1)
-  //               .concat("mjs")
-  //               .join(".")
-  //           ) {
-  //             pm.launchNode(test, destinationOfRuntime(test, "node", config));
-  //           }
-
-  //           if (
-  //             changedFile ===
-  //             test
-  //               .replace("./", "web/")
-  //               .split(".")
-  //               .slice(0, -1)
-  //               .concat("mjs")
-  //               .join(".")
-  //           ) {
-  //             pm.launchWeb(
-  //               test,
-  //               destinationOfRuntime(test, "web", config),
-  //               sidecars
-  //             );
-  //           }
-  //         }
-  //       });
-  //     }
-  //   }
-  // );
 };

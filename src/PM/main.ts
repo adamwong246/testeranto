@@ -1,29 +1,26 @@
 import fs from "fs";
 import path from "path";
-import puppeteer, { Page, ScreenshotOptions } from "puppeteer-core";
+import puppeteer, { Browser, ScreenshotOptions } from "puppeteer-core";
 import { PassThrough } from "stream";
+import crypto from "crypto";
 
 import { IBuiltConfig, ITestTypes } from "../lib/types";
 
 import { PM } from "./index.js";
 import { destinationOfRuntime } from "../utils.js";
 import { ITLog } from "../lib/index.js";
-
-import httpProxy from "http-proxy";
-import http from "http";
-// const httpProxy = require("http-proxy");
-// const proxy = new httpProxy.createProxyServer();
+import { Page } from "puppeteer-core/lib/esm/puppeteer";
 
 type IFPaths = string[];
 
 const fPaths: IFPaths = [];
 const fileStreams3: fs.WriteStream[] = [];
-const files: Record<string, Set<string>> = {}; // = new Set<string>();
+const files: Record<string, Set<string>> = {};
 const screenshots: Record<string, Promise<Uint8Array>[]> = {};
 
-const port = 4000;
-
 export class PM_Main extends PM {
+  browser: Browser;
+
   shutdownMode = false;
   configs: IBuiltConfig;
   ports: Record<number, boolean>;
@@ -132,49 +129,129 @@ export class PM_Main extends PM {
     };
   }
 
-  shutDown() {
-    console.log("shutting down...");
-    this.shutdownMode = true;
-    this.checkForShutdown();
+  $(selector: string): boolean {
+    throw new Error("Method not implemented.");
   }
-
+  screencast(opts: object) {
+    throw new Error("Method not implemented.");
+  }
   customScreenShot(opts: object) {
     throw new Error("Method not implemented.");
   }
+
+  end(accessObject: { uid: number }): boolean {
+    throw new Error("Method not implemented.");
+  }
+
+  existsSync(destFolder: string): boolean {
+    return fs.existsSync(destFolder);
+  }
+
+  async mkdirSync(fp: string) {
+    if (!fs.existsSync(fp)) {
+      return fs.mkdirSync(fp, {
+        recursive: true,
+      });
+    }
+    return false;
+  }
+
+  writeFileSync(fp: string, contents: string) {
+    fs.writeFileSync(fp, contents);
+  }
+
+  createWriteStream(filepath: string): fs.WriteStream {
+    return fs.createWriteStream(filepath);
+  }
+
+  testArtiFactoryfileWriter(tLog: ITLog, callback: (Promise) => void) {
+    return (fPath, value: string | Buffer | PassThrough) => {
+      callback(
+        new Promise<void>((res, rej) => {
+          tLog("testArtiFactory =>", fPath);
+
+          const cleanPath = path.resolve(fPath);
+          fPaths.push(cleanPath.replace(process.cwd(), ``));
+
+          const targetDir = cleanPath.split("/").slice(0, -1).join("/");
+
+          fs.mkdir(targetDir, { recursive: true }, async (error) => {
+            if (error) {
+              console.error(`❗️testArtiFactory failed`, targetDir, error);
+            }
+
+            fs.writeFileSync(
+              path.resolve(
+                targetDir.split("/").slice(0, -1).join("/"),
+                "manifest"
+              ),
+              fPaths.join(`\n`),
+              {
+                encoding: "utf-8",
+              }
+            );
+
+            if (Buffer.isBuffer(value)) {
+              fs.writeFileSync(fPath, value, "binary");
+              res();
+            } else if (`string` === typeof value) {
+              fs.writeFileSync(fPath, value.toString(), {
+                encoding: "utf-8",
+              });
+              res();
+            } else {
+              /* @ts-ignore:next-line */
+              const pipeStream: PassThrough = value;
+              const myFile = fs.createWriteStream(fPath);
+              pipeStream.pipe(myFile);
+              pipeStream.on("close", () => {
+                myFile.close();
+                res();
+              });
+            }
+          });
+        })
+      );
+    };
+  }
+
+  write(accessObject: { uid: number }, contents: string): boolean {
+    throw new Error("Method not implemented.");
+  }
+  page(): string | undefined {
+    throw new Error("Method not implemented.");
+  }
+  click(selector: string): string | undefined {
+    throw new Error("Method not implemented.");
+  }
+  focusOn(selector: string) {
+    throw new Error("Method not implemented.");
+  }
+  typeInto(value: string) {
+    throw new Error("Method not implemented.");
+  }
+  getValue(value: string) {
+    throw new Error("Method not implemented.");
+  }
+  getAttribute(selector: string, attribute: string) {
+    throw new Error("Method not implemented.");
+  }
+  isDisabled(selector: string): boolean {
+    throw new Error("Method not implemented.");
+  }
+  ////////////////////////////////////////////////////////////////////////////////
 
   async startPuppeteer(options: any, destfolder: string): Promise<any> {
     this.browser = (await puppeteer.launch(options)) as any;
   }
 
-  // async startPuppeteer(options: any, destfolder: string): Promise<any> {
-  //   return new Promise(async (res, rej) => {
-  //     this.browser = (await puppeteer.launch(options)) as any;
-  //     res(this.browser);
-  //     // http
-  //     //   .createServer()
-  //     //   .on("upgrade", async (req, socket, head) => {
-  //     //     console.log("upgrade");
+  ////////////////////////////////////////////////////////////////////////////////
 
-  //     //     // console.log("this.browser", this.browser);
-  //     //     const target = this.browser.wsEndpoint();
-  //     //     proxy.ws(req, socket, head, { target });
-  //     //   })
-  //     //   .on("request", (request, res) => {
-  //     //     console.log("request");
-  //     //     // console.log(err);
-  //     //   })
-  //     //   .on("error", function (err, req, res) {
-  //     //     console.log(err);
-  //     //     rej(err);
-  //     //   })
-  //     //   .listen(port, async () => {
-  //     //     console.log(`proxy server running at ${port}`);
-
-  //     //     this.browser = (await puppeteer.launch(options)) as any;
-  //     //     res(this.browser);
-  //     //   });
-  //   });
-  // }
+  shutDown() {
+    console.log("shutting down...");
+    this.shutdownMode = true;
+    this.checkForShutdown();
+  }
 
   checkForShutdown = () => {
     const anyRunning: boolean =
@@ -284,19 +361,7 @@ export class PM_Main extends PM {
         defaultModule
           .receiveTestResourceConfig(argz)
           .then(async (features: string[]) => {
-            Object.keys(features)
-              .reduce(async (mm, lm) => {
-                const accum = await mm;
-                const x = await this.configs.featureIngestor(features[lm]);
-                accum[lm] = x;
-                return accum;
-              }, Promise.resolve({}))
-              .then((x) => {
-                fs.writeFileSync(
-                  `${destFolder}/features.json`,
-                  JSON.stringify(x, null, 2)
-                );
-              });
+            this.receiveFeatures(features, destFolder);
           })
           .catch((e) => {
             console.log("catch", e);
@@ -482,14 +547,6 @@ export class PM_Main extends PM {
 
     let argz = "";
 
-    // const testConfig = this.configs.tests.find((t) => {
-    //   return t[0] === src;
-    // });
-
-    // if (!testConfig) {
-    //   console.error("missing test config");
-    //   process.exit(-1);
-    // }
     const testConfigResource = testConfig[2];
 
     let portsToUse: string[] = [];
@@ -610,9 +667,37 @@ export class PM_Main extends PM {
         // });
 
         page.exposeFunction(
+          "screencast",
+          async (ssOpts: ScreenshotOptions, testName: string) => {
+            const p = ssOpts.path as string;
+            const dir = path.dirname(p);
+            fs.mkdirSync(dir, {
+              recursive: true,
+            });
+            if (!files[testName]) {
+              files[testName] = new Set();
+            }
+            files[testName].add(ssOpts.path as string);
+
+            const sPromise = page.screenshot({
+              ...ssOpts,
+              path: p,
+            });
+
+            if (!screenshots[testName]) {
+              screenshots[testName] = [];
+            }
+            screenshots[testName].push(sPromise);
+            // sPromise.then(())
+            await sPromise;
+            return sPromise;
+            // page.evaluate(`window["screenshot done"]`);
+          }
+        );
+
+        page.exposeFunction(
           "customScreenShot",
           async (ssOpts: ScreenshotOptions, testName: string) => {
-            // console.log("main.ts browser custom-screenshot", testName);
             const p = ssOpts.path as string;
             const dir = path.dirname(p);
             fs.mkdirSync(dir, {
@@ -748,6 +833,54 @@ export class PM_Main extends PM {
           // return page.close();
         });
 
+        page.exposeFunction("page", () => {
+          return page.mainFrame()._id;
+        });
+
+        page.exposeFunction("click", (sel) => {
+          return page.click(sel);
+        });
+
+        page.exposeFunction("focusOn", (sel) => {
+          return page.focus(sel);
+        });
+
+        page.exposeFunction(
+          "typeInto",
+          async (value) => await page.keyboard.type(value)
+        );
+
+        page.exposeFunction("getValue", (selector) =>
+          page.$eval(selector, (input) => input.getAttribute("value"))
+        );
+
+        page.exposeFunction(
+          "getAttribute",
+          async (selector: string, attribute: string) => {
+            const attributeValue = await page.$eval(selector, (input) => {
+              return input.getAttribute(attribute);
+            });
+            return attributeValue;
+          }
+        );
+
+        page.exposeFunction("isDisabled", async (selector: string) => {
+          const attributeValue = await page.$eval(
+            selector,
+            (input: HTMLButtonElement) => {
+              return input.disabled;
+            }
+          );
+          return attributeValue;
+        });
+
+        page.exposeFunction("$", async (selector: string) => {
+          const x = page.$(selector);
+          const y = await x;
+
+          return y;
+        });
+
         return page;
       })
       .then(async (page) => {
@@ -755,31 +888,11 @@ export class PM_Main extends PM {
         //   console.debug(`Log from client: [${log.text()}] `)
         // );
         await page.goto(`file://${`${dest}.html`}`, {});
-        // await page.waitForNavigation();
-
-        // await page.exposeFunction("PUPPETEER", () => this.browser);
-        // console.log("window.PUPPETEER", this.browser);
-        // await page.evaluate(() => {
-        //   console.log("window.PUPPETEER", this.browser);
-        //   window.PUPPETEER = this.browser;
-        // });
 
         await page
           .evaluate(evaluation)
           .then(async (features: string[]) => {
-            Object.keys(features || {})
-              .reduce(async (mm, lm) => {
-                const accum = await mm;
-                const x = await this.configs.featureIngestor(features[lm]);
-                accum[lm] = x;
-                return accum;
-              }, Promise.resolve({}))
-              .then((x) => {
-                fs.writeFileSync(
-                  `${destFolder}/features.json`,
-                  JSON.stringify(x, null, 2)
-                );
-              });
+            this.receiveFeatures(features, destFolder);
           })
           .catch((e) => {
             console.log("evaluation failed.", dest);
@@ -789,90 +902,93 @@ export class PM_Main extends PM {
             console.log("evaluation complete.", dest);
             // page.close();
             this.deregister(t);
-            // whyIsNodeRunning();
           });
 
         return page;
       });
   };
 
-  end(accessObject: { uid: number }): boolean {
-    throw new Error("Method not implemented.");
-  }
+  receiveFeatures = (features: string[], destFolder: string) => {
+    console.log("this.receiveFeatures", features);
+    Object.keys(features)
+      .reduce(async (mm, featureStringKey) => {
+        const accum = await mm;
 
-  existsSync(destFolder: string): boolean {
-    return fs.existsSync(destFolder);
-  }
+        const isUrl = isValidUrl(featureStringKey);
 
-  async mkdirSync(fp: string) {
-    if (!fs.existsSync(fp)) {
-      return fs.mkdirSync(fp, {
-        recursive: true,
-      });
-    }
-    return false;
-  }
+        if (isUrl) {
+          const u = new URL(featureStringKey);
 
-  writeFileSync(fp: string, contents: string) {
-    fs.writeFileSync(fp, contents);
-  }
+          if (u.protocol === "file:") {
+            const newPath = `docs/features/internal/${u.pathname}`;
 
-  createWriteStream(filepath: string): fs.WriteStream {
-    return fs.createWriteStream(filepath);
-  }
-
-  testArtiFactoryfileWriter(tLog: ITLog, callback: (Promise) => void) {
-    return (fPath, value: string | Buffer | PassThrough) => {
-      callback(
-        new Promise<void>((res, rej) => {
-          tLog("testArtiFactory =>", fPath);
-
-          const cleanPath = path.resolve(fPath);
-          fPaths.push(cleanPath.replace(process.cwd(), ``));
-
-          const targetDir = cleanPath.split("/").slice(0, -1).join("/");
-
-          fs.mkdir(targetDir, { recursive: true }, async (error) => {
-            if (error) {
-              console.error(`❗️testArtiFactory failed`, targetDir, error);
-            }
-
-            fs.writeFileSync(
-              path.resolve(
-                targetDir.split("/").slice(0, -1).join("/"),
-                "manifest"
-              ),
-              fPaths.join(`\n`),
-              {
-                encoding: "utf-8",
+            fs.symlink(u.pathname, newPath, (err) => {
+              if (err) {
+                console.error("Error creating symlink:", err);
+              } else {
+                console.log("Symlink created successfully");
               }
+            });
+            accum.push(newPath);
+          } else if (u.protocol === "http:" || u.protocol === "https:") {
+            const newPath = `docs/features/external${u.hostname}${u.pathname}`;
+            const body = await this.configs.featureIngestor(
+              features[featureStringKey]
             );
+            writeFileAndCreateDir(newPath, body);
+            accum.push(newPath);
+          }
+        } else {
+          const newPath = `docs/features/plain/${await sha256(
+            featureStringKey
+          )}`;
+          writeFileAndCreateDir(newPath, featureStringKey);
+          accum.push(newPath);
+          // accum[newPath] = featureStringKey;
+        }
 
-            if (Buffer.isBuffer(value)) {
-              fs.writeFileSync(fPath, value, "binary");
-              res();
-            } else if (`string` === typeof value) {
-              fs.writeFileSync(fPath, value.toString(), {
-                encoding: "utf-8",
-              });
-              res();
-            } else {
-              /* @ts-ignore:next-line */
-              const pipeStream: PassThrough = value;
-              const myFile = fs.createWriteStream(fPath);
-              pipeStream.pipe(myFile);
-              pipeStream.on("close", () => {
-                myFile.close();
-                res();
-              });
-            }
-          });
-        })
-      );
-    };
+        return accum;
+      }, Promise.resolve([] as string[]))
+      .then((features: string[]) => {
+        fs.writeFileSync(
+          `${destFolder}/featurePrompt.txt`,
+          features
+            .map((f) => {
+              return `/read ${f}`;
+            })
+            .join("\n")
+        );
+      });
+  };
+}
+
+async function writeFileAndCreateDir(filePath, data) {
+  const dirPath = path.dirname(filePath);
+
+  try {
+    await fs.promises.mkdir(dirPath, { recursive: true });
+    await fs.promises.writeFile(filePath, data);
+    console.log(`File written successfully to ${filePath}`);
+  } catch (error) {
+    console.error(`Error writing file: ${error}`);
   }
+}
 
-  write(accessObject: { uid: number }, contents: string): boolean {
-    throw new Error("Method not implemented.");
+async function sha256(rawData) {
+  const data =
+    typeof rawData === "object" ? JSON.stringify(rawData) : String(rawData);
+
+  const msgBuffer = new TextEncoder().encode(data);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+function isValidUrl(string) {
+  try {
+    new URL(string);
+    return true;
+  } catch (err) {
+    return false;
   }
 }

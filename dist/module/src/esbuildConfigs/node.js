@@ -15,7 +15,7 @@ export default (config, entryPoints) => {
         }, platform: "node", external: [
             // "testeranto.json",
             // "features.test.js",
-            // "react",
+            "react",
             // "events",
             // "ganache"
             ...config.externals,

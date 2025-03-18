@@ -3,13 +3,21 @@
 import { PassThrough } from "stream";
 import { ITLog, ITTestResourceConfiguration } from "../lib";
 import { PM } from "./index.js";
-import { Page } from "puppeteer-core/lib/esm/puppeteer";
 declare type PuppetMasterServer = Record<string, Promise<any>>;
 export declare class PM_Node extends PM {
     server: PuppetMasterServer;
     testResourceConfiguration: ITTestResourceConfiguration;
     constructor(t: ITTestResourceConfiguration);
-    customScreenShot(opts: object, page: Page): any;
+    $(selector: string): boolean;
+    screencast(opts: object): void;
+    isDisabled(selector: string): boolean;
+    getAttribute(selector: string, attribute: string): void;
+    getValue(selector: string): void;
+    focusOn(selector: string): void;
+    typeInto(value: string): void;
+    page(): any;
+    click(selector: string): string | undefined;
+    customScreenShot(opts: object): any;
     existsSync(destFolder: string): boolean;
     mkdirSync(): any;
     write(writeObject: {
@@ -22,6 +30,6 @@ export declare class PM_Node extends PM {
     }): any;
     customclose(): void;
     testArtiFactoryfileWriter(tLog: ITLog, callback: (Promise: any) => void): (fPath: any, value: string | Buffer | PassThrough) => void;
-    startPuppeteer(options?: any): Promise<any>;
+    startPuppeteer(options?: any): any;
 }
 export {};
