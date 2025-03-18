@@ -11,7 +11,7 @@ export declare abstract class BaseSuite<ITestShape extends IBaseTest<unknown, un
     testResourceConfiguration: ITTestResourceConfiguration;
     index: number;
     constructor(name: string, index: number, givens?: IGivens<ITestShape>, checks?: BaseCheck<ITestShape>[]);
-    features(): {};
+    features(): string[];
     toObj(): {
         name: string;
         givens: {
@@ -28,7 +28,7 @@ export declare abstract class BaseSuite<ITestShape extends IBaseTest<unknown, un
             features: string[];
         }[];
         fails: BaseGiven<ITestShape>[];
-        features: {};
+        features: string[];
     };
     setup(s: ITestShape["iinput"], artifactory: ITestArtifactory, tr: ITTestResourceConfiguration, pm: PM): Promise<ITestShape["isubject"]>;
     assertThat(t: ITestShape["then"]): unknown;

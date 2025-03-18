@@ -526,36 +526,45 @@ class PM_Main extends index_js_1.PM {
         };
         this.receiveFeatures = (features, destFolder) => {
             console.log("this.receiveFeatures", features);
-            Object.keys(features)
+            features
                 .reduce(async (mm, featureStringKey) => {
                 const accum = await mm;
                 const isUrl = isValidUrl(featureStringKey);
                 if (isUrl) {
                     const u = new URL(featureStringKey);
                     if (u.protocol === "file:") {
-                        const newPath = `docs/features/internal/${u.pathname}`;
+                        const newPath = `${process.cwd()}/docs/features/internal/${path_1.default.relative(process.cwd(), u.pathname)}`;
+                        await fs_1.default.promises.mkdir(path_1.default.dirname(newPath), { recursive: true });
+                        try {
+                            await fs_1.default.unlinkSync(newPath);
+                            // console.log(`Removed existing link at ${newPath}`);
+                        }
+                        catch (error) {
+                            if (error.code !== "ENOENT") {
+                                // throw error;
+                            }
+                        }
                         fs_1.default.symlink(u.pathname, newPath, (err) => {
                             if (err) {
-                                console.error("Error creating symlink:", err);
+                                // console.error("Error creating symlink:", err);
                             }
                             else {
-                                console.log("Symlink created successfully");
+                                // console.log("Symlink created successfully");
                             }
                         });
                         accum.push(newPath);
                     }
                     else if (u.protocol === "http:" || u.protocol === "https:") {
-                        const newPath = `docs/features/external${u.hostname}${u.pathname}`;
-                        const body = await this.configs.featureIngestor(features[featureStringKey]);
+                        const newPath = `${process.cwd()}/docs/features/external${u.hostname}${u.pathname}`;
+                        const body = await this.configs.featureIngestor(featureStringKey);
                         writeFileAndCreateDir(newPath, body);
                         accum.push(newPath);
                     }
                 }
                 else {
-                    const newPath = `docs/features/plain/${await sha256(featureStringKey)}`;
+                    const newPath = `${process.cwd()}/docs/features/plain/${await sha256(featureStringKey)}`;
                     writeFileAndCreateDir(newPath, featureStringKey);
                     accum.push(newPath);
-                    // accum[newPath] = featureStringKey;
                 }
                 return accum;
             }, Promise.resolve([]))
@@ -745,7 +754,6 @@ async function writeFileAndCreateDir(filePath, data) {
     try {
         await fs_1.default.promises.mkdir(dirPath, { recursive: true });
         await fs_1.default.promises.writeFile(filePath, data);
-        console.log(`File written successfully to ${filePath}`);
     }
     catch (error) {
         console.error(`Error writing file: ${error}`);

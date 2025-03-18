@@ -80642,31 +80642,37 @@ var PM_Main = class extends PM {
     };
     this.receiveFeatures = (features, destFolder) => {
       console.log("this.receiveFeatures", features);
-      Object.keys(features).reduce(async (mm, featureStringKey) => {
+      features.reduce(async (mm, featureStringKey) => {
         const accum = await mm;
         const isUrl = isValidUrl(featureStringKey);
         if (isUrl) {
           const u = new URL(featureStringKey);
           if (u.protocol === "file:") {
-            const newPath = `docs/features/internal/${u.pathname}`;
+            const newPath = `${process.cwd()}/docs/features/internal/${path11.relative(
+              process.cwd(),
+              u.pathname
+            )}`;
+            await fs6.promises.mkdir(path11.dirname(newPath), { recursive: true });
+            try {
+              await fs6.unlinkSync(newPath);
+            } catch (error) {
+              if (error.code !== "ENOENT") {
+              }
+            }
             fs6.symlink(u.pathname, newPath, (err) => {
               if (err) {
-                console.error("Error creating symlink:", err);
               } else {
-                console.log("Symlink created successfully");
               }
             });
             accum.push(newPath);
           } else if (u.protocol === "http:" || u.protocol === "https:") {
-            const newPath = `docs/features/external${u.hostname}${u.pathname}`;
-            const body = await this.configs.featureIngestor(
-              features[featureStringKey]
-            );
+            const newPath = `${process.cwd()}/docs/features/external${u.hostname}${u.pathname}`;
+            const body = await this.configs.featureIngestor(featureStringKey);
             writeFileAndCreateDir(newPath, body);
             accum.push(newPath);
           }
         } else {
-          const newPath = `docs/features/plain/${await sha256(
+          const newPath = `${process.cwd()}/docs/features/plain/${await sha256(
             featureStringKey
           )}`;
           writeFileAndCreateDir(newPath, featureStringKey);
@@ -80872,7 +80878,6 @@ async function writeFileAndCreateDir(filePath, data) {
   try {
     await fs6.promises.mkdir(dirPath, { recursive: true });
     await fs6.promises.writeFile(filePath, data);
-    console.log(`File written successfully to ${filePath}`);
   } catch (error) {
     console.error(`Error writing file: ${error}`);
   }
@@ -80960,7 +80965,7 @@ var Puppeteer_default = async (partialConfig) => {
     "."
   );
   console.log(
-    "\n Puppeteer is running. Press 'q' to shutdown softly. Press 'x' to hard.\n"
+    "\n Puppeteer is running. Press 'q' to shutdown softly. Press 'x' to shutdown forcefully.\n"
   );
   process.stdin.on("keypress", (str, key) => {
     if (key.name === "q") {

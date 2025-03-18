@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = __importDefault(require("path"));
 const index_js_1 = __importDefault(require("./index.js"));
 const inputFilesPlugin_js_1 = __importDefault(require("./inputFilesPlugin.js"));
+const featuresPlugin_js_1 = __importDefault(require("./featuresPlugin.js"));
 exports.default = (config, entryPoints) => {
     const { inputFilesPluginFactory, register } = (0, inputFilesPlugin_js_1.default)("web", entryPoints);
     return Object.assign(Object.assign({}, (0, index_js_1.default)(config)), { 
@@ -39,6 +40,8 @@ exports.default = (config, entryPoints) => {
             "process",
             "dns",
         ], platform: "browser", entryPoints: [...entryPoints], plugins: [
+            featuresPlugin_js_1.default,
+            // markdownPlugin({}),
             ...(config.nodePlugins.map((p) => p(register, entryPoints)) || []),
             inputFilesPluginFactory,
             {

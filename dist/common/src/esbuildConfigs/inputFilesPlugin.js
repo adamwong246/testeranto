@@ -63,6 +63,7 @@ ${[...addableFiles]
                                     }
                                 })
                                     .join("\n")}
+/read ${testPaths}
 /load ${featuresPath}
 /code Fix the failing tests described in ${testPaths}. Correct any type signature errors. Implement any method which throws "Function not implemented."
 `);

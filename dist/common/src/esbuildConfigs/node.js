@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const index_js_1 = __importDefault(require("./index.js"));
 const inputFilesPlugin_js_1 = __importDefault(require("./inputFilesPlugin.js"));
+const featuresPlugin_1 = __importDefault(require("./featuresPlugin"));
 exports.default = (config, entryPoints) => {
     const { inputFilesPluginFactory, register } = (0, inputFilesPlugin_js_1.default)("node", entryPoints);
     // const inputFilesPluginFactory = inputFilesPlugin("node", entryPoints);
@@ -25,6 +26,8 @@ exports.default = (config, entryPoints) => {
             // "ganache"
             ...config.externals,
         ], entryPoints: [...entryPoints], plugins: [
+            featuresPlugin_1.default,
+            // markdownPlugin({}),
             ...(config.nodePlugins.map((p) => p(register, entryPoints)) || []),
             inputFilesPluginFactory,
             // inputFilesPlugin("node", entryPoints),

@@ -1,6 +1,7 @@
 import path from "path";
 import baseEsBuildConfig from "./index.js";
 import inputFilesPlugin from "./inputFilesPlugin.js";
+import featuresPlugin from "./featuresPlugin.js";
 export default (config, entryPoints) => {
     const { inputFilesPluginFactory, register } = inputFilesPlugin("web", entryPoints);
     return Object.assign(Object.assign({}, baseEsBuildConfig(config)), { 
@@ -34,6 +35,8 @@ export default (config, entryPoints) => {
             "process",
             "dns",
         ], platform: "browser", entryPoints: [...entryPoints], plugins: [
+            featuresPlugin,
+            // markdownPlugin({}),
             ...(config.nodePlugins.map((p) => p(register, entryPoints)) || []),
             inputFilesPluginFactory,
             {

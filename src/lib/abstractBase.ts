@@ -63,12 +63,12 @@ export abstract class BaseSuite<
       .flat()
       .filter((value, index, array) => {
         return array.indexOf(value) === index;
-      })
-      .reduce((mm, lm) => {
-        mm[lm] = lm;
-        return mm;
-      }, {});
-    return features || {};
+      });
+    // .reduce((mm, lm) => {
+    //   mm[lm] = lm;
+    //   return mm;
+    // }, {});
+    return features || [];
   }
 
   public toObj() {

@@ -56,7 +56,7 @@ exports.default = async (partialConfig) => {
             // "--start-maximized",
         ],
     }, ".");
-    console.log("\n Puppeteer is running. Press 'q' to shutdown softly. Press 'x' to hard.\n");
+    console.log("\n Puppeteer is running. Press 'q' to shutdown softly. Press 'x' to shutdown forcefully.\n");
     process.stdin.on("keypress", (str, key) => {
         if (key.name === "q") {
             pm.shutDown();

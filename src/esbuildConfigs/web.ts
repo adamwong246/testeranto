@@ -1,10 +1,14 @@
 import { BuildOptions } from "esbuild";
 import path from "path";
 
+// import pkg from "esbuild-plugin-markdown";
+// const { markdownPlugin } = pkg;
+
 import { IBaseConfig } from "../lib/types.js";
 
 import baseEsBuildConfig from "./index.js";
 import inputFilesPlugin from "./inputFilesPlugin.js";
+import featuresPlugin from "./featuresPlugin.js";
 
 export default (
   config: IBaseConfig,
@@ -64,6 +68,9 @@ export default (
     entryPoints: [...entryPoints],
 
     plugins: [
+      featuresPlugin,
+
+      // markdownPlugin({}),
       ...(config.nodePlugins.map((p) => p(register, entryPoints)) || []),
       inputFilesPluginFactory,
       {

@@ -1,5 +1,6 @@
 import baseEsBuildConfig from "./index.js";
 import inputFilesPlugin from "./inputFilesPlugin.js";
+import featuresPlugin from "./featuresPlugin";
 export default (config, entryPoints) => {
     const { inputFilesPluginFactory, register } = inputFilesPlugin("node", entryPoints);
     // const inputFilesPluginFactory = inputFilesPlugin("node", entryPoints);
@@ -20,6 +21,8 @@ export default (config, entryPoints) => {
             // "ganache"
             ...config.externals,
         ], entryPoints: [...entryPoints], plugins: [
+            featuresPlugin,
+            // markdownPlugin({}),
             ...(config.nodePlugins.map((p) => p(register, entryPoints)) || []),
             inputFilesPluginFactory,
             // inputFilesPlugin("node", entryPoints),
