@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ITProject = void 0;
+const child_process_1 = require("child_process");
 const esbuild_1 = __importDefault(require("esbuild"));
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
@@ -15,6 +16,84 @@ const web_html_js_1 = __importDefault(require("./web.html.js"));
 readline_1.default.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
     process.stdin.setRawMode(true);
+const logContent = [];
+function parseTsErrors() {
+    try {
+        // const logContent = fs.readFileSync(logPath, "utf-8").split("\n");
+        const regex = /(^src(.*?))\(\d*,\d*\): error/gm;
+        const brokenFilesToLines = {};
+        for (let i = 0; i < logContent.length - 1; i++) {
+            let m;
+            while ((m = regex.exec(logContent[i])) !== null) {
+                // This is necessary to avoid infinite loops with zero-width matches
+                if (m.index === regex.lastIndex) {
+                    regex.lastIndex++;
+                }
+                if (!brokenFilesToLines[m[1]]) {
+                    brokenFilesToLines[m[1]] = new Set();
+                }
+                brokenFilesToLines[m[1]].add(i);
+            }
+        }
+        const final = Object.keys(brokenFilesToLines).reduce((mm, lm, ndx) => {
+            mm[lm] = Array.from(brokenFilesToLines[lm]).map((l, ndx3) => {
+                const a = Array.from(brokenFilesToLines[lm]);
+                return Object.keys(a).reduce((mm2, lm2, ndx2) => {
+                    const acc = [];
+                    let j = a[lm2] + 1;
+                    let working = true;
+                    while (j < logContent.length - 1 && working) {
+                        if (!logContent[j].match(regex) &&
+                            working &&
+                            !logContent[j].match(/^..\/(.*?)\(\d*,\d*\)/)) {
+                            acc.push(logContent[j]);
+                        }
+                        else {
+                            working = false;
+                        }
+                        j++;
+                    }
+                    mm2[lm] = [logContent[l], ...acc];
+                    return mm2;
+                }, {})[lm];
+            });
+            return mm;
+        }, {});
+        Object.keys(final).forEach((k) => {
+            fs_1.default.mkdirSync(`./docs/types/${k.split("/").slice(0, -1).join("/")}`, {
+                recursive: true,
+            });
+            fs_1.default.writeFileSync(`./docs/types/${k}.type_errors.txt`, final[k].flat().flat().join("\r\n"));
+        });
+    }
+    catch (error) {
+        console.error("Error reading or parsing the log file:", error);
+        process.exit(1);
+    }
+}
+const compile = () => {
+    return new Promise((resolve, reject) => {
+        const tsc = (0, child_process_1.spawn)("tsc", ["-noEmit"]);
+        tsc.stdout.on("data", (data) => {
+            // console.log(`stdout: ${data}`);
+            const lines = data.toString().split("\n");
+            logContent.push(...lines);
+        });
+        tsc.stderr.on("data", (data) => {
+            // console.error(`stderr: ${data}`);
+        });
+        tsc.on("close", (code) => {
+            parseTsErrors();
+            resolve(`tsc process exited with code ${code}`);
+            // if (code !== 0) {
+            //   resolve(`tsc process exited with code ${code}`);
+            //   // reject(`tsc process exited with code ${code}`);
+            // } else {
+            //   resolve({});
+            // }
+        });
+    });
+};
 class ITProject {
     constructor(configs) {
         this.nodeDone = false;
@@ -58,6 +137,7 @@ class ITProject {
             }
         });
         fs_1.default.writeFileSync(`${this.config.outdir}/testeranto.json`, JSON.stringify(Object.assign(Object.assign({}, this.config), { buildDir: process.cwd() + "/" + this.config.outdir }), null, 2));
+        compile();
         Promise.resolve(Promise.all([...this.getSecondaryEndpointsPoints("web")].map(async (sourceFilePath) => {
             const sourceFileSplit = sourceFilePath.split("/");
             const sourceDir = sourceFileSplit.slice(0, -1);

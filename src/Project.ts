@@ -1,3 +1,5 @@
+import { spawn } from "child_process";
+
 import esbuild from "esbuild";
 import fs from "fs";
 import path from "path";
@@ -11,6 +13,104 @@ import { ITestTypes, IBaseConfig, IRunTime } from "./lib/types.js";
 
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
+
+const logContent: string[] = [];
+
+function parseTsErrors(): void {
+  try {
+    // const logContent = fs.readFileSync(logPath, "utf-8").split("\n");
+    const regex = /(^src(.*?))\(\d*,\d*\): error/gm;
+    const brokenFilesToLines: Record<string, Set<number>> = {};
+
+    for (let i = 0; i < logContent.length - 1; i++) {
+      let m;
+
+      while ((m = regex.exec(logContent[i])) !== null) {
+        // This is necessary to avoid infinite loops with zero-width matches
+        if (m.index === regex.lastIndex) {
+          regex.lastIndex++;
+        }
+        if (!brokenFilesToLines[m[1]]) {
+          brokenFilesToLines[m[1]] = new Set<number>();
+        }
+        brokenFilesToLines[m[1]].add(i);
+      }
+    }
+
+    const final = Object.keys(brokenFilesToLines).reduce((mm, lm, ndx) => {
+      mm[lm] = Array.from(brokenFilesToLines[lm]).map((l, ndx3) => {
+        const a = Array.from(brokenFilesToLines[lm]);
+
+        return Object.keys(a).reduce((mm2, lm2, ndx2) => {
+          const acc: string[] = [];
+
+          let j = a[lm2] + 1;
+
+          let working = true;
+          while (j < logContent.length - 1 && working) {
+            if (
+              !logContent[j].match(regex) &&
+              working &&
+              !logContent[j].match(/^..\/(.*?)\(\d*,\d*\)/)
+            ) {
+              acc.push(logContent[j]);
+            } else {
+              working = false;
+            }
+
+            j++;
+          }
+
+          mm2[lm] = [logContent[l], ...acc];
+
+          return mm2;
+        }, {} as any)[lm];
+      });
+      return mm;
+    }, {});
+
+    Object.keys(final).forEach((k) => {
+      fs.mkdirSync(`./docs/types/${k.split("/").slice(0, -1).join("/")}`, {
+        recursive: true,
+      });
+      fs.writeFileSync(
+        `./docs/types/${k}.type_errors.txt`,
+        final[k].flat().flat().join("\r\n")
+      );
+    });
+  } catch (error) {
+    console.error("Error reading or parsing the log file:", error);
+    process.exit(1);
+  }
+}
+
+const compile = () => {
+  return new Promise((resolve, reject) => {
+    const tsc = spawn("tsc", ["-noEmit"]);
+
+    tsc.stdout.on("data", (data) => {
+      // console.log(`stdout: ${data}`);
+      const lines = data.toString().split("\n");
+      logContent.push(...lines);
+    });
+
+    tsc.stderr.on("data", (data) => {
+      // console.error(`stderr: ${data}`);
+    });
+
+    tsc.on("close", (code) => {
+      parseTsErrors();
+
+      resolve(`tsc process exited with code ${code}`);
+      // if (code !== 0) {
+      //   resolve(`tsc process exited with code ${code}`);
+      //   // reject(`tsc process exited with code ${code}`);
+      // } else {
+      //   resolve({});
+      // }
+    });
+  });
+};
 
 export class ITProject {
   config: IBaseConfig;
@@ -42,6 +142,8 @@ export class ITProject {
         2
       )
     );
+
+    compile();
 
     Promise.resolve(
       Promise.all(

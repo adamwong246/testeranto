@@ -9,12 +9,11 @@ const register = (entrypoint, sources) => {
     sources.forEach((s) => otherInputs[entrypoint].add(s));
 };
 function tree(meta, key) {
+    console.log("searching metafile for", key);
     return [
         key,
-        ...meta.inputs[key].imports
-            .filter((x) => x.external !== true)
-            .filter((x) => x.path.split("/")[0] !== "node_modules")
-            .map((f) => f.path),
+        ...meta.inputs[key].imports.map((f) => path.resolve(f.path)),
+        // .filter((f) => f.startsWith(`${process.cwd()}/src`)),
     ];
 }
 export default (platform, entryPoints) => {
@@ -34,7 +33,7 @@ export default (platform, entryPoints) => {
                             }
                             const promptPath = path.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `prompt.txt`);
                             const testPaths = path.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `tests.json`);
-                            const featuresPath = path.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `featurePrompt.txt`); // /read ${featuresPath}
+                            const featuresPath = path.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `featurePrompt.txt`);
                             if (result.metafile) {
                                 const addableFiles = tree(result.metafile, entryPoint.split("/").slice(1).join("/"))
                                     .map((y) => {
@@ -44,23 +43,25 @@ export default (platform, entryPoints) => {
                                     return y;
                                 })
                                     .flat();
+                                const typeErrorFiles = addableFiles.map((t) => `docs/types/${t}.type_errors.txt`);
                                 fs.writeFileSync(promptPath, `
 ${[...addableFiles]
                                     .map((x) => {
                                     return `/add ${x}`;
                                 })
                                     .join("\n")}
-${[...addableFiles]
+${[...typeErrorFiles]
                                     .map((x) => {
-                                    const f = `docs/ts/${x}.type_errors.txt`;
-                                    if (fs.existsSync(f)) {
-                                        return `/read ${f}`;
-                                    }
+                                    // const f = `docs/types/${x}.type_errors.txt`;
+                                    return `/read ${x}`;
+                                    // if (fs.existsSync(f)) {
+                                    //   return `/read ${f}`;
+                                    // }
                                 })
                                     .join("\n")}
 /read ${testPaths}
 /load ${featuresPath}
-/code Fix the failing tests described in ${testPaths}. Correct any type signature errors. Implement any method which throws "Function not implemented."
+/code Fix the failing tests described in ${testPaths}. Correct any type signature errors described in the files [${typeErrorFiles.join(", ")}]. Implement any method which throws "Function not implemented."
 `);
                             }
                         });
