@@ -4,8 +4,8 @@ import puppeteer from "puppeteer-core";
 import crypto from "crypto";
 import { PM } from "./index.js";
 import { destinationOfRuntime } from "../utils.js";
-const fPaths = [];
 const fileStreams3 = [];
+const fPaths = [];
 const files = {};
 const screenshots = {};
 export class PM_Main extends PM {
@@ -121,6 +121,7 @@ export class PM_Main extends PM {
                 fs: destFolder,
                 browserWSEndpoint: this.browser.wsEndpoint(),
             });
+            // files[src] = new Set();
             // const evaluation = `
             // console.log("importing ${dest}.mjs");
             // import('${dest}.mjs').then(async (x) => {
@@ -184,9 +185,9 @@ export class PM_Main extends PM {
                     });
                     page.exposeFunction("createWriteStream", (fp, testName) => {
                         const f = fs.createWriteStream(fp);
-                        if (!files[testName]) {
-                            files[testName] = new Set();
-                        }
+                        // if (!files[testName]) {
+                        //   files[testName] = new Set();
+                        // }
                         files[testName].add(fp);
                         const p = new Promise((res, rej) => {
                             res(fp);
@@ -318,6 +319,8 @@ export class PM_Main extends PM {
     })`;
             const fileStreams2 = [];
             const doneFileStream2 = [];
+            const stdoutStream = fs.createWriteStream(`${dest}/stdout.log`);
+            const stderrStream = fs.createWriteStream(`${dest}/stderr.log`);
             this.browser
                 .newPage()
                 .then((page) => {
@@ -474,9 +477,39 @@ export class PM_Main extends PM {
                 return page;
             })
                 .then(async (page) => {
-                // page.on("console", (log) =>
-                //   console.debug(`Log from client: [${log.text()}] `)
-                // );
+                const close = () => {
+                    console.log("evaluation complete.", dest);
+                    page.off("pageerror");
+                    page.close();
+                    this.deregister(t);
+                    stderrStream.close();
+                    stdoutStream.close();
+                };
+                page.on("pageerror", (err) => {
+                    console.debug(`Error from ${t}: [${err.name}] `);
+                    stderrStream.write(err.name);
+                    if (err.cause) {
+                        console.debug(`Error from ${t} cause: [${err.cause}] `);
+                        stderrStream.write(err.cause);
+                    }
+                    if (err.stack) {
+                        console.debug(`Error from stack ${t}: [${err.stack}] `);
+                        stderrStream.write(err.stack);
+                    }
+                    console.debug(`Error from message ${t}: [${err.message}] `);
+                    stderrStream.write(err.message);
+                    // close();
+                });
+                page.on("console", (log) => {
+                    // console.debug(`Log from ${t}: [${log.text()}] `);
+                    // console.debug(`Log from ${t}: [${JSON.stringify(log.location())}] `);
+                    // console.debug(
+                    //   `Log from ${t}: [${JSON.stringify(log.stackTrace())}] `
+                    // );
+                    stdoutStream.write(log.text());
+                    stdoutStream.write(JSON.stringify(log.location()));
+                    stdoutStream.write(JSON.stringify(log.stackTrace()));
+                });
                 await page.goto(`file://${`${dest}.html`}`, {});
                 await page
                     .evaluate(evaluation)
@@ -488,9 +521,12 @@ export class PM_Main extends PM {
                     console.log(e);
                 })
                     .finally(() => {
-                    console.log("evaluation complete.", dest);
+                    close();
+                    // console.log("evaluation complete.", dest);
                     // page.close();
-                    this.deregister(t);
+                    // this.deregister(t);
+                    // stderrStream.close();
+                    // stdoutStream.close();
                 });
                 return page;
             });

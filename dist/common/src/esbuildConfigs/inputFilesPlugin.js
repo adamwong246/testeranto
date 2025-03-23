@@ -42,6 +42,8 @@ exports.default = (platform, entryPoints) => {
                             const promptPath = path_1.default.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `prompt.txt`);
                             const testPaths = path_1.default.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `tests.json`);
                             const featuresPath = path_1.default.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `featurePrompt.txt`);
+                            const stderrPath = path_1.default.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `stderr.log`);
+                            const stdoutPath = path_1.default.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `stdout.log`);
                             if (result.metafile) {
                                 const addableFiles = tree(result.metafile, entryPoint.split("/").slice(1).join("/"))
                                     .map((y) => {
@@ -51,7 +53,6 @@ exports.default = (platform, entryPoints) => {
                                     return y;
                                 })
                                     .flat();
-                                console.log("addablefiles", addableFiles);
                                 const typeErrorFiles = addableFiles.map((t) => `docs/types/${t}.type_errors.txt`);
                                 fs_1.default.writeFileSync(promptPath, `
 ${addableFiles
@@ -71,7 +72,11 @@ ${typeErrorFiles
                                     .join("\n")}
   
 /read ${testPaths}
+/read ${stdoutPath}
+/read ${stderrPath}
+
 /load ${featuresPath}
+
 /code Fix the failing tests described in ${testPaths}. Correct any type signature errors described in the files [${typeErrorFiles.join(", ")}]. Implement any method which throws "Function not implemented."
 `);
                             }

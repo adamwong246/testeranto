@@ -81,6 +81,19 @@ export default (
                 `featurePrompt.txt`
               );
 
+              const stderrPath = path.join(
+                "./docs/",
+                platform,
+                entryPoint.split(".").slice(0, -1).join("."),
+                `stderr.log`
+              );
+              const stdoutPath = path.join(
+                "./docs/",
+                platform,
+                entryPoint.split(".").slice(0, -1).join("."),
+                `stdout.log`
+              );
+
               if (result.metafile) {
                 const addableFiles = tree(
                   result.metafile,
@@ -118,7 +131,11 @@ ${typeErrorFiles
   .join("\n")}
   
 /read ${testPaths}
+/read ${stdoutPath}
+/read ${stderrPath}
+
 /load ${featuresPath}
+
 /code Fix the failing tests described in ${testPaths}. Correct any type signature errors described in the files [${typeErrorFiles.join(
                     ", "
                   )}]. Implement any method which throws "Function not implemented."

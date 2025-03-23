@@ -43,7 +43,7 @@
     "./**/*.*ts",
     "./**/*.*tsx",
     "index.d.ts",
-    "build-tests.ts",
+    "src/build-tests.ts",
     "run-tests.ts",
     "testeranto.ts",
   ],

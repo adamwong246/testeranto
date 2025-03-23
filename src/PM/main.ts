@@ -1,6 +1,10 @@
 import fs from "fs";
 import path from "path";
-import puppeteer, { Browser, ScreenshotOptions } from "puppeteer-core";
+import puppeteer, {
+  Browser,
+  ConsoleMessage,
+  ScreenshotOptions,
+} from "puppeteer-core";
 import { PassThrough } from "stream";
 import crypto from "crypto";
 
@@ -11,10 +15,12 @@ import { destinationOfRuntime } from "../utils.js";
 import { ITLog } from "../lib/index.js";
 import { Page } from "puppeteer-core/lib/esm/puppeteer";
 
+const fileStreams3: fs.WriteStream[] = [];
+
 type IFPaths = string[];
 
 const fPaths: IFPaths = [];
-const fileStreams3: fs.WriteStream[] = [];
+
 const files: Record<string, Set<string>> = {};
 const screenshots: Record<string, Promise<Uint8Array>[]> = {};
 
@@ -395,6 +401,7 @@ export class PM_Main extends PM {
       browserWSEndpoint: this.browser.wsEndpoint(),
     });
 
+    // files[src] = new Set();
     // const evaluation = `
     // console.log("importing ${dest}.mjs");
     // import('${dest}.mjs').then(async (x) => {
@@ -482,9 +489,9 @@ export class PM_Main extends PM {
             (fp: string, testName: string) => {
               const f = fs.createWriteStream(fp);
 
-              if (!files[testName]) {
-                files[testName] = new Set();
-              }
+              // if (!files[testName]) {
+              //   files[testName] = new Set();
+              // }
               files[testName].add(fp);
 
               const p = new Promise<string>((res, rej) => {
@@ -658,6 +665,9 @@ export class PM_Main extends PM {
 
     const fileStreams2: fs.WriteStream[] = [];
     const doneFileStream2: Promise<any>[] = [];
+
+    const stdoutStream = fs.createWriteStream(`${dest}/stdout.log`);
+    const stderrStream = fs.createWriteStream(`${dest}/stderr.log`);
 
     this.browser
       .newPage()
@@ -884,9 +894,44 @@ export class PM_Main extends PM {
         return page;
       })
       .then(async (page) => {
-        // page.on("console", (log) =>
-        //   console.debug(`Log from client: [${log.text()}] `)
-        // );
+        const close = () => {
+          console.log("evaluation complete.", dest);
+          page.off("pageerror");
+          page.close();
+
+          this.deregister(t);
+          stderrStream.close();
+          stdoutStream.close();
+        };
+
+        page.on("pageerror", (err: Error) => {
+          console.debug(`Error from ${t}: [${err.name}] `);
+          stderrStream.write(err.name);
+
+          if (err.cause) {
+            console.debug(`Error from ${t} cause: [${err.cause}] `);
+            stderrStream.write(err.cause);
+          }
+
+          if (err.stack) {
+            console.debug(`Error from stack ${t}: [${err.stack}] `);
+            stderrStream.write(err.stack);
+          }
+
+          console.debug(`Error from message ${t}: [${err.message}] `);
+          stderrStream.write(err.message);
+          // close();
+        });
+        page.on("console", (log: ConsoleMessage) => {
+          // console.debug(`Log from ${t}: [${log.text()}] `);
+          // console.debug(`Log from ${t}: [${JSON.stringify(log.location())}] `);
+          // console.debug(
+          //   `Log from ${t}: [${JSON.stringify(log.stackTrace())}] `
+          // );
+          stdoutStream.write(log.text());
+          stdoutStream.write(JSON.stringify(log.location()));
+          stdoutStream.write(JSON.stringify(log.stackTrace()));
+        });
         await page.goto(`file://${`${dest}.html`}`, {});
 
         await page
@@ -899,9 +944,12 @@ export class PM_Main extends PM {
             console.log(e);
           })
           .finally(() => {
-            console.log("evaluation complete.", dest);
+            close();
+            // console.log("evaluation complete.", dest);
             // page.close();
-            this.deregister(t);
+            // this.deregister(t);
+            // stderrStream.close();
+            // stdoutStream.close();
           });
 
         return page;

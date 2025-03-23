@@ -16,7 +16,7 @@ export default async (partialConfig) => {
         executablePath: 
         // process.env.CHROMIUM_PATH || "/opt/homebrew/bin/chromium",
         "/opt/homebrew/bin/chromium",
-        headless: true,
+        headless: false,
         dumpio: true,
         // timeout: 0,
         devtools: true,

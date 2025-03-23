@@ -111,9 +111,9 @@ export default abstract class Testeranto<
           return fullTestInterface.beforeEach(
             subject,
             initializer,
-            (fPath: string, value: unknown) =>
-              // TODO does not work?
-              artifactory(`beforeEach/${fPath}`, value),
+            // (fPath: string, value: unknown) =>
+            //   // TODO does not work?
+            //   artifactory(`beforeEach/${fPath}`, value),
             testResource,
             this.initialValues,
             pm

@@ -26,7 +26,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const Puppeteer_js_1 = __importDefault(require("./Puppeteer.js"));
 const process_1 = __importDefault(require("process"));
-const Project_1 = require("./src/Project");
-const Project = await Promise.resolve().then(() => __importStar(require(process_1.default.argv[2])));
-exports.default = new Project_1.ITProject(Project);
+if (!process_1.default.argv[2]) {
+    console.log("You didn't pass a config file");
+    process_1.default.exit(-1);
+}
+else {
+    Promise.resolve().then(() => __importStar(require(process_1.default.cwd() + "/" + process_1.default.argv[2]))).then((module) => {
+        (0, Puppeteer_js_1.default)(module.default);
+    });
+}

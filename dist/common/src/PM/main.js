@@ -33,8 +33,8 @@ const puppeteer_core_1 = __importDefault(require("puppeteer-core"));
 const crypto_1 = __importDefault(require("crypto"));
 const index_js_1 = require("./index.js");
 const utils_js_1 = require("../utils.js");
-const fPaths = [];
 const fileStreams3 = [];
+const fPaths = [];
 const files = {};
 const screenshots = {};
 class PM_Main extends index_js_1.PM {
@@ -150,6 +150,7 @@ class PM_Main extends index_js_1.PM {
                 fs: destFolder,
                 browserWSEndpoint: this.browser.wsEndpoint(),
             });
+            // files[src] = new Set();
             // const evaluation = `
             // console.log("importing ${dest}.mjs");
             // import('${dest}.mjs').then(async (x) => {
@@ -213,9 +214,9 @@ class PM_Main extends index_js_1.PM {
                     });
                     page.exposeFunction("createWriteStream", (fp, testName) => {
                         const f = fs_1.default.createWriteStream(fp);
-                        if (!files[testName]) {
-                            files[testName] = new Set();
-                        }
+                        // if (!files[testName]) {
+                        //   files[testName] = new Set();
+                        // }
                         files[testName].add(fp);
                         const p = new Promise((res, rej) => {
                             res(fp);
@@ -347,6 +348,8 @@ class PM_Main extends index_js_1.PM {
     })`;
             const fileStreams2 = [];
             const doneFileStream2 = [];
+            const stdoutStream = fs_1.default.createWriteStream(`${dest}/stdout.log`);
+            const stderrStream = fs_1.default.createWriteStream(`${dest}/stderr.log`);
             this.browser
                 .newPage()
                 .then((page) => {
@@ -503,9 +506,39 @@ class PM_Main extends index_js_1.PM {
                 return page;
             })
                 .then(async (page) => {
-                // page.on("console", (log) =>
-                //   console.debug(`Log from client: [${log.text()}] `)
-                // );
+                const close = () => {
+                    console.log("evaluation complete.", dest);
+                    page.off("pageerror");
+                    page.close();
+                    this.deregister(t);
+                    stderrStream.close();
+                    stdoutStream.close();
+                };
+                page.on("pageerror", (err) => {
+                    console.debug(`Error from ${t}: [${err.name}] `);
+                    stderrStream.write(err.name);
+                    if (err.cause) {
+                        console.debug(`Error from ${t} cause: [${err.cause}] `);
+                        stderrStream.write(err.cause);
+                    }
+                    if (err.stack) {
+                        console.debug(`Error from stack ${t}: [${err.stack}] `);
+                        stderrStream.write(err.stack);
+                    }
+                    console.debug(`Error from message ${t}: [${err.message}] `);
+                    stderrStream.write(err.message);
+                    // close();
+                });
+                page.on("console", (log) => {
+                    // console.debug(`Log from ${t}: [${log.text()}] `);
+                    // console.debug(`Log from ${t}: [${JSON.stringify(log.location())}] `);
+                    // console.debug(
+                    //   `Log from ${t}: [${JSON.stringify(log.stackTrace())}] `
+                    // );
+                    stdoutStream.write(log.text());
+                    stdoutStream.write(JSON.stringify(log.location()));
+                    stdoutStream.write(JSON.stringify(log.stackTrace()));
+                });
                 await page.goto(`file://${`${dest}.html`}`, {});
                 await page
                     .evaluate(evaluation)
@@ -517,9 +550,12 @@ class PM_Main extends index_js_1.PM {
                     console.log(e);
                 })
                     .finally(() => {
-                    console.log("evaluation complete.", dest);
+                    close();
+                    // console.log("evaluation complete.", dest);
                     // page.close();
-                    this.deregister(t);
+                    // this.deregister(t);
+                    // stderrStream.close();
+                    // stdoutStream.close();
                 });
                 return page;
             });

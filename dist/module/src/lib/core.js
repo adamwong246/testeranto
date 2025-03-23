@@ -37,9 +37,11 @@ export default class Testeranto extends ClassBuilder {
             }
         }, class Given extends BaseGiven {
             async givenThat(subject, testResource, artifactory, initializer, pm) {
-                return fullTestInterface.beforeEach(subject, initializer, (fPath, value) => 
-                // TODO does not work?
-                artifactory(`beforeEach/${fPath}`, value), testResource, this.initialValues, pm);
+                return fullTestInterface.beforeEach(subject, initializer, 
+                // (fPath: string, value: unknown) =>
+                //   // TODO does not work?
+                //   artifactory(`beforeEach/${fPath}`, value),
+                testResource, this.initialValues, pm);
             }
             afterEach(store, key, artifactory, pm) {
                 return new Promise((res) => res(fullTestInterface.afterEach(store, key, (fPath, value) => artifactory(`after/${fPath}`, value), pm)));

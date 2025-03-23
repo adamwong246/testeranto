@@ -1,9 +1,12 @@
 {
   "name": "testeranto",
-  "description": "teeny tiny tightly-typed typescript tests",
-  "version": "0.88.0",
+  "description": "the AI powered BDD test framework for typescript projects",
+  "version": "0.90.0",
   "engines": {
     "node": "18.18.0"
+  },
+  "bin": {
+    "testeranto-init": "bin/init-docs.js testeranto.mts"
   },
   "type": "module",
   "types": "./dist/index.d.mts",
@@ -185,19 +188,13 @@
     "ATDD"
   ],
   "scripts": {
-    "commit": "yarn build; git add --all && git commit -m 'stash'",
     "doit": "rm -rf node_modules && yarn install && yarn build",
-    "build": "sh prebuild.sh; cp ./src/cjs-shim.js ./dist/cjs-shim.js; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; sh postBuild.sh",
+    "build": "sh prebuild.sh; cp ./src/cjs-shim.js ./dist/cjs-shim.js; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; sh postBuild.sh; yarn bundle",
     "dev": "cp ./src/cjs-shim.js ./dist/cjs-shim.js && tsc -p tsconfig.module.json --watch & tsc -p tsconfig.common.json --watch & tsc -p tsconfig.types.json --watch ",
-    "prebuild-puppeteer": "node pupBuild.js",
+    "bundle": "node bundle.js",
     "build-module": "tsc -p tsconfig.module.json",
     "build-common": "tsc -p tsconfig.common.json",
-    "build-types": "tsc -p tsconfig.types.json",
-    "build-tests": "ts-node-esm ./project.ts",
-    "run-tests": "ts-node-esm ./run-tests.ts",
-    "init-docs": "ts-node-esm init-docs.ts",
-    "test": "yarn build-tests & yarn run-tests",
-    "scratch": "node scratch/build.js && node dist/scratch/server.js"
+    "build-types": "tsc -p tsconfig.types.json"
   },
   "peerDependencies": {
     "@types/react": "18.2.0",

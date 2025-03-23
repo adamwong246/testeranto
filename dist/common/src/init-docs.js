@@ -26,9 +26,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const process_1 = __importDefault(require("process"));
-process_1.default.chdir(__dirname);
-const Puppeteer_js_1 = __importDefault(require("./src/Puppeteer.js"));
-console.log(process_1.default.argv);
-const Project = await Promise.resolve().then(() => __importStar(require(process_1.default.argv[2])));
-exports.default = (0, Puppeteer_js_1.default)(Project);
+const fs_1 = __importDefault(require("fs"));
+const Init_1 = __importDefault(require("../dist/module/src/Init"));
+console.log("Initializing a testeranto project");
+if (!process.argv[2]) {
+    console.log("You didn't pass a config file, so I will create one for you.");
+    fs_1.default.writeFileSync("testeranto.mts", fs_1.default.readFileSync("node_modules/testeranto/src/defaultConfig.ts"));
+    Promise.resolve().then(() => __importStar(require(process.cwd() + "/" + "testeranto.mts"))).then((module) => {
+        (0, Init_1.default)(module.default);
+    });
+}
+else {
+    Promise.resolve().then(() => __importStar(require(process.cwd() + "/" + process.argv[2]))).then((module) => {
+        (0, Init_1.default)(module.default);
+    });
+}
