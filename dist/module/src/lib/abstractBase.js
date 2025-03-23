@@ -122,64 +122,6 @@ export class BaseSuite {
                 // return this;
             }
         }
-        // const afterAllProxy = new Proxy(pm, {
-        //   get(target, prop, receiver) {
-        //     if (prop === "writeFileSync") {
-        //       return (fp, contents) =>
-        //         target[prop](`suite-${sNdx}/afterAll/${fp}`, contents);
-        //     }
-        //     if (prop === "browser") {
-        //       return new Proxy(target[prop], {
-        //         get(bTarget, bProp, bReceiver) {
-        //           if (bProp === "pages") {
-        //             return async () => {
-        //               return bTarget.pages().then((pages) => {
-        //                 return pages.map((page) => {
-        //                   return new Proxy(page, {
-        //                     get(pTarget, pProp, pReciever) {
-        //                       if (pProp === "screenshot") {
-        //                         return async (x) => {
-        //                           return pm.customScreenShot({
-        //                             ...x,
-        //                             path:
-        //                               `${testResourceConfiguration.fs}/suite-${sNdx}/afterAll` +
-        //                               "/" +
-        //                               x.path,
-        //                           });
-        //                           // return await window["custom-screenshot"]({
-        //                           //   ...x,
-        //                           //   path:
-        //                           //     `${testResourceConfiguration.fs}/suite-${sNdx}/afterAll` +
-        //                           //     "/" +
-        //                           //     x.path,
-        //                           // });
-        //                         };
-        //                       } else if (pProp === "mainFrame") {
-        //                         return () => pTarget[pProp]();
-        //                       } else if (pProp === "close") {
-        //                         return () => pTarget[pProp]();
-        //                       }
-        //                       // else if (pProp === "mainFrame") {
-        //                       //   return () => target[pProp](...arguments);
-        //                       // }
-        //                       else {
-        //                         return Reflect.get(...arguments);
-        //                       }
-        //                     },
-        //                   });
-        //                 });
-        //               });
-        //               // return (await target.pages()).map((page) => {
-        //               //   return new Proxy(page, handler2);
-        //               // });
-        //             };
-        //           }
-        //         },
-        //       });
-        //     }
-        //     return Reflect.get(...arguments);
-        //   },
-        // });
         try {
             this.afterAll(this.store, artifactory, 
             // afterAllProxy
@@ -252,15 +194,17 @@ export class BaseGiven {
                         return (fp, contents) => target[prop](`suite-${suiteNdx}/given-${key}/when/beforeEach/${fp}`, contents);
                     }
                     if (prop === "customScreenShot") {
-                        return (opts) => target.customScreenShot(Object.assign(Object.assign({}, opts), { 
-                            // path: `${filepath}/${opts.path}`,
-                            path: `suite-${suiteNdx}/given-${key}/when/beforeEach/${opts.path}` }));
+                        return (opts) => target.customScreenShot(Object.assign(Object.assign({}, opts), { path: `suite-${suiteNdx}/given-${key}/when/beforeEach/${opts.path}` }));
                     }
                     return Reflect.get(...arguments);
                 },
             });
+            this.uberCatcher((e) => {
+                console.error(e);
+                this.error = e.error;
+                tLog(e.stack);
+            });
             this.store = await this.givenThat(subject, testResourceConfiguration, givenArtifactory, this.givenCB, beforeEachProxy);
-            // console.log("mark6", this.store);
             for (const [whenNdx, whenStep] of this.whens.entries()) {
                 await whenStep.test(this.store, testResourceConfiguration, tLog, pm, `suite-${suiteNdx}/given-${key}/when/${whenNdx}`);
             }

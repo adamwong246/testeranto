@@ -9,7 +9,9 @@ const index_js_1 = require("./lib/index.js");
 const node_js_1 = require("./PM/node.js");
 class NodeTesteranto extends core_js_1.default {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
-        super(input, testSpecification, testImplementation, testResourceRequirement, testInterface);
+        super(input, testSpecification, testImplementation, testResourceRequirement, testInterface, () => {
+            // no-op
+        });
     }
     async receiveTestResourceConfig(partialTestResource) {
         const t = JSON.parse(partialTestResource);

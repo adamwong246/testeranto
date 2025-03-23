@@ -43,9 +43,11 @@ export default abstract class Testeranto<
     testSpecification: ITestSpecification<ITestShape>,
     testImplementation: ITestImplementation<ITestShape>,
     testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
-    testInterface: Partial<ITestInterface<ITestShape>>
+    testInterface: Partial<ITestInterface<ITestShape>>,
+    uberCatcher: (cb) => void
   ) {
     const fullTestInterface = DefaultTestInterface(testInterface);
+
     super(
       testImplementation,
       testSpecification,
@@ -53,26 +55,6 @@ export default abstract class Testeranto<
 
       class extends BaseSuite<ITestShape> {
         afterAll(store: IStore, artifactory: ITestArtifactory, pm: PM) {
-          // const pagesHandler = {
-          //   get(target, prop) {
-          //     console.log(`Getting pages property ${prop}`);
-          //     return target[prop];
-          //   },
-          // };
-
-          // const browserHandler = {
-          //   get(target, prop) {
-          //     console.log(`Getting browser property ${prop}`);
-          //     if (prop === "pages") {
-          //       // return target[prop];
-          //       return new Proxy(target[prop], pagesHandler);
-          //     } else {
-          //       return target[prop];
-          //     }
-          //   },
-          // };
-          // const proxy = new Proxy(utils.browser, browserHandler);
-
           return fullTestInterface.afterAll(
             store,
             (fPath: string, value: unknown) =>
@@ -107,13 +89,12 @@ export default abstract class Testeranto<
       } as any,
 
       class Given extends BaseGiven<ITestShape> {
+        uberCatcher = uberCatcher;
+
         async givenThat(subject, testResource, artifactory, initializer, pm) {
           return fullTestInterface.beforeEach(
             subject,
             initializer,
-            // (fPath: string, value: unknown) =>
-            //   // TODO does not work?
-            //   artifactory(`beforeEach/${fPath}`, value),
             testResource,
             this.initialValues,
             pm

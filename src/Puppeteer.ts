@@ -83,10 +83,8 @@ export default async (partialConfig) => {
   process.stdin.on("keypress", (str, key) => {
     if (key.name === "q") {
       pm.shutDown();
-      // process.exit();
     }
     if (key.name === "x") {
-      // pm.shutDown();
       process.exit(-1);
     }
   });

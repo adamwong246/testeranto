@@ -489,8 +489,6 @@ var PM_Main = class extends PM {
       }).then(async (page) => {
         const close = () => {
           console.log("evaluation complete.", dest);
-          page.off("pageerror");
-          page.close();
           this.deregister(t);
           stderrStream.close();
           stdoutStream.close();

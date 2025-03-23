@@ -40,7 +40,23 @@ export class WebTesteranto<
       testSpecification,
       testImplementation,
       testResourceRequirement,
-      testInterface
+      testInterface,
+      (cb) => {
+        window.addEventListener("error", (e) => {
+          console.log("window.addEventListener error", e);
+          cb(e);
+          // throw e;
+        });
+
+        window.addEventListener(
+          "unhandledrejection",
+          (event: PromiseRejectionEvent) => {
+            console.log("window.addEventListener unhandledrejection", event);
+            cb({ error: event.reason.message });
+            // throw event;
+          }
+        );
+      }
     );
   }
 
@@ -53,24 +69,6 @@ export class WebTesteranto<
     return new Promise<string[]>((res, rej) => {
       res(features);
     });
-    // return features;
-    // Promise.all([...artifacts, logPromise]).then(async () => {
-    //   console.log("hello world");
-    //   pm.customclose();
-    //   // we can't close the window becuase we might be taking a screenshot
-    //   // window.close();
-    //   // console.log(
-    //   //   "(window as any).browser",
-    //   //   JSON.stringify(await (window as any).browser)
-    //   // );
-    //   // var currentWindow = (await (window as any).browser).getCurrentWindow();
-    //   // window.close();
-    //   // var customWindow = window.open("", "_blank", "");
-    //   // customWindow.close();
-    //   // this.puppetMaster.browser.page
-    //   // window["customclose"]();
-    //   // console.log("goodbye", window["customclose"]());
-    // });
   }
 }
 

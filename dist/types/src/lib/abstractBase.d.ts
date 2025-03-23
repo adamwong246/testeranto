@@ -63,6 +63,7 @@ export declare abstract class BaseGiven<ITestShape extends IBaseTest<unknown, un
     };
     abstract givenThat(subject: ITestShape["isubject"], testResourceConfiguration: any, artifactory: ITestArtifactory, givenCB: ITestShape["given"], pm: PM): Promise<ITestShape["istore"]>;
     afterEach(store: ITestShape["istore"], key: string, artifactory: ITestArtifactory, pm: PM): Promise<unknown>;
+    abstract uberCatcher(e: any): any;
     give(subject: ITestShape["isubject"], key: string, testResourceConfiguration: ITTestResourceConfiguration, tester: (t: Awaited<ITestShape["then"]> | undefined) => boolean, artifactory: ITestArtifactory, tLog: ITLog, pm: PM, suiteNdx: number): Promise<ITestShape["istore"]>;
 }
 export declare abstract class BaseWhen<ITestShape extends IBaseTest> {

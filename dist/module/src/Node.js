@@ -3,7 +3,9 @@ import { defaultTestResourceRequirement, } from "./lib/index.js";
 import { PM_Node } from "./PM/node.js";
 export class NodeTesteranto extends Testeranto {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
-        super(input, testSpecification, testImplementation, testResourceRequirement, testInterface);
+        super(input, testSpecification, testImplementation, testResourceRequirement, testInterface, () => {
+            // no-op
+        });
     }
     async receiveTestResourceConfig(partialTestResource) {
         const t = JSON.parse(partialTestResource);

@@ -4,28 +4,10 @@ const index_js_1 = require("./index.js");
 const abstractBase_js_1 = require("./abstractBase.js");
 const classBuilder_js_1 = require("./classBuilder.js");
 class Testeranto extends classBuilder_js_1.ClassBuilder {
-    constructor(input, testSpecification, testImplementation, testResourceRequirement = index_js_1.defaultTestResourceRequirement, testInterface) {
+    constructor(input, testSpecification, testImplementation, testResourceRequirement = index_js_1.defaultTestResourceRequirement, testInterface, uberCatcher) {
         const fullTestInterface = (0, index_js_1.DefaultTestInterface)(testInterface);
         super(testImplementation, testSpecification, input, class extends abstractBase_js_1.BaseSuite {
             afterAll(store, artifactory, pm) {
-                // const pagesHandler = {
-                //   get(target, prop) {
-                //     console.log(`Getting pages property ${prop}`);
-                //     return target[prop];
-                //   },
-                // };
-                // const browserHandler = {
-                //   get(target, prop) {
-                //     console.log(`Getting browser property ${prop}`);
-                //     if (prop === "pages") {
-                //       // return target[prop];
-                //       return new Proxy(target[prop], pagesHandler);
-                //     } else {
-                //       return target[prop];
-                //     }
-                //   },
-                // };
-                // const proxy = new Proxy(utils.browser, browserHandler);
                 return fullTestInterface.afterAll(store, (fPath, value) => {
                     artifactory(`afterAll4-${this.name}/${fPath}`, value);
                 }, pm);
@@ -38,12 +20,12 @@ class Testeranto extends classBuilder_js_1.ClassBuilder {
                     (async (input, artifactory, tr, pm) => input))(s, this.testResourceConfiguration, artifactory, pm);
             }
         }, class Given extends abstractBase_js_1.BaseGiven {
+            constructor() {
+                super(...arguments);
+                this.uberCatcher = uberCatcher;
+            }
             async givenThat(subject, testResource, artifactory, initializer, pm) {
-                return fullTestInterface.beforeEach(subject, initializer, 
-                // (fPath: string, value: unknown) =>
-                //   // TODO does not work?
-                //   artifactory(`beforeEach/${fPath}`, value),
-                testResource, this.initialValues, pm);
+                return fullTestInterface.beforeEach(subject, initializer, testResource, this.initialValues, pm);
             }
             afterEach(store, key, artifactory, pm) {
                 return new Promise((res) => res(fullTestInterface.afterEach(store, key, (fPath, value) => artifactory(`after/${fPath}`, value), pm)));

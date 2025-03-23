@@ -40,7 +40,10 @@ export class NodeTesteranto<
       testSpecification,
       testImplementation,
       testResourceRequirement,
-      testInterface
+      testInterface,
+      () => {
+        // no-op
+      }
     );
   }
 

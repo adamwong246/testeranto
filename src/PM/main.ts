@@ -896,8 +896,8 @@ export class PM_Main extends PM {
       .then(async (page) => {
         const close = () => {
           console.log("evaluation complete.", dest);
-          page.off("pageerror");
-          page.close();
+          // page.off("pageerror");
+          // page.close();
 
           this.deregister(t);
           stderrStream.close();
