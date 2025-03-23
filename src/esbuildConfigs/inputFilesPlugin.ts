@@ -14,11 +14,19 @@ const register = (entrypoint: string, sources: string[]): void => {
 
 function tree(meta: Metafile, key: string) {
   console.log("searching metafile for", key);
-  return [
-    key,
-    ...meta.inputs[key].imports.map((f) => path.resolve(f.path)),
-    // .filter((f) => f.startsWith(`${process.cwd()}/src`)),
-  ];
+
+  const outputKey = Object.keys(meta.outputs).find((k) => {
+    return meta.outputs[k].entryPoint === key;
+  });
+
+  if (!outputKey) {
+    console.error("No outputkey found");
+    process.exit(-1);
+  }
+
+  return Object.keys(meta.outputs[outputKey].inputs).filter((k) =>
+    k.startsWith("src")
+  );
 }
 
 export default (
@@ -93,12 +101,13 @@ export default (
                 fs.writeFileSync(
                   promptPath,
                   `
-${[...addableFiles]
+${addableFiles
   .map((x) => {
     return `/add ${x}`;
   })
   .join("\n")}
-${[...typeErrorFiles]
+  
+${typeErrorFiles
   .map((x) => {
     // const f = `docs/types/${x}.type_errors.txt`;
     return `/read ${x}`;
@@ -107,6 +116,7 @@ ${[...typeErrorFiles]
     // }
   })
   .join("\n")}
+  
 /read ${testPaths}
 /load ${featuresPath}
 /code Fix the failing tests described in ${testPaths}. Correct any type signature errors described in the files [${typeErrorFiles.join(
