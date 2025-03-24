@@ -69,15 +69,17 @@ const compile = () => {
     return new Promise((resolve, reject) => {
         const tsc = spawn("tsc", ["-noEmit"]);
         tsc.stdout.on("data", (data) => {
-            // console.log(`stdout: ${data}`);
+            // console.log(`tsc stdout: ${data}`);
             const lines = data.toString().split("\n");
             logContent.push(...lines);
         });
         tsc.stderr.on("data", (data) => {
-            // console.error(`stderr: ${data}`);
+            console.error(`stderr: ${data}`);
+            process.exit(-1);
         });
         tsc.on("close", (code) => {
             parseTsErrors();
+            console.log("tsc done");
             resolve(`tsc process exited with code ${code}`);
             // if (code !== 0) {
             //   resolve(`tsc process exited with code ${code}`);
@@ -131,7 +133,6 @@ export class ITProject {
             }
         });
         fs.writeFileSync(`${this.config.outdir}/testeranto.json`, JSON.stringify(Object.assign(Object.assign({}, this.config), { buildDir: process.cwd() + "/" + this.config.outdir }), null, 2));
-        compile();
         Promise.resolve(Promise.all([...this.getSecondaryEndpointsPoints("web")].map(async (sourceFilePath) => {
             const sourceFileSplit = sourceFilePath.split("/");
             const sourceDir = sourceFileSplit.slice(0, -1);
@@ -155,6 +156,7 @@ export class ITProject {
             });
         });
         Promise.all([
+            compile(),
             esbuild
                 .context(esbuildNodeConfiger(this.config, nodeEntryPoints))
                 .then(async (nodeContext) => {

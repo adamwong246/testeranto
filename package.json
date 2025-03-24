@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "the AI powered BDD test framework for typescript projects",
-  "version": "0.92.0",
+  "version": "0.93.0",
   "engines": {
     "node": "18.18.0"
   },
@@ -57,8 +57,8 @@
       "require": "./src/SubPackages/react-test-renderer/component/index.ts"
     },
     "./src/SubPackages/react-test-renderer/component/web": {
-      "import": "./dist/module/SubPackages/react-test-renderer/component/web.js",
-      "require": "./dist/common/SubPackages/react-test-renderer/component/web.js"
+      "import": "./dist/module/src/SubPackages/react-test-renderer/component/web.js",
+      "require": "./dist/common/src/SubPackages/react-test-renderer/component/web.js"
     },
     "./src/SubPackages/react-test-renderer/component/node": {
       "import": "./dist/module/src/SubPackages/react-test-renderer/component/node.js",

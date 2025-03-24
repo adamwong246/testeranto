@@ -251,10 +251,18 @@ export abstract class BaseGiven<
     this.thens = thens;
     this.givenCB = givenCB;
     this.initialValues = initialValues;
-    // this.key = key;
   }
 
-  beforeAll(store: ITestShape["istore"], artifactory: ITestArtifactory) {
+  beforeAll(
+    store: ITestShape["istore"],
+    // artifactory: ITestArtifactory
+    // subject,
+    initializer,
+    artifactory,
+    testResource,
+    initialValues,
+    pm
+  ) {
     return store;
   }
 

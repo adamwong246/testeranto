@@ -25,7 +25,7 @@ export type IStore = {
 
 type ISubject = {
   htmlElement: HTMLElement;
-  reactElement: any; //CElement<any, any>,
+  // reactElement: any; //CElement<any, any>,
   domRoot: ReactDom.Root;
 };
 
@@ -52,63 +52,40 @@ export default <ITestShape extends IBaseTest, IWhen, IGiven>(
     testSpecifications,
     testImplementations,
     {
-      beforeAll: async (initialProps, artificer): Promise<ISubject> => {
+      beforeAll: async (subject, artificer): Promise<ISubject> => {
         return await new Promise((resolve, rej) => {
           const htmlElement = document.getElementById("root");
           if (htmlElement) {
             const domRoot = ReactDom.createRoot(htmlElement);
-            // Ignore these type errors
-            domRoot.render(
-              createElement(
-                TesterantoComponent,
-                {
-                  ...initialProps,
-                  done: (reactElement) => {
-                    resolve({
-                      htmlElement,
-                      reactElement,
-                      domRoot,
-                    });
-                  },
-                },
-                []
-              )
-            );
-
-            // resolve({ htmlElement });
+            resolve({ domRoot, htmlElement });
           }
         });
       },
-      // beforeEach: async (
-      //   s,
-      //   initializer,
-      //   testResource,
-      //   artificer,
-      //   initialValues
-      // ): Promise<IStore> => {
-      //   return new Promise((resolve, rej) => {
-      //     console.log("beforeEach" + TesterantoComponent);
-
-      //     // const domRoot = ReactDom.createRoot(htmlElement);
-      //     // // Ignore these type errors
-      //     // domRoot.render(
-      //     //   createElement(
-      //     //     TesterantoComponent,
-      //     //     {
-      //     //       ...initializer,
-      //     //       done: (reactElement) => {
-      //     //         resolve({
-      //     //           htmlElement,
-      //     //           reactElement,
-      //     //           domRoot,
-      //     //         });
-      //     //       },
-      //     //     },
-      //     //     []
-      //     //   )
-      //     // );
-      //   });
-      // },
+      beforeEach: async (
+        { domRoot, htmlElement },
+        initialValues,
+        testResource,
+        artificer
+      ): Promise<IStore> => {
+        return new Promise(async (resolve, rej) => {
+          domRoot.render(
+            createElement(
+              TesterantoComponent,
+              {
+                ...initialValues,
+                done: (reactElement) => {
+                  resolve({
+                    htmlElement,
+                    reactElement,
+                    domRoot,
+                  });
+                },
+              },
+              []
+            )
+          );
+        });
+      },
       andWhen: function (s: IStore, whenCB): Promise<ISelection> {
         return whenCB(s);
       },

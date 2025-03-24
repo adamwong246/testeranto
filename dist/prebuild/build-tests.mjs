@@ -387,9 +387,12 @@ var compile = () => {
       logContent.push(...lines);
     });
     tsc.stderr.on("data", (data) => {
+      console.error(`stderr: ${data}`);
+      process.exit(-1);
     });
     tsc.on("close", (code) => {
       parseTsErrors();
+      console.log("tsc done");
       resolve(`tsc process exited with code ${code}`);
     });
   });
@@ -450,7 +453,6 @@ var ITProject = class {
         2
       )
     );
-    compile();
     Promise.resolve(
       Promise.all(
         [...this.getSecondaryEndpointsPoints("web")].map(
@@ -484,6 +486,7 @@ var ITProject = class {
       });
     });
     Promise.all([
+      compile(),
       esbuild.context(node_default(this.config, nodeEntryPoints)).then(async (nodeContext) => {
         if (this.config.devMode) {
           await nodeContext.watch().then((v) => {

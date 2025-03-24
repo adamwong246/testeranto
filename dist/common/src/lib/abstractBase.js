@@ -121,9 +121,11 @@ class BaseGiven {
         this.thens = thens;
         this.givenCB = givenCB;
         this.initialValues = initialValues;
-        // this.key = key;
     }
-    beforeAll(store, artifactory) {
+    beforeAll(store, 
+    // artifactory: ITestArtifactory
+    // subject,
+    initializer, artifactory, testResource, initialValues, pm) {
         return store;
     }
     toObj() {

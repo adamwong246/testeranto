@@ -1,7 +1,7 @@
 import React from "react";
 import Testeranto from "../Node.js";
 export default (testInput, testSpecifications, testImplementations, testInterface) => {
-    return Testeranto(testInput, testSpecifications, testImplementations, Object.assign({ beforeAll(x) {
+    return Testeranto(testInput, testSpecifications, testImplementations, Object.assign({ beforeAll: (x) => {
             // process.parentPort.postMessage(
             //   `/docs/web/src/ClassicalComponent/test.html`
             // );

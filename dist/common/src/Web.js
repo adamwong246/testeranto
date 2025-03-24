@@ -38,7 +38,6 @@ class WebTesteranto extends core_js_1.default {
         const t = partialTestResource; //JSON.parse(partialTestResource);
         const pm = new web_1.PM_Web(t);
         const { failed, artifacts, logPromise, features } = await this.testJobs[0].receiveTestResourceConfig(pm);
-        // pm.customclose();
         return new Promise((res, rej) => {
             res({ features, failed });
         });

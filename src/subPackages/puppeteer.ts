@@ -29,7 +29,7 @@ export default <ITestShape extends IBaseTest>(
     testSpecifications,
     testImplementations,
     {
-      beforeAll(x) {
+      beforeAll: (x) => {
         // process.parentPort.postMessage(
         //   `/docs/web/src/ClassicalComponent/test.html`
         // );

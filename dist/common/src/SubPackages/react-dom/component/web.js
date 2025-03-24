@@ -18,52 +18,26 @@ exports.default = (testInput, testSpecifications, testImplementations, testInter
         }
     }
     const t = (0, Web_js_1.default)(testInput, testSpecifications, testImplementations, {
-        beforeAll: async (initialProps, artificer) => {
+        beforeAll: async (subject, artificer) => {
             return await new Promise((resolve, rej) => {
                 const htmlElement = document.getElementById("root");
                 if (htmlElement) {
                     const domRoot = client_1.default.createRoot(htmlElement);
-                    // Ignore these type errors
-                    domRoot.render((0, react_1.createElement)(TesterantoComponent, Object.assign(Object.assign({}, initialProps), { done: (reactElement) => {
-                            resolve({
-                                htmlElement,
-                                reactElement,
-                                domRoot,
-                            });
-                        } }), []));
-                    // resolve({ htmlElement });
+                    resolve({ domRoot, htmlElement });
                 }
             });
         },
-        // beforeEach: async (
-        //   s,
-        //   initializer,
-        //   testResource,
-        //   artificer,
-        //   initialValues
-        // ): Promise<IStore> => {
-        //   return new Promise((resolve, rej) => {
-        //     console.log("beforeEach" + TesterantoComponent);
-        //     // const domRoot = ReactDom.createRoot(htmlElement);
-        //     // // Ignore these type errors
-        //     // domRoot.render(
-        //     //   createElement(
-        //     //     TesterantoComponent,
-        //     //     {
-        //     //       ...initializer,
-        //     //       done: (reactElement) => {
-        //     //         resolve({
-        //     //           htmlElement,
-        //     //           reactElement,
-        //     //           domRoot,
-        //     //         });
-        //     //       },
-        //     //     },
-        //     //     []
-        //     //   )
-        //     // );
-        //   });
-        // },
+        beforeEach: async ({ domRoot, htmlElement }, initialValues, testResource, artificer) => {
+            return new Promise(async (resolve, rej) => {
+                domRoot.render((0, react_1.createElement)(TesterantoComponent, Object.assign(Object.assign({}, initialValues), { done: (reactElement) => {
+                        resolve({
+                            htmlElement,
+                            reactElement,
+                            domRoot,
+                        });
+                    } }), []));
+            });
+        },
         andWhen: function (s, whenCB) {
             return whenCB(s);
         },

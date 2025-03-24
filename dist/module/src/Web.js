@@ -32,7 +32,6 @@ export class WebTesteranto extends Testeranto {
         const t = partialTestResource; //JSON.parse(partialTestResource);
         const pm = new PM_Web(t);
         const { failed, artifacts, logPromise, features } = await this.testJobs[0].receiveTestResourceConfig(pm);
-        // pm.customclose();
         return new Promise((res, rej) => {
             res({ features, failed });
         });

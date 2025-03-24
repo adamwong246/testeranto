@@ -2,15 +2,11 @@ import React from "react";
 import renderer, { act } from "react-test-renderer";
 export const testInterface = {
     beforeEach: function (CComponent, propsAndChildren) {
-        function Link(props) {
-            const p = props.props;
-            const c = props.children;
-            return React.createElement(CComponent, p, c);
+        function Link(proper) {
+            return React.createElement(CComponent, proper(), []);
         }
         return new Promise((res, rej) => {
             act(async () => {
-                const p = propsAndChildren;
-                const y = new CComponent(p.props);
                 const testRenderer = await renderer.create(Link(propsAndChildren));
                 res(testRenderer);
             });

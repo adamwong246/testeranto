@@ -31,15 +31,11 @@ const react_1 = __importDefault(require("react"));
 const react_test_renderer_1 = __importStar(require("react-test-renderer"));
 exports.testInterface = {
     beforeEach: function (CComponent, propsAndChildren) {
-        function Link(props) {
-            const p = props.props;
-            const c = props.children;
-            return react_1.default.createElement(CComponent, p, c);
+        function Link(proper) {
+            return react_1.default.createElement(CComponent, proper(), []);
         }
         return new Promise((res, rej) => {
             (0, react_test_renderer_1.act)(async () => {
-                const p = propsAndChildren;
-                const y = new CComponent(p.props);
                 const testRenderer = await react_test_renderer_1.default.create(Link(propsAndChildren));
                 res(testRenderer);
             });

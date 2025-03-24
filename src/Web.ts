@@ -90,7 +90,6 @@ export class WebTesteranto<
     const pm = new PM_Web(t);
     const { failed, artifacts, logPromise, features } =
       await this.testJobs[0].receiveTestResourceConfig(pm);
-    // pm.customclose();
     return new Promise<IFinalResults>((res, rej) => {
       res({ features, failed });
     });
