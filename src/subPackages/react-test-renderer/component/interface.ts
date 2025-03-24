@@ -1,5 +1,6 @@
 import React from "react";
 import renderer, { act } from "react-test-renderer";
+
 import { ISelection, IStore } from ".";
 
 export const testInterface = {
@@ -25,7 +26,6 @@ export const testInterface = {
     renderer: renderer.ReactTestRenderer,
     whenCB: any
   ): Promise<renderer.ReactTestRenderer> {
-    // console.log("andWhen", whenCB)
     await act(() => whenCB(renderer));
     return renderer;
   },
@@ -34,15 +34,12 @@ export const testInterface = {
   //   return whenCB()(s);
   // },
   butThen: async function (s: IStore, thenCB, tr): Promise<ISelection> {
-    console.log("butThen", thenCB.toString());
     return thenCB(s);
   },
   afterEach: async function (store: IStore, ndx, artificer) {
-    // console.log("afterEach", store);
     return {};
   },
   afterAll: (store: IStore, artificer) => {
-    // console.log("afterAll", store);
     return;
   },
 };

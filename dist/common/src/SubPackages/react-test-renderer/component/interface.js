@@ -46,7 +46,6 @@ exports.testInterface = {
         });
     },
     andWhen: async function (renderer, whenCB) {
-        // console.log("andWhen", whenCB)
         await (0, react_test_renderer_1.act)(() => whenCB(renderer));
         return renderer;
     },
@@ -54,15 +53,12 @@ exports.testInterface = {
     //   return whenCB()(s);
     // },
     butThen: async function (s, thenCB, tr) {
-        console.log("butThen", thenCB.toString());
         return thenCB(s);
     },
     afterEach: async function (store, ndx, artificer) {
-        // console.log("afterEach", store);
         return {};
     },
     afterAll: (store, artificer) => {
-        // console.log("afterAll", store);
         return;
     },
 };

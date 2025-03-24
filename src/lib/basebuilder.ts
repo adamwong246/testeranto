@@ -82,7 +82,6 @@ export abstract class BaseBuilder<
       this.Check()
     );
 
-    // const f = this.specs[0].features;
     this.testJobs = this.specs.map((suite: BaseSuite<ITestShape>) => {
       const suiteRunner =
         (suite: BaseSuite<ITestShape>) =>
@@ -90,14 +89,6 @@ export abstract class BaseBuilder<
           puppetMaster: PM,
           tLog: ITLog
         ): Promise<BaseSuite<ITestShape>> => {
-          // const puppeteerBrowser = await puppetMaster.startPuppeteer(
-          //   {
-          //     browserWSEndpoint:
-          //       puppetMaster.testResourceConfiguration.browserWSEndpoint,
-          //   },
-          //   puppetMaster.testResourceConfiguration.fs
-          // );
-
           const x = await suite.run(
             input,
             puppetMaster.testResourceConfiguration,
@@ -112,8 +103,6 @@ export abstract class BaseBuilder<
             puppetMaster
           );
 
-          // await puppetMaster.browser.disconnect();
-          // puppeteerBrowser.close();
           return x;
         };
 
@@ -163,7 +152,7 @@ export abstract class BaseBuilder<
             `tests.json`,
             JSON.stringify(this.toObj(), null, 2)
           );
-          console.log(`exiting gracefully with ${numberOfFailures} failures.`);
+          // console.log(`exiting gracefully with ${numberOfFailures} failures.`);
 
           return {
             failed: numberOfFailures,

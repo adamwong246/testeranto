@@ -15,6 +15,7 @@ export declare abstract class BaseSuite<ITestShape extends IBaseTest<unknown, un
     toObj(): {
         name: string;
         givens: {
+            key: string;
             name: string;
             whens: {
                 name: string;
@@ -46,9 +47,11 @@ export declare abstract class BaseGiven<ITestShape extends IBaseTest<unknown, un
     recommendedFsPath: string;
     givenCB: ITestShape["given"];
     initialValues: any;
+    key: string;
     constructor(name: string, features: string[], whens: BaseWhen<ITestShape>[], thens: BaseThen<ITestShape>[], givenCB: ITestShape["given"], initialValues: any);
     beforeAll(store: ITestShape["istore"], artifactory: ITestArtifactory): ITestShape["istore"];
     toObj(): {
+        key: string;
         name: string;
         whens: {
             name: string;
@@ -61,7 +64,7 @@ export declare abstract class BaseGiven<ITestShape extends IBaseTest<unknown, un
         error: (string | Error | undefined)[] | null;
         features: string[];
     };
-    abstract givenThat(subject: ITestShape["isubject"], testResourceConfiguration: any, artifactory: ITestArtifactory, givenCB: ITestShape["given"], pm: PM): Promise<ITestShape["istore"]>;
+    abstract givenThat(subject: ITestShape["isubject"], testResourceConfiguration: any, artifactory: ITestArtifactory, givenCB: ITestShape["given"], initialValues: any, pm: PM): Promise<ITestShape["istore"]>;
     afterEach(store: ITestShape["istore"], key: string, artifactory: ITestArtifactory, pm: PM): Promise<unknown>;
     abstract uberCatcher(e: any): any;
     give(subject: ITestShape["isubject"], key: string, testResourceConfiguration: ITTestResourceConfiguration, tester: (t: Awaited<ITestShape["then"]> | undefined) => boolean, artifactory: ITestArtifactory, tLog: ITLog, pm: PM, suiteNdx: number): Promise<ITestShape["istore"]>;

@@ -3,6 +3,10 @@ import type { Plugin } from "esbuild";
 import { IGivens, BaseCheck, BaseSuite, BaseGiven, BaseWhen, BaseThen } from "./abstractBase";
 import { ITTestResourceConfiguration, ITestArtificer } from ".";
 import { PM } from "../PM/index";
+export declare type IFinalResults = {
+    features: string[];
+    failed: number;
+};
 export declare type IRunTime = `node` | `web`;
 export declare type ITestTypes = [string, IRunTime, {
     ports: number;
@@ -55,7 +59,7 @@ export declare type ITestInterface<ITestShape extends IBaseTest<unknown, unknown
     afterAll: (store: ITestShape["istore"], artificer: ITestArtificer, pm: PM) => any;
     afterEach: (store: ITestShape["istore"], key: string, artificer: ITestArtificer, pm: PM) => Promise<unknown>;
     beforeAll: (input: ITestShape["iinput"], testResource: ITTestResourceConfiguration, artificer: ITestArtificer, pm: PM) => Promise<ITestShape["isubject"]>;
-    beforeEach: (subject: ITestShape["isubject"], initializer: (c?: any) => ITestShape["given"], testResource: ITTestResourceConfiguration, initialValues: any, pm: PM) => Promise<ITestShape["istore"]>;
+    beforeEach: (subject: ITestShape["isubject"], initializer: (c?: any) => ITestShape["given"], artificer: ITestArtificer, testResource: ITTestResourceConfiguration, initialValues: any, pm: PM) => Promise<ITestShape["istore"]>;
 };
 export declare type ISuiteKlasser<ITestShape extends IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>> = (name: string, index: number, givens: IGivens<ITestShape>, checks: BaseCheck<ITestShape>[]) => BaseSuite<ITestShape>;
 export declare type IGivenKlasser<ITestShape extends IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>> = (name: any, features: any, whens: any, thens: any, givenCB: any) => BaseGiven<ITestShape>;

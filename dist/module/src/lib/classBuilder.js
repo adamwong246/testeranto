@@ -7,7 +7,7 @@ export class ClassBuilder extends BaseBuilder {
             };
             return a;
         }, {});
-        const classyGivens = Object.entries(testImplementation.givens).reduce((a, [key, givEn]) => {
+        const classyGivens = Object.entries(testImplementation.givens).reduce((a, [key, g]) => {
             a[key] = (features, whens, thens, givEn) => {
                 return new givenKlasser.prototype.constructor(key, features, whens, thens, testImplementation.givens[key], givEn);
             };

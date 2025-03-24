@@ -5,7 +5,6 @@ import type { ImportKind, Metafile, Plugin } from "esbuild";
 const otherInputs: Record<string, Set<string>> = {};
 
 const register = (entrypoint: string, sources: string[]): void => {
-  console.log("register", entrypoint, sources);
   if (!otherInputs[entrypoint]) {
     otherInputs[entrypoint] = new Set();
   }
@@ -13,8 +12,6 @@ const register = (entrypoint: string, sources: string[]): void => {
 };
 
 function tree(meta: Metafile, key: string) {
-  console.log("searching metafile for", key);
-
   const outputKey = Object.keys(meta.outputs).find((k) => {
     return meta.outputs[k].entryPoint === key;
   });

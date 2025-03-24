@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "the AI powered BDD test framework for typescript projects",
-  "version": "0.90.0",
+  "version": "0.92.0",
   "engines": {
     "node": "18.18.0"
   },
@@ -33,8 +33,8 @@
       "require": "./src/SubPackages/react/jsx/web.ts"
     },
     "./src/SubPackages/react/jsx/node": {
-      "import": "./dist/module/SubPackages/react/jsx/node.js",
-      "require": "./dist/common/SubPackages/react/jsx/node.js"
+      "import": "./dist/module/src/SubPackages/react/jsx/node.js",
+      "require": "./dist/common/src/SubPackages/react/jsx/node.js"
     },
     "./src/SubPackages/react/component/index": {
       "import": "./dist/module/SubPackages/react/component/index.js",
@@ -61,8 +61,8 @@
       "require": "./dist/common/SubPackages/react-test-renderer/component/web.js"
     },
     "./src/SubPackages/react-test-renderer/component/node": {
-      "import": "./dist/module/SubPackages/react-test-renderer/component/node.js",
-      "require": "./dist/common/SubPackages/react-test-renderer/component/node.js"
+      "import": "./dist/module/src/SubPackages/react-test-renderer/component/node.js",
+      "require": "./dist/common/src/SubPackages/react-test-renderer/component/node.js"
     },
     "./src/SubPackages/react-test-renderer/jsx/index.js": {
       "import": "./dist/module/src/SubPackages/react-test-renderer/jsx/index.js",
@@ -109,12 +109,12 @@
       "require": "./dist/common/SubPackages/react-dom/jsx/index.js"
     },
     "./src/SubPackages/react-dom/component/web": {
-      "import": "./dist/module/SubPackages/react-dom/component/web.js",
-      "require": "./dist/common/SubPackages/react-dom/component/web.js"
+      "import": "./dist/module/src/SubPackages/react-dom/component/web.js",
+      "require": "./dist/common/src/SubPackages/react-dom/component/web.js"
     },
     "./src/SubPackages/react-dom/component/node": {
-      "import": "./dist/module/SubPackages/react-dom/component/node.js",
-      "require": "./dist/common/SubPackages/react-dom/component/node.js"
+      "import": "./dist/module/src/SubPackages/react-dom/component/node.js",
+      "require": "./dist/common/src/SubPackages/react-dom/component/node.js"
     },
     "./src/Types": {
       "import": "./src/Types.ts",

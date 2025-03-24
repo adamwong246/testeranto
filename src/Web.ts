@@ -1,3 +1,4 @@
+import { error } from "console";
 import { PM_Web } from "./PM/web";
 import type {
   IBaseTest,
@@ -10,7 +11,14 @@ import {
   ITTestResourceRequest,
   defaultTestResourceRequirement,
 } from "./lib/index.js";
-import { ITestInterface, IWebTestInterface } from "./lib/types";
+import { IFinalResults, ITestInterface, IWebTestInterface } from "./lib/types";
+
+let errorCallback = (e: any) => {};
+let unhandledrejectionCallback = (event: PromiseRejectionEvent) => {
+  console.log("window.addEventListener unhandledrejection", event);
+  // cb({ error: event.reason.message });
+  // throw event;
+};
 
 export class WebTesteranto<
   TestShape extends IBaseTest<
@@ -42,19 +50,36 @@ export class WebTesteranto<
       testResourceRequirement,
       testInterface,
       (cb) => {
-        window.addEventListener("error", (e) => {
+        window.removeEventListener("error", errorCallback);
+
+        errorCallback = (e) => {
           console.log("window.addEventListener error", e);
           cb(e);
           // throw e;
-        });
+        };
+
+        window.addEventListener("error", errorCallback);
+
+        window.removeEventListener(
+          "unhandledrejection",
+          unhandledrejectionCallback
+        );
+        /////////////////////
+
+        window.removeEventListener(
+          "unhandledrejection",
+          unhandledrejectionCallback
+        );
+
+        unhandledrejectionCallback = (event: PromiseRejectionEvent) => {
+          console.log("window.addEventListener unhandledrejection", event);
+          cb({ error: event.reason.message });
+          // throw event;
+        };
 
         window.addEventListener(
           "unhandledrejection",
-          (event: PromiseRejectionEvent) => {
-            console.log("window.addEventListener unhandledrejection", event);
-            cb({ error: event.reason.message });
-            // throw event;
-          }
+          unhandledrejectionCallback
         );
       }
     );
@@ -65,9 +90,9 @@ export class WebTesteranto<
     const pm = new PM_Web(t);
     const { failed, artifacts, logPromise, features } =
       await this.testJobs[0].receiveTestResourceConfig(pm);
-    pm.customclose();
-    return new Promise<string[]>((res, rej) => {
-      res(features);
+    // pm.customclose();
+    return new Promise<IFinalResults>((res, rej) => {
+      res({ features, failed });
     });
   }
 }

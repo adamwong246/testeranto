@@ -7,6 +7,7 @@ import { PassThrough } from "stream";
 import { IBuiltConfig, ITestTypes } from "../lib/types";
 import { PM } from "./index.js";
 import { ITLog } from "../lib/index.js";
+import { Page } from "puppeteer-core/lib/esm/puppeteer";
 export declare class PM_Main extends PM {
     browser: Browser;
     shutdownMode: boolean;
@@ -42,7 +43,7 @@ export declare class PM_Main extends PM {
     register: (src: string) => void;
     deregister: (src: string) => void;
     launchNode: (src: string, dest: string) => Promise<void>;
-    launchWebSideCar: (src: string, dest: string, testConfig: ITestTypes) => Promise<unknown>;
+    launchWebSideCar: (src: string, dest: string, testConfig: ITestTypes) => Promise<Page>;
     launchNodeSideCar: (src: string, dest: string, testConfig: ITestTypes) => Promise<void>;
     launchWeb: (t: string, dest: string, sidecars: ITestTypes[]) => void;
     receiveFeatures: (features: string[], destFolder: string) => void;

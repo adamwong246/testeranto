@@ -5,7 +5,7 @@ import {
   ITestImplementation,
 } from "../Types.js";
 
-import { ITestInterface } from "./types.js";
+import { IFinalResults, ITestInterface } from "./types.js";
 import {
   DefaultTestInterface,
   ITTestResourceRequest,
@@ -91,12 +91,20 @@ export default abstract class Testeranto<
       class Given extends BaseGiven<ITestShape> {
         uberCatcher = uberCatcher;
 
-        async givenThat(subject, testResource, artifactory, initializer, pm) {
+        async givenThat(
+          subject,
+          testResource,
+          artifactory,
+          initializer,
+          initialValues,
+          pm
+        ) {
           return fullTestInterface.beforeEach(
             subject,
             initializer,
+            artifactory,
             testResource,
-            this.initialValues,
+            initialValues,
             pm
           );
         }
@@ -239,11 +247,10 @@ export default abstract class Testeranto<
       } as any,
 
       testResourceRequirement
-      // puppetMaster
     );
   }
 
   abstract receiveTestResourceConfig(
     partialTestResource: string
-  ): Promise<string[]>;
+  ): Promise<IFinalResults>;
 }

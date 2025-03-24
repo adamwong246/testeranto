@@ -37,14 +37,12 @@ import fs from "fs";
 import path from "path";
 var otherInputs = {};
 var register = (entrypoint, sources) => {
-  console.log("register", entrypoint, sources);
   if (!otherInputs[entrypoint]) {
     otherInputs[entrypoint] = /* @__PURE__ */ new Set();
   }
   sources.forEach((s) => otherInputs[entrypoint].add(s));
 };
 function tree(meta, key) {
-  console.log("searching metafile for", key);
   const outputKey = Object.keys(meta.outputs).find((k) => {
     return meta.outputs[k].entryPoint === key;
   });

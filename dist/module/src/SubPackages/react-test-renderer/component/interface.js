@@ -17,7 +17,6 @@ export const testInterface = {
         });
     },
     andWhen: async function (renderer, whenCB) {
-        // console.log("andWhen", whenCB)
         await act(() => whenCB(renderer));
         return renderer;
     },
@@ -25,15 +24,12 @@ export const testInterface = {
     //   return whenCB()(s);
     // },
     butThen: async function (s, thenCB, tr) {
-        console.log("butThen", thenCB.toString());
         return thenCB(s);
     },
     afterEach: async function (store, ndx, artificer) {
-        // console.log("afterEach", store);
         return {};
     },
     afterAll: (store, artificer) => {
-        // console.log("afterAll", store);
         return;
     },
 };

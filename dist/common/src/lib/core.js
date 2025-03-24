@@ -24,8 +24,8 @@ class Testeranto extends classBuilder_js_1.ClassBuilder {
                 super(...arguments);
                 this.uberCatcher = uberCatcher;
             }
-            async givenThat(subject, testResource, artifactory, initializer, pm) {
-                return fullTestInterface.beforeEach(subject, initializer, testResource, this.initialValues, pm);
+            async givenThat(subject, testResource, artifactory, initializer, initialValues, pm) {
+                return fullTestInterface.beforeEach(subject, initializer, artifactory, testResource, initialValues, pm);
             }
             afterEach(store, key, artifactory, pm) {
                 return new Promise((res) => res(fullTestInterface.afterEach(store, key, (fPath, value) => artifactory(`after/${fPath}`, value), pm)));
@@ -95,9 +95,7 @@ class Testeranto extends classBuilder_js_1.ClassBuilder {
                 // TODO does not work?
                 artifactory(`afterEach2-${this.name}/${fPath}`, value), pm)));
             }
-        }, testResourceRequirement
-        // puppetMaster
-        );
+        }, testResourceRequirement);
     }
 }
 exports.default = Testeranto;

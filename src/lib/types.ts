@@ -12,6 +12,8 @@ import {
 import { ITTestResourceConfiguration, ITestArtificer } from ".";
 import { PM } from "../PM/index";
 
+export type IFinalResults = { features: string[]; failed: number };
+
 export type IRunTime = `node` | `web`;
 
 export type ITestTypes = [string, IRunTime, { ports: number }, ITestTypes[]];
@@ -213,7 +215,7 @@ export type ITestInterface<
   beforeEach: (
     subject: ITestShape["isubject"],
     initializer: (c?) => ITestShape["given"],
-    // artificer: ITestArtificer,
+    artificer: ITestArtificer,
     testResource: ITTestResourceConfiguration,
     initialValues,
     pm: PM

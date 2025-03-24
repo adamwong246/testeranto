@@ -112,12 +112,13 @@ export abstract class BaseSuite<
     const suiteArtifactory = (fPath: string, value: unknown) =>
       artifactory(`suite-${this.index}-${this.name}/${fPath}`, value);
 
-    console.log("\nSuite:", this.index, this.name);
+    // console.log("\nSuite:", this.index, this.name);
     tLog("\nSuite:", this.index, this.name);
     const sNdx = this.index;
     const sName = this.name;
 
-    for (const [gNdx, g] of Object.entries(this.givens)) {
+    for (const [gKey, g] of Object.entries(this.givens)) {
+      // console.log("gKey", gKey);
       const beforeAllProxy = new Proxy(pm, {
         get(target, prop, receiver) {
           if (prop === "customScreenShot") {
@@ -134,60 +135,6 @@ export abstract class BaseSuite<
               target[prop](`suite-${sNdx}/beforeAll/${fp}`, contents);
           }
 
-          // if (prop === "browser") {
-          //   return new Proxy(target[prop], {
-          //     get(bTarget, bProp, bReceiver) {
-          //       if (bProp === "pages") {
-          //         return async () => {
-          //           return bTarget.pages().then((pages) => {
-          //             return pages.map((page) => {
-          //               return new Proxy(page, {
-          //                 get(pTarget, pProp, pReciever) {
-          //                   if (pProp === "screenshot") {
-          //                     return async (x) => {
-          //                       return pm.customScreenShot(
-          //                         {
-          //                           ...x,
-          //                           path:
-          //                             `${testResourceConfiguration.fs}/suite-${sNdx}/beforeAll` +
-          //                             "/" +
-          //                             x.path,
-          //                         },
-          //                         page
-          //                       );
-          //                       // return await window["custom-screenshot"]({
-          //                       //   ...x,
-          //                       //   path:
-          //                       //     `${testResourceConfiguration.fs}/suite-${sNdx}/afterAll` +
-          //                       //     "/" +
-          //                       //     x.path,
-          //                       // });
-          //                     };
-          //                   } else if (pProp === "mainFrame") {
-          //                     return () => pTarget[pProp]();
-          //                   } else if (pProp === "close") {
-          //                     return () => pTarget[pProp]();
-          //                   }
-
-          //                   // else if (pProp === "mainFrame") {
-          //                   //   return () => target[pProp](...arguments);
-          //                   // }
-          //                   else {
-          //                     return Reflect.get(...arguments);
-          //                   }
-          //                 },
-          //               });
-          //             });
-          //           });
-          //           // return (await target.pages()).map((page) => {
-          //           //   return new Proxy(page, handler2);
-          //           // });
-          //         };
-          //       }
-          //     },
-          //   });
-          // }
-
           return Reflect.get(...arguments);
         },
       });
@@ -199,11 +146,11 @@ export abstract class BaseSuite<
         beforeAllProxy
       );
 
-      const giver = this.givens[gNdx];
+      const giver = this.givens[gKey];
       try {
         this.store = await giver.give(
           subject,
-          gNdx,
+          gKey,
           testResourceConfiguration,
           this.assertThat,
           suiteArtifactory,
@@ -287,6 +234,7 @@ export abstract class BaseGiven<
   recommendedFsPath: string;
   givenCB: ITestShape["given"];
   initialValues: any;
+  key: string;
 
   constructor(
     name: string,
@@ -295,6 +243,7 @@ export abstract class BaseGiven<
     thens: BaseThen<ITestShape>[],
     givenCB: ITestShape["given"],
     initialValues: any
+    // key: string
   ) {
     this.name = name;
     this.features = features;
@@ -302,6 +251,7 @@ export abstract class BaseGiven<
     this.thens = thens;
     this.givenCB = givenCB;
     this.initialValues = initialValues;
+    // this.key = key;
   }
 
   beforeAll(store: ITestShape["istore"], artifactory: ITestArtifactory) {
@@ -310,6 +260,7 @@ export abstract class BaseGiven<
 
   toObj() {
     return {
+      key: this.key,
       name: this.name,
       whens: this.whens.map((w) => w.toObj()),
       thens: this.thens.map((t) => t.toObj()),
@@ -324,6 +275,7 @@ export abstract class BaseGiven<
     testResourceConfiguration,
     artifactory: ITestArtifactory,
     givenCB: ITestShape["given"],
+    initialValues: any,
     pm: PM
   ): Promise<ITestShape["istore"]>;
 
@@ -348,10 +300,12 @@ export abstract class BaseGiven<
     pm: PM,
     suiteNdx: number
   ) {
+    this.key = key;
+    tLog(`\n ${this.key}`);
     tLog(`\n Given: ${this.name}`);
 
     const givenArtifactory = (fPath: string, value: unknown) =>
-      artifactory(`given-${key}/${fPath}`, value);
+      artifactory(`given-${this.key}/${fPath}`, value);
     try {
       // tLog(`\n Given this.store`, this.store);
 
@@ -360,7 +314,7 @@ export abstract class BaseGiven<
           if (prop === "writeFileSync") {
             return (fp, contents) =>
               target[prop](
-                `suite-${suiteNdx}/given-${key}/when/beforeEach/${fp}`,
+                `suite-${suiteNdx}/given-${this.key}/when/beforeEach/${fp}`,
                 contents
               );
           }
@@ -369,7 +323,7 @@ export abstract class BaseGiven<
             return (opts) =>
               target.customScreenShot({
                 ...opts,
-                path: `suite-${suiteNdx}/given-${key}/when/beforeEach/${opts.path}`,
+                path: `suite-${suiteNdx}/given-${this.key}/when/beforeEach/${opts.path}`,
               });
           }
 
@@ -388,6 +342,7 @@ export abstract class BaseGiven<
         testResourceConfiguration,
         givenArtifactory,
         this.givenCB,
+        this.initialValues,
         beforeEachProxy
       );
 
@@ -397,7 +352,7 @@ export abstract class BaseGiven<
           testResourceConfiguration,
           tLog,
           pm,
-          `suite-${suiteNdx}/given-${key}/when/${whenNdx}`
+          `suite-${suiteNdx}/given-${this.key}/when/${whenNdx}`
         );
       }
 
@@ -407,7 +362,7 @@ export abstract class BaseGiven<
           testResourceConfiguration,
           tLog,
           pm,
-          `suite-${suiteNdx}/given-${key}/then-${thenNdx}`
+          `suite-${suiteNdx}/given-${this.key}/then-${thenNdx}`
         );
         tester(t);
       }
@@ -426,14 +381,14 @@ export abstract class BaseGiven<
               return (opts) =>
                 target.customScreenShot({
                   ...opts,
-                  path: `suite-${suiteNdx}/given-${key}/afterEach/${opts.path}`,
+                  path: `suite-${suiteNdx}/given-${this.key}/afterEach/${opts.path}`,
                 });
             }
 
             if (prop === "writeFileSync") {
               return (fp, contents) =>
                 target[prop](
-                  `suite-${suiteNdx}/given-${key}/afterEach/${fp}`,
+                  `suite-${suiteNdx}/given-${this.key}/afterEach/${fp}`,
                   contents
                 );
             }
@@ -444,7 +399,7 @@ export abstract class BaseGiven<
 
         await this.afterEach(
           this.store,
-          key,
+          this.key,
           givenArtifactory,
           // pm
           afterEachProxy
@@ -685,63 +640,6 @@ export abstract class BaseThen<
             return (fp, contents) =>
               target[prop](`${filepath}/${fp}`, contents);
           }
-
-          // if (prop === "browser") {
-          //   return new Proxy(target[prop], {
-          //     get(bTarget, bProp, bReceiver) {
-          //       if (bProp === "pages") {
-          //         return async () => {
-          //           return bTarget.pages().then((pages) => {
-          //             return pages.map((page) => {
-          //               return new Proxy(page, {
-          //                 get(pTarget, pProp, pReciever) {
-          //                   if (pProp === "screenshot") {
-          //                     return async (x) => {
-          //                       return pm.customScreenShot(
-          //                         {
-          //                           ...x,
-          //                           path:
-          //                             `${testResourceConfiguration.fs}/${filepath}/butThen` +
-          //                             "/" +
-          //                             x.path,
-          //                         },
-          //                         page
-          //                       );
-          //                       // return await window["custom-screenshot"]({
-          //                       //   ...x,
-          //                       //   path:
-          //                       //     `${testResourceConfiguration.fs}/suite-${sNdx}/afterAll` +
-          //                       //     "/" +
-          //                       //     x.path,
-          //                       // });
-          //                     };
-          //                   } else if (pProp === "close") {
-          //                     return () => pTarget[pProp]();
-          //                   } else if (pProp === "mainFrame") {
-          //                     return () => pTarget[pProp]();
-          //                   } else if (pProp === "exposeFunction") {
-          //                     // return Reflect.get(target, prop, receiver);
-          //                     return (...a) => pTarget[pProp](...a);
-          //                     // return target[pProp];
-          //                   } else if (pProp === "removeExposedFunction") {
-          //                     // return Reflect.get(target, prop, receiver);
-          //                     return pTarget[pProp].bind(pTarget);
-          //                     // return target[pProp];
-          //                   } else {
-          //                     return Reflect.get(...arguments);
-          //                   }
-          //                 },
-          //               });
-          //             });
-          //           });
-          //           // return (await target.pages()).map((page) => {
-          //           //   return new Proxy(page, handler2);
-          //           // });
-          //         };
-          //       }
-          //     },
-          //   });
-          // }
 
           return Reflect.get(...arguments);
         },

@@ -17,8 +17,8 @@ class NodeTesteranto extends core_js_1.default {
         const t = JSON.parse(partialTestResource);
         const pm = new node_js_1.PM_Node(t);
         const { failed, artifacts, logPromise, features } = await this.testJobs[0].receiveTestResourceConfig(pm);
-        pm.customclose();
-        return features;
+        // pm.customclose();
+        return { features, failed };
     }
 }
 exports.NodeTesteranto = NodeTesteranto;

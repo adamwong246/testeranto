@@ -8,7 +8,7 @@ import puppeteer, {
 import { PassThrough } from "stream";
 import crypto from "crypto";
 
-import { IBuiltConfig, ITestTypes } from "../lib/types";
+import { IBuiltConfig, IFinalResults, ITestTypes } from "../lib/types";
 
 import { PM } from "./index.js";
 import { destinationOfRuntime } from "../utils.js";
@@ -57,14 +57,19 @@ export class PM_Main extends PM {
       contents: string,
       testName: string
     ) => {
-      // console.log("globalThis-writeFileSync", filepath);
+      // console.log(testName, "writeFileSync", filepath, testName);
 
       // Create directories if they don't exist
-      const dir = path.dirname(filepath.split("/").slice(0, -1).join("/"));
+      const dir = path.dirname(filepath);
+
+      // console.log(testName, "mkdirSync", dir);
 
       fs.mkdirSync(dir, {
         recursive: true,
       });
+
+      // console.log(testName, "mkdirSync2");
+
       if (!files[testName]) {
         files[testName] = new Set();
       }
@@ -122,17 +127,17 @@ export class PM_Main extends PM {
       return sPromise;
     };
 
-    globalThis["customclose"] = (p: string, testName: string) => {
-      if (!files[testName]) {
-        files[testName] = new Set();
-      }
+    // globalThis["customclose"] = (p: string, testName: string) => {
+    //   if (!files[testName]) {
+    //     files[testName] = new Set();
+    //   }
 
-      fs.writeFileSync(
-        p + "/manifest.json",
-        JSON.stringify(Array.from(files[testName]))
-      );
-      delete files[testName];
-    };
+    //   fs.writeFileSync(
+    //     p + "/manifest.json",
+    //     JSON.stringify(Array.from(files[testName]))
+    //   );
+    //   delete files[testName];
+    // };
   }
 
   $(selector: string): boolean {
@@ -340,14 +345,18 @@ export class PM_Main extends PM {
 
     const builtfile = dest + ".mjs";
 
+    const webSideCares: Page[] = [];
+
     await Promise.all(
-      testConfig[3].map((sidecar) => {
+      testConfig[3].map(async (sidecar) => {
         if (sidecar[1] === "web") {
-          return this.launchWebSideCar(
+          const s = await this.launchWebSideCar(
             sidecar[0],
             destinationOfRuntime(sidecar[0], "web", this.configs),
             sidecar
           );
+          webSideCares.push(s);
+          return s;
         }
 
         if (sidecar[1] === "node") {
@@ -366,13 +375,15 @@ export class PM_Main extends PM {
       return module.default.then((defaultModule) => {
         defaultModule
           .receiveTestResourceConfig(argz)
-          .then(async (features: string[]) => {
+          .then(async ({ features, failed }: IFinalResults) => {
             this.receiveFeatures(features, destFolder);
+            console.log(`${src} completed with ${failed} errors`);
           })
           .catch((e) => {
-            console.log("catch", e);
+            console.log(`${src} errored with`, e);
           })
           .finally(() => {
+            webSideCares.forEach((webSideCar) => webSideCar.close());
             this.deregister(src);
           });
       });
@@ -390,23 +401,16 @@ export class PM_Main extends PM {
     src: string,
     dest: string,
     testConfig: ITestTypes
-  ) => {
+  ): Promise<Page> => {
     const d = dest + ".mjs";
     console.log("launchWebSideCar", src, dest, d);
     const destFolder = dest.replace(".mjs", "");
-    const webArgz = JSON.stringify({
-      name: dest,
-      ports: [].toString(),
-      fs: destFolder,
-      browserWSEndpoint: this.browser.wsEndpoint(),
-    });
-
-    // files[src] = new Set();
-    // const evaluation = `
-    // console.log("importing ${dest}.mjs");
-    // import('${dest}.mjs').then(async (x) => {
-    //   console.log("imported", x.default);
-    // })`;
+    // const webArgz = JSON.stringify({
+    //   name: dest,
+    //   ports: [].toString(),
+    //   fs: destFolder,
+    //   browserWSEndpoint: this.browser.wsEndpoint(),
+    // });
 
     const fileStreams2: fs.WriteStream[] = [];
     const doneFileStream2: Promise<any>[] = [];
@@ -520,18 +524,18 @@ export class PM_Main extends PM {
             return fileStreams2[uid].end();
           });
 
-          page.exposeFunction("customclose", (p: string, testName: string) => {
-            fs.writeFileSync(
-              p + "/manifest.json",
-              JSON.stringify(Array.from(files[testName]))
-            );
-            delete files[testName];
+          // page.exposeFunction("customclose", (p: string, testName: string) => {
+          //   fs.writeFileSync(
+          //     p + "/manifest.json",
+          //     JSON.stringify(Array.from(files[testName]))
+          //   );
+          //   delete files[testName];
 
-            Promise.all(screenshots[testName] || []).then(() => {
-              delete screenshots[testName];
-              // page.close();
-            });
-          });
+          //   Promise.all(screenshots[testName] || []).then(() => {
+          //     delete screenshots[testName];
+          //     // page.close();
+          //   });
+          // });
 
           return page;
         })
@@ -737,23 +741,24 @@ export class PM_Main extends PM {
         page.exposeFunction(
           "writeFileSync",
           (fp: string, contents: string, testName: string) => {
-            const dir = path.dirname(fp);
+            return globalThis["writeFileSync"](fp, contents, testName);
+            // const dir = path.dirname(fp);
 
-            fs.mkdirSync(dir, {
-              recursive: true,
-            });
+            // fs.mkdirSync(dir, {
+            //   recursive: true,
+            // });
 
-            const p = new Promise<string>(async (res, rej) => {
-              fs.writeFileSync(fp, contents);
-              res(fp);
-            });
-            doneFileStream2.push(p);
+            // const p = new Promise<string>(async (res, rej) => {
+            //   fs.writeFileSync(fp, contents);
+            //   res(fp);
+            // });
+            // doneFileStream2.push(p);
 
-            if (!files[testName]) {
-              files[testName] = new Set();
-            }
-            files[testName].add(fp);
-            return p;
+            // if (!files[testName]) {
+            //   files[testName] = new Set();
+            // }
+            // files[testName].add(fp);
+            // return p;
           }
         );
 
@@ -803,45 +808,44 @@ export class PM_Main extends PM {
           return fileStreams2[uid].end();
         });
 
-        page.exposeFunction("customclose", (p: string, testName: string) => {
-          // console.log("closing", p);
+        // page.exposeFunction("customclose", (p: string, testName: string) => {
+        //   // console.log("closing", p);
 
-          fs.writeFileSync(
-            p + "/manifest.json",
-            JSON.stringify(Array.from(files[testName]))
-          );
-          delete files[testName];
+        //   console.log("\t GOODBYE customclose");
 
-          // console.log("screenshots[testName]", screenshots[testName]);
-          Promise.all(screenshots[testName] || []).then(() => {
-            delete screenshots[testName];
-            // page.close();
-            // console.log("\t GOODBYE");
-            // whyIsNodeRunning();
-          });
+        //   fs.writeFileSync(
+        //     p + "/manifest.json",
+        //     JSON.stringify(Array.from(files[testName]))
+        //   );
+        //   delete files[testName];
 
-          // globalThis["writeFileSync"](
-          //   p + "/manifest.json",
-          //   // files.entries()
-          //   JSON.stringify(Array.from(files[testName]))
-          // );
+        //   // console.log("screenshots[testName]", screenshots[testName]);
+        //   Promise.all(screenshots[testName] || []).then(() => {
+        //     delete screenshots[testName];
+        //   });
 
-          // console.log("closing doneFileStream2", doneFileStream2);
-          // console.log("closing doneFileStream2", doneFileStream2);
-          // Promise.all([...doneFileStream2, ...screenshots2]).then(() => {
-          //   page.close();
-          // });
+        //   // globalThis["writeFileSync"](
+        //   //   p + "/manifest.json",
+        //   //   // files.entries()
+        //   //   JSON.stringify(Array.from(files[testName]))
+        //   // );
 
-          // Promise.all(screenshots).then(() => {
-          //   page.close();
-          // });
-          // setTimeout(() => {
-          //   console.log("Delayed for 1 second.");
-          //   page.close();
-          // }, 5000);
+        //   // console.log("closing doneFileStream2", doneFileStream2);
+        //   // console.log("closing doneFileStream2", doneFileStream2);
+        //   // Promise.all([...doneFileStream2, ...screenshots2]).then(() => {
+        //   //   page.close();
+        //   // });
 
-          // return page.close();
-        });
+        //   // Promise.all(screenshots).then(() => {
+        //   //   page.close();
+        //   // });
+        //   // setTimeout(() => {
+        //   //   console.log("Delayed for 1 second.");
+        //   //   page.close();
+        //   // }, 5000);
+
+        //   // return page.close();
+        // });
 
         page.exposeFunction("page", () => {
           return page.mainFrame()._id;
@@ -895,13 +899,25 @@ export class PM_Main extends PM {
       })
       .then(async (page) => {
         const close = () => {
-          console.log("evaluation complete.", dest);
-          // page.off("pageerror");
-          // page.close();
+          if (!files[t]) {
+            files[t] = new Set();
+          }
+          // files[t].add(filepath);
 
-          this.deregister(t);
-          stderrStream.close();
-          stdoutStream.close();
+          fs.writeFileSync(
+            dest + "/manifest.json",
+            JSON.stringify(Array.from(files[t]))
+          );
+          delete files[t];
+
+          Promise.all(screenshots[t] || []).then(() => {
+            delete screenshots[t];
+            page.close();
+
+            this.deregister(t);
+            stderrStream.close();
+            stdoutStream.close();
+          });
         };
 
         page.on("pageerror", (err: Error) => {
@@ -936,20 +952,15 @@ export class PM_Main extends PM {
 
         await page
           .evaluate(evaluation)
-          .then(async (features: string[]) => {
+          .then(async ({ failed, features }: IFinalResults) => {
             this.receiveFeatures(features, destFolder);
+            console.log(`${t} completed with ${failed} errors`);
           })
           .catch((e) => {
-            console.log("evaluation failed.", dest);
-            console.log(e);
+            console.log(`${t} errored with`, e);
           })
           .finally(() => {
             close();
-            // console.log("evaluation complete.", dest);
-            // page.close();
-            // this.deregister(t);
-            // stderrStream.close();
-            // stdoutStream.close();
           });
 
         return page;
@@ -957,7 +968,6 @@ export class PM_Main extends PM {
   };
 
   receiveFeatures = (features: string[], destFolder: string) => {
-    console.log("this.receiveFeatures", features);
     features
       .reduce(async (mm, featureStringKey) => {
         const accum = await mm;

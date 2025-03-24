@@ -11,8 +11,8 @@ export class NodeTesteranto extends Testeranto {
         const t = JSON.parse(partialTestResource);
         const pm = new PM_Node(t);
         const { failed, artifacts, logPromise, features } = await this.testJobs[0].receiveTestResourceConfig(pm);
-        pm.customclose();
-        return features;
+        // pm.customclose();
+        return { features, failed };
     }
 }
 export default async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = defaultTestResourceRequirement) => {
