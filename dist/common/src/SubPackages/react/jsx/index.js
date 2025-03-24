@@ -12,14 +12,22 @@ exports.testInterface = {
     //   //   resolve(x());
     //   // });
     // },
-    beforeEach: async (subject, initializer, artificer) => {
+    // beforeEach: async (subject, initializer, artificer): Promise<IStore> => {
+    //   return new Promise((resolve, rej) => {
+    //     resolve(React.createElement(subject));
+    //   });
+    // },
+    andWhen: async (s, whenCB) => {
+        await whenCB(s());
         return new Promise((resolve, rej) => {
-            const x = react_1.default.createElement(subject);
-            console.log("react-element", x);
-            resolve(x);
+            resolve(react_1.default.createElement(s));
         });
+        // return whenCB(s);
     },
-    andWhen: function (s, whenCB) {
-        return whenCB(s);
+    butThen: async (subject, thenCB) => {
+        await thenCB(subject());
+        return new Promise((resolve, rej) => {
+            resolve(react_1.default.createElement(subject));
+        });
     },
 };

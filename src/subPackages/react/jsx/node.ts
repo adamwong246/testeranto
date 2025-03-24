@@ -12,15 +12,16 @@ export default <ITestShape extends IBaseTest>(
   testImplementations: ITestImpl<ITestShape>,
   testSpecifications: ITestSpec<ITestShape>,
   testInput: IInput,
-  testInterface: IPartialInterface<ITestShape>
+  testInterface: IPartialInterface<ITestShape> = baseInterface
 ) => {
   return Testeranto<ITestShape>(
     testInput,
     testSpecifications,
     testImplementations,
-    {
-      ...baseInterface,
-      ...testInterface,
-    }
+    testInterface
+    // {
+    //   ...baseInterface,
+    //   ...testInterface,
+    // }
   );
 };
