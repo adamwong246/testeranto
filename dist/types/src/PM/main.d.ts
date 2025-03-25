@@ -1,13 +1,13 @@
 /// <reference types="node" />
 /// <reference types="node" />
 /// <reference types="node" />
+import { CdpPage, Page } from "puppeteer-core/lib/esm/puppeteer";
 import fs from "fs";
-import { Browser } from "puppeteer-core";
+import { Browser, LaunchOptions } from "puppeteer-core";
 import { PassThrough } from "stream";
 import { IBuiltConfig, ITestTypes } from "../lib/types";
 import { PM } from "./index.js";
 import { ITLog } from "../lib/index.js";
-import { Page } from "puppeteer-core/lib/esm/puppeteer";
 export declare class PM_Main extends PM {
     browser: Browser;
     shutdownMode: boolean;
@@ -16,9 +16,13 @@ export declare class PM_Main extends PM {
     queue: any[];
     registry: Record<string, boolean>;
     constructor(configs: IBuiltConfig);
+    waitForSelector(p: string, s: string): any;
+    closePage(p: any): any;
+    newPage(): CdpPage;
+    goto(p: any, url: string): any;
     $(selector: string): boolean;
     screencast(opts: object): void;
-    customScreenShot(opts: object): void;
+    customScreenShot(opts: object, cdpPage?: CdpPage): void;
     end(accessObject: {
         uid: number;
     }): boolean;
@@ -37,7 +41,8 @@ export declare class PM_Main extends PM {
     getValue(value: string): void;
     getAttribute(selector: string, attribute: string): void;
     isDisabled(selector: string): boolean;
-    startPuppeteer(options: any, destfolder: string): Promise<any>;
+    screencastStop(s: string): void;
+    startPuppeteer(options: LaunchOptions, destfolder: string): Promise<any>;
     shutDown(): void;
     checkForShutdown: () => void;
     register: (src: string) => void;

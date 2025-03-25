@@ -8,10 +8,19 @@ export class PM_Node extends PM {
         this.server = {};
         this.testResourceConfiguration = t;
     }
-    $(selector) {
-        throw new Error("Method not implemented.");
+    waitForSelector(p, s) {
+        return globalThis["waitForSelector"](p, s);
     }
-    screencast(opts) {
+    closePage(p) {
+        return globalThis["closePage"](p);
+    }
+    goto(cdpPage, url) {
+        return globalThis["goto"](cdpPage.mainFrame()._id, url);
+    }
+    newPage() {
+        return globalThis["newPage"]();
+    }
+    $(selector) {
         throw new Error("Method not implemented.");
     }
     isDisabled(selector) {
@@ -35,8 +44,14 @@ export class PM_Node extends PM {
     click(selector) {
         return globalThis["click"](selector);
     }
-    customScreenShot(opts) {
-        return globalThis["customScreenShot"](opts);
+    screencast(opts, page) {
+        return globalThis["screencast"](Object.assign(Object.assign({}, opts), { path: this.testResourceConfiguration.fs + "/" + opts.path }), page.mainFrame()._id, this.testResourceConfiguration.name);
+    }
+    screencastStop(p) {
+        return globalThis["screencastStop"](p);
+    }
+    customScreenShot(opts, cdpPage) {
+        return globalThis["customScreenShot"](Object.assign(Object.assign({}, opts), { path: this.testResourceConfiguration.fs + "/" + opts.path }), cdpPage.mainFrame()._id, this.testResourceConfiguration.name);
     }
     existsSync(destFolder) {
         return globalThis["existsSync"](this.testResourceConfiguration.fs + "/" + destFolder);

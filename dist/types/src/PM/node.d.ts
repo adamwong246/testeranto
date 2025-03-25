@@ -1,15 +1,20 @@
 /// <reference types="node" />
 /// <reference types="node" />
+import { ScreencastOptions } from "puppeteer-core";
 import { PassThrough } from "stream";
 import { ITLog, ITTestResourceConfiguration } from "../lib";
 import { PM } from "./index.js";
+import { CdpPage } from "puppeteer-core/lib/esm/puppeteer";
 declare type PuppetMasterServer = Record<string, Promise<any>>;
 export declare class PM_Node extends PM {
     server: PuppetMasterServer;
     testResourceConfiguration: ITTestResourceConfiguration;
     constructor(t: ITTestResourceConfiguration);
+    waitForSelector(p: string, s: string): any;
+    closePage(p: any): string;
+    goto(cdpPage: CdpPage, url: string): any;
+    newPage(): CdpPage;
     $(selector: string): boolean;
-    screencast(opts: object): void;
     isDisabled(selector: string): boolean;
     getAttribute(selector: string, attribute: string): void;
     getValue(selector: string): void;
@@ -17,7 +22,9 @@ export declare class PM_Node extends PM {
     typeInto(value: string): void;
     page(): any;
     click(selector: string): string | undefined;
-    customScreenShot(opts: object): any;
+    screencast(opts: ScreencastOptions, page: CdpPage): any;
+    screencastStop(p: string): any;
+    customScreenShot(opts: ScreencastOptions, cdpPage: CdpPage): any;
     existsSync(destFolder: string): boolean;
     mkdirSync(): any;
     write(writeObject: {

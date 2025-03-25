@@ -8,11 +8,26 @@ class PM_Web extends index_js_1.PM {
         this.server = {};
         this.testResourceConfiguration = t;
     }
-    $(selector) {
-        return window["$"](selector);
+    waitForSelector(p, s) {
+        return window["waitForSelector"](p, s);
     }
     screencast(opts) {
-        throw new Error("Method not implemented.");
+        return window["screencast"](Object.assign(Object.assign({}, opts), { path: this.testResourceConfiguration.fs + "/" + opts.path }), this.testResourceConfiguration.name);
+    }
+    screencastStop(recorder) {
+        return window["screencastStop"](recorder);
+    }
+    closePage(p) {
+        return window["closePage"](p);
+    }
+    goto(p, url) {
+        return window["goto"](p, url);
+    }
+    newPage() {
+        return window["newPage"]();
+    }
+    $(selector) {
+        return window["$"](selector);
     }
     isDisabled(selector) {
         return window["isDisabled"](selector);

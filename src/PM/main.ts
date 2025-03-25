@@ -1,8 +1,11 @@
+import { CdpPage, Page } from "puppeteer-core/lib/esm/puppeteer";
 import fs from "fs";
 import path from "path";
 import puppeteer, {
   Browser,
   ConsoleMessage,
+  LaunchOptions,
+  ScreenRecorder,
   ScreenshotOptions,
 } from "puppeteer-core";
 import { PassThrough } from "stream";
@@ -13,7 +16,6 @@ import { IBuiltConfig, IFinalResults, ITestTypes } from "../lib/types";
 import { PM } from "./index.js";
 import { destinationOfRuntime } from "../utils.js";
 import { ITLog } from "../lib/index.js";
-import { Page } from "puppeteer-core/lib/esm/puppeteer";
 
 const fileStreams3: fs.WriteStream[] = [];
 
@@ -22,6 +24,7 @@ type IFPaths = string[];
 const fPaths: IFPaths = [];
 
 const files: Record<string, Set<string>> = {};
+const recorders: Record<string, ScreenRecorder> = {};
 const screenshots: Record<string, Promise<Uint8Array>[]> = {};
 
 export class PM_Main extends PM {
@@ -42,6 +45,46 @@ export class PM_Main extends PM {
     this.configs.ports.forEach((element) => {
       this.ports[element] = "true"; // set ports as open
     });
+
+    globalThis["waitForSelector"] = async (pageKey: string, sel: string) => {
+      console.log("waitForSelector", pageKey, sel);
+      const page = (await this.browser.pages()).find(
+        (p) => p.mainFrame()._id === pageKey
+      );
+      await page?.waitForSelector(sel);
+    };
+
+    globalThis["screencastStop"] = async (path: string) => {
+      return recorders[path].stop();
+    };
+
+    globalThis["closePage"] = async (pageKey) => {
+      const page = (await this.browser.pages()).find(
+        (p) => p.mainFrame()._id === pageKey
+      );
+      return page.close();
+    };
+
+    // globalThis["closePage"] = (p) => {
+    //   console.log("closePage", p);
+    //   return p.close();
+    // };
+
+    globalThis["goto"] = async (pageKey: string, url: string) => {
+      const page = (await this.browser.pages()).find(
+        (p) => p.mainFrame()._id === pageKey
+      );
+      await page?.goto(url);
+      return;
+    };
+
+    globalThis["newPage"] = () => {
+      return this.browser.newPage();
+    };
+
+    globalThis["pages"] = () => {
+      return this.browser.pages();
+    };
 
     globalThis["mkdirSync"] = (fp: string) => {
       if (!fs.existsSync(fp)) {
@@ -99,10 +142,41 @@ export class PM_Main extends PM {
       fileStreams3[uid].end();
     };
 
+    // async (ssOpts: ScreenshotOptions, testName: string) => {
+    //   const p = ssOpts.path as string;
+    //   const dir = path.dirname(p);
+    //   fs.mkdirSync(dir, {
+    //     recursive: true,
+    //   });
+    //   if (!files[testName]) {
+    //     files[testName] = new Set();
+    //   }
+    //   files[testName].add(ssOpts.path as string);
+
+    //   const sPromise = page.screenshot({
+    //     ...ssOpts,
+    //     path: p,
+    //   });
+
+    //   if (!screenshots[testName]) {
+    //     screenshots[testName] = [];
+    //   }
+    //   screenshots[testName].push(sPromise);
+    //   // sPromise.then(())
+    //   await sPromise;
+    //   return sPromise;
+    //   // page.evaluate(`window["screenshot done"]`);
+    // };
+
     globalThis["customScreenShot"] = async (
       opts: { path: string },
-      page: Page
+      pageKey: string,
+      testName: string
     ) => {
+      const page = (await this.browser.pages()).find(
+        (p) => p.mainFrame()._id === pageKey
+      );
+
       const p = opts.path as string;
       const dir = path.dirname(p);
       fs.mkdirSync(dir, {
@@ -127,6 +201,30 @@ export class PM_Main extends PM {
       return sPromise;
     };
 
+    globalThis["screencast"] = async (
+      opts: ScreenshotOptions,
+      pageKey: string
+    ) => {
+      const page = (await this.browser.pages()).find(
+        (p) => p.mainFrame()._id === pageKey
+      );
+
+      const p = opts.path as string;
+      const dir = path.dirname(p);
+      fs.mkdirSync(dir, {
+        recursive: true,
+      });
+
+      const recorder = await page?.screencast({
+        ...opts,
+        path: p,
+      });
+
+      recorders[opts.path] = recorder;
+
+      return opts.path;
+    };
+
     // globalThis["customclose"] = (p: string, testName: string) => {
     //   if (!files[testName]) {
     //     files[testName] = new Set();
@@ -140,13 +238,26 @@ export class PM_Main extends PM {
     // };
   }
 
+  waitForSelector(p: string, s: string): any {
+    throw new Error("Method not implemented.");
+  }
+  closePage(p): any {
+    throw new Error("Method not implemented.");
+  }
+  newPage(): CdpPage {
+    throw new Error("Method not implemented.");
+  }
+  goto(p, url: string): any {
+    throw new Error("Method not implemented.");
+  }
+
   $(selector: string): boolean {
     throw new Error("Method not implemented.");
   }
   screencast(opts: object) {
     throw new Error("Method not implemented.");
   }
-  customScreenShot(opts: object) {
+  customScreenShot(opts: object, cdpPage?: CdpPage) {
     throw new Error("Method not implemented.");
   }
 
@@ -250,9 +361,15 @@ export class PM_Main extends PM {
   isDisabled(selector: string): boolean {
     throw new Error("Method not implemented.");
   }
+  screencastStop(s: string) {
+    throw new Error("Method not implemented.");
+  }
   ////////////////////////////////////////////////////////////////////////////////
 
-  async startPuppeteer(options: any, destfolder: string): Promise<any> {
+  async startPuppeteer(
+    options: LaunchOptions,
+    destfolder: string
+  ): Promise<any> {
     this.browser = (await puppeteer.launch(options)) as any;
   }
 
@@ -347,27 +464,27 @@ export class PM_Main extends PM {
 
     const webSideCares: Page[] = [];
 
-    await Promise.all(
-      testConfig[3].map(async (sidecar) => {
-        if (sidecar[1] === "web") {
-          const s = await this.launchWebSideCar(
-            sidecar[0],
-            destinationOfRuntime(sidecar[0], "web", this.configs),
-            sidecar
-          );
-          webSideCares.push(s);
-          return s;
-        }
+    // await Promise.all(
+    //   testConfig[3].map(async (sidecar) => {
+    //     if (sidecar[1] === "web") {
+    //       const s = await this.launchWebSideCar(
+    //         sidecar[0],
+    //         destinationOfRuntime(sidecar[0], "web", this.configs),
+    //         sidecar
+    //       );
+    //       webSideCares.push(s);
+    //       return s;
+    //     }
 
-        if (sidecar[1] === "node") {
-          return this.launchNodeSideCar(
-            sidecar[0],
-            destinationOfRuntime(sidecar[0], "node", this.configs),
-            sidecar
-          );
-        }
-      })
-    );
+    //     if (sidecar[1] === "node") {
+    //       return this.launchNodeSideCar(
+    //         sidecar[0],
+    //         destinationOfRuntime(sidecar[0], "node", this.configs),
+    //         sidecar
+    //       );
+    //     }
+    //   })
+    // );
 
     this.server[builtfile] = await import(
       `${builtfile}?cacheBust=${Date.now()}`

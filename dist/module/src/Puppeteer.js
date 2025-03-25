@@ -11,12 +11,13 @@ export default async (partialConfig) => {
     fs.writeFileSync(`${config.outdir}/testeranto.json`, JSON.stringify(Object.assign(Object.assign({}, config), { buildDir: process.cwd() + "/" + config.outdir }), null, 2));
     const pm = new PM_Main(config);
     await pm.startPuppeteer({
+        slowMo: 1,
         // timeout: 1,
         waitForInitialPage: false,
         executablePath: 
         // process.env.CHROMIUM_PATH || "/opt/homebrew/bin/chromium",
         "/opt/homebrew/bin/chromium",
-        headless: true,
+        headless: false,
         dumpio: true,
         // timeout: 0,
         devtools: true,

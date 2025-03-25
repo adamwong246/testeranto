@@ -50,9 +50,9 @@ export class BaseSuite {
             const beforeAllProxy = new Proxy(pm, {
                 get(target, prop, receiver) {
                     if (prop === "customScreenShot") {
-                        return (opts) => target.customScreenShot(Object.assign(Object.assign({}, opts), { 
+                        return (opts, p) => target.customScreenShot(Object.assign(Object.assign({}, opts), { 
                             // path: `${filepath}/${opts.path}`,
-                            path: `suite-${sNdx}/beforeAll/${opts.path}` }));
+                            path: `suite-${sNdx}/beforeAll/${opts.path}` }), p);
                     }
                     if (prop === "writeFileSync") {
                         return (fp, contents) => target[prop](`suite-${sNdx}/beforeAll/${fp}`, contents);
@@ -151,7 +151,10 @@ export class BaseGiven {
                         return (fp, contents) => target[prop](`suite-${suiteNdx}/given-${this.key}/when/beforeEach/${fp}`, contents);
                     }
                     if (prop === "customScreenShot") {
-                        return (opts) => target.customScreenShot(Object.assign(Object.assign({}, opts), { path: `suite-${suiteNdx}/given-${this.key}/when/beforeEach/${opts.path}` }));
+                        return (opts, p) => target.customScreenShot(Object.assign(Object.assign({}, opts), { path: `suite-${suiteNdx}/given-${this.key}/when/beforeEach/${opts.path}` }), p);
+                    }
+                    if (prop === "screencast") {
+                        return (opts, p) => target.screencast(Object.assign(Object.assign({}, opts), { path: `suite-${suiteNdx}/given-${this.key}/when/beforeEach/${opts.path}` }), p);
                     }
                     return Reflect.get(...arguments);
                 },
@@ -182,7 +185,7 @@ export class BaseGiven {
                 const afterEachProxy = new Proxy(pm, {
                     get(target, prop, receiver) {
                         if (prop === "customScreenShot") {
-                            return (opts) => target.customScreenShot(Object.assign(Object.assign({}, opts), { path: `suite-${suiteNdx}/given-${this.key}/afterEach/${opts.path}` }));
+                            return (opts, p) => target.customScreenShot(Object.assign(Object.assign({}, opts), { path: `suite-${suiteNdx}/given-${this.key}/afterEach/${opts.path}` }), p);
                         }
                         if (prop === "writeFileSync") {
                             return (fp, contents) => target[prop](`suite-${suiteNdx}/given-${this.key}/afterEach/${fp}`, contents);
@@ -218,91 +221,11 @@ export class BaseWhen {
         const andWhenProxy = new Proxy(pm, {
             get(target, prop, receiver) {
                 if (prop === "customScreenShot") {
-                    return (opts) => target.customScreenShot(Object.assign(Object.assign({}, opts), { path: `${filepath}/${opts.path}` }));
+                    return (opts, p) => target.customScreenShot(Object.assign(Object.assign({}, opts), { path: `${filepath}/${opts.path}` }), p);
                 }
                 if (prop === "writeFileSync") {
                     return (fp, contents) => target[prop](`${filepath}/andWhen/${fp}`, contents);
                 }
-                /////////////////////
-                // if (prop === "browser") {
-                //   return new Proxy(target[prop], {
-                //     get(bTarget, bProp, bReceiver) {
-                //       if (bProp === "pages") {
-                //         return async () => {
-                //           return bTarget.pages().then((pages) => {
-                //             return pages.map((page) => {
-                //               return new Proxy(page, {
-                //                 get(pTarget, pProp, pReciever) {
-                //                   // console.log("mark get", pTarget, pProp, pReciever);
-                //                   if (pProp === "screenshot") {
-                //                     return async (x) => {
-                //                       return pm.customScreenShot(
-                //                         {
-                //                           ...x,
-                //                           path:
-                //                             `${testResourceConfiguration.fs}/${key}/afterEach` +
-                //                             "/" +
-                //                             x.path,
-                //                         },
-                //                         page
-                //                       );
-                //                     };
-                //                   } else if (pProp === "mainFrame") {
-                //                     return () => pTarget[pProp]();
-                //                     // return target[pProp];
-                //                     // return Reflect.get(...arguments);
-                //                   } else if (pProp === "exposeFunction") {
-                //                     // return Reflect.get(target, prop, receiver);
-                //                     return pTarget[pProp].bind(pTarget);
-                //                     // return target[pProp];
-                //                   } else if (pProp === "removeExposedFunction") {
-                //                     // return Reflect.get(target, prop, receiver);
-                //                     return pTarget[pProp].bind(pTarget);
-                //                     // return target[pProp];
-                //                   } else if (pProp === "click") {
-                //                     // console.log("mark12", arguments);
-                //                     // return Reflect.get(target, prop, receiver);
-                //                     // return pTarget[pProp].bind(pTarget);
-                //                     // return target[pProp];
-                //                     return (selector, options) => {
-                //                       pTarget[pProp](selector, options);
-                //                     };
-                //                   } else if (pProp === "$eval") {
-                //                     // return pTarget[pProp].bind(pTarget);
-                //                     return (selector, options) => {
-                //                       pTarget[pProp](selector, options);
-                //                     };
-                //                   } else if (pProp === "$") {
-                //                     return Reflect.get(...arguments);
-                //                     // return Reflect.get(target, prop, receiver);
-                //                     // return pTarget[pProp].bind(pTarget);
-                //                     // return target[pProp];
-                //                     // return pTarget[pProp].bind(pTarget);
-                //                     // return async (s) => {
-                //                     //   console.log("mark17", s);
-                //                     //   console.log("pTarget", pTarget);
-                //                     //   console.log("pProp", pProp);
-                //                     //   console.log("pReciever", pReciever);
-                //                     //   // return "XXX";
-                //                     //   // debugger;
-                //                     //   return await pTarget[pProp](s);
-                //                     // };
-                //                   } else {
-                //                     return Reflect.get(...arguments);
-                //                   }
-                //                 },
-                //               });
-                //             });
-                //           });
-                //           // return (await target.pages()).map((page) => {
-                //           //   return new Proxy(page, handler2);
-                //           // });
-                //         };
-                //       }
-                //     },
-                //   });
-                // }
-                ///////////////////////
                 return Reflect.get(...arguments);
             },
         });
@@ -341,7 +264,7 @@ export class BaseThen {
             const butThenProxy = new Proxy(pm, {
                 get(target, prop, receiver) {
                     if (prop === "customScreenShot") {
-                        return (opts) => target.customScreenShot(Object.assign(Object.assign({}, opts), { path: `${filepath}/${opts.path}` }));
+                        return (opts, p) => target.customScreenShot(Object.assign(Object.assign({}, opts), { path: `${filepath}/${opts.path}` }), p);
                     }
                     if (prop === "writeFileSync") {
                         return (fp, contents) => target[prop](`${filepath}/${fp}`, contents);

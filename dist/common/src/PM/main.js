@@ -36,6 +36,7 @@ const utils_js_1 = require("../utils.js");
 const fileStreams3 = [];
 const fPaths = [];
 const files = {};
+const recorders = {};
 const screenshots = {};
 class PM_Main extends index_js_1.PM {
     constructor(configs) {
@@ -111,16 +112,26 @@ class PM_Main extends index_js_1.PM {
             }
             const builtfile = dest + ".mjs";
             const webSideCares = [];
-            await Promise.all(testConfig[3].map(async (sidecar) => {
-                if (sidecar[1] === "web") {
-                    const s = await this.launchWebSideCar(sidecar[0], (0, utils_js_1.destinationOfRuntime)(sidecar[0], "web", this.configs), sidecar);
-                    webSideCares.push(s);
-                    return s;
-                }
-                if (sidecar[1] === "node") {
-                    return this.launchNodeSideCar(sidecar[0], (0, utils_js_1.destinationOfRuntime)(sidecar[0], "node", this.configs), sidecar);
-                }
-            }));
+            // await Promise.all(
+            //   testConfig[3].map(async (sidecar) => {
+            //     if (sidecar[1] === "web") {
+            //       const s = await this.launchWebSideCar(
+            //         sidecar[0],
+            //         destinationOfRuntime(sidecar[0], "web", this.configs),
+            //         sidecar
+            //       );
+            //       webSideCares.push(s);
+            //       return s;
+            //     }
+            //     if (sidecar[1] === "node") {
+            //       return this.launchNodeSideCar(
+            //         sidecar[0],
+            //         destinationOfRuntime(sidecar[0], "node", this.configs),
+            //         sidecar
+            //       );
+            //     }
+            //   })
+            // );
             this.server[builtfile] = await Promise.resolve().then(() => __importStar(require(`${builtfile}?cacheBust=${Date.now()}`))).then((module) => {
                 return module.default.then((defaultModule) => {
                     defaultModule
@@ -624,6 +635,33 @@ class PM_Main extends index_js_1.PM {
         this.configs.ports.forEach((element) => {
             this.ports[element] = "true"; // set ports as open
         });
+        globalThis["waitForSelector"] = async (pageKey, sel) => {
+            console.log("waitForSelector", pageKey, sel);
+            const page = (await this.browser.pages()).find((p) => p.mainFrame()._id === pageKey);
+            await (page === null || page === void 0 ? void 0 : page.waitForSelector(sel));
+        };
+        globalThis["screencastStop"] = async (path) => {
+            return recorders[path].stop();
+        };
+        globalThis["closePage"] = async (pageKey) => {
+            const page = (await this.browser.pages()).find((p) => p.mainFrame()._id === pageKey);
+            return page.close();
+        };
+        // globalThis["closePage"] = (p) => {
+        //   console.log("closePage", p);
+        //   return p.close();
+        // };
+        globalThis["goto"] = async (pageKey, url) => {
+            const page = (await this.browser.pages()).find((p) => p.mainFrame()._id === pageKey);
+            await (page === null || page === void 0 ? void 0 : page.goto(url));
+            return;
+        };
+        globalThis["newPage"] = () => {
+            return this.browser.newPage();
+        };
+        globalThis["pages"] = () => {
+            return this.browser.pages();
+        };
         globalThis["mkdirSync"] = (fp) => {
             if (!fs_1.default.existsSync(fp)) {
                 return fs_1.default.mkdirSync(fp, {
@@ -663,7 +701,31 @@ class PM_Main extends index_js_1.PM {
         globalThis["end"] = (uid) => {
             fileStreams3[uid].end();
         };
-        globalThis["customScreenShot"] = async (opts, page) => {
+        // async (ssOpts: ScreenshotOptions, testName: string) => {
+        //   const p = ssOpts.path as string;
+        //   const dir = path.dirname(p);
+        //   fs.mkdirSync(dir, {
+        //     recursive: true,
+        //   });
+        //   if (!files[testName]) {
+        //     files[testName] = new Set();
+        //   }
+        //   files[testName].add(ssOpts.path as string);
+        //   const sPromise = page.screenshot({
+        //     ...ssOpts,
+        //     path: p,
+        //   });
+        //   if (!screenshots[testName]) {
+        //     screenshots[testName] = [];
+        //   }
+        //   screenshots[testName].push(sPromise);
+        //   // sPromise.then(())
+        //   await sPromise;
+        //   return sPromise;
+        //   // page.evaluate(`window["screenshot done"]`);
+        // };
+        globalThis["customScreenShot"] = async (opts, pageKey, testName) => {
+            const page = (await this.browser.pages()).find((p) => p.mainFrame()._id === pageKey);
             const p = opts.path;
             const dir = path_1.default.dirname(p);
             fs_1.default.mkdirSync(dir, {
@@ -681,6 +743,17 @@ class PM_Main extends index_js_1.PM {
             await sPromise;
             return sPromise;
         };
+        globalThis["screencast"] = async (opts, pageKey) => {
+            const page = (await this.browser.pages()).find((p) => p.mainFrame()._id === pageKey);
+            const p = opts.path;
+            const dir = path_1.default.dirname(p);
+            fs_1.default.mkdirSync(dir, {
+                recursive: true,
+            });
+            const recorder = await (page === null || page === void 0 ? void 0 : page.screencast(Object.assign(Object.assign({}, opts), { path: p })));
+            recorders[opts.path] = recorder;
+            return opts.path;
+        };
         // globalThis["customclose"] = (p: string, testName: string) => {
         //   if (!files[testName]) {
         //     files[testName] = new Set();
@@ -692,13 +765,25 @@ class PM_Main extends index_js_1.PM {
         //   delete files[testName];
         // };
     }
+    waitForSelector(p, s) {
+        throw new Error("Method not implemented.");
+    }
+    closePage(p) {
+        throw new Error("Method not implemented.");
+    }
+    newPage() {
+        throw new Error("Method not implemented.");
+    }
+    goto(p, url) {
+        throw new Error("Method not implemented.");
+    }
     $(selector) {
         throw new Error("Method not implemented.");
     }
     screencast(opts) {
         throw new Error("Method not implemented.");
     }
-    customScreenShot(opts) {
+    customScreenShot(opts, cdpPage) {
         throw new Error("Method not implemented.");
     }
     end(accessObject) {
@@ -781,6 +866,9 @@ class PM_Main extends index_js_1.PM {
         throw new Error("Method not implemented.");
     }
     isDisabled(selector) {
+        throw new Error("Method not implemented.");
+    }
+    screencastStop(s) {
         throw new Error("Method not implemented.");
     }
     ////////////////////////////////////////////////////////////////////////////////

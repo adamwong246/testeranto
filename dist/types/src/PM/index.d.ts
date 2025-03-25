@@ -1,4 +1,6 @@
+import { CdpPage } from "puppeteer-core/lib/esm/puppeteer/puppeteer-core-browser";
 import { ITLog, ITTestResourceConfiguration } from "../lib";
+import { ScreenRecorderOptions } from "puppeteer-core/lib/esm/puppeteer";
 export declare abstract class PM {
     server: any;
     testResourceConfiguration: ITTestResourceConfiguration;
@@ -13,8 +15,9 @@ export declare abstract class PM {
     abstract end(accessObject: {
         uid: number;
     }): boolean;
-    abstract customScreenShot(opts: object): any;
-    abstract screencast(opts: object): any;
+    abstract customScreenShot(opts: object, page?: CdpPage): any;
+    abstract screencast(opts: ScreenRecorderOptions, p: any): any;
+    abstract screencastStop(s: string): any;
     abstract page(): string | undefined;
     abstract click(selector: string): any;
     abstract focusOn(selector: string): any;
@@ -23,4 +26,8 @@ export declare abstract class PM {
     abstract getAttribute(selector: string, attribute: string): any;
     abstract isDisabled(selector: string): boolean;
     abstract $(selector: string): any;
+    abstract newPage(): CdpPage;
+    abstract goto(p: any, url: string): any;
+    abstract closePage(p: any): any;
+    abstract waitForSelector(p: any, sel: string): any;
 }

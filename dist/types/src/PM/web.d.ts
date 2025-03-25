@@ -3,13 +3,19 @@
 import { PassThrough } from "stream";
 import { ITLog, ITTestResourceConfiguration } from "../lib";
 import { PM } from "./index.js";
-import { ScreenshotOptions } from "puppeteer-core";
+import { ScreencastOptions, ScreenshotOptions } from "puppeteer-core";
+import { CdpPage } from "puppeteer-core/lib/esm/puppeteer";
 declare type PuppetMasterServer = Record<string, Promise<any>>;
 export declare class PM_Web extends PM {
     server: PuppetMasterServer;
     constructor(t: ITTestResourceConfiguration);
+    waitForSelector(p: string, s: string): any;
+    screencast(opts: ScreencastOptions): any;
+    screencastStop(recorder: string): any;
+    closePage(p: any): string;
+    goto(p: any, url: string): any;
+    newPage(): CdpPage;
     $(selector: string): boolean;
-    screencast(opts: object): void;
     isDisabled(selector: string): boolean;
     getAttribute(selector: string, attribute: string): any;
     getValue(selector: string): any;

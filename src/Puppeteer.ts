@@ -31,15 +31,17 @@ export default async (partialConfig) => {
 
   await pm.startPuppeteer(
     {
+      slowMo: 1,
       // timeout: 1,
       waitForInitialPage: false,
       executablePath:
         // process.env.CHROMIUM_PATH || "/opt/homebrew/bin/chromium",
         "/opt/homebrew/bin/chromium",
-      headless: true,
+      headless: false,
       dumpio: true,
       // timeout: 0,
       devtools: true,
+
       args: [
         "--auto-open-devtools-for-tabs",
         `--remote-debugging-port=3234`,

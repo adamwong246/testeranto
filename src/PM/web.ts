@@ -3,7 +3,12 @@ import { PassThrough } from "stream";
 import { ITLog, ITTestResourceConfiguration } from "../lib";
 
 import { PM } from "./index.js";
-import { ScreenshotOptions } from "puppeteer-core";
+import {
+  ScreencastOptions,
+  ScreenRecorder,
+  ScreenshotOptions,
+} from "puppeteer-core";
+import { CdpPage } from "puppeteer-core/lib/esm/puppeteer";
 
 type PuppetMasterServer = Record<string, Promise<any>>;
 
@@ -16,11 +21,38 @@ export class PM_Web extends PM {
     this.testResourceConfiguration = t;
   }
 
+  waitForSelector(p: string, s: string): any {
+    return window["waitForSelector"](p, s);
+  }
+
+  screencast(opts: ScreencastOptions) {
+    return window["screencast"](
+      {
+        ...opts,
+        path: this.testResourceConfiguration.fs + "/" + opts.path,
+      },
+      this.testResourceConfiguration.name
+    );
+  }
+
+  screencastStop(recorder: string) {
+    return window["screencastStop"](recorder);
+  }
+
+  closePage(p): string {
+    return window["closePage"](p);
+  }
+
+  goto(p, url: string): any {
+    return window["goto"](p, url);
+  }
+
+  newPage(): CdpPage {
+    return window["newPage"]();
+  }
+
   $(selector: string): boolean {
     return window["$"](selector);
-  }
-  screencast(opts: object) {
-    throw new Error("Method not implemented.");
   }
 
   isDisabled(selector: string): boolean {

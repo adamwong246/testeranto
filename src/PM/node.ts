@@ -1,12 +1,12 @@
 import fs from "fs";
 import path from "path";
-import puppeteer from "puppeteer-core";
+import puppeteer, { ScreencastOptions, ScreenRecorder } from "puppeteer-core";
 import { PassThrough } from "stream";
 
 import { ITLog, ITTestResourceConfiguration } from "../lib";
 
 import { PM } from "./index.js";
-import { Page } from "puppeteer-core/lib/esm/puppeteer";
+import { CdpPage, Page } from "puppeteer-core/lib/esm/puppeteer";
 
 type IFPaths = string[];
 const fPaths: IFPaths = [];
@@ -23,10 +23,23 @@ export class PM_Node extends PM {
     this.testResourceConfiguration = t;
   }
 
-  $(selector: string): boolean {
-    throw new Error("Method not implemented.");
+  waitForSelector(p: string, s: string): any {
+    return globalThis["waitForSelector"](p, s);
   }
-  screencast(opts: object) {
+
+  closePage(p): string {
+    return globalThis["closePage"](p);
+  }
+
+  goto(cdpPage: CdpPage, url: string): any {
+    return globalThis["goto"](cdpPage.mainFrame()._id, url);
+  }
+
+  newPage(): CdpPage {
+    return globalThis["newPage"]();
+  }
+
+  $(selector: string): boolean {
     throw new Error("Method not implemented.");
   }
 
@@ -57,8 +70,30 @@ export class PM_Node extends PM {
     return globalThis["click"](selector);
   }
 
-  customScreenShot(opts: object) {
-    return globalThis["customScreenShot"](opts);
+  screencast(opts: ScreencastOptions, page: CdpPage) {
+    return globalThis["screencast"](
+      {
+        ...opts,
+        path: this.testResourceConfiguration.fs + "/" + opts.path,
+      },
+      page.mainFrame()._id,
+      this.testResourceConfiguration.name
+    );
+  }
+
+  screencastStop(p: string) {
+    return globalThis["screencastStop"](p);
+  }
+
+  customScreenShot(opts: ScreencastOptions, cdpPage: CdpPage) {
+    return globalThis["customScreenShot"](
+      {
+        ...opts,
+        path: this.testResourceConfiguration.fs + "/" + opts.path,
+      },
+      cdpPage.mainFrame()._id,
+      this.testResourceConfiguration.name
+    );
   }
 
   existsSync(destFolder: string): boolean {

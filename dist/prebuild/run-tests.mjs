@@ -25,6 +25,7 @@ var destinationOfRuntime = (f, r, configs) => {
 var fileStreams3 = [];
 var fPaths = [];
 var files = {};
+var recorders = {};
 var screenshots = {};
 var PM_Main = class extends PM {
   constructor(configs) {
@@ -98,26 +99,6 @@ var PM_Main = class extends PM {
       }
       const builtfile = dest + ".mjs";
       const webSideCares = [];
-      await Promise.all(
-        testConfig[3].map(async (sidecar) => {
-          if (sidecar[1] === "web") {
-            const s = await this.launchWebSideCar(
-              sidecar[0],
-              destinationOfRuntime(sidecar[0], "web", this.configs),
-              sidecar
-            );
-            webSideCares.push(s);
-            return s;
-          }
-          if (sidecar[1] === "node") {
-            return this.launchNodeSideCar(
-              sidecar[0],
-              destinationOfRuntime(sidecar[0], "node", this.configs),
-              sidecar
-            );
-          }
-        })
-      );
       this.server[builtfile] = await import(`${builtfile}?cacheBust=${Date.now()}`).then((module) => {
         return module.default.then((defaultModule) => {
           defaultModule.receiveTestResourceConfig(argz).then(async ({ features, failed }) => {
@@ -555,6 +536,35 @@ var PM_Main = class extends PM {
     this.configs.ports.forEach((element) => {
       this.ports[element] = "true";
     });
+    globalThis["waitForSelector"] = async (pageKey, sel) => {
+      console.log("waitForSelector", pageKey, sel);
+      const page = (await this.browser.pages()).find(
+        (p) => p.mainFrame()._id === pageKey
+      );
+      await page?.waitForSelector(sel);
+    };
+    globalThis["screencastStop"] = async (path3) => {
+      return recorders[path3].stop();
+    };
+    globalThis["closePage"] = async (pageKey) => {
+      const page = (await this.browser.pages()).find(
+        (p) => p.mainFrame()._id === pageKey
+      );
+      return page.close();
+    };
+    globalThis["goto"] = async (pageKey, url) => {
+      const page = (await this.browser.pages()).find(
+        (p) => p.mainFrame()._id === pageKey
+      );
+      await page?.goto(url);
+      return;
+    };
+    globalThis["newPage"] = () => {
+      return this.browser.newPage();
+    };
+    globalThis["pages"] = () => {
+      return this.browser.pages();
+    };
     globalThis["mkdirSync"] = (fp) => {
       if (!fs.existsSync(fp)) {
         return fs.mkdirSync(fp, {
@@ -592,7 +602,10 @@ var PM_Main = class extends PM {
     globalThis["end"] = (uid) => {
       fileStreams3[uid].end();
     };
-    globalThis["customScreenShot"] = async (opts, page) => {
+    globalThis["customScreenShot"] = async (opts, pageKey, testName) => {
+      const page = (await this.browser.pages()).find(
+        (p2) => p2.mainFrame()._id === pageKey
+      );
       const p = opts.path;
       const dir = path2.dirname(p);
       fs.mkdirSync(dir, {
@@ -613,6 +626,34 @@ var PM_Main = class extends PM {
       await sPromise;
       return sPromise;
     };
+    globalThis["screencast"] = async (opts, pageKey) => {
+      const page = (await this.browser.pages()).find(
+        (p2) => p2.mainFrame()._id === pageKey
+      );
+      const p = opts.path;
+      const dir = path2.dirname(p);
+      fs.mkdirSync(dir, {
+        recursive: true
+      });
+      const recorder = await page?.screencast({
+        ...opts,
+        path: p
+      });
+      recorders[opts.path] = recorder;
+      return opts.path;
+    };
+  }
+  waitForSelector(p, s) {
+    throw new Error("Method not implemented.");
+  }
+  closePage(p) {
+    throw new Error("Method not implemented.");
+  }
+  newPage() {
+    throw new Error("Method not implemented.");
+  }
+  goto(p, url) {
+    throw new Error("Method not implemented.");
   }
   $(selector) {
     throw new Error("Method not implemented.");
@@ -620,7 +661,7 @@ var PM_Main = class extends PM {
   screencast(opts) {
     throw new Error("Method not implemented.");
   }
-  customScreenShot(opts) {
+  customScreenShot(opts, cdpPage) {
     throw new Error("Method not implemented.");
   }
   end(accessObject) {
@@ -712,6 +753,9 @@ var PM_Main = class extends PM {
   isDisabled(selector) {
     throw new Error("Method not implemented.");
   }
+  screencastStop(s) {
+    throw new Error("Method not implemented.");
+  }
   ////////////////////////////////////////////////////////////////////////////////
   async startPuppeteer(options, destfolder) {
     this.browser = await puppeteer.launch(options);
@@ -771,13 +815,14 @@ var Puppeteer_default = async (partialConfig) => {
   const pm = new PM_Main(config);
   await pm.startPuppeteer(
     {
+      slowMo: 1,
       // timeout: 1,
       waitForInitialPage: false,
       executablePath: (
         // process.env.CHROMIUM_PATH || "/opt/homebrew/bin/chromium",
         "/opt/homebrew/bin/chromium"
       ),
-      headless: true,
+      headless: false,
       dumpio: true,
       // timeout: 0,
       devtools: true,
