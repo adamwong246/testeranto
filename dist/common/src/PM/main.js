@@ -778,6 +778,9 @@ class PM_Main extends index_js_1.PM {
         //   delete files[testName];
         // };
     }
+    customclose() {
+        throw new Error("Method not implemented.");
+    }
     waitForSelector(p, s) {
         throw new Error("Method not implemented.");
     }

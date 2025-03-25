@@ -25,7 +25,7 @@ export declare class PM_Web extends PM {
     click(selector: string): any;
     customScreenShot(opts: ScreenshotOptions): any;
     existsSync(destFolder: string): boolean;
-    mkdirSync(): any;
+    mkdirSync(x: any): any;
     write(writeObject: {
         uid: number;
     }, contents: string): any;

@@ -1,6 +1,7 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 
 // src/cli.ts
+import { debounceWatch } from "@bscotch/debounce-watch";
 import { spawn } from "child_process";
 import esbuild from "esbuild";
 import fs3 from "fs";
@@ -956,6 +957,9 @@ var PM_Main = class extends PM {
       return opts.path;
     };
   }
+  customclose() {
+    throw new Error("Method not implemented.");
+  }
   waitForSelector(p, s) {
     throw new Error("Method not implemented.");
   }
@@ -1146,7 +1150,8 @@ function parseTsErrors() {
       });
       fs3.writeFileSync(
         `./docs/types/${k}.type_errors.txt`,
-        final[k].flat().flat().join("\r\n")
+        final[k].flat().flat().join("\r\n"),
+        {}
       );
     });
   } catch (error) {
@@ -1156,21 +1161,21 @@ function parseTsErrors() {
 }
 var typecheck = () => {
   console.log("typechecking...");
-  return new Promise((resolve, reject) => {
-    const tsc = spawn("tsc", ["-noEmit"]);
-    tsc.stdout.on("data", (data) => {
-      const lines = data.toString().split("\n");
-      logContent.push(...lines);
-    });
-    tsc.stderr.on("data", (data) => {
-      console.error(`stderr: ${data}`);
-      process.exit(-1);
-    });
-    tsc.on("close", (code) => {
-      parseTsErrors();
-      console.log("...typechecking done");
-      resolve(`tsc process exited with code ${code}`);
-    });
+  logContent = [];
+  fs3.rmSync("docs/types", { force: true, recursive: true });
+  fs3.mkdirSync("docs/types");
+  const tsc = spawn("tsc", ["-noEmit"]);
+  tsc.stdout.on("data", (data) => {
+    const lines = data.toString().split("\n");
+    logContent.push(...lines);
+  });
+  tsc.stderr.on("data", (data) => {
+    console.error(`stderr: ${data}`);
+    process.exit(-1);
+  });
+  tsc.on("close", (code) => {
+    parseTsErrors();
+    console.log("...typechecking done");
   });
 };
 var getRunnables = (tests, payload = {
@@ -1246,7 +1251,6 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
   }
   const fileHashes = {};
   const onDone = async () => {
-    typecheck();
     if (nodeDone && webDone && status === "build") {
       status = "built";
     }
@@ -1346,6 +1350,14 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
     chunks.forEach((chunk) => {
       fs3.unlinkSync(chunk);
     });
+  });
+  const processDebouncedEvents = (events) => {
+    typecheck();
+  };
+  const watcher = await debounceWatch(processDebouncedEvents, "./src", {
+    onlyFileExtensions: ["ts", "tsx"],
+    debounceWaitSeconds: 0.2,
+    allowOverlappingRuns: false
   });
   await pm.startPuppeteer(
     {

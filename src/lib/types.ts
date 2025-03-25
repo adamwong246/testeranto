@@ -191,7 +191,7 @@ export type ITestInterface<
   ) => Promise<ITestShape["istore"]>;
   butThen: (
     store: ITestShape["istore"],
-    thenCB,
+    thenCB: ITestShape["then"],
     testResource: ITTestResourceConfiguration,
     pm: PM
   ) => Promise<ITestShape["iselection"]>;

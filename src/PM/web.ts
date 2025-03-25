@@ -3,11 +3,7 @@ import { PassThrough } from "stream";
 import { ITLog, ITTestResourceConfiguration } from "../lib";
 
 import { PM } from "./index.js";
-import {
-  ScreencastOptions,
-  ScreenRecorder,
-  ScreenshotOptions,
-} from "puppeteer-core";
+import { ScreencastOptions, ScreenshotOptions } from "puppeteer-core";
 import { CdpPage } from "puppeteer-core/lib/esm/puppeteer";
 
 type PuppetMasterServer = Record<string, Promise<any>>;
@@ -96,7 +92,7 @@ export class PM_Web extends PM {
     return window["existsSync"](destFolder);
   }
 
-  mkdirSync() {
+  mkdirSync(x) {
     return window["mkdirSync"](this.testResourceConfiguration.fs + "/");
   }
 

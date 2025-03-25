@@ -1,11 +1,14 @@
 import { spawn } from "child_process";
-
-import esbuild from "esbuild";
 import fs from "fs";
 import path from "path";
 import readline from "readline";
 import { glob } from "glob";
 import crypto from "node:crypto";
+
+import { debounceWatch } from "@bscotch/debounce-watch";
+import type { DebouncedEventsProcessor } from "@bscotch/debounce-watch";
+
+import esbuild from "esbuild";
 import watch from "recursive-watch";
 
 import esbuildNodeConfiger from "./esbuildConfigs/node.js";
@@ -22,11 +25,10 @@ import { PM_Main } from "./PM/main.js";
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
 
-const logContent: string[] = [];
+let logContent: string[] = [];
 
 function parseTsErrors(): void {
   try {
-    // const logContent = fs.readFileSync(logPath, "utf-8").split("\n");
     const regex = /(^src(.*?))\(\d*,\d*\): error/gm;
     const brokenFilesToLines: Record<string, Set<number>> = {};
 
@@ -94,24 +96,25 @@ function parseTsErrors(): void {
 
 const typecheck = () => {
   console.log("typechecking...");
-  return new Promise((resolve, reject) => {
-    const tsc = spawn("tsc", ["-noEmit"]);
+  logContent = [];
+  fs.rmSync("docs/types", { force: true, recursive: true });
+  fs.mkdirSync("docs/types");
 
-    tsc.stdout.on("data", (data) => {
-      const lines = data.toString().split("\n");
-      logContent.push(...lines);
-    });
+  const tsc = spawn("tsc", ["-noEmit"]);
 
-    tsc.stderr.on("data", (data) => {
-      console.error(`stderr: ${data}`);
-      process.exit(-1);
-    });
+  tsc.stdout.on("data", (data) => {
+    const lines = data.toString().split("\n");
+    logContent.push(...lines);
+  });
 
-    tsc.on("close", (code) => {
-      parseTsErrors();
-      console.log("...typechecking done");
-      resolve(`tsc process exited with code ${code}`);
-    });
+  tsc.stderr.on("data", (data) => {
+    console.error(`stderr: ${data}`);
+    process.exit(-1);
+  });
+
+  tsc.on("close", (code) => {
+    parseTsErrors();
+    console.log("...typechecking done");
   });
 };
 
@@ -209,11 +212,10 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
   const fileHashes = {};
 
   const onDone = async () => {
-    // console.log(nodeDone && webDone && this.mode === "PROD");
-    typecheck();
     if (nodeDone && webDone && status === "build") {
       status = "built";
     }
+
     if (nodeDone && webDone && status === "built") {
       console.log("now watching exit points!");
       Object.entries(nodeEntryPoints).forEach(([k, outputFile]) => {
@@ -325,6 +327,16 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
     chunks.forEach((chunk) => {
       fs.unlinkSync(chunk);
     });
+  });
+
+  const processDebouncedEvents: DebouncedEventsProcessor = (events) => {
+    typecheck();
+  };
+
+  const watcher = await debounceWatch(processDebouncedEvents, "./src", {
+    onlyFileExtensions: ["ts", "tsx"],
+    debounceWaitSeconds: 0.2,
+    allowOverlappingRuns: false,
   });
 
   await pm.startPuppeteer(

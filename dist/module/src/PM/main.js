@@ -749,6 +749,9 @@ export class PM_Main extends PM {
         //   delete files[testName];
         // };
     }
+    customclose() {
+        throw new Error("Method not implemented.");
+    }
     waitForSelector(p, s) {
         throw new Error("Method not implemented.");
     }

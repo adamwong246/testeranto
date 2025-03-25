@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "the AI powered BDD test framework for typescript projects",
-  "version": "0.96.0",
+  "version": "0.97.0",
   "engines": {
     "node": "18.18.0"
   },
@@ -221,6 +221,7 @@
     "typescript": "4.8.2"
   },
   "dependencies": {
+    "@bscotch/debounce-watch": "^1.1.0",
     "babel-loader": "^8.2.5",
     "chai": "^5.2.0",
     "chromium": "^3.0.3",

@@ -16,7 +16,7 @@ export declare abstract class PM {
         uid: number;
     }): boolean;
     abstract customScreenShot(opts: object, page?: CdpPage): any;
-    abstract screencast(opts: ScreenRecorderOptions, p: any): any;
+    abstract screencast(opts: ScreenRecorderOptions, p?: any): any;
     abstract screencastStop(s: string): any;
     abstract page(): string | undefined;
     abstract click(selector: string): any;
@@ -30,4 +30,5 @@ export declare abstract class PM {
     abstract goto(p: any, url: string): any;
     abstract closePage(p: any): any;
     abstract waitForSelector(p: any, sel: string): any;
+    abstract customclose(): any;
 }

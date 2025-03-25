@@ -1,12 +1,6 @@
-import {
-  Browser,
-  CdpPage,
-  Page,
-} from "puppeteer-core/lib/esm/puppeteer/puppeteer-core-browser";
-import { ITLog, ITTestResourceConfiguration } from "../lib";
-import { ScreenRecorder } from "puppeteer-core";
+import { CdpPage } from "puppeteer-core/lib/esm/puppeteer/puppeteer-core-browser";
 import { ScreenRecorderOptions } from "puppeteer-core/lib/esm/puppeteer";
-// import { Page } from "puppeteer-core";
+import { ITLog, ITTestResourceConfiguration } from "../lib";
 
 type IFPaths = string[];
 const fPaths: IFPaths = [];
@@ -15,7 +9,6 @@ export abstract class PM {
   server: any;
   testResourceConfiguration: ITTestResourceConfiguration;
 
-  // abstract startPuppeteer(options: any, destfolder: string): Promise<Browser>;
   abstract testArtiFactoryfileWriter(tLog: ITLog, callback: (Promise) => void);
   abstract createWriteStream(filepath: string): any;
   abstract writeFileSync(fp: string, contents: string);
@@ -24,7 +17,7 @@ export abstract class PM {
   abstract write(accessObject: { uid: number }, contents: string): boolean;
   abstract end(accessObject: { uid: number }): boolean;
   abstract customScreenShot(opts: object, page?: CdpPage): any;
-  abstract screencast(opts: ScreenRecorderOptions, p): any;
+  abstract screencast(opts: ScreenRecorderOptions, p?): any;
   abstract screencastStop(s: string): any;
 
   abstract page(): string | undefined;
@@ -41,4 +34,5 @@ export abstract class PM {
   abstract closePage(p): any;
 
   abstract waitForSelector(p, sel: string);
+  abstract customclose();
 }

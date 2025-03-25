@@ -99,6 +99,8 @@ function parseTsErrors() {
 const typecheck = () => {
     console.log("typechecking...");
     return new Promise((resolve, reject) => {
+        fs_1.default.rmdirSync("docs/types");
+        fs_1.default.mkdirSync("docs/types");
         const tsc = (0, child_process_1.spawn)("tsc", ["-noEmit"]);
         tsc.stdout.on("data", (data) => {
             const lines = data.toString().split("\n");

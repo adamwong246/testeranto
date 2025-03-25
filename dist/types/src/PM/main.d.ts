@@ -16,6 +16,7 @@ export declare class PM_Main extends PM {
     queue: any[];
     registry: Record<string, boolean>;
     constructor(configs: IBuiltConfig);
+    customclose(): void;
     waitForSelector(p: string, s: string): any;
     closePage(p: any): any;
     newPage(): CdpPage;

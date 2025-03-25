@@ -12,10 +12,9 @@ import { PassThrough } from "stream";
 import crypto from "crypto";
 
 import { IBuiltConfig, IFinalResults, ITestTypes } from "../lib/types";
+import { ITLog } from "../lib/index.js";
 
 import { PM } from "./index.js";
-import { destinationOfRuntime } from "../utils.js";
-import { ITLog } from "../lib/index.js";
 
 const fileStreams3: fs.WriteStream[] = [];
 
@@ -238,6 +237,9 @@ export class PM_Main extends PM {
     // };
   }
 
+  customclose() {
+    throw new Error("Method not implemented.");
+  }
   waitForSelector(p: string, s: string): any {
     throw new Error("Method not implemented.");
   }

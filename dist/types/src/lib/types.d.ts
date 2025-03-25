@@ -56,7 +56,7 @@ export declare type INodeTestInterface<ITestShape extends IBaseTest<unknown, unk
 export declare type ITestInterface<ITestShape extends IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>> = {
     assertThis: (x: ITestShape["then"]) => void;
     andWhen: (store: ITestShape["istore"], whenCB: ITestShape["when"], testResource: ITTestResourceConfiguration, pm: PM) => Promise<ITestShape["istore"]>;
-    butThen: (store: ITestShape["istore"], thenCB: any, testResource: ITTestResourceConfiguration, pm: PM) => Promise<ITestShape["iselection"]>;
+    butThen: (store: ITestShape["istore"], thenCB: ITestShape["then"], testResource: ITTestResourceConfiguration, pm: PM) => Promise<ITestShape["iselection"]>;
     afterAll: (store: ITestShape["istore"], artificer: ITestArtificer, pm: PM) => any;
     afterEach: (store: ITestShape["istore"], key: string, artificer: ITestArtificer, pm: PM) => Promise<unknown>;
     beforeAll: (input: ITestShape["iinput"], testResource: ITTestResourceConfiguration, artificer: ITestArtificer, pm: PM) => Promise<ITestShape["isubject"]>;
