@@ -1,6 +1,4 @@
 import { BuildOptions } from "esbuild";
-// import pkg from "esbuild-plugin-markdown";
-// const { markdownPlugin } = pkg;
 
 import { IBaseConfig } from "../lib/types";
 
@@ -16,9 +14,6 @@ export default (
     "node",
     entryPoints
   );
-  // const inputFilesPluginFactory = inputFilesPlugin("node", entryPoints);
-  // const register = (x) => x;
-
   return {
     ...baseEsBuildConfig(config),
 
@@ -53,7 +48,7 @@ export default (
     entryPoints: [...entryPoints],
     plugins: [
       featuresPlugin,
-      // markdownPlugin({}),
+
       ...(config.nodePlugins.map((p) => p(register, entryPoints)) || []),
 
       inputFilesPluginFactory,
@@ -63,7 +58,9 @@ export default (
         name: "rebuild-notify",
         setup(build) {
           build.onEnd((result) => {
-            console.log(`node build ended with ${result.errors.length} errors`);
+            console.log(
+              `> node build ended with ${result.errors.length} errors`
+            );
             if (result.errors.length > 0) {
               console.log(result);
             }

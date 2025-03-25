@@ -405,7 +405,7 @@ export class PM_Main extends PM {
   };
 
   launchNode = async (src: string, dest: string) => {
-    console.log("launchNode", src);
+    console.log("! node", src);
     this.register(src);
 
     const destFolder = dest.replace(".mjs", "");
@@ -460,7 +460,7 @@ export class PM_Main extends PM {
       process.exit(-1);
     }
 
-    const builtfile = dest + ".mjs";
+    const builtfile = dest;
 
     const webSideCares: Page[] = [];
 
@@ -750,19 +750,19 @@ export class PM_Main extends PM {
     }
   };
 
-  launchWeb = (t: string, dest: string, sidecars: ITestTypes[]) => {
-    console.log("launchWeb", t, dest);
+  launchWeb = (t: string, dest: string) => {
+    console.log("! web", t);
     this.register(t);
 
-    sidecars.map((sidecar) => {
-      if (sidecar[1] === "node") {
-        return this.launchNodeSideCar(
-          sidecar[0],
-          destinationOfRuntime(sidecar[0], "node", this.configs),
-          sidecar
-        );
-      }
-    });
+    // sidecars.map((sidecar) => {
+    //   if (sidecar[1] === "node") {
+    //     return this.launchNodeSideCar(
+    //       sidecar[0],
+    //       destinationOfRuntime(sidecar[0], "node", this.configs),
+    //       sidecar
+    //     );
+    //   }
+    // });
 
     const destFolder = dest.replace(".mjs", "");
 

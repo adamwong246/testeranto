@@ -30,6 +30,7 @@ export type IPlugin = (
 ) => Plugin;
 
 export type IBaseConfig = {
+  src: string;
   clearScreen: boolean;
   debugger: boolean;
   devMode: boolean;

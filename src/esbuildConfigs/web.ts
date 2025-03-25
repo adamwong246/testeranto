@@ -1,8 +1,7 @@
 import { BuildOptions } from "esbuild";
 import path from "path";
 
-// import pkg from "esbuild-plugin-markdown";
-// const { markdownPlugin } = pkg;
+import pkg from "esbuild-plugin-markdown";
 
 import { IBaseConfig } from "../lib/types.js";
 
@@ -77,7 +76,9 @@ export default (
         name: "rebuild-notify",
         setup(build) {
           build.onEnd((result) => {
-            console.log(`web build ended with ${result.errors.length} errors`);
+            console.log(
+              `> web build ended with ${result.errors.length} errors`
+            );
             if (result.errors.length > 0) {
               console.log(result);
             }

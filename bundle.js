@@ -18,30 +18,11 @@ await esbuild.build({
 })
 
 await esbuild.build({
-  entryPoints: ['src/build-tests.ts'],
+  entryPoints: ['src/cli.ts'],
   bundle: true,
   format: "esm",
   platform: "node",
-  // format: "node",
-  outfile: 'dist/prebuild/build-tests.mjs',
-  // external: ['crypto', 'os'],
-  packages: "external",
-  supported: {
-    "dynamic-import": true,
-  },
-
-  banner: {
-    js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`,
-  },
-})
-
-await esbuild.build({
-  entryPoints: ['src/run-tests.ts'],
-  bundle: true,
-  format: "esm",
-  platform: "node",
-  // format: "node",
-  outfile: 'dist/prebuild/run-tests.mjs',
+  outfile: 'dist/prebuild/cli.mjs',
   packages: "external",
   supported: {
     "dynamic-import": true,
