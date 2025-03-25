@@ -7,6 +7,7 @@ import fs3 from "fs";
 import path5 from "path";
 import readline from "readline";
 import { glob } from "glob";
+import crypto2 from "node:crypto";
 import watch from "recursive-watch";
 
 // src/esbuildConfigs/index.ts
@@ -128,6 +129,8 @@ ${addableFiles.map((x) => {
 ${typeErrorFiles.map((x) => {
                     return `/read ${x}`;
                   }).join("\n")}
+
+
   
 /read ${testPaths}
 /read ${stdoutPath}
@@ -415,7 +418,7 @@ var PM_Main = class extends PM {
       this.server[builtfile] = await import(`${builtfile}?cacheBust=${Date.now()}`).then((module) => {
         return module.default.then((defaultModule) => {
           defaultModule.receiveTestResourceConfig(argz).then(async ({ features, failed }) => {
-            this.receiveFeatures(features, destFolder);
+            this.receiveFeatures(features, destFolder, src);
             console.log(`${src} completed with ${failed} errors`);
           }).catch((e) => {
             console.log(`${src} errored with`, e);
@@ -589,8 +592,8 @@ var PM_Main = class extends PM {
         browserWSEndpoint: this.browser.wsEndpoint()
       });
       const evaluation = `
-    console.log("importing ${dest}.mjs");
-    import('${dest}.mjs').then(async (x) => {
+    console.log("importing ${dest}");
+    import('${dest}').then(async (x) => {
       console.log("imported", (await x.default));
       try {
         return await (await x.default).receiveTestResourceConfig(${webArgz})
@@ -600,8 +603,8 @@ var PM_Main = class extends PM {
     })`;
       const fileStreams2 = [];
       const doneFileStream2 = [];
-      const stdoutStream = fs2.createWriteStream(`${dest}/stdout.log`);
-      const stderrStream = fs2.createWriteStream(`${dest}/stderr.log`);
+      const stdoutStream = fs2.createWriteStream(`${destFolder}/stdout.log`);
+      const stderrStream = fs2.createWriteStream(`${destFolder}/stderr.log`);
       this.browser.newPage().then((page) => {
         page.exposeFunction(
           "screencast",
@@ -743,7 +746,7 @@ var PM_Main = class extends PM {
             files[t] = /* @__PURE__ */ new Set();
           }
           fs2.writeFileSync(
-            dest + "/manifest.json",
+            destFolder + "/manifest.json",
             JSON.stringify(Array.from(files[t]))
           );
           delete files[t];
@@ -774,9 +777,9 @@ var PM_Main = class extends PM {
           stdoutStream.write(JSON.stringify(log.location()));
           stdoutStream.write(JSON.stringify(log.stackTrace()));
         });
-        await page.goto(`file://${`${dest}.html`}`, {});
+        await page.goto(`file://${`${destFolder}.html`}`, {});
         await page.evaluate(evaluation).then(async ({ failed, features }) => {
-          this.receiveFeatures(features, destFolder);
+          this.receiveFeatures(features, destFolder, t);
           console.log(`${t} completed with ${failed} errors`);
         }).catch((e) => {
           console.log(`${t} errored with`, e);
@@ -786,7 +789,14 @@ var PM_Main = class extends PM {
         return page;
       });
     };
-    this.receiveFeatures = (features, destFolder) => {
+    this.receiveFeatures = (features, destFolder, srcTest) => {
+      const featureDestination = path4.resolve(
+        process.cwd(),
+        "docs",
+        "features",
+        "strings",
+        srcTest.split(".").slice(0, -1).join(".") + ".features.txt"
+      );
       features.reduce(async (mm, featureStringKey) => {
         const accum = await mm;
         const isUrl = isValidUrl(featureStringKey);
@@ -809,25 +819,24 @@ var PM_Main = class extends PM {
               } else {
               }
             });
-            accum.push(newPath);
+            accum.files.push(newPath);
           } else if (u.protocol === "http:" || u.protocol === "https:") {
             const newPath = `${process.cwd()}/docs/features/external${u.hostname}${u.pathname}`;
             const body = await this.configs.featureIngestor(featureStringKey);
             writeFileAndCreateDir(newPath, body);
-            accum.push(newPath);
+            accum.files.push(newPath);
           }
         } else {
-          const newPath = `${process.cwd()}/docs/features/plain/${await sha256(
-            featureStringKey
-          )}`;
-          writeFileAndCreateDir(newPath, featureStringKey);
-          accum.push(newPath);
+          await fs2.promises.mkdir(path4.dirname(featureDestination), {
+            recursive: true
+          });
+          accum.strings.push(featureStringKey);
         }
         return accum;
-      }, Promise.resolve([])).then((features2) => {
+      }, Promise.resolve({ files: [], strings: [] })).then(({ files: files2, strings }) => {
         fs2.writeFileSync(
           `${destFolder}/featurePrompt.txt`,
-          features2.map((f) => {
+          files2.map((f) => {
             return `/read ${f}`;
           }).join("\n")
         );
@@ -1075,17 +1084,10 @@ async function writeFileAndCreateDir(filePath, data) {
   const dirPath = path4.dirname(filePath);
   try {
     await fs2.promises.mkdir(dirPath, { recursive: true });
-    await fs2.promises.writeFile(filePath, data);
+    await fs2.appendFileSync(filePath, data);
   } catch (error) {
     console.error(`Error writing file: ${error}`);
   }
-}
-async function sha256(rawData) {
-  const data = typeof rawData === "object" ? JSON.stringify(rawData) : String(rawData);
-  const msgBuffer = new TextEncoder().encode(data);
-  const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 function isValidUrl(string) {
   try {
@@ -1181,7 +1183,7 @@ var getRunnables = (tests, payload = {
         `./docs/node/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
       );
     } else if (cv[1] === "web") {
-      pt.nodeEntryPoints[cv[0]] = path5.resolve(
+      pt.webEntryPoints[cv[0]] = path5.resolve(
         `./docs/web/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
       );
     }
@@ -1217,14 +1219,62 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
   let status = "build";
   let pm = new PM_Main(config);
   const onNodeDone = () => {
+    console.log("onNodeDone");
     nodeDone = true;
     onDone();
   };
   const onWebDone = () => {
+    console.log("onWebDone");
     webDone = true;
     onDone();
   };
+  async function fileHash(filePath, algorithm = "md5") {
+    return new Promise((resolve, reject) => {
+      const hash = crypto2.createHash(algorithm);
+      const fileStream = fs3.createReadStream(filePath);
+      fileStream.on("data", (data) => {
+        hash.update(data);
+      });
+      fileStream.on("end", () => {
+        const fileHash2 = hash.digest("hex");
+        resolve(fileHash2);
+      });
+      fileStream.on("error", (error) => {
+        reject(`Error reading file: ${error.message}`);
+      });
+    });
+  }
+  const fileHashes = {};
   const onDone = async () => {
+    typecheck();
+    if (nodeDone && webDone && status === "build") {
+      status = "built";
+    }
+    if (nodeDone && webDone && status === "built") {
+      console.log("now watching exit points!");
+      Object.entries(nodeEntryPoints).forEach(([k, outputFile]) => {
+        console.log("watching", outputFile);
+        watch(outputFile, async (filename) => {
+          const hash = await fileHash(outputFile);
+          if (fileHashes[k] !== hash) {
+            fileHashes[k] = hash;
+            console.log(`< ${filename} `);
+            pm.launchNode(k, outputFile);
+          }
+        });
+      });
+      Object.entries(webEntryPoints).forEach(([k, outputFile]) => {
+        console.log("watching", outputFile);
+        watch(outputFile, async (filename) => {
+          const hash = await fileHash(outputFile);
+          if (fileHashes[k] !== hash) {
+            fileHashes[k] = hash;
+            console.log(`< ${filename} `);
+            pm.launchWeb(k, outputFile);
+          }
+        });
+      });
+    }
     if (nodeDone && webDone && mode === "PROD") {
       console.log("Testeranto-EsBuild is all done. Goodbye!");
       process.exit();
@@ -1306,7 +1356,7 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
         // process.env.CHROMIUM_PATH || "/opt/homebrew/bin/chromium",
         "/opt/homebrew/bin/chromium"
       ),
-      headless: false,
+      headless: true,
       dumpio: true,
       // timeout: 0,
       devtools: true,
@@ -1343,11 +1393,6 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
     },
     "."
   );
-  console.log("Puppeteer is running.");
-  await typecheck();
-  watch(config.src, (changedFile) => {
-    typecheck();
-  });
   await Promise.all([
     esbuild.context(node_default(config, Object.keys(nodeEntryPoints))).then(async (nodeContext) => {
       if (config.devMode) {
@@ -1374,20 +1419,4 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
       return webContext;
     })
   ]);
-  Object.entries(nodeEntryPoints).forEach(([k, outputFile]) => {
-    fs3.watch(outputFile, (eventType, filename) => {
-      if (eventType === "change") {
-        console.log(`< ${filename} `);
-        pm.launchNode(k, outputFile);
-      }
-    });
-  });
-  Object.entries(webEntryPoints).forEach(([k, outputFile]) => {
-    fs3.watch(outputFile, (eventType, filename) => {
-      if (eventType === "change") {
-        console.log(`< ${filename} `);
-        pm.launchWeb(k, outputFile);
-      }
-    });
-  });
 });

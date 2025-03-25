@@ -32,7 +32,6 @@ const path_1 = __importDefault(require("path"));
 const puppeteer_core_1 = __importDefault(require("puppeteer-core"));
 const crypto_1 = __importDefault(require("crypto"));
 const index_js_1 = require("./index.js");
-const utils_js_1 = require("../utils.js");
 const fileStreams3 = [];
 const fPaths = [];
 const files = {};
@@ -63,7 +62,7 @@ class PM_Main extends index_js_1.PM {
             }
         };
         this.launchNode = async (src, dest) => {
-            console.log("launchNode", src);
+            console.log("! node", src);
             this.register(src);
             const destFolder = dest.replace(".mjs", "");
             let argz = "";
@@ -110,7 +109,7 @@ class PM_Main extends index_js_1.PM {
                 console.error("negative port makes no sense", src);
                 process.exit(-1);
             }
-            const builtfile = dest + ".mjs";
+            const builtfile = dest;
             const webSideCares = [];
             // await Promise.all(
             //   testConfig[3].map(async (sidecar) => {
@@ -137,7 +136,7 @@ class PM_Main extends index_js_1.PM {
                     defaultModule
                         .receiveTestResourceConfig(argz)
                         .then(async ({ features, failed }) => {
-                        this.receiveFeatures(features, destFolder);
+                        this.receiveFeatures(features, destFolder, src);
                         console.log(`${src} completed with ${failed} errors`);
                     })
                         .catch((e) => {
@@ -334,14 +333,18 @@ class PM_Main extends index_js_1.PM {
                 }
             }
         };
-        this.launchWeb = (t, dest, sidecars) => {
-            console.log("launchWeb", t, dest);
+        this.launchWeb = (t, dest) => {
+            console.log("! web", t);
             this.register(t);
-            sidecars.map((sidecar) => {
-                if (sidecar[1] === "node") {
-                    return this.launchNodeSideCar(sidecar[0], (0, utils_js_1.destinationOfRuntime)(sidecar[0], "node", this.configs), sidecar);
-                }
-            });
+            // sidecars.map((sidecar) => {
+            //   if (sidecar[1] === "node") {
+            //     return this.launchNodeSideCar(
+            //       sidecar[0],
+            //       destinationOfRuntime(sidecar[0], "node", this.configs),
+            //       sidecar
+            //     );
+            //   }
+            // });
             const destFolder = dest.replace(".mjs", "");
             const webArgz = JSON.stringify({
                 name: dest,
@@ -350,8 +353,8 @@ class PM_Main extends index_js_1.PM {
                 browserWSEndpoint: this.browser.wsEndpoint(),
             });
             const evaluation = `
-    console.log("importing ${dest}.mjs");
-    import('${dest}.mjs').then(async (x) => {
+    console.log("importing ${dest}");
+    import('${dest}').then(async (x) => {
       console.log("imported", (await x.default));
       try {
         return await (await x.default).receiveTestResourceConfig(${webArgz})
@@ -361,8 +364,8 @@ class PM_Main extends index_js_1.PM {
     })`;
             const fileStreams2 = [];
             const doneFileStream2 = [];
-            const stdoutStream = fs_1.default.createWriteStream(`${dest}/stdout.log`);
-            const stderrStream = fs_1.default.createWriteStream(`${dest}/stderr.log`);
+            const stdoutStream = fs_1.default.createWriteStream(`${destFolder}/stdout.log`);
+            const stderrStream = fs_1.default.createWriteStream(`${destFolder}/stderr.log`);
             this.browser
                 .newPage()
                 .then((page) => {
@@ -526,7 +529,7 @@ class PM_Main extends index_js_1.PM {
                         files[t] = new Set();
                     }
                     // files[t].add(filepath);
-                    fs_1.default.writeFileSync(dest + "/manifest.json", JSON.stringify(Array.from(files[t])));
+                    fs_1.default.writeFileSync(destFolder + "/manifest.json", JSON.stringify(Array.from(files[t])));
                     delete files[t];
                     Promise.all(screenshots[t] || []).then(() => {
                         delete screenshots[t];
@@ -561,11 +564,11 @@ class PM_Main extends index_js_1.PM {
                     stdoutStream.write(JSON.stringify(log.location()));
                     stdoutStream.write(JSON.stringify(log.stackTrace()));
                 });
-                await page.goto(`file://${`${dest}.html`}`, {});
+                await page.goto(`file://${`${destFolder}.html`}`, {});
                 await page
                     .evaluate(evaluation)
                     .then(async ({ failed, features }) => {
-                    this.receiveFeatures(features, destFolder);
+                    this.receiveFeatures(features, destFolder, t);
                     console.log(`${t} completed with ${failed} errors`);
                 })
                     .catch((e) => {
@@ -577,7 +580,8 @@ class PM_Main extends index_js_1.PM {
                 return page;
             });
         };
-        this.receiveFeatures = (features, destFolder) => {
+        this.receiveFeatures = (features, destFolder, srcTest) => {
+            const featureDestination = path_1.default.resolve(process.cwd(), "docs", "features", "strings", srcTest.split(".").slice(0, -1).join(".") + ".features.txt");
             features
                 .reduce(async (mm, featureStringKey) => {
                 const accum = await mm;
@@ -604,24 +608,33 @@ class PM_Main extends index_js_1.PM {
                                 // console.log("Symlink created successfully");
                             }
                         });
-                        accum.push(newPath);
+                        accum.files.push(newPath);
                     }
                     else if (u.protocol === "http:" || u.protocol === "https:") {
                         const newPath = `${process.cwd()}/docs/features/external${u.hostname}${u.pathname}`;
                         const body = await this.configs.featureIngestor(featureStringKey);
                         writeFileAndCreateDir(newPath, body);
-                        accum.push(newPath);
+                        accum.files.push(newPath);
                     }
                 }
                 else {
-                    const newPath = `${process.cwd()}/docs/features/plain/${await sha256(featureStringKey)}`;
-                    writeFileAndCreateDir(newPath, featureStringKey);
-                    accum.push(newPath);
+                    await fs_1.default.promises.mkdir(path_1.default.dirname(featureDestination), {
+                        recursive: true,
+                    });
+                    // const newPath = `${process.cwd()}/docs/features/plain/${await sha256(
+                    //   featureStringKey
+                    // )}`;
+                    // writeFileAndCreateDir(
+                    //   `${featureDestination}/${await sha256(featureStringKey)}`,
+                    //   featureStringKey
+                    // );
+                    accum.strings.push(featureStringKey);
                 }
                 return accum;
-            }, Promise.resolve([]))
-                .then((features) => {
-                fs_1.default.writeFileSync(`${destFolder}/featurePrompt.txt`, features
+            }, Promise.resolve({ files: [], strings: [] }))
+                .then(({ files, strings }) => {
+                // writeFileAndCreateDir(`${featureDestination}`, JSON.stringify(strings));
+                fs_1.default.writeFileSync(`${destFolder}/featurePrompt.txt`, files
                     .map((f) => {
                     return `/read ${f}`;
                 })
@@ -887,7 +900,7 @@ async function writeFileAndCreateDir(filePath, data) {
     const dirPath = path_1.default.dirname(filePath);
     try {
         await fs_1.default.promises.mkdir(dirPath, { recursive: true });
-        await fs_1.default.promises.writeFile(filePath, data);
+        await fs_1.default.appendFileSync(filePath, data);
     }
     catch (error) {
         console.error(`Error writing file: ${error}`);

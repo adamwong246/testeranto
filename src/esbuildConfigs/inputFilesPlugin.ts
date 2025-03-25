@@ -108,6 +108,14 @@ export default (
                   (t) => `docs/types/${t}.type_errors.txt`
                 );
 
+                // const featureFiles = addableFiles.map(
+                //   (t) =>
+                //     `docs/features/strings/${t
+                //       .split(".")
+                //       .slice(0, -1)
+                //       .join(".")}.features.txt`
+                // );
+
                 fs.writeFileSync(
                   promptPath,
                   `
@@ -119,13 +127,11 @@ ${addableFiles
   
 ${typeErrorFiles
   .map((x) => {
-    // const f = `docs/types/${x}.type_errors.txt`;
     return `/read ${x}`;
-    // if (fs.existsSync(f)) {
-    //   return `/read ${f}`;
-    // }
   })
   .join("\n")}
+
+
   
 /read ${testPaths}
 /read ${stdoutPath}

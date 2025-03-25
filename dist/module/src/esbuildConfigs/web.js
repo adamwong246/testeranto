@@ -43,7 +43,7 @@ export default (config, entryPoints) => {
                 name: "rebuild-notify",
                 setup(build) {
                     build.onEnd((result) => {
-                        console.log(`web build ended with ${result.errors.length} errors`);
+                        console.log(`> web build ended with ${result.errors.length} errors`);
                         if (result.errors.length > 0) {
                             console.log(result);
                         }

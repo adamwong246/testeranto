@@ -8,8 +8,6 @@ const inputFilesPlugin_js_1 = __importDefault(require("./inputFilesPlugin.js"));
 const featuresPlugin_1 = __importDefault(require("./featuresPlugin"));
 exports.default = (config, entryPoints) => {
     const { inputFilesPluginFactory, register } = (0, inputFilesPlugin_js_1.default)("node", entryPoints);
-    // const inputFilesPluginFactory = inputFilesPlugin("node", entryPoints);
-    // const register = (x) => x;
     return Object.assign(Object.assign({}, (0, index_js_1.default)(config)), { splitting: true, outdir: config.outdir + "/node", 
         // inject: [`./node_modules/testeranto/dist/cjs-shim.js`],
         metafile: true, supported: {
@@ -27,7 +25,6 @@ exports.default = (config, entryPoints) => {
             ...config.externals,
         ], entryPoints: [...entryPoints], plugins: [
             featuresPlugin_1.default,
-            // markdownPlugin({}),
             ...(config.nodePlugins.map((p) => p(register, entryPoints)) || []),
             inputFilesPluginFactory,
             // inputFilesPlugin("node", entryPoints),
@@ -35,7 +32,7 @@ exports.default = (config, entryPoints) => {
                 name: "rebuild-notify",
                 setup(build) {
                     build.onEnd((result) => {
-                        console.log(`node build ended with ${result.errors.length} errors`);
+                        console.log(`> node build ended with ${result.errors.length} errors`);
                         if (result.errors.length > 0) {
                             console.log(result);
                         }

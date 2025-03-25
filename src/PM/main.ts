@@ -493,7 +493,7 @@ export class PM_Main extends PM {
         defaultModule
           .receiveTestResourceConfig(argz)
           .then(async ({ features, failed }: IFinalResults) => {
-            this.receiveFeatures(features, destFolder);
+            this.receiveFeatures(features, destFolder, src);
             console.log(`${src} completed with ${failed} errors`);
           })
           .catch((e) => {
@@ -774,8 +774,8 @@ export class PM_Main extends PM {
     });
 
     const evaluation = `
-    console.log("importing ${dest}.mjs");
-    import('${dest}.mjs').then(async (x) => {
+    console.log("importing ${dest}");
+    import('${dest}').then(async (x) => {
       console.log("imported", (await x.default));
       try {
         return await (await x.default).receiveTestResourceConfig(${webArgz})
@@ -787,8 +787,8 @@ export class PM_Main extends PM {
     const fileStreams2: fs.WriteStream[] = [];
     const doneFileStream2: Promise<any>[] = [];
 
-    const stdoutStream = fs.createWriteStream(`${dest}/stdout.log`);
-    const stderrStream = fs.createWriteStream(`${dest}/stderr.log`);
+    const stdoutStream = fs.createWriteStream(`${destFolder}/stdout.log`);
+    const stderrStream = fs.createWriteStream(`${destFolder}/stderr.log`);
 
     this.browser
       .newPage()
@@ -1022,7 +1022,7 @@ export class PM_Main extends PM {
           // files[t].add(filepath);
 
           fs.writeFileSync(
-            dest + "/manifest.json",
+            destFolder + "/manifest.json",
             JSON.stringify(Array.from(files[t]))
           );
           delete files[t];
@@ -1065,12 +1065,12 @@ export class PM_Main extends PM {
           stdoutStream.write(JSON.stringify(log.location()));
           stdoutStream.write(JSON.stringify(log.stackTrace()));
         });
-        await page.goto(`file://${`${dest}.html`}`, {});
+        await page.goto(`file://${`${destFolder}.html`}`, {});
 
         await page
           .evaluate(evaluation)
           .then(async ({ failed, features }: IFinalResults) => {
-            this.receiveFeatures(features, destFolder);
+            this.receiveFeatures(features, destFolder, t);
             console.log(`${t} completed with ${failed} errors`);
           })
           .catch((e) => {
@@ -1084,7 +1084,19 @@ export class PM_Main extends PM {
       });
   };
 
-  receiveFeatures = (features: string[], destFolder: string) => {
+  receiveFeatures = (
+    features: string[],
+    destFolder: string,
+    srcTest: string
+  ) => {
+    const featureDestination = path.resolve(
+      process.cwd(),
+      "docs",
+      "features",
+      "strings",
+      srcTest.split(".").slice(0, -1).join(".") + ".features.txt"
+    );
+
     features
       .reduce(async (mm, featureStringKey) => {
         const accum = await mm;
@@ -1118,29 +1130,38 @@ export class PM_Main extends PM {
                 // console.log("Symlink created successfully");
               }
             });
-            accum.push(newPath);
+            accum.files.push(newPath);
           } else if (u.protocol === "http:" || u.protocol === "https:") {
             const newPath = `${process.cwd()}/docs/features/external${
               u.hostname
             }${u.pathname}`;
             const body = await this.configs.featureIngestor(featureStringKey);
             writeFileAndCreateDir(newPath, body);
-            accum.push(newPath);
+            accum.files.push(newPath);
           }
         } else {
-          const newPath = `${process.cwd()}/docs/features/plain/${await sha256(
-            featureStringKey
-          )}`;
-          writeFileAndCreateDir(newPath, featureStringKey);
-          accum.push(newPath);
+          await fs.promises.mkdir(path.dirname(featureDestination), {
+            recursive: true,
+          });
+          // const newPath = `${process.cwd()}/docs/features/plain/${await sha256(
+          //   featureStringKey
+          // )}`;
+          // writeFileAndCreateDir(
+          //   `${featureDestination}/${await sha256(featureStringKey)}`,
+          //   featureStringKey
+          // );
+          accum.strings.push(featureStringKey);
         }
 
         return accum;
-      }, Promise.resolve([] as string[]))
-      .then((features: string[]) => {
+      }, Promise.resolve({ files: [] as string[], strings: [] as string[] }))
+
+      .then(({ files, strings }: { files: string[]; strings: string[] }) => {
+        // writeFileAndCreateDir(`${featureDestination}`, JSON.stringify(strings));
+
         fs.writeFileSync(
           `${destFolder}/featurePrompt.txt`,
-          features
+          files
             .map((f) => {
               return `/read ${f}`;
             })
@@ -1155,7 +1176,7 @@ async function writeFileAndCreateDir(filePath, data) {
 
   try {
     await fs.promises.mkdir(dirPath, { recursive: true });
-    await fs.promises.writeFile(filePath, data);
+    await fs.appendFileSync(filePath, data);
   } catch (error) {
     console.error(`Error writing file: ${error}`);
   }

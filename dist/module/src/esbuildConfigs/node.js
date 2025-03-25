@@ -3,8 +3,6 @@ import inputFilesPlugin from "./inputFilesPlugin.js";
 import featuresPlugin from "./featuresPlugin";
 export default (config, entryPoints) => {
     const { inputFilesPluginFactory, register } = inputFilesPlugin("node", entryPoints);
-    // const inputFilesPluginFactory = inputFilesPlugin("node", entryPoints);
-    // const register = (x) => x;
     return Object.assign(Object.assign({}, baseEsBuildConfig(config)), { splitting: true, outdir: config.outdir + "/node", 
         // inject: [`./node_modules/testeranto/dist/cjs-shim.js`],
         metafile: true, supported: {
@@ -22,7 +20,6 @@ export default (config, entryPoints) => {
             ...config.externals,
         ], entryPoints: [...entryPoints], plugins: [
             featuresPlugin,
-            // markdownPlugin({}),
             ...(config.nodePlugins.map((p) => p(register, entryPoints)) || []),
             inputFilesPluginFactory,
             // inputFilesPlugin("node", entryPoints),
@@ -30,7 +27,7 @@ export default (config, entryPoints) => {
                 name: "rebuild-notify",
                 setup(build) {
                     build.onEnd((result) => {
-                        console.log(`node build ended with ${result.errors.length} errors`);
+                        console.log(`> node build ended with ${result.errors.length} errors`);
                         if (result.errors.length > 0) {
                             console.log(result);
                         }

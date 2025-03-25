@@ -18,6 +18,7 @@ export declare type IJsonConfig = {
 };
 export declare type IPlugin = (register: (entrypoint: any, sources: any) => any, entrypoints: any) => Plugin;
 export declare type IBaseConfig = {
+    src: string;
     clearScreen: boolean;
     debugger: boolean;
     devMode: boolean;

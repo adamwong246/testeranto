@@ -32,12 +32,12 @@ const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const readline_1 = __importDefault(require("readline"));
 const glob_1 = require("glob");
+const node_crypto_1 = __importDefault(require("node:crypto"));
 const recursive_watch_1 = __importDefault(require("recursive-watch"));
 const node_js_1 = __importDefault(require("./esbuildConfigs/node.js"));
 const web_js_1 = __importDefault(require("./esbuildConfigs/web.js"));
 const web_html_js_1 = __importDefault(require("./web.html.js"));
 const main_js_1 = require("./PM/main.js");
-const utils_js_1 = require("./utils.js");
 readline_1.default.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
     process.stdin.setRawMode(true);
@@ -96,11 +96,11 @@ function parseTsErrors() {
         process.exit(1);
     }
 }
-const compile = () => {
+const typecheck = () => {
+    console.log("typechecking...");
     return new Promise((resolve, reject) => {
         const tsc = (0, child_process_1.spawn)("tsc", ["-noEmit"]);
         tsc.stdout.on("data", (data) => {
-            // console.log(`tsc stdout: ${data}`);
             const lines = data.toString().split("\n");
             logContent.push(...lines);
         });
@@ -110,24 +110,21 @@ const compile = () => {
         });
         tsc.on("close", (code) => {
             parseTsErrors();
-            console.log("tsc done");
+            console.log("...typechecking done");
             resolve(`tsc process exited with code ${code}`);
-            // if (code !== 0) {
-            //   resolve(`tsc process exited with code ${code}`);
-            //   // reject(`tsc process exited with code ${code}`);
-            // } else {
-            //   resolve({});
-            // }
         });
     });
 };
-const getRunnables = (tests, payload = [new Set(), new Set()]) => {
+const getRunnables = (tests, payload = {
+    nodeEntryPoints: {},
+    webEntryPoints: {},
+}) => {
     return tests.reduce((pt, cv, cndx, cry) => {
         if (cv[1] === "node") {
-            pt[0].add(cv[0]);
+            pt.nodeEntryPoints[cv[0]] = path_1.default.resolve(`./docs/node/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`);
         }
         else if (cv[1] === "web") {
-            pt[1].add(cv[0]);
+            pt.webEntryPoints[cv[0]] = path_1.default.resolve(`./docs/web/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`);
         }
         if (cv[3].length) {
             getRunnables(cv[3], payload);
@@ -135,7 +132,7 @@ const getRunnables = (tests, payload = [new Set(), new Set()]) => {
         return pt;
     }, payload);
 };
-Promise.resolve().then(() => __importStar(require(process.cwd() + "/" + process.argv[2]))).then((module) => {
+Promise.resolve().then(() => __importStar(require(process.cwd() + "/" + process.argv[2]))).then(async (module) => {
     const rawConfig = module.default;
     const getSecondaryEndpointsPoints = (runtime) => {
         const meta = (ts, st) => {
@@ -158,15 +155,63 @@ Promise.resolve().then(() => __importStar(require(process.cwd() + "/" + process.
     let status = "build";
     let pm = new main_js_1.PM_Main(config);
     const onNodeDone = () => {
+        console.log("onNodeDone");
         nodeDone = true;
         onDone();
     };
     const onWebDone = () => {
+        console.log("onWebDone");
         webDone = true;
         onDone();
     };
+    async function fileHash(filePath, algorithm = "md5") {
+        return new Promise((resolve, reject) => {
+            const hash = node_crypto_1.default.createHash(algorithm);
+            const fileStream = fs_1.default.createReadStream(filePath);
+            fileStream.on("data", (data) => {
+                hash.update(data);
+            });
+            fileStream.on("end", () => {
+                const fileHash = hash.digest("hex");
+                resolve(fileHash);
+            });
+            fileStream.on("error", (error) => {
+                reject(`Error reading file: ${error.message}`);
+            });
+        });
+    }
+    const fileHashes = {};
     const onDone = async () => {
         // console.log(nodeDone && webDone && this.mode === "PROD");
+        typecheck();
+        if (nodeDone && webDone && status === "build") {
+            status = "built";
+        }
+        if (nodeDone && webDone && status === "built") {
+            console.log("now watching exit points!");
+            Object.entries(nodeEntryPoints).forEach(([k, outputFile]) => {
+                console.log("watching", outputFile);
+                (0, recursive_watch_1.default)(outputFile, async (filename) => {
+                    const hash = await fileHash(outputFile);
+                    if (fileHashes[k] !== hash) {
+                        fileHashes[k] = hash;
+                        console.log(`< ${filename} `);
+                        pm.launchNode(k, outputFile);
+                    }
+                });
+            });
+            Object.entries(webEntryPoints).forEach(([k, outputFile]) => {
+                console.log("watching", outputFile);
+                (0, recursive_watch_1.default)(outputFile, async (filename) => {
+                    const hash = await fileHash(outputFile);
+                    if (fileHashes[k] !== hash) {
+                        fileHashes[k] = hash;
+                        console.log(`< ${filename} `);
+                        pm.launchWeb(k, outputFile);
+                    }
+                });
+            });
+        }
         if (nodeDone && webDone && mode === "PROD") {
             console.log("Testeranto-EsBuild is all done. Goodbye!");
             process.exit();
@@ -184,95 +229,8 @@ Promise.resolve().then(() => __importStar(require(process.cwd() + "/" + process.
                 console.log("waiting for tests to change");
             }
             console.log("press 'q' to quit");
-            ///////////////////////////////////////////////////////////////////////////////////////////
-            if (status === "build") {
-                status = "built";
-            }
-            else {
-                await pm.startPuppeteer({
-                    slowMo: 1,
-                    // timeout: 1,
-                    waitForInitialPage: false,
-                    executablePath: 
-                    // process.env.CHROMIUM_PATH || "/opt/homebrew/bin/chromium",
-                    "/opt/homebrew/bin/chromium",
-                    headless: false,
-                    dumpio: true,
-                    // timeout: 0,
-                    devtools: true,
-                    args: [
-                        "--auto-open-devtools-for-tabs",
-                        `--remote-debugging-port=3234`,
-                        // "--disable-features=IsolateOrigins,site-per-process",
-                        "--disable-site-isolation-trials",
-                        "--allow-insecure-localhost",
-                        "--allow-file-access-from-files",
-                        "--allow-running-insecure-content",
-                        "--disable-dev-shm-usage",
-                        "--disable-extensions",
-                        "--disable-gpu",
-                        "--disable-setuid-sandbox",
-                        "--disable-site-isolation-trials",
-                        "--disable-web-security",
-                        "--no-first-run",
-                        "--no-sandbox",
-                        "--no-startup-window",
-                        // "--no-zygote",
-                        "--reduce-security-for-testing",
-                        "--remote-allow-origins=*",
-                        "--unsafely-treat-insecure-origin-as-secure=*",
-                        // "--disable-features=IsolateOrigins",
-                        // "--remote-allow-origins=ws://localhost:3234",
-                        // "--single-process",
-                        // "--unsafely-treat-insecure-origin-as-secure",
-                        // "--unsafely-treat-insecure-origin-as-secure=ws://192.168.0.101:3234",
-                        // "--disk-cache-dir=/dev/null",
-                        // "--disk-cache-size=1",
-                        // "--start-maximized",
-                    ],
-                }, ".");
-                console.log("\n Puppeteer is running. Press 'q' to shutdown softly. Press 'x' to shutdown forcefully.\n");
-                config.tests.forEach(([test, runtime, tr, sidecars]) => {
-                    if (runtime === "node") {
-                        pm.launchNode(test, (0, utils_js_1.destinationOfRuntime)(test, "node", config));
-                    }
-                    else if (runtime === "web") {
-                        pm.launchWeb(test, (0, utils_js_1.destinationOfRuntime)(test, "web", config), sidecars);
-                    }
-                    else {
-                        console.error("runtime makes no sense", runtime);
-                    }
-                });
-            }
-            ///////////////////////////////////////////////////////////////////////////////////////////
             if (config.devMode) {
-                console.log("ready and watching for changes...", config.buildDir);
-                (0, recursive_watch_1.default)(config.buildDir, (eventType, changedFile) => {
-                    if (changedFile) {
-                        config.tests.forEach(([test, runtime, tr, sidecars]) => {
-                            if (eventType === "change" || eventType === "rename") {
-                                if (changedFile ===
-                                    test
-                                        .replace("./", "node/")
-                                        .split(".")
-                                        .slice(0, -1)
-                                        .concat("mjs")
-                                        .join(".")) {
-                                    pm.launchNode(test, (0, utils_js_1.destinationOfRuntime)(test, "node", config));
-                                }
-                                if (changedFile ===
-                                    test
-                                        .replace("./", "web/")
-                                        .split(".")
-                                        .slice(0, -1)
-                                        .concat("mjs")
-                                        .join(".")) {
-                                    pm.launchWeb(test, (0, utils_js_1.destinationOfRuntime)(test, "web", config), sidecars);
-                                }
-                            }
-                        });
-                    }
-                });
+                console.log("ready and watching for changes...");
             }
             else {
                 pm.shutDown();
@@ -280,6 +238,7 @@ Promise.resolve().then(() => __importStar(require(process.cwd() + "/" + process.
             ////////////////////////////////////////////////////////////////////////////////
         }
     };
+    console.log(`Press 'q' to shutdown gracefully. Press 'x' to shutdown forcefully.`);
     process.stdin.on("keypress", (str, key) => {
         if (key.name === "q") {
             console.log("Testeranto-EsBuild is shutting down...");
@@ -302,7 +261,7 @@ Promise.resolve().then(() => __importStar(require(process.cwd() + "/" + process.
             .mkdir(path_1.default.dirname(htmlFilePath), { recursive: true })
             .then((x) => fs_1.default.writeFileSync(htmlFilePath, (0, web_html_js_1.default)(jsfilePath, htmlFilePath)));
     })));
-    const [nodeEntryPoints, webEntryPoints] = getRunnables(config.tests);
+    const { nodeEntryPoints, webEntryPoints } = getRunnables(config.tests);
     (0, glob_1.glob)(`./${config.outdir}/chunk-*.mjs`, {
         ignore: "node_modules/**",
     }).then((chunks) => {
@@ -310,10 +269,51 @@ Promise.resolve().then(() => __importStar(require(process.cwd() + "/" + process.
             fs_1.default.unlinkSync(chunk);
         });
     });
-    Promise.all([
-        compile(),
+    await pm.startPuppeteer({
+        slowMo: 1,
+        // timeout: 1,
+        waitForInitialPage: false,
+        executablePath: 
+        // process.env.CHROMIUM_PATH || "/opt/homebrew/bin/chromium",
+        "/opt/homebrew/bin/chromium",
+        headless: true,
+        dumpio: true,
+        // timeout: 0,
+        devtools: true,
+        args: [
+            "--auto-open-devtools-for-tabs",
+            `--remote-debugging-port=3234`,
+            // "--disable-features=IsolateOrigins,site-per-process",
+            "--disable-site-isolation-trials",
+            "--allow-insecure-localhost",
+            "--allow-file-access-from-files",
+            "--allow-running-insecure-content",
+            "--disable-dev-shm-usage",
+            "--disable-extensions",
+            "--disable-gpu",
+            "--disable-setuid-sandbox",
+            "--disable-site-isolation-trials",
+            "--disable-web-security",
+            "--no-first-run",
+            "--no-sandbox",
+            "--no-startup-window",
+            // "--no-zygote",
+            "--reduce-security-for-testing",
+            "--remote-allow-origins=*",
+            "--unsafely-treat-insecure-origin-as-secure=*",
+            // "--disable-features=IsolateOrigins",
+            // "--remote-allow-origins=ws://localhost:3234",
+            // "--single-process",
+            // "--unsafely-treat-insecure-origin-as-secure",
+            // "--unsafely-treat-insecure-origin-as-secure=ws://192.168.0.101:3234",
+            // "--disk-cache-dir=/dev/null",
+            // "--disk-cache-size=1",
+            // "--start-maximized",
+        ],
+    }, ".");
+    await Promise.all([
         esbuild_1.default
-            .context((0, node_js_1.default)(config, nodeEntryPoints))
+            .context((0, node_js_1.default)(config, Object.keys(nodeEntryPoints)))
             .then(async (nodeContext) => {
             if (config.devMode) {
                 await nodeContext.watch().then((v) => {
@@ -328,7 +328,7 @@ Promise.resolve().then(() => __importStar(require(process.cwd() + "/" + process.
             return nodeContext;
         }),
         esbuild_1.default
-            .context((0, web_js_1.default)(config, webEntryPoints))
+            .context((0, web_js_1.default)(config, Object.keys(webEntryPoints)))
             .then(async (webContext) => {
             if (config.devMode) {
                 await webContext.watch().then((v) => {

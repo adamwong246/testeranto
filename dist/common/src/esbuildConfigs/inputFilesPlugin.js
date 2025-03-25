@@ -52,6 +52,13 @@ exports.default = (platform, entryPoints) => {
                                 })
                                     .flat();
                                 const typeErrorFiles = addableFiles.map((t) => `docs/types/${t}.type_errors.txt`);
+                                // const featureFiles = addableFiles.map(
+                                //   (t) =>
+                                //     `docs/features/strings/${t
+                                //       .split(".")
+                                //       .slice(0, -1)
+                                //       .join(".")}.features.txt`
+                                // );
                                 fs_1.default.writeFileSync(promptPath, `
 ${addableFiles
                                     .map((x) => {
@@ -61,13 +68,11 @@ ${addableFiles
   
 ${typeErrorFiles
                                     .map((x) => {
-                                    // const f = `docs/types/${x}.type_errors.txt`;
                                     return `/read ${x}`;
-                                    // if (fs.existsSync(f)) {
-                                    //   return `/read ${f}`;
-                                    // }
                                 })
                                     .join("\n")}
+
+
   
 /read ${testPaths}
 /read ${stdoutPath}

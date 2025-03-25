@@ -3,7 +3,6 @@ import path from "path";
 import puppeteer from "puppeteer-core";
 import crypto from "crypto";
 import { PM } from "./index.js";
-import { destinationOfRuntime } from "../utils.js";
 const fileStreams3 = [];
 const fPaths = [];
 const files = {};
@@ -34,7 +33,7 @@ export class PM_Main extends PM {
             }
         };
         this.launchNode = async (src, dest) => {
-            console.log("launchNode", src);
+            console.log("! node", src);
             this.register(src);
             const destFolder = dest.replace(".mjs", "");
             let argz = "";
@@ -81,7 +80,7 @@ export class PM_Main extends PM {
                 console.error("negative port makes no sense", src);
                 process.exit(-1);
             }
-            const builtfile = dest + ".mjs";
+            const builtfile = dest;
             const webSideCares = [];
             // await Promise.all(
             //   testConfig[3].map(async (sidecar) => {
@@ -108,7 +107,7 @@ export class PM_Main extends PM {
                     defaultModule
                         .receiveTestResourceConfig(argz)
                         .then(async ({ features, failed }) => {
-                        this.receiveFeatures(features, destFolder);
+                        this.receiveFeatures(features, destFolder, src);
                         console.log(`${src} completed with ${failed} errors`);
                     })
                         .catch((e) => {
@@ -305,14 +304,18 @@ export class PM_Main extends PM {
                 }
             }
         };
-        this.launchWeb = (t, dest, sidecars) => {
-            console.log("launchWeb", t, dest);
+        this.launchWeb = (t, dest) => {
+            console.log("! web", t);
             this.register(t);
-            sidecars.map((sidecar) => {
-                if (sidecar[1] === "node") {
-                    return this.launchNodeSideCar(sidecar[0], destinationOfRuntime(sidecar[0], "node", this.configs), sidecar);
-                }
-            });
+            // sidecars.map((sidecar) => {
+            //   if (sidecar[1] === "node") {
+            //     return this.launchNodeSideCar(
+            //       sidecar[0],
+            //       destinationOfRuntime(sidecar[0], "node", this.configs),
+            //       sidecar
+            //     );
+            //   }
+            // });
             const destFolder = dest.replace(".mjs", "");
             const webArgz = JSON.stringify({
                 name: dest,
@@ -321,8 +324,8 @@ export class PM_Main extends PM {
                 browserWSEndpoint: this.browser.wsEndpoint(),
             });
             const evaluation = `
-    console.log("importing ${dest}.mjs");
-    import('${dest}.mjs').then(async (x) => {
+    console.log("importing ${dest}");
+    import('${dest}').then(async (x) => {
       console.log("imported", (await x.default));
       try {
         return await (await x.default).receiveTestResourceConfig(${webArgz})
@@ -332,8 +335,8 @@ export class PM_Main extends PM {
     })`;
             const fileStreams2 = [];
             const doneFileStream2 = [];
-            const stdoutStream = fs.createWriteStream(`${dest}/stdout.log`);
-            const stderrStream = fs.createWriteStream(`${dest}/stderr.log`);
+            const stdoutStream = fs.createWriteStream(`${destFolder}/stdout.log`);
+            const stderrStream = fs.createWriteStream(`${destFolder}/stderr.log`);
             this.browser
                 .newPage()
                 .then((page) => {
@@ -497,7 +500,7 @@ export class PM_Main extends PM {
                         files[t] = new Set();
                     }
                     // files[t].add(filepath);
-                    fs.writeFileSync(dest + "/manifest.json", JSON.stringify(Array.from(files[t])));
+                    fs.writeFileSync(destFolder + "/manifest.json", JSON.stringify(Array.from(files[t])));
                     delete files[t];
                     Promise.all(screenshots[t] || []).then(() => {
                         delete screenshots[t];
@@ -532,11 +535,11 @@ export class PM_Main extends PM {
                     stdoutStream.write(JSON.stringify(log.location()));
                     stdoutStream.write(JSON.stringify(log.stackTrace()));
                 });
-                await page.goto(`file://${`${dest}.html`}`, {});
+                await page.goto(`file://${`${destFolder}.html`}`, {});
                 await page
                     .evaluate(evaluation)
                     .then(async ({ failed, features }) => {
-                    this.receiveFeatures(features, destFolder);
+                    this.receiveFeatures(features, destFolder, t);
                     console.log(`${t} completed with ${failed} errors`);
                 })
                     .catch((e) => {
@@ -548,7 +551,8 @@ export class PM_Main extends PM {
                 return page;
             });
         };
-        this.receiveFeatures = (features, destFolder) => {
+        this.receiveFeatures = (features, destFolder, srcTest) => {
+            const featureDestination = path.resolve(process.cwd(), "docs", "features", "strings", srcTest.split(".").slice(0, -1).join(".") + ".features.txt");
             features
                 .reduce(async (mm, featureStringKey) => {
                 const accum = await mm;
@@ -575,24 +579,33 @@ export class PM_Main extends PM {
                                 // console.log("Symlink created successfully");
                             }
                         });
-                        accum.push(newPath);
+                        accum.files.push(newPath);
                     }
                     else if (u.protocol === "http:" || u.protocol === "https:") {
                         const newPath = `${process.cwd()}/docs/features/external${u.hostname}${u.pathname}`;
                         const body = await this.configs.featureIngestor(featureStringKey);
                         writeFileAndCreateDir(newPath, body);
-                        accum.push(newPath);
+                        accum.files.push(newPath);
                     }
                 }
                 else {
-                    const newPath = `${process.cwd()}/docs/features/plain/${await sha256(featureStringKey)}`;
-                    writeFileAndCreateDir(newPath, featureStringKey);
-                    accum.push(newPath);
+                    await fs.promises.mkdir(path.dirname(featureDestination), {
+                        recursive: true,
+                    });
+                    // const newPath = `${process.cwd()}/docs/features/plain/${await sha256(
+                    //   featureStringKey
+                    // )}`;
+                    // writeFileAndCreateDir(
+                    //   `${featureDestination}/${await sha256(featureStringKey)}`,
+                    //   featureStringKey
+                    // );
+                    accum.strings.push(featureStringKey);
                 }
                 return accum;
-            }, Promise.resolve([]))
-                .then((features) => {
-                fs.writeFileSync(`${destFolder}/featurePrompt.txt`, features
+            }, Promise.resolve({ files: [], strings: [] }))
+                .then(({ files, strings }) => {
+                // writeFileAndCreateDir(`${featureDestination}`, JSON.stringify(strings));
+                fs.writeFileSync(`${destFolder}/featurePrompt.txt`, files
                     .map((f) => {
                     return `/read ${f}`;
                 })
@@ -857,7 +870,7 @@ async function writeFileAndCreateDir(filePath, data) {
     const dirPath = path.dirname(filePath);
     try {
         await fs.promises.mkdir(dirPath, { recursive: true });
-        await fs.promises.writeFile(filePath, data);
+        await fs.appendFileSync(filePath, data);
     }
     catch (error) {
         console.error(`Error writing file: ${error}`);

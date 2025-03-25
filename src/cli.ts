@@ -5,6 +5,7 @@ import fs from "fs";
 import path from "path";
 import readline from "readline";
 import { glob } from "glob";
+import crypto from "node:crypto";
 import watch from "recursive-watch";
 
 import esbuildNodeConfiger from "./esbuildConfigs/node.js";
@@ -131,7 +132,7 @@ const getRunnables = (
         `./docs/node/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
       );
     } else if (cv[1] === "web") {
-      pt.nodeEntryPoints[cv[0]] = path.resolve(
+      pt.webEntryPoints[cv[0]] = path.resolve(
         `./docs/web/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
       );
     }
@@ -174,17 +175,71 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
   let pm: PM_Main | undefined = new PM_Main(config);
 
   const onNodeDone = () => {
+    console.log("onNodeDone");
     nodeDone = true;
     onDone();
   };
 
   const onWebDone = () => {
+    console.log("onWebDone");
     webDone = true;
     onDone();
   };
 
+  async function fileHash(filePath, algorithm = "md5") {
+    return new Promise((resolve, reject) => {
+      const hash = crypto.createHash(algorithm);
+      const fileStream = fs.createReadStream(filePath);
+
+      fileStream.on("data", (data) => {
+        hash.update(data);
+      });
+
+      fileStream.on("end", () => {
+        const fileHash = hash.digest("hex");
+        resolve(fileHash);
+      });
+
+      fileStream.on("error", (error) => {
+        reject(`Error reading file: ${error.message}`);
+      });
+    });
+  }
+
+  const fileHashes = {};
+
   const onDone = async () => {
     // console.log(nodeDone && webDone && this.mode === "PROD");
+    typecheck();
+    if (nodeDone && webDone && status === "build") {
+      status = "built";
+    }
+    if (nodeDone && webDone && status === "built") {
+      console.log("now watching exit points!");
+      Object.entries(nodeEntryPoints).forEach(([k, outputFile]) => {
+        console.log("watching", outputFile);
+        watch(outputFile, async (filename) => {
+          const hash = await fileHash(outputFile);
+          if (fileHashes[k] !== hash) {
+            fileHashes[k] = hash;
+            console.log(`< ${filename} `);
+            pm.launchNode(k, outputFile);
+          }
+        });
+      });
+      Object.entries(webEntryPoints).forEach(([k, outputFile]) => {
+        console.log("watching", outputFile);
+        watch(outputFile, async (filename) => {
+          const hash = await fileHash(outputFile);
+          if (fileHashes[k] !== hash) {
+            fileHashes[k] = hash;
+            console.log(`< ${filename} `);
+            pm.launchWeb(k, outputFile);
+          }
+        });
+      });
+    }
+
     if (nodeDone && webDone && mode === "PROD") {
       console.log("Testeranto-EsBuild is all done. Goodbye!");
       process.exit();
@@ -280,7 +335,7 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
       executablePath:
         // process.env.CHROMIUM_PATH || "/opt/homebrew/bin/chromium",
         "/opt/homebrew/bin/chromium",
-      headless: false,
+      headless: true,
       dumpio: true,
       // timeout: 0,
       devtools: true,
@@ -322,13 +377,6 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
     "."
   );
 
-  console.log("Puppeteer is running.");
-
-  await typecheck();
-  watch(config.src, (changedFile) => {
-    typecheck();
-  });
-
   await Promise.all([
     esbuild
       .context(esbuildNodeConfiger(config, Object.keys(nodeEntryPoints)))
@@ -360,22 +408,4 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
         return webContext;
       }),
   ]);
-
-  Object.entries(nodeEntryPoints).forEach(([k, outputFile]) => {
-    fs.watch(outputFile, (eventType, filename) => {
-      if (eventType === "change") {
-        console.log(`< ${filename} `);
-        pm.launchNode(k, outputFile);
-      }
-    });
-  });
-
-  Object.entries(webEntryPoints).forEach(([k, outputFile]) => {
-    fs.watch(outputFile, (eventType, filename) => {
-      if (eventType === "change") {
-        console.log(`< ${filename} `);
-        pm.launchWeb(k, outputFile);
-      }
-    });
-  });
 });

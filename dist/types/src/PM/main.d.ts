@@ -50,6 +50,6 @@ export declare class PM_Main extends PM {
     launchNode: (src: string, dest: string) => Promise<void>;
     launchWebSideCar: (src: string, dest: string, testConfig: ITestTypes) => Promise<Page>;
     launchNodeSideCar: (src: string, dest: string, testConfig: ITestTypes) => Promise<void>;
-    launchWeb: (t: string, dest: string, sidecars: ITestTypes[]) => void;
-    receiveFeatures: (features: string[], destFolder: string) => void;
+    launchWeb: (t: string, dest: string) => void;
+    receiveFeatures: (features: string[], destFolder: string, srcTest: string) => void;
 }
