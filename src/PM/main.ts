@@ -775,9 +775,11 @@ export class PM_Main extends PM {
       browserWSEndpoint: this.browser.wsEndpoint(),
     });
 
+    const d = `${dest}?cacheBust=${Date.now()}`;
+
     const evaluation = `
-    console.log("importing ${dest}");
-    import('${dest}').then(async (x) => {
+    console.log("importing ${d}");
+    import('${d}').then(async (x) => {
       console.log("imported", (await x.default));
       try {
         return await (await x.default).receiveTestResourceConfig(${webArgz})

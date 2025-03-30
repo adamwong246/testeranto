@@ -32,3 +32,19 @@ await esbuild.build({
     js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`,
   },
 })
+
+await esbuild.build({
+  entryPoints: ['src/cli2.ts'],
+  bundle: true,
+  format: "esm",
+  platform: "node",
+  outfile: 'dist/prebuild/cli2.mjs',
+  packages: "external",
+  supported: {
+    "dynamic-import": true,
+  },
+
+  banner: {
+    js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`,
+  },
+})

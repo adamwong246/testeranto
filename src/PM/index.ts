@@ -16,7 +16,7 @@ export abstract class PM {
   abstract existsSync(fp: string): boolean;
   abstract write(accessObject: { uid: number }, contents: string): boolean;
   abstract end(accessObject: { uid: number }): boolean;
-  abstract customScreenShot(opts: object, page?: CdpPage): any;
+  abstract customScreenShot(opts: object, page?: Promise<string>): any;
   abstract screencast(opts: ScreenRecorderOptions, p?): any;
   abstract screencastStop(s: string): any;
 

@@ -8,7 +8,22 @@ import {
   testInterface as baseInterface,
 } from "./index.js";
 
-export default <ITestShape extends IBaseTest>(
+export default <
+  ITestShape extends IBaseTest<
+    IInput,
+    number,
+    number,
+    number,
+    unknown,
+    unknown,
+    unknown,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+>(
   testImplementations: ITestImpl<ITestShape>,
   testSpecifications: ITestSpec<ITestShape>,
   testInput: IInput,
@@ -19,9 +34,5 @@ export default <ITestShape extends IBaseTest>(
     testSpecifications,
     testImplementations,
     testInterface
-    // {
-    //   ...baseInterface,
-    //   ...testInterface,
-    // }
   );
 };

@@ -1,5 +1,5 @@
 import { spawn } from "child_process";
-import fs from "fs";
+import fs, { watch } from "fs";
 import path from "path";
 import readline from "readline";
 import { glob } from "glob";
@@ -9,7 +9,7 @@ import { debounceWatch } from "@bscotch/debounce-watch";
 import type { DebouncedEventsProcessor } from "@bscotch/debounce-watch";
 
 import esbuild from "esbuild";
-import watch from "recursive-watch";
+// import watch from "recursive-watch";
 
 import esbuildNodeConfiger from "./esbuildConfigs/node.js";
 import esbuildWebConfiger from "./esbuildConfigs/web.js";
@@ -122,6 +122,7 @@ type IRunnables = {
   nodeEntryPoints: Record<string, string>;
   webEntryPoints: Record<string, string>;
 };
+
 const getRunnables = (
   tests: ITestTypes[],
   payload = {
@@ -176,15 +177,32 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
   let mode = config.devMode ? "DEV" : "PROD";
   let status: "build" | "built" = "build";
   let pm: PM_Main | undefined = new PM_Main(config);
+  const fileHashes = {};
+  const { nodeEntryPoints, webEntryPoints } = getRunnables(config.tests);
 
   const onNodeDone = () => {
     console.log("onNodeDone");
     nodeDone = true;
+
     onDone();
   };
 
   const onWebDone = () => {
     console.log("onWebDone");
+
+    // Object.entries(webEntryPoints).forEach(([k, outputFile]) => {
+    //   console.log("watching", outputFile);
+    //   watch(outputFile, async (filename) => {
+    //     const hash = await fileHash(outputFile);
+    //     console.log(`< ${filename} ${hash}`);
+    //     if (fileHashes[k] !== hash) {
+    //       fileHashes[k] = hash;
+
+    //       pm.launchWeb(k, outputFile);
+    //     }
+    //   });
+    // });
+
     webDone = true;
     onDone();
   };
@@ -209,37 +227,40 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
     });
   }
 
-  const fileHashes = {};
-
   const onDone = async () => {
-    if (nodeDone && webDone && status === "build") {
+    if (nodeDone && webDone) {
       status = "built";
     }
-
     if (nodeDone && webDone && status === "built") {
       console.log("now watching exit points!");
-      Object.entries(nodeEntryPoints).forEach(([k, outputFile]) => {
-        console.log("watching", outputFile);
-        watch(outputFile, async (filename) => {
-          const hash = await fileHash(outputFile);
-          if (fileHashes[k] !== hash) {
-            fileHashes[k] = hash;
-            console.log(`< ${filename} `);
-            pm.launchNode(k, outputFile);
-          }
-        });
-      });
-      Object.entries(webEntryPoints).forEach(([k, outputFile]) => {
-        console.log("watching", outputFile);
-        watch(outputFile, async (filename) => {
-          const hash = await fileHash(outputFile);
-          if (fileHashes[k] !== hash) {
-            fileHashes[k] = hash;
-            console.log(`< ${filename} `);
-            pm.launchWeb(k, outputFile);
-          }
-        });
-      });
+
+      // Object.entries(nodeEntryPoints).forEach(([k, outputFile]) => {
+      //   console.log("watching", outputFile);
+      //   try {
+      //     watch(outputFile, async (filename) => {
+      //       const hash = await fileHash(outputFile);
+      //       if (fileHashes[k] !== hash) {
+      //         fileHashes[k] = hash;
+      //         console.log(`< ${filename} `);
+      //         pm.launchNode(k, outputFile);
+      //       }
+      //     });
+      //   } catch (e) {
+      //     console.error(e);
+      //   }
+      // });
+
+      // Object.entries(webEntryPoints).forEach(([k, outputFile]) => {
+      //   console.log("watching", outputFile);
+      //   watch(outputFile, async (filename) => {
+      //     const hash = await fileHash(outputFile);
+      //     console.log(`< ${filename} ${hash}`);
+      //     if (fileHashes[k] !== hash) {
+      //       fileHashes[k] = hash;
+      //       pm.launchWeb(k, outputFile);
+      //     }
+      //   });
+      // });
     }
 
     if (nodeDone && webDone && mode === "PROD") {
@@ -318,8 +339,6 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
       })
     )
   );
-
-  const { nodeEntryPoints, webEntryPoints } = getRunnables(config.tests);
 
   glob(`./${config.outdir}/chunk-*.mjs`, {
     ignore: "node_modules/**",

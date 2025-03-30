@@ -83,7 +83,7 @@ export type IEntry<
 > = (
   input: ITestShape["iinput"],
   testSpecification: ITestSpecification<ITestShape>,
-  testImplementation: ITestImplementation<ITestShape, object>,
+  testImplementation: ITestImplementation<ITestShape, any>,
   testInterface: IPartialInterface<ITestShape>,
   testResourceRequirement: ITTestResourceRequest
 ) => Promise<Testeranto<ITestShape>>;
@@ -147,7 +147,7 @@ export type ITestImplementation<
     Record<string, any>,
     Record<string, any>
   >,
-  IMod = object
+  IMod = any
 > = Modify<
   {
     suites: {
@@ -158,6 +158,9 @@ export type ITestImplementation<
         ...Ig: ITestShape["givens"][K]
       ) => ITestShape["given"];
     };
+    // givens: {
+    //   [K in keyof ITestShape["givens"]]: ITestShape["given"];
+    // };
     whens: {
       [K in keyof ITestShape["whens"]]: (
         ...Iw: ITestShape["whens"][K]
@@ -166,6 +169,9 @@ export type ITestImplementation<
         utils: PM
       ) => Promise<ITestShape["when"]>;
     };
+    // whens: {
+    //   [K in keyof ITestShape["whens"]]: ITestShape["when"];
+    // };
     thens: {
       [K in keyof ITestShape["thens"]]: (
         ...It: ITestShape["thens"][K]
@@ -181,24 +187,6 @@ export type ITestImplementation<
 >;
 
 type Modify<T, R> = Omit<T, keyof R> & R;
-
-// export type IBaseTest<Shape = any, II = Shape> = {
-//   iinput: II;
-//   isubject: Shape;
-//   istore: Shape;
-//   iselection: Shape;
-//   // iinitial;
-
-//   given;
-//   when;
-//   then;
-
-//   suites: Record<string, any>;
-//   givens: Record<string, any>;
-//   whens: Record<string, any>;
-//   thens: Record<string, any>;
-//   checks: Record<string, any>;
-// };
 
 export type IBaseTest<
   IInput,

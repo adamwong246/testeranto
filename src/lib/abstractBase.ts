@@ -312,11 +312,12 @@ export abstract class BaseGiven<
     suiteNdx: number
   ) {
     this.key = key;
+
     tLog(`\n ${this.key}`);
     tLog(`\n Given: ${this.name}`);
 
     const givenArtifactory = (fPath: string, value: unknown) =>
-      artifactory(`given-${this.key}/${fPath}`, value);
+      artifactory(`given-${key}/${fPath}`, value);
     try {
       // tLog(`\n Given this.store`, this.store);
 
@@ -325,7 +326,7 @@ export abstract class BaseGiven<
           if (prop === "writeFileSync") {
             return (fp, contents) =>
               target[prop](
-                `suite-${suiteNdx}/given-${this.key}/when/beforeEach/${fp}`,
+                `suite-${suiteNdx}/given-${key}/when/beforeEach/${fp}`,
                 contents
               );
           }
@@ -335,7 +336,7 @@ export abstract class BaseGiven<
               target.customScreenShot(
                 {
                   ...opts,
-                  path: `suite-${suiteNdx}/given-${this.key}/when/beforeEach/${opts.path}`,
+                  path: `suite-${suiteNdx}/given-${key}/when/beforeEach/${opts.path}`,
                 },
                 p
               );
@@ -346,7 +347,7 @@ export abstract class BaseGiven<
               target.screencast(
                 {
                   ...opts,
-                  path: `suite-${suiteNdx}/given-${this.key}/when/beforeEach/${opts.path}`,
+                  path: `suite-${suiteNdx}/given-${key}/when/beforeEach/${opts.path}`,
                 },
                 p
               );
@@ -377,7 +378,7 @@ export abstract class BaseGiven<
           testResourceConfiguration,
           tLog,
           pm,
-          `suite-${suiteNdx}/given-${this.key}/when/${whenNdx}`
+          `suite-${suiteNdx}/given-${key}/when/${whenNdx}`
         );
       }
 
@@ -387,7 +388,7 @@ export abstract class BaseGiven<
           testResourceConfiguration,
           tLog,
           pm,
-          `suite-${suiteNdx}/given-${this.key}/then-${thenNdx}`
+          `suite-${suiteNdx}/given-${key}/then-${thenNdx}`
         );
         tester(t);
       }
@@ -407,7 +408,7 @@ export abstract class BaseGiven<
                 target.customScreenShot(
                   {
                     ...opts,
-                    path: `suite-${suiteNdx}/given-${this.key}/afterEach/${opts.path}`,
+                    path: `suite-${suiteNdx}/given-${key}/afterEach/${opts.path}`,
                   },
                   p
                 );
@@ -416,7 +417,7 @@ export abstract class BaseGiven<
             if (prop === "writeFileSync") {
               return (fp, contents) =>
                 target[prop](
-                  `suite-${suiteNdx}/given-${this.key}/afterEach/${fp}`,
+                  `suite-${suiteNdx}/given-${key}/afterEach/${fp}`,
                   contents
                 );
             }
