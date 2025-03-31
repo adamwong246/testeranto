@@ -123,13 +123,14 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
 
   Object.entries(nodeEntryPoints).forEach(
     ([k, outputFile]: [string, string]) => {
-      console.log("watching", outputFile);
+      console.log("watching and running", outputFile);
+      pm.launchNode(k, outputFile);
       try {
-        watch(outputFile, async (filename) => {
+        watch(outputFile, async (e, filename) => {
           const hash = await fileHash(outputFile);
           if (fileHashes[k] !== hash) {
             fileHashes[k] = hash;
-            console.log(`< ${filename} `);
+            console.log(`< ${e} ${filename} ${hash}`);
             pm.launchNode(k, outputFile);
           }
         });
@@ -141,10 +142,11 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
 
   Object.entries(webEntryPoints).forEach(
     ([k, outputFile]: [string, string]) => {
-      console.log("watching", outputFile);
-      watch(outputFile, async (filename) => {
+      console.log("watching and running", outputFile);
+      pm.launchWeb(k, outputFile);
+      watch(outputFile, async (e, filename) => {
         const hash = await fileHash(outputFile);
-        console.log(`< ${filename} ${hash}`);
+        console.log(`< ${e} ${filename} ${hash}`);
         if (fileHashes[k] !== hash) {
           fileHashes[k] = hash;
           pm.launchWeb(k, outputFile);
