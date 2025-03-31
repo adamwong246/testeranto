@@ -26,6 +26,18 @@ const files: Record<string, Set<string>> = {};
 const recorders: Record<string, ScreenRecorder> = {};
 const screenshots: Record<string, Promise<Uint8Array>[]> = {};
 
+const red = "\x1b[31m";
+const green = "\x1b[32m";
+const reset = "\x1b[0m"; // Resets to default color
+
+const statusMessagePretty = (failures: number, test: string) => {
+  if (failures === 0) {
+    console.log(green + `${test} completed successfully` + reset);
+  } else {
+    console.log(red + `${test} failed ${failures} times` + reset);
+  }
+};
+
 export class PM_Main extends PM {
   browser: Browser;
 
@@ -496,7 +508,8 @@ export class PM_Main extends PM {
           .receiveTestResourceConfig(argz)
           .then(async ({ features, failed }: IFinalResults) => {
             this.receiveFeatures(features, destFolder, src);
-            console.log(`${src} completed with ${failed} errors`);
+            // console.log(`${src} completed with ${failed} errors`);
+            statusMessagePretty(failed, src);
           })
           .catch((e) => {
             console.log(`${src} errored with`, e);
@@ -1075,7 +1088,8 @@ export class PM_Main extends PM {
           .evaluate(evaluation)
           .then(async ({ failed, features }: IFinalResults) => {
             this.receiveFeatures(features, destFolder, t);
-            console.log(`${t} completed with ${failed} errors`);
+            // console.log(`${t} completed with ${failed} errors`);
+            statusMessagePretty(failed, t);
           })
           .catch((e) => {
             console.log(`${t} errored with`, e);

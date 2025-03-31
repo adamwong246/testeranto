@@ -140,7 +140,7 @@ ${typeErrorFiles.map((x) => {
 
 /code Fix the failing tests described in ${testPaths}. Correct any type signature errors described in the files [${typeErrorFiles.join(
                     ", "
-                  )}]. Implement any method which throws "Function not implemented."
+                  )}]. Implement any method which throws "Function not implemented. Update "any" types to something more specific."
 `
                 );
               }
@@ -343,6 +343,16 @@ var fPaths = [];
 var files = {};
 var recorders = {};
 var screenshots = {};
+var red = "\x1B[31m";
+var green = "\x1B[32m";
+var reset = "\x1B[0m";
+var statusMessagePretty = (failures, test) => {
+  if (failures === 0) {
+    console.log(green + `${test} completed successfully` + reset);
+  } else {
+    console.log(red + `${test} failed ${failures} times` + reset);
+  }
+};
 var PM_Main = class extends PM {
   constructor(configs) {
     super();
@@ -419,7 +429,7 @@ var PM_Main = class extends PM {
         return module.default.then((defaultModule) => {
           defaultModule.receiveTestResourceConfig(argz).then(async ({ features, failed }) => {
             this.receiveFeatures(features, destFolder, src);
-            console.log(`${src} completed with ${failed} errors`);
+            statusMessagePretty(failed, src);
           }).catch((e) => {
             console.log(`${src} errored with`, e);
           }).finally(() => {
@@ -781,7 +791,7 @@ var PM_Main = class extends PM {
         await page.goto(`file://${`${destFolder}.html`}`, {});
         await page.evaluate(evaluation).then(async ({ failed, features }) => {
           this.receiveFeatures(features, destFolder, t);
-          console.log(`${t} completed with ${failed} errors`);
+          statusMessagePretty(failed, t);
         }).catch((e) => {
           console.log(`${t} errored with`, e);
         }).finally(() => {

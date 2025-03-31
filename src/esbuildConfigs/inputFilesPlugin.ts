@@ -141,7 +141,7 @@ ${typeErrorFiles
 
 /code Fix the failing tests described in ${testPaths}. Correct any type signature errors described in the files [${typeErrorFiles.join(
                     ", "
-                  )}]. Implement any method which throws "Function not implemented."
+                  )}]. Implement any method which throws "Function not implemented. Update "any" types to something more specific."
 `
                 );
               }

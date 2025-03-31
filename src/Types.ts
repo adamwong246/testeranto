@@ -147,7 +147,20 @@ export type ITestImplementation<
     Record<string, any>,
     Record<string, any>
   >,
-  IMod = any
+  IMod extends IBaseTest<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
 > = Modify<
   {
     suites: {
