@@ -3,7 +3,7 @@ import { IBaseTest } from "../Types.js";
 import { IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen } from "./abstractBase.js";
 import { ITestInterface } from "./types.js";
 export declare const BaseTestInterface: ITestInterface<IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>>;
-export declare const DefaultTestInterface: (p: Partial<ITestInterface<any>>) => ITestInterface<any>;
+export declare const DefaultTestInterface: (p: ITestInterface<any>) => ITestInterface<any>;
 export declare type ITTestResourceConfiguration = {
     name: string;
     fs: string;

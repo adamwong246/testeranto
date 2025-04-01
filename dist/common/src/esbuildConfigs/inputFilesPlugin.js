@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
+const child_process_1 = require("child_process");
 const otherInputs = {};
 const register = (entrypoint, sources) => {
     if (!otherInputs[entrypoint]) {
@@ -52,13 +53,7 @@ exports.default = (platform, entryPoints) => {
                                 })
                                     .flat();
                                 const typeErrorFiles = addableFiles.map((t) => `docs/types/${t}.type_errors.txt`);
-                                // const featureFiles = addableFiles.map(
-                                //   (t) =>
-                                //     `docs/features/strings/${t
-                                //       .split(".")
-                                //       .slice(0, -1)
-                                //       .join(".")}.features.txt`
-                                // );
+                                const lintPath = path_1.default.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `lint_errors.txt`);
                                 fs_1.default.writeFileSync(promptPath, `
 ${addableFiles
                                     .map((x) => {
@@ -72,16 +67,28 @@ ${typeErrorFiles
                                 })
                                     .join("\n")}
 
-
-  
+/read ${lintPath}
 /read ${testPaths}
 /read ${stdoutPath}
 /read ${stderrPath}
 
 /load ${featuresPath}
 
-/code Fix the failing tests described in ${testPaths}. Correct any type signature errors described in the files [${typeErrorFiles.join(", ")}]. Implement any method which throws "Function not implemented."
+/code Fix the failing tests described in ${testPaths}. Correct any type signature errors described in the files [${typeErrorFiles.join(", ")}]. Implement any method which throws "Function not implemented. Resolve the lint errors described in ${lintPath}"
 `);
+                                const logContent = [];
+                                const tsc = (0, child_process_1.spawn)("eslint", addableFiles);
+                                tsc.stdout.on("data", (data) => {
+                                    const lines = data.toString().split("\n");
+                                    logContent.push(...lines);
+                                });
+                                tsc.stderr.on("data", (data) => {
+                                    console.error(`stderr: ${data}`);
+                                    process.exit(-1);
+                                });
+                                tsc.on("close", (code) => {
+                                    fs_1.default.writeFileSync(lintPath, logContent.join("\n"));
+                                });
                             }
                         });
                     }

@@ -6,10 +6,5 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Node_js_1 = __importDefault(require("../../../Node.js"));
 const index_js_1 = require("./index.js");
 exports.default = (testImplementations, testSpecifications, testInput, testInterface = index_js_1.testInterface) => {
-    return (0, Node_js_1.default)(testInput, testSpecifications, testImplementations, testInterface
-    // {
-    //   ...baseInterface,
-    //   ...testInterface,
-    // }
-    );
+    return (0, Node_js_1.default)(testInput, testSpecifications, testImplementations, testInterface);
 };

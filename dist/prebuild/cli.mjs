@@ -1,12 +1,11 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 
 // src/cli.ts
-import { spawn } from "child_process";
+import { spawn as spawn2 } from "child_process";
 import fs3 from "fs";
 import path5 from "path";
 import readline from "readline";
 import { glob } from "glob";
-import crypto2 from "node:crypto";
 import { debounceWatch } from "@bscotch/debounce-watch";
 import esbuild from "esbuild";
 
@@ -34,6 +33,7 @@ var esbuildConfigs_default = (config) => {
 // src/esbuildConfigs/inputFilesPlugin.ts
 import fs from "fs";
 import path from "path";
+import { spawn } from "child_process";
 var otherInputs = {};
 var register = (entrypoint, sources) => {
   if (!otherInputs[entrypoint]) {
@@ -119,6 +119,12 @@ var inputFilesPlugin_default = (platform, entryPoints) => {
                 const typeErrorFiles = addableFiles.map(
                   (t) => `docs/types/${t}.type_errors.txt`
                 );
+                const lintPath = path.join(
+                  "./docs/",
+                  platform,
+                  entryPoint.split(".").slice(0, -1).join("."),
+                  `lint_errors.txt`
+                );
                 fs.writeFileSync(
                   promptPath,
                   `
@@ -130,8 +136,7 @@ ${typeErrorFiles.map((x) => {
                     return `/read ${x}`;
                   }).join("\n")}
 
-
-  
+/read ${lintPath}
 /read ${testPaths}
 /read ${stdoutPath}
 /read ${stderrPath}
@@ -140,9 +145,22 @@ ${typeErrorFiles.map((x) => {
 
 /code Fix the failing tests described in ${testPaths}. Correct any type signature errors described in the files [${typeErrorFiles.join(
                     ", "
-                  )}]. Implement any method which throws "Function not implemented. Update "any" types to something more specific."
+                  )}]. Implement any method which throws "Function not implemented. Resolve the lint errors described in ${lintPath}"
 `
                 );
+                const logContent = [];
+                const tsc = spawn("eslint", addableFiles);
+                tsc.stdout.on("data", (data) => {
+                  const lines = data.toString().split("\n");
+                  logContent.push(...lines);
+                });
+                tsc.stderr.on("data", (data) => {
+                  console.error(`stderr: ${data}`);
+                  process.exit(-1);
+                });
+                tsc.on("close", (code) => {
+                  fs.writeFileSync(lintPath, logContent.join("\n"));
+                });
               }
             });
           }
@@ -1116,8 +1134,8 @@ function isValidUrl(string) {
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
   process.stdin.setRawMode(true);
-var logContent = [];
-function parseTsErrors() {
+function parseTsErrors(logContent) {
+  fs3.writeFileSync("docs/types/log.txt", logContent.join("\n"));
   try {
     const regex = /(^src(.*?))\(\d*,\d*\): error/gm;
     const brokenFilesToLines = {};
@@ -1168,12 +1186,63 @@ function parseTsErrors() {
     process.exit(1);
   }
 }
+function parseLintErrors(logContent) {
+  fs3.writeFileSync("docs/eslint/log.txt", logContent.join("\n"));
+  try {
+    const regex = new RegExp(`^${process.cwd()}/(.*?)`, "gm");
+    const brokenFilesToLines = {};
+    for (let i = 0; i < logContent.length - 1; i++) {
+      let m;
+      while ((m = regex.exec(logContent[i])) !== null) {
+        if (m.index === regex.lastIndex) {
+          regex.lastIndex++;
+        }
+        if (!brokenFilesToLines[m[1]]) {
+          brokenFilesToLines[m[1]] = /* @__PURE__ */ new Set();
+        }
+        brokenFilesToLines[m[1]].add(i);
+      }
+    }
+    const final = Object.keys(brokenFilesToLines).reduce((mm, lm, ndx) => {
+      mm[lm] = Array.from(brokenFilesToLines[lm]).map((l, ndx3) => {
+        const a = Array.from(brokenFilesToLines[lm]);
+        return Object.keys(a).reduce((mm2, lm2, ndx2) => {
+          const acc = [];
+          let j = a[lm2] + 1;
+          let working = true;
+          while (j < logContent.length - 1 && working) {
+            if (!logContent[j].match(regex) && working) {
+              acc.push(logContent[j]);
+            } else {
+              working = false;
+            }
+            j++;
+          }
+          mm2[lm] = [logContent[l], ...acc];
+          return mm2;
+        }, {})[lm];
+      });
+      return mm;
+    }, {});
+    Object.keys(final).forEach((k) => {
+      fs3.mkdirSync(`./docs/eslint/${k.split("/").slice(0, -1).join("/")}`, {
+        recursive: true
+      });
+      fs3.writeFileSync(
+        `./docs/eslint/${k}.lint_errors.txt`,
+        final[k].flat().flat().join("\r\n")
+      );
+    });
+  } catch (error) {
+    console.error("Error reading or parsing the log file:", error);
+    process.exit(1);
+  }
+}
 var typecheck = () => {
-  console.log("typechecking...");
-  logContent = [];
+  const logContent = [];
   fs3.rmSync("docs/types", { force: true, recursive: true });
   fs3.mkdirSync("docs/types");
-  const tsc = spawn("tsc", ["-noEmit"]);
+  const tsc = spawn2("tsc", ["-noEmit"]);
   tsc.stdout.on("data", (data) => {
     const lines = data.toString().split("\n");
     logContent.push(...lines);
@@ -1183,8 +1252,24 @@ var typecheck = () => {
     process.exit(-1);
   });
   tsc.on("close", (code) => {
-    parseTsErrors();
-    console.log("...typechecking done");
+    parseTsErrors(logContent);
+  });
+};
+var eslint = () => {
+  const logContent = [];
+  fs3.rmSync("docs/eslint", { force: true, recursive: true });
+  fs3.mkdirSync("docs/eslint");
+  const tsc = spawn2("eslint", ["./src"]);
+  tsc.stdout.on("data", (data) => {
+    const lines = data.toString().split("\n");
+    logContent.push(...lines);
+  });
+  tsc.stderr.on("data", (data) => {
+    console.error(`stderr: ${data}`);
+    process.exit(-1);
+  });
+  tsc.on("close", (code) => {
+    parseLintErrors(logContent);
   });
 };
 var getRunnables = (tests, payload = {
@@ -1235,37 +1320,18 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
   const fileHashes = {};
   const { nodeEntryPoints, webEntryPoints } = getRunnables(config.tests);
   const onNodeDone = () => {
-    console.log("onNodeDone");
     nodeDone = true;
     onDone();
   };
   const onWebDone = () => {
-    console.log("onWebDone");
     webDone = true;
     onDone();
   };
-  async function fileHash(filePath, algorithm = "md5") {
-    return new Promise((resolve, reject) => {
-      const hash = crypto2.createHash(algorithm);
-      const fileStream = fs3.createReadStream(filePath);
-      fileStream.on("data", (data) => {
-        hash.update(data);
-      });
-      fileStream.on("end", () => {
-        const fileHash2 = hash.digest("hex");
-        resolve(fileHash2);
-      });
-      fileStream.on("error", (error) => {
-        reject(`Error reading file: ${error.message}`);
-      });
-    });
-  }
   const onDone = async () => {
     if (nodeDone && webDone) {
       status = "built";
     }
     if (nodeDone && webDone && status === "built") {
-      console.log("now watching exit points!");
     }
     if (nodeDone && webDone && mode === "PROD") {
       console.log("Testeranto-EsBuild is all done. Goodbye!");
@@ -1338,14 +1404,18 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
       fs3.unlinkSync(chunk);
     });
   });
-  const processDebouncedEvents = (events) => {
-    typecheck();
-  };
-  const watcher = await debounceWatch(processDebouncedEvents, "./src", {
-    onlyFileExtensions: ["ts", "tsx"],
-    debounceWaitSeconds: 0.2,
-    allowOverlappingRuns: false
-  });
+  debounceWatch(
+    (events) => {
+      typecheck();
+      eslint();
+    },
+    "./src",
+    {
+      onlyFileExtensions: ["ts", "tsx", "mts"],
+      debounceWaitSeconds: 0.2,
+      allowOverlappingRuns: false
+    }
+  );
   await pm.startPuppeteer(
     {
       slowMo: 1,

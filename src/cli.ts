@@ -9,7 +9,8 @@ import { debounceWatch } from "@bscotch/debounce-watch";
 import type { DebouncedEventsProcessor } from "@bscotch/debounce-watch";
 
 import esbuild from "esbuild";
-// import watch from "recursive-watch";
+import tseslint from "typescript-eslint";
+import { ESLint } from "eslint";
 
 import esbuildNodeConfiger from "./esbuildConfigs/node.js";
 import esbuildWebConfiger from "./esbuildConfigs/web.js";
@@ -25,9 +26,9 @@ import { PM_Main } from "./PM/main.js";
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
 
-let logContent: string[] = [];
+function parseTsErrors(logContent): void {
+  fs.writeFileSync("docs/types/log.txt", logContent.join("\n"));
 
-function parseTsErrors(): void {
   try {
     const regex = /(^src(.*?))\(\d*,\d*\): error/gm;
     const brokenFilesToLines: Record<string, Set<number>> = {};
@@ -94,9 +95,78 @@ function parseTsErrors(): void {
   }
 }
 
+function parseLintErrors(logContent): void {
+  fs.writeFileSync("docs/eslint/log.txt", logContent.join("\n"));
+
+  try {
+    const regex = new RegExp(`^${process.cwd()}/(.*?)`, "gm");
+    const brokenFilesToLines: Record<string, Set<number>> = {};
+
+    for (let i = 0; i < logContent.length - 1; i++) {
+      let m;
+
+      while ((m = regex.exec(logContent[i])) !== null) {
+        // This is necessary to avoid infinite loops with zero-width matches
+        if (m.index === regex.lastIndex) {
+          regex.lastIndex++;
+        }
+        if (!brokenFilesToLines[m[1]]) {
+          brokenFilesToLines[m[1]] = new Set<number>();
+        }
+        brokenFilesToLines[m[1]].add(i);
+      }
+    }
+
+    const final = Object.keys(brokenFilesToLines).reduce((mm, lm, ndx) => {
+      mm[lm] = Array.from(brokenFilesToLines[lm]).map((l, ndx3) => {
+        const a = Array.from(brokenFilesToLines[lm]);
+
+        return Object.keys(a).reduce((mm2, lm2, ndx2) => {
+          const acc: string[] = [];
+
+          let j = a[lm2] + 1;
+
+          let working = true;
+          while (j < logContent.length - 1 && working) {
+            if (
+              !logContent[j].match(regex) &&
+              working
+              // &&
+              // !logContent[j].match(/^..\/(.*?)\(\d*,\d*\)/)
+            ) {
+              acc.push(logContent[j]);
+            } else {
+              working = false;
+            }
+
+            j++;
+          }
+
+          mm2[lm] = [logContent[l], ...acc];
+
+          return mm2;
+        }, {} as any)[lm];
+      });
+      return mm;
+    }, {});
+
+    Object.keys(final).forEach((k) => {
+      fs.mkdirSync(`./docs/eslint/${k.split("/").slice(0, -1).join("/")}`, {
+        recursive: true,
+      });
+      fs.writeFileSync(
+        `./docs/eslint/${k}.lint_errors.txt`,
+        final[k].flat().flat().join("\r\n")
+      );
+    });
+  } catch (error) {
+    console.error("Error reading or parsing the log file:", error);
+    process.exit(1);
+  }
+}
+
 const typecheck = () => {
-  console.log("typechecking...");
-  logContent = [];
+  const logContent: string[] = [];
   fs.rmSync("docs/types", { force: true, recursive: true });
   fs.mkdirSync("docs/types");
 
@@ -113,8 +183,29 @@ const typecheck = () => {
   });
 
   tsc.on("close", (code) => {
-    parseTsErrors();
-    console.log("...typechecking done");
+    parseTsErrors(logContent);
+  });
+};
+
+const eslint = () => {
+  const logContent: string[] = [];
+  fs.rmSync("docs/eslint", { force: true, recursive: true });
+  fs.mkdirSync("docs/eslint");
+
+  const tsc = spawn("eslint", ["./src"]);
+
+  tsc.stdout.on("data", (data) => {
+    const lines = data.toString().split("\n");
+    logContent.push(...lines);
+  });
+
+  tsc.stderr.on("data", (data) => {
+    console.error(`stderr: ${data}`);
+    process.exit(-1);
+  });
+
+  tsc.on("close", (code) => {
+    parseLintErrors(logContent);
   });
 };
 
@@ -181,59 +272,40 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
   const { nodeEntryPoints, webEntryPoints } = getRunnables(config.tests);
 
   const onNodeDone = () => {
-    console.log("onNodeDone");
     nodeDone = true;
-
     onDone();
   };
 
   const onWebDone = () => {
-    console.log("onWebDone");
-
-    // Object.entries(webEntryPoints).forEach(([k, outputFile]) => {
-    //   console.log("watching", outputFile);
-    //   watch(outputFile, async (filename) => {
-    //     const hash = await fileHash(outputFile);
-    //     console.log(`< ${filename} ${hash}`);
-    //     if (fileHashes[k] !== hash) {
-    //       fileHashes[k] = hash;
-
-    //       pm.launchWeb(k, outputFile);
-    //     }
-    //   });
-    // });
-
     webDone = true;
     onDone();
   };
 
-  async function fileHash(filePath, algorithm = "md5") {
-    return new Promise((resolve, reject) => {
-      const hash = crypto.createHash(algorithm);
-      const fileStream = fs.createReadStream(filePath);
+  // async function fileHash(filePath, algorithm = "md5") {
+  //   return new Promise((resolve, reject) => {
+  //     const hash = crypto.createHash(algorithm);
+  //     const fileStream = fs.createReadStream(filePath);
 
-      fileStream.on("data", (data) => {
-        hash.update(data);
-      });
+  //     fileStream.on("data", (data) => {
+  //       hash.update(data);
+  //     });
 
-      fileStream.on("end", () => {
-        const fileHash = hash.digest("hex");
-        resolve(fileHash);
-      });
+  //     fileStream.on("end", () => {
+  //       const fileHash = hash.digest("hex");
+  //       resolve(fileHash);
+  //     });
 
-      fileStream.on("error", (error) => {
-        reject(`Error reading file: ${error.message}`);
-      });
-    });
-  }
+  //     fileStream.on("error", (error) => {
+  //       reject(`Error reading file: ${error.message}`);
+  //     });
+  //   });
+  // }
 
   const onDone = async () => {
     if (nodeDone && webDone) {
       status = "built";
     }
     if (nodeDone && webDone && status === "built") {
-      console.log("now watching exit points!");
-
       // Object.entries(nodeEntryPoints).forEach(([k, outputFile]) => {
       //   console.log("watching", outputFile);
       //   try {
@@ -249,7 +321,6 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
       //     console.error(e);
       //   }
       // });
-
       // Object.entries(webEntryPoints).forEach(([k, outputFile]) => {
       //   console.log("watching", outputFile);
       //   watch(outputFile, async (filename) => {
@@ -305,6 +376,21 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
     }
   });
 
+  // const eslint = new ESLint();
+  // const configEslint = await eslint.calculateConfigForFile(
+  //   "./src/eslint.config.mjs"
+  // );
+  // // console.log(`configEslint`, configEslint);
+  // fs.watch("src", { recursive: true }, async (eventType, filename) => {
+  //   if (eventType === "change") {
+  //     console.log(`File ${filename} has been modified.`);
+  //     const x = await eslint.lintFiles([`./src/${filename}`]);
+  //     console.log(x[0].messages);
+  //   } else if (eventType === "rename") {
+  //     console.log(`File ${filename} has been created or deleted.`);
+  //   }
+  // });
+
   fs.writeFileSync(
     `${config.outdir}/testeranto.json`,
     JSON.stringify(config, null, 2)
@@ -348,15 +434,22 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
     });
   });
 
-  const processDebouncedEvents: DebouncedEventsProcessor = (events) => {
-    typecheck();
-  };
+  // const processDebouncedEvents: DebouncedEventsProcessor = (events) => {
+  //   typecheck();
+  // };
 
-  const watcher = await debounceWatch(processDebouncedEvents, "./src", {
-    onlyFileExtensions: ["ts", "tsx"],
-    debounceWaitSeconds: 0.2,
-    allowOverlappingRuns: false,
-  });
+  debounceWatch(
+    (events) => {
+      typecheck();
+      eslint();
+    },
+    "./src",
+    {
+      onlyFileExtensions: ["ts", "tsx", "mts"],
+      debounceWaitSeconds: 0.2,
+      allowOverlappingRuns: false,
+    }
+  );
 
   await pm.startPuppeteer(
     {

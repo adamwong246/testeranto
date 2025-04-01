@@ -1,4 +1,4 @@
-import { IBaseTest } from "../Types";
+// import { IBaseTest } from "../Types";
 
 import type { Plugin } from "esbuild";
 import {
@@ -9,8 +9,7 @@ import {
   BaseWhen,
   BaseThen,
 } from "./abstractBase";
-import { ITTestResourceConfiguration, ITestArtificer } from ".";
-import { PM } from "../PM/index";
+import { IBaseTest } from "../Types";
 
 export type IFinalResults = { features: string[]; failed: number };
 
@@ -48,180 +47,6 @@ export type IBaseConfig = {
 };
 
 export type IBuiltConfig = { buildDir: string } & IBaseConfig;
-
-export type IWebTestInterface<
-  ITestShape extends IBaseTest<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
-  >
-> = {
-  assertThis: (x: ITestShape["then"]) => void;
-
-  andWhen: (
-    store: ITestShape["istore"],
-    whenCB: ITestShape["when"],
-    testResource: ITTestResourceConfiguration,
-    utils: PM
-  ) => Promise<ITestShape["istore"]>;
-  butThen: (
-    store: ITestShape["istore"],
-    thenCB,
-    testResource: ITTestResourceConfiguration,
-    utils: PM
-  ) => Promise<ITestShape["iselection"]>;
-
-  afterAll: (
-    store: ITestShape["istore"],
-    artificer: ITestArtificer,
-    utils: PM
-  ) => any;
-  afterEach: (
-    store: ITestShape["istore"],
-    key: string,
-    artificer: ITestArtificer,
-    utils: PM
-  ) => Promise<unknown>;
-  beforeAll: (
-    input: ITestShape["iinput"],
-    testResource: ITTestResourceConfiguration,
-    artificer: ITestArtificer,
-    utils: PM
-  ) => Promise<ITestShape["isubject"]>;
-  beforeEach: (
-    subject: ITestShape["isubject"],
-    initializer: (c?) => ITestShape["given"],
-    artificer: ITestArtificer,
-    testResource: ITTestResourceConfiguration,
-    initialValues,
-    utils: PM
-  ) => Promise<ITestShape["istore"]>;
-};
-// & ITestInterface<ITestShape>;
-
-export type INodeTestInterface<
-  ITestShape extends IBaseTest<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
-  >
-> = {
-  assertThis: (x: ITestShape["then"]) => void;
-  andWhen: (
-    store: ITestShape["istore"],
-    whenCB: ITestShape["when"],
-    testResource: ITTestResourceConfiguration,
-    utils: PM
-  ) => Promise<ITestShape["istore"]>;
-  butThen: (
-    store: ITestShape["istore"],
-    thenCB,
-    testResource: ITTestResourceConfiguration,
-    utils: PM
-  ) => Promise<ITestShape["iselection"]>;
-  afterAll: (
-    store: ITestShape["istore"],
-    artificer: ITestArtificer,
-    pm: PM
-  ) => any;
-  afterEach: (
-    store: ITestShape["istore"],
-    key: string,
-    artificer: ITestArtificer,
-    pm: PM
-  ) => Promise<unknown>;
-  beforeAll: (
-    input: ITestShape["iinput"],
-    testResource: ITTestResourceConfiguration,
-    artificer: ITestArtificer,
-    pm: PM
-  ) => Promise<ITestShape["isubject"]>;
-  beforeEach: (
-    subject: ITestShape["isubject"],
-    initializer: (c?) => ITestShape["given"],
-    artificer: ITestArtificer,
-    testResource: ITTestResourceConfiguration,
-    initialValues,
-    pm: PM
-  ) => Promise<ITestShape["istore"]>;
-};
-// & ITestInterface<ITestShape>;
-
-export type ITestInterface<
-  ITestShape extends IBaseTest<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
-  >
-> = {
-  assertThis: (x: ITestShape["then"]) => void;
-
-  andWhen: (
-    store: ITestShape["istore"],
-    whenCB: ITestShape["when"],
-    testResource: ITTestResourceConfiguration,
-    pm: PM
-  ) => Promise<ITestShape["istore"]>;
-  butThen: (
-    store: ITestShape["istore"],
-    thenCB: ITestShape["then"],
-    testResource: ITTestResourceConfiguration,
-    pm: PM
-  ) => Promise<ITestShape["iselection"]>;
-
-  afterAll: (
-    store: ITestShape["istore"],
-    artificer: ITestArtificer,
-    pm: PM
-  ) => any;
-  afterEach: (
-    store: ITestShape["istore"],
-    key: string,
-    artificer: ITestArtificer,
-    pm: PM
-  ) => Promise<unknown>;
-  beforeAll: (
-    input: ITestShape["iinput"],
-    testResource: ITTestResourceConfiguration,
-    artificer: ITestArtificer,
-    pm: PM
-  ) => Promise<ITestShape["isubject"]>;
-  beforeEach: (
-    subject: ITestShape["isubject"],
-    initializer: (c?) => ITestShape["given"],
-    artificer: ITestArtificer,
-    testResource: ITTestResourceConfiguration,
-    initialValues,
-    pm: PM
-  ) => Promise<ITestShape["istore"]>;
-};
 
 export type ISuiteKlasser<
   ITestShape extends IBaseTest<

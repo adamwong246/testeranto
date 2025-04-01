@@ -142,19 +142,19 @@ export class BaseGiven {
         this.key = key;
         tLog(`\n ${this.key}`);
         tLog(`\n Given: ${this.name}`);
-        const givenArtifactory = (fPath, value) => artifactory(`given-${this.key}/${fPath}`, value);
+        const givenArtifactory = (fPath, value) => artifactory(`given-${key}/${fPath}`, value);
         try {
             // tLog(`\n Given this.store`, this.store);
             const beforeEachProxy = new Proxy(pm, {
                 get(target, prop, receiver) {
                     if (prop === "writeFileSync") {
-                        return (fp, contents) => target[prop](`suite-${suiteNdx}/given-${this.key}/when/beforeEach/${fp}`, contents);
+                        return (fp, contents) => target[prop](`suite-${suiteNdx}/given-${key}/when/beforeEach/${fp}`, contents);
                     }
                     if (prop === "customScreenShot") {
-                        return (opts, p) => target.customScreenShot(Object.assign(Object.assign({}, opts), { path: `suite-${suiteNdx}/given-${this.key}/when/beforeEach/${opts.path}` }), p);
+                        return (opts, p) => target.customScreenShot(Object.assign(Object.assign({}, opts), { path: `suite-${suiteNdx}/given-${key}/when/beforeEach/${opts.path}` }), p);
                     }
                     if (prop === "screencast") {
-                        return (opts, p) => target.screencast(Object.assign(Object.assign({}, opts), { path: `suite-${suiteNdx}/given-${this.key}/when/beforeEach/${opts.path}` }), p);
+                        return (opts, p) => target.screencast(Object.assign(Object.assign({}, opts), { path: `suite-${suiteNdx}/given-${key}/when/beforeEach/${opts.path}` }), p);
                     }
                     return Reflect.get(...arguments);
                 },
@@ -166,10 +166,10 @@ export class BaseGiven {
             });
             this.store = await this.givenThat(subject, testResourceConfiguration, givenArtifactory, this.givenCB, this.initialValues, beforeEachProxy);
             for (const [whenNdx, whenStep] of this.whens.entries()) {
-                await whenStep.test(this.store, testResourceConfiguration, tLog, pm, `suite-${suiteNdx}/given-${this.key}/when/${whenNdx}`);
+                await whenStep.test(this.store, testResourceConfiguration, tLog, pm, `suite-${suiteNdx}/given-${key}/when/${whenNdx}`);
             }
             for (const [thenNdx, thenStep] of this.thens.entries()) {
-                const t = await thenStep.test(this.store, testResourceConfiguration, tLog, pm, `suite-${suiteNdx}/given-${this.key}/then-${thenNdx}`);
+                const t = await thenStep.test(this.store, testResourceConfiguration, tLog, pm, `suite-${suiteNdx}/given-${key}/then-${thenNdx}`);
                 tester(t);
             }
         }
@@ -185,10 +185,10 @@ export class BaseGiven {
                 const afterEachProxy = new Proxy(pm, {
                     get(target, prop, receiver) {
                         if (prop === "customScreenShot") {
-                            return (opts, p) => target.customScreenShot(Object.assign(Object.assign({}, opts), { path: `suite-${suiteNdx}/given-${this.key}/afterEach/${opts.path}` }), p);
+                            return (opts, p) => target.customScreenShot(Object.assign(Object.assign({}, opts), { path: `suite-${suiteNdx}/given-${key}/afterEach/${opts.path}` }), p);
                         }
                         if (prop === "writeFileSync") {
-                            return (fp, contents) => target[prop](`suite-${suiteNdx}/given-${this.key}/afterEach/${fp}`, contents);
+                            return (fp, contents) => target[prop](`suite-${suiteNdx}/given-${key}/afterEach/${fp}`, contents);
                         }
                         return Reflect.get(...arguments);
                     },

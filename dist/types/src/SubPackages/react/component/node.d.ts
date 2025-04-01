@@ -3,5 +3,5 @@ import { IBaseTest, ITestImplementation, ITestSpecification } from "../../../Typ
 declare type IInput = typeof React.Component;
 export declare type IImpl<ISpec extends IBaseTest, IState> = ITestImplementation<ISpec, object>;
 export declare type ISpec<T extends IBaseTest> = ITestSpecification<T>;
-declare const _default: <ITestShape extends any, IState>(testImplementations: ITestImplementation<ITestShape, object>, testSpecifications: ISpec<ITestShape>, testInput: IInput) => Promise<import("../../../lib/core.js").default<ITestShape>>;
+declare const _default: <ITestShape extends any, IState>(testImplementations: any, testSpecifications: ISpec<ITestShape>, testInput: IInput) => Promise<import("../../../lib/core.js").default<ITestShape>>;
 export default _default;

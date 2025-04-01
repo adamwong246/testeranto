@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import type { ImportKind, Metafile, Plugin } from "esbuild";
+import { spawn } from "child_process";
 
 const otherInputs: Record<string, Set<string>> = {};
 
@@ -108,14 +109,12 @@ export default (
                   (t) => `docs/types/${t}.type_errors.txt`
                 );
 
-                // const featureFiles = addableFiles.map(
-                //   (t) =>
-                //     `docs/features/strings/${t
-                //       .split(".")
-                //       .slice(0, -1)
-                //       .join(".")}.features.txt`
-                // );
-
+                const lintPath = path.join(
+                  "./docs/",
+                  platform,
+                  entryPoint.split(".").slice(0, -1).join("."),
+                  `lint_errors.txt`
+                );
                 fs.writeFileSync(
                   promptPath,
                   `
@@ -131,8 +130,7 @@ ${typeErrorFiles
   })
   .join("\n")}
 
-
-  
+/read ${lintPath}
 /read ${testPaths}
 /read ${stdoutPath}
 /read ${stderrPath}
@@ -141,9 +139,26 @@ ${typeErrorFiles
 
 /code Fix the failing tests described in ${testPaths}. Correct any type signature errors described in the files [${typeErrorFiles.join(
                     ", "
-                  )}]. Implement any method which throws "Function not implemented. Update "any" types to something more specific."
+                  )}]. Implement any method which throws "Function not implemented. Resolve the lint errors described in ${lintPath}"
 `
                 );
+
+                const logContent: string[] = [];
+                const tsc = spawn("eslint", addableFiles);
+
+                tsc.stdout.on("data", (data) => {
+                  const lines = data.toString().split("\n");
+                  logContent.push(...lines);
+                });
+
+                tsc.stderr.on("data", (data) => {
+                  console.error(`stderr: ${data}`);
+                  process.exit(-1);
+                });
+
+                tsc.on("close", (code) => {
+                  fs.writeFileSync(lintPath, logContent.join("\n"));
+                });
               }
             });
           }

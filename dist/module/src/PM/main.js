@@ -8,6 +8,17 @@ const fPaths = [];
 const files = {};
 const recorders = {};
 const screenshots = {};
+const red = "\x1b[31m";
+const green = "\x1b[32m";
+const reset = "\x1b[0m"; // Resets to default color
+const statusMessagePretty = (failures, test) => {
+    if (failures === 0) {
+        console.log(green + `${test} completed successfully` + reset);
+    }
+    else {
+        console.log(red + `${test} failed ${failures} times` + reset);
+    }
+};
 export class PM_Main extends PM {
     constructor(configs) {
         super();
@@ -108,7 +119,8 @@ export class PM_Main extends PM {
                         .receiveTestResourceConfig(argz)
                         .then(async ({ features, failed }) => {
                         this.receiveFeatures(features, destFolder, src);
-                        console.log(`${src} completed with ${failed} errors`);
+                        // console.log(`${src} completed with ${failed} errors`);
+                        statusMessagePretty(failed, src);
                     })
                         .catch((e) => {
                         console.log(`${src} errored with`, e);
@@ -323,9 +335,10 @@ export class PM_Main extends PM {
                 fs: destFolder,
                 browserWSEndpoint: this.browser.wsEndpoint(),
             });
+            const d = `${dest}?cacheBust=${Date.now()}`;
             const evaluation = `
-    console.log("importing ${dest}");
-    import('${dest}').then(async (x) => {
+    console.log("importing ${d}");
+    import('${d}').then(async (x) => {
       console.log("imported", (await x.default));
       try {
         return await (await x.default).receiveTestResourceConfig(${webArgz})
@@ -540,7 +553,8 @@ export class PM_Main extends PM {
                     .evaluate(evaluation)
                     .then(async ({ failed, features }) => {
                     this.receiveFeatures(features, destFolder, t);
-                    console.log(`${t} completed with ${failed} errors`);
+                    // console.log(`${t} completed with ${failed} errors`);
+                    statusMessagePretty(failed, t);
                 })
                     .catch((e) => {
                     console.log(`${t} errored with`, e);
