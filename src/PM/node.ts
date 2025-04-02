@@ -43,7 +43,7 @@ export class PM_Node extends PM {
     throw new Error("Method not implemented.");
   }
 
-  isDisabled(selector: string): boolean {
+  isDisabled(selector: string): Promise<boolean> {
     throw new Error("Method not implemented.");
   }
 

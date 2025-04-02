@@ -24,17 +24,18 @@ var green = "\x1B[32m";
 var reset = "\x1B[0m";
 var statusMessagePretty = (failures, test) => {
   if (failures === 0) {
-    console.log(green + `${test} completed successfully` + reset);
+    console.log(green + `> ${test} completed successfully` + reset);
   } else {
-    console.log(red + `${test} failed ${failures} times` + reset);
+    console.log(red + `> ${test} failed ${failures} times` + reset);
   }
 };
 var PM_Main = class extends PM {
   constructor(configs) {
     super();
     this.shutdownMode = false;
+    this.bigBoard = {};
     this.checkForShutdown = () => {
-      const anyRunning = Object.values(this.registry).filter((x) => x === false).length > 0;
+      const anyRunning = Object.values(this.bigBoard).filter((x) => x.status === "running").length > 0;
       if (anyRunning) {
       } else {
         this.browser.disconnect().then(() => {
@@ -43,18 +44,20 @@ var PM_Main = class extends PM {
         });
       }
     };
-    this.register = (src) => {
-      this.registry[src] = false;
+    this.testIsNowRunning = (src) => {
+      console.log("testIsNowRunning", src);
+      this.bigBoard[src].status = "running";
     };
-    this.deregister = (src) => {
-      this.registry[src] = true;
+    this.testIsNowDone = (src) => {
+      console.log("testIsNowDone", src);
+      this.bigBoard[src].status = "waiting";
       if (this.shutdownMode) {
         this.checkForShutdown();
       }
     };
     this.launchNode = async (src, dest) => {
       console.log("! node", src);
-      this.register(src);
+      this.testIsNowRunning(src);
       const destFolder = dest.replace(".mjs", "");
       let argz = "";
       const testConfig = this.configs.tests.find((t) => {
@@ -106,11 +109,12 @@ var PM_Main = class extends PM {
           defaultModule.receiveTestResourceConfig(argz).then(async ({ features, failed }) => {
             this.receiveFeatures(features, destFolder, src);
             statusMessagePretty(failed, src);
+            this.receiveExitCode(src, failed);
           }).catch((e) => {
             console.log(`${src} errored with`, e);
           }).finally(() => {
             webSideCares.forEach((webSideCar) => webSideCar.close());
-            this.deregister(src);
+            this.testIsNowDone(src);
           });
         });
       });
@@ -269,7 +273,7 @@ var PM_Main = class extends PM {
     };
     this.launchWeb = (t, dest) => {
       console.log("! web", t);
-      this.register(t);
+      this.testIsNowRunning(t);
       const destFolder = dest.replace(".mjs", "");
       const webArgz = JSON.stringify({
         name: dest,
@@ -440,7 +444,7 @@ var PM_Main = class extends PM {
           Promise.all(screenshots[t] || []).then(() => {
             delete screenshots[t];
             page.close();
-            this.deregister(t);
+            this.testIsNowDone(t);
             stderrStream.close();
             stdoutStream.close();
           });
@@ -458,6 +462,7 @@ var PM_Main = class extends PM {
           }
           console.debug(`Error from message ${t}: [${err.message}] `);
           stderrStream.write(err.message);
+          close();
         });
         page.on("console", (log) => {
           stdoutStream.write(log.text());
@@ -468,6 +473,7 @@ var PM_Main = class extends PM {
         await page.evaluate(evaluation).then(async ({ failed, features }) => {
           this.receiveFeatures(features, destFolder, t);
           statusMessagePretty(failed, t);
+          this.receiveExitCode(t, failed);
         }).catch((e) => {
           console.log(`${t} errored with`, e);
         }).finally(() => {
@@ -528,11 +534,26 @@ var PM_Main = class extends PM {
           }).join("\n")
         );
       });
+      this.writeBigBoard();
+    };
+    this.receiveExitCode = (srcTest, failures) => {
+      this.bigBoard[srcTest].runTimeError = failures;
+      this.writeBigBoard();
+    };
+    this.writeBigBoard = () => {
+      fs.writeFileSync(
+        "./docs/bigBoard.json",
+        JSON.stringify(this.bigBoard, null, 2)
+      );
     };
     this.server = {};
     this.configs = configs;
     this.ports = {};
-    this.registry = {};
+    this.configs.tests.forEach(([t]) => {
+      this.bigBoard[t] = {
+        status: "?"
+      };
+    });
     this.configs.ports.forEach((element) => {
       this.ports[element] = "true";
     });
@@ -574,8 +595,7 @@ var PM_Main = class extends PM {
       return false;
     };
     globalThis["writeFileSync"] = (filepath, contents, testName) => {
-      const dir = path.dirname(filepath);
-      fs.mkdirSync(dir, {
+      fs.mkdirSync(path.dirname(filepath), {
         recursive: true
       });
       if (!files[testName]) {
@@ -892,7 +912,7 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
           const hash = await fileHash(outputFile);
           if (fileHashes[k] !== hash) {
             fileHashes[k] = hash;
-            console.log(`< ${e} ${filename} ${hash}`);
+            console.log(`< ${e} ${filename}`);
             pm.launchNode(k, outputFile);
           }
         });
@@ -907,7 +927,7 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
       pm.launchWeb(k, outputFile);
       watch(outputFile, async (e, filename) => {
         const hash = await fileHash(outputFile);
-        console.log(`< ${e} ${filename} ${hash}`);
+        console.log(`< ${e} ${filename}`);
         if (fileHashes[k] !== hash) {
           fileHashes[k] = hash;
           pm.launchWeb(k, outputFile);

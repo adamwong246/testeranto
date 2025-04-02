@@ -157,7 +157,10 @@ ${typeErrorFiles
                 });
 
                 tsc.on("close", (code) => {
-                  fs.writeFileSync(lintPath, logContent.join("\n"));
+                  fs.writeFileSync(
+                    lintPath,
+                    logContent.filter((l) => l !== "").join("\n")
+                  );
                 });
               }
             });

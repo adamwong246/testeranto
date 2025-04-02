@@ -51,7 +51,7 @@ export class PM_Web extends PM {
     return window["$"](selector);
   }
 
-  isDisabled(selector: string): boolean {
+  isDisabled(selector: string): Promise<boolean> {
     return window["isDisabled"](selector);
   }
 

@@ -130,7 +130,7 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
           const hash = await fileHash(outputFile);
           if (fileHashes[k] !== hash) {
             fileHashes[k] = hash;
-            console.log(`< ${e} ${filename} ${hash}`);
+            console.log(`< ${e} ${filename}`);
             pm.launchNode(k, outputFile);
           }
         });
@@ -146,7 +146,7 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
       pm.launchWeb(k, outputFile);
       watch(outputFile, async (e, filename) => {
         const hash = await fileHash(outputFile);
-        console.log(`< ${e} ${filename} ${hash}`);
+        console.log(`< ${e} ${filename}`);
         if (fileHashes[k] !== hash) {
           fileHashes[k] = hash;
           pm.launchWeb(k, outputFile);
