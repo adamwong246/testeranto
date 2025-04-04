@@ -50,6 +50,16 @@ export default async (partialConfig) => {
     `${config.outdir}/ReportClient.css`
   );
 
+  fs.copyFileSync(
+    `node_modules/testeranto/dist/prebuild/TestReport.js`,
+    `${config.outdir}/TestReport.js`
+  );
+
+  fs.copyFileSync(
+    `node_modules/testeranto/dist/prebuild/TestReport.css`,
+    `${config.outdir}/TestReport.css`
+  );
+
   fs.writeFileSync(
     `${config.outdir}/testeranto.json`,
     JSON.stringify(

@@ -679,49 +679,43 @@ class PM_Main extends index_js_1.PM {
         };
         this.writeBigBoard = () => {
             fs_1.default.writeFileSync("./docs/bigBoard.json", JSON.stringify(this.bigBoard, null, 2));
-            fs_1.default.writeFileSync("./docs/bigBoard.html", 
-            // JSON.stringify(this.bigBoard, null, 2)
-            `
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta name="description" content="Webpage description goes here" />
-  <meta charset="utf-8" />
-  <title>kokomoBay - testeranto</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="author" content="" />
-
-  <link rel="stylesheet" href="/index.css" />
-  <script type="module" src="/littleBoard.js"></script>
-
-</head>
-
-<body>
-  <table>
-    ${Object.keys(this.bigBoard)
-                .map((v) => {
-                return `<tr>
-        <td>${v}</td>
-        
-        <td>${this.bigBoard[v].status}</td>
-        <td>${this.bigBoard[v].runTimeError}</td>
-        <td>
-          <a href="/${this.configs.tests.find((t) => t[0] === v)[1]}/${v
-                    .split(".")
-                    .slice(0, -1)
-                    .join(".")}/littleBoard.html">more</a>
-        </td>
-      </tr>`;
-            })
-                .join("")}
-
-  </table>
-  
-</body>
-
-</html>
-    `);
+            //     fs.writeFileSync(
+            //       "./docs/bigBoard.html",
+            //       // JSON.stringify(this.bigBoard, null, 2)
+            //       `
+            // <!DOCTYPE html>
+            // <html lang="en">
+            // <head>
+            //   <meta name="description" content="Webpage description goes here" />
+            //   <meta charset="utf-8" />
+            //   <title>kokomoBay - testeranto</title>
+            //   <meta name="viewport" content="width=device-width, initial-scale=1" />
+            //   <meta name="author" content="" />
+            //   <link rel="stylesheet" href="/index.css" />
+            //   <script type="module" src="/littleBoard.js"></script>
+            // </head>
+            // <body>
+            //   <table>
+            //     ${Object.keys(this.bigBoard)
+            //       .map((v) => {
+            //         return `<tr>
+            //         <td>${v}</td>
+            //         <td>${this.bigBoard[v].status}</td>
+            //         <td>${this.bigBoard[v].runTimeError}</td>
+            //         <td>
+            //           <a href="/${this.configs.tests.find((t) => t[0] === v)[1]}/${v
+            //           .split(".")
+            //           .slice(0, -1)
+            //           .join(".")}/littleBoard.html">more</a>
+            //         </td>
+            //       </tr>`;
+            //       })
+            //       .join("")}
+            //   </table>
+            // </body>
+            // </html>
+            //     `
+            //     );
         };
         this.server = {};
         this.configs = configs;

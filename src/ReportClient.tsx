@@ -1,11 +1,6 @@
 import ReactDom from "react-dom/client";
 import React, { useEffect, useState } from "react";
 
-import Col from 'react-bootstrap/Col';
-import Nav from 'react-bootstrap/Nav';
-import Row from 'react-bootstrap/Row';
-import Tab from 'react-bootstrap/Tab';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { IBuiltConfig, IRunTime, ITestTypes } from "./lib/types";
 
@@ -17,39 +12,12 @@ type ICollation = {
   };
   sidecars: ITestTypes[];
   status: string;
-  runTimeError: number;
   staticAnalysis: string;
+  typeErrors: string;
+  bddErrors: string;
 };
 
 type ICollations = ICollation[];
-
-const TestPane = ({ collation }: { collation: ICollation }) => {
-
-  return <div>    <Tab.Container id="TestPane-tabs" defaultActiveKey="first">
-    <Row>
-      <Col sm={3}>
-        <Nav variant="pills" className="flex-column">
-
-          <Nav.Item>
-            <Nav.Link eventKey={`${collation.name}-bdd`}>BDD tests</Nav.Link>
-            <Nav.Link eventKey={`${collation.name}-type`}>type tests</Nav.Link>
-            <Nav.Link eventKey={`${collation.name}-static`}>static tests</Nav.Link>
-          </Nav.Item>
-
-        </Nav>
-      </Col>
-      <Col sm={9}>
-        <Tab.Content>
-          <Tab.Pane eventKey={`${collation.name}-bdd`}>BDD</Tab.Pane>
-          <Tab.Pane eventKey={`${collation.name}-type`}>TYPE</Tab.Pane>
-          <Tab.Pane eventKey={`${collation.name}-static`}>
-            <pre>{collation.staticAnalysis}</pre>
-          </Tab.Pane>
-        </Tab.Content>
-      </Col>
-    </Row>
-  </Tab.Container></div>
-}
 
 const BigBoard = () => {
 
@@ -85,7 +53,7 @@ const BigBoard = () => {
 
       let accumulator = {};
       for (const t of (configs || { tests: [] as ITestTypes[] }).tests) {
-        accumulator[t[0]] = await (await fetch(`http://localhost:8080/${t[1]}/${t[0].split(".").slice(0, -1).join(".")}/lint_errors.txt`)).text()
+        accumulator[t[0]] = await (await fetch(`http://localhost:8080/${t[1]}/${t[0].split(".").slice(0, -1).join(".")}/lint_errors.exitCode`)).text()
       }
       setStaticAnalysis(accumulator);
 
@@ -93,7 +61,35 @@ const BigBoard = () => {
     })();
   }, [configs, bigBoard]);
 
-  if (!configs || !staticAnalysis) {
+  const [typeErrors, setTypeErrors] = useState<Record<string, string>>({});
+  useEffect(() => {
+    (async () => {
+
+      let accumulator = {};
+      for (const t of (configs || { tests: [] as ITestTypes[] }).tests) {
+        accumulator[t[0]] = await (await fetch(`http://localhost:8080/${t[1]}/${t[0].split(".").slice(0, -1).join(".")}/type_errors.exitCode`)).text()
+      }
+      setTypeErrors(accumulator);
+
+
+    })();
+  }, [configs, bigBoard]);
+
+  const [bddErrors, setBddErrors] = useState<Record<string, string>>({});
+  useEffect(() => {
+    (async () => {
+
+      let accumulator = {};
+      for (const t of (configs || { tests: [] as ITestTypes[] }).tests) {
+        accumulator[t[0]] = await (await fetch(`http://localhost:8080/${t[1]}/${t[0].split(".").slice(0, -1).join(".")}/exitCode`)).text()
+      }
+      setBddErrors(accumulator);
+
+
+    })();
+  }, [configs, bigBoard]);
+
+  if (!configs || !staticAnalysis || !typeErrors || !bddErrors) {
     return <div>loading...</div>
   }
 
@@ -104,44 +100,68 @@ const BigBoard = () => {
       runTime: c[1],
       tr: c[2],
       sidecars: c[3],
-      staticAnalysis: staticAnalysis[c[0]]
+      staticAnalysis: staticAnalysis[c[0]],
+      typeErrors: typeErrors[c[0]],
+      bddErrors: bddErrors[c[0]],
     } as ICollation
   });
 
-  console.log(collated);
+  // console.log(collated);
 
-  return <div>    <Tab.Container id="root-tab-container" defaultActiveKey="first">
-    <Row>
-      <Col sm={3}>
-        <Nav variant="pills" className="flex-column">
+  return <table>
+    <tr>
+      <td>name</td>
+      <td>run time</td>
+      <td>BDD errors</td>
+      <td>Lint errors</td>
+      <td>Type errors</td>
+    </tr>
+    {
+      ...collated.map((c) => {
+        return <tr>
+          <td>{c.name}</td>
+          <td>{c.runTime}</td>
+          <td><a href={`${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/littleBoard.html`}>{c.bddErrors}</a></td>
+          <td><a href={`${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/lint_errors.json`}>{c.staticAnalysis}</a></td>
+          <td><a href={`${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/type_errors.txt`}>{c.typeErrors}</a></td>
 
-          {
-            collated.map((t) =>
-              <Nav.Item>
-                <Nav.Link eventKey={t.name}>
-                  <p>{t.name}</p>
-                  <p>{t.status}, {t.runTimeError}</p>
 
-                </Nav.Link>
-              </Nav.Item>
-            )
-          }
+        </tr>
+      })
+    }
+  </table>
+  // return <div>    <Tab.Container id="root-tab-container" defaultActiveKey="first">
+  //   <Row>
+  //     <Col sm={3}>
+  //       <Nav variant="pills" className="flex-column">
 
-        </Nav>
-      </Col>
-      <Col sm={9}>
-        <Tab.Content>
-          {
-            collated.map((t) =>
+  //         {
+  //           collated.map((t) =>
+  //             <Nav.Item>
+  //               <Nav.Link eventKey={t.name}>
+  //                 <p>{t.name}</p>
+  //                 <p>{t.status}, {t.runTimeError}</p>
 
-              <Tab.Pane eventKey={t.name}><TestPane collation={t} /></Tab.Pane>
+  //               </Nav.Link>
+  //             </Nav.Item>
+  //           )
+  //         }
 
-            )
-          }
-        </Tab.Content>
-      </Col>
-    </Row>
-  </Tab.Container></div>
+  //       </Nav>
+  //     </Col>
+  //     <Col sm={9}>
+  //       <Tab.Content>
+  //         {
+  //           collated.map((t) =>
+
+  //             <Tab.Pane eventKey={t.name}><TestPane collation={t} /></Tab.Pane>
+
+  //           )
+  //         }
+  //       </Tab.Content>
+  //     </Col>
+  //   </Row>
+  // </Tab.Container></div>
 }
 
 document.addEventListener("DOMContentLoaded", function () {

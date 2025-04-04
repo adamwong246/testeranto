@@ -18,8 +18,8 @@ export default async (partialConfig) => {
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="author" content="" />
 
-  <link rel="stylesheet" href="/index.css" />
-  <script type="module" src="/bigBoard.js"></script>
+  <link rel="stylesheet" href="/ReportClient.css" />
+  <script type="module" src="/ReportClient.js"></script>
 
 </head>
 
@@ -31,8 +31,10 @@ export default async (partialConfig) => {
 
 </html>
     `);
-    fs.copyFileSync(`node_modules/testeranto/dist/prebuild/ReportClient.js`, `${config.outdir}/bigBoard.js`);
-    fs.copyFileSync(`node_modules/testeranto/dist/prebuild/littleBoard.js`, `${config.outdir}/littleBoard.js`);
+    fs.copyFileSync(`node_modules/testeranto/dist/prebuild/ReportClient.js`, `${config.outdir}/ReportClient.js`);
+    fs.copyFileSync(`node_modules/testeranto/dist/prebuild/ReportClient.css`, `${config.outdir}/ReportClient.css`);
+    fs.copyFileSync(`node_modules/testeranto/dist/prebuild/TestReport.js`, `${config.outdir}/TestReport.js`);
+    fs.copyFileSync(`node_modules/testeranto/dist/prebuild/TestReport.css`, `${config.outdir}/TestReport.css`);
     fs.writeFileSync(`${config.outdir}/testeranto.json`, JSON.stringify(Object.assign(Object.assign({}, config), { buildDir: process.cwd() + "/" + config.outdir }), null, 2));
     try {
         fs.mkdirSync(`${process.cwd()}/${config.outdir}/node`);

@@ -153,98 +153,22 @@ export abstract class BaseBuilder<
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="author" content="" />
 
-  <link rel="stylesheet" href="/index.css" />
-  <script src="/littleBoard.js"></script>
+  <link rel="stylesheet" href="/TestReport.css" />
+  <script src="/TestReport.js"></script>
 
-  <style>${`
-/* container */
-.three-columns-grid {
-    display: grid;
-    grid-auto-rows: 1fr;
-    grid-template-columns: 1fr 1fr 1fr;
-}
-
-/* columns */
-.three-columns-grid > * {
-    padding:1rem;
-}
-  `}</style>
 </head>
 
   <body>
-  <h1>Test report</h1>
-  
-
-  
-
-
-  <ul>
-
-    <li> ${`SUITE ${o.name}`}<li>
-  
-    
-
-    
-    <ul>
-    ${o.givens
-      .map((g) => {
-        return `<div class="three-columns-grid">
-    <div>${`<li>
-        ${`<p>${g.key}</p>`}
-        ${`<p>GIVEN ${g.name}</p>`}
-
-        <ul>
-    ${g.whens
-      .map((w) => {
-        return `<li>${`WHEN ${w.name}`}</li>`;
-      })
-      .join("")}
-      
-    </ul>
-
-            <ul>
-    ${g.thens
-      .map((t) => {
-        return `<li>${`THEN ${t.name}`}</li>`;
-      })
-      .join("")}
-      
-    </ul>
-
-    
-
-        
-        <li>`}</div>
-    <div>${`<p>error? ${g.error}</p>`}</div>
-    <div>${`<p>features? ${g.features}</p>`}</div>
-    </div>`;
-        // return ;
-      })
-      .join("")}
-      
-    </ul>
-    
-  <ul>
-
-  <pre>${JSON.stringify(o, null, 2)}<pre>
+    <h1>Test report</h1>
+            <div id="root"/>
   </body>
             `
           );
-
-          // if (numberOfFailures > 0) {
-          //   puppetMaster.writeFileSync(
-          //     `prompt`,
-          //     `
-          //     aider --message "make a script that prints hello" hello.js
-          //     `
-          //   );
-          // }
 
           puppetMaster.writeFileSync(
             `tests.json`,
             JSON.stringify(this.toObj(), null, 2)
           );
-          // console.log(`exiting gracefully with ${numberOfFailures} failures.`);
 
           return {
             failed: numberOfFailures,

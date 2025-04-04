@@ -1204,51 +1204,51 @@ export class PM_Main extends PM {
       JSON.stringify(this.bigBoard, null, 2)
     );
 
-    fs.writeFileSync(
-      "./docs/bigBoard.html",
-      // JSON.stringify(this.bigBoard, null, 2)
-      `
-<!DOCTYPE html>
-<html lang="en">
+    //     fs.writeFileSync(
+    //       "./docs/bigBoard.html",
+    //       // JSON.stringify(this.bigBoard, null, 2)
+    //       `
+    // <!DOCTYPE html>
+    // <html lang="en">
 
-<head>
-  <meta name="description" content="Webpage description goes here" />
-  <meta charset="utf-8" />
-  <title>kokomoBay - testeranto</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="author" content="" />
+    // <head>
+    //   <meta name="description" content="Webpage description goes here" />
+    //   <meta charset="utf-8" />
+    //   <title>kokomoBay - testeranto</title>
+    //   <meta name="viewport" content="width=device-width, initial-scale=1" />
+    //   <meta name="author" content="" />
 
-  <link rel="stylesheet" href="/index.css" />
-  <script type="module" src="/littleBoard.js"></script>
+    //   <link rel="stylesheet" href="/index.css" />
+    //   <script type="module" src="/littleBoard.js"></script>
 
-</head>
+    // </head>
 
-<body>
-  <table>
-    ${Object.keys(this.bigBoard)
-      .map((v) => {
-        return `<tr>
-        <td>${v}</td>
-        
-        <td>${this.bigBoard[v].status}</td>
-        <td>${this.bigBoard[v].runTimeError}</td>
-        <td>
-          <a href="/${this.configs.tests.find((t) => t[0] === v)[1]}/${v
-          .split(".")
-          .slice(0, -1)
-          .join(".")}/littleBoard.html">more</a>
-        </td>
-      </tr>`;
-      })
-      .join("")}
+    // <body>
+    //   <table>
+    //     ${Object.keys(this.bigBoard)
+    //       .map((v) => {
+    //         return `<tr>
+    //         <td>${v}</td>
 
-  </table>
-  
-</body>
+    //         <td>${this.bigBoard[v].status}</td>
+    //         <td>${this.bigBoard[v].runTimeError}</td>
+    //         <td>
+    //           <a href="/${this.configs.tests.find((t) => t[0] === v)[1]}/${v
+    //           .split(".")
+    //           .slice(0, -1)
+    //           .join(".")}/littleBoard.html">more</a>
+    //         </td>
+    //       </tr>`;
+    //       })
+    //       .join("")}
 
-</html>
-    `
-    );
+    //   </table>
+
+    // </body>
+
+    // </html>
+    //     `
+    //     );
   };
 }
 

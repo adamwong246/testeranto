@@ -1,8 +1,11 @@
 import { watch } from "fs";
-import { PM_Main } from "./PM/main";
 import path from "path";
 import crypto from "node:crypto";
 import fs from "fs";
+import tsc from "tsc-prog";
+import { ESLint } from "eslint";
+import ts from "typescript";
+import { PM_Main } from "./PM/main";
 const fileHashes = {};
 async function fileHash(filePath, algorithm = "md5") {
     return new Promise((resolve, reject) => {
@@ -37,9 +40,120 @@ const getRunnables = (tests, payload = {
         return pt;
     }, payload);
 };
+const tscPather = (entryPoint, platform) => {
+    return path.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `type_errors.txt`);
+};
+const tscExitCodePather = (entryPoint, platform) => {
+    return path.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `type_errors.exitcode`);
+};
+const lintPather = (entryPoint, platform) => {
+    return path.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `lint_errors.json`);
+};
+const lintExitCodePather = (entryPoint, platform) => {
+    return path.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `lint_errors.exitcode`);
+};
+const tscCheck = ({ entrypoint, addableFiles, platform, }) => {
+    console.log("tsc <", entrypoint);
+    const program = tsc.createProgramFromConfig({
+        basePath: process.cwd(), // always required, used for relative paths
+        configFilePath: "tsconfig.json", // config to inherit from (optional)
+        compilerOptions: {
+            rootDir: "src",
+            outDir: tscPather(entrypoint, platform),
+            // declaration: true,
+            // skipLibCheck: true,
+            noEmit: true,
+        },
+        include: addableFiles, //["src/**/*"],
+        // exclude: ["**/*.test.ts", "**/*.spec.ts"],
+    });
+    const tscPath = tscPather(entrypoint, platform);
+    let allDiagnostics = program.getSemanticDiagnostics();
+    const d = [];
+    allDiagnostics.forEach((diagnostic) => {
+        if (diagnostic.file) {
+            let { line, character } = ts.getLineAndCharacterOfPosition(diagnostic.file, diagnostic.start);
+            let message = ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n");
+            d.push(`${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`);
+        }
+        else {
+            d.push(ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n"));
+        }
+    });
+    fs.writeFileSync(tscPath, d.join("\n"));
+    fs.writeFileSync(tscExitCodePather(entrypoint, platform), d.length.toString());
+};
+const eslint = new ESLint();
+const formatter = await eslint.loadFormatter("./node_modules/testeranto/dist/prebuild/eslint-formatter-testeranto.mjs");
+const eslintCheck = async (entrypoint, platform, addableFiles) => {
+    console.log("eslint <", entrypoint);
+    const results = (await eslint.lintFiles(addableFiles))
+        .filter((r) => r.messages.length)
+        .filter((r) => {
+        return r.messages[0].ruleId !== null;
+    })
+        .map((r) => {
+        delete r.source;
+        return r;
+    });
+    fs.writeFileSync(lintPather(entrypoint, platform), await formatter.format(results));
+    fs.writeFileSync(lintExitCodePather(entrypoint, platform), results.length.toString());
+};
+const makePrompt = (entryPoint, addableFiles, platform) => {
+    const promptPath = path.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `prompt.txt`);
+    const testPaths = path.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `tests.json`);
+    const featuresPath = path.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `featurePrompt.txt`);
+    fs.writeFileSync(promptPath, `
+${addableFiles
+        .map((x) => {
+        return `/add ${x}`;
+    })
+        .join("\n")}
+
+/read ${lintPather(entryPoint, platform)}
+/read ${tscPather(entryPoint, platform)}
+/read ${testPaths}
+
+/load ${featuresPath}
+
+/code Fix the failing tests described in ${testPaths}. Correct any type signature errors described in the files ${tscPather(entryPoint, platform)}. Implement any method which throws "Function not implemented. Resolve the lint errors described in ${lintPather(entryPoint, platform)}"
+          `);
+};
+const metafileOutputs = async (platform) => {
+    const outputs = JSON.parse(fs.readFileSync(`docs/${platform}/metafile.json`).toString()).metafile.outputs;
+    Object.keys(outputs).forEach((k) => {
+        const addableFiles = Object.keys(outputs[k].inputs).filter((i) => {
+            if (!fs.existsSync(i))
+                return false;
+            if (i.startsWith("node_modules"))
+                return false;
+            return true;
+        });
+        const f = `${k.split(".").slice(0, -1).join(".")}/`;
+        if (!fs.existsSync(f)) {
+            fs.mkdirSync(f);
+        }
+        const entrypoint = outputs[k].entryPoint;
+        if (entrypoint) {
+            tscCheck({ platform, addableFiles, entrypoint });
+            eslintCheck(entrypoint, platform, addableFiles);
+            makePrompt(entrypoint, addableFiles, platform);
+        }
+    });
+};
 import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
     const rawConfig = module.default;
     const config = Object.assign(Object.assign({}, rawConfig), { buildDir: process.cwd() + "/" + rawConfig.outdir });
+    metafileOutputs("node");
+    watch("docs/node/metafile.json", async (e, filename) => {
+        console.log(`< ${e} ${filename}`);
+        metafileOutputs("node");
+    });
+    metafileOutputs("web");
+    watch("docs/web/metafile.json", async (e, filename) => {
+        console.log(`< ${e} ${filename}`);
+        metafileOutputs("web");
+    });
     let pm = new PM_Main(config);
     await pm.startPuppeteer({
         slowMo: 1,

@@ -1,11 +1,7 @@
-import { spawn } from "child_process";
 import fs, { watch } from "fs";
 import path from "path";
 import readline from "readline";
 import { glob } from "glob";
-
-import { debounceWatch } from "@bscotch/debounce-watch";
-
 import esbuild from "esbuild";
 
 import esbuildNodeConfiger from "./esbuildConfigs/node.js";
@@ -20,189 +16,6 @@ import {
 
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
-
-function parseTsErrors(logContent): void {
-  fs.writeFileSync("docs/types/log.txt", logContent.join("\n"));
-
-  try {
-    const regex = /(^src(.*?))\(\d*,\d*\): error/gm;
-    const brokenFilesToLines: Record<string, Set<number>> = {};
-
-    for (let i = 0; i < logContent.length - 1; i++) {
-      let m;
-
-      while ((m = regex.exec(logContent[i])) !== null) {
-        // This is necessary to avoid infinite loops with zero-width matches
-        if (m.index === regex.lastIndex) {
-          regex.lastIndex++;
-        }
-        if (!brokenFilesToLines[m[1]]) {
-          brokenFilesToLines[m[1]] = new Set<number>();
-        }
-        brokenFilesToLines[m[1]].add(i);
-      }
-    }
-
-    const final = Object.keys(brokenFilesToLines).reduce((mm, lm, ndx) => {
-      mm[lm] = Array.from(brokenFilesToLines[lm]).map((l, ndx3) => {
-        const a = Array.from(brokenFilesToLines[lm]);
-
-        return Object.keys(a).reduce((mm2, lm2, ndx2) => {
-          const acc: string[] = [];
-
-          let j = a[lm2] + 1;
-
-          let working = true;
-          while (j < logContent.length - 1 && working) {
-            if (
-              !logContent[j].match(regex) &&
-              working &&
-              !logContent[j].match(/^..\/(.*?)\(\d*,\d*\)/)
-            ) {
-              acc.push(logContent[j]);
-            } else {
-              working = false;
-            }
-
-            j++;
-          }
-
-          mm2[lm] = [logContent[l], ...acc];
-
-          return mm2;
-        }, {} as any)[lm];
-      });
-      return mm;
-    }, {});
-
-    Object.keys(final).forEach((k) => {
-      fs.mkdirSync(`./docs/types/${k.split("/").slice(0, -1).join("/")}`, {
-        recursive: true,
-      });
-      fs.writeFileSync(
-        `./docs/types/${k}.type_errors.txt`,
-        final[k].flat().flat().join("\r\n")
-      );
-    });
-  } catch (error) {
-    console.error("Error reading or parsing the log file:", error);
-    process.exit(1);
-  }
-}
-
-// function parseLintErrors(logContent): void {
-//   fs.writeFileSync("docs/eslint/log.txt", logContent.join("\n"));
-
-//   try {
-//     const regex = new RegExp(`^${process.cwd()}/(.*?)`, "gm");
-//     const brokenFilesToLines: Record<string, Set<number>> = {};
-
-//     for (let i = 0; i < logContent.length - 1; i++) {
-//       let m;
-
-//       while ((m = regex.exec(logContent[i])) !== null) {
-//         // This is necessary to avoid infinite loops with zero-width matches
-//         if (m.index === regex.lastIndex) {
-//           regex.lastIndex++;
-//         }
-//         if (!brokenFilesToLines[m[1]]) {
-//           brokenFilesToLines[m[1]] = new Set<number>();
-//         }
-//         brokenFilesToLines[m[1]].add(i);
-//       }
-//     }
-
-//     const final = Object.keys(brokenFilesToLines).reduce((mm, lm, ndx) => {
-//       mm[lm] = Array.from(brokenFilesToLines[lm]).map((l, ndx3) => {
-//         const a = Array.from(brokenFilesToLines[lm]);
-
-//         return Object.keys(a).reduce((mm2, lm2, ndx2) => {
-//           const acc: string[] = [];
-
-//           let j = a[lm2] + 1;
-
-//           let working = true;
-//           while (j < logContent.length - 1 && working) {
-//             if (
-//               !logContent[j].match(regex) &&
-//               working
-//               // &&
-//               // !logContent[j].match(/^..\/(.*?)\(\d*,\d*\)/)
-//             ) {
-//               acc.push(logContent[j]);
-//             } else {
-//               working = false;
-//             }
-
-//             j++;
-//           }
-
-//           mm2[lm] = [logContent[l], ...acc];
-
-//           return mm2;
-//         }, {} as any)[lm];
-//       });
-//       return mm;
-//     }, {});
-
-//     Object.keys(final).forEach((k) => {
-//       fs.mkdirSync(`./docs/eslint/${k.split("/").slice(0, -1).join("/")}`, {
-//         recursive: true,
-//       });
-//       fs.writeFileSync(
-//         `./docs/eslint/${k}.lint_errors.txt`,
-//         final[k].flat().flat().join("\r\n")
-//       );
-//     });
-//   } catch (error) {
-//     console.error("Error reading or parsing the log file:", error);
-//     process.exit(1);
-//   }
-// }
-
-// const typecheck = () => {
-//   const logContent: string[] = [];
-//   fs.rmSync("docs/types", { force: true, recursive: true });
-//   fs.mkdirSync("docs/types");
-
-//   const tsc = spawn("tsc", ["-noEmit"]);
-
-//   tsc.stdout.on("data", (data) => {
-//     const lines = data.toString().split("\n");
-//     logContent.push(...lines);
-//   });
-
-//   tsc.stderr.on("data", (data) => {
-//     console.error(`stderr: ${data}`);
-//     process.exit(-1);
-//   });
-
-//   tsc.on("close", (code, x, y) => {
-//     parseTsErrors(logContent);
-//   });
-// };
-
-// const eslint = () => {
-//   const logContent: string[] = [];
-//   fs.rmSync("docs/eslint", { force: true, recursive: true });
-//   fs.mkdirSync("docs/eslint");
-
-//   const tsc = spawn("eslint", ["./src"]);
-
-//   tsc.stdout.on("data", (data) => {
-//     const lines = data.toString().split("\n");
-//     logContent.push(...lines);
-//   });
-
-//   tsc.stderr.on("data", (data) => {
-//     console.error(`stderr: ${data}`);
-//     process.exit(-1);
-//   });
-
-//   tsc.on("close", (code) => {
-//     parseLintErrors(logContent);
-//   });
-// };
 
 type IRunnables = {
   nodeEntryPoints: Record<string, string>;
@@ -275,26 +88,6 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
     webDone = true;
     onDone();
   };
-
-  // async function fileHash(filePath, algorithm = "md5") {
-  //   return new Promise((resolve, reject) => {
-  //     const hash = crypto.createHash(algorithm);
-  //     const fileStream = fs.createReadStream(filePath);
-
-  //     fileStream.on("data", (data) => {
-  //       hash.update(data);
-  //     });
-
-  //     fileStream.on("end", () => {
-  //       const fileHash = hash.digest("hex");
-  //       resolve(fileHash);
-  //     });
-
-  //     fileStream.on("error", (error) => {
-  //       reject(`Error reading file: ${error.message}`);
-  //     });
-  //   });
-  // }
 
   const onDone = async () => {
     if (nodeDone && webDone) {
@@ -371,21 +164,6 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
     }
   });
 
-  // const eslint = new ESLint();
-  // const configEslint = await eslint.calculateConfigForFile(
-  //   "./src/eslint.config.mjs"
-  // );
-  // // console.log(`configEslint`, configEslint);
-  // fs.watch("src", { recursive: true }, async (eventType, filename) => {
-  //   if (eventType === "change") {
-  //     console.log(`File ${filename} has been modified.`);
-  //     const x = await eslint.lintFiles([`./src/${filename}`]);
-  //     console.log(x[0].messages);
-  //   } else if (eventType === "rename") {
-  //     console.log(`File ${filename} has been created or deleted.`);
-  //   }
-  // });
-
   fs.writeFileSync(
     `${config.outdir}/testeranto.json`,
     JSON.stringify(config, null, 2)
@@ -428,18 +206,6 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
       fs.unlinkSync(chunk);
     });
   });
-
-  // debounceWatch(
-  //   (events) => {
-  //     typecheck();
-  //   },
-  //   "./src",
-  //   {
-  //     onlyFileExtensions: ["ts", "tsx", "mts"],
-  //     debounceWaitSeconds: 0.2,
-  //     allowOverlappingRuns: false,
-  //   }
-  // );
 
   await Promise.all([
     esbuild

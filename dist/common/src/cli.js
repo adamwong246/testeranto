@@ -36,12 +36,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const child_process_1 = require("child_process");
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const readline_1 = __importDefault(require("readline"));
 const glob_1 = require("glob");
-const debounce_watch_1 = require("@bscotch/debounce-watch");
+// import { debounceWatch } from "@bscotch/debounce-watch";
 const esbuild_1 = __importDefault(require("esbuild"));
 const node_js_1 = __importDefault(require("./esbuildConfigs/node.js"));
 const web_js_1 = __importDefault(require("./esbuildConfigs/web.js"));
@@ -49,135 +48,6 @@ const web_html_js_1 = __importDefault(require("./web.html.js"));
 readline_1.default.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
     process.stdin.setRawMode(true);
-function parseTsErrors(logContent) {
-    fs_1.default.writeFileSync("docs/types/log.txt", logContent.join("\n"));
-    try {
-        const regex = /(^src(.*?))\(\d*,\d*\): error/gm;
-        const brokenFilesToLines = {};
-        for (let i = 0; i < logContent.length - 1; i++) {
-            let m;
-            while ((m = regex.exec(logContent[i])) !== null) {
-                // This is necessary to avoid infinite loops with zero-width matches
-                if (m.index === regex.lastIndex) {
-                    regex.lastIndex++;
-                }
-                if (!brokenFilesToLines[m[1]]) {
-                    brokenFilesToLines[m[1]] = new Set();
-                }
-                brokenFilesToLines[m[1]].add(i);
-            }
-        }
-        const final = Object.keys(brokenFilesToLines).reduce((mm, lm, ndx) => {
-            mm[lm] = Array.from(brokenFilesToLines[lm]).map((l, ndx3) => {
-                const a = Array.from(brokenFilesToLines[lm]);
-                return Object.keys(a).reduce((mm2, lm2, ndx2) => {
-                    const acc = [];
-                    let j = a[lm2] + 1;
-                    let working = true;
-                    while (j < logContent.length - 1 && working) {
-                        if (!logContent[j].match(regex) &&
-                            working &&
-                            !logContent[j].match(/^..\/(.*?)\(\d*,\d*\)/)) {
-                            acc.push(logContent[j]);
-                        }
-                        else {
-                            working = false;
-                        }
-                        j++;
-                    }
-                    mm2[lm] = [logContent[l], ...acc];
-                    return mm2;
-                }, {})[lm];
-            });
-            return mm;
-        }, {});
-        Object.keys(final).forEach((k) => {
-            fs_1.default.mkdirSync(`./docs/types/${k.split("/").slice(0, -1).join("/")}`, {
-                recursive: true,
-            });
-            fs_1.default.writeFileSync(`./docs/types/${k}.type_errors.txt`, final[k].flat().flat().join("\r\n"));
-        });
-    }
-    catch (error) {
-        console.error("Error reading or parsing the log file:", error);
-        process.exit(1);
-    }
-}
-// function parseLintErrors(logContent): void {
-//   fs.writeFileSync("docs/eslint/log.txt", logContent.join("\n"));
-//   try {
-//     const regex = new RegExp(`^${process.cwd()}/(.*?)`, "gm");
-//     const brokenFilesToLines: Record<string, Set<number>> = {};
-//     for (let i = 0; i < logContent.length - 1; i++) {
-//       let m;
-//       while ((m = regex.exec(logContent[i])) !== null) {
-//         // This is necessary to avoid infinite loops with zero-width matches
-//         if (m.index === regex.lastIndex) {
-//           regex.lastIndex++;
-//         }
-//         if (!brokenFilesToLines[m[1]]) {
-//           brokenFilesToLines[m[1]] = new Set<number>();
-//         }
-//         brokenFilesToLines[m[1]].add(i);
-//       }
-//     }
-//     const final = Object.keys(brokenFilesToLines).reduce((mm, lm, ndx) => {
-//       mm[lm] = Array.from(brokenFilesToLines[lm]).map((l, ndx3) => {
-//         const a = Array.from(brokenFilesToLines[lm]);
-//         return Object.keys(a).reduce((mm2, lm2, ndx2) => {
-//           const acc: string[] = [];
-//           let j = a[lm2] + 1;
-//           let working = true;
-//           while (j < logContent.length - 1 && working) {
-//             if (
-//               !logContent[j].match(regex) &&
-//               working
-//               // &&
-//               // !logContent[j].match(/^..\/(.*?)\(\d*,\d*\)/)
-//             ) {
-//               acc.push(logContent[j]);
-//             } else {
-//               working = false;
-//             }
-//             j++;
-//           }
-//           mm2[lm] = [logContent[l], ...acc];
-//           return mm2;
-//         }, {} as any)[lm];
-//       });
-//       return mm;
-//     }, {});
-//     Object.keys(final).forEach((k) => {
-//       fs.mkdirSync(`./docs/eslint/${k.split("/").slice(0, -1).join("/")}`, {
-//         recursive: true,
-//       });
-//       fs.writeFileSync(
-//         `./docs/eslint/${k}.lint_errors.txt`,
-//         final[k].flat().flat().join("\r\n")
-//       );
-//     });
-//   } catch (error) {
-//     console.error("Error reading or parsing the log file:", error);
-//     process.exit(1);
-//   }
-// }
-const typecheck = () => {
-    const logContent = [];
-    fs_1.default.rmSync("docs/types", { force: true, recursive: true });
-    fs_1.default.mkdirSync("docs/types");
-    const tsc = (0, child_process_1.spawn)("tsc", ["-noEmit"]);
-    tsc.stdout.on("data", (data) => {
-        const lines = data.toString().split("\n");
-        logContent.push(...lines);
-    });
-    tsc.stderr.on("data", (data) => {
-        console.error(`stderr: ${data}`);
-        process.exit(-1);
-    });
-    tsc.on("close", (code, x, y) => {
-        parseTsErrors(logContent);
-    });
-};
 const getRunnables = (tests, payload = {
     nodeEntryPoints: {},
     webEntryPoints: {},
@@ -217,7 +87,7 @@ Promise.resolve(`${process.cwd() + "/" + process.argv[2]}`).then(s => __importSt
     let mode = config.devMode ? "DEV" : "PROD";
     let status = "build";
     // let pm: PM_Main | undefined = new PM_Main(config);
-    const fileHashes = {};
+    // const fileHashes = {};
     const { nodeEntryPoints, webEntryPoints } = getRunnables(config.tests);
     const onNodeDone = () => {
         nodeDone = true;
@@ -345,17 +215,17 @@ Promise.resolve(`${process.cwd() + "/" + process.argv[2]}`).then(s => __importSt
             fs_1.default.unlinkSync(chunk);
         });
     });
-    // const processDebouncedEvents: DebouncedEventsProcessor = (events) => {
-    //   typecheck();
-    // };
-    (0, debounce_watch_1.debounceWatch)((events) => {
-        typecheck();
-        // eslint();
-    }, "./src", {
-        onlyFileExtensions: ["ts", "tsx", "mts"],
-        debounceWaitSeconds: 0.2,
-        allowOverlappingRuns: false,
-    });
+    // debounceWatch(
+    //   (events) => {
+    //     typecheck();
+    //   },
+    //   "./src",
+    //   {
+    //     onlyFileExtensions: ["ts", "tsx", "mts"],
+    //     debounceWaitSeconds: 0.2,
+    //     allowOverlappingRuns: false,
+    //   }
+    // );
     await Promise.all([
         esbuild_1.default
             .context((0, node_js_1.default)(config, Object.keys(nodeEntryPoints)))

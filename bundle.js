@@ -50,14 +50,21 @@ await esbuild.build({
 })
 
 await esbuild.build({
-  entryPoints: ['src/ReportClient.tsx'],
+  entryPoints: ['src/ReportClient.tsx', 'src/TestReport.tsx'],
   bundle: true,
-  format: "esm",
+  format: "iife",
   platform: "browser",
   outdir: 'dist/prebuild'
-  // outfile: 'dist/prebuild/ReportClient.mjs',
-  // external: ['react']
-  // packages: "external",
+})
+
+
+await esbuild.build({
+  entryPoints: ['src/ReportServer.ts'],
+  bundle: true,
+  format: "esm",
+  platform: "node",
+  outfile: 'dist/prebuild/ReportServer.mjs',
+  packages: "external",
   // supported: {
   //   "dynamic-import": true,
   // },
@@ -67,29 +74,12 @@ await esbuild.build({
   // },
 })
 
-// await esbuild.build({
-//   entryPoints: ['src/LittleBoard.tsx'],
-//   bundle: true,
-//   format: "esm",
-//   platform: "browser",
-//   outfile: 'dist/prebuild/LittleBoard.mjs',
-//   // external: ['react']
-//   // packages: "external",
-//   // supported: {
-//   //   "dynamic-import": true,
-//   // },
-
-//   // banner: {
-//   //   js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`,
-//   // },
-// })
-
 await esbuild.build({
-  entryPoints: ['src/ReportServer.ts'],
+  entryPoints: ['src/esbuildConfigs/eslint-formatter-testeranto.ts'],
   bundle: true,
   format: "esm",
   platform: "node",
-  outfile: 'dist/prebuild/ReportServer.mjs',
+  outfile: 'dist/prebuild/eslint-formatter-testeranto.mjs',
   packages: "external",
   // supported: {
   //   "dynamic-import": true,
