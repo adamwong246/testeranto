@@ -1,6 +1,3 @@
-/// <reference types="node" />
-/// <reference types="node" />
-/// <reference types="node" />
 import { CdpPage, Page } from "puppeteer-core/lib/esm/puppeteer";
 import fs from "fs";
 import { Browser, LaunchOptions } from "puppeteer-core";
@@ -14,7 +11,12 @@ export declare class PM_Main extends PM {
     configs: IBuiltConfig;
     ports: Record<number, boolean>;
     queue: any[];
-    registry: Record<string, boolean>;
+    bigBoard: Record<string, {
+        status: "?" | "running" | "waiting";
+        runTimeError?: number;
+        typeErrors?: string;
+        staticErrors?: string;
+    }>;
     constructor(configs: IBuiltConfig);
     customclose(): void;
     waitForSelector(p: string, s: string): any;
@@ -41,16 +43,18 @@ export declare class PM_Main extends PM {
     typeInto(value: string): void;
     getValue(value: string): void;
     getAttribute(selector: string, attribute: string): void;
-    isDisabled(selector: string): boolean;
+    isDisabled(selector: string): Promise<boolean>;
     screencastStop(s: string): void;
     startPuppeteer(options: LaunchOptions, destfolder: string): Promise<any>;
     shutDown(): void;
     checkForShutdown: () => void;
-    register: (src: string) => void;
-    deregister: (src: string) => void;
+    testIsNowRunning: (src: string) => void;
+    testIsNowDone: (src: string) => void;
     launchNode: (src: string, dest: string) => Promise<void>;
     launchWebSideCar: (src: string, dest: string, testConfig: ITestTypes) => Promise<Page>;
     launchNodeSideCar: (src: string, dest: string, testConfig: ITestTypes) => Promise<void>;
     launchWeb: (t: string, dest: string) => void;
     receiveFeatures: (features: string[], destFolder: string, srcTest: string) => void;
+    receiveExitCode: (srcTest: string, failures: number) => void;
+    writeBigBoard: () => void;
 }

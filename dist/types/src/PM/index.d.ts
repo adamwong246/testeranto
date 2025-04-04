@@ -24,7 +24,7 @@ export declare abstract class PM {
     abstract typeInto(value: string): any;
     abstract getValue(value: string): any;
     abstract getAttribute(selector: string, attribute: string): any;
-    abstract isDisabled(selector: string): boolean;
+    abstract isDisabled(selector: string): Promise<boolean>;
     abstract $(selector: string): any;
     abstract newPage(): CdpPage;
     abstract goto(p: any, url: string): any;

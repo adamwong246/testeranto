@@ -1,12 +1,10 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 
 // src/cli.ts
-import { spawn as spawn2 } from "child_process";
 import fs2 from "fs";
 import path4 from "path";
 import readline from "readline";
 import { glob } from "glob";
-import { debounceWatch } from "@bscotch/debounce-watch";
 import esbuild from "esbuild";
 
 // src/esbuildConfigs/index.ts
@@ -125,6 +123,12 @@ var inputFilesPlugin_default = (platform, entryPoints) => {
                   entryPoint.split(".").slice(0, -1).join("."),
                   `lint_errors.txt`
                 );
+                const tscPath = path.join(
+                  "./docs/",
+                  platform,
+                  entryPoint.split(".").slice(0, -1).join("."),
+                  `type_errors.txt`
+                );
                 fs.writeFileSync(
                   promptPath,
                   `
@@ -148,21 +152,45 @@ ${typeErrorFiles.map((x) => {
                   )}]. Implement any method which throws "Function not implemented. Resolve the lint errors described in ${lintPath}"
 `
                 );
-                const logContent = [];
-                const tsc = spawn("eslint", addableFiles);
+                if (!fs.existsSync(`./docs/${platform}/${entryPoint}/`)) {
+                  fs.mkdirSync(`./docs/${platform}/${entryPoint}/`, {
+                    recursive: true
+                  });
+                }
+                console.log("ESLINT", addableFiles);
+                fs.writeFileSync(lintPath, "");
+                const eslintLogContent = [];
+                const eslintProcess = spawn("eslint", addableFiles);
+                eslintProcess.stdout.on("data", (data) => {
+                  const lines = data.toString().split("\n");
+                  eslintLogContent.push(...lines);
+                });
+                eslintProcess.stderr.on("data", (data) => {
+                  console.error(`stderr: ${data}`);
+                  process.exit(-1);
+                });
+                eslintProcess.on("close", (code) => {
+                  console.log("ESLINT", addableFiles, "done");
+                  fs.writeFileSync(
+                    lintPath,
+                    eslintLogContent.filter((l) => l !== "").join("\n")
+                  );
+                });
+                console.log("TSC", addableFiles, "done");
+                fs.writeFileSync(tscPath, "");
+                const tscLogContent = [];
+                const tsc = spawn("tsc", ["-noEmit", ...addableFiles]);
                 tsc.stdout.on("data", (data) => {
                   const lines = data.toString().split("\n");
-                  logContent.push(...lines);
+                  tscLogContent.push(...lines);
                 });
                 tsc.stderr.on("data", (data) => {
                   console.error(`stderr: ${data}`);
                   process.exit(-1);
                 });
-                tsc.on("close", (code) => {
-                  fs.writeFileSync(
-                    lintPath,
-                    logContent.filter((l) => l !== "").join("\n")
-                  );
+                tsc.on("close", (code, x, y) => {
+                  console.log("TSC", addableFiles, "done");
+                  parseTsErrors(tscLogContent, tscPath);
                 });
               }
             });
@@ -172,6 +200,51 @@ ${typeErrorFiles.map((x) => {
     }
   };
 };
+function parseTsErrors(logContent, tscPath) {
+  try {
+    const regex = /(^src(.*?))\(\d*,\d*\): error/gm;
+    const brokenFilesToLines = {};
+    for (let i = 0; i < logContent.length - 1; i++) {
+      let m;
+      while ((m = regex.exec(logContent[i])) !== null) {
+        if (m.index === regex.lastIndex) {
+          regex.lastIndex++;
+        }
+        if (!brokenFilesToLines[m[1]]) {
+          brokenFilesToLines[m[1]] = /* @__PURE__ */ new Set();
+        }
+        brokenFilesToLines[m[1]].add(i);
+      }
+    }
+    const final = Object.keys(brokenFilesToLines).reduce((mm, lm, ndx) => {
+      mm[lm] = Array.from(brokenFilesToLines[lm]).map((l, ndx3) => {
+        const a = Array.from(brokenFilesToLines[lm]);
+        return Object.keys(a).reduce((mm2, lm2, ndx2) => {
+          const acc = [];
+          let j = a[lm2] + 1;
+          let working = true;
+          while (j < logContent.length - 1 && working) {
+            if (!logContent[j].match(regex) && working && !logContent[j].match(/^..\/(.*?)\(\d*,\d*\)/)) {
+              acc.push(logContent[j]);
+            } else {
+              working = false;
+            }
+            j++;
+          }
+          mm2[lm] = [logContent[l], ...acc];
+          return mm2;
+        }, {})[lm];
+      });
+      return mm;
+    }, {});
+    Object.keys(final).forEach((k) => {
+      fs.writeFileSync(tscPath, final[k].flat().flat().join("\r\n"));
+    });
+  } catch (error) {
+    console.error("Error reading or parsing the log file:", error);
+    process.exit(1);
+  }
+}
 
 // src/esbuildConfigs/featuresPlugin.ts
 import path2 from "path";
@@ -352,75 +425,6 @@ var web_html_default = (jsfilePath, htmlFilePath) => `
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
   process.stdin.setRawMode(true);
-function parseTsErrors(logContent) {
-  fs2.writeFileSync("docs/types/log.txt", logContent.join("\n"));
-  try {
-    const regex = /(^src(.*?))\(\d*,\d*\): error/gm;
-    const brokenFilesToLines = {};
-    for (let i = 0; i < logContent.length - 1; i++) {
-      let m;
-      while ((m = regex.exec(logContent[i])) !== null) {
-        if (m.index === regex.lastIndex) {
-          regex.lastIndex++;
-        }
-        if (!brokenFilesToLines[m[1]]) {
-          brokenFilesToLines[m[1]] = /* @__PURE__ */ new Set();
-        }
-        brokenFilesToLines[m[1]].add(i);
-      }
-    }
-    const final = Object.keys(brokenFilesToLines).reduce((mm, lm, ndx) => {
-      mm[lm] = Array.from(brokenFilesToLines[lm]).map((l, ndx3) => {
-        const a = Array.from(brokenFilesToLines[lm]);
-        return Object.keys(a).reduce((mm2, lm2, ndx2) => {
-          const acc = [];
-          let j = a[lm2] + 1;
-          let working = true;
-          while (j < logContent.length - 1 && working) {
-            if (!logContent[j].match(regex) && working && !logContent[j].match(/^..\/(.*?)\(\d*,\d*\)/)) {
-              acc.push(logContent[j]);
-            } else {
-              working = false;
-            }
-            j++;
-          }
-          mm2[lm] = [logContent[l], ...acc];
-          return mm2;
-        }, {})[lm];
-      });
-      return mm;
-    }, {});
-    Object.keys(final).forEach((k) => {
-      fs2.mkdirSync(`./docs/types/${k.split("/").slice(0, -1).join("/")}`, {
-        recursive: true
-      });
-      fs2.writeFileSync(
-        `./docs/types/${k}.type_errors.txt`,
-        final[k].flat().flat().join("\r\n")
-      );
-    });
-  } catch (error) {
-    console.error("Error reading or parsing the log file:", error);
-    process.exit(1);
-  }
-}
-var typecheck = () => {
-  const logContent = [];
-  fs2.rmSync("docs/types", { force: true, recursive: true });
-  fs2.mkdirSync("docs/types");
-  const tsc = spawn2("tsc", ["-noEmit"]);
-  tsc.stdout.on("data", (data) => {
-    const lines = data.toString().split("\n");
-    logContent.push(...lines);
-  });
-  tsc.stderr.on("data", (data) => {
-    console.error(`stderr: ${data}`);
-    process.exit(-1);
-  });
-  tsc.on("close", (code, x, y) => {
-    parseTsErrors(logContent);
-  });
-};
 var getRunnables = (tests, payload = {
   nodeEntryPoints: {},
   webEntryPoints: {}
@@ -465,7 +469,6 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
   let webDone = false;
   let mode = config.devMode ? "DEV" : "PROD";
   let status = "build";
-  const fileHashes = {};
   const { nodeEntryPoints, webEntryPoints } = getRunnables(config.tests);
   const onNodeDone = () => {
     nodeDone = true;
@@ -551,17 +554,6 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
       fs2.unlinkSync(chunk);
     });
   });
-  debounceWatch(
-    (events) => {
-      typecheck();
-    },
-    "./src",
-    {
-      onlyFileExtensions: ["ts", "tsx", "mts"],
-      debounceWaitSeconds: 0.2,
-      allowOverlappingRuns: false
-    }
-  );
   await Promise.all([
     esbuild.context(node_default(config, Object.keys(nodeEntryPoints))).then(async (nodeContext) => {
       if (config.devMode) {

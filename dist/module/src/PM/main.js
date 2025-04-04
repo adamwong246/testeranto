@@ -13,18 +13,20 @@ const green = "\x1b[32m";
 const reset = "\x1b[0m"; // Resets to default color
 const statusMessagePretty = (failures, test) => {
     if (failures === 0) {
-        console.log(green + `${test} completed successfully` + reset);
+        console.log(green + `> ${test} completed successfully` + reset);
     }
     else {
-        console.log(red + `${test} failed ${failures} times` + reset);
+        console.log(red + `> ${test} failed ${failures} times` + reset);
     }
 };
 export class PM_Main extends PM {
     constructor(configs) {
         super();
         this.shutdownMode = false;
+        this.bigBoard = {};
         this.checkForShutdown = () => {
-            const anyRunning = Object.values(this.registry).filter((x) => x === false).length > 0;
+            const anyRunning = Object.values(this.bigBoard).filter((x) => x.status === "running")
+                .length > 0;
             if (anyRunning) {
             }
             else {
@@ -34,18 +36,20 @@ export class PM_Main extends PM {
                 });
             }
         };
-        this.register = (src) => {
-            this.registry[src] = false;
+        this.testIsNowRunning = (src) => {
+            console.log("testIsNowRunning", src);
+            this.bigBoard[src].status = "running";
         };
-        this.deregister = (src) => {
-            this.registry[src] = true;
+        this.testIsNowDone = (src) => {
+            console.log("testIsNowDone", src);
+            this.bigBoard[src].status = "waiting";
             if (this.shutdownMode) {
                 this.checkForShutdown();
             }
         };
         this.launchNode = async (src, dest) => {
             console.log("! node", src);
-            this.register(src);
+            this.testIsNowRunning(src);
             const destFolder = dest.replace(".mjs", "");
             let argz = "";
             const testConfig = this.configs.tests.find((t) => {
@@ -121,13 +125,14 @@ export class PM_Main extends PM {
                         this.receiveFeatures(features, destFolder, src);
                         // console.log(`${src} completed with ${failed} errors`);
                         statusMessagePretty(failed, src);
+                        this.receiveExitCode(src, failed);
                     })
                         .catch((e) => {
                         console.log(`${src} errored with`, e);
                     })
                         .finally(() => {
                         webSideCares.forEach((webSideCar) => webSideCar.close());
-                        this.deregister(src);
+                        this.testIsNowDone(src);
                     });
                 });
             });
@@ -318,7 +323,7 @@ export class PM_Main extends PM {
         };
         this.launchWeb = (t, dest) => {
             console.log("! web", t);
-            this.register(t);
+            this.testIsNowRunning(t);
             // sidecars.map((sidecar) => {
             //   if (sidecar[1] === "node") {
             //     return this.launchNodeSideCar(
@@ -518,7 +523,7 @@ export class PM_Main extends PM {
                     Promise.all(screenshots[t] || []).then(() => {
                         delete screenshots[t];
                         page.close();
-                        this.deregister(t);
+                        this.testIsNowDone(t);
                         stderrStream.close();
                         stdoutStream.close();
                     });
@@ -536,7 +541,7 @@ export class PM_Main extends PM {
                     }
                     console.debug(`Error from message ${t}: [${err.message}] `);
                     stderrStream.write(err.message);
-                    // close();
+                    close();
                 });
                 page.on("console", (log) => {
                     // console.debug(`Log from ${t}: [${log.text()}] `);
@@ -555,11 +560,13 @@ export class PM_Main extends PM {
                     this.receiveFeatures(features, destFolder, t);
                     // console.log(`${t} completed with ${failed} errors`);
                     statusMessagePretty(failed, t);
+                    this.receiveExitCode(t, failed);
                 })
                     .catch((e) => {
                     console.log(`${t} errored with`, e);
                 })
                     .finally(() => {
+                    // this.testIsNowDone(t);
                     close();
                 });
                 return page;
@@ -625,11 +632,66 @@ export class PM_Main extends PM {
                 })
                     .join("\n"));
             });
+            this.writeBigBoard();
+        };
+        this.receiveExitCode = (srcTest, failures) => {
+            this.bigBoard[srcTest].runTimeError = failures;
+            this.writeBigBoard();
+        };
+        this.writeBigBoard = () => {
+            fs.writeFileSync("./docs/bigBoard.json", JSON.stringify(this.bigBoard, null, 2));
+            fs.writeFileSync("./docs/bigBoard.html", 
+            // JSON.stringify(this.bigBoard, null, 2)
+            `
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="description" content="Webpage description goes here" />
+  <meta charset="utf-8" />
+  <title>kokomoBay - testeranto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="" />
+
+  <link rel="stylesheet" href="/index.css" />
+  <script type="module" src="/littleBoard.js"></script>
+
+</head>
+
+<body>
+  <table>
+    ${Object.keys(this.bigBoard)
+                .map((v) => {
+                return `<tr>
+        <td>${v}</td>
+        
+        <td>${this.bigBoard[v].status}</td>
+        <td>${this.bigBoard[v].runTimeError}</td>
+        <td>
+          <a href="/${this.configs.tests.find((t) => t[0] === v)[1]}/${v
+                    .split(".")
+                    .slice(0, -1)
+                    .join(".")}/littleBoard.html">more</a>
+        </td>
+      </tr>`;
+            })
+                .join("")}
+
+  </table>
+  
+</body>
+
+</html>
+    `);
         };
         this.server = {};
         this.configs = configs;
         this.ports = {};
-        this.registry = {};
+        this.configs.tests.forEach(([t]) => {
+            this.bigBoard[t] = {
+                status: "?",
+            };
+        });
         this.configs.ports.forEach((element) => {
             this.ports[element] = "true"; // set ports as open
         });
@@ -645,10 +707,6 @@ export class PM_Main extends PM {
             const page = (await this.browser.pages()).find((p) => p.mainFrame()._id === pageKey);
             return page.close();
         };
-        // globalThis["closePage"] = (p) => {
-        //   console.log("closePage", p);
-        //   return p.close();
-        // };
         globalThis["goto"] = async (pageKey, url) => {
             const page = (await this.browser.pages()).find((p) => p.mainFrame()._id === pageKey);
             await (page === null || page === void 0 ? void 0 : page.goto(url));
@@ -669,14 +727,9 @@ export class PM_Main extends PM {
             return false;
         };
         globalThis["writeFileSync"] = (filepath, contents, testName) => {
-            // console.log(testName, "writeFileSync", filepath, testName);
-            // Create directories if they don't exist
-            const dir = path.dirname(filepath);
-            // console.log(testName, "mkdirSync", dir);
-            fs.mkdirSync(dir, {
+            fs.mkdirSync(path.dirname(filepath), {
                 recursive: true,
             });
-            // console.log(testName, "mkdirSync2");
             if (!files[testName]) {
                 files[testName] = new Set();
             }

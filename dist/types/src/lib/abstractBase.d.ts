@@ -1,7 +1,7 @@
 import { IBaseTest } from "../Types";
 import { PM } from "../PM/index.js";
 import { ITTestResourceConfiguration, ITestArtifactory, ITLog } from ".";
-export declare type IGivens<ITestShape extends IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>> = Record<string, BaseGiven<ITestShape>>;
+export type IGivens<ITestShape extends IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>> = Record<string, BaseGiven<ITestShape>>;
 export declare abstract class BaseSuite<ITestShape extends IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>> {
     name: string;
     givens: IGivens<ITestShape>;

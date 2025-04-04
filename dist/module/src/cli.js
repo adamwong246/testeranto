@@ -8,7 +8,6 @@ import esbuild from "esbuild";
 import esbuildNodeConfiger from "./esbuildConfigs/node.js";
 import esbuildWebConfiger from "./esbuildConfigs/web.js";
 import webHtmlFrame from "./web.html.js";
-import { PM_Main } from "./PM/main.js";
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
     process.stdin.setRawMode(true);
@@ -66,62 +65,64 @@ function parseTsErrors(logContent) {
         process.exit(1);
     }
 }
-function parseLintErrors(logContent) {
-    fs.writeFileSync("docs/eslint/log.txt", logContent.join("\n"));
-    try {
-        const regex = new RegExp(`^${process.cwd()}/(.*?)`, "gm");
-        const brokenFilesToLines = {};
-        for (let i = 0; i < logContent.length - 1; i++) {
-            let m;
-            while ((m = regex.exec(logContent[i])) !== null) {
-                // This is necessary to avoid infinite loops with zero-width matches
-                if (m.index === regex.lastIndex) {
-                    regex.lastIndex++;
-                }
-                if (!brokenFilesToLines[m[1]]) {
-                    brokenFilesToLines[m[1]] = new Set();
-                }
-                brokenFilesToLines[m[1]].add(i);
-            }
-        }
-        const final = Object.keys(brokenFilesToLines).reduce((mm, lm, ndx) => {
-            mm[lm] = Array.from(brokenFilesToLines[lm]).map((l, ndx3) => {
-                const a = Array.from(brokenFilesToLines[lm]);
-                return Object.keys(a).reduce((mm2, lm2, ndx2) => {
-                    const acc = [];
-                    let j = a[lm2] + 1;
-                    let working = true;
-                    while (j < logContent.length - 1 && working) {
-                        if (!logContent[j].match(regex) &&
-                            working
-                        // &&
-                        // !logContent[j].match(/^..\/(.*?)\(\d*,\d*\)/)
-                        ) {
-                            acc.push(logContent[j]);
-                        }
-                        else {
-                            working = false;
-                        }
-                        j++;
-                    }
-                    mm2[lm] = [logContent[l], ...acc];
-                    return mm2;
-                }, {})[lm];
-            });
-            return mm;
-        }, {});
-        Object.keys(final).forEach((k) => {
-            fs.mkdirSync(`./docs/eslint/${k.split("/").slice(0, -1).join("/")}`, {
-                recursive: true,
-            });
-            fs.writeFileSync(`./docs/eslint/${k}.lint_errors.txt`, final[k].flat().flat().join("\r\n"));
-        });
-    }
-    catch (error) {
-        console.error("Error reading or parsing the log file:", error);
-        process.exit(1);
-    }
-}
+// function parseLintErrors(logContent): void {
+//   fs.writeFileSync("docs/eslint/log.txt", logContent.join("\n"));
+//   try {
+//     const regex = new RegExp(`^${process.cwd()}/(.*?)`, "gm");
+//     const brokenFilesToLines: Record<string, Set<number>> = {};
+//     for (let i = 0; i < logContent.length - 1; i++) {
+//       let m;
+//       while ((m = regex.exec(logContent[i])) !== null) {
+//         // This is necessary to avoid infinite loops with zero-width matches
+//         if (m.index === regex.lastIndex) {
+//           regex.lastIndex++;
+//         }
+//         if (!brokenFilesToLines[m[1]]) {
+//           brokenFilesToLines[m[1]] = new Set<number>();
+//         }
+//         brokenFilesToLines[m[1]].add(i);
+//       }
+//     }
+//     const final = Object.keys(brokenFilesToLines).reduce((mm, lm, ndx) => {
+//       mm[lm] = Array.from(brokenFilesToLines[lm]).map((l, ndx3) => {
+//         const a = Array.from(brokenFilesToLines[lm]);
+//         return Object.keys(a).reduce((mm2, lm2, ndx2) => {
+//           const acc: string[] = [];
+//           let j = a[lm2] + 1;
+//           let working = true;
+//           while (j < logContent.length - 1 && working) {
+//             if (
+//               !logContent[j].match(regex) &&
+//               working
+//               // &&
+//               // !logContent[j].match(/^..\/(.*?)\(\d*,\d*\)/)
+//             ) {
+//               acc.push(logContent[j]);
+//             } else {
+//               working = false;
+//             }
+//             j++;
+//           }
+//           mm2[lm] = [logContent[l], ...acc];
+//           return mm2;
+//         }, {} as any)[lm];
+//       });
+//       return mm;
+//     }, {});
+//     Object.keys(final).forEach((k) => {
+//       fs.mkdirSync(`./docs/eslint/${k.split("/").slice(0, -1).join("/")}`, {
+//         recursive: true,
+//       });
+//       fs.writeFileSync(
+//         `./docs/eslint/${k}.lint_errors.txt`,
+//         final[k].flat().flat().join("\r\n")
+//       );
+//     });
+//   } catch (error) {
+//     console.error("Error reading or parsing the log file:", error);
+//     process.exit(1);
+//   }
+// }
 const typecheck = () => {
     const logContent = [];
     fs.rmSync("docs/types", { force: true, recursive: true });
@@ -135,25 +136,8 @@ const typecheck = () => {
         console.error(`stderr: ${data}`);
         process.exit(-1);
     });
-    tsc.on("close", (code) => {
+    tsc.on("close", (code, x, y) => {
         parseTsErrors(logContent);
-    });
-};
-const eslint = () => {
-    const logContent = [];
-    fs.rmSync("docs/eslint", { force: true, recursive: true });
-    fs.mkdirSync("docs/eslint");
-    const tsc = spawn("eslint", ["./src"]);
-    tsc.stdout.on("data", (data) => {
-        const lines = data.toString().split("\n");
-        logContent.push(...lines);
-    });
-    tsc.stderr.on("data", (data) => {
-        console.error(`stderr: ${data}`);
-        process.exit(-1);
-    });
-    tsc.on("close", (code) => {
-        parseLintErrors(logContent);
     });
 };
 const getRunnables = (tests, payload = {
@@ -194,7 +178,7 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
     let webDone = false;
     let mode = config.devMode ? "DEV" : "PROD";
     let status = "build";
-    let pm = new PM_Main(config);
+    // let pm: PM_Main | undefined = new PM_Main(config);
     const fileHashes = {};
     const { nodeEntryPoints, webEntryPoints } = getRunnables(config.tests);
     const onNodeDone = () => {
@@ -274,7 +258,7 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
                 console.log("ready and watching for changes...");
             }
             else {
-                pm.shutDown();
+                // pm.shutDown();
             }
             ////////////////////////////////////////////////////////////////////////////////
         }
@@ -328,54 +312,12 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
     // };
     debounceWatch((events) => {
         typecheck();
-        eslint();
+        // eslint();
     }, "./src", {
         onlyFileExtensions: ["ts", "tsx", "mts"],
         debounceWaitSeconds: 0.2,
         allowOverlappingRuns: false,
     });
-    await pm.startPuppeteer({
-        slowMo: 1,
-        // timeout: 1,
-        waitForInitialPage: false,
-        executablePath: 
-        // process.env.CHROMIUM_PATH || "/opt/homebrew/bin/chromium",
-        "/opt/homebrew/bin/chromium",
-        headless: true,
-        dumpio: true,
-        // timeout: 0,
-        devtools: true,
-        args: [
-            "--auto-open-devtools-for-tabs",
-            `--remote-debugging-port=3234`,
-            // "--disable-features=IsolateOrigins,site-per-process",
-            "--disable-site-isolation-trials",
-            "--allow-insecure-localhost",
-            "--allow-file-access-from-files",
-            "--allow-running-insecure-content",
-            "--disable-dev-shm-usage",
-            "--disable-extensions",
-            "--disable-gpu",
-            "--disable-setuid-sandbox",
-            "--disable-site-isolation-trials",
-            "--disable-web-security",
-            "--no-first-run",
-            "--no-sandbox",
-            "--no-startup-window",
-            // "--no-zygote",
-            "--reduce-security-for-testing",
-            "--remote-allow-origins=*",
-            "--unsafely-treat-insecure-origin-as-secure=*",
-            // "--disable-features=IsolateOrigins",
-            // "--remote-allow-origins=ws://localhost:3234",
-            // "--single-process",
-            // "--unsafely-treat-insecure-origin-as-secure",
-            // "--unsafely-treat-insecure-origin-as-secure=ws://192.168.0.101:3234",
-            // "--disk-cache-dir=/dev/null",
-            // "--disk-cache-size=1",
-            // "--start-maximized",
-        ],
-    }, ".");
     await Promise.all([
         esbuild
             .context(esbuildNodeConfiger(config, Object.keys(nodeEntryPoints)))

@@ -87,7 +87,7 @@ ${typeErrorFiles
                                     process.exit(-1);
                                 });
                                 tsc.on("close", (code) => {
-                                    fs_1.default.writeFileSync(lintPath, logContent.join("\n"));
+                                    fs_1.default.writeFileSync(lintPath, logContent.filter((l) => l !== "").join("\n"));
                                 });
                             }
                         });

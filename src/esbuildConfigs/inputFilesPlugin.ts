@@ -41,6 +41,7 @@ export default (
       name: "metafileWriter",
       setup(build) {
         build.onEnd((result) => {
+          console.log("build.onEnd", entryPoints);
           fs.writeFileSync(
             `docs/${platform}/metafile.json`,
             JSON.stringify(result, null, 2)
@@ -115,6 +116,14 @@ export default (
                   entryPoint.split(".").slice(0, -1).join("."),
                   `lint_errors.txt`
                 );
+
+                const tscPath = path.join(
+                  "./docs/",
+                  platform,
+                  entryPoint.split(".").slice(0, -1).join("."),
+                  `type_errors.txt`
+                );
+
                 fs.writeFileSync(
                   promptPath,
                   `
@@ -143,12 +152,47 @@ ${typeErrorFiles
 `
                 );
 
-                const logContent: string[] = [];
-                const tsc = spawn("eslint", addableFiles);
+                if (!fs.existsSync(`./docs/${platform}/${entryPoint}/`)) {
+                  fs.mkdirSync(`./docs/${platform}/${entryPoint}/`, {
+                    recursive: true,
+                  });
+                }
+
+                console.log("ESLINT", addableFiles);
+                fs.writeFileSync(lintPath, "");
+
+                const eslintLogContent: string[] = [];
+                const eslintProcess = spawn("eslint", addableFiles);
+
+                eslintProcess.stdout.on("data", (data) => {
+                  const lines = data.toString().split("\n");
+                  eslintLogContent.push(...lines);
+                });
+
+                eslintProcess.stderr.on("data", (data) => {
+                  console.error(`stderr: ${data}`);
+                  process.exit(-1);
+                });
+
+                eslintProcess.on("close", (code) => {
+                  console.log("ESLINT", addableFiles, "done");
+                  fs.writeFileSync(
+                    lintPath,
+                    eslintLogContent.filter((l) => l !== "").join("\n")
+                  );
+                });
+
+                ////////////////////////////////////////////
+
+                console.log("TSC", addableFiles, "done");
+
+                fs.writeFileSync(tscPath, "");
+                const tscLogContent: string[] = [];
+                const tsc = spawn("tsc", ["-noEmit", ...addableFiles]);
 
                 tsc.stdout.on("data", (data) => {
                   const lines = data.toString().split("\n");
-                  logContent.push(...lines);
+                  tscLogContent.push(...lines);
                 });
 
                 tsc.stderr.on("data", (data) => {
@@ -156,11 +200,9 @@ ${typeErrorFiles
                   process.exit(-1);
                 });
 
-                tsc.on("close", (code) => {
-                  fs.writeFileSync(
-                    lintPath,
-                    logContent.filter((l) => l !== "").join("\n")
-                  );
+                tsc.on("close", (code, x, y) => {
+                  console.log("TSC", addableFiles, "done");
+                  parseTsErrors(tscLogContent, tscPath);
                 });
               }
             });
@@ -170,3 +212,64 @@ ${typeErrorFiles
     },
   };
 };
+
+function parseTsErrors(logContent, tscPath: string): void {
+  try {
+    const regex = /(^src(.*?))\(\d*,\d*\): error/gm;
+    const brokenFilesToLines: Record<string, Set<number>> = {};
+
+    for (let i = 0; i < logContent.length - 1; i++) {
+      let m;
+
+      while ((m = regex.exec(logContent[i])) !== null) {
+        // This is necessary to avoid infinite loops with zero-width matches
+        if (m.index === regex.lastIndex) {
+          regex.lastIndex++;
+        }
+        if (!brokenFilesToLines[m[1]]) {
+          brokenFilesToLines[m[1]] = new Set<number>();
+        }
+        brokenFilesToLines[m[1]].add(i);
+      }
+    }
+
+    const final = Object.keys(brokenFilesToLines).reduce((mm, lm, ndx) => {
+      mm[lm] = Array.from(brokenFilesToLines[lm]).map((l, ndx3) => {
+        const a = Array.from(brokenFilesToLines[lm]);
+
+        return Object.keys(a).reduce((mm2, lm2, ndx2) => {
+          const acc: string[] = [];
+
+          let j = a[lm2] + 1;
+
+          let working = true;
+          while (j < logContent.length - 1 && working) {
+            if (
+              !logContent[j].match(regex) &&
+              working &&
+              !logContent[j].match(/^..\/(.*?)\(\d*,\d*\)/)
+            ) {
+              acc.push(logContent[j]);
+            } else {
+              working = false;
+            }
+
+            j++;
+          }
+
+          mm2[lm] = [logContent[l], ...acc];
+
+          return mm2;
+        }, {} as any)[lm];
+      });
+      return mm;
+    }, {});
+
+    Object.keys(final).forEach((k) => {
+      fs.writeFileSync(tscPath, final[k].flat().flat().join("\r\n"));
+    });
+  } catch (error) {
+    console.error("Error reading or parsing the log file:", error);
+    process.exit(1);
+  }
+}

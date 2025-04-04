@@ -1,4 +1,4 @@
 import { IBaseTest, IPartialInterface } from "../../../Types";
-import { ITestSpec, IInput } from "./index.js";
-declare const _default: <ITestShape extends IBaseTest<IInput, number, number, number, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>>(testImplementations: any, testSpecifications: ITestSpec<ITestShape>, testInput: IInput, testInterface?: Partial<import("../../../Types").ITestInterface<ITestShape>>) => Promise<import("../../../lib/core.js").default<ITestShape>>;
+import { ITestImpl, ITestSpec, IInput } from "./index.js";
+declare const _default: <ITestShape extends IBaseTest<IInput, number, number, number, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>>(testImplementations: ITestImpl<ITestShape>, testSpecifications: ITestSpec<ITestShape>, testInput: IInput, testInterface?: IPartialInterface<ITestShape>) => Promise<import("../../../lib/core.js").default<ITestShape>>;
 export default _default;

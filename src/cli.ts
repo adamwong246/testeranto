@@ -160,27 +160,27 @@ function parseTsErrors(logContent): void {
 //   }
 // }
 
-const typecheck = () => {
-  const logContent: string[] = [];
-  fs.rmSync("docs/types", { force: true, recursive: true });
-  fs.mkdirSync("docs/types");
+// const typecheck = () => {
+//   const logContent: string[] = [];
+//   fs.rmSync("docs/types", { force: true, recursive: true });
+//   fs.mkdirSync("docs/types");
 
-  const tsc = spawn("tsc", ["-noEmit"]);
+//   const tsc = spawn("tsc", ["-noEmit"]);
 
-  tsc.stdout.on("data", (data) => {
-    const lines = data.toString().split("\n");
-    logContent.push(...lines);
-  });
+//   tsc.stdout.on("data", (data) => {
+//     const lines = data.toString().split("\n");
+//     logContent.push(...lines);
+//   });
 
-  tsc.stderr.on("data", (data) => {
-    console.error(`stderr: ${data}`);
-    process.exit(-1);
-  });
+//   tsc.stderr.on("data", (data) => {
+//     console.error(`stderr: ${data}`);
+//     process.exit(-1);
+//   });
 
-  tsc.on("close", (code, x, y) => {
-    parseTsErrors(logContent);
-  });
-};
+//   tsc.on("close", (code, x, y) => {
+//     parseTsErrors(logContent);
+//   });
+// };
 
 // const eslint = () => {
 //   const logContent: string[] = [];
@@ -263,7 +263,7 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
   let mode = config.devMode ? "DEV" : "PROD";
   let status: "build" | "built" = "build";
   // let pm: PM_Main | undefined = new PM_Main(config);
-  const fileHashes = {};
+  // const fileHashes = {};
   const { nodeEntryPoints, webEntryPoints } = getRunnables(config.tests);
 
   const onNodeDone = () => {
@@ -429,22 +429,17 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
     });
   });
 
-  // const processDebouncedEvents: DebouncedEventsProcessor = (events) => {
-  //   typecheck();
-  // };
-
-  debounceWatch(
-    (events) => {
-      typecheck();
-      // eslint();
-    },
-    "./src",
-    {
-      onlyFileExtensions: ["ts", "tsx", "mts"],
-      debounceWaitSeconds: 0.2,
-      allowOverlappingRuns: false,
-    }
-  );
+  // debounceWatch(
+  //   (events) => {
+  //     typecheck();
+  //   },
+  //   "./src",
+  //   {
+  //     onlyFileExtensions: ["ts", "tsx", "mts"],
+  //     debounceWaitSeconds: 0.2,
+  //     allowOverlappingRuns: false,
+  //   }
+  // );
 
   await Promise.all([
     esbuild

@@ -40,6 +40,94 @@ export class BaseBuilder {
                         return suiteDone.givens[k].error;
                     }).length;
                     puppetMaster.writeFileSync(`exitcode`, numberOfFailures.toString());
+                    const o = this.toObj();
+                    puppetMaster.writeFileSync(`littleBoard.html`, `
+            <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="description" content="Webpage description goes here" />
+  <meta charset="utf-8" />
+  <title>kokomoBay - testeranto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="" />
+
+  <link rel="stylesheet" href="/index.css" />
+  <script src="/littleBoard.js"></script>
+
+  <style>${`
+/* container */
+.three-columns-grid {
+    display: grid;
+    grid-auto-rows: 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+/* columns */
+.three-columns-grid > * {
+    padding:1rem;
+}
+  `}</style>
+</head>
+
+  <body>
+  <h1>Test report</h1>
+  
+
+  
+
+
+  <ul>
+
+    <li> ${`SUITE ${o.name}`}<li>
+  
+    
+
+    
+    <ul>
+    ${o.givens
+                        .map((g) => {
+                        return `<div class="three-columns-grid">
+    <div>${`<li>
+        ${`<p>${g.key}</p>`}
+        ${`<p>GIVEN ${g.name}</p>`}
+
+        <ul>
+    ${g.whens
+                            .map((w) => {
+                            return `<li>${`WHEN ${w.name}`}</li>`;
+                        })
+                            .join("")}
+      
+    </ul>
+
+            <ul>
+    ${g.thens
+                            .map((t) => {
+                            return `<li>${`THEN ${t.name}`}</li>`;
+                        })
+                            .join("")}
+      
+    </ul>
+
+    
+
+        
+        <li>`}</div>
+    <div>${`<p>error? ${g.error}</p>`}</div>
+    <div>${`<p>features? ${g.features}</p>`}</div>
+    </div>`;
+                        // return ;
+                    })
+                        .join("")}
+      
+    </ul>
+    
+  <ul>
+
+  <pre>${JSON.stringify(o, null, 2)}<pre>
+  </body>
+            `);
                     // if (numberOfFailures > 0) {
                     //   puppetMaster.writeFileSync(
                     //     `prompt`,

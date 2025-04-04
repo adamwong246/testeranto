@@ -15,13 +15,23 @@ var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (
 }) : function(o, v) {
     o["default"] = v;
 });
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -65,7 +75,7 @@ const getRunnables = (tests, payload = {
         return pt;
     }, payload);
 };
-Promise.resolve().then(() => __importStar(require(process.cwd() + "/" + process.argv[2]))).then(async (module) => {
+Promise.resolve(`${process.cwd() + "/" + process.argv[2]}`).then(s => __importStar(require(s))).then(async (module) => {
     const rawConfig = module.default;
     const config = Object.assign(Object.assign({}, rawConfig), { buildDir: process.cwd() + "/" + rawConfig.outdir });
     let pm = new main_1.PM_Main(config);
@@ -120,7 +130,7 @@ Promise.resolve().then(() => __importStar(require(process.cwd() + "/" + process.
                 const hash = await fileHash(outputFile);
                 if (fileHashes[k] !== hash) {
                     fileHashes[k] = hash;
-                    console.log(`< ${e} ${filename} ${hash}`);
+                    console.log(`< ${e} ${filename}`);
                     pm.launchNode(k, outputFile);
                 }
             });
@@ -134,7 +144,7 @@ Promise.resolve().then(() => __importStar(require(process.cwd() + "/" + process.
         pm.launchWeb(k, outputFile);
         (0, fs_1.watch)(outputFile, async (e, filename) => {
             const hash = await fileHash(outputFile);
-            console.log(`< ${e} ${filename} ${hash}`);
+            console.log(`< ${e} ${filename}`);
             if (fileHashes[k] !== hash) {
                 fileHashes[k] = hash;
                 pm.launchWeb(k, outputFile);

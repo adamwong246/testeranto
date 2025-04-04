@@ -1,11 +1,9 @@
-/// <reference types="node" />
-/// <reference types="node" />
 import { PassThrough } from "stream";
 import { ITLog, ITTestResourceConfiguration } from "../lib";
 import { PM } from "./index.js";
 import { ScreencastOptions, ScreenshotOptions } from "puppeteer-core";
 import { CdpPage } from "puppeteer-core/lib/esm/puppeteer";
-declare type PuppetMasterServer = Record<string, Promise<any>>;
+type PuppetMasterServer = Record<string, Promise<any>>;
 export declare class PM_Web extends PM {
     server: PuppetMasterServer;
     constructor(t: ITTestResourceConfiguration);
@@ -16,7 +14,7 @@ export declare class PM_Web extends PM {
     goto(p: any, url: string): any;
     newPage(): CdpPage;
     $(selector: string): boolean;
-    isDisabled(selector: string): boolean;
+    isDisabled(selector: string): Promise<boolean>;
     getAttribute(selector: string, attribute: string): any;
     getValue(selector: string): any;
     focusOn(selector: string): any;
