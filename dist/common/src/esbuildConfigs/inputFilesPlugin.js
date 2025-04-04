@@ -18,7 +18,7 @@ exports.default = (platform, entryPoints) => {
             name: "metafileWriter",
             setup(build) {
                 build.onEnd((result) => {
-                    console.log("build.onEnd", entryPoints);
+                    // console.log("build.onEnd", entryPoints);
                     fs_1.default.writeFileSync(`docs/${platform}/metafile.json`, JSON.stringify(result, null, 2));
                 });
             },

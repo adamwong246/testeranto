@@ -5,16 +5,27 @@ import fs from "fs";
 import tsc from "tsc-prog";
 import { ESLint } from "eslint";
 import ts from "typescript";
+import readline from "readline";
 
 import { PM_Main } from "./PM/main";
-import { IBaseConfig, IBuiltConfig, ITestTypes } from "./lib/types";
+import { IBaseConfig, IBuiltConfig, IRunnables, ITestTypes } from "./lib/types";
+import {
+  lintExitCodePather,
+  lintPather,
+  tscExitCodePather,
+  tscPather,
+} from "./utils";
 
-type IRunnables = {
-  nodeEntryPoints: Record<string, string>;
-  webEntryPoints: Record<string, string>;
-};
+console.log("Press 'x' to shutdown forcefully.");
+readline.emitKeypressEvents(process.stdin);
+if (process.stdin.isTTY) process.stdin.setRawMode(true);
 
-const fileHashes = {};
+process.stdin.on("keypress", (str, key) => {
+  if (key.name === "x") {
+    console.log("Testeranto-Run is shutting down forcefully...");
+    process.exit(-1);
+  }
+});
 
 async function fileHash(filePath, algorithm = "md5") {
   return new Promise((resolve, reject) => {
@@ -62,43 +73,7 @@ const getRunnables = (
   }, payload as IRunnables);
 };
 
-const tscPather = (entryPoint: string, platform: "web" | "node") => {
-  return path.join(
-    "./docs/",
-    platform,
-    entryPoint.split(".").slice(0, -1).join("."),
-    `type_errors.txt`
-  );
-};
-
-const tscExitCodePather = (entryPoint: string, platform: "web" | "node") => {
-  return path.join(
-    "./docs/",
-    platform,
-    entryPoint.split(".").slice(0, -1).join("."),
-    `type_errors.exitcode`
-  );
-};
-
-const lintPather = (entryPoint: string, platform: "web" | "node") => {
-  return path.join(
-    "./docs/",
-    platform,
-    entryPoint.split(".").slice(0, -1).join("."),
-    `lint_errors.json`
-  );
-};
-
-const lintExitCodePather = (entryPoint: string, platform: "web" | "node") => {
-  return path.join(
-    "./docs/",
-    platform,
-    entryPoint.split(".").slice(0, -1).join("."),
-    `lint_errors.exitcode`
-  );
-};
-
-const tscCheck = ({
+const tscCheck = async ({
   entrypoint,
   addableFiles,
   platform,
@@ -183,7 +158,7 @@ const eslintCheck = async (
   );
 };
 
-const makePrompt = (
+const makePrompt = async (
   entryPoint: string,
   addableFiles: string[],
   platform: "web" | "node"
@@ -244,9 +219,13 @@ type IOutputs = Record<
 >;
 
 const metafileOutputs = async (platform: "web" | "node") => {
-  const outputs: IOutputs = JSON.parse(
+  const metafile = JSON.parse(
     fs.readFileSync(`docs/${platform}/metafile.json`).toString()
-  ).metafile.outputs;
+  ).metafile;
+
+  if (!metafile) return;
+
+  const outputs: IOutputs = metafile.outputs;
 
   Object.keys(outputs).forEach((k) => {
     const addableFiles = Object.keys(outputs[k].inputs).filter((i) => {
@@ -278,19 +257,39 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
     buildDir: process.cwd() + "/" + rawConfig.outdir,
   };
 
-  metafileOutputs("node");
-  watch("docs/node/metafile.json", async (e, filename) => {
-    console.log(`< ${e} ${filename}`);
-    metafileOutputs("node");
+  let mode = config.devMode ? "DEV" : "PROD";
+  const fileHashes = {};
+  let pm: PM_Main | undefined = new PM_Main(config);
+
+  console.log(`Press 'q' to shutdown gracefully`);
+  process.stdin.on("keypress", (str, key) => {
+    if (key.name === "q") {
+      console.log("Testeranto-Run is shutting down gracefully...");
+      mode = "PROD";
+      // onDone();
+      nodeMetafileWatcher.close();
+      webMetafileWatcher.close();
+      pm.shutDown();
+    }
   });
+
+  metafileOutputs("node");
+  const nodeMetafileWatcher = watch(
+    "docs/node/metafile.json",
+    async (e, filename) => {
+      console.log(`< ${e} ${filename}`);
+      metafileOutputs("node");
+    }
+  );
 
   metafileOutputs("web");
-  watch("docs/web/metafile.json", async (e, filename) => {
-    console.log(`< ${e} ${filename}`);
-    metafileOutputs("web");
-  });
-
-  let pm: PM_Main | undefined = new PM_Main(config);
+  const webMetafileWatcher = watch(
+    "docs/web/metafile.json",
+    async (e, filename) => {
+      console.log(`< ${e} ${filename}`);
+      metafileOutputs("web");
+    }
+  );
 
   await pm.startPuppeteer(
     {

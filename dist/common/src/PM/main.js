@@ -42,6 +42,7 @@ const path_1 = __importDefault(require("path"));
 const puppeteer_core_1 = __importDefault(require("puppeteer-core"));
 const crypto_1 = __importDefault(require("crypto"));
 const index_js_1 = require("./index.js");
+const utils_1 = require("../utils");
 const fileStreams3 = [];
 const fPaths = [];
 const files = {};
@@ -70,17 +71,32 @@ class PM_Main extends index_js_1.PM {
             }
             else {
                 this.browser.disconnect().then(() => {
-                    console.log("Goodbye");
+                    const final = this.configs.tests.reduce((mm, t) => {
+                        const bddErrors = fs_1.default
+                            .readFileSync((0, utils_1.bddExitCodePather)(t[0], t[1]))
+                            .toString();
+                        const lintErrors = fs_1.default
+                            .readFileSync((0, utils_1.lintExitCodePather)(t[0], t[1]))
+                            .toString();
+                        const typeErrors = fs_1.default
+                            .readFileSync((0, utils_1.tscExitCodePather)(t[0], t[1]))
+                            .toString();
+                        mm[t[0]] = {
+                            bddErrors,
+                            lintErrors,
+                            typeErrors,
+                        };
+                        return mm;
+                    }, {});
+                    console.log("Goodbye", final);
                     process.exit();
                 });
             }
         };
         this.testIsNowRunning = (src) => {
-            console.log("testIsNowRunning", src);
             this.bigBoard[src].status = "running";
         };
         this.testIsNowDone = (src) => {
-            console.log("testIsNowDone", src);
             this.bigBoard[src].status = "waiting";
             if (this.shutdownMode) {
                 this.checkForShutdown();
@@ -962,9 +978,13 @@ class PM_Main extends index_js_1.PM {
     async startPuppeteer(options, destfolder) {
         this.browser = (await puppeteer_core_1.default.launch(options));
     }
-    ////////////////////////////////////////////////////////////////////////////////
+    // goodbye = () => {
+    //   this.browser.disconnect().then(() => {
+    //     console.log("Goodbye");
+    //     process.exit();
+    //   });
+    // };
     shutDown() {
-        console.log("shutting down...");
         this.shutdownMode = true;
         this.checkForShutdown();
     }

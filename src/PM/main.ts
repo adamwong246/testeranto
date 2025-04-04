@@ -15,6 +15,11 @@ import { IBuiltConfig, IFinalResults, ITestTypes } from "../lib/types";
 import { ITLog } from "../lib/index.js";
 
 import { PM } from "./index.js";
+import {
+  bddExitCodePather,
+  lintExitCodePather,
+  tscExitCodePather,
+} from "../utils";
 
 const fileStreams3: fs.WriteStream[] = [];
 
@@ -384,10 +389,15 @@ export class PM_Main extends PM {
     this.browser = (await puppeteer.launch(options)) as any;
   }
 
-  ////////////////////////////////////////////////////////////////////////////////
+  // goodbye = () => {
+  //   this.browser.disconnect().then(() => {
+
+  //     console.log("Goodbye");
+  //     process.exit();
+  //   });
+  // };
 
   shutDown() {
-    console.log("shutting down...");
     this.shutdownMode = true;
     this.checkForShutdown();
   }
@@ -399,19 +409,35 @@ export class PM_Main extends PM {
     if (anyRunning) {
     } else {
       this.browser.disconnect().then(() => {
-        console.log("Goodbye");
+        const final = this.configs.tests.reduce((mm, t) => {
+          const bddErrors = fs
+            .readFileSync(bddExitCodePather(t[0], t[1]))
+            .toString();
+          const lintErrors = fs
+            .readFileSync(lintExitCodePather(t[0], t[1]))
+            .toString();
+          const typeErrors = fs
+            .readFileSync(tscExitCodePather(t[0], t[1]))
+            .toString();
+          mm[t[0]] = {
+            bddErrors,
+            lintErrors,
+            typeErrors,
+          };
+          return mm;
+        }, {});
+
+        console.log("Goodbye", final);
         process.exit();
       });
     }
   };
 
   testIsNowRunning = (src: string) => {
-    console.log("testIsNowRunning", src);
     this.bigBoard[src].status = "running";
   };
 
   testIsNowDone = (src: string) => {
-    console.log("testIsNowDone", src);
     this.bigBoard[src].status = "waiting";
     if (this.shutdownMode) {
       this.checkForShutdown();

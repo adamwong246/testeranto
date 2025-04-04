@@ -3,6 +3,7 @@ import path from "path";
 import puppeteer from "puppeteer-core";
 import crypto from "crypto";
 import { PM } from "./index.js";
+import { bddExitCodePather, lintExitCodePather, tscExitCodePather, } from "../utils";
 const fileStreams3 = [];
 const fPaths = [];
 const files = {};
@@ -31,17 +32,32 @@ export class PM_Main extends PM {
             }
             else {
                 this.browser.disconnect().then(() => {
-                    console.log("Goodbye");
+                    const final = this.configs.tests.reduce((mm, t) => {
+                        const bddErrors = fs
+                            .readFileSync(bddExitCodePather(t[0], t[1]))
+                            .toString();
+                        const lintErrors = fs
+                            .readFileSync(lintExitCodePather(t[0], t[1]))
+                            .toString();
+                        const typeErrors = fs
+                            .readFileSync(tscExitCodePather(t[0], t[1]))
+                            .toString();
+                        mm[t[0]] = {
+                            bddErrors,
+                            lintErrors,
+                            typeErrors,
+                        };
+                        return mm;
+                    }, {});
+                    console.log("Goodbye", final);
                     process.exit();
                 });
             }
         };
         this.testIsNowRunning = (src) => {
-            console.log("testIsNowRunning", src);
             this.bigBoard[src].status = "running";
         };
         this.testIsNowDone = (src) => {
-            console.log("testIsNowDone", src);
             this.bigBoard[src].status = "waiting";
             if (this.shutdownMode) {
                 this.checkForShutdown();
@@ -923,9 +939,13 @@ export class PM_Main extends PM {
     async startPuppeteer(options, destfolder) {
         this.browser = (await puppeteer.launch(options));
     }
-    ////////////////////////////////////////////////////////////////////////////////
+    // goodbye = () => {
+    //   this.browser.disconnect().then(() => {
+    //     console.log("Goodbye");
+    //     process.exit();
+    //   });
+    // };
     shutDown() {
-        console.log("shutting down...");
         this.shutdownMode = true;
         this.checkForShutdown();
     }

@@ -12,15 +12,11 @@ import {
   IBaseConfig,
   IRunTime,
   IBuiltConfig,
+  IRunnables,
 } from "./lib/types.js";
 
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
-
-type IRunnables = {
-  nodeEntryPoints: Record<string, string>;
-  webEntryPoints: Record<string, string>;
-};
 
 const getRunnables = (
   tests: ITestTypes[],
@@ -142,7 +138,6 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
       } else {
         console.log("waiting for tests to change");
       }
-      console.log("press 'q' to quit");
 
       if (config.devMode) {
         console.log("ready and watching for changes...");
@@ -158,9 +153,13 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
   );
   process.stdin.on("keypress", (str, key) => {
     if (key.name === "q") {
-      console.log("Testeranto-EsBuild is shutting down...");
+      console.log("Testeranto-Build is shutting down...");
       mode = "PROD";
       onDone();
+    }
+    if (key.name === "x") {
+      console.log("Testeranto-Build is shutting down forcefully...");
+      process.exit(-1);
     }
   });
 

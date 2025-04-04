@@ -5,8 +5,19 @@ import fs from "fs";
 import tsc from "tsc-prog";
 import { ESLint } from "eslint";
 import ts from "typescript";
+import readline from "readline";
 import { PM_Main } from "./PM/main";
-const fileHashes = {};
+import { lintExitCodePather, lintPather, tscExitCodePather, tscPather, } from "./utils";
+console.log("Press 'x' to shutdown forcefully.");
+readline.emitKeypressEvents(process.stdin);
+if (process.stdin.isTTY)
+    process.stdin.setRawMode(true);
+process.stdin.on("keypress", (str, key) => {
+    if (key.name === "x") {
+        console.log("Testeranto-Run is shutting down forcefully...");
+        process.exit(-1);
+    }
+});
 async function fileHash(filePath, algorithm = "md5") {
     return new Promise((resolve, reject) => {
         const hash = crypto.createHash(algorithm);
@@ -40,19 +51,7 @@ const getRunnables = (tests, payload = {
         return pt;
     }, payload);
 };
-const tscPather = (entryPoint, platform) => {
-    return path.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `type_errors.txt`);
-};
-const tscExitCodePather = (entryPoint, platform) => {
-    return path.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `type_errors.exitcode`);
-};
-const lintPather = (entryPoint, platform) => {
-    return path.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `lint_errors.json`);
-};
-const lintExitCodePather = (entryPoint, platform) => {
-    return path.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `lint_errors.exitcode`);
-};
-const tscCheck = ({ entrypoint, addableFiles, platform, }) => {
+const tscCheck = async ({ entrypoint, addableFiles, platform, }) => {
     console.log("tsc <", entrypoint);
     const program = tsc.createProgramFromConfig({
         basePath: process.cwd(), // always required, used for relative paths
@@ -99,7 +98,7 @@ const eslintCheck = async (entrypoint, platform, addableFiles) => {
     fs.writeFileSync(lintPather(entrypoint, platform), await formatter.format(results));
     fs.writeFileSync(lintExitCodePather(entrypoint, platform), results.length.toString());
 };
-const makePrompt = (entryPoint, addableFiles, platform) => {
+const makePrompt = async (entryPoint, addableFiles, platform) => {
     const promptPath = path.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `prompt.txt`);
     const testPaths = path.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `tests.json`);
     const featuresPath = path.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `featurePrompt.txt`);
@@ -120,7 +119,10 @@ ${addableFiles
           `);
 };
 const metafileOutputs = async (platform) => {
-    const outputs = JSON.parse(fs.readFileSync(`docs/${platform}/metafile.json`).toString()).metafile.outputs;
+    const metafile = JSON.parse(fs.readFileSync(`docs/${platform}/metafile.json`).toString()).metafile;
+    if (!metafile)
+        return;
+    const outputs = metafile.outputs;
     Object.keys(outputs).forEach((k) => {
         const addableFiles = Object.keys(outputs[k].inputs).filter((i) => {
             if (!fs.existsSync(i))
@@ -144,17 +146,30 @@ const metafileOutputs = async (platform) => {
 import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
     const rawConfig = module.default;
     const config = Object.assign(Object.assign({}, rawConfig), { buildDir: process.cwd() + "/" + rawConfig.outdir });
+    let mode = config.devMode ? "DEV" : "PROD";
+    const fileHashes = {};
+    let pm = new PM_Main(config);
+    console.log(`Press 'q' to shutdown gracefully`);
+    process.stdin.on("keypress", (str, key) => {
+        if (key.name === "q") {
+            console.log("Testeranto-Run is shutting down gracefully...");
+            mode = "PROD";
+            // onDone();
+            nodeMetafileWatcher.close();
+            webMetafileWatcher.close();
+            pm.shutDown();
+        }
+    });
     metafileOutputs("node");
-    watch("docs/node/metafile.json", async (e, filename) => {
+    const nodeMetafileWatcher = watch("docs/node/metafile.json", async (e, filename) => {
         console.log(`< ${e} ${filename}`);
         metafileOutputs("node");
     });
     metafileOutputs("web");
-    watch("docs/web/metafile.json", async (e, filename) => {
+    const webMetafileWatcher = watch("docs/web/metafile.json", async (e, filename) => {
         console.log(`< ${e} ${filename}`);
         metafileOutputs("web");
     });
-    let pm = new PM_Main(config);
     await pm.startPuppeteer({
         slowMo: 1,
         // timeout: 1,

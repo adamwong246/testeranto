@@ -11,6 +11,11 @@ import {
 } from "./abstractBase";
 import { IBaseTest } from "../Types";
 
+export type IRunnables = {
+  nodeEntryPoints: Record<string, string>;
+  webEntryPoints: Record<string, string>;
+};
+
 export type IFinalResults = { features: string[]; failed: number };
 
 export type IRunTime = `node` | `web`;

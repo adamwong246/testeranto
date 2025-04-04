@@ -2,21 +2,65 @@ import { createRequire } from 'module';const require = createRequire(import.meta
 
 // src/run.ts
 import { watch } from "fs";
-import path2 from "path";
+import path3 from "path";
 import crypto2 from "node:crypto";
 import fs2 from "fs";
 import tsc from "tsc-prog";
 import { ESLint } from "eslint";
 import ts from "typescript";
+import readline from "readline";
 
 // src/PM/main.ts
 import fs from "fs";
-import path from "path";
+import path2 from "path";
 import puppeteer from "puppeteer-core";
 import crypto from "crypto";
 
 // src/PM/index.js
 var PM = class {
+};
+
+// src/utils.ts
+import path from "path";
+var tscPather = (entryPoint, platform) => {
+  return path.join(
+    "./docs/",
+    platform,
+    entryPoint.split(".").slice(0, -1).join("."),
+    `type_errors.txt`
+  );
+};
+var tscExitCodePather = (entryPoint, platform) => {
+  return path.join(
+    "./docs/",
+    platform,
+    entryPoint.split(".").slice(0, -1).join("."),
+    `type_errors.exitcode`
+  );
+};
+var lintPather = (entryPoint, platform) => {
+  return path.join(
+    "./docs/",
+    platform,
+    entryPoint.split(".").slice(0, -1).join("."),
+    `lint_errors.json`
+  );
+};
+var lintExitCodePather = (entryPoint, platform) => {
+  return path.join(
+    "./docs/",
+    platform,
+    entryPoint.split(".").slice(0, -1).join("."),
+    `lint_errors.exitcode`
+  );
+};
+var bddExitCodePather = (entryPoint, platform) => {
+  return path.join(
+    "./docs/",
+    platform,
+    entryPoint.split(".").slice(0, -1).join("."),
+    `exitcode`
+  );
 };
 
 // src/PM/main.ts
@@ -45,17 +89,26 @@ var PM_Main = class extends PM {
       if (anyRunning) {
       } else {
         this.browser.disconnect().then(() => {
-          console.log("Goodbye");
+          const final = this.configs.tests.reduce((mm, t) => {
+            const bddErrors = fs.readFileSync(bddExitCodePather(t[0], t[1])).toString();
+            const lintErrors = fs.readFileSync(lintExitCodePather(t[0], t[1])).toString();
+            const typeErrors = fs.readFileSync(tscExitCodePather(t[0], t[1])).toString();
+            mm[t[0]] = {
+              bddErrors,
+              lintErrors,
+              typeErrors
+            };
+            return mm;
+          }, {});
+          console.log("Goodbye", final);
           process.exit();
         });
       }
     };
     this.testIsNowRunning = (src) => {
-      console.log("testIsNowRunning", src);
       this.bigBoard[src].status = "running";
     };
     this.testIsNowDone = (src) => {
-      console.log("testIsNowDone", src);
       this.bigBoard[src].status = "waiting";
       if (this.shutdownMode) {
         this.checkForShutdown();
@@ -142,7 +195,7 @@ var PM_Main = class extends PM {
             "custom-screenshot",
             async (ssOpts, testName) => {
               const p = ssOpts.path;
-              const dir = path.dirname(p);
+              const dir = path2.dirname(p);
               fs.mkdirSync(dir, {
                 recursive: true
               });
@@ -162,7 +215,7 @@ var PM_Main = class extends PM {
           page.exposeFunction(
             "writeFileSync",
             (fp, contents, testName) => {
-              const dir = path.dirname(fp);
+              const dir = path2.dirname(fp);
               fs.mkdirSync(dir, {
                 recursive: true
               });
@@ -307,7 +360,7 @@ var PM_Main = class extends PM {
           "screencast",
           async (ssOpts, testName) => {
             const p = ssOpts.path;
-            const dir = path.dirname(p);
+            const dir = path2.dirname(p);
             fs.mkdirSync(dir, {
               recursive: true
             });
@@ -331,7 +384,7 @@ var PM_Main = class extends PM {
           "customScreenShot",
           async (ssOpts, testName) => {
             const p = ssOpts.path;
-            const dir = path.dirname(p);
+            const dir = path2.dirname(p);
             fs.mkdirSync(dir, {
               recursive: true
             });
@@ -489,7 +542,7 @@ var PM_Main = class extends PM {
       });
     };
     this.receiveFeatures = (features, destFolder, srcTest) => {
-      const featureDestination = path.resolve(
+      const featureDestination = path2.resolve(
         process.cwd(),
         "docs",
         "features",
@@ -502,11 +555,11 @@ var PM_Main = class extends PM {
         if (isUrl) {
           const u = new URL(featureStringKey);
           if (u.protocol === "file:") {
-            const newPath = `${process.cwd()}/docs/features/internal/${path.relative(
+            const newPath = `${process.cwd()}/docs/features/internal/${path2.relative(
               process.cwd(),
               u.pathname
             )}`;
-            await fs.promises.mkdir(path.dirname(newPath), { recursive: true });
+            await fs.promises.mkdir(path2.dirname(newPath), { recursive: true });
             try {
               await fs.unlinkSync(newPath);
             } catch (error) {
@@ -526,7 +579,7 @@ var PM_Main = class extends PM {
             accum.files.push(newPath);
           }
         } else {
-          await fs.promises.mkdir(path.dirname(featureDestination), {
+          await fs.promises.mkdir(path2.dirname(featureDestination), {
             recursive: true
           });
           accum.strings.push(featureStringKey);
@@ -570,8 +623,8 @@ var PM_Main = class extends PM {
       );
       await page?.waitForSelector(sel);
     };
-    globalThis["screencastStop"] = async (path3) => {
-      return recorders[path3].stop();
+    globalThis["screencastStop"] = async (path4) => {
+      return recorders[path4].stop();
     };
     globalThis["closePage"] = async (pageKey) => {
       const page = (await this.browser.pages()).find(
@@ -601,7 +654,7 @@ var PM_Main = class extends PM {
       return false;
     };
     globalThis["writeFileSync"] = (filepath, contents, testName) => {
-      fs.mkdirSync(path.dirname(filepath), {
+      fs.mkdirSync(path2.dirname(filepath), {
         recursive: true
       });
       if (!files[testName]) {
@@ -633,7 +686,7 @@ var PM_Main = class extends PM {
         (p2) => p2.mainFrame()._id === pageKey
       );
       const p = opts.path;
-      const dir = path.dirname(p);
+      const dir = path2.dirname(p);
       fs.mkdirSync(dir, {
         recursive: true
       });
@@ -657,7 +710,7 @@ var PM_Main = class extends PM {
         (p2) => p2.mainFrame()._id === pageKey
       );
       const p = opts.path;
-      const dir = path.dirname(p);
+      const dir = path2.dirname(p);
       fs.mkdirSync(dir, {
         recursive: true
       });
@@ -718,7 +771,7 @@ var PM_Main = class extends PM {
       callback(
         new Promise((res, rej) => {
           tLog("testArtiFactory =>", fPath);
-          const cleanPath = path.resolve(fPath);
+          const cleanPath = path2.resolve(fPath);
           fPaths.push(cleanPath.replace(process.cwd(), ``));
           const targetDir = cleanPath.split("/").slice(0, -1).join("/");
           fs.mkdir(targetDir, { recursive: true }, async (error) => {
@@ -726,7 +779,7 @@ var PM_Main = class extends PM {
               console.error(`\u2757\uFE0FtestArtiFactory failed`, targetDir, error);
             }
             fs.writeFileSync(
-              path.resolve(
+              path2.resolve(
                 targetDir.split("/").slice(0, -1).join("/"),
                 "manifest"
               ),
@@ -789,15 +842,19 @@ var PM_Main = class extends PM {
   async startPuppeteer(options, destfolder) {
     this.browser = await puppeteer.launch(options);
   }
-  ////////////////////////////////////////////////////////////////////////////////
+  // goodbye = () => {
+  //   this.browser.disconnect().then(() => {
+  //     console.log("Goodbye");
+  //     process.exit();
+  //   });
+  // };
   shutDown() {
-    console.log("shutting down...");
     this.shutdownMode = true;
     this.checkForShutdown();
   }
 };
 async function writeFileAndCreateDir(filePath, data) {
-  const dirPath = path.dirname(filePath);
+  const dirPath = path2.dirname(filePath);
   try {
     await fs.promises.mkdir(dirPath, { recursive: true });
     await fs.appendFileSync(filePath, data);
@@ -815,7 +872,16 @@ function isValidUrl(string) {
 }
 
 // src/run.ts
-var fileHashes = {};
+console.log("Press 'x' to shutdown forcefully.");
+readline.emitKeypressEvents(process.stdin);
+if (process.stdin.isTTY)
+  process.stdin.setRawMode(true);
+process.stdin.on("keypress", (str, key) => {
+  if (key.name === "x") {
+    console.log("Testeranto-Run is shutting down forcefully...");
+    process.exit(-1);
+  }
+});
 async function fileHash(filePath, algorithm = "md5") {
   return new Promise((resolve, reject) => {
     const hash = crypto2.createHash(algorithm);
@@ -838,11 +904,11 @@ var getRunnables = (tests, payload = {
 }) => {
   return tests.reduce((pt, cv, cndx, cry) => {
     if (cv[1] === "node") {
-      pt.nodeEntryPoints[cv[0]] = path2.resolve(
+      pt.nodeEntryPoints[cv[0]] = path3.resolve(
         `./docs/node/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
       );
     } else if (cv[1] === "web") {
-      pt.webEntryPoints[cv[0]] = path2.resolve(
+      pt.webEntryPoints[cv[0]] = path3.resolve(
         `./docs/web/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
       );
     }
@@ -852,39 +918,7 @@ var getRunnables = (tests, payload = {
     return pt;
   }, payload);
 };
-var tscPather = (entryPoint, platform) => {
-  return path2.join(
-    "./docs/",
-    platform,
-    entryPoint.split(".").slice(0, -1).join("."),
-    `type_errors.txt`
-  );
-};
-var tscExitCodePather = (entryPoint, platform) => {
-  return path2.join(
-    "./docs/",
-    platform,
-    entryPoint.split(".").slice(0, -1).join("."),
-    `type_errors.exitcode`
-  );
-};
-var lintPather = (entryPoint, platform) => {
-  return path2.join(
-    "./docs/",
-    platform,
-    entryPoint.split(".").slice(0, -1).join("."),
-    `lint_errors.json`
-  );
-};
-var lintExitCodePather = (entryPoint, platform) => {
-  return path2.join(
-    "./docs/",
-    platform,
-    entryPoint.split(".").slice(0, -1).join("."),
-    `lint_errors.exitcode`
-  );
-};
-var tscCheck = ({
+var tscCheck = async ({
   entrypoint,
   addableFiles,
   platform
@@ -953,20 +987,20 @@ var eslintCheck = async (entrypoint, platform, addableFiles) => {
     results.length.toString()
   );
 };
-var makePrompt = (entryPoint, addableFiles, platform) => {
-  const promptPath = path2.join(
+var makePrompt = async (entryPoint, addableFiles, platform) => {
+  const promptPath = path3.join(
     "./docs/",
     platform,
     entryPoint.split(".").slice(0, -1).join("."),
     `prompt.txt`
   );
-  const testPaths = path2.join(
+  const testPaths = path3.join(
     "./docs/",
     platform,
     entryPoint.split(".").slice(0, -1).join("."),
     `tests.json`
   );
-  const featuresPath = path2.join(
+  const featuresPath = path3.join(
     "./docs/",
     platform,
     entryPoint.split(".").slice(0, -1).join("."),
@@ -996,9 +1030,12 @@ ${addableFiles.map((x) => {
   );
 };
 var metafileOutputs = async (platform) => {
-  const outputs = JSON.parse(
+  const metafile = JSON.parse(
     fs2.readFileSync(`docs/${platform}/metafile.json`).toString()
-  ).metafile.outputs;
+  ).metafile;
+  if (!metafile)
+    return;
+  const outputs = metafile.outputs;
   Object.keys(outputs).forEach((k) => {
     const addableFiles = Object.keys(outputs[k].inputs).filter((i) => {
       if (!fs2.existsSync(i))
@@ -1025,17 +1062,35 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
     ...rawConfig,
     buildDir: process.cwd() + "/" + rawConfig.outdir
   };
-  metafileOutputs("node");
-  watch("docs/node/metafile.json", async (e, filename) => {
-    console.log(`< ${e} ${filename}`);
-    metafileOutputs("node");
-  });
-  metafileOutputs("web");
-  watch("docs/web/metafile.json", async (e, filename) => {
-    console.log(`< ${e} ${filename}`);
-    metafileOutputs("web");
-  });
+  let mode = config.devMode ? "DEV" : "PROD";
+  const fileHashes = {};
   let pm = new PM_Main(config);
+  console.log(`Press 'q' to shutdown gracefully`);
+  process.stdin.on("keypress", (str, key) => {
+    if (key.name === "q") {
+      console.log("Testeranto-Run is shutting down gracefully...");
+      mode = "PROD";
+      nodeMetafileWatcher.close();
+      webMetafileWatcher.close();
+      pm.shutDown();
+    }
+  });
+  metafileOutputs("node");
+  const nodeMetafileWatcher = watch(
+    "docs/node/metafile.json",
+    async (e, filename) => {
+      console.log(`< ${e} ${filename}`);
+      metafileOutputs("node");
+    }
+  );
+  metafileOutputs("web");
+  const webMetafileWatcher = watch(
+    "docs/web/metafile.json",
+    async (e, filename) => {
+      console.log(`< ${e} ${filename}`);
+      metafileOutputs("web");
+    }
+  );
   await pm.startPuppeteer(
     {
       slowMo: 1,

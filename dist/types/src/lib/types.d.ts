@@ -1,6 +1,10 @@
 import type { Plugin } from "esbuild";
 import { IGivens, BaseCheck, BaseSuite, BaseGiven, BaseWhen, BaseThen } from "./abstractBase";
 import { IBaseTest } from "../Types";
+export type IRunnables = {
+    nodeEntryPoints: Record<string, string>;
+    webEntryPoints: Record<string, string>;
+};
 export type IFinalResults = {
     features: string[];
     failed: number;

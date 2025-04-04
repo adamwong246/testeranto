@@ -67,7 +67,8 @@ const BigBoard = () => {
             React.createElement("td", null, "run time"),
             React.createElement("td", null, "BDD errors"),
             React.createElement("td", null, "Lint errors"),
-            React.createElement("td", null, "Type errors")),
+            React.createElement("td", null, "Type errors"),
+            React.createElement("td", null, "prompt")),
         ...collated.map((c) => {
             return React.createElement("tr", null,
                 React.createElement("td", null, c.name),
@@ -77,7 +78,11 @@ const BigBoard = () => {
                 React.createElement("td", null,
                     React.createElement("a", { href: `${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/lint_errors.json` }, c.staticAnalysis)),
                 React.createElement("td", null,
-                    React.createElement("a", { href: `${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/type_errors.txt` }, c.typeErrors)));
+                    React.createElement("a", { href: `${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/typeErrors.txt` }, c.typeErrors)),
+                React.createElement("td", null,
+                    React.createElement("pre", null,
+                        "aider --model deepseek/deepseek-chat --load ",
+                        `docs/${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/prompt.txt`)));
         }));
     // return <div>    <Tab.Container id="root-tab-container" defaultActiveKey="first">
     //   <Row>

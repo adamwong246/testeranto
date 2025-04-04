@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { IBuiltConfig, IRunTime, ITestTypes } from "./lib/types";
 
+
 type ICollation = {
   name: string;
   runTime: IRunTime;
@@ -115,6 +116,7 @@ const BigBoard = () => {
       <td>BDD errors</td>
       <td>Lint errors</td>
       <td>Type errors</td>
+      <td>prompt</td>
     </tr>
     {
       ...collated.map((c) => {
@@ -123,7 +125,15 @@ const BigBoard = () => {
           <td>{c.runTime}</td>
           <td><a href={`${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/littleBoard.html`}>{c.bddErrors}</a></td>
           <td><a href={`${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/lint_errors.json`}>{c.staticAnalysis}</a></td>
-          <td><a href={`${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/type_errors.txt`}>{c.typeErrors}</a></td>
+          <td><a href={`${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/typeErrors.txt`}>{c.typeErrors}</a></td>
+          {/* <td><a href={lintPather(c.name, c.runTime)}>{c.staticAnalysis}</a></td>
+          <td><a href={tscPather(c.name, c.runTime)}>{c.typeErrors}</a></td> */}
+
+          <td>
+            <pre>
+              aider --model deepseek/deepseek-chat --load {`docs/${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/prompt.txt`}
+            </pre>
+          </td>
 
 
         </tr>

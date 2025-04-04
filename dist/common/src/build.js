@@ -144,7 +144,6 @@ Promise.resolve(`${process.cwd() + "/" + process.argv[2]}`).then(s => __importSt
             else {
                 console.log("waiting for tests to change");
             }
-            console.log("press 'q' to quit");
             if (config.devMode) {
                 console.log("ready and watching for changes...");
             }
@@ -157,9 +156,13 @@ Promise.resolve(`${process.cwd() + "/" + process.argv[2]}`).then(s => __importSt
     console.log(`Press 'q' to shutdown gracefully. Press 'x' to shutdown forcefully.`);
     process.stdin.on("keypress", (str, key) => {
         if (key.name === "q") {
-            console.log("Testeranto-EsBuild is shutting down...");
+            console.log("Testeranto-Build is shutting down...");
             mode = "PROD";
             onDone();
+        }
+        if (key.name === "x") {
+            console.log("Testeranto-Build is shutting down forcefully...");
+            process.exit(-1);
         }
     });
     fs_1.default.writeFileSync(`${config.outdir}/testeranto.json`, JSON.stringify(config, null, 2));
