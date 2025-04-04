@@ -1,51 +1,12 @@
-"use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || (function () {
-    var ownKeys = function(o) {
-        ownKeys = Object.getOwnPropertyNames || function (o) {
-            var ar = [];
-            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
-            return ar;
-        };
-        return ownKeys(o);
-    };
-    return function (mod) {
-        if (mod && mod.__esModule) return mod;
-        var result = {};
-        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
-        __setModuleDefault(result, mod);
-        return result;
-    };
-})();
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const fs_1 = __importDefault(require("fs"));
-const path_1 = __importDefault(require("path"));
-const readline_1 = __importDefault(require("readline"));
-const glob_1 = require("glob");
-// import { debounceWatch } from "@bscotch/debounce-watch";
-const esbuild_1 = __importDefault(require("esbuild"));
-const node_js_1 = __importDefault(require("./esbuildConfigs/node.js"));
-const web_js_1 = __importDefault(require("./esbuildConfigs/web.js"));
-const web_html_js_1 = __importDefault(require("./web.html.js"));
-readline_1.default.emitKeypressEvents(process.stdin);
+import fs from "fs";
+import path from "path";
+import readline from "readline";
+import { glob } from "glob";
+import esbuild from "esbuild";
+import esbuildNodeConfiger from "./esbuildConfigs/node.js";
+import esbuildWebConfiger from "./esbuildConfigs/web.js";
+import webHtmlFrame from "./web.html.js";
+readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
     process.stdin.setRawMode(true);
 const getRunnables = (tests, payload = {
@@ -54,10 +15,10 @@ const getRunnables = (tests, payload = {
 }) => {
     return tests.reduce((pt, cv, cndx, cry) => {
         if (cv[1] === "node") {
-            pt.nodeEntryPoints[cv[0]] = path_1.default.resolve(`./docs/node/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`);
+            pt.nodeEntryPoints[cv[0]] = path.resolve(`./docs/node/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`);
         }
         else if (cv[1] === "web") {
-            pt.webEntryPoints[cv[0]] = path_1.default.resolve(`./docs/web/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`);
+            pt.webEntryPoints[cv[0]] = path.resolve(`./docs/web/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`);
         }
         if (cv[3].length) {
             getRunnables(cv[3], payload);
@@ -65,7 +26,7 @@ const getRunnables = (tests, payload = {
         return pt;
     }, payload);
 };
-Promise.resolve(`${process.cwd() + "/" + process.argv[2]}`).then(s => __importStar(require(s))).then(async (module) => {
+import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
     const rawConfig = module.default;
     const getSecondaryEndpointsPoints = (runtime) => {
         const meta = (ts, st) => {
@@ -97,22 +58,6 @@ Promise.resolve(`${process.cwd() + "/" + process.argv[2]}`).then(s => __importSt
         webDone = true;
         onDone();
     };
-    // async function fileHash(filePath, algorithm = "md5") {
-    //   return new Promise((resolve, reject) => {
-    //     const hash = crypto.createHash(algorithm);
-    //     const fileStream = fs.createReadStream(filePath);
-    //     fileStream.on("data", (data) => {
-    //       hash.update(data);
-    //     });
-    //     fileStream.on("end", () => {
-    //       const fileHash = hash.digest("hex");
-    //       resolve(fileHash);
-    //     });
-    //     fileStream.on("error", (error) => {
-    //       reject(`Error reading file: ${error.message}`);
-    //     });
-    //   });
-    // }
     const onDone = async () => {
         if (nodeDone && webDone) {
             status = "built";
@@ -179,21 +124,7 @@ Promise.resolve(`${process.cwd() + "/" + process.argv[2]}`).then(s => __importSt
             onDone();
         }
     });
-    // const eslint = new ESLint();
-    // const configEslint = await eslint.calculateConfigForFile(
-    //   "./src/eslint.config.mjs"
-    // );
-    // // console.log(`configEslint`, configEslint);
-    // fs.watch("src", { recursive: true }, async (eventType, filename) => {
-    //   if (eventType === "change") {
-    //     console.log(`File ${filename} has been modified.`);
-    //     const x = await eslint.lintFiles([`./src/${filename}`]);
-    //     console.log(x[0].messages);
-    //   } else if (eventType === "rename") {
-    //     console.log(`File ${filename} has been created or deleted.`);
-    //   }
-    // });
-    fs_1.default.writeFileSync(`${config.outdir}/testeranto.json`, JSON.stringify(config, null, 2));
+    fs.writeFileSync(`${config.outdir}/testeranto.json`, JSON.stringify(config, null, 2));
     Promise.resolve(Promise.all([...getSecondaryEndpointsPoints("web")].map(async (sourceFilePath) => {
         const sourceFileSplit = sourceFilePath.split("/");
         const sourceDir = sourceFileSplit.slice(0, -1);
@@ -202,33 +133,22 @@ Promise.resolve(`${process.cwd() + "/" + process.argv[2]}`).then(s => __importSt
             .split(".")
             .slice(0, -1)
             .join(".");
-        const htmlFilePath = path_1.default.normalize(`${process.cwd()}/${config.outdir}/web/${sourceDir.join("/")}/${sourceFileNameMinusJs}.html`);
+        const htmlFilePath = path.normalize(`${process.cwd()}/${config.outdir}/web/${sourceDir.join("/")}/${sourceFileNameMinusJs}.html`);
         const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
-        return fs_1.default.promises
-            .mkdir(path_1.default.dirname(htmlFilePath), { recursive: true })
-            .then((x) => fs_1.default.writeFileSync(htmlFilePath, (0, web_html_js_1.default)(jsfilePath, htmlFilePath)));
+        return fs.promises
+            .mkdir(path.dirname(htmlFilePath), { recursive: true })
+            .then((x) => fs.writeFileSync(htmlFilePath, webHtmlFrame(jsfilePath, htmlFilePath)));
     })));
-    (0, glob_1.glob)(`./${config.outdir}/chunk-*.mjs`, {
+    glob(`./${config.outdir}/chunk-*.mjs`, {
         ignore: "node_modules/**",
     }).then((chunks) => {
         chunks.forEach((chunk) => {
-            fs_1.default.unlinkSync(chunk);
+            fs.unlinkSync(chunk);
         });
     });
-    // debounceWatch(
-    //   (events) => {
-    //     typecheck();
-    //   },
-    //   "./src",
-    //   {
-    //     onlyFileExtensions: ["ts", "tsx", "mts"],
-    //     debounceWaitSeconds: 0.2,
-    //     allowOverlappingRuns: false,
-    //   }
-    // );
     await Promise.all([
-        esbuild_1.default
-            .context((0, node_js_1.default)(config, Object.keys(nodeEntryPoints)))
+        esbuild
+            .context(esbuildNodeConfiger(config, Object.keys(nodeEntryPoints)))
             .then(async (nodeContext) => {
             if (config.devMode) {
                 await nodeContext.watch().then((v) => {
@@ -242,8 +162,8 @@ Promise.resolve(`${process.cwd() + "/" + process.argv[2]}`).then(s => __importSt
             }
             return nodeContext;
         }),
-        esbuild_1.default
-            .context((0, web_js_1.default)(config, Object.keys(webEntryPoints)))
+        esbuild
+            .context(esbuildWebConfiger(config, Object.keys(webEntryPoints)))
             .then(async (webContext) => {
             if (config.devMode) {
                 await webContext.watch().then((v) => {

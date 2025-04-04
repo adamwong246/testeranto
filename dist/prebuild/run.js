@@ -1,6 +1,6 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 
-// src/cli2.ts
+// src/run.ts
 import { watch } from "fs";
 import path2 from "path";
 import crypto2 from "node:crypto";
@@ -814,7 +814,7 @@ function isValidUrl(string) {
   }
 }
 
-// src/cli2.ts
+// src/run.ts
 var fileHashes = {};
 async function fileHash(filePath, algorithm = "md5") {
   return new Promise((resolve, reject) => {

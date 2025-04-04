@@ -65,16 +65,7 @@ class BaseBuilder {
             <div id="root"/>
   </body>
             `);
-                    // if (numberOfFailures > 0) {
-                    //   puppetMaster.writeFileSync(
-                    //     `prompt`,
-                    //     `
-                    //     aider --message "make a script that prints hello" hello.js
-                    //     `
-                    //   );
-                    // }
                     puppetMaster.writeFileSync(`tests.json`, JSON.stringify(this.toObj(), null, 2));
-                    // console.log(`exiting gracefully with ${numberOfFailures} failures.`);
                     return {
                         failed: numberOfFailures,
                         artifacts: this.artifacts || [],

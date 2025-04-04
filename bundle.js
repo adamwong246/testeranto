@@ -18,11 +18,12 @@ await esbuild.build({
 })
 
 await esbuild.build({
-  entryPoints: ['src/cli.ts'],
+  entryPoints: ['src/build.ts', 'src/run.ts'],
   bundle: true,
   format: "esm",
   platform: "node",
-  outfile: 'dist/prebuild/cli.mjs',
+  // outfile: 'dist/prebuild/cli.mjs'
+  outdir: 'dist/prebuild',
   packages: "external",
   supported: {
     "dynamic-import": true,
@@ -33,21 +34,21 @@ await esbuild.build({
   },
 })
 
-await esbuild.build({
-  entryPoints: ['src/cli2.ts'],
-  bundle: true,
-  format: "esm",
-  platform: "node",
-  outfile: 'dist/prebuild/cli2.mjs',
-  packages: "external",
-  supported: {
-    "dynamic-import": true,
-  },
+// await esbuild.build({
+//   entryPoints: ['src/cli2.ts'],
+//   bundle: true,
+//   format: "esm",
+//   platform: "node",
+//   outfile: 'dist/prebuild/cli2.mjs',
+//   packages: "external",
+//   supported: {
+//     "dynamic-import": true,
+//   },
 
-  banner: {
-    js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`,
-  },
-})
+//   banner: {
+//     js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`,
+//   },
+// })
 
 await esbuild.build({
   entryPoints: ['src/ReportClient.tsx', 'src/TestReport.tsx'],

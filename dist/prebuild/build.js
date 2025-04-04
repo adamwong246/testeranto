@@ -1,6 +1,6 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 
-// src/cli.ts
+// src/build.ts
 import fs2 from "fs";
 import path3 from "path";
 import readline from "readline";
@@ -230,7 +230,7 @@ var web_html_default = (jsfilePath, htmlFilePath) => `
 </html>
 `;
 
-// src/cli.ts
+// src/build.ts
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
   process.stdin.setRawMode(true);

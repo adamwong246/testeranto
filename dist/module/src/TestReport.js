@@ -2,19 +2,6 @@ import ReactDom from "react-dom/client";
 import React, { useEffect, useState } from "react";
 import { Col, Nav, Row, Tab } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
-// type ICollation = {
-//   name: string;
-//   runTime: IRunTime;
-//   tr: {
-//     ports: number;
-//   };
-//   sidecars: ITestTypes[];
-//   status: string;
-//   staticAnalysis: string;
-//   typeErrors: string;
-//   bddErrors: string;
-// };
-// type ICollations = ICollation[];
 const StepPane = ({ step }) => {
     return React.createElement("div", null,
         React.createElement("pre", null,
@@ -74,39 +61,6 @@ const BddPage = () => {
     if (!configs || !bddErrors) {
         return React.createElement("div", null, "loading...");
     }
-    // const collated: ICollations = configs.tests.map((c) => {
-    //   return {
-    //     ...bigBoard[c[0]],
-    //     name: c[0],
-    //     runTime: c[1],
-    //     tr: c[2],
-    //     sidecars: c[3],
-    //     staticAnalysis: staticAnalysis[c[0]],
-    //     typeErrors: typeErrors[c[0]],
-    //     bddErrors: bddErrors[c[0]],
-    //   } as ICollation
-    // });
-    // console.log(collated);
-    // return <table>
-    //   <tr>
-    //     <td>name</td>
-    //     <td>run time</td>
-    //     <td>BDD errors</td>
-    //     <td>Lint errors</td>
-    //     <td>Type errors</td>
-    //   </tr>
-    //   {
-    //     ...collated.map((c) => {
-    //       return <tr>
-    //         <td>{c.name}</td>
-    //         <td>{c.runTime}</td>
-    //         <td><a href={`${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/littleBoard.html`}>{c.bddErrors}</a></td>
-    //         <td><a href={`${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/lint_errors.json`}>{c.staticAnalysis}</a></td>
-    //         <td><a href={`${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/type_errors.txt`}>{c.typeErrors}</a></td>
-    //       </tr>
-    //     })
-    //   }
-    // </table>
     return React.createElement("div", null,
         "  ",
         React.createElement(Row, null,

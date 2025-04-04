@@ -1,30 +1,6 @@
 import ReactDom from "react-dom/client";
 import React, { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-// const TestPane = ({ collation }: { collation: ICollation }) => {
-//   return <div>    <Tab.Container id="TestPane-tabs" defaultActiveKey="first">
-//     <Row>
-//       <Col sm={3}>
-//         <Nav variant="pills" className="flex-column">
-//           <Nav.Item>
-//             <Nav.Link eventKey={`${collation.name}-bdd`}>BDD tests</Nav.Link>
-//             <Nav.Link eventKey={`${collation.name}-type`}>type tests</Nav.Link>
-//             <Nav.Link eventKey={`${collation.name}-static`}>static tests</Nav.Link>
-//           </Nav.Item>
-//         </Nav>
-//       </Col>
-//       <Col sm={9}>
-//         <Tab.Content>
-//           <Tab.Pane eventKey={`${collation.name}-bdd`}>BDD</Tab.Pane>
-//           <Tab.Pane eventKey={`${collation.name}-type`}><pre>{collation.typeErrors}</pre></Tab.Pane>
-//           <Tab.Pane eventKey={`${collation.name}-static`}>
-//             <pre>{collation.staticAnalysis}</pre>
-//           </Tab.Pane>
-//         </Tab.Content>
-//       </Col>
-//     </Row>
-//   </Tab.Container></div>
-// }
 const BigBoard = () => {
     const [configs, setConfigs] = useState();
     useEffect(() => {
