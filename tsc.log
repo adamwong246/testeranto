@@ -1,13 +1,11 @@
 $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit
-src/esbuildConfigs/node.ts(52,7): error TS2741: Property 'setup' is missing in type 'Plugin' but required in type 'import("/Users/adam/Code/testeranto/node_modules/esbuild/lib/main").Plugin'.
-src/esbuildConfigs/node.ts(54,7): error TS2322: Type 'Plugin | Plugin | { name: string; setup(build: PluginBuild): void; }' is not assignable to type 'Plugin'.
-  Property 'setup' is missing in type 'Plugin' but required in type 'import("/Users/adam/Code/testeranto/node_modules/esbuild/lib/main").Plugin'.
-src/esbuildConfigs/node.ts(57,7): error TS2322: Type 'Plugin | Plugin | { name: string; setup(build: PluginBuild): void; }' is not assignable to type 'Plugin'.
-  Property 'setup' is missing in type 'Plugin' but required in type 'import("/Users/adam/Code/testeranto/node_modules/esbuild/lib/main").Plugin'.
-src/esbuildConfigs/web.ts(6,10): error TS2305: Module '"../lib/types.js"' has no exported member 'IBaseConfig'.
+src/esbuildConfigs/node.ts(62,7): error TS2741: Property 'setup' is missing in type 'Plugin' but required in type 'import("/Users/adam/Code/testeranto/node_modules/esbuild/lib/main").Plugin'.
+src/esbuildConfigs/web.ts(73,7): error TS2741: Property 'setup' is missing in type 'Plugin' but required in type 'import("/Users/adam/Code/testeranto/node_modules/esbuild/lib/main").Plugin'.
+src/lib/abstractBase.ts(5,10): error TS2305: Module '"../../dist/types/src/Types.js"' has no exported member 'IBaseTest'.
 src/lib/abstractBase.ts(158,11): error TS2345: Argument of type '(t: I["then"]) => unknown' is not assignable to parameter of type '(t: Awaited<I["then"]> | undefined) => boolean'.
   Type 'unknown' is not assignable to type 'boolean'.
 src/lib/abstractBase.ts(703,68): error TS2554: Expected 5 arguments, but got 4.
+src/lib/index.ts(1,10): error TS2305: Module '"../../dist/types/src/Types.js"' has no exported member 'IBaseTest'.
 src/lib/index.ts(43,8): error TS18046: 'thenCb' is of type 'unknown'.
 src/lib/index.ts(44,19): error TS2322: Type 'unknown' is not assignable to type 'Promise<unknown>'.
 src/Node.ts(58,56): error TS2345: Argument of type 'PM_Node' is not assignable to parameter of type 'PM'.
@@ -34,33 +32,12 @@ src/PM/node.ts(88,3): error TS2416: Property 'customScreenShot' in type 'PM_Node
         Type 'undefined' is not assignable to type 'CdpPage'.
 src/ReportClient.tsx(180,38): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
   Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.
-src/SubPackages/puppeteer.ts(79,5): error TS2322: Type '(x: I["iinput"]) => I["iinput"]' is not assignable to type '(input: I["iinput"], testResource: ITTestResourceConfiguration, pm: PM) => Promise<I["isubject"]>'.
-  Type 'I["iinput"]' is not assignable to type 'Promise<I["isubject"]>'.
-src/SubPackages/puppeteer.ts(92,14): error TS2349: This expression is not callable.
-  Type 'unknown' has no call signatures.
-src/SubPackages/react-dom/component/node.ts(74,14): error TS2349: This expression is not callable.
-  Type 'unknown' has no call signatures.
-src/SubPackages/react-dom/component/web.ts(83,11): error TS2339: Property 'domRoot' does not exist on type 'unknown'.
-src/SubPackages/react-dom/component/web.ts(83,20): error TS2339: Property 'htmlElement' does not exist on type 'unknown'.
-src/SubPackages/react-dom/component/web.ts(108,16): error TS2349: This expression is not callable.
-  Type 'unknown' has no call signatures.
-src/SubPackages/react-dom/component/web.ts(111,16): error TS2349: This expression is not callable.
-  Type 'unknown' has no call signatures.
-src/SubPackages/react-dom/jsx/node.ts(53,31): error TS2769: No overload matches this call.
-  The last overload gave the following error.
-    Argument of type 'I["iinput"]' is not assignable to parameter of type 'string | FunctionComponent<{}> | ComponentClass<{}, any>'.
-      Type 'I["iinput"]' is not assignable to type 'ComponentClass<{}, any>'.
-src/SubPackages/react-dom/jsx/node.ts(61,16): error TS2304: Cannot find name 'ITestShape'.
-src/SubPackages/react-dom/jsx/web.ts(65,38): error TS2339: Property 'createRoot' does not exist on type 'typeof import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/index")'.
-src/SubPackages/react-dom/jsx/web.ts(72,19): error TS2769: No overload matches this call.
-  The last overload gave the following error.
-    Type 'I["iinput"]' is not assignable to type 'IInput'.
-src/SubPackages/react-dom/jsx/web.ts(98,19): error TS2345: Argument of type 'I["isubject"]' is not assignable to parameter of type 'HTMLElement | PromiseLike<HTMLElement>'.
-  Type 'I["isubject"]' is not assignable to type 'HTMLElement'.
-src/SubPackages/react-dom/jsx/web.ts(120,16): error TS2349: This expression is not callable.
-  Type 'unknown' has no call signatures.
-src/SubPackages/react-dom/jsx/web.ts(135,19): error TS2349: This expression is not callable.
-  Type 'unknown' has no call signatures.
+src/SubPackages/react-dom/component/web.ts(90,13): error TS2345: Argument of type 'CElement<any, TesterantoComponent>' is not assignable to parameter of type 'ReactNode'.
+  Property 'children' is missing in type 'ComponentElement<any, TesterantoComponent>' but required in type 'ReactPortal'.
+src/SubPackages/react-dom/jsx/node.ts(50,17): error TS2345: Argument of type 'FunctionComponentElement<any>' is not assignable to parameter of type 'I["istore"] | PromiseLike<I["istore"]>'.
+  Type 'FunctionComponentElement<any>' is not assignable to type 'I["istore"]'.
+    'I["istore"]' could be instantiated with an arbitrary type which could be unrelated to 'FunctionComponentElement<any>'.
+src/SubPackages/react-dom/jsx/web.ts(71,38): error TS2339: Property 'createRoot' does not exist on type 'typeof import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/index")'.
 src/SubPackages/react-test-renderer/component/interface.ts(16,52): error TS2345: Argument of type 'CElement<any, Component<any, any, any>>' is not assignable to parameter of type 'ReactElement<unknown, string | JSXElementConstructor<any>>'.
   Types of property 'type' are incompatible.
     Type 'ComponentClass<any, any>' is not assignable to type 'string | JSXElementConstructor<any>'.
@@ -79,15 +56,14 @@ src/SubPackages/react-test-renderer/fc/node.ts(66,33): error TS2769: No overload
     Argument of type 'I["isubject"]' is not assignable to parameter of type 'string | FunctionComponent<(c?: any) => I["given"]> | ComponentClass<(c?: any) => I["given"], any>'.
       Type 'I["isubject"]' is not assignable to type 'ComponentClass<(c?: any) => I["given"], any>'.
 src/SubPackages/react-test-renderer/fc/node.ts(81,13): error TS2339: Property 'unmount' does not exist on type 'I["istore"]'.
-src/SubPackages/react-test-renderer/fc/web.ts(65,13): error TS2345: Argument of type 'DetailedReactHTMLElement<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>' is not assignable to parameter of type 'ReactElement<unknown, string | JSXElementConstructor<any>>'.
+src/SubPackages/react-test-renderer/fc/web.ts(63,13): error TS2345: Argument of type 'DetailedReactHTMLElement<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>' is not assignable to parameter of type 'ReactElement<unknown, string | JSXElementConstructor<any>>'.
   Types of property 'key' are incompatible.
     Type 'Key | null' is not assignable to type 'string | null'.
       Type 'number' is not assignable to type 'string'.
-src/SubPackages/react-test-renderer/fc/web.ts(65,33): error TS2769: No overload matches this call.
+src/SubPackages/react-test-renderer/fc/web.ts(63,33): error TS2769: No overload matches this call.
   The last overload gave the following error.
     Argument of type 'I["isubject"]' is not assignable to parameter of type 'string | FunctionComponent<(c?: any) => I["given"]> | ComponentClass<(c?: any) => I["given"], any>'.
       Type 'I["isubject"]' is not assignable to type 'ComponentClass<(c?: any) => I["given"], any>'.
-src/SubPackages/react-test-renderer/fc/web.ts(80,13): error TS2339: Property 'unmount' does not exist on type 'I["istore"]'.
 src/SubPackages/react-test-renderer/jsx/index.ts(78,9): error TS2345: Argument of type 'CElement<any, Component<any, any, any>>' is not assignable to parameter of type 'ReactElement<unknown, string | JSXElementConstructor<any>>'.
   Types of property 'type' are incompatible.
     Type 'ComponentClass<any, any>' is not assignable to type 'string | JSXElementConstructor<any>'.
@@ -97,29 +73,35 @@ src/SubPackages/react-test-renderer/jsx/index.ts(78,9): error TS2345: Argument o
             Type 'React.ReactNode' is not assignable to type 'import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/node_modules/@types/react/index").ReactNode'.
               Type 'ReactElement<any, string | JSXElementConstructor<any>>' is not assignable to type 'ReactNode'.
                 Property 'children' is missing in type 'ReactElement<any, string | JSXElementConstructor<any>>' but required in type 'ReactPortal'.
-src/SubPackages/react-test-renderer/MemoExoticComponent/node.ts(44,37): error TS2345: Argument of type 'DetailedReactHTMLElement<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>' is not assignable to parameter of type 'ReactElement<unknown, string | JSXElementConstructor<any>>'.
+src/SubPackages/react-test-renderer/jsx/node.ts(26,34): error TS2344: Type 'I' does not satisfy the constraint 'Ibdd_in<ReactTestRenderer, ReactTestRenderer, ReactTestRenderer, ReactTestRenderer, unknown, unknown, unknown>'.
+  Type 'Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>' is not assignable to type 'Ibdd_in<ReactTestRenderer, ReactTestRenderer, ReactTestRenderer, ReactTestRenderer, unknown, unknown, unknown>'.
+    Type 'unknown' is not assignable to type 'ReactTestRenderer'.
+src/SubPackages/react-test-renderer/jsx/node.ts(27,33): error TS2344: Type 'I' does not satisfy the constraint 'Ibdd_in<ReactTestRenderer, ReactTestRenderer, ReactTestRenderer, ReactTestRenderer, unknown, unknown, unknown>'.
+  Type 'Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>' is not assignable to type 'Ibdd_in<ReactTestRenderer, ReactTestRenderer, ReactTestRenderer, ReactTestRenderer, unknown, unknown, unknown>'.
+    Type 'unknown' is not assignable to type 'ReactTestRenderer'.
+src/SubPackages/react-test-renderer/jsx/web.ts(26,34): error TS2344: Type 'I' does not satisfy the constraint 'Ibdd_in<ReactTestRenderer, ReactTestRenderer, ReactTestRenderer, ReactTestRenderer, unknown, unknown, unknown>'.
+  Type 'Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>' is not assignable to type 'Ibdd_in<ReactTestRenderer, ReactTestRenderer, ReactTestRenderer, ReactTestRenderer, unknown, unknown, unknown>'.
+    Type 'unknown' is not assignable to type 'ReactTestRenderer'.
+src/SubPackages/react-test-renderer/jsx/web.ts(27,33): error TS2344: Type 'I' does not satisfy the constraint 'Ibdd_in<ReactTestRenderer, ReactTestRenderer, ReactTestRenderer, ReactTestRenderer, unknown, unknown, unknown>'.
+  Type 'Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>' is not assignable to type 'Ibdd_in<ReactTestRenderer, ReactTestRenderer, ReactTestRenderer, ReactTestRenderer, unknown, unknown, unknown>'.
+    Type 'unknown' is not assignable to type 'ReactTestRenderer'.
+src/SubPackages/react-test-renderer/MemoExoticComponent/node.ts(43,37): error TS2345: Argument of type 'DetailedReactHTMLElement<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>' is not assignable to parameter of type 'ReactElement<unknown, string | JSXElementConstructor<any>>'.
   Types of property 'key' are incompatible.
     Type 'Key | null' is not assignable to type 'string | null'.
       Type 'number' is not assignable to type 'string'.
-src/SubPackages/react-test-renderer/MemoExoticComponent/node.ts(44,57): error TS2769: No overload matches this call.
+src/SubPackages/react-test-renderer/MemoExoticComponent/node.ts(43,57): error TS2769: No overload matches this call.
   The last overload gave the following error.
     Argument of type 'I["isubject"]' is not assignable to parameter of type 'string | FunctionComponent<(c?: any) => I["given"]> | ComponentClass<(c?: any) => I["given"], any>'.
-      Type 'I["isubject"]' is not assignable to type 'ComponentClass<(c?: any) => I["given"], any>'.
+      Type 'ReactTestRenderer' is not assignable to type 'string | FunctionComponent<(c?: any) => I["given"]> | ComponentClass<(c?: any) => I["given"], any>'.
+        Type 'I["isubject"]' is not assignable to type 'ComponentClass<(c?: any) => I["given"], any>'.
+          Type 'ReactTestRenderer' is not assignable to type 'ComponentClass<(c?: any) => I["given"], any>'.
+            Type 'ReactTestRenderer' provides no match for the signature 'new (props: (c?: any) => I["given"], context?: any): Component<(c?: any) => I["given"], any, any>'.
 src/SubPackages/react/component/node.ts(84,14): error TS2349: This expression is not callable.
   Type 'unknown' has no call signatures.
 src/SubPackages/react/component/web.ts(83,14): error TS2349: This expression is not callable.
   Type 'unknown' has no call signatures.
-src/SubPackages/react/jsx/index.ts(71,18): error TS2349: This expression is not callable.
-  Type 'IStore' has no call signatures.
-src/SubPackages/react/jsx/index.ts(73,15): error TS2345: Argument of type 'DetailedReactHTMLElement<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>' is not assignable to parameter of type 'IStore | PromiseLike<IStore>'.
-  Type 'DetailedReactHTMLElement<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>' is not assignable to type 'IStore'.
-    Types of property 'type' are incompatible.
-      Type 'string' is not assignable to type 'ComponentClass<any, any>'.
-        Type 'string' is not assignable to type 'ComponentClass<any, any>'.
-src/SubPackages/react/jsx/index.ts(73,35): error TS2769: No overload matches this call.
-  The last overload gave the following error.
-    Argument of type 'IStore' is not assignable to parameter of type 'string | ComponentClass<any, any> | FunctionComponent<any>'.
 src/TestReport.tsx(153,56): error TS2739: Type '{ key: string; name: string; whens: { name: string; error: string; }[]; thens: { name: string; error: string; }[]; }' is missing the following properties from type '{ key: string; name: string; error: string[]; features: string[]; whens: { name: string; error: string; }[]; thens: { name: string; error: string; }[]; }': error, features
 src/TestReport.tsx(168,38): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
   Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.
+src/Web.ts(1,10): error TS2305: Module '"../dist/types/src/Types"' has no exported member 'IBaseTest'.
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.

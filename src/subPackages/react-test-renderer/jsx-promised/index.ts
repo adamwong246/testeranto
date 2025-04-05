@@ -17,10 +17,10 @@ export type ISubject = renderer.ReactTestRenderer;
 
 export type ITestImpl<
   I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
+    renderer.ReactTestRenderer,
+    renderer.ReactTestRenderer,
+    renderer.ReactTestRenderer,
+    renderer.ReactTestRenderer,
     unknown,
     unknown,
     unknown
@@ -36,10 +36,10 @@ export type ITestImpl<
 
 export type ITestSpec<
   I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
+    renderer.ReactTestRenderer,
+    renderer.ReactTestRenderer,
+    renderer.ReactTestRenderer,
+    renderer.ReactTestRenderer,
     unknown,
     unknown,
     unknown
@@ -54,7 +54,7 @@ export type ITestSpec<
 > = ITestSpecification<I, O>;
 
 export const testInterface = {
-  beforeEach: async (CComponent): Promise<renderer.ReactTestRenderer> => {
+  beforeEach: async (CComponent) => {
     return new Promise((res, rej) => {
       let component;
       act(async () => {

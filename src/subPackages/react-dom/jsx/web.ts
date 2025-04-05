@@ -10,7 +10,13 @@ import {
   ITestSpecification,
 } from "../../../Types";
 
-import type { IInput, ISelection, IStore } from "./index";
+import type {
+  IInput,
+  ISelection,
+  IStore,
+  IThenShape,
+  IWhenShape,
+} from "./index";
 
 export type ISubject = HTMLElement;
 
@@ -32,13 +38,13 @@ const TesterantoComponent = ({
 
 export default <
   I extends Ibdd_in<
+    IInput,
+    ISubject,
+    ISelection,
+    IStore,
     unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
+    IWhenShape,
+    IThenShape
   >,
   O extends Ibdd_out<
     Record<string, any>,
@@ -87,36 +93,31 @@ export default <
         });
       },
 
-      beforeEach: async (
-        subject,
-        initializer,
-        artificer,
-        testResource,
-        pm
-      ): Promise<IStore> => {
-        return new Promise((resolve, rej) => {
-          resolve(subject);
-          // const tc = TesterantoComponent({
-          //   innerComp: () =>
-          //     testInput({
-          //       port: 3003,
-          //       address: "some-address",
-          //       secretKey: "someSecretKey",
-          //       abi: "foo",
-          //     }),
-          //   done: (reactElement: any) => {
-          //     console.log("mark9");
-          //     resolve(reactElement);
-          //     // process.nextTick(() => {
-          //     //   resolve(reactElement);
-          //     // });
-          //   },
-          // });
-          // console.log("mark9", tc);
-          // createPortal(tc, subject.domRoot);
-        });
+      beforeEach: async (subject) => {
+        return subject;
+        // return new Promise((resolve, rej) => {
+        //   resolve(subject);
+        //   // const tc = TesterantoComponent({
+        //   //   innerComp: () =>
+        //   //     testInput({
+        //   //       port: 3003,
+        //   //       address: "some-address",
+        //   //       secretKey: "someSecretKey",
+        //   //       abi: "foo",
+        //   //     }),
+        //   //   done: (reactElement: any) => {
+        //   //     console.log("mark9");
+        //   //     resolve(reactElement);
+        //   //     // process.nextTick(() => {
+        //   //     //   resolve(reactElement);
+        //   //     // });
+        //   //   },
+        //   // });
+        //   // console.log("mark9", tc);
+        //   // createPortal(tc, subject.domRoot);
+        // });
       },
-      andWhen: function (s: IStore, whenCB, tr, utils): Promise<ISelection> {
+      andWhen: async function (s, whenCB, tr, utils) {
         return whenCB(s, utils);
         // return new Promise(async (resolve, rej) => {
         //   // resolve(await whenCB(s, utils));
@@ -125,12 +126,7 @@ export default <
         //   // });
         // });
       },
-      butThen: async function (
-        s: IStore,
-        thenCB,
-        tr,
-        utils
-      ): Promise<ISelection> {
+      butThen: async function (s, thenCB, tr, utils) {
         return new Promise((resolve, rej) => {
           resolve(thenCB(s, utils));
         });

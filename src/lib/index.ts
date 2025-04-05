@@ -150,7 +150,7 @@ export type IRunTime = `node` | `web`;
 
 export type ITestTypes = [string, IRunTime, { ports: number }, ITestTypes[]];
 
-export type IPlugin = (
+export type IPluginFactory = (
   register: (entrypoint, sources) => any,
   entrypoints
 ) => Plugin;
@@ -167,8 +167,8 @@ export type IBaseConfig = {
   ports: string[];
   tests: ITestTypes[];
 
-  nodePlugins: IPlugin[];
-  webPlugins: IPlugin[];
+  nodePlugins: IPluginFactory[];
+  webPlugins: IPluginFactory[];
 
   featureIngestor: (s: string) => Promise<string>;
 };

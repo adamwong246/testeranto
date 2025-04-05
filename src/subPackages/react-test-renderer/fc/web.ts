@@ -17,7 +17,7 @@ export type ISpec<
   I extends Ibdd_in<
     unknown,
     unknown,
-    unknown,
+    renderer.ReactTestRenderer,
     unknown,
     unknown,
     unknown,
@@ -31,11 +31,12 @@ export type ISpec<
     Record<string, any>
   >
 > = ITestSpecification<I, O>;
+
 export default <
   I extends Ibdd_in<
     unknown,
     unknown,
-    unknown,
+    renderer.ReactTestRenderer,
     unknown,
     unknown,
     unknown,
@@ -54,10 +55,7 @@ export default <
   testInput: IInput
 ) =>
   test<I, O>(testInput, testSpecifications, testImplementations, {
-    beforeEach: function (
-      CComponent,
-      props
-    ): Promise<renderer.ReactTestRenderer> {
+    beforeEach: function (CComponent, props) {
       return new Promise((res, rej) => {
         let component: renderer.ReactTestRenderer;
         act(() => {

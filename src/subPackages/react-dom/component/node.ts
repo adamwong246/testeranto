@@ -15,9 +15,7 @@ import {
 } from "../../../Types";
 
 type IInput = typeof React.Component;
-type InitialState = unknown;
-type IWhenShape = any;
-export type IThenShape = any;
+
 export type ISelection = ReactNode;
 export type IStore = ReactNode;
 export type ISubject = ReactNode;
@@ -26,12 +24,12 @@ export { renderToStaticMarkup, renderToStaticNodeStream, Stream };
 
 export default <
   I extends Ibdd_in<
+    IInput,
+    ISubject,
+    IStore,
+    ISelection,
     unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
+    (s: IStore) => IStore,
     unknown
   >,
   O extends Ibdd_out<
@@ -47,40 +45,21 @@ export default <
   testInput: IInput
 ) => {
   return Testeranto<I, O>(testInput, testSpecifications, testImplementations, {
-    // beforeAll: async (
-    //   prototype,
-    //   artificer
-    // ): Promise<ISubject> => {
-    //   return await new Promise((resolve, rej) => {
-    //     const elem = document.getElementById("root");
-    //     if (elem) {
-    //       resolve({ htmlElement: elem });
-    //     }
-
-    //   })
-    // },
-    beforeEach: async (
-      reactComponent,
-      ndx,
-      testRsource,
-      artificer
-    ): Promise<IStore> => {
+    beforeEach: async (): Promise<IStore> => {
       return new Promise((resolve, rej) => {
-        // Ignore these type errors
         resolve(createElement(testInput));
       });
     },
-    andWhen: async function (s: IStore, whenCB): Promise<ISelection> {
+    andWhen: async function (s, whenCB) {
       return whenCB(s);
-      // return s
     },
-    butThen: async function (s: IStore): Promise<ISelection> {
+    butThen: async function (s) {
       return s;
     },
-    afterEach: async function (store: IStore, ndx, artificer) {
+    afterEach: async function () {
       return {};
     },
-    afterAll: (store: IStore, artificer) => {
+    afterAll: () => {
       return;
     },
   });

@@ -13,10 +13,10 @@ type IInput = React.MemoExoticComponent<() => JSX.Element>;
 
 export default <
   I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
+    IInput,
+    renderer.ReactTestRenderer,
+    renderer.ReactTestRenderer,
+    renderer.ReactTestRenderer,
     unknown,
     unknown,
     unknown
@@ -27,8 +27,7 @@ export default <
     Record<string, any>,
     Record<string, any>,
     Record<string, any>
-  >,
-  PropShape
+  >
 >(
   testImplementations: ITestImplementation<I, O>,
   testSpecifications: ITestSpecification<I, O>,

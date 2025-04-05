@@ -36,24 +36,13 @@ export default (
     },
     platform: "node",
 
-    external: [
-      // "testeranto.json",
-      // "features.test.js",
-      "react",
-      // "events",
-      // "ganache"
-      ...config.externals,
-    ],
+    external: ["react", ...config.externals],
 
     entryPoints: [...entryPoints],
     plugins: [
       featuresPlugin,
 
-      ...(config.nodePlugins.map((p) => p(register, entryPoints)) || []),
-
       inputFilesPluginFactory,
-      // inputFilesPlugin("node", entryPoints),
-
       {
         name: "rebuild-notify",
         setup(build) {
@@ -69,6 +58,8 @@ export default (
           });
         },
       },
+
+      ...(config.nodePlugins.map((p) => p(register, entryPoints)) || []),
     ],
   };
 };

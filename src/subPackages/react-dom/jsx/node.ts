@@ -13,14 +13,16 @@ import {
   ITestSpecification,
 } from "../../../Types";
 
+import { IInput, ISelection, IStore } from "./index.js";
+
 export { renderToStaticMarkup, renderToStaticNodeStream, Stream };
 
 export default <
   I extends Ibdd_in<
+    IInput,
     unknown,
-    unknown,
-    unknown,
-    unknown,
+    ISelection,
+    IStore,
     unknown,
     unknown,
     unknown
@@ -43,12 +45,7 @@ export default <
         resolve(null);
       });
     },
-    beforeEach: async (
-      reactComponent,
-      ndx,
-      testRsource,
-      artificer
-    ): Promise<I["istore"]> => {
+    beforeEach: async () => {
       return new Promise((resolve, rej) => {
         resolve(createElement(testInput));
       });
@@ -56,9 +53,7 @@ export default <
     andWhen: async function (s, whenCB) {
       return s;
     },
-    butThen: async function (
-      s: I["istore"]
-    ): Promise<ITestShape["iselection"]> {
+    butThen: async function (s: I["istore"]): Promise<I["iselection"]> {
       return s;
     },
     afterEach: async function (store: I["istore"], ndx, artificer) {

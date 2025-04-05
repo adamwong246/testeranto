@@ -20,7 +20,7 @@ export type ITestImpl<
   I extends Ibdd_in<
     unknown,
     unknown,
-    unknown,
+    renderer.ReactTestRenderer,
     unknown,
     unknown,
     unknown,
@@ -39,7 +39,7 @@ export type ITestSpec<
   I extends Ibdd_in<
     unknown,
     unknown,
-    unknown,
+    renderer.ReactTestRenderer,
     unknown,
     unknown,
     unknown,

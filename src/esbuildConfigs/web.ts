@@ -1,9 +1,7 @@
 import { BuildOptions } from "esbuild";
 import path from "path";
 
-import pkg from "esbuild-plugin-markdown";
-
-import { IBaseConfig } from "../lib/types.js";
+import { IBaseConfig } from "../lib/index.js";
 
 import baseEsBuildConfig from "./index.js";
 import inputFilesPlugin from "./inputFilesPlugin.js";
@@ -21,13 +19,6 @@ export default (
   return {
     ...baseEsBuildConfig(config),
 
-    // inject: ["./node_modules/testeranto/dist/cjs-shim.js"],
-    // banner: {
-    //   js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`,
-    // },
-
-    // splitting: true,
-
     outdir: config.outdir + "/web",
 
     alias: {
@@ -37,11 +28,6 @@ export default (
     metafile: true,
 
     external: [
-      // "testeranto.json",
-      // "features.test.ts",
-      // "url",
-      // "react",
-
       "path",
       "fs",
       "stream",
@@ -56,7 +42,6 @@ export default (
       "zlib",
       "crypto",
       "https",
-
       "util",
       "process",
       "dns",
@@ -68,9 +53,6 @@ export default (
 
     plugins: [
       featuresPlugin,
-
-      // markdownPlugin({}),
-      ...(config.nodePlugins.map((p) => p(register, entryPoints)) || []),
       inputFilesPluginFactory,
       {
         name: "rebuild-notify",
@@ -87,6 +69,8 @@ export default (
           });
         },
       },
+
+      ...(config.nodePlugins.map((p) => p(register, entryPoints)) || []),
     ],
   };
 };

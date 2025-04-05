@@ -12,10 +12,10 @@ import {
 } from "../../../Types";
 
 type IInput = typeof React.Component;
-type InitialState = unknown;
 type ISelection = {
   htmlElement: HTMLElement;
   reactElement: any; //CElement<any, any>;
+  domRoot: ReactDom.Root;
 };
 
 export type IStore = {
@@ -32,13 +32,13 @@ type ISubject = {
 
 export default <
   I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
+    IInput,
+    ISubject,
+    ISelection,
+    IStore,
+    (s: IStore) => IStore,
+    (s: IStore) => IStore,
+    (s: IStore) => IStore
   >,
   O extends Ibdd_out<
     Record<string, any>,
@@ -104,10 +104,10 @@ export default <
           );
         });
       },
-      andWhen: function (s: IStore, whenCB): Promise<ISelection> {
+      andWhen: async function (s, whenCB) {
         return whenCB(s);
       },
-      butThen: async function (s: IStore, thenCB): Promise<ISelection> {
+      butThen: async function (s, thenCB) {
         return thenCB(s);
       },
       afterEach:
