@@ -1,12 +1,9 @@
 {
   "name": "testeranto",
   "description": "the AI powered BDD test framework for typescript projects",
-  "version": "0.107.0",
+  "version": "0.107.2",
   "engines": {
     "node": "18.18.0"
-  },
-  "bin": {
-    "testeranto-init": "bin/init-docs.js testeranto.mts"
   },
   "type": "module",
   "types": "./dist/index.d.mts",

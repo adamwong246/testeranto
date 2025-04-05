@@ -110,20 +110,11 @@ var node_default = (config, entryPoints) => {
       js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`
     },
     platform: "node",
-    external: [
-      // "testeranto.json",
-      // "features.test.js",
-      "react",
-      // "events",
-      // "ganache"
-      ...config.externals
-    ],
+    external: ["react", ...config.externals],
     entryPoints: [...entryPoints],
     plugins: [
       featuresPlugin_default,
-      ...config.nodePlugins.map((p) => p(register2, entryPoints)) || [],
       inputFilesPluginFactory,
-      // inputFilesPlugin("node", entryPoints),
       {
         name: "rebuild-notify",
         setup(build) {
@@ -136,7 +127,8 @@ var node_default = (config, entryPoints) => {
             }
           });
         }
-      }
+      },
+      ...config.nodePlugins.map((p) => p(register2, entryPoints)) || []
     ]
   };
 };
@@ -150,21 +142,12 @@ var web_default = (config, entryPoints) => {
   );
   return {
     ...esbuildConfigs_default(config),
-    // inject: ["./node_modules/testeranto/dist/cjs-shim.js"],
-    // banner: {
-    //   js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`,
-    // },
-    // splitting: true,
     outdir: config.outdir + "/web",
     alias: {
       react: path2.resolve("./node_modules/react")
     },
     metafile: true,
     external: [
-      // "testeranto.json",
-      // "features.test.ts",
-      // "url",
-      // "react",
       "path",
       "fs",
       "stream",
@@ -187,8 +170,6 @@ var web_default = (config, entryPoints) => {
     entryPoints: [...entryPoints],
     plugins: [
       featuresPlugin_default,
-      // markdownPlugin({}),
-      ...config.nodePlugins.map((p) => p(register2, entryPoints)) || [],
       inputFilesPluginFactory,
       {
         name: "rebuild-notify",
@@ -202,7 +183,8 @@ var web_default = (config, entryPoints) => {
             }
           });
         }
-      }
+      },
+      ...config.nodePlugins.map((p) => p(register2, entryPoints)) || []
     ]
   };
 };
