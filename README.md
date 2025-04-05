@@ -2,18 +2,17 @@
 
 🚧 WARNING: Testeranto is still under development and is not ready for production yet. 🚧
 
-demo: [chromapdx.github.io/kokomoBay](https://chromapdx.github.io/kokomoBay/docs/index.html)
+demo video: [youtube](https://www.youtube.com/embed/WvU5xMqGi6Q)
+
 source: [github.com/adamwong246/testeranto](https://github.com/adamwong246/testeranto)
 
 npm: [npmjs.com/package/testeranto](https://www.npmjs.com/package/testeranto)
 
 dev: [github.dev/adamwong246/testeranto](https://github.dev/adamwong246/testeranto)
 
+example test report: [chromapdx.github.io/kokomoBay](https://chromapdx.github.io/kokomoBay/docs/index.html)
+
 example repo: [kokomo bay](https://github.com/ChromaPDX/kokomoBay)
-
-## Demo
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/WvU5xMqGi6Q" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## What is testeranto?
 
