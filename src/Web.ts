@@ -1,4 +1,3 @@
-import { IBaseTest } from "../dist/types/src/Types";
 import { PM_Web } from "./PM/web";
 import type {
   Ibdd_in,

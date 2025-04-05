@@ -130,7 +130,7 @@ const tscCheck = async ({ entrypoint, addableFiles, platform, }) => {
     fs_2.default.writeFileSync((0, utils_1.tscExitCodePather)(entrypoint, platform), d.length.toString());
 };
 const eslint = new eslint_1.ESLint();
-const formatter = await eslint.loadFormatter("./node_modules/testeranto/dist/prebuild/eslint-formatter-testeranto.mjs");
+const formatter = await eslint.loadFormatter("./node_modules/testeranto/dist/prebuild/esbuildConfigs/eslint-formatter-testeranto.mjs");
 const eslintCheck = async (entrypoint, platform, addableFiles) => {
     console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`eslint < ${entrypoint}`)));
     const results = (await eslint.lintFiles(addableFiles))

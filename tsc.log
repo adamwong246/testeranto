@@ -1,11 +1,11 @@
 $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit
 src/esbuildConfigs/node.ts(62,7): error TS2741: Property 'setup' is missing in type 'Plugin' but required in type 'import("/Users/adam/Code/testeranto/node_modules/esbuild/lib/main").Plugin'.
 src/esbuildConfigs/web.ts(73,7): error TS2741: Property 'setup' is missing in type 'Plugin' but required in type 'import("/Users/adam/Code/testeranto/node_modules/esbuild/lib/main").Plugin'.
-src/lib/abstractBase.ts(5,10): error TS2305: Module '"../../dist/types/src/Types.js"' has no exported member 'IBaseTest'.
+src/lib/abstractBase.ts(5,27): error TS2307: Cannot find module '../../dist/types/src/Types.js' or its corresponding type declarations.
 src/lib/abstractBase.ts(158,11): error TS2345: Argument of type '(t: I["then"]) => unknown' is not assignable to parameter of type '(t: Awaited<I["then"]> | undefined) => boolean'.
   Type 'unknown' is not assignable to type 'boolean'.
 src/lib/abstractBase.ts(703,68): error TS2554: Expected 5 arguments, but got 4.
-src/lib/index.ts(1,10): error TS2305: Module '"../../dist/types/src/Types.js"' has no exported member 'IBaseTest'.
+src/lib/index.ts(1,27): error TS2307: Cannot find module '../../dist/types/src/Types.js' or its corresponding type declarations.
 src/lib/index.ts(43,8): error TS18046: 'thenCb' is of type 'unknown'.
 src/lib/index.ts(44,19): error TS2322: Type 'unknown' is not assignable to type 'Promise<unknown>'.
 src/Node.ts(58,56): error TS2345: Argument of type 'PM_Node' is not assignable to parameter of type 'PM'.
@@ -103,5 +103,5 @@ src/SubPackages/react/component/web.ts(83,14): error TS2349: This expression is 
 src/TestReport.tsx(153,56): error TS2739: Type '{ key: string; name: string; whens: { name: string; error: string; }[]; thens: { name: string; error: string; }[]; }' is missing the following properties from type '{ key: string; name: string; error: string[]; features: string[]; whens: { name: string; error: string; }[]; thens: { name: string; error: string; }[]; }': error, features
 src/TestReport.tsx(168,38): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
   Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.
-src/Web.ts(1,10): error TS2305: Module '"../dist/types/src/Types"' has no exported member 'IBaseTest'.
+src/Web.ts(1,27): error TS2307: Cannot find module '../dist/types/src/Types' or its corresponding type declarations.
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.

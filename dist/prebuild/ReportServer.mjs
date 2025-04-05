@@ -1,3 +1,5 @@
+import { createRequire } from 'module';const require = createRequire(import.meta.url);
+
 // src/ReportServer.ts
 import staticServer from "node-static";
 import http from "http";

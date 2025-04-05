@@ -985,7 +985,7 @@ var tscCheck = async ({
 };
 var eslint = new ESLint();
 var formatter = await eslint.loadFormatter(
-  "./node_modules/testeranto/dist/prebuild/eslint-formatter-testeranto.mjs"
+  "./node_modules/testeranto/dist/prebuild/esbuildConfigs/eslint-formatter-testeranto.mjs"
 );
 var eslintCheck = async (entrypoint, platform, addableFiles) => {
   console.log(ansiC2.green(ansiC2.inverse(`eslint < ${entrypoint}`)));

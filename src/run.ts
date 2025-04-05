@@ -141,7 +141,7 @@ const tscCheck = async ({
 
 const eslint = new ESLint();
 const formatter = await eslint.loadFormatter(
-  "./node_modules/testeranto/dist/prebuild/eslint-formatter-testeranto.mjs"
+  "./node_modules/testeranto/dist/prebuild/esbuildConfigs/eslint-formatter-testeranto.mjs"
 );
 
 const eslintCheck = async (
