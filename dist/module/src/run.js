@@ -1,3 +1,4 @@
+import ansiC from "ansi-colors";
 import { watch } from "fs";
 import path from "path";
 import crypto from "node:crypto";
@@ -8,7 +9,6 @@ import ts from "typescript";
 import readline from "readline";
 import { PM_Main } from "./PM/main";
 import { lintExitCodePather, lintPather, tscExitCodePather, tscPather, } from "./utils";
-import ansiC from "ansi-colors";
 console.log(ansiC.inverse("Press 'x' to shutdown forcefully."));
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)

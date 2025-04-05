@@ -1,6 +1,7 @@
-import { IBaseConfig } from "testeranto/src/lib/types.js";
+import { IBaseConfig } from "./lib/types";
 
 const config: IBaseConfig = {
+  src: "src",
   outdir: "docs",
   tests: [],
   debugger: true,

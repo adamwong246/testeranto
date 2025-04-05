@@ -1,29 +1,41 @@
 import fs from "fs";
 import path from "path";
 import puppeteer from "puppeteer-core";
-import crypto from "crypto";
 import ansiC from "ansi-colors";
-import { PM } from "./index.js";
 import { bddExitCodePather, lintExitCodePather, tscExitCodePather, } from "../utils";
+import { PM } from "./index.js";
 const fileStreams3 = [];
 const fPaths = [];
 const files = {};
 const recorders = {};
 const screenshots = {};
-const red = "\x1b[31m";
-const green = "\x1b[32m";
-const reverse = "e[7m";
-const reset = "\x1b[0m"; // Resets to default color
 const statusMessagePretty = (failures, test) => {
     if (failures === 0) {
-        // console.log(green + `> ${test} completed successfully` + reset);
         console.log(ansiC.green(ansiC.inverse(`> ${test} completed successfully`)));
     }
     else {
-        // console.log(red + `> ${test} failed ${failures} times` + reset);
         console.log(ansiC.red(ansiC.inverse(`> ${test} failed ${failures} times`)));
     }
 };
+async function writeFileAndCreateDir(filePath, data) {
+    const dirPath = path.dirname(filePath);
+    try {
+        await fs.promises.mkdir(dirPath, { recursive: true });
+        await fs.appendFileSync(filePath, data);
+    }
+    catch (error) {
+        console.error(`Error writing file: ${error}`);
+    }
+}
+function isValidUrl(string) {
+    try {
+        new URL(string);
+        return true;
+    }
+    catch (err) {
+        return false;
+    }
+}
 export class PM_Main extends PM {
     constructor(configs) {
         super();
@@ -644,13 +656,6 @@ export class PM_Main extends PM {
                     await fs.promises.mkdir(path.dirname(featureDestination), {
                         recursive: true,
                     });
-                    // const newPath = `${process.cwd()}/docs/features/plain/${await sha256(
-                    //   featureStringKey
-                    // )}`;
-                    // writeFileAndCreateDir(
-                    //   `${featureDestination}/${await sha256(featureStringKey)}`,
-                    //   featureStringKey
-                    // );
                     accum.strings.push(featureStringKey);
                 }
                 return accum;
@@ -671,43 +676,6 @@ export class PM_Main extends PM {
         };
         this.writeBigBoard = () => {
             fs.writeFileSync("./docs/bigBoard.json", JSON.stringify(this.bigBoard, null, 2));
-            //     fs.writeFileSync(
-            //       "./docs/bigBoard.html",
-            //       // JSON.stringify(this.bigBoard, null, 2)
-            //       `
-            // <!DOCTYPE html>
-            // <html lang="en">
-            // <head>
-            //   <meta name="description" content="Webpage description goes here" />
-            //   <meta charset="utf-8" />
-            //   <title>kokomoBay - testeranto</title>
-            //   <meta name="viewport" content="width=device-width, initial-scale=1" />
-            //   <meta name="author" content="" />
-            //   <link rel="stylesheet" href="/index.css" />
-            //   <script type="module" src="/littleBoard.js"></script>
-            // </head>
-            // <body>
-            //   <table>
-            //     ${Object.keys(this.bigBoard)
-            //       .map((v) => {
-            //         return `<tr>
-            //         <td>${v}</td>
-            //         <td>${this.bigBoard[v].status}</td>
-            //         <td>${this.bigBoard[v].runTimeError}</td>
-            //         <td>
-            //           <a href="/${this.configs.tests.find((t) => t[0] === v)[1]}/${v
-            //           .split(".")
-            //           .slice(0, -1)
-            //           .join(".")}/littleBoard.html">more</a>
-            //         </td>
-            //       </tr>`;
-            //       })
-            //       .join("")}
-            //   </table>
-            // </body>
-            // </html>
-            //     `
-            //     );
         };
         this.server = {};
         this.configs = configs;
@@ -721,18 +689,25 @@ export class PM_Main extends PM {
             this.ports[element] = "true"; // set ports as open
         });
         globalThis["waitForSelector"] = async (pageKey, sel) => {
-            const page = (await this.browser.pages()).find((p) => p.mainFrame()._id === pageKey);
+            const page = (await this.browser.pages()).find(
+            /* @ts-ignore:next-line */
+            (p) => p.mainFrame()._id === pageKey);
             await (page === null || page === void 0 ? void 0 : page.waitForSelector(sel));
         };
         globalThis["screencastStop"] = async (path) => {
             return recorders[path].stop();
         };
         globalThis["closePage"] = async (pageKey) => {
-            const page = (await this.browser.pages()).find((p) => p.mainFrame()._id === pageKey);
+            const page = (await this.browser.pages()).find(
+            /* @ts-ignore:next-line */
+            (p) => p.mainFrame()._id === pageKey);
+            /* @ts-ignore:next-line */
             return page.close();
         };
         globalThis["goto"] = async (pageKey, url) => {
-            const page = (await this.browser.pages()).find((p) => p.mainFrame()._id === pageKey);
+            const page = (await this.browser.pages()).find(
+            /* @ts-ignore:next-line */
+            (p) => p.mainFrame()._id === pageKey);
             await (page === null || page === void 0 ? void 0 : page.goto(url));
             return;
         };
@@ -800,7 +775,9 @@ export class PM_Main extends PM {
         //   // page.evaluate(`window["screenshot done"]`);
         // };
         globalThis["customScreenShot"] = async (opts, pageKey, testName) => {
-            const page = (await this.browser.pages()).find((p) => p.mainFrame()._id === pageKey);
+            const page = (await this.browser.pages()).find(
+            /* @ts-ignore:next-line */
+            (p) => p.mainFrame()._id === pageKey);
             const p = opts.path;
             const dir = path.dirname(p);
             fs.mkdirSync(dir, {
@@ -819,7 +796,9 @@ export class PM_Main extends PM {
             return sPromise;
         };
         globalThis["screencast"] = async (opts, pageKey) => {
-            const page = (await this.browser.pages()).find((p) => p.mainFrame()._id === pageKey);
+            const page = (await this.browser.pages()).find(
+            /* @ts-ignore:next-line */
+            (p) => p.mainFrame()._id === pageKey);
             const p = opts.path;
             const dir = path.dirname(p);
             fs.mkdirSync(dir, {
@@ -962,31 +941,5 @@ export class PM_Main extends PM {
     shutDown() {
         this.shutdownMode = true;
         this.checkForShutdown();
-    }
-}
-async function writeFileAndCreateDir(filePath, data) {
-    const dirPath = path.dirname(filePath);
-    try {
-        await fs.promises.mkdir(dirPath, { recursive: true });
-        await fs.appendFileSync(filePath, data);
-    }
-    catch (error) {
-        console.error(`Error writing file: ${error}`);
-    }
-}
-async function sha256(rawData) {
-    const data = typeof rawData === "object" ? JSON.stringify(rawData) : String(rawData);
-    const msgBuffer = new TextEncoder().encode(data);
-    const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
-}
-function isValidUrl(string) {
-    try {
-        new URL(string);
-        return true;
-    }
-    catch (err) {
-        return false;
     }
 }

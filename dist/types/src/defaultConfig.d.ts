@@ -1,3 +1,3 @@
-import { IBaseConfig } from "testeranto/src/lib/types.js";
+import { IBaseConfig } from "./lib/types";
 declare const config: IBaseConfig;
 export default config;

@@ -1,9 +1,10 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 
 // src/run.ts
+import ansiC2 from "ansi-colors";
 import { watch } from "fs";
 import path3 from "path";
-import crypto2 from "node:crypto";
+import crypto from "node:crypto";
 import fs2 from "fs";
 import tsc from "tsc-prog";
 import { ESLint } from "eslint";
@@ -14,12 +15,7 @@ import readline from "readline";
 import fs from "fs";
 import path2 from "path";
 import puppeteer from "puppeteer-core";
-import crypto from "crypto";
 import ansiC from "ansi-colors";
-
-// src/PM/index.js
-var PM = class {
-};
 
 // src/utils.ts
 import path from "path";
@@ -64,6 +60,10 @@ var bddExitCodePather = (entryPoint, platform) => {
   );
 };
 
+// src/PM/index.ts
+var PM = class {
+};
+
 // src/PM/main.ts
 var fileStreams3 = [];
 var fPaths = [];
@@ -77,6 +77,23 @@ var statusMessagePretty = (failures, test) => {
     console.log(ansiC.red(ansiC.inverse(`> ${test} failed ${failures} times`)));
   }
 };
+async function writeFileAndCreateDir(filePath, data) {
+  const dirPath = path2.dirname(filePath);
+  try {
+    await fs.promises.mkdir(dirPath, { recursive: true });
+    await fs.appendFileSync(filePath, data);
+  } catch (error) {
+    console.error(`Error writing file: ${error}`);
+  }
+}
+function isValidUrl(string) {
+  try {
+    new URL(string);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
 var PM_Main = class extends PM {
   constructor(configs) {
     super();
@@ -621,6 +638,7 @@ var PM_Main = class extends PM {
     });
     globalThis["waitForSelector"] = async (pageKey, sel) => {
       const page = (await this.browser.pages()).find(
+        /* @ts-ignore:next-line */
         (p) => p.mainFrame()._id === pageKey
       );
       await page?.waitForSelector(sel);
@@ -630,12 +648,14 @@ var PM_Main = class extends PM {
     };
     globalThis["closePage"] = async (pageKey) => {
       const page = (await this.browser.pages()).find(
+        /* @ts-ignore:next-line */
         (p) => p.mainFrame()._id === pageKey
       );
       return page.close();
     };
     globalThis["goto"] = async (pageKey, url) => {
       const page = (await this.browser.pages()).find(
+        /* @ts-ignore:next-line */
         (p) => p.mainFrame()._id === pageKey
       );
       await page?.goto(url);
@@ -685,6 +705,7 @@ var PM_Main = class extends PM {
     };
     globalThis["customScreenShot"] = async (opts, pageKey, testName) => {
       const page = (await this.browser.pages()).find(
+        /* @ts-ignore:next-line */
         (p2) => p2.mainFrame()._id === pageKey
       );
       const p = opts.path;
@@ -709,6 +730,7 @@ var PM_Main = class extends PM {
     };
     globalThis["screencast"] = async (opts, pageKey) => {
       const page = (await this.browser.pages()).find(
+        /* @ts-ignore:next-line */
         (p2) => p2.mainFrame()._id === pageKey
       );
       const p = opts.path;
@@ -855,26 +877,8 @@ var PM_Main = class extends PM {
     this.checkForShutdown();
   }
 };
-async function writeFileAndCreateDir(filePath, data) {
-  const dirPath = path2.dirname(filePath);
-  try {
-    await fs.promises.mkdir(dirPath, { recursive: true });
-    await fs.appendFileSync(filePath, data);
-  } catch (error) {
-    console.error(`Error writing file: ${error}`);
-  }
-}
-function isValidUrl(string) {
-  try {
-    new URL(string);
-    return true;
-  } catch (err) {
-    return false;
-  }
-}
 
 // src/run.ts
-import ansiC2 from "ansi-colors";
 console.log(ansiC2.inverse("Press 'x' to shutdown forcefully."));
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
@@ -887,7 +891,7 @@ process.stdin.on("keypress", (str, key) => {
 });
 async function fileHash(filePath, algorithm = "md5") {
   return new Promise((resolve, reject) => {
-    const hash = crypto2.createHash(algorithm);
+    const hash = crypto.createHash(algorithm);
     const fileStream = fs2.createReadStream(filePath);
     fileStream.on("data", (data) => {
       hash.update(data);

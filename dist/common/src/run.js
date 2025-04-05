@@ -36,6 +36,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const ansi_colors_1 = __importDefault(require("ansi-colors"));
 const fs_1 = require("fs");
 const path_1 = __importDefault(require("path"));
 const node_crypto_1 = __importDefault(require("node:crypto"));
@@ -46,7 +47,6 @@ const typescript_1 = __importDefault(require("typescript"));
 const readline_1 = __importDefault(require("readline"));
 const main_1 = require("./PM/main");
 const utils_1 = require("./utils");
-const ansi_colors_1 = __importDefault(require("ansi-colors"));
 console.log(ansi_colors_1.default.inverse("Press 'x' to shutdown forcefully."));
 readline_1.default.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)

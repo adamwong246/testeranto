@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const config = {
+    src: "src",
     outdir: "docs",
     tests: [],
     debugger: true,

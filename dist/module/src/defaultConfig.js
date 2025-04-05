@@ -1,4 +1,5 @@
 const config = {
+    src: "src",
     outdir: "docs",
     tests: [],
     debugger: true,

@@ -10,43 +10,52 @@ import puppeteer, {
 } from "puppeteer-core";
 import { PassThrough } from "stream";
 import crypto from "crypto";
-
 import ansiC from "ansi-colors";
 
 import { IBuiltConfig, IFinalResults, ITestTypes } from "../lib/types";
 import { ITLog } from "../lib/index.js";
-
-import { PM } from "./index.js";
 import {
   bddExitCodePather,
   lintExitCodePather,
   tscExitCodePather,
 } from "../utils";
 
+import { PM } from "./index.js";
+
 const fileStreams3: fs.WriteStream[] = [];
-
 type IFPaths = string[];
-
 const fPaths: IFPaths = [];
-
 const files: Record<string, Set<string>> = {};
 const recorders: Record<string, ScreenRecorder> = {};
 const screenshots: Record<string, Promise<Uint8Array>[]> = {};
 
-const red = "\x1b[31m";
-const green = "\x1b[32m";
-const reverse = "e[7m";
-const reset = "\x1b[0m"; // Resets to default color
-
 const statusMessagePretty = (failures: number, test: string) => {
   if (failures === 0) {
-    // console.log(green + `> ${test} completed successfully` + reset);
     console.log(ansiC.green(ansiC.inverse(`> ${test} completed successfully`)));
   } else {
-    // console.log(red + `> ${test} failed ${failures} times` + reset);
     console.log(ansiC.red(ansiC.inverse(`> ${test} failed ${failures} times`)));
   }
 };
+
+async function writeFileAndCreateDir(filePath, data) {
+  const dirPath = path.dirname(filePath);
+
+  try {
+    await fs.promises.mkdir(dirPath, { recursive: true });
+    await fs.appendFileSync(filePath, data);
+  } catch (error) {
+    console.error(`Error writing file: ${error}`);
+  }
+}
+
+function isValidUrl(string) {
+  try {
+    new URL(string);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
 
 export class PM_Main extends PM {
   browser: Browser;
@@ -84,6 +93,7 @@ export class PM_Main extends PM {
 
     globalThis["waitForSelector"] = async (pageKey: string, sel: string) => {
       const page = (await this.browser.pages()).find(
+        /* @ts-ignore:next-line */
         (p) => p.mainFrame()._id === pageKey
       );
       await page?.waitForSelector(sel);
@@ -95,13 +105,16 @@ export class PM_Main extends PM {
 
     globalThis["closePage"] = async (pageKey) => {
       const page = (await this.browser.pages()).find(
+        /* @ts-ignore:next-line */
         (p) => p.mainFrame()._id === pageKey
       );
+      /* @ts-ignore:next-line */
       return page.close();
     };
 
     globalThis["goto"] = async (pageKey: string, url: string) => {
       const page = (await this.browser.pages()).find(
+        /* @ts-ignore:next-line */
         (p) => p.mainFrame()._id === pageKey
       );
       await page?.goto(url);
@@ -194,6 +207,7 @@ export class PM_Main extends PM {
       testName: string
     ) => {
       const page = (await this.browser.pages()).find(
+        /* @ts-ignore:next-line */
         (p) => p.mainFrame()._id === pageKey
       );
 
@@ -226,6 +240,7 @@ export class PM_Main extends PM {
       pageKey: string
     ) => {
       const page = (await this.browser.pages()).find(
+        /* @ts-ignore:next-line */
         (p) => p.mainFrame()._id === pageKey
       );
 
@@ -713,6 +728,7 @@ export class PM_Main extends PM {
         })
         .then(async (page) => {
           await page.goto(`file://${`${dest}.html`}`, {});
+
           res(page);
         });
     });
@@ -1206,13 +1222,7 @@ export class PM_Main extends PM {
           await fs.promises.mkdir(path.dirname(featureDestination), {
             recursive: true,
           });
-          // const newPath = `${process.cwd()}/docs/features/plain/${await sha256(
-          //   featureStringKey
-          // )}`;
-          // writeFileAndCreateDir(
-          //   `${featureDestination}/${await sha256(featureStringKey)}`,
-          //   featureStringKey
-          // );
+
           accum.strings.push(featureStringKey);
         }
 
@@ -1245,81 +1255,5 @@ export class PM_Main extends PM {
       "./docs/bigBoard.json",
       JSON.stringify(this.bigBoard, null, 2)
     );
-
-    //     fs.writeFileSync(
-    //       "./docs/bigBoard.html",
-    //       // JSON.stringify(this.bigBoard, null, 2)
-    //       `
-    // <!DOCTYPE html>
-    // <html lang="en">
-
-    // <head>
-    //   <meta name="description" content="Webpage description goes here" />
-    //   <meta charset="utf-8" />
-    //   <title>kokomoBay - testeranto</title>
-    //   <meta name="viewport" content="width=device-width, initial-scale=1" />
-    //   <meta name="author" content="" />
-
-    //   <link rel="stylesheet" href="/index.css" />
-    //   <script type="module" src="/littleBoard.js"></script>
-
-    // </head>
-
-    // <body>
-    //   <table>
-    //     ${Object.keys(this.bigBoard)
-    //       .map((v) => {
-    //         return `<tr>
-    //         <td>${v}</td>
-
-    //         <td>${this.bigBoard[v].status}</td>
-    //         <td>${this.bigBoard[v].runTimeError}</td>
-    //         <td>
-    //           <a href="/${this.configs.tests.find((t) => t[0] === v)[1]}/${v
-    //           .split(".")
-    //           .slice(0, -1)
-    //           .join(".")}/littleBoard.html">more</a>
-    //         </td>
-    //       </tr>`;
-    //       })
-    //       .join("")}
-
-    //   </table>
-
-    // </body>
-
-    // </html>
-    //     `
-    //     );
   };
-}
-
-async function writeFileAndCreateDir(filePath, data) {
-  const dirPath = path.dirname(filePath);
-
-  try {
-    await fs.promises.mkdir(dirPath, { recursive: true });
-    await fs.appendFileSync(filePath, data);
-  } catch (error) {
-    console.error(`Error writing file: ${error}`);
-  }
-}
-
-async function sha256(rawData) {
-  const data =
-    typeof rawData === "object" ? JSON.stringify(rawData) : String(rawData);
-
-  const msgBuffer = new TextEncoder().encode(data);
-  const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
-}
-
-function isValidUrl(string) {
-  try {
-    new URL(string);
-    return true;
-  } catch (err) {
-    return false;
-  }
 }

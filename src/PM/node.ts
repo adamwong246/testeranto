@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import puppeteer, { ScreencastOptions, ScreenRecorder } from "puppeteer-core";
+import { ScreencastOptions } from "puppeteer-core";
 import { PassThrough } from "stream";
 
 import { ITLog, ITTestResourceConfiguration } from "../lib";
