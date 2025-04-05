@@ -9,13 +9,13 @@ import ts from "typescript";
 import readline from "readline";
 
 import { PM_Main } from "./PM/main";
-import { IBaseConfig, IBuiltConfig, IRunnables, ITestTypes } from "./lib/types";
 import {
   lintExitCodePather,
   lintPather,
   tscExitCodePather,
   tscPather,
 } from "./utils";
+import { IBaseConfig, IBuiltConfig, IRunnables, ITestTypes } from "./lib";
 
 console.log(ansiC.inverse("Press 'x' to shutdown forcefully."));
 

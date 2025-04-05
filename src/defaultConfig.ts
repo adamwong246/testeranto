@@ -1,4 +1,4 @@
-import { IBaseConfig } from "./lib/types";
+import { IBaseConfig } from "./lib";
 
 const config: IBaseConfig = {
   src: "src",

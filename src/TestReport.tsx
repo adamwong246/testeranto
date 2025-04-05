@@ -1,9 +1,10 @@
 import ReactDom from "react-dom/client";
 import React, { useEffect, useState } from "react";
-
 import { Col, Nav, Row, Tab } from "react-bootstrap";
+
+import { IBuiltConfig } from "./lib";
+
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { IBuiltConfig, IRunTime, ITestTypes } from "./lib/types";
 
 const StepPane = ({ step }: {
   step: {

@@ -7,9 +7,10 @@ import {
 import type {
   IBaseTest,
   ITestImplementation,
+  ITestInterface,
   ITestSpecification,
 } from "./Types.js";
-import { ITestInterface, INodeTestInterface } from "./lib/types.js";
+
 import { PM_Node } from "./PM/node.js";
 
 export class NodeTesteranto<

@@ -1,6 +1,6 @@
-// import { configs } from "eslint-plugin-react";
 import path from "path";
-import { IBuiltConfig, IRunTime } from "./lib/types";
+
+import { IRunTime, IBuiltConfig } from "./lib";
 
 export const destinationOfRuntime = (
   f: string,

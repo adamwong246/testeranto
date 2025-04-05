@@ -1,17 +1,18 @@
-import { error } from "console";
 import { PM_Web } from "./PM/web";
 import type {
   IBaseTest,
   ITestImplementation,
+  ITestInterface,
   ITestSpecification,
+  IWebTestInterface,
 } from "./Types";
 import Testeranto from "./lib/core.js";
 import {
+  IFinalResults,
   ITTestResourceConfiguration,
   ITTestResourceRequest,
   defaultTestResourceRequirement,
 } from "./lib/index.js";
-import { IFinalResults, ITestInterface, IWebTestInterface } from "./lib/types";
 
 let errorCallback = (e: any) => {};
 let unhandledrejectionCallback = (event: PromiseRejectionEvent) => {
