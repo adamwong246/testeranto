@@ -1,0 +1,161 @@
+$ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit
+src/esbuildConfigs/node.ts(52,7): error TS2741: Property 'setup' is missing in type 'Plugin' but required in type 'import("/Users/adam/Code/testeranto/node_modules/esbuild/lib/main").Plugin'.
+src/esbuildConfigs/node.ts(54,7): error TS2322: Type 'Plugin | Plugin | { name: string; setup(build: PluginBuild): void; }' is not assignable to type 'Plugin'.
+  Property 'setup' is missing in type 'Plugin' but required in type 'import("/Users/adam/Code/testeranto/node_modules/esbuild/lib/main").Plugin'.
+src/esbuildConfigs/node.ts(57,7): error TS2322: Type 'Plugin | Plugin | { name: string; setup(build: PluginBuild): void; }' is not assignable to type 'Plugin'.
+  Property 'setup' is missing in type 'Plugin' but required in type 'import("/Users/adam/Code/testeranto/node_modules/esbuild/lib/main").Plugin'.
+src/esbuildConfigs/web.ts(6,10): error TS2305: Module '"../lib/types.js"' has no exported member 'IBaseConfig'.
+src/lib/abstractBase.ts(141,30): error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
+src/lib/abstractBase.ts(158,11): error TS2345: Argument of type '(t: ITestShape["then"]) => unknown' is not assignable to parameter of type '(t: Awaited<ITestShape["then"]> | undefined) => boolean'.
+  Type 'unknown' is not assignable to type 'boolean'.
+src/lib/abstractBase.ts(356,30): error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
+src/lib/abstractBase.ts(425,32): error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
+src/lib/abstractBase.ts(444,51): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/lib/abstractBase.ts(498,28): error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
+src/lib/abstractBase.ts(595,30): error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
+src/lib/abstractBase.ts(701,68): error TS2554: Expected 5 arguments, but got 4.
+src/lib/core.ts(45,25): error TS2314: Generic type 'ITestImplementation' requires 2 type argument(s).
+src/lib/core.ts(217,15): error TS2416: Property 'checkThat' in type 'Check' is not assignable to the same property in base type 'BaseCheck<ITestShape>'.
+  Type '(subject: any, testResourceConfiguration: any, artifactory: any, pm: any) => Promise<any>' is not assignable to type '(subject: ITestShape["isubject"], testResourceConfiguration: any, artifactory: ITestArtifactory) => Promise<ITestShape["istore"]>'.
+    Target signature provides too few arguments. Expected 4 or more, but got 3.
+src/lib/index.ts(65,8): error TS18046: 'thenCb' is of type 'unknown'.
+src/lib/index.ts(66,19): error TS2322: Type 'unknown' is not assignable to type 'Promise<unknown>'.
+src/Node.ts(35,25): error TS2314: Generic type 'ITestImplementation' requires 2 type argument(s).
+src/Node.ts(55,56): error TS2345: Argument of type 'PM_Node' is not assignable to parameter of type 'PM'.
+  Types of property 'customScreenShot' are incompatible.
+    Type '(opts: ScreencastOptions, cdpPage: CdpPage) => any' is not assignable to type '(opts: object, page?: string | undefined) => any'.
+      Types of parameters 'cdpPage' and 'page' are incompatible.
+        Type 'string | undefined' is not assignable to type 'CdpPage'.
+          Type 'undefined' is not assignable to type 'CdpPage'.
+src/Node.ts(79,23): error TS2314: Generic type 'ITestImplementation' requires 2 type argument(s).
+src/Node.ts(80,26): error TS2552: Cannot find name 'INodeTestInterface'. Did you mean 'ITestInterface'?
+src/PM/main.ts(227,24): error TS18048: 'page' is possibly 'undefined'.
+src/PM/main.ts(258,9): error TS2322: Type 'string' is not assignable to type '`${string}.webm`'.
+src/PM/main.ts(261,17): error TS2538: Type 'undefined' cannot be used as an index type.
+src/PM/main.ts(300,3): error TS2416: Property 'customScreenShot' in type 'PM_Main' is not assignable to the same property in base type 'PM'.
+  Type '(opts: object, cdpPage?: CdpPage | undefined) => void' is not assignable to type '(opts: object, page?: string | undefined) => any'.
+    Types of parameters 'cdpPage' and 'page' are incompatible.
+      Type 'string | undefined' is not assignable to type 'CdpPage | undefined'.
+        Type 'string' is not assignable to type 'CdpPage'.
+src/PM/main.ts(735,15): error TS2345: Argument of type 'Page' is not assignable to parameter of type 'Page | PromiseLike<Page>'.
+  Type 'import("/Users/adam/Code/testeranto/node_modules/puppeteer-core/lib/types").Page' is not assignable to type 'import("/Users/adam/Code/testeranto/node_modules/puppeteer-core/lib/esm/puppeteer/api/Page").Page'.
+    Property '#private' in type 'Page' refers to a different member that cannot be accessed from within type 'Page'.
+src/PM/node.ts(88,3): error TS2416: Property 'customScreenShot' in type 'PM_Node' is not assignable to the same property in base type 'PM'.
+  Type '(opts: ScreencastOptions, cdpPage: CdpPage) => any' is not assignable to type '(opts: object, page?: string | undefined) => any'.
+    Types of parameters 'cdpPage' and 'page' are incompatible.
+      Type 'string | undefined' is not assignable to type 'CdpPage'.
+        Type 'undefined' is not assignable to type 'CdpPage'.
+src/ReportClient.tsx(180,38): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
+  Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.
+src/SubPackages/puppeteer.ts(17,33): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/SubPackages/puppeteer.ts(17,46): error TS2314: Generic type 'ITestImplementation' requires 2 type argument(s).
+src/SubPackages/puppeteer.ts(19,29): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/SubPackages/puppeteer.ts(21,36): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/SubPackages/puppeteer.ts(24,24): error TS2314: Generic type 'ITestImplementation' requires 2 type argument(s).
+src/SubPackages/react-dom/component/node.ts(26,36): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/SubPackages/react-dom/component/node.ts(27,24): error TS2314: Generic type 'ITestImplementation' requires 2 type argument(s).
+src/SubPackages/react-dom/component/web.ts(32,36): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/SubPackages/react-dom/jsx/node.ts(16,36): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/SubPackages/react-dom/jsx/web.ts(33,36): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/SubPackages/react-dom/jsx/web.ts(34,24): error TS2314: Generic type 'ITestImplementation' requires 2 type argument(s).
+src/SubPackages/react-dom/jsx/web.ts(48,38): error TS2339: Property 'createRoot' does not exist on type 'typeof import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/index")'.
+src/SubPackages/react-test-renderer/component/index.ts(20,38): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/SubPackages/react-test-renderer/component/index.ts(21,3): error TS2314: Generic type 'ITestImplementation' requires 2 type argument(s).
+src/SubPackages/react-test-renderer/component/index.ts(22,38): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/SubPackages/react-test-renderer/component/interface.ts(16,52): error TS2345: Argument of type 'CElement<any, Component<any, any, any>>' is not assignable to parameter of type 'ReactElement<unknown, string | JSXElementConstructor<any>>'.
+  Types of property 'type' are incompatible.
+    Type 'ComponentClass<any, any>' is not assignable to type 'string | JSXElementConstructor<any>'.
+      Type 'ComponentClass<any, any>' is not assignable to type 'new (props: any) => Component<any, any, any>'.
+        Construct signature return types 'Component<any, any, any>' and 'Component<any, any, any>' are incompatible.
+          The types returned by 'render()' are incompatible between these types.
+            Type 'React.ReactNode' is not assignable to type 'import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/node_modules/@types/react/index").ReactNode'.
+              Type 'ReactElement<any, string | JSXElementConstructor<any>>' is not assignable to type 'ReactNode'.
+                Property 'children' is missing in type 'ReactElement<any, string | JSXElementConstructor<any>>' but required in type 'ReactPortal'.
+src/SubPackages/react-test-renderer/component/node.ts(7,36): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/SubPackages/react-test-renderer/component/web.ts(7,36): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/SubPackages/react-test-renderer/fc/node.ts(16,38): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/SubPackages/react-test-renderer/fc/node.ts(18,36): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/SubPackages/react-test-renderer/fc/node.ts(19,24): error TS2314: Generic type 'ITestImplementation' requires 2 type argument(s).
+src/SubPackages/react-test-renderer/fc/node.ts(32,13): error TS2345: Argument of type 'CElement<any, Component<any, any, any>>' is not assignable to parameter of type 'ReactElement<unknown, string | JSXElementConstructor<any>>'.
+  Types of property 'type' are incompatible.
+    Type 'ComponentClass<any, any>' is not assignable to type 'string | JSXElementConstructor<any>'.
+      Type 'ComponentClass<any, any>' is not assignable to type 'new (props: any) => Component<any, any, any>'.
+        Construct signature return types 'Component<any, any, any>' and 'Component<any, any, any>' are incompatible.
+          The types returned by 'render()' are incompatible between these types.
+            Type 'React.ReactNode' is not assignable to type 'import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/node_modules/@types/react/index").ReactNode'.
+              Type 'ReactElement<any, string | JSXElementConstructor<any>>' is not assignable to type 'ReactNode'.
+                Property 'children' is missing in type 'ReactElement<any, string | JSXElementConstructor<any>>' but required in type 'ReactPortal'.
+src/SubPackages/react-test-renderer/fc/web.ts(15,38): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/SubPackages/react-test-renderer/fc/web.ts(17,36): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/SubPackages/react-test-renderer/fc/web.ts(18,24): error TS2314: Generic type 'ITestImplementation' requires 2 type argument(s).
+src/SubPackages/react-test-renderer/fc/web.ts(31,13): error TS2345: Argument of type 'FunctionComponentElement<(c?: any) => ITestShape["given"]>' is not assignable to parameter of type 'ReactElement<unknown, string | JSXElementConstructor<any>>'.
+  Types of property 'type' are incompatible.
+    Type 'FunctionComponent<(c?: any) => ITestShape["given"]>' is not assignable to type 'string | JSXElementConstructor<any>'.
+      Type 'FunctionComponent<(c?: any) => ITestShape["given"]>' is not assignable to type '(props: any) => ReactNode | Promise<ReactNode>'.
+        Type 'ReactElement<any, any> | null' is not assignable to type 'ReactNode | Promise<ReactNode>'.
+          Type 'ReactElement<any, any>' is not assignable to type 'ReactNode | Promise<ReactNode>'.
+            Property 'children' is missing in type 'ReactElement<any, any>' but required in type 'ReactPortal'.
+src/SubPackages/react-test-renderer/jsx-promised/index.ts(17,42): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/SubPackages/react-test-renderer/jsx-promised/index.ts(18,3): error TS2314: Generic type 'ITestImplementation' requires 2 type argument(s).
+src/SubPackages/react-test-renderer/jsx-promised/index.ts(20,42): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/SubPackages/react-test-renderer/jsx-promised/node.ts(6,36): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/SubPackages/react-test-renderer/jsx-promised/web.ts(9,36): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/SubPackages/react-test-renderer/jsx/index.ts(18,42): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/SubPackages/react-test-renderer/jsx/index.ts(20,3): error TS2344: Type 'object' does not satisfy the constraint 'Ibdd_out<Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>'.
+  Type '{}' is missing the following properties from type 'Ibdd_out<Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>': suites, givens, whens, thens, checks
+src/SubPackages/react-test-renderer/jsx/index.ts(23,42): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/SubPackages/react-test-renderer/jsx/index.ts(55,9): error TS2345: Argument of type 'CElement<any, Component<any, any, any>>' is not assignable to parameter of type 'ReactElement<unknown, string | JSXElementConstructor<any>>'.
+  Types of property 'type' are incompatible.
+    Type 'ComponentClass<any, any>' is not assignable to type 'string | JSXElementConstructor<any>'.
+      Type 'ComponentClass<any, any>' is not assignable to type 'new (props: any) => Component<any, any, any>'.
+        Construct signature return types 'Component<any, any, any>' and 'Component<any, any, any>' are incompatible.
+          The types returned by 'render()' are incompatible between these types.
+            Type 'React.ReactNode' is not assignable to type 'import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/node_modules/@types/react/index").ReactNode'.
+              Type 'ReactElement<any, string | JSXElementConstructor<any>>' is not assignable to type 'ReactNode'.
+                Property 'children' is missing in type 'ReactElement<any, string | JSXElementConstructor<any>>' but required in type 'ReactPortal'.
+src/SubPackages/react-test-renderer/jsx/web.ts(8,36): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/SubPackages/react-test-renderer/MemoExoticComponent/node.ts(15,36): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/SubPackages/react-test-renderer/MemoExoticComponent/node.ts(16,24): error TS2314: Generic type 'ITestImplementation' requires 2 type argument(s).
+src/SubPackages/react-test-renderer/MemoExoticComponent/node.ts(27,37): error TS2345: Argument of type 'CElement<any, Component<any, any, any>>' is not assignable to parameter of type 'ReactElement<unknown, string | JSXElementConstructor<any>>'.
+  Types of property 'type' are incompatible.
+    Type 'ComponentClass<any, any>' is not assignable to type 'string | JSXElementConstructor<any>'.
+      Type 'ComponentClass<any, any>' is not assignable to type 'new (props: any) => Component<any, any, any>'.
+        Construct signature return types 'Component<any, any, any>' and 'Component<any, any, any>' are incompatible.
+          The types returned by 'render()' are incompatible between these types.
+            Type 'React.ReactNode' is not assignable to type 'import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/node_modules/@types/react/index").ReactNode'.
+              Type 'ReactElement<any, string | JSXElementConstructor<any>>' is not assignable to type 'ReactNode'.
+                Property 'children' is missing in type 'ReactElement<any, string | JSXElementConstructor<any>>' but required in type 'ReactPortal'.
+src/SubPackages/react/component/node.ts(16,33): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/SubPackages/react/component/node.ts(18,3): error TS2344: Type 'object' does not satisfy the constraint 'Ibdd_out<Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>'.
+  Type '{}' is missing the following properties from type 'Ibdd_out<Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>': suites, givens, whens, thens, checks
+src/SubPackages/react/component/node.ts(21,29): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/SubPackages/react/component/node.ts(23,36): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/SubPackages/react/component/node.ts(24,24): error TS2314: Generic type 'ITestImplementation' requires 2 type argument(s).
+src/SubPackages/react/component/web.ts(16,33): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/SubPackages/react/component/web.ts(18,3): error TS2344: Type 'object' does not satisfy the constraint 'Ibdd_out<Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>'.
+  Type '{}' is missing the following properties from type 'Ibdd_out<Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>': suites, givens, whens, thens, checks
+src/SubPackages/react/component/web.ts(21,29): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/SubPackages/react/component/web.ts(23,36): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/SubPackages/react/component/web.ts(24,24): error TS2314: Generic type 'ITestImplementation' requires 2 type argument(s).
+src/SubPackages/react/jsx/index.ts(19,42): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/SubPackages/react/jsx/index.ts(20,3): error TS2314: Generic type 'ITestImplementation' requires 2 type argument(s).
+src/SubPackages/react/jsx/index.ts(22,42): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/SubPackages/react/jsx/index.ts(38,18): error TS2349: This expression is not callable.
+  Type 'IStore' has no call signatures.
+src/SubPackages/react/jsx/index.ts(40,15): error TS2345: Argument of type 'DetailedReactHTMLElement<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>' is not assignable to parameter of type 'IStore | PromiseLike<IStore>'.
+  Type 'DetailedReactHTMLElement<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>' is not assignable to type 'IStore'.
+    Types of property 'type' are incompatible.
+      Type 'string' is not assignable to type 'ComponentClass<any, any>'.
+        Type 'string' is not assignable to type 'ComponentClass<any, any>'.
+src/SubPackages/react/jsx/index.ts(40,35): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'IStore' is not assignable to parameter of type 'string | ComponentClass<any, any> | FunctionComponent<any>'.
+src/SubPackages/react/jsx/web.ts(15,36): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
+src/TestReport.tsx(153,56): error TS2739: Type '{ key: string; name: string; whens: { name: string; error: string; }[]; thens: { name: string; error: string; }[]; }' is missing the following properties from type '{ key: string; name: string; error: string[]; features: string[]; whens: { name: string; error: string; }[]; thens: { name: string; error: string; }[]; }': error, features
+src/TestReport.tsx(168,38): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
+  Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.
+src/Types.ts(96,21): error TS2344: Type 'I' does not satisfy the constraint 'IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>'.
+  Type 'Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>' is missing the following properties from type 'IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>': suites, givens, whens, thens, checks
+src/Web.ts(43,25): error TS2314: Generic type 'ITestImplementation' requires 2 type argument(s).
+src/Web.ts(118,23): error TS2314: Generic type 'ITestImplementation' requires 2 type argument(s).
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
