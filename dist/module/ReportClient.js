@@ -60,7 +60,6 @@ const BigBoard = () => {
     const collated = configs.tests.map((c) => {
         return Object.assign(Object.assign({}, bigBoard[c[0]]), { name: c[0], runTime: c[1], tr: c[2], sidecars: c[3], staticAnalysis: staticAnalysis[c[0]], typeErrors: typeErrors[c[0]], bddErrors: bddErrors[c[0]] });
     });
-    // console.log(collated);
     return React.createElement("table", null,
         React.createElement("tr", null,
             React.createElement("td", null, "name"),
@@ -78,39 +77,12 @@ const BigBoard = () => {
                 React.createElement("td", null,
                     React.createElement("a", { href: `${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/lint_errors.json` }, c.staticAnalysis)),
                 React.createElement("td", null,
-                    React.createElement("a", { href: `${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/typeErrors.txt` }, c.typeErrors)),
+                    React.createElement("a", { href: `${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/type_errors.txt` }, c.typeErrors)),
                 React.createElement("td", null,
                     React.createElement("pre", null,
                         "aider --model deepseek/deepseek-chat --load ",
                         `docs/${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/prompt.txt`)));
         }));
-    // return <div>    <Tab.Container id="root-tab-container" defaultActiveKey="first">
-    //   <Row>
-    //     <Col sm={3}>
-    //       <Nav variant="pills" className="flex-column">
-    //         {
-    //           collated.map((t) =>
-    //             <Nav.Item>
-    //               <Nav.Link eventKey={t.name}>
-    //                 <p>{t.name}</p>
-    //                 <p>{t.status}, {t.runTimeError}</p>
-    //               </Nav.Link>
-    //             </Nav.Item>
-    //           )
-    //         }
-    //       </Nav>
-    //     </Col>
-    //     <Col sm={9}>
-    //       <Tab.Content>
-    //         {
-    //           collated.map((t) =>
-    //             <Tab.Pane eventKey={t.name}><TestPane collation={t} /></Tab.Pane>
-    //           )
-    //         }
-    //       </Tab.Content>
-    //     </Col>
-    //   </Row>
-    // </Tab.Container></div>
 };
 document.addEventListener("DOMContentLoaded", function () {
     const elem = document.getElementById("root");

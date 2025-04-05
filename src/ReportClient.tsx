@@ -1,9 +1,9 @@
 import ReactDom from "react-dom/client";
 import React, { useEffect, useState } from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { IRunTime, ITestTypes, IBuiltConfig } from "./lib";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 type ICollation = {
   name: string;
@@ -107,8 +107,6 @@ const BigBoard = () => {
     } as ICollation
   });
 
-  // console.log(collated);
-
   return <table>
     <tr>
       <td>name</td>
@@ -125,9 +123,8 @@ const BigBoard = () => {
           <td>{c.runTime}</td>
           <td><a href={`${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/littleBoard.html`}>{c.bddErrors}</a></td>
           <td><a href={`${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/lint_errors.json`}>{c.staticAnalysis}</a></td>
-          <td><a href={`${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/typeErrors.txt`}>{c.typeErrors}</a></td>
-          {/* <td><a href={lintPather(c.name, c.runTime)}>{c.staticAnalysis}</a></td>
-          <td><a href={tscPather(c.name, c.runTime)}>{c.typeErrors}</a></td> */}
+          <td><a href={`${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/type_errors.txt`}>{c.typeErrors}</a></td>
+
 
           <td>
             <pre>
@@ -140,38 +137,6 @@ const BigBoard = () => {
       })
     }
   </table>
-  // return <div>    <Tab.Container id="root-tab-container" defaultActiveKey="first">
-  //   <Row>
-  //     <Col sm={3}>
-  //       <Nav variant="pills" className="flex-column">
-
-  //         {
-  //           collated.map((t) =>
-  //             <Nav.Item>
-  //               <Nav.Link eventKey={t.name}>
-  //                 <p>{t.name}</p>
-  //                 <p>{t.status}, {t.runTimeError}</p>
-
-  //               </Nav.Link>
-  //             </Nav.Item>
-  //           )
-  //         }
-
-  //       </Nav>
-  //     </Col>
-  //     <Col sm={9}>
-  //       <Tab.Content>
-  //         {
-  //           collated.map((t) =>
-
-  //             <Tab.Pane eventKey={t.name}><TestPane collation={t} /></Tab.Pane>
-
-  //           )
-  //         }
-  //       </Tab.Content>
-  //     </Col>
-  //   </Row>
-  // </Tab.Container></div>
 }
 
 document.addEventListener("DOMContentLoaded", function () {

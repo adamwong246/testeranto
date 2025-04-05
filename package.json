@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "the AI powered BDD test framework for typescript projects",
-  "version": "0.108.0",
+  "version": "0.109.0",
   "engines": {
     "node": "18.18.0"
   },
@@ -22,16 +22,16 @@
       "require": "./dist/common/SubPackages/puppeteer.js"
     },
     "./src/SubPackages/react/jsx/index": {
-      "import": "./dist/module/src/SubPackages/react/jsx/index.js",
-      "require": "./dist/common/src/SubPackages/react/jsx/index.js"
+      "import": "./dist/module/SubPackages/react/jsx/index.js",
+      "require": "./dist/common/SubPackages/react/jsx/index.js"
     },
     "./src/SubPackages/react/jsx/web": {
       "import": "./src/SubPackages/react/jsx/web.ts",
       "require": "./src/SubPackages/react/jsx/web.ts"
     },
     "./src/SubPackages/react/jsx/node": {
-      "import": "./dist/module/src/SubPackages/react/jsx/node.js",
-      "require": "./dist/common/src/SubPackages/react/jsx/node.js"
+      "import": "./dist/module/SubPackages/react/jsx/node.js",
+      "require": "./dist/common/SubPackages/react/jsx/node.js"
     },
     "./src/SubPackages/react/component/index": {
       "import": "./dist/module/SubPackages/react/component/index.js",
@@ -46,28 +46,28 @@
       "require": "./dist/common/SubPackages/react/component/node.js"
     },
     "./src/SubPackages/react-test-renderer/component/index.ts": {
-      "import": "./src/SubPackages/react-test-renderer/component/index.ts",
-      "require": "./src/SubPackages/react-test-renderer/component/index.ts"
+      "import": "./SubPackages/react-test-renderer/component/index.ts",
+      "require": "./SubPackages/react-test-renderer/component/index.ts"
     },
     "./src/SubPackages/react-test-renderer/component/index": {
-      "import": "./src/SubPackages/react-test-renderer/component/index.ts",
-      "require": "./src/SubPackages/react-test-renderer/component/index.ts"
+      "import": "./SubPackages/react-test-renderer/component/index.ts",
+      "require": "./SubPackages/react-test-renderer/component/index.ts"
     },
     "./src/SubPackages/react-test-renderer/component/web": {
-      "import": "./dist/module/src/SubPackages/react-test-renderer/component/web.js",
-      "require": "./dist/common/src/SubPackages/react-test-renderer/component/web.js"
+      "import": "./dist/module/SubPackages/react-test-renderer/component/web.js",
+      "require": "./dist/common/SubPackages/react-test-renderer/component/web.js"
     },
     "./src/SubPackages/react-test-renderer/component/node": {
-      "import": "./dist/module/src/SubPackages/react-test-renderer/component/node.js",
-      "require": "./dist/common/src/SubPackages/react-test-renderer/component/node.js"
+      "import": "./dist/module/SubPackages/react-test-renderer/component/node.js",
+      "require": "./dist/common/SubPackages/react-test-renderer/component/node.js"
     },
     "./src/SubPackages/react-test-renderer/jsx/index.js": {
-      "import": "./dist/module/src/SubPackages/react-test-renderer/jsx/index.js",
-      "require": "./dist/common/src/SubPackages/react-test-renderer/jsx/index.js"
+      "import": "./dist/module/SubPackages/react-test-renderer/jsx/index.js",
+      "require": "./dist/common/SubPackages/react-test-renderer/jsx/index.js"
     },
     "./src/SubPackages/react-test-renderer/jsx/web.js": {
-      "import": "./dist/module/src/SubPackages/react-test-renderer/jsx/web.js",
-      "require": "./dist/common/src/SubPackages/react-test-renderer/jsx/web.js"
+      "import": "./dist/module/SubPackages/react-test-renderer/jsx/web.js",
+      "require": "./dist/common/SubPackages/react-test-renderer/jsx/web.js"
     },
     "./src/SubPackages/react-test-renderer/jsx/node.js": {
       "import": "./dist/module/SubPackages/react-test-renderer/jsx/node.js",
@@ -106,20 +106,20 @@
       "require": "./dist/common/SubPackages/react-dom/jsx/index.js"
     },
     "./src/SubPackages/react-dom/component/web": {
-      "import": "./dist/module/src/SubPackages/react-dom/component/web.js",
-      "require": "./dist/common/src/SubPackages/react-dom/component/web.js"
+      "import": "./dist/module/SubPackages/react-dom/component/web.js",
+      "require": "./dist/common/SubPackages/react-dom/component/web.js"
     },
     "./src/SubPackages/react-dom/component/node": {
-      "import": "./dist/module/src/SubPackages/react-dom/component/node.js",
-      "require": "./dist/common/src/SubPackages/react-dom/component/node.js"
+      "import": "./dist/module/SubPackages/react-dom/component/node.js",
+      "require": "./dist/common/SubPackages/react-dom/component/node.js"
     },
     "./src/Types": {
-      "import": "./src/Types.ts",
-      "require": "./src/Types.ts"
+      "import": "./Types.ts",
+      "require": "./Types.ts"
     },
     "./src/utils": {
-      "import": "./src/utils.ts",
-      "require": "./src/utils.ts"
+      "import": "./utils.ts",
+      "require": "./utils.ts"
     },
     "./src/Features": {
       "import": "./dist/module/Features.js",
