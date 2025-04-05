@@ -15,6 +15,7 @@ import fs from "fs";
 import path2 from "path";
 import puppeteer from "puppeteer-core";
 import crypto from "crypto";
+import ansiC from "ansi-colors";
 
 // src/PM/index.js
 var PM = class {
@@ -69,14 +70,11 @@ var fPaths = [];
 var files = {};
 var recorders = {};
 var screenshots = {};
-var red = "\x1B[31m";
-var green = "\x1B[32m";
-var reset = "\x1B[0m";
 var statusMessagePretty = (failures, test) => {
   if (failures === 0) {
-    console.log(green + `> ${test} completed successfully` + reset);
+    console.log(ansiC.green(ansiC.inverse(`> ${test} completed successfully`)));
   } else {
-    console.log(red + `> ${test} failed ${failures} times` + reset);
+    console.log(ansiC.red(ansiC.inverse(`> ${test} failed ${failures} times`)));
   }
 };
 var PM_Main = class extends PM {
@@ -100,7 +98,9 @@ var PM_Main = class extends PM {
             };
             return mm;
           }, {});
-          console.log("Goodbye", final);
+          const s = JSON.stringify(final, null, 2);
+          fs.writeFileSync("docs/summary.json", s);
+          console.log(ansiC.inverse("Goodbye"));
           process.exit();
         });
       }
@@ -115,7 +115,7 @@ var PM_Main = class extends PM {
       }
     };
     this.launchNode = async (src, dest) => {
-      console.log("! node", src);
+      console.log(ansiC.yellow(`! node, ${src}`));
       this.testIsNowRunning(src);
       const destFolder = dest.replace(".mjs", "");
       let argz = "";
@@ -170,7 +170,7 @@ var PM_Main = class extends PM {
             statusMessagePretty(failed, src);
             this.receiveExitCode(src, failed);
           }).catch((e) => {
-            console.log(`${src} errored with`, e);
+            console.log(ansiC.red(ansiC.inverse(`${src} errored with: ${e}`)));
           }).finally(() => {
             webSideCares.forEach((webSideCar) => webSideCar.close());
             this.testIsNowDone(src);
@@ -185,7 +185,7 @@ var PM_Main = class extends PM {
     };
     this.launchWebSideCar = async (src, dest, testConfig) => {
       const d = dest + ".mjs";
-      console.log("launchWebSideCar", src, dest, d);
+      console.log(ansiC.green(ansiC.inverse(`launchWebSideCar ${src}`)));
       const destFolder = dest.replace(".mjs", "");
       const fileStreams2 = [];
       const doneFileStream2 = [];
@@ -279,7 +279,7 @@ var PM_Main = class extends PM {
     };
     this.launchNodeSideCar = async (src, dest, testConfig) => {
       const d = dest + ".mjs";
-      console.log("launchNodeSideCar", src, dest, d);
+      console.log(ansiC.green(ansiC.inverse(`launchNodeSideCar ${src}`)));
       const destFolder = dest.replace(".mjs", "");
       let argz = "";
       const testConfigResource = testConfig[2];
@@ -331,7 +331,7 @@ var PM_Main = class extends PM {
       }
     };
     this.launchWeb = (t, dest) => {
-      console.log("! web", t);
+      console.log(ansiC.green(ansiC.inverse(`! web ${t}`)));
       this.testIsNowRunning(t);
       const destFolder = dest.replace(".mjs", "");
       const webArgz = JSON.stringify({
@@ -342,9 +342,9 @@ var PM_Main = class extends PM {
       });
       const d = `${dest}?cacheBust=${Date.now()}`;
       const evaluation = `
-    console.log("importing ${d}");
+
     import('${d}').then(async (x) => {
-      console.log("imported", (await x.default));
+
       try {
         return await (await x.default).receiveTestResourceConfig(${webArgz})
       } catch (e) {
@@ -534,7 +534,7 @@ var PM_Main = class extends PM {
           statusMessagePretty(failed, t);
           this.receiveExitCode(t, failed);
         }).catch((e) => {
-          console.log(`${t} errored with`, e);
+          console.log(ansiC.red(ansiC.inverse(`${t} errored with: ${e}`)));
         }).finally(() => {
           close();
         });
@@ -617,7 +617,6 @@ var PM_Main = class extends PM {
       this.ports[element] = "true";
     });
     globalThis["waitForSelector"] = async (pageKey, sel) => {
-      console.log("waitForSelector", pageKey, sel);
       const page = (await this.browser.pages()).find(
         (p) => p.mainFrame()._id === pageKey
       );
@@ -872,6 +871,7 @@ function isValidUrl(string) {
 }
 
 // src/run.ts
+import ansiC2 from "ansi-colors";
 console.log("Press 'x' to shutdown forcefully.");
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
@@ -923,7 +923,7 @@ var tscCheck = async ({
   addableFiles,
   platform
 }) => {
-  console.log("tsc <", entrypoint);
+  console.log(ansiC2.green(ansiC2.inverse(`tsc < ${entrypoint}`)));
   const program = tsc.createProgramFromConfig({
     basePath: process.cwd(),
     // always required, used for relative paths
@@ -971,7 +971,7 @@ var formatter = await eslint.loadFormatter(
   "./node_modules/testeranto/dist/prebuild/eslint-formatter-testeranto.mjs"
 );
 var eslintCheck = async (entrypoint, platform, addableFiles) => {
-  console.log("eslint <", entrypoint);
+  console.log(ansiC2.green(ansiC2.inverse(`eslint < ${entrypoint}`)));
   const results = (await eslint.lintFiles(addableFiles)).filter((r) => r.messages.length).filter((r) => {
     return r.messages[0].ruleId !== null;
   }).map((r) => {
@@ -1065,10 +1065,12 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
   let mode = config.devMode ? "DEV" : "PROD";
   const fileHashes = {};
   let pm = new PM_Main(config);
-  console.log(`Press 'q' to shutdown gracefully`);
+  console.log(ansiC2.inverse(`Press 'q' to shutdown gracefully`));
   process.stdin.on("keypress", (str, key) => {
     if (key.name === "q") {
-      console.log("Testeranto-Run is shutting down gracefully...");
+      console.log(
+        ansiC2.inverse("Testeranto-Run is shutting down gracefully...")
+      );
       mode = "PROD";
       nodeMetafileWatcher.close();
       webMetafileWatcher.close();
@@ -1079,7 +1081,7 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
   const nodeMetafileWatcher = watch(
     "docs/node/metafile.json",
     async (e, filename) => {
-      console.log(`< ${e} ${filename}`);
+      console.log(ansiC2.yellow(ansiC2.inverse(`< ${e} ${filename}`)));
       metafileOutputs("node");
     }
   );
@@ -1087,7 +1089,7 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
   const webMetafileWatcher = watch(
     "docs/web/metafile.json",
     async (e, filename) => {
-      console.log(`< ${e} ${filename}`);
+      console.log(ansiC2.yellow(ansiC2.inverse(`< ${e} ${filename}`)));
       metafileOutputs("web");
     }
   );

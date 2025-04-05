@@ -46,6 +46,7 @@ const typescript_1 = __importDefault(require("typescript"));
 const readline_1 = __importDefault(require("readline"));
 const main_1 = require("./PM/main");
 const utils_1 = require("./utils");
+const ansi_colors_1 = __importDefault(require("ansi-colors"));
 console.log("Press 'x' to shutdown forcefully.");
 readline_1.default.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
@@ -90,7 +91,8 @@ const getRunnables = (tests, payload = {
     }, payload);
 };
 const tscCheck = async ({ entrypoint, addableFiles, platform, }) => {
-    console.log("tsc <", entrypoint);
+    // console.log("tsc <", entrypoint);
+    console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`tsc < ${entrypoint}`)));
     const program = tsc_prog_1.default.createProgramFromConfig({
         basePath: process.cwd(), // always required, used for relative paths
         configFilePath: "tsconfig.json", // config to inherit from (optional)
@@ -123,7 +125,7 @@ const tscCheck = async ({ entrypoint, addableFiles, platform, }) => {
 const eslint = new eslint_1.ESLint();
 const formatter = await eslint.loadFormatter("./node_modules/testeranto/dist/prebuild/eslint-formatter-testeranto.mjs");
 const eslintCheck = async (entrypoint, platform, addableFiles) => {
-    console.log("eslint <", entrypoint);
+    console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`eslint < ${entrypoint}`)));
     const results = (await eslint.lintFiles(addableFiles))
         .filter((r) => r.messages.length)
         .filter((r) => {
@@ -187,10 +189,10 @@ Promise.resolve(`${process.cwd() + "/" + process.argv[2]}`).then(s => __importSt
     let mode = config.devMode ? "DEV" : "PROD";
     const fileHashes = {};
     let pm = new main_1.PM_Main(config);
-    console.log(`Press 'q' to shutdown gracefully`);
+    console.log(ansi_colors_1.default.inverse(`Press 'q' to shutdown gracefully`));
     process.stdin.on("keypress", (str, key) => {
         if (key.name === "q") {
-            console.log("Testeranto-Run is shutting down gracefully...");
+            console.log(ansi_colors_1.default.inverse("Testeranto-Run is shutting down gracefully..."));
             mode = "PROD";
             // onDone();
             nodeMetafileWatcher.close();
@@ -200,12 +202,14 @@ Promise.resolve(`${process.cwd() + "/" + process.argv[2]}`).then(s => __importSt
     });
     metafileOutputs("node");
     const nodeMetafileWatcher = (0, fs_1.watch)("docs/node/metafile.json", async (e, filename) => {
-        console.log(`< ${e} ${filename}`);
+        // console.log(`< ${e} ${filename}`);
+        console.log(ansi_colors_1.default.yellow(ansi_colors_1.default.inverse(`< ${e} ${filename}`)));
         metafileOutputs("node");
     });
     metafileOutputs("web");
     const webMetafileWatcher = (0, fs_1.watch)("docs/web/metafile.json", async (e, filename) => {
-        console.log(`< ${e} ${filename}`);
+        // console.log(`< ${e} ${filename}`);
+        console.log(ansi_colors_1.default.yellow(ansi_colors_1.default.inverse(`< ${e} ${filename}`)));
         metafileOutputs("web");
     });
     await pm.startPuppeteer({

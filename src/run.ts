@@ -16,6 +16,8 @@ import {
   tscPather,
 } from "./utils";
 
+import ansiC from "ansi-colors";
+
 console.log("Press 'x' to shutdown forcefully.");
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
@@ -82,7 +84,8 @@ const tscCheck = async ({
   entrypoint: string;
   addableFiles: string[];
 }) => {
-  console.log("tsc <", entrypoint);
+  // console.log("tsc <", entrypoint);
+  console.log(ansiC.green(ansiC.inverse(`tsc < ${entrypoint}`)));
 
   const program = tsc.createProgramFromConfig({
     basePath: process.cwd(), // always required, used for relative paths
@@ -137,7 +140,7 @@ const eslintCheck = async (
   platform: "web" | "node",
   addableFiles: string[]
 ) => {
-  console.log("eslint <", entrypoint);
+  console.log(ansiC.green(ansiC.inverse(`eslint < ${entrypoint}`)));
   const results = (await eslint.lintFiles(addableFiles))
     .filter((r) => r.messages.length)
     .filter((r) => {
@@ -261,10 +264,12 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
   const fileHashes = {};
   let pm: PM_Main | undefined = new PM_Main(config);
 
-  console.log(`Press 'q' to shutdown gracefully`);
+  console.log(ansiC.inverse(`Press 'q' to shutdown gracefully`));
   process.stdin.on("keypress", (str, key) => {
     if (key.name === "q") {
-      console.log("Testeranto-Run is shutting down gracefully...");
+      console.log(
+        ansiC.inverse("Testeranto-Run is shutting down gracefully...")
+      );
       mode = "PROD";
       // onDone();
       nodeMetafileWatcher.close();
@@ -277,7 +282,8 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
   const nodeMetafileWatcher = watch(
     "docs/node/metafile.json",
     async (e, filename) => {
-      console.log(`< ${e} ${filename}`);
+      // console.log(`< ${e} ${filename}`);
+      console.log(ansiC.yellow(ansiC.inverse(`< ${e} ${filename}`)));
       metafileOutputs("node");
     }
   );
@@ -286,7 +292,8 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
   const webMetafileWatcher = watch(
     "docs/web/metafile.json",
     async (e, filename) => {
-      console.log(`< ${e} ${filename}`);
+      // console.log(`< ${e} ${filename}`);
+      console.log(ansiC.yellow(ansiC.inverse(`< ${e} ${filename}`)));
       metafileOutputs("web");
     }
   );

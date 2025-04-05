@@ -11,6 +11,8 @@ import puppeteer, {
 import { PassThrough } from "stream";
 import crypto from "crypto";
 
+import ansiC from "ansi-colors";
+
 import { IBuiltConfig, IFinalResults, ITestTypes } from "../lib/types";
 import { ITLog } from "../lib/index.js";
 
@@ -33,13 +35,16 @@ const screenshots: Record<string, Promise<Uint8Array>[]> = {};
 
 const red = "\x1b[31m";
 const green = "\x1b[32m";
+const reverse = "e[7m";
 const reset = "\x1b[0m"; // Resets to default color
 
 const statusMessagePretty = (failures: number, test: string) => {
   if (failures === 0) {
-    console.log(green + `> ${test} completed successfully` + reset);
+    // console.log(green + `> ${test} completed successfully` + reset);
+    console.log(ansiC.green(ansiC.inverse(`> ${test} completed successfully`)));
   } else {
-    console.log(red + `> ${test} failed ${failures} times` + reset);
+    // console.log(red + `> ${test} failed ${failures} times` + reset);
+    console.log(ansiC.red(ansiC.inverse(`> ${test} failed ${failures} times`)));
   }
 };
 
@@ -78,7 +83,6 @@ export class PM_Main extends PM {
     });
 
     globalThis["waitForSelector"] = async (pageKey: string, sel: string) => {
-      console.log("waitForSelector", pageKey, sel);
       const page = (await this.browser.pages()).find(
         (p) => p.mainFrame()._id === pageKey
       );
@@ -427,7 +431,9 @@ export class PM_Main extends PM {
           return mm;
         }, {});
 
-        console.log("Goodbye", final);
+        const s = JSON.stringify(final, null, 2);
+        fs.writeFileSync("docs/summary.json", s);
+        console.log(ansiC.inverse("Goodbye"));
         process.exit();
       });
     }
@@ -445,7 +451,7 @@ export class PM_Main extends PM {
   };
 
   launchNode = async (src: string, dest: string) => {
-    console.log("! node", src);
+    console.log(ansiC.yellow(`! node, ${src}`));
     this.testIsNowRunning(src);
 
     const destFolder = dest.replace(".mjs", "");
@@ -539,7 +545,8 @@ export class PM_Main extends PM {
             this.receiveExitCode(src, failed);
           })
           .catch((e) => {
-            console.log(`${src} errored with`, e);
+            console.log(ansiC.red(ansiC.inverse(`${src} errored with: ${e}`)));
+            // console.log(reset, `${src} errored with`, e);
           })
           .finally(() => {
             webSideCares.forEach((webSideCar) => webSideCar.close());
@@ -562,7 +569,9 @@ export class PM_Main extends PM {
     testConfig: ITestTypes
   ): Promise<Page> => {
     const d = dest + ".mjs";
-    console.log("launchWebSideCar", src, dest, d);
+    // console.log(green, "launchWebSideCar", src, dest, d);
+    console.log(ansiC.green(ansiC.inverse(`launchWebSideCar ${src}`)));
+
     const destFolder = dest.replace(".mjs", "");
     // const webArgz = JSON.stringify({
     //   name: dest,
@@ -711,7 +720,8 @@ export class PM_Main extends PM {
     testConfig: ITestTypes
   ) => {
     const d = dest + ".mjs";
-    console.log("launchNodeSideCar", src, dest, d);
+    // console.log(green, "launchNodeSideCar", src, dest, d);
+    console.log(ansiC.green(ansiC.inverse(`launchNodeSideCar ${src}`)));
 
     const destFolder = dest.replace(".mjs", "");
 
@@ -793,7 +803,8 @@ export class PM_Main extends PM {
   };
 
   launchWeb = (t: string, dest: string) => {
-    console.log("! web", t);
+    // console.log(green, "! web", t);
+    console.log(ansiC.green(ansiC.inverse(`! web ${t}`)));
     this.testIsNowRunning(t);
 
     // sidecars.map((sidecar) => {
@@ -818,9 +829,9 @@ export class PM_Main extends PM {
     const d = `${dest}?cacheBust=${Date.now()}`;
 
     const evaluation = `
-    console.log("importing ${d}");
+
     import('${d}').then(async (x) => {
-      console.log("imported", (await x.default));
+
       try {
         return await (await x.default).receiveTestResourceConfig(${webArgz})
       } catch (e) {
@@ -1120,7 +1131,8 @@ export class PM_Main extends PM {
             this.receiveExitCode(t, failed);
           })
           .catch((e) => {
-            console.log(`${t} errored with`, e);
+            // console.log(red, `${t} errored with`, e);
+            console.log(ansiC.red(ansiC.inverse(`${t} errored with: ${e}`)));
           })
           .finally(() => {
             // this.testIsNowDone(t);

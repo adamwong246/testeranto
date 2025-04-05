@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import puppeteer from "puppeteer-core";
 import crypto from "crypto";
+import ansiC from "ansi-colors";
 import { PM } from "./index.js";
 import { bddExitCodePather, lintExitCodePather, tscExitCodePather, } from "../utils";
 const fileStreams3 = [];
@@ -11,13 +12,16 @@ const recorders = {};
 const screenshots = {};
 const red = "\x1b[31m";
 const green = "\x1b[32m";
+const reverse = "e[7m";
 const reset = "\x1b[0m"; // Resets to default color
 const statusMessagePretty = (failures, test) => {
     if (failures === 0) {
-        console.log(green + `> ${test} completed successfully` + reset);
+        // console.log(green + `> ${test} completed successfully` + reset);
+        console.log(ansiC.green(ansiC.inverse(`> ${test} completed successfully`)));
     }
     else {
-        console.log(red + `> ${test} failed ${failures} times` + reset);
+        // console.log(red + `> ${test} failed ${failures} times` + reset);
+        console.log(ansiC.red(ansiC.inverse(`> ${test} failed ${failures} times`)));
     }
 };
 export class PM_Main extends PM {
@@ -49,7 +53,9 @@ export class PM_Main extends PM {
                         };
                         return mm;
                     }, {});
-                    console.log("Goodbye", final);
+                    const s = JSON.stringify(final, null, 2);
+                    fs.writeFileSync("docs/summary.json", s);
+                    console.log(ansiC.inverse("Goodbye"));
                     process.exit();
                 });
             }
@@ -64,7 +70,7 @@ export class PM_Main extends PM {
             }
         };
         this.launchNode = async (src, dest) => {
-            console.log("! node", src);
+            console.log(ansiC.yellow(`! node, ${src}`));
             this.testIsNowRunning(src);
             const destFolder = dest.replace(".mjs", "");
             let argz = "";
@@ -144,7 +150,8 @@ export class PM_Main extends PM {
                         this.receiveExitCode(src, failed);
                     })
                         .catch((e) => {
-                        console.log(`${src} errored with`, e);
+                        console.log(ansiC.red(ansiC.inverse(`${src} errored with: ${e}`)));
+                        // console.log(reset, `${src} errored with`, e);
                     })
                         .finally(() => {
                         webSideCares.forEach((webSideCar) => webSideCar.close());
@@ -161,7 +168,8 @@ export class PM_Main extends PM {
         };
         this.launchWebSideCar = async (src, dest, testConfig) => {
             const d = dest + ".mjs";
-            console.log("launchWebSideCar", src, dest, d);
+            // console.log(green, "launchWebSideCar", src, dest, d);
+            console.log(ansiC.green(ansiC.inverse(`launchWebSideCar ${src}`)));
             const destFolder = dest.replace(".mjs", "");
             // const webArgz = JSON.stringify({
             //   name: dest,
@@ -268,7 +276,8 @@ export class PM_Main extends PM {
         };
         this.launchNodeSideCar = async (src, dest, testConfig) => {
             const d = dest + ".mjs";
-            console.log("launchNodeSideCar", src, dest, d);
+            // console.log(green, "launchNodeSideCar", src, dest, d);
+            console.log(ansiC.green(ansiC.inverse(`launchNodeSideCar ${src}`)));
             const destFolder = dest.replace(".mjs", "");
             let argz = "";
             const testConfigResource = testConfig[2];
@@ -338,7 +347,8 @@ export class PM_Main extends PM {
             }
         };
         this.launchWeb = (t, dest) => {
-            console.log("! web", t);
+            // console.log(green, "! web", t);
+            console.log(ansiC.green(ansiC.inverse(`! web ${t}`)));
             this.testIsNowRunning(t);
             // sidecars.map((sidecar) => {
             //   if (sidecar[1] === "node") {
@@ -358,9 +368,9 @@ export class PM_Main extends PM {
             });
             const d = `${dest}?cacheBust=${Date.now()}`;
             const evaluation = `
-    console.log("importing ${d}");
+
     import('${d}').then(async (x) => {
-      console.log("imported", (await x.default));
+
       try {
         return await (await x.default).receiveTestResourceConfig(${webArgz})
       } catch (e) {
@@ -579,7 +589,8 @@ export class PM_Main extends PM {
                     this.receiveExitCode(t, failed);
                 })
                     .catch((e) => {
-                    console.log(`${t} errored with`, e);
+                    // console.log(red, `${t} errored with`, e);
+                    console.log(ansiC.red(ansiC.inverse(`${t} errored with: ${e}`)));
                 })
                     .finally(() => {
                     // this.testIsNowDone(t);
@@ -706,7 +717,6 @@ export class PM_Main extends PM {
             this.ports[element] = "true"; // set ports as open
         });
         globalThis["waitForSelector"] = async (pageKey, sel) => {
-            console.log("waitForSelector", pageKey, sel);
             const page = (await this.browser.pages()).find((p) => p.mainFrame()._id === pageKey);
             await (page === null || page === void 0 ? void 0 : page.waitForSelector(sel));
         };
