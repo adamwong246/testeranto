@@ -10,7 +10,7 @@ import {
 import { PM } from "./PM/index.js";
 import { ITestCheckCallback } from "./lib/types.js";
 
-export type IWebTestInterface<
+type IBasicInterface<
   ITestShape extends IBaseTest<
     unknown,
     unknown,
@@ -66,6 +66,23 @@ export type IWebTestInterface<
   ) => Promise<ITestShape["istore"]>;
 };
 
+export type IWebTestInterface<
+  ITestShape extends IBaseTest<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+> = IBasicInterface<ITestShape>;
+
 export type INodeTestInterface<
   I extends Ibdd_in<
     unknown,
@@ -76,42 +93,7 @@ export type INodeTestInterface<
     unknown,
     unknown
   >
-> = {
-  assertThis: (x: I["then"]) => void;
-  andWhen: (
-    store: I["istore"],
-    whenCB: I["when"],
-    testResource: ITTestResourceConfiguration,
-    utils: PM
-  ) => Promise<I["istore"]>;
-  butThen: (
-    store: I["istore"],
-    thenCB,
-    testResource: ITTestResourceConfiguration,
-    utils: PM
-  ) => Promise<I["iselection"]>;
-  afterAll: (store: I["istore"], artificer: ITestArtificer, pm: PM) => any;
-  afterEach: (
-    store: I["istore"],
-    key: string,
-    artificer: ITestArtificer,
-    pm: PM
-  ) => Promise<unknown>;
-  beforeAll: (
-    input: I["iinput"],
-    testResource: ITTestResourceConfiguration,
-    artificer: ITestArtificer,
-    pm: PM
-  ) => Promise<I["isubject"]>;
-  beforeEach: (
-    subject: I["isubject"],
-    initializer: (c?) => I["given"],
-    artificer: ITestArtificer,
-    testResource: ITTestResourceConfiguration,
-    initialValues,
-    pm: PM
-  ) => Promise<I["istore"]>;
-};
+> = IBasicInterface<I>;
 
 export type ITestInterface<
   I extends Ibdd_in<
