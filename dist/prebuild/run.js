@@ -87,17 +87,20 @@ var PM_Main = class extends PM {
       if (anyRunning) {
       } else {
         this.browser.disconnect().then(() => {
-          const final = this.configs.tests.reduce((mm, t) => {
-            const bddErrors = fs.readFileSync(bddExitCodePather(t[0], t[1])).toString();
-            const lintErrors = fs.readFileSync(lintExitCodePather(t[0], t[1])).toString();
-            const typeErrors = fs.readFileSync(tscExitCodePather(t[0], t[1])).toString();
-            mm[t[0]] = {
-              bddErrors,
-              lintErrors,
-              typeErrors
-            };
-            return mm;
-          }, {});
+          const final = {
+            timestamp: Date.now(),
+            tests: this.configs.tests.reduce((mm, t) => {
+              const bddErrors = fs.readFileSync(bddExitCodePather(t[0], t[1])).toString();
+              const lintErrors = fs.readFileSync(lintExitCodePather(t[0], t[1])).toString();
+              const typeErrors = fs.readFileSync(tscExitCodePather(t[0], t[1])).toString();
+              mm[t[0]] = {
+                bddErrors,
+                lintErrors,
+                typeErrors
+              };
+              return mm;
+            }, {})
+          };
           const s = JSON.stringify(final, null, 2);
           fs.writeFileSync("docs/summary.json", s);
           console.log(ansiC.inverse("Goodbye"));
@@ -115,7 +118,7 @@ var PM_Main = class extends PM {
       }
     };
     this.launchNode = async (src, dest) => {
-      console.log(ansiC.yellow(`! node, ${src}`));
+      console.log(ansiC.green(ansiC.inverse(`! node, ${src}`)));
       this.testIsNowRunning(src);
       const destFolder = dest.replace(".mjs", "");
       let argz = "";
@@ -123,7 +126,7 @@ var PM_Main = class extends PM {
         return t[0] === src;
       });
       if (!testConfig) {
-        console.error("missing test config");
+        console.log(ansiC.inverse("missing test config! Exiting ungracefully!"));
         process.exit(-1);
       }
       const testConfigResource = testConfig[2];
@@ -872,13 +875,13 @@ function isValidUrl(string) {
 
 // src/run.ts
 import ansiC2 from "ansi-colors";
-console.log("Press 'x' to shutdown forcefully.");
+console.log(ansiC2.inverse("Press 'x' to shutdown forcefully."));
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
   process.stdin.setRawMode(true);
 process.stdin.on("keypress", (str, key) => {
   if (key.name === "x") {
-    console.log("Testeranto-Run is shutting down forcefully...");
+    console.log(ansiC2.inverse("Shutting down forcefully..."));
     process.exit(-1);
   }
 });
@@ -896,6 +899,15 @@ async function fileHash(filePath, algorithm = "md5") {
     fileStream.on("error", (error) => {
       reject(`Error reading file: ${error.message}`);
     });
+  });
+}
+async function filesHash(files2, algorithm = "md5") {
+  return new Promise((resolve, reject) => {
+    resolve(
+      files2.reduce(async (mm, f) => {
+        return await mm + await fileHash(f);
+      }, Promise.resolve(""))
+    );
   });
 }
 var getRunnables = (tests, payload = {
@@ -918,6 +930,7 @@ var getRunnables = (tests, payload = {
     return pt;
   }, payload);
 };
+var changes = {};
 var tscCheck = async ({
   entrypoint,
   addableFiles,
@@ -1036,7 +1049,7 @@ var metafileOutputs = async (platform) => {
   if (!metafile)
     return;
   const outputs = metafile.outputs;
-  Object.keys(outputs).forEach((k) => {
+  Object.keys(outputs).forEach(async (k) => {
     const addableFiles = Object.keys(outputs[k].inputs).filter((i) => {
       if (!fs2.existsSync(i))
         return false;
@@ -1050,9 +1063,14 @@ var metafileOutputs = async (platform) => {
     }
     const entrypoint = outputs[k].entryPoint;
     if (entrypoint) {
-      tscCheck({ platform, addableFiles, entrypoint });
-      eslintCheck(entrypoint, platform, addableFiles);
-      makePrompt(entrypoint, addableFiles, platform);
+      const changeDigest = await filesHash(addableFiles);
+      if (changeDigest === changes[entrypoint]) {
+      } else {
+        changes[entrypoint] = changeDigest;
+        tscCheck({ platform, addableFiles, entrypoint });
+        eslintCheck(entrypoint, platform, addableFiles);
+        makePrompt(entrypoint, addableFiles, platform);
+      }
     }
   });
 };
@@ -1081,7 +1099,7 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
   const nodeMetafileWatcher = watch(
     "docs/node/metafile.json",
     async (e, filename) => {
-      console.log(ansiC2.yellow(ansiC2.inverse(`< ${e} ${filename}`)));
+      console.log(ansiC2.green(ansiC2.inverse(`< ${e} ${filename} (node)`)));
       metafileOutputs("node");
     }
   );
@@ -1089,7 +1107,7 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
   const webMetafileWatcher = watch(
     "docs/web/metafile.json",
     async (e, filename) => {
-      console.log(ansiC2.yellow(ansiC2.inverse(`< ${e} ${filename}`)));
+      console.log(ansiC2.green(ansiC2.inverse(`< ${e} ${filename} (web)`)));
       metafileOutputs("web");
     }
   );
@@ -1142,14 +1160,13 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
   const { nodeEntryPoints, webEntryPoints } = getRunnables(config.tests);
   Object.entries(nodeEntryPoints).forEach(
     ([k, outputFile]) => {
-      console.log("watching and running", outputFile);
       pm.launchNode(k, outputFile);
       try {
         watch(outputFile, async (e, filename) => {
           const hash = await fileHash(outputFile);
           if (fileHashes[k] !== hash) {
             fileHashes[k] = hash;
-            console.log(`< ${e} ${filename}`);
+            console.log(ansiC2.green(ansiC2.inverse(`< ${e} ${filename}`)));
             pm.launchNode(k, outputFile);
           }
         });
@@ -1160,13 +1177,12 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
   );
   Object.entries(webEntryPoints).forEach(
     ([k, outputFile]) => {
-      console.log("watching and running", outputFile);
       pm.launchWeb(k, outputFile);
       watch(outputFile, async (e, filename) => {
         const hash = await fileHash(outputFile);
-        console.log(`< ${e} ${filename}`);
         if (fileHashes[k] !== hash) {
           fileHashes[k] = hash;
+          console.log(ansiC2.green(ansiC2.inverse(`< ${e} ${filename}`)));
           pm.launchWeb(k, outputFile);
         }
       });

@@ -18,19 +18,20 @@ import {
 
 import ansiC from "ansi-colors";
 
-console.log("Press 'x' to shutdown forcefully.");
+console.log(ansiC.inverse("Press 'x' to shutdown forcefully."));
+
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
 
 process.stdin.on("keypress", (str, key) => {
   if (key.name === "x") {
-    console.log("Testeranto-Run is shutting down forcefully...");
+    console.log(ansiC.inverse("Shutting down forcefully..."));
     process.exit(-1);
   }
 });
 
 async function fileHash(filePath, algorithm = "md5") {
-  return new Promise((resolve, reject) => {
+  return new Promise<string>((resolve, reject) => {
     const hash = crypto.createHash(algorithm);
     const fileStream = fs.createReadStream(filePath);
 
@@ -49,6 +50,15 @@ async function fileHash(filePath, algorithm = "md5") {
   });
 }
 
+async function filesHash(files: string[], algorithm = "md5") {
+  return new Promise<string>((resolve, reject) => {
+    resolve(
+      files.reduce(async (mm: Promise<string>, f) => {
+        return (await mm) + (await fileHash(f));
+      }, Promise.resolve(""))
+    );
+  });
+}
 const getRunnables = (
   tests: ITestTypes[],
   payload = {
@@ -75,6 +85,8 @@ const getRunnables = (
   }, payload as IRunnables);
 };
 
+const changes: Record<string, string> = {};
+
 const tscCheck = async ({
   entrypoint,
   addableFiles,
@@ -84,9 +96,7 @@ const tscCheck = async ({
   entrypoint: string;
   addableFiles: string[];
 }) => {
-  // console.log("tsc <", entrypoint);
   console.log(ansiC.green(ansiC.inverse(`tsc < ${entrypoint}`)));
-
   const program = tsc.createProgramFromConfig({
     basePath: process.cwd(), // always required, used for relative paths
     configFilePath: "tsconfig.json", // config to inherit from (optional)
@@ -230,7 +240,7 @@ const metafileOutputs = async (platform: "web" | "node") => {
 
   const outputs: IOutputs = metafile.outputs;
 
-  Object.keys(outputs).forEach((k) => {
+  Object.keys(outputs).forEach(async (k) => {
     const addableFiles = Object.keys(outputs[k].inputs).filter((i) => {
       if (!fs.existsSync(i)) return false;
       if (i.startsWith("node_modules")) return false;
@@ -245,9 +255,16 @@ const metafileOutputs = async (platform: "web" | "node") => {
     const entrypoint = outputs[k].entryPoint;
 
     if (entrypoint) {
-      tscCheck({ platform, addableFiles, entrypoint });
-      eslintCheck(entrypoint, platform, addableFiles);
-      makePrompt(entrypoint, addableFiles, platform);
+      const changeDigest = await filesHash(addableFiles);
+
+      if (changeDigest === changes[entrypoint]) {
+        // skip
+      } else {
+        changes[entrypoint] = changeDigest;
+        tscCheck({ platform, addableFiles, entrypoint });
+        eslintCheck(entrypoint, platform, addableFiles);
+        makePrompt(entrypoint, addableFiles, platform);
+      }
     }
   });
 };
@@ -282,8 +299,7 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
   const nodeMetafileWatcher = watch(
     "docs/node/metafile.json",
     async (e, filename) => {
-      // console.log(`< ${e} ${filename}`);
-      console.log(ansiC.yellow(ansiC.inverse(`< ${e} ${filename}`)));
+      console.log(ansiC.green(ansiC.inverse(`< ${e} ${filename} (node)`)));
       metafileOutputs("node");
     }
   );
@@ -292,8 +308,7 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
   const webMetafileWatcher = watch(
     "docs/web/metafile.json",
     async (e, filename) => {
-      // console.log(`< ${e} ${filename}`);
-      console.log(ansiC.yellow(ansiC.inverse(`< ${e} ${filename}`)));
+      console.log(ansiC.green(ansiC.inverse(`< ${e} ${filename} (web)`)));
       metafileOutputs("web");
     }
   );
@@ -352,14 +367,13 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
 
   Object.entries(nodeEntryPoints).forEach(
     ([k, outputFile]: [string, string]) => {
-      console.log("watching and running", outputFile);
       pm.launchNode(k, outputFile);
       try {
         watch(outputFile, async (e, filename) => {
           const hash = await fileHash(outputFile);
           if (fileHashes[k] !== hash) {
             fileHashes[k] = hash;
-            console.log(`< ${e} ${filename}`);
+            console.log(ansiC.green(ansiC.inverse(`< ${e} ${filename}`)));
             pm.launchNode(k, outputFile);
           }
         });
@@ -371,13 +385,12 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
 
   Object.entries(webEntryPoints).forEach(
     ([k, outputFile]: [string, string]) => {
-      console.log("watching and running", outputFile);
       pm.launchWeb(k, outputFile);
       watch(outputFile, async (e, filename) => {
         const hash = await fileHash(outputFile);
-        console.log(`< ${e} ${filename}`);
         if (fileHashes[k] !== hash) {
           fileHashes[k] = hash;
+          console.log(ansiC.green(ansiC.inverse(`< ${e} ${filename}`)));
           pm.launchWeb(k, outputFile);
         }
       });

@@ -75,23 +75,26 @@ class PM_Main extends index_js_1.PM {
             }
             else {
                 this.browser.disconnect().then(() => {
-                    const final = this.configs.tests.reduce((mm, t) => {
-                        const bddErrors = fs_1.default
-                            .readFileSync((0, utils_1.bddExitCodePather)(t[0], t[1]))
-                            .toString();
-                        const lintErrors = fs_1.default
-                            .readFileSync((0, utils_1.lintExitCodePather)(t[0], t[1]))
-                            .toString();
-                        const typeErrors = fs_1.default
-                            .readFileSync((0, utils_1.tscExitCodePather)(t[0], t[1]))
-                            .toString();
-                        mm[t[0]] = {
-                            bddErrors,
-                            lintErrors,
-                            typeErrors,
-                        };
-                        return mm;
-                    }, {});
+                    const final = {
+                        timestamp: Date.now(),
+                        tests: this.configs.tests.reduce((mm, t) => {
+                            const bddErrors = fs_1.default
+                                .readFileSync((0, utils_1.bddExitCodePather)(t[0], t[1]))
+                                .toString();
+                            const lintErrors = fs_1.default
+                                .readFileSync((0, utils_1.lintExitCodePather)(t[0], t[1]))
+                                .toString();
+                            const typeErrors = fs_1.default
+                                .readFileSync((0, utils_1.tscExitCodePather)(t[0], t[1]))
+                                .toString();
+                            mm[t[0]] = {
+                                bddErrors,
+                                lintErrors,
+                                typeErrors,
+                            };
+                            return mm;
+                        }, {}),
+                    };
                     const s = JSON.stringify(final, null, 2);
                     fs_1.default.writeFileSync("docs/summary.json", s);
                     console.log(ansi_colors_1.default.inverse("Goodbye"));
@@ -109,7 +112,8 @@ class PM_Main extends index_js_1.PM {
             }
         };
         this.launchNode = async (src, dest) => {
-            console.log(ansi_colors_1.default.yellow(`! node, ${src}`));
+            // console.log(ansiC.yellow(`! node, ${src}`));
+            console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`! node, ${src}`)));
             this.testIsNowRunning(src);
             const destFolder = dest.replace(".mjs", "");
             let argz = "";
@@ -117,7 +121,7 @@ class PM_Main extends index_js_1.PM {
                 return t[0] === src;
             });
             if (!testConfig) {
-                console.error("missing test config");
+                console.log(ansi_colors_1.default.inverse("missing test config! Exiting ungracefully!"));
                 process.exit(-1);
             }
             const testConfigResource = testConfig[2];

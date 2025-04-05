@@ -36,23 +36,26 @@ export class PM_Main extends PM {
             }
             else {
                 this.browser.disconnect().then(() => {
-                    const final = this.configs.tests.reduce((mm, t) => {
-                        const bddErrors = fs
-                            .readFileSync(bddExitCodePather(t[0], t[1]))
-                            .toString();
-                        const lintErrors = fs
-                            .readFileSync(lintExitCodePather(t[0], t[1]))
-                            .toString();
-                        const typeErrors = fs
-                            .readFileSync(tscExitCodePather(t[0], t[1]))
-                            .toString();
-                        mm[t[0]] = {
-                            bddErrors,
-                            lintErrors,
-                            typeErrors,
-                        };
-                        return mm;
-                    }, {});
+                    const final = {
+                        timestamp: Date.now(),
+                        tests: this.configs.tests.reduce((mm, t) => {
+                            const bddErrors = fs
+                                .readFileSync(bddExitCodePather(t[0], t[1]))
+                                .toString();
+                            const lintErrors = fs
+                                .readFileSync(lintExitCodePather(t[0], t[1]))
+                                .toString();
+                            const typeErrors = fs
+                                .readFileSync(tscExitCodePather(t[0], t[1]))
+                                .toString();
+                            mm[t[0]] = {
+                                bddErrors,
+                                lintErrors,
+                                typeErrors,
+                            };
+                            return mm;
+                        }, {}),
+                    };
                     const s = JSON.stringify(final, null, 2);
                     fs.writeFileSync("docs/summary.json", s);
                     console.log(ansiC.inverse("Goodbye"));
@@ -70,7 +73,8 @@ export class PM_Main extends PM {
             }
         };
         this.launchNode = async (src, dest) => {
-            console.log(ansiC.yellow(`! node, ${src}`));
+            // console.log(ansiC.yellow(`! node, ${src}`));
+            console.log(ansiC.green(ansiC.inverse(`! node, ${src}`)));
             this.testIsNowRunning(src);
             const destFolder = dest.replace(".mjs", "");
             let argz = "";
@@ -78,7 +82,7 @@ export class PM_Main extends PM {
                 return t[0] === src;
             });
             if (!testConfig) {
-                console.error("missing test config");
+                console.log(ansiC.inverse("missing test config! Exiting ungracefully!"));
                 process.exit(-1);
             }
             const testConfigResource = testConfig[2];

@@ -47,13 +47,13 @@ const readline_1 = __importDefault(require("readline"));
 const main_1 = require("./PM/main");
 const utils_1 = require("./utils");
 const ansi_colors_1 = __importDefault(require("ansi-colors"));
-console.log("Press 'x' to shutdown forcefully.");
+console.log(ansi_colors_1.default.inverse("Press 'x' to shutdown forcefully."));
 readline_1.default.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
     process.stdin.setRawMode(true);
 process.stdin.on("keypress", (str, key) => {
     if (key.name === "x") {
-        console.log("Testeranto-Run is shutting down forcefully...");
+        console.log(ansi_colors_1.default.inverse("Shutting down forcefully..."));
         process.exit(-1);
     }
 });
@@ -73,6 +73,13 @@ async function fileHash(filePath, algorithm = "md5") {
         });
     });
 }
+async function filesHash(files, algorithm = "md5") {
+    return new Promise((resolve, reject) => {
+        resolve(files.reduce(async (mm, f) => {
+            return (await mm) + (await fileHash(f));
+        }, Promise.resolve("")));
+    });
+}
 const getRunnables = (tests, payload = {
     nodeEntryPoints: {},
     webEntryPoints: {},
@@ -90,8 +97,8 @@ const getRunnables = (tests, payload = {
         return pt;
     }, payload);
 };
+const changes = {};
 const tscCheck = async ({ entrypoint, addableFiles, platform, }) => {
-    // console.log("tsc <", entrypoint);
     console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`tsc < ${entrypoint}`)));
     const program = tsc_prog_1.default.createProgramFromConfig({
         basePath: process.cwd(), // always required, used for relative paths
@@ -163,7 +170,7 @@ const metafileOutputs = async (platform) => {
     if (!metafile)
         return;
     const outputs = metafile.outputs;
-    Object.keys(outputs).forEach((k) => {
+    Object.keys(outputs).forEach(async (k) => {
         const addableFiles = Object.keys(outputs[k].inputs).filter((i) => {
             if (!fs_2.default.existsSync(i))
                 return false;
@@ -177,9 +184,16 @@ const metafileOutputs = async (platform) => {
         }
         const entrypoint = outputs[k].entryPoint;
         if (entrypoint) {
-            tscCheck({ platform, addableFiles, entrypoint });
-            eslintCheck(entrypoint, platform, addableFiles);
-            makePrompt(entrypoint, addableFiles, platform);
+            const changeDigest = await filesHash(addableFiles);
+            if (changeDigest === changes[entrypoint]) {
+                // skip
+            }
+            else {
+                changes[entrypoint] = changeDigest;
+                tscCheck({ platform, addableFiles, entrypoint });
+                eslintCheck(entrypoint, platform, addableFiles);
+                makePrompt(entrypoint, addableFiles, platform);
+            }
         }
     });
 };
@@ -202,14 +216,12 @@ Promise.resolve(`${process.cwd() + "/" + process.argv[2]}`).then(s => __importSt
     });
     metafileOutputs("node");
     const nodeMetafileWatcher = (0, fs_1.watch)("docs/node/metafile.json", async (e, filename) => {
-        // console.log(`< ${e} ${filename}`);
-        console.log(ansi_colors_1.default.yellow(ansi_colors_1.default.inverse(`< ${e} ${filename}`)));
+        console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`< ${e} ${filename} (node)`)));
         metafileOutputs("node");
     });
     metafileOutputs("web");
     const webMetafileWatcher = (0, fs_1.watch)("docs/web/metafile.json", async (e, filename) => {
-        // console.log(`< ${e} ${filename}`);
-        console.log(ansi_colors_1.default.yellow(ansi_colors_1.default.inverse(`< ${e} ${filename}`)));
+        console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`< ${e} ${filename} (web)`)));
         metafileOutputs("web");
     });
     await pm.startPuppeteer({
@@ -256,14 +268,13 @@ Promise.resolve(`${process.cwd() + "/" + process.argv[2]}`).then(s => __importSt
     }, ".");
     const { nodeEntryPoints, webEntryPoints } = getRunnables(config.tests);
     Object.entries(nodeEntryPoints).forEach(([k, outputFile]) => {
-        console.log("watching and running", outputFile);
         pm.launchNode(k, outputFile);
         try {
             (0, fs_1.watch)(outputFile, async (e, filename) => {
                 const hash = await fileHash(outputFile);
                 if (fileHashes[k] !== hash) {
                     fileHashes[k] = hash;
-                    console.log(`< ${e} ${filename}`);
+                    console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`< ${e} ${filename}`)));
                     pm.launchNode(k, outputFile);
                 }
             });
@@ -273,13 +284,12 @@ Promise.resolve(`${process.cwd() + "/" + process.argv[2]}`).then(s => __importSt
         }
     });
     Object.entries(webEntryPoints).forEach(([k, outputFile]) => {
-        console.log("watching and running", outputFile);
         pm.launchWeb(k, outputFile);
         (0, fs_1.watch)(outputFile, async (e, filename) => {
             const hash = await fileHash(outputFile);
-            console.log(`< ${e} ${filename}`);
             if (fileHashes[k] !== hash) {
                 fileHashes[k] = hash;
+                console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`< ${e} ${filename}`)));
                 pm.launchWeb(k, outputFile);
             }
         });
