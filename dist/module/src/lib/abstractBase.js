@@ -57,6 +57,7 @@ export class BaseSuite {
                     if (prop === "writeFileSync") {
                         return (fp, contents) => target[prop](`suite-${sNdx}/beforeAll/${fp}`, contents);
                     }
+                    /* @ts-ignore:next-line */
                     return Reflect.get(...arguments);
                 },
             });
@@ -156,6 +157,7 @@ export class BaseGiven {
                     if (prop === "screencast") {
                         return (opts, p) => target.screencast(Object.assign(Object.assign({}, opts), { path: `suite-${suiteNdx}/given-${key}/when/beforeEach/${opts.path}` }), p);
                     }
+                    /* @ts-ignore:next-line */
                     return Reflect.get(...arguments);
                 },
             });
@@ -190,6 +192,7 @@ export class BaseGiven {
                         if (prop === "writeFileSync") {
                             return (fp, contents) => target[prop](`suite-${suiteNdx}/given-${key}/afterEach/${fp}`, contents);
                         }
+                        /* @ts-ignore:next-line */
                         return Reflect.get(...arguments);
                     },
                 });
@@ -226,6 +229,7 @@ export class BaseWhen {
                 if (prop === "writeFileSync") {
                     return (fp, contents) => target[prop](`${filepath}/andWhen/${fp}`, contents);
                 }
+                /* @ts-ignore:next-line */
                 return Reflect.get(...arguments);
             },
         });
@@ -269,6 +273,7 @@ export class BaseThen {
                     if (prop === "writeFileSync") {
                         return (fp, contents) => target[prop](`${filepath}/${fp}`, contents);
                     }
+                    /* @ts-ignore:next-line */
                     return Reflect.get(...arguments);
                 },
             });

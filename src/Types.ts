@@ -34,27 +34,16 @@ export type ITestInterface<
     testResource: ITTestResourceConfiguration,
     pm: PM
   ) => Promise<I["iselection"]>;
-  afterAll: (
-    store: I["istore"],
-    // artificer: ITestArtificer,
-    pm: PM
-  ) => any;
-  afterEach: (
-    store: I["istore"],
-    key: string,
-    // artificer: ITestArtificer,
-    pm: PM
-  ) => Promise<unknown>;
+  afterAll: (store: I["istore"], pm: PM) => any;
+  afterEach: (store: I["istore"], key: string, pm: PM) => Promise<unknown>;
   beforeAll: (
     input: I["iinput"],
     testResource: ITTestResourceConfiguration,
-    // artificer: ITestArtificer,
     pm: PM
   ) => Promise<I["isubject"]>;
   beforeEach: (
     subject: I["isubject"],
     initializer: (c?) => I["given"],
-    // artificer: ITestArtificer,
     testResource: ITTestResourceConfiguration,
     initialValues,
     pm: PM
@@ -109,196 +98,21 @@ export type IPartialNodeInterface<
   >
 > = Partial<INodeTestInterface<I>>;
 export type IPartialWebInterface<
-  I extends IBaseTest<
+  I extends Ibdd_in<
     unknown,
     unknown,
     unknown,
     unknown,
     unknown,
     unknown,
-    unknown,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
+    unknown
   >
 > = Partial<IWebTestInterface<I>>;
 
-export type ITestSpecification<
-  I extends Ibdd_out<
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
-  >
-> = (
-  Suite: {
-    [K in keyof I["suites"]]: (
-      name: string,
-      givens: IGivens<
-        IBaseTest<
-          unknown,
-          unknown,
-          unknown,
-          unknown,
-          unknown,
-          unknown,
-          unknown,
-          Record<string, any>,
-          Record<string, any>,
-          Record<string, any>,
-          Record<string, any>,
-          Record<string, any>
-        >
-      >,
-      checks: BaseCheck<
-        IBaseTest<
-          unknown,
-          unknown,
-          unknown,
-          unknown,
-          unknown,
-          unknown,
-          unknown,
-          Record<string, any>,
-          Record<string, any>,
-          Record<string, any>,
-          Record<string, any>,
-          Record<string, any>
-        >
-      >[]
-    ) => BaseSuite<
-      IBaseTest<
-        unknown,
-        unknown,
-        unknown,
-        unknown,
-        unknown,
-        unknown,
-        unknown,
-        Record<string, any>,
-        Record<string, any>,
-        Record<string, any>,
-        Record<string, any>,
-        Record<string, any>
-      >
-    >;
-  },
-  Given: {
-    [K in keyof I["givens"]]: (
-      features: string[],
-      whens: BaseWhen<
-        IBaseTest<
-          unknown,
-          unknown,
-          unknown,
-          unknown,
-          unknown,
-          unknown,
-          unknown,
-          Record<string, any>,
-          Record<string, any>,
-          Record<string, any>,
-          Record<string, any>,
-          Record<string, any>
-        >
-      >[],
-      thens: BaseThen<
-        IBaseTest<
-          unknown,
-          unknown,
-          unknown,
-          unknown,
-          unknown,
-          unknown,
-          unknown,
-          Record<string, any>,
-          Record<string, any>,
-          Record<string, any>,
-          Record<string, any>,
-          Record<string, any>
-        >
-      >[],
-      ...xtrasB: I["givens"][K]
-    ) => BaseGiven<
-      IBaseTest<
-        unknown,
-        unknown,
-        unknown,
-        unknown,
-        unknown,
-        unknown,
-        unknown,
-        Record<string, any>,
-        Record<string, any>,
-        Record<string, any>,
-        Record<string, any>,
-        Record<string, any>
-      >
-    >;
-  },
-  When: {
-    [K in keyof I["whens"]]: (
-      ...xtrasC: I["whens"][K]
-    ) => BaseWhen<
-      IBaseTest<
-        unknown,
-        unknown,
-        unknown,
-        unknown,
-        unknown,
-        unknown,
-        unknown,
-        Record<string, any>,
-        Record<string, any>,
-        Record<string, any>,
-        Record<string, any>,
-        Record<string, any>
-      >
-    >;
-  },
-  Then: {
-    [K in keyof I["thens"]]: (
-      ...xtrasD: I["thens"][K]
-    ) => BaseThen<
-      IBaseTest<
-        unknown,
-        unknown,
-        unknown,
-        unknown,
-        unknown,
-        unknown,
-        unknown,
-        Record<string, any>,
-        Record<string, any>,
-        Record<string, any>,
-        Record<string, any>,
-        Record<string, any>
-      >
-    >;
-  },
-  Check: ITestCheckCallback<
-    IBaseTest<
-      unknown,
-      unknown,
-      unknown,
-      unknown,
-      unknown,
-      unknown,
-      unknown,
-      Record<string, any>,
-      Record<string, any>,
-      Record<string, any>,
-      Record<string, any>,
-      Record<string, any>
-    >
-  >
-) => any[];
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export type ITestImplementation<
-  IN extends Ibdd_in<
+export type ITestSpecification<
+  I extends Ibdd_in<
     unknown,
     unknown,
     unknown,
@@ -307,7 +121,51 @@ export type ITestImplementation<
     unknown,
     unknown
   >,
-  OUT extends Ibdd_out<
+  O extends Ibdd_out<
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+> = (
+  Suite: {
+    [K in keyof O["suites"]]: (
+      name: string,
+      givens: IGivens<I>,
+      checks: BaseCheck<I, O>[]
+    ) => BaseSuite<I, O>;
+  },
+  Given: {
+    [K in keyof O["givens"]]: (
+      features: string[],
+      whens: BaseWhen<I>[],
+      thens: BaseThen<I>[],
+      ...xtrasB: O["givens"][K]
+    ) => BaseGiven<I>;
+  },
+  When: {
+    [K in keyof O["whens"]]: (...xtrasC: O["whens"][K]) => BaseWhen<I>;
+  },
+  Then: {
+    [K in keyof O["thens"]]: (...xtrasD: O["thens"][K]) => BaseThen<I>;
+  },
+  Check: ITestCheckCallback<I, O>
+) => any[];
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export type ITestImplementation<
+  I extends Ibdd_in<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown
+  >,
+  O extends Ibdd_out<
     Record<string, any>,
     Record<string, any>,
     Record<string, any>,
@@ -316,55 +174,29 @@ export type ITestImplementation<
   >
 > = {
   suites: {
-    [K in keyof OUT["suites"]]: string;
+    [K in keyof O["suites"]]: string;
   };
   givens: {
-    [K in keyof OUT["givens"]]: (...Ig: OUT["givens"][K]) => IN["given"];
+    [K in keyof O["givens"]]: (...Ig: O["givens"][K]) => I["given"];
   };
   whens: {
-    [K in keyof OUT["whens"]]: (
-      ...Iw: OUT["whens"][K]
-    ) => (zel: IN["iselection"], utils: PM) => Promise<IN["when"]>;
+    [K in keyof O["whens"]]: (
+      ...Iw: O["whens"][K]
+    ) => (zel: I["iselection"], utils: PM) => Promise<I["when"]>;
   };
   thens: {
-    [K in keyof OUT["thens"]]: (
-      ...It: OUT["thens"][K]
-    ) => (ssel: IN["iselection"], utils: PM) => IN["then"];
+    [K in keyof O["thens"]]: (
+      ...It: O["thens"][K]
+    ) => (ssel: I["iselection"], utils: PM) => I["then"];
   };
   checks: {
-    [K in keyof OUT["checks"]]: (...Ic: OUT["checks"][K]) => IN["given"];
+    [K in keyof O["checks"]]: (...Ic: O["checks"][K]) => I["given"];
   };
 };
 
-export type Modify<T, R> = Omit<T, keyof R> & R;
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export type IBaseTest<
-  IInput,
-  ISubject,
-  IStore,
-  ISelection,
-  IGiven,
-  IWhen,
-  IThen,
-  ISuites extends Record<string, any>,
-  IGivens extends Record<string, any>,
-  IWhens extends Record<string, any>,
-  IThens extends Record<string, any>,
-  IChecks extends Record<string, any>
-> = {
-  iinput: IInput;
-  isubject: ISubject;
-  istore: IStore;
-  iselection: ISelection;
-  given: IGiven;
-  when: IWhen;
-  then: IThen;
-  suites: ISuites;
-  givens: IGivens;
-  whens: IWhens;
-  thens: IThens;
-  checks: IChecks;
-};
+export type Modify<T, R> = Omit<T, keyof R> & R;
 
 export type Ibdd_out<
   ISuites extends Record<string, any>,

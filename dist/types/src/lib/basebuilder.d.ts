@@ -1,27 +1,27 @@
 import { ITTestResourceRequest, ITestJob } from ".";
-import { IBaseTest, ITestSpecification } from "../Types.js";
+import { Ibdd_in, Ibdd_out, ITestSpecification } from "../Types.js";
 import { ISuiteKlasser, IGivenKlasser, IWhenKlasser, IThenKlasser, ICheckKlasser } from "./types.js";
 import { BaseCheck, BaseWhen, BaseThen, BaseGiven } from "./abstractBase.js";
 import { PM } from "../PM/index.js";
-export declare abstract class BaseBuilder<ITestShape extends IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>, SuiteExtensions, GivenExtensions, WhenExtensions, ThenExtensions, CheckExtensions> {
-    readonly input: ITestShape["iinput"];
+export declare abstract class BaseBuilder<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>, O extends Ibdd_out<Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>, SuiteExtensions, GivenExtensions, WhenExtensions, ThenExtensions, CheckExtensions> {
+    readonly input: I["iinput"];
     specs: any;
-    assertThis: (t: ITestShape["then"]) => {};
+    assertThis: (t: I["then"]) => {};
     testResourceRequirement: ITTestResourceRequest;
     artifacts: Promise<unknown>[];
     testJobs: ITestJob[];
-    testSpecification: ITestSpecification<ITestShape>;
-    suitesOverrides: Record<keyof SuiteExtensions, ISuiteKlasser<ITestShape>>;
-    givenOverides: Record<keyof GivenExtensions, IGivenKlasser<ITestShape>>;
-    whenOverides: Record<keyof WhenExtensions, IWhenKlasser<ITestShape>>;
-    thenOverides: Record<keyof ThenExtensions, IThenKlasser<ITestShape>>;
-    checkOverides: Record<keyof CheckExtensions, ICheckKlasser<ITestShape>>;
+    testSpecification: ITestSpecification<I, O>;
+    suitesOverrides: Record<keyof SuiteExtensions, ISuiteKlasser<I, O>>;
+    givenOverides: Record<keyof GivenExtensions, IGivenKlasser<I>>;
+    whenOverides: Record<keyof WhenExtensions, IWhenKlasser<I>>;
+    thenOverides: Record<keyof ThenExtensions, IThenKlasser<I>>;
+    checkOverides: Record<keyof CheckExtensions, ICheckKlasser<I, O>>;
     puppetMaster: PM;
-    constructor(input: ITestShape["iinput"], suitesOverrides: Record<keyof SuiteExtensions, ISuiteKlasser<ITestShape>>, givenOverides: Record<keyof GivenExtensions, IGivenKlasser<ITestShape>>, whenOverides: Record<keyof WhenExtensions, IWhenKlasser<ITestShape>>, thenOverides: Record<keyof ThenExtensions, IThenKlasser<ITestShape>>, checkOverides: Record<keyof CheckExtensions, ICheckKlasser<ITestShape>>, testResourceRequirement: ITTestResourceRequest, testSpecification: any);
+    constructor(input: I["iinput"], suitesOverrides: Record<keyof SuiteExtensions, ISuiteKlasser<I, O>>, givenOverides: Record<keyof GivenExtensions, IGivenKlasser<I>>, whenOverides: Record<keyof WhenExtensions, IWhenKlasser<I>>, thenOverides: Record<keyof ThenExtensions, IThenKlasser<I>>, checkOverides: Record<keyof CheckExtensions, ICheckKlasser<I, O>>, testResourceRequirement: ITTestResourceRequest, testSpecification: any);
     Specs(): any;
-    Suites(): Record<keyof SuiteExtensions, ISuiteKlasser<ITestShape>>;
-    Given(): Record<keyof GivenExtensions, (name: string, features: string[], whens: BaseWhen<ITestShape>[], thens: BaseThen<ITestShape>[], gcb: any) => BaseGiven<ITestShape>>;
-    When(): Record<keyof WhenExtensions, (arg0: ITestShape["istore"], ...arg1: any) => BaseWhen<ITestShape>>;
-    Then(): Record<keyof ThenExtensions, (selection: ITestShape["iselection"], expectation: any) => BaseThen<ITestShape>>;
-    Check(): Record<keyof CheckExtensions, (feature: string, callback: (whens: any, thens: any) => any, whens: any, thens: any, x: any) => BaseCheck<ITestShape>>;
+    Suites(): Record<keyof SuiteExtensions, ISuiteKlasser<I, O>>;
+    Given(): Record<keyof GivenExtensions, (name: string, features: string[], whens: BaseWhen<I>[], thens: BaseThen<I>[], gcb: any) => BaseGiven<I>>;
+    When(): Record<keyof WhenExtensions, (arg0: I["istore"], ...arg1: any) => BaseWhen<I>>;
+    Then(): Record<keyof ThenExtensions, (selection: I["iselection"], expectation: any) => BaseThen<I>>;
+    Check(): Record<keyof CheckExtensions, (feature: string, callback: (whens: any, thens: any) => any, whens: any, thens: any, x: any) => BaseCheck<I, O>>;
 }

@@ -1,3 +1,5 @@
+import { Ibdd_in, Ibdd_out } from "../Types";
+
 import {
   IGivens,
   BaseCheck,
@@ -6,17 +8,18 @@ import {
   BaseWhen,
   BaseThen,
 } from "./abstractBase";
-import { IBaseTest } from "../Types";
 
 export type ITestCheckCallback<
-  ITestShape extends IBaseTest<
+  I extends Ibdd_in<
     unknown,
     unknown,
     unknown,
     unknown,
     unknown,
     unknown,
-    unknown,
+    unknown
+  >,
+  O extends Ibdd_out<
     Record<string, any>,
     Record<string, any>,
     Record<string, any>,
@@ -24,30 +27,32 @@ export type ITestCheckCallback<
     Record<string, any>
   >
 > = {
-  [K in keyof ITestShape["checks"]]: (
+  [K in keyof O["checks"]]: (
     name: string,
     features: string[],
     callbackA: (
       whens: {
-        [K in keyof ITestShape["whens"]]: (...unknown) => BaseWhen<ITestShape>;
+        [K in keyof O["whens"]]: (...unknown) => BaseWhen<I>;
       },
       thens: {
-        [K in keyof ITestShape["thens"]]: (...unknown) => BaseThen<ITestShape>;
+        [K in keyof O["thens"]]: (...unknown) => BaseThen<I>;
       }
     ) => Promise<any>,
-    ...xtrasA: ITestShape["checks"][K]
-  ) => BaseCheck<ITestShape>;
+    ...xtrasA: O["checks"][K]
+  ) => BaseCheck<I, O>;
 };
 
 export type ISuiteKlasser<
-  ITestShape extends IBaseTest<
+  I extends Ibdd_in<
     unknown,
     unknown,
     unknown,
     unknown,
     unknown,
     unknown,
-    unknown,
+    unknown
+  >,
+  O extends Ibdd_out<
     Record<string, any>,
     Record<string, any>,
     Record<string, any>,
@@ -57,74 +62,61 @@ export type ISuiteKlasser<
 > = (
   name: string,
   index: number,
-  givens: IGivens<ITestShape>,
-  checks: BaseCheck<ITestShape>[]
-) => BaseSuite<ITestShape>;
+  givens: IGivens<I>,
+  checks: BaseCheck<I, O>[]
+) => BaseSuite<I, O>;
 
 export type IGivenKlasser<
-  ITestShape extends IBaseTest<
+  I extends Ibdd_in<
     unknown,
     unknown,
     unknown,
     unknown,
     unknown,
     unknown,
-    unknown,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
+    unknown
   >
-> = (name, features, whens, thens, givenCB) => BaseGiven<ITestShape>;
+> = (name, features, whens, thens, givenCB) => BaseGiven<I>;
 
 export type IWhenKlasser<
-  ITestShape extends IBaseTest<
+  I extends Ibdd_in<
     unknown,
     unknown,
     unknown,
     unknown,
     unknown,
     unknown,
-    unknown,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
+    unknown
   >
-> = (s, o) => BaseWhen<ITestShape>;
+> = (s, o) => BaseWhen<I>;
 
 export type IThenKlasser<
-  ITestShape extends IBaseTest<
+  I extends Ibdd_in<
     unknown,
     unknown,
     unknown,
     unknown,
     unknown,
     unknown,
-    unknown,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
+    unknown
   >
-> = (s, o) => BaseThen<ITestShape>;
+> = (s, o) => BaseThen<I>;
 
 export type ICheckKlasser<
-  ITestShape extends IBaseTest<
+  I extends Ibdd_in<
     unknown,
     unknown,
     unknown,
     unknown,
     unknown,
     unknown,
-    unknown,
+    unknown
+  >,
+  O extends Ibdd_out<
     Record<string, any>,
     Record<string, any>,
     Record<string, any>,
     Record<string, any>,
     Record<string, any>
   >
-> = (n, f, cb, w, t) => BaseCheck<ITestShape>;
+> = (n, f, cb, w, t) => BaseCheck<I, O>;

@@ -5,36 +5,39 @@ import {
   ITTestResourceRequest,
 } from "./lib/index.js";
 import type {
-  IBaseTest,
+  Ibdd_in,
+  Ibdd_out,
+  INodeTestInterface,
   ITestImplementation,
   ITestInterface,
   ITestSpecification,
 } from "./Types.js";
-
 import { PM_Node } from "./PM/node.js";
 
 export class NodeTesteranto<
-  TestShape extends IBaseTest<
+  I extends Ibdd_in<
     unknown,
     unknown,
     unknown,
     unknown,
     unknown,
     unknown,
-    unknown,
+    unknown
+  >,
+  O extends Ibdd_out<
     Record<string, any>,
     Record<string, any>,
     Record<string, any>,
     Record<string, any>,
     Record<string, any>
   >
-> extends Testeranto<TestShape> {
+> extends Testeranto<I, O> {
   constructor(
-    input: TestShape["iinput"],
-    testSpecification: ITestSpecification<TestShape>,
-    testImplementation: ITestImplementation<TestShape>,
+    input: I["iinput"],
+    testSpecification: ITestSpecification<I, O>,
+    testImplementation: ITestImplementation<I, O>,
     testResourceRequirement: ITTestResourceRequest,
-    testInterface: Partial<ITestInterface<TestShape>>
+    testInterface: Partial<ITestInterface<I>>
   ) {
     super(
       input,
@@ -59,14 +62,16 @@ export class NodeTesteranto<
 }
 
 export default async <
-  ITestShape extends IBaseTest<
+  I extends Ibdd_in<
     unknown,
     unknown,
     unknown,
     unknown,
     unknown,
     unknown,
-    unknown,
+    unknown
+  >,
+  O extends Ibdd_out<
     Record<string, any>,
     Record<string, any>,
     Record<string, any>,
@@ -74,13 +79,13 @@ export default async <
     Record<string, any>
   >
 >(
-  input: ITestShape["iinput"],
-  testSpecification: ITestSpecification<ITestShape>,
-  testImplementation: ITestImplementation<ITestShape>,
-  testInterface: Partial<INodeTestInterface<ITestShape>>,
+  input: I["iinput"],
+  testSpecification: ITestSpecification<I, O>,
+  testImplementation: ITestImplementation<I, O>,
+  testInterface: Partial<INodeTestInterface<I>>,
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
-): Promise<Testeranto<ITestShape>> => {
-  return new NodeTesteranto<ITestShape>(
+): Promise<Testeranto<I, O>> => {
+  return new NodeTesteranto<I, O>(
     input,
     testSpecification,
     testImplementation,

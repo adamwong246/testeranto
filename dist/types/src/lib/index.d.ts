@@ -1,7 +1,7 @@
 import { PM } from "../PM/index.js";
-import { IBaseTest, ITestInterface } from "../Types.js";
+import { Ibdd_in, Ibdd_out, ITestInterface } from "../Types.js";
 import { IGivens, BaseCheck, BaseSuite } from "./abstractBase.js";
-export declare const BaseTestInterface: ITestInterface<IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>>;
+export declare const BaseTestInterface: ITestInterface<Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>>;
 export declare const DefaultTestInterface: (p: Partial<ITestInterface<any>>) => ITestInterface<any>;
 export type ITTestResourceConfiguration = {
     name: string;
@@ -28,14 +28,14 @@ export type ITestArtificer = (key: string, data: any) => void;
 type ITest = {
     toObj(): object;
     name: string;
-    givens: IGivens<IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>>;
-    checks: BaseCheck<IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>>[];
+    givens: IGivens<Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>>;
+    checks: BaseCheck<Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>, Ibdd_out<Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>>[];
     testResourceConfiguration: ITTestResourceConfiguration;
 };
 export type ITestJob<T = PM> = {
     toObj(): object;
     test: ITest;
-    runner: (x: ITTestResourceConfiguration, t: ITLog) => Promise<BaseSuite<IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>>>;
+    runner: (x: ITTestResourceConfiguration, t: ITLog) => Promise<BaseSuite<Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>, Ibdd_out<Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>>>;
     testResourceRequirement: ITTestResourceRequirement;
     receiveTestResourceConfig: (pm: PM) => Promise<{
         failed: number;

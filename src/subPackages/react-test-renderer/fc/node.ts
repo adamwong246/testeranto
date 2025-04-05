@@ -6,21 +6,55 @@ import test from "../../../Node.js";
 import {
   ITestSpecification,
   ITestImplementation,
-  IBaseTest,
+  Ibdd_in,
+  Ibdd_out,
 } from "../../../Types";
 
 export type IInput = React.FC;
 export type IWhenShape = unknown;
 export type IThenShape = unknown;
 
-export type ISpec<ITestShape extends IBaseTest> =
-  ITestSpecification<ITestShape>;
-export default <ITestShape extends IBaseTest>(
-  testImplementations: ITestImplementation<ITestShape>,
-  testSpecifications: ISpec<ITestShape>,
+export type ISpec<
+  I extends Ibdd_in<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown
+  >,
+  O extends Ibdd_out<
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+> = ITestSpecification<I, O>;
+export default <
+  I extends Ibdd_in<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown
+  >,
+  O extends Ibdd_out<
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+>(
+  testImplementations: ITestImplementation<I, O>,
+  testSpecifications: ISpec<I, O>,
   testInput: IInput
 ) =>
-  test<ITestShape>(testInput, testSpecifications, testImplementations, {
+  test<I, O>(testInput, testSpecifications, testImplementations, {
     beforeEach: function (
       CComponent,
       props

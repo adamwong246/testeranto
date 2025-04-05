@@ -2,7 +2,8 @@ import { CElement } from "react";
 import React from "react";
 
 import {
-  IBaseTest,
+  Ibdd_in,
+  Ibdd_out,
   IPartialInterface,
   ITestImplementation,
   ITestSpecification,
@@ -16,11 +17,43 @@ export type ISelection = CElement<any, any>;
 export type IStore = CElement<any, any>;
 export type ISubject = CElement<any, any>;
 
-export type ITestImpl<ITestShape extends IBaseTest> =
-  ITestImplementation<ITestShape>;
+export type ITestImpl<
+  I extends Ibdd_in<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown
+  >,
+  O extends Ibdd_out<
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+> = ITestImplementation<I, O>;
 
-export type ITestSpec<ITestShape extends IBaseTest> =
-  ITestSpecification<ITestShape>;
+export type ITestSpec<
+  I extends Ibdd_in<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown
+  >,
+  O extends Ibdd_out<
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+> = ITestSpecification<I, O>;
 
 export const testInterface: IPartialInterface<any> = {
   // beforeAll: async (proto, testResource, artificer, pm): Promise<IStore> => {

@@ -1,13 +1,7 @@
 import React from "react";
 import renderer, { act } from "react-test-renderer";
-const Context = React.createContext({});
-const AppContext = React.createContext({});
-const contextValue = {
-    ingredients: ["flour", "sugar", "eggs"],
-    temperature: "200",
-};
 export const testInterface = {
-    butThen: async function (s, thenCB, tr) {
+    butThen: async function (s, thenCB) {
         // console.log("butThen", thenCB.toString());
         return thenCB(s);
     },

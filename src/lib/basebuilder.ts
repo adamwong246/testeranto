@@ -1,7 +1,7 @@
 import { PassThrough } from "stream";
 
 import { ITTestResourceRequest, ITestJob, ITLog } from ".";
-import { IBaseTest, ITestSpecification } from "../Types.js";
+import { Ibdd_in, Ibdd_out, ITestSpecification } from "../Types.js";
 
 import {
   ISuiteKlasser,
@@ -20,14 +20,16 @@ import {
 import { PM } from "../PM/index.js";
 
 export abstract class BaseBuilder<
-  ITestShape extends IBaseTest<
+  I extends Ibdd_in<
     unknown,
     unknown,
     unknown,
     unknown,
     unknown,
     unknown,
-    unknown,
+    unknown
+  >,
+  O extends Ibdd_out<
     Record<string, any>,
     Record<string, any>,
     Record<string, any>,
@@ -42,26 +44,26 @@ export abstract class BaseBuilder<
 > {
   specs: any;
 
-  assertThis: (t: ITestShape["then"]) => {};
+  assertThis: (t: I["then"]) => {};
 
   testResourceRequirement: ITTestResourceRequest;
   artifacts: Promise<unknown>[] = [];
   testJobs: ITestJob[];
-  testSpecification: ITestSpecification<ITestShape>;
-  suitesOverrides: Record<keyof SuiteExtensions, ISuiteKlasser<ITestShape>>;
-  givenOverides: Record<keyof GivenExtensions, IGivenKlasser<ITestShape>>;
-  whenOverides: Record<keyof WhenExtensions, IWhenKlasser<ITestShape>>;
-  thenOverides: Record<keyof ThenExtensions, IThenKlasser<ITestShape>>;
-  checkOverides: Record<keyof CheckExtensions, ICheckKlasser<ITestShape>>;
+  testSpecification: ITestSpecification<I, O>;
+  suitesOverrides: Record<keyof SuiteExtensions, ISuiteKlasser<I, O>>;
+  givenOverides: Record<keyof GivenExtensions, IGivenKlasser<I>>;
+  whenOverides: Record<keyof WhenExtensions, IWhenKlasser<I>>;
+  thenOverides: Record<keyof ThenExtensions, IThenKlasser<I>>;
+  checkOverides: Record<keyof CheckExtensions, ICheckKlasser<I, O>>;
   puppetMaster: PM;
 
   constructor(
-    public readonly input: ITestShape["iinput"],
-    suitesOverrides: Record<keyof SuiteExtensions, ISuiteKlasser<ITestShape>>,
-    givenOverides: Record<keyof GivenExtensions, IGivenKlasser<ITestShape>>,
-    whenOverides: Record<keyof WhenExtensions, IWhenKlasser<ITestShape>>,
-    thenOverides: Record<keyof ThenExtensions, IThenKlasser<ITestShape>>,
-    checkOverides: Record<keyof CheckExtensions, ICheckKlasser<ITestShape>>,
+    public readonly input: I["iinput"],
+    suitesOverrides: Record<keyof SuiteExtensions, ISuiteKlasser<I, O>>,
+    givenOverides: Record<keyof GivenExtensions, IGivenKlasser<I>>,
+    whenOverides: Record<keyof WhenExtensions, IWhenKlasser<I>>,
+    thenOverides: Record<keyof ThenExtensions, IThenKlasser<I>>,
+    checkOverides: Record<keyof CheckExtensions, ICheckKlasser<I, O>>,
     testResourceRequirement: ITTestResourceRequest,
     testSpecification: any
   ) {
@@ -82,13 +84,10 @@ export abstract class BaseBuilder<
       this.Check()
     );
 
-    this.testJobs = this.specs.map((suite: BaseSuite<ITestShape>) => {
+    this.testJobs = this.specs.map((suite: BaseSuite<I, O>) => {
       const suiteRunner =
-        (suite: BaseSuite<ITestShape>) =>
-        async (
-          puppetMaster: PM,
-          tLog: ITLog
-        ): Promise<BaseSuite<ITestShape>> => {
+        (suite: BaseSuite<I, O>) =>
+        async (puppetMaster: PM, tLog: ITLog): Promise<BaseSuite<I, O>> => {
           const x = await suite.run(
             input,
             puppetMaster.testResourceConfiguration,
@@ -124,10 +123,7 @@ export abstract class BaseBuilder<
             puppetMaster.write(access, `${l.toString()}\n`);
           };
 
-          const suiteDone: BaseSuite<ITestShape> = await runner(
-            puppetMaster,
-            tLog
-          );
+          const suiteDone: BaseSuite<I, O> = await runner(puppetMaster, tLog);
 
           const logPromise = new Promise((res, rej) => {
             puppetMaster.end(access);
@@ -193,27 +189,24 @@ export abstract class BaseBuilder<
     (
       name: string,
       features: string[],
-      whens: BaseWhen<ITestShape>[],
-      thens: BaseThen<ITestShape>[],
+      whens: BaseWhen<I>[],
+      thens: BaseThen<I>[],
       gcb
-    ) => BaseGiven<ITestShape>
+    ) => BaseGiven<I>
   > {
     return this.givenOverides;
   }
 
   When(): Record<
     keyof WhenExtensions,
-    (arg0: ITestShape["istore"], ...arg1: any) => BaseWhen<ITestShape>
+    (arg0: I["istore"], ...arg1: any) => BaseWhen<I>
   > {
     return this.whenOverides;
   }
 
   Then(): Record<
     keyof ThenExtensions,
-    (
-      selection: ITestShape["iselection"],
-      expectation: any
-    ) => BaseThen<ITestShape>
+    (selection: I["iselection"], expectation: any) => BaseThen<I>
   > {
     return this.thenOverides;
   }
@@ -226,7 +219,7 @@ export abstract class BaseBuilder<
       whens,
       thens,
       x
-    ) => BaseCheck<ITestShape>
+    ) => BaseCheck<I, O>
   > {
     return this.checkOverides;
   }

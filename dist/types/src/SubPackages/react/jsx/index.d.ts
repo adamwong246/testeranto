@@ -1,5 +1,5 @@
 import { CElement } from "react";
-import { IBaseTest, IPartialInterface, ITestImplementation, ITestSpecification } from "../../../Types";
+import { Ibdd_in, Ibdd_out, IPartialInterface, ITestImplementation, ITestSpecification } from "../../../Types";
 export type IWhenShape = any;
 export type IThenShape = any;
 export type InitialState = unknown;
@@ -7,6 +7,6 @@ export type IInput = () => JSX.Element;
 export type ISelection = CElement<any, any>;
 export type IStore = CElement<any, any>;
 export type ISubject = CElement<any, any>;
-export type ITestImpl<ITestShape extends IBaseTest> = ITestImplementation<ITestShape>;
-export type ITestSpec<ITestShape extends IBaseTest> = ITestSpecification<ITestShape>;
+export type ITestImpl<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>, O extends Ibdd_out<Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>> = ITestImplementation<I, O>;
+export type ITestSpec<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>, O extends Ibdd_out<Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>> = ITestSpecification<I, O>;
 export declare const testInterface: IPartialInterface<any>;

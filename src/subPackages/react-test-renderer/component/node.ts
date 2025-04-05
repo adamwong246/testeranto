@@ -1,15 +1,34 @@
 import Testeranto from "../../../Node.js";
-import type { IBaseTest } from "../../../Types";
+import { Ibdd_in, Ibdd_out } from "../../../Types.js";
 
 import { IImpl, ISpec, IInput } from "./index.js";
 import { testInterface } from "./interface.js";
 
-export default <ITestShape extends IBaseTest, IProps, IState>(
-  testImplementations: IImpl<ITestShape>,
-  testSpecifications: ISpec<ITestShape>,
+export default <
+  I extends Ibdd_in<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown
+  >,
+  O extends Ibdd_out<
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >,
+  IProps,
+  IState
+>(
+  testImplementations: IImpl<I, O>,
+  testSpecifications: ISpec<I, O>,
   testInput: IInput<IProps, IState>
 ) =>
-  Testeranto<ITestShape>(
+  Testeranto<I, O>(
     testInput,
     testSpecifications,
     testImplementations,

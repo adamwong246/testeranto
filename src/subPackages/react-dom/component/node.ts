@@ -8,7 +8,8 @@ import Stream from "stream";
 import Testeranto from "../../../Node.js";
 
 import {
-  IBaseTest,
+  Ibdd_in,
+  Ibdd_out,
   ITestImplementation,
   ITestSpecification,
 } from "../../../Types";
@@ -23,54 +24,66 @@ export type ISubject = ReactNode;
 
 export { renderToStaticMarkup, renderToStaticNodeStream, Stream };
 
-export default <ITestShape extends IBaseTest>(
-  testImplementations: ITestImplementation<ITestShape>,
-  testSpecifications: ITestSpecification<ITestShape>,
+export default <
+  I extends Ibdd_in<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown
+  >,
+  O extends Ibdd_out<
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+>(
+  testImplementations: ITestImplementation<I, O>,
+  testSpecifications: ITestSpecification<I, O>,
   testInput: IInput
 ) => {
-  return Testeranto<ITestShape>(
-    testInput,
-    testSpecifications,
-    testImplementations,
-    {
-      // beforeAll: async (
-      //   prototype,
-      //   artificer
-      // ): Promise<ISubject> => {
-      //   return await new Promise((resolve, rej) => {
-      //     const elem = document.getElementById("root");
-      //     if (elem) {
-      //       resolve({ htmlElement: elem });
-      //     }
+  return Testeranto<I, O>(testInput, testSpecifications, testImplementations, {
+    // beforeAll: async (
+    //   prototype,
+    //   artificer
+    // ): Promise<ISubject> => {
+    //   return await new Promise((resolve, rej) => {
+    //     const elem = document.getElementById("root");
+    //     if (elem) {
+    //       resolve({ htmlElement: elem });
+    //     }
 
-      //   })
-      // },
-      beforeEach: async (
-        reactComponent,
-        ndx,
-        testRsource,
-        artificer
-      ): Promise<IStore> => {
-        return new Promise((resolve, rej) => {
-          // Ignore these type errors
-          resolve(createElement(testInput));
-        });
-      },
-      andWhen: async function (s: IStore, whenCB): Promise<ISelection> {
-        return whenCB(s);
-        // return s
-      },
-      butThen: async function (s: IStore): Promise<ISelection> {
-        return s;
-      },
-      afterEach: async function (store: IStore, ndx, artificer) {
-        return {};
-      },
-      afterAll: (store: IStore, artificer) => {
-        return;
-      },
-    }
-  );
+    //   })
+    // },
+    beforeEach: async (
+      reactComponent,
+      ndx,
+      testRsource,
+      artificer
+    ): Promise<IStore> => {
+      return new Promise((resolve, rej) => {
+        // Ignore these type errors
+        resolve(createElement(testInput));
+      });
+    },
+    andWhen: async function (s: IStore, whenCB): Promise<ISelection> {
+      return whenCB(s);
+      // return s
+    },
+    butThen: async function (s: IStore): Promise<ISelection> {
+      return s;
+    },
+    afterEach: async function (store: IStore, ndx, artificer) {
+      return {};
+    },
+    afterAll: (store: IStore, artificer) => {
+      return;
+    },
+  });
 };
 
 // type IInput = typeof React.Component;

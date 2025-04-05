@@ -1,5 +1,5 @@
 import Testeranto from "../../../Node.js";
-import { IBaseTest, IPartialInterface } from "../../../Types";
+import { Ibdd_in, Ibdd_out, IPartialInterface } from "../../../Types";
 
 import {
   ITestImpl,
@@ -9,14 +9,16 @@ import {
 } from "./index.js";
 
 export default <
-  ITestShape extends IBaseTest<
-    IInput,
-    number,
-    number,
-    number,
+  I extends Ibdd_in<
     unknown,
     unknown,
     unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown
+  >,
+  O extends Ibdd_out<
     Record<string, any>,
     Record<string, any>,
     Record<string, any>,
@@ -24,12 +26,12 @@ export default <
     Record<string, any>
   >
 >(
-  testImplementations: ITestImpl<ITestShape>,
-  testSpecifications: ITestSpec<ITestShape>,
+  testImplementations: ITestImpl<I, O>,
+  testSpecifications: ITestSpec<I, O>,
   testInput: IInput,
-  testInterface: IPartialInterface<ITestShape> = baseInterface
+  testInterface: IPartialInterface<I> = baseInterface
 ) => {
-  return Testeranto<ITestShape>(
+  return Testeranto<I, O>(
     testInput,
     testSpecifications,
     testImplementations,

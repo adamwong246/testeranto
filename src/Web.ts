@@ -1,6 +1,8 @@
+import { IBaseTest } from "../dist/types/src/Types";
 import { PM_Web } from "./PM/web";
 import type {
-  IBaseTest,
+  Ibdd_in,
+  Ibdd_out,
   ITestImplementation,
   ITestInterface,
   ITestSpecification,
@@ -22,27 +24,29 @@ let unhandledrejectionCallback = (event: PromiseRejectionEvent) => {
 };
 
 export class WebTesteranto<
-  TestShape extends IBaseTest<
+  I extends Ibdd_in<
     unknown,
     unknown,
     unknown,
     unknown,
     unknown,
     unknown,
-    unknown,
+    unknown
+  >,
+  O extends Ibdd_out<
     Record<string, any>,
     Record<string, any>,
     Record<string, any>,
     Record<string, any>,
     Record<string, any>
   >
-> extends Testeranto<TestShape> {
+> extends Testeranto<I, O> {
   constructor(
-    input: TestShape["iinput"],
-    testSpecification: ITestSpecification<TestShape>,
-    testImplementation: ITestImplementation<TestShape>,
+    input: I["iinput"],
+    testSpecification: ITestSpecification<I, O>,
+    testImplementation: ITestImplementation<I, O>,
     testResourceRequirement: ITTestResourceRequest,
-    testInterface: Partial<ITestInterface<TestShape>>
+    testInterface: Partial<ITestInterface<I>>
   ) {
     super(
       input,
@@ -98,14 +102,16 @@ export class WebTesteranto<
 }
 
 export default async <
-  ITestShape extends IBaseTest<
+  I extends Ibdd_in<
     unknown,
     unknown,
     unknown,
     unknown,
     unknown,
     unknown,
-    unknown,
+    unknown
+  >,
+  O extends Ibdd_out<
     Record<string, any>,
     Record<string, any>,
     Record<string, any>,
@@ -113,13 +119,13 @@ export default async <
     Record<string, any>
   >
 >(
-  input: ITestShape["iinput"],
-  testSpecification: ITestSpecification<ITestShape>,
-  testImplementation: ITestImplementation<ITestShape>,
-  testInterface: Partial<IWebTestInterface<ITestShape>>,
+  input: I["iinput"],
+  testSpecification: ITestSpecification<I, O>,
+  testImplementation: ITestImplementation<I, O>,
+  testInterface: Partial<IWebTestInterface<I>>,
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
-): Promise<Testeranto<ITestShape>> => {
-  return new WebTesteranto<ITestShape>(
+): Promise<Testeranto<I, O>> => {
+  return new WebTesteranto<I, O>(
     input,
     testSpecification,
     testImplementation,

@@ -1,12 +1,12 @@
 import React, { ReactNode } from "react";
 import { renderToStaticMarkup, renderToStaticNodeStream } from "react-dom/server";
 import Stream from "stream";
-import { IBaseTest, ITestImplementation, ITestSpecification } from "../../../Types";
+import { Ibdd_in, Ibdd_out, ITestImplementation, ITestSpecification } from "../../../Types";
 type IInput = typeof React.Component;
 export type IThenShape = any;
 export type ISelection = ReactNode;
 export type IStore = ReactNode;
 export type ISubject = ReactNode;
 export { renderToStaticMarkup, renderToStaticNodeStream, Stream };
-declare const _default: <ITestShape extends IBaseTest>(testImplementations: ITestImplementation<ITestShape>, testSpecifications: ITestSpecification<ITestShape>, testInput: IInput) => Promise<import("../../../lib/core.js").default<ITestShape>>;
+declare const _default: <I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>, O extends Ibdd_out<Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>>(testImplementations: ITestImplementation<I, O>, testSpecifications: ITestSpecification<I, O>, testInput: IInput) => Promise<import("../../../lib/core.js").default<I, O>>;
 export default _default;

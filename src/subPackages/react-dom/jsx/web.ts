@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import { CElement, createElement } from "react";
 import ReactDom from "react-dom";
-import { createPortal } from "react-dom";
 
 import Testeranto from "../../../Web.js";
 import {
-  IBaseTest,
+  Ibdd_in,
+  Ibdd_out,
   ITestImplementation,
   ITestSpecification,
 } from "../../../Types";
@@ -30,12 +30,29 @@ const TesterantoComponent = ({
   return React.createElement("div", { ref: myContainer }, innerComp());
 };
 
-export default <ITestShape extends IBaseTest>(
-  testImplementations: ITestImplementation<ITestShape>,
-  testSpecifications: ITestSpecification<ITestShape>,
+export default <
+  I extends Ibdd_in<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown
+  >,
+  O extends Ibdd_out<
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+>(
+  testImplementations: ITestImplementation<I, O>,
+  testSpecifications: ITestSpecification<I, O>,
   testInput: IInput
 ) => {
-  const t = Testeranto<ITestShape>(
+  const t = Testeranto<I, O>(
     testInput,
     testSpecifications,
     testImplementations,

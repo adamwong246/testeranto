@@ -3,7 +3,8 @@ import ReactDom from "react-dom/client";
 
 import Testeranto from "../../../Web.js";
 import {
-  IBaseTest,
+  Ibdd_in,
+  Ibdd_out,
   IPartialInterface,
   IPartialWebInterface,
   ITestImplementation,
@@ -29,10 +30,27 @@ type ISubject = {
   domRoot: ReactDom.Root;
 };
 
-export default <ITestShape extends IBaseTest, IWhen, IGiven>(
+export default <
+  I extends Ibdd_in<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown
+  >,
+  O extends Ibdd_out<
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+>(
   testInput: IInput,
-  testSpecifications: ITestSpecification<ITestShape>,
-  testImplementations: ITestImplementation<ITestShape, any>,
+  testSpecifications: ITestSpecification<I, O>,
+  testImplementations: ITestImplementation<I, O>,
   testInterface?: IPartialWebInterface<any>
 ) => {
   class TesterantoComponent extends testInput {
@@ -47,7 +65,7 @@ export default <ITestShape extends IBaseTest, IWhen, IGiven>(
     }
   }
 
-  const t = Testeranto<ITestShape>(
+  const t = Testeranto<I, O>(
     testInput,
     testSpecifications,
     testImplementations,

@@ -2,7 +2,8 @@ import React from "react";
 import renderer, { act } from "react-test-renderer";
 
 import {
-  IBaseTest,
+  Ibdd_in,
+  Ibdd_out,
   ITestImplementation,
   ITestSpecification,
 } from "../../../Types";
@@ -15,24 +16,46 @@ export type ISelection = renderer.ReactTestRenderer;
 export type IStore = renderer.ReactTestRenderer;
 export type ISubject = renderer.ReactTestRenderer;
 
-export type ITestImpl<ITestShape extends IBaseTest> = ITestImplementation<
-  ITestShape,
-  object
->;
+export type ITestImpl<
+  I extends Ibdd_in<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown
+  >,
+  O extends Ibdd_out<
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+> = ITestImplementation<I, O>;
 
-export type ITestSpec<ITestShape extends IBaseTest> =
-  ITestSpecification<ITestShape>;
-
-const Context = React.createContext({});
-
-const AppContext = React.createContext({});
-const contextValue = {
-  ingredients: ["flour", "sugar", "eggs"],
-  temperature: "200",
-};
+export type ITestSpec<
+  I extends Ibdd_in<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown
+  >,
+  O extends Ibdd_out<
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+> = ITestSpecification<I, O>;
 
 export const testInterface = {
-  butThen: async function (s: IStore, thenCB, tr): Promise<ISelection> {
+  butThen: async function (s: IStore, thenCB): Promise<ISelection> {
     // console.log("butThen", thenCB.toString());
     return thenCB(s);
   },

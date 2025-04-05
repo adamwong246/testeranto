@@ -1,5 +1,6 @@
 import {
-  IBaseTest,
+  Ibdd_in,
+  Ibdd_out,
   IPartialInterface,
   IPartialWebInterface,
 } from "../../../Types";
@@ -12,19 +13,31 @@ import {
   testInterface as baseInterface,
 } from "./index.js";
 
-export default <ITestShape extends IBaseTest>(
-  testImplementations: ITestImpl<ITestShape>,
-  testSpecifications: ITestSpec<ITestShape>,
+export default <
+  I extends Ibdd_in<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown
+  >,
+  O extends Ibdd_out<
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+>(
+  testImplementations: ITestImpl<I, O>,
+  testSpecifications: ITestSpec<I, O>,
   testInput: IInput,
-  testInterface: IPartialWebInterface<ITestShape>
+  testInterface: IPartialWebInterface<I>
 ) => {
-  return Testeranto<ITestShape>(
-    testInput,
-    testSpecifications,
-    testImplementations,
-    {
-      ...baseInterface,
-      ...testInterface,
-    }
-  );
+  return Testeranto<I, O>(testInput, testSpecifications, testImplementations, {
+    ...baseInterface,
+    ...testInterface,
+  });
 };

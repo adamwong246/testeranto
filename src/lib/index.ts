@@ -1,23 +1,11 @@
+import { IBaseTest } from "../../dist/types/src/Types.js";
 import { PM } from "../PM/index.js";
-import { IBaseTest, ITestInterface } from "../Types.js";
+import { Ibdd_in, Ibdd_out, ITestInterface } from "../Types.js";
 
 import { IGivens, BaseCheck, BaseSuite } from "./abstractBase.js";
 
 export const BaseTestInterface: ITestInterface<
-  IBaseTest<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
-  >
+  Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>
 > = {
   beforeAll: async (s) => s,
   beforeEach: async function (
@@ -31,35 +19,25 @@ export const BaseTestInterface: ITestInterface<
   },
   afterEach: async (s) => s,
   afterAll: (
-    store: IBaseTest<
+    store: Ibdd_in<
       unknown,
       unknown,
       unknown,
       unknown,
       unknown,
       unknown,
-      unknown,
-      Record<string, any>,
-      Record<string, any>,
-      Record<string, any>,
-      Record<string, any>,
-      Record<string, any>
+      unknown
     >["istore"]
   ) => undefined,
   butThen: async (
-    store: IBaseTest<
+    store: Ibdd_in<
       unknown,
       unknown,
       unknown,
       unknown,
       unknown,
       unknown,
-      unknown,
-      Record<string, any>,
-      Record<string, any>,
-      Record<string, any>,
-      Record<string, any>,
-      Record<string, any>
+      unknown
     >["istore"],
     thenCb
   ) => thenCb(store),
@@ -111,30 +89,11 @@ type ITest = {
   toObj(): object;
   name: string;
   givens: IGivens<
-    IBaseTest<
-      unknown,
-      unknown,
-      unknown,
-      unknown,
-      unknown,
-      unknown,
-      unknown,
-      Record<string, any>,
-      Record<string, any>,
-      Record<string, any>,
-      Record<string, any>,
-      Record<string, any>
-    >
+    Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>
   >;
   checks: BaseCheck<
-    IBaseTest<
-      unknown,
-      unknown,
-      unknown,
-      unknown,
-      unknown,
-      unknown,
-      unknown,
+    Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>,
+    Ibdd_out<
       Record<string, any>,
       Record<string, any>,
       Record<string, any>,
@@ -153,14 +112,8 @@ export type ITestJob<T = PM> = {
     t: ITLog
   ) => Promise<
     BaseSuite<
-      IBaseTest<
-        unknown,
-        unknown,
-        unknown,
-        unknown,
-        unknown,
-        unknown,
-        unknown,
+      Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>,
+      Ibdd_out<
         Record<string, any>,
         Record<string, any>,
         Record<string, any>,
@@ -196,12 +149,6 @@ export type IFinalResults = { features: string[]; failed: number };
 export type IRunTime = `node` | `web`;
 
 export type ITestTypes = [string, IRunTime, { ports: number }, ITestTypes[]];
-
-// export type IJsonConfig = {
-//   outdir: string;
-//   tests: ITestTypes[];
-//   botEmail: string;
-// };
 
 export type IPlugin = (
   register: (entrypoint, sources) => any,

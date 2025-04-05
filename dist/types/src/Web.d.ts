@@ -1,9 +1,9 @@
-import type { IBaseTest, ITestImplementation, ITestInterface, ITestSpecification, IWebTestInterface } from "./Types";
+import type { Ibdd_in, Ibdd_out, ITestImplementation, ITestInterface, ITestSpecification, IWebTestInterface } from "./Types";
 import Testeranto from "./lib/core.js";
 import { IFinalResults, ITTestResourceRequest } from "./lib/index.js";
-export declare class WebTesteranto<TestShape extends IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>> extends Testeranto<TestShape> {
-    constructor(input: TestShape["iinput"], testSpecification: ITestSpecification<TestShape>, testImplementation: ITestImplementation<TestShape>, testResourceRequirement: ITTestResourceRequest, testInterface: Partial<ITestInterface<TestShape>>);
+export declare class WebTesteranto<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>, O extends Ibdd_out<Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>> extends Testeranto<I, O> {
+    constructor(input: I["iinput"], testSpecification: ITestSpecification<I, O>, testImplementation: ITestImplementation<I, O>, testResourceRequirement: ITTestResourceRequest, testInterface: Partial<ITestInterface<I>>);
     receiveTestResourceConfig(partialTestResource: any): Promise<IFinalResults>;
 }
-declare const _default: <ITestShape extends IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>>(input: ITestShape["iinput"], testSpecification: ITestSpecification<ITestShape>, testImplementation: ITestImplementation<ITestShape>, testInterface: Partial<IWebTestInterface<ITestShape>>, testResourceRequirement?: ITTestResourceRequest) => Promise<Testeranto<ITestShape>>;
+declare const _default: <I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>, O extends Ibdd_out<Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>>(input: I["iinput"], testSpecification: ITestSpecification<I, O>, testImplementation: ITestImplementation<I, O>, testInterface: Partial<IWebTestInterface<I>>, testResourceRequirement?: ITTestResourceRequest) => Promise<Testeranto<I, O>>;
 export default _default;

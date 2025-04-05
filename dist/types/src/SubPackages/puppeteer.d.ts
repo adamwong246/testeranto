@@ -1,6 +1,6 @@
-import { IBaseTest, IPartialNodeInterface, ITestImplementation, ITestSpecification } from "../Types";
+import { Ibdd_in, Ibdd_out, IPartialNodeInterface, ITestImplementation, ITestSpecification } from "../Types";
 type IInput = string;
-export type IImpl<ISpec extends IBaseTest> = ITestImplementation<ISpec>;
-export type ISpec<T extends IBaseTest> = ITestSpecification<T>;
-declare const _default: <ITestShape extends IBaseTest>(testInput: IInput, testSpecifications: ISpec<ITestShape>, testImplementations: ITestImplementation<ITestShape>, testInterface?: IPartialNodeInterface<ITestShape>) => Promise<import("../lib/core.js").default<ITestShape>>;
+export type IImpl<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>, O extends Ibdd_out<Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>> = ITestImplementation<I, O>;
+export type ISpec<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>, O extends Ibdd_out<Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>> = ITestSpecification<I, O>;
+declare const _default: <I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>, O extends Ibdd_out<Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>>(testInput: IInput, testSpecifications: ISpec<I, O>, testImplementations: ITestImplementation<I, O>, testInterface?: IPartialNodeInterface<I>) => Promise<import("../lib/core.js").default<I, O>>;
 export default _default;

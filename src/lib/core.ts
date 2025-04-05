@@ -1,9 +1,10 @@
 import { IStore } from "../SubPackages/react/jsx";
 import {
-  IBaseTest,
   ITestSpecification,
   ITestImplementation,
   ITestInterface,
+  Ibdd_in,
+  Ibdd_out,
 } from "../Types.js";
 import { PM } from "../PM/index";
 
@@ -24,27 +25,29 @@ import {
 import { ClassBuilder } from "./classBuilder.js";
 
 export default abstract class Testeranto<
-  ITestShape extends IBaseTest<
+  I extends Ibdd_in<
     unknown,
     unknown,
     unknown,
     unknown,
     unknown,
     unknown,
-    unknown,
+    unknown
+  >,
+  O extends Ibdd_out<
     Record<string, any>,
     Record<string, any>,
     Record<string, any>,
     Record<string, any>,
     Record<string, any>
   >
-> extends ClassBuilder<ITestShape> {
+> extends ClassBuilder<I, O> {
   constructor(
-    input: ITestShape["iinput"],
-    testSpecification: ITestSpecification<ITestShape>,
-    testImplementation: ITestImplementation<ITestShape>,
+    input: I["iinput"],
+    testSpecification: ITestSpecification<I, O>,
+    testImplementation: ITestImplementation<I, O>,
     testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
-    testInterface: Partial<ITestInterface<ITestShape>>,
+    testInterface: Partial<ITestInterface<I>>,
     uberCatcher: (cb) => void
   ) {
     const fullTestInterface = DefaultTestInterface(testInterface);
@@ -54,7 +57,7 @@ export default abstract class Testeranto<
       testSpecification,
       input,
 
-      class extends BaseSuite<ITestShape> {
+      class extends BaseSuite<I, O> {
         afterAll(store: IStore, artifactory: ITestArtifactory, pm: PM) {
           return fullTestInterface.afterAll(
             store,
@@ -72,15 +75,15 @@ export default abstract class Testeranto<
         }
 
         async setup(
-          s: ITestShape["iinput"],
+          s: I["iinput"],
           artifactory: ITestArtifactory,
           tr,
           pm
-        ): Promise<ITestShape["isubject"]> {
+        ): Promise<I["isubject"]> {
           return (
             fullTestInterface.beforeAll ||
             (async (
-              input: ITestShape["iinput"],
+              input: I["iinput"],
               artifactory: ITestArtifactory,
               tr,
               pm: PM
@@ -94,7 +97,7 @@ export default abstract class Testeranto<
         }
       } as any,
 
-      class Given extends BaseGiven<ITestShape> {
+      class Given extends BaseGiven<I> {
         uberCatcher = uberCatcher;
 
         async givenThat(
@@ -116,7 +119,7 @@ export default abstract class Testeranto<
         }
 
         afterEach(
-          store: ITestShape["istore"],
+          store: I["istore"],
           key: string,
           artifactory,
           pm
@@ -135,7 +138,7 @@ export default abstract class Testeranto<
         }
       } as any,
 
-      class When extends BaseWhen<ITestShape> {
+      class When extends BaseWhen<I> {
         async andWhen(store, whenCB, testResource, pm) {
           try {
             return await fullTestInterface.andWhen(
@@ -164,13 +167,13 @@ export default abstract class Testeranto<
         }
       } as any,
 
-      class Then extends BaseThen<ITestShape> {
+      class Then extends BaseThen<I> {
         async butThen(
           store: any,
           thenCB,
           testResource: any,
           pm: PM
-        ): Promise<ITestShape["iselection"]> {
+        ): Promise<I["iselection"]> {
           return await fullTestInterface
             .butThen(store, thenCB, testResource, pm)
             .then(
@@ -204,7 +207,7 @@ export default abstract class Testeranto<
         }
       } as any,
 
-      class Check extends BaseCheck<ITestShape> {
+      class Check extends BaseCheck<I, O> {
         initialValues: any;
 
         constructor(
@@ -232,7 +235,7 @@ export default abstract class Testeranto<
         }
 
         afterEach(
-          store: ITestShape["istore"],
+          store: I["istore"],
           key: string,
           artifactory,
           pm

@@ -3,7 +3,8 @@ import React from "react";
 import Testeranto from "../../../Web.js";
 
 import {
-  IBaseTest,
+  Ibdd_in,
+  Ibdd_out,
   ITestImplementation,
   ITestSpecification,
 } from "../../../Types";
@@ -11,33 +12,75 @@ import {
 type IInput = typeof React.Component;
 type ISelection = React.CElement<any, any>;
 type Store = React.CElement<any, any>;
-// type Subject = React.CElement<any, any>;
 
-export type IImpl<ISpec extends IBaseTest, IState> = ITestImplementation<
-  ISpec,
-  object
->;
+export type IImpl<
+  I extends Ibdd_in<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown
+  >,
+  O extends Ibdd_out<
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+> = ITestImplementation<I, O>;
 
-export type ISpec<T extends IBaseTest> = ITestSpecification<T>;
+export type ISpec<
+  I extends Ibdd_in<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown
+  >,
+  O extends Ibdd_out<
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+> = ITestSpecification<I, O>;
 
-export default <ITestShape extends IBaseTest>(
-  testImplementations: ITestImplementation<ITestShape>,
-  testSpecifications: ISpec<ITestShape>,
+export default <
+  I extends Ibdd_in<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown
+  >,
+  O extends Ibdd_out<
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+>(
+  testImplementations: ITestImplementation<I, O>,
+  testSpecifications: ISpec<I, O>,
   testInput: IInput
 ) => {
-  return Testeranto<ITestShape>(
-    testInput,
-    testSpecifications,
-    testImplementations,
-    {
-      beforeEach: async (): Promise<Store> => {
-        return new Promise((resolve, rej) => {
-          resolve(React.createElement(testInput, {}, []));
-        });
-      },
-      andWhen: function (s: Store, whenCB): Promise<ISelection> {
-        return whenCB()(s);
-      },
-    }
-  );
+  return Testeranto<I, O>(testInput, testSpecifications, testImplementations, {
+    beforeEach: async (): Promise<Store> => {
+      return new Promise((resolve, rej) => {
+        resolve(React.createElement(testInput, {}, []));
+      });
+    },
+    andWhen: function (s: Store, whenCB): Promise<ISelection> {
+      return whenCB()(s);
+    },
+  });
 };

@@ -2,7 +2,8 @@ import React from "react";
 import renderer, { act } from "react-test-renderer";
 
 import type {
-  IBaseTest,
+  Ibdd_in,
+  Ibdd_out,
   ITestImplementation,
   ITestSpecification,
 } from "../../../Types";
@@ -17,7 +18,39 @@ export type ISelection = renderer.ReactTestRenderer;
 export type IStore = renderer.ReactTestRenderer;
 export type ISubject = renderer.ReactTestRenderer;
 
-export type IImpl<ITestShape extends IBaseTest> =
-  ITestImplementation<ITestShape>;
-export type ISpec<ITestShape extends IBaseTest> =
-  ITestSpecification<ITestShape>;
+export type IImpl<
+  I extends Ibdd_in<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown
+  >,
+  O extends Ibdd_out<
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+> = ITestImplementation<I, O>;
+export type ISpec<
+  I extends Ibdd_in<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown
+  >,
+  O extends Ibdd_out<
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>
+  >
+> = ITestSpecification<I, O>;
