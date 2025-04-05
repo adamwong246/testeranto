@@ -1,9 +1,9 @@
 import ReactDom from "react-dom/client";
 import React, { useEffect, useState } from "react";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { IBuiltConfig, IRunTime, ITestTypes } from "./lib/types";
+import { IRunTime, ITestTypes, IBuiltConfig } from "./lib";
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 type ICollation = {
   name: string;

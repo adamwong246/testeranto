@@ -1,6 +1,6 @@
 import { BuildOptions } from "esbuild";
 
-import { IBaseConfig } from "../lib/types";
+import { IBaseConfig } from "../lib/index.js";
 
 import baseEsBuildConfig from "./index.js";
 import inputFilesPlugin from "./inputFilesPlugin.js";

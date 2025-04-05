@@ -1,7 +1,5 @@
 import fs from "fs";
-import path from "path";
-import type { ImportKind, Metafile, Plugin } from "esbuild";
-import { spawn } from "child_process";
+import type { Plugin } from "esbuild";
 
 const otherInputs: Record<string, Set<string>> = {};
 

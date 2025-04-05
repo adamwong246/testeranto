@@ -1,7 +1,6 @@
 import Testeranto from "./lib/core.js";
 import { ITTestResourceRequest } from "./lib/index.js";
-import type { IBaseTest, ITestImplementation, ITestSpecification } from "./Types.js";
-import { ITestInterface, INodeTestInterface } from "./lib/types.js";
+import type { IBaseTest, ITestImplementation, ITestInterface, ITestSpecification } from "./Types.js";
 export declare class NodeTesteranto<TestShape extends IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>> extends Testeranto<TestShape> {
     constructor(input: TestShape["iinput"], testSpecification: ITestSpecification<TestShape>, testImplementation: ITestImplementation<TestShape>, testResourceRequirement: ITTestResourceRequest, testInterface: Partial<ITestInterface<TestShape>>);
     receiveTestResourceConfig(partialTestResource: string): Promise<{

@@ -4,7 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.promptPather = exports.bddExitCodePather = exports.bddPather = exports.lintExitCodePather = exports.lintPather = exports.tscExitCodePather = exports.tscPather = exports.destinationOfRuntime = void 0;
-// import { configs } from "eslint-plugin-react";
 const path_1 = __importDefault(require("path"));
 const destinationOfRuntime = (f, r, configs) => {
     return path_1.default

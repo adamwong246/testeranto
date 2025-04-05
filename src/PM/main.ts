@@ -9,11 +9,14 @@ import puppeteer, {
   ScreenshotOptions,
 } from "puppeteer-core";
 import { PassThrough } from "stream";
-import crypto from "crypto";
 import ansiC from "ansi-colors";
 
-import { IBuiltConfig, IFinalResults, ITestTypes } from "../lib/types";
-import { ITLog } from "../lib/index.js";
+import {
+  IBuiltConfig,
+  IFinalResults,
+  ITestTypes,
+  ITLog,
+} from "../lib/index.js";
 import {
   bddExitCodePather,
   lintExitCodePather,

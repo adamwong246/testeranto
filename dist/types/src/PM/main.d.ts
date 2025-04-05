@@ -2,8 +2,7 @@ import { CdpPage, Page } from "puppeteer-core/lib/esm/puppeteer";
 import fs from "fs";
 import { Browser, LaunchOptions } from "puppeteer-core";
 import { PassThrough } from "stream";
-import { IBuiltConfig, ITestTypes } from "../lib/types";
-import { ITLog } from "../lib/index.js";
+import { IBuiltConfig, ITestTypes, ITLog } from "../lib/index.js";
 import { PM } from "./index.js";
 export declare class PM_Main extends PM {
     browser: Browser;

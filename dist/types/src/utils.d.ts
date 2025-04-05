@@ -1,4 +1,4 @@
-import { IBuiltConfig, IRunTime } from "./lib/types";
+import { IRunTime, IBuiltConfig } from "./lib";
 export declare const destinationOfRuntime: (f: string, r: IRunTime, configs: IBuiltConfig) => string;
 export declare const tscPather: (entryPoint: string, platform: "web" | "node") => string;
 export declare const tscExitCodePather: (entryPoint: string, platform: "web" | "node") => string;

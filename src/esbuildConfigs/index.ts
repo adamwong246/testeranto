@@ -1,6 +1,6 @@
 import { BuildOptions } from "esbuild";
 
-import { IBaseConfig } from "../lib/types";
+import { IBaseConfig } from "../lib";
 
 export default (config: IBaseConfig): BuildOptions => {
   return {

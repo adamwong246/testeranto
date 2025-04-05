@@ -38,7 +38,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = __importDefault(require("fs"));
 const Init_1 = __importDefault(require("./Init"));
-// import Init from "../dist/module/src/Init";
 console.log("Initializing a testeranto project");
 if (!process.argv[2]) {
     console.log("You didn't pass a config file, so I will create one for you.");

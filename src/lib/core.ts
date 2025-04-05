@@ -3,11 +3,13 @@ import {
   IBaseTest,
   ITestSpecification,
   ITestImplementation,
+  ITestInterface,
 } from "../Types.js";
+import { PM } from "../PM/index";
 
-import { IFinalResults, ITestInterface } from "./types.js";
 import {
   DefaultTestInterface,
+  IFinalResults,
   ITTestResourceRequest,
   ITestArtifactory,
   defaultTestResourceRequirement,
@@ -20,7 +22,6 @@ import {
   BaseCheck,
 } from "./abstractBase.js";
 import { ClassBuilder } from "./classBuilder.js";
-import { PM } from "../PM/index";
 
 export default abstract class Testeranto<
   ITestShape extends IBaseTest<

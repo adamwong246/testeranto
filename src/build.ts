@@ -9,11 +9,11 @@ import esbuildWebConfiger from "./esbuildConfigs/web.js";
 import webHtmlFrame from "./web.html.js";
 import {
   ITestTypes,
+  IRunnables,
   IBaseConfig,
   IRunTime,
   IBuiltConfig,
-  IRunnables,
-} from "./lib/types.js";
+} from "./lib/index.js";
 
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);

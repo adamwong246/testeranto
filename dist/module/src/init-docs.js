@@ -1,6 +1,5 @@
 import fs from "fs";
 import Init from "./Init";
-// import Init from "../dist/module/src/Init";
 console.log("Initializing a testeranto project");
 if (!process.argv[2]) {
     console.log("You didn't pass a config file, so I will create one for you.");
