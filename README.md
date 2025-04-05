@@ -1,5 +1,7 @@
 # testeranto
 
+## the AI powered BDD test framework for typescript projects
+
 🚧 WARNING: Testeranto is still under development and is not ready for production yet. 🚧
 
 demo video: [youtube](https://www.youtube.com/embed/WvU5xMqGi6Q)
@@ -16,7 +18,6 @@ example repo: [kokomo bay](https://github.com/ChromaPDX/kokomoBay)
 
 ## What is testeranto?
 
-- Testeranto.ts an AI-first, Acceptance Test Driven Development ([ATDD](https://en.wikipedia.org/wiki/Acceptance_test-driven_development)) framework for typescript projects.
 - Testeranto produces test results which can be fed to Aider.ai to automatically fix failing tests.
 - Testeranto tests are specified in a strongly-typed gherkin-like syntax. Rather than testing your code directly, Testeranto requires you wrap your code with a semantic interface which is based on TS type signatures.
 - Testeranto can be run in the frontend or the backend, or both.
