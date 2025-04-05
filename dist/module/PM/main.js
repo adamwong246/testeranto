@@ -635,14 +635,13 @@ export class PM_Main extends PM {
                                 // throw error;
                             }
                         }
-                        fs.symlink(u.pathname, newPath, (err) => {
-                            if (err) {
-                                // console.error("Error creating symlink:", err);
-                            }
-                            else {
-                                // console.log("Symlink created successfully");
-                            }
-                        });
+                        // fs.symlink(u.pathname, newPath, (err) => {
+                        //   if (err) {
+                        //     // console.error("Error creating symlink:", err);
+                        //   } else {
+                        //     // console.log("Symlink created successfully");
+                        //   }
+                        // });
                         accum.files.push(newPath);
                     }
                     else if (u.protocol === "http:" || u.protocol === "https:") {

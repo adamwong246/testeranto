@@ -32,7 +32,7 @@ var tscExitCodePather = (entryPoint, platform) => {
     "./docs/",
     platform,
     entryPoint.split(".").slice(0, -1).join("."),
-    `type_errors.exitcode`
+    `type_errors.txt`
   );
 };
 var lintPather = (entryPoint, platform) => {
@@ -48,7 +48,7 @@ var lintExitCodePather = (entryPoint, platform) => {
     "./docs/",
     platform,
     entryPoint.split(".").slice(0, -1).join("."),
-    `lint_errors.exitcode`
+    `lint_errors.txt`
   );
 };
 var bddExitCodePather = (entryPoint, platform) => {
@@ -56,7 +56,7 @@ var bddExitCodePather = (entryPoint, platform) => {
     "./docs/",
     platform,
     entryPoint.split(".").slice(0, -1).join("."),
-    `exitcode`
+    `bdd_errors.txt`
   );
 };
 
@@ -586,11 +586,6 @@ var PM_Main = class extends PM {
               if (error.code !== "ENOENT") {
               }
             }
-            fs.symlink(u.pathname, newPath, (err) => {
-              if (err) {
-              } else {
-              }
-            });
             accum.files.push(newPath);
           } else if (u.protocol === "http:" || u.protocol === "https:") {
             const newPath = `${process.cwd()}/docs/features/external${u.hostname}${u.pathname}`;

@@ -674,14 +674,13 @@ class PM_Main extends index_js_1.PM {
                                 // throw error;
                             }
                         }
-                        fs_1.default.symlink(u.pathname, newPath, (err) => {
-                            if (err) {
-                                // console.error("Error creating symlink:", err);
-                            }
-                            else {
-                                // console.log("Symlink created successfully");
-                            }
-                        });
+                        // fs.symlink(u.pathname, newPath, (err) => {
+                        //   if (err) {
+                        //     // console.error("Error creating symlink:", err);
+                        //   } else {
+                        //     // console.log("Symlink created successfully");
+                        //   }
+                        // });
                         accum.files.push(newPath);
                     }
                     else if (u.protocol === "http:" || u.protocol === "https:") {

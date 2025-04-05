@@ -27,8 +27,8 @@ var Init_default = async (partialConfig) => {
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="author" content="" />
 
-  <link rel="stylesheet" href="/ReportClient.css" />
-  <script type="module" src="/ReportClient.js"></script>
+  <link rel="stylesheet" href="/kokomoBay/docs/ReportClient.css" />
+  <script type="module" src="/kokomoBay/docs/ReportClient.js"></script>
 
 </head>
 

@@ -31,7 +31,7 @@ export const tscExitCodePather = (
     "./docs/",
     platform,
     entryPoint.split(".").slice(0, -1).join("."),
-    `type_errors.exitcode`
+    `type_errors.txt`
   );
 };
 
@@ -52,7 +52,7 @@ export const lintExitCodePather = (
     "./docs/",
     platform,
     entryPoint.split(".").slice(0, -1).join("."),
-    `lint_errors.exitcode`
+    `lint_errors.txt`
   );
 };
 
@@ -73,7 +73,7 @@ export const bddExitCodePather = (
     "./docs/",
     platform,
     entryPoint.split(".").slice(0, -1).join("."),
-    `exitcode`
+    `bdd_errors.txt`
   );
 };
 

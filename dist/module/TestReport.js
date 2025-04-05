@@ -44,7 +44,7 @@ const BddPage = () => {
     const [configs, setConfigs] = useState();
     useEffect(() => {
         (async () => {
-            fetch('http://localhost:8080/testeranto.json')
+            fetch('/kokomoBay/docs/testeranto.json')
                 .then(response => response.json())
                 .then(json => {
                 setConfigs(json);

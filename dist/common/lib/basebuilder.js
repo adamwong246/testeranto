@@ -42,7 +42,7 @@ class BaseBuilder {
                     const numberOfFailures = Object.keys(suiteDone.givens).filter((k) => {
                         return suiteDone.givens[k].error;
                     }).length;
-                    puppetMaster.writeFileSync(`exitcode`, numberOfFailures.toString());
+                    puppetMaster.writeFileSync(`bdd_errors.txt`, numberOfFailures.toString());
                     const o = this.toObj();
                     puppetMaster.writeFileSync(`littleBoard.html`, `
             <!DOCTYPE html>
@@ -55,8 +55,8 @@ class BaseBuilder {
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="author" content="" />
 
-  <link rel="stylesheet" href="/TestReport.css" />
-  <script src="/TestReport.js"></script>
+  <link rel="stylesheet" href="/kokomoBay/docs/TestReport.css" />
+  <script src="/kokomoBay/docs/TestReport.js"></script>
 
 </head>
 

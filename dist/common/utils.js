@@ -18,7 +18,7 @@ const tscPather = (entryPoint, platform) => {
 };
 exports.tscPather = tscPather;
 const tscExitCodePather = (entryPoint, platform) => {
-    return path_1.default.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `type_errors.exitcode`);
+    return path_1.default.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `type_errors.txt`);
 };
 exports.tscExitCodePather = tscExitCodePather;
 const lintPather = (entryPoint, platform) => {
@@ -26,7 +26,7 @@ const lintPather = (entryPoint, platform) => {
 };
 exports.lintPather = lintPather;
 const lintExitCodePather = (entryPoint, platform) => {
-    return path_1.default.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `lint_errors.exitcode`);
+    return path_1.default.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `lint_errors.txt`);
 };
 exports.lintExitCodePather = lintExitCodePather;
 const bddPather = (entryPoint, platform) => {
@@ -34,7 +34,7 @@ const bddPather = (entryPoint, platform) => {
 };
 exports.bddPather = bddPather;
 const bddExitCodePather = (entryPoint, platform) => {
-    return path_1.default.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `exitcode`);
+    return path_1.default.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `bdd_errors.txt`);
 };
 exports.bddExitCodePather = bddExitCodePather;
 const promptPather = (entryPoint, platform) => {

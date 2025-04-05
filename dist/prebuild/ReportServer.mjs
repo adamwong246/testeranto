@@ -4,7 +4,8 @@ import { createRequire } from 'module';const require = createRequire(import.meta
 import staticServer from "node-static";
 import http from "http";
 var main = async () => {
-  const fileServer = new staticServer.Server("docs");
+  process.chdir("../");
+  const fileServer = new staticServer.Server(".", {});
   http.createServer(function(request, response) {
     request.addListener("end", function() {
       fileServer.serve(request, response);

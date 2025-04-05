@@ -6,6 +6,7 @@ import { IBuiltConfig } from "./lib";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+
 const StepPane = ({ step }: {
   step: {
     name: string,
@@ -88,7 +89,7 @@ const BddPage = () => {
   const [configs, setConfigs] = useState<IBuiltConfig>();
   useEffect(() => {
     (async () => {
-      fetch('http://localhost:8080/testeranto.json')
+      fetch('/kokomoBay/docs/testeranto.json')
         .then(response => response.json())
         .then(json => {
           setConfigs(json)
@@ -159,6 +160,8 @@ const BddPage = () => {
         </Row>
       </Tab.Container>
     </Row>
+
+    <footer>made with ❤️ and <a href="https://adamwong246.github.io/testeranto/" >testeranto </a></footer>
   </div>
 }
 
