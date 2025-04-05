@@ -5,7 +5,6 @@ import {
 } from "../Types.js";
 
 import { BaseBuilder } from "./basebuilder.js";
-
 import {
   ISuiteKlasser,
   IGivenKlasser,
@@ -13,7 +12,6 @@ import {
   IThenKlasser,
   ICheckKlasser,
 } from "./types.js";
-import { PM } from "../PM/index.js";
 import { ITTestResourceRequest } from "./index.js";
 
 export abstract class ClassBuilder<
@@ -126,7 +124,6 @@ export abstract class ClassBuilder<
       classyChecks,
       testResourceRequirement,
       testSpecification
-      // puppetMaster
     );
   }
 }

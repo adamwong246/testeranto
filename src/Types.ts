@@ -1,8 +1,4 @@
-import {
-  ITTestResourceConfiguration,
-  ITestArtificer,
-  ITestCheckCallback,
-} from "./lib/index.js";
+import { ITTestResourceConfiguration, ITestArtificer } from "./lib/index.js";
 import {
   IGivens,
   BaseCheck,
@@ -12,6 +8,7 @@ import {
   BaseGiven,
 } from "./lib/abstractBase.js";
 import { PM } from "./PM/index.js";
+import { ITestCheckCallback } from "./lib/types.js";
 
 export type IWebTestInterface<
   ITestShape extends IBaseTest<

@@ -1,6 +1,7 @@
-import { ITTestResourceConfiguration, ITestArtificer, ITestCheckCallback } from "./lib/index.js";
+import { ITTestResourceConfiguration, ITestArtificer } from "./lib/index.js";
 import { IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen, BaseGiven } from "./lib/abstractBase.js";
 import { PM } from "./PM/index.js";
+import { ITestCheckCallback } from "./lib/types.js";
 export type IWebTestInterface<ITestShape extends IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>> = {
     assertThis: (x: ITestShape["then"]) => void;
     andWhen: (store: ITestShape["istore"], whenCB: ITestShape["when"], testResource: ITTestResourceConfiguration, utils: PM) => Promise<ITestShape["istore"]>;

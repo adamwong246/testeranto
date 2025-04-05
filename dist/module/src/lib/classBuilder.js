@@ -31,8 +31,6 @@ export class ClassBuilder extends BaseBuilder {
             };
             return a;
         }, {});
-        super(input, classySuites, classyGivens, classyWhens, classyThens, classyChecks, testResourceRequirement, testSpecification
-        // puppetMaster
-        );
+        super(input, classySuites, classyGivens, classyWhens, classyThens, classyChecks, testResourceRequirement, testSpecification);
     }
 }

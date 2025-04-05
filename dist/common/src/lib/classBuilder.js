@@ -34,9 +34,7 @@ class ClassBuilder extends basebuilder_js_1.BaseBuilder {
             };
             return a;
         }, {});
-        super(input, classySuites, classyGivens, classyWhens, classyThens, classyChecks, testResourceRequirement, testSpecification
-        // puppetMaster
-        );
+        super(input, classySuites, classyGivens, classyWhens, classyThens, classyChecks, testResourceRequirement, testSpecification);
     }
 }
 exports.ClassBuilder = ClassBuilder;

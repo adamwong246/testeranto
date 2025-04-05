@@ -1,4 +1,3 @@
-// import { INodeUtils, ITestInterface, IUtils, IWebUtils } from "./types.js";
 export const BaseTestInterface = {
     beforeAll: async (s) => s,
     beforeEach: async function (subject, initialValues, x, testResource, pm) {

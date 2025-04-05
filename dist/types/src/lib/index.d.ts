@@ -1,7 +1,6 @@
 import { PM } from "../PM/index.js";
-import { IBaseTest } from "../Types.js";
-import { IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen } from "./abstractBase.js";
-import { ITestInterface } from "./types.js";
+import { IBaseTest, ITestInterface } from "../Types.js";
+import { IGivens, BaseCheck, BaseSuite } from "./abstractBase.js";
 export declare const BaseTestInterface: ITestInterface<IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>>;
 export declare const DefaultTestInterface: (p: Partial<ITestInterface<any>>) => ITestInterface<any>;
 export type ITTestResourceConfiguration = {
@@ -50,11 +49,35 @@ export type ITestResults = Promise<{
 }>[];
 export declare const defaultTestResourceRequirement: ITTestResourceRequest;
 export type ITestArtifactory = (key: string, value: unknown) => unknown;
-export type ITestCheckCallback<ITestShape extends IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>> = {
-    [K in keyof ITestShape["checks"]]: (name: string, features: string[], callbackA: (whens: {
-        [K in keyof ITestShape["whens"]]: (...unknown: any[]) => BaseWhen<ITestShape>;
-    }, thens: {
-        [K in keyof ITestShape["thens"]]: (...unknown: any[]) => BaseThen<ITestShape>;
-    }) => Promise<any>, ...xtrasA: ITestShape["checks"][K]) => BaseCheck<ITestShape>;
+export type IRunnables = {
+    nodeEntryPoints: Record<string, string>;
+    webEntryPoints: Record<string, string>;
 };
+export type IFinalResults = {
+    features: string[];
+    failed: number;
+};
+export type IRunTime = `node` | `web`;
+export type ITestTypes = [string, IRunTime, {
+    ports: number;
+}, ITestTypes[]];
+export type IPlugin = (register: (entrypoint: any, sources: any) => any, entrypoints: any) => Plugin;
+export type IBaseConfig = {
+    src: string;
+    clearScreen: boolean;
+    debugger: boolean;
+    devMode: boolean;
+    externals: string[];
+    minify: boolean;
+    outbase: string;
+    outdir: string;
+    ports: string[];
+    tests: ITestTypes[];
+    nodePlugins: IPlugin[];
+    webPlugins: IPlugin[];
+    featureIngestor: (s: string) => Promise<string>;
+};
+export type IBuiltConfig = {
+    buildDir: string;
+} & IBaseConfig;
 export {};
