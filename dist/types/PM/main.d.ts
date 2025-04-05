@@ -1,8 +1,9 @@
 import { CdpPage, Page } from "puppeteer-core/lib/esm/puppeteer";
 import fs from "fs";
-import { Browser, LaunchOptions } from "puppeteer-core";
+import { Browser } from "puppeteer-core";
 import { PassThrough } from "stream";
 import { IBuiltConfig, ITestTypes, ITLog } from "../lib/index.js";
+import { ISummary } from "../utils";
 import { PM } from "./index.js";
 export declare class PM_Main extends PM {
     browser: Browser;
@@ -10,13 +11,12 @@ export declare class PM_Main extends PM {
     configs: IBuiltConfig;
     ports: Record<number, boolean>;
     queue: any[];
-    bigBoard: Record<string, {
-        status: "?" | "running" | "waiting";
-        runTimeError?: number;
-        typeErrors?: string;
-        staticErrors?: string;
-    }>;
+    mode: "DEV" | "PROD";
+    bigBoard: ISummary;
+    webMetafileWatcher: fs.FSWatcher;
+    nodeMetafileWatcher: fs.FSWatcher;
     constructor(configs: IBuiltConfig);
+    stop: () => void;
     customclose(): void;
     waitForSelector(p: string, s: string): any;
     closePage(p: any): any;
@@ -44,8 +44,15 @@ export declare class PM_Main extends PM {
     getAttribute(selector: string, attribute: string): void;
     isDisabled(selector: string): Promise<boolean>;
     screencastStop(s: string): void;
-    startPuppeteer(options: LaunchOptions, destfolder: string): Promise<any>;
-    shutDown(): void;
+    metafileOutputs(platform: "web" | "node"): Promise<void>;
+    start(): Promise<any>;
+    tscCheck: ({ entrypoint, addableFiles, platform, }: {
+        platform: "web" | "node";
+        entrypoint: string;
+        addableFiles: string[];
+    }) => Promise<void>;
+    eslintCheck: (entrypoint: string, platform: "web" | "node", addableFiles: string[]) => Promise<void>;
+    makePrompt: (entryPoint: string, addableFiles: string[], platform: "web" | "node") => Promise<void>;
     checkForShutdown: () => void;
     testIsNowRunning: (src: string) => void;
     testIsNowDone: (src: string) => void;

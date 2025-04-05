@@ -2,32 +2,21 @@ import { createRequire } from 'module';const require = createRequire(import.meta
 
 // src/run.ts
 import ansiC2 from "ansi-colors";
-import { watch } from "fs";
-import path3 from "path";
-import crypto from "node:crypto";
-import fs2 from "fs";
-import tsc from "tsc-prog";
-import { ESLint } from "eslint";
-import ts from "typescript";
 import readline from "readline";
 
 // src/PM/main.ts
-import fs from "fs";
+import ts from "typescript";
+import fs, { watch } from "fs";
 import path2 from "path";
 import puppeteer from "puppeteer-core";
 import ansiC from "ansi-colors";
+import crypto from "node:crypto";
+import { ESLint } from "eslint";
+import tsc from "tsc-prog";
 
 // src/utils.ts
 import path from "path";
 var tscPather = (entryPoint, platform) => {
-  return path.join(
-    "./docs/",
-    platform,
-    entryPoint.split(".").slice(0, -1).join("."),
-    `type_errors.txt`
-  );
-};
-var tscExitCodePather = (entryPoint, platform) => {
   return path.join(
     "./docs/",
     platform,
@@ -43,33 +32,59 @@ var lintPather = (entryPoint, platform) => {
     `lint_errors.json`
   );
 };
-var lintExitCodePather = (entryPoint, platform) => {
-  return path.join(
-    "./docs/",
-    platform,
-    entryPoint.split(".").slice(0, -1).join("."),
-    `lint_errors.txt`
-  );
-};
-var bddExitCodePather = (entryPoint, platform) => {
-  return path.join(
-    "./docs/",
-    platform,
-    entryPoint.split(".").slice(0, -1).join("."),
-    `bdd_errors.txt`
-  );
-};
 
 // src/PM/index.ts
 var PM = class {
 };
 
 // src/PM/main.ts
+var eslint = new ESLint();
+var formatter = await eslint.loadFormatter(
+  "./node_modules/testeranto/dist/prebuild/esbuildConfigs/eslint-formatter-testeranto.mjs"
+);
+var changes = {};
+var fileHashes = {};
 var fileStreams3 = [];
 var fPaths = [];
 var files = {};
 var recorders = {};
 var screenshots = {};
+async function fileHash(filePath, algorithm = "md5") {
+  return new Promise((resolve, reject) => {
+    const hash = crypto.createHash(algorithm);
+    const fileStream = fs.createReadStream(filePath);
+    fileStream.on("data", (data) => {
+      hash.update(data);
+    });
+    fileStream.on("end", () => {
+      const fileHash2 = hash.digest("hex");
+      resolve(fileHash2);
+    });
+    fileStream.on("error", (error) => {
+      reject(`Error reading file: ${error.message}`);
+    });
+  });
+}
+var getRunnables = (tests, payload = {
+  nodeEntryPoints: {},
+  webEntryPoints: {}
+}) => {
+  return tests.reduce((pt, cv, cndx, cry) => {
+    if (cv[1] === "node") {
+      pt.nodeEntryPoints[cv[0]] = path2.resolve(
+        `./docs/node/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+      );
+    } else if (cv[1] === "web") {
+      pt.webEntryPoints[cv[0]] = path2.resolve(
+        `./docs/web/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+      );
+    }
+    if (cv[3].length) {
+      getRunnables(cv[3], payload);
+    }
+    return pt;
+  }, payload);
+};
 var statusMessagePretty = (failures, test) => {
   if (failures === 0) {
     console.log(ansiC.green(ansiC.inverse(`> ${test} completed successfully`)));
@@ -86,6 +101,15 @@ async function writeFileAndCreateDir(filePath, data) {
     console.error(`Error writing file: ${error}`);
   }
 }
+var filesHash = async (files2, algorithm = "md5") => {
+  return new Promise((resolve, reject) => {
+    resolve(
+      files2.reduce(async (mm, f) => {
+        return await mm + await fileHash(f);
+      }, Promise.resolve(""))
+    );
+  });
+};
 function isValidUrl(string) {
   try {
     new URL(string);
@@ -99,27 +123,137 @@ var PM_Main = class extends PM {
     super();
     this.shutdownMode = false;
     this.bigBoard = {};
+    this.stop = () => {
+      console.log(ansiC.inverse("Testeranto-Run is shutting down gracefully..."));
+      this.mode = "PROD";
+      this.nodeMetafileWatcher.close();
+      this.webMetafileWatcher.close();
+      this.checkForShutdown();
+    };
+    this.tscCheck = async ({
+      entrypoint,
+      addableFiles,
+      platform
+    }) => {
+      console.log(ansiC.green(ansiC.inverse(`tsc < ${entrypoint}`)));
+      this.bigBoard[entrypoint].typeErrors = "?";
+      const program = tsc.createProgramFromConfig({
+        basePath: process.cwd(),
+        // always required, used for relative paths
+        configFilePath: "tsconfig.json",
+        // config to inherit from (optional)
+        compilerOptions: {
+          rootDir: "src",
+          outDir: tscPather(entrypoint, platform),
+          // declaration: true,
+          // skipLibCheck: true,
+          noEmit: true
+        },
+        include: addableFiles
+        //["src/**/*"],
+        // exclude: ["**/*.test.ts", "**/*.spec.ts"],
+      });
+      const tscPath = tscPather(entrypoint, platform);
+      let allDiagnostics = program.getSemanticDiagnostics();
+      const d = [];
+      allDiagnostics.forEach((diagnostic) => {
+        if (diagnostic.file) {
+          let { line, character } = ts.getLineAndCharacterOfPosition(
+            diagnostic.file,
+            diagnostic.start
+          );
+          let message = ts.flattenDiagnosticMessageText(
+            diagnostic.messageText,
+            "\n"
+          );
+          d.push(
+            `${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`
+          );
+        } else {
+          d.push(ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n"));
+        }
+      });
+      fs.writeFileSync(tscPath, d.join("\n"));
+      this.bigBoard[entrypoint].typeErrors = d.length;
+      if (this.shutdownMode) {
+        this.checkForShutdown();
+      }
+    };
+    this.eslintCheck = async (entrypoint, platform, addableFiles) => {
+      this.bigBoard[entrypoint].staticErrors = "?";
+      console.log(ansiC.green(ansiC.inverse(`eslint < ${entrypoint}`)));
+      const results = (await eslint.lintFiles(addableFiles)).filter((r) => r.messages.length).filter((r) => {
+        return r.messages[0].ruleId !== null;
+      }).map((r) => {
+        delete r.source;
+        return r;
+      });
+      fs.writeFileSync(
+        lintPather(entrypoint, platform),
+        await formatter.format(results)
+      );
+      this.bigBoard[entrypoint].staticErrors = results.length;
+      if (this.shutdownMode) {
+        this.checkForShutdown();
+      }
+    };
+    this.makePrompt = async (entryPoint, addableFiles, platform) => {
+      this.bigBoard[entryPoint].prompt = "?";
+      const promptPath = path2.join(
+        "./docs/",
+        platform,
+        entryPoint.split(".").slice(0, -1).join("."),
+        `prompt.txt`
+      );
+      const testPaths = path2.join(
+        "./docs/",
+        platform,
+        entryPoint.split(".").slice(0, -1).join("."),
+        `tests.json`
+      );
+      const featuresPath = path2.join(
+        "./docs/",
+        platform,
+        entryPoint.split(".").slice(0, -1).join("."),
+        `featurePrompt.txt`
+      );
+      fs.writeFileSync(
+        promptPath,
+        `
+${addableFiles.map((x) => {
+          return `/add ${x}`;
+        }).join("\n")}
+
+/read ${lintPather(entryPoint, platform)}
+/read ${tscPather(entryPoint, platform)}
+/read ${testPaths}
+
+/load ${featuresPath}
+
+/code Fix the failing tests described in ${testPaths}. Correct any type signature errors described in the files ${tscPather(
+          entryPoint,
+          platform
+        )}. Implement any method which throws "Function not implemented. Resolve the lint errors described in ${lintPather(
+          entryPoint,
+          platform
+        )}"
+          `
+      );
+      this.bigBoard[entryPoint].prompt = `aider --model deepseek/deepseek-chat --load docs/${platform}/${entryPoint.split(".").slice(0, -1).join(".")}/prompt.txt`;
+      if (this.shutdownMode) {
+        this.checkForShutdown();
+      }
+    };
     this.checkForShutdown = () => {
-      const anyRunning = Object.values(this.bigBoard).filter((x) => x.status === "running").length > 0;
+      const anyRunning = Object.values(this.bigBoard).filter((x) => x.prompt === "?").length + Object.values(this.bigBoard).filter((x) => x.runTimeError === "?").length + Object.values(this.bigBoard).filter((x) => x.staticErrors === "?").length + Object.values(this.bigBoard).filter((x) => x.typeErrors === "?").length > 0;
       if (anyRunning) {
+        console.log(ansiC.inverse("Shutting down. Please wait"));
       } else {
         this.browser.disconnect().then(() => {
-          const final = {
-            timestamp: Date.now(),
-            tests: this.configs.tests.reduce((mm, t) => {
-              const bddErrors = fs.readFileSync(bddExitCodePather(t[0], t[1])).toString();
-              const lintErrors = fs.readFileSync(lintExitCodePather(t[0], t[1])).toString();
-              const typeErrors = fs.readFileSync(tscExitCodePather(t[0], t[1])).toString();
-              mm[t[0]] = {
-                bddErrors,
-                lintErrors,
-                typeErrors
-              };
-              return mm;
-            }, {})
-          };
-          const s = JSON.stringify(final, null, 2);
-          fs.writeFileSync("docs/summary.json", s);
+          fs.writeFileSync(
+            "docs/summary.json",
+            JSON.stringify(this.bigBoard, null, 2)
+          );
           console.log(ansiC.inverse("Goodbye"));
           process.exit();
         });
@@ -206,7 +340,6 @@ var PM_Main = class extends PM {
     this.launchWebSideCar = async (src, dest, testConfig) => {
       const d = dest + ".mjs";
       console.log(ansiC.green(ansiC.inverse(`launchWebSideCar ${src}`)));
-      const destFolder = dest.replace(".mjs", "");
       const fileStreams2 = [];
       const doneFileStream2 = [];
       return new Promise((res, rej) => {
@@ -608,7 +741,6 @@ var PM_Main = class extends PM {
           }).join("\n")
         );
       });
-      this.writeBigBoard();
     };
     this.receiveExitCode = (srcTest, failures) => {
       this.bigBoard[srcTest].runTimeError = failures;
@@ -616,16 +748,20 @@ var PM_Main = class extends PM {
     };
     this.writeBigBoard = () => {
       fs.writeFileSync(
-        "./docs/bigBoard.json",
+        "./docs/summary.json",
         JSON.stringify(this.bigBoard, null, 2)
       );
     };
+    this.mode = configs.devMode ? "DEV" : "PROD";
     this.server = {};
     this.configs = configs;
     this.ports = {};
     this.configs.tests.forEach(([t]) => {
       this.bigBoard[t] = {
-        status: "?"
+        runTimeError: "?",
+        typeErrors: "?",
+        staticErrors: "?",
+        prompt: "?"
       };
     });
     this.configs.ports.forEach((element) => {
@@ -638,8 +774,8 @@ var PM_Main = class extends PM {
       );
       await page?.waitForSelector(sel);
     };
-    globalThis["screencastStop"] = async (path4) => {
-      return recorders[path4].stop();
+    globalThis["screencastStop"] = async (path3) => {
+      return recorders[path3].stop();
     };
     globalThis["closePage"] = async (pageKey) => {
       const page = (await this.browser.pages()).find(
@@ -858,260 +994,44 @@ var PM_Main = class extends PM {
     throw new Error("Method not implemented.");
   }
   ////////////////////////////////////////////////////////////////////////////////
-  async startPuppeteer(options, destfolder) {
-    this.browser = await puppeteer.launch(options);
-  }
-  // goodbye = () => {
-  //   this.browser.disconnect().then(() => {
-  //     console.log("Goodbye");
-  //     process.exit();
-  //   });
-  // };
-  shutDown() {
-    this.shutdownMode = true;
-    this.checkForShutdown();
-  }
-};
-
-// src/run.ts
-console.log(ansiC2.inverse("Press 'x' to shutdown forcefully."));
-readline.emitKeypressEvents(process.stdin);
-if (process.stdin.isTTY)
-  process.stdin.setRawMode(true);
-process.stdin.on("keypress", (str, key) => {
-  if (key.name === "x") {
-    console.log(ansiC2.inverse("Shutting down forcefully..."));
-    process.exit(-1);
-  }
-});
-async function fileHash(filePath, algorithm = "md5") {
-  return new Promise((resolve, reject) => {
-    const hash = crypto.createHash(algorithm);
-    const fileStream = fs2.createReadStream(filePath);
-    fileStream.on("data", (data) => {
-      hash.update(data);
-    });
-    fileStream.on("end", () => {
-      const fileHash2 = hash.digest("hex");
-      resolve(fileHash2);
-    });
-    fileStream.on("error", (error) => {
-      reject(`Error reading file: ${error.message}`);
-    });
-  });
-}
-async function filesHash(files2, algorithm = "md5") {
-  return new Promise((resolve, reject) => {
-    resolve(
-      files2.reduce(async (mm, f) => {
-        return await mm + await fileHash(f);
-      }, Promise.resolve(""))
-    );
-  });
-}
-var getRunnables = (tests, payload = {
-  nodeEntryPoints: {},
-  webEntryPoints: {}
-}) => {
-  return tests.reduce((pt, cv, cndx, cry) => {
-    if (cv[1] === "node") {
-      pt.nodeEntryPoints[cv[0]] = path3.resolve(
-        `./docs/node/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
-      );
-    } else if (cv[1] === "web") {
-      pt.webEntryPoints[cv[0]] = path3.resolve(
-        `./docs/web/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
-      );
-    }
-    if (cv[3].length) {
-      getRunnables(cv[3], payload);
-    }
-    return pt;
-  }, payload);
-};
-var changes = {};
-var tscCheck = async ({
-  entrypoint,
-  addableFiles,
-  platform
-}) => {
-  console.log(ansiC2.green(ansiC2.inverse(`tsc < ${entrypoint}`)));
-  const program = tsc.createProgramFromConfig({
-    basePath: process.cwd(),
-    // always required, used for relative paths
-    configFilePath: "tsconfig.json",
-    // config to inherit from (optional)
-    compilerOptions: {
-      rootDir: "src",
-      outDir: tscPather(entrypoint, platform),
-      // declaration: true,
-      // skipLibCheck: true,
-      noEmit: true
-    },
-    include: addableFiles
-    //["src/**/*"],
-    // exclude: ["**/*.test.ts", "**/*.spec.ts"],
-  });
-  const tscPath = tscPather(entrypoint, platform);
-  let allDiagnostics = program.getSemanticDiagnostics();
-  const d = [];
-  allDiagnostics.forEach((diagnostic) => {
-    if (diagnostic.file) {
-      let { line, character } = ts.getLineAndCharacterOfPosition(
-        diagnostic.file,
-        diagnostic.start
-      );
-      let message = ts.flattenDiagnosticMessageText(
-        diagnostic.messageText,
-        "\n"
-      );
-      d.push(
-        `${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`
-      );
-    } else {
-      d.push(ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n"));
-    }
-  });
-  fs2.writeFileSync(tscPath, d.join("\n"));
-  fs2.writeFileSync(
-    tscExitCodePather(entrypoint, platform),
-    d.length.toString()
-  );
-};
-var eslint = new ESLint();
-var formatter = await eslint.loadFormatter(
-  "./node_modules/testeranto/dist/prebuild/esbuildConfigs/eslint-formatter-testeranto.mjs"
-);
-var eslintCheck = async (entrypoint, platform, addableFiles) => {
-  console.log(ansiC2.green(ansiC2.inverse(`eslint < ${entrypoint}`)));
-  const results = (await eslint.lintFiles(addableFiles)).filter((r) => r.messages.length).filter((r) => {
-    return r.messages[0].ruleId !== null;
-  }).map((r) => {
-    delete r.source;
-    return r;
-  });
-  fs2.writeFileSync(
-    lintPather(entrypoint, platform),
-    await formatter.format(results)
-  );
-  fs2.writeFileSync(
-    lintExitCodePather(entrypoint, platform),
-    results.length.toString()
-  );
-};
-var makePrompt = async (entryPoint, addableFiles, platform) => {
-  const promptPath = path3.join(
-    "./docs/",
-    platform,
-    entryPoint.split(".").slice(0, -1).join("."),
-    `prompt.txt`
-  );
-  const testPaths = path3.join(
-    "./docs/",
-    platform,
-    entryPoint.split(".").slice(0, -1).join("."),
-    `tests.json`
-  );
-  const featuresPath = path3.join(
-    "./docs/",
-    platform,
-    entryPoint.split(".").slice(0, -1).join("."),
-    `featurePrompt.txt`
-  );
-  fs2.writeFileSync(
-    promptPath,
-    `
-${addableFiles.map((x) => {
-      return `/add ${x}`;
-    }).join("\n")}
-
-/read ${lintPather(entryPoint, platform)}
-/read ${tscPather(entryPoint, platform)}
-/read ${testPaths}
-
-/load ${featuresPath}
-
-/code Fix the failing tests described in ${testPaths}. Correct any type signature errors described in the files ${tscPather(
-      entryPoint,
-      platform
-    )}. Implement any method which throws "Function not implemented. Resolve the lint errors described in ${lintPather(
-      entryPoint,
-      platform
-    )}"
-          `
-  );
-};
-var metafileOutputs = async (platform) => {
-  const metafile = JSON.parse(
-    fs2.readFileSync(`docs/${platform}/metafile.json`).toString()
-  ).metafile;
-  if (!metafile)
-    return;
-  const outputs = metafile.outputs;
-  Object.keys(outputs).forEach(async (k) => {
-    const addableFiles = Object.keys(outputs[k].inputs).filter((i) => {
-      if (!fs2.existsSync(i))
-        return false;
-      if (i.startsWith("node_modules"))
-        return false;
-      return true;
-    });
-    const f = `${k.split(".").slice(0, -1).join(".")}/`;
-    if (!fs2.existsSync(f)) {
-      fs2.mkdirSync(f);
-    }
-    const entrypoint = outputs[k].entryPoint;
-    if (entrypoint) {
-      const changeDigest = await filesHash(addableFiles);
-      if (changeDigest === changes[entrypoint]) {
-      } else {
-        changes[entrypoint] = changeDigest;
-        tscCheck({ platform, addableFiles, entrypoint });
-        eslintCheck(entrypoint, platform, addableFiles);
-        makePrompt(entrypoint, addableFiles, platform);
+  async metafileOutputs(platform) {
+    const metafile = JSON.parse(
+      fs.readFileSync(`docs/${platform}/metafile.json`).toString()
+    ).metafile;
+    if (!metafile)
+      return;
+    const outputs = metafile.outputs;
+    Object.keys(outputs).forEach(async (k) => {
+      const addableFiles = Object.keys(outputs[k].inputs).filter((i) => {
+        if (!fs.existsSync(i))
+          return false;
+        if (i.startsWith("node_modules"))
+          return false;
+        return true;
+      });
+      const f = `${k.split(".").slice(0, -1).join(".")}/`;
+      if (!fs.existsSync(f)) {
+        fs.mkdirSync(f);
       }
-    }
-  });
-};
-import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
-  const rawConfig = module.default;
-  const config = {
-    ...rawConfig,
-    buildDir: process.cwd() + "/" + rawConfig.outdir
-  };
-  let mode = config.devMode ? "DEV" : "PROD";
-  const fileHashes = {};
-  let pm = new PM_Main(config);
-  console.log(ansiC2.inverse(`Press 'q' to shutdown gracefully`));
-  process.stdin.on("keypress", (str, key) => {
-    if (key.name === "q") {
-      console.log(
-        ansiC2.inverse("Testeranto-Run is shutting down gracefully...")
-      );
-      mode = "PROD";
-      nodeMetafileWatcher.close();
-      webMetafileWatcher.close();
-      pm.shutDown();
-    }
-  });
-  metafileOutputs("node");
-  const nodeMetafileWatcher = watch(
-    "docs/node/metafile.json",
-    async (e, filename) => {
-      console.log(ansiC2.green(ansiC2.inverse(`< ${e} ${filename} (node)`)));
-      metafileOutputs("node");
-    }
-  );
-  metafileOutputs("web");
-  const webMetafileWatcher = watch(
-    "docs/web/metafile.json",
-    async (e, filename) => {
-      console.log(ansiC2.green(ansiC2.inverse(`< ${e} ${filename} (web)`)));
-      metafileOutputs("web");
-    }
-  );
-  await pm.startPuppeteer(
-    {
+      const entrypoint = outputs[k].entryPoint;
+      if (entrypoint) {
+        const changeDigest = await filesHash(addableFiles);
+        if (changeDigest === changes[entrypoint]) {
+        } else {
+          changes[entrypoint] = changeDigest;
+          this.tscCheck({
+            platform,
+            addableFiles,
+            entrypoint: "./" + entrypoint
+          });
+          this.eslintCheck("./" + entrypoint, platform, addableFiles);
+          this.makePrompt("./" + entrypoint, addableFiles, platform);
+        }
+      }
+    });
+  }
+  async start() {
+    this.browser = await puppeteer.launch({
       slowMo: 1,
       // timeout: 1,
       waitForInitialPage: false,
@@ -1153,38 +1073,81 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
         // "--disk-cache-size=1",
         // "--start-maximized",
       ]
-    },
-    "."
-  );
-  const { nodeEntryPoints, webEntryPoints } = getRunnables(config.tests);
-  Object.entries(nodeEntryPoints).forEach(
-    ([k, outputFile]) => {
-      pm.launchNode(k, outputFile);
-      try {
+    });
+    const { nodeEntryPoints, webEntryPoints } = getRunnables(
+      this.configs.tests
+    );
+    Object.entries(nodeEntryPoints).forEach(
+      ([k, outputFile]) => {
+        this.launchNode(k, outputFile);
+        try {
+          watch(outputFile, async (e, filename) => {
+            const hash = await fileHash(outputFile);
+            if (fileHashes[k] !== hash) {
+              fileHashes[k] = hash;
+              console.log(ansiC.green(ansiC.inverse(`< ${e} ${filename}`)));
+              this.launchNode(k, outputFile);
+            }
+          });
+        } catch (e) {
+          console.error(e);
+        }
+      }
+    );
+    Object.entries(webEntryPoints).forEach(
+      ([k, outputFile]) => {
+        this.launchWeb(k, outputFile);
         watch(outputFile, async (e, filename) => {
           const hash = await fileHash(outputFile);
           if (fileHashes[k] !== hash) {
             fileHashes[k] = hash;
-            console.log(ansiC2.green(ansiC2.inverse(`< ${e} ${filename}`)));
-            pm.launchNode(k, outputFile);
+            console.log(ansiC.green(ansiC.inverse(`< ${e} ${filename}`)));
+            this.launchWeb(k, outputFile);
           }
         });
-      } catch (e) {
-        console.error(e);
       }
+    );
+    this.metafileOutputs("node");
+    this.nodeMetafileWatcher = watch(
+      "docs/node/metafile.json",
+      async (e, filename) => {
+        console.log(ansiC.green(ansiC.inverse(`< ${e} ${filename} (node)`)));
+        this.metafileOutputs("node");
+      }
+    );
+    this.metafileOutputs("web");
+    this.webMetafileWatcher = watch(
+      "docs/web/metafile.json",
+      async (e, filename) => {
+        console.log(ansiC.green(ansiC.inverse(`< ${e} ${filename} (web)`)));
+        this.metafileOutputs("web");
+      }
+    );
+  }
+};
+
+// src/run.ts
+readline.emitKeypressEvents(process.stdin);
+if (process.stdin.isTTY)
+  process.stdin.setRawMode(true);
+console.log(ansiC2.inverse("Press 'x' to shutdown forcefully."));
+process.stdin.on("keypress", (str, key) => {
+  if (key.name === "x") {
+    console.log(ansiC2.inverse("Shutting down forcefully..."));
+    process.exit(-1);
+  }
+});
+import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
+  const rawConfig = module.default;
+  const config = {
+    ...rawConfig,
+    buildDir: process.cwd() + "/" + rawConfig.outdir
+  };
+  const pm = new PM_Main(config);
+  pm.start();
+  process.stdin.on("keypress", (str, key) => {
+    if (key.name === "q") {
+      pm.stop();
     }
-  );
-  Object.entries(webEntryPoints).forEach(
-    ([k, outputFile]) => {
-      pm.launchWeb(k, outputFile);
-      watch(outputFile, async (e, filename) => {
-        const hash = await fileHash(outputFile);
-        if (fileHashes[k] !== hash) {
-          fileHashes[k] = hash;
-          console.log(ansiC2.green(ansiC2.inverse(`< ${e} ${filename}`)));
-          pm.launchWeb(k, outputFile);
-        }
-      });
-    }
-  );
+  });
 });

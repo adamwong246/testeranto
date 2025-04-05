@@ -19,7 +19,7 @@ const BigBoard = () => {
     const [bigBoard, setBigBoard] = useState({});
     useEffect(() => {
         (async () => {
-            fetch('/kokomoBay/docs/bigBoard.json')
+            fetch('/kokomoBay/docs/summary.json')
                 .then(response => response.json())
                 .then(json => {
                 setBigBoard(json);
@@ -27,41 +27,41 @@ const BigBoard = () => {
                 .catch(error => console.error(error));
         })();
     }, []);
-    const [staticAnalysis, setStaticAnalysis] = useState({});
-    useEffect(() => {
-        (async () => {
-            let accumulator = {};
-            for (const t of (configs || { tests: [] }).tests) {
-                accumulator[t[0]] = await (await fetch(`/kokomoBay/docs/${t[1]}/${t[0].split(".").slice(0, -1).join(".")}/lint_errors.txt`)).text();
-            }
-            setStaticAnalysis(accumulator);
-        })();
-    }, [configs, bigBoard]);
-    const [typeErrors, setTypeErrors] = useState({});
-    useEffect(() => {
-        (async () => {
-            let accumulator = {};
-            for (const t of (configs || { tests: [] }).tests) {
-                accumulator[t[0]] = await (await fetch(`/kokomoBay/docs/${t[1]}/${t[0].split(".").slice(0, -1).join(".")}/type_errors.txt`)).text();
-            }
-            setTypeErrors(accumulator);
-        })();
-    }, [configs, bigBoard]);
-    const [bddErrors, setBddErrors] = useState({});
-    useEffect(() => {
-        (async () => {
-            let accumulator = {};
-            for (const t of (configs || { tests: [] }).tests) {
-                accumulator[t[0]] = await (await fetch(`/kokomoBay/docs/${t[1]}/${t[0].split(".").slice(0, -1).join(".")}/bdd_errors.txt`)).text();
-            }
-            setBddErrors(accumulator);
-        })();
-    }, [configs, bigBoard]);
-    if (!configs || !staticAnalysis || !typeErrors || !bddErrors) {
+    // const [staticAnalysis, setStaticAnalysis] = useState<Record<string, string>>({});
+    // useEffect(() => {
+    //   (async () => {
+    //     let accumulator = {};
+    //     for (const t of (configs || { tests: [] as ITestTypes[] }).tests) {
+    //       accumulator[t[0]] = await (await fetch(`/kokomoBay/docs/${t[1]}/${t[0].split(".").slice(0, -1).join(".")}/lint_errors.txt`)).text()
+    //     }
+    //     setStaticAnalysis(accumulator);
+    //   })();
+    // }, [configs, bigBoard]);
+    // const [typeErrors, setTypeErrors] = useState<Record<string, string>>({});
+    // useEffect(() => {
+    //   (async () => {
+    //     let accumulator = {};
+    //     for (const t of (configs || { tests: [] as ITestTypes[] }).tests) {
+    //       accumulator[t[0]] = await (await fetch(`/kokomoBay/docs/${t[1]}/${t[0].split(".").slice(0, -1).join(".")}/type_errors.txt`)).text()
+    //     }
+    //     setTypeErrors(accumulator);
+    //   })();
+    // }, [configs, bigBoard]);
+    // const [bddErrors, setBddErrors] = useState<Record<string, string>>({});
+    // useEffect(() => {
+    //   (async () => {
+    //     let accumulator = {};
+    //     for (const t of (configs || { tests: [] as ITestTypes[] }).tests) {
+    //       accumulator[t[0]] = await (await fetch(`/kokomoBay/docs/${t[1]}/${t[0].split(".").slice(0, -1).join(".")}/bdd_errors.txt`)).text()
+    //     }
+    //     setBddErrors(accumulator);
+    //   })();
+    // }, [configs, bigBoard]);
+    if (!configs) {
         return React.createElement("div", null, "loading...");
     }
     const collated = configs.tests.map((c) => {
-        return Object.assign(Object.assign({}, bigBoard[c[0]]), { name: c[0], runTime: c[1], tr: c[2], sidecars: c[3], staticAnalysis: staticAnalysis[c[0]], typeErrors: typeErrors[c[0]], bddErrors: bddErrors[c[0]] });
+        return Object.assign(Object.assign({}, bigBoard[c[0]]), { name: c[0], runTime: c[1], tr: c[2], sidecars: c[3], staticAnalysis: bigBoard[c[0]].staticErrors, typeErrors: bigBoard[c[0]].typeErrors, bddErrors: bigBoard[c[0]].runTimeError, prompt: bigBoard[c[0]].prompt });
     });
     return React.createElement("div", null,
         React.createElement(Table, { striped: true, bordered: true, hover: true },
@@ -84,9 +84,7 @@ const BigBoard = () => {
                     React.createElement("td", null,
                         React.createElement("a", { href: `${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/type_errors.txt` }, c.typeErrors)),
                     React.createElement("td", null,
-                        React.createElement("pre", null,
-                            "aider --model deepseek/deepseek-chat --load ",
-                            `docs/${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/prompt.txt`)));
+                        React.createElement("pre", null, c.prompt)));
             }))),
         React.createElement(Footer, null));
 };

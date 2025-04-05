@@ -7,6 +7,7 @@ import "./style.css"
 import { IRunTime, ITestTypes, IBuiltConfig } from "./lib";
 import { Footer } from "./Footer";
 import { Table } from "react-bootstrap";
+import { ISummary } from "./utils";
 
 
 type ICollation = {
@@ -16,10 +17,10 @@ type ICollation = {
     ports: number;
   };
   sidecars: ITestTypes[];
-  status: string;
-  staticAnalysis: string;
-  typeErrors: string;
-  bddErrors: string;
+  staticAnalysis: number | "?";
+  typeErrors: number | "?";
+  bddErrors: number | "?";
+  prompt: string | "?";
 };
 
 type ICollations = ICollation[];
@@ -39,10 +40,10 @@ const BigBoard = () => {
     })();
   }, []);
 
-  const [bigBoard, setBigBoard] = useState<Record<string, object>>({});
+  const [bigBoard, setBigBoard] = useState<Record<string, ISummary>>({});
   useEffect(() => {
     (async () => {
-      fetch('/kokomoBay/docs/bigBoard.json')
+      fetch('/kokomoBay/docs/summary.json')
         .then(response => response.json())
         .then(json => {
           setBigBoard(json)
@@ -52,49 +53,49 @@ const BigBoard = () => {
     })();
   }, []);
 
-  const [staticAnalysis, setStaticAnalysis] = useState<Record<string, string>>({});
-  useEffect(() => {
-    (async () => {
+  // const [staticAnalysis, setStaticAnalysis] = useState<Record<string, string>>({});
+  // useEffect(() => {
+  //   (async () => {
 
-      let accumulator = {};
-      for (const t of (configs || { tests: [] as ITestTypes[] }).tests) {
-        accumulator[t[0]] = await (await fetch(`/kokomoBay/docs/${t[1]}/${t[0].split(".").slice(0, -1).join(".")}/lint_errors.txt`)).text()
-      }
-      setStaticAnalysis(accumulator);
-
-
-    })();
-  }, [configs, bigBoard]);
-
-  const [typeErrors, setTypeErrors] = useState<Record<string, string>>({});
-  useEffect(() => {
-    (async () => {
-
-      let accumulator = {};
-      for (const t of (configs || { tests: [] as ITestTypes[] }).tests) {
-        accumulator[t[0]] = await (await fetch(`/kokomoBay/docs/${t[1]}/${t[0].split(".").slice(0, -1).join(".")}/type_errors.txt`)).text()
-      }
-      setTypeErrors(accumulator);
+  //     let accumulator = {};
+  //     for (const t of (configs || { tests: [] as ITestTypes[] }).tests) {
+  //       accumulator[t[0]] = await (await fetch(`/kokomoBay/docs/${t[1]}/${t[0].split(".").slice(0, -1).join(".")}/lint_errors.txt`)).text()
+  //     }
+  //     setStaticAnalysis(accumulator);
 
 
-    })();
-  }, [configs, bigBoard]);
+  //   })();
+  // }, [configs, bigBoard]);
 
-  const [bddErrors, setBddErrors] = useState<Record<string, string>>({});
-  useEffect(() => {
-    (async () => {
+  // const [typeErrors, setTypeErrors] = useState<Record<string, string>>({});
+  // useEffect(() => {
+  //   (async () => {
 
-      let accumulator = {};
-      for (const t of (configs || { tests: [] as ITestTypes[] }).tests) {
-        accumulator[t[0]] = await (await fetch(`/kokomoBay/docs/${t[1]}/${t[0].split(".").slice(0, -1).join(".")}/bdd_errors.txt`)).text()
-      }
-      setBddErrors(accumulator);
+  //     let accumulator = {};
+  //     for (const t of (configs || { tests: [] as ITestTypes[] }).tests) {
+  //       accumulator[t[0]] = await (await fetch(`/kokomoBay/docs/${t[1]}/${t[0].split(".").slice(0, -1).join(".")}/type_errors.txt`)).text()
+  //     }
+  //     setTypeErrors(accumulator);
 
 
-    })();
-  }, [configs, bigBoard]);
+  //   })();
+  // }, [configs, bigBoard]);
 
-  if (!configs || !staticAnalysis || !typeErrors || !bddErrors) {
+  // const [bddErrors, setBddErrors] = useState<Record<string, string>>({});
+  // useEffect(() => {
+  //   (async () => {
+
+  //     let accumulator = {};
+  //     for (const t of (configs || { tests: [] as ITestTypes[] }).tests) {
+  //       accumulator[t[0]] = await (await fetch(`/kokomoBay/docs/${t[1]}/${t[0].split(".").slice(0, -1).join(".")}/bdd_errors.txt`)).text()
+  //     }
+  //     setBddErrors(accumulator);
+
+
+  //   })();
+  // }, [configs, bigBoard]);
+
+  if (!configs) {
     return <div>loading...</div>
   }
 
@@ -105,9 +106,10 @@ const BigBoard = () => {
       runTime: c[1],
       tr: c[2],
       sidecars: c[3],
-      staticAnalysis: staticAnalysis[c[0]],
-      typeErrors: typeErrors[c[0]],
-      bddErrors: bddErrors[c[0]],
+      staticAnalysis: bigBoard[c[0]].staticErrors,
+      typeErrors: bigBoard[c[0]].typeErrors,
+      bddErrors: bigBoard[c[0]].runTimeError,
+      prompt: bigBoard[c[0]].prompt
     } as ICollation
   });
 
@@ -138,7 +140,7 @@ const BigBoard = () => {
 
               <td>
                 <pre>
-                  aider --model deepseek/deepseek-chat --load {`docs/${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/prompt.txt`}
+                  {c.prompt}
                 </pre>
               </td>
 

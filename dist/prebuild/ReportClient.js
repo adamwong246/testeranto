@@ -24540,42 +24540,12 @@
     const [bigBoard, setBigBoard] = (0, import_react3.useState)({});
     (0, import_react3.useEffect)(() => {
       (async () => {
-        fetch("/kokomoBay/docs/bigBoard.json").then((response) => response.json()).then((json) => {
+        fetch("/kokomoBay/docs/summary.json").then((response) => response.json()).then((json) => {
           setBigBoard(json);
         }).catch((error) => console.error(error));
       })();
     }, []);
-    const [staticAnalysis, setStaticAnalysis] = (0, import_react3.useState)({});
-    (0, import_react3.useEffect)(() => {
-      (async () => {
-        let accumulator = {};
-        for (const t of (configs || { tests: [] }).tests) {
-          accumulator[t[0]] = await (await fetch(`/kokomoBay/docs/${t[1]}/${t[0].split(".").slice(0, -1).join(".")}/lint_errors.txt`)).text();
-        }
-        setStaticAnalysis(accumulator);
-      })();
-    }, [configs, bigBoard]);
-    const [typeErrors, setTypeErrors] = (0, import_react3.useState)({});
-    (0, import_react3.useEffect)(() => {
-      (async () => {
-        let accumulator = {};
-        for (const t of (configs || { tests: [] }).tests) {
-          accumulator[t[0]] = await (await fetch(`/kokomoBay/docs/${t[1]}/${t[0].split(".").slice(0, -1).join(".")}/type_errors.txt`)).text();
-        }
-        setTypeErrors(accumulator);
-      })();
-    }, [configs, bigBoard]);
-    const [bddErrors, setBddErrors] = (0, import_react3.useState)({});
-    (0, import_react3.useEffect)(() => {
-      (async () => {
-        let accumulator = {};
-        for (const t of (configs || { tests: [] }).tests) {
-          accumulator[t[0]] = await (await fetch(`/kokomoBay/docs/${t[1]}/${t[0].split(".").slice(0, -1).join(".")}/bdd_errors.txt`)).text();
-        }
-        setBddErrors(accumulator);
-      })();
-    }, [configs, bigBoard]);
-    if (!configs || !staticAnalysis || !typeErrors || !bddErrors) {
+    if (!configs) {
       return /* @__PURE__ */ import_react3.default.createElement("div", null, "loading...");
     }
     const collated = configs.tests.map((c) => {
@@ -24585,13 +24555,14 @@
         runTime: c[1],
         tr: c[2],
         sidecars: c[3],
-        staticAnalysis: staticAnalysis[c[0]],
-        typeErrors: typeErrors[c[0]],
-        bddErrors: bddErrors[c[0]]
+        staticAnalysis: bigBoard[c[0]].staticErrors,
+        typeErrors: bigBoard[c[0]].typeErrors,
+        bddErrors: bigBoard[c[0]].runTimeError,
+        prompt: bigBoard[c[0]].prompt
       };
     });
     return /* @__PURE__ */ import_react3.default.createElement("div", null, /* @__PURE__ */ import_react3.default.createElement(Table_default, { striped: true, bordered: true, hover: true }, /* @__PURE__ */ import_react3.default.createElement("thead", null, /* @__PURE__ */ import_react3.default.createElement("tr", null, /* @__PURE__ */ import_react3.default.createElement("th", null), /* @__PURE__ */ import_react3.default.createElement("th", null, "platform"), /* @__PURE__ */ import_react3.default.createElement("th", null, "BDD errors"), /* @__PURE__ */ import_react3.default.createElement("th", null, "Lint errors"), /* @__PURE__ */ import_react3.default.createElement("th", null, "Type errors"), /* @__PURE__ */ import_react3.default.createElement("th", null, "prompt"))), /* @__PURE__ */ import_react3.default.createElement("tbody", null, ...collated.map((c) => {
-      return /* @__PURE__ */ import_react3.default.createElement("tr", null, /* @__PURE__ */ import_react3.default.createElement("td", null, c.name), /* @__PURE__ */ import_react3.default.createElement("td", null, c.runTime), /* @__PURE__ */ import_react3.default.createElement("td", null, /* @__PURE__ */ import_react3.default.createElement("a", { href: `${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/littleBoard.html` }, c.bddErrors)), /* @__PURE__ */ import_react3.default.createElement("td", null, /* @__PURE__ */ import_react3.default.createElement("a", { href: `${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/lint_errors.json` }, c.staticAnalysis)), /* @__PURE__ */ import_react3.default.createElement("td", null, /* @__PURE__ */ import_react3.default.createElement("a", { href: `${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/type_errors.txt` }, c.typeErrors)), /* @__PURE__ */ import_react3.default.createElement("td", null, /* @__PURE__ */ import_react3.default.createElement("pre", null, "aider --model deepseek/deepseek-chat --load ", `docs/${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/prompt.txt`)));
+      return /* @__PURE__ */ import_react3.default.createElement("tr", null, /* @__PURE__ */ import_react3.default.createElement("td", null, c.name), /* @__PURE__ */ import_react3.default.createElement("td", null, c.runTime), /* @__PURE__ */ import_react3.default.createElement("td", null, /* @__PURE__ */ import_react3.default.createElement("a", { href: `${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/littleBoard.html` }, c.bddErrors)), /* @__PURE__ */ import_react3.default.createElement("td", null, /* @__PURE__ */ import_react3.default.createElement("a", { href: `${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/lint_errors.json` }, c.staticAnalysis)), /* @__PURE__ */ import_react3.default.createElement("td", null, /* @__PURE__ */ import_react3.default.createElement("a", { href: `${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/type_errors.txt` }, c.typeErrors)), /* @__PURE__ */ import_react3.default.createElement("td", null, /* @__PURE__ */ import_react3.default.createElement("pre", null, c.prompt)));
     }))), /* @__PURE__ */ import_react3.default.createElement(Footer, null));
   };
   document.addEventListener("DOMContentLoaded", function() {

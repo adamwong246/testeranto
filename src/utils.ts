@@ -2,6 +2,16 @@ import path from "path";
 
 import { IRunTime, IBuiltConfig } from "./lib";
 
+export type ISummary = Record<
+  string,
+  {
+    runTimeError?: number | "?";
+    typeErrors?: number | "?";
+    staticErrors?: number | "?";
+    prompt?: string | "?";
+  }
+>;
+
 export const destinationOfRuntime = (
   f: string,
   r: IRunTime,
