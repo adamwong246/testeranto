@@ -10,91 +10,6 @@ import {
 import { PM } from "./PM/index.js";
 import { ITestCheckCallback } from "./lib/types.js";
 
-type IBasicInterface<
-  ITestShape extends IBaseTest<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
-  >
-> = {
-  assertThis: (x: ITestShape["then"]) => void;
-  andWhen: (
-    store: ITestShape["istore"],
-    whenCB: ITestShape["when"],
-    testResource: ITTestResourceConfiguration,
-    utils: PM
-  ) => Promise<ITestShape["istore"]>;
-  butThen: (
-    store: ITestShape["istore"],
-    thenCB,
-    testResource: ITTestResourceConfiguration,
-    utils: PM
-  ) => Promise<ITestShape["iselection"]>;
-  afterAll: (
-    store: ITestShape["istore"],
-    artificer: ITestArtificer,
-    utils: PM
-  ) => any;
-  afterEach: (
-    store: ITestShape["istore"],
-    key: string,
-    artificer: ITestArtificer,
-    utils: PM
-  ) => Promise<unknown>;
-  beforeAll: (
-    input: ITestShape["iinput"],
-    testResource: ITTestResourceConfiguration,
-    artificer: ITestArtificer,
-    utils: PM
-  ) => Promise<ITestShape["isubject"]>;
-  beforeEach: (
-    subject: ITestShape["isubject"],
-    initializer: (c?) => ITestShape["given"],
-    artificer: ITestArtificer,
-    testResource: ITTestResourceConfiguration,
-    initialValues,
-    utils: PM
-  ) => Promise<ITestShape["istore"]>;
-};
-
-export type IWebTestInterface<
-  ITestShape extends IBaseTest<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
-  >
-> = IBasicInterface<ITestShape>;
-
-export type INodeTestInterface<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >
-> = IBasicInterface<I>;
-
 export type ITestInterface<
   I extends Ibdd_in<
     unknown,
@@ -141,6 +56,30 @@ export type ITestInterface<
     pm: PM
   ) => Promise<I["istore"]>;
 };
+
+export type IWebTestInterface<
+  I extends Ibdd_in<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown
+  >
+> = ITestInterface<I>;
+
+export type INodeTestInterface<
+  I extends Ibdd_in<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown
+  >
+> = ITestInterface<I>;
 
 export type IPartialInterface<
   I extends Ibdd_in<

@@ -154,8 +154,6 @@ src/SubPackages/react/jsx/web.ts(15,36): error TS2314: Generic type 'IBaseTest' 
 src/TestReport.tsx(153,56): error TS2739: Type '{ key: string; name: string; whens: { name: string; error: string; }[]; thens: { name: string; error: string; }[]; }' is missing the following properties from type '{ key: string; name: string; error: string[]; features: string[]; whens: { name: string; error: string; }[]; thens: { name: string; error: string; }[]; }': error, features
 src/TestReport.tsx(168,38): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
   Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.
-src/Types.ts(96,21): error TS2344: Type 'I' does not satisfy the constraint 'IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>'.
-  Type 'Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>' is missing the following properties from type 'IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>': suites, givens, whens, thens, checks
 src/Web.ts(43,25): error TS2314: Generic type 'ITestImplementation' requires 2 type argument(s).
 src/Web.ts(118,23): error TS2314: Generic type 'ITestImplementation' requires 2 type argument(s).
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
