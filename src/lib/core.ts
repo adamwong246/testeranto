@@ -58,11 +58,11 @@ export default abstract class Testeranto<
         afterAll(store: IStore, artifactory: ITestArtifactory, pm: PM) {
           return fullTestInterface.afterAll(
             store,
-            (fPath: string, value: unknown) =>
-              // TODO does not work?
-              {
-                artifactory(`afterAll4-${this.name}/${fPath}`, value);
-              },
+            // (fPath: string, value: unknown) =>
+            //   // TODO does not work?
+            //   {
+            //     artifactory(`afterAll4-${this.name}/${fPath}`, value);
+            //   },
             pm
           );
         }
@@ -85,7 +85,12 @@ export default abstract class Testeranto<
               tr,
               pm: PM
             ) => input as any)
-          )(s, this.testResourceConfiguration, artifactory, pm);
+          )(
+            s,
+            this.testResourceConfiguration,
+            // artifactory,
+            pm
+          );
         }
       } as any,
 
@@ -103,7 +108,7 @@ export default abstract class Testeranto<
           return fullTestInterface.beforeEach(
             subject,
             initializer,
-            artifactory,
+            // artifactory,
             testResource,
             initialValues,
             pm
@@ -121,8 +126,8 @@ export default abstract class Testeranto<
               fullTestInterface.afterEach(
                 store,
                 key,
-                (fPath: string, value: unknown) =>
-                  artifactory(`after/${fPath}`, value),
+                // (fPath: string, value: unknown) =>
+                //   artifactory(`after/${fPath}`, value),
                 pm
               )
             )
@@ -218,8 +223,8 @@ export default abstract class Testeranto<
           return fullTestInterface.beforeEach(
             subject,
             this.initialValues,
-            (fPath: string, value: unknown) =>
-              artifactory(`before/${fPath}`, value),
+            // (fPath: string, value: unknown) =>
+            //   artifactory(`before/${fPath}`, value),
             testResourceConfiguration,
             this.initialValues,
             pm
@@ -237,9 +242,9 @@ export default abstract class Testeranto<
               fullTestInterface.afterEach(
                 store,
                 key,
-                (fPath: string, value: unknown) =>
-                  // TODO does not work?
-                  artifactory(`afterEach2-${this.name}/${fPath}`, value),
+                // (fPath: string, value: unknown) =>
+                //   // TODO does not work?
+                //   artifactory(`afterEach2-${this.name}/${fPath}`, value),
                 pm
               )
             )

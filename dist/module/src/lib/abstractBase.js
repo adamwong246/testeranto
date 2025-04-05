@@ -297,7 +297,7 @@ export class BaseCheck {
     }
     async check(subject, key, testResourceConfiguration, tester, artifactory, tLog, pm) {
         tLog(`\n Check: ${this.name}`);
-        const store = await this.checkThat(subject, testResourceConfiguration, artifactory);
+        const store = await this.checkThat(subject, testResourceConfiguration, artifactory, pm);
         await this.checkCB(Object.entries(this.whens).reduce((a, [key, when]) => {
             a[key] = async (payload) => {
                 return await when(payload, testResourceConfiguration).test(store, testResourceConfiguration, tLog, pm, "x");

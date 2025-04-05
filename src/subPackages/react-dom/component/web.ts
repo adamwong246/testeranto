@@ -94,11 +94,11 @@ export default <ITestShape extends IBaseTest, IWhen, IGiven>(
       },
       afterEach:
         testInterface?.afterEach ||
-        async function (store: IStore, ndx, artificer, utils) {
+        async function (store: IStore, ndx, utils) {
           return store;
         },
 
-      afterAll: async (store: IStore, artificer, utils) => {
+      afterAll: async (store: IStore, utils) => {
         // setTimeout(() => {
         //   console.log("This will run after 1 second");
         // }, 1000); // 1000 milliseconds = 1 second

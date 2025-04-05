@@ -1,27 +1,18 @@
-import { ITTestResourceConfiguration, ITestArtificer } from "./lib/index.js";
+import { ITTestResourceConfiguration } from "./lib/index.js";
 import { IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen, BaseGiven } from "./lib/abstractBase.js";
 import { PM } from "./PM/index.js";
 import { ITestCheckCallback } from "./lib/types.js";
-type IBasicInterface<ITestShape extends IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>> = {
-    assertThis: (x: ITestShape["then"]) => void;
-    andWhen: (store: ITestShape["istore"], whenCB: ITestShape["when"], testResource: ITTestResourceConfiguration, utils: PM) => Promise<ITestShape["istore"]>;
-    butThen: (store: ITestShape["istore"], thenCB: any, testResource: ITTestResourceConfiguration, utils: PM) => Promise<ITestShape["iselection"]>;
-    afterAll: (store: ITestShape["istore"], artificer: ITestArtificer, utils: PM) => any;
-    afterEach: (store: ITestShape["istore"], key: string, artificer: ITestArtificer, utils: PM) => Promise<unknown>;
-    beforeAll: (input: ITestShape["iinput"], testResource: ITTestResourceConfiguration, artificer: ITestArtificer, utils: PM) => Promise<ITestShape["isubject"]>;
-    beforeEach: (subject: ITestShape["isubject"], initializer: (c?: any) => ITestShape["given"], artificer: ITestArtificer, testResource: ITTestResourceConfiguration, initialValues: any, utils: PM) => Promise<ITestShape["istore"]>;
-};
-export type IWebTestInterface<ITestShape extends IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>> = IBasicInterface<ITestShape>;
-export type INodeTestInterface<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>> = IBasicInterface<I>;
 export type ITestInterface<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>> = {
     assertThis: (x: I["then"]) => void;
     andWhen: (store: I["istore"], whenCB: I["when"], testResource: ITTestResourceConfiguration, pm: PM) => Promise<I["istore"]>;
     butThen: (store: I["istore"], thenCB: I["then"], testResource: ITTestResourceConfiguration, pm: PM) => Promise<I["iselection"]>;
-    afterAll: (store: I["istore"], artificer: ITestArtificer, pm: PM) => any;
-    afterEach: (store: I["istore"], key: string, artificer: ITestArtificer, pm: PM) => Promise<unknown>;
-    beforeAll: (input: I["iinput"], testResource: ITTestResourceConfiguration, artificer: ITestArtificer, pm: PM) => Promise<I["isubject"]>;
-    beforeEach: (subject: I["isubject"], initializer: (c?: any) => I["given"], artificer: ITestArtificer, testResource: ITTestResourceConfiguration, initialValues: any, pm: PM) => Promise<I["istore"]>;
+    afterAll: (store: I["istore"], pm: PM) => any;
+    afterEach: (store: I["istore"], key: string, pm: PM) => Promise<unknown>;
+    beforeAll: (input: I["iinput"], testResource: ITTestResourceConfiguration, pm: PM) => Promise<I["isubject"]>;
+    beforeEach: (subject: I["isubject"], initializer: (c?: any) => I["given"], testResource: ITTestResourceConfiguration, initialValues: any, pm: PM) => Promise<I["istore"]>;
 };
+export type IWebTestInterface<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>> = ITestInterface<I>;
+export type INodeTestInterface<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>> = ITestInterface<I>;
 export type IPartialInterface<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>> = Partial<ITestInterface<I>>;
 export type IPartialNodeInterface<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>> = Partial<INodeTestInterface<I>>;
 export type IPartialWebInterface<I extends IBaseTest<unknown, unknown, unknown, unknown, unknown, unknown, unknown, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>> = Partial<IWebTestInterface<I>>;
@@ -82,4 +73,3 @@ export type Ibdd_in<IInput, ISubject, IStore, ISelection, IGiven, IWhen, IThen> 
     when: IWhen;
     then: IThen;
 };
-export {};

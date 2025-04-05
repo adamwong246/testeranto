@@ -13,11 +13,8 @@ src/lib/abstractBase.ts(425,32): error TS2556: A spread argument must either hav
 src/lib/abstractBase.ts(444,51): error TS2314: Generic type 'IBaseTest' requires 12 type argument(s).
 src/lib/abstractBase.ts(498,28): error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
 src/lib/abstractBase.ts(595,30): error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
-src/lib/abstractBase.ts(701,68): error TS2554: Expected 5 arguments, but got 4.
+src/lib/abstractBase.ts(703,68): error TS2554: Expected 5 arguments, but got 4.
 src/lib/core.ts(45,25): error TS2314: Generic type 'ITestImplementation' requires 2 type argument(s).
-src/lib/core.ts(217,15): error TS2416: Property 'checkThat' in type 'Check' is not assignable to the same property in base type 'BaseCheck<ITestShape>'.
-  Type '(subject: any, testResourceConfiguration: any, artifactory: any, pm: any) => Promise<any>' is not assignable to type '(subject: ITestShape["isubject"], testResourceConfiguration: any, artifactory: ITestArtifactory) => Promise<ITestShape["istore"]>'.
-    Target signature provides too few arguments. Expected 4 or more, but got 3.
 src/lib/index.ts(65,8): error TS18046: 'thenCb' is of type 'unknown'.
 src/lib/index.ts(66,19): error TS2322: Type 'unknown' is not assignable to type 'Promise<unknown>'.
 src/Node.ts(35,25): error TS2314: Generic type 'ITestImplementation' requires 2 type argument(s).

@@ -656,7 +656,8 @@ export abstract class BaseCheck<
   abstract checkThat(
     subject: ITestShape["isubject"],
     testResourceConfiguration,
-    artifactory: ITestArtifactory
+    artifactory: ITestArtifactory,
+    pm: PM
   ): Promise<ITestShape["istore"]>;
 
   async afterEach(
@@ -681,7 +682,8 @@ export abstract class BaseCheck<
     const store = await this.checkThat(
       subject,
       testResourceConfiguration,
-      artifactory
+      artifactory,
+      pm
     );
     await this.checkCB(
       Object.entries(this.whens).reduce((a, [key, when]) => {

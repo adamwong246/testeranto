@@ -34,23 +34,27 @@ export type ITestInterface<
     testResource: ITTestResourceConfiguration,
     pm: PM
   ) => Promise<I["iselection"]>;
-  afterAll: (store: I["istore"], artificer: ITestArtificer, pm: PM) => any;
+  afterAll: (
+    store: I["istore"],
+    // artificer: ITestArtificer,
+    pm: PM
+  ) => any;
   afterEach: (
     store: I["istore"],
     key: string,
-    artificer: ITestArtificer,
+    // artificer: ITestArtificer,
     pm: PM
   ) => Promise<unknown>;
   beforeAll: (
     input: I["iinput"],
     testResource: ITTestResourceConfiguration,
-    artificer: ITestArtificer,
+    // artificer: ITestArtificer,
     pm: PM
   ) => Promise<I["isubject"]>;
   beforeEach: (
     subject: I["isubject"],
     initializer: (c?) => I["given"],
-    artificer: ITestArtificer,
+    // artificer: ITestArtificer,
     testResource: ITTestResourceConfiguration,
     initialValues,
     pm: PM

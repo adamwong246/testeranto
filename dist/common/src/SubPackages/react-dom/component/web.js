@@ -45,10 +45,10 @@ exports.default = (testInput, testSpecifications, testImplementations, testInter
             return thenCB(s);
         },
         afterEach: (testInterface === null || testInterface === void 0 ? void 0 : testInterface.afterEach) ||
-            async function (store, ndx, artificer, utils) {
+            async function (store, ndx, utils) {
                 return store;
             },
-        afterAll: async (store, artificer, utils) => {
+        afterAll: async (store, utils) => {
             // setTimeout(() => {
             //   console.log("This will run after 1 second");
             // }, 1000); // 1000 milliseconds = 1 second

@@ -104,7 +104,7 @@ export declare abstract class BaseCheck<ITestShape extends IBaseTest<unknown, un
         [K in keyof ITestShape["thens"]]: (p: any, tc: any) => BaseThen<ITestShape>;
     };
     constructor(name: string, features: string[], checkCB: (whens: any, thens: any) => any, whens: any, thens: any);
-    abstract checkThat(subject: ITestShape["isubject"], testResourceConfiguration: any, artifactory: ITestArtifactory): Promise<ITestShape["istore"]>;
+    abstract checkThat(subject: ITestShape["isubject"], testResourceConfiguration: any, artifactory: ITestArtifactory, pm: PM): Promise<ITestShape["istore"]>;
     afterEach(store: ITestShape["istore"], key: string, cb: any, pm: PM): Promise<unknown>;
     check(subject: ITestShape["isubject"], key: string, testResourceConfiguration: any, tester: any, artifactory: ITestArtifactory, tLog: ITLog, pm: PM): Promise<void>;
 }
