@@ -2,6 +2,8 @@ import ReactDom from "react-dom/client";
 import React, { useEffect, useState } from "react";
 import { Col, Nav, Row, Tab } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "./style.css";
+import { Footer } from "./Footer";
 const StepPane = ({ step }) => {
     return React.createElement("div", null,
         React.createElement("pre", null,
@@ -77,7 +79,8 @@ const BddPage = () => {
                                 g.name))))),
                     React.createElement(Col, { sm: 9 },
                         React.createElement(Tab.Content, null, ...bddErrors.givens.map((g) => React.createElement(Tab.Pane, { eventKey: g.key },
-                            React.createElement(TestPane, { given: g })))))))));
+                            React.createElement(TestPane, { given: g })))))))),
+        React.createElement(Footer, null));
 };
 document.addEventListener("DOMContentLoaded", function () {
     const elem = document.getElementById("root");

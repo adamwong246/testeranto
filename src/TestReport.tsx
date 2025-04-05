@@ -5,7 +5,8 @@ import { Col, Nav, Row, Tab } from "react-bootstrap";
 import { IBuiltConfig } from "./lib";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import "./style.css"
+import { Footer } from "./Footer";
 
 const StepPane = ({ step }: {
   step: {
@@ -161,7 +162,7 @@ const BddPage = () => {
       </Tab.Container>
     </Row>
 
-    <footer>made with ❤️ and <a href="https://adamwong246.github.io/testeranto/" >testeranto </a></footer>
+    <Footer />
   </div>
 }
 

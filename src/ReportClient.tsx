@@ -2,8 +2,11 @@ import ReactDom from "react-dom/client";
 import React, { useEffect, useState } from "react";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "./style.css"
 
 import { IRunTime, ITestTypes, IBuiltConfig } from "./lib";
+import { Footer } from "./Footer";
+import { Table } from "react-bootstrap";
 
 
 type ICollation = {
@@ -83,7 +86,7 @@ const BigBoard = () => {
 
       let accumulator = {};
       for (const t of (configs || { tests: [] as ITestTypes[] }).tests) {
-        accumulator[t[0]] = await (await fetch(`/kokomoBay/docs/${t[1]}/${t[0].split(".").slice(0, -1).join(".")}/bdd_errors.txtestReport.css`)).text()
+        accumulator[t[0]] = await (await fetch(`/kokomoBay/docs/${t[1]}/${t[0].split(".").slice(0, -1).join(".")}/bdd_errors.txt`)).text()
       }
       setBddErrors(accumulator);
 
@@ -109,37 +112,44 @@ const BigBoard = () => {
   });
 
   return <div >
-    <table>
-      <tr>
-        <td>name</td>
-        <td>run time</td>
-        <td>BDD errors</td>
-        <td>Lint errors</td>
-        <td>Type errors</td>
-        <td>prompt</td>
-      </tr>
-      {
-        ...collated.map((c) => {
-          return <tr>
-            <td>{c.name}</td>
-            <td>{c.runTime}</td>
-            <td><a href={`${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/littleBoard.html`}>{c.bddErrors}</a></td>
-            <td><a href={`${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/lint_errors.json`}>{c.staticAnalysis}</a></td>
-            <td><a href={`${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/type_errors.txt`}>{c.typeErrors}</a></td>
+    <Table striped bordered hover>
+      <thead>
+        <tr>
+          <th></th>
+          <th>platform</th>
+          <th>BDD errors</th>
+          <th>Lint errors</th>
+          <th>Type errors</th>
+          <th>prompt</th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+        {
+          ...collated.map((c) => {
+            return <tr>
+              <td>{c.name}</td>
+              <td>{c.runTime}</td>
+              <td><a href={`${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/littleBoard.html`}>{c.bddErrors}</a></td>
+              <td><a href={`${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/lint_errors.json`}>{c.staticAnalysis}</a></td>
+              <td><a href={`${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/type_errors.txt`}>{c.typeErrors}</a></td>
 
 
-            <td>
-              <pre>
-                aider --model deepseek/deepseek-chat --load {`docs/${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/prompt.txt`}
-              </pre>
-            </td>
+              <td>
+                <pre>
+                  aider --model deepseek/deepseek-chat --load {`docs/${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/prompt.txt`}
+                </pre>
+              </td>
 
 
-          </tr>
-        })
-      }
-    </table>
-    <footer>made with ❤️ and <a href="https://adamwong246.github.io/testeranto/" >testeranto </a></footer>
+            </tr>
+          })
+        }
+      </tbody>
+
+    </Table>
+    <Footer />
   </div>
 }
 

@@ -2383,9 +2383,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React28 = require_react();
+          var React29 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React28.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React29.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -3990,7 +3990,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React28.Children.forEach(props.children, function(child) {
+                  React29.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -12437,7 +12437,7 @@
             }
           }
           var fakeInternalInstance = {};
-          var emptyRefsObject = new React28.Component().refs;
+          var emptyRefsObject = new React29.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -23609,7 +23609,7 @@
       if (true) {
         (function() {
           "use strict";
-          var React28 = require_react();
+          var React29 = require_react();
           var REACT_ELEMENT_TYPE = Symbol.for("react.element");
           var REACT_PORTAL_TYPE = Symbol.for("react.portal");
           var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
@@ -23635,7 +23635,7 @@
             }
             return null;
           }
-          var ReactSharedInternals = React28.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React29.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function error(format) {
             {
               {
@@ -25271,7 +25271,7 @@
 
   // src/TestReport.tsx
   var import_client = __toESM(require_client(), 1);
-  var import_react32 = __toESM(require_react(), 1);
+  var import_react33 = __toESM(require_react(), 1);
 
   // node_modules/@babel/runtime/helpers/esm/extends.js
   function _extends() {
@@ -27356,41 +27356,45 @@
     Pane: TabPane_default
   });
 
+  // src/Footer.tsx
+  var import_react32 = __toESM(require_react(), 1);
+  var Footer = () => /* @__PURE__ */ import_react32.default.createElement("footer", null, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react32.default.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto "));
+
   // src/TestReport.tsx
   var StepPane = ({ step }) => {
-    return /* @__PURE__ */ import_react32.default.createElement("div", null, /* @__PURE__ */ import_react32.default.createElement("pre", null, /* @__PURE__ */ import_react32.default.createElement("code", null, JSON.stringify(step, null, 2))));
+    return /* @__PURE__ */ import_react33.default.createElement("div", null, /* @__PURE__ */ import_react33.default.createElement("pre", null, /* @__PURE__ */ import_react33.default.createElement("code", null, JSON.stringify(step, null, 2))));
   };
   var TestPane = ({ given }) => {
-    return /* @__PURE__ */ import_react32.default.createElement("div", null, "    ", /* @__PURE__ */ import_react32.default.createElement(Tab_default.Container, { id: "TestPane-tabs", defaultActiveKey: "first" }, /* @__PURE__ */ import_react32.default.createElement(Row_default, null, /* @__PURE__ */ import_react32.default.createElement(Col_default, { sm: 3 }, /* @__PURE__ */ import_react32.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, /* @__PURE__ */ import_react32.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react32.default.createElement(Nav_default2.Link, { eventKey: `bdd-features` }, "features"), ...given.whens.map((w, ndx) => /* @__PURE__ */ import_react32.default.createElement(Nav_default2.Link, { eventKey: `bdd-when-${ndx}` }, "When ", w.name, " ", w.error && "!")), ...given.thens.map((t, ndx) => /* @__PURE__ */ import_react32.default.createElement(Nav_default2.Link, { eventKey: `bdd-then-${ndx}` }, "Then ", t.name, " ", t.error && "!")), /* @__PURE__ */ import_react32.default.createElement(Nav_default2.Link, { eventKey: `bdd-errors` }, "errors")))), /* @__PURE__ */ import_react32.default.createElement(Col_default, { sm: 9 }, /* @__PURE__ */ import_react32.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react32.default.createElement(Tab_default.Pane, { eventKey: `bdd-features` }, /* @__PURE__ */ import_react32.default.createElement("pre", null, /* @__PURE__ */ import_react32.default.createElement("code", null, JSON.stringify(given.features, null, 2)))), ...given.whens.map((w, ndx) => /* @__PURE__ */ import_react32.default.createElement(Tab_default.Pane, { eventKey: `bdd-when-${ndx}` }, /* @__PURE__ */ import_react32.default.createElement(StepPane, { step: w }))), ...given.thens.map((t, ndx) => /* @__PURE__ */ import_react32.default.createElement(Tab_default.Pane, { eventKey: `bdd-then-${ndx}` }, /* @__PURE__ */ import_react32.default.createElement(StepPane, { step: t }))), /* @__PURE__ */ import_react32.default.createElement(Tab_default.Pane, { eventKey: `bdd-errors` }, /* @__PURE__ */ import_react32.default.createElement("pre", null, /* @__PURE__ */ import_react32.default.createElement("code", null, JSON.stringify(given.error, null, 2)))))))));
+    return /* @__PURE__ */ import_react33.default.createElement("div", null, "    ", /* @__PURE__ */ import_react33.default.createElement(Tab_default.Container, { id: "TestPane-tabs", defaultActiveKey: "first" }, /* @__PURE__ */ import_react33.default.createElement(Row_default, null, /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 3 }, /* @__PURE__ */ import_react33.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: `bdd-features` }, "features"), ...given.whens.map((w, ndx) => /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: `bdd-when-${ndx}` }, "When ", w.name, " ", w.error && "!")), ...given.thens.map((t, ndx) => /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: `bdd-then-${ndx}` }, "Then ", t.name, " ", t.error && "!")), /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: `bdd-errors` }, "errors")))), /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 9 }, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: `bdd-features` }, /* @__PURE__ */ import_react33.default.createElement("pre", null, /* @__PURE__ */ import_react33.default.createElement("code", null, JSON.stringify(given.features, null, 2)))), ...given.whens.map((w, ndx) => /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: `bdd-when-${ndx}` }, /* @__PURE__ */ import_react33.default.createElement(StepPane, { step: w }))), ...given.thens.map((t, ndx) => /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: `bdd-then-${ndx}` }, /* @__PURE__ */ import_react33.default.createElement(StepPane, { step: t }))), /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: `bdd-errors` }, /* @__PURE__ */ import_react33.default.createElement("pre", null, /* @__PURE__ */ import_react33.default.createElement("code", null, JSON.stringify(given.error, null, 2)))))))));
   };
   var BddPage = () => {
-    const [configs, setConfigs] = (0, import_react32.useState)();
-    (0, import_react32.useEffect)(() => {
+    const [configs, setConfigs] = (0, import_react33.useState)();
+    (0, import_react33.useEffect)(() => {
       (async () => {
         fetch("/kokomoBay/docs/testeranto.json").then((response) => response.json()).then((json) => {
           setConfigs(json);
         }).catch((error) => console.error(error));
       })();
     }, []);
-    const [bddErrors, setBddErrors] = (0, import_react32.useState)();
-    (0, import_react32.useEffect)(() => {
+    const [bddErrors, setBddErrors] = (0, import_react33.useState)();
+    (0, import_react33.useEffect)(() => {
       (async () => {
         setBddErrors(await (await fetch(`tests.json`)).json());
       })();
     }, [configs]);
     if (!configs || !bddErrors) {
-      return /* @__PURE__ */ import_react32.default.createElement("div", null, "loading...");
+      return /* @__PURE__ */ import_react33.default.createElement("div", null, "loading...");
     }
-    return /* @__PURE__ */ import_react32.default.createElement("div", null, "  ", /* @__PURE__ */ import_react32.default.createElement(Row_default, null, /* @__PURE__ */ import_react32.default.createElement(Col_default, { sm: 12 }, /* @__PURE__ */ import_react32.default.createElement("h2", null, bddErrors.name))), /* @__PURE__ */ import_react32.default.createElement(Row_default, null, /* @__PURE__ */ import_react32.default.createElement(Tab_default.Container, { id: "root-tab-container", defaultActiveKey: "first" }, /* @__PURE__ */ import_react32.default.createElement(Row_default, null, /* @__PURE__ */ import_react32.default.createElement(Col_default, { sm: 3 }, /* @__PURE__ */ import_react32.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, ...bddErrors.givens.map(
-      (g) => /* @__PURE__ */ import_react32.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react32.default.createElement(Nav_default2.Link, { eventKey: g.key }, g.key, ": Given ", g.name))
-    ))), /* @__PURE__ */ import_react32.default.createElement(Col_default, { sm: 9 }, /* @__PURE__ */ import_react32.default.createElement(Tab_default.Content, null, ...bddErrors.givens.map(
-      (g) => /* @__PURE__ */ import_react32.default.createElement(Tab_default.Pane, { eventKey: g.key }, /* @__PURE__ */ import_react32.default.createElement(TestPane, { given: g }))
-    )))))));
+    return /* @__PURE__ */ import_react33.default.createElement("div", null, "  ", /* @__PURE__ */ import_react33.default.createElement(Row_default, null, /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 12 }, /* @__PURE__ */ import_react33.default.createElement("h2", null, bddErrors.name))), /* @__PURE__ */ import_react33.default.createElement(Row_default, null, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Container, { id: "root-tab-container", defaultActiveKey: "first" }, /* @__PURE__ */ import_react33.default.createElement(Row_default, null, /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 3 }, /* @__PURE__ */ import_react33.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, ...bddErrors.givens.map(
+      (g) => /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: g.key }, g.key, ": Given ", g.name))
+    ))), /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 9 }, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Content, null, ...bddErrors.givens.map(
+      (g) => /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: g.key }, /* @__PURE__ */ import_react33.default.createElement(TestPane, { given: g }))
+    )))))), /* @__PURE__ */ import_react33.default.createElement(Footer, null));
   };
   document.addEventListener("DOMContentLoaded", function() {
     const elem = document.getElementById("root");
     if (elem) {
-      import_client.default.createRoot(elem).render(import_react32.default.createElement(BddPage, {}, []));
+      import_client.default.createRoot(elem).render(import_react33.default.createElement(BddPage, {}, []));
     }
   });
   console.log("hello BddPage!");

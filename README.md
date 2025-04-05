@@ -2,6 +2,7 @@
 
 🚧 WARNING: Testeranto is still under development and is not ready for production yet. 🚧
 
+demo: [chromapdx.github.io/kokomoBay](https://chromapdx.github.io/kokomoBay/docs/index.html)
 source: [github.com/adamwong246/testeranto](https://github.com/adamwong246/testeranto)
 
 npm: [npmjs.com/package/testeranto](https://www.npmjs.com/package/testeranto)
