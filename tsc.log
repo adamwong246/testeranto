@@ -14,18 +14,7 @@ src/Node.ts(58,56): error TS2345: Argument of type 'PM_Node' is not assignable t
       Types of parameters 'cdpPage' and 'page' are incompatible.
         Type 'string | undefined' is not assignable to type 'CdpPage'.
           Type 'undefined' is not assignable to type 'CdpPage'.
-src/PM/main.ts(127,25): error TS2339: Property 'devMode' does not exist on type 'IBuiltConfig'.
-src/PM/main.ts(250,24): error TS18048: 'page' is possibly 'undefined'.
-src/PM/main.ts(281,9): error TS2322: Type 'string' is not assignable to type '`${string}.webm`'.
-src/PM/main.ts(284,17): error TS2538: Type 'undefined' cannot be used as an index type.
-src/PM/main.ts(459,3): error TS2416: Property 'customScreenShot' in type 'PM_Main' is not assignable to the same property in base type 'PM'.
-  Type '(opts: object, cdpPage?: CdpPage | undefined) => void' is not assignable to type '(opts: object, page?: string | undefined) => any'.
-    Types of parameters 'cdpPage' and 'page' are incompatible.
-      Type 'string | undefined' is not assignable to type 'CdpPage | undefined'.
-        Type 'string' is not assignable to type 'CdpPage'.
-src/PM/main.ts(1066,15): error TS2345: Argument of type 'Page' is not assignable to parameter of type 'Page | PromiseLike<Page>'.
-  Type 'import("/Users/adam/Code/testeranto/node_modules/puppeteer-core/lib/types").Page' is not assignable to type 'import("/Users/adam/Code/testeranto/node_modules/puppeteer-core/lib/esm/puppeteer/api/Page").Page'.
-    Property '#private' in type 'Page' refers to a different member that cannot be accessed from within type 'Page'.
+src/PM/main.ts(460,14): error TS2339: Property 'shutdownMode' does not exist on type 'PM_Main'.
 src/PM/node.ts(88,3): error TS2416: Property 'customScreenShot' in type 'PM_Node' is not assignable to the same property in base type 'PM'.
   Type '(opts: ScreencastOptions, cdpPage: CdpPage) => any' is not assignable to type '(opts: object, page?: string | undefined) => any'.
     Types of parameters 'cdpPage' and 'page' are incompatible.

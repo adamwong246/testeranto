@@ -1,15 +1,9 @@
 import ts from "typescript";
 
-import { CdpPage, Page } from "puppeteer-core/lib/esm/puppeteer";
+import { Page } from "puppeteer-core/lib/esm/puppeteer";
 import fs, { watch } from "fs";
 import path from "path";
-import puppeteer, {
-  Browser,
-  ConsoleMessage,
-  ScreenRecorder,
-  ScreenshotOptions,
-} from "puppeteer-core";
-import { PassThrough } from "stream";
+import puppeteer, { ConsoleMessage, ScreenshotOptions } from "puppeteer-core";
 import ansiC from "ansi-colors";
 import crypto from "node:crypto";
 import { ESLint } from "eslint";
@@ -19,11 +13,10 @@ import {
   IFinalResults,
   IRunnables,
   ITestTypes,
-  ITLog,
 } from "../lib/index.js";
 import { ISummary, lintPather, promptPather, tscPather } from "../utils";
 
-import { PM } from "./index.js";
+import { PM_Base } from "./base.js";
 
 type IOutputs = Record<
   string,
@@ -38,11 +31,7 @@ const formatter = await eslint.loadFormatter(
 );
 const changes: Record<string, string> = {};
 const fileHashes = {};
-const fileStreams3: fs.WriteStream[] = [];
-type IFPaths = string[];
-const fPaths: IFPaths = [];
 const files: Record<string, Set<string>> = {};
-const recorders: Record<string, ScreenRecorder> = {};
 const screenshots: Record<string, Promise<Uint8Array>[]> = {};
 
 async function fileHash(filePath, algorithm = "md5") {
@@ -103,31 +92,20 @@ function isValidUrl(string) {
   }
 }
 
-export class PM_Main extends PM {
+export class PM_Main extends PM_Base {
   name: string;
-
-  browser: Browser;
-
-  shutdownMode = false;
-  configs: IBuiltConfig;
   ports: Record<number, boolean>;
   queue: any[];
-
   mode: "once" | "dev";
-
   bigBoard: ISummary = {};
   webMetafileWatcher: fs.FSWatcher;
   nodeMetafileWatcher: fs.FSWatcher;
 
   constructor(configs: IBuiltConfig, name: string, mode: "once" | "dev") {
-    super();
+    super(configs);
 
     this.name = name;
-
     this.mode = mode;
-
-    this.server = {};
-    this.configs = configs;
     this.ports = {};
 
     this.configs.tests.forEach(([t]) => {
@@ -142,149 +120,6 @@ export class PM_Main extends PM {
     this.configs.ports.forEach((element) => {
       this.ports[element] = "true"; // set ports as open
     });
-
-    globalThis["waitForSelector"] = async (pageKey: string, sel: string) => {
-      const page = (await this.browser.pages()).find(
-        /* @ts-ignore:next-line */
-        (p) => p.mainFrame()._id === pageKey
-      );
-      await page?.waitForSelector(sel);
-    };
-
-    globalThis["screencastStop"] = async (path: string) => {
-      return recorders[path].stop();
-    };
-
-    globalThis["closePage"] = async (pageKey) => {
-      const page = (await this.browser.pages()).find(
-        /* @ts-ignore:next-line */
-        (p) => p.mainFrame()._id === pageKey
-      );
-      /* @ts-ignore:next-line */
-      return page.close();
-    };
-
-    globalThis["goto"] = async (pageKey: string, url: string) => {
-      const page = (await this.browser.pages()).find(
-        /* @ts-ignore:next-line */
-        (p) => p.mainFrame()._id === pageKey
-      );
-      await page?.goto(url);
-      return;
-    };
-
-    globalThis["newPage"] = () => {
-      return this.browser.newPage();
-    };
-
-    globalThis["pages"] = () => {
-      return this.browser.pages();
-    };
-
-    globalThis["mkdirSync"] = (fp: string) => {
-      if (!fs.existsSync(fp)) {
-        return fs.mkdirSync(fp, {
-          recursive: true,
-        });
-      }
-      return false;
-    };
-
-    globalThis["writeFileSync"] = (
-      filepath: string,
-      contents: string,
-      testName: string
-    ) => {
-      fs.mkdirSync(path.dirname(filepath), {
-        recursive: true,
-      });
-      if (!files[testName]) {
-        files[testName] = new Set();
-      }
-      files[testName].add(filepath);
-      return fs.writeFileSync(filepath, contents);
-    };
-
-    globalThis["createWriteStream"] = (filepath: string, testName: string) => {
-      const f = fs.createWriteStream(filepath);
-      fileStreams3.push(f);
-      // files.add(filepath);
-      if (!files[testName]) {
-        files[testName] = new Set();
-      }
-      files[testName].add(filepath);
-      return {
-        ...JSON.parse(JSON.stringify(f)),
-        uid: fileStreams3.length - 1,
-      };
-    };
-
-    globalThis["write"] = (uid: number, contents: string) => {
-      fileStreams3[uid].write(contents);
-    };
-
-    globalThis["end"] = (uid: number) => {
-      fileStreams3[uid].end();
-    };
-
-    globalThis["customScreenShot"] = async (
-      opts: { path: string },
-      pageKey: string,
-      testName: string
-    ) => {
-      const page = (await this.browser.pages()).find(
-        /* @ts-ignore:next-line */
-        (p) => p.mainFrame()._id === pageKey
-      );
-
-      const p = opts.path as string;
-      const dir = path.dirname(p);
-      fs.mkdirSync(dir, {
-        recursive: true,
-      });
-      if (!files[opts.path]) {
-        files[opts.path] = new Set();
-      }
-      files[opts.path].add(opts.path as string);
-
-      const sPromise = page.screenshot({
-        ...opts,
-        path: p,
-      });
-
-      if (!screenshots[opts.path]) {
-        screenshots[opts.path] = [];
-      }
-      screenshots[opts.path].push(sPromise);
-
-      await sPromise;
-      return sPromise;
-    };
-
-    globalThis["screencast"] = async (
-      opts: ScreenshotOptions,
-      pageKey: string
-    ) => {
-      const page = (await this.browser.pages()).find(
-        /* @ts-ignore:next-line */
-        (p) => p.mainFrame()._id === pageKey
-      );
-
-      const p = opts.path as string;
-      const dir = path.dirname(p);
-      fs.mkdirSync(dir, {
-        recursive: true,
-      });
-
-      const recorder = await page?.screencast({
-        ...opts,
-        path: p,
-      });
-
-      recorders[opts.path] = recorder;
-
-      return opts.path;
-    };
   }
 
   async start(): Promise<any> {
@@ -294,48 +129,43 @@ export class PM_Main extends PM {
 
     this.browser = (await puppeteer.launch({
       slowMo: 1,
-      // timeout: 1,
       waitForInitialPage: false,
       executablePath:
         // process.env.CHROMIUM_PATH || "/opt/homebrew/bin/chromium",
         "/opt/homebrew/bin/chromium",
       headless: true,
-      dumpio: true,
-      // timeout: 0,
-      devtools: true,
+      dumpio: false,
+      devtools: false,
 
       args: [
-        "--auto-open-devtools-for-tabs",
-        `--remote-debugging-port=3234`,
-
-        // "--disable-features=IsolateOrigins,site-per-process",
-        "--disable-site-isolation-trials",
-        "--allow-insecure-localhost",
         "--allow-file-access-from-files",
+        "--allow-insecure-localhost",
         "--allow-running-insecure-content",
-
+        "--auto-open-devtools-for-tabs",
         "--disable-dev-shm-usage",
         "--disable-extensions",
         "--disable-gpu",
         "--disable-setuid-sandbox",
         "--disable-site-isolation-trials",
+        "--disable-site-isolation-trials",
         "--disable-web-security",
         "--no-first-run",
         "--no-sandbox",
         "--no-startup-window",
-        // "--no-zygote",
         "--reduce-security-for-testing",
         "--remote-allow-origins=*",
+        `--remote-debugging-port=3234`,
         "--unsafely-treat-insecure-origin-as-secure=*",
+        // "--disable-features=IsolateOrigins,site-per-process",
         // "--disable-features=IsolateOrigins",
-        // "--remote-allow-origins=ws://localhost:3234",
-        // "--single-process",
-        // "--unsafely-treat-insecure-origin-as-secure",
-        // "--unsafely-treat-insecure-origin-as-secure=ws://192.168.0.101:3234",
-
         // "--disk-cache-dir=/dev/null",
         // "--disk-cache-size=1",
+        // "--no-zygote",
+        // "--remote-allow-origins=ws://localhost:3234",
+        // "--single-process",
         // "--start-maximized",
+        // "--unsafely-treat-insecure-origin-as-secure",
+        // "--unsafely-treat-insecure-origin-as-secure=ws://192.168.0.101:3234",
       ],
     })) as any;
 
@@ -434,134 +264,6 @@ export class PM_Main extends PM {
       return pt;
     }, payload as IRunnables);
   };
-
-  customclose() {
-    throw new Error("Method not implemented.");
-  }
-  waitForSelector(p: string, s: string): any {
-    throw new Error("Method not implemented.");
-  }
-  closePage(p): any {
-    throw new Error("Method not implemented.");
-  }
-  newPage(): CdpPage {
-    throw new Error("Method not implemented.");
-  }
-  goto(p, url: string): any {
-    throw new Error("Method not implemented.");
-  }
-  $(selector: string): boolean {
-    throw new Error("Method not implemented.");
-  }
-  screencast(opts: object) {
-    throw new Error("Method not implemented.");
-  }
-  customScreenShot(opts: object, cdpPage?: CdpPage) {
-    throw new Error("Method not implemented.");
-  }
-  end(accessObject: { uid: number }): boolean {
-    throw new Error("Method not implemented.");
-  }
-  existsSync(destFolder: string): boolean {
-    return fs.existsSync(destFolder);
-  }
-
-  async mkdirSync(fp: string) {
-    if (!fs.existsSync(fp)) {
-      return fs.mkdirSync(fp, {
-        recursive: true,
-      });
-    }
-    return false;
-  }
-
-  writeFileSync(fp: string, contents: string) {
-    fs.writeFileSync(fp, contents);
-  }
-
-  createWriteStream(filepath: string): fs.WriteStream {
-    return fs.createWriteStream(filepath);
-  }
-
-  testArtiFactoryfileWriter(tLog: ITLog, callback: (Promise) => void) {
-    return (fPath, value: string | Buffer | PassThrough) => {
-      callback(
-        new Promise<void>((res, rej) => {
-          tLog("testArtiFactory =>", fPath);
-
-          const cleanPath = path.resolve(fPath);
-          fPaths.push(cleanPath.replace(process.cwd(), ``));
-
-          const targetDir = cleanPath.split("/").slice(0, -1).join("/");
-
-          fs.mkdir(targetDir, { recursive: true }, async (error) => {
-            if (error) {
-              console.error(`❗️testArtiFactory failed`, targetDir, error);
-            }
-
-            fs.writeFileSync(
-              path.resolve(
-                targetDir.split("/").slice(0, -1).join("/"),
-                "manifest"
-              ),
-              fPaths.join(`\n`),
-              {
-                encoding: "utf-8",
-              }
-            );
-
-            if (Buffer.isBuffer(value)) {
-              fs.writeFileSync(fPath, value, "binary");
-              res();
-            } else if (`string` === typeof value) {
-              fs.writeFileSync(fPath, value.toString(), {
-                encoding: "utf-8",
-              });
-              res();
-            } else {
-              /* @ts-ignore:next-line */
-              const pipeStream: PassThrough = value;
-              const myFile = fs.createWriteStream(fPath);
-              pipeStream.pipe(myFile);
-              pipeStream.on("close", () => {
-                myFile.close();
-                res();
-              });
-            }
-          });
-        })
-      );
-    };
-  }
-
-  write(accessObject: { uid: number }, contents: string): boolean {
-    throw new Error("Method not implemented.");
-  }
-  page(): string | undefined {
-    throw new Error("Method not implemented.");
-  }
-  click(selector: string): string | undefined {
-    throw new Error("Method not implemented.");
-  }
-  focusOn(selector: string) {
-    throw new Error("Method not implemented.");
-  }
-  typeInto(value: string) {
-    throw new Error("Method not implemented.");
-  }
-  getValue(value: string) {
-    throw new Error("Method not implemented.");
-  }
-  getAttribute(selector: string, attribute: string) {
-    throw new Error("Method not implemented.");
-  }
-  isDisabled(selector: string): Promise<boolean> {
-    throw new Error("Method not implemented.");
-  }
-  screencastStop(s: string) {
-    throw new Error("Method not implemented.");
-  }
-  ////////////////////////////////////////////////////////////////////////////////
 
   async metafileOutputs(platform: "web" | "node") {
     const metafile = JSON.parse(
@@ -751,9 +453,7 @@ ${addableFiles
       .split(".")
       .slice(0, -1)
       .join(".")}/prompt.txt`;
-    if (this.shutdownMode) {
-      this.checkForShutdown();
-    }
+    this.checkForShutdown();
   };
 
   checkForShutdown = () => {
@@ -801,7 +501,6 @@ ${addableFiles
     }
   };
 
-  ////////////////////////////////////////////////////////////////////////////////
   typeCheckIsRunning = (src: string) => {
     this.bigBoard[src].typeErrors = "?";
   };
@@ -834,10 +533,7 @@ ${addableFiles
     this.checkForShutdown();
   };
 
-  ////////////////////////////////////////////////////////////////////////////////
-
   launchNode = async (src: string, dest: string) => {
-    // console.log(ansiC.yellow(`! node, ${src}`));
     console.log(ansiC.green(ansiC.inverse(`! node, ${src}`)));
     this.bddTestIsRunning(src);
 
@@ -849,7 +545,7 @@ ${addableFiles
       fs.mkdirSync(reportDest, { recursive: true });
     }
 
-    const destFolder = dest.replace(".mjs", ""); //`./testeranto/reports/${dest.replace(".mjs", "")}`; //dest.replace(".mjs", "");
+    const destFolder = dest.replace(".mjs", "");
 
     let argz = "";
 
@@ -981,7 +677,6 @@ ${addableFiles
           page.exposeFunction(
             "custom-screenshot",
             async (ssOpts: ScreenshotOptions, testName: string) => {
-              // console.log("main.ts browser custom-screenshot", testName);
               const p = ssOpts.path as string;
               const dir = path.dirname(p);
               fs.mkdirSync(dir, {
@@ -998,10 +693,8 @@ ${addableFiles
                 screenshots[testName] = [];
               }
               screenshots[testName].push(sPromise);
-              // sPromise.then(())
               await sPromise;
               return sPromise;
-              // page.evaluate(`window["screenshot done"]`);
             }
           );
 
@@ -1046,9 +739,6 @@ ${addableFiles
             (fp: string, testName: string) => {
               const f = fs.createWriteStream(fp);
 
-              // if (!files[testName]) {
-              //   files[testName] = new Set();
-              // }
               files[testName].add(fp);
 
               const p = new Promise<string>((res, rej) => {
@@ -1077,24 +767,12 @@ ${addableFiles
             return fileStreams2[uid].end();
           });
 
-          // page.exposeFunction("customclose", (p: string, testName: string) => {
-          //   fs.writeFileSync(
-          //     p + "/manifest.json",
-          //     JSON.stringify(Array.from(files[testName]))
-          //   );
-          //   delete files[testName];
-
-          //   Promise.all(screenshots[testName] || []).then(() => {
-          //     delete screenshots[testName];
-          //     // page.close();
-          //   });
-          // });
-
           return page;
         })
         .then(async (page) => {
           await page.goto(`file://${`${dest}.html`}`, {});
 
+          /* @ts-ignore:next-line */
           res(page);
         });
     });
@@ -1366,45 +1044,6 @@ ${addableFiles
         page.exposeFunction("end", async (uid: number) => {
           return fileStreams2[uid].end();
         });
-
-        // page.exposeFunction("customclose", (p: string, testName: string) => {
-        //   // console.log("closing", p);
-
-        //   console.log("\t GOODBYE customclose");
-
-        //   fs.writeFileSync(
-        //     p + "/manifest.json",
-        //     JSON.stringify(Array.from(files[testName]))
-        //   );
-        //   delete files[testName];
-
-        //   // console.log("screenshots[testName]", screenshots[testName]);
-        //   Promise.all(screenshots[testName] || []).then(() => {
-        //     delete screenshots[testName];
-        //   });
-
-        //   // globalThis["writeFileSync"](
-        //   //   p + "/manifest.json",
-        //   //   // files.entries()
-        //   //   JSON.stringify(Array.from(files[testName]))
-        //   // );
-
-        //   // console.log("closing doneFileStream2", doneFileStream2);
-        //   // console.log("closing doneFileStream2", doneFileStream2);
-        //   // Promise.all([...doneFileStream2, ...screenshots2]).then(() => {
-        //   //   page.close();
-        //   // });
-
-        //   // Promise.all(screenshots).then(() => {
-        //   //   page.close();
-        //   // });
-        //   // setTimeout(() => {
-        //   //   console.log("Delayed for 1 second.");
-        //   //   page.close();
-        //   // }, 5000);
-
-        //   // return page.close();
-        // });
 
         page.exposeFunction("page", () => {
           return (page.mainFrame() as unknown as { _id: string })._id;
