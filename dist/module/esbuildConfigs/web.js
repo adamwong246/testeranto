@@ -2,9 +2,9 @@ import path from "path";
 import baseEsBuildConfig from "./index.js";
 import inputFilesPlugin from "./inputFilesPlugin.js";
 import featuresPlugin from "./featuresPlugin.js";
-export default (config, entryPoints) => {
-    const { inputFilesPluginFactory, register } = inputFilesPlugin("web", entryPoints);
-    return Object.assign(Object.assign({}, baseEsBuildConfig(config)), { outdir: config.outdir + "/web", alias: {
+export default (config, entryPoints, testName) => {
+    const { inputFilesPluginFactory, register } = inputFilesPlugin("web", testName);
+    return Object.assign(Object.assign({}, baseEsBuildConfig(config)), { outdir: `testeranto/bundles/web/${testName}`, alias: {
             react: path.resolve("./node_modules/react"),
         }, metafile: true, external: [
             "path",

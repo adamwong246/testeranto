@@ -2,10 +2,11 @@ import { CdpPage, Page } from "puppeteer-core/lib/esm/puppeteer";
 import fs from "fs";
 import { Browser } from "puppeteer-core";
 import { PassThrough } from "stream";
-import { IBuiltConfig, ITestTypes, ITLog } from "../lib/index.js";
+import { IBuiltConfig, IRunnables, ITestTypes, ITLog } from "../lib/index.js";
 import { ISummary } from "../utils";
 import { PM } from "./index.js";
 export declare class PM_Main extends PM {
+    name: string;
     browser: Browser;
     shutdownMode: boolean;
     configs: IBuiltConfig;
@@ -15,8 +16,13 @@ export declare class PM_Main extends PM {
     bigBoard: ISummary;
     webMetafileWatcher: fs.FSWatcher;
     nodeMetafileWatcher: fs.FSWatcher;
-    constructor(configs: IBuiltConfig);
+    constructor(configs: IBuiltConfig, name: string);
+    start(): Promise<any>;
     stop: () => void;
+    getRunnables: (tests: ITestTypes[], payload?: {
+        nodeEntryPoints: {};
+        webEntryPoints: {};
+    }) => IRunnables;
     customclose(): void;
     waitForSelector(p: string, s: string): any;
     closePage(p: any): any;
@@ -45,7 +51,6 @@ export declare class PM_Main extends PM {
     isDisabled(selector: string): Promise<boolean>;
     screencastStop(s: string): void;
     metafileOutputs(platform: "web" | "node"): Promise<void>;
-    start(): Promise<any>;
     tscCheck: ({ entrypoint, addableFiles, platform, }: {
         platform: "web" | "node";
         entrypoint: string;
@@ -59,8 +64,8 @@ export declare class PM_Main extends PM {
     launchNode: (src: string, dest: string) => Promise<void>;
     launchWebSideCar: (src: string, dest: string, testConfig: ITestTypes) => Promise<Page>;
     launchNodeSideCar: (src: string, dest: string, testConfig: ITestTypes) => Promise<void>;
-    launchWeb: (t: string, dest: string) => void;
-    receiveFeatures: (features: string[], destFolder: string, srcTest: string) => void;
+    launchWeb: (src: string, dest: string) => void;
+    receiveFeatures: (features: string[], destFolder: string, srcTest: string, platform: "node" | "web") => void;
     receiveExitCode: (srcTest: string, failures: number) => void;
     writeBigBoard: () => void;
 }

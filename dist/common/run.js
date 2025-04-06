@@ -38,6 +38,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const ansi_colors_1 = __importDefault(require("ansi-colors"));
 const readline_1 = __importDefault(require("readline"));
+const path_1 = __importDefault(require("path"));
 const main_1 = require("./PM/main");
 readline_1.default.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
@@ -50,9 +51,11 @@ process.stdin.on("keypress", (str, key) => {
     }
 });
 Promise.resolve(`${process.cwd() + "/" + process.argv[2]}`).then(s => __importStar(require(s))).then(async (module) => {
+    const testName = path_1.default.basename(process.argv[2]).split(".")[0];
+    console.log("testeranto is testing", testName);
     const rawConfig = module.default;
-    const config = Object.assign(Object.assign({}, rawConfig), { buildDir: process.cwd() + "/" + rawConfig.outdir });
-    const pm = new main_1.PM_Main(config);
+    const config = Object.assign(Object.assign({}, rawConfig), { buildDir: process.cwd() + "/" + `testeranto/${testName}.json` });
+    const pm = new main_1.PM_Main(config, testName);
     pm.start();
     process.stdin.on("keypress", (str, key) => {
         if (key.name === "q") {

@@ -11,15 +11,19 @@ const register = (entrypoint, sources) => {
     }
     sources.forEach((s) => otherInputs[entrypoint].add(s));
 };
-exports.default = (platform, entryPoints) => {
+exports.default = (platform, testName) => {
+    const d = `testeranto/bundles/${platform}/${testName}/`;
+    const f = `testeranto/bundles/${platform}/${testName}/metafile.json`;
+    if (!fs_1.default.existsSync(d)) {
+        fs_1.default.mkdirSync(d);
+    }
     return {
         register,
         inputFilesPluginFactory: {
             name: "metafileWriter",
             setup(build) {
                 build.onEnd((result) => {
-                    // console.log("build.onEnd", entryPoints);
-                    fs_1.default.writeFileSync(`docs/${platform}/metafile.json`, JSON.stringify(result, null, 2));
+                    fs_1.default.writeFileSync(f, JSON.stringify(result, null, 2));
                 });
             },
         },

@@ -7,9 +7,9 @@ const path_1 = __importDefault(require("path"));
 const index_js_1 = __importDefault(require("./index.js"));
 const inputFilesPlugin_js_1 = __importDefault(require("./inputFilesPlugin.js"));
 const featuresPlugin_js_1 = __importDefault(require("./featuresPlugin.js"));
-exports.default = (config, entryPoints) => {
-    const { inputFilesPluginFactory, register } = (0, inputFilesPlugin_js_1.default)("web", entryPoints);
-    return Object.assign(Object.assign({}, (0, index_js_1.default)(config)), { outdir: config.outdir + "/web", alias: {
+exports.default = (config, entryPoints, testName) => {
+    const { inputFilesPluginFactory, register } = (0, inputFilesPlugin_js_1.default)("web", testName);
+    return Object.assign(Object.assign({}, (0, index_js_1.default)(config)), { outdir: `testeranto/bundles/web/${testName}`, alias: {
             react: path_1.default.resolve("./node_modules/react"),
         }, metafile: true, external: [
             "path",

@@ -1,9 +1,11 @@
 import baseEsBuildConfig from "./index.js";
 import inputFilesPlugin from "./inputFilesPlugin.js";
 import featuresPlugin from "./featuresPlugin";
-export default (config, entryPoints) => {
-    const { inputFilesPluginFactory, register } = inputFilesPlugin("node", entryPoints);
-    return Object.assign(Object.assign({}, baseEsBuildConfig(config)), { splitting: true, outdir: config.outdir + "/node", 
+export default (config, entryPoints, testName) => {
+    const { inputFilesPluginFactory, register } = inputFilesPlugin("node", 
+    // entryPoints,
+    testName);
+    return Object.assign(Object.assign({}, baseEsBuildConfig(config)), { splitting: true, outdir: `testeranto/bundles/node/${testName}/`, 
         // inject: [`./node_modules/testeranto/dist/cjs-shim.js`],
         metafile: true, supported: {
             "dynamic-import": true,

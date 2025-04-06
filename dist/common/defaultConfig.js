@@ -2,13 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const config = {
     src: "src",
-    outdir: "docs",
+    // outdir: "docs",
     tests: [],
     debugger: true,
     clearScreen: false,
     devMode: true,
     minify: false,
-    outbase: ".",
+    // outbase: ".",
     ports: ["3001"],
     externals: [],
     nodePlugins: [],

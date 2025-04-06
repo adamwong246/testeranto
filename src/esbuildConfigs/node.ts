@@ -8,18 +8,20 @@ import featuresPlugin from "./featuresPlugin";
 
 export default (
   config: IBaseConfig,
-  entryPoints: Set<string> | string[]
+  entryPoints: Set<string> | string[],
+  testName: string
 ): BuildOptions => {
   const { inputFilesPluginFactory, register } = inputFilesPlugin(
     "node",
-    entryPoints
+    // entryPoints,
+    testName
   );
   return {
     ...baseEsBuildConfig(config),
 
     splitting: true,
 
-    outdir: config.outdir + "/node",
+    outdir: `testeranto/bundles/node/${testName}/`,
 
     // inject: [`./node_modules/testeranto/dist/cjs-shim.js`],
     metafile: true,

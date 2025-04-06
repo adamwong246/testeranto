@@ -1,5 +1,6 @@
 import ansiC from "ansi-colors";
 import readline from "readline";
+import path from "path";
 import { PM_Main } from "./PM/main";
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
@@ -12,9 +13,11 @@ process.stdin.on("keypress", (str, key) => {
     }
 });
 import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
+    const testName = path.basename(process.argv[2]).split(".")[0];
+    console.log("testeranto is testing", testName);
     const rawConfig = module.default;
-    const config = Object.assign(Object.assign({}, rawConfig), { buildDir: process.cwd() + "/" + rawConfig.outdir });
-    const pm = new PM_Main(config);
+    const config = Object.assign(Object.assign({}, rawConfig), { buildDir: process.cwd() + "/" + `testeranto/${testName}.json` });
+    const pm = new PM_Main(config, testName);
     pm.start();
     process.stdin.on("keypress", (str, key) => {
         if (key.name === "q") {

@@ -15,7 +15,7 @@ var esbuildConfigs_default = (config) => {
     format: "esm",
     splitting: true,
     outExtension: { ".js": ".mjs" },
-    outbase: config.outbase,
+    outbase: ".",
     jsx: "transform",
     bundle: true,
     minify: config.minify === true,
@@ -37,17 +37,19 @@ var register = (entrypoint, sources) => {
   }
   sources.forEach((s) => otherInputs[entrypoint].add(s));
 };
-var inputFilesPlugin_default = (platform, entryPoints) => {
+var inputFilesPlugin_default = (platform, testName) => {
+  const d = `testeranto/bundles/${platform}/${testName}/`;
+  const f = `testeranto/bundles/${platform}/${testName}/metafile.json`;
+  if (!fs.existsSync(d)) {
+    fs.mkdirSync(d);
+  }
   return {
     register,
     inputFilesPluginFactory: {
       name: "metafileWriter",
       setup(build) {
         build.onEnd((result) => {
-          fs.writeFileSync(
-            `docs/${platform}/metafile.json`,
-            JSON.stringify(result, null, 2)
-          );
+          fs.writeFileSync(f, JSON.stringify(result, null, 2));
         });
       }
     }
@@ -88,15 +90,16 @@ var featuresPlugin_default = {
 };
 
 // src/esbuildConfigs/node.ts
-var node_default = (config, entryPoints) => {
+var node_default = (config, entryPoints, testName) => {
   const { inputFilesPluginFactory, register: register2 } = inputFilesPlugin_default(
     "node",
-    entryPoints
+    // entryPoints,
+    testName
   );
   return {
     ...esbuildConfigs_default(config),
     splitting: true,
-    outdir: config.outdir + "/node",
+    outdir: `testeranto/bundles/node/${testName}/`,
     // inject: [`./node_modules/testeranto/dist/cjs-shim.js`],
     metafile: true,
     supported: {
@@ -135,14 +138,14 @@ var node_default = (config, entryPoints) => {
 
 // src/esbuildConfigs/web.ts
 import path2 from "path";
-var web_default = (config, entryPoints) => {
+var web_default = (config, entryPoints, testName) => {
   const { inputFilesPluginFactory, register: register2 } = inputFilesPlugin_default(
     "web",
-    entryPoints
+    testName
   );
   return {
     ...esbuildConfigs_default(config),
-    outdir: config.outdir + "/web",
+    outdir: `testeranto/bundles/web/${testName}`,
     alias: {
       react: path2.resolve("./node_modules/react")
     },
@@ -236,6 +239,8 @@ var getRunnables = (tests, payload = {
   }, payload);
 };
 import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
+  const testName = path3.basename(process.argv[2]).split(".")[0];
+  console.log("testeranto is testing", testName);
   const rawConfig = module.default;
   const getSecondaryEndpointsPoints = (runtime) => {
     const meta = (ts, st) => {
@@ -253,7 +258,7 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
   };
   const config = {
     ...rawConfig,
-    buildDir: process.cwd() + "/" + rawConfig.outdir
+    buildDir: process.cwd() + "/testeranto/bundles/" + testName
   };
   let nodeDone = false;
   let webDone = false;
@@ -315,7 +320,7 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
     }
   });
   fs2.writeFileSync(
-    `${config.outdir}/testeranto.json`,
+    `testeranto/${testName}.json`,
     JSON.stringify(config, null, 2)
   );
   Promise.resolve(
@@ -326,7 +331,7 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
         const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
         const sourceFileNameMinusJs = sourceFileName.split(".").slice(0, -1).join(".");
         const htmlFilePath = path3.normalize(
-          `${process.cwd()}/${config.outdir}/web/${sourceDir.join(
+          `${process.cwd()}/testeranto/bundles/web/${testName}/${sourceDir.join(
             "/"
           )}/${sourceFileNameMinusJs}.html`
         );
@@ -340,7 +345,7 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
       })
     )
   );
-  glob(`./${config.outdir}/chunk-*.mjs`, {
+  glob(`${process.cwd()}/testeranto/bundles/${testName}/chunk-*.mjs`, {
     ignore: "node_modules/**"
   }).then((chunks) => {
     chunks.forEach((chunk) => {
@@ -348,7 +353,9 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
     });
   });
   await Promise.all([
-    esbuild.context(node_default(config, Object.keys(nodeEntryPoints))).then(async (nodeContext) => {
+    esbuild.context(
+      node_default(config, Object.keys(nodeEntryPoints), testName)
+    ).then(async (nodeContext) => {
       if (config.devMode) {
         await nodeContext.watch().then((v) => {
           onNodeDone();
@@ -360,7 +367,9 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
       }
       return nodeContext;
     }),
-    esbuild.context(web_default(config, Object.keys(webEntryPoints))).then(async (webContext) => {
+    esbuild.context(
+      web_default(config, Object.keys(webEntryPoints), testName)
+    ).then(async (webContext) => {
       if (config.devMode) {
         await webContext.watch().then((v) => {
           onWebDone();

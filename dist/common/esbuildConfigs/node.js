@@ -6,9 +6,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const index_js_1 = __importDefault(require("./index.js"));
 const inputFilesPlugin_js_1 = __importDefault(require("./inputFilesPlugin.js"));
 const featuresPlugin_1 = __importDefault(require("./featuresPlugin"));
-exports.default = (config, entryPoints) => {
-    const { inputFilesPluginFactory, register } = (0, inputFilesPlugin_js_1.default)("node", entryPoints);
-    return Object.assign(Object.assign({}, (0, index_js_1.default)(config)), { splitting: true, outdir: config.outdir + "/node", 
+exports.default = (config, entryPoints, testName) => {
+    const { inputFilesPluginFactory, register } = (0, inputFilesPlugin_js_1.default)("node", 
+    // entryPoints,
+    testName);
+    return Object.assign(Object.assign({}, (0, index_js_1.default)(config)), { splitting: true, outdir: `testeranto/bundles/node/${testName}/`, 
         // inject: [`./node_modules/testeranto/dist/cjs-shim.js`],
         metafile: true, supported: {
             "dynamic-import": true,

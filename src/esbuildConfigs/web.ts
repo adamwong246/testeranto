@@ -9,17 +9,18 @@ import featuresPlugin from "./featuresPlugin.js";
 
 export default (
   config: IBaseConfig,
-  entryPoints: Set<string> | string[]
+  entryPoints: Set<string> | string[],
+  testName: string
 ): BuildOptions => {
   const { inputFilesPluginFactory, register } = inputFilesPlugin(
     "web",
-    entryPoints
+    testName
   );
 
   return {
     ...baseEsBuildConfig(config),
 
-    outdir: config.outdir + "/web",
+    outdir: `testeranto/bundles/web/${testName}`,
 
     alias: {
       react: path.resolve("./node_modules/react"),

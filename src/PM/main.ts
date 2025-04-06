@@ -21,7 +21,7 @@ import {
   ITestTypes,
   ITLog,
 } from "../lib/index.js";
-import { ISummary, lintPather, tscPather } from "../utils";
+import { ISummary, lintPather, promptPather, tscPather } from "../utils";
 
 import { PM } from "./index.js";
 
@@ -65,32 +65,6 @@ async function fileHash(filePath, algorithm = "md5") {
   });
 }
 
-const getRunnables = (
-  tests: ITestTypes[],
-  payload = {
-    nodeEntryPoints: {},
-    webEntryPoints: {},
-  }
-): IRunnables => {
-  return tests.reduce((pt, cv, cndx, cry) => {
-    if (cv[1] === "node") {
-      pt.nodeEntryPoints[cv[0]] = path.resolve(
-        `./docs/node/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
-      );
-    } else if (cv[1] === "web") {
-      pt.webEntryPoints[cv[0]] = path.resolve(
-        `./docs/web/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
-      );
-    }
-
-    if (cv[3].length) {
-      getRunnables(cv[3], payload);
-    }
-
-    return pt;
-  }, payload as IRunnables);
-};
-
 const statusMessagePretty = (failures: number, test: string) => {
   if (failures === 0) {
     console.log(ansiC.green(ansiC.inverse(`> ${test} completed successfully`)));
@@ -130,6 +104,8 @@ function isValidUrl(string) {
 }
 
 export class PM_Main extends PM {
+  name: string;
+
   browser: Browser;
 
   shutdownMode = false;
@@ -143,8 +119,10 @@ export class PM_Main extends PM {
   webMetafileWatcher: fs.FSWatcher;
   nodeMetafileWatcher: fs.FSWatcher;
 
-  constructor(configs: IBuiltConfig) {
+  constructor(configs: IBuiltConfig, name: string) {
     super();
+
+    this.name = name;
 
     this.mode = configs.devMode ? "DEV" : "PROD";
 
@@ -309,12 +287,152 @@ export class PM_Main extends PM {
     };
   }
 
+  async start(): Promise<any> {
+    if (!fs.existsSync(`testeranto/reports/${this.name}`)) {
+      fs.mkdirSync(`testeranto/reports/${this.name}`);
+    }
+
+    this.browser = (await puppeteer.launch({
+      slowMo: 1,
+      // timeout: 1,
+      waitForInitialPage: false,
+      executablePath:
+        // process.env.CHROMIUM_PATH || "/opt/homebrew/bin/chromium",
+        "/opt/homebrew/bin/chromium",
+      headless: true,
+      dumpio: true,
+      // timeout: 0,
+      devtools: true,
+
+      args: [
+        "--auto-open-devtools-for-tabs",
+        `--remote-debugging-port=3234`,
+
+        // "--disable-features=IsolateOrigins,site-per-process",
+        "--disable-site-isolation-trials",
+        "--allow-insecure-localhost",
+        "--allow-file-access-from-files",
+        "--allow-running-insecure-content",
+
+        "--disable-dev-shm-usage",
+        "--disable-extensions",
+        "--disable-gpu",
+        "--disable-setuid-sandbox",
+        "--disable-site-isolation-trials",
+        "--disable-web-security",
+        "--no-first-run",
+        "--no-sandbox",
+        "--no-startup-window",
+        // "--no-zygote",
+        "--reduce-security-for-testing",
+        "--remote-allow-origins=*",
+        "--unsafely-treat-insecure-origin-as-secure=*",
+        // "--disable-features=IsolateOrigins",
+        // "--remote-allow-origins=ws://localhost:3234",
+        // "--single-process",
+        // "--unsafely-treat-insecure-origin-as-secure",
+        // "--unsafely-treat-insecure-origin-as-secure=ws://192.168.0.101:3234",
+
+        // "--disk-cache-dir=/dev/null",
+        // "--disk-cache-size=1",
+        // "--start-maximized",
+      ],
+    })) as any;
+
+    const { nodeEntryPoints, webEntryPoints } = this.getRunnables(
+      this.configs.tests
+    );
+
+    Object.entries(nodeEntryPoints).forEach(
+      ([k, outputFile]: [string, string]) => {
+        this.launchNode(k, outputFile);
+        try {
+          watch(outputFile, async (e, filename) => {
+            const hash = await fileHash(outputFile);
+            if (fileHashes[k] !== hash) {
+              fileHashes[k] = hash;
+              console.log(ansiC.green(ansiC.inverse(`< ${e} ${filename}`)));
+              this.launchNode(k, outputFile);
+            }
+          });
+        } catch (e) {
+          console.error(e);
+        }
+      }
+    );
+
+    Object.entries(webEntryPoints).forEach(
+      ([k, outputFile]: [string, string]) => {
+        this.launchWeb(k, outputFile);
+        watch(outputFile, async (e, filename) => {
+          const hash = await fileHash(outputFile);
+          if (fileHashes[k] !== hash) {
+            fileHashes[k] = hash;
+            console.log(ansiC.green(ansiC.inverse(`< ${e} ${filename}`)));
+            this.launchWeb(k, outputFile);
+          }
+        });
+      }
+    );
+
+    this.metafileOutputs("node");
+    const w = `./testeranto/bundles/node/${this.name}/metafile.json`;
+    console.log("w", w);
+    this.nodeMetafileWatcher = watch(w, async (e, filename) => {
+      console.log(ansiC.green(ansiC.inverse(`< ${e} ${filename} (node)`)));
+      this.metafileOutputs("node");
+    });
+
+    this.metafileOutputs("web");
+    this.webMetafileWatcher = watch(
+      `./testeranto/bundles/web/${this.name}/metafile.json`,
+      async (e, filename) => {
+        console.log(ansiC.green(ansiC.inverse(`< ${e} ${filename} (web)`)));
+        this.metafileOutputs("web");
+      }
+    );
+  }
+
   stop = () => {
     console.log(ansiC.inverse("Testeranto-Run is shutting down gracefully..."));
     this.mode = "PROD";
     this.nodeMetafileWatcher.close();
     this.webMetafileWatcher.close();
     this.checkForShutdown();
+  };
+
+  getRunnables = (
+    tests: ITestTypes[],
+    payload = {
+      nodeEntryPoints: {},
+      webEntryPoints: {},
+    }
+  ): IRunnables => {
+    return tests.reduce((pt, cv, cndx, cry) => {
+      if (cv[1] === "node") {
+        pt.nodeEntryPoints[cv[0]] = path.resolve(
+          `./testeranto/bundles/node/${this.name}/${cv[0]
+            .split(".")
+            .slice(0, -1)
+            .concat("mjs")
+            .join(".")}`
+        );
+      } else if (cv[1] === "web") {
+        pt.webEntryPoints[cv[0]] = path.resolve(
+          `./testeranto/bundles/web/${this.name}/${cv[0]
+            .split(".")
+            .slice(0, -1)
+            .concat("mjs")
+            .join(".")}`
+        );
+      }
+
+      if (cv[3].length) {
+        this.getRunnables(cv[3], payload);
+      }
+
+      return pt;
+    }, payload as IRunnables);
   };
 
   customclose() {
@@ -447,7 +565,11 @@ export class PM_Main extends PM {
 
   async metafileOutputs(platform: "web" | "node") {
     const metafile = JSON.parse(
-      fs.readFileSync(`docs/${platform}/metafile.json`).toString()
+      fs
+        .readFileSync(
+          `./testeranto/bundles/${platform}/${this.name}/metafile.json`
+        )
+        .toString()
     ).metafile;
 
     if (!metafile) return;
@@ -487,109 +609,6 @@ export class PM_Main extends PM {
     });
   }
 
-  async start(): Promise<any> {
-    this.browser = (await puppeteer.launch({
-      slowMo: 1,
-      // timeout: 1,
-      waitForInitialPage: false,
-      executablePath:
-        // process.env.CHROMIUM_PATH || "/opt/homebrew/bin/chromium",
-        "/opt/homebrew/bin/chromium",
-      headless: true,
-      dumpio: true,
-      // timeout: 0,
-      devtools: true,
-
-      args: [
-        "--auto-open-devtools-for-tabs",
-        `--remote-debugging-port=3234`,
-
-        // "--disable-features=IsolateOrigins,site-per-process",
-        "--disable-site-isolation-trials",
-        "--allow-insecure-localhost",
-        "--allow-file-access-from-files",
-        "--allow-running-insecure-content",
-
-        "--disable-dev-shm-usage",
-        "--disable-extensions",
-        "--disable-gpu",
-        "--disable-setuid-sandbox",
-        "--disable-site-isolation-trials",
-        "--disable-web-security",
-        "--no-first-run",
-        "--no-sandbox",
-        "--no-startup-window",
-        // "--no-zygote",
-        "--reduce-security-for-testing",
-        "--remote-allow-origins=*",
-        "--unsafely-treat-insecure-origin-as-secure=*",
-        // "--disable-features=IsolateOrigins",
-        // "--remote-allow-origins=ws://localhost:3234",
-        // "--single-process",
-        // "--unsafely-treat-insecure-origin-as-secure",
-        // "--unsafely-treat-insecure-origin-as-secure=ws://192.168.0.101:3234",
-
-        // "--disk-cache-dir=/dev/null",
-        // "--disk-cache-size=1",
-        // "--start-maximized",
-      ],
-    })) as any;
-
-    const { nodeEntryPoints, webEntryPoints } = getRunnables(
-      this.configs.tests
-    );
-
-    Object.entries(nodeEntryPoints).forEach(
-      ([k, outputFile]: [string, string]) => {
-        this.launchNode(k, outputFile);
-        try {
-          watch(outputFile, async (e, filename) => {
-            const hash = await fileHash(outputFile);
-            if (fileHashes[k] !== hash) {
-              fileHashes[k] = hash;
-              console.log(ansiC.green(ansiC.inverse(`< ${e} ${filename}`)));
-              this.launchNode(k, outputFile);
-            }
-          });
-        } catch (e) {
-          console.error(e);
-        }
-      }
-    );
-
-    Object.entries(webEntryPoints).forEach(
-      ([k, outputFile]: [string, string]) => {
-        this.launchWeb(k, outputFile);
-        watch(outputFile, async (e, filename) => {
-          const hash = await fileHash(outputFile);
-          if (fileHashes[k] !== hash) {
-            fileHashes[k] = hash;
-            console.log(ansiC.green(ansiC.inverse(`< ${e} ${filename}`)));
-            this.launchWeb(k, outputFile);
-          }
-        });
-      }
-    );
-
-    this.metafileOutputs("node");
-    this.nodeMetafileWatcher = watch(
-      "docs/node/metafile.json",
-      async (e, filename) => {
-        console.log(ansiC.green(ansiC.inverse(`< ${e} ${filename} (node)`)));
-        this.metafileOutputs("node");
-      }
-    );
-
-    this.metafileOutputs("web");
-    this.webMetafileWatcher = watch(
-      "docs/web/metafile.json",
-      async (e, filename) => {
-        console.log(ansiC.green(ansiC.inverse(`< ${e} ${filename} (web)`)));
-        this.metafileOutputs("web");
-      }
-    );
-  }
-
   tscCheck = async ({
     entrypoint,
     addableFiles,
@@ -607,7 +626,7 @@ export class PM_Main extends PM {
       configFilePath: "tsconfig.json", // config to inherit from (optional)
       compilerOptions: {
         rootDir: "src",
-        outDir: tscPather(entrypoint, platform),
+        outDir: tscPather(entrypoint, platform, this.name),
         // declaration: true,
         // skipLibCheck: true,
         noEmit: true,
@@ -615,7 +634,7 @@ export class PM_Main extends PM {
       include: addableFiles, //["src/**/*"],
       // exclude: ["**/*.test.ts", "**/*.spec.ts"],
     });
-    const tscPath = tscPather(entrypoint, platform);
+    const tscPath = tscPather(entrypoint, platform, this.name);
 
     let allDiagnostics = program.getSemanticDiagnostics();
 
@@ -669,7 +688,7 @@ export class PM_Main extends PM {
       });
 
     fs.writeFileSync(
-      lintPather(entrypoint, platform),
+      lintPather(entrypoint, platform, this.name),
       await formatter.format(results)
     );
     this.bigBoard[entrypoint].staticErrors = results.length;
@@ -688,22 +707,21 @@ export class PM_Main extends PM {
     platform: "web" | "node"
   ) => {
     this.bigBoard[entryPoint].prompt = "?";
-    const promptPath = path.join(
-      "./docs/",
-      platform,
-      entryPoint.split(".").slice(0, -1).join("."),
-      `prompt.txt`
-    );
+    const promptPath = promptPather(entryPoint, platform, this.name);
 
     const testPaths = path.join(
-      "./docs/",
+      "testeranto",
+      "reports",
+      this.name,
       platform,
       entryPoint.split(".").slice(0, -1).join("."),
       `tests.json`
     );
 
     const featuresPath = path.join(
-      "./docs/",
+      "testeranto",
+      "reports",
+      this.name,
       platform,
       entryPoint.split(".").slice(0, -1).join("."),
       `featurePrompt.txt`
@@ -718,24 +736,28 @@ ${addableFiles
   })
   .join("\n")}
 
-/read ${lintPather(entryPoint, platform)}
-/read ${tscPather(entryPoint, platform)}
+/read ${lintPather(entryPoint, platform, this.name)}
+/read ${tscPather(entryPoint, platform, this.name)}
 /read ${testPaths}
 
 /load ${featuresPath}
 
 /code Fix the failing tests described in ${testPaths}. Correct any type signature errors described in the files ${tscPather(
         entryPoint,
-        platform
+        platform,
+        this.name
       )}. Implement any method which throws "Function not implemented. Resolve the lint errors described in ${lintPather(
         entryPoint,
-        platform
+        platform,
+        this.name
       )}"
           `
     );
     this.bigBoard[
       entryPoint
-    ].prompt = `aider --model deepseek/deepseek-chat --load docs/${platform}/${entryPoint
+    ].prompt = `aider --model deepseek/deepseek-chat --load testeranto/${
+      this.name
+    }/reports/${platform}/${entryPoint
       .split(".")
       .slice(0, -1)
       .join(".")}/prompt.txt`;
@@ -759,7 +781,7 @@ ${addableFiles
     } else {
       this.browser.disconnect().then(() => {
         fs.writeFileSync(
-          "docs/summary.json",
+          `testeranto/reports/${this.name}/summary.json`,
           JSON.stringify(this.bigBoard, null, 2)
         );
         console.log(ansiC.inverse("Goodbye"));
@@ -769,11 +791,11 @@ ${addableFiles
   };
 
   testIsNowRunning = (src: string) => {
-    this.bigBoard[src].status = "running";
+    // this.bigBoard[src].status = "running";
   };
 
   testIsNowDone = (src: string) => {
-    this.bigBoard[src].status = "waiting";
+    // this.bigBoard[src].status = "waiting";
     if (this.shutdownMode) {
       this.checkForShutdown();
     }
@@ -782,9 +804,18 @@ ${addableFiles
   launchNode = async (src: string, dest: string) => {
     // console.log(ansiC.yellow(`! node, ${src}`));
     console.log(ansiC.green(ansiC.inverse(`! node, ${src}`)));
+
+    const reportDest = `testeranto/reports/${this.name}/${src
+      .split(".")
+      .slice(0, -1)
+      .join(".")}/node`;
+    if (!fs.existsSync(reportDest)) {
+      fs.mkdirSync(reportDest, { recursive: true });
+    }
+
     this.testIsNowRunning(src);
 
-    const destFolder = dest.replace(".mjs", "");
+    const destFolder = dest.replace(".mjs", ""); //`./testeranto/reports/${dest.replace(".mjs", "")}`; //dest.replace(".mjs", "");
 
     let argz = "";
 
@@ -804,7 +835,7 @@ ${addableFiles
         scheduled: true,
         name: src,
         ports: portsToUse,
-        fs: destFolder,
+        fs: reportDest,
         browserWSEndpoint: this.browser.wsEndpoint(),
       });
     } else if (testConfigResource.ports > 0) {
@@ -869,7 +900,7 @@ ${addableFiles
         defaultModule
           .receiveTestResourceConfig(argz)
           .then(async ({ features, failed }: IFinalResults) => {
-            this.receiveFeatures(features, destFolder, src);
+            this.receiveFeatures(features, destFolder, src, "node");
             // console.log(`${src} completed with ${failed} errors`);
             statusMessagePretty(failed, src);
             this.receiveExitCode(src, failed);
@@ -1119,10 +1150,19 @@ ${addableFiles
     }
   };
 
-  launchWeb = (t: string, dest: string) => {
+  launchWeb = (src: string, dest: string) => {
     // console.log(green, "! web", t);
-    console.log(ansiC.green(ansiC.inverse(`! web ${t}`)));
-    this.testIsNowRunning(t);
+    console.log(ansiC.green(ansiC.inverse(`! web ${src}`)));
+
+    const reportDest = `testeranto/reports/${this.name}/${src
+      .split(".")
+      .slice(0, -1)
+      .join(".")}/web`;
+    if (!fs.existsSync(reportDest)) {
+      fs.mkdirSync(reportDest, { recursive: true });
+    }
+
+    this.testIsNowRunning(src);
 
     // sidecars.map((sidecar) => {
     //   if (sidecar[1] === "node") {
@@ -1388,42 +1428,42 @@ ${addableFiles
       })
       .then(async (page) => {
         const close = () => {
-          if (!files[t]) {
-            files[t] = new Set();
+          if (!files[src]) {
+            files[src] = new Set();
           }
           // files[t].add(filepath);
 
           fs.writeFileSync(
             destFolder + "/manifest.json",
-            JSON.stringify(Array.from(files[t]))
+            JSON.stringify(Array.from(files[src]))
           );
-          delete files[t];
+          delete files[src];
 
-          Promise.all(screenshots[t] || []).then(() => {
-            delete screenshots[t];
+          Promise.all(screenshots[src] || []).then(() => {
+            delete screenshots[src];
             page.close();
 
-            this.testIsNowDone(t);
+            this.testIsNowDone(src);
             stderrStream.close();
             stdoutStream.close();
           });
         };
 
         page.on("pageerror", (err: Error) => {
-          console.debug(`Error from ${t}: [${err.name}] `);
+          console.debug(`Error from ${src}: [${err.name}] `);
           stderrStream.write(err.name);
 
           if (err.cause) {
-            console.debug(`Error from ${t} cause: [${err.cause}] `);
+            console.debug(`Error from ${src} cause: [${err.cause}] `);
             stderrStream.write(err.cause);
           }
 
           if (err.stack) {
-            console.debug(`Error from stack ${t}: [${err.stack}] `);
+            console.debug(`Error from stack ${src}: [${err.stack}] `);
             stderrStream.write(err.stack);
           }
 
-          console.debug(`Error from message ${t}: [${err.message}] `);
+          console.debug(`Error from message ${src}: [${err.message}] `);
           stderrStream.write(err.message);
           close();
         });
@@ -1442,14 +1482,14 @@ ${addableFiles
         await page
           .evaluate(evaluation)
           .then(async ({ failed, features }: IFinalResults) => {
-            this.receiveFeatures(features, destFolder, t);
+            this.receiveFeatures(features, destFolder, src, "web");
             // console.log(`${t} completed with ${failed} errors`);
-            statusMessagePretty(failed, t);
-            this.receiveExitCode(t, failed);
+            statusMessagePretty(failed, src);
+            this.receiveExitCode(src, failed);
           })
           .catch((e) => {
             // console.log(red, `${t} errored with`, e);
-            console.log(ansiC.red(ansiC.inverse(`${t} errored with: ${e}`)));
+            console.log(ansiC.red(ansiC.inverse(`${src} errored with: ${e}`)));
           })
           .finally(() => {
             // this.testIsNowDone(t);
@@ -1463,11 +1503,12 @@ ${addableFiles
   receiveFeatures = (
     features: string[],
     destFolder: string,
-    srcTest: string
+    srcTest: string,
+    platform: "node" | "web"
   ) => {
     const featureDestination = path.resolve(
       process.cwd(),
-      "docs",
+      "reports",
       "features",
       "strings",
       srcTest.split(".").slice(0, -1).join(".") + ".features.txt"
@@ -1483,7 +1524,7 @@ ${addableFiles
           const u = new URL(featureStringKey);
 
           if (u.protocol === "file:") {
-            const newPath = `${process.cwd()}/docs/features/internal/${path.relative(
+            const newPath = `${process.cwd()}/testeranto/features/internal/${path.relative(
               process.cwd(),
               u.pathname
             )}`;
@@ -1508,7 +1549,7 @@ ${addableFiles
             // });
             accum.files.push(newPath);
           } else if (u.protocol === "http:" || u.protocol === "https:") {
-            const newPath = `${process.cwd()}/docs/features/external${
+            const newPath = `${process.cwd()}/testeranto/features/external${
               u.hostname
             }${u.pathname}`;
             const body = await this.configs.featureIngestor(featureStringKey);
@@ -1530,7 +1571,11 @@ ${addableFiles
         // writeFileAndCreateDir(`${featureDestination}`, JSON.stringify(strings));
 
         fs.writeFileSync(
-          `${destFolder}/featurePrompt.txt`,
+          // `${destFolder}/featurePrompt.txt`,
+          `testeranto/reports/${this.name}/${srcTest
+            .split(".")
+            .slice(0, -1)
+            .join(".")}/${platform}/featurePrompt.txt`,
           files
             .map((f) => {
               return `/read ${f}`;
@@ -1549,7 +1594,7 @@ ${addableFiles
 
   writeBigBoard = () => {
     fs.writeFileSync(
-      "./docs/summary.json",
+      `./testeranto/reports/${this.name}/summary.json`,
       JSON.stringify(this.bigBoard, null, 2)
     );
   };

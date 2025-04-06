@@ -45,6 +45,11 @@ const getRunnables = (
 };
 
 import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
+  const testName = path.basename(process.argv[2]).split(".")[0];
+  console.log("testeranto is testing", testName);
+
+  // if (!fs.existsSync(`testeranto/`))
+
   const rawConfig: IBaseConfig = module.default;
 
   const getSecondaryEndpointsPoints = (runtime?: IRunTime): string[] => {
@@ -64,15 +69,14 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
 
   const config: IBuiltConfig = {
     ...rawConfig,
-    buildDir: process.cwd() + "/" + rawConfig.outdir,
+    buildDir: process.cwd() + "/testeranto/bundles/" + testName,
   };
 
   let nodeDone: boolean = false;
   let webDone: boolean = false;
   let mode = config.devMode ? "DEV" : "PROD";
   let status: "build" | "built" = "build";
-  // let pm: PM_Main | undefined = new PM_Main(config);
-  // const fileHashes = {};
+
   const { nodeEntryPoints, webEntryPoints } = getRunnables(config.tests);
 
   const onNodeDone = () => {
@@ -164,7 +168,7 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
   });
 
   fs.writeFileSync(
-    `${config.outdir}/testeranto.json`,
+    `testeranto/${testName}.json`,
     JSON.stringify(config, null, 2)
   );
 
@@ -180,7 +184,7 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
           .join(".");
 
         const htmlFilePath = path.normalize(
-          `${process.cwd()}/${config.outdir}/web/${sourceDir.join(
+          `${process.cwd()}/testeranto/bundles/web/${testName}/${sourceDir.join(
             "/"
           )}/${sourceFileNameMinusJs}.html`
         );
@@ -198,7 +202,7 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
     )
   );
 
-  glob(`./${config.outdir}/chunk-*.mjs`, {
+  glob(`${process.cwd()}/testeranto/bundles/${testName}/chunk-*.mjs`, {
     ignore: "node_modules/**",
   }).then((chunks) => {
     chunks.forEach((chunk) => {
@@ -208,7 +212,9 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
 
   await Promise.all([
     esbuild
-      .context(esbuildNodeConfiger(config, Object.keys(nodeEntryPoints)))
+      .context(
+        esbuildNodeConfiger(config, Object.keys(nodeEntryPoints), testName)
+      )
       .then(async (nodeContext) => {
         if (config.devMode) {
           await nodeContext.watch().then((v) => {
@@ -223,7 +229,9 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
         return nodeContext;
       }),
     esbuild
-      .context(esbuildWebConfiger(config, Object.keys(webEntryPoints)))
+      .context(
+        esbuildWebConfiger(config, Object.keys(webEntryPoints), testName)
+      )
       .then(async (webContext) => {
         if (config.devMode) {
           await webContext.watch().then((v) => {

@@ -1,5 +1,6 @@
 import ansiC from "ansi-colors";
 import readline from "readline";
+import path from "path";
 
 import { PM_Main } from "./PM/main";
 import { IBaseConfig, IBuiltConfig } from "./lib";
@@ -16,14 +17,17 @@ process.stdin.on("keypress", (str, key) => {
 });
 
 import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
+  const testName = path.basename(process.argv[2]).split(".")[0];
+  console.log("testeranto is testing", testName);
+
   const rawConfig: IBaseConfig = module.default;
 
   const config: IBuiltConfig = {
     ...rawConfig,
-    buildDir: process.cwd() + "/" + rawConfig.outdir,
+    buildDir: process.cwd() + "/" + `testeranto/${testName}.json`,
   };
 
-  const pm = new PM_Main(config);
+  const pm = new PM_Main(config, testName);
   pm.start();
 
   process.stdin.on("keypress", (str, key) => {

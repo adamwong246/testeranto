@@ -65,6 +65,9 @@ const getRunnables = (tests, payload = {
     }, payload);
 };
 Promise.resolve(`${process.cwd() + "/" + process.argv[2]}`).then(s => __importStar(require(s))).then(async (module) => {
+    const testName = path_1.default.basename(process.argv[2]).split(".")[0];
+    console.log("testeranto is testing", testName);
+    // if (!fs.existsSync(`testeranto/`))
     const rawConfig = module.default;
     const getSecondaryEndpointsPoints = (runtime) => {
         const meta = (ts, st) => {
@@ -80,13 +83,11 @@ Promise.resolve(`${process.cwd() + "/" + process.argv[2]}`).then(s => __importSt
         };
         return Array.from(meta(config.tests, new Set()));
     };
-    const config = Object.assign(Object.assign({}, rawConfig), { buildDir: process.cwd() + "/" + rawConfig.outdir });
+    const config = Object.assign(Object.assign({}, rawConfig), { buildDir: process.cwd() + "/testeranto/bundles/" + testName });
     let nodeDone = false;
     let webDone = false;
     let mode = config.devMode ? "DEV" : "PROD";
     let status = "build";
-    // let pm: PM_Main | undefined = new PM_Main(config);
-    // const fileHashes = {};
     const { nodeEntryPoints, webEntryPoints } = getRunnables(config.tests);
     const onNodeDone = () => {
         nodeDone = true;
@@ -165,7 +166,7 @@ Promise.resolve(`${process.cwd() + "/" + process.argv[2]}`).then(s => __importSt
             process.exit(-1);
         }
     });
-    fs_1.default.writeFileSync(`${config.outdir}/testeranto.json`, JSON.stringify(config, null, 2));
+    fs_1.default.writeFileSync(`testeranto/${testName}.json`, JSON.stringify(config, null, 2));
     Promise.resolve(Promise.all([...getSecondaryEndpointsPoints("web")].map(async (sourceFilePath) => {
         const sourceFileSplit = sourceFilePath.split("/");
         const sourceDir = sourceFileSplit.slice(0, -1);
@@ -174,13 +175,13 @@ Promise.resolve(`${process.cwd() + "/" + process.argv[2]}`).then(s => __importSt
             .split(".")
             .slice(0, -1)
             .join(".");
-        const htmlFilePath = path_1.default.normalize(`${process.cwd()}/${config.outdir}/web/${sourceDir.join("/")}/${sourceFileNameMinusJs}.html`);
+        const htmlFilePath = path_1.default.normalize(`${process.cwd()}/testeranto/bundles/web/${testName}/${sourceDir.join("/")}/${sourceFileNameMinusJs}.html`);
         const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
         return fs_1.default.promises
             .mkdir(path_1.default.dirname(htmlFilePath), { recursive: true })
             .then((x) => fs_1.default.writeFileSync(htmlFilePath, (0, web_html_js_1.default)(jsfilePath, htmlFilePath)));
     })));
-    (0, glob_1.glob)(`./${config.outdir}/chunk-*.mjs`, {
+    (0, glob_1.glob)(`${process.cwd()}/testeranto/bundles/${testName}/chunk-*.mjs`, {
         ignore: "node_modules/**",
     }).then((chunks) => {
         chunks.forEach((chunk) => {
@@ -189,7 +190,7 @@ Promise.resolve(`${process.cwd() + "/" + process.argv[2]}`).then(s => __importSt
     });
     await Promise.all([
         esbuild_1.default
-            .context((0, node_js_1.default)(config, Object.keys(nodeEntryPoints)))
+            .context((0, node_js_1.default)(config, Object.keys(nodeEntryPoints), testName))
             .then(async (nodeContext) => {
             if (config.devMode) {
                 await nodeContext.watch().then((v) => {
@@ -204,7 +205,7 @@ Promise.resolve(`${process.cwd() + "/" + process.argv[2]}`).then(s => __importSt
             return nodeContext;
         }),
         esbuild_1.default
-            .context((0, web_js_1.default)(config, Object.keys(webEntryPoints)))
+            .context((0, web_js_1.default)(config, Object.keys(webEntryPoints), testName))
             .then(async (webContext) => {
             if (config.devMode) {
                 await webContext.watch().then((v) => {

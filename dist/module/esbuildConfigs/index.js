@@ -5,7 +5,7 @@ export default (config) => {
         format: "esm",
         splitting: true,
         outExtension: { ".js": ".mjs" },
-        outbase: config.outbase,
+        outbase: ".",
         jsx: "transform",
         bundle: true,
         minify: config.minify === true,

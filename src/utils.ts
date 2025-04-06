@@ -24,74 +24,62 @@ export const destinationOfRuntime = (
     .join(".");
 };
 
-export const tscPather = (entryPoint: string, platform: "web" | "node") => {
-  return path.join(
-    "./docs/",
-    platform,
-    entryPoint.split(".").slice(0, -1).join("."),
-    `type_errors.txt`
-  );
-};
-
-export const tscExitCodePather = (
+export const tscPather = (
   entryPoint: string,
-  platform: "web" | "node"
+  platform: "web" | "node",
+  projectName: string
 ) => {
   return path.join(
-    "./docs/",
-    platform,
+    "testeranto",
+    "reports",
+    projectName,
     entryPoint.split(".").slice(0, -1).join("."),
+    platform,
     `type_errors.txt`
   );
 };
 
-export const lintPather = (entryPoint: string, platform: "web" | "node") => {
+export const lintPather = (
+  entryPoint: string,
+  platform: "web" | "node",
+  projectName: string
+) => {
   return path.join(
-    "./docs/",
-    platform,
+    "testeranto",
+    "reports",
+    projectName,
     entryPoint.split(".").slice(0, -1).join("."),
+    platform,
     `lint_errors.json`
   );
 };
 
-export const lintExitCodePather = (
+export const bddPather = (
   entryPoint: string,
-  platform: "web" | "node"
+  platform: "web" | "node",
+  projectName: string
 ) => {
   return path.join(
-    "./docs/",
-    platform,
+    "testeranto",
+    "reports",
+    projectName,
     entryPoint.split(".").slice(0, -1).join("."),
-    `lint_errors.txt`
-  );
-};
-
-export const bddPather = (entryPoint: string, platform: "web" | "node") => {
-  return path.join(
-    "./docs/",
     platform,
-    entryPoint.split(".").slice(0, -1).join("."),
     `tests.json`
   );
 };
 
-export const bddExitCodePather = (
+export const promptPather = (
   entryPoint: string,
-  platform: "web" | "node"
+  platform: "web" | "node",
+  projectName: string
 ) => {
   return path.join(
-    "./docs/",
-    platform,
+    "testeranto",
+    "reports",
+    projectName,
     entryPoint.split(".").slice(0, -1).join("."),
-    `bdd_errors.txt`
-  );
-};
-
-export const promptPather = (entryPoint: string, platform: "web" | "node") => {
-  return path.join(
-    "./docs/",
     platform,
-    entryPoint.split(".").slice(0, -1).join("."),
     `prompt.txt`
   );
 };

@@ -72,23 +72,6 @@ async function fileHash(filePath, algorithm = "md5") {
         });
     });
 }
-const getRunnables = (tests, payload = {
-    nodeEntryPoints: {},
-    webEntryPoints: {},
-}) => {
-    return tests.reduce((pt, cv, cndx, cry) => {
-        if (cv[1] === "node") {
-            pt.nodeEntryPoints[cv[0]] = path_1.default.resolve(`./docs/node/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`);
-        }
-        else if (cv[1] === "web") {
-            pt.webEntryPoints[cv[0]] = path_1.default.resolve(`./docs/web/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`);
-        }
-        if (cv[3].length) {
-            getRunnables(cv[3], payload);
-        }
-        return pt;
-    }, payload);
-};
 const statusMessagePretty = (failures, test) => {
     if (failures === 0) {
         console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`> ${test} completed successfully`)));
@@ -124,7 +107,7 @@ function isValidUrl(string) {
     }
 }
 class PM_Main extends index_js_1.PM {
-    constructor(configs) {
+    constructor(configs, name) {
         super();
         this.shutdownMode = false;
         this.bigBoard = {};
@@ -135,6 +118,31 @@ class PM_Main extends index_js_1.PM {
             this.webMetafileWatcher.close();
             this.checkForShutdown();
         };
+        this.getRunnables = (tests, payload = {
+            nodeEntryPoints: {},
+            webEntryPoints: {},
+        }) => {
+            return tests.reduce((pt, cv, cndx, cry) => {
+                if (cv[1] === "node") {
+                    pt.nodeEntryPoints[cv[0]] = path_1.default.resolve(`./testeranto/bundles/node/${this.name}/${cv[0]
+                        .split(".")
+                        .slice(0, -1)
+                        .concat("mjs")
+                        .join(".")}`);
+                }
+                else if (cv[1] === "web") {
+                    pt.webEntryPoints[cv[0]] = path_1.default.resolve(`./testeranto/bundles/web/${this.name}/${cv[0]
+                        .split(".")
+                        .slice(0, -1)
+                        .concat("mjs")
+                        .join(".")}`);
+                }
+                if (cv[3].length) {
+                    this.getRunnables(cv[3], payload);
+                }
+                return pt;
+            }, payload);
+        };
         this.tscCheck = async ({ entrypoint, addableFiles, platform, }) => {
             console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`tsc < ${entrypoint}`)));
             this.bigBoard[entrypoint].typeErrors = "?";
@@ -143,7 +151,7 @@ class PM_Main extends index_js_1.PM {
                 configFilePath: "tsconfig.json", // config to inherit from (optional)
                 compilerOptions: {
                     rootDir: "src",
-                    outDir: (0, utils_1.tscPather)(entrypoint, platform),
+                    outDir: (0, utils_1.tscPather)(entrypoint, platform, this.name),
                     // declaration: true,
                     // skipLibCheck: true,
                     noEmit: true,
@@ -151,7 +159,7 @@ class PM_Main extends index_js_1.PM {
                 include: addableFiles, //["src/**/*"],
                 // exclude: ["**/*.test.ts", "**/*.spec.ts"],
             });
-            const tscPath = (0, utils_1.tscPather)(entrypoint, platform);
+            const tscPath = (0, utils_1.tscPather)(entrypoint, platform, this.name);
             let allDiagnostics = program.getSemanticDiagnostics();
             const d = [];
             allDiagnostics.forEach((diagnostic) => {
@@ -186,7 +194,7 @@ class PM_Main extends index_js_1.PM {
                 delete r.source;
                 return r;
             });
-            fs_1.default.writeFileSync((0, utils_1.lintPather)(entrypoint, platform), await formatter.format(results));
+            fs_1.default.writeFileSync((0, utils_1.lintPather)(entrypoint, platform, this.name), await formatter.format(results));
             this.bigBoard[entrypoint].staticErrors = results.length;
             if (this.shutdownMode) {
                 this.checkForShutdown();
@@ -198,9 +206,9 @@ class PM_Main extends index_js_1.PM {
         };
         this.makePrompt = async (entryPoint, addableFiles, platform) => {
             this.bigBoard[entryPoint].prompt = "?";
-            const promptPath = path_1.default.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `prompt.txt`);
-            const testPaths = path_1.default.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `tests.json`);
-            const featuresPath = path_1.default.join("./docs/", platform, entryPoint.split(".").slice(0, -1).join("."), `featurePrompt.txt`);
+            const promptPath = (0, utils_1.promptPather)(entryPoint, platform, this.name);
+            const testPaths = path_1.default.join("testeranto", "reports", this.name, platform, entryPoint.split(".").slice(0, -1).join("."), `tests.json`);
+            const featuresPath = path_1.default.join("testeranto", "reports", this.name, platform, entryPoint.split(".").slice(0, -1).join("."), `featurePrompt.txt`);
             fs_1.default.writeFileSync(promptPath, `
 ${addableFiles
                 .map((x) => {
@@ -208,15 +216,15 @@ ${addableFiles
             })
                 .join("\n")}
 
-/read ${(0, utils_1.lintPather)(entryPoint, platform)}
-/read ${(0, utils_1.tscPather)(entryPoint, platform)}
+/read ${(0, utils_1.lintPather)(entryPoint, platform, this.name)}
+/read ${(0, utils_1.tscPather)(entryPoint, platform, this.name)}
 /read ${testPaths}
 
 /load ${featuresPath}
 
-/code Fix the failing tests described in ${testPaths}. Correct any type signature errors described in the files ${(0, utils_1.tscPather)(entryPoint, platform)}. Implement any method which throws "Function not implemented. Resolve the lint errors described in ${(0, utils_1.lintPather)(entryPoint, platform)}"
+/code Fix the failing tests described in ${testPaths}. Correct any type signature errors described in the files ${(0, utils_1.tscPather)(entryPoint, platform, this.name)}. Implement any method which throws "Function not implemented. Resolve the lint errors described in ${(0, utils_1.lintPather)(entryPoint, platform, this.name)}"
           `);
-            this.bigBoard[entryPoint].prompt = `aider --model deepseek/deepseek-chat --load docs/${platform}/${entryPoint
+            this.bigBoard[entryPoint].prompt = `aider --model deepseek/deepseek-chat --load testeranto/${this.name}/reports/${platform}/${entryPoint
                 .split(".")
                 .slice(0, -1)
                 .join(".")}/prompt.txt`;
@@ -238,17 +246,17 @@ ${addableFiles
             }
             else {
                 this.browser.disconnect().then(() => {
-                    fs_1.default.writeFileSync("docs/summary.json", JSON.stringify(this.bigBoard, null, 2));
+                    fs_1.default.writeFileSync(`testeranto/reports/${this.name}/summary.json`, JSON.stringify(this.bigBoard, null, 2));
                     console.log(ansi_colors_1.default.inverse("Goodbye"));
                     process.exit();
                 });
             }
         };
         this.testIsNowRunning = (src) => {
-            this.bigBoard[src].status = "running";
+            // this.bigBoard[src].status = "running";
         };
         this.testIsNowDone = (src) => {
-            this.bigBoard[src].status = "waiting";
+            // this.bigBoard[src].status = "waiting";
             if (this.shutdownMode) {
                 this.checkForShutdown();
             }
@@ -256,8 +264,15 @@ ${addableFiles
         this.launchNode = async (src, dest) => {
             // console.log(ansiC.yellow(`! node, ${src}`));
             console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`! node, ${src}`)));
+            const reportDest = `testeranto/reports/${this.name}/${src
+                .split(".")
+                .slice(0, -1)
+                .join(".")}/node`;
+            if (!fs_1.default.existsSync(reportDest)) {
+                fs_1.default.mkdirSync(reportDest, { recursive: true });
+            }
             this.testIsNowRunning(src);
-            const destFolder = dest.replace(".mjs", "");
+            const destFolder = dest.replace(".mjs", ""); //`./testeranto/reports/${dest.replace(".mjs", "")}`; //dest.replace(".mjs", "");
             let argz = "";
             const testConfig = this.configs.tests.find((t) => {
                 return t[0] === src;
@@ -273,7 +288,7 @@ ${addableFiles
                     scheduled: true,
                     name: src,
                     ports: portsToUse,
-                    fs: destFolder,
+                    fs: reportDest,
                     browserWSEndpoint: this.browser.wsEndpoint(),
                 });
             }
@@ -329,7 +344,7 @@ ${addableFiles
                     defaultModule
                         .receiveTestResourceConfig(argz)
                         .then(async ({ features, failed }) => {
-                        this.receiveFeatures(features, destFolder, src);
+                        this.receiveFeatures(features, destFolder, src, "node");
                         // console.log(`${src} completed with ${failed} errors`);
                         statusMessagePretty(failed, src);
                         this.receiveExitCode(src, failed);
@@ -517,10 +532,17 @@ ${addableFiles
                 }
             }
         };
-        this.launchWeb = (t, dest) => {
+        this.launchWeb = (src, dest) => {
             // console.log(green, "! web", t);
-            console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`! web ${t}`)));
-            this.testIsNowRunning(t);
+            console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`! web ${src}`)));
+            const reportDest = `testeranto/reports/${this.name}/${src
+                .split(".")
+                .slice(0, -1)
+                .join(".")}/web`;
+            if (!fs_1.default.existsSync(reportDest)) {
+                fs_1.default.mkdirSync(reportDest, { recursive: true });
+            }
+            this.testIsNowRunning(src);
             // sidecars.map((sidecar) => {
             //   if (sidecar[1] === "node") {
             //     return this.launchNodeSideCar(
@@ -711,32 +733,32 @@ ${addableFiles
             })
                 .then(async (page) => {
                 const close = () => {
-                    if (!files[t]) {
-                        files[t] = new Set();
+                    if (!files[src]) {
+                        files[src] = new Set();
                     }
                     // files[t].add(filepath);
-                    fs_1.default.writeFileSync(destFolder + "/manifest.json", JSON.stringify(Array.from(files[t])));
-                    delete files[t];
-                    Promise.all(screenshots[t] || []).then(() => {
-                        delete screenshots[t];
+                    fs_1.default.writeFileSync(destFolder + "/manifest.json", JSON.stringify(Array.from(files[src])));
+                    delete files[src];
+                    Promise.all(screenshots[src] || []).then(() => {
+                        delete screenshots[src];
                         page.close();
-                        this.testIsNowDone(t);
+                        this.testIsNowDone(src);
                         stderrStream.close();
                         stdoutStream.close();
                     });
                 };
                 page.on("pageerror", (err) => {
-                    console.debug(`Error from ${t}: [${err.name}] `);
+                    console.debug(`Error from ${src}: [${err.name}] `);
                     stderrStream.write(err.name);
                     if (err.cause) {
-                        console.debug(`Error from ${t} cause: [${err.cause}] `);
+                        console.debug(`Error from ${src} cause: [${err.cause}] `);
                         stderrStream.write(err.cause);
                     }
                     if (err.stack) {
-                        console.debug(`Error from stack ${t}: [${err.stack}] `);
+                        console.debug(`Error from stack ${src}: [${err.stack}] `);
                         stderrStream.write(err.stack);
                     }
-                    console.debug(`Error from message ${t}: [${err.message}] `);
+                    console.debug(`Error from message ${src}: [${err.message}] `);
                     stderrStream.write(err.message);
                     close();
                 });
@@ -754,14 +776,14 @@ ${addableFiles
                 await page
                     .evaluate(evaluation)
                     .then(async ({ failed, features }) => {
-                    this.receiveFeatures(features, destFolder, t);
+                    this.receiveFeatures(features, destFolder, src, "web");
                     // console.log(`${t} completed with ${failed} errors`);
-                    statusMessagePretty(failed, t);
-                    this.receiveExitCode(t, failed);
+                    statusMessagePretty(failed, src);
+                    this.receiveExitCode(src, failed);
                 })
                     .catch((e) => {
                     // console.log(red, `${t} errored with`, e);
-                    console.log(ansi_colors_1.default.red(ansi_colors_1.default.inverse(`${t} errored with: ${e}`)));
+                    console.log(ansi_colors_1.default.red(ansi_colors_1.default.inverse(`${src} errored with: ${e}`)));
                 })
                     .finally(() => {
                     // this.testIsNowDone(t);
@@ -770,8 +792,8 @@ ${addableFiles
                 return page;
             });
         };
-        this.receiveFeatures = (features, destFolder, srcTest) => {
-            const featureDestination = path_1.default.resolve(process.cwd(), "docs", "features", "strings", srcTest.split(".").slice(0, -1).join(".") + ".features.txt");
+        this.receiveFeatures = (features, destFolder, srcTest, platform) => {
+            const featureDestination = path_1.default.resolve(process.cwd(), "reports", "features", "strings", srcTest.split(".").slice(0, -1).join(".") + ".features.txt");
             features
                 .reduce(async (mm, featureStringKey) => {
                 const accum = await mm;
@@ -779,7 +801,7 @@ ${addableFiles
                 if (isUrl) {
                     const u = new URL(featureStringKey);
                     if (u.protocol === "file:") {
-                        const newPath = `${process.cwd()}/docs/features/internal/${path_1.default.relative(process.cwd(), u.pathname)}`;
+                        const newPath = `${process.cwd()}/testeranto/features/internal/${path_1.default.relative(process.cwd(), u.pathname)}`;
                         await fs_1.default.promises.mkdir(path_1.default.dirname(newPath), { recursive: true });
                         try {
                             await fs_1.default.unlinkSync(newPath);
@@ -800,7 +822,7 @@ ${addableFiles
                         accum.files.push(newPath);
                     }
                     else if (u.protocol === "http:" || u.protocol === "https:") {
-                        const newPath = `${process.cwd()}/docs/features/external${u.hostname}${u.pathname}`;
+                        const newPath = `${process.cwd()}/testeranto/features/external${u.hostname}${u.pathname}`;
                         const body = await this.configs.featureIngestor(featureStringKey);
                         writeFileAndCreateDir(newPath, body);
                         accum.files.push(newPath);
@@ -816,7 +838,12 @@ ${addableFiles
             }, Promise.resolve({ files: [], strings: [] }))
                 .then(({ files, strings }) => {
                 // writeFileAndCreateDir(`${featureDestination}`, JSON.stringify(strings));
-                fs_1.default.writeFileSync(`${destFolder}/featurePrompt.txt`, files
+                fs_1.default.writeFileSync(
+                // `${destFolder}/featurePrompt.txt`,
+                `testeranto/reports/${this.name}/${srcTest
+                    .split(".")
+                    .slice(0, -1)
+                    .join(".")}/${platform}/featurePrompt.txt`, files
                     .map((f) => {
                     return `/read ${f}`;
                 })
@@ -829,8 +856,9 @@ ${addableFiles
             this.writeBigBoard();
         };
         this.writeBigBoard = () => {
-            fs_1.default.writeFileSync("./docs/summary.json", JSON.stringify(this.bigBoard, null, 2));
+            fs_1.default.writeFileSync(`./testeranto/reports/${this.name}/summary.json`, JSON.stringify(this.bigBoard, null, 2));
         };
+        this.name = name;
         this.mode = configs.devMode ? "DEV" : "PROD";
         this.server = {};
         this.configs = configs;
@@ -944,6 +972,93 @@ ${addableFiles
             return opts.path;
         };
     }
+    async start() {
+        if (!fs_1.default.existsSync(`testeranto/reports/${this.name}`)) {
+            fs_1.default.mkdirSync(`testeranto/reports/${this.name}`);
+        }
+        this.browser = (await puppeteer_core_1.default.launch({
+            slowMo: 1,
+            // timeout: 1,
+            waitForInitialPage: false,
+            executablePath: 
+            // process.env.CHROMIUM_PATH || "/opt/homebrew/bin/chromium",
+            "/opt/homebrew/bin/chromium",
+            headless: true,
+            dumpio: true,
+            // timeout: 0,
+            devtools: true,
+            args: [
+                "--auto-open-devtools-for-tabs",
+                `--remote-debugging-port=3234`,
+                // "--disable-features=IsolateOrigins,site-per-process",
+                "--disable-site-isolation-trials",
+                "--allow-insecure-localhost",
+                "--allow-file-access-from-files",
+                "--allow-running-insecure-content",
+                "--disable-dev-shm-usage",
+                "--disable-extensions",
+                "--disable-gpu",
+                "--disable-setuid-sandbox",
+                "--disable-site-isolation-trials",
+                "--disable-web-security",
+                "--no-first-run",
+                "--no-sandbox",
+                "--no-startup-window",
+                // "--no-zygote",
+                "--reduce-security-for-testing",
+                "--remote-allow-origins=*",
+                "--unsafely-treat-insecure-origin-as-secure=*",
+                // "--disable-features=IsolateOrigins",
+                // "--remote-allow-origins=ws://localhost:3234",
+                // "--single-process",
+                // "--unsafely-treat-insecure-origin-as-secure",
+                // "--unsafely-treat-insecure-origin-as-secure=ws://192.168.0.101:3234",
+                // "--disk-cache-dir=/dev/null",
+                // "--disk-cache-size=1",
+                // "--start-maximized",
+            ],
+        }));
+        const { nodeEntryPoints, webEntryPoints } = this.getRunnables(this.configs.tests);
+        Object.entries(nodeEntryPoints).forEach(([k, outputFile]) => {
+            this.launchNode(k, outputFile);
+            try {
+                (0, fs_1.watch)(outputFile, async (e, filename) => {
+                    const hash = await fileHash(outputFile);
+                    if (fileHashes[k] !== hash) {
+                        fileHashes[k] = hash;
+                        console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`< ${e} ${filename}`)));
+                        this.launchNode(k, outputFile);
+                    }
+                });
+            }
+            catch (e) {
+                console.error(e);
+            }
+        });
+        Object.entries(webEntryPoints).forEach(([k, outputFile]) => {
+            this.launchWeb(k, outputFile);
+            (0, fs_1.watch)(outputFile, async (e, filename) => {
+                const hash = await fileHash(outputFile);
+                if (fileHashes[k] !== hash) {
+                    fileHashes[k] = hash;
+                    console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`< ${e} ${filename}`)));
+                    this.launchWeb(k, outputFile);
+                }
+            });
+        });
+        this.metafileOutputs("node");
+        const w = `./testeranto/bundles/node/${this.name}/metafile.json`;
+        console.log("w", w);
+        this.nodeMetafileWatcher = (0, fs_1.watch)(w, async (e, filename) => {
+            console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`< ${e} ${filename} (node)`)));
+            this.metafileOutputs("node");
+        });
+        this.metafileOutputs("web");
+        this.webMetafileWatcher = (0, fs_1.watch)(`./testeranto/bundles/web/${this.name}/metafile.json`, async (e, filename) => {
+            console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`< ${e} ${filename} (web)`)));
+            this.metafileOutputs("web");
+        });
+    }
     customclose() {
         throw new Error("Method not implemented.");
     }
@@ -1055,7 +1170,9 @@ ${addableFiles
     }
     ////////////////////////////////////////////////////////////////////////////////
     async metafileOutputs(platform) {
-        const metafile = JSON.parse(fs_1.default.readFileSync(`docs/${platform}/metafile.json`).toString()).metafile;
+        const metafile = JSON.parse(fs_1.default
+            .readFileSync(`./testeranto/bundles/${platform}/${this.name}/metafile.json`)
+            .toString()).metafile;
         if (!metafile)
             return;
         const outputs = metafile.outputs;
@@ -1088,88 +1205,6 @@ ${addableFiles
                     this.makePrompt("./" + entrypoint, addableFiles, platform);
                 }
             }
-        });
-    }
-    async start() {
-        this.browser = (await puppeteer_core_1.default.launch({
-            slowMo: 1,
-            // timeout: 1,
-            waitForInitialPage: false,
-            executablePath: 
-            // process.env.CHROMIUM_PATH || "/opt/homebrew/bin/chromium",
-            "/opt/homebrew/bin/chromium",
-            headless: true,
-            dumpio: true,
-            // timeout: 0,
-            devtools: true,
-            args: [
-                "--auto-open-devtools-for-tabs",
-                `--remote-debugging-port=3234`,
-                // "--disable-features=IsolateOrigins,site-per-process",
-                "--disable-site-isolation-trials",
-                "--allow-insecure-localhost",
-                "--allow-file-access-from-files",
-                "--allow-running-insecure-content",
-                "--disable-dev-shm-usage",
-                "--disable-extensions",
-                "--disable-gpu",
-                "--disable-setuid-sandbox",
-                "--disable-site-isolation-trials",
-                "--disable-web-security",
-                "--no-first-run",
-                "--no-sandbox",
-                "--no-startup-window",
-                // "--no-zygote",
-                "--reduce-security-for-testing",
-                "--remote-allow-origins=*",
-                "--unsafely-treat-insecure-origin-as-secure=*",
-                // "--disable-features=IsolateOrigins",
-                // "--remote-allow-origins=ws://localhost:3234",
-                // "--single-process",
-                // "--unsafely-treat-insecure-origin-as-secure",
-                // "--unsafely-treat-insecure-origin-as-secure=ws://192.168.0.101:3234",
-                // "--disk-cache-dir=/dev/null",
-                // "--disk-cache-size=1",
-                // "--start-maximized",
-            ],
-        }));
-        const { nodeEntryPoints, webEntryPoints } = getRunnables(this.configs.tests);
-        Object.entries(nodeEntryPoints).forEach(([k, outputFile]) => {
-            this.launchNode(k, outputFile);
-            try {
-                (0, fs_1.watch)(outputFile, async (e, filename) => {
-                    const hash = await fileHash(outputFile);
-                    if (fileHashes[k] !== hash) {
-                        fileHashes[k] = hash;
-                        console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`< ${e} ${filename}`)));
-                        this.launchNode(k, outputFile);
-                    }
-                });
-            }
-            catch (e) {
-                console.error(e);
-            }
-        });
-        Object.entries(webEntryPoints).forEach(([k, outputFile]) => {
-            this.launchWeb(k, outputFile);
-            (0, fs_1.watch)(outputFile, async (e, filename) => {
-                const hash = await fileHash(outputFile);
-                if (fileHashes[k] !== hash) {
-                    fileHashes[k] = hash;
-                    console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`< ${e} ${filename}`)));
-                    this.launchWeb(k, outputFile);
-                }
-            });
-        });
-        this.metafileOutputs("node");
-        this.nodeMetafileWatcher = (0, fs_1.watch)("docs/node/metafile.json", async (e, filename) => {
-            console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`< ${e} ${filename} (node)`)));
-            this.metafileOutputs("node");
-        });
-        this.metafileOutputs("web");
-        this.webMetafileWatcher = (0, fs_1.watch)("docs/web/metafile.json", async (e, filename) => {
-            console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`< ${e} ${filename} (web)`)));
-            this.metafileOutputs("web");
         });
     }
 }

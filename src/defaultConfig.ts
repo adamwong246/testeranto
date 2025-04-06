@@ -2,13 +2,13 @@ import { IBaseConfig } from "./lib";
 
 const config: IBaseConfig = {
   src: "src",
-  outdir: "docs",
+  // outdir: "docs",
   tests: [],
   debugger: true,
   clearScreen: false,
   devMode: true,
   minify: false,
-  outbase: ".",
+  // outbase: ".",
   ports: ["3001"],
   externals: [],
   nodePlugins: [],

@@ -12,11 +12,16 @@ const register = (entrypoint: string, sources: string[]): void => {
 
 export default (
   platform: "web" | "node",
-  entryPoints: Set<string> | string[]
+  testName: string
 ): {
   register: (entrypoint: string, sources: string[]) => void;
   inputFilesPluginFactory: Plugin;
 } => {
+  const d = `testeranto/bundles/${platform}/${testName}/`;
+  const f = `testeranto/bundles/${platform}/${testName}/metafile.json`;
+  if (!fs.existsSync(d)) {
+    fs.mkdirSync(d);
+  }
   return {
     register,
 
@@ -24,11 +29,7 @@ export default (
       name: "metafileWriter",
       setup(build) {
         build.onEnd((result) => {
-          // console.log("build.onEnd", entryPoints);
-          fs.writeFileSync(
-            `docs/${platform}/metafile.json`,
-            JSON.stringify(result, null, 2)
-          );
+          fs.writeFileSync(f, JSON.stringify(result, null, 2));
         });
       },
     },

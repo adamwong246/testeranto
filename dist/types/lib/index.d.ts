@@ -69,8 +69,6 @@ export type IBaseConfig = {
     devMode: boolean;
     externals: string[];
     minify: boolean;
-    outbase: string;
-    outdir: string;
     ports: string[];
     tests: ITestTypes[];
     nodePlugins: IPluginFactory[];
