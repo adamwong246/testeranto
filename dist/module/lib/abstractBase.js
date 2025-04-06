@@ -21,9 +21,11 @@ export class BaseSuite {
     }
     toObj() {
         const givens = Object.keys(this.givens).map((k) => this.givens[k].toObj());
+        const checks = Object.keys(this.checks).map((k) => this.checks[k].toObj());
         return {
             name: this.name,
             givens,
+            checks,
             fails: this.fails,
             features: this.features(),
         };
@@ -45,23 +47,22 @@ export class BaseSuite {
         tLog("\nSuite:", this.index, this.name);
         const sNdx = this.index;
         const sName = this.name;
+        const beforeAllProxy = new Proxy(pm, {
+            get(target, prop, receiver) {
+                if (prop === "customScreenShot") {
+                    return (opts, p) => target.customScreenShot(Object.assign(Object.assign({}, opts), { 
+                        // path: `${filepath}/${opts.path}`,
+                        path: `suite-${sNdx}/beforeAll/${opts.path}` }), p);
+                }
+                if (prop === "writeFileSync") {
+                    return (fp, contents) => target[prop](`suite-${sNdx}/beforeAll/${fp}`, contents);
+                }
+                /* @ts-ignore:next-line */
+                return Reflect.get(...arguments);
+            },
+        });
+        const subject = await this.setup(input, suiteArtifactory, testResourceConfiguration, beforeAllProxy);
         for (const [gKey, g] of Object.entries(this.givens)) {
-            // console.log("gKey", gKey);
-            const beforeAllProxy = new Proxy(pm, {
-                get(target, prop, receiver) {
-                    if (prop === "customScreenShot") {
-                        return (opts, p) => target.customScreenShot(Object.assign(Object.assign({}, opts), { 
-                            // path: `${filepath}/${opts.path}`,
-                            path: `suite-${sNdx}/beforeAll/${opts.path}` }), p);
-                    }
-                    if (prop === "writeFileSync") {
-                        return (fp, contents) => target[prop](`suite-${sNdx}/beforeAll/${fp}`, contents);
-                    }
-                    /* @ts-ignore:next-line */
-                    return Reflect.get(...arguments);
-                },
-            });
-            const subject = await this.setup(input, suiteArtifactory, testResourceConfiguration, beforeAllProxy);
             const giver = this.givens[gKey];
             try {
                 this.store = await giver.give(subject, gKey, testResourceConfiguration, this.assertThat, suiteArtifactory, tLog, pm, sNdx);
@@ -71,6 +72,9 @@ export class BaseSuite {
                 this.fails.push(giver);
                 // return this;
             }
+        }
+        for (const [ndx, thater] of this.checks.entries()) {
+            await thater.check(subject, thater.name, testResourceConfiguration, this.assertThat, suiteArtifactory, tLog, pm);
         }
         try {
             this.afterAll(this.store, artifactory, 
@@ -82,17 +86,6 @@ export class BaseSuite {
             // this.fails.push(this);
             // return this;
         }
-        // for (const [ndx, thater] of this.checks.entries()) {
-        //   await thater.check(
-        //     subject,
-        //     thater.name,
-        //     testResourceConfiguration,
-        //     this.assertThat,
-        //     suiteArtifactory,
-        //     tLog,
-        //     pm
-        //   );
-        // }
         // @TODO fix me
         // for (const k of Object.keys(this.givens)) {
         //   const giver = this.givens[k];
@@ -109,9 +102,7 @@ export class BaseSuite {
     }
 }
 export class BaseGiven {
-    constructor(name, features, whens, thens, givenCB, initialValues
-    // key: string
-    ) {
+    constructor(name, features, whens, thens, givenCB, initialValues) {
         this.name = name;
         this.features = features;
         this.whens = whens;
@@ -220,7 +211,6 @@ export class BaseWhen {
     }
     async test(store, testResourceConfiguration, tLog, pm, filepath) {
         tLog(" When:", this.name);
-        const name = this.name;
         const andWhenProxy = new Proxy(pm, {
             get(target, prop, receiver) {
                 if (prop === "customScreenShot") {
@@ -263,7 +253,10 @@ export class BaseThen {
         };
     }
     async test(store, testResourceConfiguration, tLog, pm, filepath) {
-        tLog(" Then:", this.name);
+        this.go = (s) => {
+            tLog(" Then!!!:", this.name);
+            this.thenCB(s, tLog);
+        };
         try {
             const butThenProxy = new Proxy(pm, {
                 get(target, prop, receiver) {
@@ -277,7 +270,14 @@ export class BaseThen {
                     return Reflect.get(...arguments);
                 },
             });
-            return this.butThen(store, this.thenCB, testResourceConfiguration, butThenProxy).catch((e) => {
+            return this.butThen(store, 
+            // t,
+            this.go, 
+            // (s: I["iselection"], "x") => {
+            //   // tLog(" Then!!!:", this.name);
+            //   this.thenCB(s, tLog);
+            // },
+            testResourceConfiguration, butThenProxy).catch((e) => {
                 this.error = true;
                 throw e;
             });
@@ -288,34 +288,40 @@ export class BaseThen {
             throw e;
         }
     }
+    check() { }
 }
 export class BaseCheck {
-    constructor(name, features, checkCB, whens, thens) {
+    constructor(name, features, checker, x, checkCB) {
         this.name = name;
         this.features = features;
         this.checkCB = checkCB;
-        this.whens = whens;
-        this.thens = thens;
+        this.checker = checker;
     }
-    async afterEach(store, key, cb, pm) {
-        return;
+    toObj() {
+        return {
+            key: this.key,
+            name: this.name,
+            functionAsString: this.checkCB.toString(),
+            // thens: this.thens.map((t) => t.toObj()),
+            // error: this.error ? [this.error, this.error.stack] : null,
+            // fail: this.fail ? [this.fail] : false,
+            features: this.features,
+        };
+    }
+    async afterEach(store, key, artifactory, pm) {
+        return store;
+    }
+    beforeAll(store, 
+    // artifactory: ITestArtifactory
+    // subject,
+    initializer, artifactory, testResource, initialValues, pm) {
+        return store;
     }
     async check(subject, key, testResourceConfiguration, tester, artifactory, tLog, pm) {
+        this.key = key;
         tLog(`\n Check: ${this.name}`);
-        const store = await this.checkThat(subject, testResourceConfiguration, artifactory, pm);
-        await this.checkCB(Object.entries(this.whens).reduce((a, [key, when]) => {
-            a[key] = async (payload) => {
-                return await when(payload, testResourceConfiguration).test(store, testResourceConfiguration, tLog, pm, "x");
-            };
-            return a;
-        }, {}), Object.entries(this.thens).reduce((a, [key, then]) => {
-            a[key] = async (payload) => {
-                const t = await then(payload, testResourceConfiguration).test(store, testResourceConfiguration, tLog, pm);
-                tester(t);
-            };
-            return a;
-        }, {}));
-        await this.afterEach(store, key, () => { }, pm);
+        this.store = await this.checkThat(subject, testResourceConfiguration, artifactory, this.checkCB, this.initialValues, pm);
+        await this.checker(this.store, pm);
         return;
     }
 }

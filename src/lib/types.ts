@@ -1,3 +1,4 @@
+import { PM } from "../PM";
 import { Ibdd_in, Ibdd_out } from "../Types";
 
 import {
@@ -30,14 +31,8 @@ export type ITestCheckCallback<
   [K in keyof O["checks"]]: (
     name: string,
     features: string[],
-    callbackA: (
-      whens: {
-        [K in keyof O["whens"]]: (...unknown) => BaseWhen<I>;
-      },
-      thens: {
-        [K in keyof O["thens"]]: (...unknown) => BaseThen<I>;
-      }
-    ) => Promise<any>,
+    checkCallback: (store: I["istore"], pm: PM) => Promise<any>,
+
     ...xtrasA: O["checks"][K]
   ) => BaseCheck<I, O>;
 };

@@ -111,7 +111,6 @@ export default abstract class Testeranto<
           return fullTestInterface.beforeEach(
             subject,
             initializer,
-            // artifactory,
             testResource,
             initialValues,
             pm
@@ -125,17 +124,10 @@ export default abstract class Testeranto<
           pm
         ): Promise<unknown> {
           return new Promise((res) =>
-            res(
-              fullTestInterface.afterEach(
-                store,
-                key,
-                // (fPath: string, value: unknown) =>
-                //   artifactory(`after/${fPath}`, value),
-                pm
-              )
-            )
+            res(fullTestInterface.afterEach(store, key, pm))
           );
         }
+        s;
       } as any,
 
       class When extends BaseWhen<I> {
@@ -213,23 +205,28 @@ export default abstract class Testeranto<
         constructor(
           name: string,
           features: string[],
-          checkCallback: (a, b) => any,
+          checkCallback: (s: I["istore"], pm: PM) => any,
           whens,
           thens,
           initialValues: any
         ) {
-          super(name, features, checkCallback, whens, thens);
+          super(name, features, whens, thens, checkCallback, initialValues);
           this.initialValues = initialValues;
         }
 
-        async checkThat(subject, testResourceConfiguration, artifactory, pm) {
+        async checkThat(
+          subject,
+          testResourceConfiguration,
+          artifactory,
+          initializer,
+          initialValues,
+          pm
+        ) {
           return fullTestInterface.beforeEach(
             subject,
-            this.initialValues,
-            // (fPath: string, value: unknown) =>
-            //   artifactory(`before/${fPath}`, value),
+            initializer,
             testResourceConfiguration,
-            this.initialValues,
+            initialValues,
             pm
           );
         }
@@ -241,16 +238,7 @@ export default abstract class Testeranto<
           pm
         ): Promise<unknown> {
           return new Promise((res) =>
-            res(
-              fullTestInterface.afterEach(
-                store,
-                key,
-                // (fPath: string, value: unknown) =>
-                //   // TODO does not work?
-                //   artifactory(`afterEach2-${this.name}/${fPath}`, value),
-                pm
-              )
-            )
+            res(fullTestInterface.afterEach(store, key, pm))
           );
         }
       } as any,

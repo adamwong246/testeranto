@@ -9,7 +9,7 @@ const StepPane = ({ step }) => {
         React.createElement("pre", null,
             React.createElement("code", null, JSON.stringify(step, null, 2))));
 };
-const TestPane = ({ given }) => {
+const TestPane = ({ given, log }) => {
     return React.createElement("div", null,
         "    ",
         React.createElement(Tab.Container, { id: "TestPane-tabs", defaultActiveKey: "first" },
@@ -29,7 +29,7 @@ const TestPane = ({ given }) => {
                                 " ",
                                 t.error && "!")),
                             React.createElement(Nav.Link, { eventKey: `bdd-errors` }, "errors")))),
-                React.createElement(Col, { sm: 9 },
+                React.createElement(Col, { sm: 6 },
                     React.createElement(Tab.Content, null,
                         React.createElement(Tab.Pane, { eventKey: `bdd-features` },
                             React.createElement("pre", null,
@@ -60,7 +60,13 @@ const BddPage = () => {
             setBddErrors(await (await fetch(`tests.json`)).json());
         })();
     }, [configs]);
-    if (!configs || !bddErrors) {
+    const [log, setLog] = useState();
+    useEffect(() => {
+        (async () => {
+            setLog(await (await fetch(`log.txt`)).text());
+        })();
+    }, [configs]);
+    if (!configs || !bddErrors || !log) {
         return React.createElement("div", null, "loading...");
     }
     return React.createElement("div", null,
@@ -72,12 +78,15 @@ const BddPage = () => {
             React.createElement(Tab.Container, { id: "root-tab-container", defaultActiveKey: "first" },
                 React.createElement(Row, null,
                     React.createElement(Col, { sm: 3 },
+                        React.createElement("pre", null,
+                            React.createElement("code", null, log))),
+                    React.createElement(Col, { sm: 3 },
                         React.createElement(Nav, { variant: "pills", className: "flex-column" }, ...bddErrors.givens.map((g) => React.createElement(Nav.Item, null,
                             React.createElement(Nav.Link, { eventKey: g.key },
                                 g.key,
                                 ": Given ",
                                 g.name))))),
-                    React.createElement(Col, { sm: 9 },
+                    React.createElement(Col, { sm: 6 },
                         React.createElement(Tab.Content, null, ...bddErrors.givens.map((g) => React.createElement(Tab.Pane, { eventKey: g.key },
                             React.createElement(TestPane, { given: g })))))))),
         React.createElement(Footer, null));

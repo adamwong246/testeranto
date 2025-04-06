@@ -22,7 +22,7 @@ const StepPane = ({ step }: {
   </div>
 }
 
-const TestPane = ({ given }: {
+const TestPane = ({ given, log }: {
   given: {
     key: string,
     name: string,
@@ -41,6 +41,7 @@ const TestPane = ({ given }: {
 
   return <div>    <Tab.Container id="TestPane-tabs" defaultActiveKey="first">
     <Row>
+
       <Col sm={3}>
         <Nav variant="pills" className="flex-column">
 
@@ -61,7 +62,7 @@ const TestPane = ({ given }: {
 
 
       </Col>
-      <Col sm={9}>
+      <Col sm={6}>
         <Tab.Content>
 
           <Tab.Pane eventKey={`bdd-features`}>
@@ -121,7 +122,14 @@ const BddPage = () => {
     })();
   }, [configs]);
 
-  if (!configs || !bddErrors) {
+  const [log, setLog] = useState<string>();
+  useEffect(() => {
+    (async () => {
+      setLog(await (await fetch(`log.txt`)).text());
+    })();
+  }, [configs]);
+
+  if (!configs || !bddErrors || !log) {
     return <div>loading...</div>
   }
 
@@ -132,6 +140,13 @@ const BddPage = () => {
     <Row>
       <Tab.Container id="root-tab-container" defaultActiveKey="first">
         <Row>
+
+          <Col sm={3}>
+            <pre><code>{log}</code></pre>
+
+
+          </Col>
+
           <Col sm={3}>
             <Nav variant="pills" className="flex-column">
 
@@ -147,7 +162,7 @@ const BddPage = () => {
 
             </Nav>
           </Col>
-          <Col sm={9}>
+          <Col sm={6}>
             <Tab.Content>
               {
                 ...bddErrors.givens.map((g) =>

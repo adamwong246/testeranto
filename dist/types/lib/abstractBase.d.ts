@@ -1,6 +1,6 @@
 import { PM } from "../PM/index.js";
-import { ITTestResourceConfiguration, ITestArtifactory, ITLog } from ".";
 import { Ibdd_in, Ibdd_out } from "../Types.js";
+import { ITTestResourceConfiguration, ITestArtifactory, ITLog } from ".";
 export type IGivens<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>> = Record<string, BaseGiven<I>>;
 export declare abstract class BaseSuite<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>, O extends Ibdd_out<Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>> {
     name: string;
@@ -28,6 +28,7 @@ export declare abstract class BaseSuite<I extends Ibdd_in<unknown, unknown, unkn
             error: (string | Error | undefined)[] | null;
             features: string[];
         }[];
+        checks: any[];
         fails: BaseGiven<I>[];
         features: string[];
     };
@@ -83,28 +84,35 @@ export declare abstract class BaseWhen<I extends Ibdd_in<unknown, unknown, unkno
 }
 export declare abstract class BaseThen<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>> {
     name: string;
-    thenCB: (storeState: I["iselection"]) => I["then"];
+    thenCB: (storeState: I["iselection"], tLog: any) => I["then"];
+    go: (storeState: I["iselection"]) => I["then"];
     error: boolean;
     constructor(name: string, thenCB: (val: I["iselection"]) => I["then"]);
     toObj(): {
         name: string;
         error: boolean;
     };
-    abstract butThen(store: I["istore"], thenCB: any, testResourceConfiguration: ITTestResourceConfiguration, pm: PM): Promise<I["iselection"]>;
+    abstract butThen(store: I["istore"], thenCB: (s: I["iselection"], tLog: any) => I["isubject"], testResourceConfiguration: ITTestResourceConfiguration, pm: PM): Promise<I["iselection"]>;
     test(store: I["istore"], testResourceConfiguration: any, tLog: ITLog, pm: PM, filepath: string): Promise<I["then"] | undefined>;
+    check(): void;
 }
 export declare abstract class BaseCheck<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>, O extends Ibdd_out<Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>> {
+    key: string;
     name: string;
     features: string[];
-    checkCB: (whens: any, thens: any) => any;
-    whens: {
-        [K in keyof O["whens"]]: (p: any, tc: any) => BaseWhen<I>;
+    checkCB: (store: I["istore"], pm: PM) => any;
+    initialValues: any;
+    store: I["istore"];
+    checker: any;
+    constructor(name: string, features: string[], checker: (store: I["istore"], pm: PM) => any, x: any, checkCB: any);
+    abstract checkThat(subject: I["isubject"], testResourceConfiguration: any, artifactory: ITestArtifactory, initializer: any, initialValues: any, pm: PM): Promise<I["istore"]>;
+    toObj(): {
+        key: string;
+        name: string;
+        functionAsString: string;
+        features: string[];
     };
-    thens: {
-        [K in keyof O["thens"]]: (p: any, tc: any) => BaseThen<I>;
-    };
-    constructor(name: string, features: string[], checkCB: (whens: any, thens: any) => any, whens: any, thens: any);
-    abstract checkThat(subject: I["isubject"], testResourceConfiguration: any, artifactory: ITestArtifactory, pm: PM): Promise<I["istore"]>;
-    afterEach(store: I["istore"], key: string, cb: any, pm: PM): Promise<unknown>;
+    afterEach(store: I["istore"], key: string, artifactory: ITestArtifactory, pm: PM): Promise<unknown>;
+    beforeAll(store: I["istore"], initializer: any, artifactory: any, testResource: any, initialValues: any, pm: any): I["istore"];
     check(subject: I["isubject"], key: string, testResourceConfiguration: any, tester: any, artifactory: ITestArtifactory, tLog: ITLog, pm: PM): Promise<void>;
 }

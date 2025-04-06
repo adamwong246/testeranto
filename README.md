@@ -30,3 +30,7 @@ example repo: [kokomo bay](https://github.com/ChromaPDX/kokomoBay)
 - puppeteer - provides access to both node and chrome runtimes
 - esbuild - used to quickly generate test bundles
 - aider - AI to automatically fix broken tests
+
+## Do's and Don't
+
+When writing your test, be careful when using platform specific features, like "fs" on node, or "window" in the browser. If you need to write to a file, or to log information, use the `utils`. Instead of platform specific libraries, like node's "assert", use a cross-platform alternative like "chai".

@@ -14,6 +14,7 @@ import {
   ICheckKlasser,
 } from "./types.js";
 import { ITTestResourceRequest } from "./index.js";
+import { BaseCheck } from "./abstractBase.js";
 
 export abstract class ClassBuilder<
   I extends Ibdd_in<
@@ -61,14 +62,15 @@ export abstract class ClassBuilder<
 
     const classyGivens = Object.entries(testImplementation.givens).reduce(
       (a, [key, g]) => {
-        a[key] = (features, whens, thens, givEn) => {
+        a[key] = (features, whens, thens) => {
+          // console.log("givEn", givEn.toString());
           return new givenKlasser.prototype.constructor(
             key,
             features,
             whens,
             thens,
-            testImplementation.givens[key],
-            givEn
+            testImplementation.givens[key]
+            // givEn
           );
         };
         return a;
@@ -103,19 +105,18 @@ export abstract class ClassBuilder<
     );
 
     const classyChecks = Object.entries(testImplementation.checks).reduce(
-      (a, [key, z]) => {
-        a[key] = (somestring, features, callback) => {
+      (a, [key, chEck]) => {
+        a[key] = (name, features, checker) => {
           return new checkKlasser.prototype.constructor(
-            somestring,
+            key,
             features,
-            callback,
-            classyWhens,
-            classyThens
+            chEck,
+            checker
           );
         };
         return a;
       },
-      {}
+      {} as Record<string, (n, f, c) => BaseCheck<I, O>>
     );
 
     super(

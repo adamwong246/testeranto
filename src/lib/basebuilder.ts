@@ -58,7 +58,7 @@ export abstract class BaseBuilder<
   puppetMaster: PM;
 
   constructor(
-    public readonly input: I["iinput"],
+    input: I["iinput"],
     suitesOverrides: Record<keyof SuiteExtensions, ISuiteKlasser<I, O>>,
     givenOverides: Record<keyof GivenExtensions, IGivenKlasser<I>>,
     whenOverides: Record<keyof WhenExtensions, IWhenKlasser<I>>,
@@ -218,7 +218,7 @@ export abstract class BaseBuilder<
     keyof CheckExtensions,
     (
       feature: string,
-      callback: (whens, thens) => any,
+      callback: (whens, thens, pm: PM) => any,
       whens,
       thens,
       x

@@ -11,8 +11,11 @@ class ClassBuilder extends basebuilder_js_1.BaseBuilder {
             return a;
         }, {});
         const classyGivens = Object.entries(testImplementation.givens).reduce((a, [key, g]) => {
-            a[key] = (features, whens, thens, givEn) => {
-                return new givenKlasser.prototype.constructor(key, features, whens, thens, testImplementation.givens[key], givEn);
+            a[key] = (features, whens, thens) => {
+                // console.log("givEn", givEn.toString());
+                return new givenKlasser.prototype.constructor(key, features, whens, thens, testImplementation.givens[key]
+                // givEn
+                );
             };
             return a;
         }, {});
@@ -28,9 +31,9 @@ class ClassBuilder extends basebuilder_js_1.BaseBuilder {
             };
             return a;
         }, {});
-        const classyChecks = Object.entries(testImplementation.checks).reduce((a, [key, z]) => {
-            a[key] = (somestring, features, callback) => {
-                return new checkKlasser.prototype.constructor(somestring, features, callback, classyWhens, classyThens);
+        const classyChecks = Object.entries(testImplementation.checks).reduce((a, [key, chEck]) => {
+            a[key] = (name, features, checker) => {
+                return new checkKlasser.prototype.constructor(key, features, chEck, checker);
             };
             return a;
         }, {});

@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BaseBuilder = void 0;
 class BaseBuilder {
     constructor(input, suitesOverrides, givenOverides, whenOverides, thenOverides, checkOverides, testResourceRequirement, testSpecification) {
-        this.input = input;
         this.artifacts = [];
         this.artifacts = [];
         this.testResourceRequirement = testResourceRequirement;
