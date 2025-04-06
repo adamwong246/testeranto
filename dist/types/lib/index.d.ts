@@ -66,7 +66,6 @@ export type IBaseConfig = {
     src: string;
     clearScreen: boolean;
     debugger: boolean;
-    devMode: boolean;
     externals: string[];
     minify: boolean;
     ports: string[];

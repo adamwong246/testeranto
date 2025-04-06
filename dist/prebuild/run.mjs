@@ -114,13 +114,13 @@ function isValidUrl(string) {
   }
 }
 var PM_Main = class extends PM {
-  constructor(configs, name) {
+  constructor(configs, name, mode2) {
     super();
     this.shutdownMode = false;
     this.bigBoard = {};
     this.stop = () => {
       console.log(ansiC.inverse("Testeranto-Run is shutting down gracefully..."));
-      this.mode = "PROD";
+      this.mode = "once";
       this.nodeMetafileWatcher.close();
       this.webMetafileWatcher.close();
       this.checkForShutdown();
@@ -151,7 +151,7 @@ var PM_Main = class extends PM {
       platform
     }) => {
       console.log(ansiC.green(ansiC.inverse(`tsc < ${entrypoint}`)));
-      this.bigBoard[entrypoint].typeErrors = "?";
+      this.typeCheckIsRunning(entrypoint);
       const program = tsc.createProgramFromConfig({
         basePath: process.cwd(),
         // always required, used for relative paths
@@ -170,7 +170,7 @@ var PM_Main = class extends PM {
       });
       const tscPath = tscPather(entrypoint, platform, this.name);
       let allDiagnostics = program.getSemanticDiagnostics();
-      const d = [];
+      const results = [];
       allDiagnostics.forEach((diagnostic) => {
         if (diagnostic.file) {
           let { line, character } = ts.getLineAndCharacterOfPosition(
@@ -181,22 +181,21 @@ var PM_Main = class extends PM {
             diagnostic.messageText,
             "\n"
           );
-          d.push(
+          results.push(
             `${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`
           );
         } else {
-          d.push(ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n"));
+          results.push(
+            ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n")
+          );
         }
       });
-      fs.writeFileSync(tscPath, d.join("\n"));
-      this.bigBoard[entrypoint].typeErrors = d.length;
-      if (this.shutdownMode) {
-        this.checkForShutdown();
-      }
+      fs.writeFileSync(tscPath, results.join("\n"));
+      this.typeCheckIsNowDone(entrypoint, results.length);
     };
     this.eslintCheck = async (entrypoint, platform, addableFiles) => {
-      this.bigBoard[entrypoint].staticErrors = "?";
       console.log(ansiC.green(ansiC.inverse(`eslint < ${entrypoint}`)));
+      this.lintIsRunning(entrypoint);
       const results = (await eslint.lintFiles(addableFiles)).filter((r) => r.messages.length).filter((r) => {
         return r.messages[0].ruleId !== null;
       }).map((r) => {
@@ -207,10 +206,7 @@ var PM_Main = class extends PM {
         lintPather(entrypoint, platform, this.name),
         await formatter.format(results)
       );
-      this.bigBoard[entrypoint].staticErrors = results.length;
-      if (this.shutdownMode) {
-        this.checkForShutdown();
-      }
+      this.lintIsNowDone(entrypoint, results.length);
     };
     this.makePrompt = async (entryPoint, addableFiles, platform) => {
       this.bigBoard[entryPoint].prompt = "?";
@@ -261,34 +257,77 @@ ${addableFiles.map((x) => {
       }
     };
     this.checkForShutdown = () => {
-      const anyRunning = Object.values(this.bigBoard).filter((x) => x.prompt === "?").length + Object.values(this.bigBoard).filter((x) => x.runTimeError === "?").length + Object.values(this.bigBoard).filter((x) => x.staticErrors === "?").length + Object.values(this.bigBoard).filter((x) => x.typeErrors === "?").length > 0;
-      if (anyRunning) {
-        console.log(ansiC.inverse("Shutting down. Please wait"));
-      } else {
+      this.writeBigBoard();
+      if (this.mode === "dev")
+        return;
+      let inflight = false;
+      Object.keys(this.bigBoard).forEach((k) => {
+        if (this.bigBoard[k].prompt === "?") {
+          console.log(ansiC.blue(ansiC.inverse(`\u{1F555} prompt ${k}`)));
+          inflight = true;
+        }
+      });
+      Object.keys(this.bigBoard).forEach((k) => {
+        if (this.bigBoard[k].runTimeError === "?") {
+          console.log(ansiC.blue(ansiC.inverse(`\u{1F555} runTimeError ${k}`)));
+          inflight = true;
+        }
+      });
+      Object.keys(this.bigBoard).forEach((k) => {
+        if (this.bigBoard[k].staticErrors === "?") {
+          console.log(ansiC.blue(ansiC.inverse(`\u{1F555} staticErrors ${k}`)));
+          inflight = true;
+        }
+      });
+      Object.keys(this.bigBoard).forEach((k) => {
+        if (this.bigBoard[k].typeErrors === "?") {
+          console.log(ansiC.blue(ansiC.inverse(`\u{1F555} typeErrors ${k}`)));
+          inflight = true;
+        }
+      });
+      this.writeBigBoard();
+      if (!inflight) {
         this.browser.disconnect().then(() => {
-          fs.writeFileSync(
-            `testeranto/reports/${this.name}/summary.json`,
-            JSON.stringify(this.bigBoard, null, 2)
-          );
-          console.log(ansiC.inverse("Goodbye"));
+          console.log(ansiC.inverse("Goodbye from testeranto \u2764\uFE0F\u2764\uFE0F\u2764\uFE0F"));
           process.exit();
         });
       }
     };
-    this.testIsNowRunning = (src) => {
+    ////////////////////////////////////////////////////////////////////////////////
+    this.typeCheckIsRunning = (src) => {
+      this.bigBoard[src].typeErrors = "?";
     };
-    this.testIsNowDone = (src) => {
-      if (this.shutdownMode) {
-        this.checkForShutdown();
-      }
+    this.typeCheckIsNowDone = (src, failures) => {
+      this.bigBoard[src].typeErrors = failures;
+      this.writeBigBoard();
+      this.checkForShutdown();
     };
+    this.lintIsRunning = (src) => {
+      this.bigBoard[src].staticErrors = "?";
+      this.writeBigBoard();
+    };
+    this.lintIsNowDone = (src, failures) => {
+      this.bigBoard[src].staticErrors = failures;
+      this.writeBigBoard();
+      this.checkForShutdown();
+    };
+    this.bddTestIsRunning = (src) => {
+      this.bigBoard[src].runTimeError = "?";
+      this.writeBigBoard();
+    };
+    this.bddTestIsNowDone = (src, failures) => {
+      this.bigBoard[src].runTimeError = failures;
+      this.writeBigBoard();
+      this.checkForShutdown();
+    };
+    ////////////////////////////////////////////////////////////////////////////////
     this.launchNode = async (src, dest) => {
       console.log(ansiC.green(ansiC.inverse(`! node, ${src}`)));
+      this.bddTestIsRunning(src);
       const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/node`;
       if (!fs.existsSync(reportDest)) {
         fs.mkdirSync(reportDest, { recursive: true });
       }
-      this.testIsNowRunning(src);
       const destFolder = dest.replace(".mjs", "");
       let argz = "";
       const testConfig = this.configs.tests.find((t) => {
@@ -340,12 +379,12 @@ ${addableFiles.map((x) => {
           defaultModule.receiveTestResourceConfig(argz).then(async ({ features, failed }) => {
             this.receiveFeatures(features, destFolder, src, "node");
             statusMessagePretty(failed, src);
-            this.receiveExitCode(src, failed);
+            this.bddTestIsNowDone(src, failed);
           }).catch((e) => {
             console.log(ansiC.red(ansiC.inverse(`${src} errored with: ${e}`)));
+            this.bddTestIsNowDone(src, -1);
           }).finally(() => {
             webSideCares.forEach((webSideCar) => webSideCar.close());
-            this.testIsNowDone(src);
           });
         });
       });
@@ -503,11 +542,11 @@ ${addableFiles.map((x) => {
     };
     this.launchWeb = (src, dest) => {
       console.log(ansiC.green(ansiC.inverse(`! web ${src}`)));
+      this.bddTestIsRunning(src);
       const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/web`;
       if (!fs.existsSync(reportDest)) {
         fs.mkdirSync(reportDest, { recursive: true });
       }
-      this.testIsNowRunning(src);
       const destFolder = dest.replace(".mjs", "");
       const webArgz = JSON.stringify({
         name: dest,
@@ -678,7 +717,6 @@ ${addableFiles.map((x) => {
           Promise.all(screenshots[src] || []).then(() => {
             delete screenshots[src];
             page.close();
-            this.testIsNowDone(src);
             stderrStream.close();
             stdoutStream.close();
           });
@@ -696,6 +734,7 @@ ${addableFiles.map((x) => {
           }
           console.debug(`Error from message ${src}: [${err.message}] `);
           stderrStream.write(err.message);
+          this.bddTestIsNowDone(src, -1);
           close();
         });
         page.on("console", (log) => {
@@ -707,10 +746,11 @@ ${addableFiles.map((x) => {
         await page.evaluate(evaluation).then(async ({ failed, features }) => {
           this.receiveFeatures(features, destFolder, src, "web");
           statusMessagePretty(failed, src);
-          this.receiveExitCode(src, failed);
+          this.bddTestIsNowDone(src, failed);
         }).catch((e) => {
           console.log(ansiC.red(ansiC.inverse(`${src} errored with: ${e}`)));
         }).finally(() => {
+          this.bddTestIsNowDone(src, -1);
           close();
         });
         return page;
@@ -765,10 +805,6 @@ ${addableFiles.map((x) => {
         );
       });
     };
-    this.receiveExitCode = (srcTest, failures) => {
-      this.bigBoard[srcTest].runTimeError = failures;
-      this.writeBigBoard();
-    };
     this.writeBigBoard = () => {
       fs.writeFileSync(
         `./testeranto/reports/${this.name}/summary.json`,
@@ -776,7 +812,7 @@ ${addableFiles.map((x) => {
       );
     };
     this.name = name;
-    this.mode = configs.devMode ? "DEV" : "PROD";
+    this.mode = mode2;
     this.server = {};
     this.configs = configs;
     this.ports = {};
@@ -1165,15 +1201,20 @@ process.stdin.on("keypress", (str, key) => {
     process.exit(-1);
   }
 });
+var mode = process.argv[3];
+if (mode !== "once" && mode !== "dev") {
+  console.error("the 2nd argument should be 'dev' or 'once' ");
+  process.exit(-1);
+}
 import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
   const testName = path3.basename(process.argv[2]).split(".")[0];
-  console.log("testeranto is testing", testName);
+  console.log("testeranto is running", testName, mode);
   const rawConfig = module.default;
   const config = {
     ...rawConfig,
     buildDir: process.cwd() + `/testeranto/${testName}.json`
   };
-  const pm = new PM_Main(config, testName);
+  const pm = new PM_Main(config, testName, mode);
   pm.start();
   process.stdin.on("keypress", (str, key) => {
     if (key.name === "q") {

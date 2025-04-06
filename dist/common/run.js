@@ -50,6 +50,11 @@ process.stdin.on("keypress", (str, key) => {
         process.exit(-1);
     }
 });
+const mode = process.argv[3];
+if (mode !== "once" && mode !== "dev") {
+    console.error("the 2nd argument should be 'dev' or 'once' ");
+    process.exit(-1);
+}
 Promise.resolve(`${process.cwd() + "/" + process.argv[2]}`).then(s => __importStar(require(s))).then(async (module) => {
     const testName = path_1.default.basename(process.argv[2]).split(".")[0];
     console.log("testeranto is testing", testName);

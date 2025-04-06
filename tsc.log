@@ -1,4 +1,5 @@
 $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit
+src/defaultConfig.ts(9,3): error TS2353: Object literal may only specify known properties, and 'devMode' does not exist in type 'IBaseConfig'.
 src/esbuildConfigs/node.ts(64,7): error TS2741: Property 'setup' is missing in type 'Plugin' but required in type 'import("/Users/adam/Code/testeranto/node_modules/esbuild/lib/main").Plugin'.
 src/esbuildConfigs/web.ts(74,7): error TS2741: Property 'setup' is missing in type 'Plugin' but required in type 'import("/Users/adam/Code/testeranto/node_modules/esbuild/lib/main").Plugin'.
 src/lib/abstractBase.ts(157,11): error TS2345: Argument of type '(t: I["then"]) => unknown' is not assignable to parameter of type '(t: Awaited<I["then"]> | undefined) => boolean'.
@@ -13,6 +14,7 @@ src/Node.ts(58,56): error TS2345: Argument of type 'PM_Node' is not assignable t
       Types of parameters 'cdpPage' and 'page' are incompatible.
         Type 'string | undefined' is not assignable to type 'CdpPage'.
           Type 'undefined' is not assignable to type 'CdpPage'.
+src/PM/main.ts(127,25): error TS2339: Property 'devMode' does not exist on type 'IBuiltConfig'.
 src/PM/main.ts(250,24): error TS18048: 'page' is possibly 'undefined'.
 src/PM/main.ts(281,9): error TS2322: Type 'string' is not assignable to type '`${string}.webm`'.
 src/PM/main.ts(284,17): error TS2538: Type 'undefined' cannot be used as an index type.

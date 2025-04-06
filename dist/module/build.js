@@ -26,6 +26,12 @@ const getRunnables = (tests, payload = {
         return pt;
     }, payload);
 };
+// let mode = config.devMode ? "DEV" : "PROD";
+let mode = process.argv[3];
+if (mode !== "once" && mode !== "dev") {
+    console.error("the 2nd argument should be 'dev' or 'once' ");
+    process.exit(-1);
+}
 import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
     const testName = path.basename(process.argv[2]).split(".")[0];
     console.log("testeranto is testing", testName);
@@ -46,9 +52,24 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
         return Array.from(meta(config.tests, new Set()));
     };
     const config = Object.assign(Object.assign({}, rawConfig), { buildDir: process.cwd() + "/testeranto/bundles/" + testName });
+    console.log(`Press 'q' to shutdown gracefully. Press 'x' to shutdown forcefully.`);
+    process.stdin.on("keypress", (str, key) => {
+        if (key.name === "q") {
+            console.log("Testeranto-Build is shutting down...");
+            mode = "once";
+            onDone();
+        }
+        else if (key.name === "x") {
+            console.log("Testeranto-Build is shutting down forcefully...");
+            process.exit(-1);
+        }
+        else {
+            console.log(`Press 'q' to shutdown gracefully. Press 'x' to shutdown forcefully.`);
+        }
+    });
+    // let mode = config.devMode ? "DEV" : "PROD";
     let nodeDone = false;
     let webDone = false;
-    let mode = config.devMode ? "DEV" : "PROD";
     let status = "build";
     const { nodeEntryPoints, webEntryPoints } = getRunnables(config.tests);
     const onNodeDone = () => {
@@ -91,12 +112,12 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
             //   });
             // });
         }
-        if (nodeDone && webDone && mode === "PROD") {
+        if (nodeDone && webDone && mode === "once") {
             console.log("Testeranto-EsBuild is all done. Goodbye!");
             process.exit();
         }
         else {
-            if (mode === "PROD") {
+            if (mode === "once") {
                 console.log("waiting for tests to finish");
                 console.log(JSON.stringify({
                     nodeDone: nodeDone,
@@ -107,27 +128,15 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
             else {
                 console.log("waiting for tests to change");
             }
-            if (config.devMode) {
+            if ((mode = "dev")) {
                 console.log("ready and watching for changes...");
             }
             else {
-                // pm.shutDown();
+                console.log("waiting for tests to complete");
             }
             ////////////////////////////////////////////////////////////////////////////////
         }
     };
-    console.log(`Press 'q' to shutdown gracefully. Press 'x' to shutdown forcefully.`);
-    process.stdin.on("keypress", (str, key) => {
-        if (key.name === "q") {
-            console.log("Testeranto-Build is shutting down...");
-            mode = "PROD";
-            onDone();
-        }
-        if (key.name === "x") {
-            console.log("Testeranto-Build is shutting down forcefully...");
-            process.exit(-1);
-        }
-    });
     fs.writeFileSync(`testeranto/${testName}.json`, JSON.stringify(config, null, 2));
     Promise.resolve(Promise.all([...getSecondaryEndpointsPoints("web")].map(async (sourceFilePath) => {
         const sourceFileSplit = sourceFilePath.split("/");
@@ -154,7 +163,7 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
         esbuild
             .context(esbuildNodeConfiger(config, Object.keys(nodeEntryPoints), testName))
             .then(async (nodeContext) => {
-            if (config.devMode) {
+            if (mode === "dev") {
                 await nodeContext.watch().then((v) => {
                     onNodeDone();
                 });
@@ -169,7 +178,7 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
         esbuild
             .context(esbuildWebConfiger(config, Object.keys(webEntryPoints), testName))
             .then(async (webContext) => {
-            if (config.devMode) {
+            if (mode === "dev") {
                 await webContext.watch().then((v) => {
                     onWebDone();
                 });

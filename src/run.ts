@@ -16,9 +16,15 @@ process.stdin.on("keypress", (str, key) => {
   }
 });
 
+const mode = process.argv[3] as "once" | "dev";
+if (mode !== "once" && mode !== "dev") {
+  console.error("the 2nd argument should be 'dev' or 'once' ");
+  process.exit(-1);
+}
+
 import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
   const testName = path.basename(process.argv[2]).split(".")[0];
-  console.log("testeranto is testing", testName);
+  console.log("testeranto is running", testName, mode);
 
   const rawConfig: IBaseConfig = module.default;
 
@@ -27,7 +33,7 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
     buildDir: process.cwd() + "/" + `testeranto/${testName}.json`,
   };
 
-  const pm = new PM_Main(config, testName);
+  const pm = new PM_Main(config, testName, mode);
   pm.start();
 
   process.stdin.on("keypress", (str, key) => {

@@ -44,11 +44,17 @@ const getRunnables = (
   }, payload as IRunnables);
 };
 
+// let mode = config.devMode ? "DEV" : "PROD";
+let mode = process.argv[3] as "once" | "dev";
+
+if (mode !== "once" && mode !== "dev") {
+  console.error("the 2nd argument should be 'dev' or 'once' ");
+  process.exit(-1);
+}
+
 import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
   const testName = path.basename(process.argv[2]).split(".")[0];
-  console.log("testeranto is testing", testName);
-
-  // if (!fs.existsSync(`testeranto/`))
+  console.log("testeranto is building", testName, mode);
 
   const rawConfig: IBaseConfig = module.default;
 
@@ -72,9 +78,29 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
     buildDir: process.cwd() + "/testeranto/bundles/" + testName,
   };
 
+  console.log(
+    `Press 'q' to shutdown gracefully. Press 'x' to shutdown forcefully.`
+  );
+  process.stdin.on("keypress", (str, key) => {
+    if (key.name === "q") {
+      console.log("Testeranto-Build is shutting down...");
+      mode = "once";
+      onDone();
+    } else if (key.name === "x") {
+      console.log("Testeranto-Build is shutting down forcefully...");
+      process.exit(-1);
+    } else {
+      console.log(
+        `Press 'q' to shutdown gracefully. Press 'x' to shutdown forcefully.`
+      );
+    }
+  });
+
+  // let mode = config.devMode ? "DEV" : "PROD";
+
   let nodeDone: boolean = false;
   let webDone: boolean = false;
-  let mode = config.devMode ? "DEV" : "PROD";
+
   let status: "build" | "built" = "build";
 
   const { nodeEntryPoints, webEntryPoints } = getRunnables(config.tests);
@@ -93,82 +119,17 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
     if (nodeDone && webDone) {
       status = "built";
     }
-    if (nodeDone && webDone && status === "built") {
-      // Object.entries(nodeEntryPoints).forEach(([k, outputFile]) => {
-      //   console.log("watching", outputFile);
-      //   try {
-      //     watch(outputFile, async (filename) => {
-      //       const hash = await fileHash(outputFile);
-      //       if (fileHashes[k] !== hash) {
-      //         fileHashes[k] = hash;
-      //         console.log(`< ${filename} `);
-      //         pm.launchNode(k, outputFile);
-      //       }
-      //     });
-      //   } catch (e) {
-      //     console.error(e);
-      //   }
-      // });
-      // Object.entries(webEntryPoints).forEach(([k, outputFile]) => {
-      //   console.log("watching", outputFile);
-      //   watch(outputFile, async (filename) => {
-      //     const hash = await fileHash(outputFile);
-      //     console.log(`< ${filename} ${hash}`);
-      //     if (fileHashes[k] !== hash) {
-      //       fileHashes[k] = hash;
-      //       pm.launchWeb(k, outputFile);
-      //     }
-      //   });
-      // });
-    }
-
-    if (nodeDone && webDone && mode === "PROD") {
+    if (nodeDone && webDone && mode === "once") {
       console.log("Testeranto-EsBuild is all done. Goodbye!");
       process.exit();
-    } else {
-      if (mode === "PROD") {
-        console.log("waiting for tests to finish");
-        console.log(
-          JSON.stringify(
-            {
-              nodeDone: nodeDone,
-              webDone: webDone,
-              mode: mode,
-            },
-            null,
-            2
-          )
-        );
-      } else {
-        console.log("waiting for tests to change");
-      }
-
-      if (config.devMode) {
-        console.log("ready and watching for changes...");
-      } else {
-        // pm.shutDown();
-      }
-      ////////////////////////////////////////////////////////////////////////////////
     }
   };
 
-  console.log(
-    `Press 'q' to shutdown gracefully. Press 'x' to shutdown forcefully.`
-  );
-  process.stdin.on("keypress", (str, key) => {
-    if (key.name === "q") {
-      console.log("Testeranto-Build is shutting down...");
-      mode = "PROD";
-      onDone();
-    }
-    if (key.name === "x") {
-      console.log("Testeranto-Build is shutting down forcefully...");
-      process.exit(-1);
-    }
-  });
-
+  if (!fs.existsSync(`testeranto/reports/${testName}`)) {
+    fs.mkdirSync(`testeranto/reports/${testName}`);
+  }
   fs.writeFileSync(
-    `testeranto/${testName}.json`,
+    `testeranto/reports/${testName}/config.json`,
     JSON.stringify(config, null, 2)
   );
 
@@ -216,7 +177,7 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
         esbuildNodeConfiger(config, Object.keys(nodeEntryPoints), testName)
       )
       .then(async (nodeContext) => {
-        if (config.devMode) {
+        if (mode === "dev") {
           await nodeContext.watch().then((v) => {
             onNodeDone();
           });
@@ -233,7 +194,7 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
         esbuildWebConfiger(config, Object.keys(webEntryPoints), testName)
       )
       .then(async (webContext) => {
-        if (config.devMode) {
+        if (mode === "dev") {
           await webContext.watch().then((v) => {
             onWebDone();
           });
