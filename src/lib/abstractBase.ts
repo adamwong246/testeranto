@@ -106,7 +106,7 @@ export abstract class BaseSuite<
     pm: PM
   ): Promise<BaseSuite<I, O>> {
     this.testResourceConfiguration = testResourceConfiguration;
-    tLog("test resources: ", JSON.stringify(testResourceConfiguration));
+    // tLog("test resources: ", JSON.stringify(testResourceConfiguration));
 
     const suiteArtifactory = (fPath: string, value: unknown) =>
       artifactory(`suite-${this.index}-${this.name}/${fPath}`, value);

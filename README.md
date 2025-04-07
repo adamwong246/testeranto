@@ -22,6 +22,7 @@ example repo: [kokomo bay](https://github.com/ChromaPDX/kokomoBay)
 - Testeranto tests are specified in a strongly-typed gherkin-like syntax. Rather than testing your code directly, Testeranto requires you wrap your code with a semantic interface which is based on TS type signatures.
 - Testeranto can be run in the frontend or the backend, or both.
 - Testeranto can be used to test anything that can be bundled with esbuild.
+- Testeranto is _reasonably_ efficient. It is less performant than other similar js testing libraries.
 
 ## tech of note
 

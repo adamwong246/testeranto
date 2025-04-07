@@ -41,7 +41,7 @@ export class BaseSuite {
     }
     async run(input, testResourceConfiguration, artifactory, tLog, pm) {
         this.testResourceConfiguration = testResourceConfiguration;
-        tLog("test resources: ", JSON.stringify(testResourceConfiguration));
+        // tLog("test resources: ", JSON.stringify(testResourceConfiguration));
         const suiteArtifactory = (fPath, value) => artifactory(`suite-${this.index}-${this.name}/${fPath}`, value);
         // console.log("\nSuite:", this.index, this.name);
         tLog("\nSuite:", this.index, this.name);
