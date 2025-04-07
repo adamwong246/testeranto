@@ -429,7 +429,8 @@ export abstract class BaseGiven<
           afterEachProxy
         );
       } catch (e) {
-        console.error("afterEach failed! no error will be recorded!", e);
+        console.error("afterEach failed!", e);
+        this.error = e.message;
       }
     }
     return this.store;

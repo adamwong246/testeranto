@@ -788,7 +788,7 @@ ${addableFiles.map((x) => {
       const webArgz = JSON.stringify({
         name: dest,
         ports: [].toString(),
-        fs: destFolder,
+        fs: reportDest,
         browserWSEndpoint: this.browser.wsEndpoint()
       });
       const d = `${dest}?cacheBust=${Date.now()}`;
@@ -807,6 +807,9 @@ ${addableFiles.map((x) => {
       const stdoutStream = fs2.createWriteStream(`${destFolder}/stdout.log`);
       const stderrStream = fs2.createWriteStream(`${destFolder}/stderr.log`);
       this.browser.newPage().then((page) => {
+        page.on("console", (msg) => {
+          console.log("web > ", msg.args(), msg.text());
+        });
         page.exposeFunction(
           "screencast",
           async (ssOpts, testName) => {

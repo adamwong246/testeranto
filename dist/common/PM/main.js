@@ -550,7 +550,7 @@ ${addableFiles
             const webArgz = JSON.stringify({
                 name: dest,
                 ports: [].toString(),
-                fs: destFolder,
+                fs: reportDest,
                 browserWSEndpoint: this.browser.wsEndpoint(),
             });
             const d = `${dest}?cacheBust=${Date.now()}`;
@@ -571,9 +571,9 @@ ${addableFiles
             this.browser
                 .newPage()
                 .then((page) => {
-                // page.on("console", (msg) => {
-                //   // console.log("web > ", msg.args(), msg.text());
-                // });
+                page.on("console", (msg) => {
+                    console.log("web > ", msg.args(), msg.text());
+                });
                 page.exposeFunction("screencast", async (ssOpts, testName) => {
                     const p = ssOpts.path;
                     const dir = path_1.default.dirname(p);

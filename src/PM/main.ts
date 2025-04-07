@@ -887,7 +887,7 @@ ${addableFiles
     const webArgz = JSON.stringify({
       name: dest,
       ports: [].toString(),
-      fs: destFolder,
+      fs: reportDest,
       browserWSEndpoint: this.browser.wsEndpoint(),
     });
 
@@ -913,9 +913,9 @@ ${addableFiles
     this.browser
       .newPage()
       .then((page) => {
-        // page.on("console", (msg) => {
-        //   // console.log("web > ", msg.args(), msg.text());
-        // });
+        page.on("console", (msg) => {
+          console.log("web > ", msg.args(), msg.text());
+        });
 
         page.exposeFunction(
           "screencast",

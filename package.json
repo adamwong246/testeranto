@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "the AI powered BDD test framework for typescript projects",
-  "version": "0.118.0",
+  "version": "0.119.0",
   "engines": {
     "node": "18.18.0"
   },
