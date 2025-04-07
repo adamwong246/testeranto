@@ -44,7 +44,7 @@ class BaseBuilder {
                     puppetMaster.writeFileSync(`bdd_errors.txt`, numberOfFailures.toString());
                     const o = this.toObj();
                     puppetMaster.writeFileSync(`littleBoard.html`, `
-            <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -54,15 +54,15 @@ class BaseBuilder {
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="author" content="" />
 
-  <link rel="stylesheet" href="/kokomoBay/docs/TestReport.css" />
-  <script src="/kokomoBay/docs/TestReport.js"></script>
+  <link rel="stylesheet" href="/kokomoBay/testeranto/TestReport.css" />
+  <script src="/kokomoBay/testeranto/TestReport.js"></script>
 
 </head>
 
-  <body>
-    <h1>Test report</h1>
-            <div id="root"/>
-  </body>
+<body>
+  <h1>Test report</h1>
+  <div id="root"/>
+</body>
             `);
                     puppetMaster.writeFileSync(`tests.json`, JSON.stringify(this.toObj(), null, 2));
                     return {

@@ -3,7 +3,7 @@ import readline from "readline";
 import path from "path";
 
 import { PM_Main } from "./PM/main";
-import { IBaseConfig, IBuiltConfig } from "./lib";
+import { IBaseConfig, IBuiltConfig, IConfigV2 } from "./lib";
 
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
@@ -16,17 +16,23 @@ process.stdin.on("keypress", (str, key) => {
   }
 });
 
+let testName = process.argv[2];
+
 const mode = process.argv[3] as "once" | "dev";
 if (mode !== "once" && mode !== "dev") {
   console.error("the 2nd argument should be 'dev' or 'once' ");
   process.exit(-1);
 }
 
-import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
-  const testName = path.basename(process.argv[2]).split(".")[0];
-  console.log("testeranto is running", testName, mode);
+console.log("testeranto is running", testName, mode);
 
-  const rawConfig: IBaseConfig = module.default;
+import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
+  // const testName = path.basename(process.argv[2]).split(".")[0];
+  const bigConfig: IConfigV2 = module.default;
+
+  const rawConfig: IBaseConfig = bigConfig.projects[testName];
+
+  // const rawConfig: IBaseConfig = module.default;
 
   const config: IBuiltConfig = {
     ...rawConfig,

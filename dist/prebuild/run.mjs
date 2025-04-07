@@ -3,7 +3,6 @@ import { createRequire } from 'module';const require = createRequire(import.meta
 // src/run.ts
 import ansiC2 from "ansi-colors";
 import readline from "readline";
-import path4 from "path";
 
 // src/PM/main.ts
 import ts from "typescript";
@@ -74,8 +73,8 @@ var PM_Base = class extends PM {
       );
       await page?.waitForSelector(sel);
     };
-    globalThis["screencastStop"] = async (path5) => {
-      return recorders[path5].stop();
+    globalThis["screencastStop"] = async (path4) => {
+      return recorders[path4].stop();
     };
     globalThis["closePage"] = async (pageKey) => {
       const page = (await this.browser.pages()).find(
@@ -106,23 +105,23 @@ var PM_Base = class extends PM {
       }
       return false;
     };
-    globalThis["writeFileSync"] = (filepath, contents, testName) => {
+    globalThis["writeFileSync"] = (filepath, contents, testName2) => {
       fs.mkdirSync(path2.dirname(filepath), {
         recursive: true
       });
-      if (!files[testName]) {
-        files[testName] = /* @__PURE__ */ new Set();
+      if (!files[testName2]) {
+        files[testName2] = /* @__PURE__ */ new Set();
       }
-      files[testName].add(filepath);
+      files[testName2].add(filepath);
       return fs.writeFileSync(filepath, contents);
     };
-    globalThis["createWriteStream"] = (filepath, testName) => {
+    globalThis["createWriteStream"] = (filepath, testName2) => {
       const f = fs.createWriteStream(filepath);
       fileStreams3.push(f);
-      if (!files[testName]) {
-        files[testName] = /* @__PURE__ */ new Set();
+      if (!files[testName2]) {
+        files[testName2] = /* @__PURE__ */ new Set();
       }
-      files[testName].add(filepath);
+      files[testName2].add(filepath);
       return {
         ...JSON.parse(JSON.stringify(f)),
         uid: fileStreams3.length - 1
@@ -134,7 +133,7 @@ var PM_Base = class extends PM {
     globalThis["end"] = (uid) => {
       fileStreams3[uid].end();
     };
-    globalThis["customScreenShot"] = async (opts, pageKey, testName) => {
+    globalThis["customScreenShot"] = async (opts, pageKey, testName2) => {
       const page = (await this.browser.pages()).find(
         /* @ts-ignore:next-line */
         (p2) => p2.mainFrame()._id === pageKey
@@ -640,28 +639,28 @@ ${addableFiles.map((x) => {
         this.browser.newPage().then((page) => {
           page.exposeFunction(
             "custom-screenshot",
-            async (ssOpts, testName) => {
+            async (ssOpts, testName2) => {
               const p = ssOpts.path;
               const dir = path3.dirname(p);
               fs2.mkdirSync(dir, {
                 recursive: true
               });
-              files2[testName].add(ssOpts.path);
+              files2[testName2].add(ssOpts.path);
               const sPromise = page.screenshot({
                 ...ssOpts,
                 path: p
               });
-              if (!screenshots2[testName]) {
-                screenshots2[testName] = [];
+              if (!screenshots2[testName2]) {
+                screenshots2[testName2] = [];
               }
-              screenshots2[testName].push(sPromise);
+              screenshots2[testName2].push(sPromise);
               await sPromise;
               return sPromise;
             }
           );
           page.exposeFunction(
             "writeFileSync",
-            (fp, contents, testName) => {
+            (fp, contents, testName2) => {
               const dir = path3.dirname(fp);
               fs2.mkdirSync(dir, {
                 recursive: true
@@ -671,10 +670,10 @@ ${addableFiles.map((x) => {
                 res2(fp);
               });
               doneFileStream2.push(p);
-              if (!files2[testName]) {
-                files2[testName] = /* @__PURE__ */ new Set();
+              if (!files2[testName2]) {
+                files2[testName2] = /* @__PURE__ */ new Set();
               }
-              files2[testName].add(fp);
+              files2[testName2].add(fp);
               return p;
             }
           );
@@ -691,9 +690,9 @@ ${addableFiles.map((x) => {
           });
           page.exposeFunction(
             "createWriteStream",
-            (fp, testName) => {
+            (fp, testName2) => {
               const f = fs2.createWriteStream(fp);
-              files2[testName].add(fp);
+              files2[testName2].add(fp);
               const p = new Promise((res2, rej2) => {
                 res2(fp);
               });
@@ -812,56 +811,56 @@ ${addableFiles.map((x) => {
         });
         page.exposeFunction(
           "screencast",
-          async (ssOpts, testName) => {
+          async (ssOpts, testName2) => {
             const p = ssOpts.path;
             const dir = path3.dirname(p);
             fs2.mkdirSync(dir, {
               recursive: true
             });
-            if (!files2[testName]) {
-              files2[testName] = /* @__PURE__ */ new Set();
+            if (!files2[testName2]) {
+              files2[testName2] = /* @__PURE__ */ new Set();
             }
-            files2[testName].add(ssOpts.path);
+            files2[testName2].add(ssOpts.path);
             const sPromise = page.screenshot({
               ...ssOpts,
               path: p
             });
-            if (!screenshots2[testName]) {
-              screenshots2[testName] = [];
+            if (!screenshots2[testName2]) {
+              screenshots2[testName2] = [];
             }
-            screenshots2[testName].push(sPromise);
+            screenshots2[testName2].push(sPromise);
             await sPromise;
             return sPromise;
           }
         );
         page.exposeFunction(
           "customScreenShot",
-          async (ssOpts, testName) => {
+          async (ssOpts, testName2) => {
             const p = ssOpts.path;
             const dir = path3.dirname(p);
             fs2.mkdirSync(dir, {
               recursive: true
             });
-            if (!files2[testName]) {
-              files2[testName] = /* @__PURE__ */ new Set();
+            if (!files2[testName2]) {
+              files2[testName2] = /* @__PURE__ */ new Set();
             }
-            files2[testName].add(ssOpts.path);
+            files2[testName2].add(ssOpts.path);
             const sPromise = page.screenshot({
               ...ssOpts,
               path: p
             });
-            if (!screenshots2[testName]) {
-              screenshots2[testName] = [];
+            if (!screenshots2[testName2]) {
+              screenshots2[testName2] = [];
             }
-            screenshots2[testName].push(sPromise);
+            screenshots2[testName2].push(sPromise);
             await sPromise;
             return sPromise;
           }
         );
         page.exposeFunction(
           "writeFileSync",
-          (fp, contents, testName) => {
-            return globalThis["writeFileSync"](fp, contents, testName);
+          (fp, contents, testName2) => {
+            return globalThis["writeFileSync"](fp, contents, testName2);
           }
         );
         page.exposeFunction("existsSync", (fp, contents) => {
@@ -877,12 +876,12 @@ ${addableFiles.map((x) => {
         });
         page.exposeFunction(
           "createWriteStream",
-          (fp, testName) => {
+          (fp, testName2) => {
             const f = fs2.createWriteStream(fp);
-            if (!files2[testName]) {
-              files2[testName] = /* @__PURE__ */ new Set();
+            if (!files2[testName2]) {
+              files2[testName2] = /* @__PURE__ */ new Set();
             }
-            files2[testName].add(fp);
+            files2[testName2].add(fp);
             const p = new Promise((res, rej) => {
               res(fp);
             });
@@ -1211,15 +1210,16 @@ process.stdin.on("keypress", (str, key) => {
     process.exit(-1);
   }
 });
+var testName = process.argv[2];
 var mode = process.argv[3];
 if (mode !== "once" && mode !== "dev") {
   console.error("the 2nd argument should be 'dev' or 'once' ");
   process.exit(-1);
 }
-import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
-  const testName = path4.basename(process.argv[2]).split(".")[0];
-  console.log("testeranto is running", testName, mode);
-  const rawConfig = module.default;
+console.log("testeranto is running", testName, mode);
+import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
+  const bigConfig = module.default;
+  const rawConfig = bigConfig.projects[testName];
   const config = {
     ...rawConfig,
     buildDir: process.cwd() + `/testeranto/${testName}.json`

@@ -77,4 +77,7 @@ export type IBaseConfig = {
 export type IBuiltConfig = {
     buildDir: string;
 } & IBaseConfig;
+export type IConfigV2 = {
+    projects: Record<string, IBaseConfig>;
+};
 export {};

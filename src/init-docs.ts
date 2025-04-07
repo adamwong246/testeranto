@@ -1,4 +1,3 @@
-import fs from "fs";
 import Init from "./Init";
 
 console.log("Initializing a testeranto project");

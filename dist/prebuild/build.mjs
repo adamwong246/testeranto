@@ -38,9 +38,9 @@ var register = (entrypoint, sources) => {
   }
   sources.forEach((s) => otherInputs[entrypoint].add(s));
 };
-var inputFilesPlugin_default = (platform, testName) => {
-  const d = `testeranto/bundles/${platform}/${testName}/`;
-  const f = `testeranto/bundles/${platform}/${testName}/metafile.json`;
+var inputFilesPlugin_default = (platform, testName2) => {
+  const d = `testeranto/bundles/${platform}/${testName2}/`;
+  const f = `testeranto/bundles/${platform}/${testName2}/metafile.json`;
   if (!fs.existsSync(d)) {
     fs.mkdirSync(d);
   }
@@ -91,16 +91,16 @@ var featuresPlugin_default = {
 };
 
 // src/esbuildConfigs/node.ts
-var node_default = (config, entryPoints, testName) => {
+var node_default = (config, entryPoints, testName2) => {
   const { inputFilesPluginFactory, register: register2 } = inputFilesPlugin_default(
     "node",
     // entryPoints,
-    testName
+    testName2
   );
   return {
     ...esbuildConfigs_default(config),
     splitting: true,
-    outdir: `testeranto/bundles/node/${testName}/`,
+    outdir: `testeranto/bundles/node/${testName2}/`,
     // inject: [`./node_modules/testeranto/dist/cjs-shim.js`],
     metafile: true,
     supported: {
@@ -139,14 +139,14 @@ var node_default = (config, entryPoints, testName) => {
 
 // src/esbuildConfigs/web.ts
 import path2 from "path";
-var web_default = (config, entryPoints, testName) => {
+var web_default = (config, entryPoints, testName2) => {
   const { inputFilesPluginFactory, register: register2 } = inputFilesPlugin_default(
     "web",
-    testName
+    testName2
   );
   return {
     ...esbuildConfigs_default(config),
-    outdir: `testeranto/bundles/web/${testName}`,
+    outdir: `testeranto/bundles/web/${testName2}`,
     alias: {
       react: path2.resolve("./node_modules/react")
     },
@@ -219,35 +219,21 @@ var web_html_default = (jsfilePath, htmlFilePath) => `
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
   process.stdin.setRawMode(true);
-var getRunnables = (tests, payload = {
-  nodeEntryPoints: {},
-  webEntryPoints: {}
-}) => {
-  return tests.reduce((pt, cv, cndx, cry) => {
-    if (cv[1] === "node") {
-      pt.nodeEntryPoints[cv[0]] = path3.resolve(
-        `./docs/node/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
-      );
-    } else if (cv[1] === "web") {
-      pt.webEntryPoints[cv[0]] = path3.resolve(
-        `./docs/web/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
-      );
-    }
-    if (cv[3].length) {
-      getRunnables(cv[3], payload);
-    }
-    return pt;
-  }, payload);
-};
+var testName = process.argv[2];
 var mode = process.argv[3];
 if (mode !== "once" && mode !== "dev") {
-  console.error("the 2nd argument should be 'dev' or 'once' ");
+  console.error(`The 4th argument should be 'dev' or 'once', not '${mode}'.`);
   process.exit(-1);
 }
-import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
-  const testName = path3.basename(process.argv[2]).split(".")[0];
-  console.log("testeranto is building", testName, mode);
-  const rawConfig = module.default;
+console.log("testeranto is building", testName, mode);
+import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
+  const bigConfig = module.default;
+  const project = bigConfig.projects[testName];
+  if (!project) {
+    console.error("no project found for", testName, "in testeranto.config.ts");
+    process.exit(-1);
+  }
+  const rawConfig = bigConfig.projects[testName];
   const getSecondaryEndpointsPoints = (runtime) => {
     const meta = (ts, st) => {
       ts.forEach((t) => {
@@ -308,8 +294,66 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
     fs2.mkdirSync(`testeranto/reports/${testName}`);
   }
   fs2.writeFileSync(
+    `${process.cwd()}/testeranto/reports/${testName}/index.html`,
+    `
+    <!DOCTYPE html>
+    <html lang="en">
+  
+    <head>
+      <meta name="description" content="Webpage description goes here" />
+      <meta charset="utf-8" />
+      <title>kokomoBay - testeranto</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <meta name="author" content="" />
+  
+      <link rel="stylesheet" href="/kokomoBay/testeranto/ReportClient.css" />
+      <script type="module" src="/kokomoBay/testeranto/ReportClient.js"></script>
+  
+    </head>
+  
+    <body>
+      <div id="root">
+        react is loading
+      </div>
+    </body>
+  
+    </html>
+        `
+  );
+  fs2.writeFileSync(
     `testeranto/reports/${testName}/config.json`,
     JSON.stringify(config, null, 2)
+  );
+  fs2.writeFileSync(
+    `${process.cwd()}/testeranto/index.html`,
+    `
+  <!DOCTYPE html>
+  <html lang="en">
+
+  <head>
+    <meta name="description" content="Webpage description goes here" />
+    <meta charset="utf-8" />
+    <title>kokomoBay - testeranto</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="" />
+
+    <script type="application/json" id="bigConfig">
+      ${JSON.stringify(Object.keys(bigConfig.projects))}
+    </script>
+
+    <link rel="stylesheet" href="/kokomoBay/testeranto/Project.css" />
+    <script type="module" src="/kokomoBay/testeranto/Project.js"></script>
+
+  </head>
+
+  <body>
+    <div id="root">
+      react is loading
+    </div>
+  </body>
+
+  </html>
+      `
   );
   Promise.resolve(
     Promise.all(
@@ -371,3 +415,23 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
     })
   ]);
 });
+var getRunnables = (tests, payload = {
+  nodeEntryPoints: {},
+  webEntryPoints: {}
+}) => {
+  return tests.reduce((pt, cv, cndx, cry) => {
+    if (cv[1] === "node") {
+      pt.nodeEntryPoints[cv[0]] = path3.resolve(
+        `./docs/node/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+      );
+    } else if (cv[1] === "web") {
+      pt.webEntryPoints[cv[0]] = path3.resolve(
+        `./docs/web/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+      );
+    }
+    if (cv[3].length) {
+      getRunnables(cv[3], payload);
+    }
+    return pt;
+  }, payload);
+};

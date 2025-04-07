@@ -22,7 +22,7 @@ const StepPane = ({ step }: {
   </div>
 }
 
-const TestPane = ({ given, log }: {
+const TestPane = ({ given }: {
   given: {
     key: string,
     name: string,
@@ -88,18 +88,18 @@ const TestPane = ({ given, log }: {
 
 const BddPage = () => {
 
-  const [configs, setConfigs] = useState<IBuiltConfig>();
-  useEffect(() => {
-    (async () => {
-      fetch('/kokomoBay/docs/testeranto.json')
-        .then(response => response.json())
-        .then(json => {
-          setConfigs(json)
-        })
-        .catch(error => console.error(error));
+  // const [configs, setConfigs] = useState<IBuiltConfig>();
+  // useEffect(() => {
+  //   (async () => {
+  //     fetch('../config.json')
+  //       .then(response => response.json())
+  //       .then(json => {
+  //         setConfigs(json)
+  //       })
+  //       .catch(error => console.error(error));
 
-    })();
-  }, []);
+  //   })();
+  // }, []);
 
 
   const [bddErrors, setBddErrors] = useState<{
@@ -120,16 +120,16 @@ const BddPage = () => {
     (async () => {
       setBddErrors(await (await fetch(`tests.json`)).json());
     })();
-  }, [configs]);
+  }, []);
 
   const [log, setLog] = useState<string>();
   useEffect(() => {
     (async () => {
       setLog(await (await fetch(`log.txt`)).text());
     })();
-  }, [configs]);
+  }, []);
 
-  if (!configs || !bddErrors || !log) {
+  if (!bddErrors || !log) {
     return <div>loading...</div>
   }
 

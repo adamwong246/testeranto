@@ -92,7 +92,7 @@ await esbuild.build({
 /////////////////////////
 
 await esbuild.build({
-  entryPoints: ['src/ReportClient.tsx', 'src/TestReport.tsx'],
+  entryPoints: ['src/ReportClient.tsx', 'src/TestReport.tsx', 'src/Project.tsx'],
   bundle: true,
   format: "iife",
   platform: "browser",

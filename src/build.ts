@@ -14,49 +14,32 @@ import {
   IBaseConfig,
   IRunTime,
   IBuiltConfig,
+  IConfigV2,
 } from "./lib/index.js";
 
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
 
-const getRunnables = (
-  tests: ITestTypes[],
-  payload = {
-    nodeEntryPoints: {},
-    webEntryPoints: {},
-  }
-): IRunnables => {
-  return tests.reduce((pt, cv, cndx, cry) => {
-    if (cv[1] === "node") {
-      pt.nodeEntryPoints[cv[0]] = path.resolve(
-        `./docs/node/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
-      );
-    } else if (cv[1] === "web") {
-      pt.webEntryPoints[cv[0]] = path.resolve(
-        `./docs/web/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
-      );
-    }
-
-    if (cv[3].length) {
-      getRunnables(cv[3], payload);
-    }
-
-    return pt;
-  }, payload as IRunnables);
-};
+let testName = process.argv[2];
 
 let mode = process.argv[3] as "once" | "dev";
-
 if (mode !== "once" && mode !== "dev") {
-  console.error("the 2nd argument should be 'dev' or 'once' ");
+  console.error(`The 4th argument should be 'dev' or 'once', not '${mode}'.`);
   process.exit(-1);
 }
 
-import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
-  const testName = path.basename(process.argv[2]).split(".")[0];
-  console.log("testeranto is building", testName, mode);
+console.log("testeranto is building", testName, mode);
 
-  const rawConfig: IBaseConfig = module.default;
+import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
+  const bigConfig: IConfigV2 = module.default;
+
+  const project = bigConfig.projects[testName];
+  if (!project) {
+    console.error("no project found for", testName, "in testeranto.config.ts");
+    process.exit(-1);
+  }
+
+  const rawConfig: IBaseConfig = bigConfig.projects[testName];
 
   const getSecondaryEndpointsPoints = (runtime?: IRunTime): string[] => {
     const meta = (ts: ITestTypes[], st: Set<string>): Set<string> => {
@@ -125,9 +108,70 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
   if (!fs.existsSync(`testeranto/reports/${testName}`)) {
     fs.mkdirSync(`testeranto/reports/${testName}`);
   }
+
+  fs.writeFileSync(
+    `${process.cwd()}/testeranto/reports/${testName}/index.html`,
+    `
+    <!DOCTYPE html>
+    <html lang="en">
+  
+    <head>
+      <meta name="description" content="Webpage description goes here" />
+      <meta charset="utf-8" />
+      <title>kokomoBay - testeranto</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <meta name="author" content="" />
+  
+      <link rel="stylesheet" href="/kokomoBay/testeranto/ReportClient.css" />
+      <script type="module" src="/kokomoBay/testeranto/ReportClient.js"></script>
+  
+    </head>
+  
+    <body>
+      <div id="root">
+        react is loading
+      </div>
+    </body>
+  
+    </html>
+        `
+  );
+
   fs.writeFileSync(
     `testeranto/reports/${testName}/config.json`,
     JSON.stringify(config, null, 2)
+  );
+
+  fs.writeFileSync(
+    `${process.cwd()}/testeranto/index.html`,
+    `
+  <!DOCTYPE html>
+  <html lang="en">
+
+  <head>
+    <meta name="description" content="Webpage description goes here" />
+    <meta charset="utf-8" />
+    <title>kokomoBay - testeranto</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="" />
+
+    <script type="application/json" id="bigConfig">
+      ${JSON.stringify(Object.keys(bigConfig.projects))}
+    </script>
+
+    <link rel="stylesheet" href="/kokomoBay/testeranto/Project.css" />
+    <script type="module" src="/kokomoBay/testeranto/Project.js"></script>
+
+  </head>
+
+  <body>
+    <div id="root">
+      react is loading
+    </div>
+  </body>
+
+  </html>
+      `
   );
 
   Promise.resolve(
@@ -204,3 +248,29 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
       }),
   ]);
 });
+
+const getRunnables = (
+  tests: ITestTypes[],
+  payload = {
+    nodeEntryPoints: {},
+    webEntryPoints: {},
+  }
+): IRunnables => {
+  return tests.reduce((pt, cv, cndx, cry) => {
+    if (cv[1] === "node") {
+      pt.nodeEntryPoints[cv[0]] = path.resolve(
+        `./docs/node/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+      );
+    } else if (cv[1] === "web") {
+      pt.webEntryPoints[cv[0]] = path.resolve(
+        `./docs/web/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+      );
+    }
+
+    if (cv[3].length) {
+      getRunnables(cv[3], payload);
+    }
+
+    return pt;
+  }, payload as IRunnables);
+};

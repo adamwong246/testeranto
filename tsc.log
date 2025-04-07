@@ -17,6 +17,9 @@ src/PM/node.ts(88,3): error TS2416: Property 'customScreenShot' in type 'PM_Node
     Types of parameters 'cdpPage' and 'page' are incompatible.
       Type 'string | undefined' is not assignable to type 'CdpPage'.
         Type 'undefined' is not assignable to type 'CdpPage'.
+src/Project.tsx(37,31): error TS2531: Object is possibly 'null'.
+src/Project.tsx(193,38): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
+  Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.
 src/ReportClient.tsx(161,38): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
   Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.
 src/SubPackages/react-dom/component/web.ts(90,13): error TS2345: Argument of type 'CElement<any, TesterantoComponent>' is not assignable to parameter of type 'ReactNode'.

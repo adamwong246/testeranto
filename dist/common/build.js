@@ -48,32 +48,21 @@ const web_html_js_1 = __importDefault(require("./web.html.js"));
 readline_1.default.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
     process.stdin.setRawMode(true);
-const getRunnables = (tests, payload = {
-    nodeEntryPoints: {},
-    webEntryPoints: {},
-}) => {
-    return tests.reduce((pt, cv, cndx, cry) => {
-        if (cv[1] === "node") {
-            pt.nodeEntryPoints[cv[0]] = path_1.default.resolve(`./docs/node/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`);
-        }
-        else if (cv[1] === "web") {
-            pt.webEntryPoints[cv[0]] = path_1.default.resolve(`./docs/web/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`);
-        }
-        if (cv[3].length) {
-            getRunnables(cv[3], payload);
-        }
-        return pt;
-    }, payload);
-};
+let testName = process.argv[2];
 let mode = process.argv[3];
 if (mode !== "once" && mode !== "dev") {
-    console.error("the 2nd argument should be 'dev' or 'once' ");
+    console.error(`The 4th argument should be 'dev' or 'once', not '${mode}'.`);
     process.exit(-1);
 }
-Promise.resolve(`${process.cwd() + "/" + process.argv[2]}`).then(s => __importStar(require(s))).then(async (module) => {
-    const testName = path_1.default.basename(process.argv[2]).split(".")[0];
-    console.log("testeranto is building", testName, mode);
-    const rawConfig = module.default;
+console.log("testeranto is building", testName, mode);
+Promise.resolve(`${process.cwd() + "/" + "testeranto.config.ts"}`).then(s => __importStar(require(s))).then(async (module) => {
+    const bigConfig = module.default;
+    const project = bigConfig.projects[testName];
+    if (!project) {
+        console.error("no project found for", testName, "in testeranto.config.ts");
+        process.exit(-1);
+    }
+    const rawConfig = bigConfig.projects[testName];
     const getSecondaryEndpointsPoints = (runtime) => {
         const meta = (ts, st) => {
             ts.forEach((t) => {
@@ -128,7 +117,59 @@ Promise.resolve(`${process.cwd() + "/" + process.argv[2]}`).then(s => __importSt
     if (!fs_1.default.existsSync(`testeranto/reports/${testName}`)) {
         fs_1.default.mkdirSync(`testeranto/reports/${testName}`);
     }
+    fs_1.default.writeFileSync(`${process.cwd()}/testeranto/reports/${testName}/index.html`, `
+    <!DOCTYPE html>
+    <html lang="en">
+  
+    <head>
+      <meta name="description" content="Webpage description goes here" />
+      <meta charset="utf-8" />
+      <title>kokomoBay - testeranto</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <meta name="author" content="" />
+  
+      <link rel="stylesheet" href="/kokomoBay/testeranto/ReportClient.css" />
+      <script type="module" src="/kokomoBay/testeranto/ReportClient.js"></script>
+  
+    </head>
+  
+    <body>
+      <div id="root">
+        react is loading
+      </div>
+    </body>
+  
+    </html>
+        `);
     fs_1.default.writeFileSync(`testeranto/reports/${testName}/config.json`, JSON.stringify(config, null, 2));
+    fs_1.default.writeFileSync(`${process.cwd()}/testeranto/index.html`, `
+  <!DOCTYPE html>
+  <html lang="en">
+
+  <head>
+    <meta name="description" content="Webpage description goes here" />
+    <meta charset="utf-8" />
+    <title>kokomoBay - testeranto</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="" />
+
+    <script type="application/json" id="bigConfig">
+      ${JSON.stringify(Object.keys(bigConfig.projects))}
+    </script>
+
+    <link rel="stylesheet" href="/kokomoBay/testeranto/Project.css" />
+    <script type="module" src="/kokomoBay/testeranto/Project.js"></script>
+
+  </head>
+
+  <body>
+    <div id="root">
+      react is loading
+    </div>
+  </body>
+
+  </html>
+      `);
     Promise.resolve(Promise.all([...getSecondaryEndpointsPoints("web")].map(async (sourceFilePath) => {
         const sourceFileSplit = sourceFilePath.split("/");
         const sourceDir = sourceFileSplit.slice(0, -1);
@@ -183,3 +224,20 @@ Promise.resolve(`${process.cwd() + "/" + process.argv[2]}`).then(s => __importSt
         }),
     ]);
 });
+const getRunnables = (tests, payload = {
+    nodeEntryPoints: {},
+    webEntryPoints: {},
+}) => {
+    return tests.reduce((pt, cv, cndx, cry) => {
+        if (cv[1] === "node") {
+            pt.nodeEntryPoints[cv[0]] = path_1.default.resolve(`./docs/node/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`);
+        }
+        else if (cv[1] === "web") {
+            pt.webEntryPoints[cv[0]] = path_1.default.resolve(`./docs/web/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`);
+        }
+        if (cv[3].length) {
+            getRunnables(cv[3], payload);
+        }
+        return pt;
+    }, payload);
+};
