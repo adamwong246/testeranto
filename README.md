@@ -12,7 +12,7 @@ npm: [npmjs.com/package/testeranto](https://www.npmjs.com/package/testeranto)
 
 dev: [github.dev/adamwong246/testeranto](https://github.dev/adamwong246/testeranto)
 
-example test report: [chromapdx.github.io/kokomoBay](https://chromapdx.github.io/kokomoBay/docs/index.html)
+example test report: [chromapdx.github.io/kokomoBay](https://chromapdx.github.io/kokomoBay/testeranto/index.html)
 
 example repo: [kokomo bay](https://github.com/ChromaPDX/kokomoBay)
 
