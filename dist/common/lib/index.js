@@ -8,7 +8,12 @@ exports.BaseTestInterface = {
     },
     afterEach: async (s) => s,
     afterAll: (store) => undefined,
-    butThen: async (store, thenCb) => thenCb(store),
+    butThen: async (store, thenCb) => {
+        try {
+            thenCb(store);
+        }
+        catch (e) { }
+    },
     andWhen: (a) => a,
     assertThis: () => null,
 };

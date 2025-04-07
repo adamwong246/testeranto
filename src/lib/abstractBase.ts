@@ -536,7 +536,7 @@ export abstract class BaseThen<
   >
 > {
   public name: string;
-  thenCB: (storeState: I["iselection"], tLog) => I["then"];
+  thenCB: (storeState: I["iselection"]) => I["then"];
   go: (storeState: I["iselection"]) => I["then"];
   error: boolean;
 
@@ -556,7 +556,7 @@ export abstract class BaseThen<
 
   abstract butThen(
     store: I["istore"],
-    thenCB: (s: I["iselection"], tLog) => I["isubject"],
+    thenCB: (s: I["iselection"]) => I["isubject"],
     testResourceConfiguration: ITTestResourceConfiguration,
     pm: PM
   ): Promise<I["iselection"]>;
@@ -568,9 +568,15 @@ export abstract class BaseThen<
     pm: PM,
     filepath: string
   ): Promise<I["then"] | undefined> {
-    this.go = (s: I["iselection"]) => {
+    this.go = async (s: I["iselection"]) => {
       tLog(" Then!!!:", this.name);
-      this.thenCB(s, tLog);
+
+      try {
+        await this.thenCB(s);
+      } catch (e) {
+        console.log("test failed", e);
+        this.error = e.message;
+      }
     };
 
     try {
@@ -599,12 +605,7 @@ export abstract class BaseThen<
 
       return this.butThen(
         store,
-        // t,
         this.go,
-        // (s: I["iselection"], "x") => {
-        //   // tLog(" Then!!!:", this.name);
-        //   this.thenCB(s, tLog);
-        // },
         testResourceConfiguration,
         butThenProxy
       ).catch((e) => {

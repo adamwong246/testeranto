@@ -495,7 +495,7 @@ ${addableFiles
 
     if (!inflight) {
       this.browser.disconnect().then(() => {
-        console.log(ansiC.inverse("Goodbye from testeranto ❤️❤️❤️"));
+        console.log(ansiC.inverse(`${this.name} has been tested. Goodbye.`));
         process.exit();
       });
     }

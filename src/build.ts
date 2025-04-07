@@ -1,3 +1,4 @@
+import ansiC from "ansi-colors";
 import fs, { watch } from "fs";
 import path from "path";
 import readline from "readline";
@@ -44,7 +45,6 @@ const getRunnables = (
   }, payload as IRunnables);
 };
 
-// let mode = config.devMode ? "DEV" : "PROD";
 let mode = process.argv[3] as "once" | "dev";
 
 if (mode !== "once" && mode !== "dev") {
@@ -95,9 +95,6 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
       );
     }
   });
-
-  // let mode = config.devMode ? "DEV" : "PROD";
-
   let nodeDone: boolean = false;
   let webDone: boolean = false;
 
@@ -120,7 +117,7 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
       status = "built";
     }
     if (nodeDone && webDone && mode === "once") {
-      console.log("Testeranto-EsBuild is all done. Goodbye!");
+      console.log(ansiC.inverse(`${testName} has been built. Goodbye.`));
       process.exit();
     }
   };

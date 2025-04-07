@@ -65,4 +65,4 @@ var Init_default = async () => {
 // src/init-docs.ts
 console.log("Initializing a testeranto project");
 Init_default();
-console.log("goodbye");
+console.log("testeranto project initialized");

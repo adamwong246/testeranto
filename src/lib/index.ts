@@ -1,4 +1,3 @@
-import { IBaseTest } from "../../dist/types/src/Types.js";
 import { PM } from "../PM/index.js";
 import { Ibdd_in, Ibdd_out, ITestInterface } from "../Types.js";
 
@@ -39,8 +38,12 @@ export const BaseTestInterface: ITestInterface<
       unknown,
       unknown
     >["istore"],
-    thenCb
-  ) => thenCb(store),
+    thenCb: any
+  ) => {
+    try {
+      thenCb(store);
+    } catch (e) {}
+  },
   andWhen: (a) => a,
   assertThis: () => null,
 };

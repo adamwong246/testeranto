@@ -7,15 +7,12 @@ import crypto from "node:crypto";
 import { ESLint } from "eslint";
 import tsc from "tsc-prog";
 import { lintPather, promptPather, tscPather } from "../utils";
-import { PM } from "./index.js";
+import { PM_Base } from "./base.js";
 const eslint = new ESLint();
 const formatter = await eslint.loadFormatter("./node_modules/testeranto/dist/prebuild/esbuildConfigs/eslint-formatter-testeranto.mjs");
 const changes = {};
 const fileHashes = {};
-const fileStreams3 = [];
-const fPaths = [];
 const files = {};
-const recorders = {};
 const screenshots = {};
 async function fileHash(filePath, algorithm = "md5") {
     return new Promise((resolve, reject) => {
@@ -67,14 +64,13 @@ function isValidUrl(string) {
         return false;
     }
 }
-export class PM_Main extends PM {
-    constructor(configs, name) {
-        super();
-        this.shutdownMode = false;
+export class PM_Main extends PM_Base {
+    constructor(configs, name, mode) {
+        super(configs);
         this.bigBoard = {};
         this.stop = () => {
             console.log(ansiC.inverse("Testeranto-Run is shutting down gracefully..."));
-            this.mode = "PROD";
+            this.mode = "once";
             this.nodeMetafileWatcher.close();
             this.webMetafileWatcher.close();
             this.checkForShutdown();
@@ -106,7 +102,7 @@ export class PM_Main extends PM {
         };
         this.tscCheck = async ({ entrypoint, addableFiles, platform, }) => {
             console.log(ansiC.green(ansiC.inverse(`tsc < ${entrypoint}`)));
-            this.bigBoard[entrypoint].typeErrors = "?";
+            this.typeCheckIsRunning(entrypoint);
             const program = tsc.createProgramFromConfig({
                 basePath: process.cwd(), // always required, used for relative paths
                 configFilePath: "tsconfig.json", // config to inherit from (optional)
@@ -122,30 +118,23 @@ export class PM_Main extends PM {
             });
             const tscPath = tscPather(entrypoint, platform, this.name);
             let allDiagnostics = program.getSemanticDiagnostics();
-            const d = [];
+            const results = [];
             allDiagnostics.forEach((diagnostic) => {
                 if (diagnostic.file) {
                     let { line, character } = ts.getLineAndCharacterOfPosition(diagnostic.file, diagnostic.start);
                     let message = ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n");
-                    d.push(`${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`);
+                    results.push(`${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`);
                 }
                 else {
-                    d.push(ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n"));
+                    results.push(ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n"));
                 }
             });
-            fs.writeFileSync(tscPath, d.join("\n"));
-            this.bigBoard[entrypoint].typeErrors = d.length;
-            if (this.shutdownMode) {
-                this.checkForShutdown();
-            }
-            // fs.writeFileSync(
-            //   tscExitCodePather(entrypoint, platform),
-            //   d.length.toString()
-            // );
+            fs.writeFileSync(tscPath, results.join("\n"));
+            this.typeCheckIsNowDone(entrypoint, results.length);
         };
         this.eslintCheck = async (entrypoint, platform, addableFiles) => {
-            this.bigBoard[entrypoint].staticErrors = "?";
             console.log(ansiC.green(ansiC.inverse(`eslint < ${entrypoint}`)));
+            this.lintIsRunning(entrypoint);
             const results = (await eslint.lintFiles(addableFiles))
                 .filter((r) => r.messages.length)
                 .filter((r) => {
@@ -156,14 +145,7 @@ export class PM_Main extends PM {
                 return r;
             });
             fs.writeFileSync(lintPather(entrypoint, platform, this.name), await formatter.format(results));
-            this.bigBoard[entrypoint].staticErrors = results.length;
-            if (this.shutdownMode) {
-                this.checkForShutdown();
-            }
-            // fs.writeFileSync(
-            //   lintExitCodePather(entrypoint, platform),
-            //   results.length.toString()
-            // );
+            this.lintIsNowDone(entrypoint, results.length);
         };
         this.makePrompt = async (entryPoint, addableFiles, platform) => {
             this.bigBoard[entryPoint].prompt = "?";
@@ -189,42 +171,74 @@ ${addableFiles
                 .split(".")
                 .slice(0, -1)
                 .join(".")}/prompt.txt`;
-            if (this.shutdownMode) {
-                this.checkForShutdown();
-            }
+            this.checkForShutdown();
         };
         this.checkForShutdown = () => {
-            const anyRunning = Object.values(this.bigBoard).filter((x) => x.prompt === "?").length +
-                Object.values(this.bigBoard).filter((x) => x.runTimeError === "?")
-                    .length +
-                Object.values(this.bigBoard).filter((x) => x.staticErrors === "?")
-                    .length +
-                Object.values(this.bigBoard).filter((x) => x.typeErrors === "?")
-                    .length >
-                0;
-            if (anyRunning) {
-                console.log(ansiC.inverse("Shutting down. Please wait"));
-            }
-            else {
+            this.writeBigBoard();
+            if (this.mode === "dev")
+                return;
+            let inflight = false;
+            Object.keys(this.bigBoard).forEach((k) => {
+                if (this.bigBoard[k].prompt === "?") {
+                    console.log(ansiC.blue(ansiC.inverse(`🕕 prompt ${k}`)));
+                    inflight = true;
+                }
+            });
+            Object.keys(this.bigBoard).forEach((k) => {
+                if (this.bigBoard[k].runTimeError === "?") {
+                    console.log(ansiC.blue(ansiC.inverse(`🕕 runTimeError ${k}`)));
+                    inflight = true;
+                }
+            });
+            Object.keys(this.bigBoard).forEach((k) => {
+                if (this.bigBoard[k].staticErrors === "?") {
+                    console.log(ansiC.blue(ansiC.inverse(`🕕 staticErrors ${k}`)));
+                    inflight = true;
+                }
+            });
+            Object.keys(this.bigBoard).forEach((k) => {
+                if (this.bigBoard[k].typeErrors === "?") {
+                    console.log(ansiC.blue(ansiC.inverse(`🕕 typeErrors ${k}`)));
+                    inflight = true;
+                }
+            });
+            this.writeBigBoard();
+            if (!inflight) {
                 this.browser.disconnect().then(() => {
-                    fs.writeFileSync(`testeranto/reports/${this.name}/summary.json`, JSON.stringify(this.bigBoard, null, 2));
-                    console.log(ansiC.inverse("Goodbye"));
+                    console.log(ansiC.inverse(`${this.name} has been tested. Goodbye.`));
                     process.exit();
                 });
             }
         };
-        this.testIsNowRunning = (src) => {
-            // this.bigBoard[src].status = "running";
+        this.typeCheckIsRunning = (src) => {
+            this.bigBoard[src].typeErrors = "?";
         };
-        this.testIsNowDone = (src) => {
-            // this.bigBoard[src].status = "waiting";
-            if (this.shutdownMode) {
-                this.checkForShutdown();
-            }
+        this.typeCheckIsNowDone = (src, failures) => {
+            this.bigBoard[src].typeErrors = failures;
+            this.writeBigBoard();
+            this.checkForShutdown();
+        };
+        this.lintIsRunning = (src) => {
+            this.bigBoard[src].staticErrors = "?";
+            this.writeBigBoard();
+        };
+        this.lintIsNowDone = (src, failures) => {
+            this.bigBoard[src].staticErrors = failures;
+            this.writeBigBoard();
+            this.checkForShutdown();
+        };
+        this.bddTestIsRunning = (src) => {
+            this.bigBoard[src].runTimeError = "?";
+            this.writeBigBoard();
+        };
+        this.bddTestIsNowDone = (src, failures) => {
+            this.bigBoard[src].runTimeError = failures;
+            this.writeBigBoard();
+            this.checkForShutdown();
         };
         this.launchNode = async (src, dest) => {
-            // console.log(ansiC.yellow(`! node, ${src}`));
             console.log(ansiC.green(ansiC.inverse(`! node, ${src}`)));
+            this.bddTestIsRunning(src);
             const reportDest = `testeranto/reports/${this.name}/${src
                 .split(".")
                 .slice(0, -1)
@@ -232,8 +246,7 @@ ${addableFiles
             if (!fs.existsSync(reportDest)) {
                 fs.mkdirSync(reportDest, { recursive: true });
             }
-            this.testIsNowRunning(src);
-            const destFolder = dest.replace(".mjs", ""); //`./testeranto/reports/${dest.replace(".mjs", "")}`; //dest.replace(".mjs", "");
+            const destFolder = dest.replace(".mjs", "");
             let argz = "";
             const testConfig = this.configs.tests.find((t) => {
                 return t[0] === src;
@@ -306,17 +319,15 @@ ${addableFiles
                         .receiveTestResourceConfig(argz)
                         .then(async ({ features, failed }) => {
                         this.receiveFeatures(features, destFolder, src, "node");
-                        // console.log(`${src} completed with ${failed} errors`);
                         statusMessagePretty(failed, src);
-                        this.receiveExitCode(src, failed);
+                        this.bddTestIsNowDone(src, failed);
                     })
                         .catch((e) => {
                         console.log(ansiC.red(ansiC.inverse(`${src} errored with: ${e}`)));
-                        // console.log(reset, `${src} errored with`, e);
+                        this.bddTestIsNowDone(src, -1);
                     })
                         .finally(() => {
                         webSideCares.forEach((webSideCar) => webSideCar.close());
-                        this.testIsNowDone(src);
                     });
                 });
             });
@@ -342,7 +353,6 @@ ${addableFiles
                     //   //   console.log(`${i}: ${msg._args[i]}`);
                     // });
                     page.exposeFunction("custom-screenshot", async (ssOpts, testName) => {
-                        // console.log("main.ts browser custom-screenshot", testName);
                         const p = ssOpts.path;
                         const dir = path.dirname(p);
                         fs.mkdirSync(dir, {
@@ -354,10 +364,8 @@ ${addableFiles
                             screenshots[testName] = [];
                         }
                         screenshots[testName].push(sPromise);
-                        // sPromise.then(())
                         await sPromise;
                         return sPromise;
-                        // page.evaluate(`window["screenshot done"]`);
                     });
                     page.exposeFunction("writeFileSync", (fp, contents, testName) => {
                         const dir = path.dirname(fp);
@@ -388,9 +396,6 @@ ${addableFiles
                     });
                     page.exposeFunction("createWriteStream", (fp, testName) => {
                         const f = fs.createWriteStream(fp);
-                        // if (!files[testName]) {
-                        //   files[testName] = new Set();
-                        // }
                         files[testName].add(fp);
                         const p = new Promise((res, rej) => {
                             res(fp);
@@ -408,21 +413,11 @@ ${addableFiles
                     page.exposeFunction("end", async (uid) => {
                         return fileStreams2[uid].end();
                     });
-                    // page.exposeFunction("customclose", (p: string, testName: string) => {
-                    //   fs.writeFileSync(
-                    //     p + "/manifest.json",
-                    //     JSON.stringify(Array.from(files[testName]))
-                    //   );
-                    //   delete files[testName];
-                    //   Promise.all(screenshots[testName] || []).then(() => {
-                    //     delete screenshots[testName];
-                    //     // page.close();
-                    //   });
-                    // });
                     return page;
                 })
                     .then(async (page) => {
                     await page.goto(`file://${`${dest}.html`}`, {});
+                    /* @ts-ignore:next-line */
                     res(page);
                 });
             });
@@ -494,8 +489,8 @@ ${addableFiles
             }
         };
         this.launchWeb = (src, dest) => {
-            // console.log(green, "! web", t);
             console.log(ansiC.green(ansiC.inverse(`! web ${src}`)));
+            this.bddTestIsRunning(src);
             const reportDest = `testeranto/reports/${this.name}/${src
                 .split(".")
                 .slice(0, -1)
@@ -503,7 +498,6 @@ ${addableFiles
             if (!fs.existsSync(reportDest)) {
                 fs.mkdirSync(reportDest, { recursive: true });
             }
-            this.testIsNowRunning(src);
             // sidecars.map((sidecar) => {
             //   if (sidecar[1] === "node") {
             //     return this.launchNodeSideCar(
@@ -631,37 +625,6 @@ ${addableFiles
                 page.exposeFunction("end", async (uid) => {
                     return fileStreams2[uid].end();
                 });
-                // page.exposeFunction("customclose", (p: string, testName: string) => {
-                //   // console.log("closing", p);
-                //   console.log("\t GOODBYE customclose");
-                //   fs.writeFileSync(
-                //     p + "/manifest.json",
-                //     JSON.stringify(Array.from(files[testName]))
-                //   );
-                //   delete files[testName];
-                //   // console.log("screenshots[testName]", screenshots[testName]);
-                //   Promise.all(screenshots[testName] || []).then(() => {
-                //     delete screenshots[testName];
-                //   });
-                //   // globalThis["writeFileSync"](
-                //   //   p + "/manifest.json",
-                //   //   // files.entries()
-                //   //   JSON.stringify(Array.from(files[testName]))
-                //   // );
-                //   // console.log("closing doneFileStream2", doneFileStream2);
-                //   // console.log("closing doneFileStream2", doneFileStream2);
-                //   // Promise.all([...doneFileStream2, ...screenshots2]).then(() => {
-                //   //   page.close();
-                //   // });
-                //   // Promise.all(screenshots).then(() => {
-                //   //   page.close();
-                //   // });
-                //   // setTimeout(() => {
-                //   //   console.log("Delayed for 1 second.");
-                //   //   page.close();
-                //   // }, 5000);
-                //   // return page.close();
-                // });
                 page.exposeFunction("page", () => {
                     return page.mainFrame()._id;
                 });
@@ -703,7 +666,6 @@ ${addableFiles
                     Promise.all(screenshots[src] || []).then(() => {
                         delete screenshots[src];
                         page.close();
-                        this.testIsNowDone(src);
                         stderrStream.close();
                         stdoutStream.close();
                     });
@@ -721,6 +683,7 @@ ${addableFiles
                     }
                     console.debug(`Error from message ${src}: [${err.message}] `);
                     stderrStream.write(err.message);
+                    this.bddTestIsNowDone(src, -1);
                     close();
                 });
                 page.on("console", (log) => {
@@ -740,14 +703,14 @@ ${addableFiles
                     this.receiveFeatures(features, destFolder, src, "web");
                     // console.log(`${t} completed with ${failed} errors`);
                     statusMessagePretty(failed, src);
-                    this.receiveExitCode(src, failed);
+                    this.bddTestIsNowDone(src, failed);
                 })
                     .catch((e) => {
                     // console.log(red, `${t} errored with`, e);
                     console.log(ansiC.red(ansiC.inverse(`${src} errored with: ${e}`)));
                 })
                     .finally(() => {
-                    // this.testIsNowDone(t);
+                    this.bddTestIsNowDone(src, -1);
                     close();
                 });
                 return page;
@@ -812,17 +775,11 @@ ${addableFiles
             });
             // this.writeBigBoard();
         };
-        this.receiveExitCode = (srcTest, failures) => {
-            this.bigBoard[srcTest].runTimeError = failures;
-            this.writeBigBoard();
-        };
         this.writeBigBoard = () => {
             fs.writeFileSync(`./testeranto/reports/${this.name}/summary.json`, JSON.stringify(this.bigBoard, null, 2));
         };
         this.name = name;
-        this.mode = configs.devMode ? "DEV" : "PROD";
-        this.server = {};
-        this.configs = configs;
+        this.mode = mode;
         this.ports = {};
         this.configs.tests.forEach(([t]) => {
             this.bigBoard[t] = {
@@ -835,103 +792,6 @@ ${addableFiles
         this.configs.ports.forEach((element) => {
             this.ports[element] = "true"; // set ports as open
         });
-        globalThis["waitForSelector"] = async (pageKey, sel) => {
-            const page = (await this.browser.pages()).find(
-            /* @ts-ignore:next-line */
-            (p) => p.mainFrame()._id === pageKey);
-            await (page === null || page === void 0 ? void 0 : page.waitForSelector(sel));
-        };
-        globalThis["screencastStop"] = async (path) => {
-            return recorders[path].stop();
-        };
-        globalThis["closePage"] = async (pageKey) => {
-            const page = (await this.browser.pages()).find(
-            /* @ts-ignore:next-line */
-            (p) => p.mainFrame()._id === pageKey);
-            /* @ts-ignore:next-line */
-            return page.close();
-        };
-        globalThis["goto"] = async (pageKey, url) => {
-            const page = (await this.browser.pages()).find(
-            /* @ts-ignore:next-line */
-            (p) => p.mainFrame()._id === pageKey);
-            await (page === null || page === void 0 ? void 0 : page.goto(url));
-            return;
-        };
-        globalThis["newPage"] = () => {
-            return this.browser.newPage();
-        };
-        globalThis["pages"] = () => {
-            return this.browser.pages();
-        };
-        globalThis["mkdirSync"] = (fp) => {
-            if (!fs.existsSync(fp)) {
-                return fs.mkdirSync(fp, {
-                    recursive: true,
-                });
-            }
-            return false;
-        };
-        globalThis["writeFileSync"] = (filepath, contents, testName) => {
-            fs.mkdirSync(path.dirname(filepath), {
-                recursive: true,
-            });
-            if (!files[testName]) {
-                files[testName] = new Set();
-            }
-            files[testName].add(filepath);
-            return fs.writeFileSync(filepath, contents);
-        };
-        globalThis["createWriteStream"] = (filepath, testName) => {
-            const f = fs.createWriteStream(filepath);
-            fileStreams3.push(f);
-            // files.add(filepath);
-            if (!files[testName]) {
-                files[testName] = new Set();
-            }
-            files[testName].add(filepath);
-            return Object.assign(Object.assign({}, JSON.parse(JSON.stringify(f))), { uid: fileStreams3.length - 1 });
-        };
-        globalThis["write"] = (uid, contents) => {
-            fileStreams3[uid].write(contents);
-        };
-        globalThis["end"] = (uid) => {
-            fileStreams3[uid].end();
-        };
-        globalThis["customScreenShot"] = async (opts, pageKey, testName) => {
-            const page = (await this.browser.pages()).find(
-            /* @ts-ignore:next-line */
-            (p) => p.mainFrame()._id === pageKey);
-            const p = opts.path;
-            const dir = path.dirname(p);
-            fs.mkdirSync(dir, {
-                recursive: true,
-            });
-            if (!files[opts.path]) {
-                files[opts.path] = new Set();
-            }
-            files[opts.path].add(opts.path);
-            const sPromise = page.screenshot(Object.assign(Object.assign({}, opts), { path: p }));
-            if (!screenshots[opts.path]) {
-                screenshots[opts.path] = [];
-            }
-            screenshots[opts.path].push(sPromise);
-            await sPromise;
-            return sPromise;
-        };
-        globalThis["screencast"] = async (opts, pageKey) => {
-            const page = (await this.browser.pages()).find(
-            /* @ts-ignore:next-line */
-            (p) => p.mainFrame()._id === pageKey);
-            const p = opts.path;
-            const dir = path.dirname(p);
-            fs.mkdirSync(dir, {
-                recursive: true,
-            });
-            const recorder = await (page === null || page === void 0 ? void 0 : page.screencast(Object.assign(Object.assign({}, opts), { path: p })));
-            recorders[opts.path] = recorder;
-            return opts.path;
-        };
     }
     async start() {
         if (!fs.existsSync(`testeranto/reports/${this.name}`)) {
@@ -939,44 +799,42 @@ ${addableFiles
         }
         this.browser = (await puppeteer.launch({
             slowMo: 1,
-            // timeout: 1,
             waitForInitialPage: false,
             executablePath: 
             // process.env.CHROMIUM_PATH || "/opt/homebrew/bin/chromium",
             "/opt/homebrew/bin/chromium",
             headless: true,
-            dumpio: true,
-            // timeout: 0,
-            devtools: true,
+            dumpio: false,
+            devtools: false,
             args: [
-                "--auto-open-devtools-for-tabs",
-                `--remote-debugging-port=3234`,
-                // "--disable-features=IsolateOrigins,site-per-process",
-                "--disable-site-isolation-trials",
-                "--allow-insecure-localhost",
                 "--allow-file-access-from-files",
+                "--allow-insecure-localhost",
                 "--allow-running-insecure-content",
+                "--auto-open-devtools-for-tabs",
                 "--disable-dev-shm-usage",
                 "--disable-extensions",
                 "--disable-gpu",
                 "--disable-setuid-sandbox",
                 "--disable-site-isolation-trials",
+                "--disable-site-isolation-trials",
                 "--disable-web-security",
                 "--no-first-run",
                 "--no-sandbox",
                 "--no-startup-window",
-                // "--no-zygote",
                 "--reduce-security-for-testing",
                 "--remote-allow-origins=*",
+                `--remote-debugging-port=3234`,
                 "--unsafely-treat-insecure-origin-as-secure=*",
+                // "--disable-features=IsolateOrigins,site-per-process",
                 // "--disable-features=IsolateOrigins",
-                // "--remote-allow-origins=ws://localhost:3234",
-                // "--single-process",
-                // "--unsafely-treat-insecure-origin-as-secure",
-                // "--unsafely-treat-insecure-origin-as-secure=ws://192.168.0.101:3234",
                 // "--disk-cache-dir=/dev/null",
                 // "--disk-cache-size=1",
+                // "--no-zygote",
+                // "--remote-allow-origins=ws://localhost:3234",
+                // "--single-process",
                 // "--start-maximized",
+                // "--unsafely-treat-insecure-origin-as-secure",
+                // "--unsafely-treat-insecure-origin-as-secure=ws://192.168.0.101:3234",
             ],
         }));
         const { nodeEntryPoints, webEntryPoints } = this.getRunnables(this.configs.tests);
@@ -1020,116 +878,6 @@ ${addableFiles
             this.metafileOutputs("web");
         });
     }
-    customclose() {
-        throw new Error("Method not implemented.");
-    }
-    waitForSelector(p, s) {
-        throw new Error("Method not implemented.");
-    }
-    closePage(p) {
-        throw new Error("Method not implemented.");
-    }
-    newPage() {
-        throw new Error("Method not implemented.");
-    }
-    goto(p, url) {
-        throw new Error("Method not implemented.");
-    }
-    $(selector) {
-        throw new Error("Method not implemented.");
-    }
-    screencast(opts) {
-        throw new Error("Method not implemented.");
-    }
-    customScreenShot(opts, cdpPage) {
-        throw new Error("Method not implemented.");
-    }
-    end(accessObject) {
-        throw new Error("Method not implemented.");
-    }
-    existsSync(destFolder) {
-        return fs.existsSync(destFolder);
-    }
-    async mkdirSync(fp) {
-        if (!fs.existsSync(fp)) {
-            return fs.mkdirSync(fp, {
-                recursive: true,
-            });
-        }
-        return false;
-    }
-    writeFileSync(fp, contents) {
-        fs.writeFileSync(fp, contents);
-    }
-    createWriteStream(filepath) {
-        return fs.createWriteStream(filepath);
-    }
-    testArtiFactoryfileWriter(tLog, callback) {
-        return (fPath, value) => {
-            callback(new Promise((res, rej) => {
-                tLog("testArtiFactory =>", fPath);
-                const cleanPath = path.resolve(fPath);
-                fPaths.push(cleanPath.replace(process.cwd(), ``));
-                const targetDir = cleanPath.split("/").slice(0, -1).join("/");
-                fs.mkdir(targetDir, { recursive: true }, async (error) => {
-                    if (error) {
-                        console.error(`❗️testArtiFactory failed`, targetDir, error);
-                    }
-                    fs.writeFileSync(path.resolve(targetDir.split("/").slice(0, -1).join("/"), "manifest"), fPaths.join(`\n`), {
-                        encoding: "utf-8",
-                    });
-                    if (Buffer.isBuffer(value)) {
-                        fs.writeFileSync(fPath, value, "binary");
-                        res();
-                    }
-                    else if (`string` === typeof value) {
-                        fs.writeFileSync(fPath, value.toString(), {
-                            encoding: "utf-8",
-                        });
-                        res();
-                    }
-                    else {
-                        /* @ts-ignore:next-line */
-                        const pipeStream = value;
-                        const myFile = fs.createWriteStream(fPath);
-                        pipeStream.pipe(myFile);
-                        pipeStream.on("close", () => {
-                            myFile.close();
-                            res();
-                        });
-                    }
-                });
-            }));
-        };
-    }
-    write(accessObject, contents) {
-        throw new Error("Method not implemented.");
-    }
-    page() {
-        throw new Error("Method not implemented.");
-    }
-    click(selector) {
-        throw new Error("Method not implemented.");
-    }
-    focusOn(selector) {
-        throw new Error("Method not implemented.");
-    }
-    typeInto(value) {
-        throw new Error("Method not implemented.");
-    }
-    getValue(value) {
-        throw new Error("Method not implemented.");
-    }
-    getAttribute(selector, attribute) {
-        throw new Error("Method not implemented.");
-    }
-    isDisabled(selector) {
-        throw new Error("Method not implemented.");
-    }
-    screencastStop(s) {
-        throw new Error("Method not implemented.");
-    }
-    ////////////////////////////////////////////////////////////////////////////////
     async metafileOutputs(platform) {
         const metafile = JSON.parse(fs
             .readFileSync(`./testeranto/bundles/${platform}/${this.name}/metafile.json`)

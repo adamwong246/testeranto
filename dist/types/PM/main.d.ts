@@ -1,55 +1,23 @@
-import { CdpPage, Page } from "puppeteer-core/lib/esm/puppeteer";
+import { Page } from "puppeteer-core/lib/esm/puppeteer";
 import fs from "fs";
-import { Browser } from "puppeteer-core";
-import { PassThrough } from "stream";
-import { IBuiltConfig, IRunnables, ITestTypes, ITLog } from "../lib/index.js";
+import { IBuiltConfig, IRunnables, ITestTypes } from "../lib/index.js";
 import { ISummary } from "../utils";
-import { PM } from "./index.js";
-export declare class PM_Main extends PM {
+import { PM_Base } from "./base.js";
+export declare class PM_Main extends PM_Base {
     name: string;
-    browser: Browser;
-    shutdownMode: boolean;
-    configs: IBuiltConfig;
     ports: Record<number, boolean>;
     queue: any[];
-    mode: "DEV" | "PROD";
+    mode: "once" | "dev";
     bigBoard: ISummary;
     webMetafileWatcher: fs.FSWatcher;
     nodeMetafileWatcher: fs.FSWatcher;
-    constructor(configs: IBuiltConfig, name: string);
+    constructor(configs: IBuiltConfig, name: string, mode: "once" | "dev");
     start(): Promise<any>;
     stop: () => void;
     getRunnables: (tests: ITestTypes[], payload?: {
         nodeEntryPoints: {};
         webEntryPoints: {};
     }) => IRunnables;
-    customclose(): void;
-    waitForSelector(p: string, s: string): any;
-    closePage(p: any): any;
-    newPage(): CdpPage;
-    goto(p: any, url: string): any;
-    $(selector: string): boolean;
-    screencast(opts: object): void;
-    customScreenShot(opts: object, cdpPage?: CdpPage): void;
-    end(accessObject: {
-        uid: number;
-    }): boolean;
-    existsSync(destFolder: string): boolean;
-    mkdirSync(fp: string): Promise<string | false | undefined>;
-    writeFileSync(fp: string, contents: string): void;
-    createWriteStream(filepath: string): fs.WriteStream;
-    testArtiFactoryfileWriter(tLog: ITLog, callback: (Promise: any) => void): (fPath: any, value: string | Buffer | PassThrough) => void;
-    write(accessObject: {
-        uid: number;
-    }, contents: string): boolean;
-    page(): string | undefined;
-    click(selector: string): string | undefined;
-    focusOn(selector: string): void;
-    typeInto(value: string): void;
-    getValue(value: string): void;
-    getAttribute(selector: string, attribute: string): void;
-    isDisabled(selector: string): Promise<boolean>;
-    screencastStop(s: string): void;
     metafileOutputs(platform: "web" | "node"): Promise<void>;
     tscCheck: ({ entrypoint, addableFiles, platform, }: {
         platform: "web" | "node";
@@ -59,13 +27,16 @@ export declare class PM_Main extends PM {
     eslintCheck: (entrypoint: string, platform: "web" | "node", addableFiles: string[]) => Promise<void>;
     makePrompt: (entryPoint: string, addableFiles: string[], platform: "web" | "node") => Promise<void>;
     checkForShutdown: () => void;
-    testIsNowRunning: (src: string) => void;
-    testIsNowDone: (src: string) => void;
+    typeCheckIsRunning: (src: string) => void;
+    typeCheckIsNowDone: (src: string, failures: number) => void;
+    lintIsRunning: (src: string) => void;
+    lintIsNowDone: (src: string, failures: number) => void;
+    bddTestIsRunning: (src: string) => void;
+    bddTestIsNowDone: (src: string, failures: number) => void;
     launchNode: (src: string, dest: string) => Promise<void>;
     launchWebSideCar: (src: string, dest: string, testConfig: ITestTypes) => Promise<Page>;
     launchNodeSideCar: (src: string, dest: string, testConfig: ITestTypes) => Promise<void>;
     launchWeb: (src: string, dest: string) => void;
     receiveFeatures: (features: string[], destFolder: string, srcTest: string, platform: "node" | "web") => void;
-    receiveExitCode: (srcTest: string, failures: number) => void;
     writeBigBoard: () => void;
 }

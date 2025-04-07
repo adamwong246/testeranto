@@ -36,6 +36,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const ansi_colors_1 = __importDefault(require("ansi-colors"));
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const readline_1 = __importDefault(require("readline"));
@@ -64,7 +65,6 @@ const getRunnables = (tests, payload = {
         return pt;
     }, payload);
 };
-// let mode = config.devMode ? "DEV" : "PROD";
 let mode = process.argv[3];
 if (mode !== "once" && mode !== "dev") {
     console.error("the 2nd argument should be 'dev' or 'once' ");
@@ -72,8 +72,7 @@ if (mode !== "once" && mode !== "dev") {
 }
 Promise.resolve(`${process.cwd() + "/" + process.argv[2]}`).then(s => __importStar(require(s))).then(async (module) => {
     const testName = path_1.default.basename(process.argv[2]).split(".")[0];
-    console.log("testeranto is testing", testName);
-    // if (!fs.existsSync(`testeranto/`))
+    console.log("testeranto is building", testName, mode);
     const rawConfig = module.default;
     const getSecondaryEndpointsPoints = (runtime) => {
         const meta = (ts, st) => {
@@ -105,7 +104,6 @@ Promise.resolve(`${process.cwd() + "/" + process.argv[2]}`).then(s => __importSt
             console.log(`Press 'q' to shutdown gracefully. Press 'x' to shutdown forcefully.`);
         }
     });
-    // let mode = config.devMode ? "DEV" : "PROD";
     let nodeDone = false;
     let webDone = false;
     let status = "build";
@@ -122,60 +120,15 @@ Promise.resolve(`${process.cwd() + "/" + process.argv[2]}`).then(s => __importSt
         if (nodeDone && webDone) {
             status = "built";
         }
-        if (nodeDone && webDone && status === "built") {
-            // Object.entries(nodeEntryPoints).forEach(([k, outputFile]) => {
-            //   console.log("watching", outputFile);
-            //   try {
-            //     watch(outputFile, async (filename) => {
-            //       const hash = await fileHash(outputFile);
-            //       if (fileHashes[k] !== hash) {
-            //         fileHashes[k] = hash;
-            //         console.log(`< ${filename} `);
-            //         pm.launchNode(k, outputFile);
-            //       }
-            //     });
-            //   } catch (e) {
-            //     console.error(e);
-            //   }
-            // });
-            // Object.entries(webEntryPoints).forEach(([k, outputFile]) => {
-            //   console.log("watching", outputFile);
-            //   watch(outputFile, async (filename) => {
-            //     const hash = await fileHash(outputFile);
-            //     console.log(`< ${filename} ${hash}`);
-            //     if (fileHashes[k] !== hash) {
-            //       fileHashes[k] = hash;
-            //       pm.launchWeb(k, outputFile);
-            //     }
-            //   });
-            // });
-        }
         if (nodeDone && webDone && mode === "once") {
-            console.log("Testeranto-EsBuild is all done. Goodbye!");
+            console.log(ansi_colors_1.default.inverse(`${testName} has been built. Goodbye.`));
             process.exit();
         }
-        else {
-            if (mode === "once") {
-                console.log("waiting for tests to finish");
-                console.log(JSON.stringify({
-                    nodeDone: nodeDone,
-                    webDone: webDone,
-                    mode: mode,
-                }, null, 2));
-            }
-            else {
-                console.log("waiting for tests to change");
-            }
-            if ((mode = "dev")) {
-                console.log("ready and watching for changes...");
-            }
-            else {
-                console.log("waiting for tests to complete");
-            }
-            ////////////////////////////////////////////////////////////////////////////////
-        }
     };
-    fs_1.default.writeFileSync(`testeranto/${testName}.json`, JSON.stringify(config, null, 2));
+    if (!fs_1.default.existsSync(`testeranto/reports/${testName}`)) {
+        fs_1.default.mkdirSync(`testeranto/reports/${testName}`);
+    }
+    fs_1.default.writeFileSync(`testeranto/reports/${testName}/config.json`, JSON.stringify(config, null, 2));
     Promise.resolve(Promise.all([...getSecondaryEndpointsPoints("web")].map(async (sourceFilePath) => {
         const sourceFileSplit = sourceFilePath.split("/");
         const sourceDir = sourceFileSplit.slice(0, -1);

@@ -527,7 +527,7 @@ ${addableFiles.map((x) => {
       this.writeBigBoard();
       if (!inflight) {
         this.browser.disconnect().then(() => {
-          console.log(ansiC.inverse("Goodbye from testeranto \u2764\uFE0F\u2764\uFE0F\u2764\uFE0F"));
+          console.log(ansiC.inverse(`${this.name} has been tested. Goodbye.`));
           process.exit();
         });
       }

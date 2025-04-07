@@ -259,9 +259,15 @@ class BaseThen {
         };
     }
     async test(store, testResourceConfiguration, tLog, pm, filepath) {
-        this.go = (s) => {
+        this.go = async (s) => {
             tLog(" Then!!!:", this.name);
-            this.thenCB(s, tLog);
+            try {
+                await this.thenCB(s);
+            }
+            catch (e) {
+                console.log("test failed", e);
+                this.error = e.message;
+            }
         };
         try {
             const butThenProxy = new Proxy(pm, {
@@ -276,14 +282,7 @@ class BaseThen {
                     return Reflect.get(...arguments);
                 },
             });
-            return this.butThen(store, 
-            // t,
-            this.go, 
-            // (s: I["iselection"], "x") => {
-            //   // tLog(" Then!!!:", this.name);
-            //   this.thenCB(s, tLog);
-            // },
-            testResourceConfiguration, butThenProxy).catch((e) => {
+            return this.butThen(store, this.go, testResourceConfiguration, butThenProxy).catch((e) => {
                 this.error = true;
                 throw e;
             });

@@ -1,6 +1,7 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 
 // src/build.ts
+import ansiC from "ansi-colors";
 import fs2 from "fs";
 import path3 from "path";
 import readline from "readline";
@@ -299,7 +300,7 @@ import(process.cwd() + "/" + process.argv[2]).then(async (module) => {
       status = "built";
     }
     if (nodeDone && webDone && mode === "once") {
-      console.log("Testeranto-EsBuild is all done. Goodbye!");
+      console.log(ansiC.inverse(`${testName} has been built. Goodbye.`));
       process.exit();
     }
   };

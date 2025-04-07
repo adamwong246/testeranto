@@ -57,10 +57,10 @@ if (mode !== "once" && mode !== "dev") {
 }
 Promise.resolve(`${process.cwd() + "/" + process.argv[2]}`).then(s => __importStar(require(s))).then(async (module) => {
     const testName = path_1.default.basename(process.argv[2]).split(".")[0];
-    console.log("testeranto is testing", testName);
+    console.log("testeranto is running", testName, mode);
     const rawConfig = module.default;
     const config = Object.assign(Object.assign({}, rawConfig), { buildDir: process.cwd() + "/" + `testeranto/${testName}.json` });
-    const pm = new main_1.PM_Main(config, testName);
+    const pm = new main_1.PM_Main(config, testName, mode);
     pm.start();
     process.stdin.on("keypress", (str, key) => {
         if (key.name === "q") {

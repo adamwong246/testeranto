@@ -84,7 +84,7 @@ export declare abstract class BaseWhen<I extends Ibdd_in<unknown, unknown, unkno
 }
 export declare abstract class BaseThen<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>> {
     name: string;
-    thenCB: (storeState: I["iselection"], tLog: any) => I["then"];
+    thenCB: (storeState: I["iselection"]) => I["then"];
     go: (storeState: I["iselection"]) => I["then"];
     error: boolean;
     constructor(name: string, thenCB: (val: I["iselection"]) => I["then"]);
@@ -92,7 +92,7 @@ export declare abstract class BaseThen<I extends Ibdd_in<unknown, unknown, unkno
         name: string;
         error: boolean;
     };
-    abstract butThen(store: I["istore"], thenCB: (s: I["iselection"], tLog: any) => I["isubject"], testResourceConfiguration: ITTestResourceConfiguration, pm: PM): Promise<I["iselection"]>;
+    abstract butThen(store: I["istore"], thenCB: (s: I["iselection"]) => I["isubject"], testResourceConfiguration: ITTestResourceConfiguration, pm: PM): Promise<I["iselection"]>;
     test(store: I["istore"], testResourceConfiguration: any, tLog: ITLog, pm: PM, filepath: string): Promise<I["then"] | undefined>;
     check(): void;
 }
