@@ -242,6 +242,7 @@
     "fs-extra": "^11.2.0",
     "fs.promises.exists": "^1.1.4",
     "glob": "^10.3.12",
+    "is-path-inside": "^4.0.0",
     "iterm-tab": "^0.4.0",
     "live-server": "^1.2.2",
     "node-static": "^0.7.11",
