@@ -37,9 +37,11 @@ export abstract class BaseSuite<
   givens: IGivens<I>;
   checks: BaseCheck<I, O>[];
   store: I["istore"];
-  fails: BaseGiven<I>[];
+  // fails: BaseGiven<I>[];
   testResourceConfiguration: ITTestResourceConfiguration;
   index: number;
+  failed: boolean;
+  fails: number;
 
   constructor(
     name: string,
@@ -51,7 +53,7 @@ export abstract class BaseSuite<
     this.index = index;
     this.givens = givens;
     this.checks = checks;
-    this.fails = [];
+    this.fails = 0;
   }
 
   public features() {
@@ -77,6 +79,7 @@ export abstract class BaseSuite<
       givens,
       checks,
       fails: this.fails,
+      failed: this.failed,
       features: this.features(),
     };
   }
@@ -161,8 +164,10 @@ export abstract class BaseSuite<
           sNdx
         );
       } catch (e) {
-        console.error(e);
-        this.fails.push(giver);
+        this.failed = true;
+        this.fails = this.fails + 1;
+        // console.error(e);
+        // this.fails.push(giver);
         // return this;
       }
     }
@@ -232,6 +237,7 @@ export abstract class BaseGiven<
   givenCB: I["given"];
   initialValues: any;
   key: string;
+  failed: boolean;
 
   constructor(
     name: string,
@@ -269,6 +275,7 @@ export abstract class BaseGiven<
       whens: this.whens.map((w) => w.toObj()),
       thens: this.thens.map((t) => t.toObj()),
       error: this.error ? [this.error, this.error.stack] : null,
+      failed: this.failed,
       // fail: this.fail ? [this.fail] : false,
       features: this.features,
     };
@@ -311,52 +318,51 @@ export abstract class BaseGiven<
 
     const givenArtifactory = (fPath: string, value: unknown) =>
       artifactory(`given-${key}/${fPath}`, value);
+
+    const beforeEachProxy = new Proxy(pm, {
+      get(target, prop, receiver) {
+        if (prop === "writeFileSync") {
+          return (fp, contents) =>
+            target[prop](
+              `suite-${suiteNdx}/given-${key}/when/beforeEach/${fp}`,
+              contents
+            );
+        }
+
+        if (prop === "customScreenShot") {
+          return (opts, p) =>
+            target.customScreenShot(
+              {
+                ...opts,
+                path: `suite-${suiteNdx}/given-${key}/when/beforeEach/${opts.path}`,
+              },
+              p
+            );
+        }
+
+        if (prop === "screencast") {
+          return (opts, p) =>
+            target.screencast(
+              {
+                ...opts,
+                path: `suite-${suiteNdx}/given-${key}/when/beforeEach/${opts.path}`,
+              },
+              p
+            );
+        }
+
+        /* @ts-ignore:next-line */
+        return Reflect.get(...arguments);
+      },
+    });
+
+    this.uberCatcher((e) => {
+      console.error(e);
+      this.error = e.error;
+      tLog(e.stack);
+    });
+
     try {
-      // tLog(`\n Given this.store`, this.store);
-
-      const beforeEachProxy = new Proxy(pm, {
-        get(target, prop, receiver) {
-          if (prop === "writeFileSync") {
-            return (fp, contents) =>
-              target[prop](
-                `suite-${suiteNdx}/given-${key}/when/beforeEach/${fp}`,
-                contents
-              );
-          }
-
-          if (prop === "customScreenShot") {
-            return (opts, p) =>
-              target.customScreenShot(
-                {
-                  ...opts,
-                  path: `suite-${suiteNdx}/given-${key}/when/beforeEach/${opts.path}`,
-                },
-                p
-              );
-          }
-
-          if (prop === "screencast") {
-            return (opts, p) =>
-              target.screencast(
-                {
-                  ...opts,
-                  path: `suite-${suiteNdx}/given-${key}/when/beforeEach/${opts.path}`,
-                },
-                p
-              );
-          }
-
-          /* @ts-ignore:next-line */
-          return Reflect.get(...arguments);
-        },
-      });
-
-      this.uberCatcher((e) => {
-        console.error(e);
-        this.error = e.error;
-        tLog(e.stack);
-      });
-
       this.store = await this.givenThat(
         subject,
         testResourceConfiguration,
@@ -365,6 +371,13 @@ export abstract class BaseGiven<
         this.initialValues,
         beforeEachProxy
       );
+    } catch (e) {
+      this.error = e;
+      throw e;
+    }
+
+    try {
+      // tLog(`\n Given this.store`, this.store);
 
       for (const [whenNdx, whenStep] of this.whens.entries()) {
         await whenStep.test(
@@ -387,12 +400,10 @@ export abstract class BaseGiven<
         tester(t);
       }
     } catch (e) {
-      console.error(e);
-      this.error = e;
+      // this.error = e;
+      this.failed = true;
       tLog(e.stack);
-      // tLog("\u0007"); // bell
-
-      // throw e;
+      throw e;
     } finally {
       try {
         const afterEachProxy = new Proxy(pm, {
@@ -429,8 +440,10 @@ export abstract class BaseGiven<
           afterEachProxy
         );
       } catch (e) {
-        console.error("afterEach failed!", e);
-        this.error = e.message;
+        this.failed = e;
+        throw e;
+        // console.error("afterEach failed!", e);
+        // this.error = e.message;
       }
     }
     return this.store;
@@ -575,8 +588,9 @@ export abstract class BaseThen<
       try {
         await this.thenCB(s);
       } catch (e) {
-        console.log("test failed", e);
-        this.error = e.message;
+        console.log("test failed 1", e);
+        this.error = e;
+        throw e;
       }
     };
 
@@ -610,12 +624,12 @@ export abstract class BaseThen<
         testResourceConfiguration,
         butThenProxy
       ).catch((e) => {
-        this.error = true;
+        this.error = e;
         throw e;
       });
     } catch (e) {
-      console.log("test failed", e);
-      this.error = e.message;
+      console.log("test failed 2", e);
+      this.error = e;
       throw e;
     }
   }

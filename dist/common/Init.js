@@ -10,6 +10,7 @@ exports.default = async () => {
         `testeranto/bundles/`,
         `testeranto/bundles/node`,
         `testeranto/bundles/web`,
+        `testeranto/bundles/pure`,
         `testeranto/reports`,
         `testeranto/reports/`,
         `testeranto/features/`,
@@ -21,42 +22,10 @@ exports.default = async () => {
             // console.error(e);
         }
     });
-    // fs.writeFileSync(
-    //   `${process.cwd()}/testeranto/index.html`,
-    //   `
-    // <!DOCTYPE html>
-    // <html lang="en">
-    // <head>
-    //   <meta name="description" content="Webpage description goes here" />
-    //   <meta charset="utf-8" />
-    //   <title>kokomoBay - testeranto</title>
-    //   <meta name="viewport" content="width=device-width, initial-scale=1" />
-    //   <meta name="author" content="" />
-    //   <script type="module" src="/kokomoBay/testeranto/Project.js"></script>
-    // </head>
-    // <body>
-    //   <div id="root">
-    //     react is loading
-    //   </div>
-    // </body>
-    // </html>
-    //     `
-    // );
     fs_1.default.copyFileSync(`node_modules/testeranto/dist/prebuild/Project.js`, `testeranto/Project.js`);
     fs_1.default.copyFileSync(`node_modules/testeranto/dist/prebuild/ReportClient.js`, `testeranto/ReportClient.js`);
     fs_1.default.copyFileSync(`node_modules/testeranto/dist/prebuild/Project.css`, `testeranto/Project.css`);
     fs_1.default.copyFileSync(`node_modules/testeranto/dist/prebuild/ReportClient.css`, `testeranto/ReportClient.css`);
     fs_1.default.copyFileSync(`node_modules/testeranto/dist/prebuild/TestReport.js`, `testeranto/TestReport.js`);
     fs_1.default.copyFileSync(`node_modules/testeranto/dist/prebuild/TestReport.css`, `testeranto/TestReport.css`);
-    // fs.writeFileSync(
-    //   `${config.outdir}/testeranto.json`,
-    //   JSON.stringify(
-    //     {
-    //       ...config,
-    //       buildDir: process.cwd() + "/" + config.outdir,
-    //     },
-    //     null,
-    //     2
-    //   )
-    // );
 };

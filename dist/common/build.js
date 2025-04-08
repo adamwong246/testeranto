@@ -40,11 +40,12 @@ const ansi_colors_1 = __importDefault(require("ansi-colors"));
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const readline_1 = __importDefault(require("readline"));
-const glob_1 = require("glob");
 const esbuild_1 = __importDefault(require("esbuild"));
 const node_js_1 = __importDefault(require("./esbuildConfigs/node.js"));
 const web_js_1 = __importDefault(require("./esbuildConfigs/web.js"));
+const pure_js_1 = __importDefault(require("./esbuildConfigs/pure.js"));
 const web_html_js_1 = __importDefault(require("./web.html.js"));
+const utils_js_1 = require("./utils.js");
 readline_1.default.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
     process.stdin.setRawMode(true);
@@ -95,8 +96,9 @@ Promise.resolve(`${process.cwd() + "/" + "testeranto.config.ts"}`).then(s => __i
     });
     let nodeDone = false;
     let webDone = false;
+    let importDone = false;
     let status = "build";
-    const { nodeEntryPoints, webEntryPoints } = getRunnables(config.tests);
+    const { nodeEntryPoints, webEntryPoints, importEntryPoints } = (0, utils_js_1.getRunnables)(config.tests, testName);
     const onNodeDone = () => {
         nodeDone = true;
         onDone();
@@ -105,11 +107,15 @@ Promise.resolve(`${process.cwd() + "/" + "testeranto.config.ts"}`).then(s => __i
         webDone = true;
         onDone();
     };
+    const onImportDone = () => {
+        importDone = true;
+        onDone();
+    };
     const onDone = async () => {
-        if (nodeDone && webDone) {
+        if (nodeDone && webDone && importDone) {
             status = "built";
         }
-        if (nodeDone && webDone && mode === "once") {
+        if (nodeDone && webDone && importDone && mode === "once") {
             console.log(ansi_colors_1.default.inverse(`${testName} has been built. Goodbye.`));
             process.exit();
         }
@@ -184,60 +190,34 @@ Promise.resolve(`${process.cwd() + "/" + "testeranto.config.ts"}`).then(s => __i
             .mkdir(path_1.default.dirname(htmlFilePath), { recursive: true })
             .then((x) => fs_1.default.writeFileSync(htmlFilePath, (0, web_html_js_1.default)(jsfilePath, htmlFilePath)));
     })));
-    (0, glob_1.glob)(`${process.cwd()}/testeranto/bundles/${testName}/chunk-*.mjs`, {
-        ignore: "node_modules/**",
-    }).then((chunks) => {
-        chunks.forEach((chunk) => {
-            fs_1.default.unlinkSync(chunk);
-        });
-    });
+    // glob(`${process.cwd()}/testeranto/bundles/${testName}/chunk-*.mjs`, {
+    //   ignore: "node_modules/**",
+    // }).then((chunks) => {
+    //   chunks.forEach((chunk) => {
+    //     fs.unlinkSync(chunk);
+    //   });
+    // });
     await Promise.all([
-        esbuild_1.default
-            .context((0, node_js_1.default)(config, Object.keys(nodeEntryPoints), testName))
-            .then(async (nodeContext) => {
-            if (mode === "dev") {
-                await nodeContext.watch().then((v) => {
-                    onNodeDone();
-                });
-            }
-            else {
-                nodeContext.rebuild().then((v) => {
-                    onNodeDone();
-                });
-            }
-            return nodeContext;
-        }),
-        esbuild_1.default
-            .context((0, web_js_1.default)(config, Object.keys(webEntryPoints), testName))
-            .then(async (webContext) => {
-            if (mode === "dev") {
-                await webContext.watch().then((v) => {
-                    onWebDone();
-                });
-            }
-            else {
-                webContext.rebuild().then((v) => {
-                    onWebDone();
-                });
-            }
-            return webContext;
+        ...[
+            [pure_js_1.default, importEntryPoints, onImportDone],
+            [node_js_1.default, nodeEntryPoints, onNodeDone],
+            [web_js_1.default, webEntryPoints, onWebDone],
+        ].map(([configer, entryPoints, done]) => {
+            esbuild_1.default
+                .context(configer(config, Object.keys(entryPoints), testName))
+                .then(async (ctx) => {
+                if (mode === "dev") {
+                    await ctx.watch().then((v) => {
+                        done();
+                    });
+                }
+                else {
+                    ctx.rebuild().then((v) => {
+                        done();
+                    });
+                }
+                return ctx;
+            });
         }),
     ]);
 });
-const getRunnables = (tests, payload = {
-    nodeEntryPoints: {},
-    webEntryPoints: {},
-}) => {
-    return tests.reduce((pt, cv, cndx, cry) => {
-        if (cv[1] === "node") {
-            pt.nodeEntryPoints[cv[0]] = path_1.default.resolve(`./docs/node/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`);
-        }
-        else if (cv[1] === "web") {
-            pt.webEntryPoints[cv[0]] = path_1.default.resolve(`./docs/web/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`);
-        }
-        if (cv[3].length) {
-            getRunnables(cv[3], payload);
-        }
-        return pt;
-    }, payload);
-};

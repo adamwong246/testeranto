@@ -1,7 +1,9 @@
+import net from "net";
 import fs from "fs";
 import path from "path";
 import { ScreencastOptions } from "puppeteer-core";
 import { PassThrough } from "stream";
+import rpc from "rpc-over-ipc";
 
 import { ITLog, ITTestResourceConfiguration } from "../lib";
 
@@ -16,11 +18,32 @@ type PuppetMasterServer = Record<string, Promise<any>>;
 export class PM_Node extends PM {
   server: PuppetMasterServer;
   testResourceConfiguration: ITTestResourceConfiguration;
+  client: net.Socket;
 
   constructor(t: ITTestResourceConfiguration) {
     super();
     this.server = {};
     this.testResourceConfiguration = t;
+  }
+
+  start(): Promise<void> {
+    return new Promise((res) => {
+      process.on("message", (message: unknown) => {
+        console.log("MESSAGE", message);
+        if (message.path) {
+          this.client = net.createConnection(message.path, () => {
+            res();
+            // this.client.write("hi from child");
+            // console.error("goodbye node error", e);
+            // process.exit(-1);
+          });
+        }
+      });
+    });
+  }
+
+  stop(): Promise<void> {
+    throw new Error("Method not implemented.");
   }
 
   waitForSelector(p: string, s: string): any {
@@ -50,6 +73,7 @@ export class PM_Node extends PM {
   getAttribute(selector: string, attribute: string) {
     throw new Error("Method not implemented.");
   }
+
   getValue(selector: string) {
     throw new Error("Method not implemented.");
   }
@@ -106,27 +130,109 @@ export class PM_Node extends PM {
     return globalThis["mkdirSync"](this.testResourceConfiguration.fs + "/");
   }
 
-  write(writeObject: { uid: number }, contents: string) {
-    return globalThis["write"](writeObject.uid, contents);
+  write(uid: number, contents: string): Promise<boolean> {
+    return new Promise<boolean>((res) => {
+      const key = Math.random().toString();
+
+      const myListener = (event) => {
+        const x = JSON.parse(event);
+
+        if (x.key === key) {
+          // console.log(`WRITE MATCH`, key);
+          process.removeListener("message", myListener);
+          res(x.written);
+        }
+      };
+
+      process.addListener("message", myListener);
+
+      this.client.write(JSON.stringify(["write", uid, contents, key]));
+    });
+
+    // return globalThis["write"](writeObject.uid, contents);
   }
 
   writeFileSync(filepath: string, contents: string) {
-    return globalThis["writeFileSync"](
-      this.testResourceConfiguration.fs + "/" + filepath,
-      contents,
-      this.testResourceConfiguration.name
-    );
+    return new Promise<boolean>((res) => {
+      const key = Math.random().toString();
+
+      const myListener = (event) => {
+        const x = JSON.parse(event);
+        if (x.key === key) {
+          process.removeListener("message", myListener);
+          res(x.uid);
+        }
+      };
+
+      process.addListener("message", myListener);
+
+      this.client.write(
+        JSON.stringify([
+          "writeFileSync",
+          this.testResourceConfiguration.fs + "/" + filepath,
+          contents,
+          this.testResourceConfiguration.name,
+          key,
+        ])
+      );
+    });
+
+    // return globalThis["writeFileSync"](
+    //   this.testResourceConfiguration.fs + "/" + filepath,
+    //   contents,
+    //   this.testResourceConfiguration.name
+    // );
   }
 
-  createWriteStream(filepath: string): any {
-    return globalThis["createWriteStream"](
-      this.testResourceConfiguration.fs + "/" + filepath,
-      this.testResourceConfiguration.name
-    );
+  createWriteStream(filepath: string): Promise<string> {
+    return new Promise((res) => {
+      const key = Math.random().toString();
+
+      const myListener = (event) => {
+        const x = JSON.parse(event);
+
+        if (x.key === key) {
+          process.removeListener("message", myListener);
+          res(x.uid);
+        }
+      };
+
+      process.addListener("message", myListener);
+
+      this.client.write(
+        JSON.stringify([
+          "createWriteStream",
+          this.testResourceConfiguration.fs + "/" + filepath,
+          this.testResourceConfiguration.name,
+          key,
+        ])
+      );
+    });
   }
 
-  end(writeObject: { uid: number }) {
-    return globalThis["end"](writeObject.uid);
+  end(uid) {
+    console.log("end");
+    return new Promise((res) => {
+      const key = Math.random().toString();
+
+      const myListener = (event) => {
+        console.log(`Received end: ${JSON.stringify(event)}`);
+
+        const x = JSON.parse(event);
+        console.log(`x: `, x);
+        if (x.key === key) {
+          console.log(`end MATCH`, key);
+          process.removeListener("message", myListener);
+          res(x.uid);
+        }
+      };
+
+      process.addListener("message", myListener);
+
+      this.client.write(JSON.stringify(["end", uid, key]));
+    });
+
+    // return globalThis["end"](writeObject.uid);
   }
 
   customclose() {

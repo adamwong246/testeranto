@@ -92,11 +92,12 @@ export class WebTesteranto<
   async receiveTestResourceConfig(partialTestResource: any) {
     const t: ITTestResourceConfiguration = partialTestResource; //JSON.parse(partialTestResource);
     const pm = new PM_Web(t);
-    const { failed, artifacts, logPromise, features } =
-      await this.testJobs[0].receiveTestResourceConfig(pm);
-    return new Promise<IFinalResults>((res, rej) => {
-      res({ features, failed });
-    });
+    return await this.testJobs[0].receiveTestResourceConfig(pm);
+    // const { failed, artifacts, logPromise, features } =
+    //   await this.testJobs[0].receiveTestResourceConfig(pm);
+    // return new Promise<IFinalResults>((res, rej) => {
+    //   res({ features, failed });
+    // });
   }
 }
 

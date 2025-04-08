@@ -8,7 +8,7 @@ const BigBoard = () => {
     const [configs, setConfigs] = useState();
     useEffect(() => {
         (async () => {
-            fetch('/kokomoBay/docs/testeranto.json')
+            fetch(`/kokomoBay/testeranto/reports${t}/config.json`)
                 .then(response => response.json())
                 .then(json => {
                 setConfigs(json);

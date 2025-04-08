@@ -7,9 +7,10 @@ export declare abstract class BaseSuite<I extends Ibdd_in<unknown, unknown, unkn
     givens: IGivens<I>;
     checks: BaseCheck<I, O>[];
     store: I["istore"];
-    fails: BaseGiven<I>[];
     testResourceConfiguration: ITTestResourceConfiguration;
     index: number;
+    failed: boolean;
+    fails: number;
     constructor(name: string, index: number, givens?: IGivens<I>, checks?: BaseCheck<I, O>[]);
     features(): string[];
     toObj(): {
@@ -26,10 +27,12 @@ export declare abstract class BaseSuite<I extends Ibdd_in<unknown, unknown, unkn
                 error: boolean;
             }[];
             error: (string | Error | undefined)[] | null;
+            failed: boolean;
             features: string[];
         }[];
         checks: any[];
-        fails: BaseGiven<I>[];
+        fails: number;
+        failed: boolean;
         features: string[];
     };
     setup(s: I["iinput"], artifactory: ITestArtifactory, tr: ITTestResourceConfiguration, pm: PM): Promise<I["isubject"]>;
@@ -49,6 +52,7 @@ export declare abstract class BaseGiven<I extends Ibdd_in<unknown, unknown, unkn
     givenCB: I["given"];
     initialValues: any;
     key: string;
+    failed: boolean;
     constructor(name: string, features: string[], whens: BaseWhen<I>[], thens: BaseThen<I>[], givenCB: I["given"], initialValues: any);
     beforeAll(store: I["istore"], initializer: any, artifactory: any, testResource: any, initialValues: any, pm: any): I["istore"];
     toObj(): {
@@ -63,6 +67,7 @@ export declare abstract class BaseGiven<I extends Ibdd_in<unknown, unknown, unkn
             error: boolean;
         }[];
         error: (string | Error | undefined)[] | null;
+        failed: boolean;
         features: string[];
     };
     abstract givenThat(subject: I["isubject"], testResourceConfiguration: any, artifactory: ITestArtifactory, givenCB: I["given"], initialValues: any, pm: PM): Promise<I["istore"]>;

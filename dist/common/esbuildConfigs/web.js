@@ -45,6 +45,6 @@ exports.default = (config, entryPoints, testName) => {
                     });
                 },
             },
-            ...(config.nodePlugins.map((p) => p(register, entryPoints)) || []),
+            ...((config.webPlugins || []).map((p) => p(register, entryPoints)) || []),
         ] });
 };

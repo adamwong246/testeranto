@@ -1,3 +1,4 @@
+import net from "net";
 import { ScreencastOptions } from "puppeteer-core";
 import { PassThrough } from "stream";
 import { ITLog, ITTestResourceConfiguration } from "../lib";
@@ -7,7 +8,10 @@ type PuppetMasterServer = Record<string, Promise<any>>;
 export declare class PM_Node extends PM {
     server: PuppetMasterServer;
     testResourceConfiguration: ITTestResourceConfiguration;
+    client: net.Socket;
     constructor(t: ITTestResourceConfiguration);
+    start(): Promise<void>;
+    stop(): Promise<void>;
     waitForSelector(p: string, s: string): any;
     closePage(p: any): string;
     goto(cdpPage: CdpPage, url: string): any;
@@ -25,14 +29,10 @@ export declare class PM_Node extends PM {
     customScreenShot(opts: ScreencastOptions, cdpPage: CdpPage): any;
     existsSync(destFolder: string): boolean;
     mkdirSync(): any;
-    write(writeObject: {
-        uid: number;
-    }, contents: string): any;
-    writeFileSync(filepath: string, contents: string): any;
-    createWriteStream(filepath: string): any;
-    end(writeObject: {
-        uid: number;
-    }): any;
+    write(uid: number, contents: string): Promise<boolean>;
+    writeFileSync(filepath: string, contents: string): Promise<boolean>;
+    createWriteStream(filepath: string): Promise<string>;
+    end(uid: any): Promise<unknown>;
     customclose(): void;
     testArtiFactoryfileWriter(tLog: ITLog, callback: (Promise: any) => void): (fPath: any, value: string | Buffer | PassThrough) => void;
     startPuppeteer(options?: any): any;

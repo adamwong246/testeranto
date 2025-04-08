@@ -111,24 +111,25 @@ export type IPartialWebInterface<
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export type ITestSpecification<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
-  O extends Ibdd_out<
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
-  >
-> = (
+type IT = Ibdd_in<
+  unknown,
+  unknown,
+  unknown,
+  unknown,
+  unknown,
+  unknown,
+  unknown
+>;
+
+type OT = Ibdd_out<
+  Record<string, any>,
+  Record<string, any>,
+  Record<string, any>,
+  Record<string, any>,
+  Record<string, any>
+>;
+
+export type ITestSpecification<I extends IT, O extends OT> = (
   Suite: {
     [K in keyof O["suites"]]: (
       name: string,

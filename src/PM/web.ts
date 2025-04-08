@@ -17,6 +17,15 @@ export class PM_Web extends PM {
     this.testResourceConfiguration = t;
   }
 
+  start(): Promise<void> {
+    console.log("mark6");
+    return new Promise((r) => r());
+  }
+
+  stop(): Promise<void> {
+    return new Promise((r) => r());
+  }
+
   waitForSelector(p: string, s: string): any {
     return window["waitForSelector"](p, s);
   }

@@ -35,3 +35,12 @@ example repo: [kokomo bay](https://github.com/ChromaPDX/kokomoBay)
 ## Do's and Don't
 
 When writing your test, be careful when using platform specific features, like "fs" on node, or "window" in the browser. If you need to write to a file, or to log information, use the `utils`. Instead of platform specific libraries, like node's "assert", use a cross-platform alternative like "chai".
+
+## Platforms
+
+Testeranto runs tests in multiple runtimes. You can run the same test (more or less) in multiple contexts. Depending on your test subject, not all may be applicable
+
+1. Node - the test is run in node v8 via fork.
+2. Web - the test is run in chrome, in a page. If you code relies upon `window` or `document`, you should use this style.
+3. Pure - the test is dynamically imported into the main thread. It will not have access to IO (console.log, etc) but it is more performant.
+4. WebWorker - the test is tested in a web worker, in the browser, but not in a page.

@@ -38,7 +38,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const ansi_colors_1 = __importDefault(require("ansi-colors"));
 const readline_1 = __importDefault(require("readline"));
-const path_1 = __importDefault(require("path"));
 const main_1 = require("./PM/main");
 readline_1.default.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
@@ -50,15 +49,16 @@ process.stdin.on("keypress", (str, key) => {
         process.exit(-1);
     }
 });
+let testName = process.argv[2];
 const mode = process.argv[3];
 if (mode !== "once" && mode !== "dev") {
     console.error("the 2nd argument should be 'dev' or 'once' ");
     process.exit(-1);
 }
-Promise.resolve(`${process.cwd() + "/" + process.argv[2]}`).then(s => __importStar(require(s))).then(async (module) => {
-    const testName = path_1.default.basename(process.argv[2]).split(".")[0];
-    console.log("testeranto is running", testName, mode);
-    const rawConfig = module.default;
+console.log("testeranto is running", testName, mode);
+Promise.resolve(`${process.cwd() + "/" + "testeranto.config.ts"}`).then(s => __importStar(require(s))).then(async (module) => {
+    const bigConfig = module.default;
+    const rawConfig = bigConfig.projects[testName];
     const config = Object.assign(Object.assign({}, rawConfig), { buildDir: process.cwd() + "/" + `testeranto/${testName}.json` });
     const pm = new main_1.PM_Main(config, testName, mode);
     pm.start();

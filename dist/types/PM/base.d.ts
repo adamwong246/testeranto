@@ -1,5 +1,4 @@
 import { CdpPage } from "puppeteer-core/lib/esm/puppeteer";
-import fs from "fs";
 import { Browser } from "puppeteer-core";
 import { PassThrough } from "stream";
 import { IBuiltConfig, ITLog } from "../lib/index.js";
@@ -21,12 +20,10 @@ export declare abstract class PM_Base extends PM {
     }): boolean;
     existsSync(destFolder: string): boolean;
     mkdirSync(fp: string): Promise<string | false | undefined>;
-    writeFileSync(fp: string, contents: string): void;
-    createWriteStream(filepath: string): fs.WriteStream;
+    writeFileSync(filepath: string, contents: string, testName: string): Promise<unknown>;
+    createWriteStream(filepath: string, testName: string): Promise<string>;
     testArtiFactoryfileWriter(tLog: ITLog, callback: (Promise: any) => void): (fPath: any, value: string | Buffer | PassThrough) => void;
-    write(accessObject: {
-        uid: number;
-    }, contents: string): boolean;
+    write(uid: number, contents: string): Promise<unknown>;
     page(): string | undefined;
     click(selector: string): string | undefined;
     focusOn(selector: string): void;

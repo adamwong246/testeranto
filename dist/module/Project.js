@@ -99,7 +99,7 @@ const BigBoard = () => {
                             React.createElement("td", null,
                                 React.createElement("a", { href: `/kokomoBay/testeranto/reports/${x}/littleBoard.html` }, y.runTimeError)),
                             React.createElement("td", null,
-                                React.createElement("a", { href: `/kokomoBay/testeranto/reports/${x}/lint_errors.html` }, y.staticErrors)),
+                                React.createElement("a", { href: `/kokomoBay/testeranto/reports/${x}/lint_errors.json` }, y.staticErrors)),
                             React.createElement("td", null,
                                 React.createElement("a", { href: `/kokomoBay/testeranto/reports/${x}/type_errors.txt` }, y.typeErrors)),
                             React.createElement("td", null,

@@ -7,6 +7,8 @@ type PuppetMasterServer = Record<string, Promise<any>>;
 export declare class PM_Web extends PM {
     server: PuppetMasterServer;
     constructor(t: ITTestResourceConfiguration);
+    start(): Promise<void>;
+    stop(): Promise<void>;
     waitForSelector(p: string, s: string): any;
     screencast(opts: ScreencastOptions): any;
     screencastStop(recorder: string): any;

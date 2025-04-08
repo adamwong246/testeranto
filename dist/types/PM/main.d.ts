@@ -1,6 +1,6 @@
 import { Page } from "puppeteer-core/lib/esm/puppeteer";
 import fs from "fs";
-import { IBuiltConfig, IRunnables, ITestTypes } from "../lib/index.js";
+import { IBuiltConfig, IRunnables, IRunTime, ITestTypes } from "../lib/index.js";
 import { ISummary } from "../utils";
 import { PM_Base } from "./base.js";
 export declare class PM_Main extends PM_Base {
@@ -11,14 +11,16 @@ export declare class PM_Main extends PM_Base {
     bigBoard: ISummary;
     webMetafileWatcher: fs.FSWatcher;
     nodeMetafileWatcher: fs.FSWatcher;
+    importMetafileWatcher: fs.FSWatcher;
     constructor(configs: IBuiltConfig, name: string, mode: "once" | "dev");
-    start(): Promise<any>;
-    stop: () => void;
-    getRunnables: (tests: ITestTypes[], payload?: {
+    start(): Promise<void>;
+    stop(): Promise<void>;
+    getRunnables: (tests: ITestTypes[], testName: string, payload?: {
         nodeEntryPoints: {};
         webEntryPoints: {};
+        importEntryPoints: {};
     }) => IRunnables;
-    metafileOutputs(platform: "web" | "node"): Promise<void>;
+    metafileOutputs(platform: IRunTime): Promise<void>;
     tscCheck: ({ entrypoint, addableFiles, platform, }: {
         platform: "web" | "node";
         entrypoint: string;
@@ -33,10 +35,11 @@ export declare class PM_Main extends PM_Base {
     lintIsNowDone: (src: string, failures: number) => void;
     bddTestIsRunning: (src: string) => void;
     bddTestIsNowDone: (src: string, failures: number) => void;
+    launchPure: (src: string, dest: string) => Promise<void>;
     launchNode: (src: string, dest: string) => Promise<void>;
     launchWebSideCar: (src: string, dest: string, testConfig: ITestTypes) => Promise<Page>;
     launchNodeSideCar: (src: string, dest: string, testConfig: ITestTypes) => Promise<void>;
-    launchWeb: (src: string, dest: string) => void;
-    receiveFeatures: (features: string[], destFolder: string, srcTest: string, platform: "node" | "web") => void;
+    launchWeb: (src: string, dest: string) => Promise<void>;
+    receiveFeatures: (features: string[], destFolder: string, srcTest: string, platform: IRunTime) => void;
     writeBigBoard: () => void;
 }

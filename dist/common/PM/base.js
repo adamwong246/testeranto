@@ -55,27 +55,25 @@ class PM_Base extends index_js_1.PM {
             return false;
         };
         globalThis["writeFileSync"] = (filepath, contents, testName) => {
-            fs_1.default.mkdirSync(path_1.default.dirname(filepath), {
-                recursive: true,
-            });
-            if (!files[testName]) {
-                files[testName] = new Set();
-            }
-            files[testName].add(filepath);
-            return fs_1.default.writeFileSync(filepath, contents);
+            this.writeFileSync(filepath, contents, testName);
         };
         globalThis["createWriteStream"] = (filepath, testName) => {
-            const f = fs_1.default.createWriteStream(filepath);
-            fileStreams3.push(f);
-            // files.add(filepath);
-            if (!files[testName]) {
-                files[testName] = new Set();
-            }
-            files[testName].add(filepath);
-            return Object.assign(Object.assign({}, JSON.parse(JSON.stringify(f))), { uid: fileStreams3.length - 1 });
+            return this.createWriteStream(filepath, testName);
+            // const f = fs.createWriteStream(filepath);
+            // fileStreams3.push(f);
+            // // files.add(filepath);
+            // if (!files[testName]) {
+            //   files[testName] = new Set();
+            // }
+            // files[testName].add(filepath);
+            // return {
+            //   ...JSON.parse(JSON.stringify(f)),
+            //   uid: fileStreams3.length - 1,
+            // };
         };
         globalThis["write"] = (uid, contents) => {
-            fileStreams3[uid].write(contents);
+            // fileStreams3[uid].write(contents);
+            return this.write(uid, contents);
         };
         globalThis["end"] = (uid) => {
             fileStreams3[uid].end();
@@ -158,11 +156,34 @@ class PM_Base extends index_js_1.PM {
         }
         return false;
     }
-    writeFileSync(fp, contents) {
-        fs_1.default.writeFileSync(fp, contents);
+    writeFileSync(filepath, contents, testName) {
+        return new Promise((res) => {
+            fs_1.default.mkdirSync(path_1.default.dirname(filepath), {
+                recursive: true,
+            });
+            if (!files[testName]) {
+                files[testName] = new Set();
+            }
+            files[testName].add(filepath);
+            // return ;
+            res(fs_1.default.writeFileSync(filepath, contents));
+        });
     }
-    createWriteStream(filepath) {
-        return fs_1.default.createWriteStream(filepath);
+    createWriteStream(filepath, testName) {
+        return new Promise((res) => {
+            const f = fs_1.default.createWriteStream(filepath);
+            fileStreams3.push(f);
+            // files.add(filepath);
+            if (!files[testName]) {
+                files[testName] = new Set();
+            }
+            files[testName].add(filepath);
+            res((fileStreams3.length - 1).toString());
+        });
+        // return {
+        //   ...JSON.parse(JSON.stringify(f)),
+        //   uid: fileStreams3.length - 1,
+        // };
     }
     testArtiFactoryfileWriter(tLog, callback) {
         return (fPath, value) => {
@@ -202,8 +223,12 @@ class PM_Base extends index_js_1.PM {
             }));
         };
     }
-    write(accessObject, contents) {
-        throw new Error("Method not implemented.");
+    write(uid, contents) {
+        return new Promise((res) => {
+            const x = fileStreams3[uid].write(contents);
+            res(x);
+        });
+        // return x
     }
     page() {
         throw new Error("Method not implemented.");

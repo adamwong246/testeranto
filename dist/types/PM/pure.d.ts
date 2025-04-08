@@ -1,0 +1,38 @@
+import { ScreencastOptions } from "puppeteer-core";
+import { PassThrough } from "stream";
+import { ITLog, ITTestResourceConfiguration } from "../lib";
+import { PM } from "./index.js";
+import { CdpPage } from "puppeteer-core/lib/esm/puppeteer";
+type PuppetMasterServer = Record<string, Promise<any>>;
+export declare class PM_Pure extends PM {
+    server: PuppetMasterServer;
+    testResourceConfiguration: ITTestResourceConfiguration;
+    constructor(t: ITTestResourceConfiguration);
+    start(): Promise<void>;
+    stop(): Promise<void>;
+    waitForSelector(p: string, s: string): any;
+    closePage(p: any): string;
+    goto(cdpPage: CdpPage, url: string): any;
+    newPage(): CdpPage;
+    $(selector: string): boolean;
+    isDisabled(selector: string): Promise<boolean>;
+    getAttribute(selector: string, attribute: string): void;
+    getValue(selector: string): void;
+    focusOn(selector: string): void;
+    typeInto(value: string): void;
+    page(): any;
+    click(selector: string): string | undefined;
+    screencast(opts: ScreencastOptions, page: CdpPage): any;
+    screencastStop(p: string): any;
+    customScreenShot(opts: ScreencastOptions, cdpPage: CdpPage): any;
+    existsSync(destFolder: string): boolean;
+    mkdirSync(): any;
+    write(uid: number, contents: string): any;
+    writeFileSync(filepath: string, contents: string): any;
+    createWriteStream(filepath: string): any;
+    end(uid: number): any;
+    customclose(): void;
+    testArtiFactoryfileWriter(tLog: ITLog, callback: (Promise: any) => void): (fPath: any, value: string | Buffer | PassThrough) => void;
+    startPuppeteer(options?: any): any;
+}
+export {};

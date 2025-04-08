@@ -1,5 +1,6 @@
 import type { Plugin } from "esbuild";
-declare const _default: (platform: "web" | "node", testName: string) => {
+import { IRunTime } from "../lib";
+declare const _default: (platform: IRunTime, testName: string) => {
     register: (entrypoint: string, sources: string[]) => void;
     inputFilesPluginFactory: Plugin;
 };

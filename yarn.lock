@@ -4751,6 +4751,11 @@ rimraf@^2.7.1:
   dependencies:
     glob "^7.1.3"
 
+rpc-over-ipc@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/rpc-over-ipc/-/rpc-over-ipc-1.0.0.tgz#6eb6621d2d1b341cf65a55ccc98aaab78c271ad2"
+  integrity sha512-d9UAUkH9j6CmoZhU0e4Y2EX80zCLczdwXMhRZWJtO5w0cq5jJ1xHCXMry/0XXW7aBzerW3CqsjDUHv0//IVzzg==
+
 run-parallel@^1.1.9:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/run-parallel/-/run-parallel-1.2.0.tgz#66d1368da7bdf921eb9d95bd1a9229e7f21a43ee"

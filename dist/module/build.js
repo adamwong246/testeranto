@@ -2,11 +2,12 @@ import ansiC from "ansi-colors";
 import fs from "fs";
 import path from "path";
 import readline from "readline";
-import { glob } from "glob";
 import esbuild from "esbuild";
 import esbuildNodeConfiger from "./esbuildConfigs/node.js";
 import esbuildWebConfiger from "./esbuildConfigs/web.js";
+import esbuildImportConfiger from "./esbuildConfigs/pure.js";
 import webHtmlFrame from "./web.html.js";
+import { getRunnables } from "./utils.js";
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
     process.stdin.setRawMode(true);
@@ -57,8 +58,9 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
     });
     let nodeDone = false;
     let webDone = false;
+    let importDone = false;
     let status = "build";
-    const { nodeEntryPoints, webEntryPoints } = getRunnables(config.tests);
+    const { nodeEntryPoints, webEntryPoints, importEntryPoints } = getRunnables(config.tests, testName);
     const onNodeDone = () => {
         nodeDone = true;
         onDone();
@@ -67,11 +69,15 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
         webDone = true;
         onDone();
     };
+    const onImportDone = () => {
+        importDone = true;
+        onDone();
+    };
     const onDone = async () => {
-        if (nodeDone && webDone) {
+        if (nodeDone && webDone && importDone) {
             status = "built";
         }
-        if (nodeDone && webDone && mode === "once") {
+        if (nodeDone && webDone && importDone && mode === "once") {
             console.log(ansiC.inverse(`${testName} has been built. Goodbye.`));
             process.exit();
         }
@@ -146,60 +152,34 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
             .mkdir(path.dirname(htmlFilePath), { recursive: true })
             .then((x) => fs.writeFileSync(htmlFilePath, webHtmlFrame(jsfilePath, htmlFilePath)));
     })));
-    glob(`${process.cwd()}/testeranto/bundles/${testName}/chunk-*.mjs`, {
-        ignore: "node_modules/**",
-    }).then((chunks) => {
-        chunks.forEach((chunk) => {
-            fs.unlinkSync(chunk);
-        });
-    });
+    // glob(`${process.cwd()}/testeranto/bundles/${testName}/chunk-*.mjs`, {
+    //   ignore: "node_modules/**",
+    // }).then((chunks) => {
+    //   chunks.forEach((chunk) => {
+    //     fs.unlinkSync(chunk);
+    //   });
+    // });
     await Promise.all([
-        esbuild
-            .context(esbuildNodeConfiger(config, Object.keys(nodeEntryPoints), testName))
-            .then(async (nodeContext) => {
-            if (mode === "dev") {
-                await nodeContext.watch().then((v) => {
-                    onNodeDone();
-                });
-            }
-            else {
-                nodeContext.rebuild().then((v) => {
-                    onNodeDone();
-                });
-            }
-            return nodeContext;
-        }),
-        esbuild
-            .context(esbuildWebConfiger(config, Object.keys(webEntryPoints), testName))
-            .then(async (webContext) => {
-            if (mode === "dev") {
-                await webContext.watch().then((v) => {
-                    onWebDone();
-                });
-            }
-            else {
-                webContext.rebuild().then((v) => {
-                    onWebDone();
-                });
-            }
-            return webContext;
+        ...[
+            [esbuildImportConfiger, importEntryPoints, onImportDone],
+            [esbuildNodeConfiger, nodeEntryPoints, onNodeDone],
+            [esbuildWebConfiger, webEntryPoints, onWebDone],
+        ].map(([configer, entryPoints, done]) => {
+            esbuild
+                .context(configer(config, Object.keys(entryPoints), testName))
+                .then(async (ctx) => {
+                if (mode === "dev") {
+                    await ctx.watch().then((v) => {
+                        done();
+                    });
+                }
+                else {
+                    ctx.rebuild().then((v) => {
+                        done();
+                    });
+                }
+                return ctx;
+            });
         }),
     ]);
 });
-const getRunnables = (tests, payload = {
-    nodeEntryPoints: {},
-    webEntryPoints: {},
-}) => {
-    return tests.reduce((pt, cv, cndx, cry) => {
-        if (cv[1] === "node") {
-            pt.nodeEntryPoints[cv[0]] = path.resolve(`./docs/node/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`);
-        }
-        else if (cv[1] === "web") {
-            pt.webEntryPoints[cv[0]] = path.resolve(`./docs/web/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`);
-        }
-        if (cv[3].length) {
-            getRunnables(cv[3], payload);
-        }
-        return pt;
-    }, payload);
-};

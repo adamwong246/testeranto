@@ -1,5 +1,6 @@
 import fs from "fs";
 import type { Plugin } from "esbuild";
+import { IRunTime } from "../lib";
 
 const otherInputs: Record<string, Set<string>> = {};
 
@@ -11,7 +12,7 @@ const register = (entrypoint: string, sources: string[]): void => {
 };
 
 export default (
-  platform: "web" | "node",
+  platform: IRunTime,
   testName: string
 ): {
   register: (entrypoint: string, sources: string[]) => void;

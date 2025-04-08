@@ -9,12 +9,18 @@ export abstract class PM {
   server: any;
   testResourceConfiguration: ITTestResourceConfiguration;
 
+  abstract start(): Promise<void>;
+  abstract stop(): Promise<void>;
+
   abstract testArtiFactoryfileWriter(tLog: ITLog, callback: (Promise) => void);
-  abstract createWriteStream(filepath: string): any;
-  abstract writeFileSync(fp: string, contents: string);
+  abstract createWriteStream(filepath: string): Promise<string>;
+  abstract writeFileSync(fp: string, contents: string): Promise<boolean>;
   abstract mkdirSync(a: string);
   abstract existsSync(fp: string): boolean;
-  abstract write(accessObject: { uid: number }, contents: string): boolean;
+  abstract write(
+    accessObject: { uid: number },
+    contents: string
+  ): Promise<boolean>;
   abstract end(accessObject: { uid: number }): boolean;
   abstract customScreenShot(opts: object, page?: string): any;
   abstract screencast(opts: ScreenRecorderOptions, p?): any;

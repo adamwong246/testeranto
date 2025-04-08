@@ -49,27 +49,25 @@ export class PM_Base extends PM {
             return false;
         };
         globalThis["writeFileSync"] = (filepath, contents, testName) => {
-            fs.mkdirSync(path.dirname(filepath), {
-                recursive: true,
-            });
-            if (!files[testName]) {
-                files[testName] = new Set();
-            }
-            files[testName].add(filepath);
-            return fs.writeFileSync(filepath, contents);
+            this.writeFileSync(filepath, contents, testName);
         };
         globalThis["createWriteStream"] = (filepath, testName) => {
-            const f = fs.createWriteStream(filepath);
-            fileStreams3.push(f);
-            // files.add(filepath);
-            if (!files[testName]) {
-                files[testName] = new Set();
-            }
-            files[testName].add(filepath);
-            return Object.assign(Object.assign({}, JSON.parse(JSON.stringify(f))), { uid: fileStreams3.length - 1 });
+            return this.createWriteStream(filepath, testName);
+            // const f = fs.createWriteStream(filepath);
+            // fileStreams3.push(f);
+            // // files.add(filepath);
+            // if (!files[testName]) {
+            //   files[testName] = new Set();
+            // }
+            // files[testName].add(filepath);
+            // return {
+            //   ...JSON.parse(JSON.stringify(f)),
+            //   uid: fileStreams3.length - 1,
+            // };
         };
         globalThis["write"] = (uid, contents) => {
-            fileStreams3[uid].write(contents);
+            // fileStreams3[uid].write(contents);
+            return this.write(uid, contents);
         };
         globalThis["end"] = (uid) => {
             fileStreams3[uid].end();
@@ -152,11 +150,34 @@ export class PM_Base extends PM {
         }
         return false;
     }
-    writeFileSync(fp, contents) {
-        fs.writeFileSync(fp, contents);
+    writeFileSync(filepath, contents, testName) {
+        return new Promise((res) => {
+            fs.mkdirSync(path.dirname(filepath), {
+                recursive: true,
+            });
+            if (!files[testName]) {
+                files[testName] = new Set();
+            }
+            files[testName].add(filepath);
+            // return ;
+            res(fs.writeFileSync(filepath, contents));
+        });
     }
-    createWriteStream(filepath) {
-        return fs.createWriteStream(filepath);
+    createWriteStream(filepath, testName) {
+        return new Promise((res) => {
+            const f = fs.createWriteStream(filepath);
+            fileStreams3.push(f);
+            // files.add(filepath);
+            if (!files[testName]) {
+                files[testName] = new Set();
+            }
+            files[testName].add(filepath);
+            res((fileStreams3.length - 1).toString());
+        });
+        // return {
+        //   ...JSON.parse(JSON.stringify(f)),
+        //   uid: fileStreams3.length - 1,
+        // };
     }
     testArtiFactoryfileWriter(tLog, callback) {
         return (fPath, value) => {
@@ -196,8 +217,12 @@ export class PM_Base extends PM {
             }));
         };
     }
-    write(accessObject, contents) {
-        throw new Error("Method not implemented.");
+    write(uid, contents) {
+        return new Promise((res) => {
+            const x = fileStreams3[uid].write(contents);
+            res(x);
+        });
+        // return x
     }
     page() {
         throw new Error("Method not implemented.");

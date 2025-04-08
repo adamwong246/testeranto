@@ -1,25 +1,63 @@
 $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit
 src/defaultConfig.ts(9,3): error TS2353: Object literal may only specify known properties, and 'devMode' does not exist in type 'IBaseConfig'.
 src/esbuildConfigs/node.ts(64,7): error TS2741: Property 'setup' is missing in type 'Plugin' but required in type 'import("/Users/adam/Code/testeranto/node_modules/esbuild/lib/main").Plugin'.
+src/esbuildConfigs/pure.ts(65,19): error TS2339: Property 'purePlugins' does not exist on type 'IBaseConfig'.
 src/esbuildConfigs/web.ts(74,7): error TS2741: Property 'setup' is missing in type 'Plugin' but required in type 'import("/Users/adam/Code/testeranto/node_modules/esbuild/lib/main").Plugin'.
-src/lib/abstractBase.ts(157,11): error TS2345: Argument of type '(t: I["then"]) => unknown' is not assignable to parameter of type '(t: Awaited<I["then"]> | undefined) => boolean'.
+src/lib/abstractBase.ts(160,11): error TS2345: Argument of type '(t: I["then"]) => unknown' is not assignable to parameter of type '(t: Awaited<I["then"]> | undefined) => boolean'.
   Type 'unknown' is not assignable to type 'boolean'.
+src/lib/basebuilder.ts(128,48): error TS2345: Argument of type 'string' is not assignable to parameter of type '{ uid: number; }'.
+src/lib/basebuilder.ts(135,36): error TS2345: Argument of type 'string' is not assignable to parameter of type '{ uid: number; }'.
 src/lib/core.ts(213,62): error TS2554: Expected 5 arguments, but got 6.
-src/lib/index.ts(47,19): error TS2322: Type 'unknown' is not assignable to type 'Promise<unknown>'.
-src/Node.ts(58,56): error TS2345: Argument of type 'PM_Node' is not assignable to parameter of type 'PM'.
-  Types of property 'customScreenShot' are incompatible.
-    Type '(opts: ScreencastOptions, cdpPage: CdpPage) => any' is not assignable to type '(opts: object, page?: string | undefined) => any'.
-      Types of parameters 'cdpPage' and 'page' are incompatible.
-        Type 'string | undefined' is not assignable to type 'CdpPage'.
-          Type 'undefined' is not assignable to type 'CdpPage'.
-src/PM/node.ts(88,3): error TS2416: Property 'customScreenShot' in type 'PM_Node' is not assignable to the same property in base type 'PM'.
+src/lib/index.ts(50,19): error TS2322: Type 'unknown' is not assignable to type 'Promise<unknown>'.
+src/PM/base.ts(210,3): error TS2416: Property 'writeFileSync' in type 'PM_Base' is not assignable to the same property in base type 'PM'.
+  Type '(filepath: string, contents: string, testName: string) => Promise<unknown>' is not assignable to type '(fp: string, contents: string) => Promise<boolean>'.
+    Target signature provides too few arguments. Expected 3 or more, but got 2.
+src/PM/base.ts(225,3): error TS2416: Property 'createWriteStream' in type 'PM_Base' is not assignable to the same property in base type 'PM'.
+  Type '(filepath: string, testName: string) => Promise<string>' is not assignable to type '(filepath: string) => Promise<string>'.
+    Target signature provides too few arguments. Expected 2 or more, but got 1.
+src/PM/base.ts(294,3): error TS2416: Property 'write' in type 'PM_Base' is not assignable to the same property in base type 'PM'.
+  Type '(uid: number, contents: string) => Promise<unknown>' is not assignable to type '(accessObject: { uid: number; }, contents: string) => Promise<boolean>'.
+    Types of parameters 'uid' and 'accessObject' are incompatible.
+      Type '{ uid: number; }' is not assignable to type 'number'.
+src/PM/main.ts(345,13): error TS2322: Type 'IRunTime' is not assignable to type '"node" | "web"'.
+  Type '"web_worker"' is not assignable to type '"node" | "web"'.
+src/PM/main.ts(349,47): error TS2345: Argument of type 'IRunTime' is not assignable to parameter of type '"node" | "web"'.
+  Type '"web_worker"' is not assignable to type '"node" | "web"'.
+src/PM/main.ts(350,60): error TS2345: Argument of type 'IRunTime' is not assignable to parameter of type '"node" | "web"'.
+  Type '"web_worker"' is not assignable to type '"node" | "web"'.
+src/PM/main.ts(883,7): error TS18047: 'child.stderr' is possibly 'null'.
+src/PM/main.ts(886,7): error TS18047: 'child.stdout' is possibly 'null'.
+src/PM/node.ts(33,13): error TS18046: 'message' is of type 'unknown'.
+src/PM/node.ts(34,46): error TS18046: 'message' is of type 'unknown'.
+src/PM/node.ts(112,3): error TS2416: Property 'customScreenShot' in type 'PM_Node' is not assignable to the same property in base type 'PM'.
   Type '(opts: ScreencastOptions, cdpPage: CdpPage) => any' is not assignable to type '(opts: object, page?: string | undefined) => any'.
     Types of parameters 'cdpPage' and 'page' are incompatible.
       Type 'string | undefined' is not assignable to type 'CdpPage'.
         Type 'undefined' is not assignable to type 'CdpPage'.
+src/PM/node.ts(133,3): error TS2416: Property 'write' in type 'PM_Node' is not assignable to the same property in base type 'PM'.
+  Type '(uid: number, contents: string) => Promise<boolean>' is not assignable to type '(accessObject: { uid: number; }, contents: string) => Promise<boolean>'.
+    Types of parameters 'uid' and 'accessObject' are incompatible.
+      Type '{ uid: number; }' is not assignable to type 'number'.
+src/PM/node.ts(213,3): error TS2416: Property 'end' in type 'PM_Node' is not assignable to the same property in base type 'PM'.
+  Type '(uid: any) => Promise<unknown>' is not assignable to type '(accessObject: { uid: number; }) => boolean'.
+    Type 'Promise<unknown>' is not assignable to type 'boolean'.
+src/PM/pure.ts(97,3): error TS2416: Property 'customScreenShot' in type 'PM_Pure' is not assignable to the same property in base type 'PM'.
+  Type '(opts: ScreencastOptions, cdpPage: CdpPage) => any' is not assignable to type '(opts: object, page?: string | undefined) => any'.
+    Types of parameters 'cdpPage' and 'page' are incompatible.
+      Type 'string | undefined' is not assignable to type 'CdpPage'.
+        Type 'undefined' is not assignable to type 'CdpPage'.
+src/PM/pure.ts(118,3): error TS2416: Property 'write' in type 'PM_Pure' is not assignable to the same property in base type 'PM'.
+  Type '(uid: number, contents: string) => any' is not assignable to type '(accessObject: { uid: number; }, contents: string) => Promise<boolean>'.
+    Types of parameters 'uid' and 'accessObject' are incompatible.
+      Type '{ uid: number; }' is not assignable to type 'number'.
+src/PM/pure.ts(137,3): error TS2416: Property 'end' in type 'PM_Pure' is not assignable to the same property in base type 'PM'.
+  Type '(uid: number) => any' is not assignable to type '(accessObject: { uid: number; }) => boolean'.
+    Types of parameters 'uid' and 'accessObject' are incompatible.
+      Type '{ uid: number; }' is not assignable to type 'number'.
 src/Project.tsx(37,31): error TS2531: Object is possibly 'null'.
 src/Project.tsx(193,38): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
   Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.
+src/ReportClient.tsx(33,45): error TS2304: Cannot find name 't'.
 src/ReportClient.tsx(161,38): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
   Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.
 src/SubPackages/react-dom/component/web.ts(90,13): error TS2345: Argument of type 'CElement<any, TesterantoComponent>' is not assignable to parameter of type 'ReactNode'.
@@ -54,27 +92,18 @@ src/SubPackages/react-test-renderer/fc/web.ts(63,33): error TS2769: No overload 
   The last overload gave the following error.
     Argument of type 'I["isubject"]' is not assignable to parameter of type 'string | FunctionComponent<(c?: any) => I["given"]> | ComponentClass<(c?: any) => I["given"], any>'.
       Type 'I["isubject"]' is not assignable to type 'ComponentClass<(c?: any) => I["given"], any>'.
-src/SubPackages/react-test-renderer/jsx/index.ts(78,9): error TS2345: Argument of type 'CElement<any, Component<any, any, any>>' is not assignable to parameter of type 'ReactElement<unknown, string | JSXElementConstructor<any>>'.
-  Types of property 'type' are incompatible.
-    Type 'ComponentClass<any, any>' is not assignable to type 'string | JSXElementConstructor<any>'.
-      Type 'ComponentClass<any, any>' is not assignable to type 'new (props: any) => Component<any, any, any>'.
-        Construct signature return types 'Component<any, any, any>' and 'Component<any, any, any>' are incompatible.
-          The types returned by 'render()' are incompatible between these types.
-            Type 'React.ReactNode' is not assignable to type 'import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/node_modules/@types/react/index").ReactNode'.
-              Type 'ReactElement<any, string | JSXElementConstructor<any>>' is not assignable to type 'ReactNode'.
-                Property 'children' is missing in type 'ReactElement<any, string | JSXElementConstructor<any>>' but required in type 'ReactPortal'.
-src/SubPackages/react-test-renderer/jsx/node.ts(26,34): error TS2344: Type 'I' does not satisfy the constraint 'Ibdd_in<ReactTestRenderer, ReactTestRenderer, ReactTestRenderer, ReactTestRenderer, unknown, unknown, unknown>'.
-  Type 'Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>' is not assignable to type 'Ibdd_in<ReactTestRenderer, ReactTestRenderer, ReactTestRenderer, ReactTestRenderer, unknown, unknown, unknown>'.
-    Type 'unknown' is not assignable to type 'ReactTestRenderer'.
-src/SubPackages/react-test-renderer/jsx/node.ts(27,33): error TS2344: Type 'I' does not satisfy the constraint 'Ibdd_in<ReactTestRenderer, ReactTestRenderer, ReactTestRenderer, ReactTestRenderer, unknown, unknown, unknown>'.
-  Type 'Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>' is not assignable to type 'Ibdd_in<ReactTestRenderer, ReactTestRenderer, ReactTestRenderer, ReactTestRenderer, unknown, unknown, unknown>'.
-    Type 'unknown' is not assignable to type 'ReactTestRenderer'.
-src/SubPackages/react-test-renderer/jsx/web.ts(26,34): error TS2344: Type 'I' does not satisfy the constraint 'Ibdd_in<ReactTestRenderer, ReactTestRenderer, ReactTestRenderer, ReactTestRenderer, unknown, unknown, unknown>'.
-  Type 'Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>' is not assignable to type 'Ibdd_in<ReactTestRenderer, ReactTestRenderer, ReactTestRenderer, ReactTestRenderer, unknown, unknown, unknown>'.
-    Type 'unknown' is not assignable to type 'ReactTestRenderer'.
-src/SubPackages/react-test-renderer/jsx/web.ts(27,33): error TS2344: Type 'I' does not satisfy the constraint 'Ibdd_in<ReactTestRenderer, ReactTestRenderer, ReactTestRenderer, ReactTestRenderer, unknown, unknown, unknown>'.
-  Type 'Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>' is not assignable to type 'Ibdd_in<ReactTestRenderer, ReactTestRenderer, ReactTestRenderer, ReactTestRenderer, unknown, unknown, unknown>'.
-    Type 'unknown' is not assignable to type 'ReactTestRenderer'.
+src/SubPackages/react-test-renderer/jsx/index.ts(27,12): error TS2349: This expression is not callable.
+  Type 'void' has no call signatures.
+src/SubPackages/react-test-renderer/jsx/index.ts(45,9): error TS2345: Argument of type 'DetailedReactHTMLElement<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>' is not assignable to parameter of type 'ReactElement<unknown, string | JSXElementConstructor<any>>'.
+  Types of property 'key' are incompatible.
+    Type 'Key | null' is not assignable to type 'string | null'.
+      Type 'number' is not assignable to type 'string'.
+src/SubPackages/react-test-renderer/jsx/index.ts(46,11): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'ReactTestRenderer' is not assignable to parameter of type 'string | FunctionComponent<(c?: any) => unknown> | ComponentClass<(c?: any) => unknown, any>'.
+src/SubPackages/react-test-renderer/jsx/index.ts(48,31): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'ReactTestRenderer' is not assignable to parameter of type 'string | FunctionComponent<(c?: any) => unknown> | ComponentClass<(c?: any) => unknown, any>'.
 src/SubPackages/react-test-renderer/MemoExoticComponent/node.ts(43,37): error TS2345: Argument of type 'DetailedReactHTMLElement<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>' is not assignable to parameter of type 'ReactElement<unknown, string | JSXElementConstructor<any>>'.
   Types of property 'key' are incompatible.
     Type 'Key | null' is not assignable to type 'string | null'.
@@ -90,8 +119,8 @@ src/SubPackages/react/component/node.ts(84,14): error TS2349: This expression is
   Type 'unknown' has no call signatures.
 src/SubPackages/react/component/web.ts(83,14): error TS2349: This expression is not callable.
   Type 'unknown' has no call signatures.
-src/TestReport.tsx(25,28): error TS2339: Property 'log' does not exist on type '{ given: { key: string; name: string; error: string[]; features: string[]; whens: { name: string; error: string; }[]; thens: { name: string; error: string; }[]; }; }'.
 src/TestReport.tsx(170,56): error TS2739: Type '{ key: string; name: string; whens: { name: string; error: string; }[]; thens: { name: string; error: string; }[]; }' is missing the following properties from type '{ key: string; name: string; error: string[]; features: string[]; whens: { name: string; error: string; }[]; thens: { name: string; error: string; }[]; }': error, features
 src/TestReport.tsx(187,38): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
   Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.
+src/utils.ts(124,27): error TS2304: Cannot find name 'testName'.
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.

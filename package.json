@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "the AI powered BDD test framework for typescript projects",
-  "version": "0.121.1",
+  "version": "0.121.2",
   "engines": {
     "node": "18.18.0"
   },
@@ -17,9 +17,9 @@
       "import": "./dist/cjs-shim.js",
       "require": "./dist/cjs-shim.js"
     },
-    "./src/SubPackages/puppeteer": {
-      "import": "./dist/module/SubPackages/puppeteer.js",
-      "require": "./dist/common/SubPackages/puppeteer.js"
+    "./src/SubPackages/**/*": {
+      "import": "./dist/module/SubPackages/",
+      "require": "./dist/common/SubPackages/"
     },
     "./src/SubPackages/react/jsx/index": {
       "import": "./src/SubPackages/react/jsx/index.ts",
@@ -32,6 +32,10 @@
     "./src/SubPackages/react/jsx/node": {
       "import": "./src/SubPackages/react/jsx/node.ts",
       "require": "./src/SubPackages/react/jsx/node.ts"
+    },
+    "./src/SubPackages/react/jsx/pure": {
+      "import": "./src/SubPackages/react/jsx/pure.ts",
+      "require": "./src/SubPackages/react/jsx/pure.ts"
     },
     "./src/SubPackages/react/component/index": {
       "import": "./dist/module/SubPackages/react/component/index.js",
@@ -72,6 +76,10 @@
     "./src/SubPackages/react-test-renderer/jsx/node.js": {
       "import": "./dist/module/SubPackages/react-test-renderer/jsx/node.js",
       "require": "./dist/common/SubPackages/react-test-renderer/jsx/node.js"
+    },
+    "./src/SubPackages/react-test-renderer/jsx/pure.js": {
+      "import": "./dist/module/SubPackages/react-test-renderer/jsx/pure.js",
+      "require": "./dist/common/SubPackages/react-test-renderer/jsx/pure.js"
     },
     "./src/SubPackages/react-test-renderer/jsx-promised/index": {
       "import": "./dist/module/SubPackages/react-test-renderer/jsx-promised/index.js",
@@ -141,6 +149,10 @@
       "import": "./src/Node.ts",
       "require": "./src/Node.ts"
     },
+    "./src/Pure": {
+      "import": "./src/Pure.ts",
+      "require": "./src/Pure.ts"
+    },
     "./src/Init": {
       "import": "./dist/module/src/Init.js",
       "require": "./dist/common/src/Init.js"
@@ -181,7 +193,7 @@
     "ATDD"
   ],
   "scripts": {
-    "build-hard": "rm -rf dist/** && yarn build && yarn bundle && yarn type-check",
+    "build-hard": "rm -rf dist/** && yarn bundle &&  yarn build && yarn type-check",
     "doit": "rm -rf node_modules && yarn install && yarn build",
     "build": "sh prebuild.sh; cp ./src/cjs-shim.js ./dist/cjs-shim.js; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; sh postBuild.sh; yarn bundle",
     "dev": "cp ./src/cjs-shim.js ./dist/cjs-shim.js && tsc -p tsconfig.module.json --watch & tsc -p tsconfig.common.json --watch & tsc -p tsconfig.types.json --watch ",
@@ -255,6 +267,7 @@
     "react-router-dom": "6.29.0",
     "react-test-renderer": "18.2.0",
     "recursive-watch": "^1.1.4",
+    "rpc-over-ipc": "^1.0.0",
     "tsc-prog": "^2.3.0",
     "url": "^0.11.4",
     "uuid": "^10.0.0",

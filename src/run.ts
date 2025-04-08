@@ -27,12 +27,9 @@ if (mode !== "once" && mode !== "dev") {
 console.log("testeranto is running", testName, mode);
 
 import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
-  // const testName = path.basename(process.argv[2]).split(".")[0];
   const bigConfig: IConfigV2 = module.default;
 
   const rawConfig: IBaseConfig = bigConfig.projects[testName];
-
-  // const rawConfig: IBaseConfig = module.default;
 
   const config: IBuiltConfig = {
     ...rawConfig,

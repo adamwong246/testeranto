@@ -1,60 +1,27 @@
 import React from "react";
-import renderer, { act } from "react-test-renderer";
+import renderer, { act, ReactTestRenderer } from "react-test-renderer";
 
-import {
-  Ibdd_in,
-  Ibdd_out,
-  ITestImplementation,
-  ITestSpecification,
-} from "../../../Types";
+import { Ibdd_in, IPartialInterface } from "../../../Types";
 
 export type IWhenShape = any;
-export type IThenShape = any;
+export type IThenShape = void;
 export type InitialState = unknown;
 export type IInput = (props?) => JSX.Element;
 export type ISelection = renderer.ReactTestRenderer;
 export type IStore = renderer.ReactTestRenderer;
 export type ISubject = renderer.ReactTestRenderer;
 
-export type ITestImpl<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    renderer.ReactTestRenderer,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
-  O extends Ibdd_out<
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
-  >
-> = ITestImplementation<I, O>;
+export type I = Ibdd_in<
+  (props?) => JSX.Element,
+  ReactTestRenderer,
+  ReactTestRenderer,
+  ReactTestRenderer,
+  unknown,
+  IWhenShape,
+  IThenShape
+>;
 
-export type ITestSpec<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    renderer.ReactTestRenderer,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
-  O extends Ibdd_out<
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
-  >
-> = ITestSpecification<I, O>;
-
-export const testInterface = {
+export const testInterface: IPartialInterface<I> = {
   butThen: async function (s: IStore, thenCB): Promise<ISelection> {
     // console.log("butThen", thenCB.toString());
     return thenCB(s);

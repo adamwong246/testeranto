@@ -1,20 +1,14 @@
 import test from "../../../Node.js";
-import { Ibdd_in, Ibdd_out } from "../../../Types.js";
+import {
+  Ibdd_out,
+  ITestImplementation,
+  ITestSpecification,
+} from "../../../Types.js";
 
-import type { ITestImpl, ITestSpec } from "../jsx-promised";
-
-import { IInput, testInterface } from "./index.js";
+import { I, IInput, testInterface } from "./index.js";
 
 export default <
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
+  II extends I,
   O extends Ibdd_out<
     Record<string, any>,
     Record<string, any>,
@@ -23,8 +17,8 @@ export default <
     Record<string, any>
   >
 >(
-  testImplementations: ITestImpl<I, O>,
-  testSpecifications: ITestSpec<I, O>,
+  testImplementations: ITestImplementation<II, O>,
+  testSpecifications: ITestSpecification<II, O>,
   testInput: IInput,
   testInterface2 = testInterface
 ) => {

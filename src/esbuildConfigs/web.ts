@@ -71,7 +71,7 @@ export default (
         },
       },
 
-      ...(config.nodePlugins.map((p) => p(register, entryPoints)) || []),
+      ...((config.webPlugins || []).map((p) => p(register, entryPoints)) || []),
     ],
   };
 };

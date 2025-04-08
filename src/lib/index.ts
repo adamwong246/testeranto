@@ -1,4 +1,7 @@
+import { PM_Pure } from "../PM/pure.js";
 import { PM } from "../PM/index.js";
+import { PM_Node } from "../PM/node.js";
+import { PM_Web } from "../PM/web.js";
 import { Ibdd_in, Ibdd_out, ITestInterface } from "../Types.js";
 
 import { IGivens, BaseCheck, BaseSuite } from "./abstractBase.js";
@@ -126,12 +129,7 @@ export type ITestJob<T = PM> = {
     >
   >;
   testResourceRequirement: ITTestResourceRequirement;
-  receiveTestResourceConfig: (pm: PM) => Promise<{
-    failed: number;
-    artifacts: Promise<unknown>[];
-    logPromise: Promise<unknown>;
-    features: string[];
-  }>;
+  receiveTestResourceConfig: (pm: PM_Node | PM_Web | PM_Pure) => IFinalResults;
 };
 
 export type ITestResults = Promise<{ test: ITest }>[];
@@ -145,11 +143,18 @@ export type ITestArtifactory = (key: string, value: unknown) => unknown;
 export type IRunnables = {
   nodeEntryPoints: Record<string, string>;
   webEntryPoints: Record<string, string>;
+  importEntryPoints: Record<string, string>;
 };
 
-export type IFinalResults = { features: string[]; failed: number };
+export type IFinalResults = {
+  features: string[];
+  failed: boolean;
+  fails: number;
+  artifacts: Promise<unknown>[];
+  logPromise: Promise<unknown>;
+};
 
-export type IRunTime = `node` | `web`;
+export type IRunTime = `node` | `web` | "web_worker" | "pure";
 
 export type ITestTypes = [string, IRunTime, { ports: number }, ITestTypes[]];
 
@@ -162,16 +167,14 @@ export type IBaseConfig = {
   src: string;
   clearScreen: boolean;
   debugger: boolean;
-  // devMode: boolean;
   externals: string[];
   minify: boolean;
-  // outbase: string;
-  // outdir: string;
   ports: string[];
   tests: ITestTypes[];
 
   nodePlugins: IPluginFactory[];
   webPlugins: IPluginFactory[];
+  importPlugins: IPluginFactory[];
 
   featureIngestor: (s: string) => Promise<string>;
 };

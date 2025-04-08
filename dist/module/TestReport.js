@@ -9,7 +9,7 @@ const StepPane = ({ step }) => {
         React.createElement("pre", null,
             React.createElement("code", null, JSON.stringify(step, null, 2))));
 };
-const TestPane = ({ given, log }) => {
+const TestPane = ({ given }) => {
     return React.createElement("div", null,
         "    ",
         React.createElement(Tab.Container, { id: "TestPane-tabs", defaultActiveKey: "first" },
@@ -43,30 +43,30 @@ const TestPane = ({ given, log }) => {
                                 React.createElement("code", null, JSON.stringify(given.error, null, 2)))))))));
 };
 const BddPage = () => {
-    const [configs, setConfigs] = useState();
-    useEffect(() => {
-        (async () => {
-            fetch('/kokomoBay/docs/testeranto.json')
-                .then(response => response.json())
-                .then(json => {
-                setConfigs(json);
-            })
-                .catch(error => console.error(error));
-        })();
-    }, []);
+    // const [configs, setConfigs] = useState<IBuiltConfig>();
+    // useEffect(() => {
+    //   (async () => {
+    //     fetch('../config.json')
+    //       .then(response => response.json())
+    //       .then(json => {
+    //         setConfigs(json)
+    //       })
+    //       .catch(error => console.error(error));
+    //   })();
+    // }, []);
     const [bddErrors, setBddErrors] = useState();
     useEffect(() => {
         (async () => {
             setBddErrors(await (await fetch(`tests.json`)).json());
         })();
-    }, [configs]);
+    }, []);
     const [log, setLog] = useState();
     useEffect(() => {
         (async () => {
             setLog(await (await fetch(`log.txt`)).text());
         })();
-    }, [configs]);
-    if (!configs || !bddErrors || !log) {
+    }, []);
+    if (!bddErrors || !log) {
         return React.createElement("div", null, "loading...");
     }
     return React.createElement("div", null,

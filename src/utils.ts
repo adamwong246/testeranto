@@ -1,6 +1,6 @@
 import path from "path";
 
-import { IRunTime, IBuiltConfig } from "./lib";
+import { IRunTime, IBuiltConfig, IRunnables, ITestTypes } from "./lib";
 
 export type ISummary = Record<
   string,
@@ -82,4 +82,48 @@ export const promptPather = (
     platform,
     `prompt.txt`
   );
+};
+
+export const getRunnables = (
+  tests: ITestTypes[],
+  projectName: string,
+  payload = {
+    nodeEntryPoints: {},
+    webEntryPoints: {},
+    importEntryPoints: {},
+  }
+): IRunnables => {
+  return tests.reduce((pt, cv, cndx, cry) => {
+    if (cv[1] === "node") {
+      pt.nodeEntryPoints[cv[0]] = path.resolve(
+        `./testeranto/bundles/node/${projectName}/${cv[0]
+          .split(".")
+          .slice(0, -1)
+          .concat("mjs")
+          .join(".")}`
+      );
+    } else if (cv[1] === "web") {
+      pt.webEntryPoints[cv[0]] = path.resolve(
+        `./testeranto/bundles/web/${projectName}/${cv[0]
+          .split(".")
+          .slice(0, -1)
+          .concat("mjs")
+          .join(".")}`
+      );
+    } else if (cv[1] === "pure") {
+      pt.importEntryPoints[cv[0]] = path.resolve(
+        `./testeranto/bundles/pure/${projectName}/${cv[0]
+          .split(".")
+          .slice(0, -1)
+          .concat("mjs")
+          .join(".")}`
+      );
+    }
+
+    if (cv[3].length) {
+      getRunnables(cv[3], testName, payload);
+    }
+
+    return pt;
+  }, payload as IRunnables);
 };

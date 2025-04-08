@@ -28,22 +28,24 @@ class BaseBuilder {
                 },
                 runner,
                 receiveTestResourceConfig: async function (puppetMaster) {
+                    const start = await puppetMaster.start();
                     const logFilePath = "log.txt";
                     const access = await puppetMaster.createWriteStream(logFilePath);
-                    const tLog = (...l) => {
-                        puppetMaster.write(access, `${l.toString()}\n`);
+                    const tLog = async (...l) => {
+                        const x = await puppetMaster.write(access, `${l.toString()}\n`);
+                        // console.log("x", x);
                     };
                     const suiteDone = await runner(puppetMaster, tLog);
-                    const logPromise = new Promise((res, rej) => {
-                        puppetMaster.end(access);
+                    const logPromise = new Promise(async (res, rej) => {
+                        await puppetMaster.end(access);
                         res(true);
                     });
-                    const numberOfFailures = Object.keys(suiteDone.givens).filter((k) => {
-                        return suiteDone.givens[k].error;
-                    }).length;
-                    puppetMaster.writeFileSync(`bdd_errors.txt`, numberOfFailures.toString());
-                    const o = this.toObj();
-                    puppetMaster.writeFileSync(`littleBoard.html`, `
+                    // const numberOfFailures = Object.keys(suiteDone.givens).filter((k) => {
+                    //   return suiteDone.givens[k].error;
+                    // }).length;
+                    const fails = suiteDone.fails;
+                    const b = await puppetMaster.writeFileSync(`bdd_errors.txt`, fails.toString());
+                    await puppetMaster.writeFileSync(`littleBoard.html`, `
 <!DOCTYPE html>
 <html lang="en">
 
@@ -60,13 +62,13 @@ class BaseBuilder {
 </head>
 
 <body>
-  <h1>Test report</h1>
   <div id="root"/>
 </body>
             `);
-                    puppetMaster.writeFileSync(`tests.json`, JSON.stringify(this.toObj(), null, 2));
+                    await puppetMaster.writeFileSync(`tests.json`, JSON.stringify(this.toObj(), null, 2));
                     return {
-                        failed: numberOfFailures,
+                        failed: fails > 0,
+                        fails,
                         artifacts: this.artifacts || [],
                         logPromise,
                         features: suiteDone.features(),
@@ -75,6 +77,12 @@ class BaseBuilder {
             };
         });
     }
+    // testsJson() {
+    //   puppetMaster.writeFileSync(
+    //     `tests.json`,
+    //     JSON.stringify({ features: suiteDone.features() }, null, 2)
+    //   );
+    // }
     Specs() {
         return this.specs;
     }

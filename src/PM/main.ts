@@ -1,5 +1,5 @@
 import ts from "typescript";
-
+import net from "net";
 import { Page } from "puppeteer-core/lib/esm/puppeteer";
 import fs, { watch } from "fs";
 import path from "path";
@@ -12,11 +12,19 @@ import {
   IBuiltConfig,
   IFinalResults,
   IRunnables,
+  IRunTime,
   ITestTypes,
 } from "../lib/index.js";
-import { ISummary, lintPather, promptPather, tscPather } from "../utils";
+import {
+  getRunnables,
+  ISummary,
+  lintPather,
+  promptPather,
+  tscPather,
+} from "../utils";
 
 import { PM_Base } from "./base.js";
+import { fork, spawn } from "node:child_process";
 
 type IOutputs = Record<
   string,
@@ -92,6 +100,39 @@ function isValidUrl(string) {
   }
 }
 
+// async function pollForFile(filePath, intervalMs = 1000, timeoutMs = 10000) {
+//   const startTime = Date.now();
+
+//   try {
+//     await fs.accessSync(filePath);
+//     console.log("exists ", filePath);
+//     return true; // File exists
+//   } catch (error) {
+//     console.log("polling for ", filePath);
+//     if (error.code !== "ENOENT") {
+//       throw error; // Unexpected error
+//     }
+//     // File does not exist yet, wait and try again
+//     await new Promise((resolve) => setTimeout(resolve, intervalMs));
+//   }
+//   // return false; // Timeout, file does not exist
+// }
+
+// Wait for file to exist, checks every 2 seconds by default
+function pollForFile(path, timeout = 2000) {
+  const intervalObj = setInterval(function () {
+    const file = path;
+    const fileExists = fs.existsSync(file);
+
+    console.log("Checking for: ", file);
+    console.log("Exists: ", fileExists);
+
+    if (fileExists) {
+      clearInterval(intervalObj);
+    }
+  }, timeout);
+}
+
 export class PM_Main extends PM_Base {
   name: string;
   ports: Record<number, boolean>;
@@ -100,6 +141,7 @@ export class PM_Main extends PM_Base {
   bigBoard: ISummary = {};
   webMetafileWatcher: fs.FSWatcher;
   nodeMetafileWatcher: fs.FSWatcher;
+  importMetafileWatcher: fs.FSWatcher;
 
   constructor(configs: IBuiltConfig, name: string, mode: "once" | "dev") {
     super(configs);
@@ -122,10 +164,12 @@ export class PM_Main extends PM_Base {
     });
   }
 
-  async start(): Promise<any> {
+  async start() {
     if (!fs.existsSync(`testeranto/reports/${this.name}`)) {
       fs.mkdirSync(`testeranto/reports/${this.name}`);
     }
+
+    // await pollForFile();
 
     this.browser = (await puppeteer.launch({
       slowMo: 1,
@@ -169,103 +213,101 @@ export class PM_Main extends PM_Base {
       ],
     })) as any;
 
-    const { nodeEntryPoints, webEntryPoints } = this.getRunnables(
-      this.configs.tests
-    );
+    const { nodeEntryPoints, webEntryPoints, importEntryPoints } =
+      this.getRunnables(this.configs.tests, this.name);
 
-    Object.entries(nodeEntryPoints).forEach(
-      ([k, outputFile]: [string, string]) => {
-        this.launchNode(k, outputFile);
-        try {
-          watch(outputFile, async (e, filename) => {
-            const hash = await fileHash(outputFile);
-            if (fileHashes[k] !== hash) {
-              fileHashes[k] = hash;
-              console.log(ansiC.green(ansiC.inverse(`< ${e} ${filename}`)));
-              this.launchNode(k, outputFile);
+    [
+      [
+        nodeEntryPoints,
+        this.launchNode,
+        "node",
+        (w) => {
+          this.nodeMetafileWatcher = w;
+        },
+      ],
+      [
+        webEntryPoints,
+        this.launchWeb,
+        "web",
+        (w) => {
+          this.webMetafileWatcher = w;
+        },
+      ],
+      [
+        importEntryPoints,
+        this.launchPure,
+        "pure",
+        (w) => {
+          this.importMetafileWatcher = w;
+        },
+      ],
+    ].forEach(
+      async ([eps, launcher, runtime, watcher]: [
+        Record<string, string>,
+        (src: string, dest: string) => Promise<void>,
+        IRunTime,
+        (f: fs.FSWatcher) => void
+      ]) => {
+        const metafile = `./testeranto/bundles/${runtime}/${this.name}/metafile.json`;
+
+        await pollForFile(metafile);
+
+        Object.entries(eps).forEach(
+          async ([k, outputFile]: [string, string]) => {
+            // await pollForFile(outputFile);
+
+            launcher(k, outputFile);
+            try {
+              watch(outputFile, async (e, filename) => {
+                const hash = await fileHash(outputFile);
+                if (fileHashes[k] !== hash) {
+                  fileHashes[k] = hash;
+                  console.log(ansiC.green(ansiC.inverse(`< ${e} ${filename}`)));
+                  launcher(k, outputFile);
+                }
+              });
+            } catch (e) {
+              console.error(e);
             }
-          });
-        } catch (e) {
-          console.error(e);
-        }
-      }
-    );
-
-    Object.entries(webEntryPoints).forEach(
-      ([k, outputFile]: [string, string]) => {
-        this.launchWeb(k, outputFile);
-        watch(outputFile, async (e, filename) => {
-          const hash = await fileHash(outputFile);
-          if (fileHashes[k] !== hash) {
-            fileHashes[k] = hash;
-            console.log(ansiC.green(ansiC.inverse(`< ${e} ${filename}`)));
-            this.launchWeb(k, outputFile);
           }
-        });
-      }
-    );
+        );
 
-    this.metafileOutputs("node");
-    const w = `./testeranto/bundles/node/${this.name}/metafile.json`;
-    console.log("w", w);
-    this.nodeMetafileWatcher = watch(w, async (e, filename) => {
-      console.log(ansiC.green(ansiC.inverse(`< ${e} ${filename} (node)`)));
-      this.metafileOutputs("node");
-    });
+        this.metafileOutputs(runtime);
 
-    this.metafileOutputs("web");
-    this.webMetafileWatcher = watch(
-      `./testeranto/bundles/web/${this.name}/metafile.json`,
-      async (e, filename) => {
-        console.log(ansiC.green(ansiC.inverse(`< ${e} ${filename} (web)`)));
-        this.metafileOutputs("web");
+        watcher(
+          watch(metafile, async (e, filename) => {
+            console.log(
+              ansiC.green(ansiC.inverse(`< ${e} ${filename} (${runtime})`))
+            );
+            this.metafileOutputs(runtime);
+          })
+        );
       }
     );
   }
 
-  stop = () => {
+  async stop() {
     console.log(ansiC.inverse("Testeranto-Run is shutting down gracefully..."));
     this.mode = "once";
     this.nodeMetafileWatcher.close();
     this.webMetafileWatcher.close();
+    this.importMetafileWatcher.close();
     this.checkForShutdown();
-  };
+  }
 
   getRunnables = (
     tests: ITestTypes[],
+    testName: string,
     payload = {
       nodeEntryPoints: {},
       webEntryPoints: {},
+      importEntryPoints: {},
     }
   ): IRunnables => {
-    return tests.reduce((pt, cv, cndx, cry) => {
-      if (cv[1] === "node") {
-        pt.nodeEntryPoints[cv[0]] = path.resolve(
-          `./testeranto/bundles/node/${this.name}/${cv[0]
-            .split(".")
-            .slice(0, -1)
-            .concat("mjs")
-            .join(".")}`
-        );
-      } else if (cv[1] === "web") {
-        pt.webEntryPoints[cv[0]] = path.resolve(
-          `./testeranto/bundles/web/${this.name}/${cv[0]
-            .split(".")
-            .slice(0, -1)
-            .concat("mjs")
-            .join(".")}`
-        );
-      }
-
-      if (cv[3].length) {
-        this.getRunnables(cv[3], payload);
-      }
-
-      return pt;
-    }, payload as IRunnables);
+    return getRunnables(tests, testName, payload);
   };
 
-  async metafileOutputs(platform: "web" | "node") {
+  async metafileOutputs(platform: IRunTime) {
     const metafile = JSON.parse(
       fs
         .readFileSync(
@@ -533,14 +575,14 @@ ${addableFiles
     this.checkForShutdown();
   };
 
-  launchNode = async (src: string, dest: string) => {
-    console.log(ansiC.green(ansiC.inverse(`! node, ${src}`)));
+  launchPure = async (src: string, dest: string) => {
+    console.log(ansiC.green(ansiC.inverse(`! pure, ${src}`)));
     this.bddTestIsRunning(src);
 
     const reportDest = `testeranto/reports/${this.name}/${src
       .split(".")
       .slice(0, -1)
-      .join(".")}/node`;
+      .join(".")}/pure`;
     if (!fs.existsSync(reportDest)) {
       fs.mkdirSync(reportDest, { recursive: true });
     }
@@ -583,7 +625,6 @@ ${addableFiles
         argz = JSON.stringify({
           scheduled: true,
           name: src,
-          // ports: [3333],
           ports: portsToUse,
           fs: destFolder,
           browserWSEndpoint: this.browser.wsEndpoint(),
@@ -600,6 +641,11 @@ ${addableFiles
     const builtfile = dest;
 
     const webSideCares: Page[] = [];
+
+    // fs.writeFileSync(
+    //   `${reportDest}/stdlog.txt`,
+    //   "THIS FILE IS AUTO GENERATED. IT IS PURPOSEFULLY LEFT BLANK."
+    // );
 
     // await Promise.all(
     //   testConfig[3].map(async (sidecar) => {
@@ -629,10 +675,10 @@ ${addableFiles
       return module.default.then((defaultModule) => {
         defaultModule
           .receiveTestResourceConfig(argz)
-          .then(async ({ features, failed }: IFinalResults) => {
-            this.receiveFeatures(features, destFolder, src, "node");
-            statusMessagePretty(failed, src);
-            this.bddTestIsNowDone(src, failed);
+          .then(async (results: IFinalResults) => {
+            this.receiveFeatures(results.features, destFolder, src, "pure");
+            statusMessagePretty(results.fails, src);
+            this.bddTestIsNowDone(src, results.fails);
           })
           .catch((e) => {
             console.log(ansiC.red(ansiC.inverse(`${src} errored with: ${e}`)));
@@ -643,6 +689,229 @@ ${addableFiles
           });
       });
     });
+
+    // console.log("portsToUse", portsToUse);
+    for (let i = 0; i <= portsToUse.length; i++) {
+      if (portsToUse[i]) {
+        this.ports[portsToUse[i]] = "true"; //port is open again
+      }
+    }
+  };
+
+  launchNode = async (src: string, dest: string) => {
+    console.log(ansiC.green(ansiC.inverse(`! node, ${src}`)));
+    this.bddTestIsRunning(src);
+
+    const reportDest = `testeranto/reports/${this.name}/${src
+      .split(".")
+      .slice(0, -1)
+      .join(".")}/node`;
+    if (!fs.existsSync(reportDest)) {
+      fs.mkdirSync(reportDest, { recursive: true });
+    }
+
+    const destFolder = dest.replace(".mjs", "");
+
+    let testResources = "";
+
+    const testConfig = this.configs.tests.find((t) => {
+      return t[0] === src;
+    });
+
+    if (!testConfig) {
+      console.log(ansiC.inverse("missing test config! Exiting ungracefully!"));
+      process.exit(-1);
+    }
+    const testConfigResource = testConfig[2];
+
+    let portsToUse: string[] = [];
+    if (testConfigResource.ports === 0) {
+      testResources = JSON.stringify({
+        scheduled: true,
+        name: src,
+        ports: portsToUse,
+        fs: reportDest,
+        browserWSEndpoint: this.browser.wsEndpoint(),
+      });
+    } else if (testConfigResource.ports > 0) {
+      const openPorts = Object.entries(this.ports).filter(
+        ([portnumber, portopen]) => portopen
+      );
+
+      if (openPorts.length >= testConfigResource.ports) {
+        for (let i = 0; i < testConfigResource.ports; i++) {
+          portsToUse.push(openPorts[i][0]);
+
+          this.ports[openPorts[i][0]] = false; // port is now closed
+        }
+
+        testResources = JSON.stringify({
+          scheduled: true,
+          name: src,
+          ports: portsToUse,
+          fs: destFolder,
+          browserWSEndpoint: this.browser.wsEndpoint(),
+        });
+      } else {
+        this.queue.push(src);
+        return;
+      }
+    } else {
+      console.error("negative port makes no sense", src);
+      process.exit(-1);
+    }
+
+    const builtfile = dest;
+
+    // const webSideCares: Page[] = [];
+
+    // await Promise.all(
+    //   testConfig[3].map(async (sidecar) => {
+    //     if (sidecar[1] === "web") {
+    //       const s = await this.launchWebSideCar(
+    //         sidecar[0],
+    //         destinationOfRuntime(sidecar[0], "web", this.configs),
+    //         sidecar
+    //       );
+    //       webSideCares.push(s);
+    //       return s;
+    //     }
+
+    //     if (sidecar[1] === "node") {
+    //       return this.launchNodeSideCar(
+    //         sidecar[0],
+    //         destinationOfRuntime(sidecar[0], "node", this.configs),
+    //         sidecar
+    //       );
+    //     }
+    //   })
+    // );
+
+    // const f = fork(builtfile, [testResources], {
+    //   silent: true,
+    //   // detached: true,
+    //   // stdio: "ignore",
+    // });
+
+    let haltReturns = false;
+
+    let buffer: Buffer<ArrayBufferLike> = new Buffer("");
+    const server = net.createServer((socket) => {
+      socket.on("data", (data) => {
+        buffer = Buffer.concat([buffer, data]);
+
+        let messages: string[][] = [];
+        for (let b = 0; b < buffer.length + 1; b++) {
+          let c = buffer.slice(0, b);
+          let d;
+          try {
+            d = JSON.parse(c.toString());
+
+            messages.push(d);
+            buffer = buffer.slice(b, buffer.length + 1);
+            b = 0;
+          } catch (e) {
+            // b++;
+          }
+        }
+
+        messages.forEach(async (payload) => {
+          if (payload[0] === "writeFileSync") {
+            const r = await this.writeFileSync(
+              payload[1],
+              payload[2],
+              payload[3]
+            );
+
+            if (!haltReturns) {
+              child.send(
+                JSON.stringify({
+                  uid: r,
+                  key: payload[4],
+                })
+              );
+            }
+          }
+
+          if (payload[0] === "createWriteStream") {
+            const r = await this.createWriteStream(payload[1], payload[2]);
+
+            if (!haltReturns) {
+              child.send(
+                JSON.stringify({
+                  uid: r,
+                  key: payload[3],
+                })
+              );
+            }
+          }
+
+          if (payload[0] === "write") {
+            const r = await this.write(JSON.parse(payload[1]), payload[2]);
+
+            if (!haltReturns) {
+              child.send(
+                JSON.stringify({
+                  written: r,
+                  key: payload[3],
+                })
+              );
+            }
+          }
+        });
+
+        // let payload;
+        // try {
+        //   payload = JSON.parse(data.toString());
+        // } catch (e) {
+        //   // buffer = buffer + data
+        //   buffer.write(data.toString());
+        //   return;
+        // }
+      });
+    });
+
+    const oStream = fs.createWriteStream(`${reportDest}/console_log.txt`);
+
+    const child = spawn("node", [builtfile, testResources], {
+      stdio: ["pipe", "pipe", "pipe", "ipc"],
+      // silent: true
+    });
+
+    const p = destFolder + "/pipe";
+    server.listen(p, () => {
+      child.stderr.on("data", (data) => {
+        oStream.write(`stderr data ${data}`);
+      });
+      child.stdout.on("data", (data) => {
+        oStream.write(`stdout data ${data}`);
+      });
+      child.on("close", (code) => {
+        oStream.close();
+        server.close();
+
+        if (code === null) {
+          this.bddTestIsNowDone(src, -1);
+          statusMessagePretty(-1, src);
+        } else if (code === 0) {
+          this.bddTestIsNowDone(src, 0);
+          statusMessagePretty(0, src);
+        } else {
+          this.bddTestIsNowDone(src, code);
+          statusMessagePretty(code, src);
+        }
+
+        // haltReturns = true;
+      });
+      child.on("exit", (code) => {
+        // console.log(`exit`);
+        // oStream.close();
+        // server.close();
+        // this.bddTestIsNowDone(src, code || -1);
+      });
+    });
+
+    child.send({ path: p });
 
     // console.log("portsToUse", portsToUse);
     for (let i = 0; i <= portsToUse.length; i++) {
@@ -860,7 +1129,7 @@ ${addableFiles
     }
   };
 
-  launchWeb = (src: string, dest: string) => {
+  launchWeb = async (src: string, dest: string) => {
     console.log(ansiC.green(ansiC.inverse(`! web ${src}`)));
     this.bddTestIsRunning(src);
 
@@ -907,16 +1176,11 @@ ${addableFiles
     const fileStreams2: fs.WriteStream[] = [];
     const doneFileStream2: Promise<any>[] = [];
 
-    const stdoutStream = fs.createWriteStream(`${destFolder}/stdout.log`);
-    const stderrStream = fs.createWriteStream(`${destFolder}/stderr.log`);
+    const oStream = fs.createWriteStream(`${reportDest}/console_log.txt`);
 
     this.browser
       .newPage()
       .then((page) => {
-        page.on("console", (msg) => {
-          console.log("web > ", msg.args(), msg.text());
-        });
-
         page.exposeFunction(
           "screencast",
           async (ssOpts: ScreenshotOptions, testName: string) => {
@@ -1111,53 +1375,50 @@ ${addableFiles
           Promise.all(screenshots[src] || []).then(() => {
             delete screenshots[src];
             page.close();
-            stderrStream.close();
-            stdoutStream.close();
+            oStream.close();
           });
         };
 
         page.on("pageerror", (err: Error) => {
           console.debug(`Error from ${src}: [${err.name}] `);
-          stderrStream.write(err.name);
+          oStream.write(err.name);
+          oStream.write("\n");
 
           if (err.cause) {
             console.debug(`Error from ${src} cause: [${err.cause}] `);
-            stderrStream.write(err.cause);
+            oStream.write(err.cause);
+            oStream.write("\n");
           }
 
           if (err.stack) {
             console.debug(`Error from stack ${src}: [${err.stack}] `);
-            stderrStream.write(err.stack);
+            oStream.write(err.stack);
+            oStream.write("\n");
           }
 
           console.debug(`Error from message ${src}: [${err.message}] `);
-          stderrStream.write(err.message);
+          oStream.write(err.message);
+          oStream.write("\n");
 
           this.bddTestIsNowDone(src, -1);
           close();
         });
         page.on("console", (log: ConsoleMessage) => {
-          // console.debug(`Log from ${t}: [${log.text()}] `);
-          // console.debug(`Log from ${t}: [${JSON.stringify(log.location())}] `);
-          // console.debug(
-          //   `Log from ${t}: [${JSON.stringify(log.stackTrace())}] `
-          // );
-          stdoutStream.write(log.text());
-          stdoutStream.write(JSON.stringify(log.location()));
-          stdoutStream.write(JSON.stringify(log.stackTrace()));
+          oStream.write(log.text());
+          oStream.write(JSON.stringify(log.location()));
+          oStream.write(JSON.stringify(log.stackTrace()));
+          oStream.write("\n");
         });
         await page.goto(`file://${`${destFolder}.html`}`, {});
 
         await page
           .evaluate(evaluation)
-          .then(async ({ failed, features }: IFinalResults) => {
+          .then(async ({ fails, failed, features }: IFinalResults) => {
             this.receiveFeatures(features, destFolder, src, "web");
-            // console.log(`${t} completed with ${failed} errors`);
-            statusMessagePretty(failed, src);
-            this.bddTestIsNowDone(src, failed);
+            statusMessagePretty(fails, src);
+            this.bddTestIsNowDone(src, fails);
           })
           .catch((e) => {
-            // console.log(red, `${t} errored with`, e);
             console.log(ansiC.red(ansiC.inverse(`${src} errored with: ${e}`)));
           })
           .finally(() => {
@@ -1173,7 +1434,7 @@ ${addableFiles
     features: string[],
     destFolder: string,
     srcTest: string,
-    platform: "node" | "web"
+    platform: IRunTime
   ) => {
     const featureDestination = path.resolve(
       process.cwd(),
@@ -1237,10 +1498,7 @@ ${addableFiles
       }, Promise.resolve({ files: [] as string[], strings: [] as string[] }))
 
       .then(({ files, strings }: { files: string[]; strings: string[] }) => {
-        // writeFileAndCreateDir(`${featureDestination}`, JSON.stringify(strings));
-
         fs.writeFileSync(
-          // `${destFolder}/featurePrompt.txt`,
           `testeranto/reports/${this.name}/${srcTest
             .split(".")
             .slice(0, -1)
@@ -1252,8 +1510,6 @@ ${addableFiles
             .join("\n")
         );
       });
-
-    // this.writeBigBoard();
   };
 
   writeBigBoard = () => {

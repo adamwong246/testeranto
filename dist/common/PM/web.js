@@ -8,6 +8,13 @@ class PM_Web extends index_js_1.PM {
         this.server = {};
         this.testResourceConfiguration = t;
     }
+    start() {
+        console.log("mark6");
+        return new Promise((r) => r());
+    }
+    stop() {
+        return new Promise((r) => r());
+    }
     waitForSelector(p, s) {
         return window["waitForSelector"](p, s);
     }

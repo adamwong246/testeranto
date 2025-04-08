@@ -6,6 +6,7 @@ import readline from "readline";
 
 // src/PM/main.ts
 import ts from "typescript";
+import net from "net";
 import fs2, { watch } from "fs";
 import path3 from "path";
 import puppeteer from "puppeteer-core";
@@ -45,6 +46,31 @@ var promptPather = (entryPoint, platform, projectName) => {
     platform,
     `prompt.txt`
   );
+};
+var getRunnables = (tests, projectName, payload = {
+  nodeEntryPoints: {},
+  webEntryPoints: {},
+  importEntryPoints: {}
+}) => {
+  return tests.reduce((pt, cv, cndx, cry) => {
+    if (cv[1] === "node") {
+      pt.nodeEntryPoints[cv[0]] = path.resolve(
+        `./testeranto/bundles/node/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+      );
+    } else if (cv[1] === "web") {
+      pt.webEntryPoints[cv[0]] = path.resolve(
+        `./testeranto/bundles/web/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+      );
+    } else if (cv[1] === "pure") {
+      pt.importEntryPoints[cv[0]] = path.resolve(
+        `./testeranto/bundles/pure/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+      );
+    }
+    if (cv[3].length) {
+      getRunnables(cv[3], testName, payload);
+    }
+    return pt;
+  }, payload);
 };
 
 // src/PM/base.ts
@@ -105,35 +131,19 @@ var PM_Base = class extends PM {
       }
       return false;
     };
-    globalThis["writeFileSync"] = (filepath, contents, testName2) => {
-      fs.mkdirSync(path2.dirname(filepath), {
-        recursive: true
-      });
-      if (!files[testName2]) {
-        files[testName2] = /* @__PURE__ */ new Set();
-      }
-      files[testName2].add(filepath);
-      return fs.writeFileSync(filepath, contents);
+    globalThis["writeFileSync"] = (filepath, contents, testName3) => {
+      this.writeFileSync(filepath, contents, testName3);
     };
-    globalThis["createWriteStream"] = (filepath, testName2) => {
-      const f = fs.createWriteStream(filepath);
-      fileStreams3.push(f);
-      if (!files[testName2]) {
-        files[testName2] = /* @__PURE__ */ new Set();
-      }
-      files[testName2].add(filepath);
-      return {
-        ...JSON.parse(JSON.stringify(f)),
-        uid: fileStreams3.length - 1
-      };
+    globalThis["createWriteStream"] = (filepath, testName3) => {
+      return this.createWriteStream(filepath, testName3);
     };
     globalThis["write"] = (uid, contents) => {
-      fileStreams3[uid].write(contents);
+      return this.write(uid, contents);
     };
     globalThis["end"] = (uid) => {
       fileStreams3[uid].end();
     };
-    globalThis["customScreenShot"] = async (opts, pageKey, testName2) => {
+    globalThis["customScreenShot"] = async (opts, pageKey, testName3) => {
       const page = (await this.browser.pages()).find(
         /* @ts-ignore:next-line */
         (p2) => p2.mainFrame()._id === pageKey
@@ -216,11 +226,28 @@ var PM_Base = class extends PM {
     }
     return false;
   }
-  writeFileSync(fp, contents) {
-    fs.writeFileSync(fp, contents);
+  writeFileSync(filepath, contents, testName3) {
+    return new Promise((res) => {
+      fs.mkdirSync(path2.dirname(filepath), {
+        recursive: true
+      });
+      if (!files[testName3]) {
+        files[testName3] = /* @__PURE__ */ new Set();
+      }
+      files[testName3].add(filepath);
+      res(fs.writeFileSync(filepath, contents));
+    });
   }
-  createWriteStream(filepath) {
-    return fs.createWriteStream(filepath);
+  createWriteStream(filepath, testName3) {
+    return new Promise((res) => {
+      const f = fs.createWriteStream(filepath);
+      fileStreams3.push(f);
+      if (!files[testName3]) {
+        files[testName3] = /* @__PURE__ */ new Set();
+      }
+      files[testName3].add(filepath);
+      res((fileStreams3.length - 1).toString());
+    });
   }
   testArtiFactoryfileWriter(tLog, callback) {
     return (fPath, value) => {
@@ -267,8 +294,11 @@ var PM_Base = class extends PM {
       );
     };
   }
-  write(accessObject, contents) {
-    throw new Error("Method not implemented.");
+  write(uid, contents) {
+    return new Promise((res) => {
+      const x = fileStreams3[uid].write(contents);
+      res(x);
+    });
   }
   page() {
     throw new Error("Method not implemented.");
@@ -297,6 +327,7 @@ var PM_Base = class extends PM {
 };
 
 // src/PM/main.ts
+import { spawn } from "node:child_process";
 var eslint = new ESLint();
 var formatter = await eslint.loadFormatter(
   "./node_modules/testeranto/dist/prebuild/esbuildConfigs/eslint-formatter-testeranto.mjs"
@@ -354,36 +385,27 @@ function isValidUrl(string) {
     return false;
   }
 }
+function pollForFile(path4, timeout = 2e3) {
+  const intervalObj = setInterval(function() {
+    const file = path4;
+    const fileExists = fs2.existsSync(file);
+    console.log("Checking for: ", file);
+    console.log("Exists: ", fileExists);
+    if (fileExists) {
+      clearInterval(intervalObj);
+    }
+  }, timeout);
+}
 var PM_Main = class extends PM_Base {
   constructor(configs, name, mode2) {
     super(configs);
     this.bigBoard = {};
-    this.stop = () => {
-      console.log(ansiC.inverse("Testeranto-Run is shutting down gracefully..."));
-      this.mode = "once";
-      this.nodeMetafileWatcher.close();
-      this.webMetafileWatcher.close();
-      this.checkForShutdown();
-    };
-    this.getRunnables = (tests, payload = {
+    this.getRunnables = (tests, testName3, payload = {
       nodeEntryPoints: {},
-      webEntryPoints: {}
+      webEntryPoints: {},
+      importEntryPoints: {}
     }) => {
-      return tests.reduce((pt, cv, cndx, cry) => {
-        if (cv[1] === "node") {
-          pt.nodeEntryPoints[cv[0]] = path3.resolve(
-            `./testeranto/bundles/node/${this.name}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
-          );
-        } else if (cv[1] === "web") {
-          pt.webEntryPoints[cv[0]] = path3.resolve(
-            `./testeranto/bundles/web/${this.name}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
-          );
-        }
-        if (cv[3].length) {
-          this.getRunnables(cv[3], payload);
-        }
-        return pt;
-      }, payload);
+      return getRunnables(tests, testName3, payload);
     };
     this.tscCheck = async ({
       entrypoint,
@@ -557,10 +579,10 @@ ${addableFiles.map((x) => {
       this.writeBigBoard();
       this.checkForShutdown();
     };
-    this.launchNode = async (src, dest) => {
-      console.log(ansiC.green(ansiC.inverse(`! node, ${src}`)));
+    this.launchPure = async (src, dest) => {
+      console.log(ansiC.green(ansiC.inverse(`! pure, ${src}`)));
       this.bddTestIsRunning(src);
-      const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/node`;
+      const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/pure`;
       if (!fs2.existsSync(reportDest)) {
         fs2.mkdirSync(reportDest, { recursive: true });
       }
@@ -595,7 +617,6 @@ ${addableFiles.map((x) => {
           argz = JSON.stringify({
             scheduled: true,
             name: src,
-            // ports: [3333],
             ports: portsToUse,
             fs: destFolder,
             browserWSEndpoint: this.browser.wsEndpoint()
@@ -612,10 +633,10 @@ ${addableFiles.map((x) => {
       const webSideCares = [];
       this.server[builtfile] = await import(`${builtfile}?cacheBust=${Date.now()}`).then((module) => {
         return module.default.then((defaultModule) => {
-          defaultModule.receiveTestResourceConfig(argz).then(async ({ features, failed }) => {
-            this.receiveFeatures(features, destFolder, src, "node");
-            statusMessagePretty(failed, src);
-            this.bddTestIsNowDone(src, failed);
+          defaultModule.receiveTestResourceConfig(argz).then(async (results) => {
+            this.receiveFeatures(results.features, destFolder, src, "pure");
+            statusMessagePretty(results.fails, src);
+            this.bddTestIsNowDone(src, results.fails);
           }).catch((e) => {
             console.log(ansiC.red(ansiC.inverse(`${src} errored with: ${e}`)));
             this.bddTestIsNowDone(src, -1);
@@ -624,6 +645,152 @@ ${addableFiles.map((x) => {
           });
         });
       });
+      for (let i = 0; i <= portsToUse.length; i++) {
+        if (portsToUse[i]) {
+          this.ports[portsToUse[i]] = "true";
+        }
+      }
+    };
+    this.launchNode = async (src, dest) => {
+      console.log(ansiC.green(ansiC.inverse(`! node, ${src}`)));
+      this.bddTestIsRunning(src);
+      const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/node`;
+      if (!fs2.existsSync(reportDest)) {
+        fs2.mkdirSync(reportDest, { recursive: true });
+      }
+      const destFolder = dest.replace(".mjs", "");
+      let testResources = "";
+      const testConfig = this.configs.tests.find((t) => {
+        return t[0] === src;
+      });
+      if (!testConfig) {
+        console.log(ansiC.inverse("missing test config! Exiting ungracefully!"));
+        process.exit(-1);
+      }
+      const testConfigResource = testConfig[2];
+      let portsToUse = [];
+      if (testConfigResource.ports === 0) {
+        testResources = JSON.stringify({
+          scheduled: true,
+          name: src,
+          ports: portsToUse,
+          fs: reportDest,
+          browserWSEndpoint: this.browser.wsEndpoint()
+        });
+      } else if (testConfigResource.ports > 0) {
+        const openPorts = Object.entries(this.ports).filter(
+          ([portnumber, portopen]) => portopen
+        );
+        if (openPorts.length >= testConfigResource.ports) {
+          for (let i = 0; i < testConfigResource.ports; i++) {
+            portsToUse.push(openPorts[i][0]);
+            this.ports[openPorts[i][0]] = false;
+          }
+          testResources = JSON.stringify({
+            scheduled: true,
+            name: src,
+            ports: portsToUse,
+            fs: destFolder,
+            browserWSEndpoint: this.browser.wsEndpoint()
+          });
+        } else {
+          this.queue.push(src);
+          return;
+        }
+      } else {
+        console.error("negative port makes no sense", src);
+        process.exit(-1);
+      }
+      const builtfile = dest;
+      let haltReturns = false;
+      let buffer = new Buffer("");
+      const server = net.createServer((socket) => {
+        socket.on("data", (data) => {
+          buffer = Buffer.concat([buffer, data]);
+          let messages = [];
+          for (let b = 0; b < buffer.length + 1; b++) {
+            let c = buffer.slice(0, b);
+            let d;
+            try {
+              d = JSON.parse(c.toString());
+              messages.push(d);
+              buffer = buffer.slice(b, buffer.length + 1);
+              b = 0;
+            } catch (e) {
+            }
+          }
+          messages.forEach(async (payload) => {
+            if (payload[0] === "writeFileSync") {
+              const r = await this.writeFileSync(
+                payload[1],
+                payload[2],
+                payload[3]
+              );
+              if (!haltReturns) {
+                child.send(
+                  JSON.stringify({
+                    uid: r,
+                    key: payload[4]
+                  })
+                );
+              }
+            }
+            if (payload[0] === "createWriteStream") {
+              const r = await this.createWriteStream(payload[1], payload[2]);
+              if (!haltReturns) {
+                child.send(
+                  JSON.stringify({
+                    uid: r,
+                    key: payload[3]
+                  })
+                );
+              }
+            }
+            if (payload[0] === "write") {
+              const r = await this.write(JSON.parse(payload[1]), payload[2]);
+              if (!haltReturns) {
+                child.send(
+                  JSON.stringify({
+                    written: r,
+                    key: payload[3]
+                  })
+                );
+              }
+            }
+          });
+        });
+      });
+      const oStream = fs2.createWriteStream(`${reportDest}/console_log.txt`);
+      const child = spawn("node", [builtfile, testResources], {
+        stdio: ["pipe", "pipe", "pipe", "ipc"]
+        // silent: true
+      });
+      const p = destFolder + "/pipe";
+      server.listen(p, () => {
+        child.stderr.on("data", (data) => {
+          oStream.write(`stderr data ${data}`);
+        });
+        child.stdout.on("data", (data) => {
+          oStream.write(`stdout data ${data}`);
+        });
+        child.on("close", (code) => {
+          oStream.close();
+          server.close();
+          if (code === null) {
+            this.bddTestIsNowDone(src, -1);
+            statusMessagePretty(-1, src);
+          } else if (code === 0) {
+            this.bddTestIsNowDone(src, 0);
+            statusMessagePretty(0, src);
+          } else {
+            this.bddTestIsNowDone(src, code);
+            statusMessagePretty(code, src);
+          }
+        });
+        child.on("exit", (code) => {
+        });
+      });
+      child.send({ path: p });
       for (let i = 0; i <= portsToUse.length; i++) {
         if (portsToUse[i]) {
           this.ports[portsToUse[i]] = "true";
@@ -639,28 +806,28 @@ ${addableFiles.map((x) => {
         this.browser.newPage().then((page) => {
           page.exposeFunction(
             "custom-screenshot",
-            async (ssOpts, testName2) => {
+            async (ssOpts, testName3) => {
               const p = ssOpts.path;
               const dir = path3.dirname(p);
               fs2.mkdirSync(dir, {
                 recursive: true
               });
-              files2[testName2].add(ssOpts.path);
+              files2[testName3].add(ssOpts.path);
               const sPromise = page.screenshot({
                 ...ssOpts,
                 path: p
               });
-              if (!screenshots2[testName2]) {
-                screenshots2[testName2] = [];
+              if (!screenshots2[testName3]) {
+                screenshots2[testName3] = [];
               }
-              screenshots2[testName2].push(sPromise);
+              screenshots2[testName3].push(sPromise);
               await sPromise;
               return sPromise;
             }
           );
           page.exposeFunction(
             "writeFileSync",
-            (fp, contents, testName2) => {
+            (fp, contents, testName3) => {
               const dir = path3.dirname(fp);
               fs2.mkdirSync(dir, {
                 recursive: true
@@ -670,10 +837,10 @@ ${addableFiles.map((x) => {
                 res2(fp);
               });
               doneFileStream2.push(p);
-              if (!files2[testName2]) {
-                files2[testName2] = /* @__PURE__ */ new Set();
+              if (!files2[testName3]) {
+                files2[testName3] = /* @__PURE__ */ new Set();
               }
-              files2[testName2].add(fp);
+              files2[testName3].add(fp);
               return p;
             }
           );
@@ -690,9 +857,9 @@ ${addableFiles.map((x) => {
           });
           page.exposeFunction(
             "createWriteStream",
-            (fp, testName2) => {
+            (fp, testName3) => {
               const f = fs2.createWriteStream(fp);
-              files2[testName2].add(fp);
+              files2[testName3].add(fp);
               const p = new Promise((res2, rej2) => {
                 res2(fp);
               });
@@ -776,7 +943,7 @@ ${addableFiles.map((x) => {
         }
       }
     };
-    this.launchWeb = (src, dest) => {
+    this.launchWeb = async (src, dest) => {
       console.log(ansiC.green(ansiC.inverse(`! web ${src}`)));
       this.bddTestIsRunning(src);
       const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/web`;
@@ -803,64 +970,60 @@ ${addableFiles.map((x) => {
     })`;
       const fileStreams2 = [];
       const doneFileStream2 = [];
-      const stdoutStream = fs2.createWriteStream(`${destFolder}/stdout.log`);
-      const stderrStream = fs2.createWriteStream(`${destFolder}/stderr.log`);
+      const oStream = fs2.createWriteStream(`${reportDest}/console_log.txt`);
       this.browser.newPage().then((page) => {
-        page.on("console", (msg) => {
-          console.log("web > ", msg.args(), msg.text());
-        });
         page.exposeFunction(
           "screencast",
-          async (ssOpts, testName2) => {
+          async (ssOpts, testName3) => {
             const p = ssOpts.path;
             const dir = path3.dirname(p);
             fs2.mkdirSync(dir, {
               recursive: true
             });
-            if (!files2[testName2]) {
-              files2[testName2] = /* @__PURE__ */ new Set();
+            if (!files2[testName3]) {
+              files2[testName3] = /* @__PURE__ */ new Set();
             }
-            files2[testName2].add(ssOpts.path);
+            files2[testName3].add(ssOpts.path);
             const sPromise = page.screenshot({
               ...ssOpts,
               path: p
             });
-            if (!screenshots2[testName2]) {
-              screenshots2[testName2] = [];
+            if (!screenshots2[testName3]) {
+              screenshots2[testName3] = [];
             }
-            screenshots2[testName2].push(sPromise);
+            screenshots2[testName3].push(sPromise);
             await sPromise;
             return sPromise;
           }
         );
         page.exposeFunction(
           "customScreenShot",
-          async (ssOpts, testName2) => {
+          async (ssOpts, testName3) => {
             const p = ssOpts.path;
             const dir = path3.dirname(p);
             fs2.mkdirSync(dir, {
               recursive: true
             });
-            if (!files2[testName2]) {
-              files2[testName2] = /* @__PURE__ */ new Set();
+            if (!files2[testName3]) {
+              files2[testName3] = /* @__PURE__ */ new Set();
             }
-            files2[testName2].add(ssOpts.path);
+            files2[testName3].add(ssOpts.path);
             const sPromise = page.screenshot({
               ...ssOpts,
               path: p
             });
-            if (!screenshots2[testName2]) {
-              screenshots2[testName2] = [];
+            if (!screenshots2[testName3]) {
+              screenshots2[testName3] = [];
             }
-            screenshots2[testName2].push(sPromise);
+            screenshots2[testName3].push(sPromise);
             await sPromise;
             return sPromise;
           }
         );
         page.exposeFunction(
           "writeFileSync",
-          (fp, contents, testName2) => {
-            return globalThis["writeFileSync"](fp, contents, testName2);
+          (fp, contents, testName3) => {
+            return globalThis["writeFileSync"](fp, contents, testName3);
           }
         );
         page.exposeFunction("existsSync", (fp, contents) => {
@@ -876,12 +1039,12 @@ ${addableFiles.map((x) => {
         });
         page.exposeFunction(
           "createWriteStream",
-          (fp, testName2) => {
+          (fp, testName3) => {
             const f = fs2.createWriteStream(fp);
-            if (!files2[testName2]) {
-              files2[testName2] = /* @__PURE__ */ new Set();
+            if (!files2[testName3]) {
+              files2[testName3] = /* @__PURE__ */ new Set();
             }
-            files2[testName2].add(fp);
+            files2[testName3].add(fp);
             const p = new Promise((res, rej) => {
               res(fp);
             });
@@ -956,36 +1119,40 @@ ${addableFiles.map((x) => {
           Promise.all(screenshots2[src] || []).then(() => {
             delete screenshots2[src];
             page.close();
-            stderrStream.close();
-            stdoutStream.close();
+            oStream.close();
           });
         };
         page.on("pageerror", (err) => {
           console.debug(`Error from ${src}: [${err.name}] `);
-          stderrStream.write(err.name);
+          oStream.write(err.name);
+          oStream.write("\n");
           if (err.cause) {
             console.debug(`Error from ${src} cause: [${err.cause}] `);
-            stderrStream.write(err.cause);
+            oStream.write(err.cause);
+            oStream.write("\n");
           }
           if (err.stack) {
             console.debug(`Error from stack ${src}: [${err.stack}] `);
-            stderrStream.write(err.stack);
+            oStream.write(err.stack);
+            oStream.write("\n");
           }
           console.debug(`Error from message ${src}: [${err.message}] `);
-          stderrStream.write(err.message);
+          oStream.write(err.message);
+          oStream.write("\n");
           this.bddTestIsNowDone(src, -1);
           close();
         });
         page.on("console", (log) => {
-          stdoutStream.write(log.text());
-          stdoutStream.write(JSON.stringify(log.location()));
-          stdoutStream.write(JSON.stringify(log.stackTrace()));
+          oStream.write(log.text());
+          oStream.write(JSON.stringify(log.location()));
+          oStream.write(JSON.stringify(log.stackTrace()));
+          oStream.write("\n");
         });
         await page.goto(`file://${`${destFolder}.html`}`, {});
-        await page.evaluate(evaluation).then(async ({ failed, features }) => {
+        await page.evaluate(evaluation).then(async ({ fails, failed, features }) => {
           this.receiveFeatures(features, destFolder, src, "web");
-          statusMessagePretty(failed, src);
-          this.bddTestIsNowDone(src, failed);
+          statusMessagePretty(fails, src);
+          this.bddTestIsNowDone(src, fails);
         }).catch((e) => {
           console.log(ansiC.red(ansiC.inverse(`${src} errored with: ${e}`)));
         }).finally(() => {
@@ -1036,7 +1203,6 @@ ${addableFiles.map((x) => {
         return accum;
       }, Promise.resolve({ files: [], strings: [] })).then(({ files: files3, strings }) => {
         fs2.writeFileSync(
-          // `${destFolder}/featurePrompt.txt`,
           `testeranto/reports/${this.name}/${srcTest.split(".").slice(0, -1).join(".")}/${platform}/featurePrompt.txt`,
           files3.map((f) => {
             return `/read ${f}`;
@@ -1110,54 +1276,72 @@ ${addableFiles.map((x) => {
         // "--unsafely-treat-insecure-origin-as-secure=ws://192.168.0.101:3234",
       ]
     });
-    const { nodeEntryPoints, webEntryPoints } = this.getRunnables(
-      this.configs.tests
-    );
-    Object.entries(nodeEntryPoints).forEach(
-      ([k, outputFile]) => {
-        this.launchNode(k, outputFile);
-        try {
-          watch(outputFile, async (e, filename) => {
-            const hash = await fileHash(outputFile);
-            if (fileHashes[k] !== hash) {
-              fileHashes[k] = hash;
-              console.log(ansiC.green(ansiC.inverse(`< ${e} ${filename}`)));
-              this.launchNode(k, outputFile);
-            }
-          });
-        } catch (e) {
-          console.error(e);
+    const { nodeEntryPoints, webEntryPoints, importEntryPoints } = this.getRunnables(this.configs.tests, this.name);
+    [
+      [
+        nodeEntryPoints,
+        this.launchNode,
+        "node",
+        (w) => {
+          this.nodeMetafileWatcher = w;
         }
-      }
-    );
-    Object.entries(webEntryPoints).forEach(
-      ([k, outputFile]) => {
-        this.launchWeb(k, outputFile);
-        watch(outputFile, async (e, filename) => {
-          const hash = await fileHash(outputFile);
-          if (fileHashes[k] !== hash) {
-            fileHashes[k] = hash;
-            console.log(ansiC.green(ansiC.inverse(`< ${e} ${filename}`)));
-            this.launchWeb(k, outputFile);
+      ],
+      [
+        webEntryPoints,
+        this.launchWeb,
+        "web",
+        (w) => {
+          this.webMetafileWatcher = w;
+        }
+      ],
+      [
+        importEntryPoints,
+        this.launchPure,
+        "pure",
+        (w) => {
+          this.importMetafileWatcher = w;
+        }
+      ]
+    ].forEach(
+      async ([eps, launcher, runtime, watcher]) => {
+        const metafile = `./testeranto/bundles/${runtime}/${this.name}/metafile.json`;
+        await pollForFile(metafile);
+        Object.entries(eps).forEach(
+          async ([k, outputFile]) => {
+            launcher(k, outputFile);
+            try {
+              watch(outputFile, async (e, filename) => {
+                const hash = await fileHash(outputFile);
+                if (fileHashes[k] !== hash) {
+                  fileHashes[k] = hash;
+                  console.log(ansiC.green(ansiC.inverse(`< ${e} ${filename}`)));
+                  launcher(k, outputFile);
+                }
+              });
+            } catch (e) {
+              console.error(e);
+            }
           }
-        });
+        );
+        this.metafileOutputs(runtime);
+        watcher(
+          watch(metafile, async (e, filename) => {
+            console.log(
+              ansiC.green(ansiC.inverse(`< ${e} ${filename} (${runtime})`))
+            );
+            this.metafileOutputs(runtime);
+          })
+        );
       }
     );
-    this.metafileOutputs("node");
-    const w = `./testeranto/bundles/node/${this.name}/metafile.json`;
-    console.log("w", w);
-    this.nodeMetafileWatcher = watch(w, async (e, filename) => {
-      console.log(ansiC.green(ansiC.inverse(`< ${e} ${filename} (node)`)));
-      this.metafileOutputs("node");
-    });
-    this.metafileOutputs("web");
-    this.webMetafileWatcher = watch(
-      `./testeranto/bundles/web/${this.name}/metafile.json`,
-      async (e, filename) => {
-        console.log(ansiC.green(ansiC.inverse(`< ${e} ${filename} (web)`)));
-        this.metafileOutputs("web");
-      }
-    );
+  }
+  async stop() {
+    console.log(ansiC.inverse("Testeranto-Run is shutting down gracefully..."));
+    this.mode = "once";
+    this.nodeMetafileWatcher.close();
+    this.webMetafileWatcher.close();
+    this.importMetafileWatcher.close();
+    this.checkForShutdown();
   }
   async metafileOutputs(platform) {
     const metafile = JSON.parse(
@@ -1210,21 +1394,21 @@ process.stdin.on("keypress", (str, key) => {
     process.exit(-1);
   }
 });
-var testName = process.argv[2];
+var testName2 = process.argv[2];
 var mode = process.argv[3];
 if (mode !== "once" && mode !== "dev") {
   console.error("the 2nd argument should be 'dev' or 'once' ");
   process.exit(-1);
 }
-console.log("testeranto is running", testName, mode);
+console.log("testeranto is running", testName2, mode);
 import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
   const bigConfig = module.default;
-  const rawConfig = bigConfig.projects[testName];
+  const rawConfig = bigConfig.projects[testName2];
   const config = {
     ...rawConfig,
-    buildDir: process.cwd() + `/testeranto/${testName}.json`
+    buildDir: process.cwd() + `/testeranto/${testName2}.json`
   };
-  const pm = new PM_Main(config, testName, mode);
+  const pm = new PM_Main(config, testName2, mode);
   pm.start();
   process.stdin.on("keypress", (str, key) => {
     if (key.name === "q") {
