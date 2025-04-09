@@ -11,9 +11,9 @@ import webHtmlFrame from "./web.html.js";
 
 import { getRunnables } from "./utils.js";
 import {
-  IBaseConfig,
+  ITestconfig,
   IBuiltConfig,
-  IConfigV2,
+  IProject,
   IRunTime,
   ITestTypes,
 } from "./Types.js";
@@ -32,7 +32,7 @@ if (mode !== "once" && mode !== "dev") {
 console.log("testeranto is building", testName, mode);
 
 import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
-  const bigConfig: IConfigV2 = module.default;
+  const bigConfig: IProject = module.default;
 
   const project = bigConfig.projects[testName];
   if (!project) {
@@ -40,7 +40,7 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
     process.exit(-1);
   }
 
-  const rawConfig: IBaseConfig = bigConfig.projects[testName];
+  const rawConfig: ITestconfig = bigConfig.projects[testName];
 
   const getSecondaryEndpointsPoints = (runtime?: IRunTime): string[] => {
     const meta = (ts: ITestTypes[], st: Set<string>): Set<string> => {

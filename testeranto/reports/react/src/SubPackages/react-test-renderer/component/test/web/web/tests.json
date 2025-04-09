@@ -1,0 +1,132 @@
+{
+  "name": "a classical react component",
+  "givens": [
+    {
+      "key": "test0",
+      "name": "AnEmptyState",
+      "whens": [
+        {
+          "name": "IClickTheButton: undefined"
+        },
+        {
+          "name": "IClickTheButton: undefined"
+        },
+        {
+          "name": "IClickTheButton: undefined"
+        },
+        {
+          "name": "IClickTheHeader: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "ThePropsIs: [object Object]",
+          "error": false
+        },
+        {
+          "name": "TheStatusIs: [object Object]",
+          "error": false
+        }
+      ],
+      "error": null,
+      "features": [
+        "I click 4 times and the count is 3"
+      ]
+    },
+    {
+      "key": "test1",
+      "name": "AnEmptyState",
+      "whens": [
+        {
+          "name": "IClickTheButton: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "ThePropsIs: [object Object]",
+          "error": false
+        },
+        {
+          "name": "TheStatusIs: [object Object]",
+          "error": false
+        }
+      ],
+      "error": null,
+      "features": [
+        "Count is 1 by default"
+      ]
+    },
+    {
+      "key": "test2",
+      "name": "AnEmptyState",
+      "whens": [
+        {
+          "name": "IClickTheButton: undefined"
+        },
+        {
+          "name": "IClickTheButton: undefined"
+        },
+        {
+          "name": "IClickTheButton: undefined"
+        },
+        {
+          "name": "IClickTheButton: undefined"
+        },
+        {
+          "name": "IClickTheButton: undefined"
+        },
+        {
+          "name": "IClickTheButton: undefined"
+        },
+        {
+          "name": "IClickTheButton: undefined"
+        },
+        {
+          "name": "IClickTheButton: undefined"
+        },
+        {
+          "name": "IClickTheButton: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheStatusIs: [object Object]",
+          "error": false
+        }
+      ],
+      "error": null,
+      "features": [
+        "0"
+      ]
+    },
+    {
+      "key": "test3",
+      "name": "AnEmptyState",
+      "whens": [
+        {
+          "name": "IClickTheButton: undefined"
+        },
+        {
+          "name": "IClickTheButton: undefined"
+        }
+      ],
+      "thens": [
+        {
+          "name": "TheStatusIs: [object Object]",
+          "error": false
+        }
+      ],
+      "error": null,
+      "features": [
+        "0"
+      ]
+    }
+  ],
+  "checks": [],
+  "fails": 0,
+  "features": [
+    "I click 4 times and the count is 3",
+    "Count is 1 by default",
+    "0"
+  ]
+}

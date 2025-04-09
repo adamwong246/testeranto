@@ -1,0 +1,17 @@
+/Users/adam/Code/testeranto/src/lib/classBuilder.ts (40,60): Property 'suites' does not exist on type 'ITestImplementation<I, O, M>'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.ts (55,60): Property 'givens' does not exist on type 'ITestImplementation<I, O, M>'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.ts (64,32): Property 'givens' does not exist on type 'ITestImplementation<I, O, M>'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.ts (73,59): Property 'whens' does not exist on type 'ITestImplementation<I, O, M>'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.ts (86,59): Property 'thens' does not exist on type 'ITestImplementation<I, O, M>'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.ts (99,60): Property 'checks' does not exist on type 'ITestImplementation<I, O, M>'.
+/Users/adam/Code/testeranto/src/SubPackages/react-test-renderer/component/interface.ts (14,34): No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'ReactTestRenderer' is not assignable to parameter of type 'string | FunctionComponent<any> | ComponentClass<any, any>'.
+/Users/adam/Code/testeranto/src/SubPackages/react-test-renderer/component/interface.ts (18,52): Argument of type 'DetailedReactHTMLElement<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>' is not assignable to parameter of type 'ReactElement<unknown, string | JSXElementConstructor<any>>'.
+  Types of property 'key' are incompatible.
+    Type 'Key | null' is not assignable to type 'string | null'.
+      Type 'number' is not assignable to type 'string'.
+/Users/adam/Code/testeranto/src/SubPackages/react-test-renderer/component/test/implementation.ts (46,35): Type '(component: ReactTestRenderer) => ReactTestRenderer' is not assignable to type '(ssel: ReactTestRenderer, utils: PM) => (r: ReactTestRenderer) => ReactTestRenderer'.
+  Type 'ReactTestRenderer' is not assignable to type '(r: ReactTestRenderer) => ReactTestRenderer'.
+    Type 'ReactTestRenderer' provides no match for the signature '(r: ReactTestRenderer): ReactTestRenderer'.
+/Users/adam/Code/testeranto/src/SubPackages/react-test-renderer/component/test/pure.ts (10,21): Expected 1-2 type arguments, but got 3.

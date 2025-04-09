@@ -1,13 +1,13 @@
 import { BuildOptions } from "esbuild";
 
-import { IBaseConfig } from "../lib/index.js";
+import { ITestconfig } from "../lib/index.js";
 
 import baseEsBuildConfig from "./index.js";
 import inputFilesPlugin from "./inputFilesPlugin.js";
 import featuresPlugin from "./featuresPlugin.js";
 
 export default (
-  config: IBaseConfig,
+  config: ITestconfig,
   entryPoints: string[],
   testName: string
 ): BuildOptions => {

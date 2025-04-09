@@ -1,6 +1,6 @@
-import { IBaseConfig } from "./lib";
+import { ITestconfig } from "./lib";
 
-const config: IBaseConfig = {
+const config: ITestconfig = {
   src: "src",
   tests: [],
   debugger: true,

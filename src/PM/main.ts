@@ -1,3 +1,5 @@
+import { spawn } from "node:child_process";
+
 import ts from "typescript";
 import net from "net";
 import { Page } from "puppeteer-core/lib/esm/puppeteer";
@@ -8,6 +10,7 @@ import ansiC from "ansi-colors";
 import crypto from "node:crypto";
 import { ESLint } from "eslint";
 import tsc from "tsc-prog";
+
 import { IFinalResults, IRunnables } from "../lib/index.js";
 import {
   getRunnables,
@@ -16,10 +19,9 @@ import {
   promptPather,
   tscPather,
 } from "../utils";
+import { IBuiltConfig, IRunTime, ITestTypes } from "../Types.js";
 
 import { PM_Base } from "./base.js";
-import { spawn } from "node:child_process";
-import { IBuiltConfig, IRunTime, ITestTypes } from "../Types.js";
 
 type IOutputs = Record<
   string,

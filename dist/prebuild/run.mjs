@@ -5,6 +5,7 @@ import ansiC2 from "ansi-colors";
 import readline from "readline";
 
 // src/PM/main.ts
+import { spawn } from "node:child_process";
 import ts from "typescript";
 import net from "net";
 import fs2, { watch } from "fs";
@@ -305,7 +306,6 @@ var PM_Base = class {
 };
 
 // src/PM/main.ts
-import { spawn } from "node:child_process";
 var eslint = new ESLint();
 var formatter = await eslint.loadFormatter(
   "./node_modules/testeranto/dist/prebuild/esbuildConfigs/eslint-formatter-testeranto.mjs"

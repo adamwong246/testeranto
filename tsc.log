@@ -22,6 +22,10 @@ src/SubPackages/react-test-renderer/component/interface.ts(18,52): error TS2345:
   Types of property 'key' are incompatible.
     Type 'Key | null' is not assignable to type 'string | null'.
       Type 'number' is not assignable to type 'string'.
+src/SubPackages/react-test-renderer/component/test/implementation.ts(46,35): error TS2322: Type '(component: ReactTestRenderer) => ReactTestRenderer' is not assignable to type '(ssel: ReactTestRenderer, utils: PM) => (r: ReactTestRenderer) => ReactTestRenderer'.
+  Type 'ReactTestRenderer' is not assignable to type '(r: ReactTestRenderer) => ReactTestRenderer'.
+    Type 'ReactTestRenderer' provides no match for the signature '(r: ReactTestRenderer): ReactTestRenderer'.
+src/SubPackages/react-test-renderer/component/test/pure.ts(10,21): error TS2558: Expected 1-2 type arguments, but got 3.
 src/SubPackages/react-test-renderer/fc/node.ts(57,8): error TS2558: Expected 3 type arguments, but got 2.
 src/SubPackages/react-test-renderer/fc/node.ts(66,13): error TS2345: Argument of type 'DetailedReactHTMLElement<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>' is not assignable to parameter of type 'ReactElement<unknown, string | JSXElementConstructor<any>>'.
   Types of property 'key' are incompatible.

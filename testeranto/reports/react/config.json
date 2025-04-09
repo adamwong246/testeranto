@@ -1,0 +1,22 @@
+{
+  "src": "src",
+  "debugger": false,
+  "minify": false,
+  "clearScreen": false,
+  "externals": [],
+  "ports": [],
+  "tests": [
+    [
+      "./src/SubPackages/react-test-renderer/component/test/node.ts",
+      "node",
+      {
+        "ports": 0
+      },
+      []
+    ]
+  ],
+  "webPlugins": [],
+  "nodePlugins": [],
+  "importPlugins": [],
+  "buildDir": "/Users/adam/Code/testeranto/testeranto/bundles/react"
+}

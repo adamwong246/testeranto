@@ -3,7 +3,7 @@ import readline from "readline";
 import path from "path";
 
 import { PM_Main } from "./PM/main";
-import { IBaseConfig, IBuiltConfig, IConfigV2 } from "./Types";
+import { ITestconfig, IBuiltConfig, IProject } from "./Types";
 
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
@@ -27,9 +27,9 @@ if (mode !== "once" && mode !== "dev") {
 console.log("testeranto is running", testName, mode);
 
 import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
-  const bigConfig: IConfigV2 = module.default;
+  const bigConfig: IProject = module.default;
 
-  const rawConfig: IBaseConfig = bigConfig.projects[testName];
+  const rawConfig: ITestconfig = bigConfig.projects[testName];
 
   const config: IBuiltConfig = {
     ...rawConfig,

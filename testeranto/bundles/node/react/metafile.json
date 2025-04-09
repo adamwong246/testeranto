@@ -1,0 +1,627 @@
+{
+  "errors": [],
+  "warnings": [],
+  "metafile": {
+    "inputs": {
+      "src/lib/index.ts": {
+        "bytes": 3131,
+        "imports": [
+          {
+            "path": "../PM/pure.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../PM/node.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../PM/web.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../Types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./abstractBase.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./types.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/abstractBase.ts": {
+        "bytes": 14727,
+        "imports": [
+          {
+            "path": "../Types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": ".",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./types.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/basebuilder.ts": {
+        "bytes": 5779,
+        "imports": [
+          {
+            "path": "stream",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../Types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": ".",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./abstractBase.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/classBuilder.ts": {
+        "bytes": 3143,
+        "imports": [
+          {
+            "path": "../Types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/basebuilder.ts",
+            "kind": "import-statement",
+            "original": "./basebuilder.js"
+          },
+          {
+            "path": "./types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./index.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./abstractBase.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/core.ts": {
+        "bytes": 4563,
+        "imports": [
+          {
+            "path": "../Types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/index.ts",
+            "kind": "import-statement",
+            "original": "./index.js"
+          },
+          {
+            "path": "src/lib/abstractBase.ts",
+            "kind": "import-statement",
+            "original": "./abstractBase.js"
+          },
+          {
+            "path": "src/lib/classBuilder.ts",
+            "kind": "import-statement",
+            "original": "./classBuilder.js"
+          },
+          {
+            "path": "./types",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/PM/index.ts": {
+        "bytes": 1657,
+        "imports": [
+          {
+            "path": "puppeteer-core",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "puppeteer-core/lib/esm/puppeteer",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../lib",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/PM/node.ts": {
+        "bytes": 6087,
+        "imports": [
+          {
+            "path": "net",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "fs",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "path",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "puppeteer-core",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "stream",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../lib",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/PM/index.ts",
+            "kind": "import-statement",
+            "original": "."
+          }
+        ],
+        "format": "esm"
+      },
+      "src/Node.ts": {
+        "bytes": 2417,
+        "imports": [
+          {
+            "path": "src/lib/core.ts",
+            "kind": "import-statement",
+            "original": "./lib/core.js"
+          },
+          {
+            "path": "src/lib/index.ts",
+            "kind": "import-statement",
+            "original": "./lib/index.js"
+          },
+          {
+            "path": "src/PM/node.ts",
+            "kind": "import-statement",
+            "original": "./PM/node.js"
+          }
+        ],
+        "format": "esm"
+      },
+      "node_modules/scheduler/cjs/scheduler-unstable_mock.production.min.js": {
+        "bytes": 4786,
+        "imports": [],
+        "format": "cjs"
+      },
+      "node_modules/scheduler/cjs/scheduler-unstable_mock.development.js": {
+        "bytes": 17457,
+        "imports": [],
+        "format": "cjs"
+      },
+      "node_modules/scheduler/unstable_mock.js": {
+        "bytes": 226,
+        "imports": [
+          {
+            "path": "node_modules/scheduler/cjs/scheduler-unstable_mock.production.min.js",
+            "kind": "require-call",
+            "original": "./cjs/scheduler-unstable_mock.production.min.js"
+          },
+          {
+            "path": "node_modules/scheduler/cjs/scheduler-unstable_mock.development.js",
+            "kind": "require-call",
+            "original": "./cjs/scheduler-unstable_mock.development.js"
+          }
+        ],
+        "format": "cjs"
+      },
+      "node_modules/scheduler/cjs/scheduler.production.min.js": {
+        "bytes": 4235,
+        "imports": [],
+        "format": "cjs"
+      },
+      "node_modules/scheduler/cjs/scheduler.development.js": {
+        "bytes": 17497,
+        "imports": [],
+        "format": "cjs"
+      },
+      "node_modules/scheduler/index.js": {
+        "bytes": 198,
+        "imports": [
+          {
+            "path": "node_modules/scheduler/cjs/scheduler.production.min.js",
+            "kind": "require-call",
+            "original": "./cjs/scheduler.production.min.js"
+          },
+          {
+            "path": "node_modules/scheduler/cjs/scheduler.development.js",
+            "kind": "require-call",
+            "original": "./cjs/scheduler.development.js"
+          }
+        ],
+        "format": "cjs"
+      },
+      "node_modules/react-test-renderer/cjs/react-test-renderer.production.min.js": {
+        "bytes": 87323,
+        "imports": [
+          {
+            "path": "react",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "node_modules/scheduler/unstable_mock.js",
+            "kind": "require-call",
+            "original": "scheduler/unstable_mock"
+          },
+          {
+            "path": "node_modules/scheduler/index.js",
+            "kind": "require-call",
+            "original": "scheduler"
+          }
+        ],
+        "format": "cjs"
+      },
+      "node_modules/react-test-renderer/cjs/react-test-renderer.development.js": {
+        "bytes": 645765,
+        "imports": [
+          {
+            "path": "react",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "node_modules/scheduler/unstable_mock.js",
+            "kind": "require-call",
+            "original": "scheduler/unstable_mock"
+          },
+          {
+            "path": "node_modules/scheduler/index.js",
+            "kind": "require-call",
+            "original": "scheduler"
+          }
+        ],
+        "format": "cjs"
+      },
+      "node_modules/react-test-renderer/index.js": {
+        "bytes": 218,
+        "imports": [
+          {
+            "path": "node_modules/react-test-renderer/cjs/react-test-renderer.production.min.js",
+            "kind": "require-call",
+            "original": "./cjs/react-test-renderer.production.min.js"
+          },
+          {
+            "path": "node_modules/react-test-renderer/cjs/react-test-renderer.development.js",
+            "kind": "require-call",
+            "original": "./cjs/react-test-renderer.development.js"
+          }
+        ],
+        "format": "cjs"
+      },
+      "src/SubPackages/react-test-renderer/component/interface.ts": {
+        "bytes": 1105,
+        "imports": [
+          {
+            "path": "react",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node_modules/react-test-renderer/index.js",
+            "kind": "import-statement",
+            "original": "react-test-renderer"
+          },
+          {
+            "path": "../../../Types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": ".",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/SubPackages/react-test-renderer/component/node.ts": {
+        "bytes": 522,
+        "imports": [
+          {
+            "path": "src/Node.ts",
+            "kind": "import-statement",
+            "original": "../../../Node.js"
+          },
+          {
+            "path": "../../../Types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./index.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/SubPackages/react-test-renderer/component/interface.ts",
+            "kind": "import-statement",
+            "original": "./interface.js"
+          }
+        ],
+        "format": "esm"
+      },
+      "src/examples/react/component/index.tsx": {
+        "bytes": 864,
+        "imports": [
+          {
+            "path": "react",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/examples/react/component/test.ts": {
+        "bytes": 1883,
+        "imports": [
+          {
+            "path": "../../../Types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../../../Types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": ".",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "node_modules/chai/chai.js": {
+        "bytes": 139547,
+        "imports": [],
+        "format": "esm"
+      },
+      "src/SubPackages/react-test-renderer/component/test/implementation.ts": {
+        "bytes": 1909,
+        "imports": [
+          {
+            "path": "react-test-renderer",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node_modules/chai/chai.js",
+            "kind": "import-statement",
+            "original": "chai"
+          },
+          {
+            "path": "../../../../examples/react/component/test",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "..",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../../../../Types",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/SubPackages/react-test-renderer/component/test/node.ts": {
+        "bytes": 457,
+        "imports": [
+          {
+            "path": "src/SubPackages/react-test-renderer/component/node.ts",
+            "kind": "import-statement",
+            "original": "../node"
+          },
+          {
+            "path": "../../../../examples/react/component/test",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../../../../examples/react/component",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/examples/react/component/index.tsx",
+            "kind": "import-statement",
+            "original": "../../../../examples/react/component/index"
+          },
+          {
+            "path": "src/examples/react/component/test.ts",
+            "kind": "import-statement",
+            "original": "../../../../examples/react/component/test"
+          },
+          {
+            "path": "src/SubPackages/react-test-renderer/component/test/implementation.ts",
+            "kind": "import-statement",
+            "original": "./implementation"
+          }
+        ],
+        "format": "esm"
+      }
+    },
+    "outputs": {
+      "testeranto/bundles/node/react/src/SubPackages/react-test-renderer/component/test/node.mjs": {
+        "imports": [
+          {
+            "path": "react",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "react",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "net",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "fs",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "path",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "react",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "react",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "exports": [
+          "default"
+        ],
+        "entryPoint": "src/SubPackages/react-test-renderer/component/test/node.ts",
+        "inputs": {
+          "node_modules/scheduler/cjs/scheduler-unstable_mock.production.min.js": {
+            "bytesInOutput": 8287
+          },
+          "node_modules/scheduler/cjs/scheduler-unstable_mock.development.js": {
+            "bytesInOutput": 19200
+          },
+          "node_modules/scheduler/unstable_mock.js": {
+            "bytesInOutput": 341
+          },
+          "node_modules/scheduler/cjs/scheduler.production.min.js": {
+            "bytesInOutput": 7012
+          },
+          "node_modules/scheduler/cjs/scheduler.development.js": {
+            "bytesInOutput": 16923
+          },
+          "node_modules/scheduler/index.js": {
+            "bytesInOutput": 301
+          },
+          "node_modules/react-test-renderer/cjs/react-test-renderer.production.min.js": {
+            "bytesInOutput": 150810
+          },
+          "node_modules/react-test-renderer/cjs/react-test-renderer.development.js": {
+            "bytesInOutput": 565969
+          },
+          "node_modules/react-test-renderer/index.js": {
+            "bytesInOutput": 341
+          },
+          "src/lib/index.ts": {
+            "bytesInOutput": 512
+          },
+          "src/lib/abstractBase.ts": {
+            "bytesInOutput": 9818
+          },
+          "src/lib/basebuilder.ts": {
+            "bytesInOutput": 3502
+          },
+          "src/lib/classBuilder.ts": {
+            "bytesInOutput": 2222
+          },
+          "src/lib/core.ts": {
+            "bytesInOutput": 2890
+          },
+          "src/PM/node.ts": {
+            "bytesInOutput": 4986
+          },
+          "src/PM/index.ts": {
+            "bytesInOutput": 20
+          },
+          "src/Node.ts": {
+            "bytesInOutput": 1098
+          },
+          "src/SubPackages/react-test-renderer/component/interface.ts": {
+            "bytesInOutput": 964
+          },
+          "src/SubPackages/react-test-renderer/component/node.ts": {
+            "bytesInOutput": 166
+          },
+          "src/examples/react/component/index.tsx": {
+            "bytesInOutput": 978
+          },
+          "src/examples/react/component/test.ts": {
+            "bytesInOutput": 1452
+          },
+          "node_modules/chai/chai.js": {
+            "bytesInOutput": 130559
+          },
+          "src/SubPackages/react-test-renderer/component/test/implementation.ts": {
+            "bytesInOutput": 1283
+          },
+          "src/SubPackages/react-test-renderer/component/test/node.ts": {
+            "bytesInOutput": 96
+          }
+        },
+        "bytes": 942018
+      }
+    }
+  }
+}

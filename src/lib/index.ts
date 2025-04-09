@@ -6,7 +6,7 @@ import {
   Ibdd_in,
   Ibdd_out,
   ITestInterface,
-  IBaseConfig,
+  ITestconfig,
   IBuiltConfig,
   IRunTime,
   ITestTypes,
@@ -131,7 +131,7 @@ export const defaultTestResourceRequirement: ITTestResourceRequest = {
 
 export type ITestArtifactory = (key: string, value: unknown) => unknown;
 
-export type { IBaseConfig, IBuiltConfig, IRunTime, ITestTypes };
+export type { ITestconfig, IBuiltConfig, IRunTime, ITestTypes };
 
 export type IRunnables = {
   nodeEntryPoints: Record<string, string>;

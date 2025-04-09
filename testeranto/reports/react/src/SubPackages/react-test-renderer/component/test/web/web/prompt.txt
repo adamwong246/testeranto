@@ -1,0 +1,23 @@
+
+/add src/PM/web.ts
+/add src/lib/index.ts
+/add src/lib/abstractBase.ts
+/add src/lib/basebuilder.ts
+/add src/lib/classBuilder.ts
+/add src/lib/core.ts
+/add src/Web.ts
+/add src/SubPackages/react-test-renderer/component/interface.ts
+/add src/SubPackages/react-test-renderer/component/web.ts
+/add src/examples/react/component/index.tsx
+/add src/examples/react/component/test.ts
+/add src/SubPackages/react-test-renderer/component/test/implementation.ts
+/add src/SubPackages/react-test-renderer/component/test/web.ts
+
+/read testeranto/reports/react/src/SubPackages/react-test-renderer/component/test/web/web/lint_errors.json
+/read testeranto/reports/react/src/SubPackages/react-test-renderer/component/test/web/web/type_errors.txt
+/read testeranto/reports/react/web/src/SubPackages/react-test-renderer/component/test/web/tests.json
+
+/load testeranto/reports/react/web/src/SubPackages/react-test-renderer/component/test/web/featurePrompt.txt
+
+/code Fix the failing tests described in testeranto/reports/react/web/src/SubPackages/react-test-renderer/component/test/web/tests.json. Correct any type signature errors described in the files testeranto/reports/react/src/SubPackages/react-test-renderer/component/test/web/web/type_errors.txt. Implement any method which throws "Function not implemented. Resolve the lint errors described in testeranto/reports/react/src/SubPackages/react-test-renderer/component/test/web/web/lint_errors.json"
+          

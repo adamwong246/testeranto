@@ -1,8 +1,8 @@
 import { BuildOptions } from "esbuild";
 
-import { IBaseConfig } from "../lib";
+import { ITestconfig } from "../lib";
 
-export default (config: IBaseConfig): BuildOptions => {
+export default (config: ITestconfig): BuildOptions => {
   return {
     // packages: "external",
     target: "esnext",

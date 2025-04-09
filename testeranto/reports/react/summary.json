@@ -1,0 +1,8 @@
+{
+  "./src/SubPackages/react-test-renderer/component/test/node.ts": {
+    "runTimeError": "?",
+    "typeErrors": "?",
+    "staticErrors": "?",
+    "prompt": "?"
+  }
+}

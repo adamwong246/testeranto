@@ -184,22 +184,22 @@ export type IRunTime = `node` | `web` | "pure";
 
 export type ITestTypes = [string, IRunTime, { ports: number }, ITestTypes[]];
 
-export type IBaseConfig = {
-  src: string;
+export type ITestconfig = {
   clearScreen: boolean;
   debugger: boolean;
   externals: string[];
-  minify: boolean;
-  ports: string[];
-  tests: ITestTypes[];
-  nodePlugins: IPluginFactory[];
-  webPlugins: IPluginFactory[];
-  importPlugins: IPluginFactory[];
   featureIngestor: (s: string) => Promise<string>;
+  importPlugins: IPluginFactory[];
+  minify: boolean;
+  nodePlugins: IPluginFactory[];
+  ports: string[];
+  src: string;
+  tests: ITestTypes[];
+  webPlugins: IPluginFactory[];
 };
 
-export type IBuiltConfig = { buildDir: string } & IBaseConfig;
+export type IBuiltConfig = { buildDir: string } & ITestconfig;
 
-export type IConfigV2 = {
-  projects: Record<string, IBaseConfig>;
+export type IProject = {
+  projects: Record<string, ITestconfig>;
 };
