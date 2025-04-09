@@ -8,35 +8,24 @@ import type {
   Ibdd_in,
   Ibdd_out,
   INodeTestInterface,
+  IT,
   ITestImplementation,
   ITestInterface,
   ITestSpecification,
+  OT,
 } from "./Types.js";
 
 import { PM_Pure } from "./PM/pure.js";
 
-export class PureTesteranto<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
-  O extends Ibdd_out<
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
-  >
-> extends Testeranto<I, O> {
+export class PureTesteranto<I extends IT, O extends OT, M> extends Testeranto<
+  I,
+  O,
+  M
+> {
   constructor(
     input: I["iinput"],
     testSpecification: ITestSpecification<I, O>,
-    testImplementation: ITestImplementation<I, O>,
+    testImplementation: ITestImplementation<I, O, M>,
     testResourceRequirement: ITTestResourceRequest,
     testInterface: Partial<ITestInterface<I>>
   ) {
@@ -63,31 +52,14 @@ export class PureTesteranto<
   }
 }
 
-export default async <
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
-  O extends Ibdd_out<
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
-  >
->(
+export default async <I extends IT, O extends OT, M>(
   input: I["iinput"],
   testSpecification: ITestSpecification<I, O>,
-  testImplementation: ITestImplementation<I, O>,
+  testImplementation: ITestImplementation<I, O, M>,
   testInterface: Partial<INodeTestInterface<I>>,
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
-): Promise<Testeranto<I, O>> => {
-  return new PureTesteranto<I, O>(
+): Promise<Testeranto<I, O, M>> => {
+  return new PureTesteranto<I, O, M>(
     input,
     testSpecification,
     testImplementation,

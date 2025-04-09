@@ -494,10 +494,11 @@ ${addableFiles
             });
             const p = destFolder + "/pipe";
             server.listen(p, () => {
-                child.stderr.on("data", (data) => {
+                var _a, _b;
+                (_a = child.stderr) === null || _a === void 0 ? void 0 : _a.on("data", (data) => {
                     oStream.write(`stderr data ${data}`);
                 });
-                child.stdout.on("data", (data) => {
+                (_b = child.stdout) === null || _b === void 0 ? void 0 : _b.on("data", (data) => {
                     oStream.write(`stdout data ${data}`);
                 });
                 child.on("close", (code) => {

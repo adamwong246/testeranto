@@ -1,9 +1,9 @@
 import Testeranto from "./lib/core.js";
 import { ITTestResourceRequest } from "./lib/index.js";
-import type { Ibdd_in, Ibdd_out, INodeTestInterface, ITestImplementation, ITestInterface, ITestSpecification } from "./Types.js";
-export declare class NodeTesteranto<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>, O extends Ibdd_out<Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>> extends Testeranto<I, O> {
-    constructor(input: I["iinput"], testSpecification: ITestSpecification<I, O>, testImplementation: ITestImplementation<I, O>, testResourceRequirement: ITTestResourceRequest, testInterface: Partial<ITestInterface<I>>);
+import type { INodeTestInterface, IT, ITestImplementation, ITestInterface, ITestSpecification, OT } from "./Types.js";
+export declare class NodeTesteranto<I extends IT, O extends OT, M> extends Testeranto<I, O, M> {
+    constructor(input: I["iinput"], testSpecification: ITestSpecification<I, O>, testImplementation: ITestImplementation<I, O, M>, testResourceRequirement: ITTestResourceRequest, testInterface: Partial<ITestInterface<I>>);
     receiveTestResourceConfig(partialTestResource: string): Promise<import("./lib/index.js").IFinalResults>;
 }
-declare const testeranto: <I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>, O extends Ibdd_out<Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>>(input: I["iinput"], testSpecification: ITestSpecification<I, O>, testImplementation: ITestImplementation<I, O>, testInterface: Partial<INodeTestInterface<I>>, testResourceRequirement?: ITTestResourceRequest) => Promise<Testeranto<I, O>>;
+declare const testeranto: <I extends IT, O extends OT, M>(input: I["iinput"], testSpecification: ITestSpecification<I, O>, testImplementation: ITestImplementation<I, O, M>, testInterface: Partial<INodeTestInterface<I>>, testResourceRequirement?: ITTestResourceRequest) => Promise<Testeranto<I, O, M>>;
 export default testeranto;

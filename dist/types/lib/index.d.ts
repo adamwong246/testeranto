@@ -1,8 +1,7 @@
 import { PM_Pure } from "../PM/pure.js";
-import { PM } from "../PM/server.js";
 import { PM_Node } from "../PM/node.js";
 import { PM_Web } from "../PM/web.js";
-import { Ibdd_in, Ibdd_out, ITestInterface, IBaseConfig, IBuiltConfig, IRunTime, ITestTypes } from "../Types.js";
+import { Ibdd_in, ITestInterface, IBaseConfig, IBuiltConfig, IRunTime, ITestTypes, IT, OT } from "../Types.js";
 import { IGivens, BaseCheck, BaseSuite } from "./abstractBase.js";
 export declare const BaseTestInterface: ITestInterface<Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>>;
 export declare const DefaultTestInterface: (p: Partial<ITestInterface<any>>) => ITestInterface<any>;
@@ -32,13 +31,13 @@ type ITest = {
     toObj(): object;
     name: string;
     givens: IGivens<Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>>;
-    checks: BaseCheck<Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>, Ibdd_out<Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>>[];
+    checks: BaseCheck<IT>[];
     testResourceConfiguration: ITTestResourceConfiguration;
 };
-export type ITestJob<T = PM> = {
+export type ITestJob = {
     toObj(): object;
     test: ITest;
-    runner: (x: ITTestResourceConfiguration, t: ITLog) => Promise<BaseSuite<Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>, Ibdd_out<Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>>>;
+    runner: (x: ITTestResourceConfiguration, t: ITLog) => Promise<BaseSuite<IT, OT>>;
     testResourceRequirement: ITTestResourceRequirement;
     receiveTestResourceConfig: (pm: PM_Node | PM_Web | PM_Pure) => IFinalResults;
 };

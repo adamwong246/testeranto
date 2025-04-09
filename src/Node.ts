@@ -1,4 +1,3 @@
-import net from "net";
 import Testeranto from "./lib/core.js";
 import {
   defaultTestResourceRequirement,
@@ -6,37 +5,24 @@ import {
   ITTestResourceRequest,
 } from "./lib/index.js";
 import type {
-  Ibdd_in,
-  Ibdd_out,
   INodeTestInterface,
+  IT,
   ITestImplementation,
   ITestInterface,
   ITestSpecification,
+  OT,
 } from "./Types.js";
 import { PM_Node } from "./PM/node.js";
 
-export class NodeTesteranto<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
-  O extends Ibdd_out<
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
-  >
-> extends Testeranto<I, O> {
+export class NodeTesteranto<I extends IT, O extends OT, M> extends Testeranto<
+  I,
+  O,
+  M
+> {
   constructor(
     input: I["iinput"],
     testSpecification: ITestSpecification<I, O>,
-    testImplementation: ITestImplementation<I, O>,
+    testImplementation: ITestImplementation<I, O, M>,
     testResourceRequirement: ITTestResourceRequest,
     testInterface: Partial<ITestInterface<I>>
   ) {
@@ -63,31 +49,14 @@ export class NodeTesteranto<
   }
 }
 
-const testeranto = async <
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
-  O extends Ibdd_out<
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
-  >
->(
+const testeranto = async <I extends IT, O extends OT, M>(
   input: I["iinput"],
   testSpecification: ITestSpecification<I, O>,
-  testImplementation: ITestImplementation<I, O>,
+  testImplementation: ITestImplementation<I, O, M>,
   testInterface: Partial<INodeTestInterface<I>>,
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
-): Promise<Testeranto<I, O>> => {
-  const t = new NodeTesteranto<I, O>(
+): Promise<Testeranto<I, O, M>> => {
+  const t = new NodeTesteranto<I, O, M>(
     input,
     testSpecification,
     testImplementation,

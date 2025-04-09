@@ -8,12 +8,11 @@ import featuresPlugin from "./featuresPlugin";
 
 export default (
   config: IBaseConfig,
-  entryPoints: Set<string> | string[],
+  entryPoints: string[],
   testName: string
 ): BuildOptions => {
   const { inputFilesPluginFactory, register } = inputFilesPlugin(
     "node",
-    // entryPoints,
     testName
   );
   return {
@@ -47,7 +46,10 @@ export default (
       inputFilesPluginFactory,
       {
         name: "rebuild-notify",
-        setup: (build: any) => {
+        setup: (build) => {
+          build.onStart(() => {
+            console.log(`> node build starting...`);
+          });
           build.onEnd((result) => {
             console.log(
               `> node build ended with ${result.errors.length} errors`

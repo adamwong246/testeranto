@@ -1,11 +1,11 @@
 import fs from "fs";
 import path from "path";
 import { ScreencastOptions } from "puppeteer-core";
+import { CdpPage } from "puppeteer-core/lib/esm/puppeteer";
 import { PassThrough } from "stream";
 
 import { ITLog, ITTestResourceConfiguration } from "../lib";
 
-import { CdpPage } from "puppeteer-core/lib/esm/puppeteer";
 import { PM } from ".";
 
 type IFPaths = string[];
@@ -31,8 +31,8 @@ export class PM_Pure extends PM {
     return new Promise((r) => r());
   }
 
-  pages(): string[] {
-    throw new Error("Method not implemented.");
+  pages() {
+    return globalThis["pages"]();
   }
 
   waitForSelector(p: string, s: string): any {
@@ -47,7 +47,7 @@ export class PM_Pure extends PM {
     return globalThis["goto"](cdpPage.mainFrame()._id, url);
   }
 
-  newPage(): CdpPage {
+  newPage() {
     return globalThis["newPage"]();
   }
 

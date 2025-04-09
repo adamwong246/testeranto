@@ -1,5 +1,5 @@
 import { Page } from "puppeteer-core";
-import { CdpPage, ScreenRecorderOptions } from "puppeteer-core/lib/esm/puppeteer";
+import { ScreenRecorderOptions } from "puppeteer-core/lib/esm/puppeteer";
 import { ITLog, ITTestResourceConfiguration } from "../lib";
 export declare abstract class PM {
     server: any;
@@ -21,9 +21,9 @@ export declare abstract class PM {
     abstract goto(p: any, url: string): any;
     abstract isDisabled(selector: string): Promise<boolean>;
     abstract mkdirSync(a: string): any;
-    abstract newPage(): CdpPage;
-    abstract page(): string | undefined;
-    abstract pages(): string[];
+    abstract newPage(): Promise<string>;
+    abstract page(): Promise<string | undefined>;
+    abstract pages(): Promise<string[]>;
     abstract screencast(o: ScreenRecorderOptions, p: Page | string): any;
     abstract screencastStop(s: string): any;
     abstract typeInto(selector: string, value: string): any;

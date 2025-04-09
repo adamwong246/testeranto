@@ -22,6 +22,9 @@ exports.default = (config, entryPoints, testName) => {
             {
                 name: "rebuild-notify",
                 setup: (build) => {
+                    build.onStart(() => {
+                        console.log(`> pure build starting...`);
+                    });
                     build.onEnd((result) => {
                         console.log(`> pure build ended with ${result.errors.length} errors`);
                         if (result.errors.length > 0) {
@@ -32,6 +35,7 @@ exports.default = (config, entryPoints, testName) => {
                     });
                 },
             },
-            ...((config.nodePlugins || []).map((p) => p(register, entryPoints)) || []),
+            ...((config.nodePlugins || []).map((p) => p(register, entryPoints)) ||
+                []),
         ] });
 };

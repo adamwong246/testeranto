@@ -1,15 +1,14 @@
 import { PM_Web } from "./PM/web";
 import type {
-  Ibdd_in,
-  Ibdd_out,
+  IT,
   ITestImplementation,
   ITestInterface,
   ITestSpecification,
   IWebTestInterface,
+  OT,
 } from "./Types";
 import Testeranto from "./lib/core.js";
 import {
-  IFinalResults,
   ITTestResourceConfiguration,
   ITTestResourceRequest,
   defaultTestResourceRequirement,
@@ -22,28 +21,15 @@ let unhandledrejectionCallback = (event: PromiseRejectionEvent) => {
   // throw event;
 };
 
-export class WebTesteranto<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
-  O extends Ibdd_out<
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
-  >
-> extends Testeranto<I, O> {
+export class WebTesteranto<I extends IT, O extends OT, M> extends Testeranto<
+  I,
+  O,
+  M
+> {
   constructor(
     input: I["iinput"],
     testSpecification: ITestSpecification<I, O>,
-    testImplementation: ITestImplementation<I, O>,
+    testImplementation: ITestImplementation<I, O, M>,
     testResourceRequirement: ITTestResourceRequest,
     testInterface: Partial<ITestInterface<I>>
   ) {
@@ -93,39 +79,17 @@ export class WebTesteranto<
     const t: ITTestResourceConfiguration = partialTestResource; //JSON.parse(partialTestResource);
     const pm = new PM_Web(t);
     return await this.testJobs[0].receiveTestResourceConfig(pm);
-    // const { failed, artifacts, logPromise, features } =
-    //   await this.testJobs[0].receiveTestResourceConfig(pm);
-    // return new Promise<IFinalResults>((res, rej) => {
-    //   res({ features, failed });
-    // });
   }
 }
 
-export default async <
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
-  O extends Ibdd_out<
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
-  >
->(
+export default async <I extends IT, O extends OT, M>(
   input: I["iinput"],
   testSpecification: ITestSpecification<I, O>,
-  testImplementation: ITestImplementation<I, O>,
+  testImplementation: ITestImplementation<I, O, M>,
   testInterface: Partial<IWebTestInterface<I>>,
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
-): Promise<Testeranto<I, O>> => {
-  return new WebTesteranto<I, O>(
+): Promise<Testeranto<I, O, M>> => {
+  return new WebTesteranto<I, O, M>(
     input,
     testSpecification,
     testImplementation,

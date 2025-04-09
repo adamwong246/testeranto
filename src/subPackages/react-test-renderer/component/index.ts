@@ -1,12 +1,24 @@
 import React from "react";
-import renderer, { act } from "react-test-renderer";
+import renderer, { act, ReactTestRenderer } from "react-test-renderer";
 
 import type {
   Ibdd_in,
   Ibdd_out,
+  IT,
   ITestImplementation,
   ITestSpecification,
+  OT,
 } from "../../../Types";
+
+export type I = Ibdd_in<
+  IInput<any, any>,
+  ReactTestRenderer,
+  ReactTestRenderer,
+  ReactTestRenderer,
+  unknown,
+  unknown,
+  unknown
+>;
 
 export type ISuper<T> = T extends infer U ? U : object;
 
@@ -18,39 +30,9 @@ export type ISelection = renderer.ReactTestRenderer;
 export type IStore = renderer.ReactTestRenderer;
 export type ISubject = renderer.ReactTestRenderer;
 
-export type IImpl<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
-  O extends Ibdd_out<
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
-  >
-> = ITestImplementation<I, O>;
-export type ISpec<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
-  O extends Ibdd_out<
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
-  >
+export type IImpl<I extends IT, O extends OT, M> = ITestImplementation<I, O>;
+export type ITestSpecification<
+  I extends IT,
+  O extends OT,
+  M
 > = ITestSpecification<I, O>;

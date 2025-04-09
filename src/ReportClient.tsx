@@ -35,7 +35,7 @@ const BigBoard = () => {
   const [configs, setConfigs] = useState<IBuiltConfig>();
   useEffect(() => {
     (async () => {
-      fetch(`/kokomoBay/testeranto/reports${t}/config.json`)
+      fetch(`/kokomoBay/testeranto/reports/${window.location.pathname.split('/').pop()}/config.json`)
         .then(response => response.json())
         .then(json => {
           setConfigs(json)

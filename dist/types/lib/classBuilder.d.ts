@@ -1,7 +1,9 @@
-import { Ibdd_in, Ibdd_out, ITestImplementation, ITestSpecification } from "../Types.js";
+import { IT, ITestImplementation, ITestSpecification, OT } from "../Types.js";
 import { BaseBuilder } from "./basebuilder.js";
 import { ISuiteKlasser, IGivenKlasser, IWhenKlasser, IThenKlasser, ICheckKlasser } from "./types.js";
 import { ITTestResourceRequest } from "./index.js";
-export declare abstract class ClassBuilder<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>, O extends Ibdd_out<Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>> extends BaseBuilder<I, O, any, any, any, any, any> {
-    constructor(testImplementation: ITestImplementation<I, O>, testSpecification: ITestSpecification<I, O>, input: I["iinput"], suiteKlasser: ISuiteKlasser<I, O>, givenKlasser: IGivenKlasser<I>, whenKlasser: IWhenKlasser<I>, thenKlasser: IThenKlasser<I>, checkKlasser: ICheckKlasser<I, O>, testResourceRequirement: ITTestResourceRequest);
+type IExtenstions = Record<string, unknown>;
+export declare abstract class ClassBuilder<I extends IT = IT, O extends OT = OT, M = unknown> extends BaseBuilder<I, O, IExtenstions, IExtenstions, IExtenstions, IExtenstions, IExtenstions> {
+    constructor(testImplementation: ITestImplementation<I, O, M>, testSpecification: ITestSpecification<I, O>, input: I["iinput"], suiteKlasser: ISuiteKlasser<I, O>, givenKlasser: IGivenKlasser<I>, whenKlasser: IWhenKlasser<I>, thenKlasser: IThenKlasser<I>, checkKlasser: ICheckKlasser<I>, testResourceRequirement: ITTestResourceRequest);
 }
+export {};

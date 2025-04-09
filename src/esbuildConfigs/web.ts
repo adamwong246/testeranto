@@ -9,7 +9,7 @@ import featuresPlugin from "./featuresPlugin.js";
 
 export default (
   config: IBaseConfig,
-  entryPoints: Set<string> | string[],
+  entryPoints: string[],
   testName: string
 ): BuildOptions => {
   const { inputFilesPluginFactory, register } = inputFilesPlugin(
@@ -57,7 +57,10 @@ export default (
       inputFilesPluginFactory,
       {
         name: "rebuild-notify",
-        setup: (build: any) => {
+        setup: (build) => {
+          build.onStart(() => {
+            console.log(`> web build starting...`);
+          });
           build.onEnd((result) => {
             console.log(
               `> web build ended with ${result.errors.length} errors`

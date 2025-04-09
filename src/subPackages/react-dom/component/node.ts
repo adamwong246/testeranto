@@ -22,16 +22,17 @@ export type ISubject = ReactNode;
 
 export { renderToStaticMarkup, renderToStaticNodeStream, Stream };
 
+export type I = Ibdd_in<
+  IInput,
+  ISubject,
+  IStore,
+  ISelection,
+  unknown,
+  (s: IStore) => IStore,
+  unknown
+>;
 export default <
-  I extends Ibdd_in<
-    IInput,
-    ISubject,
-    IStore,
-    ISelection,
-    unknown,
-    (s: IStore) => IStore,
-    unknown
-  >,
+  I,
   O extends Ibdd_out<
     Record<string, any>,
     Record<string, any>,

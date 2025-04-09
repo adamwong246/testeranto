@@ -1,7 +1,6 @@
 import net from "net";
 import { ScreencastOptions } from "puppeteer-core";
 import { PassThrough } from "stream";
-import { CdpPage } from "puppeteer-core/lib/esm/puppeteer";
 import { ITLog, ITTestResourceConfiguration } from "../lib";
 import { PM } from ".";
 export declare class PM_Node extends PM {
@@ -11,23 +10,23 @@ export declare class PM_Node extends PM {
     start(): Promise<void>;
     stop(): Promise<void>;
     send<I>(command: string, ...argz: any[]): Promise<I>;
-    pages(): string[];
+    pages(): Promise<string[]>;
     waitForSelector(p: string, s: string): any;
     closePage(p: any): Promise<unknown>;
     goto(page: string, url: string): Promise<unknown>;
-    newPage(): Promise<CdpPage>;
+    newPage(): Promise<string>;
     $(selector: string): Promise<unknown>;
     isDisabled(selector: string): Promise<boolean>;
     getAttribute(selector: string, attribute: string): Promise<unknown>;
     getValue(selector: string): Promise<unknown>;
     focusOn(selector: string): Promise<unknown>;
     typeInto(selector: string): Promise<unknown>;
-    page(): Promise<unknown>;
+    page(): Promise<string | undefined>;
     click(selector: string): Promise<unknown>;
     screencast(opts: ScreencastOptions, page: string): Promise<unknown>;
     screencastStop(p: string): Promise<unknown>;
     customScreenShot(opts: ScreencastOptions, page?: string): Promise<unknown>;
-    existsSync(destFolder: string): Promise<unknown>;
+    existsSync(destFolder: string): Promise<boolean>;
     mkdirSync(): Promise<unknown>;
     write(uid: number, contents: string): Promise<boolean>;
     writeFileSync(filepath: string, contents: string): Promise<boolean>;

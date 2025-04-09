@@ -24532,7 +24532,7 @@
     const [configs, setConfigs] = (0, import_react3.useState)();
     (0, import_react3.useEffect)(() => {
       (async () => {
-        fetch(`/kokomoBay/testeranto/reports${t}/config.json`).then((response) => response.json()).then((json) => {
+        fetch(`/kokomoBay/testeranto/reports/${window.location.pathname.split("/").pop()}/config.json`).then((response) => response.json()).then((json) => {
           setConfigs(json);
         }).catch((error) => console.error(error));
       })();

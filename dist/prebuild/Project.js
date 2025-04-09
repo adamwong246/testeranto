@@ -24570,7 +24570,7 @@
   document.addEventListener("DOMContentLoaded", function() {
     const elem = document.getElementById("root");
     if (elem) {
-      import_client.default.createRoot(elem).render(import_react3.default.createElement(BigBoard, {}, []));
+      import_client.default.createRoot(elem).render(import_react3.default.createElement(BigBoard, {}));
     }
   });
   console.log("hello BigBoard!");

@@ -93,7 +93,6 @@ var featuresPlugin_default = {
 var node_default = (config, entryPoints, testName2) => {
   const { inputFilesPluginFactory, register: register2 } = inputFilesPlugin_default(
     "node",
-    // entryPoints,
     testName2
   );
   return {
@@ -121,6 +120,9 @@ var node_default = (config, entryPoints, testName2) => {
       {
         name: "rebuild-notify",
         setup: (build) => {
+          build.onStart(() => {
+            console.log(`> node build starting...`);
+          });
           build.onEnd((result) => {
             console.log(
               `> node build ended with ${result.errors.length} errors`
@@ -177,6 +179,9 @@ var web_default = (config, entryPoints, testName2) => {
       {
         name: "rebuild-notify",
         setup: (build) => {
+          build.onStart(() => {
+            console.log(`> web build starting...`);
+          });
           build.onEnd((result) => {
             console.log(
               `> web build ended with ${result.errors.length} errors`
@@ -224,6 +229,9 @@ var pure_default = (config, entryPoints, testName2) => {
       {
         name: "rebuild-notify",
         setup: (build) => {
+          build.onStart(() => {
+            console.log(`> pure build starting...`);
+          });
           build.onEnd((result) => {
             console.log(
               `> pure build ended with ${result.errors.length} errors`

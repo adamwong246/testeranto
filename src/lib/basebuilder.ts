@@ -1,14 +1,15 @@
 import { PassThrough } from "stream";
 
-import { ITTestResourceRequest, ITestJob, ITLog, IFinalResults } from ".";
-import { Ibdd_in, Ibdd_out, ITestSpecification } from "../Types.js";
+import { IT, ITestSpecification, OT } from "../Types.js";
 
+import { ITTestResourceRequest, ITestJob, ITLog, IFinalResults } from ".";
 import {
   ISuiteKlasser,
   IGivenKlasser,
   IWhenKlasser,
   IThenKlasser,
   ICheckKlasser,
+  IPM,
 } from "./types.js";
 import {
   BaseCheck,
@@ -17,29 +18,10 @@ import {
   BaseThen,
   BaseGiven,
 } from "./abstractBase.js";
-import { PM_Node } from "../PM/node";
-import { PM_Pure } from "../PM/pure";
-import { PM_Web } from "../PM/web";
-
-type IPM = PM_Node | PM_Web | PM_Pure;
 
 export abstract class BaseBuilder<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
-  O extends Ibdd_out<
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
-  >,
+  I extends IT,
+  O extends OT,
   SuiteExtensions,
   GivenExtensions,
   WhenExtensions,
@@ -58,7 +40,7 @@ export abstract class BaseBuilder<
   givenOverides: Record<keyof GivenExtensions, IGivenKlasser<I>>;
   whenOverides: Record<keyof WhenExtensions, IWhenKlasser<I>>;
   thenOverides: Record<keyof ThenExtensions, IThenKlasser<I>>;
-  checkOverides: Record<keyof CheckExtensions, ICheckKlasser<I, O>>;
+  checkOverides: Record<keyof CheckExtensions, ICheckKlasser<I>>;
   puppetMaster: IPM;
 
   constructor(
@@ -67,7 +49,7 @@ export abstract class BaseBuilder<
     givenOverides: Record<keyof GivenExtensions, IGivenKlasser<I>>,
     whenOverides: Record<keyof WhenExtensions, IWhenKlasser<I>>,
     thenOverides: Record<keyof ThenExtensions, IThenKlasser<I>>,
-    checkOverides: Record<keyof CheckExtensions, ICheckKlasser<I, O>>,
+    checkOverides: Record<keyof CheckExtensions, ICheckKlasser<I>>,
     testResourceRequirement: ITTestResourceRequest,
     testSpecification: any
   ) {

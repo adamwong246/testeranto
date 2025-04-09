@@ -15,7 +15,7 @@ export class PM_Pure extends PM {
         return new Promise((r) => r());
     }
     pages() {
-        throw new Error("Method not implemented.");
+        return globalThis["pages"]();
     }
     waitForSelector(p, s) {
         return globalThis["waitForSelector"](p, s);

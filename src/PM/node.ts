@@ -3,7 +3,6 @@ import fs from "fs";
 import path from "path";
 import { ScreencastOptions } from "puppeteer-core";
 import { PassThrough } from "stream";
-import { CdpPage } from "puppeteer-core/lib/esm/puppeteer";
 
 import { ITLog, ITTestResourceConfiguration } from "../lib";
 
@@ -23,7 +22,7 @@ export class PM_Node extends PM {
 
   start(): Promise<void> {
     return new Promise((res) => {
-      process.on("message", (message: unknown) => {
+      process.on("message", (message: { path?: string }) => {
         if (message.path) {
           this.client = net.createConnection(message.path, () => {
             res();
@@ -55,8 +54,8 @@ export class PM_Node extends PM {
     });
   }
 
-  pages(): string[] {
-    return this.send("pages", ...arguments);
+  async pages() {
+    return this.send<string[]>("pages", ...arguments);
   }
 
   waitForSelector(p: string, s: string): any {
@@ -73,8 +72,8 @@ export class PM_Node extends PM {
     // return globalThis["goto"](cdpPage.mainFrame()._id, url);
   }
 
-  async newPage(): Promise<CdpPage> {
-    return this.send<CdpPage>("newPage");
+  async newPage() {
+    return this.send<string>("newPage");
   }
 
   $(selector: string) {
@@ -102,7 +101,7 @@ export class PM_Node extends PM {
   }
 
   page() {
-    return this.send("page");
+    return this.send<string | undefined>("page");
   }
 
   click(selector: string) {
@@ -137,8 +136,8 @@ export class PM_Node extends PM {
     );
   }
 
-  existsSync(destFolder: string) {
-    return this.send(
+  async existsSync(destFolder: string): Promise<boolean> {
+    return await this.send<boolean>(
       "existsSync",
       this.testResourceConfiguration.fs + "/" + destFolder
     );

@@ -33,9 +33,9 @@ export abstract class PM {
   abstract goto(p, url: string): any;
   abstract isDisabled(selector: string): Promise<boolean>;
   abstract mkdirSync(a: string);
-  abstract newPage(): CdpPage;
-  abstract page(): string | undefined;
-  abstract pages(): string[];
+  abstract newPage(): Promise<string>;
+  abstract page(): Promise<string | undefined>;
+  abstract pages(): Promise<string[]>;
   abstract screencast(o: ScreenRecorderOptions, p: Page | string): any;
   abstract screencastStop(s: string): any;
   abstract typeInto(selector: string, value: string): any;

@@ -1,43 +1,15 @@
-import { PM } from "../PM/server.js";
-import { Ibdd_in, Ibdd_out } from "../Types.js";
+import { IT, OT } from "../Types.js";
 
 import { ITTestResourceConfiguration, ITestArtifactory, ITLog } from ".";
+import { IPM } from "./types.js";
 
-export type IGivens<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >
-> = Record<string, BaseGiven<I>>;
+export type IGivens<I extends IT> = Record<string, BaseGiven<I>>;
 
-export abstract class BaseSuite<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
-  O extends Ibdd_out<
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
-  >
-> {
+export abstract class BaseSuite<I extends IT = IT, O extends OT = OT> {
   name: string;
   givens: IGivens<I>;
-  checks: BaseCheck<I, O>[];
+  checks: BaseCheck<I>[];
   store: I["istore"];
-  // fails: BaseGiven<I>[];
   testResourceConfiguration: ITTestResourceConfiguration;
   index: number;
   failed: boolean;
@@ -47,7 +19,7 @@ export abstract class BaseSuite<
     name: string,
     index: number,
     givens: IGivens<I> = {},
-    checks: BaseCheck<I, O>[] = []
+    checks: BaseCheck<I>[] = []
   ) {
     this.name = name;
     this.index = index;
@@ -63,10 +35,6 @@ export abstract class BaseSuite<
       .filter((value, index, array) => {
         return array.indexOf(value) === index;
       });
-    // .reduce((mm, lm) => {
-    //   mm[lm] = lm;
-    //   return mm;
-    // }, {});
     return features || [];
   }
 
@@ -88,7 +56,7 @@ export abstract class BaseSuite<
     s: I["iinput"],
     artifactory: ITestArtifactory,
     tr: ITTestResourceConfiguration,
-    pm: PM
+    pm: IPM
   ): Promise<I["isubject"]> {
     return new Promise((res) => res(s as unknown as I["isubject"]));
   }
@@ -97,7 +65,7 @@ export abstract class BaseSuite<
     return !!t;
   }
 
-  afterAll(store: I["istore"], artifactory: ITestArtifactory, pm: PM) {
+  afterAll(store: I["istore"], artifactory: ITestArtifactory, pm: IPM) {
     return store;
   }
 
@@ -106,7 +74,7 @@ export abstract class BaseSuite<
     testResourceConfiguration: ITTestResourceConfiguration,
     artifactory: (fPath: string, value: unknown) => void,
     tLog: (...string) => void,
-    pm: PM
+    pm: IPM
   ): Promise<BaseSuite<I, O>> {
     this.testResourceConfiguration = testResourceConfiguration;
     // tLog("test resources: ", JSON.stringify(testResourceConfiguration));
@@ -215,17 +183,7 @@ export abstract class BaseSuite<
   }
 }
 
-export abstract class BaseGiven<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >
-> {
+export abstract class BaseGiven<I extends IT = IT> {
   name: string;
   features: string[];
   whens: BaseWhen<I>[];
@@ -255,16 +213,7 @@ export abstract class BaseGiven<
     this.initialValues = initialValues;
   }
 
-  beforeAll(
-    store: I["istore"],
-    // artifactory: ITestArtifactory
-    // subject,
-    initializer,
-    artifactory,
-    testResource,
-    initialValues,
-    pm
-  ) {
+  beforeAll(store: I["istore"]) {
     return store;
   }
 
@@ -276,7 +225,6 @@ export abstract class BaseGiven<
       thens: this.thens.map((t) => t.toObj()),
       error: this.error ? [this.error, this.error.stack] : null,
       failed: this.failed,
-      // fail: this.fail ? [this.fail] : false,
       features: this.features,
     };
   }
@@ -287,14 +235,14 @@ export abstract class BaseGiven<
     artifactory: ITestArtifactory,
     givenCB: I["given"],
     initialValues: any,
-    pm: PM
+    pm: IPM
   ): Promise<I["istore"]>;
 
   async afterEach(
     store: I["istore"],
     key: string,
     artifactory: ITestArtifactory,
-    pm: PM
+    pm: IPM
   ): Promise<unknown> {
     return store;
   }
@@ -308,7 +256,7 @@ export abstract class BaseGiven<
     tester: (t: Awaited<I["then"]> | undefined) => boolean,
     artifactory: ITestArtifactory,
     tLog: ITLog,
-    pm: PM,
+    pm: IPM,
     suiteNdx: number
   ) {
     this.key = key;
@@ -450,17 +398,7 @@ export abstract class BaseGiven<
   }
 }
 
-export abstract class BaseWhen<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >
-> {
+export abstract class BaseWhen<I extends IT> {
   public name: string;
   whenCB: (x: I["iselection"]) => I["then"];
   error: boolean;
@@ -474,7 +412,7 @@ export abstract class BaseWhen<
     store: I["istore"],
     whenCB: (x: I["iselection"]) => I["then"],
     testResource,
-    pm: PM
+    pm: IPM
   ): Promise<any>;
 
   toObj() {
@@ -488,7 +426,7 @@ export abstract class BaseWhen<
     store: I["istore"],
     testResourceConfiguration,
     tLog: ITLog,
-    pm: PM,
+    pm: IPM,
     filepath: string
   ) {
     tLog(" When:", this.name);
@@ -538,17 +476,7 @@ export abstract class BaseWhen<
   }
 }
 
-export abstract class BaseThen<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >
-> {
+export abstract class BaseThen<I extends IT> {
   public name: string;
   thenCB: (storeState: I["iselection"]) => I["then"];
   go: (storeState: I["iselection"]) => I["then"];
@@ -572,14 +500,15 @@ export abstract class BaseThen<
     store: I["istore"],
     thenCB: (s: I["iselection"]) => I["isubject"],
     testResourceConfiguration: ITTestResourceConfiguration,
-    pm: PM
+    pm: IPM,
+    ...args: any[]
   ): Promise<I["iselection"]>;
 
   async test(
     store: I["istore"],
     testResourceConfiguration,
     tLog: ITLog,
-    pm: PM,
+    pm: IPM,
     filepath: string
   ): Promise<I["then"] | undefined> {
     this.go = async (s: I["iselection"]) => {
@@ -637,42 +566,19 @@ export abstract class BaseThen<
   check() {}
 }
 
-export abstract class BaseCheck<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
-  O extends Ibdd_out<
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
-  >
-> {
+export abstract class BaseCheck<I extends IT = IT, O extends OT = OT> {
   key: string;
   name: string;
   features: string[];
-  checkCB: (store: I["istore"], pm: PM) => any;
+  checkCB: (store: I["istore"], pm: IPM) => any;
   initialValues: any;
   store: I["istore"];
-  // whens: {
-  //   [K in keyof O["whens"]]: (p, tc) => BaseWhen<I>;
-  // };
-  // thens: {
-  //   [K in keyof O["thens"]]: (p, tc) => BaseThen<I>;
-  // };
   checker: any;
 
   constructor(
     name: string,
     features: string[],
-    checker: (store: I["istore"], pm: PM) => any,
+    checker: (store: I["istore"], pm: IPM) => any,
     x: any,
     checkCB: any
   ) {
@@ -688,7 +594,7 @@ export abstract class BaseCheck<
     artifactory: ITestArtifactory,
     initializer,
     initialValues,
-    pm: PM
+    pm: IPM
   ): Promise<I["istore"]>;
 
   toObj() {
@@ -696,9 +602,6 @@ export abstract class BaseCheck<
       key: this.key,
       name: this.name,
       functionAsString: this.checkCB.toString(),
-      // thens: this.thens.map((t) => t.toObj()),
-      // error: this.error ? [this.error, this.error.stack] : null,
-      // fail: this.fail ? [this.fail] : false,
       features: this.features,
     };
   }
@@ -707,21 +610,12 @@ export abstract class BaseCheck<
     store: I["istore"],
     key: string,
     artifactory: ITestArtifactory,
-    pm: PM
+    pm: IPM
   ): Promise<unknown> {
     return store;
   }
 
-  beforeAll(
-    store: I["istore"],
-    // artifactory: ITestArtifactory
-    // subject,
-    initializer,
-    artifactory,
-    testResource,
-    initialValues,
-    pm
-  ) {
+  beforeAll(store: I["istore"]) {
     return store;
   }
 
@@ -732,7 +626,7 @@ export abstract class BaseCheck<
     tester,
     artifactory: ITestArtifactory,
     tLog: ITLog,
-    pm: PM
+    pm: IPM
   ) {
     this.key = key;
     tLog(`\n Check: ${this.name}`);

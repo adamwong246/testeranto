@@ -32,11 +32,6 @@ export class WebTesteranto extends Testeranto {
         const t = partialTestResource; //JSON.parse(partialTestResource);
         const pm = new PM_Web(t);
         return await this.testJobs[0].receiveTestResourceConfig(pm);
-        // const { failed, artifacts, logPromise, features } =
-        //   await this.testJobs[0].receiveTestResourceConfig(pm);
-        // return new Promise<IFinalResults>((res, rej) => {
-        //   res({ features, failed });
-        // });
     }
 }
 export default async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = defaultTestResourceRequirement) => {

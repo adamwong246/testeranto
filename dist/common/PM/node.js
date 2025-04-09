@@ -42,7 +42,7 @@ class PM_Node extends _1.PM {
             this.client.write(JSON.stringify([command, ...argz, key]));
         });
     }
-    pages() {
+    async pages() {
         return this.send("pages", ...arguments);
     }
     waitForSelector(p, s) {
@@ -92,8 +92,8 @@ class PM_Node extends _1.PM {
     customScreenShot(opts, page) {
         return this.send("customScreenShot", Object.assign(Object.assign({}, opts), { path: this.testResourceConfiguration.fs + "/" + opts.path }), page, this.testResourceConfiguration.name);
     }
-    existsSync(destFolder) {
-        return this.send("existsSync", this.testResourceConfiguration.fs + "/" + destFolder);
+    async existsSync(destFolder) {
+        return await this.send("existsSync", this.testResourceConfiguration.fs + "/" + destFolder);
     }
     mkdirSync() {
         return this.send("mkdirSync", this.testResourceConfiguration.fs + "/");

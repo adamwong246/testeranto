@@ -13,10 +13,6 @@ export class BaseSuite {
             .filter((value, index, array) => {
             return array.indexOf(value) === index;
         });
-        // .reduce((mm, lm) => {
-        //   mm[lm] = lm;
-        //   return mm;
-        // }, {});
         return features || [];
     }
     toObj() {
@@ -113,10 +109,7 @@ export class BaseGiven {
         this.givenCB = givenCB;
         this.initialValues = initialValues;
     }
-    beforeAll(store, 
-    // artifactory: ITestArtifactory
-    // subject,
-    initializer, artifactory, testResource, initialValues, pm) {
+    beforeAll(store) {
         return store;
     }
     toObj() {
@@ -127,7 +120,6 @@ export class BaseGiven {
             thens: this.thens.map((t) => t.toObj()),
             error: this.error ? [this.error, this.error.stack] : null,
             failed: this.failed,
-            // fail: this.fail ? [this.fail] : false,
             features: this.features,
         };
     }
@@ -314,19 +306,13 @@ export class BaseCheck {
             key: this.key,
             name: this.name,
             functionAsString: this.checkCB.toString(),
-            // thens: this.thens.map((t) => t.toObj()),
-            // error: this.error ? [this.error, this.error.stack] : null,
-            // fail: this.fail ? [this.fail] : false,
             features: this.features,
         };
     }
     async afterEach(store, key, artifactory, pm) {
         return store;
     }
-    beforeAll(store, 
-    // artifactory: ITestArtifactory
-    // subject,
-    initializer, artifactory, testResource, initialValues, pm) {
+    beforeAll(store) {
         return store;
     }
     async check(subject, key, testResourceConfiguration, tester, artifactory, tLog, pm) {

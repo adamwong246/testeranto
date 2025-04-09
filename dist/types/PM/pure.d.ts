@@ -1,7 +1,7 @@
 import { ScreencastOptions } from "puppeteer-core";
+import { CdpPage } from "puppeteer-core/lib/esm/puppeteer";
 import { PassThrough } from "stream";
 import { ITLog, ITTestResourceConfiguration } from "../lib";
-import { CdpPage } from "puppeteer-core/lib/esm/puppeteer";
 import { PM } from ".";
 type PuppetMasterServer = Record<string, Promise<any>>;
 export declare class PM_Pure extends PM {
@@ -10,11 +10,11 @@ export declare class PM_Pure extends PM {
     constructor(t: ITTestResourceConfiguration);
     start(): Promise<void>;
     stop(): Promise<void>;
-    pages(): string[];
+    pages(): any;
     waitForSelector(p: string, s: string): any;
     closePage(p: any): string;
     goto(cdpPage: CdpPage, url: string): any;
-    newPage(): CdpPage;
+    newPage(): any;
     $(selector: string): boolean;
     isDisabled(selector: string): Promise<boolean>;
     getAttribute(selector: string, attribute: string): any;

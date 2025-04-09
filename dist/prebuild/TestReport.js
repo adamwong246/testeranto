@@ -27394,7 +27394,7 @@
     if (elem) {
       if (elem) {
         const root = import_client.default.createRoot(elem);
-        root.render(import_react33.default.createElement(BddPage, {}, []));
+        root.render(import_react33.default.createElement(BddPage, {}));
       }
     }
   });

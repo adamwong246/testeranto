@@ -186,7 +186,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if (elem) {
     if (elem) {
       const root = ReactDom.createRoot(elem);
-      root.render(React.createElement(BddPage, {}, []));
+      root.render(React.createElement(BddPage, {}));
     }
   }
 });

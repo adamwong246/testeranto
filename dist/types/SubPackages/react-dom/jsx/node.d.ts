@@ -3,5 +3,5 @@ import Stream from "stream";
 import { Ibdd_in, Ibdd_out, ITestImplementation, ITestSpecification } from "../../../Types";
 import { IInput, ISelection, IStore } from "./index.js";
 export { renderToStaticMarkup, renderToStaticNodeStream, Stream };
-declare const _default: <I extends Ibdd_in<IInput, unknown, ISelection, IStore, unknown, unknown, unknown>, O extends Ibdd_out<Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>>(testImplementations: ITestImplementation<I, O>, testSpecifications: ITestSpecification<I, O>, testInput: I["iinput"]) => Promise<import("../../../lib/core.js").default<I, O>>;
+declare const _default: <I extends Ibdd_in<IInput, unknown, ISelection, IStore, unknown, unknown, unknown>, O extends Ibdd_out<Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>>(testImplementations: ITestImplementation<I, O>, testSpecifications: ITestSpecification<I, O>, testInput: I["iinput"]) => Promise<import("../../../lib/core.js").default<I, O, unknown>>;
 export default _default;

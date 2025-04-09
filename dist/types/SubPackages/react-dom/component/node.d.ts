@@ -7,5 +7,6 @@ export type ISelection = ReactNode;
 export type IStore = ReactNode;
 export type ISubject = ReactNode;
 export { renderToStaticMarkup, renderToStaticNodeStream, Stream };
-declare const _default: <I extends Ibdd_in<IInput, ISubject, IStore, ISelection, unknown, (s: IStore) => IStore, unknown>, O extends Ibdd_out<Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>>(testImplementations: ITestImplementation<I, O>, testSpecifications: ITestSpecification<I, O>, testInput: IInput) => Promise<import("../../../lib/core.js").default<I, O>>;
+export type I = Ibdd_in<IInput, ISubject, IStore, ISelection, unknown, (s: IStore) => IStore, unknown>;
+declare const _default: <I, O extends Ibdd_out<Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>>(testImplementations: ITestImplementation<I, O>, testSpecifications: ITestSpecification<I, O>, testInput: IInput) => Promise<import("../../../lib/core.js").default<I, O, unknown>>;
 export default _default;

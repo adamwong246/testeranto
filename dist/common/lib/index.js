@@ -14,7 +14,7 @@ exports.BaseTestInterface = {
         }
         catch (e) { }
     },
-    andWhen: (a) => a,
+    andWhen: async (a) => a,
     assertThis: () => null,
 };
 const DefaultTestInterface = (p) => {
@@ -24,7 +24,3 @@ exports.DefaultTestInterface = DefaultTestInterface;
 exports.defaultTestResourceRequirement = {
     ports: 0,
 };
-// export type IPluginFactory = (
-//   register: (entrypoint, sources) => any,
-//   entrypoints
-// ) => Plugin;

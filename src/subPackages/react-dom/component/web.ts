@@ -1,14 +1,15 @@
-import React, { CElement, createElement } from "react";
+import React, { createElement } from "react";
 import ReactDom from "react-dom/client";
 
 import Testeranto from "../../../Web.js";
 import {
   Ibdd_in,
   Ibdd_out,
-  IPartialInterface,
   IPartialWebInterface,
   ITestImplementation,
   ITestSpecification,
+  MT,
+  OT,
 } from "../../../Types";
 
 type IInput = typeof React.Component;
@@ -30,28 +31,21 @@ type ISubject = {
   domRoot: ReactDom.Root;
 };
 
-export default <
-  I extends Ibdd_in<
-    IInput,
-    ISubject,
-    ISelection,
-    IStore,
-    (s: IStore) => IStore,
-    (s: IStore) => IStore,
-    (s: IStore) => IStore
-  >,
-  O extends Ibdd_out<
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
-  >
->(
+export type I = Ibdd_in<
+  IInput,
+  ISubject,
+  ISelection,
+  IStore,
+  (s: IStore) => IStore,
+  (s: IStore) => IStore,
+  (s: IStore) => IStore
+>;
+
+export default <O extends OT, M extends MT<O>>(
   testInput: IInput,
   testSpecifications: ITestSpecification<I, O>,
-  testImplementations: ITestImplementation<I, O>,
-  testInterface?: IPartialWebInterface<any>
+  testImplementations: ITestImplementation<I, O, M>,
+  testInterface?: IPartialWebInterface<I>
 ) => {
   class TesterantoComponent extends testInput {
     done: (t: TesterantoComponent) => void;
@@ -65,7 +59,7 @@ export default <
     }
   }
 
-  const t = Testeranto<I, O>(
+  const t = Testeranto<I, O, M>(
     testInput,
     testSpecifications,
     testImplementations,

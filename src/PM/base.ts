@@ -81,7 +81,7 @@ export abstract class PM_Base {
 
   async pages(): Promise<string[]> {
     return (await this.browser.pages()).map((p) => {
-      return p.mainFrame()._id;
+      return (p.mainFrame() as any)._id;
     });
   }
 

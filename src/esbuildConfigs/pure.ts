@@ -8,7 +8,7 @@ import featuresPlugin from "./featuresPlugin.js";
 
 export default (
   config: IBaseConfig,
-  entryPoints: Set<string> | string[],
+  entryPoints: string[],
   testName: string
 ): BuildOptions => {
   const { inputFilesPluginFactory, register } = inputFilesPlugin(
@@ -48,7 +48,10 @@ export default (
       inputFilesPluginFactory,
       {
         name: "rebuild-notify",
-        setup: (build: any) => {
+        setup: (build) => {
+          build.onStart(() => {
+            console.log(`> pure build starting...`);
+          });
           build.onEnd((result) => {
             console.log(
               `> pure build ended with ${result.errors.length} errors`
@@ -62,7 +65,8 @@ export default (
         },
       },
 
-      ...((config.nodePlugins || []).map((p) => p(register, entryPoints)) || []),
+      ...((config.nodePlugins || []).map((p) => p(register, entryPoints)) ||
+        []),
     ],
   };
 };

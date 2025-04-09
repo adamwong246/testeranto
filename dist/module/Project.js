@@ -114,7 +114,7 @@ const BigBoard = () => {
 document.addEventListener("DOMContentLoaded", function () {
     const elem = document.getElementById("root");
     if (elem) {
-        ReactDom.createRoot(elem).render(React.createElement(BigBoard, {}, []));
+        ReactDom.createRoot(elem).render(React.createElement(BigBoard, {}));
     }
 });
 console.log("hello BigBoard!");

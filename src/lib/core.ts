@@ -3,10 +3,9 @@ import {
   ITestSpecification,
   ITestImplementation,
   ITestInterface,
-  Ibdd_in,
-  Ibdd_out,
+  IT,
+  OT,
 } from "../Types.js";
-import { PM } from "../PM/server";
 
 import {
   DefaultTestInterface,
@@ -23,29 +22,17 @@ import {
   BaseCheck,
 } from "./abstractBase.js";
 import { ClassBuilder } from "./classBuilder.js";
+import { IPM } from "./types";
 
 export default abstract class Testeranto<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
-  O extends Ibdd_out<
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
-  >
-> extends ClassBuilder<I, O> {
+  I extends IT,
+  O extends OT,
+  M
+> extends ClassBuilder<I, O, M> {
   constructor(
     input: I["iinput"],
     testSpecification: ITestSpecification<I, O>,
-    testImplementation: ITestImplementation<I, O>,
+    testImplementation: ITestImplementation<I, O, M>,
     testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
     testInterface: Partial<ITestInterface<I>>,
     uberCatcher: (cb: () => void) => void
@@ -58,16 +45,8 @@ export default abstract class Testeranto<
       input,
 
       class extends BaseSuite<I, O> {
-        afterAll(store: IStore, artifactory: ITestArtifactory, pm: PM) {
-          return fullTestInterface.afterAll(
-            store,
-            // (fPath: string, value: unknown) =>
-            //   // TODO does not work?
-            //   {
-            //     artifactory(`afterAll4-${this.name}/${fPath}`, value);
-            //   },
-            pm
-          );
+        afterAll(store: IStore, artifactory: ITestArtifactory, pm: IPM) {
+          return fullTestInterface.afterAll(store, pm);
         }
 
         assertThat(t): boolean {
@@ -86,7 +65,7 @@ export default abstract class Testeranto<
               input: I["iinput"],
               artifactory: ITestArtifactory,
               tr,
-              pm: PM
+              pm: IPM
             ) => input as any)
           )(
             s,
@@ -142,20 +121,6 @@ export default abstract class Testeranto<
           } catch (e) {
             throw e;
           }
-          // return fullTestInterface
-          //   .andWhen(store, whenCB, testResource, pm)
-          //   .catch((e) => {
-          //     throw e;
-          //   });
-          // return new Promise((res, rej) => {
-          //   fullTestInterface.andWhen(store, whenCB, testResource, pm);
-          // });
-          // return await fullTestInterface.andWhen(
-          //   store,
-          //   whenCB,
-          //   testResource,
-          //   pm
-          // );
         }
       } as any,
 
@@ -164,7 +129,7 @@ export default abstract class Testeranto<
           store: any,
           thenCB,
           testResource: any,
-          pm: PM
+          pm: IPM
         ): Promise<I["iselection"]> {
           return await fullTestInterface
             .butThen(store, thenCB, testResource, pm)
@@ -177,41 +142,22 @@ export default abstract class Testeranto<
                 throw e;
               }
             );
-          // try {
-          //   console.log("mark 4");
-          //   return await fullTestInterface.butThen(
-          //     store,
-          //     thenCB,
-          //     testResource,
-          //     pm
-          //   );
-          // } catch (e) {
-          //   console.log("mar123");
-          //   throw e;
-          // }
-
-          // return await fullTestInterface.butThen(
-          //   store,
-          //   thenCB,
-          //   testResourceConfiguration,
-          //   pm
-          // );
         }
       } as any,
 
-      class Check extends BaseCheck<I, O> {
+      class Check extends BaseCheck<I> {
         initialValues: any;
 
         constructor(
           name: string,
           features: string[],
-          checkCallback: (s: I["istore"], pm: PM) => any,
-          whens,
-          thens,
-          initialValues: any
+          checkCallback: (s: I["istore"], pm: IPM) => any,
+          x,
+          i,
+          c
         ) {
-          super(name, features, whens, thens, checkCallback, initialValues);
-          this.initialValues = initialValues;
+          super(name, features, checkCallback, x, c);
+          this.initialValues = i;
         }
 
         async checkThat(

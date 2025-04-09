@@ -1,9 +1,4 @@
-import {
-  Ibdd_in,
-  Ibdd_out,
-  ITestImplementation,
-  ITestSpecification,
-} from "../Types.js";
+import { IT, ITestImplementation, ITestSpecification, OT } from "../Types.js";
 
 import { BaseBuilder } from "./basebuilder.js";
 import {
@@ -16,33 +11,30 @@ import {
 import { ITTestResourceRequest } from "./index.js";
 import { BaseCheck } from "./abstractBase.js";
 
+type IExtenstions = Record<string, unknown>;
+
 export abstract class ClassBuilder<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
-  O extends Ibdd_out<
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
-  >
-> extends BaseBuilder<I, O, any, any, any, any, any> {
+  I extends IT = IT,
+  O extends OT = OT,
+  M = unknown
+> extends BaseBuilder<
+  I,
+  O,
+  IExtenstions,
+  IExtenstions,
+  IExtenstions,
+  IExtenstions,
+  IExtenstions
+> {
   constructor(
-    testImplementation: ITestImplementation<I, O>,
+    testImplementation: ITestImplementation<I, O, M>,
     testSpecification: ITestSpecification<I, O>,
     input: I["iinput"],
     suiteKlasser: ISuiteKlasser<I, O>,
     givenKlasser: IGivenKlasser<I>,
     whenKlasser: IWhenKlasser<I>,
     thenKlasser: IThenKlasser<I>,
-    checkKlasser: ICheckKlasser<I, O>,
+    checkKlasser: ICheckKlasser<I>,
     testResourceRequirement: ITTestResourceRequest
   ) {
     const classySuites = Object.entries(testImplementation.suites).reduce(
@@ -116,7 +108,7 @@ export abstract class ClassBuilder<
         };
         return a;
       },
-      {} as Record<string, (n, f, c) => BaseCheck<I, O>>
+      {} as Record<string, (n, f, c) => BaseCheck<I>>
     );
 
     super(

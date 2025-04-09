@@ -6,13 +6,7 @@ export default class Testeranto extends ClassBuilder {
         const fullTestInterface = DefaultTestInterface(testInterface);
         super(testImplementation, testSpecification, input, class extends BaseSuite {
             afterAll(store, artifactory, pm) {
-                return fullTestInterface.afterAll(store, 
-                // (fPath: string, value: unknown) =>
-                //   // TODO does not work?
-                //   {
-                //     artifactory(`afterAll4-${this.name}/${fPath}`, value);
-                //   },
-                pm);
+                return fullTestInterface.afterAll(store, pm);
             }
             assertThat(t) {
                 return fullTestInterface.assertThis(t);
@@ -42,20 +36,6 @@ export default class Testeranto extends ClassBuilder {
                 catch (e) {
                     throw e;
                 }
-                // return fullTestInterface
-                //   .andWhen(store, whenCB, testResource, pm)
-                //   .catch((e) => {
-                //     throw e;
-                //   });
-                // return new Promise((res, rej) => {
-                //   fullTestInterface.andWhen(store, whenCB, testResource, pm);
-                // });
-                // return await fullTestInterface.andWhen(
-                //   store,
-                //   whenCB,
-                //   testResource,
-                //   pm
-                // );
             }
         }, class Then extends BaseThen {
             async butThen(store, thenCB, testResource, pm) {
@@ -67,29 +47,11 @@ export default class Testeranto extends ClassBuilder {
                     console.log(" ERROR ", e);
                     throw e;
                 });
-                // try {
-                //   console.log("mark 4");
-                //   return await fullTestInterface.butThen(
-                //     store,
-                //     thenCB,
-                //     testResource,
-                //     pm
-                //   );
-                // } catch (e) {
-                //   console.log("mar123");
-                //   throw e;
-                // }
-                // return await fullTestInterface.butThen(
-                //   store,
-                //   thenCB,
-                //   testResourceConfiguration,
-                //   pm
-                // );
             }
         }, class Check extends BaseCheck {
-            constructor(name, features, checkCallback, whens, thens, initialValues) {
-                super(name, features, whens, thens, checkCallback, initialValues);
-                this.initialValues = initialValues;
+            constructor(name, features, checkCallback, x, i, c) {
+                super(name, features, checkCallback, x, c);
+                this.initialValues = i;
             }
             async checkThat(subject, testResourceConfiguration, artifactory, initializer, initialValues, pm) {
                 return fullTestInterface.beforeEach(subject, initializer, testResourceConfiguration, initialValues, pm);

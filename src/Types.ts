@@ -1,4 +1,6 @@
-import { ITTestResourceConfiguration, ITestArtificer } from "./lib/index.js";
+import { Plugin } from "esbuild";
+
+import { ITTestResourceConfiguration } from "./lib/index.js";
 import {
   IGivens,
   BaseCheck,
@@ -7,111 +9,53 @@ import {
   BaseThen,
   BaseGiven,
 } from "./lib/abstractBase.js";
-import { PM } from "./PM/server.js";
-import { ITestCheckCallback } from "./lib/types.js";
+import { IPM, ITestCheckCallback } from "./lib/types.js";
+import { PM } from "./PM/index.js";
 
-export type ITestInterface<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >
-> = {
-  assertThis: (x: I["then"]) => void;
+export type ITestInterface<I extends IT = IT> = {
+  assertThis: (x: I["then"]) => any;
   andWhen: (
     store: I["istore"],
     whenCB: I["when"],
     testResource: ITTestResourceConfiguration,
-    pm: PM
+    pm: IPM
   ) => Promise<I["istore"]>;
   butThen: (
     store: I["istore"],
     thenCB: I["then"],
     testResource: ITTestResourceConfiguration,
-    pm: PM
+    pm: IPM
   ) => Promise<I["iselection"]>;
-  afterAll: (store: I["istore"], pm: PM) => any;
-  afterEach: (store: I["istore"], key: string, pm: PM) => Promise<unknown>;
+  afterAll: (store: I["istore"], pm: IPM) => any;
+  afterEach: (store: I["istore"], key: string, pm: IPM) => Promise<unknown>;
   beforeAll: (
     input: I["iinput"],
     testResource: ITTestResourceConfiguration,
-    pm: PM
+    pm: IPM
   ) => Promise<I["isubject"]>;
   beforeEach: (
     subject: I["isubject"],
     initializer: (c?) => I["given"],
     testResource: ITTestResourceConfiguration,
     initialValues,
-    pm: PM
+    pm: IPM
   ) => Promise<I["istore"]>;
 };
 
-export type IWebTestInterface<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >
-> = ITestInterface<I>;
+export type IWebTestInterface<I extends IT> = ITestInterface<I>;
 
-export type INodeTestInterface<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >
-> = ITestInterface<I>;
+export type INodeTestInterface<I extends IT> = ITestInterface<I>;
 
-export type IPartialInterface<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >
-> = Partial<ITestInterface<I>>;
+export type IPartialInterface<I extends IT> = Partial<ITestInterface<I>>;
 
-export type IPartialNodeInterface<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >
-> = Partial<INodeTestInterface<I>>;
-export type IPartialWebInterface<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >
-> = Partial<IWebTestInterface<I>>;
+export type IPartialNodeInterface<I extends IT> = Partial<
+  INodeTestInterface<I>
+>;
+export type IPartialWebInterface<I extends IT> = Partial<IWebTestInterface<I>>;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-type IT = Ibdd_in<
+export type IT = Ibdd_in<
   unknown,
   unknown,
   unknown,
@@ -121,7 +65,7 @@ type IT = Ibdd_in<
   unknown
 >;
 
-type OT = Ibdd_out<
+export type OT = Ibdd_out<
   Record<string, any>,
   Record<string, any>,
   Record<string, any>,
@@ -129,12 +73,20 @@ type OT = Ibdd_out<
   Record<string, any>
 >;
 
+// export type MT<O extends OT> = Partial<{
+//   suites: { [K in keyof O["suites"]]: unknown };
+//   givens: { [K in keyof O["givens"]]: unknown };
+//   whens: { [K in keyof O["whens"]]: unknown };
+//   thens: { [K in keyof O["thens"]]: unknown };
+//   checks: { [K in keyof O["checks"]]: unknown };
+// }>;
+
 export type ITestSpecification<I extends IT, O extends OT> = (
   Suite: {
     [K in keyof O["suites"]]: (
       name: string,
       givens: IGivens<I>,
-      checks: BaseCheck<I, O>[]
+      checks: BaseCheck<I>[]
     ) => BaseSuite<I, O>;
   },
   Given: {
@@ -157,54 +109,44 @@ export type ITestSpecification<I extends IT, O extends OT> = (
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export type ITestImplementation<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
-  O extends Ibdd_out<
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
-  >
-> = {
-  suites: {
-    [K in keyof O["suites"]]: string;
-  };
-  givens: {
-    [K in keyof O["givens"]]: (...Ig: O["givens"][K]) => I["given"];
-  };
-  whens: {
-    [K in keyof O["whens"]]: (
-      ...Iw: O["whens"][K]
-    ) => (zel: I["iselection"], utils: PM) => Promise<I["when"]>;
-  };
-  thens: {
-    [K in keyof O["thens"]]: (
-      ...It: O["thens"][K]
-    ) => (ssel: I["iselection"], utils: PM) => I["then"];
-  };
-  checks: {
-    [K in keyof O["checks"]]: (...Ic: O["checks"][K]) => I["given"];
-  };
-};
+  I extends IT,
+  O extends OT,
+  modifier = {}
+> = Modify<
+  {
+    suites: {
+      [K in keyof O["suites"]]: string;
+    };
+    givens: {
+      [K in keyof O["givens"]]: (...Ig: O["givens"][K]) => I["given"];
+    };
+    whens: {
+      [K in keyof O["whens"]]: (
+        ...Iw: O["whens"][K]
+      ) => (zel: I["iselection"], utils: PM) => Promise<I["when"]>;
+    };
+    thens: {
+      [K in keyof O["thens"]]: (
+        ...It: O["thens"][K]
+      ) => (ssel: I["iselection"], utils: PM) => I["then"];
+    };
+    checks: {
+      [K in keyof O["checks"]]: (...Ic: O["checks"][K]) => I["given"];
+    };
+  },
+  modifier
+>;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export type Modify<T, R> = Omit<T, keyof R> & R;
 
 export type Ibdd_out<
-  ISuites extends Record<string, any>,
-  IGivens extends Record<string, any>,
-  IWhens extends Record<string, any>,
-  IThens extends Record<string, any>,
-  IChecks extends Record<string, any>
+  ISuites extends Record<string, any> = Record<string, any>,
+  IGivens extends Record<string, any> = Record<string, any>,
+  IWhens extends Record<string, any> = Record<string, any>,
+  IThens extends Record<string, any> = Record<string, any>,
+  IChecks extends Record<string, any> = Record<string, any>
 > = {
   suites: ISuites;
   givens: IGivens;
@@ -234,11 +176,11 @@ export type Ibdd_in<
 ///////////////////////////////////////////////
 
 export type IPluginFactory = (
-  register: (entrypoint, sources) => any,
-  entrypoints
+  register: (entrypoint: string, sources: string[]) => any,
+  entrypoints: string[]
 ) => Plugin;
 
-export type IRunTime = `node` | `web` | "web_worker" | "pure";
+export type IRunTime = `node` | `web` | "pure";
 
 export type ITestTypes = [string, IRunTime, { ports: number }, ITestTypes[]];
 
@@ -250,11 +192,9 @@ export type IBaseConfig = {
   minify: boolean;
   ports: string[];
   tests: ITestTypes[];
-
   nodePlugins: IPluginFactory[];
   webPlugins: IPluginFactory[];
   importPlugins: IPluginFactory[];
-
   featureIngestor: (s: string) => Promise<string>;
 };
 

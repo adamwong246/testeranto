@@ -1,34 +1,15 @@
 import Testeranto from "../../../Node.js";
-import { Ibdd_in, Ibdd_out } from "../../../Types.js";
+import { ITestImplementation, ITestSpecification, OT } from "../../../Types.js";
 
-import { IImpl, ISpec, IInput } from "./index.js";
+import { IInput, I } from "./index.js";
 import { testInterface } from "./interface.js";
 
-export default <
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
-  O extends Ibdd_out<
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
-  >,
-  IProps,
-  IState
->(
-  testImplementations: IImpl<I, O>,
-  testSpecifications: ISpec<I, O>,
+export default <O extends OT, IProps, IState, M = {}>(
+  testImplementations: ITestImplementation<I, O, M>,
+  testSpecifications: ITestSpecification<I, O>,
   testInput: IInput<IProps, IState>
 ) =>
-  Testeranto<I, O>(
+  Testeranto<I, O, M>(
     testInput,
     testSpecifications,
     testImplementations,

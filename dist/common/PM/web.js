@@ -3,8 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PM_Web = void 0;
 class PM_Web {
     constructor(t) {
-        // super();
-        // this.server = {};
         this.testResourceConfiguration = t;
     }
     start() {
@@ -83,42 +81,6 @@ class PM_Web {
         return (fPath, value) => {
             callback(new Promise((res, rej) => {
                 tLog("testArtiFactory =>", fPath);
-                // const cleanPath = path.resolve(fPath);
-                // fPaths.push(cleanPath.replace(process.cwd(), ``));
-                // const targetDir = cleanPath.split("/").slice(0, -1).join("/");
-                // fs.mkdir(targetDir, { recursive: true }, async (error) => {
-                //   if (error) {
-                //     console.error(`❗️testArtiFactory failed`, targetDir, error);
-                //   }
-                //   fs.writeFileSync(
-                //     path.resolve(
-                //       targetDir.split("/").slice(0, -1).join("/"),
-                //       "manifest"
-                //     ),
-                //     fPaths.join(`\n`),
-                //     {
-                //       encoding: "utf-8",
-                //     }
-                //   );
-                //   if (Buffer.isBuffer(value)) {
-                //     fs.writeFileSync(fPath, value, "binary");
-                //     res();
-                //   } else if (`string` === typeof value) {
-                //     fs.writeFileSync(fPath, value.toString(), {
-                //       encoding: "utf-8",
-                //     });
-                //     res();
-                //   } else {
-                //     /* @ts-ignore:next-line */
-                //     const pipeStream: PassThrough = value;
-                //     const myFile = fs.createWriteStream(fPath);
-                //     pipeStream.pipe(myFile);
-                //     pipeStream.on("close", () => {
-                //       myFile.close();
-                //       res();
-                //     });
-                //   }
-                // });
             }));
         };
     }

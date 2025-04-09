@@ -6,12 +6,9 @@ import { CdpPage, Page } from "puppeteer-core/lib/esm/puppeteer";
 import { ITLog, ITTestResourceConfiguration } from "../lib";
 
 export class PM_Web {
-  // server: PuppetMasterServer;
   testResourceConfiguration: ITTestResourceConfiguration;
 
   constructor(t: ITTestResourceConfiguration) {
-    // super();
-    // this.server = {};
     this.testResourceConfiguration = t;
   }
 
@@ -138,114 +135,8 @@ export class PM_Web {
       callback(
         new Promise<void>((res, rej) => {
           tLog("testArtiFactory =>", fPath);
-
-          // const cleanPath = path.resolve(fPath);
-          // fPaths.push(cleanPath.replace(process.cwd(), ``));
-
-          // const targetDir = cleanPath.split("/").slice(0, -1).join("/");
-
-          // fs.mkdir(targetDir, { recursive: true }, async (error) => {
-          //   if (error) {
-          //     console.error(`❗️testArtiFactory failed`, targetDir, error);
-          //   }
-
-          //   fs.writeFileSync(
-          //     path.resolve(
-          //       targetDir.split("/").slice(0, -1).join("/"),
-          //       "manifest"
-          //     ),
-          //     fPaths.join(`\n`),
-          //     {
-          //       encoding: "utf-8",
-          //     }
-          //   );
-
-          //   if (Buffer.isBuffer(value)) {
-          //     fs.writeFileSync(fPath, value, "binary");
-          //     res();
-          //   } else if (`string` === typeof value) {
-          //     fs.writeFileSync(fPath, value.toString(), {
-          //       encoding: "utf-8",
-          //     });
-          //     res();
-          //   } else {
-          //     /* @ts-ignore:next-line */
-          //     const pipeStream: PassThrough = value;
-          //     const myFile = fs.createWriteStream(fPath);
-          //     pipeStream.pipe(myFile);
-          //     pipeStream.on("close", () => {
-          //       myFile.close();
-          //       res();
-          //     });
-          //   }
-          // });
         })
       );
     };
   }
-
-  // startPuppeteer(options, destFolder: string): Promise<any> {
-  //   const name = this.testResourceConfiguration.name;
-
-  //   return fetch(`http://localhost:3234/json/version`)
-  //     .then((v) => {
-  //       return v.json();
-  //     })
-  //     .then((json) => {
-  //       console.log(json);
-
-  //       return puppeteer
-  //         .connect({
-  //           // "ws://localhost:3234/devtools/browser/01cc60a5-dad6-4b65-a848-09d77764a3fa"
-  //           // browserWSEndpoint: json.webSocketDebuggerUrl,
-  //           browserURL: "http://localhost:3234/json/version",
-  //         })
-  //         .then(async (b) => {
-  //           this.browser = b;
-
-  //           // const t = this.browser.targets()[2];
-  //           // const s = this.browser.defaultBrowserContext().
-  //           console.log(this.browser);
-  //           console.log(this.browser.browserContexts());
-  //           // const handler2 = {
-  //           //   get(target, prop, receiver) {
-  //           //     if (prop === "screenshot") {
-  //           //       return async (x) => {
-  //           //         return await window["custom-screenshot"](
-  //           //           {
-  //           //             ...x,
-  //           //             // path: destFolder + "/" + x.path,
-  //           //             path: x.path,
-  //           //           },
-  //           //           name
-  //           //         );
-  //           //       };
-  //           //     } else if (prop === "mainFrame") {
-  //           //       return () => target[prop](...arguments);
-  //           //     } else {
-  //           //       return Reflect.get(...arguments);
-  //           //     }
-  //           //   },
-  //           // };
-  //           // const handler1 = {
-  //           //   get(target, prop, receiver) {
-  //           //     if (prop === "pages") {
-  //           //       return async () => {
-  //           //         return target.pages().then((pages) => {
-  //           //           return pages.map((p) => {
-  //           //             return new Proxy(p, handler2);
-  //           //           });
-  //           //         });
-  //           //       };
-  //           //     }
-
-  //           //     return Reflect.get(...arguments);
-  //           //   },
-  //           // };
-
-  //           // const proxy3 = new Proxy(this.browser, handler1);
-  //           // this.browser = proxy3;
-  //         });
-  //     });
-  // }
 }

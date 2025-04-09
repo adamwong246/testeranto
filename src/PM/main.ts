@@ -855,10 +855,10 @@ ${addableFiles
 
     const p = destFolder + "/pipe";
     server.listen(p, () => {
-      child.stderr.on("data", (data) => {
+      child.stderr?.on("data", (data) => {
         oStream.write(`stderr data ${data}`);
       });
-      child.stdout.on("data", (data) => {
+      child.stdout?.on("data", (data) => {
         oStream.write(`stdout data ${data}`);
       });
       child.on("close", (code) => {

@@ -1,5 +1,5 @@
 import { PM_Pure } from "../PM/pure.js";
-import { PM } from "../PM/server.js";
+
 import { PM_Node } from "../PM/node.js";
 import { PM_Web } from "../PM/web.js";
 import {
@@ -10,9 +10,12 @@ import {
   IBuiltConfig,
   IRunTime,
   ITestTypes,
+  IT,
+  OT,
 } from "../Types.js";
 
 import { IGivens, BaseCheck, BaseSuite } from "./abstractBase.js";
+import { IPM } from "./types.js";
 
 export const BaseTestInterface: ITestInterface<
   Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>
@@ -23,7 +26,7 @@ export const BaseTestInterface: ITestInterface<
     initialValues: any,
     x: any,
     testResource: any,
-    pm: PM
+    pm: IPM
   ) {
     return subject as any;
   },
@@ -55,7 +58,7 @@ export const BaseTestInterface: ITestInterface<
       thenCb(store);
     } catch (e) {}
   },
-  andWhen: (a) => a,
+  andWhen: async (a) => a,
   assertThis: () => null,
 };
 
@@ -105,37 +108,17 @@ type ITest = {
   givens: IGivens<
     Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>
   >;
-  checks: BaseCheck<
-    Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>,
-    Ibdd_out<
-      Record<string, any>,
-      Record<string, any>,
-      Record<string, any>,
-      Record<string, any>,
-      Record<string, any>
-    >
-  >[];
+  checks: BaseCheck<IT>[];
   testResourceConfiguration: ITTestResourceConfiguration;
 };
 
-export type ITestJob<T = PM> = {
+export type ITestJob = {
   toObj(): object;
   test: ITest;
   runner: (
     x: ITTestResourceConfiguration,
     t: ITLog
-  ) => Promise<
-    BaseSuite<
-      Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>,
-      Ibdd_out<
-        Record<string, any>,
-        Record<string, any>,
-        Record<string, any>,
-        Record<string, any>,
-        Record<string, any>
-      >
-    >
-  >;
+  ) => Promise<BaseSuite<IT, OT>>;
   testResourceRequirement: ITTestResourceRequirement;
   receiveTestResourceConfig: (pm: PM_Node | PM_Web | PM_Pure) => IFinalResults;
 };
@@ -148,7 +131,6 @@ export const defaultTestResourceRequirement: ITTestResourceRequest = {
 
 export type ITestArtifactory = (key: string, value: unknown) => unknown;
 
-// Export the types that were missing
 export type { IBaseConfig, IBuiltConfig, IRunTime, ITestTypes };
 
 export type IRunnables = {
@@ -164,8 +146,3 @@ export type IFinalResults = {
   artifacts: Promise<unknown>[];
   logPromise: Promise<unknown>;
 };
-
-// export type IPluginFactory = (
-//   register: (entrypoint, sources) => any,
-//   entrypoints
-// ) => Plugin;
