@@ -24529,7 +24529,10 @@
 
   // src/Project.tsx
   var BigBoard = () => {
-    const projects = JSON.parse(document.getElementById("bigConfig").innerHTML);
+    const bigConfigElement = document.getElementById("bigConfig");
+    if (!bigConfigElement)
+      throw new Error("bigConfig element not found");
+    const projects = JSON.parse(bigConfigElement.innerHTML);
     const [summary, setSummary] = (0, import_react3.useState)();
     (0, import_react3.useEffect)(() => {
       (async () => {

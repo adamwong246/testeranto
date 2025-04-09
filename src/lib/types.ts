@@ -1,4 +1,4 @@
-import { PM } from "../PM";
+import { PM } from "../PM/server";
 import { Ibdd_in, Ibdd_out } from "../Types";
 
 import {

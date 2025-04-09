@@ -8,13 +8,7 @@ import ansiC from "ansi-colors";
 import crypto from "node:crypto";
 import { ESLint } from "eslint";
 import tsc from "tsc-prog";
-import {
-  IBuiltConfig,
-  IFinalResults,
-  IRunnables,
-  IRunTime,
-  ITestTypes,
-} from "../lib/index.js";
+import { IFinalResults, IRunnables } from "../lib/index.js";
 import {
   getRunnables,
   ISummary,
@@ -24,7 +18,8 @@ import {
 } from "../utils";
 
 import { PM_Base } from "./base.js";
-import { fork, spawn } from "node:child_process";
+import { spawn } from "node:child_process";
+import { IBuiltConfig, IRunTime, ITestTypes } from "../Types.js";
 
 type IOutputs = Record<
   string,
@@ -100,32 +95,14 @@ function isValidUrl(string) {
   }
 }
 
-// async function pollForFile(filePath, intervalMs = 1000, timeoutMs = 10000) {
-//   const startTime = Date.now();
-
-//   try {
-//     await fs.accessSync(filePath);
-//     console.log("exists ", filePath);
-//     return true; // File exists
-//   } catch (error) {
-//     console.log("polling for ", filePath);
-//     if (error.code !== "ENOENT") {
-//       throw error; // Unexpected error
-//     }
-//     // File does not exist yet, wait and try again
-//     await new Promise((resolve) => setTimeout(resolve, intervalMs));
-//   }
-//   // return false; // Timeout, file does not exist
-// }
-
 // Wait for file to exist, checks every 2 seconds by default
 function pollForFile(path, timeout = 2000) {
   const intervalObj = setInterval(function () {
     const file = path;
     const fileExists = fs.existsSync(file);
 
-    console.log("Checking for: ", file);
-    console.log("Exists: ", fileExists);
+    // console.log("Checking for: ", file);
+    // console.log("Exists: ", fileExists);
 
     if (fileExists) {
       clearInterval(intervalObj);
@@ -164,7 +141,41 @@ export class PM_Main extends PM_Base {
     });
   }
 
+  mapping(): [string, (...a) => any][] {
+    return [
+      ["$", this.$],
+      ["click", this.click],
+      ["closePage", this.closePage],
+      ["createWriteStream", this.createWriteStream],
+      ["customclose", this.customclose],
+      ["customScreenShot", this.customScreenShot],
+      ["end", this.end],
+      ["existsSync", this.existsSync],
+      ["focusOn", this.focusOn],
+      ["getAttribute", this.getAttribute],
+      ["getValue", this.getValue],
+      ["goto", this.goto],
+      ["isDisabled", this.isDisabled],
+      ["mkdirSync", this.mkdirSync],
+      ["newPage", this.newPage],
+      ["page", this.page],
+      ["pages", this.pages],
+      ["screencast", this.screencast],
+      ["screencastStop", this.screencastStop],
+      ["typeInto", this.typeInto],
+      ["waitForSelector", this.waitForSelector],
+      ["write", this.write],
+      ["writeFileSync", this.writeFileSync],
+    ];
+  }
+
   async start() {
+    // set up the "pure" listeners
+    this.mapping().forEach(async ([command, func]) => {
+      // page.exposeFunction(command, func);
+      globalThis[command] = func;
+    });
+
     if (!fs.existsSync(`testeranto/reports/${this.name}`)) {
       fs.mkdirSync(`testeranto/reports/${this.name}`);
     }
@@ -358,7 +369,7 @@ export class PM_Main extends PM_Base {
     addableFiles,
     platform,
   }: {
-    platform: "web" | "node";
+    platform: IRunTime;
     entrypoint: string;
     addableFiles: string[];
   }) => {
@@ -376,6 +387,7 @@ export class PM_Main extends PM_Base {
         noEmit: true,
       },
       include: addableFiles, //["src/**/*"],
+      // exclude: ["node_modules", "../testeranto"],
       // exclude: ["**/*.test.ts", "**/*.spec.ts"],
     });
     const tscPath = tscPather(entrypoint, platform, this.name);
@@ -412,7 +424,7 @@ export class PM_Main extends PM_Base {
 
   eslintCheck = async (
     entrypoint: string,
-    platform: "web" | "node",
+    platform: IRunTime,
     addableFiles: string[]
   ) => {
     console.log(ansiC.green(ansiC.inverse(`eslint < ${entrypoint}`)));
@@ -438,7 +450,7 @@ export class PM_Main extends PM_Base {
   makePrompt = async (
     entryPoint: string,
     addableFiles: string[],
-    platform: "web" | "node"
+    platform: IRunTime
   ) => {
     this.bigBoard[entryPoint].prompt = "?";
     const promptPath = promptPather(entryPoint, platform, this.name);
@@ -669,9 +681,7 @@ ${addableFiles
     //   })
     // );
 
-    this.server[builtfile] = await import(
-      `${builtfile}?cacheBust=${Date.now()}`
-    ).then((module) => {
+    await import(`${builtfile}?cacheBust=${Date.now()}`).then((module) => {
       return module.default.then((defaultModule) => {
         defaultModule
           .receiveTestResourceConfig(argz)
@@ -816,58 +826,23 @@ ${addableFiles
         }
 
         messages.forEach(async (payload) => {
-          if (payload[0] === "writeFileSync") {
-            const r = await this.writeFileSync(
-              payload[1],
-              payload[2],
-              payload[3]
-            );
+          // set up the "node" listeners
+          this.mapping().forEach(async ([command, func]) => {
+            if (payload[0] === command) {
+              const x = payload.slice(1, -1);
+              const r = await this[command](...x);
 
-            if (!haltReturns) {
-              child.send(
-                JSON.stringify({
-                  uid: r,
-                  key: payload[4],
-                })
-              );
+              if (!haltReturns) {
+                child.send(
+                  JSON.stringify({
+                    payload: r,
+                    key: payload[payload.length - 1],
+                  })
+                );
+              }
             }
-          }
-
-          if (payload[0] === "createWriteStream") {
-            const r = await this.createWriteStream(payload[1], payload[2]);
-
-            if (!haltReturns) {
-              child.send(
-                JSON.stringify({
-                  uid: r,
-                  key: payload[3],
-                })
-              );
-            }
-          }
-
-          if (payload[0] === "write") {
-            const r = await this.write(JSON.parse(payload[1]), payload[2]);
-
-            if (!haltReturns) {
-              child.send(
-                JSON.stringify({
-                  written: r,
-                  key: payload[3],
-                })
-              );
-            }
-          }
+          });
         });
-
-        // let payload;
-        // try {
-        //   payload = JSON.parse(data.toString());
-        // } catch (e) {
-        //   // buffer = buffer + data
-        //   buffer.write(data.toString());
-        //   return;
-        // }
       });
     });
 
@@ -903,17 +878,11 @@ ${addableFiles
 
         // haltReturns = true;
       });
-      child.on("exit", (code) => {
-        // console.log(`exit`);
-        // oStream.close();
-        // server.close();
-        // this.bddTestIsNowDone(src, code || -1);
-      });
+      child.on("exit", (code) => {});
     });
 
     child.send({ path: p });
 
-    // console.log("portsToUse", portsToUse);
     for (let i = 0; i <= portsToUse.length; i++) {
       if (portsToUse[i]) {
         this.ports[portsToUse[i]] = "true"; //port is open again
@@ -1101,9 +1070,7 @@ ${addableFiles
 
     const builtfile = dest + ".mjs";
 
-    this.server[builtfile] = await import(
-      `${builtfile}?cacheBust=${Date.now()}`
-    ).then((module) => {
+    await import(`${builtfile}?cacheBust=${Date.now()}`).then((module) => {
       return module.default.then((defaultModule) => {
         // console.log("defaultModule", defaultModule);
         const s = new defaultModule();
@@ -1141,16 +1108,6 @@ ${addableFiles
       fs.mkdirSync(reportDest, { recursive: true });
     }
 
-    // sidecars.map((sidecar) => {
-    //   if (sidecar[1] === "node") {
-    //     return this.launchNodeSideCar(
-    //       sidecar[0],
-    //       destinationOfRuntime(sidecar[0], "node", this.configs),
-    //       sidecar
-    //     );
-    //   }
-    // });
-
     const destFolder = dest.replace(".mjs", "");
 
     const webArgz = JSON.stringify({
@@ -1173,188 +1130,14 @@ ${addableFiles
       }
     })`;
 
-    const fileStreams2: fs.WriteStream[] = [];
-    const doneFileStream2: Promise<any>[] = [];
-
     const oStream = fs.createWriteStream(`${reportDest}/console_log.txt`);
 
     this.browser
       .newPage()
       .then((page) => {
-        page.exposeFunction(
-          "screencast",
-          async (ssOpts: ScreenshotOptions, testName: string) => {
-            const p = ssOpts.path as string;
-            const dir = path.dirname(p);
-            fs.mkdirSync(dir, {
-              recursive: true,
-            });
-            if (!files[testName]) {
-              files[testName] = new Set();
-            }
-            files[testName].add(ssOpts.path as string);
-
-            const sPromise = page.screenshot({
-              ...ssOpts,
-              path: p,
-            });
-
-            if (!screenshots[testName]) {
-              screenshots[testName] = [];
-            }
-            screenshots[testName].push(sPromise);
-            // sPromise.then(())
-            await sPromise;
-            return sPromise;
-            // page.evaluate(`window["screenshot done"]`);
-          }
-        );
-
-        page.exposeFunction(
-          "customScreenShot",
-          async (ssOpts: ScreenshotOptions, testName: string) => {
-            const p = ssOpts.path as string;
-            const dir = path.dirname(p);
-            fs.mkdirSync(dir, {
-              recursive: true,
-            });
-            if (!files[testName]) {
-              files[testName] = new Set();
-            }
-            files[testName].add(ssOpts.path as string);
-
-            const sPromise = page.screenshot({
-              ...ssOpts,
-              path: p,
-            });
-
-            if (!screenshots[testName]) {
-              screenshots[testName] = [];
-            }
-            screenshots[testName].push(sPromise);
-            // sPromise.then(())
-            await sPromise;
-            return sPromise;
-            // page.evaluate(`window["screenshot done"]`);
-          }
-        );
-
-        page.exposeFunction(
-          "writeFileSync",
-          (fp: string, contents: string, testName: string) => {
-            return globalThis["writeFileSync"](fp, contents, testName);
-            // const dir = path.dirname(fp);
-
-            // fs.mkdirSync(dir, {
-            //   recursive: true,
-            // });
-
-            // const p = new Promise<string>(async (res, rej) => {
-            //   fs.writeFileSync(fp, contents);
-            //   res(fp);
-            // });
-            // doneFileStream2.push(p);
-
-            // if (!files[testName]) {
-            //   files[testName] = new Set();
-            // }
-            // files[testName].add(fp);
-            // return p;
-          }
-        );
-
-        page.exposeFunction("existsSync", (fp: string, contents: string) => {
-          return fs.existsSync(fp);
-        });
-
-        page.exposeFunction("mkdirSync", (fp: string) => {
-          if (!fs.existsSync(fp)) {
-            return fs.mkdirSync(fp, {
-              recursive: true,
-            });
-          }
-          return false;
-        });
-
-        page.exposeFunction(
-          "createWriteStream",
-          (fp: string, testName: string) => {
-            const f = fs.createWriteStream(fp);
-
-            if (!files[testName]) {
-              files[testName] = new Set();
-            }
-            files[testName].add(fp);
-
-            const p = new Promise<string>((res, rej) => {
-              res(fp);
-            });
-            doneFileStream2.push(p);
-            f.on("close", async () => {
-              await p;
-            });
-            fileStreams2.push(f);
-            return {
-              ...JSON.parse(JSON.stringify(f)),
-              uid: fileStreams2.length - 1,
-            };
-          }
-        );
-
-        page.exposeFunction("write", async (uid: number, contents: string) => {
-          return fileStreams2[uid].write(contents);
-        });
-
-        page.exposeFunction("end", async (uid: number) => {
-          return fileStreams2[uid].end();
-        });
-
-        page.exposeFunction("page", () => {
-          return (page.mainFrame() as unknown as { _id: string })._id;
-        });
-
-        page.exposeFunction("click", (sel) => {
-          return page.click(sel);
-        });
-
-        page.exposeFunction("focusOn", (sel) => {
-          return page.focus(sel);
-        });
-
-        page.exposeFunction(
-          "typeInto",
-          async (value) => await page.keyboard.type(value)
-        );
-
-        page.exposeFunction("getValue", (selector) =>
-          page.$eval(selector, (input) => input.getAttribute("value"))
-        );
-
-        page.exposeFunction(
-          "getAttribute",
-          async (selector: string, attribute: string) => {
-            const attributeValue = await page.$eval(selector, (input) => {
-              return input.getAttribute(attribute);
-            });
-            return attributeValue;
-          }
-        );
-
-        page.exposeFunction("isDisabled", async (selector: string) => {
-          const attributeValue = await page.$eval(
-            selector,
-            (input: HTMLButtonElement) => {
-              return input.disabled;
-            }
-          );
-          return attributeValue;
-        });
-
-        page.exposeFunction("$", async (selector: string) => {
-          const x = page.$(selector);
-          const y = await x;
-
-          return y;
+        // set up the "node" listeners
+        this.mapping().forEach(async ([command, func]) => {
+          page.exposeFunction(command, func);
         });
 
         return page;

@@ -1,4 +1,4 @@
-import { PM } from "../PM/index.js";
+import { PM } from "../PM/server.js";
 import { Ibdd_in, Ibdd_out } from "../Types.js";
 
 import { ITTestResourceConfiguration, ITestArtifactory, ITLog } from ".";
@@ -93,8 +93,8 @@ export abstract class BaseSuite<
     return new Promise((res) => res(s as unknown as I["isubject"]));
   }
 
-  assertThat(t: I["then"]): unknown {
-    return t;
+  assertThat(t: Awaited<I["then"]> | undefined): boolean {
+    return !!t;
   }
 
   afterAll(store: I["istore"], artifactory: ITestArtifactory, pm: PM) {

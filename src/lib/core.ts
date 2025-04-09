@@ -6,7 +6,7 @@ import {
   Ibdd_in,
   Ibdd_out,
 } from "../Types.js";
-import { PM } from "../PM/index";
+import { PM } from "../PM/server";
 
 import {
   DefaultTestInterface,
@@ -48,7 +48,7 @@ export default abstract class Testeranto<
     testImplementation: ITestImplementation<I, O>,
     testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
     testInterface: Partial<ITestInterface<I>>,
-    uberCatcher: (cb) => void
+    uberCatcher: (cb: () => void) => void
   ) {
     const fullTestInterface = DefaultTestInterface(testInterface);
 
@@ -70,8 +70,8 @@ export default abstract class Testeranto<
           );
         }
 
-        assertThat(t) {
-          fullTestInterface.assertThis(t);
+        assertThat(t): boolean {
+          return fullTestInterface.assertThis(t);
         }
 
         async setup(

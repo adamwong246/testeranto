@@ -6,144 +6,103 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PM_Base = void 0;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
-const index_js_1 = require("./index.js");
 const fileStreams3 = [];
 const fPaths = [];
 const files = {};
 const recorders = {};
 const screenshots = {};
-class PM_Base extends index_js_1.PM {
+class PM_Base {
     constructor(configs) {
-        super();
-        this.server = {};
         this.configs = configs;
-        globalThis["waitForSelector"] = async (pageKey, sel) => {
-            const page = (await this.browser.pages()).find(
-            /* @ts-ignore:next-line */
-            (p) => p.mainFrame()._id === pageKey);
-            await (page === null || page === void 0 ? void 0 : page.waitForSelector(sel));
-        };
-        globalThis["screencastStop"] = async (path) => {
-            return recorders[path].stop();
-        };
-        globalThis["closePage"] = async (pageKey) => {
-            const page = (await this.browser.pages()).find(
-            /* @ts-ignore:next-line */
-            (p) => p.mainFrame()._id === pageKey);
-            /* @ts-ignore:next-line */
-            return page.close();
-        };
-        globalThis["goto"] = async (pageKey, url) => {
-            const page = (await this.browser.pages()).find(
-            /* @ts-ignore:next-line */
-            (p) => p.mainFrame()._id === pageKey);
-            await (page === null || page === void 0 ? void 0 : page.goto(url));
-            return;
-        };
-        globalThis["newPage"] = () => {
-            return this.browser.newPage();
-        };
-        globalThis["pages"] = () => {
-            return this.browser.pages();
-        };
-        globalThis["mkdirSync"] = (fp) => {
-            if (!fs_1.default.existsSync(fp)) {
-                return fs_1.default.mkdirSync(fp, {
-                    recursive: true,
-                });
-            }
-            return false;
-        };
-        globalThis["writeFileSync"] = (filepath, contents, testName) => {
-            this.writeFileSync(filepath, contents, testName);
-        };
-        globalThis["createWriteStream"] = (filepath, testName) => {
-            return this.createWriteStream(filepath, testName);
-            // const f = fs.createWriteStream(filepath);
-            // fileStreams3.push(f);
-            // // files.add(filepath);
-            // if (!files[testName]) {
-            //   files[testName] = new Set();
-            // }
-            // files[testName].add(filepath);
-            // return {
-            //   ...JSON.parse(JSON.stringify(f)),
-            //   uid: fileStreams3.length - 1,
-            // };
-        };
-        globalThis["write"] = (uid, contents) => {
-            // fileStreams3[uid].write(contents);
-            return this.write(uid, contents);
-        };
-        globalThis["end"] = (uid) => {
-            fileStreams3[uid].end();
-        };
-        globalThis["customScreenShot"] = async (opts, pageKey, testName) => {
-            const page = (await this.browser.pages()).find(
-            /* @ts-ignore:next-line */
-            (p) => p.mainFrame()._id === pageKey);
-            const p = opts.path;
-            const dir = path_1.default.dirname(p);
-            fs_1.default.mkdirSync(dir, {
-                recursive: true,
-            });
-            if (!files[opts.path]) {
-                files[opts.path] = new Set();
-            }
-            files[opts.path].add(opts.path);
-            /* @ts-ignore:next-line */
-            const sPromise = page.screenshot(Object.assign(Object.assign({}, opts), { path: p }));
-            if (!screenshots[opts.path]) {
-                screenshots[opts.path] = [];
-            }
-            screenshots[opts.path].push(sPromise);
-            await sPromise;
-            return sPromise;
-        };
-        globalThis["screencast"] = async (opts, pageKey) => {
-            const page = (await this.browser.pages()).find(
-            /* @ts-ignore:next-line */
-            (p) => p.mainFrame()._id === pageKey);
-            const p = opts.path;
-            const dir = path_1.default.dirname(p);
-            fs_1.default.mkdirSync(dir, {
-                recursive: true,
-            });
-            const recorder = await (page === null || page === void 0 ? void 0 : page.screencast(Object.assign(Object.assign({}, opts), { 
-                /* @ts-ignore:next-line */
-                path: p })));
-            /* @ts-ignore:next-line */
-            recorders[opts.path] = recorder;
-            return opts.path;
-        };
     }
     customclose() {
         throw new Error("Method not implemented.");
     }
     waitForSelector(p, s) {
-        throw new Error("Method not implemented.");
+        return new Promise((res) => {
+            this.doInPage(p, async (page) => {
+                const x = page.$(s);
+                const y = await x;
+                res(y !== null);
+                // return page.focus(selector);
+            });
+        });
     }
     closePage(p) {
-        throw new Error("Method not implemented.");
+        // throw new Error("Method not implemented.");
+        return new Promise((res) => {
+            this.doInPage(p, async (page) => {
+                page.close();
+                res({});
+                // return page.focus(selector);
+            });
+        });
     }
     newPage() {
-        throw new Error("Method not implemented.");
+        return this.browser.newPage();
     }
     goto(p, url) {
-        throw new Error("Method not implemented.");
+        return new Promise((res) => {
+            this.doInPage(p, async (page) => {
+                await (page === null || page === void 0 ? void 0 : page.goto(url));
+                res({});
+                // return page.focus(selector);
+            });
+        });
     }
-    $(selector) {
-        throw new Error("Method not implemented.");
+    $(selector, p) {
+        return new Promise((res) => {
+            this.doInPage(p, async (page) => {
+                const x = page.$(selector);
+                const y = await x;
+                res(y !== null);
+            });
+        });
     }
-    screencast(opts) {
-        throw new Error("Method not implemented.");
+    async pages() {
+        return (await this.browser.pages()).map((p) => {
+            return p.mainFrame()._id;
+        });
     }
-    /* @ts-ignore:next-line */
-    customScreenShot(opts, cdpPage) {
-        throw new Error("Method not implemented.");
+    async screencast(ssOpts, testName, page) {
+        const p = ssOpts.path;
+        const dir = path_1.default.dirname(p);
+        fs_1.default.mkdirSync(dir, {
+            recursive: true,
+        });
+        if (!files[testName]) {
+            files[testName] = new Set();
+        }
+        files[testName].add(ssOpts.path);
+        const sPromise = page.screenshot(Object.assign(Object.assign({}, ssOpts), { path: p }));
+        if (!screenshots[testName]) {
+            screenshots[testName] = [];
+        }
+        screenshots[testName].push(sPromise);
+        await sPromise;
+        return sPromise;
     }
-    end(accessObject) {
-        throw new Error("Method not implemented.");
+    async customScreenShot(ssOpts, testName, page) {
+        const p = ssOpts.path;
+        const dir = path_1.default.dirname(p);
+        fs_1.default.mkdirSync(dir, {
+            recursive: true,
+        });
+        if (!files[testName]) {
+            files[testName] = new Set();
+        }
+        files[testName].add(ssOpts.path);
+        const sPromise = page.screenshot(Object.assign(Object.assign({}, ssOpts), { path: p }));
+        if (!screenshots[testName]) {
+            screenshots[testName] = [];
+        }
+        screenshots[testName].push(sPromise);
+        await sPromise;
+        return sPromise;
+    }
+    async end(uid) {
+        await fileStreams3[uid].end();
+        return true;
     }
     existsSync(destFolder) {
         return fs_1.default.existsSync(destFolder);
@@ -156,8 +115,8 @@ class PM_Base extends index_js_1.PM {
         }
         return false;
     }
-    writeFileSync(filepath, contents, testName) {
-        return new Promise((res) => {
+    async writeFileSync(filepath, contents, testName) {
+        return new Promise(async (res) => {
             fs_1.default.mkdirSync(path_1.default.dirname(filepath), {
                 recursive: true,
             });
@@ -165,25 +124,20 @@ class PM_Base extends index_js_1.PM {
                 files[testName] = new Set();
             }
             files[testName].add(filepath);
-            // return ;
-            res(fs_1.default.writeFileSync(filepath, contents));
+            await fs_1.default.writeFileSync(filepath, contents);
+            res(true);
         });
     }
-    createWriteStream(filepath, testName) {
+    async createWriteStream(filepath, testName) {
         return new Promise((res) => {
             const f = fs_1.default.createWriteStream(filepath);
             fileStreams3.push(f);
-            // files.add(filepath);
             if (!files[testName]) {
                 files[testName] = new Set();
             }
             files[testName].add(filepath);
-            res((fileStreams3.length - 1).toString());
+            res(fileStreams3.length - 1);
         });
-        // return {
-        //   ...JSON.parse(JSON.stringify(f)),
-        //   uid: fileStreams3.length - 1,
-        // };
     }
     testArtiFactoryfileWriter(tLog, callback) {
         return (fPath, value) => {
@@ -223,36 +177,54 @@ class PM_Base extends index_js_1.PM {
             }));
         };
     }
-    write(uid, contents) {
+    async write(uid, contents) {
         return new Promise((res) => {
             const x = fileStreams3[uid].write(contents);
             res(x);
         });
-        // return x
     }
     page() {
         throw new Error("Method not implemented.");
     }
-    click(selector) {
-        throw new Error("Method not implemented.");
+    click(selector, page) {
+        return page.click(selector);
     }
-    focusOn(selector) {
-        throw new Error("Method not implemented.");
+    async focusOn(selector, p) {
+        this.doInPage(p, (page) => {
+            return page.focus(selector);
+        });
     }
-    typeInto(value) {
-        throw new Error("Method not implemented.");
+    async typeInto(value, p) {
+        this.doInPage(p, (page) => {
+            return page.keyboard.type(value);
+        });
     }
-    getValue(value) {
-        throw new Error("Method not implemented.");
+    getValue(value, p) {
+        this.doInPage(p, (page) => {
+            return page.keyboard.type(value);
+        });
     }
-    getAttribute(selector, attribute) {
-        throw new Error("Method not implemented.");
+    getAttribute(selector, attribute, p) {
+        this.doInPage(p, (page) => {
+            return page.$eval(selector, (input) => input.getAttribute("value"));
+        });
     }
-    isDisabled(selector) {
-        throw new Error("Method not implemented.");
+    isDisabled(selector, p) {
+        this.doInPage(p, async (page) => {
+            return await page.$eval(selector, (input) => {
+                return input.disabled;
+            });
+        });
     }
     screencastStop(s) {
-        throw new Error("Method not implemented.");
+        return recorders[s].stop();
+    }
+    async doInPage(p, cb) {
+        (await this.browser.pages()).forEach((page) => {
+            if (page.mainFrame()._id === p) {
+                return cb(page);
+            }
+        });
     }
 }
 exports.PM_Base = PM_Base;

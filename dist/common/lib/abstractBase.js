@@ -38,7 +38,7 @@ class BaseSuite {
         return new Promise((res) => res(s));
     }
     assertThat(t) {
-        return t;
+        return !!t;
     }
     afterAll(store, artifactory, pm) {
         return store;

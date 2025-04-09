@@ -17,7 +17,7 @@ class Testeranto extends classBuilder_js_1.ClassBuilder {
                 pm);
             }
             assertThat(t) {
-                fullTestInterface.assertThis(t);
+                return fullTestInterface.assertThis(t);
             }
             async setup(s, artifactory, tr, pm) {
                 return (fullTestInterface.beforeAll ||

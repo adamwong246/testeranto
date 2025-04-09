@@ -4,10 +4,11 @@ import React, { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./style.css"
 
-import { IRunTime, ITestTypes, IBuiltConfig, IConfigV2 } from "./lib";
+
 import { Footer } from "./Footer";
 import { Table } from "react-bootstrap";
-// import { ISummary } from "./utils";
+import { ITestTypes, IRunTime, IBuiltConfig } from "./lib";
+
 
 type ISummary = {
   staticAnalysis: number | "?";
@@ -34,7 +35,9 @@ type ICollations = ICollation[];
 
 const BigBoard = () => {
 
-  const projects = JSON.parse(document.getElementById('bigConfig').innerHTML) as string[];
+  const bigConfigElement = document.getElementById('bigConfig');
+  if (!bigConfigElement) throw new Error('bigConfig element not found');
+  const projects = JSON.parse(bigConfigElement.innerHTML) as string[];
   // const projects = Object.keys(bigConfig.projects);
 
   // const [configs, setConfigs] = useState<IBuiltConfig>();

@@ -21,7 +21,7 @@ exports.default = (config, entryPoints, testName) => {
             inputFilesPluginFactory,
             {
                 name: "rebuild-notify",
-                setup(build) {
+                setup: (build) => {
                     build.onEnd((result) => {
                         console.log(`> pure build ended with ${result.errors.length} errors`);
                         if (result.errors.length > 0) {
@@ -32,7 +32,6 @@ exports.default = (config, entryPoints, testName) => {
                     });
                 },
             },
-            ...((config.purePlugins || []).map((p) => p(register, entryPoints)) ||
-                []),
+            ...((config.nodePlugins || []).map((p) => p(register, entryPoints)) || []),
         ] });
 };

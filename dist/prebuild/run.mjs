@@ -66,9 +66,6 @@ var getRunnables = (tests, projectName, payload = {
         `./testeranto/bundles/pure/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
       );
     }
-    if (cv[3].length) {
-      getRunnables(cv[3], testName, payload);
-    }
     return pt;
   }, payload);
 };
@@ -76,144 +73,105 @@ var getRunnables = (tests, projectName, payload = {
 // src/PM/base.ts
 import fs from "fs";
 import path2 from "path";
-
-// src/PM/index.ts
-var PM = class {
-};
-
-// src/PM/base.ts
 var fileStreams3 = [];
 var fPaths = [];
 var files = {};
 var recorders = {};
 var screenshots = {};
-var PM_Base = class extends PM {
+var PM_Base = class {
   constructor(configs) {
-    super();
-    this.server = {};
     this.configs = configs;
-    globalThis["waitForSelector"] = async (pageKey, sel) => {
-      const page = (await this.browser.pages()).find(
-        /* @ts-ignore:next-line */
-        (p) => p.mainFrame()._id === pageKey
-      );
-      await page?.waitForSelector(sel);
-    };
-    globalThis["screencastStop"] = async (path4) => {
-      return recorders[path4].stop();
-    };
-    globalThis["closePage"] = async (pageKey) => {
-      const page = (await this.browser.pages()).find(
-        /* @ts-ignore:next-line */
-        (p) => p.mainFrame()._id === pageKey
-      );
-      return page.close();
-    };
-    globalThis["goto"] = async (pageKey, url) => {
-      const page = (await this.browser.pages()).find(
-        /* @ts-ignore:next-line */
-        (p) => p.mainFrame()._id === pageKey
-      );
-      await page?.goto(url);
-      return;
-    };
-    globalThis["newPage"] = () => {
-      return this.browser.newPage();
-    };
-    globalThis["pages"] = () => {
-      return this.browser.pages();
-    };
-    globalThis["mkdirSync"] = (fp) => {
-      if (!fs.existsSync(fp)) {
-        return fs.mkdirSync(fp, {
-          recursive: true
-        });
-      }
-      return false;
-    };
-    globalThis["writeFileSync"] = (filepath, contents, testName3) => {
-      this.writeFileSync(filepath, contents, testName3);
-    };
-    globalThis["createWriteStream"] = (filepath, testName3) => {
-      return this.createWriteStream(filepath, testName3);
-    };
-    globalThis["write"] = (uid, contents) => {
-      return this.write(uid, contents);
-    };
-    globalThis["end"] = (uid) => {
-      fileStreams3[uid].end();
-    };
-    globalThis["customScreenShot"] = async (opts, pageKey, testName3) => {
-      const page = (await this.browser.pages()).find(
-        /* @ts-ignore:next-line */
-        (p2) => p2.mainFrame()._id === pageKey
-      );
-      const p = opts.path;
-      const dir = path2.dirname(p);
-      fs.mkdirSync(dir, {
-        recursive: true
-      });
-      if (!files[opts.path]) {
-        files[opts.path] = /* @__PURE__ */ new Set();
-      }
-      files[opts.path].add(opts.path);
-      const sPromise = page.screenshot({
-        ...opts,
-        path: p
-      });
-      if (!screenshots[opts.path]) {
-        screenshots[opts.path] = [];
-      }
-      screenshots[opts.path].push(sPromise);
-      await sPromise;
-      return sPromise;
-    };
-    globalThis["screencast"] = async (opts, pageKey) => {
-      const page = (await this.browser.pages()).find(
-        /* @ts-ignore:next-line */
-        (p2) => p2.mainFrame()._id === pageKey
-      );
-      const p = opts.path;
-      const dir = path2.dirname(p);
-      fs.mkdirSync(dir, {
-        recursive: true
-      });
-      const recorder = await page?.screencast({
-        ...opts,
-        /* @ts-ignore:next-line */
-        path: p
-      });
-      recorders[opts.path] = recorder;
-      return opts.path;
-    };
   }
   customclose() {
     throw new Error("Method not implemented.");
   }
   waitForSelector(p, s) {
-    throw new Error("Method not implemented.");
+    return new Promise((res) => {
+      this.doInPage(p, async (page) => {
+        const x = page.$(s);
+        const y = await x;
+        res(y !== null);
+      });
+    });
   }
   closePage(p) {
-    throw new Error("Method not implemented.");
+    return new Promise((res) => {
+      this.doInPage(p, async (page) => {
+        page.close();
+        res({});
+      });
+    });
   }
   newPage() {
-    throw new Error("Method not implemented.");
+    return this.browser.newPage();
   }
   goto(p, url) {
-    throw new Error("Method not implemented.");
+    return new Promise((res) => {
+      this.doInPage(p, async (page) => {
+        await page?.goto(url);
+        res({});
+      });
+    });
   }
-  $(selector) {
-    throw new Error("Method not implemented.");
+  $(selector, p) {
+    return new Promise((res) => {
+      this.doInPage(p, async (page) => {
+        const x = page.$(selector);
+        const y = await x;
+        res(y !== null);
+      });
+    });
   }
-  screencast(opts) {
-    throw new Error("Method not implemented.");
+  async pages() {
+    return (await this.browser.pages()).map((p) => {
+      return p.mainFrame()._id;
+    });
   }
-  /* @ts-ignore:next-line */
-  customScreenShot(opts, cdpPage) {
-    throw new Error("Method not implemented.");
+  async screencast(ssOpts, testName2, page) {
+    const p = ssOpts.path;
+    const dir = path2.dirname(p);
+    fs.mkdirSync(dir, {
+      recursive: true
+    });
+    if (!files[testName2]) {
+      files[testName2] = /* @__PURE__ */ new Set();
+    }
+    files[testName2].add(ssOpts.path);
+    const sPromise = page.screenshot({
+      ...ssOpts,
+      path: p
+    });
+    if (!screenshots[testName2]) {
+      screenshots[testName2] = [];
+    }
+    screenshots[testName2].push(sPromise);
+    await sPromise;
+    return sPromise;
   }
-  end(accessObject) {
-    throw new Error("Method not implemented.");
+  async customScreenShot(ssOpts, testName2, page) {
+    const p = ssOpts.path;
+    const dir = path2.dirname(p);
+    fs.mkdirSync(dir, {
+      recursive: true
+    });
+    if (!files[testName2]) {
+      files[testName2] = /* @__PURE__ */ new Set();
+    }
+    files[testName2].add(ssOpts.path);
+    const sPromise = page.screenshot({
+      ...ssOpts,
+      path: p
+    });
+    if (!screenshots[testName2]) {
+      screenshots[testName2] = [];
+    }
+    screenshots[testName2].push(sPromise);
+    await sPromise;
+    return sPromise;
+  }
+  async end(uid) {
+    await fileStreams3[uid].end();
+    return true;
   }
   existsSync(destFolder) {
     return fs.existsSync(destFolder);
@@ -226,27 +184,28 @@ var PM_Base = class extends PM {
     }
     return false;
   }
-  writeFileSync(filepath, contents, testName3) {
-    return new Promise((res) => {
+  async writeFileSync(filepath, contents, testName2) {
+    return new Promise(async (res) => {
       fs.mkdirSync(path2.dirname(filepath), {
         recursive: true
       });
-      if (!files[testName3]) {
-        files[testName3] = /* @__PURE__ */ new Set();
+      if (!files[testName2]) {
+        files[testName2] = /* @__PURE__ */ new Set();
       }
-      files[testName3].add(filepath);
-      res(fs.writeFileSync(filepath, contents));
+      files[testName2].add(filepath);
+      await fs.writeFileSync(filepath, contents);
+      res(true);
     });
   }
-  createWriteStream(filepath, testName3) {
+  async createWriteStream(filepath, testName2) {
     return new Promise((res) => {
       const f = fs.createWriteStream(filepath);
       fileStreams3.push(f);
-      if (!files[testName3]) {
-        files[testName3] = /* @__PURE__ */ new Set();
+      if (!files[testName2]) {
+        files[testName2] = /* @__PURE__ */ new Set();
       }
-      files[testName3].add(filepath);
-      res((fileStreams3.length - 1).toString());
+      files[testName2].add(filepath);
+      res(fileStreams3.length - 1);
     });
   }
   testArtiFactoryfileWriter(tLog, callback) {
@@ -294,7 +253,7 @@ var PM_Base = class extends PM {
       );
     };
   }
-  write(uid, contents) {
+  async write(uid, contents) {
     return new Promise((res) => {
       const x = fileStreams3[uid].write(contents);
       res(x);
@@ -303,26 +262,45 @@ var PM_Base = class extends PM {
   page() {
     throw new Error("Method not implemented.");
   }
-  click(selector) {
-    throw new Error("Method not implemented.");
+  click(selector, page) {
+    return page.click(selector);
   }
-  focusOn(selector) {
-    throw new Error("Method not implemented.");
+  async focusOn(selector, p) {
+    this.doInPage(p, (page) => {
+      return page.focus(selector);
+    });
   }
-  typeInto(value) {
-    throw new Error("Method not implemented.");
+  async typeInto(value, p) {
+    this.doInPage(p, (page) => {
+      return page.keyboard.type(value);
+    });
   }
-  getValue(value) {
-    throw new Error("Method not implemented.");
+  getValue(value, p) {
+    this.doInPage(p, (page) => {
+      return page.keyboard.type(value);
+    });
   }
-  getAttribute(selector, attribute) {
-    throw new Error("Method not implemented.");
+  getAttribute(selector, attribute, p) {
+    this.doInPage(p, (page) => {
+      return page.$eval(selector, (input) => input.getAttribute("value"));
+    });
   }
-  isDisabled(selector) {
-    throw new Error("Method not implemented.");
+  isDisabled(selector, p) {
+    this.doInPage(p, async (page) => {
+      return await page.$eval(selector, (input) => {
+        return input.disabled;
+      });
+    });
   }
   screencastStop(s) {
-    throw new Error("Method not implemented.");
+    return recorders[s].stop();
+  }
+  async doInPage(p, cb) {
+    (await this.browser.pages()).forEach((page) => {
+      if (page.mainFrame()._id === p) {
+        return cb(page);
+      }
+    });
   }
 };
 
@@ -389,8 +367,6 @@ function pollForFile(path4, timeout = 2e3) {
   const intervalObj = setInterval(function() {
     const file = path4;
     const fileExists = fs2.existsSync(file);
-    console.log("Checking for: ", file);
-    console.log("Exists: ", fileExists);
     if (fileExists) {
       clearInterval(intervalObj);
     }
@@ -400,12 +376,12 @@ var PM_Main = class extends PM_Base {
   constructor(configs, name, mode2) {
     super(configs);
     this.bigBoard = {};
-    this.getRunnables = (tests, testName3, payload = {
+    this.getRunnables = (tests, testName2, payload = {
       nodeEntryPoints: {},
       webEntryPoints: {},
       importEntryPoints: {}
     }) => {
-      return getRunnables(tests, testName3, payload);
+      return getRunnables(tests, testName2, payload);
     };
     this.tscCheck = async ({
       entrypoint,
@@ -428,6 +404,7 @@ var PM_Main = class extends PM_Base {
         },
         include: addableFiles
         //["src/**/*"],
+        // exclude: ["node_modules", "../testeranto"],
         // exclude: ["**/*.test.ts", "**/*.spec.ts"],
       });
       const tscPath = tscPather(entrypoint, platform, this.name);
@@ -631,7 +608,7 @@ ${addableFiles.map((x) => {
       }
       const builtfile = dest;
       const webSideCares = [];
-      this.server[builtfile] = await import(`${builtfile}?cacheBust=${Date.now()}`).then((module) => {
+      await import(`${builtfile}?cacheBust=${Date.now()}`).then((module) => {
         return module.default.then((defaultModule) => {
           defaultModule.receiveTestResourceConfig(argz).then(async (results) => {
             this.receiveFeatures(results.features, destFolder, src, "pure");
@@ -720,43 +697,20 @@ ${addableFiles.map((x) => {
             }
           }
           messages.forEach(async (payload) => {
-            if (payload[0] === "writeFileSync") {
-              const r = await this.writeFileSync(
-                payload[1],
-                payload[2],
-                payload[3]
-              );
-              if (!haltReturns) {
-                child.send(
-                  JSON.stringify({
-                    uid: r,
-                    key: payload[4]
-                  })
-                );
+            this.mapping().forEach(async ([command, func]) => {
+              if (payload[0] === command) {
+                const x = payload.slice(1, -1);
+                const r = await this[command](...x);
+                if (!haltReturns) {
+                  child.send(
+                    JSON.stringify({
+                      payload: r,
+                      key: payload[payload.length - 1]
+                    })
+                  );
+                }
               }
-            }
-            if (payload[0] === "createWriteStream") {
-              const r = await this.createWriteStream(payload[1], payload[2]);
-              if (!haltReturns) {
-                child.send(
-                  JSON.stringify({
-                    uid: r,
-                    key: payload[3]
-                  })
-                );
-              }
-            }
-            if (payload[0] === "write") {
-              const r = await this.write(JSON.parse(payload[1]), payload[2]);
-              if (!haltReturns) {
-                child.send(
-                  JSON.stringify({
-                    written: r,
-                    key: payload[3]
-                  })
-                );
-              }
-            }
+            });
           });
         });
       });
@@ -806,28 +760,28 @@ ${addableFiles.map((x) => {
         this.browser.newPage().then((page) => {
           page.exposeFunction(
             "custom-screenshot",
-            async (ssOpts, testName3) => {
+            async (ssOpts, testName2) => {
               const p = ssOpts.path;
               const dir = path3.dirname(p);
               fs2.mkdirSync(dir, {
                 recursive: true
               });
-              files2[testName3].add(ssOpts.path);
+              files2[testName2].add(ssOpts.path);
               const sPromise = page.screenshot({
                 ...ssOpts,
                 path: p
               });
-              if (!screenshots2[testName3]) {
-                screenshots2[testName3] = [];
+              if (!screenshots2[testName2]) {
+                screenshots2[testName2] = [];
               }
-              screenshots2[testName3].push(sPromise);
+              screenshots2[testName2].push(sPromise);
               await sPromise;
               return sPromise;
             }
           );
           page.exposeFunction(
             "writeFileSync",
-            (fp, contents, testName3) => {
+            (fp, contents, testName2) => {
               const dir = path3.dirname(fp);
               fs2.mkdirSync(dir, {
                 recursive: true
@@ -837,10 +791,10 @@ ${addableFiles.map((x) => {
                 res2(fp);
               });
               doneFileStream2.push(p);
-              if (!files2[testName3]) {
-                files2[testName3] = /* @__PURE__ */ new Set();
+              if (!files2[testName2]) {
+                files2[testName2] = /* @__PURE__ */ new Set();
               }
-              files2[testName3].add(fp);
+              files2[testName2].add(fp);
               return p;
             }
           );
@@ -857,9 +811,9 @@ ${addableFiles.map((x) => {
           });
           page.exposeFunction(
             "createWriteStream",
-            (fp, testName3) => {
+            (fp, testName2) => {
               const f = fs2.createWriteStream(fp);
-              files2[testName3].add(fp);
+              files2[testName2].add(fp);
               const p = new Promise((res2, rej2) => {
                 res2(fp);
               });
@@ -931,7 +885,7 @@ ${addableFiles.map((x) => {
         process.exit(-1);
       }
       const builtfile = dest + ".mjs";
-      this.server[builtfile] = await import(`${builtfile}?cacheBust=${Date.now()}`).then((module) => {
+      await import(`${builtfile}?cacheBust=${Date.now()}`).then((module) => {
         return module.default.then((defaultModule) => {
           const s = new defaultModule();
           s.receiveTestResourceConfig(argz);
@@ -968,142 +922,10 @@ ${addableFiles.map((x) => {
         console.log("fail", e)
       }
     })`;
-      const fileStreams2 = [];
-      const doneFileStream2 = [];
       const oStream = fs2.createWriteStream(`${reportDest}/console_log.txt`);
       this.browser.newPage().then((page) => {
-        page.exposeFunction(
-          "screencast",
-          async (ssOpts, testName3) => {
-            const p = ssOpts.path;
-            const dir = path3.dirname(p);
-            fs2.mkdirSync(dir, {
-              recursive: true
-            });
-            if (!files2[testName3]) {
-              files2[testName3] = /* @__PURE__ */ new Set();
-            }
-            files2[testName3].add(ssOpts.path);
-            const sPromise = page.screenshot({
-              ...ssOpts,
-              path: p
-            });
-            if (!screenshots2[testName3]) {
-              screenshots2[testName3] = [];
-            }
-            screenshots2[testName3].push(sPromise);
-            await sPromise;
-            return sPromise;
-          }
-        );
-        page.exposeFunction(
-          "customScreenShot",
-          async (ssOpts, testName3) => {
-            const p = ssOpts.path;
-            const dir = path3.dirname(p);
-            fs2.mkdirSync(dir, {
-              recursive: true
-            });
-            if (!files2[testName3]) {
-              files2[testName3] = /* @__PURE__ */ new Set();
-            }
-            files2[testName3].add(ssOpts.path);
-            const sPromise = page.screenshot({
-              ...ssOpts,
-              path: p
-            });
-            if (!screenshots2[testName3]) {
-              screenshots2[testName3] = [];
-            }
-            screenshots2[testName3].push(sPromise);
-            await sPromise;
-            return sPromise;
-          }
-        );
-        page.exposeFunction(
-          "writeFileSync",
-          (fp, contents, testName3) => {
-            return globalThis["writeFileSync"](fp, contents, testName3);
-          }
-        );
-        page.exposeFunction("existsSync", (fp, contents) => {
-          return fs2.existsSync(fp);
-        });
-        page.exposeFunction("mkdirSync", (fp) => {
-          if (!fs2.existsSync(fp)) {
-            return fs2.mkdirSync(fp, {
-              recursive: true
-            });
-          }
-          return false;
-        });
-        page.exposeFunction(
-          "createWriteStream",
-          (fp, testName3) => {
-            const f = fs2.createWriteStream(fp);
-            if (!files2[testName3]) {
-              files2[testName3] = /* @__PURE__ */ new Set();
-            }
-            files2[testName3].add(fp);
-            const p = new Promise((res, rej) => {
-              res(fp);
-            });
-            doneFileStream2.push(p);
-            f.on("close", async () => {
-              await p;
-            });
-            fileStreams2.push(f);
-            return {
-              ...JSON.parse(JSON.stringify(f)),
-              uid: fileStreams2.length - 1
-            };
-          }
-        );
-        page.exposeFunction("write", async (uid, contents) => {
-          return fileStreams2[uid].write(contents);
-        });
-        page.exposeFunction("end", async (uid) => {
-          return fileStreams2[uid].end();
-        });
-        page.exposeFunction("page", () => {
-          return page.mainFrame()._id;
-        });
-        page.exposeFunction("click", (sel) => {
-          return page.click(sel);
-        });
-        page.exposeFunction("focusOn", (sel) => {
-          return page.focus(sel);
-        });
-        page.exposeFunction(
-          "typeInto",
-          async (value) => await page.keyboard.type(value)
-        );
-        page.exposeFunction(
-          "getValue",
-          (selector) => page.$eval(selector, (input) => input.getAttribute("value"))
-        );
-        page.exposeFunction(
-          "getAttribute",
-          async (selector, attribute) => {
-            const attributeValue = await page.$eval(selector, (input) => {
-              return input.getAttribute(attribute);
-            });
-            return attributeValue;
-          }
-        );
-        page.exposeFunction("isDisabled", async (selector) => {
-          const attributeValue = await page.$eval(
-            selector,
-            (input) => {
-              return input.disabled;
-            }
-          );
-          return attributeValue;
-        });
-        page.exposeFunction("$", async (selector) => {
-          const x = page.$(selector);
-          const y = await x;
-          return y;
+        this.mapping().forEach(async ([command, func]) => {
+          page.exposeFunction(command, func);
         });
         return page;
       }).then(async (page) => {
@@ -1231,7 +1053,37 @@ ${addableFiles.map((x) => {
       this.ports[element] = "true";
     });
   }
+  mapping() {
+    return [
+      ["$", this.$],
+      ["click", this.click],
+      ["closePage", this.closePage],
+      ["createWriteStream", this.createWriteStream],
+      ["customclose", this.customclose],
+      ["customScreenShot", this.customScreenShot],
+      ["end", this.end],
+      ["existsSync", this.existsSync],
+      ["focusOn", this.focusOn],
+      ["getAttribute", this.getAttribute],
+      ["getValue", this.getValue],
+      ["goto", this.goto],
+      ["isDisabled", this.isDisabled],
+      ["mkdirSync", this.mkdirSync],
+      ["newPage", this.newPage],
+      ["page", this.page],
+      ["pages", this.pages],
+      ["screencast", this.screencast],
+      ["screencastStop", this.screencastStop],
+      ["typeInto", this.typeInto],
+      ["waitForSelector", this.waitForSelector],
+      ["write", this.write],
+      ["writeFileSync", this.writeFileSync]
+    ];
+  }
   async start() {
+    this.mapping().forEach(async ([command, func]) => {
+      globalThis[command] = func;
+    });
     if (!fs2.existsSync(`testeranto/reports/${this.name}`)) {
       fs2.mkdirSync(`testeranto/reports/${this.name}`);
     }
@@ -1394,21 +1246,21 @@ process.stdin.on("keypress", (str, key) => {
     process.exit(-1);
   }
 });
-var testName2 = process.argv[2];
+var testName = process.argv[2];
 var mode = process.argv[3];
 if (mode !== "once" && mode !== "dev") {
   console.error("the 2nd argument should be 'dev' or 'once' ");
   process.exit(-1);
 }
-console.log("testeranto is running", testName2, mode);
+console.log("testeranto is running", testName, mode);
 import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
   const bigConfig = module.default;
-  const rawConfig = bigConfig.projects[testName2];
+  const rawConfig = bigConfig.projects[testName];
   const config = {
     ...rawConfig,
-    buildDir: process.cwd() + `/testeranto/${testName2}.json`
+    buildDir: process.cwd() + `/testeranto/${testName}.json`
   };
-  const pm = new PM_Main(config, testName2, mode);
+  const pm = new PM_Main(config, testName, mode);
   pm.start();
   process.stdin.on("keypress", (str, key) => {
     if (key.name === "q") {

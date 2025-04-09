@@ -3,39 +3,30 @@ import fs from "fs";
 import path from "path";
 import { ScreencastOptions } from "puppeteer-core";
 import { PassThrough } from "stream";
-import rpc from "rpc-over-ipc";
+import { CdpPage } from "puppeteer-core/lib/esm/puppeteer";
 
 import { ITLog, ITTestResourceConfiguration } from "../lib";
 
-import { PM } from "./index.js";
-import { CdpPage, Page } from "puppeteer-core/lib/esm/puppeteer";
+import { PM } from ".";
 
 type IFPaths = string[];
 const fPaths: IFPaths = [];
 
-type PuppetMasterServer = Record<string, Promise<any>>;
-
 export class PM_Node extends PM {
-  server: PuppetMasterServer;
   testResourceConfiguration: ITTestResourceConfiguration;
   client: net.Socket;
 
   constructor(t: ITTestResourceConfiguration) {
     super();
-    this.server = {};
     this.testResourceConfiguration = t;
   }
 
   start(): Promise<void> {
     return new Promise((res) => {
       process.on("message", (message: unknown) => {
-        console.log("MESSAGE", message);
         if (message.path) {
           this.client = net.createConnection(message.path, () => {
             res();
-            // this.client.write("hi from child");
-            // console.error("goodbye node error", e);
-            // process.exit(-1);
           });
         }
       });
@@ -46,197 +37,145 @@ export class PM_Node extends PM {
     throw new Error("Method not implemented.");
   }
 
+  send<I>(command: string, ...argz): Promise<I> {
+    return new Promise<I>((res) => {
+      const key = Math.random().toString();
+
+      const myListener = (event) => {
+        const x = JSON.parse(event);
+        if (x.key === key) {
+          process.removeListener("message", myListener);
+          res(x.payload);
+        }
+      };
+
+      process.addListener("message", myListener);
+
+      this.client.write(JSON.stringify([command, ...argz, key]));
+    });
+  }
+
+  pages(): string[] {
+    return this.send("pages", ...arguments);
+  }
+
   waitForSelector(p: string, s: string): any {
-    return globalThis["waitForSelector"](p, s);
+    return this.send("waitForSelector", ...arguments);
   }
 
-  closePage(p): string {
-    return globalThis["closePage"](p);
+  closePage(p) {
+    return this.send("closePage", ...arguments);
+    // return globalThis["closePage"](p);
   }
 
-  goto(cdpPage: CdpPage, url: string): any {
-    return globalThis["goto"](cdpPage.mainFrame()._id, url);
+  goto(page: string, url: string) {
+    return this.send("goto", ...arguments);
+    // return globalThis["goto"](cdpPage.mainFrame()._id, url);
   }
 
-  newPage(): CdpPage {
-    return globalThis["newPage"]();
+  async newPage(): Promise<CdpPage> {
+    return this.send<CdpPage>("newPage");
   }
 
-  $(selector: string): boolean {
-    throw new Error("Method not implemented.");
+  $(selector: string) {
+    return this.send("$", ...arguments);
   }
 
   isDisabled(selector: string): Promise<boolean> {
-    throw new Error("Method not implemented.");
+    return this.send("isDisabled", ...arguments);
   }
 
   getAttribute(selector: string, attribute: string) {
-    throw new Error("Method not implemented.");
+    return this.send("getAttribute", ...arguments);
   }
 
   getValue(selector: string) {
-    throw new Error("Method not implemented.");
+    return this.send("getValue", ...arguments);
   }
 
   focusOn(selector: string) {
-    throw new Error("Method not implemented.");
+    return this.send("focusOn", ...arguments);
   }
 
-  typeInto(value: string) {
-    throw new Error("Method not implemented.");
+  typeInto(selector: string) {
+    return this.send("typeInto", ...arguments);
   }
 
   page() {
-    return globalThis["page"]();
+    return this.send("page");
   }
 
-  click(selector: string): string | undefined {
-    return globalThis["click"](selector);
+  click(selector: string) {
+    return this.send("click", ...arguments);
   }
 
-  screencast(opts: ScreencastOptions, page: CdpPage) {
-    return globalThis["screencast"](
+  screencast(opts: ScreencastOptions, page: string) {
+    return this.send(
+      "screencast",
       {
         ...opts,
         path: this.testResourceConfiguration.fs + "/" + opts.path,
       },
-      page.mainFrame()._id,
+      page,
       this.testResourceConfiguration.name
     );
   }
 
   screencastStop(p: string) {
-    return globalThis["screencastStop"](p);
+    return this.send("screencastStop", ...arguments);
   }
 
-  customScreenShot(opts: ScreencastOptions, cdpPage: CdpPage) {
-    return globalThis["customScreenShot"](
+  customScreenShot(opts: ScreencastOptions, page?: string) {
+    return this.send(
+      "customScreenShot",
       {
         ...opts,
         path: this.testResourceConfiguration.fs + "/" + opts.path,
       },
-      cdpPage.mainFrame()._id,
+      page,
       this.testResourceConfiguration.name
     );
   }
 
-  existsSync(destFolder: string): boolean {
-    return globalThis["existsSync"](
+  existsSync(destFolder: string) {
+    return this.send(
+      "existsSync",
       this.testResourceConfiguration.fs + "/" + destFolder
     );
   }
 
   mkdirSync() {
-    return globalThis["mkdirSync"](this.testResourceConfiguration.fs + "/");
+    return this.send("mkdirSync", this.testResourceConfiguration.fs + "/");
   }
 
-  write(uid: number, contents: string): Promise<boolean> {
-    return new Promise<boolean>((res) => {
-      const key = Math.random().toString();
-
-      const myListener = (event) => {
-        const x = JSON.parse(event);
-
-        if (x.key === key) {
-          // console.log(`WRITE MATCH`, key);
-          process.removeListener("message", myListener);
-          res(x.written);
-        }
-      };
-
-      process.addListener("message", myListener);
-
-      this.client.write(JSON.stringify(["write", uid, contents, key]));
-    });
-
-    // return globalThis["write"](writeObject.uid, contents);
+  async write(uid: number, contents: string): Promise<boolean> {
+    return await this.send("write", ...arguments);
   }
 
-  writeFileSync(filepath: string, contents: string) {
-    return new Promise<boolean>((res) => {
-      const key = Math.random().toString();
-
-      const myListener = (event) => {
-        const x = JSON.parse(event);
-        if (x.key === key) {
-          process.removeListener("message", myListener);
-          res(x.uid);
-        }
-      };
-
-      process.addListener("message", myListener);
-
-      this.client.write(
-        JSON.stringify([
-          "writeFileSync",
-          this.testResourceConfiguration.fs + "/" + filepath,
-          contents,
-          this.testResourceConfiguration.name,
-          key,
-        ])
-      );
-    });
-
-    // return globalThis["writeFileSync"](
-    //   this.testResourceConfiguration.fs + "/" + filepath,
-    //   contents,
-    //   this.testResourceConfiguration.name
-    // );
+  async writeFileSync(filepath: string, contents: string) {
+    return await this.send<boolean>(
+      "writeFileSync",
+      this.testResourceConfiguration.fs + "/" + filepath,
+      contents,
+      this.testResourceConfiguration.name
+    );
   }
 
-  createWriteStream(filepath: string): Promise<string> {
-    return new Promise((res) => {
-      const key = Math.random().toString();
-
-      const myListener = (event) => {
-        const x = JSON.parse(event);
-
-        if (x.key === key) {
-          process.removeListener("message", myListener);
-          res(x.uid);
-        }
-      };
-
-      process.addListener("message", myListener);
-
-      this.client.write(
-        JSON.stringify([
-          "createWriteStream",
-          this.testResourceConfiguration.fs + "/" + filepath,
-          this.testResourceConfiguration.name,
-          key,
-        ])
-      );
-    });
+  async createWriteStream(filepath: string) {
+    return await this.send<string>(
+      "createWriteStream",
+      this.testResourceConfiguration.fs + "/" + filepath,
+      this.testResourceConfiguration.name
+    );
   }
 
-  end(uid) {
-    console.log("end");
-    return new Promise((res) => {
-      const key = Math.random().toString();
-
-      const myListener = (event) => {
-        console.log(`Received end: ${JSON.stringify(event)}`);
-
-        const x = JSON.parse(event);
-        console.log(`x: `, x);
-        if (x.key === key) {
-          console.log(`end MATCH`, key);
-          process.removeListener("message", myListener);
-          res(x.uid);
-        }
-      };
-
-      process.addListener("message", myListener);
-
-      this.client.write(JSON.stringify(["end", uid, key]));
-    });
-
-    // return globalThis["end"](writeObject.uid);
+  async end(uid) {
+    return await this.send<boolean>("end", ...arguments);
   }
 
-  customclose() {
-    globalThis["customclose"](
+  async customclose() {
+    return await this.send(
+      "customclose",
       this.testResourceConfiguration.fs,
       this.testResourceConfiguration.name
     );

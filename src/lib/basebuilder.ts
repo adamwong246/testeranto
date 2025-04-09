@@ -17,7 +17,11 @@ import {
   BaseThen,
   BaseGiven,
 } from "./abstractBase.js";
-import { PM } from "../PM/index.js";
+import { PM_Node } from "../PM/node";
+import { PM_Pure } from "../PM/pure";
+import { PM_Web } from "../PM/web";
+
+type IPM = PM_Node | PM_Web | PM_Pure;
 
 export abstract class BaseBuilder<
   I extends Ibdd_in<
@@ -55,7 +59,7 @@ export abstract class BaseBuilder<
   whenOverides: Record<keyof WhenExtensions, IWhenKlasser<I>>;
   thenOverides: Record<keyof ThenExtensions, IThenKlasser<I>>;
   checkOverides: Record<keyof CheckExtensions, ICheckKlasser<I, O>>;
-  puppetMaster: PM;
+  puppetMaster: IPM;
 
   constructor(
     input: I["iinput"],
@@ -87,7 +91,7 @@ export abstract class BaseBuilder<
     this.testJobs = this.specs.map((suite: BaseSuite<I, O>) => {
       const suiteRunner =
         (suite: BaseSuite<I, O>) =>
-        async (puppetMaster: PM, tLog: ITLog): Promise<BaseSuite<I, O>> => {
+        async (puppetMaster: IPM, tLog: ITLog): Promise<BaseSuite<I, O>> => {
           const x = await suite.run(
             input,
             puppetMaster.testResourceConfiguration,
@@ -117,12 +121,14 @@ export abstract class BaseBuilder<
         runner,
 
         receiveTestResourceConfig: async function (
-          puppetMaster: PM
+          puppetMaster: IPM
         ): Promise<IFinalResults> {
           const start = await puppetMaster.start();
 
           const logFilePath = "log.txt";
-          const access = await puppetMaster.createWriteStream(logFilePath);
+          const access: number = await puppetMaster.createWriteStream(
+            logFilePath
+          );
 
           const tLog = async (...l: string[]) => {
             const x = await puppetMaster.write(access, `${l.toString()}\n`);
@@ -136,9 +142,6 @@ export abstract class BaseBuilder<
             res(true);
           });
 
-          // const numberOfFailures = Object.keys(suiteDone.givens).filter((k) => {
-          //   return suiteDone.givens[k].error;
-          // }).length;
           const fails = suiteDone.fails;
 
           const b = await puppetMaster.writeFileSync(
@@ -232,7 +235,7 @@ export abstract class BaseBuilder<
     keyof CheckExtensions,
     (
       feature: string,
-      callback: (whens, thens, pm: PM) => any,
+      callback: (whens, thens, pm: IPM) => any,
       whens,
       thens,
       x

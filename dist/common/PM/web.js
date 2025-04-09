@@ -1,15 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PM_Web = void 0;
-const index_js_1 = require("./index.js");
-class PM_Web extends index_js_1.PM {
+class PM_Web {
     constructor(t) {
-        super();
-        this.server = {};
+        // super();
+        // this.server = {};
         this.testResourceConfiguration = t;
     }
     start() {
-        console.log("mark6");
         return new Promise((r) => r());
     }
     stop() {
@@ -18,8 +16,8 @@ class PM_Web extends index_js_1.PM {
     waitForSelector(p, s) {
         return window["waitForSelector"](p, s);
     }
-    screencast(opts) {
-        return window["screencast"](Object.assign(Object.assign({}, opts), { path: this.testResourceConfiguration.fs + "/" + opts.path }), this.testResourceConfiguration.name);
+    screencast(opts, page) {
+        return window["screencast"](Object.assign(Object.assign({}, opts), { path: this.testResourceConfiguration.fs + "/" + opts.path }), page.mainFrame()._id, this.testResourceConfiguration.name);
     }
     screencastStop(recorder) {
         return window["screencastStop"](recorder);
@@ -57,7 +55,7 @@ class PM_Web extends index_js_1.PM {
     click(selector) {
         return window["click"](selector);
     }
-    customScreenShot(opts) {
+    customScreenShot(opts, page) {
         return window["customScreenShot"](Object.assign(Object.assign({}, opts), { path: this.testResourceConfiguration.fs + "/" + opts.path }), this.testResourceConfiguration.name);
     }
     existsSync(destFolder) {
@@ -66,8 +64,8 @@ class PM_Web extends index_js_1.PM {
     mkdirSync(x) {
         return window["mkdirSync"](this.testResourceConfiguration.fs + "/");
     }
-    write(writeObject, contents) {
-        return window["write"](writeObject.uid, contents);
+    write(uid, contents) {
+        return window["write"](uid, contents);
     }
     writeFileSync(filepath, contents) {
         return window["writeFileSync"](this.testResourceConfiguration.fs + "/" + filepath, contents, this.testResourceConfiguration.name);
@@ -75,8 +73,8 @@ class PM_Web extends index_js_1.PM {
     createWriteStream(filepath) {
         return window["createWriteStream"](this.testResourceConfiguration.fs + "/" + filepath, this.testResourceConfiguration.name);
     }
-    end(writeObject) {
-        return window["end"](writeObject.uid);
+    end(uid) {
+        return window["end"](uid);
     }
     customclose() {
         window["customclose"](this.testResourceConfiguration.fs, this.testResourceConfiguration.name);

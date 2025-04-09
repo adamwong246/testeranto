@@ -1,16 +1,14 @@
 const config = {
     src: "src",
-    // outdir: "docs",
     tests: [],
     debugger: true,
     clearScreen: false,
-    devMode: true,
     minify: false,
-    // outbase: ".",
     ports: ["3001"],
     externals: [],
     nodePlugins: [],
     webPlugins: [],
+    importPlugins: [],
     featureIngestor: function (s) {
         throw new Error("Function not implemented.");
     },

@@ -6,20 +6,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PM_Pure = void 0;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
-const index_js_1 = require("./index.js");
+const _1 = require(".");
 const fPaths = [];
-class PM_Pure extends index_js_1.PM {
+class PM_Pure extends _1.PM {
     constructor(t) {
         super();
         this.server = {};
         this.testResourceConfiguration = t;
     }
     start() {
-        console.log("mark6");
         return new Promise((r) => r());
     }
     stop() {
         return new Promise((r) => r());
+    }
+    pages() {
+        throw new Error("Method not implemented.");
     }
     waitForSelector(p, s) {
         return globalThis["waitForSelector"](p, s);
@@ -34,22 +36,22 @@ class PM_Pure extends index_js_1.PM {
         return globalThis["newPage"]();
     }
     $(selector) {
-        throw new Error("Method not implemented.");
+        return globalThis["$"](selector);
     }
     isDisabled(selector) {
-        throw new Error("Method not implemented.");
+        return globalThis["isDisabled"](selector);
     }
     getAttribute(selector, attribute) {
-        throw new Error("Method not implemented.");
+        return globalThis["getAttribute"](selector, attribute);
     }
     getValue(selector) {
-        throw new Error("Method not implemented.");
+        return globalThis["getValue"](selector);
     }
     focusOn(selector) {
-        throw new Error("Method not implemented.");
+        return globalThis["focusOn"](selector);
     }
-    typeInto(value) {
-        throw new Error("Method not implemented.");
+    typeInto(selector, value) {
+        return globalThis["typeInto"](selector, value);
     }
     page() {
         return globalThis["page"]();
@@ -58,13 +60,13 @@ class PM_Pure extends index_js_1.PM {
         return globalThis["click"](selector);
     }
     screencast(opts, page) {
-        return globalThis["screencast"](Object.assign(Object.assign({}, opts), { path: this.testResourceConfiguration.fs + "/" + opts.path }), page.mainFrame()._id, this.testResourceConfiguration.name);
+        return globalThis["screencast"](Object.assign(Object.assign({}, opts), { path: this.testResourceConfiguration.fs + "/" + opts.path }), page, this.testResourceConfiguration.name);
     }
     screencastStop(p) {
         return globalThis["screencastStop"](p);
     }
-    customScreenShot(opts, cdpPage) {
-        return globalThis["customScreenShot"](Object.assign(Object.assign({}, opts), { path: this.testResourceConfiguration.fs + "/" + opts.path }), cdpPage.mainFrame()._id, this.testResourceConfiguration.name);
+    customScreenShot(opts, page) {
+        return globalThis["customScreenShot"](Object.assign(Object.assign({}, opts), { path: this.testResourceConfiguration.fs + "/" + opts.path }), page, this.testResourceConfiguration.name);
     }
     existsSync(destFolder) {
         return globalThis["existsSync"](this.testResourceConfiguration.fs + "/" + destFolder);

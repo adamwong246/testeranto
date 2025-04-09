@@ -1,24 +1,21 @@
 import { PassThrough } from "stream";
 
+import { ScreencastOptions, ScreenshotOptions } from "puppeteer-core";
+import { CdpPage, Page } from "puppeteer-core/lib/esm/puppeteer";
+
 import { ITLog, ITTestResourceConfiguration } from "../lib";
 
-import { PM } from "./index.js";
-import { ScreencastOptions, ScreenshotOptions } from "puppeteer-core";
-import { CdpPage } from "puppeteer-core/lib/esm/puppeteer";
-
-type PuppetMasterServer = Record<string, Promise<any>>;
-
-export class PM_Web extends PM {
-  server: PuppetMasterServer;
+export class PM_Web {
+  // server: PuppetMasterServer;
+  testResourceConfiguration: ITTestResourceConfiguration;
 
   constructor(t: ITTestResourceConfiguration) {
-    super();
-    this.server = {};
+    // super();
+    // this.server = {};
     this.testResourceConfiguration = t;
   }
 
   start(): Promise<void> {
-    console.log("mark6");
     return new Promise((r) => r());
   }
 
@@ -30,12 +27,13 @@ export class PM_Web extends PM {
     return window["waitForSelector"](p, s);
   }
 
-  screencast(opts: ScreencastOptions) {
+  screencast(opts: ScreencastOptions, page: Page) {
     return window["screencast"](
       {
         ...opts,
         path: this.testResourceConfiguration.fs + "/" + opts.path,
       },
+      page.mainFrame()._id,
       this.testResourceConfiguration.name
     );
   }
@@ -87,7 +85,7 @@ export class PM_Web extends PM {
     return window["click"](selector);
   }
 
-  customScreenShot(opts: ScreenshotOptions) {
+  customScreenShot(opts: ScreenshotOptions, page: Page) {
     return window["customScreenShot"](
       {
         ...opts,
@@ -105,8 +103,8 @@ export class PM_Web extends PM {
     return window["mkdirSync"](this.testResourceConfiguration.fs + "/");
   }
 
-  write(writeObject: { uid: number }, contents: string) {
-    return window["write"](writeObject.uid, contents);
+  write(uid: number, contents: string): Promise<boolean> {
+    return window["write"](uid, contents);
   }
 
   writeFileSync(filepath: string, contents: string) {
@@ -124,8 +122,8 @@ export class PM_Web extends PM {
     );
   }
 
-  end(writeObject: { uid: number }) {
-    return window["end"](writeObject.uid);
+  end(uid: number): boolean {
+    return window["end"](uid);
   }
 
   customclose() {

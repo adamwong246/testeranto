@@ -94,7 +94,10 @@ const BddPage = () => {
 document.addEventListener("DOMContentLoaded", function () {
     const elem = document.getElementById("root");
     if (elem) {
-        ReactDom.createRoot(elem).render(React.createElement(BddPage, {}, []));
+        if (elem) {
+            const root = ReactDom.createRoot(elem);
+            root.render(React.createElement(BddPage, {}, []));
+        }
     }
 });
 console.log("hello BddPage!");

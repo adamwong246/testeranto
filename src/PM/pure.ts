@@ -5,8 +5,8 @@ import { PassThrough } from "stream";
 
 import { ITLog, ITTestResourceConfiguration } from "../lib";
 
-import { PM } from "./index.js";
-import { CdpPage, Page } from "puppeteer-core/lib/esm/puppeteer";
+import { CdpPage } from "puppeteer-core/lib/esm/puppeteer";
+import { PM } from ".";
 
 type IFPaths = string[];
 const fPaths: IFPaths = [];
@@ -24,12 +24,15 @@ export class PM_Pure extends PM {
   }
 
   start(): Promise<void> {
-    console.log("mark6");
     return new Promise((r) => r());
   }
 
   stop(): Promise<void> {
     return new Promise((r) => r());
+  }
+
+  pages(): string[] {
+    throw new Error("Method not implemented.");
   }
 
   waitForSelector(p: string, s: string): any {
@@ -49,26 +52,27 @@ export class PM_Pure extends PM {
   }
 
   $(selector: string): boolean {
-    throw new Error("Method not implemented.");
+    return globalThis["$"](selector);
   }
 
   isDisabled(selector: string): Promise<boolean> {
-    throw new Error("Method not implemented.");
+    return globalThis["isDisabled"](selector);
   }
 
   getAttribute(selector: string, attribute: string) {
-    throw new Error("Method not implemented.");
+    return globalThis["getAttribute"](selector, attribute);
   }
+
   getValue(selector: string) {
-    throw new Error("Method not implemented.");
+    return globalThis["getValue"](selector);
   }
 
   focusOn(selector: string) {
-    throw new Error("Method not implemented.");
+    return globalThis["focusOn"](selector);
   }
 
-  typeInto(value: string) {
-    throw new Error("Method not implemented.");
+  typeInto(selector: string, value: string) {
+    return globalThis["typeInto"](selector, value);
   }
 
   page() {
@@ -79,13 +83,13 @@ export class PM_Pure extends PM {
     return globalThis["click"](selector);
   }
 
-  screencast(opts: ScreencastOptions, page: CdpPage) {
+  screencast(opts: ScreencastOptions, page: string) {
     return globalThis["screencast"](
       {
         ...opts,
         path: this.testResourceConfiguration.fs + "/" + opts.path,
       },
-      page.mainFrame()._id,
+      page,
       this.testResourceConfiguration.name
     );
   }
@@ -94,18 +98,18 @@ export class PM_Pure extends PM {
     return globalThis["screencastStop"](p);
   }
 
-  customScreenShot(opts: ScreencastOptions, cdpPage: CdpPage) {
+  customScreenShot(opts: ScreencastOptions, page: string) {
     return globalThis["customScreenShot"](
       {
         ...opts,
         path: this.testResourceConfiguration.fs + "/" + opts.path,
       },
-      cdpPage.mainFrame()._id,
+      page,
       this.testResourceConfiguration.name
     );
   }
 
-  existsSync(destFolder: string): boolean {
+  existsSync(destFolder: string): Promise<boolean> {
     return globalThis["existsSync"](
       this.testResourceConfiguration.fs + "/" + destFolder
     );

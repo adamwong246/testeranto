@@ -39,7 +39,6 @@ const testeranto = async (input, testSpecification, testImplementation, testInte
         // process.send({ message: "Hello from child!" });
         // process.on("message", (message) => {
         //   const client = net.createConnection(message.path, () => {
-        //     client.write("hi from child");
         //     console.error("goodbye node error", e);
         //     process.exit(-1);
         //   });

@@ -8,14 +8,15 @@ import esbuildNodeConfiger from "./esbuildConfigs/node.js";
 import esbuildWebConfiger from "./esbuildConfigs/web.js";
 import esbuildImportConfiger from "./esbuildConfigs/pure.js";
 import webHtmlFrame from "./web.html.js";
+
+import { getRunnables } from "./utils.js";
 import {
-  ITestTypes,
   IBaseConfig,
-  IRunTime,
   IBuiltConfig,
   IConfigV2,
-} from "./lib/index.js";
-import { getRunnables } from "./utils.js";
+  IRunTime,
+  ITestTypes,
+} from "./Types.js";
 
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);

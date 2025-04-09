@@ -1,4 +1,4 @@
-import { PM } from "../PM/index.js";
+import { PM } from "../PM/server.js";
 import { Ibdd_in, Ibdd_out } from "../Types.js";
 import { ITTestResourceConfiguration, ITestArtifactory, ITLog } from ".";
 export type IGivens<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>> = Record<string, BaseGiven<I>>;
@@ -36,7 +36,7 @@ export declare abstract class BaseSuite<I extends Ibdd_in<unknown, unknown, unkn
         features: string[];
     };
     setup(s: I["iinput"], artifactory: ITestArtifactory, tr: ITTestResourceConfiguration, pm: PM): Promise<I["isubject"]>;
-    assertThat(t: I["then"]): unknown;
+    assertThat(t: Awaited<I["then"]> | undefined): boolean;
     afterAll(store: I["istore"], artifactory: ITestArtifactory, pm: PM): I["istore"];
     run(input: I["iinput"], testResourceConfiguration: ITTestResourceConfiguration, artifactory: (fPath: string, value: unknown) => void, tLog: (...string: any[]) => void, pm: PM): Promise<BaseSuite<I, O>>;
 }

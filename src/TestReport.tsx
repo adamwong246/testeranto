@@ -26,8 +26,8 @@ const TestPane = ({ given }: {
   given: {
     key: string,
     name: string,
-    error: string[],
-    features: string[],
+    error?: string[],
+    features?: string[],
     whens: {
       name: string;
       error: string;
@@ -184,7 +184,10 @@ const BddPage = () => {
 document.addEventListener("DOMContentLoaded", function () {
   const elem = document.getElementById("root");
   if (elem) {
-    ReactDom.createRoot(elem).render(React.createElement(BddPage, {}, []));
+    if (elem) {
+      const root = ReactDom.createRoot(elem);
+      root.render(React.createElement(BddPage, {}, []));
+    }
   }
 });
 

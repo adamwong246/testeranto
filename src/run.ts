@@ -3,7 +3,7 @@ import readline from "readline";
 import path from "path";
 
 import { PM_Main } from "./PM/main";
-import { IBaseConfig, IBuiltConfig, IConfigV2 } from "./lib";
+import { IBaseConfig, IBuiltConfig, IConfigV2 } from "./Types";
 
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);

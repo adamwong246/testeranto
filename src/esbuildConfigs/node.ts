@@ -47,7 +47,7 @@ export default (
       inputFilesPluginFactory,
       {
         name: "rebuild-notify",
-        setup(build) {
+        setup: (build: any) => {
           build.onEnd((result) => {
             console.log(
               `> node build ended with ${result.errors.length} errors`

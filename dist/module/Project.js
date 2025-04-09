@@ -5,7 +5,10 @@ import "./style.css";
 import { Footer } from "./Footer";
 import { Table } from "react-bootstrap";
 const BigBoard = () => {
-    const projects = JSON.parse(document.getElementById('bigConfig').innerHTML);
+    const bigConfigElement = document.getElementById('bigConfig');
+    if (!bigConfigElement)
+        throw new Error('bigConfig element not found');
+    const projects = JSON.parse(bigConfigElement.innerHTML);
     // const projects = Object.keys(bigConfig.projects);
     // const [configs, setConfigs] = useState<IBuiltConfig>();
     // useEffect(() => {

@@ -1,4 +1,4 @@
-import { PM } from "../PM";
+import { PM } from "../PM/server";
 import { Ibdd_in, Ibdd_out } from "../Types";
 import { IGivens, BaseCheck, BaseSuite, BaseGiven, BaseWhen, BaseThen } from "./abstractBase";
 export type ITestCheckCallback<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>, O extends Ibdd_out<Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>> = {

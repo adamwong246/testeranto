@@ -1,64 +1,34 @@
 $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit
-src/defaultConfig.ts(9,3): error TS2353: Object literal may only specify known properties, and 'devMode' does not exist in type 'IBaseConfig'.
 src/esbuildConfigs/node.ts(64,7): error TS2741: Property 'setup' is missing in type 'Plugin' but required in type 'import("/Users/adam/Code/testeranto/node_modules/esbuild/lib/main").Plugin'.
-src/esbuildConfigs/pure.ts(65,19): error TS2339: Property 'purePlugins' does not exist on type 'IBaseConfig'.
+src/esbuildConfigs/pure.ts(65,7): error TS2741: Property 'setup' is missing in type 'Plugin' but required in type 'import("/Users/adam/Code/testeranto/node_modules/esbuild/lib/main").Plugin'.
 src/esbuildConfigs/web.ts(74,7): error TS2741: Property 'setup' is missing in type 'Plugin' but required in type 'import("/Users/adam/Code/testeranto/node_modules/esbuild/lib/main").Plugin'.
-src/lib/abstractBase.ts(160,11): error TS2345: Argument of type '(t: I["then"]) => unknown' is not assignable to parameter of type '(t: Awaited<I["then"]> | undefined) => boolean'.
-  Type 'unknown' is not assignable to type 'boolean'.
-src/lib/basebuilder.ts(128,48): error TS2345: Argument of type 'string' is not assignable to parameter of type '{ uid: number; }'.
-src/lib/basebuilder.ts(135,36): error TS2345: Argument of type 'string' is not assignable to parameter of type '{ uid: number; }'.
+src/lib/abstractBase.ts(1,20): error TS2307: Cannot find module '../PM/server.js' or its corresponding type declarations.
+src/lib/core.ts(9,20): error TS2307: Cannot find module '../PM/server' or its corresponding type declarations.
+src/lib/core.ts(74,11): error TS2322: Type 'void' is not assignable to type 'boolean'.
 src/lib/core.ts(213,62): error TS2554: Expected 5 arguments, but got 6.
-src/lib/index.ts(50,19): error TS2322: Type 'unknown' is not assignable to type 'Promise<unknown>'.
-src/PM/base.ts(210,3): error TS2416: Property 'writeFileSync' in type 'PM_Base' is not assignable to the same property in base type 'PM'.
-  Type '(filepath: string, contents: string, testName: string) => Promise<unknown>' is not assignable to type '(fp: string, contents: string) => Promise<boolean>'.
-    Target signature provides too few arguments. Expected 3 or more, but got 2.
-src/PM/base.ts(225,3): error TS2416: Property 'createWriteStream' in type 'PM_Base' is not assignable to the same property in base type 'PM'.
-  Type '(filepath: string, testName: string) => Promise<string>' is not assignable to type '(filepath: string) => Promise<string>'.
-    Target signature provides too few arguments. Expected 2 or more, but got 1.
-src/PM/base.ts(294,3): error TS2416: Property 'write' in type 'PM_Base' is not assignable to the same property in base type 'PM'.
-  Type '(uid: number, contents: string) => Promise<unknown>' is not assignable to type '(accessObject: { uid: number; }, contents: string) => Promise<boolean>'.
-    Types of parameters 'uid' and 'accessObject' are incompatible.
-      Type '{ uid: number; }' is not assignable to type 'number'.
-src/PM/main.ts(345,13): error TS2322: Type 'IRunTime' is not assignable to type '"node" | "web"'.
-  Type '"web_worker"' is not assignable to type '"node" | "web"'.
-src/PM/main.ts(349,47): error TS2345: Argument of type 'IRunTime' is not assignable to parameter of type '"node" | "web"'.
-  Type '"web_worker"' is not assignable to type '"node" | "web"'.
-src/PM/main.ts(350,60): error TS2345: Argument of type 'IRunTime' is not assignable to parameter of type '"node" | "web"'.
-  Type '"web_worker"' is not assignable to type '"node" | "web"'.
-src/PM/main.ts(883,7): error TS18047: 'child.stderr' is possibly 'null'.
-src/PM/main.ts(886,7): error TS18047: 'child.stdout' is possibly 'null'.
-src/PM/node.ts(33,13): error TS18046: 'message' is of type 'unknown'.
-src/PM/node.ts(34,46): error TS18046: 'message' is of type 'unknown'.
-src/PM/node.ts(112,3): error TS2416: Property 'customScreenShot' in type 'PM_Node' is not assignable to the same property in base type 'PM'.
-  Type '(opts: ScreencastOptions, cdpPage: CdpPage) => any' is not assignable to type '(opts: object, page?: string | undefined) => any'.
-    Types of parameters 'cdpPage' and 'page' are incompatible.
-      Type 'string | undefined' is not assignable to type 'CdpPage'.
-        Type 'undefined' is not assignable to type 'CdpPage'.
-src/PM/node.ts(133,3): error TS2416: Property 'write' in type 'PM_Node' is not assignable to the same property in base type 'PM'.
-  Type '(uid: number, contents: string) => Promise<boolean>' is not assignable to type '(accessObject: { uid: number; }, contents: string) => Promise<boolean>'.
-    Types of parameters 'uid' and 'accessObject' are incompatible.
-      Type '{ uid: number; }' is not assignable to type 'number'.
-src/PM/node.ts(213,3): error TS2416: Property 'end' in type 'PM_Node' is not assignable to the same property in base type 'PM'.
-  Type '(uid: any) => Promise<unknown>' is not assignable to type '(accessObject: { uid: number; }) => boolean'.
-    Type 'Promise<unknown>' is not assignable to type 'boolean'.
-src/PM/pure.ts(97,3): error TS2416: Property 'customScreenShot' in type 'PM_Pure' is not assignable to the same property in base type 'PM'.
-  Type '(opts: ScreencastOptions, cdpPage: CdpPage) => any' is not assignable to type '(opts: object, page?: string | undefined) => any'.
-    Types of parameters 'cdpPage' and 'page' are incompatible.
-      Type 'string | undefined' is not assignable to type 'CdpPage'.
-        Type 'undefined' is not assignable to type 'CdpPage'.
-src/PM/pure.ts(118,3): error TS2416: Property 'write' in type 'PM_Pure' is not assignable to the same property in base type 'PM'.
-  Type '(uid: number, contents: string) => any' is not assignable to type '(accessObject: { uid: number; }, contents: string) => Promise<boolean>'.
-    Types of parameters 'uid' and 'accessObject' are incompatible.
-      Type '{ uid: number; }' is not assignable to type 'number'.
-src/PM/pure.ts(137,3): error TS2416: Property 'end' in type 'PM_Pure' is not assignable to the same property in base type 'PM'.
-  Type '(uid: number) => any' is not assignable to type '(accessObject: { uid: number; }) => boolean'.
-    Types of parameters 'uid' and 'accessObject' are incompatible.
-      Type '{ uid: number; }' is not assignable to type 'number'.
-src/Project.tsx(37,31): error TS2531: Object is possibly 'null'.
-src/Project.tsx(193,38): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
+src/lib/index.ts(2,20): error TS2307: Cannot find module '../PM/server.js' or its corresponding type declarations.
+src/lib/index.ts(58,19): error TS2322: Type 'unknown' is not assignable to type 'Promise<unknown>'.
+src/lib/types.ts(1,20): error TS2307: Cannot find module '../PM/server' or its corresponding type declarations.
+src/PM/base.ts(84,28): error TS2339: Property '_id' does not exist on type 'Frame'.
+src/PM/main.ts(858,7): error TS18047: 'child.stderr' is possibly 'null'.
+src/PM/main.ts(861,7): error TS18047: 'child.stdout' is possibly 'null'.
+src/PM/node.ts(27,13): error TS18046: 'message' is of type 'unknown'.
+src/PM/node.ts(28,46): error TS18046: 'message' is of type 'unknown'.
+src/PM/node.ts(59,5): error TS2740: Type 'Promise<unknown>' is missing the following properties from type 'string[]': length, pop, push, concat, and 35 more.
+src/PM/node.ts(76,9): error TS2416: Property 'newPage' in type 'PM_Node' is not assignable to the same property in base type 'PM'.
+  Type '() => Promise<CdpPage>' is not assignable to type '() => CdpPage'.
+    Type 'Promise<CdpPage>' is missing the following properties from type 'CdpPage': #private, _client, isServiceWorkerBypassed, isDragInterceptionEnabled, and 105 more.
+src/PM/node.ts(104,3): error TS2416: Property 'page' in type 'PM_Node' is not assignable to the same property in base type 'PM'.
+  Type '() => Promise<unknown>' is not assignable to type '() => string | undefined'.
+    Type 'Promise<unknown>' is not assignable to type 'string'.
+src/PM/node.ts(140,3): error TS2416: Property 'existsSync' in type 'PM_Node' is not assignable to the same property in base type 'PM'.
+  Type '(destFolder: string) => Promise<unknown>' is not assignable to type '(fp: string) => Promise<boolean>'.
+    Type 'Promise<unknown>' is not assignable to type 'Promise<boolean>'.
+      Type 'unknown' is not assignable to type 'boolean'.
+src/Project.tsx(196,38): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
   Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.
-src/ReportClient.tsx(33,45): error TS2304: Cannot find name 't'.
-src/ReportClient.tsx(161,38): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
+src/ReportClient.tsx(38,45): error TS2304: Cannot find name 't'.
+src/ReportClient.tsx(166,38): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
   Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.
 src/SubPackages/react-dom/component/web.ts(90,13): error TS2345: Argument of type 'CElement<any, TesterantoComponent>' is not assignable to parameter of type 'ReactNode'.
   Property 'children' is missing in type 'ComponentElement<any, TesterantoComponent>' but required in type 'ReactPortal'.
@@ -119,8 +89,9 @@ src/SubPackages/react/component/node.ts(84,14): error TS2349: This expression is
   Type 'unknown' has no call signatures.
 src/SubPackages/react/component/web.ts(83,14): error TS2349: This expression is not callable.
   Type 'unknown' has no call signatures.
-src/TestReport.tsx(170,56): error TS2739: Type '{ key: string; name: string; whens: { name: string; error: string; }[]; thens: { name: string; error: string; }[]; }' is missing the following properties from type '{ key: string; name: string; error: string[]; features: string[]; whens: { name: string; error: string; }[]; thens: { name: string; error: string; }[]; }': error, features
-src/TestReport.tsx(187,38): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
+src/TestReport.tsx(189,19): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
   Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.
-src/utils.ts(124,27): error TS2304: Cannot find name 'testName'.
+src/Types.ts(10,20): error TS2307: Cannot find module './PM/server.js' or its corresponding type declarations.
+src/Web.ts(61,14): error TS2554: Expected 0 arguments, but got 1.
+src/Web.ts(80,14): error TS2554: Expected 0 arguments, but got 1.
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.

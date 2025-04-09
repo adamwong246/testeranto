@@ -1,6 +1,7 @@
 import path from "path";
 
-import { IRunTime, IBuiltConfig, IRunnables, ITestTypes } from "./lib";
+import { IBuiltConfig, IRunTime, ITestTypes } from "./Types";
+import { IRunnables } from "./lib";
 
 export type ISummary = Record<
   string,
@@ -26,7 +27,7 @@ export const destinationOfRuntime = (
 
 export const tscPather = (
   entryPoint: string,
-  platform: "web" | "node",
+  platform: IRunTime,
   projectName: string
 ) => {
   return path.join(
@@ -41,7 +42,7 @@ export const tscPather = (
 
 export const lintPather = (
   entryPoint: string,
-  platform: "web" | "node",
+  platform: IRunTime,
   projectName: string
 ) => {
   return path.join(
@@ -56,7 +57,7 @@ export const lintPather = (
 
 export const bddPather = (
   entryPoint: string,
-  platform: "web" | "node",
+  platform: IRunTime,
   projectName: string
 ) => {
   return path.join(
@@ -71,7 +72,7 @@ export const bddPather = (
 
 export const promptPather = (
   entryPoint: string,
-  platform: "web" | "node",
+  platform: IRunTime,
   projectName: string
 ) => {
   return path.join(
@@ -120,9 +121,9 @@ export const getRunnables = (
       );
     }
 
-    if (cv[3].length) {
-      getRunnables(cv[3], testName, payload);
-    }
+    // if (cv[3].length) {
+    //   getRunnables(cv[3], testName, payload);
+    // }
 
     return pt;
   }, payload as IRunnables);

@@ -1,6 +1,6 @@
 import { ITTestResourceConfiguration } from "./lib/index.js";
 import { IGivens, BaseCheck, BaseSuite, BaseWhen, BaseThen, BaseGiven } from "./lib/abstractBase.js";
-import { PM } from "./PM/index.js";
+import { PM } from "./PM/server.js";
 import { ITestCheckCallback } from "./lib/types.js";
 export type ITestInterface<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>> = {
     assertThis: (x: I["then"]) => void;
@@ -16,7 +16,9 @@ export type INodeTestInterface<I extends Ibdd_in<unknown, unknown, unknown, unkn
 export type IPartialInterface<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>> = Partial<ITestInterface<I>>;
 export type IPartialNodeInterface<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>> = Partial<INodeTestInterface<I>>;
 export type IPartialWebInterface<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>> = Partial<IWebTestInterface<I>>;
-export type ITestSpecification<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>, O extends Ibdd_out<Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>> = (Suite: {
+type IT = Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>;
+type OT = Ibdd_out<Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>;
+export type ITestSpecification<I extends IT, O extends OT> = (Suite: {
     [K in keyof O["suites"]]: (name: string, givens: IGivens<I>, checks: BaseCheck<I, O>[]) => BaseSuite<I, O>;
 }, Given: {
     [K in keyof O["givens"]]: (features: string[], whens: BaseWhen<I>[], thens: BaseThen<I>[], ...xtrasB: O["givens"][K]) => BaseGiven<I>;
@@ -59,3 +61,28 @@ export type Ibdd_in<IInput, ISubject, IStore, ISelection, IGiven, IWhen, IThen> 
     when: IWhen;
     then: IThen;
 };
+export type IPluginFactory = (register: (entrypoint: any, sources: any) => any, entrypoints: any) => Plugin;
+export type IRunTime = `node` | `web` | "web_worker" | "pure";
+export type ITestTypes = [string, IRunTime, {
+    ports: number;
+}, ITestTypes[]];
+export type IBaseConfig = {
+    src: string;
+    clearScreen: boolean;
+    debugger: boolean;
+    externals: string[];
+    minify: boolean;
+    ports: string[];
+    tests: ITestTypes[];
+    nodePlugins: IPluginFactory[];
+    webPlugins: IPluginFactory[];
+    importPlugins: IPluginFactory[];
+    featureIngestor: (s: string) => Promise<string>;
+};
+export type IBuiltConfig = {
+    buildDir: string;
+} & IBaseConfig;
+export type IConfigV2 = {
+    projects: Record<string, IBaseConfig>;
+};
+export {};

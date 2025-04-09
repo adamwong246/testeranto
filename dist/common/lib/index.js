@@ -24,3 +24,7 @@ exports.DefaultTestInterface = DefaultTestInterface;
 exports.defaultTestResourceRequirement = {
     ports: 0,
 };
+// export type IPluginFactory = (
+//   register: (entrypoint, sources) => any,
+//   entrypoints
+// ) => Plugin;

@@ -27392,7 +27392,10 @@
   document.addEventListener("DOMContentLoaded", function() {
     const elem = document.getElementById("root");
     if (elem) {
-      import_client.default.createRoot(elem).render(import_react33.default.createElement(BddPage, {}, []));
+      if (elem) {
+        const root = import_client.default.createRoot(elem);
+        root.render(import_react33.default.createElement(BddPage, {}, []));
+      }
     }
   });
   console.log("hello BddPage!");

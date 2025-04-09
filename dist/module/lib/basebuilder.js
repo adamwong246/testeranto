@@ -37,9 +37,6 @@ export class BaseBuilder {
                         await puppetMaster.end(access);
                         res(true);
                     });
-                    // const numberOfFailures = Object.keys(suiteDone.givens).filter((k) => {
-                    //   return suiteDone.givens[k].error;
-                    // }).length;
                     const fails = suiteDone.fails;
                     const b = await puppetMaster.writeFileSync(`bdd_errors.txt`, fails.toString());
                     await puppetMaster.writeFileSync(`littleBoard.html`, `

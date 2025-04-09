@@ -20,3 +20,7 @@ export const DefaultTestInterface = (p) => {
 export const defaultTestResourceRequirement = {
     ports: 0,
 };
+// export type IPluginFactory = (
+//   register: (entrypoint, sources) => any,
+//   entrypoints
+// ) => Plugin;

@@ -56,9 +56,9 @@ const getRunnables = (tests, projectName, payload = {
                 .concat("mjs")
                 .join(".")}`);
         }
-        if (cv[3].length) {
-            (0, exports.getRunnables)(cv[3], testName, payload);
-        }
+        // if (cv[3].length) {
+        //   getRunnables(cv[3], testName, payload);
+        // }
         return pt;
     }, payload);
 };

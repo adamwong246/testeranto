@@ -7,8 +7,13 @@ import "./style.css"
 import { IRunTime, ITestTypes, IBuiltConfig } from "./lib";
 import { Footer } from "./Footer";
 import { Table } from "react-bootstrap";
-import { ISummary } from "./utils";
 
+type ISummary = {
+  runTimeError: number | "?";
+  typeErrors: number | "?";
+  staticErrors: number | "?";
+  prompt: string | "?";
+};
 
 type ICollation = {
   name: string;

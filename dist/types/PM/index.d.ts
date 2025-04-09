@@ -1,5 +1,5 @@
-import { CdpPage } from "puppeteer-core/lib/esm/puppeteer/puppeteer-core-browser";
-import { ScreenRecorderOptions } from "puppeteer-core/lib/esm/puppeteer";
+import { Page } from "puppeteer-core";
+import { CdpPage, ScreenRecorderOptions } from "puppeteer-core/lib/esm/puppeteer";
 import { ITLog, ITTestResourceConfiguration } from "../lib";
 export declare abstract class PM {
     server: any;
@@ -7,30 +7,27 @@ export declare abstract class PM {
     abstract start(): Promise<void>;
     abstract stop(): Promise<void>;
     abstract testArtiFactoryfileWriter(tLog: ITLog, callback: (Promise: any) => void): any;
-    abstract createWriteStream(filepath: string): Promise<string>;
-    abstract writeFileSync(fp: string, contents: string): Promise<boolean>;
-    abstract mkdirSync(a: string): any;
-    abstract existsSync(fp: string): boolean;
-    abstract write(accessObject: {
-        uid: number;
-    }, contents: string): Promise<boolean>;
-    abstract end(accessObject: {
-        uid: number;
-    }): boolean;
-    abstract customScreenShot(opts: object, page?: string): any;
-    abstract screencast(opts: ScreenRecorderOptions, p?: any): any;
-    abstract screencastStop(s: string): any;
-    abstract page(): string | undefined;
-    abstract click(selector: string): any;
-    abstract focusOn(selector: string): any;
-    abstract typeInto(value: string): any;
-    abstract getValue(value: string): any;
-    abstract getAttribute(selector: string, attribute: string): any;
-    abstract isDisabled(selector: string): Promise<boolean>;
     abstract $(selector: string): any;
-    abstract newPage(): CdpPage;
-    abstract goto(p: any, url: string): any;
+    abstract click(selector: string): any;
     abstract closePage(p: any): any;
-    abstract waitForSelector(p: any, sel: string): any;
+    abstract createWriteStream(filepath: string, testName: string): Promise<string>;
     abstract customclose(): any;
+    abstract customScreenShot(opts: object, page?: string): any;
+    abstract end(uid: number): Promise<boolean>;
+    abstract existsSync(fp: string): Promise<boolean>;
+    abstract focusOn(selector: string): any;
+    abstract getAttribute(selector: string, attribute: string): any;
+    abstract getValue(value: string): any;
+    abstract goto(p: any, url: string): any;
+    abstract isDisabled(selector: string): Promise<boolean>;
+    abstract mkdirSync(a: string): any;
+    abstract newPage(): CdpPage;
+    abstract page(): string | undefined;
+    abstract pages(): string[];
+    abstract screencast(o: ScreenRecorderOptions, p: Page | string): any;
+    abstract screencastStop(s: string): any;
+    abstract typeInto(selector: string, value: string): any;
+    abstract waitForSelector(p: any, sel: string): any;
+    abstract write(uid: number, contents: string): Promise<boolean>;
+    abstract writeFileSync(f: string, c: string, t: string): Promise<boolean>;
 }

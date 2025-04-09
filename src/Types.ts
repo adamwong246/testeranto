@@ -7,7 +7,7 @@ import {
   BaseThen,
   BaseGiven,
 } from "./lib/abstractBase.js";
-import { PM } from "./PM/index.js";
+import { PM } from "./PM/server.js";
 import { ITestCheckCallback } from "./lib/types.js";
 
 export type ITestInterface<
@@ -229,4 +229,37 @@ export type Ibdd_in<
   given: IGiven;
   when: IWhen;
   then: IThen;
+};
+
+///////////////////////////////////////////////
+
+export type IPluginFactory = (
+  register: (entrypoint, sources) => any,
+  entrypoints
+) => Plugin;
+
+export type IRunTime = `node` | `web` | "web_worker" | "pure";
+
+export type ITestTypes = [string, IRunTime, { ports: number }, ITestTypes[]];
+
+export type IBaseConfig = {
+  src: string;
+  clearScreen: boolean;
+  debugger: boolean;
+  externals: string[];
+  minify: boolean;
+  ports: string[];
+  tests: ITestTypes[];
+
+  nodePlugins: IPluginFactory[];
+  webPlugins: IPluginFactory[];
+  importPlugins: IPluginFactory[];
+
+  featureIngestor: (s: string) => Promise<string>;
+};
+
+export type IBuiltConfig = { buildDir: string } & IBaseConfig;
+
+export type IConfigV2 = {
+  projects: Record<string, IBaseConfig>;
 };

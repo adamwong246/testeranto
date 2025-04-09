@@ -48,7 +48,7 @@ export default (
       inputFilesPluginFactory,
       {
         name: "rebuild-notify",
-        setup(build) {
+        setup: (build: any) => {
           build.onEnd((result) => {
             console.log(
               `> pure build ended with ${result.errors.length} errors`
@@ -62,8 +62,7 @@ export default (
         },
       },
 
-      ...((config.purePlugins || []).map((p) => p(register, entryPoints)) ||
-        []),
+      ...((config.nodePlugins || []).map((p) => p(register, entryPoints)) || []),
     ],
   };
 };
