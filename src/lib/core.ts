@@ -1,4 +1,3 @@
-import { IStore } from "../SubPackages/react/jsx";
 import {
   ITestSpecification,
   ITestImplementation,
@@ -45,7 +44,7 @@ export default abstract class Testeranto<
       input,
 
       class extends BaseSuite<I, O> {
-        afterAll(store: IStore, artifactory: ITestArtifactory, pm: IPM) {
+        afterAll(store: I["istore"], artifactory: ITestArtifactory, pm: IPM) {
           return fullTestInterface.afterAll(store, pm);
         }
 

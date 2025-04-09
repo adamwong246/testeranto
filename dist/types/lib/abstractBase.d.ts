@@ -101,7 +101,7 @@ export declare abstract class BaseThen<I extends IT> {
     test(store: I["istore"], testResourceConfiguration: any, tLog: ITLog, pm: IPM, filepath: string): Promise<I["then"] | undefined>;
     check(): void;
 }
-export declare abstract class BaseCheck<I extends IT = IT, O extends OT = OT> {
+export declare abstract class BaseCheck<I extends IT = IT> {
     key: string;
     name: string;
     features: string[];

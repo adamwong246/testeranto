@@ -9,30 +9,19 @@ src/Project.tsx(196,38): error TS2345: Argument of type 'FunctionComponentElemen
   Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.
 src/ReportClient.tsx(166,38): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
   Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.
-src/SubPackages/react-dom/component/node.ts(44,44): error TS2344: Type 'I' does not satisfy the constraint 'IT'.
-src/SubPackages/react-dom/component/node.ts(45,42): error TS2344: Type 'I' does not satisfy the constraint 'IT'.
-src/SubPackages/react-dom/component/node.ts(48,21): error TS2558: Expected 3 type arguments, but got 2.
-src/SubPackages/react-dom/component/node.ts(55,14): error TS2349: This expression is not callable.
-  Type 'unknown' has no call signatures.
-src/SubPackages/react-dom/component/web.ts(11,3): error TS2305: Module '"../../../Types"' has no exported member 'MT'.
-src/SubPackages/react-dom/component/web.ts(84,13): error TS2345: Argument of type 'CElement<any, TesterantoComponent>' is not assignable to parameter of type 'ReactNode'.
-  Property 'children' is missing in type 'ComponentElement<any, TesterantoComponent>' but required in type 'ReactPortal'.
-src/SubPackages/react-dom/jsx/node.ts(42,21): error TS2558: Expected 3 type arguments, but got 2.
-src/SubPackages/react-dom/jsx/node.ts(50,17): error TS2345: Argument of type 'FunctionComponentElement<any>' is not assignable to parameter of type 'I["istore"] | PromiseLike<I["istore"]>'.
-  Type 'FunctionComponentElement<any>' is not assignable to type 'I["istore"]'.
-    'I["istore"]' could be instantiated with an arbitrary type which could be unrelated to 'FunctionComponentElement<any>'.
-src/SubPackages/react-dom/jsx/web.ts(61,24): error TS2558: Expected 3 type arguments, but got 2.
-src/SubPackages/react-dom/jsx/web.ts(71,38): error TS2339: Property 'createRoot' does not exist on type 'typeof import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/index")'.
-src/SubPackages/react-test-renderer/component/index.ts(9,3): error TS2440: Import declaration conflicts with local declaration of 'ITestSpecification'.
-src/SubPackages/react-test-renderer/component/interface.ts(16,52): error TS2345: Argument of type 'CElement<any, Component<any, any, any>>' is not assignable to parameter of type 'ReactElement<unknown, string | JSXElementConstructor<any>>'.
-  Types of property 'type' are incompatible.
-    Type 'ComponentClass<any, any>' is not assignable to type 'string | JSXElementConstructor<any>'.
-      Type 'ComponentClass<any, any>' is not assignable to type 'new (props: any) => Component<any, any, any>'.
-        Construct signature return types 'Component<any, any, any>' and 'Component<any, any, any>' are incompatible.
-          The types returned by 'render()' are incompatible between these types.
-            Type 'React.ReactNode' is not assignable to type 'import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/node_modules/@types/react/index").ReactNode'.
-              Type 'ReactElement<any, string | JSXElementConstructor<any>>' is not assignable to type 'ReactNode'.
-                Property 'children' is missing in type 'ReactElement<any, string | JSXElementConstructor<any>>' but required in type 'ReactPortal'.
+src/SubPackages/react-dom/component/dynamic.ts(69,11): error TS2552: Cannot find name 'createElement'. Did you mean 'frameElement'?
+src/SubPackages/react-dom/component/dynamic.ts(93,7): error TS2552: Cannot find name 'testInterface'. Did you mean 'testInterfacer'?
+src/SubPackages/react-dom/jsx/dynamic.ts(25,17): error TS2345: Argument of type 'null' is not assignable to parameter of type 'HTMLElement | PromiseLike<HTMLElement>'.
+src/SubPackages/react-dom/jsx/dynamic.ts(30,17): error TS2345: Argument of type 'FunctionComponentElement<any>' is not assignable to parameter of type 'HTMLElement | PromiseLike<HTMLElement>'.
+src/SubPackages/react-dom/jsx/static.ts(44,11): error TS2345: Argument of type 'FunctionComponentElement<{ done: (ref: MutableRefObject<any>) => any; innerComp: IInput; }>' is not assignable to parameter of type 'ReactNode'.
+  Property 'children' is missing in type 'FunctionComponentElement<{ done: (ref: MutableRefObject<any>) => any; innerComp: IInput; }>' but required in type 'ReactPortal'.
+src/SubPackages/react-test-renderer/component/interface.ts(14,34): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'ReactTestRenderer' is not assignable to parameter of type 'string | ComponentClass<any, any> | FunctionComponent<any>'.
+src/SubPackages/react-test-renderer/component/interface.ts(18,52): error TS2345: Argument of type 'DetailedReactHTMLElement<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>' is not assignable to parameter of type 'ReactElement<unknown, string | JSXElementConstructor<any>>'.
+  Types of property 'key' are incompatible.
+    Type 'Key | null' is not assignable to type 'string | null'.
+      Type 'number' is not assignable to type 'string'.
 src/SubPackages/react-test-renderer/fc/node.ts(57,8): error TS2558: Expected 3 type arguments, but got 2.
 src/SubPackages/react-test-renderer/fc/node.ts(66,13): error TS2345: Argument of type 'DetailedReactHTMLElement<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>' is not assignable to parameter of type 'ReactElement<unknown, string | JSXElementConstructor<any>>'.
   Types of property 'key' are incompatible.
@@ -52,7 +41,11 @@ src/SubPackages/react-test-renderer/fc/web.ts(63,33): error TS2769: No overload 
   The last overload gave the following error.
     Argument of type 'I["isubject"]' is not assignable to parameter of type 'string | FunctionComponent<(c?: any) => I["given"]> | ComponentClass<(c?: any) => I["given"], any>'.
       Type 'I["isubject"]' is not assignable to type 'ComponentClass<(c?: any) => I["given"], any>'.
+src/SubPackages/react-test-renderer/jsx-promised/node.ts(4,10): error TS2305: Module '"../../react/jsx"' has no exported member 'ITestImpl'.
+src/SubPackages/react-test-renderer/jsx-promised/node.ts(4,21): error TS2305: Module '"../../react/jsx"' has no exported member 'ITestSpec'.
 src/SubPackages/react-test-renderer/jsx-promised/node.ts(30,15): error TS2558: Expected 3 type arguments, but got 2.
+src/SubPackages/react-test-renderer/jsx-promised/web.ts(4,10): error TS2305: Module '"../../react/jsx"' has no exported member 'ITestImpl'.
+src/SubPackages/react-test-renderer/jsx-promised/web.ts(4,21): error TS2305: Module '"../../react/jsx"' has no exported member 'ITestSpec'.
 src/SubPackages/react-test-renderer/jsx-promised/web.ts(30,15): error TS2558: Expected 3 type arguments, but got 2.
 src/SubPackages/react-test-renderer/jsx/index.ts(27,12): error TS2349: This expression is not callable.
   Type 'void' has no call signatures.
@@ -81,14 +74,6 @@ src/SubPackages/react-test-renderer/MemoExoticComponent/node.ts(43,57): error TS
         Type 'I["isubject"]' is not assignable to type 'ComponentClass<(c?: any) => I["given"], any>'.
           Type 'ReactTestRenderer' is not assignable to type 'ComponentClass<(c?: any) => I["given"], any>'.
             Type 'ReactTestRenderer' provides no match for the signature 'new (props: (c?: any) => I["given"], context?: any): Component<(c?: any) => I["given"], any, any>'.
-src/SubPackages/react/component/node.ts(77,21): error TS2558: Expected 3 type arguments, but got 2.
-src/SubPackages/react/component/node.ts(84,14): error TS2349: This expression is not callable.
-  Type 'unknown' has no call signatures.
-src/SubPackages/react/component/web.ts(76,21): error TS2558: Expected 3 type arguments, but got 2.
-src/SubPackages/react/component/web.ts(83,14): error TS2349: This expression is not callable.
-  Type 'unknown' has no call signatures.
-src/SubPackages/react/jsx/node.ts(34,21): error TS2558: Expected 3 type arguments, but got 2.
-src/SubPackages/react/jsx/web.ts(39,21): error TS2558: Expected 3 type arguments, but got 2.
 src/TestReport.tsx(189,19): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
   Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.
 src/Web.ts(47,14): error TS2554: Expected 0 arguments, but got 1.

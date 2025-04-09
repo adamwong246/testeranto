@@ -221,7 +221,7 @@ export abstract class BaseBuilder<
       whens,
       thens,
       x
-    ) => BaseCheck<I, O>
+    ) => BaseCheck<I>
   > {
     return this.checkOverides;
   }

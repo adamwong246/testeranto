@@ -1,9 +1,11 @@
 import React from "react";
 import renderer, { act } from "react-test-renderer";
 
-import { ISelection, IStore } from ".";
+import { IPartialInterface } from "../../../Types";
 
-export const testInterface = {
+import { I } from ".";
+
+export const testInterface: IPartialInterface<I> = {
   beforeEach: function (
     CComponent,
     propsAndChildren: () => any
@@ -29,13 +31,13 @@ export const testInterface = {
   // andWhen: function (s: Store, whenCB): Promise<Selection> {
   //   return whenCB()(s);
   // },
-  butThen: async function (s: IStore, thenCB, tr): Promise<ISelection> {
+  butThen: async function (s, thenCB, tr) {
     return thenCB(s);
   },
-  afterEach: async function (store: IStore, ndx, artificer) {
+  afterEach: async function (store, ndx, artificer) {
     return {};
   },
-  afterAll: (store: IStore, artificer) => {
+  afterAll: (store, artificer) => {
     return;
   },
 };

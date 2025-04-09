@@ -21,5 +21,5 @@ export declare abstract class BaseBuilder<I extends IT, O extends OT, SuiteExten
     Given(): Record<keyof GivenExtensions, (name: string, features: string[], whens: BaseWhen<I>[], thens: BaseThen<I>[], gcb: any) => BaseGiven<I>>;
     When(): Record<keyof WhenExtensions, (arg0: I["istore"], ...arg1: any) => BaseWhen<I>>;
     Then(): Record<keyof ThenExtensions, (selection: I["iselection"], expectation: any) => BaseThen<I>>;
-    Check(): Record<keyof CheckExtensions, (feature: string, callback: (whens: any, thens: any, pm: IPM) => any, whens: any, thens: any, x: any) => BaseCheck<I, O>>;
+    Check(): Record<keyof CheckExtensions, (feature: string, callback: (whens: any, thens: any, pm: IPM) => any, whens: any, thens: any, x: any) => BaseCheck<I>>;
 }

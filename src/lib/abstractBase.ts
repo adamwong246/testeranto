@@ -566,7 +566,7 @@ export abstract class BaseThen<I extends IT> {
   check() {}
 }
 
-export abstract class BaseCheck<I extends IT = IT, O extends OT = OT> {
+export abstract class BaseCheck<I extends IT = IT> {
   key: string;
   name: string;
   features: string[];

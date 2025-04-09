@@ -1,7 +1,4 @@
-import { renderToStaticMarkup, renderToStaticNodeStream } from "react-dom/server";
-import Stream from "stream";
-import { Ibdd_in, Ibdd_out, ITestImplementation, ITestSpecification } from "../../../Types";
-import { IInput, ISelection, IStore } from "./index.js";
-export { renderToStaticMarkup, renderToStaticNodeStream, Stream };
-declare const _default: <I extends Ibdd_in<IInput, unknown, ISelection, IStore, unknown, unknown, unknown>, O extends Ibdd_out<Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>, Record<string, any>>>(testImplementations: ITestImplementation<I, O>, testSpecifications: ITestSpecification<I, O>, testInput: I["iinput"]) => Promise<import("../../../lib/core.js").default<I, O, unknown>>;
+import { ITestImplementation, ITestSpecification, OT } from "../../../Types";
+import { I } from "./static.js";
+declare const _default: <O extends OT, M>(testImplementations: ITestImplementation<I, O, M>, testSpecifications: ITestSpecification<I, O>, testInput: I["iinput"]) => Promise<import("../../../lib/core.js").default<I, O, M>>;
 export default _default;

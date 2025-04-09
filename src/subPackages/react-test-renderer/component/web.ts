@@ -1,5 +1,6 @@
-import { ITestImplementation, ITestSpecification, OT } from "../../../Types.js";
 import Testeranto from "../../../Web.js";
+
+import { ITestImplementation, ITestSpecification, OT } from "../../../Types.js";
 
 import { IInput, I } from "./index.js";
 import { testInterface } from "./interface";

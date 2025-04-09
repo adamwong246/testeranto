@@ -1,87 +1,17 @@
-import React from "react";
-
 import Testeranto from "../../../Node.js";
+import { ITestImplementation, ITestSpecification, OT } from "../../../Types";
 
-import {
-  Ibdd_in,
-  Ibdd_out,
-  ITestImplementation,
-  ITestSpecification,
-} from "../../../Types";
+import { reactInterfacer, I } from "./index.js";
 
-type IInput = typeof React.Component;
-type ISelection = React.CElement<any, any>;
-type IStore = React.CElement<any, any>;
-type ISubject = React.CElement<any, any>;
-
-export type IImpl<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
-  O extends Ibdd_out<
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
-  >
-> = ITestImplementation<I, O>;
-
-export type ISpec<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
-  O extends Ibdd_out<
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
-  >
-> = ITestSpecification<I, O>;
-
-export default <
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
-  O extends Ibdd_out<
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>
-  >
->(
-  testImplementations: ITestImplementation<I, O>,
-  testSpecifications: ISpec<I, O>,
-  testInput: IInput
+export default <O extends OT, M>(
+  testImplementations: ITestImplementation<I, O, M>,
+  testSpecifications: ITestSpecification<I, O>,
+  testInput: I["iinput"]
 ) => {
-  return Testeranto<I, O>(testInput, testSpecifications, testImplementations, {
-    beforeEach: async (): Promise<IStore> => {
-      return new Promise((resolve, rej) => {
-        resolve(React.createElement(testInput, {}, []));
-      });
-    },
-    andWhen: function (s: IStore, whenCB): Promise<ISelection> {
-      return whenCB()(s);
-    },
-  });
+  return Testeranto<I, O, M>(
+    testInput,
+    testSpecifications,
+    testImplementations,
+    reactInterfacer(testInput)
+  );
 };
