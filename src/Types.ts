@@ -135,7 +135,27 @@ export type ITestImplementation<
     };
   },
   modifier
->;
+> & {
+  suites: {
+    [K in keyof O["suites"]]: string;
+  };
+  givens: {
+    [K in keyof O["givens"]]: (...Ig: O["givens"][K]) => I["given"];
+  };
+  whens: {
+    [K in keyof O["whens"]]: (
+      ...Iw: O["whens"][K]
+    ) => (zel: I["iselection"], utils: PM) => Promise<I["when"]>;
+  };
+  thens: {
+    [K in keyof O["thens"]]: (
+      ...It: O["thens"][K]
+    ) => (ssel: I["iselection"], utils: PM) => I["then"];
+  };
+  checks: {
+    [K in keyof O["checks"]]: (...Ic: O["checks"][K]) => I["given"];
+  };
+};
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -176,8 +196,8 @@ export type Ibdd_in<
 ///////////////////////////////////////////////
 
 export type IPluginFactory = (
-  register: (entrypoint: string, sources: string[]) => any,
-  entrypoints: string[]
+  register?: (entrypoint: string, sources: string[]) => any,
+  entrypoints?: string[]
 ) => Plugin;
 
 export type IRunTime = `node` | `web` | "pure";

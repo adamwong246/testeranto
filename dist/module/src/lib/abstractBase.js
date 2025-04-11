@@ -43,7 +43,7 @@ export class BaseSuite {
         // console.log("\nSuite:", this.index, this.name);
         tLog("\nSuite:", this.index, this.name);
         const sNdx = this.index;
-        const sName = this.name;
+        // const sName = this.name;
         const beforeAllProxy = new Proxy(pm, {
             get(target, prop, receiver) {
                 if (prop === "customScreenShot") {
@@ -155,6 +155,7 @@ export class BaseGiven {
             this.store = await this.givenThat(subject, testResourceConfiguration, givenArtifactory, this.givenCB, this.initialValues, beforeEachProxy);
         }
         catch (e) {
+            console.error("failure 4 ", e);
             this.error = e;
             throw e;
         }
@@ -164,11 +165,19 @@ export class BaseGiven {
                 await whenStep.test(this.store, testResourceConfiguration, tLog, pm, `suite-${suiteNdx}/given-${key}/when/${whenNdx}`);
             }
             for (const [thenNdx, thenStep] of this.thens.entries()) {
-                const t = await thenStep.test(this.store, testResourceConfiguration, tLog, pm, `suite-${suiteNdx}/given-${key}/then-${thenNdx}`);
-                tester(t);
+                const t = await thenStep
+                    .test(this.store, testResourceConfiguration, tLog, pm, `suite-${suiteNdx}/given-${key}/then-${thenNdx}`)
+                    .catch((x) => {
+                    console.log("test failed 111", x);
+                });
+                return tester(t);
+                // ((t) => {
+                //   return tester(t);
+                // })();
             }
         }
         catch (e) {
+            console.error("failure 3 ", e);
             // this.error = e;
             this.failed = true;
             tLog(e.stack);
@@ -193,9 +202,9 @@ export class BaseGiven {
                 afterEachProxy);
             }
             catch (e) {
+                console.error("afterEach failed!", e);
                 this.failed = e;
                 throw e;
-                // console.error("afterEach failed!", e);
                 // this.error = e.message;
             }
         }
@@ -257,31 +266,65 @@ export class BaseThen {
         };
     }
     async test(store, testResourceConfiguration, tLog, pm, filepath) {
-        this.go = async (s) => {
-            tLog(" Then!!!:", this.name);
-            try {
-                await this.thenCB(s);
-            }
-            catch (e) {
-                console.log("test failed 1", e);
-                this.error = e;
-                throw e;
-            }
-        };
         try {
-            const butThenProxy = new Proxy(pm, {
-                get(target, prop, receiver) {
-                    if (prop === "customScreenShot") {
-                        return (opts, p) => target.customScreenShot(Object.assign(Object.assign({}, opts), { path: `${filepath}/${opts.path}` }), p);
-                    }
-                    if (prop === "writeFileSync") {
-                        return (fp, contents) => target[prop](`${filepath}/${fp}`, contents);
-                    }
-                    /* @ts-ignore:next-line */
-                    return Reflect.get(...arguments);
-                },
-            });
-            return this.butThen(store, this.go, testResourceConfiguration, butThenProxy).catch((e) => {
+            return this.butThen(store, async (s) => {
+                tLog(" Then!!!:", this.name);
+                this.thenCB(s)
+                    .then((x) => {
+                    console.log("foo", x);
+                })
+                    .catch((e) => {
+                    console.log("test failed 1", e);
+                    this.error = e;
+                    throw e;
+                });
+                // try {
+                //   await this.thenCB(s);
+                // } catch (e) {
+                //   console.log("test failed 1", e);
+                //   console.trace();
+                //   this.error = e;
+                //   throw e;
+                // }
+            }, testResourceConfiguration, 
+            // new Proxy(pm, {
+            //   apply: function (target, thisArg, argumentsList) {
+            //     try {
+            //       return Reflect.apply(target, thisArg, argumentsList);
+            //     } catch (error) {
+            //       console.error(`Error calling function:`, error);
+            //       // Handle the error
+            //       return undefined;
+            //     }
+            //   },
+            //   get: (target, prop, receiver) => {
+            //     if (prop === "customScreenShot") {
+            //       return (opts, p) =>
+            //         target.customScreenShot(
+            //           {
+            //             ...opts,
+            //             path: `${filepath}/${opts.path}`,
+            //           },
+            //           p
+            //         );
+            //     }
+            //     if (prop === "writeFileSync") {
+            //       return (fp, contents) =>
+            //         target[prop](`${filepath}/${fp}`, contents);
+            //     }
+            //     /* @ts-ignore:next-line */
+            //     try {
+            //       return Reflect.get(...arguments);
+            //     } catch (e) {
+            //       console.log("test failed 11", e);
+            //       console.trace();
+            //       this.error = e;
+            //       throw e;
+            //     }
+            //   },
+            // })
+            pm).catch((e) => {
+                console.log("test failed 3", e);
                 this.error = e;
                 throw e;
             });
@@ -305,7 +348,7 @@ export class BaseCheck {
         return {
             key: this.key,
             name: this.name,
-            functionAsString: this.checkCB.toString(),
+            // functionAsString: this.checkCB.toString(),
             features: this.features,
         };
     }

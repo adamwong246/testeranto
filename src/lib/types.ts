@@ -1,4 +1,3 @@
-import { PM } from "../PM";
 import { PM_Node } from "../PM/node";
 import { PM_Pure } from "../PM/pure";
 import { PM_Web } from "../PM/web";
@@ -19,7 +18,7 @@ export type ITestCheckCallback<I extends IT, O extends OT> = {
   [K in keyof O["checks"]]: (
     name: string,
     features: string[],
-    checkCallback: (store: I["istore"], pm: PM) => Promise<any>,
+    checkCallback: (store: I["istore"], pm: IPM) => Promise<any>,
 
     ...xtrasA: O["checks"][K]
   ) => BaseCheck<I>;

@@ -4,7 +4,6 @@ import { PM_Node } from "../PM/node.js";
 import { PM_Web } from "../PM/web.js";
 import {
   Ibdd_in,
-  Ibdd_out,
   ITestInterface,
   ITestconfig,
   IBuiltConfig,
@@ -17,9 +16,7 @@ import {
 import { IGivens, BaseCheck, BaseSuite } from "./abstractBase.js";
 import { IPM } from "./types.js";
 
-export const BaseTestInterface: ITestInterface<
-  Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>
-> = {
+export const BaseTestInterface: ITestInterface<IT> = {
   beforeAll: async (s) => s,
   beforeEach: async function (
     subject: any,
@@ -31,32 +28,19 @@ export const BaseTestInterface: ITestInterface<
     return subject as any;
   },
   afterEach: async (s) => s,
-  afterAll: (
-    store: Ibdd_in<
-      unknown,
-      unknown,
-      unknown,
-      unknown,
-      unknown,
-      unknown,
-      unknown
-    >["istore"]
-  ) => undefined,
+  afterAll: (store: IT["istore"]) => undefined,
   butThen: async (
-    store: Ibdd_in<
-      unknown,
-      unknown,
-      unknown,
-      unknown,
-      unknown,
-      unknown,
-      unknown
-    >["istore"],
-    thenCb: any
+    store: IT["istore"],
+    thenCb: (s: IT["iselection"]) => Promise<IT["isubject"]>
   ) => {
-    try {
-      thenCb(store);
-    } catch (e) {}
+    // thenCb(store);
+
+    return thenCb(store);
+    //   thenCb(store);
+    // } catch (e) {
+    //   console.log("mark777", e);
+    //   throw e;
+    // }
   },
   andWhen: async (a) => a,
   assertThis: () => null,

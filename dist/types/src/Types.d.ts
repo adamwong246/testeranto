@@ -62,7 +62,7 @@ export type Ibdd_in<IInput, ISubject, IStore, ISelection, IGiven, IWhen, IThen> 
     when: IWhen;
     then: IThen;
 };
-export type IPluginFactory = (register: (entrypoint: string, sources: string[]) => any, entrypoints: string[]) => Plugin;
+export type IPluginFactory = (register?: (entrypoint: string, sources: string[]) => any, entrypoints?: string[]) => Plugin;
 export type IRunTime = `node` | `web` | "pure";
 export type ITestTypes = [string, IRunTime, {
     ports: number;

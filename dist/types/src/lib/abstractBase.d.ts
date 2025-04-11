@@ -73,7 +73,7 @@ export declare abstract class BaseGiven<I extends IT = IT> {
     abstract givenThat(subject: I["isubject"], testResourceConfiguration: any, artifactory: ITestArtifactory, givenCB: I["given"], initialValues: any, pm: IPM): Promise<I["istore"]>;
     afterEach(store: I["istore"], key: string, artifactory: ITestArtifactory, pm: IPM): Promise<unknown>;
     abstract uberCatcher(e: any): any;
-    give(subject: I["isubject"], key: string, testResourceConfiguration: ITTestResourceConfiguration, tester: (t: Awaited<I["then"]> | undefined) => boolean, artifactory: ITestArtifactory, tLog: ITLog, pm: IPM, suiteNdx: number): Promise<I["istore"]>;
+    give(subject: I["isubject"], key: string, testResourceConfiguration: ITTestResourceConfiguration, tester: (t: Awaited<I["then"]> | undefined) => boolean, artifactory: ITestArtifactory, tLog: ITLog, pm: IPM, suiteNdx: number): Promise<boolean | I["istore"]>;
 }
 export declare abstract class BaseWhen<I extends IT> {
     name: string;
@@ -89,8 +89,7 @@ export declare abstract class BaseWhen<I extends IT> {
 }
 export declare abstract class BaseThen<I extends IT> {
     name: string;
-    thenCB: (storeState: I["iselection"]) => I["then"];
-    go: (storeState: I["iselection"]) => I["then"];
+    thenCB: (storeState: I["iselection"]) => Promise<I["then"]>;
     error: boolean;
     constructor(name: string, thenCB: (val: I["iselection"]) => I["then"]);
     toObj(): {
@@ -114,7 +113,6 @@ export declare abstract class BaseCheck<I extends IT = IT> {
     toObj(): {
         key: string;
         name: string;
-        functionAsString: string;
         features: string[];
     };
     afterEach(store: I["istore"], key: string, artifactory: ITestArtifactory, pm: IPM): Promise<unknown>;

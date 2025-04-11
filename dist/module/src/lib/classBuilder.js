@@ -24,7 +24,18 @@ export class ClassBuilder extends BaseBuilder {
         }, {});
         const classyThens = Object.entries(testImplementation.thens).reduce((a, [key, thEn]) => {
             a[key] = (expected, x) => {
-                return new thenKlasser.prototype.constructor(`${thEn.name}: ${expected && expected.toString()}`, thEn(expected));
+                return new thenKlasser.prototype.constructor(`${thEn.name}: ${expected && expected.toString()}`, 
+                // () => {
+                //   thEn(expected);
+                //   // return new Promise((res), rej) => {
+                //   // }
+                //   // try {
+                //   //   thEn(expected);
+                //   // } catch (c) {
+                //   //   console.log("mark99");
+                //   // }
+                // },
+                thEn(expected));
             };
             return a;
         }, {});

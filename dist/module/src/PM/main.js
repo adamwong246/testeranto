@@ -306,24 +306,40 @@ ${addableFiles
             //     }
             //   })
             // );
-            await import(`${builtfile}?cacheBust=${Date.now()}`).then((module) => {
-                return module.default.then((defaultModule) => {
-                    defaultModule
-                        .receiveTestResourceConfig(argz)
-                        .then(async (results) => {
-                        this.receiveFeatures(results.features, destFolder, src, "pure");
-                        statusMessagePretty(results.fails, src);
-                        this.bddTestIsNowDone(src, results.fails);
+            try {
+                await import(`${builtfile}?cacheBust=${Date.now()}`).then((module) => {
+                    return module.default
+                        .then((defaultModule) => {
+                        defaultModule
+                            .receiveTestResourceConfig(argz)
+                            .then(async (results) => {
+                            this.receiveFeatures(results.features, destFolder, src, "pure");
+                            statusMessagePretty(results.fails, src);
+                            this.bddTestIsNowDone(src, results.fails);
+                        })
+                            .catch((e) => {
+                            console.log(ansiC.red(ansiC.inverse(`${src} errored with: ${e}`)));
+                            this.bddTestIsNowDone(src, -1);
+                        })
+                            .finally(() => {
+                            webSideCares.forEach((webSideCar) => webSideCar.close());
+                        });
                     })
                         .catch((e) => {
-                        console.log(ansiC.red(ansiC.inverse(`${src} errored with: ${e}`)));
+                        console.log(ansiC.red(ansiC.inverse(`${src} errored with: ${e}. Check ${reportDest}/error.txt for more info`)));
+                        this.writeFileSync(`${reportDest}/error.txt`, e.stack, src);
                         this.bddTestIsNowDone(src, -1);
-                    })
-                        .finally(() => {
-                        webSideCares.forEach((webSideCar) => webSideCar.close());
+                        statusMessagePretty(-1, src);
+                        // console.error(e);
                     });
                 });
-            });
+            }
+            catch (e) {
+                console.log(ansiC.red(ansiC.inverse(`${src} errored with: ${e}. Check ${reportDest}/error.txt for more info`)));
+                this.writeFileSync(`${reportDest}/error.txt`, e.stack, src);
+                this.bddTestIsNowDone(src, -1);
+                statusMessagePretty(-1, src);
+            }
             // console.log("portsToUse", portsToUse);
             for (let i = 0; i <= portsToUse.length; i++) {
                 if (portsToUse[i]) {
@@ -449,11 +465,34 @@ ${addableFiles
                 });
             });
             const oStream = fs.createWriteStream(`${reportDest}/console_log.txt`);
-            const child = spawn("node", [builtfile, testResources], {
+            const child = spawn("node", [builtfile, testResources, "--trace-warnings"], {
                 stdio: ["pipe", "pipe", "pipe", "ipc"],
                 // silent: true
             });
+            // const child = spawn(
+            //   "node",
+            //   ["inspect", builtfile, testResources, "--trace-warnings"],
+            //   {
+            //     stdio: ["pipe", "pipe", "pipe", "ipc"],
+            //     env: {
+            //       NODE_INSPECT_RESUME_ON_START: "1",
+            //     },
+            //     // silent: true
+            //   }
+            // );
+            // console.log(
+            //   "spawning",
+            //   "node",
+            //   ["inspect", builtfile, testResources, "--trace-warnings"],
+            //   {
+            //     NODE_INSPECT_RESUME_ON_START: "1",
+            //   }
+            // );
             const p = destFolder + "/pipe";
+            const errFile = `${reportDest}/error.txt`;
+            if (fs.existsSync(errFile)) {
+                fs.rmSync(errFile);
+            }
             server.listen(p, () => {
                 var _a, _b;
                 (_a = child.stderr) === null || _a === void 0 ? void 0 : _a.on("data", (data) => {
@@ -477,9 +516,26 @@ ${addableFiles
                         this.bddTestIsNowDone(src, code);
                         statusMessagePretty(code, src);
                     }
-                    // haltReturns = true;
+                    if (fs.existsSync(p)) {
+                        fs.rmSync(p);
+                    }
+                    haltReturns = true;
                 });
-                child.on("exit", (code) => { });
+                child.on("exit", (code) => {
+                    haltReturns = true;
+                });
+                child.on("error", (e) => {
+                    haltReturns = true;
+                    if (fs.existsSync(p)) {
+                        fs.rmSync(p);
+                    }
+                    console.log(ansiC.red(ansiC.inverse(`${src} errored with: ${e.name}. Check ${errFile}for more info`)));
+                    this.writeFileSync(`${reportDest}/error.txt`, e.toString(), src);
+                    this.bddTestIsNowDone(src, -1);
+                    statusMessagePretty(-1, src);
+                    // this.bddTestIsNowDone(src, -1);
+                    // statusMessagePretty(-1, src);
+                });
             });
             child.send({ path: p });
             for (let i = 0; i <= portsToUse.length; i++) {

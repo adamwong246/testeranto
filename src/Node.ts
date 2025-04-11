@@ -64,7 +64,13 @@ const testeranto = async <I extends IT, O extends OT, M>(
     testInterface
   );
 
+  process.on("unhandledRejection", (reason, promise) => {
+    console.error("Unhandled Rejection at:", promise, "reason:", reason);
+    // Optionally, terminate the process or perform cleanup
+  });
+
   try {
+    console.log(process.argv);
     const f = await t.receiveTestResourceConfig(process.argv[2]);
 
     console.error("goodbye node error", f.fails);

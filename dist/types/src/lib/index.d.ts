@@ -3,7 +3,7 @@ import { PM_Node } from "../PM/node.js";
 import { PM_Web } from "../PM/web.js";
 import { Ibdd_in, ITestInterface, ITestconfig, IBuiltConfig, IRunTime, ITestTypes, IT, OT } from "../Types.js";
 import { IGivens, BaseCheck, BaseSuite } from "./abstractBase.js";
-export declare const BaseTestInterface: ITestInterface<Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>>;
+export declare const BaseTestInterface: ITestInterface<IT>;
 export declare const DefaultTestInterface: (p: Partial<ITestInterface<any>>) => ITestInterface<any>;
 export type ITTestResourceConfiguration = {
     name: string;

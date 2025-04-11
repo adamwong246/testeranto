@@ -9,10 +9,14 @@ exports.BaseTestInterface = {
     afterEach: async (s) => s,
     afterAll: (store) => undefined,
     butThen: async (store, thenCb) => {
+        // thenCb(store);
         try {
             thenCb(store);
         }
-        catch (e) { }
+        catch (e) {
+            console.log("mark777", e);
+            throw e;
+        }
     },
     andWhen: async (a) => a,
     assertThis: () => null,

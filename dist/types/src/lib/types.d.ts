@@ -1,4 +1,3 @@
-import { PM } from "../PM";
 import { PM_Node } from "../PM/node";
 import { PM_Pure } from "../PM/pure";
 import { PM_Web } from "../PM/web";
@@ -6,7 +5,7 @@ import { IT, OT } from "../Types";
 import { IGivens, BaseCheck, BaseSuite, BaseGiven, BaseWhen, BaseThen } from "./abstractBase";
 export type IPM = PM_Node | PM_Web | PM_Pure;
 export type ITestCheckCallback<I extends IT, O extends OT> = {
-    [K in keyof O["checks"]]: (name: string, features: string[], checkCallback: (store: I["istore"], pm: PM) => Promise<any>, ...xtrasA: O["checks"][K]) => BaseCheck<I>;
+    [K in keyof O["checks"]]: (name: string, features: string[], checkCallback: (store: I["istore"], pm: IPM) => Promise<any>, ...xtrasA: O["checks"][K]) => BaseCheck<I>;
 };
 export type ISuiteKlasser<I extends IT, O extends OT> = (name: string, index: number, givens: IGivens<I>, checks: BaseCheck<I>[]) => BaseSuite<I, O>;
 export type IGivenKlasser<I extends IT> = (name: any, features: any, whens: any, thens: any, givenCB: any) => BaseGiven<I>;

@@ -175,7 +175,15 @@ export abstract class PM_Base {
   }
 
   async createWriteStream(filepath: string, testName: string): Promise<number> {
+    const folder = filepath.split("/").slice(0, -1).join("/");
+
     return new Promise<number>((res) => {
+      if (!fs.existsSync(folder)) {
+        return fs.mkdirSync(folder, {
+          recursive: true,
+        });
+      }
+
       const f = fs.createWriteStream(filepath);
       fileStreams3.push(f);
       if (!files[testName]) {

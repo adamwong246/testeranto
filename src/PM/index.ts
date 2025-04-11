@@ -1,12 +1,7 @@
 import { Page } from "puppeteer-core";
-import {
-  CdpPage,
-  ScreenRecorderOptions,
-} from "puppeteer-core/lib/esm/puppeteer";
-import { ITLog, ITTestResourceConfiguration } from "../lib";
+import { ScreenRecorderOptions } from "puppeteer-core/lib/esm/puppeteer";
 
-type IFPaths = string[];
-const fPaths: IFPaths = [];
+import { ITLog, ITTestResourceConfiguration } from "../lib";
 
 export abstract class PM {
   server: any;

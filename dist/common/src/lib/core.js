@@ -41,13 +41,18 @@ class Testeranto extends classBuilder_js_1.ClassBuilder {
             }
         }, class Then extends abstractBase_js_1.BaseThen {
             async butThen(store, thenCB, testResource, pm) {
+                console.log("mark6668", thenCB.toString());
                 return await fullTestInterface
                     .butThen(store, thenCB, testResource, pm)
                     .then((v) => {
                     return v;
                 }, (e) => {
                     console.log(" ERROR ", e);
-                    throw e;
+                    // throw e;
+                })
+                    .catch((e) => {
+                    console.log(" CATCH! ", e);
+                    // throw e;
                 });
             }
         }, class Check extends abstractBase_js_1.BaseCheck {

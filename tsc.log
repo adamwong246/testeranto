@@ -1,10 +1,4 @@
 $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit
-src/lib/classBuilder.ts(40,60): error TS2339: Property 'suites' does not exist on type 'ITestImplementation<I, O, M>'.
-src/lib/classBuilder.ts(55,60): error TS2339: Property 'givens' does not exist on type 'ITestImplementation<I, O, M>'.
-src/lib/classBuilder.ts(64,32): error TS2339: Property 'givens' does not exist on type 'ITestImplementation<I, O, M>'.
-src/lib/classBuilder.ts(73,59): error TS2339: Property 'whens' does not exist on type 'ITestImplementation<I, O, M>'.
-src/lib/classBuilder.ts(86,59): error TS2339: Property 'thens' does not exist on type 'ITestImplementation<I, O, M>'.
-src/lib/classBuilder.ts(99,60): error TS2339: Property 'checks' does not exist on type 'ITestImplementation<I, O, M>'.
 src/Project.tsx(196,38): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
   Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.
 src/ReportClient.tsx(166,38): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.

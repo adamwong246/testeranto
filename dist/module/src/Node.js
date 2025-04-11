@@ -19,7 +19,12 @@ export class NodeTesteranto extends Testeranto {
 }
 const testeranto = async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = defaultTestResourceRequirement) => {
     const t = new NodeTesteranto(input, testSpecification, testImplementation, testResourceRequirement, testInterface);
+    process.on("unhandledRejection", (reason, promise) => {
+        console.error("Unhandled Rejection at:", promise, "reason:", reason);
+        // Optionally, terminate the process or perform cleanup
+    });
     try {
+        console.log(process.argv);
         const f = await t.receiveTestResourceConfig(process.argv[2]);
         console.error("goodbye node error", f.fails);
         process.exit(f.fails);

@@ -130,17 +130,12 @@ export default abstract class Testeranto<
           testResource: any,
           pm: IPM
         ): Promise<I["iselection"]> {
-          return await fullTestInterface
-            .butThen(store, thenCB, testResource, pm)
-            .then(
-              (v) => {
-                return v;
-              },
-              (e) => {
-                console.log(" ERROR ", e);
-                throw e;
-              }
-            );
+          return await fullTestInterface.butThen(
+            store,
+            thenCB,
+            testResource,
+            pm
+          );
         }
       } as any,
 

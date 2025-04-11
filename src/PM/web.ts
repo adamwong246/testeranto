@@ -43,7 +43,7 @@ export class PM_Web {
     return window["closePage"](p);
   }
 
-  goto(p, url: string): any {
+  goto(p, url: string) {
     return window["goto"](p, url);
   }
 
@@ -60,10 +60,10 @@ export class PM_Web {
   }
 
   getAttribute(selector: string, attribute: string) {
-    return window["getValue"](selector, attribute);
+    return window["getAttribute"](selector, attribute);
   }
 
-  getValue(selector: string) {
+  getValue(selector: number) {
     return window["getValue"](selector);
   }
 
