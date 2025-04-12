@@ -39,19 +39,7 @@ export default class Testeranto extends ClassBuilder {
             }
         }, class Then extends BaseThen {
             async butThen(store, thenCB, testResource, pm) {
-                console.log("mark6668", thenCB.toString());
-                return await fullTestInterface
-                    .butThen(store, thenCB, testResource, pm)
-                    .then((v) => {
-                    return v;
-                }, (e) => {
-                    console.log(" ERROR ", e);
-                    // throw e;
-                })
-                    .catch((e) => {
-                    console.log(" CATCH! ", e);
-                    // throw e;
-                });
+                return await fullTestInterface.butThen(store, thenCB, testResource, pm);
             }
         }, class Check extends BaseCheck {
             constructor(name, features, checkCallback, x, i, c) {

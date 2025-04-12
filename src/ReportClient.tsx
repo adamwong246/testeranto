@@ -35,7 +35,7 @@ const BigBoard = () => {
   const [configs, setConfigs] = useState<IBuiltConfig>();
   useEffect(() => {
     (async () => {
-      fetch(`/kokomoBay/testeranto/reports/${window.location.pathname.split('/').pop()}/config.json`)
+      fetch(`./reports/${window.location.pathname.split('/').pop()}/config.json`)
         .then(response => response.json())
         .then(json => {
           setConfigs(json)
@@ -48,7 +48,7 @@ const BigBoard = () => {
   const [bigBoard, setBigBoard] = useState<Record<string, ISummary>>({});
   useEffect(() => {
     (async () => {
-      fetch('/kokomoBay/docs/summary.json')
+      fetch('./docs/summary.json')
         .then(response => response.json())
         .then(json => {
           setBigBoard(json)
@@ -167,4 +167,4 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-console.log("hello BigBoard!")
+console.log("hello ReportClient!")

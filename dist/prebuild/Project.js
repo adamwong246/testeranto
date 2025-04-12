@@ -24539,8 +24539,8 @@
         const x = projects.map(async (p) => {
           return [
             p,
-            await (await fetch(`/kokomoBay/testeranto/reports/${p}/config.json`)).json(),
-            await (await fetch(`/kokomoBay/testeranto/reports/${p}/summary.json`)).json()
+            await (await fetch(`./reports/${p}/config.json`)).json(),
+            await (await fetch(`./reports/${p}/summary.json`)).json()
           ];
         });
         Promise.all(x).then((v) => {
@@ -24563,7 +24563,7 @@
       return /* @__PURE__ */ import_react3.default.createElement(import_react3.default.Fragment, null, /* @__PURE__ */ import_react3.default.createElement("tr", null, /* @__PURE__ */ import_react3.default.createElement("th", null, s[0])), ...s[1].tests.map((t) => {
         const x = `${s[0]}/${t[0].split(".").slice(0, -1).join(".")}/${t[1]}`;
         const y = s[2][t[0]];
-        return /* @__PURE__ */ import_react3.default.createElement("tr", null, /* @__PURE__ */ import_react3.default.createElement("td", null, t[0]), /* @__PURE__ */ import_react3.default.createElement("td", null, t[1]), /* @__PURE__ */ import_react3.default.createElement("td", null, /* @__PURE__ */ import_react3.default.createElement("a", { href: `/kokomoBay/testeranto/reports/${x}/littleBoard.html` }, y.runTimeError)), /* @__PURE__ */ import_react3.default.createElement("td", null, /* @__PURE__ */ import_react3.default.createElement("a", { href: `/kokomoBay/testeranto/reports/${x}/lint_errors.json` }, y.staticErrors)), /* @__PURE__ */ import_react3.default.createElement("td", null, /* @__PURE__ */ import_react3.default.createElement("a", { href: `/kokomoBay/testeranto/reports/${x}/type_errors.txt` }, y.typeErrors)), /* @__PURE__ */ import_react3.default.createElement("td", null, /* @__PURE__ */ import_react3.default.createElement("pre", null, s[2][t[0]].prompt)));
+        return /* @__PURE__ */ import_react3.default.createElement("tr", null, /* @__PURE__ */ import_react3.default.createElement("td", null, t[0]), /* @__PURE__ */ import_react3.default.createElement("td", null, t[1]), /* @__PURE__ */ import_react3.default.createElement("td", null, /* @__PURE__ */ import_react3.default.createElement("a", { href: `./reports/${x}/index.html` }, y.runTimeError)), /* @__PURE__ */ import_react3.default.createElement("td", null, /* @__PURE__ */ import_react3.default.createElement("a", { href: `./reports/${x}/lint_errors.json` }, y.staticErrors)), /* @__PURE__ */ import_react3.default.createElement("td", null, /* @__PURE__ */ import_react3.default.createElement("a", { href: `./reports/${x}/type_errors.txt` }, y.typeErrors)), /* @__PURE__ */ import_react3.default.createElement("td", null, /* @__PURE__ */ import_react3.default.createElement("pre", null, s[2][t[0]].prompt)));
       }));
     }))), /* @__PURE__ */ import_react3.default.createElement(Footer, null));
   };
@@ -24573,7 +24573,7 @@
       import_client.default.createRoot(elem).render(import_react3.default.createElement(BigBoard, {}));
     }
   });
-  console.log("hello BigBoard!");
+  console.log("hello Project!");
 })();
 /*! Bundled license information:
 

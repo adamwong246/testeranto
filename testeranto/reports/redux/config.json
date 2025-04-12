@@ -1,0 +1,38 @@
+{
+  "tests": [
+    [
+      "./test/node.ts",
+      "node",
+      {
+        "ports": 0
+      },
+      []
+    ],
+    [
+      "./test/pure.ts",
+      "pure",
+      {
+        "ports": 0
+      },
+      []
+    ],
+    [
+      "./test/web.ts",
+      "web",
+      {
+        "ports": 0
+      },
+      []
+    ]
+  ],
+  "clearScreen": false,
+  "debugger": false,
+  "externals": [],
+  "importPlugins": [],
+  "minify": false,
+  "nodePlugins": [],
+  "ports": [],
+  "src": "node_modules/testeranto_with_reduxjs_toolkit",
+  "webPlugins": [],
+  "buildDir": "/Users/adam/Code/testeranto/testeranto/bundles/redux"
+}

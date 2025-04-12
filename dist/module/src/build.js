@@ -19,6 +19,7 @@ if (mode !== "once" && mode !== "dev") {
 }
 console.log("testeranto is building", testName, mode);
 import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
+    const pckge = (await import(`${process.cwd()}/package.json`)).default;
     const bigConfig = module.default;
     const project = bigConfig.projects[testName];
     if (!project) {
@@ -92,12 +93,12 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
     <head>
       <meta name="description" content="Webpage description goes here" />
       <meta charset="utf-8" />
-      <title>kokomoBay - testeranto</title>
+      <title>${pckge.name} - testeranto</title>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta name="author" content="" />
   
-      <link rel="stylesheet" href="/kokomoBay/testeranto/ReportClient.css" />
-      <script type="module" src="/kokomoBay/testeranto/ReportClient.js"></script>
+      <link rel="stylesheet" href="../ReportClient.css" />
+      <script type="module" src="../ReportClient.js"></script>
   
     </head>
   
@@ -117,7 +118,7 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
   <head>
     <meta name="description" content="Webpage description goes here" />
     <meta charset="utf-8" />
-    <title>kokomoBay - testeranto</title>
+    <title>${pckge.name} - testeranto</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="" />
 
@@ -125,8 +126,8 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
       ${JSON.stringify(Object.keys(bigConfig.projects))}
     </script>
 
-    <link rel="stylesheet" href="/kokomoBay/testeranto/Project.css" />
-    <script type="module" src="/kokomoBay/testeranto/Project.js"></script>
+    <link rel="stylesheet" href="Project.css" />
+    <script type="module" src="Project.js"></script>
 
   </head>
 
@@ -159,6 +160,40 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
     //     fs.unlinkSync(chunk);
     //   });
     // });
+    const x = [
+        ["pure", Object.keys(importEntryPoints)],
+        ["node", Object.keys(nodeEntryPoints)],
+        ["web", Object.keys(webEntryPoints)],
+    ];
+    x.forEach(async ([runtime, keys]) => {
+        keys.forEach(async (k) => {
+            const folder = `testeranto/reports/${testName}/${k
+                .split(".")
+                .slice(0, -1)
+                .join(".")}/${runtime}`;
+            await fs.mkdirSync(folder, { recursive: true });
+            fs.writeFileSync(`${folder}/index.html`, `
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="description" content="Webpage description goes here" />
+  <meta charset="utf-8" />
+  <title>${testName} - testeranto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="" />
+
+  <link rel="stylesheet" href="../../../../../TestReport.css" />
+  <script src="../../../../../TestReport.js"></script>
+
+</head>
+
+<body>
+  <div id="root"/>
+</body>
+            `);
+        });
+    });
     await Promise.all([
         ...[
             [esbuildImportConfiger, importEntryPoints, onImportDone],

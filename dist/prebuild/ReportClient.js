@@ -24532,7 +24532,7 @@
     const [configs, setConfigs] = (0, import_react3.useState)();
     (0, import_react3.useEffect)(() => {
       (async () => {
-        fetch(`/kokomoBay/testeranto/reports/${window.location.pathname.split("/").pop()}/config.json`).then((response) => response.json()).then((json) => {
+        fetch(`./reports/${window.location.pathname.split("/").pop()}/config.json`).then((response) => response.json()).then((json) => {
           setConfigs(json);
         }).catch((error) => console.error(error));
       })();
@@ -24540,7 +24540,7 @@
     const [bigBoard, setBigBoard] = (0, import_react3.useState)({});
     (0, import_react3.useEffect)(() => {
       (async () => {
-        fetch("/kokomoBay/docs/summary.json").then((response) => response.json()).then((json) => {
+        fetch("./docs/summary.json").then((response) => response.json()).then((json) => {
           setBigBoard(json);
         }).catch((error) => console.error(error));
       })();
@@ -24571,7 +24571,7 @@
       import_client.default.createRoot(elem).render(import_react3.default.createElement(BigBoard, {}, []));
     }
   });
-  console.log("hello BigBoard!");
+  console.log("hello ReportClient!");
 })();
 /*! Bundled license information:
 

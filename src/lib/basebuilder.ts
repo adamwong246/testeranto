@@ -126,34 +126,31 @@ export abstract class BaseBuilder<
 
           const fails = suiteDone.fails;
 
-          const b = await puppetMaster.writeFileSync(
-            `bdd_errors.txt`,
-            fails.toString()
-          );
+          await puppetMaster.writeFileSync(`bdd_errors.txt`, fails.toString());
 
-          await puppetMaster.writeFileSync(
-            `littleBoard.html`,
-            `
-<!DOCTYPE html>
-<html lang="en">
+          //           await puppetMaster.writeFileSync(
+          //             `index.html`,
+          //             `
+          // <!DOCTYPE html>
+          // <html lang="en">
 
-<head>
-  <meta name="description" content="Webpage description goes here" />
-  <meta charset="utf-8" />
-  <title>kokomoBay - testeranto</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="author" content="" />
+          // <head>
+          //   <meta name="description" content="Webpage description goes here" />
+          //   <meta charset="utf-8" />
+          //   <title>kokomoBay - testeranto</title>
+          //   <meta name="viewport" content="width=device-width, initial-scale=1" />
+          //   <meta name="author" content="" />
 
-  <link rel="stylesheet" href="/kokomoBay/testeranto/TestReport.css" />
-  <script src="/kokomoBay/testeranto/TestReport.js"></script>
+          //   <link rel="stylesheet" href="/kokomoBay/testeranto/TestReport.css" />
+          //   <script src="/kokomoBay/testeranto/TestReport.js"></script>
 
-</head>
+          // </head>
 
-<body>
-  <div id="root"/>
-</body>
-            `
-          );
+          // <body>
+          //   <div id="root"/>
+          // </body>
+          //             `
+          //           );
 
           await puppetMaster.writeFileSync(
             `tests.json`,

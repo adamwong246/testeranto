@@ -1,3 +1,4 @@
+import { afterAllProxy, afterEachProxy, andWhenProxy, beforeAllProxy, beforeEachProxy, butThenProxy, } from "./pmProxy.js";
 export class BaseSuite {
     constructor(name, index, givens = {}, checks = []) {
         this.name = name;
@@ -44,21 +45,7 @@ export class BaseSuite {
         tLog("\nSuite:", this.index, this.name);
         const sNdx = this.index;
         // const sName = this.name;
-        const beforeAllProxy = new Proxy(pm, {
-            get(target, prop, receiver) {
-                if (prop === "customScreenShot") {
-                    return (opts, p) => target.customScreenShot(Object.assign(Object.assign({}, opts), { 
-                        // path: `${filepath}/${opts.path}`,
-                        path: `suite-${sNdx}/beforeAll/${opts.path}` }), p);
-                }
-                if (prop === "writeFileSync") {
-                    return (fp, contents) => target[prop](`suite-${sNdx}/beforeAll/${fp}`, contents);
-                }
-                /* @ts-ignore:next-line */
-                return Reflect.get(...arguments);
-            },
-        });
-        const subject = await this.setup(input, suiteArtifactory, testResourceConfiguration, beforeAllProxy);
+        const subject = await this.setup(input, suiteArtifactory, testResourceConfiguration, beforeAllProxy(pm, sNdx.toString()));
         for (const [gKey, g] of Object.entries(this.givens)) {
             const giver = this.givens[gKey];
             try {
@@ -76,9 +63,7 @@ export class BaseSuite {
             await thater.check(subject, thater.name, testResourceConfiguration, this.assertThat, suiteArtifactory, tLog, pm);
         }
         try {
-            this.afterAll(this.store, artifactory, 
-            // afterAllProxy
-            pm);
+            this.afterAll(this.store, artifactory, afterAllProxy(pm, sNdx.toString()));
         }
         catch (e) {
             console.error(e);
@@ -131,28 +116,13 @@ export class BaseGiven {
         tLog(`\n ${this.key}`);
         tLog(`\n Given: ${this.name}`);
         const givenArtifactory = (fPath, value) => artifactory(`given-${key}/${fPath}`, value);
-        const beforeEachProxy = new Proxy(pm, {
-            get(target, prop, receiver) {
-                if (prop === "writeFileSync") {
-                    return (fp, contents) => target[prop](`suite-${suiteNdx}/given-${key}/when/beforeEach/${fp}`, contents);
-                }
-                if (prop === "customScreenShot") {
-                    return (opts, p) => target.customScreenShot(Object.assign(Object.assign({}, opts), { path: `suite-${suiteNdx}/given-${key}/when/beforeEach/${opts.path}` }), p);
-                }
-                if (prop === "screencast") {
-                    return (opts, p) => target.screencast(Object.assign(Object.assign({}, opts), { path: `suite-${suiteNdx}/given-${key}/when/beforeEach/${opts.path}` }), p);
-                }
-                /* @ts-ignore:next-line */
-                return Reflect.get(...arguments);
-            },
-        });
         this.uberCatcher((e) => {
             console.error(e);
             this.error = e.error;
             tLog(e.stack);
         });
         try {
-            this.store = await this.givenThat(subject, testResourceConfiguration, givenArtifactory, this.givenCB, this.initialValues, beforeEachProxy);
+            this.store = await this.givenThat(subject, testResourceConfiguration, givenArtifactory, this.givenCB, this.initialValues, beforeEachProxy(pm, suiteNdx.toString()));
         }
         catch (e) {
             console.error("failure 4 ", e);
@@ -165,11 +135,7 @@ export class BaseGiven {
                 await whenStep.test(this.store, testResourceConfiguration, tLog, pm, `suite-${suiteNdx}/given-${key}/when/${whenNdx}`);
             }
             for (const [thenNdx, thenStep] of this.thens.entries()) {
-                const t = await thenStep
-                    .test(this.store, testResourceConfiguration, tLog, pm, `suite-${suiteNdx}/given-${key}/then-${thenNdx}`)
-                    .catch((x) => {
-                    console.log("test failed 111", x);
-                });
+                const t = await thenStep.test(this.store, testResourceConfiguration, tLog, pm, `suite-${suiteNdx}/given-${key}/then-${thenNdx}`);
                 return tester(t);
                 // ((t) => {
                 //   return tester(t);
@@ -177,29 +143,13 @@ export class BaseGiven {
             }
         }
         catch (e) {
-            console.error("failure 3 ", e);
-            // this.error = e;
             this.failed = true;
             tLog(e.stack);
             throw e;
         }
         finally {
             try {
-                const afterEachProxy = new Proxy(pm, {
-                    get(target, prop, receiver) {
-                        if (prop === "customScreenShot") {
-                            return (opts, p) => target.customScreenShot(Object.assign(Object.assign({}, opts), { path: `suite-${suiteNdx}/given-${key}/afterEach/${opts.path}` }), p);
-                        }
-                        if (prop === "writeFileSync") {
-                            return (fp, contents) => target[prop](`suite-${suiteNdx}/given-${key}/afterEach/${fp}`, contents);
-                        }
-                        /* @ts-ignore:next-line */
-                        return Reflect.get(...arguments);
-                    },
-                });
-                await this.afterEach(this.store, this.key, givenArtifactory, 
-                // pm
-                afterEachProxy);
+                await this.afterEach(this.store, this.key, givenArtifactory, afterEachProxy(pm, suiteNdx.toString(), key));
             }
             catch (e) {
                 console.error("afterEach failed!", e);
@@ -224,33 +174,10 @@ export class BaseWhen {
     }
     async test(store, testResourceConfiguration, tLog, pm, filepath) {
         tLog(" When:", this.name);
-        const andWhenProxy = new Proxy(pm, {
-            get(target, prop, receiver) {
-                if (prop === "customScreenShot") {
-                    return (opts, p) => target.customScreenShot(Object.assign(Object.assign({}, opts), { path: `${filepath}/${opts.path}` }), p);
-                }
-                if (prop === "writeFileSync") {
-                    return (fp, contents) => target[prop](`${filepath}/andWhen/${fp}`, contents);
-                }
-                /* @ts-ignore:next-line */
-                return Reflect.get(...arguments);
-            },
-        });
-        return await this.andWhen(store, this.whenCB, testResourceConfiguration, andWhenProxy).catch((e) => {
+        return await this.andWhen(store, this.whenCB, testResourceConfiguration, andWhenProxy(pm, filepath)).catch((e) => {
             this.error = true;
             // throw e;
         });
-        // try {
-        //   return await this.andWhen(
-        //     store,
-        //     this.whenCB,
-        //     testResourceConfiguration,
-        //     andWhenProxy
-        //   );
-        // } catch (e) {
-        //   this.error = true;
-        //   throw e;
-        // }
     }
 }
 export class BaseThen {
@@ -266,74 +193,19 @@ export class BaseThen {
         };
     }
     async test(store, testResourceConfiguration, tLog, pm, filepath) {
-        try {
-            return this.butThen(store, async (s) => {
-                tLog(" Then!!!:", this.name);
-                this.thenCB(s)
-                    .then((x) => {
-                    console.log("foo", x);
-                })
-                    .catch((e) => {
-                    console.log("test failed 1", e);
-                    this.error = e;
-                    throw e;
-                });
-                // try {
-                //   await this.thenCB(s);
-                // } catch (e) {
-                //   console.log("test failed 1", e);
-                //   console.trace();
-                //   this.error = e;
-                //   throw e;
-                // }
-            }, testResourceConfiguration, 
-            // new Proxy(pm, {
-            //   apply: function (target, thisArg, argumentsList) {
-            //     try {
-            //       return Reflect.apply(target, thisArg, argumentsList);
-            //     } catch (error) {
-            //       console.error(`Error calling function:`, error);
-            //       // Handle the error
-            //       return undefined;
-            //     }
-            //   },
-            //   get: (target, prop, receiver) => {
-            //     if (prop === "customScreenShot") {
-            //       return (opts, p) =>
-            //         target.customScreenShot(
-            //           {
-            //             ...opts,
-            //             path: `${filepath}/${opts.path}`,
-            //           },
-            //           p
-            //         );
-            //     }
-            //     if (prop === "writeFileSync") {
-            //       return (fp, contents) =>
-            //         target[prop](`${filepath}/${fp}`, contents);
-            //     }
-            //     /* @ts-ignore:next-line */
-            //     try {
-            //       return Reflect.get(...arguments);
-            //     } catch (e) {
-            //       console.log("test failed 11", e);
-            //       console.trace();
-            //       this.error = e;
-            //       throw e;
-            //     }
-            //   },
-            // })
-            pm).catch((e) => {
-                console.log("test failed 3", e);
-                this.error = e;
-                throw e;
-            });
-        }
-        catch (e) {
-            console.log("test failed 2", e);
+        return this.butThen(store, async (s) => {
+            tLog(" Then!!!:", this.name);
+            if (typeof this.thenCB === "function") {
+                return await this.thenCB(s);
+            }
+            else {
+                return this.thenCB;
+            }
+        }, testResourceConfiguration, butThenProxy(pm, filepath)).catch((e) => {
+            console.log("test failed 3", e);
             this.error = e;
             throw e;
-        }
+        });
     }
     check() { }
 }

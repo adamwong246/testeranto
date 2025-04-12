@@ -135,7 +135,6 @@ class PM_Main extends base_js_1.PM_Base {
                 basePath: process.cwd(), // always required, used for relative paths
                 configFilePath: "tsconfig.json", // config to inherit from (optional)
                 compilerOptions: {
-                    rootDir: "src",
                     outDir: (0, utils_1.tscPather)(entrypoint, platform, this.name),
                     // declaration: true,
                     // skipLibCheck: true,
@@ -402,7 +401,7 @@ ${addableFiles
                 return t[0] === src;
             });
             if (!testConfig) {
-                console.log(ansi_colors_1.default.inverse("missing test config! Exiting ungracefully!"));
+                console.log(ansi_colors_1.default.inverse(`missing test config! Exiting ungracefully for '${src}'`));
                 process.exit(-1);
             }
             const testConfigResource = testConfig[2];
@@ -514,7 +513,7 @@ ${addableFiles
             //   {
             //     stdio: ["pipe", "pipe", "pipe", "ipc"],
             //     env: {
-            //       NODE_INSPECT_RESUME_ON_START: "1",
+            //       // NODE_INSPECT_RESUME_ON_START: "1",
             //     },
             //     // silent: true
             //   }
@@ -1016,7 +1015,7 @@ ${addableFiles
                         const hash = await fileHash(outputFile);
                         if (fileHashes[k] !== hash) {
                             fileHashes[k] = hash;
-                            console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`< ${e} ${filename}`)));
+                            console.log(ansi_colors_1.default.yellow(ansi_colors_1.default.inverse(`< ${e} ${filename}`)));
                             launcher(k, outputFile);
                         }
                     });
@@ -1027,7 +1026,7 @@ ${addableFiles
             });
             this.metafileOutputs(runtime);
             watcher((0, fs_1.watch)(metafile, async (e, filename) => {
-                console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`< ${e} ${filename} (${runtime})`)));
+                console.log(ansi_colors_1.default.yellow(ansi_colors_1.default.inverse(`< ${e} ${filename} (${runtime})`)));
                 this.metafileOutputs(runtime);
             }));
         });

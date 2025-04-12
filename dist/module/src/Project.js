@@ -38,8 +38,8 @@ const BigBoard = () => {
             const x = projects.map(async (p) => {
                 return [
                     p,
-                    (await (await fetch(`/kokomoBay/testeranto/reports/${p}/config.json`)).json()),
-                    (await (await fetch(`/kokomoBay/testeranto/reports/${p}/summary.json`)).json())
+                    (await (await fetch(`./reports/${p}/config.json`)).json()),
+                    (await (await fetch(`./reports/${p}/summary.json`)).json())
                 ];
             });
             Promise.all(x).then((v) => {
@@ -100,11 +100,11 @@ const BigBoard = () => {
                             React.createElement("td", null, t[0]),
                             React.createElement("td", null, t[1]),
                             React.createElement("td", null,
-                                React.createElement("a", { href: `/kokomoBay/testeranto/reports/${x}/littleBoard.html` }, y.runTimeError)),
+                                React.createElement("a", { href: `./reports/${x}/index.html` }, y.runTimeError)),
                             React.createElement("td", null,
-                                React.createElement("a", { href: `/kokomoBay/testeranto/reports/${x}/lint_errors.json` }, y.staticErrors)),
+                                React.createElement("a", { href: `./reports/${x}/lint_errors.json` }, y.staticErrors)),
                             React.createElement("td", null,
-                                React.createElement("a", { href: `/kokomoBay/testeranto/reports/${x}/type_errors.txt` }, y.typeErrors)),
+                                React.createElement("a", { href: `./reports/${x}/type_errors.txt` }, y.typeErrors)),
                             React.createElement("td", null,
                                 React.createElement("pre", null, s[2][t[0]].prompt)));
                     }));
@@ -117,4 +117,4 @@ document.addEventListener("DOMContentLoaded", function () {
         ReactDom.createRoot(elem).render(React.createElement(BigBoard, {}));
     }
 });
-console.log("hello BigBoard!");
+console.log("hello Project!");

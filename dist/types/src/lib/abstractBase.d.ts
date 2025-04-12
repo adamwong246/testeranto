@@ -91,12 +91,12 @@ export declare abstract class BaseThen<I extends IT> {
     name: string;
     thenCB: (storeState: I["iselection"]) => Promise<I["then"]>;
     error: boolean;
-    constructor(name: string, thenCB: (val: I["iselection"]) => I["then"]);
+    constructor(name: string, thenCB: (val: I["iselection"]) => Promise<I["then"]>);
     toObj(): {
         name: string;
         error: boolean;
     };
-    abstract butThen(store: I["istore"], thenCB: (s: I["iselection"]) => I["isubject"], testResourceConfiguration: ITTestResourceConfiguration, pm: IPM, ...args: any[]): Promise<I["iselection"]>;
+    abstract butThen(store: I["istore"], thenCB: (s: I["iselection"]) => Promise<I["isubject"]>, testResourceConfiguration: ITTestResourceConfiguration, pm: IPM, ...args: any[]): Promise<I["iselection"]>;
     test(store: I["istore"], testResourceConfiguration: any, tLog: ITLog, pm: IPM, filepath: string): Promise<I["then"] | undefined>;
     check(): void;
 }

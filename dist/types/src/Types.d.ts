@@ -79,6 +79,7 @@ export type ITestconfig = {
     src: string;
     tests: ITestTypes[];
     webPlugins: IPluginFactory[];
+    reportDomain: string;
 };
 export type IBuiltConfig = {
     buildDir: string;

@@ -78,8 +78,8 @@ const BigBoard = () => {
       const x: Promise<[string, IBuiltConfig, ISummary]>[] = projects.map(async (p) => {
         return [
           p,
-          (await (await fetch(`/kokomoBay/testeranto/reports/${p}/config.json`)).json()) as IBuiltConfig,
-          (await (await fetch(`/kokomoBay/testeranto/reports/${p}/summary.json`)).json()) as ISummary
+          (await (await fetch(`./reports/${p}/config.json`)).json()) as IBuiltConfig,
+          (await (await fetch(`./reports/${p}/summary.json`)).json()) as ISummary
         ] as [string, IBuiltConfig, ISummary]
       })
 
@@ -158,9 +158,9 @@ const BigBoard = () => {
                   return <tr>
                     <td>{t[0]}</td>
                     <td>{t[1]}</td>
-                    <td><a href={`/kokomoBay/testeranto/reports/${x}/littleBoard.html`}>{y.runTimeError}</a></td>
-                    <td><a href={`/kokomoBay/testeranto/reports/${x}/lint_errors.json`}>{y.staticErrors}</a></td>
-                    <td><a href={`/kokomoBay/testeranto/reports/${x}/type_errors.txt`}>{y.typeErrors}</a></td>
+                    <td><a href={`./reports/${x}/index.html`}>{y.runTimeError}</a></td>
+                    <td><a href={`./reports/${x}/lint_errors.json`}>{y.staticErrors}</a></td>
+                    <td><a href={`./reports/${x}/type_errors.txt`}>{y.typeErrors}</a></td>
                     <td>
                       <pre>
 
@@ -197,4 +197,4 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-console.log("hello BigBoard!")
+console.log("hello Project!")

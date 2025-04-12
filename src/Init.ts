@@ -1,4 +1,5 @@
 import fs from "fs";
+import esbuild from "esbuild";
 
 export default async () => {
   [

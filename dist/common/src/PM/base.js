@@ -129,7 +129,13 @@ class PM_Base {
         });
     }
     async createWriteStream(filepath, testName) {
+        const folder = filepath.split("/").slice(0, -1).join("/");
         return new Promise((res) => {
+            if (!fs_1.default.existsSync(folder)) {
+                return fs_1.default.mkdirSync(folder, {
+                    recursive: true,
+                });
+            }
             const f = fs_1.default.createWriteStream(filepath);
             fileStreams3.push(f);
             if (!files[testName]) {

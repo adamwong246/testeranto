@@ -1,0 +1,504 @@
+{
+  "errors": [],
+  "warnings": [],
+  "metafile": {
+    "inputs": {
+      "../testeranto-redux-toolkit/node_modules/testeranto/src/PM/web.ts": {
+        "bytes": 3280,
+        "imports": [
+          {
+            "path": "stream",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "puppeteer-core",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "puppeteer-core/lib/esm/puppeteer",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../lib",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "../testeranto-redux-toolkit/node_modules/testeranto/src/lib/index.ts": {
+        "bytes": 3131,
+        "imports": [
+          {
+            "path": "../PM/pure.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../PM/node.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../PM/web.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../Types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./abstractBase.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./types.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "../testeranto-redux-toolkit/node_modules/testeranto/src/lib/abstractBase.ts": {
+        "bytes": 14727,
+        "imports": [
+          {
+            "path": "../Types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": ".",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./types.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "../testeranto-redux-toolkit/node_modules/testeranto/src/lib/basebuilder.ts": {
+        "bytes": 5779,
+        "imports": [
+          {
+            "path": "stream",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../Types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": ".",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./abstractBase.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "../testeranto-redux-toolkit/node_modules/testeranto/src/lib/classBuilder.ts": {
+        "bytes": 3143,
+        "imports": [
+          {
+            "path": "../Types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../testeranto-redux-toolkit/node_modules/testeranto/src/lib/basebuilder.ts",
+            "kind": "import-statement",
+            "original": "./basebuilder.js"
+          },
+          {
+            "path": "./types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./index.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./abstractBase.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "../testeranto-redux-toolkit/node_modules/testeranto/src/lib/core.ts": {
+        "bytes": 4563,
+        "imports": [
+          {
+            "path": "../Types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../testeranto-redux-toolkit/node_modules/testeranto/src/lib/index.ts",
+            "kind": "import-statement",
+            "original": "./index.js"
+          },
+          {
+            "path": "../testeranto-redux-toolkit/node_modules/testeranto/src/lib/abstractBase.ts",
+            "kind": "import-statement",
+            "original": "./abstractBase.js"
+          },
+          {
+            "path": "../testeranto-redux-toolkit/node_modules/testeranto/src/lib/classBuilder.ts",
+            "kind": "import-statement",
+            "original": "./classBuilder.js"
+          },
+          {
+            "path": "./types",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "../testeranto-redux-toolkit/node_modules/testeranto/src/Web.ts": {
+        "bytes": 2698,
+        "imports": [
+          {
+            "path": "../testeranto-redux-toolkit/node_modules/testeranto/src/PM/web.ts",
+            "kind": "import-statement",
+            "original": "./PM/web"
+          },
+          {
+            "path": "../testeranto-redux-toolkit/node_modules/testeranto/src/lib/core.ts",
+            "kind": "import-statement",
+            "original": "./lib/core.js"
+          },
+          {
+            "path": "../testeranto-redux-toolkit/node_modules/testeranto/src/lib/index.ts",
+            "kind": "import-statement",
+            "original": "./lib/index.js"
+          }
+        ],
+        "format": "esm"
+      },
+      "../testeranto-redux-toolkit/node_modules/redux/dist/redux.mjs": {
+        "bytes": 16765,
+        "imports": [],
+        "format": "esm"
+      },
+      "../testeranto-redux-toolkit/src/index.ts": {
+        "bytes": 2410,
+        "imports": [
+          {
+            "path": "testeranto/src/Types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "testeranto/src/Types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "@reduxjs/toolkit",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../testeranto-redux-toolkit/node_modules/redux/dist/redux.mjs",
+            "kind": "import-statement",
+            "original": "redux"
+          },
+          {
+            "path": "testeranto/src/lib/types",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "../testeranto-redux-toolkit/src/web.ts": {
+        "bytes": 566,
+        "imports": [
+          {
+            "path": "../testeranto-redux-toolkit/node_modules/testeranto/src/Web.ts",
+            "kind": "import-statement",
+            "original": "testeranto/src/Web"
+          },
+          {
+            "path": "testeranto/src/Types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "redux",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../testeranto-redux-toolkit/src/index.ts",
+            "kind": "import-statement",
+            "original": "."
+          }
+        ],
+        "format": "esm"
+      },
+      "../testeranto-redux-toolkit/node_modules/chai/chai.js": {
+        "bytes": 139547,
+        "imports": [],
+        "format": "esm"
+      },
+      "../testeranto-redux-toolkit/node_modules/immer/dist/immer.mjs": {
+        "bytes": 36195,
+        "imports": [],
+        "format": "esm"
+      },
+      "../testeranto-redux-toolkit/node_modules/reselect/dist/reselect.mjs": {
+        "bytes": 21982,
+        "imports": [],
+        "format": "esm"
+      },
+      "../testeranto-redux-toolkit/node_modules/redux-thunk/dist/redux-thunk.mjs": {
+        "bytes": 417,
+        "imports": [],
+        "format": "esm"
+      },
+      "../testeranto-redux-toolkit/node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs": {
+        "bytes": 77904,
+        "imports": [
+          {
+            "path": "../testeranto-redux-toolkit/node_modules/redux/dist/redux.mjs",
+            "kind": "import-statement",
+            "original": "redux"
+          },
+          {
+            "path": "../testeranto-redux-toolkit/node_modules/immer/dist/immer.mjs",
+            "kind": "import-statement",
+            "original": "immer"
+          },
+          {
+            "path": "../testeranto-redux-toolkit/node_modules/reselect/dist/reselect.mjs",
+            "kind": "import-statement",
+            "original": "reselect"
+          },
+          {
+            "path": "../testeranto-redux-toolkit/node_modules/immer/dist/immer.mjs",
+            "kind": "import-statement",
+            "original": "immer"
+          },
+          {
+            "path": "../testeranto-redux-toolkit/node_modules/reselect/dist/reselect.mjs",
+            "kind": "import-statement",
+            "original": "reselect"
+          },
+          {
+            "path": "../testeranto-redux-toolkit/node_modules/redux/dist/redux.mjs",
+            "kind": "import-statement",
+            "original": "redux"
+          },
+          {
+            "path": "../testeranto-redux-toolkit/node_modules/redux/dist/redux.mjs",
+            "kind": "import-statement",
+            "original": "redux"
+          },
+          {
+            "path": "../testeranto-redux-toolkit/node_modules/redux-thunk/dist/redux-thunk.mjs",
+            "kind": "import-statement",
+            "original": "redux-thunk"
+          },
+          {
+            "path": "../testeranto-redux-toolkit/node_modules/redux/dist/redux.mjs",
+            "kind": "import-statement",
+            "original": "redux"
+          },
+          {
+            "path": "../testeranto-redux-toolkit/node_modules/immer/dist/immer.mjs",
+            "kind": "import-statement",
+            "original": "immer"
+          },
+          {
+            "path": "../testeranto-redux-toolkit/node_modules/redux/dist/redux.mjs",
+            "kind": "import-statement",
+            "original": "redux"
+          },
+          {
+            "path": "../testeranto-redux-toolkit/node_modules/immer/dist/immer.mjs",
+            "kind": "import-statement",
+            "original": "immer"
+          },
+          {
+            "path": "../testeranto-redux-toolkit/node_modules/immer/dist/immer.mjs",
+            "kind": "import-statement",
+            "original": "immer"
+          },
+          {
+            "path": "../testeranto-redux-toolkit/node_modules/immer/dist/immer.mjs",
+            "kind": "import-statement",
+            "original": "immer"
+          },
+          {
+            "path": "../testeranto-redux-toolkit/node_modules/redux/dist/redux.mjs",
+            "kind": "import-statement",
+            "original": "redux"
+          },
+          {
+            "path": "../testeranto-redux-toolkit/node_modules/redux/dist/redux.mjs",
+            "kind": "import-statement",
+            "original": "redux"
+          },
+          {
+            "path": "../testeranto-redux-toolkit/node_modules/redux/dist/redux.mjs",
+            "kind": "import-statement",
+            "original": "redux"
+          }
+        ],
+        "format": "esm"
+      },
+      "../testeranto-redux-toolkit/test/index.ts": {
+        "bytes": 3557,
+        "imports": [
+          {
+            "path": "../testeranto-redux-toolkit/node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs",
+            "kind": "import-statement",
+            "original": "@reduxjs/toolkit"
+          }
+        ],
+        "format": "esm"
+      },
+      "../testeranto-redux-toolkit/test/test.ts": {
+        "bytes": 3040,
+        "imports": [
+          {
+            "path": "testeranto/src/Types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../testeranto-redux-toolkit/node_modules/chai/chai.js",
+            "kind": "import-statement",
+            "original": "chai"
+          },
+          {
+            "path": "../src/index.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../testeranto-redux-toolkit/test/index.ts",
+            "kind": "import-statement",
+            "original": "./index.js"
+          }
+        ],
+        "format": "esm"
+      },
+      "../testeranto-redux-toolkit/test/web.ts": {
+        "bytes": 278,
+        "imports": [
+          {
+            "path": "../testeranto-redux-toolkit/src/web.ts",
+            "kind": "import-statement",
+            "original": "../src/web"
+          },
+          {
+            "path": "testeranto/src/Types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": ".",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../testeranto-redux-toolkit/test/test.ts",
+            "kind": "import-statement",
+            "original": "./test"
+          }
+        ],
+        "format": "esm"
+      }
+    },
+    "outputs": {
+      "testeranto/bundles/web/redux/node_modules/testeranto_with_reduxjs_toolkit/test/web.mjs": {
+        "imports": [],
+        "exports": [
+          "default"
+        ],
+        "entryPoint": "../testeranto-redux-toolkit/test/web.ts",
+        "inputs": {
+          "../testeranto-redux-toolkit/node_modules/testeranto/src/PM/web.ts": {
+            "bytesInOutput": 2541
+          },
+          "../testeranto-redux-toolkit/node_modules/testeranto/src/lib/index.ts": {
+            "bytesInOutput": 512
+          },
+          "../testeranto-redux-toolkit/node_modules/testeranto/src/lib/abstractBase.ts": {
+            "bytesInOutput": 10179
+          },
+          "../testeranto-redux-toolkit/node_modules/testeranto/src/lib/basebuilder.ts": {
+            "bytesInOutput": 3682
+          },
+          "../testeranto-redux-toolkit/node_modules/testeranto/src/lib/classBuilder.ts": {
+            "bytesInOutput": 2217
+          },
+          "../testeranto-redux-toolkit/node_modules/testeranto/src/lib/core.ts": {
+            "bytesInOutput": 2850
+          },
+          "../testeranto-redux-toolkit/node_modules/testeranto/src/Web.ts": {
+            "bytesInOutput": 1714
+          },
+          "../testeranto-redux-toolkit/node_modules/redux/dist/redux.mjs": {
+            "bytesInOutput": 8792
+          },
+          "../testeranto-redux-toolkit/src/index.ts": {
+            "bytesInOutput": 506
+          },
+          "../testeranto-redux-toolkit/src/web.ts": {
+            "bytesInOutput": 177
+          },
+          "../testeranto-redux-toolkit/node_modules/chai/chai.js": {
+            "bytesInOutput": 130570
+          },
+          "../testeranto-redux-toolkit/node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs": {
+            "bytesInOutput": 23045
+          },
+          "../testeranto-redux-toolkit/node_modules/immer/dist/immer.mjs": {
+            "bytesInOutput": 20236
+          },
+          "../testeranto-redux-toolkit/node_modules/reselect/dist/reselect.mjs": {
+            "bytesInOutput": 10857
+          },
+          "../testeranto-redux-toolkit/test/index.ts": {
+            "bytesInOutput": 2083
+          },
+          "../testeranto-redux-toolkit/test/test.ts": {
+            "bytesInOutput": 2622
+          },
+          "../testeranto-redux-toolkit/test/web.ts": {
+            "bytesInOutput": 82
+          }
+        },
+        "bytes": 231244
+      }
+    }
+  }
+}

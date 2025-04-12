@@ -384,7 +384,6 @@ export class PM_Main extends PM_Base {
       basePath: process.cwd(), // always required, used for relative paths
       configFilePath: "tsconfig.json", // config to inherit from (optional)
       compilerOptions: {
-        rootDir: "src",
         outDir: tscPather(entrypoint, platform, this.name),
         // declaration: true,
         // skipLibCheck: true,
@@ -762,7 +761,9 @@ ${addableFiles
     });
 
     if (!testConfig) {
-      console.log(ansiC.inverse("missing test config! Exiting ungracefully!"));
+      console.log(
+        ansiC.inverse(`missing test config! Exiting ungracefully for '${src}'`)
+      );
       process.exit(-1);
     }
     const testConfigResource = testConfig[2];

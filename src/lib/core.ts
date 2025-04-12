@@ -9,6 +9,7 @@ import {
 import {
   DefaultTestInterface,
   IFinalResults,
+  ITTestResourceConfiguration,
   ITTestResourceRequest,
   ITestArtifactory,
   defaultTestResourceRequirement,
@@ -48,15 +49,15 @@ export default abstract class Testeranto<
           return fullTestInterface.afterAll(store, pm);
         }
 
-        assertThat(t): boolean {
+        assertThat(t: Awaited<I["then"]>): boolean {
           return fullTestInterface.assertThis(t);
         }
 
         async setup(
           s: I["iinput"],
           artifactory: ITestArtifactory,
-          tr,
-          pm
+          tr: ITTestResourceConfiguration,
+          pm: IPM
         ): Promise<I["isubject"]> {
           return (
             fullTestInterface.beforeAll ||

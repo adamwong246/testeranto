@@ -33,7 +33,7 @@ export class PM_Web {
         return window["isDisabled"](selector);
     }
     getAttribute(selector, attribute) {
-        return window["getValue"](selector, attribute);
+        return window["getAttribute"](selector, attribute);
     }
     getValue(selector) {
         return window["getValue"](selector);

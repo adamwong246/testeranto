@@ -16,7 +16,7 @@ export declare class PM_Web {
     $(selector: string): boolean;
     isDisabled(selector: string): Promise<boolean>;
     getAttribute(selector: string, attribute: string): any;
-    getValue(selector: string): any;
+    getValue(selector: number): any;
     focusOn(selector: string): any;
     typeInto(value: string): any;
     page(): string | undefined;

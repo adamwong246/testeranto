@@ -96,7 +96,6 @@ export class PM_Main extends PM_Base {
                 basePath: process.cwd(), // always required, used for relative paths
                 configFilePath: "tsconfig.json", // config to inherit from (optional)
                 compilerOptions: {
-                    rootDir: "src",
                     outDir: tscPather(entrypoint, platform, this.name),
                     // declaration: true,
                     // skipLibCheck: true,
@@ -363,7 +362,7 @@ ${addableFiles
                 return t[0] === src;
             });
             if (!testConfig) {
-                console.log(ansiC.inverse("missing test config! Exiting ungracefully!"));
+                console.log(ansiC.inverse(`missing test config! Exiting ungracefully for '${src}'`));
                 process.exit(-1);
             }
             const testConfigResource = testConfig[2];
@@ -475,7 +474,7 @@ ${addableFiles
             //   {
             //     stdio: ["pipe", "pipe", "pipe", "ipc"],
             //     env: {
-            //       NODE_INSPECT_RESUME_ON_START: "1",
+            //       // NODE_INSPECT_RESUME_ON_START: "1",
             //     },
             //     // silent: true
             //   }
@@ -977,7 +976,7 @@ ${addableFiles
                         const hash = await fileHash(outputFile);
                         if (fileHashes[k] !== hash) {
                             fileHashes[k] = hash;
-                            console.log(ansiC.green(ansiC.inverse(`< ${e} ${filename}`)));
+                            console.log(ansiC.yellow(ansiC.inverse(`< ${e} ${filename}`)));
                             launcher(k, outputFile);
                         }
                     });
@@ -988,7 +987,7 @@ ${addableFiles
             });
             this.metafileOutputs(runtime);
             watcher(watch(metafile, async (e, filename) => {
-                console.log(ansiC.green(ansiC.inverse(`< ${e} ${filename} (${runtime})`)));
+                console.log(ansiC.yellow(ansiC.inverse(`< ${e} ${filename} (${runtime})`)));
                 this.metafileOutputs(runtime);
             }));
         });

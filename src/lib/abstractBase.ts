@@ -409,7 +409,11 @@ export abstract class BaseThen<I extends IT> {
       async (s: I["iselection"]) => {
         tLog(" Then!!!:", this.name);
 
-        return await this.thenCB(s);
+        if (typeof this.thenCB === "function") {
+          return await this.thenCB(s);
+        } else {
+          return this.thenCB;
+        }
       },
       testResourceConfiguration,
       butThenProxy(pm, filepath)

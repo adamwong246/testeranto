@@ -33,17 +33,10 @@ export const BaseTestInterface: ITestInterface<IT> = {
     store: IT["istore"],
     thenCb: (s: IT["iselection"]) => Promise<IT["isubject"]>
   ) => {
-    // thenCb(store);
-
     return thenCb(store);
-    //   thenCb(store);
-    // } catch (e) {
-    //   console.log("mark777", e);
-    //   throw e;
-    // }
   },
   andWhen: async (a) => a,
-  assertThis: () => null,
+  assertThis: (x: any) => null,
 };
 
 export const DefaultTestInterface = (

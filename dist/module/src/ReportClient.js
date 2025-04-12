@@ -8,7 +8,7 @@ const BigBoard = () => {
     const [configs, setConfigs] = useState();
     useEffect(() => {
         (async () => {
-            fetch(`/kokomoBay/testeranto/reports/${window.location.pathname.split('/').pop()}/config.json`)
+            fetch(`./reports/${window.location.pathname.split('/').pop()}/config.json`)
                 .then(response => response.json())
                 .then(json => {
                 setConfigs(json);
@@ -19,7 +19,7 @@ const BigBoard = () => {
     const [bigBoard, setBigBoard] = useState({});
     useEffect(() => {
         (async () => {
-            fetch('/kokomoBay/docs/summary.json')
+            fetch('./docs/summary.json')
                 .then(response => response.json())
                 .then(json => {
                 setBigBoard(json);
@@ -94,4 +94,4 @@ document.addEventListener("DOMContentLoaded", function () {
         ReactDom.createRoot(elem).render(React.createElement(BigBoard, {}, []));
     }
 });
-console.log("hello BigBoard!");
+console.log("hello ReportClient!");
