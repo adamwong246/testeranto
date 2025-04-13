@@ -34,7 +34,7 @@ async function fileHash(filePath, algorithm = "md5") {
 }
 const statusMessagePretty = (failures, test) => {
     if (failures === 0) {
-        console.log(ansiC.green(ansiC.inverse(`> ${test} completed successfully`)));
+        console.log(ansiC.green(ansiC.inverse(`> ${test} completed successfully?!?`)));
     }
     else {
         console.log(ansiC.red(ansiC.inverse(`> ${test} failed ${failures} times`)));
@@ -468,30 +468,28 @@ ${addableFiles
                 stdio: ["pipe", "pipe", "pipe", "ipc"],
                 // silent: true
             });
-            // const child = spawn(
-            //   "node",
-            //   ["inspect", builtfile, testResources, "--trace-warnings"],
-            //   {
-            //     stdio: ["pipe", "pipe", "pipe", "ipc"],
-            //     env: {
-            //       // NODE_INSPECT_RESUME_ON_START: "1",
-            //     },
-            //     // silent: true
-            //   }
-            // );
-            // console.log(
-            //   "spawning",
-            //   "node",
-            //   ["inspect", builtfile, testResources, "--trace-warnings"],
-            //   {
-            //     NODE_INSPECT_RESUME_ON_START: "1",
-            //   }
-            // );
-            const p = destFolder + "/pipe";
+            const p = destFolder + "/tpipe";
+            // exec(`lsof`, (ec, out, err) => {
+            //   console.log(ec, out, err);
+            // });
+            // if (fs.existsSync(p)) {
+            //   fs.rmSync(p);
+            // }
             const errFile = `${reportDest}/error.txt`;
             if (fs.existsSync(errFile)) {
                 fs.rmSync(errFile);
             }
+            // server.on("error", (e) => {
+            //   if (e.code === "EADDRINUSE") {
+            //     console.error(e);
+            //     process.exit(-1);
+            //     // console.error("Address in use, retrying...");
+            //     // setTimeout(() => {
+            //     //   server.close();
+            //     //   server.listen(p);
+            //     // }, 1000);
+            //   }
+            // });
             server.listen(p, () => {
                 var _a, _b;
                 (_a = child.stderr) === null || _a === void 0 ? void 0 : _a.on("data", (data) => {
@@ -501,6 +499,11 @@ ${addableFiles
                     oStream.write(`stdout data ${data}`);
                 });
                 child.on("close", (code) => {
+                    console.log("close");
+                    console.log("deleting", p);
+                    if (fs.existsSync(p)) {
+                        fs.rmSync(p);
+                    }
                     oStream.close();
                     server.close();
                     if (code === null) {
@@ -515,19 +518,23 @@ ${addableFiles
                         this.bddTestIsNowDone(src, code);
                         statusMessagePretty(code, src);
                     }
-                    if (fs.existsSync(p)) {
-                        fs.rmSync(p);
-                    }
                     haltReturns = true;
                 });
                 child.on("exit", (code) => {
-                    haltReturns = true;
-                });
-                child.on("error", (e) => {
-                    haltReturns = true;
+                    console.log("exit");
+                    console.log("deleting", p);
                     if (fs.existsSync(p)) {
                         fs.rmSync(p);
                     }
+                    haltReturns = true;
+                });
+                child.on("error", (e) => {
+                    console.log("error");
+                    console.log("deleting", p);
+                    if (fs.existsSync(p)) {
+                        fs.rmSync(p);
+                    }
+                    haltReturns = true;
                     console.log(ansiC.red(ansiC.inverse(`${src} errored with: ${e.name}. Check ${errFile}for more info`)));
                     this.writeFileSync(`${reportDest}/error.txt`, e.toString(), src);
                     this.bddTestIsNowDone(src, -1);

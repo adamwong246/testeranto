@@ -338,7 +338,9 @@ async function fileHash(filePath, algorithm = "md5") {
 }
 var statusMessagePretty = (failures, test) => {
   if (failures === 0) {
-    console.log(ansiC.green(ansiC.inverse(`> ${test} completed successfully`)));
+    console.log(
+      ansiC.green(ansiC.inverse(`> ${test} completed successfully?!?`))
+    );
   } else {
     console.log(ansiC.red(ansiC.inverse(`> ${test} failed ${failures} times`)));
   }
@@ -756,7 +758,7 @@ ${addableFiles.map((x) => {
           // silent: true
         }
       );
-      const p = destFolder + "/pipe";
+      const p = destFolder + "/tpipe";
       const errFile = `${reportDest}/error.txt`;
       if (fs2.existsSync(errFile)) {
         fs2.rmSync(errFile);
@@ -769,6 +771,11 @@ ${addableFiles.map((x) => {
           oStream.write(`stdout data ${data}`);
         });
         child.on("close", (code) => {
+          console.log("close");
+          console.log("deleting", p);
+          if (fs2.existsSync(p)) {
+            fs2.rmSync(p);
+          }
           oStream.close();
           server.close();
           if (code === null) {
@@ -781,19 +788,23 @@ ${addableFiles.map((x) => {
             this.bddTestIsNowDone(src, code);
             statusMessagePretty(code, src);
           }
-          if (fs2.existsSync(p)) {
-            fs2.rmSync(p);
-          }
           haltReturns = true;
         });
         child.on("exit", (code) => {
-          haltReturns = true;
-        });
-        child.on("error", (e) => {
-          haltReturns = true;
+          console.log("exit");
+          console.log("deleting", p);
           if (fs2.existsSync(p)) {
             fs2.rmSync(p);
           }
+          haltReturns = true;
+        });
+        child.on("error", (e) => {
+          console.log("error");
+          console.log("deleting", p);
+          if (fs2.existsSync(p)) {
+            fs2.rmSync(p);
+          }
+          haltReturns = true;
           console.log(
             ansiC.red(
               ansiC.inverse(

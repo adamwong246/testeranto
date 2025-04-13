@@ -1,4 +1,4 @@
-import { spawn } from "node:child_process";
+import { exec, spawn } from "node:child_process";
 
 import ts from "typescript";
 import net from "net";
@@ -61,7 +61,9 @@ async function fileHash(filePath, algorithm = "md5") {
 
 const statusMessagePretty = (failures: number, test: string) => {
   if (failures === 0) {
-    console.log(ansiC.green(ansiC.inverse(`> ${test} completed successfully`)));
+    console.log(
+      ansiC.green(ansiC.inverse(`> ${test} completed successfully?!?`))
+    );
   } else {
     console.log(ansiC.red(ansiC.inverse(`> ${test} failed ${failures} times`)));
   }
@@ -840,6 +842,7 @@ ${addableFiles
     let haltReturns = false;
 
     let buffer: Buffer<ArrayBufferLike> = new Buffer("");
+
     const server = net.createServer((socket) => {
       socket.on("data", (data) => {
         buffer = Buffer.concat([buffer, data]);
@@ -891,33 +894,32 @@ ${addableFiles
       }
     );
 
-    // const child = spawn(
-    //   "node",
-    //   ["inspect", builtfile, testResources, "--trace-warnings"],
-    //   {
-    //     stdio: ["pipe", "pipe", "pipe", "ipc"],
-    //     env: {
-    //       // NODE_INSPECT_RESUME_ON_START: "1",
-    //     },
-    //     // silent: true
-    //   }
-    // );
+    const p = destFolder + "/tpipe";
+    // exec(`lsof`, (ec, out, err) => {
+    //   console.log(ec, out, err);
+    // });
 
-    // console.log(
-    //   "spawning",
-    //   "node",
-    //   ["inspect", builtfile, testResources, "--trace-warnings"],
-    //   {
-    //     NODE_INSPECT_RESUME_ON_START: "1",
-    //   }
-    // );
+    // if (fs.existsSync(p)) {
+    //   fs.rmSync(p);
+    // }
 
-    const p = destFolder + "/pipe";
     const errFile = `${reportDest}/error.txt`;
 
     if (fs.existsSync(errFile)) {
       fs.rmSync(errFile);
     }
+
+    // server.on("error", (e) => {
+    //   if (e.code === "EADDRINUSE") {
+    //     console.error(e);
+    //     process.exit(-1);
+    //     // console.error("Address in use, retrying...");
+    //     // setTimeout(() => {
+    //     //   server.close();
+    //     //   server.listen(p);
+    //     // }, 1000);
+    //   }
+    // });
 
     server.listen(p, () => {
       child.stderr?.on("data", (data) => {
@@ -927,6 +929,12 @@ ${addableFiles
         oStream.write(`stdout data ${data}`);
       });
       child.on("close", (code) => {
+        console.log("close");
+        console.log("deleting", p);
+        if (fs.existsSync(p)) {
+          fs.rmSync(p);
+        }
+
         oStream.close();
         server.close();
 
@@ -941,21 +949,26 @@ ${addableFiles
           statusMessagePretty(code, src);
         }
 
-        if (fs.existsSync(p)) {
-          fs.rmSync(p);
-        }
-
         haltReturns = true;
       });
       child.on("exit", (code) => {
-        haltReturns = true;
-      });
-      child.on("error", (e) => {
-        haltReturns = true;
-
+        console.log("exit");
+        console.log("deleting", p);
         if (fs.existsSync(p)) {
           fs.rmSync(p);
         }
+
+        haltReturns = true;
+      });
+      child.on("error", (e) => {
+        console.log("error");
+        console.log("deleting", p);
+        if (fs.existsSync(p)) {
+          fs.rmSync(p);
+        }
+
+        haltReturns = true;
+
         console.log(
           ansiC.red(
             ansiC.inverse(
