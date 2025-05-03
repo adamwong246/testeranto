@@ -31,6 +31,10 @@ export class PM_Pure extends PM {
     return new Promise((r) => r());
   }
 
+  launchSideCar(n: number): Promise<[number, ITTestResourceConfiguration]> {
+    return globalThis["launchSideCar"](n, this.testResourceConfiguration.name);
+  }
+
   pages() {
     return globalThis["pages"]();
   }

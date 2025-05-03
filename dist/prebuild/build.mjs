@@ -205,7 +205,7 @@ var pure_default = (config, entryPoints, testName2) => {
   );
   return {
     ...esbuildConfigs_default(config),
-    drop: ["console", "debugger"],
+    // drop: ["console", "debugger"],
     splitting: true,
     outdir: `testeranto/bundles/pure/${testName2}/`,
     // inject: [`./node_modules/testeranto/dist/cjs-shim.js`],
@@ -273,8 +273,11 @@ var web_html_default = (jsfilePath, htmlFilePath) => `
 import path3 from "path";
 var getRunnables = (tests, projectName, payload = {
   nodeEntryPoints: {},
+  nodeEntryPointSidecars: {},
   webEntryPoints: {},
-  importEntryPoints: {}
+  webEntryPointSidecars: {},
+  pureEntryPoints: {},
+  pureEntryPointSidecars: {}
 }) => {
   return tests.reduce((pt, cv, cndx, cry) => {
     if (cv[1] === "node") {
@@ -286,10 +289,25 @@ var getRunnables = (tests, projectName, payload = {
         `./testeranto/bundles/web/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
       );
     } else if (cv[1] === "pure") {
-      pt.importEntryPoints[cv[0]] = path3.resolve(
+      pt.pureEntryPoints[cv[0]] = path3.resolve(
         `./testeranto/bundles/pure/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
       );
     }
+    cv[3].filter((t) => t[1] === "node").forEach((t) => {
+      pt.nodeEntryPointSidecars[`${t[0]}`] = path3.resolve(
+        `./testeranto/bundles/node/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+      );
+    });
+    cv[3].filter((t) => t[1] === "web").forEach((t) => {
+      pt.webEntryPointSidecars[`${t[0]}`] = path3.resolve(
+        `./testeranto/bundles/web/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+      );
+    });
+    cv[3].filter((t) => t[1] === "pure").forEach((t) => {
+      pt.pureEntryPointSidecars[`${t[0]}`] = path3.resolve(
+        `./testeranto/bundles/pure/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+      );
+    });
     return pt;
   }, payload);
 };
@@ -328,6 +346,20 @@ import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
     };
     return Array.from(meta(config.tests, /* @__PURE__ */ new Set()));
   };
+  const getSideCars = (runtime) => {
+    return Array.from(
+      new Set(
+        config.tests.reduce((mm, t) => {
+          mm = mm.concat(t[3]);
+          return mm;
+        }, []).filter((t) => {
+          return t[1] === runtime;
+        }).map((t) => {
+          return t[0];
+        })
+      )
+    );
+  };
   const config = {
     ...rawConfig,
     buildDir: process.cwd() + "/testeranto/bundles/" + testName
@@ -353,10 +385,14 @@ import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
   let webDone = false;
   let importDone = false;
   let status = "build";
-  const { nodeEntryPoints, webEntryPoints, importEntryPoints } = getRunnables(
-    config.tests,
-    testName
-  );
+  const {
+    nodeEntryPoints,
+    nodeEntryPointSidecars,
+    webEntryPoints,
+    webEntryPointSidecars,
+    pureEntryPoints,
+    pureEntryPointSidecars
+  } = getRunnables(config.tests, testName);
   const onNodeDone = () => {
     nodeDone = true;
     onDone();
@@ -378,6 +414,7 @@ import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
       process.exit();
     }
   };
+  console.log(`testeranto/reports/${testName}`);
   if (!fs2.existsSync(`testeranto/reports/${testName}`)) {
     fs2.mkdirSync(`testeranto/reports/${testName}`);
   }
@@ -466,11 +503,24 @@ import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
     )
   );
   const x = [
-    ["pure", Object.keys(importEntryPoints)],
+    ["pure", Object.keys(pureEntryPoints)],
     ["node", Object.keys(nodeEntryPoints)],
     ["web", Object.keys(webEntryPoints)]
+    // [
+    //   "pure",
+    //   [...Object.keys(pureEntryPoints), ...Object.keys(pureEntryPointSidecars)],
+    // ],
+    // [
+    //   "node",
+    //   [...Object.keys(nodeEntryPoints), ...Object.keys(nodeEntryPointSidecars)],
+    // ],
+    // [
+    //   "web",
+    //   [...Object.keys(webEntryPoints), ...Object.keys(webEntryPointSidecars)],
+    // ],
   ];
   x.forEach(async ([runtime, keys]) => {
+    console.log(runtime, keys);
     keys.forEach(async (k) => {
       const folder = `testeranto/reports/${testName}/${k.split(".").slice(0, -1).join(".")}/${runtime}`;
       await fs2.mkdirSync(folder, { recursive: true });
@@ -487,8 +537,8 @@ import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="author" content="" />
 
-  <link rel="stylesheet" href="../../../../../TestReport.css" />
-  <script src="../../../../../TestReport.js"></script>
+  <link rel="stylesheet" href="../../../../../../TestReport.css" />
+  <script src="../../../../../../TestReport.js"></script>
 
 </head>
 
@@ -499,13 +549,47 @@ import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
       );
     });
   });
+  [
+    [pureEntryPoints, pureEntryPointSidecars, "pure"],
+    [webEntryPoints, webEntryPointSidecars, "web"],
+    [nodeEntryPoints, nodeEntryPointSidecars, "node"]
+  ].forEach(
+    ([eps, eps2, runtime]) => {
+      [...Object.keys(eps), ...Object.keys(eps2)].forEach((ep) => {
+        const fp = path4.resolve(
+          `testeranto`,
+          `reports`,
+          testName,
+          ep.split(".").slice(0, -1).join("."),
+          runtime
+        );
+        fs2.mkdirSync(fp, { recursive: true });
+      });
+    }
+  );
   await Promise.all([
     ...[
-      [pure_default, importEntryPoints, onImportDone],
-      [node_default, nodeEntryPoints, onNodeDone],
-      [web_default, webEntryPoints, onWebDone]
-    ].map(([configer, entryPoints, done]) => {
-      esbuild.context(configer(config, Object.keys(entryPoints), testName)).then(async (ctx) => {
+      [
+        pure_default,
+        pureEntryPoints,
+        pureEntryPointSidecars,
+        onImportDone
+      ],
+      [
+        node_default,
+        nodeEntryPoints,
+        nodeEntryPointSidecars,
+        onNodeDone
+      ],
+      [web_default, webEntryPoints, webEntryPointSidecars, onWebDone]
+    ].map(([configer, entryPoints, sidecars, done]) => {
+      esbuild.context(
+        configer(
+          config,
+          [...Object.keys(entryPoints), ...Object.keys(sidecars)],
+          testName
+        )
+      ).then(async (ctx) => {
         if (mode === "dev") {
           await ctx.watch().then((v) => {
             done();

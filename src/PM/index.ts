@@ -11,7 +11,7 @@ export abstract class PM {
   abstract stop(): Promise<void>;
   abstract testArtiFactoryfileWriter(tLog: ITLog, callback: (Promise) => void);
 
-  abstract $(selector: string): any;
+  abstract $(selector: string, page: string): any;
   abstract click(selector: string): any;
   abstract closePage(p): any;
   abstract createWriteStream(
@@ -23,8 +23,9 @@ export abstract class PM {
   abstract end(uid: number): Promise<boolean>;
   abstract existsSync(fp: string): Promise<boolean>;
   abstract focusOn(selector: string): any;
-  abstract getAttribute(selector: string, attribute: string): any;
-  abstract getValue(value: string): any;
+  abstract getAttribute(selector: string, attribute: string, page: string): any;
+  abstract getInnerHtml(selector: string, page: string): any;
+  // abstract getValue(value: string): any;
   abstract goto(p, url: string): any;
   abstract isDisabled(selector: string): Promise<boolean>;
   abstract mkdirSync(a: string);
@@ -37,4 +38,9 @@ export abstract class PM {
   abstract waitForSelector(p, sel: string);
   abstract write(uid: number, contents: string): Promise<boolean>;
   abstract writeFileSync(f: string, c: string, t: string): Promise<boolean>;
+
+  abstract launchSideCar(
+    n: number
+  ): Promise<[number, ITTestResourceConfiguration]>;
+  abstract stopSideCar(n: number): Promise<any>;
 }

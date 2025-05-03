@@ -27383,11 +27383,18 @@
     if (!bddErrors || !log) {
       return /* @__PURE__ */ import_react33.default.createElement("div", null, "loading...");
     }
-    return /* @__PURE__ */ import_react33.default.createElement("div", null, "  ", /* @__PURE__ */ import_react33.default.createElement(Row_default, null, /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 12 }, /* @__PURE__ */ import_react33.default.createElement("h2", null, bddErrors.name))), /* @__PURE__ */ import_react33.default.createElement(Row_default, null, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Container, { id: "root-tab-container", defaultActiveKey: "first" }, /* @__PURE__ */ import_react33.default.createElement(Row_default, null, /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 3 }, /* @__PURE__ */ import_react33.default.createElement("pre", null, /* @__PURE__ */ import_react33.default.createElement("code", null, log))), /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 3 }, /* @__PURE__ */ import_react33.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, ...bddErrors.givens.map(
+    return /* @__PURE__ */ import_react33.default.createElement("div", null, "  ", /* @__PURE__ */ import_react33.default.createElement(Row_default, null, /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 12 }, /* @__PURE__ */ import_react33.default.createElement("h2", null, bddErrors.name))), /* @__PURE__ */ import_react33.default.createElement(Row_default, null, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Container, { id: "root-tab-container", defaultActiveKey: "log" }, /* @__PURE__ */ import_react33.default.createElement(Row_default, null, /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 1 }, /* @__PURE__ */ import_react33.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: "log" }, "log"), /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: "steps" }, "steps")))), /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 11 }, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: "log" }, /* @__PURE__ */ import_react33.default.createElement("pre", null, /* @__PURE__ */ import_react33.default.createElement("code", null, log))), /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: "steps" }, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Container, { id: "secondary-tab-container", defaultActiveKey: "first" }, /* @__PURE__ */ import_react33.default.createElement(Row_default, null, /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 3 }, /* @__PURE__ */ import_react33.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, ...bddErrors.givens.map(
       (g) => /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: g.key }, g.key, ": Given ", g.name))
-    ))), /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 6 }, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Content, null, ...bddErrors.givens.map(
+    ))), /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 9 }, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Content, null, ...bddErrors.givens.map(
       (g) => /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: g.key }, /* @__PURE__ */ import_react33.default.createElement(TestPane, { given: g }))
-    )))))), /* @__PURE__ */ import_react33.default.createElement(Footer, null));
+    ))))))))))), /* @__PURE__ */ import_react33.default.createElement("div", { style: {
+      backgroundColor: "lightgray",
+      margin: "0.5rem",
+      padding: "0.5rem",
+      position: "fixed",
+      left: 0,
+      bottom: 0
+    } }, /* @__PURE__ */ import_react33.default.createElement("a", { href: "/" }, "\u{1F3E0}")), /* @__PURE__ */ import_react33.default.createElement(Footer, null));
   };
   document.addEventListener("DOMContentLoaded", function() {
     const elem = document.getElementById("root");
@@ -27398,7 +27405,6 @@
       }
     }
   });
-  console.log("hello BddPage!");
 })();
 /*! Bundled license information:
 

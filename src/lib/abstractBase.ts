@@ -292,7 +292,6 @@ export abstract class BaseGiven<I extends IT = IT> {
           pm,
           `suite-${suiteNdx}/given-${key}/then-${thenNdx}`
         );
-
         return tester(t);
         // ((t) => {
         //   return tester(t);

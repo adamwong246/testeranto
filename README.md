@@ -74,6 +74,25 @@ Testeranto generates a "prompt" alongside test results. This prompt is passed to
 
 Testeranto connects "features" to tests. The features may be simple strings, but they can also take the form of local markdown files, or remote URLs to external feature tracking systems. For instance, this could be a jira ticket or a github issue. These features are used to inform the AI context.
 
+```ts
+import someMarkdownFile from "someMarkdownFile.md";
+
+...
+
+test0: Given.Default(
+  [
+    "https://api.github.com/repos/adamwong246/testeranto/issues/8",
+    "you can set the width and height of a Rectangle",
+    someMarkdownFile
+    ],
+
+  [When.setWidth(4), When.setHeight(19)],
+  [Then.getWidth(4), Then.getHeight(19)]
+),
+...
+
+```
+
 ## Platforms
 
 Testeranto runs tests in multiple runtimes. You can run the same test (more or less) in multiple contexts, but depending on your test subject, not all may be applicable. For instance, if you are testing an http node server, you'll can't use the web runtime. If your code references `document` or `window`, you must use the web style. And if you wish to capture console.logs in a node context, you should use the `pure` runtime.
@@ -112,7 +131,7 @@ export default async <I extends IT, O extends OT, M>(
 
 Practically speaking, for each thing you test, you will need to implement 3 types and 4 objects.
 
-### type I
+#### type I
 
 this type describes the shape of the BDD test
 
@@ -128,7 +147,7 @@ export type I = Ibdd_in<
 >;
 ```
 
-### type O
+#### type O
 
 this type describes the shape of the "interface"
 
@@ -169,7 +188,7 @@ export type O = Ibdd_out<
 >;
 ```
 
-### type M (optional)
+#### type M (optional)
 
 this type describes the modifications to the shape of the "specification". It can be used to make your BDD tests DRYer but is not necessary
 
@@ -191,7 +210,7 @@ export type M = {
 };
 ```
 
-### the "specification" aka ITestSpecification<I, O>
+#### the "specification" aka ITestSpecification<I, O>
 
 The test specification is the BDD tests logic. The specification implements BDD directives "Given", "When", and Then"
 
@@ -229,7 +248,7 @@ export const RectangleTesterantoBaseTestSpecification: ITestSpecification<
 };
 ```
 
-### the "interface" aka testInterface: Partial<IWebTestInterface<I>>
+#### the "interface" aka testInterface: Partial<IWebTestInterface<I>>
 
 The test interface is code which is NOT BDD steps. The interface implements "before all", "after all", "before each", and "after each", all of which are optional. f
 
@@ -247,7 +266,7 @@ export const RectangleTesterantoBaseInterface: IPartialInterface<I> = {
 };
 ```
 
-## the "test resource requirement" aka ITTestResourceRequest (optional)
+#### the "test resource requirement" aka ITTestResourceRequest (optional)
 
 The test resource requirement describes things that the test needs to run, namely network ports. It is optional, but you should add this argument if your test needs to rely upon network ports
 

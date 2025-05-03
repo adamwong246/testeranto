@@ -1,170 +1,164 @@
-import ReactDom from "react-dom/client";
-import React, { useEffect, useState } from "react";
+// import ReactDom from "react-dom/client";
+// import React, { useEffect, useState } from "react";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import "./style.css"
+// import 'bootstrap/dist/css/bootstrap.min.css';
+// import "./style.css"
 
-import { IRunTime, ITestTypes, IBuiltConfig } from "./lib";
-import { Footer } from "./Footer";
-import { Table } from "react-bootstrap";
+// import { IRunTime, ITestTypes, IBuiltConfig } from "./lib";
+// import { Footer } from "./Footer";
+// import { Table } from "react-bootstrap";
+// import { ISummary } from "./Types";
 
-type ISummary = {
-  runTimeError: number | "?";
-  typeErrors: number | "?";
-  staticErrors: number | "?";
-  prompt: string | "?";
-};
+// type ICollation = {
+//   name: string;
+//   runTime: IRunTime;
+//   tr: {
+//     ports: number;
+//   };
+//   sidecars: ITestTypes[];
+//   staticAnalysis: number | "?";
+//   typeErrors: number | "?";
+//   bddErrors: number | "?";
+//   prompt: string | "?";
+// };
 
-type ICollation = {
-  name: string;
-  runTime: IRunTime;
-  tr: {
-    ports: number;
-  };
-  sidecars: ITestTypes[];
-  staticAnalysis: number | "?";
-  typeErrors: number | "?";
-  bddErrors: number | "?";
-  prompt: string | "?";
-};
+// type ICollations = ICollation[];
 
-type ICollations = ICollation[];
+// const BigBoard = () => {
 
-const BigBoard = () => {
+//   const [configs, setConfigs] = useState<IBuiltConfig>();
+//   useEffect(() => {
+//     (async () => {
+//       fetch(`./reports/${window.location.pathname.split('/').pop()}/config.json`)
+//         .then(response => response.json())
+//         .then(json => {
+//           setConfigs(json)
+//         })
+//         .catch(error => console.error(error));
 
-  const [configs, setConfigs] = useState<IBuiltConfig>();
-  useEffect(() => {
-    (async () => {
-      fetch(`./reports/${window.location.pathname.split('/').pop()}/config.json`)
-        .then(response => response.json())
-        .then(json => {
-          setConfigs(json)
-        })
-        .catch(error => console.error(error));
+//     })();
+//   }, []);
 
-    })();
-  }, []);
+//   const [bigBoard, setBigBoard] = useState<Record<string, ISummary>>({});
+//   useEffect(() => {
+//     (async () => {
+//       fetch('./docs/summary.json')
+//         .then(response => response.json())
+//         .then(json => {
+//           setBigBoard(json)
+//         })
+//         .catch(error => console.error(error));
 
-  const [bigBoard, setBigBoard] = useState<Record<string, ISummary>>({});
-  useEffect(() => {
-    (async () => {
-      fetch('./docs/summary.json')
-        .then(response => response.json())
-        .then(json => {
-          setBigBoard(json)
-        })
-        .catch(error => console.error(error));
+//     })();
+//   }, []);
 
-    })();
-  }, []);
+//   // const [staticAnalysis, setStaticAnalysis] = useState<Record<string, string>>({});
+//   // useEffect(() => {
+//   //   (async () => {
 
-  // const [staticAnalysis, setStaticAnalysis] = useState<Record<string, string>>({});
-  // useEffect(() => {
-  //   (async () => {
-
-  //     let accumulator = {};
-  //     for (const t of (configs || { tests: [] as ITestTypes[] }).tests) {
-  //       accumulator[t[0]] = await (await fetch(`/kokomoBay/docs/${t[1]}/${t[0].split(".").slice(0, -1).join(".")}/lint_errors.txt`)).text()
-  //     }
-  //     setStaticAnalysis(accumulator);
+//   //     let accumulator = {};
+//   //     for (const t of (configs || { tests: [] as ITestTypes[] }).tests) {
+//   //       accumulator[t[0]] = await (await fetch(`/kokomoBay/docs/${t[1]}/${t[0].split(".").slice(0, -1).join(".")}/lint_errors.txt`)).text()
+//   //     }
+//   //     setStaticAnalysis(accumulator);
 
 
-  //   })();
-  // }, [configs, bigBoard]);
+//   //   })();
+//   // }, [configs, bigBoard]);
 
-  // const [typeErrors, setTypeErrors] = useState<Record<string, string>>({});
-  // useEffect(() => {
-  //   (async () => {
+//   // const [typeErrors, setTypeErrors] = useState<Record<string, string>>({});
+//   // useEffect(() => {
+//   //   (async () => {
 
-  //     let accumulator = {};
-  //     for (const t of (configs || { tests: [] as ITestTypes[] }).tests) {
-  //       accumulator[t[0]] = await (await fetch(`/kokomoBay/docs/${t[1]}/${t[0].split(".").slice(0, -1).join(".")}/type_errors.txt`)).text()
-  //     }
-  //     setTypeErrors(accumulator);
-
-
-  //   })();
-  // }, [configs, bigBoard]);
-
-  // const [bddErrors, setBddErrors] = useState<Record<string, string>>({});
-  // useEffect(() => {
-  //   (async () => {
-
-  //     let accumulator = {};
-  //     for (const t of (configs || { tests: [] as ITestTypes[] }).tests) {
-  //       accumulator[t[0]] = await (await fetch(`/kokomoBay/docs/${t[1]}/${t[0].split(".").slice(0, -1).join(".")}/bdd_errors.txt`)).text()
-  //     }
-  //     setBddErrors(accumulator);
+//   //     let accumulator = {};
+//   //     for (const t of (configs || { tests: [] as ITestTypes[] }).tests) {
+//   //       accumulator[t[0]] = await (await fetch(`/kokomoBay/docs/${t[1]}/${t[0].split(".").slice(0, -1).join(".")}/type_errors.txt`)).text()
+//   //     }
+//   //     setTypeErrors(accumulator);
 
 
-  //   })();
-  // }, [configs, bigBoard]);
+//   //   })();
+//   // }, [configs, bigBoard]);
 
-  if (!configs) {
-    return <div>loading...</div>
-  }
+//   // const [bddErrors, setBddErrors] = useState<Record<string, string>>({});
+//   // useEffect(() => {
+//   //   (async () => {
 
-  const collated: ICollations = configs.tests.map((c) => {
-    return {
-      ...bigBoard[c[0]],
-      name: c[0],
-      runTime: c[1],
-      tr: c[2],
-      sidecars: c[3],
-      staticAnalysis: bigBoard[c[0]].staticErrors,
-      typeErrors: bigBoard[c[0]].typeErrors,
-      bddErrors: bigBoard[c[0]].runTimeError,
-      prompt: bigBoard[c[0]].prompt
-    } as ICollation
-  });
-
-  return <div >
-    <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th></th>
-          <th>platform</th>
-          <th>BDD errors</th>
-          <th>Lint errors</th>
-          <th>Type errors</th>
-          <th>prompt</th>
-        </tr>
-
-      </thead>
-
-      <tbody>
-        {
-          ...collated.map((c) => {
-            return <tr>
-              <td>{c.name}</td>
-              <td>{c.runTime}</td>
-              <td><a href={`${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/littleBoard.html`}>{c.bddErrors}</a></td>
-              <td><a href={`${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/lint_errors.json`}>{c.staticAnalysis}</a></td>
-              <td><a href={`${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/type_errors.txt`}>{c.typeErrors}</a></td>
+//   //     let accumulator = {};
+//   //     for (const t of (configs || { tests: [] as ITestTypes[] }).tests) {
+//   //       accumulator[t[0]] = await (await fetch(`/kokomoBay/docs/${t[1]}/${t[0].split(".").slice(0, -1).join(".")}/bdd_errors.txt`)).text()
+//   //     }
+//   //     setBddErrors(accumulator);
 
 
-              <td>
-                <pre>
-                  {c.prompt}
-                </pre>
-              </td>
+//   //   })();
+//   // }, [configs, bigBoard]);
+
+//   if (!configs) {
+//     return <div>loading...</div>
+//   }
+
+//   const collated: ICollations = configs.tests.map((c) => {
+//     return {
+//       ...bigBoard[c[0]],
+//       name: c[0],
+//       runTime: c[1],
+//       tr: c[2],
+//       sidecars: c[3],
+//       staticAnalysis: bigBoard[c[0]].staticErrors,
+//       typeErrors: bigBoard[c[0]].typeErrors,
+//       bddErrors: bigBoard[c[0]].runTimeError,
+//       prompt: bigBoard[c[0]].prompt
+//     } as ICollation
+//   });
+
+//   return <div >
+//     <Table striped bordered hover>
+//       <thead>
+//         <tr>
+//           <th></th>
+//           <th>platform</th>
+//           <th>BDD errors</th>
+//           <th>Lint errors</th>
+//           <th>Type errors</th>
+//           <th>prompt</th>
+//         </tr>
+
+//       </thead>
+
+//       <tbody>
+//         {
+//           ...collated.map((c) => {
+//             return <tr>
+//               <td>{c.name}</td>
+//               <td>{c.runTime}</td>
+//               <td><a href={`${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/littleBoard.html`}>{c.bddErrors}</a></td>
+//               <td><a href={`${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/lint_errors.json`}>{c.staticAnalysis}</a></td>
+//               <td><a href={`${c.runTime}/${c.name.split(".").slice(0, -1).join(".")}/type_errors.txt`}>{c.typeErrors}</a></td>
 
 
-            </tr>
-          })
-        }
-      </tbody>
+//               <td>
+//                 <pre>
+//                   {c.prompt}
+//                 </pre>
+//               </td>
 
-    </Table>
-    <Footer />
-  </div>
-}
 
-document.addEventListener("DOMContentLoaded", function () {
-  const elem = document.getElementById("root");
-  if (elem) {
-    ReactDom.createRoot(elem).render(React.createElement(BigBoard, {}, []));
-  }
-});
+//             </tr>
+//           })
+//         }
+//       </tbody>
 
-console.log("hello ReportClient!")
+//     </Table>
+//     <Footer />
+//   </div>
+// }
+
+// document.addEventListener("DOMContentLoaded", function () {
+//   const elem = document.getElementById("root");
+//   if (elem) {
+//     ReactDom.createRoot(elem).render(React.createElement(BigBoard, {}, []));
+//   }
+// });
+
+// console.log("hello ReportClient!")

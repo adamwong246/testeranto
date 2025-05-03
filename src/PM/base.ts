@@ -26,8 +26,10 @@ export abstract class PM_Base {
     this.configs = configs;
   }
 
+  abstract launchSideCar(n: number, testName: string, projectName: string);
+
   customclose() {
-    throw new Error("Method not implemented.");
+    throw new Error("customclose not implemented.");
   }
 
   waitForSelector(p: string, s: string): any {
@@ -54,8 +56,8 @@ export abstract class PM_Base {
     });
   }
 
-  newPage(): Promise<Page> {
-    return this.browser.newPage();
+  async newPage(): Promise<string> {
+    return (await this.browser.newPage()).mainFrame()._id;
   }
 
   goto(p, url: string): any {
@@ -69,12 +71,12 @@ export abstract class PM_Base {
     });
   }
 
-  $(selector: string, p: string): Promise<boolean> {
+  $(selector: string, p: string): Promise<any> {
     return new Promise((res) => {
       this.doInPage(p, async (page) => {
-        const x = page.$(selector);
-        const y = await x;
-        res(y !== null);
+        const x = await page.$(selector);
+        const y = await x?.jsonValue();
+        res(y);
       });
     });
   }
@@ -112,7 +114,7 @@ export abstract class PM_Base {
   async customScreenShot(
     ssOpts: ScreenshotOptions,
     testName: string,
-    page: Page
+    pageUid: any
   ) {
     const p = ssOpts.path as string;
     const dir = path.dirname(p);
@@ -124,6 +126,9 @@ export abstract class PM_Base {
     }
     files[testName].add(ssOpts.path as string);
 
+    const page = (await this.browser.pages()).find(
+      (p) => p.mainFrame()._id === pageUid
+    ) as Page;
     const sPromise = page.screenshot({
       ...ssOpts,
       path: p,
@@ -253,8 +258,8 @@ export abstract class PM_Base {
     });
   }
 
-  page(): string | undefined {
-    throw new Error("Method not implemented.");
+  page(p): string | undefined {
+    return p;
   }
 
   click(selector: string, page: Page) {
@@ -273,15 +278,29 @@ export abstract class PM_Base {
     });
   }
 
-  getValue(value: string, p: string) {
-    this.doInPage(p, (page) => {
-      return page.keyboard.type(value);
-    });
-  }
+  // setValue(value: string, p: string) {
+  //   this.doInPage(p, (page) => {
+  //     return page.keyboard.type(value);
+  //   });
+  // }
 
   getAttribute(selector: string, attribute: string, p: string) {
     this.doInPage(p, (page) => {
-      return page.$eval(selector, (input) => input.getAttribute("value"));
+      return page.$eval(selector, (input) => input.getAttribute(attribute));
+    });
+  }
+
+  async getInnerHtml(selector: string, p: string) {
+    return new Promise((res, rej) => {
+      this.doInPage(p, async (page) => {
+        const e = await page.$(selector);
+        if (!e) {
+          rej();
+        } else {
+          const text = await (await e.getProperty("textContent")).jsonValue();
+          res(text);
+        }
+      });
     });
   }
 

@@ -18,7 +18,7 @@ export default (
   return {
     ...baseEsBuildConfig(config),
 
-    drop: ["console", "debugger"],
+    // drop: ["console", "debugger"],
 
     splitting: true,
 

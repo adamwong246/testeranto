@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Plugin } from "esbuild";
 
 import { ITTestResourceConfiguration } from "./lib/index.js";
@@ -11,6 +12,17 @@ import {
 } from "./lib/abstractBase.js";
 import { IPM, ITestCheckCallback } from "./lib/types.js";
 import { PM } from "./PM/index.js";
+
+export type ISummary = Record<
+  string,
+  {
+    runTimeError?: number | "?";
+    typeErrors?: number | "?";
+    staticErrors?: number | "?";
+    prompt?: string | "?";
+    failingFeatures: Record<string, string[]>;
+  }
+>;
 
 export type ITestInterface<I extends IT = IT> = {
   assertThis: (x: I["then"]) => any;
@@ -180,7 +192,7 @@ export type IPluginFactory = (
   entrypoints?: string[]
 ) => Plugin;
 
-export type IRunTime = `node` | `web` | "pure";
+export type IRunTime = `node` | `web` | "pure" | `spawn`;
 
 export type ITestTypes = [string, IRunTime, { ports: number }, ITestTypes[]];
 
@@ -196,7 +208,7 @@ export type ITestconfig = {
   src: string;
   tests: ITestTypes[];
   webPlugins: IPluginFactory[];
-  reportDomain: string;
+  // reportDomain: string;
 };
 
 export type IBuiltConfig = { buildDir: string } & ITestconfig;

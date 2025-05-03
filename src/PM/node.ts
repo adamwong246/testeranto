@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable prefer-rest-params */
 import net from "net";
 import fs from "fs";
 import path from "path";
@@ -33,7 +36,7 @@ export class PM_Node extends PM {
   }
 
   stop(): Promise<void> {
-    throw new Error("Method not implemented.");
+    throw new Error("stop not implemented.");
   }
 
   send<I>(command: string, ...argz): Promise<I> {
@@ -52,6 +55,24 @@ export class PM_Node extends PM {
 
       this.client.write(JSON.stringify([command, ...argz, key]));
     });
+  }
+
+  async launchSideCar(
+    n: number
+  ): Promise<[number, ITTestResourceConfiguration]> {
+    return this.send<[number, ITTestResourceConfiguration]>(
+      "launchSideCar",
+      n,
+      this.testResourceConfiguration.name
+    );
+  }
+
+  stopSideCar(n: number): Promise<any> {
+    return this.send<ITTestResourceConfiguration>(
+      "stopSideCar",
+      n,
+      this.testResourceConfiguration.name
+    );
   }
 
   async pages() {
@@ -76,7 +97,7 @@ export class PM_Node extends PM {
     return this.send<string>("newPage");
   }
 
-  $(selector: string) {
+  $(selector: string, page: string) {
     return this.send("$", ...arguments);
   }
 
@@ -84,13 +105,17 @@ export class PM_Node extends PM {
     return this.send("isDisabled", ...arguments);
   }
 
-  getAttribute(selector: string, attribute: string) {
+  getAttribute(selector: string, attribute: string, p: string) {
     return this.send("getAttribute", ...arguments);
   }
 
-  getValue(selector: string) {
-    return this.send("getValue", ...arguments);
+  getInnerHtml(selector: string, p: string) {
+    return this.send("getInnerHtml", ...arguments);
   }
+
+  // setValue(selector: string) {
+  //   return this.send("getValue", ...arguments);
+  // }
 
   focusOn(selector: string) {
     return this.send("focusOn", ...arguments);
@@ -124,15 +149,19 @@ export class PM_Node extends PM {
     return this.send("screencastStop", ...arguments);
   }
 
-  customScreenShot(opts: ScreencastOptions, page?: string) {
+  customScreenShot(x: ScreencastOptions, y?: string) {
+    const opts = x[0];
+    const page = x[1];
+
     return this.send(
       "customScreenShot",
       {
         ...opts,
         path: this.testResourceConfiguration.fs + "/" + opts.path,
       },
-      page,
-      this.testResourceConfiguration.name
+
+      this.testResourceConfiguration.name,
+      page
     );
   }
 

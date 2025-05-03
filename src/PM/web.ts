@@ -4,11 +4,13 @@ import { ScreencastOptions, ScreenshotOptions } from "puppeteer-core";
 import { CdpPage, Page } from "puppeteer-core/lib/esm/puppeteer";
 
 import { ITLog, ITTestResourceConfiguration } from "../lib";
+import { PM } from ".";
 
-export class PM_Web {
+export class PM_Web extends PM {
   testResourceConfiguration: ITTestResourceConfiguration;
 
   constructor(t: ITTestResourceConfiguration) {
+    super();
     this.testResourceConfiguration = t;
   }
 
@@ -18,6 +20,18 @@ export class PM_Web {
 
   stop(): Promise<void> {
     return new Promise((r) => r());
+  }
+
+  pages(): Promise<string[]> {
+    throw new Error("Method not implemented.");
+  }
+
+  stopSideCar(n: number): Promise<any> {
+    return window["stopSideCar"](n, this.testResourceConfiguration.name);
+  }
+
+  launchSideCar(n: number): Promise<[number, ITTestResourceConfiguration]> {
+    return window["launchSideCar"](n, this.testResourceConfiguration.name);
   }
 
   waitForSelector(p: string, s: string): any {
@@ -47,7 +61,7 @@ export class PM_Web {
     return window["goto"](p, url);
   }
 
-  newPage(): CdpPage {
+  newPage(): string {
     return window["newPage"]();
   }
 
@@ -74,21 +88,26 @@ export class PM_Web {
     return window["typeInto"](value);
   }
 
-  page(): string | undefined {
-    return window["page"]();
+  async page(x?): Promise<string | undefined> {
+    return window["page"](x);
   }
 
   click(selector: string): any {
     return window["click"](selector);
   }
 
-  customScreenShot(opts: ScreenshotOptions, page: Page) {
+  customScreenShot(x: ScreenshotOptions, y: any) {
+    const opts = x[0];
+    const page = x[1];
+    console.log("customScreenShot 2 opts", opts);
+    console.log("customScreenShot 2 page", page);
     return window["customScreenShot"](
       {
         ...opts,
         path: this.testResourceConfiguration.fs + "/" + opts.path,
       },
-      this.testResourceConfiguration.name
+      this.testResourceConfiguration.name,
+      page
     );
   }
 

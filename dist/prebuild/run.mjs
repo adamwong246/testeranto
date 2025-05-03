@@ -50,8 +50,11 @@ var promptPather = (entryPoint, platform, projectName) => {
 };
 var getRunnables = (tests, projectName, payload = {
   nodeEntryPoints: {},
+  nodeEntryPointSidecars: {},
   webEntryPoints: {},
-  importEntryPoints: {}
+  webEntryPointSidecars: {},
+  pureEntryPoints: {},
+  pureEntryPointSidecars: {}
 }) => {
   return tests.reduce((pt, cv, cndx, cry) => {
     if (cv[1] === "node") {
@@ -63,10 +66,25 @@ var getRunnables = (tests, projectName, payload = {
         `./testeranto/bundles/web/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
       );
     } else if (cv[1] === "pure") {
-      pt.importEntryPoints[cv[0]] = path.resolve(
+      pt.pureEntryPoints[cv[0]] = path.resolve(
         `./testeranto/bundles/pure/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
       );
     }
+    cv[3].filter((t) => t[1] === "node").forEach((t) => {
+      pt.nodeEntryPointSidecars[`${t[0]}`] = path.resolve(
+        `./testeranto/bundles/node/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+      );
+    });
+    cv[3].filter((t) => t[1] === "web").forEach((t) => {
+      pt.webEntryPointSidecars[`${t[0]}`] = path.resolve(
+        `./testeranto/bundles/web/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+      );
+    });
+    cv[3].filter((t) => t[1] === "pure").forEach((t) => {
+      pt.pureEntryPointSidecars[`${t[0]}`] = path.resolve(
+        `./testeranto/bundles/pure/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+      );
+    });
     return pt;
   }, payload);
 };
@@ -84,7 +102,7 @@ var PM_Base = class {
     this.configs = configs;
   }
   customclose() {
-    throw new Error("Method not implemented.");
+    throw new Error("customclose not implemented.");
   }
   waitForSelector(p, s) {
     return new Promise((res) => {
@@ -103,8 +121,8 @@ var PM_Base = class {
       });
     });
   }
-  newPage() {
-    return this.browser.newPage();
+  async newPage() {
+    return (await this.browser.newPage()).mainFrame()._id;
   }
   goto(p, url) {
     return new Promise((res) => {
@@ -117,9 +135,9 @@ var PM_Base = class {
   $(selector, p) {
     return new Promise((res) => {
       this.doInPage(p, async (page) => {
-        const x = page.$(selector);
-        const y = await x;
-        res(y !== null);
+        const x = await page.$(selector);
+        const y = await x?.jsonValue();
+        res(y);
       });
     });
   }
@@ -149,7 +167,7 @@ var PM_Base = class {
     await sPromise;
     return sPromise;
   }
-  async customScreenShot(ssOpts, testName2, page) {
+  async customScreenShot(ssOpts, testName2, pageUid) {
     const p = ssOpts.path;
     const dir = path2.dirname(p);
     fs.mkdirSync(dir, {
@@ -159,6 +177,9 @@ var PM_Base = class {
       files[testName2] = /* @__PURE__ */ new Set();
     }
     files[testName2].add(ssOpts.path);
+    const page = (await this.browser.pages()).find(
+      (p2) => p2.mainFrame()._id === pageUid
+    );
     const sPromise = page.screenshot({
       ...ssOpts,
       path: p
@@ -266,8 +287,8 @@ var PM_Base = class {
       res(x);
     });
   }
-  page() {
-    throw new Error("Method not implemented.");
+  page(p) {
+    return p;
   }
   click(selector, page) {
     return page.click(selector);
@@ -282,14 +303,27 @@ var PM_Base = class {
       return page.keyboard.type(value);
     });
   }
-  getValue(value, p) {
-    this.doInPage(p, (page) => {
-      return page.keyboard.type(value);
-    });
-  }
+  // setValue(value: string, p: string) {
+  //   this.doInPage(p, (page) => {
+  //     return page.keyboard.type(value);
+  //   });
+  // }
   getAttribute(selector, attribute, p) {
     this.doInPage(p, (page) => {
-      return page.$eval(selector, (input) => input.getAttribute("value"));
+      return page.$eval(selector, (input) => input.getAttribute(attribute));
+    });
+  }
+  async getInnerHtml(selector, p) {
+    return new Promise((res, rej) => {
+      this.doInPage(p, async (page) => {
+        const e = await page.$(selector);
+        if (!e) {
+          rej();
+        } else {
+          const text = await (await e.getProperty("textContent")).jsonValue();
+          res(text);
+        }
+      });
     });
   }
   isDisabled(selector, p) {
@@ -349,7 +383,7 @@ async function writeFileAndCreateDir(filePath, data) {
   const dirPath = path3.dirname(filePath);
   try {
     await fs2.promises.mkdir(dirPath, { recursive: true });
-    await fs2.appendFileSync(filePath, data);
+    await fs2.writeFileSync(filePath, data);
   } catch (error) {
     console.error(`Error writing file: ${error}`);
   }
@@ -383,11 +417,14 @@ function pollForFile(path4, timeout = 2e3) {
 var PM_Main = class extends PM_Base {
   constructor(configs, name, mode2) {
     super(configs);
-    this.bigBoard = {};
+    this.summary = {};
     this.getRunnables = (tests, testName2, payload = {
       nodeEntryPoints: {},
+      nodeEntryPointSidecars: {},
       webEntryPoints: {},
-      importEntryPoints: {}
+      webEntryPointSidecars: {},
+      pureEntryPoints: {},
+      pureEntryPointSidecars: {}
     }) => {
       return getRunnables(tests, testName2, payload);
     };
@@ -415,15 +452,15 @@ var PM_Main = class extends PM_Base {
         // exclude: ["**/*.test.ts", "**/*.spec.ts"],
       });
       const tscPath = tscPather(entrypoint, platform, this.name);
-      let allDiagnostics = program.getSemanticDiagnostics();
+      const allDiagnostics = program.getSemanticDiagnostics();
       const results = [];
       allDiagnostics.forEach((diagnostic) => {
         if (diagnostic.file) {
-          let { line, character } = ts.getLineAndCharacterOfPosition(
+          const { line, character } = ts.getLineAndCharacterOfPosition(
             diagnostic.file,
             diagnostic.start
           );
-          let message = ts.flattenDiagnosticMessageText(
+          const message = ts.flattenDiagnosticMessageText(
             diagnostic.messageText,
             "\n"
           );
@@ -455,7 +492,7 @@ var PM_Main = class extends PM_Base {
       this.lintIsNowDone(entrypoint, results.length);
     };
     this.makePrompt = async (entryPoint, addableFiles, platform) => {
-      this.bigBoard[entryPoint].prompt = "?";
+      this.summary[entryPoint].prompt = "?";
       const promptPath = promptPather(entryPoint, platform, this.name);
       const testPaths = path3.join(
         "testeranto",
@@ -497,34 +534,35 @@ ${addableFiles.map((x) => {
         )}"
           `
       );
-      this.bigBoard[entryPoint].prompt = `aider --model deepseek/deepseek-chat --load testeranto/${this.name}/reports/${platform}/${entryPoint.split(".").slice(0, -1).join(".")}/prompt.txt`;
+      this.summary[entryPoint].prompt = `aider --model deepseek/deepseek-chat --load testeranto/${this.name}/reports/${platform}/${entryPoint.split(".").slice(0, -1).join(".")}/prompt.txt`;
       this.checkForShutdown();
     };
     this.checkForShutdown = () => {
+      console.log(ansiC.inverse(`checkForShutdown`));
       this.writeBigBoard();
       if (this.mode === "dev")
         return;
       let inflight = false;
-      Object.keys(this.bigBoard).forEach((k) => {
-        if (this.bigBoard[k].prompt === "?") {
+      Object.keys(this.summary).forEach((k) => {
+        if (this.summary[k].prompt === "?") {
           console.log(ansiC.blue(ansiC.inverse(`\u{1F555} prompt ${k}`)));
           inflight = true;
         }
       });
-      Object.keys(this.bigBoard).forEach((k) => {
-        if (this.bigBoard[k].runTimeError === "?") {
+      Object.keys(this.summary).forEach((k) => {
+        if (this.summary[k].runTimeError === "?") {
           console.log(ansiC.blue(ansiC.inverse(`\u{1F555} runTimeError ${k}`)));
           inflight = true;
         }
       });
-      Object.keys(this.bigBoard).forEach((k) => {
-        if (this.bigBoard[k].staticErrors === "?") {
+      Object.keys(this.summary).forEach((k) => {
+        if (this.summary[k].staticErrors === "?") {
           console.log(ansiC.blue(ansiC.inverse(`\u{1F555} staticErrors ${k}`)));
           inflight = true;
         }
       });
-      Object.keys(this.bigBoard).forEach((k) => {
-        if (this.bigBoard[k].typeErrors === "?") {
+      Object.keys(this.summary).forEach((k) => {
+        if (this.summary[k].typeErrors === "?") {
           console.log(ansiC.blue(ansiC.inverse(`\u{1F555} typeErrors ${k}`)));
           inflight = true;
         }
@@ -538,28 +576,28 @@ ${addableFiles.map((x) => {
       }
     };
     this.typeCheckIsRunning = (src) => {
-      this.bigBoard[src].typeErrors = "?";
+      this.summary[src].typeErrors = "?";
     };
     this.typeCheckIsNowDone = (src, failures) => {
-      this.bigBoard[src].typeErrors = failures;
+      this.summary[src].typeErrors = failures;
       this.writeBigBoard();
       this.checkForShutdown();
     };
     this.lintIsRunning = (src) => {
-      this.bigBoard[src].staticErrors = "?";
+      this.summary[src].staticErrors = "?";
       this.writeBigBoard();
     };
     this.lintIsNowDone = (src, failures) => {
-      this.bigBoard[src].staticErrors = failures;
+      this.summary[src].staticErrors = failures;
       this.writeBigBoard();
       this.checkForShutdown();
     };
     this.bddTestIsRunning = (src) => {
-      this.bigBoard[src].runTimeError = "?";
+      this.summary[src].runTimeError = "?";
       this.writeBigBoard();
     };
     this.bddTestIsNowDone = (src, failures) => {
-      this.bigBoard[src].runTimeError = failures;
+      this.summary[src].runTimeError = failures;
       this.writeBigBoard();
       this.checkForShutdown();
     };
@@ -580,7 +618,7 @@ ${addableFiles.map((x) => {
         process.exit(-1);
       }
       const testConfigResource = testConfig[2];
-      let portsToUse = [];
+      const portsToUse = [];
       if (testConfigResource.ports === 0) {
         argz = JSON.stringify({
           scheduled: true,
@@ -619,16 +657,15 @@ ${addableFiles.map((x) => {
         await import(`${builtfile}?cacheBust=${Date.now()}`).then((module) => {
           return module.default.then((defaultModule) => {
             defaultModule.receiveTestResourceConfig(argz).then(async (results) => {
-              this.receiveFeatures(results.features, destFolder, src, "pure");
               statusMessagePretty(results.fails, src);
               this.bddTestIsNowDone(src, results.fails);
             }).catch((e) => {
               console.log(
-                ansiC.red(ansiC.inverse(`${src} errored with: ${e}`))
+                ansiC.red(
+                  ansiC.inverse(`launchPure - ${src} errored with: ${e}`)
+                )
               );
               this.bddTestIsNowDone(src, -1);
-            }).finally(() => {
-              webSideCares.forEach((webSideCar) => webSideCar.close());
             });
           }).catch((e) => {
             console.log(
@@ -657,7 +694,7 @@ ${addableFiles.map((x) => {
       }
       for (let i = 0; i <= portsToUse.length; i++) {
         if (portsToUse[i]) {
-          this.ports[portsToUse[i]] = "true";
+          this.ports[portsToUse[i]] = true;
         }
       }
     };
@@ -680,15 +717,17 @@ ${addableFiles.map((x) => {
         process.exit(-1);
       }
       const testConfigResource = testConfig[2];
-      let portsToUse = [];
+      const portsToUse = [];
       if (testConfigResource.ports === 0) {
-        testResources = JSON.stringify({
-          scheduled: true,
+        console.error("portsToUse", []);
+        const t = {
           name: src,
-          ports: portsToUse,
+          // ports: portsToUse.map((v) => Number(v)),
+          ports: [],
           fs: reportDest,
           browserWSEndpoint: this.browser.wsEndpoint()
-        });
+        };
+        testResources = JSON.stringify(t);
       } else if (testConfigResource.ports > 0) {
         const openPorts = Object.entries(this.ports).filter(
           ([portnumber, portopen]) => portopen
@@ -698,6 +737,7 @@ ${addableFiles.map((x) => {
             portsToUse.push(openPorts[i][0]);
             this.ports[openPorts[i][0]] = false;
           }
+          console.error("portsToUse", portsToUse);
           testResources = JSON.stringify({
             scheduled: true,
             name: src,
@@ -719,9 +759,9 @@ ${addableFiles.map((x) => {
       const server = net.createServer((socket) => {
         socket.on("data", (data) => {
           buffer = Buffer.concat([buffer, data]);
-          let messages = [];
+          const messages = [];
           for (let b = 0; b < buffer.length + 1; b++) {
-            let c = buffer.slice(0, b);
+            const c = buffer.slice(0, b);
             let d;
             try {
               d = JSON.parse(c.toString());
@@ -758,24 +798,20 @@ ${addableFiles.map((x) => {
           // silent: true
         }
       );
-      const p = destFolder + "/tpipe";
+      const p = "/tmp/tpipe" + Math.random();
       const errFile = `${reportDest}/error.txt`;
       if (fs2.existsSync(errFile)) {
         fs2.rmSync(errFile);
       }
       server.listen(p, () => {
         child.stderr?.on("data", (data) => {
-          oStream.write(`stderr data ${data}`);
+          oStream.write(`stderr > ${data}`);
         });
         child.stdout?.on("data", (data) => {
-          oStream.write(`stdout data ${data}`);
+          oStream.write(`stdout > ${data}`);
         });
         child.on("close", (code) => {
           console.log("close");
-          console.log("deleting", p);
-          if (fs2.existsSync(p)) {
-            fs2.rmSync(p);
-          }
           oStream.close();
           server.close();
           if (code === null) {
@@ -792,11 +828,13 @@ ${addableFiles.map((x) => {
         });
         child.on("exit", (code) => {
           console.log("exit");
-          console.log("deleting", p);
-          if (fs2.existsSync(p)) {
-            fs2.rmSync(p);
-          }
           haltReturns = true;
+          for (let i = 0; i <= portsToUse.length; i++) {
+            if (portsToUse[i]) {
+              this.ports[portsToUse[i]] = true;
+            }
+          }
+          console.log("exitthis.ports", this.ports);
         });
         child.on("error", (e) => {
           console.log("error");
@@ -818,120 +856,248 @@ ${addableFiles.map((x) => {
         });
       });
       child.send({ path: p });
-      for (let i = 0; i <= portsToUse.length; i++) {
-        if (portsToUse[i]) {
-          this.ports[portsToUse[i]] = "true";
-        }
-      }
     };
-    this.launchWebSideCar = async (src, dest, testConfig) => {
-      const d = dest + ".mjs";
+    this.launchWebSideCar = async (testConfig) => {
+      const src = testConfig[0];
+      const dest = src.split(".").slice(0, -1).join(".");
+      const destFolder = dest.replace(".mjs", "");
       console.log(ansiC.green(ansiC.inverse(`launchWebSideCar ${src}`)));
       const fileStreams2 = [];
       const doneFileStream2 = [];
+      const oStream = fs2.createWriteStream(`${destFolder}/console_log.txt`);
       return new Promise((res, rej) => {
-        this.browser.newPage().then((page) => {
-          page.exposeFunction(
-            "custom-screenshot",
-            async (ssOpts, testName2) => {
-              const p = ssOpts.path;
-              const dir = path3.dirname(p);
-              fs2.mkdirSync(dir, {
-                recursive: true
-              });
-              files2[testName2].add(ssOpts.path);
-              const sPromise = page.screenshot({
-                ...ssOpts,
-                path: p
-              });
-              if (!screenshots2[testName2]) {
-                screenshots2[testName2] = [];
-              }
-              screenshots2[testName2].push(sPromise);
-              await sPromise;
-              return sPromise;
-            }
-          );
-          page.exposeFunction(
-            "writeFileSync",
-            (fp, contents, testName2) => {
-              const dir = path3.dirname(fp);
-              fs2.mkdirSync(dir, {
-                recursive: true
-              });
-              const p = new Promise(async (res2, rej2) => {
-                fs2.writeFileSync(fp, contents);
-                res2(fp);
-              });
-              doneFileStream2.push(p);
-              if (!files2[testName2]) {
-                files2[testName2] = /* @__PURE__ */ new Set();
-              }
-              files2[testName2].add(fp);
-              return p;
-            }
-          );
-          page.exposeFunction("existsSync", (fp, contents) => {
-            return fs2.existsSync(fp);
+        this.browser.newPage().then(async (page) => {
+          this.mapping().forEach(async ([command, func]) => {
+            page.exposeFunction(command, func);
           });
-          page.exposeFunction("mkdirSync", (fp) => {
-            if (!fs2.existsSync(fp)) {
-              return fs2.mkdirSync(fp, {
-                recursive: true
-              });
+          const close = () => {
+            if (!files2[src]) {
+              files2[src] = /* @__PURE__ */ new Set();
             }
-            return false;
+            fs2.writeFileSync(
+              destFolder + "/manifest.json",
+              JSON.stringify(Array.from(files2[src]))
+            );
+            delete files2[src];
+            Promise.all(screenshots2[src] || []).then(() => {
+              delete screenshots2[src];
+              page.close();
+              oStream.close();
+            });
+          };
+          page.on("pageerror", (err) => {
+            console.debug(`Error from ${src}: [${err.name}] `);
+            oStream.write(err.name);
+            oStream.write("\n");
+            if (err.cause) {
+              console.debug(`Error from ${src} cause: [${err.cause}] `);
+              oStream.write(err.cause);
+              oStream.write("\n");
+            }
+            if (err.stack) {
+              console.debug(`Error from stack ${src}: [${err.stack}] `);
+              oStream.write(err.stack);
+              oStream.write("\n");
+            }
+            console.debug(`Error from message ${src}: [${err.message}] `);
+            oStream.write(err.message);
+            oStream.write("\n");
+            this.bddTestIsNowDone(src, -1);
+            close();
           });
-          page.exposeFunction(
-            "createWriteStream",
-            (fp, testName2) => {
-              const f = fs2.createWriteStream(fp);
-              files2[testName2].add(fp);
-              const p = new Promise((res2, rej2) => {
-                res2(fp);
-              });
-              doneFileStream2.push(p);
-              f.on("close", async () => {
-                await p;
-              });
-              fileStreams2.push(f);
-              return {
-                ...JSON.parse(JSON.stringify(f)),
-                uid: fileStreams2.length - 1
-              };
-            }
-          );
-          page.exposeFunction(
-            "write",
-            async (uid, contents) => {
-              return fileStreams2[uid].write(contents);
-            }
-          );
-          page.exposeFunction("end", async (uid) => {
-            return fileStreams2[uid].end();
+          page.on("console", (log) => {
+            oStream.write(log.text());
+            oStream.write(JSON.stringify(log.location()));
+            oStream.write(JSON.stringify(log.stackTrace()));
+            oStream.write("\n");
+          });
+          await page.goto(`file://${`${destFolder}.html`}`, {});
+          const webArgz = JSON.stringify({
+            name: dest,
+            ports: [].toString(),
+            fs: dest,
+            browserWSEndpoint: this.browser.wsEndpoint()
+          });
+          const d = `${dest}?cacheBust=${Date.now()}`;
+          const evaluation = `
+    import('${d}').then(async (x) => {
+
+      try {
+        return await (await x.default).receiveTestResourceConfig(${webArgz})
+      } catch (e) {
+        console.log("fail", e.toString())
+      }
+    })`;
+          await page.evaluate(evaluation).then(async ({ fails, failed, features }) => {
+            statusMessagePretty(fails, src);
+            this.bddTestIsNowDone(src, fails);
+          }).catch((e) => {
+            console.log(
+              ansiC.red(
+                ansiC.inverse(`launchWebSidecar - ${src} errored with: ${e}`)
+              )
+            );
+          }).finally(() => {
+            this.bddTestIsNowDone(src, -1);
+            close();
           });
           return page;
         }).then(async (page) => {
           await page.goto(`file://${`${dest}.html`}`, {});
-          res(page);
+          res([Math.random(), page]);
         });
       });
     };
-    this.launchNodeSideCar = async (src, dest, testConfig) => {
+    this.launchNodeSideCar = async (sidecar) => {
+      const src = sidecar[0];
+      const dest = process.cwd() + `/testeranto/bundles/node/${this.name}/${sidecar[0]}`;
       const d = dest + ".mjs";
-      console.log(ansiC.green(ansiC.inverse(`launchNodeSideCar ${src}`)));
+      console.log(ansiC.green(ansiC.inverse(`launchNodeSideCar ${sidecar[0]}`)));
+      const destFolder = dest.replace(".ts", "");
+      const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/node`;
+      const argz = {
+        name: sidecar[0],
+        ports: [],
+        fs: destFolder,
+        browserWSEndpoint: this.browser.wsEndpoint()
+      };
+      const testReq = sidecar[2];
+      const portsToUse = [];
+      if (testReq.ports === 0) {
+      } else if (testReq.ports > 0) {
+        const openPorts = Object.entries(this.ports).filter(
+          ([portnumber, portopen]) => portopen
+        );
+        console.log("nodeSideCar mark2", this.ports);
+        console.log("nodeSideCar mark", openPorts, testReq.ports);
+        if (openPorts.length >= testReq.ports) {
+          for (let i = 0; i < testReq.ports; i++) {
+            portsToUse.push(openPorts[i][0]);
+            this.ports[openPorts[i][0]] = false;
+          }
+          console.log("nodeSideCar portsToUse", portsToUse);
+          argz.ports = portsToUse;
+          const builtfile = destFolder + ".mjs";
+          let haltReturns = false;
+          let buffer = new Buffer("");
+          const server = net.createServer((socket) => {
+            socket.on("data", (data) => {
+              console.log("data", data);
+              buffer = Buffer.concat([buffer, data]);
+              const messages = [];
+              for (let b = 0; b < buffer.length + 1; b++) {
+                const c = buffer.slice(0, b);
+                let d2;
+                try {
+                  d2 = JSON.parse(c.toString());
+                  messages.push(d2);
+                  buffer = buffer.slice(b, buffer.length + 1);
+                  b = 0;
+                } catch (e) {
+                }
+              }
+              messages.forEach(async (payload) => {
+                this.mapping().forEach(async ([command, func]) => {
+                  if (payload[0] === command) {
+                    const x = payload.slice(1, -1);
+                    const r2 = await this[command](...x);
+                    if (!haltReturns) {
+                      child.send(
+                        JSON.stringify({
+                          payload: r2,
+                          key: payload[payload.length - 1]
+                        })
+                      );
+                    }
+                  }
+                });
+              });
+            });
+          });
+          const oStream = fs2.createWriteStream(`${reportDest}/console_log.txt`);
+          const child = spawn("node", [builtfile, JSON.stringify(argz)], {
+            stdio: ["pipe", "pipe", "pipe", "ipc"]
+            // silent: true
+          });
+          const p = "/tmp/tpipe" + Math.random();
+          const errFile = `${reportDest}/error.txt`;
+          server.listen(p, () => {
+            child.stderr?.on("data", (data) => {
+              oStream.write(`stderr > ${data}`);
+            });
+            child.stdout?.on("data", (data) => {
+              oStream.write(`stdout > ${data}`);
+            });
+            child.on("close", (code) => {
+              console.log("nodeSideCar close", this.ports);
+              oStream.close();
+              server.close();
+              haltReturns = true;
+            });
+            child.on("exit", (code) => {
+              console.log("nodeSideCar exit", this.ports);
+              haltReturns = true;
+              for (let i = 0; i <= portsToUse.length; i++) {
+                if (portsToUse[i]) {
+                  this.ports[portsToUse[i]] = true;
+                }
+              }
+              console.log("nodeSideCar exit2", this.ports);
+            });
+            child.on("error", (e) => {
+              console.log("error");
+              if (fs2.existsSync(p)) {
+                fs2.rmSync(p);
+              }
+              haltReturns = true;
+              console.log(
+                ansiC.red(
+                  ansiC.inverse(
+                    `launchNodeSideCar - ${src} errored with: ${e.name}. Check ${errFile}for more info`
+                  )
+                )
+              );
+              this.writeFileSync(`${reportDest}/error.txt`, e.toString(), src);
+            });
+          });
+          child.send({ path: p });
+          const r = Math.random();
+          this.nodeSidecars[r] = child;
+          return [r, argz];
+        } else {
+          console.log("Not enough open ports!", openPorts, testReq.ports);
+          this.queue.push(sidecar[0]);
+          return [Math.random(), argz];
+        }
+      } else {
+        console.error("negative port makes no sense", sidecar[0]);
+        process.exit(-1);
+      }
+    };
+    this.stopPureSideCar = async (uid) => {
+      console.log(ansiC.green(ansiC.inverse(`stopPureSideCar ${uid}`)));
+      await this.sidecars[uid].shutdown();
+      return;
+    };
+    this.launchPureSideCar = async (sidecar) => {
+      console.log(ansiC.green(ansiC.inverse(`launchPureSideCar ${sidecar[0]}`)));
+      const r = Math.random();
+      const dest = process.cwd() + `/testeranto/bundles/pure/${this.name}/${sidecar[0]}`;
+      const builtfile = dest.split(".").slice(0, -1).concat("mjs").join(".");
       const destFolder = dest.replace(".mjs", "");
-      let argz = "";
-      const testConfigResource = testConfig[2];
-      let portsToUse = [];
+      let argz;
+      const z = sidecar[2];
+      const testConfigResource = sidecar[2];
+      const src = sidecar[0];
+      const portsToUse = [];
       if (testConfigResource.ports === 0) {
-        argz = JSON.stringify({
-          scheduled: true,
+        argz = {
+          // scheduled: true,
           name: src,
           ports: portsToUse,
           fs: destFolder,
           browserWSEndpoint: this.browser.wsEndpoint()
-        });
+        };
       } else if (testConfigResource.ports > 0) {
         const openPorts = Object.entries(this.ports).filter(
           ([portnumber, portopen]) => portopen
@@ -941,14 +1107,14 @@ ${addableFiles.map((x) => {
             portsToUse.push(openPorts[i][0]);
             this.ports[openPorts[i][0]] = false;
           }
-          argz = JSON.stringify({
-            scheduled: true,
+          argz = {
+            // scheduled: true,
             name: src,
             // ports: [3333],
             ports: portsToUse,
             fs: ".",
             browserWSEndpoint: this.browser.wsEndpoint()
-          });
+          };
         } else {
           this.queue.push(src);
           return;
@@ -957,18 +1123,11 @@ ${addableFiles.map((x) => {
         console.error("negative port makes no sense", src);
         process.exit(-1);
       }
-      const builtfile = dest + ".mjs";
       await import(`${builtfile}?cacheBust=${Date.now()}`).then((module) => {
-        return module.default.then((defaultModule) => {
-          const s = new defaultModule();
-          s.receiveTestResourceConfig(argz);
-        });
+        this.pureSidecars[r] = module.default;
+        this.pureSidecars[r].start(argz);
       });
-      for (let i = 0; i <= portsToUse.length; i++) {
-        if (portsToUse[i]) {
-          this.ports[portsToUse[i]] = "true";
-        }
-      }
+      return [r, argz];
     };
     this.launchWeb = async (src, dest) => {
       console.log(ansiC.green(ansiC.inverse(`! web ${src}`)));
@@ -979,7 +1138,7 @@ ${addableFiles.map((x) => {
       }
       const destFolder = dest.replace(".mjs", "");
       const webArgz = JSON.stringify({
-        name: dest,
+        name: src,
         ports: [].toString(),
         fs: reportDest,
         browserWSEndpoint: this.browser.wsEndpoint()
@@ -998,7 +1157,17 @@ ${addableFiles.map((x) => {
       const oStream = fs2.createWriteStream(`${reportDest}/console_log.txt`);
       this.browser.newPage().then((page) => {
         this.mapping().forEach(async ([command, func]) => {
-          page.exposeFunction(command, func);
+          if (command === "page") {
+            page.exposeFunction(command, (x) => {
+              if (x) {
+                return func(x);
+              } else {
+                return func(page.mainFrame()._id);
+              }
+            });
+          } else {
+            return page.exposeFunction(command, func);
+          }
         });
         return page;
       }).then(async (page) => {
@@ -1039,17 +1208,21 @@ ${addableFiles.map((x) => {
         });
         page.on("console", (log) => {
           oStream.write(log.text());
+          oStream.write("\n");
           oStream.write(JSON.stringify(log.location()));
+          oStream.write("\n");
           oStream.write(JSON.stringify(log.stackTrace()));
           oStream.write("\n");
         });
         await page.goto(`file://${`${destFolder}.html`}`, {});
+        this.webSidecars[Math.random()] = page.mainFrame()._id;
         await page.evaluate(evaluation).then(async ({ fails, failed, features }) => {
-          this.receiveFeatures(features, destFolder, src, "web");
           statusMessagePretty(fails, src);
           this.bddTestIsNowDone(src, fails);
         }).catch((e) => {
-          console.log(ansiC.red(ansiC.inverse(`${src} errored with: ${e}`)));
+          console.log(
+            ansiC.red(ansiC.inverse(`launchweb - ${src} errored with: ${e}`))
+          );
         }).finally(() => {
           this.bddTestIsNowDone(src, -1);
           close();
@@ -1057,7 +1230,7 @@ ${addableFiles.map((x) => {
         return page;
       });
     };
-    this.receiveFeatures = (features, destFolder, srcTest, platform) => {
+    this.receiveFeaturesV2 = (reportDest, srcTest, platform) => {
       const featureDestination = path3.resolve(
         process.cwd(),
         "reports",
@@ -1065,7 +1238,10 @@ ${addableFiles.map((x) => {
         "strings",
         srcTest.split(".").slice(0, -1).join(".") + ".features.txt"
       );
-      features.reduce(async (mm, featureStringKey) => {
+      const testReport = JSON.parse(
+        fs2.readFileSync(`${reportDest}/tests.json`).toString()
+      );
+      testReport.features.reduce(async (mm, featureStringKey) => {
         const accum = await mm;
         const isUrl = isValidUrl(featureStringKey);
         if (isUrl) {
@@ -1075,16 +1251,9 @@ ${addableFiles.map((x) => {
               process.cwd(),
               u.pathname
             )}`;
-            await fs2.promises.mkdir(path3.dirname(newPath), { recursive: true });
-            try {
-              await fs2.unlinkSync(newPath);
-            } catch (error) {
-              if (error.code !== "ENOENT") {
-              }
-            }
-            accum.files.push(newPath);
+            accum.files.push(u.pathname);
           } else if (u.protocol === "http:" || u.protocol === "https:") {
-            const newPath = `${process.cwd()}/testeranto/features/external${u.hostname}${u.pathname}`;
+            const newPath = `${process.cwd()}/testeranto/features/external/${u.hostname}${u.pathname}`;
             const body = await this.configs.featureIngestor(featureStringKey);
             writeFileAndCreateDir(newPath, body);
             accum.files.push(newPath);
@@ -1104,27 +1273,89 @@ ${addableFiles.map((x) => {
           }).join("\n")
         );
       });
+      testReport.givens.forEach((g) => {
+        if (g.failed === true) {
+          this.summary[srcTest].failingFeatures[g.key] = g.features;
+        }
+      });
+      this.writeBigBoard();
     };
     this.writeBigBoard = () => {
       fs2.writeFileSync(
         `./testeranto/reports/${this.name}/summary.json`,
-        JSON.stringify(this.bigBoard, null, 2)
+        JSON.stringify(this.summary, null, 2)
       );
     };
     this.name = name;
     this.mode = mode2;
     this.ports = {};
-    this.configs.tests.forEach(([t]) => {
-      this.bigBoard[t] = {
+    this.queue = [];
+    this.configs.tests.forEach(([t, rt, tr, sidecars]) => {
+      this.summary[t] = {
         runTimeError: "?",
         typeErrors: "?",
         staticErrors: "?",
-        prompt: "?"
+        prompt: "?",
+        failingFeatures: {}
       };
+      sidecars.forEach(([t2]) => {
+        this.summary[t2] = {
+          // runTimeError: "?",
+          typeErrors: "?",
+          staticErrors: "?"
+          // prompt: "?",
+          // failingFeatures: {},
+        };
+      });
     });
+    this.nodeSidecars = {};
+    this.webSidecars = {};
+    this.pureSidecars = {};
     this.configs.ports.forEach((element) => {
-      this.ports[element] = "true";
+      this.ports[element] = true;
     });
+  }
+  async stopSideCar(uid) {
+    console.log(ansiC.green(ansiC.inverse(`stopSideCar ${uid}`)));
+    Object.entries(this.pureSidecars).forEach(async ([k, v]) => {
+      if (Number(k) === uid) {
+        await this.pureSidecars[Number(k)].stop();
+        delete this.pureSidecars[Number(k)];
+      }
+    });
+    Object.entries(this.nodeSidecars).forEach(async ([k, v]) => {
+      if (Number(k) === uid) {
+        await this.nodeSidecars[Number(k)].send("stop");
+        delete this.nodeSidecars[Number(k)];
+      }
+    });
+    Object.entries(this.webSidecars).forEach(async ([k, v]) => {
+      if (Number(k) === uid) {
+        (await this.browser.pages()).forEach(async (p) => {
+          if (p.mainFrame()._id === k) {
+            await this.webSidecars[Number(k)].close();
+            delete this.webSidecars[Number(k)];
+          }
+        });
+      }
+    });
+    return;
+  }
+  async launchSideCar(n, name) {
+    const c = this.configs.tests.find(([v, r2]) => {
+      return v === name;
+    });
+    const s = c[3][n];
+    const r = s[1];
+    if (r === "node") {
+      return this.launchNodeSideCar(s);
+    } else if (r === "web") {
+      return this.launchWebSideCar(s);
+    } else if (r === "pure") {
+      return this.launchPureSideCar(s);
+    } else {
+      throw `unknown runtime ${r}`;
+    }
   }
   mapping() {
     return [
@@ -1133,20 +1364,23 @@ ${addableFiles.map((x) => {
       ["closePage", this.closePage],
       ["createWriteStream", this.createWriteStream],
       ["customclose", this.customclose],
-      ["customScreenShot", this.customScreenShot],
+      ["customScreenShot", this.customScreenShot.bind(this)],
       ["end", this.end],
       ["existsSync", this.existsSync],
       ["focusOn", this.focusOn],
       ["getAttribute", this.getAttribute],
-      ["getValue", this.getValue],
-      ["goto", this.goto],
+      ["getInnerHtml", this.getInnerHtml],
+      // ["setValue", this.setValue],
+      ["goto", this.goto.bind(this)],
       ["isDisabled", this.isDisabled],
+      ["launchSideCar", this.launchSideCar.bind(this)],
       ["mkdirSync", this.mkdirSync],
       ["newPage", this.newPage],
       ["page", this.page],
       ["pages", this.pages],
       ["screencast", this.screencast],
       ["screencastStop", this.screencastStop],
+      ["stopSideCar", this.stopSideCar.bind(this)],
       ["typeInto", this.typeInto],
       ["waitForSelector", this.waitForSelector],
       ["write", this.write],
@@ -1163,14 +1397,12 @@ ${addableFiles.map((x) => {
     this.browser = await puppeteer.launch({
       slowMo: 1,
       waitForInitialPage: false,
-      executablePath: (
-        // process.env.CHROMIUM_PATH || "/opt/homebrew/bin/chromium",
-        "/opt/homebrew/bin/chromium"
-      ),
+      executablePath: "/opt/homebrew/bin/chromium",
       headless: true,
       dumpio: false,
       devtools: false,
       args: [
+        "--disable-features=site-per-process",
         "--allow-file-access-from-files",
         "--allow-insecure-localhost",
         "--allow-running-insecure-content",
@@ -1180,15 +1412,14 @@ ${addableFiles.map((x) => {
         "--disable-gpu",
         "--disable-setuid-sandbox",
         "--disable-site-isolation-trials",
-        "--disable-site-isolation-trials",
         "--disable-web-security",
         "--no-first-run",
         "--no-sandbox",
         "--no-startup-window",
         "--reduce-security-for-testing",
         "--remote-allow-origins=*",
-        `--remote-debugging-port=3234`,
-        "--unsafely-treat-insecure-origin-as-secure=*"
+        "--unsafely-treat-insecure-origin-as-secure=*",
+        `--remote-debugging-port=3234`
         // "--disable-features=IsolateOrigins,site-per-process",
         // "--disable-features=IsolateOrigins",
         // "--disk-cache-dir=/dev/null",
@@ -1201,7 +1432,7 @@ ${addableFiles.map((x) => {
         // "--unsafely-treat-insecure-origin-as-secure=ws://192.168.0.101:3234",
       ]
     });
-    const { nodeEntryPoints, webEntryPoints, importEntryPoints } = this.getRunnables(this.configs.tests, this.name);
+    const { nodeEntryPoints, webEntryPoints, pureEntryPoints } = this.getRunnables(this.configs.tests, this.name);
     [
       [
         nodeEntryPoints,
@@ -1220,7 +1451,7 @@ ${addableFiles.map((x) => {
         }
       ],
       [
-        importEntryPoints,
+        pureEntryPoints,
         this.launchPure,
         "pure",
         (w) => {

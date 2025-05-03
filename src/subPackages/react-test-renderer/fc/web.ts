@@ -74,7 +74,6 @@ export default <
       return renderer;
     },
     afterEach: async (store, key, artificer) => {
-      console.log("afterall");
       store.unmount();
     },
   });

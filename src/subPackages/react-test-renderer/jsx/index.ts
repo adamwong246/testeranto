@@ -23,7 +23,6 @@ export type I = Ibdd_in<
 
 export const testInterface: IPartialInterface<I> = {
   butThen: async function (s: IStore, thenCB): Promise<ISelection> {
-    // console.log("butThen", thenCB.toString());
     return thenCB(s);
   },
   beforeEach: function (

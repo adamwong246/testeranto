@@ -70,7 +70,6 @@ const testeranto = async <I extends IT, O extends OT, M>(
   });
 
   try {
-    console.log(process.argv);
     const f = await t.receiveTestResourceConfig(process.argv[2]);
 
     console.error("goodbye node error", f.fails);

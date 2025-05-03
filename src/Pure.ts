@@ -5,8 +5,6 @@ import {
   ITTestResourceRequest,
 } from "./lib/index.js";
 import type {
-  Ibdd_in,
-  Ibdd_out,
   INodeTestInterface,
   IT,
   ITestImplementation,

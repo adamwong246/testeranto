@@ -138,11 +138,72 @@ const BddPage = () => {
   </Row>
 
     <Row>
-      <Tab.Container id="root-tab-container" defaultActiveKey="first">
+      <Tab.Container id="root-tab-container" defaultActiveKey="log">
         <Row>
 
-          <Col sm={3}>
-            <pre><code>{log}</code></pre>
+          <Col sm={1}>
+            <Nav variant="pills" className="flex-column">
+
+              <Nav.Item>
+                <Nav.Link eventKey={"log"}>
+                  log
+                </Nav.Link>
+                <Nav.Link eventKey={"steps"}>
+                  steps
+                </Nav.Link>
+              </Nav.Item>
+
+            </Nav>
+          </Col>
+
+          <Col sm={11}>
+            <Tab.Content>
+              <Tab.Pane eventKey={"log"}>
+                <pre><code>{log}</code></pre>
+              </Tab.Pane>
+
+              <Tab.Pane eventKey={"steps"}>
+
+                <Tab.Container id="secondary-tab-container" defaultActiveKey="first">
+                  <Row>
+                    <Col sm={3}>
+                      <Nav variant="pills" className="flex-column">
+
+                        {
+                          ...bddErrors.givens.map((g) =>
+                            <Nav.Item>
+                              <Nav.Link eventKey={g.key}>
+                                {g.key}: Given {g.name}
+                              </Nav.Link>
+                            </Nav.Item>
+                          )
+                        }
+
+                      </Nav>
+                    </Col>
+                    <Col sm={9}>
+                      <Tab.Content>
+                        {
+                          ...bddErrors.givens.map((g) =>
+
+                            <Tab.Pane eventKey={g.key}><TestPane given={g} /></Tab.Pane>
+
+                          )
+                        }
+                      </Tab.Content>
+                    </Col>
+                  </Row>
+
+                </Tab.Container>
+              </Tab.Pane>
+
+            </Tab.Content>
+
+
+          </Col>
+
+          {/* <Col sm={3}>
+            
 
 
           </Col>
@@ -172,10 +233,22 @@ const BddPage = () => {
                 )
               }
             </Tab.Content>
-          </Col>
+          </Col> */}
+
         </Row>
       </Tab.Container>
     </Row>
+
+    <div style={{
+      backgroundColor: 'lightgray',
+      margin: '0.5rem',
+      padding: '0.5rem',
+      position: 'fixed',
+      left: 0,
+      bottom: 0
+    }}>
+      <a href="/">🏠</a>
+    </div>
 
     <Footer />
   </div>
@@ -190,5 +263,3 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 });
-
-console.log("hello BddPage!")

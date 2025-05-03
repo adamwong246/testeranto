@@ -8,7 +8,7 @@ const prxy = function (pm: IPM, mappings: [string, (...x) => any][]) {
         const arger = mapping[1];
 
         if (prop === method) {
-          return (x) => target[prop](arger(x));
+          return (...x) => target[prop](arger(...x));
         }
       }
 

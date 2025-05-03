@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { PM_Pure } from "../PM/pure.js";
 
 import { PM_Node } from "../PM/node.js";
@@ -36,7 +38,7 @@ export const BaseTestInterface: ITestInterface<IT> = {
     return thenCb(store);
   },
   andWhen: async (a) => a,
-  assertThis: (x: any) => null,
+  assertThis: (x: any) => x,
 };
 
 export const DefaultTestInterface = (
@@ -112,8 +114,11 @@ export type { ITestconfig, IBuiltConfig, IRunTime, ITestTypes };
 
 export type IRunnables = {
   nodeEntryPoints: Record<string, string>;
+  nodeEntryPointSidecars: Record<string, string>;
   webEntryPoints: Record<string, string>;
-  importEntryPoints: Record<string, string>;
+  webEntryPointSidecars: Record<string, string>;
+  pureEntryPoints: Record<string, string>;
+  pureEntryPointSidecars: Record<string, string>;
 };
 
 export type IFinalResults = {

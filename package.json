@@ -125,6 +125,22 @@
       "import": "./src/lib/abstractBase.ts",
       "require": "./src/lib/abstractBase.ts"
     },
+    "./src/lib/Sidecar": {
+      "import": "./src/lib/Sidecar.ts",
+      "require": "./src/lib/Sidecar.ts"
+    },
+    "./src/PureSidecar": {
+      "import": "./src/PureSidecar.ts",
+      "require": "./src/PureSidecar.ts"
+    },
+    "./src/NodeSidecar": {
+      "import": "./src/NodeSidecar.ts",
+      "require": "./src/NodeSidecar.ts"
+    },
+    "./src/WebSidecar": {
+      "import": "./src/WebSidecar.ts",
+      "require": "./src/WebSidecar.ts"
+    },
     "./src/Types": {
       "import": "./src/Types.ts",
       "require": "./src/Types.ts"
