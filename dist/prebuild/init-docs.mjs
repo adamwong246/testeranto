@@ -11,7 +11,8 @@ var Init_default = async () => {
     `testeranto/bundles/pure`,
     `testeranto/reports`,
     `testeranto/reports/`,
-    `testeranto/features/`
+    `testeranto/features/`,
+    `testeranto/externalTests/`
   ].forEach((f) => {
     try {
       fs.mkdirSync(`${process.cwd()}/${f}`);

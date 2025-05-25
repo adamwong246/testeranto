@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IT, ITestImplementation, ITestSpecification, OT } from "../Types.js";
 
 import { BaseBuilder } from "./basebuilder.js";
@@ -27,7 +29,13 @@ export abstract class ClassBuilder<
   IExtenstions
 > {
   constructor(
-    testImplementation: ITestImplementation<I, O, M>,
+    testImplementation: ITestImplementation<I, O, M> & {
+      suites: Record<string, any>;
+      givens: Record<string, any>;
+      whens: Record<string, any>;
+      thens: Record<string, any>;
+      checks: Record<string, any>;
+    },
     testSpecification: ITestSpecification<I, O>,
     input: I["iinput"],
     suiteKlasser: ISuiteKlasser<I, O>,

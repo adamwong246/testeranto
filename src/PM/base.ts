@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import fs from "fs";
 import path from "path";
 import {
@@ -236,7 +238,6 @@ export abstract class PM_Base {
               });
               res();
             } else {
-              /* @ts-ignore:next-line */
               const pipeStream: PassThrough = value;
               const myFile = fs.createWriteStream(fPath);
               pipeStream.pipe(myFile);
@@ -318,7 +319,8 @@ export abstract class PM_Base {
 
   async doInPage(p: string, cb: (p: Page) => unknown) {
     (await this.browser.pages()).forEach((page: Page) => {
-      if ((page.mainFrame() as any)._id === p) {
+      const frame = page.mainFrame() as { _id?: string };
+      if (frame._id === p) {
         return cb(page);
       }
     });

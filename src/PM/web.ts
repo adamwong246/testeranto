@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { PassThrough } from "stream";
 
 import { ScreencastOptions, ScreenshotOptions } from "puppeteer-core";
-import { CdpPage, Page } from "puppeteer-core/lib/esm/puppeteer";
+import { Page } from "puppeteer-core/lib/esm/puppeteer";
 
 import { ITLog, ITTestResourceConfiguration } from "../lib";
 import { PM } from ".";
@@ -22,6 +24,10 @@ export class PM_Web extends PM {
     return new Promise((r) => r());
   }
 
+  getInnerHtml(selector: string, page: string) {
+    throw new Error("web.ts getInnHtml not implemented");
+  }
+
   pages(): Promise<string[]> {
     throw new Error("Method not implemented.");
   }
@@ -38,7 +44,7 @@ export class PM_Web extends PM {
     return window["waitForSelector"](p, s);
   }
 
-  screencast(opts: ScreencastOptions, page: Page) {
+  screencast(opts: ScreencastOptions, page: Page): Promise<any> {
     return window["screencast"](
       {
         ...opts,
@@ -61,7 +67,7 @@ export class PM_Web extends PM {
     return window["goto"](p, url);
   }
 
-  newPage(): string {
+  newPage() {
     return window["newPage"]();
   }
 
@@ -111,7 +117,7 @@ export class PM_Web extends PM {
     );
   }
 
-  existsSync(destFolder: string): boolean {
+  existsSync(destFolder: string): Promise<boolean> {
     return window["existsSync"](destFolder);
   }
 
@@ -138,7 +144,7 @@ export class PM_Web extends PM {
     );
   }
 
-  end(uid: number): boolean {
+  end(uid: number): Promise<boolean> {
     return window["end"](uid);
   }
 

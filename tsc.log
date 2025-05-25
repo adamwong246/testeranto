@@ -1,15 +1,26 @@
 $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit
-../testeranto-solidity/testeranto.config.ts(7,5): error TS2741: Property 'reportDomain' is missing in type '{ tests: [string, "node", { ports: number; }, never[]][]; clearScreen: false; debugger: false; externals: string[]; featureIngestor: (s: string) => Promise<string>; webPlugins: never[]; ... 4 more ...; src: string; }' but required in type 'ITestconfig'.
-src/defaultConfig.ts(3,7): error TS2741: Property 'reportDomain' is missing in type '{ src: string; tests: never[]; debugger: true; clearScreen: false; minify: false; ports: string[]; externals: never[]; nodePlugins: never[]; webPlugins: never[]; importPlugins: never[]; featureIngestor: (s: string) => Promise<...>; }' but required in type 'ITestconfig'.
-src/lib/classBuilder.ts(40,60): error TS2339: Property 'suites' does not exist on type 'ITestImplementation<I, O, M>'.
-src/lib/classBuilder.ts(55,60): error TS2339: Property 'givens' does not exist on type 'ITestImplementation<I, O, M>'.
-src/lib/classBuilder.ts(64,32): error TS2339: Property 'givens' does not exist on type 'ITestImplementation<I, O, M>'.
-src/lib/classBuilder.ts(73,59): error TS2339: Property 'whens' does not exist on type 'ITestImplementation<I, O, M>'.
-src/lib/classBuilder.ts(86,59): error TS2339: Property 'thens' does not exist on type 'ITestImplementation<I, O, M>'.
-src/lib/classBuilder.ts(110,60): error TS2339: Property 'checks' does not exist on type 'ITestImplementation<I, O, M>'.
-src/Project.tsx(196,38): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
-  Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.
-src/ReportClient.tsx(166,38): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
+../testeranto-redux-toolkit/testeranto.config.ts(6,5): error TS2741: Property 'externalTests' is missing in type '{ tests: ([string, "node", { ports: number; }, never[]] | [string, "pure", { ports: number; }, never[]] | [string, "web", { ports: number; }, never[]])[]; clearScreen: false; debugger: false; externals: never[]; ... 6 more ...; webPlugins: never[]; }' but required in type 'ITestconfig'.
+../testeranto-solidity/testeranto.config.ts(7,5): error TS2741: Property 'externalTests' is missing in type '{ tests: [string, "node", { ports: number; }, never[]][]; clearScreen: false; debugger: false; externals: string[]; featureIngestor: (s: string) => Promise<string>; webPlugins: never[]; ... 4 more ...; src: string; }' but required in type 'ITestconfig'.
+src/lib/classBuilder.ts(99,28): error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
+src/lib/core.ts(44,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: { [K in keyof O["suites"]]: string; }; givens: { [K in keyof O["givens"]]: (...Ig: O["givens"][K]) => I["given"]; }; whens: { [K in keyof O["whens"]]: (...Iw: O["whens"][K]) => (zel: I["iselection"], utils: PM) => Promise<...>; }; thens: { [K in keyof O["thens"]]: (...It: O["thens"][K]) => (ssel: I["i...'.
+  Type 'Omit<{ suites: { [K in keyof O["suites"]]: string; }; givens: { [K in keyof O["givens"]]: (...Ig: O["givens"][K]) => I["given"]; }; whens: { [K in keyof O["whens"]]: (...Iw: O["whens"][K]) => (zel: I["iselection"], utils: PM) => Promise<...>; }; thens: { [K in keyof O["thens"]]: (...It: O["thens"][K]) => (ssel: I["i...' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; checks: Record<string, any>; }': suites, givens, whens, thens, checks
+src/PM/base.ts(62,55): error TS2339: Property '_id' does not exist on type 'Frame'.
+src/PM/base.ts(132,28): error TS2339: Property '_id' does not exist on type 'Frame'.
+src/PM/main.ts(149,9): error TS2741: Property 'failingFeatures' is missing in type '{ typeErrors: "?"; staticErrors: "?"; }' but required in type '{ runTimeError?: number | "?" | undefined; typeErrors?: number | "?" | undefined; staticErrors?: number | "?" | undefined; prompt?: string | undefined; failingFeatures: Record<string, string[]>; }'.
+src/PM/main.ts(192,29): error TS2339: Property '_id' does not exist on type 'Frame'.
+src/PM/main.ts(1201,6): error TS2366: Function lacks ending return statement and return type does not include 'undefined'.
+src/PM/main.ts(1239,27): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+src/PM/main.ts(1363,16): error TS2339: Property 'sidecars' does not exist on type 'PM_Main'.
+src/PM/main.ts(1402,27): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+src/PM/main.ts(1417,9): error TS2322: Type 'undefined' is not assignable to type '[number, ITTestResourceConfiguration]'.
+src/PM/main.ts(1484,46): error TS2339: Property '_id' does not exist on type 'Frame'.
+src/PM/main.ts(1549,60): error TS2339: Property '_id' does not exist on type 'Frame'.
+src/PM/web.ts(47,3): error TS2416: Property 'screencast' in type 'PM_Web' is not assignable to the same property in base type 'PM'.
+  Type '(opts: ScreencastOptions, page: Page) => Promise<any>' is not assignable to type '(o: ScreenRecorderOptions, p: string | Page) => any'.
+    Types of parameters 'page' and 'p' are incompatible.
+      Type 'string | Page' is not assignable to type 'Page'.
+        Type 'string' is not assignable to type 'Page'.
+src/Project.tsx(400,38): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
   Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.
 src/SubPackages/react-dom/component/dynamic.ts(69,11): error TS2552: Cannot find name 'createElement'. Did you mean 'frameElement'?
 src/SubPackages/react-dom/component/dynamic.ts(93,7): error TS2552: Cannot find name 'testInterface'. Did you mean 'testInterfacer'?
@@ -37,7 +48,7 @@ src/SubPackages/react-test-renderer/fc/node.ts(66,33): error TS2769: No overload
   The last overload gave the following error.
     Argument of type 'I["isubject"]' is not assignable to parameter of type 'string | FunctionComponent<(c?: any) => I["given"]> | ComponentClass<(c?: any) => I["given"], any>'.
       Type 'I["isubject"]' is not assignable to type 'ComponentClass<(c?: any) => I["given"], any>'.
-src/SubPackages/react-test-renderer/fc/node.ts(81,13): error TS2339: Property 'unmount' does not exist on type 'I["istore"]'.
+src/SubPackages/react-test-renderer/fc/node.ts(80,13): error TS2339: Property 'unmount' does not exist on type 'I["istore"]'.
 src/SubPackages/react-test-renderer/fc/web.ts(57,8): error TS2558: Expected 3 type arguments, but got 2.
 src/SubPackages/react-test-renderer/fc/web.ts(63,13): error TS2345: Argument of type 'DetailedReactHTMLElement<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>' is not assignable to parameter of type 'ReactElement<unknown, string | JSXElementConstructor<any>>'.
   Types of property 'key' are incompatible.
@@ -53,16 +64,16 @@ src/SubPackages/react-test-renderer/jsx-promised/node.ts(30,15): error TS2558: E
 src/SubPackages/react-test-renderer/jsx-promised/web.ts(4,10): error TS2305: Module '"../../react/jsx"' has no exported member 'ITestImpl'.
 src/SubPackages/react-test-renderer/jsx-promised/web.ts(4,21): error TS2305: Module '"../../react/jsx"' has no exported member 'ITestSpec'.
 src/SubPackages/react-test-renderer/jsx-promised/web.ts(30,15): error TS2558: Expected 3 type arguments, but got 2.
-src/SubPackages/react-test-renderer/jsx/index.ts(27,12): error TS2349: This expression is not callable.
+src/SubPackages/react-test-renderer/jsx/index.ts(26,12): error TS2349: This expression is not callable.
   Type 'void' has no call signatures.
-src/SubPackages/react-test-renderer/jsx/index.ts(45,9): error TS2345: Argument of type 'DetailedReactHTMLElement<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>' is not assignable to parameter of type 'ReactElement<unknown, string | JSXElementConstructor<any>>'.
+src/SubPackages/react-test-renderer/jsx/index.ts(44,9): error TS2345: Argument of type 'DetailedReactHTMLElement<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>' is not assignable to parameter of type 'ReactElement<unknown, string | JSXElementConstructor<any>>'.
   Types of property 'key' are incompatible.
     Type 'Key | null' is not assignable to type 'string | null'.
       Type 'number' is not assignable to type 'string'.
-src/SubPackages/react-test-renderer/jsx/index.ts(46,11): error TS2769: No overload matches this call.
+src/SubPackages/react-test-renderer/jsx/index.ts(45,11): error TS2769: No overload matches this call.
   The last overload gave the following error.
     Argument of type 'ReactTestRenderer' is not assignable to parameter of type 'string | FunctionComponent<(c?: any) => unknown> | ComponentClass<(c?: any) => unknown, any>'.
-src/SubPackages/react-test-renderer/jsx/index.ts(48,31): error TS2769: No overload matches this call.
+src/SubPackages/react-test-renderer/jsx/index.ts(47,31): error TS2769: No overload matches this call.
   The last overload gave the following error.
     Argument of type 'ReactTestRenderer' is not assignable to parameter of type 'string | FunctionComponent<(c?: any) => unknown> | ComponentClass<(c?: any) => unknown, any>'.
 src/SubPackages/react-test-renderer/jsx/node.ts(25,15): error TS2558: Expected 3 type arguments, but got 2.
@@ -80,7 +91,7 @@ src/SubPackages/react-test-renderer/MemoExoticComponent/node.ts(43,57): error TS
         Type 'I["isubject"]' is not assignable to type 'ComponentClass<(c?: any) => I["given"], any>'.
           Type 'ReactTestRenderer' is not assignable to type 'ComponentClass<(c?: any) => I["given"], any>'.
             Type 'ReactTestRenderer' provides no match for the signature 'new (props: (c?: any) => I["given"], context?: any): Component<(c?: any) => I["given"], any, any>'.
-src/TestReport.tsx(189,19): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
+src/TestReport.tsx(262,19): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
   Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.
 src/Web.ts(47,14): error TS2554: Expected 0 arguments, but got 1.
 src/Web.ts(66,14): error TS2554: Expected 0 arguments, but got 1.

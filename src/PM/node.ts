@@ -245,7 +245,6 @@ export class PM_Node extends PM {
               });
               res();
             } else {
-              /* @ts-ignore:next-line */
               const pipeStream: PassThrough = value;
               const myFile = fs.createWriteStream(fPath);
               pipeStream.pipe(myFile);

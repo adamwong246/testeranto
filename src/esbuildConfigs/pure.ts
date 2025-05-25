@@ -6,6 +6,8 @@ import baseEsBuildConfig from "./index.js";
 import inputFilesPlugin from "./inputFilesPlugin.js";
 import featuresPlugin from "./featuresPlugin.js";
 
+import { isBuiltin } from "node:module";
+
 export default (
   config: ITestconfig,
   entryPoints: string[],
@@ -18,7 +20,7 @@ export default (
   return {
     ...baseEsBuildConfig(config),
 
-    // drop: ["console", "debugger"],
+    drop: ["console", "debugger"],
 
     splitting: true,
 
@@ -46,6 +48,22 @@ export default (
       featuresPlugin,
 
       inputFilesPluginFactory,
+
+      {
+        name: "native-node-import-filter",
+        setup(build) {
+          build.onResolve({ filter: /fs/ }, (args) => {
+            if (isBuiltin(args.path)) {
+              throw new Error(
+                `cannot use native node package "${args.path}" in a "pure" test. If you really want to use this package, convert this test from "pure" to "node"`
+              );
+            }
+
+            return { path: args.path };
+          });
+        },
+      },
+
       {
         name: "rebuild-notify",
         setup: (build) => {

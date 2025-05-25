@@ -338,7 +338,8 @@ var PM_Base = class {
   }
   async doInPage(p, cb) {
     (await this.browser.pages()).forEach((page) => {
-      if (page.mainFrame()._id === p) {
+      const frame = page.mainFrame();
+      if (frame._id === p) {
         return cb(page);
       }
     });
@@ -968,8 +969,6 @@ ${addableFiles.map((x) => {
         const openPorts = Object.entries(this.ports).filter(
           ([portnumber, portopen]) => portopen
         );
-        console.log("nodeSideCar mark2", this.ports);
-        console.log("nodeSideCar mark", openPorts, testReq.ports);
         if (openPorts.length >= testReq.ports) {
           for (let i = 0; i < testReq.ports; i++) {
             portsToUse.push(openPorts[i][0]);
@@ -982,7 +981,6 @@ ${addableFiles.map((x) => {
           let buffer = new Buffer("");
           const server = net.createServer((socket) => {
             socket.on("data", (data) => {
-              console.log("data", data);
               buffer = Buffer.concat([buffer, data]);
               const messages = [];
               for (let b = 0; b < buffer.length + 1; b++) {
@@ -1029,23 +1027,19 @@ ${addableFiles.map((x) => {
               oStream.write(`stdout > ${data}`);
             });
             child.on("close", (code) => {
-              console.log("nodeSideCar close", this.ports);
               oStream.close();
               server.close();
               haltReturns = true;
             });
             child.on("exit", (code) => {
-              console.log("nodeSideCar exit", this.ports);
               haltReturns = true;
               for (let i = 0; i <= portsToUse.length; i++) {
                 if (portsToUse[i]) {
                   this.ports[portsToUse[i]] = true;
                 }
               }
-              console.log("nodeSideCar exit2", this.ports);
             });
             child.on("error", (e) => {
-              console.log("error");
               if (fs2.existsSync(p)) {
                 fs2.rmSync(p);
               }
@@ -1492,6 +1486,8 @@ ${addableFiles.map((x) => {
         );
       }
     );
+  }
+  async launchExternalTest(externalTestName, externalTest) {
   }
   async stop() {
     console.log(ansiC.inverse("Testeranto-Run is shutting down gracefully..."));

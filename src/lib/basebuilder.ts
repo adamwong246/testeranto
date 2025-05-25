@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+/* eslint-disable no-async-promise-executor */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { PassThrough } from "stream";
 
 import { IT, ITestSpecification, OT } from "../Types.js";
@@ -105,21 +109,18 @@ export abstract class BaseBuilder<
         receiveTestResourceConfig: async function (
           puppetMaster: IPM
         ): Promise<IFinalResults> {
-          const start = await puppetMaster.start();
-
           const logFilePath = "log.txt";
           const access: number = await puppetMaster.createWriteStream(
             logFilePath
           );
 
           const tLog = async (...l: string[]) => {
-            const x = await puppetMaster.write(access, `${l.toString()}\n`);
             // console.log("x", x);
           };
 
           const suiteDone: BaseSuite<I, O> = await runner(puppetMaster, tLog);
 
-          const logPromise = new Promise(async (res, rej) => {
+          const logPromise = new Promise(async (res) => {
             await puppetMaster.end(access);
             res(true);
           });

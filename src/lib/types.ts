@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { PM_Node } from "../PM/node";
 import { PM_Pure } from "../PM/pure";
 import { PM_Web } from "../PM/web";

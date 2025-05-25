@@ -1,5 +1,9 @@
-import fs from "fs";
-import path from "path";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+// import fs from "fs";
+// import path from "path";
+
 import { ScreencastOptions } from "puppeteer-core";
 import { CdpPage } from "puppeteer-core/lib/esm/puppeteer";
 import { PassThrough } from "stream";
@@ -14,6 +18,15 @@ const fPaths: IFPaths = [];
 type PuppetMasterServer = Record<string, Promise<any>>;
 
 export class PM_Pure extends PM {
+  getInnerHtml(selector: string, page: string): Promise<string> {
+    throw new Error("pure.ts getInnHtml not implemented");
+    return Promise.resolve("");
+  }
+
+  stopSideCar(uid: number): Promise<boolean> {
+    throw new Error("pure.ts getInnHtml not implemented");
+    return Promise.resolve(true);
+  }
   server: PuppetMasterServer;
   testResourceConfiguration: ITTestResourceConfiguration;
 
@@ -154,60 +167,53 @@ export class PM_Pure extends PM {
   }
 
   testArtiFactoryfileWriter(tLog: ITLog, callback: (Promise) => void) {
-    return (fPath, value: string | Buffer | PassThrough) => {
-      callback(
-        new Promise<void>((res, rej) => {
-          tLog("testArtiFactory =>", fPath);
-
-          const cleanPath = path.resolve(fPath);
-          fPaths.push(cleanPath.replace(process.cwd(), ``));
-
-          const targetDir = cleanPath.split("/").slice(0, -1).join("/");
-
-          fs.mkdir(targetDir, { recursive: true }, async (error) => {
-            if (error) {
-              console.error(`❗️testArtiFactory failed`, targetDir, error);
-            }
-
-            fs.writeFileSync(
-              path.resolve(
-                targetDir.split("/").slice(0, -1).join("/"),
-                "manifest"
-              ),
-              fPaths.join(`\n`),
-              {
-                encoding: "utf-8",
-              }
-            );
-
-            if (Buffer.isBuffer(value)) {
-              fs.writeFileSync(fPath, value, "binary");
-              res();
-            } else if (`string` === typeof value) {
-              fs.writeFileSync(fPath, value.toString(), {
-                encoding: "utf-8",
-              });
-              res();
-            } else {
-              /* @ts-ignore:next-line */
-              const pipeStream: PassThrough = value;
-              const myFile = fs.createWriteStream(fPath);
-              pipeStream.pipe(myFile);
-              pipeStream.on("close", () => {
-                myFile.close();
-                res();
-              });
-            }
-          });
-        })
-      );
-    };
+    // return (fPath, value: string | Buffer | PassThrough) => {
+    //   callback(
+    //     new Promise<void>((res) => {
+    //       tLog("testArtiFactory =>", fPath);
+    //       const cleanPath = path.resolve(fPath);
+    //       fPaths.push(cleanPath.replace(process.cwd(), ``));
+    //       const targetDir = cleanPath.split("/").slice(0, -1).join("/");
+    //       fs.mkdir(targetDir, { recursive: true }, async (error) => {
+    //         if (error) {
+    //           console.error(`❗️testArtiFactory failed`, targetDir, error);
+    //         }
+    //         fs.writeFileSync(
+    //           path.resolve(
+    //             targetDir.split("/").slice(0, -1).join("/"),
+    //             "manifest"
+    //           ),
+    //           fPaths.join(`\n`),
+    //           {
+    //             encoding: "utf-8",
+    //           }
+    //         );
+    //         if (Buffer.isBuffer(value)) {
+    //           fs.writeFileSync(fPath, value, "binary");
+    //           res();
+    //         } else if (`string` === typeof value) {
+    //           fs.writeFileSync(fPath, value.toString(), {
+    //             encoding: "utf-8",
+    //           });
+    //           res();
+    //         } else {
+    //           const pipeStream: PassThrough = value;
+    //           const myFile = fs.createWriteStream(fPath);
+    //           pipeStream.pipe(myFile);
+    //           pipeStream.on("close", () => {
+    //             myFile.close();
+    //             res();
+    //           });
+    //         }
+    //       });
+    //     })
+    //   );
+    // };
   }
 
-  // launch(options?: PuppeteerLaunchOptions): Promise<Browser>;
-  startPuppeteer(options?: any): any {
-    // return puppeteer.connect(options).then((b) => {
-    //   this.browser = b;
-    // });
-  }
+  // startPuppeteer(options?: any): any {
+  //   // return puppeteer.connect(options).then((b) => {
+  //   //   this.browser = b;
+  //   // });
+  // }
 }

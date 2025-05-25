@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Page } from "puppeteer-core";
 import { ScreenRecorderOptions } from "puppeteer-core/lib/esm/puppeteer";
 

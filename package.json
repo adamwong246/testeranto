@@ -102,12 +102,12 @@
       "require": "./dist/common/SubPackages/react-test-renderer/MemoExoticComponent/node.js"
     },
     "./src/SubPackages/react-dom/jsx/web": {
-      "import": "./dist/module/SubPackages/react-dom/jsx/web.js",
-      "require": "./dist/common/SubPackages/react-dom/jsx/web.js"
+      "import": "./src/SubPackages/react-dom/jsx/web.ts",
+      "require": "./src/SubPackages/react-dom/jsx/web.ts"
     },
     "./src/SubPackages/react-dom/jsx/node": {
-      "import": "./dist/module/SubPackages/react-dom/jsx/node.js",
-      "require": "./dist/common/SubPackages/react-dom/jsx/node.js"
+      "import": "./src/SubPackages/react-dom/jsx/node.js",
+      "require": "./src/SubPackages/react-dom/jsx/node.js"
     },
     "./src/SubPackages/react-dom/jsx/index": {
       "import": "./dist/module/SubPackages/react-dom/jsx/index.js",

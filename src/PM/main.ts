@@ -2,7 +2,7 @@
 /* eslint-disable no-async-promise-executor */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ChildProcess, spawn } from "node:child_process";
+import { ChildProcess, exec, spawn } from "node:child_process";
 
 import ts from "typescript";
 import net from "net";
@@ -198,26 +198,6 @@ export class PM_Main extends PM_Base {
     });
 
     return;
-
-    // const c = this.configs.tests.find(([v, r]) => {
-    //   console.log(v, name);
-    //   return v === name;
-    // }) as ITestTypes;
-
-    // console.log("stopSideCar c", c[3]);
-
-    // const s = c[3][n];
-
-    // const r = s[1];
-    // if (r === "node") {
-    //   return this.stopNodeSideCar(n);
-    // } else if (r === "web") {
-    //   return this.stopWebSideCar(n);
-    // } else if (r === "pure") {
-    //   return this.stopPureSideCar(n);
-    // } else {
-    //   throw `unknown runtime ${r}`;
-    // }
   }
 
   async launchSideCar(
@@ -398,6 +378,43 @@ export class PM_Main extends PM_Base {
         );
       }
     );
+
+    // Object.keys(this.configs.externalTests).forEach((et) => {
+    //   this.launchExternalTest(et, this.configs.externalTests[et]);
+    // });
+  }
+
+  async launchExternalTest(
+    externalTestName: string,
+    externalTest: {
+      watch: string[];
+      exec: string;
+    }
+  ) {
+    // fs.mkdirSync(`testeranto/externalTests/${externalTestName}`);
+    // exec(externalTest.exec, (error, stdout, stderr) => {
+    //   if (error) {
+    //     fs.writeFileSync(
+    //       `testeranto/externalTests/${externalTestName}/exitcode.txt`,
+    //       `${error.name}\n${error.message}\n${error.code}\n`
+    //     );
+    //   } else {
+    //     fs.writeFileSync(
+    //       `testeranto/externalTests/${externalTestName}/exitcode.txt`,
+    //       `0`
+    //     );
+    //   }
+    //   fs.writeFileSync(
+    //     `testeranto/externalTests/${externalTestName}/stdout.txt`,
+    //     stdout
+    //   );
+    //   fs.writeFileSync(
+    //     `testeranto/externalTests/${externalTestName}/stderr.txt`,
+    //     stderr
+    //   );
+    //   // console.log(`externalTest stdout: ${stdout}`);
+    //   // console.error(`externalTest stderr: ${stderr}`);
+    // });
   }
 
   async stop() {
@@ -1217,9 +1234,6 @@ ${addableFiles
         ([portnumber, portopen]) => portopen
       );
 
-      console.log("nodeSideCar mark2", this.ports);
-      console.log("nodeSideCar mark", openPorts, testReq.ports);
-
       if (openPorts.length >= testReq.ports) {
         for (let i = 0; i < testReq.ports; i++) {
           portsToUse.push(openPorts[i][0]);
@@ -1238,7 +1252,6 @@ ${addableFiles
 
         const server = net.createServer((socket) => {
           socket.on("data", (data) => {
-            console.log("data", data);
             buffer = Buffer.concat([buffer, data]);
 
             const messages: string[][] = [];
@@ -1295,27 +1308,12 @@ ${addableFiles
             oStream.write(`stdout > ${data}`);
           });
           child.on("close", (code) => {
-            console.log("nodeSideCar close", this.ports);
             oStream.close();
             server.close();
-
-            // this.receiveFeaturesV2(reportDest, src, "node");
-
-            // if (code === null) {
-            //   this.bddTestIsNowDone(src, -1);
-            //   statusMessagePretty(-1, src);
-            // } else if (code === 0) {
-            //   this.bddTestIsNowDone(src, 0);
-            //   statusMessagePretty(0, src);
-            // } else {
-            //   this.bddTestIsNowDone(src, code);
-            //   statusMessagePretty(code, src);
-            // }
 
             haltReturns = true;
           });
           child.on("exit", (code) => {
-            console.log("nodeSideCar exit", this.ports);
             haltReturns = true;
 
             for (let i = 0; i <= portsToUse.length; i++) {
@@ -1323,12 +1321,8 @@ ${addableFiles
                 this.ports[portsToUse[i]] = true; //port is open again
               }
             }
-
-            console.log("nodeSideCar exit2", this.ports);
           });
           child.on("error", (e) => {
-            console.log("error");
-
             if (fs.existsSync(p)) {
               fs.rmSync(p);
             }

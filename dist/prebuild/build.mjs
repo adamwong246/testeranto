@@ -198,6 +198,7 @@ var web_default = (config, entryPoints, testName2) => {
 };
 
 // src/esbuildConfigs/pure.ts
+import { isBuiltin } from "node:module";
 var pure_default = (config, entryPoints, testName2) => {
   const { inputFilesPluginFactory, register: register2 } = inputFilesPlugin_default(
     "pure",
@@ -205,7 +206,7 @@ var pure_default = (config, entryPoints, testName2) => {
   );
   return {
     ...esbuildConfigs_default(config),
-    // drop: ["console", "debugger"],
+    drop: ["console", "debugger"],
     splitting: true,
     outdir: `testeranto/bundles/pure/${testName2}/`,
     // inject: [`./node_modules/testeranto/dist/cjs-shim.js`],
@@ -226,6 +227,19 @@ var pure_default = (config, entryPoints, testName2) => {
     plugins: [
       featuresPlugin_default,
       inputFilesPluginFactory,
+      {
+        name: "native-node-import-filter",
+        setup(build) {
+          build.onResolve({ filter: /fs/ }, (args) => {
+            if (isBuiltin(args.path)) {
+              throw new Error(
+                `cannot use native node package "${args.path}" in a "pure" test. If you really want to use this package, convert this test from "pure" to "node"`
+              );
+            }
+            return { path: args.path };
+          });
+        }
+      },
       {
         name: "rebuild-notify",
         setup: (build) => {

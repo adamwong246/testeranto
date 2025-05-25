@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IPM } from "./types";
 
 const prxy = function (pm: IPM, mappings: [string, (...x) => any][]) {

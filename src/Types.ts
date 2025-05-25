@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Plugin } from "esbuild";
 
@@ -84,14 +85,6 @@ export type OT = Ibdd_out<
   Record<string, any>,
   Record<string, any>
 >;
-
-// export type MT<O extends OT> = Partial<{
-//   suites: { [K in keyof O["suites"]]: unknown };
-//   givens: { [K in keyof O["givens"]]: unknown };
-//   whens: { [K in keyof O["whens"]]: unknown };
-//   thens: { [K in keyof O["thens"]]: unknown };
-//   checks: { [K in keyof O["checks"]]: unknown };
-// }>;
 
 export type ITestSpecification<I extends IT, O extends OT> = (
   Suite: {
@@ -200,6 +193,7 @@ export type ITestconfig = {
   clearScreen: boolean;
   debugger: boolean;
   externals: string[];
+  externalTests: Record<string, { watch: string[]; exec: string }>;
   featureIngestor: (s: string) => Promise<string>;
   importPlugins: IPluginFactory[];
   minify: boolean;
@@ -208,7 +202,6 @@ export type ITestconfig = {
   src: string;
   tests: ITestTypes[];
   webPlugins: IPluginFactory[];
-  // reportDomain: string;
 };
 
 export type IBuiltConfig = { buildDir: string } & ITestconfig;

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import ansiC from "ansi-colors";
 import fs, { watch } from "fs";
 import path from "path";
@@ -21,7 +23,7 @@ import {
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
 
-let testName = process.argv[2];
+const testName = process.argv[2];
 
 let mode = process.argv[3] as "once" | "dev";
 if (mode !== "once" && mode !== "dev") {

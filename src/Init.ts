@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import fs from "fs";
-import esbuild from "esbuild";
 
 export default async () => {
   [
@@ -11,6 +11,7 @@ export default async () => {
     `testeranto/reports`,
     `testeranto/reports/`,
     `testeranto/features/`,
+    `testeranto/externalTests/`,
   ].forEach((f) => {
     try {
       fs.mkdirSync(`${process.cwd()}/${f}`);
