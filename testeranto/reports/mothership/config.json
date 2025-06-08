@@ -1,0 +1,25 @@
+{
+  "tests": [
+    [
+      "./src/mothership/test.ts",
+      "node",
+      {
+        "ports": 1
+      },
+      []
+    ]
+  ],
+  "clearScreen": false,
+  "debugger": false,
+  "externals": [],
+  "externalTests": {},
+  "importPlugins": [],
+  "minify": false,
+  "nodePlugins": [],
+  "ports": [
+    "3333"
+  ],
+  "src": "",
+  "webPlugins": [],
+  "buildDir": "/Users/adam/Code/testeranto/testeranto/bundles/mothership"
+}

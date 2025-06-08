@@ -1,0 +1,13 @@
+/Users/adam/Code/testeranto/src/lib/basebuilder.ts (85,15): This expression is not callable.
+  Not all constituents of type 'void | ((fPath: any, value: string | Buffer<ArrayBufferLike> | PassThrough) => void)' are callable.
+    Type 'void' has no call signatures.
+/Users/adam/Code/testeranto/src/lib/classBuilder.ts (99,28): A spread argument must either have a tuple type or be passed to a rest parameter.
+/Users/adam/Code/testeranto/src/lib/core.ts (44,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: { [K in keyof O["suites"]]: string; }; givens: { [K in keyof O["givens"]]: (...Ig: O["givens"][K]) => I["given"]; }; whens: { [K in keyof O["whens"]]: (...Iw: O["whens"][K]) => (zel: I["iselection"], tr: ITTestResourceConfiguration, utils: PM) => Promise<...>; }; thens: { [K in keyof O["thens"]]: (......'.
+  Type 'Omit<{ suites: { [K in keyof O["suites"]]: string; }; givens: { [K in keyof O["givens"]]: (...Ig: O["givens"][K]) => I["given"]; }; whens: { [K in keyof O["whens"]]: (...Iw: O["whens"][K]) => (zel: I["iselection"], tr: ITTestResourceConfiguration, utils: PM) => Promise<...>; }; thens: { [K in keyof O["thens"]]: (......' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; checks: Record<string, any>; }': suites, givens, whens, thens, checks
+/Users/adam/Code/testeranto/src/lib/index.ts (46,11): 'whenCB' is of type 'unknown'.
+/Users/adam/Code/testeranto/src/mothership/test.ts (72,13): Type '(x: any) => any' is not assignable to type 'string'.
+/Users/adam/Code/testeranto/src/PM/web.ts (47,3): Property 'screencast' in type 'PM_Web' is not assignable to the same property in base type 'PM'.
+  Type '(opts: ScreencastOptions, page: Page) => Promise<any>' is not assignable to type '(o: ScreenRecorderOptions, p: string | Page) => any'.
+    Types of parameters 'page' and 'p' are incompatible.
+      Type 'string | Page' is not assignable to type 'Page'.
+        Type 'string' is not assignable to type 'Page'.

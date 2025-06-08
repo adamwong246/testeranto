@@ -1,0 +1,24 @@
+{
+  "name": "the mothership allows the coordination of test resources",
+  "givens": [
+    {
+      "key": "test0",
+      "name": "ItIsRunning",
+      "whens": [
+        {
+          "name": "IClaimTheResource: test"
+        }
+      ],
+      "thens": [],
+      "error": null,
+      "features": [
+        "a resource can be claimed"
+      ]
+    }
+  ],
+  "checks": [],
+  "fails": 0,
+  "features": [
+    "a resource can be claimed"
+  ]
+}

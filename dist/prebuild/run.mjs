@@ -346,6 +346,40 @@ var PM_Base = class {
   }
 };
 
+// src/utils/queue.ts
+var Queue = class {
+  constructor() {
+    this.items = [];
+  }
+  enqueue(element) {
+    this.items.push(element);
+  }
+  dequeue() {
+    if (this.isEmpty()) {
+      return "Queue is empty";
+    }
+    return this.items.shift();
+  }
+  peek() {
+    if (this.isEmpty()) {
+      return "Queue is empty";
+    }
+    return this.items[0];
+  }
+  isEmpty() {
+    return this.items.length === 0;
+  }
+  size() {
+    return this.items.length;
+  }
+  clear() {
+    this.items = [];
+  }
+  print() {
+    console.log(this.items.join(" -> "));
+  }
+};
+
 // src/PM/main.ts
 var eslint = new ESLint();
 var formatter = await eslint.loadFormatter(
@@ -406,7 +440,7 @@ function isValidUrl(string) {
     return false;
   }
 }
-function pollForFile(path4, timeout = 2e3) {
+async function pollForFile(path4, timeout = 2e3) {
   const intervalObj = setInterval(function() {
     const file = path4;
     const fileExists = fs2.existsSync(file);
@@ -706,7 +740,6 @@ ${addableFiles.map((x) => {
       if (!fs2.existsSync(reportDest)) {
         fs2.mkdirSync(reportDest, { recursive: true });
       }
-      const destFolder = dest.replace(".mjs", "");
       let testResources = "";
       const testConfig = this.configs.tests.find((t) => {
         return t[0] === src;
@@ -720,7 +753,7 @@ ${addableFiles.map((x) => {
       const testConfigResource = testConfig[2];
       const portsToUse = [];
       if (testConfigResource.ports === 0) {
-        console.error("portsToUse", []);
+        console.error("portsToUse?!", []);
         const t = {
           name: src,
           // ports: portsToUse.map((v) => Number(v)),
@@ -743,10 +776,11 @@ ${addableFiles.map((x) => {
             scheduled: true,
             name: src,
             ports: portsToUse,
-            fs: destFolder,
+            fs: reportDest,
             browserWSEndpoint: this.browser.wsEndpoint()
           });
         } else {
+          console.log("Not enough ports! Enqueuing test job...");
           this.queue.push(src);
           return;
         }
@@ -756,55 +790,53 @@ ${addableFiles.map((x) => {
       }
       const builtfile = dest;
       let haltReturns = false;
+      const ipcfile = "/tmp/tpipe_" + Math.random();
+      const child = spawn("node", [builtfile, testResources, ipcfile], {
+        stdio: ["pipe", "pipe", "pipe", "ipc"]
+      });
       let buffer = new Buffer("");
       const server = net.createServer((socket) => {
+        const queue = new Queue();
         socket.on("data", (data) => {
           buffer = Buffer.concat([buffer, data]);
-          const messages = [];
           for (let b = 0; b < buffer.length + 1; b++) {
             const c = buffer.slice(0, b);
             let d;
             try {
               d = JSON.parse(c.toString());
-              messages.push(d);
+              queue.enqueue(d);
               buffer = buffer.slice(b, buffer.length + 1);
               b = 0;
             } catch (e) {
             }
           }
-          messages.forEach(async (payload) => {
-            this.mapping().forEach(async ([command, func]) => {
-              if (payload[0] === command) {
-                const x = payload.slice(1, -1);
-                const r = await this[command](...x);
-                if (!haltReturns) {
-                  child.send(
-                    JSON.stringify({
-                      payload: r,
-                      key: payload[payload.length - 1]
-                    })
-                  );
+          while (queue.size() > 0) {
+            const message = queue.dequeue();
+            if (message) {
+              this.mapping().forEach(async ([command, func]) => {
+                if (message[0] === command) {
+                  const x = message.slice(1, -1);
+                  const r = await this[command](...x);
+                  if (!haltReturns) {
+                    child.send(
+                      JSON.stringify({
+                        payload: r,
+                        key: message[message.length - 1]
+                      })
+                    );
+                  }
                 }
-              }
-            });
-          });
+              });
+            }
+          }
         });
       });
       const oStream = fs2.createWriteStream(`${reportDest}/console_log.txt`);
-      const child = spawn(
-        "node",
-        [builtfile, testResources, "--trace-warnings"],
-        {
-          stdio: ["pipe", "pipe", "pipe", "ipc"]
-          // silent: true
-        }
-      );
-      const p = "/tmp/tpipe" + Math.random();
       const errFile = `${reportDest}/error.txt`;
       if (fs2.existsSync(errFile)) {
         fs2.rmSync(errFile);
       }
-      server.listen(p, () => {
+      server.listen(ipcfile, () => {
         child.stderr?.on("data", (data) => {
           oStream.write(`stderr > ${data}`);
         });
@@ -839,10 +871,6 @@ ${addableFiles.map((x) => {
         });
         child.on("error", (e) => {
           console.log("error");
-          console.log("deleting", p);
-          if (fs2.existsSync(p)) {
-            fs2.rmSync(p);
-          }
           haltReturns = true;
           console.log(
             ansiC.red(
@@ -856,7 +884,6 @@ ${addableFiles.map((x) => {
           statusMessagePretty(-1, src);
         });
       });
-      child.send({ path: p });
     };
     this.launchWebSideCar = async (testConfig) => {
       const src = testConfig[0];

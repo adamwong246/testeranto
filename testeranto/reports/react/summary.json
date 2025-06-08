@@ -1,9 +1,0 @@
-{
-  "./src/SubPackages/react-test-renderer/component/test/node.ts": {
-    "runTimeError": 255,
-    "typeErrors": 6,
-    "staticErrors": 5,
-    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/react/reports/node/./src/SubPackages/react-test-renderer/component/test/node/prompt.txt",
-    "failingFeatures": {}
-  }
-}

@@ -25,6 +25,7 @@ import { IBuiltConfig, IRunTime, ISummary, ITestTypes } from "../Types.js";
 
 import { PM_Base } from "./base.js";
 import { Sidecar } from "../lib/Sidecar.js";
+import { Queue } from "../utils/queue.js";
 
 type IOutputs = Record<
   string,
@@ -103,7 +104,7 @@ function isValidUrl(string) {
 }
 
 // Wait for file to exist, checks every 2 seconds by default
-function pollForFile(path, timeout = 2000) {
+async function pollForFile(path, timeout = 2000) {
   const intervalObj = setInterval(function () {
     const file = path;
     const fileExists = fs.existsSync(file);
@@ -873,11 +874,12 @@ ${addableFiles
       .split(".")
       .slice(0, -1)
       .join(".")}/node`;
+
     if (!fs.existsSync(reportDest)) {
       fs.mkdirSync(reportDest, { recursive: true });
     }
 
-    const destFolder = dest.replace(".mjs", "");
+    // const destFolder = dest.replace(".mjs", "");
 
     let testResources = "";
 
@@ -895,7 +897,7 @@ ${addableFiles
 
     const portsToUse: string[] = [];
     if (testConfigResource.ports === 0) {
-      console.error("portsToUse", []);
+      console.error("portsToUse?!", []);
       const t: ITTestResourceConfiguration = {
         name: src,
         // ports: portsToUse.map((v) => Number(v)),
@@ -923,10 +925,11 @@ ${addableFiles
           scheduled: true,
           name: src,
           ports: portsToUse,
-          fs: destFolder,
+          fs: reportDest,
           browserWSEndpoint: this.browser.wsEndpoint(),
         });
       } else {
+        console.log("Not enough ports! Enqueuing test job...");
         this.queue.push(src);
         return;
       }
@@ -939,20 +942,26 @@ ${addableFiles
 
     let haltReturns = false;
 
+    const ipcfile = "/tmp/tpipe_" + Math.random();
+    const child = spawn("node", [builtfile, testResources, ipcfile], {
+      stdio: ["pipe", "pipe", "pipe", "ipc"],
+    });
+
     let buffer: Buffer<ArrayBufferLike> = new Buffer("");
 
     const server = net.createServer((socket) => {
+      const queue = new Queue<string[]>();
+
       socket.on("data", (data) => {
         buffer = Buffer.concat([buffer, data]);
 
-        const messages: string[][] = [];
         for (let b = 0; b < buffer.length + 1; b++) {
           const c = buffer.slice(0, b);
           let d;
           try {
             d = JSON.parse(c.toString());
 
-            messages.push(d);
+            queue.enqueue(d);
             buffer = buffer.slice(b, buffer.length + 1);
             b = 0;
           } catch (e) {
@@ -960,39 +969,32 @@ ${addableFiles
           }
         }
 
-        messages.forEach(async (payload) => {
-          // set up the "node" listeners
-          this.mapping().forEach(async ([command, func]) => {
-            if (payload[0] === command) {
-              const x = payload.slice(1, -1);
-              const r = await this[command](...x);
+        while (queue.size() > 0) {
+          const message = queue.dequeue();
 
-              if (!haltReturns) {
-                child.send(
-                  JSON.stringify({
-                    payload: r,
-                    key: payload[payload.length - 1],
-                  })
-                );
+          if (message) {
+            // set up the "node" listeners
+            this.mapping().forEach(async ([command, func]) => {
+              if (message[0] === command) {
+                const x = message.slice(1, -1);
+                const r = await this[command](...x);
+
+                if (!haltReturns) {
+                  child.send(
+                    JSON.stringify({
+                      payload: r,
+                      key: message[message.length - 1],
+                    })
+                  );
+                }
               }
-            }
-          });
-        });
+            });
+          }
+        }
       });
     });
 
     const oStream = fs.createWriteStream(`${reportDest}/console_log.txt`);
-
-    const child = spawn(
-      "node",
-      [builtfile, testResources, "--trace-warnings"],
-      {
-        stdio: ["pipe", "pipe", "pipe", "ipc"],
-        // silent: true
-      }
-    );
-
-    const p = "/tmp/tpipe" + Math.random();
 
     const errFile = `${reportDest}/error.txt`;
 
@@ -1000,7 +1002,7 @@ ${addableFiles
       fs.rmSync(errFile);
     }
 
-    server.listen(p, () => {
+    server.listen(ipcfile, () => {
       child.stderr?.on("data", (data) => {
         oStream.write(`stderr > ${data}`);
       });
@@ -1041,10 +1043,6 @@ ${addableFiles
       });
       child.on("error", (e) => {
         console.log("error");
-        console.log("deleting", p);
-        if (fs.existsSync(p)) {
-          fs.rmSync(p);
-        }
 
         haltReturns = true;
 
@@ -1060,8 +1058,6 @@ ${addableFiles
         statusMessagePretty(-1, src);
       });
     });
-
-    child.send({ path: p });
   };
 
   launchWebSideCar = async (

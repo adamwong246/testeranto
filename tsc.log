@@ -1,20 +1,24 @@
 $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit
-../testeranto-redux-toolkit/testeranto.config.ts(6,5): error TS2741: Property 'externalTests' is missing in type '{ tests: ([string, "node", { ports: number; }, never[]] | [string, "pure", { ports: number; }, never[]] | [string, "web", { ports: number; }, never[]])[]; clearScreen: false; debugger: false; externals: never[]; ... 6 more ...; webPlugins: never[]; }' but required in type 'ITestconfig'.
-../testeranto-solidity/testeranto.config.ts(7,5): error TS2741: Property 'externalTests' is missing in type '{ tests: [string, "node", { ports: number; }, never[]][]; clearScreen: false; debugger: false; externals: string[]; featureIngestor: (s: string) => Promise<string>; webPlugins: never[]; ... 4 more ...; src: string; }' but required in type 'ITestconfig'.
+src/lib/basebuilder.ts(85,15): error TS2349: This expression is not callable.
+  Not all constituents of type 'void | ((fPath: any, value: string | Buffer<ArrayBufferLike> | PassThrough) => void)' are callable.
+    Type 'void' has no call signatures.
 src/lib/classBuilder.ts(99,28): error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
 src/lib/core.ts(44,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: { [K in keyof O["suites"]]: string; }; givens: { [K in keyof O["givens"]]: (...Ig: O["givens"][K]) => I["given"]; }; whens: { [K in keyof O["whens"]]: (...Iw: O["whens"][K]) => (zel: I["iselection"], utils: PM) => Promise<...>; }; thens: { [K in keyof O["thens"]]: (...It: O["thens"][K]) => (ssel: I["i...'.
   Type 'Omit<{ suites: { [K in keyof O["suites"]]: string; }; givens: { [K in keyof O["givens"]]: (...Ig: O["givens"][K]) => I["given"]; }; whens: { [K in keyof O["whens"]]: (...Iw: O["whens"][K]) => (zel: I["iselection"], utils: PM) => Promise<...>; }; thens: { [K in keyof O["thens"]]: (...It: O["thens"][K]) => (ssel: I["i...' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; checks: Record<string, any>; }': suites, givens, whens, thens, checks
 src/PM/base.ts(62,55): error TS2339: Property '_id' does not exist on type 'Frame'.
 src/PM/base.ts(132,28): error TS2339: Property '_id' does not exist on type 'Frame'.
-src/PM/main.ts(149,9): error TS2741: Property 'failingFeatures' is missing in type '{ typeErrors: "?"; staticErrors: "?"; }' but required in type '{ runTimeError?: number | "?" | undefined; typeErrors?: number | "?" | undefined; staticErrors?: number | "?" | undefined; prompt?: string | undefined; failingFeatures: Record<string, string[]>; }'.
-src/PM/main.ts(192,29): error TS2339: Property '_id' does not exist on type 'Frame'.
-src/PM/main.ts(1201,6): error TS2366: Function lacks ending return statement and return type does not include 'undefined'.
-src/PM/main.ts(1239,27): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
-src/PM/main.ts(1363,16): error TS2339: Property 'sidecars' does not exist on type 'PM_Main'.
-src/PM/main.ts(1402,27): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
-src/PM/main.ts(1417,9): error TS2322: Type 'undefined' is not assignable to type '[number, ITTestResourceConfiguration]'.
-src/PM/main.ts(1484,46): error TS2339: Property '_id' does not exist on type 'Frame'.
-src/PM/main.ts(1549,60): error TS2339: Property '_id' does not exist on type 'Frame'.
+src/PM/main.ts(150,9): error TS2741: Property 'failingFeatures' is missing in type '{ typeErrors: "?"; staticErrors: "?"; }' but required in type '{ runTimeError?: number | "?" | undefined; typeErrors?: number | "?" | undefined; staticErrors?: number | "?" | undefined; prompt?: string | undefined; failingFeatures: Record<string, string[]>; }'.
+src/PM/main.ts(193,29): error TS2339: Property '_id' does not exist on type 'Frame'.
+src/PM/main.ts(1214,6): error TS2366: Function lacks ending return statement and return type does not include 'undefined'.
+src/PM/main.ts(1252,27): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+src/PM/main.ts(1376,16): error TS2339: Property 'sidecars' does not exist on type 'PM_Main'.
+src/PM/main.ts(1415,27): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+src/PM/main.ts(1430,9): error TS2322: Type 'undefined' is not assignable to type '[number, ITTestResourceConfiguration]'.
+src/PM/main.ts(1497,46): error TS2339: Property '_id' does not exist on type 'Frame'.
+src/PM/main.ts(1562,60): error TS2339: Property '_id' does not exist on type 'Frame'.
+src/PM/node.ts(17,14): error TS2654: Non-abstract class 'PM_Node' is missing implementations for the following members of 'PM': 'startPM', 'stopPM'.
+src/PM/pure.ts(20,14): error TS2654: Non-abstract class 'PM_Pure' is missing implementations for the following members of 'PM': 'startPM', 'stopPM'.
+src/PM/web.ts(11,14): error TS2654: Non-abstract class 'PM_Web' is missing implementations for the following members of 'PM': 'startPM', 'stopPM'.
 src/PM/web.ts(47,3): error TS2416: Property 'screencast' in type 'PM_Web' is not assignable to the same property in base type 'PM'.
   Type '(opts: ScreencastOptions, page: Page) => Promise<any>' is not assignable to type '(o: ScreenRecorderOptions, p: string | Page) => any'.
     Types of parameters 'page' and 'p' are incompatible.
@@ -38,7 +42,7 @@ src/SubPackages/react-test-renderer/component/interface.ts(18,52): error TS2345:
 src/SubPackages/react-test-renderer/component/test/implementation.ts(46,35): error TS2322: Type '(component: ReactTestRenderer) => ReactTestRenderer' is not assignable to type '(ssel: ReactTestRenderer, utils: PM) => (r: ReactTestRenderer) => ReactTestRenderer'.
   Type 'ReactTestRenderer' is not assignable to type '(r: ReactTestRenderer) => ReactTestRenderer'.
     Type 'ReactTestRenderer' provides no match for the signature '(r: ReactTestRenderer): ReactTestRenderer'.
-src/SubPackages/react-test-renderer/component/test/pure.ts(10,21): error TS2558: Expected 1-2 type arguments, but got 3.
+src/SubPackages/react-test-renderer/component/test/pure.ts(10,21): error TS2558: Expected 2 type arguments, but got 3.
 src/SubPackages/react-test-renderer/fc/node.ts(57,8): error TS2558: Expected 3 type arguments, but got 2.
 src/SubPackages/react-test-renderer/fc/node.ts(66,13): error TS2345: Argument of type 'DetailedReactHTMLElement<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>' is not assignable to parameter of type 'ReactElement<unknown, string | JSXElementConstructor<any>>'.
   Types of property 'key' are incompatible.

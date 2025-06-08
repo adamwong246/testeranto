@@ -14,6 +14,8 @@ import type {
 } from "./Types.js";
 import { PM_Node } from "./PM/node.js";
 
+let ipcfile;
+
 export class NodeTesteranto<I extends IT, O extends OT, M> extends Testeranto<
   I,
   O,
@@ -40,7 +42,7 @@ export class NodeTesteranto<I extends IT, O extends OT, M> extends Testeranto<
 
   async receiveTestResourceConfig(partialTestResource: string) {
     const t: ITTestResourceConfiguration = JSON.parse(partialTestResource);
-    const pm = new PM_Node(t);
+    const pm = new PM_Node(t, ipcfile);
     return await this.testJobs[0].receiveTestResourceConfig(pm);
     // const { failed, artifacts, logPromise, features } =
     //   await this.testJobs[0].receiveTestResourceConfig(pm);
@@ -67,9 +69,11 @@ const testeranto = async <I extends IT, O extends OT, M>(
   process.on("unhandledRejection", (reason, promise) => {
     console.error("Unhandled Rejection at:", promise, "reason:", reason);
     // Optionally, terminate the process or perform cleanup
+    // t.registerUncaughtPromise(reason, promise);
   });
 
   try {
+    ipcfile = process.argv[3];
     const f = await t.receiveTestResourceConfig(process.argv[2]);
 
     console.error("goodbye node error", f.fails);

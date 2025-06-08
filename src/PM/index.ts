@@ -26,7 +26,6 @@ export abstract class PM {
   abstract focusOn(selector: string): any;
   abstract getAttribute(selector: string, attribute: string, page: string): any;
   abstract getInnerHtml(selector: string, page: string): any;
-  // abstract getValue(value: string): any;
   abstract goto(p, url: string): any;
   abstract isDisabled(selector: string): Promise<boolean>;
   abstract mkdirSync(a: string);

@@ -18,21 +18,28 @@ export class PM_Node extends PM {
   testResourceConfiguration: ITTestResourceConfiguration;
   client: net.Socket;
 
-  constructor(t: ITTestResourceConfiguration) {
+  constructor(t: ITTestResourceConfiguration, ipcFile: string) {
     super();
     this.testResourceConfiguration = t;
+
+    this.client = net.createConnection(ipcFile, () => {
+      return;
+    });
   }
 
   start(): Promise<void> {
-    return new Promise((res) => {
-      process.on("message", (message: { path?: string }) => {
-        if (message.path) {
-          this.client = net.createConnection(message.path, () => {
-            res();
-          });
-        }
-      });
-    });
+    throw new Error("DEPREFECATED");
+    // console.log("START");
+    // return new Promise((res) => {
+    //   process.on("message", (message: { path?: string }) => {
+    //     console.log("MESSAGE");
+    //     if (message.path) {
+    //       this.client = net.createConnection(message.path, () => {
+    //         res();
+    //       });
+    //     }
+    //   });
+    // });
   }
 
   stop(): Promise<void> {
@@ -40,9 +47,17 @@ export class PM_Node extends PM {
   }
 
   send<I>(command: string, ...argz): Promise<I> {
-    return new Promise<I>((res) => {
-      const key = Math.random().toString();
+    const key = Math.random().toString();
+    // console.log("SEND", key, command, ...argz);
 
+    if (!this.client) {
+      console.error(
+        `Tried to send "${command} (${argz})" but the test has not been started and the IPC client is not established. Exiting as failure!`
+      );
+      process.exit(-1);
+    }
+
+    return new Promise<I>((res) => {
       const myListener = (event) => {
         const x = JSON.parse(event);
         if (x.key === key) {
@@ -181,6 +196,7 @@ export class PM_Node extends PM {
   }
 
   async writeFileSync(filepath: string, contents: string) {
+    // console.log("mark55");
     return await this.send<boolean>(
       "writeFileSync",
       this.testResourceConfiguration.fs + "/" + filepath,

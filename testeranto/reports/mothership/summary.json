@@ -1,0 +1,9 @@
+{
+  "./src/mothership/test.ts": {
+    "runTimeError": 0,
+    "typeErrors": 6,
+    "staticErrors": 2,
+    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/mothership/reports/node/./src/mothership/test/prompt.txt",
+    "failingFeatures": {}
+  }
+}

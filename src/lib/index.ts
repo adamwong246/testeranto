@@ -37,7 +37,31 @@ export const BaseTestInterface: ITestInterface<IT> = {
   ) => {
     return thenCb(store);
   },
-  andWhen: async (a) => a,
+  andWhen: async (
+    store: IT["istore"],
+    whenCB: IT["when"],
+    testResource: ITTestResourceConfiguration,
+    pm: IPM
+  ) => {
+    await whenCB(store, testResource, pm);
+    // (async () => {
+    //   await whenCB(store, testResource, pm);
+    // })().catch((e) => {
+    //   console.log("fopp", e); // caught
+    // });
+
+    // console.log("mark999", whenCB.toString());
+
+    // return i;
+    // try {
+    //   return await whenCB(store, testResource, pm);
+    // } catch (e) {
+    //   console.log("mark2", e);
+    // }
+    // whenCB(store, testResource, pm).catch((e) => {
+    //   console.log("mark2", e);
+    // });
+  },
   assertThis: (x: any) => x,
 };
 

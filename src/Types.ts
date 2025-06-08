@@ -116,7 +116,17 @@ export type ITestSpecification<I extends IT, O extends OT> = (
 export type ITestImplementation<
   I extends IT,
   O extends OT,
-  modifier = {}
+  modifier = {
+    whens: {
+      [K in keyof O["whens"]]: (
+        ...Iw: O["whens"][K]
+      ) => (
+        zel: I["iselection"],
+        tr: ITTestResourceConfiguration,
+        utils: PM
+      ) => Promise<I["when"]>;
+    };
+  }
 > = Modify<
   {
     suites: {
@@ -128,7 +138,11 @@ export type ITestImplementation<
     whens: {
       [K in keyof O["whens"]]: (
         ...Iw: O["whens"][K]
-      ) => (zel: I["iselection"], utils: PM) => Promise<I["when"]>;
+      ) => (
+        zel: I["iselection"],
+        tr: ITTestResourceConfiguration,
+        utils: PM
+      ) => Promise<I["when"]>;
     };
     thens: {
       [K in keyof O["thens"]]: (
@@ -141,6 +155,44 @@ export type ITestImplementation<
   },
   modifier
 >;
+
+// export type ITestImplementation<
+//   I extends IT,
+//   O extends OT,
+//   modifier = Partial<{
+//     // givens: string;
+//     givens: {
+//       [K in keyof O["givens"]]: (...Ig: O["givens"][K]) => I["given"];
+//     };
+//   }>
+// > = Modify<
+//   {
+//     // suites: {
+//     //   // [K in keyof O["suites"]]: unknown;
+//     //   [K in keyof O["suites"]]: (...Ig: O["suites"][K]) => I["suites"];
+//     // };
+//     // suites: [];
+
+//     // givens: {
+//     //   [K in keyof O["givens"]]: (...Ig: O["givens"][K]) => I["given"];
+//     // };
+
+//     whens: {
+//       [K in keyof O["whens"]]: (
+//         ...Iw: O["whens"][K]
+//       ) => (zel: I["iselection"], utils: PM) => Promise<I["when"]>;
+//     };
+//     thens: {
+//       [K in keyof O["thens"]]: (
+//         ...It: O["thens"][K]
+//       ) => (ssel: I["iselection"], utils: PM) => I["then"];
+//     };
+//     checks: {
+//       [K in keyof O["checks"]]: (...Ic: O["checks"][K]) => I["given"];
+//     };
+//   },
+//   modifier
+// >;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

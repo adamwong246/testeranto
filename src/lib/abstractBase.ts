@@ -327,7 +327,7 @@ export abstract class BaseGiven<I extends IT = IT> {
 export abstract class BaseWhen<I extends IT> {
   public name: string;
   whenCB: (x: I["iselection"]) => I["then"];
-  error: boolean;
+  error: Error;
 
   constructor(name: string, whenCB: (xyz: I["iselection"]) => I["then"]) {
     this.name = name;
@@ -342,9 +342,10 @@ export abstract class BaseWhen<I extends IT> {
   ): Promise<any>;
 
   toObj() {
+    console.log("toObj error", this.error);
     return {
       name: this.name,
-      error: this.error,
+      error: this.error && this.error.name + this.error.stack,
     };
   }
 
@@ -362,9 +363,10 @@ export abstract class BaseWhen<I extends IT> {
       this.whenCB,
       testResourceConfiguration,
       andWhenProxy(pm, filepath)
-    ).catch((e) => {
-      this.error = true;
-      // throw e;
+    ).catch((e: Error) => {
+      console.log("MARK9", e);
+      this.error = e;
+      throw e;
     });
   }
 }
