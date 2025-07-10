@@ -91,7 +91,7 @@ export abstract class ClassBuilder<
       {}
     );
 
-    const classyThens = Object.entries(testImplementation.thens).reduce(
+    const classyThens = Object.entries<(expected: any, ...x: any[]) => any>(testImplementation.thens).reduce(
       (a, [key, thEn]: [string, (s: I["iselection"]) => I["isubject"]]) => {
         a[key] = (expected, ...x) => {
           return new thenKlasser.prototype.constructor(

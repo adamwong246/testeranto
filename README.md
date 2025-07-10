@@ -1,8 +1,37 @@
 # testeranto
 
-## the AI powered BDD test framework for typescript projects
+## The AI-powered BDD test framework for TypeScript projects
 
 🚧 WARNING: Testeranto is still under development and is not ready for production yet. 🚧
+
+## Quick Start
+
+1. Install testeranto:
+```bash
+npm install testeranto
+```
+
+2. Create a test file (e.g., `rectangle.test.ts`):
+```typescript
+import { Given, When, Then } from 'testeranto';
+
+type Rectangle = { width: number; height: number };
+
+const RectangleSpec = (Suite, Given, When, Then) => [
+  Suite.Default("Rectangle tests", {
+    test1: Given.Default(
+      ["Basic rectangle operations"],
+      [When.setWidth(5), When.setHeight(10)],
+      [Then.getWidth(5), Then.getHeight(10)]
+    )
+  })
+];
+```
+
+3. Run your tests:
+```bash
+npx testeranto run rectangle.test.ts
+```
 
 demo video: [youtube](https://www.youtube.com/embed/WvU5xMqGi6Q)
 
@@ -12,11 +41,7 @@ npm: [npmjs.com/package/testeranto](https://www.npmjs.com/package/testeranto)
 
 dev: [github.dev/adamwong246/testeranto](https://github.dev/adamwong246/testeranto)
 
-example test report: [chromapdx.github.io/kokomoBay](https://chromapdx.github.io/kokomoBay/testeranto/index.html)
-
-example repo: [kokomo bay](https://github.com/ChromaPDX/kokomoBay)
-
-example repo V2: [testeranto-starter](https://github.com/adamwong246/testeranto-starter)
+example repo: [testeranto-starter](https://github.com/adamwong246/testeranto-starter)
 
 ## What is testeranto?
 
@@ -27,28 +52,44 @@ example repo V2: [testeranto-starter](https://github.com/adamwong246/testeranto-
 - Testeranto connects "features" to "tests". This allows the AI to read feature documentation from external systems, like Jira.
 - Testeranto generates test results into static a website which can be deployed to github pages easily.
 
-## tech of note
+## Key Technologies
 
-- esm - Testeranto uses modern js
-- typescript - tests are functions with type parameters
-- puppeteer - provides access to both node and chrome runtimes
-- esbuild - used to quickly generate test bundles
-- aider - AI to automatically fix broken tests
-- eslint - runs upon the input files to generate a file of static analysis errors
-- tsc - runs upon the input files to generate a file of type errors
-- markdown - Markdown is used record feature files
+Testeranto builds on modern JavaScript/TypeScript tooling:
 
-## scripts
+| Technology | Purpose |
+|------------|---------|
+| TypeScript | Strongly-typed test definitions |
+| Puppeteer  | Cross-runtime testing (Node & Browser) |
+| esbuild    | Fast test bundling |
+| Aider.ai   | AI-powered test fixing |
+| ESLint     | Static analysis of test files |
+| tsc        | Type checking of test files |
+| Markdown   | Feature documentation format |
 
-`yarn t-init`: startup a new testeranto project
+## CLI Commands
 
-`yarn t-build <someTest> <once|dev>`: build the "someTest" project once, or continuously
+| Command | Description |
+|---------|-------------|
+| `testeranto init` | Create a new testeranto project |
+| `testeranto build <testFile>` | Build test bundles |
+| `testeranto run <testFile>` | Run tests once |
+| `testeranto watch <testFile>` | Run tests in watch mode |
+| `testeranto report` | Launch test report server |
+| `testeranto aider` | Fix failing tests with AI |
 
-`yarn t-run <someTest> <once|dev>`: run the "someTest" project once, or continuously
+Example workflow:
+```bash
+# Initialize project
+testeranto init
 
-`yarn t-report` Run the report server
+# Write tests in test/*.test.ts
 
-`yarn t-aider PATH_TO_PROMPT_FILE`: Execute a generated prompt file to fix broken tests.
+# Run tests
+testeranto run test/rectangle.test.ts
+
+# Get AI help with failures
+testeranto aider
+```
 
 ## AI
 
@@ -101,9 +142,36 @@ Testeranto runs tests in multiple runtimes. You can run the same test (more or l
 2. Web - the test is run in chrome, in a page.
 3. Pure - the test is dynamically imported into the main thread. It will not have access to IO (console.log, etc) but it is more performant.
 
-## Concepts
+## Core Concepts
 
-Testeranto tests take some piece of javascript as input, and wraps it in testing apparatus, and then executes that test on the given platform. You must provide this apparatus in the following form:
+Testeranto provides a structured way to define BDD tests with strong typing. Here's a complete example:
+
+```typescript
+// Define your test subject
+class Rectangle {
+  constructor(public width: number, public height: number) {}
+
+  setWidth(w: number) { this.width = w; }
+  setHeight(h: number) { this.height = h; }
+}
+
+// Define test types
+type IRectangle = Ibdd_in<null, null, Rectangle, Rectangle, Rectangle, 
+  (n: number) => (r: Rectangle) => void,
+  (r: Rectangle) => number
+>;
+
+// Implement test specification
+const RectangleSpec: ITestSpecification<IRectangle> = (Suite, Given, When, Then) => [
+  Suite.Default("Rectangle Operations", {
+    basic: Given.Default(
+      ["Validate basic rectangle operations"],
+      [When.setWidth(5), When.setHeight(10)],
+      [Then.getWidth(5), Then.getHeight(10)]
+    )
+  })
+];
+```
 
 ```js
 export default async <I extends IT, O extends OT, M>(

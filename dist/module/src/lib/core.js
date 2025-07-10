@@ -23,7 +23,6 @@ export default class Testeranto extends ClassBuilder {
                 this.uberCatcher = uberCatcher;
             }
             async givenThat(subject, testResource, artifactory, initializer, initialValues, pm) {
-                debugger;
                 return fullTestInterface.beforeEach(subject, initializer, testResource, initialValues, pm);
             }
             afterEach(store, key, artifactory, pm) {

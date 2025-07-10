@@ -33,7 +33,13 @@ export default abstract class Testeranto<
   constructor(
     input: I["iinput"],
     testSpecification: ITestSpecification<I, O>,
-    testImplementation: ITestImplementation<I, O, M>,
+    testImplementation: ITestImplementation<I, O, M> & {
+      suites: Record<string, any>;
+      givens: Record<string, any>;
+      whens: Record<string, any>;
+      thens: Record<string, any>;
+      checks: Record<string, any>;
+    },
     testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
     testInterface: Partial<ITestInterface<I>>,
     uberCatcher: (cb: () => void) => void
@@ -88,7 +94,6 @@ export default abstract class Testeranto<
           initialValues,
           pm
         ) {
-          debugger;
           return fullTestInterface.beforeEach(
             subject,
             initializer,

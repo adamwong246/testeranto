@@ -2,7 +2,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { PassThrough } from "stream";
 
-import { ScreencastOptions, ScreenshotOptions } from "puppeteer-core";
+import { ScreencastOptions, ScreenshotOptions, Frame } from "puppeteer-core";
+
+declare module "puppeteer-core" {
+  interface Frame {
+    _id: string;
+  }
+}
 import { Page } from "puppeteer-core/lib/esm/puppeteer";
 
 import { ITLog, ITTestResourceConfiguration } from "../lib";
@@ -44,7 +50,7 @@ export class PM_Web extends PM {
     return window["waitForSelector"](p, s);
   }
 
-  screencast(opts: ScreencastOptions, page: Page): Promise<any> {
+  screencast(o: ScreencastOptions, p: string | Page): any {
     return window["screencast"](
       {
         ...opts,

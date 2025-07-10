@@ -3,30 +3,35 @@ src/lib/basebuilder.ts(85,15): error TS2349: This expression is not callable.
   Not all constituents of type 'void | ((fPath: any, value: string | Buffer<ArrayBufferLike> | PassThrough) => void)' are callable.
     Type 'void' has no call signatures.
 src/lib/classBuilder.ts(99,28): error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
-src/lib/core.ts(44,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: { [K in keyof O["suites"]]: string; }; givens: { [K in keyof O["givens"]]: (...Ig: O["givens"][K]) => I["given"]; }; whens: { [K in keyof O["whens"]]: (...Iw: O["whens"][K]) => (zel: I["iselection"], tr: ITTestResourceConfiguration, utils: PM) => Promise<...>; }; thens: { [K in keyof O["thens"]]: (......'.
-  Type 'Omit<{ suites: { [K in keyof O["suites"]]: string; }; givens: { [K in keyof O["givens"]]: (...Ig: O["givens"][K]) => I["given"]; }; whens: { [K in keyof O["whens"]]: (...Iw: O["whens"][K]) => (zel: I["iselection"], tr: ITTestResourceConfiguration, utils: PM) => Promise<...>; }; thens: { [K in keyof O["thens"]]: (......' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; checks: Record<string, any>; }': suites, givens, whens, thens, checks
 src/lib/index.ts(46,11): error TS18046: 'whenCB' is of type 'unknown'.
 src/mothership/test.ts(72,13): error TS2322: Type '(x: any) => any' is not assignable to type 'string'.
-src/PM/base.ts(62,55): error TS2339: Property '_id' does not exist on type 'Frame'.
-src/PM/base.ts(132,28): error TS2339: Property '_id' does not exist on type 'Frame'.
+src/Node.ts(34,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; checks: Record<string, any>; }': suites, givens, whens, thens, checks
 src/PM/main.ts(150,9): error TS2741: Property 'failingFeatures' is missing in type '{ typeErrors: "?"; staticErrors: "?"; }' but required in type '{ runTimeError?: number | "?" | undefined; typeErrors?: number | "?" | undefined; staticErrors?: number | "?" | undefined; prompt?: string | undefined; failingFeatures: Record<string, string[]>; }'.
-src/PM/main.ts(193,29): error TS2339: Property '_id' does not exist on type 'Frame'.
-src/PM/main.ts(1197,6): error TS2366: Function lacks ending return statement and return type does not include 'undefined'.
-src/PM/main.ts(1235,27): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
-src/PM/main.ts(1359,16): error TS2339: Property 'sidecars' does not exist on type 'PM_Main'.
-src/PM/main.ts(1398,27): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
-src/PM/main.ts(1413,9): error TS2322: Type 'undefined' is not assignable to type '[number, ITTestResourceConfiguration]'.
-src/PM/main.ts(1480,46): error TS2339: Property '_id' does not exist on type 'Frame'.
-src/PM/main.ts(1545,60): error TS2339: Property '_id' does not exist on type 'Frame'.
-src/PM/web.ts(47,3): error TS2416: Property 'screencast' in type 'PM_Web' is not assignable to the same property in base type 'PM'.
-  Type '(opts: ScreencastOptions, page: Page) => Promise<any>' is not assignable to type '(o: ScreenRecorderOptions, p: string | Page) => any'.
-    Types of parameters 'page' and 'p' are incompatible.
-      Type 'string | Page' is not assignable to type 'Page'.
-        Type 'string' is not assignable to type 'Page'.
+src/PM/main.ts(1215,6): error TS2366: Function lacks ending return statement and return type does not include 'undefined'.
+src/PM/main.ts(1253,27): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+src/PM/main.ts(1377,16): error TS2339: Property 'sidecars' does not exist on type 'PM_Main'.
+src/PM/main.ts(1416,27): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+src/PM/main.ts(1431,9): error TS2322: Type 'undefined' is not assignable to type '[number, ITTestResourceConfiguration]'.
+src/PM/main.ts(1563,9): error TS2322: Type 'string' is not assignable to type 'Page'.
+src/PM/web.ts(53,3): error TS2416: Property 'screencast' in type 'PM_Web' is not assignable to the same property in base type 'PM'.
+  Type '(o: ScreencastOptions, p: string | Page) => any' is not assignable to type '(o: ScreenRecorderOptions, p: string | Page) => any'.
+    Types of parameters 'p' and 'p' are incompatible.
+      Type 'string | import("/Users/adam/Code/testeranto/node_modules/puppeteer-core/lib/types").Page' is not assignable to type 'string | import("/Users/adam/Code/testeranto/node_modules/puppeteer-core/lib/esm/puppeteer/api/Page").Page'.
+        Type 'Page' is not assignable to type 'string | Page'.
+          Type 'import("/Users/adam/Code/testeranto/node_modules/puppeteer-core/lib/types").Page' is not assignable to type 'import("/Users/adam/Code/testeranto/node_modules/puppeteer-core/lib/esm/puppeteer/api/Page").Page'.
+            Property '#private' in type 'Page' refers to a different member that cannot be accessed from within type 'Page'.
+src/PM/web.ts(56,12): error TS2304: Cannot find name 'opts'.
+src/PM/web.ts(57,57): error TS2304: Cannot find name 'opts'.
+src/PM/web.ts(59,7): error TS2663: Cannot find name 'page'. Did you mean the instance member 'this.page'?
 src/Project.tsx(400,38): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
   Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.
+src/Pure.ts(33,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; checks: Record<string, any>; }': suites, givens, whens, thens, checks
 src/TestReport.tsx(262,19): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
   Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.
+src/Web.ts(39,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; checks: Record<string, any>; }': suites, givens, whens, thens, checks
 src/Web.ts(47,14): error TS2554: Expected 0 arguments, but got 1.
 src/Web.ts(66,14): error TS2554: Expected 0 arguments, but got 1.
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.

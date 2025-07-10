@@ -25,7 +25,7 @@ export class PM_Web extends PM {
     waitForSelector(p, s) {
         return window["waitForSelector"](p, s);
     }
-    screencast(opts, page) {
+    screencast(o, p) {
         return window["screencast"](Object.assign(Object.assign({}, opts), { path: this.testResourceConfiguration.fs + "/" + opts.path }), page.mainFrame()._id, this.testResourceConfiguration.name);
     }
     screencastStop(recorder) {

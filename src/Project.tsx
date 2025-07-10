@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import ReactDom from "react-dom/client";
-import React, { useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { Col, Nav, Row, Tab, Table } from "react-bootstrap";
 
 import { Footer } from "./Footer";
