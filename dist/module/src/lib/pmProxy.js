@@ -5,7 +5,7 @@ const prxy = function (pm, mappings) {
                 const method = mapping[0];
                 const arger = mapping[1];
                 if (prop === method) {
-                    return (x) => target[prop](arger(x));
+                    return (...x) => target[prop](arger(...x));
                 }
             }
             return (...x) => target[prop](...x);

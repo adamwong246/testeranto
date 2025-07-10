@@ -62,15 +62,15 @@ export abstract class ClassBuilder<
 
     const classyGivens = Object.entries(testImplementation.givens).reduce(
       (a, [key, g]) => {
-        a[key] = (features, whens, thens) => {
+        a[key] = (features, whens, thens, ...initialValues) => {
           // console.log("givEn", givEn.toString());
           return new givenKlasser.prototype.constructor(
             key,
             features,
             whens,
             thens,
-            testImplementation.givens[key]
-            // givEn
+            testImplementation.givens[key],
+            initialValues
           );
         };
         return a;

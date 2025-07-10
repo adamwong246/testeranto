@@ -3,22 +3,21 @@ src/lib/basebuilder.ts(85,15): error TS2349: This expression is not callable.
   Not all constituents of type 'void | ((fPath: any, value: string | Buffer<ArrayBufferLike> | PassThrough) => void)' are callable.
     Type 'void' has no call signatures.
 src/lib/classBuilder.ts(99,28): error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
-src/lib/core.ts(44,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: { [K in keyof O["suites"]]: string; }; givens: { [K in keyof O["givens"]]: (...Ig: O["givens"][K]) => I["given"]; }; whens: { [K in keyof O["whens"]]: (...Iw: O["whens"][K]) => (zel: I["iselection"], utils: PM) => Promise<...>; }; thens: { [K in keyof O["thens"]]: (...It: O["thens"][K]) => (ssel: I["i...'.
-  Type 'Omit<{ suites: { [K in keyof O["suites"]]: string; }; givens: { [K in keyof O["givens"]]: (...Ig: O["givens"][K]) => I["given"]; }; whens: { [K in keyof O["whens"]]: (...Iw: O["whens"][K]) => (zel: I["iselection"], utils: PM) => Promise<...>; }; thens: { [K in keyof O["thens"]]: (...It: O["thens"][K]) => (ssel: I["i...' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; checks: Record<string, any>; }': suites, givens, whens, thens, checks
+src/lib/core.ts(44,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: { [K in keyof O["suites"]]: string; }; givens: { [K in keyof O["givens"]]: (...Ig: O["givens"][K]) => I["given"]; }; whens: { [K in keyof O["whens"]]: (...Iw: O["whens"][K]) => (zel: I["iselection"], tr: ITTestResourceConfiguration, utils: PM) => Promise<...>; }; thens: { [K in keyof O["thens"]]: (......'.
+  Type 'Omit<{ suites: { [K in keyof O["suites"]]: string; }; givens: { [K in keyof O["givens"]]: (...Ig: O["givens"][K]) => I["given"]; }; whens: { [K in keyof O["whens"]]: (...Iw: O["whens"][K]) => (zel: I["iselection"], tr: ITTestResourceConfiguration, utils: PM) => Promise<...>; }; thens: { [K in keyof O["thens"]]: (......' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; checks: Record<string, any>; }': suites, givens, whens, thens, checks
+src/lib/index.ts(46,11): error TS18046: 'whenCB' is of type 'unknown'.
+src/mothership/test.ts(72,13): error TS2322: Type '(x: any) => any' is not assignable to type 'string'.
 src/PM/base.ts(62,55): error TS2339: Property '_id' does not exist on type 'Frame'.
 src/PM/base.ts(132,28): error TS2339: Property '_id' does not exist on type 'Frame'.
 src/PM/main.ts(150,9): error TS2741: Property 'failingFeatures' is missing in type '{ typeErrors: "?"; staticErrors: "?"; }' but required in type '{ runTimeError?: number | "?" | undefined; typeErrors?: number | "?" | undefined; staticErrors?: number | "?" | undefined; prompt?: string | undefined; failingFeatures: Record<string, string[]>; }'.
 src/PM/main.ts(193,29): error TS2339: Property '_id' does not exist on type 'Frame'.
-src/PM/main.ts(1214,6): error TS2366: Function lacks ending return statement and return type does not include 'undefined'.
-src/PM/main.ts(1252,27): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
-src/PM/main.ts(1376,16): error TS2339: Property 'sidecars' does not exist on type 'PM_Main'.
-src/PM/main.ts(1415,27): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
-src/PM/main.ts(1430,9): error TS2322: Type 'undefined' is not assignable to type '[number, ITTestResourceConfiguration]'.
-src/PM/main.ts(1497,46): error TS2339: Property '_id' does not exist on type 'Frame'.
-src/PM/main.ts(1562,60): error TS2339: Property '_id' does not exist on type 'Frame'.
-src/PM/node.ts(17,14): error TS2654: Non-abstract class 'PM_Node' is missing implementations for the following members of 'PM': 'startPM', 'stopPM'.
-src/PM/pure.ts(20,14): error TS2654: Non-abstract class 'PM_Pure' is missing implementations for the following members of 'PM': 'startPM', 'stopPM'.
-src/PM/web.ts(11,14): error TS2654: Non-abstract class 'PM_Web' is missing implementations for the following members of 'PM': 'startPM', 'stopPM'.
+src/PM/main.ts(1197,6): error TS2366: Function lacks ending return statement and return type does not include 'undefined'.
+src/PM/main.ts(1235,27): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+src/PM/main.ts(1359,16): error TS2339: Property 'sidecars' does not exist on type 'PM_Main'.
+src/PM/main.ts(1398,27): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+src/PM/main.ts(1413,9): error TS2322: Type 'undefined' is not assignable to type '[number, ITTestResourceConfiguration]'.
+src/PM/main.ts(1480,46): error TS2339: Property '_id' does not exist on type 'Frame'.
+src/PM/main.ts(1545,60): error TS2339: Property '_id' does not exist on type 'Frame'.
 src/PM/web.ts(47,3): error TS2416: Property 'screencast' in type 'PM_Web' is not assignable to the same property in base type 'PM'.
   Type '(opts: ScreencastOptions, page: Page) => Promise<any>' is not assignable to type '(o: ScreenRecorderOptions, p: string | Page) => any'.
     Types of parameters 'page' and 'p' are incompatible.
@@ -26,75 +25,6 @@ src/PM/web.ts(47,3): error TS2416: Property 'screencast' in type 'PM_Web' is not
         Type 'string' is not assignable to type 'Page'.
 src/Project.tsx(400,38): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
   Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.
-src/SubPackages/react-dom/component/dynamic.ts(69,11): error TS2552: Cannot find name 'createElement'. Did you mean 'frameElement'?
-src/SubPackages/react-dom/component/dynamic.ts(93,7): error TS2552: Cannot find name 'testInterface'. Did you mean 'testInterfacer'?
-src/SubPackages/react-dom/jsx/dynamic.ts(25,17): error TS2345: Argument of type 'null' is not assignable to parameter of type 'HTMLElement | PromiseLike<HTMLElement>'.
-src/SubPackages/react-dom/jsx/dynamic.ts(30,17): error TS2345: Argument of type 'FunctionComponentElement<any>' is not assignable to parameter of type 'HTMLElement | PromiseLike<HTMLElement>'.
-src/SubPackages/react-dom/jsx/static.ts(44,11): error TS2345: Argument of type 'FunctionComponentElement<{ done: (ref: MutableRefObject<any>) => any; innerComp: IInput; }>' is not assignable to parameter of type 'ReactNode'.
-  Property 'children' is missing in type 'FunctionComponentElement<{ done: (ref: MutableRefObject<any>) => any; innerComp: IInput; }>' but required in type 'ReactPortal'.
-src/SubPackages/react-test-renderer/component/interface.ts(14,34): error TS2769: No overload matches this call.
-  The last overload gave the following error.
-    Argument of type 'ReactTestRenderer' is not assignable to parameter of type 'string | ComponentClass<any, any> | FunctionComponent<any>'.
-src/SubPackages/react-test-renderer/component/interface.ts(18,52): error TS2345: Argument of type 'DetailedReactHTMLElement<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>' is not assignable to parameter of type 'ReactElement<unknown, string | JSXElementConstructor<any>>'.
-  Types of property 'key' are incompatible.
-    Type 'Key | null' is not assignable to type 'string | null'.
-      Type 'number' is not assignable to type 'string'.
-src/SubPackages/react-test-renderer/component/test/implementation.ts(46,35): error TS2322: Type '(component: ReactTestRenderer) => ReactTestRenderer' is not assignable to type '(ssel: ReactTestRenderer, utils: PM) => (r: ReactTestRenderer) => ReactTestRenderer'.
-  Type 'ReactTestRenderer' is not assignable to type '(r: ReactTestRenderer) => ReactTestRenderer'.
-    Type 'ReactTestRenderer' provides no match for the signature '(r: ReactTestRenderer): ReactTestRenderer'.
-src/SubPackages/react-test-renderer/component/test/pure.ts(10,21): error TS2558: Expected 2 type arguments, but got 3.
-src/SubPackages/react-test-renderer/fc/node.ts(57,8): error TS2558: Expected 3 type arguments, but got 2.
-src/SubPackages/react-test-renderer/fc/node.ts(66,13): error TS2345: Argument of type 'DetailedReactHTMLElement<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>' is not assignable to parameter of type 'ReactElement<unknown, string | JSXElementConstructor<any>>'.
-  Types of property 'key' are incompatible.
-    Type 'Key | null' is not assignable to type 'string | null'.
-      Type 'number' is not assignable to type 'string'.
-src/SubPackages/react-test-renderer/fc/node.ts(66,33): error TS2769: No overload matches this call.
-  The last overload gave the following error.
-    Argument of type 'I["isubject"]' is not assignable to parameter of type 'string | FunctionComponent<(c?: any) => I["given"]> | ComponentClass<(c?: any) => I["given"], any>'.
-      Type 'I["isubject"]' is not assignable to type 'ComponentClass<(c?: any) => I["given"], any>'.
-src/SubPackages/react-test-renderer/fc/node.ts(80,13): error TS2339: Property 'unmount' does not exist on type 'I["istore"]'.
-src/SubPackages/react-test-renderer/fc/web.ts(57,8): error TS2558: Expected 3 type arguments, but got 2.
-src/SubPackages/react-test-renderer/fc/web.ts(63,13): error TS2345: Argument of type 'DetailedReactHTMLElement<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>' is not assignable to parameter of type 'ReactElement<unknown, string | JSXElementConstructor<any>>'.
-  Types of property 'key' are incompatible.
-    Type 'Key | null' is not assignable to type 'string | null'.
-      Type 'number' is not assignable to type 'string'.
-src/SubPackages/react-test-renderer/fc/web.ts(63,33): error TS2769: No overload matches this call.
-  The last overload gave the following error.
-    Argument of type 'I["isubject"]' is not assignable to parameter of type 'string | FunctionComponent<(c?: any) => I["given"]> | ComponentClass<(c?: any) => I["given"], any>'.
-      Type 'I["isubject"]' is not assignable to type 'ComponentClass<(c?: any) => I["given"], any>'.
-src/SubPackages/react-test-renderer/jsx-promised/node.ts(4,10): error TS2305: Module '"../../react/jsx"' has no exported member 'ITestImpl'.
-src/SubPackages/react-test-renderer/jsx-promised/node.ts(4,21): error TS2305: Module '"../../react/jsx"' has no exported member 'ITestSpec'.
-src/SubPackages/react-test-renderer/jsx-promised/node.ts(30,15): error TS2558: Expected 3 type arguments, but got 2.
-src/SubPackages/react-test-renderer/jsx-promised/web.ts(4,10): error TS2305: Module '"../../react/jsx"' has no exported member 'ITestImpl'.
-src/SubPackages/react-test-renderer/jsx-promised/web.ts(4,21): error TS2305: Module '"../../react/jsx"' has no exported member 'ITestSpec'.
-src/SubPackages/react-test-renderer/jsx-promised/web.ts(30,15): error TS2558: Expected 3 type arguments, but got 2.
-src/SubPackages/react-test-renderer/jsx/index.ts(26,12): error TS2349: This expression is not callable.
-  Type 'void' has no call signatures.
-src/SubPackages/react-test-renderer/jsx/index.ts(44,9): error TS2345: Argument of type 'DetailedReactHTMLElement<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>' is not assignable to parameter of type 'ReactElement<unknown, string | JSXElementConstructor<any>>'.
-  Types of property 'key' are incompatible.
-    Type 'Key | null' is not assignable to type 'string | null'.
-      Type 'number' is not assignable to type 'string'.
-src/SubPackages/react-test-renderer/jsx/index.ts(45,11): error TS2769: No overload matches this call.
-  The last overload gave the following error.
-    Argument of type 'ReactTestRenderer' is not assignable to parameter of type 'string | FunctionComponent<(c?: any) => unknown> | ComponentClass<(c?: any) => unknown, any>'.
-src/SubPackages/react-test-renderer/jsx/index.ts(47,31): error TS2769: No overload matches this call.
-  The last overload gave the following error.
-    Argument of type 'ReactTestRenderer' is not assignable to parameter of type 'string | FunctionComponent<(c?: any) => unknown> | ComponentClass<(c?: any) => unknown, any>'.
-src/SubPackages/react-test-renderer/jsx/node.ts(25,15): error TS2558: Expected 3 type arguments, but got 2.
-src/SubPackages/react-test-renderer/jsx/pure.ts(25,15): error TS2558: Expected 3 type arguments, but got 2.
-src/SubPackages/react-test-renderer/jsx/web.ts(26,15): error TS2558: Expected 3 type arguments, but got 2.
-src/SubPackages/react-test-renderer/MemoExoticComponent/node.ts(36,8): error TS2558: Expected 3 type arguments, but got 2.
-src/SubPackages/react-test-renderer/MemoExoticComponent/node.ts(43,37): error TS2345: Argument of type 'DetailedReactHTMLElement<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>' is not assignable to parameter of type 'ReactElement<unknown, string | JSXElementConstructor<any>>'.
-  Types of property 'key' are incompatible.
-    Type 'Key | null' is not assignable to type 'string | null'.
-      Type 'number' is not assignable to type 'string'.
-src/SubPackages/react-test-renderer/MemoExoticComponent/node.ts(43,57): error TS2769: No overload matches this call.
-  The last overload gave the following error.
-    Argument of type 'I["isubject"]' is not assignable to parameter of type 'string | FunctionComponent<(c?: any) => I["given"]> | ComponentClass<(c?: any) => I["given"], any>'.
-      Type 'ReactTestRenderer' is not assignable to type 'string | FunctionComponent<(c?: any) => I["given"]> | ComponentClass<(c?: any) => I["given"], any>'.
-        Type 'I["isubject"]' is not assignable to type 'ComponentClass<(c?: any) => I["given"], any>'.
-          Type 'ReactTestRenderer' is not assignable to type 'ComponentClass<(c?: any) => I["given"], any>'.
-            Type 'ReactTestRenderer' provides no match for the signature 'new (props: (c?: any) => I["given"], context?: any): Component<(c?: any) => I["given"], any, any>'.
 src/TestReport.tsx(262,19): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
   Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.
 src/Web.ts(47,14): error TS2554: Expected 0 arguments, but got 1.

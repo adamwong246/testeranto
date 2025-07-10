@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import fs from "fs";
 export default async () => {
     [
@@ -9,6 +10,7 @@ export default async () => {
         `testeranto/reports`,
         `testeranto/reports/`,
         `testeranto/features/`,
+        `testeranto/externalTests/`,
     ].forEach((f) => {
         try {
             fs.mkdirSync(`${process.cwd()}/${f}`);
@@ -20,7 +22,10 @@ export default async () => {
     fs.copyFileSync(`node_modules/testeranto/dist/prebuild/Project.js`, `testeranto/Project.js`);
     fs.copyFileSync(`node_modules/testeranto/dist/prebuild/ReportClient.js`, `testeranto/ReportClient.js`);
     fs.copyFileSync(`node_modules/testeranto/dist/prebuild/Project.css`, `testeranto/Project.css`);
-    fs.copyFileSync(`node_modules/testeranto/dist/prebuild/ReportClient.css`, `testeranto/ReportClient.css`);
+    // fs.copyFileSync(
+    //   `node_modules/testeranto/dist/prebuild/ReportClient.css`,
+    //   `testeranto/ReportClient.css`
+    // );
     fs.copyFileSync(`node_modules/testeranto/dist/prebuild/TestReport.js`, `testeranto/TestReport.js`);
     fs.copyFileSync(`node_modules/testeranto/dist/prebuild/TestReport.css`, `testeranto/TestReport.css`);
 };

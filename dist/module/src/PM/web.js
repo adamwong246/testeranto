@@ -1,5 +1,7 @@
-export class PM_Web {
+import { PM } from ".";
+export class PM_Web extends PM {
     constructor(t) {
+        super();
         this.testResourceConfiguration = t;
     }
     start() {
@@ -7,6 +9,18 @@ export class PM_Web {
     }
     stop() {
         return new Promise((r) => r());
+    }
+    getInnerHtml(selector, page) {
+        throw new Error("web.ts getInnHtml not implemented");
+    }
+    pages() {
+        throw new Error("Method not implemented.");
+    }
+    stopSideCar(n) {
+        return window["stopSideCar"](n, this.testResourceConfiguration.name);
+    }
+    launchSideCar(n) {
+        return window["launchSideCar"](n, this.testResourceConfiguration.name);
     }
     waitForSelector(p, s) {
         return window["waitForSelector"](p, s);
@@ -44,14 +58,18 @@ export class PM_Web {
     typeInto(value) {
         return window["typeInto"](value);
     }
-    page() {
-        return window["page"]();
+    async page(x) {
+        return window["page"](x);
     }
     click(selector) {
         return window["click"](selector);
     }
-    customScreenShot(opts, page) {
-        return window["customScreenShot"](Object.assign(Object.assign({}, opts), { path: this.testResourceConfiguration.fs + "/" + opts.path }), this.testResourceConfiguration.name);
+    customScreenShot(x, y) {
+        const opts = x[0];
+        const page = x[1];
+        console.log("customScreenShot 2 opts", opts);
+        console.log("customScreenShot 2 page", page);
+        return window["customScreenShot"](Object.assign(Object.assign({}, opts), { path: this.testResourceConfiguration.fs + "/" + opts.path }), this.testResourceConfiguration.name, page);
     }
     existsSync(destFolder) {
         return window["existsSync"](destFolder);

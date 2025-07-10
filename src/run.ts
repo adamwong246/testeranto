@@ -1,6 +1,5 @@
 import ansiC from "ansi-colors";
 import readline from "readline";
-import path from "path";
 
 import { PM_Main } from "./PM/main";
 import { ITestconfig, IBuiltConfig, IProject } from "./Types";

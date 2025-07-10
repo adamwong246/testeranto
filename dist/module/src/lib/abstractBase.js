@@ -167,16 +167,18 @@ export class BaseWhen {
         this.whenCB = whenCB;
     }
     toObj() {
+        console.log("toObj error", this.error);
         return {
             name: this.name,
-            error: this.error,
+            error: this.error && this.error.name + this.error.stack,
         };
     }
     async test(store, testResourceConfiguration, tLog, pm, filepath) {
         tLog(" When:", this.name);
         return await this.andWhen(store, this.whenCB, testResourceConfiguration, andWhenProxy(pm, filepath)).catch((e) => {
-            this.error = true;
-            // throw e;
+            console.log("MARK9", e);
+            this.error = e;
+            throw e;
         });
     }
 }

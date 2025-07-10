@@ -1,8 +1,16 @@
-import fs from "fs";
-import path from "path";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { PM } from ".";
 const fPaths = [];
 export class PM_Pure extends PM {
+    getInnerHtml(selector, page) {
+        throw new Error("pure.ts getInnHtml not implemented");
+        return Promise.resolve("");
+    }
+    stopSideCar(uid) {
+        throw new Error("pure.ts getInnHtml not implemented");
+        return Promise.resolve(true);
+    }
     constructor(t) {
         super();
         this.server = {};
@@ -13,6 +21,9 @@ export class PM_Pure extends PM {
     }
     stop() {
         return new Promise((r) => r());
+    }
+    launchSideCar(n) {
+        return globalThis["launchSideCar"](n, this.testResourceConfiguration.name);
     }
     pages() {
         return globalThis["pages"]();
@@ -84,47 +95,47 @@ export class PM_Pure extends PM {
         globalThis["customclose"](this.testResourceConfiguration.fs, this.testResourceConfiguration.name);
     }
     testArtiFactoryfileWriter(tLog, callback) {
-        return (fPath, value) => {
-            callback(new Promise((res, rej) => {
-                tLog("testArtiFactory =>", fPath);
-                const cleanPath = path.resolve(fPath);
-                fPaths.push(cleanPath.replace(process.cwd(), ``));
-                const targetDir = cleanPath.split("/").slice(0, -1).join("/");
-                fs.mkdir(targetDir, { recursive: true }, async (error) => {
-                    if (error) {
-                        console.error(`❗️testArtiFactory failed`, targetDir, error);
-                    }
-                    fs.writeFileSync(path.resolve(targetDir.split("/").slice(0, -1).join("/"), "manifest"), fPaths.join(`\n`), {
-                        encoding: "utf-8",
-                    });
-                    if (Buffer.isBuffer(value)) {
-                        fs.writeFileSync(fPath, value, "binary");
-                        res();
-                    }
-                    else if (`string` === typeof value) {
-                        fs.writeFileSync(fPath, value.toString(), {
-                            encoding: "utf-8",
-                        });
-                        res();
-                    }
-                    else {
-                        /* @ts-ignore:next-line */
-                        const pipeStream = value;
-                        const myFile = fs.createWriteStream(fPath);
-                        pipeStream.pipe(myFile);
-                        pipeStream.on("close", () => {
-                            myFile.close();
-                            res();
-                        });
-                    }
-                });
-            }));
-        };
-    }
-    // launch(options?: PuppeteerLaunchOptions): Promise<Browser>;
-    startPuppeteer(options) {
-        // return puppeteer.connect(options).then((b) => {
-        //   this.browser = b;
-        // });
+        // return (fPath, value: string | Buffer | PassThrough) => {
+        //   callback(
+        //     new Promise<void>((res) => {
+        //       tLog("testArtiFactory =>", fPath);
+        //       const cleanPath = path.resolve(fPath);
+        //       fPaths.push(cleanPath.replace(process.cwd(), ``));
+        //       const targetDir = cleanPath.split("/").slice(0, -1).join("/");
+        //       fs.mkdir(targetDir, { recursive: true }, async (error) => {
+        //         if (error) {
+        //           console.error(`❗️testArtiFactory failed`, targetDir, error);
+        //         }
+        //         fs.writeFileSync(
+        //           path.resolve(
+        //             targetDir.split("/").slice(0, -1).join("/"),
+        //             "manifest"
+        //           ),
+        //           fPaths.join(`\n`),
+        //           {
+        //             encoding: "utf-8",
+        //           }
+        //         );
+        //         if (Buffer.isBuffer(value)) {
+        //           fs.writeFileSync(fPath, value, "binary");
+        //           res();
+        //         } else if (`string` === typeof value) {
+        //           fs.writeFileSync(fPath, value.toString(), {
+        //             encoding: "utf-8",
+        //           });
+        //           res();
+        //         } else {
+        //           const pipeStream: PassThrough = value;
+        //           const myFile = fs.createWriteStream(fPath);
+        //           pipeStream.pipe(myFile);
+        //           pipeStream.on("close", () => {
+        //             myFile.close();
+        //             res();
+        //           });
+        //         }
+        //       });
+        //     })
+        //   );
+        // };
     }
 }

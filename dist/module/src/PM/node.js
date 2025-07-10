@@ -1,30 +1,44 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable prefer-rest-params */
 import net from "net";
 import fs from "fs";
 import path from "path";
 import { PM } from ".";
 const fPaths = [];
 export class PM_Node extends PM {
-    constructor(t) {
+    constructor(t, ipcFile) {
         super();
         this.testResourceConfiguration = t;
-    }
-    start() {
-        return new Promise((res) => {
-            process.on("message", (message) => {
-                if (message.path) {
-                    this.client = net.createConnection(message.path, () => {
-                        res();
-                    });
-                }
-            });
+        this.client = net.createConnection(ipcFile, () => {
+            return;
         });
     }
+    start() {
+        throw new Error("DEPREFECATED");
+        // console.log("START");
+        // return new Promise((res) => {
+        //   process.on("message", (message: { path?: string }) => {
+        //     console.log("MESSAGE");
+        //     if (message.path) {
+        //       this.client = net.createConnection(message.path, () => {
+        //         res();
+        //       });
+        //     }
+        //   });
+        // });
+    }
     stop() {
-        throw new Error("Method not implemented.");
+        throw new Error("stop not implemented.");
     }
     send(command, ...argz) {
+        const key = Math.random().toString();
+        // console.log("SEND", key, command, ...argz);
+        if (!this.client) {
+            console.error(`Tried to send "${command} (${argz})" but the test has not been started and the IPC client is not established. Exiting as failure!`);
+            process.exit(-1);
+        }
         return new Promise((res) => {
-            const key = Math.random().toString();
             const myListener = (event) => {
                 const x = JSON.parse(event);
                 if (x.key === key) {
@@ -35,6 +49,12 @@ export class PM_Node extends PM {
             process.addListener("message", myListener);
             this.client.write(JSON.stringify([command, ...argz, key]));
         });
+    }
+    async launchSideCar(n) {
+        return this.send("launchSideCar", n, this.testResourceConfiguration.name);
+    }
+    stopSideCar(n) {
+        return this.send("stopSideCar", n, this.testResourceConfiguration.name);
     }
     async pages() {
         return this.send("pages", ...arguments);
@@ -53,18 +73,21 @@ export class PM_Node extends PM {
     async newPage() {
         return this.send("newPage");
     }
-    $(selector) {
+    $(selector, page) {
         return this.send("$", ...arguments);
     }
     isDisabled(selector) {
         return this.send("isDisabled", ...arguments);
     }
-    getAttribute(selector, attribute) {
+    getAttribute(selector, attribute, p) {
         return this.send("getAttribute", ...arguments);
     }
-    getValue(selector) {
-        return this.send("getValue", ...arguments);
+    getInnerHtml(selector, p) {
+        return this.send("getInnerHtml", ...arguments);
     }
+    // setValue(selector: string) {
+    //   return this.send("getValue", ...arguments);
+    // }
     focusOn(selector) {
         return this.send("focusOn", ...arguments);
     }
@@ -83,8 +106,10 @@ export class PM_Node extends PM {
     screencastStop(p) {
         return this.send("screencastStop", ...arguments);
     }
-    customScreenShot(opts, page) {
-        return this.send("customScreenShot", Object.assign(Object.assign({}, opts), { path: this.testResourceConfiguration.fs + "/" + opts.path }), page, this.testResourceConfiguration.name);
+    customScreenShot(x, y) {
+        const opts = x[0];
+        const page = x[1];
+        return this.send("customScreenShot", Object.assign(Object.assign({}, opts), { path: this.testResourceConfiguration.fs + "/" + opts.path }), this.testResourceConfiguration.name, page);
     }
     async existsSync(destFolder) {
         return await this.send("existsSync", this.testResourceConfiguration.fs + "/" + destFolder);
@@ -96,6 +121,7 @@ export class PM_Node extends PM {
         return await this.send("write", ...arguments);
     }
     async writeFileSync(filepath, contents) {
+        // console.log("mark55");
         return await this.send("writeFileSync", this.testResourceConfiguration.fs + "/" + filepath, contents, this.testResourceConfiguration.name);
     }
     async createWriteStream(filepath) {
@@ -132,7 +158,6 @@ export class PM_Node extends PM {
                         res();
                     }
                     else {
-                        /* @ts-ignore:next-line */
                         const pipeStream = value;
                         const myFile = fs.createWriteStream(fPath);
                         pipeStream.pipe(myFile);

@@ -1,6 +1,7 @@
 import Testeranto from "./lib/core.js";
 import { defaultTestResourceRequirement, } from "./lib/index.js";
 import { PM_Node } from "./PM/node.js";
+let ipcfile;
 export class NodeTesteranto extends Testeranto {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
         super(input, testSpecification, testImplementation, testResourceRequirement, testInterface, () => {
@@ -9,7 +10,7 @@ export class NodeTesteranto extends Testeranto {
     }
     async receiveTestResourceConfig(partialTestResource) {
         const t = JSON.parse(partialTestResource);
-        const pm = new PM_Node(t);
+        const pm = new PM_Node(t, ipcfile);
         return await this.testJobs[0].receiveTestResourceConfig(pm);
         // const { failed, artifacts, logPromise, features } =
         //   await this.testJobs[0].receiveTestResourceConfig(pm);
@@ -22,9 +23,10 @@ const testeranto = async (input, testSpecification, testImplementation, testInte
     process.on("unhandledRejection", (reason, promise) => {
         console.error("Unhandled Rejection at:", promise, "reason:", reason);
         // Optionally, terminate the process or perform cleanup
+        // t.registerUncaughtPromise(reason, promise);
     });
     try {
-        console.log(process.argv);
+        ipcfile = process.argv[3];
         const f = await t.receiveTestResourceConfig(process.argv[2]);
         console.error("goodbye node error", f.fails);
         process.exit(f.fails);

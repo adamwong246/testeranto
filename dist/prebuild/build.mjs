@@ -206,7 +206,7 @@ var pure_default = (config, entryPoints, testName2) => {
   );
   return {
     ...esbuildConfigs_default(config),
-    drop: ["console", "debugger"],
+    drop: [],
     splitting: true,
     outdir: `testeranto/bundles/pure/${testName2}/`,
     // inject: [`./node_modules/testeranto/dist/cjs-shim.js`],

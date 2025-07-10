@@ -75,20 +75,39 @@ const BddPage = () => {
             React.createElement(Col, { sm: 12 },
                 React.createElement("h2", null, bddErrors.name))),
         React.createElement(Row, null,
-            React.createElement(Tab.Container, { id: "root-tab-container", defaultActiveKey: "first" },
+            React.createElement(Tab.Container, { id: "root-tab-container", defaultActiveKey: "log" },
                 React.createElement(Row, null,
-                    React.createElement(Col, { sm: 3 },
-                        React.createElement("pre", null,
-                            React.createElement("code", null, log))),
-                    React.createElement(Col, { sm: 3 },
-                        React.createElement(Nav, { variant: "pills", className: "flex-column" }, ...bddErrors.givens.map((g) => React.createElement(Nav.Item, null,
-                            React.createElement(Nav.Link, { eventKey: g.key },
-                                g.key,
-                                ": Given ",
-                                g.name))))),
-                    React.createElement(Col, { sm: 6 },
-                        React.createElement(Tab.Content, null, ...bddErrors.givens.map((g) => React.createElement(Tab.Pane, { eventKey: g.key },
-                            React.createElement(TestPane, { given: g })))))))),
+                    React.createElement(Col, { sm: 1 },
+                        React.createElement(Nav, { variant: "pills", className: "flex-column" },
+                            React.createElement(Nav.Item, null,
+                                React.createElement(Nav.Link, { eventKey: "log" }, "log"),
+                                React.createElement(Nav.Link, { eventKey: "steps" }, "steps")))),
+                    React.createElement(Col, { sm: 11 },
+                        React.createElement(Tab.Content, null,
+                            React.createElement(Tab.Pane, { eventKey: "log" },
+                                React.createElement("pre", null,
+                                    React.createElement("code", null, log))),
+                            React.createElement(Tab.Pane, { eventKey: "steps" },
+                                React.createElement(Tab.Container, { id: "secondary-tab-container", defaultActiveKey: "first" },
+                                    React.createElement(Row, null,
+                                        React.createElement(Col, { sm: 3 },
+                                            React.createElement(Nav, { variant: "pills", className: "flex-column" }, ...bddErrors.givens.map((g) => React.createElement(Nav.Item, null,
+                                                React.createElement(Nav.Link, { eventKey: g.key },
+                                                    g.key,
+                                                    ": Given ",
+                                                    g.name))))),
+                                        React.createElement(Col, { sm: 9 },
+                                            React.createElement(Tab.Content, null, ...bddErrors.givens.map((g) => React.createElement(Tab.Pane, { eventKey: g.key },
+                                                React.createElement(TestPane, { given: g }))))))))))))),
+        React.createElement("div", { style: {
+                backgroundColor: 'lightgray',
+                margin: '0.5rem',
+                padding: '0.5rem',
+                position: 'fixed',
+                left: 0,
+                bottom: 0
+            } },
+            React.createElement("a", { href: "/" }, "\uD83C\uDFE0")),
         React.createElement(Footer, null));
 };
 document.addEventListener("DOMContentLoaded", function () {
@@ -100,4 +119,3 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 });
-console.log("hello BddPage!");

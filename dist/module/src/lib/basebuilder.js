@@ -25,15 +25,13 @@ export class BaseBuilder {
                 },
                 runner,
                 receiveTestResourceConfig: async function (puppetMaster) {
-                    const start = await puppetMaster.start();
                     const logFilePath = "log.txt";
                     const access = await puppetMaster.createWriteStream(logFilePath);
                     const tLog = async (...l) => {
-                        const x = await puppetMaster.write(access, `${l.toString()}\n`);
                         // console.log("x", x);
                     };
                     const suiteDone = await runner(puppetMaster, tLog);
-                    const logPromise = new Promise(async (res, rej) => {
+                    const logPromise = new Promise(async (res) => {
                         await puppetMaster.end(access);
                         res(true);
                     });

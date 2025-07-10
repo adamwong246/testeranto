@@ -23,6 +23,7 @@ export default class Testeranto extends ClassBuilder {
                 this.uberCatcher = uberCatcher;
             }
             async givenThat(subject, testResource, artifactory, initializer, initialValues, pm) {
+                debugger;
                 return fullTestInterface.beforeEach(subject, initializer, testResource, initialValues, pm);
             }
             afterEach(store, key, artifactory, pm) {
@@ -30,12 +31,17 @@ export default class Testeranto extends ClassBuilder {
             }
         }, class When extends BaseWhen {
             async andWhen(store, whenCB, testResource, pm) {
-                try {
-                    return await fullTestInterface.andWhen(store, whenCB, testResource, pm);
-                }
-                catch (e) {
-                    throw e;
-                }
+                return await fullTestInterface.andWhen(store, whenCB, testResource, pm);
+                // try {
+                //   return await fullTestInterface.andWhen(
+                //     store,
+                //     whenCB,
+                //     testResource,
+                //     pm
+                //   );
+                // } catch (e) {
+                //   console.log("mark22", e);
+                // }
             }
         }, class Then extends BaseThen {
             async butThen(store, thenCB, testResource, pm) {

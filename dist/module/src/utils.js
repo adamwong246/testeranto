@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import path from "path";
 export const destinationOfRuntime = (f, r, configs) => {
     return path
@@ -20,8 +21,11 @@ export const promptPather = (entryPoint, platform, projectName) => {
 };
 export const getRunnables = (tests, projectName, payload = {
     nodeEntryPoints: {},
+    nodeEntryPointSidecars: {},
     webEntryPoints: {},
-    importEntryPoints: {},
+    webEntryPointSidecars: {},
+    pureEntryPoints: {},
+    pureEntryPointSidecars: {},
 }) => {
     return tests.reduce((pt, cv, cndx, cry) => {
         if (cv[1] === "node") {
@@ -39,15 +43,40 @@ export const getRunnables = (tests, projectName, payload = {
                 .join(".")}`);
         }
         else if (cv[1] === "pure") {
-            pt.importEntryPoints[cv[0]] = path.resolve(`./testeranto/bundles/pure/${projectName}/${cv[0]
+            pt.pureEntryPoints[cv[0]] = path.resolve(`./testeranto/bundles/pure/${projectName}/${cv[0]
                 .split(".")
                 .slice(0, -1)
                 .concat("mjs")
                 .join(".")}`);
         }
-        // if (cv[3].length) {
-        //   getRunnables(cv[3], testName, payload);
-        // }
+        //////////////////////////////////////////////////////////
+        cv[3]
+            .filter((t) => t[1] === "node")
+            .forEach((t) => {
+            pt.nodeEntryPointSidecars[`${t[0]}`] = path.resolve(`./testeranto/bundles/node/${projectName}/${cv[0]
+                .split(".")
+                .slice(0, -1)
+                .concat("mjs")
+                .join(".")}`);
+        });
+        cv[3]
+            .filter((t) => t[1] === "web")
+            .forEach((t) => {
+            pt.webEntryPointSidecars[`${t[0]}`] = path.resolve(`./testeranto/bundles/web/${projectName}/${cv[0]
+                .split(".")
+                .slice(0, -1)
+                .concat("mjs")
+                .join(".")}`);
+        });
+        cv[3]
+            .filter((t) => t[1] === "pure")
+            .forEach((t) => {
+            pt.pureEntryPointSidecars[`${t[0]}`] = path.resolve(`./testeranto/bundles/pure/${projectName}/${cv[0]
+                .split(".")
+                .slice(0, -1)
+                .concat("mjs")
+                .join(".")}`);
+        });
         return pt;
     }, payload);
 };

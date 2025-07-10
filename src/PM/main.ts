@@ -264,47 +264,57 @@ export class PM_Main extends PM_Base {
       fs.mkdirSync(`testeranto/reports/${this.name}`);
     }
 
-    this.browser = (await puppeteer.launch({
-      slowMo: 1,
-      waitForInitialPage: false,
-      executablePath: "/opt/homebrew/bin/chromium",
+    const executablePath = "/opt/homebrew/bin/chromium";
 
-      headless: true,
+    try {
+      this.browser = await puppeteer.launch({
+        slowMo: 1,
+        waitForInitialPage: false,
+        executablePath,
 
-      dumpio: false,
-      devtools: false,
+        headless: true,
 
-      args: [
-        "--disable-features=site-per-process",
-        "--allow-file-access-from-files",
-        "--allow-insecure-localhost",
-        "--allow-running-insecure-content",
-        "--auto-open-devtools-for-tabs",
-        "--disable-dev-shm-usage",
-        "--disable-extensions",
-        "--disable-gpu",
-        "--disable-setuid-sandbox",
-        "--disable-site-isolation-trials",
-        "--disable-web-security",
-        "--no-first-run",
-        "--no-sandbox",
-        "--no-startup-window",
-        "--reduce-security-for-testing",
-        "--remote-allow-origins=*",
-        "--unsafely-treat-insecure-origin-as-secure=*",
-        `--remote-debugging-port=3234`,
-        // "--disable-features=IsolateOrigins,site-per-process",
-        // "--disable-features=IsolateOrigins",
-        // "--disk-cache-dir=/dev/null",
-        // "--disk-cache-size=1",
-        // "--no-zygote",
-        // "--remote-allow-origins=ws://localhost:3234",
-        // "--single-process",
-        // "--start-maximized",
-        // "--unsafely-treat-insecure-origin-as-secure",
-        // "--unsafely-treat-insecure-origin-as-secure=ws://192.168.0.101:3234",
-      ],
-    })) as any;
+        dumpio: false,
+        devtools: false,
+
+        args: [
+          "--disable-features=site-per-process",
+          "--allow-file-access-from-files",
+          "--allow-insecure-localhost",
+          "--allow-running-insecure-content",
+          "--auto-open-devtools-for-tabs",
+          "--disable-dev-shm-usage",
+          "--disable-extensions",
+          "--disable-gpu",
+          "--disable-setuid-sandbox",
+          "--disable-site-isolation-trials",
+          "--disable-web-security",
+          "--no-first-run",
+          "--no-sandbox",
+          "--no-startup-window",
+          "--reduce-security-for-testing",
+          "--remote-allow-origins=*",
+          "--unsafely-treat-insecure-origin-as-secure=*",
+          `--remote-debugging-port=3234`,
+          // "--disable-features=IsolateOrigins,site-per-process",
+          // "--disable-features=IsolateOrigins",
+          // "--disk-cache-dir=/dev/null",
+          // "--disk-cache-size=1",
+          // "--no-zygote",
+          // "--remote-allow-origins=ws://localhost:3234",
+          // "--single-process",
+          // "--start-maximized",
+          // "--unsafely-treat-insecure-origin-as-secure",
+          // "--unsafely-treat-insecure-origin-as-secure=ws://192.168.0.101:3234",
+        ],
+      });
+    } catch (e) {
+      console.error(e);
+      console.error(
+        "could not start chrome via puppeter. Check this path: ",
+        executablePath
+      );
+    }
 
     const { nodeEntryPoints, webEntryPoints, pureEntryPoints } =
       this.getRunnables(this.configs.tests, this.name);
@@ -456,9 +466,16 @@ export class PM_Main extends PM_Base {
     const outputs: IOutputs = metafile.outputs;
 
     Object.keys(outputs).forEach(async (k) => {
+      const pattern = `testeranto/bundles/${platform}/${this.name}/${this.configs.src}`;
+      if (!k.startsWith(pattern)) {
+        return false;
+      }
+
       const addableFiles = Object.keys(outputs[k].inputs).filter((i) => {
         if (!fs.existsSync(i)) return false;
         if (i.startsWith("node_modules")) return false;
+        if (i.startsWith("./node_modules")) return false;
+
         return true;
       });
 
@@ -721,6 +738,7 @@ ${addableFiles
       .split(".")
       .slice(0, -1)
       .join(".")}/pure`;
+
     if (!fs.existsSync(reportDest)) {
       fs.mkdirSync(reportDest, { recursive: true });
     }

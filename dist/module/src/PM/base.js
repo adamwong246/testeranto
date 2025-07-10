@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import fs from "fs";
 import path from "path";
 const fileStreams3 = [];
@@ -10,7 +12,7 @@ export class PM_Base {
         this.configs = configs;
     }
     customclose() {
-        throw new Error("Method not implemented.");
+        throw new Error("customclose not implemented.");
     }
     waitForSelector(p, s) {
         return new Promise((res) => {
@@ -32,8 +34,8 @@ export class PM_Base {
             });
         });
     }
-    newPage() {
-        return this.browser.newPage();
+    async newPage() {
+        return (await this.browser.newPage()).mainFrame()._id;
     }
     goto(p, url) {
         return new Promise((res) => {
@@ -47,9 +49,9 @@ export class PM_Base {
     $(selector, p) {
         return new Promise((res) => {
             this.doInPage(p, async (page) => {
-                const x = page.$(selector);
-                const y = await x;
-                res(y !== null);
+                const x = await page.$(selector);
+                const y = await (x === null || x === void 0 ? void 0 : x.jsonValue());
+                res(y);
             });
         });
     }
@@ -76,7 +78,7 @@ export class PM_Base {
         await sPromise;
         return sPromise;
     }
-    async customScreenShot(ssOpts, testName, page) {
+    async customScreenShot(ssOpts, testName, pageUid) {
         const p = ssOpts.path;
         const dir = path.dirname(p);
         fs.mkdirSync(dir, {
@@ -86,6 +88,7 @@ export class PM_Base {
             files[testName] = new Set();
         }
         files[testName].add(ssOpts.path);
+        const page = (await this.browser.pages()).find((p) => p.mainFrame()._id === pageUid);
         const sPromise = page.screenshot(Object.assign(Object.assign({}, ssOpts), { path: p }));
         if (!screenshots[testName]) {
             screenshots[testName] = [];
@@ -164,7 +167,6 @@ export class PM_Base {
                         res();
                     }
                     else {
-                        /* @ts-ignore:next-line */
                         const pipeStream = value;
                         const myFile = fs.createWriteStream(fPath);
                         pipeStream.pipe(myFile);
@@ -183,8 +185,8 @@ export class PM_Base {
             res(x);
         });
     }
-    page() {
-        throw new Error("Method not implemented.");
+    page(p) {
+        return p;
     }
     click(selector, page) {
         return page.click(selector);
@@ -199,14 +201,28 @@ export class PM_Base {
             return page.keyboard.type(value);
         });
     }
-    getValue(value, p) {
-        this.doInPage(p, (page) => {
-            return page.keyboard.type(value);
-        });
-    }
+    // setValue(value: string, p: string) {
+    //   this.doInPage(p, (page) => {
+    //     return page.keyboard.type(value);
+    //   });
+    // }
     getAttribute(selector, attribute, p) {
         this.doInPage(p, (page) => {
-            return page.$eval(selector, (input) => input.getAttribute("value"));
+            return page.$eval(selector, (input) => input.getAttribute(attribute));
+        });
+    }
+    async getInnerHtml(selector, p) {
+        return new Promise((res, rej) => {
+            this.doInPage(p, async (page) => {
+                const e = await page.$(selector);
+                if (!e) {
+                    rej();
+                }
+                else {
+                    const text = await (await e.getProperty("textContent")).jsonValue();
+                    res(text);
+                }
+            });
         });
     }
     isDisabled(selector, p) {
@@ -221,7 +237,8 @@ export class PM_Base {
     }
     async doInPage(p, cb) {
         (await this.browser.pages()).forEach((page) => {
-            if (page.mainFrame()._id === p) {
+            const frame = page.mainFrame();
+            if (frame._id === p) {
                 return cb(page);
             }
         });

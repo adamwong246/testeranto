@@ -8,11 +8,9 @@ export class ClassBuilder extends BaseBuilder {
             return a;
         }, {});
         const classyGivens = Object.entries(testImplementation.givens).reduce((a, [key, g]) => {
-            a[key] = (features, whens, thens) => {
+            a[key] = (features, whens, thens, ...initialValues) => {
                 // console.log("givEn", givEn.toString());
-                return new givenKlasser.prototype.constructor(key, features, whens, thens, testImplementation.givens[key]
-                // givEn
-                );
+                return new givenKlasser.prototype.constructor(key, features, whens, thens, testImplementation.givens[key], initialValues);
             };
             return a;
         }, {});
@@ -23,19 +21,8 @@ export class ClassBuilder extends BaseBuilder {
             return a;
         }, {});
         const classyThens = Object.entries(testImplementation.thens).reduce((a, [key, thEn]) => {
-            a[key] = (expected, x) => {
-                return new thenKlasser.prototype.constructor(`${thEn.name}: ${expected && expected.toString()}`, 
-                // () => {
-                //   thEn(expected);
-                //   // return new Promise((res), rej) => {
-                //   // }
-                //   // try {
-                //   //   thEn(expected);
-                //   // } catch (c) {
-                //   //   console.log("mark99");
-                //   // }
-                // },
-                thEn(expected));
+            a[key] = (expected, ...x) => {
+                return new thenKlasser.prototype.constructor(`${thEn.name}: ${expected && expected.toString()}`, thEn(expected, ...x));
             };
             return a;
         }, {});

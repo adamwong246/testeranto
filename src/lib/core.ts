@@ -88,6 +88,7 @@ export default abstract class Testeranto<
           initialValues,
           pm
         ) {
+          debugger;
           return fullTestInterface.beforeEach(
             subject,
             initializer,
