@@ -1,13 +1,18 @@
 import { ITTestResourceConfiguration } from "../lib";
 
+import { ITLog } from "../lib";
+
 export abstract class PM_sidecar {
-  // server: any;
   testResourceConfiguration: ITTestResourceConfiguration;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   abstract start(stopper: () => any): Promise<void>;
-  // abstract stop(): Promise<void>;
-  // abstract testArtiFactoryfileWriter(tLog: ITLog, callback: (Promise) => void);
+  abstract stop(): Promise<void>;
+  
+  testArtiFactoryfileWriter(tLog: ITLog, callback: (p: Promise<void>) => void) {
+    return (fPath: string, value: unknown) => {
+      callback(Promise.resolve());
+    };
+  }
 
   // abstract $(selector: string): any;
   // abstract click(selector: string): any;

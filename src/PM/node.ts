@@ -225,8 +225,8 @@ export class PM_Node extends PM {
     );
   }
 
-  testArtiFactoryfileWriter(tLog: ITLog, callback: (Promise) => void) {
-    return (fPath, value: string | Buffer | PassThrough) => {
+  testArtiFactoryfileWriter(tLog: ITLog, callback: (p: Promise<void>) => void) {
+    return (fPath: string, value: string | Buffer | PassThrough) => {
       callback(
         new Promise<void>((res, rej) => {
           tLog("testArtiFactory =>", fPath);

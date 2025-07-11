@@ -18,19 +18,19 @@ import {
 import { IGivens, BaseCheck, BaseSuite } from "./abstractBase.js";
 import { IPM } from "./types.js";
 
-export const BaseTestInterface: ITestInterface<IT> = {
-  beforeAll: async (s) => s,
+export const BaseTestInterface = <T extends IT>(): ITestInterface<T> => ({
+  beforeAll: async (s: T["istore"]) => s,
   beforeEach: async function (
-    subject: any,
-    initialValues: any,
-    x: any,
-    testResource: any,
+    subject: T["isubject"],
+    initialValues: T["iinitialValues"],
+    x: unknown,
+    testResource: ITTestResourceConfiguration,
     pm: IPM
-  ) {
-    return subject as any;
+  ): Promise<T["isubject"]> {
+    return subject;
   },
-  afterEach: async (s) => s,
-  afterAll: (store: IT["istore"]) => undefined,
+  afterEach: async (s: T["istore"]) => s,
+  afterAll: (store: T["istore"]) => undefined,
   butThen: async (
     store: IT["istore"],
     thenCb: (s: IT["iselection"]) => Promise<IT["isubject"]>
@@ -43,31 +43,19 @@ export const BaseTestInterface: ITestInterface<IT> = {
     testResource: ITTestResourceConfiguration,
     pm: IPM
   ) => {
-    await whenCB(store, testResource, pm);
-    // (async () => {
-    //   await whenCB(store, testResource, pm);
-    // })().catch((e) => {
-    //   console.log("fopp", e); // caught
-    // });
-
-    // console.log("mark999", whenCB.toString());
-
-    // return i;
-    // try {
-    //   return await whenCB(store, testResource, pm);
-    // } catch (e) {
-    //   console.log("mark2", e);
-    // }
-    // whenCB(store, testResource, pm).catch((e) => {
-    //   console.log("mark2", e);
-    // });
+    try {
+      await whenCB(store, testResource, pm);
+    } catch (error) {
+      console.error("Error in andWhen:", error);
+      throw error; // Re-throw to maintain test failure
+    }
   },
   assertThis: (x: any) => x,
-};
+});
 
-export const DefaultTestInterface = (
-  p: Partial<ITestInterface<any>>
-): ITestInterface<any> => {
+export const DefaultTestInterface = <T extends IT>(
+  p: Partial<ITestInterface<T>>
+): ITestInterface<T> => {
   return {
     ...BaseTestInterface,
     ...p,
@@ -78,7 +66,10 @@ export type ITTestResourceConfiguration = {
   name: string;
   fs: string;
   ports: number[];
-  browserWSEndpoint: string;
+  browserWSEndpoint?: string;
+  timeout?: number;
+  retries?: number;
+  environment?: Record<string, string>;
 };
 
 export type ITTestResourceRequirement = {

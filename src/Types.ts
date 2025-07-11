@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Plugin } from "esbuild";
-
 import { ITTestResourceConfiguration } from "./lib/index.js";
+import { PM } from "./PM/index.js";
+import { IT, OT } from "../dist/types/src/Types.js";
 import {
   IGivens,
   BaseCheck,
@@ -11,131 +11,76 @@ import {
   BaseThen,
   BaseGiven,
 } from "./lib/abstractBase.js";
-import { IPM, ITestCheckCallback } from "./lib/types.js";
-import { PM } from "./PM/index.js";
+import { ITestCheckCallback } from "./lib/types.js";
 
-export type ISummary = Record<
-  string,
-  {
-    runTimeError?: number | "?";
-    typeErrors?: number | "?";
-    staticErrors?: number | "?";
-    prompt?: string | "?";
-    failingFeatures: Record<string, string[]>;
-  }
->;
-
-/**
- * Defines the interface for test lifecycle operations.
- * @template I - The test input type extending IT
- */
-export type ITestInterface<I extends IT = IT> = {
-  /** Assertion function to validate test results */
-  assertThis: (x: I["then"]) => any;
-  
-  /** Executes a When step */
-  andWhen: (
-    store: I["istore"],
-    whenCB: I["when"],
-    testResource: ITTestResourceConfiguration,
-    pm: IPM
-  ) => Promise<I["istore"]>;
-  
-  /** Executes a Then step */  
-  butThen: (
-    store: I["istore"],
-    thenCB: I["then"],
-    testResource: ITTestResourceConfiguration,
-    pm: IPM
-  ) => Promise<I["iselection"]>;
-  
-  /** Runs after all tests complete */
-  afterAll: (store: I["istore"], pm: IPM) => any;
-  
-  /** Runs after each test case */
-  afterEach: (store: I["istore"], key: string, pm: IPM) => Promise<unknown>;
-  
-  /** Runs before all tests start */
-  beforeAll: (
-    input: I["iinput"],
-    testResource: ITTestResourceConfiguration,
-    pm: IPM
-  ) => Promise<I["isubject"]>;
-  
-  /** Runs before each test case */
-  beforeEach: (
-    subject: I["isubject"],
-    initializer: (c?) => I["given"],
-    testResource: ITTestResourceConfiguration,
-    initialValues,
-    pm: IPM
-  ) => Promise<I["istore"]>;
+// Simplified test result summary
+export type TestSummary = {
+  testName: string;
+  errors?: {
+    runtime?: number;
+    type?: number;
+    static?: number;
+  };
+  prompt?: string;
+  failedFeatures: string[];
 };
 
-// Example usage:
-/*
-interface MyTestInterface extends ITestInterface<MyTestType> {
-  beforeEach: (subject, initializer) => {
-    console.log('Setting up test');
-    return initializer();
-  }
-}
-*/
+// Core test lifecycle hooks
+export type TestLifecycle<Subject, State, Selection> = {
+  // Setup
+  beforeAll?: (input: any) => Promise<Subject>;
+  beforeEach?: (subject: Subject) => Promise<State>;
 
-export type IWebTestInterface<I extends IT> = ITestInterface<I>;
+  // Execution
+  executeStep?: (state: State) => Promise<State>;
+  verifyStep?: (state: State) => Promise<Selection>;
 
-export type INodeTestInterface<I extends IT> = ITestInterface<I>;
+  // Cleanup
+  afterEach?: (state: State) => Promise<void>;
+  afterAll?: (state: State) => Promise<void>;
 
-export type IPartialInterface<I extends IT> = Partial<ITestInterface<I>>;
+  // Assertions
+  assert?: (result: Selection) => void;
+};
 
-export type IPartialNodeInterface<I extends IT> = Partial<
-  INodeTestInterface<I>
->;
-export type IPartialWebInterface<I extends IT> = Partial<IWebTestInterface<I>>;
+// BDD Test Structure
+export type TestDefinition<Subject, State, Selection> = {
+  // Test subject
+  subject: Subject;
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Test steps
+  given?: (input: any) => State;
+  when?: (state: State) => State | Promise<State>;
+  then?: (state: State) => Selection | Promise<Selection>;
 
-/**
- * Core test type defining the shape of BDD test inputs and operations.
- * Each generic parameter represents:
- * @template IInput - Type of initial test input
- * @template ISubject - Type of test subject being tested 
- * @template IStore - Type of test state storage
- * @template ISelection - Type of selected test state
- * @template IGiven - Type for Given steps
- * @template IWhen - Type for When steps 
- * @template IThen - Type for Then steps
- */
-export type IT = Ibdd_in<
-  unknown,  // IInput
-  unknown,  // ISubject
-  unknown,  // IStore
-  unknown,  // ISelection
-  unknown,  // IGiven
-  unknown,  // IWhen
-  unknown   // IThen
->;
+  // Configuration
+  resources?: ITTestResourceConfiguration;
+  pm?: typeof PM;
+};
 
-// Example usage:
-/*
-type RectangleTest = Ibdd_in<
-  null,                   // No initial input needed
-  Rectangle,              // Test subject is Rectangle class
-  Rectangle,              // Store complete Rectangle state
-  Rectangle,              // Select complete Rectangle for assertions
-  (w: number, h: number) => Rectangle,  // Given creates Rectangle
-  (n: number) => (r: Rectangle) => void, // When modifies Rectangle
-  (r: Rectangle) => number              // Then checks Rectangle props
->;
-*/
+// Test Suite Organization
+export type TestSuite = {
+  name: string;
+  tests: TestDefinition<any, any, any>[];
+  features?: string[];
+};
 
-export type OT = Ibdd_out<
-  Record<string, any>,
-  Record<string, any>,
-  Record<string, any>,
-  Record<string, any>,
-  Record<string, any>
->;
+// Runtime Configuration
+export type RuntimeConfig = {
+  type: "node" | "web" | "pure" | "spawn";
+  ports?: number[];
+  plugins?: Plugin[];
+};
+
+// Project Configuration
+export type ProjectConfig = {
+  name: string;
+  sourceDir: string;
+  testSuites: TestSuite[];
+  runtime: RuntimeConfig;
+  minify?: boolean;
+  debug?: boolean;
+};
 
 // Specification component types
 export type SuiteSpecification<I extends IT, O extends OT> = {
@@ -290,32 +235,32 @@ export type Ibdd_out<
  * This is the core type that structures all test operations.
  */
 export type Ibdd_in<
-  IInput,     // Type of initial test input
-  ISubject,   // Type of object being tested
-  IStore,     // Type for storing test state between steps  
+  IInput, // Type of initial test input
+  ISubject, // Type of object being tested
+  IStore, // Type for storing test state between steps
   ISelection, // Type for selecting state for assertions
-  IGiven,     // Type for Given step functions
-  IWhen,      // Type for When step functions
-  IThen       // Type for Then step functions
+  IGiven, // Type for Given step functions
+  IWhen, // Type for When step functions
+  IThen // Type for Then step functions
 > = {
   /** Initial input required to start tests */
   iinput: IInput;
-  
+
   /** The subject being tested (class, function, etc) */
   isubject: ISubject;
-  
+
   /** Complete test state storage */
   istore: IStore;
-  
-  /** Selected portion of state for assertions */  
+
+  /** Selected portion of state for assertions */
   iselection: ISelection;
-  
+
   /** Function type for Given steps */
   given: IGiven;
-  
+
   /** Function type for When steps */
   when: IWhen;
-  
+
   /** Function type for Then steps */
   then: IThen;
 };

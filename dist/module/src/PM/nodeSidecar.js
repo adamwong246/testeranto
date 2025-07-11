@@ -8,6 +8,7 @@ export class PM_Node_Sidecar extends PM_sidecar {
     constructor(t) {
         super();
         this.testResourceConfiguration = t;
+        this.client = {};
     }
     start(stopper) {
         return new Promise((res) => {
@@ -25,9 +26,21 @@ export class PM_Node_Sidecar extends PM_sidecar {
             });
         });
     }
-    // stop(): Promise<void> {
-    //   throw new Error("Method not implemented.");
-    // }
+    stop() {
+        return new Promise((resolve) => {
+            if (this.client) {
+                this.client.end(() => resolve());
+            }
+            else {
+                resolve();
+            }
+        });
+    }
+    testArtiFactoryfileWriter(tLog, callback) {
+        return (fPath, value) => {
+            callback(Promise.resolve());
+        };
+    }
     send(command, ...argz) {
         return new Promise((res) => {
             const key = Math.random().toString();

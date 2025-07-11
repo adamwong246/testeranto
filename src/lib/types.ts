@@ -2,7 +2,7 @@
 import { PM_Node } from "../PM/node";
 import { PM_Pure } from "../PM/pure";
 import { PM_Web } from "../PM/web";
-import { IT, OT } from "../Types";
+import type { IT, OT } from "../Types";
 
 import {
   IGivens,
@@ -15,11 +15,23 @@ import {
 
 export type IPM = PM_Node | PM_Web | PM_Pure;
 
+export type TestPhase = 'beforeAll' | 'beforeEach' | 'test' | 'afterEach' | 'afterAll';
+
+export type TestError = {
+  phase: TestPhase;
+  error: Error;
+  testName: string;
+  timestamp: number;
+  stackTrace?: string;
+  additionalInfo?: Record<string, unknown>;
+  isRetryable?: boolean;
+};
+
 export type ITestCheckCallback<I extends IT, O extends OT> = {
   [K in keyof O["checks"]]: (
     name: string,
     features: string[],
-    checkCallback: (store: I["istore"], pm: IPM) => Promise<any>,
+    checkCallback: (store: I["istore"], pm: IPM) => Promise<O["checks"][K]>,
 
     ...xtrasA: O["checks"][K]
   ) => BaseCheck<I>;

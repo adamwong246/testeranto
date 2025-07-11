@@ -1,36 +1,10 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
-var __create = Object.create;
-var __defProp = Object.defineProperty;
-var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-var __getOwnPropNames = Object.getOwnPropertyNames;
-var __getProtoOf = Object.getPrototypeOf;
-var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x, {
-  get: (a, b) => (typeof require !== "undefined" ? require : a)[b]
-}) : x)(function(x) {
-  if (typeof require !== "undefined")
-    return require.apply(this, arguments);
-  throw new Error('Dynamic require of "' + x + '" is not supported');
-});
-var __commonJS = (cb, mod) => function __require2() {
-  return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
-};
-var __copyProps = (to, from, except, desc) => {
-  if (from && typeof from === "object" || typeof from === "function") {
-    for (let key of __getOwnPropNames(from))
-      if (!__hasOwnProp.call(to, key) && key !== except)
-        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
-  }
-  return to;
-};
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
-  // If the importer is in node compatibility mode or this is not an ESM
-  // file that has been converted to a CommonJS file using a Babel-
-  // compatible transform (i.e. "__esModule" has not been set), then set
-  // "default" to the CommonJS "module.exports" for node compatibility.
-  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
-  mod
-));
+import {
+  Node_default,
+  __commonJS,
+  __require,
+  __toESM
+} from "../../chunk-V2EQEXU2.mjs";
 
 // node_modules/depd/index.js
 var require_depd = __commonJS({
@@ -1303,14 +1277,14 @@ var require_node = __commonJS({
           }
           break;
         case "FILE":
-          var fs2 = __require("fs");
-          stream2 = new fs2.SyncWriteStream(fd2, { autoClose: false });
+          var fs = __require("fs");
+          stream2 = new fs.SyncWriteStream(fd2, { autoClose: false });
           stream2._type = "fs";
           break;
         case "PIPE":
         case "TCP":
-          var net2 = __require("net");
-          stream2 = new net2.Socket({
+          var net = __require("net");
+          stream2 = new net.Socket({
             fd: fd2,
             readable: false,
             writable: true
@@ -14125,11 +14099,11 @@ var require_mime_types = __commonJS({
       }
       return exts[0];
     }
-    function lookup(path2) {
-      if (!path2 || typeof path2 !== "string") {
+    function lookup(path) {
+      if (!path || typeof path !== "string") {
         return false;
       }
-      var extension2 = extname("x." + path2).toLowerCase().substr(1);
+      var extension2 = extname("x." + path).toLowerCase().substr(1);
       if (!extension2) {
         return false;
       }
@@ -17567,14 +17541,14 @@ var require_node2 = __commonJS({
           }
           break;
         case "FILE":
-          var fs2 = __require("fs");
-          stream2 = new fs2.SyncWriteStream(fd2, { autoClose: false });
+          var fs = __require("fs");
+          stream2 = new fs.SyncWriteStream(fd2, { autoClose: false });
           stream2._type = "fs";
           break;
         case "PIPE":
         case "TCP":
-          var net2 = __require("net");
-          stream2 = new net2.Socket({
+          var net = __require("net");
+          stream2 = new net.Socket({
             fd: fd2,
             readable: false,
             writable: true
@@ -18290,14 +18264,14 @@ var require_node3 = __commonJS({
           }
           break;
         case "FILE":
-          var fs2 = __require("fs");
-          stream2 = new fs2.SyncWriteStream(fd2, { autoClose: false });
+          var fs = __require("fs");
+          stream2 = new fs.SyncWriteStream(fd2, { autoClose: false });
           stream2._type = "fs";
           break;
         case "PIPE":
         case "TCP":
-          var net2 = __require("net");
-          stream2 = new net2.Socket({
+          var net = __require("net");
+          stream2 = new net.Socket({
             fd: fd2,
             readable: false,
             writable: true
@@ -18379,7 +18353,7 @@ var require_path_to_regexp = __commonJS({
   "node_modules/path-to-regexp/index.js"(exports, module) {
     module.exports = pathToRegexp;
     var MATCHING_GROUP_REGEXP = /\\.|\((?:\?<(.*?)>)?(?!\?)/g;
-    function pathToRegexp(path2, keys, options) {
+    function pathToRegexp(path, keys, options) {
       options = options || {};
       keys = keys || [];
       var strict = options.strict;
@@ -18393,8 +18367,8 @@ var require_path_to_regexp = __commonJS({
       var pos = 0;
       var backtrack = "";
       var m;
-      if (path2 instanceof RegExp) {
-        while (m = MATCHING_GROUP_REGEXP.exec(path2.source)) {
+      if (path instanceof RegExp) {
+        while (m = MATCHING_GROUP_REGEXP.exec(path.source)) {
           if (m[0][0] === "\\")
             continue;
           keys.push({
@@ -18403,18 +18377,18 @@ var require_path_to_regexp = __commonJS({
             offset: m.index
           });
         }
-        return path2;
+        return path;
       }
-      if (Array.isArray(path2)) {
-        path2 = path2.map(function(value) {
+      if (Array.isArray(path)) {
+        path = path.map(function(value) {
           return pathToRegexp(value, keys, options).source;
         });
-        return new RegExp(path2.join("|"), flags);
+        return new RegExp(path.join("|"), flags);
       }
-      if (typeof path2 !== "string") {
+      if (typeof path !== "string") {
         throw new TypeError("path must be a string, array of strings, or regular expression");
       }
-      path2 = path2.replace(
+      path = path.replace(
         /\\.|(\/)?(\.)?:(\w+)(\(.*?\))?(\*)?(\?)?|[.*]|\/\(/g,
         function(match, slash, format, key, capture, star, optional, offset) {
           if (match[0] === "\\") {
@@ -18431,7 +18405,7 @@ var require_path_to_regexp = __commonJS({
           if (slash || format) {
             backtrack = "";
           } else {
-            backtrack += path2.slice(pos, offset);
+            backtrack += path.slice(pos, offset);
           }
           pos = offset + match.length;
           if (match === "*") {
@@ -18459,7 +18433,7 @@ var require_path_to_regexp = __commonJS({
           return result;
         }
       );
-      while (m = MATCHING_GROUP_REGEXP.exec(path2)) {
+      while (m = MATCHING_GROUP_REGEXP.exec(path)) {
         if (m[0][0] === "\\")
           continue;
         if (keysOffset + i === keys.length || keys[keysOffset + i].offset > m.index) {
@@ -18472,13 +18446,13 @@ var require_path_to_regexp = __commonJS({
         }
         i++;
       }
-      path2 += strict ? "" : path2[path2.length - 1] === "/" ? "?" : "/?";
+      path += strict ? "" : path[path.length - 1] === "/" ? "?" : "/?";
       if (end) {
-        path2 += "$";
-      } else if (path2[path2.length - 1] !== "/") {
-        path2 += lookahead ? "(?=/|$)" : "(?:/|$)";
+        path += "$";
+      } else if (path[path.length - 1] !== "/") {
+        path += lookahead ? "(?=/|$)" : "(?:/|$)";
       }
-      return new RegExp("^" + path2, flags);
+      return new RegExp("^" + path, flags);
     }
   }
 });
@@ -18491,19 +18465,19 @@ var require_layer = __commonJS({
     var debug = require_src3()("express:router:layer");
     var hasOwnProperty = Object.prototype.hasOwnProperty;
     module.exports = Layer;
-    function Layer(path2, options, fn) {
+    function Layer(path, options, fn) {
       if (!(this instanceof Layer)) {
-        return new Layer(path2, options, fn);
+        return new Layer(path, options, fn);
       }
-      debug("new %o", path2);
+      debug("new %o", path);
       var opts = options || {};
       this.handle = fn;
       this.name = fn.name || "<anonymous>";
       this.params = void 0;
       this.path = void 0;
-      this.regexp = pathRegexp(path2, this.keys = [], opts);
-      this.regexp.fast_star = path2 === "*";
-      this.regexp.fast_slash = path2 === "/" && opts.end === false;
+      this.regexp = pathRegexp(path, this.keys = [], opts);
+      this.regexp.fast_star = path === "*";
+      this.regexp.fast_slash = path === "/" && opts.end === false;
     }
     Layer.prototype.handle_error = function handle_error(error, req, res, next) {
       var fn = this.handle;
@@ -18527,20 +18501,20 @@ var require_layer = __commonJS({
         next(err);
       }
     };
-    Layer.prototype.match = function match(path2) {
+    Layer.prototype.match = function match(path) {
       var match2;
-      if (path2 != null) {
+      if (path != null) {
         if (this.regexp.fast_slash) {
           this.params = {};
           this.path = "";
           return true;
         }
         if (this.regexp.fast_star) {
-          this.params = { "0": decode_param(path2) };
-          this.path = path2;
+          this.params = { "0": decode_param(path) };
+          this.path = path;
           return true;
         }
-        match2 = this.regexp.exec(path2);
+        match2 = this.regexp.exec(path);
       }
       if (!match2) {
         this.params = void 0;
@@ -18633,10 +18607,10 @@ var require_route = __commonJS({
     var slice = Array.prototype.slice;
     var toString = Object.prototype.toString;
     module.exports = Route;
-    function Route(path2) {
-      this.path = path2;
+    function Route(path) {
+      this.path = path;
       this.stack = [];
-      debug("new %o", path2);
+      debug("new %o", path);
       this.methods = {};
     }
     Route.prototype._handles_method = function _handles_method(method) {
@@ -18849,8 +18823,8 @@ var require_router = __commonJS({
         if (++sync > 100) {
           return setImmediate(next, err);
         }
-        var path2 = getPathname(req);
-        if (path2 == null) {
+        var path = getPathname(req);
+        if (path == null) {
           return done(layerError);
         }
         var layer;
@@ -18858,7 +18832,7 @@ var require_router = __commonJS({
         var route;
         while (match !== true && idx < stack.length) {
           layer = stack[idx++];
-          match = matchLayer(layer, path2);
+          match = matchLayer(layer, path);
           route = layer.route;
           if (typeof match !== "boolean") {
             layerError = layerError || match;
@@ -18896,18 +18870,18 @@ var require_router = __commonJS({
           } else if (route) {
             layer.handle_request(req, res, next);
           } else {
-            trim_prefix(layer, layerError, layerPath, path2);
+            trim_prefix(layer, layerError, layerPath, path);
           }
           sync = 0;
         });
       }
-      function trim_prefix(layer, layerError, layerPath, path2) {
+      function trim_prefix(layer, layerError, layerPath, path) {
         if (layerPath.length !== 0) {
-          if (layerPath !== path2.slice(0, layerPath.length)) {
+          if (layerPath !== path.slice(0, layerPath.length)) {
             next(layerError);
             return;
           }
-          var c = path2[layerPath.length];
+          var c = path[layerPath.length];
           if (c && c !== "/" && c !== ".")
             return next(layerError);
           debug("trim prefix (%s) from url %s", layerPath, req.url);
@@ -18987,7 +18961,7 @@ var require_router = __commonJS({
     };
     proto.use = function use(fn) {
       var offset = 0;
-      var path2 = "/";
+      var path = "/";
       if (typeof fn !== "function") {
         var arg = fn;
         while (Array.isArray(arg) && arg.length !== 0) {
@@ -18995,7 +18969,7 @@ var require_router = __commonJS({
         }
         if (typeof arg !== "function") {
           offset = 1;
-          path2 = fn;
+          path = fn;
         }
       }
       var callbacks = flatten(slice.call(arguments, offset));
@@ -19007,8 +18981,8 @@ var require_router = __commonJS({
         if (typeof fn !== "function") {
           throw new TypeError("Router.use() requires a middleware function but got a " + gettype(fn));
         }
-        debug("use %o %s", path2, fn.name || "<anonymous>");
-        var layer = new Layer(path2, {
+        debug("use %o %s", path, fn.name || "<anonymous>");
+        var layer = new Layer(path, {
           sensitive: this.caseSensitive,
           strict: false,
           end: false
@@ -19018,9 +18992,9 @@ var require_router = __commonJS({
       }
       return this;
     };
-    proto.route = function route(path2) {
-      var route2 = new Route(path2);
-      var layer = new Layer(path2, {
+    proto.route = function route(path) {
+      var route2 = new Route(path);
+      var layer = new Layer(path, {
         sensitive: this.caseSensitive,
         strict: this.strict,
         end: true
@@ -19030,8 +19004,8 @@ var require_router = __commonJS({
       return route2;
     };
     methods.concat("all").forEach(function(method) {
-      proto[method] = function(path2) {
-        var route = this.route(path2);
+      proto[method] = function(path) {
+        var route = this.route(path);
         route[method].apply(route, slice.call(arguments, 1));
         return this;
       };
@@ -19067,9 +19041,9 @@ var require_router = __commonJS({
       }
       return toString.call(obj).replace(objectRegExp, "$1");
     }
-    function matchLayer(layer, path2) {
+    function matchLayer(layer, path) {
       try {
-        return layer.match(path2);
+        return layer.match(path);
       } catch (err) {
         return err;
       }
@@ -19188,13 +19162,13 @@ var require_view = __commonJS({
   "node_modules/express/lib/view.js"(exports, module) {
     "use strict";
     var debug = require_src3()("express:view");
-    var path2 = __require("path");
-    var fs2 = __require("fs");
-    var dirname = path2.dirname;
-    var basename = path2.basename;
-    var extname = path2.extname;
-    var join = path2.join;
-    var resolve = path2.resolve;
+    var path = __require("path");
+    var fs = __require("fs");
+    var dirname = path.dirname;
+    var basename = path.basename;
+    var extname = path.extname;
+    var join = path.join;
+    var resolve = path.resolve;
     module.exports = View;
     function View(name, options) {
       var opts = options || {};
@@ -19223,17 +19197,17 @@ var require_view = __commonJS({
       this.path = this.lookup(fileName);
     }
     View.prototype.lookup = function lookup(name) {
-      var path3;
+      var path2;
       var roots = [].concat(this.root);
       debug('lookup "%s"', name);
-      for (var i = 0; i < roots.length && !path3; i++) {
+      for (var i = 0; i < roots.length && !path2; i++) {
         var root = roots[i];
         var loc = resolve(root, name);
         var dir = dirname(loc);
         var file = basename(loc);
-        path3 = this.resolve(dir, file);
+        path2 = this.resolve(dir, file);
       }
-      return path3;
+      return path2;
     };
     View.prototype.render = function render(options, callback) {
       debug('render "%s"', this.path);
@@ -19241,21 +19215,21 @@ var require_view = __commonJS({
     };
     View.prototype.resolve = function resolve2(dir, file) {
       var ext = this.ext;
-      var path3 = join(dir, file);
-      var stat = tryStat(path3);
+      var path2 = join(dir, file);
+      var stat = tryStat(path2);
       if (stat && stat.isFile()) {
-        return path3;
+        return path2;
       }
-      path3 = join(dir, basename(file, ext), "index" + ext);
-      stat = tryStat(path3);
+      path2 = join(dir, basename(file, ext), "index" + ext);
+      stat = tryStat(path2);
       if (stat && stat.isFile()) {
-        return path3;
+        return path2;
       }
     };
-    function tryStat(path3) {
-      debug('stat "%s"', path3);
+    function tryStat(path2) {
+      debug('stat "%s"', path2);
       try {
-        return fs2.statSync(path3);
+        return fs.statSync(path2);
       } catch (e) {
         return void 0;
       }
@@ -19928,14 +19902,14 @@ var require_node4 = __commonJS({
           }
           break;
         case "FILE":
-          var fs2 = __require("fs");
-          stream2 = new fs2.SyncWriteStream(fd2, { autoClose: false });
+          var fs = __require("fs");
+          stream2 = new fs.SyncWriteStream(fd2, { autoClose: false });
           stream2._type = "fs";
           break;
         case "PIPE":
         case "TCP":
-          var net2 = __require("net");
-          stream2 = new net2.Socket({
+          var net = __require("net");
+          stream2 = new net.Socket({
             fd: fd2,
             readable: false,
             writable: true
@@ -20115,8 +20089,8 @@ var require_types = __commonJS({
 // node_modules/mime/mime.js
 var require_mime = __commonJS({
   "node_modules/mime/mime.js"(exports, module) {
-    var path2 = __require("path");
-    var fs2 = __require("fs");
+    var path = __require("path");
+    var fs = __require("fs");
     function Mime() {
       this.types = /* @__PURE__ */ Object.create(null);
       this.extensions = /* @__PURE__ */ Object.create(null);
@@ -20137,7 +20111,7 @@ var require_mime = __commonJS({
     };
     Mime.prototype.load = function(file) {
       this._loading = file;
-      var map = {}, content = fs2.readFileSync(file, "ascii"), lines = content.split(/[\r\n]+/);
+      var map = {}, content = fs.readFileSync(file, "ascii"), lines = content.split(/[\r\n]+/);
       lines.forEach(function(line) {
         var fields = line.replace(/\s*#.*|^\s*|\s*$/g, "").split(/\s+/);
         map[fields.shift()] = fields;
@@ -20145,8 +20119,8 @@ var require_mime = __commonJS({
       this.define(map);
       this._loading = null;
     };
-    Mime.prototype.lookup = function(path3, fallback) {
-      var ext = path3.replace(/^.*[\.\/\\]/, "").toLowerCase();
+    Mime.prototype.lookup = function(path2, fallback) {
+      var ext = path2.replace(/^.*[\.\/\\]/, "").toLowerCase();
       return this.types[ext] || fallback || this.default_type;
     };
     Mime.prototype.extension = function(mimeType) {
@@ -20375,33 +20349,33 @@ var require_send = __commonJS({
     var escapeHtml = require_escape_html();
     var etag = require_etag();
     var fresh = require_fresh();
-    var fs2 = __require("fs");
+    var fs = __require("fs");
     var mime = require_mime();
     var ms = require_ms5();
     var onFinished = require_on_finished();
     var parseRange = require_range_parser();
-    var path2 = __require("path");
+    var path = __require("path");
     var statuses = require_statuses();
     var Stream = __require("stream");
     var util = __require("util");
-    var extname = path2.extname;
-    var join = path2.join;
-    var normalize = path2.normalize;
-    var resolve = path2.resolve;
-    var sep = path2.sep;
+    var extname = path.extname;
+    var join = path.join;
+    var normalize = path.normalize;
+    var resolve = path.resolve;
+    var sep = path.sep;
     var BYTES_RANGE_REGEXP = /^ *bytes=/;
     var MAX_MAXAGE = 60 * 60 * 24 * 365 * 1e3;
     var UP_PATH_REGEXP = /(?:^|[\\/])\.\.(?:[\\/]|$)/;
     module.exports = send;
     module.exports.mime = mime;
-    function send(req, path3, options) {
-      return new SendStream(req, path3, options);
+    function send(req, path2, options) {
+      return new SendStream(req, path2, options);
     }
-    function SendStream(req, path3, options) {
+    function SendStream(req, path2, options) {
       Stream.call(this);
       var opts = options || {};
       this.options = opts;
-      this.path = path3;
+      this.path = path2;
       this.req = req;
       this._acceptRanges = opts.acceptRanges !== void 0 ? Boolean(opts.acceptRanges) : true;
       this._cacheControl = opts.cacheControl !== void 0 ? Boolean(opts.cacheControl) : true;
@@ -20447,8 +20421,8 @@ var require_send = __commonJS({
       this._index = index2;
       return this;
     }, "send.index: pass index as option");
-    SendStream.prototype.root = function root(path3) {
-      this._root = resolve(String(path3));
+    SendStream.prototype.root = function root(path2) {
+      this._root = resolve(String(path2));
       debug("root %s", this._root);
       return this;
     };
@@ -20561,10 +20535,10 @@ var require_send = __commonJS({
       var lastModified = this.res.getHeader("Last-Modified");
       return parseHttpDate(lastModified) <= parseHttpDate(ifRange);
     };
-    SendStream.prototype.redirect = function redirect(path3) {
+    SendStream.prototype.redirect = function redirect(path2) {
       var res = this.res;
       if (hasListeners(this, "directory")) {
-        this.emit("directory", res, path3);
+        this.emit("directory", res, path2);
         return;
       }
       if (this.hasTrailingSlash()) {
@@ -20584,42 +20558,42 @@ var require_send = __commonJS({
     SendStream.prototype.pipe = function pipe(res) {
       var root = this._root;
       this.res = res;
-      var path3 = decode(this.path);
-      if (path3 === -1) {
+      var path2 = decode(this.path);
+      if (path2 === -1) {
         this.error(400);
         return res;
       }
-      if (~path3.indexOf("\0")) {
+      if (~path2.indexOf("\0")) {
         this.error(400);
         return res;
       }
       var parts;
       if (root !== null) {
-        if (path3) {
-          path3 = normalize("." + sep + path3);
+        if (path2) {
+          path2 = normalize("." + sep + path2);
         }
-        if (UP_PATH_REGEXP.test(path3)) {
-          debug('malicious path "%s"', path3);
+        if (UP_PATH_REGEXP.test(path2)) {
+          debug('malicious path "%s"', path2);
           this.error(403);
           return res;
         }
-        parts = path3.split(sep);
-        path3 = normalize(join(root, path3));
+        parts = path2.split(sep);
+        path2 = normalize(join(root, path2));
       } else {
-        if (UP_PATH_REGEXP.test(path3)) {
-          debug('malicious path "%s"', path3);
+        if (UP_PATH_REGEXP.test(path2)) {
+          debug('malicious path "%s"', path2);
           this.error(403);
           return res;
         }
-        parts = normalize(path3).split(sep);
-        path3 = resolve(path3);
+        parts = normalize(path2).split(sep);
+        path2 = resolve(path2);
       }
       if (containsDotFile(parts)) {
         var access = this._dotfiles;
         if (access === void 0) {
           access = parts[parts.length - 1][0] === "." ? this._hidden ? "allow" : "ignore" : "allow";
         }
-        debug('%s dotfile "%s"', access, path3);
+        debug('%s dotfile "%s"', access, path2);
         switch (access) {
           case "allow":
             break;
@@ -20633,13 +20607,13 @@ var require_send = __commonJS({
         }
       }
       if (this._index.length && this.hasTrailingSlash()) {
-        this.sendIndex(path3);
+        this.sendIndex(path2);
         return res;
       }
-      this.sendFile(path3);
+      this.sendFile(path2);
       return res;
     };
-    SendStream.prototype.send = function send2(path3, stat) {
+    SendStream.prototype.send = function send2(path2, stat) {
       var len = stat.size;
       var options = this.options;
       var opts = {};
@@ -20651,9 +20625,9 @@ var require_send = __commonJS({
         this.headersAlreadySent();
         return;
       }
-      debug('pipe "%s"', path3);
-      this.setHeader(path3, stat);
-      this.type(path3);
+      debug('pipe "%s"', path2);
+      this.setHeader(path2, stat);
+      this.type(path2);
       if (this.isConditionalGET()) {
         if (this.isPreconditionFailure()) {
           this.error(412);
@@ -20703,30 +20677,30 @@ var require_send = __commonJS({
         res.end();
         return;
       }
-      this.stream(path3, opts);
+      this.stream(path2, opts);
     };
-    SendStream.prototype.sendFile = function sendFile(path3) {
+    SendStream.prototype.sendFile = function sendFile(path2) {
       var i = 0;
       var self = this;
-      debug('stat "%s"', path3);
-      fs2.stat(path3, function onstat(err, stat) {
-        if (err && err.code === "ENOENT" && !extname(path3) && path3[path3.length - 1] !== sep) {
+      debug('stat "%s"', path2);
+      fs.stat(path2, function onstat(err, stat) {
+        if (err && err.code === "ENOENT" && !extname(path2) && path2[path2.length - 1] !== sep) {
           return next(err);
         }
         if (err)
           return self.onStatError(err);
         if (stat.isDirectory())
-          return self.redirect(path3);
-        self.emit("file", path3, stat);
-        self.send(path3, stat);
+          return self.redirect(path2);
+        self.emit("file", path2, stat);
+        self.send(path2, stat);
       });
       function next(err) {
         if (self._extensions.length <= i) {
           return err ? self.onStatError(err) : self.error(404);
         }
-        var p = path3 + "." + self._extensions[i++];
+        var p = path2 + "." + self._extensions[i++];
         debug('stat "%s"', p);
-        fs2.stat(p, function(err2, stat) {
+        fs.stat(p, function(err2, stat) {
           if (err2)
             return next(err2);
           if (stat.isDirectory())
@@ -20736,7 +20710,7 @@ var require_send = __commonJS({
         });
       }
     };
-    SendStream.prototype.sendIndex = function sendIndex(path3) {
+    SendStream.prototype.sendIndex = function sendIndex(path2) {
       var i = -1;
       var self = this;
       function next(err) {
@@ -20745,9 +20719,9 @@ var require_send = __commonJS({
             return self.onStatError(err);
           return self.error(404);
         }
-        var p = join(path3, self._index[i]);
+        var p = join(path2, self._index[i]);
         debug('stat "%s"', p);
-        fs2.stat(p, function(err2, stat) {
+        fs.stat(p, function(err2, stat) {
           if (err2)
             return next(err2);
           if (stat.isDirectory())
@@ -20758,10 +20732,10 @@ var require_send = __commonJS({
       }
       next();
     };
-    SendStream.prototype.stream = function stream(path3, options) {
+    SendStream.prototype.stream = function stream(path2, options) {
       var self = this;
       var res = this.res;
-      var stream2 = fs2.createReadStream(path3, options);
+      var stream2 = fs.createReadStream(path2, options);
       this.emit("stream", stream2);
       stream2.pipe(res);
       function cleanup() {
@@ -20776,11 +20750,11 @@ var require_send = __commonJS({
         self.emit("end");
       });
     };
-    SendStream.prototype.type = function type(path3) {
+    SendStream.prototype.type = function type(path2) {
       var res = this.res;
       if (res.getHeader("Content-Type"))
         return;
-      var type2 = mime.lookup(path3);
+      var type2 = mime.lookup(path2);
       if (!type2) {
         debug("no content-type");
         return;
@@ -20789,9 +20763,9 @@ var require_send = __commonJS({
       debug("content-type %s", type2);
       res.setHeader("Content-Type", type2 + (charset ? "; charset=" + charset : ""));
     };
-    SendStream.prototype.setHeader = function setHeader(path3, stat) {
+    SendStream.prototype.setHeader = function setHeader(path2, stat) {
       var res = this.res;
-      this.emit("headers", res, path3, stat);
+      this.emit("headers", res, path2, stat);
       if (this._acceptRanges && !res.getHeader("Accept-Ranges")) {
         debug("accept ranges");
         res.setHeader("Accept-Ranges", "bytes");
@@ -20850,9 +20824,9 @@ var require_send = __commonJS({
       }
       return err instanceof Error ? createError(status, err, { expose: false }) : createError(status, err);
     }
-    function decode(path3) {
+    function decode(path2) {
       try {
-        return decodeURIComponent(path3);
+        return decodeURIComponent(path2);
       } catch (err) {
         return -1;
       }
@@ -21764,12 +21738,12 @@ var require_utils2 = __commonJS({
     var querystring = __require("querystring");
     exports.etag = createETagGenerator({ weak: false });
     exports.wetag = createETagGenerator({ weak: true });
-    exports.isAbsolute = function(path2) {
-      if ("/" === path2[0])
+    exports.isAbsolute = function(path) {
+      if ("/" === path[0])
         return true;
-      if (":" === path2[1] && ("\\" === path2[2] || "/" === path2[2]))
+      if (":" === path[1] && ("\\" === path[2] || "/" === path[2]))
         return true;
-      if ("\\\\" === path2.substring(0, 2))
+      if ("\\\\" === path.substring(0, 2))
         return true;
     };
     exports.flatten = deprecate.function(
@@ -21982,7 +21956,7 @@ var require_application = __commonJS({
     };
     app2.use = function use(fn) {
       var offset = 0;
-      var path2 = "/";
+      var path = "/";
       if (typeof fn !== "function") {
         var arg = fn;
         while (Array.isArray(arg) && arg.length !== 0) {
@@ -21990,7 +21964,7 @@ var require_application = __commonJS({
         }
         if (typeof arg !== "function") {
           offset = 1;
-          path2 = fn;
+          path = fn;
         }
       }
       var fns = flatten(slice.call(arguments, offset));
@@ -22001,12 +21975,12 @@ var require_application = __commonJS({
       var router = this._router;
       fns.forEach(function(fn2) {
         if (!fn2 || !fn2.handle || !fn2.set) {
-          return router.use(path2, fn2);
+          return router.use(path, fn2);
         }
-        debug(".use app under %s", path2);
-        fn2.mountpath = path2;
+        debug(".use app under %s", path);
+        fn2.mountpath = path;
         fn2.parent = this;
-        router.use(path2, function mounted_app(req, res, next) {
+        router.use(path, function mounted_app(req, res, next) {
           var orig = req.app;
           fn2.handle(req, res, function(err) {
             setPrototypeOf(req, orig.request);
@@ -22018,9 +21992,9 @@ var require_application = __commonJS({
       }, this);
       return this;
     };
-    app2.route = function route(path2) {
+    app2.route = function route(path) {
       this.lazyrouter();
-      return this._router.route(path2);
+      return this._router.route(path);
     };
     app2.engine = function engine(ext, fn) {
       if (typeof fn !== "function") {
@@ -22071,7 +22045,7 @@ var require_application = __commonJS({
       }
       return this;
     };
-    app2.path = function path2() {
+    app2.path = function path() {
       return this.parent ? this.parent.path() + this.mountpath : "";
     };
     app2.enabled = function enabled(setting) {
@@ -22087,19 +22061,19 @@ var require_application = __commonJS({
       return this.set(setting, false);
     };
     methods.forEach(function(method) {
-      app2[method] = function(path2) {
+      app2[method] = function(path) {
         if (method === "get" && arguments.length === 1) {
-          return this.set(path2);
+          return this.set(path);
         }
         this.lazyrouter();
-        var route = this._router.route(path2);
+        var route = this._router.route(path);
         route[method].apply(route, slice.call(arguments, 1));
         return this;
       };
     });
-    app2.all = function all(path2) {
+    app2.all = function all(path) {
       this.lazyrouter();
-      var route = this._router.route(path2);
+      var route = this._router.route(path);
       var args = slice.call(arguments, 1);
       for (var i = 0; i < methods.length; i++) {
         route[methods[i]].apply(route, args);
@@ -22871,7 +22845,7 @@ var require_request = __commonJS({
       var subdomains2 = !isIP(hostname) ? hostname.split(".").reverse() : [hostname];
       return subdomains2.slice(offset);
     });
-    defineGetter(req, "path", function path2() {
+    defineGetter(req, "path", function path() {
       return parse(this).pathname;
     });
     defineGetter(req, "hostname", function hostname() {
@@ -23203,7 +23177,7 @@ var require_response = __commonJS({
     var http = __require("http");
     var isAbsolute = require_utils2().isAbsolute;
     var onFinished = require_on_finished();
-    var path2 = __require("path");
+    var path = __require("path");
     var statuses = require_statuses();
     var merge = require_utils_merge();
     var sign = require_cookie_signature().sign;
@@ -23212,9 +23186,9 @@ var require_response = __commonJS({
     var setCharset = require_utils2().setCharset;
     var cookie = require_cookie();
     var send = require_send();
-    var extname = path2.extname;
+    var extname = path.extname;
     var mime = send.mime;
-    var resolve = path2.resolve;
+    var resolve = path.resolve;
     var vary = require_vary();
     var res = Object.create(http.ServerResponse.prototype);
     module.exports = res;
@@ -23392,26 +23366,26 @@ var require_response = __commonJS({
       this.type("txt");
       return this.send(body);
     };
-    res.sendFile = function sendFile(path3, options, callback) {
+    res.sendFile = function sendFile(path2, options, callback) {
       var done = callback;
       var req = this.req;
       var res2 = this;
       var next = req.next;
       var opts = options || {};
-      if (!path3) {
+      if (!path2) {
         throw new TypeError("path argument is required to res.sendFile");
       }
-      if (typeof path3 !== "string") {
+      if (typeof path2 !== "string") {
         throw new TypeError("path must be a string to res.sendFile");
       }
       if (typeof options === "function") {
         done = options;
         opts = {};
       }
-      if (!opts.root && !isAbsolute(path3)) {
+      if (!opts.root && !isAbsolute(path2)) {
         throw new TypeError("path must be absolute or specify root to res.sendFile");
       }
-      var pathname = encodeURI(path3);
+      var pathname = encodeURI(path2);
       var file = send(req, pathname, opts);
       sendfile(res2, file, opts, function(err) {
         if (done)
@@ -23423,7 +23397,7 @@ var require_response = __commonJS({
         }
       });
     };
-    res.sendfile = function(path3, options, callback) {
+    res.sendfile = function(path2, options, callback) {
       var done = callback;
       var req = this.req;
       var res2 = this;
@@ -23433,7 +23407,7 @@ var require_response = __commonJS({
         done = options;
         opts = {};
       }
-      var file = send(req, path3, opts);
+      var file = send(req, path2, opts);
       sendfile(res2, file, opts, function(err) {
         if (done)
           return done(err);
@@ -23448,7 +23422,7 @@ var require_response = __commonJS({
       res.sendfile,
       "res.sendfile: Use res.sendFile instead"
     );
-    res.download = function download(path3, filename, options, callback) {
+    res.download = function download(path2, filename, options, callback) {
       var done = callback;
       var name = filename;
       var opts = options || null;
@@ -23465,7 +23439,7 @@ var require_response = __commonJS({
         opts = filename;
       }
       var headers = {
-        "Content-Disposition": contentDisposition(name || path3)
+        "Content-Disposition": contentDisposition(name || path2)
       };
       if (opts && opts.headers) {
         var keys = Object.keys(opts.headers);
@@ -23478,7 +23452,7 @@ var require_response = __commonJS({
       }
       opts = Object.create(opts);
       opts.headers = headers;
-      var fullPath = !opts.root ? resolve(path3) : path3;
+      var fullPath = !opts.root ? resolve(path2) : path2;
       return this.sendFile(fullPath, opts, done);
     };
     res.contentType = res.type = function contentType(type) {
@@ -23788,11 +23762,11 @@ var require_serve_static = __commonJS({
         }
         var forwardError = !fallthrough;
         var originalUrl = parseUrl.original(req);
-        var path2 = parseUrl(req).pathname;
-        if (path2 === "/" && originalUrl.pathname.substr(-1) !== "/") {
-          path2 = "";
+        var path = parseUrl(req).pathname;
+        if (path === "/" && originalUrl.pathname.substr(-1) !== "/") {
+          path = "";
         }
-        var stream = send(req, path2, opts);
+        var stream = send(req, path, opts);
         stream.on("directory", onDirectory);
         if (setHeaders) {
           stream.on("headers", setHeaders);
@@ -23927,998 +23901,6 @@ var require_express2 = __commonJS({
     module.exports = require_express();
   }
 });
-
-// src/lib/index.ts
-var BaseTestInterface = {
-  beforeAll: async (s) => s,
-  beforeEach: async function(subject, initialValues, x, testResource, pm) {
-    return subject;
-  },
-  afterEach: async (s) => s,
-  afterAll: (store) => void 0,
-  butThen: async (store, thenCb) => {
-    return thenCb(store);
-  },
-  andWhen: async (store, whenCB, testResource, pm) => {
-    await whenCB(store, testResource, pm);
-  },
-  assertThis: (x) => x
-};
-var DefaultTestInterface = (p) => {
-  return {
-    ...BaseTestInterface,
-    ...p
-  };
-};
-var defaultTestResourceRequirement = {
-  ports: 0
-};
-
-// src/lib/pmProxy.ts
-var prxy = function(pm, mappings) {
-  return new Proxy(pm, {
-    get: (target, prop, receiver) => {
-      for (const mapping of mappings) {
-        const method = mapping[0];
-        const arger = mapping[1];
-        if (prop === method) {
-          return (...x) => target[prop](arger(...x));
-        }
-      }
-      return (...x) => target[prop](...x);
-    }
-  });
-};
-var butThenProxy = (pm, filepath) => prxy(pm, [
-  [
-    "screencast",
-    (opts, p) => [
-      {
-        ...opts,
-        path: `${filepath}/butThen/${opts.path}`
-      },
-      p
-    ]
-  ],
-  ["createWriteStream", (fp) => [`${filepath}/butThen/${fp}`]],
-  [
-    "writeFileSync",
-    (fp, contents) => [`${filepath}/butThen/${fp}`, contents]
-  ],
-  [
-    "customScreenShot",
-    (opts, p) => [
-      {
-        ...opts,
-        path: `${filepath}/butThen/${opts.path}`
-      },
-      p
-    ]
-  ]
-]);
-var andWhenProxy = (pm, filepath) => prxy(pm, [
-  [
-    "screencast",
-    (opts, p) => [
-      {
-        ...opts,
-        path: `${filepath}/andWhen/${opts.path}`
-      },
-      p
-    ]
-  ],
-  ["createWriteStream", (fp) => [`${filepath}/andWhen/${fp}`]],
-  ["writeFileSync", (fp, contents) => [`${filepath}/andWhen${fp}`, contents]],
-  [
-    "customScreenShot",
-    (opts, p) => [
-      {
-        ...opts,
-        path: `${filepath}/andWhen${opts.path}`
-      },
-      p
-    ]
-  ]
-]);
-var afterEachProxy = (pm, suite, given) => prxy(pm, [
-  [
-    "screencast",
-    (opts, p) => [
-      {
-        ...opts,
-        path: `suite-${suite}/given-${given}/afterEach/${opts.path}`
-      },
-      p
-    ]
-  ],
-  ["createWriteStream", (fp) => [`suite-${suite}/afterEach/${fp}`]],
-  [
-    "writeFileSync",
-    (fp, contents) => [
-      `suite-${suite}/given-${given}/afterEach/${fp}`,
-      contents
-    ]
-  ],
-  [
-    "customScreenShot",
-    (opts, p) => [
-      {
-        ...opts,
-        path: `suite-${suite}/given-${given}/afterEach/${opts.path}`
-      },
-      p
-    ]
-  ]
-]);
-var beforeEachProxy = (pm, suite) => prxy(pm, [
-  [
-    "screencast",
-    (opts, p) => [
-      {
-        ...opts,
-        path: `suite-${suite}/beforeEach/${opts.path}`
-      },
-      p
-    ]
-  ],
-  [
-    "writeFileSync",
-    (fp, contents) => [`suite-${suite}/beforeEach/${fp}`, contents]
-  ],
-  [
-    "customScreenShot",
-    (opts, p) => [
-      {
-        ...opts,
-        path: `suite-${suite}/beforeEach/${opts.path}`
-      },
-      p
-    ]
-  ],
-  ["createWriteStream", (fp) => [`suite-${suite}/beforeEach/${fp}`]]
-]);
-var beforeAllProxy = (pm, suite) => prxy(pm, [
-  [
-    "writeFileSync",
-    (fp, contents) => [`suite-${suite}/beforeAll/${fp}`, contents]
-  ],
-  [
-    "customScreenShot",
-    (opts, p) => [
-      {
-        ...opts,
-        path: `suite-${suite}/beforeAll/${opts.path}`
-      },
-      p
-    ]
-  ],
-  ["createWriteStream", (fp) => [`suite-${suite}/beforeAll/${fp}`]]
-]);
-var afterAllProxy = (pm, suite) => prxy(pm, [
-  ["createWriteStream", (fp) => [`suite-${suite}/afterAll/${fp}`]],
-  [
-    "writeFileSync",
-    (fp, contents) => [`suite-${suite}/afterAll/${fp}`, contents]
-  ],
-  [
-    "customScreenShot",
-    (opts, p) => [
-      {
-        ...opts,
-        path: `suite-${suite}/afterAll/${opts.path}`
-      },
-      p
-    ]
-  ]
-]);
-
-// src/lib/abstractBase.ts
-var BaseSuite = class {
-  constructor(name, index, givens = {}, checks = []) {
-    this.name = name;
-    this.index = index;
-    this.givens = givens;
-    this.checks = checks;
-    this.fails = 0;
-  }
-  features() {
-    const features = Object.keys(this.givens).map((k) => this.givens[k].features).flat().filter((value, index, array) => {
-      return array.indexOf(value) === index;
-    });
-    return features || [];
-  }
-  toObj() {
-    const givens = Object.keys(this.givens).map((k) => this.givens[k].toObj());
-    const checks = Object.keys(this.checks).map((k) => this.checks[k].toObj());
-    return {
-      name: this.name,
-      givens,
-      checks,
-      fails: this.fails,
-      failed: this.failed,
-      features: this.features()
-    };
-  }
-  setup(s, artifactory, tr, pm) {
-    return new Promise((res) => res(s));
-  }
-  assertThat(t) {
-    return !!t;
-  }
-  afterAll(store, artifactory, pm) {
-    return store;
-  }
-  async run(input, testResourceConfiguration, artifactory, tLog, pm) {
-    this.testResourceConfiguration = testResourceConfiguration;
-    const suiteArtifactory = (fPath, value) => artifactory(`suite-${this.index}-${this.name}/${fPath}`, value);
-    tLog("\nSuite:", this.index, this.name);
-    const sNdx = this.index;
-    const subject = await this.setup(
-      input,
-      suiteArtifactory,
-      testResourceConfiguration,
-      beforeAllProxy(pm, sNdx.toString())
-    );
-    for (const [gKey, g] of Object.entries(this.givens)) {
-      const giver = this.givens[gKey];
-      try {
-        this.store = await giver.give(
-          subject,
-          gKey,
-          testResourceConfiguration,
-          this.assertThat,
-          suiteArtifactory,
-          tLog,
-          pm,
-          sNdx
-        );
-      } catch (e) {
-        this.failed = true;
-        this.fails = this.fails + 1;
-      }
-    }
-    for (const [ndx, thater] of this.checks.entries()) {
-      await thater.check(
-        subject,
-        thater.name,
-        testResourceConfiguration,
-        this.assertThat,
-        suiteArtifactory,
-        tLog,
-        pm
-      );
-    }
-    try {
-      this.afterAll(
-        this.store,
-        artifactory,
-        afterAllProxy(pm, sNdx.toString())
-      );
-    } catch (e) {
-      console.error(e);
-    }
-    return this;
-  }
-};
-var BaseGiven = class {
-  constructor(name, features, whens, thens, givenCB, initialValues) {
-    this.name = name;
-    this.features = features;
-    this.whens = whens;
-    this.thens = thens;
-    this.givenCB = givenCB;
-    this.initialValues = initialValues;
-  }
-  beforeAll(store) {
-    return store;
-  }
-  toObj() {
-    return {
-      key: this.key,
-      name: this.name,
-      whens: this.whens.map((w) => w.toObj()),
-      thens: this.thens.map((t) => t.toObj()),
-      error: this.error ? [this.error, this.error.stack] : null,
-      failed: this.failed,
-      features: this.features
-    };
-  }
-  async afterEach(store, key, artifactory, pm) {
-    return store;
-  }
-  async give(subject, key, testResourceConfiguration, tester, artifactory, tLog, pm, suiteNdx) {
-    this.key = key;
-    tLog(`
- ${this.key}`);
-    tLog(`
- Given: ${this.name}`);
-    const givenArtifactory = (fPath, value) => artifactory(`given-${key}/${fPath}`, value);
-    this.uberCatcher((e) => {
-      console.error(e);
-      this.error = e.error;
-      tLog(e.stack);
-    });
-    try {
-      this.store = await this.givenThat(
-        subject,
-        testResourceConfiguration,
-        givenArtifactory,
-        this.givenCB,
-        this.initialValues,
-        beforeEachProxy(pm, suiteNdx.toString())
-      );
-    } catch (e) {
-      console.error("failure 4 ", e);
-      this.error = e;
-      throw e;
-    }
-    try {
-      for (const [whenNdx, whenStep] of this.whens.entries()) {
-        await whenStep.test(
-          this.store,
-          testResourceConfiguration,
-          tLog,
-          pm,
-          `suite-${suiteNdx}/given-${key}/when/${whenNdx}`
-        );
-      }
-      for (const [thenNdx, thenStep] of this.thens.entries()) {
-        const t = await thenStep.test(
-          this.store,
-          testResourceConfiguration,
-          tLog,
-          pm,
-          `suite-${suiteNdx}/given-${key}/then-${thenNdx}`
-        );
-        return tester(t);
-      }
-    } catch (e) {
-      this.failed = true;
-      tLog(e.stack);
-      throw e;
-    } finally {
-      try {
-        await this.afterEach(
-          this.store,
-          this.key,
-          givenArtifactory,
-          afterEachProxy(pm, suiteNdx.toString(), key)
-        );
-      } catch (e) {
-        console.error("afterEach failed!", e);
-        this.failed = e;
-        throw e;
-      }
-    }
-    return this.store;
-  }
-};
-var BaseWhen = class {
-  constructor(name, whenCB) {
-    this.name = name;
-    this.whenCB = whenCB;
-  }
-  toObj() {
-    console.log("toObj error", this.error);
-    return {
-      name: this.name,
-      error: this.error && this.error.name + this.error.stack
-    };
-  }
-  async test(store, testResourceConfiguration, tLog, pm, filepath) {
-    tLog(" When:", this.name);
-    return await this.andWhen(
-      store,
-      this.whenCB,
-      testResourceConfiguration,
-      andWhenProxy(pm, filepath)
-    ).catch((e) => {
-      console.log("MARK9", e);
-      this.error = e;
-      throw e;
-    });
-  }
-};
-var BaseThen = class {
-  constructor(name, thenCB) {
-    this.name = name;
-    this.thenCB = thenCB;
-    this.error = false;
-  }
-  toObj() {
-    return {
-      name: this.name,
-      error: this.error
-    };
-  }
-  async test(store, testResourceConfiguration, tLog, pm, filepath) {
-    return this.butThen(
-      store,
-      async (s) => {
-        tLog(" Then!!!:", this.name);
-        if (typeof this.thenCB === "function") {
-          return await this.thenCB(s);
-        } else {
-          return this.thenCB;
-        }
-      },
-      testResourceConfiguration,
-      butThenProxy(pm, filepath)
-    ).catch((e) => {
-      console.log("test failed 3", e);
-      this.error = e;
-      throw e;
-    });
-  }
-  check() {
-  }
-};
-var BaseCheck = class {
-  constructor(name, features, checker, x, checkCB) {
-    this.name = name;
-    this.features = features;
-    this.checkCB = checkCB;
-    this.checker = checker;
-  }
-  toObj() {
-    return {
-      key: this.key,
-      name: this.name,
-      // functionAsString: this.checkCB.toString(),
-      features: this.features
-    };
-  }
-  async afterEach(store, key, artifactory, pm) {
-    return store;
-  }
-  beforeAll(store) {
-    return store;
-  }
-  async check(subject, key, testResourceConfiguration, tester, artifactory, tLog, pm) {
-    this.key = key;
-    tLog(`
- Check: ${this.name}`);
-    this.store = await this.checkThat(
-      subject,
-      testResourceConfiguration,
-      artifactory,
-      this.checkCB,
-      this.initialValues,
-      pm
-    );
-    await this.checker(this.store, pm);
-    return;
-  }
-};
-
-// src/lib/basebuilder.ts
-var BaseBuilder = class {
-  constructor(input, suitesOverrides, givenOverides, whenOverides, thenOverides, checkOverides, testResourceRequirement, testSpecification) {
-    this.artifacts = [];
-    this.artifacts = [];
-    this.testResourceRequirement = testResourceRequirement;
-    this.suitesOverrides = suitesOverrides;
-    this.givenOverides = givenOverides;
-    this.whenOverides = whenOverides;
-    this.thenOverides = thenOverides;
-    this.checkOverides = checkOverides;
-    this.testSpecification = testSpecification;
-    this.specs = testSpecification(
-      this.Suites(),
-      this.Given(),
-      this.When(),
-      this.Then(),
-      this.Check()
-    );
-    this.testJobs = this.specs.map((suite) => {
-      const suiteRunner = (suite2) => async (puppetMaster, tLog) => {
-        const x = await suite2.run(
-          input,
-          puppetMaster.testResourceConfiguration,
-          (fPath, value) => puppetMaster.testArtiFactoryfileWriter(
-            tLog,
-            (p) => {
-              this.artifacts.push(p);
-            }
-          )(puppetMaster.testResourceConfiguration.fs + "/" + fPath, value),
-          tLog,
-          puppetMaster
-        );
-        return x;
-      };
-      const runner = suiteRunner(suite);
-      return {
-        test: suite,
-        toObj: () => {
-          return suite.toObj();
-        },
-        runner,
-        receiveTestResourceConfig: async function(puppetMaster) {
-          const logFilePath = "log.txt";
-          const access = await puppetMaster.createWriteStream(
-            logFilePath
-          );
-          const tLog = async (...l) => {
-          };
-          const suiteDone = await runner(puppetMaster, tLog);
-          const logPromise = new Promise(async (res) => {
-            await puppetMaster.end(access);
-            res(true);
-          });
-          const fails = suiteDone.fails;
-          await puppetMaster.writeFileSync(`bdd_errors.txt`, fails.toString());
-          await puppetMaster.writeFileSync(
-            `tests.json`,
-            JSON.stringify(this.toObj(), null, 2)
-          );
-          return {
-            failed: fails > 0,
-            fails,
-            artifacts: this.artifacts || [],
-            logPromise,
-            features: suiteDone.features()
-          };
-        }
-      };
-    });
-  }
-  // testsJson() {
-  //   puppetMaster.writeFileSync(
-  //     `tests.json`,
-  //     JSON.stringify({ features: suiteDone.features() }, null, 2)
-  //   );
-  // }
-  Specs() {
-    return this.specs;
-  }
-  Suites() {
-    return this.suitesOverrides;
-  }
-  Given() {
-    return this.givenOverides;
-  }
-  When() {
-    return this.whenOverides;
-  }
-  Then() {
-    return this.thenOverides;
-  }
-  Check() {
-    return this.checkOverides;
-  }
-};
-
-// src/lib/classBuilder.ts
-var ClassBuilder = class extends BaseBuilder {
-  constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResourceRequirement) {
-    const classySuites = Object.entries(testImplementation.suites).reduce(
-      (a, [key], index) => {
-        a[key] = (somestring, givens, checks) => {
-          return new suiteKlasser.prototype.constructor(
-            somestring,
-            index,
-            givens,
-            checks
-          );
-        };
-        return a;
-      },
-      {}
-    );
-    const classyGivens = Object.entries(testImplementation.givens).reduce(
-      (a, [key, g]) => {
-        a[key] = (features, whens, thens) => {
-          return new givenKlasser.prototype.constructor(
-            key,
-            features,
-            whens,
-            thens,
-            testImplementation.givens[key]
-            // givEn
-          );
-        };
-        return a;
-      },
-      {}
-    );
-    const classyWhens = Object.entries(testImplementation.whens).reduce(
-      (a, [key, whEn]) => {
-        a[key] = (payload) => {
-          return new whenKlasser.prototype.constructor(
-            `${whEn.name}: ${payload && payload.toString()}`,
-            whEn(payload)
-          );
-        };
-        return a;
-      },
-      {}
-    );
-    const classyThens = Object.entries(testImplementation.thens).reduce(
-      (a, [key, thEn]) => {
-        a[key] = (expected, ...x) => {
-          return new thenKlasser.prototype.constructor(
-            `${thEn.name}: ${expected && expected.toString()}`,
-            thEn(expected, ...x)
-          );
-        };
-        return a;
-      },
-      {}
-    );
-    const classyChecks = Object.entries(testImplementation.checks).reduce(
-      (a, [key, chEck]) => {
-        a[key] = (name, features, checker) => {
-          return new checkKlasser.prototype.constructor(
-            key,
-            features,
-            chEck,
-            checker
-          );
-        };
-        return a;
-      },
-      {}
-    );
-    super(
-      input,
-      classySuites,
-      classyGivens,
-      classyWhens,
-      classyThens,
-      classyChecks,
-      testResourceRequirement,
-      testSpecification
-    );
-  }
-};
-
-// src/lib/core.ts
-var Testeranto = class extends ClassBuilder {
-  constructor(input, testSpecification, testImplementation, testResourceRequirement = defaultTestResourceRequirement, testInterface2, uberCatcher) {
-    const fullTestInterface = DefaultTestInterface(testInterface2);
-    super(
-      testImplementation,
-      testSpecification,
-      input,
-      class extends BaseSuite {
-        afterAll(store, artifactory, pm) {
-          return fullTestInterface.afterAll(store, pm);
-        }
-        assertThat(t) {
-          return fullTestInterface.assertThis(t);
-        }
-        async setup(s, artifactory, tr, pm) {
-          return (fullTestInterface.beforeAll || (async (input2, artifactory2, tr2, pm2) => input2))(
-            s,
-            this.testResourceConfiguration,
-            // artifactory,
-            pm
-          );
-        }
-      },
-      class Given extends BaseGiven {
-        constructor() {
-          super(...arguments);
-          this.uberCatcher = uberCatcher;
-        }
-        async givenThat(subject, testResource, artifactory, initializer, initialValues, pm) {
-          return fullTestInterface.beforeEach(
-            subject,
-            initializer,
-            testResource,
-            initialValues,
-            pm
-          );
-        }
-        afterEach(store, key, artifactory, pm) {
-          return new Promise(
-            (res) => res(fullTestInterface.afterEach(store, key, pm))
-          );
-        }
-      },
-      class When extends BaseWhen {
-        async andWhen(store, whenCB, testResource, pm) {
-          return await fullTestInterface.andWhen(
-            store,
-            whenCB,
-            testResource,
-            pm
-          );
-        }
-      },
-      class Then extends BaseThen {
-        async butThen(store, thenCB, testResource, pm) {
-          return await fullTestInterface.butThen(
-            store,
-            thenCB,
-            testResource,
-            pm
-          );
-        }
-      },
-      class Check extends BaseCheck {
-        constructor(name, features, checkCallback, x, i, c) {
-          super(name, features, checkCallback, x, c);
-          this.initialValues = i;
-        }
-        async checkThat(subject, testResourceConfiguration, artifactory, initializer, initialValues, pm) {
-          return fullTestInterface.beforeEach(
-            subject,
-            initializer,
-            testResourceConfiguration,
-            initialValues,
-            pm
-          );
-        }
-        afterEach(store, key, artifactory, pm) {
-          return new Promise(
-            (res) => res(fullTestInterface.afterEach(store, key, pm))
-          );
-        }
-      },
-      testResourceRequirement
-    );
-  }
-};
-
-// src/PM/node.ts
-import net from "net";
-import fs from "fs";
-import path from "path";
-
-// src/PM/index.ts
-var PM = class {
-};
-
-// src/PM/node.ts
-var fPaths = [];
-var PM_Node = class extends PM {
-  constructor(t, ipcFile) {
-    super();
-    this.testResourceConfiguration = t;
-    this.client = net.createConnection(ipcFile, () => {
-      return;
-    });
-  }
-  start() {
-    throw new Error("DEPREFECATED");
-  }
-  stop() {
-    throw new Error("stop not implemented.");
-  }
-  send(command, ...argz) {
-    const key = Math.random().toString();
-    if (!this.client) {
-      console.error(
-        `Tried to send "${command} (${argz})" but the test has not been started and the IPC client is not established. Exiting as failure!`
-      );
-      process.exit(-1);
-    }
-    return new Promise((res) => {
-      const myListener = (event) => {
-        const x = JSON.parse(event);
-        if (x.key === key) {
-          process.removeListener("message", myListener);
-          res(x.payload);
-        }
-      };
-      process.addListener("message", myListener);
-      this.client.write(JSON.stringify([command, ...argz, key]));
-    });
-  }
-  async launchSideCar(n) {
-    return this.send(
-      "launchSideCar",
-      n,
-      this.testResourceConfiguration.name
-    );
-  }
-  stopSideCar(n) {
-    return this.send(
-      "stopSideCar",
-      n,
-      this.testResourceConfiguration.name
-    );
-  }
-  async pages() {
-    return this.send("pages", ...arguments);
-  }
-  waitForSelector(p, s) {
-    return this.send("waitForSelector", ...arguments);
-  }
-  closePage(p) {
-    return this.send("closePage", ...arguments);
-  }
-  goto(page, url) {
-    return this.send("goto", ...arguments);
-  }
-  async newPage() {
-    return this.send("newPage");
-  }
-  $(selector, page) {
-    return this.send("$", ...arguments);
-  }
-  isDisabled(selector) {
-    return this.send("isDisabled", ...arguments);
-  }
-  getAttribute(selector, attribute, p) {
-    return this.send("getAttribute", ...arguments);
-  }
-  getInnerHtml(selector, p) {
-    return this.send("getInnerHtml", ...arguments);
-  }
-  // setValue(selector: string) {
-  //   return this.send("getValue", ...arguments);
-  // }
-  focusOn(selector) {
-    return this.send("focusOn", ...arguments);
-  }
-  typeInto(selector) {
-    return this.send("typeInto", ...arguments);
-  }
-  page() {
-    return this.send("page");
-  }
-  click(selector) {
-    return this.send("click", ...arguments);
-  }
-  screencast(opts, page) {
-    return this.send(
-      "screencast",
-      {
-        ...opts,
-        path: this.testResourceConfiguration.fs + "/" + opts.path
-      },
-      page,
-      this.testResourceConfiguration.name
-    );
-  }
-  screencastStop(p) {
-    return this.send("screencastStop", ...arguments);
-  }
-  customScreenShot(x, y) {
-    const opts = x[0];
-    const page = x[1];
-    return this.send(
-      "customScreenShot",
-      {
-        ...opts,
-        path: this.testResourceConfiguration.fs + "/" + opts.path
-      },
-      this.testResourceConfiguration.name,
-      page
-    );
-  }
-  async existsSync(destFolder) {
-    return await this.send(
-      "existsSync",
-      this.testResourceConfiguration.fs + "/" + destFolder
-    );
-  }
-  mkdirSync() {
-    return this.send("mkdirSync", this.testResourceConfiguration.fs + "/");
-  }
-  async write(uid, contents) {
-    return await this.send("write", ...arguments);
-  }
-  async writeFileSync(filepath, contents) {
-    return await this.send(
-      "writeFileSync",
-      this.testResourceConfiguration.fs + "/" + filepath,
-      contents,
-      this.testResourceConfiguration.name
-    );
-  }
-  async createWriteStream(filepath) {
-    return await this.send(
-      "createWriteStream",
-      this.testResourceConfiguration.fs + "/" + filepath,
-      this.testResourceConfiguration.name
-    );
-  }
-  async end(uid) {
-    return await this.send("end", ...arguments);
-  }
-  async customclose() {
-    return await this.send(
-      "customclose",
-      this.testResourceConfiguration.fs,
-      this.testResourceConfiguration.name
-    );
-  }
-  testArtiFactoryfileWriter(tLog, callback) {
-    return (fPath, value) => {
-      callback(
-        new Promise((res, rej) => {
-          tLog("testArtiFactory =>", fPath);
-          const cleanPath = path.resolve(fPath);
-          fPaths.push(cleanPath.replace(process.cwd(), ``));
-          const targetDir = cleanPath.split("/").slice(0, -1).join("/");
-          fs.mkdir(targetDir, { recursive: true }, async (error) => {
-            if (error) {
-              console.error(`\u2757\uFE0FtestArtiFactory failed`, targetDir, error);
-            }
-            fs.writeFileSync(
-              path.resolve(
-                targetDir.split("/").slice(0, -1).join("/"),
-                "manifest"
-              ),
-              fPaths.join(`
-`),
-              {
-                encoding: "utf-8"
-              }
-            );
-            if (Buffer.isBuffer(value)) {
-              fs.writeFileSync(fPath, value, "binary");
-              res();
-            } else if (`string` === typeof value) {
-              fs.writeFileSync(fPath, value.toString(), {
-                encoding: "utf-8"
-              });
-              res();
-            } else {
-              const pipeStream = value;
-              const myFile = fs.createWriteStream(fPath);
-              pipeStream.pipe(myFile);
-              pipeStream.on("close", () => {
-                myFile.close();
-                res();
-              });
-            }
-          });
-        })
-      );
-    };
-  }
-  // launch(options?: PuppeteerLaunchOptions): Promise<Browser>;
-  startPuppeteer(options) {
-  }
-};
-
-// src/Node.ts
-var ipcfile;
-var NodeTesteranto = class extends Testeranto {
-  constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface2) {
-    super(
-      input,
-      testSpecification,
-      testImplementation,
-      testResourceRequirement,
-      testInterface2,
-      () => {
-      }
-    );
-  }
-  async receiveTestResourceConfig(partialTestResource) {
-    const t = JSON.parse(partialTestResource);
-    const pm = new PM_Node(t, ipcfile);
-    return await this.testJobs[0].receiveTestResourceConfig(pm);
-  }
-};
-var testeranto = async (input, testSpecification, testImplementation, testInterface2, testResourceRequirement = defaultTestResourceRequirement) => {
-  const t = new NodeTesteranto(
-    input,
-    testSpecification,
-    testImplementation,
-    testResourceRequirement,
-    testInterface2
-  );
-  process.on("unhandledRejection", (reason, promise) => {
-    console.error("Unhandled Rejection at:", promise, "reason:", reason);
-  });
-  try {
-    ipcfile = process.argv[3];
-    const f = await t.receiveTestResourceConfig(process.argv[2]);
-    console.error("goodbye node error", f.fails);
-    process.exit(f.fails);
-  } catch (e) {
-    console.error("goodbye node error", e);
-    process.exit(-1);
-  }
-  return t;
-};
-var Node_default = testeranto;
 
 // src/mothership/index.ts
 var import_express = __toESM(require_express2(), 1);

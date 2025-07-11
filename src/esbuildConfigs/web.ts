@@ -1,3 +1,5 @@
+import { polyfillNode } from "esbuild-plugin-polyfill-node";
+
 import { BuildOptions } from "esbuild";
 import path from "path";
 
@@ -20,6 +22,7 @@ export default (
   return {
     ...baseEsBuildConfig(config),
 
+    treeShaking: true,
     outdir: `testeranto/bundles/web/${testName}`,
 
     alias: {
@@ -55,6 +58,16 @@ export default (
     plugins: [
       featuresPlugin,
       inputFilesPluginFactory,
+
+      polyfillNode({
+        // You might need to configure specific Node.js modules you want to polyfill
+        // Example:
+        // modules: {
+        //   'util': true,
+        //   'fs': false,
+        // }
+      }),
+
       {
         name: "rebuild-notify",
         setup: (build) => {

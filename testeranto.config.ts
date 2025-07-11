@@ -15,7 +15,27 @@ const config: IProject = {
     // },
 
     mothership: {
-      tests: [["./src/mothership/test.ts", "node", { ports: 1 }, []]],
+      tests: [
+        // ["./src/mothership/test.ts", "node", { ports: 1 }, []],
+        [
+          "./src/PM/__tests__/nodeSidecar.testeranto.ts",
+          "node",
+          { ports: 1 },
+          [],
+        ],
+        // [
+        //   "./src/PM/__tests__/pureSidecar.testeranto.ts",
+        //   "node",
+        //   { ports: 1 },
+        //   [],
+        // ],
+        // [
+        //   "./src/PM/__tests__/webSidecar.testeranto.ts",
+        //   "node",
+        //   { ports: 1 },
+        //   [],
+        // ],
+      ],
       clearScreen: false,
       debugger: false,
       externals: [],

@@ -9,7 +9,7 @@ declare module "puppeteer-core" {
     _id: string;
   }
 }
-import { Page } from "puppeteer-core/lib/esm/puppeteer";
+import { Page } from "puppeteer-core";
 
 import { ITLog, ITTestResourceConfiguration } from "../lib";
 import { PM } from ".";
@@ -50,7 +50,7 @@ export class PM_Web extends PM {
     return window["waitForSelector"](p, s);
   }
 
-  screencast(o: ScreencastOptions, p: string | Page): any {
+  screencast(o: ScreencastOptions, p: string | Page): Promise<string> {
     return window["screencast"](
       {
         ...opts,

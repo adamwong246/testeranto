@@ -1,13 +1,4 @@
 
-/add src/lib/index.ts
-/add src/lib/pmProxy.ts
-/add src/lib/abstractBase.ts
-/add src/lib/basebuilder.ts
-/add src/lib/classBuilder.ts
-/add src/lib/core.ts
-/add src/PM/node.ts
-/add src/PM/index.ts
-/add src/Node.ts
 /add src/mothership/index.ts
 /add src/mothership/test.ts
 

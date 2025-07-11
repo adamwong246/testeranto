@@ -1,7 +1,7 @@
 {
   "tests": [
     [
-      "./src/mothership/test.ts",
+      "./src/PM/__tests__/nodeSidecar.testeranto.ts",
       "node",
       {
         "ports": 1

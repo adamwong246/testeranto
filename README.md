@@ -4,35 +4,6 @@
 
 🚧 WARNING: Testeranto is still under development and is not ready for production yet. 🚧
 
-## Quick Start
-
-1. Install testeranto:
-```bash
-npm install testeranto
-```
-
-2. Create a test file (e.g., `rectangle.test.ts`):
-```typescript
-import { Given, When, Then } from 'testeranto';
-
-type Rectangle = { width: number; height: number };
-
-const RectangleSpec = (Suite, Given, When, Then) => [
-  Suite.Default("Rectangle tests", {
-    test1: Given.Default(
-      ["Basic rectangle operations"],
-      [When.setWidth(5), When.setHeight(10)],
-      [Then.getWidth(5), Then.getHeight(10)]
-    )
-  })
-];
-```
-
-3. Run your tests:
-```bash
-npx testeranto run rectangle.test.ts
-```
-
 demo video: [youtube](https://www.youtube.com/embed/WvU5xMqGi6Q)
 
 source: [github.com/adamwong246/testeranto](https://github.com/adamwong246/testeranto)
@@ -56,39 +27,141 @@ example repo: [testeranto-starter](https://github.com/adamwong246/testeranto-sta
 
 Testeranto builds on modern JavaScript/TypeScript tooling:
 
-| Technology | Purpose |
-|------------|---------|
-| TypeScript | Strongly-typed test definitions |
+| Technology | Purpose                                |
+| ---------- | -------------------------------------- |
+| TypeScript | Strongly-typed test definitions        |
 | Puppeteer  | Cross-runtime testing (Node & Browser) |
-| esbuild    | Fast test bundling |
-| Aider.ai   | AI-powered test fixing |
-| ESLint     | Static analysis of test files |
-| tsc        | Type checking of test files |
-| Markdown   | Feature documentation format |
+| esbuild    | Fast test bundling                     |
+| Aider.ai   | AI-powered test fixing                 |
+| ESLint     | Static analysis of test files          |
+| tsc        | Type checking of test files            |
+| Markdown   | Feature documentation format           |
+
+## Quick Start
+
+1. Install testeranto:
+
+```bash
+npm install testeranto
+```
+
+2. Create a test file (e.g., `rectangle.test.ts`):
+
+```typescript
+import { Given, When, Then } from "testeranto";
+
+type Rectangle = { width: number; height: number };
+
+const RectangleSpec = (Suite, Given, When, Then) => [
+  Suite.Default("Rectangle tests", {
+    test1: Given.Default(
+      ["Basic rectangle operations"],
+      [When.setWidth(5), When.setHeight(10)],
+      [Then.getWidth(5), Then.getHeight(10)]
+    ),
+  }),
+];
+```
+
+3. Run your tests in two separate terminals:
+
+```bash
+# Terminal 1 - Build in watch mode
+yarn t-build rectangle.test.ts dev
+
+# Terminal 2 - Run in watch mode
+yarn t-run rectangle.test.ts dev
+```
+
+## Architecture Overview
+
+```mermaid
+flowchart TD
+    subgraph ThreePillars["Testeranto Core"]
+        Builder[Test Builder]
+        Runner[Test Runner]
+        Aider[AI Integration]
+    end
+
+    subgraph BuilderComponents[" "]
+        Specification[Specification]
+        Implementation[Implementation]
+        Interface[Interface]
+    end
+
+    subgraph Runtimes[" "]
+        Node[Node]
+        Web[Browser]
+        Pure[JS]
+    end
+
+    Builder --> Runner
+    Runner --> Aider
+    Aider --> Builder
+
+    Builder --> BuilderComponents
+    Runner --> Runtimes
+
+    style ThreePillars fill:none,stroke:#586e75
+    style Builder fill:#268bd2,stroke:#586e75,color:#fdf6e3
+    style Runner fill:#268bd2,stroke:#586e75,color:#fdf6e3
+    style Aider fill:#b58900,stroke:#586e75,color:#002b36
+    style BuilderComponents fill:#002b36,stroke:#586e75,color:#eee8d5
+    style Runtimes fill:#073642,stroke:#586e75,color:#eee8d5
+    style Specification fill:#2aa198,stroke:#586e75,color:#002b36
+    style Implementation fill:#2aa198,stroke:#586e75,color:#002b36
+    style Interface fill:#2aa198,stroke:#586e75,color:#002b36
+    style Node fill:#859900,stroke:#586e75,color:#002b36
+    style Web fill:#859900,stroke:#586e75,color:#002b36
+    style Pure fill:#859900,stroke:#586e75,color:#002b36
+```
+
+## Runtime Platforms
+
+Testeranto runs tests in multiple runtime environments, each suited for different testing scenarios:
+
+| Runtime  | Description                                       | When To Use                                                            | Key Characteristics                                     |
+| -------- | ------------------------------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------- |
+| **Node** | Full IO access with Node.js built-in modules      | Testing backend code, Node APIs, or anything needing filesystem access | Runs in Node v8 via fork, has access to fs, crypto, etc |
+| **Web**  | DOM API access with browser capabilities          | Testing frontend code, UI interactions, or visual regression           | Runs in Chrome page, can take screenshots/recordings    |
+| **Pure** | Isolated JS runtime without external dependencies | Fast unit tests that don't need external resources                     | Dynamically imported into main thread, no IO access     |
+
+**Key Considerations:**
+
+- Use **Node** for testing backend services, file operations, or anything requiring Node.js APIs
+- Use **Web** when testing browser-specific code that references `document` or `window`
+- Use **Pure** for fast, isolated unit tests where you don't need console output or external resources
 
 ## CLI Commands
 
-| Command | Description |
-|---------|-------------|
-| `testeranto init` | Create a new testeranto project |
-| `testeranto build <testFile>` | Build test bundles |
-| `testeranto run <testFile>` | Run tests once |
-| `testeranto watch <testFile>` | Run tests in watch mode |
-| `testeranto report` | Launch test report server |
-| `testeranto aider` | Fix failing tests with AI |
+| Command                               | Description                                   |
+| ------------------------------------- | --------------------------------------------- |
+| `yarn t-init`                         | Create a new testeranto project               |
+| `yarn t-build <YOUR_TESTS> dev\|once` | Build test bundles (watch or single-run mode) |
+| `yarn t-run <YOUR_TESTS> dev\|once`   | Run tests (watch or single-run mode)          |
+| `yarn t-report`                       | Launch test report server                     |
+| `yarn t-aider`                        | Fix failing tests with AI                     |
 
 Example workflow:
+
 ```bash
 # Initialize project
-testeranto init
+yarn t-init
 
 # Write tests in test/*.test.ts
 
-# Run tests
-testeranto run test/rectangle.test.ts
+# In terminal 1 - Build tests (watch mode)
+yarn t-build test/rectangle.test.ts dev
+
+# In terminal 2 - Run tests (watch mode)
+yarn t-run test/rectangle.test.ts dev
+
+# Or for single-run mode:
+yarn t-build test/rectangle.test.ts once
+yarn t-run test/rectangle.test.ts once
 
 # Get AI help with failures
-testeranto aider
+yarn t-aider
 ```
 
 ## AI
@@ -134,44 +207,183 @@ test0: Given.Default(
 
 ```
 
-## Platforms
-
-Testeranto runs tests in multiple runtimes. You can run the same test (more or less) in multiple contexts, but depending on your test subject, not all may be applicable. For instance, if you are testing an http node server, you'll can't use the web runtime. If your code references `document` or `window`, you must use the web style. And if you wish to capture console.logs in a node context, you should use the `pure` runtime.
-
-1. Node - the test is run in node v8 via fork.
-2. Web - the test is run in chrome, in a page.
-3. Pure - the test is dynamically imported into the main thread. It will not have access to IO (console.log, etc) but it is more performant.
-
 ## Core Concepts
 
-Testeranto provides a structured way to define BDD tests with strong typing. Here's a complete example:
+Testeranto's type system provides a rigorous framework for Behavior-Driven Development (BDD) testing. Let's break down the key components using a Rectangle class example.
+
+### 1. Test Subject
+
+First, define the class you want to test:
 
 ```typescript
-// Define your test subject
 class Rectangle {
   constructor(public width: number, public height: number) {}
 
-  setWidth(w: number) { this.width = w; }
-  setHeight(h: number) { this.height = h; }
+  setWidth(w: number) {
+    this.width = w;
+  }
+  setHeight(h: number) {
+    this.height = h;
+  }
+  getArea() {
+    return this.width * this.height;
+  }
 }
+```
 
-// Define test types
-type IRectangle = Ibdd_in<null, null, Rectangle, Rectangle, Rectangle, 
-  (n: number) => (r: Rectangle) => void,
-  (r: Rectangle) => number
+### 2. Test Interface Types
+
+Testeranto uses a powerful type system to ensure your tests match your implementation:
+
+```typescript
+type IRectangle = Ibdd_in<
+  null, // No special initialization needed
+  null, // No special cleanup needed
+  Rectangle, // The test subject type
+  Rectangle, // State type between test steps
+  Rectangle, // Final state type
+  (n: number) => (r: Rectangle) => void, // When functions signature
+  (r: Rectangle) => number // Then functions signature
 >;
+```
 
-// Implement test specification
-const RectangleSpec: ITestSpecification<IRectangle> = (Suite, Given, When, Then) => [
+This type definition ensures:
+
+- Type safety throughout the test lifecycle
+- Clear separation of test phases (setup, execution, verification)
+- Proper function signatures for test steps
+
+### 3. Test Specification
+
+Define your BDD-style tests with full type checking:
+
+```typescript
+const RectangleSpec: ITestSpecification<IRectangle> = (
+  Suite,
+  Given,
+  When,
+  Then
+) => [
   Suite.Default("Rectangle Operations", {
-    basic: Given.Default(
+    // Test case 1: Basic dimension setting
+    basicDimensions: Given.Default(
       ["Validate basic rectangle operations"],
-      [When.setWidth(5), When.setHeight(10)],
-      [Then.getWidth(5), Then.getHeight(10)]
-    )
-  })
+      [When.setWidth(5), When.setHeight(10)], // Actions
+      [Then.getWidth(5), Then.getHeight(10)] // Assertions
+    ),
+
+    // Test case 2: Area calculation
+    areaCalculation: Given.Default(
+      ["Validate area calculation"],
+      [When.setWidth(3), When.setHeight(4)],
+      [(r) => r.getArea() === 12] // Custom assertion
+    ),
+  }),
 ];
 ```
+
+### Development Workflow
+
+```mermaid
+
+
+
+
+flowchart LR
+
+    subgraph hh["humans"]
+        direction LR
+        Human[🧑💻 ]
+    end
+
+    subgraph bb["AI"]
+        direction LR
+        Bot[🤖🧠 aider]
+    end
+
+
+    tests ---> L
+    subgraph tests
+        direction LR
+        A[Test Specification]
+        B[Test Interface]
+        C[Test Implementation]
+        K[application code]
+    end
+
+    subgraph buildSystem
+        direction TB
+        L["t-build"]
+        M[t-run]
+        L ---> M
+
+        M ---> N
+        M --->O
+        M --->P
+        N["BDD tests"]
+        O["Static analysis"]
+        P["Type checking"]
+
+        Q["reports"]
+        N ---> Q
+        O ---> Q
+        P ---> Q
+
+
+
+    end
+
+    Q ---> bb
+
+    buildSystem ---> bb
+    bb ---> tests
+    hh ---> tests
+
+
+
+
+
+
+    %% Styling
+    style Human fill:#268bd2,stroke:#586e75,color:#fdf6e3
+    style Bot fill:#d33682,stroke:#586e75,color:#fdf6e3
+
+    %% Layout tweaks
+    classDef column margin-right:20px
+
+```
+
+**Key Components:**
+
+1. **Specification** - BDD test definitions (Given/When/Then)
+2. **Implementation** - Concrete test logic and assertions
+3. **Interface** - Test lifecycle hooks (before/after each)
+
+**Rapid Development Loop:**
+
+1. `t-build` continuously type-checks and bundles tests
+2. `t-run` executes tests as they change
+3. Aider analyzes failures and suggests fixes
+4. Developer iterates based on feedback
+
+The workflow creates a tight feedback loop where:
+
+- Type errors are caught immediately during build
+- Test failures trigger AI-assisted fixes
+- Changes propagate instantly through the system
+
+2. **Autocomplete** - IDE support for test steps
+3. **Refactoring safety** - Changes to implementation trigger type errors in tests
+4. **Documentation** - Types serve as living documentation
+
+### The Testing Lifecycle
+
+1. **Given** - Set up initial state
+2. **When** - Perform actions on the subject
+3. **Then** - Verify outcomes
+4. **Check** - Imperative-style validations (optional)
+
+Each phase is type-checked against your interface definition, ensuring tests remain valid as your code evolves.
 
 ```js
 export default async <I extends IT, O extends OT, M>(

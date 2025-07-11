@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { IT, OT } from "../Types.js";
+import type { IT, OT } from "../Types.js";
 
 import { ITTestResourceConfiguration, ITestArtifactory, ITLog } from ".";
 import { IPM } from "./types.js";

@@ -13,10 +13,12 @@ const fPaths: IFPaths = [];
 export class PM_Node_Sidecar extends PM_sidecar {
   testResourceConfiguration: ITTestResourceConfiguration;
   client: net.Socket;
+  mockListener?: jest.Mock;
 
   constructor(t: ITTestResourceConfiguration) {
     super();
     this.testResourceConfiguration = t;
+    this.client = {} as net.Socket;
   }
 
   start(stopper: () => any): Promise<void> {
@@ -35,9 +37,21 @@ export class PM_Node_Sidecar extends PM_sidecar {
     });
   }
 
-  // stop(): Promise<void> {
-  //   throw new Error("Method not implemented.");
-  // }
+  stop(): Promise<void> {
+    return new Promise((resolve) => {
+      if (this.client) {
+        this.client.end(() => resolve());
+      } else {
+        resolve();
+      }
+    });
+  }
+
+  testArtiFactoryfileWriter(tLog: ITLog, callback: (p: Promise<void>) => void) {
+    return (fPath: string, value: string | Buffer | PassThrough) => {
+      callback(Promise.resolve());
+    };
+  }
 
   send<I>(command: string, ...argz): Promise<I> {
     return new Promise<I>((res) => {

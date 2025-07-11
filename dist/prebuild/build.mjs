@@ -139,6 +139,7 @@ var node_default = (config, entryPoints, testName2) => {
 };
 
 // src/esbuildConfigs/web.ts
+import { polyfillNode } from "esbuild-plugin-polyfill-node";
 import path2 from "path";
 var web_default = (config, entryPoints, testName2) => {
   const { inputFilesPluginFactory, register: register2 } = inputFilesPlugin_default(
@@ -147,6 +148,7 @@ var web_default = (config, entryPoints, testName2) => {
   );
   return {
     ...esbuildConfigs_default(config),
+    treeShaking: true,
     outdir: `testeranto/bundles/web/${testName2}`,
     alias: {
       react: path2.resolve("./node_modules/react")
@@ -176,6 +178,14 @@ var web_default = (config, entryPoints, testName2) => {
     plugins: [
       featuresPlugin_default,
       inputFilesPluginFactory,
+      polyfillNode({
+        // You might need to configure specific Node.js modules you want to polyfill
+        // Example:
+        // modules: {
+        //   'util': true,
+        //   'fs': false,
+        // }
+      }),
       {
         name: "rebuild-notify",
         setup: (build) => {
