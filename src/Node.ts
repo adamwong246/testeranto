@@ -76,10 +76,10 @@ const testeranto = async <I extends IT, O extends OT, M>(
     ipcfile = process.argv[3];
     const f = await t.receiveTestResourceConfig(process.argv[2]);
 
-    console.error("goodbye node error", f.fails);
+    console.error("goodbye node with failures", f.fails);
     process.exit(f.fails);
   } catch (e) {
-    console.error("goodbye node error", e);
+    console.error("goodbye node with caught error", e);
     process.exit(-1);
 
     // fs.writeFileSync(`tests.json`, JSON.stringify(t.,

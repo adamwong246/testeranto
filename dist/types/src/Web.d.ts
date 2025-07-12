@@ -1,4 +1,4 @@
-import type { IT, ITestImplementation, ITestInterface, ITestSpecification, IWebTestInterface, OT } from "./Types";
+import type { ITestImplementation, ITestInterface, ITestSpecification } from "./Types";
 import Testeranto from "./lib/core.js";
 import { ITTestResourceRequest } from "./lib/index.js";
 export declare class WebTesteranto<I extends IT, O extends OT, M> extends Testeranto<I, O, M> {

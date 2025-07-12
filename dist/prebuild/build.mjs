@@ -1,4 +1,11 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
+var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x, {
+  get: (a, b) => (typeof require !== "undefined" ? require : a)[b]
+}) : x)(function(x) {
+  if (typeof require !== "undefined")
+    return require.apply(this, arguments);
+  throw new Error('Dynamic require of "' + x + '" is not supported');
+});
 
 // src/build.ts
 import ansiC from "ansi-colors";
@@ -209,6 +216,34 @@ var web_default = (config, entryPoints, testName2) => {
 
 // src/esbuildConfigs/pure.ts
 import { isBuiltin } from "node:module";
+
+// src/esbuildConfigs/consoleDetectorPlugin.ts
+var consoleDetectorPlugin = {
+  name: "console-detector",
+  setup(build) {
+    build.onLoad({ filter: /\.(js|ts)$/ }, async (args) => {
+      const contents = await __require("fs").promises.readFile(args.path, "utf8");
+      const consolePattern = /console\.(log|error|warn|info|debug|trace|dir|dirxml|table|group|groupEnd|clear|count|countReset|assert|profile|profileEnd|time|timeLog|timeEnd|timeStamp|context|memory)/g;
+      const matches = contents.match(consolePattern);
+      if (matches) {
+        const uniqueMethods = [...new Set(matches)];
+        return {
+          warnings: uniqueMethods.map((method) => ({
+            text: `Detected ${method} call - Pure runtime does not allow IO operations. Use Node runtime instead.`,
+            location: {
+              file: args.path,
+              line: contents.split("\n").findIndex((line) => line.includes(method)) + 1,
+              column: 0
+            }
+          }))
+        };
+      }
+      return null;
+    });
+  }
+};
+
+// src/esbuildConfigs/pure.ts
 var pure_default = (config, entryPoints, testName2) => {
   const { inputFilesPluginFactory, register: register2 } = inputFilesPlugin_default(
     "pure",
@@ -237,6 +272,7 @@ var pure_default = (config, entryPoints, testName2) => {
     plugins: [
       featuresPlugin_default,
       inputFilesPluginFactory,
+      consoleDetectorPlugin,
       {
         name: "native-node-import-filter",
         setup(build) {

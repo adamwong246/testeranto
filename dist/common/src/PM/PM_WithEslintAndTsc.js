@@ -72,8 +72,12 @@ class PM_WithEslintAndTsc extends base_js_1.PM_Base {
         this.makePrompt = async (entryPoint, addableFiles, platform) => {
             this.summary[entryPoint].prompt = "?";
             const promptPath = (0, utils_1.promptPather)(entryPoint, platform, this.name);
-            const testPaths = path_1.default.join("testeranto", "reports", this.name, platform, entryPoint.split(".").slice(0, -1).join("."), `tests.json`);
+            const testPaths = path_1.default.join("testeranto", "reports", this.name, entryPoint.split(".").slice(0, -1).join("."), platform, `tests.json`);
             const featuresPath = path_1.default.join("testeranto", "reports", this.name, platform, entryPoint.split(".").slice(0, -1).join("."), `featurePrompt.txt`);
+            const logPath = path_1.default.join("testeranto", "reports", this.name, entryPoint.split(".").slice(0, -1).join("."), platform, `console_log.txt`);
+            const lintPath = path_1.default.join("testeranto", "reports", this.name, entryPoint.split(".").slice(0, -1).join("."), platform, `lint_errors.json`);
+            const typePath = path_1.default.join("testeranto", "reports", this.name, entryPoint.split(".").slice(0, -1).join("."), platform, `type_errors.txt`);
+            const messagePath = path_1.default.join("testeranto", "reports", this.name, entryPoint.split(".").slice(0, -1).join("."), platform, `message`);
             fs_1.default.writeFileSync(promptPath, `
 ${addableFiles
                 .map((x) => {
@@ -81,14 +85,12 @@ ${addableFiles
             })
                 .join("\n")}
 
-/read ${(0, utils_1.lintPather)(entryPoint, platform, this.name)}
-/read ${(0, utils_1.tscPather)(entryPoint, platform, this.name)}
 /read ${testPaths}
-
-/load ${featuresPath}
-
-/code Fix the failing tests described in ${testPaths}. Correct any type signature errors described in the files ${(0, utils_1.tscPather)(entryPoint, platform, this.name)}. Implement any method which throws "Function not implemented. Resolve the lint errors described in ${(0, utils_1.lintPather)(entryPoint, platform, this.name)}"
-          `);
+/read ${logPath}
+/read ${typePath}
+/read ${lintPath}
+`);
+            fs_1.default.writeFileSync(messagePath, `Fix the failing tests described in ${testPaths} and ${logPath}. DO NOT refactor beyond what is necessary. Always prefer minimal changes, focusing mostly on keeping the BDD tests passing`);
             this.summary[entryPoint].prompt = `aider --model deepseek/deepseek-chat --load testeranto/${this.name}/reports/${platform}/${entryPoint
                 .split(".")
                 .slice(0, -1)

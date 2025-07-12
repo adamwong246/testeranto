@@ -57,7 +57,7 @@ class BaseSuite {
             catch (e) {
                 this.failed = true;
                 this.fails = this.fails + 1;
-                // console.error(e);
+                console.error(e);
                 // this.fails.push(giver);
                 // return this;
             }
@@ -140,7 +140,7 @@ class BaseGiven {
             }
             for (const [thenNdx, thenStep] of this.thens.entries()) {
                 const t = await thenStep.test(this.store, testResourceConfiguration, tLog, pm, `suite-${suiteNdx}/given-${key}/then-${thenNdx}`);
-                return tester(t);
+                tester(t);
                 // ((t) => {
                 //   return tester(t);
                 // })();

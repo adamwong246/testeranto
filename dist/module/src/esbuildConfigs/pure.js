@@ -2,6 +2,7 @@ import baseEsBuildConfig from "./index.js";
 import inputFilesPlugin from "./inputFilesPlugin.js";
 import featuresPlugin from "./featuresPlugin.js";
 import { isBuiltin } from "node:module";
+import { consoleDetectorPlugin } from "./consoleDetectorPlugin.js";
 export default (config, entryPoints, testName) => {
     const { inputFilesPluginFactory, register } = inputFilesPlugin("pure", testName);
     return Object.assign(Object.assign({}, baseEsBuildConfig(config)), { drop: [], splitting: true, outdir: `testeranto/bundles/pure/${testName}/`, 
@@ -15,6 +16,7 @@ export default (config, entryPoints, testName) => {
         }, platform: "node", external: ["react", ...config.externals], entryPoints: [...entryPoints], plugins: [
             featuresPlugin,
             inputFilesPluginFactory,
+            consoleDetectorPlugin,
             {
                 name: "native-node-import-filter",
                 setup(build) {

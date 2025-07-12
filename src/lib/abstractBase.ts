@@ -120,7 +120,7 @@ export abstract class BaseSuite<I extends IT = IT, O extends OT = OT> {
       } catch (e) {
         this.failed = true;
         this.fails = this.fails + 1;
-        // console.error(e);
+        console.error(e);
         // this.fails.push(giver);
         // return this;
       }
@@ -294,7 +294,7 @@ export abstract class BaseGiven<I extends IT = IT> {
           pm,
           `suite-${suiteNdx}/given-${key}/then-${thenNdx}`
         );
-        return tester(t);
+        tester(t);
         // ((t) => {
         //   return tester(t);
         // })();

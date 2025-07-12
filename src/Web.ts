@@ -1,11 +1,8 @@
 import { PM_Web } from "./PM/web";
 import type {
-  IT,
   ITestImplementation,
   ITestInterface,
   ITestSpecification,
-  IWebTestInterface,
-  OT,
 } from "./Types";
 import Testeranto from "./lib/core.js";
 import {

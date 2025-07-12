@@ -7,6 +7,7 @@ import inputFilesPlugin from "./inputFilesPlugin.js";
 import featuresPlugin from "./featuresPlugin.js";
 
 import { isBuiltin } from "node:module";
+import { consoleDetectorPlugin } from "./consoleDetectorPlugin.js";
 
 export default (
   config: ITestconfig,
@@ -48,6 +49,8 @@ export default (
       featuresPlugin,
 
       inputFilesPluginFactory,
+
+      consoleDetectorPlugin,
 
       {
         name: "native-node-import-filter",

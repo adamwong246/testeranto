@@ -464,8 +464,8 @@ var PM_WithEslintAndTsc = class extends PM_Base {
         "testeranto",
         "reports",
         this.name,
-        platform,
         entryPoint.split(".").slice(0, -1).join("."),
+        platform,
         `tests.json`
       );
       const featuresPath = path3.join(
@@ -476,6 +476,38 @@ var PM_WithEslintAndTsc = class extends PM_Base {
         entryPoint.split(".").slice(0, -1).join("."),
         `featurePrompt.txt`
       );
+      const logPath = path3.join(
+        "testeranto",
+        "reports",
+        this.name,
+        entryPoint.split(".").slice(0, -1).join("."),
+        platform,
+        `console_log.txt`
+      );
+      const lintPath = path3.join(
+        "testeranto",
+        "reports",
+        this.name,
+        entryPoint.split(".").slice(0, -1).join("."),
+        platform,
+        `lint_errors.json`
+      );
+      const typePath = path3.join(
+        "testeranto",
+        "reports",
+        this.name,
+        entryPoint.split(".").slice(0, -1).join("."),
+        platform,
+        `type_errors.txt`
+      );
+      const messagePath = path3.join(
+        "testeranto",
+        "reports",
+        this.name,
+        entryPoint.split(".").slice(0, -1).join("."),
+        platform,
+        `message`
+      );
       fs2.writeFileSync(
         promptPath,
         `
@@ -483,22 +515,15 @@ ${addableFiles.map((x) => {
           return `/add ${x}`;
         }).join("\n")}
 
-/read ${lintPather(entryPoint, platform, this.name)}
-/read ${tscPather(entryPoint, platform, this.name)}
 /read ${testPaths}
-
-/load ${featuresPath}
-
-/code Fix the failing tests described in ${testPaths}. Correct any type signature errors described in the files ${tscPather(
-          entryPoint,
-          platform,
-          this.name
-        )}. Implement any method which throws "Function not implemented. Resolve the lint errors described in ${lintPather(
-          entryPoint,
-          platform,
-          this.name
-        )}"
-          `
+/read ${logPath}
+/read ${typePath}
+/read ${lintPath}
+`
+      );
+      fs2.writeFileSync(
+        messagePath,
+        `Fix the failing tests described in ${testPaths} and ${logPath}. DO NOT refactor beyond what is necessary. Always prefer minimal changes, focusing mostly on keeping the BDD tests passing`
       );
       this.summary[entryPoint].prompt = `aider --model deepseek/deepseek-chat --load testeranto/${this.name}/reports/${platform}/${entryPoint.split(".").slice(0, -1).join(".")}/prompt.txt`;
       this.checkForShutdown();

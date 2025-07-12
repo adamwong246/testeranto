@@ -7,6 +7,7 @@ const index_js_1 = __importDefault(require("./index.js"));
 const inputFilesPlugin_js_1 = __importDefault(require("./inputFilesPlugin.js"));
 const featuresPlugin_js_1 = __importDefault(require("./featuresPlugin.js"));
 const node_module_1 = require("node:module");
+const consoleDetectorPlugin_js_1 = require("./consoleDetectorPlugin.js");
 exports.default = (config, entryPoints, testName) => {
     const { inputFilesPluginFactory, register } = (0, inputFilesPlugin_js_1.default)("pure", testName);
     return Object.assign(Object.assign({}, (0, index_js_1.default)(config)), { drop: [], splitting: true, outdir: `testeranto/bundles/pure/${testName}/`, 
@@ -20,6 +21,7 @@ exports.default = (config, entryPoints, testName) => {
         }, platform: "node", external: ["react", ...config.externals], entryPoints: [...entryPoints], plugins: [
             featuresPlugin_js_1.default,
             inputFilesPluginFactory,
+            consoleDetectorPlugin_js_1.consoleDetectorPlugin,
             {
                 name: "native-node-import-filter",
                 setup(build) {
