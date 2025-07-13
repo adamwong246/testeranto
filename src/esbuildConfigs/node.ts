@@ -5,6 +5,7 @@ import { ITestconfig } from "../lib/index.js";
 import baseEsBuildConfig from "./index.js";
 import inputFilesPlugin from "./inputFilesPlugin.js";
 import featuresPlugin from "./featuresPlugin";
+import rebuildPlugin from "./rebuildPlugin.js";
 
 export default (
   config: ITestconfig,
@@ -44,24 +45,7 @@ export default (
       featuresPlugin,
 
       inputFilesPluginFactory,
-      {
-        name: "rebuild-notify",
-        setup: (build) => {
-          build.onStart(() => {
-            console.log(`> node build starting...`);
-          });
-          build.onEnd((result) => {
-            console.log(
-              `> node build ended with ${result.errors.length} errors`
-            );
-            if (result.errors.length > 0) {
-              console.log(result);
-            }
-            // console.log(result);
-            // result.errors.length !== 0 && process.exit(-1);
-          });
-        },
-      },
+      rebuildPlugin("node"),
 
       ...(config.nodePlugins.map((p) => p(register, entryPoints)) || []),
     ],

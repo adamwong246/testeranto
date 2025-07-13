@@ -1,12 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  ITestSpecification,
-  ITestImplementation,
-  ITestInterface,
-  IT,
-  OT,
-} from "../Types.js";
-
 import {
   DefaultTestInterface,
   IFinalResults,
@@ -24,6 +15,11 @@ import {
 } from "./abstractBase.js";
 import { ClassBuilder } from "./classBuilder.js";
 import { IPM } from "./types";
+import {
+  ITestSpecification,
+  ITestImplementation,
+  ITestInterface,
+} from "../CoreTypes.js";
 
 export default abstract class Testeranto<
   I extends IT,

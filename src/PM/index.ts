@@ -37,7 +37,7 @@ export abstract class PM {
   abstract typeInto(selector: string, value: string): any;
   abstract waitForSelector(p, sel: string);
   abstract write(uid: number, contents: string): Promise<boolean>;
-  abstract writeFileSync(f: string, c: string, t: string): Promise<boolean>;
+  abstract writeFileSync(f: string, c: string): Promise<boolean>;
 
   abstract launchSideCar(
     n: number

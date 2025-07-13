@@ -854,9 +854,14 @@ var PM_Main = class extends PM_WithEslintAndTsc {
       const builtfile = dest;
       let haltReturns = false;
       const ipcfile = "/tmp/tpipe_" + Math.random();
-      const child = spawn("node", [builtfile, testResources, ipcfile], {
-        stdio: ["pipe", "pipe", "pipe", "ipc"]
-      });
+      const child = spawn(
+        "node",
+        // "node --inspect-brk ",
+        [builtfile, testResources, ipcfile],
+        {
+          stdio: ["pipe", "pipe", "pipe", "ipc"]
+        }
+      );
       let buffer = new Buffer("");
       const server = net.createServer((socket) => {
         const queue = new Queue();
@@ -907,7 +912,6 @@ var PM_Main = class extends PM_WithEslintAndTsc {
           oStream.write(`stdout > ${data}`);
         });
         child.on("close", (code) => {
-          console.log("close");
           oStream.close();
           server.close();
           if (code === null) {
@@ -923,14 +927,12 @@ var PM_Main = class extends PM_WithEslintAndTsc {
           haltReturns = true;
         });
         child.on("exit", (code) => {
-          console.log("exit");
           haltReturns = true;
           for (let i = 0; i <= portsToUse.length; i++) {
             if (portsToUse[i]) {
               this.ports[portsToUse[i]] = true;
             }
           }
-          console.log("exitthis.ports", this.ports);
         });
         child.on("error", (e) => {
           console.log("error");

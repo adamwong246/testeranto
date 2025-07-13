@@ -3,6 +3,7 @@ import inputFilesPlugin from "./inputFilesPlugin.js";
 import featuresPlugin from "./featuresPlugin.js";
 import { isBuiltin } from "node:module";
 import { consoleDetectorPlugin } from "./consoleDetectorPlugin.js";
+import rebuildPlugin from "./rebuildPlugin.js";
 export default (config, entryPoints, testName) => {
     const { inputFilesPluginFactory, register } = inputFilesPlugin("pure", testName);
     return Object.assign(Object.assign({}, baseEsBuildConfig(config)), { drop: [], splitting: true, outdir: `testeranto/bundles/pure/${testName}/`, 
@@ -28,22 +29,7 @@ export default (config, entryPoints, testName) => {
                     });
                 },
             },
-            {
-                name: "rebuild-notify",
-                setup: (build) => {
-                    build.onStart(() => {
-                        console.log(`> pure build starting...`);
-                    });
-                    build.onEnd((result) => {
-                        console.log(`> pure build ended with ${result.errors.length} errors`);
-                        if (result.errors.length > 0) {
-                            console.log(result);
-                        }
-                        // console.log(result);
-                        // result.errors.length !== 0 && process.exit(-1);
-                    });
-                },
-            },
+            rebuildPlugin("pure"),
             ...((config.nodePlugins || []).map((p) => p(register, entryPoints)) ||
                 []),
         ] });

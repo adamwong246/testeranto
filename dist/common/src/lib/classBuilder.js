@@ -12,14 +12,13 @@ class ClassBuilder extends basebuilder_js_1.BaseBuilder {
         }, {});
         const classyGivens = Object.entries(testImplementation.givens).reduce((a, [key, g]) => {
             a[key] = (features, whens, thens, ...initialValues) => {
-                // console.log("givEn", givEn.toString());
                 return new givenKlasser.prototype.constructor(key, features, whens, thens, testImplementation.givens[key], initialValues);
             };
             return a;
         }, {});
         const classyWhens = Object.entries(testImplementation.whens).reduce((a, [key, whEn]) => {
-            a[key] = (payload) => {
-                return new whenKlasser.prototype.constructor(`${whEn.name}: ${payload && payload.toString()}`, whEn(payload));
+            a[key] = (...payload) => {
+                return new whenKlasser.prototype.constructor(`${whEn.name}: ${payload && payload.toString()}`, whEn(...payload));
             };
             return a;
         }, {});

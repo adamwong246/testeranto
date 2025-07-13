@@ -2383,9 +2383,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React30 = require_react();
+          var React29 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React30.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React29.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -3990,7 +3990,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React30.Children.forEach(props.children, function(child) {
+                  React29.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -12437,7 +12437,7 @@
             }
           }
           var fakeInternalInstance = {};
-          var emptyRefsObject = new React30.Component().refs;
+          var emptyRefsObject = new React29.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -23609,7 +23609,7 @@
       if (true) {
         (function() {
           "use strict";
-          var React30 = require_react();
+          var React29 = require_react();
           var REACT_ELEMENT_TYPE = Symbol.for("react.element");
           var REACT_PORTAL_TYPE = Symbol.for("react.portal");
           var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
@@ -23635,7 +23635,7 @@
             }
             return null;
           }
-          var ReactSharedInternals = React30.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React29.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function error(format) {
             {
               {
@@ -26186,6 +26186,7 @@
       })
     });
   });
+  TransitionWrapper.displayName = "TransitionWrapper";
   var TransitionWrapper_default = TransitionWrapper;
 
   // node_modules/@restart/ui/esm/Anchor.js
@@ -26577,7 +26578,7 @@
   }
   function $b5e257d569688ac6$var$useLegacySSRSafeId(defaultId) {
     let ctx = (0, import_react24.useContext)($b5e257d569688ac6$var$SSRContext);
-    if (ctx === $b5e257d569688ac6$var$defaultContext && !$b5e257d569688ac6$var$canUseDOM)
+    if (ctx === $b5e257d569688ac6$var$defaultContext && !$b5e257d569688ac6$var$canUseDOM && true)
       console.warn("When server rendering, you must wrap your application in an <SSRProvider> to ensure consistent ids are generated between the client and server.");
     let counter = $b5e257d569688ac6$var$useCounter(!!defaultId);
     let prefix = ctx === $b5e257d569688ac6$var$defaultContext && false ? "react-aria" : `react-aria${ctx.prefix}`;
@@ -27064,9 +27065,6 @@
   // node_modules/react-bootstrap/esm/Tab.js
   var import_prop_types3 = __toESM(require_prop_types());
 
-  // node_modules/react-bootstrap/esm/TabContainer.js
-  var React24 = __toESM(require_react());
-
   // node_modules/@restart/ui/esm/Tabs.js
   var React23 = __toESM(require_react());
   var import_react31 = __toESM(require_react());
@@ -27249,11 +27247,11 @@
   var TabContainer_default = TabContainer;
 
   // node_modules/react-bootstrap/esm/TabContent.js
-  var React25 = __toESM(require_react());
+  var React24 = __toESM(require_react());
   var import_classnames7 = __toESM(require_classnames());
   var import_jsx_runtime16 = __toESM(require_jsx_runtime());
   "use client";
-  var TabContent = /* @__PURE__ */ React25.forwardRef(({
+  var TabContent = /* @__PURE__ */ React24.forwardRef(({
     className,
     bsPrefix,
     as: Component = "div",
@@ -27271,10 +27269,10 @@
 
   // node_modules/react-bootstrap/esm/TabPane.js
   var import_classnames8 = __toESM(require_classnames());
-  var React26 = __toESM(require_react());
+  var React25 = __toESM(require_react());
   var import_jsx_runtime17 = __toESM(require_jsx_runtime());
   "use client";
-  var TabPane = /* @__PURE__ */ React26.forwardRef(({
+  var TabPane = /* @__PURE__ */ React25.forwardRef(({
     bsPrefix,
     transition,
     ...props
@@ -27358,10 +27356,10 @@
 
   // node_modules/react-bootstrap/esm/Table.js
   var import_classnames9 = __toESM(require_classnames());
-  var React27 = __toESM(require_react());
+  var React26 = __toESM(require_react());
   var import_jsx_runtime18 = __toESM(require_jsx_runtime());
   "use client";
-  var Table = /* @__PURE__ */ React27.forwardRef(({
+  var Table = /* @__PURE__ */ React26.forwardRef(({
     bsPrefix,
     className,
     striped,
@@ -27392,6 +27390,7 @@
     }
     return table;
   });
+  Table.displayName = "Table";
   var Table_default = Table;
 
   // src/Footer.tsx

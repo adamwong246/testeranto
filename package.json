@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "the AI powered BDD test framework for typescript projects",
-  "version": "0.134.0",
+  "version": "0.135.0",
   "engines": {
     "node": "18.18.0"
   },
@@ -16,6 +16,10 @@
     "./src/cjs-shim.ts": {
       "import": "./dist/cjs-shim.js",
       "require": "./dist/cjs-shim.js"
+    },
+    "./src/lib": {
+      "import": "./src/lib/index.ts",
+      "require": "./src/lib/index.ts"
     },
     "./src/lib/abstractBase": {
       "import": "./src/lib/abstractBase.ts",
@@ -177,6 +181,7 @@
     "esbuild-plugin-markdown": "^0.0.3",
     "esbuild-plugin-polyfill-node": "^0.3.0",
     "eslint": "^9.23.0",
+    "eslint-formatter-compact": "^8.40.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-react": "^7.31.11",
     "eslint-plugin-react-hooks": "^5.1.0",

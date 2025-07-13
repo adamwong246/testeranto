@@ -18,10 +18,7 @@ export declare abstract class BaseSuite<I extends IT = IT, O extends OT = OT> {
         givens: {
             key: string;
             name: string;
-            whens: {
-                name: string;
-                error: string;
-            }[];
+            whens: {}[];
             thens: {
                 name: string;
                 error: boolean;
@@ -58,10 +55,7 @@ export declare abstract class BaseGiven<I extends IT = IT> {
     toObj(): {
         key: string;
         name: string;
-        whens: {
-            name: string;
-            error: string;
-        }[];
+        whens: {}[];
         thens: {
             name: string;
             error: boolean;

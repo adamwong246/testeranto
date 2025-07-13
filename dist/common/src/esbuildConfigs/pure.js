@@ -8,6 +8,7 @@ const inputFilesPlugin_js_1 = __importDefault(require("./inputFilesPlugin.js"));
 const featuresPlugin_js_1 = __importDefault(require("./featuresPlugin.js"));
 const node_module_1 = require("node:module");
 const consoleDetectorPlugin_js_1 = require("./consoleDetectorPlugin.js");
+const rebuildPlugin_js_1 = __importDefault(require("./rebuildPlugin.js"));
 exports.default = (config, entryPoints, testName) => {
     const { inputFilesPluginFactory, register } = (0, inputFilesPlugin_js_1.default)("pure", testName);
     return Object.assign(Object.assign({}, (0, index_js_1.default)(config)), { drop: [], splitting: true, outdir: `testeranto/bundles/pure/${testName}/`, 
@@ -33,22 +34,7 @@ exports.default = (config, entryPoints, testName) => {
                     });
                 },
             },
-            {
-                name: "rebuild-notify",
-                setup: (build) => {
-                    build.onStart(() => {
-                        console.log(`> pure build starting...`);
-                    });
-                    build.onEnd((result) => {
-                        console.log(`> pure build ended with ${result.errors.length} errors`);
-                        if (result.errors.length > 0) {
-                            console.log(result);
-                        }
-                        // console.log(result);
-                        // result.errors.length !== 0 && process.exit(-1);
-                    });
-                },
-            },
+            (0, rebuildPlugin_js_1.default)("pure"),
             ...((config.nodePlugins || []).map((p) => p(register, entryPoints)) ||
                 []),
         ] });

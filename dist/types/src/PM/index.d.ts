@@ -29,7 +29,7 @@ export declare abstract class PM {
     abstract typeInto(selector: string, value: string): any;
     abstract waitForSelector(p: any, sel: string): any;
     abstract write(uid: number, contents: string): Promise<boolean>;
-    abstract writeFileSync(f: string, c: string, t: string): Promise<boolean>;
+    abstract writeFileSync(f: string, c: string): Promise<boolean>;
     abstract launchSideCar(n: number): Promise<[number, ITTestResourceConfiguration]>;
     abstract stopSideCar(n: number): Promise<any>;
 }

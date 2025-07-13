@@ -4,23 +4,37 @@ import {
   ITTestResourceConfiguration,
   ITTestResourceRequest,
 } from "./lib/index.js";
-import type {
-  INodeTestInterface,
-  IT,
+import type {} from // INodeTestInterface,
+// IT,
+// ITestImplementation,
+// ITestInterface,
+// ITestSpecification,
+// OT,
+"./Types.js";
+import { PM_Node } from "./PM/node.js";
+import {
+  ITestSpecification,
   ITestImplementation,
   ITestInterface,
-  ITestSpecification,
-  OT,
-} from "./Types.js";
-import { PM_Node } from "./PM/node.js";
+  Ibdd_in,
+  Ibdd_out,
+} from "./CoreTypes.js";
 
 let ipcfile;
 
-export class NodeTesteranto<I extends IT, O extends OT, M> extends Testeranto<
-  I,
-  O,
+export class NodeTesteranto<
+  I extends Ibdd_in<
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown,
+    unknown
+  >,
+  O extends Ibdd_out,
   M
-> {
+> extends Testeranto<I, O, M> {
   constructor(
     input: I["iinput"],
     testSpecification: ITestSpecification<I, O>,

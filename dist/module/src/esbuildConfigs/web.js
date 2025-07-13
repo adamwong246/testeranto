@@ -3,6 +3,7 @@ import path from "path";
 import baseEsBuildConfig from "./index.js";
 import inputFilesPlugin from "./inputFilesPlugin.js";
 import featuresPlugin from "./featuresPlugin.js";
+import rebuildPlugin from "./rebuildPlugin.js";
 export default (config, entryPoints, testName) => {
     const { inputFilesPluginFactory, register } = inputFilesPlugin("web", testName);
     return Object.assign(Object.assign({}, baseEsBuildConfig(config)), { treeShaking: true, outdir: `testeranto/bundles/web/${testName}`, alias: {
@@ -36,22 +37,7 @@ export default (config, entryPoints, testName) => {
             //   'fs': false,
             // }
             }),
-            {
-                name: "rebuild-notify",
-                setup: (build) => {
-                    build.onStart(() => {
-                        console.log(`> web build starting...`);
-                    });
-                    build.onEnd((result) => {
-                        console.log(`> web build ended with ${result.errors.length} errors`);
-                        if (result.errors.length > 0) {
-                            console.log(result);
-                        }
-                        // console.log(result);
-                        // result.errors.length !== 0 && process.exit(-1);
-                    });
-                },
-            },
+            rebuildPlugin("web"),
             ...((config.webPlugins || []).map((p) => p(register, entryPoints)) || []),
         ] });
 };

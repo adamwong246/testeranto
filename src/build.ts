@@ -195,13 +195,14 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
     <title>${pckge.name} - testeranto</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="" />
+    <base href="https://adamwong246.github.io/spacetrash_v8" target="_blank">
 
     <script type="application/json" id="bigConfig">
       ${JSON.stringify(Object.keys(bigConfig.projects))}
     </script>
 
-    <link rel="stylesheet" href="Project.css" />
-    <script type="module" src="Project.js"></script>
+    <link rel="stylesheet" href="/reports/Project.css" />
+    <script type="module" src="/reports/Project.js"></script>
 
   </head>
 

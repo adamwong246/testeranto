@@ -1,7 +1,7 @@
 import Testeranto from "./lib/core.js";
 import { ITTestResourceRequest } from "./lib/index.js";
-import type { INodeTestInterface, IT, ITestImplementation, ITestInterface, ITestSpecification, OT } from "./Types.js";
-export declare class NodeTesteranto<I extends IT, O extends OT, M> extends Testeranto<I, O, M> {
+import { ITestSpecification, ITestImplementation, ITestInterface, Ibdd_in, Ibdd_out } from "./CoreTypes.js";
+export declare class NodeTesteranto<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>, O extends Ibdd_out, M> extends Testeranto<I, O, M> {
     constructor(input: I["iinput"], testSpecification: ITestSpecification<I, O>, testImplementation: ITestImplementation<I, O, M>, testResourceRequirement: ITTestResourceRequest, testInterface: Partial<ITestInterface<I>>);
     receiveTestResourceConfig(partialTestResource: string): Promise<import("./lib/index.js").IFinalResults>;
 }

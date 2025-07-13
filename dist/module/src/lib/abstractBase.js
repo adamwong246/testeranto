@@ -101,7 +101,12 @@ export class BaseGiven {
         return {
             key: this.key,
             name: this.name,
-            whens: this.whens.map((w) => w.toObj()),
+            whens: this.whens.map((w) => {
+                if (w && w.toObj)
+                    return w.toObj();
+                console.error("w is not as expected!", w);
+                return {};
+            }),
             thens: this.thens.map((t) => t.toObj()),
             error: this.error ? [this.error, this.error.stack] : null,
             failed: this.failed,

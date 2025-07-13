@@ -703,9 +703,14 @@ export class PM_Main extends PM_WithEslintAndTsc {
     let haltReturns = false;
 
     const ipcfile = "/tmp/tpipe_" + Math.random();
-    const child = spawn("node", [builtfile, testResources, ipcfile], {
-      stdio: ["pipe", "pipe", "pipe", "ipc"],
-    });
+    const child = spawn(
+      "node",
+      // "node --inspect-brk ",
+      [builtfile, testResources, ipcfile],
+      {
+        stdio: ["pipe", "pipe", "pipe", "ipc"],
+      }
+    );
 
     let buffer: Buffer<ArrayBufferLike> = new Buffer("");
 
@@ -770,7 +775,6 @@ export class PM_Main extends PM_WithEslintAndTsc {
         oStream.write(`stdout > ${data}`);
       });
       child.on("close", (code) => {
-        console.log("close");
         oStream.close();
         server.close();
 
@@ -790,7 +794,6 @@ export class PM_Main extends PM_WithEslintAndTsc {
         haltReturns = true;
       });
       child.on("exit", (code) => {
-        console.log("exit");
         haltReturns = true;
 
         for (let i = 0; i <= portsToUse.length; i++) {
@@ -798,8 +801,6 @@ export class PM_Main extends PM_WithEslintAndTsc {
             this.ports[portsToUse[i]] = true; //port is open again
           }
         }
-
-        console.log("exitthis.ports", this.ports);
       });
       child.on("error", (e) => {
         console.log("error");

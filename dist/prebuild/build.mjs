@@ -9,7 +9,7 @@ var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require
 
 // src/build.ts
 import ansiC from "ansi-colors";
-import fs2 from "fs";
+import fs3 from "fs";
 import path4 from "path";
 import readline from "readline";
 import esbuild from "esbuild";
@@ -96,6 +96,25 @@ var featuresPlugin_default = {
   }
 };
 
+// src/esbuildConfigs/rebuildPlugin.ts
+import fs2 from "fs";
+var rebuildPlugin_default = (r) => {
+  return {
+    name: "rebuild-notify",
+    setup: (build) => {
+      build.onStart(() => {
+        console.log(`> web build starting...`);
+      });
+      build.onEnd((result) => {
+        console.log(`> web build ended with ${result.errors.length} errors`);
+        if (result.errors.length > 0) {
+          fs2.writeFileSync(`./${r}_build_errors`, JSON.stringify(result));
+        }
+      });
+    }
+  };
+};
+
 // src/esbuildConfigs/node.ts
 var node_default = (config, entryPoints, testName2) => {
   const { inputFilesPluginFactory, register: register2 } = inputFilesPlugin_default(
@@ -124,22 +143,7 @@ var node_default = (config, entryPoints, testName2) => {
     plugins: [
       featuresPlugin_default,
       inputFilesPluginFactory,
-      {
-        name: "rebuild-notify",
-        setup: (build) => {
-          build.onStart(() => {
-            console.log(`> node build starting...`);
-          });
-          build.onEnd((result) => {
-            console.log(
-              `> node build ended with ${result.errors.length} errors`
-            );
-            if (result.errors.length > 0) {
-              console.log(result);
-            }
-          });
-        }
-      },
+      rebuildPlugin_default("node"),
       ...config.nodePlugins.map((p) => p(register2, entryPoints)) || []
     ]
   };
@@ -193,22 +197,7 @@ var web_default = (config, entryPoints, testName2) => {
         //   'fs': false,
         // }
       }),
-      {
-        name: "rebuild-notify",
-        setup: (build) => {
-          build.onStart(() => {
-            console.log(`> web build starting...`);
-          });
-          build.onEnd((result) => {
-            console.log(
-              `> web build ended with ${result.errors.length} errors`
-            );
-            if (result.errors.length > 0) {
-              console.log(result);
-            }
-          });
-        }
-      },
+      rebuildPlugin_default("web"),
       ...(config.webPlugins || []).map((p) => p(register2, entryPoints)) || []
     ]
   };
@@ -286,22 +275,7 @@ var pure_default = (config, entryPoints, testName2) => {
           });
         }
       },
-      {
-        name: "rebuild-notify",
-        setup: (build) => {
-          build.onStart(() => {
-            console.log(`> pure build starting...`);
-          });
-          build.onEnd((result) => {
-            console.log(
-              `> pure build ended with ${result.errors.length} errors`
-            );
-            if (result.errors.length > 0) {
-              console.log(result);
-            }
-          });
-        }
-      },
+      rebuildPlugin_default("pure"),
       ...(config.nodePlugins || []).map((p) => p(register2, entryPoints)) || []
     ]
   };
@@ -475,10 +449,10 @@ import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
     }
   };
   console.log(`testeranto/reports/${testName}`);
-  if (!fs2.existsSync(`testeranto/reports/${testName}`)) {
-    fs2.mkdirSync(`testeranto/reports/${testName}`);
+  if (!fs3.existsSync(`testeranto/reports/${testName}`)) {
+    fs3.mkdirSync(`testeranto/reports/${testName}`);
   }
-  fs2.writeFileSync(
+  fs3.writeFileSync(
     `${process.cwd()}/testeranto/reports/${testName}/index.html`,
     `
     <!DOCTYPE html>
@@ -505,11 +479,11 @@ import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
     </html>
         `
   );
-  fs2.writeFileSync(
+  fs3.writeFileSync(
     `testeranto/reports/${testName}/config.json`,
     JSON.stringify(config, null, 2)
   );
-  fs2.writeFileSync(
+  fs3.writeFileSync(
     `${process.cwd()}/testeranto/index.html`,
     `
   <!DOCTYPE html>
@@ -521,13 +495,14 @@ import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
     <title>${pckge.name} - testeranto</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="" />
+    <base href="https://adamwong246.github.io/spacetrash_v8" target="_blank">
 
     <script type="application/json" id="bigConfig">
       ${JSON.stringify(Object.keys(bigConfig.projects))}
     </script>
 
-    <link rel="stylesheet" href="Project.css" />
-    <script type="module" src="Project.js"></script>
+    <link rel="stylesheet" href="/reports/Project.css" />
+    <script type="module" src="/reports/Project.js"></script>
 
   </head>
 
@@ -553,8 +528,8 @@ import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
           )}/${sourceFileNameMinusJs}.html`
         );
         const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
-        return fs2.promises.mkdir(path4.dirname(htmlFilePath), { recursive: true }).then(
-          (x2) => fs2.writeFileSync(
+        return fs3.promises.mkdir(path4.dirname(htmlFilePath), { recursive: true }).then(
+          (x2) => fs3.writeFileSync(
             htmlFilePath,
             web_html_default(jsfilePath, htmlFilePath)
           )
@@ -583,8 +558,8 @@ import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
     console.log(runtime, keys);
     keys.forEach(async (k) => {
       const folder = `testeranto/reports/${testName}/${k.split(".").slice(0, -1).join(".")}/${runtime}`;
-      await fs2.mkdirSync(folder, { recursive: true });
-      fs2.writeFileSync(
+      await fs3.mkdirSync(folder, { recursive: true });
+      fs3.writeFileSync(
         `${folder}/index.html`,
         `
 <!DOCTYPE html>
@@ -623,7 +598,7 @@ import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
           ep.split(".").slice(0, -1).join("."),
           runtime
         );
-        fs2.mkdirSync(fp, { recursive: true });
+        fs3.mkdirSync(fp, { recursive: true });
       });
     }
   );
