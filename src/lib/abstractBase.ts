@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { IT, OT } from "../Types.js";
 
 import { ITTestResourceConfiguration, ITestArtifactory, ITLog } from ".";
 import { IPM } from "./types.js";
@@ -12,10 +11,11 @@ import {
   beforeEachProxy,
   butThenProxy,
 } from "./pmProxy.js";
+import { Ibdd_in, Ibdd_in_any, Ibdd_out } from "../CoreTypes";
 
-export type IGivens<I extends IT> = Record<string, BaseGiven<I>>;
+export type IGivens<I extends Ibdd_in_any> = Record<string, BaseGiven<I>>;
 
-export abstract class BaseSuite<I extends IT = IT, O extends OT = OT> {
+export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out> {
   name: string;
   givens: IGivens<I>;
   checks: BaseCheck<I>[];
@@ -168,7 +168,7 @@ export abstract class BaseSuite<I extends IT = IT, O extends OT = OT> {
   }
 }
 
-export abstract class BaseGiven<I extends IT = IT> {
+export abstract class BaseGiven<I extends Ibdd_in_any> {
   name: string;
   features: string[];
   whens: BaseWhen<I>[];
@@ -329,7 +329,7 @@ export abstract class BaseGiven<I extends IT = IT> {
   }
 }
 
-export abstract class BaseWhen<I extends IT> {
+export abstract class BaseWhen<I extends Ibdd_in_any> {
   public name: string;
   whenCB: (x: I["iselection"]) => I["then"];
   error: Error;
@@ -376,7 +376,7 @@ export abstract class BaseWhen<I extends IT> {
   }
 }
 
-export abstract class BaseThen<I extends IT> {
+export abstract class BaseThen<I extends Ibdd_in_any> {
   public name: string;
   thenCB: (storeState: I["iselection"]) => Promise<I["then"]>;
   error: boolean;
@@ -435,7 +435,7 @@ export abstract class BaseThen<I extends IT> {
   check() {}
 }
 
-export abstract class BaseCheck<I extends IT = IT> {
+export abstract class BaseCheck<I extends Ibdd_in_any> {
   key: string;
   name: string;
   features: string[];

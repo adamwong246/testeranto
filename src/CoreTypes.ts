@@ -169,3 +169,5 @@ export type Ibdd_in<
   /** Function type for Then steps */
   then: IThen;
 };
+
+export type Ibdd_in_any = Ibdd_in<any, any, any, any, any, any, any>;
