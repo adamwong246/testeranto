@@ -2,9 +2,14 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable no-async-promise-executor */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { PassThrough } from "stream";
 
-import { IT, ITestSpecification, OT } from "../Types.js";
+import type {
+  Ibdd_in_any,
+  Ibdd_out_any,
+  ITestSpecification,
+} from "../CoreTypes";
 
 import { ITTestResourceRequest, ITestJob, ITLog, IFinalResults } from ".";
 import {
@@ -24,8 +29,8 @@ import {
 } from "./abstractBase.js";
 
 export abstract class BaseBuilder<
-  I extends IT,
-  O extends OT,
+  I extends Ibdd_in_any,
+  O extends Ibdd_out_any,
   SuiteExtensions,
   GivenExtensions,
   WhenExtensions,

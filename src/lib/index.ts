@@ -4,21 +4,15 @@ import { PM_Pure } from "../PM/pure.js";
 
 import { PM_Node } from "../PM/node.js";
 import { PM_Web } from "../PM/web.js";
-import {
-  Ibdd_in,
-  ITestInterface,
-  ITestconfig,
-  IBuiltConfig,
-  IRunTime,
-  ITestTypes,
-  IT,
-  OT,
-} from "../Types.js";
+import { ITestconfig, IBuiltConfig, IRunTime, ITestTypes } from "../Types.js";
 
 import { IGivens, BaseCheck, BaseSuite } from "./abstractBase.js";
 import { IPM } from "./types.js";
+import { ITestInterface, Ibdd_in, Ibdd_in_any } from "../CoreTypes.js";
 
-export const BaseTestInterface = <T extends IT>(): ITestInterface<T> => ({
+export const BaseTestInterface = <
+  T extends Ibdd_in_any
+>(): ITestInterface<T> => ({
   beforeAll: async (s: T["istore"]) => s,
   beforeEach: async function (
     subject: T["isubject"],
@@ -32,14 +26,14 @@ export const BaseTestInterface = <T extends IT>(): ITestInterface<T> => ({
   afterEach: async (s: T["istore"]) => s,
   afterAll: (store: T["istore"]) => undefined,
   butThen: async (
-    store: IT["istore"],
-    thenCb: (s: IT["iselection"]) => Promise<IT["isubject"]>
+    store: T["istore"],
+    thenCb: (s: T["iselection"]) => Promise<T["isubject"]>
   ) => {
     return thenCb(store);
   },
   andWhen: async (
-    store: IT["istore"],
-    whenCB: IT["when"],
+    store: T["istore"],
+    whenCB: T["when"],
     testResource: ITTestResourceConfiguration,
     pm: IPM
   ) => {
@@ -53,7 +47,7 @@ export const BaseTestInterface = <T extends IT>(): ITestInterface<T> => ({
   assertThis: (x: any) => x,
 });
 
-export const DefaultTestInterface = <T extends IT>(
+export const DefaultTestInterface = <T extends Ibdd_in_any>(
   p: Partial<ITestInterface<T>>
 ): ITestInterface<T> => {
   return {
@@ -102,7 +96,7 @@ type ITest = {
   givens: IGivens<
     Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>
   >;
-  checks: BaseCheck<IT>[];
+  checks: BaseCheck<Ibdd_in_any>[];
   testResourceConfiguration: ITTestResourceConfiguration;
 };
 
@@ -112,7 +106,7 @@ export type ITestJob = {
   runner: (
     x: ITTestResourceConfiguration,
     t: ITLog
-  ) => Promise<BaseSuite<IT, OT>>;
+  ) => Promise<BaseSuite<Ibdd_in_any, OT>>;
   testResourceRequirement: ITTestResourceRequirement;
   receiveTestResourceConfig: (pm: PM_Node | PM_Web | PM_Pure) => IFinalResults;
 };

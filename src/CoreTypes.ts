@@ -137,6 +137,14 @@ export type Ibdd_out<
   checks: IChecks;
 };
 
+export type Ibdd_out_any = Ibdd_out<
+  TestSuiteShape,
+  TestGivenShape,
+  TestWhenShape,
+  TestThenShape,
+  TestCheckShape
+>;
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 export type Ibdd_in<
@@ -170,4 +178,12 @@ export type Ibdd_in<
   then: IThen;
 };
 
-export type Ibdd_in_any = Ibdd_in<any, any, any, any, any, any, any>;
+export type Ibdd_in_any = Ibdd_in<
+  unknown,
+  unknown,
+  unknown,
+  unknown,
+  unknown,
+  unknown,
+  unknown
+>;

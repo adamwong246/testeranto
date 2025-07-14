@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   DefaultTestInterface,
   IFinalResults,
@@ -15,15 +17,18 @@ import {
 } from "./abstractBase.js";
 import { ClassBuilder } from "./classBuilder.js";
 import { IPM } from "./types";
-import {
-  ITestSpecification,
+
+import type {
+  Ibdd_in_any,
+  Ibdd_out,
   ITestImplementation,
   ITestInterface,
-} from "../CoreTypes.js";
+  ITestSpecification,
+} from "../CoreTypes";
 
 export default abstract class Testeranto<
-  I extends IT,
-  O extends OT,
+  I extends Ibdd_in_any,
+  O extends Ibdd_out,
   M
 > extends ClassBuilder<I, O, M> {
   constructor(

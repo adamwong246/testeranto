@@ -1,27 +1,21 @@
 $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit
-src/defaultConfig.ts(14,3): error TS2561: Object literal may only specify known properties, but 'externalTests' does not exist in type 'ITestconfig'. Did you mean to write 'externals'?
-src/lib/abstractBase.ts(3,15): error TS2305: Module '"../Types.js"' has no exported member 'IT'.
-src/lib/abstractBase.ts(3,19): error TS2305: Module '"../Types.js"' has no exported member 'OT'.
-src/lib/basebuilder.ts(7,10): error TS2305: Module '"../Types.js"' has no exported member 'IT'.
-src/lib/basebuilder.ts(7,14): error TS2724: '"../Types.js"' has no exported member named 'ITestSpecification'. Did you mean 'SuiteSpecification'?
-src/lib/basebuilder.ts(7,34): error TS2305: Module '"../Types.js"' has no exported member 'OT'.
-src/lib/basebuilder.ts(85,15): error TS2349: This expression is not callable.
+src/lib/basebuilder.ts(90,15): error TS2349: This expression is not callable.
   Not all constituents of type 'void | ((fPath: string, value: string | Buffer<ArrayBufferLike> | PassThrough) => void)' are callable.
     Type 'void' has no call signatures.
-src/lib/classBuilder.ts(3,10): error TS2305: Module '"../Types.js"' has no exported member 'IT'.
-src/lib/classBuilder.ts(3,14): error TS2724: '"../Types.js"' has no exported member named 'ITestImplementation'. Did you mean 'TestWhenImplementation'?
-src/lib/classBuilder.ts(3,35): error TS2724: '"../Types.js"' has no exported member named 'ITestSpecification'. Did you mean 'SuiteSpecification'?
-src/lib/classBuilder.ts(3,55): error TS2305: Module '"../Types.js"' has no exported member 'OT'.
-src/lib/classBuilder.ts(85,18): error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
-src/lib/classBuilder.ts(100,28): error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
-src/lib/core.ts(25,13): error TS2304: Cannot find name 'IT'.
-src/lib/core.ts(26,13): error TS2304: Cannot find name 'OT'.
-src/lib/index.ts(8,3): error TS2459: Module '"../Types.js"' declares 'Ibdd_in' locally, but it is not exported.
-src/lib/index.ts(9,3): error TS2305: Module '"../Types.js"' has no exported member 'ITestInterface'.
-src/lib/index.ts(14,3): error TS2305: Module '"../Types.js"' has no exported member 'IT'.
-src/lib/index.ts(15,3): error TS2305: Module '"../Types.js"' has no exported member 'OT'.
-src/lib/types.ts(5,15): error TS2305: Module '"../Types"' has no exported member 'IT'.
-src/lib/types.ts(5,19): error TS2305: Module '"../Types"' has no exported member 'OT'.
+src/lib/classBuilder.ts(90,18): error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
+src/lib/classBuilder.ts(105,28): error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
+src/lib/index.ts(17,3): error TS2322: Type '(subject: T["isubject"], initialValues: T["iinitialValues"], x: unknown, testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["isubject"]>' is not assignable to type '(subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceConfiguration, initialValues: any, pm: IPM) => Promise<...>'.
+  Types of parameters 'initialValues' and 'initializer' are incompatible.
+    Type '(c?: any) => T["given"]' is not assignable to type 'T["iinitialValues"]'.
+      'T["iinitialValues"]' could be instantiated with an arbitrary type which could be unrelated to '(c?: any) => T["given"]'.
+src/lib/index.ts(19,20): error TS2536: Type '"iinitialValues"' cannot be used to index type 'T'.
+src/lib/index.ts(41,13): error TS2349: This expression is not callable.
+  Type 'unknown' has no call signatures.
+src/lib/index.ts(53,3): error TS2322: Type '{ assertThis?: ((x: T["then"]) => any) | undefined; andWhen?: ((store: T["istore"], whenCB: T["when"], testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["istore"]>) | undefined; ... 4 more ...; beforeEach?: ((subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceCon...' is not assignable to type 'ITestInterface<T>'.
+  Types of property 'assertThis' are incompatible.
+    Type '((x: T["then"]) => any) | undefined' is not assignable to type '(x: T["then"]) => any'.
+      Type 'undefined' is not assignable to type '(x: T["then"]) => any'.
+src/lib/index.ts(109,39): error TS2304: Cannot find name 'OT'.
 src/mothership/test.ts(9,3): error TS2459: Module '"../Types"' declares 'Ibdd_out' locally, but it is not exported.
 src/mothership/test.ts(10,3): error TS2724: '"../Types"' has no exported member named 'ITestSpecification'. Did you mean 'SuiteSpecification'?
 src/mothership/test.ts(11,3): error TS2305: Module '"../Types"' has no exported member 'IT'.

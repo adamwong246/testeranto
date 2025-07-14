@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { ITTestResourceConfiguration, ITestArtifactory, ITLog } from ".";
+import { ITestArtifactory, ITLog, ITTestResourceConfiguration } from ".";
 import { IPM } from "./types.js";
 import {
   afterAllProxy,
@@ -11,11 +11,11 @@ import {
   beforeEachProxy,
   butThenProxy,
 } from "./pmProxy.js";
-import { Ibdd_in, Ibdd_in_any, Ibdd_out } from "../CoreTypes";
+import type { Ibdd_in_any, Ibdd_out_any } from "../CoreTypes";
 
 export type IGivens<I extends Ibdd_in_any> = Record<string, BaseGiven<I>>;
 
-export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out> {
+export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
   name: string;
   givens: IGivens<I>;
   checks: BaseCheck<I>[];

@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { IT, ITestImplementation, ITestSpecification, OT } from "../Types.js";
+import type {
+  Ibdd_in_any,
+  Ibdd_out,
+  ITestImplementation,
+  ITestSpecification,
+} from "../CoreTypes";
 
 import { BaseBuilder } from "./basebuilder.js";
 import {
@@ -16,8 +21,8 @@ import { BaseCheck } from "./abstractBase.js";
 type IExtenstions = Record<string, unknown>;
 
 export abstract class ClassBuilder<
-  I extends IT = IT,
-  O extends OT = OT,
+  I extends Ibdd_in_any = Ibdd_in_any,
+  O extends Ibdd_out = Ibdd_out,
   M = unknown
 > extends BaseBuilder<
   I,
