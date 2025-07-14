@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ITTestResourceConfiguration } from "./lib";
 
 import { IPM, ITestCheckCallback } from "./lib/types";
@@ -21,17 +22,7 @@ import {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-export type ITestInterface<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >
-> = {
+export type ITestInterface<I extends Ibdd_in_any> = {
   assertThis: (x: I["then"]) => any;
   andWhen: (
     store: I["istore"],
@@ -64,22 +55,8 @@ export type ITestInterface<
 /////////////////////////////////////////////////////////////////////////////////////////
 
 export type ITestSpecification<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
-  O extends Ibdd_out<
-    TestSuiteShape,
-    TestGivenShape,
-    TestWhenShape,
-    TestThenShape,
-    TestCheckShape
-  >
+  I extends Ibdd_in_any,
+  O extends Ibdd_out_any
 > = (
   Suite: SuiteSpecification<I, O>,
   Given: GivenSpecification<I, O>,
@@ -91,22 +68,8 @@ export type ITestSpecification<
 /////////////////////////////////////////////////////////////////////////////////////////
 
 export type ITestImplementation<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
-  O extends Ibdd_out<
-    TestSuiteShape,
-    TestGivenShape,
-    TestWhenShape,
-    TestThenShape,
-    TestCheckShape
-  >,
+  I extends Ibdd_in_any,
+  O extends Ibdd_out_any,
   modifier = {
     whens: TestWhenImplementation<I, O>;
   }

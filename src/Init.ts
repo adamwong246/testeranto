@@ -25,10 +25,10 @@ export default async () => {
     `testeranto/Project.js`
   );
 
-  fs.copyFileSync(
-    `node_modules/testeranto/dist/prebuild/ReportClient.js`,
-    `testeranto/ReportClient.js`
-  );
+  // fs.copyFileSync(
+  //   `node_modules/testeranto/dist/prebuild/ReportClient.js`,
+  //   `testeranto/ReportClient.js`
+  // );
 
   fs.copyFileSync(
     `node_modules/testeranto/dist/prebuild/Project.css`,

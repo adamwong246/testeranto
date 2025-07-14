@@ -1,11 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { PM_Web } from "./PM/web";
 import Testeranto from "./lib/core.js";
 import { defaultTestResourceRequirement, } from "./lib/index.js";
 let errorCallback = (e) => { };
 let unhandledrejectionCallback = (event) => {
     console.log("window.addEventListener unhandledrejection", event);
-    // cb({ error: event.reason.message });
-    // throw event;
 };
 export class WebTesteranto extends Testeranto {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {

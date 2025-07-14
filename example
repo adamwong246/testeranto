@@ -1,0 +1,318 @@
+diff --git a/src/CoreTypes.ts b/src/CoreTypes.ts
+index 6aaea3f..1c76d7c 100644
+--- a/src/CoreTypes.ts
++++ b/src/CoreTypes.ts
+@@ -137,6 +137,14 @@ export type Ibdd_out<
+   checks: IChecks;
+ };
+ 
++export type Ibdd_out_any = Ibdd_out<
++  TestSuiteShape,
++  TestGivenShape,
++  TestWhenShape,
++  TestThenShape,
++  TestCheckShape
++>;
++
+ /////////////////////////////////////////////////////////////////////////////////////////
+ 
+ export type Ibdd_in<
+@@ -170,4 +178,12 @@ export type Ibdd_in<
+   then: IThen;
+ };
+ 
+-export type Ibdd_in_any = Ibdd_in<any, any, any, any, any, any, any>;
++export type Ibdd_in_any = Ibdd_in<
++  unknown,
++  unknown,
++  unknown,
++  unknown,
++  unknown,
++  unknown,
++  unknown
++>;
+diff --git a/src/defaultConfig.ts b/src/defaultConfig.ts
+index d69998b..16fa4e4 100644
+--- a/src/defaultConfig.ts
++++ b/src/defaultConfig.ts
+@@ -11,7 +11,7 @@ const config: ITestconfig = {
+   nodePlugins: [],
+   webPlugins: [],
+   importPlugins: [],
+-  externalTests: {},
++
+   featureIngestor: function (s: string): Promise<string> {
+     throw new Error("Function not implemented.");
+   },
+diff --git a/src/lib/abstractBase.ts b/src/lib/abstractBase.ts
+index 2dd0603..93130d6 100644
+--- a/src/lib/abstractBase.ts
++++ b/src/lib/abstractBase.ts
+@@ -1,7 +1,7 @@
+ /* eslint-disable @typescript-eslint/no-unused-vars */
+ /* eslint-disable @typescript-eslint/no-explicit-any */
+ 
+-import { ITTestResourceConfiguration, ITestArtifactory, ITLog } from ".";
++import { ITestArtifactory, ITLog, ITTestResourceConfiguration } from ".";
+ import { IPM } from "./types.js";
+ import {
+   afterAllProxy,
+@@ -11,11 +11,11 @@ import {
+   beforeEachProxy,
+   butThenProxy,
+ } from "./pmProxy.js";
+-import { Ibdd_in, Ibdd_in_any, Ibdd_out } from "../CoreTypes";
++import type { Ibdd_in_any, Ibdd_out_any } from "../CoreTypes";
+ 
+ export type IGivens<I extends Ibdd_in_any> = Record<string, BaseGiven<I>>;
+ 
+-export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out> {
++export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
+   name: string;
+   givens: IGivens<I>;
+   checks: BaseCheck<I>[];
+diff --git a/src/lib/basebuilder.ts b/src/lib/basebuilder.ts
+index 92a47a5..f26b72d 100644
+--- a/src/lib/basebuilder.ts
++++ b/src/lib/basebuilder.ts
+@@ -2,9 +2,14 @@
+ /* eslint-disable @typescript-eslint/no-empty-object-type */
+ /* eslint-disable no-async-promise-executor */
+ /* eslint-disable @typescript-eslint/no-explicit-any */
++
+ import { PassThrough } from "stream";
+ 
+-import { IT, ITestSpecification, OT } from "../Types.js";
++import type {
++  Ibdd_in_any,
++  Ibdd_out_any,
++  ITestSpecification,
++} from "../CoreTypes";
+ 
+ import { ITTestResourceRequest, ITestJob, ITLog, IFinalResults } from ".";
+ import {
+@@ -24,8 +29,8 @@ import {
+ } from "./abstractBase.js";
+ 
+ export abstract class BaseBuilder<
+-  I extends IT,
+-  O extends OT,
++  I extends Ibdd_in_any,
++  O extends Ibdd_out_any,
+   SuiteExtensions,
+   GivenExtensions,
+   WhenExtensions,
+diff --git a/src/lib/classBuilder.ts b/src/lib/classBuilder.ts
+index 27057f3..58a85d3 100644
+--- a/src/lib/classBuilder.ts
++++ b/src/lib/classBuilder.ts
+@@ -1,6 +1,11 @@
+ /* eslint-disable @typescript-eslint/no-unused-vars */
+ /* eslint-disable @typescript-eslint/no-explicit-any */
+-import { IT, ITestImplementation, ITestSpecification, OT } from "../Types.js";
++import type {
++  Ibdd_in_any,
++  Ibdd_out,
++  ITestImplementation,
++  ITestSpecification,
++} from "../CoreTypes";
+ 
+ import { BaseBuilder } from "./basebuilder.js";
+ import {
+@@ -16,8 +21,8 @@ import { BaseCheck } from "./abstractBase.js";
+ type IExtenstions = Record<string, unknown>;
+ 
+ export abstract class ClassBuilder<
+-  I extends IT = IT,
+-  O extends OT = OT,
++  I extends Ibdd_in_any = Ibdd_in_any,
++  O extends Ibdd_out = Ibdd_out,
+   M = unknown
+ > extends BaseBuilder<
+   I,
+diff --git a/src/lib/core.ts b/src/lib/core.ts
+index a60ed79..9da7ece 100644
+--- a/src/lib/core.ts
++++ b/src/lib/core.ts
+@@ -1,3 +1,5 @@
++/* eslint-disable @typescript-eslint/no-unused-vars */
++/* eslint-disable @typescript-eslint/no-explicit-any */
+ import {
+   DefaultTestInterface,
+   IFinalResults,
+@@ -15,15 +17,18 @@ import {
+ } from "./abstractBase.js";
+ import { ClassBuilder } from "./classBuilder.js";
+ import { IPM } from "./types";
+-import {
+-  ITestSpecification,
++
++import type {
++  Ibdd_in_any,
++  Ibdd_out,
+   ITestImplementation,
+   ITestInterface,
+-} from "../CoreTypes.js";
++  ITestSpecification,
++} from "../CoreTypes";
+ 
+ export default abstract class Testeranto<
+-  I extends IT,
+-  O extends OT,
++  I extends Ibdd_in_any,
++  O extends Ibdd_out,
+   M
+ > extends ClassBuilder<I, O, M> {
+   constructor(
+diff --git a/src/lib/index.ts b/src/lib/index.ts
+index bbbdee6..226d27a 100644
+--- a/src/lib/index.ts
++++ b/src/lib/index.ts
+@@ -4,21 +4,15 @@ import { PM_Pure } from "../PM/pure.js";
+ 
+ import { PM_Node } from "../PM/node.js";
+ import { PM_Web } from "../PM/web.js";
+-import {
+-  Ibdd_in,
+-  ITestInterface,
+-  ITestconfig,
+-  IBuiltConfig,
+-  IRunTime,
+-  ITestTypes,
+-  IT,
+-  OT,
+-} from "../Types.js";
++import { ITestconfig, IBuiltConfig, IRunTime, ITestTypes } from "../Types.js";
+ 
+ import { IGivens, BaseCheck, BaseSuite } from "./abstractBase.js";
+ import { IPM } from "./types.js";
++import { ITestInterface, Ibdd_in, Ibdd_in_any } from "../CoreTypes.js";
+ 
+-export const BaseTestInterface = <T extends IT>(): ITestInterface<T> => ({
++export const BaseTestInterface = <
++  T extends Ibdd_in_any
++>(): ITestInterface<T> => ({
+   beforeAll: async (s: T["istore"]) => s,
+   beforeEach: async function (
+     subject: T["isubject"],
+@@ -32,14 +26,14 @@ export const BaseTestInterface = <T extends IT>(): ITestInterface<T> => ({
+   afterEach: async (s: T["istore"]) => s,
+   afterAll: (store: T["istore"]) => undefined,
+   butThen: async (
+-    store: IT["istore"],
+-    thenCb: (s: IT["iselection"]) => Promise<IT["isubject"]>
++    store: T["istore"],
++    thenCb: (s: T["iselection"]) => Promise<T["isubject"]>
+   ) => {
+     return thenCb(store);
+   },
+   andWhen: async (
+-    store: IT["istore"],
+-    whenCB: IT["when"],
++    store: T["istore"],
++    whenCB: T["when"],
+     testResource: ITTestResourceConfiguration,
+     pm: IPM
+   ) => {
+@@ -53,7 +47,7 @@ export const BaseTestInterface = <T extends IT>(): ITestInterface<T> => ({
+   assertThis: (x: any) => x,
+ });
+ 
+-export const DefaultTestInterface = <T extends IT>(
++export const DefaultTestInterface = <T extends Ibdd_in_any>(
+   p: Partial<ITestInterface<T>>
+ ): ITestInterface<T> => {
+   return {
+@@ -102,7 +96,7 @@ type ITest = {
+   givens: IGivens<
+     Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>
+   >;
+-  checks: BaseCheck<IT>[];
++  checks: BaseCheck<Ibdd_in_any>[];
+   testResourceConfiguration: ITTestResourceConfiguration;
+ };
+ 
+@@ -112,7 +106,7 @@ export type ITestJob = {
+   runner: (
+     x: ITTestResourceConfiguration,
+     t: ITLog
+-  ) => Promise<BaseSuite<IT, OT>>;
++  ) => Promise<BaseSuite<Ibdd_in_any, OT>>;
+   testResourceRequirement: ITTestResourceRequirement;
+   receiveTestResourceConfig: (pm: PM_Node | PM_Web | PM_Pure) => IFinalResults;
+ };
+diff --git a/src/lib/types.ts b/src/lib/types.ts
+index 7593ace..99be47b 100644
+--- a/src/lib/types.ts
++++ b/src/lib/types.ts
+@@ -1,8 +1,8 @@
+ /* eslint-disable @typescript-eslint/no-explicit-any */
++import { Ibdd_in_any, Ibdd_out_any } from "../CoreTypes";
+ import { PM_Node } from "../PM/node";
+ import { PM_Pure } from "../PM/pure";
+ import { PM_Web } from "../PM/web";
+-import type { IT, OT } from "../Types";
+ 
+ import {
+   IGivens,
+@@ -15,7 +15,12 @@ import {
+ 
+ export type IPM = PM_Node | PM_Web | PM_Pure;
+ 
+-export type TestPhase = 'beforeAll' | 'beforeEach' | 'test' | 'afterEach' | 'afterAll';
++export type TestPhase =
++  | "beforeAll"
++  | "beforeEach"
++  | "test"
++  | "afterEach"
++  | "afterAll";
+ 
+ export type TestError = {
+   phase: TestPhase;
+@@ -27,7 +32,10 @@ export type TestError = {
+   isRetryable?: boolean;
+ };
+ 
+-export type ITestCheckCallback<I extends IT, O extends OT> = {
++export type ITestCheckCallback<
++  I extends Ibdd_in_any,
++  O extends Ibdd_out_any
++> = {
+   [K in keyof O["checks"]]: (
+     name: string,
+     features: string[],
+@@ -37,14 +45,14 @@ export type ITestCheckCallback<I extends IT, O extends OT> = {
+   ) => BaseCheck<I>;
+ };
+ 
+-export type ISuiteKlasser<I extends IT, O extends OT> = (
++export type ISuiteKlasser<I extends Ibdd_in_any, O extends Ibdd_out_any> = (
+   name: string,
+   index: number,
+   givens: IGivens<I>,
+   checks: BaseCheck<I>[]
+ ) => BaseSuite<I, O>;
+ 
+-export type IGivenKlasser<I extends IT> = (
++export type IGivenKlasser<I extends Ibdd_in_any> = (
+   name,
+   features,
+   whens,
+@@ -52,8 +60,14 @@ export type IGivenKlasser<I extends IT> = (
+   givenCB
+ ) => BaseGiven<I>;
+ 
+-export type IWhenKlasser<I extends IT> = (s, o) => BaseWhen<I>;
++export type IWhenKlasser<I extends Ibdd_in_any> = (s, o) => BaseWhen<I>;
+ 
+-export type IThenKlasser<I extends IT> = (s, o) => BaseThen<I>;
++export type IThenKlasser<I extends Ibdd_in_any> = (s, o) => BaseThen<I>;
+ 
+-export type ICheckKlasser<I extends IT> = (n, f, cb, w, t) => BaseCheck<I>;
++export type ICheckKlasser<I extends Ibdd_in_any> = (
++  n,
++  f,
++  cb,
++  w,
++  t
++) => BaseCheck<I>;

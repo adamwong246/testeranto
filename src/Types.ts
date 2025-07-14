@@ -12,25 +12,22 @@ import {
   IGivens,
 } from "./lib/abstractBase.js";
 
-import { Ibdd_in, Ibdd_out } from "./CoreTypes.js";
+import { Ibdd_in_any, Ibdd_out_any } from "./CoreTypes.js";
+
+export type ISummary = Record<
+  string,
+  {
+    runTimeError: string;
+    typeErrors: number;
+    staticErrors: number;
+    prompt: string;
+    failingFeatures: object;
+  }
+>;
 
 export type SuiteSpecification<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
-  O extends Ibdd_out<
-    TestSuiteShape,
-    TestGivenShape,
-    TestWhenShape,
-    TestThenShape,
-    TestCheckShape
-  >
+  I extends Ibdd_in_any,
+  O extends Ibdd_out_any
 > = {
   [K in keyof O["suites"]]: (
     name: string,
@@ -109,22 +106,8 @@ export type ProjectConfig = {
 };
 
 export type GivenSpecification<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
-  O extends Ibdd_out<
-    TestSuiteShape,
-    TestGivenShape,
-    TestWhenShape,
-    TestThenShape,
-    TestCheckShape
-  >
+  I extends Ibdd_in_any,
+  O extends Ibdd_out_any
 > = {
   [K in keyof O["givens"]]: (
     features: string[],
@@ -134,101 +117,31 @@ export type GivenSpecification<
   ) => BaseGiven<I>;
 };
 
-export type WhenSpecification<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
-  O extends Ibdd_out<
-    TestSuiteShape,
-    TestGivenShape,
-    TestWhenShape,
-    TestThenShape,
-    TestCheckShape
-  >
-> = {
+export type WhenSpecification<I extends Ibdd_in_any, O extends Ibdd_out_any> = {
   [K in keyof O["whens"]]: (...xtrasC: O["whens"][K]) => BaseWhen<I>;
 };
 
-export type ThenSpecification<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
-  O extends Ibdd_out<
-    TestSuiteShape,
-    TestGivenShape,
-    TestWhenShape,
-    TestThenShape,
-    TestCheckShape
-  >
-> = {
+export type ThenSpecification<I extends Ibdd_in_any, O extends Ibdd_out_any> = {
   [K in keyof O["thens"]]: (...xtrasD: O["thens"][K]) => BaseThen<I>;
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Base implementation types
-export type TestSuiteImplementation<
-  O extends Ibdd_out<
-    TestSuiteShape,
-    TestGivenShape,
-    TestWhenShape,
-    TestThenShape,
-    TestCheckShape
-  >
-> = {
+export type TestSuiteImplementation<O extends Ibdd_out_any> = {
   [K in keyof O["suites"]]: string;
 };
 
 export type TestGivenImplementation<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
-  O extends Ibdd_out<
-    TestSuiteShape,
-    TestGivenShape,
-    TestWhenShape,
-    TestThenShape,
-    TestCheckShape
-  >
+  I extends Ibdd_in_any,
+  O extends Ibdd_out_any
 > = {
   [K in keyof O["givens"]]: (...Ig: O["givens"][K]) => I["given"];
 };
 
 export type TestWhenImplementation<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
-  O extends Ibdd_out<
-    TestSuiteShape,
-    TestGivenShape,
-    TestWhenShape,
-    TestThenShape,
-    TestCheckShape
-  >
+  I extends Ibdd_in_any,
+  O extends Ibdd_out_any
 > = {
   [K in keyof O["whens"]]: (
     ...Iw: O["whens"][K]
@@ -240,22 +153,8 @@ export type TestWhenImplementation<
 };
 
 export type TestThenImplementation<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
-  O extends Ibdd_out<
-    TestSuiteShape,
-    TestGivenShape,
-    TestWhenShape,
-    TestThenShape,
-    TestCheckShape
-  >
+  I extends Ibdd_in_any,
+  O extends Ibdd_out_any
 > = {
   [K in keyof O["thens"]]: (
     ...It: O["thens"][K]
@@ -263,22 +162,8 @@ export type TestThenImplementation<
 };
 
 export type TestCheckImplementation<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
-  O extends Ibdd_out<
-    TestSuiteShape,
-    TestGivenShape,
-    TestWhenShape,
-    TestThenShape,
-    TestCheckShape
-  >
+  I extends Ibdd_in_any,
+  O extends Ibdd_out_any
 > = {
   [K in keyof O["checks"]]: (...Ic: O["checks"][K]) => I["given"];
 };

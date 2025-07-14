@@ -8,7 +8,11 @@ import { ITestconfig, IBuiltConfig, IRunTime, ITestTypes } from "../Types.js";
 
 import { IGivens, BaseCheck, BaseSuite } from "./abstractBase.js";
 import { IPM } from "./types.js";
-import { ITestInterface, Ibdd_in, Ibdd_in_any } from "../CoreTypes.js";
+import type {
+  ITestInterface,
+  Ibdd_in_any,
+  Ibdd_out_any,
+} from "../CoreTypes.js";
 
 export const BaseTestInterface = <
   T extends Ibdd_in_any
@@ -93,9 +97,7 @@ export type ITestArtificer = (key: string, data: any) => void;
 type ITest = {
   toObj(): object;
   name: string;
-  givens: IGivens<
-    Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>
-  >;
+  givens: IGivens<Ibdd_in_any>;
   checks: BaseCheck<Ibdd_in_any>[];
   testResourceConfiguration: ITTestResourceConfiguration;
 };
@@ -106,7 +108,7 @@ export type ITestJob = {
   runner: (
     x: ITTestResourceConfiguration,
     t: ITLog
-  ) => Promise<BaseSuite<Ibdd_in_any, OT>>;
+  ) => Promise<BaseSuite<Ibdd_in_any, Ibdd_out_any>>;
   testResourceRequirement: ITTestResourceRequirement;
   receiveTestResourceConfig: (pm: PM_Node | PM_Web | PM_Pure) => IFinalResults;
 };

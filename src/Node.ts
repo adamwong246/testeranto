@@ -4,35 +4,21 @@ import {
   ITTestResourceConfiguration,
   ITTestResourceRequest,
 } from "./lib/index.js";
-import type {} from // INodeTestInterface,
-// IT,
-// ITestImplementation,
-// ITestInterface,
-// ITestSpecification,
-// OT,
-"./Types.js";
 import { PM_Node } from "./PM/node.js";
 import {
   ITestSpecification,
   ITestImplementation,
   ITestInterface,
-  Ibdd_in,
+  Ibdd_in_any,
+  Ibdd_out_any,
   Ibdd_out,
 } from "./CoreTypes.js";
 
 let ipcfile;
 
 export class NodeTesteranto<
-  I extends Ibdd_in<
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown,
-    unknown
-  >,
-  O extends Ibdd_out,
+  I extends Ibdd_in_any,
+  O extends Ibdd_out_any,
   M
 > extends Testeranto<I, O, M> {
   constructor(
@@ -65,7 +51,7 @@ export class NodeTesteranto<
   }
 }
 
-const testeranto = async <I extends IT, O extends OT, M>(
+const testeranto = async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
   input: I["iinput"],
   testSpecification: ITestSpecification<I, O>,
   testImplementation: ITestImplementation<I, O, M>,
@@ -108,7 +94,7 @@ const testeranto = async <I extends IT, O extends OT, M>(
     // });
   }
 
-  return t;
+  // return t;
 };
 
 export default testeranto;

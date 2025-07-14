@@ -27416,7 +27416,6 @@
     ), /* @__PURE__ */ import_react33.default.createElement(Footer, null));
   };
   document.addEventListener("DOMContentLoaded", function() {
-    debugger;
     const elem = document.getElementById("root");
     if (elem) {
       if (elem) {

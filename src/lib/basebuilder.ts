@@ -11,7 +11,7 @@ import type {
   ITestSpecification,
 } from "../CoreTypes";
 
-import { ITTestResourceRequest, ITestJob, ITLog, IFinalResults } from ".";
+import { ITestJob, ITLog, IFinalResults, ITTestResourceRequest } from ".";
 import {
   ISuiteKlasser,
   IGivenKlasser,

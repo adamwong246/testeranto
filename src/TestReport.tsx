@@ -2,8 +2,6 @@ import ReactDom from "react-dom/client";
 import React, { useEffect, useState } from "react";
 import { Col, Nav, Row, Tab } from "react-bootstrap";
 
-import { IBuiltConfig } from "./lib";
-
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
 import { Footer } from "./Footer";
@@ -271,7 +269,6 @@ const BddPage = () => {
 };
 
 document.addEventListener("DOMContentLoaded", function () {
-  debugger
   const elem = document.getElementById("root");
   if (elem) {
     if (elem) {

@@ -1,9 +1,15 @@
-import { PM_Web } from "./PM/web";
-import type {
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import {
+  ITestSpecification,
   ITestImplementation,
   ITestInterface,
-  ITestSpecification,
-} from "./Types";
+  Ibdd_in_any,
+  Ibdd_out,
+} from "./CoreTypes";
+import { PM_Web } from "./PM/web";
+
 import Testeranto from "./lib/core.js";
 import {
   ITTestResourceConfiguration,
@@ -14,15 +20,13 @@ import {
 let errorCallback = (e: any) => {};
 let unhandledrejectionCallback = (event: PromiseRejectionEvent) => {
   console.log("window.addEventListener unhandledrejection", event);
-  // cb({ error: event.reason.message });
-  // throw event;
 };
 
-export class WebTesteranto<I extends IT, O extends OT, M> extends Testeranto<
-  I,
-  O,
+export class WebTesteranto<
+  I extends Ibdd_in_any,
+  O extends Ibdd_out,
   M
-> {
+> extends Testeranto<I, O, M> {
   constructor(
     input: I["iinput"],
     testSpecification: ITestSpecification<I, O>,
@@ -79,7 +83,7 @@ export class WebTesteranto<I extends IT, O extends OT, M> extends Testeranto<
   }
 }
 
-export default async <I extends IT, O extends OT, M>(
+export default async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
   input: I["iinput"],
   testSpecification: ITestSpecification<I, O>,
   testImplementation: ITestImplementation<I, O, M>,

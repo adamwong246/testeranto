@@ -49,7 +49,7 @@ process.stdin.on("keypress", (str, key) => {
         process.exit(-1);
     }
 });
-let testName = process.argv[2];
+const testName = process.argv[2];
 const mode = process.argv[3];
 if (mode !== "once" && mode !== "dev") {
     console.error("the 2nd argument should be 'dev' or 'once' ");

@@ -1,8 +1,8 @@
-import type { IT, OT } from "../Types.js";
-import { ITTestResourceConfiguration, ITestArtifactory, ITLog } from ".";
+import { ITestArtifactory, ITLog, ITTestResourceConfiguration } from ".";
 import { IPM } from "./types.js";
-export type IGivens<I extends IT> = Record<string, BaseGiven<I>>;
-export declare abstract class BaseSuite<I extends IT = IT, O extends OT = OT> {
+import type { Ibdd_in_any, Ibdd_out_any } from "../CoreTypes";
+export type IGivens<I extends Ibdd_in_any> = Record<string, BaseGiven<I>>;
+export declare abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
     name: string;
     givens: IGivens<I>;
     checks: BaseCheck<I>[];
@@ -37,7 +37,7 @@ export declare abstract class BaseSuite<I extends IT = IT, O extends OT = OT> {
     afterAll(store: I["istore"], artifactory: ITestArtifactory, pm: IPM): I["istore"];
     run(input: I["iinput"], testResourceConfiguration: ITTestResourceConfiguration, artifactory: (fPath: string, value: unknown) => void, tLog: (...string: any[]) => void, pm: IPM): Promise<BaseSuite<I, O>>;
 }
-export declare abstract class BaseGiven<I extends IT = IT> {
+export declare abstract class BaseGiven<I extends Ibdd_in_any> {
     name: string;
     features: string[];
     whens: BaseWhen<I>[];
@@ -69,7 +69,7 @@ export declare abstract class BaseGiven<I extends IT = IT> {
     abstract uberCatcher(e: any): any;
     give(subject: I["isubject"], key: string, testResourceConfiguration: ITTestResourceConfiguration, tester: (t: Awaited<I["then"]> | undefined) => boolean, artifactory: ITestArtifactory, tLog: ITLog, pm: IPM, suiteNdx: number): Promise<I["istore"]>;
 }
-export declare abstract class BaseWhen<I extends IT> {
+export declare abstract class BaseWhen<I extends Ibdd_in_any> {
     name: string;
     whenCB: (x: I["iselection"]) => I["then"];
     error: Error;
@@ -81,7 +81,7 @@ export declare abstract class BaseWhen<I extends IT> {
     };
     test(store: I["istore"], testResourceConfiguration: any, tLog: ITLog, pm: IPM, filepath: string): Promise<any>;
 }
-export declare abstract class BaseThen<I extends IT> {
+export declare abstract class BaseThen<I extends Ibdd_in_any> {
     name: string;
     thenCB: (storeState: I["iselection"]) => Promise<I["then"]>;
     error: boolean;
@@ -94,7 +94,7 @@ export declare abstract class BaseThen<I extends IT> {
     test(store: I["istore"], testResourceConfiguration: any, tLog: ITLog, pm: IPM, filepath: string): Promise<I["then"] | undefined>;
     check(): void;
 }
-export declare abstract class BaseCheck<I extends IT = IT> {
+export declare abstract class BaseCheck<I extends Ibdd_in_any> {
     key: string;
     name: string;
     features: string[];

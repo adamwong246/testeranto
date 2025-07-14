@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type {
   Ibdd_in_any,
-  Ibdd_out,
+  Ibdd_out_any,
   ITestImplementation,
   ITestSpecification,
 } from "../CoreTypes";
@@ -22,7 +22,7 @@ type IExtenstions = Record<string, unknown>;
 
 export abstract class ClassBuilder<
   I extends Ibdd_in_any = Ibdd_in_any,
-  O extends Ibdd_out = Ibdd_out,
+  O extends Ibdd_out_any = Ibdd_out_any,
   M = unknown
 > extends BaseBuilder<
   I,

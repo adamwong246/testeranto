@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { afterAllProxy, afterEachProxy, andWhenProxy, beforeAllProxy, beforeEachProxy, butThenProxy, } from "./pmProxy.js";
 export class BaseSuite {
     constructor(name, index, givens = {}, checks = []) {

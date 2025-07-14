@@ -4,95 +4,78 @@ src/lib/basebuilder.ts(90,15): error TS2349: This expression is not callable.
     Type 'void' has no call signatures.
 src/lib/classBuilder.ts(90,18): error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
 src/lib/classBuilder.ts(105,28): error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
-src/lib/index.ts(17,3): error TS2322: Type '(subject: T["isubject"], initialValues: T["iinitialValues"], x: unknown, testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["isubject"]>' is not assignable to type '(subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceConfiguration, initialValues: any, pm: IPM) => Promise<...>'.
+src/lib/index.ts(21,3): error TS2322: Type '(subject: T["isubject"], initialValues: T["iinitialValues"], x: unknown, testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["isubject"]>' is not assignable to type '(subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceConfiguration, initialValues: any, pm: IPM) => Promise<...>'.
   Types of parameters 'initialValues' and 'initializer' are incompatible.
     Type '(c?: any) => T["given"]' is not assignable to type 'T["iinitialValues"]'.
       'T["iinitialValues"]' could be instantiated with an arbitrary type which could be unrelated to '(c?: any) => T["given"]'.
-src/lib/index.ts(19,20): error TS2536: Type '"iinitialValues"' cannot be used to index type 'T'.
-src/lib/index.ts(41,13): error TS2349: This expression is not callable.
+src/lib/index.ts(23,20): error TS2536: Type '"iinitialValues"' cannot be used to index type 'T'.
+src/lib/index.ts(45,13): error TS2349: This expression is not callable.
   Type 'unknown' has no call signatures.
-src/lib/index.ts(53,3): error TS2322: Type '{ assertThis?: ((x: T["then"]) => any) | undefined; andWhen?: ((store: T["istore"], whenCB: T["when"], testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["istore"]>) | undefined; ... 4 more ...; beforeEach?: ((subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceCon...' is not assignable to type 'ITestInterface<T>'.
+src/lib/index.ts(57,3): error TS2322: Type '{ assertThis?: ((x: T["then"]) => any) | undefined; andWhen?: ((store: T["istore"], whenCB: T["when"], testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["istore"]>) | undefined; ... 4 more ...; beforeEach?: ((subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceCon...' is not assignable to type 'ITestInterface<T>'.
   Types of property 'assertThis' are incompatible.
     Type '((x: T["then"]) => any) | undefined' is not assignable to type '(x: T["then"]) => any'.
       Type 'undefined' is not assignable to type '(x: T["then"]) => any'.
-src/lib/index.ts(109,39): error TS2304: Cannot find name 'OT'.
-src/mothership/test.ts(9,3): error TS2459: Module '"../Types"' declares 'Ibdd_out' locally, but it is not exported.
-src/mothership/test.ts(10,3): error TS2724: '"../Types"' has no exported member named 'ITestSpecification'. Did you mean 'SuiteSpecification'?
-src/mothership/test.ts(11,3): error TS2305: Module '"../Types"' has no exported member 'IT'.
-src/mothership/test.ts(12,3): error TS2724: '"../Types"' has no exported member named 'ITestImplementation'. Did you mean 'TestWhenImplementation'?
-src/mothership/test.ts(13,3): error TS2459: Module '"../Types"' declares 'Ibdd_in' locally, but it is not exported.
-src/mothership/test.ts(14,3): error TS2305: Module '"../Types"' has no exported member 'IPartialNodeInterface'.
-src/Node.ts(48,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M> & M & { ...; }'.
+src/mothership/test.ts(75,13): error TS2322: Type '(x: any) => any' is not assignable to type 'string'.
+src/mothership/test.ts(105,22): error TS2304: Cannot find name 'IPartialNodeInterface'.
+src/Node.ts(34,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M> & M & { ...; }'.
   Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; checks: Record<string, any>; }': suites, givens, whens, thens, checks
-src/Node.ts(68,37): error TS2304: Cannot find name 'IT'.
-src/Node.ts(68,51): error TS2304: Cannot find name 'OT'.
-src/Node.ts(72,26): error TS2552: Cannot find name 'INodeTestInterface'. Did you mean 'ITestInterface'?
-src/PM/__tests__/nodeSidecar.testeranto.ts(6,3): error TS2459: Module '"../../Types"' declares 'Ibdd_out' locally, but it is not exported.
-src/PM/__tests__/nodeSidecar.testeranto.ts(7,3): error TS2724: '"../../Types"' has no exported member named 'ITestSpecification'. Did you mean 'SuiteSpecification'?
-src/PM/__tests__/nodeSidecar.testeranto.ts(8,3): error TS2305: Module '"../../Types"' has no exported member 'IT'.
-src/PM/__tests__/nodeSidecar.testeranto.ts(9,3): error TS2724: '"../../Types"' has no exported member named 'ITestImplementation'. Did you mean 'TestWhenImplementation'?
-src/PM/__tests__/nodeSidecar.testeranto.ts(10,3): error TS2459: Module '"../../Types"' declares 'Ibdd_in' locally, but it is not exported.
-src/PM/__tests__/nodeSidecar.testeranto.ts(11,3): error TS2305: Module '"../../Types"' has no exported member 'IPartialNodeInterface'.
-src/PM/__tests__/nodeSidecar.testeranto.ts(107,29): error TS2454: Variable 'callbackFn' is used before being assigned.
-src/PM/__tests__/pureSidecar.testeranto.ts(6,3): error TS2459: Module '"../../Types"' declares 'Ibdd_out' locally, but it is not exported.
-src/PM/__tests__/pureSidecar.testeranto.ts(7,3): error TS2724: '"../../Types"' has no exported member named 'ITestSpecification'. Did you mean 'SuiteSpecification'?
-src/PM/__tests__/pureSidecar.testeranto.ts(8,3): error TS2305: Module '"../../Types"' has no exported member 'IT'.
-src/PM/__tests__/pureSidecar.testeranto.ts(9,3): error TS2724: '"../../Types"' has no exported member named 'ITestImplementation'. Did you mean 'TestWhenImplementation'?
-src/PM/__tests__/pureSidecar.testeranto.ts(10,3): error TS2459: Module '"../../Types"' declares 'Ibdd_in' locally, but it is not exported.
-src/PM/__tests__/pureSidecar.testeranto.ts(11,3): error TS2305: Module '"../../Types"' has no exported member 'IPartialNodeInterface'.
-src/PM/__tests__/pureSidecar.testeranto.ts(81,7): error TS2322: Type '(event: string, callback: Function) => void' is not assignable to type '{ (event: "beforeExit", listener: BeforeExitListener): Process; (event: "disconnect", listener: DisconnectListener): Process; (event: "exit", listener: ExitListener): Process; (event: "rejectionHandled", listener: RejectionHandledListener): Process; (event: "uncaughtException", listener: UncaughtExceptionListener): ...'.
+src/Node.ts(58,26): error TS2552: Cannot find name 'INodeTestInterface'. Did you mean 'ITestInterface'?
+src/PM/__tests__/nodeSidecar.testeranto.ts(58,43): error TS2304: Cannot find name 'I'.
+src/PM/__tests__/nodeSidecar.testeranto.ts(59,13): error TS2322: Type '(x: any) => any' is not assignable to type 'string'.
+src/PM/__tests__/nodeSidecar.testeranto.ts(100,29): error TS2454: Variable 'callbackFn' is used before being assigned.
+src/PM/__tests__/nodeSidecar.testeranto.ts(131,18): error TS2339: Property 'removeListenerCalled' does not exist on type 'PM'.
+src/PM/__tests__/nodeSidecar.testeranto.ts(141,22): error TS2304: Cannot find name 'IPartialNodeInterface'.
+src/PM/__tests__/nodeSidecar.testeranto.ts(141,44): error TS2304: Cannot find name 'I'.
+src/PM/__tests__/pureSidecar.testeranto.ts(58,43): error TS2304: Cannot find name 'I'.
+src/PM/__tests__/pureSidecar.testeranto.ts(59,13): error TS2322: Type '(x: any) => any' is not assignable to type 'string'.
+src/PM/__tests__/pureSidecar.testeranto.ts(74,7): error TS2322: Type '(event: string, callback: Function) => void' is not assignable to type '{ (event: "beforeExit", listener: BeforeExitListener): Process; (event: "disconnect", listener: DisconnectListener): Process; (event: "exit", listener: ExitListener): Process; (event: "rejectionHandled", listener: RejectionHandledListener): Process; (event: "uncaughtException", listener: UncaughtExceptionListener): ...'.
   Type 'void' is not assignable to type 'Process'.
-src/PM/__tests__/pureSidecar.testeranto.ts(100,29): error TS2454: Variable 'callbackFn' is used before being assigned.
-src/PM/__tests__/pureSidecar.testeranto.ts(106,35): error TS2322: Type 'boolean' is not assignable to type 'Process'.
-src/PM/__tests__/pureSidecar.testeranto.ts(107,38): error TS2322: Type 'boolean' is not assignable to type 'Process'.
-src/PM/__tests__/webSidecar.testeranto.ts(6,3): error TS2459: Module '"../../Types"' declares 'Ibdd_out' locally, but it is not exported.
-src/PM/__tests__/webSidecar.testeranto.ts(7,3): error TS2724: '"../../Types"' has no exported member named 'ITestSpecification'. Did you mean 'SuiteSpecification'?
-src/PM/__tests__/webSidecar.testeranto.ts(8,3): error TS2305: Module '"../../Types"' has no exported member 'IT'.
-src/PM/__tests__/webSidecar.testeranto.ts(9,3): error TS2724: '"../../Types"' has no exported member named 'ITestImplementation'. Did you mean 'TestWhenImplementation'?
-src/PM/__tests__/webSidecar.testeranto.ts(10,3): error TS2459: Module '"../../Types"' declares 'Ibdd_in' locally, but it is not exported.
-src/PM/__tests__/webSidecar.testeranto.ts(11,3): error TS2305: Module '"../../Types"' has no exported member 'IPartialNodeInterface'.
-src/PM/__tests__/webSidecar.testeranto.ts(81,7): error TS2322: Type '(event: string, callback: Function) => void' is not assignable to type '{ (event: "beforeExit", listener: BeforeExitListener): Process; (event: "disconnect", listener: DisconnectListener): Process; (event: "exit", listener: ExitListener): Process; (event: "rejectionHandled", listener: RejectionHandledListener): Process; (event: "uncaughtException", listener: UncaughtExceptionListener): ...'.
+src/PM/__tests__/pureSidecar.testeranto.ts(93,29): error TS2454: Variable 'callbackFn' is used before being assigned.
+src/PM/__tests__/pureSidecar.testeranto.ts(99,35): error TS2322: Type 'boolean' is not assignable to type 'Process'.
+src/PM/__tests__/pureSidecar.testeranto.ts(100,38): error TS2322: Type 'boolean' is not assignable to type 'Process'.
+src/PM/__tests__/pureSidecar.testeranto.ts(115,18): error TS2339: Property 'removeListenerCalled' does not exist on type 'PM'.
+src/PM/__tests__/pureSidecar.testeranto.ts(125,22): error TS2304: Cannot find name 'IPartialNodeInterface'.
+src/PM/__tests__/pureSidecar.testeranto.ts(125,44): error TS2304: Cannot find name 'I'.
+src/PM/__tests__/webSidecar.testeranto.ts(58,43): error TS2304: Cannot find name 'I'.
+src/PM/__tests__/webSidecar.testeranto.ts(59,13): error TS2322: Type '(x: any) => any' is not assignable to type 'string'.
+src/PM/__tests__/webSidecar.testeranto.ts(74,7): error TS2322: Type '(event: string, callback: Function) => void' is not assignable to type '{ (event: "beforeExit", listener: BeforeExitListener): Process; (event: "disconnect", listener: DisconnectListener): Process; (event: "exit", listener: ExitListener): Process; (event: "rejectionHandled", listener: RejectionHandledListener): Process; (event: "uncaughtException", listener: UncaughtExceptionListener): ...'.
   Type 'void' is not assignable to type 'Process'.
-src/PM/__tests__/webSidecar.testeranto.ts(100,29): error TS2454: Variable 'callbackFn' is used before being assigned.
-src/PM/__tests__/webSidecar.testeranto.ts(106,35): error TS2322: Type 'boolean' is not assignable to type 'Process'.
-src/PM/__tests__/webSidecar.testeranto.ts(107,38): error TS2322: Type 'boolean' is not assignable to type 'Process'.
+src/PM/__tests__/webSidecar.testeranto.ts(93,29): error TS2454: Variable 'callbackFn' is used before being assigned.
+src/PM/__tests__/webSidecar.testeranto.ts(99,35): error TS2322: Type 'boolean' is not assignable to type 'Process'.
+src/PM/__tests__/webSidecar.testeranto.ts(100,38): error TS2322: Type 'boolean' is not assignable to type 'Process'.
+src/PM/__tests__/webSidecar.testeranto.ts(115,18): error TS2339: Property 'removeListenerCalled' does not exist on type 'PM'.
+src/PM/__tests__/webSidecar.testeranto.ts(125,22): error TS2304: Cannot find name 'IPartialNodeInterface'.
+src/PM/__tests__/webSidecar.testeranto.ts(125,44): error TS2304: Cannot find name 'I'.
 src/PM/main.ts(958,6): error TS2366: Function lacks ending return statement and return type does not include 'undefined'.
 src/PM/main.ts(996,27): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
 src/PM/main.ts(1120,16): error TS2339: Property 'sidecars' does not exist on type 'PM_Main'.
 src/PM/main.ts(1159,27): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
 src/PM/main.ts(1174,9): error TS2322: Type 'undefined' is not assignable to type '[number, ITTestResourceConfiguration]'.
 src/PM/main.ts(1306,9): error TS2322: Type 'string' is not assignable to type 'Page'.
-src/PM/nodeSidecar.ts(16,18): error TS2503: Cannot find namespace 'jest'.
-src/PM/nodeSidecar.ts(50,35): error TS2304: Cannot find name 'ITLog'.
-src/PM/nodeSidecar.ts(51,53): error TS2304: Cannot find name 'PassThrough'.
-src/PM/PM_WithEslintAndTsc.ts(14,34): error TS2305: Module '"../Types.js"' has no exported member 'ISummary'.
+src/PM/PM_WithEslintAndTsc.ts(37,9): error TS2322: Type 'string' is not assignable to type 'number'.
+src/PM/PM_WithEslintAndTsc.ts(38,9): error TS2322: Type 'string' is not assignable to type 'number'.
+src/PM/PM_WithEslintAndTsc.ts(45,11): error TS2322: Type 'string' is not assignable to type 'number'.
+src/PM/PM_WithEslintAndTsc.ts(46,11): error TS2322: Type 'string' is not assignable to type 'number'.
+src/PM/PM_WithEslintAndTsc.ts(231,5): error TS2322: Type 'string' is not assignable to type 'number'.
+src/PM/PM_WithEslintAndTsc.ts(241,5): error TS2322: Type 'string' is not assignable to type 'number'.
+src/PM/PM_WithEslintAndTsc.ts(257,5): error TS2322: Type 'number' is not assignable to type 'string'.
+src/PM/PM_WithEslintAndTsc.ts(293,11): error TS2367: This comparison appears to be unintentional because the types 'number' and 'string' have no overlap.
+src/PM/PM_WithEslintAndTsc.ts(300,11): error TS2367: This comparison appears to be unintentional because the types 'number' and 'string' have no overlap.
 src/PM/web.ts(56,12): error TS2304: Cannot find name 'opts'.
 src/PM/web.ts(57,57): error TS2304: Cannot find name 'opts'.
 src/PM/web.ts(59,7): error TS2663: Cannot find name 'page'. Did you mean the instance member 'this.page'?
-src/Project.tsx(11,10): error TS2305: Module '"./Types"' has no exported member 'ISummary'.
-src/Project.tsx(400,38): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
+src/Project.tsx(398,38): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
   Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.
-src/Pure.ts(8,3): error TS2305: Module '"./Types.js"' has no exported member 'INodeTestInterface'.
-src/Pure.ts(9,3): error TS2305: Module '"./Types.js"' has no exported member 'IT'.
-src/Pure.ts(10,3): error TS2724: '"./Types.js"' has no exported member named 'ITestImplementation'. Did you mean 'TestWhenImplementation'?
-src/Pure.ts(11,3): error TS2305: Module '"./Types.js"' has no exported member 'ITestInterface'.
-src/Pure.ts(12,3): error TS2724: '"./Types.js"' has no exported member named 'ITestSpecification'. Did you mean 'SuiteSpecification'?
-src/Pure.ts(13,3): error TS2305: Module '"./Types.js"' has no exported member 'OT'.
-src/SP__Polygon.test.ts(1,35): error TS2307: Cannot find module '../lib' or its corresponding type declarations.
-src/SP__Polygon.test.ts(2,25): error TS2307: Cannot find module './SP__Polygon' or its corresponding type declarations.
-src/SP__Polygon.test.ts(10,49): error TS2304: Cannot find name 'expect'.
-src/TestReport.tsx(279,19): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
+src/Pure.ts(33,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; checks: Record<string, any>; }': suites, givens, whens, thens, checks
+src/Pure.ts(57,26): error TS2552: Cannot find name 'INodeTestInterface'. Did you mean 'ITestInterface'?
+src/TestReport.tsx(276,19): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
   Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.
-src/Web.ts(3,3): error TS2724: '"./Types"' has no exported member named 'ITestImplementation'. Did you mean 'TestWhenImplementation'?
-src/Web.ts(4,3): error TS2305: Module '"./Types"' has no exported member 'ITestInterface'.
-src/Web.ts(5,3): error TS2724: '"./Types"' has no exported member named 'ITestSpecification'. Did you mean 'SuiteSpecification'?
-src/Web.ts(21,38): error TS2304: Cannot find name 'IT'.
-src/Web.ts(21,52): error TS2304: Cannot find name 'OT'.
-src/Web.ts(44,14): error TS2554: Expected 0 arguments, but got 1.
-src/Web.ts(63,14): error TS2554: Expected 0 arguments, but got 1.
-src/Web.ts(82,33): error TS2304: Cannot find name 'IT'.
-src/Web.ts(82,47): error TS2304: Cannot find name 'OT'.
-src/Web.ts(86,26): error TS2304: Cannot find name 'IWebTestInterface'.
+src/Web.ts(40,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; checks: Record<string, any>; }': suites, givens, whens, thens, checks
+src/Web.ts(48,14): error TS2554: Expected 0 arguments, but got 1.
+src/Web.ts(67,14): error TS2554: Expected 0 arguments, but got 1.
+src/Web.ts(90,26): error TS2552: Cannot find name 'IWebTestInterface'. Did you mean 'ITestInterface'?
 testeranto.config.ts(42,7): error TS2561: Object literal may only specify known properties, but 'externalTests' does not exist in type 'ITestconfig'. Did you mean to write 'externals'?
 testeranto.config.ts(91,7): error TS2561: Object literal may only specify known properties, but 'externalTests' does not exist in type 'ITestconfig'. Did you mean to write 'externals'?
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.

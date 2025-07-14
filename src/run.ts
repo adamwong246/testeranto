@@ -15,7 +15,7 @@ process.stdin.on("keypress", (str, key) => {
   }
 });
 
-let testName = process.argv[2];
+const testName = process.argv[2];
 
 const mode = process.argv[3] as "once" | "dev";
 if (mode !== "once" && mode !== "dev") {

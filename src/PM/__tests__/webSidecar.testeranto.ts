@@ -5,21 +5,9 @@ import Testeranto from "../../Node";
 import {
   Ibdd_out,
   ITestSpecification,
-  IT,
   ITestImplementation,
-  Ibdd_in,
-  IPartialNodeInterface,
-} from "../../Types";
-
-type I = Ibdd_in<
-  PM_Web_Sidecar,
-  PM_Web_Sidecar,
-  unknown,
-  unknown,
-  unknown,
-  unknown,
-  unknown
->;
+  Ibdd_in_any,
+} from "../../CoreTypes";
 
 type O = Ibdd_out<
   {
@@ -41,7 +29,12 @@ type O = Ibdd_out<
   }
 >;
 
-const specification: ITestSpecification<IT, O> = (Suite, Given, When, Then) => {
+const specification: ITestSpecification<Ibdd_in_any, O> = (
+  Suite,
+  Given,
+  When,
+  Then
+) => {
   return [
     Suite.SidecarInitialized(
       "Web Sidecar message passing works correctly",

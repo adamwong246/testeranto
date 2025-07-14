@@ -1,18 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+  Ibdd_in,
+  Ibdd_out,
+  ITestSpecification,
+  ITestImplementation,
+  Ibdd_in_any,
+} from "../CoreTypes";
 import { ITTestResourceConfiguration } from "../lib";
 import { IPM } from "../lib/types";
 import Testeranto from "../Node";
 import { PM } from "../PM";
-
-import {
-  Ibdd_out,
-  ITestSpecification,
-  IT,
-  ITestImplementation,
-  Ibdd_in,
-  IPartialNodeInterface,
-} from "../Types";
 
 import appFactory from "./index";
 
@@ -49,7 +47,12 @@ type O = Ibdd_out<
   }
 >;
 
-const specification: ITestSpecification<IT, O> = (Suite, Given, When, Then) => {
+const specification: ITestSpecification<Ibdd_in_any, O> = (
+  Suite,
+  Given,
+  When,
+  Then
+) => {
   console.log("Suite", Suite);
   return [
     Suite.TheMothership(

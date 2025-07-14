@@ -20,7 +20,7 @@ import { IPM } from "./types";
 
 import type {
   Ibdd_in_any,
-  Ibdd_out,
+  Ibdd_out_any,
   ITestImplementation,
   ITestInterface,
   ITestSpecification,
@@ -28,7 +28,7 @@ import type {
 
 export default abstract class Testeranto<
   I extends Ibdd_in_any,
-  O extends Ibdd_out,
+  O extends Ibdd_out_any,
   M
 > extends ClassBuilder<I, O, M> {
   constructor(

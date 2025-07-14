@@ -2,8 +2,15 @@ import { Plugin } from "esbuild";
 import { ITTestResourceConfiguration } from "./lib/index.js";
 import { PM } from "./PM/index.js";
 import { BaseWhen, BaseThen, BaseGiven, BaseCheck, BaseSuite, IGivens } from "./lib/abstractBase.js";
-import { Ibdd_in, Ibdd_out } from "./CoreTypes.js";
-export type SuiteSpecification<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>, O extends Ibdd_out<TestSuiteShape, TestGivenShape, TestWhenShape, TestThenShape, TestCheckShape>> = {
+import { Ibdd_in_any, Ibdd_out_any } from "./CoreTypes.js";
+export type ISummary = Record<string, {
+    runTimeError: string;
+    typeErrors: number;
+    staticErrors: number;
+    prompt: string;
+    failingFeatures: object;
+}>;
+export type SuiteSpecification<I extends Ibdd_in_any, O extends Ibdd_out_any> = {
     [K in keyof O["suites"]]: (name: string, givens: IGivens<I>, checks: BaseCheck<I>[]) => BaseSuite<I, O>;
 };
 export type TestSummary = {
@@ -51,28 +58,28 @@ export type ProjectConfig = {
     minify?: boolean;
     debug?: boolean;
 };
-export type GivenSpecification<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>, O extends Ibdd_out<TestSuiteShape, TestGivenShape, TestWhenShape, TestThenShape, TestCheckShape>> = {
+export type GivenSpecification<I extends Ibdd_in_any, O extends Ibdd_out_any> = {
     [K in keyof O["givens"]]: (features: string[], whens: BaseWhen<I>[], thens: BaseThen<I>[], ...xtrasB: O["givens"][K]) => BaseGiven<I>;
 };
-export type WhenSpecification<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>, O extends Ibdd_out<TestSuiteShape, TestGivenShape, TestWhenShape, TestThenShape, TestCheckShape>> = {
+export type WhenSpecification<I extends Ibdd_in_any, O extends Ibdd_out_any> = {
     [K in keyof O["whens"]]: (...xtrasC: O["whens"][K]) => BaseWhen<I>;
 };
-export type ThenSpecification<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>, O extends Ibdd_out<TestSuiteShape, TestGivenShape, TestWhenShape, TestThenShape, TestCheckShape>> = {
+export type ThenSpecification<I extends Ibdd_in_any, O extends Ibdd_out_any> = {
     [K in keyof O["thens"]]: (...xtrasD: O["thens"][K]) => BaseThen<I>;
 };
-export type TestSuiteImplementation<O extends Ibdd_out<TestSuiteShape, TestGivenShape, TestWhenShape, TestThenShape, TestCheckShape>> = {
+export type TestSuiteImplementation<O extends Ibdd_out_any> = {
     [K in keyof O["suites"]]: string;
 };
-export type TestGivenImplementation<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>, O extends Ibdd_out<TestSuiteShape, TestGivenShape, TestWhenShape, TestThenShape, TestCheckShape>> = {
+export type TestGivenImplementation<I extends Ibdd_in_any, O extends Ibdd_out_any> = {
     [K in keyof O["givens"]]: (...Ig: O["givens"][K]) => I["given"];
 };
-export type TestWhenImplementation<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>, O extends Ibdd_out<TestSuiteShape, TestGivenShape, TestWhenShape, TestThenShape, TestCheckShape>> = {
+export type TestWhenImplementation<I extends Ibdd_in_any, O extends Ibdd_out_any> = {
     [K in keyof O["whens"]]: (...Iw: O["whens"][K]) => (zel: I["iselection"], tr: ITTestResourceConfiguration, utils: PM) => Promise<I["when"]>;
 };
-export type TestThenImplementation<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>, O extends Ibdd_out<TestSuiteShape, TestGivenShape, TestWhenShape, TestThenShape, TestCheckShape>> = {
+export type TestThenImplementation<I extends Ibdd_in_any, O extends Ibdd_out_any> = {
     [K in keyof O["thens"]]: (...It: O["thens"][K]) => (ssel: I["iselection"], utils: PM) => I["then"];
 };
-export type TestCheckImplementation<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>, O extends Ibdd_out<TestSuiteShape, TestGivenShape, TestWhenShape, TestThenShape, TestCheckShape>> = {
+export type TestCheckImplementation<I extends Ibdd_in_any, O extends Ibdd_out_any> = {
     [K in keyof O["checks"]]: (...Ic: O["checks"][K]) => I["given"];
 };
 export type Modify<T, R> = Omit<T, keyof R> & R;

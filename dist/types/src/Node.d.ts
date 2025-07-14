@@ -1,9 +1,9 @@
 import Testeranto from "./lib/core.js";
 import { ITTestResourceRequest } from "./lib/index.js";
-import { ITestSpecification, ITestImplementation, ITestInterface, Ibdd_in, Ibdd_out } from "./CoreTypes.js";
-export declare class NodeTesteranto<I extends Ibdd_in<unknown, unknown, unknown, unknown, unknown, unknown, unknown>, O extends Ibdd_out, M> extends Testeranto<I, O, M> {
+import { ITestSpecification, ITestImplementation, ITestInterface, Ibdd_in_any, Ibdd_out_any, Ibdd_out } from "./CoreTypes.js";
+export declare class NodeTesteranto<I extends Ibdd_in_any, O extends Ibdd_out_any, M> extends Testeranto<I, O, M> {
     constructor(input: I["iinput"], testSpecification: ITestSpecification<I, O>, testImplementation: ITestImplementation<I, O, M>, testResourceRequirement: ITTestResourceRequest, testInterface: Partial<ITestInterface<I>>);
     receiveTestResourceConfig(partialTestResource: string): Promise<import("./lib/index.js").IFinalResults>;
 }
-declare const testeranto: <I extends IT, O extends OT, M>(input: I["iinput"], testSpecification: ITestSpecification<I, O>, testImplementation: ITestImplementation<I, O, M>, testInterface: Partial<INodeTestInterface<I>>, testResourceRequirement?: ITTestResourceRequest) => Promise<Testeranto<I, O, M>>;
+declare const testeranto: <I extends Ibdd_in_any, O extends Ibdd_out, M>(input: I["iinput"], testSpecification: ITestSpecification<I, O>, testImplementation: ITestImplementation<I, O, M>, testInterface: Partial<INodeTestInterface<I>>, testResourceRequirement?: ITTestResourceRequest) => Promise<Testeranto<I, O, M>>;
 export default testeranto;

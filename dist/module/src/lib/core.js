@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DefaultTestInterface, defaultTestResourceRequirement, } from "./index.js";
 import { BaseSuite, BaseGiven, BaseWhen, BaseThen, BaseCheck, } from "./abstractBase.js";
 import { ClassBuilder } from "./classBuilder.js";

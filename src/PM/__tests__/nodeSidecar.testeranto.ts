@@ -3,23 +3,11 @@ import { ITTestResourceConfiguration } from "../../lib";
 import { PM_Node_Sidecar } from "../nodeSidecar";
 import Testeranto from "../../Node";
 import {
+  Ibdd_in_any,
   Ibdd_out,
-  ITestSpecification,
-  IT,
   ITestImplementation,
-  Ibdd_in,
-  IPartialNodeInterface,
-} from "../../Types";
-
-type I = Ibdd_in<
-  PM_Node_Sidecar,
-  PM_Node_Sidecar,
-  unknown,
-  unknown,
-  unknown,
-  unknown,
-  unknown
->;
+  ITestSpecification,
+} from "../../CoreTypes";
 
 type O = Ibdd_out<
   {
@@ -41,7 +29,12 @@ type O = Ibdd_out<
   }
 >;
 
-const specification: ITestSpecification<IT, O> = (Suite, Given, When, Then) => {
+const specification: ITestSpecification<Ibdd_in_any, O> = (
+  Suite,
+  Given,
+  When,
+  Then
+) => {
   return [
     Suite.SidecarInitialized(
       "Sidecar message passing works correctly",
@@ -84,7 +77,7 @@ const implementation: ITestImplementation<I, O> = {
             callbackFn = callback;
             callback(
               JSON.stringify({
-                key: "mock-key", 
+                key: "mock-key",
                 payload: message,
               })
             );
@@ -92,9 +85,9 @@ const implementation: ITestImplementation<I, O> = {
           return mockProcess;
         },
         addListener: () => mockProcess,
-        removeListener: () => mockProcess
+        removeListener: () => mockProcess,
       } as unknown as NodeJS.Process;
-      
+
       process = mockProcess;
 
       let writeCalled = false;
@@ -118,7 +111,7 @@ const implementation: ITestImplementation<I, O> = {
         removeListener: () => {
           removeListenerCalled = true;
           return mockProcess;
-        }
+        },
       } as unknown as NodeJS.Process;
       process = mockProcess;
 

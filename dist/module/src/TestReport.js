@@ -114,7 +114,6 @@ const BddPage = () => {
         React.createElement(Footer, null)));
 };
 document.addEventListener("DOMContentLoaded", function () {
-    debugger;
     const elem = document.getElementById("root");
     if (elem) {
         if (elem) {

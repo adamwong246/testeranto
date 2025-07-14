@@ -36,7 +36,7 @@ const implementation = {
                     return mockProcess;
                 },
                 addListener: () => mockProcess,
-                removeListener: () => mockProcess
+                removeListener: () => mockProcess,
             };
             process = mockProcess;
             let writeCalled = false;
@@ -58,7 +58,7 @@ const implementation = {
                 removeListener: () => {
                     removeListenerCalled = true;
                     return mockProcess;
-                }
+                },
             };
             process = mockProcess;
             await sidecar.send("test-command", "test");

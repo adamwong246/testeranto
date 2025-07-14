@@ -1,4 +1,6 @@
 "use strict";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -10,8 +12,6 @@ const index_js_1 = require("./lib/index.js");
 let errorCallback = (e) => { };
 let unhandledrejectionCallback = (event) => {
     console.log("window.addEventListener unhandledrejection", event);
-    // cb({ error: event.reason.message });
-    // throw event;
 };
 class WebTesteranto extends core_js_1.default {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {

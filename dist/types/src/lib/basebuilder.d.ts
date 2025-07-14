@@ -1,8 +1,8 @@
-import { IT, ITestSpecification, OT } from "../Types.js";
-import { ITTestResourceRequest, ITestJob } from ".";
+import type { Ibdd_in_any, Ibdd_out_any, ITestSpecification } from "../CoreTypes";
+import { ITestJob, ITTestResourceRequest } from ".";
 import { ISuiteKlasser, IGivenKlasser, IWhenKlasser, IThenKlasser, ICheckKlasser, IPM } from "./types.js";
 import { BaseCheck, BaseWhen, BaseThen, BaseGiven } from "./abstractBase.js";
-export declare abstract class BaseBuilder<I extends IT, O extends OT, SuiteExtensions, GivenExtensions, WhenExtensions, ThenExtensions, CheckExtensions> {
+export declare abstract class BaseBuilder<I extends Ibdd_in_any, O extends Ibdd_out_any, SuiteExtensions, GivenExtensions, WhenExtensions, ThenExtensions, CheckExtensions> {
     specs: any;
     assertThis: (t: I["then"]) => {};
     testResourceRequirement: ITTestResourceRequest;

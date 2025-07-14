@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Ibdd_in_any, Ibdd_out_any } from "../CoreTypes";
+import type { Ibdd_in_any, Ibdd_out_any } from "../CoreTypes";
 import { PM_Node } from "../PM/node";
 import { PM_Pure } from "../PM/pure";
 import { PM_Web } from "../PM/web";

@@ -25,7 +25,10 @@ exports.default = async () => {
         }
     });
     fs_1.default.copyFileSync(`node_modules/testeranto/dist/prebuild/Project.js`, `testeranto/Project.js`);
-    fs_1.default.copyFileSync(`node_modules/testeranto/dist/prebuild/ReportClient.js`, `testeranto/ReportClient.js`);
+    // fs.copyFileSync(
+    //   `node_modules/testeranto/dist/prebuild/ReportClient.js`,
+    //   `testeranto/ReportClient.js`
+    // );
     fs_1.default.copyFileSync(`node_modules/testeranto/dist/prebuild/Project.css`, `testeranto/Project.css`);
     // fs.copyFileSync(
     //   `node_modules/testeranto/dist/prebuild/ReportClient.css`,

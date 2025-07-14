@@ -1,12 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-// import fs from "fs";
-// import path from "path";
-
 import { ScreencastOptions } from "puppeteer-core";
 import { CdpPage } from "puppeteer-core/lib/esm/puppeteer";
-import { PassThrough } from "stream";
 
 import { ITLog, ITTestResourceConfiguration } from "../lib";
 

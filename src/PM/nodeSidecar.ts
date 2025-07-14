@@ -3,9 +3,10 @@
 /* eslint-disable prefer-rest-params */
 import net from "net";
 
-import { ITTestResourceConfiguration } from "../lib";
+import { ITLog, ITTestResourceConfiguration } from "../lib";
 
 import { PM_sidecar } from "./sidecar";
+import { PassThrough } from "stream";
 
 type IFPaths = string[];
 const fPaths: IFPaths = [];
@@ -13,7 +14,6 @@ const fPaths: IFPaths = [];
 export class PM_Node_Sidecar extends PM_sidecar {
   testResourceConfiguration: ITTestResourceConfiguration;
   client: net.Socket;
-  mockListener?: jest.Mock;
 
   constructor(t: ITTestResourceConfiguration) {
     super();

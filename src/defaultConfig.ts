@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ITestconfig } from "./lib";
 
 const config: ITestconfig = {
