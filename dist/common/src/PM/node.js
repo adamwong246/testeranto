@@ -150,9 +150,16 @@ class PM_Node extends _1.PM {
                     if (error) {
                         console.error(`❗️testArtiFactory failed`, targetDir, error);
                     }
-                    fs_1.default.writeFileSync(path_1.default.resolve(targetDir.split("/").slice(0, -1).join("/"), "manifest"), fPaths.join(`\n`), {
-                        encoding: "utf-8",
-                    });
+                    // fs.writeFileSync(
+                    //   path.resolve(
+                    //     targetDir.split("/").slice(0, -1).join("/"),
+                    //     "manifest"
+                    //   ),
+                    //   fPaths.join(`\n`),
+                    //   {
+                    //     encoding: "utf-8",
+                    //   }
+                    // );
                     if (Buffer.isBuffer(value)) {
                         fs_1.default.writeFileSync(fPath, value, "binary");
                         res();

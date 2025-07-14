@@ -14,7 +14,7 @@ exports.default = (r) => {
             build.onEnd((result) => {
                 console.log(`> web build ended with ${result.errors.length} errors`);
                 if (result.errors.length > 0) {
-                    fs_1.default.writeFileSync(`./${r}_build_errors`, JSON.stringify(result));
+                    fs_1.default.writeFileSync(`./testeranto/reports${r}_build_errors`, JSON.stringify(result, null, 2));
                 }
             });
         },

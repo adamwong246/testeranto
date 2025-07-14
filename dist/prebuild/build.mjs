@@ -108,7 +108,10 @@ var rebuildPlugin_default = (r) => {
       build.onEnd((result) => {
         console.log(`> web build ended with ${result.errors.length} errors`);
         if (result.errors.length > 0) {
-          fs2.writeFileSync(`./${r}_build_errors`, JSON.stringify(result));
+          fs2.writeFileSync(
+            `./testeranto/reports${r}_build_errors`,
+            JSON.stringify(result, null, 2)
+          );
         }
       });
     }
@@ -346,6 +349,90 @@ var getRunnables = (tests, projectName, payload = {
   }, payload);
 };
 
+// src/utils/buildTemplates.ts
+var testReportPage = (packageName, domain) => {
+  return `
+    <!DOCTYPE html>
+    <html lang="en">
+  
+    <head>
+      <meta name="description" content="Webpage description goes here" />
+      <meta charset="utf-8" />
+      <title>${packageName} - testeranto</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <meta name="author" content="" />
+      
+      <base href="${domain}" target="_blank">
+  
+      <link rel="stylesheet" href="../ReportClient.css" />
+      <script type="module" src="../ReportClient.js"></script>
+  
+    </head>
+  
+    <body>
+      <div id="root">
+        react is loading
+      </div>
+    </body>
+  
+    </html>
+        `;
+};
+var testsReportPage = (packageName, domain, projects) => {
+  return `
+    <!DOCTYPE html>
+    <html lang="en">
+  
+    <head>
+      <meta name="description" content="Webpage description goes here" />
+      <meta charset="utf-8" />
+      <title>${packageName} - testeranto</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <meta name="author" content="" />
+      <base href="${domain}" target="_blank">
+  
+      <script type="application/json" id="bigConfig">
+        ${JSON.stringify(Object.keys(projects))}
+      </script>
+  
+      <link rel="stylesheet" href="./testeranto/Project.css" />
+      <script type="module" src="./testeranto/Project.js"></script>
+  
+    </head>
+  
+    <body>
+      <div id="root">
+        react is loading
+      </div>
+    </body>
+  
+    </html>
+        `;
+};
+var idkPage = (testName2, domain) => {
+  return `
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="description" content="Webpage description goes here" />
+  <base href="${domain}" target="_blank">
+  <meta charset="utf-8" />
+  <title>${testName2} - testeranto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="" />
+
+  <link rel="stylesheet" href="./testeranto/TestReport.css" />
+  <script src="./testeranto/TestReport.js"></script>
+
+</head>
+
+<body>
+  <div id="root"/>
+</body>
+            `;
+};
+
 // src/build.ts
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
@@ -454,30 +541,11 @@ import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
   }
   fs3.writeFileSync(
     `${process.cwd()}/testeranto/reports/${testName}/index.html`,
-    `
-    <!DOCTYPE html>
-    <html lang="en">
-  
-    <head>
-      <meta name="description" content="Webpage description goes here" />
-      <meta charset="utf-8" />
-      <title>${pckge.name} - testeranto</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <meta name="author" content="" />
-  
-      <link rel="stylesheet" href="../ReportClient.css" />
-      <script type="module" src="../ReportClient.js"></script>
-  
-    </head>
-  
-    <body>
-      <div id="root">
-        react is loading
-      </div>
-    </body>
-  
-    </html>
-        `
+    testReportPage(pckge.name, bigConfig.reportDomain)
+  );
+  fs3.writeFileSync(
+    `${process.cwd()}/testeranto/reports/${testName}/dev.html`,
+    testReportPage(pckge.name, "/")
   );
   fs3.writeFileSync(
     `testeranto/reports/${testName}/config.json`,
@@ -485,35 +553,11 @@ import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
   );
   fs3.writeFileSync(
     `${process.cwd()}/testeranto/index.html`,
-    `
-  <!DOCTYPE html>
-  <html lang="en">
-
-  <head>
-    <meta name="description" content="Webpage description goes here" />
-    <meta charset="utf-8" />
-    <title>${pckge.name} - testeranto</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="author" content="" />
-    <base href="https://adamwong246.github.io/spacetrash_v8" target="_blank">
-
-    <script type="application/json" id="bigConfig">
-      ${JSON.stringify(Object.keys(bigConfig.projects))}
-    </script>
-
-    <link rel="stylesheet" href="/reports/Project.css" />
-    <script type="module" src="/reports/Project.js"></script>
-
-  </head>
-
-  <body>
-    <div id="root">
-      react is loading
-    </div>
-  </body>
-
-  </html>
-      `
+    testsReportPage(pckge.name, bigConfig.reportDomain, bigConfig.projects)
+  );
+  fs3.writeFileSync(
+    `${process.cwd()}/testeranto/dev.html`,
+    testsReportPage(pckge.name, "/", bigConfig.projects)
   );
   Promise.resolve(
     Promise.all(
@@ -561,27 +605,9 @@ import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
       await fs3.mkdirSync(folder, { recursive: true });
       fs3.writeFileSync(
         `${folder}/index.html`,
-        `
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta name="description" content="Webpage description goes here" />
-  <meta charset="utf-8" />
-  <title>${testName} - testeranto</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="author" content="" />
-
-  <link rel="stylesheet" href="../../../../../../TestReport.css" />
-  <script src="../../../../../../TestReport.js"></script>
-
-</head>
-
-<body>
-  <div id="root"/>
-</body>
-            `
+        idkPage(testName, bigConfig.reportDomain)
       );
+      fs3.writeFileSync(`${folder}/dev.html`, idkPage(testName, ""));
     });
   });
   [

@@ -428,7 +428,10 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                             files[src] = new Set();
                         }
                         // files[t].add(filepath);
-                        fs_1.default.writeFileSync(destFolder + "/manifest.json", JSON.stringify(Array.from(files[src])));
+                        // fs.writeFileSync(
+                        //   destFolder + "/manifest.json",
+                        //   JSON.stringify(Array.from(files[src]))
+                        // );
                         delete files[src];
                         Promise.all(screenshots[src] || []).then(() => {
                             delete screenshots[src];
@@ -748,7 +751,10 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                         files[src] = new Set();
                     }
                     // files[t].add(filepath);
-                    fs_1.default.writeFileSync(destFolder + "/manifest.json", JSON.stringify(Array.from(files[src])));
+                    // fs.writeFileSync(
+                    //   destFolder + "/manifest.json",
+                    //   JSON.stringify(Array.from(files[src]))
+                    // );
                     delete files[src];
                     Promise.all(screenshots[src] || []).then(() => {
                         delete screenshots[src];
@@ -969,7 +975,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                 slowMo: 1,
                 waitForInitialPage: false,
                 executablePath,
-                headless: false,
+                headless: true,
                 dumpio: false,
                 devtools: false,
                 args: [

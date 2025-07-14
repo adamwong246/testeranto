@@ -309,7 +309,6 @@ export type ITestconfig = {
   clearScreen: boolean;
   debugger: boolean;
   externals: string[];
-  externalTests: Record<string, { watch: string[]; exec: string }>;
   featureIngestor: (s: string) => Promise<string>;
   importPlugins: IPluginFactory[];
   minify: boolean;
@@ -324,4 +323,5 @@ export type IBuiltConfig = { buildDir: string } & ITestconfig;
 
 export type IProject = {
   projects: Record<string, ITestconfig>;
+  reportDomain: string;
 };

@@ -61,11 +61,11 @@ const Features = ({ summary }) => {
                             React.createElement("td", null, t[0]),
                             React.createElement("td", null, t[1]),
                             React.createElement("td", null,
-                                React.createElement("a", { href: `./reports/${x}/index.html` }, y.runTimeError)),
+                                React.createElement("a", { href: `./asdasasdasdd/reports/${x}/index.html` }, y.runTimeError)),
                             React.createElement("td", null,
-                                React.createElement("a", { href: `./reports/${x}/lint_errors.json` }, y.staticErrors)),
+                                React.createElement("a", { href: `./testeasdqqweqweranto/reports/${x}/lint_errors.json` }, y.staticErrors)),
                             React.createElement("td", null,
-                                React.createElement("a", { href: `./reports/${x}/type_errors.txt` }, y.typeErrors)),
+                                React.createElement("a", { href: `./testezxcdcdfranto/reports/${x}/type_errors.txt` }, y.typeErrors)),
                             React.createElement("td", null,
                                 React.createElement("pre", null, s[2][t[0]].prompt)));
                     }));
@@ -101,8 +101,8 @@ const BigBoard = () => {
             const x = projects.map(async (p) => {
                 return [
                     p,
-                    (await (await fetch(`./reports/${p}/config.json`)).json()),
-                    (await (await fetch(`./reports/${p}/summary.json`)).json())
+                    (await (await fetch(`./testeranto/reports/${p}/config.json`)).json()),
+                    (await (await fetch(`./testeranto/reports/${p}/summary.json`)).json())
                 ];
             });
             Promise.all(x).then((v) => {
@@ -170,11 +170,11 @@ const BigBoard = () => {
                                                 React.createElement("td", null, t[0]),
                                                 React.createElement("td", null, t[1]),
                                                 React.createElement("td", null,
-                                                    React.createElement("a", { href: `./reports/${x}/index.html` }, y.runTimeError)),
+                                                    React.createElement("a", { href: `./testeranto/reports/${x}/index.html` }, y.runTimeError)),
                                                 React.createElement("td", null,
-                                                    React.createElement("a", { href: `./reports/${x}/lint_errors.json` }, y.staticErrors)),
+                                                    React.createElement("a", { href: `./testeranto/reports/${x}/lint_errors.json` }, y.staticErrors)),
                                                 React.createElement("td", null,
-                                                    React.createElement("a", { href: `./reports/${x}/type_errors.txt` }, y.typeErrors)),
+                                                    React.createElement("a", { href: `./testeranto/reports/${x}/type_errors.txt` }, y.typeErrors)),
                                                 React.createElement("td", null,
                                                     React.createElement("pre", null,
                                                         React.createElement("button", { onClick: () => {

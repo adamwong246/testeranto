@@ -19,6 +19,12 @@ import {
   IRunTime,
   ITestTypes,
 } from "./Types.js";
+import { config } from "process";
+import {
+  idkPage,
+  testReportPage,
+  testsReportPage,
+} from "./utils/buildTemplates.js";
 
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
@@ -152,30 +158,12 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
 
   fs.writeFileSync(
     `${process.cwd()}/testeranto/reports/${testName}/index.html`,
-    `
-    <!DOCTYPE html>
-    <html lang="en">
-  
-    <head>
-      <meta name="description" content="Webpage description goes here" />
-      <meta charset="utf-8" />
-      <title>${pckge.name} - testeranto</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <meta name="author" content="" />
-  
-      <link rel="stylesheet" href="../ReportClient.css" />
-      <script type="module" src="../ReportClient.js"></script>
-  
-    </head>
-  
-    <body>
-      <div id="root">
-        react is loading
-      </div>
-    </body>
-  
-    </html>
-        `
+    testReportPage(pckge.name, bigConfig.reportDomain)
+  );
+
+  fs.writeFileSync(
+    `${process.cwd()}/testeranto/reports/${testName}/dev.html`,
+    testReportPage(pckge.name, "/")
   );
 
   fs.writeFileSync(
@@ -185,35 +173,12 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
 
   fs.writeFileSync(
     `${process.cwd()}/testeranto/index.html`,
-    `
-  <!DOCTYPE html>
-  <html lang="en">
+    testsReportPage(pckge.name, bigConfig.reportDomain, bigConfig.projects)
+  );
 
-  <head>
-    <meta name="description" content="Webpage description goes here" />
-    <meta charset="utf-8" />
-    <title>${pckge.name} - testeranto</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="author" content="" />
-    <base href="https://adamwong246.github.io/spacetrash_v8" target="_blank">
-
-    <script type="application/json" id="bigConfig">
-      ${JSON.stringify(Object.keys(bigConfig.projects))}
-    </script>
-
-    <link rel="stylesheet" href="/reports/Project.css" />
-    <script type="module" src="/reports/Project.js"></script>
-
-  </head>
-
-  <body>
-    <div id="root">
-      react is loading
-    </div>
-  </body>
-
-  </html>
-      `
+  fs.writeFileSync(
+    `${process.cwd()}/testeranto/dev.html`,
+    testsReportPage(pckge.name, "/", bigConfig.projects)
   );
 
   Promise.resolve(
@@ -281,29 +246,13 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
         .join(".")}/${runtime}`;
 
       await fs.mkdirSync(folder, { recursive: true });
+
       fs.writeFileSync(
         `${folder}/index.html`,
-        `
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta name="description" content="Webpage description goes here" />
-  <meta charset="utf-8" />
-  <title>${testName} - testeranto</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="author" content="" />
-
-  <link rel="stylesheet" href="../../../../../../TestReport.css" />
-  <script src="../../../../../../TestReport.js"></script>
-
-</head>
-
-<body>
-  <div id="root"/>
-</body>
-            `
+        idkPage(testName, bigConfig.reportDomain)
       );
+
+      fs.writeFileSync(`${folder}/dev.html`, idkPage(testName, ""));
     });
   });
 

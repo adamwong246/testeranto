@@ -238,7 +238,7 @@ export class PM_Main extends PM_WithEslintAndTsc {
         waitForInitialPage: false,
         executablePath,
 
-        headless: false,
+        headless: true,
 
         dumpio: false,
         devtools: false,
@@ -853,10 +853,10 @@ export class PM_Main extends PM_WithEslintAndTsc {
             }
             // files[t].add(filepath);
 
-            fs.writeFileSync(
-              destFolder + "/manifest.json",
-              JSON.stringify(Array.from(files[src]))
-            );
+            // fs.writeFileSync(
+            //   destFolder + "/manifest.json",
+            //   JSON.stringify(Array.from(files[src]))
+            // );
             delete files[src];
 
             Promise.all(screenshots[src] || []).then(() => {
@@ -1255,10 +1255,10 @@ export class PM_Main extends PM_WithEslintAndTsc {
           }
           // files[t].add(filepath);
 
-          fs.writeFileSync(
-            destFolder + "/manifest.json",
-            JSON.stringify(Array.from(files[src]))
-          );
+          // fs.writeFileSync(
+          //   destFolder + "/manifest.json",
+          //   JSON.stringify(Array.from(files[src]))
+          // );
           delete files[src];
 
           Promise.all(screenshots[src] || []).then(() => {

@@ -1,60 +1,73 @@
 $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit
-src/lib/abstractBase.ts(3,15): error TS2459: Module '"../Types.js"' declares 'IT' locally, but it is not exported.
-src/lib/abstractBase.ts(3,19): error TS2459: Module '"../Types.js"' declares 'OT' locally, but it is not exported.
-src/lib/basebuilder.ts(7,10): error TS2459: Module '"../Types.js"' declares 'IT' locally, but it is not exported.
-src/lib/basebuilder.ts(7,34): error TS2459: Module '"../Types.js"' declares 'OT' locally, but it is not exported.
+src/defaultConfig.ts(14,3): error TS2561: Object literal may only specify known properties, but 'externalTests' does not exist in type 'ITestconfig'. Did you mean to write 'externals'?
+src/lib/abstractBase.ts(3,15): error TS2305: Module '"../Types.js"' has no exported member 'IT'.
+src/lib/abstractBase.ts(3,19): error TS2305: Module '"../Types.js"' has no exported member 'OT'.
+src/lib/basebuilder.ts(7,10): error TS2305: Module '"../Types.js"' has no exported member 'IT'.
+src/lib/basebuilder.ts(7,14): error TS2724: '"../Types.js"' has no exported member named 'ITestSpecification'. Did you mean 'SuiteSpecification'?
+src/lib/basebuilder.ts(7,34): error TS2305: Module '"../Types.js"' has no exported member 'OT'.
 src/lib/basebuilder.ts(85,15): error TS2349: This expression is not callable.
-  Not all constituents of type 'void | ((fPath: any, value: string | Buffer<ArrayBufferLike> | PassThrough) => void)' are callable.
+  Not all constituents of type 'void | ((fPath: string, value: string | Buffer<ArrayBufferLike> | PassThrough) => void)' are callable.
     Type 'void' has no call signatures.
-src/lib/classBuilder.ts(3,10): error TS2459: Module '"../Types.js"' declares 'IT' locally, but it is not exported.
-src/lib/classBuilder.ts(3,55): error TS2459: Module '"../Types.js"' declares 'OT' locally, but it is not exported.
-src/lib/classBuilder.ts(99,28): error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
-src/lib/core.ts(5,3): error TS2305: Module '"../Types.js"' has no exported member 'ITestInterface'.
-src/lib/core.ts(6,3): error TS2459: Module '"../Types.js"' declares 'IT' locally, but it is not exported.
-src/lib/core.ts(7,3): error TS2459: Module '"../Types.js"' declares 'OT' locally, but it is not exported.
+src/lib/classBuilder.ts(3,10): error TS2305: Module '"../Types.js"' has no exported member 'IT'.
+src/lib/classBuilder.ts(3,14): error TS2724: '"../Types.js"' has no exported member named 'ITestImplementation'. Did you mean 'TestWhenImplementation'?
+src/lib/classBuilder.ts(3,35): error TS2724: '"../Types.js"' has no exported member named 'ITestSpecification'. Did you mean 'SuiteSpecification'?
+src/lib/classBuilder.ts(3,55): error TS2305: Module '"../Types.js"' has no exported member 'OT'.
+src/lib/classBuilder.ts(85,18): error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
+src/lib/classBuilder.ts(100,28): error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
+src/lib/core.ts(25,13): error TS2304: Cannot find name 'IT'.
+src/lib/core.ts(26,13): error TS2304: Cannot find name 'OT'.
+src/lib/index.ts(8,3): error TS2459: Module '"../Types.js"' declares 'Ibdd_in' locally, but it is not exported.
 src/lib/index.ts(9,3): error TS2305: Module '"../Types.js"' has no exported member 'ITestInterface'.
-src/lib/index.ts(14,3): error TS2459: Module '"../Types.js"' declares 'IT' locally, but it is not exported.
-src/lib/index.ts(15,3): error TS2459: Module '"../Types.js"' declares 'OT' locally, but it is not exported.
-src/lib/types.ts(5,15): error TS2459: Module '"../Types"' declares 'IT' locally, but it is not exported.
-src/lib/types.ts(5,19): error TS2459: Module '"../Types"' declares 'OT' locally, but it is not exported.
-src/mothership/test.ts(11,3): error TS2459: Module '"../Types"' declares 'IT' locally, but it is not exported.
+src/lib/index.ts(14,3): error TS2305: Module '"../Types.js"' has no exported member 'IT'.
+src/lib/index.ts(15,3): error TS2305: Module '"../Types.js"' has no exported member 'OT'.
+src/lib/types.ts(5,15): error TS2305: Module '"../Types"' has no exported member 'IT'.
+src/lib/types.ts(5,19): error TS2305: Module '"../Types"' has no exported member 'OT'.
+src/mothership/test.ts(9,3): error TS2459: Module '"../Types"' declares 'Ibdd_out' locally, but it is not exported.
+src/mothership/test.ts(10,3): error TS2724: '"../Types"' has no exported member named 'ITestSpecification'. Did you mean 'SuiteSpecification'?
+src/mothership/test.ts(11,3): error TS2305: Module '"../Types"' has no exported member 'IT'.
+src/mothership/test.ts(12,3): error TS2724: '"../Types"' has no exported member named 'ITestImplementation'. Did you mean 'TestWhenImplementation'?
+src/mothership/test.ts(13,3): error TS2459: Module '"../Types"' declares 'Ibdd_in' locally, but it is not exported.
 src/mothership/test.ts(14,3): error TS2305: Module '"../Types"' has no exported member 'IPartialNodeInterface'.
-src/mothership/test.ts(72,13): error TS2322: Type '(x: any) => any' is not assignable to type 'string'.
-src/Node.ts(8,3): error TS2305: Module '"./Types.js"' has no exported member 'INodeTestInterface'.
-src/Node.ts(9,3): error TS2459: Module '"./Types.js"' declares 'IT' locally, but it is not exported.
-src/Node.ts(11,3): error TS2305: Module '"./Types.js"' has no exported member 'ITestInterface'.
-src/Node.ts(13,3): error TS2459: Module '"./Types.js"' declares 'OT' locally, but it is not exported.
-src/Node.ts(34,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M> & M & { ...; }'.
+src/Node.ts(48,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M> & M & { ...; }'.
   Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; checks: Record<string, any>; }': suites, givens, whens, thens, checks
-src/PM/__tests__/nodeSidecar.testeranto.ts(8,3): error TS2459: Module '"../../Types"' declares 'IT' locally, but it is not exported.
+src/Node.ts(68,37): error TS2304: Cannot find name 'IT'.
+src/Node.ts(68,51): error TS2304: Cannot find name 'OT'.
+src/Node.ts(72,26): error TS2552: Cannot find name 'INodeTestInterface'. Did you mean 'ITestInterface'?
+src/PM/__tests__/nodeSidecar.testeranto.ts(6,3): error TS2459: Module '"../../Types"' declares 'Ibdd_out' locally, but it is not exported.
+src/PM/__tests__/nodeSidecar.testeranto.ts(7,3): error TS2724: '"../../Types"' has no exported member named 'ITestSpecification'. Did you mean 'SuiteSpecification'?
+src/PM/__tests__/nodeSidecar.testeranto.ts(8,3): error TS2305: Module '"../../Types"' has no exported member 'IT'.
+src/PM/__tests__/nodeSidecar.testeranto.ts(9,3): error TS2724: '"../../Types"' has no exported member named 'ITestImplementation'. Did you mean 'TestWhenImplementation'?
+src/PM/__tests__/nodeSidecar.testeranto.ts(10,3): error TS2459: Module '"../../Types"' declares 'Ibdd_in' locally, but it is not exported.
 src/PM/__tests__/nodeSidecar.testeranto.ts(11,3): error TS2305: Module '"../../Types"' has no exported member 'IPartialNodeInterface'.
-src/PM/__tests__/nodeSidecar.testeranto.ts(66,13): error TS2322: Type '(x: any) => any' is not assignable to type 'string'.
 src/PM/__tests__/nodeSidecar.testeranto.ts(107,29): error TS2454: Variable 'callbackFn' is used before being assigned.
-src/PM/__tests__/nodeSidecar.testeranto.ts(138,18): error TS2339: Property 'removeListenerCalled' does not exist on type 'PM'.
-src/PM/__tests__/pureSidecar.testeranto.ts(8,3): error TS2459: Module '"../../Types"' declares 'IT' locally, but it is not exported.
+src/PM/__tests__/pureSidecar.testeranto.ts(6,3): error TS2459: Module '"../../Types"' declares 'Ibdd_out' locally, but it is not exported.
+src/PM/__tests__/pureSidecar.testeranto.ts(7,3): error TS2724: '"../../Types"' has no exported member named 'ITestSpecification'. Did you mean 'SuiteSpecification'?
+src/PM/__tests__/pureSidecar.testeranto.ts(8,3): error TS2305: Module '"../../Types"' has no exported member 'IT'.
+src/PM/__tests__/pureSidecar.testeranto.ts(9,3): error TS2724: '"../../Types"' has no exported member named 'ITestImplementation'. Did you mean 'TestWhenImplementation'?
+src/PM/__tests__/pureSidecar.testeranto.ts(10,3): error TS2459: Module '"../../Types"' declares 'Ibdd_in' locally, but it is not exported.
 src/PM/__tests__/pureSidecar.testeranto.ts(11,3): error TS2305: Module '"../../Types"' has no exported member 'IPartialNodeInterface'.
-src/PM/__tests__/pureSidecar.testeranto.ts(66,13): error TS2322: Type '(x: any) => any' is not assignable to type 'string'.
 src/PM/__tests__/pureSidecar.testeranto.ts(81,7): error TS2322: Type '(event: string, callback: Function) => void' is not assignable to type '{ (event: "beforeExit", listener: BeforeExitListener): Process; (event: "disconnect", listener: DisconnectListener): Process; (event: "exit", listener: ExitListener): Process; (event: "rejectionHandled", listener: RejectionHandledListener): Process; (event: "uncaughtException", listener: UncaughtExceptionListener): ...'.
   Type 'void' is not assignable to type 'Process'.
 src/PM/__tests__/pureSidecar.testeranto.ts(100,29): error TS2454: Variable 'callbackFn' is used before being assigned.
 src/PM/__tests__/pureSidecar.testeranto.ts(106,35): error TS2322: Type 'boolean' is not assignable to type 'Process'.
 src/PM/__tests__/pureSidecar.testeranto.ts(107,38): error TS2322: Type 'boolean' is not assignable to type 'Process'.
-src/PM/__tests__/pureSidecar.testeranto.ts(122,18): error TS2339: Property 'removeListenerCalled' does not exist on type 'PM'.
-src/PM/__tests__/webSidecar.testeranto.ts(8,3): error TS2459: Module '"../../Types"' declares 'IT' locally, but it is not exported.
+src/PM/__tests__/webSidecar.testeranto.ts(6,3): error TS2459: Module '"../../Types"' declares 'Ibdd_out' locally, but it is not exported.
+src/PM/__tests__/webSidecar.testeranto.ts(7,3): error TS2724: '"../../Types"' has no exported member named 'ITestSpecification'. Did you mean 'SuiteSpecification'?
+src/PM/__tests__/webSidecar.testeranto.ts(8,3): error TS2305: Module '"../../Types"' has no exported member 'IT'.
+src/PM/__tests__/webSidecar.testeranto.ts(9,3): error TS2724: '"../../Types"' has no exported member named 'ITestImplementation'. Did you mean 'TestWhenImplementation'?
+src/PM/__tests__/webSidecar.testeranto.ts(10,3): error TS2459: Module '"../../Types"' declares 'Ibdd_in' locally, but it is not exported.
 src/PM/__tests__/webSidecar.testeranto.ts(11,3): error TS2305: Module '"../../Types"' has no exported member 'IPartialNodeInterface'.
-src/PM/__tests__/webSidecar.testeranto.ts(66,13): error TS2322: Type '(x: any) => any' is not assignable to type 'string'.
 src/PM/__tests__/webSidecar.testeranto.ts(81,7): error TS2322: Type '(event: string, callback: Function) => void' is not assignable to type '{ (event: "beforeExit", listener: BeforeExitListener): Process; (event: "disconnect", listener: DisconnectListener): Process; (event: "exit", listener: ExitListener): Process; (event: "rejectionHandled", listener: RejectionHandledListener): Process; (event: "uncaughtException", listener: UncaughtExceptionListener): ...'.
   Type 'void' is not assignable to type 'Process'.
 src/PM/__tests__/webSidecar.testeranto.ts(100,29): error TS2454: Variable 'callbackFn' is used before being assigned.
 src/PM/__tests__/webSidecar.testeranto.ts(106,35): error TS2322: Type 'boolean' is not assignable to type 'Process'.
 src/PM/__tests__/webSidecar.testeranto.ts(107,38): error TS2322: Type 'boolean' is not assignable to type 'Process'.
-src/PM/__tests__/webSidecar.testeranto.ts(122,18): error TS2339: Property 'removeListenerCalled' does not exist on type 'PM'.
-src/PM/main.ts(959,6): error TS2366: Function lacks ending return statement and return type does not include 'undefined'.
-src/PM/main.ts(997,27): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
-src/PM/main.ts(1121,16): error TS2339: Property 'sidecars' does not exist on type 'PM_Main'.
-src/PM/main.ts(1160,27): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
-src/PM/main.ts(1175,9): error TS2322: Type 'undefined' is not assignable to type '[number, ITTestResourceConfiguration]'.
-src/PM/main.ts(1307,9): error TS2322: Type 'string' is not assignable to type 'Page'.
+src/PM/main.ts(958,6): error TS2366: Function lacks ending return statement and return type does not include 'undefined'.
+src/PM/main.ts(996,27): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+src/PM/main.ts(1120,16): error TS2339: Property 'sidecars' does not exist on type 'PM_Main'.
+src/PM/main.ts(1159,27): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+src/PM/main.ts(1174,9): error TS2322: Type 'undefined' is not assignable to type '[number, ITTestResourceConfiguration]'.
+src/PM/main.ts(1306,9): error TS2322: Type 'string' is not assignable to type 'Page'.
 src/PM/nodeSidecar.ts(16,18): error TS2503: Cannot find namespace 'jest'.
 src/PM/nodeSidecar.ts(50,35): error TS2304: Cannot find name 'ITLog'.
 src/PM/nodeSidecar.ts(51,53): error TS2304: Cannot find name 'PassThrough'.
@@ -66,19 +79,26 @@ src/Project.tsx(11,10): error TS2305: Module '"./Types"' has no exported member 
 src/Project.tsx(400,38): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
   Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.
 src/Pure.ts(8,3): error TS2305: Module '"./Types.js"' has no exported member 'INodeTestInterface'.
-src/Pure.ts(9,3): error TS2459: Module '"./Types.js"' declares 'IT' locally, but it is not exported.
+src/Pure.ts(9,3): error TS2305: Module '"./Types.js"' has no exported member 'IT'.
+src/Pure.ts(10,3): error TS2724: '"./Types.js"' has no exported member named 'ITestImplementation'. Did you mean 'TestWhenImplementation'?
 src/Pure.ts(11,3): error TS2305: Module '"./Types.js"' has no exported member 'ITestInterface'.
-src/Pure.ts(13,3): error TS2459: Module '"./Types.js"' declares 'OT' locally, but it is not exported.
-src/Pure.ts(33,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M> & M & { ...; }'.
-  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; checks: Record<string, any>; }': suites, givens, whens, thens, checks
-src/TestReport.tsx(262,19): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
+src/Pure.ts(12,3): error TS2724: '"./Types.js"' has no exported member named 'ITestSpecification'. Did you mean 'SuiteSpecification'?
+src/Pure.ts(13,3): error TS2305: Module '"./Types.js"' has no exported member 'OT'.
+src/SP__Polygon.test.ts(1,35): error TS2307: Cannot find module '../lib' or its corresponding type declarations.
+src/SP__Polygon.test.ts(2,25): error TS2307: Cannot find module './SP__Polygon' or its corresponding type declarations.
+src/SP__Polygon.test.ts(10,49): error TS2304: Cannot find name 'expect'.
+src/TestReport.tsx(279,19): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
   Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.
-src/Web.ts(3,3): error TS2459: Module '"./Types"' declares 'IT' locally, but it is not exported.
-src/Web.ts(5,3): error TS2305: Module '"./Types"' has no exported member 'ITestInterface'.
-src/Web.ts(7,3): error TS2305: Module '"./Types"' has no exported member 'IWebTestInterface'.
-src/Web.ts(8,3): error TS2459: Module '"./Types"' declares 'OT' locally, but it is not exported.
-src/Web.ts(39,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M> & M & { ...; }'.
-  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; checks: Record<string, any>; }': suites, givens, whens, thens, checks
-src/Web.ts(47,14): error TS2554: Expected 0 arguments, but got 1.
-src/Web.ts(66,14): error TS2554: Expected 0 arguments, but got 1.
+src/Web.ts(3,3): error TS2724: '"./Types"' has no exported member named 'ITestImplementation'. Did you mean 'TestWhenImplementation'?
+src/Web.ts(4,3): error TS2305: Module '"./Types"' has no exported member 'ITestInterface'.
+src/Web.ts(5,3): error TS2724: '"./Types"' has no exported member named 'ITestSpecification'. Did you mean 'SuiteSpecification'?
+src/Web.ts(21,38): error TS2304: Cannot find name 'IT'.
+src/Web.ts(21,52): error TS2304: Cannot find name 'OT'.
+src/Web.ts(44,14): error TS2554: Expected 0 arguments, but got 1.
+src/Web.ts(63,14): error TS2554: Expected 0 arguments, but got 1.
+src/Web.ts(82,33): error TS2304: Cannot find name 'IT'.
+src/Web.ts(82,47): error TS2304: Cannot find name 'OT'.
+src/Web.ts(86,26): error TS2304: Cannot find name 'IWebTestInterface'.
+testeranto.config.ts(42,7): error TS2561: Object literal may only specify known properties, but 'externalTests' does not exist in type 'ITestconfig'. Did you mean to write 'externals'?
+testeranto.config.ts(91,7): error TS2561: Object literal may only specify known properties, but 'externalTests' does not exist in type 'ITestconfig'. Did you mean to write 'externals'?
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.

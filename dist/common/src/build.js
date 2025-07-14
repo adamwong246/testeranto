@@ -48,6 +48,7 @@ const web_js_1 = __importDefault(require("./esbuildConfigs/web.js"));
 const pure_js_1 = __importDefault(require("./esbuildConfigs/pure.js"));
 const web_html_js_1 = __importDefault(require("./web.html.js"));
 const utils_js_1 = require("./utils.js");
+const buildTemplates_js_1 = require("./utils/buildTemplates.js");
 readline_1.default.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
     process.stdin.setRawMode(true);
@@ -144,60 +145,11 @@ Promise.resolve(`${process.cwd() + "/" + "testeranto.config.ts"}`).then(s => __i
     if (!fs_1.default.existsSync(`testeranto/reports/${testName}`)) {
         fs_1.default.mkdirSync(`testeranto/reports/${testName}`);
     }
-    fs_1.default.writeFileSync(`${process.cwd()}/testeranto/reports/${testName}/index.html`, `
-    <!DOCTYPE html>
-    <html lang="en">
-  
-    <head>
-      <meta name="description" content="Webpage description goes here" />
-      <meta charset="utf-8" />
-      <title>${pckge.name} - testeranto</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <meta name="author" content="" />
-  
-      <link rel="stylesheet" href="../ReportClient.css" />
-      <script type="module" src="../ReportClient.js"></script>
-  
-    </head>
-  
-    <body>
-      <div id="root">
-        react is loading
-      </div>
-    </body>
-  
-    </html>
-        `);
+    fs_1.default.writeFileSync(`${process.cwd()}/testeranto/reports/${testName}/index.html`, (0, buildTemplates_js_1.testReportPage)(pckge.name, bigConfig.reportDomain));
+    fs_1.default.writeFileSync(`${process.cwd()}/testeranto/reports/${testName}/dev.html`, (0, buildTemplates_js_1.testReportPage)(pckge.name, "/"));
     fs_1.default.writeFileSync(`testeranto/reports/${testName}/config.json`, JSON.stringify(config, null, 2));
-    fs_1.default.writeFileSync(`${process.cwd()}/testeranto/index.html`, `
-  <!DOCTYPE html>
-  <html lang="en">
-
-  <head>
-    <meta name="description" content="Webpage description goes here" />
-    <meta charset="utf-8" />
-    <title>${pckge.name} - testeranto</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="author" content="" />
-    <base href="https://adamwong246.github.io/spacetrash_v8" target="_blank">
-
-    <script type="application/json" id="bigConfig">
-      ${JSON.stringify(Object.keys(bigConfig.projects))}
-    </script>
-
-    <link rel="stylesheet" href="/reports/Project.css" />
-    <script type="module" src="/reports/Project.js"></script>
-
-  </head>
-
-  <body>
-    <div id="root">
-      react is loading
-    </div>
-  </body>
-
-  </html>
-      `);
+    fs_1.default.writeFileSync(`${process.cwd()}/testeranto/index.html`, (0, buildTemplates_js_1.testsReportPage)(pckge.name, bigConfig.reportDomain, bigConfig.projects));
+    fs_1.default.writeFileSync(`${process.cwd()}/testeranto/dev.html`, (0, buildTemplates_js_1.testsReportPage)(pckge.name, "/", bigConfig.projects));
     Promise.resolve(Promise.all([...getSecondaryEndpointsPoints("web")].map(async (sourceFilePath) => {
         const sourceFileSplit = sourceFilePath.split("/");
         const sourceDir = sourceFileSplit.slice(0, -1);
@@ -244,26 +196,8 @@ Promise.resolve(`${process.cwd() + "/" + "testeranto.config.ts"}`).then(s => __i
                 .slice(0, -1)
                 .join(".")}/${runtime}`;
             await fs_1.default.mkdirSync(folder, { recursive: true });
-            fs_1.default.writeFileSync(`${folder}/index.html`, `
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta name="description" content="Webpage description goes here" />
-  <meta charset="utf-8" />
-  <title>${testName} - testeranto</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="author" content="" />
-
-  <link rel="stylesheet" href="../../../../../../TestReport.css" />
-  <script src="../../../../../../TestReport.js"></script>
-
-</head>
-
-<body>
-  <div id="root"/>
-</body>
-            `);
+            fs_1.default.writeFileSync(`${folder}/index.html`, (0, buildTemplates_js_1.idkPage)(testName, bigConfig.reportDomain));
+            fs_1.default.writeFileSync(`${folder}/dev.html`, (0, buildTemplates_js_1.idkPage)(testName, ""));
         });
     });
     [

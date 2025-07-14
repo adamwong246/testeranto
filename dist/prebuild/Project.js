@@ -27406,7 +27406,7 @@
       return /* @__PURE__ */ import_react33.default.createElement(import_react33.default.Fragment, null, /* @__PURE__ */ import_react33.default.createElement("tr", null, /* @__PURE__ */ import_react33.default.createElement("th", null, s[0])), ...s[1].tests.map((t) => {
         const x = `${s[0]}/${t[0].split(".").slice(0, -1).join(".")}/${t[1]}`;
         const y = s[2][t[0]];
-        return /* @__PURE__ */ import_react33.default.createElement("tr", null, /* @__PURE__ */ import_react33.default.createElement("td", null, t[0]), /* @__PURE__ */ import_react33.default.createElement("td", null, t[1]), /* @__PURE__ */ import_react33.default.createElement("td", null, /* @__PURE__ */ import_react33.default.createElement("a", { href: `./reports/${x}/index.html` }, y.runTimeError)), /* @__PURE__ */ import_react33.default.createElement("td", null, /* @__PURE__ */ import_react33.default.createElement("a", { href: `./reports/${x}/lint_errors.json` }, y.staticErrors)), /* @__PURE__ */ import_react33.default.createElement("td", null, /* @__PURE__ */ import_react33.default.createElement("a", { href: `./reports/${x}/type_errors.txt` }, y.typeErrors)), /* @__PURE__ */ import_react33.default.createElement("td", null, /* @__PURE__ */ import_react33.default.createElement("pre", null, s[2][t[0]].prompt)));
+        return /* @__PURE__ */ import_react33.default.createElement("tr", null, /* @__PURE__ */ import_react33.default.createElement("td", null, t[0]), /* @__PURE__ */ import_react33.default.createElement("td", null, t[1]), /* @__PURE__ */ import_react33.default.createElement("td", null, /* @__PURE__ */ import_react33.default.createElement("a", { href: `./asdasasdasdd/reports/${x}/index.html` }, y.runTimeError)), /* @__PURE__ */ import_react33.default.createElement("td", null, /* @__PURE__ */ import_react33.default.createElement("a", { href: `./testeasdqqweqweranto/reports/${x}/lint_errors.json` }, y.staticErrors)), /* @__PURE__ */ import_react33.default.createElement("td", null, /* @__PURE__ */ import_react33.default.createElement("a", { href: `./testezxcdcdfranto/reports/${x}/type_errors.txt` }, y.typeErrors)), /* @__PURE__ */ import_react33.default.createElement("td", null, /* @__PURE__ */ import_react33.default.createElement("pre", null, s[2][t[0]].prompt)));
       }));
     }))));
   };
@@ -27424,8 +27424,8 @@
         const x = projects.map(async (p) => {
           return [
             p,
-            await (await fetch(`./reports/${p}/config.json`)).json(),
-            await (await fetch(`./reports/${p}/summary.json`)).json()
+            await (await fetch(`./testeranto/reports/${p}/config.json`)).json(),
+            await (await fetch(`./testeranto/reports/${p}/summary.json`)).json()
           ];
         });
         Promise.all(x).then((v) => {
@@ -27447,7 +27447,7 @@
       return /* @__PURE__ */ import_react33.default.createElement(import_react33.default.Fragment, null, /* @__PURE__ */ import_react33.default.createElement("tr", null, /* @__PURE__ */ import_react33.default.createElement("th", null, s[0])), ...s[1].tests.map((t) => {
         const x = `${s[0]}/${t[0].split(".").slice(0, -1).join(".")}/${t[1]}`;
         const y = s[2][t[0]];
-        return /* @__PURE__ */ import_react33.default.createElement("tr", null, /* @__PURE__ */ import_react33.default.createElement("td", null, t[0]), /* @__PURE__ */ import_react33.default.createElement("td", null, t[1]), /* @__PURE__ */ import_react33.default.createElement("td", null, /* @__PURE__ */ import_react33.default.createElement("a", { href: `./reports/${x}/index.html` }, y.runTimeError)), /* @__PURE__ */ import_react33.default.createElement("td", null, /* @__PURE__ */ import_react33.default.createElement("a", { href: `./reports/${x}/lint_errors.json` }, y.staticErrors)), /* @__PURE__ */ import_react33.default.createElement("td", null, /* @__PURE__ */ import_react33.default.createElement("a", { href: `./reports/${x}/type_errors.txt` }, y.typeErrors)), /* @__PURE__ */ import_react33.default.createElement("td", null, /* @__PURE__ */ import_react33.default.createElement("pre", null, /* @__PURE__ */ import_react33.default.createElement("button", { onClick: () => {
+        return /* @__PURE__ */ import_react33.default.createElement("tr", null, /* @__PURE__ */ import_react33.default.createElement("td", null, t[0]), /* @__PURE__ */ import_react33.default.createElement("td", null, t[1]), /* @__PURE__ */ import_react33.default.createElement("td", null, /* @__PURE__ */ import_react33.default.createElement("a", { href: `./testeranto/reports/${x}/index.html` }, y.runTimeError)), /* @__PURE__ */ import_react33.default.createElement("td", null, /* @__PURE__ */ import_react33.default.createElement("a", { href: `./testeranto/reports/${x}/lint_errors.json` }, y.staticErrors)), /* @__PURE__ */ import_react33.default.createElement("td", null, /* @__PURE__ */ import_react33.default.createElement("a", { href: `./testeranto/reports/${x}/type_errors.txt` }, y.typeErrors)), /* @__PURE__ */ import_react33.default.createElement("td", null, /* @__PURE__ */ import_react33.default.createElement("pre", null, /* @__PURE__ */ import_react33.default.createElement("button", { onClick: () => {
           copyToClipboard(s[2][t[0]].prompt);
         } }, "copy"))), /* @__PURE__ */ import_react33.default.createElement("td", null, /* @__PURE__ */ import_react33.default.createElement("pre", null, /* @__PURE__ */ import_react33.default.createElement("code", null, JSON.stringify(y.failingFeatures, null, 2)))));
       }));

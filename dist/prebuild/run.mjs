@@ -967,10 +967,6 @@ var PM_Main = class extends PM_WithEslintAndTsc {
             if (!files2[src]) {
               files2[src] = /* @__PURE__ */ new Set();
             }
-            fs3.writeFileSync(
-              destFolder + "/manifest.json",
-              JSON.stringify(Array.from(files2[src]))
-            );
             delete files2[src];
             Promise.all(screenshots2[src] || []).then(() => {
               delete screenshots2[src];
@@ -1261,10 +1257,6 @@ var PM_Main = class extends PM_WithEslintAndTsc {
           if (!files2[src]) {
             files2[src] = /* @__PURE__ */ new Set();
           }
-          fs3.writeFileSync(
-            destFolder + "/manifest.json",
-            JSON.stringify(Array.from(files2[src]))
-          );
           delete files2[src];
           Promise.all(screenshots2[src] || []).then(() => {
             delete screenshots2[src];
@@ -1460,7 +1452,7 @@ var PM_Main = class extends PM_WithEslintAndTsc {
         slowMo: 1,
         waitForInitialPage: false,
         executablePath,
-        headless: false,
+        headless: true,
         dumpio: false,
         devtools: false,
         args: [

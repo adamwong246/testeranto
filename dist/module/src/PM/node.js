@@ -144,9 +144,16 @@ export class PM_Node extends PM {
                     if (error) {
                         console.error(`❗️testArtiFactory failed`, targetDir, error);
                     }
-                    fs.writeFileSync(path.resolve(targetDir.split("/").slice(0, -1).join("/"), "manifest"), fPaths.join(`\n`), {
-                        encoding: "utf-8",
-                    });
+                    // fs.writeFileSync(
+                    //   path.resolve(
+                    //     targetDir.split("/").slice(0, -1).join("/"),
+                    //     "manifest"
+                    //   ),
+                    //   fPaths.join(`\n`),
+                    //   {
+                    //     encoding: "utf-8",
+                    //   }
+                    // );
                     if (Buffer.isBuffer(value)) {
                         fs.writeFileSync(fPath, value, "binary");
                         res();

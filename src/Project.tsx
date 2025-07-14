@@ -166,9 +166,9 @@ const Features = ({ summary }: { summary: ISummaries }) => {
                   return <tr>
                     <td>{t[0]}</td>
                     <td>{t[1]}</td>
-                    <td><a href={`./reports/${x}/index.html`}>{y.runTimeError}</a></td>
-                    <td><a href={`./reports/${x}/lint_errors.json`}>{y.staticErrors}</a></td>
-                    <td><a href={`./reports/${x}/type_errors.txt`}>{y.typeErrors}</a></td>
+                    <td><a href={`./asdasasdasdd/reports/${x}/index.html`}>{y.runTimeError}</a></td>
+                    <td><a href={`./testeasdqqweqweranto/reports/${x}/lint_errors.json`}>{y.staticErrors}</a></td>
+                    <td><a href={`./testezxcdcdfranto/reports/${x}/type_errors.txt`}>{y.typeErrors}</a></td>
                     <td>
                       <pre>
 
@@ -255,8 +255,8 @@ const BigBoard = () => {
       const x: Promise<[string, IBuiltConfig, ISummary]>[] = projects.map(async (p) => {
         return [
           p,
-          (await (await fetch(`./reports/${p}/config.json`)).json()) as IBuiltConfig,
-          (await (await fetch(`./reports/${p}/summary.json`)).json()) as ISummary
+          (await (await fetch(`./testeranto/reports/${p}/config.json`)).json()) as IBuiltConfig,
+          (await (await fetch(`./testeranto/reports/${p}/summary.json`)).json()) as ISummary
         ] as [string, IBuiltConfig, ISummary]
       })
 
@@ -345,9 +345,9 @@ const BigBoard = () => {
                           return <tr>
                             <td>{t[0]}</td>
                             <td>{t[1]}</td>
-                            <td><a href={`./reports/${x}/index.html`}>{y.runTimeError}</a></td>
-                            <td><a href={`./reports/${x}/lint_errors.json`}>{y.staticErrors}</a></td>
-                            <td><a href={`./reports/${x}/type_errors.txt`}>{y.typeErrors}</a></td>
+                            <td><a href={`./testeranto/reports/${x}/index.html`}>{y.runTimeError}</a></td>
+                            <td><a href={`./testeranto/reports/${x}/lint_errors.json`}>{y.staticErrors}</a></td>
+                            <td><a href={`./testeranto/reports/${x}/type_errors.txt`}>{y.typeErrors}</a></td>
                             <td>
                               <pre>
 
