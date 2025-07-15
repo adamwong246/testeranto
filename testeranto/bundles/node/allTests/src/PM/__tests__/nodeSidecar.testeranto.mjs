@@ -4,8 +4,8 @@ import {
 } from "../../../chunk-PG6KUKNP.mjs";
 import {
   Node_default
-} from "../../../chunk-5MQGD4WC.mjs";
-import "../../../chunk-6CGAD2FD.mjs";
+} from "../../../chunk-W44DUDBK.mjs";
+import "../../../chunk-UED26IMH.mjs";
 
 // src/PM/nodeSidecar.ts
 import net from "net";

@@ -1,4 +1,5 @@
-import Testeranto from "../../Pure";
+import Testeranto from "../../Node";
+
 import { ClassBuilder } from "../classBuilder";
 import { specification } from "./classBuilder.test.specification";
 import { implementation } from "./classBuilder.test.implementation";

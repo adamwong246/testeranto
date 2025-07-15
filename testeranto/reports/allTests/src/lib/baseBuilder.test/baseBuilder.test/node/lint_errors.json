@@ -914,25 +914,14 @@
     "filePath": "/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.ts",
     "messages": [
       {
-        "ruleId": "@typescript-eslint/no-unused-vars",
-        "severity": 2,
-        "message": "'TestBaseBuilder' is defined but never used.",
-        "line": 3,
-        "column": 10,
-        "nodeType": null,
-        "messageId": "unusedVar",
-        "endLine": 3,
-        "endColumn": 25
-      },
-      {
         "ruleId": "@typescript-eslint/no-empty-object-type",
         "severity": 2,
         "message": "The `{}` (\"empty object\") type allows any non-nullish value, including literals like `0` and `\"\"`.\n- If that's what you want, disable this lint rule with an inline comment or configure the 'allowObjectTypes' rule option.\n- If you want a type meaning \"any object\", you probably want `object` instead.\n- If you want a type meaning \"any value\", you probably want `unknown` instead.",
-        "line": 10,
+        "line": 8,
         "column": 33,
         "nodeType": "TSTypeLiteral",
         "messageId": "noEmptyObject",
-        "endLine": 10,
+        "endLine": 8,
         "endColumn": 35,
         "suggestions": [
           {
@@ -942,8 +931,8 @@
             },
             "fix": {
               "range": [
-                370,
-                372
+                316,
+                318
               ],
               "text": "object"
             },
@@ -956,8 +945,8 @@
             },
             "fix": {
               "range": [
-                370,
-                372
+                316,
+                318
               ],
               "text": "unknown"
             },
@@ -967,7 +956,7 @@
       }
     ],
     "suppressedMessages": [],
-    "errorCount": 2,
+    "errorCount": 1,
     "fatalErrorCount": 0,
     "warningCount": 0,
     "fixableErrorCount": 0,

@@ -59,8 +59,9 @@
   Types of property 'assertThis' are incompatible.
     Type '((x: T["then"]) => any) | undefined' is not assignable to type '(x: T["then"]) => any'.
       Type 'undefined' is not assignable to type '(x: T["then"]) => any'.
+/Users/adam/Code/testeranto/src/Node.ts (34,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; checks: Record<string, any>; }': suites, givens, whens, thens, checks
+/Users/adam/Code/testeranto/src/Node.ts (58,26): Cannot find name 'INodeTestInterface'.
 /Users/adam/Code/testeranto/src/PM/web.ts (56,12): Cannot find name 'opts'.
 /Users/adam/Code/testeranto/src/PM/web.ts (57,57): Cannot find name 'opts'.
 /Users/adam/Code/testeranto/src/PM/web.ts (59,7): Cannot find name 'page'. Did you mean the instance member 'this.page'?
-/Users/adam/Code/testeranto/src/Pure.ts (32,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M> & M & { ...; }'.
-  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; checks: Record<string, any>; }': suites, givens, whens, thens, checks

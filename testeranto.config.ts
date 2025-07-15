@@ -4,6 +4,9 @@ const config: IProject = {
   projects: {
     allTests: {
       tests: [
+        ["src/lib/pmProxy.test/index.ts", "node", { ports: 1 }, []],
+        ["src/lib/core.test/core.test.ts", "node", { ports: 1 }, []],
+
         [
           "src/lib/classBuilder.test/classBuilder.test.ts",
           "node",
@@ -17,10 +20,9 @@ const config: IProject = {
           { ports: 1 },
           [],
         ],
-
         ["./src/lib/BaseSuite.test.ts", "node", { ports: 1 }, []],
-
         ["./src/mothership/test.ts", "node", { ports: 1 }, []],
+
         [
           "./src/PM/__tests__/nodeSidecar.testeranto.ts",
           "node",

@@ -1,6 +1,22 @@
 {
   "tests": [
     [
+      "src/lib/pmProxy.test/index.ts",
+      "node",
+      {
+        "ports": 1
+      },
+      []
+    ],
+    [
+      "src/lib/core.test/core.test.ts",
+      "node",
+      {
+        "ports": 1
+      },
+      []
+    ],
+    [
       "src/lib/classBuilder.test/classBuilder.test.ts",
       "node",
       {

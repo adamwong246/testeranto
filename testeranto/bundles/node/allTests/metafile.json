@@ -45,7 +45,7 @@
         "format": "esm"
       },
       "src/lib/pmProxy.ts": {
-        "bytes": 8884,
+        "bytes": 4454,
         "imports": [
           {
             "path": "./types",
@@ -165,7 +165,7 @@
         "format": "esm"
       },
       "src/lib/core.ts": {
-        "bytes": 5039,
+        "bytes": 5043,
         "imports": [
           {
             "path": "src/lib/index.ts",
@@ -212,6 +212,218 @@
             "path": "../lib",
             "kind": "import-statement",
             "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/PM/node.ts": {
+        "bytes": 7363,
+        "imports": [
+          {
+            "path": "net",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "fs",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "path",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "puppeteer-core",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "stream",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../lib",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/PM/index.ts",
+            "kind": "import-statement",
+            "original": "."
+          }
+        ],
+        "format": "esm"
+      },
+      "src/Node.ts": {
+        "bytes": 2786,
+        "imports": [
+          {
+            "path": "src/lib/core.ts",
+            "kind": "import-statement",
+            "original": "./lib/core.js"
+          },
+          {
+            "path": "src/lib/index.ts",
+            "kind": "import-statement",
+            "original": "./lib/index.js"
+          },
+          {
+            "path": "src/PM/node.ts",
+            "kind": "import-statement",
+            "original": "./PM/node.js"
+          },
+          {
+            "path": "./CoreTypes.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/pmProxy.test/mockPMBase.ts": {
+        "bytes": 3696,
+        "imports": [
+          {
+            "path": "puppeteer-core",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../index",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../../PM/base",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/pmProxy.test/implementation.ts": {
+        "bytes": 1996,
+        "imports": [
+          {
+            "path": "./types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../../CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../pmProxy",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/pmProxy.test/mockPMBase.ts",
+            "kind": "import-statement",
+            "original": "./mockPMBase"
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/pmProxy.test/specification.ts": {
+        "bytes": 1252,
+        "imports": [
+          {
+            "path": "./types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../../CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "node_modules/chai/chai.js": {
+        "bytes": 139547,
+        "imports": [],
+        "format": "esm"
+      },
+      "src/lib/pmProxy.test/interface.ts": {
+        "bytes": 1436,
+        "imports": [
+          {
+            "path": "node_modules/chai/chai.js",
+            "kind": "import-statement",
+            "original": "chai"
+          },
+          {
+            "path": "./types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../../CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/pmProxy.ts",
+            "kind": "import-statement",
+            "original": "../pmProxy"
+          },
+          {
+            "path": "../types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/pmProxy.test/mockPMBase.ts",
+            "kind": "import-statement",
+            "original": "./mockPMBase"
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/pmProxy.test/index.ts": {
+        "bytes": 521,
+        "imports": [
+          {
+            "path": "src/Node.ts",
+            "kind": "import-statement",
+            "original": "../../Node"
+          },
+          {
+            "path": "src/lib/pmProxy.test/implementation.ts",
+            "kind": "import-statement",
+            "original": "./implementation"
+          },
+          {
+            "path": "src/lib/pmProxy.test/specification.ts",
+            "kind": "import-statement",
+            "original": "./specification"
+          },
+          {
+            "path": "src/lib/pmProxy.test/interface.ts",
+            "kind": "import-statement",
+            "original": "./interface"
+          },
+          {
+            "path": "./types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/pmProxy.ts",
+            "kind": "import-statement",
+            "original": "../pmProxy"
           }
         ],
         "format": "esm"
@@ -264,6 +476,131 @@
             "path": "src/PM/pure.ts",
             "kind": "import-statement",
             "original": "./PM/pure.js"
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/core.test/core.test.specification.ts": {
+        "bytes": 2526,
+        "imports": [
+          {
+            "path": "../../CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./core.test.types",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/core.test/MockCore.ts": {
+        "bytes": 1142,
+        "imports": [
+          {
+            "path": "src/lib/core.ts",
+            "kind": "import-statement",
+            "original": "../core"
+          },
+          {
+            "path": "../../CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "..",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/core.test/core.test.implementation.ts": {
+        "bytes": 3513,
+        "imports": [
+          {
+            "path": "../../CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/core.test/MockCore.ts",
+            "kind": "import-statement",
+            "original": "./MockCore"
+          },
+          {
+            "path": "./core.test.types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "stream",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "..",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../../CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/core.test/core.test.interface.ts": {
+        "bytes": 596,
+        "imports": [
+          {
+            "path": "../../CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./core.test.types",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/core.test/core.test.ts": {
+        "bytes": 561,
+        "imports": [
+          {
+            "path": "src/Pure.ts",
+            "kind": "import-statement",
+            "original": "../../Pure"
+          },
+          {
+            "path": "src/lib/core.test/core.test.specification.ts",
+            "kind": "import-statement",
+            "original": "./core.test.specification"
+          },
+          {
+            "path": "src/lib/core.test/core.test.implementation.ts",
+            "kind": "import-statement",
+            "original": "./core.test.implementation"
+          },
+          {
+            "path": "src/lib/core.test/core.test.interface.ts",
+            "kind": "import-statement",
+            "original": "./core.test.interface"
+          },
+          {
+            "path": "./core.test.types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/core.test/MockCore.ts",
+            "kind": "import-statement",
+            "original": "./MockCore"
           }
         ],
         "format": "esm"
@@ -358,12 +695,12 @@
         "format": "esm"
       },
       "src/lib/classBuilder.test/classBuilder.test.ts": {
-        "bytes": 454,
+        "bytes": 455,
         "imports": [
           {
-            "path": "src/Pure.ts",
+            "path": "src/Node.ts",
             "kind": "import-statement",
-            "original": "../../Pure"
+            "original": "../../Node"
           },
           {
             "path": "src/lib/classBuilder.ts",
@@ -483,17 +820,12 @@
         "format": "esm"
       },
       "src/lib/baseBuilder.test/baseBuilder.test.ts": {
-        "bytes": 454,
+        "bytes": 400,
         "imports": [
           {
-            "path": "src/Pure.ts",
+            "path": "src/Node.ts",
             "kind": "import-statement",
-            "original": "../../Pure"
-          },
-          {
-            "path": "./TestBaseBuilder",
-            "kind": "import-statement",
-            "external": true
+            "original": "../../Node"
           },
           {
             "path": "src/lib/baseBuilder.test/baseBuilder.test.specification.ts",
@@ -518,76 +850,14 @@
         ],
         "format": "esm"
       },
-      "src/PM/node.ts": {
-        "bytes": 7363,
-        "imports": [
-          {
-            "path": "net",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "fs",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "path",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "puppeteer-core",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "stream",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "../lib",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "src/PM/index.ts",
-            "kind": "import-statement",
-            "original": "."
-          }
-        ],
-        "format": "esm"
-      },
-      "src/Node.ts": {
-        "bytes": 2786,
-        "imports": [
-          {
-            "path": "src/lib/core.ts",
-            "kind": "import-statement",
-            "original": "./lib/core.js"
-          },
-          {
-            "path": "src/lib/index.ts",
-            "kind": "import-statement",
-            "original": "./lib/index.js"
-          },
-          {
-            "path": "src/PM/node.ts",
-            "kind": "import-statement",
-            "original": "./PM/node.js"
-          },
-          {
-            "path": "./CoreTypes.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
       "src/lib/BaseSuite.test.ts": {
-        "bytes": 11771,
+        "bytes": 11837,
         "imports": [
+          {
+            "path": "src/Node.ts",
+            "kind": "import-statement",
+            "original": "../Node"
+          },
           {
             "path": "src/lib/BaseSuite.ts",
             "kind": "import-statement",
@@ -614,9 +884,9 @@
             "external": true
           },
           {
-            "path": "src/Node.ts",
+            "path": "../Types",
             "kind": "import-statement",
-            "original": "../Node"
+            "external": true
           }
         ],
         "format": "esm"
@@ -3452,14 +3722,126 @@
       }
     },
     "outputs": {
-      "testeranto/bundles/node/allTests/src/lib/classBuilder.test/classBuilder.test.mjs": {
+      "testeranto/bundles/node/allTests/src/PM/__tests__/webSidecar.testeranto.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/node/allTests/chunk-YI3EGRMQ.mjs",
+            "path": "testeranto/bundles/node/allTests/chunk-PG6KUKNP.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/node/allTests/chunk-6CGAD2FD.mjs",
+            "path": "testeranto/bundles/node/allTests/chunk-W44DUDBK.mjs",
+            "kind": "import-statement"
+          },
+          {
+            "path": "testeranto/bundles/node/allTests/chunk-UED26IMH.mjs",
+            "kind": "import-statement"
+          },
+          {
+            "path": "net",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "exports": [
+          "default"
+        ],
+        "entryPoint": "src/PM/__tests__/webSidecar.testeranto.ts",
+        "inputs": {
+          "src/PM/webSidecar.ts": {
+            "bytesInOutput": 899
+          },
+          "src/PM/__tests__/webSidecar.testeranto.ts": {
+            "bytesInOutput": 2861
+          }
+        },
+        "bytes": 4133
+      },
+      "testeranto/bundles/node/allTests/src/lib/pmProxy.test/index.mjs": {
+        "imports": [
+          {
+            "path": "testeranto/bundles/node/allTests/chunk-W44DUDBK.mjs",
+            "kind": "import-statement"
+          },
+          {
+            "path": "testeranto/bundles/node/allTests/chunk-UED26IMH.mjs",
+            "kind": "import-statement"
+          }
+        ],
+        "exports": [
+          "default"
+        ],
+        "entryPoint": "src/lib/pmProxy.test/index.ts",
+        "inputs": {
+          "src/lib/pmProxy.test/mockPMBase.ts": {
+            "bytesInOutput": 2701
+          },
+          "src/lib/pmProxy.test/implementation.ts": {
+            "bytesInOutput": 1316
+          },
+          "src/lib/pmProxy.test/specification.ts": {
+            "bytesInOutput": 1116
+          },
+          "node_modules/chai/chai.js": {
+            "bytesInOutput": 130527
+          },
+          "src/lib/pmProxy.test/interface.ts": {
+            "bytesInOutput": 874
+          },
+          "src/lib/pmProxy.test/index.ts": {
+            "bytesInOutput": 198
+          }
+        },
+        "bytes": 144670
+      },
+      "testeranto/bundles/node/allTests/src/lib/core.test/core.test.mjs": {
+        "imports": [
+          {
+            "path": "testeranto/bundles/node/allTests/chunk-UED26IMH.mjs",
+            "kind": "import-statement"
+          },
+          {
+            "path": "stream",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "exports": [
+          "default"
+        ],
+        "entryPoint": "src/lib/core.test/core.test.ts",
+        "inputs": {
+          "src/PM/pure.ts": {
+            "bytesInOutput": 3131
+          },
+          "src/Pure.ts": {
+            "bytesInOutput": 817
+          },
+          "src/lib/core.test/core.test.specification.ts": {
+            "bytesInOutput": 2371
+          },
+          "src/lib/core.test/MockCore.ts": {
+            "bytesInOutput": 553
+          },
+          "src/lib/core.test/core.test.implementation.ts": {
+            "bytesInOutput": 3134
+          },
+          "src/lib/core.test/core.test.interface.ts": {
+            "bytesInOutput": 475
+          },
+          "src/lib/core.test/core.test.ts": {
+            "bytesInOutput": 281
+          }
+        },
+        "bytes": 11244
+      },
+      "testeranto/bundles/node/allTests/src/lib/classBuilder.test/classBuilder.test.mjs": {
+        "imports": [
+          {
+            "path": "testeranto/bundles/node/allTests/chunk-W44DUDBK.mjs",
+            "kind": "import-statement"
+          },
+          {
+            "path": "testeranto/bundles/node/allTests/chunk-UED26IMH.mjs",
             "kind": "import-statement"
           },
           {
@@ -3494,11 +3876,11 @@
       "testeranto/bundles/node/allTests/src/lib/baseBuilder.test/baseBuilder.test.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/node/allTests/chunk-YI3EGRMQ.mjs",
+            "path": "testeranto/bundles/node/allTests/chunk-W44DUDBK.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/node/allTests/chunk-6CGAD2FD.mjs",
+            "path": "testeranto/bundles/node/allTests/chunk-UED26IMH.mjs",
             "kind": "import-statement"
           },
           {
@@ -3530,34 +3912,14 @@
         },
         "bytes": 5653
       },
-      "testeranto/bundles/node/allTests/chunk-YI3EGRMQ.mjs": {
-        "imports": [
-          {
-            "path": "testeranto/bundles/node/allTests/chunk-6CGAD2FD.mjs",
-            "kind": "import-statement"
-          }
-        ],
-        "exports": [
-          "Pure_default"
-        ],
-        "inputs": {
-          "src/PM/pure.ts": {
-            "bytesInOutput": 3131
-          },
-          "src/Pure.ts": {
-            "bytesInOutput": 809
-          }
-        },
-        "bytes": 4183
-      },
       "testeranto/bundles/node/allTests/src/lib/BaseSuite.test.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/node/allTests/chunk-5MQGD4WC.mjs",
+            "path": "testeranto/bundles/node/allTests/chunk-W44DUDBK.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/node/allTests/chunk-6CGAD2FD.mjs",
+            "path": "testeranto/bundles/node/allTests/chunk-UED26IMH.mjs",
             "kind": "import-statement"
           }
         ],
@@ -3575,11 +3937,11 @@
       "testeranto/bundles/node/allTests/src/mothership/test.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/node/allTests/chunk-5MQGD4WC.mjs",
+            "path": "testeranto/bundles/node/allTests/chunk-W44DUDBK.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/node/allTests/chunk-6CGAD2FD.mjs",
+            "path": "testeranto/bundles/node/allTests/chunk-UED26IMH.mjs",
             "kind": "import-statement"
           },
           {
@@ -4396,11 +4758,11 @@
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/node/allTests/chunk-5MQGD4WC.mjs",
+            "path": "testeranto/bundles/node/allTests/chunk-W44DUDBK.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/node/allTests/chunk-6CGAD2FD.mjs",
+            "path": "testeranto/bundles/node/allTests/chunk-UED26IMH.mjs",
             "kind": "import-statement"
           },
           {
@@ -4430,11 +4792,11 @@
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/node/allTests/chunk-5MQGD4WC.mjs",
+            "path": "testeranto/bundles/node/allTests/chunk-W44DUDBK.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/node/allTests/chunk-6CGAD2FD.mjs",
+            "path": "testeranto/bundles/node/allTests/chunk-UED26IMH.mjs",
             "kind": "import-statement"
           },
           {
@@ -4457,40 +4819,6 @@
         },
         "bytes": 4142
       },
-      "testeranto/bundles/node/allTests/src/PM/__tests__/webSidecar.testeranto.mjs": {
-        "imports": [
-          {
-            "path": "testeranto/bundles/node/allTests/chunk-PG6KUKNP.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/node/allTests/chunk-5MQGD4WC.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/node/allTests/chunk-6CGAD2FD.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "net",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "exports": [
-          "default"
-        ],
-        "entryPoint": "src/PM/__tests__/webSidecar.testeranto.ts",
-        "inputs": {
-          "src/PM/webSidecar.ts": {
-            "bytesInOutput": 899
-          },
-          "src/PM/__tests__/webSidecar.testeranto.ts": {
-            "bytesInOutput": 2861
-          }
-        },
-        "bytes": 4133
-      },
       "testeranto/bundles/node/allTests/chunk-PG6KUKNP.mjs": {
         "imports": [],
         "exports": [
@@ -4503,10 +4831,10 @@
         },
         "bytes": 1679
       },
-      "testeranto/bundles/node/allTests/chunk-5MQGD4WC.mjs": {
+      "testeranto/bundles/node/allTests/chunk-W44DUDBK.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/node/allTests/chunk-6CGAD2FD.mjs",
+            "path": "testeranto/bundles/node/allTests/chunk-UED26IMH.mjs",
             "kind": "import-statement"
           },
           {
@@ -4533,12 +4861,12 @@
             "bytesInOutput": 5231
           },
           "src/Node.ts": {
-            "bytesInOutput": 1289
+            "bytesInOutput": 1293
           }
         },
-        "bytes": 6763
+        "bytes": 6771
       },
-      "testeranto/bundles/node/allTests/chunk-6CGAD2FD.mjs": {
+      "testeranto/bundles/node/allTests/chunk-UED26IMH.mjs": {
         "imports": [],
         "exports": [
           "BaseBuilder",
@@ -4549,15 +4877,17 @@
           "BaseWhen",
           "ClassBuilder",
           "PM",
-          "Testeranto",
+          "TesterantoCore",
           "__commonJS",
           "__require",
           "__toESM",
+          "andWhenProxy",
+          "butThenProxy",
           "defaultTestResourceRequirement"
         ],
         "inputs": {
           "src/lib/pmProxy.ts": {
-            "bytesInOutput": 3201
+            "bytesInOutput": 3236
           },
           "src/lib/abstractBase.ts": {
             "bytesInOutput": 4668
@@ -4575,13 +4905,13 @@
             "bytesInOutput": 674
           },
           "src/lib/core.ts": {
-            "bytesInOutput": 2684
+            "bytesInOutput": 2688
           },
           "src/PM/index.ts": {
             "bytesInOutput": 20
           }
         },
-        "bytes": 20729
+        "bytes": 20804
       }
     }
   }

@@ -21,7 +21,7 @@ import type {
 } from "../CoreTypes";
 import { BaseSuite } from "./BaseSuite.js";
 
-export default abstract class Testeranto<
+export default abstract class TesterantoCore<
   I extends Ibdd_in_any,
   O extends Ibdd_out_any,
   M

@@ -3,17 +3,17 @@
     {
       "id": "",
       "location": {
-        "column": 43,
-        "file": "src/lib/classBuilder.test/classBuilder.test.implementation.ts",
+        "column": 55,
+        "file": "src/lib/pmProxy.test/implementation.ts",
         "length": 1,
-        "line": 91,
-        "lineText": "      if (!builder.testResourceRequirement)) {",
+        "line": 33,
+        "lineText": "        return [proxies.butThenProxy(mockPm, filepath)., expecation];",
         "namespace": "",
         "suggestion": ""
       },
       "notes": [],
       "pluginName": "",
-      "text": "Unexpected \")\""
+      "text": "Expected identifier but found \",\""
     }
   ],
   "warnings": []

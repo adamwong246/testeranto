@@ -1,4 +1,8 @@
-/add docs/index.md
-/add README.md
+/read README.md
+
+/read docs/index.md
+/read docs/testing.ai.txt
+
 /add src/CoreTypes.ts
+/add src//lib/types.ts
 

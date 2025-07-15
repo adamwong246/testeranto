@@ -1,7 +1,9 @@
+import Testeranto from "../Node";
+
 import { BaseSuite } from "./BaseSuite";
 import { BaseGiven, BaseWhen, BaseThen, BaseCheck } from "./abstractBase";
 import { ITTestResourceConfiguration, ITestArtifactory, ITLog } from ".";
-import { IPM } from "./types";
+import { IPM, ITestCheckCallback } from "./types";
 import {
   Ibdd_in,
   Ibdd_out,
@@ -9,7 +11,7 @@ import {
   ITestImplementation,
   ITestInterface,
 } from "../CoreTypes";
-import Testeranto from "../Node";
+import { WhenSpecification } from "../Types";
 
 // 1. Define our test types with full type safety
 type TestStore = {
@@ -159,10 +161,10 @@ class TestableSuite extends BaseSuite<I, O> {
 
 // 3. Enhanced Test Specification with more test cases
 const specification: ITestSpecification<I, O> = (
-  Suite: SuiteSpecification<I, O>,
-  Given: GivenSpecification<I, O>,
+  Suite: ITestSpecification<I, O>,
+  Given: WhenSpecification<I, O>,
   When: WhenSpecification<I, O>,
-  Then: ThenSpecification<I, O>,
+  Then: WhenSpecification<I, O>,
   Check: ITestCheckCallback<I, O>
 ) => [
   Suite.Default(

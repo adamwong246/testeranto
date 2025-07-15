@@ -1,10 +1,10 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
-  Pure_default
-} from "../../../chunk-YI3EGRMQ.mjs";
+  Node_default
+} from "../../../chunk-W44DUDBK.mjs";
 import {
   BaseBuilder as BaseBuilder2
-} from "../../../chunk-6CGAD2FD.mjs";
+} from "../../../chunk-UED26IMH.mjs";
 
 // src/lib/baseBuilder.test/baseBuilder.test.specification.ts
 var specification = (Suite, Given, When, Then, Check) => {
@@ -215,7 +215,7 @@ var testInterface = {
 };
 
 // src/lib/baseBuilder.test/baseBuilder.test.ts
-var baseBuilder_test_default = Pure_default(
+var baseBuilder_test_default = Node_default(
   BaseBuilder.prototype,
   specification,
   implementation,

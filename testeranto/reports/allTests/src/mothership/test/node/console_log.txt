@@ -1,0 +1,44 @@
+stdout > Suite { TheMothership: [Function (anonymous)] }
+stdout > MARK9 TypeError: fullTestInterface.andWhen is not a function
+    at When.andWhen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:739:42)
+    at When.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:306:23)
+    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:253:24)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:622:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:411:19
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:439:29)
+    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-W44DUDBK.mjs:223:12)
+    at async testeranto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-W44DUDBK.mjs:239:15)
+stderr > afterEach failed! TypeError: fullTestInterface.afterEach is not a function
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:733:44
+    at new Promise (<anonymous>)
+    at Given.afterEach (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:732:18)
+    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:277:20)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:622:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:411:19
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:439:29)
+    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-W44DUDBK.mjs:223:12)
+    at async testeranto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-W44DUDBK.mjs:239:15)
+stderr > Given error: TypeError: fullTestInterface.afterEach is not a function
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:733:44
+    at new Promise (<anonymous>)
+    at Given.afterEach (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:732:18)
+    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:277:20)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:622:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:411:19
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:439:29)
+    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-W44DUDBK.mjs:223:12)
+    at async testeranto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-W44DUDBK.mjs:239:15)
+goodbye node with caught error TypeError: fullTestInterface.afterEach is not a function
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:733:44
+    at new Promise (<anonymous>)
+    at Given.afterEach (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:732:18)
+    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:277:20)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:622:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:411:19
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:439:29)
+    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-W44DUDBK.mjs:223:12)
+    at async testeranto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-W44DUDBK.mjs:239:15)

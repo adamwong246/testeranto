@@ -1,8 +1,22 @@
 {
+  "src/lib/pmProxy.test/index.ts": {
+    "typeErrors": "?",
+    "staticErrors": "?",
+    "runTimeError": 255,
+    "prompt": "?",
+    "failingFeatures": {}
+  },
+  "src/lib/core.test/core.test.ts": {
+    "typeErrors": "?",
+    "staticErrors": "?",
+    "runTimeError": "?",
+    "prompt": "?",
+    "failingFeatures": {}
+  },
   "src/lib/classBuilder.test/classBuilder.test.ts": {
     "typeErrors": "?",
     "staticErrors": "?",
-    "runTimeError": 1,
+    "runTimeError": "?",
     "prompt": "?",
     "failingFeatures": {}
   },
@@ -14,7 +28,7 @@
     "failingFeatures": {}
   },
   "./src/lib/BaseSuite.test.ts": {
-    "typeErrors": 34,
+    "typeErrors": 47,
     "staticErrors": 1,
     "runTimeError": "?",
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/node/./src/lib/BaseSuite.test/prompt.txt",
@@ -23,7 +37,7 @@
   "./src/mothership/test.ts": {
     "typeErrors": 14,
     "staticErrors": 0,
-    "runTimeError": "?",
+    "runTimeError": 255,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/node/./src/mothership/test/prompt.txt",
     "failingFeatures": {}
   },
@@ -48,18 +62,32 @@
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/node/./src/PM/__tests__/webSidecar.testeranto/prompt.txt",
     "failingFeatures": {}
   },
+  "./src/lib/pmProxy.test/index.ts": {
+    "typeErrors": 26,
+    "staticErrors": 4,
+    "runTimeError": "?",
+    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/node/./src/lib/pmProxy.test/index/prompt.txt",
+    "failingFeatures": {}
+  },
   "./src/lib/classBuilder.test/classBuilder.test.ts": {
-    "typeErrors": 49,
+    "typeErrors": 50,
     "staticErrors": 3,
     "runTimeError": "?",
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/node/./src/lib/classBuilder.test/classBuilder.test/prompt.txt",
     "failingFeatures": {}
   },
   "./src/lib/baseBuilder.test/baseBuilder.test.ts": {
-    "typeErrors": 32,
+    "typeErrors": 33,
     "staticErrors": 5,
     "runTimeError": "?",
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/node/./src/lib/baseBuilder.test/baseBuilder.test/prompt.txt",
+    "failingFeatures": {}
+  },
+  "./src/lib/core.test/core.test.ts": {
+    "typeErrors": 39,
+    "staticErrors": 4,
+    "runTimeError": "?",
+    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/node/./src/lib/core.test/core.test/prompt.txt",
     "failingFeatures": {}
   }
 }
