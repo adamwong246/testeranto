@@ -20,13 +20,8 @@ import {
   ICheckKlasser,
   IPM,
 } from "./types.js";
-import {
-  BaseCheck,
-  BaseSuite,
-  BaseWhen,
-  BaseThen,
-  BaseGiven,
-} from "./abstractBase.js";
+import { BaseCheck, BaseWhen, BaseThen, BaseGiven } from "./abstractBase.js";
+import { BaseSuite } from "./BaseSuite";
 
 export abstract class BaseBuilder<
   I extends Ibdd_in_any,

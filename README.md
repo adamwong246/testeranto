@@ -14,7 +14,7 @@
 
 - Testeranto produces test results which can be fed to Aider.ai to automatically fix failing tests.
 - Testeranto tests are specified in a strongly-typed gherkin-like syntax. Rather than testing your code directly, Testeranto requires you wrap your code with a semantic interface which is based on TS type signatures.
-- Testeranto can be run test in the frontend or the backend, or both.
+- Testeranto can run tests in the frontend or the backend, or both.
 - Testeranto can be used to test anything that can be bundled with esbuild.
 - Testeranto connects "features" to "tests". This allows the AI to read feature documentation from external systems, like Jira.
 - Testeranto generates test results into static a website which can be deployed to github pages easily.
@@ -59,65 +59,22 @@ const RectangleSpec = (Suite, Given, When, Then) => [
 ];
 ```
 
-3. Run your tests in two separate terminals:
+3. Run the tests
+
+To start testeranto in dev mode, build your tests in one terminal and execute them in another
 
 ```bash
 # Terminal 1 - Build in watch mode
-yarn t-build rectangle.test.ts dev
+yarn t-build rectangle.test.ts yourProject dev
 
 # Terminal 2 - Run in watch mode
-yarn t-run rectangle.test.ts dev
+yarn t-run rectangle.test.ts yourProject dev
 ```
 
-### Development Workflow
+or build and run your tests only once
 
-```mermaid
-%%{init: {'theme': 'dark'}}%%
-flowchart LR
-    Human[🧑💻 Human]
-    aider[🤖🧠 aider]
-
-    tests ---> L
-    subgraph tests
-        direction LR
-        A[Test Specification]
-        B[Test Interface]
-        C[Test Implementation]
-        K[application code]
-    end
-
-    subgraph reports
-        direction LR
-        N["BDD tests"]
-        O["Static analysis"]
-        P["Type checking"]
-    end
-
-    L["t-build"]
-        TRUN[t-run]
-        L ---> TRUN
-        TRUN ---> Runtimes
-        N ---> aider
-        O ---> aider
-        P ---> aider
-
-    subgraph Runtimes["The 3 runtimes"]
-        Node[Node]
-        Web[Browser]
-        Pure[JS]
-    end
-
-    aider ---> tests
-    Human ---> tests
-    Runtimes --> reports
-
-    %% Styling
-    style Human fill:#268bd2,stroke:#586e75,color:#fdf6e3
-    style aider fill:#d33682,stroke:#586e75,color:#fdf6e3
-
-    %% Layout tweaks
-    classDef column margin-right:20px
-
+```bash
+yarn t-build rectangle.test.ts yourProject once && yarn t-run rectangle.test.ts yourProject once
 ```
 
 ## Runtime Platforms
@@ -184,7 +141,7 @@ Fix the failing tests described in testeranto/reports/allTests/node/test/node/te
 
 Testeranto connects "features" to tests. The features may be simple strings, but they can also take the form of local markdown files, or remote URLs to external feature tracking systems. For instance, this could be a jira ticket or a github issue. These features are used to inform the AI context.
 
-```ts
+```typescript
 import someMarkdownFile from "someMarkdownFile.md";
 
 ...

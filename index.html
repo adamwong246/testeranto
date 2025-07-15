@@ -1,97 +1,92 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>README.md</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-  <script>
-    mermaid.initialize({ startOnLoad: true, theme: 'dark' });
-  </script>
-  <base href="https://adamwong246.github.io/testeranto/" target="_blank">
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>README.md</title>
+    
+    <!-- Prism.js CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet" />
 
+    <!-- load style AFTER prism -->
+    <link rel="stylesheet" href="style.css">
+
+    
+</head>
 <body>
-  <div id="container">
-    <h1>testeranto</h1>
-    <h2>The AI-powered BDD test framework for TypeScript projects</h2>
-    <h4>🚧 WARNING: Testeranto is still under development and is not ready for production yet. 🚧</h4>
-    <ul>
-      <li>demo video: <a href="https://www.youtube.com/embed/WvU5xMqGi6Q">youtube</a></li>
-      <li>source: <a href="https://github.com/adamwong246/testeranto">github.com/adamwong246/testeranto</a></li>
-      <li>npm: <a href="https://www.npmjs.com/package/testeranto">npmjs.com/package/testeranto</a></li>
-      <li>dev: <a href="https://github.dev/adamwong246/testeranto">github.dev/adamwong246/testeranto</a></li>
-      <li>example repo: <a href="https://github.com/adamwong246/testeranto-starter">testeranto-starter</a></li>
-    </ul>
-    <h2>What is testeranto?</h2>
-    <ul>
-      <li>Testeranto produces test results which can be fed to Aider.ai to automatically fix failing tests.</li>
-      <li>Testeranto tests are specified in a strongly-typed gherkin-like syntax. Rather than testing your code
-        directly, Testeranto requires you wrap your code with a semantic interface which is based on TS type signatures.
-      </li>
-      <li>Testeranto can be run test in the frontend or the backend, or both.</li>
-      <li>Testeranto can be used to test anything that can be bundled with esbuild.</li>
-      <li>Testeranto connects &quot;features&quot; to &quot;tests&quot;. This allows the AI to read feature
-        documentation from external systems, like Jira.</li>
-      <li>Testeranto generates test results into static a website which can be deployed to github pages easily.</li>
-      <li>Testeranto uses esbuild to bundle it&#39;s tests. The result is used to refine the list of files added to the
-        context of the AI. <strong>The consequence of this is that you can fit all relevant files, and ONLY the relevant
-          files, into the LLMs context.</strong></li>
-    </ul>
-    <h2>Key Technologies</h2>
-    <table>
-      <thead>
-        <tr>
-          <th></th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>ESM</td>
-          <td>Modern javascript tooling</td>
-        </tr>
-        <tr>
-          <td>TypeScript</td>
-          <td>Strongly-typed test definitions</td>
-        </tr>
-        <tr>
-          <td>Puppeteer</td>
-          <td>Cross-runtime testing (Node &amp; Browser)</td>
-        </tr>
-        <tr>
-          <td>esbuild</td>
-          <td>Fast test bundling</td>
-        </tr>
-        <tr>
-          <td>Aider.ai</td>
-          <td>AI-powered test fixing</td>
-        </tr>
-        <tr>
-          <td>ESLint</td>
-          <td>Static analysis of test files</td>
-        </tr>
-        <tr>
-          <td>tsc</td>
-          <td>Type checking of test files</td>
-        </tr>
-        <tr>
-          <td>Markdown</td>
-          <td>Feature documentation format</td>
-        </tr>
-      </tbody>
-    </table>
-    <h2>Quick Start</h2>
-    <ol>
-      <li>Install testeranto:</li>
-    </ol>
-    <pre>npm install testeranto</pre>
-    <ol start="2">
-      <li>Create a test file (e.g., <code>rectangle.test.ts</code>):</li>
-    </ol>
-    <pre>import { Given, When, Then } from "testeranto";
+    <div class="parallax-background"></div>
+    <div id="container">
+        <h1>testeranto</h1>
+<h2>The AI-powered BDD test framework for TypeScript projects</h2>
+<h4>🚧 WARNING: Testeranto is still under development and is not ready for production yet. 🚧</h4>
+<ul>
+<li>demo video: <a href="https://www.youtube.com/embed/WvU5xMqGi6Q">youtube</a></li>
+<li>source: <a href="https://github.com/adamwong246/testeranto">github.com/adamwong246/testeranto</a></li>
+<li>npm: <a href="https://www.npmjs.com/package/testeranto">npmjs.com/package/testeranto</a></li>
+<li>dev: <a href="https://github.dev/adamwong246/testeranto">github.dev/adamwong246/testeranto</a></li>
+<li>example repo: <a href="https://github.com/adamwong246/testeranto-starter">testeranto-starter</a></li>
+</ul>
+<h2>What is testeranto?</h2>
+<ul>
+<li>Testeranto produces test results which can be fed to Aider.ai to automatically fix failing tests.</li>
+<li>Testeranto tests are specified in a strongly-typed gherkin-like syntax. Rather than testing your code directly, Testeranto requires you wrap your code with a semantic interface which is based on TS type signatures.</li>
+<li>Testeranto can run tests in the frontend or the backend, or both.</li>
+<li>Testeranto can be used to test anything that can be bundled with esbuild.</li>
+<li>Testeranto connects &quot;features&quot; to &quot;tests&quot;. This allows the AI to read feature documentation from external systems, like Jira.</li>
+<li>Testeranto generates test results into static a website which can be deployed to github pages easily.</li>
+<li>Testeranto uses esbuild to bundle it&#39;s tests. The result is used to refine the list of files added to the context of the AI. <strong>The consequence of this is that you can fit all relevant files, and ONLY the relevant files, into the LLMs context.</strong></li>
+</ul>
+<h2>Key Technologies</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ESM</td>
+<td>Modern javascript tooling</td>
+</tr>
+<tr>
+<td>TypeScript</td>
+<td>Strongly-typed test definitions</td>
+</tr>
+<tr>
+<td>Puppeteer</td>
+<td>Cross-runtime testing (Node &amp; Browser)</td>
+</tr>
+<tr>
+<td>esbuild</td>
+<td>Fast test bundling</td>
+</tr>
+<tr>
+<td>Aider.ai</td>
+<td>AI-powered test fixing</td>
+</tr>
+<tr>
+<td>ESLint</td>
+<td>Static analysis of test files</td>
+</tr>
+<tr>
+<td>tsc</td>
+<td>Type checking of test files</td>
+</tr>
+<tr>
+<td>Markdown</td>
+<td>Feature documentation format</td>
+</tr>
+</tbody></table>
+<h2>Quick Start</h2>
+<ol>
+<li>Install testeranto:</li>
+</ol>
+<pre>npm install testeranto</pre><ol start="2">
+<li>Create a test file (e.g., <code>rectangle.test.ts</code>):</li>
+</ol>
+<pre class="language-typescript line-numbers"><code class="language-typescript">import { Given, When, Then } from "testeranto";
 
 type Rectangle = { width: number; height: number };
 
@@ -103,129 +98,75 @@ const RectangleSpec = (Suite, Given, When, Then) => [
       [Then.getWidth(5), Then.getHeight(10)]
     ),
   }),
-];</pre>
-    <ol start="3">
-      <li>Run your tests in two separate terminals:</li>
-    </ol>
-    <pre># Terminal 1 - Build in watch mode
-yarn t-build rectangle.test.ts dev
+];</code></pre><ol start="3">
+<li>Run the tests</li>
+</ol>
+<p>To start testeranto in dev mode, build your tests in one terminal and execute them in another</p>
+<pre># Terminal 1 - Build in watch mode
+yarn t-build rectangle.test.ts yourProject dev
 
 # Terminal 2 - Run in watch mode
-yarn t-run rectangle.test.ts dev</pre>
-    <h3>Development Workflow</h3>
-    <pre class="mermaid">%%{init: {'theme': 'dark'}}%%
-flowchart LR
-    Human[🧑💻 Human]
-    aider[🤖🧠 aider]
-
-    tests ---> L
-    subgraph tests
-        direction LR
-        A[Test Specification]
-        B[Test Interface]
-        C[Test Implementation]
-        K[application code]
-    end
-
-    subgraph reports
-        direction LR
-        N["BDD tests"]
-        O["Static analysis"]
-        P["Type checking"]
-    end
-
-    L["t-build"]
-        TRUN[t-run]
-        L ---> TRUN
-        TRUN ---> Runtimes
-        N ---> aider
-        O ---> aider
-        P ---> aider
-
-    subgraph Runtimes["The 3 runtimes"]
-        Node[Node]
-        Web[Browser]
-        Pure[JS]
-    end
-
-    aider ---> tests
-    Human ---> tests
-    Runtimes --> reports
-
-    %% Styling
-    style Human fill:#268bd2,stroke:#586e75,color:#fdf6e3
-    style aider fill:#d33682,stroke:#586e75,color:#fdf6e3
-
-    %% Layout tweaks
-    classDef column margin-right:20px
-</pre>
-    <h2>Runtime Platforms</h2>
-    <table>
-      <thead>
-        <tr>
-          <th></th>
-          <th>Runs on</th>
-          <th>You should use this runtime for...</th>
-          <th>Important differences</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Node</strong></td>
-          <td>node V8 with fork</td>
-          <td>testing backend code, Node APIs (like <code>fs</code> and <code>crypto</code>), or anything needing
-            filesystem access</td>
-          <td>has access to the filesystem and io</td>
-        </tr>
-        <tr>
-          <td><strong>Web</strong></td>
-          <td>chrome browser</td>
-          <td>testing frontend code, anything that uses <code>document</code> or <code>window</code>, UI interactions,
-            or visual regression</td>
-          <td>can take screenshots/recordings</td>
-        </tr>
-        <tr>
-          <td><strong>Pure</strong></td>
-          <td>node v8, dynamically imported</td>
-          <td>testing code which can run on both node-v8 and the the browser</td>
-          <td>Very similar to &quot;Node&quot; but has no IO access and thus, no console.log. This runtime is
-            theoretically faster.</td>
-        </tr>
-      </tbody>
-    </table>
-    <h2>CLI Commands</h2>
-    <table>
-      <thead>
-        <tr>
-          <th></th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><code>yarn t-init</code></td>
-          <td>Create a new testeranto project</td>
-        </tr>
-        <tr>
-          <td><code>yarn t-build &lt;YOUR_TESTS&gt; dev|once</code></td>
-          <td>Build test bundles (watch or single-run mode)</td>
-        </tr>
-        <tr>
-          <td><code>yarn t-run &lt;YOUR_TESTS&gt; dev|once</code></td>
-          <td>Run tests (watch or single-run mode)</td>
-        </tr>
-        <tr>
-          <td><code>yarn t-report</code></td>
-          <td>Launch test report server</td>
-        </tr>
-        <tr>
-          <td><code>yarn t-aider</code></td>
-          <td>Fix failing tests with AI</td>
-        </tr>
-      </tbody>
-    </table>
-    <h2>Example workflow:</h2>
-    <pre># Initialize project
+yarn t-run rectangle.test.ts yourProject dev</pre><p>or build and run your tests only once</p>
+<pre>yarn t-build rectangle.test.ts yourProject once && yarn t-run rectangle.test.ts yourProject once</pre><h2>Runtime Platforms</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Runs on</th>
+<th>You should use this runtime for...</th>
+<th>Important differences</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Node</strong></td>
+<td>node V8 with fork</td>
+<td>testing backend code, Node APIs (like <code>fs</code> and <code>crypto</code>), or anything needing filesystem access</td>
+<td>has access to the filesystem and io</td>
+</tr>
+<tr>
+<td><strong>Web</strong></td>
+<td>chrome browser</td>
+<td>testing frontend code, anything that uses <code>document</code> or <code>window</code>, UI interactions, or visual regression</td>
+<td>can take screenshots/recordings</td>
+</tr>
+<tr>
+<td><strong>Pure</strong></td>
+<td>node v8, dynamically imported</td>
+<td>testing code which can run on both node-v8 and the the browser</td>
+<td>Very similar to &quot;Node&quot; but has no IO access and thus, no console.log. This runtime is theoretically faster.</td>
+</tr>
+</tbody></table>
+<h2>CLI Commands</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>yarn t-init</code></td>
+<td>Create a new testeranto project</td>
+</tr>
+<tr>
+<td><code>yarn t-build &lt;YOUR_TESTS&gt; dev|once</code></td>
+<td>Build test bundles (watch or single-run mode)</td>
+</tr>
+<tr>
+<td><code>yarn t-run &lt;YOUR_TESTS&gt; dev|once</code></td>
+<td>Run tests (watch or single-run mode)</td>
+</tr>
+<tr>
+<td><code>yarn t-report</code></td>
+<td>Launch test report server</td>
+</tr>
+<tr>
+<td><code>yarn t-aider</code></td>
+<td>Fix failing tests with AI</td>
+</tr>
+</tbody></table>
+<h2>Example workflow:</h2>
+<pre># Initialize project
 yarn t-init
 
 # Write tests in test/*.test.ts
@@ -241,10 +182,9 @@ yarn t-build test/rectangle.test.ts once
 yarn t-run test/rectangle.test.ts once
 
 # Get AI help with failures
-yarn t-aider</pre>
-    <h2>Aider</h2>
-    <p>Testeranto generates a &quot;prompt&quot; alongside test results. This prompt is passed to aider as input.</p>
-    <pre>// input src files which can be edited by aider
+yarn t-aider</pre><h2>Aider</h2>
+<p>Testeranto generates a &quot;prompt&quot; alongside test results. This prompt is passed to aider as input.</p>
+<pre>// input src files which can be edited by aider
 /add test/node.ts
 
 // test report files that inform aider but should not be edited
@@ -256,12 +196,9 @@ yarn t-aider</pre>
 /load testeranto/reports/allTests/node/test/node/featurePrompt.txt
 
 // tell the AI what to do
-Fix the failing tests described in testeranto/reports/allTests/node/test/node/tests.json. Correct any type signature errors described in the files testeranto/reports/allTests/test/node/node/type_errors.txt. Implement any method which throws "Function not implemented. Resolve the lint errors described in testeranto/reports/allTests/test/node/node/lint_errors.json"</pre>
-    <h2>&quot;Features&quot;</h2>
-    <p>Testeranto connects &quot;features&quot; to tests. The features may be simple strings, but they can also take the
-      form of local markdown files, or remote URLs to external feature tracking systems. For instance, this could be a
-      jira ticket or a github issue. These features are used to inform the AI context.</p>
-    <pre>import someMarkdownFile from "someMarkdownFile.md";
+Fix the failing tests described in testeranto/reports/allTests/node/test/node/tests.json. Correct any type signature errors described in the files testeranto/reports/allTests/test/node/node/type_errors.txt. Implement any method which throws "Function not implemented. Resolve the lint errors described in testeranto/reports/allTests/test/node/node/lint_errors.json"</pre><h2>&quot;Features&quot;</h2>
+<p>Testeranto connects &quot;features&quot; to tests. The features may be simple strings, but they can also take the form of local markdown files, or remote URLs to external feature tracking systems. For instance, this could be a jira ticket or a github issue. These features are used to inform the AI context.</p>
+<pre class="language-typescript line-numbers"><code class="language-typescript">import someMarkdownFile from "someMarkdownFile.md";
 
 ...
 
@@ -276,29 +213,39 @@ test0: Given.Default(
   [Then.getWidth(4), Then.getHeight(19)]
 ),
 ...
-</pre>
-    <h2>Sidecars (COMING SOON)</h2>
-    <p>Along side your test, you can include a number of &quot;sidecars&quot; which are other bundled javascript assets
-      upon which your test depends. For example, suppose you have an app with a frontend and backend component. You
-      could run a react test in the web and include the node http server as a sidecar.</p>
-    <h2><code>eslint</code> and <code>tsc</code></h2>
-    <p>Alongside the bdd tests, testeranto runs eslint and tsc upon the input files to generate a list of static
-      analysis errors and a list of type errors, respectively.</p>
-    <h2>Subprojects</h2>
-    <p>Testeranto has a core repo, but there are also subprojects which implement tests by type and by technology</p>
-    <h3>testeranto-solidity</h3>
-    <p>Test a solidity contract. Also included is an example of deploying a contrct to a ganache server.</p>
-    <h3>testeranto-reduxtoolkit</h3>
-    <p>Test a redux store.</p>
-    <h3>testeranto-http</h3>
-    <p>Test a node http server.</p>
-    <h3>testeranto-react (COMING SOON)</h3>
-    <p>Test a react component. You can choose from a variety of types (jsx functions, class style, etc) and you can test
-      with <code>react</code>, <code>react-dom</code>, or <code>react-test-renderer</code></p>
-    <h3>testeranto-express (COMING SOON)</h3>
-    <h3>testeranto-xstate (COMING SOON)</h3>
+</code></pre><h2>Sidecars (COMING SOON)</h2>
+<p>Along side your test, you can include a number of &quot;sidecars&quot; which are other bundled javascript assets upon which your test depends. For example, suppose you have an app with a frontend and backend component. You could run a react test in the web and include the node http server as a sidecar.</p>
+<h2><code>eslint</code> and <code>tsc</code></h2>
+<p>Alongside the bdd tests, testeranto runs eslint and tsc upon the input files to generate a list of static analysis errors and a list of type errors, respectively.</p>
+<h2>Subprojects</h2>
+<p>Testeranto has a core repo, but there are also subprojects which implement tests by type and by technology</p>
+<h3>testeranto-solidity</h3>
+<p>Test a solidity contract. Also included is an example of deploying a contrct to a ganache server.</p>
+<h3>testeranto-reduxtoolkit</h3>
+<p>Test a redux store.</p>
+<h3>testeranto-http</h3>
+<p>Test a node http server.</p>
+<h3>testeranto-react (COMING SOON)</h3>
+<p>Test a react component. You can choose from a variety of types (jsx functions, class style, etc) and you can test with <code>react</code>, <code>react-dom</code>, or <code>react-test-renderer</code></p>
+<h3>testeranto-express (COMING SOON)</h3>
+<h3>testeranto-xstate (COMING SOON)</h3>
 
-  </div>
+    </div>
+    <!-- Prism.js JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Prism.highlightAll();
+            
+            // Parallax effect
+            const parallaxBg = document.querySelector('.parallax-background');
+            window.addEventListener('scroll', function() {
+                const scrollPosition = window.pageYOffset;
+                parallaxBg.style.transform = 'translateY(scrollPosition)';
+            });
+        });
+    </script>
 </body>
-
 </html>

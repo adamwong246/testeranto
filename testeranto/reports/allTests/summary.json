@@ -1,0 +1,37 @@
+{
+  "./src/lib/BaseSuite.test.ts": {
+    "runTimeError": 255,
+    "typeErrors": 34,
+    "staticErrors": 1,
+    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/node/./src/lib/BaseSuite.test/prompt.txt",
+    "failingFeatures": {}
+  },
+  "./src/mothership/test.ts": {
+    "runTimeError": "?",
+    "typeErrors": 14,
+    "staticErrors": 0,
+    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/node/./src/mothership/test/prompt.txt",
+    "failingFeatures": {}
+  },
+  "./src/PM/__tests__/nodeSidecar.testeranto.ts": {
+    "runTimeError": "?",
+    "typeErrors": 18,
+    "staticErrors": 1,
+    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/node/./src/PM/__tests__/nodeSidecar.testeranto/prompt.txt",
+    "failingFeatures": {}
+  },
+  "./src/PM/__tests__/pureSidecar.testeranto.ts": {
+    "runTimeError": "?",
+    "typeErrors": 21,
+    "staticErrors": 1,
+    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/node/./src/PM/__tests__/pureSidecar.testeranto/prompt.txt",
+    "failingFeatures": {}
+  },
+  "./src/PM/__tests__/webSidecar.testeranto.ts": {
+    "runTimeError": "?",
+    "typeErrors": 21,
+    "staticErrors": 1,
+    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/node/./src/PM/__tests__/webSidecar.testeranto/prompt.txt",
+    "failingFeatures": {}
+  }
+}

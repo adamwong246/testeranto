@@ -1,9 +1,0 @@
-{
-  "./src/PM/__tests__/nodeSidecar.testeranto.ts": {
-    "runTimeError": "?",
-    "typeErrors": 32,
-    "staticErrors": 4,
-    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/mothership/reports/node/./src/PM/__tests__/nodeSidecar.testeranto/prompt.txt",
-    "failingFeatures": {}
-  }
-}

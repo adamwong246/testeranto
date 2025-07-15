@@ -1,0 +1,80 @@
+[
+  {
+    "filePath": "/Users/adam/Code/testeranto/src/PM/__tests__/nodeSidecar.testeranto.ts",
+    "messages": [
+      {
+        "ruleId": "@typescript-eslint/no-unsafe-function-type",
+        "severity": 2,
+        "message": "The `Function` type accepts any function-like value.\nPrefer explicitly defining any function parameters and return type.",
+        "line": 73,
+        "column": 23,
+        "nodeType": "Identifier",
+        "messageId": "bannedFunctionType",
+        "endLine": 73,
+        "endColumn": 31
+      },
+      {
+        "ruleId": "@typescript-eslint/no-unsafe-function-type",
+        "severity": 2,
+        "message": "The `Function` type accepts any function-like value.\nPrefer explicitly defining any function parameters and return type.",
+        "line": 75,
+        "column": 39,
+        "nodeType": "Identifier",
+        "messageId": "bannedFunctionType",
+        "endLine": 75,
+        "endColumn": 47
+      },
+      {
+        "ruleId": "@typescript-eslint/no-unused-vars",
+        "severity": 2,
+        "message": "'data' is defined but never used.",
+        "line": 94,
+        "column": 31,
+        "nodeType": null,
+        "messageId": "unusedVar",
+        "endLine": 94,
+        "endColumn": 35
+      },
+      {
+        "ruleId": "@typescript-eslint/no-unused-vars",
+        "severity": 2,
+        "message": "'testResource' is defined but never used.",
+        "line": 142,
+        "column": 44,
+        "nodeType": null,
+        "messageId": "unusedVar",
+        "endLine": 142,
+        "endColumn": 56
+      },
+      {
+        "ruleId": "@typescript-eslint/no-unused-vars",
+        "severity": 2,
+        "message": "'initialValues' is defined but never used.",
+        "line": 142,
+        "column": 58,
+        "nodeType": null,
+        "messageId": "unusedVar",
+        "endLine": 142,
+        "endColumn": 71
+      },
+      {
+        "ruleId": "@typescript-eslint/no-unused-vars",
+        "severity": 2,
+        "message": "'pm' is defined but never used.",
+        "line": 142,
+        "column": 73,
+        "nodeType": null,
+        "messageId": "unusedVar",
+        "endLine": 142,
+        "endColumn": 75
+      }
+    ],
+    "suppressedMessages": [],
+    "errorCount": 6,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  }
+]

@@ -8,11 +8,11 @@ import {
   BaseThen,
   BaseGiven,
   BaseCheck,
-  BaseSuite,
   IGivens,
 } from "./lib/abstractBase.js";
 
 import { Ibdd_in_any, Ibdd_out_any } from "./CoreTypes.js";
+import { BaseSuite } from "./lib/BaseSuite.js";
 
 export type ISummary = Record<
   string,

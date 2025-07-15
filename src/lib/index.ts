@@ -6,13 +6,14 @@ import { PM_Node } from "../PM/node.js";
 import { PM_Web } from "../PM/web.js";
 import { ITestconfig, IBuiltConfig, IRunTime, ITestTypes } from "../Types.js";
 
-import { IGivens, BaseCheck, BaseSuite } from "./abstractBase.js";
+import { IGivens, BaseCheck } from "./abstractBase.js";
 import { IPM } from "./types.js";
 import type {
   ITestInterface,
   Ibdd_in_any,
   Ibdd_out_any,
 } from "../CoreTypes.js";
+import { BaseSuite } from "./BaseSuite.js";
 
 export const BaseTestInterface = <
   T extends Ibdd_in_any

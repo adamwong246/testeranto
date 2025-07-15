@@ -1,40 +1,30 @@
 import { IProject } from "./src/Types";
 
-// import redux from "testeranto_with_reduxjs_toolkit/testeranto.config";
-// import solidity from "testeranto-solidity/testeranto.config";
-
 const config: IProject = {
   projects: {
-    // redux: {
-    //   ...redux.projects.allTests,
-    //   src: "node_modules/testeranto_with_reduxjs_toolkit",
-    // },
-    // solidity: {
-    //   ...solidity.projects.solidity,
-    //   src: "node_modules/testeranto-solidity",
-    // },
-
-    mothership: {
+    allTests: {
       tests: [
-        // ["./src/mothership/test.ts", "node", { ports: 1 }, []],
+        ["./src/lib/BaseSuite.test.ts", "node", { ports: 1 }, []],
+
+        ["./src/mothership/test.ts", "node", { ports: 1 }, []],
         [
           "./src/PM/__tests__/nodeSidecar.testeranto.ts",
           "node",
           { ports: 1 },
           [],
         ],
-        // [
-        //   "./src/PM/__tests__/pureSidecar.testeranto.ts",
-        //   "node",
-        //   { ports: 1 },
-        //   [],
-        // ],
-        // [
-        //   "./src/PM/__tests__/webSidecar.testeranto.ts",
-        //   "node",
-        //   { ports: 1 },
-        //   [],
-        // ],
+        [
+          "./src/PM/__tests__/pureSidecar.testeranto.ts",
+          "node",
+          { ports: 1 },
+          [],
+        ],
+        [
+          "./src/PM/__tests__/webSidecar.testeranto.ts",
+          "node",
+          { ports: 1 },
+          [],
+        ],
       ],
       clearScreen: false,
       debugger: false,

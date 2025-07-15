@@ -5,13 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>index.md</title>
+    
+    <!-- Prism.js CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet" />
+
+    <!-- load style AFTER prism -->
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>
-        mermaid.initialize({ startOnLoad: true, theme: 'dark' });
-    </script>
+
+    
 </head>
 <body>
+    <div class="parallax-background"></div>
     <div id="container">
         <h1>Testeranto docs and core concepts</h1>
 <p>Testeranto&#39;s type system provides a rigorous framework for Behavior-Driven Development (BDD) testing. While powerful, the API can initially seem complex but everything you need to know can be summed up in <strong>3 core functions and 5 essential types</strong>. Follow these patterns, and TypeScript&#39;s type checker will guide you through the rest.</p>
@@ -19,7 +24,7 @@
 <p>Let&#39;s break down the key components using a Rectangle class example.</p>
 <h3>The Test Subject</h3>
 <p>This is the thing-to-be-tested, for this example, a very simple implementation of a Rectangle</p>
-<pre>class Rectangle {
+<pre class="language-typescript line-numbers"><code class="language-typescript">class Rectangle {
   constructor(public width: number, public height: number) {}
 
   setWidth(w: number) {
@@ -31,7 +36,7 @@
   getArea() {
     return this.width * this.height;
   }
-}</pre><h3>Testeranto&#39;s 3 functions</h3>
+}</code></pre><h3>Testeranto&#39;s 3 functions</h3>
 <p>For each of testeranto&#39;s runtime, there is a specific Testeranto main function. Each is it&#39;s own import but all 3 are called in the same way.</p>
 <h4>Node</h4>
 <pre>import Testeranto from "testeranto/src/Node"; // <- import the Node main function
@@ -114,7 +119,7 @@ export default Testeranto<
 <li>Maps directly to BDD concepts</li>
 <li>Uses Ibdd_out for type safety</li>
 </ul>
-<pre>import {
+<pre class="language-typescript line-numbers"><code class="language-typescript">import {
   Ibdd_in,
   Ibdd_out,
   ITestSpecification,
@@ -151,7 +156,7 @@ export const specification: ITestSpecification<
       []
     ),
   ];
-};</pre><h4>The Implementation (ITestImplementation)</h4>
+};</code></pre><h4>The Implementation (ITestImplementation)</h4>
 <p>The Implementation provides the concrete operations that bring specifications to life. This is where you define <strong>how</strong> each test step actually works.</p>
 <ul>
 <li><code>suites</code>: Test grouping and organization</li>
@@ -512,5 +517,21 @@ export default Testeranto<
 
 </pre>
     </div>
+    <!-- Prism.js JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Prism.highlightAll();
+            
+            // Parallax effect
+            const parallaxBg = document.querySelector('.parallax-background');
+            window.addEventListener('scroll', function() {
+                const scrollPosition = window.pageYOffset;
+                parallaxBg.style.transform = 'translateY(scrollPosition)';
+            });
+        });
+    </script>
 </body>
 </html>

@@ -1,4 +1,0 @@
-stdout > Suite { TheMothership: [Function (anonymous)] }
-stdout > Example app listening on port 3333
-stdout > toObj error undefined
-stderr > goodbye node error 0

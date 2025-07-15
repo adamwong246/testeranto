@@ -8,13 +8,7 @@ import {
   ITestArtifactory,
   defaultTestResourceRequirement,
 } from "./index.js";
-import {
-  BaseSuite,
-  BaseGiven,
-  BaseWhen,
-  BaseThen,
-  BaseCheck,
-} from "./abstractBase.js";
+import { BaseGiven, BaseWhen, BaseThen, BaseCheck } from "./abstractBase.js";
 import { ClassBuilder } from "./classBuilder.js";
 import { IPM } from "./types";
 
@@ -25,6 +19,7 @@ import type {
   ITestInterface,
   ITestSpecification,
 } from "../CoreTypes";
+import { BaseSuite } from "./BaseSuite.js";
 
 export default abstract class Testeranto<
   I extends Ibdd_in_any,

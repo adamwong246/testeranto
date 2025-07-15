@@ -7,11 +7,11 @@ import { PM_Web } from "../PM/web";
 import {
   IGivens,
   BaseCheck,
-  BaseSuite,
   BaseGiven,
   BaseWhen,
   BaseThen,
 } from "./abstractBase";
+import { BaseSuite } from "./BaseSuite";
 
 export type IPM = PM_Node | PM_Web | PM_Pure;
 
