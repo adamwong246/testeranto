@@ -27,10 +27,9 @@ const template = (title, content) => `
     </script>
 </head>
 <body>
-<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
-  <image href="logo.svg" height="200" width="200" />
-</svg>
-    ${content.replace(/<p>⚠️(.*?)<\/p>/g, '<div class="warning">$1</div>')}
+    <div id="container">
+        ${content.replace(/<p>⚠️(.*?)<\/p>/g, '<div class="warning">$1</div>')}
+    </div>
 </body>
 </html>
 `;

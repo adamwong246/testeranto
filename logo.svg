@@ -2,37 +2,38 @@
   <defs>
     <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#FF6B6B" />
-      <stop offset="100%" stop-color="#FFE66D" />
+      <stop offset="100%" stop-color="#7FB3D5" />
     </linearGradient>
     <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#4ECDC4" />
-      <stop offset="100%" stop-color="#A7E8BD" />
+      <stop offset="100%" stop-color="#00B4A0" />
     </linearGradient>
   </defs>
   
-  <!-- Playful background shape with even more padding -->
-  <path d="M50,50 Q150,20 250,50 Q280,150 250,250 Q150,280 50,250 Q20,150 50,50 Z" 
-        fill="url(#gradient1)" stroke="#FF6B6B" stroke-width="4"/>
-  
+  <!-- Playful background shape -->
+  <path d="M50,50 Q150,20 250,50 Q280,150 250,250 Q150,280 50,250 Q20,150 50,50 Z"
+    fill="url(#gradient1)" stroke="#FF6B6B" stroke-width="4" />
+
   <!-- Robot mascot head -->
-  <circle cx="150" cy="125" r="40" fill="#FFE66D" stroke="#FF6B6B" stroke-width="3"/>
-  
+  <circle cx="150" cy="125" r="40" fill="#7FB3D5" stroke="#292F36" stroke-width="3" />
+
   <!-- Robot eyes -->
-  <circle cx="130" cy="115" r="8" fill="#4ECDC4"/>
-  <circle cx="170" cy="115" r="8" fill="#4ECDC4"/>
-  
+  <circle cx="130" cy="115" r="8" fill="#292F36" />
+  <circle cx="170" cy="115" r="8" fill="#292F36" />
+
   <!-- Robot mouth (smile) -->
-  <path d="M130,135 Q150,155 170,135" fill="none" stroke="#FF6B6B" stroke-width="3" stroke-linecap="round"/>
-  
+  <path d="M130,135 Q150,155 170,135" fill="none" stroke="#292F36" stroke-width="3"
+    stroke-linecap="round" />
+
   <!-- BDD elements orbiting face center (150,125) -->
   <g>
 
     <!-- First ball + label -->
     <g xmlns="http://www.w3.org/2000/svg">
       
-      <circle cx="212" cy="125" r="15" fill="#FFE66D" />
+      <circle cx="212" cy="125" r="15" fill="#E6B422" />
 
-      <text x="212" y="130" text-anchor="middle" fill="#1D3557" font-family="monospace"
+      <text x="212" y="130" text-anchor="middle" fill="#292F36" font-family="monospace"
         font-size="9" font-weight="bold">GIVEN</text>
       <animateTransform attributeName="transform" type="rotate" from="0 150 125" to="360 150
       125" dur="10s" repeatCount="indefinite" />
@@ -43,7 +44,7 @@
       
       <circle cx="126" cy="181.6" r="15" fill="#FF6B6B"  />
 
-      <text x="126" y="186.6" text-anchor="middle" fill="#1D3557" font-family="monospace"
+      <text x="126" y="186.6" text-anchor="middle" fill="#292F36" font-family="monospace"
         font-size="10" font-weight="bold">WHEN</text>
       <animateTransform attributeName="transform" type="rotate" from="0 150 125" to="360 150
       125" dur="10s" repeatCount="indefinite"/> 
@@ -52,18 +53,18 @@
     <!-- Third ball + label -->
     <g xmlns="http://www.w3.org/2000/svg">
       <circle cx="120" cy="71.4" r="15" fill="#4ECDC4"/>
-      <text x="120" y="75.4" text-anchor="middle" fill="#1D3557" font-family="monospace"
+      <text x="120" y="75.4" text-anchor="middle" fill="#0A0F1F" font-family="monospace"
         font-size="10" font-weight="bold">THEN</text>
       <animateTransform attributeName="transform" type="rotate" from="0 150 125" to="360 150
       125" dur="10s" repeatCount="indefinite"/> 
     </g>
   </g>
-  
+
   <!-- Higher title position with more padding -->
    <g>
     <path id="titlePath" d="M50,220 Q150,250 250,220" fill="none" />
     <text font-family="monospace" font-size="33" font-weight="bold" fill="#1D3557">
-      <textPath href="#titlePath" startOffset="50%" text-anchor="middle">TESTERANTO</textPath>
+      <textPath href="#titlePath" startOffset="50%" text-anchor="middle" fill="#292F36">TESTERANTO</textPath>
     </text>
 
    </g>

@@ -234,7 +234,3 @@ Test a react component. You can choose from a variety of types (jsx functions, c
 ### testeranto-express (COMING SOON)
 
 ### testeranto-xstate (COMING SOON)
-
-## What's with the funky logo?
-
-It was designed by aider to be "visually distinct and humorous", as was the styling of this page. This was what it came up with in it's charmingly literal way. I touched it up a bit but kept the spirit of the original.
