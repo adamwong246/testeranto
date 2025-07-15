@@ -30,23 +30,13 @@ export abstract class PM_WithEslintAndTsc extends PM_Base {
 
     this.name = name;
     this.mode = mode;
+    this.summary = {};
 
+    // Initialize all test entries first
     this.configs.tests.forEach(([t, rt, tr, sidecars]) => {
-      this.summary[t] = {
-        runTimeError: "?",
-        typeErrors: "?",
-        staticErrors: "?",
-        prompt: "?",
-        failingFeatures: {},
-      };
-      sidecars.forEach(([t]) => {
-        this.summary[t] = {
-          // runTimeError: "?",
-          typeErrors: "?",
-          staticErrors: "?",
-          // prompt: "?",
-          // failingFeatures: {},
-        };
+      this.ensureSummaryEntry(t);
+      sidecars.forEach(([sidecarName]) => {
+        this.ensureSummaryEntry(sidecarName, true);
       });
     });
   }
@@ -227,34 +217,58 @@ ${addableFiles
     this.checkForShutdown();
   };
 
+  private ensureSummaryEntry(src: string, isSidecar = false) {
+    if (!this.summary[src]) {
+      this.summary[src] = {
+        typeErrors: "?",
+        staticErrors: "?",
+        runTimeError: "?",
+        prompt: "?",
+        failingFeatures: {}
+      };
+      if (isSidecar) {
+        // Sidecars don't need all fields
+        delete this.summary[src].runTimeError;
+        delete this.summary[src].prompt;
+      }
+    }
+    return this.summary[src];
+  }
+
   typeCheckIsRunning = (src: string) => {
-    this.summary[src].typeErrors = "?";
+    const entry = this.ensureSummaryEntry(src);
+    entry.typeErrors = "?";
   };
 
   typeCheckIsNowDone = (src: string, failures: number) => {
-    this.summary[src].typeErrors = failures;
+    const entry = this.ensureSummaryEntry(src);
+    entry.typeErrors = failures;
     this.writeBigBoard();
     this.checkForShutdown();
   };
 
   lintIsRunning = (src: string) => {
-    this.summary[src].staticErrors = "?";
+    const entry = this.ensureSummaryEntry(src);
+    entry.staticErrors = "?";
     this.writeBigBoard();
   };
 
   lintIsNowDone = (src: string, failures: number) => {
-    this.summary[src].staticErrors = failures;
+    const entry = this.ensureSummaryEntry(src);
+    entry.staticErrors = failures;
     this.writeBigBoard();
     this.checkForShutdown();
   };
 
   bddTestIsRunning = (src: string) => {
-    this.summary[src].runTimeError = "?";
+    const entry = this.ensureSummaryEntry(src);
+    entry.runTimeError = "?";
     this.writeBigBoard();
   };
 
   bddTestIsNowDone = (src: string, failures: number) => {
-    this.summary[src].runTimeError = failures;
+    const entry = this.ensureSummaryEntry(src);
+    entry.runTimeError = failures;
     this.writeBigBoard();
     this.checkForShutdown();
   };

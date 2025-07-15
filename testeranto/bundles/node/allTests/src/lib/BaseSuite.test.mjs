@@ -1,12 +1,14 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
+  Node_default
+} from "../../chunk-5MQGD4WC.mjs";
+import {
   BaseCheck,
   BaseGiven,
   BaseSuite,
   BaseThen,
-  BaseWhen,
-  Node_default
-} from "../../chunk-4PJCC2XT.mjs";
+  BaseWhen
+} from "../../chunk-6CGAD2FD.mjs";
 
 // src/lib/BaseSuite.test.ts
 var MockGiven = class extends BaseGiven {

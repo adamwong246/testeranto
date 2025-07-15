@@ -1,0 +1,1 @@
+aider --load docs/testing.prompt.txt --message-file  docs/testing.message.txt

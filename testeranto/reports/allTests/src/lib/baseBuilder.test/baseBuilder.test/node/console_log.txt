@@ -1,0 +1,12 @@
+stderr > file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/baseBuilder.test/baseBuilder.test.mjs:1121
+  BaseBuilder.prototype,
+  ^
+
+ReferenceError: BaseBuilder is not defined
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/baseBuilder.test/baseBuilder.test.mjs:1121:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:192:25)
+    at async DefaultModuleLoader.import (node:internal/modules/esm/loader:228:24)
+    at async loadESM (node:internal/process/esm_loader:40:7)
+    at async handleMainPromise (node:internal/modules/run_main:66:12)
+
+Node.js v20.4.0

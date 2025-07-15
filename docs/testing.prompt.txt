@@ -1,0 +1,4 @@
+/add docs/index.md
+/add README.md
+/add src/CoreTypes.ts
+

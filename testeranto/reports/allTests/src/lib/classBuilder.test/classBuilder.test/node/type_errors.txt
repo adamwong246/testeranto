@@ -1,0 +1,66 @@
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.types.ts (7,3): Cannot find name 'BaseBuilder'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.types.ts (8,3): Cannot find name 'BaseBuilder'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.types.ts (9,3): Cannot find name 'BaseBuilder'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.types.ts (10,9): Cannot find name 'BaseBuilder'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/TestBaseBuilder.ts (44,56): Type 'never[]' is not assignable to type 'number'.
+/Users/adam/Code/testeranto/src/lib/basebuilder.ts (85,15): This expression is not callable.
+  Not all constituents of type 'void | ((fPath: string, value: string | Buffer<ArrayBufferLike> | PassThrough) => void)' are callable.
+    Type 'void' has no call signatures.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (8,3): Property 'ExtendedSuite' is missing in type '{ Default: string; }' but required in type 'TestSuiteImplementation<O>'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (16,9): Cannot find name 'specification'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (18,9): Argument of type 'typeof (Anonymous class)' is not assignable to parameter of type 'ISuiteKlasser<any, any>'.
+  Type 'typeof (Anonymous class)' provides no match for the signature '(name: string, index: number, givens: IGivens<any>, checks: BaseCheck<any>[]): BaseSuite<any, any>'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (29,9): Cannot find name 'specification'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (31,9): Argument of type 'typeof (Anonymous class)' is not assignable to parameter of type 'ISuiteKlasser<any, any>'.
+  Type 'typeof (Anonymous class)' provides no match for the signature '(name: string, index: number, givens: IGivens<any>, checks: BaseCheck<any>[]): BaseSuite<any, any>'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (42,9): Cannot find name 'specification'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (44,9): Argument of type 'typeof (Anonymous class)' is not assignable to parameter of type 'ISuiteKlasser<any, any>'.
+  Type 'typeof (Anonymous class)' provides no match for the signature '(name: string, index: number, givens: IGivens<any>, checks: BaseCheck<any>[]): BaseSuite<any, any>'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (55,9): Cannot find name 'specification'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (57,9): Argument of type 'typeof (Anonymous class)' is not assignable to parameter of type 'ISuiteKlasser<any, any>'.
+  Type 'typeof (Anonymous class)' provides no match for the signature '(name: string, index: number, givens: IGivens<any>, checks: BaseCheck<any>[]): BaseSuite<any, any>'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (65,37): Cannot find name 'ITestSpecification'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (70,9): Argument of type 'typeof (Anonymous class)' is not assignable to parameter of type 'ISuiteKlasser<any, any>'.
+  Type 'typeof (Anonymous class)' provides no match for the signature '(name: string, index: number, givens: IGivens<any>, checks: BaseCheck<any>[]): BaseSuite<any, any>'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (179,30): Type '(builder: ClassBuilder<any, any, any>) => Promise<ClassBuilder<any, any, any>>' is not assignable to type '(builder: ClassBuilder<any, any, any>) => ClassBuilder<any, any, any>'.
+  Type 'Promise<ClassBuilder<any, any, any>>' is missing the following properties from type 'ClassBuilder<any, any, any>': specs, assertThis, testResourceRequirement, artifacts, and 14 more.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (181,23): Property 'testRun' does not exist on type 'ClassBuilder<any, any, any>'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (196,20): Type 'PassThrough' is not assignable to type '() => ClassBuilder<any, any, any>'.
+  Type 'Transform' provides no match for the signature '(): ClassBuilder<any, any, any>'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (197,41): Type 'boolean' is not assignable to type '() => ClassBuilder<any, any, any>'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (198,40): Type 'boolean' is not assignable to type '() => ClassBuilder<any, any, any>'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (198,50): Cannot find name 'specification'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.interface.ts (4,14): Property 'beforeAll' is missing in type '{ beforeEach: (subject: BaseBuilder<any, any, any, any, any, any>, initializer: (c?: any) => () => BaseBuilder<any, any, any, any, any, any>) => Promise<() => BaseBuilder<any, any, any, any, any, any>>; ... 4 more ...; assertThis: (x: any) => void; }' but required in type 'ITestInterface<I>'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.interface.ts (9,26): Expected 1 arguments, but got 2.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.interface.ts (12,26): Expected 1 arguments, but got 2.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.specification.ts (21,28): Expected 4 arguments, but got 3.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.specification.ts (26,37): Expected 4 arguments, but got 3.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.specification.ts (69,37): Expected 4 arguments, but got 3.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.specification.ts (70,11): Cannot find name 'implementation'. Did you mean 'DOMImplementation'?
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.specification.ts (74,36): Expected 4 arguments, but got 3.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.specification.ts (88,54): Cannot find name 'ITestJob'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.specification.ts (107,15): Expected 4 arguments, but got 1.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.specification.ts (108,15): Expected 4 arguments, but got 1.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.types.ts (26,38): Cannot find name 'ITestImplementation'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.types.ts (27,37): Cannot find name 'ITestSpecification'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.types.ts (32,25): Cannot find name 'ITestJob'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.types.ts (34,35): Cannot find name 'ITestJob'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.types.ts (34,50): Cannot find name 'ITestJob'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.ts (90,18): A spread argument must either have a tuple type or be passed to a rest parameter.
+/Users/adam/Code/testeranto/src/lib/classBuilder.ts (105,28): A spread argument must either have a tuple type or be passed to a rest parameter.
+/Users/adam/Code/testeranto/src/lib/index.ts (22,3): Type '(subject: T["isubject"], initialValues: T["iinitialValues"], x: unknown, testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["isubject"]>' is not assignable to type '(subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceConfiguration, initialValues: any, pm: IPM) => Promise<...>'.
+  Types of parameters 'initialValues' and 'initializer' are incompatible.
+    Type '(c?: any) => T["given"]' is not assignable to type 'T["iinitialValues"]'.
+      'T["iinitialValues"]' could be instantiated with an arbitrary type which could be unrelated to '(c?: any) => T["given"]'.
+/Users/adam/Code/testeranto/src/lib/index.ts (24,20): Type '"iinitialValues"' cannot be used to index type 'T'.
+/Users/adam/Code/testeranto/src/lib/index.ts (46,13): This expression is not callable.
+  Type 'unknown' has no call signatures.
+/Users/adam/Code/testeranto/src/lib/index.ts (58,3): Type '{ assertThis?: ((x: T["then"]) => any) | undefined; andWhen?: ((store: T["istore"], whenCB: T["when"], testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["istore"]>) | undefined; ... 4 more ...; beforeEach?: ((subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceCon...' is not assignable to type 'ITestInterface<T>'.
+  Types of property 'assertThis' are incompatible.
+    Type '((x: T["then"]) => any) | undefined' is not assignable to type '(x: T["then"]) => any'.
+      Type 'undefined' is not assignable to type '(x: T["then"]) => any'.
+/Users/adam/Code/testeranto/src/PM/web.ts (56,12): Cannot find name 'opts'.
+/Users/adam/Code/testeranto/src/PM/web.ts (57,57): Cannot find name 'opts'.
+/Users/adam/Code/testeranto/src/PM/web.ts (59,7): Cannot find name 'page'. Did you mean the instance member 'this.page'?
+/Users/adam/Code/testeranto/src/Pure.ts (32,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; checks: Record<string, any>; }': suites, givens, whens, thens, checks

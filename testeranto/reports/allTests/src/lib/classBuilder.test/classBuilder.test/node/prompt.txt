@@ -1,0 +1,11 @@
+
+/add src/lib/classBuilder.test/classBuilder.test.specification.ts
+/add src/lib/classBuilder.test/TestClassBuilder.ts
+/add src/lib/classBuilder.test/classBuilder.test.implementation.ts
+/add src/lib/classBuilder.test/classBuilder.test.interface.ts
+/add src/lib/classBuilder.test/classBuilder.test.ts
+
+/read testeranto/reports/allTests/src/lib/classBuilder.test/classBuilder.test/node/tests.json
+/read testeranto/reports/allTests/src/lib/classBuilder.test/classBuilder.test/node/console_log.txt
+/read testeranto/reports/allTests/src/lib/classBuilder.test/classBuilder.test/node/type_errors.txt
+/read testeranto/reports/allTests/src/lib/classBuilder.test/classBuilder.test/node/lint_errors.json

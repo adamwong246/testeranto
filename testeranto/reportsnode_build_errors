@@ -1,0 +1,20 @@
+{
+  "errors": [
+    {
+      "id": "",
+      "location": {
+        "column": 43,
+        "file": "src/lib/classBuilder.test/classBuilder.test.implementation.ts",
+        "length": 1,
+        "line": 91,
+        "lineText": "      if (!builder.testResourceRequirement)) {",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [],
+      "pluginName": "",
+      "text": "Unexpected \")\""
+    }
+  ],
+  "warnings": []
+}

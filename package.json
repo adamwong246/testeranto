@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "the AI powered BDD test framework for typescript projects",
-  "version": "0.140.2",
+  "version": "0.141.0",
   "engines": {
     "node": "18.18.0"
   },
@@ -128,8 +128,8 @@
     "build-types": "tsc -p tsconfig.types.json",
     "type-check": "yarn tsc --noEmit > tsc.log",
     "type-fix": "aider --model deepseek/deepseek-chat --load type-fix.txt",
-    "t-build": "tsx dist/prebuild/build.mjs",
-    "t-run": "tsx dist/prebuild/run.mjs",
+    "t-build": "tsx src/build.ts",
+    "t-run": "tsx src/run.ts",
     "t-init": "tsx dist/prebuild/init-docs.mjs",
     "t-report": "tsx dist/prebuild/ReportServer.mjs",
     "build-docs": "node scripts/compile-docs.js"

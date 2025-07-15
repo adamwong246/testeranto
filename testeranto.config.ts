@@ -4,6 +4,20 @@ const config: IProject = {
   projects: {
     allTests: {
       tests: [
+        [
+          "src/lib/classBuilder.test/classBuilder.test.ts",
+          "node",
+          { ports: 1 },
+          [],
+        ],
+
+        [
+          "src/lib/baseBuilder.test/baseBuilder.test.ts",
+          "node",
+          { ports: 1 },
+          [],
+        ],
+
         ["./src/lib/BaseSuite.test.ts", "node", { ports: 1 }, []],
 
         ["./src/mothership/test.ts", "node", { ports: 1 }, []],
@@ -29,7 +43,6 @@ const config: IProject = {
       clearScreen: false,
       debugger: false,
       externals: [],
-      externalTests: {},
       featureIngestor: function (s: string): Promise<string> {
         throw new Error("Function not implemented.");
       },
@@ -78,7 +91,6 @@ const config: IProject = {
       webPlugins: [],
       nodePlugins: [],
       importPlugins: [],
-      externalTests: {},
     },
   },
 };

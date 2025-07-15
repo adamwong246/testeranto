@@ -1,6 +1,22 @@
 {
   "tests": [
     [
+      "src/lib/classBuilder.test/classBuilder.test.ts",
+      "node",
+      {
+        "ports": 1
+      },
+      []
+    ],
+    [
+      "src/lib/baseBuilder.test/baseBuilder.test.ts",
+      "node",
+      {
+        "ports": 1
+      },
+      []
+    ],
+    [
       "./src/lib/BaseSuite.test.ts",
       "node",
       {
@@ -44,7 +60,6 @@
   "clearScreen": false,
   "debugger": false,
   "externals": [],
-  "externalTests": {},
   "importPlugins": [],
   "minify": false,
   "nodePlugins": [],

@@ -1,0 +1,17 @@
+stderr > file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/classBuilder.test/classBuilder.test.mjs:68
+          implementation,
+          ^
+
+ReferenceError: implementation is not defined
+    at specification2 (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/classBuilder.test/classBuilder.test.mjs:68:11)
+    at new BaseBuilder (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-6CGAD2FD.mjs:402:18)
+    at new ClassBuilder (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-6CGAD2FD.mjs:560:5)
+    at new Testeranto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-6CGAD2FD.mjs:697:5)
+    at new PureTesteranto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-YI3EGRMQ.mjs:139:5)
+    at Pure_default (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-YI3EGRMQ.mjs:156:10)
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/classBuilder.test/classBuilder.test.mjs:398:33
+    at ModuleJob.run (node:internal/modules/esm/module_job:192:25)
+    at async DefaultModuleLoader.import (node:internal/modules/esm/loader:228:24)
+    at async loadESM (node:internal/process/esm_loader:40:7)
+
+Node.js v20.4.0
