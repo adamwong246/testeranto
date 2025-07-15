@@ -7,50 +7,50 @@ tr:last-child td {
 }
 
 @font-face {
-  font-family: 'M PLUS Rounded 1c';
-  src: url('../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Thin.ttf') format('truetype');
+  font-family: "M PLUS Rounded 1c";
+  src: url("./fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Thin.ttf") format("truetype");
   font-weight: 100;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'M PLUS Rounded 1c';
-  src: url('../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Light.ttf') format('truetype');
+  font-family: "M PLUS Rounded 1c";
+  src: url("./fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Light.ttf") format("truetype");
   font-weight: 300;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'M PLUS Rounded 1c';
-  src: url('../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Regular.ttf') format('truetype');
+  font-family: "M PLUS Rounded 1c";
+  src: url("./fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'M PLUS Rounded 1c';
-  src: url('../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Medium.ttf') format('truetype');
+  font-family: "M PLUS Rounded 1c";
+  src: url("./fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Medium.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'M PLUS Rounded 1c';
-  src: url('../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Bold.ttf') format('truetype');
+  font-family: "M PLUS Rounded 1c";
+  src: url("./fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Bold.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'M PLUS Rounded 1c';
-  src: url('../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-ExtraBold.ttf') format('truetype');
+  font-family: "M PLUS Rounded 1c";
+  src: url("./fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-ExtraBold.ttf") format("truetype");
   font-weight: 800;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'M PLUS Rounded 1c';
-  src: url('../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Black.ttf') format('truetype');
+  font-family: "M PLUS Rounded 1c";
+  src: url("./fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Black.ttf") format("truetype");
   font-weight: 900;
   font-style: normal;
 }
@@ -60,9 +60,9 @@ tr:last-child td {
   /* Coral Blush */
   --secondary: #4ecdc4;
   /* Mint Teal */
-  --yellow: #E6B422;
+  --yellow: #e6b422;
   /* Muted Gold */
-  --green: #00B4A0;
+  --green: #00b4a0;
   /* Deep Teal */
   --light: #292f36;
   /* Midnight Ink */
@@ -77,7 +77,7 @@ tr:last-child td {
   /* Twilight Navy */
   --bg-sunrise: rgba(176, 125, 133, 1);
   /* Muted Rose */
-  --bg-sunrise2: #B07D85;
+  --bg-sunrise2: #b07d85;
   /* Dusty Rose */
   --bg-end: #7fb3d5;
   /* Sky Whisper */
@@ -134,7 +134,6 @@ h5,
 h6,
 li {
   text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
-
 }
 
 pre.mermaid {
@@ -177,7 +176,6 @@ h6 {
   margin-bottom: 0.5rem;
 }
 
-
 code,
 pre {
   width: 40rem;
@@ -191,16 +189,13 @@ table {
   border-radius: 4px;
 }
 
-
-
 td {
   padding: 0.5rem;
   border-bottom: 2px solid rgba(255, 255, 255, 0.352);
-
 }
 
 body {
-  font-family: 'M PLUS Rounded 1c', sans-serif;
+  font-family: "M PLUS Rounded 1c", sans-serif;
   color: var(--dark);
   line-height: 1.6;
   margin: 0;
@@ -234,7 +229,6 @@ body::before {
       rgba(24, 75, 106, 1) 100% */
     );
 }
-
 
 body {
   display: flex;
