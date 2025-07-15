@@ -2,33 +2,29 @@
 
 ## The AI-powered BDD test framework for TypeScript projects
 
-🚧 WARNING: Testeranto is still under development and is not ready for production yet. 🚧
+#### 🚧 WARNING: Testeranto is still under development and is not ready for production yet. 🚧
 
-demo video: [youtube](https://www.youtube.com/embed/WvU5xMqGi6Q)
-
-source: [github.com/adamwong246/testeranto](https://github.com/adamwong246/testeranto)
-
-npm: [npmjs.com/package/testeranto](https://www.npmjs.com/package/testeranto)
-
-dev: [github.dev/adamwong246/testeranto](https://github.dev/adamwong246/testeranto)
-
-example repo: [testeranto-starter](https://github.com/adamwong246/testeranto-starter)
+- demo video: [youtube](https://www.youtube.com/embed/WvU5xMqGi6Q)
+- source: [github.com/adamwong246/testeranto](https://github.com/adamwong246/testeranto)
+- npm: [npmjs.com/package/testeranto](https://www.npmjs.com/package/testeranto)
+- dev: [github.dev/adamwong246/testeranto](https://github.dev/adamwong246/testeranto)
+- example repo: [testeranto-starter](https://github.com/adamwong246/testeranto-starter)
 
 ## What is testeranto?
 
 - Testeranto produces test results which can be fed to Aider.ai to automatically fix failing tests.
 - Testeranto tests are specified in a strongly-typed gherkin-like syntax. Rather than testing your code directly, Testeranto requires you wrap your code with a semantic interface which is based on TS type signatures.
-- Testeranto can be run in the frontend or the backend, or both.
+- Testeranto can be run test in the frontend or the backend, or both.
 - Testeranto can be used to test anything that can be bundled with esbuild.
 - Testeranto connects "features" to "tests". This allows the AI to read feature documentation from external systems, like Jira.
 - Testeranto generates test results into static a website which can be deployed to github pages easily.
+- Testeranto uses esbuild to bundle it's tests. The result is used to refine the list of files added to the context of the AI. **The consequence of this is that you can fit all relevant files, and ONLY the relevant files, into the LLMs context.**
 
 ## Key Technologies
 
-Testeranto builds on modern JavaScript/TypeScript tooling:
-
-| Technology | Purpose                                |
+|            |                                        |
 | ---------- | -------------------------------------- |
+| ESM        | Modern javascript tooling              |
 | TypeScript | Strongly-typed test definitions        |
 | Puppeteer  | Cross-runtime testing (Node & Browser) |
 | esbuild    | Fast test bundling                     |
@@ -76,19 +72,10 @@ yarn t-run rectangle.test.ts dev
 ### Development Workflow
 
 ```mermaid
-
+%%{init: {'theme': 'dark'}}%%
 flowchart LR
-
-    subgraph hh["humans"]
-        direction LR
-        Human[🧑💻 ]
-    end
-
-    subgraph bb["AI"]
-        direction LR
-        Bot[🤖🧠 aider]
-    end
-
+    Human[🧑💻 Human]
+    aider[🤖🧠 aider]
 
     tests ---> L
     subgraph tests
@@ -99,102 +86,51 @@ flowchart LR
         K[application code]
     end
 
-    subgraph buildSystem
-        direction TB
-        L["t-build"]
-        M[t-run]
-        L ---> M
-
-        M ---> N
-        M --->O
-        M --->P
+    subgraph reports
+        direction LR
         N["BDD tests"]
         O["Static analysis"]
         P["Type checking"]
-
-        Q["reports"]
-        N ---> Q
-        O ---> Q
-        P ---> Q
     end
 
-    Q ---> bb
+    L["t-build"]
+        TRUN[t-run]
+        L ---> TRUN
+        TRUN ---> Runtimes
+        N ---> aider
+        O ---> aider
+        P ---> aider
 
-    buildSystem ---> bb
-    bb ---> tests
-    hh ---> tests
+    subgraph Runtimes["The 3 runtimes"]
+        Node[Node]
+        Web[Browser]
+        Pure[JS]
+    end
+
+    aider ---> tests
+    Human ---> tests
+    Runtimes --> reports
 
     %% Styling
     style Human fill:#268bd2,stroke:#586e75,color:#fdf6e3
-    style Bot fill:#d33682,stroke:#586e75,color:#fdf6e3
+    style aider fill:#d33682,stroke:#586e75,color:#fdf6e3
 
     %% Layout tweaks
     classDef column margin-right:20px
 
 ```
 
-## Architecture Overview
-
-```mermaid
-flowchart TD
-    subgraph ThreePillars["Testeranto Core"]
-        Builder[Test Builder]
-        Runner[Test Runner]
-        Aider[AI Integration]
-    end
-
-    subgraph BuilderComponents[" "]
-        Specification[Specification]
-        Implementation[Implementation]
-        Interface[Interface]
-    end
-
-    subgraph Runtimes[" "]
-        Node[Node]
-        Web[Browser]
-        Pure[JS]
-    end
-
-    Builder --> Runner
-    Runner --> Aider
-    Aider --> Builder
-
-    Builder --> BuilderComponents
-    Runner --> Runtimes
-
-    style ThreePillars fill:none,stroke:#586e75
-    style Builder fill:#268bd2,stroke:#586e75,color:#fdf6e3
-    style Runner fill:#268bd2,stroke:#586e75,color:#fdf6e3
-    style Aider fill:#b58900,stroke:#586e75,color:#002b36
-    style BuilderComponents fill:#002b36,stroke:#586e75,color:#eee8d5
-    style Runtimes fill:#073642,stroke:#586e75,color:#eee8d5
-    style Specification fill:#2aa198,stroke:#586e75,color:#002b36
-    style Implementation fill:#2aa198,stroke:#586e75,color:#002b36
-    style Interface fill:#2aa198,stroke:#586e75,color:#002b36
-    style Node fill:#859900,stroke:#586e75,color:#002b36
-    style Web fill:#859900,stroke:#586e75,color:#002b36
-    style Pure fill:#859900,stroke:#586e75,color:#002b36
-```
-
 ## Runtime Platforms
 
-Testeranto runs tests in multiple runtime environments, each suited for different testing scenarios:
-
-| Runtime  | Description                                       | When To Use                                                            | Key Characteristics                                     |
-| -------- | ------------------------------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------- |
-| **Node** | Full IO access with Node.js built-in modules      | Testing backend code, Node APIs, or anything needing filesystem access | Runs in Node v8 via fork, has access to fs, crypto, etc |
-| **Web**  | DOM API access with browser capabilities          | Testing frontend code, UI interactions, or visual regression           | Runs in Chrome page, can take screenshots/recordings    |
-| **Pure** | Isolated JS runtime without external dependencies | Fast unit tests that don't need external resources                     | Dynamically imported into main thread, no IO access     |
-
-**Key Considerations:**
-
-- Use **Node** for testing backend services, file operations, or anything requiring Node.js APIs
-- Use **Web** when testing browser-specific code that references `document` or `window`
-- Use **Pure** for fast, isolated unit tests where you don't need console output or external resources
+|          | Runs on                       | You should use this runtime for...                                                                      | Important differences                                                                                       |
+| -------- | ----------------------------- | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| **Node** | node V8 with fork             | testing backend code, Node APIs (like `fs` and `crypto`), or anything needing filesystem access         | has access to the filesystem and io                                                                         |
+| **Web**  | chrome browser                | testing frontend code, anything that uses `document` or `window`, UI interactions, or visual regression | can take screenshots/recordings                                                                             |
+| **Pure** | node v8, dynamically imported | testing code which can run on both node-v8 and the the browser                                          | Very similar to "Node" but has no IO access and thus, no console.log. This runtime is theoretically faster. |
 
 ## CLI Commands
 
-| Command                               | Description                                   |
+|                                       |                                               |
 | ------------------------------------- | --------------------------------------------- |
 | `yarn t-init`                         | Create a new testeranto project               |
 | `yarn t-build <YOUR_TESTS> dev\|once` | Build test bundles (watch or single-run mode) |
@@ -202,7 +138,7 @@ Testeranto runs tests in multiple runtime environments, each suited for differen
 | `yarn t-report`                       | Launch test report server                     |
 | `yarn t-aider`                        | Fix failing tests with AI                     |
 
-Example workflow:
+## Example workflow:
 
 ```bash
 # Initialize project
@@ -224,7 +160,7 @@ yarn t-run test/rectangle.test.ts once
 yarn t-aider
 ```
 
-## AI
+## Aider
 
 Testeranto generates a "prompt" alongside test results. This prompt is passed to aider as input.
 
@@ -241,7 +177,7 @@ Testeranto generates a "prompt" alongside test results. This prompt is passed to
 /load testeranto/reports/allTests/node/test/node/featurePrompt.txt
 
 // tell the AI what to do
-/code Fix the failing tests described in testeranto/reports/allTests/node/test/node/tests.json. Correct any type signature errors described in the files testeranto/reports/allTests/test/node/node/type_errors.txt. Implement any method which throws "Function not implemented. Resolve the lint errors described in testeranto/reports/allTests/test/node/node/lint_errors.json"
+Fix the failing tests described in testeranto/reports/allTests/node/test/node/tests.json. Correct any type signature errors described in the files testeranto/reports/allTests/test/node/node/type_errors.txt. Implement any method which throws "Function not implemented. Resolve the lint errors described in testeranto/reports/allTests/test/node/node/lint_errors.json"
 ```
 
 ## "Features"
@@ -298,3 +234,7 @@ Test a react component. You can choose from a variety of types (jsx functions, c
 ### testeranto-express (COMING SOON)
 
 ### testeranto-xstate (COMING SOON)
+
+## What's with the funky logo?
+
+It was designed by aider to be "visually distinct and humorous", as was the styling of this page. This was what it came up with in it's charmingly literal way. I touched it up a bit but kept the spirit of the original.

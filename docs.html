@@ -1,17 +1,27 @@
-# Testeranto docs and core concepts
 
-Testeranto's type system provides a rigorous framework for Behavior-Driven Development (BDD) testing. While powerful, the API can initially seem complex but everything you need to know can be summed up in **3 core functions and 5 essential types**. Follow these patterns, and TypeScript's type checker will guide you through the rest.
-
-### ⚠️ this doc is a work in progress. It is 99% accurate but needs some attention to be complete. ⚠️
-
-Let's break down the key components using a Rectangle class example.
-
-### The Test Subject
-
-This is the thing-to-be-tested, for this example, a very simple implementation of a Rectangle
-
-```typescript
-class Rectangle {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index.md</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+    </script>
+</head>
+<body>
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <image href="logo.svg" height="200" width="200" />
+</svg>
+    <h1>Testeranto docs and core concepts</h1>
+<p>Testeranto&#39;s type system provides a rigorous framework for Behavior-Driven Development (BDD) testing. While powerful, the API can initially seem complex but everything you need to know can be summed up in <strong>3 core functions and 5 essential types</strong>. Follow these patterns, and TypeScript&#39;s type checker will guide you through the rest.</p>
+<h3>⚠️ this doc is a work in progress. It is 99% accurate but needs some attention to be complete. ⚠️</h3>
+<p>Let&#39;s break down the key components using a Rectangle class example.</p>
+<h3>The Test Subject</h3>
+<p>This is the thing-to-be-tested, for this example, a very simple implementation of a Rectangle</p>
+<pre>class Rectangle {
   constructor(public width: number, public height: number) {}
 
   setWidth(w: number) {
@@ -23,17 +33,10 @@ class Rectangle {
   getArea() {
     return this.width * this.height;
   }
-}
-```
-
-### Testeranto's 3 functions
-
-For each of testeranto's runtime, there is a specific Testeranto main function. Each is it's own import but all 3 are called in the same way.
-
-#### Node
-
-```ts
-import Testeranto from "testeranto/src/Node"; // <- import the Node main function
+}</pre><h3>Testeranto&#39;s 3 functions</h3>
+<p>For each of testeranto&#39;s runtime, there is a specific Testeranto main function. Each is it&#39;s own import but all 3 are called in the same way.</p>
+<h4>Node</h4>
+<pre>import Testeranto from "testeranto/src/Node"; // <- import the Node main function
 // below this point, all runtimes are identical!
 
 // Note the type parameters I, O, and M: these will be important later
@@ -46,13 +49,8 @@ export default Testeranto<
     specification,
     implementation,
     interface
-);
-```
-
-#### Web
-
-```ts
-import Testeranto from "testeranto/src/Web"; // <- import the Web main function
+);</pre><h4>Web</h4>
+<pre>import Testeranto from "testeranto/src/Web"; // <- import the Web main function
 // below this point, all runtimes are identical!
 
 import { implementation } from "./Rectangle.test.implementation";
@@ -69,13 +67,8 @@ export default Testeranto<
     specification,
     implementation,
     interface
-);
-```
-
-#### Pure
-
-```ts
-import Testeranto from "testeranto/src/Pure"; // <- import the Pure main function
+);</pre><h4>Pure</h4>
+<pre>import Testeranto from "testeranto/src/Pure"; // <- import the Pure main function
 // below this point, all runtimes are identical!
 
 import { implementation } from "./Rectangle.test.implementation";
@@ -92,21 +85,16 @@ export default Testeranto<
     specification,
     implementation,
     interface
-);
-```
-
-### Testeranto's 5 Essential Types
-
-Every testeranto test is built around these 5 types that form a complete testing pipeline:
-
-1. **ITestSpecification** - The "what" of your tests (business requirements)
-2. **ITestImplementation** - The "how" of your tests (concrete operations)
-3. **ITestInterface** - The "glue" between specs and implementation
-4. **Ibdd_in** - Defines the internal test flow shape
-5. **Ibdd_out** - Defines the external test interface
-
-```mermaid
-flowchart LR
+);</pre><h3>Testeranto&#39;s 5 Essential Types</h3>
+<p>Every testeranto test is built around these 5 types that form a complete testing pipeline:</p>
+<ol>
+<li><strong>ITestSpecification</strong> - The &quot;what&quot; of your tests (business requirements)</li>
+<li><strong>ITestImplementation</strong> - The &quot;how&quot; of your tests (concrete operations)</li>
+<li><strong>ITestInterface</strong> - The &quot;glue&quot; between specs and implementation</li>
+<li><strong>Ibdd_in</strong> - Defines the internal test flow shape</li>
+<li><strong>Ibdd_out</strong> - Defines the external test interface</li>
+</ol>
+<pre class="mermaid">flowchart LR
     S[ITestSpecification] -->|defines| O[Ibdd_out]
     I[ITestImplementation] -->|uses| O
     I -->|uses| M[Modifier]
@@ -119,21 +107,16 @@ flowchart LR
     style T fill:#b58900,stroke:#073642
     style O fill:#d33682,stroke:#073642
     style N fill:#cb4b16,stroke:#073642
-    style M fill:#6c71c4,stroke:#073642
-```
-
-#### The Specification (ITestSpecification)
-
-The Specification defines the business requirements in plain language, completely separate from implementation details. This is where you describe **what** should be tested without worrying about **how**.
-
-- Pure business logic
-- Human-readable test descriptions
-- Defines test suites, scenarios (Given/When/Then)
-- Maps directly to BDD concepts
-- Uses Ibdd_out for type safety
-
-```typescript
-import {
+    style M fill:#6c71c4,stroke:#073642</pre><h4>The Specification (ITestSpecification)</h4>
+<p>The Specification defines the business requirements in plain language, completely separate from implementation details. This is where you describe <strong>what</strong> should be tested without worrying about <strong>how</strong>.</p>
+<ul>
+<li>Pure business logic</li>
+<li>Human-readable test descriptions</li>
+<li>Defines test suites, scenarios (Given/When/Then)</li>
+<li>Maps directly to BDD concepts</li>
+<li>Uses Ibdd_out for type safety</li>
+</ul>
+<pre>import {
   Ibdd_in,
   Ibdd_out,
   ITestSpecification,
@@ -170,21 +153,16 @@ export const specification: ITestSpecification<
       []
     ),
   ];
-};
-```
-
-#### The Implementation (ITestImplementation)
-
-The Implementation provides the concrete operations that bring specifications to life. This is where you define **how** each test step actually works.
-
-- `suites`: Test grouping and organization
-- `givens`: Initial test states/setup
-- `whens`: Actions that change state
-- `thens`: Assertions and validations
-- `checks`: Additional verification points
-
-```ts
-import {
+};</pre><h4>The Implementation (ITestImplementation)</h4>
+<p>The Implementation provides the concrete operations that bring specifications to life. This is where you define <strong>how</strong> each test step actually works.</p>
+<ul>
+<li><code>suites</code>: Test grouping and organization</li>
+<li><code>givens</code>: Initial test states/setup</li>
+<li><code>whens</code>: Actions that change state</li>
+<li><code>thens</code>: Assertions and validations</li>
+<li><code>checks</code>: Additional verification points</li>
+</ul>
+<pre>import {
   Ibdd_in,
   Ibdd_out,
   ITestImplementation,
@@ -238,15 +216,9 @@ export const implementation: ITestImplementation<
   checks: {
     Default: () => new Rectangle(2, 2),
   },
-};
-```
-
-#### The Interface aka ITestInterface
-
-The test interface is code which is NOT BDD . The interface adapts your test subject so that the BDD hooks can be applied. The interface implements the traditional BDD steps "before all", "after all", "before each", "after each", etc
-
-```ts
-
+};</pre><h4>The Interface aka ITestInterface</h4>
+<p>The test interface is code which is NOT BDD . The interface adapts your test subject so that the BDD hooks can be applied. The interface implements the traditional BDD steps &quot;before all&quot;, &quot;after all&quot;, &quot;before each&quot;, &quot;after each&quot;, etc</p>
+<pre>
 import {
   Ibdd_in,
   ITestInterface,
@@ -270,15 +242,9 @@ export const testInterface: ITestInterface<
   },
   afterAll: () => {},
   assertThis: (x: any, y) => {},
-};
-```
-
-#### type I aka Ibdd_in
-
-this type describes the "inner" shape of your BDD tests.
-
-```ts
-import { Ibdd_in } from "testeranto/src/CoreTypes";
+};</pre><h4>type I aka Ibdd_in</h4>
+<p>this type describes the &quot;inner&quot; shape of your BDD tests.</p>
+<pre>import { Ibdd_in } from "testeranto/src/CoreTypes";
 
 // TODO this is inaccurate
 export type I = Ibdd_in<
@@ -289,15 +255,9 @@ export type I = Ibdd_in<
   Rectangle,
   (...x) => (rectangle: Rectangle, utils: IPM) => Rectangle,
   (rectangle: Rectangle, utils: IPM) => Rectangle
->;
-```
-
-#### type O aka Ibdd_out
-
-this type describes the "outer" shape of your BDD tests.
-
-```ts
-import { Ibdd_out } from "testeranto/src/CoreTypes";
+>;</pre><h4>type O aka Ibdd_out</h4>
+<p>this type describes the &quot;outer&quot; shape of your BDD tests.</p>
+<pre>import { Ibdd_out } from "testeranto/src/CoreTypes";
 
 export type O = Ibdd_out<
   // Suite
@@ -332,15 +292,9 @@ export type O = Ibdd_out<
     WidthOfOneAndHeightOfOne;
     WidthAndHeightOf: [number, number];
   }
->;
-```
-
-#### type M (optional)
-
-this type describes the modifications to the shape of the "specification". It can be used to make your BDD tests DRYer but is not necessary
-
-```ts
-export type M = {
+>;</pre><h4>type M (optional)</h4>
+<p>this type describes the modifications to the shape of the &quot;specification&quot;. It can be used to make your BDD tests DRYer but is not necessary</p>
+<pre>export type M = {
   givens: {
     [K in keyof O["givens"]]: (...Iw: O["givens"][K]) => Rectangle;
   };
@@ -354,13 +308,8 @@ export type M = {
       ...Iw: O["thens"][K]
     ) => (rectangle: Rectangle, utils: PM) => Rectangle;
   };
-};
-```
-
-## Putting it all together
-
-```ts
-//  Make sure you import the right runtime
+};</pre><h2>Putting it all together</h2>
+<pre>//  Make sure you import the right runtime
 import Testeranto from "testeranto/src/Pure";
 
 import {
@@ -563,5 +512,6 @@ export default Testeranto<
 );
 
 
-
-```
+</pre>
+</body>
+</html>

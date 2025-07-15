@@ -1,4 +1,3 @@
-import { Ibdd_in } from "../dist/types/src/CoreTypes.js";
 import {
   Ibdd_in_any,
   Ibdd_out,
@@ -54,7 +53,7 @@ export default async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
   input: I["iinput"],
   testSpecification: ITestSpecification<I, O>,
   testImplementation: ITestImplementation<I, O, M>,
-  testInterface: Partial<INodeTestInterface<I>>,
+  testInterface: Partial<ITestInterface<I>>,
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
 ): Promise<Testeranto<I, O, M>> => {
   return new PureTesteranto<I, O, M>(
