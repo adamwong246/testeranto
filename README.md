@@ -4,7 +4,8 @@
 
 #### 🚧 WARNING: Testeranto is still under development and is not ready for production yet. 🚧
 
-- demo video: [youtube](https://www.youtube.com/embed/WvU5xMqGi6Q)
+- README: [index.html]: [](https://adamwong246.github.io/testeranto/)
+- demo: [youtube](https://www.youtube.com/embed/WvU5xMqGi6Q)
 - source: [github.com/adamwong246/testeranto](https://github.com/adamwong246/testeranto)
 - npm: [npmjs.com/package/testeranto](https://www.npmjs.com/package/testeranto)
 - dev: [github.dev/adamwong246/testeranto](https://github.dev/adamwong246/testeranto)
