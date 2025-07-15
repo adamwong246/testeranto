@@ -221,6 +221,23 @@ const specification: ITestSpecification<I, O> = (
       // )
     ]
   ),
+
+  Suite.Default("Comprehensive Integration", {
+    fullStackTest: Given.Default(
+      ["All components should work together"],
+      [
+        When.addArtifact(Promise.resolve("test")),
+        When.modifySpecs((specs) => [...specs, "extra"]),
+        When.modifyJobs((jobs) => [...jobs, {}])
+      ],
+      [
+        Then.specsModified(1),
+        Then.jobsModified(1),
+        Then.artifactsTracked(),
+        Then.testRunSuccessful()
+      ]
+    )
+  })
 ];
 
 // 4. Enhanced Test Implementation with more operations

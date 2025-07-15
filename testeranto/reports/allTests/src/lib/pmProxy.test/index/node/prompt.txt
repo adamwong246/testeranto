@@ -1,5 +1,4 @@
 
-/add src/lib/pmProxy.test/mockPMBase.ts
 /add src/lib/pmProxy.test/implementation.ts
 /add src/lib/pmProxy.test/specification.ts
 /add src/lib/pmProxy.test/interface.ts

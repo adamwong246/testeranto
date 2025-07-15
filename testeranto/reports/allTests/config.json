@@ -1,6 +1,14 @@
 {
   "tests": [
     [
+      "src/Pure.test.ts",
+      "node",
+      {
+        "ports": 1
+      },
+      []
+    ],
+    [
       "src/lib/pmProxy.test/index.ts",
       "node",
       {
@@ -34,6 +42,30 @@
     ],
     [
       "./src/lib/BaseSuite.test.ts",
+      "node",
+      {
+        "ports": 1
+      },
+      []
+    ],
+    [
+      "./src/lib/BaseGiven.test.ts",
+      "node",
+      {
+        "ports": 1
+      },
+      []
+    ],
+    [
+      "./src/lib/BaseWhen.test.ts",
+      "node",
+      {
+        "ports": 1
+      },
+      []
+    ],
+    [
+      "./src/lib/BaseThen.test.ts",
       "node",
       {
         "ports": 1

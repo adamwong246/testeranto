@@ -2,18 +2,24 @@
   "errors": [
     {
       "id": "",
-      "location": {
-        "column": 55,
-        "file": "src/lib/pmProxy.test/implementation.ts",
-        "length": 1,
-        "line": 33,
-        "lineText": "        return [proxies.butThenProxy(mockPm, filepath)., expecation];",
-        "namespace": "",
-        "suggestion": ""
-      },
+      "location": null,
       "notes": [],
       "pluginName": "",
-      "text": "Expected identifier but found \",\""
+      "text": "Could not resolve \"./src/lib/BaseGiven.test.ts\""
+    },
+    {
+      "id": "",
+      "location": null,
+      "notes": [],
+      "pluginName": "",
+      "text": "Could not resolve \"./src/lib/BaseWhen.test.ts\""
+    },
+    {
+      "id": "",
+      "location": null,
+      "notes": [],
+      "pluginName": "",
+      "text": "Could not resolve \"./src/lib/BaseThen.test.ts\""
     }
   ],
   "warnings": []

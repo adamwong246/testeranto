@@ -1,0 +1,7 @@
+
+/add src/Pure.test.ts
+
+/read testeranto/reports/allTests/src/Pure.test/node/tests.json
+/read testeranto/reports/allTests/src/Pure.test/node/console_log.txt
+/read testeranto/reports/allTests/src/Pure.test/node/type_errors.txt
+/read testeranto/reports/allTests/src/Pure.test/node/lint_errors.json

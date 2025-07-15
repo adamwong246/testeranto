@@ -9,9 +9,9 @@ stdout > mark2 butThen {
         }
       }
 stdout > test failed 3 TypeError: store.butThenProxy is not a function
-    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/pmProxy.test/index.mjs:137:31)
+    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/pmProxy.test/index.mjs:28:31)
     at file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:336:29
-    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/pmProxy.test/index.mjs:4201:12)
+    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/pmProxy.test/index.mjs:4205:12)
     at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:749:42)
     at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:331:17)
     at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:262:34)
@@ -20,9 +20,9 @@ stdout > test failed 3 TypeError: store.butThenProxy is not a function
     at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:411:19
     at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:439:29)
 stderr > Given error: TypeError: store.butThenProxy is not a function
-    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/pmProxy.test/index.mjs:137:31)
+    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/pmProxy.test/index.mjs:28:31)
     at file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:336:29
-    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/pmProxy.test/index.mjs:4201:12)
+    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/pmProxy.test/index.mjs:4205:12)
     at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:749:42)
     at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:331:17)
     at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:262:34)
@@ -31,9 +31,9 @@ stderr > Given error: TypeError: store.butThenProxy is not a function
     at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:411:19
     at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:439:29)
 stderr > goodbye node with caught error TypeError: store.butThenProxy is not a function
-    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/pmProxy.test/index.mjs:137:31)
+    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/pmProxy.test/index.mjs:28:31)
     at file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:336:29
-    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/pmProxy.test/index.mjs:4201:12)
+    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/pmProxy.test/index.mjs:4205:12)
     at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:749:42)
     at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:331:17)
     at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-UED26IMH.mjs:262:34)

@@ -14,21 +14,25 @@
   Types of property 'assertThis' are incompatible.
     Type '((x: T["then"]) => any) | undefined' is not assignable to type '(x: T["then"]) => any'.
       Type 'undefined' is not assignable to type '(x: T["then"]) => any'.
-/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (21,5): Type '(method: IProxiedFunctions, expectedPath: string) => (store: { butThenProxy: IProxy; }) => [string, string]' is not assignable to type '(It_0: IProxiedFunctions, It_1: string) => (ssel: { proxies: ITestProxies; filepath: string; mockPm: IPM; }, utils: PM) => [IPM, "string"]'.
-  Type '(store: { butThenProxy: IProxy; }) => [string, string]' is not assignable to type '(ssel: { proxies: ITestProxies; filepath: string; mockPm: IPM; }, utils: PM) => [IPM, "string"]'.
+/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (21,5): Type '(method: IProxiedFunctions, expectedPath: string) => (store: { butThenProxy: IProxy; }) => [undefined, undefined] | [string, string, any] | [any, string]' is not assignable to type '(It_0: IProxiedFunctions, It_1: string) => (ssel: { proxies: ITestProxies; filepath: string; mockPm: IPM; }, utils: PM) => [IPM, "string"]'.
+  Type '(store: { butThenProxy: IProxy; }) => [undefined, undefined] | [string, string, any] | [any, string]' is not assignable to type '(ssel: { proxies: ITestProxies; filepath: string; mockPm: IPM; }, utils: PM) => [IPM, "string"]'.
     Types of parameters 'store' and 'ssel' are incompatible.
       Property 'butThenProxy' is missing in type '{ proxies: ITestProxies; filepath: string; mockPm: IPM; }' but required in type '{ butThenProxy: IProxy; }'.
-/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (36,33): Property 'getLastCall' does not exist on type 'IPM'.
+/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (44,35): Property 'getLastCall' does not exist on type 'IPM'.
   Property 'getLastCall' does not exist on type 'PM_Pure'.
-/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (40,33): Property 'getLastCall' does not exist on type 'IPM'.
+/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (45,38): Property 'getLastCall' does not exist on type 'IPM'.
   Property 'getLastCall' does not exist on type 'PM_Pure'.
-/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (43,36): Type '"screen.png"' is not assignable to type '`${string}.webm`'.
-/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (44,33): Property 'getLastCall' does not exist on type 'IPM'.
+/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (52,35): Property 'getLastCall' does not exist on type 'IPM'.
   Property 'getLastCall' does not exist on type 'PM_Pure'.
-/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (47,42): Type '"shot.png"' is not assignable to type '`${string}.webm`'.
-/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (48,33): Property 'getLastCall' does not exist on type 'IPM'.
+/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (58,19): Type '"screen.png"' is not assignable to type '`${string}.webm`'.
+/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (64,35): Property 'getLastCall' does not exist on type 'IPM'.
   Property 'getLastCall' does not exist on type 'PM_Pure'.
-/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (60,5): Type '(s: string) => string' is not assignable to type '() => [string, string]'.
+/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (65,38): Property 'getLastCall' does not exist on type 'IPM'.
+  Property 'getLastCall' does not exist on type 'PM_Pure'.
+/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (70,19): Type '"shot.png"' is not assignable to type '`${string}.webm`'.
+/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (73,35): Property 'getLastCall' does not exist on type 'IPM'.
+  Property 'getLastCall' does not exist on type 'PM_Pure'.
+/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (102,5): Type '(s: string) => string' is not assignable to type '() => [string, string]'.
   Target signature provides too few arguments. Expected 1 or more, but got 0.
 /Users/adam/Code/testeranto/src/lib/pmProxy.test/index.ts (17,3): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, never>'.
   The types returned by 'givens.SomeBaseString(...)' are incompatible between these types.
@@ -45,6 +49,13 @@
   Target signature provides too few arguments. Expected 4 or more, but got 3.
 /Users/adam/Code/testeranto/src/lib/pmProxy.test/interface.ts (44,3): Type '(returnedFilePath: any, expectation: any) => void' is not assignable to type '(x: [IPM, "string"]) => any'.
   Target signature provides too few arguments. Expected 2 or more, but got 1.
+/Users/adam/Code/testeranto/src/lib/pmProxy.test/specification.ts (11,9): Expected 3 arguments, but got 2.
+/Users/adam/Code/testeranto/src/lib/pmProxy.test/specification.ts (59,9): Expected 3 arguments, but got 2.
+/Users/adam/Code/testeranto/src/lib/pmProxy.test/specification.ts (87,9): Expected 3 arguments, but got 2.
+/Users/adam/Code/testeranto/src/lib/pmProxy.test/specification.ts (94,14): Property 'verifyContent' does not exist on type 'ThenSpecification<I, O>'.
+/Users/adam/Code/testeranto/src/lib/pmProxy.test/specification.ts (103,14): Property 'verifyContent' does not exist on type 'ThenSpecification<I, O>'.
+/Users/adam/Code/testeranto/src/lib/pmProxy.test/specification.ts (109,9): Expected 3 arguments, but got 2.
+/Users/adam/Code/testeranto/src/lib/pmProxy.test/specification.ts (119,52): Argument of type 'undefined' is not assignable to parameter of type 'string'.
 /Users/adam/Code/testeranto/src/Node.ts (34,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M> & M & { ...; }'.
   Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; checks: Record<string, any>; }': suites, givens, whens, thens, checks
 /Users/adam/Code/testeranto/src/Node.ts (58,26): Cannot find name 'INodeTestInterface'. Did you mean 'ITestInterface'?

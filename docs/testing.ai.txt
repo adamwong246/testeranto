@@ -1,5 +1,24 @@
 # Testeranto Testing Patterns
 
+## Key Learnings From Self-Testing
+
+1. Test Organization Insights:
+- Mock implementations proved essential for testing abstract base classes
+- Type parameters (I/O/M) need careful documentation for test writers
+- Integration tests revealed subtle proxy chain issues
+
+2. Effective Patterns:
+- Builder tests validate both construction and runtime behavior  
+- Proxy tests verify path rewriting and content preservation
+- Error tests check both expected and unexpected cases
+- Lifecycle tests cover full BDD sequence
+
+3. Improvement Opportunities:
+- Need more test utilities for common scenarios
+- Could add test generation from type definitions
+- Should document common test pitfalls
+- Would benefit from more example test suites
+
 ## Core Testing Principles
 
 1. Tests follow BDD structure with Given/When/Then

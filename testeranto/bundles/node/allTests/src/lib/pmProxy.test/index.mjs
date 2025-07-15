@@ -1,123 +1,14 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
+  MockPMBase
+} from "../../../chunk-VAAIAWXC.mjs";
+import {
   Node_default
 } from "../../../chunk-W44DUDBK.mjs";
 import {
   andWhenProxy,
   butThenProxy
 } from "../../../chunk-UED26IMH.mjs";
-
-// src/lib/pmProxy.test/mockPMBase.ts
-var MockPMBase = class {
-  constructor(configs) {
-    this.calls = {};
-    this.testResourceConfiguration = {};
-    this.configs = configs || {};
-  }
-  // Common tracking functionality
-  trackCall(method, args) {
-    if (!this.calls[method]) {
-      this.calls[method] = [];
-    }
-    this.calls[method].push(args);
-  }
-  getCallCount(method) {
-    return this.calls[method]?.length || 0;
-  }
-  getLastCall(method) {
-    const calls = this.calls[method];
-    return calls ? calls[calls.length - 1] : null;
-  }
-  // Minimal implementations of required methods
-  launchSideCar(n, testName, projectName) {
-    this.trackCall("launchSideCar", { n, testName, projectName });
-    return Promise.resolve();
-  }
-  end(uid) {
-    this.trackCall("end", { uid });
-    return Promise.resolve(true);
-  }
-  writeFileSync(path, content, testName) {
-    this.trackCall("writeFileSync", { path, content, testName });
-    return Promise.resolve(true);
-  }
-  createWriteStream(path, testName) {
-    this.trackCall("createWriteStream", { path, testName });
-    return Promise.resolve(0);
-  }
-  screencast(opts, testName, page) {
-    this.trackCall("screencast", { opts, testName, page });
-    return Promise.resolve({});
-  }
-  customScreenShot(opts, testName, pageUid) {
-    this.trackCall("customScreenShot", { opts, testName, pageUid });
-    return Promise.resolve({});
-  }
-  testArtiFactoryfileWriter(tLog, callback) {
-    return (fPath, value) => {
-      this.trackCall("testArtiFactoryfileWriter", { fPath, value });
-      callback(Promise.resolve());
-    };
-  }
-  // Other required PM_Base methods with minimal implementations
-  closePage(p) {
-    return Promise.resolve();
-  }
-  $(selector, p) {
-    return Promise.resolve();
-  }
-  click(selector, page) {
-    return Promise.resolve();
-  }
-  goto(p, url) {
-    return Promise.resolve();
-  }
-  newPage() {
-    return Promise.resolve("mock-page");
-  }
-  pages() {
-    return Promise.resolve(["mock-page"]);
-  }
-  waitForSelector(p, s) {
-    return Promise.resolve(true);
-  }
-  focusOn(selector, p) {
-    return Promise.resolve();
-  }
-  typeInto(value, p) {
-    return Promise.resolve();
-  }
-  getAttribute(selector, attribute, p) {
-    return Promise.resolve();
-  }
-  getInnerHtml(selector, p) {
-    return Promise.resolve();
-  }
-  isDisabled(selector, p) {
-    return Promise.resolve(false);
-  }
-  screencastStop(s) {
-    return Promise.resolve();
-  }
-  existsSync(destFolder) {
-    return false;
-  }
-  mkdirSync(fp) {
-    return Promise.resolve();
-  }
-  write(uid, contents) {
-    return Promise.resolve(true);
-  }
-  page(p) {
-    return "mock-page";
-  }
-  doInPage(p, cb) {
-    return Promise.resolve();
-  }
-  customclose() {
-    return Promise.resolve();
-  }
-};
 
 // src/lib/pmProxy.test/implementation.ts
 var implementation = {
@@ -136,27 +27,62 @@ var implementation = {
       const filepath = "test/path";
       const proxiedPm = store.butThenProxy(mockPm, filepath);
       let actualPath;
-      switch (method) {
-        case "writeFileSync":
-          proxiedPm.writeFileSync("test.txt", "content");
-          actualPath = mockPm.getLastCall("writeFileSync")?.path;
-          break;
-        case "createWriteStream":
-          proxiedPm.createWriteStream("stream.txt");
-          actualPath = mockPm.getLastCall("createWriteStream")?.path;
-          break;
-        case "screencast":
-          proxiedPm.screencast({ path: "screen.png" }, "test");
-          actualPath = mockPm.getLastCall("screencast")?.opts?.path;
-          break;
-        case "customScreenShot":
-          proxiedPm.customScreenShot({ path: "shot.png" }, "test");
-          actualPath = mockPm.getLastCall("customScreenShot")?.opts?.path;
-          break;
-        default:
-          throw new Error(`Unknown method: ${method}`);
+      let actualContent;
+      try {
+        switch (method) {
+          case "writeFileSync":
+            const content = expectedPath.includes("content") ? "test content" : "default content";
+            proxiedPm.writeFileSync(
+              expectedPath.includes("empty") ? "" : expectedPath.includes("nested") ? "nested/folder/test.txt" : expectedPath.includes("spaces") ? "file with spaces.txt" : expectedPath.includes("invalid") ? "../invalid.txt" : "test.txt",
+              content
+            );
+            actualPath = mockPm.getLastCall("writeFileSync")?.path;
+            actualContent = mockPm.getLastCall("writeFileSync")?.content;
+            break;
+          case "createWriteStream":
+            proxiedPm.createWriteStream(
+              expectedPath.includes("empty") ? "" : "stream.txt"
+            );
+            actualPath = mockPm.getLastCall("createWriteStream")?.path;
+            break;
+          case "screencast":
+            proxiedPm.screencast(
+              {
+                path: "screen.png",
+                quality: 80,
+                fullPage: true
+              },
+              "test"
+            );
+            actualPath = mockPm.getLastCall("screencast")?.opts?.path;
+            actualContent = mockPm.getLastCall("screencast")?.opts;
+            break;
+          case "customScreenShot":
+            proxiedPm.customScreenShot(
+              { path: "shot.png" },
+              "test"
+            );
+            actualPath = mockPm.getLastCall("customScreenShot")?.opts?.path;
+            break;
+          default:
+            throw new Error(`Unknown method: ${method}`);
+        }
+        if (expectedPath === void 0) {
+          return [void 0, void 0];
+        }
+        return [actualPath, expectedPath, actualContent];
+      } catch (error) {
+        return [error.message, expectedPath];
       }
-      return [actualPath, expectedPath];
+    },
+    verifyContent: (expectedContent) => (result) => {
+      const actualContent = result[2];
+      if (JSON.stringify(actualContent) !== JSON.stringify(expectedContent)) {
+        throw new Error(
+          `Content mismatch. Expected: ${JSON.stringify(expectedContent)}, Got: ${JSON.stringify(actualContent)}`
+        );
+      }
+      return result;
     }
   },
   checks: {
@@ -166,36 +92,114 @@ var implementation = {
 
 // src/lib/pmProxy.test/specification.ts
 var specification = (Suite, Given, When, Then, Check) => [
-  Suite.Default(
-    "PM Proxy Functionality",
-    {
-      writeFileProxyTest: Given.SomeBaseString(
-        ["butThenProxy should rewrite writeFileSync paths"],
-        [],
-        [Then.theButTheProxyReturns("writeFileSync", "test/path/butThen/test.txt")],
-        "a test string"
-      ),
-      createWriteStreamProxyTest: Given.SomeBaseString(
-        ["butThenProxy should rewrite createWriteStream paths"],
-        [],
-        [Then.theButTheProxyReturns("createWriteStream", "test/path/butThen/stream.txt")],
-        "a test string"
-      ),
-      screencastProxyTest: Given.SomeBaseString(
-        ["butThenProxy should rewrite screencast paths"],
-        [],
-        [Then.theButTheProxyReturns("screencast", "test/path/butThen/screen.png")],
-        "a test string"
-      ),
-      customScreenShotProxyTest: Given.SomeBaseString(
-        ["butThenProxy should rewrite customScreenShot paths"],
-        [],
-        [Then.theButTheProxyReturns("customScreenShot", "test/path/butThen/shot.png")],
-        "a test string"
-      )
-    },
-    []
-  )
+  Suite.Default("PM Proxy Functionality", {
+    // Basic path rewriting tests
+    writeFileProxyTest: Given.SomeBaseString(
+      ["butThenProxy should rewrite writeFileSync paths"],
+      [],
+      [Then.theButTheProxyReturns("writeFileSync", "test/path/butThen/test.txt")],
+      "writeFileSync test"
+    ),
+    createWriteStreamProxyTest: Given.SomeBaseString(
+      ["butThenProxy should rewrite createWriteStream paths"],
+      [],
+      [Then.theButTheProxyReturns("createWriteStream", "test/path/butThen/stream.txt")],
+      "createWriteStream test"
+    ),
+    screencastProxyTest: Given.SomeBaseString(
+      ["butThenProxy should rewrite screencast paths"],
+      [],
+      [Then.theButTheProxyReturns("screencast", "test/path/butThen/screen.png")],
+      "screencast test"
+    ),
+    customScreenShotProxyTest: Given.SomeBaseString(
+      ["butThenProxy should rewrite customScreenShot paths"],
+      [],
+      [Then.theButTheProxyReturns("customScreenShot", "test/path/butThen/shot.png")],
+      "customScreenShot test"
+    ),
+    // Edge cases
+    emptyPathTest: Given.SomeBaseString(
+      ["butThenProxy should handle empty paths"],
+      [],
+      [Then.theButTheProxyReturns("writeFileSync", "test/path/butThen/")],
+      "empty path test"
+    ),
+    nestedPathTest: Given.SomeBaseString(
+      ["butThenProxy should handle nested paths"],
+      [],
+      [Then.theButTheProxyReturns("writeFileSync", "test/path/butThen/nested/folder/test.txt")],
+      "nested path test"
+    ),
+    specialCharsTest: Given.SomeBaseString(
+      ["butThenProxy should handle special characters in paths"],
+      [],
+      [Then.theButTheProxyReturns("writeFileSync", "test/path/butThen/file with spaces.txt")],
+      "special chars test"
+    )
+  }),
+  Suite.Default("Proxy Type Coverage", {
+    // Test all proxy types
+    butThenProxyTest: Given.SomeBaseString(
+      ["butThenProxy should work correctly"],
+      [],
+      [Then.theButTheProxyReturns("writeFileSync", "test/path/butThen/test.txt")],
+      "butThenProxy test"
+    ),
+    andWhenProxyTest: Given.SomeBaseString(
+      ["andWhenProxy should work correctly"],
+      [],
+      [Then.theButTheProxyReturns("writeFileSync", "test/path/andWhen/test.txt")],
+      "andWhenProxy test"
+    ),
+    beforeEachProxyTest: Given.SomeBaseString(
+      ["beforeEachProxy should work correctly"],
+      [],
+      [Then.theButTheProxyReturns("writeFileSync", "suite-1/beforeEach/test.txt")],
+      "beforeEachProxy test"
+    ),
+    afterEachProxyTest: Given.SomeBaseString(
+      ["afterEachProxy should work correctly"],
+      [],
+      [Then.theButTheProxyReturns("writeFileSync", "suite-1/given-1/afterEach/test.txt")],
+      "afterEachProxy test"
+    )
+  }),
+  Suite.Default("Content Preservation", {
+    // Verify content is preserved
+    contentPreservationTest: Given.SomeBaseString(
+      ["Proxies should preserve file content"],
+      [],
+      [
+        Then.theButTheProxyReturns("writeFileSync", "test/path/butThen/test.txt"),
+        Then.verifyContent("test content")
+      ],
+      "content preservation test"
+    ),
+    objectContentTest: Given.SomeBaseString(
+      ["Proxies should preserve object content"],
+      [],
+      [
+        Then.theButTheProxyReturns("screencast", "test/path/butThen/screen.png"),
+        Then.verifyContent({ quality: 80, fullPage: true })
+      ],
+      "object content test"
+    )
+  }),
+  Suite.Default("Error Cases", {
+    invalidPathTest: Given.SomeBaseString(
+      ["Proxies should handle invalid paths"],
+      [],
+      [Then.theButTheProxyReturns("writeFileSync", "test/path/butThen/../invalid.txt")],
+      "invalid path test"
+    ),
+    undefinedInputTest: Given.SomeBaseString(
+      ["Proxies should handle undefined inputs"],
+      [],
+      [Then.theButTheProxyReturns("writeFileSync", void 0)],
+      "undefined input test"
+    )
+  })
 ];
 
 // node_modules/chai/chai.js

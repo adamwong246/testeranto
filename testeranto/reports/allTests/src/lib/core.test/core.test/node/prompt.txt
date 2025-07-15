@@ -1,6 +1,4 @@
 
-/add src/PM/pure.ts
-/add src/Pure.ts
 /add src/lib/core.test/core.test.specification.ts
 /add src/lib/core.test/MockCore.ts
 /add src/lib/core.test/core.test.implementation.ts

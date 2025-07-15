@@ -133,7 +133,23 @@ var specification = (Suite, Given, When, Then, Check) => [
       //   ]
       // )
     ]
-  )
+  ),
+  Suite.Default("Comprehensive Integration", {
+    fullStackTest: Given.Default(
+      ["All components should work together"],
+      [
+        When.addArtifact(Promise.resolve("test")),
+        When.modifySpecs((specs) => [...specs, "extra"]),
+        When.modifyJobs((jobs) => [...jobs, {}])
+      ],
+      [
+        Then.specsModified(1),
+        Then.jobsModified(1),
+        Then.artifactsTracked(),
+        Then.testRunSuccessful()
+      ]
+    )
+  })
 ];
 var implementation = {
   suites: {
