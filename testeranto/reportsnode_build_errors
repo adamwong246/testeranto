@@ -5,21 +5,7 @@
       "location": null,
       "notes": [],
       "pluginName": "",
-      "text": "Could not resolve \"./src/lib/BaseGiven.test.ts\""
-    },
-    {
-      "id": "",
-      "location": null,
-      "notes": [],
-      "pluginName": "",
-      "text": "Could not resolve \"./src/lib/BaseWhen.test.ts\""
-    },
-    {
-      "id": "",
-      "location": null,
-      "notes": [],
-      "pluginName": "",
-      "text": "Could not resolve \"./src/lib/BaseThen.test.ts\""
+      "text": "Could not resolve \"./src/lib/abstractBase/index.ts\""
     }
   ],
   "warnings": []

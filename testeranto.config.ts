@@ -22,9 +22,7 @@ const config: IProject = {
           [],
         ],
         ["./src/lib/BaseSuite.test.ts", "node", { ports: 1 }, []],
-        ["./src/lib/BaseGiven.test.ts", "node", { ports: 1 }, []],
-        ["./src/lib/BaseWhen.test.ts", "node", { ports: 1 }, []],
-        ["./src/lib/BaseThen.test.ts", "node", { ports: 1 }, []],
+        // ["./src/lib/abstractBase/index.ts", "node", { ports: 1 }, []],
 
         ["./src/mothership/test.ts", "node", { ports: 1 }, []],
 

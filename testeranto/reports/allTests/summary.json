@@ -83,13 +83,6 @@
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/node/./src/lib/pmProxy.test/index/prompt.txt",
     "failingFeatures": {}
   },
-  "./src/lib/classBuilder.test/classBuilder.test.ts": {
-    "typeErrors": 50,
-    "staticErrors": 3,
-    "runTimeError": "?",
-    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/node/./src/lib/classBuilder.test/classBuilder.test/prompt.txt",
-    "failingFeatures": {}
-  },
   "./src/lib/core.test/core.test.ts": {
     "typeErrors": 39,
     "staticErrors": 4,
@@ -102,6 +95,13 @@
     "staticErrors": 5,
     "runTimeError": "?",
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/node/./src/lib/baseBuilder.test/baseBuilder.test/prompt.txt",
+    "failingFeatures": {}
+  },
+  "./src/lib/classBuilder.test/classBuilder.test.ts": {
+    "typeErrors": 50,
+    "staticErrors": 3,
+    "runTimeError": "?",
+    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/node/./src/lib/classBuilder.test/classBuilder.test/prompt.txt",
     "failingFeatures": {}
   }
 }
