@@ -13,13 +13,13 @@
 
 ## What is testeranto?
 
-- Testeranto produces test results which can be fed to Aider.ai to automatically fix failing tests.
-- Testeranto tests are specified in a strongly-typed gherkin-like syntax. Rather than testing your code directly, Testeranto requires you wrap your code with a semantic interface which is based on TS type signatures.
-- Testeranto can run tests in the frontend or the backend, or both.
+- Testeranto produces test results that can be fed to Aider.ai to automatically fix failing tests.
+- Testeranto tests are specified in a strongly-typed gherkin-like syntax. Rather than testing your code directly, Testeranto requires you to wrap your code with a semantic interface that is based on TS type signatures.
+- Testeranto can run tests in the frontend, the backend, or both.
 - Testeranto can be used to test anything that can be bundled with esbuild.
 - Testeranto connects "features" to "tests". This allows the AI to read feature documentation from external systems, like Jira.
-- Testeranto generates test results into static a website which can be deployed to github pages easily.
-- Testeranto uses esbuild to bundle it's tests. The result is used to refine the list of files added to the context of the AI. **The consequence of this is that you can fit all relevant files, and ONLY the relevant files, into the LLMs context.**
+- Testeranto generates test results as a static website that can be easily deployed to GitHub Pages.
+- Testeranto uses esbuild to bundle its tests. The result is used to refine the list of files added to the AI's context. **The consequence of this is that you can fit all relevant files, and only the relevant files, into the LLM's context.**
 
 ## Key Technologies
 
@@ -84,7 +84,7 @@ yarn t-build rectangle.test.ts yourProject once && yarn t-run rectangle.test.ts 
 | -------- | ----------------------------- | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
 | **Node** | node V8 with fork             | testing backend code, Node APIs (like `fs` and `crypto`), or anything needing filesystem access         | has access to the filesystem and io                                                                         |
 | **Web**  | chrome browser                | testing frontend code, anything that uses `document` or `window`, UI interactions, or visual regression | can take screenshots/recordings                                                                             |
-| **Pure** | node v8, dynamically imported | testing code which can run on both node-v8 and the the browser                                          | Very similar to "Node" but has no IO access and thus, no console.log. This runtime is theoretically faster. |
+| **Pure** | node v8, dynamically imported | testing code that can run on both node-v8 and the browser                                               | Very similar to "Node" but has no IO access and thus no console.log. This runtime is theoretically faster. |
 
 ## CLI Commands
 
@@ -123,7 +123,7 @@ yarn t-aider
 Testeranto generates a "prompt" alongside test results. This prompt is passed to aider as input.
 
 ```
-// input src files which can be edited by aider
+// input src files that can be edited by Aider
 /add test/node.ts
 
 // test report files that inform aider but should not be edited
@@ -163,11 +163,11 @@ test0: Given.Default(
 
 ## Sidecars (COMING SOON)
 
-Along side your test, you can include a number of "sidecars" which are other bundled javascript assets upon which your test depends. For example, suppose you have an app with a frontend and backend component. You could run a react test in the web and include the node http server as a sidecar.
+Alongside your test, you can include a number of "sidecars" - other bundled JavaScript assets upon which your test depends. For example, suppose you have an app with frontend and backend components. You could run a React test in the web and include the Node HTTP server as a sidecar.
 
 ## `eslint` and `tsc`
 
-Alongside the bdd tests, testeranto runs eslint and tsc upon the input files to generate a list of static analysis errors and a list of type errors, respectively.
+Alongside the BDD tests, Testeranto runs ESLint and tsc on the input files to generate a list of static analysis errors and type errors, respectively.
 
 ## Subprojects
 
@@ -179,11 +179,11 @@ Test a solidity contract. Also included is an example of deploying a contrct to 
 
 ### testeranto-reduxtoolkit
 
-Test a redux store.
+Tests a Redux store.
 
 ### testeranto-http
 
-Test a node http server.
+Tests a Node HTTP server.
 
 ### testeranto-react (COMING SOON)
 
