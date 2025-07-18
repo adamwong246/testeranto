@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "the AI powered BDD test framework for typescript projects",
-  "version": "0.146.4",
+  "version": "0.146.5",
   "engines": {
     "node": "18.18.0"
   },
@@ -146,6 +146,9 @@
     "typescript": "4.8.2",
     "typescript-eslint": "^8.29.0"
   },
+  "dependenciesPurpose": {
+    "express": "Used in unfinished feature 'mothership'"
+  },
   "devDependencies": {
     "@eslint/js": "^9.23.0",
     "@swc/core": "^1.3.26",
@@ -160,8 +163,6 @@
     "@typescript-eslint/eslint-plugin": "^5.46.0",
     "@typescript-eslint/parser": "^5.46.0",
     "marked": "^12.0.2",
-    "testeranto-solidity": "latest",
-    "testeranto_with_reduxjs_toolkit": "latest",
     "ts-node": "^10.9.1",
     "typescript": "^5.8.2"
   },
@@ -177,7 +178,6 @@
     "bootstrap": "^5.3.4",
     "chai": "^5.2.0",
     "chromium": "^3.0.3",
-    "dot-prop": "^9.0.0",
     "esbuild": "0.17.5",
     "esbuild-plugin-external-package": "^1.0.0",
     "esbuild-plugin-import-map": "^2.1.0",
@@ -191,30 +191,19 @@
     "express": "^4.21.2",
     "fs-extra": "^11.2.0",
     "fs.promises.exists": "^1.1.4",
-    "glob": "^10.3.12",
-    "is-path-inside": "^4.0.0",
-    "iterm-tab": "^0.4.0",
-    "live-server": "^1.2.2",
     "mermaid": "^11.8.1",
     "mermaid-isomorphic": "^3.0.4",
     "node-static": "^0.7.11",
-    "octokit": "^4.1.2",
     "puppeteer": "^24.4.0",
     "puppeteer-core": "24.4.0",
     "react": "18.2.0",
     "react-bootstrap": "^2.10.9",
     "react-dom": "18.2.0",
-    "react-router-dom": "6.29.0",
-    "react-test-renderer": "18.2.0",
-    "recursive-watch": "^1.1.4",
-    "rpc-over-ipc": "^1.0.0",
     "testeranto": "",
     "tsc-prog": "^2.3.0",
     "tsx": "^4.19.3",
     "typescript-eslint": "^8.29.1",
     "url": "^0.11.4",
-    "uuid": "^10.0.0",
-    "why-is-node-running": "^3.2.2",
-    "ws": "^8.16.0"
+    "uuid": "^10.0.0"
   }
 }
