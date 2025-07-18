@@ -2,7 +2,7 @@
 
 ## The AI-powered BDD test framework for TypeScript projects
 
-#### 🚧 WARNING: Testeranto is still under development but is not ready for production yet. I am rapidly working to release a beta ASAP. If you are interested in joining this beta program, please context me. 🚧
+#### 🚧 WARNING: Testeranto is still under development but is not ready for production yet. I am rapidly working to release a beta ASAP. If you are interested in joining this beta program, please contact me. 🚧
 
 - README: [adamwong246.github.io/testeranto/testeranto](https://adamwong246.github.io/testeranto/testeranto)
 - demo: [youtube](https://www.youtube.com/embed/WvU5xMqGi6Q)
@@ -163,6 +163,8 @@ test0: Given.Default(
 ## `eslint` and `tsc`
 
 Alongside the BDD tests, Testeranto runs ESLint and tsc on the input files to generate a list of static analysis errors and type errors, respectively.
+
+---
 
 ## Sidecars (COMING SOON)
 
