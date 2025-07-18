@@ -105,6 +105,6 @@ const config: IProject = {
       importPlugins: [],
     },
   },
-  reportDomain: "https://adamwong246.github.io/testeranto",
+  reportDomain: "https://adamwong246.github.io/testeranto/testeranto",
 };
 export default config;

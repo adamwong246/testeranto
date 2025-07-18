@@ -1,11 +1,11 @@
 TypeError: When.addArtifact is not a function
-    at specification (file:///Users/adam/Code/testeranto/testeranto/bundles/pure/allTests/src/lib/BaseSuite.test/pure.test.mjs?cacheBust=1752859436874:139:14)
+    at specification (file:///Users/adam/Code/testeranto/testeranto/bundles/pure/allTests/src/lib/BaseSuite.test/pure.test.mjs?cacheBust=1752859572676:139:14)
     at new BaseBuilder (file:///Users/adam/Code/testeranto/testeranto/bundles/pure/allTests/chunk-W22WOQNK.mjs:15:18)
     at new ClassBuilder (file:///Users/adam/Code/testeranto/testeranto/bundles/pure/allTests/chunk-W22WOQNK.mjs:646:5)
     at new TesterantoCore (file:///Users/adam/Code/testeranto/testeranto/bundles/pure/allTests/chunk-W22WOQNK.mjs:663:5)
     at new PureTesteranto (file:///Users/adam/Code/testeranto/testeranto/bundles/pure/allTests/chunk-W22WOQNK.mjs:883:5)
     at Pure_default (file:///Users/adam/Code/testeranto/testeranto/bundles/pure/allTests/chunk-W22WOQNK.mjs:904:10)
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/pure/allTests/src/lib/BaseSuite.test/pure.test.mjs?cacheBust=1752859436874:315:25
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/pure/allTests/src/lib/BaseSuite.test/pure.test.mjs?cacheBust=1752859572676:315:25
     at ModuleJob.run (node:internal/modules/esm/module_job:192:25)
     at async CustomizedModuleLoader.import (node:internal/modules/esm/loader:228:24)
     at launchPure (/Users/adam/Code/testeranto/src/PM/main.ts:577:7)
