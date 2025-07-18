@@ -80,10 +80,10 @@
       "id": "",
       "location": {
         "column": 57,
-        "file": "src/lib/core.ts",
-        "length": 19,
-        "line": 11,
-        "lineText": "import { BaseGiven, BaseWhen, BaseThen, BaseCheck } from \"./abstractBase.js\";",
+        "file": "src/lib/BaseSuite.test/test.ts",
+        "length": 17,
+        "line": 10,
+        "lineText": "import { BaseGiven, BaseWhen, BaseThen, BaseCheck } from \"../abstractBase\";",
         "namespace": "",
         "suggestion": ""
       },
@@ -95,10 +95,10 @@
       "id": "",
       "location": {
         "column": 57,
-        "file": "src/lib/core.ts",
-        "length": 19,
-        "line": 11,
-        "lineText": "import { BaseGiven, BaseWhen, BaseThen, BaseCheck } from \"./abstractBase.js\";",
+        "file": "src/lib/BaseSuite.test/test.ts",
+        "length": 17,
+        "line": 10,
+        "lineText": "import { BaseGiven, BaseWhen, BaseThen, BaseCheck } from \"../abstractBase\";",
         "namespace": "",
         "suggestion": ""
       },

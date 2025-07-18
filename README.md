@@ -2,14 +2,14 @@
 
 ## The AI-powered BDD test framework for TypeScript projects
 
-#### 🚧 WARNING: Testeranto is still under development and is not ready for production yet. 🚧
+#### 🚧 WARNING: Testeranto is still under development but is not ready for production yet. I am rapidly working to release a beta ASAP. If you are interested in joining this beta program, please context me. 🚧
 
-- README: [index.html](https://adamwong246.github.io/testeranto/)
+- README: [adamwong246.github.io/testeranto/testeranto](https://adamwong246.github.io/testeranto/testeranto)
 - demo: [youtube](https://www.youtube.com/embed/WvU5xMqGi6Q)
 - source: [github.com/adamwong246/testeranto](https://github.com/adamwong246/testeranto)
 - npm: [npmjs.com/package/testeranto](https://www.npmjs.com/package/testeranto)
-- dev: [github.dev/adamwong246/testeranto](https://github.dev/adamwong246/testeranto)
 - example repo: [testeranto-starter](https://github.com/adamwong246/testeranto-starter)
+- tests report: [adamwong246.github.io/testeranto/testeranto](https://adamwong246.github.io/testeranto/testeranto/index.html)
 
 ## What is testeranto?
 
@@ -160,21 +160,21 @@ test0: Given.Default(
 
 ```
 
-## Sidecars (COMING SOON)
-
-Alongside your test, you can include a number of "sidecars" - other bundled JavaScript assets upon which your test depends. For example, suppose you have an app with frontend and backend components. You could run a React test in the web and include the Node HTTP server as a sidecar.
-
 ## `eslint` and `tsc`
 
 Alongside the BDD tests, Testeranto runs ESLint and tsc on the input files to generate a list of static analysis errors and type errors, respectively.
 
+## Sidecars (COMING SOON)
+
+Alongside your test, you can include a number of "sidecars" - other bundled JavaScript assets upon which your test depends. For example, suppose you have an app with frontend and backend components. You could run a React test in the web and include the Node HTTP server as a sidecar.
+
 ## Subprojects
 
-Testeranto has a core repo, but there are also subprojects which implement tests by type and by technology
+Testeranto has a core repo, but there are also sub-projects which implement tests by type and by technology
 
 ### testeranto-solidity
 
-Test a solidity contract. Also included is an example of deploying a contrct to a ganache server.
+Test a solidity contract. Also included is an example of deploying a contract to a ganache server.
 
 ### testeranto-reduxtoolkit
 
