@@ -25,7 +25,6 @@ export class PM_Node_Sidecar extends PM_sidecar {
     return new Promise((res) => {
       process.on("message", async (message: { path: string } | "stop") => {
         if (message === "stop") {
-          console.log("STOP!", stopper.toString());
           await stopper();
           process.exit();
         } else if (message.path) {

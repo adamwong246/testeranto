@@ -214,7 +214,6 @@ export abstract class BaseWhen<I extends Ibdd_in_any> {
       testResourceConfiguration,
       andWhenProxy(pm, filepath)
     ).catch((e: Error) => {
-      console.log("MARK9", e);
       this.error = e;
       throw e;
     });
@@ -271,7 +270,6 @@ export abstract class BaseThen<I extends Ibdd_in_any> {
       testResourceConfiguration,
       butThenProxy(pm, filepath)
     ).catch((e) => {
-      console.log("test failed 3", e);
       this.error = e;
       throw e;
     });

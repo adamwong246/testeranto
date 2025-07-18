@@ -28,18 +28,7 @@ export class PM_Node extends PM {
   }
 
   start(): Promise<void> {
-    throw new Error("DEPREFECATED");
-    // console.log("START");
-    // return new Promise((res) => {
-    //   process.on("message", (message: { path?: string }) => {
-    //     console.log("MESSAGE");
-    //     if (message.path) {
-    //       this.client = net.createConnection(message.path, () => {
-    //         res();
-    //       });
-    //     }
-    //   });
-    // });
+    throw new Error("DEPRECATED");
   }
 
   stop(): Promise<void> {
@@ -48,8 +37,6 @@ export class PM_Node extends PM {
 
   send<I>(command: string, ...argz): Promise<I> {
     const key = Math.random().toString();
-    // console.log("SEND", key, command, ...argz);
-
     if (!this.client) {
       console.error(
         `Tried to send "${command} (${argz})" but the test has not been started and the IPC client is not established. Exiting as failure!`
@@ -196,7 +183,6 @@ export class PM_Node extends PM {
   }
 
   async writeFileSync(filepath: string, contents: string) {
-    // console.log("mark55");
     return await this.send<boolean>(
       "writeFileSync",
       this.testResourceConfiguration.fs + "/" + filepath,

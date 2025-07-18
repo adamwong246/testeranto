@@ -238,7 +238,6 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
   ];
 
   x.forEach(async ([runtime, keys]) => {
-    console.log(runtime, keys);
     keys.forEach(async (k) => {
       const folder = `testeranto/reports/${testName}/${k
         .split(".")

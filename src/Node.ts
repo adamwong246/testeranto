@@ -16,6 +16,8 @@ import {
 
 let ipcfile;
 
+console.log("mark4");
+
 export class NodeTesteranto<
   I extends Ibdd_in_any,
   O extends Ibdd_out_any,
@@ -58,21 +60,22 @@ const testeranto = async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
   testInterface: Partial<INodeTestInterface<I>>,
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
 ): Promise<Testeranto<I, O, M>> => {
-  const t = new NodeTesteranto<I, O, M>(
-    input,
-    testSpecification,
-    testImplementation,
-    testResourceRequirement,
-    testInterface
-  );
-
-  process.on("unhandledRejection", (reason, promise) => {
-    console.error("Unhandled Rejection at:", promise, "reason:", reason);
-    // Optionally, terminate the process or perform cleanup
-    // t.registerUncaughtPromise(reason, promise);
-  });
-
   try {
+    const t = new NodeTesteranto<I, O, M>(
+      input,
+      testSpecification,
+      testImplementation,
+      testResourceRequirement,
+      testInterface
+    );
+    console.log("mark6");
+
+    process.on("unhandledRejection", (reason, promise) => {
+      console.error("Unhandled Rejection at:", promise, "reason:", reason);
+      // Optionally, terminate the process or perform cleanup
+      // t.registerUncaughtPromise(reason, promise);
+    });
+
     ipcfile = process.argv[3];
     const f = await t.receiveTestResourceConfig(process.argv[2]);
 

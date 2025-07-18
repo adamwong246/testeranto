@@ -1,6 +1,6 @@
 # Testeranto docs and core concepts
 
-Testeranto's type system provides a rigorous framework for Behavior-Driven Development (BDD) testing. While powerful, the API can initially seem complex but everything you need to know can be summed up in **3 core functions and 5 essential types**. Follow these patterns, and TypeScript's type checker will guide you through the rest.
+Testeranto's type system provides a rigorous framework for Behavior-Driven Development (BDD) testing. The API may seem complex but everything you need to know can be summed up in **1 function, 3 runtimes and 5 essential types, and 1 optional type**. Follow these patterns, and TypeScript's type checker will guide you through the rest.
 
 ### ⚠️ this doc is a work in progress. It is 99% accurate but needs some attention to be complete. ⚠️
 
@@ -26,7 +26,21 @@ class Rectangle {
 }
 ```
 
-### Testeranto's 3 functions
+### Testeranto's 1 function
+
+Testeranto has 1 function. This function launches and runs the tests. It is here that all 5 types converge and if you can type this function call correctly, the TS type system should guide you through the rest.
+
+```ts
+async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
+  input: I["iinput"],
+  testSpecification: ITestSpecification<I, O>,
+  testImplementation: ITestImplementation<I, O, M>,
+  testInterface: Partial<ITestInterface<I>>,
+  testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
+): Promise<Testeranto<I, O, M>>
+```
+
+### Testeranto's 3 runtimes
 
 For each of testeranto's runtime, there is a specific Testeranto main function. Each is it's own import but all 3 are called in the same way.
 
@@ -35,6 +49,10 @@ For each of testeranto's runtime, there is a specific Testeranto main function. 
 ```ts
 import Testeranto from "testeranto/src/Node"; // <- import the Node main function
 // below this point, all runtimes are identical!
+
+import { implementation } from "./Rectangle.test.implementation";
+import { specification } from "./Rectangle.test.specification";
+import { interface } from "./Rectangle.test.interface";
 
 // Note the type parameters I, O, and M: these will be important later
 export default Testeranto<
@@ -95,32 +113,9 @@ export default Testeranto<
 );
 ```
 
-### Testeranto's 5 Essential Types
+### Testeranto's 5 essential types
 
-Every testeranto test is built around these 5 types that form a complete testing pipeline:
-
-1. **ITestSpecification** - The "what" of your tests (business requirements)
-2. **ITestImplementation** - The "how" of your tests (concrete operations)
-3. **ITestInterface** - The "glue" between specs and implementation
-4. **Ibdd_in** - Defines the internal test flow shape
-5. **Ibdd_out** - Defines the external test interface
-
-```mermaid
-flowchart LR
-    S[ITestSpecification] -->|defines| O[Ibdd_out]
-    I[ITestImplementation] -->|uses| O
-    I -->|uses| M[Modifier]
-    T[ITestInterface] -->|connects| N[Ibdd_in]
-    S -->|flows through| N
-    I -->|flows through| N
-
-    style S fill:#2aa198,stroke:#073642
-    style I fill:#859900,stroke:#073642
-    style T fill:#b58900,stroke:#073642
-    style O fill:#d33682,stroke:#073642
-    style N fill:#cb4b16,stroke:#073642
-    style M fill:#6c71c4,stroke:#073642
-```
+Every testeranto test is built around these 5 types that form a complete testing pipeline.
 
 #### The Specification (ITestSpecification)
 
@@ -130,7 +125,6 @@ The Specification defines the business requirements in plain language, completel
 - Human-readable test descriptions
 - Defines test suites, scenarios (Given/When/Then)
 - Maps directly to BDD concepts
-- Uses Ibdd_out for type safety
 
 ```typescript
 import {
@@ -243,10 +237,9 @@ export const implementation: ITestImplementation<
 
 #### The Interface aka ITestInterface
 
-The test interface is code which is NOT BDD . The interface adapts your test subject so that the BDD hooks can be applied. The interface implements the traditional BDD steps "before all", "after all", "before each", "after each", etc
+The test interface is code which is NOT business logic. The interface adapts your test subject so that the BDD hooks can be applied. The interface implements the traditional BDD steps "before all", "after all", "before each", "after each", etc
 
 ```ts
-
 import {
   Ibdd_in,
   ITestInterface,
@@ -275,7 +268,7 @@ export const testInterface: ITestInterface<
 
 #### type I aka Ibdd_in
 
-this type describes the "inner" shape of your BDD tests.
+This type describes the "inner" shape of your BDD tests. Over the course of the execution of the test, the subject will change shapes- this test describe those changes.
 
 ```ts
 import { Ibdd_in } from "testeranto/src/CoreTypes";
@@ -294,7 +287,7 @@ export type I = Ibdd_in<
 
 #### type O aka Ibdd_out
 
-this type describes the "outer" shape of your BDD tests.
+This type describes the "outer" shape of your BDD tests. This type describes the set of legal BDD clauses.
 
 ```ts
 import { Ibdd_out } from "testeranto/src/CoreTypes";
@@ -334,6 +327,8 @@ export type O = Ibdd_out<
   }
 >;
 ```
+
+### Testeranto's 1 optional type
 
 #### type M (optional)
 

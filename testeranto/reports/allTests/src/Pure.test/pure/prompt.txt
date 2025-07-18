@@ -1,0 +1,18 @@
+
+/add src/lib/index.ts
+/add src/lib/pmProxy.ts
+/add src/lib/abstractBase.ts
+/add src/lib/basebuilder.ts
+/add src/lib/classBuilder.ts
+/add src/lib/BaseSuite.ts
+/add src/lib/core.ts
+/add src/PM/index.ts
+/add src/PM/pure.ts
+/add src/Pure.ts
+/add src/lib/pmProxy.test/mockPMBase.ts
+/add src/Pure.test.ts
+
+/read testeranto/reports/allTests/src/Pure.test/pure/tests.json
+/read testeranto/reports/allTests/src/Pure.test/pure/logs.txt
+/read testeranto/reports/allTests/src/Pure.test/pure/type_errors.txt
+/read testeranto/reports/allTests/src/Pure.test/pure/lint_errors.json

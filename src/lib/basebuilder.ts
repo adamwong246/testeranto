@@ -114,8 +114,9 @@ export abstract class BaseBuilder<
             logFilePath
           );
 
+          // deprecated?
           const tLog = async (...l: string[]) => {
-            // console.log("x", x);
+            //
           };
 
           const suiteDone: BaseSuite<I, O> = await runner(puppetMaster, tLog);

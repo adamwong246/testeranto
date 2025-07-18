@@ -25,7 +25,6 @@ export const testInterface: ITestInterface<I> = {
   },
 
   butThen: async (store, thenCB, testResource, pm) => {
-    console.log("mark2 butThen", store, thenCB.toString());
     const proxiedPM = butThenProxy(pm, "some/path");
     return thenCB(store, proxiedPM);
   },

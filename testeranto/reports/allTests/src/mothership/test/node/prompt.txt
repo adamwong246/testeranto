@@ -1,8 +1,0 @@
-
-/add src/mothership/index.ts
-/add src/mothership/test.ts
-
-/read testeranto/reports/allTests/src/mothership/test/node/tests.json
-/read testeranto/reports/allTests/src/mothership/test/node/console_log.txt
-/read testeranto/reports/allTests/src/mothership/test/node/type_errors.txt
-/read testeranto/reports/allTests/src/mothership/test/node/lint_errors.json

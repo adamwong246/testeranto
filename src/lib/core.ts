@@ -120,16 +120,6 @@ export default abstract class TesterantoCore<
             testResource,
             pm
           );
-          // try {
-          //   return await fullTestInterface.andWhen(
-          //     store,
-          //     whenCB,
-          //     testResource,
-          //     pm
-          //   );
-          // } catch (e) {
-          //   console.log("mark22", e);
-          // }
         }
       } as any,
 

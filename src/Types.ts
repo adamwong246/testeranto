@@ -17,11 +17,11 @@ import { BaseSuite } from "./lib/BaseSuite.js";
 export type ISummary = Record<
   string,
   {
-    runTimeError: string;
-    typeErrors: number;
-    staticErrors: number;
-    prompt: string;
-    failingFeatures: object;
+    runTimeErrors: number | "?" | undefined;
+    typeErrors: number | "?" | undefined;
+    staticErrors: number | "?" | undefined;
+    prompt: string | "?" | undefined;
+    failingFeatures: object | undefined;
   }
 >;
 

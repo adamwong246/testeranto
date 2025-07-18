@@ -51,7 +51,15 @@ export abstract class PM_WithEslintAndTsc extends PM_Base {
     addableFiles: string[];
   }) => {
     console.log(ansiC.green(ansiC.inverse(`tsc < ${entrypoint}`)));
-    this.typeCheckIsRunning(entrypoint);
+    try {
+      this.typeCheckIsRunning(entrypoint);
+    } catch (e) {
+      console.error("error in tscCheck");
+      console.error(e);
+      console.error(entrypoint);
+      console.error(JSON.stringify(this.summary, null, 2));
+      process.exit(-1);
+    }
 
     const program = tsc.createProgramFromConfig({
       basePath: process.cwd(), // always required, used for relative paths
@@ -94,7 +102,6 @@ export abstract class PM_WithEslintAndTsc extends PM_Base {
     });
 
     fs.writeFileSync(tscPath, results.join("\n"));
-
     this.typeCheckIsNowDone(entrypoint, results.length);
   };
 
@@ -104,7 +111,16 @@ export abstract class PM_WithEslintAndTsc extends PM_Base {
     addableFiles: string[]
   ) => {
     console.log(ansiC.green(ansiC.inverse(`eslint < ${entrypoint}`)));
-    this.lintIsRunning(entrypoint);
+
+    try {
+      this.lintIsRunning(entrypoint);
+    } catch (e) {
+      console.error("error in eslintCheck");
+      console.error(e);
+      console.error(entrypoint);
+      console.error(JSON.stringify(this.summary, null, 2));
+      process.exit(-1);
+    }
 
     const results = (await eslint.lintFiles(addableFiles))
       .filter((r) => r.messages.length)
@@ -155,7 +171,7 @@ export abstract class PM_WithEslintAndTsc extends PM_Base {
       this.name,
       entryPoint.split(".").slice(0, -1).join("."),
       platform,
-      `console_log.txt`
+      `logs.txt`
     );
 
     const lintPath = path.join(
@@ -220,55 +236,86 @@ ${addableFiles
   private ensureSummaryEntry(src: string, isSidecar = false) {
     if (!this.summary[src]) {
       this.summary[src] = {
-        typeErrors: "?",
-        staticErrors: "?",
-        runTimeError: "?",
-        prompt: "?",
-        failingFeatures: {}
+        typeErrors: undefined,
+        staticErrors: undefined,
+        runTimeErrors: undefined,
+        prompt: undefined,
+        failingFeatures: {},
       };
       if (isSidecar) {
         // Sidecars don't need all fields
-        delete this.summary[src].runTimeError;
-        delete this.summary[src].prompt;
+        // delete this.summary[src].runTimeError;
+        // delete this.summary[src].prompt;
       }
     }
     return this.summary[src];
   }
 
   typeCheckIsRunning = (src: string) => {
-    const entry = this.ensureSummaryEntry(src);
-    entry.typeErrors = "?";
+    if (!this.summary[src]) {
+      throw `this.summary[${src}] is undefined`;
+    }
+
+    this.summary[src].typeErrors = "?";
   };
 
   typeCheckIsNowDone = (src: string, failures: number) => {
-    const entry = this.ensureSummaryEntry(src);
-    entry.typeErrors = failures;
+    if (!this.summary[src]) {
+      throw `this.summary[${src}] is undefined`;
+    }
+
+    if (failures === 0) {
+      console.log(ansiC.green(ansiC.inverse(`tsc > ${src}`)));
+    } else {
+      console.log(
+        ansiC.red(ansiC.inverse(`tsc > ${src} failed ${failures} times`))
+      );
+    }
+
+    this.summary[src].typeErrors = failures;
     this.writeBigBoard();
     this.checkForShutdown();
   };
 
   lintIsRunning = (src: string) => {
-    const entry = this.ensureSummaryEntry(src);
-    entry.staticErrors = "?";
+    if (!this.summary[src]) {
+      throw `this.summary[${src}] is undefined`;
+    }
+    this.summary[src].staticErrors = "?";
     this.writeBigBoard();
   };
 
   lintIsNowDone = (src: string, failures: number) => {
-    const entry = this.ensureSummaryEntry(src);
-    entry.staticErrors = failures;
+    if (!this.summary[src]) {
+      throw `this.summary[${src}] is undefined`;
+    }
+
+    if (failures === 0) {
+      console.log(ansiC.green(ansiC.inverse(`eslint > ${src}`)));
+    } else {
+      console.log(
+        ansiC.red(ansiC.inverse(`eslint > ${src} failed ${failures} times`))
+      );
+    }
+
+    this.summary[src].staticErrors = failures;
     this.writeBigBoard();
     this.checkForShutdown();
   };
 
   bddTestIsRunning = (src: string) => {
-    const entry = this.ensureSummaryEntry(src);
-    entry.runTimeError = "?";
+    if (!this.summary[src]) {
+      throw `this.summary[${src}] is undefined`;
+    }
+    this.summary[src].runTimeErrors = "?";
     this.writeBigBoard();
   };
 
   bddTestIsNowDone = (src: string, failures: number) => {
-    const entry = this.ensureSummaryEntry(src);
-    entry.runTimeError = failures;
+    if (!this.summary[src]) {
+      throw `this.summary[${src}] is undefined`;
+    }
+    this.summary[src].runTimeErrors = failures;
     this.writeBigBoard();
     this.checkForShutdown();
   };
@@ -280,50 +327,5 @@ ${addableFiles
     );
   };
 
-  checkForShutdown = () => {
-    console.log(ansiC.inverse(`checkForShutdown`));
-
-    this.writeBigBoard();
-
-    if (this.mode === "dev") return;
-
-    let inflight = false;
-
-    Object.keys(this.summary).forEach((k) => {
-      if (this.summary[k].prompt === "?") {
-        console.log(ansiC.blue(ansiC.inverse(`🕕 prompt ${k}`)));
-        inflight = true;
-      }
-    });
-
-    Object.keys(this.summary).forEach((k) => {
-      if (this.summary[k].runTimeError === "?") {
-        console.log(ansiC.blue(ansiC.inverse(`🕕 runTimeError ${k}`)));
-        inflight = true;
-      }
-    });
-
-    Object.keys(this.summary).forEach((k) => {
-      if (this.summary[k].staticErrors === "?") {
-        console.log(ansiC.blue(ansiC.inverse(`🕕 staticErrors ${k}`)));
-        inflight = true;
-      }
-    });
-
-    Object.keys(this.summary).forEach((k) => {
-      if (this.summary[k].typeErrors === "?") {
-        console.log(ansiC.blue(ansiC.inverse(`🕕 typeErrors ${k}`)));
-        inflight = true;
-      }
-    });
-
-    this.writeBigBoard();
-
-    if (!inflight) {
-      this.browser.disconnect().then(() => {
-        console.log(ansiC.inverse(`${this.name} has been tested. Goodbye.`));
-        process.exit();
-      });
-    }
-  };
+  abstract checkForShutdown();
 }

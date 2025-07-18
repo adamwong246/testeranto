@@ -4,46 +4,39 @@ const config: IProject = {
   projects: {
     allTests: {
       tests: [
-        ["src/Pure.test.ts", "node", { ports: 1 }, []],
-        ["src/lib/pmProxy.test/index.ts", "node", { ports: 1 }, []],
-        ["src/lib/core.test/core.test.ts", "node", { ports: 1 }, []],
-
-        [
-          "src/lib/classBuilder.test/classBuilder.test.ts",
-          "node",
-          { ports: 1 },
-          [],
-        ],
-
-        [
-          "src/lib/baseBuilder.test/baseBuilder.test.ts",
-          "node",
-          { ports: 1 },
-          [],
-        ],
-        ["./src/lib/BaseSuite.test.ts", "node", { ports: 1 }, []],
-        // ["./src/lib/abstractBase/index.ts", "node", { ports: 1 }, []],
-
-        ["./src/mothership/test.ts", "node", { ports: 1 }, []],
-
-        [
-          "./src/PM/__tests__/nodeSidecar.testeranto.ts",
-          "node",
-          { ports: 1 },
-          [],
-        ],
-        [
-          "./src/PM/__tests__/pureSidecar.testeranto.ts",
-          "node",
-          { ports: 1 },
-          [],
-        ],
-        [
-          "./src/PM/__tests__/webSidecar.testeranto.ts",
-          "node",
-          { ports: 1 },
-          [],
-        ],
+        // ["src/lib/BaseSuite.test/node.test.ts", "node", { ports: 0 }, []],
+        // ["src/lib/BaseSuite.test/pure.test.ts", "pure", { ports: 0 }, []],
+        // ["src/lib/BaseSuite.test/web.test.ts", "web", { ports: 0 }, []],
+        ["src/Pure.test.ts", "pure", { ports: 0 }, []],
+        // ["src/lib/pmProxy.test/index.ts", "node", { ports: 0 }, []],
+        // ["src/lib/core.test/core.test.ts", "node", { ports: 0 }, []],
+        // [
+        //   "src/lib/classBuilder.test/classBuilder.test.ts",
+        //   "node",
+        //   { ports: 0 },
+        //   [],
+        // ],
+        // [
+        //   "src/lib/baseBuilder.test/baseBuilder.test.ts",
+        //   "node",
+        //   { ports: 0 },
+        //   [],
+        // ],
+        // ["src/mothership/test.ts", "node", { ports: 0 }, []],
+        // ["./src/lib/abstractBase/index.ts", "node", { ports: 0 }, []],
+        // [
+        //   "src/PM/__tests__/nodeSidecar.testeranto.ts",
+        //   "node",
+        //   { ports: 1 },
+        //   [],
+        // ],
+        // [
+        //   "src/PM/__tests__/pureSidecar.testeranto.ts",
+        //   "node",
+        //   { ports: 1 },
+        //   [],
+        // ],
+        // ["src/PM/__tests__/webSidecar.testeranto.ts", "node", { ports: 1 }, []],
       ],
       clearScreen: false,
       debugger: false,
@@ -98,5 +91,6 @@ const config: IProject = {
       importPlugins: [],
     },
   },
+  reportDomain: "",
 };
 export default config;

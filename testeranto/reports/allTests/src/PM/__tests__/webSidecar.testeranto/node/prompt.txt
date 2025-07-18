@@ -1,8 +1,0 @@
-
-/add src/PM/webSidecar.ts
-/add src/PM/__tests__/webSidecar.testeranto.ts
-
-/read testeranto/reports/allTests/src/PM/__tests__/webSidecar.testeranto/node/tests.json
-/read testeranto/reports/allTests/src/PM/__tests__/webSidecar.testeranto/node/console_log.txt
-/read testeranto/reports/allTests/src/PM/__tests__/webSidecar.testeranto/node/type_errors.txt
-/read testeranto/reports/allTests/src/PM/__tests__/webSidecar.testeranto/node/lint_errors.json

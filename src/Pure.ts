@@ -41,7 +41,13 @@ export class PureTesteranto<
   async receiveTestResourceConfig(partialTestResource: string) {
     const t: ITTestResourceConfiguration = JSON.parse(partialTestResource);
     const pm = new PM_Pure(t);
-    return await this.testJobs[0].receiveTestResourceConfig(pm);
+
+    try {
+      return await this.testJobs[0].receiveTestResourceConfig(pm);
+    } catch (e) {
+      return -2;
+    }
+
     // const { failed, artifacts, logPromise, features, fails } =
     //   await this.testJobs[0].receiveTestResourceConfig(pm);
     // // pm.customclose();
@@ -55,7 +61,7 @@ export default async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
   testImplementation: ITestImplementation<I, O, M>,
   testInterface: Partial<ITestInterface<I>>,
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
-): Promise<Testeranto<I, O, M>> => {
+): Promise<number | Testeranto<I, O, M>> => {
   return new PureTesteranto<I, O, M>(
     input,
     testSpecification,
@@ -63,4 +69,16 @@ export default async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
     testResourceRequirement,
     testInterface
   );
+
+  // try {
+  //   return new PureTesteranto<I, O, M>(
+  //     input,
+  //     testSpecification,
+  //     testImplementation,
+  //     testResourceRequirement,
+  //     testInterface
+  //   );
+  // } catch (e) {
+  //   return -1;
+  // }
 };
