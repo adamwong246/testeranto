@@ -24492,9 +24492,9 @@
     }
   });
 
-  // node_modules/react-is/cjs/react-is.development.js
+  // node_modules/prop-types/node_modules/react-is/cjs/react-is.development.js
   var require_react_is_development = __commonJS({
-    "node_modules/react-is/cjs/react-is.development.js"(exports) {
+    "node_modules/prop-types/node_modules/react-is/cjs/react-is.development.js"(exports) {
       "use strict";
       if (true) {
         (function() {
@@ -24647,9 +24647,9 @@
     }
   });
 
-  // node_modules/react-is/index.js
+  // node_modules/prop-types/node_modules/react-is/index.js
   var require_react_is = __commonJS({
-    "node_modules/react-is/index.js"(exports, module) {
+    "node_modules/prop-types/node_modules/react-is/index.js"(exports, module) {
       "use strict";
       if (false) {
         module.exports = null;
@@ -27361,33 +27361,61 @@
   var Footer = () => /* @__PURE__ */ import_react32.default.createElement("footer", null, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react32.default.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto "));
 
   // src/TestReport.tsx
-  var StepPane = ({ step }) => {
+  var StepPane = ({
+    step
+  }) => {
     return /* @__PURE__ */ import_react33.default.createElement("div", null, /* @__PURE__ */ import_react33.default.createElement("pre", null, /* @__PURE__ */ import_react33.default.createElement("code", null, JSON.stringify(step, null, 2))));
   };
-  var TestPane = ({ given }) => {
-    return /* @__PURE__ */ import_react33.default.createElement("div", null, "    ", /* @__PURE__ */ import_react33.default.createElement(Tab_default.Container, { id: "TestPane-tabs", defaultActiveKey: "first" }, /* @__PURE__ */ import_react33.default.createElement(Row_default, null, /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 3 }, /* @__PURE__ */ import_react33.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: `bdd-features` }, "features"), ...given.whens.map((w, ndx) => /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: `bdd-when-${ndx}` }, "When ", w.name, " ", w.error && "!")), ...given.thens.map((t, ndx) => /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: `bdd-then-${ndx}` }, "Then ", t.name, " ", t.error && "!")), /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: `bdd-errors` }, "errors")))), /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 6 }, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: `bdd-features` }, /* @__PURE__ */ import_react33.default.createElement("pre", null, /* @__PURE__ */ import_react33.default.createElement("code", null, JSON.stringify(given.features, null, 2)))), ...given.whens.map((w, ndx) => /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: `bdd-when-${ndx}` }, /* @__PURE__ */ import_react33.default.createElement(StepPane, { step: w }))), ...given.thens.map((t, ndx) => /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: `bdd-then-${ndx}` }, /* @__PURE__ */ import_react33.default.createElement(StepPane, { step: t }))), /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: `bdd-errors` }, /* @__PURE__ */ import_react33.default.createElement("pre", null, /* @__PURE__ */ import_react33.default.createElement("code", null, JSON.stringify(given.error, null, 2)))))))));
+  var TestPane = ({
+    given
+  }) => {
+    return /* @__PURE__ */ import_react33.default.createElement("div", null, " ", /* @__PURE__ */ import_react33.default.createElement(Tab_default.Container, { id: "TestPane-tabs", defaultActiveKey: "first" }, /* @__PURE__ */ import_react33.default.createElement(Row_default, null, /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 3 }, /* @__PURE__ */ import_react33.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: `bdd-features` }, "features"), ...given.whens.map((w, ndx) => /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: `bdd-when-${ndx}` }, "When ", w.name, " ", w.error && "!")), ...given.thens.map((t, ndx) => /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: `bdd-then-${ndx}` }, "Then ", t.name, " ", t.error && "!")), /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: `bdd-errors` }, "errors")))), /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 6 }, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: `bdd-features` }, /* @__PURE__ */ import_react33.default.createElement("pre", null, /* @__PURE__ */ import_react33.default.createElement("code", null, JSON.stringify(given.features, null, 2)))), ...given.whens.map((w, ndx) => /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: `bdd-when-${ndx}` }, /* @__PURE__ */ import_react33.default.createElement(StepPane, { step: w }))), ...given.thens.map((t, ndx) => /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: `bdd-then-${ndx}` }, /* @__PURE__ */ import_react33.default.createElement(StepPane, { step: t }))), /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: `bdd-errors` }, /* @__PURE__ */ import_react33.default.createElement("pre", null, /* @__PURE__ */ import_react33.default.createElement("code", null, JSON.stringify(given.error, null, 2)))))))));
   };
   var BddPage = () => {
     const [bddErrors, setBddErrors] = (0, import_react33.useState)();
     (0, import_react33.useEffect)(() => {
       (async () => {
-        setBddErrors(await (await fetch(`tests.json`)).json());
+        setBddErrors(
+          await (await fetch(
+            `${window.location.href.split("/").slice(0, -1).join("/")}/tests.json`
+          )).json()
+        );
       })();
     }, []);
     const [log, setLog] = (0, import_react33.useState)();
     (0, import_react33.useEffect)(() => {
       (async () => {
-        setLog(await (await fetch(`log.txt`)).text());
+        setLog(
+          await (await fetch(
+            `${window.location.href.split("/").slice(0, -1).join("/")}/log.txt`
+          )).text()
+        );
       })();
     }, []);
-    if (!bddErrors || !log) {
+    if (bddErrors === void 0 || log === void 0) {
       return /* @__PURE__ */ import_react33.default.createElement("div", null, "loading...");
     }
-    return /* @__PURE__ */ import_react33.default.createElement("div", null, "  ", /* @__PURE__ */ import_react33.default.createElement(Row_default, null, /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 12 }, /* @__PURE__ */ import_react33.default.createElement("h2", null, bddErrors.name))), /* @__PURE__ */ import_react33.default.createElement(Row_default, null, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Container, { id: "root-tab-container", defaultActiveKey: "first" }, /* @__PURE__ */ import_react33.default.createElement(Row_default, null, /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 3 }, /* @__PURE__ */ import_react33.default.createElement("pre", null, /* @__PURE__ */ import_react33.default.createElement("code", null, log))), /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 3 }, /* @__PURE__ */ import_react33.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, ...bddErrors.givens.map(
-      (g) => /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: g.key }, g.key, ": Given ", g.name))
-    ))), /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 6 }, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Content, null, ...bddErrors.givens.map(
-      (g) => /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: g.key }, /* @__PURE__ */ import_react33.default.createElement(TestPane, { given: g }))
-    )))))), /* @__PURE__ */ import_react33.default.createElement(Footer, null));
+    return /* @__PURE__ */ import_react33.default.createElement("div", null, " ", /* @__PURE__ */ import_react33.default.createElement(Row_default, null, /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 12 }, /* @__PURE__ */ import_react33.default.createElement("h2", null, bddErrors.name))), /* @__PURE__ */ import_react33.default.createElement(Row_default, null, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Container, { id: "root-tab-container", defaultActiveKey: "log" }, /* @__PURE__ */ import_react33.default.createElement(Row_default, null, /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 1 }, /* @__PURE__ */ import_react33.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: "log" }, "log"), /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: "steps" }, "steps")))), /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 11 }, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: "log" }, /* @__PURE__ */ import_react33.default.createElement("pre", null, /* @__PURE__ */ import_react33.default.createElement("code", null, log))), /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: "steps" }, /* @__PURE__ */ import_react33.default.createElement(
+      Tab_default.Container,
+      {
+        id: "secondary-tab-container",
+        defaultActiveKey: "first"
+      },
+      /* @__PURE__ */ import_react33.default.createElement(Row_default, null, /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 3 }, /* @__PURE__ */ import_react33.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, ...bddErrors.givens.map((g) => /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: g.key }, g.key, ": Given ", g.name))))), /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 9 }, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Content, null, ...bddErrors.givens.map((g) => /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: g.key }, /* @__PURE__ */ import_react33.default.createElement(TestPane, { given: g }))))))
+    ))))))), /* @__PURE__ */ import_react33.default.createElement(
+      "div",
+      {
+        style: {
+          backgroundColor: "lightgray",
+          margin: "0.5rem",
+          padding: "0.5rem",
+          position: "fixed",
+          left: 0,
+          bottom: 0
+        }
+      },
+      /* @__PURE__ */ import_react33.default.createElement("a", { href: "/" }, "\u{1F3E0}")
+    ), /* @__PURE__ */ import_react33.default.createElement(Footer, null));
   };
   document.addEventListener("DOMContentLoaded", function() {
     const elem = document.getElementById("root");
@@ -27398,7 +27426,6 @@
       }
     }
   });
-  console.log("hello BddPage!");
 })();
 /*! Bundled license information:
 

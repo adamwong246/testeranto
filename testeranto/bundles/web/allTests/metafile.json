@@ -299,7 +299,7 @@
         "format": "esm"
       },
       "src/lib/basebuilder.ts": {
-        "bytes": 6133,
+        "bytes": 5308,
         "imports": [
           {
             "path": "stream",

@@ -208,7 +208,7 @@
     "react-test-renderer": "18.2.0",
     "recursive-watch": "^1.1.4",
     "rpc-over-ipc": "^1.0.0",
-    "testeranto": "^0.125.3",
+    "testeranto": "",
     "tsc-prog": "^2.3.0",
     "tsx": "^4.19.3",
     "typescript-eslint": "^8.29.1",
