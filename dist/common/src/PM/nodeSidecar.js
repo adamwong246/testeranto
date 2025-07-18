@@ -20,7 +20,6 @@ class PM_Node_Sidecar extends sidecar_1.PM_sidecar {
         return new Promise((res) => {
             process.on("message", async (message) => {
                 if (message === "stop") {
-                    console.log("STOP!", stopper.toString());
                     await stopper();
                     process.exit();
                 }

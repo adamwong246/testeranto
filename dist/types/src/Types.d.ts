@@ -1,14 +1,15 @@
 import { Plugin } from "esbuild";
 import { ITTestResourceConfiguration } from "./lib/index.js";
 import { PM } from "./PM/index.js";
-import { BaseWhen, BaseThen, BaseGiven, BaseCheck, BaseSuite, IGivens } from "./lib/abstractBase.js";
+import { BaseWhen, BaseThen, BaseGiven, BaseCheck, IGivens } from "./lib/abstractBase.js";
 import { Ibdd_in_any, Ibdd_out_any } from "./CoreTypes.js";
+import { BaseSuite } from "./lib/BaseSuite.js";
 export type ISummary = Record<string, {
-    runTimeError: string;
-    typeErrors: number;
-    staticErrors: number;
-    prompt: string;
-    failingFeatures: object;
+    runTimeErrors: number | "?" | undefined;
+    typeErrors: number | "?" | undefined;
+    staticErrors: number | "?" | undefined;
+    prompt: string | "?" | undefined;
+    failingFeatures: object | undefined;
 }>;
 export type SuiteSpecification<I extends Ibdd_in_any, O extends Ibdd_out_any> = {
     [K in keyof O["suites"]]: (name: string, givens: IGivens<I>, checks: BaseCheck<I>[]) => BaseSuite<I, O>;

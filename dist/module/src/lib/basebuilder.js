@@ -31,8 +31,9 @@ export class BaseBuilder {
                 receiveTestResourceConfig: async function (puppetMaster) {
                     const logFilePath = "log.txt";
                     const access = await puppetMaster.createWriteStream(logFilePath);
+                    // deprecated?
                     const tLog = async (...l) => {
-                        // console.log("x", x);
+                        //
                     };
                     const suiteDone = await runner(puppetMaster, tLog);
                     const logPromise = new Promise(async (res) => {

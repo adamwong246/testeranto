@@ -189,7 +189,6 @@ Promise.resolve(`${process.cwd() + "/" + "testeranto.config.ts"}`).then(s => __i
         // ],
     ];
     x.forEach(async ([runtime, keys]) => {
-        console.log(runtime, keys);
         keys.forEach(async (k) => {
             const folder = `testeranto/reports/${testName}/${k
                 .split(".")

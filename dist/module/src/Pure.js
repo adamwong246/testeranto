@@ -10,7 +10,12 @@ export class PureTesteranto extends Testeranto {
     async receiveTestResourceConfig(partialTestResource) {
         const t = JSON.parse(partialTestResource);
         const pm = new PM_Pure(t);
-        return await this.testJobs[0].receiveTestResourceConfig(pm);
+        try {
+            return await this.testJobs[0].receiveTestResourceConfig(pm);
+        }
+        catch (e) {
+            return -2;
+        }
         // const { failed, artifacts, logPromise, features, fails } =
         //   await this.testJobs[0].receiveTestResourceConfig(pm);
         // // pm.customclose();
@@ -19,4 +24,15 @@ export class PureTesteranto extends Testeranto {
 }
 export default async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = defaultTestResourceRequirement) => {
     return new PureTesteranto(input, testSpecification, testImplementation, testResourceRequirement, testInterface);
+    // try {
+    //   return new PureTesteranto<I, O, M>(
+    //     input,
+    //     testSpecification,
+    //     testImplementation,
+    //     testResourceRequirement,
+    //     testInterface
+    //   );
+    // } catch (e) {
+    //   return -1;
+    // }
 };

@@ -12,6 +12,7 @@ export declare abstract class PM_WithEslintAndTsc extends PM_Base {
     }) => Promise<void>;
     eslintCheck: (entrypoint: string, platform: IRunTime, addableFiles: string[]) => Promise<void>;
     makePrompt: (entryPoint: string, addableFiles: string[], platform: IRunTime) => Promise<void>;
+    private ensureSummaryEntry;
     typeCheckIsRunning: (src: string) => void;
     typeCheckIsNowDone: (src: string, failures: number) => void;
     lintIsRunning: (src: string) => void;
@@ -19,5 +20,5 @@ export declare abstract class PM_WithEslintAndTsc extends PM_Base {
     bddTestIsRunning: (src: string) => void;
     bddTestIsNowDone: (src: string, failures: number) => void;
     writeBigBoard: () => void;
-    checkForShutdown: () => void;
+    abstract checkForShutdown(): any;
 }

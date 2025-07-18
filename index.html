@@ -20,24 +20,24 @@
     <div id="container">
         <h1>testeranto</h1>
 <h2>The AI-powered BDD test framework for TypeScript projects</h2>
-<h4>🚧 WARNING: Testeranto is still under development and is not ready for production yet. 🚧</h4>
+<h4>🚧 WARNING: Testeranto is still under development but is not ready for production yet. I am rapidly working to release a beta ASAP. If you are interested in joining this beta program, please contact me. 🚧</h4>
 <ul>
-<li>README: <a href="https://adamwong246.github.io/testeranto/">index.html</a></li>
+<li>README: <a href="https://adamwong246.github.io/testeranto/testeranto">adamwong246.github.io/testeranto/testeranto</a></li>
 <li>demo: <a href="https://www.youtube.com/embed/WvU5xMqGi6Q">youtube</a></li>
 <li>source: <a href="https://github.com/adamwong246/testeranto">github.com/adamwong246/testeranto</a></li>
 <li>npm: <a href="https://www.npmjs.com/package/testeranto">npmjs.com/package/testeranto</a></li>
-<li>dev: <a href="https://github.dev/adamwong246/testeranto">github.dev/adamwong246/testeranto</a></li>
 <li>example repo: <a href="https://github.com/adamwong246/testeranto-starter">testeranto-starter</a></li>
+<li>tests report: <a href="https://adamwong246.github.io/testeranto/testeranto/index.html">adamwong246.github.io/testeranto/testeranto</a></li>
 </ul>
 <h2>What is testeranto?</h2>
 <ul>
-<li>Testeranto produces test results which can be fed to Aider.ai to automatically fix failing tests.</li>
-<li>Testeranto tests are specified in a strongly-typed gherkin-like syntax. Rather than testing your code directly, Testeranto requires you wrap your code with a semantic interface which is based on TS type signatures.</li>
-<li>Testeranto can run tests in the frontend or the backend, or both.</li>
+<li>Testeranto produces test results that can be fed to Aider.ai to automatically fix failing tests.</li>
+<li>Testeranto tests are specified in a strongly-typed gherkin-like syntax. Rather than testing your code directly, Testeranto requires you to wrap your code with a semantic interface that is based on TS type signatures.</li>
+<li>Testeranto can run tests in the frontend, the backend, or both.</li>
 <li>Testeranto can be used to test anything that can be bundled with esbuild.</li>
 <li>Testeranto connects &quot;features&quot; to &quot;tests&quot;. This allows the AI to read feature documentation from external systems, like Jira.</li>
-<li>Testeranto generates test results into static a website which can be deployed to github pages easily.</li>
-<li>Testeranto uses esbuild to bundle it&#39;s tests. The result is used to refine the list of files added to the context of the AI. <strong>The consequence of this is that you can fit all relevant files, and ONLY the relevant files, into the LLMs context.</strong></li>
+<li>Testeranto generates test results as a static website that can be easily deployed to GitHub Pages.</li>
+<li>Testeranto uses esbuild to bundle its tests. The result is used to refine the list of files added to the AI&#39;s context. <strong>The consequence of this is that you can fit all relevant files, and only the relevant files, into the LLM&#39;s context.</strong></li>
 </ul>
 <h2>Key Technologies</h2>
 <table>
@@ -75,10 +75,6 @@
 <td>tsc</td>
 <td>Type checking of test files</td>
 </tr>
-<tr>
-<td>Markdown</td>
-<td>Feature documentation format</td>
-</tr>
 </tbody></table>
 <h2>Quick Start</h2>
 <ol>
@@ -113,28 +109,24 @@ yarn t-run rectangle.test.ts yourProject dev</pre><p>or build and run your tests
 <thead>
 <tr>
 <th></th>
-<th>Runs on</th>
 <th>You should use this runtime for...</th>
 <th>Important differences</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><strong>Node</strong></td>
-<td>node V8 with fork</td>
+<td><strong>Node</strong> : node V8 with fork</td>
 <td>testing backend code, Node APIs (like <code>fs</code> and <code>crypto</code>), or anything needing filesystem access</td>
 <td>has access to the filesystem and io</td>
 </tr>
 <tr>
-<td><strong>Web</strong></td>
-<td>chrome browser</td>
+<td><strong>Web</strong> : chrome browser</td>
 <td>testing frontend code, anything that uses <code>document</code> or <code>window</code>, UI interactions, or visual regression</td>
 <td>can take screenshots/recordings</td>
 </tr>
 <tr>
-<td><strong>Pure</strong></td>
-<td>node v8, dynamically imported</td>
-<td>testing code which can run on both node-v8 and the the browser</td>
-<td>Very similar to &quot;Node&quot; but has no IO access and thus, no console.log. This runtime is theoretically faster.</td>
+<td><strong>Pure</strong> : node v8, dynamically imported</td>
+<td>testing code that can run on both node-v8 and the browser</td>
+<td>Very similar to &quot;Node&quot; but has no IO access and thus no console.log. This runtime is theoretically faster.</td>
 </tr>
 </tbody></table>
 <h2>CLI Commands</h2>
@@ -185,7 +177,7 @@ yarn t-run test/rectangle.test.ts once
 # Get AI help with failures
 yarn t-aider</pre><h2>Aider</h2>
 <p>Testeranto generates a &quot;prompt&quot; alongside test results. This prompt is passed to aider as input.</p>
-<pre>// input src files which can be edited by aider
+<pre>// input src files that can be edited by Aider
 /add test/node.ts
 
 // test report files that inform aider but should not be edited
@@ -214,18 +206,19 @@ test0: Given.Default(
   [Then.getWidth(4), Then.getHeight(19)]
 ),
 ...
-</code></pre><h2>Sidecars (COMING SOON)</h2>
-<p>Along side your test, you can include a number of &quot;sidecars&quot; which are other bundled javascript assets upon which your test depends. For example, suppose you have an app with a frontend and backend component. You could run a react test in the web and include the node http server as a sidecar.</p>
-<h2><code>eslint</code> and <code>tsc</code></h2>
-<p>Alongside the bdd tests, testeranto runs eslint and tsc upon the input files to generate a list of static analysis errors and a list of type errors, respectively.</p>
+</code></pre><h2><code>eslint</code> and <code>tsc</code></h2>
+<p>Alongside the BDD tests, Testeranto runs ESLint and tsc on the input files to generate a list of static analysis errors and type errors, respectively.</p>
+<hr>
+<h2>Sidecars (COMING SOON)</h2>
+<p>Alongside your test, you can include a number of &quot;sidecars&quot; - other bundled JavaScript assets upon which your test depends. For example, suppose you have an app with frontend and backend components. You could run a React test in the web and include the Node HTTP server as a sidecar.</p>
 <h2>Subprojects</h2>
-<p>Testeranto has a core repo, but there are also subprojects which implement tests by type and by technology</p>
+<p>Testeranto has a core repo, but there are also sub-projects which implement tests by type and by technology</p>
 <h3>testeranto-solidity</h3>
-<p>Test a solidity contract. Also included is an example of deploying a contrct to a ganache server.</p>
+<p>Test a solidity contract. Also included is an example of deploying a contract to a ganache server.</p>
 <h3>testeranto-reduxtoolkit</h3>
-<p>Test a redux store.</p>
+<p>Tests a Redux store.</p>
 <h3>testeranto-http</h3>
-<p>Test a node http server.</p>
+<p>Tests a Node HTTP server.</p>
 <h3>testeranto-react (COMING SOON)</h3>
 <p>Test a react component. You can choose from a variety of types (jsx functions, class style, etc) and you can test with <code>react</code>, <code>react-dom</code>, or <code>react-test-renderer</code></p>
 <h3>testeranto-express (COMING SOON)</h3>

@@ -18,7 +18,16 @@ export class PM_WithEslintAndTsc extends PM_Base {
         this.summary = {};
         this.tscCheck = async ({ entrypoint, addableFiles, platform, }) => {
             console.log(ansiC.green(ansiC.inverse(`tsc < ${entrypoint}`)));
-            this.typeCheckIsRunning(entrypoint);
+            try {
+                this.typeCheckIsRunning(entrypoint);
+            }
+            catch (e) {
+                console.error("error in tscCheck");
+                console.error(e);
+                console.error(entrypoint);
+                console.error(JSON.stringify(this.summary, null, 2));
+                process.exit(-1);
+            }
             const program = tsc.createProgramFromConfig({
                 basePath: process.cwd(), // always required, used for relative paths
                 configFilePath: "tsconfig.json", // config to inherit from (optional)
@@ -50,7 +59,16 @@ export class PM_WithEslintAndTsc extends PM_Base {
         };
         this.eslintCheck = async (entrypoint, platform, addableFiles) => {
             console.log(ansiC.green(ansiC.inverse(`eslint < ${entrypoint}`)));
-            this.lintIsRunning(entrypoint);
+            try {
+                this.lintIsRunning(entrypoint);
+            }
+            catch (e) {
+                console.error("error in eslintCheck");
+                console.error(e);
+                console.error(entrypoint);
+                console.error(JSON.stringify(this.summary, null, 2));
+                process.exit(-1);
+            }
             const results = (await eslint.lintFiles(addableFiles))
                 .filter((r) => r.messages.length)
                 .filter((r) => {
@@ -68,7 +86,7 @@ export class PM_WithEslintAndTsc extends PM_Base {
             const promptPath = promptPather(entryPoint, platform, this.name);
             const testPaths = path.join("testeranto", "reports", this.name, entryPoint.split(".").slice(0, -1).join("."), platform, `tests.json`);
             const featuresPath = path.join("testeranto", "reports", this.name, platform, entryPoint.split(".").slice(0, -1).join("."), `featurePrompt.txt`);
-            const logPath = path.join("testeranto", "reports", this.name, entryPoint.split(".").slice(0, -1).join("."), platform, `console_log.txt`);
+            const logPath = path.join("testeranto", "reports", this.name, entryPoint.split(".").slice(0, -1).join("."), platform, `logs.txt`);
             const lintPath = path.join("testeranto", "reports", this.name, entryPoint.split(".").slice(0, -1).join("."), platform, `lint_errors.json`);
             const typePath = path.join("testeranto", "reports", this.name, entryPoint.split(".").slice(0, -1).join("."), platform, `type_errors.txt`);
             const messagePath = path.join("testeranto", "reports", this.name, entryPoint.split(".").slice(0, -1).join("."), platform, `message`);
@@ -92,91 +110,90 @@ ${addableFiles
             this.checkForShutdown();
         };
         this.typeCheckIsRunning = (src) => {
+            if (!this.summary[src]) {
+                throw `this.summary[${src}] is undefined`;
+            }
             this.summary[src].typeErrors = "?";
         };
         this.typeCheckIsNowDone = (src, failures) => {
+            if (!this.summary[src]) {
+                throw `this.summary[${src}] is undefined`;
+            }
+            if (failures === 0) {
+                console.log(ansiC.green(ansiC.inverse(`tsc > ${src}`)));
+            }
+            else {
+                console.log(ansiC.red(ansiC.inverse(`tsc > ${src} failed ${failures} times`)));
+            }
             this.summary[src].typeErrors = failures;
             this.writeBigBoard();
             this.checkForShutdown();
         };
         this.lintIsRunning = (src) => {
+            if (!this.summary[src]) {
+                throw `this.summary[${src}] is undefined`;
+            }
             this.summary[src].staticErrors = "?";
             this.writeBigBoard();
         };
         this.lintIsNowDone = (src, failures) => {
+            if (!this.summary[src]) {
+                throw `this.summary[${src}] is undefined`;
+            }
+            if (failures === 0) {
+                console.log(ansiC.green(ansiC.inverse(`eslint > ${src}`)));
+            }
+            else {
+                console.log(ansiC.red(ansiC.inverse(`eslint > ${src} failed ${failures} times`)));
+            }
             this.summary[src].staticErrors = failures;
             this.writeBigBoard();
             this.checkForShutdown();
         };
         this.bddTestIsRunning = (src) => {
-            this.summary[src].runTimeError = "?";
+            if (!this.summary[src]) {
+                throw `this.summary[${src}] is undefined`;
+            }
+            this.summary[src].runTimeErrors = "?";
             this.writeBigBoard();
         };
         this.bddTestIsNowDone = (src, failures) => {
-            this.summary[src].runTimeError = failures;
+            if (!this.summary[src]) {
+                throw `this.summary[${src}] is undefined`;
+            }
+            this.summary[src].runTimeErrors = failures;
             this.writeBigBoard();
             this.checkForShutdown();
         };
         this.writeBigBoard = () => {
             fs.writeFileSync(`./testeranto/reports/${this.name}/summary.json`, JSON.stringify(this.summary, null, 2));
         };
-        this.checkForShutdown = () => {
-            console.log(ansiC.inverse(`checkForShutdown`));
-            this.writeBigBoard();
-            if (this.mode === "dev")
-                return;
-            let inflight = false;
-            Object.keys(this.summary).forEach((k) => {
-                if (this.summary[k].prompt === "?") {
-                    console.log(ansiC.blue(ansiC.inverse(`🕕 prompt ${k}`)));
-                    inflight = true;
-                }
-            });
-            Object.keys(this.summary).forEach((k) => {
-                if (this.summary[k].runTimeError === "?") {
-                    console.log(ansiC.blue(ansiC.inverse(`🕕 runTimeError ${k}`)));
-                    inflight = true;
-                }
-            });
-            Object.keys(this.summary).forEach((k) => {
-                if (this.summary[k].staticErrors === "?") {
-                    console.log(ansiC.blue(ansiC.inverse(`🕕 staticErrors ${k}`)));
-                    inflight = true;
-                }
-            });
-            Object.keys(this.summary).forEach((k) => {
-                if (this.summary[k].typeErrors === "?") {
-                    console.log(ansiC.blue(ansiC.inverse(`🕕 typeErrors ${k}`)));
-                    inflight = true;
-                }
-            });
-            this.writeBigBoard();
-            if (!inflight) {
-                this.browser.disconnect().then(() => {
-                    console.log(ansiC.inverse(`${this.name} has been tested. Goodbye.`));
-                    process.exit();
-                });
-            }
-        };
         this.name = name;
         this.mode = mode;
+        this.summary = {};
+        // Initialize all test entries first
         this.configs.tests.forEach(([t, rt, tr, sidecars]) => {
-            this.summary[t] = {
-                runTimeError: "?",
-                typeErrors: "?",
-                staticErrors: "?",
-                prompt: "?",
-                failingFeatures: {},
-            };
-            sidecars.forEach(([t]) => {
-                this.summary[t] = {
-                    // runTimeError: "?",
-                    typeErrors: "?",
-                    staticErrors: "?",
-                    // prompt: "?",
-                    // failingFeatures: {},
-                };
+            this.ensureSummaryEntry(t);
+            sidecars.forEach(([sidecarName]) => {
+                this.ensureSummaryEntry(sidecarName, true);
             });
         });
+    }
+    ensureSummaryEntry(src, isSidecar = false) {
+        if (!this.summary[src]) {
+            this.summary[src] = {
+                typeErrors: undefined,
+                staticErrors: undefined,
+                runTimeErrors: undefined,
+                prompt: undefined,
+                failingFeatures: {},
+            };
+            if (isSidecar) {
+                // Sidecars don't need all fields
+                // delete this.summary[src].runTimeError;
+                // delete this.summary[src].prompt;
+            }
+        }
+        return this.summary[src];
     }
 }

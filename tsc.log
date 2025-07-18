@@ -109,12 +109,12 @@ src/lib/BaseSuite.test/test.ts(248,35): error TS2322: Type 'TestableSuite' is no
 src/lib/BaseSuite.test/test.ts(254,7): error TS2322: Type '(suite: TestableSuite) => Promise<TestableSuite>' is not assignable to type '(zel: TestSelection, tr: ITTestResourceConfiguration, utils: PM) => Promise<(store: TestStore) => Promise<TestStore>>'.
   Types of parameters 'suite' and 'zel' are incompatible.
     Type 'TestSelection' is missing the following properties from type 'TestableSuite': name, givens, checks, store, and 10 more.
-src/lib/BaseSuite.test/test.ts(274,11): error TS2322: Type '() => void' is not assignable to type '((selector: string, page: string) => Promise<unknown>) | ((selector: string) => boolean) | ((selector: string) => boolean)'.
-  Type '() => void' is not assignable to type '(selector: string, page: string) => Promise<unknown>'.
-    Type 'void' is not assignable to type 'Promise<unknown>'.
-src/lib/BaseSuite.test/test.ts(276,11): error TS2322: Type '() => void' is not assignable to type '((p: any) => Promise<unknown>) | ((p: any) => string) | ((p: any) => string)'.
-  Type '() => void' is not assignable to type '(p: any) => Promise<unknown>'.
-    Type 'void' is not assignable to type 'Promise<unknown>'.
+src/lib/BaseSuite.test/test.ts(274,11): error TS2322: Type '() => void' is not assignable to type '((selector: string) => boolean) | ((selector: string) => boolean) | ((selector: string, page: string) => Promise<unknown>)'.
+  Type '() => void' is not assignable to type '(selector: string) => boolean'.
+    Type 'void' is not assignable to type 'boolean'.
+src/lib/BaseSuite.test/test.ts(276,11): error TS2322: Type '() => void' is not assignable to type '((p: any) => string) | ((p: any) => string) | ((p: any) => Promise<unknown>)'.
+  Type '() => void' is not assignable to type '(p: any) => string'.
+    Type 'void' is not assignable to type 'string'.
 src/lib/BaseSuite.test/test.ts(281,11): error TS2345: Argument of type 'null' is not assignable to parameter of type 'typeof BaseSuite'.
 src/lib/BaseSuite.test/test.ts(295,13): error TS2345: Argument of type 'null' is not assignable to parameter of type 'typeof BaseSuite'.
 src/lib/BaseSuite.test/test.ts(342,5): error TS2322: Type '(feature: string) => ((suite: TestableSuite) => TestableSuite)' is not assignable to type '(feature: string) => (ssel: TestSelection, utils: PM) => (store: TestStore) => Promise<TestSelection>'.
@@ -130,35 +130,34 @@ src/lib/BaseSuite.test/test.ts(446,44): error TS2554: Expected 1 arguments, but 
 src/lib/BaseSuite.test/test.ts(453,48): error TS2554: Expected 1 arguments, but got 2.
 src/lib/BaseSuite.test/test.ts(455,3): error TS2322: Type '(store: I["istore"]) => I["istore"]' is not assignable to type '(store: TestStore, key: string, pm: IPM) => Promise<unknown>'.
   Type 'TestStore' is missing the following properties from type 'Promise<unknown>': then, catch, finally, [Symbol.toStringTag]
-src/lib/classBuilder.test/classBuilder.test.implementation.ts(11,3): error TS2741: Property 'ExtendedSuite' is missing in type '{ Default: string; }' but required in type 'TestSuiteImplementation<O>'.
-src/lib/classBuilder.test/classBuilder.test.implementation.ts(21,9): error TS2345: Argument of type 'typeof (Anonymous class)' is not assignable to parameter of type 'ISuiteKlasser<I, O>'.
+src/lib/classBuilder.test/classBuilder.test.implementation.ts(12,3): error TS2741: Property 'ExtendedSuite' is missing in type '{ Default: string; }' but required in type 'TestSuiteImplementation<O>'.
+src/lib/classBuilder.test/classBuilder.test.implementation.ts(22,9): error TS2345: Argument of type 'typeof (Anonymous class)' is not assignable to parameter of type 'ISuiteKlasser<I, O>'.
   Type 'typeof (Anonymous class)' provides no match for the signature '(name: string, index: number, givens: IGivens<I>, checks: BaseCheck<I>[]): BaseSuite<I, O>'.
-src/lib/classBuilder.test/classBuilder.test.implementation.ts(34,9): error TS2345: Argument of type 'typeof (Anonymous class)' is not assignable to parameter of type 'ISuiteKlasser<I, O>'.
+src/lib/classBuilder.test/classBuilder.test.implementation.ts(35,9): error TS2345: Argument of type 'typeof (Anonymous class)' is not assignable to parameter of type 'ISuiteKlasser<I, O>'.
   Type 'typeof (Anonymous class)' provides no match for the signature '(name: string, index: number, givens: IGivens<I>, checks: BaseCheck<I>[]): BaseSuite<I, O>'.
-src/lib/classBuilder.test/classBuilder.test.implementation.ts(47,9): error TS2345: Argument of type 'typeof (Anonymous class)' is not assignable to parameter of type 'ISuiteKlasser<I, O>'.
+src/lib/classBuilder.test/classBuilder.test.implementation.ts(48,9): error TS2345: Argument of type 'typeof (Anonymous class)' is not assignable to parameter of type 'ISuiteKlasser<I, O>'.
   Type 'typeof (Anonymous class)' provides no match for the signature '(name: string, index: number, givens: IGivens<I>, checks: BaseCheck<I>[]): BaseSuite<I, O>'.
-src/lib/classBuilder.test/classBuilder.test.implementation.ts(60,9): error TS2345: Argument of type 'typeof (Anonymous class)' is not assignable to parameter of type 'ISuiteKlasser<I, O>'.
+src/lib/classBuilder.test/classBuilder.test.implementation.ts(61,9): error TS2345: Argument of type 'typeof (Anonymous class)' is not assignable to parameter of type 'ISuiteKlasser<I, O>'.
   Type 'typeof (Anonymous class)' provides no match for the signature '(name: string, index: number, givens: IGivens<I>, checks: BaseCheck<I>[]): BaseSuite<I, O>'.
-src/lib/classBuilder.test/classBuilder.test.implementation.ts(73,9): error TS2345: Argument of type 'typeof (Anonymous class)' is not assignable to parameter of type 'ISuiteKlasser<any, any>'.
+src/lib/classBuilder.test/classBuilder.test.implementation.ts(74,9): error TS2345: Argument of type 'typeof (Anonymous class)' is not assignable to parameter of type 'ISuiteKlasser<any, any>'.
   Type 'typeof (Anonymous class)' provides no match for the signature '(name: string, index: number, givens: IGivens<any>, checks: BaseCheck<any>[]): BaseSuite<any, any>'.
-src/lib/classBuilder.test/classBuilder.test.implementation.ts(182,30): error TS2322: Type '(builder: ClassBuilder<any, any, any>) => Promise<ClassBuilder<any, any, any>>' is not assignable to type '(builder: ClassBuilder<any, any, any>) => ClassBuilder<any, any, any>'.
+src/lib/classBuilder.test/classBuilder.test.implementation.ts(183,30): error TS2322: Type '(builder: ClassBuilder<any, any, any>) => Promise<ClassBuilder<any, any, any>>' is not assignable to type '(builder: ClassBuilder<any, any, any>) => ClassBuilder<any, any, any>'.
   Type 'Promise<ClassBuilder<any, any, any>>' is missing the following properties from type 'ClassBuilder<any, any, any>': specs, assertThis, testResourceRequirement, artifacts, and 14 more.
-src/lib/classBuilder.test/classBuilder.test.implementation.ts(184,23): error TS2339: Property 'testRun' does not exist on type 'ClassBuilder<any, any, any>'.
-src/lib/classBuilder.test/classBuilder.test.implementation.ts(199,20): error TS2322: Type 'PassThrough' is not assignable to type '() => ClassBuilder<any, any, any>'.
+src/lib/classBuilder.test/classBuilder.test.implementation.ts(185,23): error TS2339: Property 'testRun' does not exist on type 'ClassBuilder<any, any, any>'.
+src/lib/classBuilder.test/classBuilder.test.implementation.ts(200,20): error TS2322: Type 'PassThrough' is not assignable to type '() => ClassBuilder<any, any, any>'.
   Type 'Transform' provides no match for the signature '(): ClassBuilder<any, any, any>'.
-src/lib/classBuilder.test/classBuilder.test.implementation.ts(200,41): error TS2322: Type 'boolean' is not assignable to type '() => ClassBuilder<any, any, any>'.
-src/lib/classBuilder.test/classBuilder.test.implementation.ts(201,40): error TS2322: Type 'boolean' is not assignable to type '() => ClassBuilder<any, any, any>'.
-src/lib/classBuilder.test/classBuilder.test.interface.ts(4,14): error TS2741: Property 'beforeAll' is missing in type '{ beforeEach: (subject: BaseBuilder<any, any, any, any, any, any>, initializer: (c?: any) => () => BaseBuilder<any, any, any, any, any, any>) => Promise<() => BaseBuilder<any, any, any, any, any, any>>; ... 4 more ...; assertThis: (x: any) => void; }' but required in type 'ITestInterface<I>'.
-src/lib/classBuilder.test/classBuilder.test.interface.ts(9,26): error TS2554: Expected 1 arguments, but got 2.
-src/lib/classBuilder.test/classBuilder.test.interface.ts(12,26): error TS2554: Expected 1 arguments, but got 2.
-src/lib/classBuilder.test/classBuilder.test.specification.ts(21,28): error TS2554: Expected 4 arguments, but got 3.
-src/lib/classBuilder.test/classBuilder.test.specification.ts(26,37): error TS2554: Expected 4 arguments, but got 3.
-src/lib/classBuilder.test/classBuilder.test.specification.ts(69,37): error TS2554: Expected 4 arguments, but got 3.
-src/lib/classBuilder.test/classBuilder.test.specification.ts(70,11): error TS2552: Cannot find name 'implementation'. Did you mean 'DOMImplementation'?
-src/lib/classBuilder.test/classBuilder.test.specification.ts(74,36): error TS2554: Expected 4 arguments, but got 3.
-src/lib/classBuilder.test/classBuilder.test.specification.ts(88,54): error TS2304: Cannot find name 'ITestJob'.
-src/lib/classBuilder.test/classBuilder.test.specification.ts(107,15): error TS2554: Expected 4 arguments, but got 1.
+src/lib/classBuilder.test/classBuilder.test.implementation.ts(201,41): error TS2322: Type 'boolean' is not assignable to type '() => ClassBuilder<any, any, any>'.
+src/lib/classBuilder.test/classBuilder.test.implementation.ts(202,40): error TS2322: Type 'boolean' is not assignable to type '() => ClassBuilder<any, any, any>'.
+src/lib/classBuilder.test/classBuilder.test.interface.ts(5,14): error TS2741: Property 'beforeAll' is missing in type '{ beforeEach: (subject: BaseBuilder<any, any, any, any, any, any>, initializer: (c?: any) => () => BaseBuilder<any, any, any, any, any, any>) => Promise<() => BaseBuilder<any, any, any, any, any, any>>; ... 4 more ...; assertThis: (x: any) => void; }' but required in type 'ITestInterface<I>'.
+src/lib/classBuilder.test/classBuilder.test.interface.ts(10,26): error TS2554: Expected 1 arguments, but got 2.
+src/lib/classBuilder.test/classBuilder.test.interface.ts(13,26): error TS2554: Expected 1 arguments, but got 2.
+src/lib/classBuilder.test/classBuilder.test.specification.ts(22,28): error TS2554: Expected 4 arguments, but got 3.
+src/lib/classBuilder.test/classBuilder.test.specification.ts(27,37): error TS2554: Expected 4 arguments, but got 3.
+src/lib/classBuilder.test/classBuilder.test.specification.ts(70,37): error TS2554: Expected 4 arguments, but got 3.
+src/lib/classBuilder.test/classBuilder.test.specification.ts(71,11): error TS2304: Cannot find name 'implementation'.
+src/lib/classBuilder.test/classBuilder.test.specification.ts(75,36): error TS2554: Expected 4 arguments, but got 3.
 src/lib/classBuilder.test/classBuilder.test.specification.ts(108,15): error TS2554: Expected 4 arguments, but got 1.
+src/lib/classBuilder.test/classBuilder.test.specification.ts(109,15): error TS2554: Expected 4 arguments, but got 1.
 src/lib/classBuilder.ts(90,18): error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
 src/lib/classBuilder.ts(105,28): error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
 src/lib/core.test/core.test.implementation.ts(18,9): error TS2304: Cannot find name 'specification'.
@@ -210,19 +209,19 @@ src/lib/pmProxy.test/implementation.ts(21,5): error TS2322: Type '(method: IProx
     Types of parameters 'store' and 'ssel' are incompatible.
       Property 'butThenProxy' is missing in type '{ proxies: ITestProxies; filepath: string; mockPm: IPM; }' but required in type '{ butThenProxy: IProxy; }'.
 src/lib/pmProxy.test/implementation.ts(44,35): error TS2339: Property 'getLastCall' does not exist on type 'IPM'.
-  Property 'getLastCall' does not exist on type 'PM_Node'.
+  Property 'getLastCall' does not exist on type 'PM_Pure'.
 src/lib/pmProxy.test/implementation.ts(45,38): error TS2339: Property 'getLastCall' does not exist on type 'IPM'.
-  Property 'getLastCall' does not exist on type 'PM_Node'.
+  Property 'getLastCall' does not exist on type 'PM_Pure'.
 src/lib/pmProxy.test/implementation.ts(52,35): error TS2339: Property 'getLastCall' does not exist on type 'IPM'.
-  Property 'getLastCall' does not exist on type 'PM_Node'.
+  Property 'getLastCall' does not exist on type 'PM_Pure'.
 src/lib/pmProxy.test/implementation.ts(58,19): error TS2322: Type '"screen.png"' is not assignable to type '`${string}.webm`'.
 src/lib/pmProxy.test/implementation.ts(64,35): error TS2339: Property 'getLastCall' does not exist on type 'IPM'.
-  Property 'getLastCall' does not exist on type 'PM_Node'.
+  Property 'getLastCall' does not exist on type 'PM_Pure'.
 src/lib/pmProxy.test/implementation.ts(65,38): error TS2339: Property 'getLastCall' does not exist on type 'IPM'.
-  Property 'getLastCall' does not exist on type 'PM_Node'.
+  Property 'getLastCall' does not exist on type 'PM_Pure'.
 src/lib/pmProxy.test/implementation.ts(70,19): error TS2322: Type '"shot.png"' is not assignable to type '`${string}.webm`'.
 src/lib/pmProxy.test/implementation.ts(73,35): error TS2339: Property 'getLastCall' does not exist on type 'IPM'.
-  Property 'getLastCall' does not exist on type 'PM_Node'.
+  Property 'getLastCall' does not exist on type 'PM_Pure'.
 src/lib/pmProxy.test/implementation.ts(102,5): error TS2322: Type '(s: string) => string' is not assignable to type '() => [string, string]'.
   Target signature provides too few arguments. Expected 1 or more, but got 0.
 src/lib/pmProxy.test/index.ts(17,3): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, never>'.
@@ -300,11 +299,10 @@ src/Project.tsx(144,30): error TS2551: Property 'runTimeError' does not exist on
 src/Project.tsx(328,40): error TS2551: Property 'runTimeError' does not exist on type '{ runTimeErrors: number | "?" | undefined; typeErrors: number | "?" | undefined; staticErrors: number | "?" | undefined; prompt: string | undefined; failingFeatures: object | undefined; }'. Did you mean 'runTimeErrors'?
 src/Project.tsx(398,38): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
   Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.
-src/Pure.test.ts(297,3): error TS2345: Argument of type '{ suites: { Default: string; }; givens: { Default: () => { pm: IPM; config: {}; proxies: { butThenProxy: (pm: IPM, path: string) => { writeFileSync: (p: string, c: string) => any; testResourceConfiguration: ITTestResourceConfiguration; client: Socket; server: any; } | { ...; } | { ...; }; andWhenProxy: (pm: IPM, pat...' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<PureO>; givens: TestGivenImplementation<PureI, PureO>; whens: TestWhenImplementation<PureI, PureO>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, never>'.
-  The types returned by 'checks.Default(...)' are incompatible between these types.
-    Type 'IPM' is not assignable to type '() => IPM'.
-      Type 'PM_Node' is not assignable to type '() => IPM'.
-        Type 'PM_Node' provides no match for the signature '(): IPM'.
+src/Pure.test.ts(297,3): error TS2345: Argument of type '{ suites: { Default: string; }; givens: { Default: () => { pm: IPM; config: {}; proxies: { butThenProxy: (pm: IPM, path: string) => { writeFileSync: (p: string, c: string) => any; server: PuppetMasterServer; testResourceConfiguration: ITTestResourceConfiguration; } | { ...; } | { ...; }; andWhenProxy: (pm: IPM, path...' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<PureO>; givens: TestGivenImplementation<PureI, PureO>; whens: TestWhenImplementation<PureI, PureO>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, never>'.
+  The types returned by 'givens.Default(...)' are incompatible between these types.
+    Type '{ pm: IPM; config: {}; proxies: { butThenProxy: (pm: IPM, path: string) => { writeFileSync: (p: string, c: string) => any; server: PuppetMasterServer; testResourceConfiguration: ITTestResourceConfiguration; } | { ...; } | { ...; }; andWhenProxy: (pm: IPM, path: string) => { ...; } | ... 1 more ... | { ...; }; before...' is not assignable to type '() => IPM'.
+      Type '{ pm: IPM; config: {}; proxies: { butThenProxy: (pm: IPM, path: string) => { writeFileSync: (p: string, c: string) => any; server: PuppetMasterServer; testResourceConfiguration: ITTestResourceConfiguration; } | { ...; } | { ...; }; andWhenProxy: (pm: IPM, path: string) => { ...; } | ... 1 more ... | { ...; }; before...' provides no match for the signature '(): IPM'.
 src/Pure.ts(32,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M> & M & { ...; }'.
   Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; checks: Record<string, any>; }': suites, givens, whens, thens, checks
 src/Pure.ts(41,9): error TS2416: Property 'receiveTestResourceConfig' in type 'PureTesteranto<I, O, M>' is not assignable to the same property in base type 'TesterantoCore<I, O, M>'.

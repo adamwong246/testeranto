@@ -5,10 +5,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const index_js_1 = require("./index.js");
 const abstractBase_js_1 = require("./abstractBase.js");
 const classBuilder_js_1 = require("./classBuilder.js");
-class Testeranto extends classBuilder_js_1.ClassBuilder {
+const BaseSuite_js_1 = require("./BaseSuite.js");
+class TesterantoCore extends classBuilder_js_1.ClassBuilder {
     constructor(input, testSpecification, testImplementation, testResourceRequirement = index_js_1.defaultTestResourceRequirement, testInterface, uberCatcher) {
         const fullTestInterface = (0, index_js_1.DefaultTestInterface)(testInterface);
-        super(testImplementation, testSpecification, input, class extends abstractBase_js_1.BaseSuite {
+        super(testImplementation, testSpecification, input, class extends BaseSuite_js_1.BaseSuite {
             afterAll(store, artifactory, pm) {
                 return fullTestInterface.afterAll(store, pm);
             }
@@ -35,16 +36,6 @@ class Testeranto extends classBuilder_js_1.ClassBuilder {
         }, class When extends abstractBase_js_1.BaseWhen {
             async andWhen(store, whenCB, testResource, pm) {
                 return await fullTestInterface.andWhen(store, whenCB, testResource, pm);
-                // try {
-                //   return await fullTestInterface.andWhen(
-                //     store,
-                //     whenCB,
-                //     testResource,
-                //     pm
-                //   );
-                // } catch (e) {
-                //   console.log("mark22", e);
-                // }
             }
         }, class Then extends abstractBase_js_1.BaseThen {
             async butThen(store, thenCB, testResource, pm) {
@@ -64,4 +55,4 @@ class Testeranto extends classBuilder_js_1.ClassBuilder {
         }, testResourceRequirement);
     }
 }
-exports.default = Testeranto;
+exports.default = TesterantoCore;

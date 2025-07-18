@@ -19,7 +19,7 @@
     <div class="parallax-background"></div>
     <div id="container">
         <h1>Testeranto docs and core concepts</h1>
-<p>Testeranto&#39;s type system provides a rigorous framework for Behavior-Driven Development (BDD) testing. While powerful, the API can initially seem complex but everything you need to know can be summed up in <strong>3 core functions and 5 essential types</strong>. Follow these patterns, and TypeScript&#39;s type checker will guide you through the rest.</p>
+<p>Testeranto&#39;s type system provides a rigorous framework for Behavior-Driven Development (BDD) testing. The API may seem complex but everything you need to know can be summed up in <strong>1 function, 3 runtimes and 5 essential types, and 1 optional type</strong>. Follow these patterns, and TypeScript&#39;s type checker will guide you through the rest.</p>
 <h3>⚠️ this doc is a work in progress. It is 99% accurate but needs some attention to be complete. ⚠️</h3>
 <p>Let&#39;s break down the key components using a Rectangle class example.</p>
 <h3>The Test Subject</h3>
@@ -36,11 +36,23 @@
   getArea() {
     return this.width * this.height;
   }
-}</code></pre><h3>Testeranto&#39;s 3 functions</h3>
+}</code></pre><h3>Testeranto&#39;s 1 function</h3>
+<p>Testeranto has 1 function. This function launches and runs the tests. It is here that all 5 types converge and if you can type this function call correctly, the TS type system should guide you through the rest.</p>
+<pre>async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
+  input: I["iinput"],
+  testSpecification: ITestSpecification<I, O>,
+  testImplementation: ITestImplementation<I, O, M>,
+  testInterface: Partial<ITestInterface<I>>,
+  testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
+): Promise<Testeranto<I, O, M>></pre><h3>Testeranto&#39;s 3 runtimes</h3>
 <p>For each of testeranto&#39;s runtime, there is a specific Testeranto main function. Each is it&#39;s own import but all 3 are called in the same way.</p>
 <h4>Node</h4>
 <pre>import Testeranto from "testeranto/src/Node"; // <- import the Node main function
 // below this point, all runtimes are identical!
+
+import { implementation } from "./Rectangle.test.implementation";
+import { specification } from "./Rectangle.test.specification";
+import { interface } from "./Rectangle.test.interface";
 
 // Note the type parameters I, O, and M: these will be important later
 export default Testeranto<
@@ -88,36 +100,15 @@ export default Testeranto<
     specification,
     implementation,
     interface
-);</pre><h3>Testeranto&#39;s 5 Essential Types</h3>
-<p>Every testeranto test is built around these 5 types that form a complete testing pipeline:</p>
-<ol>
-<li><strong>ITestSpecification</strong> - The &quot;what&quot; of your tests (business requirements)</li>
-<li><strong>ITestImplementation</strong> - The &quot;how&quot; of your tests (concrete operations)</li>
-<li><strong>ITestInterface</strong> - The &quot;glue&quot; between specs and implementation</li>
-<li><strong>Ibdd_in</strong> - Defines the internal test flow shape</li>
-<li><strong>Ibdd_out</strong> - Defines the external test interface</li>
-</ol>
-<pre class="mermaid">flowchart LR
-    S[ITestSpecification] -->|defines| O[Ibdd_out]
-    I[ITestImplementation] -->|uses| O
-    I -->|uses| M[Modifier]
-    T[ITestInterface] -->|connects| N[Ibdd_in]
-    S -->|flows through| N
-    I -->|flows through| N
-
-    style S fill:#2aa198,stroke:#073642
-    style I fill:#859900,stroke:#073642
-    style T fill:#b58900,stroke:#073642
-    style O fill:#d33682,stroke:#073642
-    style N fill:#cb4b16,stroke:#073642
-    style M fill:#6c71c4,stroke:#073642</pre><h4>The Specification (ITestSpecification)</h4>
+);</pre><h3>Testeranto&#39;s 5 essential types</h3>
+<p>Every testeranto test is built around these 5 types that form a complete testing pipeline.</p>
+<h4>The Specification (ITestSpecification)</h4>
 <p>The Specification defines the business requirements in plain language, completely separate from implementation details. This is where you describe <strong>what</strong> should be tested without worrying about <strong>how</strong>.</p>
 <ul>
 <li>Pure business logic</li>
 <li>Human-readable test descriptions</li>
 <li>Defines test suites, scenarios (Given/When/Then)</li>
 <li>Maps directly to BDD concepts</li>
-<li>Uses Ibdd_out for type safety</li>
 </ul>
 <pre class="language-typescript line-numbers"><code class="language-typescript">import {
   Ibdd_in,
@@ -220,9 +211,8 @@ export const implementation: ITestImplementation<
     Default: () => new Rectangle(2, 2),
   },
 };</pre><h4>The Interface aka ITestInterface</h4>
-<p>The test interface is code which is NOT BDD . The interface adapts your test subject so that the BDD hooks can be applied. The interface implements the traditional BDD steps &quot;before all&quot;, &quot;after all&quot;, &quot;before each&quot;, &quot;after each&quot;, etc</p>
-<pre>
-import {
+<p>The test interface is code which is NOT business logic. The interface adapts your test subject so that the BDD hooks can be applied. The interface implements the traditional BDD steps &quot;before all&quot;, &quot;after all&quot;, &quot;before each&quot;, &quot;after each&quot;, etc</p>
+<pre>import {
   Ibdd_in,
   ITestInterface,
 } from "testeranto/src/CoreTypes";
@@ -246,7 +236,7 @@ export const testInterface: ITestInterface<
   afterAll: () => {},
   assertThis: (x: any, y) => {},
 };</pre><h4>type I aka Ibdd_in</h4>
-<p>this type describes the &quot;inner&quot; shape of your BDD tests.</p>
+<p>This type describes the &quot;inner&quot; shape of your BDD tests. Over the course of the execution of the test, the subject will change shapes- this test describe those changes.</p>
 <pre>import { Ibdd_in } from "testeranto/src/CoreTypes";
 
 // TODO this is inaccurate
@@ -259,7 +249,7 @@ export type I = Ibdd_in<
   (...x) => (rectangle: Rectangle, utils: IPM) => Rectangle,
   (rectangle: Rectangle, utils: IPM) => Rectangle
 >;</pre><h4>type O aka Ibdd_out</h4>
-<p>this type describes the &quot;outer&quot; shape of your BDD tests.</p>
+<p>This type describes the &quot;outer&quot; shape of your BDD tests. This type describes the set of legal BDD clauses.</p>
 <pre>import { Ibdd_out } from "testeranto/src/CoreTypes";
 
 export type O = Ibdd_out<
@@ -295,7 +285,8 @@ export type O = Ibdd_out<
     WidthOfOneAndHeightOfOne;
     WidthAndHeightOf: [number, number];
   }
->;</pre><h4>type M (optional)</h4>
+>;</pre><h3>Testeranto&#39;s 1 optional type</h3>
+<h4>type M (optional)</h4>
 <p>this type describes the modifications to the shape of the &quot;specification&quot;. It can be used to make your BDD tests DRYer but is not necessary</p>
 <pre>export type M = {
   givens: {
@@ -515,7 +506,18 @@ export default Testeranto<
 );
 
 
-</pre>
+</pre><h2>Trouble shooting</h2>
+<h3>Double check your runtimes.</h3>
+<p>Every test has a runtime, which must defined in 2 places. Both must match.</p>
+<ol>
+<li>The import of the runtime</li>
+<li>The runtime defined alongside the test in testeranto.config.ts</li>
+</ol>
+<p>By convention, test filenames reveal their runtime. Ex: <code>__tests__/yourClass.node.test</code>. This is ONLY a convention. It has no real bearing on the runtime.</p>
+<h2>Dos and Don&#39;ts</h2>
+<h3>Do pass your test subject to the main testeranto function.</h3>
+<h3>Don&#39;t import your test subject elsewhere in your tests.</h3>
+
     </div>
     <!-- Prism.js JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>

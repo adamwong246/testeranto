@@ -1,15 +1,8 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
-var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x, {
-  get: (a, b) => (typeof require !== "undefined" ? require : a)[b]
-}) : x)(function(x) {
-  if (typeof require !== "undefined")
-    return require.apply(this, arguments);
-  throw new Error('Dynamic require of "' + x + '" is not supported');
-});
 
 // src/build.ts
 import ansiC from "ansi-colors";
-import fs3 from "fs";
+import fs4 from "fs";
 import path4 from "path";
 import readline from "readline";
 import esbuild from "esbuild";
@@ -102,11 +95,8 @@ var rebuildPlugin_default = (r) => {
   return {
     name: "rebuild-notify",
     setup: (build) => {
-      build.onStart(() => {
-        console.log(`> web build starting...`);
-      });
       build.onEnd((result) => {
-        console.log(`> web build ended with ${result.errors.length} errors`);
+        console.log(`${r} > build ended with ${result.errors.length} errors`);
         if (result.errors.length > 0) {
           fs2.writeFileSync(
             `./testeranto/reports${r}_build_errors`,
@@ -210,27 +200,37 @@ var web_default = (config, entryPoints, testName2) => {
 import { isBuiltin } from "node:module";
 
 // src/esbuildConfigs/consoleDetectorPlugin.ts
+import fs3 from "fs";
 var consoleDetectorPlugin = {
   name: "console-detector",
   setup(build) {
     build.onLoad({ filter: /\.(js|ts)$/ }, async (args) => {
-      const contents = await __require("fs").promises.readFile(args.path, "utf8");
+      const contents = await fs3.promises.readFile(args.path, "utf8");
       const consolePattern = /console\.(log|error|warn|info|debug|trace|dir|dirxml|table|group|groupEnd|clear|count|countReset|assert|profile|profileEnd|time|timeLog|timeEnd|timeStamp|context|memory)/g;
       const matches = contents.match(consolePattern);
       if (matches) {
         const uniqueMethods = [...new Set(matches)];
         return {
           warnings: uniqueMethods.map((method) => ({
-            text: `Detected ${method} call - Pure runtime does not allow IO operations. Use Node runtime instead.`,
-            location: {
-              file: args.path,
-              line: contents.split("\n").findIndex((line) => line.includes(method)) + 1,
-              column: 0
-            }
+            text: `call of "${method}" was detected, which is not supported in the pure runtime.`
+            // location: {
+            //   file: args.path,
+            //   line:
+            //     contents
+            //       .split("\n")
+            //       .findIndex((line) => line.includes(method)) + 1,
+            //   column: 0,
+            // },
           }))
         };
       }
       return null;
+    });
+    build.onEnd((buildResult) => {
+      if (buildResult.warnings.find((br) => br.pluginName === "console-detector"))
+        console.warn(
+          `Warning: An unsupported method call was detected in a source file used to build for the pure runtime. It is possible that this method call is in a comment block. If you really want to use this function, change this test to the "node" runtime.`
+        );
     });
   }
 };
@@ -265,13 +265,14 @@ var pure_default = (config, entryPoints, testName2) => {
       featuresPlugin_default,
       inputFilesPluginFactory,
       consoleDetectorPlugin,
+      // nativeImportDetectorPlugin,
       {
         name: "native-node-import-filter",
         setup(build) {
           build.onResolve({ filter: /fs/ }, (args) => {
             if (isBuiltin(args.path)) {
               throw new Error(
-                `cannot use native node package "${args.path}" in a "pure" test. If you really want to use this package, convert this test from "pure" to "node"`
+                `You attempted to import a node module "${args.path}" into a "pure" test, which is not allowed. If you really want to use this package, convert this test from "pure" to "node"`
               );
             }
             return { path: args.path };
@@ -536,26 +537,26 @@ import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
     }
   };
   console.log(`testeranto/reports/${testName}`);
-  if (!fs3.existsSync(`testeranto/reports/${testName}`)) {
-    fs3.mkdirSync(`testeranto/reports/${testName}`);
+  if (!fs4.existsSync(`testeranto/reports/${testName}`)) {
+    fs4.mkdirSync(`testeranto/reports/${testName}`);
   }
-  fs3.writeFileSync(
+  fs4.writeFileSync(
     `${process.cwd()}/testeranto/reports/${testName}/index.html`,
     testReportPage(pckge.name, bigConfig.reportDomain)
   );
-  fs3.writeFileSync(
+  fs4.writeFileSync(
     `${process.cwd()}/testeranto/reports/${testName}/dev.html`,
     testReportPage(pckge.name, "/")
   );
-  fs3.writeFileSync(
+  fs4.writeFileSync(
     `testeranto/reports/${testName}/config.json`,
     JSON.stringify(config, null, 2)
   );
-  fs3.writeFileSync(
+  fs4.writeFileSync(
     `${process.cwd()}/testeranto/index.html`,
     testsReportPage(pckge.name, bigConfig.reportDomain, bigConfig.projects)
   );
-  fs3.writeFileSync(
+  fs4.writeFileSync(
     `${process.cwd()}/testeranto/dev.html`,
     testsReportPage(pckge.name, "/", bigConfig.projects)
   );
@@ -572,8 +573,8 @@ import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
           )}/${sourceFileNameMinusJs}.html`
         );
         const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
-        return fs3.promises.mkdir(path4.dirname(htmlFilePath), { recursive: true }).then(
-          (x2) => fs3.writeFileSync(
+        return fs4.promises.mkdir(path4.dirname(htmlFilePath), { recursive: true }).then(
+          (x2) => fs4.writeFileSync(
             htmlFilePath,
             web_html_default(jsfilePath, htmlFilePath)
           )
@@ -599,15 +600,14 @@ import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
     // ],
   ];
   x.forEach(async ([runtime, keys]) => {
-    console.log(runtime, keys);
     keys.forEach(async (k) => {
       const folder = `testeranto/reports/${testName}/${k.split(".").slice(0, -1).join(".")}/${runtime}`;
-      await fs3.mkdirSync(folder, { recursive: true });
-      fs3.writeFileSync(
+      await fs4.mkdirSync(folder, { recursive: true });
+      fs4.writeFileSync(
         `${folder}/index.html`,
         idkPage(testName, bigConfig.reportDomain)
       );
-      fs3.writeFileSync(`${folder}/dev.html`, idkPage(testName, ""));
+      fs4.writeFileSync(`${folder}/dev.html`, idkPage(testName, ""));
     });
   });
   [
@@ -624,7 +624,7 @@ import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
           ep.split(".").slice(0, -1).join("."),
           runtime
         );
-        fs3.mkdirSync(fp, { recursive: true });
+        fs4.mkdirSync(fp, { recursive: true });
       });
     }
   );

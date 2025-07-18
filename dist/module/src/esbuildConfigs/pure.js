@@ -18,12 +18,13 @@ export default (config, entryPoints, testName) => {
             featuresPlugin,
             inputFilesPluginFactory,
             consoleDetectorPlugin,
+            // nativeImportDetectorPlugin,
             {
                 name: "native-node-import-filter",
                 setup(build) {
                     build.onResolve({ filter: /fs/ }, (args) => {
                         if (isBuiltin(args.path)) {
-                            throw new Error(`cannot use native node package "${args.path}" in a "pure" test. If you really want to use this package, convert this test from "pure" to "node"`);
+                            throw new Error(`You attempted to import a node module "${args.path}" into a "pure" test, which is not allowed. If you really want to use this package, convert this test from "pure" to "node"`);
                         }
                         return { path: args.path };
                     });

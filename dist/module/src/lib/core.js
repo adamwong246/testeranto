@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DefaultTestInterface, defaultTestResourceRequirement, } from "./index.js";
-import { BaseSuite, BaseGiven, BaseWhen, BaseThen, BaseCheck, } from "./abstractBase.js";
+import { BaseGiven, BaseWhen, BaseThen, BaseCheck } from "./abstractBase.js";
 import { ClassBuilder } from "./classBuilder.js";
-export default class Testeranto extends ClassBuilder {
+import { BaseSuite } from "./BaseSuite.js";
+export default class TesterantoCore extends ClassBuilder {
     constructor(input, testSpecification, testImplementation, testResourceRequirement = defaultTestResourceRequirement, testInterface, uberCatcher) {
         const fullTestInterface = DefaultTestInterface(testInterface);
         super(testImplementation, testSpecification, input, class extends BaseSuite {
@@ -33,16 +34,6 @@ export default class Testeranto extends ClassBuilder {
         }, class When extends BaseWhen {
             async andWhen(store, whenCB, testResource, pm) {
                 return await fullTestInterface.andWhen(store, whenCB, testResource, pm);
-                // try {
-                //   return await fullTestInterface.andWhen(
-                //     store,
-                //     whenCB,
-                //     testResource,
-                //     pm
-                //   );
-                // } catch (e) {
-                //   console.log("mark22", e);
-                // }
             }
         }, class Then extends BaseThen {
             async butThen(store, thenCB, testResource, pm) {

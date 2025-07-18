@@ -6,14 +6,15 @@ import { IBuiltConfig, IRunTime, ITestTypes } from "../Types.js";
 import { Sidecar } from "../lib/Sidecar.js";
 import { PM_WithEslintAndTsc } from "./PM_WithEslintAndTsc.js";
 export declare class PM_Main extends PM_WithEslintAndTsc {
-    ports: Record<number, boolean>;
-    queue: any[];
+    ports: Record<number, string>;
+    queue: string[];
     webMetafileWatcher: fs.FSWatcher;
     nodeMetafileWatcher: fs.FSWatcher;
     importMetafileWatcher: fs.FSWatcher;
     pureSidecars: Record<number, Sidecar>;
     nodeSidecars: Record<number, ChildProcess>;
     webSidecars: Record<number, Page>;
+    launchers: Record<string, () => void>;
     constructor(configs: IBuiltConfig, name: string, mode: "once" | "dev");
     stopSideCar(uid: number): Promise<any>;
     launchSideCar(n: number, name: string): Promise<[number, ITTestResourceConfiguration]>;
@@ -41,4 +42,6 @@ export declare class PM_Main extends PM_WithEslintAndTsc {
     launchPureSideCar: (sidecar: ITestTypes) => Promise<[number, ITTestResourceConfiguration]>;
     launchWeb: (src: string, dest: string) => Promise<void>;
     receiveFeaturesV2: (reportDest: string, srcTest: string, platform: IRunTime) => void;
+    checkQueue(): void;
+    checkForShutdown: () => void;
 }

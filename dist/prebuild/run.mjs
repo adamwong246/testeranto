@@ -15,37 +15,37 @@ import crypto from "node:crypto";
 
 // src/utils.ts
 import path from "path";
-var tscPather = (entryPoint, platform, projectName) => {
+var tscPather = (entryPoint, platform, projectName2) => {
   return path.join(
     "testeranto",
     "reports",
-    projectName,
+    projectName2,
     entryPoint.split(".").slice(0, -1).join("."),
     platform,
     `type_errors.txt`
   );
 };
-var lintPather = (entryPoint, platform, projectName) => {
+var lintPather = (entryPoint, platform, projectName2) => {
   return path.join(
     "testeranto",
     "reports",
-    projectName,
+    projectName2,
     entryPoint.split(".").slice(0, -1).join("."),
     platform,
     `lint_errors.json`
   );
 };
-var promptPather = (entryPoint, platform, projectName) => {
+var promptPather = (entryPoint, platform, projectName2) => {
   return path.join(
     "testeranto",
     "reports",
-    projectName,
+    projectName2,
     entryPoint.split(".").slice(0, -1).join("."),
     platform,
     `prompt.txt`
   );
 };
-var getRunnables = (tests, projectName, payload = {
+var getRunnables = (tests, projectName2, payload = {
   nodeEntryPoints: {},
   nodeEntryPointSidecars: {},
   webEntryPoints: {},
@@ -56,30 +56,30 @@ var getRunnables = (tests, projectName, payload = {
   return tests.reduce((pt, cv, cndx, cry) => {
     if (cv[1] === "node") {
       pt.nodeEntryPoints[cv[0]] = path.resolve(
-        `./testeranto/bundles/node/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+        `./testeranto/bundles/node/${projectName2}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
       );
     } else if (cv[1] === "web") {
       pt.webEntryPoints[cv[0]] = path.resolve(
-        `./testeranto/bundles/web/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+        `./testeranto/bundles/web/${projectName2}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
       );
     } else if (cv[1] === "pure") {
       pt.pureEntryPoints[cv[0]] = path.resolve(
-        `./testeranto/bundles/pure/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+        `./testeranto/bundles/pure/${projectName2}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
       );
     }
     cv[3].filter((t) => t[1] === "node").forEach((t) => {
       pt.nodeEntryPointSidecars[`${t[0]}`] = path.resolve(
-        `./testeranto/bundles/node/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+        `./testeranto/bundles/node/${projectName2}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
       );
     });
     cv[3].filter((t) => t[1] === "web").forEach((t) => {
       pt.webEntryPointSidecars[`${t[0]}`] = path.resolve(
-        `./testeranto/bundles/web/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+        `./testeranto/bundles/web/${projectName2}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
       );
     });
     cv[3].filter((t) => t[1] === "pure").forEach((t) => {
       pt.pureEntryPointSidecars[`${t[0]}`] = path.resolve(
-        `./testeranto/bundles/pure/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+        `./testeranto/bundles/pure/${projectName2}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
       );
     });
     return pt;
@@ -185,37 +185,37 @@ var PM_Base = class {
       return p.mainFrame()._id;
     });
   }
-  async screencast(ssOpts, testName2, page) {
+  async screencast(ssOpts, testName, page) {
     const p = ssOpts.path;
     const dir = path2.dirname(p);
     fs.mkdirSync(dir, {
       recursive: true
     });
-    if (!files[testName2]) {
-      files[testName2] = /* @__PURE__ */ new Set();
+    if (!files[testName]) {
+      files[testName] = /* @__PURE__ */ new Set();
     }
-    files[testName2].add(ssOpts.path);
+    files[testName].add(ssOpts.path);
     const sPromise = page.screenshot({
       ...ssOpts,
       path: p
     });
-    if (!screenshots[testName2]) {
-      screenshots[testName2] = [];
+    if (!screenshots[testName]) {
+      screenshots[testName] = [];
     }
-    screenshots[testName2].push(sPromise);
+    screenshots[testName].push(sPromise);
     await sPromise;
     return sPromise;
   }
-  async customScreenShot(ssOpts, testName2, pageUid) {
+  async customScreenShot(ssOpts, testName, pageUid) {
     const p = ssOpts.path;
     const dir = path2.dirname(p);
     fs.mkdirSync(dir, {
       recursive: true
     });
-    if (!files[testName2]) {
-      files[testName2] = /* @__PURE__ */ new Set();
+    if (!files[testName]) {
+      files[testName] = /* @__PURE__ */ new Set();
     }
-    files[testName2].add(ssOpts.path);
+    files[testName].add(ssOpts.path);
     const page = (await this.browser.pages()).find(
       (p2) => p2.mainFrame()._id === pageUid
     );
@@ -223,10 +223,10 @@ var PM_Base = class {
       ...ssOpts,
       path: p
     });
-    if (!screenshots[testName2]) {
-      screenshots[testName2] = [];
+    if (!screenshots[testName]) {
+      screenshots[testName] = [];
     }
-    screenshots[testName2].push(sPromise);
+    screenshots[testName].push(sPromise);
     await sPromise;
     return sPromise;
   }
@@ -245,20 +245,20 @@ var PM_Base = class {
     }
     return false;
   }
-  async writeFileSync(filepath, contents, testName2) {
+  async writeFileSync(filepath, contents, testName) {
     return new Promise(async (res) => {
       fs.mkdirSync(path2.dirname(filepath), {
         recursive: true
       });
-      if (!files[testName2]) {
-        files[testName2] = /* @__PURE__ */ new Set();
+      if (!files[testName]) {
+        files[testName] = /* @__PURE__ */ new Set();
       }
-      files[testName2].add(filepath);
+      files[testName].add(filepath);
       await fs.writeFileSync(filepath, contents);
       res(true);
     });
   }
-  async createWriteStream(filepath, testName2) {
+  async createWriteStream(filepath, testName) {
     const folder = filepath.split("/").slice(0, -1).join("/");
     return new Promise((res) => {
       if (!fs.existsSync(folder)) {
@@ -268,10 +268,10 @@ var PM_Base = class {
       }
       const f = fs.createWriteStream(filepath);
       fileStreams3.push(f);
-      if (!files[testName2]) {
-        files[testName2] = /* @__PURE__ */ new Set();
+      if (!files[testName]) {
+        files[testName] = /* @__PURE__ */ new Set();
       }
-      files[testName2].add(filepath);
+      files[testName].add(filepath);
       res(fileStreams3.length - 1);
     });
   }
@@ -400,7 +400,15 @@ var PM_WithEslintAndTsc = class extends PM_Base {
       platform
     }) => {
       console.log(ansiC.green(ansiC.inverse(`tsc < ${entrypoint}`)));
-      this.typeCheckIsRunning(entrypoint);
+      try {
+        this.typeCheckIsRunning(entrypoint);
+      } catch (e) {
+        console.error("error in tscCheck");
+        console.error(e);
+        console.error(entrypoint);
+        console.error(JSON.stringify(this.summary, null, 2));
+        process.exit(-1);
+      }
       const program = tsc.createProgramFromConfig({
         basePath: process.cwd(),
         // always required, used for relative paths
@@ -444,7 +452,15 @@ var PM_WithEslintAndTsc = class extends PM_Base {
     };
     this.eslintCheck = async (entrypoint, platform, addableFiles) => {
       console.log(ansiC.green(ansiC.inverse(`eslint < ${entrypoint}`)));
-      this.lintIsRunning(entrypoint);
+      try {
+        this.lintIsRunning(entrypoint);
+      } catch (e) {
+        console.error("error in eslintCheck");
+        console.error(e);
+        console.error(entrypoint);
+        console.error(JSON.stringify(this.summary, null, 2));
+        process.exit(-1);
+      }
       const results = (await eslint.lintFiles(addableFiles)).filter((r) => r.messages.length).filter((r) => {
         return r.messages[0].ruleId !== null;
       }).map((r) => {
@@ -482,7 +498,7 @@ var PM_WithEslintAndTsc = class extends PM_Base {
         this.name,
         entryPoint.split(".").slice(0, -1).join("."),
         platform,
-        `console_log.txt`
+        `logs.txt`
       );
       const lintPath = path3.join(
         "testeranto",
@@ -529,28 +545,60 @@ ${addableFiles.map((x) => {
       this.checkForShutdown();
     };
     this.typeCheckIsRunning = (src) => {
+      if (!this.summary[src]) {
+        throw `this.summary[${src}] is undefined`;
+      }
       this.summary[src].typeErrors = "?";
     };
     this.typeCheckIsNowDone = (src, failures) => {
+      if (!this.summary[src]) {
+        throw `this.summary[${src}] is undefined`;
+      }
+      if (failures === 0) {
+        console.log(ansiC.green(ansiC.inverse(`tsc > ${src}`)));
+      } else {
+        console.log(
+          ansiC.red(ansiC.inverse(`tsc > ${src} failed ${failures} times`))
+        );
+      }
       this.summary[src].typeErrors = failures;
       this.writeBigBoard();
       this.checkForShutdown();
     };
     this.lintIsRunning = (src) => {
+      if (!this.summary[src]) {
+        throw `this.summary[${src}] is undefined`;
+      }
       this.summary[src].staticErrors = "?";
       this.writeBigBoard();
     };
     this.lintIsNowDone = (src, failures) => {
+      if (!this.summary[src]) {
+        throw `this.summary[${src}] is undefined`;
+      }
+      if (failures === 0) {
+        console.log(ansiC.green(ansiC.inverse(`eslint > ${src}`)));
+      } else {
+        console.log(
+          ansiC.red(ansiC.inverse(`eslint > ${src} failed ${failures} times`))
+        );
+      }
       this.summary[src].staticErrors = failures;
       this.writeBigBoard();
       this.checkForShutdown();
     };
     this.bddTestIsRunning = (src) => {
-      this.summary[src].runTimeError = "?";
+      if (!this.summary[src]) {
+        throw `this.summary[${src}] is undefined`;
+      }
+      this.summary[src].runTimeErrors = "?";
       this.writeBigBoard();
     };
     this.bddTestIsNowDone = (src, failures) => {
-      this.summary[src].runTimeError = failures;
+      if (!this.summary[src]) {
+        throw `this.summary[${src}] is undefined`;
+      }
+      this.summary[src].runTimeErrors = failures;
       this.writeBigBoard();
       this.checkForShutdown();
     };
@@ -560,68 +608,34 @@ ${addableFiles.map((x) => {
         JSON.stringify(this.summary, null, 2)
       );
     };
-    this.checkForShutdown = () => {
-      console.log(ansiC.inverse(`checkForShutdown`));
-      this.writeBigBoard();
-      if (this.mode === "dev")
-        return;
-      let inflight = false;
-      Object.keys(this.summary).forEach((k) => {
-        if (this.summary[k].prompt === "?") {
-          console.log(ansiC.blue(ansiC.inverse(`\u{1F555} prompt ${k}`)));
-          inflight = true;
-        }
-      });
-      Object.keys(this.summary).forEach((k) => {
-        if (this.summary[k].runTimeError === "?") {
-          console.log(ansiC.blue(ansiC.inverse(`\u{1F555} runTimeError ${k}`)));
-          inflight = true;
-        }
-      });
-      Object.keys(this.summary).forEach((k) => {
-        if (this.summary[k].staticErrors === "?") {
-          console.log(ansiC.blue(ansiC.inverse(`\u{1F555} staticErrors ${k}`)));
-          inflight = true;
-        }
-      });
-      Object.keys(this.summary).forEach((k) => {
-        if (this.summary[k].typeErrors === "?") {
-          console.log(ansiC.blue(ansiC.inverse(`\u{1F555} typeErrors ${k}`)));
-          inflight = true;
-        }
-      });
-      this.writeBigBoard();
-      if (!inflight) {
-        this.browser.disconnect().then(() => {
-          console.log(ansiC.inverse(`${this.name} has been tested. Goodbye.`));
-          process.exit();
-        });
-      }
-    };
     this.name = name;
     this.mode = mode2;
+    this.summary = {};
     this.configs.tests.forEach(([t, rt, tr, sidecars]) => {
-      this.summary[t] = {
-        runTimeError: "?",
-        typeErrors: "?",
-        staticErrors: "?",
-        prompt: "?",
-        failingFeatures: {}
-      };
-      sidecars.forEach(([t2]) => {
-        this.summary[t2] = {
-          // runTimeError: "?",
-          typeErrors: "?",
-          staticErrors: "?"
-          // prompt: "?",
-          // failingFeatures: {},
-        };
+      this.ensureSummaryEntry(t);
+      sidecars.forEach(([sidecarName]) => {
+        this.ensureSummaryEntry(sidecarName, true);
       });
     });
+  }
+  ensureSummaryEntry(src, isSidecar = false) {
+    if (!this.summary[src]) {
+      this.summary[src] = {
+        typeErrors: void 0,
+        staticErrors: void 0,
+        runTimeErrors: void 0,
+        prompt: void 0,
+        failingFeatures: {}
+      };
+      if (isSidecar) {
+      }
+    }
+    return this.summary[src];
   }
 };
 
 // src/PM/main.ts
+import ansiColors from "ansi-colors";
 var changes = {};
 var fileHashes = {};
 var files2 = {};
@@ -642,13 +656,15 @@ async function fileHash(filePath, algorithm = "md5") {
     });
   });
 }
-var statusMessagePretty = (failures, test) => {
+var statusMessagePretty = (failures, test, runtime) => {
   if (failures === 0) {
     console.log(
-      ansiC2.green(ansiC2.inverse(`> ${test} completed successfully?!?`))
+      ansiC2.green(ansiC2.inverse(`${runtime} > ${test} completed successfully`))
     );
   } else {
-    console.log(ansiC2.red(ansiC2.inverse(`> ${test} failed ${failures} times`)));
+    console.log(
+      ansiC2.red(ansiC2.inverse(`${runtime} > ${test} failed ${failures} times`))
+    );
   }
 };
 async function writeFileAndCreateDir(filePath, data) {
@@ -689,7 +705,7 @@ async function pollForFile(path5, timeout = 2e3) {
 var PM_Main = class extends PM_WithEslintAndTsc {
   constructor(configs, name, mode2) {
     super(configs, name, mode2);
-    this.getRunnables = (tests, testName2, payload = {
+    this.getRunnables = (tests, testName, payload = {
       nodeEntryPoints: {},
       nodeEntryPointSidecars: {},
       webEntryPoints: {},
@@ -697,10 +713,10 @@ var PM_Main = class extends PM_WithEslintAndTsc {
       pureEntryPoints: {},
       pureEntryPointSidecars: {}
     }) => {
-      return getRunnables(tests, testName2, payload);
+      return getRunnables(tests, testName, payload);
     };
     this.launchPure = async (src, dest) => {
-      console.log(ansiC2.green(ansiC2.inverse(`! pure, ${src}`)));
+      console.log(ansiC2.green(ansiC2.inverse(`pure < ${src}`)));
       this.bddTestIsRunning(src);
       const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/pure`;
       if (!fs3.existsSync(reportDest)) {
@@ -727,12 +743,12 @@ var PM_Main = class extends PM_WithEslintAndTsc {
         });
       } else if (testConfigResource.ports > 0) {
         const openPorts = Object.entries(this.ports).filter(
-          ([portnumber, portopen]) => portopen
+          ([portnumber, status]) => status === ""
         );
         if (openPorts.length >= testConfigResource.ports) {
           for (let i = 0; i < testConfigResource.ports; i++) {
             portsToUse.push(openPorts[i][0]);
-            this.ports[openPorts[i][0]] = false;
+            this.ports[openPorts[i][0]] = src;
           }
           argz = JSON.stringify({
             scheduled: true,
@@ -755,49 +771,45 @@ var PM_Main = class extends PM_WithEslintAndTsc {
         await import(`${builtfile}?cacheBust=${Date.now()}`).then((module) => {
           return module.default.then((defaultModule) => {
             defaultModule.receiveTestResourceConfig(argz).then(async (results) => {
-              statusMessagePretty(results.fails, src);
+              statusMessagePretty(results.fails, src, "pure");
               this.bddTestIsNowDone(src, results.fails);
             }).catch((e) => {
               console.log(
-                ansiC2.red(
-                  ansiC2.inverse(`launchPure - ${src} errored with: ${e}`)
-                )
+                ansiC2.red(`launchPure - ${src} errored with: ${e}`)
               );
               this.bddTestIsNowDone(src, -1);
             });
           }).catch((e) => {
             console.log(
-              ansiC2.red(
-                ansiC2.inverse(
-                  `${src} errored with: ${e}. Check ${reportDest}/error.txt for more info`
-                )
+              ansiColors.red(
+                `pure ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`
               )
             );
-            this.writeFileSync(`${reportDest}/error.txt`, e.stack, src);
+            this.writeFileSync(`${reportDest}/logs.txt`, e.stack, src);
             this.bddTestIsNowDone(src, -1);
-            statusMessagePretty(-1, src);
+            statusMessagePretty(-1, src, "pure");
           });
         });
       } catch (e) {
         console.log(
           ansiC2.red(
             ansiC2.inverse(
-              `${src} errored with: ${e}. Check ${reportDest}/error.txt for more info`
+              `${src} 1 errored with: ${e}. Check ${reportDest}/logs.txt for more info`
             )
           )
         );
-        this.writeFileSync(`${reportDest}/error.txt`, e.stack, src);
+        this.writeFileSync(`${reportDest}/logs.txt`, e.stack, src);
         this.bddTestIsNowDone(src, -1);
-        statusMessagePretty(-1, src);
+        statusMessagePretty(-1, src, "pure");
       }
       for (let i = 0; i <= portsToUse.length; i++) {
         if (portsToUse[i]) {
-          this.ports[portsToUse[i]] = true;
+          this.ports[portsToUse[i]] = "";
         }
       }
     };
     this.launchNode = async (src, dest) => {
-      console.log(ansiC2.green(ansiC2.inverse(`! node, ${src}`)));
+      console.log(ansiC2.green(ansiC2.inverse(`node < ${src}`)));
       this.bddTestIsRunning(src);
       const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/node`;
       if (!fs3.existsSync(reportDest)) {
@@ -816,7 +828,6 @@ var PM_Main = class extends PM_WithEslintAndTsc {
       const testConfigResource = testConfig[2];
       const portsToUse = [];
       if (testConfigResource.ports === 0) {
-        console.error("portsToUse?!", []);
         const t = {
           name: src,
           // ports: portsToUse.map((v) => Number(v)),
@@ -827,14 +838,13 @@ var PM_Main = class extends PM_WithEslintAndTsc {
         testResources = JSON.stringify(t);
       } else if (testConfigResource.ports > 0) {
         const openPorts = Object.entries(this.ports).filter(
-          ([portnumber, portopen]) => portopen
+          ([portnumber, portopen]) => portopen === ""
         );
         if (openPorts.length >= testConfigResource.ports) {
           for (let i = 0; i < testConfigResource.ports; i++) {
             portsToUse.push(openPorts[i][0]);
-            this.ports[openPorts[i][0]] = false;
+            this.ports[openPorts[i][0]] = src;
           }
-          console.error("portsToUse", portsToUse);
           testResources = JSON.stringify({
             scheduled: true,
             name: src,
@@ -843,7 +853,11 @@ var PM_Main = class extends PM_WithEslintAndTsc {
             browserWSEndpoint: this.browser.wsEndpoint()
           });
         } else {
-          console.log("Not enough ports! Enqueuing test job...");
+          console.log(
+            ansiC2.red(
+              `node: cannot run ${src} because there are no open ports ATM. This job will be enqueued and run again run a port is available`
+            )
+          );
           this.queue.push(src);
           return;
         }
@@ -855,8 +869,8 @@ var PM_Main = class extends PM_WithEslintAndTsc {
       let haltReturns = false;
       const ipcfile = "/tmp/tpipe_" + Math.random();
       const child = spawn(
-        "node",
         // "node --inspect-brk ",
+        "node",
         [builtfile, testResources, ipcfile],
         {
           stdio: ["pipe", "pipe", "pipe", "ipc"]
@@ -899,8 +913,8 @@ var PM_Main = class extends PM_WithEslintAndTsc {
           }
         });
       });
-      const oStream = fs3.createWriteStream(`${reportDest}/console_log.txt`);
-      const errFile = `${reportDest}/error.txt`;
+      const oStream = fs3.createWriteStream(`${reportDest}/logs.txt`);
+      const errFile = `${reportDest}/logs.txt`;
       if (fs3.existsSync(errFile)) {
         fs3.rmSync(errFile);
       }
@@ -911,18 +925,25 @@ var PM_Main = class extends PM_WithEslintAndTsc {
         child.stdout?.on("data", (data) => {
           oStream.write(`stdout > ${data}`);
         });
+        child.on("error", (err) => {
+        });
         child.on("close", (code) => {
           oStream.close();
           server.close();
-          if (code === null) {
+          if (code === 255) {
+            console.log(
+              ansiColors.red(
+                `node ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`
+              )
+            );
             this.bddTestIsNowDone(src, -1);
-            statusMessagePretty(-1, src);
+            statusMessagePretty(-1, src, "node");
           } else if (code === 0) {
             this.bddTestIsNowDone(src, 0);
-            statusMessagePretty(0, src);
+            statusMessagePretty(0, src, "node");
           } else {
             this.bddTestIsNowDone(src, code);
-            statusMessagePretty(code, src);
+            statusMessagePretty(code, src, "node");
           }
           haltReturns = true;
         });
@@ -930,7 +951,7 @@ var PM_Main = class extends PM_WithEslintAndTsc {
           haltReturns = true;
           for (let i = 0; i <= portsToUse.length; i++) {
             if (portsToUse[i]) {
-              this.ports[portsToUse[i]] = true;
+              this.ports[portsToUse[i]] = "";
             }
           }
         });
@@ -940,13 +961,13 @@ var PM_Main = class extends PM_WithEslintAndTsc {
           console.log(
             ansiC2.red(
               ansiC2.inverse(
-                `${src} errored with: ${e.name}. Check ${errFile}for more info`
+                `${src} errored with: ${e.name}. Check ${errFile} for more info`
               )
             )
           );
-          this.writeFileSync(`${reportDest}/error.txt`, e.toString(), src);
+          this.writeFileSync(`${reportDest}/logs.txt`, e.toString(), src);
           this.bddTestIsNowDone(src, -1);
-          statusMessagePretty(-1, src);
+          statusMessagePretty(-1, src, "node");
         });
       });
     };
@@ -957,7 +978,7 @@ var PM_Main = class extends PM_WithEslintAndTsc {
       console.log(ansiC2.green(ansiC2.inverse(`launchWebSideCar ${src}`)));
       const fileStreams2 = [];
       const doneFileStream2 = [];
-      const oStream = fs3.createWriteStream(`${destFolder}/console_log.txt`);
+      const oStream = fs3.createWriteStream(`${destFolder}/logs.txt`);
       return new Promise((res, rej) => {
         this.browser.newPage().then(async (page) => {
           this.mapping().forEach(async ([command, func]) => {
@@ -1018,7 +1039,7 @@ var PM_Main = class extends PM_WithEslintAndTsc {
       }
     })`;
           await page.evaluate(evaluation).then(async ({ fails, failed, features }) => {
-            statusMessagePretty(fails, src);
+            statusMessagePretty(fails, src, "web");
             this.bddTestIsNowDone(src, fails);
           }).catch((e) => {
             console.log(
@@ -1055,14 +1076,13 @@ var PM_Main = class extends PM_WithEslintAndTsc {
       if (testReq.ports === 0) {
       } else if (testReq.ports > 0) {
         const openPorts = Object.entries(this.ports).filter(
-          ([portnumber, portopen]) => portopen
+          ([portnumber, portopen]) => portopen === ""
         );
         if (openPorts.length >= testReq.ports) {
           for (let i = 0; i < testReq.ports; i++) {
             portsToUse.push(openPorts[i][0]);
-            this.ports[openPorts[i][0]] = false;
+            this.ports[openPorts[i][0]] = src;
           }
-          console.log("nodeSideCar portsToUse", portsToUse);
           argz.ports = portsToUse;
           const builtfile = destFolder + ".mjs";
           let haltReturns = false;
@@ -1100,13 +1120,13 @@ var PM_Main = class extends PM_WithEslintAndTsc {
               });
             });
           });
-          const oStream = fs3.createWriteStream(`${reportDest}/console_log.txt`);
+          const oStream = fs3.createWriteStream(`${reportDest}/logs.txt`);
           const child = spawn("node", [builtfile, JSON.stringify(argz)], {
             stdio: ["pipe", "pipe", "pipe", "ipc"]
             // silent: true
           });
           const p = "/tmp/tpipe" + Math.random();
-          const errFile = `${reportDest}/error.txt`;
+          const errFile = `${reportDest}/logs.txt`;
           server.listen(p, () => {
             child.stderr?.on("data", (data) => {
               oStream.write(`stderr > ${data}`);
@@ -1123,7 +1143,7 @@ var PM_Main = class extends PM_WithEslintAndTsc {
               haltReturns = true;
               for (let i = 0; i <= portsToUse.length; i++) {
                 if (portsToUse[i]) {
-                  this.ports[portsToUse[i]] = true;
+                  this.ports[portsToUse[i]] = "";
                 }
               }
             });
@@ -1139,7 +1159,7 @@ var PM_Main = class extends PM_WithEslintAndTsc {
                   )
                 )
               );
-              this.writeFileSync(`${reportDest}/error.txt`, e.toString(), src);
+              this.writeFileSync(`${reportDest}/logs.txt`, e.toString(), src);
             });
           });
           child.send({ path: p });
@@ -1147,7 +1167,11 @@ var PM_Main = class extends PM_WithEslintAndTsc {
           this.nodeSidecars[r] = child;
           return [r, argz];
         } else {
-          console.log("Not enough open ports!", openPorts, testReq.ports);
+          console.log(
+            ansiC2.red(
+              `cannot ${src} because there are no open ports. the job will be unqueued`
+            )
+          );
           this.queue.push(sidecar[0]);
           return [Math.random(), argz];
         }
@@ -1182,12 +1206,12 @@ var PM_Main = class extends PM_WithEslintAndTsc {
         };
       } else if (testConfigResource.ports > 0) {
         const openPorts = Object.entries(this.ports).filter(
-          ([portnumber, portopen]) => portopen
+          ([portnumber, portopen]) => portopen === ""
         );
         if (openPorts.length >= testConfigResource.ports) {
           for (let i = 0; i < testConfigResource.ports; i++) {
             portsToUse.push(openPorts[i][0]);
-            this.ports[openPorts[i][0]] = false;
+            this.ports[openPorts[i][0]] = src;
           }
           argz = {
             // scheduled: true,
@@ -1212,7 +1236,7 @@ var PM_Main = class extends PM_WithEslintAndTsc {
       return [r, argz];
     };
     this.launchWeb = async (src, dest) => {
-      console.log(ansiC2.green(ansiC2.inverse(`! web ${src}`)));
+      console.log(ansiC2.green(ansiC2.inverse(`web < ${src}`)));
       this.bddTestIsRunning(src);
       const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/web`;
       if (!fs3.existsSync(reportDest)) {
@@ -1236,7 +1260,8 @@ var PM_Main = class extends PM_WithEslintAndTsc {
         console.log("fail", e)
       }
     })`;
-      const oStream = fs3.createWriteStream(`${reportDest}/console_log.txt`);
+      const ofile = `${reportDest}/logs.txt`;
+      const oStream = fs3.createWriteStream(ofile);
       this.browser.newPage().then((page) => {
         this.mapping().forEach(async ([command, func]) => {
           if (command === "page") {
@@ -1265,22 +1290,25 @@ var PM_Main = class extends PM_WithEslintAndTsc {
           });
         };
         page.on("pageerror", (err) => {
-          console.debug(`Error from ${src}: [${err.name}] `);
+          console.log(
+            ansiColors.red(
+              `web ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`
+            )
+          );
           oStream.write(err.name);
           oStream.write("\n");
           if (err.cause) {
-            console.debug(`Error from ${src} cause: [${err.cause}] `);
             oStream.write(err.cause);
             oStream.write("\n");
           }
           if (err.stack) {
-            console.debug(`Error from stack ${src}: [${err.stack}] `);
             oStream.write(err.stack);
             oStream.write("\n");
           }
-          console.debug(`Error from message ${src}: [${err.message}] `);
-          oStream.write(err.message);
-          oStream.write("\n");
+          if (err.message) {
+            oStream.write(err.message);
+            oStream.write("\n");
+          }
           this.bddTestIsNowDone(src, -1);
           close();
         });
@@ -1295,15 +1323,12 @@ var PM_Main = class extends PM_WithEslintAndTsc {
         await page.goto(`file://${`${destFolder}.html`}`, {});
         this.webSidecars[Math.random()] = page.mainFrame()._id;
         await page.evaluate(evaluation).then(async ({ fails, failed, features }) => {
-          statusMessagePretty(fails, src);
+          statusMessagePretty(fails, src, "web");
           this.bddTestIsNowDone(src, fails);
-        }).catch((e) => {
-          console.log(
-            ansiC2.red(ansiC2.inverse(`launchweb - ${src} errored with: ${e}`))
-          );
-        }).finally(() => {
-          this.bddTestIsNowDone(src, -1);
           close();
+        }).catch((e) => {
+          this.bddTestIsNowDone(src, -1);
+        }).finally(() => {
         });
         return page;
       });
@@ -1358,13 +1383,62 @@ var PM_Main = class extends PM_WithEslintAndTsc {
       });
       this.writeBigBoard();
     };
+    this.checkForShutdown = () => {
+      this.checkQueue();
+      console.log(
+        ansiC2.inverse(
+          `The following jobs are awaiting resources: ${JSON.stringify(
+            this.queue
+          )}`
+        )
+      );
+      console.log(
+        ansiC2.inverse(`The status of ports: ${JSON.stringify(this.ports)}`)
+      );
+      this.writeBigBoard();
+      if (this.mode === "dev")
+        return;
+      let inflight = false;
+      Object.keys(this.summary).forEach((k) => {
+        if (this.summary[k].prompt === "?") {
+          console.log(ansiC2.blue(ansiC2.inverse(`\u{1F555} prompt ${k}`)));
+          inflight = true;
+        }
+      });
+      Object.keys(this.summary).forEach((k) => {
+        if (this.summary[k].runTimeErrors === "?") {
+          console.log(ansiC2.blue(ansiC2.inverse(`\u{1F555} runTimeError ${k}`)));
+          inflight = true;
+        }
+      });
+      Object.keys(this.summary).forEach((k) => {
+        if (this.summary[k].staticErrors === "?") {
+          console.log(ansiC2.blue(ansiC2.inverse(`\u{1F555} staticErrors ${k}`)));
+          inflight = true;
+        }
+      });
+      Object.keys(this.summary).forEach((k) => {
+        if (this.summary[k].typeErrors === "?") {
+          console.log(ansiC2.blue(ansiC2.inverse(`\u{1F555} typeErrors ${k}`)));
+          inflight = true;
+        }
+      });
+      this.writeBigBoard();
+      if (!inflight) {
+        this.browser.disconnect().then(() => {
+          console.log(ansiC2.inverse(`${this.name} has been tested. Goodbye.`));
+          process.exit();
+        });
+      }
+    };
+    this.launchers = {};
     this.ports = {};
     this.queue = [];
     this.nodeSidecars = {};
     this.webSidecars = {};
     this.pureSidecars = {};
     this.configs.ports.forEach((element) => {
-      this.ports[element] = true;
+      this.ports[element] = "";
     });
   }
   async stopSideCar(uid) {
@@ -1524,17 +1598,18 @@ var PM_Main = class extends PM_WithEslintAndTsc {
         const metafile = `./testeranto/bundles/${runtime}/${this.name}/metafile.json`;
         await pollForFile(metafile);
         Object.entries(eps).forEach(
-          async ([k, outputFile]) => {
-            launcher(k, outputFile);
+          async ([inputFile, outputFile]) => {
+            this.launchers[inputFile] = () => launcher(inputFile, outputFile);
+            this.launchers[inputFile]();
             try {
               watch(outputFile, async (e, filename) => {
                 const hash = await fileHash(outputFile);
-                if (fileHashes[k] !== hash) {
-                  fileHashes[k] = hash;
+                if (fileHashes[inputFile] !== hash) {
+                  fileHashes[inputFile] = hash;
                   console.log(
                     ansiC2.yellow(ansiC2.inverse(`< ${e} ${filename}`))
                   );
-                  launcher(k, outputFile);
+                  this.launchers[inputFile]();
                 }
               });
             } catch (e) {
@@ -1600,13 +1675,24 @@ var PM_Main = class extends PM_WithEslintAndTsc {
           this.tscCheck({
             platform,
             addableFiles,
-            entrypoint: "./" + entrypoint
+            entrypoint
           });
-          this.eslintCheck("./" + entrypoint, platform, addableFiles);
-          this.makePrompt("./" + entrypoint, addableFiles, platform);
+          this.eslintCheck(entrypoint, platform, addableFiles);
+          this.makePrompt(entrypoint, addableFiles, platform);
         }
       }
     });
+  }
+  checkQueue() {
+    const x = this.queue.pop();
+    if (!x) {
+      ansiC2.inverse(`The following queue is empty`);
+      return;
+    }
+    const test = this.configs.tests.find((t) => t[0] === x);
+    if (!test)
+      throw `test is undefined ${x}`;
+    this.launchers[test[0]]();
   }
 };
 
@@ -1614,28 +1700,28 @@ var PM_Main = class extends PM_WithEslintAndTsc {
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
   process.stdin.setRawMode(true);
-console.log(ansiC3.inverse("Press 'x' to shutdown forcefully."));
+console.log(ansiC3.inverse("Press 'q' to initiate a graceful shutdown."));
+console.log(ansiC3.inverse("Press 'x' to quit forcefully."));
 process.stdin.on("keypress", (str, key) => {
   if (key.name === "x") {
     console.log(ansiC3.inverse("Shutting down forcefully..."));
     process.exit(-1);
   }
 });
-var testName = process.argv[2];
+var projectName = process.argv[2];
 var mode = process.argv[3];
 if (mode !== "once" && mode !== "dev") {
   console.error("the 2nd argument should be 'dev' or 'once' ");
   process.exit(-1);
 }
-console.log("testeranto is running", testName, mode);
 import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
   const bigConfig = module.default;
-  const rawConfig = bigConfig.projects[testName];
+  const rawConfig = bigConfig.projects[projectName];
   const config = {
     ...rawConfig,
-    buildDir: process.cwd() + `/testeranto/${testName}.json`
+    buildDir: process.cwd() + `/testeranto/${projectName}.json`
   };
-  const pm = new PM_Main(config, testName, mode);
+  const pm = new PM_Main(config, projectName, mode);
   pm.start();
   process.stdin.on("keypress", (str, key) => {
     if (key.name === "q") {

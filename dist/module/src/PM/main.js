@@ -12,6 +12,7 @@ import crypto from "node:crypto";
 import { getRunnables } from "../utils";
 import { Queue } from "../utils/queue.js";
 import { PM_WithEslintAndTsc } from "./PM_WithEslintAndTsc.js";
+import ansiColors from "ansi-colors";
 const changes = {};
 const fileHashes = {};
 const files = {};
@@ -32,12 +33,12 @@ async function fileHash(filePath, algorithm = "md5") {
         });
     });
 }
-const statusMessagePretty = (failures, test) => {
+const statusMessagePretty = (failures, test, runtime) => {
     if (failures === 0) {
-        console.log(ansiC.green(ansiC.inverse(`> ${test} completed successfully?!?`)));
+        console.log(ansiC.green(ansiC.inverse(`${runtime} > ${test} completed successfully`)));
     }
     else {
-        console.log(ansiC.red(ansiC.inverse(`> ${test} failed ${failures} times`)));
+        console.log(ansiC.red(ansiC.inverse(`${runtime} > ${test} failed ${failures} times`)));
     }
 };
 async function writeFileAndCreateDir(filePath, data) {
@@ -71,8 +72,6 @@ async function pollForFile(path, timeout = 2000) {
     const intervalObj = setInterval(function () {
         const file = path;
         const fileExists = fs.existsSync(file);
-        // console.log("Checking for: ", file);
-        // console.log("Exists: ", fileExists);
         if (fileExists) {
             clearInterval(intervalObj);
         }
@@ -92,7 +91,7 @@ export class PM_Main extends PM_WithEslintAndTsc {
             return getRunnables(tests, testName, payload);
         };
         this.launchPure = async (src, dest) => {
-            console.log(ansiC.green(ansiC.inverse(`! pure, ${src}`)));
+            console.log(ansiC.green(ansiC.inverse(`pure < ${src}`)));
             this.bddTestIsRunning(src);
             const reportDest = `testeranto/reports/${this.name}/${src
                 .split(".")
@@ -122,11 +121,11 @@ export class PM_Main extends PM_WithEslintAndTsc {
                 });
             }
             else if (testConfigResource.ports > 0) {
-                const openPorts = Object.entries(this.ports).filter(([portnumber, portopen]) => portopen);
+                const openPorts = Object.entries(this.ports).filter(([portnumber, status]) => status === "");
                 if (openPorts.length >= testConfigResource.ports) {
                     for (let i = 0; i < testConfigResource.ports; i++) {
                         portsToUse.push(openPorts[i][0]);
-                        this.ports[openPorts[i][0]] = false; // port is now closed
+                        this.ports[openPorts[i][0]] = src; // port is now claimed
                     }
                     argz = JSON.stringify({
                         scheduled: true,
@@ -180,11 +179,11 @@ export class PM_Main extends PM_WithEslintAndTsc {
                             .then(async (results) => {
                             // this.receiveFeatures(results.features, destFolder, src, "pure");
                             // this.receiveFeaturesV2(reportDest, src, "pure");
-                            statusMessagePretty(results.fails, src);
+                            statusMessagePretty(results.fails, src, "pure");
                             this.bddTestIsNowDone(src, results.fails);
                         })
                             .catch((e) => {
-                            console.log(ansiC.red(ansiC.inverse(`launchPure - ${src} errored with: ${e}`)));
+                            console.log(ansiC.red(`launchPure - ${src} errored with: ${e}`));
                             this.bddTestIsNowDone(src, -1);
                         });
                         // .finally(() => {
@@ -192,28 +191,28 @@ export class PM_Main extends PM_WithEslintAndTsc {
                         // });
                     })
                         .catch((e) => {
-                        console.log(ansiC.red(ansiC.inverse(`${src} errored with: ${e}. Check ${reportDest}/error.txt for more info`)));
-                        this.writeFileSync(`${reportDest}/error.txt`, e.stack, src);
+                        console.log(ansiColors.red(`pure ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`));
+                        this.writeFileSync(`${reportDest}/logs.txt`, e.stack, src);
                         this.bddTestIsNowDone(src, -1);
-                        statusMessagePretty(-1, src);
+                        statusMessagePretty(-1, src, "pure");
                         // console.error(e);
                     });
                 });
             }
             catch (e) {
-                console.log(ansiC.red(ansiC.inverse(`${src} errored with: ${e}. Check ${reportDest}/error.txt for more info`)));
-                this.writeFileSync(`${reportDest}/error.txt`, e.stack, src);
+                console.log(ansiC.red(ansiC.inverse(`${src} 1 errored with: ${e}. Check ${reportDest}/logs.txt for more info`)));
+                this.writeFileSync(`${reportDest}/logs.txt`, e.stack, src);
                 this.bddTestIsNowDone(src, -1);
-                statusMessagePretty(-1, src);
+                statusMessagePretty(-1, src, "pure");
             }
             for (let i = 0; i <= portsToUse.length; i++) {
                 if (portsToUse[i]) {
-                    this.ports[portsToUse[i]] = true; //port is open again
+                    this.ports[portsToUse[i]] = ""; //port is open again
                 }
             }
         };
         this.launchNode = async (src, dest) => {
-            console.log(ansiC.green(ansiC.inverse(`! node, ${src}`)));
+            console.log(ansiC.green(ansiC.inverse(`node < ${src}`)));
             this.bddTestIsRunning(src);
             const reportDest = `testeranto/reports/${this.name}/${src
                 .split(".")
@@ -234,7 +233,6 @@ export class PM_Main extends PM_WithEslintAndTsc {
             const testConfigResource = testConfig[2];
             const portsToUse = [];
             if (testConfigResource.ports === 0) {
-                console.error("portsToUse?!", []);
                 const t = {
                     name: src,
                     // ports: portsToUse.map((v) => Number(v)),
@@ -245,13 +243,12 @@ export class PM_Main extends PM_WithEslintAndTsc {
                 testResources = JSON.stringify(t);
             }
             else if (testConfigResource.ports > 0) {
-                const openPorts = Object.entries(this.ports).filter(([portnumber, portopen]) => portopen);
+                const openPorts = Object.entries(this.ports).filter(([portnumber, portopen]) => portopen === "");
                 if (openPorts.length >= testConfigResource.ports) {
                     for (let i = 0; i < testConfigResource.ports; i++) {
                         portsToUse.push(openPorts[i][0]);
-                        this.ports[openPorts[i][0]] = false; // port is now closed
+                        this.ports[openPorts[i][0]] = src; // port is now claimed
                     }
-                    console.error("portsToUse", portsToUse);
                     testResources = JSON.stringify({
                         scheduled: true,
                         name: src,
@@ -261,7 +258,7 @@ export class PM_Main extends PM_WithEslintAndTsc {
                     });
                 }
                 else {
-                    console.log("Not enough ports! Enqueuing test job...");
+                    console.log(ansiC.red(`node: cannot run ${src} because there are no open ports ATM. This job will be enqueued and run again run a port is available`));
                     this.queue.push(src);
                     return;
                 }
@@ -273,9 +270,9 @@ export class PM_Main extends PM_WithEslintAndTsc {
             const builtfile = dest;
             let haltReturns = false;
             const ipcfile = "/tmp/tpipe_" + Math.random();
-            const child = spawn("node", 
+            const child = spawn(
             // "node --inspect-brk ",
-            [builtfile, testResources, ipcfile], {
+            "node", [builtfile, testResources, ipcfile], {
                 stdio: ["pipe", "pipe", "pipe", "ipc"],
             });
             let buffer = new Buffer("");
@@ -316,8 +313,8 @@ export class PM_Main extends PM_WithEslintAndTsc {
                     }
                 });
             });
-            const oStream = fs.createWriteStream(`${reportDest}/console_log.txt`);
-            const errFile = `${reportDest}/error.txt`;
+            const oStream = fs.createWriteStream(`${reportDest}/logs.txt`);
+            const errFile = `${reportDest}/logs.txt`;
             if (fs.existsSync(errFile)) {
                 fs.rmSync(errFile);
             }
@@ -329,21 +326,22 @@ export class PM_Main extends PM_WithEslintAndTsc {
                 (_b = child.stdout) === null || _b === void 0 ? void 0 : _b.on("data", (data) => {
                     oStream.write(`stdout > ${data}`);
                 });
+                child.on("error", (err) => { });
                 child.on("close", (code) => {
                     oStream.close();
                     server.close();
-                    // this.receiveFeaturesV2(reportDest, src, "node");
-                    if (code === null) {
+                    if (code === 255) {
+                        console.log(ansiColors.red(`node ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`));
                         this.bddTestIsNowDone(src, -1);
-                        statusMessagePretty(-1, src);
+                        statusMessagePretty(-1, src, "node");
                     }
                     else if (code === 0) {
                         this.bddTestIsNowDone(src, 0);
-                        statusMessagePretty(0, src);
+                        statusMessagePretty(0, src, "node");
                     }
                     else {
                         this.bddTestIsNowDone(src, code);
-                        statusMessagePretty(code, src);
+                        statusMessagePretty(code, src, "node");
                     }
                     haltReturns = true;
                 });
@@ -351,24 +349,21 @@ export class PM_Main extends PM_WithEslintAndTsc {
                     haltReturns = true;
                     for (let i = 0; i <= portsToUse.length; i++) {
                         if (portsToUse[i]) {
-                            this.ports[portsToUse[i]] = true; //port is open again
+                            this.ports[portsToUse[i]] = ""; //port is open again
                         }
                     }
                 });
                 child.on("error", (e) => {
                     console.log("error");
                     haltReturns = true;
-                    console.log(ansiC.red(ansiC.inverse(`${src} errored with: ${e.name}. Check ${errFile}for more info`)));
-                    this.writeFileSync(`${reportDest}/error.txt`, e.toString(), src);
+                    console.log(ansiC.red(ansiC.inverse(`${src} errored with: ${e.name}. Check ${errFile} for more info`)));
+                    this.writeFileSync(`${reportDest}/logs.txt`, e.toString(), src);
                     this.bddTestIsNowDone(src, -1);
-                    statusMessagePretty(-1, src);
+                    statusMessagePretty(-1, src, "node");
                 });
             });
         };
-        this.launchWebSideCar = async (
-        // src: string,
-        // dest: string,
-        testConfig) => {
+        this.launchWebSideCar = async (testConfig) => {
             const src = testConfig[0];
             const dest = src.split(".").slice(0, -1).join(".");
             // const d = dest + ".mjs";
@@ -376,7 +371,7 @@ export class PM_Main extends PM_WithEslintAndTsc {
             console.log(ansiC.green(ansiC.inverse(`launchWebSideCar ${src}`)));
             const fileStreams2 = [];
             const doneFileStream2 = [];
-            const oStream = fs.createWriteStream(`${destFolder}/console_log.txt`);
+            const oStream = fs.createWriteStream(`${destFolder}/logs.txt`);
             return new Promise((res, rej) => {
                 this.browser
                     .newPage()
@@ -448,7 +443,7 @@ export class PM_Main extends PM_WithEslintAndTsc {
                         .then(async ({ fails, failed, features }) => {
                         // this.receiveFeatures(features, destFolder, src, "web");
                         // this.receiveFeaturesV2(reportDest, src, "web");
-                        statusMessagePretty(fails, src);
+                        statusMessagePretty(fails, src, "web");
                         this.bddTestIsNowDone(src, fails);
                     })
                         .catch((e) => {
@@ -495,13 +490,12 @@ export class PM_Main extends PM_WithEslintAndTsc {
                 // };
             }
             else if (testReq.ports > 0) {
-                const openPorts = Object.entries(this.ports).filter(([portnumber, portopen]) => portopen);
+                const openPorts = Object.entries(this.ports).filter(([portnumber, portopen]) => portopen === "");
                 if (openPorts.length >= testReq.ports) {
                     for (let i = 0; i < testReq.ports; i++) {
                         portsToUse.push(openPorts[i][0]);
-                        this.ports[openPorts[i][0]] = false; // port is now closed
+                        this.ports[openPorts[i][0]] = src; // port is now closed
                     }
-                    console.log("nodeSideCar portsToUse", portsToUse);
                     argz.ports = portsToUse;
                     const builtfile = destFolder + ".mjs";
                     let haltReturns = false;
@@ -539,13 +533,13 @@ export class PM_Main extends PM_WithEslintAndTsc {
                             });
                         });
                     });
-                    const oStream = fs.createWriteStream(`${reportDest}/console_log.txt`);
+                    const oStream = fs.createWriteStream(`${reportDest}/logs.txt`);
                     const child = spawn("node", [builtfile, JSON.stringify(argz)], {
                         stdio: ["pipe", "pipe", "pipe", "ipc"],
                         // silent: true
                     });
                     const p = "/tmp/tpipe" + Math.random();
-                    const errFile = `${reportDest}/error.txt`;
+                    const errFile = `${reportDest}/logs.txt`;
                     server.listen(p, () => {
                         var _a, _b;
                         (_a = child.stderr) === null || _a === void 0 ? void 0 : _a.on("data", (data) => {
@@ -563,7 +557,7 @@ export class PM_Main extends PM_WithEslintAndTsc {
                             haltReturns = true;
                             for (let i = 0; i <= portsToUse.length; i++) {
                                 if (portsToUse[i]) {
-                                    this.ports[portsToUse[i]] = true; //port is open again
+                                    this.ports[portsToUse[i]] = ""; //port is open again
                                 }
                             }
                         });
@@ -573,7 +567,7 @@ export class PM_Main extends PM_WithEslintAndTsc {
                             }
                             haltReturns = true;
                             console.log(ansiC.red(ansiC.inverse(`launchNodeSideCar - ${src} errored with: ${e.name}. Check ${errFile}for more info`)));
-                            this.writeFileSync(`${reportDest}/error.txt`, e.toString(), src);
+                            this.writeFileSync(`${reportDest}/logs.txt`, e.toString(), src);
                             // this.bddTestIsNowDone(src, -1);
                             // statusMessagePretty(-1, src);
                         });
@@ -584,7 +578,7 @@ export class PM_Main extends PM_WithEslintAndTsc {
                     return [r, argz];
                 }
                 else {
-                    console.log("Not enough open ports!", openPorts, testReq.ports);
+                    console.log(ansiC.red(`cannot ${src} because there are no open ports. the job will be unqueued`));
                     this.queue.push(sidecar[0]);
                     return [Math.random(), argz];
                 }
@@ -620,12 +614,11 @@ export class PM_Main extends PM_WithEslintAndTsc {
                 };
             }
             else if (testConfigResource.ports > 0) {
-                const openPorts = Object.entries(this.ports).filter(([portnumber, portopen]) => portopen);
-                // console.log("openPorts", openPorts);
+                const openPorts = Object.entries(this.ports).filter(([portnumber, portopen]) => portopen === "");
                 if (openPorts.length >= testConfigResource.ports) {
                     for (let i = 0; i < testConfigResource.ports; i++) {
                         portsToUse.push(openPorts[i][0]);
-                        this.ports[openPorts[i][0]] = false; // port is now closed
+                        this.ports[openPorts[i][0]] = src; // port is now claimed
                     }
                     argz = {
                         // scheduled: true,
@@ -658,7 +651,7 @@ export class PM_Main extends PM_WithEslintAndTsc {
             // }
         };
         this.launchWeb = async (src, dest) => {
-            console.log(ansiC.green(ansiC.inverse(`! web ${src}`)));
+            console.log(ansiC.green(ansiC.inverse(`web < ${src}`)));
             this.bddTestIsRunning(src);
             const reportDest = `testeranto/reports/${this.name}/${src
                 .split(".")
@@ -685,7 +678,8 @@ export class PM_Main extends PM_WithEslintAndTsc {
         console.log("fail", e)
       }
     })`;
-            const oStream = fs.createWriteStream(`${reportDest}/console_log.txt`);
+            const ofile = `${reportDest}/logs.txt`;
+            const oStream = fs.createWriteStream(ofile);
             this.browser
                 .newPage()
                 .then((page) => {
@@ -724,22 +718,21 @@ export class PM_Main extends PM_WithEslintAndTsc {
                     });
                 };
                 page.on("pageerror", (err) => {
-                    console.debug(`Error from ${src}: [${err.name}] `);
+                    console.log(ansiColors.red(`web ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`));
                     oStream.write(err.name);
                     oStream.write("\n");
                     if (err.cause) {
-                        console.debug(`Error from ${src} cause: [${err.cause}] `);
                         oStream.write(err.cause);
                         oStream.write("\n");
                     }
                     if (err.stack) {
-                        console.debug(`Error from stack ${src}: [${err.stack}] `);
                         oStream.write(err.stack);
                         oStream.write("\n");
                     }
-                    console.debug(`Error from message ${src}: [${err.message}] `);
-                    oStream.write(err.message);
-                    oStream.write("\n");
+                    if (err.message) {
+                        oStream.write(err.message);
+                        oStream.write("\n");
+                    }
                     this.bddTestIsNowDone(src, -1);
                     close();
                 });
@@ -758,16 +751,23 @@ export class PM_Main extends PM_WithEslintAndTsc {
                     .then(async ({ fails, failed, features }) => {
                     // this.receiveFeatures(features, destFolder, src, "web");
                     // this.receiveFeaturesV2(reportDest, src, "web");
-                    statusMessagePretty(fails, src);
+                    statusMessagePretty(fails, src, "web");
                     this.bddTestIsNowDone(src, fails);
+                    close();
                 })
                     .catch((e) => {
-                    console.log(ansiC.red(ansiC.inverse(`launchweb - ${src} errored with: ${e}`)));
+                    // console.log(ansiC.red(ansiC.inverse(e)));
+                    // console.log(
+                    //   ansiC.red(
+                    //     ansiC.inverse(
+                    //       `web ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`
+                    //     )
+                    //   )
+                    // );
+                    this.bddTestIsNowDone(src, -1);
                 })
                     .finally(() => {
-                    this.bddTestIsNowDone(src, -1);
                     // process.exit(-1);
-                    close();
                 });
                 return page;
             });
@@ -775,10 +775,8 @@ export class PM_Main extends PM_WithEslintAndTsc {
         this.receiveFeaturesV2 = (reportDest, srcTest, platform) => {
             const featureDestination = path.resolve(process.cwd(), "reports", "features", "strings", srcTest.split(".").slice(0, -1).join(".") + ".features.txt");
             const testReport = JSON.parse(fs.readFileSync(`${reportDest}/tests.json`).toString());
-            // console.log("mark2", testReport);
             testReport.features
                 .reduce(async (mm, featureStringKey) => {
-                // console.log("mark4", featureStringKey);
                 const accum = await mm;
                 const isUrl = isValidUrl(featureStringKey);
                 if (isUrl) {
@@ -838,13 +836,55 @@ export class PM_Main extends PM_WithEslintAndTsc {
             // this.summary[srcTest].failingFeatures = f;
             this.writeBigBoard();
         };
+        this.checkForShutdown = () => {
+            // console.log(ansiC.inverse(JSON.stringify(this.summary, null, 2)));
+            this.checkQueue();
+            console.log(ansiC.inverse(`The following jobs are awaiting resources: ${JSON.stringify(this.queue)}`));
+            console.log(ansiC.inverse(`The status of ports: ${JSON.stringify(this.ports)}`));
+            this.writeBigBoard();
+            if (this.mode === "dev")
+                return;
+            let inflight = false;
+            Object.keys(this.summary).forEach((k) => {
+                if (this.summary[k].prompt === "?") {
+                    console.log(ansiC.blue(ansiC.inverse(`🕕 prompt ${k}`)));
+                    inflight = true;
+                }
+            });
+            Object.keys(this.summary).forEach((k) => {
+                if (this.summary[k].runTimeErrors === "?") {
+                    console.log(ansiC.blue(ansiC.inverse(`🕕 runTimeError ${k}`)));
+                    inflight = true;
+                }
+            });
+            Object.keys(this.summary).forEach((k) => {
+                if (this.summary[k].staticErrors === "?") {
+                    console.log(ansiC.blue(ansiC.inverse(`🕕 staticErrors ${k}`)));
+                    inflight = true;
+                }
+            });
+            Object.keys(this.summary).forEach((k) => {
+                if (this.summary[k].typeErrors === "?") {
+                    console.log(ansiC.blue(ansiC.inverse(`🕕 typeErrors ${k}`)));
+                    inflight = true;
+                }
+            });
+            this.writeBigBoard();
+            if (!inflight) {
+                this.browser.disconnect().then(() => {
+                    console.log(ansiC.inverse(`${this.name} has been tested. Goodbye.`));
+                    process.exit();
+                });
+            }
+        };
+        this.launchers = {};
         this.ports = {};
         this.queue = [];
         this.nodeSidecars = {};
         this.webSidecars = {};
         this.pureSidecars = {};
         this.configs.ports.forEach((element) => {
-            this.ports[element] = true; // set ports as open
+            this.ports[element] = ""; // set ports as open
         });
     }
     async stopSideCar(uid) {
@@ -1004,16 +1044,18 @@ export class PM_Main extends PM_WithEslintAndTsc {
         ].forEach(async ([eps, launcher, runtime, watcher]) => {
             const metafile = `./testeranto/bundles/${runtime}/${this.name}/metafile.json`;
             await pollForFile(metafile);
-            Object.entries(eps).forEach(async ([k, outputFile]) => {
-                // await pollForFile(outputFile);
-                launcher(k, outputFile);
+            Object.entries(eps).forEach(async ([inputFile, outputFile]) => {
+                // await pollForFile(outputFile);\
+                this.launchers[inputFile] = () => launcher(inputFile, outputFile);
+                this.launchers[inputFile]();
                 try {
                     watch(outputFile, async (e, filename) => {
                         const hash = await fileHash(outputFile);
-                        if (fileHashes[k] !== hash) {
-                            fileHashes[k] = hash;
+                        if (fileHashes[inputFile] !== hash) {
+                            fileHashes[inputFile] = hash;
                             console.log(ansiC.yellow(ansiC.inverse(`< ${e} ${filename}`)));
-                            launcher(k, outputFile);
+                            // launcher(inputFile, outputFile);
+                            this.launchers[inputFile]();
                         }
                     });
                 }
@@ -1053,8 +1095,6 @@ export class PM_Main extends PM_WithEslintAndTsc {
         //     `testeranto/externalTests/${externalTestName}/stderr.txt`,
         //     stderr
         //   );
-        //   // console.log(`externalTest stdout: ${stdout}`);
-        //   // console.error(`externalTest stderr: ${stderr}`);
         // });
     }
     async stop() {
@@ -1101,12 +1141,24 @@ export class PM_Main extends PM_WithEslintAndTsc {
                     this.tscCheck({
                         platform,
                         addableFiles,
-                        entrypoint: "./" + entrypoint,
+                        entrypoint: entrypoint,
                     });
-                    this.eslintCheck("./" + entrypoint, platform, addableFiles);
-                    this.makePrompt("./" + entrypoint, addableFiles, platform);
+                    this.eslintCheck(entrypoint, platform, addableFiles);
+                    this.makePrompt(entrypoint, addableFiles, platform);
                 }
             }
         });
+    }
+    checkQueue() {
+        const x = this.queue.pop();
+        if (!x) {
+            ansiC.inverse(`The following queue is empty`);
+            return;
+        }
+        const test = this.configs.tests.find((t) => t[0] === x);
+        if (!test)
+            throw `test is undefined ${x}`;
+        // const [src, runtime, ...xx]: [string, IRunTime, ...any] = test;
+        this.launchers[test[0]]();
     }
 }

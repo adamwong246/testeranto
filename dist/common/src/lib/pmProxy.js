@@ -1,7 +1,9 @@
 "use strict";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.afterAllProxy = exports.beforeAllProxy = exports.beforeEachProxy = exports.afterEachProxy = exports.andWhenProxy = exports.butThenProxy = void 0;
-const prxy = function (pm, mappings) {
+const baseProxy = function (pm, mappings) {
     return new Proxy(pm, {
         get: (target, prop, receiver) => {
             for (const mapping of mappings) {
@@ -15,7 +17,7 @@ const prxy = function (pm, mappings) {
         },
     });
 };
-const butThenProxy = (pm, filepath) => prxy(pm, [
+const butThenProxy = (pm, filepath) => baseProxy(pm, [
     [
         "screencast",
         (opts, p) => [
@@ -37,7 +39,7 @@ const butThenProxy = (pm, filepath) => prxy(pm, [
     ],
 ]);
 exports.butThenProxy = butThenProxy;
-const andWhenProxy = (pm, filepath) => prxy(pm, [
+const andWhenProxy = (pm, filepath) => baseProxy(pm, [
     [
         "screencast",
         (opts, p) => [
@@ -56,7 +58,7 @@ const andWhenProxy = (pm, filepath) => prxy(pm, [
     ],
 ]);
 exports.andWhenProxy = andWhenProxy;
-const afterEachProxy = (pm, suite, given) => prxy(pm, [
+const afterEachProxy = (pm, suite, given) => baseProxy(pm, [
     [
         "screencast",
         (opts, p) => [
@@ -81,7 +83,7 @@ const afterEachProxy = (pm, suite, given) => prxy(pm, [
     ],
 ]);
 exports.afterEachProxy = afterEachProxy;
-const beforeEachProxy = (pm, suite) => prxy(pm, [
+const beforeEachProxy = (pm, suite) => baseProxy(pm, [
     [
         "screencast",
         (opts, p) => [
@@ -103,7 +105,7 @@ const beforeEachProxy = (pm, suite) => prxy(pm, [
     ["createWriteStream", (fp) => [`suite-${suite}/beforeEach/${fp}`]],
 ]);
 exports.beforeEachProxy = beforeEachProxy;
-const beforeAllProxy = (pm, suite) => prxy(pm, [
+const beforeAllProxy = (pm, suite) => baseProxy(pm, [
     [
         "writeFileSync",
         (fp, contents) => [`suite-${suite}/beforeAll/${fp}`, contents],
@@ -118,7 +120,7 @@ const beforeAllProxy = (pm, suite) => prxy(pm, [
     ["createWriteStream", (fp) => [`suite-${suite}/beforeAll/${fp}`]],
 ]);
 exports.beforeAllProxy = beforeAllProxy;
-const afterAllProxy = (pm, suite) => prxy(pm, [
+const afterAllProxy = (pm, suite) => baseProxy(pm, [
     ["createWriteStream", (fp) => [`suite-${suite}/afterAll/${fp}`]],
     [
         "writeFileSync",
@@ -133,162 +135,3 @@ const afterAllProxy = (pm, suite) => prxy(pm, [
     ],
 ]);
 exports.afterAllProxy = afterAllProxy;
-/////////////////////////////////////////////////
-// export const butThenProxy = (pm: IPM, filepath: string) => {
-//   return new Proxy(pm, {
-//     get: (target, prop, receiver) => {
-//       if (prop === "customScreenShot") {
-//         return (opts, p) =>
-//           target.customScreenShot(
-//             {
-//               ...opts,
-//               path: `${filepath}/${opts.path}`,
-//             },
-//             p
-//           );
-//       }
-//       if (prop === "writeFileSync") {
-//         return (fp, contents) => target[prop](`${filepath}/${fp}`, contents);
-//       }
-//     },
-//   });
-// };
-// export const andWhenProxy = (pm: IPM, filepath: string) => {
-//   return new Proxy(pm, {
-//     get(target, prop, receiver) {
-//       if (prop === "customScreenShot") {
-//         return (opts, p) =>
-//           target.customScreenShot(
-//             {
-//               ...opts,
-//               path: `${filepath}/${opts.path}`,
-//             },
-//             p
-//           );
-//       }
-//       if (prop === "writeFileSync") {
-//         return (fp, contents) =>
-//           target[prop](`${filepath}/andWhen/${fp}`, contents);
-//       }
-//       /* @ts-ignore:next-line */
-//       return Reflect.get(...arguments);
-//     },
-//   });
-// };
-// export const afterEachProxy = (pm: IPM, suite: string, given: string): IPM => {
-//   return new Proxy(pm, {
-//     get(target, prop, receiver) {
-//       if (prop === "customScreenShot") {
-//         return (opts, p) =>
-//           target.customScreenShot(
-//             {
-//               ...opts,
-//               path: `suite-${suite}/given-${given}/afterEach/${opts.path}`,
-//             },
-//             p
-//           );
-//       }
-//       if (prop === "writeFileSync") {
-//         return (fp, contents) =>
-//           target[prop](
-//             `suite-${suite}/given-${given}/afterEach/${fp}`,
-//             contents
-//           );
-//       }
-//       /* @ts-ignore:next-line */
-//       return Reflect.get(...arguments);
-//     },
-//   });
-// };
-// export const beforeAllProxy = (pm: IPM, suite: string): IPM => {
-//   return new Proxy(pm, {
-//     get(target, prop, receiver) {
-//       if (prop === "customScreenShot") {
-//         return (opts, p) =>
-//           target.customScreenShot(
-//             {
-//               ...opts,
-//               // path: `${filepath}/${opts.path}`,
-//               path: `suite-${suite}/beforeAll/${opts.path}`,
-//             },
-//             p
-//           );
-//       }
-//       if (prop === "writeFileSync") {
-//         return (fp, contents) =>
-//           target[prop](`suite-${suite}/beforeAll/${fp}`, contents);
-//       }
-//       /* @ts-ignore:next-line */
-//       return Reflect.get(...arguments);
-//     },
-//   });
-// };
-// export const beforeEachProxy = (pm: IPM, suite: string, given: string): IPM => {
-//   return new Proxy(pm, {
-//     get(target, prop, receiver) {
-//       // if (prop === "write") {
-//       //   return (handle, contents) =>
-//       //     target[prop](
-//       //       `suite-${suiteNdx}/given-${key}/when/beforeEach/${fp}`,
-//       //       contents
-//       //     );
-//       // }
-//       if (prop === "createWriteStream") {
-//         return (fp) =>
-//           target[prop](`suite-${suite}/given-${given}/when/beforeEach/${fp}`);
-//       }
-//       if (prop === "writeFileSync") {
-//         return (fp, contents) =>
-//           target[prop](
-//             `suite-${suite}/given-${given}/when/beforeEach/${fp}`,
-//             contents
-//           );
-//       }
-//       if (prop === "customScreenShot") {
-//         return (opts, p) =>
-//           target.customScreenShot(
-//             {
-//               ...opts,
-//               path: `suite-${suite}/given-${given}/when/beforeEach/${opts.path}`,
-//             },
-//             p
-//           );
-//       }
-//       if (prop === "screencast") {
-//         return (opts, p) =>
-//           target.screencast(
-//             {
-//               ...opts,
-//               path: `suite-${suite}/given-${given}/when/beforeEach/${opts.path}`,
-//             },
-//             p
-//           );
-//       }
-//       /* @ts-ignore:next-line */
-//       return Reflect.get(...arguments);
-//     },
-//   });
-// };
-// export const afterAllProxy = (pm: IPM, suite: string): IPM => {
-//   return new Proxy(pm, {
-//     get(target, prop, receiver) {
-//       if (prop === "customScreenShot") {
-//         return (opts, p) =>
-//           target.customScreenShot(
-//             {
-//               ...opts,
-//               // path: `${filepath}/${opts.path}`,
-//               path: `suite-${suite}/afterAll/${opts.path}`,
-//             },
-//             p
-//           );
-//       }
-//       if (prop === "writeFileSync") {
-//         return (fp, contents) =>
-//           target[prop](`suite-${suite}/afterAll/${fp}`, contents);
-//       }
-//       /* @ts-ignore:next-line */
-//       return Reflect.get(...arguments);
-//     },
-//   });
-// };

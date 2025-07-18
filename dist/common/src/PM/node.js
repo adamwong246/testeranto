@@ -21,25 +21,13 @@ class PM_Node extends _1.PM {
         });
     }
     start() {
-        throw new Error("DEPREFECATED");
-        // console.log("START");
-        // return new Promise((res) => {
-        //   process.on("message", (message: { path?: string }) => {
-        //     console.log("MESSAGE");
-        //     if (message.path) {
-        //       this.client = net.createConnection(message.path, () => {
-        //         res();
-        //       });
-        //     }
-        //   });
-        // });
+        throw new Error("DEPRECATED");
     }
     stop() {
         throw new Error("stop not implemented.");
     }
     send(command, ...argz) {
         const key = Math.random().toString();
-        // console.log("SEND", key, command, ...argz);
         if (!this.client) {
             console.error(`Tried to send "${command} (${argz})" but the test has not been started and the IPC client is not established. Exiting as failure!`);
             process.exit(-1);
@@ -127,7 +115,6 @@ class PM_Node extends _1.PM {
         return await this.send("write", ...arguments);
     }
     async writeFileSync(filepath, contents) {
-        // console.log("mark55");
         return await this.send("writeFileSync", this.testResourceConfiguration.fs + "/" + filepath, contents, this.testResourceConfiguration.name);
     }
     async createWriteStream(filepath) {

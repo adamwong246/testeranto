@@ -2,7 +2,8 @@ import type { Ibdd_in_any, Ibdd_out_any } from "../CoreTypes";
 import { PM_Node } from "../PM/node";
 import { PM_Pure } from "../PM/pure";
 import { PM_Web } from "../PM/web";
-import { IGivens, BaseCheck, BaseSuite, BaseGiven, BaseWhen, BaseThen } from "./abstractBase";
+import { IGivens, BaseCheck, BaseGiven, BaseWhen, BaseThen } from "./abstractBase";
+import { BaseSuite } from "./BaseSuite";
 export type IPM = PM_Node | PM_Web | PM_Pure;
 export type TestPhase = "beforeAll" | "beforeEach" | "test" | "afterEach" | "afterAll";
 export type TestError = {
