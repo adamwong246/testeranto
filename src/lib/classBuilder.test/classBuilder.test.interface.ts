@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ITestInterface } from "../../CoreTypes";
 import { I } from "../baseBuilder.test/baseBuilder.test.types";
 

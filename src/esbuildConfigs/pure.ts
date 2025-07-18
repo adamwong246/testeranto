@@ -9,6 +9,7 @@ import featuresPlugin from "./featuresPlugin.js";
 import { isBuiltin } from "node:module";
 import { consoleDetectorPlugin } from "./consoleDetectorPlugin.js";
 import rebuildPlugin from "./rebuildPlugin.js";
+import { nativeImportDetectorPlugin } from "./nativeImportDetectorPlugin.js";
 
 export default (
   config: ITestconfig,
@@ -53,13 +54,14 @@ export default (
 
       consoleDetectorPlugin,
 
+      // nativeImportDetectorPlugin,
       {
         name: "native-node-import-filter",
         setup(build) {
           build.onResolve({ filter: /fs/ }, (args) => {
             if (isBuiltin(args.path)) {
               throw new Error(
-                `cannot use native node package "${args.path}" in a "pure" test. If you really want to use this package, convert this test from "pure" to "node"`
+                `You attempted to import a node module "${args.path}" into a "pure" test, which is not allowed. If you really want to use this package, convert this test from "pure" to "node"`
               );
             }
 

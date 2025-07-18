@@ -560,3 +560,20 @@ export default Testeranto<
 
 
 ```
+
+## Trouble shooting
+
+### Double check your runtimes.
+
+Every test has a runtime, which must defined in 2 places. Both must match.
+
+1. The import of the runtime
+2. The runtime defined alongside the test in testeranto.config.ts
+
+By convention, test filenames reveal their runtime. Ex: `__tests__/yourClass.node.test`. This is ONLY a convention. It has no real bearing on the runtime.
+
+## Dos and Don'ts
+
+### Do pass your test subject to the main testeranto function.
+
+### Don't import your test subject elsewhere in your tests.

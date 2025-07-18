@@ -1,8 +1,12 @@
-import { ITestImplementation } from "../../CoreTypes";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { PassThrough } from "stream";
+
+import { ITestImplementation, ITestSpecification } from "../../CoreTypes";
 import { TestClassBuilder } from "./TestClassBuilder";
 import { I, O, M } from "./classBuilder.test.types";
-import { PassThrough } from "stream";
+
 import { ITTestResourceRequest } from "..";
+import { specification } from "./classBuilder.test.specification";
 
 export const implementation: ITestImplementation<I, O, M> = {
   suites: {

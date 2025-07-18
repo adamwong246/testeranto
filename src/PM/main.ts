@@ -577,11 +577,6 @@ export class PM_Main extends PM_WithEslintAndTsc {
       await import(`${builtfile}?cacheBust=${Date.now()}`).then((module) => {
         return module.default
           .then((defaultModule) => {
-            console.log("mark8");
-            console.log(builtfile);
-            console.log(module);
-            console.log(defaultModule);
-
             defaultModule
               .receiveTestResourceConfig(argz)
               .then(async (results: IFinalResults) => {
@@ -665,7 +660,6 @@ export class PM_Main extends PM_WithEslintAndTsc {
 
     const portsToUse: string[] = [];
     if (testConfigResource.ports === 0) {
-      console.error("portsToUse?!", []);
       const t: ITTestResourceConfiguration = {
         name: src,
         // ports: portsToUse.map((v) => Number(v)),
@@ -686,8 +680,6 @@ export class PM_Main extends PM_WithEslintAndTsc {
 
           this.ports[openPorts[i][0]] = src; // port is now claimed
         }
-
-        console.error("portsToUse", portsToUse);
 
         testResources = JSON.stringify({
           scheduled: true,
@@ -716,8 +708,8 @@ export class PM_Main extends PM_WithEslintAndTsc {
 
     const ipcfile = "/tmp/tpipe_" + Math.random();
     const child = spawn(
-      "node",
       // "node --inspect-brk ",
+      "node",
       [builtfile, testResources, ipcfile],
       {
         stdio: ["pipe", "pipe", "pipe", "ipc"],
@@ -803,7 +795,6 @@ export class PM_Main extends PM_WithEslintAndTsc {
           this.bddTestIsNowDone(src, 0);
           statusMessagePretty(0, src, "node");
         } else {
-          console.log("mark3", code);
           this.bddTestIsNowDone(src, code);
           statusMessagePretty(code, src, "node");
         }

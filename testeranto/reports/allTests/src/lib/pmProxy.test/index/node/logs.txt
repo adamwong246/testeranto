@@ -1,0 +1,30 @@
+stdout > mark4
+args [
+  '/Users/adam/.nvm/versions/node/v20.4.0/bin/node',
+  '/Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/pmProxy.test/index.mjs',
+  '{"name":"src/lib/pmProxy.test/index.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/pmProxy.test/index/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/3bc6c3d8-8947-40e9-96c7-53ef79166410"}',
+  '/tmp/tpipe_0.6565458683998961'
+]
+receiveTestResourceConfig {"name":"src/lib/pmProxy.test/index.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/pmProxy.test/index/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/3bc6c3d8-8947-40e9-96c7-53ef79166410"}
+stderr > Given error 1: TypeError: store.butThenProxy is not a function
+    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/pmProxy.test/index.mjs:137:31)
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RF3LIUSG.mjs:606:29
+    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/pmProxy.test/index.mjs:4313:12)
+    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RF3LIUSG.mjs:715:42)
+    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RF3LIUSG.mjs:601:17)
+    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RF3LIUSG.mjs:533:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RF3LIUSG.mjs:393:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RF3LIUSG.mjs:182:19
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RF3LIUSG.mjs:210:29)
+goodbye node with caught error TypeError: store.butThenProxy is not a function
+    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/pmProxy.test/index.mjs:137:31)
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RF3LIUSG.mjs:606:29
+    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/pmProxy.test/index.mjs:4313:12)
+    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RF3LIUSG.mjs:715:42)
+    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RF3LIUSG.mjs:601:17)
+    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RF3LIUSG.mjs:533:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RF3LIUSG.mjs:393:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RF3LIUSG.mjs:182:19
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RF3LIUSG.mjs:210:29)

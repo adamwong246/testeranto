@@ -84,7 +84,7 @@ export class MockGiven extends BaseGiven<I> {
   }
 
   uberCatcher(e: Error): void {
-    console.error("Given error:", e);
+    console.error("Given error 2:", e);
   }
 }
 

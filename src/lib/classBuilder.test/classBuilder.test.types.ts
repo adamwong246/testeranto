@@ -1,6 +1,12 @@
-import { Ibdd_in, Ibdd_out } from "../../CoreTypes";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  Ibdd_in,
+  Ibdd_out,
+  ITestImplementation,
+  ITestSpecification,
+} from "../../CoreTypes";
 import { ClassBuilder } from "../classBuilder";
-import { ITTestResourceRequest } from "..";
+import { ITestJob, ITTestResourceRequest } from "..";
 
 export type I = Ibdd_in<
   {}, // iinput
@@ -61,12 +67,18 @@ export type O = Ibdd_out<
 
 export type M = {
   givens: {
-    [K in keyof O["givens"]]: (...args: O["givens"][K]) => ClassBuilder<any, any, any>;
+    [K in keyof O["givens"]]: (
+      ...args: O["givens"][K]
+    ) => ClassBuilder<any, any, any>;
   };
   whens: {
-    [K in keyof O["whens"]]: (...args: O["whens"][K]) => (builder: ClassBuilder<any, any, any>) => ClassBuilder<any, any, any>;
+    [K in keyof O["whens"]]: (
+      ...args: O["whens"][K]
+    ) => (builder: ClassBuilder<any, any, any>) => ClassBuilder<any, any, any>;
   };
   thens: {
-    [K in keyof O["thens"]]: (...args: O["thens"][K]) => (builder: ClassBuilder<any, any, any>) => ClassBuilder<any, any, any>;
+    [K in keyof O["thens"]]: (
+      ...args: O["thens"][K]
+    ) => (builder: ClassBuilder<any, any, any>) => ClassBuilder<any, any, any>;
   };
 };

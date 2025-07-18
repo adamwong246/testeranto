@@ -1,0 +1,11 @@
+
+/add src/lib/baseBuilder.test/baseBuilder.test.specification.ts
+/add src/lib/baseBuilder.test/baseBuilder.test.implementation.ts
+/add src/lib/baseBuilder.test/TestBaseBuilder.ts
+/add src/lib/baseBuilder.test/baseBuilder.test.interface.ts
+/add src/lib/baseBuilder.test/baseBuilder.test.pure.ts
+
+/read testeranto/reports/allTests/src/lib/baseBuilder.test/baseBuilder.test.pure/pure/tests.json
+/read testeranto/reports/allTests/src/lib/baseBuilder.test/baseBuilder.test.pure/pure/logs.txt
+/read testeranto/reports/allTests/src/lib/baseBuilder.test/baseBuilder.test.pure/pure/type_errors.txt
+/read testeranto/reports/allTests/src/lib/baseBuilder.test/baseBuilder.test.pure/pure/lint_errors.json

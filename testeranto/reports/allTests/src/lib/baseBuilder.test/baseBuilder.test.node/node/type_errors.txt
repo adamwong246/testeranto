@@ -1,0 +1,57 @@
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (19,5): Type '() => TestBaseBuilder<Ibdd_in_any, Ibdd_out_any, {}, {}, {}, {}, {}>' is not assignable to type '() => () => BaseBuilder<any, any, any, any, any, any>'.
+  Type 'TestBaseBuilder<Ibdd_in_any, Ibdd_out_any, {}, {}, {}, {}, {}>' is not assignable to type '() => BaseBuilder<any, any, any, any, any, any>'.
+    Type 'TestBaseBuilder<Ibdd_in_any, Ibdd_out_any, {}, {}, {}, {}, {}>' provides no match for the signature '(): BaseBuilder<any, any, any, any, any, any>'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (27,11): Type 'never[]' is not assignable to type 'number'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (39,11): Type 'never[]' is not assignable to type 'number'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (62,25): Cannot find name 'ITestJob'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (69,32): Type '(builder: TestSubject) => TestSubject' is not assignable to type '(ssel: BaseBuilder<any, any, any, any, any, any>, utils: PM) => (store: any) => any'.
+  Type 'TestSubject' is not assignable to type '(store: any) => any'.
+    Type 'TestBaseBuilder<any, any, any, any, any, any, {}>' provides no match for the signature '(store: any): any'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (75,27): Type '(builder: TestSubject) => TestSubject' is not assignable to type '(ssel: BaseBuilder<any, any, any, any, any, any>, utils: PM) => (store: any) => any'.
+  Type 'TestSubject' is not assignable to type '(store: any) => any'.
+    Type 'TestBaseBuilder<any, any, any, any, any, any, {}>' provides no match for the signature '(store: any): any'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (81,24): Type '(builder: TestSubject) => TestSubject' is not assignable to type '(ssel: BaseBuilder<any, any, any, any, any, any>, utils: PM) => (store: any) => any'.
+  Type 'TestSubject' is not assignable to type '(store: any) => any'.
+    Type 'TestBaseBuilder<any, any, any, any, any, any, {}>' provides no match for the signature '(store: any): any'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (132,20): Type 'PassThrough' is not assignable to type '() => BaseBuilder<any, any, any, any, any, any>'.
+  Type 'Transform' provides no match for the signature '(): BaseBuilder<any, any, any, any, any, any>'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.interface.ts (5,14): Property 'beforeAll' is missing in type '{ beforeEach: (subject: BaseBuilder<any, any, any, any, any, any>, initializer: (c?: any) => () => BaseBuilder<any, any, any, any, any, any>) => Promise<() => BaseBuilder<any, any, any, any, any, any>>; ... 4 more ...; assertThis: (x: any) => void; }' but required in type 'ITestInterface<I>'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.interface.ts (10,26): Expected 1 arguments, but got 2.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.interface.ts (13,26): Expected 1 arguments, but got 2.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.types.ts (7,3): Cannot find name 'BaseBuilder'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.types.ts (8,3): Cannot find name 'BaseBuilder'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.types.ts (9,3): Cannot find name 'BaseBuilder'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.types.ts (10,9): Cannot find name 'BaseBuilder'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/TestBaseBuilder.ts (44,56): Type 'never[]' is not assignable to type 'number'.
+/Users/adam/Code/testeranto/src/lib/basebuilder.ts (85,15): This expression is not callable.
+  Not all constituents of type 'void | ((fPath: string, value: string | Buffer<ArrayBufferLike> | PassThrough) => void)' are callable.
+    Type 'void' has no call signatures.
+/Users/adam/Code/testeranto/src/lib/classBuilder.ts (90,18): A spread argument must either have a tuple type or be passed to a rest parameter.
+/Users/adam/Code/testeranto/src/lib/classBuilder.ts (105,28): A spread argument must either have a tuple type or be passed to a rest parameter.
+/Users/adam/Code/testeranto/src/lib/index.ts (22,3): Type '(subject: T["isubject"], initialValues: T["iinitialValues"], x: unknown, testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["isubject"]>' is not assignable to type '(subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceConfiguration, initialValues: any, pm: IPM) => Promise<...>'.
+  Types of parameters 'initialValues' and 'initializer' are incompatible.
+    Type '(c?: any) => T["given"]' is not assignable to type 'T["iinitialValues"]'.
+      'T["iinitialValues"]' could be instantiated with an arbitrary type which could be unrelated to '(c?: any) => T["given"]'.
+/Users/adam/Code/testeranto/src/lib/index.ts (24,20): Type '"iinitialValues"' cannot be used to index type 'T'.
+/Users/adam/Code/testeranto/src/lib/index.ts (46,13): This expression is not callable.
+  Type 'unknown' has no call signatures.
+/Users/adam/Code/testeranto/src/lib/index.ts (58,3): Type '{ assertThis?: ((x: T["then"]) => any) | undefined; andWhen?: ((store: T["istore"], whenCB: T["when"], testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["istore"]>) | undefined; ... 4 more ...; beforeEach?: ((subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceCon...' is not assignable to type 'ITestInterface<T>'.
+  Types of property 'assertThis' are incompatible.
+    Type '((x: T["then"]) => any) | undefined' is not assignable to type '(x: T["then"]) => any'.
+      Type 'undefined' is not assignable to type '(x: T["then"]) => any'.
+/Users/adam/Code/testeranto/src/PM/web.ts (56,12): Cannot find name 'opts'.
+/Users/adam/Code/testeranto/src/PM/web.ts (57,57): Cannot find name 'opts'.
+/Users/adam/Code/testeranto/src/PM/web.ts (59,7): Cannot find name 'page'. Did you mean the instance member 'this.page'?
+/Users/adam/Code/testeranto/src/Pure.ts (32,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; checks: Record<string, any>; }': suites, givens, whens, thens, checks
+/Users/adam/Code/testeranto/src/Pure.ts (41,9): Property 'receiveTestResourceConfig' in type 'PureTesteranto<I, O, M>' is not assignable to the same property in base type 'TesterantoCore<I, O, M>'.
+  Type '(partialTestResource: string) => Promise<IFinalResults | -2>' is not assignable to type '(partialTestResource: string) => Promise<IFinalResults>'.
+    Type 'Promise<IFinalResults | -2>' is not assignable to type 'Promise<IFinalResults>'.
+      Type 'IFinalResults | -2' is not assignable to type 'IFinalResults'.
+        Type 'number' is not assignable to type 'IFinalResults'.
+/Users/adam/Code/testeranto/src/Pure.ts (65,3): Type 'PureTesteranto<I, O, M>' is not assignable to type 'number | TesterantoCore<I, O, M>'.
+  Type 'PureTesteranto<I, O, M>' is not assignable to type 'TesterantoCore<I, O, M>'.
+    The types returned by 'receiveTestResourceConfig(...)' are incompatible between these types.
+      Type 'Promise<IFinalResults | -2>' is not assignable to type 'Promise<IFinalResults>'.
+        Type 'IFinalResults | -2' is not assignable to type 'IFinalResults'.
+          Type 'number' is not assignable to type 'IFinalResults'.

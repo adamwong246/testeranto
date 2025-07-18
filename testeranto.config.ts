@@ -4,24 +4,38 @@ const config: IProject = {
   projects: {
     allTests: {
       tests: [
-        // ["src/lib/BaseSuite.test/node.test.ts", "node", { ports: 0 }, []],
-        // ["src/lib/BaseSuite.test/pure.test.ts", "pure", { ports: 0 }, []],
-        // ["src/lib/BaseSuite.test/web.test.ts", "web", { ports: 0 }, []],
+        ["src/lib/BaseSuite.test/node.test.ts", "node", { ports: 0 }, []],
+        ["src/lib/BaseSuite.test/pure.test.ts", "pure", { ports: 0 }, []],
+        ["src/lib/BaseSuite.test/web.test.ts", "web", { ports: 0 }, []],
         ["src/Pure.test.ts", "pure", { ports: 0 }, []],
-        // ["src/lib/pmProxy.test/index.ts", "node", { ports: 0 }, []],
-        // ["src/lib/core.test/core.test.ts", "node", { ports: 0 }, []],
-        // [
-        //   "src/lib/classBuilder.test/classBuilder.test.ts",
-        //   "node",
-        //   { ports: 0 },
-        //   [],
-        // ],
-        // [
-        //   "src/lib/baseBuilder.test/baseBuilder.test.ts",
-        //   "node",
-        //   { ports: 0 },
-        //   [],
-        // ],
+        ["src/lib/pmProxy.test/index.ts", "node", { ports: 0 }, []],
+        ["src/lib/core.test/core.test.ts", "node", { ports: 0 }, []],
+        [
+          "src/lib/classBuilder.test/classBuilder.test.ts",
+          "node",
+          { ports: 0 },
+          [],
+        ],
+
+        [
+          "src/lib/baseBuilder.test/baseBuilder.test.node.ts",
+          "node",
+          { ports: 0 },
+          [],
+        ],
+        [
+          "src/lib/baseBuilder.test/baseBuilder.test.pure.ts",
+          "pure",
+          { ports: 0 },
+          [],
+        ],
+        [
+          "src/lib/baseBuilder.test/baseBuilder.test.web.ts",
+          "web",
+          { ports: 0 },
+          [],
+        ],
+
         // ["src/mothership/test.ts", "node", { ports: 0 }, []],
         // ["./src/lib/abstractBase/index.ts", "node", { ports: 0 }, []],
         // [

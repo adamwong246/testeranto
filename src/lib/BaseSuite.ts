@@ -95,21 +95,23 @@ export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
 
     for (const [gKey, g] of Object.entries(this.givens)) {
       const giver = this.givens[gKey];
-      this.store = await giver.give(
-        subject,
-        gKey,
-        testResourceConfiguration,
-        this.assertThat,
-        suiteArtifactory,
-        tLog,
-        pm,
-        sNdx
-      ).catch((e) => {
-        this.failed = true;
-        this.fails = this.fails + 1;
-        console.error("Given error:", e);
-        throw e;
-      });
+      this.store = await giver
+        .give(
+          subject,
+          gKey,
+          testResourceConfiguration,
+          this.assertThat,
+          suiteArtifactory,
+          tLog,
+          pm,
+          sNdx
+        )
+        .catch((e) => {
+          this.failed = true;
+          this.fails = this.fails + 1;
+          console.error("Given error 1:", e);
+          throw e;
+        });
     }
 
     for (const [ndx, thater] of this.checks.entries()) {

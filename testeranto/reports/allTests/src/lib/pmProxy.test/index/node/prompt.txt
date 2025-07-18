@@ -1,0 +1,11 @@
+
+/add src/lib/pmProxy.test/mockPMBase.ts
+/add src/lib/pmProxy.test/implementation.ts
+/add src/lib/pmProxy.test/specification.ts
+/add src/lib/pmProxy.test/interface.ts
+/add src/lib/pmProxy.test/index.ts
+
+/read testeranto/reports/allTests/src/lib/pmProxy.test/index/node/tests.json
+/read testeranto/reports/allTests/src/lib/pmProxy.test/index/node/logs.txt
+/read testeranto/reports/allTests/src/lib/pmProxy.test/index/node/type_errors.txt
+/read testeranto/reports/allTests/src/lib/pmProxy.test/index/node/lint_errors.json

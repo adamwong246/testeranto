@@ -32,7 +32,6 @@
 | Aider.ai   | AI-powered test fixing                 |
 | ESLint     | Static analysis of test files          |
 | tsc        | Type checking of test files            |
-| Markdown   | Feature documentation format           |
 
 ## Quick Start
 
@@ -80,11 +79,11 @@ yarn t-build rectangle.test.ts yourProject once && yarn t-run rectangle.test.ts 
 
 ## Runtime Platforms
 
-|          | Runs on                       | You should use this runtime for...                                                                      | Important differences                                                                                       |
-| -------- | ----------------------------- | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| **Node** | node V8 with fork             | testing backend code, Node APIs (like `fs` and `crypto`), or anything needing filesystem access         | has access to the filesystem and io                                                                         |
-| **Web**  | chrome browser                | testing frontend code, anything that uses `document` or `window`, UI interactions, or visual regression | can take screenshots/recordings                                                                             |
-| **Pure** | node v8, dynamically imported | testing code that can run on both node-v8 and the browser                                               | Very similar to "Node" but has no IO access and thus no console.log. This runtime is theoretically faster. |
+|                                          | You should use this runtime for...                                                                      | Important differences                                                                                      |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| **Node** : node V8 with fork             | testing backend code, Node APIs (like `fs` and `crypto`), or anything needing filesystem access         | has access to the filesystem and io                                                                        |
+| **Web** : chrome browser                 | testing frontend code, anything that uses `document` or `window`, UI interactions, or visual regression | can take screenshots/recordings                                                                            |
+| **Pure** : node v8, dynamically imported | testing code that can run on both node-v8 and the browser                                               | Very similar to "Node" but has no IO access and thus no console.log. This runtime is theoretically faster. |
 
 ## CLI Commands
 

@@ -1,3 +1,4 @@
+import { ITestJob } from "..";
 import { ITestSpecification } from "../../CoreTypes";
 import { I, O } from "./classBuilder.test.types";
 
@@ -55,7 +56,7 @@ export const specification: ITestSpecification<I, O> = (
             Then.givensOverridesConfigured(),
             Then.whensOverridesConfigured(),
             Then.thensOverridesConfigured(),
-            Then.checksOverridesConfigured()
+            Then.checksOverridesConfigured(),
           ]
         ),
       },
@@ -101,12 +102,12 @@ export const specification: ITestSpecification<I, O> = (
           ["Should complete a full test run successfully"],
           [],
           [Then.testRunSuccessful()]
-        )
+        ),
       },
       [
         Check.ImplementationCheck((impl) => impl !== null),
-        Check.SpecificationCheck((spec) => spec !== null)
+        Check.SpecificationCheck((spec) => spec !== null),
       ]
-    )
+    ),
   ];
 };

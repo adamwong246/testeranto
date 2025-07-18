@@ -43,6 +43,7 @@ export class NodeTesteranto<
   }
 
   async receiveTestResourceConfig(partialTestResource: string) {
+    console.log("receiveTestResourceConfig", partialTestResource);
     const t: ITTestResourceConfiguration = JSON.parse(partialTestResource);
     const pm = new PM_Node(t, ipcfile);
     return await this.testJobs[0].receiveTestResourceConfig(pm);
@@ -68,7 +69,7 @@ const testeranto = async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
       testResourceRequirement,
       testInterface
     );
-    console.log("mark6");
+    console.log("args", process.argv);
 
     process.on("unhandledRejection", (reason, promise) => {
       console.error("Unhandled Rejection at:", promise, "reason:", reason);

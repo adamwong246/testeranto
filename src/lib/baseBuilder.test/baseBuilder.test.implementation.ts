@@ -4,7 +4,8 @@ import { ITestImplementation } from "../../CoreTypes";
 import { TestBaseBuilder } from "./TestBaseBuilder";
 
 import { I, O } from "./baseBuilder.test.types";
-import { TestBaseBuilder } from "./TestBaseBuilder";
+import { ITTestResourceRequest } from "..";
+import { BaseBuilder } from "../basebuilder";
 
 // Define our test subject type
 type TestSubject = TestBaseBuilder<any, any, any, any, any, any>;

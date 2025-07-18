@@ -1,4 +1,4 @@
-import Testeranto from "../../Node";
+import Testeranto from "../../Pure";
 
 import { specification } from "./baseBuilder.test.specification";
 import { implementation } from "./baseBuilder.test.implementation";
