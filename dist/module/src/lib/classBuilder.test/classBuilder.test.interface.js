@@ -1,4 +1,5 @@
 export const testInterface = {
+    beforeAll: async () => { },
     beforeEach: async (subject, initializer) => {
         return initializer();
     },
@@ -10,5 +11,5 @@ export const testInterface = {
     },
     afterEach: (store) => store,
     afterAll: () => { },
-    assertThis: (x) => { },
+    assertThis: (x) => { }
 };

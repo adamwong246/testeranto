@@ -5,11 +5,9 @@ import { Col, Nav, Row, Tab, Table } from "react-bootstrap";
 
 import { Footer } from "./Footer";
 import { IBuiltConfig } from "./lib";
-
-import "bootstrap/dist/css/bootstrap.min.css";
 import { ISummary } from "./Types";
 
-// import "./style.scss";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 type ISummaries = [string, IBuiltConfig, ISummary][];
 
@@ -21,12 +19,39 @@ const BigBoard = () => {
   const projects = JSON.parse(bigConfigElement.innerHTML) as string[];
 
   const [summary, setSummary] = useState<ISummaries>();
+  const [nodeLogs, setNodeLogs] = useState<Record<string, string>>({});
+  const [webLogs, setWebLogs] = useState<Record<string, string>>({});
+  const [pureLogs, setPureLogs] = useState<Record<string, string>>({});
+  const [activeTab, setActiveTab] = useState<string>("node");
+
+  const fetchLogs = async (project: string) => {
+    try {
+      const [nodeRes, webRes, pureRes] = await Promise.all([
+        fetch(`./testeranto/bundles/node/${project}/metafile.json`),
+        fetch(`./testeranto/bundles/web/${project}/metafile.json`),
+        fetch(`./testeranto/bundles/pure/${project}/metafile.json`),
+      ]);
+
+      setNodeLogs({ [project]: await nodeRes.json() });
+      setWebLogs({ [project]: await webRes.json() });
+      setPureLogs({ [project]: await pureRes.json() });
+    } catch (error) {
+      console.error("Error fetching logs:", error);
+      setNodeLogs({ [project]: "ERROR" });
+      setNodeLogs({ [project]: "ERROR" });
+      setNodeLogs({ [project]: "ERROR" });
+
+    }
+  };
 
   useEffect(() => {
 
     (async () => {
       const x: Promise<[string, IBuiltConfig, ISummary]>[] = projects.map(
         async (p) => {
+
+          fetchLogs(p);
+
           return [
             p,
 
@@ -45,6 +70,8 @@ const BigBoard = () => {
         setSummary(v);
       });
     })();
+
+
   }, []);
 
   if (!summary || summary?.length === 0) {
@@ -54,87 +81,212 @@ const BigBoard = () => {
 
   return (
     <div className="container-fluid">
-      <Table>
-        <thead>
-          <tr>
-            <th>project</th>
-            <th>platform</th>
-            <th>BDD errors</th>
-            <th>Lint errors</th>
-            <th>Type errors</th>
+      <Tab.Container defaultActiveKey="node">
+        <nav className="navbar navbar-expand-lg navbar-light bg-light mb-3 rounded">
+          <div className="container-fluid">
+            <span className="navbar-brand text-muted">Project: testeranto</span>
+            <Nav variant="pills" className="me-auto" activeKey={activeTab} onSelect={(k) => setActiveTab(k || "node")}>
+              <Nav.Item>
+                <Nav.Link eventKey="projects">Test Results</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="node">Node Build</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="web">Web Build</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="pure">Pure Build</Nav.Link>
+              </Nav.Item>
 
-          </tr>
-        </thead>
+            </Nav>
+          </div>
+        </nav>
+        <Row>
+          <Tab.Content>
+            <Tab.Pane eventKey="node">
+              {Object.keys(nodeLogs).length > 0 && (
+                <div className={`alert ${Object.values(nodeLogs).every(log => !log.errors || log.errors.length === 0)
+                  ? 'alert-success'
+                  : 'alert-danger'} d-flex justify-content-between align-items-center`}>
+                  <span>
+                    {Object.values(nodeLogs).every(log => !log.errors || log.errors.length === 0)
+                      ? '✅ All Node builds passed successfully'
+                      : '❌ Some Node builds failed'}
+                  </span>
+                  {!Object.values(nodeLogs).every(log => !log.errors || log.errors.length === 0) && (
+                    <button
+                      onClick={() => alert('AI debugger coming soon!')}
+                      className="btn btn-sm btn-primary"
+                      title="Get AI help debugging these build failures"
+                    >
+                      🤖🪄✨
+                    </button>
+                  )}
+                </div>
+              )}
+              <pre style={{ backgroundColor: '#f8f9fa', padding: '15px', borderRadius: '4px' }}>
+                {JSON.stringify(nodeLogs, null, 2)}
+              </pre>
+            </Tab.Pane>
+            <Tab.Pane eventKey="web">
+              {Object.keys(webLogs).length > 0 && (
+                <div className={`alert ${Object.values(webLogs).every(log => !log.errors || log.errors.length === 0)
+                  ? 'alert-success'
+                  : 'alert-danger'} d-flex justify-content-between align-items-center`}>
+                  <span>
+                    {Object.values(webLogs).every(log => !log.errors || log.errors.length === 0)
+                      ? '✅ All Web builds passed successfully'
+                      : '❌ Some Web builds failed'}
+                  </span>
+                  {!Object.values(webLogs).every(log => !log.errors || log.errors.length === 0) && (
+                    <button
+                      onClick={() => alert('AI debugger coming soon!')}
+                      className="btn btn-sm btn-primary"
+                      title="Get AI help debugging these build failures"
+                    >
+                      🤖🪄✨
+                    </button>
+                  )}
+                </div>
+              )}
+              <pre style={{ backgroundColor: '#f8f9fa', padding: '15px', borderRadius: '4px' }}>
+                {JSON.stringify(webLogs, null, 2)}
+              </pre>
+            </Tab.Pane>
+            <Tab.Pane eventKey="pure">
+              {Object.keys(pureLogs).length > 0 && (
+                <div className={`alert ${Object.values(pureLogs).every(log => !log.errors || log.errors.length === 0)
+                  ? 'alert-success'
+                  : 'alert-danger'} d-flex justify-content-between align-items-center`}>
+                  <span>
+                    {Object.values(pureLogs).every(log => !log.errors || log.errors.length === 0)
+                      ? '✅ All Pure builds passed successfully'
+                      : '❌ Some Pure builds failed'}
+                  </span>
+                  {!Object.values(pureLogs).every(log => !log.errors || log.errors.length === 0) && (
+                    <button
+                      onClick={() => alert('AI debugger coming soon!')}
+                      className="btn btn-sm btn-primary"
+                      title="Get AI help debugging these build failures"
+                    >
+                      🤖🪄✨
+                    </button>
+                  )}
+                </div>
+              )}
+              <pre style={{ backgroundColor: '#f8f9fa', padding: '15px', borderRadius: '4px' }}>
+                {JSON.stringify(pureLogs, null, 2)}
+              </pre>
+            </Tab.Pane>
+            <Tab.Pane eventKey="projects">
+              <Tab.Container defaultActiveKey={projects[0]}>
+                <Row>
+                  <Col sm={3}>
+                    <Nav variant="pills" className="flex-column">
+                      {projects.map((project) => (
+                        <Nav.Item key={project}>
+                          <Nav.Link eventKey={project}>{project}</Nav.Link>
+                        </Nav.Item>
+                      ))}
+                    </Nav>
+                  </Col>
+                  <Col sm={9}>
+                    <Tab.Content>
+                      {projects.map((project) => (
+                        <Tab.Pane key={project} eventKey={project}>
+                          <Table>
+                            <Table>
+                              <thead>
+                                <tr>
+                                  <th>project</th>
+                                  <th>platform</th>
+                                  <th>BDD errors</th>
+                                  <th>Lint errors</th>
+                                  <th>Type errors</th>
 
-        <tbody>
-          {...summary.map((s) => {
-            return (
-              <>
-                <tr>
-                  <th>{s[0]}</th>
-                </tr>
-                {...s[1].tests.map((t) => {
-                  const x = `${s[0]}/${t[0]
-                    .split(".")
-                    .slice(0, -1)
-                    .join(".")}/${t[1]}`;
-                  const y = s[2][t[0]];
+                                </tr>
+                              </thead>
 
-                  return (
-                    <tr>
-                      <td>{t[0]}</td>
-                      <td>{t[1]}</td>
-                      <td>
+                              <tbody>
+                                {...summary.map((s) => {
+                                  return (
+                                    <>
+                                      <tr>
+                                        <th>{s[0]}</th>
+                                      </tr>
+                                      {...s[1].tests.map((t) => {
+                                        const x = `${s[0]}/${t[0]
+                                          .split(".")
+                                          .slice(0, -1)
+                                          .join(".")}/${t[1]}`;
+                                        const y = s[2][t[0]];
 
+                                        if (!y) return <pre>ERROR</pre>
 
-
-
-                        <a
-                          href={`./testeranto/reports/${x}/index.html`}
-                        >
-
-                          {
-                            (y.runTimeErrors < 0) && "‼️ Tests did not complete"
-                          }
-
-                          {
-                            y.runTimeErrors === 0 && "✅ All tests passed"
-                          }
-
-                          {
-                            y.runTimeErrors > 0 && `⚠️ ${y.runTimeErrors} failures`
-                          }
-
-                        </a>
-                      </td>
-                      <td>
-                        <a
-                          href={`./testeranto/reports/${x}/lint_errors.json`}
-                        >
-                          {y.staticErrors}
-                        </a>
-                      </td>
-                      <td>
-                        <a
-                          href={`./testeranto/reports/${x}/type_errors.txt`}
-                        >
-                          {y.typeErrors}
-                        </a>
-                      </td>
+                                        return (
+                                          <tr>
+                                            <td>{t[0]}</td>
+                                            <td>{t[1]}</td>
+                                            <td>
 
 
-                    </tr>
-                  );
-                })}
-              </>
-            );
-          })}
-        </tbody>
-      </Table>
 
 
+                                              <a
+                                                href={`./testeranto/reports/${x}/index.html`}
+                                              >
+
+                                                {
+                                                  (y.runTimeErrors < 0) && "‼️ Tests did not complete"
+                                                }
+
+                                                {
+                                                  y.runTimeErrors === 0 && "✅ All tests passed"
+                                                }
+
+                                                {
+                                                  y.runTimeErrors > 0 && `⚠️ ${y.runTimeErrors} failures`
+                                                }
+
+                                              </a>
+                                            </td>
+                                            <td>
+                                              <a
+                                                href={`./testeranto/reports/${x}/lint_errors.json`}
+                                              >
+                                                {y.staticErrors}
+                                              </a>
+                                            </td>
+                                            <td>
+                                              <a
+                                                href={`./testeranto/reports/${x}/type_errors.txt`}
+                                              >
+                                                {y.typeErrors}
+                                              </a>
+                                            </td>
+
+
+                                          </tr>
+                                        );
+                                      })}
+                                    </>
+                                  );
+                                })}
+                              </tbody>
+                            </Table>
+                          </Table>
+                        </Tab.Pane>
+                      ))}
+                    </Tab.Content>
+                  </Col>
+                </Row>
+              </Tab.Container>
+            </Tab.Pane>
+          </Tab.Content>
+        </Row>
+      </Tab.Container>
       <Footer />
-
     </div>
   );
 };

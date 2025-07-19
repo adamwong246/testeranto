@@ -1,47 +1,4 @@
-import { BaseGiven, BaseWhen, BaseThen, BaseCheck } from "../abstractBase";
-import { BaseSuite } from "../BaseSuite";
-// 2. Mock implementations with proper typing
-export class MockGiven extends BaseGiven {
-    constructor(name, features, whens, thens) {
-        super(name, features, whens, thens, async () => ({ testStore: true }), // givenCB
-        {} // initialValues
-        );
-    }
-    async givenThat(subject, testResourceConfiguration, artifactory, givenCB, initialValues, pm) {
-        return { testStore: true };
-    }
-    uberCatcher(e) {
-        console.error("Given error 2:", e);
-    }
-}
-class MockWhen extends BaseWhen {
-    async andWhen(store, whenCB, testResource, pm) {
-        return Object.assign(Object.assign({}, store), { testStore: true });
-    }
-}
-class MockThen extends BaseThen {
-    async butThen(store, thenCB, testResourceConfiguration, pm) {
-        return { testSelection: true };
-    }
-}
-class MockCheck extends BaseCheck {
-    async checkThat(subject, testResourceConfiguration, artifactory, initializer, initialValues, pm) {
-        return { testStore: true };
-    }
-}
-class TestableSuite extends BaseSuite {
-    constructor(name, index) {
-        super(name, index, {
-            testGiven: new MockGiven("testGiven", ["testFeature"], [
-                new MockWhen("testWhen", () => Promise.resolve({ testStore: true })),
-            ], [
-                new MockThen("testThen", async () => Promise.resolve({ testSelection: true })),
-            ]),
-        }, [
-            new MockCheck("testCheck", ["testFeature"], () => Promise.resolve({ testStore: true }), null, () => { }),
-        ]);
-    }
-}
+import { MockSuite } from "./mock";
 // 3. Enhanced Test Specification with more test cases
 export const specification = (Suite, Given, When, Then, Check) => [
     Suite.Default("BaseSuite Core Functionality Tests", {
@@ -94,7 +51,7 @@ export const implementation = {
         Default: "BaseSuite Comprehensive Test Suite",
     },
     givens: {
-        Default: () => new TestableSuite("testSuite", 0),
+        Default: () => new MockSuite("testSuite", 0),
     },
     whens: {
         RunSuite: () => async (suite) => {
@@ -212,7 +169,7 @@ export const implementation = {
         },
     },
     checks: {
-        Default: () => new TestableSuite("testCheck", 1),
+        Default: () => new MockSuite("testCheck", 1),
     },
 };
 // 5. Fully typed Test Interface

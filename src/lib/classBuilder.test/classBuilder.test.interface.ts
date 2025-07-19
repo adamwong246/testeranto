@@ -3,6 +3,7 @@ import { ITestInterface } from "../../CoreTypes";
 import { I } from "../baseBuilder.test/baseBuilder.test.types";
 
 export const testInterface: ITestInterface<I> = {
+  beforeAll: async () => {},
   beforeEach: async (subject, initializer) => {
     return initializer();
   },
@@ -14,5 +15,5 @@ export const testInterface: ITestInterface<I> = {
   },
   afterEach: (store) => store,
   afterAll: () => {},
-  assertThis: (x: any) => {},
+  assertThis: (x: any) => {}
 };

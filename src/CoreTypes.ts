@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ITTestResourceConfiguration } from "./lib";
+import { BaseGiven } from "./lib/abstractBase";
+import { BaseSuite } from "./lib/BaseSuite";
 
 import { IPM, ITestCheckCallback } from "./lib/types";
 import {
@@ -63,7 +65,7 @@ export type ITestSpecification<
   When: WhenSpecification<I, O>,
   Then: ThenSpecification<I, O>,
   Check: ITestCheckCallback<I, O>
-) => any[];
+) => BaseSuite<I, O>[];
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

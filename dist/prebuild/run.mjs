@@ -869,9 +869,9 @@ var PM_Main = class extends PM_WithEslintAndTsc {
       let haltReturns = false;
       const ipcfile = "/tmp/tpipe_" + Math.random();
       const child = spawn(
-        // "node --inspect-brk ",
         "node",
-        [builtfile, testResources, ipcfile],
+        // "node",
+        ["--inspect-brk", builtfile, testResources, ipcfile],
         {
           stdio: ["pipe", "pipe", "pipe", "ipc"]
         }

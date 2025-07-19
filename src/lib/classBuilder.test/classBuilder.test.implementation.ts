@@ -1,25 +1,30 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { PassThrough } from "stream";
 
 import { ITestImplementation, ITestSpecification } from "../../CoreTypes";
-import { TestClassBuilder } from "./TestClassBuilder";
+import mock from "./mock";
+
 import { I, O, M } from "./classBuilder.test.types";
 
 import { ITTestResourceRequest } from "..";
 import { specification } from "./classBuilder.test.specification";
+import { MockSuite } from "../BaseSuite.test/mock";
 
 export const implementation: ITestImplementation<I, O, M> = {
   suites: {
     Default: "ClassBuilder test suite",
+    ExtendedSuite: "Extended ClassBuilder test suite",
   },
 
   givens: {
     Default: () => {
-      return new TestClassBuilder(
+      return new mock(
         implementation, // Use the current implementation
         specification, // Use the current specification
         {}, // Default input
-        class {}, // suiteKlasser
+        MockSuite,
+        // class {}, // suiteKlasser
         class {}, // givenKlasser
         class {}, // whenKlasser
         class {}, // thenKlasser
@@ -28,7 +33,7 @@ export const implementation: ITestImplementation<I, O, M> = {
       );
     },
     WithCustomInput: (input: any) => {
-      return new TestClassBuilder(
+      return new mock(
         implementation,
         specification,
         input,
@@ -41,7 +46,7 @@ export const implementation: ITestImplementation<I, O, M> = {
       );
     },
     WithResourceRequirements: (requirements: ITTestResourceRequest) => {
-      return new TestClassBuilder(
+      return new mock(
         implementation,
         specification,
         {},
@@ -54,7 +59,7 @@ export const implementation: ITestImplementation<I, O, M> = {
       );
     },
     WithCustomImplementation: (impl: ITestImplementation<any, any>) => {
-      return new TestClassBuilder(
+      return new mock(
         impl,
         specification,
         {},
@@ -67,7 +72,7 @@ export const implementation: ITestImplementation<I, O, M> = {
       );
     },
     WithCustomSpecification: (spec: ITestSpecification<any, any>) => {
-      return new TestClassBuilder(
+      return new mock(
         implementation,
         spec,
         {},
@@ -104,18 +109,20 @@ export const implementation: ITestImplementation<I, O, M> = {
   },
 
   thens: {
-    initializedProperly: () => (builder) => {
+    initializedProperly: () => (builder: any) => {
       if (!(builder instanceof TestClassBuilder)) {
         throw new Error("Builder was not properly initialized");
       }
       return builder;
     },
+
     specsGenerated: () => (builder) => {
       if (!Array.isArray(builder.specs)) {
         throw new Error("Specs were not generated");
       }
       return builder;
     },
+
     jobsCreated: () => (builder) => {
       if (!Array.isArray(builder.testJobs)) {
         throw new Error("Test jobs were not created");
@@ -198,7 +205,5 @@ export const implementation: ITestImplementation<I, O, M> = {
 
   checks: {
     Default: () => new PassThrough(),
-    ImplementationCheck: (validator) => validator(implementation),
-    SpecificationCheck: (validator) => validator(specification),
   },
 };

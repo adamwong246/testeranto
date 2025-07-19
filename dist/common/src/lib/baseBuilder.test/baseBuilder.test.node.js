@@ -7,5 +7,5 @@ const Pure_1 = __importDefault(require("../../Pure"));
 const baseBuilder_test_specification_1 = require("./baseBuilder.test.specification");
 const baseBuilder_test_implementation_1 = require("./baseBuilder.test.implementation");
 const baseBuilder_test_interface_1 = require("./baseBuilder.test.interface");
-const basebuilder_1 = require("../basebuilder");
-exports.default = (0, Pure_1.default)(basebuilder_1.BaseBuilder.prototype, baseBuilder_test_specification_1.specification, baseBuilder_test_implementation_1.implementation, baseBuilder_test_interface_1.testInterface);
+const baseBuilder_test_mock_1 = require("./baseBuilder.test.mock");
+exports.default = (0, Pure_1.default)(baseBuilder_test_mock_1.MockBaseBuilder.prototype, baseBuilder_test_specification_1.specification, baseBuilder_test_implementation_1.implementation, baseBuilder_test_interface_1.testInterface);

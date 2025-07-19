@@ -1,7 +1,10 @@
 
+/add src/PM/node.ts
+/add src/Node.ts
 /add src/lib/classBuilder.test/classBuilder.test.specification.ts
 /add src/lib/classBuilder.test/classBuilder.test.implementation.ts
-/add src/lib/classBuilder.test/TestClassBuilder.ts
+/add src/lib/classBuilder.test/mock.ts
+/add src/lib/BaseSuite.test/mock.ts
 /add src/lib/classBuilder.test/classBuilder.test.interface.ts
 /add src/lib/classBuilder.test/classBuilder.test.ts
 

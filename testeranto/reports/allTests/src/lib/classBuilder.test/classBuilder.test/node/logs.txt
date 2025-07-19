@@ -1,12 +1,2 @@
-stdout > mark4
-stderr > goodbye node with caught error ReferenceError: implementation is not defined
-    at specification (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/classBuilder.test/classBuilder.test.mjs:68:11)
-    at new BaseBuilder (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RF3LIUSG.mjs:173:18)
-    at new ClassBuilder (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RF3LIUSG.mjs:331:5)
-    at new TesterantoCore (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RF3LIUSG.mjs:663:5)
-    at new NodeTesteranto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-NQBTLMSG.mjs:211:5)
-    at testeranto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-NQBTLMSG.mjs:230:15)
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/classBuilder.test/classBuilder.test.mjs:400:33
-    at ModuleJob.run (node:internal/modules/esm/module_job:192:25)
-    at async DefaultModuleLoader.import (node:internal/modules/esm/loader:228:24)
-    at async loadESM (node:internal/process/esm_loader:40:7)
+stderr > Debugger listening on ws://127.0.0.1:9229/22acbe3b-1647-4de7-bbe8-8eec9121a444
+For help, see: https://nodejs.org/en/docs/inspector

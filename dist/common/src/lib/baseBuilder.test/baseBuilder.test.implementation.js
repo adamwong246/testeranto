@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.implementation = void 0;
 const stream_1 = require("stream");
-const TestBaseBuilder_1 = require("./TestBaseBuilder");
+const baseBuilder_test_mock_1 = require("./baseBuilder.test.mock");
 const basebuilder_1 = require("../basebuilder");
 exports.implementation = {
     suites: {
@@ -10,13 +10,13 @@ exports.implementation = {
     },
     givens: {
         Default: () => {
-            return new TestBaseBuilder_1.TestBaseBuilder({}, {}, {}, {}, {}, {}, { ports: [] }, () => []);
+            return new baseBuilder_test_mock_1.MockBaseBuilder({}, {}, {}, {}, {}, {}, { ports: [] }, () => []);
         },
         WithCustomInput: (input) => {
-            return new TestBaseBuilder_1.TestBaseBuilder(input, {}, {}, {}, {}, {}, { ports: [] }, () => []);
+            return new baseBuilder_test_mock_1.MockBaseBuilder(input, {}, {}, {}, {}, {}, { ports: [] }, () => []);
         },
         WithResourceRequirements: (requirements) => {
-            return new TestBaseBuilder_1.TestBaseBuilder({}, {}, {}, {}, {}, {}, requirements, () => []);
+            return new baseBuilder_test_mock_1.MockBaseBuilder({}, {}, {}, {}, {}, {}, requirements, () => []);
         },
     },
     whens: {

@@ -16,8 +16,6 @@ import {
 
 let ipcfile;
 
-console.log("mark4");
-
 export class NodeTesteranto<
   I extends Ibdd_in_any,
   O extends Ibdd_out_any,
@@ -69,7 +67,6 @@ const testeranto = async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
       testResourceRequirement,
       testInterface
     );
-    console.log("args", process.argv);
 
     process.on("unhandledRejection", (reason, promise) => {
       console.error("Unhandled Rejection at:", promise, "reason:", reason);

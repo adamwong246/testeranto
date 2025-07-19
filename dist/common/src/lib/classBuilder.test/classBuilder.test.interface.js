@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.testInterface = void 0;
 exports.testInterface = {
+    beforeAll: async () => { },
     beforeEach: async (subject, initializer) => {
         return initializer();
     },
@@ -13,5 +14,5 @@ exports.testInterface = {
     },
     afterEach: (store) => store,
     afterAll: () => { },
-    assertThis: (x) => { },
+    assertThis: (x) => { }
 };

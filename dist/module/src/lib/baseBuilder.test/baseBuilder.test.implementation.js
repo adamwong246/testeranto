@@ -1,5 +1,5 @@
 import { PassThrough } from "stream";
-import { TestBaseBuilder } from "./TestBaseBuilder";
+import { MockBaseBuilder } from "./baseBuilder.test.mock";
 import { BaseBuilder } from "../basebuilder";
 export const implementation = {
     suites: {
@@ -7,13 +7,13 @@ export const implementation = {
     },
     givens: {
         Default: () => {
-            return new TestBaseBuilder({}, {}, {}, {}, {}, {}, { ports: [] }, () => []);
+            return new MockBaseBuilder({}, {}, {}, {}, {}, {}, { ports: [] }, () => []);
         },
         WithCustomInput: (input) => {
-            return new TestBaseBuilder(input, {}, {}, {}, {}, {}, { ports: [] }, () => []);
+            return new MockBaseBuilder(input, {}, {}, {}, {}, {}, { ports: [] }, () => []);
         },
         WithResourceRequirements: (requirements) => {
-            return new TestBaseBuilder({}, {}, {}, {}, {}, {}, requirements, () => []);
+            return new MockBaseBuilder({}, {}, {}, {}, {}, {}, requirements, () => []);
         },
     },
     whens: {

@@ -1,14 +1,14 @@
 import { PassThrough } from "stream";
 
 import { ITestImplementation } from "../../CoreTypes";
-import { TestBaseBuilder } from "./TestBaseBuilder";
+import { MockBaseBuilder } from "./baseBuilder.test.mock";
 
 import { I, O } from "./baseBuilder.test.types";
 import { ITTestResourceRequest } from "..";
 import { BaseBuilder } from "../basebuilder";
 
 // Define our test subject type
-type TestSubject = TestBaseBuilder<any, any, any, any, any, any>;
+type TestSubject = MockBaseBuilder<any, any, any, any, any, any>;
 
 export const implementation: ITestImplementation<I, O, {}> = {
   suites: {
@@ -17,7 +17,7 @@ export const implementation: ITestImplementation<I, O, {}> = {
 
   givens: {
     Default: () => {
-      return new TestBaseBuilder(
+      return new MockBaseBuilder(
         {},
         {},
         {},
@@ -29,7 +29,7 @@ export const implementation: ITestImplementation<I, O, {}> = {
       );
     },
     WithCustomInput: (input: any) => {
-      return new TestBaseBuilder(
+      return new MockBaseBuilder(
         input,
         {},
         {},
@@ -41,7 +41,7 @@ export const implementation: ITestImplementation<I, O, {}> = {
       );
     },
     WithResourceRequirements: (requirements: ITTestResourceRequest) => {
-      return new TestBaseBuilder(
+      return new MockBaseBuilder(
         {},
         {},
         {},

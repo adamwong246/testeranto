@@ -2,7 +2,6 @@ import Testeranto from "./lib/core.js";
 import { defaultTestResourceRequirement, } from "./lib/index.js";
 import { PM_Node } from "./PM/node.js";
 let ipcfile;
-console.log("mark4");
 export class NodeTesteranto extends Testeranto {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
         super(input, testSpecification, testImplementation, testResourceRequirement, testInterface, () => {
@@ -23,7 +22,6 @@ export class NodeTesteranto extends Testeranto {
 const testeranto = async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = defaultTestResourceRequirement) => {
     try {
         const t = new NodeTesteranto(input, testSpecification, testImplementation, testResourceRequirement, testInterface);
-        console.log("args", process.argv);
         process.on("unhandledRejection", (reason, promise) => {
             console.error("Unhandled Rejection at:", promise, "reason:", reason);
             // Optionally, terminate the process or perform cleanup

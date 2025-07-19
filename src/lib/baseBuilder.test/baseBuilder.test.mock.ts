@@ -12,7 +12,7 @@ import { ITTestResourceRequest } from "..";
 /**
  * Concrete implementation of BaseBuilder for testing purposes only
  */
-export class TestBaseBuilder<
+export class MockBaseBuilder<
   I extends Ibdd_in_any,
   O extends Ibdd_out_any,
   SuiteExtensions = {},

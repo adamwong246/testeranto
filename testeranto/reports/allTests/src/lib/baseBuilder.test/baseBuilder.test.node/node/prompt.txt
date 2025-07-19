@@ -1,7 +1,9 @@
 
+/add src/PM/pure.ts
+/add src/Pure.ts
 /add src/lib/baseBuilder.test/baseBuilder.test.specification.ts
 /add src/lib/baseBuilder.test/baseBuilder.test.implementation.ts
-/add src/lib/baseBuilder.test/TestBaseBuilder.ts
+/add src/lib/baseBuilder.test/baseBuilder.test.mock.ts
 /add src/lib/baseBuilder.test/baseBuilder.test.interface.ts
 /add src/lib/baseBuilder.test/baseBuilder.test.node.ts
 

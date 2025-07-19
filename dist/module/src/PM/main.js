@@ -270,9 +270,9 @@ export class PM_Main extends PM_WithEslintAndTsc {
             const builtfile = dest;
             let haltReturns = false;
             const ipcfile = "/tmp/tpipe_" + Math.random();
-            const child = spawn(
-            // "node --inspect-brk ",
-            "node", [builtfile, testResources, ipcfile], {
+            const child = spawn("node", 
+            // "node",
+            ["--inspect-brk", builtfile, testResources, ipcfile], {
                 stdio: ["pipe", "pipe", "pipe", "ipc"],
             });
             let buffer = new Buffer("");

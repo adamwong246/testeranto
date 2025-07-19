@@ -1,21 +1,27 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.implementation = void 0;
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 const stream_1 = require("stream");
-const TestClassBuilder_1 = require("./TestClassBuilder");
+const mock_1 = __importDefault(require("./mock"));
 const classBuilder_test_specification_1 = require("./classBuilder.test.specification");
+const mock_2 = require("../BaseSuite.test/mock");
 exports.implementation = {
     suites: {
         Default: "ClassBuilder test suite",
+        ExtendedSuite: "Extended ClassBuilder test suite",
     },
     givens: {
         Default: () => {
-            return new TestClassBuilder_1.TestClassBuilder(exports.implementation, // Use the current implementation
+            return new mock_1.default(exports.implementation, // Use the current implementation
             classBuilder_test_specification_1.specification, // Use the current specification
             {}, // Default input
-            class {
-            }, // suiteKlasser
+            mock_2.MockSuite, 
+            // class {}, // suiteKlasser
             class {
             }, // givenKlasser
             class {
@@ -28,7 +34,7 @@ exports.implementation = {
             );
         },
         WithCustomInput: (input) => {
-            return new TestClassBuilder_1.TestClassBuilder(exports.implementation, classBuilder_test_specification_1.specification, input, class {
+            return new mock_1.default(exports.implementation, classBuilder_test_specification_1.specification, input, class {
             }, class {
             }, class {
             }, class {
@@ -36,7 +42,7 @@ exports.implementation = {
             }, { ports: [] });
         },
         WithResourceRequirements: (requirements) => {
-            return new TestClassBuilder_1.TestClassBuilder(exports.implementation, classBuilder_test_specification_1.specification, {}, class {
+            return new mock_1.default(exports.implementation, classBuilder_test_specification_1.specification, {}, class {
             }, class {
             }, class {
             }, class {
@@ -44,7 +50,7 @@ exports.implementation = {
             }, requirements);
         },
         WithCustomImplementation: (impl) => {
-            return new TestClassBuilder_1.TestClassBuilder(impl, classBuilder_test_specification_1.specification, {}, class {
+            return new mock_1.default(impl, classBuilder_test_specification_1.specification, {}, class {
             }, class {
             }, class {
             }, class {
@@ -52,7 +58,7 @@ exports.implementation = {
             }, { ports: [] });
         },
         WithCustomSpecification: (spec) => {
-            return new TestClassBuilder_1.TestClassBuilder(exports.implementation, spec, {}, class {
+            return new mock_1.default(exports.implementation, spec, {}, class {
             }, class {
             }, class {
             }, class {
@@ -83,7 +89,7 @@ exports.implementation = {
     },
     thens: {
         initializedProperly: () => (builder) => {
-            if (!(builder instanceof TestClassBuilder_1.TestClassBuilder)) {
+            if (!(builder instanceof TestClassBuilder)) {
                 throw new Error("Builder was not properly initialized");
             }
             return builder;
@@ -176,7 +182,5 @@ exports.implementation = {
     },
     checks: {
         Default: () => new stream_1.PassThrough(),
-        ImplementationCheck: (validator) => validator(exports.implementation),
-        SpecificationCheck: (validator) => validator(classBuilder_test_specification_1.specification),
     },
 };

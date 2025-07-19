@@ -205,7 +205,6 @@ var PM_Node = class extends PM {
 
 // src/Node.ts
 var ipcfile;
-console.log("mark4");
 var NodeTesteranto = class extends TesterantoCore {
   constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
     super(
@@ -234,7 +233,6 @@ var testeranto = async (input, testSpecification, testImplementation, testInterf
       testResourceRequirement,
       testInterface
     );
-    console.log("args", process.argv);
     process.on("unhandledRejection", (reason, promise) => {
       console.error("Unhandled Rejection at:", promise, "reason:", reason);
     });

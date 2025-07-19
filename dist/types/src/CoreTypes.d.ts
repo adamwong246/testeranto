@@ -1,4 +1,5 @@
 import { ITTestResourceConfiguration } from "./lib";
+import { BaseSuite } from "./lib/BaseSuite";
 import { IPM, ITestCheckCallback } from "./lib/types";
 import { GivenSpecification, WhenSpecification, ThenSpecification, TestWhenImplementation, Modify, TestSuiteImplementation, TestGivenImplementation, TestThenImplementation, TestCheckImplementation, TestSuiteShape, TestGivenShape, TestWhenShape, TestThenShape, TestCheckShape, SuiteSpecification } from "./Types";
 export type ITestInterface<I extends Ibdd_in_any> = {
@@ -10,7 +11,7 @@ export type ITestInterface<I extends Ibdd_in_any> = {
     beforeAll: (input: I["iinput"], testResource: ITTestResourceConfiguration, pm: IPM) => Promise<I["isubject"]>;
     beforeEach: (subject: I["isubject"], initializer: (c?: any) => I["given"], testResource: ITTestResourceConfiguration, initialValues: any, pm: IPM) => Promise<I["istore"]>;
 };
-export type ITestSpecification<I extends Ibdd_in_any, O extends Ibdd_out_any> = (Suite: SuiteSpecification<I, O>, Given: GivenSpecification<I, O>, When: WhenSpecification<I, O>, Then: ThenSpecification<I, O>, Check: ITestCheckCallback<I, O>) => any[];
+export type ITestSpecification<I extends Ibdd_in_any, O extends Ibdd_out_any> = (Suite: SuiteSpecification<I, O>, Given: GivenSpecification<I, O>, When: WhenSpecification<I, O>, Then: ThenSpecification<I, O>, Check: ITestCheckCallback<I, O>) => BaseSuite<I, O>[];
 export type ITestImplementation<I extends Ibdd_in_any, O extends Ibdd_out_any, modifier = {
     whens: TestWhenImplementation<I, O>;
 }> = Modify<{

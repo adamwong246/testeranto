@@ -1,23 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TestClassBuilder = void 0;
+exports.MockBaseBuilder = void 0;
 const basebuilder_1 = require("../basebuilder");
 /**
- * Concrete implementation of BaseBuilder for testing ClassBuilder
+ * Concrete implementation of BaseBuilder for testing purposes only
  */
-class TestClassBuilder extends basebuilder_1.BaseBuilder {
-    constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResourceRequirement) {
-        super(input, {}, // suitesOverrides
-        {}, // givenOverides
-        {}, // whenOverides
-        {}, // thenOverides
-        {}, // checkOverides
-        testResourceRequirement, testSpecification);
+class MockBaseBuilder extends basebuilder_1.BaseBuilder {
+    constructor(input, suitesOverrides = {}, givenOverrides = {}, whenOverrides = {}, thenOverrides = {}, checkOverrides = {}, testResourceRequirement = { ports: [] }, testSpecification = () => []) {
+        super(input, suitesOverrides, givenOverrides, whenOverrides, thenOverrides, checkOverrides, testResourceRequirement, testSpecification);
         this.summary = {};
         this.summary = {};
     }
     /**
-     * Simplified test run for verification
+     * Simplified version for testing that doesn't actually run tests
      */
     testRun(puppetMaster) {
         this.summary = {
@@ -38,4 +33,4 @@ class TestClassBuilder extends basebuilder_1.BaseBuilder {
         });
     }
 }
-exports.TestClassBuilder = TestClassBuilder;
+exports.MockBaseBuilder = MockBaseBuilder;

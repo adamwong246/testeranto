@@ -120,14 +120,28 @@ const BddPage = () => {
     return <div>loading...</div>;
   }
 
+  function stripDomainFromUrl(url) {
+    try {
+      const urlObj = new URL(url);
+      // Construct the new URL by combining pathname, search (query parameters), and hash
+      // The slice(1) removes the leading '/' from pathname if it's not the root path
+      return urlObj.pathname + urlObj.search + urlObj.hash;
+    } catch (error) {
+      console.error("Invalid URL:", error);
+      return null; // Or throw an error, depending on desired error handling
+    }
+  }
+
   const copyAiderCommand = async () => {
     if (typeof prompt !== 'string' || typeof message !== 'string') {
       alert('Prompt and message files must be loaded first');
       return;
     }
 
-    const basePath = window.location.href.split('/').slice(0, -1).join('/');
-    const command = `aider --log-file ${basePath}/message.txt --message-file ${basePath}/prompt.txt`;
+    const basePath = `.${stripDomainFromUrl(window.location.href).split('/').slice(0, -1).join('/')}`;
+
+
+    const command = `aider --load ${basePath}/prompt.txt  --message-file ${basePath}/message.txt`;
 
     try {
       await navigator.clipboard.writeText(command);
@@ -141,25 +155,11 @@ const BddPage = () => {
 
   return (
     <div className="container-fluid p-4">
-      <nav className="navbar navbar-expand-lg navbar-light bg-light mb-3 rounded">
-        <div className="container-fluid">
-          <span className="navbar-brand text-muted">{basePath.split("testeranto/reports")[1]}</span>
-          <div className="ms-auto">
-            <button
-              onClick={copyAiderCommand}
-              className="btn btn-primary"
-              title="Copy aider command to clipboard"
-            >
-              🤖🪄✨
-            </button>
-          </div>
-        </div>
-      </nav>
-
       <Tab.Container defaultActiveKey="tests">
-        <Row>
-          <Col sm={2}>
-            <Nav variant="pills" className="flex-column">
+        <nav className="navbar navbar-expand-lg navbar-light bg-light mb-3 rounded">
+          <div className="container-fluid">
+            <span className="navbar-brand text-muted">{basePath.split("testeranto/reports")[1]}</span>
+            <Nav variant="pills" className="me-auto">
               <Nav.Item>
                 <Nav.Link eventKey="tests">Results</Nav.Link>
               </Nav.Item>
@@ -170,8 +170,19 @@ const BddPage = () => {
                 <Nav.Link eventKey="ai">Aider</Nav.Link>
               </Nav.Item>
             </Nav>
-          </Col>
-          <Col sm={10}>
+            <div className="ms-auto">
+              <button
+                onClick={copyAiderCommand}
+                className="btn btn-primary"
+                title="Copy aider command to clipboard"
+              >
+                🤖🪄✨
+              </button>
+            </div>
+          </div>
+        </nav>
+        <Row>
+          <Col sm={12}>
             <Tab.Content>
               <Tab.Pane eventKey="tests">
                 {'error' in bddErrors ? (

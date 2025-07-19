@@ -7,9 +7,9 @@ import {
   ITestInterface,
 } from "../../CoreTypes";
 import { WhenSpecification } from "../../Types";
-import { BaseGiven, BaseWhen, BaseThen, BaseCheck } from "../abstractBase";
 import { BaseSuite } from "../BaseSuite";
 import { IPM, ITestCheckCallback } from "../types";
+import { MockSuite } from "./mock";
 
 // 1. Define our test types with full type safety
 export type TestStore = {
@@ -53,109 +53,6 @@ export type O = Ibdd_out<
     TestCheck: []; // Check validations
   }
 >;
-
-// 2. Mock implementations with proper typing
-export class MockGiven extends BaseGiven<I> {
-  constructor(
-    name: string,
-    features: string[],
-    whens: BaseWhen<I>[],
-    thens: BaseThen<I>[]
-  ) {
-    super(
-      name,
-      features,
-      whens,
-      thens,
-      async () => ({ testStore: true }), // givenCB
-      {} // initialValues
-    );
-  }
-
-  async givenThat(
-    subject: I["isubject"],
-    testResourceConfiguration: ITTestResourceConfiguration,
-    artifactory: ITestArtifactory,
-    givenCB: I["given"],
-    initialValues: any,
-    pm: IPM
-  ): Promise<TestStore> {
-    return { testStore: true };
-  }
-
-  uberCatcher(e: Error): void {
-    console.error("Given error 2:", e);
-  }
-}
-
-class MockWhen extends BaseWhen<I> {
-  async andWhen(
-    store: TestStore,
-    whenCB: (x: TestSelection) => Promise<TestStore>,
-    testResource: ITTestResourceConfiguration,
-    pm: IPM
-  ): Promise<TestStore> {
-    return { ...store, testStore: true };
-  }
-}
-
-class MockThen extends BaseThen<I> {
-  async butThen(
-    store: TestStore,
-    thenCB: (s: TestSelection) => Promise<TestSelection>,
-    testResourceConfiguration: ITTestResourceConfiguration,
-    pm: IPM
-  ): Promise<TestSelection> {
-    return { testSelection: true };
-  }
-}
-
-class MockCheck extends BaseCheck<I> {
-  async checkThat(
-    subject: I["isubject"],
-    testResourceConfiguration: ITTestResourceConfiguration,
-    artifactory: ITestArtifactory,
-    initializer: any,
-    initialValues: any,
-    pm: IPM
-  ): Promise<TestStore> {
-    return { testStore: true };
-  }
-}
-
-class TestableSuite extends BaseSuite<I, O> {
-  constructor(name: string, index: number) {
-    super(
-      name,
-      index,
-      {
-        testGiven: new MockGiven(
-          "testGiven",
-          ["testFeature"],
-          [
-            new MockWhen("testWhen", () =>
-              Promise.resolve({ testStore: true })
-            ),
-          ],
-          [
-            new MockThen("testThen", async () =>
-              Promise.resolve({ testSelection: true })
-            ),
-          ]
-        ),
-      },
-      [
-        new MockCheck(
-          "testCheck",
-          ["testFeature"],
-          () => Promise.resolve({ testStore: true }),
-          null,
-          () => {}
-        ),
-      ]
-    );
-  }
-}
 
 // 3. Enhanced Test Specification with more test cases
 export const specification: ITestSpecification<I, O> = (
@@ -245,13 +142,13 @@ export const implementation: ITestImplementation<I, O> = {
   },
 
   givens: {
-    Default: (): TestableSuite => new TestableSuite("testSuite", 0),
+    Default: (): MockSuite => new MockSuite("testSuite", 0),
   },
 
   whens: {
     RunSuite:
-      (): ((suite: TestableSuite) => Promise<TestableSuite>) =>
-      async (suite: TestableSuite) => {
+      (): ((suite: MockSuite) => Promise<MockSuite>) =>
+      async (suite: MockSuite) => {
         const mockConfig: ITTestResourceConfiguration = {
           name: "test",
           fs: "/tmp",
@@ -287,8 +184,8 @@ export const implementation: ITestImplementation<I, O> = {
       },
 
     RunSuiteWithError:
-      (): ((suite: TestableSuite) => Promise<TestableSuite>) =>
-      async (suite: TestableSuite) => {
+      (): ((suite: MockSuite) => Promise<MockSuite>) =>
+      async (suite: MockSuite) => {
         // Force an error by passing invalid config
         try {
           await suite.run(
@@ -305,8 +202,8 @@ export const implementation: ITestImplementation<I, O> = {
       },
 
     AddFeature:
-      (feature: string): ((suite: TestableSuite) => TestableSuite) =>
-      (suite: TestableSuite) => {
+      (feature: string): ((suite: MockSuite) => MockSuite) =>
+      (suite: MockSuite) => {
         // Add a feature to the first given
         const firstGivenKey = Object.keys(suite.givens)[0];
         if (firstGivenKey) {
@@ -318,8 +215,8 @@ export const implementation: ITestImplementation<I, O> = {
 
   thens: {
     SuiteNameMatches:
-      (expectedName: string): ((suite: TestableSuite) => TestableSuite) =>
-      (suite: TestableSuite) => {
+      (expectedName: string): ((suite: MockSuite) => MockSuite) =>
+      (suite: MockSuite) => {
         if (suite.name !== expectedName) {
           throw new Error(
             `Expected suite name '${expectedName}', got '${suite.name}'`
@@ -329,8 +226,8 @@ export const implementation: ITestImplementation<I, O> = {
       },
 
     SuiteIndexMatches:
-      (expectedIndex: number): ((suite: TestableSuite) => TestableSuite) =>
-      (suite: TestableSuite) => {
+      (expectedIndex: number): ((suite: MockSuite) => MockSuite) =>
+      (suite: MockSuite) => {
         if (suite.index !== expectedIndex) {
           throw new Error(
             `Expected suite index ${expectedIndex}, got ${suite.index}`
@@ -340,8 +237,8 @@ export const implementation: ITestImplementation<I, O> = {
       },
 
     FeaturesIncludes:
-      (feature: string): ((suite: TestableSuite) => TestableSuite) =>
-      (suite: TestableSuite) => {
+      (feature: string): ((suite: MockSuite) => MockSuite) =>
+      (suite: MockSuite) => {
         if (!suite.features().includes(feature)) {
           throw new Error(`Expected features to include ${feature}`);
         }
@@ -349,8 +246,8 @@ export const implementation: ITestImplementation<I, O> = {
       },
 
     FeatureCountMatches:
-      (expectedCount: number): ((suite: TestableSuite) => TestableSuite) =>
-      (suite: TestableSuite) => {
+      (expectedCount: number): ((suite: MockSuite) => MockSuite) =>
+      (suite: MockSuite) => {
         const actualCount = suite.features().length;
         if (actualCount !== expectedCount) {
           throw new Error(
@@ -360,18 +257,15 @@ export const implementation: ITestImplementation<I, O> = {
         return suite;
       },
 
-    StoreValid:
-      (): ((suite: TestableSuite) => TestableSuite) =>
-      (suite: TestableSuite) => {
-        if (!suite.store?.testStore) {
-          throw new Error("Expected valid store after execution");
-        }
-        return suite;
-      },
+    StoreValid: (): ((suite: MockSuite) => MockSuite) => (suite: MockSuite) => {
+      if (!suite.store?.testStore) {
+        throw new Error("Expected valid store after execution");
+      }
+      return suite;
+    },
 
     NoErrorsOccurred:
-      (): ((suite: TestableSuite) => TestableSuite) =>
-      (suite: TestableSuite) => {
+      (): ((suite: MockSuite) => MockSuite) => (suite: MockSuite) => {
         if (suite.failed || suite.fails > 0) {
           throw new Error("Expected no errors to occur during execution");
         }
@@ -379,8 +273,8 @@ export const implementation: ITestImplementation<I, O> = {
       },
 
     ErrorCountMatches:
-      (expectedCount: number): ((suite: TestableSuite) => TestableSuite) =>
-      (suite: TestableSuite) => {
+      (expectedCount: number): ((suite: MockSuite) => MockSuite) =>
+      (suite: MockSuite) => {
         if (suite.fails !== expectedCount) {
           throw new Error(
             `Expected ${expectedCount} errors, got ${suite.fails}`
@@ -390,8 +284,7 @@ export const implementation: ITestImplementation<I, O> = {
       },
 
     FailedFlagSet:
-      (): ((suite: TestableSuite) => TestableSuite) =>
-      (suite: TestableSuite) => {
+      (): ((suite: MockSuite) => MockSuite) => (suite: MockSuite) => {
         if (!suite.failed) {
           throw new Error("Expected failed flag to be set after error");
         }
@@ -399,8 +292,7 @@ export const implementation: ITestImplementation<I, O> = {
       },
 
     AllChecksCompleted:
-      (): ((suite: TestableSuite) => TestableSuite) =>
-      (suite: TestableSuite) => {
+      (): ((suite: MockSuite) => MockSuite) => (suite: MockSuite) => {
         if (suite.checks.some((check) => !check.key)) {
           throw new Error("Expected all checks to be completed");
         }
@@ -408,26 +300,23 @@ export const implementation: ITestImplementation<I, O> = {
       },
 
     AllTestsCompleted:
-      (): ((suite: TestableSuite) => TestableSuite) =>
-      (suite: TestableSuite) => {
+      (): ((suite: MockSuite) => MockSuite) => (suite: MockSuite) => {
         if (!suite.store) {
           throw new Error("Expected all tests to be completed");
         }
         return suite;
       },
 
-    CleanExit:
-      (): ((suite: TestableSuite) => TestableSuite) =>
-      (suite: TestableSuite) => {
-        if (suite.failed && suite.fails === 0) {
-          throw new Error("Expected clean exit state");
-        }
-        return suite;
-      },
+    CleanExit: (): ((suite: MockSuite) => MockSuite) => (suite: MockSuite) => {
+      if (suite.failed && suite.fails === 0) {
+        throw new Error("Expected clean exit state");
+      }
+      return suite;
+    },
   },
 
   checks: {
-    Default: (): TestableSuite => new TestableSuite("testCheck", 1),
+    Default: (): MockSuite => new MockSuite("testCheck", 1),
   },
 };
 

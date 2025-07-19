@@ -1,18 +1,21 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { PassThrough } from "stream";
-import { TestClassBuilder } from "./TestClassBuilder";
+import mock from "./mock";
 import { specification } from "./classBuilder.test.specification";
+import { MockSuite } from "../BaseSuite.test/mock";
 export const implementation = {
     suites: {
         Default: "ClassBuilder test suite",
+        ExtendedSuite: "Extended ClassBuilder test suite",
     },
     givens: {
         Default: () => {
-            return new TestClassBuilder(implementation, // Use the current implementation
+            return new mock(implementation, // Use the current implementation
             specification, // Use the current specification
             {}, // Default input
-            class {
-            }, // suiteKlasser
+            MockSuite, 
+            // class {}, // suiteKlasser
             class {
             }, // givenKlasser
             class {
@@ -25,7 +28,7 @@ export const implementation = {
             );
         },
         WithCustomInput: (input) => {
-            return new TestClassBuilder(implementation, specification, input, class {
+            return new mock(implementation, specification, input, class {
             }, class {
             }, class {
             }, class {
@@ -33,7 +36,7 @@ export const implementation = {
             }, { ports: [] });
         },
         WithResourceRequirements: (requirements) => {
-            return new TestClassBuilder(implementation, specification, {}, class {
+            return new mock(implementation, specification, {}, class {
             }, class {
             }, class {
             }, class {
@@ -41,7 +44,7 @@ export const implementation = {
             }, requirements);
         },
         WithCustomImplementation: (impl) => {
-            return new TestClassBuilder(impl, specification, {}, class {
+            return new mock(impl, specification, {}, class {
             }, class {
             }, class {
             }, class {
@@ -49,7 +52,7 @@ export const implementation = {
             }, { ports: [] });
         },
         WithCustomSpecification: (spec) => {
-            return new TestClassBuilder(implementation, spec, {}, class {
+            return new mock(implementation, spec, {}, class {
             }, class {
             }, class {
             }, class {
@@ -173,7 +176,5 @@ export const implementation = {
     },
     checks: {
         Default: () => new PassThrough(),
-        ImplementationCheck: (validator) => validator(implementation),
-        SpecificationCheck: (validator) => validator(specification),
     },
 };

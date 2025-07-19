@@ -1,11 +1,8 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.TestBaseBuilder = void 0;
-const basebuilder_1 = require("../basebuilder");
+import { BaseBuilder } from "../basebuilder";
 /**
  * Concrete implementation of BaseBuilder for testing purposes only
  */
-class TestBaseBuilder extends basebuilder_1.BaseBuilder {
+export class MockBaseBuilder extends BaseBuilder {
     constructor(input, suitesOverrides = {}, givenOverrides = {}, whenOverrides = {}, thenOverrides = {}, checkOverrides = {}, testResourceRequirement = { ports: [] }, testSpecification = () => []) {
         super(input, suitesOverrides, givenOverrides, whenOverrides, thenOverrides, checkOverrides, testResourceRequirement, testSpecification);
         this.summary = {};
@@ -33,4 +30,3 @@ class TestBaseBuilder extends basebuilder_1.BaseBuilder {
         });
     }
 }
-exports.TestBaseBuilder = TestBaseBuilder;

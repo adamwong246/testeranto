@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { NonEmptyObject } from "type-fest";
+
 import type {
   Ibdd_in_any,
   Ibdd_out_any,
@@ -35,7 +37,7 @@ export abstract class ClassBuilder<
 > {
   constructor(
     testImplementation: ITestImplementation<I, O, M> & {
-      suites: Record<string, any>;
+      suites: Record<string, NonEmptyObject<object>>;
       givens: Record<string, any>;
       whens: Record<string, any>;
       thens: Record<string, any>;

@@ -1,10 +1,171 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
-  Pure_default
-} from "../../../chunk-YZWFKYY3.mjs";
-import {
-  BaseBuilder
-} from "../../../chunk-RF3LIUSG.mjs";
+  BaseBuilder,
+  PM,
+  TesterantoCore,
+  defaultTestResourceRequirement
+} from "../../../chunk-RDFX5IH4.mjs";
+
+// src/PM/pure.ts
+var PM_Pure = class extends PM {
+  constructor(t) {
+    super();
+    this.server = {};
+    this.testResourceConfiguration = t;
+  }
+  getInnerHtml(selector, page) {
+    throw new Error("pure.ts getInnHtml not implemented");
+    return Promise.resolve("");
+  }
+  stopSideCar(uid) {
+    throw new Error("pure.ts getInnHtml not implemented");
+    return Promise.resolve(true);
+  }
+  start() {
+    return new Promise((r) => r());
+  }
+  stop() {
+    return new Promise((r) => r());
+  }
+  launchSideCar(n) {
+    return globalThis["launchSideCar"](n, this.testResourceConfiguration.name);
+  }
+  pages() {
+    return globalThis["pages"]();
+  }
+  waitForSelector(p, s) {
+    return globalThis["waitForSelector"](p, s);
+  }
+  closePage(p) {
+    return globalThis["closePage"](p);
+  }
+  goto(cdpPage, url) {
+    return globalThis["goto"](cdpPage.mainFrame()._id, url);
+  }
+  newPage() {
+    return globalThis["newPage"]();
+  }
+  $(selector) {
+    return globalThis["$"](selector);
+  }
+  isDisabled(selector) {
+    return globalThis["isDisabled"](selector);
+  }
+  getAttribute(selector, attribute) {
+    return globalThis["getAttribute"](selector, attribute);
+  }
+  getValue(selector) {
+    return globalThis["getValue"](selector);
+  }
+  focusOn(selector) {
+    return globalThis["focusOn"](selector);
+  }
+  typeInto(selector, value) {
+    return globalThis["typeInto"](selector, value);
+  }
+  page() {
+    return globalThis["page"]();
+  }
+  click(selector) {
+    return globalThis["click"](selector);
+  }
+  screencast(opts, page) {
+    return globalThis["screencast"](
+      {
+        ...opts,
+        path: this.testResourceConfiguration.fs + "/" + opts.path
+      },
+      page,
+      this.testResourceConfiguration.name
+    );
+  }
+  screencastStop(p) {
+    return globalThis["screencastStop"](p);
+  }
+  customScreenShot(opts, page) {
+    return globalThis["customScreenShot"](
+      {
+        ...opts,
+        path: this.testResourceConfiguration.fs + "/" + opts.path
+      },
+      page,
+      this.testResourceConfiguration.name
+    );
+  }
+  existsSync(destFolder) {
+    return globalThis["existsSync"](
+      this.testResourceConfiguration.fs + "/" + destFolder
+    );
+  }
+  mkdirSync() {
+    return globalThis["mkdirSync"](this.testResourceConfiguration.fs + "/");
+  }
+  write(uid, contents) {
+    return globalThis["write"](uid, contents);
+  }
+  writeFileSync(filepath, contents) {
+    return globalThis["writeFileSync"](
+      this.testResourceConfiguration.fs + "/" + filepath,
+      contents,
+      this.testResourceConfiguration.name
+    );
+  }
+  createWriteStream(filepath) {
+    return globalThis["createWriteStream"](
+      this.testResourceConfiguration.fs + "/" + filepath,
+      this.testResourceConfiguration.name
+    );
+  }
+  end(uid) {
+    return globalThis["end"](uid);
+  }
+  customclose() {
+    globalThis["customclose"](
+      this.testResourceConfiguration.fs,
+      this.testResourceConfiguration.name
+    );
+  }
+  testArtiFactoryfileWriter(tLog, callback) {
+  }
+  // startPuppeteer(options?: any): any {
+  //   // return puppeteer.connect(options).then((b) => {
+  //   //   this.browser = b;
+  //   // });
+  // }
+};
+
+// src/Pure.ts
+var PureTesteranto = class extends TesterantoCore {
+  constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface2) {
+    super(
+      input,
+      testSpecification,
+      testImplementation,
+      testResourceRequirement,
+      testInterface2,
+      () => {
+      }
+    );
+  }
+  async receiveTestResourceConfig(partialTestResource) {
+    const t = JSON.parse(partialTestResource);
+    const pm = new PM_Pure(t);
+    try {
+      return await this.testJobs[0].receiveTestResourceConfig(pm);
+    } catch (e) {
+      return -2;
+    }
+  }
+};
+var Pure_default = async (input, testSpecification, testImplementation, testInterface2, testResourceRequirement = defaultTestResourceRequirement) => {
+  return new PureTesteranto(
+    input,
+    testSpecification,
+    testImplementation,
+    testResourceRequirement,
+    testInterface2
+  );
+};
 
 // src/lib/baseBuilder.test/baseBuilder.test.specification.ts
 var specification = (Suite, Given, When, Then, Check) => {
@@ -36,8 +197,8 @@ var specification = (Suite, Given, When, Then, Check) => {
 // src/lib/baseBuilder.test/baseBuilder.test.implementation.ts
 import { PassThrough } from "stream";
 
-// src/lib/baseBuilder.test/TestBaseBuilder.ts
-var TestBaseBuilder = class extends BaseBuilder {
+// src/lib/baseBuilder.test/baseBuilder.test.mock.ts
+var MockBaseBuilder = class extends BaseBuilder {
   constructor(input, suitesOverrides = {}, givenOverrides = {}, whenOverrides = {}, thenOverrides = {}, checkOverrides = {}, testResourceRequirement = { ports: [] }, testSpecification = () => []) {
     super(
       input,
@@ -82,7 +243,7 @@ var implementation = {
   },
   givens: {
     Default: () => {
-      return new TestBaseBuilder(
+      return new MockBaseBuilder(
         {},
         {},
         {},
@@ -94,7 +255,7 @@ var implementation = {
       );
     },
     WithCustomInput: (input) => {
-      return new TestBaseBuilder(
+      return new MockBaseBuilder(
         input,
         {},
         {},
@@ -106,7 +267,7 @@ var implementation = {
       );
     },
     WithResourceRequirements: (requirements) => {
-      return new TestBaseBuilder(
+      return new MockBaseBuilder(
         {},
         {},
         {},
@@ -216,7 +377,7 @@ var testInterface = {
 
 // src/lib/baseBuilder.test/baseBuilder.test.node.ts
 var baseBuilder_test_node_default = Pure_default(
-  BaseBuilder.prototype,
+  MockBaseBuilder.prototype,
   specification,
   implementation,
   testInterface

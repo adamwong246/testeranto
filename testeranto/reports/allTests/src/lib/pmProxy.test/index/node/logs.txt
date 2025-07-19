@@ -1,11 +1,4 @@
-stdout > mark4
-args [
-  '/Users/adam/.nvm/versions/node/v20.4.0/bin/node',
-  '/Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/pmProxy.test/index.mjs',
-  '{"name":"src/lib/pmProxy.test/index.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/pmProxy.test/index/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/14614a37-b174-483d-91b9-71e763e204b0"}',
-  '/tmp/tpipe_0.6465440848331121'
-]
-receiveTestResourceConfig {"name":"src/lib/pmProxy.test/index.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/pmProxy.test/index/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/14614a37-b174-483d-91b9-71e763e204b0"}
+stdout > receiveTestResourceConfig {"name":"src/lib/pmProxy.test/index.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/pmProxy.test/index/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/9d800368-5c6d-401c-8b96-1fe7ff9e415f"}
 stderr > Given error 1: TypeError: store.butThenProxy is not a function
     at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/pmProxy.test/index.mjs:137:31)
     at file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RF3LIUSG.mjs:606:29
@@ -17,7 +10,7 @@ stderr > Given error 1: TypeError: store.butThenProxy is not a function
     at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RF3LIUSG.mjs:393:20)
     at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RF3LIUSG.mjs:182:19
     at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RF3LIUSG.mjs:210:29)
-goodbye node with caught error TypeError: store.butThenProxy is not a function
+stderr > goodbye node with caught error TypeError: store.butThenProxy is not a function
     at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/pmProxy.test/index.mjs:137:31)
     at file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RF3LIUSG.mjs:606:29
     at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/pmProxy.test/index.mjs:4313:12)

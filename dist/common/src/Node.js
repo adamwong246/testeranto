@@ -8,7 +8,6 @@ const core_js_1 = __importDefault(require("./lib/core.js"));
 const index_js_1 = require("./lib/index.js");
 const node_js_1 = require("./PM/node.js");
 let ipcfile;
-console.log("mark4");
 class NodeTesteranto extends core_js_1.default {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
         super(input, testSpecification, testImplementation, testResourceRequirement, testInterface, () => {
@@ -30,7 +29,6 @@ exports.NodeTesteranto = NodeTesteranto;
 const testeranto = async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = index_js_1.defaultTestResourceRequirement) => {
     try {
         const t = new NodeTesteranto(input, testSpecification, testImplementation, testResourceRequirement, testInterface);
-        console.log("args", process.argv);
         process.on("unhandledRejection", (reason, promise) => {
             console.error("Unhandled Rejection at:", promise, "reason:", reason);
             // Optionally, terminate the process or perform cleanup

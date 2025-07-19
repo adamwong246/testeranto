@@ -76,13 +76,25 @@ const BddPage = () => {
     if (bddErrors === undefined || log === undefined) {
         return React.createElement("div", null, "loading...");
     }
+    function stripDomainFromUrl(url) {
+        try {
+            const urlObj = new URL(url);
+            // Construct the new URL by combining pathname, search (query parameters), and hash
+            // The slice(1) removes the leading '/' from pathname if it's not the root path
+            return urlObj.pathname + urlObj.search + urlObj.hash;
+        }
+        catch (error) {
+            console.error("Invalid URL:", error);
+            return null; // Or throw an error, depending on desired error handling
+        }
+    }
     const copyAiderCommand = async () => {
         if (typeof prompt !== 'string' || typeof message !== 'string') {
             alert('Prompt and message files must be loaded first');
             return;
         }
-        const basePath = window.location.href.split('/').slice(0, -1).join('/');
-        const command = `aider --log-file ${basePath}/message.txt --message-file ${basePath}/prompt.txt`;
+        const basePath = `.${stripDomainFromUrl(window.location.href).split('/').slice(0, -1).join('/')}`;
+        const command = `aider --load ${basePath}/prompt.txt  --message-file ${basePath}/message.txt`;
         try {
             await navigator.clipboard.writeText(command);
             alert('Copied to clipboard:\n' + command);
@@ -93,22 +105,21 @@ const BddPage = () => {
     };
     const basePath = window.location.href.split('/').slice(0, -1).join('/');
     return (React.createElement("div", { className: "container-fluid p-4" },
-        React.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-light mb-3 rounded" },
-            React.createElement("div", { className: "container-fluid" },
-                React.createElement("span", { className: "navbar-brand text-muted" }, basePath.split("testeranto/reports")[1]),
-                React.createElement("div", { className: "ms-auto" },
-                    React.createElement("button", { onClick: copyAiderCommand, className: "btn btn-primary", title: "Copy aider command to clipboard" }, "\uD83E\uDD16\uD83E\uDE84\u2728")))),
         React.createElement(Tab.Container, { defaultActiveKey: "tests" },
-            React.createElement(Row, null,
-                React.createElement(Col, { sm: 2 },
-                    React.createElement(Nav, { variant: "pills", className: "flex-column" },
+            React.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-light mb-3 rounded" },
+                React.createElement("div", { className: "container-fluid" },
+                    React.createElement("span", { className: "navbar-brand text-muted" }, basePath.split("testeranto/reports")[1]),
+                    React.createElement(Nav, { variant: "pills", className: "me-auto" },
                         React.createElement(Nav.Item, null,
                             React.createElement(Nav.Link, { eventKey: "tests" }, "Results")),
                         React.createElement(Nav.Item, null,
                             React.createElement(Nav.Link, { eventKey: "logs" }, "Logs")),
                         React.createElement(Nav.Item, null,
-                            React.createElement(Nav.Link, { eventKey: "ai" }, "Aider")))),
-                React.createElement(Col, { sm: 10 },
+                            React.createElement(Nav.Link, { eventKey: "ai" }, "Aider"))),
+                    React.createElement("div", { className: "ms-auto" },
+                        React.createElement("button", { onClick: copyAiderCommand, className: "btn btn-primary", title: "Copy aider command to clipboard" }, "\uD83E\uDD16\uD83E\uDE84\u2728")))),
+            React.createElement(Row, null,
+                React.createElement(Col, { sm: 12 },
                     React.createElement(Tab.Content, null,
                         React.createElement(Tab.Pane, { eventKey: "tests" }, 'error' in bddErrors ? (React.createElement("div", { className: "alert alert-danger" },
                             React.createElement("h4", null, "Error loading test results"),

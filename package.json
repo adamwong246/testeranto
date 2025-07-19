@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "the AI powered BDD test framework for typescript projects",
-  "version": "0.150.0",
+  "version": "0.151.0",
   "engines": {
     "node": "18.18.0"
   },
@@ -205,6 +205,7 @@
     "testeranto": "",
     "tsc-prog": "^2.3.0",
     "tsx": "^4.19.3",
+    "type-fest": "^4.41.0",
     "typescript-eslint": "^8.29.1",
     "url": "^0.11.4",
     "uuid": "^10.0.0"
