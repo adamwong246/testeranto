@@ -2,9 +2,9 @@ import ReactDom from "react-dom/client";
 import React, { useEffect, useState } from "react";
 import { Col, Nav, Row, Tab } from "react-bootstrap";
 
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./style.css";
 import { Footer } from "./Footer";
+
+import "./style.scss";
 
 const StepPane = ({
   step,

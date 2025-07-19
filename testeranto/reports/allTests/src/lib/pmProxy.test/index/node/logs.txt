@@ -2,10 +2,10 @@ stdout > mark4
 args [
   '/Users/adam/.nvm/versions/node/v20.4.0/bin/node',
   '/Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/pmProxy.test/index.mjs',
-  '{"name":"src/lib/pmProxy.test/index.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/pmProxy.test/index/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/01aaf280-ef2d-48e8-825b-80ac80ecc282"}',
-  '/tmp/tpipe_0.6320101130344133'
+  '{"name":"src/lib/pmProxy.test/index.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/pmProxy.test/index/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/f6239d09-e255-499e-9748-12f90d93daeb"}',
+  '/tmp/tpipe_0.11735328165613468'
 ]
-receiveTestResourceConfig {"name":"src/lib/pmProxy.test/index.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/pmProxy.test/index/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/01aaf280-ef2d-48e8-825b-80ac80ecc282"}
+receiveTestResourceConfig {"name":"src/lib/pmProxy.test/index.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/pmProxy.test/index/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/f6239d09-e255-499e-9748-12f90d93daeb"}
 stderr > Given error 1: TypeError: store.butThenProxy is not a function
     at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/pmProxy.test/index.mjs:137:31)
     at file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RF3LIUSG.mjs:606:29

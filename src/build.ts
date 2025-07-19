@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import ansiC from "ansi-colors";
-import fs, { watch } from "fs";
+import fs from "fs";
 import path from "path";
 import readline from "readline";
 import esbuild from "esbuild";
@@ -19,7 +19,6 @@ import {
   IRunTime,
   ITestTypes,
 } from "./Types.js";
-import { config } from "process";
 import {
   idkPage,
   testReportPage,

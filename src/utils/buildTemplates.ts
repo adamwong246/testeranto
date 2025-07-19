@@ -10,7 +10,25 @@ export const testReportPage = (packageName: string, domain: string) => {
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta name="author" content="" />
       
-      <base href="${domain}" target="_blank">
+      <script>
+      
+
+      (function () {
+    window.__getLocation = function () {
+        return window.location;
+    };
+    window.dynamicBase = function (suffix) {
+        var base = document.createElement('base');
+        var l = window.__getLocation();
+        base.href = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + (suffix || '');
+        document.getElementsByTagName('head')[0].appendChild(base);
+    };
+})();
+
+      </script>
+
+      <script>window.dynamicBase("/testeranto")</script>
+
   
       <link rel="stylesheet" href="../ReportClient.css" />
       <script type="module" src="../ReportClient.js"></script>
@@ -42,18 +60,40 @@ export const testsReportPage = (
       <title>${packageName} - testeranto</title>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta name="author" content="" />
-      <base href="${domain}" target="_blank">
+      
+
+      <script>
+      
+
+      (function () {
+    window.__getLocation = function () {
+        return window.location;
+    };
+    window.dynamicBase = function (suffix) {
+        var base = document.createElement('base');
+        var l = window.__getLocation();
+        base.href = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + (suffix || '');
+        document.getElementsByTagName('head')[0].appendChild(base);
+    };
+})();
+
+      </script>
+      
+      <script>window.dynamicBase("/testeranto")</script>
+
   
       <script type="application/json" id="bigConfig">
         ${JSON.stringify(Object.keys(projects))}
       </script>
   
-      <link rel="stylesheet" href="./testeranto/Project.css" />
-      <script type="module" src="./testeranto/Project.js"></script>
+      <link rel="stylesheet" href="/testeranto/Project.css" />
+      
+      <script type="module" src="/testeranto/Project.js"></script>
   
     </head>
   
     <body>
+      <div class="parallax-background"></div>
       <div id="root">
         react is loading
       </div>
@@ -63,6 +103,7 @@ export const testsReportPage = (
         `;
 };
 
+// deprecated
 export const idkPage = (testName: string, domain: string) => {
   return `
 <!DOCTYPE html>
@@ -82,6 +123,7 @@ export const idkPage = (testName: string, domain: string) => {
 </head>
 
 <body>
+<div class="parallax-background"></div>
   <div id="root"/>
 </body>
             `;

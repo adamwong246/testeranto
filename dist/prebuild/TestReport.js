@@ -27358,7 +27358,14 @@
 
   // src/Footer.tsx
   var import_react32 = __toESM(require_react(), 1);
-  var Footer = () => /* @__PURE__ */ import_react32.default.createElement("footer", null, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react32.default.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto "));
+  var Footer = () => /* @__PURE__ */ import_react32.default.createElement("footer", { style: {
+    backgroundColor: "lightgray",
+    margin: "0.5rem",
+    padding: "0.5rem",
+    position: "fixed",
+    bottom: 0,
+    right: 0
+  } }, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react32.default.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto "));
 
   // src/TestReport.tsx
   var StepPane = ({

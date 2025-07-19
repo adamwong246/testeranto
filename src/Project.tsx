@@ -7,211 +7,9 @@ import { Footer } from "./Footer";
 import { IBuiltConfig } from "./lib";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./style.css";
 import { ISummary } from "./Types";
 
-const ExternalFeatures = ({ summary }: { summary: ISummaries }) => {
-  return (
-    <div>
-      <Row>
-        <Tab.Container id="external-features-tab-container">
-          <Row>
-            <Col sm={1}>
-              <Nav variant="pills" className="flex-column">
-                <Nav.Item>
-                  <Nav.Link eventKey={"log"}>log</Nav.Link>
-                  <Nav.Link eventKey={"steps"}>steps</Nav.Link>
-                </Nav.Item>
-              </Nav>
-            </Col>
-
-            <Col sm={11}>
-              <Tab.Content>
-                <Tab.Pane eventKey={"log"}>
-                  {/* <pre><code>{log}</code></pre> */}
-                </Tab.Pane>
-
-                <Tab.Pane eventKey={"steps"}>
-                  <Tab.Container
-                    id="secondary-tab-container"
-                    defaultActiveKey="first"
-                  >
-                    <Row>
-                      <Col sm={3}>
-                        <Nav variant="pills" className="flex-column">
-                          {/* {
-                          ...bddErrors.givens.map((g) =>
-                            <Nav.Item>
-                              <Nav.Link eventKey={g.key}>
-                                {g.key}: Given {g.name}
-                              </Nav.Link>
-                            </Nav.Item>
-                          )
-                        } */}
-                        </Nav>
-                      </Col>
-                      <Col sm={9}>
-                        <Tab.Content>
-                          {/* {
-                          ...bddErrors.givens.map((g) =>
-
-                            <Tab.Pane eventKey={g.key}><TestPane given={g} /></Tab.Pane>
-
-                          )
-                        } */}
-                        </Tab.Content>
-                      </Col>
-                    </Row>
-                  </Tab.Container>
-                </Tab.Pane>
-              </Tab.Content>
-            </Col>
-
-            {/* <Col sm={3}>
-            
-
-
-          </Col>
-
-          <Col sm={3}>
-            <Nav variant="pills" className="flex-column">
-
-              {
-                ...bddErrors.givens.map((g) =>
-                  <Nav.Item>
-                    <Nav.Link eventKey={g.key}>
-                      {g.key}: Given {g.name}
-                    </Nav.Link>
-                  </Nav.Item>
-                )
-              }
-
-            </Nav>
-          </Col>
-          <Col sm={6}>
-            <Tab.Content>
-              {
-                ...bddErrors.givens.map((g) =>
-
-                  <Tab.Pane eventKey={g.key}><TestPane given={g} /></Tab.Pane>
-
-                )
-              }
-            </Tab.Content>
-          </Col> */}
-          </Row>
-        </Tab.Container>
-      </Row>
-    </div>
-  );
-};
-
-const Features = ({ summary }: { summary: ISummaries }) => {
-  return (
-    <div>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>project</th>
-            <th>platform</th>
-            <th>BDD errors</th>
-            <th>Lint errors</th>
-            <th>Type errors</th>
-            <th>prompt</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {...summary.map((s) => {
-            return (
-              <>
-                <tr>
-                  <th>{s[0]}</th>
-                </tr>
-                {...s[1].tests.map((t) => {
-                  const x = `${s[0]}/${t[0]
-                    .split(".")
-                    .slice(0, -1)
-                    .join(".")}/${t[1]}`;
-                  const y = s[2][t[0]];
-
-                  return (
-                    <tr>
-                      <td>{t[0]}</td>
-                      <td>{t[1]}</td>
-                      <td>
-                        <a href={`./asdasasdasdd/reports/${x}/index.html`}>
-                          {y.runTimeError}
-                        </a>
-                      </td>
-                      <td>
-                        <a
-                          href={`./testeasdqqweqweranto/reports/${x}/lint_errors.json`}
-                        >
-                          {y.staticErrors}
-                        </a>
-                      </td>
-                      <td>
-                        <a
-                          href={`./testezxcdcdfranto/reports/${x}/type_errors.txt`}
-                        >
-                          {y.typeErrors}
-                        </a>
-                      </td>
-                      <td>
-                        <pre>
-                          {s[2][t[0]].prompt}
-                          {/* <button onClick={() => {
-                        copyToClipboard(s[2][t[0]].prompt)
-                      }}>prompt</button> */}
-                        </pre>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </>
-            );
-          })}
-        </tbody>
-      </Table>
-    </div>
-  );
-};
-
-const Docs = ({ summary }: { summary: ISummaries }) => {
-  return (
-    <div>
-      <Tab.Container id="DocsPane-tabs" defaultActiveKey="external">
-        <Row>
-          <Col sm={12}>
-            <Nav>
-              <Nav.Link eventKey={`external`}>external</Nav.Link>
-              <Nav.Link eventKey={`markdown`}>markdown</Nav.Link>
-              <Nav.Link eventKey={`string`}>string</Nav.Link>
-            </Nav>
-          </Col>
-        </Row>
-        <Row>
-          <Col sm={12}>
-            <Tab.Content>
-              <Tab.Pane eventKey={`external`}>
-                <ExternalFeatures summary={summary} />
-              </Tab.Pane>
-
-              <Tab.Pane eventKey={`markdown`}>
-                <ExternalFeatures summary={summary} />
-              </Tab.Pane>
-
-              <Tab.Pane eventKey={`string`}>
-                <ExternalFeatures summary={summary} />
-              </Tab.Pane>
-            </Tab.Content>
-          </Col>
-        </Row>
-      </Tab.Container>
-    </div>
-  );
-};
+// import "./style.scss";
 
 type ISummaries = [string, IBuiltConfig, ISummary][];
 
@@ -274,120 +72,100 @@ const BigBoard = () => {
   }
 
   return (
-    <div>
-      {" "}
-      <Tab.Container id="TestPane-tabs" defaultActiveKey="tests">
-        <Row>
-          <Col sm={12}>
-            <Nav>
-              <Nav.Link eventKey={`tests`}>tests</Nav.Link>
-              <Nav.Link eventKey={`features`}>features</Nav.Link>
-              <Nav.Link eventKey={`docs`}>docs</Nav.Link>
-            </Nav>
-          </Col>
-        </Row>
-        <Row>
-          <Col sm={12}>
-            <Tab.Content>
-              <Tab.Pane eventKey={`tests`}>
-                <Table striped bordered hover>
-                  <thead>
+    <div className="container-fluid">
+      <Table>
+        <thead>
+          <tr>
+            <th>project</th>
+            <th>platform</th>
+            <th>BDD errors</th>
+            <th>Lint errors</th>
+            <th>Type errors</th>
+            <th>prompt</th>
+
+          </tr>
+        </thead>
+
+        <tbody>
+          {...summary.map((s) => {
+            return (
+              <>
+                <tr>
+                  <th>{s[0]}</th>
+                </tr>
+                {...s[1].tests.map((t) => {
+                  const x = `${s[0]}/${t[0]
+                    .split(".")
+                    .slice(0, -1)
+                    .join(".")}/${t[1]}`;
+                  const y = s[2][t[0]];
+
+                  return (
                     <tr>
-                      <th>project</th>
-                      <th>platform</th>
-                      <th>BDD errors</th>
-                      <th>Lint errors</th>
-                      <th>Type errors</th>
-                      <th>prompt</th>
-                      <th>failing features</th>
+                      <td>{t[0]}</td>
+                      <td>{t[1]}</td>
+                      <td>
+
+
+
+
+                        <a
+                          href={`./testeranto/reports/${x}/index.html`}
+                        >
+
+                          {
+                            (y.runTimeErrors < 0) && "‼️ Tests did not complete"
+                          }
+
+                          {
+                            y.runTimeErrors === 0 && "✅ All tests passed"
+                          }
+
+                          {
+                            y.runTimeErrors > 0 && `⚠️ ${y.runTimeErrors} failures`
+                          }
+
+                        </a>
+                      </td>
+                      <td>
+                        <a
+                          href={`./testeranto/reports/${x}/lint_errors.json`}
+                        >
+                          {y.staticErrors}
+                        </a>
+                      </td>
+                      <td>
+                        <a
+                          href={`./testeranto/reports/${x}/type_errors.txt`}
+                        >
+                          {y.typeErrors}
+                        </a>
+                      </td>
+                      <td>
+                        <pre>
+                          {/* {s[2][t[0]].prompt} */}
+                          <button
+                            onClick={() => {
+                              copyToClipboard(s[2][t[0]].prompt);
+                            }}
+                          >
+                            copy
+                          </button>
+                        </pre>
+                      </td>
+
                     </tr>
-                  </thead>
+                  );
+                })}
+              </>
+            );
+          })}
+        </tbody>
+      </Table>
 
-                  <tbody>
-                    {...summary.map((s) => {
-                      return (
-                        <>
-                          <tr>
-                            <th>{s[0]}</th>
-                          </tr>
-                          {...s[1].tests.map((t) => {
-                            const x = `${s[0]}/${t[0]
-                              .split(".")
-                              .slice(0, -1)
-                              .join(".")}/${t[1]}`;
-                            const y = s[2][t[0]];
 
-                            return (
-                              <tr>
-                                <td>{t[0]}</td>
-                                <td>{t[1]}</td>
-                                <td>
-                                  <a
-                                    href={`./testeranto/reports/${x}/index.html`}
-                                  >
-                                    {y.runTimeError}
-                                  </a>
-                                </td>
-                                <td>
-                                  <a
-                                    href={`./testeranto/reports/${x}/lint_errors.json`}
-                                  >
-                                    {y.staticErrors}
-                                  </a>
-                                </td>
-                                <td>
-                                  <a
-                                    href={`./testeranto/reports/${x}/type_errors.txt`}
-                                  >
-                                    {y.typeErrors}
-                                  </a>
-                                </td>
-                                <td>
-                                  <pre>
-                                    {/* {s[2][t[0]].prompt} */}
-                                    <button
-                                      onClick={() => {
-                                        copyToClipboard(s[2][t[0]].prompt);
-                                      }}
-                                    >
-                                      copy
-                                    </button>
-                                  </pre>
-                                </td>
-                                <td>
-                                  {/* <a href={`./reports/${x}/type_errors.txt`}>{y.typeErrors}</a> */}
-                                  <pre>
-                                    <code>
-                                      {JSON.stringify(
-                                        y.failingFeatures,
-                                        null,
-                                        2
-                                      )}
-                                    </code>
-                                  </pre>
-                                </td>
-                              </tr>
-                            );
-                          })}
-                        </>
-                      );
-                    })}
-                  </tbody>
-                </Table>
-              </Tab.Pane>
-
-              <Tab.Pane eventKey={`features`}>
-                <Features summary={summary} />
-              </Tab.Pane>
-
-              <Tab.Pane eventKey={`docs`}>
-                <Docs summary={summary} />
-              </Tab.Pane>
-            </Tab.Content>
-          </Col>
-        </Row>
-      </Tab.Container>
       <Footer />
+
     </div>
   );
 };

@@ -295,9 +295,8 @@ src/PM/main.ts(1445,9): error TS2532: Object is possibly 'undefined'.
 src/PM/web.ts(56,12): error TS2304: Cannot find name 'opts'.
 src/PM/web.ts(57,57): error TS2304: Cannot find name 'opts'.
 src/PM/web.ts(59,7): error TS2663: Cannot find name 'page'. Did you mean the instance member 'this.page'?
-src/Project.tsx(144,30): error TS2551: Property 'runTimeError' does not exist on type '{ runTimeErrors: number | "?" | undefined; typeErrors: number | "?" | undefined; staticErrors: number | "?" | undefined; prompt: string | undefined; failingFeatures: object | undefined; }'. Did you mean 'runTimeErrors'?
-src/Project.tsx(328,40): error TS2551: Property 'runTimeError' does not exist on type '{ runTimeErrors: number | "?" | undefined; typeErrors: number | "?" | undefined; staticErrors: number | "?" | undefined; prompt: string | undefined; failingFeatures: object | undefined; }'. Did you mean 'runTimeErrors'?
-src/Project.tsx(398,38): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
+src/Project.tsx(313,30): error TS2551: Property 'runTimeError' does not exist on type '{ runTimeErrors: number | "?" | undefined; typeErrors: number | "?" | undefined; staticErrors: number | "?" | undefined; prompt: string | undefined; failingFeatures: object | undefined; }'. Did you mean 'runTimeErrors'?
+src/Project.tsx(370,38): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
   Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.
 src/Pure.test.ts(297,3): error TS2345: Argument of type '{ suites: { Default: string; }; givens: { Default: () => { pm: IPM; config: {}; proxies: { butThenProxy: (pm: IPM, path: string) => { writeFileSync: (p: string, c: string) => any; server: PuppetMasterServer; testResourceConfiguration: ITTestResourceConfiguration; } | { ...; } | { ...; }; andWhenProxy: (pm: IPM, path...' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<PureO>; givens: TestGivenImplementation<PureI, PureO>; whens: TestWhenImplementation<PureI, PureO>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, never>'.
   The types returned by 'givens.Default(...)' are incompatible between these types.

@@ -14,11 +14,34 @@
     <link rel="stylesheet" href="style.css">
 
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Prism.highlightAll();
+            
+            // Parallax effect
+            const parallaxBg = document.querySelector('.parallax-background');
+            window.addEventListener('scroll', function() {
+                const scrollPosition = window.pageYOffset;
+                parallaxBg.style.transform = 'translateY(scrollPosition)';
+            });
+        });
+    </script>
+    
 </head>
+
 <body>
-    <div class="parallax-background"></div>
-    <div id="container">
-        <h1>Testeranto docs and core concepts</h1>
+
+    <div class="container">        
+        <div class="row">
+            <div class="col-xs-0 col-sm-0 col-md-1">
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-10">
+                <div id="container">
+                    <h1>Testeranto docs and core concepts</h1>
 <p>Testeranto&#39;s type system provides a rigorous framework for Behavior-Driven Development (BDD) testing. The API may seem complex but everything you need to know can be summed up in <strong>1 function, 3 runtimes and 5 essential types, and 1 optional type</strong>. Follow these patterns, and TypeScript&#39;s type checker will guide you through the rest.</p>
 <h3>⚠️ this doc is a work in progress. It is 99% accurate but needs some attention to be complete. ⚠️</h3>
 <p>Let&#39;s break down the key components using a Rectangle class example.</p>
@@ -518,22 +541,23 @@ export default Testeranto<
 <h3>Do pass your test subject to the main testeranto function.</h3>
 <h3>Don&#39;t import your test subject elsewhere in your tests.</h3>
 
+                </div>
+            </div>
+        
+            <div class="col-xs-0 col-sm-0" col-md-1">
+        </div>
     </div>
-    <!-- Prism.js JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Prism.highlightAll();
-            
-            // Parallax effect
-            const parallaxBg = document.querySelector('.parallax-background');
-            window.addEventListener('scroll', function() {
-                const scrollPosition = window.pageYOffset;
-                parallaxBg.style.transform = 'translateY(scrollPosition)';
-            });
-        });
-    </script>
+
+
+
+
+    
+
+    
+
+</div>
+
+
+
 </body>
 </html>

@@ -2,7 +2,7 @@
 
 ## The AI-powered BDD test framework for TypeScript projects
 
-#### 🚧 WARNING: Testeranto is still under development but is not ready for production yet. I am rapidly working to release a beta ASAP. If you are interested in joining this beta program, please contact me. 🚧
+#### 🚧 Testeranto is still under development but is not ready for production yet. I am rapidly working to release a beta ASAP. If you are interested in joining this beta program, please contact me. 🚧
 
 - README: [adamwong246.github.io/testeranto/testeranto](https://adamwong246.github.io/testeranto/testeranto)
 - demo: [youtube](https://www.youtube.com/embed/WvU5xMqGi6Q)
@@ -160,15 +160,9 @@ test0: Given.Default(
 
 ```
 
-## `eslint` and `tsc`
+## eslint and tsc
 
-Alongside the BDD tests, Testeranto runs ESLint and tsc on the input files to generate a list of static analysis errors and type errors, respectively.
-
----
-
-## Sidecars (COMING SOON)
-
-Alongside your test, you can include a number of "sidecars" - other bundled JavaScript assets upon which your test depends. For example, suppose you have an app with frontend and backend components. You could run a React test in the web and include the Node HTTP server as a sidecar.
+Alongside the BDD tests, Testeranto runs ESLint and tsc on the input files to generate a list of static analysis errors and type errors, respectively. Aider will use this to resolve both.
 
 ## Subprojects
 
@@ -193,3 +187,7 @@ Test a react component. You can choose from a variety of types (jsx functions, c
 ### testeranto-express (COMING SOON)
 
 ### testeranto-xstate (COMING SOON)
+
+## Sidecars (COMING SOON)
+
+Alongside your test, you can include a number of "sidecars" - other bundled JavaScript assets upon which your test depends. For example, suppose you have an app with frontend and backend components. You could run a React test in the web and include the Node HTTP server as a sidecar.

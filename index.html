@@ -14,13 +14,36 @@
     <link rel="stylesheet" href="style.css">
 
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Prism.highlightAll();
+            
+            // Parallax effect
+            const parallaxBg = document.querySelector('.parallax-background');
+            window.addEventListener('scroll', function() {
+                const scrollPosition = window.pageYOffset;
+                parallaxBg.style.transform = 'translateY(scrollPosition)';
+            });
+        });
+    </script>
+    
 </head>
+
 <body>
-    <div class="parallax-background"></div>
-    <div id="container">
-        <h1>testeranto</h1>
+
+    <div class="container">        
+        <div class="row">
+            <div class="col-xs-0 col-sm-0 col-md-1">
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-10">
+                <div id="container">
+                    <h1>testeranto</h1>
 <h2>The AI-powered BDD test framework for TypeScript projects</h2>
-<h4>🚧 WARNING: Testeranto is still under development but is not ready for production yet. I am rapidly working to release a beta ASAP. If you are interested in joining this beta program, please contact me. 🚧</h4>
+<h4>🚧 Testeranto is still under development but is not ready for production yet. I am rapidly working to release a beta ASAP. If you are interested in joining this beta program, please contact me. 🚧</h4>
 <ul>
 <li>README: <a href="https://adamwong246.github.io/testeranto/testeranto">adamwong246.github.io/testeranto/testeranto</a></li>
 <li>demo: <a href="https://www.youtube.com/embed/WvU5xMqGi6Q">youtube</a></li>
@@ -206,11 +229,8 @@ test0: Given.Default(
   [Then.getWidth(4), Then.getHeight(19)]
 ),
 ...
-</code></pre><h2><code>eslint</code> and <code>tsc</code></h2>
-<p>Alongside the BDD tests, Testeranto runs ESLint and tsc on the input files to generate a list of static analysis errors and type errors, respectively.</p>
-<hr>
-<h2>Sidecars (COMING SOON)</h2>
-<p>Alongside your test, you can include a number of &quot;sidecars&quot; - other bundled JavaScript assets upon which your test depends. For example, suppose you have an app with frontend and backend components. You could run a React test in the web and include the Node HTTP server as a sidecar.</p>
+</code></pre><h2>eslint and tsc</h2>
+<p>Alongside the BDD tests, Testeranto runs ESLint and tsc on the input files to generate a list of static analysis errors and type errors, respectively. Aider will use this to resolve both.</p>
 <h2>Subprojects</h2>
 <p>Testeranto has a core repo, but there are also sub-projects which implement tests by type and by technology</p>
 <h3>testeranto-solidity</h3>
@@ -223,23 +243,26 @@ test0: Given.Default(
 <p>Test a react component. You can choose from a variety of types (jsx functions, class style, etc) and you can test with <code>react</code>, <code>react-dom</code>, or <code>react-test-renderer</code></p>
 <h3>testeranto-express (COMING SOON)</h3>
 <h3>testeranto-xstate (COMING SOON)</h3>
+<h2>Sidecars (COMING SOON)</h2>
+<p>Alongside your test, you can include a number of &quot;sidecars&quot; - other bundled JavaScript assets upon which your test depends. For example, suppose you have an app with frontend and backend components. You could run a React test in the web and include the Node HTTP server as a sidecar.</p>
 
+                </div>
+            </div>
+        
+            <div class="col-xs-0 col-sm-0" col-md-1">
+        </div>
     </div>
-    <!-- Prism.js JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Prism.highlightAll();
-            
-            // Parallax effect
-            const parallaxBg = document.querySelector('.parallax-background');
-            window.addEventListener('scroll', function() {
-                const scrollPosition = window.pageYOffset;
-                parallaxBg.style.transform = 'translateY(scrollPosition)';
-            });
-        });
-    </script>
+
+
+
+
+    
+
+    
+
+</div>
+
+
+
 </body>
 </html>

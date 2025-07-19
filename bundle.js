@@ -1,4 +1,5 @@
 import * as esbuild from 'esbuild'
+import { sassPlugin } from 'esbuild-sass-plugin'
 
 await esbuild.build({
   outExtension: { '.js': '.mjs' },
@@ -25,9 +26,20 @@ await esbuild.build({
 })
 
 await esbuild.build({
-  entryPoints: ['src/TestReport.tsx', 'src/Project.tsx'],
+  entryPoints: [
+    'src/TestReport.tsx',
+    'src/Project.tsx'
+  ],
   bundle: true,
   format: "iife",
   platform: "browser",
-  outdir: 'dist/prebuild'
+  outdir: 'dist/prebuild',
+  logLevel: 'error',
+  loader: {
+    ".scss": "text",
+    ".ttf": "binary",
+    ".png": "binary",
+    ".jpg": "binary",
+  },
+  plugins: [sassPlugin()]
 })

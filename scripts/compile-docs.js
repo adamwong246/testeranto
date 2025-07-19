@@ -2,6 +2,8 @@ import fs from "fs";
 import path from "path";
 import { marked } from "marked";
 
+import * as sass from 'sass';
+
 marked.use({
     renderer: {
         code: function (code, lang) {
@@ -30,13 +32,6 @@ const template = (title, content) => `
     <link rel="stylesheet" href="style.css">
 
     
-</head>
-<body>
-    <div class="parallax-background"></div>
-    <div id="container">
-        ${content.replace(/<p>⚠️(.*?)<\/p>/g, '<div class="warning">$1</div>')}
-    </div>
-    <!-- Prism.js JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
@@ -52,6 +47,37 @@ const template = (title, content) => `
             });
         });
     </script>
+    
+</head>
+
+<body>
+
+    <div class="container">        
+        <div class="row">
+            <div class="col-xs-0 col-sm-0 col-md-1">
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-10">
+                <div id="container">
+                    ${content.replace(/<p>⚠️(.*?)<\/p>/g, '<div class="warning">$1</div>')}
+                </div>
+            </div>
+        
+            <div class="col-xs-0 col-sm-0" col-md-1">
+        </div>
+    </div>
+
+
+
+
+    
+
+    
+
+</div>
+
+
+
 </body>
 </html>
 `;
@@ -80,6 +106,13 @@ const main = () => {
         const docsHtml = processFile("docs/index.md");
         fs.writeFileSync(path.join(outDir, "docs.html"), docsHtml);
         console.log("Generated: docs.html");
+
+
+        const result = sass.compile("src/style.scss");
+        // console.log(result)
+        fs.writeFileSync(path.join(outDir, "style.css"), result.css);
+
+
     } catch (err) {
         console.error("Error compiling docs:", err);
         process.exit(1);
