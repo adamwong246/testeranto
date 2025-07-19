@@ -103,7 +103,7 @@ export const testsReportPage = (
         `;
 };
 
-// deprecated
+// deprecated?
 export const idkPage = (testName: string, domain: string) => {
   return `
 <!DOCTYPE html>
@@ -111,19 +111,39 @@ export const idkPage = (testName: string, domain: string) => {
 
 <head>
   <meta name="description" content="Webpage description goes here" />
-  <base href="${domain}" target="_blank">
+
   <meta charset="utf-8" />
   <title>${testName} - testeranto</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="author" content="" />
 
-  <link rel="stylesheet" href="./testeranto/TestReport.css" />
-  <script src="./testeranto/TestReport.js"></script>
+  <link rel="stylesheet" href="/TestReport.css" />
+  <script src="/TestReport.js"></script>
+
+        <script>
+      
+
+      (function () {
+    window.__getLocation = function () {
+        return window.location;
+    };
+    window.dynamicBase = function (suffix) {
+        var base = document.createElement('base');
+        var l = window.__getLocation();
+        base.href = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + (suffix || '');
+        document.getElementsByTagName('head')[0].appendChild(base);
+    };
+})();
+
+      </script>
+
+      <script>window.dynamicBase("/testeranto")</script>
+
 
 </head>
 
 <body>
-<div class="parallax-background"></div>
+
   <div id="root"/>
 </body>
             `;

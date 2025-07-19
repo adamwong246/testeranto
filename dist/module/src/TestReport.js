@@ -2,45 +2,7 @@ import ReactDom from "react-dom/client";
 import React, { useEffect, useState } from "react";
 import { Col, Nav, Row, Tab } from "react-bootstrap";
 import { Footer } from "./Footer";
-import "./style.scss";
-const StepPane = ({ step, }) => {
-    return (React.createElement("div", null,
-        React.createElement("pre", null,
-            React.createElement("code", null, JSON.stringify(step, null, 2)))));
-};
-const TestPane = ({ given, }) => {
-    return (React.createElement("div", null,
-        " ",
-        React.createElement(Tab.Container, { id: "TestPane-tabs", defaultActiveKey: "first" },
-            React.createElement(Row, null,
-                React.createElement(Col, { sm: 3 },
-                    React.createElement(Nav, { variant: "pills", className: "flex-column" },
-                        React.createElement(Nav.Item, null,
-                            React.createElement(Nav.Link, { eventKey: `bdd-features` }, "features"),
-                            ...given.whens.map((w, ndx) => (React.createElement(Nav.Link, { eventKey: `bdd-when-${ndx}` },
-                                "When ",
-                                w.name,
-                                " ",
-                                w.error && "!"))),
-                            ...given.thens.map((t, ndx) => (React.createElement(Nav.Link, { eventKey: `bdd-then-${ndx}` },
-                                "Then ",
-                                t.name,
-                                " ",
-                                t.error && "!"))),
-                            React.createElement(Nav.Link, { eventKey: `bdd-errors` }, "errors")))),
-                React.createElement(Col, { sm: 6 },
-                    React.createElement(Tab.Content, null,
-                        React.createElement(Tab.Pane, { eventKey: `bdd-features` },
-                            React.createElement("pre", null,
-                                React.createElement("code", null, JSON.stringify(given.features, null, 2)))),
-                        ...given.whens.map((w, ndx) => (React.createElement(Tab.Pane, { eventKey: `bdd-when-${ndx}` },
-                            React.createElement(StepPane, { step: w })))),
-                        ...given.thens.map((t, ndx) => (React.createElement(Tab.Pane, { eventKey: `bdd-then-${ndx}` },
-                            React.createElement(StepPane, { step: t })))),
-                        React.createElement(Tab.Pane, { eventKey: `bdd-errors` },
-                            React.createElement("pre", null,
-                                React.createElement("code", null, JSON.stringify(given.error, null, 2))))))))));
-};
+import "bootstrap/dist/css/bootstrap.min.css";
 const BddPage = () => {
     // const [configs, setConfigs] = useState<IBuiltConfig>();
     // useEffect(() => {
@@ -56,60 +18,70 @@ const BddPage = () => {
     const [bddErrors, setBddErrors] = useState();
     useEffect(() => {
         (async () => {
-            setBddErrors(await (await fetch(`${window.location.href
-                .split("/")
-                .slice(0, -1)
-                .join("/")}/tests.json`)).json());
+            try {
+                const fetched = await fetch(`${window.location.href
+                    .split("/")
+                    .slice(0, -1)
+                    .join("/")}/tests.json`);
+                const testsJson = await (fetched).json();
+                setBddErrors(testsJson);
+            }
+            catch (e) {
+                setBddErrors({ error: e });
+            }
         })();
     }, []);
     const [log, setLog] = useState();
     useEffect(() => {
         (async () => {
-            setLog(await (await fetch(`${window.location.href.split("/").slice(0, -1).join("/")}/log.txt`)).text());
+            try {
+                setLog(await (await fetch(`${window.location.href.split("/").slice(0, -1).join("/")}/logs.txt`)).text());
+            }
+            catch (e) {
+                setLog({ error: e });
+            }
         })();
     }, []);
     if (bddErrors === undefined || log === undefined) {
         return React.createElement("div", null, "loading...");
     }
-    return (React.createElement("div", null,
-        " ",
-        React.createElement(Row, null,
-            React.createElement(Col, { sm: 12 },
-                React.createElement("h2", null, bddErrors.name))),
-        React.createElement(Row, null,
-            React.createElement(Tab.Container, { id: "root-tab-container", defaultActiveKey: "log" },
-                React.createElement(Row, null,
-                    React.createElement(Col, { sm: 1 },
-                        React.createElement(Nav, { variant: "pills", className: "flex-column" },
-                            React.createElement(Nav.Item, null,
-                                React.createElement(Nav.Link, { eventKey: "log" }, "log"),
-                                React.createElement(Nav.Link, { eventKey: "steps" }, "steps")))),
-                    React.createElement(Col, { sm: 11 },
-                        React.createElement(Tab.Content, null,
-                            React.createElement(Tab.Pane, { eventKey: "log" },
-                                React.createElement("pre", null,
-                                    React.createElement("code", null, log))),
-                            React.createElement(Tab.Pane, { eventKey: "steps" },
-                                React.createElement(Tab.Container, { id: "secondary-tab-container", defaultActiveKey: "first" },
-                                    React.createElement(Row, null,
-                                        React.createElement(Col, { sm: 3 },
-                                            React.createElement(Nav, { variant: "pills", className: "flex-column" }, ...bddErrors.givens.map((g) => (React.createElement(Nav.Item, null,
-                                                React.createElement(Nav.Link, { eventKey: g.key },
-                                                    g.key,
-                                                    ": Given ",
-                                                    g.name)))))),
-                                        React.createElement(Col, { sm: 9 },
-                                            React.createElement(Tab.Content, null, ...bddErrors.givens.map((g) => (React.createElement(Tab.Pane, { eventKey: g.key },
-                                                React.createElement(TestPane, { given: g })))))))))))))),
-        React.createElement("div", { style: {
-                backgroundColor: "lightgray",
-                margin: "0.5rem",
-                padding: "0.5rem",
-                position: "fixed",
-                left: 0,
-                bottom: 0,
-            } },
-            React.createElement("a", { href: "/" }, "\uD83C\uDFE0")),
+    return (React.createElement("div", { className: "container-fluid p-4" },
+        React.createElement(Tab.Container, { defaultActiveKey: "tests" },
+            React.createElement(Row, null,
+                React.createElement(Col, { sm: 3 },
+                    React.createElement(Nav, { variant: "pills", className: "flex-column" },
+                        React.createElement(Nav.Item, null,
+                            React.createElement(Nav.Link, { eventKey: "tests" }, "Test Results")),
+                        React.createElement(Nav.Item, null,
+                            React.createElement(Nav.Link, { eventKey: "logs" }, "Execution Logs")))),
+                React.createElement(Col, { sm: 9 },
+                    React.createElement(Tab.Content, null,
+                        React.createElement(Tab.Pane, { eventKey: "tests" }, 'error' in bddErrors ? (React.createElement("div", { className: "alert alert-danger" },
+                            React.createElement("h4", null, "Error loading test results"),
+                            React.createElement("pre", null, JSON.stringify(bddErrors.error, null, 2)))) : (React.createElement("div", null,
+                            React.createElement("h2", null, "Test Results"),
+                            bddErrors.name && React.createElement("h3", null, bddErrors.name),
+                            bddErrors.givens.map((given, i) => (React.createElement("div", { key: i, className: "mb-4" },
+                                React.createElement("h4", null,
+                                    "Given: ",
+                                    given.name),
+                                React.createElement("ul", { className: "list-group" }, given.whens.map((when, j) => (React.createElement("li", { key: `w-${j}`, className: `list-group-item ${when.error ? 'list-group-item-danger' : 'list-group-item-success'}` },
+                                    React.createElement("strong", null, "When:"),
+                                    " ",
+                                    when.name,
+                                    when.error && (React.createElement("div", { className: "mt-2" },
+                                        React.createElement("pre", { className: "text-danger" }, when.error))))))),
+                                React.createElement("ul", { className: "list-group mt-2" }, given.thens.map((then, k) => (React.createElement("li", { key: `t-${k}`, className: `list-group-item ${then.error ? 'list-group-item-danger' : 'list-group-item-success'}` },
+                                    React.createElement("strong", null, "Then:"),
+                                    " ",
+                                    then.name,
+                                    then.error && (React.createElement("div", { className: "mt-2" },
+                                        React.createElement("pre", { className: "text-danger" }, then.error))))))))))))),
+                        React.createElement(Tab.Pane, { eventKey: "logs" }, typeof log === 'string' ? (React.createElement("div", null,
+                            React.createElement("h2", null, "Execution Logs"),
+                            React.createElement("pre", { className: "bg-light p-3", style: { maxHeight: '500px', overflow: 'auto' } }, log))) : (React.createElement("div", { className: "alert alert-danger" },
+                            React.createElement("h4", null, "Error loading logs"),
+                            React.createElement("pre", null, JSON.stringify(log.error, null, 2))))))))),
         React.createElement(Footer, null)));
 };
 document.addEventListener("DOMContentLoaded", function () {

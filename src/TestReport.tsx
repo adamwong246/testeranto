@@ -4,96 +4,7 @@ import { Col, Nav, Row, Tab } from "react-bootstrap";
 
 import { Footer } from "./Footer";
 
-import "./style.scss";
-
-const StepPane = ({
-  step,
-}: {
-  step: {
-    name: string;
-    error: string;
-  };
-}) => {
-  return (
-    <div>
-      <pre>
-        <code>{JSON.stringify(step, null, 2)}</code>
-      </pre>
-    </div>
-  );
-};
-
-const TestPane = ({
-  given,
-}: {
-  given: {
-    key: string;
-    name: string;
-    error?: string[];
-    features?: string[];
-    whens: {
-      name: string;
-      error: string;
-    }[];
-    thens: {
-      name: string;
-      error: string;
-    }[];
-  };
-}) => {
-  return (
-    <div>
-      {" "}
-      <Tab.Container id="TestPane-tabs" defaultActiveKey="first">
-        <Row>
-          <Col sm={3}>
-            <Nav variant="pills" className="flex-column">
-              <Nav.Item>
-                <Nav.Link eventKey={`bdd-features`}>features</Nav.Link>
-                {...given.whens.map((w, ndx) => (
-                  <Nav.Link eventKey={`bdd-when-${ndx}`}>
-                    When {w.name} {w.error && "!"}
-                  </Nav.Link>
-                ))}
-                {...given.thens.map((t, ndx) => (
-                  <Nav.Link eventKey={`bdd-then-${ndx}`}>
-                    Then {t.name} {t.error && "!"}
-                  </Nav.Link>
-                ))}
-                <Nav.Link eventKey={`bdd-errors`}>errors</Nav.Link>
-              </Nav.Item>
-            </Nav>
-          </Col>
-          <Col sm={6}>
-            <Tab.Content>
-              <Tab.Pane eventKey={`bdd-features`}>
-                <pre>
-                  <code>{JSON.stringify(given.features, null, 2)}</code>
-                </pre>
-              </Tab.Pane>
-
-              {...given.whens.map((w, ndx) => (
-                <Tab.Pane eventKey={`bdd-when-${ndx}`}>
-                  <StepPane step={w} />
-                </Tab.Pane>
-              ))}
-              {...given.thens.map((t, ndx) => (
-                <Tab.Pane eventKey={`bdd-then-${ndx}`}>
-                  <StepPane step={t} />
-                </Tab.Pane>
-              ))}
-              <Tab.Pane eventKey={`bdd-errors`}>
-                <pre>
-                  <code>{JSON.stringify(given.error, null, 2)}</code>
-                </pre>
-              </Tab.Pane>
-            </Tab.Content>
-          </Col>
-        </Row>
-      </Tab.Container>
-    </div>
-  );
-};
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const BddPage = () => {
   // const [configs, setConfigs] = useState<IBuiltConfig>();
@@ -123,32 +34,47 @@ const BddPage = () => {
         error: string;
       }[];
     }[];
-  }>();
+  } | { error: object }>();
+
+
   useEffect(() => {
     (async () => {
-      setBddErrors(
-        await (
-          await fetch(
-            `${window.location.href
-              .split("/")
-              .slice(0, -1)
-              .join("/")}/tests.json`
-          )
-        ).json()
-      );
+      try {
+        const fetched = await fetch(
+          `${window.location.href
+            .split("/")
+            .slice(0, -1)
+            .join("/")}/tests.json`
+        );
+
+        const testsJson = await (fetched).json();
+        setBddErrors(testsJson);
+
+      } catch (e) {
+        setBddErrors({ error: e });
+      }
     })();
   }, []);
 
-  const [log, setLog] = useState<string>();
+  const [log, setLog] = useState<string | { error: object }>();
+
   useEffect(() => {
     (async () => {
-      setLog(
-        await (
-          await fetch(
-            `${window.location.href.split("/").slice(0, -1).join("/")}/log.txt`
-          )
-        ).text()
-      );
+
+      try {
+        setLog(
+          await (
+            await fetch(
+              `${window.location.href.split("/").slice(0, -1).join("/")}/logs.txt`
+            )
+          ).text()
+        );
+      } catch (e) {
+        setLog({ error: e })
+      }
+
+
+
     })();
   }, []);
 
@@ -157,112 +83,83 @@ const BddPage = () => {
   }
 
   return (
-    <div>
-      {" "}
-      <Row>
-        <Col sm={12}>
-          <h2>{bddErrors.name}</h2>
-        </Col>
-      </Row>
-      <Row>
-        <Tab.Container id="root-tab-container" defaultActiveKey="log">
-          <Row>
-            <Col sm={1}>
-              <Nav variant="pills" className="flex-column">
-                <Nav.Item>
-                  <Nav.Link eventKey={"log"}>log</Nav.Link>
-                  <Nav.Link eventKey={"steps"}>steps</Nav.Link>
-                </Nav.Item>
-              </Nav>
-            </Col>
-
-            <Col sm={11}>
-              <Tab.Content>
-                <Tab.Pane eventKey={"log"}>
-                  <pre>
-                    <code>{log}</code>
-                  </pre>
-                </Tab.Pane>
-
-                <Tab.Pane eventKey={"steps"}>
-                  <Tab.Container
-                    id="secondary-tab-container"
-                    defaultActiveKey="first"
-                  >
-                    <Row>
-                      <Col sm={3}>
-                        <Nav variant="pills" className="flex-column">
-                          {...bddErrors.givens.map((g) => (
-                            <Nav.Item>
-                              <Nav.Link eventKey={g.key}>
-                                {g.key}: Given {g.name}
-                              </Nav.Link>
-                            </Nav.Item>
-                          ))}
-                        </Nav>
-                      </Col>
-                      <Col sm={9}>
-                        <Tab.Content>
-                          {...bddErrors.givens.map((g) => (
-                            <Tab.Pane eventKey={g.key}>
-                              <TestPane given={g} />
-                            </Tab.Pane>
-                          ))}
-                        </Tab.Content>
-                      </Col>
-                    </Row>
-                  </Tab.Container>
-                </Tab.Pane>
-              </Tab.Content>
-            </Col>
-
-            {/* <Col sm={3}>
-            
-
-
-          </Col>
-
-          <Col sm={3}>
+    <div className="container-fluid p-4">
+      <Tab.Container defaultActiveKey="tests">
+        <Row>
+          <Col sm={2}>
             <Nav variant="pills" className="flex-column">
-
-              {
-                ...bddErrors.givens.map((g) =>
-                  <Nav.Item>
-                    <Nav.Link eventKey={g.key}>
-                      {g.key}: Given {g.name}
-                    </Nav.Link>
-                  </Nav.Item>
-                )
-              }
-
+              <Nav.Item>
+                <Nav.Link eventKey="tests">Test Results</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="logs">Execution Logs</Nav.Link>
+              </Nav.Item>
             </Nav>
           </Col>
-          <Col sm={6}>
+          <Col sm={10}>
             <Tab.Content>
-              {
-                ...bddErrors.givens.map((g) =>
-
-                  <Tab.Pane eventKey={g.key}><TestPane given={g} /></Tab.Pane>
-
-                )
-              }
+              <Tab.Pane eventKey="tests">
+                {'error' in bddErrors ? (
+                  <div className="alert alert-danger">
+                    <h4>Error loading test results</h4>
+                    <pre>{JSON.stringify(bddErrors.error, null, 2)}</pre>
+                  </div>
+                ) : (
+                  <div>
+                    <h2>Test Results</h2>
+                    {bddErrors.name && <h3>{bddErrors.name}</h3>}
+                    {bddErrors.givens.map((given, i) => (
+                      <div key={i} className="mb-4">
+                        <h4>Given: {given.name}</h4>
+                        <ul className="list-group">
+                          {given.whens.map((when, j) => (
+                            <li key={`w-${j}`} className={`list-group-item ${when.error ? 'list-group-item-danger' : 'list-group-item-success'}`}>
+                              <strong>When:</strong> {when.name}
+                              {when.error && (
+                                <div className="mt-2">
+                                  <pre className="text-danger">{when.error}</pre>
+                                </div>
+                              )}
+                            </li>
+                          ))}
+                        </ul>
+                        <ul className="list-group mt-2">
+                          {given.thens.map((then, k) => (
+                            <li key={`t-${k}`} className={`list-group-item ${then.error ? 'list-group-item-danger' : 'list-group-item-success'}`}>
+                              <strong>Then:</strong> {then.name}
+                              {then.error && (
+                                <div className="mt-2">
+                                  <pre className="text-danger">{then.error}</pre>
+                                </div>
+                              )}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </Tab.Pane>
+              <Tab.Pane eventKey="logs">
+                {typeof log === 'string' ? (
+                  <div>
+                    <h2>Execution Logs</h2>
+                    <pre className="bg-light p-3" style={{ maxHeight: '500px', overflow: 'auto' }}>
+                      {log}
+                    </pre>
+                  </div>
+                ) : (
+                  <div className="alert alert-danger">
+                    <h4>Error loading logs</h4>
+                    <pre>{JSON.stringify(log.error, null, 2)}</pre>
+                  </div>
+                )}
+              </Tab.Pane>
             </Tab.Content>
-          </Col> */}
-          </Row>
-        </Tab.Container>
-      </Row>
-      <div
-        style={{
-          backgroundColor: "lightgray",
-          margin: "0.5rem",
-          padding: "0.5rem",
-          position: "fixed",
-          left: 0,
-          bottom: 0,
-        }}
-      >
-        <a href="/">🏠</a>
-      </div>
+          </Col>
+        </Row>
+      </Tab.Container>
+
       <Footer />
     </div>
   );
