@@ -522,7 +522,7 @@ var PM_WithEslintAndTsc = class extends PM_Base {
         this.name,
         entryPoint.split(".").slice(0, -1).join("."),
         platform,
-        `message`
+        `message.txt`
       );
       fs2.writeFileSync(
         promptPath,

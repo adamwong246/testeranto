@@ -1,0 +1,135 @@
+:root {
+  --primary: #ff6b6b;
+  /* Coral Blush */
+  --secondary: #4ecdc4;
+  /* Mint Teal */
+  --yellow: #e6b422;
+  /* Muted Gold */
+  --green: #00b4a0;
+  /* Deep Teal */
+  --light: #292f36;
+  /* Midnight Ink */
+  --dark: #f1faee;
+  /* Pearl Mist */
+  --content-bg: rgba(30, 42, 58, 0.7);
+
+  /* Gradient Colors */
+  --bg-start: #0a0f1f;
+  /* Deep Cosmos */
+  --bg-mid: #1a2b50;
+  /* Twilight Navy */
+  --bg-sunrise: rgba(176, 125, 133, 1);
+  /* Muted Rose */
+  --bg-sunrise2: #b07d85;
+  /* Dusty Rose */
+  --bg-end: #7fb3d5;
+  /* Sky Whisper */
+
+  --semi-trans-bg: #292f3649;
+}
+
+pre, code {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-width: 80ch;
+  overflow-x: auto;
+  display: block;
+  // background-color: lightgray;
+  padding: 1rem;
+  border-radius: 4px;
+  font-family: monospace;
+  line-height: 1.4;
+  color: #333;
+}
+
+.footer {
+  background-color: lightgray;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  transition: all 0.5s ease;
+  border-radius: 4px;
+  transform: scale(1);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  overflow: hidden;
+
+  a {
+    color: inherit;
+    // text-decoration: none;
+    position: relative;
+    z-index: 1;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &:hover {
+    background: 
+      linear-gradient(
+        var(--angle, 45deg),
+        var(--bg-sunrise2),
+        var(--bg-end)
+      ),
+      radial-gradient(
+        circle at center,
+        rgba(255,255,255,0.1) 0%,
+        transparent 70%
+      );
+    background-size: 
+      300% 300%,
+      200% 200%;
+    animation: 
+      gradientBG 8s ease infinite,
+      rotateGradient 20s linear infinite,
+      ripple 4s ease infinite;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  }
+}
+
+@keyframes gradientBG {
+  0%, 100% {
+    background-position: 
+      0% 50%,
+      0% 0%;
+  }
+  25% {
+    background-position: 
+      100% 50%,
+      100% 50%;
+  }
+  50% {
+    background-position: 
+      50% 100%,
+      50% 100%;
+  }
+  75% {
+    background-position: 
+      100% 0%,
+      0% 100%;
+  }
+}
+
+@keyframes rotateGradient {
+  0% {
+    --angle: 45deg;
+  }
+  100% {
+    --angle: 405deg;
+  }
+}
+
+@keyframes ripple {
+  0%, 100% {
+    background-size: 
+      300% 300%,
+      100% 100%;
+  }
+  50% {
+    background-size: 
+      300% 300%,
+      200% 200%;
+  }
+}

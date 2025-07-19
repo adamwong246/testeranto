@@ -5,6 +5,7 @@ import { Col, Nav, Row, Tab } from "react-bootstrap";
 import { Footer } from "./Footer";
 
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./TestReport.scss"
 
 const BddPage = () => {
   // const [configs, setConfigs] = useState<IBuiltConfig>();
@@ -57,10 +58,11 @@ const BddPage = () => {
   }, []);
 
   const [log, setLog] = useState<string | { error: object }>();
+  const [message, setMessage] = useState<string | { error: object }>();
+  const [prompt, setPrompt] = useState<string | { error: object }>();
 
   useEffect(() => {
     (async () => {
-
       try {
         setLog(
           await (
@@ -72,27 +74,100 @@ const BddPage = () => {
       } catch (e) {
         setLog({ error: e })
       }
-
-
-
     })();
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const messageText = await (
+          await fetch(
+            `${window.location.href.split("/").slice(0, -1).join("/")}/message.txt`
+          )
+        ).text();
+        setMessage(messageText);
+        console.log('Message:', messageText);
+      } catch (e) {
+        setMessage({ error: e });
+        console.error('Error loading message:', e);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const promptText = await (
+          await fetch(
+            `${window.location.href.split("/").slice(0, -1).join("/")}/prompt.txt`
+          )
+        ).text();
+        setPrompt(promptText);
+        console.log('Prompt:', promptText);
+      } catch (e) {
+        setPrompt({ error: e });
+        console.error('Error loading prompt:', e);
+      }
+    })();
+  }, []);
+
+
+
+  // })();
+  //   }, []);
 
   if (bddErrors === undefined || log === undefined) {
     return <div>loading...</div>;
   }
 
+  const copyAiderCommand = async () => {
+    if (typeof prompt !== 'string' || typeof message !== 'string') {
+      alert('Prompt and message files must be loaded first');
+      return;
+    }
+
+    const basePath = window.location.href.split('/').slice(0, -1).join('/');
+    const command = `aider --log-file ${basePath}/message.txt --message-file ${basePath}/prompt.txt`;
+
+    try {
+      await navigator.clipboard.writeText(command);
+      alert('Copied to clipboard:\n' + command);
+    } catch (err) {
+      alert('Failed to copy command: ' + err);
+    }
+  };
+
+  const basePath = window.location.href.split('/').slice(0, -1).join('/');
+
   return (
     <div className="container-fluid p-4">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light mb-3 rounded">
+        <div className="container-fluid">
+          <span className="navbar-brand text-muted">{basePath.split("testeranto/reports")[1]}</span>
+          <div className="ms-auto">
+            <button
+              onClick={copyAiderCommand}
+              className="btn btn-primary"
+              title="Copy aider command to clipboard"
+            >
+              🤖🪄✨
+            </button>
+          </div>
+        </div>
+      </nav>
+
       <Tab.Container defaultActiveKey="tests">
         <Row>
           <Col sm={2}>
             <Nav variant="pills" className="flex-column">
               <Nav.Item>
-                <Nav.Link eventKey="tests">Test Results</Nav.Link>
+                <Nav.Link eventKey="tests">Results</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="logs">Execution Logs</Nav.Link>
+                <Nav.Link eventKey="logs">Logs</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="ai">Aider</Nav.Link>
               </Nav.Item>
             </Nav>
           </Col>
@@ -143,8 +218,7 @@ const BddPage = () => {
               <Tab.Pane eventKey="logs">
                 {typeof log === 'string' ? (
                   <div>
-                    <h2>Execution Logs</h2>
-                    <pre className="bg-light p-3" style={{ maxHeight: '500px', overflow: 'auto' }}>
+                    <pre className="bg-secondary text-white p-3" style={{ overflow: 'auto' }}>
                       {log}
                     </pre>
                   </div>
@@ -154,6 +228,39 @@ const BddPage = () => {
                     <pre>{JSON.stringify(log.error, null, 2)}</pre>
                   </div>
                 )}
+              </Tab.Pane>
+
+              <Tab.Pane eventKey="ai">
+                <div className="row">
+                  <div className="col-md-12">
+
+
+                    {typeof message === 'string' ? (
+                      <pre className="bg-secondary text-white p-3" style={{ overflow: 'auto' }}>
+                        {message}
+                      </pre>
+                    ) : (
+                      <div className="alert alert-danger">
+                        <h5>Error loading AI message</h5>
+                        <pre>{JSON.stringify(message.error, null, 2)}</pre>
+                      </div>
+                    )}
+
+
+                    {typeof prompt === 'string' ? (
+                      <pre className="bg-secondary text-white  p-3" style={{ overflow: 'auto' }}>
+                        {prompt}
+                      </pre>
+                    ) : (
+                      <div className="alert alert-danger">
+                        <h5>Error loading AI prompt</h5>
+                        <pre>{JSON.stringify(prompt.error, null, 2)}</pre>
+                      </div>
+                    )}
+
+
+                  </div>
+                </div>
               </Tab.Pane>
             </Tab.Content>
           </Col>

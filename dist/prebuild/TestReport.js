@@ -27358,14 +27358,7 @@
 
   // src/Footer.tsx
   var import_react32 = __toESM(require_react(), 1);
-  var Footer = () => /* @__PURE__ */ import_react32.default.createElement("footer", { style: {
-    backgroundColor: "lightgray",
-    margin: "0.5rem",
-    padding: "0.5rem",
-    position: "fixed",
-    bottom: 0,
-    right: 0
-  } }, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react32.default.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto "));
+  var Footer = () => /* @__PURE__ */ import_react32.default.createElement("footer", { className: "footer" }, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react32.default.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto"));
 
   // src/TestReport.tsx
   var BddPage = () => {
@@ -27384,6 +27377,8 @@
       })();
     }, []);
     const [log, setLog] = (0, import_react33.useState)();
+    const [message, setMessage] = (0, import_react33.useState)();
+    const [prompt, setPrompt] = (0, import_react33.useState)();
     (0, import_react33.useEffect)(() => {
       (async () => {
         try {
@@ -27397,10 +27392,61 @@
         }
       })();
     }, []);
+    (0, import_react33.useEffect)(() => {
+      (async () => {
+        try {
+          const messageText = await (await fetch(
+            `${window.location.href.split("/").slice(0, -1).join("/")}/message.txt`
+          )).text();
+          setMessage(messageText);
+          console.log("Message:", messageText);
+        } catch (e) {
+          setMessage({ error: e });
+          console.error("Error loading message:", e);
+        }
+      })();
+    }, []);
+    (0, import_react33.useEffect)(() => {
+      (async () => {
+        try {
+          const promptText = await (await fetch(
+            `${window.location.href.split("/").slice(0, -1).join("/")}/prompt.txt`
+          )).text();
+          setPrompt(promptText);
+          console.log("Prompt:", promptText);
+        } catch (e) {
+          setPrompt({ error: e });
+          console.error("Error loading prompt:", e);
+        }
+      })();
+    }, []);
     if (bddErrors === void 0 || log === void 0) {
       return /* @__PURE__ */ import_react33.default.createElement("div", null, "loading...");
     }
-    return /* @__PURE__ */ import_react33.default.createElement("div", { className: "container-fluid p-4" }, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Container, { defaultActiveKey: "tests" }, /* @__PURE__ */ import_react33.default.createElement(Row_default, null, /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 3 }, /* @__PURE__ */ import_react33.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: "tests" }, "Test Results")), /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: "logs" }, "Execution Logs")))), /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 9 }, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: "tests" }, "error" in bddErrors ? /* @__PURE__ */ import_react33.default.createElement("div", { className: "alert alert-danger" }, /* @__PURE__ */ import_react33.default.createElement("h4", null, "Error loading test results"), /* @__PURE__ */ import_react33.default.createElement("pre", null, JSON.stringify(bddErrors.error, null, 2))) : /* @__PURE__ */ import_react33.default.createElement("div", null, /* @__PURE__ */ import_react33.default.createElement("h2", null, "Test Results"), bddErrors.name && /* @__PURE__ */ import_react33.default.createElement("h3", null, bddErrors.name), bddErrors.givens.map((given, i) => /* @__PURE__ */ import_react33.default.createElement("div", { key: i, className: "mb-4" }, /* @__PURE__ */ import_react33.default.createElement("h4", null, "Given: ", given.name), /* @__PURE__ */ import_react33.default.createElement("ul", { className: "list-group" }, given.whens.map((when, j) => /* @__PURE__ */ import_react33.default.createElement("li", { key: `w-${j}`, className: `list-group-item ${when.error ? "list-group-item-danger" : "list-group-item-success"}` }, /* @__PURE__ */ import_react33.default.createElement("strong", null, "When:"), " ", when.name, when.error && /* @__PURE__ */ import_react33.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react33.default.createElement("pre", { className: "text-danger" }, when.error))))), /* @__PURE__ */ import_react33.default.createElement("ul", { className: "list-group mt-2" }, given.thens.map((then, k) => /* @__PURE__ */ import_react33.default.createElement("li", { key: `t-${k}`, className: `list-group-item ${then.error ? "list-group-item-danger" : "list-group-item-success"}` }, /* @__PURE__ */ import_react33.default.createElement("strong", null, "Then:"), " ", then.name, then.error && /* @__PURE__ */ import_react33.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react33.default.createElement("pre", { className: "text-danger" }, then.error))))))))), /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: "logs" }, typeof log === "string" ? /* @__PURE__ */ import_react33.default.createElement("div", null, /* @__PURE__ */ import_react33.default.createElement("h2", null, "Execution Logs"), /* @__PURE__ */ import_react33.default.createElement("pre", { className: "bg-light p-3", style: { maxHeight: "500px", overflow: "auto" } }, log)) : /* @__PURE__ */ import_react33.default.createElement("div", { className: "alert alert-danger" }, /* @__PURE__ */ import_react33.default.createElement("h4", null, "Error loading logs"), /* @__PURE__ */ import_react33.default.createElement("pre", null, JSON.stringify(log.error, null, 2)))))))), /* @__PURE__ */ import_react33.default.createElement(Footer, null));
+    const copyAiderCommand = async () => {
+      if (typeof prompt !== "string" || typeof message !== "string") {
+        alert("Prompt and message files must be loaded first");
+        return;
+      }
+      const basePath2 = window.location.href.split("/").slice(0, -1).join("/");
+      const command = `aider --log-file ${basePath2}/message.txt --message-file ${basePath2}/prompt.txt`;
+      try {
+        await navigator.clipboard.writeText(command);
+        alert("Copied to clipboard:\n" + command);
+      } catch (err) {
+        alert("Failed to copy command: " + err);
+      }
+    };
+    const basePath = window.location.href.split("/").slice(0, -1).join("/");
+    return /* @__PURE__ */ import_react33.default.createElement("div", { className: "container-fluid p-4" }, /* @__PURE__ */ import_react33.default.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-light mb-3 rounded" }, /* @__PURE__ */ import_react33.default.createElement("div", { className: "container-fluid" }, /* @__PURE__ */ import_react33.default.createElement("span", { className: "navbar-brand text-muted" }, basePath.split("testeranto/reports")[1]), /* @__PURE__ */ import_react33.default.createElement("div", { className: "ms-auto" }, /* @__PURE__ */ import_react33.default.createElement(
+      "button",
+      {
+        onClick: copyAiderCommand,
+        className: "btn btn-primary",
+        title: "Copy aider command to clipboard"
+      },
+      "\u{1F916}\u{1FA84}\u2728"
+    )))), /* @__PURE__ */ import_react33.default.createElement(Tab_default.Container, { defaultActiveKey: "tests" }, /* @__PURE__ */ import_react33.default.createElement(Row_default, null, /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 2 }, /* @__PURE__ */ import_react33.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: "tests" }, "Results")), /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: "logs" }, "Logs")), /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: "ai" }, "Aider")))), /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 10 }, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: "tests" }, "error" in bddErrors ? /* @__PURE__ */ import_react33.default.createElement("div", { className: "alert alert-danger" }, /* @__PURE__ */ import_react33.default.createElement("h4", null, "Error loading test results"), /* @__PURE__ */ import_react33.default.createElement("pre", null, JSON.stringify(bddErrors.error, null, 2))) : /* @__PURE__ */ import_react33.default.createElement("div", null, /* @__PURE__ */ import_react33.default.createElement("h2", null, "Test Results"), bddErrors.name && /* @__PURE__ */ import_react33.default.createElement("h3", null, bddErrors.name), bddErrors.givens.map((given, i) => /* @__PURE__ */ import_react33.default.createElement("div", { key: i, className: "mb-4" }, /* @__PURE__ */ import_react33.default.createElement("h4", null, "Given: ", given.name), /* @__PURE__ */ import_react33.default.createElement("ul", { className: "list-group" }, given.whens.map((when, j) => /* @__PURE__ */ import_react33.default.createElement("li", { key: `w-${j}`, className: `list-group-item ${when.error ? "list-group-item-danger" : "list-group-item-success"}` }, /* @__PURE__ */ import_react33.default.createElement("strong", null, "When:"), " ", when.name, when.error && /* @__PURE__ */ import_react33.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react33.default.createElement("pre", { className: "text-danger" }, when.error))))), /* @__PURE__ */ import_react33.default.createElement("ul", { className: "list-group mt-2" }, given.thens.map((then, k) => /* @__PURE__ */ import_react33.default.createElement("li", { key: `t-${k}`, className: `list-group-item ${then.error ? "list-group-item-danger" : "list-group-item-success"}` }, /* @__PURE__ */ import_react33.default.createElement("strong", null, "Then:"), " ", then.name, then.error && /* @__PURE__ */ import_react33.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react33.default.createElement("pre", { className: "text-danger" }, then.error))))))))), /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: "logs" }, typeof log === "string" ? /* @__PURE__ */ import_react33.default.createElement("div", null, /* @__PURE__ */ import_react33.default.createElement("pre", { className: "bg-secondary text-white p-3", style: { overflow: "auto" } }, log)) : /* @__PURE__ */ import_react33.default.createElement("div", { className: "alert alert-danger" }, /* @__PURE__ */ import_react33.default.createElement("h4", null, "Error loading logs"), /* @__PURE__ */ import_react33.default.createElement("pre", null, JSON.stringify(log.error, null, 2)))), /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: "ai" }, /* @__PURE__ */ import_react33.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react33.default.createElement("div", { className: "col-md-12" }, typeof message === "string" ? /* @__PURE__ */ import_react33.default.createElement("pre", { className: "bg-secondary text-white p-3", style: { overflow: "auto" } }, message) : /* @__PURE__ */ import_react33.default.createElement("div", { className: "alert alert-danger" }, /* @__PURE__ */ import_react33.default.createElement("h5", null, "Error loading AI message"), /* @__PURE__ */ import_react33.default.createElement("pre", null, JSON.stringify(message.error, null, 2))), typeof prompt === "string" ? /* @__PURE__ */ import_react33.default.createElement("pre", { className: "bg-secondary text-white  p-3", style: { overflow: "auto" } }, prompt) : /* @__PURE__ */ import_react33.default.createElement("div", { className: "alert alert-danger" }, /* @__PURE__ */ import_react33.default.createElement("h5", null, "Error loading AI prompt"), /* @__PURE__ */ import_react33.default.createElement("pre", null, JSON.stringify(prompt.error, null, 2)))))))))), /* @__PURE__ */ import_react33.default.createElement(Footer, null));
   };
   document.addEventListener("DOMContentLoaded", function() {
     const elem = document.getElementById("root");

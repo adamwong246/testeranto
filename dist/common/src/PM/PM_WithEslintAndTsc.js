@@ -95,7 +95,7 @@ class PM_WithEslintAndTsc extends base_js_1.PM_Base {
             const logPath = path_1.default.join("testeranto", "reports", this.name, entryPoint.split(".").slice(0, -1).join("."), platform, `logs.txt`);
             const lintPath = path_1.default.join("testeranto", "reports", this.name, entryPoint.split(".").slice(0, -1).join("."), platform, `lint_errors.json`);
             const typePath = path_1.default.join("testeranto", "reports", this.name, entryPoint.split(".").slice(0, -1).join("."), platform, `type_errors.txt`);
-            const messagePath = path_1.default.join("testeranto", "reports", this.name, entryPoint.split(".").slice(0, -1).join("."), platform, `message`);
+            const messagePath = path_1.default.join("testeranto", "reports", this.name, entryPoint.split(".").slice(0, -1).join("."), platform, `message.txt`);
             fs_1.default.writeFileSync(promptPath, `
 ${addableFiles
                 .map((x) => {

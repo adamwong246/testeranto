@@ -84,10 +84,7 @@ const BigBoard = () => {
                             React.createElement("td", null,
                                 React.createElement("a", { href: `./testeranto/reports/${x}/type_errors.txt` }, y.typeErrors)),
                             React.createElement("td", null,
-                                React.createElement("pre", null,
-                                    React.createElement("button", { onClick: () => {
-                                            copyToClipboard(s[2][t[0]].prompt);
-                                        } }, "copy")))));
+                                React.createElement("pre", null))));
                     })));
             }))),
         React.createElement(Footer, null)));

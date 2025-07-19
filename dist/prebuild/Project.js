@@ -24525,14 +24525,7 @@
 
   // src/Footer.tsx
   var import_react2 = __toESM(require_react(), 1);
-  var Footer = () => /* @__PURE__ */ import_react2.default.createElement("footer", { style: {
-    backgroundColor: "lightgray",
-    margin: "0.5rem",
-    padding: "0.5rem",
-    position: "fixed",
-    bottom: 0,
-    right: 0
-  } }, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react2.default.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto "));
+  var Footer = () => /* @__PURE__ */ import_react2.default.createElement("footer", { className: "footer" }, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react2.default.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto"));
 
   // src/Project.tsx
   var BigBoard = () => {
@@ -24591,15 +24584,7 @@
             href: `./testeranto/reports/${x}/type_errors.txt`
           },
           y.typeErrors
-        )), /* @__PURE__ */ import_react3.default.createElement("td", null, /* @__PURE__ */ import_react3.default.createElement("pre", null, /* @__PURE__ */ import_react3.default.createElement(
-          "button",
-          {
-            onClick: () => {
-              copyToClipboard(s[2][t[0]].prompt);
-            }
-          },
-          "copy"
-        ))));
+        )), /* @__PURE__ */ import_react3.default.createElement("td", null, /* @__PURE__ */ import_react3.default.createElement("pre", null)));
       }));
     }))), /* @__PURE__ */ import_react3.default.createElement(Footer, null));
   };
