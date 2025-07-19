@@ -1,9 +1,17 @@
 {
   "src/lib/classBuilder.test/classBuilder.test.ts": {
-    "runTimeErrors": "?",
+    "runTimeErrors": -1,
     "failingFeatures": {}
   },
   "src/lib/baseBuilder.test/baseBuilder.test.node.ts": {
+    "runTimeErrors": 0,
+    "failingFeatures": {}
+  },
+  "src/lib/baseBuilder.test/baseBuilder.test.pure.ts": {
+    "runTimeErrors": 0,
+    "failingFeatures": {}
+  },
+  "src/lib/baseBuilder.test/baseBuilder.test.web.ts": {
     "runTimeErrors": 0,
     "failingFeatures": {}
   }

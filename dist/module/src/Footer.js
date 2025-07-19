@@ -1,4 +1,5 @@
 import React from "react";
-export const Footer = () => React.createElement("footer", { className: "footer" },
+import "./TestReport.scss";
+export const Footer = () => (React.createElement("div", { className: "footer" },
     "made with \u2764\uFE0F and ",
-    React.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto"));
+    React.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto")));

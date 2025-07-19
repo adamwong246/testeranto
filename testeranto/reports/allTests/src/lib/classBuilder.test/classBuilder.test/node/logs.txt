@@ -1,2 +1,56 @@
-stderr > Debugger listening on ws://127.0.0.1:9229/22acbe3b-1647-4de7-bbe8-8eec9121a444
-For help, see: https://nodejs.org/en/docs/inspector
+stderr > Starting inspector on 127.0.0.1:9229 failed: address already in use
+stdout > Then {
+  initializedProperly: [Function (anonymous)],
+  specsGenerated: [Function (anonymous)],
+  jobsCreated: [Function (anonymous)],
+  artifactsTracked: [Function (anonymous)],
+  resourceRequirementsSet: [Function (anonymous)],
+  suitesOverridesConfigured: [Function (anonymous)],
+  givensOverridesConfigured: [Function (anonymous)],
+  whensOverridesConfigured: [Function (anonymous)],
+  thensOverridesConfigured: [Function (anonymous)],
+  checksOverridesConfigured: [Function (anonymous)],
+  specsModified: [Function (anonymous)],
+  jobsModified: [Function (anonymous)],
+  errorThrown: [Function (anonymous)],
+  testRunSuccessful: [Function (anonymous)]
+}
+stdout > receiveTestResourceConfig {"name":"src/lib/classBuilder.test/classBuilder.test.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/classBuilder.test/classBuilder.test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/1828e7cc-b492-4017-92a5-6d6569c44a9b"}
+stdout > Then {
+  initializedProperly: [Function (anonymous)],
+  specsGenerated: [Function (anonymous)],
+  jobsCreated: [Function (anonymous)],
+  artifactsTracked: [Function (anonymous)],
+  resourceRequirementsSet: [Function (anonymous)],
+  suitesOverridesConfigured: [Function (anonymous)],
+  givensOverridesConfigured: [Function (anonymous)],
+  whensOverridesConfigured: [Function (anonymous)],
+  thensOverridesConfigured: [Function (anonymous)],
+  checksOverridesConfigured: [Function (anonymous)],
+  specsModified: [Function (anonymous)],
+  jobsModified: [Function (anonymous)],
+  errorThrown: [Function (anonymous)],
+  testRunSuccessful: [Function (anonymous)]
+}
+stderr > Given error 1: ReferenceError: TestClassBuilder is not defined
+    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/classBuilder.test/classBuilder.test.mjs:604:32)
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RDFX5IH4.mjs:517:29
+    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/classBuilder.test/classBuilder.test.mjs:709:12)
+    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RDFX5IH4.mjs:715:42)
+    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RDFX5IH4.mjs:512:17)
+    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RDFX5IH4.mjs:444:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RDFX5IH4.mjs:619:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RDFX5IH4.mjs:24:19
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RDFX5IH4.mjs:52:29)
+goodbye node with caught error ReferenceError: TestClassBuilder is not defined
+    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/classBuilder.test/classBuilder.test.mjs:604:32)
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RDFX5IH4.mjs:517:29
+    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/classBuilder.test/classBuilder.test.mjs:709:12)
+    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RDFX5IH4.mjs:715:42)
+    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RDFX5IH4.mjs:512:17)
+    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RDFX5IH4.mjs:444:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RDFX5IH4.mjs:619:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RDFX5IH4.mjs:24:19
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-RDFX5IH4.mjs:52:29)

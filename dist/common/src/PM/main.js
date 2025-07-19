@@ -235,6 +235,9 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                         this.bddTestIsNowDone(src, -1);
                         statusMessagePretty(-1, src, "pure");
                         // console.error(e);
+                    })
+                        .finally((x) => {
+                        fs_1.default.writeFileSync(reportDest + "/manifest.json", JSON.stringify(Array.from(files[src])));
                     });
                 });
             }
@@ -369,6 +372,11 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                 child.on("close", (code) => {
                     oStream.close();
                     server.close();
+                    if (!files[src]) {
+                        files[src] = new Set();
+                    }
+                    // files[src].add(filepath);
+                    fs_1.default.writeFileSync(reportDest + "/manifest.json", JSON.stringify(Array.from(files[src])));
                     if (code === 255) {
                         console.log(ansi_colors_2.default.red(`node ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`));
                         this.bddTestIsNowDone(src, -1);
@@ -422,11 +430,8 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                         if (!files[src]) {
                             files[src] = new Set();
                         }
-                        // files[t].add(filepath);
-                        // fs.writeFileSync(
-                        //   destFolder + "/manifest.json",
-                        //   JSON.stringify(Array.from(files[src]))
-                        // );
+                        // files[src].add(filepath);
+                        fs_1.default.writeFileSync(destFolder + "/manifest.json", JSON.stringify(Array.from(files[src])));
                         delete files[src];
                         Promise.all(screenshots[src] || []).then(() => {
                             delete screenshots[src];
@@ -745,10 +750,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                         files[src] = new Set();
                     }
                     // files[t].add(filepath);
-                    // fs.writeFileSync(
-                    //   destFolder + "/manifest.json",
-                    //   JSON.stringify(Array.from(files[src]))
-                    // );
+                    fs_1.default.writeFileSync(destFolder + "/manifest.json", JSON.stringify(Array.from(files[src])));
                     delete files[src];
                     Promise.all(screenshots[src] || []).then(() => {
                         delete screenshots[src];

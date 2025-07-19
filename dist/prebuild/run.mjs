@@ -788,6 +788,11 @@ var PM_Main = class extends PM_WithEslintAndTsc {
             this.writeFileSync(`${reportDest}/logs.txt`, e.stack, src);
             this.bddTestIsNowDone(src, -1);
             statusMessagePretty(-1, src, "pure");
+          }).finally((x) => {
+            fs3.writeFileSync(
+              reportDest + "/manifest.json",
+              JSON.stringify(Array.from(files2[src]))
+            );
           });
         });
       } catch (e) {
@@ -930,6 +935,13 @@ var PM_Main = class extends PM_WithEslintAndTsc {
         child.on("close", (code) => {
           oStream.close();
           server.close();
+          if (!files2[src]) {
+            files2[src] = /* @__PURE__ */ new Set();
+          }
+          fs3.writeFileSync(
+            reportDest + "/manifest.json",
+            JSON.stringify(Array.from(files2[src]))
+          );
           if (code === 255) {
             console.log(
               ansiColors.red(
@@ -988,6 +1000,10 @@ var PM_Main = class extends PM_WithEslintAndTsc {
             if (!files2[src]) {
               files2[src] = /* @__PURE__ */ new Set();
             }
+            fs3.writeFileSync(
+              destFolder + "/manifest.json",
+              JSON.stringify(Array.from(files2[src]))
+            );
             delete files2[src];
             Promise.all(screenshots2[src] || []).then(() => {
               delete screenshots2[src];
@@ -1282,6 +1298,10 @@ var PM_Main = class extends PM_WithEslintAndTsc {
           if (!files2[src]) {
             files2[src] = /* @__PURE__ */ new Set();
           }
+          fs3.writeFileSync(
+            destFolder + "/manifest.json",
+            JSON.stringify(Array.from(files2[src]))
+          );
           delete files2[src];
           Promise.all(screenshots2[src] || []).then(() => {
             delete screenshots2[src];

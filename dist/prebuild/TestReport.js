@@ -579,7 +579,7 @@
             var newElement = ReactElement(oldElement.type, newKey, oldElement.ref, oldElement._self, oldElement._source, oldElement._owner, oldElement.props);
             return newElement;
           }
-          function cloneElement3(element, config, children) {
+          function cloneElement6(element, config, children) {
             if (element === null || element === void 0) {
               throw new Error("React.cloneElement(...): The argument must be a React element, but you passed " + element + ".");
             }
@@ -627,7 +627,7 @@
             }
             return ReactElement(element.type, key, ref, self, source, owner, props);
           }
-          function isValidElement(object) {
+          function isValidElement2(object) {
             return typeof object === "object" && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
           }
           var SEPARATOR = ".";
@@ -692,7 +692,7 @@
                   return c;
                 });
               } else if (mappedChild != null) {
-                if (isValidElement(mappedChild)) {
+                if (isValidElement2(mappedChild)) {
                   {
                     if (mappedChild.key && (!_child || _child.key !== mappedChild.key)) {
                       checkKeyStringCoercion(mappedChild.key);
@@ -780,12 +780,12 @@
             }) || [];
           }
           function onlyChild(children) {
-            if (!isValidElement(children)) {
+            if (!isValidElement2(children)) {
               throw new Error("React.Children.only expected to receive a single React element child.");
             }
             return children;
           }
-          function createContext7(defaultValue) {
+          function createContext10(defaultValue) {
             var context3 = {
               $$typeof: REACT_CONTEXT_TYPE,
               // As a workaround to support multiple concurrent renderers, we categorize
@@ -940,7 +940,7 @@
             };
             {
               var defaultProps;
-              var propTypes2;
+              var propTypes5;
               Object.defineProperties(lazyType, {
                 defaultProps: {
                   configurable: true,
@@ -958,11 +958,11 @@
                 propTypes: {
                   configurable: true,
                   get: function() {
-                    return propTypes2;
+                    return propTypes5;
                   },
                   set: function(newPropTypes) {
                     error("React.lazy(...): It is not supported to assign `propTypes` to a lazy component import. Either specify them where the component is defined, or create a wrapping component around it.");
-                    propTypes2 = newPropTypes;
+                    propTypes5 = newPropTypes;
                     Object.defineProperty(lazyType, "propTypes", {
                       enumerable: true
                     });
@@ -972,7 +972,7 @@
             }
             return lazyType;
           }
-          function forwardRef15(render) {
+          function forwardRef41(render) {
             {
               if (render != null && render.$$typeof === REACT_MEMO_TYPE) {
                 error("forwardRef requires a render function but received a `memo` component. Instead of forwardRef(memo(...)), use memo(forwardRef(...)).");
@@ -1071,21 +1071,21 @@
             }
             return dispatcher;
           }
-          function useContext6(Context) {
+          function useContext15(Context2) {
             var dispatcher = resolveDispatcher();
             {
-              if (Context._context !== void 0) {
-                var realContext = Context._context;
-                if (realContext.Consumer === Context) {
+              if (Context2._context !== void 0) {
+                var realContext = Context2._context;
+                if (realContext.Consumer === Context2) {
                   error("Calling useContext(Context.Consumer) is not supported, may cause bugs, and will be removed in a future major release. Did you mean to call useContext(Context) instead?");
-                } else if (realContext.Provider === Context) {
+                } else if (realContext.Provider === Context2) {
                   error("Calling useContext(Context.Provider) is not supported. Did you mean to call useContext(Context) instead?");
                 }
               }
             }
-            return dispatcher.useContext(Context);
+            return dispatcher.useContext(Context2);
           }
-          function useState8(initialState) {
+          function useState14(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1093,11 +1093,11 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useReducer(reducer, initialArg, init);
           }
-          function useRef9(initialValue) {
+          function useRef16(initialValue) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect12(create, deps) {
+          function useEffect17(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create, deps);
           }
@@ -1109,15 +1109,15 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useLayoutEffect(create, deps);
           }
-          function useCallback8(callback, deps) {
+          function useCallback12(callback, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useCallback(callback, deps);
           }
-          function useMemo5(create, deps) {
+          function useMemo8(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useMemo(create, deps);
           }
-          function useImperativeHandle(ref, create, deps) {
+          function useImperativeHandle2(ref, create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useImperativeHandle(ref, create, deps);
           }
@@ -1127,7 +1127,7 @@
               return dispatcher.useDebugValue(value, formatterFn);
             }
           }
-          function useTransition() {
+          function useTransition2() {
             var dispatcher = resolveDispatcher();
             return dispatcher.useTransition();
           }
@@ -1511,11 +1511,11 @@
             if (isArray(node)) {
               for (var i = 0; i < node.length; i++) {
                 var child = node[i];
-                if (isValidElement(child)) {
+                if (isValidElement2(child)) {
                   validateExplicitKey(child, parentType);
                 }
               }
-            } else if (isValidElement(node)) {
+            } else if (isValidElement2(node)) {
               if (node._store) {
                 node._store.validated = true;
               }
@@ -1526,7 +1526,7 @@
                   var iterator = iteratorFn.call(node);
                   var step;
                   while (!(step = iterator.next()).done) {
-                    if (isValidElement(step.value)) {
+                    if (isValidElement2(step.value)) {
                       validateExplicitKey(step.value, parentType);
                     }
                   }
@@ -1540,19 +1540,19 @@
               if (type === null || type === void 0 || typeof type === "string") {
                 return;
               }
-              var propTypes2;
+              var propTypes5;
               if (typeof type === "function") {
-                propTypes2 = type.propTypes;
+                propTypes5 = type.propTypes;
               } else if (typeof type === "object" && (type.$$typeof === REACT_FORWARD_REF_TYPE || // Note: Memo only checks outer props here.
               // Inner props are checked in the reconciler.
               type.$$typeof === REACT_MEMO_TYPE)) {
-                propTypes2 = type.propTypes;
+                propTypes5 = type.propTypes;
               } else {
                 return;
               }
-              if (propTypes2) {
+              if (propTypes5) {
                 var name = getComponentNameFromType(type);
-                checkPropTypes(propTypes2, element.props, "prop", name, element);
+                checkPropTypes(propTypes5, element.props, "prop", name, element);
               } else if (type.PropTypes !== void 0 && !propTypesMisspellWarningShown) {
                 propTypesMisspellWarningShown = true;
                 var _name = getComponentNameFromType(type);
@@ -1649,7 +1649,7 @@
             return validatedFactory;
           }
           function cloneElementWithValidation(element, props, children) {
-            var newElement = cloneElement3.apply(this, arguments);
+            var newElement = cloneElement6.apply(this, arguments);
             for (var i = 2; i < arguments.length; i++) {
               validateChildKeys(arguments[i], newElement.type);
             }
@@ -1849,14 +1849,14 @@
           var createElement$1 = createElementWithValidation;
           var cloneElement$1 = cloneElementWithValidation;
           var createFactory = createFactoryWithValidation;
-          var Children = {
+          var Children2 = {
             map: mapChildren,
             forEach: forEachChildren,
             count: countChildren,
             toArray: toArray2,
             only: onlyChild
           };
-          exports.Children = Children;
+          exports.Children = Children2;
           exports.Component = Component;
           exports.Fragment = REACT_FRAGMENT_TYPE;
           exports.Profiler = REACT_PROFILER_TYPE;
@@ -1865,31 +1865,31 @@
           exports.Suspense = REACT_SUSPENSE_TYPE;
           exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactSharedInternals;
           exports.cloneElement = cloneElement$1;
-          exports.createContext = createContext7;
+          exports.createContext = createContext10;
           exports.createElement = createElement$1;
           exports.createFactory = createFactory;
           exports.createRef = createRef;
-          exports.forwardRef = forwardRef15;
-          exports.isValidElement = isValidElement;
+          exports.forwardRef = forwardRef41;
+          exports.isValidElement = isValidElement2;
           exports.lazy = lazy;
           exports.memo = memo;
           exports.startTransition = startTransition;
           exports.unstable_act = act;
-          exports.useCallback = useCallback8;
-          exports.useContext = useContext6;
+          exports.useCallback = useCallback12;
+          exports.useContext = useContext15;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect12;
+          exports.useEffect = useEffect17;
           exports.useId = useId;
-          exports.useImperativeHandle = useImperativeHandle;
+          exports.useImperativeHandle = useImperativeHandle2;
           exports.useInsertionEffect = useInsertionEffect;
           exports.useLayoutEffect = useLayoutEffect2;
-          exports.useMemo = useMemo5;
+          exports.useMemo = useMemo8;
           exports.useReducer = useReducer2;
-          exports.useRef = useRef9;
-          exports.useState = useState8;
+          exports.useRef = useRef16;
+          exports.useState = useState14;
           exports.useSyncExternalStore = useSyncExternalStore;
-          exports.useTransition = useTransition;
+          exports.useTransition = useTransition2;
           exports.version = ReactVersion;
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
@@ -2383,9 +2383,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React29 = require_react();
+          var React60 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React29.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React60.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -3990,7 +3990,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React29.Children.forEach(props.children, function(child) {
+                  React60.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -8190,7 +8190,7 @@
               });
             }
           }
-          var activeElement = null;
+          var activeElement2 = null;
           var activeElementInst = null;
           function shouldUseChangeEvent(elem) {
             var nodeName = elem.nodeName && elem.nodeName.toLowerCase();
@@ -8220,16 +8220,16 @@
             isInputEventSupported = isEventSupported("input") && (!document.documentMode || document.documentMode > 9);
           }
           function startWatchingForValueChange(target, targetInst) {
-            activeElement = target;
+            activeElement2 = target;
             activeElementInst = targetInst;
-            activeElement.attachEvent("onpropertychange", handlePropertyChange);
+            activeElement2.attachEvent("onpropertychange", handlePropertyChange);
           }
           function stopWatchingForValueChange() {
-            if (!activeElement) {
+            if (!activeElement2) {
               return;
             }
-            activeElement.detachEvent("onpropertychange", handlePropertyChange);
-            activeElement = null;
+            activeElement2.detachEvent("onpropertychange", handlePropertyChange);
+            activeElement2 = null;
             activeElementInst = null;
           }
           function handlePropertyChange(nativeEvent) {
@@ -12437,7 +12437,7 @@
             }
           }
           var fakeInternalInstance = {};
-          var emptyRefsObject = new React29.Component().refs;
+          var emptyRefsObject = new React60.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -23514,7 +23514,7 @@
       (function() {
         "use strict";
         var hasOwn = {}.hasOwnProperty;
-        function classNames9() {
+        function classNames30() {
           var classes = "";
           for (var i = 0; i < arguments.length; i++) {
             var arg = arguments[i];
@@ -23532,7 +23532,7 @@
             return "";
           }
           if (Array.isArray(arg)) {
-            return classNames9.apply(null, arg);
+            return classNames30.apply(null, arg);
           }
           if (arg.toString !== Object.prototype.toString && !arg.toString.toString().includes("[native code]")) {
             return arg.toString();
@@ -23555,14 +23555,14 @@
           return value + newClass;
         }
         if (typeof module !== "undefined" && module.exports) {
-          classNames9.default = classNames9;
-          module.exports = classNames9;
+          classNames30.default = classNames30;
+          module.exports = classNames30;
         } else if (typeof define === "function" && typeof define.amd === "object" && define.amd) {
           define("classnames", [], function() {
-            return classNames9;
+            return classNames30;
           });
         } else {
-          window.classNames = classNames9;
+          window.classNames = classNames30;
         }
       })();
     }
@@ -23609,7 +23609,7 @@
       if (true) {
         (function() {
           "use strict";
-          var React29 = require_react();
+          var React60 = require_react();
           var REACT_ELEMENT_TYPE = Symbol.for("react.element");
           var REACT_PORTAL_TYPE = Symbol.for("react.portal");
           var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
@@ -23635,7 +23635,7 @@
             }
             return null;
           }
-          var ReactSharedInternals = React29.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React60.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function error(format) {
             {
               {
@@ -24263,7 +24263,7 @@
           {
             propTypesMisspellWarningShown = false;
           }
-          function isValidElement(object) {
+          function isValidElement2(object) {
             {
               return typeof object === "object" && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
             }
@@ -24330,11 +24330,11 @@
               if (isArray(node)) {
                 for (var i = 0; i < node.length; i++) {
                   var child = node[i];
-                  if (isValidElement(child)) {
+                  if (isValidElement2(child)) {
                     validateExplicitKey(child, parentType);
                   }
                 }
-              } else if (isValidElement(node)) {
+              } else if (isValidElement2(node)) {
                 if (node._store) {
                   node._store.validated = true;
                 }
@@ -24345,7 +24345,7 @@
                     var iterator = iteratorFn.call(node);
                     var step;
                     while (!(step = iterator.next()).done) {
-                      if (isValidElement(step.value)) {
+                      if (isValidElement2(step.value)) {
                         validateExplicitKey(step.value, parentType);
                       }
                     }
@@ -24360,19 +24360,19 @@
               if (type === null || type === void 0 || typeof type === "string") {
                 return;
               }
-              var propTypes2;
+              var propTypes5;
               if (typeof type === "function") {
-                propTypes2 = type.propTypes;
+                propTypes5 = type.propTypes;
               } else if (typeof type === "object" && (type.$$typeof === REACT_FORWARD_REF_TYPE || // Note: Memo only checks outer props here.
               // Inner props are checked in the reconciler.
               type.$$typeof === REACT_MEMO_TYPE)) {
-                propTypes2 = type.propTypes;
+                propTypes5 = type.propTypes;
               } else {
                 return;
               }
-              if (propTypes2) {
+              if (propTypes5) {
                 var name = getComponentNameFromType(type);
-                checkPropTypes(propTypes2, element.props, "prop", name, element);
+                checkPropTypes(propTypes5, element.props, "prop", name, element);
               } else if (type.PropTypes !== void 0 && !propTypesMisspellWarningShown) {
                 propTypesMisspellWarningShown = true;
                 var _name = getComponentNameFromType(type);
@@ -24837,7 +24837,7 @@
       function emptyFunctionThatReturnsNull() {
         return null;
       }
-      module.exports = function(isValidElement, throwOnDirectAccess) {
+      module.exports = function(isValidElement2, throwOnDirectAccess) {
         var ITERATOR_SYMBOL = typeof Symbol === "function" && Symbol.iterator;
         var FAUX_ITERATOR_SYMBOL = "@@iterator";
         function getIteratorFn(maybeIterable) {
@@ -24965,7 +24965,7 @@
         function createElementTypeChecker() {
           function validate(props, propName, componentName, location, propFullName) {
             var propValue = props[propName];
-            if (!isValidElement(propValue)) {
+            if (!isValidElement2(propValue)) {
               var propType = getPropType(propValue);
               return new PropTypeError("Invalid " + location + " `" + propFullName + "` of type " + ("`" + propType + "` supplied to `" + componentName + "`, expected a single ReactElement."));
             }
@@ -25153,7 +25153,7 @@
               if (Array.isArray(propValue)) {
                 return propValue.every(isNode);
               }
-              if (propValue === null || isValidElement(propValue)) {
+              if (propValue === null || isValidElement2(propValue)) {
                 return true;
               }
               var iteratorFn = getIteratorFn(propValue);
@@ -25269,9 +25269,56 @@
     }
   });
 
+  // node_modules/warning/warning.js
+  var require_warning = __commonJS({
+    "node_modules/warning/warning.js"(exports, module) {
+      "use strict";
+      var __DEV__ = true;
+      var warning3 = function() {
+      };
+      if (__DEV__) {
+        printWarning = function printWarning2(format, args) {
+          var len = arguments.length;
+          args = new Array(len > 1 ? len - 1 : 0);
+          for (var key = 1; key < len; key++) {
+            args[key - 1] = arguments[key];
+          }
+          var argIndex = 0;
+          var message = "Warning: " + format.replace(/%s/g, function() {
+            return args[argIndex++];
+          });
+          if (typeof console !== "undefined") {
+            console.error(message);
+          }
+          try {
+            throw new Error(message);
+          } catch (x) {
+          }
+        };
+        warning3 = function(condition, format, args) {
+          var len = arguments.length;
+          args = new Array(len > 2 ? len - 2 : 0);
+          for (var key = 2; key < len; key++) {
+            args[key - 2] = arguments[key];
+          }
+          if (format === void 0) {
+            throw new Error(
+              "`warning(condition, format, ...args)` requires a warning message argument"
+            );
+          }
+          if (!condition) {
+            printWarning.apply(null, [format].concat(args));
+          }
+        };
+      }
+      var printWarning;
+      module.exports = warning3;
+    }
+  });
+
   // src/TestReport.tsx
   var import_client = __toESM(require_client(), 1);
-  var import_react33 = __toESM(require_react(), 1);
+  var import_react56 = __toESM(require_react(), 1);
 
   // node_modules/@babel/runtime/helpers/esm/extends.js
   function _extends() {
@@ -25438,6 +25485,12 @@
       minBreakpoint
     } = (0, import_react3.useContext)(ThemeContext);
     return minBreakpoint;
+  }
+  function useIsRTL() {
+    const {
+      dir
+    } = (0, import_react3.useContext)(ThemeContext);
+    return dir === "rtl";
   }
 
   // node_modules/dom-helpers/esm/ownerDocument.js
@@ -25950,6 +26003,9 @@
 
   // node_modules/@restart/ui/esm/utils.js
   var React5 = __toESM(require_react());
+  function isEscKey(e) {
+    return e.code === "Escape" || e.keyCode === 27;
+  }
   function getReactVersion() {
     const parts = React5.version.split(".");
     return {
@@ -26188,68 +26244,120 @@
   });
   var TransitionWrapper_default = TransitionWrapper;
 
-  // node_modules/@restart/ui/esm/Anchor.js
-  var React8 = __toESM(require_react());
-
-  // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useCallbackRef.js
-  var import_react8 = __toESM(require_react());
-
-  // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useCommittedRef.js
+  // node_modules/@restart/hooks/esm/useEventCallback.js
   var import_react9 = __toESM(require_react());
+
+  // node_modules/@restart/hooks/esm/useCommittedRef.js
+  var import_react8 = __toESM(require_react());
   function useCommittedRef(value) {
-    const ref = (0, import_react9.useRef)(value);
-    (0, import_react9.useEffect)(() => {
+    const ref = (0, import_react8.useRef)(value);
+    (0, import_react8.useEffect)(() => {
       ref.current = value;
     }, [value]);
     return ref;
   }
   var useCommittedRef_default = useCommittedRef;
 
-  // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useEventCallback.js
-  var import_react10 = __toESM(require_react());
+  // node_modules/@restart/hooks/esm/useEventCallback.js
   function useEventCallback(fn) {
     const ref = useCommittedRef_default(fn);
-    return (0, import_react10.useCallback)(function(...args) {
+    return (0, import_react9.useCallback)(function(...args) {
+      return ref.current && ref.current(...args);
+    }, [ref]);
+  }
+
+  // node_modules/react-bootstrap/esm/divWithClassName.js
+  var React7 = __toESM(require_react());
+  var import_classnames = __toESM(require_classnames());
+  var import_jsx_runtime3 = __toESM(require_jsx_runtime());
+  var divWithClassName_default = (className) => /* @__PURE__ */ React7.forwardRef((p, ref) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", {
+    ...p,
+    ref,
+    className: (0, import_classnames.default)(p.className, className)
+  }));
+
+  // node_modules/@restart/ui/esm/Anchor.js
+  var React9 = __toESM(require_react());
+
+  // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useCallbackRef.js
+  var import_react10 = __toESM(require_react());
+
+  // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useCommittedRef.js
+  var import_react11 = __toESM(require_react());
+  function useCommittedRef2(value) {
+    const ref = (0, import_react11.useRef)(value);
+    (0, import_react11.useEffect)(() => {
+      ref.current = value;
+    }, [value]);
+    return ref;
+  }
+  var useCommittedRef_default2 = useCommittedRef2;
+
+  // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useEventCallback.js
+  var import_react12 = __toESM(require_react());
+  function useEventCallback2(fn) {
+    const ref = useCommittedRef_default2(fn);
+    return (0, import_react12.useCallback)(function(...args) {
       return ref.current && ref.current(...args);
     }, [ref]);
   }
 
   // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useEventListener.js
-  var import_react11 = __toESM(require_react());
-
-  // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useGlobalListener.js
-  var import_react12 = __toESM(require_react());
-
-  // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useInterval.js
   var import_react13 = __toESM(require_react());
 
-  // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useRafInterval.js
+  // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useGlobalListener.js
   var import_react14 = __toESM(require_react());
 
-  // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useMergeState.js
+  // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useInterval.js
   var import_react15 = __toESM(require_react());
 
-  // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useMounted.js
+  // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useRafInterval.js
   var import_react16 = __toESM(require_react());
 
-  // node_modules/@restart/ui/node_modules/@restart/hooks/esm/usePrevious.js
+  // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useMergeState.js
   var import_react17 = __toESM(require_react());
 
-  // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useImage.js
+  // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useMounted.js
   var import_react18 = __toESM(require_react());
+  function useMounted() {
+    const mounted = (0, import_react18.useRef)(true);
+    const isMounted = (0, import_react18.useRef)(() => mounted.current);
+    (0, import_react18.useEffect)(() => {
+      mounted.current = true;
+      return () => {
+        mounted.current = false;
+      };
+    }, []);
+    return isMounted.current;
+  }
 
-  // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useResizeObserver.js
+  // node_modules/@restart/ui/node_modules/@restart/hooks/esm/usePrevious.js
+  var import_react19 = __toESM(require_react());
+  function usePrevious(value) {
+    const ref = (0, import_react19.useRef)(null);
+    (0, import_react19.useEffect)(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  }
+
+  // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useImage.js
   var import_react20 = __toESM(require_react());
 
+  // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useResizeObserver.js
+  var import_react22 = __toESM(require_react());
+
   // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useIsomorphicEffect.js
-  var import_react19 = __toESM(require_react());
+  var import_react21 = __toESM(require_react());
   var isReactNative = typeof global !== "undefined" && // @ts-ignore
   global.navigator && // @ts-ignore
   global.navigator.product === "ReactNative";
+  var isDOM = typeof document !== "undefined";
+  var useIsomorphicEffect_default = isDOM || isReactNative ? import_react21.useLayoutEffect : import_react21.useEffect;
 
   // node_modules/@restart/ui/esm/Button.js
-  var React7 = __toESM(require_react());
-  var import_jsx_runtime3 = __toESM(require_jsx_runtime());
+  var React8 = __toESM(require_react());
+  var import_jsx_runtime4 = __toESM(require_jsx_runtime());
   var _excluded = ["as", "disabled"];
   function _objectWithoutPropertiesLoose2(r, e) {
     if (null == r)
@@ -26329,7 +26437,7 @@
       onKeyDown: handleKeyDown
     }, meta];
   }
-  var Button = /* @__PURE__ */ React7.forwardRef((_ref, ref) => {
+  var Button = /* @__PURE__ */ React8.forwardRef((_ref, ref) => {
     let {
       as: asProp,
       disabled
@@ -26340,7 +26448,7 @@
       tagName: asProp,
       disabled
     }, props));
-    return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(Component, Object.assign({}, props, buttonProps, {
+    return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Component, Object.assign({}, props, buttonProps, {
       ref
     }));
   });
@@ -26348,7 +26456,7 @@
   var Button_default = Button;
 
   // node_modules/@restart/ui/esm/Anchor.js
-  var import_jsx_runtime4 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime5 = __toESM(require_jsx_runtime());
   var _excluded2 = ["onKeyDown"];
   function _objectWithoutPropertiesLoose3(r, e) {
     if (null == r)
@@ -26365,25 +26473,25 @@
   function isTrivialHref2(href) {
     return !href || href.trim() === "#";
   }
-  var Anchor = /* @__PURE__ */ React8.forwardRef((_ref, ref) => {
+  var Anchor = /* @__PURE__ */ React9.forwardRef((_ref, ref) => {
     let {
       onKeyDown
     } = _ref, props = _objectWithoutPropertiesLoose3(_ref, _excluded2);
     const [buttonProps] = useButtonProps(Object.assign({
       tagName: "a"
     }, props));
-    const handleKeyDown = useEventCallback((e) => {
+    const handleKeyDown = useEventCallback2((e) => {
       buttonProps.onKeyDown(e);
       onKeyDown == null ? void 0 : onKeyDown(e);
     });
     if (isTrivialHref2(props.href) || props.role === "button") {
-      return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("a", Object.assign({
+      return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("a", Object.assign({
         ref
       }, props, buttonProps, {
         onKeyDown: handleKeyDown
       }));
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("a", Object.assign({
+    return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("a", Object.assign({
       ref
     }, props, {
       onKeyDown
@@ -26393,15 +26501,15 @@
   var Anchor_default = Anchor;
 
   // node_modules/react-bootstrap/esm/Fade.js
-  var import_classnames = __toESM(require_classnames());
-  var React9 = __toESM(require_react());
-  var import_react21 = __toESM(require_react());
-  var import_jsx_runtime5 = __toESM(require_jsx_runtime());
+  var import_classnames2 = __toESM(require_classnames());
+  var React10 = __toESM(require_react());
+  var import_react23 = __toESM(require_react());
+  var import_jsx_runtime6 = __toESM(require_jsx_runtime());
   var fadeStyles = {
     [ENTERING]: "show",
     [ENTERED]: "show"
   };
-  var Fade = /* @__PURE__ */ React9.forwardRef(({
+  var Fade = /* @__PURE__ */ React10.forwardRef(({
     className,
     children,
     transitionClasses = {},
@@ -26416,36 +26524,125 @@
       appear: false,
       ...rest
     };
-    const handleEnter = (0, import_react21.useCallback)((node, isAppearing) => {
+    const handleEnter = (0, import_react23.useCallback)((node, isAppearing) => {
       triggerBrowserReflow(node);
       onEnter == null || onEnter(node, isAppearing);
     }, [onEnter]);
-    return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(TransitionWrapper_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(TransitionWrapper_default, {
       ref,
       addEndListener: transitionEndListener,
       ...props,
       onEnter: handleEnter,
       childRef: getChildRef(children),
-      children: (status, innerProps) => /* @__PURE__ */ React9.cloneElement(children, {
+      children: (status, innerProps) => /* @__PURE__ */ React10.cloneElement(children, {
         ...innerProps,
-        className: (0, import_classnames.default)("fade", className, children.props.className, fadeStyles[status], transitionClasses[status])
+        className: (0, import_classnames2.default)("fade", className, children.props.className, fadeStyles[status], transitionClasses[status])
       })
     });
   });
   Fade.displayName = "Fade";
   var Fade_default = Fade;
 
-  // node_modules/react-bootstrap/esm/CardHeaderContext.js
-  var React10 = __toESM(require_react());
+  // node_modules/react-bootstrap/esm/CloseButton.js
+  var import_prop_types3 = __toESM(require_prop_types());
+  var React11 = __toESM(require_react());
+  var import_classnames3 = __toESM(require_classnames());
+  var import_jsx_runtime7 = __toESM(require_jsx_runtime());
+  var propTypes = {
+    /** An accessible label indicating the relevant information about the Close Button. */
+    "aria-label": import_prop_types3.default.string,
+    /** A callback fired after the Close Button is clicked. */
+    onClick: import_prop_types3.default.func,
+    /**
+     * Render different color variant for the button.
+     *
+     * Omitting this will render the default dark color.
+     */
+    variant: import_prop_types3.default.oneOf(["white"])
+  };
+  var CloseButton = /* @__PURE__ */ React11.forwardRef(({
+    className,
+    variant,
+    "aria-label": ariaLabel = "Close",
+    ...props
+  }, ref) => /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", {
+    ref,
+    type: "button",
+    className: (0, import_classnames3.default)("btn-close", variant && `btn-close-${variant}`, className),
+    "aria-label": ariaLabel,
+    ...props
+  }));
+  CloseButton.displayName = "CloseButton";
+  CloseButton.propTypes = propTypes;
+  var CloseButton_default = CloseButton;
+
+  // node_modules/react-bootstrap/esm/Button.js
+  var import_classnames4 = __toESM(require_classnames());
+  var React12 = __toESM(require_react());
+  var import_jsx_runtime8 = __toESM(require_jsx_runtime());
   "use client";
-  var context = /* @__PURE__ */ React10.createContext(null);
+  var Button2 = /* @__PURE__ */ React12.forwardRef(({
+    as,
+    bsPrefix,
+    variant = "primary",
+    size: size2,
+    active = false,
+    disabled = false,
+    className,
+    ...props
+  }, ref) => {
+    const prefix = useBootstrapPrefix(bsPrefix, "btn");
+    const [buttonProps, {
+      tagName
+    }] = useButtonProps({
+      tagName: as,
+      disabled,
+      ...props
+    });
+    const Component = tagName;
+    return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(Component, {
+      ...buttonProps,
+      ...props,
+      ref,
+      disabled,
+      className: (0, import_classnames4.default)(className, prefix, active && "active", variant && `${prefix}-${variant}`, size2 && `${prefix}-${size2}`, props.href && disabled && "disabled")
+    });
+  });
+  Button2.displayName = "Button";
+  var Button_default2 = Button2;
+
+  // node_modules/react-bootstrap/esm/CardHeaderContext.js
+  var React13 = __toESM(require_react());
+  "use client";
+  var context = /* @__PURE__ */ React13.createContext(null);
   context.displayName = "CardHeaderContext";
   var CardHeaderContext_default = context;
 
+  // node_modules/@restart/hooks/esm/useUpdatedRef.js
+  var import_react24 = __toESM(require_react());
+  function useUpdatedRef(value) {
+    const valueRef = (0, import_react24.useRef)(value);
+    valueRef.current = value;
+    return valueRef;
+  }
+
+  // node_modules/@restart/hooks/esm/useWillUnmount.js
+  var import_react25 = __toESM(require_react());
+  function useWillUnmount(fn) {
+    const onUnmount = useUpdatedRef(fn);
+    (0, import_react25.useEffect)(() => () => onUnmount.current(), []);
+  }
+
+  // node_modules/react-bootstrap/esm/ElementChildren.js
+  var React14 = __toESM(require_react());
+  function hasChildOfType(children, type) {
+    return React14.Children.toArray(children).some((child) => /* @__PURE__ */ React14.isValidElement(child) && child.type === type);
+  }
+
   // node_modules/react-bootstrap/esm/Col.js
-  var import_classnames2 = __toESM(require_classnames());
-  var React11 = __toESM(require_react());
-  var import_jsx_runtime6 = __toESM(require_jsx_runtime());
+  var import_classnames5 = __toESM(require_classnames());
+  var React15 = __toESM(require_react());
+  var import_jsx_runtime9 = __toESM(require_jsx_runtime());
   "use client";
   function useCol({
     as,
@@ -26483,14 +26680,14 @@
     });
     return [{
       ...props,
-      className: (0, import_classnames2.default)(className, ...spans, ...classes)
+      className: (0, import_classnames5.default)(className, ...spans, ...classes)
     }, {
       as,
       bsPrefix,
       spans
     }];
   }
-  var Col = /* @__PURE__ */ React11.forwardRef(
+  var Col = /* @__PURE__ */ React15.forwardRef(
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
     (props, ref) => {
       const [{
@@ -26501,10 +26698,10 @@
         bsPrefix,
         spans
       }] = useCol(props);
-      return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(Component, {
+      return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(Component, {
         ...colProps,
         ref,
-        className: (0, import_classnames2.default)(className, !spans.length && bsPrefix)
+        className: (0, import_classnames5.default)(className, !spans.length && bsPrefix)
       });
     }
   );
@@ -26518,17 +26715,17 @@
   }
 
   // node_modules/@restart/ui/node_modules/uncontrollable/lib/esm/index.js
-  var import_react22 = __toESM(require_react());
+  var import_react26 = __toESM(require_react());
   function useUncontrolledProp2(propValue, defaultValue, handler) {
-    const wasPropRef = (0, import_react22.useRef)(propValue !== void 0);
-    const [stateValue, setState] = (0, import_react22.useState)(defaultValue);
+    const wasPropRef = (0, import_react26.useRef)(propValue !== void 0);
+    const [stateValue, setState] = (0, import_react26.useState)(defaultValue);
     const isProp2 = propValue !== void 0;
     const wasProp = wasPropRef.current;
     wasPropRef.current = isProp2;
     if (!isProp2 && wasProp && stateValue !== defaultValue) {
       setState(defaultValue);
     }
-    return [isProp2 ? propValue : stateValue, (0, import_react22.useCallback)((...args) => {
+    return [isProp2 ? propValue : stateValue, (0, import_react26.useCallback)((...args) => {
       const [value, ...rest] = args;
       let returnValue = handler == null ? void 0 : handler(value, ...rest);
       setState(value);
@@ -26537,28 +26734,36 @@
   }
 
   // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useForceUpdate.js
-  var import_react23 = __toESM(require_react());
+  var import_react27 = __toESM(require_react());
   function useForceUpdate() {
-    const [, dispatch] = (0, import_react23.useReducer)((revision) => revision + 1, 0);
+    const [, dispatch] = (0, import_react27.useReducer)((revision) => revision + 1, 0);
     return dispatch;
   }
 
+  // node_modules/dom-helpers/esm/contains.js
+  function contains(context3, node) {
+    if (context3.contains)
+      return context3.contains(node);
+    if (context3.compareDocumentPosition)
+      return context3 === node || !!(context3.compareDocumentPosition(node) & 16);
+  }
+
   // node_modules/@react-aria/ssr/dist/SSRProvider.mjs
-  var import_react24 = __toESM(require_react(), 1);
+  var import_react28 = __toESM(require_react(), 1);
   var $b5e257d569688ac6$var$defaultContext = {
     prefix: String(Math.round(Math.random() * 1e10)),
     current: 0
   };
-  var $b5e257d569688ac6$var$SSRContext = /* @__PURE__ */ (0, import_react24.default).createContext($b5e257d569688ac6$var$defaultContext);
-  var $b5e257d569688ac6$var$IsSSRContext = /* @__PURE__ */ (0, import_react24.default).createContext(false);
+  var $b5e257d569688ac6$var$SSRContext = /* @__PURE__ */ (0, import_react28.default).createContext($b5e257d569688ac6$var$defaultContext);
+  var $b5e257d569688ac6$var$IsSSRContext = /* @__PURE__ */ (0, import_react28.default).createContext(false);
   var $b5e257d569688ac6$var$canUseDOM = Boolean(typeof window !== "undefined" && window.document && window.document.createElement);
   var $b5e257d569688ac6$var$componentIds = /* @__PURE__ */ new WeakMap();
   function $b5e257d569688ac6$var$useCounter(isDisabled = false) {
-    let ctx = (0, import_react24.useContext)($b5e257d569688ac6$var$SSRContext);
-    let ref = (0, import_react24.useRef)(null);
+    let ctx = (0, import_react28.useContext)($b5e257d569688ac6$var$SSRContext);
+    let ref = (0, import_react28.useRef)(null);
     if (ref.current === null && !isDisabled) {
       var _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED_ReactCurrentOwner, _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
-      let currentOwner = (_React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = (0, import_react24.default).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED) === null || _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED === void 0 ? void 0 : (_React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED_ReactCurrentOwner = _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner) === null || _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED_ReactCurrentOwner === void 0 ? void 0 : _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED_ReactCurrentOwner.current;
+      let currentOwner = (_React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = (0, import_react28.default).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED) === null || _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED === void 0 ? void 0 : (_React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED_ReactCurrentOwner = _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner) === null || _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED_ReactCurrentOwner === void 0 ? void 0 : _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED_ReactCurrentOwner.current;
       if (currentOwner) {
         let prevComponentValue = $b5e257d569688ac6$var$componentIds.get(currentOwner);
         if (prevComponentValue == null)
@@ -26576,7 +26781,7 @@
     return ref.current;
   }
   function $b5e257d569688ac6$var$useLegacySSRSafeId(defaultId) {
-    let ctx = (0, import_react24.useContext)($b5e257d569688ac6$var$SSRContext);
+    let ctx = (0, import_react28.useContext)($b5e257d569688ac6$var$SSRContext);
     if (ctx === $b5e257d569688ac6$var$defaultContext && !$b5e257d569688ac6$var$canUseDOM)
       console.warn("When server rendering, you must wrap your application in an <SSRProvider> to ensure consistent ids are generated between the client and server.");
     let counter = $b5e257d569688ac6$var$useCounter(!!defaultId);
@@ -26584,12 +26789,12 @@
     return defaultId || `${prefix}-${counter}`;
   }
   function $b5e257d569688ac6$var$useModernSSRSafeId(defaultId) {
-    let id = (0, import_react24.default).useId();
-    let [didSSR] = (0, import_react24.useState)($b5e257d569688ac6$export$535bd6ca7f90a273());
+    let id = (0, import_react28.default).useId();
+    let [didSSR] = (0, import_react28.useState)($b5e257d569688ac6$export$535bd6ca7f90a273());
     let prefix = didSSR || false ? "react-aria" : `react-aria${$b5e257d569688ac6$var$defaultContext.prefix}`;
     return defaultId || `${prefix}-${id}`;
   }
-  var $b5e257d569688ac6$export$619500959fc48b26 = typeof (0, import_react24.default)["useId"] === "function" ? $b5e257d569688ac6$var$useModernSSRSafeId : $b5e257d569688ac6$var$useLegacySSRSafeId;
+  var $b5e257d569688ac6$export$619500959fc48b26 = typeof (0, import_react28.default)["useId"] === "function" ? $b5e257d569688ac6$var$useModernSSRSafeId : $b5e257d569688ac6$var$useLegacySSRSafeId;
   function $b5e257d569688ac6$var$getSnapshot() {
     return false;
   }
@@ -26601,14 +26806,14 @@
     };
   }
   function $b5e257d569688ac6$export$535bd6ca7f90a273() {
-    if (typeof (0, import_react24.default)["useSyncExternalStore"] === "function")
-      return (0, import_react24.default)["useSyncExternalStore"]($b5e257d569688ac6$var$subscribe, $b5e257d569688ac6$var$getSnapshot, $b5e257d569688ac6$var$getServerSnapshot);
-    return (0, import_react24.useContext)($b5e257d569688ac6$var$IsSSRContext);
+    if (typeof (0, import_react28.default)["useSyncExternalStore"] === "function")
+      return (0, import_react28.default)["useSyncExternalStore"]($b5e257d569688ac6$var$subscribe, $b5e257d569688ac6$var$getSnapshot, $b5e257d569688ac6$var$getServerSnapshot);
+    return (0, import_react28.useContext)($b5e257d569688ac6$var$IsSSRContext);
   }
 
   // node_modules/@restart/ui/esm/SelectableContext.js
-  var React12 = __toESM(require_react());
-  var SelectableContext = /* @__PURE__ */ React12.createContext(null);
+  var React16 = __toESM(require_react());
+  var SelectableContext = /* @__PURE__ */ React16.createContext(null);
   var makeEventKey = (eventKey, href = null) => {
     if (eventKey != null)
       return String(eventKey);
@@ -26617,8 +26822,8 @@
   var SelectableContext_default = SelectableContext;
 
   // node_modules/@restart/ui/esm/NavContext.js
-  var React13 = __toESM(require_react());
-  var NavContext = /* @__PURE__ */ React13.createContext(null);
+  var React17 = __toESM(require_react());
+  var NavContext = /* @__PURE__ */ React17.createContext(null);
   NavContext.displayName = "NavContext";
   var NavContext_default = NavContext;
 
@@ -26632,19 +26837,512 @@
     return `${PROPERTY_PREFIX}${property}`;
   }
 
+  // node_modules/@restart/ui/esm/useWindow.js
+  var import_react29 = __toESM(require_react());
+  var Context = /* @__PURE__ */ (0, import_react29.createContext)(canUseDOM_default ? window : void 0);
+  var WindowProvider = Context.Provider;
+  function useWindow() {
+    return (0, import_react29.useContext)(Context);
+  }
+
   // node_modules/react-bootstrap/esm/NavbarContext.js
-  var React14 = __toESM(require_react());
+  var React18 = __toESM(require_react());
   "use client";
-  var context2 = /* @__PURE__ */ React14.createContext(null);
+  var context2 = /* @__PURE__ */ React18.createContext(null);
   context2.displayName = "NavbarContext";
   var NavbarContext_default = context2;
 
+  // node_modules/react-bootstrap/esm/Form.js
+  var import_classnames17 = __toESM(require_classnames());
+  var import_prop_types5 = __toESM(require_prop_types());
+  var React33 = __toESM(require_react());
+
+  // node_modules/react-bootstrap/esm/FormCheck.js
+  var import_classnames9 = __toESM(require_classnames());
+  var React23 = __toESM(require_react());
+  var import_react32 = __toESM(require_react());
+
+  // node_modules/react-bootstrap/esm/Feedback.js
+  var import_classnames6 = __toESM(require_classnames());
+  var React19 = __toESM(require_react());
+  var import_prop_types4 = __toESM(require_prop_types());
+  var import_jsx_runtime10 = __toESM(require_jsx_runtime());
+  var propTypes2 = {
+    /**
+     * Specify whether the feedback is for valid or invalid fields
+     *
+     * @type {('valid'|'invalid')}
+     */
+    type: import_prop_types4.default.string,
+    /** Display feedback as a tooltip. */
+    tooltip: import_prop_types4.default.bool,
+    as: import_prop_types4.default.elementType
+  };
+  var Feedback = /* @__PURE__ */ React19.forwardRef(
+    // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+    ({
+      as: Component = "div",
+      className,
+      type = "valid",
+      tooltip = false,
+      ...props
+    }, ref) => /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(Component, {
+      ...props,
+      ref,
+      className: (0, import_classnames6.default)(className, `${type}-${tooltip ? "tooltip" : "feedback"}`)
+    })
+  );
+  Feedback.displayName = "Feedback";
+  Feedback.propTypes = propTypes2;
+  var Feedback_default = Feedback;
+
+  // node_modules/react-bootstrap/esm/FormCheckInput.js
+  var import_classnames7 = __toESM(require_classnames());
+  var React21 = __toESM(require_react());
+  var import_react30 = __toESM(require_react());
+
+  // node_modules/react-bootstrap/esm/FormContext.js
+  var React20 = __toESM(require_react());
+  "use client";
+  var FormContext = /* @__PURE__ */ React20.createContext({});
+  var FormContext_default = FormContext;
+
+  // node_modules/react-bootstrap/esm/FormCheckInput.js
+  var import_jsx_runtime11 = __toESM(require_jsx_runtime());
+  "use client";
+  var FormCheckInput = /* @__PURE__ */ React21.forwardRef(({
+    id,
+    bsPrefix,
+    className,
+    type = "checkbox",
+    isValid = false,
+    isInvalid = false,
+    // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+    as: Component = "input",
+    ...props
+  }, ref) => {
+    const {
+      controlId
+    } = (0, import_react30.useContext)(FormContext_default);
+    bsPrefix = useBootstrapPrefix(bsPrefix, "form-check-input");
+    return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Component, {
+      ...props,
+      ref,
+      type,
+      id: id || controlId,
+      className: (0, import_classnames7.default)(className, bsPrefix, isValid && "is-valid", isInvalid && "is-invalid")
+    });
+  });
+  FormCheckInput.displayName = "FormCheckInput";
+  var FormCheckInput_default = FormCheckInput;
+
+  // node_modules/react-bootstrap/esm/FormCheckLabel.js
+  var import_classnames8 = __toESM(require_classnames());
+  var React22 = __toESM(require_react());
+  var import_react31 = __toESM(require_react());
+  var import_jsx_runtime12 = __toESM(require_jsx_runtime());
+  "use client";
+  var FormCheckLabel = /* @__PURE__ */ React22.forwardRef(({
+    bsPrefix,
+    className,
+    htmlFor,
+    ...props
+  }, ref) => {
+    const {
+      controlId
+    } = (0, import_react31.useContext)(FormContext_default);
+    bsPrefix = useBootstrapPrefix(bsPrefix, "form-check-label");
+    return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("label", {
+      ...props,
+      ref,
+      htmlFor: htmlFor || controlId,
+      className: (0, import_classnames8.default)(className, bsPrefix)
+    });
+  });
+  FormCheckLabel.displayName = "FormCheckLabel";
+  var FormCheckLabel_default = FormCheckLabel;
+
+  // node_modules/react-bootstrap/esm/FormCheck.js
+  var import_jsx_runtime13 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime14 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime15 = __toESM(require_jsx_runtime());
+  "use client";
+  var FormCheck = /* @__PURE__ */ React23.forwardRef(({
+    id,
+    bsPrefix,
+    bsSwitchPrefix,
+    inline = false,
+    reverse = false,
+    disabled = false,
+    isValid = false,
+    isInvalid = false,
+    feedbackTooltip = false,
+    feedback,
+    feedbackType,
+    className,
+    style: style2,
+    title = "",
+    type = "checkbox",
+    label,
+    children,
+    // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+    as = "input",
+    ...props
+  }, ref) => {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "form-check");
+    bsSwitchPrefix = useBootstrapPrefix(bsSwitchPrefix, "form-switch");
+    const {
+      controlId
+    } = (0, import_react32.useContext)(FormContext_default);
+    const innerFormContext = (0, import_react32.useMemo)(() => ({
+      controlId: id || controlId
+    }), [controlId, id]);
+    const hasLabel = !children && label != null && label !== false || hasChildOfType(children, FormCheckLabel_default);
+    const input = /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(FormCheckInput_default, {
+      ...props,
+      type: type === "switch" ? "checkbox" : type,
+      ref,
+      isValid,
+      isInvalid,
+      disabled,
+      as
+    });
+    return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(FormContext_default.Provider, {
+      value: innerFormContext,
+      children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", {
+        style: style2,
+        className: (0, import_classnames9.default)(className, hasLabel && bsPrefix, inline && `${bsPrefix}-inline`, reverse && `${bsPrefix}-reverse`, type === "switch" && bsSwitchPrefix),
+        children: children || /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(import_jsx_runtime14.Fragment, {
+          children: [input, hasLabel && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(FormCheckLabel_default, {
+            title,
+            children: label
+          }), feedback && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Feedback_default, {
+            type: feedbackType,
+            tooltip: feedbackTooltip,
+            children: feedback
+          })]
+        })
+      })
+    });
+  });
+  FormCheck.displayName = "FormCheck";
+  var FormCheck_default = Object.assign(FormCheck, {
+    Input: FormCheckInput_default,
+    Label: FormCheckLabel_default
+  });
+
+  // node_modules/react-bootstrap/esm/FormControl.js
+  var import_classnames10 = __toESM(require_classnames());
+  var React24 = __toESM(require_react());
+  var import_react33 = __toESM(require_react());
+  var import_warning = __toESM(require_warning());
+  var import_jsx_runtime16 = __toESM(require_jsx_runtime());
+  "use client";
+  var FormControl = /* @__PURE__ */ React24.forwardRef(({
+    bsPrefix,
+    type,
+    size: size2,
+    htmlSize,
+    id,
+    className,
+    isValid = false,
+    isInvalid = false,
+    plaintext,
+    readOnly,
+    // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+    as: Component = "input",
+    ...props
+  }, ref) => {
+    const {
+      controlId
+    } = (0, import_react33.useContext)(FormContext_default);
+    bsPrefix = useBootstrapPrefix(bsPrefix, "form-control");
+    true ? (0, import_warning.default)(controlId == null || !id, "`controlId` is ignored on `<FormControl>` when `id` is specified.") : void 0;
+    return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(Component, {
+      ...props,
+      type,
+      size: htmlSize,
+      ref,
+      readOnly,
+      id: id || controlId,
+      className: (0, import_classnames10.default)(className, plaintext ? `${bsPrefix}-plaintext` : bsPrefix, size2 && `${bsPrefix}-${size2}`, type === "color" && `${bsPrefix}-color`, isValid && "is-valid", isInvalid && "is-invalid")
+    });
+  });
+  FormControl.displayName = "FormControl";
+  var FormControl_default = Object.assign(FormControl, {
+    Feedback: Feedback_default
+  });
+
+  // node_modules/react-bootstrap/esm/FormFloating.js
+  var React25 = __toESM(require_react());
+  var import_classnames11 = __toESM(require_classnames());
+  var import_jsx_runtime17 = __toESM(require_jsx_runtime());
+  "use client";
+  var FormFloating = /* @__PURE__ */ React25.forwardRef(({
+    className,
+    bsPrefix,
+    as: Component = "div",
+    ...props
+  }, ref) => {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "form-floating");
+    return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Component, {
+      ref,
+      className: (0, import_classnames11.default)(className, bsPrefix),
+      ...props
+    });
+  });
+  FormFloating.displayName = "FormFloating";
+  var FormFloating_default = FormFloating;
+
+  // node_modules/react-bootstrap/esm/FormGroup.js
+  var React26 = __toESM(require_react());
+  var import_react34 = __toESM(require_react());
+  var import_jsx_runtime18 = __toESM(require_jsx_runtime());
+  var FormGroup = /* @__PURE__ */ React26.forwardRef(({
+    controlId,
+    // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+    as: Component = "div",
+    ...props
+  }, ref) => {
+    const context3 = (0, import_react34.useMemo)(() => ({
+      controlId
+    }), [controlId]);
+    return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(FormContext_default.Provider, {
+      value: context3,
+      children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(Component, {
+        ...props,
+        ref
+      })
+    });
+  });
+  FormGroup.displayName = "FormGroup";
+  var FormGroup_default = FormGroup;
+
+  // node_modules/react-bootstrap/esm/FormLabel.js
+  var import_classnames12 = __toESM(require_classnames());
+  var React27 = __toESM(require_react());
+  var import_react35 = __toESM(require_react());
+  var import_warning2 = __toESM(require_warning());
+  var import_jsx_runtime19 = __toESM(require_jsx_runtime());
+  "use client";
+  var FormLabel = /* @__PURE__ */ React27.forwardRef(({
+    // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+    as: Component = "label",
+    bsPrefix,
+    column = false,
+    visuallyHidden = false,
+    className,
+    htmlFor,
+    ...props
+  }, ref) => {
+    const {
+      controlId
+    } = (0, import_react35.useContext)(FormContext_default);
+    bsPrefix = useBootstrapPrefix(bsPrefix, "form-label");
+    let columnClass = "col-form-label";
+    if (typeof column === "string")
+      columnClass = `${columnClass} ${columnClass}-${column}`;
+    const classes = (0, import_classnames12.default)(className, bsPrefix, visuallyHidden && "visually-hidden", column && columnClass);
+    true ? (0, import_warning2.default)(controlId == null || !htmlFor, "`controlId` is ignored on `<FormLabel>` when `htmlFor` is specified.") : void 0;
+    htmlFor = htmlFor || controlId;
+    if (column)
+      return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(Col_default, {
+        ref,
+        as: "label",
+        className: classes,
+        htmlFor,
+        ...props
+      });
+    return (
+      // eslint-disable-next-line jsx-a11y/label-has-for, jsx-a11y/label-has-associated-control
+      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(Component, {
+        ref,
+        className: classes,
+        htmlFor,
+        ...props
+      })
+    );
+  });
+  FormLabel.displayName = "FormLabel";
+  var FormLabel_default = FormLabel;
+
+  // node_modules/react-bootstrap/esm/FormRange.js
+  var import_classnames13 = __toESM(require_classnames());
+  var React28 = __toESM(require_react());
+  var import_react36 = __toESM(require_react());
+  var import_jsx_runtime20 = __toESM(require_jsx_runtime());
+  "use client";
+  var FormRange = /* @__PURE__ */ React28.forwardRef(({
+    bsPrefix,
+    className,
+    id,
+    ...props
+  }, ref) => {
+    const {
+      controlId
+    } = (0, import_react36.useContext)(FormContext_default);
+    bsPrefix = useBootstrapPrefix(bsPrefix, "form-range");
+    return /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("input", {
+      ...props,
+      type: "range",
+      ref,
+      className: (0, import_classnames13.default)(className, bsPrefix),
+      id: id || controlId
+    });
+  });
+  FormRange.displayName = "FormRange";
+  var FormRange_default = FormRange;
+
+  // node_modules/react-bootstrap/esm/FormSelect.js
+  var import_classnames14 = __toESM(require_classnames());
+  var React29 = __toESM(require_react());
+  var import_react37 = __toESM(require_react());
+  var import_jsx_runtime21 = __toESM(require_jsx_runtime());
+  "use client";
+  var FormSelect = /* @__PURE__ */ React29.forwardRef(({
+    bsPrefix,
+    size: size2,
+    htmlSize,
+    className,
+    isValid = false,
+    isInvalid = false,
+    id,
+    ...props
+  }, ref) => {
+    const {
+      controlId
+    } = (0, import_react37.useContext)(FormContext_default);
+    bsPrefix = useBootstrapPrefix(bsPrefix, "form-select");
+    return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("select", {
+      ...props,
+      size: htmlSize,
+      ref,
+      className: (0, import_classnames14.default)(className, bsPrefix, size2 && `${bsPrefix}-${size2}`, isValid && `is-valid`, isInvalid && `is-invalid`),
+      id: id || controlId
+    });
+  });
+  FormSelect.displayName = "FormSelect";
+  var FormSelect_default = FormSelect;
+
+  // node_modules/react-bootstrap/esm/FormText.js
+  var import_classnames15 = __toESM(require_classnames());
+  var React30 = __toESM(require_react());
+  var import_jsx_runtime22 = __toESM(require_jsx_runtime());
+  "use client";
+  var FormText = /* @__PURE__ */ React30.forwardRef(
+    // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+    ({
+      bsPrefix,
+      className,
+      as: Component = "small",
+      muted,
+      ...props
+    }, ref) => {
+      bsPrefix = useBootstrapPrefix(bsPrefix, "form-text");
+      return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Component, {
+        ...props,
+        ref,
+        className: (0, import_classnames15.default)(className, bsPrefix, muted && "text-muted")
+      });
+    }
+  );
+  FormText.displayName = "FormText";
+  var FormText_default = FormText;
+
+  // node_modules/react-bootstrap/esm/Switch.js
+  var React31 = __toESM(require_react());
+  var import_jsx_runtime23 = __toESM(require_jsx_runtime());
+  var Switch = /* @__PURE__ */ React31.forwardRef((props, ref) => /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(FormCheck_default, {
+    ...props,
+    ref,
+    type: "switch"
+  }));
+  Switch.displayName = "Switch";
+  var Switch_default = Object.assign(Switch, {
+    Input: FormCheck_default.Input,
+    Label: FormCheck_default.Label
+  });
+
+  // node_modules/react-bootstrap/esm/FloatingLabel.js
+  var import_classnames16 = __toESM(require_classnames());
+  var React32 = __toESM(require_react());
+  var import_jsx_runtime24 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime25 = __toESM(require_jsx_runtime());
+  "use client";
+  var FloatingLabel = /* @__PURE__ */ React32.forwardRef(({
+    bsPrefix,
+    className,
+    children,
+    controlId,
+    label,
+    ...props
+  }, ref) => {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "form-floating");
+    return /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(FormGroup_default, {
+      ref,
+      className: (0, import_classnames16.default)(className, bsPrefix),
+      controlId,
+      ...props,
+      children: [children, /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("label", {
+        htmlFor: controlId,
+        children: label
+      })]
+    });
+  });
+  FloatingLabel.displayName = "FloatingLabel";
+  var FloatingLabel_default = FloatingLabel;
+
+  // node_modules/react-bootstrap/esm/Form.js
+  var import_jsx_runtime26 = __toESM(require_jsx_runtime());
+  var propTypes3 = {
+    /**
+     * The Form `ref` will be forwarded to the underlying element,
+     * which means, unless it's rendered `as` a composite component,
+     * it will be a DOM node, when resolved.
+     *
+     * @type {ReactRef}
+     * @alias ref
+     */
+    _ref: import_prop_types5.default.any,
+    /**
+     * Mark a form as having been validated. Setting it to `true` will
+     * toggle any validation styles on the forms elements.
+     */
+    validated: import_prop_types5.default.bool,
+    as: import_prop_types5.default.elementType
+  };
+  var Form = /* @__PURE__ */ React33.forwardRef(({
+    className,
+    validated,
+    // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+    as: Component = "form",
+    ...props
+  }, ref) => /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Component, {
+    ...props,
+    ref,
+    className: (0, import_classnames17.default)(className, validated && "was-validated")
+  }));
+  Form.displayName = "Form";
+  Form.propTypes = propTypes3;
+  var Form_default = Object.assign(Form, {
+    Group: FormGroup_default,
+    Control: FormControl_default,
+    Floating: FormFloating_default,
+    Check: FormCheck_default,
+    Switch: Switch_default,
+    Label: FormLabel_default,
+    Text: FormText_default,
+    Range: FormRange_default,
+    Select: FormSelect_default,
+    FloatingLabel: FloatingLabel_default
+  });
+
   // node_modules/@restart/ui/esm/Nav.js
-  var React17 = __toESM(require_react());
-  var import_react27 = __toESM(require_react());
+  var React36 = __toESM(require_react());
+  var import_react40 = __toESM(require_react());
 
   // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useMergedRefs.js
-  var import_react25 = __toESM(require_react());
+  var import_react38 = __toESM(require_react());
   var toFnRef2 = (ref) => !ref || typeof ref === "function" ? ref : (value) => {
     ref.current = value;
   };
@@ -26659,19 +27357,19 @@
     };
   }
   function useMergedRefs2(refA, refB) {
-    return (0, import_react25.useMemo)(() => mergeRefs2(refA, refB), [refA, refB]);
+    return (0, import_react38.useMemo)(() => mergeRefs2(refA, refB), [refA, refB]);
   }
   var useMergedRefs_default2 = useMergedRefs2;
 
   // node_modules/@restart/ui/esm/TabContext.js
-  var React15 = __toESM(require_react());
-  var TabContext = /* @__PURE__ */ React15.createContext(null);
+  var React34 = __toESM(require_react());
+  var TabContext = /* @__PURE__ */ React34.createContext(null);
   var TabContext_default = TabContext;
 
   // node_modules/@restart/ui/esm/NavItem.js
-  var React16 = __toESM(require_react());
-  var import_react26 = __toESM(require_react());
-  var import_jsx_runtime7 = __toESM(require_jsx_runtime());
+  var React35 = __toESM(require_react());
+  var import_react39 = __toESM(require_react());
+  var import_jsx_runtime27 = __toESM(require_jsx_runtime());
   var _excluded3 = ["as", "active", "eventKey"];
   function _objectWithoutPropertiesLoose4(r, e) {
     if (null == r)
@@ -26693,9 +27391,9 @@
     role,
     disabled
   }) {
-    const parentOnSelect = (0, import_react26.useContext)(SelectableContext_default);
-    const navContext = (0, import_react26.useContext)(NavContext_default);
-    const tabContext = (0, import_react26.useContext)(TabContext_default);
+    const parentOnSelect = (0, import_react39.useContext)(SelectableContext_default);
+    const navContext = (0, import_react39.useContext)(NavContext_default);
+    const tabContext = (0, import_react39.useContext)(TabContext_default);
     let isActive = active;
     const props = {
       role
@@ -26721,7 +27419,7 @@
         props["aria-disabled"] = true;
       }
     }
-    props.onClick = useEventCallback((e) => {
+    props.onClick = useEventCallback2((e) => {
       if (disabled)
         return;
       onClick == null ? void 0 : onClick(e);
@@ -26736,7 +27434,7 @@
       isActive
     }];
   }
-  var NavItem = /* @__PURE__ */ React16.forwardRef((_ref, ref) => {
+  var NavItem = /* @__PURE__ */ React35.forwardRef((_ref, ref) => {
     let {
       as: Component = Button_default,
       active,
@@ -26747,7 +27445,7 @@
       active
     }, options));
     props[dataAttr("active")] = meta.isActive;
-    return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Component, Object.assign({}, options, props, {
+    return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(Component, Object.assign({}, options, props, {
       ref
     }));
   });
@@ -26755,7 +27453,7 @@
   var NavItem_default = NavItem;
 
   // node_modules/@restart/ui/esm/Nav.js
-  var import_jsx_runtime8 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime28 = __toESM(require_jsx_runtime());
   var _excluded4 = ["as", "onSelect", "activeKey", "role", "onKeyDown"];
   function _objectWithoutPropertiesLoose5(r, e) {
     if (null == r)
@@ -26772,7 +27470,7 @@
   var noop2 = () => {
   };
   var EVENT_KEY_ATTR = dataAttr("event-key");
-  var Nav = /* @__PURE__ */ React17.forwardRef((_ref, ref) => {
+  var Nav = /* @__PURE__ */ React36.forwardRef((_ref, ref) => {
     let {
       // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
       as: Component = "div",
@@ -26782,9 +27480,9 @@
       onKeyDown
     } = _ref, props = _objectWithoutPropertiesLoose5(_ref, _excluded4);
     const forceUpdate = useForceUpdate();
-    const needsRefocusRef = (0, import_react27.useRef)(false);
-    const parentOnSelect = (0, import_react27.useContext)(SelectableContext_default);
-    const tabContext = (0, import_react27.useContext)(TabContext_default);
+    const needsRefocusRef = (0, import_react40.useRef)(false);
+    const parentOnSelect = (0, import_react40.useContext)(SelectableContext_default);
+    const tabContext = (0, import_react40.useContext)(TabContext_default);
     let getControlledId, getControllerId;
     if (tabContext) {
       role = role || "tablist";
@@ -26792,7 +27490,7 @@
       getControlledId = tabContext.getControlledId;
       getControllerId = tabContext.getControllerId;
     }
-    const listNode = (0, import_react27.useRef)(null);
+    const listNode = (0, import_react40.useRef)(null);
     const getNextActiveTab = (offset) => {
       const currentListNode = listNode.current;
       if (!currentListNode)
@@ -26842,7 +27540,7 @@
       needsRefocusRef.current = true;
       forceUpdate();
     };
-    (0, import_react27.useEffect)(() => {
+    (0, import_react40.useEffect)(() => {
       if (listNode.current && needsRefocusRef.current) {
         const activeChild = listNode.current.querySelector(`[${EVENT_KEY_ATTR}][aria-selected=true]`);
         activeChild == null ? void 0 : activeChild.focus();
@@ -26850,9 +27548,9 @@
       needsRefocusRef.current = false;
     });
     const mergedRef = useMergedRefs_default2(ref, listNode);
-    return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(SelectableContext_default.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(SelectableContext_default.Provider, {
       value: handleSelect,
-      children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(NavContext_default.Provider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(NavContext_default.Provider, {
         value: {
           role,
           // used by NavLink to determine it's role
@@ -26860,7 +27558,7 @@
           getControlledId: getControlledId || noop2,
           getControllerId: getControllerId || noop2
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(Component, Object.assign({}, props, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(Component, Object.assign({}, props, {
           onKeyDown: handleKeyDown,
           ref: mergedRef,
           role
@@ -26873,8 +27571,205 @@
     Item: NavItem_default
   });
 
+  // node_modules/react-bootstrap/esm/Modal.js
+  var import_classnames23 = __toESM(require_classnames());
+
+  // node_modules/dom-helpers/esm/scrollbarSize.js
+  var size;
+  function scrollbarSize(recalc) {
+    if (!size && size !== 0 || recalc) {
+      if (canUseDOM_default) {
+        var scrollDiv = document.createElement("div");
+        scrollDiv.style.position = "absolute";
+        scrollDiv.style.top = "-9999px";
+        scrollDiv.style.width = "50px";
+        scrollDiv.style.height = "50px";
+        scrollDiv.style.overflow = "scroll";
+        document.body.appendChild(scrollDiv);
+        size = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+        document.body.removeChild(scrollDiv);
+      }
+    }
+    return size;
+  }
+
+  // node_modules/@restart/hooks/esm/useCallbackRef.js
+  var import_react41 = __toESM(require_react());
+  function useCallbackRef2() {
+    return (0, import_react41.useState)(null);
+  }
+
+  // node_modules/react-bootstrap/esm/Modal.js
+  var React47 = __toESM(require_react());
+  var import_react50 = __toESM(require_react());
+
+  // node_modules/dom-helpers/esm/activeElement.js
+  function activeElement(doc) {
+    if (doc === void 0) {
+      doc = ownerDocument();
+    }
+    try {
+      var active = doc.activeElement;
+      if (!active || !active.nodeName)
+        return null;
+      return active;
+    } catch (e) {
+      return doc.body;
+    }
+  }
+
+  // node_modules/@restart/ui/esm/Modal.js
+  var import_react48 = __toESM(require_react());
+  var React39 = __toESM(require_react());
+  var import_react_dom3 = __toESM(require_react_dom());
+
+  // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useUpdatedRef.js
+  var import_react42 = __toESM(require_react());
+  function useUpdatedRef2(value) {
+    const valueRef = (0, import_react42.useRef)(value);
+    valueRef.current = value;
+    return valueRef;
+  }
+
+  // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useWillUnmount.js
+  var import_react43 = __toESM(require_react());
+  function useWillUnmount2(fn) {
+    const onUnmount = useUpdatedRef2(fn);
+    (0, import_react43.useEffect)(() => () => onUnmount.current(), []);
+  }
+
+  // node_modules/@restart/ui/esm/getScrollbarWidth.js
+  function getBodyScrollbarWidth(ownerDocument2 = document) {
+    const window2 = ownerDocument2.defaultView;
+    return Math.abs(window2.innerWidth - ownerDocument2.documentElement.clientWidth);
+  }
+
+  // node_modules/@restart/ui/esm/ModalManager.js
+  var OPEN_DATA_ATTRIBUTE = dataAttr("modal-open");
+  var ModalManager = class {
+    constructor({
+      ownerDocument: ownerDocument2,
+      handleContainerOverflow = true,
+      isRTL = false
+    } = {}) {
+      this.handleContainerOverflow = handleContainerOverflow;
+      this.isRTL = isRTL;
+      this.modals = [];
+      this.ownerDocument = ownerDocument2;
+    }
+    getScrollbarWidth() {
+      return getBodyScrollbarWidth(this.ownerDocument);
+    }
+    getElement() {
+      return (this.ownerDocument || document).body;
+    }
+    setModalAttributes(_modal) {
+    }
+    removeModalAttributes(_modal) {
+    }
+    setContainerStyle(containerState) {
+      const style2 = {
+        overflow: "hidden"
+      };
+      const paddingProp = this.isRTL ? "paddingLeft" : "paddingRight";
+      const container = this.getElement();
+      containerState.style = {
+        overflow: container.style.overflow,
+        [paddingProp]: container.style[paddingProp]
+      };
+      if (containerState.scrollBarWidth) {
+        style2[paddingProp] = `${parseInt(css_default(container, paddingProp) || "0", 10) + containerState.scrollBarWidth}px`;
+      }
+      container.setAttribute(OPEN_DATA_ATTRIBUTE, "");
+      css_default(container, style2);
+    }
+    reset() {
+      [...this.modals].forEach((m) => this.remove(m));
+    }
+    removeContainerStyle(containerState) {
+      const container = this.getElement();
+      container.removeAttribute(OPEN_DATA_ATTRIBUTE);
+      Object.assign(container.style, containerState.style);
+    }
+    add(modal) {
+      let modalIdx = this.modals.indexOf(modal);
+      if (modalIdx !== -1) {
+        return modalIdx;
+      }
+      modalIdx = this.modals.length;
+      this.modals.push(modal);
+      this.setModalAttributes(modal);
+      if (modalIdx !== 0) {
+        return modalIdx;
+      }
+      this.state = {
+        scrollBarWidth: this.getScrollbarWidth(),
+        style: {}
+      };
+      if (this.handleContainerOverflow) {
+        this.setContainerStyle(this.state);
+      }
+      return modalIdx;
+    }
+    remove(modal) {
+      const modalIdx = this.modals.indexOf(modal);
+      if (modalIdx === -1) {
+        return;
+      }
+      this.modals.splice(modalIdx, 1);
+      if (!this.modals.length && this.handleContainerOverflow) {
+        this.removeContainerStyle(this.state);
+      }
+      this.removeModalAttributes(modal);
+    }
+    isTopModal(modal) {
+      return !!this.modals.length && this.modals[this.modals.length - 1] === modal;
+    }
+  };
+  var ModalManager_default = ModalManager;
+
+  // node_modules/@restart/ui/esm/useWaitForDOMRef.js
+  var import_react44 = __toESM(require_react());
+  var resolveContainerRef = (ref, document2) => {
+    if (!canUseDOM_default)
+      return null;
+    if (ref == null)
+      return (document2 || ownerDocument()).body;
+    if (typeof ref === "function")
+      ref = ref();
+    if (ref && "current" in ref)
+      ref = ref.current;
+    if (ref && ("nodeType" in ref || ref.getBoundingClientRect))
+      return ref;
+    return null;
+  };
+  function useWaitForDOMRef(ref, onResolved) {
+    const window2 = useWindow();
+    const [resolvedRef, setRef] = (0, import_react44.useState)(() => resolveContainerRef(ref, window2 == null ? void 0 : window2.document));
+    if (!resolvedRef) {
+      const earlyRef = resolveContainerRef(ref);
+      if (earlyRef)
+        setRef(earlyRef);
+    }
+    (0, import_react44.useEffect)(() => {
+      if (onResolved && resolvedRef) {
+        onResolved(resolvedRef);
+      }
+    }, [onResolved, resolvedRef]);
+    (0, import_react44.useEffect)(() => {
+      const nextRef = resolveContainerRef(ref);
+      if (nextRef !== resolvedRef) {
+        setRef(nextRef);
+      }
+    }, [ref, resolvedRef]);
+    return resolvedRef;
+  }
+
+  // node_modules/@restart/ui/esm/ImperativeTransition.js
+  var import_react47 = __toESM(require_react());
+
   // node_modules/@restart/ui/esm/NoopTransition.js
-  var import_react28 = __toESM(require_react());
+  var import_react45 = __toESM(require_react());
   function NoopTransition({
     children,
     in: inProp,
@@ -26882,10 +27777,10 @@
     mountOnEnter,
     unmountOnExit
   }) {
-    const ref = (0, import_react28.useRef)(null);
-    const hasEnteredRef = (0, import_react28.useRef)(inProp);
-    const handleExited = useEventCallback(onExited);
-    (0, import_react28.useEffect)(() => {
+    const ref = (0, import_react45.useRef)(null);
+    const hasEnteredRef = (0, import_react45.useRef)(inProp);
+    const handleExited = useEventCallback2(onExited);
+    (0, import_react45.useEffect)(() => {
       if (inProp)
         hasEnteredRef.current = true;
       else {
@@ -26893,7 +27788,7 @@
       }
     }, [inProp, handleExited]);
     const combinedRef = useMergedRefs_default2(ref, getChildRef(children));
-    const child = /* @__PURE__ */ (0, import_react28.cloneElement)(children, {
+    const child = /* @__PURE__ */ (0, import_react45.cloneElement)(children, {
       ref: combinedRef
     });
     if (inProp)
@@ -26908,26 +27803,900 @@
   }
   var NoopTransition_default = NoopTransition;
 
+  // node_modules/@restart/ui/esm/RTGTransition.js
+  var React37 = __toESM(require_react());
+
+  // node_modules/@restart/ui/esm/useRTGTransitionProps.js
+  var import_react46 = __toESM(require_react());
+  var _excluded5 = ["onEnter", "onEntering", "onEntered", "onExit", "onExiting", "onExited", "addEndListener", "children"];
+  function _objectWithoutPropertiesLoose6(r, e) {
+    if (null == r)
+      return {};
+    var t = {};
+    for (var n in r)
+      if ({}.hasOwnProperty.call(r, n)) {
+        if (e.indexOf(n) >= 0)
+          continue;
+        t[n] = r[n];
+      }
+    return t;
+  }
+  function useRTGTransitionProps(_ref) {
+    let {
+      onEnter,
+      onEntering,
+      onEntered,
+      onExit,
+      onExiting,
+      onExited,
+      addEndListener,
+      children
+    } = _ref, props = _objectWithoutPropertiesLoose6(_ref, _excluded5);
+    const nodeRef = (0, import_react46.useRef)(null);
+    const mergedRef = useMergedRefs_default2(nodeRef, getChildRef(children));
+    const normalize = (callback) => (param) => {
+      if (callback && nodeRef.current) {
+        callback(nodeRef.current, param);
+      }
+    };
+    const handleEnter = (0, import_react46.useCallback)(normalize(onEnter), [onEnter]);
+    const handleEntering = (0, import_react46.useCallback)(normalize(onEntering), [onEntering]);
+    const handleEntered = (0, import_react46.useCallback)(normalize(onEntered), [onEntered]);
+    const handleExit = (0, import_react46.useCallback)(normalize(onExit), [onExit]);
+    const handleExiting = (0, import_react46.useCallback)(normalize(onExiting), [onExiting]);
+    const handleExited = (0, import_react46.useCallback)(normalize(onExited), [onExited]);
+    const handleAddEndListener = (0, import_react46.useCallback)(normalize(addEndListener), [addEndListener]);
+    return Object.assign({}, props, {
+      nodeRef
+    }, onEnter && {
+      onEnter: handleEnter
+    }, onEntering && {
+      onEntering: handleEntering
+    }, onEntered && {
+      onEntered: handleEntered
+    }, onExit && {
+      onExit: handleExit
+    }, onExiting && {
+      onExiting: handleExiting
+    }, onExited && {
+      onExited: handleExited
+    }, addEndListener && {
+      addEndListener: handleAddEndListener
+    }, {
+      children: typeof children === "function" ? (status, innerProps) => (
+        // TODO: Types for RTG missing innerProps, so need to cast.
+        children(status, Object.assign({}, innerProps, {
+          ref: mergedRef
+        }))
+      ) : /* @__PURE__ */ (0, import_react46.cloneElement)(children, {
+        ref: mergedRef
+      })
+    });
+  }
+
+  // node_modules/@restart/ui/esm/RTGTransition.js
+  var import_jsx_runtime29 = __toESM(require_jsx_runtime());
+  var _excluded6 = ["component"];
+  function _objectWithoutPropertiesLoose7(r, e) {
+    if (null == r)
+      return {};
+    var t = {};
+    for (var n in r)
+      if ({}.hasOwnProperty.call(r, n)) {
+        if (e.indexOf(n) >= 0)
+          continue;
+        t[n] = r[n];
+      }
+    return t;
+  }
+  var RTGTransition = /* @__PURE__ */ React37.forwardRef((_ref, ref) => {
+    let {
+      component: Component
+    } = _ref, props = _objectWithoutPropertiesLoose7(_ref, _excluded6);
+    const transitionProps = useRTGTransitionProps(props);
+    return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(Component, Object.assign({
+      ref
+    }, transitionProps));
+  });
+  var RTGTransition_default = RTGTransition;
+
+  // node_modules/@restart/ui/esm/ImperativeTransition.js
+  var import_jsx_runtime30 = __toESM(require_jsx_runtime());
+  function useTransition({
+    in: inProp,
+    onTransition
+  }) {
+    const ref = (0, import_react47.useRef)(null);
+    const isInitialRef = (0, import_react47.useRef)(true);
+    const handleTransition = useEventCallback2(onTransition);
+    useIsomorphicEffect_default(() => {
+      if (!ref.current) {
+        return void 0;
+      }
+      let stale = false;
+      handleTransition({
+        in: inProp,
+        element: ref.current,
+        initial: isInitialRef.current,
+        isStale: () => stale
+      });
+      return () => {
+        stale = true;
+      };
+    }, [inProp, handleTransition]);
+    useIsomorphicEffect_default(() => {
+      isInitialRef.current = false;
+      return () => {
+        isInitialRef.current = true;
+      };
+    }, []);
+    return ref;
+  }
+  function ImperativeTransition({
+    children,
+    in: inProp,
+    onExited,
+    onEntered,
+    transition
+  }) {
+    const [exited, setExited] = (0, import_react47.useState)(!inProp);
+    if (inProp && exited) {
+      setExited(false);
+    }
+    const ref = useTransition({
+      in: !!inProp,
+      onTransition: (options) => {
+        const onFinish = () => {
+          if (options.isStale())
+            return;
+          if (options.in) {
+            onEntered == null ? void 0 : onEntered(options.element, options.initial);
+          } else {
+            setExited(true);
+            onExited == null ? void 0 : onExited(options.element);
+          }
+        };
+        Promise.resolve(transition(options)).then(onFinish, (error) => {
+          if (!options.in)
+            setExited(true);
+          throw error;
+        });
+      }
+    });
+    const combinedRef = useMergedRefs_default2(ref, getChildRef(children));
+    return exited && !inProp ? null : /* @__PURE__ */ (0, import_react47.cloneElement)(children, {
+      ref: combinedRef
+    });
+  }
+  function renderTransition(component, runTransition, props) {
+    if (component) {
+      return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(RTGTransition_default, Object.assign({}, props, {
+        component
+      }));
+    }
+    if (runTransition) {
+      return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(ImperativeTransition, Object.assign({}, props, {
+        transition: runTransition
+      }));
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(NoopTransition_default, Object.assign({}, props));
+  }
+
+  // node_modules/@restart/ui/esm/Modal.js
+  var import_jsx_runtime31 = __toESM(require_jsx_runtime());
+  var _excluded7 = ["show", "role", "className", "style", "children", "backdrop", "keyboard", "onBackdropClick", "onEscapeKeyDown", "transition", "runTransition", "backdropTransition", "runBackdropTransition", "autoFocus", "enforceFocus", "restoreFocus", "restoreFocusOptions", "renderDialog", "renderBackdrop", "manager", "container", "onShow", "onHide", "onExit", "onExited", "onExiting", "onEnter", "onEntering", "onEntered"];
+  function _objectWithoutPropertiesLoose8(r, e) {
+    if (null == r)
+      return {};
+    var t = {};
+    for (var n in r)
+      if ({}.hasOwnProperty.call(r, n)) {
+        if (e.indexOf(n) >= 0)
+          continue;
+        t[n] = r[n];
+      }
+    return t;
+  }
+  var manager;
+  function getManager(window2) {
+    if (!manager)
+      manager = new ModalManager_default({
+        ownerDocument: window2 == null ? void 0 : window2.document
+      });
+    return manager;
+  }
+  function useModalManager(provided) {
+    const window2 = useWindow();
+    const modalManager = provided || getManager(window2);
+    const modal = (0, import_react48.useRef)({
+      dialog: null,
+      backdrop: null
+    });
+    return Object.assign(modal.current, {
+      add: () => modalManager.add(modal.current),
+      remove: () => modalManager.remove(modal.current),
+      isTopModal: () => modalManager.isTopModal(modal.current),
+      setDialogRef: (0, import_react48.useCallback)((ref) => {
+        modal.current.dialog = ref;
+      }, []),
+      setBackdropRef: (0, import_react48.useCallback)((ref) => {
+        modal.current.backdrop = ref;
+      }, [])
+    });
+  }
+  var Modal = /* @__PURE__ */ (0, import_react48.forwardRef)((_ref, ref) => {
+    let {
+      show = false,
+      role = "dialog",
+      className,
+      style: style2,
+      children,
+      backdrop = true,
+      keyboard = true,
+      onBackdropClick,
+      onEscapeKeyDown,
+      transition,
+      runTransition,
+      backdropTransition,
+      runBackdropTransition,
+      autoFocus = true,
+      enforceFocus = true,
+      restoreFocus = true,
+      restoreFocusOptions,
+      renderDialog,
+      renderBackdrop = (props) => /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("div", Object.assign({}, props)),
+      manager: providedManager,
+      container: containerRef,
+      onShow,
+      onHide = () => {
+      },
+      onExit,
+      onExited,
+      onExiting,
+      onEnter,
+      onEntering,
+      onEntered
+    } = _ref, rest = _objectWithoutPropertiesLoose8(_ref, _excluded7);
+    const ownerWindow2 = useWindow();
+    const container = useWaitForDOMRef(containerRef);
+    const modal = useModalManager(providedManager);
+    const isMounted = useMounted();
+    const prevShow = usePrevious(show);
+    const [exited, setExited] = (0, import_react48.useState)(!show);
+    const lastFocusRef = (0, import_react48.useRef)(null);
+    (0, import_react48.useImperativeHandle)(ref, () => modal, [modal]);
+    if (canUseDOM_default && !prevShow && show) {
+      lastFocusRef.current = activeElement(ownerWindow2 == null ? void 0 : ownerWindow2.document);
+    }
+    if (show && exited) {
+      setExited(false);
+    }
+    const handleShow = useEventCallback2(() => {
+      modal.add();
+      removeKeydownListenerRef.current = listen_default(document, "keydown", handleDocumentKeyDown);
+      removeFocusListenerRef.current = listen_default(
+        document,
+        "focus",
+        // the timeout is necessary b/c this will run before the new modal is mounted
+        // and so steals focus from it
+        () => setTimeout(handleEnforceFocus),
+        true
+      );
+      if (onShow) {
+        onShow();
+      }
+      if (autoFocus) {
+        var _modal$dialog$ownerDo, _modal$dialog;
+        const currentActiveElement = activeElement((_modal$dialog$ownerDo = (_modal$dialog = modal.dialog) == null ? void 0 : _modal$dialog.ownerDocument) != null ? _modal$dialog$ownerDo : ownerWindow2 == null ? void 0 : ownerWindow2.document);
+        if (modal.dialog && currentActiveElement && !contains(modal.dialog, currentActiveElement)) {
+          lastFocusRef.current = currentActiveElement;
+          modal.dialog.focus();
+        }
+      }
+    });
+    const handleHide = useEventCallback2(() => {
+      modal.remove();
+      removeKeydownListenerRef.current == null ? void 0 : removeKeydownListenerRef.current();
+      removeFocusListenerRef.current == null ? void 0 : removeFocusListenerRef.current();
+      if (restoreFocus) {
+        var _lastFocusRef$current;
+        (_lastFocusRef$current = lastFocusRef.current) == null ? void 0 : _lastFocusRef$current.focus == null ? void 0 : _lastFocusRef$current.focus(restoreFocusOptions);
+        lastFocusRef.current = null;
+      }
+    });
+    (0, import_react48.useEffect)(() => {
+      if (!show || !container)
+        return;
+      handleShow();
+    }, [
+      show,
+      container,
+      /* should never change: */
+      handleShow
+    ]);
+    (0, import_react48.useEffect)(() => {
+      if (!exited)
+        return;
+      handleHide();
+    }, [exited, handleHide]);
+    useWillUnmount2(() => {
+      handleHide();
+    });
+    const handleEnforceFocus = useEventCallback2(() => {
+      if (!enforceFocus || !isMounted() || !modal.isTopModal()) {
+        return;
+      }
+      const currentActiveElement = activeElement(ownerWindow2 == null ? void 0 : ownerWindow2.document);
+      if (modal.dialog && currentActiveElement && !contains(modal.dialog, currentActiveElement)) {
+        modal.dialog.focus();
+      }
+    });
+    const handleBackdropClick = useEventCallback2((e) => {
+      if (e.target !== e.currentTarget) {
+        return;
+      }
+      onBackdropClick == null ? void 0 : onBackdropClick(e);
+      if (backdrop === true) {
+        onHide();
+      }
+    });
+    const handleDocumentKeyDown = useEventCallback2((e) => {
+      if (keyboard && isEscKey(e) && modal.isTopModal()) {
+        onEscapeKeyDown == null ? void 0 : onEscapeKeyDown(e);
+        if (!e.defaultPrevented) {
+          onHide();
+        }
+      }
+    });
+    const removeFocusListenerRef = (0, import_react48.useRef)();
+    const removeKeydownListenerRef = (0, import_react48.useRef)();
+    const handleHidden = (...args) => {
+      setExited(true);
+      onExited == null ? void 0 : onExited(...args);
+    };
+    if (!container) {
+      return null;
+    }
+    const dialogProps = Object.assign({
+      role,
+      ref: modal.setDialogRef,
+      // apparently only works on the dialog role element
+      "aria-modal": role === "dialog" ? true : void 0
+    }, rest, {
+      style: style2,
+      className,
+      tabIndex: -1
+    });
+    let dialog = renderDialog ? renderDialog(dialogProps) : /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("div", Object.assign({}, dialogProps, {
+      children: /* @__PURE__ */ React39.cloneElement(children, {
+        role: "document"
+      })
+    }));
+    dialog = renderTransition(transition, runTransition, {
+      unmountOnExit: true,
+      mountOnEnter: true,
+      appear: true,
+      in: !!show,
+      onExit,
+      onExiting,
+      onExited: handleHidden,
+      onEnter,
+      onEntering,
+      onEntered,
+      children: dialog
+    });
+    let backdropElement = null;
+    if (backdrop) {
+      backdropElement = renderBackdrop({
+        ref: modal.setBackdropRef,
+        onClick: handleBackdropClick
+      });
+      backdropElement = renderTransition(backdropTransition, runBackdropTransition, {
+        in: !!show,
+        appear: true,
+        mountOnEnter: true,
+        unmountOnExit: true,
+        children: backdropElement
+      });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(import_jsx_runtime31.Fragment, {
+      children: /* @__PURE__ */ import_react_dom3.default.createPortal(/* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(import_jsx_runtime31.Fragment, {
+        children: [backdropElement, dialog]
+      }), container)
+    });
+  });
+  Modal.displayName = "Modal";
+  var Modal_default = Object.assign(Modal, {
+    Manager: ModalManager_default
+  });
+
+  // node_modules/dom-helpers/esm/hasClass.js
+  function hasClass(element, className) {
+    if (element.classList)
+      return !!className && element.classList.contains(className);
+    return (" " + (element.className.baseVal || element.className) + " ").indexOf(" " + className + " ") !== -1;
+  }
+
+  // node_modules/dom-helpers/esm/addClass.js
+  function addClass(element, className) {
+    if (element.classList)
+      element.classList.add(className);
+    else if (!hasClass(element, className))
+      if (typeof element.className === "string")
+        element.className = element.className + " " + className;
+      else
+        element.setAttribute("class", (element.className && element.className.baseVal || "") + " " + className);
+  }
+
+  // node_modules/dom-helpers/esm/removeClass.js
+  function replaceClassName(origClass, classToRemove) {
+    return origClass.replace(new RegExp("(^|\\s)" + classToRemove + "(?:\\s|$)", "g"), "$1").replace(/\s+/g, " ").replace(/^\s*|\s*$/g, "");
+  }
+  function removeClass(element, className) {
+    if (element.classList) {
+      element.classList.remove(className);
+    } else if (typeof element.className === "string") {
+      element.className = replaceClassName(element.className, className);
+    } else {
+      element.setAttribute("class", replaceClassName(element.className && element.className.baseVal || "", className));
+    }
+  }
+
+  // node_modules/react-bootstrap/esm/BootstrapModalManager.js
+  var Selector = {
+    FIXED_CONTENT: ".fixed-top, .fixed-bottom, .is-fixed, .sticky-top",
+    STICKY_CONTENT: ".sticky-top",
+    NAVBAR_TOGGLER: ".navbar-toggler"
+  };
+  var BootstrapModalManager = class extends ModalManager_default {
+    adjustAndStore(prop, element, adjust) {
+      const actual = element.style[prop];
+      element.dataset[prop] = actual;
+      css_default(element, {
+        [prop]: `${parseFloat(css_default(element, prop)) + adjust}px`
+      });
+    }
+    restore(prop, element) {
+      const value = element.dataset[prop];
+      if (value !== void 0) {
+        delete element.dataset[prop];
+        css_default(element, {
+          [prop]: value
+        });
+      }
+    }
+    setContainerStyle(containerState) {
+      super.setContainerStyle(containerState);
+      const container = this.getElement();
+      addClass(container, "modal-open");
+      if (!containerState.scrollBarWidth)
+        return;
+      const paddingProp = this.isRTL ? "paddingLeft" : "paddingRight";
+      const marginProp = this.isRTL ? "marginLeft" : "marginRight";
+      qsa(container, Selector.FIXED_CONTENT).forEach((el) => this.adjustAndStore(paddingProp, el, containerState.scrollBarWidth));
+      qsa(container, Selector.STICKY_CONTENT).forEach((el) => this.adjustAndStore(marginProp, el, -containerState.scrollBarWidth));
+      qsa(container, Selector.NAVBAR_TOGGLER).forEach((el) => this.adjustAndStore(marginProp, el, containerState.scrollBarWidth));
+    }
+    removeContainerStyle(containerState) {
+      super.removeContainerStyle(containerState);
+      const container = this.getElement();
+      removeClass(container, "modal-open");
+      const paddingProp = this.isRTL ? "paddingLeft" : "paddingRight";
+      const marginProp = this.isRTL ? "marginLeft" : "marginRight";
+      qsa(container, Selector.FIXED_CONTENT).forEach((el) => this.restore(paddingProp, el));
+      qsa(container, Selector.STICKY_CONTENT).forEach((el) => this.restore(marginProp, el));
+      qsa(container, Selector.NAVBAR_TOGGLER).forEach((el) => this.restore(marginProp, el));
+    }
+  };
+  var sharedManager;
+  function getSharedManager(options) {
+    if (!sharedManager)
+      sharedManager = new BootstrapModalManager(options);
+    return sharedManager;
+  }
+
+  // node_modules/react-bootstrap/esm/ModalBody.js
+  var React40 = __toESM(require_react());
+  var import_classnames18 = __toESM(require_classnames());
+  var import_jsx_runtime32 = __toESM(require_jsx_runtime());
+  "use client";
+  var ModalBody = /* @__PURE__ */ React40.forwardRef(({
+    className,
+    bsPrefix,
+    as: Component = "div",
+    ...props
+  }, ref) => {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "modal-body");
+    return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(Component, {
+      ref,
+      className: (0, import_classnames18.default)(className, bsPrefix),
+      ...props
+    });
+  });
+  ModalBody.displayName = "ModalBody";
+  var ModalBody_default = ModalBody;
+
+  // node_modules/react-bootstrap/esm/ModalContext.js
+  var React41 = __toESM(require_react());
+  "use client";
+  var ModalContext = /* @__PURE__ */ React41.createContext({
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    onHide() {
+    }
+  });
+  var ModalContext_default = ModalContext;
+
+  // node_modules/react-bootstrap/esm/ModalDialog.js
+  var import_classnames19 = __toESM(require_classnames());
+  var React42 = __toESM(require_react());
+  var import_jsx_runtime33 = __toESM(require_jsx_runtime());
+  "use client";
+  var ModalDialog = /* @__PURE__ */ React42.forwardRef(({
+    bsPrefix,
+    className,
+    contentClassName,
+    centered,
+    size: size2,
+    fullscreen,
+    children,
+    scrollable,
+    ...props
+  }, ref) => {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "modal");
+    const dialogClass = `${bsPrefix}-dialog`;
+    const fullScreenClass = typeof fullscreen === "string" ? `${bsPrefix}-fullscreen-${fullscreen}` : `${bsPrefix}-fullscreen`;
+    return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("div", {
+      ...props,
+      ref,
+      className: (0, import_classnames19.default)(dialogClass, className, size2 && `${bsPrefix}-${size2}`, centered && `${dialogClass}-centered`, scrollable && `${dialogClass}-scrollable`, fullscreen && fullScreenClass),
+      children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("div", {
+        className: (0, import_classnames19.default)(`${bsPrefix}-content`, contentClassName),
+        children
+      })
+    });
+  });
+  ModalDialog.displayName = "ModalDialog";
+  var ModalDialog_default = ModalDialog;
+
+  // node_modules/react-bootstrap/esm/ModalFooter.js
+  var React43 = __toESM(require_react());
+  var import_classnames20 = __toESM(require_classnames());
+  var import_jsx_runtime34 = __toESM(require_jsx_runtime());
+  "use client";
+  var ModalFooter = /* @__PURE__ */ React43.forwardRef(({
+    className,
+    bsPrefix,
+    as: Component = "div",
+    ...props
+  }, ref) => {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "modal-footer");
+    return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(Component, {
+      ref,
+      className: (0, import_classnames20.default)(className, bsPrefix),
+      ...props
+    });
+  });
+  ModalFooter.displayName = "ModalFooter";
+  var ModalFooter_default = ModalFooter;
+
+  // node_modules/react-bootstrap/esm/ModalHeader.js
+  var import_classnames21 = __toESM(require_classnames());
+  var React45 = __toESM(require_react());
+
+  // node_modules/react-bootstrap/esm/AbstractModalHeader.js
+  var React44 = __toESM(require_react());
+  var import_react49 = __toESM(require_react());
+  var import_jsx_runtime35 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime36 = __toESM(require_jsx_runtime());
+  "use client";
+  var AbstractModalHeader = /* @__PURE__ */ React44.forwardRef(({
+    closeLabel = "Close",
+    closeVariant,
+    closeButton = false,
+    onHide,
+    children,
+    ...props
+  }, ref) => {
+    const context3 = (0, import_react49.useContext)(ModalContext_default);
+    const handleClick = useEventCallback(() => {
+      context3 == null || context3.onHide();
+      onHide == null || onHide();
+    });
+    return /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("div", {
+      ref,
+      ...props,
+      children: [children, closeButton && /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(CloseButton_default, {
+        "aria-label": closeLabel,
+        variant: closeVariant,
+        onClick: handleClick
+      })]
+    });
+  });
+  var AbstractModalHeader_default = AbstractModalHeader;
+
+  // node_modules/react-bootstrap/esm/ModalHeader.js
+  var import_jsx_runtime37 = __toESM(require_jsx_runtime());
+  "use client";
+  var ModalHeader = /* @__PURE__ */ React45.forwardRef(({
+    bsPrefix,
+    className,
+    closeLabel = "Close",
+    closeButton = false,
+    ...props
+  }, ref) => {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "modal-header");
+    return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(AbstractModalHeader_default, {
+      ref,
+      ...props,
+      className: (0, import_classnames21.default)(className, bsPrefix),
+      closeLabel,
+      closeButton
+    });
+  });
+  ModalHeader.displayName = "ModalHeader";
+  var ModalHeader_default = ModalHeader;
+
+  // node_modules/react-bootstrap/esm/ModalTitle.js
+  var React46 = __toESM(require_react());
+  var import_classnames22 = __toESM(require_classnames());
+  var import_jsx_runtime38 = __toESM(require_jsx_runtime());
+  "use client";
+  var DivStyledAsH4 = divWithClassName_default("h4");
+  var ModalTitle = /* @__PURE__ */ React46.forwardRef(({
+    className,
+    bsPrefix,
+    as: Component = DivStyledAsH4,
+    ...props
+  }, ref) => {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "modal-title");
+    return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(Component, {
+      ref,
+      className: (0, import_classnames22.default)(className, bsPrefix),
+      ...props
+    });
+  });
+  ModalTitle.displayName = "ModalTitle";
+  var ModalTitle_default = ModalTitle;
+
+  // node_modules/react-bootstrap/esm/Modal.js
+  var import_jsx_runtime39 = __toESM(require_jsx_runtime());
+  "use client";
+  function DialogTransition(props) {
+    return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(Fade_default, {
+      ...props,
+      timeout: null
+    });
+  }
+  function BackdropTransition(props) {
+    return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(Fade_default, {
+      ...props,
+      timeout: null
+    });
+  }
+  var Modal2 = /* @__PURE__ */ React47.forwardRef(({
+    bsPrefix,
+    className,
+    style: style2,
+    dialogClassName,
+    contentClassName,
+    children,
+    dialogAs: Dialog = ModalDialog_default,
+    "data-bs-theme": dataBsTheme,
+    "aria-labelledby": ariaLabelledby,
+    "aria-describedby": ariaDescribedby,
+    "aria-label": ariaLabel,
+    /* BaseModal props */
+    show = false,
+    animation = true,
+    backdrop = true,
+    keyboard = true,
+    onEscapeKeyDown,
+    onShow,
+    onHide,
+    container,
+    autoFocus = true,
+    enforceFocus = true,
+    restoreFocus = true,
+    restoreFocusOptions,
+    onEntered,
+    onExit,
+    onExiting,
+    onEnter,
+    onEntering,
+    onExited,
+    backdropClassName,
+    manager: propsManager,
+    ...props
+  }, ref) => {
+    const [modalStyle, setStyle] = (0, import_react50.useState)({});
+    const [animateStaticModal, setAnimateStaticModal] = (0, import_react50.useState)(false);
+    const waitingForMouseUpRef = (0, import_react50.useRef)(false);
+    const ignoreBackdropClickRef = (0, import_react50.useRef)(false);
+    const removeStaticModalAnimationRef = (0, import_react50.useRef)(null);
+    const [modal, setModalRef] = useCallbackRef2();
+    const mergedRef = useMergedRefs_default(ref, setModalRef);
+    const handleHide = useEventCallback(onHide);
+    const isRTL = useIsRTL();
+    bsPrefix = useBootstrapPrefix(bsPrefix, "modal");
+    const modalContext = (0, import_react50.useMemo)(() => ({
+      onHide: handleHide
+    }), [handleHide]);
+    function getModalManager() {
+      if (propsManager)
+        return propsManager;
+      return getSharedManager({
+        isRTL
+      });
+    }
+    function updateDialogStyle(node) {
+      if (!canUseDOM_default)
+        return;
+      const containerIsOverflowing = getModalManager().getScrollbarWidth() > 0;
+      const modalIsOverflowing = node.scrollHeight > ownerDocument(node).documentElement.clientHeight;
+      setStyle({
+        paddingRight: containerIsOverflowing && !modalIsOverflowing ? scrollbarSize() : void 0,
+        paddingLeft: !containerIsOverflowing && modalIsOverflowing ? scrollbarSize() : void 0
+      });
+    }
+    const handleWindowResize = useEventCallback(() => {
+      if (modal) {
+        updateDialogStyle(modal.dialog);
+      }
+    });
+    useWillUnmount(() => {
+      removeEventListener_default(window, "resize", handleWindowResize);
+      removeStaticModalAnimationRef.current == null || removeStaticModalAnimationRef.current();
+    });
+    const handleDialogMouseDown = () => {
+      waitingForMouseUpRef.current = true;
+    };
+    const handleMouseUp = (e) => {
+      if (waitingForMouseUpRef.current && modal && e.target === modal.dialog) {
+        ignoreBackdropClickRef.current = true;
+      }
+      waitingForMouseUpRef.current = false;
+    };
+    const handleStaticModalAnimation = () => {
+      setAnimateStaticModal(true);
+      removeStaticModalAnimationRef.current = transitionEnd(modal.dialog, () => {
+        setAnimateStaticModal(false);
+      });
+    };
+    const handleStaticBackdropClick = (e) => {
+      if (e.target !== e.currentTarget) {
+        return;
+      }
+      handleStaticModalAnimation();
+    };
+    const handleClick = (e) => {
+      if (backdrop === "static") {
+        handleStaticBackdropClick(e);
+        return;
+      }
+      if (ignoreBackdropClickRef.current || e.target !== e.currentTarget) {
+        ignoreBackdropClickRef.current = false;
+        return;
+      }
+      onHide == null || onHide();
+    };
+    const handleEscapeKeyDown = (e) => {
+      if (keyboard) {
+        onEscapeKeyDown == null || onEscapeKeyDown(e);
+      } else {
+        e.preventDefault();
+        if (backdrop === "static") {
+          handleStaticModalAnimation();
+        }
+      }
+    };
+    const handleEnter = (node, isAppearing) => {
+      if (node) {
+        updateDialogStyle(node);
+      }
+      onEnter == null || onEnter(node, isAppearing);
+    };
+    const handleExit = (node) => {
+      removeStaticModalAnimationRef.current == null || removeStaticModalAnimationRef.current();
+      onExit == null || onExit(node);
+    };
+    const handleEntering = (node, isAppearing) => {
+      onEntering == null || onEntering(node, isAppearing);
+      addEventListener_default(window, "resize", handleWindowResize);
+    };
+    const handleExited = (node) => {
+      if (node)
+        node.style.display = "";
+      onExited == null || onExited(node);
+      removeEventListener_default(window, "resize", handleWindowResize);
+    };
+    const renderBackdrop = (0, import_react50.useCallback)((backdropProps) => /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", {
+      ...backdropProps,
+      className: (0, import_classnames23.default)(`${bsPrefix}-backdrop`, backdropClassName, !animation && "show")
+    }), [animation, backdropClassName, bsPrefix]);
+    const baseModalStyle = {
+      ...style2,
+      ...modalStyle
+    };
+    baseModalStyle.display = "block";
+    const renderDialog = (dialogProps) => /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", {
+      role: "dialog",
+      ...dialogProps,
+      style: baseModalStyle,
+      className: (0, import_classnames23.default)(className, bsPrefix, animateStaticModal && `${bsPrefix}-static`, !animation && "show"),
+      onClick: backdrop ? handleClick : void 0,
+      onMouseUp: handleMouseUp,
+      "data-bs-theme": dataBsTheme,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledby,
+      "aria-describedby": ariaDescribedby,
+      children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(Dialog, {
+        ...props,
+        onMouseDown: handleDialogMouseDown,
+        className: dialogClassName,
+        contentClassName,
+        children
+      })
+    });
+    return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(ModalContext_default.Provider, {
+      value: modalContext,
+      children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(Modal_default, {
+        show,
+        ref: mergedRef,
+        backdrop,
+        container,
+        keyboard: true,
+        autoFocus,
+        enforceFocus,
+        restoreFocus,
+        restoreFocusOptions,
+        onEscapeKeyDown: handleEscapeKeyDown,
+        onShow,
+        onHide,
+        onEnter: handleEnter,
+        onEntering: handleEntering,
+        onEntered,
+        onExit: handleExit,
+        onExiting,
+        onExited: handleExited,
+        manager: getModalManager(),
+        transition: animation ? DialogTransition : void 0,
+        backdropTransition: animation ? BackdropTransition : void 0,
+        renderBackdrop,
+        renderDialog
+      })
+    });
+  });
+  Modal2.displayName = "Modal";
+  var Modal_default2 = Object.assign(Modal2, {
+    Body: ModalBody_default,
+    Header: ModalHeader_default,
+    Title: ModalTitle_default,
+    Footer: ModalFooter_default,
+    Dialog: ModalDialog_default,
+    TRANSITION_DURATION: 300,
+    BACKDROP_TRANSITION_DURATION: 150
+  });
+
   // node_modules/react-bootstrap/esm/Nav.js
-  var import_classnames5 = __toESM(require_classnames());
-  var React20 = __toESM(require_react());
-  var import_react29 = __toESM(require_react());
+  var import_classnames26 = __toESM(require_classnames());
+  var React50 = __toESM(require_react());
+  var import_react51 = __toESM(require_react());
 
   // node_modules/react-bootstrap/esm/NavItem.js
-  var React18 = __toESM(require_react());
-  var import_classnames3 = __toESM(require_classnames());
-  var import_jsx_runtime9 = __toESM(require_jsx_runtime());
+  var React48 = __toESM(require_react());
+  var import_classnames24 = __toESM(require_classnames());
+  var import_jsx_runtime40 = __toESM(require_jsx_runtime());
   "use client";
-  var NavItem2 = /* @__PURE__ */ React18.forwardRef(({
+  var NavItem2 = /* @__PURE__ */ React48.forwardRef(({
     className,
     bsPrefix,
     as: Component = "div",
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "nav-item");
-    return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(Component, {
+    return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Component, {
       ref,
-      className: (0, import_classnames3.default)(className, bsPrefix),
+      className: (0, import_classnames24.default)(className, bsPrefix),
       ...props
     });
   });
@@ -26935,11 +28704,11 @@
   var NavItem_default2 = NavItem2;
 
   // node_modules/react-bootstrap/esm/NavLink.js
-  var import_classnames4 = __toESM(require_classnames());
-  var React19 = __toESM(require_react());
-  var import_jsx_runtime10 = __toESM(require_jsx_runtime());
+  var import_classnames25 = __toESM(require_classnames());
+  var React49 = __toESM(require_react());
+  var import_jsx_runtime41 = __toESM(require_jsx_runtime());
   "use client";
-  var NavLink = /* @__PURE__ */ React19.forwardRef(({
+  var NavLink = /* @__PURE__ */ React49.forwardRef(({
     bsPrefix,
     className,
     as: Component = Anchor_default,
@@ -26955,21 +28724,21 @@
       disabled,
       ...props
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(Component, {
+    return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Component, {
       ...props,
       ...navItemProps,
       ref,
       disabled,
-      className: (0, import_classnames4.default)(className, bsPrefix, disabled && "disabled", meta.isActive && "active")
+      className: (0, import_classnames25.default)(className, bsPrefix, disabled && "disabled", meta.isActive && "active")
     });
   });
   NavLink.displayName = "NavLink";
   var NavLink_default = NavLink;
 
   // node_modules/react-bootstrap/esm/Nav.js
-  var import_jsx_runtime11 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime42 = __toESM(require_jsx_runtime());
   "use client";
-  var Nav2 = /* @__PURE__ */ React20.forwardRef((uncontrolledProps, ref) => {
+  var Nav2 = /* @__PURE__ */ React50.forwardRef((uncontrolledProps, ref) => {
     const {
       as = "div",
       bsPrefix: initialBsPrefix,
@@ -26988,8 +28757,8 @@
     let navbarBsPrefix;
     let cardHeaderBsPrefix;
     let isNavbar = false;
-    const navbarContext = (0, import_react29.useContext)(NavbarContext_default);
-    const cardHeaderContext = (0, import_react29.useContext)(CardHeaderContext_default);
+    const navbarContext = (0, import_react51.useContext)(NavbarContext_default);
+    const cardHeaderContext = (0, import_react51.useContext)(CardHeaderContext_default);
     if (navbarContext) {
       navbarBsPrefix = navbarContext.bsPrefix;
       isNavbar = navbar == null ? true : navbar;
@@ -26998,11 +28767,11 @@
         cardHeaderBsPrefix
       } = cardHeaderContext);
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Nav_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(Nav_default, {
       as,
       ref,
       activeKey,
-      className: (0, import_classnames5.default)(className, {
+      className: (0, import_classnames26.default)(className, {
         [bsPrefix]: !isNavbar,
         [`${navbarBsPrefix}-nav`]: isNavbar,
         [`${navbarBsPrefix}-nav-scroll`]: isNavbar && navbarScroll,
@@ -27021,11 +28790,11 @@
   });
 
   // node_modules/react-bootstrap/esm/Row.js
-  var import_classnames6 = __toESM(require_classnames());
-  var React21 = __toESM(require_react());
-  var import_jsx_runtime12 = __toESM(require_jsx_runtime());
+  var import_classnames27 = __toESM(require_classnames());
+  var React51 = __toESM(require_react());
+  var import_jsx_runtime43 = __toESM(require_jsx_runtime());
   "use client";
-  var Row = /* @__PURE__ */ React21.forwardRef(({
+  var Row = /* @__PURE__ */ React51.forwardRef(({
     bsPrefix,
     className,
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
@@ -27052,33 +28821,33 @@
       if (cols != null)
         classes.push(`${sizePrefix}${infix}-${cols}`);
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Component, {
+    return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(Component, {
       ref,
       ...props,
-      className: (0, import_classnames6.default)(className, decoratedBsPrefix, ...classes)
+      className: (0, import_classnames27.default)(className, decoratedBsPrefix, ...classes)
     });
   });
   Row.displayName = "Row";
   var Row_default = Row;
 
   // node_modules/react-bootstrap/esm/Tab.js
-  var import_prop_types3 = __toESM(require_prop_types());
+  var import_prop_types6 = __toESM(require_prop_types());
 
   // node_modules/react-bootstrap/esm/TabContainer.js
-  var React24 = __toESM(require_react());
+  var React54 = __toESM(require_react());
 
   // node_modules/@restart/ui/esm/Tabs.js
-  var React23 = __toESM(require_react());
-  var import_react31 = __toESM(require_react());
+  var React53 = __toESM(require_react());
+  var import_react53 = __toESM(require_react());
 
   // node_modules/@restart/ui/esm/TabPanel.js
-  var React22 = __toESM(require_react());
-  var import_react30 = __toESM(require_react());
-  var import_jsx_runtime13 = __toESM(require_jsx_runtime());
-  var _excluded5 = ["active", "eventKey", "mountOnEnter", "transition", "unmountOnExit", "role", "onEnter", "onEntering", "onEntered", "onExit", "onExiting", "onExited"];
+  var React52 = __toESM(require_react());
+  var import_react52 = __toESM(require_react());
+  var import_jsx_runtime44 = __toESM(require_jsx_runtime());
+  var _excluded8 = ["active", "eventKey", "mountOnEnter", "transition", "unmountOnExit", "role", "onEnter", "onEntering", "onEntered", "onExit", "onExiting", "onExited"];
   var _excluded22 = ["activeKey", "getControlledId", "getControllerId"];
   var _excluded32 = ["as"];
-  function _objectWithoutPropertiesLoose6(r, e) {
+  function _objectWithoutPropertiesLoose9(r, e) {
     if (null == r)
       return {};
     var t = {};
@@ -27104,8 +28873,8 @@
       onExit,
       onExiting,
       onExited
-    } = _ref, props = _objectWithoutPropertiesLoose6(_ref, _excluded5);
-    const context3 = (0, import_react30.useContext)(TabContext_default);
+    } = _ref, props = _objectWithoutPropertiesLoose9(_ref, _excluded8);
+    const context3 = (0, import_react52.useContext)(TabContext_default);
     if (!context3)
       return [Object.assign({}, props, {
         role
@@ -27126,7 +28895,7 @@
       activeKey,
       getControlledId,
       getControllerId
-    } = context3, rest = _objectWithoutPropertiesLoose6(context3, _excluded22);
+    } = context3, rest = _objectWithoutPropertiesLoose9(context3, _excluded22);
     const key = makeEventKey(eventKey);
     return [Object.assign({}, props, {
       role,
@@ -27146,12 +28915,12 @@
       onExited
     }];
   }
-  var TabPanel = /* @__PURE__ */ React22.forwardRef(
+  var TabPanel = /* @__PURE__ */ React52.forwardRef(
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
     (_ref2, ref) => {
       let {
         as: Component = "div"
-      } = _ref2, props = _objectWithoutPropertiesLoose6(_ref2, _excluded32);
+      } = _ref2, props = _objectWithoutPropertiesLoose9(_ref2, _excluded32);
       const [tabPanelProps, {
         isActive,
         onEnter,
@@ -27164,11 +28933,11 @@
         unmountOnExit,
         transition: Transition2 = NoopTransition_default
       }] = useTabPanel(props);
-      return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(TabContext_default.Provider, {
+      return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(TabContext_default.Provider, {
         value: null,
-        children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(SelectableContext_default.Provider, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(SelectableContext_default.Provider, {
           value: null,
-          children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Transition2, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(Transition2, {
             in: isActive,
             onEnter,
             onEntering,
@@ -27178,7 +28947,7 @@
             onExited,
             mountOnEnter,
             unmountOnExit,
-            children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Component, Object.assign({}, tabPanelProps, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(Component, Object.assign({}, tabPanelProps, {
               ref,
               hidden: !isActive,
               "aria-hidden": !isActive
@@ -27192,7 +28961,7 @@
   var TabPanel_default = TabPanel;
 
   // node_modules/@restart/ui/esm/Tabs.js
-  var import_jsx_runtime14 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime45 = __toESM(require_jsx_runtime());
   var Tabs = (props) => {
     const {
       id: userId,
@@ -27207,8 +28976,8 @@
     } = props;
     const [activeKey, onSelect] = useUncontrolledProp2(propsActiveKey, defaultActiveKey, propsOnSelect);
     const id = $b5e257d569688ac6$export$619500959fc48b26(userId);
-    const generateChildId = (0, import_react31.useMemo)(() => generateCustomChildId || ((key, type) => id ? `${id}-${type}-${key}` : null), [id, generateCustomChildId]);
-    const tabContext = (0, import_react31.useMemo)(() => ({
+    const generateChildId = (0, import_react53.useMemo)(() => generateCustomChildId || ((key, type) => id ? `${id}-${type}-${key}` : null), [id, generateCustomChildId]);
+    const tabContext = (0, import_react53.useMemo)(() => ({
       onSelect,
       activeKey,
       transition,
@@ -27217,9 +28986,9 @@
       getControlledId: (key) => generateChildId(key, "tabpane"),
       getControllerId: (key) => generateChildId(key, "tab")
     }), [onSelect, activeKey, transition, mountOnEnter, unmountOnExit, generateChildId]);
-    return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(TabContext_default.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(TabContext_default.Provider, {
       value: tabContext,
-      children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(SelectableContext_default.Provider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(SelectableContext_default.Provider, {
         value: onSelect || null,
         children
       })
@@ -27237,11 +29006,11 @@
   }
 
   // node_modules/react-bootstrap/esm/TabContainer.js
-  var import_jsx_runtime15 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime46 = __toESM(require_jsx_runtime());
   var TabContainer = ({
     transition,
     ...props
-  }) => /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Tabs_default, {
+  }) => /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(Tabs_default, {
     ...props,
     transition: getTabTransitionComponent(transition)
   });
@@ -27249,20 +29018,20 @@
   var TabContainer_default = TabContainer;
 
   // node_modules/react-bootstrap/esm/TabContent.js
-  var React25 = __toESM(require_react());
-  var import_classnames7 = __toESM(require_classnames());
-  var import_jsx_runtime16 = __toESM(require_jsx_runtime());
+  var React55 = __toESM(require_react());
+  var import_classnames28 = __toESM(require_classnames());
+  var import_jsx_runtime47 = __toESM(require_jsx_runtime());
   "use client";
-  var TabContent = /* @__PURE__ */ React25.forwardRef(({
+  var TabContent = /* @__PURE__ */ React55.forwardRef(({
     className,
     bsPrefix,
     as: Component = "div",
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "tab-content");
-    return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(Component, {
+    return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(Component, {
       ref,
-      className: (0, import_classnames7.default)(className, bsPrefix),
+      className: (0, import_classnames28.default)(className, bsPrefix),
       ...props
     });
   });
@@ -27270,11 +29039,11 @@
   var TabContent_default = TabContent;
 
   // node_modules/react-bootstrap/esm/TabPane.js
-  var import_classnames8 = __toESM(require_classnames());
-  var React26 = __toESM(require_react());
-  var import_jsx_runtime17 = __toESM(require_jsx_runtime());
+  var import_classnames29 = __toESM(require_classnames());
+  var React56 = __toESM(require_react());
+  var import_jsx_runtime48 = __toESM(require_jsx_runtime());
   "use client";
-  var TabPane = /* @__PURE__ */ React26.forwardRef(({
+  var TabPane = /* @__PURE__ */ React56.forwardRef(({
     bsPrefix,
     transition,
     ...props
@@ -27300,11 +29069,11 @@
       transition: getTabTransitionComponent(transition)
     });
     const prefix = useBootstrapPrefix(bsPrefix, "tab-pane");
-    return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(TabContext_default.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(TabContext_default.Provider, {
       value: null,
-      children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(SelectableContext_default.Provider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(SelectableContext_default.Provider, {
         value: null,
-        children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Transition2, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(Transition2, {
           in: isActive,
           onEnter,
           onEntering,
@@ -27314,10 +29083,10 @@
           onExited,
           mountOnEnter,
           unmountOnExit,
-          children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Component, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(Component, {
             ...rest,
             ref,
-            className: (0, import_classnames8.default)(className, prefix, isActive && "active")
+            className: (0, import_classnames29.default)(className, prefix, isActive && "active")
           })
         })
       })
@@ -27327,29 +29096,29 @@
   var TabPane_default = TabPane;
 
   // node_modules/react-bootstrap/esm/Tab.js
-  var propTypes = {
-    eventKey: import_prop_types3.default.oneOfType([import_prop_types3.default.string, import_prop_types3.default.number]),
+  var propTypes4 = {
+    eventKey: import_prop_types6.default.oneOfType([import_prop_types6.default.string, import_prop_types6.default.number]),
     /**
      * Content for the tab title.
      */
-    title: import_prop_types3.default.node.isRequired,
+    title: import_prop_types6.default.node.isRequired,
     /**
      * The disabled state of the tab.
      */
-    disabled: import_prop_types3.default.bool,
+    disabled: import_prop_types6.default.bool,
     /**
      * Class to pass to the underlying nav link.
      */
-    tabClassName: import_prop_types3.default.string,
+    tabClassName: import_prop_types6.default.string,
     /**
      * Object containing attributes to pass to underlying nav link.
      */
-    tabAttrs: import_prop_types3.default.object
+    tabAttrs: import_prop_types6.default.object
   };
   var Tab = () => {
     throw new Error("ReactBootstrap: The `Tab` component is not meant to be rendered! It's an abstract component that is only valid as a direct Child of the `Tabs` Component. For custom tabs components use TabPane and TabsContainer directly");
   };
-  Tab.propTypes = propTypes;
+  Tab.propTypes = propTypes4;
   var Tab_default = Object.assign(Tab, {
     Container: TabContainer_default,
     Content: TabContent_default,
@@ -27357,13 +29126,126 @@
   });
 
   // src/Footer.tsx
-  var import_react32 = __toESM(require_react(), 1);
-  var Footer = () => /* @__PURE__ */ import_react32.default.createElement("footer", { className: "footer" }, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react32.default.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto"));
+  var import_react54 = __toESM(require_react(), 1);
+  var Footer = () => /* @__PURE__ */ import_react54.default.createElement("div", { className: "footer" }, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react54.default.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto"));
+
+  // src/SettingsButton.tsx
+  var import_react55 = __toESM(require_react(), 1);
+  var SettingsButton = ({ className }) => {
+    const [showModal, setShowModal] = (0, import_react55.useState)(false);
+    const [theme, setTheme] = (0, import_react55.useState)(localStorage.getItem("theme") || "system");
+    const handleThemeChange = (e) => {
+      const newTheme = e.target.value;
+      setTheme(newTheme);
+      localStorage.setItem("theme", newTheme);
+      let themeToApply2 = newTheme;
+      if (newTheme === "system") {
+        themeToApply2 = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.setAttribute("data-bs-theme", themeToApply2);
+    };
+    return /* @__PURE__ */ import_react55.default.createElement(import_react55.default.Fragment, null, /* @__PURE__ */ import_react55.default.createElement("div", { id: "settings-button" }, /* @__PURE__ */ import_react55.default.createElement(
+      "button",
+      {
+        className: `btn btn-sm btn-outline-secondary ${className}`,
+        onClick: () => setShowModal(true)
+      },
+      /* @__PURE__ */ import_react55.default.createElement("div", { id: "gear-icon-settings" }, "\u2699\uFE0F")
+    )), /* @__PURE__ */ import_react55.default.createElement(Modal_default2, { show: showModal, onHide: () => setShowModal(false) }, /* @__PURE__ */ import_react55.default.createElement(Modal_default2.Header, { closeButton: true }, /* @__PURE__ */ import_react55.default.createElement(Modal_default2.Title, null, "\u2699\uFE0F Settings")), /* @__PURE__ */ import_react55.default.createElement(Modal_default2.Body, null, /* @__PURE__ */ import_react55.default.createElement(Form_default, null, /* @__PURE__ */ import_react55.default.createElement(Form_default.Group, { className: "mb-3" }, /* @__PURE__ */ import_react55.default.createElement(Form_default.Label, null, "Theme"), /* @__PURE__ */ import_react55.default.createElement("div", null, /* @__PURE__ */ import_react55.default.createElement(
+      Form_default.Check,
+      {
+        type: "radio",
+        id: "theme-system",
+        label: "\u{1F5A5}\uFE0F Auto",
+        name: "theme",
+        value: "system",
+        checked: theme === "system",
+        onChange: handleThemeChange
+      }
+    ), /* @__PURE__ */ import_react55.default.createElement(
+      Form_default.Check,
+      {
+        type: "radio",
+        id: "theme-light",
+        label: "\u2600\uFE0F Business casual",
+        name: "theme",
+        value: "light",
+        checked: theme === "light",
+        onChange: handleThemeChange
+      }
+    ), /* @__PURE__ */ import_react55.default.createElement(
+      Form_default.Check,
+      {
+        type: "radio",
+        id: "theme-dark",
+        label: "\u{1F319} Business Formal",
+        name: "theme",
+        value: "dark",
+        checked: theme === "dark",
+        onChange: handleThemeChange
+      }
+    ), /* @__PURE__ */ import_react55.default.createElement(
+      Form_default.Check,
+      {
+        type: "radio",
+        id: "theme-light-vibrant",
+        label: "\u{1F389} Office party",
+        name: "theme",
+        value: "light-vibrant",
+        checked: theme === "light-vibrant",
+        onChange: handleThemeChange
+      }
+    ), /* @__PURE__ */ import_react55.default.createElement(
+      Form_default.Check,
+      {
+        type: "radio",
+        id: "theme-dark-vibrant",
+        label: "\u{1F303} After party",
+        name: "theme",
+        value: "dark-vibrant",
+        checked: theme === "dark-vibrant",
+        onChange: handleThemeChange
+      }
+    ), /* @__PURE__ */ import_react55.default.createElement(
+      Form_default.Check,
+      {
+        type: "radio",
+        id: "theme-light-grayscale",
+        label: "\u{1F4BC} Serious Business",
+        name: "theme",
+        value: "light-grayscale",
+        checked: theme === "light-grayscale",
+        onChange: handleThemeChange
+      }
+    ), /* @__PURE__ */ import_react55.default.createElement(
+      Form_default.Check,
+      {
+        type: "radio",
+        id: "theme-dark-grayscale",
+        label: "\u{1F576}\uFE0F Very Serious Business",
+        name: "theme",
+        value: "dark-grayscale",
+        checked: theme === "dark-grayscale",
+        onChange: handleThemeChange
+      }
+    ), /* @__PURE__ */ import_react55.default.createElement(
+      Form_default.Check,
+      {
+        type: "radio",
+        id: "theme-sepia",
+        label: "\u{1F3E1} WFH",
+        name: "theme",
+        value: "sepia",
+        checked: theme === "sepia",
+        onChange: handleThemeChange
+      }
+    ))))), /* @__PURE__ */ import_react55.default.createElement(Modal_default2.Footer, null, /* @__PURE__ */ import_react55.default.createElement(Button_default2, { variant: "secondary", onClick: () => setShowModal(false) }, "Close"))));
+  };
 
   // src/TestReport.tsx
   var BddPage = () => {
-    const [bddErrors, setBddErrors] = (0, import_react33.useState)();
-    (0, import_react33.useEffect)(() => {
+    const [bddErrors, setBddErrors] = (0, import_react56.useState)();
+    (0, import_react56.useEffect)(() => {
       (async () => {
         try {
           const fetched = await fetch(
@@ -27376,10 +29258,10 @@
         }
       })();
     }, []);
-    const [log, setLog] = (0, import_react33.useState)();
-    const [message, setMessage] = (0, import_react33.useState)();
-    const [prompt, setPrompt] = (0, import_react33.useState)();
-    (0, import_react33.useEffect)(() => {
+    const [log, setLog] = (0, import_react56.useState)();
+    const [message, setMessage] = (0, import_react56.useState)();
+    const [prompt, setPrompt] = (0, import_react56.useState)();
+    (0, import_react56.useEffect)(() => {
       (async () => {
         try {
           setLog(
@@ -27392,28 +29274,26 @@
         }
       })();
     }, []);
-    (0, import_react33.useEffect)(() => {
+    (0, import_react56.useEffect)(() => {
       (async () => {
         try {
           const messageText = await (await fetch(
             `${window.location.href.split("/").slice(0, -1).join("/")}/message.txt`
           )).text();
           setMessage(messageText);
-          console.log("Message:", messageText);
         } catch (e) {
           setMessage({ error: e });
           console.error("Error loading message:", e);
         }
       })();
     }, []);
-    (0, import_react33.useEffect)(() => {
+    (0, import_react56.useEffect)(() => {
       (async () => {
         try {
           const promptText = await (await fetch(
             `${window.location.href.split("/").slice(0, -1).join("/")}/prompt.txt`
           )).text();
           setPrompt(promptText);
-          console.log("Prompt:", promptText);
         } catch (e) {
           setPrompt({ error: e });
           console.error("Error loading prompt:", e);
@@ -27421,7 +29301,7 @@
       })();
     }, []);
     if (bddErrors === void 0 || log === void 0) {
-      return /* @__PURE__ */ import_react33.default.createElement("div", null, "loading...");
+      return /* @__PURE__ */ import_react56.default.createElement("div", null, "loading...");
     }
     function stripDomainFromUrl(url) {
       try {
@@ -27447,7 +29327,7 @@
       }
     };
     const basePath = window.location.href.split("/").slice(0, -1).join("/");
-    return /* @__PURE__ */ import_react33.default.createElement("div", { className: "container-fluid p-4" }, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Container, { defaultActiveKey: "tests" }, /* @__PURE__ */ import_react33.default.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-light mb-3 rounded" }, /* @__PURE__ */ import_react33.default.createElement("div", { className: "container-fluid" }, /* @__PURE__ */ import_react33.default.createElement("span", { className: "navbar-brand text-muted" }, basePath.split("testeranto/reports")[1]), /* @__PURE__ */ import_react33.default.createElement(Nav_default2, { variant: "pills", className: "me-auto" }, /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: "tests" }, "Results")), /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: "logs" }, "Logs")), /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: "ai" }, "Aider"))), /* @__PURE__ */ import_react33.default.createElement("div", { className: "ms-auto" }, /* @__PURE__ */ import_react33.default.createElement(
+    return /* @__PURE__ */ import_react56.default.createElement("div", { className: "container-fluid p-4", style: { backgroundColor: "transparent" } }, /* @__PURE__ */ import_react56.default.createElement(Tab_default.Container, { defaultActiveKey: "tests" }, /* @__PURE__ */ import_react56.default.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-light mb-3 rounded" }, /* @__PURE__ */ import_react56.default.createElement("div", { className: "container-fluid" }, /* @__PURE__ */ import_react56.default.createElement("span", { className: "navbar-brand text-muted" }, basePath.split("testeranto/reports")[1]), /* @__PURE__ */ import_react56.default.createElement(Nav_default2, { variant: "pills", className: "me-auto" }, /* @__PURE__ */ import_react56.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react56.default.createElement(Nav_default2.Link, { eventKey: "tests" }, "Results")), /* @__PURE__ */ import_react56.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react56.default.createElement(Nav_default2.Link, { eventKey: "logs" }, "Logs")), /* @__PURE__ */ import_react56.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react56.default.createElement(Nav_default2.Link, { eventKey: "ai" }, "Aider"))), /* @__PURE__ */ import_react56.default.createElement("div", { className: "ms-auto" }, /* @__PURE__ */ import_react56.default.createElement(
       "button",
       {
         onClick: copyAiderCommand,
@@ -27455,14 +29335,23 @@
         title: "Copy aider command to clipboard"
       },
       "\u{1F916}\u{1FA84}\u2728"
-    )))), /* @__PURE__ */ import_react33.default.createElement(Row_default, null, /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 12 }, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: "tests" }, "error" in bddErrors ? /* @__PURE__ */ import_react33.default.createElement("div", { className: "alert alert-danger" }, /* @__PURE__ */ import_react33.default.createElement("h4", null, "Error loading test results"), /* @__PURE__ */ import_react33.default.createElement("pre", null, JSON.stringify(bddErrors.error, null, 2))) : /* @__PURE__ */ import_react33.default.createElement("div", null, /* @__PURE__ */ import_react33.default.createElement("h2", null, "Test Results"), bddErrors.name && /* @__PURE__ */ import_react33.default.createElement("h3", null, bddErrors.name), bddErrors.givens.map((given, i) => /* @__PURE__ */ import_react33.default.createElement("div", { key: i, className: "mb-4" }, /* @__PURE__ */ import_react33.default.createElement("h4", null, "Given: ", given.name), /* @__PURE__ */ import_react33.default.createElement("ul", { className: "list-group" }, given.whens.map((when, j) => /* @__PURE__ */ import_react33.default.createElement("li", { key: `w-${j}`, className: `list-group-item ${when.error ? "list-group-item-danger" : "list-group-item-success"}` }, /* @__PURE__ */ import_react33.default.createElement("strong", null, "When:"), " ", when.name, when.error && /* @__PURE__ */ import_react33.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react33.default.createElement("pre", { className: "text-danger" }, when.error))))), /* @__PURE__ */ import_react33.default.createElement("ul", { className: "list-group mt-2" }, given.thens.map((then, k) => /* @__PURE__ */ import_react33.default.createElement("li", { key: `t-${k}`, className: `list-group-item ${then.error ? "list-group-item-danger" : "list-group-item-success"}` }, /* @__PURE__ */ import_react33.default.createElement("strong", null, "Then:"), " ", then.name, then.error && /* @__PURE__ */ import_react33.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react33.default.createElement("pre", { className: "text-danger" }, then.error))))))))), /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: "logs" }, typeof log === "string" ? /* @__PURE__ */ import_react33.default.createElement("div", null, /* @__PURE__ */ import_react33.default.createElement("pre", { className: "bg-secondary text-white p-3", style: { overflow: "auto" } }, log)) : /* @__PURE__ */ import_react33.default.createElement("div", { className: "alert alert-danger" }, /* @__PURE__ */ import_react33.default.createElement("h4", null, "Error loading logs"), /* @__PURE__ */ import_react33.default.createElement("pre", null, JSON.stringify(log.error, null, 2)))), /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: "ai" }, /* @__PURE__ */ import_react33.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react33.default.createElement("div", { className: "col-md-12" }, typeof message === "string" ? /* @__PURE__ */ import_react33.default.createElement("pre", { className: "bg-secondary text-white p-3", style: { overflow: "auto" } }, message) : /* @__PURE__ */ import_react33.default.createElement("div", { className: "alert alert-danger" }, /* @__PURE__ */ import_react33.default.createElement("h5", null, "Error loading AI message"), /* @__PURE__ */ import_react33.default.createElement("pre", null, JSON.stringify(message.error, null, 2))), typeof prompt === "string" ? /* @__PURE__ */ import_react33.default.createElement("pre", { className: "bg-secondary text-white  p-3", style: { overflow: "auto" } }, prompt) : /* @__PURE__ */ import_react33.default.createElement("div", { className: "alert alert-danger" }, /* @__PURE__ */ import_react33.default.createElement("h5", null, "Error loading AI prompt"), /* @__PURE__ */ import_react33.default.createElement("pre", null, JSON.stringify(prompt.error, null, 2)))))))))), /* @__PURE__ */ import_react33.default.createElement(Footer, null));
+    )))), /* @__PURE__ */ import_react56.default.createElement(Row_default, null, /* @__PURE__ */ import_react56.default.createElement(Col_default, { sm: 12 }, /* @__PURE__ */ import_react56.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react56.default.createElement(Tab_default.Pane, { eventKey: "tests" }, "error" in bddErrors ? /* @__PURE__ */ import_react56.default.createElement("div", { className: "alert alert-danger" }, /* @__PURE__ */ import_react56.default.createElement("h4", null, "Error loading test results"), /* @__PURE__ */ import_react56.default.createElement("pre", null, JSON.stringify(bddErrors.error, null, 2))) : /* @__PURE__ */ import_react56.default.createElement("div", null, /* @__PURE__ */ import_react56.default.createElement("h2", null, "Test Results"), bddErrors.name && /* @__PURE__ */ import_react56.default.createElement("h3", null, bddErrors.name), bddErrors.givens.map((given, i) => /* @__PURE__ */ import_react56.default.createElement("div", { key: i, className: "mb-4" }, /* @__PURE__ */ import_react56.default.createElement("h4", null, "Given: ", given.name), /* @__PURE__ */ import_react56.default.createElement("ul", { className: "list-group" }, given.whens.map((when, j) => /* @__PURE__ */ import_react56.default.createElement("li", { key: `w-${j}`, className: `list-group-item ${when.error ? "list-group-item-danger" : "list-group-item-success"}` }, /* @__PURE__ */ import_react56.default.createElement("strong", null, "When:"), " ", when.name, when.error && /* @__PURE__ */ import_react56.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react56.default.createElement("pre", { className: "text-danger" }, when.error))))), /* @__PURE__ */ import_react56.default.createElement("ul", { className: "list-group mt-2" }, given.thens.map((then, k) => /* @__PURE__ */ import_react56.default.createElement("li", { key: `t-${k}`, className: `list-group-item ${then.error ? "list-group-item-danger" : "list-group-item-success"}` }, /* @__PURE__ */ import_react56.default.createElement("strong", null, "Then:"), " ", then.name, then.error && /* @__PURE__ */ import_react56.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react56.default.createElement("pre", { className: "text-danger" }, then.error))))))))), /* @__PURE__ */ import_react56.default.createElement(Tab_default.Pane, { eventKey: "logs" }, typeof log === "string" ? /* @__PURE__ */ import_react56.default.createElement("div", null, /* @__PURE__ */ import_react56.default.createElement("pre", { className: "bg-secondary text-white p-3", style: { overflow: "auto" } }, log)) : /* @__PURE__ */ import_react56.default.createElement("div", { className: "alert alert-danger" }, /* @__PURE__ */ import_react56.default.createElement("h4", null, "Error loading logs"), /* @__PURE__ */ import_react56.default.createElement("pre", null, JSON.stringify(log.error, null, 2)))), /* @__PURE__ */ import_react56.default.createElement(Tab_default.Pane, { eventKey: "ai" }, /* @__PURE__ */ import_react56.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react56.default.createElement("div", { className: "col-md-12" }, typeof message === "string" ? /* @__PURE__ */ import_react56.default.createElement("pre", { className: "bg-secondary text-white p-3", style: { overflow: "auto" } }, message) : /* @__PURE__ */ import_react56.default.createElement("div", { className: "alert alert-danger" }, /* @__PURE__ */ import_react56.default.createElement("h5", null, "Error loading AI message"), /* @__PURE__ */ import_react56.default.createElement("pre", null, JSON.stringify(message.error, null, 2))), typeof prompt === "string" ? /* @__PURE__ */ import_react56.default.createElement("pre", { className: "bg-secondary text-white  p-3", style: { overflow: "auto" } }, prompt) : /* @__PURE__ */ import_react56.default.createElement("div", { className: "alert alert-danger" }, /* @__PURE__ */ import_react56.default.createElement("h5", null, "Error loading AI prompt"), /* @__PURE__ */ import_react56.default.createElement("pre", null, JSON.stringify(prompt.error, null, 2)))))))))), /* @__PURE__ */ import_react56.default.createElement(SettingsButton, { className: "gear-icon" }), /* @__PURE__ */ import_react56.default.createElement(Footer, null));
   };
+  var savedTheme = localStorage.getItem("theme") || "system";
+  var themeToApply = savedTheme;
+  if (savedTheme === "system") {
+    themeToApply = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+  } else if (["light-vibrant", "dark-vibrant", "light-grayscale", "dark-grayscale", "sepia"].includes(savedTheme)) {
+    themeToApply = savedTheme;
+  }
+  document.documentElement.setAttribute("data-bs-theme", themeToApply);
   document.addEventListener("DOMContentLoaded", function() {
     const elem = document.getElementById("root");
     if (elem) {
       if (elem) {
         const root = import_client.default.createRoot(elem);
-        root.render(import_react33.default.createElement(BddPage, {}));
+        root.render(import_react56.default.createElement(BddPage, {}));
+        document.body.classList.add(`${themeToApply}-theme`);
       }
     }
   });

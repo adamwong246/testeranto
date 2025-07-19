@@ -6,6 +6,7 @@ import { Footer } from "./Footer";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./TestReport.scss"
+import { SettingsButton } from "./SettingsButton";
 
 const BddPage = () => {
   // const [configs, setConfigs] = useState<IBuiltConfig>();
@@ -86,7 +87,7 @@ const BddPage = () => {
           )
         ).text();
         setMessage(messageText);
-        console.log('Message:', messageText);
+
       } catch (e) {
         setMessage({ error: e });
         console.error('Error loading message:', e);
@@ -103,7 +104,7 @@ const BddPage = () => {
           )
         ).text();
         setPrompt(promptText);
-        console.log('Prompt:', promptText);
+
       } catch (e) {
         setPrompt({ error: e });
         console.error('Error loading prompt:', e);
@@ -154,7 +155,7 @@ const BddPage = () => {
   const basePath = window.location.href.split('/').slice(0, -1).join('/');
 
   return (
-    <div className="container-fluid p-4">
+    <div className="container-fluid p-4" style={{ backgroundColor: 'transparent' }}>
       <Tab.Container defaultActiveKey="tests">
         <nav className="navbar navbar-expand-lg navbar-light bg-light mb-3 rounded">
           <div className="container-fluid">
@@ -278,10 +279,24 @@ const BddPage = () => {
         </Row>
       </Tab.Container>
 
+      <SettingsButton className="gear-icon" />
+
       <Footer />
+
     </div>
   );
 };
+
+// Initialize theme
+const savedTheme = localStorage.getItem('theme') || 'system';
+let themeToApply = savedTheme;
+if (savedTheme === 'system') {
+  themeToApply = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+} else if (['light-vibrant', 'dark-vibrant', 'light-grayscale', 'dark-grayscale', 'sepia'].includes(savedTheme)) {
+  themeToApply = savedTheme;
+}
+document.documentElement.setAttribute('data-bs-theme', themeToApply);
+
 
 document.addEventListener("DOMContentLoaded", function () {
   const elem = document.getElementById("root");
@@ -289,6 +304,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (elem) {
       const root = ReactDom.createRoot(elem);
       root.render(React.createElement(BddPage, {}));
+      document.body.classList.add(`${themeToApply}-theme`);
     }
   }
 });

@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import { Col, Nav, Row, Tab, Table } from "react-bootstrap";
 import { Footer } from "./Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { SettingsButton } from "./SettingsButton";
+import "./themesAndFonts.scss";
 const BigBoard = () => {
     const bigConfigElement = document.getElementById("bigConfig");
     if (!bigConfigElement)
@@ -50,8 +52,8 @@ const BigBoard = () => {
     if (!summary || (summary === null || summary === void 0 ? void 0 : summary.length) === 0) {
         return React.createElement("div", null, "loading...");
     }
-    return (React.createElement("div", { className: "container-fluid" },
-        React.createElement(Tab.Container, { defaultActiveKey: "node" },
+    return (React.createElement("div", { className: "container-fluid p-4", style: { backgroundColor: 'transparent' } },
+        React.createElement(Tab.Container, { activeKey: activeTab, defaultActiveKey: "node" },
             React.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-light mb-3 rounded" },
                 React.createElement("div", { className: "container-fluid" },
                     React.createElement("span", { className: "navbar-brand text-muted" }, "Project: testeranto"),
@@ -59,11 +61,23 @@ const BigBoard = () => {
                         React.createElement(Nav.Item, null,
                             React.createElement(Nav.Link, { eventKey: "projects" }, "Test Results")),
                         React.createElement(Nav.Item, null,
-                            React.createElement(Nav.Link, { eventKey: "node" }, "Node Build")),
+                            React.createElement(Nav.Link, { eventKey: "node", className: Object.values(nodeLogs).every(log => !log.errors || log.errors.length === 0)
+                                    ? "text-success"
+                                    : "text-danger" },
+                                "Node Build ",
+                                Object.values(nodeLogs).every(log => !log.errors || log.errors.length === 0) ? "✅" : "❌")),
                         React.createElement(Nav.Item, null,
-                            React.createElement(Nav.Link, { eventKey: "web" }, "Web Build")),
+                            React.createElement(Nav.Link, { eventKey: "web", className: Object.values(webLogs).every(log => !log.errors || log.errors.length === 0)
+                                    ? "text-success"
+                                    : "text-danger" },
+                                "Web Build ",
+                                Object.values(webLogs).every(log => !log.errors || log.errors.length === 0) ? "✅" : "❌")),
                         React.createElement(Nav.Item, null,
-                            React.createElement(Nav.Link, { eventKey: "pure" }, "Pure Build"))))),
+                            React.createElement(Nav.Link, { eventKey: "pure", className: Object.values(pureLogs).every(log => !log.errors || log.errors.length === 0)
+                                    ? "text-success"
+                                    : "text-danger" },
+                                "Pure Build ",
+                                Object.values(pureLogs).every(log => !log.errors || log.errors.length === 0) ? "✅" : "❌"))))),
             React.createElement(Row, null,
                 React.createElement(Tab.Content, null,
                     React.createElement(Tab.Pane, { eventKey: "node" },
@@ -115,6 +129,7 @@ const BigBoard = () => {
                                                         React.createElement("tr", null,
                                                             React.createElement("th", null, s[0])),
                                                         ...s[1].tests.map((t) => {
+                                                            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t;
                                                             const x = `${s[0]}/${t[0]
                                                                 .split(".")
                                                                 .slice(0, -1)
@@ -124,7 +139,25 @@ const BigBoard = () => {
                                                                 return React.createElement("pre", null, "ERROR");
                                                             return (React.createElement("tr", null,
                                                                 React.createElement("td", null, t[0]),
-                                                                React.createElement("td", null, t[1]),
+                                                                React.createElement("td", null,
+                                                                    React.createElement("button", { className: `btn btn-sm ${(t[1] === "node" && ((_b = (_a = nodeLogs[s[0]]) === null || _a === void 0 ? void 0 : _a.errors) === null || _b === void 0 ? void 0 : _b.length) === 0) ||
+                                                                            (t[1] === "web" && ((_d = (_c = webLogs[s[0]]) === null || _c === void 0 ? void 0 : _c.errors) === null || _d === void 0 ? void 0 : _d.length) === 0) ||
+                                                                            (t[1] === "pure" && ((_f = (_e = pureLogs[s[0]]) === null || _e === void 0 ? void 0 : _e.errors) === null || _f === void 0 ? void 0 : _f.length) === 0)
+                                                                            ? "btn-outline-success"
+                                                                            : "btn-outline-danger"}`, onClick: () => {
+                                                                            const tabKey = t[1] === "node" ? "node" : t[1] === "web" ? "web" : "pure";
+                                                                            setActiveTab(tabKey);
+                                                                        }, title: (t[1] === "node" && ((_h = (_g = nodeLogs[s[0]]) === null || _g === void 0 ? void 0 : _g.errors) === null || _h === void 0 ? void 0 : _h.length) === 0) ||
+                                                                            (t[1] === "web" && ((_k = (_j = webLogs[s[0]]) === null || _j === void 0 ? void 0 : _j.errors) === null || _k === void 0 ? void 0 : _k.length) === 0) ||
+                                                                            (t[1] === "pure" && ((_m = (_l = pureLogs[s[0]]) === null || _l === void 0 ? void 0 : _l.errors) === null || _m === void 0 ? void 0 : _m.length) === 0)
+                                                                            ? "Build succeeded"
+                                                                            : "Build failed" },
+                                                                        t[1],
+                                                                        (t[1] === "node" && ((_p = (_o = nodeLogs[s[0]]) === null || _o === void 0 ? void 0 : _o.errors) === null || _p === void 0 ? void 0 : _p.length) === 0) ||
+                                                                            (t[1] === "web" && ((_r = (_q = webLogs[s[0]]) === null || _q === void 0 ? void 0 : _q.errors) === null || _r === void 0 ? void 0 : _r.length) === 0) ||
+                                                                            (t[1] === "pure" && ((_t = (_s = pureLogs[s[0]]) === null || _s === void 0 ? void 0 : _s.errors) === null || _t === void 0 ? void 0 : _t.length) === 0)
+                                                                            ? " ✅"
+                                                                            : " ❌")),
                                                                 React.createElement("td", null,
                                                                     React.createElement("a", { href: `./testeranto/reports/${x}/index.html` },
                                                                         (y.runTimeErrors < 0) && "‼️ Tests did not complete",
@@ -136,8 +169,20 @@ const BigBoard = () => {
                                                                     React.createElement("a", { href: `./testeranto/reports/${x}/type_errors.txt` }, y.typeErrors))));
                                                         })));
                                                 }))))))))))))))),
+        React.createElement(SettingsButton, { className: "gear-icon" }),
         React.createElement(Footer, null)));
 };
+// Initialize theme
+const savedTheme = localStorage.getItem('theme') || 'system';
+let themeToApply = savedTheme;
+if (savedTheme === 'system') {
+    themeToApply = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+}
+else if (['light-vibrant', 'dark-vibrant', 'light-grayscale', 'dark-grayscale', 'sepia'].includes(savedTheme)) {
+    themeToApply = savedTheme;
+}
+document.documentElement.setAttribute('data-bs-theme', themeToApply);
+document.body.classList.add(`${themeToApply}-theme`);
 document.addEventListener("DOMContentLoaded", function () {
     const elem = document.getElementById("root");
     if (elem) {

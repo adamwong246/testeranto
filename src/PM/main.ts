@@ -607,6 +607,12 @@ export class PM_Main extends PM_WithEslintAndTsc {
             this.bddTestIsNowDone(src, -1);
             statusMessagePretty(-1, src, "pure");
             // console.error(e);
+          })
+          .finally((x) => {
+            fs.writeFileSync(
+              reportDest + "/manifest.json",
+              JSON.stringify(Array.from(files[src]))
+            );
           });
       });
     } catch (e) {
@@ -783,6 +789,16 @@ export class PM_Main extends PM_WithEslintAndTsc {
         oStream.close();
         server.close();
 
+        if (!files[src]) {
+          files[src] = new Set();
+        }
+        // files[src].add(filepath);
+
+        fs.writeFileSync(
+          reportDest + "/manifest.json",
+          JSON.stringify(Array.from(files[src]))
+        );
+
         if (code === 255) {
           console.log(
             ansiColors.red(
@@ -857,12 +873,13 @@ export class PM_Main extends PM_WithEslintAndTsc {
             if (!files[src]) {
               files[src] = new Set();
             }
-            // files[t].add(filepath);
+            // files[src].add(filepath);
 
-            // fs.writeFileSync(
-            //   destFolder + "/manifest.json",
-            //   JSON.stringify(Array.from(files[src]))
-            // );
+            fs.writeFileSync(
+              destFolder + "/manifest.json",
+              JSON.stringify(Array.from(files[src]))
+            );
+
             delete files[src];
 
             Promise.all(screenshots[src] || []).then(() => {
@@ -1265,10 +1282,10 @@ export class PM_Main extends PM_WithEslintAndTsc {
           }
           // files[t].add(filepath);
 
-          // fs.writeFileSync(
-          //   destFolder + "/manifest.json",
-          //   JSON.stringify(Array.from(files[src]))
-          // );
+          fs.writeFileSync(
+            destFolder + "/manifest.json",
+            JSON.stringify(Array.from(files[src]))
+          );
           delete files[src];
 
           Promise.all(screenshots[src] || []).then(() => {

@@ -22,18 +22,18 @@ const config = {
                     { ports: 0 },
                     [],
                 ],
-                // [
-                //   "src/lib/baseBuilder.test/baseBuilder.test.pure.ts",
-                //   "pure",
-                //   { ports: 0 },
-                //   [],
-                // ],
-                // [
-                //   "src/lib/baseBuilder.test/baseBuilder.test.web.ts",
-                //   "web",
-                //   { ports: 0 },
-                //   [],
-                // ],
+                [
+                    "src/lib/baseBuilder.test/baseBuilder.test.pure.ts",
+                    "pure",
+                    { ports: 0 },
+                    [],
+                ],
+                [
+                    "src/lib/baseBuilder.test/baseBuilder.test.web.ts",
+                    "web",
+                    { ports: 0 },
+                    [],
+                ],
                 // ["src/mothership/test.ts", "node", { ports: 0 }, []],
                 // ["./src/lib/abstractBase/index.ts", "node", { ports: 0 }, []],
                 // [

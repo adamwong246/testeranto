@@ -8,6 +8,9 @@ import { IBuiltConfig } from "./lib";
 import { ISummary } from "./Types";
 
 import "bootstrap/dist/css/bootstrap.min.css";
+import { SettingsButton } from "./SettingsButton";
+
+import "./themesAndFonts.scss"
 
 type ISummaries = [string, IBuiltConfig, ISummary][];
 
@@ -80,8 +83,8 @@ const BigBoard = () => {
 
 
   return (
-    <div className="container-fluid">
-      <Tab.Container defaultActiveKey="node">
+    <div className="container-fluid p-4" style={{ backgroundColor: 'transparent' }}>
+      <Tab.Container activeKey={activeTab} defaultActiveKey="node">
         <nav className="navbar navbar-expand-lg navbar-light bg-light mb-3 rounded">
           <div className="container-fluid">
             <span className="navbar-brand text-muted">Project: testeranto</span>
@@ -90,13 +93,34 @@ const BigBoard = () => {
                 <Nav.Link eventKey="projects">Test Results</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="node">Node Build</Nav.Link>
+                <Nav.Link
+                  eventKey="node"
+                  className={Object.values(nodeLogs).every(log => !log.errors || log.errors.length === 0)
+                    ? "text-success"
+                    : "text-danger"}
+                >
+                  Node Build {Object.values(nodeLogs).every(log => !log.errors || log.errors.length === 0) ? "✅" : "❌"}
+                </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="web">Web Build</Nav.Link>
+                <Nav.Link
+                  eventKey="web"
+                  className={Object.values(webLogs).every(log => !log.errors || log.errors.length === 0)
+                    ? "text-success"
+                    : "text-danger"}
+                >
+                  Web Build {Object.values(webLogs).every(log => !log.errors || log.errors.length === 0) ? "✅" : "❌"}
+                </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="pure">Pure Build</Nav.Link>
+                <Nav.Link
+                  eventKey="pure"
+                  className={Object.values(pureLogs).every(log => !log.errors || log.errors.length === 0)
+                    ? "text-success"
+                    : "text-danger"}
+                >
+                  Pure Build {Object.values(pureLogs).every(log => !log.errors || log.errors.length === 0) ? "✅" : "❌"}
+                </Nav.Link>
               </Nav.Item>
 
             </Nav>
@@ -227,7 +251,34 @@ const BigBoard = () => {
                                         return (
                                           <tr>
                                             <td>{t[0]}</td>
-                                            <td>{t[1]}</td>
+                                            <td>
+                                              <button
+                                                className={`btn btn-sm ${(t[1] === "node" && nodeLogs[s[0]]?.errors?.length === 0) ||
+                                                  (t[1] === "web" && webLogs[s[0]]?.errors?.length === 0) ||
+                                                  (t[1] === "pure" && pureLogs[s[0]]?.errors?.length === 0)
+                                                  ? "btn-outline-success"
+                                                  : "btn-outline-danger"
+                                                  }`}
+                                                onClick={() => {
+                                                  const tabKey = t[1] === "node" ? "node" : t[1] === "web" ? "web" : "pure";
+                                                  setActiveTab(tabKey);
+                                                }}
+                                                title={
+                                                  (t[1] === "node" && nodeLogs[s[0]]?.errors?.length === 0) ||
+                                                    (t[1] === "web" && webLogs[s[0]]?.errors?.length === 0) ||
+                                                    (t[1] === "pure" && pureLogs[s[0]]?.errors?.length === 0)
+                                                    ? "Build succeeded"
+                                                    : "Build failed"
+                                                }
+                                              >
+                                                {t[1]}
+                                                {(t[1] === "node" && nodeLogs[s[0]]?.errors?.length === 0) ||
+                                                  (t[1] === "web" && webLogs[s[0]]?.errors?.length === 0) ||
+                                                  (t[1] === "pure" && pureLogs[s[0]]?.errors?.length === 0)
+                                                  ? " ✅"
+                                                  : " ❌"}
+                                              </button>
+                                            </td>
                                             <td>
 
 
@@ -286,10 +337,24 @@ const BigBoard = () => {
           </Tab.Content>
         </Row>
       </Tab.Container>
+
+      <SettingsButton className="gear-icon" />
+
       <Footer />
     </div>
   );
 };
+
+// Initialize theme
+const savedTheme = localStorage.getItem('theme') || 'system';
+let themeToApply = savedTheme;
+if (savedTheme === 'system') {
+  themeToApply = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+} else if (['light-vibrant', 'dark-vibrant', 'light-grayscale', 'dark-grayscale', 'sepia'].includes(savedTheme)) {
+  themeToApply = savedTheme;
+}
+document.documentElement.setAttribute('data-bs-theme', themeToApply);
+document.body.classList.add(`${themeToApply}-theme`);
 
 document.addEventListener("DOMContentLoaded", function () {
   const elem = document.getElementById("root");

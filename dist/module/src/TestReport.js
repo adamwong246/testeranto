@@ -4,6 +4,7 @@ import { Col, Nav, Row, Tab } from "react-bootstrap";
 import { Footer } from "./Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./TestReport.scss";
+import { SettingsButton } from "./SettingsButton";
 const BddPage = () => {
     // const [configs, setConfigs] = useState<IBuiltConfig>();
     // useEffect(() => {
@@ -50,7 +51,6 @@ const BddPage = () => {
             try {
                 const messageText = await (await fetch(`${window.location.href.split("/").slice(0, -1).join("/")}/message.txt`)).text();
                 setMessage(messageText);
-                console.log('Message:', messageText);
             }
             catch (e) {
                 setMessage({ error: e });
@@ -63,7 +63,6 @@ const BddPage = () => {
             try {
                 const promptText = await (await fetch(`${window.location.href.split("/").slice(0, -1).join("/")}/prompt.txt`)).text();
                 setPrompt(promptText);
-                console.log('Prompt:', promptText);
             }
             catch (e) {
                 setPrompt({ error: e });
@@ -104,7 +103,7 @@ const BddPage = () => {
         }
     };
     const basePath = window.location.href.split('/').slice(0, -1).join('/');
-    return (React.createElement("div", { className: "container-fluid p-4" },
+    return (React.createElement("div", { className: "container-fluid p-4", style: { backgroundColor: 'transparent' } },
         React.createElement(Tab.Container, { defaultActiveKey: "tests" },
             React.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-light mb-3 rounded" },
                 React.createElement("div", { className: "container-fluid" },
@@ -155,14 +154,26 @@ const BddPage = () => {
                                     typeof prompt === 'string' ? (React.createElement("pre", { className: "bg-secondary text-white  p-3", style: { overflow: 'auto' } }, prompt)) : (React.createElement("div", { className: "alert alert-danger" },
                                         React.createElement("h5", null, "Error loading AI prompt"),
                                         React.createElement("pre", null, JSON.stringify(prompt.error, null, 2))))))))))),
+        React.createElement(SettingsButton, { className: "gear-icon" }),
         React.createElement(Footer, null)));
 };
+// Initialize theme
+const savedTheme = localStorage.getItem('theme') || 'system';
+let themeToApply = savedTheme;
+if (savedTheme === 'system') {
+    themeToApply = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+}
+else if (['light-vibrant', 'dark-vibrant', 'light-grayscale', 'dark-grayscale', 'sepia'].includes(savedTheme)) {
+    themeToApply = savedTheme;
+}
+document.documentElement.setAttribute('data-bs-theme', themeToApply);
 document.addEventListener("DOMContentLoaded", function () {
     const elem = document.getElementById("root");
     if (elem) {
         if (elem) {
             const root = ReactDom.createRoot(elem);
             root.render(React.createElement(BddPage, {}));
+            document.body.classList.add(`${themeToApply}-theme`);
         }
     }
 });

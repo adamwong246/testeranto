@@ -1,16 +1,17 @@
+@use "./themesAndFonts.scss";
+
+// .container-fluid {
+//   padding: 0;
+// }
+
 :root {
-  --primary: #ff6b6b;
-  /* Coral Blush */
-  --secondary: #4ecdc4;
-  /* Mint Teal */
-  --yellow: #e6b422;
-  /* Muted Gold */
-  --green: #00b4a0;
-  /* Deep Teal */
-  --light: #292f36;
-  /* Midnight Ink */
-  --dark: #f1faee;
-  /* Pearl Mist */
+  --primary: #0a2342; /* Navy */
+  --secondary: #4ecdc4; /* Keep teal */
+  --accent: #ff6b6b; /* Coral as accent only */
+  --light: #f8f9fa; /* Light gray bg */
+  --dark: #333; /* Dark text */
+  --success: #28a745;
+  --danger: #dc3545;
   --content-bg: rgba(30, 42, 58, 0.7);
 
   /* Gradient Colors */
@@ -28,7 +29,8 @@
   --semi-trans-bg: #292f3649;
 }
 
-pre, code {
+pre,
+code {
   white-space: pre-wrap;
   word-wrap: break-word;
   max-width: 80ch;
@@ -42,8 +44,41 @@ pre, code {
   color: #333;
 }
 
-.footer {
+#settings-button {
   background-color: lightgray;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+
+  &:hover {
+    #gear-icon-settings {
+      display: inline-block;
+      animation: spin 1s linear infinite;
+      transform-origin: center;
+    }
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.gear-icon {
+  transition: transform 0.3s ease;
+}
+
+.footer {
+  background-color: var(--semi-trans-bg);
   margin: 0.5rem;
   padding: 0.5rem;
   position: fixed;
@@ -52,8 +87,10 @@ pre, code {
   transition: all 0.5s ease;
   border-radius: 4px;
   transform: scale(1);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  backdrop-filter: blur(5px);
+  z-index: 1000;
 
   a {
     color: inherit;
@@ -66,49 +103,37 @@ pre, code {
   }
 
   &:hover {
-    background: 
-      linear-gradient(
+    background: linear-gradient(
         var(--angle, 45deg),
         var(--bg-sunrise2),
         var(--bg-end)
       ),
       radial-gradient(
         circle at center,
-        rgba(255,255,255,0.1) 0%,
+        rgba(255, 255, 255, 0.1) 0%,
         transparent 70%
       );
-    background-size: 
-      300% 300%,
-      200% 200%;
-    animation: 
-      gradientBG 8s ease infinite,
-      rotateGradient 20s linear infinite,
+    background-size: 300% 300%, 200% 200%;
+    animation: gradientBG 8s ease infinite, rotateGradient 20s linear infinite,
       ripple 4s ease infinite;
     color: white;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   }
 }
 
 @keyframes gradientBG {
-  0%, 100% {
-    background-position: 
-      0% 50%,
-      0% 0%;
+  0%,
+  100% {
+    background-position: 0% 50%, 0% 0%;
   }
   25% {
-    background-position: 
-      100% 50%,
-      100% 50%;
+    background-position: 100% 50%, 100% 50%;
   }
   50% {
-    background-position: 
-      50% 100%,
-      50% 100%;
+    background-position: 50% 100%, 50% 100%;
   }
   75% {
-    background-position: 
-      100% 0%,
-      0% 100%;
+    background-position: 100% 0%, 0% 100%;
   }
 }
 
@@ -122,14 +147,11 @@ pre, code {
 }
 
 @keyframes ripple {
-  0%, 100% {
-    background-size: 
-      300% 300%,
-      100% 100%;
+  0%,
+  100% {
+    background-size: 300% 300%, 100% 100%;
   }
   50% {
-    background-size: 
-      300% 300%,
-      200% 200%;
+    background-size: 300% 300%, 200% 200%;
   }
 }
