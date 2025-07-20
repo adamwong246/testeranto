@@ -69,7 +69,7 @@ export const testsReportPage = (packageName, domain, projects) => {
         if (l.hostname === "localhost"){
           base.href = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + '/testeranto';
         } else if (l.hostname === "adamwong246.github.io"){
-          base.href = "https://adamwong246.github.io/testeranto";
+          base.href = "https://adamwong246.github.io/testeranto/testeranto";
         } else {
           console.error("unsupported hostname");
         }
